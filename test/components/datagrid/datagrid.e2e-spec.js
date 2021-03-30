@@ -1,4 +1,5 @@
 const { browser, element } = require('protractor');
+
 const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
 const utils = requireHelper('e2e-utils');
 const config = requireHelper('e2e-config');
@@ -7,30 +8,29 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-
 /**
  * general CSS selectors used throughout these tests
  */
 const S = {
-  gridRow: ({ row }={}) => {
+  gridRow: ({ row } = {}) => {
     const rSelector = row ? `:nth-child(${row})` : '';
-    return `#datagrid .datagrid-wrapper tbody tr${rSelector}`
+    return `#datagrid .datagrid-wrapper tbody tr${rSelector}`;
   },
-  gridColumn: ({ row, column }={}) => {
+  gridColumn: ({ row, column } = {}) => {
     const cSelector = column ? `:nth-child(${column})` : '';
     const rSelector = row ? `:nth-child(${row})` : '';
-    return `#datagrid .datagrid-wrapper tbody tr${rSelector} td${cSelector}`
+    return `#datagrid .datagrid-wrapper tbody tr${rSelector} td${cSelector}`;
   },
-  gridRowCheckbox: ({ row, column=1, checked }) => {
-    const checkedState = `${!checked?':not(':''}.is-checked${!checked ? ')':''}`;
+  gridRowCheckbox: ({ row, column = 1, checked }) => {
+    const checkedState = `${!checked ? ':not(' : ''}.is-checked${!checked ? ')' : ''}`;
 
     return (
       `#datagrid .datagrid-wrapper tbody tr:nth-child(${row}) ` +
-      `td:nth-child(${column}) ` + 
+      `td:nth-child(${column}) ` +
       `[role="checkbox"]${checkedState}`
     );
   },
-  removeRowButton: () => `#remove-btn`
+  removeRowButton: () => '#remove-btn'
 };
 
 const openPersonalizationDialog = async () => {
@@ -1284,7 +1284,7 @@ describe('Datagrid mixed selection tests', () => {
   }
 });
 
-fdescribe('Datagrid multiselect tests', () => {
+describe('Datagrid multiselect tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-multiselect.html?theme=classic&layout=nofrills');
 
@@ -1382,7 +1382,7 @@ fdescribe('Datagrid multiselect tests', () => {
     await $(S.gridColumn({ row: 2, checked: false })).click();
     await browser.wait(until.presenceOf($(S.gridRowCheckbox({ row: 2, checked: true }))));
 
-    const prevRowCount =  await $$(S.gridRow()).count();
+    const prevRowCount = await $$(S.gridRow()).count();
     await browser.wait(until.presenceOf($(S.removeRowButton())));
     await $(S.removeRowButton()).click();
 
@@ -1400,16 +1400,12 @@ fdescribe('Datagrid multiselect tests', () => {
     await browser.wait(until.presenceOf($(S.gridRowCheckbox({ row: 2, checked: false }))));
     await $(S.gridColumn({ row: 2, column: 2 })).click();
     await browser.wait(until.presenceOf($(S.gridRowCheckbox({ row: 2, checked: true }))));
-    
     await browser.wait(until.presenceOf($(S.gridRowCheckbox({ row: 1, checked: false }))));
     await $(S.gridColumn({ row: 1, column: 2 })).click();
     await browser.wait(until.presenceOf($(S.gridRowCheckbox({ row: 1, checked: true }))));
-    
-    const prevRowCount =  await $$(S.gridRow()).count();
-    
+    const prevRowCount = await $$(S.gridRow()).count();
     await browser.wait(until.presenceOf($(S.removeRowButton())));
     await $(S.removeRowButton()).click();
-   
     await Promise.all([
       browser.wait(until.stalenessOf($(S.gridRow({ row: prevRowCount - 1 })))),
       browser.wait(until.stalenessOf($(S.gridRow({ row: prevRowCount }))))
