@@ -12,8 +12,6 @@ The IDS components are backed by both functional and end-to-end (e2e) test suite
 - [Making Accessibility e2e Tests with Axe](#making-accessibility-e2e-tests-with-axe)
 - [Testing Resources](#testing-resources)
 
-
-
 ## Test Stack
 
 - [Karma](https://karma-runner.github.io/2.0/index.html) test runner for all tests.
@@ -184,8 +182,9 @@ Following the process below will safely create baseline images the CI can use du
 We created a docker image to help manage baselines. This is located in the [Infor Design System Docker Repos](https://hub.docker.com/r/infords/travis/tags).
 
 1. Download the docker image with `docker run --name travis-debug -dit infords/travis:v1`.
-1. Once the image has been downloaded, you can login to the VM/Docker container by running bash through `exec` e.g. 
-```
+1. Once the image has been downloaded, you can login to the VM/Docker container by running bash through `exec` e.g.
+
+```sh
 docker exec -it travis-debug bash -l
 ```
 
