@@ -1,4 +1,4 @@
-const { browser } = require('protractor');
+const { browser, element } = require('protractor');
 const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
 const utils = requireHelper('e2e-utils');
 const config = requireHelper('e2e-config');
@@ -1373,36 +1373,49 @@ fdescribe('Datagrid multiselect tests', () => {
     expect(await element.all(by.css('.modal-content input[type="checkbox"]')).count()).toEqual(5);
   });
 
-  it('Should remove rows in order', async () => {
-    await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(1) td:nth-child(2)')).click();
-    await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(2) td:nth-child(2)')).click();
-    await element(by.css('#remove-btn')).click();
-
-    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(1) td:nth-child(2)')).getText()).toEqual('2342203');
-    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(2) td:nth-child(2)')).getText()).toEqual('2445204');
-  });
-
-  it('Should remove two rows after selecting in reverse order (2, 1)', async () => {
-    await browser.wait(until.presenceOf($(S.gridColumn({ row: 2, column: 2 }))));
-    await element(by.css(S.gridColumn({ row: 2, column: 2 }))).click();
-    await browser.wait(until.presenceOf($(S.gridRowCheckbox({ row: 2, checked: true }))));
-    await browser.wait(until.presenceOf($(S.gridColumn({ row: 1, column: 2 }))));
-    
-    await element(by.css(S.gridColumn({ row: 1, column: 2 }))).click();
-    
+  it('Should remove two rows after selecting them in order', async () => {
+    await browser.wait(until.presenceOf($(S.gridRowCheckbox({ row: 1, checked: false }))));
+    await $(S.gridColumn({ row: 1, column: 2 })).click();
     await browser.wait(until.presenceOf($(S.gridRowCheckbox({ row: 1, checked: true }))));
-    await browser.wait(until.presenceOf($(S.removeRowButton())));
+
+    await browser.wait(until.presenceOf($(S.gridRowCheckbox({ row: 2, checked: false }))));
+    await $(S.gridColumn({ row: 2, checked: false })).click();
+    await browser.wait(until.presenceOf($(S.gridRowCheckbox({ row: 2, checked: true }))));
 
     const prevRowCount =  await $$(S.gridRow()).count();
+    await browser.wait(until.presenceOf($(S.removeRowButton())));
+    await $(S.removeRowButton()).click();
 
-    await element(by.css(S.removeRowButton())).click();
-   
     await Promise.all([
-      await browser.wait(until.stalenessOf($(S.gridRow({ row: prevRowCount - 1 })))),
-      await browser.wait(until.stalenessOf($(S.gridRow({ row: prevRowCount }))))
+      browser.wait(until.stalenessOf($(S.gridRow({ row: prevRowCount - 1 })))),
+      browser.wait(until.stalenessOf($(S.gridRow({ row: prevRowCount }))))
     ]);
 
-    expect(await $$(S.gridRow()).count().toEqual(prevRowCount - 2));
+    expect(await $$(S.gridRow()).count()).toEqual(prevRowCount - 2);
+    expect(await $(S.gridColumn({ row: 1, column: 2 })).getText()).toEqual('2342203');
+    expect(await $(S.gridColumn({ row: 2, column: 2 })).getText()).toEqual('2445204');
+  });
+
+  it('Should remove two rows after selecting them in reverse order', async () => {
+    await browser.wait(until.presenceOf($(S.gridRowCheckbox({ row: 2, checked: false }))));
+    await $(S.gridColumn({ row: 2, column: 2 })).click();
+    await browser.wait(until.presenceOf($(S.gridRowCheckbox({ row: 2, checked: true }))));
+    
+    await browser.wait(until.presenceOf($(S.gridRowCheckbox({ row: 1, checked: false }))));
+    await $(S.gridColumn({ row: 1, column: 2 })).click();
+    await browser.wait(until.presenceOf($(S.gridRowCheckbox({ row: 1, checked: true }))));
+    
+    const prevRowCount =  await $$(S.gridRow()).count();
+    
+    await browser.wait(until.presenceOf($(S.removeRowButton())));
+    await $(S.removeRowButton()).click();
+   
+    await Promise.all([
+      browser.wait(until.stalenessOf($(S.gridRow({ row: prevRowCount - 1 })))),
+      browser.wait(until.stalenessOf($(S.gridRow({ row: prevRowCount }))))
+    ]);
+
+    expect(await ($$(S.gridRow()).count())).toEqual(prevRowCount - 2);
     expect(await $(S.gridColumn({ row: 1, column: 2 })).getText()).toEqual('2342203');
     expect(await $(S.gridColumn({ row: 2, column: 2 })).getText()).toEqual('2445204');
   });
