@@ -4549,7 +4549,7 @@ describe('Datagrid Personalization tests', () => {
 describe('Datagrid Actions Popupmenu tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-actions-reload?layout=nofrills');
-    const datagridEl = await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(1)'));
+    const datagridEl = await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(3)'));
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(datagridEl), config.waitsFor);
   });
