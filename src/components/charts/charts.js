@@ -3,6 +3,7 @@ import { utils } from '../../utils/utils';
 import { xssUtils } from '../../utils/xss';
 import { DOM } from '../../utils/dom';
 import { theme } from '../theme/theme';
+import { Locale } from '../locale/locale';
 
 const charts = {};
 
@@ -357,7 +358,7 @@ charts.addLegend = function (series, chartType, settings, container) {
       extraClass += ` ${series[i].option}`;
     }
 
-    let seriesLine = `<span class="chart-legend-item${extraClass}" tabindex="0"></span>`;
+    let seriesLine = `<span class="chart-legend-item${extraClass}" tabindex="0" role="button"></span>`;
     const hexColor = charts.chartColor(i, chartType || (series.length === 1 ? 'bar-single' : 'bar'), series[i]);
     const colorName = charts.chartColorName(i, chartType || (series.length === 1 ? 'bar-single' : 'bar'), series[i]);
 
@@ -387,18 +388,18 @@ charts.addLegend = function (series, chartType, settings, container) {
     }
 
     if (series[i].display && series[i].display === 'block') {
-      seriesLine = `<span class="chart-legend-item${extraClass}" tabindex="0"></span>`;
+      seriesLine = `<span class="chart-legend-item${extraClass}" tabindex="0" role="button"></span>`;
     }
 
     if (isTwoColumn) {
       if (widthPercent > 45 && settings.legendPlacement !== 'right') {
-        seriesLine = `<span class="chart-legend-item${extraClass}" tabindex="0"></span>`;
+        seriesLine = `<span class="chart-legend-item${extraClass}" tabindex="0" role="button"></span>`;
       } else {
-        seriesLine = `<span class="chart-legend-item${extraClass} is-two-column" tabindex="0" ></span>`;
+        seriesLine = `<span class="chart-legend-item${extraClass} is-two-column" tabindex="0" role="button"></span>`;
       }
     }
     seriesLine = $(seriesLine);
-    seriesLine.append(color, textBlock);
+    seriesLine.append(color, `<span class="audible">${Locale.translate('Highlight')}</span>`, textBlock);
     utils.addAttributes(seriesLine, series[i], series[i]?.data?.attributes, 'legend');
 
     if ((chartType === 'pie' || chartType === 'donut') && settings.showMobile) {
@@ -490,8 +491,15 @@ charts.handleElementClick = function (line, series, settings) {
 
   if (['radar', 'pie', 'donut', 'column', 'bar', 'bar-stacked', 'bar-grouped', 'bar-normalized',
     'column-grouped', 'column-stacked', 'column-positive-negative', 'positive-negative'].indexOf(settings.type) !== -1) {
+    const lineElem = $(line);
+    const isPressed = lineElem.attr('aria-pressed') === 'true';
+
     charts.clickedLegend = true;
     selector.dispatch('click');
+    lineElem.parent().find('[aria-pressed]').removeAttr('aria-pressed');
+    if (!isPressed) {
+      lineElem.attr('aria-pressed', 'true');
+    }
   }
 
   if (elem.selectionObj) {

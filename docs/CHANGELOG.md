@@ -34,6 +34,7 @@
 - `[Modal]` Fixed a bug where fullsize responsive setting doesn't work on android phones in landscape mode. ([#4451](https://github.com/infor-design/enterprise/issues/4451))
 - `[Pie Chart]` Added support for double click to Pie and Donut. ([#3229](https://github.com/infor-design/enterprise/issues/3229))
 - `[Pie Chart]` Fixed bug were pie chart type does not remove old class name ([#3144](https://github.com/infor-design/enterprise/issues/3144))
+- `[Pie Chart]` Improved the accessibility of legend items with roles and offscreen labels. ([#4831](https://github.com/infor-design/enterprise/issues/4831))
 - `[Radar Chart]` Added support for double click. ([#3229](https://github.com/infor-design/enterprise/issues/3229))
 - `[Rating]` Fixed color of unclick rating star. ([#4853](https://github.com/infor-design/enterprise/issues/4853))
 - `[Popupmenu]` Fixed a lifecycle issue on menus that are shared between trigger elements, where these menus were incorrectly being torn down. ([NG#987](https://github.com/infor-design/enterprise-ng/issues/987))
