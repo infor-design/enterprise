@@ -176,7 +176,8 @@
   },
   "browserslist": [
     "last 2 versions",
-    "not ie 10"
+    "not ie",
+    "not op_mob"
   ],
   "optionalDependencies": {
     "fsevents": "*"
