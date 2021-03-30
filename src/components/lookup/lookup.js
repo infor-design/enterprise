@@ -158,12 +158,6 @@ Lookup.prototype = {
       cssClass += ' has-actions-wrapper';
     }
 
-    // Add Button
-    this.icon = $('<span class="trigger"></span>').append($.createIcon(this.settings.icon));
-    if (this.settings.icon !== 'icon-search-list') {
-      this.icon.addClass('has-custom-icon');
-    }
-
     if (this.isInlineLabel) {
       this.inlineLabel.addClass(cssClass);
     } else {
@@ -180,6 +174,15 @@ Lookup.prototype = {
       } else {
         lookup.wrap(this.container);
       }
+    }
+
+    // Add Button
+    this.icon = $(`<button class="btn-icon trigger">
+      <span class="audible"></span>
+      ${$.createIcon(this.settings.icon)}
+    </button>`);
+    if (this.settings.icon !== 'icon-search-list') {
+      this.icon.addClass('has-custom-icon');
     }
 
     lookup.after(this.icon);
@@ -250,8 +253,10 @@ Lookup.prototype = {
    * @returns {void}
    */
   addAria() {
-    const self = this;
-    self.label = self.isInlineLabel ? self.inlineLabelText : $(`label[for="${self.element.attr('id')}"]`);
+    this.label = this.isInlineLabel ? this.inlineLabelText : $(`label[for="${this.element.attr('id')}"]`);
+
+    const triggerBtnText = Locale.translate('LookupTriggerButton').replace('{0}', this.label.text());
+    this.icon.children('span.audible').text(triggerBtnText);
   },
 
   /**
@@ -465,13 +470,13 @@ Lookup.prototype = {
       buttons = [{
         text: Locale.translate('Cancel'),
         click(e, modal) {
-          modal.oldActive = self.element;
+          modal.oldActive = self.icon;
           modal.close();
         }
       }, {
         text: Locale.translate('Apply'),
         click(e, modal) {
-          modal.oldActive = self.element;
+          modal.oldActive = self.icon;
           modal.close();
           self.insertRows();
         },
@@ -483,13 +488,13 @@ Lookup.prototype = {
       buttons = [{
         text: Locale.translate('Cancel'),
         click(e, modal) {
-          modal.oldActive = self.element;
+          modal.oldActive = self.icon;
           modal.close();
         }
       }, {
         text: Locale.translate('Apply'),
         click(e, modal) {
-          modal.oldActive = self.element;
+          modal.oldActive = self.icon;
           modal.close();
           self.insertRows();
         },
@@ -961,6 +966,7 @@ Lookup.prototype = {
   enable() {
     this.element.prop('disabled', false).prop('readonly', false);
     this.element.parent().removeClass('is-disabled');
+    this.icon.prop('disabled', false);
   },
 
   /**
@@ -970,6 +976,7 @@ Lookup.prototype = {
   disable() {
     this.element.prop('disabled', true);
     this.element.parent().addClass('is-disabled');
+    this.icon.prop('disabled', true);
   },
 
   /**
@@ -978,6 +985,7 @@ Lookup.prototype = {
    */
   readonly() {
     this.element.prop('readonly', true);
+    this.icon.prop('disabled', false);
   },
 
   /**

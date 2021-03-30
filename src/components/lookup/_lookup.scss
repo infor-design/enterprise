@@ -46,19 +46,22 @@
   .trigger {
     cursor: pointer;
     display: inline-block;
-    height: 34px;
-    margin-left: -35px;
+    height: 24px;
+    margin-left: -30px;
+    margin-top: 6px;
+    min-height: 24px;
+    min-width: 24px;
     outline: none;
     position: absolute;
-    width: 34px;
+    width: 24px;
 
     .icon {
       background-color: inherit;
       color: $trigger-icon-fill-color;
       height: 18px;
       pointer-events: none;
-      right: -7px;
-      top: 8px;
+      right: 1px;
+      top: -1px;
       width: 18px;
     }
 

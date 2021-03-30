@@ -262,6 +262,7 @@ Soho.Locale.addCulture('en-US', {
     Locked: { id: 'Locked', value: 'Locked', comment: 'Locked tooltip' },
     Logout: { id: 'Logout', value: 'Log Out', comment: 'Log out of the application' },
     Lookup: { id: 'Lookup', value: 'Lookup', comment: 'Lookup - As in looking up a record or value' },
+    LookupTriggerButton: { id: 'LookupTriggerButton', value: '{0} Lookup Trigger', comment: 'Used in accessible labels to describe a lookup field\'s trigger button to assistive technology' },
     Lowest: { id: 'Lowest', value: 'Lowest', comment: 'Lowest - As in Lowest value' },
     Mail: { id: 'Mail', value: 'Mail', comment: 'Mail tooltip' },
     MapPin: { id: 'MapPin', value: 'Pin', comment: 'Map Pin tooltip' },
