@@ -42,6 +42,7 @@
 - `[Radar Chart]` Added support for double click. ([#3229](https://github.com/infor-design/enterprise/issues/3229))
 - `[Rating]` Fixed color of unclick rating star. ([#4853](https://github.com/infor-design/enterprise/issues/4853))
 - `[Popupmenu]` Fixed a lifecycle issue on menus that are shared between trigger elements, where these menus were incorrectly being torn down. ([NG#987](https://github.com/infor-design/enterprise-ng/issues/987))
+- `[Switch]` Adjust styles to be more discernable between unchecked and disabled ([#4341](https://github.com/infor-design/enterprise/issues/4341))
 - `[Tabs (Horizontal/Header)]` Fixed bug with the placement of the focus state in RTL mode, and other minor visual improvements. ([#4877](https://github.com/infor-design/enterprise/issues/4877))
 - `[Tabs Module]` Fixed a bug where clear button was missing when clearable setting is activated in tabs module searchfield. ([#4898](https://github.com/infor-design/enterprise/issues/4898))
 - `[Textarea]` Fixed a bug where the textarea options like autogrow, autoGrowMaxHeight doesn't work after the initialization inside of the accordion. ([#4977](https://github.com/infor-design/enterprise/issues/4977))
