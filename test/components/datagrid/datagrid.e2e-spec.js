@@ -1289,9 +1289,9 @@ describe('Datagrid multiselect tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-multiselect.html?theme=classic&layout=nofrills');
 
-    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(1)'));
+    const datagridEl = await element(by.css('#datagrid tbody tr:nth-child(3)'));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(datagridEl), config.waitsFor);
   });
 
   it('Should not have errors', async () => {
