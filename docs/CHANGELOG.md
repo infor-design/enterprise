@@ -1,17 +1,19 @@
 # What's New with Enterprise
 
-## v4.39.0
+## v4.50.0
 
-### v4.39.0 Important Notes
+### v4.50.0 Important Notes
 
+- `[General]` We bumped the version from 4.39 (four - thirty nine) to 4.50 (four - fifty) to correspond with the general release of Soho (IDS) Design system 4.5 so the versions sync up better. We could not use 4.5 since it was already in use previously. ([#5012](https://github.com/infor-design/enterprise/issues/5012))
 - `[General]` We Updated development dependencies. Most important things to note are: we now support node 14 for development and this is recommended. ([#4998](https://github.com/infor-design/enterprise/issues/4998))
 
-### v4.39.0 Fixes
+### v4.50.0 Fixes
 
 - `[Breadcrumb]` Changed the colors for disabled breadcrumbs to make them lighter than the enabled ones. ([#4917](https://github.com/infor-design/enterprise/issues/4917))
 - `[Bar Chart]` Added support for double click to Bar, Bar Grouped, Bar Stacked. ([#3229](https://github.com/infor-design/enterprise/issues/3229))
 - `[Bullet Chart]` Added support for double click. ([#3229](https://github.com/infor-design/enterprise/issues/3229))
 - `[BusyIndicator]` Fixed a bug that caused the busy-indicator to show below the busy indicator container. ([#4953](https://github.com/infor-design/enterprise/issues/4953))
+- `[Color Picker]`Fix issue with text disappearing and improve responsiveness when there isn't space horizontally ([#4930](https://github.com/infor-design/enterprise/issues/4930))
 - `[Column Chart]` Added support for double click to Column, Column Grouped, Column Stacked, Column Stacked-singular and Column Positive Negative. ([#3229](https://github.com/infor-design/enterprise/issues/3229))
 - `[Datagrid]` Fixed a bug where filter dropdown menus did not close when focusing a filter input. ([#4766](https://github.com/infor-design/enterprise/issues/4766))
 - `[Datagrid]` Fixed an error seen clicking items if using a flex toolbar for the datagrid toolbar. ([#4941](https://github.com/infor-design/enterprise/issues/4941))
@@ -26,6 +28,7 @@
 - `[Editor]`Adjusted the editor to not treat separators after headers as leading and removing them. ([#4751](https://github.com/infor-design/enterprise/issues/4751))
 - `[General]` Can run stylelint command on W10 cmd for development ([#4993](https://github.com/infor-design/enterprise/issues/4993))
 - `[General]` We Updated jQuery to use 3.6.0. ([#1690](https://github.com/infor-design/enterprise/issues/1690))
+- `[Header]` Removed breadcrumb coloring from current class, which was causing the wrong kind of emphasis for breadcrumbs in headers. ([#5003](https://github.com/infor-design/enterprise/issues/5003))
 - `[Input]` Changed the disabled search field color for Safari to match that of other browsers. ([#4611](https://github.com/infor-design/enterprise/issues/4611))
 - `[Lookup]` Isolated the scss/css .close.icon class inside of .modal-content and removed any extra top property to fix the alignment issue.([#4933](https://github.com/infor-design/enterprise/issues/4933))
 - `[Line Chart]` Added support for double click to Area, Bubble, Line and Scatterplot. ([#3229](https://github.com/infor-design/enterprise/issues/3229))

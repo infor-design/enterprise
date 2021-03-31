@@ -6,7 +6,7 @@ The IDS components are backed by both functional and end-to-end (e2e) test suite
 
 - [Karma](https://karma-runner.github.io/2.0/index.html) test runner for all tests.
 - [Protractor](https://www.protractortest.org/) for controlling e2e tests.
-- [Github Actions](https://github.com/features/actions) for continuous integration (CI).
+- [Github Actions](https://github.com/features/actions) for continuous integration (CI). See `.github/workflows` folder for current implementation
 - [Browser Stack](https://www.browserstack.com/) for testing specific browsers.
 
 ## Writing Tests
@@ -36,11 +36,10 @@ The IDS components are backed by both functional and end-to-end (e2e) test suite
 #### Best Practices for Tests
 
 - Try to use `protractor.ExpectedConditions` rather than sleeps to make things faster, these wait for items in the DOM to change. For more into see [the protractor docs](https://www.protractortest.org/#/api?view=ProtractorExpectedConditions).
-- If you have to use a sleep make sure to use the right config for example `await browser.driver.sleep(config.sleep)`. This is only .5 seconds
 - If you see a sleep in the code, try to refactor it to use `protractor.ExpectedConditions`
 - Keep the test as simple as possible and just test one thing per test
 - Try not repeat yourself in tests. For example if you covered some functionality in one page, no need to test the same thing in another page.
-- We use `async` in the tests rather than promises see [this blog on async tests](https://chariotsolutions.com/blog/post/simplify-protractor-web-tests-with-async-and-await/)
+- We use `async` in the functional tests rather than promises see [this blog on async tests](https://chariotsolutions.com/blog/post/simplify-protractor-web-tests-with-async-and-await/)
 - Make sure you don't forget the awaits, the await is just on the things that return a promise for example. `await element(by.css('.pager-next')).click();` not `await element(await by.css('.pager-next')).click();`.
 - In functional tests use the `cleanup` function and make sure you remove everything in the page including the scripts and add an id for them.
 
@@ -54,13 +53,13 @@ For development purposes, the functional tests can be run in the background cont
 npm run functional:local
 ```
 
-To run the tests in a CI environment (Git Hub Actions), use:
+To run the tests as a CI environment would (Git Hub Actions), use:
 
 ```sh
 npm run functional:ci
 ```
 
-## Running e2e tests silently for continuous integration (CI)
+## Sequence for Running e2e tests locally
 
 ```sh
 npm run build
@@ -70,8 +69,6 @@ npm quickstart
 # In a new shell
 npm run e2e:ci
 ```
-
-See `.github/workflows` folder for current implementation
 
 ## Running E2E Tests Locally
 
@@ -171,13 +168,13 @@ Following the process below will safely create baseline images the CI can use du
 
 We created a docker image to help manage baselines. This is located in the [Infor Design System Docker Repos](https://hub.docker.com/r/infords/travis/tags).
 
-1. Download the docker image with `docker run --name travis-debug -dit infords/travis:v1`.
+1. Download the docker image with `docker run --name travis-debug -dit infords/travis:v2`.
 1. Once downloaded, login to the VM with `docker exec -it travis-debug bash -l`.
 1. If you had a previous VM with travis-debug you may need to rename it. Do a rename and then login again to the VM:
 
   ```sh
   docker rename travis-debug travis-debug-old
-  docker run --name travis-debug -dit infords/travis:v1
+  docker run --name travis-debug -dit infords/travis:v2
   ```
 
 1. Test the image with `cat /etc/os-release` , you should see `16.04.6 LTS (Xenial Xerus)`.
@@ -210,42 +207,14 @@ This is good step to follow if you see an error similar to this one when running
 #### Updating the docker image
 
 1. Make sure you sign up for docker and are adding to the [IDS Community](https://hub.docker.com/u/infords).
-1. Tag your docker image `docker tag <image id> infords/travis:v1`. You can find this ID with `docker image ls`.
-1. Push to the repo either adding a new version or updating one with `docker push infords/travis:v1`
-1. Any changes you make must be saved `docker commit travis-vm infords/travis:v1` where `travis-vm` is the NAMES of the container which you can see in `docker container ls`.
+1. Tag your docker image `docker tag <image id> infords/travis:v2` (bump the v2 to next version). You can find this ID with `docker image ls`.
+1. Push to the repo either adding a new version or updating one with `docker push infords/travis:v2`
+1. Any changes you make must be saved `docker commit travis-vm infords/travis:v2` where `travis-vm` is the NAMES of the container which you can see in `docker container ls`.
 1. Push the repo if changes with the command from 2.
-
-#### Debugging to Travis Builds
-
-Since we are now on xenial on travis we can debug and load the travis builds as if they are a VM. This will let us debug build problems and even update visual regression tests. Most of this information is on the [travis site](https://docs.travis-ci.com/user/running-build-in-debug-mode/#Things-to-do-once-you-are-inside-the-debug-VM) but some of the gotchas are noted here.
-
-1. Figure out the job ID by drilling into one of the jobs on the build, for example [234107789](https://travis-ci.com/infor-design/enterprise/jobs/234107789). The job ID is 234107789.
-1. Make a file such as `debug.sh` file in the current director with the following contents.
-
-```sh
-curl -s -X POST -H "Content-Type: application/json" \
-   -H "Accept: application/json" \
-   -H "Travis-API-Version: 3" \
-   -H "Authorization: token <token>" \
-   -d '{ "quiet": false }' \
-   https://api.travis-ci.com/job/<build-id>/debug
-```
-
-1. You may need to run `chmod +x debug.sh` to excute.
-1. Run the command `debug.sh` and you should see a pending status.
-1. Go back to the build for example [234107789](https://travis-ci.com/infor-design/enterprise/jobs/234107789) and you should see it starting up. It will run the initial setup ending with a command you can use to connect to at the end of the log.
-1. Connect to the vm with the command noted for example `ssh GURDunMkqtCo3qmb891XRBTuJ@nyc1.tmate.io`.
-1. You may need to reset or add a new ssh key. See the [github ssh page](https://help.github.com/en/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) for more info. I used `ssh-keygen -t rsa -b 4096 -C "your_email@example.com"`
-1. Now you are connected! You can use this like a normal VM, debug, or create baselines as the following section but without the VM.
-1. You may want to start the server in the background by running a command like `nohup npm run start &`
-1. You may want to check the git branch you're on is correct and is not HEAD, so you can make commits.
-1. You may want to run `PS1='\u:\W\$ '` to shorten the machine name on the command line.
-1. Then you can run the tests with `npm run e2e:ci:debug`.
-1. Disconnect to kill the build or cancel from the UI with the "Cancel Build" button.
 
 #### Setting up a Docker environment manually
 
-We kept the old instructions in needed to make the travis VM for now. See the Using the docker image section.
+We used this set of instructions we needed to make the travis VM originally.
 
 1. Push the branch you're working on to GitHub (we'll need it later).
 1. In your terminal, run `docker run --name travis-vm -dit travisci/ubuntu-systemd:16.04` to download the Travis CI docker image to mimic the environment. And wait....
@@ -313,7 +282,7 @@ Some tests will most likely fail.  These failures are due to visual differences.
 
 #### Replacing ALL Baseline images at once
 
-1. Copy the file from the actual directory to the baseline directory.
+1. Copy the file from the test/.tmp/actual directory to the test/baseline directory.
 1. Run the `npm run e2e:ci` again to tests.  Ensure that all the tests pass.
 1. Commit and push the files to your branch.
 
