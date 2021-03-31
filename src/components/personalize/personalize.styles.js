@@ -369,10 +369,18 @@ html[dir='rtl'] .scrollable-flex-header.is-personalizable .breadcrumb.truncated:
 .is-personalizable.tab-container.header-tabs:not(.alternate)::before {
   background-image: linear-gradient(to right, ${colors.dark} , ${colorUtils.hexToRgba(colors.dark, 0)}) !important;
 }
+html[dir='rtl'] .is-personalizable .tab-container.header-tabs:not(.alternate)::before,
+html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::before {
+  background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base});
+}
 
 .is-personalizable .tab-container.header-tabs:not(.alternate)::after,
 .is-personalizable.tab-container.header-tabs:not(.alternate)::after {
   background-image: linear-gradient(to right, ${colorUtils.hexToRgba(colors.dark, 0)}, ${colors.dark}) !important;
+}
+html[dir='rtl'] .is-personalizable .tab-container.header-tabs:not(.alternate)::after,
+html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::after {
+  background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.dark, 0)}, ${colors.dark}) !important;
 }
 
 .hero-widget.is-personalizable {

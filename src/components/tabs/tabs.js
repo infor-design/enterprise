@@ -2203,19 +2203,13 @@ Tabs.prototype = {
       return;
     }
 
-    const isRTL = Locale.isRTL();
     const tablistContainerElem = this.tablistContainer[0];
-    const scrollLeft = tablistContainerElem.scrollLeft;
+    const scrollLeft = Math.abs(tablistContainerElem.scrollLeft);
     const scrollWidth = tablistContainerElem.scrollWidth;
     const containerWidth = parseInt(window.getComputedStyle(tablistContainerElem).getPropertyValue('width'), 10);
 
-    if (isRTL) {
-      this.element[0].classList[scrollLeft > 0 ? 'add' : 'remove']('scrolled-left');
-      this.element[0].classList[(scrollWidth - scrollLeft) <= containerWidth ? 'remove' : 'add']('scrolled-right');
-    } else {
-      this.element[0].classList[scrollLeft > 0 ? 'add' : 'remove']('scrolled-right');
-      this.element[0].classList[(scrollWidth - scrollLeft) <= containerWidth ? 'remove' : 'add']('scrolled-left');
-    }
+    this.element[0].classList[scrollLeft > 1 ? 'add' : 'remove']('scrolled-right');
+    this.element[0].classList[(scrollWidth - scrollLeft - 1) <= containerWidth ? 'remove' : 'add']('scrolled-left');
   },
 
   /**
@@ -3807,7 +3801,7 @@ Tabs.prototype = {
     const isNotHeaderTabs = (!this.isHeaderTabs() || this.isHeaderTabs() && this.element[0].classList.contains('alternate'));
     const isVerticalTabs = this.isVerticalTabs();
     const isRTL = Locale.isRTL();
-    const tabMoreWidth = !isVerticalTabs ? this.moreButton.outerWidth(true) : 0;
+    const tabMoreWidth = !isVerticalTabs ? this.moreButton.outerWidth(true) - 8 : 0;
     const parentContainer = this.element;
     const scrollingTablist = this.tablistContainer;
     const accountForPadding = scrollingTablist && this.focusState.parent().is(scrollingTablist);
@@ -3815,7 +3809,6 @@ Tabs.prototype = {
     function adjustForParentContainer(targetRectObj, parentElement, tablistContainer) {
       const parentRect = parentElement[0].getBoundingClientRect();
       let parentPadding;
-      let tablistScrollWidth;
       let tablistScrollLeft;
 
       // Adjust from the top
@@ -3832,24 +3825,16 @@ Tabs.prototype = {
 
       // If inside a scrollable tablist, account for the scroll position
       if (tablistContainer) {
-        tablistScrollLeft = tablistContainer ? tablistContainer[0].scrollLeft : 0;
-        tablistScrollWidth = tablistContainer ? tablistContainer[0].scrollWidth : 0;
+        tablistScrollLeft = tablistContainer ? Math.abs(tablistContainer[0].scrollLeft) : 0;
 
-        if (isRTL && !isVerticalTabs) {
-          // TODO: Improve this calculation because there's something off
-          const tmpLeft = targetRectObj.left;
-          if (isNotHeaderTabs) {
-            tablistScrollLeft = tablistContainer ? tablistContainer[0].scrollLeft : 0;
-            tablistScrollWidth = tablistContainer ? tablistContainer[0].scrollWidth : 0;
-          } else {
-            targetRectObj.left = tablistScrollWidth -
-              (targetRectObj.right + tablistScrollLeft + (tabMoreWidth) + 32);
-            targetRectObj.right = tablistScrollWidth -
-              (tmpLeft + tablistScrollLeft + (tabMoreWidth) + 32);
-          }
-        } else {
-          targetRectObj.left += tablistScrollLeft;
-          targetRectObj.right += tablistScrollLeft;
+        // Account for the container's scrolling
+        targetRectObj.left += tablistScrollLeft;
+        targetRectObj.right += tablistScrollLeft;
+
+        // On RTL, remove the width of the controls on the left-most side of the tab container
+        if (isRTL && !isNotHeaderTabs) {
+          targetRectObj.left -= tabMoreWidth;
+          targetRectObj.right -= tabMoreWidth;
         }
 
         if (accountForPadding) {
