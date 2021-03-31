@@ -84,6 +84,14 @@ describe('Lookup API', () => {
     expect(document.body.querySelector('.lookup')).toBeTruthy();
   });
 
+  fit('Should have accessible text', () => {
+    // Label
+    expect(lookupObj.label.length).toBeTruthy();
+
+    // Trigger button audible span
+    expect(lookupObj.icon[0].querySelector('.audible').textContent.length).toBeTruthy();
+  });
+
   it('Should be able to disable it', () => {
     lookupObj.disable();
 

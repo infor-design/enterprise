@@ -23,17 +23,6 @@ describe('Lookup example tests', () => {
     expect(await lookupEl.isEnabled()).toBe(false);
   });
 
-  fit('should have accessible text', async () => {
-    const lookupLabelEl = await element(by.css('[for="product-lookup"]'));
-    const lookupBtnEl = await element.all(by.css('.trigger > span')).first();
-
-    expect(await lookupLabelEl.getText()).toBe('Products');
-
-    // Read by screen reader as "Products Lookup Trigger Button"
-    debugger;
-    expect(await lookupBtnEl.getText()).toBe('Products Lookup Trigger');
-  });
-
   it('should display when its trigger is clicked', async () => {
     const buttonEl = await element.all(by.className('trigger')).first();
     await buttonEl.click();
