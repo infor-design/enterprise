@@ -178,7 +178,7 @@ Following the process below will safely create baseline images the CI can use du
 
 We created a docker image to help manage baselines. This is located in the [Infor Design System Docker Repos](https://hub.docker.com/r/infords/travis/tags).
 
-1. Download the docker image with `docker run --name travis-debug -dit infords/travis:v2`.
+1. Download the git show-branchdocker image with `docker run --name travis-debug -dit infords/travis:v2`.
 1. Once the image has been downloaded, you can login to the VM/Docker container by running bash through `exec` e.g.
 
 ```sh
