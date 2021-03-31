@@ -1,9 +1,38 @@
+/* eslint-disable compat/compat */
+const { browser, element } = require('protractor');
+
 const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
 const utils = requireHelper('e2e-utils');
 const config = requireHelper('e2e-config');
+const until = protractor.ExpectedConditions;
 requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
+
+/**
+ * general CSS selectors used throughout these tests
+ */
+const S = {
+  gridRow: ({ row } = {}) => {
+    const rSelector = row ? `:nth-child(${row})` : '';
+    return `#datagrid .datagrid-wrapper tbody tr${rSelector}`;
+  },
+  gridColumn: ({ row, column } = {}) => {
+    const cSelector = column ? `:nth-child(${column})` : '';
+    const rSelector = row ? `:nth-child(${row})` : '';
+    return `#datagrid .datagrid-wrapper tbody tr${rSelector} td${cSelector}`;
+  },
+  gridRowCheckbox: ({ row, column = 1, checked }) => {
+    const checkedState = `${!checked ? ':not(' : ''}.is-checked${!checked ? ')' : ''}`;
+
+    return (
+      `#datagrid .datagrid-wrapper tbody tr:nth-child(${row}) ` +
+      `td:nth-child(${column}) ` +
+      `[role="checkbox"]${checkedState}`
+    );
+  },
+  removeRowButton: () => '#remove-btn'
+};
 
 const openPersonalizationDialog = async () => {
   await element.all(by.css('.btn-actions')).first().click();
@@ -1345,23 +1374,47 @@ describe('Datagrid multiselect tests', () => {
     expect(await element.all(by.css('.modal-content input[type="checkbox"]')).count()).toEqual(5);
   });
 
-  it('Should remove rows in order', async () => {
-    await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(1) td:nth-child(2)')).click();
-    await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(2) td:nth-child(2)')).click();
-    await element(by.css('#remove-btn')).click();
+  it('Should remove two rows after selecting them in order', async () => {
+    await browser.wait(until.presenceOf($(S.gridRowCheckbox({ row: 1, checked: false }))));
+    await $(S.gridColumn({ row: 1, column: 2 })).click();
+    await browser.wait(until.presenceOf($(S.gridRowCheckbox({ row: 1, checked: true }))));
 
-    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(1) td:nth-child(2)')).getText()).toEqual('2342203');
-    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(2) td:nth-child(2)')).getText()).toEqual('2445204');
+    await browser.wait(until.presenceOf($(S.gridRowCheckbox({ row: 2, checked: false }))));
+    await $(S.gridColumn({ row: 2, checked: false })).click();
+    await browser.wait(until.presenceOf($(S.gridRowCheckbox({ row: 2, checked: true }))));
+
+    const prevRowCount = await $$(S.gridRow()).count();
+    await browser.wait(until.presenceOf($(S.removeRowButton())));
+    await $(S.removeRowButton()).click();
+
+    await Promise.all([
+      browser.wait(until.stalenessOf($(S.gridRow({ row: prevRowCount - 1 })))),
+      browser.wait(until.stalenessOf($(S.gridRow({ row: prevRowCount }))))
+    ]);
+
+    expect(await $$(S.gridRow()).count()).toEqual(prevRowCount - 2);
+    expect(await $(S.gridColumn({ row: 1, column: 2 })).getText()).toEqual('2342203');
+    expect(await $(S.gridColumn({ row: 2, column: 2 })).getText()).toEqual('2445204');
   });
 
-  it('Should remove rows in reverse order', async () => {
-    await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(2) td:nth-child(2)')).click();
-    await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(1) td:nth-child(2)')).click();
-    await element(by.css('#remove-btn')).click();
-    await browser.driver.sleep(config.sleep);
+  it('Should remove two rows after selecting them in reverse order', async () => {
+    await browser.wait(until.presenceOf($(S.gridRowCheckbox({ row: 2, checked: false }))));
+    await $(S.gridColumn({ row: 2, column: 2 })).click();
+    await browser.wait(until.presenceOf($(S.gridRowCheckbox({ row: 2, checked: true }))));
+    await browser.wait(until.presenceOf($(S.gridRowCheckbox({ row: 1, checked: false }))));
+    await $(S.gridColumn({ row: 1, column: 2 })).click();
+    await browser.wait(until.presenceOf($(S.gridRowCheckbox({ row: 1, checked: true }))));
+    const prevRowCount = await $$(S.gridRow()).count();
+    await browser.wait(until.presenceOf($(S.removeRowButton())));
+    await $(S.removeRowButton()).click();
+    await Promise.all([
+      browser.wait(until.stalenessOf($(S.gridRow({ row: prevRowCount - 1 })))),
+      browser.wait(until.stalenessOf($(S.gridRow({ row: prevRowCount }))))
+    ]);
 
-    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(1) td:nth-child(2)')).getText()).toEqual('2342203');
-    expect(await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(2) td:nth-child(2)')).getText()).toEqual('2445204');
+    expect(await ($$(S.gridRow()).count())).toEqual(prevRowCount - 2);
+    expect(await $(S.gridColumn({ row: 1, column: 2 })).getText()).toEqual('2342203');
+    expect(await $(S.gridColumn({ row: 2, column: 2 })).getText()).toEqual('2445204');
   });
 
   if (utils.isChrome() && utils.isCI()) {
