@@ -1318,14 +1318,27 @@ describe('Datagrid multiselect tests', () => {
   });
 
   it('Should handle removing selected rows ', async () => {
-    expect(await element.all(by.css('.datagrid-row')).count()).toEqual(7);
+    await browser.wait(until.presenceOf($(S.gridRow())));
+    const prevRowCount = await $$(S.gridRow()).count();
 
-    await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(1) td:nth-child(1)')).click();
-    await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(2) td:nth-child(2)')).click();
+    expect(prevRowCount).toEqual(7);
 
-    await element(by.id('remove-btn')).click();
+    await browser.wait(until.presenceOf($(S.gridRowCheckbox({ row: 1, checked: false }))));
+    await $(S.gridColumn({ row: 1, column: 1 })).click();
+    await browser.wait(until.presenceOf($(S.gridRowCheckbox({ row: 1, checked: true }))));
 
-    expect(await element.all(by.css('.datagrid-row')).count()).toEqual(5);
+    await browser.wait(until.presenceOf($(S.gridRowCheckbox({ row: 2, checked: false }))));
+    await $(S.gridColumn({ row: 2, column: 1 })).click();
+    await browser.wait(until.presenceOf($(S.gridRowCheckbox({ row: 2, checked: true }))));
+
+    await $(S.removeRowButton()).click();
+
+    await Promise.all([
+      browser.wait(until.stalenessOf($(S.gridRow({ row: prevRowCount - 1 })))),
+      browser.wait(until.stalenessOf($(S.gridRow({ row: prevRowCount }))))
+    ]);
+
+    expect(await $$(S.gridRow()).count()).toEqual(prevRowCount - 2);
   });
 
   it('Should have aria-checked and not aria-selected', async () => {
