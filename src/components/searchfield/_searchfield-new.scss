@@ -16,6 +16,10 @@
     }
   }
 
+  &.non-collapsible > .icon:not(.close):not(.icon-error) {
+    top: 12px;
+  }
+
   .go-button {
     height: 100%;
   }
