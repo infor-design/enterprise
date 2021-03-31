@@ -12,6 +12,7 @@
 - `[Bar Chart]` Added support for double click to Bar, Bar Grouped, Bar Stacked. ([#3229](https://github.com/infor-design/enterprise/issues/3229))
 - `[Bullet Chart]` Added support for double click. ([#3229](https://github.com/infor-design/enterprise/issues/3229))
 - `[BusyIndicator]` Fixed a bug that caused the busy-indicator to show below the busy indicator container. ([#4953](https://github.com/infor-design/enterprise/issues/4953))
+- `[Color Picker]`Fix issue with text disappearing and improve responsiveness when there isn't space horizontally ([#4930](https://github.com/infor-design/enterprise/issues/4930))
 - `[Column Chart]` Added support for double click to Column, Column Grouped, Column Stacked, Column Stacked-singular and Column Positive Negative. ([#3229](https://github.com/infor-design/enterprise/issues/3229))
 - `[Datagrid]` Fixed a bug where filter dropdown menus did not close when focusing a filter input. ([#4766](https://github.com/infor-design/enterprise/issues/4766))
 - `[Datagrid]` Fixed an error seen clicking items if using a flex toolbar for the datagrid toolbar. ([#4941](https://github.com/infor-design/enterprise/issues/4941))
