@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import * as debug from '../../utils/debug';
+import { Environment as env } from '../../utils/environment';
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
 
@@ -187,8 +188,12 @@ Lookup.prototype = {
         <span class="audible"></span>
         ${$.createIcon(this.settings.icon)}
       </button>`);
+
+      const iconEl = this.icon.children('.icon');
       if (this.settings.icon !== 'icon-search-list') {
-        this.icon.addClass('has-custom-icon');
+        iconEl.addClass('has-custom-icon');
+      } else if (env.rtl) {
+        iconEl.addClass('icon-rtl-rotate');
       }
     }
 

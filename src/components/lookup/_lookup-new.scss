@@ -41,6 +41,23 @@ html.is-firefox {
 }
 
 html[dir='rtl'] {
+  .lookup-wrapper {
+    .trigger {
+      margin-right: -32px;
+      margin-top: 8px;
+
+      .icon {
+        left: auto;
+      }
+    }
+
+    .searchfield-wrapper {
+      > .icon.close {
+        left: 35px;
+      }
+    }
+  }
+
   .field-short,
   .form-layout-compact .field {
     .lookup-wrapper {
@@ -48,14 +65,6 @@ html[dir='rtl'] {
         .icon {
           top: 7px;
         }
-      }
-    }
-  }
-
-  .lookup-wrapper {
-    .searchfield-wrapper {
-      > .icon.close {
-        left: 35px;
       }
     }
   }

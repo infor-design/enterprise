@@ -38,3 +38,14 @@
     }
   }
 }
+
+html[dir='rtl'] {
+  .datepicker {
+    + .trigger,
+    + .tooltip-description + .trigger {
+      margin-left: auto;
+      margin-right: -30px;
+      margin-top: 9px;
+    }
+  }
+}
