@@ -415,11 +415,16 @@ $datagrid-small-row-height: 25px;
       }
     }
 
+    // Editable column which is hovered with isList attribute
     tr.is-hover-row:not(.error):not(.is-rowdisabled):not(.datagrid-virtual-row-bottom):not(.is-selected):not(.is-rowactivated):not(.datagrid-expandable-row) td:not(.is-editing):not(.is-readonly):not(.error) {
       background-color: $datagrid-list-row-hover-color;
 
       .is-readonly {
         background-color: transparent;
+      }
+
+      &.has-btn-actions {
+        background-color: $datagrid-row-hover-color;
       }
     }
 
