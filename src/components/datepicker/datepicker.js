@@ -87,6 +87,7 @@ const COMPONENT_NAME = 'datepicker';
  * @param {function} [settings.onOpenCalendar] Call back for when the calendar is open, allows you to set the date.
  * @param {boolean} [settings.isMonthPicker] Indicates this is a month picker on the month and week view. Has some slight different behavior.
  * @param {string} [settings.attributes] Add extra attributes like id's to the element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
+ * @param {boolean} [settings.tabbable=true] If true, causes the Datepicker's trigger icon to be focusable with the keyboard.
 */
 const DATEPICKER_DEFAULTS = {
   showTime: false,
@@ -139,7 +140,8 @@ const DATEPICKER_DEFAULTS = {
   showToday: true,
   onOpenCalendar: null,
   isMonthPicker: false,
-  attributes: null
+  attributes: null,
+  tabbable: true
 };
 
 function DatePicker(element, settings) {
@@ -190,6 +192,8 @@ DatePicker.prototype = {
     if (this.element.is(':read-only')) {
       this.readonly();
     }
+
+    this.makeTabbable(this.settings.tabbable);
 
     // Enable classes and settings for week selection
     if (this.settings.range.selectWeek) {
@@ -1810,6 +1814,13 @@ DatePicker.prototype = {
    */
   isReadonly() {
     return this.element.prop('readonly');
+  },
+
+  /**
+   * @param {boolean} val if true, sets the trigger button to a focusable tab index
+   */
+  makeTabbable(val) {
+    this.trigger.attr('tabIndex', val ? 0 : -1);
   },
 
   /**

@@ -1,0 +1,50 @@
+<div class="row">
+  <div class="four columns">
+
+    <div class="field">
+      <label for="date-field-normal" class="label">Date Field</label>
+      <input id="date-field-normal" data-automation-id="custom-automation-id" class="datepicker" name="date-field"
+        type="text" data-init="false" />
+    </div>
+
+    <div class="field">
+      <label for="date-field-disabled" class="label">Date Field (Disabled)</label>
+      <input id="date-field-disabled" value="10/31/2014" class="datepicker" disabled="true" name="date-field-disabled"
+        type="text" data-init="false" />
+    </div>
+
+    <div class="field">
+      <label for="date-field-readonly" class="label">Date Field (Readonly)</label>
+      <input id="date-field-readonly" value="10/31/2014" class="datepicker" readonly="true" name="date-field-readonly"
+        type="text" data-init="false" />
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+    $('#date-field-normal')
+      .datepicker({
+        tabbable: false,
+        attributes: [
+          { name: 'id', value: 'custom-id' },
+          { name: 'data-automation-id', value: 'custom-automation-id' }
+        ]
+      })
+      .on('change', function () {
+        console.log('Change Event Fired')
+      });
+
+    $('#date-field-disabled')
+      .datepicker({
+        tabbable: false
+      });
+
+    $('#date-field-readonly')
+      .datepicker({
+        tabbable: false
+      });
+  });
+</script>
