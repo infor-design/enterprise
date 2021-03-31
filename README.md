@@ -4,7 +4,7 @@
 [![npm version](https://badge.fury.io/js/ids-enterprise.svg)](https://badge.fury.io/js/ids-enterprise)
 ![Build Check](https://github.com/infor-design/enterprise/workflows/Build%20Check/badge.svg)
 
-Infor Design System's Enterprise component library is a framework-independent UI library consisting of CSS and JS that provides Infor product development teams, partners, and customers the tools to create user experiences that are approachable, focused, relevant and perceptive.
+Infor Design System's Enterprise component library (also known as Soho Components) is a framework-independent UI library consisting of CSS and JS that provides Infor product development teams, partners, and customers the tools to create user experiences that are approachable, focused, relevant and perceptive.
 
 For guidelines on when and where to use the components see the [design.infor.com](http://design.infor.com).
 
