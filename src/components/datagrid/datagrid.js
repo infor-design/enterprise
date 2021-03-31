@@ -1669,6 +1669,7 @@ Datagrid.prototype = {
     this.element.off('focus.datagrid-filter-focus')
       .on('focus.datagrid-filter-focus', '.datagrid-filter-wrapper input', () => {
         activeMenu?.close();
+        document.dispatchEvent(new Event('click'));
       });
 
     if (this.settings.filterWhenTyping) {
