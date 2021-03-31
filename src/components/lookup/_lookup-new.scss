@@ -5,7 +5,8 @@
   .lookup-wrapper {
     .trigger {
       .icon {
-        top: 7px;
+        right: 0;
+        top: -1px;
       }
     }
   }
@@ -34,7 +35,7 @@ html.is-firefox {
   .lookup-wrapper {
     .trigger {
       .icon {
-        top: 6px;
+        top: 0;
       }
     }
   }
@@ -62,8 +63,12 @@ html[dir='rtl'] {
   .form-layout-compact .field {
     .lookup-wrapper {
       .trigger {
+        margin-right: -23px;
+        margin-top: 5px;
+
         .icon {
-          top: 7px;
+          right: 0;
+          top: -1px;
         }
       }
     }

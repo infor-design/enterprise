@@ -16,8 +16,13 @@
 .field-short,
 .form-layout-compact .field {
   .datepicker {
-    + .trigger {
-      margin-top: 6px;
+    + .trigger,
+    + .tooltip-description + .trigger {
+      margin-top: 4px;
+
+      .icon {
+        top: -3px;
+      }
     }
   }
 }
@@ -32,7 +37,8 @@
   .field-short,
   .form-layout-compact .field {
     .datepicker {
-      + .trigger {
+      + .trigger,
+      + .tooltip-description + .trigger {
         margin-top: 8px;
       }
     }
@@ -46,6 +52,18 @@ html[dir='rtl'] {
       margin-left: auto;
       margin-right: -30px;
       margin-top: 9px;
+    }
+  }
+
+  .field-short,
+  .form-layout-compact .field {
+    .datepicker {
+      + .trigger,
+      + .tooltip-description + .trigger {
+        margin-left: auto;
+        margin-right: -23px;
+        margin-top: 5px;
+      }
     }
   }
 }

@@ -254,10 +254,14 @@
   .lookup-wrapper {
     margin-bottom: 0;
 
-    .trigger {
-      height: 24px;
-      margin-left: -22px;
-      width: 18px;
+    .trigger,
+    + .tooltip-description + .trigger {
+      height: 20px;
+      margin-left: -26px;
+      margin-top: 3px;
+      min-height: 20px;
+      min-width: 20px;
+      width: 20px;
 
       .icon {
         height: 16px;
