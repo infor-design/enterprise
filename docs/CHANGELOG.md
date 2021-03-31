@@ -1,12 +1,13 @@
 # What's New with Enterprise
 
-## v4.39.0
+## v4.50.0
 
-### v4.39.0 Important Notes
+### v4.50.0 Important Notes
 
+- `[General]` We bumped the version from 4.39 (four - thirty nine) to 4.50 (four - fifty) to correspond with the general release of Soho (IDS) Design system 4.5 so the versions sync up better. We could not use 4.5 since it was already in use previously. ([#5012](https://github.com/infor-design/enterprise/issues/5012))
 - `[General]` We Updated development dependencies. Most important things to note are: we now support node 14 for development and this is recommended. ([#4998](https://github.com/infor-design/enterprise/issues/4998))
 
-### v4.39.0 Fixes
+### v4.50.0 Fixes
 
 - `[Breadcrumb]` Changed the colors for disabled breadcrumbs to make them lighter than the enabled ones. ([#4917](https://github.com/infor-design/enterprise/issues/4917))
 - `[Bar Chart]` Added support for double click to Bar, Bar Grouped, Bar Stacked. ([#3229](https://github.com/infor-design/enterprise/issues/3229))
