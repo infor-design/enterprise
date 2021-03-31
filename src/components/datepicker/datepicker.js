@@ -295,9 +295,16 @@ DatePicker.prototype = {
    */
   addAria() {
     this.label = $(`label[for="${this.element.attr('id')}"]`);
-    this.label.append(`<span class="audible">${Locale.translate('PressDown', { locale: this.locale.name, language: this.language })}</span>`);
+    const pressDownMsg = `. ${Locale.translate('PressDown', { locale: this.locale.name, language: this.language })}`;
+    const span = this.label.children('span.audible');
 
-    this.trigger.children('.audible').text(Locale.translate('DatePickerTriggerButton').replace('{0}', this.label.text()));
+    if (span.length) {
+      span.text(pressDownMsg);
+    } else {
+      this.label.append(`<span class="audible">${pressDownMsg}</span>`);
+    }
+
+    this.trigger.children('.audible').text(Locale.translate('DatePickerTriggerButton'));
   },
 
   /**
