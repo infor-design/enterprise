@@ -84,7 +84,7 @@ describe('Lookup API', () => {
     expect(document.body.querySelector('.lookup')).toBeTruthy();
   });
 
-  fit('Should have accessible text', () => {
+  it('Should have accessible text', () => {
     // Label
     expect(lookupObj.label.length).toBeTruthy();
 

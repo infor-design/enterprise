@@ -263,7 +263,7 @@ Lookup.prototype = {
    */
   addAria() {
     this.label = this.isInlineLabel ? this.inlineLabelText : $(`label[for="${this.element.attr('id')}"]`);
-    const pressDownMsg = `. ${Locale.translate('PressDown')}`;
+    const pressDownMsg = `${Locale.translate('Lookup')}. ${Locale.translate('PressDown')}`;
     const span = this.label.children('span.audible');
 
     if (span.length) {

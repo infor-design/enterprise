@@ -82,7 +82,7 @@ describe('DatePicker API', () => {
     expect(datepickerAPI.isDisabled()).toBeFalsy();
   });
 
-  fit('Should have accessible text', () => {
+  it('Should have accessible text', () => {
     // Label
     expect(datepickerAPI.label.length).toBeTruthy();
 

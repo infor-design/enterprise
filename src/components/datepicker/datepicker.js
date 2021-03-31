@@ -294,6 +294,16 @@ DatePicker.prototype = {
    * @returns {void}
    */
   addAria() {
+    this.element.attr({
+      role: 'combobox',
+      'aria-expanded': 'false',
+    });
+
+    this.trigger.attr({
+      role: 'button',
+      'aria-haspopup': 'dialog'
+    });
+
     this.label = $(`label[for="${this.element.attr('id')}"]`);
     const pressDownMsg = `. ${Locale.translate('PressDown', { locale: this.locale.name, language: this.language })}`;
     const span = this.label.children('span.audible');

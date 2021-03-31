@@ -426,6 +426,7 @@ Soho.Locale.addCulture('en-US', {
     Theme: { id: 'Theme', value: 'Theme', comment: 'Refers to an application Theme' },
     Time: { id: 'Time', value: 'Time', comment: 'The time part of a date.' },
     TimepickerPopup: { id: 'TimepickerPopup', value: 'Timepicker Popup', comment: 'text read out by assistive technology that explains that the user is interacting with a Timepicker popup.' },
+    TimepickerTriggerButton: { id: 'TimepickerTriggerButton', value: 'Time Picker Trigger Button.  Press Enter to select.', comment: 'Used in accessible labels to describe a date picker field\'s trigger button to assistive technology' },
     Timer: { id: 'Timer', value: 'Timer', comment: 'Timer tooltip' },
     To: { id: 'To', value: 'To', comment: 'End of a range (of dates)' },
     Today: { id: 'Today', value: 'Today', comment: 'refering to today on a calendar' },

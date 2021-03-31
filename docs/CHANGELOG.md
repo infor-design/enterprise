@@ -20,6 +20,7 @@
 - `[Datagrid]` Only show row status when dirty indicator and row status both exist to address conflicting visual issue. ([#4918](https://github.com/infor-design/enterprise/issues/4918))
 - `[Datagrid]` Fixed an issue where selecting a row added background to row-status. ([#4918](https://github.com/infor-design/enterprise/issues/4918))
 - `[Datagrid]` Fixed an issue where the filter menu would not repopen in some cases. ([#4995](https://github.com/infor-design/enterprise/issues/4995))
+- `[Datepicker]` Added a setting that replaces the trigger icon with an actual button for better accessibility, enabled by default. ([#4820](https://github.com/infor-design/enterprise/issues/4820))
 - `[Datepicker]` Updated validation.js to check if date picker contains a time value ([#4888](https://github.com/infor-design/enterprise/issues/4888))
 - `[Datepicker]` Fixed a UI issue where the apply and cancel buttons were unable to see on small screens. ([#4950](https://github.com/infor-design/enterprise/issues/4950))
 - `[Editor]`Adjusted the editor to not treat separators after headers as leading and removing them. ([#4751](https://github.com/infor-design/enterprise/issues/4751))
@@ -31,6 +32,7 @@
 - `[Header]` Removed breadcrumb coloring from current class, which was causing the wrong kind of emphasis for breadcrumbs in headers. ([#5003](https://github.com/infor-design/enterprise/issues/5003))
 - `[Input]` Changed the disabled search field color for Safari to match that of other browsers. ([#4611](https://github.com/infor-design/enterprise/issues/4611))
 - `[Lookup]` Isolated the scss/css .close.icon class inside of .modal-content and removed any extra top property to fix the alignment issue.([#4933](https://github.com/infor-design/enterprise/issues/4933))
+- `[Lookup]` Added a setting that replaces the trigger icon with an actual button for better accessibility, enabled by default. ([#4820](https://github.com/infor-design/enterprise/issues/4820))
 - `[Line Chart]` Added support for double click to Area, Bubble, Line and Scatterplot. ([#3229](https://github.com/infor-design/enterprise/issues/3229))
 - `[Message]` Added automation id's to the message's modal main area dialog as well with `modal` prefix. ([#4871](https://github.com/infor-design/enterprise/issues/4871))
 - `[Modal]` Fixed a bug where fullsize responsive setting doesn't work on android phones in landscape mode. ([#4451](https://github.com/infor-design/enterprise/issues/4451))
@@ -43,6 +45,7 @@
 - `[Tabs (Horizontal/Header)]` Fixed bug with the placement of the focus state in RTL mode, and other minor visual improvements. ([#4877](https://github.com/infor-design/enterprise/issues/4877))
 - `[Tabs Module]` Fixed a bug where clear button was missing when clearable setting is activated in tabs module searchfield. ([#4898](https://github.com/infor-design/enterprise/issues/4898))
 - `[Textarea]` Fixed a bug where the textarea options like autogrow, autoGrowMaxHeight doesn't work after the initialization inside of the accordion. ([#4977](https://github.com/infor-design/enterprise/issues/4977))
+- `[Timepicker]` Added a setting that replaces the trigger icon with an actual button for better accessibility, enabled by default. ([#4820](https://github.com/infor-design/enterprise/issues/4820))
 - `[Toast]` Fixed a bug where the first toast in the page is not announced to screen readers. ([#4519](https://github.com/infor-design/enterprise/issues/4519))
 - `[Tooltip]` Fixed a bug in tooltip that prevented linking id-based tooltip content. ([#4827](https://github.com/infor-design/enterprise/issues/4827))
 
