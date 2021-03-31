@@ -714,7 +714,7 @@
 
 // On Safari (specifically targeting iPad/iPhone) make the anchors pass through
 // to enable easier tapping of dismissible icons (See infor-design/enterprise#4763)
-.is-safari {
+.ios {
   .tab {
     > a {
       pointer-events: none;
@@ -744,13 +744,15 @@ html[dir='rtl'] {
     left: 0;
   }
 
-  .tab-container.horizontal,
-  .tab-container.header-tabs {
+  .tab-container.horizontal {
     &::before {
       left: auto;
       right: 0;
     }
+  }
 
+  .tab-container.horizontal,
+  .tab-container.header-tabs {
     &::after {
       left: 51px;
       right: auto;
@@ -802,6 +804,22 @@ html[dir='rtl'] {
       &::before {
         left: auto;
         right: 0;
+      }
+    }
+
+    .tab-list-container {
+      margin-right: 1px;
+
+      .tab {
+        &.dismissible {
+          padding-left: 10px;
+          padding-right: auto;
+        }
+
+        &:not(.last-child) {
+          margin-left: 10px;
+          margin-right: auto;
+        }
       }
     }
 
