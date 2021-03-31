@@ -216,6 +216,10 @@ Lookup.prototype = {
       this.disable();
     }
 
+    if (!this.settings.editable || this.element.is('[readonly]')) {
+      this.readonly();
+    }
+
     this.makeTabbable(this.settings.tabbable);
 
     if (this.settings.clearable) {
@@ -230,10 +234,6 @@ Lookup.prototype = {
       lookup.on('cleared', (e) => {
         this.settings.clear(e, this, this.settings.clearArguments);
       });
-    }
-
-    if (!this.settings.editable) {
-      this.element.attr('readonly', 'true').addClass('is-not-editable');
     }
 
     // Fix field options in case lookup is initialized after
@@ -982,7 +982,7 @@ Lookup.prototype = {
    * @returns {void}
    */
   enable() {
-    this.element.prop('disabled', false).prop('readonly', false);
+    this.element.prop('disabled', false).prop('readonly', false).removeClass('is-not-editable');
     this.element.parent().removeClass('is-disabled');
     this.icon.prop('disabled', false);
   },
@@ -1002,8 +1002,9 @@ Lookup.prototype = {
    * @returns {void}
    */
   readonly() {
-    this.element.prop('readonly', true);
-    this.icon.prop('disabled', false);
+    debugger;
+    this.element.prop('readonly', true).addClass('is-not-editable');
+    this.icon.prop('disabled', true);
   },
 
   /**

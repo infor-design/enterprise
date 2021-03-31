@@ -189,7 +189,7 @@ DatePicker.prototype = {
       this.disable();
     }
 
-    if (this.element.is(':read-only')) {
+    if (this.element.is('[readonly]')) {
       this.readonly();
     }
 

@@ -82,6 +82,14 @@ describe('DatePicker API', () => {
     expect(datepickerAPI.isDisabled()).toBeFalsy();
   });
 
+  fit('Should have accessible text', () => {
+    // Label
+    expect(datepickerAPI.label.length).toBeTruthy();
+
+    // Trigger button audible span
+    expect(datepickerAPI.trigger[0].querySelector('.audible').textContent.length).toBeTruthy();
+  });
+
   it('Should render datepicker readonly', () => {
     datepickerAPI.readonly();
 
