@@ -2,17 +2,21 @@
 //================================================== //
 
 .datepicker {
-  + .icon,
-  + .tooltip-description + .icon {
-    margin-left: -28px;
-    margin-top: 11px;
+  + .trigger,
+  + .tooltip-description + .trigger {
+    margin-left: -32px;
+    margin-top: 7px;
+
+    .icon {
+      top: -2px;
+    }
   }
 }
 
 .field-short,
 .form-layout-compact .field {
   .datepicker {
-    + .icon {
+    + .trigger {
       margin-top: 6px;
     }
   }
@@ -28,7 +32,7 @@
   .field-short,
   .form-layout-compact .field {
     .datepicker {
-      + .icon {
+      + .trigger {
         margin-top: 8px;
       }
     }

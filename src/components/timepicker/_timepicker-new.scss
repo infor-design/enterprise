@@ -2,19 +2,18 @@
 //================================================== //
 
 .timepicker {
-  + .icon,
-  + .tooltip-description + .icon {
-    margin-left: -29px;
-    margin-top: 10px;
+  + .trigger,
+  + .tooltip-description + .trigger {
+    margin-left: -32px;
+    margin-top: 7px;
   }
 }
 
 .field-short {
   .timepicker {
-    + .icon,
-    + .tooltip-description + .icon {
+    + .trigger,
+    + .tooltip-description + .trigger {
       margin-left: -23px;
-      margin-top: 7px;
     }
   }
 }
@@ -27,7 +26,7 @@
 html.is-firefox {
   .timepicker {
     + .icon,
-    + .tooltip-description + .icon {
+    + .tooltip-description + .trigger {
       margin-top: 8px;
     }
   }
@@ -35,7 +34,7 @@ html.is-firefox {
   .form-layout-compact {
     .timepicker {
       + .icon,
-      + .tooltip-description + .icon {
+      + .tooltip-description + .trigger {
         margin-top: 9px !important;
       }
     }
@@ -44,8 +43,8 @@ html.is-firefox {
 
 html[dir='rtl'] {
   .timepicker {
-    + .icon,
-    + .tooltip-description + .icon {
+    + .trigger,
+    + .tooltip-description + .trigger {
       margin-left: auto;
       margin-right: -29px;
     }
@@ -54,8 +53,8 @@ html[dir='rtl'] {
   .field-short,
   .form-layout-compact .field {
     .timepicker {
-      + .icon,
-      + .tooltip-description + .icon {
+      + .trigger,
+      + .tooltip-description + .trigger {
         margin-right: -22px;
         margin-top: 7px;
       }
@@ -66,8 +65,8 @@ html[dir='rtl'] {
     .field-short,
     .form-layout-compact .field {
       .timepicker {
-        + .icon,
-        + .tooltip-description + .icon {
+        + .trigger,
+        + .tooltip-description + .trigger {
           margin-top: 8px;
         }
       }
