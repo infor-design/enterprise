@@ -1,6 +1,8 @@
 // Color Picker
 //================================================== //
 
+$trigger-size: 30px;
+
 @import '../icons/icons';
 @import '../input/input';
 @import '../popupmenu/popupmenu';
@@ -27,8 +29,17 @@
   }
 }
 
+.colorpicker-input-xs,
+.colorpicker-input-sm,
+.colorpicker-input-md,
+.colorpicker-input-mm,
+.colorpicker-input-lg {
+  flex-shrink: 0;
+}
+
 .colorpicker-input-xs {
   width: 18px !important;
+
 }
 
 .colorpicker-input-sm {
@@ -51,10 +62,18 @@
   background-color: $input-color-initial-background;
   border: 1px solid $input-color-initial-border;
   border-radius: 2px;
-  display: inline-block;
+  display: inline-flex;
   height: $input-size-regular-height;
+  max-width: 100%;
   overflow: hidden;
+  padding-right: $trigger-size;
+  position: relative;
   width: 150px;
+
+  .trigger {
+    position: absolute;
+    right: 0;
+  }
 
   &.is-focused {
     border-color: $input-color-focus-border;
@@ -67,6 +86,12 @@
 
   &.error {
     border-color: $error-color;
+  }
+
+  &:not(.is-disabled) {
+    > .swatch {
+      cursor: pointer;
+    }
   }
 
   &.is-disabled {
@@ -165,6 +190,7 @@
     display: inline-block;
     height: $input-size-regular-height - 0.4;
     left: 1px;
+    min-width: $input-size-regular-height - 0.4;
     position: relative;
     top: 1px;
     vertical-align: top;
@@ -323,6 +349,7 @@
     .trigger {
       height: $input-size-compact-height - 0.4;
       margin-left: -($input-size-compact-height - 0.4);
+      right: 0;
       width: $input-size-compact-height - 0.4;
 
       .icon:not(.icon-error) {
