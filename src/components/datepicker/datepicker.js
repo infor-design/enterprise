@@ -164,23 +164,31 @@ DatePicker.prototype = {
    * @returns {void}
    */
   build() {
-    // Add "is-disabled" css class to closest ".field" if element is disabled
-    if (this.element.is(':disabled')) {
-      this.element.closest('.field').addClass('is-disabled');
-    }
-
     this.element.attr('autocomplete', 'off');
 
     // Append a trigger button
-    if (this.element.next().is('svg')) {
-      this.trigger = this.element.next();
+    const next = this.element.next();
+    if (next.is('button.trigger')) {
+      this.trigger = next;
     } else {
-      this.trigger = $.createIconElement('calendar').insertAfter(this.element);
+      this.trigger = $(`<button class="btn-icon trigger">
+        <span class="audible"></span>
+        ${$.createIcon('calendar')}
+      </button>`).insertAfter(this.element);
     }
 
     // Hide icon if datepicker input is hidden
     if (this.element.hasClass('hidden')) {
       this.trigger.addClass('hidden');
+    }
+
+    // Add "is-disabled" css class to closest ".field" if element is disabled
+    if (this.element.is(':disabled')) {
+      this.disable();
+    }
+
+    if (this.element.is(':read-only')) {
+      this.readonly();
     }
 
     // Enable classes and settings for week selection
@@ -284,6 +292,8 @@ DatePicker.prototype = {
   addAria() {
     this.label = $(`label[for="${this.element.attr('id')}"]`);
     this.label.append(`<span class="audible">${Locale.translate('PressDown', { locale: this.locale.name, language: this.language })}</span>`);
+
+    this.trigger.children('.audible').text(Locale.translate('DatePickerTriggerButton').replace('{0}', this.label.text()));
   },
 
   /**
@@ -1764,6 +1774,7 @@ DatePicker.prototype = {
    */
   enable() {
     this.element.removeAttr('disabled readonly').closest('.field').removeClass('is-disabled');
+    this.trigger.prop('disabled', false);
   },
 
   /**
@@ -1771,8 +1782,8 @@ DatePicker.prototype = {
    * @returns {void}
    */
   disable() {
-    this.enable();
-    this.element.attr('disabled', 'disabled').closest('.field').addClass('is-disabled');
+    this.element.removeAttr('readonly').attr('disabled', 'disabled').closest('.field').addClass('is-disabled');
+    this.trigger.prop('disabled', true);
   },
 
   /**
@@ -1790,6 +1801,7 @@ DatePicker.prototype = {
   readonly() {
     this.enable();
     this.element.attr('readonly', 'readonly');
+    this.trigger.prop('disabled', true);
   },
 
   /**

@@ -925,11 +925,8 @@ Place.prototype = {
     element.removeClass('top right bottom left').addClass(dir);
 
     // Custom target for some scenarios
-    if (target.is('.colorpicker')) {
+    if (target.is('.colorpicker, .datepicker, .timepicker')) {
       target = target.next('.trigger');
-    }
-    if (target.is('.datepicker, .timepicker')) {
-      target = target.next('.icon');
     }
     if (target.is('.btn-split-menu, .btn-menu, .btn-actions, .btn-filter, .tab, .tab-more')) {
       target = target.find('.icon').last();
