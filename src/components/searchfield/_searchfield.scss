@@ -41,8 +41,7 @@
 
     &.close {
       outline: none;
-      right: 5px;
-      top: 10px;
+      right: 8px;
     }
 
     &.icon-error {
@@ -95,6 +94,10 @@
     white-space: nowrap;
     width: 100%;
 
+    > button.close {
+      top: 5px;
+    }
+
     > .searchfield {
       background-color: $searchfield-context-bg;
       border-bottom: 1px solid $searchfield-context-border-color;
@@ -125,7 +128,8 @@
       }
 
       &.close {
-        right: 6px;
+        padding: 1px 3px;
+        right: 8px;
       }
     }
 
@@ -320,8 +324,12 @@
     }
 
     button.close {
-      right: 35px;
-      top: 4px;
+      align-items: center;
+      display: flex;
+      height: 100%;
+      justify-content: center;
+      position: absolute;
+      top: 0;
 
       @media (min-width: $breakpoint-phone-to-tablet) {
         right: 45px;
