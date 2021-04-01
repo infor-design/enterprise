@@ -323,7 +323,7 @@
       }
     }
 
-    button.close {
+    button.close:not(.is-empty) {
       align-items: center;
       display: flex;
       height: 100%;
@@ -337,7 +337,7 @@
 
       svg.close {
         left: 0;
-        top: 0 !important;
+        top: 8px !important;
       }
     }
   }
