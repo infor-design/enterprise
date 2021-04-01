@@ -8631,10 +8631,18 @@ Datagrid.prototype = {
       // Enter or Space
       if (key === 13 || key === 32) {
         triggerEl = (self.settings.selectable === 'multiple' && index === 0) ? $('.datagrid-checkbox', th) : th;
-        triggerEl.trigger('click.datagrid').focus();
-        const selectionCheckbox = (triggerEl[0].dataset.columnId === 'selectionCheckbox' || triggerEl.prevObject[0].dataset.columnId === 'selectionCheckbox');
+        if ($(e.target).is('.btn-menu.btn-filter')) {
+          triggerEl.trigger('click.datagrid');
+          return;
+        }
+        const isSelCheckbox = el => el && el[0]?.dataset.columnId === 'selectionCheckbox';
+        const selectionCheckbox = isSelCheckbox(triggerEl) || isSelCheckbox(triggerEl.prevObject);
 
-        if ((self.settings.selectable === 'multiple' || this.settings.selectable === 'mixed') && selectionCheckbox) {
+        if ($(e.target).is('th.is-sortable')) {
+          self.setSortColumn($(this).attr('data-column-id'));
+        }
+
+        if ((self.settings.selectable === 'multiple' || self.settings.selectable === 'mixed') && selectionCheckbox) {
           checkbox
             .addClass('is-checked')
             .removeClass('is-partial');
