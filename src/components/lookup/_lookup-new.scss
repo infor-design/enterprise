@@ -1,20 +1,13 @@
 // Uplift Lookup
 //================================================== //
-.field-short,
-.form-layout-compact .field {
-  .lookup-wrapper {
-    .trigger {
-      .icon {
-        right: 0;
-        top: -1px;
-      }
-    }
-  }
-}
-
 .lookup-wrapper {
   .trigger {
     margin-top: 7px;
+
+    .icon {
+      right: 0;
+      top: 0;
+    }
   }
 
   .searchfield-wrapper {
@@ -28,6 +21,20 @@
     height: 16px;
     right: -8px;
     width: 16px;
+  }
+}
+
+.field-short,
+.form-layout-compact .field {
+  .lookup-wrapper {
+    .trigger {
+      margin-top: 4px;
+
+      .icon {
+        right: 0;
+        top: -2px;
+      }
+    }
   }
 }
 
@@ -63,12 +70,12 @@ html[dir='rtl'] {
   .form-layout-compact .field {
     .lookup-wrapper {
       .trigger {
-        margin-right: -23px;
-        margin-top: 5px;
+        margin-right: -25px;
+        margin-top: 4px;
 
         .icon {
           right: 0;
-          top: -1px;
+          top: -2px;
         }
       }
     }
