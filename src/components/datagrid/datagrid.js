@@ -136,6 +136,8 @@ const COMPONENT_NAME = 'datagrid';
  * icon: 'icon-empty-no-data', button: {text: 'Button Text', click: <function>}, height: null|'small'} set this to null for no message
  * or will default to 'No Data Found with an icon.'
  * height: The empty message container height. If set to 'small' will show only title and all other will not be render (like: icon, button, info)
+ * @param {boolean} [settings.allowChildExpandOnMatchOnly=false] If set to true, it will only expand children from matching node. If false will show children for all matching nodes.
+ * Note: Only effective if set allowChildExpandOnMatch: true
  * @param {boolean} [settings.allowChildExpandOnMatch=false] Used with filter
  * if true:
  * and if only parent has a match then add all children nodes too
@@ -235,6 +237,7 @@ const DATAGRID_DEFAULTS = {
   onKeyDown: null,
   emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data', height: null },
   searchExpandableRow: true,
+  allowChildExpandOnMatchOnly: false,
   allowChildExpandOnMatch: false,
   attributes: null
 };
@@ -2317,14 +2320,32 @@ Datagrid.prototype = {
             const nodeData = dataset[i];
             let isChildFiltered = true;
             if (nodeData.children) {
-              isChildFiltered = checkNodes(nodeData.children);
-              if (isChildFiltered) {
-                nodeData._isFilteredOut = !checkRow(nodeData);
-                if (!nodeData._isFilteredOut) {
+              if (this.settings.allowChildExpandOnMatch && this.settings.allowChildExpandOnMatchOnly) {
+                const isParentMatch = checkRow(nodeData);
+                if (!isParentMatch) {
+                  isChildFiltered = checkNodes(nodeData.children);
+                }
+                if (isParentMatch) {
+                  nodeData._isFilteredOut = false;
+                  isFiltered = false;
+                } else if (isChildFiltered) {
+                  nodeData._isFilteredOut = !checkRow(nodeData);
+                  if (!nodeData._isFilteredOut) {
+                    isFiltered = false;
+                  }
+                } else {
                   isFiltered = false;
                 }
               } else {
-                isFiltered = false;
+                isChildFiltered = checkNodes(nodeData.children);
+                if (isChildFiltered) {
+                  nodeData._isFilteredOut = !checkRow(nodeData);
+                  if (!nodeData._isFilteredOut) {
+                    isFiltered = false;
+                  }
+                } else {
+                  isFiltered = false;
+                }
               }
             } else {
               nodeData._isFilteredOut = !checkRow(nodeData);
@@ -2347,9 +2368,8 @@ Datagrid.prototype = {
           return isEmpty;
         };
 
-        if (isFilterEmpty()) {
-          removeFilteredOut(this.settings.dataset);
-        } else {
+        removeFilteredOut(this.settings.dataset);
+        if (!isFilterEmpty()) {
           checkNodes(this.settings.dataset);
         }
       } else if (this.settings.groupable) {
@@ -2449,7 +2469,7 @@ Datagrid.prototype = {
 
           if (childrenLen) {
             if (!node._isFilteredOut) {
-              if (s.allowChildExpandOnMatch) {
+              if (s.allowChildExpandOnMatch && !s.allowChildExpandOnMatchOnly) {
                 for (let i2 = 0; i2 < childrenLen; i2++) {
                   children[i2]._isFilteredOut = false;
                 }
@@ -6152,6 +6172,7 @@ Datagrid.prototype = {
         self.render(null, pagingInfo);
         self.afterPaging(pagingInfo);
       }).on(`pagesizechange.${COMPONENT_NAME}`, (e, pagingInfo) => {
+        pagingInfo.preserveSelected = true;
         self.render(null, pagingInfo);
         self.afterPaging(pagingInfo);
       });
