@@ -462,7 +462,7 @@ describe('DatePicker API', () => {
     datepickerEl.classList.add('hidden');
     datepickerAPI = new DatePicker(datepickerEl);
 
-    expect($(datepickerEl).siblings('svg.icon').css('visibility')).toEqual('hidden');
+    expect($(datepickerEl).siblings('button.trigger').css('visibility')).toEqual('hidden');
   });
 
   it('Should be able to render a different locale', (done) => {
