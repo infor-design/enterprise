@@ -1,19 +1,23 @@
 
 <div class="row">
   <div class="twelve columns">
-    <h3>Api setting: <strong>allowChildExpandOnMatch</strong></h3>
-    <p>
-      if true
+    <h3>API setting: <strong><pre style="display:inline;"">allowChildExpandOnMatch</pre></strong></h3>
+    <p style="display:inline">
+      If&nbsp;<pre style="display:inline">true</pre>
       <ul>
-        <li>&mdash; and if only parent got match then add all children nodes too</li>
-        <li>&mdash; or if one or more child node got match then add parent node and all the children nodes</li>
+        <li>&mdash; AND if only parents match, then add all child nodes as well,</li>
+        <li>&mdash; OR if one or more children nodes match, then add the parent node and all of it's children nodes.</li>
+        <br>
+        <li>&mdash; <strong><pre style="display:inline"'>allowChildExpandOnMatchOnly</pre></strong>: If <pre style="display:inline">true</pre>, it will only expand descendent children from the matching node(s). If false, it will show children for all matching nodes.<br/>
+        **<em>This (allowChildExpandOnMatchOnly) setting is only effective if <pre style="display: inline">allowChildExpandOnMatch</pre> is set to <pre style="display:inline">true</pre></em>**</li>
       </ul>
+      <br />
     </p>
-    <p>
-      if false
+    <p style="display:inline">
+      If&nbsp;<pre style="display:inline">false</pre>
       <ul>
-        <li>&mdash; and if only parent got match then make expand/collapse button to be collapsed, disabled and do not add any children nodes</li>
-        <li>&mdash; or if one or more child node got match then add parent node and only matching children nodes</li>
+        <li>&mdash; AND if only parent got match then make expand/collapse button to be collapsed, disabled and do not add any children nodes</li>
+        <li>&mdash; OR if one or more child node got match then add parent node and only matching children nodes.</li>
       </ul>
     </p>
     <br><br>
@@ -24,6 +28,10 @@
     <div class="switch">
       <input type="checkbox" class="switch" id="toggle" name="toggle" />
       <label for="toggle">allowChildExpandOnMatch: <strong class="toggle-val"></strong></label>
+    </div>
+    <div class="field">
+      <input type="checkbox" class="checkbox" id="toggle-match-only" checked="true"/>
+      <label for="toggle-match-only" class="checkbox-label" >allowChildExpandOnMatch<b>Only</b></label>
     </div>
   </div>
 </div>
@@ -39,13 +47,17 @@
     // Set vars
     var elem = $('#datagrid');
     var toggleSwitch = $('#toggle');
+    var toggleMatchOnly = $('#toggle-match-only');
     var toggleSwitchVal = $('.toggle-val');
     var allowChildExpandOnMatch = true;
+    var allowChildExpandOnMatchOnly = true;
     var columns = [];
 
     // Make switch default to checked/unchecked
     toggleSwitch.prop('checked', allowChildExpandOnMatch);
+    toggleMatchOnly.prop('checked', allowChildExpandOnMatchOnly);
     toggleSwitchVal.text(allowChildExpandOnMatch);
+    toggleMatchOnly.prop('disabled', !allowChildExpandOnMatch);
 
     // Define columns for the grid.
     columns.push({ id: 'taskName', name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Formatters.Tree, filterType: 'text', width: 500});
@@ -64,6 +76,7 @@
         dataset: data,
         treeGrid: true,
         filterable: true,
+        allowChildExpandOnMatchOnly: allowChildExpandOnMatchOnly,
         allowChildExpandOnMatch: allowChildExpandOnMatch,
         toolbar: {title: 'Tasks (Hierarchical)', results: true, personalize: true}
       });
@@ -75,9 +88,18 @@
       toggleSwitch.on('change', function() {
         allowChildExpandOnMatch = this.checked
         toggleSwitchVal.text(allowChildExpandOnMatch);
+        toggleMatchOnly.prop('disabled', !allowChildExpandOnMatch);
 
         if (datagridApi) {
           datagridApi.settings.allowChildExpandOnMatch = allowChildExpandOnMatch;
+          datagridApi.applyFilter();
+        }
+      });
+
+      // Bind toggle match only checkbox on change
+      toggleMatchOnly.on('change', function() {
+        if (datagridApi) {
+          datagridApi.settings.allowChildExpandOnMatchOnly = this.checked;
           datagridApi.applyFilter();
         }
       });

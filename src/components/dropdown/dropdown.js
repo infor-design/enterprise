@@ -1934,6 +1934,7 @@ Dropdown.prototype = {
       this.list.appendTo(targetContainer);
     }
     this.list.show();
+    this.list.attr('data-element-id', this.element.attr('id'));
 
     // Persist the "short" input field
     if (this.isShortField) {
@@ -2578,7 +2579,9 @@ Dropdown.prototype = {
     * @property {object} ui - The dialog object
     */
     this.element.trigger('listclosed', action);
-    this.activate();
+    if (action !== 'click') {
+      this.activate();
+    }
     this.toggleTooltip();
     this.list = null;
     this.searchInput = null;
