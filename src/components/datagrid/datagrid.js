@@ -1672,6 +1672,11 @@ Datagrid.prototype = {
     this.element.off('focus.datagrid-filter-focus')
       .on('focus.datagrid-filter-focus', '.datagrid-filter-wrapper input', () => {
         activeMenu?.close();
+        const dropdownId = $('#dropdown-list').attr('data-element-id');
+        const dropdown = $(`#${dropdownId}`).data('dropdown');
+        if (dropdown && dropdown.isOpen()) {
+          dropdown.closeList('click');
+        }
       });
 
     if (this.settings.filterWhenTyping) {
