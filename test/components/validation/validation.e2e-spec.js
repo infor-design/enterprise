@@ -674,7 +674,7 @@ describe('Validation message types', () => {
     await element(by.id('clearAllMessages')).click();
     let dateField = await element(by.id('date-field'));
     let dateFieldParent = await dateField.element(by.xpath('..'));
-    let dateFieldIcon = await element(by.css('#date-field + .icon'));
+    let dateFieldIcon = await element(by.css('#date-field + .trigger'));
 
     expect(await dateField.getAttribute('class')).not.toMatch(exprAlerts);
     expect(await dateFieldParent.all(by.css('.error-message')).count()).toEqual(0);
@@ -684,7 +684,7 @@ describe('Validation message types', () => {
     await element(by.id('addMessage')).click();
     dateField = await element(by.id('date-field'));
     dateFieldParent = await dateField.element(by.xpath('..'));
-    dateFieldIcon = await element(by.css('#date-field + .icon'));
+    dateFieldIcon = await element(by.css('#date-field + .trigger'));
 
     expect(await dateField.getAttribute('class')).toContain('error');
     expect(await dateFieldParent.all(by.css('.error-message')).count()).toEqual(1);
@@ -696,7 +696,7 @@ describe('Validation message types', () => {
     await element(by.id('clearAllMessages')).click();
     let dateField = await element(by.id('date-field'));
     let dateFieldParent = await dateField.element(by.xpath('..'));
-    let dateFieldIcon = await element(by.css('#date-field + .icon'));
+    let dateFieldIcon = await element(by.css('#date-field + .trigger'));
 
     expect(await dateField.getAttribute('class')).not.toMatch(exprAlerts);
     expect(await dateFieldParent.all(by.css('.alert-message')).count()).toEqual(0);
@@ -706,7 +706,7 @@ describe('Validation message types', () => {
     await element(by.id('addMessage')).click();
     dateField = await element(by.id('date-field'));
     dateFieldParent = await dateField.element(by.xpath('..'));
-    dateFieldIcon = await element(by.css('#date-field + .icon'));
+    dateFieldIcon = await element(by.css('#date-field + .trigger'));
 
     expect(await dateField.getAttribute('class')).toContain('alert');
     expect(await dateFieldParent.all(by.css('.alert-message')).count()).toEqual(1);
@@ -718,7 +718,7 @@ describe('Validation message types', () => {
     await element(by.id('clearAllMessages')).click();
     let dateField = await element(by.id('date-field'));
     let dateFieldParent = await dateField.element(by.xpath('..'));
-    let dateFieldIcon = await element(by.css('#date-field + .icon'));
+    let dateFieldIcon = await element(by.css('#date-field + .trigger'));
 
     expect(await dateField.getAttribute('class')).not.toMatch(exprAlerts);
     expect(await dateFieldParent.all(by.css('.success-message')).count()).toEqual(0);
@@ -728,7 +728,7 @@ describe('Validation message types', () => {
     await element(by.id('addMessage')).click();
     dateField = await element(by.id('date-field'));
     dateFieldParent = await dateField.element(by.xpath('..'));
-    dateFieldIcon = await element(by.css('#date-field + .icon'));
+    dateFieldIcon = await element(by.css('#date-field + .trigger'));
 
     expect(await dateField.getAttribute('class')).toContain('success');
     expect(await dateFieldParent.all(by.css('.success-message')).count()).toEqual(1);
@@ -740,7 +740,7 @@ describe('Validation message types', () => {
     await element(by.id('clearAllMessages')).click();
     let dateField = await element(by.id('date-field'));
     let dateFieldParent = await dateField.element(by.xpath('..'));
-    let dateFieldIcon = await element(by.css('#date-field + .icon'));
+    let dateFieldIcon = await element(by.css('#date-field + .trigger'));
 
     expect(await dateField.getAttribute('class')).not.toMatch(exprAlerts);
     expect(await dateFieldParent.all(by.css('.info-message')).count()).toEqual(0);
@@ -750,7 +750,7 @@ describe('Validation message types', () => {
     await element(by.id('addMessage')).click();
     dateField = await element(by.id('date-field'));
     dateFieldParent = await dateField.element(by.xpath('..'));
-    dateFieldIcon = await element(by.css('#date-field + .icon'));
+    dateFieldIcon = await element(by.css('#date-field + .trigger'));
 
     expect(await dateField.getAttribute('class')).toContain('info');
     expect(await dateFieldParent.all(by.css('.info-message')).count()).toEqual(1);
@@ -762,7 +762,7 @@ describe('Validation message types', () => {
     await element(by.id('clearAllMessages')).click();
     let dateField = await element(by.id('date-field'));
     let dateFieldParent = await dateField.element(by.xpath('..'));
-    let dateFieldIcon = await element(by.css('#date-field + .icon'));
+    let dateFieldIcon = await element(by.css('#date-field + .trigger'));
 
     expect(await dateField.getAttribute('class')).not.toMatch(exprAlerts);
     expect(await dateFieldParent.all(by.css('.custom-icon-message')).count()).toEqual(0);
@@ -772,7 +772,7 @@ describe('Validation message types', () => {
     await element(by.id('addMessage')).click();
     dateField = await element(by.id('date-field'));
     dateFieldParent = await dateField.element(by.xpath('..'));
-    dateFieldIcon = await element(by.css('#date-field + .icon'));
+    dateFieldIcon = await element(by.css('#date-field + .trigger'));
 
     expect(await dateField.getAttribute('class')).toContain('icon');
     expect(await dateFieldParent.all(by.css('.custom-icon-message')).count()).toEqual(1);
@@ -784,7 +784,7 @@ describe('Validation message types', () => {
     await element(by.id('clearAllMessages')).click();
     let dateField = await element(by.id('date-field'));
     let dateFieldParent = await dateField.element(by.xpath('..'));
-    let dateFieldIcon = await element(by.css('#date-field + .icon'));
+    let dateFieldIcon = await element(by.css('#date-field + .trigger'));
 
     expect(await dateField.getAttribute('class')).not.toMatch(exprAlerts);
     expect(await dateFieldParent.all(by.css('.error-message')).count()).toEqual(0);
@@ -794,7 +794,7 @@ describe('Validation message types', () => {
     await element(by.id('addMessage')).click();
     dateField = await element(by.id('date-field'));
     dateFieldParent = await dateField.element(by.xpath('..'));
-    dateFieldIcon = await element(by.css('#date-field + .icon'));
+    dateFieldIcon = await element(by.css('#date-field + .trigger'));
 
     expect(await dateField.getAttribute('class')).toContain('error');
     expect(await dateFieldParent.all(by.css('.error-message')).count()).toEqual(1);
@@ -809,7 +809,7 @@ describe('Validation message types', () => {
     await element(by.id('addMessage')).click();
     dateField = await element(by.id('date-field'));
     dateFieldParent = await dateField.element(by.xpath('..'));
-    dateFieldIcon = await element(by.css('#date-field + .icon'));
+    dateFieldIcon = await element(by.css('#date-field + .trigger'));
 
     expect(await dateField.getAttribute('class')).not.toContain('error');
     expect(await dateFieldParent.all(by.css('.error-message')).count()).toEqual(1);

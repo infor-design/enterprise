@@ -150,7 +150,7 @@ describe('Calendar specific month tests', () => {
   it('Should be able to cancel month selector', async () => {
     expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getText()).toEqual('October 2018');
 
-    await element(by.css('.calendar-monthview #monthview-datepicker-field + .icon'));
+    await element(by.css('.calendar-monthview #monthview-datepicker-field + .trigger'));
     await element(by.css('button.is-cancel'));
 
     expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getText()).toEqual('October 2018');
@@ -254,7 +254,7 @@ describe('Calendar specific month tests', () => {
     await nextButton.click();
 
     expect(await element(by.css('.calendar-monthview #monthview-datepicker-field')).getText()).toEqual('January 2019');
-    await element(by.css('.calendar-monthview #monthview-datepicker-field + .icon')).click();
+    await element(by.css('.calendar-monthview #monthview-datepicker-field + .trigger')).click();
     await browser.driver.wait(protractor.ExpectedConditions
       .visibilityOf(await element(by.id('monthview-popup'))), config.waitsFor);
 
