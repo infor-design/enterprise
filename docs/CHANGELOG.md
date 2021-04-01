@@ -22,7 +22,7 @@
 - `[Datagrid]` Fixed an issue where the filter menu would not repopen in some cases. ([#4995](https://github.com/infor-design/enterprise/issues/4995))
 - `[Datepicker]` Updated validation.js to check if date picker contains a time value ([#4888](https://github.com/infor-design/enterprise/issues/4888))
 - `[Datepicker]` Fixed a UI issue where the apply and cancel buttons were unable to see on small screens. ([#4950](https://github.com/infor-design/enterprise/issues/4950))
-- `[Datagrid]` Clean up hover appearance of data-grid actions button when the grid is viewed as a list. ([#4963](https://github.com/infor-design/enterprise/issues/4963))
+- `[Datagrid]` Clean up hover appearance of datagrid actions button when the grid is viewed as a list. ([#4963](https://github.com/infor-design/enterprise/issues/4963))
 - `[Editor]`Adjusted the editor to not treat separators after headers as leading and removing them. ([#4751](https://github.com/infor-design/enterprise/issues/4751))
 - `[Environment]`Updated the regular expression search criteria from Edge to Edg to resolve the EDGE is not detected issue. ([#4603](https://github.com/infor-design/enterprise/issues/4603))
 - `[Field Filter]` Fixed a UI issues where the input field has a missing border and the dropdown list does not properly align when it opened. ([#4982](https://github.com/infor-design/enterprise/issues/4982))
