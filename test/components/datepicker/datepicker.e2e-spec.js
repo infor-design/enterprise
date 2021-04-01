@@ -17,7 +17,7 @@ describe('Datepicker example-index tests', () => {
 
   it('Should open popup on icon click', async () => {
     const datepickerEl = await element(by.id('date-field-normal'));
-    await element(by.css('#date-field-normal + .icon')).click();
+    await element(by.css('#date-field-normal + .trigger')).click();
 
     expect(await datepickerEl.getAttribute('class')).toContain('is-open');
     expect(await element(by.id('monthview-popup')).isDisplayed()).toBe(true);
@@ -33,7 +33,7 @@ describe('Datepicker example-index tests', () => {
 
   it('Should set todays date from popup to field', async () => {
     const datepickerEl = await element(by.id('date-field-normal'));
-    await element(by.css('#date-field-normal + .icon')).click();
+    await element(by.css('#date-field-normal + .trigger')).click();
     await element(by.css('.hyperlink.today')).click();
 
     const testDate = new Date();
@@ -46,19 +46,19 @@ describe('Datepicker example-index tests', () => {
 
   it('Should not be able to pick a date from readonly and disabled datepicker', async () => {
     let datepickerEl = await element(by.id('date-field-disabled'));
-    await element(by.css('#date-field-disabled + .icon')).click();
+    await element(by.css('#date-field-disabled + .trigger')).click();
 
     expect(await datepickerEl.getAttribute('value')).toEqual('10/31/2014');
 
     datepickerEl = await element(by.id('date-field-readonly'));
-    await element(by.css('#date-field-readonly + .icon')).click();
+    await element(by.css('#date-field-readonly + .trigger')).click();
 
     expect(await datepickerEl.getAttribute('value')).toEqual('10/31/2014');
   });
 
   it('Should not be able to show today on a entered date', async () => {
     await element(by.id('date-field-normal')).sendKeys('4/12/2024');
-    await element(by.css('#date-field-normal + .icon')).click();
+    await element(by.css('#date-field-normal + .trigger')).click();
 
     expect(await element.all(by.css('.monthview-table .is-selected')).count()).toEqual(1);
   });
@@ -66,7 +66,7 @@ describe('Datepicker example-index tests', () => {
   it('Should be able to clear a date', async () => {
     const datepickerEl = await element(by.id('date-field-normal'));
     await datepickerEl.sendKeys('4/12/2024');
-    await element(by.css('#date-field-normal + .icon')).click();
+    await element(by.css('#date-field-normal + .trigger')).click();
     await element(by.css('button.is-cancel')).click();
 
     expect(await datepickerEl.getAttribute('value')).toEqual('');
@@ -74,7 +74,7 @@ describe('Datepicker example-index tests', () => {
 
   it('Should show correct number of selected days', async () => {
     const datepickerEl = await element(by.id('date-field-normal'));
-    await element(by.css('#date-field-normal + .icon')).click();
+    await element(by.css('#date-field-normal + .trigger')).click();
 
     let focusTD = await element(by.css('#monthview-popup td.is-selected'));
     await focusTD.sendKeys(protractor.Key.ARROW_DOWN);
@@ -98,7 +98,7 @@ describe('Datepicker example-index tests', () => {
 
   it('Should be able to set id/automation id', async () => {
     const datepickerEl = await element(by.id('date-field-normal'));
-    await element(by.css('#date-field-normal + .icon')).click();
+    await element(by.css('#date-field-normal + .trigger')).click();
     await browser.driver.sleep(config.sleep);
 
     expect(await element(by.id('btn-monthyear-pane')).getAttribute('id')).toEqual('btn-monthyear-pane');
@@ -137,7 +137,7 @@ describe('Datepicker example-index tests', () => {
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
       await element(by.css('#date-field-normal')).sendKeys('11/14/2018');
-      await element(by.css('#date-field-normal + .icon')).click();
+      await element(by.css('#date-field-normal + .trigger')).click();
 
       const containerEl = await element(by.className('no-frills'));
       await browser.driver.sleep(config.sleep);
@@ -158,7 +158,7 @@ describe('Datepicker example-index tests (fr-CA)', () => {
 
   it('Should open popup on icon click', async () => {
     const datepickerEl = await element(by.id('date-field-normal'));
-    await element(by.css('#date-field-normal + .icon')).click();
+    await element(by.css('#date-field-normal + .trigger')).click();
 
     expect(await datepickerEl.getAttribute('class')).toContain('is-open');
     expect(await element(by.id('monthview-popup')).isDisplayed()).toBe(true);
@@ -174,7 +174,7 @@ describe('Datepicker example-index tests (fr-CA)', () => {
 
   it('Should set todays date from popup to field', async () => {
     const datepickerEl = await element(by.id('date-field-normal'));
-    await element(by.css('#date-field-normal + .icon')).click();
+    await element(by.css('#date-field-normal + .trigger')).click();
     await element(by.css('.hyperlink.today')).click();
 
     const testDate = new Date();
@@ -187,19 +187,19 @@ describe('Datepicker example-index tests (fr-CA)', () => {
 
   it('Should not be able to pick a date from readonly and disabled datepicker', async () => {
     let datepickerEl = await element(by.id('date-field-disabled'));
-    await element(by.css('#date-field-disabled + .icon')).click();
+    await element(by.css('#date-field-disabled + .trigger')).click();
 
     expect(await datepickerEl.getAttribute('value')).toEqual('10/31/2014');
 
     datepickerEl = await element(by.id('date-field-readonly'));
-    await element(by.css('#date-field-readonly + .icon')).click();
+    await element(by.css('#date-field-readonly + .trigger')).click();
 
     expect(await datepickerEl.getAttribute('value')).toEqual('10/31/2014');
   });
 
   it('Should not be able to show today on a entered date', async () => {
     await element(by.id('date-field-normal')).sendKeys('4/12/2024');
-    await element(by.css('#date-field-normal + .icon')).click();
+    await element(by.css('#date-field-normal + .trigger')).click();
 
     expect(await element.all(by.css('.monthview-table .is-selected')).count()).toEqual(1);
   });
@@ -207,7 +207,7 @@ describe('Datepicker example-index tests (fr-CA)', () => {
   it('Should be able to clear a date', async () => {
     const datepickerEl = await element(by.id('date-field-normal'));
     await datepickerEl.sendKeys('4/12/2024');
-    await element(by.css('#date-field-normal + .icon')).click();
+    await element(by.css('#date-field-normal + .trigger')).click();
     await element(by.css('button.is-cancel')).click();
 
     expect(await datepickerEl.getAttribute('value')).toEqual('');
@@ -240,7 +240,7 @@ describe('Datepicker example-index tests (fr-CA)', () => {
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
       await element(by.css('#date-field-normal')).sendKeys('2018-06-20');
-      await element(by.css('#date-field-normal + .icon')).click();
+      await element(by.css('#date-field-normal + .trigger')).click();
 
       const containerEl = await element(by.className('no-frills'));
       await browser.driver.sleep(config.sleep);
@@ -462,7 +462,7 @@ describe('Datepicker Anniversary tests', () => {
 
   it('Should 3 digit month year', async () => {
     const datepickerEl = await element(by.id('MMMyyyy-date'));
-    await element(by.css('#MMMyyyy-date + .icon')).click();
+    await element(by.css('#MMMyyyy-date + .trigger')).click();
 
     const testDate = new Date();
 
@@ -473,7 +473,7 @@ describe('Datepicker Anniversary tests', () => {
 
   it('Should populate month day', async () => {
     const datepickerEl = await element(by.id('MMMMd-date'));
-    await element(by.css('#MMMMd-date + .icon')).click();
+    await element(by.css('#MMMMd-date + .trigger')).click();
 
     const testDate = new Date();
     testDate.setHours(0);
@@ -489,7 +489,7 @@ describe('Datepicker Anniversary tests', () => {
     await utils.setPage('/components/datepicker/example-anniversary-format?locale=en-GB');
 
     const datepickerEl = await element(by.id('MMMMd-date'));
-    await element(by.css('#MMMMd-date + .icon')).click();
+    await element(by.css('#MMMMd-date + .trigger')).click();
 
     const testDate = new Date();
     testDate.setHours(0);
@@ -505,7 +505,7 @@ describe('Datepicker Anniversary tests', () => {
 
   it('Should populate just year', async () => {
     const datepickerEl = await element(by.id('yyyy-date'));
-    await element(by.css('#yyyy-date + .icon')).click();
+    await element(by.css('#yyyy-date + .trigger')).click();
 
     const testDate = new Date();
 
@@ -516,7 +516,7 @@ describe('Datepicker Anniversary tests', () => {
 
   it('Should populate month year', async () => {
     const datepickerEl = await element(by.id('MMMMyyyy-date'));
-    await element(by.css('#MMMMyyyy-date + .icon')).click();
+    await element(by.css('#MMMMyyyy-date + .trigger')).click();
 
     const testDate = new Date();
 
@@ -527,7 +527,7 @@ describe('Datepicker Anniversary tests', () => {
 
   it('Should populate month/day/year', async () => {
     const datepickerEl = await element(by.id('Mdyyyy-date'));
-    await element(by.css('#Mdyyyy-date + .icon')).click();
+    await element(by.css('#Mdyyyy-date + .trigger')).click();
 
     const testDate = new Date();
     await element(by.css('#monthview-popup td.is-selected')).click();
@@ -546,7 +546,7 @@ describe('Datepicker custom format tests', () => {
 
   it('Should use Locale', async () => {
     const datepickerEl = await element(by.id('date-field-1'));
-    await element(by.css('#date-field-1 + .icon')).click();
+    await element(by.css('#date-field-1 + .trigger')).click();
 
     const testDate = new Date();
     await element(by.css('#monthview-popup td.is-selected')).click();
@@ -559,7 +559,7 @@ describe('Datepicker custom format tests', () => {
 
   it('Should format ISO Date', async () => {
     const datepickerEl = await element(by.id('date-field-2'));
-    await element(by.css('#date-field-2 + .icon')).click();
+    await element(by.css('#date-field-2 + .trigger')).click();
 
     const testDate = new Date();
     await element(by.css('#monthview-popup td.is-selected')).click();
@@ -572,7 +572,7 @@ describe('Datepicker custom format tests', () => {
 
   it('Should format Full Date', async () => {
     const datepickerEl = await element(by.id('date-field-3'));
-    await element(by.css('#date-field-3 + .icon')).click();
+    await element(by.css('#date-field-3 + .trigger')).click();
 
     const testDate = new Date();
     await element(by.css('#monthview-popup td.is-selected')).click();
@@ -585,7 +585,7 @@ describe('Datepicker custom format tests', () => {
 
   it('Should format Custom Date', async () => {
     const datepickerEl = await element(by.id('date-field-4'));
-    await element(by.css('#date-field-4 + .icon')).click();
+    await element(by.css('#date-field-4 + .trigger')).click();
 
     const testDate = new Date();
     await element(by.css('#monthview-popup td.is-selected')).click();
@@ -605,7 +605,7 @@ describe('Datepicker disabled date tests', () => {
   async function setSelector(elemSel) {
     sel.elem = elemSel;
     sel.popup = '#monthview-popup.is-open';
-    sel.trigger = `${sel.elem} + .icon`;
+    sel.trigger = `${sel.elem} + .trigger`;
     sel.table = `${sel.popup} .monthview-table`;
     sel.firstTr = `${sel.table} tbody tr:first-child`;
     sel.lastTr = `${sel.table} tbody tr:last-child`;
@@ -630,7 +630,7 @@ describe('Datepicker disabled date tests', () => {
   }
 
   it('Should support custom validation', async () => {
-    await element(by.css('#date-field + .icon')).click();
+    await element(by.css('#date-field + .trigger')).click();
 
     expect(await element.all(by.css('.monthview-table td.is-disabled')).count()).toEqual(12);
     expect(await element.all(by.css('.monthview-table td:not(.is-disabled)')).count()).toEqual(30);
@@ -708,7 +708,7 @@ describe('Datepicker disabled date tests', () => {
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
       await element(by.css('#date-field')).sendKeys('11/14/2018');
-      await element(by.css('#date-field + .icon')).click();
+      await element(by.css('#date-field + .trigger')).click();
 
       const containerEl = await element(by.className('no-frills'));
       await browser.driver.sleep(config.sleep);
@@ -736,7 +736,7 @@ describe('Datepicker Legend Tests', () => {
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
       await element(by.css('#date-field')).sendKeys('2017-01-03');
-      await element(by.css('#date-field + .icon')).click();
+      await element(by.css('#date-field + .trigger')).click();
 
       const containerEl = await element(by.className('no-frills'));
       await browser.driver.sleep(config.sleep);
@@ -782,14 +782,14 @@ describe('Datepicker Change Event Tests', () => {
   it('Should trigger 1 change on clear and then change value', async () => {
     await element(by.css('#date-field-2')).sendKeys('5/2/2020');
     await element(by.css('#date-field-2')).clear();
-    await element(by.css('#date-field-1 + .icon')).click();
+    await element(by.css('#date-field-1 + .trigger')).click();
     await element(by.css('.hyperlink.today')).click();
 
     expect(await element.all(by.css('#toast-container')).count()).toEqual(1);
   });
 
   it('Should not trigger change two changes on select and tab', async () => {
-    await element(by.css('#date-field-1 + .icon')).click();
+    await element(by.css('#date-field-1 + .trigger')).click();
     await element(by.css('.hyperlink.today')).click();
     await element(by.css('#date-field-1')).click();
     await element(by.css('#date-field-1')).sendKeys(protractor.Key.TAB);
@@ -798,7 +798,7 @@ describe('Datepicker Change Event Tests', () => {
   });
 
   it('Should trigger after clearing the value', async () => {
-    await element(by.css('#date-field-1 + .icon')).click();
+    await element(by.css('#date-field-1 + .trigger')).click();
     await element(by.css('.hyperlink.today')).click();
 
     expect(await element.all(by.css('#toast-container')).count()).toEqual(1);
@@ -807,7 +807,7 @@ describe('Datepicker Change Event Tests', () => {
     await element(by.css('#date-field-1')).clear();
     await element(by.css('#date-field-1')).sendKeys(protractor.Key.TAB);
 
-    await element(by.css('#date-field-1 + .icon')).click();
+    await element(by.css('#date-field-1 + .trigger')).click();
     await element(by.css('.hyperlink.today')).click();
 
     expect(await element.all(by.css('#toast-container')).count()).toEqual(1);
@@ -965,7 +965,7 @@ describe('Datepicker Month Year Changer Tests', () => {
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress when closed', async () => {
       await element(by.css('#date-field-normal')).sendKeys('10/1/2018');
-      await element(by.css('#date-field-normal + .icon')).click();
+      await element(by.css('#date-field-normal + .trigger')).click();
       const containerEl = await element(by.className('no-frills'));
       await browser.driver.sleep(config.sleep);
 
@@ -976,7 +976,7 @@ describe('Datepicker Month Year Changer Tests', () => {
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress when open', async () => {
       await element(by.css('#date-field-normal')).sendKeys('10/1/2018');
-      await element(by.css('#date-field-normal + .icon')).click();
+      await element(by.css('#date-field-normal + .trigger')).click();
       await browser.driver.sleep(config.sleep);
       await element(by.css('#btn-monthyear-pane')).click();
       await browser.driver
@@ -1052,7 +1052,7 @@ describe('Datepicker Month Year Changer Year First Tests', () => {
 
   it('Should show the year span in the Datepicker button first to match the JP locale', async () => {
     await element(by.css('#date-field-normal')).sendKeys('2019/07/09');
-    await element(by.css('#date-field-normal + .icon')).click();
+    await element(by.css('#date-field-normal + .trigger')).click();
     const containerEl = await element(by.className('no-frills'));
     const monthYearPaneFirstSpanEl = await element.all(by.css('#btn-monthyear-pane .year')).first();
     await browser.driver.sleep(config.sleep);
@@ -1445,7 +1445,7 @@ describe('Datepicker Umalqura Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datepicker/example-umalqura');
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.datepicker + .icon'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.datepicker + .trigger'))), config.waitsFor);
   });
 
   it('Should not have errors', async () => {
@@ -1469,7 +1469,7 @@ describe('Datepicker Umalqura Tests', () => {
   it('Should open popup on icon click', async () => {
     const datepickerEl = await element(by.id('islamic-date'));
     await datepickerEl.sendKeys('1441/09/19');
-    await element(by.css('#islamic-date + .icon')).click();
+    await element(by.css('#islamic-date + .trigger')).click();
 
     expect(await datepickerEl.getAttribute('class')).toContain('is-open');
     expect(await element(by.id('monthview-popup')).isDisplayed()).toBe(true);
@@ -1504,7 +1504,7 @@ describe('Datepicker Month Year Picker Tests', () => {
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
       await element(by.css('#month-year')).sendKeys('01/2018');
-      await element(by.css('#month-year + .icon')).click();
+      await element(by.css('#month-year + .trigger')).click();
 
       const containerEl = await element(by.className('no-frills'));
       await browser.driver.sleep(config.sleep);
@@ -1538,7 +1538,7 @@ describe('Datepicker Year Picker Tests', () => {
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
       await element(by.css('#year-only')).sendKeys('2024');
-      await element(by.css('#year-only + .icon')).click();
+      await element(by.css('#year-only + .trigger')).click();
 
       const containerEl = await element(by.className('no-frills'));
       await browser.driver.sleep(config.sleep);
@@ -1579,7 +1579,7 @@ describe('Datepicker Month Only Picker Tests', () => {
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
       await element(by.css('#month-only')).sendKeys('March');
-      await element(by.css('#month-only + .icon')).click();
+      await element(by.css('#month-only + .trigger')).click();
 
       const containerEl = await element(by.className('no-frills'));
       await browser.driver.sleep(config.sleep);
@@ -1746,7 +1746,7 @@ describe('Datepicker Gregorian SA Tests', () => {
   it('Should be able to select a day and tab out', async () => {
     const datepickerEl = await element(by.id('islamic-date'));
     await datepickerEl.sendKeys('15/07/2020');
-    await element(by.css('#islamic-date + .icon')).click();
+    await element(by.css('#islamic-date + .trigger')).click();
     const focusTD = await element(by.css('#monthview-popup td.is-selected'));
     await focusTD.sendKeys(protractor.Key.ARROW_LEFT);
     await focusTD.sendKeys(protractor.Key.ENTER);
@@ -1859,7 +1859,7 @@ describe('Datepicker Modal Test', () => {
     await browser.driver.sleep(config.sleep);
 
     const result = await browser.executeScript('$(".modal-body-wrapper")[0].scroll(0, 185)');
-    await element(by.css('#date-field + .icon')).click();
+    await element(by.css('#date-field + .trigger')).click();
     await element(by.css('.hyperlink.today')).click();
 
     await browser.driver.sleep(config.sleep);
@@ -1883,7 +1883,7 @@ describe('Datepicker Modal (No Autofocus) Test', () => {
     await browser.driver.sleep(config.sleep);
 
     const result = await browser.executeScript('$(".modal-body-wrapper")[0].scroll(0, 185)');
-    await element(by.css('#date-field + .icon')).click();
+    await element(by.css('#date-field + .trigger')).click();
     await element(by.css('.hyperlink.today')).click();
 
     await browser.driver.sleep(config.sleep);
@@ -1961,7 +1961,7 @@ describe('Datepicker set first day of week tests', () => {
 
   it('Should set first day of week', async () => {
     const triggerEl = await element(by.tagName('thead'));
-    await element(by.css('#date-field-normal + .icon')).click();
+    await element(by.css('#date-field-normal + .trigger')).click();
 
     expect(await element(by.css('.is-focused'))).toBeTruthy();
 
@@ -2032,7 +2032,7 @@ describe('Datepicker specific locale/language tests', () => {
 
   it('Should be able to use current locale', async () => {
     const datepickerEl = await element(by.id('date-field-normal'));
-    await element(by.css('#date-field-normal + .icon')).click();
+    await element(by.css('#date-field-normal + .trigger')).click();
 
     expect(await element(by.css('.hyperlink.today')).getText()).toEqual('Today');
     await element(by.css('.hyperlink.today')).click();
@@ -2047,7 +2047,7 @@ describe('Datepicker specific locale/language tests', () => {
 
   it('Should be able to use non current locale', async () => {
     const datepickerEl = await element(by.id('date-field-danish'));
-    await element(by.css('#date-field-danish + .icon')).click();
+    await element(by.css('#date-field-danish + .trigger')).click();
 
     expect(await element(by.css('.hyperlink.today')).getText()).toEqual('I dag');
     await element(by.css('.hyperlink.today')).click();
@@ -2062,7 +2062,7 @@ describe('Datepicker specific locale/language tests', () => {
 
   it('Should be Able to use non current locale and a different language', async () => {
     const datepickerEl = await element(by.id('date-field-sv-de'));
-    await element(by.css('#date-field-sv-de + .icon')).click();
+    await element(by.css('#date-field-sv-de + .trigger')).click();
 
     expect(await element(by.css('.hyperlink.today')).getText()).toEqual('Idag');
     await element(by.css('.hyperlink.today')).click();
@@ -2082,7 +2082,7 @@ describe('Datepicker specific language tests', () => {
   });
 
   it('Should be able to different language and locale', async () => {
-    await element(by.css('#date-field-normal + .icon')).click();
+    await element(by.css('#date-field-normal + .trigger')).click();
 
     expect(await element(by.css('.hyperlink.today')).getText()).toEqual('Hoy');
     expect(await element(by.css('#btn-monthyear-pane')).getText()).toEqual('Febrero 2020');
@@ -2094,7 +2094,7 @@ describe('Datepicker translation tests', () => {
   it('Should format lt-LT correctly', async () => {
     await utils.setPage('/components/datepicker/example-index?locale=lt-lT');
     await element(by.id('date-field-normal')).sendKeys('2020-06-30');
-    await element(by.css('#date-field-normal + .icon')).click();
+    await element(by.css('#date-field-normal + .trigger')).click();
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('btn-monthyear-pane'))), config.waitsFor);
 
@@ -2105,7 +2105,7 @@ describe('Datepicker translation tests', () => {
     await utils.setPage('/components/datepicker/example-index?locale=lv-LV');
     const datepickerEl = await element(by.id('date-field-normal'));
     await datepickerEl.sendKeys('30.06.2020');
-    await element(by.css('#date-field-normal + .icon')).click();
+    await element(by.css('#date-field-normal + .trigger')).click();
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('btn-monthyear-pane'))), config.waitsFor);
 
@@ -2116,7 +2116,7 @@ describe('Datepicker translation tests', () => {
     await utils.setPage('/components/datepicker/example-index?locale=ro-RO');
     const datepickerEl = await element(by.id('date-field-normal'));
     await datepickerEl.sendKeys('30.06.2020');
-    await element(by.css('#date-field-normal + .icon')).click();
+    await element(by.css('#date-field-normal + .trigger')).click();
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('btn-monthyear-pane'))), config.waitsFor);
 
@@ -2128,7 +2128,7 @@ describe('Datepicker translation tests', () => {
     await utils.setPage('/components/datepicker/example-index?locale=sk-SK');
     const datepickerEl = await element(by.id('date-field-normal'));
     await datepickerEl.sendKeys('30. 6. 2020');
-    await element(by.css('#date-field-normal + .icon')).click();
+    await element(by.css('#date-field-normal + .trigger')).click();
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('btn-monthyear-pane'))), config.waitsFor);
 
@@ -2140,7 +2140,7 @@ describe('Datepicker translation tests', () => {
     await utils.setPage('/components/datepicker/example-index?locale=el-GR');
     const datepickerEl = await element(by.id('date-field-normal'));
     await datepickerEl.sendKeys('30/6/2020');
-    await element(by.css('#date-field-normal + .icon')).click();
+    await element(by.css('#date-field-normal + .trigger')).click();
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('btn-monthyear-pane'))), config.waitsFor);
 
@@ -2152,7 +2152,7 @@ describe('Datepicker translation tests', () => {
     await utils.setPage('/components/datepicker/example-index?locale=zh-TW');
     const datepickerEl = await element(by.id('date-field-normal'));
     await datepickerEl.sendKeys('2020/6/30');
-    await element(by.css('#date-field-normal + .icon')).click();
+    await element(by.css('#date-field-normal + .trigger')).click();
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('btn-monthyear-pane'))), config.waitsFor);
 
@@ -2164,7 +2164,7 @@ describe('Datepicker translation tests', () => {
     await utils.setPage('/components/datepicker/example-index?locale=zh-CN');
     const datepickerEl = await element(by.id('date-field-normal'));
     await datepickerEl.sendKeys('2020/6/30');
-    await element(by.css('#date-field-normal + .icon')).click();
+    await element(by.css('#date-field-normal + .trigger')).click();
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('btn-monthyear-pane'))), config.waitsFor);
 

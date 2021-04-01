@@ -160,7 +160,7 @@ CalendarToolbar.prototype = {
     utils.addAttributes(this.element.find('.next'), this, this.settings.attributes, `${this.settings.viewChangerValue}-view-btn-next`);
     utils.addAttributes(this.element.find('.prev'), this, this.settings.attributes, `${this.settings.viewChangerValue}-view-btn-prev`);
     utils.addAttributes(this.element.find('.today'), this, this.settings.attributes, `${this.settings.viewChangerValue}-view-today`);
-    utils.addAttributes(this.element.find('#monthview-datepicker-field + .icon'), this, this.settings.attributes, `${this.settings.viewChangerValue}-view-datepicker-trigger`, true);
+    utils.addAttributes(this.element.find('#monthview-datepicker-field + .trigger'), this, this.settings.attributes, `${this.settings.viewChangerValue}-view-datepicker-trigger`, true);
     utils.addAttributes(this.element.find('#monthview-datepicker-field'), this, this.settings.attributes, `${this.settings.viewChangerValue}-view-datepicker`, true);
 
     utils.addAttributes($('.monthview-header #month-calendar-view-changer [value="month"]'), this, this.settings.attributes, 'month-view-changer-month');
