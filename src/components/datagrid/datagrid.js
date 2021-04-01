@@ -8621,24 +8621,25 @@ Datagrid.prototype = {
       const th = $(this);
       const index = self.columnIdxById(th.attr('data-column-id'));
       const last = self.visibleColumns().length - 1;
+      const targetJq = $(e.target);
       let triggerEl;
       let move;
 
-      if ($(e.target).closest('.popupmenu').length > 0) {
+      if (targetJq.closest('.popupmenu').length > 0) {
         return;
       }
 
       // Enter or Space
       if (key === 13 || key === 32) {
         triggerEl = (self.settings.selectable === 'multiple' && index === 0) ? $('.datagrid-checkbox', th) : th;
-        if ($(e.target).is('.btn-menu.btn-filter')) {
+        if (targetJq.is('.btn-menu.btn-filter')) {
           triggerEl.trigger('click.datagrid');
           return;
         }
         const isSelCheckbox = el => el && el[0]?.dataset.columnId === 'selectionCheckbox';
         const selectionCheckbox = isSelCheckbox(triggerEl) || isSelCheckbox(triggerEl.prevObject);
 
-        if ($(e.target).is('th.is-sortable')) {
+        if (targetJq.is('th.is-sortable')) {
           self.setSortColumn($(this).attr('data-column-id'));
         }
 
