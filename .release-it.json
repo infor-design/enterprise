@@ -3,7 +3,7 @@
         "package.json"
     ],
     "hooks": {
-        "before:init": "npm run eslint:error-only",
+        "before:init": "",
         "after:bump": "npm run build:release",
         "after:release": "./scripts/after-release.sh ${npm.tag} ${version}"
     },
