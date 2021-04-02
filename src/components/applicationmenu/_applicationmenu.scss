@@ -133,12 +133,21 @@ body.is-open-touch {
     }
 
     button.close {
+      align-items: center;
+      justify-content: center;
+      top: 5px;
+
+
       &:focus:not(.hide-focus) {
         box-shadow: 0 0 0 1px $body-color-primary-background, 0 0 0 2px transparent, 0 0 4px 3px rgba(33, 34, 36, 0.3);
 
         .icon {
           color: $ids-color-palette-white;
         }
+      }
+
+      &:not(.is-empty) {
+        display: flex;
       }
     }
 

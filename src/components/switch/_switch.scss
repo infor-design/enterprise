@@ -142,6 +142,16 @@
     border-color: $switch-disabled-border-color;
   }
 
+  input:disabled:checked ~ .label-text::before,
+  input:disabled:checked ~ label::before {
+    background-color: $switch-checked-disabled-bar-color;
+  }
+
+  input:disabled:checked ~ .label-text::after,
+  input:disabled:checked ~ label::after {
+    background-color: $switch-checked-disabled-bg-color;
+    border-color: $switch-checked-disabled-border-color;
+  }
 }
 
 .form-layout-compact {
