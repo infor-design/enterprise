@@ -37,16 +37,26 @@
     width: auto;
   }
 
-  + .icon,
-  + .tooltip-description + .icon {
+  + .trigger,
+  + .tooltip-description + .trigger {
     color: $trigger-icon-fill-color;
     cursor: pointer;
-    height: 16px;
-    margin-left: -26px;
-    margin-top: 9px;
+    height: 24px;
+    margin-left: -30px;
+    margin-top: 5px;
+    min-height: 24px;
+    min-width: 24px;
     position: absolute;
-    width: 16px;
+    width: 24px;
     z-index: 1;
+
+    .icon {
+      color: inherit;
+      height: 16px;
+      position: relative;
+      top: -1px;
+      width: 16px;
+    }
 
     &:hover {
       color: $trigger-hover-color;
@@ -60,30 +70,30 @@
   &.is-open {
     border-color: $input-color-focus-border;
 
-    + .icon {
+    + .trigger {
       color: $datepicker-icon-active-color;
     }
   }
 
-  + .icon + .icon-error {
+  + .trigger + .icon-error {
     margin-left: -50px;
   }
 
-  + .audible + .icon + .icon-error {
+  + .audible + .trigger + .icon-error {
     margin-left: -50px;
   }
 
   &:disabled {
     border-color: $datepicker-disabled-border-color;
 
-    + .icon {
+    + .trigger {
       color: $datepicker-disabled-icon-color;
       cursor: default;
     }
   }
 
   &[readonly] {
-    + .icon {
+    + .trigger {
       color: $datepicker-readonly-icon-color;
       cursor: default;
     }
@@ -155,10 +165,19 @@
   .datepicker {
     padding-right: 24px;
 
-    + .icon {
-      margin-left: -21px;
-      margin-top: 5px;
-      width: 14px;
+    + .trigger,
+    + .tooltip-description + .trigger {
+      height: 20px;
+      margin-left: -24px;
+      margin-top: 3px;
+      min-height: 20px;
+      min-width: 20px;
+      width: 20px;
+
+      .icon {
+        height: 14px;
+        width: 14px;
+      }
     }
   }
 }
@@ -166,17 +185,17 @@
 // RTL Styles
 html[dir='rtl'] {
   .datepicker {
-    + .icon {
+    + .trigger {
       margin-left: -23px;
       margin-right: -26px;
     }
 
-    + .icon + .icon-error {
+    + .trigger + .icon-error {
       margin-left: inherit;
       margin-right: -50px;
     }
 
-    + .audible + .icon + .icon-error {
+    + .audible + .trigger + .icon-error {
       margin-left: inherit;
       margin-right: -50px;
     }
@@ -194,7 +213,7 @@ html[dir='rtl'] {
       padding-left: 24px;
       padding-right: 2px;
 
-      + .icon {
+      + .trigger {
         margin-left: inherit;
         margin-right: -20px;
       }

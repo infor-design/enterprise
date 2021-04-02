@@ -2,18 +2,27 @@
 //================================================== //
 
 .datepicker {
-  + .icon,
-  + .tooltip-description + .icon {
-    margin-left: -28px;
-    margin-top: 11px;
+  + .trigger,
+  + .tooltip-description + .trigger {
+    margin-left: -32px;
+    margin-top: 7px;
+
+    .icon {
+      top: -2px;
+    }
   }
 }
 
 .field-short,
 .form-layout-compact .field {
   .datepicker {
-    + .icon {
-      margin-top: 6px;
+    + .trigger,
+    + .tooltip-description + .trigger {
+      margin-top: 4px;
+
+      .icon {
+        top: -3px;
+      }
     }
   }
 }
@@ -28,8 +37,32 @@
   .field-short,
   .form-layout-compact .field {
     .datepicker {
-      + .icon {
+      + .trigger,
+      + .tooltip-description + .trigger {
         margin-top: 8px;
+      }
+    }
+  }
+}
+
+html[dir='rtl'] {
+  .datepicker {
+    + .trigger,
+    + .tooltip-description + .trigger {
+      margin-left: auto;
+      margin-right: -30px;
+      margin-top: 9px;
+    }
+  }
+
+  .field-short,
+  .form-layout-compact .field {
+    .datepicker {
+      + .trigger,
+      + .tooltip-description + .trigger {
+        margin-left: auto;
+        margin-right: -23px;
+        margin-top: 5px;
       }
     }
   }

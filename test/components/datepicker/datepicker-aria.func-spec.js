@@ -32,7 +32,7 @@ describe('DatePicker Aria', () => {
   });
 
   it('Should set ARIA labels', () => {
-    expect(document.querySelector('label[for="date-field-normal"] span').innerHTML).toEqual('Press Down arrow to select');
+    expect(document.querySelector('label[for="date-field-normal"] span').innerHTML).toEqual('. Press Down arrow to select');
   });
 
   it('Should update ARIA labels with calendar open', (done) => {

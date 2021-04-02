@@ -36,7 +36,8 @@ describe('TimePicker settings', () => {
       roundToInterval: true,
       parentElement: null,
       returnFocus: true,
-      attributes: null
+      attributes: null,
+      tabbable: true
     };
 
     expect(timepickerObj.settings).toEqual(settings);
@@ -53,7 +54,8 @@ describe('TimePicker settings', () => {
       roundToInterval: true,
       parentElement: null,
       returnFocus: true,
-      attributes: null
+      attributes: null,
+      tabbable: true
     };
 
     timepickerObj.updated();
@@ -74,7 +76,8 @@ describe('TimePicker settings', () => {
       roundToInterval: true,
       parentElement: null,
       returnFocus: true,
-      attributes: null
+      attributes: null,
+      tabbable: true
     };
     timepickerObj.updated(settings);
 
@@ -82,7 +85,11 @@ describe('TimePicker settings', () => {
   });
 
   it('should display the trigger icon', (done) => {
-    expect(timepickerEl.nextElementSibling.classList.contains('icon')).toBeTruthy();
+    const buttonEl = timepickerEl.nextElementSibling;
+    const iconEl = buttonEl.querySelector('.icon');
+
+    expect(buttonEl.classList.contains('trigger')).toBeTruthy();
+    expect(iconEl).toBeDefined();
     done();
   });
 });

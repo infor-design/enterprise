@@ -82,6 +82,14 @@ describe('DatePicker API', () => {
     expect(datepickerAPI.isDisabled()).toBeFalsy();
   });
 
+  it('Should have accessible text', () => {
+    // Label
+    expect(datepickerAPI.label.length).toBeTruthy();
+
+    // Trigger button audible span
+    expect(datepickerAPI.trigger[0].querySelector('.audible').textContent.length).toBeTruthy();
+  });
+
   it('Should render datepicker readonly', () => {
     datepickerAPI.readonly();
 
@@ -454,7 +462,7 @@ describe('DatePicker API', () => {
     datepickerEl.classList.add('hidden');
     datepickerAPI = new DatePicker(datepickerEl);
 
-    expect($(datepickerEl).siblings('svg.icon').css('visibility')).toEqual('hidden');
+    expect($(datepickerEl).siblings('button.trigger').css('visibility')).toEqual('hidden');
   });
 
   it('Should be able to render a different locale', (done) => {

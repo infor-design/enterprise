@@ -27,7 +27,8 @@ const TIMEPICKER_DEFAULTS = function () {
     roundToInterval: true,
     parentElement: null,
     returnFocus: true,
-    attributes: null
+    attributes: null,
+    tabbable: true,
   };
 };
 
@@ -49,6 +50,7 @@ const TIMEPICKER_DEFAULTS = function () {
  * @property {string} [settings.returnFocus = true]  If set to false, focus will not be returned to
  *  the calling element. It usually should be for accessibility purposes.
  * @param {string} [settings.attributes] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
+ * @param {boolean} [settings.tabbable=true] If true, causes the Timepicker's trigger icon to be focusable with the keyboard.
  */
 function TimePicker(element, settings) {
   this.element = $(element);
@@ -172,8 +174,8 @@ TimePicker.prototype = {
    * @returns {this} component instance
    */
   build() {
-    this
-      .setup();
+    this.setup();
+    this.element.attr('autocomplete', 'off');
 
     // With this option forgoe the input and append the dropdowns/popup to the parent element
     if (this.settings.parentElement) {
@@ -184,16 +186,24 @@ TimePicker.prototype = {
       return this;
     }
 
-    // Append a Button
-    this.trigger = this.element.next('svg.icon');
-    if (this.trigger.length === 0) {
-      this.trigger = $.createIconElement('clock').insertAfter(this.element);
+    // Append a Trigger Button
+    const next = this.element.next();
+    if (next.is('button.trigger')) {
+      this.trigger = next;
+    } else {
+      this.trigger = $(`<button class="btn-icon trigger">
+        <span class="audible"></span>
+        ${$.createIcon('clock')}
+      </button>`).insertAfter(this.element);
     }
+
+    this.makeTabbable(this.settings.tabbable);
 
     this.addAria()
       .addMask()
       .handleEvents()
       .roundMinutes();
+
     return this;
   },
 
@@ -210,7 +220,6 @@ TimePicker.prototype = {
 
     this.trigger.attr({
       role: 'button',
-      'aria-hidden': 'true',
       'aria-haspopup': 'dialog'
     });
 
@@ -218,6 +227,10 @@ TimePicker.prototype = {
     this.label = $(`label[for="${this.element.attr('id')}"]`);
     this.label.find('.audible').remove();
     this.label.append(`<span class="audible">${Locale.translate('UseArrow', { locale: this.locale.name, language: this.language })}</span>`);
+
+    // Trigger Button text
+    const triggerBtnText = Locale.translate('TimepickerTriggerButton');
+    this.trigger.children('span.audible').text(triggerBtnText);
     return this;
   },
 
@@ -1134,6 +1147,13 @@ TimePicker.prototype = {
    */
   isDisabled() {
     return this.element.prop('disabled');
+  },
+
+  /**
+   * @param {boolean} val if true, sets the trigger button to a focusable tab index
+   */
+  makeTabbable(val) {
+    this.trigger.attr('tabIndex', val ? 0 : -1);
   },
 
   /**

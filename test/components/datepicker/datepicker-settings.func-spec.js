@@ -95,7 +95,11 @@ describe('DatePicker Settings', () => {
   });
 
   it('should display the trigger icon', (done) => {
-    expect(datepickerEl.nextElementSibling.classList.contains('icon')).toBeTruthy();
+    const buttonEl = datepickerEl.nextElementSibling;
+    const iconEl = buttonEl.querySelector('.icon');
+
+    expect(buttonEl.classList.contains('trigger')).toBeTruthy();
+    expect(iconEl).toBeDefined();
     done();
   });
 });

@@ -32,9 +32,6 @@ describe('TimePicker ARIA', () => {
 
     expect(document.querySelector('.icon[aria-hidden="true"]'))
       .withContext('Timepicker trigger icon `aria-hidden`').toBeTruthy();
-
-    expect(document.querySelector('.icon[role="button"]'))
-      .withContext('Timepicker trigger icon `button` role').toBeTruthy();
   });
 
   it('Should update ARIA labels with popup open', () => {

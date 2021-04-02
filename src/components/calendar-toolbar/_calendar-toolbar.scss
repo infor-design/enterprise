@@ -34,12 +34,17 @@
     margin-left: -5px;
     position: relative;
     top: 2px;
+
+    .trigger {
+      margin-left: -29px;
+      margin-top: 4px;
+    }
   }
 
   .today {
     font-size: $ids-size-font-sm;
     font-weight: $ids-number-font-weight-bold;
-    margin-left: 14px;
+    margin-left: 5px;
     text-decoration: none;
     top: 1px;
   }

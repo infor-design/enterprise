@@ -87,6 +87,7 @@ const COMPONENT_NAME = 'datepicker';
  * @param {function} [settings.onOpenCalendar] Call back for when the calendar is open, allows you to set the date.
  * @param {boolean} [settings.isMonthPicker] Indicates this is a month picker on the month and week view. Has some slight different behavior.
  * @param {string} [settings.attributes] Add extra attributes like id's to the element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
+ * @param {boolean} [settings.tabbable=true] If true, causes the Datepicker's trigger icon to be focusable with the keyboard.
 */
 const DATEPICKER_DEFAULTS = {
   showTime: false,
@@ -139,7 +140,8 @@ const DATEPICKER_DEFAULTS = {
   showToday: true,
   onOpenCalendar: null,
   isMonthPicker: false,
-  attributes: null
+  attributes: null,
+  tabbable: true
 };
 
 function DatePicker(element, settings) {
@@ -164,24 +166,34 @@ DatePicker.prototype = {
    * @returns {void}
    */
   build() {
-    // Add "is-disabled" css class to closest ".field" if element is disabled
-    if (this.element.is(':disabled')) {
-      this.element.closest('.field').addClass('is-disabled');
-    }
-
     this.element.attr('autocomplete', 'off');
 
     // Append a trigger button
-    if (this.element.next().is('svg')) {
-      this.trigger = this.element.next();
+    const next = this.element.next();
+    if (next.is('button.trigger')) {
+      this.trigger = next;
     } else {
-      this.trigger = $.createIconElement('calendar').insertAfter(this.element);
+      this.trigger = $(`<button class="btn-icon trigger">
+        <span class="audible"></span>
+        ${$.createIcon('calendar')}
+      </button>`).insertAfter(this.element);
     }
 
     // Hide icon if datepicker input is hidden
     if (this.element.hasClass('hidden')) {
       this.trigger.addClass('hidden');
     }
+
+    // Add "is-disabled" css class to closest ".field" if element is disabled
+    if (this.element.is(':disabled')) {
+      this.disable();
+    }
+
+    if (this.element.is('[readonly]')) {
+      this.readonly();
+    }
+
+    this.makeTabbable(this.settings.tabbable);
 
     // Enable classes and settings for week selection
     if (this.settings.range.selectWeek) {
@@ -282,8 +294,27 @@ DatePicker.prototype = {
    * @returns {void}
    */
   addAria() {
+    this.element.attr({
+      role: 'combobox',
+      'aria-expanded': 'false',
+    });
+
+    this.trigger.attr({
+      role: 'button',
+      'aria-haspopup': 'dialog'
+    });
+
     this.label = $(`label[for="${this.element.attr('id')}"]`);
-    this.label.append(`<span class="audible">${Locale.translate('PressDown', { locale: this.locale.name, language: this.language })}</span>`);
+    const pressDownMsg = `. ${Locale.translate('PressDown', { locale: this.locale.name, language: this.language })}`;
+    const span = this.label.children('span.audible');
+
+    if (span.length) {
+      span.text(pressDownMsg);
+    } else {
+      this.label.append(`<span class="audible">${pressDownMsg}</span>`);
+    }
+
+    this.trigger.children('.audible').text(Locale.translate('DatePickerTriggerButton'));
   },
 
   /**
@@ -1764,6 +1795,7 @@ DatePicker.prototype = {
    */
   enable() {
     this.element.removeAttr('disabled readonly').closest('.field').removeClass('is-disabled');
+    this.trigger.prop('disabled', false);
   },
 
   /**
@@ -1771,8 +1803,8 @@ DatePicker.prototype = {
    * @returns {void}
    */
   disable() {
-    this.enable();
-    this.element.attr('disabled', 'disabled').closest('.field').addClass('is-disabled');
+    this.element.removeAttr('readonly').attr('disabled', 'disabled').closest('.field').addClass('is-disabled');
+    this.trigger.prop('disabled', true);
   },
 
   /**
@@ -1790,6 +1822,7 @@ DatePicker.prototype = {
   readonly() {
     this.enable();
     this.element.attr('readonly', 'readonly');
+    this.trigger.prop('disabled', true);
   },
 
   /**
@@ -1798,6 +1831,13 @@ DatePicker.prototype = {
    */
   isReadonly() {
     return this.element.prop('readonly');
+  },
+
+  /**
+   * @param {boolean} val if true, sets the trigger button to a focusable tab index
+   */
+  makeTabbable(val) {
+    this.trigger.attr('tabIndex', val ? 0 : -1);
   },
 
   /**

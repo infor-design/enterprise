@@ -589,7 +589,7 @@ a.btn-close {
 // Short field buttons
 .field-short,
 .form-layout-compact .field {
-  [class^='btn']:not(.btn-editor) {
+  [class^='btn']:not(.btn-editor):not(.btn-icon) {
     height: $button-size-compact-height;
     margin-bottom: 10px;
     min-height: $button-size-compact-height;
@@ -612,10 +612,7 @@ a.btn-close {
   .btn-primary,
   .btn-secondary,
   .btn-tertiary,
-  .btn-menu,
-  .btn-icon,
-  .btn-actions,
-  .btn-close {
+  .btn-menu {
     padding: 0 5px;
   }
 
@@ -623,6 +620,7 @@ a.btn-close {
   .btn-actions,
   .btn-close {
     border-radius: 12px;
+    padding: 0;
   }
 
   .tag {

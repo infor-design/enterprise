@@ -84,6 +84,14 @@ describe('Lookup API', () => {
     expect(document.body.querySelector('.lookup')).toBeTruthy();
   });
 
+  it('Should have accessible text', () => {
+    // Label
+    expect(lookupObj.label.length).toBeTruthy();
+
+    // Trigger button audible span
+    expect(lookupObj.icon[0].querySelector('.audible').textContent.length).toBeTruthy();
+  });
+
   it('Should be able to disable it', () => {
     lookupObj.disable();
 
@@ -113,7 +121,7 @@ describe('Lookup API', () => {
     lookupEl.classList.add('hidden');
     lookupObj = new Lookup(lookupEl);
 
-    expect($(lookupEl).siblings('span.trigger').css('visibility')).toEqual('hidden');
+    expect($(lookupEl).siblings('button.trigger').css('visibility')).toEqual('hidden');
   });
 
   it('Should be able to destroy it', (done) => {

@@ -87,8 +87,13 @@ describe('Popdown first last tab Tests', () => {
   // 3. On last input Tab should close and focus to next.
   it('Should let close the popdown and if available focus to prev/next', async () => {
     const focusedId = () => browser.driver.switchTo().activeElement().getAttribute('id');
+
     // Tab on date field
-    await element(by.css('#date-field-normal')).sendKeys(protractor.Key.TAB);
+    const dateField = await element(by.css('#date-field-normal'));
+    await browser.actions().mouseMove(dateField).perform();
+    await browser.actions().click(dateField).perform();
+    await browser.actions().sendKeys(protractor.Key.TAB).perform();
+    await browser.actions().sendKeys(protractor.Key.TAB).perform();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.popdown'))), config.waitsFor);
     await browser.driver.sleep(config.sleepLonger);
@@ -128,8 +133,9 @@ describe('Popdown first last tab Tests', () => {
     expect(await focusedId()).toEqual('first-name');
 
     // Shift + Tab on first input in popdown
-    await element(by.css('#first-name'))
-      .sendKeys(protractor.Key.chord(protractor.Key.SHIFT, protractor.Key.TAB));
+    const shiftTab = protractor.Key.chord(protractor.Key.SHIFT, protractor.Key.TAB);
+    await browser.actions().sendKeys(shiftTab).perform();
+    await browser.actions().sendKeys(shiftTab).perform();
     await browser.driver.sleep(config.sleepLonger);
 
     // Popdown should close and previous input (date field) should be focused.

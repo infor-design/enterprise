@@ -1,0 +1,20 @@
+<div class="row">
+  <div class="twelve columns">
+    <div class="field">
+      <label for="timepicker-id-1" class="label">Timepicker</label>
+      <input id="timepicker-id-1" class="timepicker" type="text" data-init="false" />
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+    $('#timepicker-id-1').timepicker({
+      attributes: [
+        { name: 'id', value: 'timepicker-id-1' },
+        { name: 'data-automation-id', value: 'timepicker-automation-id-1' }
+      ],
+      tabbable: false
+    });
+  });
+</script>

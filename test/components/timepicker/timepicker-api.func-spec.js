@@ -80,4 +80,12 @@ describe('TimePicker API', () => {
     expect(document.body.querySelector('.timepicker[readonly]')).toBeTruthy();
     expect(timepickerObj.isDisabled()).toBeFalsy();
   });
+
+  it('Should have accessible text', () => {
+    // Label
+    expect(timepickerObj.label.length).toBeTruthy();
+
+    // Trigger button audible span
+    expect(timepickerObj.trigger[0].querySelector('.audible').textContent.length).toBeTruthy();
+  });
 });

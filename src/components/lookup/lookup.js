@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import * as debug from '../../utils/debug';
+import { Environment as env } from '../../utils/environment';
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
 
@@ -72,6 +73,7 @@ function addSuffixToAttributes(parentAttrs = [], childAttrs = [], suffix) {
  * @param {char} [settings.delimiter=','] A character being used to separate data strings
  * @param {int} [settings.minWidth=400] Applys a minimum width to the lookup
  * @param {boolean} [settings.clearable=false] Add an ability to clear the lookup field. If "true", it will affix an "x" button to the right section of the field.
+ * @param {boolean} [settings.tabbable=true] If true, causes the Lookup's trigger icon to be focusable with the keyboard.
  */
 const LOOKUP_DEFAULTS = {
   click: null,
@@ -91,6 +93,7 @@ const LOOKUP_DEFAULTS = {
   minWidth: null,
   clearable: false,
   attributes: null,
+  tabbable: true,
 };
 
 function Lookup(element, settings) {
@@ -158,12 +161,6 @@ Lookup.prototype = {
       cssClass += ' has-actions-wrapper';
     }
 
-    // Add Button
-    this.icon = $('<span class="trigger"></span>').append($.createIcon(this.settings.icon));
-    if (this.settings.icon !== 'icon-search-list') {
-      this.icon.addClass('has-custom-icon');
-    }
-
     if (this.isInlineLabel) {
       this.inlineLabel.addClass(cssClass);
     } else {
@@ -179,6 +176,24 @@ Lookup.prototype = {
           .wrapAll(this.container);
       } else {
         lookup.wrap(this.container);
+      }
+    }
+
+    // Add Button
+    const next = this.element.next();
+    if (next.is('button.trigger')) {
+      this.icon = next;
+    } else {
+      this.icon = $(`<button class="btn-icon trigger">
+        <span class="audible"></span>
+        ${$.createIcon(this.settings.icon)}
+      </button>`);
+
+      const iconEl = this.icon.children('.icon');
+      if (this.settings.icon !== 'icon-search-list') {
+        iconEl.addClass('has-custom-icon');
+      } else if (env.rtl) {
+        iconEl.addClass('icon-rtl-rotate');
       }
     }
 
@@ -206,6 +221,12 @@ Lookup.prototype = {
       this.disable();
     }
 
+    if (!this.settings.editable || this.element.is('[readonly]')) {
+      this.readonly();
+    }
+
+    this.makeTabbable(this.settings.tabbable);
+
     if (this.settings.clearable) {
       lookup.searchfield({
         clearable: true,
@@ -218,10 +239,6 @@ Lookup.prototype = {
       lookup.on('cleared', (e) => {
         this.settings.clear(e, this, this.settings.clearArguments);
       });
-    }
-
-    if (!this.settings.editable) {
-      this.element.attr('readonly', 'true').addClass('is-not-editable');
     }
 
     // Fix field options in case lookup is initialized after
@@ -250,8 +267,19 @@ Lookup.prototype = {
    * @returns {void}
    */
   addAria() {
-    const self = this;
-    self.label = self.isInlineLabel ? self.inlineLabelText : $(`label[for="${self.element.attr('id')}"]`);
+    this.label = this.isInlineLabel ? this.inlineLabelText : $(`label[for="${this.element.attr('id')}"]`);
+    const pressDownMsg = `${Locale.translate('Lookup')}. ${Locale.translate('PressDown')}`;
+    const span = this.label.children('span.audible');
+
+    if (span.length) {
+      span.text(pressDownMsg);
+    } else {
+      this.label.append(`<span class="audible">${pressDownMsg}</span>`);
+    }
+
+    // Add audible text to the trigger button
+    const triggerBtnText = Locale.translate('LookupTriggerButton');
+    this.icon.children('span.audible').text(triggerBtnText);
   },
 
   /**
@@ -465,13 +493,13 @@ Lookup.prototype = {
       buttons = [{
         text: Locale.translate('Cancel'),
         click(e, modal) {
-          modal.oldActive = self.element;
+          modal.oldActive = self.icon;
           modal.close();
         }
       }, {
         text: Locale.translate('Apply'),
         click(e, modal) {
-          modal.oldActive = self.element;
+          modal.oldActive = self.icon;
           modal.close();
           self.insertRows();
         },
@@ -483,13 +511,13 @@ Lookup.prototype = {
       buttons = [{
         text: Locale.translate('Cancel'),
         click(e, modal) {
-          modal.oldActive = self.element;
+          modal.oldActive = self.icon;
           modal.close();
         }
       }, {
         text: Locale.translate('Apply'),
         click(e, modal) {
-          modal.oldActive = self.element;
+          modal.oldActive = self.icon;
           modal.close();
           self.insertRows();
         },
@@ -959,8 +987,9 @@ Lookup.prototype = {
    * @returns {void}
    */
   enable() {
-    this.element.prop('disabled', false).prop('readonly', false);
+    this.element.prop('disabled', false).prop('readonly', false).removeClass('is-not-editable');
     this.element.parent().removeClass('is-disabled');
+    this.icon.prop('disabled', false);
   },
 
   /**
@@ -970,6 +999,7 @@ Lookup.prototype = {
   disable() {
     this.element.prop('disabled', true);
     this.element.parent().addClass('is-disabled');
+    this.icon.prop('disabled', true);
   },
 
   /**
@@ -977,7 +1007,8 @@ Lookup.prototype = {
    * @returns {void}
    */
   readonly() {
-    this.element.prop('readonly', true);
+    this.element.prop('readonly', true).addClass('is-not-editable');
+    this.icon.prop('disabled', true);
   },
 
   /**
@@ -1032,6 +1063,13 @@ Lookup.prototype = {
    */
   isReadonly() {
     return this.element.prop('readonly');
+  },
+
+  /**
+   * @param {boolean} val if true, sets the trigger button to a focusable tab index
+   */
+  makeTabbable(val) {
+    this.icon.attr('tabIndex', val ? 0 : -1);
   },
 
   /**

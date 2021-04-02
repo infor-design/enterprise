@@ -1,17 +1,15 @@
 // Uplift Lookup
 //================================================== //
-.field-short,
-.form-layout-compact .field {
-  .lookup-wrapper {
-    .trigger {
-      .icon {
-        top: 7px;
-      }
+.lookup-wrapper {
+  .trigger {
+    margin-top: 7px;
+
+    .icon {
+      right: 0;
+      top: 0;
     }
   }
-}
 
-.lookup-wrapper {
   .searchfield-wrapper {
     > .icon.close {
       right: 35px;
@@ -26,32 +24,59 @@
   }
 }
 
+.field-short,
+.form-layout-compact .field {
+  .lookup-wrapper {
+    .trigger {
+      margin-top: 4px;
+
+      .icon {
+        right: 0;
+        top: -2px;
+      }
+    }
+  }
+}
+
 html.is-firefox {
   .lookup-wrapper {
     .trigger {
       .icon {
-        top: 6px;
+        top: 0;
       }
     }
   }
 }
 
 html[dir='rtl'] {
-  .field-short,
-  .form-layout-compact .field {
-    .lookup-wrapper {
-      .trigger {
-        .icon {
-          top: 7px;
-        }
+  .lookup-wrapper {
+    .trigger {
+      margin-right: -32px;
+      margin-top: 8px;
+
+      .icon {
+        left: auto;
+      }
+    }
+
+    .searchfield-wrapper {
+      > .icon.close {
+        left: 35px;
       }
     }
   }
 
-  .lookup-wrapper {
-    .searchfield-wrapper {
-      > .icon.close {
-        left: 35px;
+  .field-short,
+  .form-layout-compact .field {
+    .lookup-wrapper {
+      .trigger {
+        margin-right: -25px;
+        margin-top: 4px;
+
+        .icon {
+          right: 0;
+          top: -2px;
+        }
       }
     }
   }

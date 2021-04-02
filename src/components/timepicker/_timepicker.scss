@@ -4,16 +4,25 @@
 .timepicker {
   width: 150px;
 
-  + .icon,
-  + .tooltip-description + .icon {
+  + .trigger,
+  + .tooltip-description + .trigger {
     @include css3(user-select, none);
 
     color: $trigger-icon-fill-color;
     cursor: pointer;
-    height: 18px;
-    margin-left: -31px;
-    margin-top: 9px;
+    height: 24px;
+    margin-left: -32px;
+    margin-top: 6px;
+    min-height: 24px;
+    min-width: 24px;
     position: absolute;
+    width: 24px;
+
+    .icon {
+      color: inherit;
+      height: 18px;
+      width: 18px;
+    }
 
     &:hover {
       color: $trigger-hover-color;
@@ -22,7 +31,6 @@
     &:active {
       color: $trigger-active-color;
     }
-
   }
 
   ~ .icon-error {
@@ -31,7 +39,7 @@
   }
 
   &.error {
-    ~ .icon {
+    ~ .trigger {
       color: $error-color;
     }
   }
@@ -39,28 +47,28 @@
   &.is-open {
     border-color: $input-color-focus-border;
 
-    + .icon {
+    + .trigger {
       color: $trigger-active-color;
     }
   }
 
-  + .icon + .icon-error {
+  + .trigger + .icon-error {
     right: 50px;
   }
 
-  + .audible + .icon + .icon-error {
+  + .audible + .trigger + .icon-error {
     right: 55px;
   }
 
   &:disabled {
-    + .icon {
+    + .trigger {
       color: $timepicker-disabled-icon-color;
       cursor: default;
     }
   }
 
   &[readonly] {
-    + .icon {
+    + .trigger {
       color: $timepicker-readonly-icon-color;
       cursor: default;
     }
@@ -152,7 +160,7 @@
       }
     }
 
-    + .icon {
+    + .trigger {
       right: 6px;
       top: 2px;
     }
@@ -174,11 +182,21 @@
   .timepicker {
     padding-right: 23px;
 
-    + .icon,
-    + .tooltip-description + .icon {
-      height: 14px;
-      margin-left: -24px;
-      margin-top: 6px;
+    + .trigger,
+    + .tooltip-description + .trigger {
+      height: 20px;
+      margin-left: -23px;
+      margin-top: 3px;
+      min-height: 20px;
+      min-width: 20px;
+      width: 20px;
+
+      .icon {
+        height: 14px;
+        position: relative;
+        top: -1px;
+        width: 14px;
+      }
     }
 
     ~ .icon-error {
@@ -191,17 +209,17 @@
 // RTL Styles
 html[dir='rtl'] {
   .timepicker {
-    + .icon,
-    + .tooltip-description + .icon {
+    + .trigger,
+    + .tooltip-description + .trigger {
       margin-left: inherit;
       margin-right: -31px;
     }
 
-    + .icon + .icon-error {
+    + .trigger + .icon-error {
       right: auto;
     }
 
-    + .audible + .icon + .icon-error {
+    + .audible + .trigger + .icon-error {
       margin-right: -48px;
       right: auto;
     }
@@ -209,7 +227,7 @@ html[dir='rtl'] {
 
   .timepicker-popup {
     .dropdown {
-      + .icon {
+      + .trigger {
         left: 5px;
         right: auto;
       }
@@ -223,8 +241,8 @@ html[dir='rtl'] {
       padding-left: 18px;
       padding-right: 2px;
 
-      + .icon,
-      + .tooltip-description + .icon {
+      + .trigger,
+      + .tooltip-description + .trigger {
         margin-left: inherit;
         margin-right: -24px;
       }
