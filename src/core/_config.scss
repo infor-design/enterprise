@@ -452,9 +452,15 @@ $switch-unchecked-border-color: $ids-color-palette-graphite-30;
 $switch-unchecked-bg-color: $ids-color-palette-white;
 $switch-unchecked-color: $font-color;
 $switch-unchecked-pressed-bg-color: $ids-color-palette-white;
+
 $switch-disabled-border-color: $ids-color-palette-graphite-30;
 $switch-disabled-bg-color: $ids-color-palette-graphite-20;
 $switch-disabled-bar-color: $ids-color-palette-graphite-30;
+
+$switch-checked-disabled-border-color: $ids-color-palette-graphite-30;
+$switch-checked-disabled-bg-color: $ids-color-palette-azure-40;
+$switch-checked-disabled-bar-color: $ids-color-palette-azure-20;
+
 $switch-disabled-label-color: $input-disabled-color;
 $switch-focus-box-shadow: 0 0 0 3px $focus-color, 0 0 0 4px $ids-color-brand-primary-base, 0 0 4px 6px rgba(54, 138, 192, 0.3);
 $switch-hover-box-shadow: 0 2px 5px $focus-shadow;
