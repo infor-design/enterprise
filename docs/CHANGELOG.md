@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.51.0
+
+### v4.51.0 Issues
+
+- `[General]` Placeholder - remove me if your first. ([#5012](https://github.com/infor-design/enterprise/issues/5012))
+
 ## v4.50.0
 
 ### v4.50.0 Important Notes
@@ -23,7 +29,7 @@
 - `[Datagrid]` Fixed an error seen clicking items if using a flex toolbar for the datagrid toolbar. ([#4941](https://github.com/infor-design/enterprise/issues/4941))
 - `[Datagrid]` Only show row status when dirty indicator and row status both exist to address conflicting visual issue. ([#4918](https://github.com/infor-design/enterprise/issues/4918))
 - `[Datagrid]` Fixed an issue where selecting a row added background to row-status. ([#4918](https://github.com/infor-design/enterprise/issues/4918))
-- `[Datagrid]` Fixed an issue where the filter menu would not repopen in some cases. ([#4995](https://github.com/infor-design/enterprise/issues/4995))
+- `[Datagrid]` Fixed an issue where the filter menu would not reopen in some cases. ([#4995](https://github.com/infor-design/enterprise/issues/4995))
 - `[Datepicker]` Added a setting that replaces the trigger icon with an actual button for better accessibility, enabled by default. ([#4820](https://github.com/infor-design/enterprise/issues/4820))
 - `[Datepicker]` Updated validation.js to check if date picker contains a time value ([#4888](https://github.com/infor-design/enterprise/issues/4888))
 - `[Datepicker]` Fixed a UI issue where the apply and cancel buttons were unable to see on small screens. ([#4950](https://github.com/infor-design/enterprise/issues/4950))
@@ -40,12 +46,12 @@
 - `[Lookup]` Added a setting that replaces the trigger icon with an actual button for better accessibility, enabled by default. ([#4820](https://github.com/infor-design/enterprise/issues/4820))
 - `[Line Chart]` Added support for double click to Area, Bubble, Line and Scatterplot. ([#3229](https://github.com/infor-design/enterprise/issues/3229))
 - `[Message]` Added automation id's to the message's modal main area dialog as well with `modal` prefix. ([#4871](https://github.com/infor-design/enterprise/issues/4871))
-- `[Modal]` Fixed a bug where fullsize responsive setting doesn't work on android phones in landscape mode. ([#4451](https://github.com/infor-design/enterprise/issues/4451))
+- `[Modal]` Fixed a bug where full size responsive setting doesn't work on android phones in landscape mode. ([#4451](https://github.com/infor-design/enterprise/issues/4451))
 - `[Pie Chart]` Added support for double click to Pie and Donut. ([#3229](https://github.com/infor-design/enterprise/issues/3229))
 - `[Pie Chart]` Fixed bug were pie chart type does not remove old class name ([#3144](https://github.com/infor-design/enterprise/issues/3144))
 - `[Pie Chart]` Improved the accessibility of legend items with roles and offscreen labels. ([#4831](https://github.com/infor-design/enterprise/issues/4831))
 - `[Radar Chart]` Added support for double click. ([#3229](https://github.com/infor-design/enterprise/issues/3229))
-- `[Rating]` Fixed color of unclick rating star. ([#4853](https://github.com/infor-design/enterprise/issues/4853))
+- `[Rating]` Fixed color of the un-checked rating star. ([#4853](https://github.com/infor-design/enterprise/issues/4853))
 - `[Popupmenu]` Fixed a lifecycle issue on menus that are shared between trigger elements, where these menus were incorrectly being torn down. ([NG#987](https://github.com/infor-design/enterprise-ng/issues/987))
 - `[Searchfield]` Fixed an issue where certain variants/scenarios had the clear button vertically below center ([#4989](https://github.com/infor-design/enterprise/issues/4989))
 - `[Switch]` Adjust styles to be more discernable between checked and checked+disabled ([#4341](https://github.com/infor-design/enterprise/issues/4341))
@@ -55,6 +61,8 @@
 - `[Timepicker]` Added a setting that replaces the trigger icon with an actual button for better accessibility, enabled by default. ([#4820](https://github.com/infor-design/enterprise/issues/4820))
 - `[Toast]` Fixed a bug where the first toast in the page is not announced to screen readers. ([#4519](https://github.com/infor-design/enterprise/issues/4519))
 - `[Tooltip]` Fixed a bug in tooltip that prevented linking id-based tooltip content. ([#4827](https://github.com/infor-design/enterprise/issues/4827))
+
+(48 Issues Solved This Release, Backlog Enterprise 152, Backlog Ng 32, 1086 Functional Tests, 1640 e2e Tests)
 
 ## v4.38.1
 
