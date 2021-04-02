@@ -59,7 +59,7 @@ describe('Validation short-field tests', () => {
 
   it('Should validate all short fields', async () => {
     const bodyEl = await element(by.css('body'));
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 35; i++) {
       await bodyEl.sendKeys(protractor.Key.TAB);  //eslint-disable-line
     }
     await browser.driver.sleep(config.sleep);
