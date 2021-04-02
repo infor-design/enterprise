@@ -392,6 +392,14 @@ $datagrid-small-row-height: 25px;
     z-index: 3;
   }
 
+  &:not(.is-gridlist) {
+    &.is-hover-row:not(.error):not(.is-rowdisabled):not(.datagrid-virtual-row-bottom):not(.is-selected):not(.is-rowactivated):not(.datagrid-expandable-row) td:not(.is-editing):not(.is-readonly):not(.error) {
+      .icon:not(.icon-rowstatus) {
+        @include trigger-icon-background($datagrid-row-hover-color);
+      }
+    }
+  }
+
   // States - List Style Datagrid
   &.is-gridlist {
     background-color: transparent !important;
@@ -1890,10 +1898,6 @@ $datagrid-small-row-height: 25px;
       .datagrid-expand-btn .icon {
         background-color: transparent;
         box-shadow: none;
-      }
-
-      .icon:not(.icon-rowstatus) {
-        @include trigger-icon-background($datagrid-row-hover-color);
       }
     }
 
