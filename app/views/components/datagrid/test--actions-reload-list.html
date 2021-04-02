@@ -1,0 +1,79 @@
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="toolbar no-actions-button" role="toolbar">
+      <div class="title">
+        Compressors
+        <span class="datagrid-result-count">(N Results)</span>
+      </div>
+      <div class="buttonset">
+        <button type="button" class="btn" id="btn-reload">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-refresh"></use>
+          </svg>
+          <span>Reload</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="datagrid">
+    </div>
+
+  </div>
+</div>
+
+<ul id="grid-actions-menu" class="popupmenu">
+  <li><a href="#">Action One</a></li>
+  <li><a href="#">Action Two</a></li>
+  <li><a href="#">Action Three</a></li>
+</ul>
+
+<script id="datagrid-script">
+  $('body').one('initialized', function () {
+
+    var grid,
+      columns = [];
+
+    // Define Columns for the Grid.
+    columns.push({ id: 'actions', name: 'Actions', field: '', width: 100, formatter: Formatters.Actions, menuId: 'grid-actions-menu', selected: function(e, link) { console.log(e, link); }});
+    columns.push({ id: 'productId', hideable: false, name: 'Id', field: 'productId', reorderable: true, formatter: Formatters.Text, width: 100 });
+    columns.push({ id: 'productName', name: 'Product Name', field: 'productName', reorderable: true, formatter: Formatters.Hyperlink, width: 200, minWidth: 150 });
+    columns.push({ id: 'activity', name: 'Activity', field: 'activity', reorderable: true });
+    columns.push({ id: 'hidden', hidden: true, name: 'Hidden', field: 'hidden' });
+    columns.push({ id: 'price', align: 'right', name: 'Actual Price', field: 'price', reorderable: true, formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$' }});
+    columns.push({ id: 'percent', align: 'right', name: 'Actual %', field: 'percent', reorderable: true, formatter: Formatters.Decimal, numberFormat: { minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'percent' }});
+    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', reorderable: true, formatter: Formatters.Date, dateFormat: 'M/d/yyyy' });
+    columns.push({ id: 'phone', name: 'Phone', field: 'phone', reorderable: true, formatter: Formatters.Text });
+
+    var url = '{{basepath}}api/datagrid-sample-data';
+
+    $.getJSON(url, function(res) {
+      // Init and get the api for the grid
+      grid = $('#datagrid').datagrid({
+        columns: columns,
+        dataset: res,
+        isList: true,
+        toolbar: { results: true }
+      });
+    });
+
+    // Set reload data
+    var reloadCounter = 0;
+    function setReloadData (data) {
+      data = (data && data.constructor === Array) ? data : [];
+      reloadCounter++;
+      var n = reloadCounter;
+      data[0] = { productId: (1000 + n), productName: 'New Compressor-' + n, activity: 'New-' + n, price: (101.99 + n), percent: 0.1, orderDate: '2018-08-07T06:00:00.000Z', phone: '(000) 111-000' + n };
+      return data;
+    }
+
+    // Handle reload
+    $('#btn-reload').on('click', function () {
+      $.getJSON(url, function(res) {
+        var newData = setReloadData(res);
+        grid.data('datagrid').loadData(newData);
+      });
+    });
+
+ });
+</script>
