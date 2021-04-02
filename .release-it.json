@@ -9,7 +9,8 @@
     },
     "git": {
         "commitMessage": "Release v${version}",
-        "tagAnnotation": "Release v${version}"
+        "tagAnnotation": "Release v${version}",
+        "requireCleanWorkingDir": "false"
     },
     "npm": {
         "tag": "latest"
