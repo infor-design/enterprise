@@ -9,13 +9,15 @@
 
 .searchfield-wrapper {
   > .icon {
-    top: 12px;
-
     &.close {
-      height: 12px;
-      right: 9px;
-      top: 13px;
+      padding: 1px 3px;
+      top: 50%;
+      transform: translateY(-50%);
     }
+  }
+
+  &.non-collapsible > .icon:not(.close):not(.icon-error) {
+    top: 12px;
   }
 
   .go-button {
@@ -50,8 +52,9 @@
       padding-top: 6px;
     }
 
-    .icon.close {
-      top: 12px;
+    > .icon,
+    > .icon:not(.close) {
+      top: 10px;
     }
   }
 
@@ -61,15 +64,23 @@
     }
   }
 
-  &.has-text .icon.close {
-    top: 11px;
+  .btn-icon.close {
+    overflow: visible;
+    &:not(.is-empty) {
+      top: 6px;
+    }
+
+    & > svg.close.icon {
+      top: calc( 50% - 6px );
+      transform: translateY(-50%);
+    }
   }
 }
 
 .toolbar-searchfield-wrapper {
   &.searchfield-wrapper {
     &.non-collapsible {
-      svg.icon {
+      svg.icon:not(.close) {
         top: 11px;
       }
     }
