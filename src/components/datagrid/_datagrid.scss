@@ -3202,8 +3202,6 @@ $datagrid-small-row-height: 25px;
       }
     }
 
-    .timepicker,
-    .datepicker,
     .dropdown {
       + .icon {
         color: $datagrid-filter-icon-color;
@@ -3226,9 +3224,36 @@ $datagrid-small-row-height: 25px;
 
     .timepicker,
     .datepicker {
-      + .icon {
-        right: 3px;
-        top: -3px;
+      + .trigger {
+        height: 20px;
+        margin-left: -13px;
+        margin-top: 2px;
+        min-height: 20px;
+        min-width: 20px;
+        width: 20px;
+
+        .icon {
+          color: $datagrid-filter-icon-color;
+          height: 14px;
+          position: absolute;
+          right: 2px;
+          top: 2px;
+          width: 14px;
+        }
+      }
+
+      &:not(:disabled) + .trigger:hover,
+      &:hover:not(:disabled) + .trigger {
+        .icon {
+          color: $datagrid-filter-hover-color !important;
+        }
+      }
+
+      &:disabled + .trigger {
+        .icon {
+          color: $datagrid-list-filter-disabled-color !important;
+          opacity: 0.6;
+        }
       }
     }
 
@@ -3273,9 +3298,12 @@ $datagrid-small-row-height: 25px;
       }
 
       .trigger {
-        height: 24px;
-        margin-left: -18px;
-        width: 27px;
+        height: 20px;
+        margin-left: -13px;
+        margin-top: 2px;
+        min-height: 20px;
+        min-width: 20px;
+        width: 20px;
 
         &:hover .icon {
           color: $datagrid-filter-hover-color;
@@ -3283,9 +3311,10 @@ $datagrid-small-row-height: 25px;
 
         .icon {
           color: $datagrid-filter-icon-color;
-          height: 30px;
-          right: -6px;
-          top: -3px;
+          height: 16px;
+          position: relative;
+          right: 1px;
+          top: -1px;
           width: 16px;
         }
       }
@@ -4239,17 +4268,16 @@ html[dir='rtl'] {
       }
     }
 
-    .datepicker + .icon {
-      margin-right: -14px;
-      right: initial;
-    }
-
     .dropdown-wrapper {
       left: 0;
     }
 
     .lookup-wrapper .trigger {
-      margin-right: -22px;
+      margin-right: -17px;
+
+      .icon {
+        right: -1px;
+      }
     }
 
     input.timepicker,
@@ -4257,10 +4285,10 @@ html[dir='rtl'] {
       padding: 3px 5px 2px 24px;
     }
 
-    .timepicker + .icon,
-    .timepicker + .tooltip-description + .icon {
-      margin-right: -6px;
-      right: -8px;
+    .datepicker + .trigger,
+    .timepicker + .trigger {
+      margin-right: -18px;
+      right: initial;
     }
 
     .datagrid-filter-wrapper input.datepicker {
