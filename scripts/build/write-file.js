@@ -28,16 +28,14 @@ function logFileResults(targetFilePath, targetFile) {
  */
 function writeFile(targetFilePath, targetFile) {
   return new Promise((resolve, reject) => {
-    if (targetFile) {
-      fs.writeFile(targetFilePath, targetFile, (err) => {
-        if (err) {
-          logger('error', `${err}`);
-          reject(err);
-        }
-        logFileResults(targetFilePath, targetFile);
-        resolve();
-      });
-    }
+    fs.writeFile(targetFilePath, targetFile, (err) => {
+      if (err) {
+        logger('error', `${err}`);
+        reject(err);
+      }
+      logFileResults(targetFilePath, targetFile);
+      resolve();
+    });
   });
 }
 

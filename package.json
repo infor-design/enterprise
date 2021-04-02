@@ -1,7 +1,7 @@
 {
   "name": "ids-enterprise",
   "slug": "ids-enterprise",
-  "version": "4.50.0-beta.0",
+  "version": "4.50.0-beta.1",
   "description": "Infor Design System (IDS) Enterprise Components for the web",
   "repository": {
     "type": "git",
@@ -169,7 +169,7 @@
     "slash": "^3.0.0",
     "stylelint": "^13.12.0",
     "stylelint-order": "^4.1.0",
-    "terser": "^5.6.1",
+    "terser": "^4.7.0",
     "webdriver-manager": "^12.1.8",
     "webpack": "^4.43.0",
     "yargs": "^16.2.0"
