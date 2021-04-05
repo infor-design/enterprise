@@ -5,7 +5,7 @@ JENKINS_DOMAIN="jenkins.design.infor.com:8080"
 JENKINS_JOB="soho-kubernetes-deploy"
 JENKINS_URL="http://$JENKINS_USER:$JENKINS_API_TOKEN@$JENKINS_DOMAIN"
 
-BUILD_FROM="master"
+BUILD_FROM="main"
 BUILD_AS_LATEST=false
 WATCH_FOR_BUILD_STATUS=false
 QUEUE_BUILD=false
