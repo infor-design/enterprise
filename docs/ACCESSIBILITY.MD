@@ -48,7 +48,7 @@ Screen readers need only be tested in one browser as recommended above.
 
 ## Other Tools for Verifying Accessibility
 
-- [Axe Chrome Dev Tools Plugin](https://chrome.google.com/webstore/detail/axe/lhdoppojpmngadmnindnejefpokejbdd?hl=en-US) - A tool that adds a tab in Chrome Dev tools for testing for accessibility problems. This tool gives a visual version of the [Axe e2e tests](https://github.com/infor-design/enterprise/blob/master/test/components/dropdown/dropdown.e2e-spec.js#L64).
+- [Axe Chrome Dev Tools Plugin](https://chrome.google.com/webstore/detail/axe/lhdoppojpmngadmnindnejefpokejbdd?hl=en-US) - A tool that adds a tab in Chrome Dev tools for testing for accessibility problems. This tool gives a visual version of the [Axe e2e tests](https://github.com/infor-design/enterprise/blob/main/test/components/dropdown/dropdown.e2e-spec.js#L64).
 - [HTML Code Sniffer](https://squizlabs.github.io/HTML_CodeSniffer/‎) - A tool that adds a bookmark to test a page for accessibility problems.
 
 ## Other Accessibility Tools

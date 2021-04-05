@@ -32,7 +32,7 @@ xssUtils.stripTags = function (html, allowed) {
     return html;
   }
 
-  const whitelist = ((`${allowed || ''}`)
+  const allowList = ((`${allowed || ''}`)
     .toLowerCase()
     .match(/<[a-z][a-z0-9]*>/g) || [])
     .join(''); // making sure the allowed arg is a string containing only tags in lowercase (<a><b><c>)
@@ -41,9 +41,9 @@ xssUtils.stripTags = function (html, allowed) {
   const commentsAndPhpTags = /<!--[\s\S]*?-->|<\?(?:php)?[\s\S]*?\?>/gi;
   let returnHTML = '';
   returnHTML = html.replace(commentsAndPhpTags, '')
-    .replace(tags, ($0, $1) => whitelist.indexOf('<' + $1.toLowerCase() + '>') > -1 ? $0 : ''); //eslint-disable-line
-  returnHTML = returnHTML.replace(tags, ($0, $1) => whitelist.indexOf('<' + $1.toLowerCase() + '>') > -1 ? $0 : ''); //eslint-disable-line
-  returnHTML = returnHTML.replace(tags, ($0, $1) => whitelist.indexOf('<' + $1.toLowerCase() + '>') > -1 ? $0 : ''); //eslint-disable-line
+    .replace(tags, ($0, $1) => allowList.indexOf('<' + $1.toLowerCase() + '>') > -1 ? $0 : ''); //eslint-disable-line
+  returnHTML = returnHTML.replace(tags, ($0, $1) => allowList.indexOf('<' + $1.toLowerCase() + '>') > -1 ? $0 : ''); //eslint-disable-line
+  returnHTML = returnHTML.replace(tags, ($0, $1) => allowList.indexOf('<' + $1.toLowerCase() + '>') > -1 ? $0 : ''); //eslint-disable-line
 
   return returnHTML;
 };

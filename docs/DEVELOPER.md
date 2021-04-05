@@ -133,7 +133,7 @@ All of our build tools run in [Node.JS](https://nodejs.org/en/). We are currentl
 
 #### Git
 
-Our project uses [Git](https://git-scm.com/) for version control.  Any pull requests made to IDS Enterprise will need to be done in a new branch cut from our latest `master` branch.  See the [Git Workflow documentation](./GIT-WORKFLOW.md) for more information.
+Our project uses [Git](https://git-scm.com/) for version control.  Any pull requests made to IDS Enterprise will need to be done in a new branch cut from our latest `main` branch.  See the [Git Workflow documentation](./GIT-WORKFLOW.md) for more information.
 
 ### Getting started
 

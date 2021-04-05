@@ -8,15 +8,15 @@ title: Enterprise Components for Infor Design System
 
 ## Usage
 
-Basic IDS Enterprise usage instructions can be found in our Github [README](https://github.com/infor-design/enterprise/blob/master/README.md).
+Basic IDS Enterprise usage instructions can be found in our Github [README](https://github.com/infor-design/enterprise/blob/main/README.md).
 
-Detailed instructions can be found in the [Developer Documentation](https://github.com/infor-design/enterprise/blob/master/docs/DEVELOPER.md)
+Detailed instructions can be found in the [Developer Documentation](https://github.com/infor-design/enterprise/blob/main/docs/DEVELOPER.md)
 
 ## Development and Contributing to the project
 
-- [Developer.md](https://github.com/infor-design/enterprise/blob/master/docs/DEVELOPER.md)
-- [Contributing.md](https://github.com/infor-design/enterprise/blob/master/docs/CONTRIBUTING.md)
-- [Coding-Standards.md](https://github.com/infor-design/enterprise/blob/master/docs/CODING-STANDARDS.md)
+- [Developer.md](https://github.com/infor-design/enterprise/blob/main/docs/DEVELOPER.md)
+- [Contributing.md](https://github.com/infor-design/enterprise/blob/main/docs/CONTRIBUTING.md)
+- [Coding-Standards.md](https://github.com/infor-design/enterprise/blob/main/docs/CODING-STANDARDS.md)
 
 You can find our NPM package [here](https://www.npmjs.com/package/ids-enterprise).
 

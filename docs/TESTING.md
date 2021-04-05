@@ -194,7 +194,7 @@ If you had a previous VM with travis-debug you may need to rename it. Do a renam
 
 1. Test the image with `cat /etc/os-release` , you should see `16.04.6 LTS (Xenial Xerus)`.
 1. Change to the designated folder with `cd ~` and then `cd enterprise`.
-1. Use git commands to get the needed branch `git status` (you start on master).
+1. Use git commands to get the needed branch `git status` (you start on main).
 
 #### Clean the docker image
 
