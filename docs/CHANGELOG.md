@@ -2,6 +2,10 @@
 
 ## v4.51.0
 
+### v4.51.0 Fixes
+- `[Datagrid]` Fixed an issue where stretching the last column of a table was not consistent when resizing the window. ([#5045](https://github.com/infor-design/enterprise/issues/5045))
+- `[Datagrid]` Fixed an issue where setting stretchColumn to 'last' did not stretch the last column in the table. ([#4913](https://github.com/infor-design/enterprise/issues/4913))
+
 ### v4.51.0 Issues
 
 - `[General]` Placeholder - remove me if your first. ([#5012](https://github.com/infor-design/enterprise/issues/5012))
