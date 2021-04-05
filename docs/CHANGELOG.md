@@ -4,7 +4,7 @@
 
 ### v4.51.0 Issues
 
-- `[General]` Placeholder - remove me if your first. ([#5012](https://github.com/infor-design/enterprise/issues/5012))
+- `[General]` The master branch is now called main. Also cleaned up some language in the repo known to be less inclusive. ([#5027](https://github.com/infor-design/enterprise/issues/5027))
 
 ## v4.50.0
 
