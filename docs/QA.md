@@ -4,7 +4,7 @@ This document describes our QA process at a super high level. For more details s
 
 ## Demo App Links
 
-- [Bleeding Edge](http://master-enterprise.demo.design.infor.com/components)
+- [Bleeding Edge](http://main-enterprise.demo.design.infor.com/components)
 - [Latest Stable](http://latest-enterprise.demo.design.infor.com/components)
 
 We have generally One Month Cycles for versions/QA.

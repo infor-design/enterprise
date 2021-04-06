@@ -4,7 +4,7 @@
 
 When doing a dev release a daily dated semver will be published to npm.
 
-1. Make sure you are on `master` and its clean
+1. Make sure you are on `main` and its clean
 1. Make sure you are authenticated with npm cli (`npm login`)
 1. `npm run release:dev`
 
@@ -76,22 +76,22 @@ git config --global credential.helper wincred
     - **Always** verify the release version when the script asks. You MAY have to use a different release-it command than what we provide with the NPM script.
     - You may get warnings about the release you are trying to do, will not line up with the previous tag. This is usually nothing, but spend a minute or two to think through it.
 
-1. Set the master branch to the next minor dev version. For example if we made branch `4.23.x`, then the `master` package.json version should now be changed to `4.24.0-dev`
+1. Set the main branch to the next minor dev version. For example if we made branch `4.23.x`, then the `main` package.json version should now be changed to `4.24.0-dev`
 1. Check that the build is running after for the deploy on the [Jenkins Server](http://jenkins.design.infor.com:8080/job/soho-kubernetes-deploy/)
 1. Watch Ms Teams for a posted release and notify QA for beta and minor
 
 For a final release, finish with:
 
-1. Manually merge the version branch into `master`. Do **NOT** use a pull request. (You will need github push permissions for this). For merging you could use the commands:
+1. Manually merge the version branch into `main`. Do **NOT** use a pull request. (You will need github push permissions for this). For merging you could use the commands:
 
 ```sh
-git checkout master
-git pull origin master
+git checkout main
+git pull origin main
 git merge {branch name}
-git push origin master
+git push origin main
 ```
 
-1. Verify the `package.json` version on master is what it should be (usually the next minor version with a `-dev` suffix)
+1. Verify the `package.json` version on main is what it should be (usually the next minor version with a `-dev` suffix)
 1. Post a message in announcements on ms teams (for final releases only).
 
 ## Verifying The Release

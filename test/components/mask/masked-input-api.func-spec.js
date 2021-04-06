@@ -24,7 +24,7 @@ describe('Mask Input Field Api', () => {
     Locale.set('en-US');
   });
 
-  it('Should pass a basic sanity test', () => {
+  it('Should pass a basic confidence test', () => {
     expect(window.Soho).toBeDefined();
     expect(window.Soho.masks).toBeDefined();
     expect(window.Soho.components.MaskInput).toBeDefined();

@@ -4,7 +4,7 @@ about: Create a report to help us improve
 
 ---
 
-<!-- Please be aware that this is a publicly visible bug report. Do not post any credentials, screenshots with proprietary information, or anything you think shouldn't be visible to the world. If private information is required to be shared for a quality bug report, please email one of the [code owners](https://github.com/infor-design/enterprise/blob/master/.github/CODEOWNERS) directly. -->
+<!-- Please be aware that this is a publicly visible bug report. Do not post any credentials, screenshots with proprietary information, or anything you think shouldn't be visible to the world. If private information is required to be shared for a quality bug report, please email one of the [code owners](https://github.com/infor-design/enterprise/blob/main/.github/CODEOWNERS) directly. -->
 
 **Describe the bug**
 A clear and concise description of what the bug is.

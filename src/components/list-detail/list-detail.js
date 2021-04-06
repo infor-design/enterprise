@@ -110,8 +110,8 @@ ListDetail.prototype = {
     this.setInternalElementReference('backElement');
     this.setInternalElementReference('listCloseElement');
     this.setInternalElementReference('toggleElement');
-    
-    // Single sanity-check for showing the detail area.
+
+    // Single confidence check for showing the detail area.
     this.showDetail = false;
     if (this.element.classList.contains('show-detail')) {
       this.showDetail = true;

@@ -91,7 +91,7 @@ Locale.set('it-lT').done(() => {
 
 ## Code Example - Adding an entirely new Locale
 
-It is possible to add a new locale that is not supported by Infor (yet). To do this you need to make a new file like <a href="https://github.com/infor-design/enterprise/tree/master/src/components/locale/cultures" target="_blank">any of these locales</a> and place this file in your cultures folder on the server. You also need to add the new locale to the `defaultLocales` and `supportedLocales` sets. Then you can use it. If you do this consider making a Pull Request to get your new locale added to the core code for others.
+It is possible to add a new locale that is not supported by Infor (yet). To do this you need to make a new file like <a href="https://github.com/infor-design/enterprise/tree/main/src/components/locale/cultures" target="_blank">any of these locales</a> and place this file in your cultures folder on the server. You also need to add the new locale to the `defaultLocales` and `supportedLocales` sets. Then you can use it. If you do this consider making a Pull Request to get your new locale added to the core code for others.
 
 ```javascript
 Locale.defaultLocales.push({ lang: 'la', default: 'la-IT' });
@@ -244,7 +244,7 @@ The following options are supported:
 
 - `pattern` - You can specify a specific date pattern to use.
 - `fromGregorian` - When using an arabic format, the date will first be converted to umalqura when specifying this option.
-- `date` - This can be 'short', 'medium', 'long' or 'timestamp' and will return the current locales format for the corresponding length of the date. <a href="https://github.com/infor-design/enterprise/blob/master/src/components/locale/cultures/en-US.js#L15" target="_blank">Other examples can be found here</a>
+- `date` - This can be 'short', 'medium', 'long' or 'timestamp' and will return the current locales format for the corresponding length of the date. <a href="https://github.com/infor-design/enterprise/blob/main/src/components/locale/cultures/en-US.js#L15" target="_blank">Other examples can be found here</a>
 
 ## Date and Time Format Patterns
 
@@ -299,7 +299,7 @@ columns.push({ id: 'orderDate', name: 'Long Timezone (Custom)', field: 'orderDat
 
 ## Currently Supported Locales
 
-For a list of all the supported components see the <a href="https://github.com/infor-design/enterprise/tree/master/src/components/locale/cultures" target="_blank">local component source</a>.
+For a list of all the supported components see the <a href="https://github.com/infor-design/enterprise/tree/main/src/components/locale/cultures" target="_blank">local component source</a>.
 
 ## Upgrading from 3.X
 
