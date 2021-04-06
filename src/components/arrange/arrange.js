@@ -40,7 +40,7 @@ function Arrange(element, settings) {
 // Arrange Methods
 Arrange.prototype = {
 
-  // example from: https://github.com/farhadi/html5arrangeable/blob/master/jquery.arrangeable.js
+  // example from: https://github.com/farhadi/html5arrangeable
   init() {
     this.isTouch = env.features.touch;
     this.isIe = env.browser.name === 'ie';
@@ -263,7 +263,7 @@ Arrange.prototype = {
           } else {
             const dt = e.originalEvent.dataTransfer;
             dt.effectAllowed = 'move';
-            dt.setData('Text', 'dummy');
+            dt.setData('Text', 'sample');
           }
         })
 

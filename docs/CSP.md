@@ -41,7 +41,7 @@ Created these notes while attempting to pass [CSP](https://csp.withgoogle.com/do
 
 ### Improper Neutralization of Script-Related HTML Tags in a Web Page (Basic XSS)
 
-Something like `elem.html(markup);` will trigger this warning. To address we should use whitelisting for example:
+Something like `elem.html(markup);` will trigger this warning. To address we should use an allowList for example:
 
 ```javascript
 DOM.html(elem, markup, '<span><div>');'

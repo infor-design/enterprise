@@ -67,7 +67,7 @@ The form style can be used on its own, like the example below.
 </form>
 ```
 
-Additionally, a master/detail format can be applied:
+Additionally, a main/detail format can be applied:
 
 ```html
 <div id="maincontent" class="form-compact-container banner-detail" role="main">

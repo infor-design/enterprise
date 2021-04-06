@@ -24,7 +24,7 @@ Guidelines for bug reports:
 1. **Git issue search** - check if the issue has already been
    reported.
 
-2. **Check if the issue has been fixed** - try to reproduce it using the latest `master`.
+2. **Check if the issue has been fixed** - try to reproduce it using the latest `main`.
 
 3. **Isolate the problem** - create a [reduced test case](http://css-tricks.com/6263-reduced-test-cases/) and a live example.
 
@@ -62,7 +62,7 @@ If you'd like to submit a pull request you'll need to do the following:
 1. **[Forking the repo](https://help.github.com/articles/fork-a-repo/)**. Navigate to [Github Repository](https://github.com/infor-design/enterprise) and click the "Fork" button in the top right corner of your browser.
 1. **[Clone the Repository](https://help.github.com/articles/cloning-a-repository/)** to your machine.
 1. **Make your changes** to your local fork for the proper branch.
-    - Almost all development will be done on branches from `master`.
+    - Almost all development will be done on branches from `main`.
     - Occasionally there will be a need to contribute to a version branch (i.e. `4.9.x`) in which case you want to branch off of one of those.
     - If you are unsure, just ask someone on the team so you don't have to redo your branch.
 1. Remember to make an **e2e or functional test** for your case.
@@ -91,7 +91,7 @@ If you'd like to submit a pull request you'll need to do the following:
 1. **Push your changes to your remote repository.**  Use `git push {remote} {branch}` to push your changes to your branch on the remote repository.
 1. **[Create a pull request](https://help.github.com/articles/creating-a-pull-request/)**
     1. Request to the proper branch
-        - Normal changes get merged into `master`
+        - Normal changes get merged into `main`
         - Version specific changes need to go into that specific version branch
     1. The pull request title should follow this format:
         - `{Issue Number} - Brief description of fix`
@@ -106,4 +106,4 @@ See [help.github.com](https://help.github.com/) for further information.
 
 Never underestimate just how useful quality assurance is. If you're looking to get involved with the code base and don't know where to start, start by checking out and testing a pull request.
 
-Essentially though, check out the latest master, take it for a spin, and if you find anything odd, please follow the [bug report guidelines](#bug-reports) and let us know!
+Essentially though, check out the latest main, take it for a spin, and if you find anything odd, please follow the [bug report guidelines](#bug-reports) and let us know!

@@ -12,7 +12,7 @@ demo:
     slug: example-tree-detail
   - name: Header / Detail
     slug: example-header-detail
-  - name: Master / Detail
+  - name: Main / Master / Detail
     slug: example-master-detail
   - name: List / Detail
     slug: example-list-detail

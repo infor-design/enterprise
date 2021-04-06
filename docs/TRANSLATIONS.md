@@ -28,4 +28,4 @@ When you get the file back.
 ## Dates and numbers
 
 All the date and number info in each file comes from or is derived from the <http://cldr.unicode.org/>.
-There is a JSON download with the info. Use the en-US.js master file for organization and copy the stuff for each locale.
+There is a JSON download with the info. Use the en-US.js main file for organization and copy the stuff for each locale.
