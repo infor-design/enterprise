@@ -4,7 +4,7 @@
 
 ### v4.51.0 Issues
 
-- `[General]` Placeholder - remove me if your first. ([#5012](https://github.com/infor-design/enterprise/issues/5012))
+- `[Circlepager]` Fixed a bug where circle buttons doesn't work on smaller viewport and first initialization of the page. ([#4966](https://github.com/infor-design/enterprise/issues/4966))
 
 ## v4.50.0
 
