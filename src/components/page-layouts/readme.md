@@ -51,9 +51,9 @@ Most of the examples require the a the following structure the body of the page.
 </html>
 ```
 
-### Single Record Edit / Master Detail
+### Single Record Edit / Main Detail
 
-We also have a number of detail patterns (tree-detail master-detail ect). Details for these can be found on the [page patterns page]( ./page-patterns)
+We also have a number of detail patterns (tree-detail main-detail ect). Details for these can be found on the [page patterns page]( ./page-patterns)
 
 ## Layout Examples
 

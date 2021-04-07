@@ -1,7 +1,7 @@
 const logger = require('../logger');
 
 // Matches required font weights as defined by the Design System:
-// https://github.com/infor-design/design-system/blob/master/design-tokens/theme-new/theme.json#L80-L84
+// https://github.com/infor-design/design-system/blob/main/design-tokens/theme-new/theme.json#L80-L84
 const STANDARD_WEIGHTS = [
   '300',
   '400',

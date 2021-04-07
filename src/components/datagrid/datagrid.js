@@ -4801,19 +4801,21 @@ Datagrid.prototype = {
 
     this.totalWidths[container] += col.hidden ? 0 : colWidth;
 
-    if (this.settings.stretchColumn !== 'last' && this.settings.stretchColumn !== null &&
-      this.settings.stretchColumn === col.id) {
-      this.stretchColumnIdx = index;
-      this.stretchColumnWidth = colWidth;
-      return ' style="width: 99%"';
-    }
-
     // For the last column stretch it if it doesnt fit the area
     if (lastColumn) {
       const diff = this.elemWidth - this.totalWidths[container];
 
       if (this.settings.stretchColumn !== 'last' && this.settings.stretchColumn !== null) {
         this.stretchColumnDiff = diff;
+      }
+
+      if (this.settings.stretchColumn === 'last' || this.settings.stretchColumn === col.id) {
+        this.stretchColumnIdx = index;
+        if (diff < colWidth) {
+          this.stretchColumnWidth = colWidth;
+        } else {
+          this.stretchColumnDiff = colWidth = diff;
+        }
       }
 
       if (this.hasLeftPane) {
@@ -4823,6 +4825,13 @@ Datagrid.prototype = {
       if (this.hasRightPane) {
         this.tableRight.css('width', this.totalWidths.right);
       }
+    }
+
+    if (this.settings.stretchColumn !== 'last' && this.settings.stretchColumn !== null &&
+      this.settings.stretchColumn === col.id) {
+      this.stretchColumnIdx = index;
+      this.stretchColumnWidth = colWidth;
+      return ' style="width: 99%"';
     }
 
     if (!this.widthPercent && colWidth === undefined) {
@@ -6488,7 +6497,7 @@ Datagrid.prototype = {
 
         if (self.stretchColumnDiff > 0 || self.stretchColumnWidth > 0) {
           const currentCol = self.bodyColGroup.find('col').eq(self.getStretchColumnIdx())[0];
-          currentCol.style.width = `${self.stretchColumnDiff > 0 ? '99%' : `${self.stretchColumnWidth}px`}`;
+          currentCol.style.width = `${self.stretchColumnDiff > 0 ? `${self.stretchColumnDiff}px` : `${self.stretchColumnWidth}px`}`;
         }
       });
     }

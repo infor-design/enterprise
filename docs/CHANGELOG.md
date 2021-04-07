@@ -2,9 +2,15 @@
 
 ## v4.51.0
 
+### v4.51.0 Fixes
+
+- `[Datagrid]` Fixed an issue where stretching the last column of a table was not consistent when resizing the window. ([#5045](https://github.com/infor-design/enterprise/issues/5045))
+- `[Datagrid]` Fixed an issue where setting stretchColumn to 'last' did not stretch the last column in the table. ([#4913](https://github.com/infor-design/enterprise/issues/4913))
+
 ### v4.51.0 Issues
 
 - `[Circlepager]` Fixed a bug where circle buttons doesn't work on smaller viewport and first initialization of the page. ([#4966](https://github.com/infor-design/enterprise/issues/4966))
+- `[General]` The master branch is now called main. Also cleaned up some language in the repo known to be less inclusive. ([#5027](https://github.com/infor-design/enterprise/issues/5027))
 
 ## v4.50.0
 
@@ -437,7 +443,7 @@
 
 ### v4.32.0 Important Notes
 
-- `[Colors]` In Uplift (Vibrant) theme there is no longer any colors in graphite. All are slate. This involved bringing in a new version 3.0 of the design system with some breaking changes you should not if using the tokens directly. See the [design system change log](https://github.com/infor-design/design-system/blob/master/docs/CHANGELOG.md) for details. ([#4206](https://github.com/infor-design/enterprise/issues/4206))
+- `[Colors]` In Uplift (Vibrant) theme there is no longer any colors in graphite. All are slate. This involved bringing in a new version 3.0 of the design system with some breaking changes you should not if using the tokens directly. See the [design system change log](https://github.com/infor-design/design-system/blob/main/docs/CHANGELOG.md) for details. ([#4206](https://github.com/infor-design/enterprise/issues/4206))
 
 ### v4.32.0 Features
 
@@ -615,7 +621,7 @@
 
 ### v4.30.0 Announcements
 
-- `[Datagrid]` The rowHeight setting has been changed to support extra-small, small, medium and large. short and normal are deprecated. If you have a custom toolbar you may need to update your [markup](https://github.com/infor-design/enterprise/blob/master/app/views/components/datagrid/example-custom-toolbar.html#L40-L44). ([#3755](https://github.com/infor-design/enterprise/issues/3755))
+- `[Datagrid]` The rowHeight setting has been changed to support extra-small, small, medium and large. short and normal are deprecated. If you have a custom toolbar you may need to update your [markup](https://github.com/infor-design/enterprise/blob/main/app/views/components/datagrid/example-custom-toolbar.html#L40-L44). ([#3755](https://github.com/infor-design/enterprise/issues/3755))
 
 ### v4.30.0 Features
 
@@ -1764,7 +1770,7 @@
 ## v4.17.0
 
 - [Npm Package](https://www.npmjs.com/package/ids-enterprise)
-- [IDS Enterprise Angular Change Log](https://github.com/infor-design/enterprise-ng/blob/master/docs/CHANGELOG.md)
+- [IDS Enterprise Angular Change Log](https://github.com/infor-design/enterprise-ng/blob/main/docs/CHANGELOG.md)
 
 ### v4.17.0 Future Deprecation
 
@@ -1819,14 +1825,14 @@
 
 - `[Css/Sass]` Replaced font-size numerical declarations with their ids-identity token counterpart. ([#1640](https://github.com/infor-design/enterprise/issues/1640))
 - `[Demoapp]` Removed query parameter for changing fonts. ([#1747](https://github.com/infor-design/enterprise/issues/1747))
-- `[Build]` Added a process to notify developers that things are being deprecated or going away. Documented the current deprecations in this system and made [notes for developers](https://github.com/infor-design/enterprise/blob/master/docs/CODING-STANDARDS.md#deprecations). ([#1747](https://github.com/infor-design/enterprise/issues/1747))
+- `[Build]` Added a process to notify developers that things are being deprecated or going away. Documented the current deprecations in this system and made [notes for developers](https://github.com/infor-design/enterprise/blob/main/docs/CODING-STANDARDS.md#deprecations). ([#1747](https://github.com/infor-design/enterprise/issues/1747))
 
 (30 Issues Solved This Release, Backlog Enterprise 224, Backlog Ng 59, 785 Functional Tests, 793 e2e Tests)
 
 ## v4.16.0
 
 - [Npm Package](https://www.npmjs.com/package/ids-enterprise)
-- [IDS Enterprise Angular Change Log](https://github.com/infor-design/enterprise-ng/blob/master/docs/CHANGELOG.md)
+- [IDS Enterprise Angular Change Log](https://github.com/infor-design/enterprise-ng/blob/main/docs/CHANGELOG.md)
 
 ### v4.16.0 Features
 
@@ -1884,7 +1890,7 @@
 ## v4.15.0
 
 - [Npm Package](https://www.npmjs.com/package/ids-enterprise)
-- [IDS Enterprise Angular Change Log](https://github.com/infor-design/enterprise-ng/blob/master/docs/CHANGELOG.md)
+- [IDS Enterprise Angular Change Log](https://github.com/infor-design/enterprise-ng/blob/main/docs/CHANGELOG.md)
 
 ### v4.15.0 Features
 
@@ -1951,7 +1957,7 @@
 ## v4.14.0
 
 - [Npm Package](https://www.npmjs.com/package/ids-enterprise)
-- [IDS Enterprise Angular Change Log](https://github.com/infor-design/enterprise-ng/blob/master/docs/CHANGELOG.md)
+- [IDS Enterprise Angular Change Log](https://github.com/infor-design/enterprise-ng/blob/main/docs/CHANGELOG.md)
 
 ### v4.14.0 Features
 
@@ -2006,7 +2012,7 @@
 ## v4.13.0
 
 - [Npm Package](https://www.npmjs.com/package/ids-enterprise)
-- [IDS Enterprise Angular Change Log](https://github.com/infor-design/enterprise-ng/blob/master/docs/CHANGELOG.md)
+- [IDS Enterprise Angular Change Log](https://github.com/infor-design/enterprise-ng/blob/main/docs/CHANGELOG.md)
 
 ### v4.13.0 Features
 
@@ -2083,7 +2089,7 @@
 ## v4.12.0
 
 - [Npm Package](https://www.npmjs.com/package/ids-enterprise)
-- [IDS Enterprise Angular Change Log](https://github.com/infor-design/enterprise-ng/blob/master/docs/CHANGELOG.md)
+- [IDS Enterprise Angular Change Log](https://github.com/infor-design/enterprise-ng/blob/main/docs/CHANGELOG.md)
 
 ### v4.12.0 Features
 
@@ -2132,7 +2138,7 @@
 ## v4.11.0
 
 - [Npm Package](https://www.npmjs.com/package/ids-enterprise)
-- [IDS Enterprise Angular Change Log](https://github.com/infor-design/enterprise-ng/blob/master/docs/CHANGELOG.md)
+- [IDS Enterprise Angular Change Log](https://github.com/infor-design/enterprise-ng/blob/main/docs/CHANGELOG.md)
 
 ### v4.11.0 Features
 
@@ -2191,7 +2197,7 @@
 ## v4.10.0
 
 - [Npm Package](https://www.npmjs.com/package/ids-enterprise)
-- [IDS Enterprise Angular Change Log](https://github.com/infor-design/enterprise-ng/blob/master/docs/CHANGELOG.md)
+- [IDS Enterprise Angular Change Log](https://github.com/infor-design/enterprise-ng/blob/main/docs/CHANGELOG.md)
 
 ### v4.10.0 Features
 
@@ -2238,7 +2244,7 @@
 ## v4.9.0
 
 - [Npm Package](https://www.npmjs.com/package/ids-enterprise)
-- [IDS Enterprise Angular Change Log](https://github.com/infor-design/enterprise-ng/blob/master/docs/CHANGELOG.md)
+- [IDS Enterprise Angular Change Log](https://github.com/infor-design/enterprise-ng/blob/main/docs/CHANGELOG.md)
 
 ### v4.9.0 Features
 
@@ -2282,7 +2288,7 @@
 ## v4.8.0
 
 - [Npm Package](https://www.npmjs.com/package/ids-enterprise)
-- [IDS Enterprise Angular Change Log](https://github.com/infor-design/enterprise-ng/blob/master/docs/CHANGELOG.md)
+- [IDS Enterprise Angular Change Log](https://github.com/infor-design/enterprise-ng/blob/main/docs/CHANGELOG.md)
 
 ### v4.8.0 Features
 
@@ -2346,7 +2352,7 @@
 
 - [Full Jira Release Notes](https://bit.ly/2HyT3zF)
 - [Npm Package](https://www.npmjs.com/package/ids-enterprise)
-- [IDS Enterprise Angular Change Log](https://github.com/infor-design/enterprise-ng/blob/master/docs/CHANGELOG.md)
+- [IDS Enterprise Angular Change Log](https://github.com/infor-design/enterprise-ng/blob/main/docs/CHANGELOG.md)
 
 ### v4.7.0 Features
 
@@ -2409,7 +2415,7 @@
 
 - [Full Jira Release Notes](https://bit.ly/2jodbem)
 - [Npm Package](http://npm.infor.com)
-- [IDS Enterprise Angular Change Log](https://github.com/infor-design/enterprise-ng/blob/master/docs/CHANGELOG.md)
+- [IDS Enterprise Angular Change Log](https://github.com/infor-design/enterprise-ng/blob/main/docs/CHANGELOG.md)
 
 ### v4.6.0 Key New Features
 

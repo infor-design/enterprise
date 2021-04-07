@@ -72,7 +72,7 @@ function getBaseVersion(str) {
 console.log('Manually publish a nightly build...');
 
 if (pkgJson.version.indexOf('-dev') === -1) {
-  console.log('Error! Cannot append date to non-dev version. Are you on the master branch?');
+  console.log('Error! Cannot append date to non-dev version. Are you on the main branch?');
   return false;
 }
 

@@ -43,9 +43,9 @@ The following classes can be used for form and label alignment.
 - `compound-field` - Used to put several fields next to each other in a row. This may be used for related fields like phone + extension [See Example](./demo/components/form/example-forms?font=source-sans)
 - `form-layout-compact` - Used to set the form fields in a more compact mode so more fields can fit in the page. [See Example](./demo/components/form/example-compact-mode?font=source-sans)
 
-### Single Record Edit / Master Detail
+### Single Record Edit / Main Detail
 
-We also have a number of detail patterns (tree-detail master-detail ect). Details for these can be found on the [page patterns page]( ./page-patterns)
+We also have a number of detail patterns (tree-detail main-detail ect). Details for these can be found on the [page patterns page]( ./page-patterns)
 
 ## Accessibility
 
