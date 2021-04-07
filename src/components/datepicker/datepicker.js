@@ -173,7 +173,7 @@ DatePicker.prototype = {
     if (next.is('button.trigger')) {
       this.trigger = next;
     } else {
-      this.trigger = $(`<button class="btn-icon trigger">
+      this.trigger = $(`<button class="btn-icon trigger" type="button">
         <span class="audible"></span>
         ${$.createIcon('calendar')}
       </button>`).insertAfter(this.element);

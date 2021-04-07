@@ -184,7 +184,7 @@ Lookup.prototype = {
     if (next.is('button.trigger')) {
       this.icon = next;
     } else {
-      this.icon = $(`<button class="btn-icon trigger">
+      this.icon = $(`<button class="btn-icon trigger" type="button">
         <span class="audible"></span>
         ${$.createIcon(this.settings.icon)}
       </button>`);
