@@ -229,6 +229,7 @@ CirclePager.prototype = {
         this.handleEvents();
         this.initActiveSlide();
         this.showCollapsedView();
+        this.removeOverflowedControls();
       }, 0);
     }
   },
@@ -352,6 +353,19 @@ CirclePager.prototype = {
       this.slidesJQ[i].style.width = `${((100 / this.slidesToShow) / this.slides.length)}%`;
     }
     this.show();
+  },
+
+  /**
+   * This will remove excess control elements that don't need.
+   * @private
+   * @returns {void}
+   */
+  removeOverflowedControls() {
+    const mainControls = this.controlButtons.parent();
+    const siblingControls = mainControls[0].nextElementSibling;
+    if (mainControls.length > 1 && siblingControls) {
+      siblingControls.remove();
+    }
   },
 
   /**
