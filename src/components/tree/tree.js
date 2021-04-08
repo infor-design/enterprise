@@ -695,37 +695,90 @@ Tree.prototype = {
   },
 
   /**
+   * Get node as jQuery wrapped element reference to a tree node.
+   * @param {string|jQuery[]|HTMLElement} node nodeID, jQuery element or HTML element.
+   * @returns {jQuery[]} a jQuery wrapped element reference to a tree node.
+   */
+  getNodeAsJQ(node) {
+    if (typeof node === 'string') {
+      return $(`#${node}`);
+    }
+    return this.isjQuery(node) ? node : $(node);
+  },
+
+  /**
+   * Expand the given node.
+   * @param {object} node - a jQuery-wrapped element reference to a tree node.
+   * @param {boolean} isSelect - make selected if true.
+   * @returns {void}
+   */
+  expandNode(node, isSelect) {
+    const targetNode = this.getNodeAsJQ(node);
+    const noSelect = !this.isTrue(isSelect);
+    this.toggleNode(targetNode, null, { isExpandNode: true, noSelect });
+  },
+
+  /**
+   * Collaps the given node.
+   * @param {object} node - a jQuery-wrapped element reference to a tree node.
+   * @param {boolean} isSelect - make selected if true.
+   * @returns {void}
+   */
+  collapseNode(node, isSelect) {
+    const targetNode = this.getNodeAsJQ(node);
+    const noSelect = !this.isTrue(isSelect);
+    this.toggleNode(targetNode, null, { isExpandNode: false, noSelect });
+  },
+
+  /**
    * Changes a node's open/close status to its opposite form.
    * @param {object} node - a jQuery-wrapped element reference to a tree node.
    * @param {object} e jquery event
+   * @param {object} opt The options expand/collapse node and/or selection.
    * @returns {void}
    */
-  toggleNode(node, e) {
+  toggleNode(node, e, opt) {
     const next = node.next();
     const self = this;
     const s = this.settings;
     let result;
+
+    // Check if given value is boolean type.
+    const isBool = (value) => {
+      let r = false;
+      if (typeof value === 'boolean') {
+        r = true;
+      } else if (typeof value === 'string') {
+        const valueLowerCase = value.toLowerCase();
+        if (valueLowerCase === 'true' || valueLowerCase === 'false') {
+          r = true;
+        }
+      }
+      return r;
+    };
+
     if (next[0] && next[0].tagName.toLowerCase() === 'ul' && next[0].getAttribute('role') === 'group') {
       const currentIcon = node.find('svg.icon-tree').getIconName();
 
-      if (DOM.hasClass(next[0], 'is-open')) {
+      // Collapse node
+      const collapseNode = (noSelect) => {
         if (typeof s.onCollapse === 'function') {
           result = s.onCollapse(node);
           if (result && result.done && typeof result.done === 'function') { // A promise is returned
             result.done((continueSelectNode) => {
-              if (continueSelectNode) {
+              if (continueSelectNode && !noSelect) {
                 self.selectNodeFinish(node, focus, e);
               }
             });
-          } else if (result) { // Boolean is returned instead of a promise
+          } else if (result && !noSelect) { // Boolean is returned instead of a promise
             self.selectNodeFinish(node, focus, e);
           }
-        } else if (s.expandTarget === 'icon') {
+        } else if (s.expandTarget === 'icon' && !noSelect) {
           const parent = node[0].parentNode;
           if (e && DOM.hasClass(e.target, 'icon') && DOM.hasClass(parent, 'folder')) {
             self.selectNodeFinish(node, focus, e);
           }
-        } else { // No Callback specified
+        } else if (!noSelect) { // No Callback specified
           self.selectNodeFinish(node, focus, e);
         }
 
@@ -733,22 +786,28 @@ Tree.prototype = {
         if (currentIcon === s.folderIconOpen || s.useExpandTarget) {
           self.setFolderIcon(node, false, false, s.expandPlusminusRotate);
         } else if (/open|close/g.test(currentIcon) && !s.useExpandTarget) {
-          self.setTreeIcon(node.find('svg.icon-tree'),
-            currentIcon.replace('open', 'closed').replace(/\s?is-selected/, ''));
+          let icon = currentIcon.replace('open', 'closed');
+          if (!noSelect) {
+            icon = icon.replace(/\s?is-selected/, '');
+          }
+          self.setTreeIcon(node.find('svg.icon-tree'), icon);
         }
 
         const parentNode = node.closest('.folder a');
         if (self.hasIconClass(parentNode)) {
           const nodeClass = parentNode.attr('class');
           if (/open|close/g.test(nodeClass) || s.useExpandTarget) {
-            self.setTreeIcon(parentNode.find('svg.icon-tree'),
-              nodeClass.replace('open', 'closed').replace(/\s?is-selected/, ''));
+            let icon = nodeClass.replace('open', 'closed');
+            if (!noSelect) {
+              icon = icon.replace(/\s?is-selected/, '');
+            }
+            self.setTreeIcon(parentNode.find('svg.icon-tree'), icon);
           }
         }
 
         self.isAnimating = true;
 
-        if (!self.isMultiselect && !s.expandTarget === 'icon') {
+        if (!self.isMultiselect && !s.expandTarget === 'icon' && !noSelect) {
           self.unSelectedNode(node.parent().find('li.is-selected'), false);
           DOM.removeClass(node[0], 'is-selected');
         }
@@ -759,24 +818,29 @@ Tree.prototype = {
         }).animateClosed();
 
         node[0].setAttribute('aria-expanded', node[0].getAttribute('aria-expanded') !== 'true');
-      } else {
+
+        self.element.triggerHandler('collapsed', { node, data: node.data('jsonData') });
+      };
+
+      // Expand node
+      const expandNode = (noSelect) => {
         if (typeof s.onExpand === 'function') {
           result = s.onExpand(node);
           if (result && result.done && typeof result.done === 'function') { // A promise is returned
             result.done((continueSelectNode) => {
-              if (continueSelectNode) {
+              if (continueSelectNode && !noSelect) {
                 self.selectNodeFinish(node, focus, e);
               }
             });
-          } else if (result) { // Boolean is returned instead of a promise
+          } else if (result && !noSelect) { // Boolean is returned instead of a promise
             self.selectNodeFinish(node, focus, e);
           }
-        } else if (s.expandTarget === 'icon') {
+        } else if (s.expandTarget === 'icon' && !noSelect) {
           const parent = node[0].parentNode;
           if (e && DOM.hasClass(e.target, 'icon') && DOM.hasClass(parent, 'folder')) {
             self.selectNodeFinish(node, focus, e);
           }
-        } else { // No Callback specified
+        } else if (!noSelect) { // No Callback specified
           self.selectNodeFinish(node, focus, e);
         }
 
@@ -799,14 +863,17 @@ Tree.prototype = {
             // Sync data on node
             nodeData.children = nodes;
             node.data('jsonData', nodeData);
+            node.data(`${COMPONENT_NAME}Api`, self);
             if (DOM.hasClass(node[0].parentNode, 'folder')) {
               self.childrenCountInit(node[0].parentNode);
             }
 
-            if (!self.isMultiselect && !s.expandTarget === 'icon') {
+            if (!self.isMultiselect && !s.expandTarget === 'icon' && !noSelect) {
               self.selectNode(node, true);
             }
-            self.initSelected();
+            if (!noSelect) {
+              self.initSelected();
+            }
           };
 
           const args = { node, data: node.data('jsonData') };
@@ -819,10 +886,29 @@ Tree.prototype = {
         if (currentIcon === s.folderIconClosed || s.useExpandTarget) {
           self.setFolderIcon(node, true, false, s.expandPlusminusRotate);
         } else if (/open|close/g.test(currentIcon) && !s.useExpandTarget) {
-          self.setTreeIcon(node.find('svg.icon-tree'),
-            currentIcon.replace('closed', 'open').replace(/\s?is-selected/, ''));
+          let icon = currentIcon.replace('closed', 'open');
+          if (!noSelect) {
+            icon = icon.replace(/\s?is-selected/, '');
+          }
+          self.setTreeIcon(node.find('svg.icon-tree'), icon);
         }
         self.accessNode(next, node);
+
+        self.element.triggerHandler('expanded', { node, data: node.data('jsonData') });
+      };
+
+      if (typeof opt === 'object' && isBool(opt.isExpandNode)) {
+        if (opt.isExpandNode) {
+          expandNode(opt.noSelect);
+          const nodes = node.parentsUntil(this.element, 'ul[role=group]');
+          this.expandAll(nodes);
+        } else {
+          collapseNode(opt.noSelect);
+        }
+      } else if (DOM.hasClass(next[0], 'is-open')) {
+        collapseNode();
+      } else {
+        expandNode();
       }
     }
   },
@@ -887,6 +973,7 @@ Tree.prototype = {
         // Sync data on node
         nodeData.children = nodes;
         nodeTarget.data('jsonData', nodeData);
+        nodeTarget.data(`${COMPONENT_NAME}Api`, self);
         self.selectNode(nodeTarget, true);
         self.initSelected();
       };
@@ -1142,6 +1229,7 @@ Tree.prototype = {
       const a = $(node);
       const data = self.jsonData[i];
       a.data('jsonData', data);
+      a.data(`${COMPONENT_NAME}Api`, self);
       if (data.selected) {
         self.selectNode(a, data.focus);
       }
@@ -1891,6 +1979,7 @@ Tree.prototype = {
         this.addAutomationAttributes(nodeJQ, jsonData);
       }
       nodeJQ.data('jsonData', entry);
+      nodeJQ.data(`${COMPONENT_NAME}Api`, self);
     }
     return entry;
   },
@@ -2097,6 +2186,7 @@ Tree.prototype = {
     }
 
     a.data('jsonData', nodeData);
+    a.data(`${COMPONENT_NAME}Api`, self);
     this.addAutomationAttributes(a, nodeData);
     this.createSortable();
     return li;
@@ -2259,6 +2349,7 @@ Tree.prototype = {
       if (jsonData) {
         jsonData.icon = nodeData.icon;
         elem.node.data('jsonData', jsonData);
+        elem.node.data(`${COMPONENT_NAME}Api`, this);
       }
     } else if (nodeData.children && nodeData.children.length &&
       !DOM.hasClass(parent, 'folder')) {
