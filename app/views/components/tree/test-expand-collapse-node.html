@@ -1,0 +1,133 @@
+<div class="row">
+  <div class="twelve columns">
+    <h2>Tree - expandNode() / collapseNode()</h2>
+    <br/><br/>
+    <button type="button" id="btn-toggle-node" class="btn-secondary"><span class="btn-text">Toggle Node</span></button>
+    <button type="button" id="btn-toggle-all" class="btn-secondary"><span class="btn-text">Toggle All</span></button>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+    <ul role="tree" aria-label="Asset Types" class="tree" data-init="false" id="json-tree">
+    </ul>
+  </div>
+</div>
+
+<script id="test-script">
+  var sampleData = [{
+    "id": "node1",
+    "text": "Node One",
+    "open": false,
+    "selected": false,
+    "href": '/somelink/'
+  }, {
+    "id": "node2",
+    "text": "Node Two",
+    "open": true,
+    "selected": false,
+    "children": [{
+        "id": "node3",
+        "text": "Node Three"
+      }, {
+        "id": "node4",
+        "text": "Node Four",
+        "children": [{
+          "id": "node5",
+          "text": "Node Five",
+          "children": [{
+            "id": "node6",
+            "text": "Node Six",
+            "icon": "icon-tree-chart",
+            "children": [{
+              "id": "node7",
+              "text": "Node Seven"
+            }, {
+              "id": "node8",
+              "text": "Node Eight"
+            }]
+          }]
+        }]
+      }]
+  }];
+
+  var treeElem = $('#json-tree');
+
+  // Initialize tree
+  treeElem
+    .tree({ dataset: sampleData })
+    .on('selected', function (e, args) {
+      console.log('selected:', args);
+    });
+
+  // Get tree Api
+  var treeApi = treeElem.data('tree');
+
+  var btnToggleNode = $('#btn-toggle-node');
+  var btnToggleAll = $('#btn-toggle-all');
+  var btnToggleNodeTextElem = btnToggleNode.find('.btn-text');
+  var btnToggleAllTextElem = btnToggleAll.find('.btn-text');
+
+  // Set target node
+  var node = $('#node5');
+
+  // Get target node text
+  var nodeText = node.find('.tree-text').text();
+
+  // Get node state collapsed/expanded
+  var isExpanded = {
+    node: function () { return node.attr('aria-expanded') === 'true'; },
+    all: function () {
+      var all = treeElem.find('ul.folder');
+      var open = treeElem.find('ul.folder.is-open');
+      return all.length === open.length;
+    }
+  };
+
+  // Set button text based on current state
+  var setButtonText = function () {
+    var toggleText = {
+      node: (isExpanded.node() ? 'Collapse' : 'Expand') + ' (' + nodeText + ')',
+      all: isExpanded.all() ? 'Collapse All' : 'Expand All'
+    };
+    btnToggleNodeTextElem.text(toggleText.node);
+    btnToggleAllTextElem.text(toggleText.all);
+  };
+
+  // Initialize tree the button text
+  setButtonText();
+
+  // Bind toggle button text on collapsed/expanded
+  treeElem.on('collapsed expanded', function () {
+    setTimeout(function() {
+      setButtonText();
+    }, 300); // wait for animation
+  });
+
+  // Bind toggle node button on click
+  btnToggleNode.on('click', function() {
+    if (treeApi) {
+      if (isExpanded.node()) {
+        treeApi.collapseNode(node); // Pass node as jQuery element
+        // treeApi.collapseNode('node5'); // Pass nodeID as string
+        // node.collapse(); // Run on node (jQuery element)
+      } else {
+        treeApi.expandNode(node); // Pass node as jQuery element
+        // treeApi.expandNode('node5'); // Pass nodeID as string
+        // node.expand(); // Run on node (jQuery element)
+      }
+    }
+  });
+
+  // Bind toggle all button on click
+  btnToggleAll.on('click', function() {
+    if (treeApi) {
+      if (isExpanded.all()) {
+        treeApi.collapseAll();
+      } else {
+        treeApi.expandAll();
+      }
+      setButtonText();
+    }
+  });
+</script>
