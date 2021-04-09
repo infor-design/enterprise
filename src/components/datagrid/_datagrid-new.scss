@@ -268,7 +268,7 @@
   }
 }
 
-.datagrid.small-rowheight tbody tr td.datagrid-trigger-cell .icon {
+.datagrid.small-rowheight tbody tr td.datagrid-trigger-cell .trigger {
   top: 4px;
 }
 
@@ -276,10 +276,22 @@
   margin-top: -4px;
 }
 
-// Extra small mode adjustments
-.datagrid-container.extra-small-rowheight {
-  .datagrid-header .datagrid-filter-wrapper .datepicker + .icon {
-    top: -6px;
+// Small mode adjustments
+.datagrid-container.small-rowheight {
+  .datagrid-header .datagrid-filter-wrapper {
+    .datepicker,
+    .timepicker {
+      + .trigger {
+        right: 2px;
+      }
+    }
+
+    .lookup-wrapper {
+      .trigger {
+        margin-left: -22px;
+        margin-top: 2px;
+      }
+    }
   }
 }
 
@@ -292,7 +304,7 @@
 // Firefox
 .is-firefox {
   // Adjust icon for firefox
-  .datagrid-header .datagrid-filter-wrapper .timepicker + .icon {
+  .datagrid-header .datagrid-filter-wrapper .timepicker + .trigger {
     top: -2px;
   }
 
@@ -498,5 +510,36 @@
 .is-safari {
   .datagrid-header .datagrid-filter-wrapper .lookup-wrapper .searchfield-wrapper.has-close-icon-button .icon {
     top: 1px;
+  }
+}
+
+html[dir='rtl'] {
+  // Small mode adjustments
+  .datagrid-container {
+    &.small-rowheight {
+      .datagrid-header .datagrid-filter-wrapper {
+        .datepicker,
+        .timepicker {
+          + .trigger {
+            left: 16px;
+            right: auto;
+          }
+        }
+      }
+    }
+
+    &.small-rowheight,
+    &.extra-small-rowheight {
+      .datagrid-header .datagrid-filter-wrapper {
+        .lookup-wrapper {
+          .trigger {
+            left: 0;
+            margin-left: 2px;
+            margin-right: auto;
+            margin-top: 2px;
+          }
+        }
+      }
+    }
   }
 }

@@ -740,18 +740,13 @@ $datagrid-small-row-height: 25px;
           }
 
           .lookup-wrapper .trigger {
-            margin-left: -27px;
-            margin-top: 0;
+            margin-left: -22px;
+            margin-top: 1px;
           }
 
           .has-close-icon-button .icon {
             right: 19px;
             top: 5px;
-          }
-
-          .timepicker + .icon,
-          .datepicker + .icon {
-            right: 5px;
           }
 
           .dropdown-wrapper {
@@ -794,14 +789,19 @@ $datagrid-small-row-height: 25px;
         }
       }
 
-      .datepicker + .icon,
-      .timepicker + .icon {
-        right: 4px;
-        top: -4px;
+      .datepicker + .trigger,
+      .timepicker + .trigger {
+        right: 0;
+        top: -1px;
       }
 
       .dropdown-wrapper {
         left: 8px;
+      }
+
+      .lookup-wrapper .trigger {
+        margin-left: -18px;
+        margin-top: 1px;
       }
     }
 
@@ -833,11 +833,6 @@ $datagrid-small-row-height: 25px;
           &.btn-filter-checkbox {
             left: calc(50% - 10px) !important;
           }
-        }
-
-        .lookup-wrapper .trigger {
-          margin-left: -25px;
-          margin-top: -1px;
         }
 
         .has-close-icon-button .icon {
@@ -4407,9 +4402,9 @@ html[dir='rtl'] {
           left: 0 !important;
         }
 
-        .datepicker + .icon,
-        .timepicker + .icon {
-          margin-right: -18px;
+        .datepicker + .trigger,
+        .timepicker + .trigger {
+          margin-right: -22px;
           right: inherit !important;
         }
       }
