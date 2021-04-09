@@ -982,7 +982,6 @@ const Locale = {  // eslint-disable-line
     let i;
     let l;
     const ampmHasDot = !!thisLocaleCalendar.dayPeriods.filter(x => x.indexOf('.') > -1).length &&
-      // dateFormat.indexOf('.') > -1 &&
       dateFormat.indexOf('a') > -1 &&
       dateFormat.indexOf('ah') < 0 &&
       dateFormat.indexOf('H') < 0;
