@@ -30,7 +30,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: node_modules
-        key: 439
+        key: 450
 
     - name: Setup timezone
       uses: zcong1993/setup-timezone@master
