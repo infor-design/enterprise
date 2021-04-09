@@ -677,6 +677,17 @@ describe('Locale API', () => {
     expect(Locale.parseDate('18.10.2019', Locale.calendar().dateFormat.short, true).getTime()).toEqual(new Date(2019, 9, 18, 0, 0, 0).getTime());
   });
 
+  it('Should parseDate in el-GR', () => {
+    Locale.set('el-GR');
+
+    expect(Locale.parseDate('18/10/2019 7:15 π.μ.', Locale.calendar().dateFormat.datetime).getTime()).toEqual(new Date(2019, 9, 18, 7, 15, 0).getTime());
+    expect(Locale.parseDate('18/10/2019 7:15 μ.μ.', Locale.calendar().dateFormat.datetime).getTime()).toEqual(new Date(2019, 9, 18, 19, 15, 0).getTime());
+    expect(Locale.parseDate('18/10/2019 12:00 π.μ.', Locale.calendar().dateFormat.datetime).getTime()).toEqual(new Date(2019, 9, 18, 0, 0, 0).getTime());
+    expect(Locale.parseDate('18/10/2019 12:00 μ.μ.', Locale.calendar().dateFormat.datetime).getTime()).toEqual(new Date(2019, 9, 18, 12, 0, 0).getTime());
+    expect(Locale.parseDate('18/10/2019 11:59 π.μ.', Locale.calendar().dateFormat.datetime).getTime()).toEqual(new Date(2019, 9, 18, 11, 59, 0).getTime());
+    expect(Locale.parseDate('18/10/2019 11:59 μ.μ.', Locale.calendar().dateFormat.datetime).getTime()).toEqual(new Date(2019, 9, 18, 23, 59, 0).getTime());
+  });
+
   it('Should parseDate with single digit formats', () => {
     expect(Locale.parseDate('18.10.2019 7.15', 'd.M.yyyy H.mm').getTime()).toEqual(new Date(2019, 9, 18, 7, 15, 0).getTime());
     expect(Locale.parseDate('18.10.2019 7.15', 'd.M.yyyy H.mm', true).getTime()).toEqual(new Date(2019, 9, 18, 7, 15, 0).getTime());

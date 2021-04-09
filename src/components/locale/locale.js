@@ -981,6 +981,11 @@ const Locale = {  // eslint-disable-line
     const isUTC = (dateString.toLowerCase().indexOf('z') > -1);
     let i;
     let l;
+    const ampmHasDot = !!thisLocaleCalendar.dayPeriods.filter(x => x.indexOf('.') > -1).length &&
+      // dateFormat.indexOf('.') > -1 &&
+      dateFormat.indexOf('a') > -1 &&
+      dateFormat.indexOf('ah') < 0 &&
+      dateFormat.indexOf('H') < 0;
     const hasDot = (dateFormat.match(/M/g) || []).length === 3 && thisLocaleCalendar &&
       thisLocaleCalendar.months && thisLocaleCalendar.months.abbreviated &&
         thisLocaleCalendar.months.abbreviated.filter(v => /\./.test(v)).length;
@@ -996,7 +1001,8 @@ const Locale = {  // eslint-disable-line
       // Replace [space & colon & dot] with "/"
       const regex = hasDot ? /[T\s:-]/g : /[T\s:.-]/g;
       dateFormat = dateFormat.replace(regex, '/').replace(/z/i, '');
-      dateString = dateString.replace(regex, '/').replace(/z/i, '');
+      dateFormat = ampmHasDot ? dateFormat.replace('//', '/') : dateFormat;
+      dateString = dateString.replace(ampmHasDot ? /[T\s:-]/g : regex, '/').replace(/z/i, '');
     }
 
     // Remove spanish de
@@ -1104,8 +1110,13 @@ const Locale = {  // eslint-disable-line
     const year = this.getDatePart(formatParts, dateStringParts, 'yy', 'yyyy');
     let hasDays = false;
     let hasAmFirst = false;
-    const amSetting = thisLocaleCalendar.dayPeriods[0].replace(/\./g, '');
-    const pmSetting = thisLocaleCalendar.dayPeriods[1].replace(/\./g, '');
+    let amSetting = thisLocaleCalendar.dayPeriods[0];
+    let pmSetting = thisLocaleCalendar.dayPeriods[1];
+
+    if (!ampmHasDot) {
+      amSetting = amSetting.replace(/\./g, '');
+      pmSetting = pmSetting.replace(/\./g, '');
+    }
 
     for (i = 0, l = dateStringParts.length; i < l; i++) {
       const pattern = `${formatParts[i]}`;
