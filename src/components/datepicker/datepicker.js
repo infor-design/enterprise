@@ -1822,7 +1822,7 @@ DatePicker.prototype = {
   readonly() {
     this.enable();
     this.element.attr('readonly', 'readonly');
-    this.trigger.prop('disabled', true);
+    this.trigger.prop('disabled', false);
   },
 
   /**
