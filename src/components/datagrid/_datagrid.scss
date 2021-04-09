@@ -3288,7 +3288,7 @@ $datagrid-small-row-height: 25px;
         .icon {
           color: $datagrid-filter-icon-color;
           right: 11px;
-          top: 5px;
+          top: calc(50% + 2px);
 
           &:hover {
             color: $datagrid-filter-hover-color;
