@@ -17,6 +17,7 @@
 
 - `[General]` We bumped the version from 4.39 (four - thirty nine) to 4.50 (four - fifty) to correspond with the general release of Soho (IDS) Design system 4.5 so the versions sync up better. We could not use 4.5 since it was already in use previously. ([#5012](https://github.com/infor-design/enterprise/issues/5012))
 - `[General]` We Updated development dependencies. Most important things to note are: we now support node 14 for development and this is recommended. ([#4998](https://github.com/infor-design/enterprise/issues/4998))
+- `[Tabs]` Changed the target element from 'li' to 'a' to be consistent. ([#4566](https://github.com/infor-design/enterprise/issues/4566))
 
 ### v4.50.0 Fixes
 
