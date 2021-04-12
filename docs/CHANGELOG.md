@@ -6,9 +6,11 @@
 
 - `[Datagrid]` Fixed an issue where stretching the last column of a table was not consistent when resizing the window. ([#5045](https://github.com/infor-design/enterprise/issues/5045))
 - `[Datagrid]` Fixed an issue where setting stretchColumn to 'last' did not stretch the last column in the table. ([#4913](https://github.com/infor-design/enterprise/issues/4913))
+- `[Tree]` Added api support for collapse/expand node methods. ([#4707](https://github.com/infor-design/enterprise/issues/4707))
 
 ### v4.51.0 Issues
 
+- `[Circlepager]` Fixed a bug where circle buttons doesn't work on smaller viewport and first initialization of the page. ([#4966](https://github.com/infor-design/enterprise/issues/4966))
 - `[General]` The master branch is now called main. Also cleaned up some language in the repo known to be less inclusive. ([#5027](https://github.com/infor-design/enterprise/issues/5027))
 
 ## v4.50.0
