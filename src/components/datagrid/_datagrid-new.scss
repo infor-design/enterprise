@@ -127,6 +127,28 @@
         margin-top: 11px;
       }
     }
+
+    input.timepicker {
+      ~ .trigger {
+        margin-left: -7px;
+        margin-top: 14px;
+      }
+    }
+  }
+
+  &.extra-small-rowheight {
+    td.is-editing {
+      input.timepicker {
+        + .trigger {
+          margin-left: -1px;
+          margin-top: 2px;
+
+          > .icon {
+            top: -2px;
+          }
+        }
+      }
+    }
   }
 
   // Short Row Height
@@ -173,6 +195,17 @@
           margin-top: -1px;
         }
       }
+
+      input.timepicker {
+        + .trigger {
+          margin-left: -2px;
+          margin-top: -1px;
+
+          > .icon {
+            top: -2px;
+          }
+        }
+      }
     }
   }
 
@@ -188,6 +221,13 @@
         + .trigger {
           margin-left: 16px;
           margin-top: 0;
+        }
+      }
+
+      input.timepicker {
+        + .trigger {
+          margin-left: 13px;
+          margin-top: 3px;
         }
       }
     }

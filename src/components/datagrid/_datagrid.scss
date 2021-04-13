@@ -860,15 +860,23 @@ $datagrid-small-row-height: 25px;
 
     td {
       &.is-editing {
-        .btn-icon {
+        .datepicker + .trigger {
+          margin-left: 4px;
+          margin-top: 1px;
+
           > .icon {
             height: 14px;
           }
         }
 
-        .datepicker + .trigger {
-          margin-left: 4px;
+        .timepicker + .trigger {
+          margin-left: 1px;
           margin-top: 1px;
+
+          > .icon {
+            position: relative;
+            top: -1px;
+          }
         }
       }
     }
@@ -892,17 +900,33 @@ $datagrid-small-row-height: 25px;
   }
 
   &.small-rowheight {
+    .datagrid-header .datagrid-filter-wrapper {
+      .timepicker + .trigger {
+        right: 2px;
+        top: 0;
+      }
+    }
+
     td {
       &.is-editing {
-        .btn-icon {
+        .datepicker + .trigger {
+          margin-left: 4px;
+          margin-top: 3px;
+
           > .icon {
             height: 15px;
           }
         }
 
-        .datepicker + .trigger {
-          margin-left: 4px;
+        .timepicker + .trigger {
+          margin-left: 0;
           margin-top: 3px;
+
+          > .icon {
+            height: 16px;
+            position: relative;
+            top: -1px;
+          }
         }
       }
     }
@@ -998,6 +1022,11 @@ $datagrid-small-row-height: 25px;
         .datepicker + .trigger {
           margin-left: 0;
           margin-top: 8px;
+        }
+
+        .timepicker + .trigger {
+          margin-left: -1px;
+          margin-top: 9px;
         }
       }
     }
@@ -2619,6 +2648,15 @@ $datagrid-small-row-height: 25px;
           padding: 0 0 0 18px;
           width: calc(100% - 26px);
 
+          + .trigger {
+            margin-left: -5px;
+            margin-top: 13px;
+
+            .icon {
+              top: -1px;
+            }
+          }
+
           ~ .icon {
             left: auto;
             margin-left: -4px;
@@ -2720,10 +2758,6 @@ $datagrid-small-row-height: 25px;
         visibility: visible;
       }
 
-      .btn-icon > .icon {
-        top: -2px;
-      }
-
       .colorpicker-container .icon {
         margin-left: 8px;
         top: 10px;
@@ -2739,6 +2773,10 @@ $datagrid-small-row-height: 25px;
         + .trigger {
           margin-left: -1px;
           margin-top: 13px;
+
+          .icon {
+            top: -2px;
+          }
         }
 
         &:disabled .icon {
