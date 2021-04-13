@@ -81,6 +81,24 @@
   padding: 1px 0 0 5px;
 }
 
+// Adjust some trigger cells
+.datagrid-trigger-cell {
+  .icon-calendar {
+    top: 0;
+  }
+
+  .btn-icon > .icon {
+    top: 0;
+  }
+
+  // Date Picker
+  .datepicker {
+    + .trigger {
+      margin-top: 11px;
+    }
+  }
+}
+
 // Main Grid
 .datagrid {
   > tbody > tr .icon.plus-minus::before,
@@ -98,13 +116,15 @@
       }
     }
 
-    &.is-editing {
-      .datepicker {
-        margin-top: 6px;
+    .datepicker {
+      margin-top: 6px;
 
-        ~ .icon {
-          top: calc(50% - 18px);
-        }
+      ~ .icon {
+        top: calc(50% - 18px);
+      }
+
+      + .trigger {
+        margin-top: 11px;
       }
     }
   }
@@ -166,10 +186,6 @@
     margin-top: -13px !important;
   }
 
-  .datagrid-trigger-cell .icon.icon-calendar {
-    top: 1px;
-  }
-
   tbody tr td.is-editing {
     input {
       height: 22px !important;
@@ -201,7 +217,7 @@
     top: 4px !important;
   }
 
-  .datagrid-cell-wrapper, {
+  .datagrid-cell-wrapper {
     padding: 2px 8px 0;
 
     .datagrid-checkbox-wrapper {

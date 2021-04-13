@@ -661,6 +661,18 @@ $datagrid-small-row-height: 25px;
       }
     }
 
+    td {
+      &.is-editing {
+        .btn-icon {
+          > .icon {
+            margin-right: 0;
+            top: -1px;
+          }
+        }
+
+      }
+    }
+
     .datagrid-column-wrapper {
       padding: 0 8px;
       top: 0;
@@ -846,6 +858,21 @@ $datagrid-small-row-height: 25px;
       }
     }
 
+    td {
+      &.is-editing {
+        .btn-icon {
+          > .icon {
+            height: 14px;
+          }
+        }
+
+        .datepicker + .trigger {
+          margin-left: 4px;
+          margin-top: 1px;
+        }
+      }
+    }
+
     tbody tr td.datagrid-trigger-cell .icon.icon-clock {
       left: -7px !important;
       top: 3px !important;
@@ -860,6 +887,23 @@ $datagrid-small-row-height: 25px;
       .timepicker + .icon {
         margin-left: 2px !important;
         top: -4px !important;
+      }
+    }
+  }
+
+  &.small-rowheight {
+    td {
+      &.is-editing {
+        .btn-icon {
+          > .icon {
+            height: 15px;
+          }
+        }
+
+        .datepicker + .trigger {
+          margin-left: 4px;
+          margin-top: 3px;
+        }
       }
     }
   }
@@ -943,6 +987,20 @@ $datagrid-small-row-height: 25px;
       }
     }
 
+    td {
+      &.is-editing {
+        .btn-icon {
+          > .icon {
+            left: 0;
+          }
+        }
+
+        .datepicker + .trigger {
+          margin-left: 0;
+          margin-top: 8px;
+        }
+      }
+    }
   }
 }
 
@@ -2662,6 +2720,10 @@ $datagrid-small-row-height: 25px;
         visibility: visible;
       }
 
+      .btn-icon > .icon {
+        top: -2px;
+      }
+
       .colorpicker-container .icon {
         margin-left: 8px;
         top: 10px;
@@ -2674,11 +2736,9 @@ $datagrid-small-row-height: 25px;
         padding: 0 0 0 16px;
         width: calc(100% - 27px);
 
-        ~ .icon {
-          left: auto;
-          margin-left: -6px;
-          top: calc(50% - 17px);
-          width: 34px;
+        + .trigger {
+          margin-left: -1px;
+          margin-top: 13px;
         }
 
         &:disabled .icon {
@@ -3675,7 +3735,7 @@ td .btn-actions {
     width: 16px;
   }
 
-  .trigger {
+  span.trigger {
     color: $datagrid-cell-color;
     display: inline-block;
     text-align: left;
@@ -4094,8 +4154,19 @@ html[dir='rtl'] {
       }
     }
 
-    td .datagrid-expand-btn {
-      left: 2px;
+    td {
+      &.is-editing {
+        .btn-icon {
+          > .icon {
+            margin-right: 3px;
+            top: -1px;
+          }
+        }
+      }
+
+      .datagrid-expand-btn {
+        left: 2px;
+      }
     }
 
     &.small-rowheight,
@@ -4117,7 +4188,7 @@ html[dir='rtl'] {
         td {
           &.datagrid-trigger-cell {
             .icon-error {
-              margin-left: 6px !important;
+              margin-left: 6px;
             }
 
             .icon-search-list {
@@ -4133,6 +4204,70 @@ html[dir='rtl'] {
               }
             }
           }
+
+          &.is-editing {
+            .datepicker {
+              padding: 0 10px 0 0;
+            }
+          }
+        }
+      }
+    }
+
+    &.extra-small-rowheight {
+      .datagrid-trigger-cell {
+        &.has-editor:not(.is-readonly):hover {
+          .icon.icon-error {
+            margin-left: 23px !important;
+          }
+        }
+      }
+
+      tbody {
+        tr {
+          td.datagrid-trigger-cell {
+            .icon.icon-calendar {
+              left: auto;
+              right: -4px;
+            }
+          }
+        }
+      }
+
+      td {
+        &.is-editing {
+          .datepicker {
+            ~ .trigger {
+              margin-right: 2px;
+            }
+          }
+        }
+      }
+    }
+
+    &.small-rowheight {
+      tbody {
+        tr {
+          td.datagrid-trigger-cell {
+            .icon.icon-calendar {
+              left: auto;
+              right: -1px;
+            }
+
+            .icon-error {
+              top: 7px;
+            }
+          }
+        }
+      }
+
+      td {
+        &.is-editing {
+          .datepicker {
+            ~ .trigger {
+              margin-right: 2px;
+            }
+          }
         }
       }
     }
@@ -4142,6 +4277,14 @@ html[dir='rtl'] {
         &.datagrid-trigger-cell {
           .icon-search-list {
             left: 2px;
+          }
+        }
+
+        &.is-editing {
+          .datepicker {
+            ~ .trigger {
+              margin-right: -3px;
+            }
           }
         }
       }
@@ -4163,14 +4306,18 @@ html[dir='rtl'] {
         &:hover,
         &:focus {
           .icon-error {
-            margin-left: 28px;
+            margin-left: 28px !important;
           }
         }
       }
 
       &.is-editing {
-        .datepicker ~ .icon {
-          margin-right: -8px;
+        .datepicker {
+          padding: 0 16px 0 0;
+
+          ~ .trigger {
+            margin-right: -3px;
+          }
         }
 
         .dropdown-wrapper .icon {
