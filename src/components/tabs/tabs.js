@@ -2614,7 +2614,7 @@ Tabs.prototype = {
     let prevLi = targetLi.prev();
 
     if (!disableBeforeClose) {
-      const canClose = this.element.triggerHandler('beforeclose', [targetLi]);
+      const canClose = this.element.triggerHandler('beforeclose', [targetAnchor]);
       if (canClose === false) {
         return false;
       }
