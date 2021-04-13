@@ -779,8 +779,14 @@ TimePicker.prototype = {
     let parts;
     let endParts;
     const timeparts = {};
+    const timeFormat = this.settings.timeFormat;
+    const ampmHasDot = !!this.dayPeriods.filter(x => x.indexOf('.') > -1).length &&
+      val.indexOf('.') > -1 &&
+      timeFormat.indexOf('a') > -1 &&
+      timeFormat.indexOf('ah') < 0 &&
+      !this.is24HourFormat();
 
-    val = val.replace(/[T\s:.-]/g, sep).replace(/z/i, '');
+    val = val.replace((ampmHasDot ? /[T\s:-]/g : /[T\s:.-]/g), sep).replace(/z/i, '');
     val = val.replace('午', `午${sep}`);
     parts = val.split(sep);
 
@@ -956,7 +962,7 @@ TimePicker.prototype = {
     const hours = this.hourSelect ? this.hourSelect[0]?.value : '';
     const minutes = this.minuteSelect ? this.minuteSelect[0]?.value : '';
     const seconds = this.secondSelect ? this.secondSelect[0]?.value : '';
-    let period = (this.periodSelect ? this.periodSelect[0]?.value : '').toUpperCase();
+    let period = (this.periodSelect ? this.periodSelect[0]?.value : '');
     const sep = this.getTimeSeparator();
     let timeString = `${hours}${sep}${minutes}${this.hasSeconds() ? sep + seconds : ''}`;
 
