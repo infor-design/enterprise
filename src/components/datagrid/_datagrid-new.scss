@@ -109,10 +109,12 @@
   td.is-editing {
     .lookup-wrapper {
       padding-top: 5px;
+    }
 
-      .trigger {
-        margin-left: -36px;
-        margin-top: 1px;
+    input.lookup {
+      + .trigger {
+        margin-left: -32px;
+        margin-top: 8px;
       }
     }
 
@@ -255,16 +257,22 @@
     }
   }
 
-  .is-editing .lookup-wrapper .trigger {
-    margin-left: 4px !important;
-    margin-top: -13px !important;
-  }
-
   tbody tr td.is-editing {
     input {
       height: 22px !important;
       margin-left: 0;
       margin-top: 1px;
+    }
+
+    input.lookup {
+      + .trigger {
+        margin-left: -13px;
+        margin-top: 1px;
+      }
+    }
+
+    .lookup-wrapper {
+      padding: 0;
     }
 
     .datepicker {
@@ -315,9 +323,15 @@
       height: 26px;
     }
 
-    .lookup-wrapper .trigger {
-      margin-left: -25px;
-      margin-top: -3px !important;
+    input.lookup {
+      + .trigger {
+        margin-left: -21px;
+        margin-top: 0;
+
+        > .icon {
+          top: -2px;
+        }
+      }
     }
 
     .datepicker + .icon {
@@ -328,13 +342,20 @@
 
 // Fix Editor Alignment
 .datagrid.extra-small-rowheight {
-  tbody tr td .icon-search-list {
-    left: -3px !important;
-    top: 4px !important;
-  }
+  tbody tr td {
+    .icon-search-list {
+      left: -3px;
+      top: 4px;
+    }
 
-  tbody tr td.is-editing .lookup-wrapper .trigger {
-    margin-top: 5px;
+    &.is-editing {
+      input.lookup {
+        + .trigger {
+          margin-left: -21px;
+          margin-top: 1px;
+        }
+      }
+    }
   }
 }
 
@@ -606,6 +627,17 @@
 html[dir='rtl'] {
   .datagrid {
     td.is-editing {
+      input.lookup {
+        + .trigger {
+          margin-left: 6px;
+          margin-top: 7px;
+
+          > .icon {
+            left: -1px;
+          }
+        }
+      }
+
       input.timepicker {
         + .trigger {
           margin-left: 7px;
@@ -633,6 +665,18 @@ html[dir='rtl'] {
       }
 
       td.is-editing {
+        input.lookup {
+          + .trigger {
+            margin-left: 6px;
+            margin-top: -1px;
+
+            > .icon {
+              left: -1px;
+              top: 0;
+            }
+          }
+        }
+
         input.timepicker {
           + .trigger {
             margin-left: 5px;
@@ -685,6 +729,19 @@ html[dir='rtl'] {
           ~ .trigger {
             margin-left: auto;
             margin-right: 17px;
+          }
+        }
+
+        input.lookup {
+          padding: 0;
+
+          + .trigger {
+            margin-left: -6px;
+            margin-top: 0;
+
+            > .icon {
+              left: -1px;
+            }
           }
         }
 
