@@ -8,6 +8,7 @@
 - `[Datagrid]` Fixed an issue where setting stretchColumn to 'last' did not stretch the last column in the table. ([#4913](https://github.com/infor-design/enterprise/issues/4913))
 - `[Multiselect]` Fixed a bug where the position of dropdown list was not correct when selecting multiple items on mobile. ([#5021](https://github.com/infor-design/enterprise/issues/5021))
 - `[Locale]` Fixed an issue where the am/pm dot was causing issue to parseDate() method for greek language. ([#4793](https://github.com/infor-design/enterprise/issues/4793))
+- `[Toast]` Fixed a bug where toast message were unable to drag down to it's current position when the `position` setting is set to `bottom right`. ([#5021](https://github.com/infor-design/enterprise/issues/5015)) 
 - `[Tree]` Added api support for collapse/expand node methods. ([#4707](https://github.com/infor-design/enterprise/issues/4707))
 
 ### v4.51.0 Issues

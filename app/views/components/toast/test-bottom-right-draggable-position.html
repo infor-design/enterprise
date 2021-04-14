@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="twelve columns">
+    <button class="btn-secondary" type="button" id="show-toast-message1">Show Toast Message (1)</button>
+    <br><br>
+    <button class="btn-secondary" type="button" id="show-toast-message2">Show Toast Message (2)</button>
+  </div>
+</div>
+
+<script>
+  function showToastMsg(uniqueid, msg) {
+    $('body').toast({
+      title: 'Application Offline',
+      message: msg,
+      draggable: true,
+      position: 'bottom right',
+      uniqueid: uniqueid,
+      timeout: 20000
+    });
+  }
+  $('#show-toast-message1').on('click', function() {
+    showToastMsg('some-uniqueid', 'This is a Toast message.(1)');
+  });
+  $('#show-toast-message2').on('click', function() {
+    showToastMsg('some-another-uniqueid', 'This is a Toast message.(2)');
+  });
+</script>
