@@ -124,7 +124,8 @@ describe('Datagrid Settings', () => { //eslint-disable-line
       emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data', height: null },
       searchExpandableRow: true,
       allowChildExpandOnMatchOnly: false,
-      allowChildExpandOnMatch: false
+      allowChildExpandOnMatch: false,
+      allowPasteFromExcel: false
     };
     datagridObj = new Datagrid(datagridEl, { dataset: data, columns });
   });

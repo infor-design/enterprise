@@ -147,6 +147,7 @@ const COMPONENT_NAME = 'datagrid';
  * and do not add any children nodes
  * or if one or more child node got match then add parent node and only matching children nodes
  * @param {string} [settings.attributes] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
+ * @param {boolean} [settings.allowPasteFromExcel=false] If true will allow data copy/paste from excel
 */
 const DATAGRID_DEFAULTS = {
   // F2 - toggles actionableMode "true" and "false"
@@ -239,7 +240,8 @@ const DATAGRID_DEFAULTS = {
   searchExpandableRow: true,
   allowChildExpandOnMatchOnly: false,
   allowChildExpandOnMatch: false,
-  attributes: null
+  attributes: null,
+  allowPasteFromExcel: false,
 };
 
 function Datagrid(element, settings) {
@@ -6286,7 +6288,7 @@ Datagrid.prototype = {
       });
 
     // Add a paste event for handling pasting from excel
-    if (self.settings.editable) {
+    if (self.settings.allowPasteFromExcel && self.settings.editable) {
       this.element.off('paste.datagrid').on('paste.datagrid', (e) => {
         let pastedData;
         if (e.originalEvent.clipboardData && e.originalEvent.clipboardData.getData) {
