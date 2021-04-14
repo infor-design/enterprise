@@ -912,6 +912,7 @@ $datagrid-small-row-height: 25px;
 
   &.small-rowheight {
     .datagrid-header .datagrid-filter-wrapper {
+      .datepicker + .trigger,
       .timepicker + .trigger {
         right: 2px;
         top: 0;
