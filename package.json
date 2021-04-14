@@ -66,7 +66,7 @@
     "e2e:local:bs": "npm run webdriver:update && npx protractor test/protractor.local.bs.conf.js",
     "e2e:local:debug": "npm run webdriver:update && npx protractor test/protractor.local.debug.conf.js",
     "webdriver:clean": "npx webdriver-manager clean",
-    "webdriver:update": "npx webdriver-manager update --standalone false --quiet --gecko=false",
+    "webdriver:update": "npx webdriver-manager update --versions.chrome 89.0.4389.128 --standalone false --quiet --gecko=false",
     "zip-dist": "npx grunt zip-dist",
     "documentation": "node ./scripts/deploy-documentation.js",
     "release:dev": "node scripts/publish-nightly-manual",
