@@ -1974,7 +1974,7 @@ describe('Datagrid Align Header Text Toggle Tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    fit('Should not visual regress', async () => {
       const containerEl = await element(by.className('container'));
       await element.all(by.css('.btn-actions')).first().click();
       await browser.driver
