@@ -32,8 +32,12 @@ jobs:
         path: node_modules
         key: enterprise-450
 
-    - name: setup-chromedriver
-      uses: nanasess/setup-chromedriver@v1.0.1
+    - name: Update Chrome
+      run: |
+        sudo apt-get update
+        sudo apt-get --only-upgrade install google-chrome-stable
+
+        google-chrome --version
 
     - name: Setup timezone
       uses: zcong1993/setup-timezone@master
@@ -46,14 +50,14 @@ jobs:
     - name: Build
       run: npm run build
 
+    - name: Run e2e tests
+      run:  (npm run quickstart &) && sleep 5; npm run e2e:ci:debug;
+
     - name: Run Lint Checks
       run: npm run lint:ci
 
     - name: Run functional tests
       run: npm run functional:ci
-
-    - name: Run e2e tests
-      run:  (npm run quickstart &) && sleep 5; npm run e2e:ci:debug;
 
     - name: Deploy Main
       env:
