@@ -9,6 +9,10 @@
   &.toast-bottom-right {
     bottom: 10px;
     right: 10px;
+
+    &.is-dragging {
+      bottom: auto;
+    }
   }
 
   &.toast-bottom-left {
