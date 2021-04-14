@@ -34,6 +34,12 @@ div.multiselect {
     + .icon {
       height: 30px;
     }
+
+    .btn-dismissible {
+      svg.icon {
+        top: -4px !important;
+      }
+    }
   }
 
   .tag-list {

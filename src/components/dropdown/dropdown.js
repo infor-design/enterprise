@@ -468,7 +468,7 @@ Dropdown.prototype = {
     const hasScrollbar = span.scrollHeight > span.clientHeight;
     this.pseudoElem[0].classList[hasScrollbar ? 'add' : 'remove']('has-scrollbar');
 
-    if (this.isOpen()) {
+    if (this.isOpen() && !this.isMobile()) {
       self.shrinkTop(this);
     }
   },
