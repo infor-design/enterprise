@@ -13,40 +13,38 @@
 
   $('body').one('initialized', function () {
 
-    Locale.set('en-US').done(function () {
-        var grid,
-          data = [],
-          columns = [];
+    var grid,
+      data = [],
+      columns = [];
 
-        // Some Sample Data
-        data.push({ value: '1:30:45 AM' });
-        data.push({ value: '2:00 AM' });
-        data.push({ value: '1:40:00 AM' });
-        data.push({ value: '5:00:45 PM' });
-        data.push({ value: '5:30 PM' });
-        data.push({ value: '11:59:59 PM' });
-        data.push({ value: '1:31 PM' });
-        data.push({ value: '4:30 PM' });
-        data.push({ value: '10:28 PM' });
+    // Some Sample Data
+    data.push({ value: '1:30:45 AM' });
+    data.push({ value: '2:00 AM' });
+    data.push({ value: '1:40:00 AM' });
+    data.push({ value: '5:00:45 PM' });
+    data.push({ value: '5:30 PM' });
+    data.push({ value: '11:59:59 PM' });
+    data.push({ value: '1:31 PM' });
+    data.push({ value: '4:30 PM' });
+    data.push({ value: '10:28 PM' });
 
-        //Define Columns for the Grid.
-        columns.push({ id: 'time1', name: 'Value', field: 'value' });
-        columns.push({ id: 'time2', name: 'Default', field: 'value', formatter: Formatters.Time, editor: Editors.Time, filterType: 'time' });
-        columns.push({ id: 'time3', name: 'Time 24', field: 'value', formatter: Formatters.Time, editor: Editors.Time, editorOptions: {'timeFormat': 'HH:mm'}, timeFormat: 'HH:mm', filterType: 'time' });
-        columns.push({ id: 'time4', name: 'Seconds', field: 'value', formatter: Formatters.Time, editor: Editors.Time, editorOptions: {'timeFormat': 'h:mm:ss a'}, timeFormat: 'h:mm:ss a', filterType: 'time' });
-        columns.push({ id: 'time5', name: 'Seconds 24', field: 'value', formatter: Formatters.Time, editor: Editors.Time, editorOptions: {'timeFormat': 'HH:mm:ss'}, timeFormat: 'HH:mm:ss', filterType: 'time' });
-        columns.push({ id: 'buffer', name: '', field: ''});
+    //Define Columns for the Grid.
+    columns.push({ id: 'time1', name: 'Value', field: 'value' });
+    columns.push({ id: 'time2', name: 'Default', field: 'value', formatter: Formatters.Time, editor: Editors.Time, filterType: 'time' });
+    columns.push({ id: 'time3', name: 'Time 24', field: 'value', formatter: Formatters.Time, editor: Editors.Time, editorOptions: {'timeFormat': 'HH:mm'}, timeFormat: 'HH:mm', filterType: 'time' });
+    columns.push({ id: 'time4', name: 'Seconds', field: 'value', formatter: Formatters.Time, editor: Editors.Time, editorOptions: {'timeFormat': 'h:mm:ss a'}, timeFormat: 'h:mm:ss a', filterType: 'time' });
+    columns.push({ id: 'time5', name: 'Seconds 24', field: 'value', formatter: Formatters.Time, editor: Editors.Time, editorOptions: {'timeFormat': 'HH:mm:ss'}, timeFormat: 'HH:mm:ss', filterType: 'time' });
+    columns.push({ id: 'buffer', name: '', field: ''});
 
-        //Init and get the api for the grid
-        $('#datagrid').datagrid({
-          columns: columns,
-          dataset: data,
-          editable: true,
-		      filterable: true,
-          toolbar: {title: 'Compressors', results: true, actions: true, rowHeight: true}
-        });
-
+    //Init and get the api for the grid
+    $('#datagrid').datagrid({
+      columns: columns,
+      dataset: data,
+      editable: true,
+      filterable: true,
+      toolbar: {title: 'Compressors', results: true, actions: true, rowHeight: true}
     });
+
   });
 
 </script>
