@@ -6,6 +6,15 @@
 
 - `[General]` Placeholder - remove me if your first. ([#5012](https://github.com/infor-design/enterprise/issues/5012))
 
+## v4.50.1
+
+### v4.50.1 Fixes
+
+- `[Datagrid]` Set the tabbable feature off for the datagrid editors. ([#5089](https://github.com/infor-design/enterprise/issues/5089))
+- `[Datagrid]` Fixed issues with misalignment on filter fields with icons. ([#5063](https://github.com/infor-design/enterprise/issues/5063))
+- `[Lookup]` Fixed a bug where non editable lookups could not be clicked/opened. ([#5062](https://github.com/infor-design/enterprise/issues/5062))
+- `[Lookup]` Fixed a bug where non strict / non editable lookups could not be clicked/opened. ([#5087](https://github.com/infor-design/enterprise/issues/5087))
+
 ## v4.50.0
 
 ### v4.50.0 Important Notes
