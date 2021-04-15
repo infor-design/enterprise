@@ -801,7 +801,7 @@ DatePicker.prototype = {
 
     if (parent.is('.datagrid-cell-wrapper')) {
       placementParentXAlignment = 'center';
-      placementParent = this.element.next('.icon');
+      placementParent = this.element.next('.icon, .trigger');
     }
 
     const popoverOpts = {
@@ -1822,7 +1822,7 @@ DatePicker.prototype = {
   readonly() {
     this.enable();
     this.element.attr('readonly', 'readonly');
-    this.trigger.prop('disabled', true);
+    this.trigger.prop('disabled', false);
   },
 
   /**

@@ -565,7 +565,7 @@ TimePicker.prototype = {
 
       if (parent.is('.datagrid-cell-wrapper')) {
         placementParentXAlignment = 'center';
-        placementParent = this.element.next('.icon');
+        placementParent = this.element.next('.icon, .trigger');
       }
 
       this.trigger.popover({
