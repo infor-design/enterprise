@@ -92,6 +92,15 @@
         }
       }
     }
+
+    &.non-collapsible.has-text {
+      // Override default functionality from toolbar searchfield
+      .btn-icon {
+        .close.icon {
+          display: block;
+        }
+      }
+    }
   }
 }
 

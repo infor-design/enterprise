@@ -1008,7 +1008,7 @@ Lookup.prototype = {
    */
   readonly() {
     this.element.prop('readonly', true).addClass('is-not-editable');
-    this.icon.prop('disabled', true);
+    this.icon.prop('disabled', false);
   },
 
   /**

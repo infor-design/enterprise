@@ -5,9 +5,9 @@ name: Build Check
 
 on:
   push:
-    branches: [ main ]
+    branches: [ 4.50.x ]
   pull_request:
-    branches: [ main ]
+    branches: [ 4.50.x ]
 
 jobs:
   build:
@@ -30,7 +30,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: node_modules
-        key: 450
+        key: version-450
 
     - name: Setup timezone
       uses: zcong1993/setup-timezone@master
@@ -51,13 +51,6 @@ jobs:
 
     - name: Run e2e tests
       run:  (npm run quickstart &) && sleep 5; npm run e2e:ci:debug;
-
-    - name: Deploy Main
-      env:
-        JENKINS_JOB_TOKEN: ${{ secrets.JENKINS_JOB_TOKEN }}
-        JENKINS_API_TOKEN: ${{ secrets.JENKINS_API_TOKEN }}
-      if: github.event_name == 'push'
-      run: sh ./scripts/jenkins-deploy.sh -b main
 
     - name: Dump GitHub context
       env:
