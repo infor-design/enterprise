@@ -1,0 +1,29 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Tooltip Example: Standard Text Tooltip</h2>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+  </div>
+</div>
+
+<script>
+  const section = document.querySelector('.twelve');
+  let html = '';
+
+  for (let index = 0; index < 1000; index++) {
+    // Buttons take 802ms (10000)
+    // Web Components Buttons takes 14.6s (10000)
+    html += `<button id="tooltip-btn${index}" class="btn-secondary" type="button" title="Tooltip ${index}">
+      Button ${index}
+    </button>`;
+  }
+
+  if (section) {
+    section.insertAdjacentHTML('beforeend', html);
+  }
+
+  $('button').tooltip();
+</script>
