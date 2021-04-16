@@ -58,6 +58,14 @@ div.multiselect {
   }
 }
 
+select.multiselect {
+  + .dropdown-wrapper .dropdown {
+    span.tag-list {
+      overflow: hidden;
+    }
+  }
+}
+
 .dropdown-list {
   &.has-icons {
     .dropdown-search {
