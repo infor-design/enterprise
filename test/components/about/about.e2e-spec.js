@@ -19,6 +19,21 @@ describe('About index tests', () => {
     expect(await element(by.id('about-modal')).isDisplayed()).toBeTruthy();
   });
 
+  it('Should display the version', async () => {
+    const buttonEl = await element(by.id('about-trigger'));
+    await buttonEl.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('about-modal'))), config.waitsFor);
+
+    expect(await element(by.css('.modal-body')).getText()).toContain('IDS Version : 4.');
+  });
+
+  it('Should show the version in the html', async () => {
+    const html = await element(by.css('html'));
+
+    expect(await html.getAttribute('data-sohoxi-version')).toContain('.');
+  });
+
   it('Should not have errors', async () => {
     await utils.checkForErrors();
   });
