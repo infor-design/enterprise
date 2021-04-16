@@ -290,6 +290,13 @@ describe('Locale API', () => {
     expect(Locale.parseDate('November 2018', { date: 'year' }).getTime()).toEqual(new Date(2018, 10, 1, 0, 0, 0).getTime());
   });
 
+  it('Should parse date in Croatian (Croatia) hr-HR', () => {
+    Locale.set('hr-HR');
+
+    expect(Locale.parseDate('01. 11. 2018. 05:25', { pattern: 'dd. MM. y. HH:mm' }).getTime()).toEqual(new Date(2018, 10, 1, 5, 25, 0).getTime());
+    expect(Locale.parseDate('01. 11. 2018. 17:25', { pattern: 'dd. MM. y. HH:mm' }).getTime()).toEqual(new Date(2018, 10, 1, 17, 25, 0).getTime());
+  });
+
   it('Should parse date in ar-SA', () => {
     Locale.set('ar-SA');
 
