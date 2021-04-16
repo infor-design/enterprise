@@ -37,7 +37,7 @@ div.multiselect {
 
     .btn-dismissible {
       svg.icon {
-        top: -4px !important;
+        top: -2px !important;
       }
     }
   }
@@ -143,6 +143,12 @@ select.multiselect {
       .tag-content {
         line-height: 17px;
       }
+
+      .btn-dismissible {
+      svg.icon {
+        top: -4px !important;
+      }
+    }
     }
   }
 }
