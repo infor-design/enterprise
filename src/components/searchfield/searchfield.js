@@ -2061,7 +2061,7 @@ SearchField.prototype = {
 
     // Used to determine if the "Tab" key was involved in switching focus to the searchfield.
     this.removeDocumentDeactivationEvents();
-    $('body').off(`breakpoint-change`);
+    $('body').off('breakpoint-change');
 
     if (this.autocomplete) {
       this.autocomplete.destroy();
