@@ -9,12 +9,22 @@
 - `[Datagrid]` Fixed an issue where the copy paste html to editable cell was cause to generate new cells. ([#4848](https://github.com/infor-design/enterprise/issues/4848))
 - `[Multiselect]` Fixed a bug where the position of dropdown list was not correct when selecting multiple items on mobile. ([#5021](https://github.com/infor-design/enterprise/issues/5021))
 - `[Locale]` Fixed an issue where the am/pm dot was causing issue to parseDate() method for greek language. ([#4793](https://github.com/infor-design/enterprise/issues/4793))
+- `[Toast]` Fixed a bug where toast message were unable to drag down to it's current position when `position` sets to 'bottom right'. ([#5015](https://github.com/infor-design/enterprise/issues/5015))
 - `[Tree]` Added api support for collapse/expand node methods. ([#4707](https://github.com/infor-design/enterprise/issues/4707))
 
 ### v4.51.0 Issues
 
 - `[Circlepager]` Fixed a bug where circle buttons doesn't work on smaller viewport and first initialization of the page. ([#4966](https://github.com/infor-design/enterprise/issues/4966))
 - `[General]` The master branch is now called main. Also cleaned up some language in the repo known to be less inclusive. ([#5027](https://github.com/infor-design/enterprise/issues/5027))
+
+## v4.50.1
+
+### v4.50.1 Fixes
+
+- `[Datagrid]` Set the tabbable feature off for the datagrid editors. ([#5089](https://github.com/infor-design/enterprise/issues/5089))
+- `[Datagrid]` Fixed issues with misalignment on filter fields with icons. ([#5063](https://github.com/infor-design/enterprise/issues/5063))
+- `[Lookup]` Fixed a bug where non editable lookups could not be clicked/opened. ([#5062](https://github.com/infor-design/enterprise/issues/5062))
+- `[Lookup]` Fixed a bug where non strict / non editable lookups could not be clicked/opened. ([#5087](https://github.com/infor-design/enterprise/issues/5087))
 
 ## v4.50.0
 

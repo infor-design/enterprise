@@ -547,7 +547,16 @@ const editors = {
 
     this.init = function () {
       this.input = $('<input class="datepicker" autocomplete="off"/>').appendTo(container);
-      this.input.datepicker(column.editorOptions || { dateFormat: column.dateFormat });
+      if (!column.editorOptions) {
+        column.editorOptions = {};
+      }
+      if (!column.editorOptions.dateFormat) {
+        column.editorOptions.dateFormat = column.dateFormat;
+      }
+      if (typeof column.editorOptions.tabbable !== 'boolean') {
+        column.editorOptions.tabbable = false;
+      }
+      this.input.datepicker(column.editorOptions);
     };
 
     this.val = function (v) {
@@ -741,7 +750,13 @@ const editors = {
 
     this.init = function () {
       this.input = $('<input class="timepicker" autocomplete="off" />').appendTo(container);
-      this.api = this.input.timepicker(column.editorOptions || '').data('timepicker');
+      if (!column.editorOptions) {
+        column.editorOptions = {};
+      }
+      if (typeof column.editorOptions.tabbable !== 'boolean') {
+        column.editorOptions.tabbable = false;
+      }
+      this.api = this.input.timepicker(column.editorOptions).data('timepicker');
     };
 
     this.val = function (v) {
@@ -816,6 +831,9 @@ const editors = {
       }
       if (!column.editorOptions.options.toolbar.title) {
         column.editorOptions.options.toolbar.title = column.name;
+      }
+      if (column.editorOptions.tabbable === undefined) {
+        column.editorOptions.tabbable = false;
       }
       this.input.lookup(column.editorOptions);
       container.find('span.trigger').attr('tabindex', '-1');
