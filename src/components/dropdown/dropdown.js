@@ -1301,9 +1301,13 @@ Dropdown.prototype = {
       // and stay still to its position.
       const totalPageHeight = document.body.scrollHeight;
       const scrollPoint = window.scrollY + window.innerHeight;
+      const isNearBottom = scrollPoint >= totalPageHeight;
 
-      scrollPoint >= totalPageHeight ? self.position() : self.shrinkTop(self);
-
+      if (isNearBottom) {
+        self.position();
+      } else {
+        self.shrinkTop(self);
+      }
     };
 
     if (this.settings.virtualScroll) {
