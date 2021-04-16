@@ -1,4 +1,4 @@
-import version from '../../package.json';
+import packageJson from '../../package.json';
 import { breakpoints } from './breakpoints';
 
 // jQuery Components
@@ -34,7 +34,7 @@ const Environment = {
    * Builds run-time environment settings
    */
   set() {
-    $('html').attr('data-sohoxi-version', version);
+    $('html').attr('data-sohoxi-version', packageJson.version);
 
     // Set the viewport meta tag to limit scaling
     this.viewport = document.querySelector('meta[name=viewport]');
