@@ -1295,7 +1295,15 @@ Dropdown.prototype = {
       });
 
       term = '';
-      self.shrinkTop(self);
+
+      // Checking the position of the dropdown element
+      // If near at the bottom of the page, will not be flowing up
+      // and stay still to its position.
+      const totalPageHeight = document.body.scrollHeight;
+      const scrollPoint = window.scrollY + window.innerHeight;
+
+      scrollPoint >= totalPageHeight ? self.position() : self.shrinkTop(self);
+
     };
 
     if (this.settings.virtualScroll) {
