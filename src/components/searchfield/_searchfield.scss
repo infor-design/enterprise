@@ -541,3 +541,7 @@ html[dir='rtl'] {
     }
   }
 }
+
+.buttonset > .toolbar-searchfield-wrapper:nth-last-child(2) > .icon.close {
+  transform: translateY(0%);
+}
