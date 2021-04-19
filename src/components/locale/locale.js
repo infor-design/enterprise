@@ -1106,7 +1106,7 @@ const Locale = {  // eslint-disable-line
     // Check the incoming date string's parts to make sure the values are
     // valid against the localized Date pattern.
     const month = this.getDatePart(formatParts, dateStringParts, 'M', 'MM', 'MMM', 'MMMM');
-    const year = this.getDatePart(formatParts, dateStringParts, 'yy', 'yyyy');
+    const year = this.getDatePart(formatParts, dateStringParts, 'y', 'yy', 'yyyy');
     let hasDays = false;
     let hasAmFirst = false;
     let amSetting = thisLocaleCalendar.dayPeriods[0];
@@ -1180,6 +1180,7 @@ const Locale = {  // eslint-disable-line
         case 'yy':
           dateObj.year = this.twoToFourDigitYear(value);
           break;
+        case 'y':
         case 'yyyy':
           dateObj.year = (value.length === 2) ?
             this.twoToFourDigitYear(value) : value;
