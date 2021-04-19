@@ -787,6 +787,9 @@ TimePicker.prototype = {
       !this.is24HourFormat();
 
     val = val.replace((ampmHasDot ? /[T\s:-]/g : /[T\s:.-]/g), sep).replace(/z/i, '');
+    if (val.indexOf(sep) < 0 && val.length === 4 && self.settings.timeFormat === 'HHmm') {
+      val = `${val.substr(0, 2)}${sep}${val.substr(2)}`;
+    }
     val = val.replace('午', `午${sep}`);
     parts = val.split(sep);
 
@@ -968,6 +971,10 @@ TimePicker.prototype = {
 
     period = (!this.is24HourFormat() && period === '') ? document.querySelector(`#${this.periodId}-shdo`).value : period;
     timeString += period ? ` ${this.translateDayPeriod(period)}` : '';
+
+    if (timeString.indexOf(sep) > -1 && this.settings.timeFormat === 'HHmm') {
+      timeString = timeString.replace(sep, '');
+    }
 
     /**
     * Fires when the value is changed by typing or the picker.
