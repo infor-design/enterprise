@@ -21,6 +21,12 @@
 - `[Circlepager]` Fixed a bug where circle buttons doesn't work on smaller viewport and first initialization of the page. ([#4966](https://github.com/infor-design/enterprise/issues/4966))
 - `[General]` The master branch is now called main. Also cleaned up some language in the repo known to be less inclusive. ([#5027](https://github.com/infor-design/enterprise/issues/5027))
 
+## v4.50.2
+
+### v4.50.2 Fixes
+
+- `[General]` Fixed incorrect version that was showing up as `[Object]` in the about dialog and html. ([#5069](https://github.com/infor-design/enterprise/issues/5069))
+
 ## v4.50.1
 
 ### v4.50.1 Fixes
