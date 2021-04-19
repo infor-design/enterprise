@@ -778,12 +778,12 @@ SearchField.prototype = {
         self.collapse();
       });
 
-      $('body').on(`resize.${this.id}`, () => {
+      $('body').on('breakpoint-change', () => {
         self.adjustOnBreakpoint();
       });
       self.adjustOnBreakpoint();
     } else {
-      $('body').on(`resize.${this.id}`, () => {
+      $('body').on('breakpoint-change', () => {
         self.simpleAdjustOnBreakpoint();
       });
       self.simpleAdjustOnBreakpoint();
@@ -2061,7 +2061,7 @@ SearchField.prototype = {
 
     // Used to determine if the "Tab" key was involved in switching focus to the searchfield.
     this.removeDocumentDeactivationEvents();
-    $('body').off(`resize.${this.id}`);
+    $('body').off('breakpoint-change');
 
     if (this.autocomplete) {
       this.autocomplete.destroy();

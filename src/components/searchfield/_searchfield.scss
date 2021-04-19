@@ -541,3 +541,16 @@ html[dir='rtl'] {
     }
   }
 }
+
+/*
+  target phone-size case when the menu first hides on resize
+  when resizing (must have dev tools off to trigger this for
+  some reason)
+*/
+.buttonset {
+  > .searchfield-wrapper.toolbar-searchfield-wrapper:not(.is-open):nth-last-child(2):first-child {
+    > .icon.close {
+      transform: translateY(0%);
+    }
+  }
+}
