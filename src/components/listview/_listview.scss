@@ -15,6 +15,10 @@
   position: relative;
   width: 100%;
 
+  input.searchfield {
+    height: 100%;
+  }
+
   p[class^='listview-'] {
     margin-top: 0;
   }
@@ -629,7 +633,7 @@
 .listview-search {
   .searchfield-wrapper {
     background-color: $body-color-primary-background;
-    height: 36px;
+    height: 100%;
     margin-bottom: 0;
     width: 100%;
 
@@ -646,8 +650,8 @@
   }
 
   .icon.close {
-    right: 10px;
-    top: 10px;
+    right: 0;
+    top: -2px;
   }
 
   .searchfield {
