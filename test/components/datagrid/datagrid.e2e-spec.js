@@ -14,12 +14,12 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
  */
 const S = {
   gridRow: ({ row, nthLastRow } = {}) => {
-    const rSelector = row ? `:nth-${nthLastRow ? 'last-child-' : ''}child(${row})` : '';
+    const rSelector = row ? `:nth-${nthLastRow ? 'last-' : ''}child(${row})` : '';
     return `#datagrid .datagrid-wrapper tbody tr${rSelector}`;
   },
   gridColumn: ({ row, column, nthLastRow } = {}) => {
     const cSelector = column ? `:nth-child(${column})` : '';
-    const rSelector = row ? `:nth-${nthLastRow ? 'last-child-' : ''}child(${row})` : '';
+    const rSelector = row ? `:nth-${nthLastRow ? 'last-' : ''}child(${row})` : '';
     return `#datagrid .datagrid-wrapper tbody tr${rSelector} td${cSelector}`;
   },
   gridRowCheckbox: ({ row, column = 1, checked }) => {
@@ -1285,7 +1285,7 @@ describe('Datagrid mixed selection tests', () => {
   }
 });
 
-describe('Datagrid multiselect tests', () => {
+fdescribe('Datagrid multiselect tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-multiselect.html?theme=classic&layout=nofrills');
 
