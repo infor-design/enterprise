@@ -1,6 +1,7 @@
 const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
 const utils = requireHelper('e2e-utils');
 const config = requireHelper('e2e-config');
+const until = protractor.ExpectedConditions;
 requireHelper('rejection');
 
 const axePageObjects = requireHelper('axe-page-objects');
@@ -187,10 +188,10 @@ describe('Button example-with-icons tests', () => {
   if (!utils.isSafari()) {
     it('Should open menu on return', async () => {
       const buttonEl = await element(by.id('menu-button-alone'));
-      await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(buttonEl), config.waitsFor);
+      await browser.driver.wait(until.presenceOf($('#menu-button-alone')), config.waitsFor);
       await buttonEl.sendKeys(protractor.Key.ENTER);
 
+      await browser.driver.wait(until.presenceOf($('#menu-button-alone.is-open')), config.waitsFor);
       expect(await buttonEl.getAttribute('class')).toContain('is-open');
 
       expect(await element(by.css('button#menu-button-alone[aria-haspopup="true"]')).isDisplayed()).toBe(true);
