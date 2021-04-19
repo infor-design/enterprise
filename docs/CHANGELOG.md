@@ -16,6 +16,12 @@
 
 - `[General]` Placeholder - remove me if your first. ([#5012](https://github.com/infor-design/enterprise/issues/5012))
 
+## v4.50.2
+
+### v4.50.2 Fixes
+
+- `[General]` Fixed incorrect version that was showing up as `[Object]` in the about dialog and html. ([#5069](https://github.com/infor-design/enterprise/issues/5069))
+
 ## v4.50.1
 
 ### v4.50.1 Fixes
