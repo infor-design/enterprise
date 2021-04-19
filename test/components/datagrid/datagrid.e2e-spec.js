@@ -28,7 +28,7 @@ const S = {
     return (
       `#datagrid .datagrid-wrapper tbody tr:nth-child(${row}) ` +
       `td:nth-child(${column}) ` +
-      `[role="checkbox"]${checkedState}`
+      `${checkedState}`
     );
   },
   removeRowButton: () => '#remove-btn'
@@ -1285,7 +1285,7 @@ describe('Datagrid mixed selection tests', () => {
   }
 });
 
-fdescribe('Datagrid multiselect tests', () => {
+describe('Datagrid multiselect tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-multiselect.html?theme=classic&layout=nofrills');
 
@@ -1363,27 +1363,24 @@ fdescribe('Datagrid multiselect tests', () => {
     await browser.wait(until.presenceOf($(S.gridColumn({ row: 1, column: 2 }))));
     await $(S.gridColumn({ row: 1, column: 2 })).click();
     await browser.wait(until.presenceOf($(S.gridRowCheckbox({ row: 1, checked: true }))));
-
     // select row 2
     await browser.wait(until.presenceOf($(S.gridColumn({ row: 2, column: 2 }))));
     await $(S.gridColumn({ row: 2, column: 2 })).click();
     await browser.wait(until.presenceOf($(S.gridRowCheckbox({ row: 2, checked: true }))));
-
     expect(await element(by.css('.selection-count')).getText()).toEqual('2 Selected');
-
     // sort ascending
     await browser.wait(
-      until.presenceOf('#datagrid .datagrid-header th.is-sortable:nth-child(2) .datagrid-header-text')
+      until.presenceOf($('#datagrid .datagrid-header th.is-sortable:nth-child(2) .datagrid-header-text'))
     );
     await element(by.css('#datagrid .datagrid-header th.is-sortable:nth-child(2) .datagrid-header-text')).click();
 
     // sort descending
     await browser.wait(
-      until.presenceOf('#datagrid .datagrid-header th.is-sorted-asc:nth-child(2) .datagrid-header-text')
+      until.presenceOf($('#datagrid .datagrid-header th.is-sorted-asc:nth-child(2) .datagrid-header-text'))
     );
     await element(by.css('#datagrid .datagrid-header th.is-sorted-asc:nth-child(2) .datagrid-header-text')).click();
     await browser.wait(
-      until.presenceOf('#datagrid .datagrid-header th.is-sorted-desc:nth-child(2) .datagrid-header-text')
+      until.presenceOf($('#datagrid .datagrid-header th.is-sorted-desc:nth-child(2) .datagrid-header-text'))
     );
 
     // select another row now that sort is flipped
