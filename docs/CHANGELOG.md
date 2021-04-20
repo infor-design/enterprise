@@ -75,6 +75,7 @@
 - `[Input]` Changed the disabled search field color for Safari to match that of other browsers. ([#4611](https://github.com/infor-design/enterprise/issues/4611))
 - `[Lookup]` Isolated the scss/css .close.icon class inside of .modal-content and removed any extra top property to fix the alignment issue.([#4933](https://github.com/infor-design/enterprise/issues/4933))
 - `[Lookup]` Added a setting that replaces the trigger icon with an actual button for better accessibility, enabled by default. ([#4820](https://github.com/infor-design/enterprise/issues/4820))
+- `[Lookup]` fix close button alignment issue. ([#5088](https://github.com/infor-design/enterprise/issues/5088))
 - `[Line Chart]` Added support for double click to Area, Bubble, Line and Scatterplot. ([#3229](https://github.com/infor-design/enterprise/issues/3229))
 - `[Message]` Added automation id's to the message's modal main area dialog as well with `modal` prefix. ([#4871](https://github.com/infor-design/enterprise/issues/4871))
 - `[Modal]` Fixed a bug where full size responsive setting doesn't work on android phones in landscape mode. ([#4451](https://github.com/infor-design/enterprise/issues/4451))
