@@ -466,7 +466,7 @@ Dropdown.prototype = {
 
     // Detect scrollbar, if applicable, to push the dropdown icon away from the scrollbar.
     const hasScrollbar = span.scrollHeight > span.clientHeight;
-    this.pseudoElem[0].classList[hasScrollbar && !this.settings.multiple ? 'add' : 'remove']('has-scrollbar');
+    this.pseudoElem[0].classList[hasScrollbar ? 'add' : 'remove']('has-scrollbar');
 
     if (this.isOpen()) {
       this.position();
@@ -1937,13 +1937,8 @@ Dropdown.prototype = {
       }
     });
 
-    let targetContainer = $('[role="main"]');
-    if (!targetContainer.length) {
-      targetContainer = $('body');
-    }
-
     if (!this.isOpen()) {
-      this.list.appendTo(targetContainer);
+      this.list.appendTo('body');
     }
     this.list.show();
     this.list.attr('data-element-id', this.element.attr('id'));

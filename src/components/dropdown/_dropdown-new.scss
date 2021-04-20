@@ -34,12 +34,6 @@ div.multiselect {
     + .icon {
       height: 30px;
     }
-
-    .btn-dismissible {
-      svg.icon {
-        top: -2px !important;
-      }
-    }
   }
 
   .tag-list {
@@ -54,14 +48,6 @@ div.multiselect {
       .icon {
         vertical-align: middle;
       }
-    }
-  }
-}
-
-select.multiselect {
-  + .dropdown-wrapper .dropdown {
-    span.tag-list {
-      overflow: hidden;
     }
   }
 }
@@ -143,12 +129,6 @@ select.multiselect {
       .tag-content {
         line-height: 17px;
       }
-
-      .btn-dismissible {
-      svg.icon {
-        top: -4px !important;
-      }
-    }
     }
   }
 }
