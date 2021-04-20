@@ -5,11 +5,16 @@
 ### v4.51.0 Fixes
 
 - `[Datagrid]` Fixed an issue where stretching the last column of a table was not consistent when resizing the window. ([#5045](https://github.com/infor-design/enterprise/issues/5045))
+- `[Datagrid]` Fixed an issue where time format HHmm was not working for time picker editor. ([#4926](https://github.com/infor-design/enterprise/issues/4926))
 - `[Datagrid]` Fixed an issue where setting stretchColumn to 'last' did not stretch the last column in the table. ([#4913](https://github.com/infor-design/enterprise/issues/4913))
 - `[Datagrid]` Fixed an issue where the copy paste html to editable cell was cause to generate new cells. ([#4848](https://github.com/infor-design/enterprise/issues/4848))
 - `[Dropdown]` Fixed a bug where the dropdown list gets detached to the input field. ([5056](https://github.com/infor-design/enterprise/issues/5056))
 - `[Multiselect]` Fixed a bug where the position of dropdown list was not correct when selecting multiple items on mobile. ([#5021](https://github.com/infor-design/enterprise/issues/5021))
+- `[Datepicker]` Fixed an issue where time was changing, if selected time was before noon for Danish language locale da-DK. ([#4987](https://github.com/infor-design/enterprise/issues/4987))
+- `[General]` Fixed incorrect version that was showing up as `[Object]` in the about dialog and html. ([#5069](https://github.com/infor-design/enterprise/issues/5069))
+- `[Locale]` Fixed an issue where the date and available date validation was not working for Croatian locale hr-HR. ([#4964](https://github.com/infor-design/enterprise/issues/4964))
 - `[Locale]` Fixed an issue where the am/pm dot was causing issue to parseDate() method for greek language. ([#4793](https://github.com/infor-design/enterprise/issues/4793))
+- `[Password]` Changed the password reveal feature to not use `text="password"` and use css instead. This makes it possible to hide autocomplete. ([#5098](https://github.com/infor-design/enterprise/issues/5098))
 - `[Toast]` Fixed a bug where toast message were unable to drag down to it's current position when `position` sets to 'bottom right'. ([#5015](https://github.com/infor-design/enterprise/issues/5015))
 - `[Tree]` Added api support for collapse/expand node methods. ([#4707](https://github.com/infor-design/enterprise/issues/4707))
 
@@ -17,6 +22,12 @@
 
 - `[Circlepager]` Fixed a bug where circle buttons doesn't work on smaller viewport and first initialization of the page. ([#4966](https://github.com/infor-design/enterprise/issues/4966))
 - `[General]` The master branch is now called main. Also cleaned up some language in the repo known to be less inclusive. ([#5027](https://github.com/infor-design/enterprise/issues/5027))
+
+## v4.50.2
+
+### v4.50.2 Fixes
+
+- `[General]` Fixed incorrect version that was showing up as `[Object]` in the about dialog and html. ([#5069](https://github.com/infor-design/enterprise/issues/5069))
 
 ## v4.50.1
 
@@ -75,7 +86,7 @@
 - `[Radar Chart]` Added support for double click. ([#3229](https://github.com/infor-design/enterprise/issues/3229))
 - `[Rating]` Fixed color of the un-checked rating star. ([#4853](https://github.com/infor-design/enterprise/issues/4853))
 - `[Popupmenu]` Fixed a lifecycle issue on menus that are shared between trigger elements, where these menus were incorrectly being torn down. ([NG#987](https://github.com/infor-design/enterprise-ng/issues/987))
-- `[Searchfield]` Fixed an issue where certain variants/scenarios had the clear button vertically below center ([#4989](https://github.com/infor-design/enterprise/issues/4989))
+- `[Searchfield]` Fixed an issue where certain variants/scenarios had the clear button vertically below center ([#4989](https://github.com/infor-design/enterprise/issues/4989), [#5096](https://github.com/infor-design/enterprise/issues/5096))
 - `[Switch]` Adjust styles to be more discernable between checked and checked+disabled ([#4341](https://github.com/infor-design/enterprise/issues/4341))
 - `[Tabs (Horizontal/Header)]` Fixed bug with the placement of the focus state in RTL mode, and other minor visual improvements. ([#4877](https://github.com/infor-design/enterprise/issues/4877))
 - `[Tabs Module]` Fixed a bug where clear button was missing when clearable setting is activated in tabs module searchfield. ([#4898](https://github.com/infor-design/enterprise/issues/4898))

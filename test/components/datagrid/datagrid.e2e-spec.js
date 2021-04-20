@@ -13,13 +13,13 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
  * general CSS selectors used throughout these tests
  */
 const S = {
-  gridRow: ({ row } = {}) => {
-    const rSelector = row ? `:nth-child(${row})` : '';
+  gridRow: ({ row, nthLastRow } = {}) => {
+    const rSelector = row ? `:nth-${nthLastRow ? 'last-' : ''}child(${row})` : '';
     return `#datagrid .datagrid-wrapper tbody tr${rSelector}`;
   },
-  gridColumn: ({ row, column } = {}) => {
+  gridColumn: ({ row, column, nthLastRow } = {}) => {
     const cSelector = column ? `:nth-child(${column})` : '';
-    const rSelector = row ? `:nth-child(${row})` : '';
+    const rSelector = row ? `:nth-${nthLastRow ? 'last-' : ''}child(${row})` : '';
     return `#datagrid .datagrid-wrapper tbody tr${rSelector} td${cSelector}`;
   },
   gridRowCheckbox: ({ row, column = 1, checked }) => {
@@ -28,7 +28,7 @@ const S = {
     return (
       `#datagrid .datagrid-wrapper tbody tr:nth-child(${row}) ` +
       `td:nth-child(${column}) ` +
-      `[role="checkbox"]${checkedState}`
+      `${checkedState}`
     );
   },
   removeRowButton: () => '#remove-btn'
@@ -1359,23 +1359,41 @@ describe('Datagrid multiselect tests', () => {
   });
 
   it('Should work with sort', async () => {
-    await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(1) td:nth-child(2)')).click();
-    await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(2) td:nth-child(2)')).click();
-    await browser.driver.sleep(config.sleep);
-
+    // select row 1
+    await browser.wait(until.presenceOf($(S.gridColumn({ row: 1, column: 2 }))));
+    await $(S.gridColumn({ row: 1, column: 2 })).click();
+    await browser.wait(until.presenceOf($(S.gridRowCheckbox({ row: 1, checked: true }))));
+    // select row 2
+    await browser.wait(until.presenceOf($(S.gridColumn({ row: 2, column: 2 }))));
+    await $(S.gridColumn({ row: 2, column: 2 })).click();
+    await browser.wait(until.presenceOf($(S.gridRowCheckbox({ row: 2, checked: true }))));
     expect(await element(by.css('.selection-count')).getText()).toEqual('2 Selected');
-    expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(2);
+    // sort ascending
+    await browser.wait(
+      until.presenceOf($('#datagrid .datagrid-header th.is-sortable:nth-child(2) .datagrid-header-text'))
+    );
+    await element(by.css('#datagrid .datagrid-header th.is-sortable:nth-child(2) .datagrid-header-text')).click();
 
-    await element(by.css('#datagrid .datagrid-header th:nth-child(2)')).click();
-    await element(by.css('#datagrid .datagrid-header th:nth-child(2)')).click();
-    await browser.driver.sleep(config.sleep);
+    // sort descending
+    await browser.wait(
+      until.presenceOf($('#datagrid .datagrid-header th.is-sorted-asc:nth-child(2) .datagrid-header-text'))
+    );
+    await element(by.css('#datagrid .datagrid-header th.is-sorted-asc:nth-child(2) .datagrid-header-text')).click();
+    await browser.wait(
+      until.presenceOf($('#datagrid .datagrid-header th.is-sorted-desc:nth-child(2) .datagrid-header-text'))
+    );
 
+    // select another row now that sort is flipped
+    await browser.wait(until.presenceOf($(S.gridColumn({ row: 1, column: 2 }))));
     await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(1) td:nth-child(2)')).click();
+    await browser.wait(until.presenceOf($(S.gridRowCheckbox({ row: 1, checked: true }))));
 
     expect(await element(by.css('.selection-count')).getText()).toEqual('3 Selected');
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(3);
 
-    await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(6) td:nth-child(2)')).click();
+    await browser.wait(until.presenceOf($(S.gridColumn({ row: 2, nthLastRow: true, column: 2 }))));
+    await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-last-child(2) td:nth-child(2)')).click();
+    await browser.wait(until.presenceOf($(S.gridRowCheckbox({ row: 2, nthLastRow: true, checked: false }))));
 
     expect(await element(by.css('.selection-count')).getText()).toEqual('2 Selected');
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(2);

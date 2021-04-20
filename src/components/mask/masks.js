@@ -410,6 +410,7 @@ const DATE_MAX_VALUES = {
   MMM: undefined,
   MM: 12,
   M: 12,
+  y: 9999,
   yy: 99,
   yyyy: 9999,
   h: 12,

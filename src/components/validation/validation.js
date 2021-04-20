@@ -207,7 +207,9 @@ function ValidationRules() {
             options.dateFormat : Locale.calendar().dateFormat.short;
           if (options.showTime) {
             const timeFormat = options.timeFormat || Locale.calendar().timeFormat;
-            format += ` ${timeFormat}`;
+            if (format.indexOf(timeFormat) < 0) {
+              format += ` ${timeFormat}`;
+            }
           }
           if (datepickerApi && datepickerApi.isIslamic) {
             format = {

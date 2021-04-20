@@ -142,11 +142,13 @@
   transform: translate(calc(-100% + -8px), 11px);
 }
 
-.input-hidepass {
+.input-hide-text {
   &::-ms-reveal,
   &::-ms-clear {
     display: none !important;
   }
+
+  -webkit-text-security: disc;
 }
 
 html[dir='rtl'] {

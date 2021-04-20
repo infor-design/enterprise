@@ -1758,7 +1758,8 @@ DatePicker.prototype = {
         hours = parsedDate?.getHours();
       }
       if (!this.isIslamic && parsedDate && hours < 12 &&
-        self.element.val().trim().indexOf(this.currentCalendar.dayPeriods[1]) > -1) {
+        self.element.val().trim().indexOf(this.currentCalendar.dayPeriods[1]) > -1 &&
+        this.currentCalendar.dayPeriods[1] !== '') {
         parsedDate.setHours(hours + 12);
       }
       if (this.isIslamic && parsedDate && hours < 12 &&
