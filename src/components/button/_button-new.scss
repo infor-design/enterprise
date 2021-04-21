@@ -70,7 +70,6 @@
     &:not(.icon-dropdown) {
       height: 16px;
       position: relative;
-      top: -2px;
       vertical-align: sub;
 
       + span:not(.audible) {
@@ -85,10 +84,10 @@
     .btn-dismissible {
       align-items: center;
       display: flex;
-      height: inherit;
+      height: inherit !important;
       line-height: inherit;
       margin-bottom: 0;
-      min-height: inherit;
+      min-height: inherit !important;
 
       > .icon {
         &:not(.icon-dropdown) {

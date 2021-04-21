@@ -469,7 +469,7 @@ Dropdown.prototype = {
     this.pseudoElem[0].classList[hasScrollbar ? 'add' : 'remove']('has-scrollbar');
 
     if (this.isOpen()) {
-      self.shrinkTop(this);
+      this.position();
     }
   },
 
@@ -1295,7 +1295,19 @@ Dropdown.prototype = {
       });
 
       term = '';
-      self.shrinkTop(self);
+
+      // Checking the position of the dropdown element
+      // If near at the bottom of the page, will not be flowing up
+      // and stay still to its position.
+      const totalPageHeight = document.body.scrollHeight;
+      const scrollPoint = window.scrollY + window.innerHeight;
+      const isNearBottom = scrollPoint >= totalPageHeight;
+
+      if (isNearBottom) {
+        self.position();
+      } else {
+        self.shrinkTop(self);
+      }
     };
 
     if (this.settings.virtualScroll) {
@@ -1925,13 +1937,8 @@ Dropdown.prototype = {
       }
     });
 
-    let targetContainer = $('[role="main"]');
-    if (!targetContainer.length) {
-      targetContainer = $('body');
-    }
-
     if (!this.isOpen()) {
-      this.list.appendTo(targetContainer);
+      this.list.appendTo('body');
     }
     this.list.show();
     this.list.attr('data-element-id', this.element.attr('id'));
