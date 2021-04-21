@@ -351,3 +351,13 @@ html[dir='rtl'] {
     }
   }
 }
+
+html[dir='rtl'] .modal-content .toolbar .buttonset .searchfield-wrapper .btn-icon.close {
+  left: 7px;
+  right: unset;
+  top: 4px;
+
+  svg.icon.close {
+    left: -4px;
+  }
+}
