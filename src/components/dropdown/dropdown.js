@@ -469,7 +469,7 @@ Dropdown.prototype = {
     this.pseudoElem[0].classList[hasScrollbar ? 'add' : 'remove']('has-scrollbar');
 
     if (this.isOpen()) {
-      self.shrinkTop(this);
+      this.position();
     }
   },
 
@@ -1295,7 +1295,19 @@ Dropdown.prototype = {
       });
 
       term = '';
-      self.shrinkTop(self);
+
+      // Checking the position of the dropdown element
+      // If near at the bottom of the page, will not be flowing up
+      // and stay still to its position.
+      const totalPageHeight = document.body.scrollHeight;
+      const scrollPoint = window.scrollY + window.innerHeight;
+      const isNearBottom = scrollPoint >= totalPageHeight;
+
+      if (isNearBottom) {
+        self.position();
+      } else {
+        self.shrinkTop(self);
+      }
     };
 
     if (this.settings.virtualScroll) {
@@ -1925,13 +1937,8 @@ Dropdown.prototype = {
       }
     });
 
-    let targetContainer = $('[role="main"]');
-    if (!targetContainer.length) {
-      targetContainer = $('body');
-    }
-
     if (!this.isOpen()) {
-      this.list.appendTo(targetContainer);
+      this.list.appendTo('body');
     }
     this.list.show();
     this.list.attr('data-element-id', this.element.attr('id'));
@@ -3533,6 +3540,7 @@ Dropdown.prototype = {
     this.pseudoElem
       .addClass('is-disabled')
       .removeClass('is-readonly')
+      .removeAttr('aria-readonly')
       .attr('tabindex', '-1')
       .prop('readonly', false)
       .prop('disabled', true);
@@ -3563,7 +3571,8 @@ Dropdown.prototype = {
       .prop('readonly', false)
       .attr('tabindex', '0')
       .removeClass('is-disabled')
-      .removeClass('is-readonly');
+      .removeClass('is-readonly')
+      .removeAttr('aria-readonly');
 
     if (this.settings.showTags) {
       this.pseudoElem.find('.tag').removeClass('is-disabled');
@@ -3580,6 +3589,7 @@ Dropdown.prototype = {
     this.pseudoElem
       .removeClass('is-disabled')
       .addClass('is-readonly')
+      .attr('aria-readonly', 'true')
       .attr('tabindex', this.element.attr('tabindex') || '0')
       .prop('disabled', false)
       .prop('readonly', true);
@@ -3616,6 +3626,7 @@ Dropdown.prototype = {
       this.readonly();
     } else {
       this.pseudoElem.removeClass('is-readonly');
+      this.pseudoElem.removeAttr('aria-readonly');
     }
 
     // update "disabled" prop
