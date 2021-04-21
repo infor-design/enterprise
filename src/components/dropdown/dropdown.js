@@ -3540,6 +3540,7 @@ Dropdown.prototype = {
     this.pseudoElem
       .addClass('is-disabled')
       .removeClass('is-readonly')
+      .removeAttr('aria-readonly')
       .attr('tabindex', '-1')
       .prop('readonly', false)
       .prop('disabled', true);
@@ -3570,7 +3571,8 @@ Dropdown.prototype = {
       .prop('readonly', false)
       .attr('tabindex', '0')
       .removeClass('is-disabled')
-      .removeClass('is-readonly');
+      .removeClass('is-readonly')
+      .removeAttr('aria-readonly');
 
     if (this.settings.showTags) {
       this.pseudoElem.find('.tag').removeClass('is-disabled');
@@ -3587,6 +3589,7 @@ Dropdown.prototype = {
     this.pseudoElem
       .removeClass('is-disabled')
       .addClass('is-readonly')
+      .attr('aria-readonly', 'true')
       .attr('tabindex', this.element.attr('tabindex') || '0')
       .prop('disabled', false)
       .prop('readonly', true);
@@ -3623,6 +3626,7 @@ Dropdown.prototype = {
       this.readonly();
     } else {
       this.pseudoElem.removeClass('is-readonly');
+      this.pseudoElem.removeAttr('aria-readonly');
     }
 
     // update "disabled" prop

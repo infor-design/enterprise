@@ -66,6 +66,7 @@ describe('Dropdown API', () => {
     dropdownObj.readonly();
 
     expect(document.body.querySelector('.dropdown.is-readonly')).toBeTruthy();
+    expect(document.body.querySelector('.dropdown.is-readonly').getAttribute('aria-readonly')).toEqual('true');
     expect(dropdownObj.isDisabled()).toBeFalsy();
   });
 
