@@ -1109,13 +1109,11 @@ DatePicker.prototype = {
   },
 
   /**
-   * Close the calendar popup.
-   * This method is slated to be removed in a future v4.15.0 or v5.0.0.
-   * @deprecated as of v4.9.0. Please use `closeCalendar()` instead.
+   * Close the calendar popup (an alias for close calendar)
    * @returns {void}
    */
   close() {
-    return deprecateMethod(this.closeCalendar, this.close).apply(this);
+    this.closeCalendar();
   },
 
   /**

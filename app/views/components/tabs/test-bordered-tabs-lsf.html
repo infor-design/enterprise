@@ -97,6 +97,10 @@
             <label for="field-4">BSI Group Code</label>
             <input type="text" id="field-4" name="first-name">
           </div>
+          <div class="field">
+            <label for="date-field-normal" class="label">Date Field</label>
+            <input id="date-field-normal" data-automation-id="custom-automation-id" class="datepicker" name="date-field" data-init="false"/>
+          </div>
         </div>
 
       </div>
@@ -136,57 +140,21 @@
           <li class="tab is-selected"><a href="#tab-p2">Pay Edit Two</a></li>
         </ul>
       </div>
-      <div class="tab-panel-container" style="min-height: calc(100% - 215px)">
-
-        <div id="tab-p1" class="tab-panel">
-          <div class="row">
-            <div class="twelve columns">
-              <p>Facilitate cultivate monetize, seize e-services peer-to-peer content integrateAJAX-enabled user-centric strategize. Mindshare; repurpose integrate global addelivery leading-edge frictionless, harness real-time plug-and-play standards-compliant 24/7 enterprise strategize robust infomediaries: functionalities back-end. Killer disintermediate web-enabled ubiquitous empower relationships, solutions, metrics architectures.</p>
-            </div>
-          </div>
-        </div>
-
-        <div id="tab-p2" class="tab-panel">
-          <div class="twelve columns">
-            <p>Facilitate cultivate monetize, seize e-services peer-to-peer content integrateAJAX-enabled user-centric strategize. Mindshare; repurpose integrate global addelivery leading-edge frictionless, harness real-time plug-and-play standards-compliant 24/7 enterprise strategize robust infomediaries: functionalities back-end. Killer disintermediate web-enabled ubiquitous empower relationships, solutions, metrics architectures.</p>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <div id="tab-year-end" class="tab-personal">
-      <div class="row">
-        <div class="twelve columns">
-          <p>Facilitate cultivate monetize, seize e-services peer-to-peer content integrateAJAX-enabled user-centric strategize. Mindshare; repurpose integrate global addelivery leading-edge frictionless, harness real-time plug-and-play standards-compliant 24/7 enterprise strategize robust infomediaries: functionalities back-end. Killer disintermediate web-enabled ubiquitous empower relationships, solutions, metrics architectures.</p>
-        </div>
-      </div>
-    </div>
-
-    <div id="tab-ben-dates" class="tab-personal">
-      <div class="row">
-        <div class="twelve columns">
-          <p>Facilitate cultivate monetize, seize e-services peer-to-peer content integrateAJAX-enabled user-centric strategize. Mindshare; repurpose integrate global addelivery leading-edge frictionless, harness real-time plug-and-play standards-compliant 24/7 enterprise strategize robust infomediaries: functionalities back-end. Killer disintermediate web-enabled ubiquitous empower relationships, solutions, metrics architectures.</p>
-        </div>
-      </div>
-    </div>
-
-    <div id="tab-ben-flags" class="tab-personal">
-      <div class="row">
-        <div class="twelve columns">
-          <p>Facilitate cultivate monetize, seize e-services peer-to-peer content integrateAJAX-enabled user-centric strategize. Mindshare; repurpose integrate global addelivery leading-edge frictionless, harness real-time plug-and-play standards-compliant 24/7 enterprise strategize robust infomediaries: functionalities back-end. Killer disintermediate web-enabled ubiquitous empower relationships, solutions, metrics architectures.</p>
-        </div>
-      </div>
-    </div>
-
-    <div id="tab-p-test" class="tab-personal">
-      <div class="row">
-        <div class="twelve columns">
-          <p>Facilitate cultivate monetize, seize e-services peer-to-peer content integrateAJAX-enabled user-centric strategize. Mindshare; repurpose integrate global addelivery leading-edge frictionless, harness real-time plug-and-play standards-compliant 24/7 enterprise strategize robust infomediaries: functionalities back-end. Killer disintermediate web-enabled ubiquitous empower relationships, solutions, metrics architectures.</p>
-        </div>
-      </div>
-    </div>
 
   </div>
 
 </div>
+
+<script>
+  $('body').on('initialized', function() {
+    $('#date-field-normal')
+      .datepicker({
+        disableValidation: true,
+        tabbable: false,
+        attributes: [
+          { name: 'id', value: 'custom-id' },
+          { name: 'data-automation-id', value: 'custom-automation-id' }
+        ]})
+
+  });
+</script>
