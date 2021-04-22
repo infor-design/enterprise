@@ -1,5 +1,4 @@
 import * as debug from '../../utils/debug';
-import { deprecateMethod } from '../../utils/deprecated';
 import { utils } from '../../utils/utils';
 import { dateUtils } from '../../utils/date';
 import { stringUtils } from '../../utils/string';
