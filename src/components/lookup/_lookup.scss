@@ -351,3 +351,33 @@ html[dir='rtl'] {
     }
   }
 }
+
+html:not([dir='rtl'])[class*='theme-classic-'] .modal-content .toolbar .buttonset .searchfield-wrapper .btn-icon.close {
+  svg.icon.close {
+    left: 2px;
+    top: 0;
+  }
+}
+
+html[dir='rtl'] .modal-content .toolbar .buttonset .searchfield-wrapper .btn-icon.close {
+  left: 7px;
+  right: unset;
+}
+
+html[class*='theme-classic-'] .modal-content .toolbar .buttonset .searchfield-wrapper .btn-icon.close {
+  svg.icon.close {
+    left: 7px;
+    position: relative;
+    right: unset;
+  }
+}
+
+/** targets only classic's svg in RTL */
+html[dir='rtl'][class*='theme-classic-'] .modal-content .toolbar .buttonset .searchfield-wrapper .btn-icon.close {
+  svg.icon.close {
+    left: 2px;
+    position: absolute;
+    right: unset;
+    top: 4px;
+  }
+}
