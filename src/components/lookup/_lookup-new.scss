@@ -13,7 +13,7 @@
   .searchfield-wrapper {
     > .icon.close {
       right: 35px;
-      top: 14px;
+      top: 19px;
     }
   }
 
@@ -89,21 +89,29 @@ html[dir='rtl'] {
         .btn-icon {
           top: 4px;
 
-          .close.icon {
+          svg.close.icon {
             border: 1px solid transparent;
             left: 4px;
-            top: calc(50% - 3px);
+            top: 7px;
           }
 
           &:focus {
             .close.icon {
               display: block;
               left: 4px;
-              top: calc(50% - 3px);
+              top: 7px;
             }
           }
         }
       }
     }
+  }
+}
+
+html[dir='rtl'] .modal-content .toolbar .buttonset .searchfield-wrapper .btn-icon.close {
+  top: 4px;
+
+  svg.icon.close {
+    left: -4px;
   }
 }
