@@ -407,6 +407,9 @@ ListView.prototype = {
             </label>`);
           }
         }
+      } else {
+        self.element.removeClass('is-multiselect');
+        item.find('.listview-selection-checkbox').remove();
       }
 
       // Hide filtered items
