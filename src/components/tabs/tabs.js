@@ -63,6 +63,7 @@ const tabContainerTypes = ['horizontal', 'vertical', 'module-tabs', 'header-tabs
  * @param {boolean} [settings.verticalResponsive=false] If Vertical Tabs & true, will automatically
  * switch to Horizontal Tabs on smaller breakpoints.
  * @param {Array} [settings.attributes=null] If set, adds additional attributes to some tabs and elements.
+ * @param {boolean} [settings.sortable=false] If true, tabs can be sortable by drag and drop.
  */
 const TABS_DEFAULTS = {
   addTabButton: false,
@@ -82,7 +83,8 @@ const TABS_DEFAULTS = {
   sourceArguments: {},
   tabCounts: false,
   verticalResponsive: false,
-  attributes: null
+  attributes: null,
+  sortable: false
 };
 
 function Tabs(element, settings) {
@@ -466,6 +468,9 @@ Tabs.prototype = {
       this.renderEdgeFading();
     }
 
+    // Create sortable tabs
+    this.createSortable();
+
     // Setup a resize observer on both the tab panel container and the tab list container (if applicable)
     // to auto-refresh the state of the Tabs on resize.  ResizeObserver doesn't work in IE.
     if (typeof ResizeObserver !== 'undefined') {
@@ -480,6 +485,60 @@ Tabs.prototype = {
     }
 
     return this;
+  },
+
+  /**
+   * Create tabs to be sortable by drag and drop.
+   * @private
+   * @returns {void}
+   */
+  createSortable() {
+    const s = this.settings;
+    if (!s.sortable) {
+      return;
+    }
+    // Sortable with touch devices, only support to module and vertical tabs.
+    if (env.features.touch && !(this.isModuleTabs() || this.isVerticalTabs())) {
+      return;
+    }
+
+    const tablist = this.tablist ? this.tablist[0] : null;
+    if (tablist) {
+      const excludeSel = '.is-disabled, .separator, .application-menu-trigger';
+      const excludeEl = [].slice.call(tablist.querySelectorAll(excludeSel));
+      excludeEl.forEach(el => el.setAttribute('data-arrange-exclude', 'true'));
+      tablist.setAttribute('data-options', '{"placeholderCssClass": "tab arrange-placeholder", "useItemDimensions": "true"}');
+
+      // Set arrange
+      tablist.classList.add('arrange');
+      let arrangeApi = this.tablist.data('arrange');
+      if (!arrangeApi) {
+        arrangeApi = this.tablist.arrange().data('arrange');
+      }
+
+      const className = 'has-placeholder';
+      let tabContainer = null;
+      if (!this.isModuleTabs() && !this.isVerticalTabs() && !this.isHeaderTabs()) {
+        this.tablist
+          .on('beforearrange.tabs', function () {
+            tabContainer = $(this).closest('.tab-container')[0];
+          })
+          .on('draggingarrange.tabs', () => {
+            tabContainer?.classList.add(className);
+          });
+      }
+      this.tablist.on('arrangeupdate.tabs', () => {
+        tabContainer?.classList.remove(className);
+        if (this.hasAnimatedBar()) {
+          const selected = this.tablist.find('.tab.is-selected');
+          this.focusBar(selected);
+        }
+      });
+
+      this.element.on('aftertabadded.tabs', () => {
+        arrangeApi?.updated();
+      });
+    }
   },
 
   /**
@@ -1475,6 +1534,17 @@ Tabs.prototype = {
   },
 
   /**
+   * Trigger event aftertabadded
+   * @private
+   * @param {string} id The tab id
+   * @returns {void}
+   */
+  triggerEventAfterTabAdded(id) {
+    const a = this.anchors.filter(`[href="#${id}"]`);
+    this.element.triggerHandler('aftertabadded', [a]);
+  },
+
+  /**
    * Handles the Add Tab button being clicked
    * @private
    * @returns {boolean|undefined} ?
@@ -1484,6 +1554,7 @@ Tabs.prototype = {
     const cb = this.settings.addTabButtonCallback;
     if (cb && typeof cb === 'function') {
       const newTabId = cb();
+      this.triggerEventAfterTabAdded('newTabId');
       return this.anchors.filter(`[href="#${newTabId}"]`);
     }
 
@@ -1520,6 +1591,7 @@ Tabs.prototype = {
     const externalSettings = this.element.triggerHandler('before-tab-added', [newId, settings, newIndex]);
     if (!externalSettings) {
       this.add(newId, settings, newIndex);
+      this.triggerEventAfterTabAdded('newId');
       return this.anchors.filter(`[href="#${newId}"]`);
     }
 
@@ -1537,6 +1609,7 @@ Tabs.prototype = {
     }
 
     this.add(newId, settings, newIndex);
+    this.triggerEventAfterTabAdded('newId');
     return this.anchors.filter(`[href="#${newId}"]`);
   },
 
@@ -2578,6 +2651,7 @@ Tabs.prototype = {
       this.positionFocusState(anchorMarkup);
       this.focusBar(tabHeaderMarkup);
       if (!this.activate(anchorMarkup.attr('href'))) {
+        this.triggerEventAfterTabAdded(tabId);
         return this;
       }
       anchorMarkup.focus();
@@ -2587,6 +2661,7 @@ Tabs.prototype = {
       this.activate(anchorMarkup.attr('href'));
     }
 
+    this.triggerEventAfterTabAdded(tabId);
     return this;
   },
 
@@ -2901,7 +2976,10 @@ Tabs.prototype = {
 
     tab.addClass('hidden');
 
-    this.select($(this.element.find('li.tab.is-selected')[0]).find('a')[0].hash);
+    const a = $(this.element.find('li.tab.is-selected')[0]).find('a');
+    if (a[0]) {
+      this.select(a[0].hash);
+    }
 
     this.focusBar();
     this.positionFocusState();
@@ -2918,8 +2996,10 @@ Tabs.prototype = {
     const tab = this.doGetTab(e, tabId);
 
     tab.removeClass('hidden');
-
-    this.select($(this.element.find('li.tab.is-selected')[0]).find('a')[0].hash);
+    const a = $(this.element.find('li.tab.is-selected')[0]).find('a');
+    if (a[0]) {
+      this.select(a[0].hash);
+    }
 
     this.focusBar();
     this.positionFocusState();
@@ -3567,7 +3647,7 @@ Tabs.prototype = {
    * @returns {boolean} whether or not the tab is overflowed.
    */
   isTabOverflowed(li) {
-    if ((this.isVerticalTabs() || this.isScrollableTabs())) {
+    if (this.isVerticalTabs() || this.isScrollableTabs() || this.tablist.find('.arrange-dragging').length) {
       return false;
     }
 
@@ -4122,7 +4202,7 @@ Tabs.prototype = {
       });
     }
 
-    this.element.off('focusout.tabs updated.tabs activated.tabs');
+    this.element.off('focusout.tabs updated.tabs activated.tabs aftertabadded.tabs');
     $('body').off(`resize.tabs${this.tabsIndex}`);
     this.tabsIndex = undefined;
 

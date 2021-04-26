@@ -17,6 +17,7 @@
 - `[Locale]` Fixed an issue where the am/pm dot was causing issue to parseDate() method for greek language. ([#4793](https://github.com/infor-design/enterprise/issues/4793))
 - `[Multiselect]` Fixed a bug where the position of dropdown list was not correct when selecting multiple items on mobile. ([#5021](https://github.com/infor-design/enterprise/issues/5021))
 - `[Password]` Changed the password reveal feature to not use `text="password"` and use css instead. This makes it possible to hide autocomplete. ([#5098](https://github.com/infor-design/enterprise/issues/5098))
+- `[Tabs]` Added support to sortable drag and drop tabs. Non touch devices it good with almost every type of tabs `Module`, `Vertical`, `Header`, `Scrollable` and `Regular`. For touch devices only support with `Module` and `Vertical` Tabs. ([#4520](https://github.com/infor-design/enterprise/issues/4520))
 - `[Toast]` Fixed a bug where toast message were unable to drag down to it's current position when `position` sets to 'bottom right'. ([#5015](https://github.com/infor-design/enterprise/issues/5015))
 - `[Toolbar]` Add fix for invisible inputs in the toolbar. ([#5122](https://github.com/infor-design/enterprise/issues/v))
 - `[Tree]` Added api support for collapse/expand node methods. ([#4707](https://github.com/infor-design/enterprise/issues/4707))
