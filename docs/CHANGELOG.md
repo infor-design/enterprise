@@ -233,6 +233,10 @@
 
 ## v4.36.0
 
+### v4.36.0 Important Changes
+
+- `[Datagrid]` Fixed a bug where the datagrid header checkbox had the wrong aria-checked state when only some rows are selected, this change occured because the aria-checked was not on the focusable element so was not announced. If using automation scripts on this attribute, you should be aware and adjust accordingly. ([#4491](https://github.com/infor-design/enterprise/issues/4491))
+
 ### v4.36.0 Features
 
 - `[Datagrid]` Made the summary row sticky on the bottom of the datagrid. ([#4645](https://github.com/infor-design/enterprise/issues/4645))
@@ -246,7 +250,6 @@
 - `[Datagrid]` Fixed a bug where filterWhenTyping did not work on lookup filter columns. ([#4678](https://github.com/infor-design/enterprise/issues/4678))
 - `[Datagrid]` Fixed an issue where updateRow will not correctly sync and merge data. ([#4674](https://github.com/infor-design/enterprise/issues/4674))
 - `[Datagrid]` Fixed a bug where the error icon overlapped to the calendar icon when a row has been selected and hovered. ([#4670](https://github.com/infor-design/enterprise/issues/4670))
-- `[Datagrid]` Fixed a bug where the datagrid header checkbox had the wrong aria-checked state when only some rows are selected. ([#4491](https://github.com/infor-design/enterprise/issues/4491))
 - `[Datagrid]` Fixed a bug where multiselect would loose selection across pages when using selectRowsAcrossPages. ([#954](https://github.com/infor-design/enterprise-ng/issues/954))
 - `[Datagrid]` Made a fix that when calling applyFilter the lookup checkbox did not update. ([#4693](https://github.com/infor-design/enterprise/issues/4693))
 - `[Datagrid]` Added the datagrid api to the current clearArguments setting's callback. ([#4693](https://github.com/infor-design/enterprise/issues/4693))
