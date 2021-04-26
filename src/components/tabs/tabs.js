@@ -333,6 +333,7 @@ Tabs.prototype = {
       }
 
       if (href !== undefined && href !== '#') {
+        href = href.replace(/\//g, '\\/');
         panel = $(href);
 
         if (li.is(':not(.has-popupmenu)') && !panel.length) {
