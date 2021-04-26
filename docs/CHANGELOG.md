@@ -8,17 +8,18 @@
 - `[Datagrid]` Fixed an issue where time format HHmm was not working for time picker editor. ([#4926](https://github.com/infor-design/enterprise/issues/4926))
 - `[Datagrid]` Fixed an issue where setting stretchColumn to 'last' did not stretch the last column in the table. ([#4913](https://github.com/infor-design/enterprise/issues/4913))
 - `[Datagrid]` Fixed an issue where the copy paste html to editable cell was cause to generate new cells. ([#4848](https://github.com/infor-design/enterprise/issues/4848))
-- `[Dropdown]` Fixed a bug where the dropdown list gets detached to the input field. ([5056](https://github.com/infor-design/enterprise/issues/5056))
-- `[Multiselect]` Fixed a bug where the position of dropdown list was not correct when selecting multiple items on mobile. ([#5021](https://github.com/infor-design/enterprise/issues/5021))
 - `[Datepicker]` Fixed an issue where time was changing, if selected time was before noon for Danish language locale da-DK. ([#4987](https://github.com/infor-design/enterprise/issues/4987))
 - `[Datepicker]` Removed deprecation warning for close method. ([#5120](https://github.com/infor-design/enterprise/issues/5120))
+- `[Dropdown]` Fixed a bug where the dropdown list gets detached to the input field. ([5056](https://github.com/infor-design/enterprise/issues/5056))
 - `[Dropdown]` Improved accessibility on readonly dropdowns by adding the aria-readonly property. ([#5107](https://github.com/infor-design/enterprise/issues/5107))
 - `[General]` Fixed incorrect version that was showing up as `[Object]` in the about dialog and html. ([#5069](https://github.com/infor-design/enterprise/issues/5069))
 - `[Listview]` Fixed a bug where changing selectable setting from 'mixed' to 'single' does not remove checkboxes. ([#5048](https://github.com/infor-design/enterprise/issues/5048))
 - `[Locale]` Fixed an issue where the date and available date validation was not working for Croatian locale hr-HR. ([#4964](https://github.com/infor-design/enterprise/issues/4964))
 - `[Locale]` Fixed an issue where the am/pm dot was causing issue to parseDate() method for greek language. ([#4793](https://github.com/infor-design/enterprise/issues/4793))
+- `[Multiselect]` Fixed a bug where the position of dropdown list was not correct when selecting multiple items on mobile. ([#5021](https://github.com/infor-design/enterprise/issues/5021))
 - `[Password]` Changed the password reveal feature to not use `text="password"` and use css instead. This makes it possible to hide autocomplete. ([#5098](https://github.com/infor-design/enterprise/issues/5098))
 - `[Toast]` Fixed a bug where toast message were unable to drag down to it's current position when `position` sets to 'bottom right'. ([#5015](https://github.com/infor-design/enterprise/issues/5015))
+- `[Toolbar]` Add fix for invisible inputs in the toolbar. ([#5122](https://github.com/infor-design/enterprise/issues/v))
 - `[Tree]` Added api support for collapse/expand node methods. ([#4707](https://github.com/infor-design/enterprise/issues/4707))
 
 ### v4.51.0 Issues
@@ -233,6 +234,10 @@
 
 ## v4.36.0
 
+### v4.36.0 Important Changes
+
+- `[Datagrid]` Fixed a bug where the datagrid header checkbox had the wrong aria-checked state when only some rows are selected, this change occured because the aria-checked was not on the focusable element so was not announced. If using automation scripts on this attribute, you should be aware and adjust accordingly. ([#4491](https://github.com/infor-design/enterprise/issues/4491))
+
 ### v4.36.0 Features
 
 - `[Datagrid]` Made the summary row sticky on the bottom of the datagrid. ([#4645](https://github.com/infor-design/enterprise/issues/4645))
@@ -246,7 +251,6 @@
 - `[Datagrid]` Fixed a bug where filterWhenTyping did not work on lookup filter columns. ([#4678](https://github.com/infor-design/enterprise/issues/4678))
 - `[Datagrid]` Fixed an issue where updateRow will not correctly sync and merge data. ([#4674](https://github.com/infor-design/enterprise/issues/4674))
 - `[Datagrid]` Fixed a bug where the error icon overlapped to the calendar icon when a row has been selected and hovered. ([#4670](https://github.com/infor-design/enterprise/issues/4670))
-- `[Datagrid]` Fixed a bug where the datagrid header checkbox had the wrong aria-checked state when only some rows are selected. ([#4491](https://github.com/infor-design/enterprise/issues/4491))
 - `[Datagrid]` Fixed a bug where multiselect would loose selection across pages when using selectRowsAcrossPages. ([#954](https://github.com/infor-design/enterprise-ng/issues/954))
 - `[Datagrid]` Made a fix that when calling applyFilter the lookup checkbox did not update. ([#4693](https://github.com/infor-design/enterprise/issues/4693))
 - `[Datagrid]` Added the datagrid api to the current clearArguments setting's callback. ([#4693](https://github.com/infor-design/enterprise/issues/4693))

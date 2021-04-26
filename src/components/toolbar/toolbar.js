@@ -1342,7 +1342,7 @@ Toolbar.prototype = {
     if (classList.contains('btn-actions')) {
       return true;
     }
-    if (classList.contains('searchfield')) {
+    if (classList.contains('searchfield') || item.nodeName === 'INPUT') {
       return false;
     }
     if (style.display === 'none') {
