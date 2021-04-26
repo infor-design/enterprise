@@ -54,3 +54,20 @@ describe('Searchfield with Toolbar alignment tests', () => {
     });
   }
 });
+
+describe('Toolbar Input tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/toolbar/example-toolbar-input?theme=new');
+    await browser.driver
+      .wait(protractor.ExpectedConditions
+        .presenceOf(element(by.id('toolbar-searchfield'))), config.waitsFor);
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should be visible have errors', async () => {
+    expect(await element(by.id('toolbar-searchfield')).isDisplayed()).toBeTruthy();
+  });
+});
