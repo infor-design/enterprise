@@ -1263,7 +1263,7 @@ ListView.prototype = {
   updated(settings) {
     // Remove the selected and activated state
     // when there's a changes in selectable setting.
-    if (settings.selectable !== this.settings.selectable) {
+    if (settings?.selectable !== this.settings.selectable) {
       const li = $(this.element.children()[0]).find('li');
       li.removeClass('is-selected is-activated');
     }
