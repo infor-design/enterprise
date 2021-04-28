@@ -71,6 +71,12 @@
     height: 34px;
     overflow: hidden;
     width: calc(100% - 1px); // 1px for the vertical centerer
+
+    &.has-arrange-placeholder {
+      .tab:hover {
+        background-color: $module-tabs-bg-color;
+      }
+    }
   }
 
   &.has-toolbar {

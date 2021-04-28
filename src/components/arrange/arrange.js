@@ -297,6 +297,7 @@ Arrange.prototype = {
             self.placeholderTouch?.remove();
           }
 
+          self.element.removeClass('has-arrange-placeholder');
           self.placeholders.filter(':visible').after(self.dragging);
           self.dragging.removeClass('arrange-dragging').show();
           self.placeholders.detach();
@@ -383,6 +384,8 @@ Arrange.prototype = {
               idx = s.isVisualItems ?
                 self.getVisualIndex(placeholder) : overIndex;
             }
+
+            self.element.addClass('has-arrange-placeholder');
 
             $.extend(status, { over: overItem, overIndex: idx });
             self.element.triggerHandler('draggingarrange', status);
