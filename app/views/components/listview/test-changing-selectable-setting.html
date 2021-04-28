@@ -1,0 +1,70 @@
+
+<div class="row">
+  <div class="twelve columns">
+      <h2 class="fieldset-title">ListView  - Change Selectable Setting</h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="one-third column">
+    <div class="card" >
+      <div class="card-header">
+        <h2 class="card-title">Tasks</h2>
+        <button class="btn-actions" type="button">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-more"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li class="is-checked"><a href="#" id="single-selection">Single Selection</a></li>
+          <li><a href="#" id="mixed-selection">Mixed Selection</a></li>
+          <li><a href="#" id="multiple-selection">Multiple Selection</a></li>
+        </ul>
+      </div>
+
+      <div class="card-content">
+        <div class="listview" id="task-listview" data-options="{'source': '{{basepath}}api/inventory-tasks', 'template': 'task-tmpl', 'disableItemDeactivation': true, 'selectOnFocus': 'false'}"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{{={{{ }}}=}}
+<script id="task-tmpl" type="text/html">
+  <ul>
+    {{#dataset}}
+      {{#disabled}}
+        <li class="is-disabled">
+      {{/disabled}}
+      {{^disabled}}
+        <li>
+      {{/disabled}}
+        <p class="listview-heading">Task #{{task}}</p>
+        <p class="listview-subheading">{{desc}} </p>
+        <p class="listview-micro">Due: {{date}}</p>
+      </li>
+    {{/dataset}}
+  </ul>
+</script>
+
+<script>
+  $('body').on('initialized', function () {
+    const listview = $('#task-listview').listview().data('listview');
+    
+    $('#single-selection').on('click', () => listview.updated({ selectable: 'single' }));
+    $('#mixed-selection').on('click', () => listview.updated({ selectable: 'mixed' }));
+    $('#multiple-selection').on('click', () => listview.updated({ selectable: 'multiple' }));
+  });
+</script>
+
+<script>
+  $('#task-listview').on('selected', function (e, args) {
+    console.log('item was selected', args);
+  }).on('itemactivated', function (e, args) {
+    console.log('item was activated', args);
+  }).on('itemdeactivated', function (e, args) {
+    console.log('item was deactivated', args);
+  });
+</script>
