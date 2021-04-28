@@ -13,6 +13,7 @@
 - `[Dropdown]` Fixed a bug where the dropdown list gets detached to the input field. ([5056](https://github.com/infor-design/enterprise/issues/5056))
 - `[Dropdown]` Improved accessibility on readonly dropdowns by adding the aria-readonly property. ([#5107](https://github.com/infor-design/enterprise/issues/5107))
 - `[General]` Fixed incorrect version that was showing up as `[Object]` in the about dialog and html. ([#5069](https://github.com/infor-design/enterprise/issues/5069))
+- `[Listview]` Fixed a bug where changing selectable setting from 'mixed' to 'single' does not remove checkboxes. ([#5048](https://github.com/infor-design/enterprise/issues/5048))
 - `[Locale]` Fixed an issue where the date and available date validation was not working for Croatian locale hr-HR. ([#4964](https://github.com/infor-design/enterprise/issues/4964))
 - `[Locale]` Fixed an issue where the am/pm dot was causing issue to parseDate() method for greek language. ([#4793](https://github.com/infor-design/enterprise/issues/4793))
 - `[Multiselect]` Fixed a bug where the position of dropdown list was not correct when selecting multiple items on mobile. ([#5021](https://github.com/infor-design/enterprise/issues/5021))

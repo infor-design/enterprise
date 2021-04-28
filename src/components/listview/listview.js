@@ -407,6 +407,9 @@ ListView.prototype = {
             </label>`);
           }
         }
+      } else {
+        self.element.removeClass('is-multiselect');
+        item.find('.listview-selection-checkbox').remove();
       }
 
       // Hide filtered items
@@ -1258,6 +1261,13 @@ ListView.prototype = {
    * @returns {object} component instance
    */
   updated(settings) {
+    // Remove the selected and activated state
+    // when there's a changes in selectable setting.
+    if (settings?.selectable !== this.settings.selectable) {
+      const li = $(this.element.children()[0]).find('li');
+      li.removeClass('is-selected is-activated');
+    }
+
     if (settings) {
       this.settings = utils.mergeSettings(this.element, settings, this.settings);
       if (settings && settings.dataset) {
