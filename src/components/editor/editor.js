@@ -2231,6 +2231,9 @@ Editor.prototype = {
         this.settings.anchor.isClickable = true;
       }
     }
+
+    // This will fire the change event in anchor link
+    this.element.trigger('change');
   },
 
   // Run the CE action.
