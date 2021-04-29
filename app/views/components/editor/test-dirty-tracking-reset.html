@@ -18,6 +18,12 @@
 </div>
 
 <script>
+  $('body').one('initialized', function () {
+    $('#editor1').editor().on('change.editor', function (e) {
+      console.log("Change detected");
+    });
+  });
+
   $('#reset-dirty').on('click', function (e) {
     $('.editor').trigger('resetdirty');
   });

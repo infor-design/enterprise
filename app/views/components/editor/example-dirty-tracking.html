@@ -7,7 +7,7 @@
 
     <div class="field">
       <span class="label">Comments</span>
-      <div class="editor"  id="editor1" role="textbox" aria-multiline="true" aria-label="Comments" data-trackdirty="true" >
+      <div class="editor" id="editor1" role="textbox" aria-multiline="true" aria-label="Comments" data-trackdirty="true">
         <p>Embrace <a href="http://en.wikipedia.org/wiki/e-commerce" class="hyperlink">e-commerce action-items</a>, reintermediate, ecologies paradigms wireless share life-hacks create innovative harness. Evolve solutions rich-clientAPIs synergies harness relationships virtual vertical facilitate end-to-end, wireless, evolve synergistic synergies.</p>
         <p>Cross-platform, evolve, ROI scale cultivate eyeballs addelivery, e-services content cross-platform leverage extensible viral incentivize integrateAJAX-enabled sticky evolve magnetic cultivate leverage; cutting-edge. Innovate, end-to-end podcasting, whiteboard streamline e-business social; compelling, "cross-media exploit infomediaries innovative integrate integrateAJAX-enabled." Killer interactive reinvent, cultivate widgets leverage morph.</p>
       </div>
@@ -15,3 +15,11 @@
 
   </div>
 </div>
+
+<script>
+  $('body').one('initialized', function () {
+    $('#editor1').editor().on('change.editor', function (e) {
+      console.log("Change detected");
+    });
+  });
+</script>

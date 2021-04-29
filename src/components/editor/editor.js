@@ -1481,6 +1481,8 @@ Editor.prototype = {
           this.getCurrentElement().focus();
         }, 1);
       }
+
+      this.element.trigger('change');
       this.bindAnchorPreview();
     }
   },
@@ -2231,9 +2233,6 @@ Editor.prototype = {
         this.settings.anchor.isClickable = true;
       }
     }
-
-    // This will fire the change event in anchor link
-    this.element.trigger('change');
   },
 
   // Run the CE action.
