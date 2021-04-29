@@ -2157,7 +2157,7 @@ describe('Datepicker translation tests', () => {
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('btn-monthyear-pane'))), config.waitsFor);
 
     expect(await element(by.css('#btn-monthyear-pane')).getText()).toBe('2020年 6月');
-    expect(await element(by.css('.monthview-table thead')).getText()).toBe('日 一 二 三 四 五 六');
+    expect(await element(by.css('.monthview-table thead')).getText()).toBe('一 二 三 四 五 六 日');
   });
 
   it('Should format zh-CN correctly', async () => {
@@ -2169,6 +2169,6 @@ describe('Datepicker translation tests', () => {
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('btn-monthyear-pane'))), config.waitsFor);
 
     expect(await element(by.css('#btn-monthyear-pane')).getText()).toBe('2020年 6月');
-    expect(await element(by.css('.monthview-table thead')).getText()).toBe('日 一 二 三 四 五 六');
+    expect(await element(by.css('.monthview-table thead')).getText()).toBe('一 二 三 四 五 六 日');
   });
 });
