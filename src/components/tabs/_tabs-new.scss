@@ -47,6 +47,13 @@
   }
 }
 
+.tab-container.has-placeholder {
+  .tab.draggable.arrange-placeholder {
+    height: 34px !important;
+    top: 0;
+  }
+}
+
 .popupmenu.tab-list-spillover,
 .popupmenu.dropdown-tab {
   .icon {
