@@ -14,6 +14,11 @@
     </div>
 
     <div class="field">
+      <label for="non-editable" class="label">Not Editable</label>
+      <input id="non-editable" class="lookup" data-options="{editable: false}" name="readonly" type="text">
+    </div>
+
+    <div class="field">
       <label for="disabled" class="label">Disabled</label>
       <input id="disabled" class="lookup" name="disabled" disabled type="text">
     </div>
@@ -40,7 +45,7 @@
     var lookup;
 
     //In this Test we have an Ajax call that returns the columns and lookup data
-    lookup = $('#normal, #dirty').lookup({
+    lookup = $('#normal, #dirty, #non-editable').lookup({
         field: 'productId',
         beforeShow: function (api, response) {
           var url = '{{basepath}}api/lookupInfo';

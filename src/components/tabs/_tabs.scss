@@ -42,6 +42,17 @@
   font-size: 0;
   position: relative;
 
+  &.has-placeholder {
+    .tab.draggable {
+      top: -12px;
+
+      &.arrange-placeholder {
+        height: 32px !important;
+        top: 0;
+      }
+    }
+  }
+
   &.has-add-button {
     .add-tab-button {
       visibility: visible;

@@ -1,0 +1,104 @@
+<body class="no-scroll">
+
+  <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
+  {{> includes/svg-inline-refs}}
+  {{> includes/applicationmenu}}
+
+  <div class="page-container no-scroll">
+
+    <!-- Module Tabs -->
+    <section id="module-tabs-example" class="tab-container module-tabs is-personalizable" data-options="{ containerElement: '#module-tabs-container', 'appMenuTrigger': true, 'addTabButton': true, 'sortable': true }">
+      <div class="tab-list-container">
+        <ul class="tab-list">
+          <li class="tab is-selected"><a href="#first-tab">First Tab</a></li>
+          <li class="tab"><a href="#second-tab">Second Tab</a></li>
+          <li class="tab"><a href="#third-tab">Third Tab</a></li>
+          <li class="tab"><a href="#fourth-tab">Fourth Tab</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Page Container -->
+    <div id="module-tabs-container" class="page-container no-scroll">
+
+      <!-- Tab Panels -->
+      <div id="first-tab" class="tab-panel no-scroll">
+        <header class="header is-personalizable">
+          <div class="toolbar">
+            <div class="title">
+              <h1>Module Tabs Test: Sortable Tabs</h1>
+            </div>
+            <div class="buttonset"></div>
+            {{> includes/header-actionbutton}}
+          </div>
+        </header>
+        <div class="page-container scrollable">
+          <div class="row">
+            <div class="six columns">
+              <p>First Tab content</p>
+              <p>This tab is 1st tab, and will be resized by the Module Tabs algorithm.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="second-tab" class="tab-panel">
+        <header class="header is-personalizable">
+          <div class="toolbar">
+            <div class="title">
+              <h1>Second Tab</h1>
+            </div>
+            <div class="buttonset"></div>
+          </div>
+        </header>
+        <div class="page-container scrollable">
+          <div class="row">
+            <div class="six columns">
+              <p>Second Tab content</p>
+              <p>This tab is 2nd tab, and will be resized by the Module Tabs algorithm.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="third-tab" class="tab-panel">
+        <header class="header is-personalizable">
+          <div class="toolbar">
+            <div class="title">
+              <h1>Third Tab</h1>
+            </div>
+            <div class="buttonset"></div>
+          </div>
+        </header>
+        <div class="page-container scrollable">
+          <div class="row">
+            <div class="six columns">
+              <p>Third Tab content</p>
+              <p>This tab is 3rd tab, and will be resized by the Module Tabs algorithm.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="fourth-tab" class="tab-panel">
+        <header class="header is-personalizable">
+          <div class="toolbar">
+            <div class="title">
+              <h1>Fourth Tab</h1>
+            </div>
+            <div class="buttonset"></div>
+          </div>
+        </header>
+        <div class="page-container scrollable">
+          <div class="row">
+            <div class="six columns">
+              <p>Fourth Tab content</p>
+              <p>This tab is 4th tab, and will be resized by the Module Tabs algorithm.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
