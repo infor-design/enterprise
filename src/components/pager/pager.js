@@ -69,6 +69,7 @@ const FOCUSABLE_SELECTOR = [
 * @param {boolean} [settings.lastPageTooltip = 'Last Page'] Tooltip for the first page, defaults to an internally translated tooltip.
 * @param {boolean} [settings.pageSizeMenuSettings = {}] customizable popupmenu settings for the Page Size Selector.
 * @param {string} [settings.attributes] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
+* @param {boolean} [settings.tabable] If true, will use tab key to navigate instead of arrow keys.
 */
 const PAGER_DEFAULTS = {
   componentAPI: undefined,
@@ -104,7 +105,8 @@ const PAGER_DEFAULTS = {
   pageSizeMenuSettings: {
     attachToBody: false
   },
-  attributes: null
+  attributes: null,
+  tabable: true
 };
 
 function Pager(element, settings) {
@@ -463,7 +465,7 @@ Pager.prototype = {
     });
 
     self.pagerBar.on('keydown.pager', $(self.focusableElements), (event) => {
-      if ($('.popupmenu.is-open').length > 0) {
+      if ($('.popupmenu.is-open').length > 0 || self.settings.tabable) {
         return true;
       }
 
@@ -1087,6 +1089,20 @@ Pager.prototype = {
     $pageSizeSelectorButton.on('selected.pager', (e, args) => {
       this.changePageSize(args);
     });
+
+    if (this.settings.tabable) {
+      const popupmenuApi = $pageSizeSelectorButton.data('popupmenu');
+      this.pagerBar
+        .off(`keydown.${COMPONENT_NAME}`, '.pager-pagesize button')
+        .on(`keydown.${COMPONENT_NAME}`, '.pager-pagesize button', (e) => {
+          const key = e.which || e.keyCode || e.charCode;
+          if (key === 40 && popupmenuApi && !popupmenuApi.isOpen) {
+            popupmenuApi.open();
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        });
+    }
   },
 
   /**
@@ -1097,6 +1113,14 @@ Pager.prototype = {
     // Adjust Page count numbers
     const state = this.state;
     let totalPages = state.pages;
+
+    // Preserve the focus before render, if focus on pagesize popupmenu
+    this.preserveFocus = this.preserveFocus || false;
+    const isPagesizeBtnFocused = $(':focus').closest('.pager-pagesize').length > 0;
+    if (!this.preserveFocus && isPagesizeBtnFocused) {
+      this.preserveFocus = true;
+    }
+
     if (state.filteredPages) {
       totalPages = state.filteredPages;
     }
@@ -1110,6 +1134,11 @@ Pager.prototype = {
     this.renderPageSelectorInput();
     this.renderPageSizeSelectorButton();
     this.renderBar();
+
+    // Apply focus after render, if preserve focus was on pagesize popupmenu
+    if (this.preserveFocus) {
+      this.element.find('.pager-pagesize button').focus();
+    }
   },
 
   /**
@@ -1235,6 +1264,9 @@ Pager.prototype = {
    * @private
    */
   initTabIndexes() {
+    if (this.settings.tabable) {
+      return;
+    }
     const tabbables = $(this.focusableElements);
     tabbables.attr('tabindex', '-1');
     tabbables.filter(':not([disabled])').first().removeAttr('tabindex');
