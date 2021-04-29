@@ -421,7 +421,7 @@ Hierarchy.prototype = {
       }
       return `
         <li data-disabled="${a.disabled}" class="${a.menu ? 'submenu' : ''}">
-          <a href="${a.url}"${opAttrStr(idx)} data-action-reference="${JSON.stringify(a.data)}">
+          <a href="${a.url}"${opAttrStr(idx)} data-action-reference='` + JSON.stringify(a.data) + `'>
             ${a.value}
             ${a.menu ? '<svg class="arrow icon-dropdown icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-dropdown"></use></svg>' : ''}
           </a>
