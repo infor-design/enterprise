@@ -40,7 +40,8 @@ describe('Tabs Settings', () => {
       sourceArguments: {},
       tabCounts: false,
       verticalResponsive: false,
-      attributes: null
+      attributes: null,
+      sortable: false
     };
     tabsObj.updated();
 
@@ -64,7 +65,8 @@ describe('Tabs Settings', () => {
       sourceArguments: {},
       tabCounts: false,
       verticalResponsive: false,
-      attributes: null
+      attributes: null,
+      sortable: false
     };
     tabsObj.updated(settings);
 

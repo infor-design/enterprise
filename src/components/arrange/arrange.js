@@ -18,6 +18,7 @@ const COMPONENT_NAME = 'arrange';
 * @param {boolean} [settings.isVisualItems] Use only index of visual items to trigger
 * @param {string} [settings.placeholder] The html for the element that appears while dragging
 * @param {string} [settings.placeholderCssClass='arrange-placeholder'] The class to add to the ghost element that is being dragged.
+* @param {boolean} [settings.useItemDimensions=false] If true, use item's dimensions to placeholder.
 */
 const ARRANGE_DEFAULTS = {
   handle: null, // The Class of the handle element
@@ -25,7 +26,8 @@ const ARRANGE_DEFAULTS = {
   connectWith: false,
   isVisualItems: false,
   placeholder: null,
-  placeholderCssClass: 'arrange-placeholder'
+  placeholderCssClass: 'arrange-placeholder',
+  useItemDimensions: false
 };
 
 function Arrange(element, settings) {
@@ -79,9 +81,11 @@ Arrange.prototype = {
    * @returns {void}
    */
   dragTouchElement(e, elm) {
-    const orig = e.originalEvent.changedTouches[0];
-    elm[0].style.top = `${(orig.pageY - this.offset.y)}px`;
-    elm[0].style.left = `${(orig.pageX - this.offset.x)}px`;
+    const orig = e.originalEvent.changedTouches;
+    if (elm && elm[0] && orig && orig[0] && this.offset) {
+      elm[0].style.top = `${(orig[0].pageY - this.offset.y)}px`;
+      elm[0].style.left = `${(orig[0].pageX - this.offset.x)}px`;
+    }
   },
 
   /**
@@ -246,24 +250,35 @@ Arrange.prototype = {
             return;
           }
 
+          // Get size of drag item and its position
+          const rect = self.dragging[0].getBoundingClientRect();
+
+          // Use item dimensions
+          if (s.useItemDimensions) {
+            placeholder[0].style.width = `${rect.width}px`;
+            placeholder[0].style.height = `${rect.height}px`;
+            placeholder[0].classList.add(...s.placeholderCssClass.split(' '));
+          }
+
           if (self.isTouch) {
-            const rect = self.dragging[0].getBoundingClientRect();
-            const touch = e.originalEvent.changedTouches[0];
+            const touch = e.originalEvent.changedTouches;
 
-            // Save offset
-            self.offset = {
-              x: touch.pageX - rect.left,
-              y: touch.pageY - rect.top
-            };
-            self.placeholderTouch = self.dragging
-              .clone().addClass('is-touch').attr('id', 'arrange-placeholder-touch')
-              .insertBefore(self.dragging);
-
-            self.dragTouchElement(e, self.placeholderTouch);
+            // Save the offset
+            if (touch && touch[0]) {
+              self.offset = {
+                x: touch[0].pageX - rect.left,
+                y: touch[0].pageY - rect.top
+              };
+            }
           } else {
             const dt = e.originalEvent.dataTransfer;
+            const offset = {
+              x: (e.originalEvent.clientX - rect.left),
+              y: (e.originalEvent.clientY - rect.top)
+            };
             dt.effectAllowed = 'move';
             dt.setData('Text', 'sample');
+            dt.setDragImage(self.dragging[0], offset.x, offset.y);
           }
         })
 
@@ -274,10 +289,15 @@ Arrange.prototype = {
           }
 
           if (self.isTouch) {
-            self.dragging.css('opacity', 1);
-            self.placeholderTouch.remove();
+            const rules = { opacity: 1 };
+            if (s.useItemDimensions) {
+              rules.position = '';
+            }
+            self.dragging.css(rules);
+            self.placeholderTouch?.remove();
           }
 
+          self.element.removeClass('has-arrange-placeholder');
           self.placeholders.filter(':visible').after(self.dragging);
           self.dragging.removeClass('arrange-dragging').show();
           self.placeholders.detach();
@@ -310,6 +330,14 @@ Arrange.prototype = {
           let overIndex;
           e.preventDefault();
 
+          if (self.isTouch && !self.placeholderTouch) {
+            self.placeholderTouch = self.dragging
+              .clone().addClass('is-touch').attr('id', 'arrange-placeholder-touch')
+              .insertBefore(self.dragging);
+
+            self.dragTouchElement(e, self.placeholderTouch);
+          }
+
           /**
           * Fires after finishing an arrange action.
           *
@@ -335,7 +363,11 @@ Arrange.prototype = {
 
           if (items.is(overItem) && placeholder.index() !== overItem.index()) {
             if (self.isTouch) {
-              self.dragging.css('opacity', 0);
+              const rules = { opacity: 0 };
+              if (s.useItemDimensions) {
+                rules.position = 'fixed';
+              }
+              self.dragging.css(rules);
             } else {
               self.dragging.hide();
             }
@@ -352,6 +384,8 @@ Arrange.prototype = {
               idx = s.isVisualItems ?
                 self.getVisualIndex(placeholder) : overIndex;
             }
+
+            self.element.addClass('has-arrange-placeholder');
 
             $.extend(status, { over: overItem, overIndex: idx });
             self.element.triggerHandler('draggingarrange', status);
