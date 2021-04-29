@@ -221,8 +221,8 @@ Lookup.prototype = {
       this.disable();
     }
 
-    if (!this.settings.editable || this.element.is('[readonly]')) {
-      this.readonly();
+    if (!this.settings.editable) {
+      this.element.attr('readonly', 'true').addClass('is-not-editable');
     }
 
     this.makeTabbable(this.settings.tabbable);
@@ -1007,7 +1007,7 @@ Lookup.prototype = {
    * @returns {void}
    */
   readonly() {
-    this.element.prop('readonly', true).addClass('is-not-editable');
+    this.element.prop('readonly', true);
     this.icon.prop('disabled', false);
   },
 

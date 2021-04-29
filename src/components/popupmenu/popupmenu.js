@@ -943,7 +943,7 @@ PopupMenu.prototype = {
     if (!immediate) {
       // Left-Click activation
       if (leftClick) {
-        this.element.on('click.popupmenu', (e) => {
+        this.element.off('click.popupmenu').on('click.popupmenu', (e) => {
           contextMenuHandler(e, true);
         });
       }
