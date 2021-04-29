@@ -21,6 +21,7 @@
 - `[Locale]` Fixed an issue where the am/pm dot was causing issue to parseDate() method for greek language. ([#4793](https://github.com/infor-design/enterprise/issues/4793))
 - `[Lookup]` Fixed an issue where readonly lookups showed up as enabled. ([#5149](https://github.com/infor-design/enterprise/issues/5149))
 - `[Multiselect]` Fixed a bug where the position of dropdown list was not correct when selecting multiple items on mobile. ([#5021](https://github.com/infor-design/enterprise/issues/5021))
+- `[Modal]` Fixed a bug that prevented modals from closing while a tooltip was displayed inside ([#5047](https://github.com/infor-design/enterprise/issues/5047))
 - `[Password]` Changed the password reveal feature to not use `text="password"` and use css instead. This makes it possible to hide autocomplete. ([#5098](https://github.com/infor-design/enterprise/issues/5098))
 - `[Tabs]` Fixed a bug where where if urls contain a href with a forward slash (paths), then this would error. Note that in this situation you need to make sure the tab panel is linked without the hash. ([#5014](https://github.com/infor-design/enterprise/issues/5014))
 - `[Tabs]` Added support to sortable drag and drop tabs. Non touch devices it good with almost every type of tabs `Module`, `Vertical`, `Header`, `Scrollable` and `Regular`. For touch devices only support with `Module` and `Vertical` Tabs. ([#4520](https://github.com/infor-design/enterprise/issues/4520))
