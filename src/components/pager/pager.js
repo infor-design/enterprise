@@ -69,7 +69,7 @@ const FOCUSABLE_SELECTOR = [
 * @param {boolean} [settings.lastPageTooltip = 'Last Page'] Tooltip for the first page, defaults to an internally translated tooltip.
 * @param {boolean} [settings.pageSizeMenuSettings = {}] customizable popupmenu settings for the Page Size Selector.
 * @param {string} [settings.attributes] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
-* @param {boolean} [settings.tabable] If true, will use tab key to navigate instead of arrow keys.
+* @param {boolean} [settings.tabbable] If true, will use tab key to navigate instead of arrow keys.
 */
 const PAGER_DEFAULTS = {
   componentAPI: undefined,
@@ -106,7 +106,7 @@ const PAGER_DEFAULTS = {
     attachToBody: false
   },
   attributes: null,
-  tabable: true
+  tabbable: true
 };
 
 function Pager(element, settings) {
@@ -465,7 +465,7 @@ Pager.prototype = {
     });
 
     self.pagerBar.on('keydown.pager', $(self.focusableElements), (event) => {
-      if ($('.popupmenu.is-open').length > 0 || self.settings.tabable) {
+      if ($('.popupmenu.is-open').length > 0 || self.settings.tabbable) {
         return true;
       }
 
@@ -1090,7 +1090,7 @@ Pager.prototype = {
       this.changePageSize(args);
     });
 
-    if (this.settings.tabable) {
+    if (this.settings.tabbable) {
       const popupmenuApi = $pageSizeSelectorButton.data('popupmenu');
       this.pagerBar
         .off(`keydown.${COMPONENT_NAME}`, '.pager-pagesize button')
@@ -1264,7 +1264,7 @@ Pager.prototype = {
    * @private
    */
   initTabIndexes() {
-    if (this.settings.tabable) {
+    if (this.settings.tabbable) {
       return;
     }
     const tabbables = $(this.focusableElements);
