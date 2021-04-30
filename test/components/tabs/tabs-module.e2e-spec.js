@@ -49,3 +49,25 @@ describe('Tabs Module Appmenu Tests', () => {
     });
   }
 });
+
+describe('Tabs Module (rename API)', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/tabs-module/test-lsf-addtabs-scenario-2');
+    const tabsEl = await element(by.id('module-tabs-example'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
+  });
+
+  // Tests infor-design/enterprise#5105
+  it('should rename the "More Tabs" menu link corresponding to a renamed tab', async () => {
+    const buttonClicks = [];
+    for (let i = 0; i < 10; i++) {
+      buttonClicks.push(element(by.css('.add-tab-button')).click());
+    }
+
+    // eslint-disable-next-line
+    await Promise.all(buttonClicks).then(() => {
+      expect(element(by.css('[href="#new-tab-9"]')).getText()).toEqual('9 Tab');
+    });
+  });
+});

@@ -3042,7 +3042,7 @@ Tabs.prototype = {
   /**
    * Renames a tab and resets the focusable bar/animation.
    * @param {jQuery.Event} e the jQuery Event
-   * @param {string} tabId a string representing the HTML `id` attribute of the new tab panel.
+   * @param {string} tabId a string representing the HTML `id` attribute of the tab panel.
    * @param {string} name the new tab name
    * @returns {void}
    */
@@ -3056,6 +3056,7 @@ Tabs.prototype = {
     if (!name) {
       return;
     }
+    name = name.toString();
 
     const tab = this.doGetTab(e, tabId);
     const hasCounts = this.settings.tabCounts;
@@ -3067,7 +3068,13 @@ Tabs.prototype = {
       count = anchor.find('.count').clone();
     }
 
-    anchor.text(name.toString());
+    anchor.text(name);
+
+    // Rename the tab inside a currently-open "More Tabs" popupmenu, if applicable
+    if (this.popupmenu) {
+      const moreAnchor = this.popupmenu.menu.find(`a[href="${tabId}"]`);
+      moreAnchor.text(name);
+    }
 
     if (hasCounts) {
       anchor.prepend(count);
