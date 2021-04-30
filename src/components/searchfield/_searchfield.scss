@@ -574,3 +574,14 @@ html[dir='rtl'] {
     top: 0;
   }
 }
+
+/**
+ * align large searchfield search icon
+ */
+.header > .full-searchfield-container .searchfield-wrapper {
+  & > svg.icon:nth-child(1) {
+    height: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
