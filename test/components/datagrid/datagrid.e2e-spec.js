@@ -1298,19 +1298,6 @@ describe('Datagrid multiselect tests', () => {
     await utils.checkForErrors();
   });
 
-  it('Should allow selection and deselection', async () => {
-    await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(1) td:nth-child(2)')).click();
-    await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(2) td:nth-child(2)')).click();
-
-    expect(await element(by.css('.selection-count')).getText()).toEqual('2 Selected');
-    await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(1) td:nth-child(2)')).click();
-
-    expect(await element(by.css('.selection-count')).getText()).toEqual('1 Selected');
-    await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(1) td:nth-child(2)')).click();
-
-    expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(2);
-  });
-
   it('Should have aria selected mixed when partly selected', async () => {
     await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(1) td:nth-child(2)')).click();
 
