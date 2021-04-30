@@ -172,12 +172,3 @@ html[dir='rtl'] {
   }
 }
 
-/**
- * targets toolbar searchfield close button inside of
- * a tab container, with variant wrapped in button
- */
-.tab-container > .toolbar > .buttonset {
-  > .searchfield-wrapper.toolbar-searchfield-wrapper > .btn-icon.close {
-    top: -2px;
-  }
-}
