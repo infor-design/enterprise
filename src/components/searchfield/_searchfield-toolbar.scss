@@ -995,10 +995,21 @@ html[dir='rtl'] {
 .header > .toolbar > .buttonset > .toolbar-searchfield-wrapper.non-collapsible.has-go-button.has-categories {
   button.close:not(.is-empty) {
     height: auto;
-    top: 5px;
+    top: 50%;
+    transform: translateY(-50%);
 
     svg.close {
       display: block;
+      top: 0px !important;
     }
+  }
+}
+
+/**
+ * there is no "new" theme file for toolbar, so placing hotfix here
+ */
+html[class*='theme-new-'] .header > .toolbar > .buttonset > .toolbar-searchfield-wrapper.non-collapsible.has-go-button.has-categories {
+  button.close:not(.is-empty) svg.close {
+    top: 1px !important;
   }
 }

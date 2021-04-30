@@ -585,3 +585,21 @@ html[dir='rtl'] {
     transform: translateY(-50%);
   }
 }
+
+/**
+ * need explicit theme-classic on these base
+ * close button rules just because it's a bit hairy
+ * at this point to un-target other rules
+ */
+html[class*='theme-classic-'] {
+  .btn-icon.close {
+    top: 50%;
+    transform: translateY(-50%);
+
+    & > svg.close.icon {
+      position: relative;
+      right: unset;
+      top: -1px;
+    }
+  }
+}

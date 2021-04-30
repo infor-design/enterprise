@@ -58,22 +58,23 @@
     }
   }
 
-  &:not(.is-open) {
+  &:not(.is-Ropen) {
     .icon:not(.close) {
       top: 8px;
     }
   }
 
   .btn-icon.close {
+    align-items: center;
+    display: flex;
+    justify-content: center;
     overflow: visible;
-
-    &:not(.is-empty) {
-      top: 6px;
-    }
+    top: 50%;
+    transform: translateY(-50%);
 
     & > svg.close.icon {
-      top: calc(50% - 6px);
-      transform: translateY(-50%);
+      position: relative;
+      top: 1px;
     }
   }
 }
