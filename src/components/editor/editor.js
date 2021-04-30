@@ -1481,6 +1481,8 @@ Editor.prototype = {
           this.getCurrentElement().focus();
         }, 1);
       }
+
+      this.element.trigger('change');
       this.bindAnchorPreview();
     }
   },
