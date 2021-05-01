@@ -1000,8 +1000,12 @@ html[dir='rtl'] {
 
     svg.close {
       display: block;
-      top: 0px !important;
+      top: 0 !important;
     }
+  }
+
+  @media (max-width: $breakpoint-phone-to-tablet) {
+    right: 29px;
   }
 }
 
