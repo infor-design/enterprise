@@ -100,7 +100,7 @@
 - `[Radar Chart]` Added support for double click. ([#3229](https://github.com/infor-design/enterprise/issues/3229))
 - `[Rating]` Fixed color of the un-checked rating star. ([#4853](https://github.com/infor-design/enterprise/issues/4853))
 - `[Popupmenu]` Fixed a lifecycle issue on menus that are shared between trigger elements, where these menus were incorrectly being torn down. ([NG#987](https://github.com/infor-design/enterprise-ng/issues/987))
-- `[Searchfield]` Fixed an issue where certain variants/scenarios had the clear button vertically below center ([#4989](https://github.com/infor-design/enterprise/issues/4989), [#5096](https://github.com/infor-design/enterprise/issues/5096))
+- `[Searchfield]` Fixed alignment issues with the close button in various scenarios ([#4989](https://github.com/infor-design/enterprise/issues/4989), [#5096](https://github.com/infor-design/enterprise/issues/5096), [#5158](https://github.com/infor-design/enterprise/issues/4989), [#5090](https://github.com/infor-design/enterprise/issues/4989))
 - `[Switch]` Adjust styles to be more discernable between checked and checked+disabled ([#4341](https://github.com/infor-design/enterprise/issues/4341))
 - `[Tabs (Horizontal/Header)]` Fixed bug with the placement of the focus state in RTL mode, and other minor visual improvements. ([#4877](https://github.com/infor-design/enterprise/issues/4877))
 - `[Tabs Module]` Fixed a bug where clear button was missing when clearable setting is activated in tabs module searchfield. ([#4898](https://github.com/infor-design/enterprise/issues/4898))
