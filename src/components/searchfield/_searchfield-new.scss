@@ -65,15 +65,16 @@
   }
 
   .btn-icon.close {
+    align-items: center;
+    display: flex;
+    justify-content: center;
     overflow: visible;
-
-    &:not(.is-empty) {
-      top: 6px;
-    }
+    top: 50%;
+    transform: translateY(-50%);
 
     & > svg.close.icon {
-      top: calc(50% - 6px);
-      transform: translateY(-50%);
+      position: relative;
+      top: 1px;
     }
   }
 }
@@ -171,12 +172,3 @@ html[dir='rtl'] {
   }
 }
 
-/**
- * targets toolbar searchfield close button inside of
- * a tab container, with variant wrapped in button
- */
-.tab-container > .toolbar > .buttonset {
-  > .searchfield-wrapper.toolbar-searchfield-wrapper > .btn-icon.close {
-    top: -2px;
-  }
-}

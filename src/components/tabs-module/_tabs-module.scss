@@ -827,3 +827,21 @@ html[dir='rtl'] {
     }
   }
 }
+
+/**
+ * targets toolbar searchfield close button inside of
+ * a tab container, with variant wrapped in button
+ */
+.tab-container > .toolbar > .buttonset {
+  > .searchfield-wrapper.toolbar-searchfield-wrapper > .btn-icon.close {
+    height: auto;
+    margin-top: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+
+    svg.icon.close {
+      top: 0;
+    }
+  }
+}

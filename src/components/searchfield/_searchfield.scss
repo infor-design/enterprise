@@ -574,3 +574,38 @@ html[dir='rtl'] {
     top: 0;
   }
 }
+
+/**
+ * align large searchfield search icon
+ */
+.header > .full-searchfield-container .searchfield-wrapper {
+  & > svg.icon:nth-child(1) {
+    height: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+/**
+ * need explicit theme-classic on these base
+ * close button rules just because it's a bit hairy
+ * at this point to un-target other rules
+ */
+html[class*='theme-classic-'] {
+  .btn-icon.close {
+    top: 50%;
+    transform: translateY(-50%);
+
+    & > svg.close.icon {
+      position: relative;
+      right: unset;
+      top: -1px;
+    }
+  }
+
+  .application-menu.has-searchfield {
+    .searchfield-wrapper.has-close-icon-button > .btn-icon.close > svg.close.icon {
+      top: 0;
+    }
+  }
+}

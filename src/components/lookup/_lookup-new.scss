@@ -86,20 +86,20 @@ html[dir='rtl'] {
   .toolbar {
     .buttonset {
       .searchfield-wrapper {
-        .btn-icon {
-          top: 4px;
+        &:not(.has-text) {
+          button.close {
+            display: none;
+          }
+        }
 
+        .btn-icon {
           svg.close.icon {
             border: 1px solid transparent;
-            left: 4px;
-            top: 7px;
           }
 
           &:focus {
             .close.icon {
               display: block;
-              left: 4px;
-              top: 7px;
             }
           }
         }

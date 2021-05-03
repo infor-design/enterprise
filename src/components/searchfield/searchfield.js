@@ -936,7 +936,7 @@ SearchField.prototype = {
     const wrapperElem = this.wrapper[0];
 
     if (this.settings.tabbable && wrapperElem.contains(active) && $(active).is('button.close')) {
-      return false;
+      return true;
     }
 
     // If another element inside the Searchfield Wrapper is focused, the entire component

@@ -984,3 +984,36 @@ html[dir='rtl'] {
     }
   }
 }
+
+/**
+ * dirty fix; fixes a quirk where on JS side sometimes there is no ".active" on
+ * searchfield-wrapper
+ * due to text field losing scope of some sort when triggering
+ * X focus; can test case this at
+ * /tabs-module/example-category-searchfield-go-button-home.html#maincontent
+ */
+.header > .toolbar > .buttonset > .toolbar-searchfield-wrapper.non-collapsible.has-go-button.has-categories {
+  button.close:not(.is-empty) {
+    height: auto;
+    top: 50%;
+    transform: translateY(-50%);
+
+    svg.close {
+      display: block;
+      top: 0 !important;
+    }
+  }
+
+  @media (max-width: $breakpoint-phone-to-tablet) {
+    right: 29px;
+  }
+}
+
+/**
+ * there is no "new" theme file for toolbar, so placing hotfix here
+ */
+html[class*='theme-new-'] .header > .toolbar > .buttonset > .toolbar-searchfield-wrapper.non-collapsible.has-go-button.has-categories {
+  button.close:not(.is-empty) svg.close {
+    top: 1px !important;
+  }
+}
