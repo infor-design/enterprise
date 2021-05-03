@@ -28,7 +28,8 @@
 - `[Tabs]` Fixed a bug where where if urls contain a href with a forward slash (paths), then this would error. Note that in this situation you need to make sure the tab panel is linked without the hash. ([#5014](https://github.com/infor-design/enterprise/issues/5014))
 - `[Tabs]` Added support to sortable drag and drop tabs. Non touch devices it good with almost every type of tabs `Module`, `Vertical`, `Header`, `Scrollable` and `Regular`. For touch devices only support with `Module` and `Vertical` Tabs. ([#4520](https://github.com/infor-design/enterprise/issues/4520))
 - `[Toast]` Fixed a bug where toast message were unable to drag down to it's current position when `position` sets to 'bottom right'. ([#5015](https://github.com/infor-design/enterprise/issues/5015))
-- `[Toolbar]` Add fix for invisible inputs in the toolbar. ([#5122](https://github.com/infor-design/enterprise/issues/v))
+- `[Toolbar]` Add fix for invisible inputs in the toolbar. ([#5122](https://github.com/infor-design/enterprise/issues/5122))
+- `[Toolbar]` Prevent individual buttons from getting stuck inside the Toolbar's overflow menu ([#4857](https://github.com/infor-design/enterprise/issues/4857))
 - `[Tree]` Added api support for collapse/expand node methods. ([#4707](https://github.com/infor-design/enterprise/issues/4707))
 
 ### v4.51.0 Issues
