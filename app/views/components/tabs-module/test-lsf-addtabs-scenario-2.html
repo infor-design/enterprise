@@ -1,0 +1,54 @@
+<body class="no-scroll">
+
+  <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
+  {{> includes/svg-inline-refs}}
+  <!-- Masthead -->
+  {{> includes/masthead}}
+  {{> includes/applicationmenu}}
+
+  <div class="page-container no-scroll">
+    <!-- Module Tabs -->
+    <section id="module-tabs-example" class="tab-container module-tabs" data-options='{ "containerElement": "#module-tabs-container" }'>
+      <div class="tab-list-container">
+        <ul class="tab-list">
+        </ul>
+      </div>
+    </section>
+
+    <!-- Page Container -->
+    <div id="module-tabs-container" class="page-container no-scroll"></div>
+  </div>
+
+  <script>
+    let control;
+
+    $('body').on('initialized', function() {
+      let tabNum = 0;
+
+      const $tabs = $('#module-tabs-example').tabs({
+        containerElement: '#module-tabs-container',
+        addTabButton: true,
+        moduleTabsTooltips: true
+      });
+      control = $tabs.data('tabs');
+
+      control.add('tab1', {
+        name: 'This is a really really really really really really long title',
+        content: '<button id="rename-btn" class="btn-secondary" style="margin:2em;">Rename</button>'
+      });
+
+      control.select('tab1');
+
+      control.addTabButton.on('click.tabs', () => {
+        control.select('#new-tab-' + tabNum);
+        control.rename('#new-tab-' + tabNum, tabNum + " Tab");
+        tabNum++;
+      });
+
+      control.getPanel('tab1').find('#rename-btn').click(function() {
+        control.rename('tab1', 'Now this text is even longer longer longer longer longer longer longer longer longer longer longer');
+      });
+    });
+  </script>
+
+</body>
