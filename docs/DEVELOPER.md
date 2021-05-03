@@ -186,7 +186,9 @@ http://localhost:4000/components/mask/test-number-mask-gauntlet?locale=es-ES&col
 
 ## Auto-running environment when opening in VSCode
 
-If you would like to conveniently auto-run the demo and web server when opening VSCode via VSCode's terminal when the repo folder is opened, this can be done by creating a file in `${root}/.vscode/tasks.json` and inputting the following:
+If you would like to conveniently auto-run the demo and web server when opening VSCode via VSCode's terminal when the repo folder is opened, this can be done by:
+
+- Creating a file in `${root}/.vscode/tasks.json` and inputting the following:
 
 ```js
 {
@@ -222,7 +224,9 @@ If you would like to conveniently auto-run the demo and web server when opening 
   }
 ```
 
-Restarting VSCode and/or re-opening the repo folder at `/enterprise` would then auto-run the dev server and demo application for you until the window is closed (note: if you have an instance running in the background/via another terminal this would fail).
+- `Command + Shift + P` (Mac) => Type "Tasks: Allow Automatic Tasks in Folder" and Click the option to allow auto running tasks
+
+- Restarting VSCode and/or re-opening the repo folder at `/enterprise` would then auto-run the dev server and demo application for you until the window is closed (note: if you have an instance running in the background/via another terminal this would fail).
 
 ## Editor Plugins
 
