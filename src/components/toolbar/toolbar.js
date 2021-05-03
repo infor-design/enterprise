@@ -860,16 +860,16 @@ Toolbar.prototype = {
    * @returns {void}
    */
   handleResize(containerDims) {
+    const buttons = this.getButtonsetButtons();
+    for (let i = 0; i < buttons.length; i++) {
+      buttons[i].removeClass('is-overflowed');
+    }
+
     if (this.settings.resizeContainers) {
       const title = containerDims ? containerDims.title : undefined;
       const buttonset = containerDims ? containerDims.buttonset : undefined;
 
       this.sizeContainers(title, buttonset);
-    }
-
-    const buttons = this.getButtonsetButtons();
-    for (let i = 0; i < buttons.length; i++) {
-      buttons[i].removeClass('is-overflowed');
     }
 
     if (this.element.is(':not(:hidden)')) {
