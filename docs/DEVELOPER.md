@@ -192,7 +192,7 @@ If you would like to conveniently auto-run the demo and web server when opening 
     "version": "2.0.0",
     "tasks": [
       {
-        "label": "Begin demo server",
+        "label": "IDS Enterprise: Demo Server",
         "type": "shell",
         "command": "npm run start",
         "windows": {
@@ -205,7 +205,7 @@ If you would like to conveniently auto-run the demo and web server when opening 
         "runOptions": { "runOn": "folderOpen" }
       },
       {
-        "label": "Watch for file changes to re-build assets",
+        "label": "IDS Enterprise: Dev Server",
         "type": "shell",
         "command": "npm run watch",
         "windows": {
