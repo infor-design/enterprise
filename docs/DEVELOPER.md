@@ -184,7 +184,51 @@ Appending these same parameters to the URL is a way to temporarily test them aga
 http://localhost:4000/components/mask/test-number-mask-gauntlet?locale=es-ES&colors=#941e1e
 ```
 
-#### Editor Plugins
+## Auto-running environment when opening in VSCode
+
+If you would like to conveniently auto-run the demo and web server when opening VSCode via VSCode's terminal when the repo folder is opened, this can be done by:
+
+- Creating a file in `${root}/.vscode/tasks.json` and inputting the following:
+
+```js
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "IDS Enterprise: Demo Server",
+        "type": "shell",
+        "command": "npm run start",
+        "windows": {
+          "command": "npm run start"
+        },
+        "presentation": {
+          "reveal": "always",
+          "panel": "new"
+        },
+        "runOptions": { "runOn": "folderOpen" }
+      },
+      {
+        "label": "IDS Enterprise: Dev Server",
+        "type": "shell",
+        "command": "npm run watch",
+        "windows": {
+          "command": "npm run watch"
+        },
+        "presentation": {
+          "reveal": "always",
+          "panel": "new"
+        },
+        "runOptions": { "runOn": "folderOpen" }
+      }
+    ]
+  }
+```
+
+- `Command + Shift + P` (Mac) => Type "Tasks: Allow Automatic Tasks in Folder" and Click the option to allow auto running tasks
+
+- Restarting VSCode and/or re-opening the repo folder at `/enterprise` would then auto-run the dev server and demo application for you until the window is closed (note: if you have an instance running in the background/via another terminal this would fail).
+
+## Editor Plugins
 
 This project uses `eslint` and `editorconfig`. You may want to add lint plugins to your editor to help comply with our coding standards:
 
