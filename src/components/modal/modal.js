@@ -1189,9 +1189,14 @@ Modal.prototype = {
 
     matchedSubComponentAPIs.forEach((matchObj) => {
       const componentAPI = matchObj.control;
-      if ((typeof componentAPI.isOpen === 'function' && componentAPI.isOpen()) ||
-        (typeof componentAPI.isOpen === 'boolean' && componentAPI.isOpen === true) ||
-        (typeof componentAPI.visible === 'boolean' && componentAPI.visible === true)) {
+
+      // Conditions below prevent the Modal from closing:
+      const isPopover = typeof componentAPI.isPopover === 'boolean' && componentAPI.isPopover === true;
+      const isOpenByFunction = typeof componentAPI.isOpen === 'function' && componentAPI.isOpen();
+      const isOpenViaProperty = typeof componentAPI.isOpen === 'boolean' && componentAPI.isOpen === true;
+      const isVisibleViaProperty = (!isPopover ? false : typeof componentAPI.visible === 'boolean' && componentAPI.visible === true);
+
+      if (isOpenByFunction || isOpenViaProperty || isVisibleViaProperty) {
         openSubComponents.push(componentAPI);
       }
     });

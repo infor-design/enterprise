@@ -1,0 +1,61 @@
+<div class="row">
+  <div class="twelve columns">
+
+    <button class="btn-secondary" type="button" id="add-context">Show Modal</button><br /><br />
+
+    <!-- Modal Example -->
+    <div id="modal-add-context" class="hidden">
+      <p>
+        The hyperlink at the end of this sentence has a tooltip built <a id="test-link" class="hyperlink" href="#">in</a>.
+      </p>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  var modals = {
+    'add-context': {
+      'title': 'Add Context',
+      'id': 'my-id',
+      'content': $('#modal-add-context'),
+      'showCloseBtn': true,
+      'triggerButton': $('#add-context'),
+      attributes: [{ name: 'id', value: 'add-context-modal' }, { name: 'data-automation-id', value: 'add-context-modal-auto' }],
+    },
+  },
+
+    setModal = function (opt) {
+      opt = $.extend({
+        buttons: [{
+          text: 'Cancel',
+          //  id: 'modal-button-1',
+          click: function (e, modal) {
+            modal.close();
+          }
+        }, {
+          text: 'Save',
+          //  id: 'modal-button-2',
+          click: function (e, modal) {
+            modal.close();
+          },
+          validate: false,
+          isDefault: true
+        }],
+      }, opt);
+
+      $('body').modal(opt);
+    };
+
+  $('#add-context').on('click', function () {
+    setModal(modals[this.id]);
+  });
+
+  $('body').on('initialized', function () {
+    $('#test-link').tooltip({
+      content: 'This Tooltip should stay open when you move the mouse away...',
+      keepOpen: true
+    });
+  });
+
+</script>
