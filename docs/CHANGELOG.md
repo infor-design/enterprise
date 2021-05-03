@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.52.0
+
+### v4.52.0 Fixes
+
+- `[General]` Placeholder for new issues. ([#5027](https://github.com/infor-design/enterprise/issues/5027))
+
 ## v4.51.0
 
 ### v4.51.0 Fixes
