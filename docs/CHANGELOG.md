@@ -15,6 +15,7 @@
 - `[Datagrid]` Fixed an issue where stretching the last column of a table was not consistent when resizing the window. ([#5045](https://github.com/infor-design/enterprise/issues/5045))
 - `[Datagrid]` Fixed an issue where time format HHmm was not working for time picker editor. ([#4926](https://github.com/infor-design/enterprise/issues/4926))
 - `[Datagrid]` Fixed an issue where setting stretchColumn to 'last' did not stretch the last column in the table. ([#4913](https://github.com/infor-design/enterprise/issues/4913))
+- `[Datagrid]` Fixed an issue where dropdown focus and arrow key was moving across the grid columns, which let open multiple dropdowns. ([#4851](https://github.com/infor-design/enterprise/issues/4851))
 - `[Datagrid]` Fixed an issue where the copy paste html to editable cell was cause to generate new cells. ([#4848](https://github.com/infor-design/enterprise/issues/4848))
 - `[Datepicker]` Fixed an issue where time was changing, if selected time was before noon for Danish language locale da-DK. ([#4987](https://github.com/infor-design/enterprise/issues/4987))
 - `[Datepicker]` Removed deprecation warning for close method. ([#5120](https://github.com/infor-design/enterprise/issues/5120))

@@ -1817,7 +1817,7 @@ Dropdown.prototype = {
     selectText();
 
     // Set focus back to the element
-    if (input) {
+    if (input && document.activeElement.tagName !== 'INPUT') {
       input[0].focus();
     }
   },
