@@ -7373,7 +7373,9 @@ Datagrid.prototype = {
     this.settings.dataset.map((row) => { delete row._selected; }); //eslint-disable-line
     // Sync the Ui and call the events
     this.dontSyncUi = false;
-    this._selectedRows = [];
+
+    // Update the display counts when unselecting all rows
+    this.displayCounts();
 
     if (!nosync) {
       this.syncSelectedUI();
