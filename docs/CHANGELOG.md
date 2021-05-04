@@ -45,6 +45,12 @@
 
 (42 Issues Solved This Release, Backlog Enterprise 166, Backlog Ng 28, 1081 Functional Tests, 1647 e2e Tests)
 
+## v4.50.3
+
+### v4.50.3 Fixes
+
+- `[Lookup]` Fixed an issue where readonly lookups showed up as enabled. ([#5149](https://github.com/infor-design/enterprise/issues/5149))
+
 ## v4.50.2
 
 ### v4.50.2 Fixes
