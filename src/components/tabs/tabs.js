@@ -3072,7 +3072,8 @@ Tabs.prototype = {
 
     // Rename the tab inside a currently-open "More Tabs" popupmenu, if applicable
     if (this.popupmenu) {
-      const moreAnchor = this.popupmenu.menu.find(`a[href="${tabId}"]`);
+      const moreAnchorSelector = tabId.charAt(0) !== '#' ? `#${tabId}` : tabId;
+      const moreAnchor = this.popupmenu.menu.find(`a[href="${moreAnchorSelector}"]`);
       moreAnchor.text(name);
     }
 
