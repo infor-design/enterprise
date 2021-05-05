@@ -3061,6 +3061,7 @@ Tabs.prototype = {
     const tab = this.doGetTab(e, tabId);
     const hasCounts = this.settings.tabCounts;
     const hasTooltip = this.settings.moduleTabsTooltips || this.settings.multiTabsTooltips;
+    const hasDismissible = tab.hasClass('dismissible');
     const anchor = tab.children('a');
     let count;
 
@@ -3075,6 +3076,10 @@ Tabs.prototype = {
       const moreAnchorSelector = tabId.charAt(0) !== '#' ? `#${tabId}` : tabId;
       const moreAnchor = this.popupmenu.menu.find(`a[href="${moreAnchorSelector}"]`);
       moreAnchor.text(name);
+
+      if (hasDismissible) {
+        moreAnchor.append($.createIconElement({ icon: 'close', classes: 'icon close' }));
+      }
     }
 
     if (hasCounts) {
