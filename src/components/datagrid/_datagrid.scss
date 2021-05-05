@@ -3853,26 +3853,6 @@ td .btn-actions {
       @include css3(transition, margin-left 300ms ease);
     }
 
-    /*
-    &:hover .icon {
-      @include trigger-icon-background($datagrid-row-hover-color);
-    }
-    */
-
-    /*
-    &.error:hover .icon,
-    &.error.icon,
-    &.datagrid-trigger-cell.error .icon {
-      @include trigger-icon-background(transparent);
-    }
-    */
-    
-    /*
-    &.is-editing:hover .icon {
-      @include trigger-icon-background($datagrid-cell-bg-color);
-    }
-    */
-
     &:hover,
     &:focus {
       .icon {
