@@ -7375,8 +7375,8 @@ Datagrid.prototype = {
     this.dontSyncUi = false;
 
     // It should not clear the selectedRows in lookup
-    const isLookup = $('.lookup-modal.is-visible');
-    this._selectedRows = !isLookup.length ? [] : this._selectedRows;
+    const isLookup = this.element.closest('.lookup-modal');
+    this._selectedRows = isLookup.length === 1 ? this._selectedRows : [];
 
     // Update the display counts when unselecting all rows
     this.displayCounts();
