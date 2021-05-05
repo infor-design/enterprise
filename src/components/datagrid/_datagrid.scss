@@ -2405,6 +2405,10 @@ $datagrid-small-row-height: 25px;
       .datagrid-cell-wrapper {
         position: relative;
 
+        .icon {
+          @include trigger-icon-background(transparent);
+        }
+
         .icon-error {
           background-color: transparent;
           box-shadow: none;
@@ -2435,6 +2439,10 @@ $datagrid-small-row-height: 25px;
       .datagrid-cell-wrapper {
         position: relative;
 
+        .icon {
+          @include trigger-icon-background(transparent);
+        }
+
         .icon-alert {
           left: 100%;
           margin-left: -30px;
@@ -2463,6 +2471,10 @@ $datagrid-small-row-height: 25px;
       .datagrid-cell-wrapper {
         position: relative;
 
+        .icon {
+          @include trigger-icon-background(transparent);
+        }
+
         .icon-success {
           left: 100%;
           margin-left: -30px;
@@ -2490,6 +2502,10 @@ $datagrid-small-row-height: 25px;
 
       .datagrid-cell-wrapper {
         position: relative;
+
+        .icon {
+          @include trigger-icon-background(transparent);
+        }
 
         .icon-info {
           left: 100%;
@@ -3837,19 +3853,25 @@ td .btn-actions {
       @include css3(transition, margin-left 300ms ease);
     }
 
+    /*
     &:hover .icon {
       @include trigger-icon-background($datagrid-row-hover-color);
     }
+    */
 
+    /*
     &.error:hover .icon,
     &.error.icon,
     &.datagrid-trigger-cell.error .icon {
       @include trigger-icon-background(transparent);
     }
-
+    */
+    
+    /*
     &.is-editing:hover .icon {
       @include trigger-icon-background($datagrid-cell-bg-color);
     }
+    */
 
     &:hover,
     &:focus {
@@ -3881,6 +3903,21 @@ td .btn-actions {
       height: inherit;
       margin-bottom: 0;
       width: inherit;
+    }
+  }
+}
+
+// Change BG color of hovered Datagrid row cell icons
+.is-hover-row {
+  .datagrid-trigger-cell {
+    .icon {
+      @include trigger-icon-background($datagrid-row-hover-color);
+    }
+
+    &.is-editing {
+      .icon {
+        @include trigger-icon-background($datagrid-cell-bg-color);
+      }
     }
   }
 }
