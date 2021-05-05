@@ -582,12 +582,9 @@ const editors = {
       // Check if isClick or cell touch and just open the list
       if (event.type === 'click' && $(event.target).is('.icon')) {
         this.input.parent().find('.icon').trigger('click');
-        this.input.closest('td').addClass('is-focused');
       }
 
       this.input.on('listclosed', () => {
-        self.input.closest('td').removeClass('is-focused');
-
         setTimeout(() => {
           self.input.trigger('focusout');
           container.parent().focus();
@@ -779,12 +776,9 @@ const editors = {
       // Check if isClick or cell touch and just open the list
       if (event.type === 'click' && $(event.target).is('.icon')) {
         this.input.parent().find('.icon').trigger('click');
-        this.input.closest('td').addClass('is-focused');
       }
 
       this.api.trigger.on('hide.editortime', () => {
-        self.input.closest('td').removeClass('is-focused');
-
         setTimeout(() => {
           self.input.trigger('focusout');
           container.parent().focus();
