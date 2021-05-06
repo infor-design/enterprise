@@ -4,7 +4,7 @@
 
 ### v4.52.0 Fixes
 
-- `[General]` Placeholder for new issues. ([#5027](https://github.com/infor-design/enterprise/issues/5027))
+- `[Lookup/Datagrid]` Fixed a bug where unselecting all items in an active page affects other selected items on other pages. ([#4503](https://github.com/infor-design/enterprise/issues/4503))
 
 ## v4.51.0
 

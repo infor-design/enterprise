@@ -7373,7 +7373,13 @@ Datagrid.prototype = {
     this.settings.dataset.map((row) => { delete row._selected; }); //eslint-disable-line
     // Sync the Ui and call the events
     this.dontSyncUi = false;
-    this._selectedRows = [];
+
+    // It should not clear the selectedRows in lookup
+    const isLookup = this.element.closest('.lookup-modal');
+    this._selectedRows = isLookup.length === 1 ? this._selectedRows : [];
+
+    // Update the display counts when unselecting all rows
+    this.displayCounts();
 
     if (!nosync) {
       this.syncSelectedUI();
