@@ -4,7 +4,7 @@
 
 ### v4.52.0 Fixes
 
-- `[General]` Placeholder for new issues. ([#5027](https://github.com/infor-design/enterprise/issues/5027))
+- `[Radio]` Fixed a bug where legend tag blinks when clicking the radio buttons. ([#4901](https://github.com/infor-design/enterprise/issues/4901))
 
 ## v4.51.0
 
