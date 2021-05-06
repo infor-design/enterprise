@@ -4,7 +4,7 @@
 
 ### v4.52.0 Fixes
 
-- `[General]` Placeholder for new issues. ([#5027](https://github.com/infor-design/enterprise/issues/5027))
+- `[Datagrid]` Fixed a bug where cells with a leading space triggered the dirty indicator even without changing the cell value on second blur/selection. ([#4825](https://github.com/infor-design/enterprise/issues/4825))
 
 ## v4.51.0
 

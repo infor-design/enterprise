@@ -9257,7 +9257,7 @@ Datagrid.prototype = {
     const isPlaceholder = $('.is-placeholder', cellNode).length > 0;
     let cellValue = (cellNode.text() ?
       cellNode.text() : this.fieldValue(rowData, col.field));
-
+    
     if (isEditor || isPlaceholder) {
       cellValue = this.fieldValue(rowData, col.field);
     }
@@ -10407,7 +10407,8 @@ Datagrid.prototype = {
     if ((d.originalVal === d.value) ||
       (d.originalVal === d.coercedVal) ||
       (d.originalVal === d.escapedCoercedVal) ||
-      (d.originalVal === d.cellNodeText)) {
+      (d.originalVal === d.cellNodeText) ||
+      (d.originalVal.trim() === d.value.trim())) {
       this.dirtyArray[row][cell].isDirty = false;
       this.setDirtyIndicator(row, cell, false);
     } else {
