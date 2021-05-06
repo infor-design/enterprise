@@ -9257,7 +9257,7 @@ Datagrid.prototype = {
     const isPlaceholder = $('.is-placeholder', cellNode).length > 0;
     let cellValue = (cellNode.text() ?
       cellNode.text() : this.fieldValue(rowData, col.field));
-    
+
     if (isEditor || isPlaceholder) {
       cellValue = this.fieldValue(rowData, col.field);
     }
