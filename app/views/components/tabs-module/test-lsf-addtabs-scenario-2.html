@@ -41,7 +41,7 @@
 
       control.addTabButton.on('click.tabs', () => {
         control.select('#new-tab-' + tabNum);
-        control.rename('#new-tab-' + tabNum, tabNum + " Tab");
+        control.rename('new-tab-' + tabNum, tabNum + " Tab");
         tabNum++;
       });
 
