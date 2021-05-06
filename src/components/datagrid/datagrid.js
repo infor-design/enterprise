@@ -9436,7 +9436,6 @@ Datagrid.prototype = {
     const rowData = this.settings.treeGrid ? this.settings.treeDepth[dataRowIndex].node :
       this.getActiveDataset()[dataRowIndex];
     let oldValue = this.fieldValue(rowData, col.field);
-
     if (col.beforeCommitCellEdit && !isCallback) {
       const vetoCommit = col.beforeCommitCellEdit({
         cell,
