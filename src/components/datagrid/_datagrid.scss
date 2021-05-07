@@ -393,6 +393,7 @@ $datagrid-small-row-height: 25px;
   }
 
   .resize-handle {
+    border: 0;
     cursor: col-resize;
     height: $datagrid-header-height;
     left: -999px;
