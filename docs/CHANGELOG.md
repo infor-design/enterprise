@@ -4,7 +4,7 @@
 
 ### v4.52.0 Fixes
 
-- `[General]` Placeholder for new issues. ([#5027](https://github.com/infor-design/enterprise/issues/5027))
+- `[Datagrid]` Fixed an issue where the datagrid resize did not work when zoomed, this was only occuring in some situations like frozen columns and colspans. ([#5115](https://github.com/infor-design/enterprise/issues/5115))
 
 ## v4.51.0
 
