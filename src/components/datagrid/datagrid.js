@@ -4816,7 +4816,8 @@ Datagrid.prototype = {
         if (diff < colWidth) {
           this.stretchColumnWidth = colWidth;
         } else {
-          this.stretchColumnDiff = colWidth = diff;
+          this.stretchColumnDiff = diff;
+          colWidth = diff;
         }
       }
 
@@ -5837,20 +5838,26 @@ Datagrid.prototype = {
         const isLeftPane = self.getContainer(node.attr('data-column-id')) === 'left';
 
         this.dragging = true;
-        const left = ui.left + 5;
+        const left = ui.left + self.devicePixelWidth(5);
         let currentCol = this.bodyColGroup.find('col').eq(idx)[0];
         if (isLeftPane) {
           currentCol = this.bodyColGroupLeft.find('col').eq(idx)[0];
         }
-        const currentColWidth = parseInt(self.currentHeader.width(), 10);
+        let currentColWidth = parseInt(self.currentHeader.width(), 10);
+        currentColWidth = self.devicePixelWidth(currentColWidth);
         let cssWidth = parseInt(currentCol.style.width || currentColWidth, 10);
+        cssWidth = self.devicePixelWidth(cssWidth);
 
         // Convert from percentage
         if (currentCol.style.width.indexOf('%') > -1) {
-          cssWidth = currentColWidth;
+          cssWidth = self.devicePixelWidth(currentColWidth);
         }
-        const offsetParentLeft = parseFloat(self.currentHeader.offsetParent().offset().left);
-        const offsetLeft = parseFloat(self.currentHeader.offset().left);
+
+        let offsetParentLeft = parseFloat(self.currentHeader.offsetParent().offset().left);
+        offsetParentLeft = self.devicePixelWidth(offsetParentLeft);
+        let offsetLeft = parseFloat(self.currentHeader.offset().left);
+        offsetLeft = self.devicePixelWidth(offsetLeft);
+
         let leftOffset = (idx === 0 ? 0 : (offsetLeft - offsetParentLeft - 2));
         if (self.hasLeftPane && !isLeftPane && idx === 0) {
           leftOffset = (offsetLeft - offsetParentLeft - 2);
@@ -5868,16 +5875,14 @@ Datagrid.prototype = {
         if (widthToSet === cssWidth) {
           return;
         }
-        currentCol.style.width = (`${widthToSet}px`);
-
+        currentCol.style.width = (`${self.devicePixelWidth(widthToSet)}px`);
         const inRange = (idx === this.settings.frozenColumns.left.length - 1) ||
           (idx <= (this.settings.frozenColumns.left.length - 1) && diff > 0);
 
         if (inRange && this.getContainer(columnId) === 'left') {
           this.totalWidths.left += diff < 0 ? Math.abs(diff) : (-diff);
-          this.tableLeft.css('width', this.totalWidths.left);
+          this.tableLeft.css('width', self.devicePixelWidth(this.totalWidths.left));
         }
-
         if (keyboard.pressedKeys.get('Shift')) {
           usingShiftKey = true;
         }
@@ -5895,19 +5900,22 @@ Datagrid.prototype = {
             DOM.getPreviousSibling(self.currentHeader, ':not(.is-hidden)') :
             DOM.getNextSibling(self.currentHeader, ':not(.is-hidden)');
 
+          if (!nextColumn) {
+            return;
+          }
+
           nextColumnId = nextColumn.getAttribute('data-column-id');
           const nextCol = Locale.isRTL() ?
             DOM.getPreviousSibling(currentCol, ':not(.is-hidden)') :
             DOM.getNextSibling(currentCol, ':not(.is-hidden)');
 
-          const nextColWidth = parseInt(nextColumn.offsetWidth, 10);
-          let nextCssWidth = parseInt(nextCol.style.width || nextColWidth, 10);
+          const nextColWidth = parseInt(self.devicePixelWidth(nextColumn.offsetWidth), 10);
+          let nextCssWidth = parseInt(self.devicePixelWidth(nextCol.style.width) || nextColWidth, 10);
           // Convert from percentage
           if (nextCol.style.width.indexOf('%') > -1) {
             nextCssWidth = nextColWidth;
           }
           nextWidthToSet = nextCssWidth + diff;
-
           if (nextWidthToSet < nextMinWidth || nextWidthToSet > nextMaxWidth) {
             self.resizeHandle.css('cursor', 'inherit');
             return;
@@ -5933,6 +5941,23 @@ Datagrid.prototype = {
           self.setColumnWidth(nextColumnId, nextWidthToSet);
         }
       });
+  },
+
+  /**
+   * Adjust the width for the devicePixelRatio
+   * @param {number} width the width to adjust
+   * @returns {number} the adjusted width
+   */
+  devicePixelWidth(width) {
+    const DPR = window.devicePixelRatio;
+    width = parseInt(width, 10);
+    if (DPR > 1) {
+      return (DPR * width);
+    }
+    if (DPR < 1) {
+      return ((1 - DPR + 1) * width);
+    }
+    return width;
   },
 
   /**
@@ -6590,11 +6615,13 @@ Datagrid.prototype = {
         const extraMargin = headerDetail.length ? parseInt(headerDetail.css('margin-left'), 10) : 0;
         const leftEdge = (parseInt(self.currentHeader.position().left, 10) - (extraMargin || 0)) +
           self.element.scrollLeft();
-        const rightEdge = leftEdge + self.currentHeader.outerWidth();
+        let rightEdge = leftEdge + self.devicePixelWidth(self.currentHeader.outerWidth());
         const alignToLeft = (e.pageX - leftEdge > rightEdge - e.pageX);
+        rightEdge = leftEdge + self.currentHeader.outerWidth();
         let leftPos = 0;
         leftPos = (alignToLeft ? (rightEdge - 5) : (leftEdge - 5));
-        const idx = self.currentHeader.parent().find('th:visible').index(self.currentHeader);
+        const allColumns = self.currentHeader.closest('.datagrid-container').find('th:visible');
+        const idx = allColumns.index(self.currentHeader);
 
         // Ignore First Column and last column
         if ((idx === 0 && (Locale.isRTL() ? alignToLeft : !alignToLeft)) ||
@@ -6609,7 +6636,6 @@ Datagrid.prototype = {
         if (Locale.isRTL() && !alignToLeft) {
           self.currentHeader = self.currentHeader.nextAll(':visible').not('.is-hidden').first();
         }
-
         if (!self.currentHeader.hasClass('is-resizable')) {
           return;
         }
