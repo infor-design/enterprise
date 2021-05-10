@@ -10412,14 +10412,20 @@ Datagrid.prototype = {
     if ((d.originalVal === d.value) ||
       (d.originalVal === d.coercedVal) ||
       (d.originalVal === d.escapedCoercedVal) ||
-      (d.originalVal === d.cellNodeText) ||
-      (d.originalVal.trim() === d.value.trim())) {
+      (d.originalVal === d.cellNodeText)) {
       this.dirtyArray[row][cell].isDirty = false;
       this.setDirtyIndicator(row, cell, false);
     } else {
       this.dirtyArray[row][cell].isDirty = true;
       cellNode[0].classList.add('is-dirty-cell');
       this.setDirtyIndicator(row, cell, true);
+    }
+
+    if (typeof d.originalVal === 'string' || d.originalVal instanceof String) {
+      if (d.originalVal?.trim() === d.value?.trim()) {
+        this.dirtyArray[row][cell].isDirty = false;
+        this.setDirtyIndicator(row, cell, false);
+      }
     }
   },
 
