@@ -10446,6 +10446,13 @@ Datagrid.prototype = {
       cellNode[0].classList.add('is-dirty-cell');
       this.setDirtyIndicator(row, cell, true);
     }
+
+    if (typeof d.originalVal === 'string' || d.originalVal instanceof String) {
+      if (d.originalVal?.trim() === d.value?.trim()) {
+        this.dirtyArray[row][cell].isDirty = false;
+        this.setDirtyIndicator(row, cell, false);
+      }
+    }
   },
 
   /**
