@@ -4,6 +4,7 @@
 
 ### v4.52.0 Fixes
 
+- `[Datagrid]` Fixed a bug where cells with a leading space triggered the dirty indicator even without changing the cell value on second blur/selection. ([#4825](https://github.com/infor-design/enterprise/issues/4825))
 - `[Lookup/Datagrid]` Fixed a bug where unselecting all items in an active page affects other selected items on other pages. ([#4503](https://github.com/infor-design/enterprise/issues/4503))
 - `[Radio]` Fixed a bug where legend tag blinks when clicking the radio buttons. ([#4901](https://github.com/infor-design/enterprise/issues/4901))
 
