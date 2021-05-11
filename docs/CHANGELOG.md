@@ -7,6 +7,12 @@
 - `[Datagrid]` Fixed an issue where the datagrid resize did not work when zoomed, this was only occuring in some situations like frozen columns and colspans. ([#5115](https://github.com/infor-design/enterprise/issues/5115))
 - `[Datagrid]` Fixed a bug where cells with a leading space triggered the dirty indicator even without changing the cell value on second blur/selection. ([#4825](https://github.com/infor-design/enterprise/issues/4825))
 - `[Lookup/Datagrid]` Fixed a bug where unselecting all items in an active page affects other selected items on other pages. ([#4503](https://github.com/infor-design/enterprise/issues/4503))
+
+## v4.51.1
+
+### v4.51.1 Fixes
+
+- `[Datagrid]` Fixed a bug where cells with a leading space triggered the dirty indicator even without changing the cell value on second blur/selection. ([#4825](https://github.com/infor-design/enterprise/issues/4825))
 - `[Radio]` Fixed a bug where legend tag blinks when clicking the radio buttons. ([#4901](https://github.com/infor-design/enterprise/issues/4901))
 
 ## v4.51.0
@@ -18,6 +24,7 @@
 - `[Datagrid]` Fixed an issue where stretching the last column of a table was not consistent when resizing the window. ([#5045](https://github.com/infor-design/enterprise/issues/5045))
 - `[Datagrid]` Fixed an issue where time format HHmm was not working for time picker editor. ([#4926](https://github.com/infor-design/enterprise/issues/4926))
 - `[Datagrid]` Fixed an issue where setting stretchColumn to 'last' did not stretch the last column in the table. ([#4913](https://github.com/infor-design/enterprise/issues/4913))
+- `[Datagrid]` Fixed an issue where when focusing dropdowns and then using arrow key, it would move across the grid columns leaving multiple open dropdowns. ([#4851](https://github.com/infor-design/enterprise/issues/4851))
 - `[Datagrid]` Fixed an issue where the copy paste html to editable cell was cause to generate new cells. ([#4848](https://github.com/infor-design/enterprise/issues/4848))
 - `[Datagrid]` Fixed some visual glitches related to focus/hover state and editable date/time cells. ([#5091](https://github.com/infor-design/enterprise/issues/5091))
 - `[Datepicker]` Fixed an issue where time was changing, if selected time was before noon for Danish language locale da-DK. ([#4987](https://github.com/infor-design/enterprise/issues/4987))
