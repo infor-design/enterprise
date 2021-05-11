@@ -1,5 +1,13 @@
 # What's New with Enterprise
 
+## v4.52.0
+
+### v4.52.0 Fixes
+
+- `[Datagrid]` Fixed a bug where cells with a leading space triggered the dirty indicator even without changing the cell value on second blur/selection. ([#4825](https://github.com/infor-design/enterprise/issues/4825))
+- `[Lookup/Datagrid]` Fixed a bug where unselecting all items in an active page affects other selected items on other pages. ([#4503](https://github.com/infor-design/enterprise/issues/4503))
+- `[Radio]` Fixed a bug where legend tag blinks when clicking the radio buttons. ([#4901](https://github.com/infor-design/enterprise/issues/4901))
+
 ## v4.51.0
 
 ### v4.51.0 Fixes
@@ -9,7 +17,9 @@
 - `[Datagrid]` Fixed an issue where stretching the last column of a table was not consistent when resizing the window. ([#5045](https://github.com/infor-design/enterprise/issues/5045))
 - `[Datagrid]` Fixed an issue where time format HHmm was not working for time picker editor. ([#4926](https://github.com/infor-design/enterprise/issues/4926))
 - `[Datagrid]` Fixed an issue where setting stretchColumn to 'last' did not stretch the last column in the table. ([#4913](https://github.com/infor-design/enterprise/issues/4913))
+- `[Datagrid]` Fixed an issue where when focusing dropdowns and then using arrow key, it would move across the grid columns leaving multiple open dropdowns. ([#4851](https://github.com/infor-design/enterprise/issues/4851))
 - `[Datagrid]` Fixed an issue where the copy paste html to editable cell was cause to generate new cells. ([#4848](https://github.com/infor-design/enterprise/issues/4848))
+- `[Datagrid]` Fixed some visual glitches related to focus/hover state and editable date/time cells. ([#5091](https://github.com/infor-design/enterprise/issues/5091))
 - `[Datepicker]` Fixed an issue where time was changing, if selected time was before noon for Danish language locale da-DK. ([#4987](https://github.com/infor-design/enterprise/issues/4987))
 - `[Datepicker]` Removed deprecation warning for close method. ([#5120](https://github.com/infor-design/enterprise/issues/5120))
 - `[Dropdown]` Fixed a bug where the dropdown list gets detached to the input field. ([5056](https://github.com/infor-design/enterprise/issues/5056))
@@ -37,6 +47,12 @@
 - `[Tree]` Added api support for collapse/expand node methods. ([#4707](https://github.com/infor-design/enterprise/issues/4707))
 
 (42 Issues Solved This Release, Backlog Enterprise 166, Backlog Ng 28, 1081 Functional Tests, 1647 e2e Tests)
+
+## v4.50.3
+
+### v4.50.3 Fixes
+
+- `[Lookup]` Fixed an issue where readonly lookups showed up as enabled. ([#5149](https://github.com/infor-design/enterprise/issues/5149))
 
 ## v4.50.2
 

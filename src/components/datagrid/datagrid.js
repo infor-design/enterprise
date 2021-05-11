@@ -7373,7 +7373,13 @@ Datagrid.prototype = {
     this.settings.dataset.map((row) => { delete row._selected; }); //eslint-disable-line
     // Sync the Ui and call the events
     this.dontSyncUi = false;
-    this._selectedRows = [];
+
+    // It should not clear the selectedRows in lookup
+    const isLookup = this.element.closest('.lookup-modal');
+    this._selectedRows = isLookup.length === 1 ? this._selectedRows : [];
+
+    // Update the display counts when unselecting all rows
+    this.displayCounts();
 
     if (!nosync) {
       this.syncSelectedUI();
@@ -9436,7 +9442,6 @@ Datagrid.prototype = {
     const rowData = this.settings.treeGrid ? this.settings.treeDepth[dataRowIndex].node :
       this.getActiveDataset()[dataRowIndex];
     let oldValue = this.fieldValue(rowData, col.field);
-
     if (col.beforeCommitCellEdit && !isCallback) {
       const vetoCommit = col.beforeCommitCellEdit({
         cell,
@@ -10414,6 +10419,13 @@ Datagrid.prototype = {
       this.dirtyArray[row][cell].isDirty = true;
       cellNode[0].classList.add('is-dirty-cell');
       this.setDirtyIndicator(row, cell, true);
+    }
+
+    if (typeof d.originalVal === 'string' || d.originalVal instanceof String) {
+      if (d.originalVal?.trim() === d.value?.trim()) {
+        this.dirtyArray[row][cell].isDirty = false;
+        this.setDirtyIndicator(row, cell, false);
+      }
     }
   },
 

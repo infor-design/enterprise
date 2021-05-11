@@ -164,6 +164,7 @@
     color: $label-color;
     font-size: $input-size-regular-font-size;
     padding-bottom: 5px !important;
+    position: relative;
   }
 
   &.is-disabled,
