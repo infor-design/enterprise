@@ -5838,7 +5838,7 @@ Datagrid.prototype = {
         const isLeftPane = self.getContainer(node.attr('data-column-id')) === 'left';
 
         this.dragging = true;
-        const left = ui.left + self.devicePixelWidth(5);
+        const left = ui.left + self.devicePixelWidth(3);
         let currentCol = this.bodyColGroup.find('col').eq(idx)[0];
         if (isLeftPane) {
           currentCol = this.bodyColGroupLeft.find('col').eq(idx)[0];
