@@ -12,12 +12,14 @@
 
 ## v4.51.1
 
-### v4.51.0 Markup Changes
-
-- `[Pager]` When fixing an accessibility complaint on pager we made all pager buttons tabable and removed the `tabindex` this could impact some test scripts. ([#4862](https://github.com/infor-design/enterprise/issues/4862))
-- `[Pager]` When fixing an accessibility complaint on pager we made all pager buttons tabable and removed the `tabindex` this could impact some test scripts. ([#4862](https://github.com/infor-design/enterprise/issues/4862))
-
 ### v4.51.1 Fixes
+
+- `[Datagrid]` Fixed a bug where cells with a leading space triggered the dirty indicator even without changing the cell value on second blur/selection. ([#4825](https://github.com/infor-design/enterprise/issues/4825))
+- `[Radio]` Fixed a bug where legend tag blinks when clicking the radio buttons. ([#4901](https://github.com/infor-design/enterprise/issues/4901))
+
+## v4.51.0
+
+### v4.51.0 Markup Changes
 
 - `[About]` The version in the html section of the document was not added correctly and is now showing the correct version string. ([#5069](https://github.com/infor-design/enterprise/issues/5069))
 - `[Datagrid]` Fixed a bug where cells with a leading space triggered the dirty indicator even without changing the cell value on second blur/selection. ([#4825](https://github.com/infor-design/enterprise/issues/4825))
@@ -25,9 +27,8 @@
 - `[Dropdown]` We added  `aria-readonly` to all readonly dropdowns. ([#5107](https://github.com/infor-design/enterprise/issues/5107))
 - `[Dropdown]` Dropdowns are now appended to the section in the page with `role="main"` there should be just one of these sections in each page. ([#1033](https://github.com/infor-design/enterprise-ng/issues/1033))
 - `[Input]` If using the password reveal feature, note that we change dit from using a `type="password"` to using a class to toggle the state. ([#5099](https://github.com/infor-design/enterprise/issues/5099))
+- `[Pager]` When fixing an accessibility complaint on pager we made all pager buttons tabable and removed the `tabindex` this could impact some test scripts. ([#4862](https://github.com/infor-design/enterprise/issues/4862))
 - `[Tabs]` We add the ability to drag tabs, if this is enabled there are a number of sort properties and classes that have been added that may need to be scripted in the future. ([#4520](https://github.com/infor-design/enterprise/issues/4520))
-
-## v4.51.0
 
 ### v4.51.0 Fixes
 
@@ -57,6 +58,7 @@
 - `[Modal]` Fixed a bug that prevented modals from closing while a tooltip was displayed inside ([#5047](https://github.com/infor-design/enterprise/issues/5047))
 - `[Pager]` Fixed an accessibility issue to use tabs instead arrow keys. ([#4862](https://github.com/infor-design/enterprise/issues/4862))
 - `[Password]` Changed the password reveal feature to not use `text="password"` and use css instead. This makes it possible to hide autocomplete. ([#5098](https://github.com/infor-design/enterprise/issues/5098))
+- `[Radio]` Fixed a bug where legend tag blinks when clicking the radio buttons. ([#4901](https://github.com/infor-design/enterprise/issues/4901))
 - `[Tabs]` Fixed a bug where where if urls contain a href with a forward slash (paths), then this would error. Note that in this situation you need to make sure the tab panel is linked without the hash. ([#5014](https://github.com/infor-design/enterprise/issues/5014))
 - `[Tabs]` Added support to sortable drag and drop tabs. Non touch devices it good with almost every type of tabs `Module`, `Vertical`, `Header`, `Scrollable` and `Regular`. For touch devices only support with `Module` and `Vertical` Tabs. ([#4520](https://github.com/infor-design/enterprise/issues/4520))
 - `[Tabs]` Changed the `rename()` method to also modify a tab's corresponding "More Tabs" menu item, if the menu is open. ([#5105](https://github.com/infor-design/enterprise/issues/5105))
