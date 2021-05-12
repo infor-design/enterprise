@@ -2,16 +2,30 @@
 
 ## v4.52.0
 
+### v4.52.0 Markup Changes
+
+- `[Datagrid]` When fixing bugs in datagrid hover states we removed the use of `is-focused` on table `td` elements. ([#5091](https://github.com/infor-design/enterprise/issues/5091))
+
 ### v4.52.0 Fixes
 
 - `[Lookup/Datagrid]` Fixed a bug where unselecting all items in an active page affects other selected items on other pages. ([#4503](https://github.com/infor-design/enterprise/issues/4503))
 
 ## v4.51.1
 
+### v4.51.0 Markup Changes
+
+- `[Pager]` When fixing an accessibility complaint on pager we made all pager buttons tabable and removed the `tabindex` this could impact some test scripts. ([#4862](https://github.com/infor-design/enterprise/issues/4862))
+- `[Pager]` When fixing an accessibility complaint on pager we made all pager buttons tabable and removed the `tabindex` this could impact some test scripts. ([#4862](https://github.com/infor-design/enterprise/issues/4862))
+
 ### v4.51.1 Fixes
 
+- `[About]` The version in the html section of the document was not added correctly and is now showing the correct version string. ([#5069](https://github.com/infor-design/enterprise/issues/5069))
 - `[Datagrid]` Fixed a bug where cells with a leading space triggered the dirty indicator even without changing the cell value on second blur/selection. ([#4825](https://github.com/infor-design/enterprise/issues/4825))
-- `[Radio]` Fixed a bug where legend tag blinks when clicking the radio buttons. ([#4901](https://github.com/infor-design/enterprise/issues/4901))
+- `[Datepicker/Monthview/Calendar]` We changed all Chinese locales to have monday as the first day of the week and this could impact scripts. ([#5147](https://github.com/infor-design/enterprise/issues/5147))
+- `[Dropdown]` We added  `aria-readonly` to all readonly dropdowns. ([#5107](https://github.com/infor-design/enterprise/issues/5107))
+- `[Dropdown]` Dropdowns are now appended to the section in the page with `role="main"` there should be just one of these sections in each page. ([#1033](https://github.com/infor-design/enterprise-ng/issues/1033))
+- `[Input]` If using the password reveal feature, note that we change dit from using a `type="password"` to using a class to toggle the state. ([#5099](https://github.com/infor-design/enterprise/issues/5099))
+- `[Tabs]` We add the ability to drag tabs, if this is enabled there are a number of sort properties and classes that have been added that may need to be scripted in the future. ([#4520](https://github.com/infor-design/enterprise/issues/4520))
 
 ## v4.51.0
 
