@@ -10,6 +10,7 @@
 
 - `[Datagrid]` When fixing bugs in datagrid hover states we removed the use of `is-focused` on table `td` elements. ([#5091](https://github.com/infor-design/enterprise/issues/5091))
 - `[Lookup/Datagrid]` Fixed a bug where the plus minus icon animation was cut off. ([#4962](https://github.com/infor-design/enterprise/issues/4962))
+- `[Datagrid]` Fixed a bug where unselecting all items in an active page affects other selected items on other pages. ([#4503](https://github.com/infor-design/enterprise/issues/4503))
 
 ## v4.51.1
 
