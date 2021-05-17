@@ -8,6 +8,7 @@
 
 ### v4.52.0 Fixes
 
+- `[Datagrid]` Fixed a bug where filter options were not opening anymore after doing sorting on server-side paging. ([#5073](https://github.com/infor-design/enterprise/issues/5073))
 - `[Lookup/Datagrid]` Fixed a bug where unselecting all items in an active page affects other selected items on other pages. ([#4503](https://github.com/infor-design/enterprise/issues/4503))
 
 ## v4.51.1

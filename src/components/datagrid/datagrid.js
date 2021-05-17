@@ -1608,13 +1608,24 @@ Datagrid.prototype = {
     let activeMenu = null;
 
     // Attach Keyboard support
-    this.element.off('click.datagrid-filter').on('click.datagrid-filter', '.btn-filter', function () {
+    this.element.off('click.datagrid-filter').on('click.datagrid-filter', '.btn-filter', function (event) {
       const filterBtn = $(this);
       const popupOpts = { trigger: 'immediate', offset: { y: 15 }, placementOpts: { strategies: ['flip', 'nudge'] } };
       const popupmenu = filterBtn.data('popupmenu');
+      const parentElem = $(event.target).parent();
+      const popupmenuElem = parentElem.find('.popupmenu');
 
       if (popupmenu) {
         popupmenu.close(true, true);
+
+        // If the menu is missing in the Datagrid filter wrapper,
+        // it will re-attach to the parent in the correct position.
+        if (!popupmenuElem.length) {
+          if (popupmenu.wrapperPlace) {
+            popupmenu.wrapper.off().remove();
+          }
+          popupmenu.menu.insertAfter(filterBtn);
+        }
       } else {
         filterBtn.off('beforeopen.datagrid-filter').on('beforeopen.datagrid-filter', (e, menu, api) => {
           self.hideTooltip();
