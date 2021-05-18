@@ -1680,6 +1680,15 @@ Datagrid.prototype = {
           dropdown.closeList('click');
         }
       });
+    this.element.off('click.datagrid-filter-click')
+      .on('click.datagrid-filter-click', 'th', () => {
+        activeMenu?.close();
+        const dropdownId = $('#dropdown-list').attr('data-element-id');
+        const dropdown = $(`#${dropdownId}`).data('dropdown');
+        if (dropdown && dropdown.isOpen()) {
+          dropdown.closeList('click');
+        }
+      });
 
     if (this.settings.filterWhenTyping) {
       this.element.off('keyup.datagrid-filter-input').on('keyup.datagrid-filter-input', '.datagrid-filter-wrapper input', (e) => {
@@ -4816,7 +4825,8 @@ Datagrid.prototype = {
         if (diff < colWidth) {
           this.stretchColumnWidth = colWidth;
         } else {
-          this.stretchColumnDiff = colWidth = diff;
+          this.stretchColumnDiff = colWidth;
+          this.stretchColumnDiff = diff;
         }
       }
 
