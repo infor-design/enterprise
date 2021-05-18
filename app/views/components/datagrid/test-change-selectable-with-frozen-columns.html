@@ -39,7 +39,7 @@
     var dg = $('#datagrid').datagrid({
       columns: columns,
       dataset: data,
-      selectable: 'mixed',
+      selectable: 'single',
       frozenColumns: {left: ['selectionCheckbox', 'productId']},
       toolbar: {title: 'Data Grid Header Title', results: true, personalize: true, actions: true, rowHeight: true, keywordFilter: true,  collapsibleFilter: true}
     }).on('selected', function (e, args) {
