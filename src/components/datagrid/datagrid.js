@@ -5471,6 +5471,7 @@ Datagrid.prototype = {
     this.settings.columns[idx].hidden = true;
     this.headerNodes().eq(idx).addClass('is-hidden');
     this.colGroupNodes().eq(idx).addClass('is-hidden');
+    this.tableBodyLeft?.find(`> tr > td:nth-child(${idx + 1})`).addClass('is-hidden');
 
     const frozenLeft = this.settings?.frozenColumns?.left.length || 0;
     this.tableBody.find(`> tr > td:nth-child(${idx - frozenLeft + 1})`).addClass('is-hidden');
@@ -5524,6 +5525,7 @@ Datagrid.prototype = {
     this.settings.columns[idx].hidden = false;
     this.headerNodes().eq(idx).removeClass('is-hidden');
     this.colGroupNodes().eq(idx).removeClass('is-hidden');
+    this.tableBodyLeft?.find(`> tr > td:nth-child(${idx + 1})`).removeClass('is-hidden');
 
     const frozenLeft = this.settings?.frozenColumns?.left.length || 0;
     this.tableBody.find(`> tr > td:nth-child(${idx - frozenLeft + 1})`).removeClass('is-hidden');
