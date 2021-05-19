@@ -49,7 +49,7 @@ function executeUpdate(cmd) {
   const exec = require('child_process').exec
   const updateProcess = exec(cmd, (err, stdout, stderr) => {
     if (err) {
-      logError(`exec error: ${err}`);
+      console.error(`exec error: ${err}`);
       return;
     }
     console.log(stdout);
