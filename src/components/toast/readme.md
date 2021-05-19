@@ -1,6 +1,6 @@
 ---
 title: Toast Component
-description: Displays a given data set in a visual way. Best for showing feedback about a system process that is not related to the current view.
+description: Toasts are used to display confirmations of success, failure, or other statuses of system processes related to a user’s workflow. If a user submits a form, a toast will confirm the successful or unsuccessful completion of that submission. Toasts are dismissible via the “close” icon or the escape key. If not dismissed, the toast will hide after a configurable amount of time.
 demo:
   embedded:
   - name: Default Configuration

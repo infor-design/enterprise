@@ -1,6 +1,6 @@
 ---
 title: Progress Indicator
-description: Displays feedback about a system process. Best for showing feedback about a system process that is not related to the current view.
+description: Displays feedback about how far along a system process is.
 demo:
   embedded:
   - name: Default Progress Indicator Example
