@@ -430,6 +430,10 @@ MaskAPI.prototype = {
         // We substring from the beginning until the position after the last filled
         // placeholder char.
         resultStr = resultStr.substr(0, indexOfLastFilledPlaceholderChar + 1);
+      } else if (rawValue !== '' && resultStr.indexOf(rawValue) > -1) {
+        // The raw value provided exists within the character literals left by processing, so
+        // we simply do nothing to the results string in this case.
+        caretPos += rawValue.length;
       } else {
         // If we couldn't find `indexOfLastFilledPlaceholderChar` that means the user deleted
         // the first character in the mask. So we return an empty string.
