@@ -970,6 +970,15 @@ Dropdown.prototype = {
       this.searchInput = this.list.find('#dropdown-search');
     } else {
       this.listUl.html(ulContents);
+
+      if (self.settings.attributes) {
+        const options = this.listUl.find('.dropdown-option a');
+
+        options.each(function (i) {
+          const opt = $(this);
+          utils.addAttributes(opt, self, self.settings.attributes, `option-${i}`, true);
+        });
+      }
     }
 
     if (env.os.name === 'ios' || env.os.name === 'android') {

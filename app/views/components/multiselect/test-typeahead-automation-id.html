@@ -1,0 +1,68 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Multiselect Test: Typeahead Automation ID</h2>
+    <br/>
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+
+    <div class="field">
+      <label for="ajax-test">Search Typeahead</label>
+      <select id="ajax-test" name="ajax-test" class="multiselect" data-init="false" multiple>
+        <option selected value="FL">Florida</option>
+      </select>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  var cachedTerm,
+    cachedData,
+    cachingEnabled = true;
+
+  function getCacheSetting() {
+    return $('#caching-on').prop('checked');
+  }
+
+  function resetCache() {
+    cachedTerm = undefined;
+    cachedData = undefined;
+    console.log('Multiselect search term/data cache has been cleared');
+  }
+
+  // Source method implementation that contains support for caching search terms/retreived data.
+  function callExternalSource(response, term) {
+    if (cachingEnabled && cachedData && cachedTerm === term) {
+      console.log('Using cached data for search term "' + term + '" instead of performing a new search...');
+      response(cachedData);
+      return;
+    }
+
+    cachedTerm = term;
+
+    var apiRoute = '{{basepath}}api/states-multiselect';
+    if (term && typeof term === 'string' && term.length) {
+      apiRoute += '?term=' + term;
+    }
+
+    console.log('Searching for term: "' + term + '".');
+    $.getJSON(apiRoute, function(data) {
+      cachedData = data;
+      response(data);
+    });
+  }
+
+  $('body').on('initialized', function() {
+    // Tie the external source method to the multiselect
+    $('#ajax-test').multiselect({
+      source: callExternalSource,
+      attributes: [{'name': 'id', 'value': 'SomeIdPrefix'}],
+      showSearchUnderSelected: true,
+      reload: 'typeahead'
+    });
+  });
+</script>
