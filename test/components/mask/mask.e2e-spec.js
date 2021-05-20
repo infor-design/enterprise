@@ -99,6 +99,26 @@ describe('Number Masks', () => {
 
     await (utils.checkForErrors());
   });
+
+  it('Correctly handles only formatting the decimal', async () => {
+    await utils.setPage('/components/mask/test-number-leading-zeroes.html');
+    const thisInputId = 'test1';
+    const inputEl = await element(by.id(thisInputId));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(inputEl), config.waitsFor);
+
+    await inputEl.clear();
+    await inputEl.sendKeys('123.123');
+
+    expect(await inputEl.getAttribute('value')).toEqual('123.123');
+
+    // Select the entire input field, then input a decimal
+    await browser.executeScript(`document.querySelector('#${thisInputId}').select();`);
+    await browser.driver.sleep(config.sleepShort);
+    await inputEl.sendKeys('.25');
+
+    expect(await inputEl.getAttribute('value')).toEqual('0.25');
+  });
 });
 
 describe('Date Masks (custom formats)', () => {
