@@ -5479,12 +5479,19 @@ Datagrid.prototype = {
     }
 
     this.settings.columns[idx].hidden = true;
-    this.headerNodes().eq(idx).addClass('is-hidden');
+    this.headerNodeCheckbox = this.headerNodes().eq(idx);
+    if (!this.settings?.frozenColumns?.left.length) this.headerNodes().eq(idx).addClass('is-hidden');
+    this.headerNodes().eq(idx).off().remove();
     this.colGroupNodes().eq(idx).addClass('is-hidden');
 
     const frozenLeft = this.settings?.frozenColumns?.left.length || 0;
     this.tableBody.find(`> tr > td:nth-child(${idx - frozenLeft + 1})`).addClass('is-hidden');
     this.bodyColGroup.find('col').eq(idx - frozenLeft).addClass('is-hidden');
+
+    if (this.tableBodyLeft?.find('> tr > td .datagrid-checkbox-wrapper')) {
+      this.bodyNodeCheckboxes = this.tableBodyLeft.find(`> tr > td:nth-child(${idx + 1})`);
+      this.tableBodyLeft.find(`> tr > td:nth-child(${idx + 1})`).remove();
+    }
 
     // Shrink or remove colgroups
     this.updateColumnGroup(idx, false);
@@ -5538,6 +5545,10 @@ Datagrid.prototype = {
     const frozenLeft = this.settings?.frozenColumns?.left.length || 0;
     this.tableBody.find(`> tr > td:nth-child(${idx - frozenLeft + 1})`).removeClass('is-hidden');
     this.bodyColGroup.find('col').eq(idx - frozenLeft).removeClass('is-hidden');
+
+    if (frozenLeft) this.tableBodyLeft.find(`> tr > td:nth-child(${idx + 1})`).removeClass('is-hidden');
+    if (this.headerNodeCheckbox) this.headerRowLeft?.find('> tr').prepend(this.headerNodeCheckbox);
+    if (this.bodyNodeCheckboxes) this.tableBodyLeft?.find('> tr').prepend(this.bodyNodeCheckboxes[idx]);
 
     // Shrink or add colgroups
     this.updateColumnGroup(idx, true);
