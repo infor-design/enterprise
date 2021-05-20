@@ -214,10 +214,13 @@ Homepage.prototype = {
           removeButton.insertBefore(header)
             .on('click.card-remove', () => {
               const removeCard = () => {
+                const cloned = card.clone(true);
                 card.remove();
                 homepage.refresh(false);
                 setTimeout(() => {
                   homepage.element.triggerHandler('removecard', [card, homepage.state]);
+                  cloned.triggerHandler('removecard', [card, homepage.state]);
+                  cloned.remove();
                 }, 0);
               };
               if (this.settings && typeof this.settings.onBeforeRemoveCard === 'function') {
