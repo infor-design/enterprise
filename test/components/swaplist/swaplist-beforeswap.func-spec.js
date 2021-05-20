@@ -43,7 +43,7 @@ describe('SwapList API', () => {
     expect(swaplistObj).toEqual(jasmine.any(Object));
   });
 
-  it('Should be able to trigger beforeswap for searched items', (done) => {
+  xit('Should be able to trigger beforeswap for searched items', (done) => {
     const spyEvent = spyOnEvent(swaplistEl, 'beforeswap');
     const contaner = swaplistEl.querySelector('.available');
     const searchEl = contaner.querySelector('#search-available');
