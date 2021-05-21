@@ -208,7 +208,7 @@
   .colorpicker-container {
     ~ .btn-actions {
       left: -10px;
-      top: -13px;
+      top: -10px;
       width: $input-size-regular-height;
     }
   }
@@ -249,6 +249,12 @@
       left: -7px;
       top: -1px;
     }
+
+    .btn-icon {
+      &.close:not(.is-empty) {
+        right: 45px;
+      }
+    }
   }
 
   .spinbox-wrapper {
@@ -282,8 +288,18 @@
 
   // Clearable Inputs that are not Searchfields
   [data-clearable='true'] {
+    ~ .btn-icon {
+      top: 0;
+      transform: none;
+
+      &:not(.is-empty) {
+        ~ .btn-actions {
+          left: -34px;
+        }
+      }
+    }
     ~ .btn-actions {
-      left: -5px;
+      left: -10px;
     }
 
     ~ .icon.close.is-empty ~ .btn-actions {
