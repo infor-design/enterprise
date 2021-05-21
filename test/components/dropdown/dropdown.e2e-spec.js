@@ -762,12 +762,12 @@ describe('Dropdown "No Search" stay-open behavior', () => {
 
     expect(await element(by.className('is-focused')).getText()).toEqual('93');
 
-    // Try to find one that doesn't exist.  All items will become unhighlighted.
+    // Try to find one that doesn't exist. The blank item will become highlighted.
     await searchInput.click();
     await searchInput.clear().sendKeys('104');
     await browser.driver.sleep(config.sleep);
 
-    expect(await element(by.className('is-focused')).isPresent()).toBeFalsy();
+    expect(await element(by.className('is-focused')).getText()).toEqual(' ');
   });
 
   it('can select keyed values with ENTER', async () => {
