@@ -834,3 +834,32 @@ describe('Dropdown blank option tests', () => {
     expect(await element(by.css('.dropdown-option.is-selected')).getAttribute('data-val')).toBe('blank');
   });
 });
+
+describe('Dropdown typeahead tests with automation id', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/dropdown/test-typeahead-automation-id');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (!utils.isSafari()) {
+    it('Should be able to set the prefix id with typeahead settings', async () => {
+      const dropdownEl = await element(by.css('div.dropdown'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
+      await dropdownEl.click();
+      await browser.driver.sleep(config.sleep);
+
+      const dropdownListSearchEl = await element(by.css('.dropdown-search'));
+      await dropdownListSearchEl.sendKeys('a');
+      await browser.driver.sleep(config.sleep);
+
+      expect(await element(by.id('SomeIdPrefix-option-0')).getAttribute('id')).toEqual('SomeIdPrefix-option-0');
+      expect(await element(by.id('SomeIdPrefix-option-1')).getAttribute('id')).toEqual('SomeIdPrefix-option-1');
+      expect(await element(by.id('SomeIdPrefix-option-2')).getAttribute('id')).toEqual('SomeIdPrefix-option-2');
+    });
+  }
+});
