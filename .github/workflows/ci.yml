@@ -30,7 +30,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: node_modules
-        key: enterprise-452
+        key: enterprise-1000
 
     - name: Update Chrome
       run: |

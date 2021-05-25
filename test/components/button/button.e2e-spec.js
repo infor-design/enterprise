@@ -192,6 +192,7 @@ describe('Button example-with-icons tests', () => {
       await buttonEl.sendKeys(protractor.Key.ENTER);
 
       await browser.driver.wait(until.presenceOf($('#menu-button-alone.is-open')), config.waitsFor);
+
       expect(await buttonEl.getAttribute('class')).toContain('is-open');
 
       expect(await element(by.css('button#menu-button-alone[aria-haspopup="true"]')).isDisplayed()).toBe(true);
