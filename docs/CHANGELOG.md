@@ -8,6 +8,7 @@
 
 ### v4.52.0 Fixes
 
+- `[About]` Fixed a bug where scroll bar is spilling outside of the border. ([#5206](https://github.com/infor-design/enterprise/issues/5206))
 - `[Datagrid]` Fixed a bug where changing a selection mode between single and mixed on a datagrid with frozen columns were not properly rendered on UI. ([#5067](https://github.com/infor-design/enterprise/issues/5067))
 - `[Datagrid]` Fixed a bug where filter options were not opening anymore after doing sorting on server-side paging. ([#5073](https://github.com/infor-design/enterprise/issues/5073))
 - `[Lookup/Datagrid]` Fixed a bug where unselecting all items in an active page affects other selected items on other pages. ([#4503](https://github.com/infor-design/enterprise/issues/4503))
