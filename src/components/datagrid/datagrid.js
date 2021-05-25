@@ -5546,9 +5546,16 @@ Datagrid.prototype = {
     this.tableBody.find(`> tr > td:nth-child(${idx - frozenLeft + 1})`).removeClass('is-hidden');
     this.bodyColGroup.find('col').eq(idx - frozenLeft).removeClass('is-hidden');
 
-    if (frozenLeft) this.tableBodyLeft.find(`> tr > td:nth-child(${idx + 1})`).removeClass('is-hidden');
-    if (this.headerNodeCheckbox) this.headerRowLeft?.find('> tr').prepend(this.headerNodeCheckbox);
-    if (this.bodyNodeCheckboxes) this.tableBodyLeft?.find('> tr').prepend(this.bodyNodeCheckboxes[idx]);
+    if (frozenLeft) {
+      this.tableBodyLeft.find(`> tr > td:nth-child(${idx + 1})`).removeClass('is-hidden');
+
+      if (this.headerNodeCheckbox && !this.headerRowLeft.find(`> tr th:nth-child(${idx + 1}) .datagrid-checkbox-wrapper`).length) {
+        this.headerRowLeft?.find('> tr').prepend(this.headerNodeCheckbox);
+      }
+      if (this.bodyNodeCheckboxes && !this.tableBodyLeft.find(`> tr td:nth-child(${idx + 1}) .datagrid-checkbox-wrapper`).length) {
+        this.tableBodyLeft?.find('> tr').prepend(this.bodyNodeCheckboxes[idx]);
+      }
+    }
 
     // Shrink or add colgroups
     this.updateColumnGroup(idx, true);
