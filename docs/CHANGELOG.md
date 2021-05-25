@@ -16,6 +16,7 @@
 - `[Datagrid/Lookup]` Fixed a bug where the plus minus icon animation was cut off. ([#4962](https://github.com/infor-design/enterprise/issues/4962))
 - `[Datagrid]` Fixed a bug where unselecting all items in an active page affects other selected items on other pages. ([#4503](https://github.com/infor-design/enterprise/issues/4503))
 - `[Datagrid]` Fixed a bug where the tag text in the column is not shown properly when hovering it on Alternate Row Shading. ([#5210](https://github.com/infor-design/enterprise/issues/5210))
+- `[Dropdown]` Fixed a bug where automatic highlighting of a blank option after opening the list was not working ([#5095](https://github.com/infor-design/enterprise/issues/5095))
 - `[Dropdown/Multiselect]` Fixed a bug where the id attribute prefix were missing from the dropdown list when searching with typeahead settings. ([#5053](https://github.com/infor-design/enterprise/issues/5053))
 - `[Field Options]` Fixed misalignment of field options for the colorpicker, clearable input field, and clearable searchfield with its close icon. ([#5139](https://github.com/infor-design/enterprise/issues/5139))
 - `[Homepage]` Fixed an issue where remove card event was not triggered on card/widget. ([#4798](https://github.com/infor-design/enterprise/issues/4798))

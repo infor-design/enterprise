@@ -762,12 +762,12 @@ describe('Dropdown "No Search" stay-open behavior', () => {
 
     expect(await element(by.className('is-focused')).getText()).toEqual('93');
 
-    // Try to find one that doesn't exist.  All items will become unhighlighted.
+    // Try to find one that doesn't exist. The blank item will become highlighted.
     await searchInput.click();
     await searchInput.clear().sendKeys('104');
     await browser.driver.sleep(config.sleep);
 
-    expect(await element(by.className('is-focused')).isPresent()).toBeFalsy();
+    expect(await element(by.className('is-focused')).getText()).toEqual(' ');
   });
 
   it('can select keyed values with ENTER', async () => {
@@ -806,6 +806,32 @@ describe('Dropdown "No Search" stay-open behavior', () => {
     await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('div.dropdown span')).first().getText()).toBe('');
+  });
+});
+
+describe('Dropdown blank option tests', () => {
+  it('Highlights the blank option when the list is opened', async () => {
+    await utils.setPage('/components/dropdown/test-blank-initially.html?layout=nofrills');
+    await utils.checkForErrors();
+
+    const dropdownEl = await element(by.css('div.dropdown'));
+    await dropdownEl.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.id('dropdown-list'))), config.waitsFor);
+
+    expect(await element(by.css('.dropdown-option.is-selected')).getAttribute('data-val')).toBe('blank');
+  });
+
+  it('Highlights the blank option when the list is opened and virtual scrolling is enabled', async () => {
+    await utils.setPage('/components/dropdown/test-virtual-scroll-blank-option.html?layout=nofrills');
+    await utils.checkForErrors();
+
+    const dropdownEl = await element(by.css('div.dropdown'));
+    await dropdownEl.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.id('dropdown-list'))), config.waitsFor);
+
+    expect(await element(by.css('.dropdown-option.is-selected')).getAttribute('data-val')).toBe('blank');
   });
 });
 
