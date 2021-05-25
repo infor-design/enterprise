@@ -38,6 +38,26 @@
     outline: medium none;
     overflow-y: scroll;
 
+    @media only screen and (max-height: $breakpoint-slim + 25) {
+      max-height: 175px; 
+    }
+
+    @media only screen and (max-height: $breakpoint-slim) {
+      max-height: 145px; 
+    }
+
+    @media only screen and (max-height: $breakpoint-slim - 50) {
+      max-height: 115px;
+    }
+
+    @media only screen and (max-height: $breakpoint-phone - 20) {
+      max-height: 100px;
+    }
+
+    @media only screen and (max-height: $breakpoint-phone - 55) {
+      max-height: 53px;
+    }
+
     &:hover {
       border-color: $about-text-hover-border-color;
     }
@@ -50,7 +70,7 @@
 
   .modal-body-wrapper {
     margin-bottom: 20px;
-    overflow: visible;
+    overflow: hidden;
   }
 
   .additional-content {
