@@ -112,6 +112,7 @@ describe('Breadcrumb should be accessible with no WCAG 2AA violations', () => {
     if (!utils.isIE()) {
       await utils.setPage('/components/breadcrumb/example-disabled?theme=classic&layout=nofrills');
       const res = await axePageObjects(browser.params.theme);
+
       expect(res.violations.length).toEqual(0);
     }
   });

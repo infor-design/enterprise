@@ -1354,6 +1354,7 @@ describe('Datagrid multiselect tests', () => {
     await browser.wait(until.presenceOf($(S.gridColumn({ row: 2, column: 2 }))));
     await $(S.gridColumn({ row: 2, column: 2 })).click();
     await browser.wait(until.presenceOf($(S.gridRowCheckbox({ row: 2, checked: true }))));
+
     expect(await element(by.css('.selection-count')).getText()).toEqual('2 Selected');
     // sort ascending
     await browser.wait(

@@ -11,7 +11,7 @@ const COMPONENT_NAME = 'colorpicker';
  * The ColorPicker Component is a trigger field with a listing colors that can be selected.
  * @class ColorPicker
  * @param {jQuery[]|HTMLElement} element The plugin element for the constuctor
- * @param {object} [settings] The settings element. 
+ * @param {object} [settings] The settings element.
  * @param {object} [settings.themes={}] Themes available for ColorPicker
  * @param {array} [settings.colors=[]] An array of objects of the form. {label: 'Azure', number: '01', value: 'CBEBF4'}
  * that can be used to populate the color grid.

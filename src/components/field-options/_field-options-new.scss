@@ -35,7 +35,7 @@
   .colorpicker-container {
     + .btn-actions {
       left: -12px;
-      top: -13px;
+      top: -10px;
       width: $input-size-regular-height;
     }
   }
@@ -53,9 +53,22 @@
     top: 0;
   }
 
-  .field-options ~ .close ~ .btn-actions {
-    left: -12px;
-    top: 0;
+  .field-options {
+    ~ .close {
+      &:not(.is-empty) {
+        top: 0;
+
+        ~ .btn-actions {
+          left: -36px;
+          top: 0;
+        }
+      }
+      &.is-empty {
+        ~ .btn-actions {
+          left: -12px;
+        }
+      }
+    }
   }
 
   [data-clearable='true'] + .icon.close {
@@ -69,6 +82,13 @@
     .btn-actions {
       left: -7px;
       width: $input-size-regular-height;
+    }
+
+    .btn-icon {
+      &.close:not(.is-empty) {
+        right: 45px;
+        top: 7px;
+      }
     }
   }
 

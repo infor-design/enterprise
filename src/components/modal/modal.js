@@ -741,7 +741,7 @@ Modal.prototype = {
   /**
    * Check if the device is Android.
    * @private
-   * @returns {boolean}
+   * @returns {boolean} whether or not the device is android
    */
   isAndroid() {
     const os = env && env.os && env.os.name ? env.os.name : '';

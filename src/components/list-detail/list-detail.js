@@ -144,7 +144,7 @@ ListDetail.prototype = {
       if (this.listContainsBackElement) {
         this.listContainsBackElement = this.listElement.contains(this.backElement);
       }
-      
+
       this.detailContainsBackElement = this.detailElement.contains(this.backElement);
     }
 
@@ -395,7 +395,7 @@ ListDetail.prototype = {
    * @returns {void}
    */
   handleToggleClick() {
-    this.toggleSidebar(this.showSidebar); 
+    this.toggleSidebar(this.showSidebar);
   },
 
   /**

@@ -2774,15 +2774,12 @@ Dropdown.prototype = {
     // Set activedescendent for new option
     this.searchInput.attr('aria-activedescendant', listOption.children('a').attr('id'));
 
-    const isEmpty = (option.val() === '' || listOption.attr('data-val') === '' || option.hasClass('clear'));
-    if (!isEmpty) {
-      this.setItemIconOverColor(listOption);
-      listOption.addClass('is-focused')
-        .children('a').attr({ tabindex: '0' });
+    this.setItemIconOverColor(listOption);
+    listOption.addClass('is-focused')
+      .children('a').attr({ tabindex: '0' });
 
-      if (!noScroll || noScroll === false || noScroll === undefined) {
-        this.scrollToOption(listOption);
-      }
+    if (!noScroll || noScroll === false || noScroll === undefined) {
+      this.scrollToOption(listOption);
     }
   },
 
