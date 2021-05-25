@@ -7,6 +7,9 @@ import { xssUtils } from '../../utils/xss';
 import { colorUtils } from '../../utils/color';
 import { CalendarToolbar } from '../calendar-toolbar/calendar-toolbar';
 
+// jQuery Components
+import '../expandablearea/expandablearea.jquery';
+
 // Settings and Options
 const COMPONENT_NAME = 'monthview';
 
@@ -19,6 +22,10 @@ const COMPONENT_NAME_DEFAULTS = {
   activeDate: null,
   activeDateIslamic: null,
   isPopup: false,
+  inpage: false,
+  inpageTitleAsButton: true,
+  inpageToggleable: true,
+  inpageExpanded: true,
   headerStyle: 'full',
   firstDayOfWeek: null,
   disable: {
@@ -71,6 +78,8 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {number} [settings.activeDate] The date to highlight as selected/today.
  * @param {number} [settings.activeDateIslamic] The date to highlight as selected/today (as an array for islamic)
  * @param {number} [settings.isPopup] Is it in a popup (datepicker using it)
+ * @param {number} [settings.inpage=false] if true, will set it as inpage month view
+ * @param {number} [settings.inpageTitleAsButton=true] if true, will set the month-year title as button for inpage
  * @param {number} [settings.headerStyle] Configure the header, this can be 'simple' or 'full'. Full adds a picker and today link.
  * @param {boolean} [settings.isMonthPicker] Indicates this is a month picker on the month and week view. Has some slight different behavior.
  * @param {number} [settings.firstDayOfWeek=null] Set first day of the week. '1' would be Monday.
@@ -162,6 +171,13 @@ MonthView.prototype = {
     if (this.settings.showMonthYearPicker === 'false') {
       this.settings.showMonthYearPicker = false;
     }
+    this.settings.inpage = stringUtils.toBoolean(this.settings.inpage);
+    if (this.settings.inpage) {
+      const cssClass = `is-inpage${!this.settings.inpageToggleable ? ' no-toggleable' : ''}`;
+      this.element.addClass(cssClass);
+      this.settings.yearsAhead = 4;
+      this.settings.yearsBack = 1;
+    }
 
     this.setCurrentCalendar();
 
@@ -245,7 +261,7 @@ MonthView.prototype = {
 
     this.monthYearPane = $('');
 
-    if (this.settings.showMonthYearPicker && this.settings.isPopup) {
+    if (this.settings.showMonthYearPicker && (this.settings.isPopup || this.settings.inpage)) {
       this.monthYearPane = $(`<div class="monthview-monthyear-pane expandable-area ${this.settings.hideDays ? ' is-expanded' : ''}">
         <div class="expandable-pane">
           <div class="content"><div class="picklist-section is-month"></div><div class="picklist-section is-year"></div></div>
@@ -253,9 +269,17 @@ MonthView.prototype = {
       </div>`);
     }
 
+    let inpageCalendarPane = '';
+    if (this.settings.inpage && this.settings.inpageToggleable) {
+      inpageCalendarPane = $(`<div class="monthview-inpage-calendar expandable-area${this.settings.inpageExpanded ? ' is-expanded' : ''}"><div class="expandable-pane"></div></div>`);
+      inpageCalendarPane.find('.expandable-pane').append(this.table);
+    }
+
     if (this.settings.hideDays) {
       this.table = '';
     }
+
+    const useElement = this.settings.inpage && this.settings.inpageToggleable && this.table !== '' ? inpageCalendarPane : this.table;
 
     // Reconfigure the header
     this.header = $('<div class="monthview-header"><div class="calendar-toolbar"></div></div>');
@@ -266,9 +290,9 @@ MonthView.prototype = {
     }
 
     this.showMonth(this.settings.month, this.settings.year);
-    this.calendar = this.element.addClass('monthview').append(this.header, this.monthYearPane, this.table);
+    this.calendar = this.element.addClass('monthview').append(this.header, this.monthYearPane, useElement);
 
-    if (!this.settings.isPopup) {
+    if (!(this.settings.isPopup || this.settings.inpage)) {
       this.element.addClass('is-fullsize');
     }
 
@@ -286,10 +310,12 @@ MonthView.prototype = {
       showToday: this.settings.showToday,
       isMonthPicker: this.settings.headerStyle === 'full',
       isAlternate: this.settings.headerStyle !== 'full',
-      isMenuButton: this.settings.headerStyle !== 'full' ? this.settings.showMonthYearPicker : false,
+      isMenuButton: (this.settings.headerStyle !== 'full' || this.settings.inpage) ? this.settings.showMonthYearPicker : false,
       showViewChanger: this.settings.showViewChanger,
       onChangeView: this.settings.onChangeView,
-      attributes: this.settings.attributes
+      attributes: this.settings.attributes,
+      inpage: this.settings.inpage,
+      inpageTitleAsButton: this.settings.inpageTitleAsButton,
     });
 
     this.handleEvents();
@@ -311,6 +337,19 @@ MonthView.prototype = {
     this.isIslamic = this.currentCalendar.name === 'islamic-umalqura';
     this.isRTL = (this.locale.direction || this.locale.data.direction) === 'right-to-left';
     this.conversions = this.currentCalendar.conversions;
+  },
+
+  /**
+   * Set month year value selected from pane
+   * @returns {void}
+   */
+  setMonthYearFromPane() {
+    const year = parseInt(this.monthYearPane.find('.is-year .is-selected a').attr('data-year'), 10);
+    const month = parseInt(this.monthYearPane.find('.is-month .is-selected a').attr('data-month'), 10);
+    if (!isNaN(month) && !isNaN(year)) {
+      this.showMonth(month, year);
+    }
+    this.monthYearPane.data('expandablearea').close();
   },
 
   /**
@@ -388,7 +427,7 @@ MonthView.prototype = {
     let days = this.currentCalendar.days.narrow;
     days = days || this.currentCalendar.days.abbreviated;
 
-    if (!s.isPopup) {
+    if (!(s.isPopup || s.inpage)) {
       days = this.currentCalendar.days.abbreviated;
     }
     const monthName = this.currentCalendar.months.wide[month];
@@ -450,6 +489,7 @@ MonthView.prototype = {
     this.dayMap = [];
     this.days.find('td').each(function (i) {
       const th = $(this).removeClass('alternate prev-month next-month is-selected range is-today');
+      const isRippleClass = s.inpage ? ' is-ripple' : '';
       th.removeAttr('aria-selected');
       th.removeAttr('tabindex');
 
@@ -461,13 +501,13 @@ MonthView.prototype = {
         self.setDisabled(th, exYear, exMonth, exDay);
         self.setLegendColor(th, exYear, exMonth, exDay);
         self.dayMap.push({ key: stringUtils.padDate(exYear, exMonth, exDay), elem: th });
-        th.addClass('alternate prev-month').html(`<span class="day-container"><span aria-hidden="true" class="day-text">${xssUtils.stripTags(exDay)}</span></span>`);
+        th.addClass('alternate prev-month').html(`<span class="day-container${isRippleClass}"><span aria-hidden="true" class="day-text">${xssUtils.stripTags(exDay)}</span></span>`);
         th.attr('data-key', stringUtils.padDate(exYear, exMonth, exDay));
       }
 
       if (i >= leadDays && dayCnt <= thisMonthDays) {
         self.dayMap.push({ key: stringUtils.padDate(year, month, dayCnt), elem: th });
-        th.html(`<span class="day-container"><span aria-hidden="true" class="day-text">${xssUtils.stripTags(dayCnt)}</span></span>`);
+        th.html(`<span class="day-container${isRippleClass}"><span aria-hidden="true" class="day-text">${xssUtils.stripTags(dayCnt)}</span></span>`);
         th.attr('data-key', stringUtils.padDate(year, month, dayCnt));
 
         // Add Selected Class to Selected Date
@@ -523,7 +563,7 @@ MonthView.prototype = {
         self.setDisabled(th, exYear, exMonth, exDay);
         self.setLegendColor(th, exYear, exMonth, exDay);
 
-        th.addClass('alternate next-month').html(`<span class="day-container"><span aria-hidden="true" class="day-text">${nextMonthDayCnt}</span></span>`);
+        th.addClass('alternate next-month').html(`<span class="day-container${isRippleClass}"><span aria-hidden="true" class="day-text">${nextMonthDayCnt}</span></span>`);
         th.attr('data-key', stringUtils.padDate(exYear, exMonth, exDay));
         nextMonthDayCnt++;
       }
@@ -640,17 +680,34 @@ MonthView.prototype = {
     }
 
     let monthList = '<ul class="picklist is-month">';
+    const isRippleClass = this.settings.inpage ? ' class="is-ripple"' : '';
 
     const wideMonths = this.currentCalendar.months.wide;
-    wideMonths.map(function (monthMap, i) { // eslint-disable-line
-      monthList += `<li class="picklist-item${(i === month ? ' is-selected ' : '')}"><a href="#" ${(i === month ? 'tabindex="0" ' : 'tabindex="-1" ')}data-month="${i}">${monthMap}</a></li>`;
-    });
+
+    if (this.settings.inpage) {
+      monthList += `<li class="picklist-item up"><a href="#" tabindex="0"${isRippleClass}><span class="audible">${Locale.translate('PreviousMonth')}</span><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-caret-up"></use></svg></a></li>`;
+
+      const maxMonthsInList = 6; // number of months: (12 / 2 = 6)
+      const monthAddition = month < maxMonthsInList ? 0 : maxMonthsInList;
+      for (let i = 0; i < maxMonthsInList; i++) {
+        const idx = i + monthAddition;
+        const monthMap = wideMonths[idx];
+        monthList += `<li class="picklist-item${(idx === month ? ' is-selected ' : '')}"><a href="#" tabindex="${idx === month ? '0' : '-1'}" data-month="${idx}"${isRippleClass}>${monthMap}</a></li>`;
+      }
+
+      monthList += `<li class="picklist-item down"><a tabindex="0"${isRippleClass}><span class="audible">${Locale.translate('NextMonth')}</span><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-caret-down"></use></svg></a></li>`;
+    } else {
+      wideMonths.map(function (monthMap, i) { // eslint-disable-line
+        monthList += `<li class="picklist-item${(i === month ? ' is-selected ' : '')}"><a href="#" tabindex="${i === month ? '0' : '-1'}" data-month="${i}"${isRippleClass}>${monthMap}</a></li>`;
+      });
+    }
+
     monthList += '</ul>';
 
     this.monthYearPane.find('.picklist-section.is-month').empty().append(monthList);
     const years = [];
     let yearList = '<ul class="picklist is-year">';
-    yearList += `<li class="picklist-item up"><a href="#" tabindex="0"><span class="audible">${Locale.translate('PreviousYear')}</span><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-caret-up"></use></svg></a></li>`;
+    yearList += `<li class="picklist-item up"><a href="#" tabindex="0"${isRippleClass}><span class="audible">${Locale.translate('PreviousYear')}</span><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-caret-up"></use></svg></a></li>`;
 
     for (let i = this.settings.yearsBack; i >= 1; i--) {
       years.push(parseInt(year, 10) - i);
@@ -662,9 +719,9 @@ MonthView.prototype = {
 
     // eslint-disable-next-line
     years.map(function (yearMap) {
-      yearList += `<li class="picklist-item${(year === yearMap ? ' is-selected ' : '')}"><a href="#" ${(year === yearMap ? 'tabindex="0" ' : 'tabindex="-1" ')}data-year="${yearMap}">${yearMap}</a></li>`;
+      yearList += `<li class="picklist-item${(year === yearMap ? ' is-selected ' : '')}"><a href="#" tabindex="${year === yearMap ? '0' : '-1'}" data-year="${yearMap}"${isRippleClass}>${yearMap}</a></li>`;
     });
-    yearList += `<li class="picklist-item down"><a tabindex="0"><span class="audible">${Locale.translate('NextYear')}</span><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-caret-down"></use></svg></a></li>`;
+    yearList += `<li class="picklist-item down"><a tabindex="0"${isRippleClass}><span class="audible">${Locale.translate('NextYear')}</span><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-caret-down"></use></svg></a></li>`;
     yearList += '</ul>';
 
     this.monthYearPane.find('.picklist-section.is-year').empty().append(yearList);
@@ -672,8 +729,13 @@ MonthView.prototype = {
       this.monthYearPane.addClass('is-yearfirst');
     }
 
-    utils.addAttributes(this.monthYearPane.find('.picklist-item.up a'), this, this.settings.attributes, 'btn-picklist-up');
-    utils.addAttributes(this.monthYearPane.find('.picklist-item.down a'), this, this.settings.attributes, 'btn-picklist-down');
+    utils.addAttributes(this.monthYearPane.find('.picklist-section.is-year .picklist-item.up a'), this, this.settings.attributes, 'btn-picklist-year-up');
+    utils.addAttributes(this.monthYearPane.find('.picklist-section.is-year .picklist-item.down a'), this, this.settings.attributes, 'btn-picklist-year-down');
+
+    if (this.settings.inpage) {
+      utils.addAttributes(this.monthYearPane.find('.picklist-section.is-month .picklist-item.up a'), this, this.settings.attributes, 'btn-picklist-month-up');
+      utils.addAttributes(this.monthYearPane.find('.picklist-section.is-month .picklist-item.down a'), this, this.settings.attributes, 'btn-picklist-month-down');
+    }
 
     this.monthYearPane.find('.is-year .picklist-item').not('.up, .down').each(function () {
       const elem = $(this).find('a');
@@ -888,9 +950,17 @@ MonthView.prototype = {
       return;
     }
 
+    const self = this;
+
+    // Set inpage target element
+    const el = this.settings.inpage ? elem.find('.day-container') : elem;
+    if (!el[0]) {
+      return;
+    }
+
     let hex = this.getLegendColor(year, month, date);
-    elem[0].style.backgroundColor = '';
-    elem.off('mouseenter.legend mouseleave.legend');
+    el[0].style.backgroundColor = '';
+    el.off('mouseenter.legend mouseleave.legend');
 
     if (hex) {
       if (hex.indexOf('#') === -1) {
@@ -899,23 +969,32 @@ MonthView.prototype = {
         hex = theme.themeColors().palette[name][number].value;
       }
       // set color on elem at .3 of provided color as per design
-      elem.addClass('is-colored');
-      elem[0].style.backgroundColor = colorUtils.hexToRgba(hex, 0.3);
-
       const normalColor = colorUtils.hexToRgba(hex, 0.3);
       const hoverColor = colorUtils.hexToRgba(hex, 0.7);
+      const th = this.table[0]?.querySelector('thead th');
+
+      elem.addClass('is-colored');
+      el[0].setAttribute('data-hex', hex);
+      el[0].style.backgroundColor = normalColor;
 
       // handle hover states
-      elem.on('mouseenter.legend', function () {
+      el.on('mouseenter.legend', function () {
         const thisElem = $(this);
         thisElem[0].style.backgroundColor = hoverColor;
         thisElem.find('span')[0].style.backgroundColor = 'transparent';
         thisElem.find('.day-text')[0].style.backgroundColor = 'transparent';
+        if (self.settings.inpage) {
+          const textColor = window.getComputedStyle(th).getPropertyValue('color');
+          thisElem.find('.day-text')[0].style.color = textColor;
+        }
       }).on('mouseleave.legend', function () {
         const thisElem = $(this);
         thisElem[0].style.backgroundColor = normalColor;
         thisElem.find('span')[0].style.backgroundColor = '';
         thisElem.find('.day-text')[0].style.backgroundColor = '';
+        if (self.settings.inpage) {
+          thisElem.find('.day-text')[0].style.color = '';
+        }
       });
     }
   },
@@ -975,7 +1054,7 @@ MonthView.prototype = {
     });
 
     // Change Month Events
-    this.header.off('click.monthview').on('click.monthview', '.btn-icon', function () {
+    this.header.off('click.monthview').on('click.monthview', '.btn-icon.prev, .btn-icon.next', function () {
       const isNext = $(this).is('.next');
       const range = {};
       const d = { month: self.currentMonth, year: self.currentYear };
@@ -1032,6 +1111,10 @@ MonthView.prototype = {
         if (args.isToday && this.settings.isPopup) {
           return;
         }
+        if (args.isApply) {
+          this.setMonthYearFromPane();
+          return;
+        }
         if (args.isToday) {
           this.setToday();
           return;
@@ -1056,8 +1139,79 @@ MonthView.prototype = {
         });
     }
 
+    // Inpage actions
+    if (s.inpage) {
+      // Set expandable area for calendar table
+      const inpageCalendarEl = this.element.find('.monthview-inpage-calendar');
+      inpageCalendarEl.expandablearea({
+        animationSpeed: 150,
+        trigger: this.element.find(s.showMonthYearPicker ? '#btn-inpage-cal' : '#btn-cal-month-year')
+      });
+      const calExpandableareaApi = inpageCalendarEl.data('expandablearea');
+
+      // Set expandable area for month year picker
+      if (s.showMonthYearPicker) {
+        const monthyearPane = this.element.find('.monthview-monthyear-pane');
+        monthyearPane.expandablearea({
+          animationSpeed: 150,
+          trigger: this.element.find('#btn-monthyear-pane')
+        }).on('beforeexpand', () => {
+          const isStatic = calExpandableareaApi && !calExpandableareaApi.isExpanded();
+          monthyearPane.css('position', isStatic ? 'static' : '');
+        });
+      }
+
+      // Set the ripple effect to each date click
+      this.element
+        .off('click.monthview-ripple')
+        .on('click.monthview-ripple', '.is-ripple', function (evt) {
+          self.setRipple(this, evt);
+        });
+    }
+
     this.handleMonthYearPane().handleKeys();
     return this;
+  },
+
+  /**
+   * set ripple effect on given element
+   * https://codepen.io/jakob-e/pen/XZoZWQ
+   * @private
+   * @param {object} el The element.
+   * @param {object|null} evt The optional jquery event.
+   * @returns {void}
+   */
+  setRipple(el, evt) {
+    if (!el || !el.classList?.contains('is-ripple')) {
+      return;
+    }
+    const e = evt.touches ? evt.touches[0] : evt;
+    const r = el.getBoundingClientRect();
+    const d = Math.sqrt(Math.pow(r.width, 2) + Math.pow(r.height, 2)) * 2;
+    const x = e.clientX ? (e.clientX - r.left) : (el.offsetWidth / 2);
+    const y = e.clientY ? (e.clientY - r.top) : (el.offsetHeight / 2);
+    const orig = el.style.cssText;
+
+    // legend colors
+    const hex = el.getAttribute('data-hex');
+    const contrast = colorUtils.getContrastColor(hex);
+    const bg = {
+      ripple: colorUtils.getLuminousColorShade(hex, contrast === 'white' ? '0.3' : '-0.3'),
+      elem: colorUtils.hexToRgba(hex, 0.7)
+    };
+    const legendColor = hex !== null ? `--ripple-background: ${bg.ripple}; background-color: ${bg.elem}; ` : '';
+
+    el.style.cssText = `${legendColor}--s: 0; --o: 1`;
+    el.offsetTop; // eslint-disable-line
+    el.style.cssText = `${legendColor}--t: 1; --o: 0; --d: ${d}; --x:${x}; --y:${y};`;
+
+    // reset
+    $(el).off('transitionend.monthview-ripple').on('transitionend.monthview-ripple', (event) => {
+      const prop = event.propertyName || event.originalEvent?.propertyName;
+      if (prop === 'transform') {
+        el.style.cssText = orig;
+      }
+    });
   },
 
   /**
@@ -1067,42 +1221,78 @@ MonthView.prototype = {
    */
   handleMonthYearPane() {
     const s = this.settings;
+    const isRippleClass = s.inpage ? ' class="is-ripple"' : '';
+
+    const appendMonth = (upDown) => {
+      const monthContainer = this.monthYearPane[0].querySelector('.picklist.is-month');
+      const wideMonths = this.currentCalendar.months.wide;
+      const monthList = monthContainer.children;
+      const monthLen = monthList.length - 2;
+      const month = monthList[(upDown === 'up' ? 1 : monthLen)].querySelector('a').getAttribute('data-month');
+      DOM.remove(monthList[(upDown === 'up' ? monthLen : 1)]);
+      const monthContainerJQ = $(monthContainer);
+
+      monthContainerJQ.find('.picklist-item').not('.up, .down').remove();
+
+      const maxMonthsInList = 6; // number of months: (12 / 2 = 6)
+      const monthAddition = month >= maxMonthsInList ? 0 : maxMonthsInList;
+      for (let i = 0; i < maxMonthsInList; i++) {
+        const idx = i + monthAddition;
+        const monthMap = wideMonths[idx];
+        const a = $(`<a href="#" tabindex="-1" data-month="${idx}"${isRippleClass}>${monthMap}</a>`);
+        const li = $('<li class="picklist-item"></li>');
+        li.append(a);
+        monthContainerJQ.find('.picklist-item.down').before(li);
+        utils.addAttributes(a, this, s.attributes, `btn-picklist-${idx}`);
+      }
+
+      if (!s.inpage) {
+        monthContainerJQ.find('.picklist-item').eq(5)
+          .addClass('is-selected')
+          .attr('tabindex', '0');
+      }
+    };
+
     const appendYear = (upDown) => {
       const yearContainer = this.monthYearPane[0].querySelector('.picklist.is-year');
       const yearList = yearContainer.children;
-      const year = yearList[(upDown === 'up' ? 1 : yearList.length - 2)].querySelector('a').getAttribute('data-year');
-      DOM.remove(yearList[(upDown === 'up' ? yearList.length - 2 : 1)]);
+      const yearsLen = yearList.length - 2;
+      const year = yearList[(upDown === 'up' ? 1 : yearsLen)].querySelector('a').getAttribute('data-year');
+      DOM.remove(yearList[(upDown === 'up' ? yearsLen : 1)]);
+      const yearContainerJQ = $(yearContainer);
 
-      $(yearContainer).find('.picklist-item').not('.up, .down').remove();
+      yearContainerJQ.find('.picklist-item').not('.up, .down').remove();
 
       if (upDown === 'up') {
-        for (let i = 10; i > 0; i--) {
+        for (let i = yearsLen; i > 0; i--) {
           const nextYear = parseInt(year, 10) - i;
 
-          const a = $(`<a href="#" tabindex="-1" data-year="${nextYear}">${nextYear}</a>`);
+          const a = $(`<a href="#" tabindex="-1" data-year="${nextYear}"${isRippleClass}>${nextYear}</a>`);
           const li = $('<li class="picklist-item"></li>');
           li.append(a);
 
-          $(yearContainer).find('.picklist-item.down').before(li);
+          yearContainerJQ.find('.picklist-item.down').before(li);
           utils.addAttributes(a, this, s.attributes, `btn-picklist-${nextYear}`);
         }
       }
 
       if (upDown === 'down') {
-        for (let i = 1; i < 11; i++) {
+        for (let i = 1; i < (yearsLen + 1); i++) {
           const nextYear = parseInt(year, 10) + i;
-          const a = $(`<a href="#" tabindex="-1" data-year="${nextYear}">${nextYear}</a>`);
+          const a = $(`<a href="#" tabindex="-1" data-year="${nextYear}"${isRippleClass}>${nextYear}</a>`);
           const li = $('<li class="picklist-item"></li>');
           li.append(a);
 
-          $(yearContainer).find('.picklist-item.down').before(li);
+          yearContainerJQ.find('.picklist-item.down').before(li);
           utils.addAttributes(a, this, s.attributes, `btn-picklist-${nextYear}`);
         }
       }
 
-      $(yearContainer).find('.picklist-item').eq(5)
-        .addClass('is-selected')
-        .attr('tabindex', '0');
+      if (!s.inpage) {
+        yearContainerJQ.find('.picklist-item').eq(5)
+          .addClass('is-selected')
+          .attr('tabindex', '0');
+      }
     };
 
     // Handle Long Press
@@ -1110,6 +1300,11 @@ MonthView.prototype = {
     this.monthYearPane
       .off('touchstart.monthviewpane mousedown.monthviewpane')
       .on('touchstart.monthviewpane mousedown.monthviewpane', '.picklist.is-year li', (e) => {
+        const noAction = s.inpage && e.target.tagName.toLowerCase() === 'li';
+        if (noAction) {
+          return true;
+        }
+
         intervalId = setInterval(() => {
           if (e.currentTarget.classList.contains('up')) {
             appendYear('up');
@@ -1146,14 +1341,26 @@ MonthView.prototype = {
     // target: clicked or keyed element
     // cssClass: target option `is-month` or `is-year`
     const setMonthYearPane = (target, cssClass) => {
-      const elem = sel => this.monthYearPane[0].querySelector(`.is-${sel} .is-selected a`);
-      const d = cssClass === 'is-month' ? {
-        month: parseInt(target.getAttribute('data-month'), 10),
-        year: parseInt(elem('year').getAttribute('data-year'), 10)
-      } : {
-        month: parseInt(elem('month').getAttribute('data-month'), 10),
-        year: parseInt(target.getAttribute('data-year'), 10)
+      const elem = (sel) => {
+        const el = this.monthYearPane[0].querySelector(`.is-${sel} .is-selected a`);
+        return (!el && s.inpage) ?
+          this.monthYearPane[0].querySelector(`.is-${sel} .picklist-item:last-child a`) : el;
       };
+      let d;
+      if (s.inpage) {
+        d = {
+          month: parseInt(elem('month').getAttribute('data-month'), 10),
+          year: parseInt(elem('year').getAttribute('data-year'), 10)
+        };
+      } else {
+        d = cssClass === 'is-month' ? {
+          month: parseInt(target.getAttribute('data-month'), 10),
+          year: parseInt(elem('year').getAttribute('data-year'), 10)
+        } : {
+          month: parseInt(elem('month').getAttribute('data-month'), 10),
+          year: parseInt(target.getAttribute('data-year'), 10)
+        };
+      }
 
       if (!s.range.useRange) {
         this.currentMonth = d.month;
@@ -1174,6 +1381,20 @@ MonthView.prototype = {
     this.monthYearPane
       .off('click.picklist-month')
       .on('click.picklist-month', '.picklist.is-month li', (e) => {
+        const noAction = s.inpage && e.target.tagName.toLowerCase() === 'li';
+        if (noAction) {
+          return;
+        }
+
+        if (e.currentTarget.classList.contains('up')) {
+          appendMonth('up');
+          return;
+        }
+        if (e.currentTarget.classList.contains('down')) {
+          appendMonth('down');
+          return;
+        }
+
         setMonthYearPane(e.target, 'is-month');
         e.preventDefault();
       });
@@ -1187,6 +1408,11 @@ MonthView.prototype = {
     this.monthYearPane
       .off('click.picklist-year')
       .on('click.picklist-year', '.picklist.is-year li', (e) => {
+        const noAction = s.inpage && e.target.tagName.toLowerCase() === 'li';
+        if (noAction) {
+          return;
+        }
+
         if (e.currentTarget.classList.contains('up')) {
           appendYear('up');
           return;
@@ -1212,10 +1438,23 @@ MonthView.prototype = {
       if (!s.hideDays) {
         this.element.find('.btn-icon, td.is-selected').attr('disabled', 'true');
         this.element.find('td.is-selected').removeAttr('tabindex');
-        // Set the height
-        this.monthYearPane.find('.content').css('height', this.header.parent().height() - this.header.height() - 55); // 45 is the footer height
+
+        if (s.inpage) {
+          this.element.find('.btn-icon.prev, .btn-icon.next').hide();
+          const el = this.element.find('.hyperlink.today, .hyperlink.apply');
+          const isApply = el.hasClass('is-apply');
+          if (isApply) {
+            el.removeClass('hidden');
+          } else {
+            el.removeClass('today is-ripple').addClass('apply').text(Locale.translate('Apply', { locale: this.locale.name, language: this.language }));
+          }
+        } else {
+          // Set the height
+          this.monthYearPane.find('.content').css('height', this.header.parent().height() - this.header.height() - 55); // 45 is the footer height
+          this.element.find('.hyperlink.today').hide();
+        }
+
         // Rename some buttons
-        this.element.find('.hyperlink.today').hide();
         this.element.find('.is-select').removeClass('is-select').addClass('is-select-month-pane');
         this.element.find('.is-cancel').removeClass('is-cancel').addClass('is-cancel-month-pane').text(Locale.translate('Cancel', { locale: this.locale.name, language: this.language }));
       }
@@ -1230,12 +1469,25 @@ MonthView.prototype = {
     }).on('collapse.monthviewpane', () => {
       // Enable it all again
       if (!s.hideDays) {
+        if (s.inpage) {
+          this.element.find('.btn-icon.prev, .btn-icon.next').show();
+          const el = this.element.find('.hyperlink.apply');
+          const isApply = el.hasClass('is-apply');
+          if (isApply) {
+            el.addClass('hidden');
+          } else {
+            el.removeClass('apply').addClass('today').text(Locale.translate('Today', { locale: this.locale.name, language: this.language }));
+          }
+        } else {
+          this.element.find('.hyperlink.today').show();
+        }
         this.element.find('.btn-icon').removeAttr('disabled');
         this.element.find('td.is-selected').attr('tabindex', '0');
-        this.element.find('.hyperlink.today').show();
         this.element.find('.is-select-month-pane').addClass('is-select').removeClass('is-select-month-pane');
         this.element.find('.is-cancel-month-pane').addClass('is-cancel').removeClass('is-cancel-month-pane').text(Locale.translate('Clear', { locale: this.locale.name, language: this.language }));
       }
+    }).on('aftercollapse.monthviewpane', () => {
+      this.element.find('.hyperlink.today').addClass('is-ripple');
     });
 
     // Handle keyboard on the month year pane
@@ -1249,7 +1501,7 @@ MonthView.prototype = {
       const adjacentA = adjacentLi.querySelector('a');
 
       a.setAttribute('tabindex', '-1');
-      li.parentNode.querySelector('.is-selected').classList.remove('is-selected');
+      li.parentNode.querySelector('.is-selected')?.classList.remove('is-selected');
       DOM.addClass(adjacentLi, 'is-selected');
       adjacentA.setAttribute('tabindex', '0');
       adjacentA.focus();
@@ -1272,7 +1524,11 @@ MonthView.prototype = {
           handle = true;
         } else if (e.key === 'Enter') {
           if (isUp || isDown) {
-            appendYear(isUp ? 'up' : 'down');
+            if (isYear) {
+              appendYear(isUp ? 'up' : 'down');
+            } else if (isMonth) {
+              appendMonth(isUp ? 'up' : 'down');
+            }
             handle = true;
           } else if (isYear || isMonth) {
             setMonthYearPane(e.target, (isYear ? 'is-year' : 'is-month'));
@@ -1282,6 +1538,7 @@ MonthView.prototype = {
 
         if (handle) {
           e.preventDefault();
+          this.setRipple(e.currentTarget, e);
         }
       });
 
@@ -1642,6 +1899,7 @@ MonthView.prototype = {
         }
 
         this.selectDay(this.currentDate, true, true);
+        this.setRipple(e.target?.querySelector('.is-ripple'), e);
       }
 
       if (handled) {
@@ -1721,6 +1979,16 @@ MonthView.prototype = {
       this.legend.append(item);
     }
     this.table.after(this.legend);
+
+    if (s.inpage) {
+      // Set is-wrapped css class to use diffrent styles
+      const first = this.legend[0].querySelector('.monthview-legend-item:first-child');
+      const last = this.legend[0].querySelector('.monthview-legend-item:last-child');
+      if (first && last) {
+        const top = el => el?.getBoundingClientRect().top;
+        this.legend[top(first) !== top(last) ? 'addClass' : 'removeClass']('is-wrapped');
+      }
+    }
   },
 
   /**

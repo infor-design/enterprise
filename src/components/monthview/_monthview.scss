@@ -673,6 +673,153 @@
       display: none;
     }
   }
+
+  &.is-inpage {
+    margin-bottom: 20px;
+    min-height: 0;
+
+    &.no-toggleable {
+      min-height: 380px;
+    }
+
+    .monthview-monthyear-pane {
+      .content {
+        height: auto;
+      }
+
+      .picklist-section.is-month::after {
+        left: 180px;
+      }
+
+      .picklist .picklist-item {
+        width: 100%;
+
+        a {
+          border-radius: 0;
+          display: block;
+          padding: 9px;
+        }
+
+        &.up,
+        &.down {
+          a {
+            border-radius: 50%;
+            display: inline-block;
+            padding: 8px 10px;
+          }
+
+          &:not(.is-selected) a {
+            --ripple-background: #{$calendar-selected-border-color};
+          }
+        }
+      }
+    }
+
+    .monthview-monthyear-pane.is-expanded {
+      min-height: calc(100% - 50px);
+
+      .content {
+        position: relative;
+      }
+    }
+
+    .monthview-inpage-calendar.is-expanded {
+      min-height: 340px;
+    }
+
+    .monthview-table {
+      border-spacing: 0;
+      margin-top: 10px;
+      padding: 0;
+
+      th {
+        height: 30px;
+      }
+
+      td {
+        border: none;
+        height: auto;
+        width: auto;
+
+        .day-container {
+          border: 1px solid transparent;
+          border-radius: 50%;
+          display: inline-block;
+          margin: 3px 0;
+
+          .day-text {
+            align-items: center;
+            display: flex;
+            height: 38px;
+            justify-content: center;
+            line-height: normal;
+            width: 38px;
+          }
+        }
+
+        &.is-colored.is-selected .day-text {
+          margin: 2px;
+        }
+
+        &:not(.is-disabled):focus {
+          border: none;
+          box-shadow: none;
+
+          .day-container {
+            border-color: $datepicker-focus-border-color;
+            box-shadow: $focus-box-shadow;
+            outline: none;
+            -moz-outline-style: none;
+            outline-style: none;
+          }
+        }
+      }
+    }
+
+    .monthview-legend {
+      max-width: 100%;
+      text-align: start;
+
+      &.is-wrapped {
+        text-align: center;
+      }
+
+      .monthview-legend-swatch {
+        height: 16px;
+        width: 16px;
+      }
+
+      .monthview-legend-text {
+        font-size: inherit;
+      }
+    }
+
+    .is-ripple {
+      overflow: hidden;
+      position: relative;
+
+      &::before {
+        background: var(--ripple-background, #{$ids-color-palette-white});
+        border-radius: 50%;
+        content: '';
+        display: block;
+        pointer-events: none;
+        position: absolute;
+
+        //  position and size
+        height: calc(var(--d) * 1px); // stylelint-disable-line
+        left: calc(var(--x) * 1px);
+        top: calc(var(--y) * 1px);
+        width: calc(var(--d) * 1px);
+
+        //  animated properties
+        opacity: calc(var(--o, 1) * 0.3); // stylelint-disable-line
+        transform: translate(-50%, -50%) scale(var(--s, 1));
+        transform-origin: center;
+        transition: calc(var(--t, 0) * 600ms) linear;
+      }
+    }
+  }
 }
 
 //monthview legend

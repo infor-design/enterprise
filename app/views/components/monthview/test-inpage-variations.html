@@ -1,0 +1,112 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Basic</h2>
+    <div id="inpage-basic" class="monthview" data-init="false">
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+    <h2>Collapsed</h2>
+    <div id="inpage-collapsed" class="monthview" data-init="false">
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+    <h2>Hide Today</h2>
+    <div id="inpage-hide-today" class="monthview" data-init="false">
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+    <h2>Hide Month Year Picker</h2>
+    <div id="inpage-hide-month-year-picker" class="monthview" data-init="false">
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+    <h2>Legend</h2>
+    <div id="inpage-legend" class="monthview" data-init="false">
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+    <h2>No Toggleable</h2>
+    <div id="inpage-no-toggleable" class="monthview" data-init="false">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+    // Basic
+    $('#inpage-basic').monthview({
+      inpage: true,
+      day: 7,
+      month: 8,
+      year: 2021
+    });
+
+    // Collapsed
+    $('#inpage-collapsed').monthview({
+      inpage: true,
+      inpageExpanded: false,
+      day: 7,
+      month: 8,
+      year: 2021
+    });
+
+    // Hide Today
+    $('#inpage-hide-today').monthview({
+      inpage: true,
+      showToday: false,
+      day: 7,
+      month: 8,
+      year: 2021
+    });
+
+    // Hide Month Year Picker
+    $('#inpage-hide-month-year-picker').monthview({
+      inpage: true,
+      showMonthYearPicker: false,
+      day: 7,
+      month: 8,
+      year: 2021
+    });
+
+    // Legend
+    $('#inpage-legend').monthview({
+      inpage: true,
+      day: 7,
+      month: 0,
+      year: 2017,
+      showLegend: true,
+      legend: [
+        { name: 'Public Holiday', color: 'emerald06', dates: ['1/1/2017', '1/2/2017', '1/12/2017'] },
+        { name: 'Weekends', color: 'amber06', dayOfWeek: [0, 6] },
+        { name: 'Other', color: 'ruby03', dates: ['1/8/2017', '1/9/2017', '1/23/2017'] },
+        { name: 'Half Days', color: 'amethyst06', dates: ['1/21/2017', '1/22/2017'] },
+        { name: 'Full Days', color: 'azure03', dates: ['1/24/2017', '1/25/2017'] }
+      ]
+    });
+
+    // No Toggleable
+    $('#inpage-no-toggleable').monthview({
+      inpage: true,
+      inpageToggleable: false,
+      day: 7,
+      month: 8,
+      year: 2021
+    });
+
+  });
+</script>

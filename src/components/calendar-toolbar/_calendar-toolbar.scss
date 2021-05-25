@@ -41,6 +41,7 @@
     }
   }
 
+  .apply,
   .today {
     font-size: $ids-size-font-sm;
     font-weight: $ids-number-font-weight-bold;
@@ -67,6 +68,7 @@
       top: -1px;
     }
 
+    .btn-cal-month-year,
     .btn-monthyear-pane {
       border-radius: 2px;
       color: $datepicker-month-year-color;
@@ -99,6 +101,43 @@
       left: -6px;
       margin-left: 0;
       position: relative;
+    }
+  }
+
+  // Inpage
+  &.is-inpage {
+    .toolbar-section {
+      min-height: 48px;
+    }
+
+    .btn-inpage-cal,
+    .prev,
+    .next {
+      border-radius: 50%;
+      height: 40px;
+      margin: 0;
+      width: 40px;
+    }
+
+    .btn-inpage-cal {
+      margin-right: 5px;
+    }
+
+    .apply {
+      padding: 9px 3px;
+      top: 9px;
+    }
+
+    .today {
+      --ripple-background: #{$calendar-selected-border-color};
+
+      padding: 9px 3px;
+    }
+
+    .btn-cal-month-year,
+    .btn-monthyear-pane {
+      height: 40px;
+      top: 2px;
     }
   }
 }
