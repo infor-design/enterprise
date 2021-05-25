@@ -687,8 +687,13 @@
         height: auto;
       }
 
-      .picklist-section.is-month::after {
-        left: 180px;
+      .picklist-section.is-month {
+        position: relative;
+
+        &::after {
+          left: unset;
+          right: 0;
+        }
       }
 
       .picklist .picklist-item {
