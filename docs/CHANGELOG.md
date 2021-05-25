@@ -14,6 +14,7 @@
 - `[Datagrid]` When fixing bugs in datagrid hover states we removed the use of `is-focused` on table `td` elements. ([#5091](https://github.com/infor-design/enterprise/issues/5091))
 - `[Datagrid/Lookup]` Fixed a bug where the plus minus icon animation was cut off. ([#4962](https://github.com/infor-design/enterprise/issues/4962))
 - `[Datagrid]` Fixed a bug where unselecting all items in an active page affects other selected items on other pages. ([#4503](https://github.com/infor-design/enterprise/issues/4503))
+- `[Datagrid]` Fixed a bug where the tag text in the column is not shown properly when hovering it on Alternate Row Shading. ([#5210](https://github.com/infor-design/enterprise/issues/5210))
 - `[Dropdown/Multiselect]` Fixed a bug where the id attribute prefix were missing from the dropdown list when searching with typeahead settings. ([#5053](https://github.com/infor-design/enterprise/issues/5053))
 - `[Homepage]` Fixed an issue where remove card event was not triggered on card/widget. ([#4798](https://github.com/infor-design/enterprise/issues/4798))
 - `[Locale]` Changed the start day of the week to monday as per translation team request. ([#5199](https://github.com/infor-design/enterprise/issues/5199))
