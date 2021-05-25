@@ -148,6 +148,8 @@ module.exports = {
 
     // Have operators on same line
     // https://eslint.org/docs/rules/operator-linebreak
-    'operator-linebreak': ['error', 'after']
+    'operator-linebreak': ['error', 'after'],
+    // Allow js in imports
+    'import/extensions': ['off']
   }
 };

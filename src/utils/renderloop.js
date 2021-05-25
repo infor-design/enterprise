@@ -17,7 +17,9 @@ if (typeof window.SohoConfig === 'object' && typeof window.SohoConfig.renderLoop
  * @returns {number} a current timestamp
  */
 function timestamp() {
+  // eslint-disable-next-line compat/compat
   return window.performance && window.performance.now ?
+    // eslint-disable-next-line compat/compat
     window.performance.now() :
     new Date().getTime();
 }
