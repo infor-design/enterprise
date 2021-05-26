@@ -255,6 +255,16 @@
   padding: 5px 0;
   text-align: left;
 
+  &.tab-list-spillover {
+    &.is-open {
+      li a {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+  }
+
   //Icon Positioning
   .icon,
   b {
