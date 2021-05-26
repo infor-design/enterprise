@@ -642,6 +642,7 @@ Calendar.prototype = {
     this.renderSelectedEventDetails();
     if (this.weekView) {
       this.weekView.settings.filteredTypes = filters;
+      this.weekView.settings.events = this.settings.events;
       this.weekView.renderAllEvents();
     }
     return this;
