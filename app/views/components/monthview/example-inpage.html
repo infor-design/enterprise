@@ -58,13 +58,13 @@
       day: initDate.day,
       month: initDate.month,
       year: initDate.year,
-      inpage: true,
+      inPage: true,
+      inPageExpanded: false,
       showMonthYearPicker: false,
-      inpageExpanded: false,
       showLegend: true,
       legend: [
-        { name: 'Scheduled', color: 'azure02', dates: scheduledDates },
-        { name: 'Not Scheduled', color: 'slate02', dates: notScheduledDates }
+        { name: 'Scheduled', color: 'azure03', dates: scheduledDates },
+        { name: 'Not Scheduled', color: 'slate03', dates: notScheduledDates }
       ]
     }).on('selected', function(e, args) {
       handleSelected(args);

@@ -30,8 +30,8 @@ const COMPONENT_NAME = 'calendartoolbar';
  * @param {boolean} [settings.showViewChanger=false] If false the dropdown to change views will not be shown.
  * @param {string} [settings.viewChangerValue='month'] The value to show selected in the view changer. Can be month, week, day or schedule.
  * @param {string} [settings.attributes] Add extra attributes like id's to the element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
- * @param {boolean} [settings.inpage=false] If true, will set inpage style for the month view in page option.
- * @param {boolean} [settings.inpageTitleAsButton=true] if true, will set the month-year title as button for inpage.
+ * @param {boolean} [settings.inPage=false] If true, will set inPage style for the month view in page option.
+ * @param {boolean} [settings.inPageTitleAsButton=true] if true, will set the month-year title as button for inPage.
 */
 const COMPONENT_DEFAULTS = {
   month: new Date().getMonth(),
@@ -45,8 +45,8 @@ const COMPONENT_DEFAULTS = {
   showViewChanger: false,
   viewChangerValue: 'month',
   isMonthPicker: false,
-  inpage: false,
-  inpageTitleAsButton: true
+  inPage: false,
+  inPageTitleAsButton: true
 };
 
 function CalendarToolbar(element, settings) {
@@ -77,12 +77,12 @@ CalendarToolbar.prototype = {
     this.element[0].setAttribute('data-init', 'false');
 
     const todayLink = { text: translate('Today'), class: 'today' };
-    let isRippleClass = s.inpage ? ' is-ripple' : '';
+    let isRippleClass = s.inPage ? ' is-ripple' : '';
 
-    // Inpage setup
-    s.inpage = stringUtils.toBoolean(s.inpage);
-    s.inpageTitleAsButton = stringUtils.toBoolean(s.inpageTitleAsButton);
-    if (s.inpage) {
+    // inPage setup
+    s.inPage = stringUtils.toBoolean(s.inPage);
+    s.inPageTitleAsButton = stringUtils.toBoolean(s.inPageTitleAsButton);
+    if (s.inPage) {
       this.element.addClass('is-inpage');
       if (!s.showToday) {
         isRippleClass = '';
@@ -92,9 +92,9 @@ CalendarToolbar.prototype = {
     }
 
     todayLink.class += ` hyperlink${isRippleClass}`;
-    const todayStr = s.showToday || s.inpage ? `<a class="${todayLink.class}" href="#">${todayLink.text}</a>` : '';
+    const todayStr = s.showToday || s.inPage ? `<a class="${todayLink.class}" href="#">${todayLink.text}</a>` : '';
 
-    if (s.isAlternate || s.inpage) {
+    if (s.isAlternate || s.inPage) {
       if (s.isAlternate) {
         this.element[0].classList.add('is-alternate');
       }
@@ -130,8 +130,8 @@ CalendarToolbar.prototype = {
           </button>
         </div>`;
 
-      let inpageHtml = '';
-      if (s.inpage) {
+      let inPageHtml = '';
+      if (s.inPage) {
         const calMonthYearButton = `
           <button type="button" class="btn btn-cal-month-year" id="btn-cal-month-year">
             ${$.createIcon('calendar')}
@@ -145,18 +145,18 @@ CalendarToolbar.prototype = {
             ${$.createIcon('calendar')}
           </button>`;
 
-        if (!s.inpageTitleAsButton) {
-          inpageHtml = `${calButton} <span class="month">november</span><span class="year">2015</span>`;
+        if (!s.inPageTitleAsButton) {
+          inPageHtml = `${calButton} <span class="month">november</span><span class="year">2015</span>`;
         } else if (s.isMenuButton) {
-          inpageHtml = `${calButton} ${monthYearPaneButton}`;
+          inPageHtml = `${calButton} ${monthYearPaneButton}`;
         } else {
-          inpageHtml = calMonthYearButton;
+          inPageHtml = calMonthYearButton;
         }
       }
 
       this.element[0].innerHTML = `
         <div class="toolbar-section">
-          ${s.inpage ? inpageHtml : menuBtnOrHtml}
+          ${s.inPage ? inPageHtml : menuBtnOrHtml}
         </div>
         ${endSectionHtml}`;
     } else {

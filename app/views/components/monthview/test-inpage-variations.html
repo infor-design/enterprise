@@ -40,8 +40,8 @@
 
 <div class="row">
   <div class="six columns">
-    <h2>No Toggleable</h2>
-    <div id="inpage-no-toggleable" class="monthview" data-init="false">
+    <h2>Not Toggleable</h2>
+    <div id="inpage-not-toggleable" class="monthview" data-init="false">
     </div>
   </div>
 </div>
@@ -50,7 +50,7 @@
   $('body').on('initialized', function () {
     // Basic
     $('#inpage-basic').monthview({
-      inpage: true,
+      inPage: true,
       day: 7,
       month: 8,
       year: 2021
@@ -58,8 +58,8 @@
 
     // Collapsed
     $('#inpage-collapsed').monthview({
-      inpage: true,
-      inpageExpanded: false,
+      inPage: true,
+      inPageExpanded: false,
       day: 7,
       month: 8,
       year: 2021
@@ -67,7 +67,7 @@
 
     // Hide Today
     $('#inpage-hide-today').monthview({
-      inpage: true,
+      inPage: true,
       showToday: false,
       day: 7,
       month: 8,
@@ -76,7 +76,7 @@
 
     // Hide Month Year Picker
     $('#inpage-hide-month-year-picker').monthview({
-      inpage: true,
+      inPage: true,
       showMonthYearPicker: false,
       day: 7,
       month: 8,
@@ -85,8 +85,8 @@
 
     // Legend
     $('#inpage-legend').monthview({
-      inpage: true,
-      day: 7,
+      inPage: true,
+      day: 5,
       month: 0,
       year: 2017,
       showLegend: true,
@@ -99,10 +99,10 @@
       ]
     });
 
-    // No Toggleable
-    $('#inpage-no-toggleable').monthview({
-      inpage: true,
-      inpageToggleable: false,
+    // Not Toggleable
+    $('#inpage-not-toggleable').monthview({
+      inPage: true,
+      inPageToggleable: false,
       day: 7,
       month: 8,
       year: 2021

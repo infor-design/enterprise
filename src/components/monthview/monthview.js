@@ -22,10 +22,10 @@ const COMPONENT_NAME_DEFAULTS = {
   activeDate: null,
   activeDateIslamic: null,
   isPopup: false,
-  inpage: false,
-  inpageTitleAsButton: true,
-  inpageToggleable: true,
-  inpageExpanded: true,
+  inPage: false,
+  inPageTitleAsButton: true,
+  inPageToggleable: true,
+  inPageExpanded: true,
   headerStyle: 'full',
   firstDayOfWeek: null,
   disable: {
@@ -78,8 +78,10 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {number} [settings.activeDate] The date to highlight as selected/today.
  * @param {number} [settings.activeDateIslamic] The date to highlight as selected/today (as an array for islamic)
  * @param {number} [settings.isPopup] Is it in a popup (datepicker using it)
- * @param {number} [settings.inpage=false] if true, will set it as inpage month view
- * @param {number} [settings.inpageTitleAsButton=true] if true, will set the month-year title as button for inpage
+ * @param {number} [settings.inPage=false] if true, will set it as inPage month view
+ * @param {number} [settings.inPageTitleAsButton=true] if true, will set the month-year title as button for inPage
+ * @param {number} [settings.inPageToggleable=true] if true, will set to be toggleable
+ * @param {number} [settings.inPageExpanded=true] if true, will init as expanded
  * @param {number} [settings.headerStyle] Configure the header, this can be 'simple' or 'full'. Full adds a picker and today link.
  * @param {boolean} [settings.isMonthPicker] Indicates this is a month picker on the month and week view. Has some slight different behavior.
  * @param {number} [settings.firstDayOfWeek=null] Set first day of the week. '1' would be Monday.
@@ -171,9 +173,9 @@ MonthView.prototype = {
     if (this.settings.showMonthYearPicker === 'false') {
       this.settings.showMonthYearPicker = false;
     }
-    this.settings.inpage = stringUtils.toBoolean(this.settings.inpage);
-    if (this.settings.inpage) {
-      const cssClass = `is-inpage${!this.settings.inpageToggleable ? ' no-toggleable' : ''}`;
+    this.settings.inPage = stringUtils.toBoolean(this.settings.inPage);
+    if (this.settings.inPage) {
+      const cssClass = `is-inpage${!this.settings.inPageToggleable ? ' not-toggleable' : ''}`;
       this.element.addClass(cssClass);
       this.settings.yearsAhead = 4;
       this.settings.yearsBack = 1;
@@ -261,7 +263,7 @@ MonthView.prototype = {
 
     this.monthYearPane = $('');
 
-    if (this.settings.showMonthYearPicker && (this.settings.isPopup || this.settings.inpage)) {
+    if (this.settings.showMonthYearPicker && (this.settings.isPopup || this.settings.inPage)) {
       this.monthYearPane = $(`<div class="monthview-monthyear-pane expandable-area ${this.settings.hideDays ? ' is-expanded' : ''}">
         <div class="expandable-pane">
           <div class="content"><div class="picklist-section is-month"></div><div class="picklist-section is-year"></div></div>
@@ -269,17 +271,17 @@ MonthView.prototype = {
       </div>`);
     }
 
-    let inpageCalendarPane = '';
-    if (this.settings.inpage && this.settings.inpageToggleable) {
-      inpageCalendarPane = $(`<div class="monthview-inpage-calendar expandable-area${this.settings.inpageExpanded ? ' is-expanded' : ''}"><div class="expandable-pane"></div></div>`);
-      inpageCalendarPane.find('.expandable-pane').append(this.table);
+    let inPageCalendarPane = '';
+    if (this.settings.inPage && this.settings.inPageToggleable) {
+      inPageCalendarPane = $(`<div class="monthview-inpage-calendar expandable-area${this.settings.inPageExpanded ? ' is-expanded' : ''}"><div class="expandable-pane"></div></div>`);
+      inPageCalendarPane.find('.expandable-pane').append(this.table);
     }
 
     if (this.settings.hideDays) {
       this.table = '';
     }
 
-    const useElement = this.settings.inpage && this.settings.inpageToggleable && this.table !== '' ? inpageCalendarPane : this.table;
+    const useElement = this.settings.inPage && this.settings.inPageToggleable && this.table !== '' ? inPageCalendarPane : this.table;
 
     // Reconfigure the header
     this.header = $('<div class="monthview-header"><div class="calendar-toolbar"></div></div>');
@@ -292,7 +294,7 @@ MonthView.prototype = {
     this.showMonth(this.settings.month, this.settings.year);
     this.calendar = this.element.addClass('monthview').append(this.header, this.monthYearPane, useElement);
 
-    if (!(this.settings.isPopup || this.settings.inpage)) {
+    if (!(this.settings.isPopup || this.settings.inPage)) {
       this.element.addClass('is-fullsize');
     }
 
@@ -310,12 +312,12 @@ MonthView.prototype = {
       showToday: this.settings.showToday,
       isMonthPicker: this.settings.headerStyle === 'full',
       isAlternate: this.settings.headerStyle !== 'full',
-      isMenuButton: (this.settings.headerStyle !== 'full' || this.settings.inpage) ? this.settings.showMonthYearPicker : false,
+      isMenuButton: (this.settings.headerStyle !== 'full' || this.settings.inPage) ? this.settings.showMonthYearPicker : false,
       showViewChanger: this.settings.showViewChanger,
       onChangeView: this.settings.onChangeView,
       attributes: this.settings.attributes,
-      inpage: this.settings.inpage,
-      inpageTitleAsButton: this.settings.inpageTitleAsButton,
+      inPage: this.settings.inPage,
+      inPageTitleAsButton: this.settings.inPageTitleAsButton,
     });
 
     this.handleEvents();
@@ -427,7 +429,7 @@ MonthView.prototype = {
     let days = this.currentCalendar.days.narrow;
     days = days || this.currentCalendar.days.abbreviated;
 
-    if (!(s.isPopup || s.inpage)) {
+    if (!(s.isPopup || s.inPage)) {
       days = this.currentCalendar.days.abbreviated;
     }
     const monthName = this.currentCalendar.months.wide[month];
@@ -489,7 +491,7 @@ MonthView.prototype = {
     this.dayMap = [];
     this.days.find('td').each(function (i) {
       const th = $(this).removeClass('alternate prev-month next-month is-selected range is-today');
-      const isRippleClass = s.inpage ? ' is-ripple' : '';
+      const isRippleClass = s.inPage ? ' is-ripple' : '';
       th.removeAttr('aria-selected');
       th.removeAttr('tabindex');
 
@@ -680,11 +682,11 @@ MonthView.prototype = {
     }
 
     let monthList = '<ul class="picklist is-month">';
-    const isRippleClass = this.settings.inpage ? ' class="is-ripple"' : '';
+    const isRippleClass = this.settings.inPage ? ' class="is-ripple"' : '';
 
     const wideMonths = this.currentCalendar.months.wide;
 
-    if (this.settings.inpage) {
+    if (this.settings.inPage) {
       monthList += `<li class="picklist-item up"><a href="#" tabindex="0"${isRippleClass}><span class="audible">${Locale.translate('PreviousMonth')}</span><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-caret-up"></use></svg></a></li>`;
 
       const maxMonthsInList = 6; // number of months: (12 / 2 = 6)
@@ -732,7 +734,7 @@ MonthView.prototype = {
     utils.addAttributes(this.monthYearPane.find('.picklist-section.is-year .picklist-item.up a'), this, this.settings.attributes, 'btn-picklist-year-up');
     utils.addAttributes(this.monthYearPane.find('.picklist-section.is-year .picklist-item.down a'), this, this.settings.attributes, 'btn-picklist-year-down');
 
-    if (this.settings.inpage) {
+    if (this.settings.inPage) {
       utils.addAttributes(this.monthYearPane.find('.picklist-section.is-month .picklist-item.up a'), this, this.settings.attributes, 'btn-picklist-month-up');
       utils.addAttributes(this.monthYearPane.find('.picklist-section.is-month .picklist-item.down a'), this, this.settings.attributes, 'btn-picklist-month-down');
     }
@@ -952,8 +954,8 @@ MonthView.prototype = {
 
     const self = this;
 
-    // Set inpage target element
-    const el = this.settings.inpage ? elem.find('.day-container') : elem;
+    // Set inPage target element
+    const el = this.settings.inPage ? elem.find('.day-container') : elem;
     if (!el[0]) {
       return;
     }
@@ -983,7 +985,7 @@ MonthView.prototype = {
         thisElem[0].style.backgroundColor = hoverColor;
         thisElem.find('span')[0].style.backgroundColor = 'transparent';
         thisElem.find('.day-text')[0].style.backgroundColor = 'transparent';
-        if (self.settings.inpage) {
+        if (self.settings.inPage) {
           const textColor = window.getComputedStyle(th).getPropertyValue('color');
           thisElem.find('.day-text')[0].style.color = textColor;
         }
@@ -992,7 +994,7 @@ MonthView.prototype = {
         thisElem[0].style.backgroundColor = normalColor;
         thisElem.find('span')[0].style.backgroundColor = '';
         thisElem.find('.day-text')[0].style.backgroundColor = '';
-        if (self.settings.inpage) {
+        if (self.settings.inPage) {
           thisElem.find('.day-text')[0].style.color = '';
         }
       });
@@ -1140,14 +1142,14 @@ MonthView.prototype = {
     }
 
     // Inpage actions
-    if (s.inpage) {
+    if (s.inPage) {
       // Set expandable area for calendar table
-      const inpageCalendarEl = this.element.find('.monthview-inpage-calendar');
-      inpageCalendarEl.expandablearea({
+      const inPageCalendarEl = this.element.find('.monthview-inpage-calendar');
+      inPageCalendarEl.expandablearea({
         animationSpeed: 150,
         trigger: this.element.find(s.showMonthYearPicker ? '#btn-inpage-cal' : '#btn-cal-month-year')
       });
-      const calExpandableareaApi = inpageCalendarEl.data('expandablearea');
+      const calExpandableareaApi = inPageCalendarEl.data('expandablearea');
 
       // Set expandable area for month year picker
       if (s.showMonthYearPicker) {
@@ -1221,7 +1223,7 @@ MonthView.prototype = {
    */
   handleMonthYearPane() {
     const s = this.settings;
-    const isRippleClass = s.inpage ? ' class="is-ripple"' : '';
+    const isRippleClass = s.inPage ? ' class="is-ripple"' : '';
 
     const appendMonth = (upDown) => {
       const monthContainer = this.monthYearPane[0].querySelector('.picklist.is-month');
@@ -1246,7 +1248,7 @@ MonthView.prototype = {
         utils.addAttributes(a, this, s.attributes, `btn-picklist-${idx}`);
       }
 
-      if (!s.inpage) {
+      if (!s.inPage) {
         monthContainerJQ.find('.picklist-item').eq(5)
           .addClass('is-selected')
           .attr('tabindex', '0');
@@ -1288,7 +1290,7 @@ MonthView.prototype = {
         }
       }
 
-      if (!s.inpage) {
+      if (!s.inPage) {
         yearContainerJQ.find('.picklist-item').eq(5)
           .addClass('is-selected')
           .attr('tabindex', '0');
@@ -1300,7 +1302,7 @@ MonthView.prototype = {
     this.monthYearPane
       .off('touchstart.monthviewpane mousedown.monthviewpane')
       .on('touchstart.monthviewpane mousedown.monthviewpane', '.picklist.is-year li', (e) => {
-        const noAction = s.inpage && e.target.tagName.toLowerCase() === 'li';
+        const noAction = s.inPage && e.target.tagName.toLowerCase() === 'li';
         if (noAction) {
           return true;
         }
@@ -1343,11 +1345,11 @@ MonthView.prototype = {
     const setMonthYearPane = (target, cssClass) => {
       const elem = (sel) => {
         const el = this.monthYearPane[0].querySelector(`.is-${sel} .is-selected a`);
-        return (!el && s.inpage) ?
+        return (!el && s.inPage) ?
           this.monthYearPane[0].querySelector(`.is-${sel} .picklist-item:last-child a`) : el;
       };
       let d;
-      if (s.inpage) {
+      if (s.inPage) {
         d = {
           month: parseInt(elem('month').getAttribute('data-month'), 10),
           year: parseInt(elem('year').getAttribute('data-year'), 10)
@@ -1381,7 +1383,7 @@ MonthView.prototype = {
     this.monthYearPane
       .off('click.picklist-month')
       .on('click.picklist-month', '.picklist.is-month li', (e) => {
-        const noAction = s.inpage && e.target.tagName.toLowerCase() === 'li';
+        const noAction = s.inPage && e.target.tagName.toLowerCase() === 'li';
         if (noAction) {
           return;
         }
@@ -1408,7 +1410,7 @@ MonthView.prototype = {
     this.monthYearPane
       .off('click.picklist-year')
       .on('click.picklist-year', '.picklist.is-year li', (e) => {
-        const noAction = s.inpage && e.target.tagName.toLowerCase() === 'li';
+        const noAction = s.inPage && e.target.tagName.toLowerCase() === 'li';
         if (noAction) {
           return;
         }
@@ -1439,7 +1441,7 @@ MonthView.prototype = {
         this.element.find('.btn-icon, td.is-selected').attr('disabled', 'true');
         this.element.find('td.is-selected').removeAttr('tabindex');
 
-        if (s.inpage) {
+        if (s.inPage) {
           this.element.find('.btn-icon.prev, .btn-icon.next').hide();
           const el = this.element.find('.hyperlink.today, .hyperlink.apply');
           const isApply = el.hasClass('is-apply');
@@ -1469,7 +1471,7 @@ MonthView.prototype = {
     }).on('collapse.monthviewpane', () => {
       // Enable it all again
       if (!s.hideDays) {
-        if (s.inpage) {
+        if (s.inPage) {
           this.element.find('.btn-icon.prev, .btn-icon.next').show();
           const el = this.element.find('.hyperlink.apply');
           const isApply = el.hasClass('is-apply');
@@ -1980,7 +1982,7 @@ MonthView.prototype = {
     }
     this.table.after(this.legend);
 
-    if (s.inpage) {
+    if (s.inPage) {
       // Set is-wrapped css class to use diffrent styles
       const first = this.legend[0].querySelector('.monthview-legend-item:first-child');
       const last = this.legend[0].querySelector('.monthview-legend-item:last-child');
