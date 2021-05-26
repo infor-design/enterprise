@@ -367,21 +367,6 @@
     }
   }
 
-  .field.is-fieldoptions {
-    .colorpicker-container {
-      ~ .btn-actions {
-        top: 1px;
-      }
-    }
-
-    .field-options ~ .close,
-    input[type='text'][readonly]:not(.fileupload) {
-      ~ .btn-actions {
-        top: 0;
-      }
-    }
-  }
-
   .field-short.is-fieldoptions,
   .form-layout-compact .field.is-fieldoptions {
     .field-options ~ .close ~ .btn-actions,

@@ -761,12 +761,6 @@
   }
 
   .field.is-fieldoptions {
-    .colorpicker-container {
-      ~ .btn-actions {
-        top: 0;
-      }
-    }
-
     .field-options ~ .close,
     input[type='text'][readonly]:not(.fileupload) {
       ~ .btn-actions {
