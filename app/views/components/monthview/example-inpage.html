@@ -75,13 +75,13 @@
      */
 
     // Init test content first time on load
-    var dateOnLoad = new Date((initDate.month + 1) + '-' + initDate.day + '-' + initDate.year);
+    var dateOnLoad = new Date((initDate.month + 1) + '/' + initDate.day + '/' + initDate.year);
     updateContent(dateOnLoad);
 
     // handle selected date
     function handleSelected(args) {
       if (args) {
-        var dt = new Date((args.month + 1) + '-' + args.day + '-' + args.year);
+        var dt = new Date((args.month + 1) + '/' + args.day + '/' + args.year);
         var dtStr = getDateString(dt);
         console.log(dtStr + ' has been selected!');
 
