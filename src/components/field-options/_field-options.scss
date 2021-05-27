@@ -699,7 +699,7 @@
     .colorpicker-container {
       ~ .btn-actions {
         left: -11px;
-        top: -14px;
+        top: -10px;
       }
     }
 
@@ -761,12 +761,6 @@
   }
 
   .field.is-fieldoptions {
-    .colorpicker-container {
-      ~ .btn-actions {
-        top: 0;
-      }
-    }
-
     .field-options ~ .close,
     input[type='text'][readonly]:not(.fileupload) {
       ~ .btn-actions {
@@ -819,6 +813,14 @@
     .field-options {
       ~ .btn-actions:not(.is-checkbox) {
         top: auto;
+      }
+    }
+
+    .searchfield-wrapper {
+      input.field-options {
+        ~ .btn-actions.btn-menu {
+          top: 0;
+        }
       }
     }
 
