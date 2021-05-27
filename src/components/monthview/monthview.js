@@ -735,6 +735,11 @@ MonthView.prototype = {
     utils.addAttributes(this.monthYearPane.find('.picklist-section.is-year .picklist-item.down a'), this, this.settings.attributes, 'btn-picklist-year-down');
 
     if (this.settings.inPage) {
+      // utils.addAttributes(this.popup.find('.btn-monthyear-pane'), this, this.settings.attributes, 'btn-monthyear');
+      utils.addAttributes(this.monthYearPane.find('.btn-inpage-cal'), this, this.settings.attributes, 'btn-inpage-cal');
+      utils.addAttributes(this.monthYearPane.find('.btn-cal-month-year'), this, this.settings.attributes, 'btn-cal-month-year');
+      utils.addAttributes(this.monthYearPane.find('.btn-monthyear-pane'), this, this.settings.attributes, 'btn-monthyear');
+      utils.addAttributes(this.monthYearPane.find('.apply'), this, this.settings.attributes, 'btn-apply');
       utils.addAttributes(this.monthYearPane.find('.picklist-section.is-month .picklist-item.up a'), this, this.settings.attributes, 'btn-picklist-month-up');
       utils.addAttributes(this.monthYearPane.find('.picklist-section.is-month .picklist-item.down a'), this, this.settings.attributes, 'btn-picklist-month-down');
     }
