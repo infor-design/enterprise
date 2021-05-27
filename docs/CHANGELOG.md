@@ -12,7 +12,7 @@
 - `[Calendar]` Fixed a bug where if the calendar event is not set to whole day then the week view and day view will not properly render on UI. ([#5195](https://github.com/infor-design/enterprise/issues/5195))
 - `[Datagrid]` Fixed a bug where changing a selection mode between single and mixed on a datagrid with frozen columns were not properly rendered on UI. ([#5067](https://github.com/infor-design/enterprise/issues/5067))
 - `[Datagrid]` Fixed a bug where filter options were not opening anymore after doing sorting on server-side paging. ([#5073](https://github.com/infor-design/enterprise/issues/5073))
-- `[Lookup/Datagrid]` Fixed a bug where unselecting all items in an active page affects other selected items on other pages. ([#4503](https://github.com/infor-design/enterprise/issues/4503))
+- `[Datagrid/Lookup]` Fixed a bug where unselecting all items in an active page affects other selected items on other pages. ([#4503](https://github.com/infor-design/enterprise/issues/4503))
 - `[Datagrid]` When fixing bugs in datagrid hover states we removed the use of `is-focused` on table `td` elements. ([#5091](https://github.com/infor-design/enterprise/issues/5091))
 - `[Datagrid/Lookup]` Fixed a bug where the plus minus icon animation was cut off. ([#4962](https://github.com/infor-design/enterprise/issues/4962))
 - `[Datagrid]` Fixed a bug where unselecting all items in an active page affects other selected items on other pages. ([#4503](https://github.com/infor-design/enterprise/issues/4503))
@@ -23,6 +23,7 @@
 - `[Homepage]` Fixed an issue where remove card event was not triggered on card/widget. ([#4798](https://github.com/infor-design/enterprise/issues/4798))
 - `[Locale]` Changed the start day of the week to monday as per translation team request. ([#5199](https://github.com/infor-design/enterprise/issues/5199))
 - `[Mask/Datagrid]` Fixed a bug in number masks where entering a decimal while the field's entire text content was selected could cause unexpected formatting. ([#4974](https://github.com/infor-design/enterprise/issues/4974))
+- `[Tabs Module]` Fixed a bug where long tab labels overflowed behind the close icon. ([#5187](https://github.com/infor-design/enterprise/issues/5187))
 
 ## v4.51.1
 
