@@ -271,13 +271,38 @@
 .field-short.is-fieldoptions,
 .form-layout-compact .field.is-fieldoptions {
   .btn-actions:not(.is-checkbox) {
-    left: -4px !important;
+    left: -1px;
     top: 1px;
   }
 
   .dropdown ~ .btn-actions,
   .multiselect ~ .btn-actions {
-    top: 3px;
+    top: 0;
+  }
+
+  .lookup-wrapper input[type='text'].lookup.field-options {
+    ~ .btn-actions {
+      top: 1px;
+    }
+  }
+
+  input[type='text']:not(.spinbox) {
+    ~ .btn-actions {
+      left: -1px;
+    }
+
+    &[data-clearable='true'] ~ .btn-icon:not(.is-empty) {
+      ~ .btn-actions {
+        left: -25px;
+      }
+    }
+  }
+
+  .searchfield-wrapper.has-close-icon-button {
+    .btn-icon.close:not(.is-empty) {
+      right: 41px;
+      top: 3px;
+    }
   }
 
   .spinbox-wrapper .btn-actions {
@@ -289,7 +314,7 @@
   }
 
   .colorpicker-container ~ .btn-actions {
-    top: -8px;
+    top: -5px;
   }
 
   .checkbox ~ .btn-actions {
@@ -308,7 +333,7 @@
 
   .searchfield-wrapper.has-focus:not(.toolbar-searchfield-wrapper) .btn-actions,
   .searchfield-wrapper .btn-actions {
-    left: -4px !important;
+    left: -1px !important;
   }
 
   .searchfield-wrapper.has-close-icon-button .searchfield {
@@ -321,13 +346,13 @@
   .textarea ~ .btn-actions,
   .textarea ~ .btn-actions {
     left: auto !important;
-    margin-left: -4px;
+    margin-left: -1px;
     top: calc(50% - 2px);
   }
 
   .fileupload {
     ~ .trigger-close:not(.is-visible) ~ .btn-actions {
-      left: -4px !important;
+      left: -1px;
     }
 
     ~ .trigger-close.is-visible ~ .btn-actions {
@@ -373,5 +398,70 @@
     .colorpicker-container ~ .btn-actions {
       top: 1px;
     }
+  }
+}
+
+// Edge
+.ie,
+.ie-edge,
+.ie-edge17 {
+  :not(.form-layout-compact) {
+    .field.is-fieldoptions {
+      .dropdown-wrapper {
+        ~ .btn-actions:not(.is-checkbox) {
+          top: 2px;
+        }
+      }
+  
+      .lookup-wrapper,
+      .spinbox-wrapper {
+        .btn-actions:not(.is-checkbox) {
+          left: -9px;
+        }
+      }
+
+      button.close:not(.is-empty) {
+        ~ .btn-actions:not(.is-checkbox) {
+          left: -36px;
+        }
+      }
+
+      textarea {
+        ~ .btn-actions:not(.is-checkbox) {
+          left: auto;
+        }
+      }
+  
+      .btn-actions:not(.is-checkbox) {
+        left: -12px;
+      }
+    }
+
+    .compound-field {
+      .field.is-fieldoptions {
+        input[type='text'] {
+          ~ .btn-actions:not(.is-checkbox) {
+            top: 0;
+          }
+        }
+      }
+    }
+  }
+
+  .form-layout-compact .field.is-fieldoptions {
+    .dropdown,
+    .multiselect {
+      .btn-actions:not(.is-checkbox) {
+        top: 0;
+      }
+    }
+
+    .btn-actions:not(.is-checkbox) {
+      left: -1px !important;
+    }
+  }
+
+  .dropdown-list.dropdown-short .trigger .icon {
+    left: -1px;
   }
 }
