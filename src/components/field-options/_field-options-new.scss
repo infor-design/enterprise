@@ -188,7 +188,6 @@
 
     .colorpicker-container ~ .btn-actions {
       left: -12px !important;
-      top: -13px !important;
     }
   }
 
@@ -363,21 +362,6 @@
     &.datepicker {
       ~ .btn-actions {
         left: -9px;
-      }
-    }
-  }
-
-  .field.is-fieldoptions {
-    .colorpicker-container {
-      ~ .btn-actions {
-        top: 1px;
-      }
-    }
-
-    .field-options ~ .close,
-    input[type='text'][readonly]:not(.fileupload) {
-      ~ .btn-actions {
-        top: 0;
       }
     }
   }
