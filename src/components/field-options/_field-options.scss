@@ -823,6 +823,13 @@
         top: -1px;
       }
     }
+
+    .dropdown,
+    .multiselect {
+      ~ .btn-actions {
+        top: 0;
+      }
+    }
   }
 
   .radio-group {
@@ -841,10 +848,32 @@
 
   .form-layout-compact {
     .field.is-fieldoptions {
-      .colorpicker-container ~ .btn-actions,
+      .colorpicker-container ~ .btn-actions {
+        top: -5px;
+      }
+
       input[type='text'] ~ .btn-actions:not(.is-checkbox) {
         top: 1px;
       }
+
+      .lookup-wrapper input[type='text'].lookup.field-options {
+        ~ .btn-actions {
+          top: 1px !important;
+        }
+      }
+
+      .field-options.textarea {
+        ~ .btn-actions {
+          left: 260px;
+        }
+      }
+
+      .dropdown,
+      .multiselect {
+      ~ .btn-actions {
+        top: 1px;
+      }
+    }
 
       .spinbox-wrapper .btn-actions {
         top: 5px !important;
