@@ -819,7 +819,12 @@ Bar.prototype = {
               .attr('x', `-${brief.transX}`)
               .attr('y', '-1em')
               .attr('requiredFeatures', 'http://www.w3.org/TR/SVG11/feature#Extensibility')
-              .html(`<div class="text ellipsis" resizeable="false" xmlns="http://www.w3.org/1999/xhtml">${d.name}</div>`);
+              .html('<div class="text ellipsis" resizeable="false" xmlns="http://www.w3.org/1999/xhtml"></div>');
+            const ellipsisEl = parentNode.querySelector('.text.ellipsis');
+            if (ellipsisEl) {
+              const textContent = document.createTextNode(d.name);
+              ellipsisEl.appendChild(textContent);
+            }
           }
 
           d3.select(parentNode)

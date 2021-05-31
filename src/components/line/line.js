@@ -931,7 +931,12 @@ Line.prototype = {
             .attr('x', `-${(brief.boxWidth + (this.isRTL ? 12 : 16))}`)
             .attr('y', '-1em')
             .attr('requiredFeatures', 'http://www.w3.org/TR/SVG11/feature#Extensibility')
-            .html(`<div class="text ellipsis" resizeable="false" xmlns="http://www.w3.org/1999/xhtml">${text}</div>`);
+            .html('<div class="text ellipsis" resizeable="false" xmlns="http://www.w3.org/1999/xhtml"></div>');
+          const ellipsisEl = parentNode.querySelector('.text.ellipsis');
+          if (ellipsisEl) {
+            const textContent = document.createTextNode(text);
+            ellipsisEl.appendChild(textContent);
+          }
           brief.elem = parentNode.querySelector('.text');
         } else {
           tick.textContent = charts.trimText(text, 5);
