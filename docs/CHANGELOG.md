@@ -1,5 +1,13 @@
 # What's New with Enterprise
 
+## v4.53.0
+
+## v4.53.0 Markup Changes
+
+## v4.53.0 Fixes
+
+- `[Application Menu]` Fixed a bug where the expanded accordion were incorrectly coloured as selected when uses the personalization colors. ([#5128](https://github.com/infor-design/enterprise/issues/5128))
+
 ## v4.52.0
 
 ### v4.52.0 Markup Changes
