@@ -715,11 +715,13 @@ Spinbox.prototype = {
       self.handleKeyDown(e, self);
     }).on('keyup.spinbox', (e) => {
       self.handleKeyup(e, self);
-    }).on('mouseover.spinbox', (e) => {
+    })
+    .on('mouseover.spinbox', () => {
       if (!self.element.parent('.spinbox-wrapper').hasClass('is-focused')) {
         self.element.addClass('is-hovered');
       }
-    }).on('mouseleave.spinbox', (e) => {
+    })
+    .on('mouseleave.spinbox', () => {
       self.element.removeClass('is-hovered');
     })
       .on('afterpaste.mask', () => {
