@@ -258,7 +258,7 @@ $prefixes: -webkit-, -moz-, -o-, -ms-, '';
 }
 
 @mixin focus-state {
-  border: solid 1px $input-color-focus-border;
+  border: solid 1px $input-color-focus-border !important;
   box-shadow: $focus-box-shadow;  //wanted 0 0 4px 3px rgba(54, 138 ,192, 0.30)
   outline: none;
   outline-color: transparent;

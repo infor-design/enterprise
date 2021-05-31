@@ -20,7 +20,7 @@
   text-align: left;
   width: 300px;
 
-  &:hover {
+  &:not(.spinbox):hover {  
     border-color: $input-color-hover-border;
   }
 
