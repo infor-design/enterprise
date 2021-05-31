@@ -716,14 +716,14 @@ Spinbox.prototype = {
     }).on('keyup.spinbox', (e) => {
       self.handleKeyup(e, self);
     })
-    .on('mouseover.spinbox', () => {
-      if (!self.element.parent('.spinbox-wrapper').hasClass('is-focused')) {
-        self.element.addClass('is-hovered');
-      }
-    })
-    .on('mouseleave.spinbox', () => {
-      self.element.removeClass('is-hovered');
-    })
+      .on('mouseover.spinbox', () => {
+        if (!self.element.parent('.spinbox-wrapper').hasClass('is-focused')) {
+          self.element.addClass('is-hovered');
+        }
+      })
+      .on('mouseleave.spinbox', () => {
+        self.element.removeClass('is-hovered');
+      })
       .on('afterpaste.mask', () => {
         self.handleAfterPaste(self);
       });
