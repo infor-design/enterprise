@@ -916,6 +916,18 @@ Modal.prototype = {
       this.element.attr('aria-labelledby', id);
       utils.addAttributes(this.element, this, this.settings.attributes, '', true);
 
+      const modalButtonSet = this.element.find('.modal-buttonset');
+      const modalButtonList = modalButtonSet.find('.btn-modal');
+      const self = this;
+      modalButtonList.each((index, item) => {
+        const btnItem = $(item);
+        if (btnItem.hasClass('btn-modal-primary')) {
+          utils.addAttributes(btnItem, self, self.settings.attributes, 'save', true);
+        } else {
+          utils.addAttributes(btnItem, self, self.settings.attributes, 'cancel', true);
+        }
+      });
+      
       // Contextual Action Panel Case - Has a toolbar
       if (this.element.find('.toolbar .title').length) {
         this.element.find('.toolbar .title').attr('id', descById);
