@@ -570,7 +570,7 @@ DatePicker.prototype = {
     if (!this.settings.attributes) return;
 
     utils.addAttributes(this.element, this, this.settings.attributes);
-    utils.addAttributes(this.trigger, this, this.settings.attributes);
+    utils.addAttributes(this.trigger, this, this.settings.attributes, 'trigger');
   },
 
   /**
