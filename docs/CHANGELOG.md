@@ -21,6 +21,7 @@
 - `[Dropdown]` Fixed a bug where automatic highlighting of a blank option after opening the list was not working ([#5095](https://github.com/infor-design/enterprise/issues/5095))
 - `[Dropdown/Multiselect]` Fixed a bug where the id attribute prefix were missing from the dropdown list when searching with typeahead settings. ([#5053](https://github.com/infor-design/enterprise/issues/5053))
 - `[Field Options]` Fixed misalignment of field options for the colorpicker, clearable input field, and clearable searchfield with its close icon. ([#5139](https://github.com/infor-design/enterprise/issues/5139))
+- `[Field Options]` Fixed misalignment of close button in searchfield with field options. ([#5138](https://github.com/infor-design/enterprise/issues/5138))
 - `[Homepage]` Fixed an issue where remove card event was not triggered on card/widget. ([#4798](https://github.com/infor-design/enterprise/issues/4798))
 - `[Locale]` Changed the start day of the week to monday as per translation team request. ([#5199](https://github.com/infor-design/enterprise/issues/5199))
 - `[Mask/Datagrid]` Fixed a bug in number masks where entering a decimal while the field's entire text content was selected could cause unexpected formatting. ([#4974](https://github.com/infor-design/enterprise/issues/4974))
