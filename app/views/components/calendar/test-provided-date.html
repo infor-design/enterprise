@@ -1,0 +1,21 @@
+<div class="full-height full-width">
+  <div class="calendar" data-init="false">
+    <div class="calendar-monthview">
+    </div>
+  </div>
+</div>
+
+<script id="test-script">
+  $('body').one('initialized', function () {
+
+    // Initialize
+    $('.calendar').calendar({
+      day: 21,
+      month: 3,
+      year: 2021,
+      showViewChanger: false
+    });
+
+  });
+
+</script>

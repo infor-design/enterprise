@@ -57,11 +57,14 @@ $('.monthview').monthview({
 Providing the data this will add an ID to the top calendar div. In addition the following related items will be set.
 
 - Monthview Container - gets the id appended directly
+- Monthview in page expand area trigger - gets `btn-inpage-cal` appended
+- Monthview in page expand area trigger with month year  - gets `btn-cal-month-year` appended
 - Next Day Button - gets `month-view-btn-next` appended
 - Previous Day Button - gets `month-view-btn-prev` appended
 - Datepicker Input - gets `month-view-datepicker` appended
 - Datepicker Trigger - gets `month-view-datepicker-trigger` appended
 - Today Button - gets `month-view-today` appended
+- Apply Button - gets `month-view-apply` appended
 
 Note that there is an extra month-view added as this can be on the same page as week-view which will have week-view appended.
 
