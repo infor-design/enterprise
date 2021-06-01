@@ -25,6 +25,8 @@
 - `[Homepage]` Fixed an issue where remove card event was not triggered on card/widget. ([#4798](https://github.com/infor-design/enterprise/issues/4798))
 - `[Locale]` Changed the start day of the week to monday as per translation team request. ([#5199](https://github.com/infor-design/enterprise/issues/5199))
 - `[Mask/Datagrid]` Fixed a bug in number masks where entering a decimal while the field's entire text content was selected could cause unexpected formatting. ([#4974](https://github.com/infor-design/enterprise/issues/4974))
+- `[Monthview]` Fixed an issue where selected date was not stay on provided day/month/year. ([#5064](https://github.com/infor-design/enterprise/issues/5064))
+- `[Monthview]` Added support for mobile view. ([#5075](https://github.com/infor-design/enterprise/issues/5075))
 - `[Tabs Module]` Fixed a bug where long tab labels overflowed behind the close icon. ([#5187](https://github.com/infor-design/enterprise/issues/5187))
 
 ## v4.51.1

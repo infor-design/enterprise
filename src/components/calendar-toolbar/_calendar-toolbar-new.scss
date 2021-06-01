@@ -8,10 +8,6 @@
     padding: 4px 36px 4px 8px;
   }
 
-  .today {
-    @include font-size(14);
-  }
-
   .toolbar-section > .month,
   .toolbar-section > .year {
     @include font-size(20);
