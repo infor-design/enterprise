@@ -12,6 +12,7 @@
 
 ### v4.52.0 Fixes
 
+- `[Application Menu]` Fixed a bug where the expanded accordion were incorrectly coloured as selected when uses the personalization colors. ([#5128](https://github.com/infor-design/enterprise/issues/5128))
 - `[About]` Fixed a bug where overflowing scrollbar in About Modal is shown on a smaller viewport. ([#5206](https://github.com/infor-design/enterprise/issues/5206))
 - `[Bar Chart]` Fixed an issue where onerror script was able to execute. ([#1030](https://github.com/infor-design/enterprise-ng/issues/1030))
 - `[Calendar]` Fixed a bug where if the calendar event is not set to whole day then the week view and day view will not properly render on UI. ([#5195](https://github.com/infor-design/enterprise/issues/5195))
@@ -22,6 +23,7 @@
 - `[Datagrid/Lookup]` Fixed a bug where the plus minus icon animation was cut off. ([#4962](https://github.com/infor-design/enterprise/issues/4962))
 - `[Datagrid]` Fixed a bug where unselecting all items in an active page affects other selected items on other pages. ([#4503](https://github.com/infor-design/enterprise/issues/4503))
 - `[Datagrid]` Fixed a bug where the tag text in the column is not shown properly when hovering it on Alternate Row Shading. ([#5210](https://github.com/infor-design/enterprise/issues/5210))
+- `[Datagrid]` Fixed a bug where the clear filter icons position were not properly aligned with the lookup. ([#5239](https://github.com/infor-design/enterprise/issues/5239))
 - `[Dropdown]` Fixed a bug where automatic highlighting of a blank option after opening the list was not working ([#5095](https://github.com/infor-design/enterprise/issues/5095))
 - `[Dropdown/Multiselect]` Fixed a bug where the id attribute prefix were missing from the dropdown list when searching with typeahead settings. ([#5053](https://github.com/infor-design/enterprise/issues/5053))
 - `[Field Options]` Fixed misalignment of field options for the colorpicker, clearable input field, and clearable searchfield with its close icon. ([#5139](https://github.com/infor-design/enterprise/issues/5139))
@@ -31,6 +33,7 @@
 - `[Mask/Datagrid]` Fixed a bug in number masks where entering a decimal while the field's entire text content was selected could cause unexpected formatting. ([#4974](https://github.com/infor-design/enterprise/issues/4974))
 - `[Monthview]` Fixed an issue where selected date was not stay on provided day/month/year. ([#5064](https://github.com/infor-design/enterprise/issues/5064))
 - `[Monthview]` Added support for mobile view. ([#5075](https://github.com/infor-design/enterprise/issues/5075))
+- `[Spinbox]` Fixed a bug where spinbox and its border is not properly rendered on responsive view. ([#5146](https://github.com/infor-design/enterprise/issues/5146))
 - `[Tabs Module]` Fixed a bug where long tab labels overflowed behind the close icon. ([#5187](https://github.com/infor-design/enterprise/issues/5187))
 
 ## v4.51.1
