@@ -1,13 +1,5 @@
 # What's New with Enterprise
 
-## v4.53.0
-
-## v4.53.0 Markup Changes
-
-## v4.53.0 Fixes
-
-- `[Application Menu]` Fixed a bug where the expanded accordion were incorrectly coloured as selected when uses the personalization colors. ([#5128](https://github.com/infor-design/enterprise/issues/5128))
-
 ## v4.52.0
 
 ### v4.52.0 Markup Changes
@@ -16,6 +8,7 @@
 
 ### v4.52.0 Fixes
 
+- `[Application Menu]` Fixed a bug where the expanded accordion were incorrectly coloured as selected when uses the personalization colors. ([#5128](https://github.com/infor-design/enterprise/issues/5128))
 - `[About]` Fixed a bug where overflowing scrollbar in About Modal is shown on a smaller viewport. ([#5206](https://github.com/infor-design/enterprise/issues/5206))
 - `[Bar Chart]` Fixed an issue where onerror script was able to execute. ([#1030](https://github.com/infor-design/enterprise-ng/issues/1030))
 - `[Calendar]` Fixed a bug where if the calendar event is not set to whole day then the week view and day view will not properly render on UI. ([#5195](https://github.com/infor-design/enterprise/issues/5195))
@@ -35,6 +28,7 @@
 - `[Mask/Datagrid]` Fixed a bug in number masks where entering a decimal while the field's entire text content was selected could cause unexpected formatting. ([#4974](https://github.com/infor-design/enterprise/issues/4974))
 - `[Monthview]` Fixed an issue where selected date was not stay on provided day/month/year. ([#5064](https://github.com/infor-design/enterprise/issues/5064))
 - `[Monthview]` Added support for mobile view. ([#5075](https://github.com/infor-design/enterprise/issues/5075))
+- `[Spinbox]` Fixed a bug where spinbox and its border is not properly rendered on responsive view. ([#5146](https://github.com/infor-design/enterprise/issues/5146))
 - `[Tabs Module]` Fixed a bug where long tab labels overflowed behind the close icon. ([#5187](https://github.com/infor-design/enterprise/issues/5187))
 
 ## v4.51.1
