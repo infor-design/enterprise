@@ -207,6 +207,11 @@ DatePicker.prototype = {
     if (!this.settings.locale && !this.settings.language) {
       this.setCurrentCalendar();
     }
+
+    // Make sure trigger has button api
+    if (!(this.trigger?.data('button'))) {
+      this.trigger.button();
+    }
   },
 
   /**

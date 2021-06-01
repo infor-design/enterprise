@@ -1,5 +1,10 @@
 <div class="row">
   <div class="four columns">
+    <h2>Calendar Toolbar - Visuals</h2>
+  </div>
+</div>
+<div class="row">
+  <div class="five columns">
     <div class="calendar-toolbar" data-init="false" id="example-1"></div>
     <div class="calendar-toolbar" data-init="false" id="example-2"></div>
     <div class="calendar-toolbar" data-init="false" id="example-3"></div>
@@ -7,11 +12,32 @@
   </div>
 </div>
 
+
+<div class="row top-padding">
+  <div class="four columns">
+    <h2>Calendar Toolbar - Visuals (InPage)</h2>
+  </div>
+</div>
+<div class="row">
+  <div class="five columns">
+    <div class="calendar-toolbar" data-init="false" id="example-5"></div>
+    <div class="calendar-toolbar" data-init="false" id="example-6"></div>
+    <div class="calendar-toolbar" data-init="false" id="example-7"></div>
+    <div class="calendar-toolbar" data-init="false" id="example-8"></div>
+  </div>
+</div>
+
 <script id="datagrid-script">
   $('body').one('initialized', function () {
     $('#example-1').calendartoolbar({ month: 1, year: 2020 });
-    $('#example-2').calendartoolbar({ month: 1, year: 2020, isAlternate: true });
-    $('#example-3').calendartoolbar({ month: 1, year: 2020, isAlternate: true, isMenuButton: false });
-    $('#example-4').calendartoolbar({ month: 1, year: 2020, showToday: false });
+    $('#example-2').calendartoolbar({ month: 1, year: 2020, showToday: false });
+    $('#example-3').calendartoolbar({ month: 1, year: 2020, isAlternate: true });
+    $('#example-4').calendartoolbar({ month: 1, year: 2020, isAlternate: true, isMenuButton: false });
+
+    // InPage
+    $('#example-5').calendartoolbar({ month: 1, year: 2020, inPage: true });
+    $('#example-6').calendartoolbar({ month: 1, year: 2020, inPage: true, showToday: false });
+    $('#example-7').calendartoolbar({ month: 1, year: 2020, inPage: true, isMenuButton: false });
+    $('#example-8').calendartoolbar({ month: 1, year: 2020, inPage: true, inPageTitleAsButton: false });
   });
 </script>
