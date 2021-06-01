@@ -16,7 +16,11 @@ input.spinbox {
   }
 
   &.is-hovered {
-    border-color: $input-color-hover-border;
+    border-color: $input-color-hover-border !important;
+  }
+
+  &.no-hover {
+    border-color: $input-color-focus-border !important;
   }
 }
 
@@ -96,6 +100,10 @@ input::-webkit-inner-spin-button {
 // Everything inside the spinbox wrapper is vertically-aligned middle.
 .spinbox-wrapper {
   display: inline-block;
+
+  input:hover  {
+    border: 1px solid $input-color-initial-border;
+  }
 
   > * {
     vertical-align: middle;
