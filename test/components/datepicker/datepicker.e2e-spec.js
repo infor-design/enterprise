@@ -106,8 +106,8 @@ describe('Datepicker example-index tests', () => {
     expect(await element(by.id('btn-monthyear-pane')).getAttribute('id')).toEqual('btn-monthyear-pane');
     expect(await element(by.id('custom-id-btn-cancel')).getAttribute('id')).toEqual('custom-id-btn-cancel');
     expect(await element(by.id('custom-id-btn-select')).getAttribute('id')).toEqual('custom-id-btn-select');
-    expect(await element(by.id('custom-id-btn-picklist-up')).getAttribute('id')).toEqual('custom-id-btn-picklist-up');
-    expect(await element(by.id('custom-id-btn-picklist-down')).getAttribute('id')).toEqual('custom-id-btn-picklist-down');
+    expect(await element(by.id('custom-id-btn-picklist-year-up')).getAttribute('id')).toEqual('custom-id-btn-picklist-year-up');
+    expect(await element(by.id('custom-id-btn-picklist-year-down')).getAttribute('id')).toEqual('custom-id-btn-picklist-year-down');
     expect(await element(by.id('custom-id-btn-picklist-3')).getAttribute('id')).toEqual('custom-id-btn-picklist-3');
     expect(await element(by.id('custom-id-btn-picklist-2018')).getAttribute('id')).toEqual('custom-id-btn-picklist-2018');
   });
