@@ -703,9 +703,13 @@ Spinbox.prototype = {
 
     // Main Spinbox Input
     this.element.on('focus.spinbox', () => {
+      self.element.addClass('no-hover');
       self.element.parent('.spinbox-wrapper').addClass('is-focused');
+      self.element.removeClass('is-hovered');
     }).on('blur.spinbox', () => {
+      self.element.removeClass('no-hover');
       self.element.parent('.spinbox-wrapper').removeClass('is-focused');
+      self.element.removeClass('is-hovered');
       if (self.settings.autocorrectOnBlur) {
         self.correctValue();
       }
@@ -714,6 +718,14 @@ Spinbox.prototype = {
     }).on('keyup.spinbox', (e) => {
       self.handleKeyup(e, self);
     })
+      .on('mouseover.spinbox', () => {
+        if (!self.element.parent('.spinbox-wrapper').hasClass('is-focused')) {
+          self.element.addClass('is-hovered');
+        }
+      })
+      .on('mouseleave.spinbox', () => {
+        self.element.removeClass('is-hovered');
+      })
       .on('afterpaste.mask', () => {
         self.handleAfterPaste(self);
       });

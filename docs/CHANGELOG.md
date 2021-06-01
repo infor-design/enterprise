@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.53.0
+
+### v4.53.0 Fixes
+
+- `[Spinbox]` Fixed a bug where spinbox and its border is not properly rendered on responsive view. ([#5146](https://github.com/infor-design/enterprise/issues/5146))
+
 ## v4.52.0
 
 ### v4.52.0 Markup Changes

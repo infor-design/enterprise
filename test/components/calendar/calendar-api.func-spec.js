@@ -295,6 +295,6 @@ describe('Calendar API', () => {
     expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('June 2019');
     expect(document.body.querySelector('thead tr th:first-child').textContent.trim()).toEqual('Sun');
     expect(document.body.querySelector('thead tr th:last-child').textContent.trim()).toEqual('Sat');
-    expect(document.querySelectorAll('.calendar-event').length).toEqual(3);
+    expect(document.querySelectorAll('.day-container .calendar-event').length).toEqual(3);
   });
 });
