@@ -43,6 +43,8 @@
 
 .field-options {
   max-width: ($field-md - 40px);
+  text-overflow: ellipsis;
+  white-space: nowrap;
   width: calc(100% - 40px);
 
   &.input-xs {
@@ -318,8 +320,8 @@
 .field-short.is-fieldoptions,
 .form-layout-compact .field.is-fieldoptions {
   .btn-actions:not(.is-checkbox) {
-    left: -3px;
-    top: 1px;
+    left: -2px;
+    top: 2px;
     width: $input-size-compact-height;
 
     .icon {
@@ -329,12 +331,43 @@
 
   .dropdown ~ .btn-actions,
   .multiselect ~ .btn-actions {
-    top: 2px;
+    top: 1px;
+  }
+
+  .lookup-wrapper {
+    input[type='text'].lookup.field-options {
+      ~ .btn-actions {
+        top: 2px;
+      }
+    }
+  }
+
+  input[type='text'][data-clearable='true'] ~ .btn-icon.close {
+    ~ .btn-actions {
+      top: 1px;
+    }
+  }
+
+  input[type='text']:not(.spinbox):not(.searchfield) {
+    padding: 0 22px 0 5px;
+
+    ~ .btn-actions {
+      top: 2px;
+    }
+
+    &[data-clearable='true'] ~ .btn-icon:not(.is-empty) {
+      right: 25px;
+      top: 1px;
+
+      ~ .btn-actions {
+        left: -26px;
+      }
+    }
   }
 
   .colorpicker-container ~ .btn-actions {
-    left: -3px;
-    top: -8px;
+    left: -2px;
+    top: -5px;
     width: $input-size-compact-height;
   }
 
@@ -342,7 +375,7 @@
     box-shadow: none;
 
     .btn-actions {
-      top: 5px;
+      top: 6px;
     }
   }
 
@@ -353,7 +386,7 @@
 
   .fileupload {
     ~ .trigger-close:not(.is-visible) ~ .btn-actions {
-      left: -3px !important;
+      left: -2px !important;
     }
 
     ~ .trigger-close.is-visible ~ .btn-actions {
@@ -376,8 +409,13 @@
 
   .searchfield-wrapper.has-focus:not(.toolbar-searchfield-wrapper),
   .searchfield-wrapper {
+    .btn-icon.close {
+      right: 41px;
+      top: 13px;
+    }
+
     .btn-actions {
-      left: -3px;
+      left: -2px;
       top: 1px;
     }
 
@@ -398,8 +436,16 @@
 
   .textarea ~ .btn-actions {
     left: auto;
-    margin-left: -3px;
+    margin-left: -1px;
     top: calc(50% - 2px);
+  }
+}
+
+.form-layout-compact {
+  .radio-group {
+    .btn-actions {
+      left: -10px;
+    }
   }
 }
 
@@ -636,7 +682,7 @@
 
       &.dropdown ~ .btn-actions,
       &.multiselect ~ .btn-actions {
-        top: 2px;
+        top: 1px !important;
       }
 
       ~ .btn-actions:not(.is-checkbox) .icon {
@@ -651,6 +697,12 @@
 
     .colorpicker-container ~ .btn-actions {
       top: -8px;
+    }
+
+    .searchfield-wrapper .field-options.searchfield {
+      ~ .btn-icon.close ~ .btn-actions {
+        top: 0 !important;
+      }
     }
 
     .searchfield-wrapper .btn-actions,
@@ -723,6 +775,10 @@
       top: 2px;
     }
 
+    button.btn-icon.close svg.close.icon {
+      margin-top: 0;
+    }
+
     .field-options ~ .close,
     input[type='text'][readonly]:not(.fileupload) {
       ~ .btn-actions {
@@ -731,19 +787,19 @@
     }
 
     .lookup-wrapper .btn-actions {
-      left: -3px;
+      left: -2px;
     }
 
     .spinbox-wrapper .btn-actions {
-      left: -3px;
+      left: -1px;
       top: 5px !important;
       width: 25px;
     }
 
     .colorpicker-container {
       ~ .btn-actions {
-        left: -3px;
-        top: -7px;
+        left: -2px;
+        top: -5px;
       }
     }
   }
@@ -767,6 +823,13 @@
         top: -1px;
       }
     }
+
+    .dropdown,
+    .multiselect {
+      ~ .btn-actions {
+        top: 0;
+      }
+    }
   }
 
   .radio-group {
@@ -785,10 +848,32 @@
 
   .form-layout-compact {
     .field.is-fieldoptions {
-      .colorpicker-container ~ .btn-actions,
+      .colorpicker-container ~ .btn-actions {
+        top: -5px;
+      }
+
       input[type='text'] ~ .btn-actions:not(.is-checkbox) {
         top: 1px;
       }
+
+      .lookup-wrapper input[type='text'].lookup.field-options {
+        ~ .btn-actions {
+          top: 1px !important;
+        }
+      }
+
+      .field-options.textarea {
+        ~ .btn-actions {
+          left: 260px;
+        }
+      }
+
+      .dropdown,
+      .multiselect {
+      ~ .btn-actions {
+        top: 1px;
+      }
+    }
 
       .spinbox-wrapper .btn-actions {
         top: 5px !important;
@@ -810,20 +895,6 @@
 // IE
 .ie {
   .field.is-fieldoptions {
-    .field-options {
-      ~ .btn-actions:not(.is-checkbox) {
-        top: auto;
-      }
-    }
-
-    .searchfield-wrapper {
-      input.field-options {
-        ~ .btn-actions.btn-menu {
-          top: 0;
-        }
-      }
-    }
-
     .dropdown,
     .multiselect {
       ~ .btn-actions:not(.is-checkbox) {
@@ -831,28 +902,9 @@
       }
     }
 
-    .datepicker,
-    .timepicker,
-    .lookup,
-    .field-options ~ .close {
-      ~ .btn-actions:not(.is-checkbox) {
-        top: -1px;
-      }
-    }
-
     .textarea {
       ~ .btn-actions:not(.is-checkbox) {
         top: calc(50% - 6px);
-      }
-    }
-  }
-
-  .compound-field {
-    .field.is-fieldoptions {
-      input[type='text'] {
-        ~ .btn-actions:not(.is-checkbox) {
-          top: -1px;
-        }
       }
     }
   }
@@ -867,7 +919,7 @@
 
   .radio-group {
     .btn-actions {
-      left: -9px;
+      left: -10px;
     }
   }
 
