@@ -101,6 +101,8 @@ describe('Datepicker example-index tests', () => {
     await element(by.css('#date-field-normal + .trigger')).click();
     await browser.driver.sleep(config.sleep);
 
+    expect(await element(by.id('date-field-normal')).getAttribute('data-automation-id')).toEqual('custom-automation-id');
+    expect(await element(by.id('custom-id')).getAttribute('data-automation-id')).toEqual('custom-automation-id');
     expect(await element(by.id('btn-monthyear-pane')).getAttribute('id')).toEqual('btn-monthyear-pane');
     expect(await element(by.id('custom-id-btn-cancel')).getAttribute('id')).toEqual('custom-id-btn-cancel');
     expect(await element(by.id('custom-id-btn-select')).getAttribute('id')).toEqual('custom-id-btn-select');

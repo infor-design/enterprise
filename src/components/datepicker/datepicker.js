@@ -194,6 +194,8 @@ DatePicker.prototype = {
 
     this.makeTabbable(this.settings.tabbable);
 
+    this.setExtraAttributes();
+
     // Enable classes and settings for week selection
     if (this.settings.range.selectWeek) {
       this.settings.selectForward = true;
@@ -557,6 +559,18 @@ DatePicker.prototype = {
       }
       this.element[0].setAttribute('placeholder', placeholder);
     }
+  },
+
+  /**
+   * Set extra attributes.
+   * @private
+   * @returns {void}
+   */
+  setExtraAttributes() {
+    if (!this.settings.attributes) return;
+
+    utils.addAttributes(this.element, this, this.settings.attributes);
+    utils.addAttributes(this.trigger, this, this.settings.attributes);
   },
 
   /**
