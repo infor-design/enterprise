@@ -1,5 +1,6 @@
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
+import { stringUtils } from '../../utils/string';
 
 // jQuery Components
 import '../../utils/behaviors'; // hidefocus
@@ -29,6 +30,8 @@ const COMPONENT_NAME = 'calendartoolbar';
  * @param {boolean} [settings.showViewChanger=false] If false the dropdown to change views will not be shown.
  * @param {string} [settings.viewChangerValue='month'] The value to show selected in the view changer. Can be month, week, day or schedule.
  * @param {string} [settings.attributes] Add extra attributes like id's to the element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
+ * @param {boolean} [settings.inPage=false] If true, will set inPage style for the month view in page option.
+ * @param {boolean} [settings.inPageTitleAsButton=true] if true, will set the month-year title as button for inPage.
 */
 const COMPONENT_DEFAULTS = {
   month: new Date().getMonth(),
@@ -41,7 +44,9 @@ const COMPONENT_DEFAULTS = {
   isMenuButton: true,
   showViewChanger: false,
   viewChangerValue: 'month',
-  isMonthPicker: false
+  isMonthPicker: false,
+  inPage: false,
+  inPageTitleAsButton: true
 };
 
 function CalendarToolbar(element, settings) {
@@ -66,63 +71,119 @@ CalendarToolbar.prototype = {
    * @returns {void}
    */
   build() {
+    const s = this.settings;
+    const translate = str => Locale.translate(str, { locale: this.locale.name, language: this.language });
     this.element[0].classList.add('flex-toolbar');
     this.element[0].setAttribute('data-init', 'false');
 
-    if (this.settings.isAlternate) {
-      this.element[0].classList.add('is-alternate');
-      const monthYearPaneButton = `<button type="button" class="btn btn-monthyear-pane expandable-area-trigger" id="btn-monthyear-pane">
-        <span class="month">november</span>
-        <span class="year">2019</span>
-        <svg class="icon icon-closed" focusable="false" aria-hidden="true" role="presentation">
-          <use href="#icon-dropdown"></use>
-        </svg>
-        <svg class="icon icon-opened" focusable="false" aria-hidden="true" role="presentation">
-          <use href="#icon-dropdown"></use>
-        </svg>
-      </button>`;
+    const todayLink = { text: translate('Today'), class: 'today' };
+    let isRippleClass = s.inPage ? ' is-ripple' : '';
+
+    // inPage setup
+    s.inPage = stringUtils.toBoolean(s.inPage);
+    s.inPageTitleAsButton = stringUtils.toBoolean(s.inPageTitleAsButton);
+    if (s.inPage) {
+      this.element.addClass('is-inpage');
+      if (!s.showToday) {
+        isRippleClass = '';
+        todayLink.text = translate('Apply');
+        todayLink.class = 'apply is-apply hidden';
+      }
+    }
+
+    todayLink.class += ` hyperlink${isRippleClass}`;
+    const todayStr = s.showToday || s.inPage ? `<a class="${todayLink.class}" href="#">${todayLink.text}</a>` : '';
+
+    if (s.isAlternate || s.inPage) {
+      if (s.isAlternate) {
+        this.element[0].classList.add('is-alternate');
+      }
+
+      const monthYearPaneButton = `
+        <button type="button" class="btn btn-monthyear-pane expandable-area-trigger" id="btn-monthyear-pane">
+          <span class="month">november</span>
+          <span class="year">2019</span>
+          <svg class="icon icon-closed" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-dropdown"></use>
+          </svg>
+          <svg class="icon icon-opened" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-dropdown"></use>
+          </svg>
+        </button>`;
+
+      const menuBtnOrHtml = s.isMenuButton ? monthYearPaneButton : '<span class="month">november</span><span class="year">2015</span>';
+
+      const endSectionHtml = `
+        <div class="toolbar-section buttonset l-align-${this.isRTL ? 'left' : 'right'}">
+          ${todayStr}
+          <button type="button" class="btn-icon prev">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-caret-left"></use>
+            </svg>
+            <span>${translate('PreviousMonth')}</span>
+          </button>
+          <button type="button" class="btn-icon next">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-caret-right"></use>
+              </svg>
+              <span>${translate('NextMonth')}</span>
+          </button>
+        </div>`;
+
+      let inPageHtml = '';
+      if (s.inPage) {
+        const calMonthYearButton = `
+          <button type="button" class="btn btn-cal-month-year" id="btn-cal-month-year">
+            ${$.createIcon('calendar')}
+            <span class="month">november</span>
+            <span class="year">2019</span>
+          </button>`;
+
+        const calButton = `
+          <button class="btn-icon btn-inpage-cal" type="button" id="btn-inpage-cal">
+            <span class="audible"></span>
+            ${$.createIcon('calendar')}
+          </button>`;
+
+        if (!s.inPageTitleAsButton) {
+          inPageHtml = `${calButton} <span class="month">november</span><span class="year">2015</span>`;
+        } else if (s.isMenuButton) {
+          inPageHtml = `${calButton} ${monthYearPaneButton}`;
+        } else {
+          inPageHtml = calMonthYearButton;
+        }
+      }
 
       this.element[0].innerHTML = `
         <div class="toolbar-section">
-          ${this.settings.isMenuButton ? monthYearPaneButton : '<span class="month">november</span><span class="year">2015</span>'}
+          ${s.inPage ? inPageHtml : menuBtnOrHtml}
         </div>
-        <div class="toolbar-section buttonset l-align-${this.isRTL ? 'left' : 'right'}">
-          ${this.settings.showToday ? `<a class="hyperlink today" href="#">${Locale.translate('Today', { locale: this.locale.name, language: this.language })}</a>` : ''}
-          <button type="button" class="btn-icon prev">
-            <svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-caret-left"></use></svg>
-            <span>${Locale.translate('PreviousMonth', { locale: this.locale.name, language: this.language })}</span>
-            </button>
-          <button type="button" class="btn-icon next">
-              <svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-caret-right"></use></svg>
-              <span>${Locale.translate('NextMonth', { locale: this.locale.name, language: this.language })}</span>
-          </button>
-        </div>
-      `;
+        ${endSectionHtml}`;
     } else {
       this.element[0].innerHTML = `
         <div class="toolbar-section">
           <button type="button" class="btn-icon prev">
             <svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-caret-left"></use></svg>
-            <span>${Locale.translate('PreviousMonth', { locale: this.locale.name, language: this.language })}</span>
+            <span>${translate('PreviousMonth')}</span>
             </button>
           <button type="button" class="btn-icon next">
               <svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-caret-right"></use></svg>
-              <span>${Locale.translate('NextMonth', { locale: this.locale.name, language: this.language })}</span>
+              <span>${translate('NextMonth')}</span>
           </button>
           <span class="monthview-datepicker">
             <span class="hidden month" data-month="9">9</span>
             <span class="hidden year">2019</span>
-            <span class="audible">${Locale.translate('SelectDay')}</span>
-            <span tabindex="0" aria-label="${Locale.translate('Today', { locale: this.locale.name, language: this.language })}" id="monthview-datepicker-field" class="datepicker input-auto" data-validation="">October 2019</span>
+            <span class="audible">${translate('SelectDay')}</span>
+            <span tabindex="0" aria-label="${translate('Today')}" id="monthview-datepicker-field" class="datepicker input-auto" data-validation="">October 2019</span>
           </span>
-          ${this.settings.showToday ? `<a class="hyperlink today" href="#">${Locale.translate('Today', { locale: this.locale.name, language: this.language })}</a>` : ''}
+          ${todayStr}
         </div>
         <div class="toolbar-section buttonset l-align-right">
-          ${!this.settings.showViewChanger ? '' : `<label for="${this.settings.viewChangerValue}-calendar-view-changer" class="label audible">${Locale.translate('ChangeView', { locale: this.locale.name, language: this.language })}</label>
-            <select id="${this.settings.viewChangerValue}-calendar-view-changer" name="${this.settings.viewChangerValue}-calendar-view-changer" class="dropdown">
-              <option value="month"${this.settings.viewChangerValue === 'month' ? ' selected' : ''}>${Locale.translate('Month', { locale: this.locale.name, language: this.language })}</option>
-              <option value="week"${this.settings.viewChangerValue === 'week' ? ' selected' : ''}>${Locale.translate('Week', { locale: this.locale.name, language: this.language })}</option>
-              <option value="day" ${this.settings.viewChangerValue === 'day' ? ' selected' : ''}>${Locale.translate('Day', { locale: this.locale.name, language: this.language })}</option>
+          ${!s.showViewChanger ? '' : `<label for="${s.viewChangerValue}-calendar-view-changer" class="label audible">${translate('ChangeView')}</label>
+            <select id="${s.viewChangerValue}-calendar-view-changer" name="${s.viewChangerValue}-calendar-view-changer" class="dropdown">
+              <option value="month"${s.viewChangerValue === 'month' ? ' selected' : ''}>${translate('Month')}</option>
+              <option value="week"${s.viewChangerValue === 'week' ? ' selected' : ''}>${translate('Week')}</option>
+              <option value="day" ${s.viewChangerValue === 'day' ? ' selected' : ''}>${translate('Day')}</option>
             </select>
           </div>`}
         </div>
@@ -136,41 +197,40 @@ CalendarToolbar.prototype = {
     this.monthPicker = this.element.find('#monthview-datepicker-field').datepicker({
       dateFormat: Locale.calendar(
         this.locale.name,
-        this.settings.language,
-        this.settings.calendarName
+        s.language,
+        s.calendarName
       ).dateFormat.year,
-      locale: this.settings.locale,
-      language: this.settings.language,
-      onOpenCalendar: this.settings.onOpenCalendar,
-      isMonthPicker: this.settings.isMonthPicker,
-      showToday: this.settings.showToday
+      locale: s.locale,
+      language: s.language,
+      onOpenCalendar: s.onOpenCalendar,
+      isMonthPicker: s.isMonthPicker,
+      showToday: s.showToday
     });
 
-    if (this.settings.showViewChanger) {
-      this.viewChanger = this.element.find(`#${this.settings.viewChangerValue}-calendar-view-changer`).dropdown();
+    if (s.showViewChanger) {
+      this.viewChanger = this.element.find(`#${s.viewChangerValue}-calendar-view-changer`).dropdown();
     }
-    this.todayLink = this.element.find('.hyperlink.today');
+    this.todayLink = this.element.find('.hyperlink.today, .hyperlink.is-apply');
     this.monthPickerApi = this.monthPicker.data('datepicker');
 
     // Hide focus on buttons
     this.element.find('button, a').hideFocus();
-    this.setInternalDate(this.isIslamic ? [this.settings.year, this.settings.month, 1] :
-      new Date(this.settings.year, this.settings.month, 1));
+    this.setInternalDate(this.isIslamic ? [s.year, s.month, 1] : new Date(s.year, s.month, 1));
 
-    utils.addAttributes(this.element.find('.next'), this, this.settings.attributes, `${this.settings.viewChangerValue}-view-btn-next`);
-    utils.addAttributes(this.element.find('.prev'), this, this.settings.attributes, `${this.settings.viewChangerValue}-view-btn-prev`);
-    utils.addAttributes(this.element.find('.today'), this, this.settings.attributes, `${this.settings.viewChangerValue}-view-today`);
-    utils.addAttributes(this.element.find('#monthview-datepicker-field + .trigger'), this, this.settings.attributes, `${this.settings.viewChangerValue}-view-datepicker-trigger`, true);
-    utils.addAttributes(this.element.find('#monthview-datepicker-field'), this, this.settings.attributes, `${this.settings.viewChangerValue}-view-datepicker`, true);
+    utils.addAttributes(this.element.find('.next'), this, s.attributes, `${s.viewChangerValue}-view-btn-next`);
+    utils.addAttributes(this.element.find('.prev'), this, s.attributes, `${s.viewChangerValue}-view-btn-prev`);
+    utils.addAttributes(this.element.find('.today'), this, s.attributes, `${s.viewChangerValue}-view-today`);
+    utils.addAttributes(this.element.find('#monthview-datepicker-field + .trigger'), this, s.attributes, `${s.viewChangerValue}-view-datepicker-trigger`, true);
+    utils.addAttributes(this.element.find('#monthview-datepicker-field'), this, s.attributes, `${s.viewChangerValue}-view-datepicker`, true);
 
-    utils.addAttributes($('.monthview-header #month-calendar-view-changer [value="month"]'), this, this.settings.attributes, 'month-view-changer-month');
-    utils.addAttributes($('.monthview-header #month-calendar-view-changer [value="week"]'), this, this.settings.attributes, 'month-view-changer-week');
-    utils.addAttributes($('.monthview-header #month-calendar-view-changer [value="day"]'), this, this.settings.attributes, 'month-view-changer-day');
-    utils.addAttributes($('.monthview-header #month-calendar-view-changer'), this, this.settings.attributes, 'month-view-changer');
-    utils.addAttributes($('.week-view-header #week-calendar-view-changer [value="month"]'), this, this.settings.attributes, 'week-view-changer-month');
-    utils.addAttributes($('.week-view-header #week-calendar-view-changer [value="week"]'), this, this.settings.attributes, 'week-view-changer-week');
-    utils.addAttributes($('.week-view-header #week-calendar-view-changer [value="day"]'), this, this.settings.attributes, 'week-view-changer-day');
-    utils.addAttributes($('.week-view-header #week-calendar-view-changer'), this, this.settings.attributes, 'week-view-changer');
+    utils.addAttributes($('.monthview-header #month-calendar-view-changer [value="month"]'), this, s.attributes, 'month-view-changer-month');
+    utils.addAttributes($('.monthview-header #month-calendar-view-changer [value="week"]'), this, s.attributes, 'month-view-changer-week');
+    utils.addAttributes($('.monthview-header #month-calendar-view-changer [value="day"]'), this, s.attributes, 'month-view-changer-day');
+    utils.addAttributes($('.monthview-header #month-calendar-view-changer'), this, s.attributes, 'month-view-changer');
+    utils.addAttributes($('.week-view-header #week-calendar-view-changer [value="month"]'), this, s.attributes, 'week-view-changer-month');
+    utils.addAttributes($('.week-view-header #week-calendar-view-changer [value="week"]'), this, s.attributes, 'week-view-changer-week');
+    utils.addAttributes($('.week-view-header #week-calendar-view-changer [value="day"]'), this, s.attributes, 'week-view-changer-day');
+    utils.addAttributes($('.week-view-header #week-calendar-view-changer'), this, s.attributes, 'week-view-changer');
 
     return this;
   },
@@ -293,7 +353,12 @@ CalendarToolbar.prototype = {
     });
 
     this.todayLink.off('click.calendar-toolbar-t').on('click.calendar-toolbar-t', (e) => {
-      this.element.trigger('change-date', { selectedDate: this.currentDate, isToday: true });
+      const args = { selectedDate: this.currentDate, isToday: true };
+      if (!e.target.classList.contains('today') && e.target.classList.contains('apply')) {
+        args.isToday = false;
+        args.isApply = true;
+      }
+      this.element.trigger('change-date', args);
       e.preventDefault();
     });
 

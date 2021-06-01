@@ -73,16 +73,16 @@ $('#date-field-normal').datepicker({
 
 Providing the data in this example will append to the following items:
 
-expect(await element(by.id('custom-id-btn-picklist-up')).getAttribute('id')).toEqual('custom-id-btn-picklist-up');
-    expect(await element(by.id('custom-id-btn-picklist-down')).getAttribute('id')).toEqual('custom-id-btn-picklist-down');
-    expect(await element(by.id('custom-id-btn-picklist-3')).getAttribute('id')).toEqual('custom-id-btn-picklist-3');
-    expect(await element(by.id('custom-id-btn-picklist-2018')).getAttribute('id')).toEqual('custom-id-btn-picklist-2018');
+expect(await element(by.id('custom-id-btn-picklist-year-up')).getAttribute('id')).toEqual('custom-id-btn-picklist-year-up');
+expect(await element(by.id('custom-id-btn-picklist-year-down')).getAttribute('id')).toEqual('custom-id-btn-picklist-year-down');
+expect(await element(by.id('custom-id-btn-picklist-3')).getAttribute('id')).toEqual('custom-id-btn-picklist-3');
+expect(await element(by.id('custom-id-btn-picklist-2018')).getAttribute('id')).toEqual('custom-id-btn-picklist-2018');
 
 - Month Year Picker Button - gets `btn-monthyear` appended
 - Cancel Button - gets `btn-cancel` appended
 - Select Button - gets `btn-select` appended
-- Down a set of years Button - gets `btn-picklist-down` appended
-- Up a set of years Button - gets `btn-picklist-up` appended
+- Down a set of years Button - gets `btn-picklist-year-down` appended
+- Up a set of years Button - gets `btn-picklist-year-up` appended
 - Each month in the month/year picker  - gets `btn-picklist-n` appended where n is the zero based month number (0-11)
 - Each year in the month/year picker  - gets `btn-picklist-n` appended where n is the four digit year
 
