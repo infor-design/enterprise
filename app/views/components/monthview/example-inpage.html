@@ -1,0 +1,150 @@
+<style>
+  .test-container {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    padding: 1em;
+  }
+  .test-container strong {
+    display: block;
+    line-height: 1.7em;
+  }
+</style>
+
+<div class="row">
+  <div class="six columns">
+    <div class="monthview" data-init="false">
+    </div>
+  </div>
+</div>
+
+<div id="test-content"></div>
+
+
+<script>
+  $('body').on('initialized', function () {
+
+    // Cache variables
+    var elem = $('.monthview');
+    var container = $('#test-content');
+    var initDate = { day: 7, month: 8, year: 2021 };
+    var maxContentItems = 3;
+
+    // Scheduled dates
+    var scheduledDates = [
+      '9/4/2021',
+      '9/10/2021',
+      '9/11/2021',
+      '9/15/2021',
+      '9/16/2021',
+      '9/17/2021',
+      '9/18/2021',
+      '9/21/2021',
+      '9/22/2021',
+      '9/23/2021',
+      '9/25/2021',
+    ];
+
+    // Not Scheduled dates
+    var notScheduledDates = [
+      '9/5/2021',
+      '9/12/2021',
+      '9/19/2021',
+      '9/26/2021',
+    ];
+
+    // Invoke monthview
+    elem.monthview({
+      day: initDate.day,
+      month: initDate.month,
+      year: initDate.year,
+      inPage: true,
+      inPageExpanded: false,
+      showMonthYearPicker: false,
+      showLegend: true,
+      legend: [
+        { name: 'Scheduled', color: 'azure03', dates: scheduledDates },
+        { name: 'Not Scheduled', color: 'slate03', dates: notScheduledDates }
+      ]
+    }).on('selected', function(e, args) {
+      handleSelected(args);
+    });
+
+    /*
+     * Below here some helper functions for use in this example
+     */
+
+    // Init test content first time on load
+    var dateOnLoad = new Date((initDate.month + 1) + '/' + initDate.day + '/' + initDate.year);
+    updateContent(dateOnLoad);
+
+    // handle selected date
+    function handleSelected(args) {
+      if (args) {
+        var dt = new Date((args.month + 1) + '/' + args.day + '/' + args.year);
+        var dtStr = getDateString(dt);
+        console.log(dtStr + ' has been selected!');
+
+        updateContent(dt);
+      }
+    }
+
+    // Update test content for given date
+    function updateContent(dt) {
+      var max = maxContentItems;
+      var outHtml = '';
+      for (var i = 0, len = max; i < max; i++) {
+        var thisDate = new Date(dt.getTime() + (i * 86400000));
+        var dtStr = getDateString(thisDate);
+        var dayStr = getDayString(thisDate);
+        outHtml += getCardHtml(dtStr, dayStr);
+      }
+      container.html(outHtml).find('.tag').tag();
+    }
+
+    // Get card html string for given date
+    function getCardHtml(dtStr, dayStr) {
+      return '' +
+        '<div class="row">' +
+          '<div class="six columns">' +
+            '<div class="card auto-height">' +
+              '<div class="card-content">' +
+                '<div class="test-container">' +
+                  '<div class="start">' +
+                    '<strong>' + dtStr + '</strong>8:40AM-4:00PM' +
+                  '</div>' +
+                  '<div class="end">' +
+                    // '<a href="#" class="tag info is-linkable">' + dayStr+ '</a>' +
+                  '</div>' +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+    }
+
+    // Get day string for given date
+    function getDayString(dt) {
+      return ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][dt.getDay()];
+    }
+
+    // Get date string for given date
+    function getDateString(dt) {
+      function nth(d) {
+        if (d > 3 && d < 21) {
+          return 'th';
+        };
+        switch (d % 10) {
+          case 1: return 'st';
+          case 2: return 'nd';
+          case 3: return 'rd';
+          default: return 'th';
+        }
+      }
+      var date = dt.getDate();
+      var month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][dt.getMonth()];
+      return date + nth(date) + ' ' + month + ' ' + dt.getFullYear();
+    }
+
+});
+</script>

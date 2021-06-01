@@ -150,7 +150,6 @@ a.is-personalizable svg.ripple-effect {
 }
 
 .accordion.panel .accordion-header.is-selected {
-  background-color: ${colors.lighter} !important;
   color: ${colors.contrast} !important;
 }
 
