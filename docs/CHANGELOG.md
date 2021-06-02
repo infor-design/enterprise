@@ -36,6 +36,8 @@
 - `[Spinbox]` Fixed a bug where spinbox and its border is not properly rendered on responsive view. ([#5146](https://github.com/infor-design/enterprise/issues/5146))
 - `[Tabs Module]` Fixed a bug where long tab labels overflowed behind the close icon. ([#5187](https://github.com/infor-design/enterprise/issues/5187))
 
+(33 Issues Solved This Release, Backlog Enterprise 134, Backlog Ng 34, 2835 1652 Functional Tests, 1652 e2e Tests)
+
 ## v4.51.1
 
 ### v4.51.1 Fixes
