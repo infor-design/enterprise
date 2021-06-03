@@ -927,7 +927,6 @@ Modal.prototype = {
           utils.addAttributes(btnItem, self, self.settings.attributes, 'cancel', true);
         }
       });
-      
       // Contextual Action Panel Case - Has a toolbar
       if (this.element.find('.toolbar .title').length) {
         this.element.find('.toolbar .title').attr('id', descById);
