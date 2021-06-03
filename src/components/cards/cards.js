@@ -41,8 +41,10 @@ Cards.prototype = {
   },
 
   setup() {
-    $('.card').addClass('test')
-    if (this.settings.expandableHeader) console.log("->", this)
+    $('.card').addClass('test');
+    console.log('working.....');
+    if (this.settings.expandableHeader) console.log("->", this);
+    return this;
   },
 
   /**
