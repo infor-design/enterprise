@@ -9,7 +9,6 @@
 ### v4.52.0 Markup Changes
 
 - `[Datagrid]` When fixing bugs in datagrid hover states we removed the use of `is-focused` on table `td` elements. ([#5091](https://github.com/infor-design/enterprise/issues/5091))
-- `[Datepicker]` Fixed a bug where the selection range was not being properly rendered in mobile. ([#5211](https://github.com/infor-design/enterprise/issues/5211))
 
 ### v4.52.0 Fixes
 
@@ -25,6 +24,7 @@
 - `[Datagrid]` Fixed a bug where unselecting all items in an active page affects other selected items on other pages. ([#4503](https://github.com/infor-design/enterprise/issues/4503))
 - `[Datagrid]` Fixed a bug where the tag text in the column is not shown properly when hovering it on Alternate Row Shading. ([#5210](https://github.com/infor-design/enterprise/issues/5210))
 - `[Datagrid]` Fixed a bug where the clear filter icons position were not properly aligned with the lookup. ([#5239](https://github.com/infor-design/enterprise/issues/5239))
+- `[Datepicker]` Fixed a bug where the selection range was not being properly rendered in mobile. ([#5211](https://github.com/infor-design/enterprise/issues/5211))
 - `[Dropdown]` Fixed a bug where automatic highlighting of a blank option after opening the list was not working ([#5095](https://github.com/infor-design/enterprise/issues/5095))
 - `[Dropdown/Multiselect]` Fixed a bug where the id attribute prefix were missing from the dropdown list when searching with typeahead settings. ([#5053](https://github.com/infor-design/enterprise/issues/5053))
 - `[Field Options]` Fixed misalignment of field options for the colorpicker, clearable input field, and clearable searchfield with its close icon. ([#5139](https://github.com/infor-design/enterprise/issues/5139))
