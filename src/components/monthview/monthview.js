@@ -5,7 +5,7 @@ import { Locale } from '../locale/locale';
 import { theme } from '../theme/theme';
 import { xssUtils } from '../../utils/xss';
 import { colorUtils } from '../../utils/color';
-import { CalendarToolbar } from '../calendar-toolbar/calendar-toolbar';
+import { CalendarToolbar } from '../calendar/calendar-toolbar';
 
 // jQuery Components
 import '../expandablearea/expandablearea.jquery';

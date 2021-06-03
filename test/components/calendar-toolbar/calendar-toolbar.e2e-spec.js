@@ -7,7 +7,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Calendar Toolbar index tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/calendar-toolbar/example-index?layout=nofrills');
+    await utils.setPage('/components/calendar/example-index?layout=nofrills');
   });
 
   it('Should render without error', async () => {
