@@ -12,7 +12,7 @@ const COMPONENT_NAME = 'expandablearea';
 * @class ExpandableArea
 * @param {string} element The component element.
 * @param {string} [settings] The component settings.
-* @param {string} [settings.trigger = null]  Id of some other button to use as a trigger
+* @param {string|object} [settings.trigger = null] Id of some other button to use as a trigger (string), or HTML/jQuery element object to use as a trigger.
 * @param {string} [settings.bottomBorder = false] Change the border to bottom vs top (for some cases)
 * @param {number} [settings.animationSpeed = 300] Change the animation speed in ms
 * @param {string} [settings.attributes=null] Add extra attributes like id's to the element. e.g. `attributes: { name: 'id', value: 'my-unique-id' }`
@@ -133,7 +133,13 @@ ExpandableArea.prototype = {
     this.expander.attr('role', 'button');
 
     if (this.expander.length === 0) {
-      this.expander = $(`#${this.settings.trigger}`);
+      if (typeof this.settings.trigger === 'string') {
+        this.expander = $(`#${this.settings.trigger}`);
+      } else if (this.settings.trigger instanceof jQuery) {
+        this.expander = this.settings.trigger;
+      } else {
+        this.expander = $(this.settings.trigger);
+      }
     }
 
     // Change the borer to the bottom vs top

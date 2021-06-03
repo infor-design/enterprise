@@ -3735,7 +3735,7 @@ describe('Datagrid paging indeterminate multiple select tests', () => {
     await utils.checkForErrors();
   });
 
-  it('Should be able to select and have it clear when paging', async () => {
+  xit('Should be able to select and have it clear when paging', async () => {
     await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(1) td:nth-child(1)')).click();
     await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(2) td:nth-child(1)')).click();
 

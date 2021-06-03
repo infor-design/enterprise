@@ -27,9 +27,12 @@
   }
 }
 
-.calendar-toolbar .toolbar-section .btn-monthyear-pane {
-  font-size: 2rem !important;
-  top: -1px;
+.calendar-toolbar .toolbar-section {
+  .btn-cal-month-year,
+  .btn-monthyear-pane {
+    font-size: 2rem !important;
+    top: -1px;
+  }
 }
 
 // Short fields - firefox
