@@ -33,7 +33,7 @@ describe('Calendar Toolbar index tests', () => {
 
 describe('Calendar Toolbar Datepicker tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/calendar-toolbar/test-datepicker?layout=nofrills');
+    await utils.setPage('/components/calendar/test-calendar-toolbar-datepicker?layout=nofrills');
   });
 
   it('Should render without error', async () => {
@@ -43,7 +43,7 @@ describe('Calendar Toolbar Datepicker tests', () => {
 
 describe('Calendar Toolbar visual tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/calendar-toolbar/test-visuals?theme=classic&layout=nofrills');
+    await utils.setPage('/components/calendar/test-calendar-toolbar-visuals?theme=classic&layout=nofrills');
   });
 
   it('Should render without error', async () => {
