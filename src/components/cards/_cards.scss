@@ -93,6 +93,28 @@
   }
 }
 
+.card-expandable-area.card.expandable-area {
+  .expandable-header {
+    display: inline-block;
+    height: auto;
+    vertical-align: middle;
+    width: 100%;
+
+    .btn-expander {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translate(0, -50%);
+
+      svg.icon {
+        &.vertical-more {
+          transform: rotate(90deg);
+        }
+      }
+    }
+  }
+}
+
 .small-widget {
   margin-bottom: 24px;
   min-height: 260px;

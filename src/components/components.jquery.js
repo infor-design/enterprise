@@ -16,6 +16,7 @@ import './applicationmenu/applicationmenu.jquery';
 import './blockgrid/blockgrid.jquery';
 import './breadcrumb/breadcrumb.jquery';
 import './busyindicator/busyindicator.jquery';
+import './cards/cards.jquery';
 import './charts/charts.jquery';
 import './calendar/calendar.jquery';
 import './circlepager/circlepager.jquery';
