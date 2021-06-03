@@ -9,6 +9,7 @@
 ### v4.52.0 Markup Changes
 
 - `[Datagrid]` When fixing bugs in datagrid hover states we removed the use of `is-focused` on table `td` elements. ([#5091](https://github.com/infor-design/enterprise/issues/5091))
+- `[Datepicker]` Fixed a bug where the selection range was not being properly rendered in mobile. ([#5211](https://github.com/infor-design/enterprise/issues/5211))
 
 ### v4.52.0 Fixes
 
