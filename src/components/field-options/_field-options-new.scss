@@ -119,7 +119,7 @@
     }
 
     ~ .trigger-close.is-visible ~ .btn-actions {
-      left: 17px !important;
+      left: 16px !important;
     }
   }
 }
@@ -172,6 +172,10 @@
       width: 38px;
     }
 
+    .field-options[data-clearable='true'] ~ .btn-actions:not(.is-checkbox) {
+      top: 0;
+    }
+
     .dropdown,
     .multiselect {
       ~ .btn-actions:not(.is-checkbox) {
@@ -194,6 +198,7 @@
 
     .colorpicker-container ~ .btn-actions {
       left: -12px !important;
+      top: -10px;
     }
   }
 
@@ -275,10 +280,6 @@
         top: 5px !important;
       }
 
-      .field-options.fileupload ~ .btn-actions {
-        left: -1px !important;
-      }
-
       .field-options.lookup ~ .btn-actions {
         left: -1px;
       }
@@ -326,7 +327,7 @@
     }
   }
 
-  input[type='text']:not(.spinbox):not(.searchfield) {
+  input[type='text']:not(.spinbox):not(.searchfield):not(.fileupload) {
     ~ .btn-actions {
       left: -1px !important;
       top: 1px;
@@ -397,7 +398,7 @@
     }
 
     ~ .trigger-close.is-visible ~ .btn-actions {
-      left: 25px !important;
+      left: 27px !important;
     }
   }
 }
@@ -518,6 +519,9 @@
     }
 
     .field-options.fileupload {
+      ~ .trigger-close.is-visible ~ .btn-actions {
+        left: 27px !important;
+      }
       ~ .btn-actions {
         left: -1px !important;
       }
