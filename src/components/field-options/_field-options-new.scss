@@ -172,6 +172,10 @@
       width: 38px;
     }
 
+    .field-options[data-clearable='true'] ~ .btn-actions:not(.is-checkbox) {
+      top: 0;
+    }
+
     .dropdown,
     .multiselect {
       ~ .btn-actions:not(.is-checkbox) {
@@ -194,6 +198,7 @@
 
     .colorpicker-container ~ .btn-actions {
       left: -12px !important;
+      top: -10px;
     }
   }
 
