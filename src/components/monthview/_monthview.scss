@@ -265,9 +265,9 @@
         and (max-device-width: $breakpoint-big-phone + 88)
         and (-webkit-min-device-pixel-ratio: 2)
         and (orientation: portrait) {
-        height: 32px;
-        line-height: 32px;
-        width: 32px;
+        height: 36px;
+        line-height: 36px;
+        width: 36px;
       }
     }
 
@@ -399,6 +399,7 @@
           position: absolute;
           width: 43px;
           z-index: -1;
+          margin-left: -1px;
         }
       }
 
