@@ -1,6 +1,6 @@
 # What's New with Enterprise
 
-## v4.6 Fixes
+## v4.53.0 Features
 
 - `[Cards]` Added card variations (Status, Hyperlink and Photo Card) with improve hitboxes for tapping. ([#5250](https://github.com/infor-design/enterprise/issues/5250))
 
