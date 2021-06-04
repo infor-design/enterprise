@@ -1,14 +1,14 @@
 
 <div class="row">
-    <h2 class="fieldset-title">Status</h2>
+    <h2 class="fieldset-title">Status (Item)</h2>
     <div class="one-third column">
         <div class="card card-variant">
             <div class="card-content">
-                <div class="card-content-status">
+                <div class="card-content-status sucess">
                     <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
                         <use href="#icon-user-status-busy"></use>
                     </svg>
-                    Overdue Item
+                    Action Item
                 </div>
                 <div class="card-content-header">Submit 360 Review</div>
                 <div class="card-content-sub">Send review by May, 2nd</div>
@@ -29,14 +29,94 @@
             </div>
         </div>
     </div>
-
+    <div class="one-third column">
+        <div class="card card-variant">
+            <div class="card-content">
+                <div class="card-content-status error">
+                    <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                        <use href="#icon-user-status-busy"></use>
+                    </svg>
+                    Action Item
+                </div>
+                <div class="card-content-header">Submit 360 Review</div>
+                <div class="card-content-sub">Send review by May, 2nd</div>
+            </div>
+            <div class="card-buttonset">
+                <div class="card-content-action">
+                    <button class="btn-actions" type="button" id="btn-1" tabindex="-1" data-popupmenu="popupmenu">
+                        <span class="audible">Actions</span>
+                        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                            <use href="#icon-drag"></use>
+                        </svg>
+                    </button>
+                    <ul class="popupmenu actions top" id="popupmenu" role="menu">
+                        <li role="presentation"><a href="#" role="menuitem" id="sales"><span>Action 1</span></a></li> 
+                        <li role="presentation"><a href="#" tabindex="-1" role="menuitem" id="filter">Action 2</a></li>
+                     </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="one-third column">
+        <div class="card card-variant">
+            <div class="card-content">
+                <div class="card-content-status alert">
+                    <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                        <use href="#icon-user-status-busy"></use>
+                    </svg>
+                    Action Item
+                </div>
+                <div class="card-content-header">Submit 360 Review</div>
+                <div class="card-content-sub">Send review by May, 2nd</div>
+            </div>
+            <div class="card-buttonset">
+                <div class="card-content-action">
+                    <button class="btn-actions" type="button" id="btn-1" tabindex="-1" data-popupmenu="popupmenu">
+                        <span class="audible">Actions</span>
+                        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                            <use href="#icon-drag"></use>
+                        </svg>
+                    </button>
+                    <ul class="popupmenu actions top" id="popupmenu" role="menu">
+                        <li role="presentation"><a href="#" role="menuitem" id="sales"><span>Action 1</span></a></li> 
+                        <li role="presentation"><a href="#" tabindex="-1" role="menuitem" id="filter">Action 2</a></li>
+                     </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <h2 class="fieldset-title">Status (Account)</h2>
     <div class="one-third column">
         <div class="card card-variant">
             <div class="card-image">
                 <img class="image-round" src="{{basepath}}/images/10.jpg" alt="Photo of John" tabindex="0"/>
             </div>
             <div class="card-content">
-                <div class="card-content-header">John Smith <span class="header-status">(Busy)</span></div>
+                <div class="card-content-header">John Smith <span class="header-status available">(Available)</span></div>
+                <div class="card-content-sub">Designer</a></div>
+            </div>
+        </div>
+    </div>
+    <div class="one-third column">
+        <div class="card card-variant">
+            <div class="card-image">
+                <img class="image-round" src="{{basepath}}/images/10.jpg" alt="Photo of John" tabindex="0"/>
+            </div>
+            <div class="card-content">
+                <div class="card-content-header">John Smith <span class="header-status busy">(Busy)</span></div>
+                <div class="card-content-sub">Designer</a></div>
+            </div>
+        </div>
+    </div>
+    <div class="one-third column">
+        <div class="card card-variant">
+            <div class="card-image">
+                <img class="image-round" src="{{basepath}}/images/10.jpg" alt="Photo of John" tabindex="0"/>
+            </div>
+            <div class="card-content">
+                <div class="card-content-header">John Smith <span class="header-status away">(Away)</span></div>
                 <div class="card-content-sub">Designer</a></div>
             </div>
         </div>
