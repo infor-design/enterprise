@@ -569,7 +569,13 @@ Modal.prototype = {
           btn.element[0].classList.add('no-validation');
         }
 
-        utils.addAttributes(btn.element, this, settingsJSON.attributes, '', true);
+        if (btn.element.hasClass('btn-modal-primary') || btn.element.text() === 'Apply') {
+          utils.addAttributes(btn.element, this, self.settings.attributes, 'save', true);
+        } else if (btn.element.hasClass('btn-cancel') || btn.element.text() === 'Cancel') {
+          utils.addAttributes(btn.element, this, self.settings.attributes, 'cancel', true);
+        } else {
+          utils.addAttributes(btn.element, this, self.settings.attributes, btn.element?.prop('id'), true);
+        }
       }
 
       // In standard Modal mode, size the buttons to fit after rendering.
@@ -916,17 +922,6 @@ Modal.prototype = {
       this.element.attr('aria-labelledby', id);
       utils.addAttributes(this.element, this, this.settings.attributes, '', true);
 
-      const modalButtonSet = this.element.find('.modal-buttonset');
-      const modalButtonList = modalButtonSet.find('.btn-modal');
-      const self = this;
-      modalButtonList.each((index, item) => {
-        const btnItem = $(item);
-        if (btnItem.hasClass('btn-modal-primary')) {
-          utils.addAttributes(btnItem, self, self.settings.attributes, 'save', true);
-        } else {
-          utils.addAttributes(btnItem, self, self.settings.attributes, 'cancel', true);
-        }
-      });
       // Contextual Action Panel Case - Has a toolbar
       if (this.element.find('.toolbar .title').length) {
         this.element.find('.toolbar .title').attr('id', descById);
