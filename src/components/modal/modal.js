@@ -569,9 +569,11 @@ Modal.prototype = {
           btn.element[0].classList.add('no-validation');
         }
 
-        if (btn.element.hasClass('btn-modal-primary') || btn.element.text() === 'Apply') {
+        if (settingsJSON.attributes) {
+          utils.addAttributes(btn.element, this, settingsJSON.attributes, '', this);
+        } else if (btn.element.hasClass('btn-modal-primary')) {
           utils.addAttributes(btn.element, this, self.settings.attributes, 'save', true);
-        } else if (btn.element.hasClass('btn-cancel') || btn.element.text() === 'Cancel') {
+        } else if (btn.element.hasClass('btn-cancel') || btn.element.text() === Locale.translate('Cancel')) {
           utils.addAttributes(btn.element, this, self.settings.attributes, 'cancel', true);
         } else {
           utils.addAttributes(btn.element, this, self.settings.attributes, btn.element?.prop('id'), true);
