@@ -413,7 +413,7 @@ describe('Tree toggle icon and children count tests', () => {
     await utils.checkForErrors();
   });
 
-  it('Should toggle by clicked on icon only and show children count', async () => {
+  xit('Should toggle by clicked on icon only and show children count', async () => {
     const link = await element(by.id('node2'));
     const iconTreeUse = await link.element(by.css('.icon-tree use'));
     const iconExpandTarget = await link.element(by.css('.icon-expand-target'));

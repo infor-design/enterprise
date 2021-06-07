@@ -138,7 +138,7 @@
     }
 
     ~ .trigger-close.is-visible ~ .btn-actions {
-      left: 19px;
+      left: 18px;
     }
   }
 
@@ -348,7 +348,7 @@
     }
   }
 
-  input[type='text']:not(.spinbox):not(.searchfield) {
+  input[type='text']:not(.spinbox):not(.searchfield):not(.fileupload) {
     padding: 0 22px 0 5px;
 
     ~ .btn-actions {
@@ -390,7 +390,7 @@
     }
 
     ~ .trigger-close.is-visible ~ .btn-actions {
-      left: 26px !important;
+      left: 27px !important;
     }
   }
 
@@ -648,7 +648,7 @@
 
     .colorpicker-container {
       ~ .btn-actions {
-        top: -12px;
+        top: -9px;
       }
     }
 
@@ -772,7 +772,7 @@
   .field-short.is-fieldoptions,
   .form-layout-compact .field.is-fieldoptions {
     .field-options ~ .btn-actions:not(.is-checkbox) {
-      top: 2px;
+      top: 1px;
     }
 
     button.btn-icon.close svg.close.icon {
