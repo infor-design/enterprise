@@ -1,5 +1,10 @@
 # What's New with Enterprise
 
+## v4.53.0 Fixes
+
+- `[Datepicker]` Fixed a bug where the setting attributes were missing in datepicker input and datepicker trigger on NG wrapper. ([#1044](https://github.com/infor-design/enterprise-ng/issues/1044))
+- `[Datepicker]` Fixed a bug where the selection range was not being properly rendered in mobile. ([#5211](https://github.com/infor-design/enterprise/issues/5211))
+
 ## v4.52.0
 
 ### v4.52.0 Markup Changes
@@ -31,6 +36,8 @@
 - `[Monthview]` Added support for mobile view. ([#5075](https://github.com/infor-design/enterprise/issues/5075))
 - `[Spinbox]` Fixed a bug where spinbox and its border is not properly rendered on responsive view. ([#5146](https://github.com/infor-design/enterprise/issues/5146))
 - `[Tabs Module]` Fixed a bug where long tab labels overflowed behind the close icon. ([#5187](https://github.com/infor-design/enterprise/issues/5187))
+
+(33 Issues Solved This Release, Backlog Enterprise 134, Backlog Ng 34, 2835 1652 Functional Tests, 1652 e2e Tests)
 
 ## v4.51.1
 
