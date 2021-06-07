@@ -73,7 +73,7 @@
     transform: translateY(-50%);
 
     @media only screen and (max-width: $breakpoint-big-phone + 60) {
-      margin-right: 35px;
+      margin: -2px 35px 0px 0px;
     }
 
     & > svg.close.icon {
