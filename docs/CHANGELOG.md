@@ -4,7 +4,7 @@
 
 - `[Datepicker]` Fixed a bug where the setting attributes were missing in datepicker input and datepicker trigger on NG wrapper. ([#1044](https://github.com/infor-design/enterprise-ng/issues/1044))
 - `[Datepicker]` Fixed a bug where the selection range was not being properly rendered in mobile. ([#5211](https://github.com/infor-design/enterprise/issues/5211))
-- `[Searchfield]` Fixed a bug where the close button is not rendered properly on mobile view. ([#5211](https://github.com/infor-design/enterprise/issues/5211))
+- `[Searchfield]` Fixed a bug where the close button is not rendered properly on mobile view. ([#5182](https://github.com/infor-design/enterprise/issues/5182))
 
 ## v4.52.0
 
