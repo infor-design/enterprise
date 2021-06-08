@@ -3,7 +3,7 @@ import { DOM } from '../../utils/dom';
 import { Locale } from '../locale/locale';
 import { stringUtils } from '../../utils/string';
 import { dateUtils } from '../../utils/date';
-import { CalendarToolbar } from '../calendar-toolbar/calendar-toolbar';
+import { CalendarToolbar } from '../calendar/calendar-toolbar';
 import { calendarShared } from '../calendar/calendar-shared';
 
 // Settings and Options
