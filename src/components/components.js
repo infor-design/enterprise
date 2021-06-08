@@ -64,7 +64,7 @@ export { Wizard } from './wizard/wizard';
 
 // Complex ====/
 export { Calendar } from './calendar/calendar';
-export { CalendarToolbar } from './calendar-toolbar/calendar-toolbar';
+export { CalendarToolbar } from './calendar/calendar-toolbar';
 export { CompositeForm } from './compositeform/compositeform';
 export { Datagrid } from './datagrid/datagrid';
 export { FormCompact } from './form-compact/form-compact';
