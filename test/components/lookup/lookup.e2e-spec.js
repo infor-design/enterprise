@@ -102,7 +102,7 @@ describe('Lookup example tests', () => {
 
     expect(await element(by.css('.modal.lookup-modal')).getAttribute('data-automation-id')).toEqual('my-lookup-modal');
     expect(await element(by.id('modal-button-1')).getAttribute('data-automation-id')).toEqual('my-lookup-modal-cancel');
-    expect(await element(by.id('modal-button-2')).getAttribute('data-automation-id')).toEqual('my-lookup-modal-save');
+    expect(await element(by.id('modal-button-2')).getAttribute('data-automation-id')).toEqual('my-lookup-modal-primary');
   });
 
   if (utils.isChrome() && utils.isCI()) {
