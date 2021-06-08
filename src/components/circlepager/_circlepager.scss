@@ -3,8 +3,10 @@
 
 @mixin controls-bullets-nav {
   .circlepager-controls {
+    align-items: center;
     bottom: 2px;
-    display: block;
+    display: flex;
+    justify-content: center;
     left: 50%;
     margin-left: -50%;
     position: absolute;
@@ -15,7 +17,6 @@
     .btn-controls-next {
       border-radius: 0;
       height: 42px;
-      top: -2px;
       width: 42px;
     }
 
@@ -102,6 +103,32 @@
         &:focus {
           background-color: $circlepager-disable-focus-bg-color;
           border-color: $circlepager-disable-focus-border-color;
+        }
+      }
+
+      &.is-ripple {
+        overflow: hidden;
+        position: relative;
+
+        &::after {
+          background: var(--ripple-background, #{$tertiary-btn-ripple-color});
+          border-radius: 50%;
+          content: '';
+          display: block;
+          pointer-events: none;
+          position: absolute;
+
+          //  position and size
+          height: calc(var(--d) * 1px); // stylelint-disable-line
+          left: calc(var(--x) * 1px);
+          top: calc(var(--y) * 1px);
+          width: calc(var(--d) * 1px);
+
+          //  animated properties
+          opacity: calc(var(--o, 1) * 0.3); // stylelint-disable-line
+          transform: translate(-50%, -50%) scale(var(--s, 1));
+          transform-origin: center;
+          transition: calc(var(--t, 0) * 600ms) linear;
         }
       }
     }
