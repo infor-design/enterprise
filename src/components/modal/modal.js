@@ -573,9 +573,8 @@ Modal.prototype = {
           // If Buttons have its own attribute settings
           utils.addAttributes(btn.element, this, settingsJSON.attributes, '', this);
         } else if (btn.element.is('[class*=primary]')) {
-          console.log('hotdog');
           // Buttons tag as btn-primary will be tag as save
-          utils.addAttributes(btn.element, this, self.settings.attributes, 'save', true);
+          utils.addAttributes(btn.element, this, self.settings.attributes, 'primary', true);
         } else if (btn.element.is('[class*=cancel]') || btn.element.text() === Locale.translate('Cancel')) {
           // Buttons tag as btn-cancel will be tag as cancel, although not all cancel buttons has a class of btn-cancel
           utils.addAttributes(btn.element, this, self.settings.attributes, 'cancel', true);
