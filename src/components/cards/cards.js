@@ -36,13 +36,10 @@ Cards.prototype = {
   init() {
     return this
       .setup()
-      .build()
-      .handleEvents();
+      .build();
   },
 
   setup() {
-    $('.card').addClass('test');
-    console.log('working.....');
     if (this.settings.expandableHeader) console.log("->", this);
     return this;
   },
@@ -54,21 +51,6 @@ Cards.prototype = {
    */
   build() {
     console.log(this)
-    return this;
-  },
-
-  /**
-   * Sets up event handlers for this component and its sub-elements.
-   * @returns {object} The Component prototype, useful for chaining.
-   * @private
-   */
-  handleEvents() {
-    const self = this;
-
-    this.element.on(`updated.${COMPONENT_NAME}`, () => {
-      self.updated();
-    });
-
     return this;
   },
 
