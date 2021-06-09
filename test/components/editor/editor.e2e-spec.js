@@ -145,8 +145,8 @@ describe('Editor example-index tests', () => {
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.editor-modal-url.is-visible'))), config.waitsFor);
     await browser.driver.sleep(config.sleep);
 
-    expect(await element(by.id('em-url-editor-1-id')).getAttribute('id')).toEqual('em-url-editor-1-id');
-    expect(await element(by.id('em-url-editor-1-id')).getAttribute('data-automation-id')).toEqual('automation-id-example1-editor-modal-input0');
+    expect(await element(by.id('example1-editor-modal-input0')).getAttribute('id')).toEqual('example1-editor-modal-input0');
+    expect(await element(by.id('example1-editor-modal-input0')).getAttribute('data-automation-id')).toEqual('automation-id-example1-editor-modal-input0');
   });
 });
 
