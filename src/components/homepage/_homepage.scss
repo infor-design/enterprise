@@ -397,25 +397,35 @@
     }
 
     .circlepager.is-active .controls .control-button {
-      border-color: $header-button-color;
-
-      &:hover {
-        border-color: $header-text-color;
+      &::before {
+        border-color: $header-button-color;
       }
 
-      &.is-active {
-        background-color: $header-text-color;
-        border-color: $header-text-color;
-
-        &:hover {
-          background-color: $header-text-color;
+      &:hover {
+        &::before {
           border-color: $header-text-color;
         }
       }
 
+      &.is-active {
+        &::before {
+          background-color: $header-text-color;
+          border-color: $header-text-color;
+        }
+
+        &:hover {
+          &::before {
+            background-color: $header-text-color;
+            border-color: $header-text-color;
+          }
+        }
+      }
+
       &:focus:not(.hide-focus) {
-        box-shadow: $header-focus-box-shadow;
-        outline-color: $header-button-color;
+        &::before {
+          box-shadow: $header-focus-box-shadow;
+          outline-color: $header-button-color;
+        }
       }
     }
   }
