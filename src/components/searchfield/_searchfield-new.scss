@@ -50,6 +50,10 @@
       height: 34px;
       padding-bottom: 6px;
       padding-top: 6px;
+
+      @media only screen and (max-width: $breakpoint-phone-to-tablet) {
+        height: 38px;
+      }
     }
 
     > .icon,
@@ -66,15 +70,18 @@
 
   .btn-icon.close {
     align-items: center;
-    display: flex;
     justify-content: center;
     overflow: visible;
     top: 50%;
     transform: translateY(-50%);
 
+    @media only screen and (max-width: $breakpoint-phone-to-tablet) {
+      margin-right: 35px;
+    }
+
     & > svg.close.icon {
       position: relative;
-      top: 1px;
+      top: -2px;
     }
   }
 }
