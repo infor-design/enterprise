@@ -1,24 +1,10 @@
 <div class="row">
   <div class="six columns">
-    <h2>Expanded Cards</h2>
+    <h2>New Expandable Card</h2>
     <br />
   </div>
 </div>
 
-<!-- <div class="row">
-    <div class="six columns">
-  
-      <div id="expandable-card-example" class="card expandable-area card-expandable-area">
-        <div class="card-header expandable-header">
-          <h2>Tuesday, 21st September</h2>
-        </div>
-        <div class="expandable-pane">
-          <div id="product-list" data-init="false" class="listview tableview"></div>
-        </div>
-      </div>
-  
-    </div>
-  </div> -->
 <div class="row">
   <div class="six columns">
     <div id="expandable-card-example" class="card">
@@ -36,13 +22,94 @@
           <li><a href="#" id="action-2">Action Two</a></li>
         </ul>
       </div>
+      <div class="card-pane">
+        <div id="data-list" class="listview tableview">
+          <ul class="card-content-list">
+            <li class="card-list-item alternate" tabindex="-1">
+              <div class="card-list-title-container">
+                <p class="micro-text">Coworker</p>
+              </div>
+              <div class="card-list-title-text-container">
+                <!-- <p class="micro-text"></p> -->
+                <button type="button" type="button">
+                  <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                    <use href="#icon-caret-right"></use>
+                  </svg>
+              </div>
+            </li>
+            <li class="card-list-item alternate">
+              <div class="card-list-title-container">
+                <p class="micro-text">Location</p>
+              </div>
+              <div class="card-list-title-text-container">
+                <p class="micro-text">NE Campus</p>
+              </div>
+            </li>
+            <li class="card-list-item alternate">
+              <div class="card-list-title-container">
+                <p class="micro-text">Job</p>
+              </div>
+              <div class="card-list-title-text-container">
+                <p class="micro-text">Cashier II</p>
+              </div>
+            </li>
+            <li class="card-list-item alternate">
+              <div class="card-list-title-container">
+                <p class="micro-text">Team</p>
+              </div>
+              <div class="card-list-title-text-container">
+                <p class="micro-text">NE_FLR</p>
+              </div>
+            </li>
+            <li class="card-list-item alternate">
+              <div class="card-list-title-container">
+                <p class="micro-text">Department</p>
+              </div>
+              <div class="card-list-title-text-container">
+                <p class="micro-text">DEPT A</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
 <script>
-$('#expandable-card-example').cards({
-  expandableHeader: true,
-  verticalButtonAction: true
-});
+  $('#expandable-card-example').cards({
+    expandableHeader: true,
+    verticalButtonAction: true
+  });
+
 </script>
+
+<script>
+  $('#data-list').listview({
+    selectable: false,
+  });
+
+</script>
+
+<style>
+  .card-list-title-container {
+    width: 50%;
+  }
+
+  .card-list-title-text-container {
+    text-align: right;
+    width: 50%;
+  }
+
+  .card-list-title-text-container button svg {
+    color: #666666;
+    height: 18px;
+    vertical-align: middle;
+    width: 18px;
+  }
+
+  .card-list-title-text-container p {
+    color: #606066;
+  }
+
+</style>

@@ -45,6 +45,7 @@ Cards.prototype = {
     if (!this.element) return;
 
     this.cardHeader = this.element.children('.card-header');
+    this.cardContentPane = this.element.children('.card-pane');
     this.buttonAction = this.cardHeader.children('.btn-actions');
     return this;
   },

@@ -121,6 +121,17 @@
       transform: translateY(-50%);
     }
   }
+
+  .card-pane {
+    .listview {
+      margin-bottom: 24px;
+
+      li {
+        margin: 0 20px;
+        padding: 16px 0;
+      }
+    }
+  }
 }
 
 .card-expandable-area.card.expandable-area {
