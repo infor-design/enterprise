@@ -494,6 +494,15 @@ span.required::after {
   opacity: 1;
 }
 
+// Text Selection
+::selection {
+  background: $ids-color-palette-azure-90;
+}
+
+::-moz-selection {
+  background: $ids-color-palette-azure-90;
+}
+
 // Mask component Adjustment Classes
 .is-number-mask {
   text-align: right;
