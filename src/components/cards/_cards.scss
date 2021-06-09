@@ -36,6 +36,115 @@
   position: relative;
   width: 100%;
 
+  &.card-variant {
+    @include auto-height;
+    align-items: center;
+    display: flex;
+    flex-flow: nowrap;
+    justify-content: space-between;
+
+    .card-image {
+      padding: 15px 0px 15px 15px;
+      flex: 0 0 auto;
+    }
+
+    .card-content {
+      padding: 15px;
+      
+      div {
+        padding: 3px;
+        
+        &.card-content-status {
+          margin-left: -4px;
+          color: $card-content-status-success-color;
+          
+          .icon {
+            margin-top: -2px;
+            vertical-align: middle;
+            height: 8px;
+            color: $card-content-status-success-color;
+          }
+
+          &.success {
+            color: $card-content-status-success-color;
+
+            .icon {
+              color: $card-content-status-success-color;
+            }
+          }
+
+          &.alert {
+            color: $card-content-status-alert-color;
+            
+            .icon {
+              color: $card-content-status-alert-color;
+            }
+          }
+
+          &.error {
+            color: $card-content-status-error-color;
+            
+            .icon {
+              color: $card-content-status-error-color;
+            }
+          }
+        }
+
+        &.card-content-header {
+          font-weight: bold;
+
+          .header-status {
+            color: $card-header-status-available-color;
+
+            &.available {
+              color: $card-header-status-available-color;
+            }
+
+            &.busy {
+              color: $card-header-status-busy-color;
+            }
+
+            &.away {
+              color: $card-header-status-away-color;
+            }
+          }
+        }
+
+        &.card-content-sub {
+          color: $card-content-sub-color;
+
+          .hyperlink {
+            padding: 7px 7px 7px 3px;
+          }
+        }
+      }
+    }
+
+    .card-buttonset {
+      padding: 15px;
+
+      .card-content-action {
+        button {
+          transform: rotate(90deg);
+        }
+
+        .btn-actions {
+          padding: 15px;
+          border-radius: unset;
+          width: unset;
+
+          &:hover {
+            color: $card-content-button-color;
+        
+            .icon {
+              color: $card-content-button-color;
+            }
+          }
+        }
+      }
+    }
+  }
+
   // Empty State Containers can have variable height
   &.is-empty {
     min-height: 0;
