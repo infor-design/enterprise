@@ -6,10 +6,12 @@
 
 ## v4.53.0 Fixes
 
+- `[Circle Pager]` Fixed size interactions and changes for mobile view port. ([#5251](https://github.com/infor-design/enterprise/issues/5251))
 - `[Datepicker]` Fixed a bug where the setting attributes were missing in datepicker input and datepicker trigger on NG wrapper. ([#1044](https://github.com/infor-design/enterprise-ng/issues/1044))
 - `[Datepicker]` Fixed a bug where the selection range was not being properly rendered in mobile. ([#5211](https://github.com/infor-design/enterprise/issues/5211))
 - `[Lookup]` Fixed a bug where lookup attributes are not added in the cancel and apply/save button. ([#5202](https://github.com/infor-design/enterprise/issues/5202))
 - `[Spinbox]` Fixed a bug where spinbox and its border is not properly rendered on responsive view. ([#5146](https://github.com/infor-design/enterprise/issues/5146))
+- `[Searchfield]` Fixed a bug where the close button is not rendered properly on mobile view. ([#5182](https://github.com/infor-design/enterprise/issues/5182))
 - `[Searchbar]` Fixed a bug where searchbar overlapped the "Websites" header when browser is minimized or viewed in mobile. ([#5248](https://github.com/infor-design/enterprise/issues/5248))
 
 ## v4.52.0

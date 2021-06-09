@@ -1,0 +1,102 @@
+<div class="row">
+  <div class="six columns">
+    <div class="card">
+      <div class="card-header">
+          <h2 class="widget-title">Circle Pager Example</h2>
+          <button type="button" class="btn-actions" type="button" id="btn-1">
+            <span class="audible">Actions</span>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-more"></use>
+            </svg>
+          </button>
+          <ul class="popupmenu actions top">
+            <li><a href="#" id="action-1">Action One</a></li>
+            <li><a href="#" id="action-2">Action Two</a></li>
+          </ul>
+      </div>
+      <div class="card-content">
+        <div id="example1" class="circlepager" data-init="false">
+          <div class="slides"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+$('body').on('initialized', function() {
+  var example1 = $('#example1');
+  var slidesContainer = example1.find('.slides');
+  var slideTemplate = '' +
+    '<div class="slide">' +
+      '<div class="slide-content">' +
+        '<div class="slide-header">' +
+          '<strong>{header}</strong><br/>' +
+          'Lorem ipsum dolor, it sit amet elit.' +
+        '</div>' +
+        '<div id="{id}" class="listview" data-init="false"></div>' +
+      '</div>' +
+    '</div>';
+
+  // Get some data
+  var url = '{{basepath}}api/products-big';
+
+  $.getJSON(url, function (res) {
+    var maxSlides = 8;
+    var maxItemsInEachList = 5;
+    var idTemplate = 'listview-circlepager-{n}';
+    var circlepagerListviewTemplate = $('#circlepager-listview-tmpl').html();
+
+    // Set data for each slide list
+    var testData = splitInToChunks(res, maxItemsInEachList);
+
+    // Create/append html for each slide and invoke listview
+    for (var i = 0, len = testData.length; ((i < len) && (i < maxSlides)); i++) {
+      var header = (testData[i][testData[i].length - 1]).productName;
+      var listviewId = idTemplate.replace('{n}', i);
+      var outHtml = slideTemplate
+        .replace('{id}', listviewId)
+        .replace('{header}', header);
+
+      slidesContainer.append(outHtml);
+      $('#' + listviewId).listview({ dataset: testData[i], template: circlepagerListviewTemplate });
+    }
+
+    // Invoke circlepager
+    example1.circlepager({
+      showArrows: true,
+      footerContainment: true,
+      pageSelectorInputText: 'Shift {0} of {1}'
+    });
+  });
+
+});
+
+// Helper function ============================
+  // Split in to chunks the given array
+  function splitInToChunks(arr, chunkSize) {
+    var r = [];
+    if (chunkSize > 0) {
+      for (var i = 0, len = arr.length; i < len; i += chunkSize) {
+        r.push(arr.slice(i, (i + chunkSize)));
+      }
+    }
+    return r;
+  }
+</script>
+
+{{={{{ }}}=}}
+<script id="circlepager-listview-tmpl" type="text/html">
+  <ul>
+    {{#dataset}}
+      <li><p class="listview-heading">{{productName}}</p></li>
+    {{/dataset}}
+  </ul>
+</script>
+
+<style>
+  #example1 .slide-header {
+    padding: 5px 20px 8px;
+  }
+</style>
+

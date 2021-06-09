@@ -46,6 +46,10 @@ const FOCUSABLE_SELECTOR = [
 * @param {Function} [settings.source] Call back function for pager data source
 * @param {number} [settings.pagesize = 15]  Can be calculated or a specific number
 * @param {array} [settings.pagesizes = [15, 25, 50, 75]] Array of numbers of the page size selector
+* @param {boolean} [settings.footerContainment = true] If false will not append to card or widget footer
+* @param {string} [settings.footerContainmentClass = null] Custom css class to use style
+* @param {string} [settings.pageSelectorInputText = null] Custom text for selector input
+* @param {boolean} [settings.showPageSelectorInput = false] If true will show selector input for standalone type
 * @param {boolean} [settings.showPageSizeSelector = true] If false will not show page size selector
 * @param {boolean} [settings.smallPageSizeSelector = false] If true, shows a condensed view of the page size selector
 * @param {string} [settings.pageSizeSelectorText = 'RecordsPerPage'] A string to the key of the translation text for the page size selector.
@@ -80,6 +84,10 @@ const PAGER_DEFAULTS = {
   source: null,
   pagesize: 15,
   pagesizes: [15, 25, 50, 75],
+  footerContainment: true,
+  footerContainmentClass: null,
+  pageSelectorInputText: null,
+  showPageSelectorInput: false,
   showPageSizeSelector: true,
   smallPageSizeSelector: false,
   pageSizeSelectorText: 'RecordsPerPage',
@@ -361,7 +369,7 @@ Pager.prototype = {
 
     // Inside of Listviews, place the pager bar inside of the card/widget footer
     const widgetContainer = this.element.closest('.card, .widget');
-    if (widgetContainer.length) {
+    if (widgetContainer.length && this.settings.footerContainment) {
       const self = this;
       const widgetTypes = ['widget', 'card'];
 
@@ -374,6 +382,10 @@ Pager.prototype = {
         let widgetFooter = widgetContent.next(`.${type}-footer`);
         if (!widgetFooter.length) {
           widgetFooter = $(`<div class="${type}-footer"></div>`).insertAfter(widgetContent);
+        }
+
+        if (this.settings.footerContainmentClass) {
+          widgetFooter.addClass(this.settings.footerContainmentClass.toString());
         }
 
         self.pagerBar.appendTo(widgetFooter);
@@ -919,7 +931,7 @@ Pager.prototype = {
 
     // Draw all relevant page numbers, if applicable
     // Page Number Buttons are only rendered if there is visible space available to fit them.
-    if (!this.isTable && hasDataset) {
+    if (!this.isTable && hasDataset && !this.settings.showPageSelectorInput) {
       let numberButtonHTML = '';
       buttonsToRender.forEach((i) => {
         if (i === (activePage || 1)) {
@@ -960,7 +972,7 @@ Pager.prototype = {
    * @returns {void}
    */
   renderPageSelectorInput() {
-    if (!this.isTable || this.settings.indeterminate) {
+    if ((!this.isTable || this.settings.indeterminate) && !this.settings.showPageSelectorInput) {
       return;
     }
 
@@ -974,7 +986,7 @@ Pager.prototype = {
     }
 
     if (!this.pageSelectorInput) {
-      let text = Locale.translate('PageOf');
+      let text = this.settings.pageSelectorInputText || Locale.translate('PageOf');
       text = text.replace('{0}', `<input class="new-mask" name="pager-pageno" value="${activePage}" autocomplete="off">`);
       text = text.replace('{1}', `<span class="pager-total-pages">${totalPages}</span>`);
       $(`<li class="pager-count"><label>${text} </label>`).insertAfter(this.pagerBar.find('.pager-prev'));
@@ -1546,7 +1558,7 @@ Pager.prototype = {
         `blur.${COMPONENT_NAME}`,
         `keydown.${COMPONENT_NAME}`
       ].join(' '));
-      $(this.pageSelectorInput).data('mask').destroy();
+      $(this.pageSelectorInput).data('mask')?.destroy();
     }
 
     if (this.pageSizeSelectorButton) {
