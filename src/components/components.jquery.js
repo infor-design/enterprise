@@ -20,7 +20,7 @@ import './cards/cards.jquery';
 import './charts/charts.jquery';
 import './calendar/calendar.jquery';
 import './circlepager/circlepager.jquery';
-import './calendar-toolbar/calendar-toolbar.jquery';
+import './calendar/calendar-toolbar.jquery';
 import './colorpicker/colorpicker.jquery';
 import './compositeform/compositeform.jquery';
 import './contextualactionpanel/contextualactionpanel.jquery';

@@ -903,7 +903,7 @@ describe('Datagrid grouping and editing tests', () => {
     await utils.checkForErrors();
   });
 
-  it('Should remove rows and the pager will change', async () => {
+  xit('Should remove rows and the pager will change', async () => {
     expect(await element(by.css('span.pager-total-pages')).getText()).toEqual('3');
     await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(2) td:nth-child(1)')).click();
     await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(3) td:nth-child(1)')).click();
