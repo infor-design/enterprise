@@ -8,7 +8,7 @@
 
 - `[Datepicker]` Fixed a bug where the setting attributes were missing in datepicker input and datepicker trigger on NG wrapper. ([#1044](https://github.com/infor-design/enterprise-ng/issues/1044))
 - `[Datepicker]` Fixed a bug where the selection range was not being properly rendered in mobile. ([#5211](https://github.com/infor-design/enterprise/issues/5211))
-- `[Editor]` Fixed a bug where automation ids are not properly rendered on editor elements. ([#5082](https://github.com/infor-design/enterprise/issues/5082))
+- `[Editor]` Fixed a bug where automation id attributes are not properly rendered on editor elements. ([#5082](https://github.com/infor-design/enterprise/issues/5082))
 - `[Searchbar]` Fixed a bug where searchbar overlapped the "Websites" header when browser is minimized or viewed in mobile. ([#5248](https://github.com/infor-design/enterprise/issues/5248))
 
 ## v4.52.0
