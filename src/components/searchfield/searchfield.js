@@ -1440,13 +1440,19 @@ SearchField.prototype = {
     }
 
     if (this.shouldBeFullWidth()) {
-      width = '100%';
+      let baseWidth = '100%';
+
+      if (breakpoints.isBelow('desktop')) {
+        baseWidth = '90%';
+      }
+
+      width = baseWidth;
 
       if ($(this.toolbarParent).closest('.header').length) {
-        width = 'calc(100% - 40px)';
+        width = `calc(${baseWidth} - 40px)`;
       }
       if ($(this.toolbarParent).closest('.tab-container.module-tabs').length) {
-        width = 'calc(100% - 1px)';
+        width = `calc(${baseWidth} - 1px)`;
       }
 
       this.openWidth = width;
