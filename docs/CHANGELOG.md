@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.53.0 Features
+
+- `[Cards]` Added card variations (Status, Hyperlink and Photo Card) with improve hitboxes for tapping. ([#5250](https://github.com/infor-design/enterprise/issues/5250))
+
 ## v4.53.0 Fixes
 
 - `[Circle Pager]` Fixed size interactions and changes for mobile view port. ([#5251](https://github.com/infor-design/enterprise/issues/5251))
