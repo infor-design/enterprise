@@ -215,6 +215,12 @@
 
   .card-header {
     height: auto;
+    margin: 0;
+    padding: 8px 2px 8px 20px;
+
+    &.expandable-card-header[role='button'] {
+      cursor: pointer;
+    }
 
     p+p {
       margin-top: 8px;
@@ -232,6 +238,9 @@
   }
 
   .card-pane {
+    height: 0;
+    overflow: hidden;
+
     .listview {
       margin-bottom: 24px;
 

@@ -18,7 +18,7 @@ const CARDS_DEFAULTS = {
   expandableHeader: false,
   verticalButtonAction: false,
   attributes: null
-}
+};
 
 function Cards(element, settings) {
   this.settings = utils.mergeSettings(element, settings, CARDS_DEFAULTS);
@@ -36,17 +36,23 @@ Cards.prototype = {
    * @private
    */
   init() {
-    return this
+    this
       .setup()
-      .build();
+      .build()
+      .handleEvents();
   },
 
   setup() {
-    if (!this.element) return;
+    this.id = this.element.attr('id');
+    if (!this.id || this.id === undefined) {
+      this.id = `expandable-card-${$('body').find('.expandable-card').index(this.element)}`;
+    }
 
     this.cardHeader = this.element.children('.card-header');
+    this.expandableCardHeader = this.element.children('.expandable-card-header');
     this.cardContentPane = this.element.children('.card-pane');
     this.buttonAction = this.cardHeader.children('.btn-actions');
+
     return this;
   },
 
@@ -56,13 +62,37 @@ Cards.prototype = {
    * @private
    */
   build() {
-    console.log(this);
+    const expanded = this.element.hasClass('is-expanded');
 
     if (this.settings.expandableHeader) this.element.addClass('expandable-card');
 
+    this.cardContentPane.attr({
+      id: `${this.id}-content`,
+      role: 'region',
+      'aria-labelledby': `${this.id}-header`
+    });
+
+    this.expandableCardHeader.attr('role', 'button');
+
     if (this.buttonAction.length > 0 && this.settings.verticalButtonAction) {
       this.buttonAction.addClass('vertical');
-    } 
+    }
+
+    if (expanded) {
+      this.cardContentPane.addClass('no-transition');
+      this.element.one('afterexpand.expandable-card', () => {
+        this.cardContentPane.removeClass('no-transition');
+      });
+      this.open();
+    }
+
+    if (!expanded) {
+      this.cardContentPane.addClass('no-transition');
+      this.element.one('aftercollapse.expandable-card', () => {
+        this.cardContentPane.removeClass('no-transition');
+      });
+      this.close();
+    }
 
     return this;
   },
@@ -78,12 +108,109 @@ Cards.prototype = {
   },
 
   /**
-   * Example Method.
-   * @returns {void}
+   * Returns expanded status about the current expandable pane.
+   * @returns {boolean} True or false depending on current expanded status.
    */
-  someMethod() {
-    // do something with this.settings not settings.
+  isExpanded() {
+    return this.element.is('.is-expanded');
   },
+
+  /**
+   * Toggle the card pane.
+   */
+  toggleExpanded() {
+    if (this.isExpanded()) {
+      this.close();
+    } else {
+      this.open();
+    }
+  },
+
+  isDisabled() {
+    return this.element.hasClass('is-disabled');
+  },
+
+  /**
+   * Opens up the card pane.
+   */
+  open() {
+    /**
+     * @event beforeexpand
+     */
+    const canExpand = this.element.triggerHandler('beforeexpand', [this.element]);
+
+    if (canExpand === false) return;
+
+    this.element.addClass('is-expanded');
+    this.expandableCardHeader.attr('aria-expanded', 'true');
+
+    /**
+     * @event expand
+     * @memberof Cards
+     * @property {object} The jQuery event object
+     */
+    this.element.triggerHandler('expand', [this.element]);
+
+    if (this.cardContentPane[0]) this.cardContentPane[0].style.display = 'block';
+
+    /**
+     * @event afterexpand
+     * @memberof Cards
+     * @property {object} The jQuery event object
+     */
+    this.cardContentPane.one('animateopencomplete', () => {
+      this.element.triggerHandler('afterexpand', [this.element]);
+    }).animateOpen({ timing: 300 });
+  },
+
+  /**
+   * Closes the card pane.
+   */
+  close() {
+    /**
+     * @event beforecollapse
+     * @memberof Cards
+     * @property {object} The jQuery event object
+     */
+    const canCollapse = this.element.triggerHandler('beforecollapse', [this.element]);
+
+    if (canCollapse === false) return;
+
+    /**
+     * @event collapse
+     * @memberof Cards
+     * @property {object} The jQuery event object
+     */
+    this.element.triggerHandler('collapse', [this.element]);
+
+    /**
+     * @event aftercollapse
+     * @memberof Cards
+     * @property {object} The jQuery event object
+     */
+    this.cardContentPane.one('animateclosedcomplete', () => {
+      this.element.removeClass('is-expanded');
+      this.expandableCardHeader.attr('aria-expanded', 'false');
+      this.element.triggerHandler('aftercollapse', [this.element]);
+      this.cardContentPane[0].style.display = 'none';
+    }).animateClosed({ timing: 300 });
+  },
+
+  /**
+   * Attach event handlers
+   * @private
+   * @returns {object} Api for chaining.
+   */
+  handleEvents() {
+    const self = this;
+    this.expandableCardHeader.on('click.cards', (e) => {
+      if (!self.isDisabled()) {
+        e.preventDefault();
+        self.toggleExpanded();
+      }
+    });
+    return this;
+  }
 
 };
 
