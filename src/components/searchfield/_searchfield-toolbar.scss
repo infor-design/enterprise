@@ -74,7 +74,7 @@ $toolbarsearchfield-category-empty-width: 51px;
 
     .collapse-button {
       & > svg {
-        @media only screen and (max-width: $breakpoint-big-phone + 60) {
+        @media only screen and (max-width: $breakpoint-phone-to-tablet) {
           margin-bottom: 2px;
         }
       }
@@ -83,7 +83,7 @@ $toolbarsearchfield-category-empty-width: 51px;
       height: 14px;
       top: 10px !important;
 
-      @media only screen and (max-width: $breakpoint-big-phone + 60) {
+      @media only screen and (max-width: $breakpoint-phone-to-tablet) {
         top: 12px !important;
       }
     }

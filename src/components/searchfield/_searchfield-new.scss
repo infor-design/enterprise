@@ -74,7 +74,6 @@
     overflow: visible;
     top: 50%;
     transform: translateY(-50%);
-    margin-top: -2px;
 
     @media only screen and (max-width: $breakpoint-phone-to-tablet) {
       margin-right: 35px;
@@ -82,7 +81,7 @@
 
     & > svg.close.icon {
       position: relative;
-      top: 1px;
+      top: -2px;
     }
   }
 }
