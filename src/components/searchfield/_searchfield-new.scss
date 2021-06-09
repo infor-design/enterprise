@@ -70,14 +70,14 @@
 
   .btn-icon.close {
     align-items: center;
-    display: flex;
     justify-content: center;
     overflow: visible;
     top: 50%;
     transform: translateY(-50%);
+    margin-top: -2px;
 
     @media only screen and (max-width: $breakpoint-big-phone + 60) {
-      margin: 0px 35px 0px 0px;
+      margin-right: 35px;
     }
 
     & > svg.close.icon {

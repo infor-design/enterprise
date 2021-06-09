@@ -72,9 +72,20 @@ $toolbarsearchfield-category-empty-width: 51px;
       padding-top: 4px !important;
     }
 
+    .collapse-button {
+      & > svg {
+        @media only screen and (max-width: $breakpoint-big-phone + 60) {
+          margin-bottom: 2px;
+        }
+      }
+    }
     .icon:not(.close) {
       height: 14px;
       top: 10px !important;
+
+      @media only screen and (max-width: $breakpoint-big-phone + 60) {
+        top: 12px !important;
+      }
     }
   }
 
