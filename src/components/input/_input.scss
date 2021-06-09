@@ -494,17 +494,6 @@ span.required::after {
   opacity: 1;
 }
 
-// Text Selection
-::selection {
-  background: $ids-color-brand-primary-base;
-  color: $inverse-color;
-}
-
-::-moz-selection {
-  background: $ids-color-brand-primary-base;
-  color: $inverse-color;
-}
-
 // Mask component Adjustment Classes
 .is-number-mask {
   text-align: right;
