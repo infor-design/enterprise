@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.53.0 Features
+
+- `[Cards]` Added card variations (Status, Hyperlink and Photo Card) with improve hitboxes for tapping. ([#5250](https://github.com/infor-design/enterprise/issues/5250))
+
 ## v4.53.0 Fixes
 
 - `[Datepicker]` Fixed a bug where the setting attributes were missing in datepicker input and datepicker trigger on NG wrapper. ([#1044](https://github.com/infor-design/enterprise-ng/issues/1044))
