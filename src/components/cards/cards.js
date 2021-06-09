@@ -10,11 +10,13 @@ const COMPONENT_NAME = 'cards';
  * @param {string} element The plugin element for the constuctor
  * @param {string} [settings] The settings element.
  * @param {boolean} [settings.expandableHeader] Abilty to expand the card header
-  * @param {string} [settings.attributes=null] Add extra attributes like id's to the element. e.g. `attributes: { name: 'id', value: 'my-unique-id' }`
+ * @param {boolean} [settings.verticalButtonAction] Ability to rotate the button action vertically
+ * @param {string} [settings.attributes=null] Add extra attributes like id's to the element. e.g. `attributes: { name: 'id', value: 'my-unique-id' }`
  */
 
 const CARDS_DEFAULTS = {
-  expandableHeader: true,
+  expandableHeader: false,
+  verticalButtonAction: false,
   attributes: null
 }
 
@@ -40,7 +42,10 @@ Cards.prototype = {
   },
 
   setup() {
-    if (this.settings.expandableHeader) console.log("->", this);
+    if (!this.element) return;
+
+    this.cardHeader = this.element.children('.card-header');
+    this.buttonAction = this.cardHeader.children('.btn-actions');
     return this;
   },
 
@@ -50,7 +55,24 @@ Cards.prototype = {
    * @private
    */
   build() {
-    console.log(this)
+    console.log(this);
+
+    if (this.settings.expandableHeader) this.element.addClass('expandable-card');
+
+    if (this.buttonAction.length > 0 && this.settings.verticalButtonAction) {
+      this.buttonAction.addClass('vertical');
+    } 
+
+    return this;
+  },
+
+  /**
+   * Update the component and optionally apply new settings.
+   * @param  {object} settings the settings to update to.
+   * @returns {object} The plugin api for chaining.
+   */
+  updated(settings) {
+    this.settings = utils.mergeSettings(this.element, settings, this.settings);
     return this;
   },
 

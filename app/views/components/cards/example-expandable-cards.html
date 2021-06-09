@@ -1,11 +1,11 @@
 <div class="row">
-    <div class="six columns">
-      <h2>Expanded Cards</h2>
-      <br />
-    </div>
+  <div class="six columns">
+    <h2>Expanded Cards</h2>
+    <br />
   </div>
-  
-  <!-- <div class="row">
+</div>
+
+<!-- <div class="row">
     <div class="six columns">
   
       <div id="expandable-card-example" class="card expandable-area card-expandable-area">
@@ -21,9 +21,28 @@
   </div> -->
 <div class="row">
   <div class="six columns">
-    <div class="card expandable-area">
-      <div class="card-header expandable-header">
+    <div id="expandable-card-example" class="card">
+      <div class="card-header">
+        <p class="heading">Tuesday, 21st September</p>
+        <p class="sub-heading">8:40AM-2:00PM</p>
+        <button type="button" class="btn-actions" type="button" id="btn-1">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-more"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu actions">
+          <li><a href="#" id="action-1">Action One</a></li>
+          <li><a href="#" id="action-2">Action Two</a></li>
+        </ul>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+$('#expandable-card-example').cards({
+  expandableHeader: true,
+  verticalButtonAction: true
+});
+</script>
