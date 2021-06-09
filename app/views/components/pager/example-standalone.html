@@ -47,6 +47,10 @@
       <input type="checkbox" class="checkbox" name="disable-last-button" id="disable-last-button"/>
       <label for="disable-last-button" class="checkbox-label">Disable Last Button</label>
     </div>
+    <div class="field">
+      <input type="checkbox" class="checkbox" name="show-page-selector-input" id="show-page-selector-input"/>
+      <label for="show-page-selector-input" class="checkbox-label">Show Page Selector Input</label>
+    </div>
 
     <div class="field">
       <label for="firstPageButtonTooltip">First Pager Button Tooltip</label>
@@ -103,6 +107,8 @@
       nextPageTooltip: 'Custom Next Tooltip',
       lastPageTooltip: 'Custom Last Tooltip',
       attributes: [{ name: 'id', value: 'standalone-pager' }, { name: 'data-automation-id', value: 'standalone-pager-auto-id' } ],
+    }).on('page', function (e, args) {
+      setButtonsState();
     }).on('firstpage', function (e, args) {
       $('body').toast({title: 'firstpage jQuery Event Fired', message: ''});
     }).on('previouspage', function (e, args) {
@@ -182,6 +188,49 @@
       var isChecked = !this.checked;
       api.updated({enableLastButton: isChecked});
     });
+
+    $('#show-page-selector-input').on('change.test', function() {
+      var isChecked = this.checked;
+      var opts = { showPageSelectorInput: isChecked, dataset: null };
+      if (isChecked) {
+        opts.dataset = getSomeData(50);
+      }
+      api.updated(opts);
+      setButtonsState();
+    });
+
+    function getSomeData(max) {
+      max = max || 1000;
+      var ds = [];
+      for (var i = 0; i < max; i++) {
+        ds.push({ someKay: 'test-id-' + i });
+      }
+      return ds;
+    }
+
+    function setButtonsState() {
+      var opts = {}
+      if (api.settings.showPageSelectorInput) {
+        var isEnabled = {
+          prevAndFirst: api.state.activePage > 1,
+          nextAndLast: api.state.activePage < api.state.pages
+        };
+        opts.enableFirstButton = isEnabled.prevAndFirst;
+        opts.enablePreviousButton = isEnabled.prevAndFirst;
+        opts.enableNextButton = isEnabled.nextAndLast;
+        opts.enableLastButton = isEnabled.nextAndLast;
+      } else {
+        var getEnabled = function (btn) {
+          return !($('#disable-' + btn + '-button').is(':checked'));
+        };
+        opts.enableFirstButton = getEnabled('first');
+        opts.enablePreviousButton = getEnabled('previous');
+        opts.enableNextButton = getEnabled('next');
+        opts.enableLastButton = getEnabled('last');
+      }
+      opts.activePage = api.state.activePage;
+      api.updated(opts);
+    }
 
     var startingFirstVal = $('#firstPageButtonTooltip').val();
     var startingPreviousVal = $('#previousPageButtonTooltip').val();

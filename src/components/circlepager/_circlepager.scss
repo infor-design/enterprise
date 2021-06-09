@@ -1,6 +1,140 @@
 // Circle Pager
 //================================================== //
 
+@mixin controls-bullets-nav {
+  .circlepager-controls {
+    align-items: center;
+    bottom: 2px;
+    display: flex;
+    justify-content: center;
+    left: 50%;
+    margin-left: -50%;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+
+    .btn-controls-previous,
+    .btn-controls-next {
+      border-radius: 0;
+      height: 42px;
+      width: 42px;
+    }
+
+    .pager-toolbar {
+      height: unset;
+      max-height: unset;
+
+      .btn-icon {
+        height: 44px;
+        margin-top: 0;
+        width: 44px;
+      }
+    }
+
+    .control-button {
+      display: inline-block;
+      margin: 0;
+      padding: 13px 13px 11px;
+
+      &::before {
+        background-color: $circlepager-bg-color;
+        border: 1px solid $circlepager-border-color;
+        border-radius: 50%;
+        content: '';
+        cursor: pointer;
+        display: inline-block;
+        height: 14px;
+        text-align: center;
+        text-decoration: none;
+        width: 14px;
+      }
+
+      &:last-child {
+        &::before {
+          margin: 0;
+        }
+      }
+
+      &:hover {
+        &::before {
+          background-color: $circlepager-hover-bg-color;
+          border-color: $circlepager-hover-border-color;
+        }
+      }
+
+      &:focus {
+        &::before {
+          background-color: $circlepager-focus-bg-color;
+          border-color: $circlepager-focus-border-color;
+        }
+      }
+
+      &.is-active {
+        &::before {
+          background-color: $circlepager-active-bg-color;
+          border-color: $circlepager-active-border-color;
+        }
+
+        &:hover {
+          &::before {
+            background-color: $circlepager-active-hover-bg-color;
+            border-color: $circlepager-active-hover-border-color;
+          }
+        }
+
+        &:focus {
+          &::before {
+            background-color: $circlepager-active-focus-bg-color;
+            border-color: $circlepager-active-focus-border-color;
+          }
+        }
+      }
+
+      &[disabled],
+      &.is-disable {
+        background-color: $circlepager-disable-bg-color;
+        border-color: $circlepager-disable-border-color;
+
+        &:hover {
+          background-color: $circlepager-disable-hover-bg-color;
+          border-color: $circlepager-disable-hover-border-color;
+        }
+
+        &:focus {
+          background-color: $circlepager-disable-focus-bg-color;
+          border-color: $circlepager-disable-focus-border-color;
+        }
+      }
+
+      &.is-ripple {
+        overflow: hidden;
+        position: relative;
+
+        &::after {
+          background: var(--ripple-background, #{$tertiary-btn-ripple-color});
+          border-radius: 50%;
+          content: '';
+          display: block;
+          pointer-events: none;
+          position: absolute;
+
+          //  position and size
+          height: calc(var(--d) * 1px); // stylelint-disable-line
+          left: calc(var(--x) * 1px);
+          top: calc(var(--y) * 1px);
+          width: calc(var(--d) * 1px);
+
+          //  animated properties
+          opacity: calc(var(--o, 1) * 0.3); // stylelint-disable-line
+          transform: translate(-50%, -50%) scale(var(--s, 1));
+          transform-origin: center;
+          transition: calc(var(--t, 0) * 600ms) linear;
+        }
+      }
+    }
+  }
+}
+
 .circlepager {
   overflow: hidden;
   position: relative;
@@ -40,7 +174,6 @@
     // Next and Previous Buttons
     .btn-next,
     .btn-previous {
-      background-color: $ids-color-palette-slate-100;
       border: 1px solid $ids-color-brand-secondary-alt;
       border-radius: 50%;
       display: none;
@@ -77,73 +210,7 @@
       }
     }
 
-    .controls {
-      bottom: 20px;
-      display: block;
-      left: 50%;
-      margin-left: -50%;
-      position: absolute;
-      text-align: center;
-      width: 100%;
-
-      .control-button {
-        background-color: $circlepager-bg-color;
-        border: 1px solid $circlepager-border-color;
-        border-radius: 50%;
-        cursor: pointer;
-        display: inline-block;
-        height: 10px;
-        margin: 0 20px 0 0;
-        text-align: center;
-        text-decoration: none;
-        width: 10px;
-
-        &:last-child {
-          margin: 0;
-        }
-
-        &:hover {
-          background-color: $circlepager-hover-bg-color;
-          border-color: $circlepager-hover-border-color;
-        }
-
-        &:focus {
-          background-color: $circlepager-focus-bg-color;
-          border-color: $circlepager-focus-border-color;
-        }
-
-        &.is-active {
-          background-color: $circlepager-active-bg-color;
-          border-color: $circlepager-active-border-color;
-
-          &:hover {
-            background-color: $circlepager-active-hover-bg-color;
-            border-color: $circlepager-active-hover-border-color;
-          }
-
-          &:focus {
-            background-color: $circlepager-active-focus-bg-color;
-            border-color: $circlepager-active-focus-border-color;
-          }
-        }
-
-        &[disabled],
-        &.is-disable {
-          background-color: $circlepager-disable-bg-color;
-          border-color: $circlepager-disable-border-color;
-
-          &:hover {
-            background-color: $circlepager-disable-hover-bg-color;
-            border-color: $circlepager-disable-hover-border-color;
-          }
-
-          &:focus {
-            background-color: $circlepager-disable-focus-bg-color;
-            border-color: $circlepager-disable-focus-border-color;
-          }
-        }
-      }
-    }
+    @include controls-bullets-nav;
   }
 
   &.is-bullets-nav-hidden {
@@ -156,8 +223,11 @@
       .control-button {
         display: none;
 
+        &::before {
+          display: none;
+        }
+
         &.is-active {
-          background-color: $ids-color-palette-slate-100;
           border: 1px solid $ids-color-brand-secondary-alt;
           border-radius: 2px;
           color: $ids-color-brand-secondary-alt;
@@ -176,6 +246,33 @@
             background-color: $ids-color-palette-slate-100;
             border-color: $ids-color-brand-secondary-alt;
           }
+        }
+      }
+    }
+  }
+}
+
+.card .card-footer,
+.widget .widget-footer {
+  @include controls-bullets-nav;
+
+  &.footer-circlepager {
+    padding: 0 3px 4px;
+
+    .pager-toolbar {
+      height: unset !important;
+      max-height: unset !important;
+
+      .btn-icon {
+        height: 44px !important;
+        margin-top: 0 !important;
+        width: 44px !important;
+
+        @media only screen and (max-width: 320px) {
+          height: 25px !important;
+          min-height: auto;
+          min-width: auto;
+          width: 25px !important;
         }
       }
     }
