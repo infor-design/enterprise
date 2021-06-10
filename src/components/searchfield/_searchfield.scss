@@ -596,6 +596,10 @@ html[class*='theme-classic-'] {
     top: 50%;
     transform: translateY(-50%);
 
+    @media only screen and (max-width: $breakpoint-phone-to-tablet) {
+      margin-right: 35px;
+    }
+
     & > svg.close.icon {
       position: relative;
       right: unset;

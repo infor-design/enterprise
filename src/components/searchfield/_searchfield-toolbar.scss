@@ -1028,3 +1028,16 @@ html[class*='theme-new-'] .header > .toolbar > .buttonset > .toolbar-searchfield
     top: 1px !important;
   }
 }
+
+html[class*='theme-classic-'] {
+  .toolbar-searchfield-wrapper {
+    &.non-collapsible {
+      .icon:not(.close) {
+  
+        @media only screen and (max-width: $breakpoint-phone-to-tablet) {
+          top: 10px !important;
+        }
+      }
+    }
+  }
+}
