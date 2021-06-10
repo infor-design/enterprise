@@ -131,8 +131,20 @@ html.is-firefox {
       }
     }
 
+    .collapse-button {
+      height: 35px !important;
+    }
+
     > .icon {
       top: 10px;
+
+      &.close {
+        top: 18px;
+
+        @media only screen and (max-width: $breakpoint-phone-to-tablet) {
+          margin-right: 5px;
+        }  
+      }
     }
 
     &.is-open,
