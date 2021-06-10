@@ -37,6 +37,11 @@ ActionSheet.prototype = {
     this.handleEvents();
   },
 
+  /**
+   * Renders the component
+   * @private
+   * @returns {void}
+   */
   render() {
     // Render root elements, if needed
     const hasRoot = document.querySelector(`#${ROOT_ELEM_ID}`);
@@ -111,6 +116,7 @@ ActionSheet.prototype = {
   },
 
   /**
+   * Sets up component event listeners
    * @private
    * @returns {void}
    */
@@ -143,7 +149,7 @@ ActionSheet.prototype = {
     this.overlayElem.removeAttribute('hidden');
     window.requestAnimationFrame(() => {
       this.setOverlayVisibility();
-      this.addOpenEvents();
+      this.addActionSheetOpenEvents();
       this.element[0].removeAttribute('aria-hidden');
     });
   },
@@ -227,7 +233,7 @@ ActionSheet.prototype = {
       return;
     }
 
-    this.removeOpenEvents();
+    this.removeActionSheetOpenEvents();
     this.element[0].setAttribute('aria-hidden', 'true');
     this.rootElem.classList.remove('engaged');
     this.setOverlayVisibility();
@@ -244,6 +250,7 @@ ActionSheet.prototype = {
   closePopupMenu() {
     // Remove Popupmenu Events
     $(this.element).off('selected.popupmenu close.popupmenu');
+    this.triggerCloseEvent('cancel');
   },
 
   /**
@@ -270,7 +277,7 @@ ActionSheet.prototype = {
       event.actionSheetElem = this.actionSheetElem;
       event.api = this;
     }
-    this.element.trigger(event);
+    this.element.trigger(event, []);
   },
 
   /**
@@ -287,7 +294,7 @@ ActionSheet.prototype = {
    * @private
    * @returns {void}
    */
-  addOpenEvents() {
+  addActionSheetOpenEvents() {
     // If clicking on the document (outside the action sheet),
     // close the action sheet.
     $(document).on('click.disengage', (e) => {
@@ -295,39 +302,52 @@ ActionSheet.prototype = {
       if (actionSheet) {
         return;
       }
+      // Purposefully doesn't run the event and just closes the popup/sheet
       this.cancel();
     });
 
     // Clicking on each button may fire a callback.
     // Callbacks are bound to the action sheet context.
     $(this.actionSheetElem).on('click.action', 'button', (e) => {
-      const cl = e.target.classList;
+      const target = e.currentTarget;
+      const cl = target.classList;
+
       if (cl.contains('btn-cancel')) {
-        this.doCancel(e.target);
+        this.doCancel(target);
         return;
       }
-      this.doSelect(e.target);
+      this.doSelect(target, true);
     });
   },
 
   /**
    * Runs the settings-driven select callback
-   * @param {*} targetActionElem
+   * @param {HTMLElement} targetActionElem represents the Action that was selected.
+   * @param {boolean} doFireEvent true if selection should fire an event.
    */
-  doSelect(targetActionElem) {
+  doSelect(targetActionElem, doFireEvent) {
     if (typeof this.settings.onSelect === 'function') {
       this.settings.onSelect(targetActionElem);
+    }
+
+    // Fires a 'selected' event the way a Popupmenu would when it's items are selected.
+    if (doFireEvent) {
+      $(this.element).trigger('selected', [$(targetActionElem), null, true]);
     }
   },
 
   /**
-   * Runs the settings-driven cancel callback
-   * @param {*} targetActionElem
+   * @param {HTMLElement} targetActionElem represents UI that caused the cancel.
+   * @param {boolean} doFireEvent true if cancelling should fire an event.
    */
-  doCancel(targetActionElem) {
+  doCancel(targetActionElem, doFireEvent) {
     if (typeof this.settings.onCancel === 'function') {
       this.settings.onCancel(targetActionElem);
-      this.cancel();
+    }
+
+    this.cancel();
+    if (doFireEvent) {
+      $(this.element).trigger('cancelled', [$(targetActionElem)]);
     }
   },
 
@@ -335,7 +355,7 @@ ActionSheet.prototype = {
    * @private
    * @returns {void}
    */
-  removeOpenEvents() {
+  removeActionSheetOpenEvents() {
     $(document).off('click.disengage');
     $(this.actionSheetElem).off('click.action');
   },
