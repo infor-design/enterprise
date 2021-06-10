@@ -78,6 +78,7 @@ ActionSheet.prototype = {
 
       // Create the action sheet wrapper
       this.actionSheetElem = document.createElement('div');
+      this.actionSheetElem.setAttribute('role', 'dialog');
       const cl = this.actionSheetElem.classList;
       cl.add('ids-actionsheet');
       if (hasIcons) {
@@ -202,8 +203,9 @@ ActionSheet.prototype = {
         }
         this.closePopupMenu();
       })
-      .on('close.popupmenu', () => {
-        this.closePopupMenu();
+      .on('close.popupmenu', (e, isCancelled) => {
+        const mode = isCancelled ? 'cancel' : '';
+        this.closePopupMenu(mode);
       });
   },
 
@@ -228,8 +230,8 @@ ActionSheet.prototype = {
    */
   close(mode = '') {
     // @TODO check for an open popupmenu before this
-    if (this.popupmenuAPI) {
-      this.closePopupMenu();
+    if (this.hasOpenPopupMenu) {
+      this.closePopupMenu(mode);
       return;
     }
 
@@ -247,10 +249,10 @@ ActionSheet.prototype = {
    * Closes a simple Popupnenu previously-opened in place of the Action Sheet.
    * @returns {void}
    */
-  closePopupMenu() {
+  closePopupMenu(mode) {
     // Remove Popupmenu Events
     $(this.element).off('selected.popupmenu close.popupmenu');
-    this.triggerCloseEvent('cancel');
+    this.triggerCloseEvent(mode);
   },
 
   /**
@@ -329,6 +331,8 @@ ActionSheet.prototype = {
     if (typeof this.settings.onSelect === 'function') {
       this.settings.onSelect(targetActionElem);
     }
+
+    this.close();
 
     // Fires a 'selected' event the way a Popupmenu would when it's items are selected.
     if (doFireEvent) {
