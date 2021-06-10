@@ -10,6 +10,7 @@
 - `[Datagrid]` Fixed a bug where animation blue circle is off-center. ([#5246](https://github.com/infor-design/enterprise/issues/5246))
 - `[Datepicker]` Fixed a bug where the setting attributes were missing in datepicker input and datepicker trigger on NG wrapper. ([#1044](https://github.com/infor-design/enterprise-ng/issues/1044))
 - `[Datepicker]` Fixed a bug where the selection range was not being properly rendered in mobile. ([#5211](https://github.com/infor-design/enterprise/issues/5211))
+- `[Personalize]` Fixed a bug where user was unable to see highlighted text in the header when using the new light default theme. ([#5219](https://github.com/infor-design/enterprise/issues/5219))
 - `[Searchfield]` Fixed a bug where the close button is not rendered properly on mobile view. ([#5182](https://github.com/infor-design/enterprise/issues/5182))
 - `[Searchbar]` Fixed a bug where searchbar overlapped the "Websites" header when browser is minimized or viewed in mobile. ([#5248](https://github.com/infor-design/enterprise/issues/5248))
 
