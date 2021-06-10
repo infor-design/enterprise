@@ -222,7 +222,7 @@
       cursor: pointer;
     }
 
-    p+p {
+    p + p {
       margin-top: 8px;
     }
 
@@ -324,7 +324,7 @@
 
   .card-title,
   .widget-title {
-    ~svg.icon {
+    ~ svg.icon {
       @include colorPalettesProperty(color);
 
       background: transparent;
@@ -375,9 +375,9 @@
     }
   }
 
-  >h2,
-  >h1,
-  >button {
+  > h2,
+  > h1,
+  > button {
     display: inline-block;
     float: left;
   }
@@ -396,8 +396,8 @@
 
   &:not(.has-toolbar) {
 
-    >.btn-actions,
-    >.btn-expander {
+    > .btn-actions,
+    > .btn-expander {
       line-height: normal;
       margin: 0;
       padding: 0;
@@ -405,11 +405,11 @@
       right: 15px;
     }
 
-    >.btn-actions {
+    > .btn-actions {
       top: 7px;
     }
 
-    >.btn-expander {
+    > .btn-expander {
       top: 5px;
 
       .icon {
@@ -477,7 +477,7 @@
 .card-list-item {
   font-size: 0;
 
-  >* {
+  > * {
     display: inline-block;
     font-size: 1rem;
     vertical-align: middle;
@@ -508,7 +508,6 @@
 }
 
 .card-detail-table {
-
   td,
   th {
     padding-top: 5px;
@@ -575,17 +574,16 @@
 
 // RTL Styles
 html[dir='rtl'] {
-
   .card-header,
   .widget-header {
 
-    >h2,
-    >h1,
-    >button {
+    > h2,
+    > h1,
+    > button {
       float: right;
     }
 
-    &:not(.has-toolbar)>.btn-actions {
+    &:not(.has-toolbar) > .btn-actions {
       left: 15px;
       right: auto;
     }
@@ -598,12 +596,12 @@ html[dir='rtl'] {
       }
     }
 
-    >button {
+    > button {
       float: right;
     }
 
-    >h2,
-    >h1 {
+    > h2,
+    > h1 {
       float: right;
       width: 100%;
     }
