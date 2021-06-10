@@ -1334,7 +1334,7 @@ utils.addAttributes = function addAttributes(elem, api, setting, suffix, overrid
  * @param {object} api The object base api
  * @param {object|Array} setting The attribute setting
  * @param {string} suffix Append an extra string at the end
- * @returns {string} the attrbibutes as a string
+ * @returns {string} the attributes as a string
  */
 utils.stringAttributes = function addAttributes(api, setting, suffix) {
   let attributes = '';

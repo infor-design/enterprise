@@ -50,6 +50,9 @@ ActionSheet.prototype = {
       this.renderRootElems();
     }
 
+    // Decorate trigger element
+    this.element[0].classList.add('ids-actionsheet-trigger');
+
     // Render this action sheet
     if (!this.actionSheetElem) {
       let actionSheetHTML = '';
@@ -135,6 +138,13 @@ ActionSheet.prototype = {
    */
   get visible() {
     return this.rootElem.classList.contains('engaged');
+  },
+
+  /**
+   * @returns {array<HTMLElement>} available buttons representing actions
+   */
+  get actionElems() {
+    return [...this.actionSheetElem.querySelectorAll('button')].filter(x => !x.classList.contains('btn-cancel'));
   },
 
   /**
@@ -287,14 +297,10 @@ ActionSheet.prototype = {
     let event;
     if (mode === 'cancel') {
       event = jQuery.Event('cancelled');
-      event.actionSheetElem = this.actionSheetElem;
-      event.api = this;
     } else {
       event = jQuery.Event('close');
-      event.actionSheetElem = this.actionSheetElem;
-      event.api = this;
     }
-    this.element.trigger(event, []);
+    this.element.trigger(event, [$(this.actionSheetElem)]);
   },
 
   /**
@@ -445,6 +451,9 @@ ActionSheet.prototype = {
       this.close();
     }
     this.element.off('click.trigger');
+
+    // Undecorate
+    this.element[0].classList.remove('ids-actionsheet-trigger');
   },
 
   /**
