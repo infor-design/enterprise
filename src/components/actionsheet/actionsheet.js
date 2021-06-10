@@ -11,16 +11,17 @@ import '../popupmenu/popupmenu.jquery';
 const COMPONENT_NAME = 'actionsheet';
 const ROOT_ELEM_ID = 'ids-actionsheet-root';
 
-const DISPLAY_AS_MENU_OPTIONS = [false, 'responsive', 'always'];
+const DISPLAY_AS_ACTION_SHEET_OPTIONS = [false, 'responsive', 'always'];
 
 const ACTION_SHEET_DEFAULTS = {
   actions: [],
   attributes: [],
   breakpoint: 'phone-to-tablet',
-  displayAsMenu: DISPLAY_AS_MENU_OPTIONS[0],
+  displayAsActionSheet: DISPLAY_AS_ACTION_SHEET_OPTIONS[1],
   overlayOpacity: 0.7,
   onSelect: null,
   onCancel: null,
+  showCancelButton: true
 };
 
 function ActionSheet(element, settings) {
@@ -63,10 +64,12 @@ ActionSheet.prototype = {
       });
 
       // Add a bottom separator and the cancel button
-      actionSheetHTML += `<div class="separator"></div>
-      <button class="btn-secondary btn-cancel ids-action">
-        <span>Cancel</span>
-      </button>`;
+      if (this.settings.showCancelButton) {
+        actionSheetHTML += `<div class="separator"></div>
+        <button class="btn-secondary btn-cancel ids-action">
+          <span>Cancel</span>
+        </button>`;
+      }
 
       // Create the action sheet wrapper
       this.actionSheetElem = document.createElement('div');
@@ -82,6 +85,12 @@ ActionSheet.prototype = {
     }
   },
 
+  /**
+   * Draws a container and overlay element into the page body.
+   * Other action sheet instances may also use these elements.
+   * @private
+   * @returns {void}
+   */
   renderRootElems() {
     const fragment = document.createDocumentFragment();
     const rootElem = document.createElement('div');
@@ -101,6 +110,10 @@ ActionSheet.prototype = {
     this.overlayElem = overlay;
   },
 
+  /**
+   * @private
+   * @returns {void}
+   */
   handleEvents() {
     this.element.on('click.trigger', () => {
       if (!this.visible) {
@@ -109,6 +122,9 @@ ActionSheet.prototype = {
     });
   },
 
+  /**
+   * @returns {boolean} true if the Action Sheet is currently visible
+   */
   get visible() {
     return this.rootElem.classList.contains('engaged');
   },
@@ -118,6 +134,11 @@ ActionSheet.prototype = {
    * @returns {void}
    */
   open() {
+    if (!this.currentlyNeedsActionSheet) {
+      this.openPopupMenu();
+      return;
+    }
+
     this.rootElem.classList.add('engaged');
     this.overlayElem.removeAttribute('hidden');
     window.requestAnimationFrame(() => {
@@ -128,11 +149,84 @@ ActionSheet.prototype = {
   },
 
   /**
+   * Opens a simple Popupmenu containing the same actions as the sheet.
+   * This occurs in responsive breakpoints above the one defined by settings.
+   * @returns {void}
+   */
+  openPopupMenu() {
+    // Generate menu HTML
+    let menuHTML = '<ul id="ids-actionsheet-popupmenu">';
+    this.settings.actions.forEach((action, i) => {
+      let icon = '';
+      if (action.icon) {
+        icon = $.createIcon({ icon: action.icon });
+      }
+      const actionHTML = `<li class="ids-action-menu-item" data-index="${i}">
+        <a>
+          ${icon}
+          <span class="ids-action-text">${action.text}</span>
+        </a>
+      </li>`;
+      menuHTML += actionHTML;
+    });
+    menuHTML += '</ul>';
+    this.element[0].insertAdjacentHTML('afterend', menuHTML);
+
+    // Invoke Popupmenu
+    this.element.popupmenu({
+      menuId: 'ids-actionsheet-popupmenu',
+      beforeOpen: (response) => {
+        response(menuHTML);
+      },
+      trigger: 'immediate',
+      removeOnDestroy: true
+    });
+
+    // Listen for Popupmenu Events.
+    // On Popupmenu's `selected` event, fire the selected callback against the correct element.
+    $(this.element)
+      .on('selected.popupmenu', (e, a) => {
+        const actionIndex = parseInt($(a.parent()).attr('data-index'), 10);
+        if (isNaN(actionIndex)) {
+          return;
+        }
+        const targetActionElem = this.actionSheetElem.children[actionIndex];
+        if (targetActionElem) {
+          this.doSelect(targetActionElem);
+        }
+        this.closePopupMenu();
+      })
+      .on('close.popupmenu', () => {
+        this.closePopupMenu();
+      });
+  },
+
+  /**
+   * @returns {Popupmenu} attached Popupmenu API, if available
+   */
+  get popupmenuAPI() {
+    return $(this.element).data('popupmenu');
+  },
+
+  /**
+   * @returns {boolean} true if there is a currently-open Popupmenu attached to the trigger button
+   */
+  get hasOpenPopupMenu() {
+    return this.popupmenuAPI?.isOpen;
+  },
+
+  /**
    * Closes the Action Sheet
    * @param {string} mode changes the way in which the Action Sheet closes.  Defaults to none.
    * @returns {void}
    */
   close(mode = '') {
+    // @TODO check for an open popupmenu before this
+    if (this.popupmenuAPI) {
+      this.closePopupMenu();
+      return;
+    }
+
     this.removeOpenEvents();
     this.element[0].setAttribute('aria-hidden', 'true');
     this.rootElem.classList.remove('engaged');
@@ -141,6 +235,15 @@ ActionSheet.prototype = {
       this.overlayElem.setAttribute('hidden', '');
       this.triggerCloseEvent(mode);
     });
+  },
+
+  /**
+   * Closes a simple Popupnenu previously-opened in place of the Action Sheet.
+   * @returns {void}
+   */
+  closePopupMenu() {
+    // Remove Popupmenu Events
+    $(this.element).off('selected.popupmenu close.popupmenu');
   },
 
   /**
@@ -171,6 +274,16 @@ ActionSheet.prototype = {
   },
 
   /**
+   * @returns {boolean} whether or not this Action Sheet instance should currently display in
+   * full size mode (uses the settings, but determined at runtime)
+   */
+  get currentlyNeedsActionSheet() {
+    const breakpoint = this.settings.breakpoint;
+    const mode = this.settings.displayAsActionSheet;
+    return (mode === 'always' || (mode === 'responsive' && breakpoints.isBelow(breakpoint)));
+  },
+
+  /**
    * @private
    * @returns {void}
    */
@@ -189,15 +302,33 @@ ActionSheet.prototype = {
     // Callbacks are bound to the action sheet context.
     $(this.actionSheetElem).on('click.action', 'button', (e) => {
       const cl = e.target.classList;
-      if (cl.contains('btn-cancel') && typeof this.settings.onCancel === 'function') {
-        this.settings.onCancel.apply(this, [e]);
-        this.cancel();
+      if (cl.contains('btn-cancel')) {
+        this.doCancel(e.target);
         return;
       }
-      if (typeof this.settings.onSelect === 'function') {
-        this.settings.onSelect.apply(this, [e]);
-      }
+      this.doSelect(e.target);
     });
+  },
+
+  /**
+   * Runs the settings-driven select callback
+   * @param {*} targetActionElem
+   */
+  doSelect(targetActionElem) {
+    if (typeof this.settings.onSelect === 'function') {
+      this.settings.onSelect(targetActionElem);
+    }
+  },
+
+  /**
+   * Runs the settings-driven cancel callback
+   * @param {*} targetActionElem
+   */
+  doCancel(targetActionElem) {
+    if (typeof this.settings.onCancel === 'function') {
+      this.settings.onCancel(targetActionElem);
+      this.cancel();
+    }
   },
 
   /**
@@ -206,6 +337,7 @@ ActionSheet.prototype = {
    */
   removeOpenEvents() {
     $(document).off('click.disengage');
+    $(this.actionSheetElem).off('click.action');
   },
 
   /**
@@ -235,7 +367,7 @@ ActionSheet.prototype = {
   },
 
   /**
-  * Teardown and remove any added markup and events.
+  * Tears down and removes any added markup and events.
   * @returns {void}
   */
   destroy() {

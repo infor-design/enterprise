@@ -20,10 +20,10 @@
 </div>
 
 <script id="test-script">
-  function onSelect(e) {
+  function onSelect(a) {
     $('body').toast({
       title: 'Selected',
-      message: 'The "'+ $(e.target).text() +'" button on the Action Sheet was clicked'
+      message: 'The "'+ a.textContent.trim() +'" button on the Action Sheet was clicked'
     });
   }
 
