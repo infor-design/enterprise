@@ -16,6 +16,7 @@ const DISPLAY_AS_ACTION_SHEET_OPTIONS = [false, 'responsive', 'always'];
 const ACTION_SHEET_DEFAULTS = {
   actions: [],
   attributes: [],
+  autoFocus: true,
   breakpoint: 'phone-to-tablet',
   displayAsActionSheet: DISPLAY_AS_ACTION_SHEET_OPTIONS[1],
   overlayOpacity: 0.7,
@@ -152,6 +153,7 @@ ActionSheet.prototype = {
       this.setOverlayVisibility();
       this.addActionSheetOpenEvents();
       this.element[0].removeAttribute('aria-hidden');
+      this.focus();
     });
   },
 
@@ -181,6 +183,7 @@ ActionSheet.prototype = {
 
     // Invoke Popupmenu
     this.element.popupmenu({
+      autoFocus: this.settings.autoFocus,
       menuId: 'ids-actionsheet-popupmenu',
       beforeOpen: (response) => {
         response(menuHTML);
@@ -202,10 +205,17 @@ ActionSheet.prototype = {
           this.doSelect(targetActionElem);
         }
         this.closePopupMenu();
+        this.focus();
+      })
+      .on('afteropen.popupmenu', () => {
+        this.focus();
       })
       .on('close.popupmenu', (e, isCancelled) => {
         const mode = isCancelled ? 'cancel' : '';
         this.closePopupMenu(mode);
+        if (!isCancelled) {
+          this.focus();
+        }
       });
   },
 
@@ -226,9 +236,10 @@ ActionSheet.prototype = {
   /**
    * Closes the Action Sheet
    * @param {string} mode changes the way in which the Action Sheet closes.  Defaults to none.
+   * @param {boolean} doFocus if true, causes an element related to the Action Sheet to be focused.
    * @returns {void}
    */
-  close(mode = '') {
+  close(mode = '', doFocus = false) {
     // @TODO check for an open popupmenu before this
     if (this.hasOpenPopupMenu) {
       this.closePopupMenu(mode);
@@ -242,6 +253,10 @@ ActionSheet.prototype = {
     utils.waitForTransitionEnd(this.overlayElem, 'opacity').then(() => {
       this.overlayElem.setAttribute('hidden', '');
       this.triggerCloseEvent(mode);
+
+      if (doFocus) {
+        this.focus();
+      }
     });
   },
 
@@ -251,7 +266,7 @@ ActionSheet.prototype = {
    */
   closePopupMenu(mode) {
     // Remove Popupmenu Events
-    $(this.element).off('selected.popupmenu close.popupmenu');
+    $(this.element).off('selected.popupmenu close.popupmenu afteropen.popupmenu');
     this.triggerCloseEvent(mode);
   },
 
@@ -283,6 +298,33 @@ ActionSheet.prototype = {
   },
 
   /**
+   * Sets focus on the correct element within the action sheet
+   * @returns {void}
+   */
+  focus() {
+    if (!this.settings.autoFocus) {
+      return;
+    }
+
+    // Popupmenu (highlight first item)
+    if (this.hasOpenPopupMenu) {
+      const a = this.popupmenuAPI.menu[0].querySelector('a');
+      a.focus();
+      this.popupmenuAPI.highlight($(a));
+      return;
+    }
+
+    // If the action sheet is engaged, focus the first available button element inside
+    if (this.visible) {
+      this.actionSheetElem.querySelector('button')?.focus();
+      return;
+    }
+
+    // If no action sheet is engaged, focus the trigger element.
+    this.element[0].focus();
+  },
+
+  /**
    * @returns {boolean} whether or not this Action Sheet instance should currently display in
    * full size mode (uses the settings, but determined at runtime)
    */
@@ -310,16 +352,31 @@ ActionSheet.prototype = {
 
     // Clicking on each button may fire a callback.
     // Callbacks are bound to the action sheet context.
-    $(this.actionSheetElem).on('click.action', 'button', (e) => {
-      const target = e.currentTarget;
-      const cl = target.classList;
+    $(this.actionSheetElem)
+      .on('click.action', 'button', (e) => {
+        const target = e.currentTarget;
+        const cl = target.classList;
 
-      if (cl.contains('btn-cancel')) {
-        this.doCancel(target);
-        return;
-      }
-      this.doSelect(target, true);
-    });
+        if (cl.contains('btn-cancel')) {
+          this.doCancel(target, false, true);
+        } else {
+          this.doSelect(target, true);
+        }
+        this.focus();
+      })
+      .on('keyup.action', (e) => {
+        // Capture keyup events from within the Action Sheet
+        if (e.target.closest('.ids-actionsheet')) {
+          const key = e.key;
+          switch (key) {
+            case 'Escape':
+              this.cancel();
+              break;
+            default:
+              break;
+          }
+        }
+      });
   },
 
   /**
@@ -361,7 +418,7 @@ ActionSheet.prototype = {
    */
   removeActionSheetOpenEvents() {
     $(document).off('click.disengage');
-    $(this.actionSheetElem).off('click.action');
+    $(this.actionSheetElem).off('click.action keyup.action');
   },
 
   /**
