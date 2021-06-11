@@ -50,6 +50,7 @@ ActionSheet.prototype = {
 
     // Decorate trigger element
     this.element[0].classList.add('ids-actionsheet-trigger');
+    utils.addAttributes(this.element, this, this.settings.attributes, 'trigger');
 
     // Render this action sheet
     if (!this.actionSheetElem) {
@@ -57,13 +58,15 @@ ActionSheet.prototype = {
       let hasIcons = false;
 
       // Render all items
-      this.settings.actions.forEach((action) => {
+      this.settings.actions.forEach((action, i) => {
         let icon = '';
+        const attrs = utils.stringAttributes(this, this.settings.attributes, `action-${i}`);
+
         if (action.icon) {
           hasIcons = true;
           icon = $.createIcon({ icon: action.icon });
         }
-        const actionHTML = `<button class="btn-tertiary ids-action">
+        const actionHTML = `<button class="btn-tertiary ids-action" data-index="${i}" ${attrs}>
           ${icon}
           <span class="ids-action-text">${action.text}</span>
         </button>`;
@@ -81,6 +84,7 @@ ActionSheet.prototype = {
       // Create the action sheet wrapper
       this.actionSheetElem = document.createElement('div');
       this.actionSheetElem.setAttribute('role', 'dialog');
+      utils.addAttributes($(this.actionSheetElem), this, this.settings.attributes, 'sheet');
       const cl = this.actionSheetElem.classList;
       cl.add('ids-actionsheet');
       if (hasIcons) {
@@ -176,8 +180,9 @@ ActionSheet.prototype = {
    * @returns {void}
    */
   openPopupMenu() {
-    // Generate menu HTML
-    let menuHTML = '<ul id="ids-actionsheet-popupmenu">';
+    // Generate/Insert Popupmenu HTML.
+    const menuAttrs = utils.stringAttributes(this, this.settings.attributes, 'menu');
+    let menuHTML = `<ul ${menuAttrs}>`;
     this.settings.actions.forEach((action, i) => {
       let icon = '';
       if (action.icon) {
@@ -192,15 +197,14 @@ ActionSheet.prototype = {
       menuHTML += actionHTML;
     });
     menuHTML += '</ul>';
-    this.element[0].insertAdjacentHTML('afterend', menuHTML);
+    const $menuEl = $(menuHTML).insertAfter(this.element);
 
-    // Invoke Popupmenu
+    // Invoke Popupmenu.
+    // NOTE: The setting of popupmenu attributes is delegated to the Popupmenu component
     this.element.popupmenu({
       autoFocus: this.settings.autoFocus,
-      menuId: 'ids-actionsheet-popupmenu',
-      beforeOpen: (response) => {
-        response(menuHTML);
-      },
+      attributes: this.settings.attributes,
+      menu: $menuEl,
       trigger: 'immediate',
       removeOnDestroy: true
     });

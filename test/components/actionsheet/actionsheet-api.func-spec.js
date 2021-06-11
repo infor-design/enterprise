@@ -3,8 +3,7 @@ import { cleanup } from '../../helpers/func-utils';
 
 const svg = require('../../../src/components/icons/theme-new-svg.html');
 
-const triggerID = 'actionsheet-trigger';
-const triggerHTML = `<button class="btn-secondary" id="${triggerID}">
+const triggerHTML = `<button class="btn-secondary">
   <svg class="icon" role="presentation">
     <use href="#icon-more"></use>
   </svg>
@@ -19,7 +18,13 @@ const testActions = [
   { icon: 'user-status-do-not-disturb', text: 'Remove' }
 ];
 
-describe('ActionSheet API', () => {
+// Automation Id Attributes
+const testAttrs = [
+  { name: 'id', value: 'my-actions' },
+  { name: 'data-automation-id', value: 'my-actions' }
+];
+
+fdescribe('ActionSheet API', () => {
   let actionSheetTriggerEl = null;
   let actionSheetEl = null;
   let actionSheetAPI = null;
@@ -30,7 +35,7 @@ describe('ActionSheet API', () => {
     actionSheetAPI = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', triggerHTML);
-    actionSheetTriggerEl = document.querySelector(`#${triggerID}`);
+    actionSheetTriggerEl = document.querySelector('.btn-secondary');
   });
 
   afterEach(() => {
@@ -124,5 +129,28 @@ describe('ActionSheet API', () => {
     });
 
     actionSheetAPI.doCancel(firstAction, true);
+  });
+
+  it('can have automation ids', () => {
+    actionSheetAPI = new ActionSheet(actionSheetTriggerEl, {
+      actions: testActions,
+      attributes: testAttrs
+    });
+    actionSheetEl = actionSheetAPI.actionSheetElem;
+    const firstAction = actionSheetAPI.actionElems[0];
+
+    // Attribute values are all prefixed with `my-actions` per the settings.
+    expect(actionSheetTriggerEl.id).toBe('my-actions-trigger');
+    expect(actionSheetEl.id).toBe('my-actions-sheet');
+    expect(firstAction.id).toBe('my-actions-action-0');
+
+    actionSheetAPI.openPopupMenu();
+    const actionSheetMenuEl = actionSheetAPI.popupmenuAPI.menu[0];
+    const firstMenuItem = actionSheetMenuEl.querySelector('a');
+
+    // The setting of popupmenu attributes is delegated to the Popupmenu component.
+    // However, they are all still prefixed with `my-actions` per the Action Sheet settings.
+    expect(actionSheetMenuEl.id).toBe('my-actions-menu');
+    expect(firstMenuItem.id).toBe('my-actions-option-0');
   });
 });
