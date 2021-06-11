@@ -24,7 +24,7 @@ const testAttrs = [
   { name: 'data-automation-id', value: 'my-actions' }
 ];
 
-fdescribe('ActionSheet API', () => {
+describe('ActionSheet API', () => {
   let actionSheetTriggerEl = null;
   let actionSheetEl = null;
   let actionSheetAPI = null;
@@ -152,5 +152,35 @@ fdescribe('ActionSheet API', () => {
     // However, they are all still prefixed with `my-actions` per the Action Sheet settings.
     expect(actionSheetMenuEl.id).toBe('my-actions-menu');
     expect(firstMenuItem.id).toBe('my-actions-option-0');
+  });
+
+  it('can be configured to always open a Popupmenu', () => {
+    actionSheetAPI = new ActionSheet(actionSheetTriggerEl, {
+      actions: testActions,
+      displayAsActionSheet: false
+    });
+    actionSheetEl = actionSheetAPI.actionSheetElem;
+
+    actionSheetAPI.open();
+    const actionSheetContainerEl = document.querySelector('#ids-actionsheet-root');
+
+    // Should not run the Action Sheet codepath
+    expect(actionSheetContainerEl.classList.contains('engaged')).toBeFalsy();
+    expect(actionSheetAPI.popupmenuAPI.isOpen).toBeTruthy();
+  });
+
+  it('can be configured to always open an Action Sheet', () => {
+    actionSheetAPI = new ActionSheet(actionSheetTriggerEl, {
+      actions: testActions,
+      displayAsActionSheet: 'always'
+    });
+    actionSheetEl = actionSheetAPI.actionSheetElem;
+
+    actionSheetAPI.open();
+    const actionSheetContainerEl = document.querySelector('#ids-actionsheet-root');
+
+    // Should run the Action Sheet codepath
+    expect(actionSheetContainerEl.classList.contains('engaged')).toBeTruthy();
+    expect(actionSheetAPI.popupmenuAPI).toBeFalsy();
   });
 });
