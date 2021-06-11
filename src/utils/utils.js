@@ -1380,8 +1380,7 @@ utils.getAttribute = function getAttribute(api, thisName, setting) {
 };
 
 /**
- * Similar to `transitionToPromise`, but simply waits for the specified property's `transitionend`
- * event to complete (allows the user to change the property outside the promise)
+ * Watches an element and waits for the specified property's `transitionend` event to complete.
  * @param {HTMLElement} el the element to act on
  * @param {string} property the CSS property used to qualify the correct transitionend event
  * @returns {Promise} fulfulled when the CSS transition completes

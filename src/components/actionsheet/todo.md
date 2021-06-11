@@ -5,7 +5,7 @@
 - [x] Add breakpoint support
 - [ ] Tie breakpoints into a responsive listener (same behavior as vertical tabs responsive setting)
 - [ ] Convert to/from Popupmenu based on breakpoint
-- [ ] Check accessibility in mobile view
+- [x] Check accessibility in mobile view
 - [ ] Implement attributes API
-- [ ] Test against scrollable actions list?
+- [x] Test against scrollable actions list?
 - [ ] Implement keyboard navigation on the Action Sheet?
