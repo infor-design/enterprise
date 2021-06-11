@@ -156,6 +156,12 @@
     }
   }
 
+  .btn-actions.vertical {
+    svg {
+      transform: rotate(90deg);
+    }
+  }
+
   // Expandable card headers set auto-height automatically
   &.expandable-area {
     @include auto-height;
@@ -199,6 +205,76 @@
   &.auto-size {
     @include auto-height;
     @include auto-width;
+  }
+}
+
+// CSS Rule for new expandable card
+.card.expandable-card {
+  height: auto;
+  min-height: 0;
+
+  .card-header {
+    height: auto;
+    margin: 0;
+    padding: 16px;
+
+    &.expandable-card-header[role='button'] {
+      cursor: pointer;
+    }
+
+    p + p {
+      margin-top: 8px;
+    }
+
+    .sub-heading {
+      color: $card-expandable-sub-heading;
+    }
+
+    button.btn-actions {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+
+  .card-pane {
+    height: 0;
+    overflow: hidden;
+
+    .listview {
+      margin-bottom: 24px;
+
+      li {
+        margin: 0 17px;
+        padding: 16px 7px;
+
+        .btn-icon {
+          left: 10px;
+        }
+      }
+    }
+  }
+}
+
+.card-expandable-area.card.expandable-area {
+  .expandable-header {
+    display: inline-block;
+    height: auto;
+    vertical-align: middle;
+    width: 100%;
+
+    .btn-expander {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translate(0, -50%);
+
+      svg.icon {
+        &.vertical-more {
+          transform: rotate(90deg);
+        }
+      }
+    }
   }
 }
 
@@ -323,6 +399,7 @@
   }
 
   &:not(.has-toolbar) {
+
     > .btn-actions,
     > .btn-expander {
       line-height: normal;
@@ -503,6 +580,7 @@
 html[dir='rtl'] {
   .card-header,
   .widget-header {
+
     > h2,
     > h1,
     > button {
@@ -535,6 +613,7 @@ html[dir='rtl'] {
 
   .card-content,
   .widget-content {
+
     .card-group-action,
     .widget-group-action {
       padding: 0 20px 0 10px;

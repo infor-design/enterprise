@@ -3536,7 +3536,7 @@ $datagrid-small-row-height: 25px;
     border: 1px solid transparent;
     border-bottom: 1px solid $datagrid-group-row-border-color;
     border-right: 1px solid $datagrid-cell-border-color;
-    padding: 0 20px;
+    padding: 0 17px;
     -webkit-text-size-adjust: none; //Prevent huge text on IOS
 
     &:focus,
@@ -3559,6 +3559,8 @@ $datagrid-small-row-height: 25px;
   .datagrid-expand-btn {
     left: -8px;
     margin-top: 0;
+    margin-right: 8px;
+    padding-left: 7px;
 
     .icon.plus-minus::before,
     .icon.plus-minus::after {
