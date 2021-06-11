@@ -76,7 +76,7 @@
     transform: translateY(-50%);
 
     @media only screen and (max-width: $breakpoint-phone-to-tablet) {
-      margin-right: 35px;
+      margin-right: 38px;
     }
 
     & > svg.close.icon {
@@ -90,7 +90,7 @@
   &.searchfield-wrapper {
     &.non-collapsible {
       svg.icon:not(.close) {
-        top: 11px;
+        top: 12px;
       }
     }
   }
