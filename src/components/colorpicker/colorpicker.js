@@ -239,6 +239,7 @@ ColorPicker.prototype = {
     this.addAria();
 
     // Add automation Id's
+    utils.addAttributes(this.element, this, this.settings.attributes, 'colorpicker');
     utils.addAttributes(this.element.parent().find('.trigger'), this, this.settings.attributes, 'trigger');
   },
 
