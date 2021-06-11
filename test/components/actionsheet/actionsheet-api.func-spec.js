@@ -19,7 +19,7 @@ const testActions = [
   { icon: 'user-status-do-not-disturb', text: 'Remove' }
 ];
 
-fdescribe('ActionSheet API', () => {
+describe('ActionSheet API', () => {
   let actionSheetTriggerEl = null;
   let actionSheetEl = null;
   let actionSheetAPI = null;

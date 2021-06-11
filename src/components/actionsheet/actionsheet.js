@@ -1,6 +1,4 @@
-import { DOM } from '../../utils/dom';
 import { utils } from '../../utils/utils';
-import { Environment as env } from '../../utils/environment';
 import { breakpoints } from '../../utils/breakpoints';
 
 // jQuery Components
@@ -271,7 +269,8 @@ ActionSheet.prototype = {
   },
 
   /**
-   * Closes a simple Popupnenu previously-opened in place of the Action Sheet.
+   * Closes a simple Popupmenu previously-opened in place of the Action Sheet.
+   * @param {string} mode changes the way in which the Popupmenu closes.  Defaults to none.
    * @returns {void}
    */
   closePopupMenu(mode) {

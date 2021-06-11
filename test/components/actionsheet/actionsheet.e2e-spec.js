@@ -10,7 +10,7 @@ const triggerId = 'action-sheet-trigger';
 const popupmenuId = 'ids-actionsheet-popupmenu';
 const containerId = 'ids-actionsheet-root';
 
-fdescribe('ActionSheet example-index tests', () => {
+describe('ActionSheet example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/actionsheet/example-index?layout=nofrills');
   });
