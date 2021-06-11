@@ -3,6 +3,7 @@
 ## v4.53.0 Features
 
 - `[Cards]` Added card variations (Status, Hyperlink and Photo Card) with improve hitboxes for tapping. ([#5250](https://github.com/infor-design/enterprise/issues/5250))
+- `[Cards]` Added improvements to the expandable cards and made a jQuery instance to be available in the angular wrapper. ([#5252](https://github.com/infor-design/enterprise/issues/5252))
 
 ## v4.53.0 Fixes
 
