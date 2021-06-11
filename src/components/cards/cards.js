@@ -75,7 +75,9 @@ Cards.prototype = {
       'aria-labelledby': `${this.id}-header`
     });
 
-    this.expandableCardHeader.attr('role', 'button');
+    if (this.settings.expandableHeader && this.expandableCardHeader) {
+      this.expandableCardHeader.attr('role', 'button');
+    }
 
     if (this.buttonAction.length > 0 && this.settings.verticalButtonAction) {
       this.buttonAction.addClass('vertical');
@@ -216,7 +218,7 @@ Cards.prototype = {
    */
   handleEvents() {
     const self = this;
-    this.expandableCardHeader.on('click.cards', (e) => {
+    this.expandableCardHeader?.on('click.cards', (e) => {
       if (!self.isDisabled()) {
         e.preventDefault();
         self.toggleExpanded();
