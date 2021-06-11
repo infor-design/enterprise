@@ -1,6 +1,6 @@
 ---
 title: Action Sheet
-description: A simple, mobile-friendly list of available contextual actions
+description: A simple, mobile-friendly list of available contextual actions.
 demo:
   embedded:
   - name: Default About Example
@@ -13,6 +13,8 @@ demo:
   - name: Callbacks Example
     slug: example-callbacks
 ---
+
+In Desktop settings, Action Sheets are represented by [Popupmenus](../popupmenu/readme.md).  However, Action Sheet components can be configured to instead display a mobile-friendly view of this menu, which appears to roll out from the bottom of the viewport, and can easily be selected by touch.
 
 ## Code Example
 
@@ -63,4 +65,45 @@ $('#action-sheet-trigger').actionsheet({
 
 ### Changing Breakpoints
 
-The breakpoint in which the Mobile view is displayed can be configured.  Using
+The breakpoint in which the Mobile view is displayed can be configured using two settings:
+
+- `[displayAsActionSheet]` - Determines the component's ability to show the Action Sheet.  By default, the action sheet will be displayed when the screen is smaller than a specified breakpoint. This can be configured to "always" show the Popupmenu (`false`), or to "always" show the Action Sheet (`always`) no matter what the breakpoint.
+- `[breakpoint]` - Maps to an [IDS Breakpoint](../breakpoints/readme.md), which will determine the viewport size in which Action Sheets will be displayed instead of Popupmenus.
+
+```js
+// Defaualt Behavior
+$('#action-sheet-trigger').actionsheet({
+  actions: [ /* ... */ ],
+  displayAsActionSheet: 'responsive'
+  breakpoint: 'phone-to-tablet'
+});
+
+// Always shows Popup
+$('#action-sheet-trigger').actionsheet({
+  actions: [ /* ... */ ],
+  displayAsActionSheet: false
+});
+
+// Always shows Action Sheet
+$('#action-sheet-trigger').actionsheet({
+  actions: [ /* ... */ ],
+  displayAsActionSheet: 'always'
+});
+```
+
+## Behavior Guidelines
+
+For easier usability, Action Sheets should not contain too many different actions.  Actions should be contextual to the element that triggered them, similar to a simple Context Menu.
+
+## Responsive Guidelines
+
+- While it's possible to configure the breakpoint at which the Action Sheet is displayed, keep in mind that the view is intended to be mobile-friendly, and should be used with regard for an easy experience for the end user.
+
+## Keyboard Shortcuts
+
+- <kbd>Spacebar</kbd> Executes an action, and closes an open Popupmenu or Action Sheet.
+- <kbd>Escape</kbd> "Cancels" an open Popupmenu or Action Sheet.
+
+## Upgrading from 3.X
+
+No corresponding component to the Action Sheet was available in the 3.x components.
