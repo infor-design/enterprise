@@ -1301,8 +1301,8 @@ Editor.prototype = {
     if (s.attributes) {
       const inputs = [].slice.call(output[0].querySelectorAll('[type="text"]'));
       const buttons = [].slice.call(output[0].querySelectorAll('button'));
-      inputs.forEach((input, i) => utils.addAttributes($(input), this, modalAttributes, `input${i}`));
-      buttons.forEach((btn, i) => utils.addAttributes($(btn), this, modalAttributes, `button${i}`));
+      inputs.forEach((input, i) => utils.addAttributes($(input), this, modalAttributes, `input${i}`, true));
+      buttons.forEach((btn, i) => utils.addAttributes($(btn), this, modalAttributes, `button${i}`, true));
     }
 
     return output.appendTo('body');
@@ -1345,8 +1345,8 @@ Editor.prototype = {
       const modalAttributes = this.getAutomationAttributes('-editor-modal');
       const inputs = [].slice.call(output[0].querySelectorAll('[type="text"]'));
       const buttons = [].slice.call(output[0].querySelectorAll('button'));
-      inputs.forEach((input, i) => utils.addAttributes($(input), this, modalAttributes, `input${i}`));
-      buttons.forEach((btn, i) => utils.addAttributes($(btn), this, modalAttributes, `button${i}`));
+      inputs.forEach((input, i) => utils.addAttributes($(input), this, modalAttributes, `input${i}`, true));
+      buttons.forEach((btn, i) => utils.addAttributes($(btn), this, modalAttributes, `button${i}`, true));
     }
     return output.appendTo('body');
   },
