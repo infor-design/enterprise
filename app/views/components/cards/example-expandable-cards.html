@@ -78,7 +78,16 @@
 <script>
   $('#new-expandable-card-example').cards({
     expandableHeader: true,
-    verticalButtonAction: true
+    verticalButtonAction: true,
+    attributes: [{
+        name: 'id',
+        value: 'card-id-1'
+      },
+      {
+        name: 'data-automation-id',
+        value: 'card-automation-id-1'
+      }
+    ]
   });
 
 </script>

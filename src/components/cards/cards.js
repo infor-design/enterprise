@@ -94,6 +94,16 @@ Cards.prototype = {
       this.close();
     }
 
+    // Additional attributes to the elements.
+    if (!this.settings.expandableHeader) {
+      utils.addAttributes(this.cardHeader, this, this.settings.attributes, 'header', true);
+    }
+
+    utils.addAttributes(this.element, this, this.settings.attributes, 'card', true);
+    utils.addAttributes(this.expandableCardHeader, this, this.settings.attributes, 'expander', true);
+    utils.addAttributes(this.buttonAction, this, this.settings.attributes, 'action', true);
+    utils.addAttributes(this.cardContentPane, this, this.settings.attributes, 'content', true);
+
     return this;
   },
 
