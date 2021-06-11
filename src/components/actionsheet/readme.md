@@ -75,7 +75,7 @@ The breakpoint in which the Mobile view is displayed can be configured using two
 $('#action-sheet-trigger').actionsheet({
   actions: [ /* ... */ ],
   displayAsActionSheet: 'responsive'
-  breakpoint: 'phone-to-tablet'
+  breakpoint: 'phone-to-tablet' // change this to a corresponding breakpoint
 });
 
 // Always shows Popup
@@ -88,6 +88,17 @@ $('#action-sheet-trigger').actionsheet({
 $('#action-sheet-trigger').actionsheet({
   actions: [ /* ... */ ],
   displayAsActionSheet: 'always'
+});
+```
+
+### Cancel Button
+
+By default, the Action Sheet displays a "cancel" button that will specifically cause the sheet to close in "cancel" mode.  A separate callback function/event is fired in this case.  It's possible to disable the cancel button to prevent this behavior:
+
+```js
+$('#action-sheet-trigger').actionsheet({
+  actions: [ /* ... */ ],
+  showCancelButton: false
 });
 ```
 

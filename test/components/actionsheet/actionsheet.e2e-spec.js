@@ -129,3 +129,23 @@ describe('ActionSheet example-breakpoints tests', () => {
     expect(await element(by.id(containerId)).getAttribute('class')).toContain('engaged');
   });
 });
+
+describe('ActionSheet no-cancel tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/actionsheet/test-no-cancel?layout=nofrills');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('does not display a cancel button', async () => {
+    const triggerEl = await element(by.id(triggerId)).click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id(containerId))), config.waitsFor);
+
+    // Action Sheet should be displayed with no cancel button present
+    expect(await element(by.id(containerId)).getAttribute('class')).toContain('engaged');
+    expect(await element(by.css('.btn-cancel')).isPresent()).toBeFalsy();
+  });
+});
