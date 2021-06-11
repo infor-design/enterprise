@@ -12,6 +12,7 @@
 - `[Datepicker]` Fixed a bug where the selection range was not being properly rendered in mobile. ([#5211](https://github.com/infor-design/enterprise/issues/5211))
 - `[Searchfield]` Fixed a bug where the close button is not rendered properly on mobile view. ([#5182](https://github.com/infor-design/enterprise/issues/5182))
 - `[Searchbar]` Fixed a bug where searchbar overlapped the "Websites" header when browser is minimized or viewed in mobile. ([#5248](https://github.com/infor-design/enterprise/issues/5248))
+- `[Splitter]` Fixed position of splitter button. ([#5121](https://github.com/infor-design/enterprise/issues/5121))
 
 ## v4.52.0
 
