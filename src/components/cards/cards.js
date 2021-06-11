@@ -45,11 +45,16 @@ Cards.prototype = {
   setup() {
     this.id = this.element.attr('id');
     if (!this.id || this.id === undefined) {
-      this.id = `expandable-card-${$('body').find('.expandable-card').index(this.element)}`;
+      this.id = `expandable-card-${$('body').find('.card').index(this.element)}`;
+      this.element.attr('id', this.id);
+    }
+
+    if (this.settings.expandableHeader) {
+      this.element.addClass('expandable-card');
+      this.expandableCardHeader = this.element.children('.card-header').addClass('expandable-card-header');
     }
 
     this.cardHeader = this.element.children('.card-header');
-    this.expandableCardHeader = this.element.children('.expandable-card-header');
     this.cardContentPane = this.element.children('.card-pane');
     this.buttonAction = this.cardHeader.children('.btn-actions');
 
@@ -63,8 +68,6 @@ Cards.prototype = {
    */
   build() {
     const expanded = this.element.hasClass('is-expanded');
-
-    if (this.settings.expandableHeader) this.element.addClass('expandable-card');
 
     this.cardContentPane.attr({
       id: `${this.id}-content`,
