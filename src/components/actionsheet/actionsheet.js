@@ -155,6 +155,11 @@ ActionSheet.prototype = {
       return;
     }
 
+    // Don't try to open if the Action Sheet is currently open
+    if (this.visible) {
+      return;
+    }
+
     this.rootElem.classList.add('engaged');
     this.overlayElem.removeAttribute('hidden');
     window.requestAnimationFrame(() => {
@@ -202,6 +207,7 @@ ActionSheet.prototype = {
 
     // Listen for Popupmenu Events.
     // On Popupmenu's `selected` event, fire the selected callback against the correct element.
+    this.hasPopupmenuEvents = true;
     $(this.element)
       .on('selected.popupmenu', (e, a) => {
         const actionIndex = parseInt($(a.parent()).attr('data-index'), 10);
@@ -210,19 +216,17 @@ ActionSheet.prototype = {
         }
         const targetActionElem = this.actionSheetElem.children[actionIndex];
         if (targetActionElem) {
-          this.doSelect(targetActionElem);
+          this.doSelect(targetActionElem, null, true);
         }
-        this.closePopupMenu();
-        this.focus();
       })
       .on('afteropen.popupmenu', () => {
         this.focus();
       })
       .on('close.popupmenu', (e, isCancelled) => {
-        const mode = isCancelled ? 'cancel' : '';
-        this.closePopupMenu(mode);
-        if (!isCancelled) {
-          this.focus();
+        if (isCancelled) {
+          this.doCancel(null, false, isCancelled);
+        } else {
+          this.close();
         }
       });
   },
@@ -248,9 +252,17 @@ ActionSheet.prototype = {
    * @returns {void}
    */
   close(mode = '', doFocus = false) {
-    // @TODO check for an open popupmenu before this
-    if (this.hasOpenPopupMenu) {
+    // Check for an open popupmenu
+    if (this.hasPopupmenuEvents) {
       this.closePopupMenu(mode);
+      if (doFocus) {
+        this.focus();
+      }
+      return;
+    }
+
+    // Check to see if it's currently-possible to close an Action Sheet
+    if (!this.visible) {
       return;
     }
 
@@ -275,16 +287,29 @@ ActionSheet.prototype = {
    */
   closePopupMenu(mode) {
     // Remove Popupmenu Events
-    $(this.element).off('selected.popupmenu close.popupmenu afteropen.popupmenu');
+    this.removePopupmenuEvents();
     this.triggerCloseEvent(mode);
   },
 
   /**
-   * Closes the Action Sheet in "cancel" mode
+   * Removes Popupmenu Events
+   * @private
    * @returns {void}
    */
-  cancel() {
-    this.close('cancel');
+  removePopupmenuEvents() {
+    if (this.hasPopupmenuEvents) {
+      $(this.element).off('selected.popupmenu close.popupmenu afteropen.popupmenu');
+      delete this.hasPopupmenuEvents;
+    }
+  },
+
+  /**
+   * Closes the Action Sheet in "cancel" mode
+   * @param {boolean} doFocus true if focus should occur after closing.
+   * @returns {void}
+   */
+  cancel(doFocus = false) {
+    this.close('cancel', doFocus);
   },
 
   /**
@@ -351,8 +376,8 @@ ActionSheet.prototype = {
       if (actionSheet) {
         return;
       }
-      // Purposefully doesn't run the event and just closes the popup/sheet
-      this.cancel();
+
+      this.doCancel(null, false, false);
     });
 
     // Clicking on each button may fire a callback.
@@ -375,7 +400,7 @@ ActionSheet.prototype = {
           const key = e.key;
           switch (key) {
             case 'Escape':
-              this.cancel();
+              this.doCancel(null, false, false);
               break;
             default:
               break;
@@ -388,32 +413,37 @@ ActionSheet.prototype = {
    * Runs the settings-driven select callback
    * @param {HTMLElement} targetActionElem represents the Action that was selected.
    * @param {boolean} doFireEvent true if selection should fire an event.
+   * @param {boolean} doFocus true if focus should occur after closing.
    */
-  doSelect(targetActionElem, doFireEvent) {
+  doSelect(targetActionElem, doFireEvent, doFocus = false) {
+    const $targetActionElem = $(targetActionElem);
     if (typeof this.settings.onSelect === 'function') {
-      this.settings.onSelect(targetActionElem);
+      this.settings.onSelect($targetActionElem);
     }
 
-    this.close();
+    this.close(null, doFocus);
 
     // Fires a 'selected' event the way a Popupmenu would when it's items are selected.
     if (doFireEvent) {
-      $(this.element).trigger('selected', [$(targetActionElem), null, true]);
+      $(this.element).trigger('selected', [$targetActionElem, null, true]);
     }
   },
 
   /**
    * @param {HTMLElement} targetActionElem represents UI that caused the cancel.
    * @param {boolean} doFireEvent true if cancelling should fire an event.
+   * @param {boolean} doFocus true if focus should occur after closing.
    */
-  doCancel(targetActionElem, doFireEvent) {
+  doCancel(targetActionElem, doFireEvent, doFocus) {
+    const $targetActionElem = $(targetActionElem);
     if (typeof this.settings.onCancel === 'function') {
-      this.settings.onCancel(targetActionElem);
+      this.settings.onCancel($targetActionElem);
     }
 
-    this.cancel();
+    this.cancel(doFocus);
+
     if (doFireEvent) {
-      $(this.element).trigger('cancelled', [$(targetActionElem)]);
+      $(this.element).trigger('cancelled', [$targetActionElem]);
     }
   },
 
@@ -439,6 +469,19 @@ ActionSheet.prototype = {
     }
 
     this.overlayElem.style.opacity = opacity ? `${opacity}` : '';
+  },
+
+  /**
+   * Triggers a UI Resync.
+   * @param {object} [settings] incoming settings
+   * @returns {void}
+   */
+  updated(settings) {
+    if (settings) {
+      this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
+    }
+    this.teardown();
+    this.init();
   },
 
   /**

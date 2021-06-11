@@ -1,4 +1,11 @@
 <div class="row">
+  <div class="six columns">
+    <p>This example fires callbacks instead of listening via event
+    </p>
+  </div>
+</div>
+
+<div class="row top-padding">
   <div class="twelve columns">
     <div class="field">
       <button id="action-sheet-trigger" class="btn-icon" data-init="false">
@@ -28,26 +35,10 @@
 
   $('#action-sheet-trigger').actionsheet({
     actions: [
-      { icon: 'mail', text: 'One' },
-      { icon: 'user-profile', text: 'Two' },
-      { icon: 'workflow', text: 'Three' },
-      { icon: 'user-status-do-not-disturb', text: 'Four' },
-      { icon: 'filter', text: 'Five' },
-      { icon: 'settings', text: 'Six' },
-      { icon: 'star-outline', text: 'Seven' },
-      { icon: 'cut', text: 'Eight' },
-      { icon: 'save', text: 'Nine' },
-      { icon: 'tack', text: 'Ten' },
-      { icon: 'mail', text: 'Eleven' },
-      { icon: 'user-profile', text: 'Twelve' },
-      { icon: 'workflow', text: 'Thirteen' },
-      { icon: 'user-status-do-not-disturb', text: 'Fourteen' },
-      { icon: 'filter', text: 'Fifteen' },
-      { icon: 'settings', text: 'Sixteen' },
-      { icon: 'star-outline', text: 'Seventeen' },
-      { icon: 'cut', text: 'Eighteen' },
-      { icon: 'save', text: 'Nineteen' },
-      { icon: 'tack', text: 'Twenty' }
+      { icon: 'mail', text: 'Email' },
+      { icon: 'user-profile', text: 'Go to Profile' },
+      { icon: 'workflow', text: 'Share' },
+      { icon: 'user-status-do-not-disturb', text: 'Remove' }
     ],
     attributes: [
       {
@@ -59,16 +50,18 @@
         value: 'mobile-menu'
       }
     ],
-    // Uncomment below to use callbacks instead
-    // onSelect: onSelect,
-    // onCancel: onCancel
+    onSelect: onSelect,
+    onCancel: onCancel
   });
 
+  // Uncomment below to use events instead
+  /*
   $('#action-sheet-trigger')
     .on('selected', function (e, a) {
       onSelect(a);
     })
-    .on('cancelled', function () {
+    .on('cancelled', function() {
       onCancel();
     });
+  */
 </script>
