@@ -4,7 +4,7 @@ const config = requireHelper('e2e-config');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('Cards example-expandable-cards tests', () => {
+describe('Cards example-expandable-cards tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/cards/example-expandable-cards?layout=nofrills');
     await browser.driver.wait(protractor.ExpectedConditions.invisibilityOf(element(by.className('card-pane'))), config.waitsFor);
