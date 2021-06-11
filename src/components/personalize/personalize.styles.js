@@ -7,7 +7,11 @@ function personalizeStyles(colors) {
   return `
 
 .is-personalizable ::selection {
-  background: ${colors.selection} !important
+  background: ${colors.selection} !important;
+}
+
+.is-personalizable .header::selection {
+  background-color: ${colors.darker} !important;
 }
 
 .is-personalizable .btn-primary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane),

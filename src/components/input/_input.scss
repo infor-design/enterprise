@@ -496,11 +496,13 @@ span.required::after {
 
 // Text Selection
 ::selection {
-  background: $ids-color-palette-azure-90;
+  background: $ids-color-brand-primary-base;
+  color: $inverse-color;
 }
 
 ::-moz-selection {
-  background: $ids-color-palette-azure-90;
+  background: $ids-color-brand-primary-base;
+  color: $inverse-color;
 }
 
 // Mask component Adjustment Classes
