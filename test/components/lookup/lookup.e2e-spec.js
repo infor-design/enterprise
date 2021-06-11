@@ -1,5 +1,6 @@
 const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
 const utils = requireHelper('e2e-utils');
+const { element } = require('protractor');
 const config = require('../../helpers/e2e-config.js');
 
 requireHelper('rejection');
@@ -100,6 +101,8 @@ describe('Lookup example tests', () => {
     await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.id('lookup-datagrid'))), config.waitsFor);
 
     expect(await element(by.css('.modal.lookup-modal')).getAttribute('data-automation-id')).toEqual('my-lookup-modal');
+    expect(await element(by.id('modal-button-1')).getAttribute('data-automation-id')).toEqual('my-lookup-modal-cancel');
+    expect(await element(by.id('modal-button-2')).getAttribute('data-automation-id')).toEqual('my-lookup-modal-primary');
   });
 
   if (utils.isChrome() && utils.isCI()) {
