@@ -197,14 +197,16 @@ masks.numberMask = function sohoNumberMask(rawValue, options) {
       thisRawValue === masks.EMPTY_STRING ||
       (thisRawValue[0] === PREFIX[0] && rawValueLength === 1)
     ) {
-      return PREFIX.split(masks.EMPTY_STRING).concat([masks.DIGITS_REGEX])
+      return PREFIX.split(masks.EMPTY_STRING)
+        .concat([masks.DIGITS_REGEX])
         .concat(SUFFIX.split(masks.EMPTY_STRING));
     }
+
     if (
       thisRawValue === DECIMAL && options.allowDecimal
     ) {
-      return PREFIX.split(masks.EMPTY_STRING).concat(['0', DECIMAL, masks.DIGITS_REGEX])
-        .concat(SUFFIX.split(masks.EMPTY_STRING));
+      return PREFIX.split(masks.EMPTY_STRING)
+        .concat(['0', masks.CARET_TRAP, DECIMAL, masks.CARET_TRAP, masks.DIGITS_REGEX]);
     }
 
     const indexOfLastDecimal = thisRawValue.lastIndexOf(DECIMAL);

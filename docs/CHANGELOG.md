@@ -1,10 +1,11 @@
 # What's New with Enterprise
 
-## v4.52.0
+## v4.51.2
 
-### v4.52.0 Fixes
+### v4.51.2 Fixes
 
-- `[Lookup/Datagrid]` Fixed a bug where unselecting all items in an active page affects other selected items on other pages. ([#4503](https://github.com/infor-design/enterprise/issues/4503))
+- `[Locale]` Fixed a bug where very large numbers with negative added an extra zero in formatNumber. ([#5308](https://github.com/infor-design/enterprise/issues/5308))
+- `[Mask/Datagrid]` Fixed a bug in number masks where entering a decimal while the field's entire text content was selected could cause unexpected formatting. ([#4974](https://github.com/infor-design/enterprise/issues/4974))
 
 ## v4.51.1
 
