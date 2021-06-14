@@ -90,7 +90,12 @@
   &.searchfield-wrapper {
     &.non-collapsible {
       svg.icon:not(.close) {
-        top: 12px;
+        top: 10px;
+        left: 8px;
+
+        @media only screen and (max-width: $breakpoint-phone-to-tablet) {
+          top: 12px;
+        }
       }
     }
   }
