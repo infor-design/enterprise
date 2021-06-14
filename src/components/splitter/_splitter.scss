@@ -82,6 +82,7 @@
 
     &.rotate {
       transform: rotate(0deg);
+      left: 4px
     }
   }
 
@@ -119,9 +120,11 @@
 
     .splitter-btn {
       transform: none;
+      margin-left: 0;
 
       &.rotate {
         margin-top: -5px;
+        margin-left: -3px;
         transform: rotate(180deg);
       }
     }
