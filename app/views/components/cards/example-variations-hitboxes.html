@@ -166,6 +166,80 @@
     </div>
 </div>
 
+<div class="row">
+    <div class="one-third column">
+        <h2 class="fieldset-title">Single Action</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="one-third column">
+        <div class="card card-variant">
+            <div class="card-image">
+                <img class="image-round" src="{{basepath}}/images/10.jpg" alt="Photo of John" tabindex="0"/>
+            </div>
+            <div class="card-content">
+                <div class="card-content-header">John Smith</div>
+                <div class="card-content-sub">Designer</a></div>
+            </div>
+            <div class="card-buttonset">
+                <div class="card-content-action">
+                    <button class="btn-actions" type="button" id="btn-1" tabindex="-1" data-popupmenu="popupmenu">
+                        <span class="audible">Actions</span>
+                        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                            <use href="#icon-drag"></use>
+                        </svg>
+                    </button>
+                    <ul class="popupmenu actions top" id="popupmenu" role="menu">
+                        <li role="presentation"><a href="#" role="menuitem" id="sales"><span>Action 1</span></a></li> 
+                        <li role="presentation"><a href="#" tabindex="-1" role="menuitem" id="filter">Action 2</a></li>
+                     </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="one-third column">
+        <div class="card card-variant">
+            <div class="card-image">
+                <img class="image-round" src="{{basepath}}/images/10.jpg" alt="Photo of John" tabindex="0"/>
+            </div>
+            <div class="card-content">
+                <div class="card-content-header">John Smith</div>
+                <div class="card-content-sub">Designer</a></div>
+            </div>
+            <div class="card-buttonset">
+                <div class="card-content-action">
+                    <button class="btn" type="button">
+                        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                          <use href="#icon-phone-linear"></use>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="one-third column">
+        <div class="card card-variant">
+            <div class="card-image">
+                <img class="image-round" src="{{basepath}}/images/10.jpg" alt="Photo of John" tabindex="0"/>
+            </div>
+            <div class="card-content">
+                <div class="card-content-header">John Smith</div>
+                <div class="card-content-sub">Designer</a></div>
+            </div>
+            <div class="card-buttonset">
+                <div class="card-content-action">
+                    <button class="btn" type="button">
+                        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                          <use href="#icon-phone-linear"></use>
+                        </svg>
+                        <span>Call</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     $('.card-variant').on('click', function () {
       alert('Test Click Card.');

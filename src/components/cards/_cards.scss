@@ -121,14 +121,26 @@
     }
 
     .card-buttonset {
-      padding: 15px;
-
       .card-content-action {
-        button {
-          transform: rotate(90deg);
+
+        .btn {
+          
+          &:hover {
+            color: $card-content-button-color;
+        
+            .icon {
+              color: $card-content-button-color;
+            }
+          }
+
+          span {
+            margin-right: 5px;
+          }
         }
 
         .btn-actions {
+          margin-right: 10px;
+          transform: rotate(90deg);
           padding: 15px;
           border-radius: unset;
           width: unset;
