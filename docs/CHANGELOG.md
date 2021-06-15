@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.50.4
+
+### v4.50.4 Fixes
+
+- `[Locale]` Fixed a bug where very large numbers with negative added an extra zero in formatNumber. ([#5308](https://github.com/infor-design/enterprise/issues/5308))
+
 ## v4.50.3
 
 ### v4.50.3 Fixes
