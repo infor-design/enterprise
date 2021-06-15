@@ -22,6 +22,7 @@ export { Blockgrid } from './blockgrid/blockgrid';
 export { Breadcrumb } from './breadcrumb/breadcrumb';
 export { Bullet } from './bullet/bullet';
 export { BusyIndicator } from './busyindicator/busyindicator';
+export { Cards } from './cards/cards';
 export { ColorPicker } from './colorpicker/colorpicker';
 export { Column } from './column/column';
 export { CompletionChart } from './completion-chart/completion-chart';

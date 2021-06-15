@@ -1269,7 +1269,8 @@ Calendar.prototype = {
     this.renderSelectedEventDetails();
 
     if (this.weekView) {
-      this.weekView.addEvent(event);
+      this.weekView.settings.events = this.settings.events;
+      this.weekView.renderAllEvents();
     }
   },
 
