@@ -120,11 +120,11 @@
 
     .splitter-btn {
       transform: none;
-      margin-left: 0;
+      margin-left: 0.7px;
 
       &.rotate {
-        margin-top: -5px;
-        margin-left: -3px;
+        margin-top: -6px;
+        margin-left: -2px;
         transform: rotate(180deg);
       }
     }
