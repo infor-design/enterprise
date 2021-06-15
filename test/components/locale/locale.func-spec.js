@@ -700,6 +700,18 @@ describe('Locale API', () => {
     expect(Locale.parseDate('18.10.2019 7.15', 'd.M.yyyy H.mm', true).getTime()).toEqual(new Date(2019, 9, 18, 7, 15, 0).getTime());
   });
 
+  it('handle big numbers ending in zero', () => {
+    expect(Locale.formatNumber('-1,482,409,800.81')).toEqual('-1,482,409,800.81');
+    expect(Locale.parseNumber('-1,482,409,800.81')).toEqual(-1482409800.81);
+  });
+
+  it('handle other big numbers', () => {
+    expect(Locale.formatNumber('123456789012345671')).toEqual('123,456,789,012,345,671.00');
+    expect(Locale.parseNumber('123456789012345671')).toEqual('123456789012345671');
+    expect(Locale.formatNumber('123456789012345678')).toEqual('123,456,789,012,345,678.00');
+    expect(Locale.parseNumber('123456789012345678')).toEqual('123456789012345678');
+  });
+
   it('Should be able to parse UTC toISOString', () => {
     Locale.set('en-US');
 
