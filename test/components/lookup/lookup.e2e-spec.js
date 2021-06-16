@@ -18,7 +18,6 @@ describe('Lookup example tests', () => {
     expect(await lookupEl.isEnabled()).toBe(true);
   });
 
-
   it('can be disabled', async () => {
     const lookupEl = await element(by.id('lookup-field-disabled'));
 
