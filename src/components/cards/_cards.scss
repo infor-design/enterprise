@@ -114,7 +114,7 @@
           color: $card-content-sub-color;
 
           .hyperlink {
-            padding: 7px 7px 7px 3px;
+            padding: 4px 2px 4px 2px;
           }
         }
       }
@@ -122,9 +122,9 @@
 
     .card-buttonset {
       .card-content-action {
-
         .btn {
-          
+          margin-right: 8px;
+
           &:hover {
             color: $card-content-button-color;
         
