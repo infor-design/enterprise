@@ -22,6 +22,7 @@ const COMPONENT_NAME = 'calendartoolbar';
  * @param {number} [settings.month] The month to show.
  * @param {number} [settings.year] The year to show.
  * @param {boolean} [settings.showToday=true] If true the today button is shown on the header.
+ * @param {boolean} [settings.showNextPrevious=true] If true the Next Previous buttons will shown on the header.
  * @param {function} [settings.onOpenCalendar] Call back for when the calendar is open on the toolbar datepicker, allows you to set the date.
  * @param {function} [settings.onChangeView] Call back for when the view changer is changed.
  * @param {boolean} [settings.isAlternate] Alternate style for the datepicker popup.
@@ -38,6 +39,7 @@ const COMPONENT_DEFAULTS = {
   year: new Date().getFullYear(),
   locale: null,
   showToday: true,
+  showNextPrevious: true,
   onOpenCalendar: null,
   onChangeView: null,
   isAlternate: false,
@@ -94,6 +96,22 @@ CalendarToolbar.prototype = {
     todayLink.class += ` hyperlink${isRippleClass}`;
     const todayStr = s.showToday || s.inPage ? `<a class="${todayLink.class}" href="#">${todayLink.text}</a>` : '';
 
+    // Next Previous Buttons
+    const nextPrevClass = s.showNextPrevious ? '' : ' no-next-previous';
+    const nextPrevButtonsHtml = !s.showNextPrevious ? '' :
+      `<button type="button" class="btn-icon prev">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-caret-left"></use>
+        </svg>
+        <span>${translate('PreviousMonth')}</span>
+      </button>
+      <button type="button" class="btn-icon next">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-caret-right"></use>
+          </svg>
+          <span>${translate('NextMonth')}</span>
+      </button>`;
+
     if (s.isAlternate || s.inPage) {
       if (s.isAlternate) {
         this.element[0].classList.add('is-alternate');
@@ -114,20 +132,9 @@ CalendarToolbar.prototype = {
       const menuBtnOrHtml = s.isMenuButton ? monthYearPaneButton : '<span class="month">november</span><span class="year">2015</span>';
 
       const endSectionHtml = `
-        <div class="toolbar-section buttonset l-align-${this.isRTL ? 'left' : 'right'}">
+        <div class="toolbar-section buttonset l-align-${this.isRTL ? 'left' : 'right'}${nextPrevClass}">
           ${todayStr}
-          <button type="button" class="btn-icon prev">
-            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-              <use href="#icon-caret-left"></use>
-            </svg>
-            <span>${translate('PreviousMonth')}</span>
-          </button>
-          <button type="button" class="btn-icon next">
-              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-                <use href="#icon-caret-right"></use>
-              </svg>
-              <span>${translate('NextMonth')}</span>
-          </button>
+          ${nextPrevButtonsHtml}
         </div>`;
 
       let inPageHtml = '';
@@ -161,15 +168,8 @@ CalendarToolbar.prototype = {
         ${endSectionHtml}`;
     } else {
       this.element[0].innerHTML = `
-        <div class="toolbar-section">
-          <button type="button" class="btn-icon prev">
-            <svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-caret-left"></use></svg>
-            <span>${translate('PreviousMonth')}</span>
-            </button>
-          <button type="button" class="btn-icon next">
-              <svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-caret-right"></use></svg>
-              <span>${translate('NextMonth')}</span>
-          </button>
+        <div class="toolbar-section${nextPrevClass}">
+          ${nextPrevButtonsHtml}
           <span class="monthview-datepicker">
             <span class="hidden month" data-month="9">9</span>
             <span class="hidden year">2019</span>

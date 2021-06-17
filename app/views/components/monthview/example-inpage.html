@@ -5,9 +5,12 @@
     justify-content: space-between;
     padding: 1em;
   }
-  .test-container strong {
-    display: block;
-    line-height: 1.7em;
+  .is-active .heading {
+    color: #0072ed;
+  }
+  .sub-heading {
+    color: #606066;
+    margin-top: 8px;
   }
 </style>
 
@@ -18,8 +21,12 @@
   </div>
 </div>
 
-<div id="test-content"></div>
-
+<div class="row">
+  <div class="six columns">
+    <div id="test-content"></div>
+    <br />
+  </div>
+</div>
 
 <script>
   $('body').on('initialized', function () {
@@ -68,6 +75,8 @@
       ]
     }).on('selected', function(e, args) {
       handleSelected(args);
+    }).on('monthrendered', function(e, args) {
+      handleMonthChange(args);
     });
 
     /*
@@ -83,40 +92,82 @@
       if (args) {
         var dt = new Date((args.month + 1) + '/' + args.day + '/' + args.year);
         var dtStr = getDateString(dt);
-        console.log(dtStr + ' has been selected!');
 
         updateContent(dt);
       }
     }
 
+    // handle month change
+    function handleMonthChange(args) {
+      if (args && args.api) {
+        var dt = args.api.currentDate;
+        var dtStr = getDateString(dt);
+
+        updateContent(dt);
+      }
+    }
+
+    // Remove older api
+    function cleanOlderApi() {
+      var buttons = container.find('.btn-actions');
+      buttons.each(function() {
+        var thisBtn = $(this);
+        var popupmenuApi = thisBtn.data('popupmenu');
+        if (popupmenuApi) {
+          popupmenuApi.destroy();
+        }
+        if (popupmenuApi) {
+          popupmenuApi.destroy();
+        }
+        var buttonApi = thisBtn.data('button');
+        if (buttonApi) {
+          buttonApi.destroy();
+        }
+      });
+    }
+
     // Update test content for given date
     function updateContent(dt) {
+      var currentTime = dt.getTime();
+      var oneDayTime = 86400000;
       var max = maxContentItems;
       var outHtml = '';
       for (var i = 0, len = max; i < max; i++) {
-        var thisDate = new Date(dt.getTime() + (i * 86400000));
+        var thisDate = new Date(currentTime + (i * oneDayTime));
         var dtStr = getDateString(thisDate);
         var dayStr = getDayString(thisDate);
-        outHtml += getCardHtml(dtStr, dayStr);
+        var isActiveDate = currentTime === thisDate.getTime();
+        outHtml += getCardHtml(dtStr, dayStr, isActiveDate);
       }
-      container.html(outHtml).find('.tag').tag();
+      cleanOlderApi();
+      container.html(outHtml)
+        .find('.btn-actions').popupmenu().button();
     }
 
     // Get card html string for given date
-    function getCardHtml(dtStr, dayStr) {
+    function getCardHtml(dtStr, dayStr, isActive) {
+      var menuBtnHtml = '' +
+        '<button type="button" class="btn-actions vertical" type="button">' +
+          '<span class="audible">Actions</span>' +
+          '<svg class="icon" focusable="false" aria-hidden="true" role="presentation">' +
+            '<use href="#icon-more"></use>' +
+          '</svg>' +
+        '</button>' +
+        '<ul class="popupmenu actions">' +
+          '<li><a href="#" id="action-1">Action One</a></li>' +
+          '<li><a href="#" id="action-2">Action Two</a></li>' +
+        '</ul>';
+
       return '' +
-        '<div class="row">' +
-          '<div class="six columns">' +
-            '<div class="card auto-height">' +
-              '<div class="card-content">' +
-                '<div class="test-container">' +
-                  '<div class="start">' +
-                    '<strong>' + dtStr + '</strong>8:40AM-4:00PM' +
-                  '</div>' +
-                  '<div class="end">' +
-                    // '<a href="#" class="tag info is-linkable">' + dayStr+ '</a>' +
-                  '</div>' +
-                '</div>' +
+        '<div class="card auto-height compact-bottom' + (isActive ? ' is-active' : '') + '">' +
+          '<div class="card-content">' +
+            '<div class="test-container">' +
+              '<div class="start">' +
+                '<h2 class="heading">' + dayStr + ', ' + dtStr + '</h2>' +
+                '<h3 class="sub-heading">8:40 AM - 4:00 PM</h3>' +
+              '</div>' +
+              '<div class="end">' +
+                menuBtnHtml +
               '</div>' +
             '</div>' +
           '</div>' +
@@ -129,7 +180,7 @@
     }
 
     // Get date string for given date
-    function getDateString(dt) {
+    function getDateString(dt, isYear) {
       function nth(d) {
         if (d > 3 && d < 21) {
           return 'th';
@@ -143,7 +194,7 @@
       }
       var date = dt.getDate();
       var month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][dt.getMonth()];
-      return date + nth(date) + ' ' + month + ' ' + dt.getFullYear();
+      return date + nth(date) + ' ' + month + ' ' + (isYear ? dt.getFullYear() : '');
     }
 
 });
