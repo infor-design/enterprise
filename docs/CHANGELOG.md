@@ -12,6 +12,7 @@
 - `[Datagrid]` Fixed a bug where animation blue circle is off-center. ([#5246](https://github.com/infor-design/enterprise/issues/5246))
 - `[Datepicker]` Fixed a bug where the setting attributes were missing in datepicker input and datepicker trigger on NG wrapper. ([#1044](https://github.com/infor-design/enterprise-ng/issues/1044))
 - `[Datepicker]` Fixed a bug where the selection range was not being properly rendered in mobile. ([#5211](https://github.com/infor-design/enterprise/issues/5211))
+- `[Datepicker]` Made the `autocomplete` attribute configurable by using the `autocompleteAttribute` setting. ([#5092](https://github.com/infor-design/enterprise/issues/5092))
 - `[Editor]` Fixed a bug where automation id attributes are not properly rendered on editor elements. ([#5082](https://github.com/infor-design/enterprise/issues/5082))
 - `[Lookup]` Fixed a bug where lookup attributes are not added in the cancel and apply/save button. ([#5202](https://github.com/infor-design/enterprise/issues/5202))
 - `[Locale]` Fixed a bug where very large numbers with negative added an extra zero in formatNumber. ([#5308](https://github.com/infor-design/enterprise/issues/5308))
@@ -22,6 +23,7 @@
 - `[Spinbox]` Fixed a bug where spinbox and its border is not properly rendered on responsive view. ([#5146](https://github.com/infor-design/enterprise/issues/5146))
 - `[Searchfield]` Fixed a bug where the close button is not rendered properly on mobile view. ([#5182](https://github.com/infor-design/enterprise/issues/5182))
 - `[Searchfield]` Fixed a bug where the search icon in search field is not aligned properly on firefox view. ([#5290](https://github.com/infor-design/enterprise/issues/5290))
+- `[Searchfield]` Made the `autocomplete` attribute configurable by using the `autocompleteAttribute` setting. ([#5092](https://github.com/infor-design/enterprise/issues/5092))
 - `[Searchbar]` Fixed a bug where searchbar overlapped the "Websites" header when browser is minimized or viewed in mobile. ([#5248](https://github.com/infor-design/enterprise/issues/5248))
 
 ## v4.52.0

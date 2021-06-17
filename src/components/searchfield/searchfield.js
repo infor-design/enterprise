@@ -37,7 +37,8 @@ const SEARCHFIELD_DEFAULTS = {
   clearable: false,
   collapsible: SEARCHFIELD_COLLAPSE_MODES[0],
   collapseSize: undefined,
-  tabbable: true
+  tabbable: true,
+  autocompleteAttribute: 'off'
 };
 
 // Used throughout:
@@ -67,6 +68,7 @@ const MAX_TOOLBARSEARCHFIELD_EXPAND_SIZE = 450;
  * @param {boolean} [settings.collapsibleOnMobile = true] If true, overrides `collapsible` only on mobile settings.
  * @param {number|function} [settings.collapseSize=undefined] If true, configures the size of a toolbar searchfield when it's in it's "button", unfocused mode.  If defined as a function, gets a reference to this API as its primary argument, and returns a number.
  * @param {boolean} [settings.tabbable=true] If true, the x button will get a tab stop. For accessibility its reccomended to keep this on.
+ * @param {string} [settings.autocompleteAttribute="off"] Allows prevention of built-in browser typeahead by changing/removing an `autocomplete` attribute to the field.
  */
 function SearchField(element, settings) {
   this.element = $(element);
@@ -259,7 +261,12 @@ SearchField.prototype = {
     }
 
     // Prevent browser typahead
-    this.element.attr('autocomplete', 'off');
+    const autocompleteSetting = this.settings.autocompleteAttribute;
+    if (typeof autocompleteSetting === 'string' && autocompleteSetting.length) {
+      this.element.attr('autocomplete', `${xssUtils.ensureAlphaNumeric(autocompleteSetting)}`);
+    } else if (this.element.hasAttr('autocomplete')) {
+      this.element.removeAttr('autocomplete');
+    }
 
     // Setup ARIA
     let label = this.element.attr('placeholder') || this.element.prev('label, .label').text().trim();
