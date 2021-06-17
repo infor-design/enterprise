@@ -631,15 +631,29 @@ Pager.prototype = {
       return;
     }
 
+    const btnJQ = $(btn);
+    const tooltipContent = this.settings[`${type}PageTooltip`];
+
     // Change the DOM
     if (toggleOption) {
       btn.disabled = false;
       btn.parentNode.classList.remove('is-disabled');
-      $(btn).removeAttr('disabled');
+      btnJQ.removeAttr('disabled aria-disabled');
+      const tooltipApi = btnJQ.data('tooltip');
+      if (tooltipApi && !tooltipApi.content) {
+        tooltipApi.content = tooltipContent;
+      }
     } else {
       btn.disabled = true;
       btn.parentNode.classList.add('is-disabled');
-      $(btn).attr('disabled', 'disabled');
+      btnJQ.attr({ disabled: 'disabled', 'aria-disabled': 'true' });
+      const tooltipEl = btnJQ.find('.disabled-tooltip');
+      if (!tooltipEl.length) {
+        const tooltipApi = btnJQ.data('tooltip');
+        tooltipApi.destroy();
+        btnJQ.append(`<div class="disabled-tooltip" title="${tooltipContent}"></div>`);
+        btnJQ.find('.disabled-tooltip').tooltip();
+      }
     }
   },
 
