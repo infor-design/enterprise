@@ -3,6 +3,10 @@
 
 @import './input-mixins';
 
+.compound-field > .field.attach-up-relative-x2 {
+  margin-top: 0;
+}
+
 // Field Style
 .field .checkbox-label,
 .field .checkbox > label {
@@ -15,7 +19,7 @@
 
 .field > input,
 .field > textarea {
-  margin-bottom: 0;
+  margin-bottom: 36px;
 }
 
 // Two Connected Fields
@@ -66,7 +70,12 @@
 }
 
 .attach-up-relative-x2 {
-  top: -35px;
+  top: -37px;
+}
+
+.attach-up-relative-x2 > label,
+.attach-up-relative-x2 > input{
+  margin-top: none;
 }
 
 .field {
@@ -106,7 +115,8 @@
   }
 
   &.field-radio {
-    margin-bottom: 20px;
+    // margin-bottom: 20px;
+    margin-bottom: 56px;
 
     .icon-dirty {
       left: -1px;
