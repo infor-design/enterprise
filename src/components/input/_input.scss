@@ -15,7 +15,11 @@
 
 .field > input,
 .field > textarea {
-  margin-bottom: 36px;
+  margin-bottom: 0px;
+}
+
+#example-settings-page-field {
+  padding-bottom: 36px;
 }
 
 // Two Connected Fields
