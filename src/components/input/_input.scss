@@ -3,10 +3,6 @@
 
 @import './input-mixins';
 
-.compound-field > .field.attach-up-relative-x2 {
-  margin-top: 0;
-}
-
 // Field Style
 .field .checkbox-label,
 .field .checkbox > label {
@@ -73,11 +69,6 @@
   top: -37px;
 }
 
-.attach-up-relative-x2 > label,
-.attach-up-relative-x2 > input{
-  margin-top: none;
-}
-
 .field {
   margin-bottom: $form-size-field-regular-margin-bottom;
   position: relative;
@@ -115,8 +106,7 @@
   }
 
   &.field-radio {
-    // margin-bottom: 20px;
-    margin-bottom: 56px;
+    margin-bottom: 20px;
 
     .icon-dirty {
       left: -1px;
