@@ -1730,8 +1730,7 @@ SearchField.prototype = {
         if (self.focusElem) {
           self.focusElem = self.input;
         }
-
-        // added valtation for searchfields inside flex toolbar
+        // added variation for searchfields inside flex toolbar
         if (!self.element.parents('.flex-toolbar').length) {
           self.input.focus();
         }
