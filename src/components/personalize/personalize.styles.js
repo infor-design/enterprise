@@ -626,7 +626,7 @@ html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.i
 
 .is-personalizable .personalize-header,
 .is-personalizable.tab-container {
-  background-color: ${colors.dark} !important;
+  background-color: ${colors.base} !important;
 }
 
 .is-personalizable .personalize-subheader {
