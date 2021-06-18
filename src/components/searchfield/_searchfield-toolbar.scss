@@ -94,6 +94,11 @@ $toolbarsearchfield-category-empty-width: 51px;
 
       @media only screen and (max-width: $breakpoint-phone-to-tablet) {
         top: 12px;
+    }
+
+    &:not(.is-open) {
+      .icon:not(.close) {
+        top: 10px;
       }
     }
   }

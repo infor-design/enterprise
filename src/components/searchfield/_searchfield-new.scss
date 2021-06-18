@@ -88,12 +88,12 @@
     transform: translateY(-50%);
 
     @media only screen and (max-width: $breakpoint-phone-to-tablet) {
-      margin-right: 35px;
+      margin-right: 38px;
     }
 
     & > svg.close.icon {
       position: relative;
-      top: -2px;
+      top: -1px;
     }
   }
 }
@@ -102,7 +102,12 @@
   &.searchfield-wrapper {
     &.non-collapsible {
       svg.icon:not(.close) {
-        top: 11px;
+        top: 10px;
+        left: 8px;
+
+        @media only screen and (max-width: $breakpoint-phone-to-tablet) {
+          top: 12px;
+        }
       }
     }
   }
