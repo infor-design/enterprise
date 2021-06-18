@@ -191,7 +191,7 @@ Tooltip.prototype = {
       (!this.settings.popover && this.settings.title)
     ) {
       this.settings.content = this.settings.title ? this.settings.title : titleAttr;
-      this.element.removeAttr('title');
+      // this.element.removeAttr('title');
     }
 
     if (this.settings.trigger === 'hover' && this.isTouch) {
@@ -226,7 +226,7 @@ Tooltip.prototype = {
     this.content = this.addClassToLinks(this.content, 'links-clickable');
 
     if (!this.isPopover) {
-      this.element.removeAttr('title').attr('aria-describedby', this.description.attr('id'));
+      this.element.attr('aria-describedby', this.description.attr('id'));
     }
 
     if (this.isPopover) {
