@@ -1,6 +1,17 @@
 // Lookup
 //================================================== //
 
+// This rule will serve to target (using .lookup-modal as parent selector)
+// the searchfield specifically inside of lookup modal
+// to avoid issues within the searchfield itself. (Also avoid using !important)
+.lookup-modal {
+  .toolbar-searchfield-wrapper.searchfield-wrapper.non-collapsible {
+    svg.icon:not(.close) {
+      top: 12px;
+    }
+  } 
+}
+
 .lookup-wrapper {
   display: inline-block;
   margin-bottom: 20px;
