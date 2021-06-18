@@ -10,6 +10,9 @@ import { WeekView } from '../week-view/week-view';
 import { Locale } from '../locale/locale';
 import { Tmpl } from '../tmpl/tmpl';
 
+// jQuery Components
+import '../popover/popover.jquery';
+
 // Settings and Options
 const COMPONENT_NAME = 'calendar';
 

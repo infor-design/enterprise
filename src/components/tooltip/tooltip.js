@@ -1150,7 +1150,8 @@ Tooltip.prototype = {
    */
   destroy() {
     this.teardown();
-    $.removeData(this.element[0], COMPONENT_NAME);
+    $.removeData(this.element[0], this.componentName);
+    delete this._componentName;
   }
 };
 
