@@ -138,6 +138,7 @@ Soho.Locale.addCulture('af-ZA', {
     Dark: { id: 'Dark', value: 'Donker', comment: 'The name of one of the application theme variants.' },
     Datagrid: { id: 'Datagrid', value: 'Datarooster', comment: 'Name of the datagrid component' },
     Date: { id: 'Date', value: 'Datum', comment: 'Describes filtering by a date data type' },
+    DatePickerTriggerButton: { id: 'DatePickerTriggerButton', value: 'Datumkiesersneller', comment: 'Used in accessible labels to describe a date picker field\'s trigger button to assistive technology' },
     Day: { id: 'Day', value: 'Dag', comment: 'Shows view with day events' },
     Days: { id: 'Days', value: 'Dae ', comment: 'Show how many days until an event' },
     DaysOverdue: { id: 'DaysOverdue', value: '{0} Dae agterstallig', comment: 'For a task /date UI' },
@@ -218,6 +219,7 @@ Soho.Locale.addCulture('af-ZA', {
     Hide: { id: 'Hide', value: 'Versteek', comment: 'On a Button for revealing text that is hidden' },
     HighContrast: { id: 'HighContrast', value: 'Hoë kontras', comment: 'The name of a theme variant' },
     Highest: { id: 'Highest', value: 'Hoogste', comment: 'Highest Four tooltip' },
+    Highlight: { id: 'Highlight', value: 'Beklemtoon', comment: 'Used to highlight (select) a chart item' },
     Home: { id: 'Home', value: 'Tuis', comment: 'Home tooltip' },
     HtmlView: { id: 'HtmlView', value: 'HTML-aansig', comment: 'Html View tooltip' },
     Id: { id: 'Id', value: 'ID', comment: 'Short for of identification' },
@@ -234,6 +236,7 @@ Soho.Locale.addCulture('af-ZA', {
     Italic: { id: 'Italic', value: 'Skuinsdruk', comment: 'Make Text Italic' },
     InvalidDate: { id: 'InvalidDate', value: 'Ongeldige datum', comment: 'validation message for wrong date format (short)' },
     InvalidTime: { id: 'InvalidTime', value: 'Ongeldige tyd', comment: 'validation message for wrong time format' },
+    InvalidDateTime: { id: 'InvalidDateTime', value: 'Ongeldige datum of tyd', comment: 'validation message for wrong date and time format' },
     Inventory: { id: 'Inventory', value: 'Inventaris', comment: 'Icon button tooltop for Inventory Action' },
     InRange: { id: 'InRange', value: 'Binne Perk', comment: 'In Range in icons for filtering' },
     IsEmpty: { id: 'IsEmpty', value: 'Is leeg', comment: 'Is Empty in icons for filtering' },
@@ -259,6 +262,7 @@ Soho.Locale.addCulture('af-ZA', {
     Locked: { id: 'Locked', value: 'Gesluit', comment: 'Locked tooltip' },
     Logout: { id: 'Logout', value: 'Meld af', comment: 'Log out of the application' },
     Lookup: { id: 'Lookup', value: 'Slaan na', comment: 'Lookup - As in looking up a record or value' },
+    LookupTriggerButton: { id: 'LookupTriggerButton', value: 'Opsoeksneller', comment: 'Used in accessible labels to describe a lookup field\'s trigger button to assistive technology' },
     Lowest: { id: 'Lowest', value: 'Laagste', comment: 'Lowest - As in Lowest value' },
     Mail: { id: 'Mail', value: 'Pos', comment: 'Mail tooltip' },
     MapPin: { id: 'MapPin', value: 'Speld vas', comment: 'Map Pin tooltip' },
@@ -421,6 +425,7 @@ Soho.Locale.addCulture('af-ZA', {
     Theme: { id: 'Theme', value: 'Tema', comment: 'Refers to an application Theme' },
     Time: { id: 'Time', value: 'Tyd', comment: 'The time part of a date.' },
     TimepickerPopup: { id: 'TimepickerPopup', value: 'Tydkieser-opspringer', comment: 'text read out by assistive technology that explains that the user is interacting with a Timepicker popup.' },
+    TimepickerTriggerButton: { id: 'TimepickerTriggerButton', value: 'Tydkiesersneller', comment: 'Used in accessible labels to describe a date picker field\'s trigger button to assistive technology' },
     Timer: { id: 'Timer', value: 'Tydhouer', comment: 'Timer tooltip' },
     To: { id: 'To', value: 'Aan', comment: 'End of a range (of dates)' },
     Today: { id: 'Today', value: 'Vandag', comment: 'refering to today on a calendar' },
@@ -468,4 +473,5 @@ Soho.Locale.addCulture('af-ZA', {
     Year: { id: 'Year', value: 'Jaar', comment: 'As in a date year' },
     Yes: { id: 'Yes', value: 'Ja', comment: 'On a dialog button' }
   }
+
 });
