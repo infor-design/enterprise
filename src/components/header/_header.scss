@@ -13,6 +13,11 @@ $subheader-height: 60px;
   overflow: hidden;
   width: 100%;
 
+  ::selection {
+    background: $ids-color-palette-azure-90;
+    color: $inverse-color;
+  }
+
   .searchfield {
     background-color: transparent;
     border: 1px solid transparent;
