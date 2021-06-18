@@ -68,6 +68,18 @@
     }
   }
 
+  &.has-close-icon-button {
+    .btn-icon.close:not(.is-empty) {
+      @media only screen and (max-width: $breakpoint-phone-to-tablet) {
+        margin-right: 0;
+      }
+
+      > .icon.close {
+        top: 0;
+      }
+    }
+  }
+
   .btn-icon.close {
     align-items: center;
     justify-content: center;

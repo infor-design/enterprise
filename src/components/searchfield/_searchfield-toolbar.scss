@@ -7,6 +7,16 @@ $toolbarsearchfield-empty-width: 34px;
 
 $toolbarsearchfield-category-empty-width: 51px;
 
+
+// This rule will serve to target (using .lookup-modal as parent selector)
+// the searchfield specifically inside of lookup modal
+// to avoid issues within the searchfield itself. (Also avoid using !important)
+.lookup-modal {
+  .toolbar-searchfield-wrapper.non-collapsible .icon:not(.close) {
+    top: 10px;
+  }
+}
+
 .toolbar-searchfield-wrapper {
   box-shadow: none;
   cursor: pointer;
@@ -81,10 +91,9 @@ $toolbarsearchfield-category-empty-width: 51px;
     }
     .icon:not(.close) {
       height: 14px;
-      top: 10px !important;
 
       @media only screen and (max-width: $breakpoint-phone-to-tablet) {
-        top: 12px !important;
+        top: 12px;
       }
     }
   }
