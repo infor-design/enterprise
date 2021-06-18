@@ -747,6 +747,18 @@
         height: auto;
         width: auto;
 
+        &:not(.is-selected):hover {
+          .day-text {
+            background-color: inherit;
+            color: $datepicker-day-color;
+
+            &:hover {
+              background-color: $datepicker-hover-bg-color;
+              color: $datepicker-hover-text-color;
+            }
+          }
+        }
+
         .day-container {
           border: 1px solid transparent;
           border-radius: 50%;
@@ -763,8 +775,33 @@
           }
         }
 
-        &.is-colored.is-selected .day-text {
-          margin: 2px;
+        &.is-colored {
+          .day-text::before {
+            background-color: var(--legendcolor);
+            border-radius: 50%;
+            content: '';
+            display: inline-block;
+            height: 38px;
+            left: 2px;
+            overflow: hidden;
+            position: absolute;
+            top: 2px;
+            width: 38px;
+            z-index: -1;
+          }
+
+          &.is-selected {
+            .day-text {
+              margin: 2px;
+
+              &::before {
+                height: 44px;
+                left: 0;
+                top: 0;
+                width: 44px;
+              }
+            }
+          }
         }
 
         &:not(.is-disabled):focus {
@@ -787,6 +824,7 @@
       text-align: start;
 
       &.is-wrapped {
+        line-height: 30px;
         text-align: center;
       }
 
@@ -796,6 +834,7 @@
       }
 
       .monthview-legend-text {
+        color: $datepicker-day-color;
         font-size: inherit;
       }
     }

@@ -24,6 +24,14 @@
 
 <div class="row">
   <div class="six columns">
+    <h2>Hide Next Previous Buttons</h2>
+    <div id="inpage-hide-next-previous" class="monthview" data-init="false">
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
     <h2>Hide Month Year Picker</h2>
     <div id="inpage-hide-month-year-picker" class="monthview" data-init="false">
     </div>
@@ -69,6 +77,15 @@
     $('#inpage-hide-today').monthview({
       inPage: true,
       showToday: false,
+      day: 7,
+      month: 8,
+      year: 2021
+    });
+
+    // Hide Next Previous Buttons
+    $('#inpage-hide-next-previous').monthview({
+      inPage: true,
+      showNextPrevious: false,
       day: 7,
       month: 8,
       year: 2021
