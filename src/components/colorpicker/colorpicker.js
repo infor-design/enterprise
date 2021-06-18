@@ -4,6 +4,9 @@ import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
 import { personalization } from '../personalize/personalize.bootstrap';
 
+// jQuery Components
+import '../tooltip/tooltip.jquery';
+
 // Default Settings
 const COMPONENT_NAME = 'colorpicker';
 

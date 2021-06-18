@@ -1,0 +1,68 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Popover Test: Same Button</h2>
+    <p>Github Issue: <a class="hyperlink" href="https://www.github.com/infor-design/enterprise-ng/issues/764"
+        target="_blank">NG #764</a></p>
+    <p>Example page has a button that contains both a tooltip and popover components. In versions before 4.53.0, displaying both of these components attached to the same element was impossible.</p>
+    <p>Hover the "Click to Show Popover" button after clicking to display the Popover. It should display both, and it should not close the Popover.</p>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <div class="field">
+      <button id="popover-trigger" class="btn-secondary" type="button" aria-haspopup="true" title="Display the Purchase Popover">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-upload"></use>
+        </svg>
+        <span>Click To Show Popover</span>
+      </button>
+    </div>
+
+    <div id="popover-contents" class="popover-content-area hidden">
+      <p>Purchase <strong>2</strong> more to save <a href="#" class="hyperlink"><strong>$100</strong></a> total</p>
+      <div class="demo-popover">
+        <table role="grid" class="l-pull-left">
+          <thead>
+            <tr>
+              <th scope="col" role="columnheader">Quantity</th>
+              <th scope="col" role="columnheader">Unit Price</th>
+              <th scope="col" role="columnheader">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>50</td>
+              <td>$18.00</td>
+              <td><strong>$900.00</strong></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <button class="btn-primary" type="button">Apply</button>
+      </div>
+      <div class="modal-buttonset">
+        <button type="button" class="btn-modal-primary">View more</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  var POPOVER_OPTIONS = {
+    closebutton: true,
+    content: $('#popover-contents'),
+    extraClass: 'alternate',
+    placement: 'right',
+    popover: true,
+    offset: {
+      y: 10
+    },
+    title: 'ABC Engine Company',
+    trigger: 'click'
+  };
+
+  $('#popover-trigger').popover(POPOVER_OPTIONS);
+</script>
