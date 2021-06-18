@@ -112,4 +112,11 @@ describe('Searchfield API', () => {
 
     expect(resultItems.length).toBe(1);
   });
+
+  it('can modify the `autocomplete` attribute', () => {
+    searchfieldAPI.updated({ autocompleteAttribute: 'my-search' });
+
+    expect(searchfieldAPI.settings.autocompleteAttribute).toEqual('my-search');
+    expect(searchfieldAPI.element.attr('autocomplete')).toEqual('my-search');
+  });
 });
