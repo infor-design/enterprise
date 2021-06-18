@@ -47,7 +47,12 @@ numberUtils.fixTo = function toFixed(number, decimals = 2) {
  */
 numberUtils.toFixed = function toFixed(number, decimals = 2) {
   // Parse the number into three parts. Max supported number is 18.6
-  const numStr = number.toString();
+  let numStr = number.toString();
+  let hasMinus = false;
+  if (numStr.substr(0, 1) === '-') {
+    hasMinus = true;
+    numStr = numStr.replace('-', '');
+  }
   let parsedNum = '';
   const noDecimals = numStr.split('.');
   const parts = [noDecimals[0].substr(0, 10), noDecimals[0].substr(10), noDecimals[1]];
@@ -66,6 +71,9 @@ numberUtils.toFixed = function toFixed(number, decimals = 2) {
   }
   if (lastPart && lastPart.substr(0, 1) === '0') {
     parsedNum = `${firstPart}0${parsedNum}`;
+  }
+  if (hasMinus) {
+    return `-${parsedNum}`;
   }
   return parsedNum;
 };

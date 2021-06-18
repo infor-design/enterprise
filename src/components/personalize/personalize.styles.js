@@ -639,26 +639,26 @@ html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.i
 
 .is-personalizable .personalize-actionable,
 .is-personalizable .personalize-actionable svg {
-  color: ${colors.contrast};
+  color: ${colors.contrast} !important;
   opacity: .8;
 }
 
 .is-personalizable .personalize-actionable:hover:not([disabled]),
 .is-personalizable .personalize-actionable:hover:not([disabled]) svg {
-  color: ${colors.contrast};
+  color: ${colors.contrast} !important;
   opacity: 1;
 }
 
 .is-personalizable .personalize-actionable.is-focused:not(.hide-focus),
 .is-personalizable .personalize-actionable:focus:not(.hide-focus) {
-  border-color: ${colors.contrast};
-  box-shadow: 0 0 4px 3px rgba(0, 0, 0, 0.2);
+  border-color: ${colors.contrast} !important;
+  box-shadow: 0 0 4px 3px rgba(255, 255, 255, 0.2);
 }
 
 .is-personalizable .personalize-actionable.hyperlink:focus:not(.hide-focus)::after {
-  border-color: ${colors.contrast};
+  border-color: ${colors.contrast} !important;
   opacity: 1;
-  box-shadow: 0 0 4px 3px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 4px 3px rgba(255, 255, 255, 0.2);
 }
 
 .is-personalizable .personalize-vertical-border {
