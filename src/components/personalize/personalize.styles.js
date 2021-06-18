@@ -7,7 +7,11 @@ function personalizeStyles(colors) {
   return `
 
 .is-personalizable ::selection {
-  background: ${colors.selection} !important
+  background: ${colors.selection} !important;
+}
+
+.is-personalizable .header::selection {
+  background-color: ${colors.darker} !important;
 }
 
 .is-personalizable .btn-primary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane),
@@ -622,7 +626,7 @@ html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.i
 
 .is-personalizable .personalize-header,
 .is-personalizable.tab-container {
-  background-color: ${colors.dark} !important;
+  background-color: ${colors.base} !important;
 }
 
 .is-personalizable .personalize-subheader {
