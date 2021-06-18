@@ -2,6 +2,7 @@ import { utils } from '../../utils/utils';
 import { breakpoints } from '../../utils/breakpoints';
 
 // jQuery Components
+import '../../utils/behaviors';
 import '../icons/icons.jquery';
 import '../popupmenu/popupmenu.jquery';
 
@@ -350,7 +351,11 @@ ActionSheet.prototype = {
 
     // If the action sheet is engaged, focus the first available button element inside
     if (this.visible) {
-      this.actionSheetElem.querySelector('button')?.focus();
+      const targetAction = this.actionSheetElem.querySelector('button');
+      if (targetAction) {
+        targetAction.focus();
+        this.resetFocusState(targetAction);
+      }
       return;
     }
 
@@ -410,6 +415,12 @@ ActionSheet.prototype = {
               break;
           }
         }
+      })
+      .on('focusin.action', 'button', (e) => {
+        this.resetFocusState(e.target.closest('.ids-action'));
+      })
+      .on('focusout.action', 'button', (e) => {
+        this.resetFocusState(e.target.closest('.ids-action'));
       });
   },
 
@@ -449,6 +460,18 @@ ActionSheet.prototype = {
     if (doFireEvent) {
       $(this.element).trigger('cancelled', [$targetActionElem]);
     }
+  },
+
+  /**
+   * Hides the focus state on a button in the Action Sheet
+   * @param {HTMLElement} targetActionElem represents UI that caused the cancel.
+   */
+  resetFocusState(targetActionElem) {
+    const $targetActionElem = $(targetActionElem);
+    if (!$targetActionElem.data('hide-focus')) {
+      $targetActionElem.hideFocus();
+    }
+    $targetActionElem.addClass('hide-focus');
   },
 
   /**
