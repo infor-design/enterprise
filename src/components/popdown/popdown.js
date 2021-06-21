@@ -257,11 +257,12 @@ Popdown.prototype = {
     });
 
     // Check to see if a Popover/Tooltip has focus, and if that component's parent
-    // element is inside the Popdown
+    // element is inside the Modal
     const tooltipParents = $(activeElem).parents('.tooltip, .popover');
     if (tooltipParents.length) {
       tooltipParents.each((i, elem) => {
-        const api = $(elem).data('tooltip');
+        const componentName = elem.className.contains('popover') ? 'popover' : 'tooltip';
+        const api = $(elem).data(componentName);
         if (api && api.isFocused) {
           componentHasFocus = true;
         }

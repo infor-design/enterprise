@@ -12,6 +12,7 @@ import '../place/place.jquery';
 
 // Component Name
 const COMPONENT_NAME = 'tooltip';
+const POPOVER_COMPONENT_NAME = 'popover';
 
 // Trigger Methods
 const TOOLTIP_TRIGGER_METHODS = ['hover', 'immediate', 'click', 'focus'];
@@ -77,12 +78,29 @@ const TOOLTIP_DEFAULTS = {
 function Tooltip(element, settings) {
   this.settings = utils.mergeSettings(element, settings, TOOLTIP_DEFAULTS);
   this.element = $(element);
-  debug.logTimeStart(COMPONENT_NAME);
+  debug.logTimeStart(this.componentName);
   this.init();
-  debug.logTimeEnd(COMPONENT_NAME);
+  debug.logTimeEnd(this.componentName);
 }
 
 Tooltip.prototype = {
+
+  /**
+   * @returns {string} either 'popover' or 'tooltip'
+   */
+  get componentName() {
+    if (!this._componentName) {
+      this._componentName = this.isPopover ? POPOVER_COMPONENT_NAME : COMPONENT_NAME;
+    }
+    return this._componentName;
+  },
+
+  /**
+   * @returns {boolean} true if this component is a Popover component instead of a Tooltip
+   */
+  get isPopover() {
+    return (this.settings.content !== null && typeof this.settings.content === 'object') || this.settings.popover === true;
+  },
 
   /**
    * @returns {boolean} whether or not the tooltip/popover element is currently visible
@@ -131,7 +149,7 @@ Tooltip.prototype = {
    * @returns {void}
    */
   init() {
-    this.uniqueId = utils.uniqueId(this.element, 'tooltip');
+    this.uniqueId = utils.uniqueId(this.element, this.componentName);
     this.isTouch = env.features.touch;
     this.setup();
     this.appendTooltip();
@@ -180,8 +198,6 @@ Tooltip.prototype = {
       this.element.addClass('longpress-target');
     }
 
-    this.isPopover = (this.settings.content !== null && typeof this.settings.content === 'object') || this.settings.popover === true;
-
     this.settings.closebutton = !!((this.settings.closebutton || this.element.data('closebutton')));
 
     if (this.element.data('extraClass') && this.element.data('extraClass').length) {
@@ -210,7 +226,7 @@ Tooltip.prototype = {
     this.content = this.addClassToLinks(this.content, 'links-clickable');
 
     if (!this.isPopover) {
-      this.element.removeAttr('title').attr('aria-describedby', this.description.attr('id'));
+      this.element.attr('aria-describedby', this.description.attr('id'));
     }
 
     if (this.isPopover) {
@@ -257,10 +273,16 @@ Tooltip.prototype = {
    * @returns {void}
    */
   appendTooltip() {
-    this.tooltip = this.settings.tooltipElement ? $(this.settings.tooltipElement) : $('#tooltip');
+    const elem = this.settings.tooltipElement;
+    const className = this.isPopover ? 'popover' : 'tooltip';
+    this.tooltip = elem ? $(elem) : $(`#${this.componentName}`);
+
     if (!this.tooltip.length) {
-      const name = (this.settings.tooltipElement ? this.settings.tooltipElement.substring(1, this.settings.tooltipElement.length) : 'tooltip');
-      this.tooltip = $(`<div class="${this.isPopover ? 'popover' : 'tooltip'} bottom is-hidden" id="${name}"><div class="arrow"></div><div class="tooltip-content"></div></div>`);
+      const name = (elem ? elem.substring(1, elem.length) : this.componentName);
+      this.tooltip = $(`<div class="${className} bottom is-hidden" id="${name}">
+        <div class="arrow"></div>
+        <div class="tooltip-content"></div>
+      </div>`);
     }
 
     this.tooltip.place({
@@ -271,7 +293,7 @@ Tooltip.prototype = {
     });
 
     // Attach a reference to this tooltip API to the actual tooltip/popover element
-    $.data(this.tooltip[0], 'tooltip', this);
+    $.data(this.tooltip[0], this.componentName, this);
 
     this.setTargetContainer();
     this.addAria();
@@ -1098,8 +1120,9 @@ Tooltip.prototype = {
       }
 
       // Remove a link back to this API, if one was generated
-      if (this.tooltip.data('tooltip')) {
-        $.removeData(this.tooltip[0], 'tooltip');
+      if (this.tooltip.data(this.componentName)) {
+        $.removeData(this.tooltip[0], this.componentName);
+        delete this._componentName;
       }
     }
 
@@ -1127,7 +1150,8 @@ Tooltip.prototype = {
    */
   destroy() {
     this.teardown();
-    $.removeData(this.element[0], COMPONENT_NAME);
+    $.removeData(this.element[0], this.componentName);
+    delete this._componentName;
   }
 };
 

@@ -32,6 +32,7 @@
 - `[Searchfield]` Fixed a bug where the button does not have the same height as the searchfield input. ([#5314](https://github.com/infor-design/enterprise/issues/5314))
 - `[Searchbar]` Fixed a bug where searchbar overlapped the "Websites" header when browser is minimized or viewed in mobile. ([#5248](https://github.com/infor-design/enterprise/issues/5248))
 - `[Splitter]` Fixed position of splitter button. ([#5121](https://github.com/infor-design/enterprise/issues/5121))
+- `[Tooltip/Popover]` Split the Popover and Tooltip into separate components. ([#5197](https://github.com/infor-design/enterprise/issues/5197))
 
 ## v4.52.0
 
