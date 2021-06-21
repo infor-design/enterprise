@@ -1,5 +1,11 @@
 // Uplift Lookup
 //================================================== //
+.lookup-modal {
+  .toolbar-searchfield-wrapper.non-collapsible .searchfield {
+    height: 34px;
+  }
+}
+
 .lookup-wrapper {
   .trigger {
     margin-top: 7px;
@@ -99,7 +105,7 @@ html[dir='rtl'] {
 
           &:focus {
             .close.icon {
-              display: block;
+              display: inline-block;
             }
           }
         }
