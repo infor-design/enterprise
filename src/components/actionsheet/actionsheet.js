@@ -344,8 +344,10 @@ ActionSheet.prototype = {
     // Popupmenu (highlight first item)
     if (this.hasOpenPopupMenu) {
       const a = this.popupmenuAPI.menu[0].querySelector('a');
-      a.focus();
-      this.popupmenuAPI.highlight($(a));
+      if (a) {
+        a.focus();
+        this.popupmenuAPI.highlight($(a));
+      }
       return;
     }
 
