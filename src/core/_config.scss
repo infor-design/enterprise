@@ -950,5 +950,10 @@ $field-md: $input-size-width-md;
 $field-lg: $input-size-width-lg;
 $field-full: 100%;
 
+// Action Sheet
+$actionsheet-bg-color: $popupmenu-bg-color;
+$actionsheet-box-shadow: 0 0 8px $drop-shadow-depth;
+$actionsheet-color: $popupmenu-color;
+
 //Misc
 $cubic-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);

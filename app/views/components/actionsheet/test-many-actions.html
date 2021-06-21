@@ -1,0 +1,74 @@
+<div class="row">
+  <div class="twelve columns">
+    <div class="field">
+      <button id="action-sheet-trigger" class="btn-icon" data-init="false">
+        <span class="audible">Trigger Action Sheet</span>
+        <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+          <use href="#icon-more"></use>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script id="test-script">
+  function onSelect($a) {
+    $('body').toast({
+      title: 'Selected',
+      message: 'The "' + $a.text().trim() + '" button on the Action Sheet was clicked'
+    });
+  }
+
+  function onCancel() {
+    $('body').toast({
+      title: 'Cancelled',
+      message: 'The Action Sheet was cancelled'
+    });
+  }
+
+  $('#action-sheet-trigger').actionsheet({
+    actions: [
+      { icon: 'mail', text: 'One' },
+      { icon: 'user-profile', text: 'Two' },
+      { icon: 'workflow', text: 'Three' },
+      { icon: 'user-status-do-not-disturb', text: 'Four' },
+      { icon: 'filter', text: 'Five' },
+      { icon: 'settings', text: 'Six' },
+      { icon: 'star-outline', text: 'Seven' },
+      { icon: 'cut', text: 'Eight' },
+      { icon: 'save', text: 'Nine' },
+      { icon: 'tack', text: 'Ten' },
+      { icon: 'mail', text: 'Eleven' },
+      { icon: 'user-profile', text: 'Twelve' },
+      { icon: 'workflow', text: 'Thirteen' },
+      { icon: 'user-status-do-not-disturb', text: 'Fourteen' },
+      { icon: 'filter', text: 'Fifteen' },
+      { icon: 'settings', text: 'Sixteen' },
+      { icon: 'star-outline', text: 'Seventeen' },
+      { icon: 'cut', text: 'Eighteen' },
+      { icon: 'save', text: 'Nineteen' },
+      { icon: 'tack', text: 'Twenty' }
+    ],
+    attributes: [
+      {
+        name: 'id',
+        value: 'my-actions'
+      },
+      {
+        name: 'data-automation-id',
+        value: 'my-actions'
+      }
+    ],
+    // Uncomment below to use callbacks instead
+    // onSelect: onSelect,
+    // onCancel: onCancel
+  });
+
+  $('#action-sheet-trigger')
+    .on('selected', function (e, a) {
+      onSelect(a);
+    })
+    .on('cancelled', function () {
+      onCancel();
+    });
+</script>

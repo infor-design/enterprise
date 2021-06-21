@@ -1334,7 +1334,7 @@ utils.addAttributes = function addAttributes(elem, api, setting, suffix, overrid
  * @param {object} api The object base api
  * @param {object|Array} setting The attribute setting
  * @param {string} suffix Append an extra string at the end
- * @returns {string} the attrbibutes as a string
+ * @returns {string} the attributes as a string
  */
 utils.stringAttributes = function addAttributes(api, setting, suffix) {
   let attributes = '';
@@ -1377,6 +1377,24 @@ utils.getAttribute = function getAttribute(api, thisName, setting) {
   });
 
   return value;
+};
+
+/**
+ * Watches an element and waits for the specified property's `transitionend` event to complete.
+ * @param {HTMLElement} el the element to act on
+ * @param {string} property the CSS property used to qualify the correct transitionend event
+ * @returns {Promise} fulfulled when the CSS transition completes
+ */
+utils.waitForTransitionEnd = function (el, property) {
+  // eslint-disable-next-line
+  return new Promise((resolve) => {
+    const transitionEnded = (e) => {
+      if (e.propertyName !== property) return;
+      el.removeEventListener('transitionend', transitionEnded);
+      resolve();
+    };
+    el.addEventListener('transitionend', transitionEnded);
+  });
 };
 
 export { utils, math };

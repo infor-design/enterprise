@@ -1,0 +1,74 @@
+@import '../button/button';
+
+.ids-actionsheet {
+  @include css3(transform, translate(0, 100%));
+  @include transition(transform 200ms $cubic-ease);
+
+  background-color: $actionsheet-bg-color;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  bottom: 0;
+  box-shadow: $actionsheet-box-shadow;
+  color: $actionsheet-color;
+  display: flex;
+  flex-direction: column;
+  left: 0;
+  margin: 0 auto;
+  max-height: 70vh;
+  max-width: 480px;
+  overflow: auto;
+  padding: 12px;
+  position: fixed;
+  right: 0;
+  -webkit-touch-callout: none;
+  z-index: 4000;
+
+  // Alignment of the items is different when icons are present
+  // ==============================
+  &.has-icons {
+    [class^='btn'] {
+      text-align: left;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      padding: 0 36px;
+    }
+  }
+}
+
+.ids-actionsheet-container {
+  bottom: 0;
+  left: 0;
+  max-height: 100vh;
+  pointer-events: none;
+  position: fixed;
+  right: 0;
+  top: 0;
+
+  // Container State while an Action Sheet is visible
+  // ==============================
+  &.engaged {
+    pointer-events: auto;
+
+    .ids-actionsheet {
+      transform: translate(0);
+    }
+
+    .overlay {
+      visibility: visible;
+    }
+  }
+}
+
+.ids-action {
+  display: block;
+  margin-right: 0;
+}
+
+.separator,
+.ids-action {
+  + .ids-action {
+    margin-top: 12px;
+  }
+}
