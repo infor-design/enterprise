@@ -1,0 +1,65 @@
+<div class="row">
+  <div class="six columns">
+    <p>This Action Sheet has no icons
+    </p>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+    <div class="field">
+      <button id="action-sheet-trigger" class="btn-icon" data-init="false">
+        <span class="audible">Trigger Action Sheet</span>
+        <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+          <use href="#icon-more"></use>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script id="test-script">
+  function onSelect($a) {
+    $('body').toast({
+      title: 'Selected',
+      message: 'The "' + $a.text().trim() + '" button on the Action Sheet was clicked'
+    });
+  }
+
+  function onCancel() {
+    $('body').toast({
+      title: 'Cancelled',
+      message: 'The Action Sheet was cancelled'
+    });
+  }
+
+  $('#action-sheet-trigger').actionsheet({
+    actions: [
+      { text: 'Email' },
+      { text: 'Go to Profile' },
+      { text: 'Share' },
+      { text: 'Remove' }
+    ],
+    attributes: [
+      {
+        name: 'id',
+        value: 'my-actions'
+      },
+      {
+        name: 'data-automation-id',
+        value: 'my-actions'
+      }
+    ],
+    // Uncomment below to use callbacks instead
+    // onSelect: onSelect,
+    // onCancel: onCancel
+  });
+
+  $('#action-sheet-trigger')
+    .on('selected', function (e, a) {
+      onSelect(a);
+    })
+    .on('cancelled', function () {
+      onCancel();
+    });
+</script>

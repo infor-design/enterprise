@@ -1,0 +1,67 @@
+<div class="row">
+  <div class="six columns">
+    <p>This example fires callbacks instead of listening via event
+    </p>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+    <div class="field">
+      <button id="action-sheet-trigger" class="btn-icon" data-init="false">
+        <span class="audible">Trigger Action Sheet</span>
+        <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+          <use href="#icon-more"></use>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script id="test-script">
+  function onSelect($a) {
+    $('body').toast({
+      title: 'Selected',
+      message: 'The "' + $a.text().trim() + '" button on the Action Sheet was clicked'
+    });
+  }
+
+  function onCancel() {
+    $('body').toast({
+      title: 'Cancelled',
+      message: 'The Action Sheet was cancelled'
+    });
+  }
+
+  $('#action-sheet-trigger').actionsheet({
+    actions: [
+      { icon: 'mail', text: 'Email' },
+      { icon: 'user-profile', text: 'Go to Profile' },
+      { icon: 'workflow', text: 'Share' },
+      { icon: 'user-status-do-not-disturb', text: 'Remove' }
+    ],
+    attributes: [
+      {
+        name: 'id',
+        value: 'my-actions'
+      },
+      {
+        name: 'data-automation-id',
+        value: 'my-actions'
+      }
+    ],
+    onSelect: onSelect,
+    onCancel: onCancel
+  });
+
+  // Uncomment below to use events instead
+  /*
+  $('#action-sheet-trigger')
+    .on('selected', function (e, a) {
+      onSelect(a);
+    })
+    .on('cancelled', function() {
+      onCancel();
+    });
+  */
+</script>

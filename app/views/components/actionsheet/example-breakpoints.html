@@ -1,0 +1,141 @@
+<div class="row">
+  <div class="six columns">
+    <p>Change the settings below to alter the breakpoint on which the Action Sheet is displayed:</p>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+    <div class="field">
+      <button id="action-sheet-trigger" class="btn-icon" data-init="false">
+        <span class="audible">Trigger Action Sheet</span>
+        <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+          <use href="#icon-more"></use>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="six columns">
+    <fieldset id="breakpoint-control-group" class="radio-group">
+      <legend>Breakpoints</legend>
+      <input type="radio" class="radio" name="breakpoint-options" id="phone" value="phone" />
+      <label for="phone" class="radio-label">Phone (320px)</label>
+      <br />
+      <input type="radio" class="radio" name="breakpoint-options" id="slim" value="slim" />
+      <label for="slim" class="radio-label">Slim (400px)</label>
+      <br />
+      <input type="radio" class="radio" name="breakpoint-options" id="phablet" value="phablet" />
+      <label for="phablet" class="radio-label">Tablet (610px)</label>
+      <br />
+      <input type="radio" class="radio" name="breakpoint-options" id="phone-to-tablet" value="phone-to-tablet" checked />
+      <label for="phone-to-tablet" class="radio-label">Phone-to-Tablet (767px)</label>
+      <br />
+      <input type="radio" class="radio" name="breakpoint-options" id="wide-tablet" value="wide-tablet" />
+      <label for="wide-tablet" class="radio-label">Wide-Tablet (968px)</label>
+      <br />
+      <input type="radio" class="radio" name="breakpoint-options" id="tablet-to-desktop" value="tablet-to-desktop" />
+      <label for="tablet-to-desktop" class="radio-label">Tablet-to-Desktop (1280px)</label>
+      <br />
+      <input type="radio" class="radio" name="breakpoint-options" id="desktop" value="desktop" />
+      <label for="desktop" class="radio-label">Desktop (1024px)</label>
+      <br />
+      <input type="radio" class="radio" name="breakpoint-options" id="desktop-to-extralarge"
+        value="desktop-to-extralarge" />
+      <label for="desktop-to-extralarge" class="radio-label">Desktop-to-ExtraLarge (1600px)</label>
+    </fieldset>
+    </div>
+  </div>
+  <div class="six columns">
+    <fieldset id="display-control-group" class="radio-group">
+      <legend>Display As Action Sheet:</legend>
+      <input type="radio" class="radio" name="display-options" id="display-never" value="" />
+      <label for="display-never" class="radio-label">Never</label>
+      <br />
+      <input type="radio" class="radio" name="display-options" id="display-responsive" value="responsive" checked/>
+      <label for="display-responsive" class="radio-label">At a specified breakpoint ("responsive")</label>
+      <br />
+      <input type="radio" class="radio" name="display-options" id="display-always" value="always" />
+      <label for="display-always" class="radio-label">Always</label>
+      <br />
+    </fieldset>
+  </div>
+</div>
+
+<script id="test-script">
+  const actionSheetTriggerBtn = $('#action-sheet-trigger');
+  const breakpointControls = $('input[name="breakpoint-options"]');
+  const breakpointControlGroup = $('#breakpoint-control-group');
+  const displayControls = $('input[name="display-options"]');
+  const displayControlGroup = $('#display-control-group');
+
+  function getCheckedBreakpointValue() {
+    return breakpointControls.filter(':checked').val()
+  }
+
+  function getCheckedDisplayValue() {
+    return displayControls.filter(':checked').val()
+  }
+
+  function onSelect($a) {
+    $('body').toast({
+      title: 'Selected',
+      message: 'The "' + $a.text().trim() + '" button on the Action Sheet was clicked'
+    });
+  }
+
+  function onCancel() {
+    $('body').toast({
+      title: 'Cancelled',
+      message: 'The Action Sheet was cancelled'
+    });
+  }
+
+  actionSheetTriggerBtn.actionsheet({
+    actions: [
+      { icon: 'mail', text: 'Email' },
+      { icon: 'user-profile', text: 'Go to Profile' },
+      { icon: 'workflow', text: 'Share' },
+      { icon: 'user-status-do-not-disturb', text: 'Remove' }
+    ],
+    attributes: [
+      {
+        name: 'id',
+        value: 'my-actions'
+      },
+      {
+        name: 'data-automation-id',
+        value: 'my-actions'
+      }
+    ],
+    breakpoint: getCheckedBreakpointValue(),
+    displayAsActionSheet: getCheckedDisplayValue()
+  });
+  const actionSheetAPI = actionSheetTriggerBtn.data('actionsheet');
+
+  actionSheetTriggerBtn
+    .on('selected', function (e, a) {
+      onSelect(a);
+    })
+    .on('cancelled', function () {
+      onCancel();
+    });
+
+  // ===========================================================
+  // Example Controls
+
+  function breakpointControlChangeHandler(e) {
+    actionSheetAPI.updated({ breakpoint: e.target.value });
+  }
+  breakpointControlGroup.on('change', 'input[type="radio"]', breakpointControlChangeHandler);
+
+  function displayControlChangeHandler(e) {
+    const newValue = e.target.value;
+    actionSheetAPI.updated({ displayAsActionSheet: newValue });
+    breakpointControlGroup[0].disabled = (newValue !== 'responsive');
+  }
+  displayControlGroup.on('change', 'input[type="radio"]', displayControlChangeHandler);
+
+</script>

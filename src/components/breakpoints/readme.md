@@ -1,5 +1,5 @@
 ---
-title: Favorites
+title: Breakpoints
 description: null
 demo:
   embedded:
