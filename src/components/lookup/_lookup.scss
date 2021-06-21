@@ -1,6 +1,17 @@
 // Lookup
 //================================================== //
 
+// This rule will serve to target (using .lookup-modal as parent selector)
+// the searchfield specifically inside of lookup modal
+// to avoid issues within the searchfield itself. (Also avoid using !important)
+.lookup-modal {
+  .toolbar-searchfield-wrapper.searchfield-wrapper.non-collapsible {
+    svg.icon:not(.close) {
+      top: 12px;
+    }
+  } 
+}
+
 .lookup-wrapper {
   display: inline-block;
   margin-bottom: 20px;
@@ -97,10 +108,14 @@
       // Override default functionality from toolbar searchfield
       .btn-icon {
         .close.icon {
-          display: block;
+          display: inline-block;
         }
       }
     }
+  }
+
+  .toolbar-searchfield-wrapper.non-collapsible .searchfield {
+    padding-top: 8px !important;
   }
 }
 
@@ -185,7 +200,7 @@
       width: calc(100% - 44px) !important;
 
       + .more {
-        padding-top: 10px;
+        padding-top: 4px;
       }
     }
   }
@@ -354,7 +369,6 @@ html[dir='rtl'] {
 
 html:not([dir='rtl'])[class*='theme-classic-'] .modal-content .toolbar .buttonset .searchfield-wrapper .btn-icon.close {
   svg.icon.close {
-    left: 2px;
     top: 0;
   }
 }
@@ -366,7 +380,6 @@ html[dir='rtl'] .modal-content .toolbar .buttonset .searchfield-wrapper .btn-ico
 
 html[class*='theme-classic-'] .modal-content .toolbar .buttonset .searchfield-wrapper .btn-icon.close {
   svg.icon.close {
-    left: 7px;
     position: relative;
     right: unset;
   }
