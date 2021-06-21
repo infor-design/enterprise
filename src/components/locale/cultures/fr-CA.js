@@ -137,6 +137,7 @@ Soho.Locale.addCulture('fr-CA', {
     Dark: { id: 'Dark', value: 'Sombre', comment: 'The name of one of the application theme variants.' },
     Datagrid: { id: 'Datagrid', value: 'Grille de données', comment: 'Name of the datagrid component' },
     Date: { id: 'Date', value: 'Date', comment: 'Describes filtering by a date data type' },
+    DatePickerTriggerButton: { id: 'DatePickerTriggerButton', value: 'Déclencheur de sélecteur de date', comment: 'Used in accessible labels to describe a date picker field\'s trigger button to assistive technology' },
     Day: { id: 'Day', value: 'Jour', comment: 'Shows view with day events' },
     Days: { id: 'Days', value: 'Jours ', comment: 'Show how many days until an event' },
     DaysOverdue: { id: 'DaysOverdue', value: '{0} jours de retard', comment: 'For a task /date UI' },
@@ -217,6 +218,7 @@ Soho.Locale.addCulture('fr-CA', {
     Hide: { id: 'Hide', value: 'Masquer', comment: 'On a Button for revealing text that is hidden' },
     HighContrast: { id: 'HighContrast', value: 'Contraste élevé', comment: 'The name of a theme variant' },
     Highest: { id: 'Highest', value: 'Valeur supérieure', comment: 'Highest Four tooltip' },
+    Highlight: { id: 'Highlight', value: 'Mettre en surbrillance', comment: 'Used to highlight (select) a chart item' },
     Home: { id: 'Home', value: 'Accueil', comment: 'Home tooltip' },
     HtmlView: { id: 'HtmlView', value: 'Affichage HTML', comment: 'Html View tooltip' },
     Id: { id: 'Id', value: 'ID', comment: 'Short for of identification' },
@@ -233,6 +235,7 @@ Soho.Locale.addCulture('fr-CA', {
     Italic: { id: 'Italic', value: 'Italique', comment: 'Make Text Italic' },
     InvalidDate: { id: 'InvalidDate', value: 'Date non valide', comment: 'validation message for wrong date format (short)' },
     InvalidTime: { id: 'InvalidTime', value: 'Heure non valide', comment: 'validation message for wrong time format' },
+    InvalidDateTime: { id: 'InvalidDateTime', value: 'Date ou heure non valide', comment: 'validation message for wrong date and time format' },
     Inventory: { id: 'Inventory', value: 'Inventaire', comment: 'Icon button tooltop for Inventory Action' },
     InRange: { id: 'InRange', value: 'Dans la plage', comment: 'In Range in icons for filtering' },
     IsEmpty: { id: 'IsEmpty', value: 'Est vide', comment: 'Is Empty in icons for filtering' },
@@ -258,6 +261,7 @@ Soho.Locale.addCulture('fr-CA', {
     Locked: { id: 'Locked', value: 'Verrouillé', comment: 'Locked tooltip' },
     Logout: { id: 'Logout', value: 'Se déconnecter', comment: 'Log out of the application' },
     Lookup: { id: 'Lookup', value: 'Rechercher', comment: 'Lookup - As in looking up a record or value' },
+    LookupTriggerButton: { id: 'LookupTriggerButton', value: 'Déclencheur de recherche', comment: 'Used in accessible labels to describe a lookup field\'s trigger button to assistive technology' },
     Lowest: { id: 'Lowest', value: 'Valeur inférieure', comment: 'Lowest - As in Lowest value' },
     Mail: { id: 'Mail', value: 'Courrier', comment: 'Mail tooltip' },
     MapPin: { id: 'MapPin', value: 'Épingler', comment: 'Map Pin tooltip' },
@@ -420,6 +424,7 @@ Soho.Locale.addCulture('fr-CA', {
     Theme: { id: 'Theme', value: 'Thème', comment: 'Refers to an application Theme' },
     Time: { id: 'Time', value: 'Heure', comment: 'The time part of a date.' },
     TimepickerPopup: { id: 'TimepickerPopup', value: 'Menu contextuel Sélecteur d\'heure', comment: 'text read out by assistive technology that explains that the user is interacting with a Timepicker popup.' },
+    TimepickerTriggerButton: { id: 'TimepickerTriggerButton', value: 'Déclencheur de sélecteur d\'heure', comment: 'Used in accessible labels to describe a date picker field\'s trigger button to assistive technology' },
     Timer: { id: 'Timer', value: 'Minuteur', comment: 'Timer tooltip' },
     To: { id: 'To', value: 'À', comment: 'End of a range (of dates)' },
     Today: { id: 'Today', value: 'Aujourd\'hui', comment: 'refering to today on a calendar' },
@@ -467,5 +472,4 @@ Soho.Locale.addCulture('fr-CA', {
     Year: { id: 'Year', value: 'Année', comment: 'As in a date year' },
     Yes: { id: 'Yes', value: 'Oui', comment: 'On a dialog button' }
   }
-
 });
