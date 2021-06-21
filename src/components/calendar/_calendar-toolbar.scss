@@ -107,9 +107,16 @@
   // Inpage
   &.is-inpage {
     .toolbar-section {
+      align-items: center;
+      display: flex;
+      justify-content: flex-end;
       min-height: 48px;
       overflow: hidden;
       padding: 4px;
+
+      &.no-next-previous {
+        margin-right: 15px;
+      }
     }
 
     .btn-inpage-cal,
@@ -123,6 +130,10 @@
 
     .btn-inpage-cal {
       margin-right: 0;
+
+      &.active:not([disabled]) .icon {
+        color: $datepicker-selected-bg-color;
+      }
     }
 
     .apply {
@@ -136,9 +147,15 @@
       padding: 9px 3px;
     }
 
-    .btn-cal-month-year .icon {
-      margin-left: 5px;
-      margin-right: 5px;
+    .btn-cal-month-year {
+      &.active:not([disabled]) .icon {
+        color: $datepicker-selected-bg-color;
+      }
+
+      .icon {
+        margin-left: 5px;
+        margin-right: 5px;
+      }
     }
 
     .btn-cal-month-year,

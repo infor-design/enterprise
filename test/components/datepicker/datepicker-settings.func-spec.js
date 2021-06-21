@@ -102,4 +102,11 @@ describe('DatePicker Settings', () => {
     expect(iconEl).toBeDefined();
     done();
   });
+
+  it('can modify the `autocomplete` attribute', () => {
+    datepickerAPI.updated({ autocompleteAttribute: 'my-date' });
+
+    expect(datepickerAPI.settings.autocompleteAttribute).toEqual('my-date');
+    expect(datepickerAPI.element.attr('autocomplete')).toEqual('my-date');
+  });
 });
