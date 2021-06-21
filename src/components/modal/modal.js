@@ -1267,7 +1267,8 @@ Modal.prototype = {
     const tooltipParents = $(activeElem).parents('.tooltip, .popover');
     if (tooltipParents.length) {
       tooltipParents.each((i, elem) => {
-        const api = $(elem).data('tooltip');
+        const componentName = elem.className.contains('popover') ? 'popover' : 'tooltip';
+        const api = $(elem).data(componentName);
         if (api && api.isFocused) {
           componentHasFocus = true;
         }

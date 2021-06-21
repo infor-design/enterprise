@@ -589,8 +589,8 @@ TimePicker.prototype = {
     }
 
     // Make adjustments to the popup HTML specific to the timepicker
-    if (this.trigger.data('tooltip')) {
-      self.popup = this.trigger.data('tooltip').tooltip;
+    if (this.trigger.data('popover')) {
+      self.popup = this.trigger.data('popover').tooltip;
       const tooltip = self.popup;
       tooltip.addClass('timepicker-popup');
     }
@@ -1027,7 +1027,7 @@ TimePicker.prototype = {
       self.setupStandardEvents();
     }
 
-    if (this.trigger.data('tooltip')) {
+    if (this.trigger.data('popover')) {
       this.element.attr('aria-expanded', 'true');
     }
 
@@ -1042,8 +1042,8 @@ TimePicker.prototype = {
    * @returns {void}
    */
   closeTimePopup() {
-    if (this.trigger.data('tooltip')) {
-      this.trigger.data('tooltip').hide();
+    if (this.trigger.data('popover')) {
+      this.trigger.data('popover').hide();
       this.element.attr('aria-expanded', 'false');
     }
   },
@@ -1084,8 +1084,8 @@ TimePicker.prototype = {
     }
 
     this.trigger.off('hide.timepicker show.timepicker');
-    this.trigger.data('tooltip').destroy();
-    this.trigger.data('tooltip', undefined);
+    this.trigger.data('popover').destroy();
+    this.trigger.data('popover', undefined);
     $('#timepicker-popup').remove();
     this.element.removeClass('is-active is-open');
   },

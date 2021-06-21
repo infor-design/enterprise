@@ -1161,7 +1161,7 @@ DatePicker.prototype = {
       this.popup.hide().remove();
     }
 
-    const popoverAPI = this.trigger.data('tooltip');
+    const popoverAPI = this.trigger.data('popover');
     if (popoverAPI) {
       popoverAPI.destroy();
     }
