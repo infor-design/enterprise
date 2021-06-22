@@ -441,6 +441,11 @@ $datagrid-small-row-height: 25px;
       }
     }
 
+    .is-hover-row .datagrid-trigger-cell .icon {
+      background-color: transparent;
+      box-shadow: none;
+    }
+
     th {
       background-color: $datagrid-list-header-bg-color;
       border-left: 0 !important;
@@ -2379,7 +2384,6 @@ $datagrid-small-row-height: 25px;
         display: block;
         margin-bottom: 6px;
         margin-top: 5px;
-        vertical-align: middle;
       }
     }
 
@@ -3558,8 +3562,8 @@ $datagrid-small-row-height: 25px;
 
   .datagrid-expand-btn {
     left: -8px;
-    margin-top: 0;
     margin-right: 8px;
+    margin-top: 0;
     padding-left: 8.3px;
 
     .icon.plus-minus::before,
