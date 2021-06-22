@@ -758,7 +758,7 @@ Lookup.prototype = {
     if (!val) {
       return;
     }
-
+    
     if (this.grid && this.settings.options.source) {
       for (let i = (this.grid._selectedRows.length - 1); i > -1; i--) {
         if (isNaN(this.grid._selectedRows[i].idx)) {
@@ -809,6 +809,7 @@ Lookup.prototype = {
           if (!foundInData) {
             const data = {};
             data[this.settings.field] = selectedIds[i];
+            this.grid._selectedRows.push({ data });
           }
           adjust = true;
         }
