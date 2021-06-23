@@ -1,0 +1,19 @@
+<div class="row top-padding">
+  <div class="six columns">
+    <h2>Mask Test: Edit decimal value a second time ignoring decimal point</h2>
+    <p>1. Enter the value .8<br>
+       2. Blur out of the field, see that the value in it is 0.8<br>
+       3. Highlight the value and try and enter the value .7<br>
+       4. See that the . is ignored and that the value is 7 when it should be .7<br><br>
+    Note: using allow leading zeros allows you to enter 0.7 in step 3, which has the decimal point maintained</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="one-half column">
+    <div class="field">
+      <label for="decimal-field">Currency Field</label>
+      <input id="decimal-field" name="decimal-field" type="text" inputmode="numeric" class="new-mask" data-options='{ "process": "number", "patternOptions": { "allowDecimal": true, "integerLimit": 20, "decimalLimit": 6, "allowLeadingZeros": true, "symbols": { "decimal": "." } } }' />
+    </div>
+  </div>
+</div>
