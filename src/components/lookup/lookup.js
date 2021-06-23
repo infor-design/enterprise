@@ -774,6 +774,8 @@ Lookup.prototype = {
       let isRemoved = false;
 
       for (let i = 0; i < selectedIds.length; i++) {
+        isRemoved = false;
+
         if (this.grid.recentlyRemoved) {
           for (let j = 0; j < this.grid.recentlyRemoved.length; j++) {
             if (this.grid.recentlyRemoved[j][this.settings.field].toString() ===
@@ -809,6 +811,7 @@ Lookup.prototype = {
           if (!foundInData) {
             const data = {};
             data[this.settings.field] = selectedIds[i];
+            this.grid._selectedRows.push({ data });
           }
           adjust = true;
         }

@@ -3,6 +3,16 @@
 .widget {
   border-radius: 6px;
   box-shadow: 0 0 8px $cardlist-box-shadow-color;
+
+  &.card-variant {
+    .card-buttonset {
+      .card-content-action {
+        .btn-actions {
+          padding: 15px;
+        }
+      }
+    }
+  }
 }
 
 .card-header,
