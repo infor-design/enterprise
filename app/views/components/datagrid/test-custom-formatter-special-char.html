@@ -1,0 +1,57 @@
+<div class="row">
+  <div class="six columns">
+    <h2 class="top-padding">Datagrid - XSS sanitize special characters</h2>
+    <p>
+      - See the grid should render fine (no console error)<br/>
+      - Hover over any row text<br />
+      - See the tooltip should show up
+    </p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+    function myCustom (row, cell, fieldValue, col, rowData) {
+      var results = '';
+      if (rowData && rowData.value === 'a') {
+        results = `<span class="custom-formatter-val" title='&#x27; onx=y'>a</span>`;
+      } else if (rowData && rowData.value === 'b') {
+        results = `<span class="custom-formatter-val" title='&#x27; abc=y'>b</span>`;
+      }
+      return results;
+    }
+
+    var myColumns = [{
+      id: 'asd-value',
+      name: 'Asd',
+      field: '',
+      formatter: myCustom
+    }];
+
+    var myDataset = [
+      { value: 'b' },
+      { value: 'b' },
+      { value: 'a' },
+      { value: 'a' },
+      { value: 'a' },
+      { value: 'b' }
+    ];
+
+    // Init the grid
+    $('#datagrid').datagrid({
+      columns: myColumns,
+      dataset: myDataset,
+      selectable: 'single'
+    }).on('afterrender', function () {
+      $('.custom-formatter-val').tooltip();
+    });
+
+  });
+</script>
