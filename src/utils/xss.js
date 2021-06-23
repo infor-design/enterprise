@@ -69,7 +69,19 @@ xssUtils.sanitizeConsoleMethods = function (html) {
  */
 xssUtils.sanitizeHTML = function (html) {
   let santizedHtml = html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/g, '');
-  santizedHtml = santizedHtml.replace(/<[^>]+/g, match => match.replace(/(\/|\s)on\w+=(\'|")?[^"]*(\'|")?/g, '')); // eslint-disable-line
+  santizedHtml = santizedHtml.replace(/<[^>]+/g, (match) => {
+    const expr = /(\/|\s)on\w+=('|")?/g;
+    let str = match;
+    if ((str.match(expr) || []).length > 0) {
+      str = str.replace(/(\/|\s)title=('|")(.*)('|")/g, (m) => {
+        if ((m.match(expr) || []).length > 0) {
+          return m.replace(expr, m2 => m2.replace('on', ''));
+        }
+        return m;
+      });
+    }
+    return str.replace(/(\/|\s)on\w+=('|")?[^"]*('|")?/g, '');
+  });
 
   // Remove console methods
   santizedHtml = this.sanitizeConsoleMethods(santizedHtml);
