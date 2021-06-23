@@ -2590,6 +2590,13 @@ Tree.prototype = {
                 startWidth: a.outerWidth()
               };
 
+              /**
+               * Fires when a tree node starts to be sorted / dragged.
+               * @event sortstart
+               * @memberof Tabs
+               * @param {jQuery.Event} e the jQuery event object
+               * @param {Object} hrsortable Gives access to a set of data around the tree nodes effected by the sort
+               */
               self.element.triggerHandler('sortstart', self.sortable);
               e.preventDefault();
               e.stopImmediatePropagation();
@@ -2652,6 +2659,13 @@ Tree.prototype = {
               // Fix: On windows 10 with IE-11 icons disappears
               utils.fixSVGIcons(start);
 
+              /**
+               * Fires when a tree node is done being sorted / dragged.
+               * @event sortend
+               * @memberof Tabs
+               * @param {jQuery.Event} e the jQuery event object
+               * @param {Object} hrsortable Gives access to a set of data around the tree nodes effected by the sort
+               */
               self.element.triggerHandler('sortend', self.sortable);
               // Sync dataset and ui
               self.syncDataset();
