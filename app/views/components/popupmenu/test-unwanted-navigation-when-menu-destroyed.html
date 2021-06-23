@@ -1,0 +1,31 @@
+<div class="row">
+  <div class="twelve columns">
+    <h2>Popupmenu Test: Unwanted navigation/link</h2>
+    <p>Clicking the first menu item will destroy the popupmenu trigger and it should not append any navigation or link in the test page url.</p>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+    <!-- Normal Menu -->
+    <div class="field">
+      <button id="popupmenu-trigger" class="btn-menu">
+        <span>Normal Menu</span>
+        <svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-dropdown">
+          <use href="#icon-dropdown"></use>
+        </svg>
+      </button>
+      <ul class="popupmenu">
+        <li><a href="#">Menu Option #1</a></li>
+        <li><a href="#">Menu Option #2</a></li>
+        <li><a href="#">Menu Option #3</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+$('.popupmenu li:first-child').on('click', function (e) {
+  $("#popupmenu-trigger").destroy(); 
+});
+</script>
