@@ -775,8 +775,8 @@ Lookup.prototype = {
 
       for (let i = 0; i < selectedIds.length; i++) {
         isRemoved = false;
-        
-        if (this.grid.recentlyRemoved) { 
+
+        if (this.grid.recentlyRemoved) {
           for (let j = 0; j < this.grid.recentlyRemoved.length; j++) {
             if (this.grid.recentlyRemoved[j][this.settings.field].toString() ===
               selectedIds[i].toString()) {
@@ -789,8 +789,8 @@ Lookup.prototype = {
           continue;
         }
         isFound = this.selectRowByValue(this.settings.field, selectedIds[i]);
-        
-        if (this.grid && this.settings.options.source && !isFound) { 
+
+        if (this.grid && this.settings.options.source && !isFound) {
           let foundInData = false;
           for (let j = 0; j < this.grid._selectedRows.length; j++) {
             if (this.grid._selectedRows[j].data[this.settings.field].toString() ===
@@ -904,8 +904,8 @@ Lookup.prototype = {
     }
 
     const data = this.settings.options.source ?
-    this.grid.settings.dataset :
-    this.settings.options.dataset;
+      this.grid.settings.dataset :
+      this.settings.options.dataset;
     const selectedRows = [];
 
     // in this case we will recall on source - server side paging
@@ -932,7 +932,7 @@ Lookup.prototype = {
       }
     }
 
-    if (this.grid && selectedRows.length > 0) { 
+    if (this.grid && selectedRows.length > 0) {
       this.grid.selectRows(selectedRows, false, true);
       return true;
     }
