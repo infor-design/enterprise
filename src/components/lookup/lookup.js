@@ -628,7 +628,7 @@ Lookup.prototype = {
   createGrid(grid) {
     const self = this;
     let lookupGrid;
-    
+
     if (grid) {
       lookupGrid = grid;
       LOOKUP_GRID_ID = grid.attr('id');
@@ -666,7 +666,7 @@ Lookup.prototype = {
     self.grid = lookupGrid.data('datagrid');
     if (!this.settings.title && self.modal) {
       self.modal.element.find('.title').not('.selection-count').remove();
-    } 
+    }
 
     const hasKeywordSearch = this.settings?.options?.toolbar?.keywordFilter;
 
@@ -683,7 +683,7 @@ Lookup.prototype = {
         self.grid.keywordSearch('');
       }
     }
-    
+
     // Mark selected rows
     lookupGrid.off('selected.lookup');
     const val = self.element.val();
@@ -758,7 +758,7 @@ Lookup.prototype = {
     if (!val) {
       return;
     }
-    
+
     if (this.grid && this.settings.options.source) {
       for (let i = (this.grid._selectedRows.length - 1); i > -1; i--) {
         if (isNaN(this.grid._selectedRows[i].idx)) {
@@ -768,7 +768,7 @@ Lookup.prototype = {
     }
 
     // Multi Select
-    if (selectedId.indexOf(this.settings.delimiter) > 1) { 
+    if (selectedId.indexOf(this.settings.delimiter) > 1) {
       const selectedIds = selectedId.split(this.settings.delimiter);
       let isFound = false;
       let isRemoved = false;
@@ -779,15 +779,15 @@ Lookup.prototype = {
         if (this.grid.recentlyRemoved) { 
           for (let j = 0; j < this.grid.recentlyRemoved.length; j++) {
             if (this.grid.recentlyRemoved[j][this.settings.field].toString() ===
-              selectedIds[i].toString()) { 
+              selectedIds[i].toString()) {
               isRemoved = true;
             }
           }
         }
-        
+
         if (isRemoved) {
           continue;
-        } 
+        }
         isFound = this.selectRowByValue(this.settings.field, selectedIds[i]);
         
         if (this.grid && this.settings.options.source && !isFound) { 
@@ -808,7 +808,7 @@ Lookup.prototype = {
             }
           }
 
-          if (!foundInData) { 
+          if (!foundInData) {
             const data = {};
             data[this.settings.field] = selectedIds[i];
             this.grid._selectedRows.push({ data });
@@ -818,7 +818,7 @@ Lookup.prototype = {
       }
 
       // There are rows selected off page. Update the count.
-      if (adjust) { 
+      if (adjust) {
         const self = this;
         self.modal.element.find('.contextual-toolbar .selection-count').text(`${selectedIds.length} ${Locale.translate('Selected')}`);
         this.grid.syncSelectedUI();
@@ -888,7 +888,7 @@ Lookup.prototype = {
       }
       return;
     }
-    
+
     this.selectRowByValue(this.settings.field, selectedId);
   },
 
@@ -902,12 +902,12 @@ Lookup.prototype = {
     if (!this.settings.options) {
       return false;
     }
-    
+
     const data = this.settings.options.source ?
     this.grid.settings.dataset :
     this.settings.options.dataset;
     const selectedRows = [];
-    
+
     // in this case we will recall on source - server side paging
     if (!data) {
       return false;
@@ -931,7 +931,7 @@ Lookup.prototype = {
         selectedRows.push(rowIndex);
       }
     }
-    
+
     if (this.grid && selectedRows.length > 0) { 
       this.grid.selectRows(selectedRows, false, true);
       return true;
