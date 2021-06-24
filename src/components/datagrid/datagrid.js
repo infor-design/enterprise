@@ -5481,7 +5481,13 @@ Datagrid.prototype = {
     this.settings.columns[idx].hidden = true;
     this.headerNodeCheckbox = this.headerNodes().eq(idx);
     if (!this.settings?.frozenColumns?.left.length) this.headerNodes().eq(idx).addClass('is-hidden');
-    this.headerNodes().eq(idx).off().remove();
+
+    if (idx === 0 && id === 'selectionCheckbox') {
+      this.headerNodes().eq(idx).off().remove();
+    } else {
+      this.headerNodes().eq(idx).addClass('is-hidden');
+    }
+
     this.colGroupNodes().eq(idx).addClass('is-hidden');
 
     const frozenLeft = this.settings?.frozenColumns?.left.length || 0;
