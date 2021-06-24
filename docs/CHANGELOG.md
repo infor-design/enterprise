@@ -1,43 +1,8 @@
 # What's New with Enterprise
 
-## v4.53.0 Features
+## v4.52.1 Fixes
 
-- `[Action Sheet]` Added a mobile device-friendly action sheet component. ([#5256](https://github.com/infor-design/enterprise/issues/5256))
-- `[Cards]` Added card variations (Status, Hyperlink and Photo Card) with improve hitboxes for tapping. ([#5250](https://github.com/infor-design/enterprise/issues/5250))
-- `[Cards]` Added improvements to the expandable cards and made a jQuery instance to be available in the angular wrapper. ([#5252](https://github.com/infor-design/enterprise/issues/5252))
-
-## v4.53.0 Fixes
-
-- `[Calendar]` Fixed a bug where calendar event is not rendered on WeekView if add event (modal) is used before add event (api). ([#5236](https://github.com/infor-design/enterprise/issues/5236))
-- `[Circle Pager]` Fixed size interactions and changes for mobile view port. ([#5251](https://github.com/infor-design/enterprise/issues/5251))
 - `[Datagrid]` Fixed an issue where personalize column headers were not rendering properly. ([#5361](https://github.com/infor-design/enterprise/issues/5361))
-- `[Datagrid]` Fixed a bug where animation blue circle is off-center. ([#5246](https://github.com/infor-design/enterprise/issues/5246))
-- `[Datagrid]` Fixed a bug where hovering lookup cells showed a grey background. ([#5157](https://github.com/infor-design/enterprise/issues/5157))
-- `[Datagrid]` Fixed an issue for xss where special characters was not sanitizing and make grid to not render. ([#975](https://github.com/infor-design/enterprise-ng/issues/975))
-- `[Datepicker]` Fixed a bug where the setting attributes were missing in datepicker input and datepicker trigger on NG wrapper. ([#1044](https://github.com/infor-design/enterprise-ng/issues/1044))
-- `[Datepicker]` Fixed a bug where the selection range was not being properly rendered in mobile. ([#5211](https://github.com/infor-design/enterprise/issues/5211))
-- `[Datepicker]` Made the `autocomplete` attribute configurable by using the `autocompleteAttribute` setting. ([#5092](https://github.com/infor-design/enterprise/issues/5092))
-- `[Dropdown]` Fixed a bug that resulted in the updatable dropdown value being changed when selecting the more actions button. ([#5222](https://github.com/infor-design/enterprise/issues/5222))
-- `[Editor]` Fixed a bug where automation id attributes are not properly rendered on editor elements. ([#5082](https://github.com/infor-design/enterprise/issues/5082))
-- `[Lookup]` Fixed a bug where lookup attributes are not added in the cancel and apply/save button. ([#5202](https://github.com/infor-design/enterprise/issues/5202))
-- `[Locale]` Fixed a bug where very large numbers with negative added an extra zero in formatNumber. ([#5308](https://github.com/infor-design/enterprise/issues/5308))
-- `[Locale]` Fixed a bug where very large numbers would get a zero added. ([#5308](https://github.com/infor-design/enterprise/issues/5308))
-- `[Locale]` Fixed a bug where very large numbers with negative added an extra zero in formatNumber. ([#5318](https://github.com/infor-design/enterprise/issues/5318))
-- `[Lookup]` Fixed a regression bug where the close/clear icon were not properly aligned on mobile and tablet viewport. ([#5299](https://github.com/infor-design/enterprise/issues/5299))
-- `[Lookup]` Fixed a bug where rows become unselected when reopened. ([#5261](https://github.com/infor-design/enterprise/issues/5261))
-- `[Monthview]` Fixed an issue where month year pick list was misaligning for inpage. ([#5345](https://github.com/infor-design/enterprise/issues/5345))
-- `[Page-Patterns]` Fixed an issue where the weight range slider was overlapping the sales amount text area. ([#5284](https://github.com/infor-design/enterprise/issues/5284))
-- `[Pager]` Fixed an issue where tooltip was not working after switch to 2nd page for disable/enable buttons with standalone Pager. ([#1047](https://github.com/infor-design/enterprise-ng/issues/1047))
-- `[Personalization]` Fixed a bug where user was unable to see highlighted text in the header when using the new light default theme. ([#5219](https://github.com/infor-design/enterprise/issues/5219))
-- `[Personalization]` Fixed an issue where hyperlinks were not showing up for dark theme. ([#5144](https://github.com/infor-design/enterprise-ng/issues/5144))
-- `[Spinbox]` Fixed a bug where spinbox and its border is not properly rendered on responsive view. ([#5146](https://github.com/infor-design/enterprise/issues/5146))
-- `[Searchfield]` Fixed a bug where the close button is not rendered properly on mobile view. ([#5182](https://github.com/infor-design/enterprise/issues/5182))
-- `[Searchfield]` Fixed a bug where the search icon in search field is not aligned properly on firefox view. ([#5290](https://github.com/infor-design/enterprise/issues/5290))
-- `[Searchfield]` Made the `autocomplete` attribute configurable by using the `autocompleteAttribute` setting. ([#5092](https://github.com/infor-design/enterprise/issues/5092))
-- `[Searchfield]` Fixed a bug where the button does not have the same height as the searchfield input. ([#5314](https://github.com/infor-design/enterprise/issues/5314))
-- `[Searchbar]` Fixed a bug where searchbar overlapped the "Websites" header when browser is minimized or viewed in mobile. ([#5248](https://github.com/infor-design/enterprise/issues/5248))
-- `[Splitter]` Fixed position of splitter button. ([#5121](https://github.com/infor-design/enterprise/issues/5121))
-- `[Tooltip/Popover]` Split the Popover and Tooltip into separate components. ([#5197](https://github.com/infor-design/enterprise/issues/5197))
 
 ## v4.52.0
 
