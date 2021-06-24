@@ -3540,7 +3540,7 @@ $datagrid-small-row-height: 25px;
     border: 1px solid transparent;
     border-bottom: 1px solid $datagrid-group-row-border-color;
     border-right: 1px solid $datagrid-cell-border-color;
-    padding: 0 17px;
+    padding: 0 20px;
     -webkit-text-size-adjust: none; //Prevent huge text on IOS
 
     &:focus,
@@ -3561,10 +3561,8 @@ $datagrid-small-row-height: 25px;
   }
 
   .datagrid-expand-btn {
-    left: -8px;
-    margin-right: 8px;
+    left: -6px;
     margin-top: 0;
-    padding-left: 8.3px;
 
     .icon.plus-minus::before,
     .icon.plus-minus::after {
@@ -3932,7 +3930,7 @@ td .btn-actions {
   }
 
   .plus-minus {
-    left: -10px;
+    left: -5.9px;
     position: relative;
     top: -6px;
   }
