@@ -13,6 +13,7 @@
 - `[Datagrid]` Fixed a bug where animation blue circle is off-center. ([#5246](https://github.com/infor-design/enterprise/issues/5246))
 - `[Datagrid]` Fixed a bug where hovering lookup cells showed a grey background. ([#5157](https://github.com/infor-design/enterprise/issues/5157))
 - `[Datagrid]` Fixed an issue for xss where special characters was not sanitizing and make grid to not render. ([#975](https://github.com/infor-design/enterprise-ng/issues/975))
+- `[Datagrid]` Fixed a bug where the home and end key should behave as default when in editable cell and not shifting to the first and end row in datagrid. ([#5179](https://github.com/infor-design/enterprise/issues/5179))
 - `[Datepicker]` Fixed a bug where the setting attributes were missing in datepicker input and datepicker trigger on NG wrapper. ([#1044](https://github.com/infor-design/enterprise-ng/issues/1044))
 - `[Datepicker]` Fixed a bug where the selection range was not being properly rendered in mobile. ([#5211](https://github.com/infor-design/enterprise/issues/5211))
 - `[Datepicker]` Made the `autocomplete` attribute configurable by using the `autocompleteAttribute` setting. ([#5092](https://github.com/infor-design/enterprise/issues/5092))
