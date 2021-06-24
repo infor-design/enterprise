@@ -8989,8 +8989,6 @@ Datagrid.prototype = {
         handled = true;
       }
 
-      console.log({this: $(this), node: node})
-
       // Home to Move to the end of the current row
       if (key === 35 && !node.hasClass('is-editing')) {
         self.setActiveCell(row, lastCell);
