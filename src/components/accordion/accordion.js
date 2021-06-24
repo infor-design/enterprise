@@ -1334,9 +1334,11 @@ Accordion.prototype = {
    * @param {jQuery[]} [headers] element references representing accordion headers.
    *  If provided, will cause only specific items to become unfiltered.  If not
    *  provided, removes all filtering from the accordion.
+   * @param {boolean} [isReset] if true, sets a flag to force unfilter the filtered accordions. This will be useful
+   * if there are no headers filtered when typing a character that is not available on the accordion list.
    */
-  unfilter(headers) {
-    if (!this.currentlyFiltered.length) {
+  unfilter(headers, isReset) {
+    if (!this.currentlyFiltered.length && !isReset) {
       return;
     }
 

@@ -236,6 +236,27 @@ ApplicationMenu.prototype = {
     $(document).on('keydown.applicationmenu', (e) => {
       self.handleKeyDown(e);
     });
+
+    $(document).on('keyup.applicationmenu', (e) => {
+      self.handleKeyUp(e);
+    });
+  },
+
+  /**
+   * Handles Keyup Events on the App Menu
+   * @param {jQuery.Event} e `keyup` events
+   * @returns {boolean} whether or not the keydown event was successful
+   */
+  handleKeyUp(e) {
+    const key = e.which;
+
+    if (key === 8 || key === 46) {
+      if (!this.element.find('.searchfield').val().length) {
+        this.accordionAPI.unfilter(null, true);
+      }
+    }
+
+    return true;
   },
 
   /**
@@ -719,7 +740,8 @@ ApplicationMenu.prototype = {
       'open-applicationmenu',
       'close-applicationmenu',
       'dismiss-applicationmenu',
-      'keydown.applicationmenu'
+      'keydown.applicationmenu',
+      'keyup.applicationmenu'
     ].join(' '));
 
     this.element.find('.expandable-area').off([
