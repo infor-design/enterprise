@@ -143,6 +143,28 @@ describe('Xss Utils', () => {
     });
   });
 
+  it('Should santize title text', () => {
+    /* eslint-disable */
+    const str = [{
+      in: `<span id="test123" title="&#x27; onx=y">a</span>`,
+      out: `<span id="test123" title="&#x27; x=y">a</span>`
+    }, {
+      in: `<span id="test123" title="&#x27; onx='y'">a</span>`,
+      out: `<span id="test123" title="&#x27; x='y'">a</span>`
+    }, {
+      in: `<span id="test123" title='&#x27; onx="y"'>a</span>`,
+      out: `<span id="test123" title='&#x27; x="y"'>a</span>`
+    }, {
+      in: `<span id="test123" title='&#x27; onx=y'>a</span>`,
+      out: `<span id="test123" title='&#x27; x=y'>a</span>`
+    }];
+    /* eslint-enable */
+
+    for (let i = 0, l = str.length; i < l; i++) {
+      expect(xssUtils.sanitizeHTML(str[i].in)).toEqual(str[i].out);
+    }
+  });
+
   it('Should force alphanumber values', () => {
     let result = xssUtils.ensureAlphaNumeric('<strong>hello world</strong>');
 

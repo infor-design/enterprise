@@ -68,6 +68,18 @@
     }
   }
 
+  &.has-close-icon-button {
+    .btn-icon.close:not(.is-empty) {
+      @media only screen and (max-width: $breakpoint-phone-to-tablet) {
+        margin-right: 0;
+      }
+
+      > .icon.close {
+        top: -1px;
+      }
+    }
+  }
+
   .btn-icon.close {
     align-items: center;
     justify-content: center;
@@ -76,12 +88,12 @@
     transform: translateY(-50%);
 
     @media only screen and (max-width: $breakpoint-phone-to-tablet) {
-      margin-right: 35px;
+      margin-right: 38px;
     }
 
     & > svg.close.icon {
       position: relative;
-      top: -2px;
+      top: -1px;
     }
   }
 }
@@ -90,7 +102,12 @@
   &.searchfield-wrapper {
     &.non-collapsible {
       svg.icon:not(.close) {
-        top: 11px;
+        top: 10px;
+        left: 8px;
+
+        @media only screen and (max-width: $breakpoint-phone-to-tablet) {
+          top: 12px;
+        }
       }
     }
   }
@@ -99,7 +116,7 @@
 // Firefox needs some help
 html.is-firefox {
   .searchfield-wrapper {
-    height: 34px;
+    height: 38px;
 
     &.toolbar-searchfield-wrapper {
       height: 34px;

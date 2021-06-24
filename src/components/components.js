@@ -15,6 +15,7 @@ export { Tmpl } from './tmpl/tmpl';
 // Mid ====/
 export { About } from './about/about';
 export { Accordion } from './accordion/accordion';
+export { ActionSheet } from './actionsheet/actionsheet';
 export { ApplicationMenu } from './applicationmenu/applicationmenu';
 export { Autocomplete } from './autocomplete/autocomplete';
 export { Bar } from './bar/bar';

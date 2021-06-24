@@ -61,6 +61,7 @@ const COMPONENT_NAME_DEFAULTS = {
   onSelected: null,
   onKeyDown: null,
   showToday: true,
+  showNextPrevious: true,
   onChangeView: null,
   isMonthPicker: false
 };
@@ -126,6 +127,7 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {boolean} [settings.onSelected=false] Callback that fires when a month day is clicked.
  * @param {boolean} [settings.onKeyDown=false] Callback that fires when a key is pressed down.
  * @param {boolean} [settings.showToday=true] If true the today button is shown on the header.
+ * @param {boolean} [settings.showNextPrevious=true] If true the Next Previous buttons will shown on the header.
  * @param {function} [settings.onChangeView] Call back for when the view changer is changed.
  * @param {string} [settings.attributes] Add extra attributes like id's to the element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
 */
@@ -310,6 +312,7 @@ MonthView.prototype = {
       year: this.currentYear,
       month: this.currentMonth,
       showToday: this.settings.showToday,
+      showNextPrevious: this.settings.showNextPrevious,
       isMonthPicker: this.settings.headerStyle === 'full',
       isAlternate: this.settings.headerStyle !== 'full',
       isMenuButton: (this.settings.headerStyle !== 'full' || this.settings.inPage) ? this.settings.showMonthYearPicker : false,
@@ -960,7 +963,7 @@ MonthView.prototype = {
     const self = this;
 
     // Set inPage target element
-    const el = this.settings.inPage ? elem.find('.day-container') : elem;
+    const el = this.settings.inPage ? elem.find('.day-text') : elem;
     if (!el[0]) {
       return;
     }
@@ -982,25 +985,46 @@ MonthView.prototype = {
 
       elem.addClass('is-colored');
       el[0].setAttribute('data-hex', hex);
-      el[0].style.backgroundColor = normalColor;
+      if (self.settings.inPage) {
+        el[0].style.setProperty('--legendcolor', normalColor);
+      } else {
+        el[0].style.backgroundColor = normalColor;
+      }
 
       // handle hover states
       el.on('mouseenter.legend', function () {
         const thisElem = $(this);
-        thisElem[0].style.backgroundColor = hoverColor;
-        thisElem.find('span')[0].style.backgroundColor = 'transparent';
-        thisElem.find('.day-text')[0].style.backgroundColor = 'transparent';
+        const span = thisElem.find('span')[0];
+        const dayText = thisElem.find('.day-text')[0];
+        const textColor = window.getComputedStyle(th).getPropertyValue('color');
+
+        this.style.backgroundColor = hoverColor;
+
         if (self.settings.inPage) {
-          const textColor = window.getComputedStyle(th).getPropertyValue('color');
-          thisElem.find('.day-text')[0].style.color = textColor;
+          this.style.color = textColor;
+        }
+        if (span) {
+          span.style.backgroundColor = 'transparent';
+        }
+        if (dayText) {
+          dayText.style.backgroundColor = 'transparent';
         }
       }).on('mouseleave.legend', function () {
         const thisElem = $(this);
-        thisElem[0].style.backgroundColor = normalColor;
-        thisElem.find('span')[0].style.backgroundColor = '';
-        thisElem.find('.day-text')[0].style.backgroundColor = '';
+        const span = thisElem.find('span')[0];
+        const dayText = thisElem.find('.day-text')[0];
+
         if (self.settings.inPage) {
-          thisElem.find('.day-text')[0].style.color = '';
+          this.style.color = '';
+          this.style.backgroundColor = '';
+        } else {
+          this.style.backgroundColor = normalColor;
+        }
+        if (span) {
+          span.style.backgroundColor = '';
+        }
+        if (dayText) {
+          dayText.style.backgroundColor = '';
         }
       });
     }

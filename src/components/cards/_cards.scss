@@ -36,6 +36,10 @@
   position: relative;
   width: 100%;
 
+  &.compact-bottom {
+    margin-bottom: 8px;
+  }
+
   &.card-variant {
     @include auto-height;
     align-items: center;
@@ -50,14 +54,14 @@
 
     .card-content {
       padding: 15px;
-      
+
       div {
         padding: 3px;
-        
+
         &.card-content-status {
           margin-left: -4px;
           color: $card-content-status-success-color;
-          
+
           .icon {
             margin-top: -2px;
             vertical-align: middle;
@@ -75,7 +79,7 @@
 
           &.alert {
             color: $card-content-status-alert-color;
-            
+
             .icon {
               color: $card-content-status-alert-color;
             }
@@ -83,7 +87,7 @@
 
           &.error {
             color: $card-content-status-error-color;
-            
+
             .icon {
               color: $card-content-status-error-color;
             }
@@ -141,13 +145,12 @@
         .btn-actions {
           margin-right: 10px;
           transform: rotate(90deg);
-          padding: 15px;
           border-radius: unset;
           width: unset;
 
           &:hover {
             color: $card-content-button-color;
-        
+
             .icon {
               color: $card-content-button-color;
             }

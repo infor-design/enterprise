@@ -10,6 +10,9 @@ import { WeekView } from '../week-view/week-view';
 import { Locale } from '../locale/locale';
 import { Tmpl } from '../tmpl/tmpl';
 
+// jQuery Components
+import '../popover/popover.jquery';
+
 // Settings and Options
 const COMPONENT_NAME = 'calendar';
 
@@ -1435,7 +1438,7 @@ Calendar.prototype = {
 
         // Wire the buttons
         elem.find('button').on('click', (e) => {
-          const popupApi = eventTarget.data('tooltip');
+          const popupApi = eventTarget.data('popover');
           const action = e.currentTarget.getAttribute('data-action');
           isCancel = action !== 'submit';
           if (popupApi) {
@@ -1509,8 +1512,8 @@ Calendar.prototype = {
     this.modalContents = null;
     if (this.activeElem) {
       this.activeElem.off();
-      if (this.activeElem.data('tooltip')) {
-        this.activeElem.data('tooltip').destroy();
+      if (this.activeElem.data('popover')) {
+        this.activeElem.data('popover').destroy();
       }
     }
     DOM.remove(document.getElementById('calendar-popup'));

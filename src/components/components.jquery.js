@@ -12,6 +12,7 @@ import './popupmenu/popupmenu.jquery';
 // Mid ====/
 import './about/about.jquery';
 import './accordion/accordion.jquery';
+import './actionsheet/actionsheet.jquery';
 import './applicationmenu/applicationmenu.jquery';
 import './blockgrid/blockgrid.jquery';
 import './breadcrumb/breadcrumb.jquery';

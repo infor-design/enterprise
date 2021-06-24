@@ -27,6 +27,12 @@
   right 300ms $cubic-ease,
   box-shadow 300ms $cubic-ease);
 
+  &.non-collapsible.is-open {
+    > .icon:not(.close):not(.icon-error) { 
+      left: 8px;
+    }
+  }
+
   > .icon {
     background-color: rgba($ids-color-palette-white, 0); // IE 10
     color: $trigger-icon-fill-color;
@@ -34,8 +40,9 @@
     position: absolute;
     top: 10px;
 
+
     &:not(.close):not(.icon-error) {
-      left: 8px;
+      left: 6px;
       pointer-events: none;
     }
 

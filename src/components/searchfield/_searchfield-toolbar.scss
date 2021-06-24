@@ -81,10 +81,9 @@ $toolbarsearchfield-category-empty-width: 51px;
     }
     .icon:not(.close) {
       height: 14px;
-      top: 10px !important;
 
       @media only screen and (max-width: $breakpoint-phone-to-tablet) {
-        top: 12px !important;
+        top: 12px;
       }
     }
   }

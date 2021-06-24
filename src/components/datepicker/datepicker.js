@@ -2,6 +2,7 @@ import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { dateUtils } from '../../utils/date';
 import { stringUtils } from '../../utils/string';
+import { xssUtils } from '../../utils/xss';
 import { Locale } from '../locale/locale';
 import { MonthView } from '../monthview/monthview';
 
@@ -86,6 +87,7 @@ const COMPONENT_NAME = 'datepicker';
  * @param {function} [settings.onOpenCalendar] Call back for when the calendar is open, allows you to set the date.
  * @param {boolean} [settings.isMonthPicker] Indicates this is a month picker on the month and week view. Has some slight different behavior.
  * @param {string} [settings.attributes] Add extra attributes like id's to the element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
+ * @param {string} [settings.autocompleteAttribute="off"] Allows prevention of built-in browser typeahead by changing/removing an `autocomplete` attribute to the field.
  * @param {boolean} [settings.tabbable=true] If true, causes the Datepicker's trigger icon to be focusable with the keyboard.
 */
 const DATEPICKER_DEFAULTS = {
@@ -140,6 +142,7 @@ const DATEPICKER_DEFAULTS = {
   onOpenCalendar: null,
   isMonthPicker: false,
   attributes: null,
+  autocompleteAttribute: 'off',
   tabbable: true
 };
 
@@ -165,7 +168,12 @@ DatePicker.prototype = {
    * @returns {void}
    */
   build() {
-    this.element.attr('autocomplete', 'off');
+    const autocompleteSetting = this.settings.autocompleteAttribute;
+    if (typeof autocompleteSetting === 'string' && autocompleteSetting.length) {
+      this.element.attr('autocomplete', `${xssUtils.ensureAlphaNumeric(autocompleteSetting)}`);
+    } else if (this.element.hasAttr('autocomplete')) {
+      this.element.removeAttr('autocomplete');
+    }
 
     // Append a trigger button
     const next = this.element.next();
@@ -1153,7 +1161,7 @@ DatePicker.prototype = {
       this.popup.hide().remove();
     }
 
-    const popoverAPI = this.trigger.data('tooltip');
+    const popoverAPI = this.trigger.data('popover');
     if (popoverAPI) {
       popoverAPI.destroy();
     }
