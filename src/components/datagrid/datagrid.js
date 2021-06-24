@@ -8978,13 +8978,13 @@ Datagrid.prototype = {
       }
 
       // Press Home or End to move to the first or last cell on the current row.
-      if (key === 36 && !self.settings.editable) {
+      if (key === 36 && !self.quickEditMode) {
         self.setActiveCell(row, 0);
         handled = true;
       }
 
       // Home to Move to the end of the current row
-      if (key === 35 && !self.settings.editable) {
+      if (key === 35 && !self.quickEditMode) {
         self.setActiveCell(row, lastCell);
         handled = true;
       }
