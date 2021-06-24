@@ -467,9 +467,17 @@ html.theme-new-contrast {
     vertical-align: middle;
   }
 
-  .tag.is-dismissible .btn-dismissible .icon {
-    top: 0;
-    vertical-align: middle;
+  .multiselect {
+    ~ .dropdown-wrapper .dropdown.has-tags {
+      .tag-list .tag.is-dismissible {
+        .btn-dismissible {
+          .icon {
+            top: 0;
+            vertical-align: middle;
+          }
+        }
+      }
+    }
   }
 }
 
