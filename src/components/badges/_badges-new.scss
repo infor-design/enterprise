@@ -36,6 +36,22 @@
   }
 
   .tag.is-dismissible .btn-dismissible .icon {
-    vertical-align: baseline;
+    top: -2px;
+    vertical-align: middle;
+  }
+}
+
+// For Safari
+.is-safari {
+  .multiselect {
+    ~ .dropdown-wrapper .dropdown.has-tags {
+      .tag-list .tag.is-dismissible {
+        .btn-dismissible {
+          .icon {
+            top: -2px;
+          }
+        }
+      }
+    }
   }
 }
