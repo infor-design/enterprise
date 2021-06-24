@@ -1023,11 +1023,9 @@ PopupMenu.prototype = {
       self.handleItemClick(e, a);
     });
 
-    $(document)
-      .off('click.popupmenu')
-      .on('click.popupmenu', function (e) {
-        e.preventDefault();
-      });
+    this.menu.off(`click.btn-menu.${this.id}`).on(`click.btn-menu.${this.id}`, (e) => {
+      e.preventDefault();
+    })
 
     const excludes = 'li:not(.separator):not(.hidden):not(.heading):not(.group):not(.is-disabled):not(.is-placeholder)';
 
