@@ -25,6 +25,7 @@
 - `[Lookup]` Fixed a regression bug where the close/clear icon were not properly aligned on mobile and tablet viewport. ([#5299](https://github.com/infor-design/enterprise/issues/5299))
 - `[Lookup]` Fixed a bug where rows become unselected when reopened. ([#5261](https://github.com/infor-design/enterprise/issues/5261))
 - `[Multiselect]` Fixed a regression bug where close icon in badge/tags were not properly aligned. ([#5351](https://github.com/infor-design/enterprise/issues/5351))
+- `[Monthview]` Fixed an issue where month year pick list was misaligning for inpage. ([#5345](https://github.com/infor-design/enterprise/issues/5345))
 - `[Page-Patterns]` Fixed an issue where the weight range slider was overlapping the sales amount text area. ([#5284](https://github.com/infor-design/enterprise/issues/5284))
 - `[Pager]` Fixed an issue where tooltip was not working after switch to 2nd page for disable/enable buttons with standalone Pager. ([#1047](https://github.com/infor-design/enterprise-ng/issues/1047))
 - `[Personalization]` Fixed a bug where user was unable to see highlighted text in the header when using the new light default theme. ([#5219](https://github.com/infor-design/enterprise/issues/5219))
