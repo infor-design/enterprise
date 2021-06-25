@@ -251,7 +251,7 @@ ApplicationMenu.prototype = {
     const key = e.which;
 
     if (key === 8 || key === 46) {
-      if (!this.element.find('.searchfield').val() && !this.element.find('.searchfield').val().length) {
+      if (!this.element.find('.searchfield').val() && !this.element.find('.searchfield').val()?.length) {
         this.accordionAPI.unfilter(null, true);
       }
     }
