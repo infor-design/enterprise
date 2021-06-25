@@ -412,7 +412,7 @@ describe('Colorpicker sizes tests', () => {
     await utils.setPage('/components/colorpicker/example-sizes?theme=classic&layout=nofrills');
   });
 
-  it('Should not have errors', async () => {
+  fit('Should not have errors', async () => {
     await utils.checkForErrors();
   });
 

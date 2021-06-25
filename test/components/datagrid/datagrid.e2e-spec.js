@@ -1639,7 +1639,7 @@ describe('Datagrid paging client side tests', () => {
     await browser.driver.sleep(config.sleep);
   });
 
-  it('Should not have errors', async () => {
+  fit('Should not have errors', async () => {
     await utils.checkForErrors();
   });
 
@@ -1755,7 +1755,7 @@ describe('Datagrid Row Indeterminate Activation tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(datagridEl), config.waitsFor);
   });
 
-  it('Should not have errors', async () => {
+  fit('Should not have errors', async () => {
     await utils.checkForErrors();
   });
 
