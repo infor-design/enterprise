@@ -1023,7 +1023,7 @@ PopupMenu.prototype = {
       self.handleItemClick(e, a);
     });
 
-    this.menu.off(`click.btn-menu.${this.id}`).on(`click.btn-menu.${this.id}`, (e) => {
+    this.menu.on(`click.btn-menu.${this.id}`, function (e) {
       e.preventDefault();
     });
 
@@ -2333,6 +2333,12 @@ PopupMenu.prototype = {
     if (this.menu && this.menu.length) {
       this.menu.off('click.popupmenu touchend.popupmenu touchcancel.popupmenu dragstart.popupmenu');
     }
+
+    setTimeout(() => {
+      if (this.menu && this.menu.length) {
+        this.menu.off(`click.btn-menu.${this.id}`);
+      }
+    }, 1);
 
     $('iframe').each(function () {
       const frame = $(this);
