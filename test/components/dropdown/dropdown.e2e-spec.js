@@ -560,7 +560,7 @@ describe('Dropdown xss tests', () => {
     await utils.setPage('/components/dropdown/test-xss');
   });
 
-  fit('Should not have errors', async () => {
+  it('Should not have errors', async () => {
     await utils.checkForErrors();
   });
 
@@ -734,7 +734,7 @@ describe('Dropdown "No Search" stay-open behavior', () => {
     await utils.setPage('/components/dropdown/example-no-search-stay-open?layout=nofrills');
   });
 
-  fit('Should not have errors', async () => {
+  it('Should not have errors', async () => {
     await utils.checkForErrors();
   });
 
