@@ -697,25 +697,32 @@
         }
       }
 
-      .picklist .picklist-item {
-        width: 100%;
-
-        a {
-          border-radius: 0;
-          display: block;
-          padding: 9px;
+      .picklist {
+        &.is-month,
+        &.is-year {
+          padding: 5px 0 0;
         }
 
-        &.up,
-        &.down {
+        .picklist-item {
+          width: 100%;
+
           a {
-            border-radius: 50%;
-            display: inline-block;
-            padding: 8px 10px;
+            border-radius: 0;
+            display: block;
+            padding: 9px;
           }
 
-          &:not(.is-selected) a {
-            --ripple-background: #{$calendar-selected-border-color};
+          &.up,
+          &.down {
+            a {
+              border-radius: 50%;
+              display: inline-block;
+              padding: 8px 10px;
+            }
+
+            &:not(.is-selected) a {
+              --ripple-background: #{$calendar-selected-border-color};
+            }
           }
         }
       }
