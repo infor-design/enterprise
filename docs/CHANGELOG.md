@@ -5,6 +5,7 @@
 - `[Action Sheet]` Added a mobile device-friendly action sheet component. ([#5256](https://github.com/infor-design/enterprise/issues/5256))
 - `[Cards]` Added card variations (Status, Hyperlink and Photo Card) with improve hitboxes for tapping. ([#5250](https://github.com/infor-design/enterprise/issues/5250))
 - `[Cards]` Added improvements to the expandable cards and made a jQuery instance to be available in the angular wrapper. ([#5252](https://github.com/infor-design/enterprise/issues/5252))
+- `[ContextualActionPanel]` Added vertical tabs example on the Contextual Action Panel. ([#5234](https://github.com/infor-design/enterprise/issues/5234))
 
 ## v4.53.0 Fixes
 
@@ -14,6 +15,7 @@
 - `[Datagrid]` Fixed a bug where animation blue circle is off-center. ([#5246](https://github.com/infor-design/enterprise/issues/5246))
 - `[Datagrid]` Fixed a bug where hovering lookup cells showed a grey background. ([#5157](https://github.com/infor-design/enterprise/issues/5157))
 - `[Datagrid]` Fixed an issue for xss where special characters was not sanitizing and make grid to not render. ([#975](https://github.com/infor-design/enterprise-ng/issues/975))
+- `[Datagrid]` Fixed a bug where the home and end key should behave as default when in editable cell and not shifting to the first and end row in datagrid. ([#5179](https://github.com/infor-design/enterprise/issues/5179))
 - `[Datepicker]` Fixed a bug where the setting attributes were missing in datepicker input and datepicker trigger on NG wrapper. ([#1044](https://github.com/infor-design/enterprise-ng/issues/1044))
 - `[Datepicker]` Fixed a bug where the selection range was not being properly rendered in mobile. ([#5211](https://github.com/infor-design/enterprise/issues/5211))
 - `[Datepicker]` Made the `autocomplete` attribute configurable by using the `autocompleteAttribute` setting. ([#5092](https://github.com/infor-design/enterprise/issues/5092))
@@ -25,6 +27,7 @@
 - `[Locale]` Fixed a bug where very large numbers with negative added an extra zero in formatNumber. ([#5318](https://github.com/infor-design/enterprise/issues/5318))
 - `[Lookup]` Fixed a regression bug where the close/clear icon were not properly aligned on mobile and tablet viewport. ([#5299](https://github.com/infor-design/enterprise/issues/5299))
 - `[Lookup]` Fixed a bug where rows become unselected when reopened. ([#5261](https://github.com/infor-design/enterprise/issues/5261))
+- `[Multiselect]` Fixed a regression bug where close icon in badge/tags were not properly aligned. ([#5351](https://github.com/infor-design/enterprise/issues/5351))
 - `[Monthview]` Fixed an issue where month year pick list was misaligning for inpage. ([#5345](https://github.com/infor-design/enterprise/issues/5345))
 - `[Page-Patterns]` Fixed an issue where the weight range slider was overlapping the sales amount text area. ([#5284](https://github.com/infor-design/enterprise/issues/5284))
 - `[Pager]` Fixed an issue where tooltip was not working after switch to 2nd page for disable/enable buttons with standalone Pager. ([#1047](https://github.com/infor-design/enterprise-ng/issues/1047))
