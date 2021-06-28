@@ -166,7 +166,7 @@ Button.prototype = {
 
     // Derive X/Y coordinates from input events
     if (e) {
-      if (!env.features.touch) {
+      if (e.originalEvent instanceof MouseEvent) {
         // Standard Mouse Click
         xPos = e.pageX - btnOffset.left;
         yPos = e.pageY - btnOffset.top;
@@ -182,8 +182,8 @@ Button.prototype = {
     }
 
     // If values have not been defined, simply set them to the center of the element.
-    xPos = (xPos < 0) ? this.element.outerWidth() / 2 : xPos;
-    yPos = (yPos < 0) ? this.element.outerHeight() / 2 : yPos;
+    if (!xPos) { xPos = this.element.outerWidth() / 2; }
+    if (!yPos) { yPos = this.element.outerHeight() / 2; }
 
     // Create/place the ripple effect
     const ripple = $(`<svg class="ripple-effect" focusable="false" aria-hidden="true" role="presentation">
