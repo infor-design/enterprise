@@ -33,6 +33,7 @@
 - `[Pager]` Fixed an issue where tooltip was not working after switch to 2nd page for disable/enable buttons with standalone Pager. ([#1047](https://github.com/infor-design/enterprise-ng/issues/1047))
 - `[Personalization]` Fixed a bug where user was unable to see highlighted text in the header when using the new light default theme. ([#5219](https://github.com/infor-design/enterprise/issues/5219))
 - `[Personalization]` Fixed an issue where hyperlinks were not showing up for dark theme. ([#5144](https://github.com/infor-design/enterprise-ng/issues/5144))
+- `[Popupmenu]` Fixed a bug where unwanted link/hash occurs if the menu if the menu is destroyed when clicking a menu item. ([#NG1046](https://github.com/infor-design/enterprise-ng/issues/1046))
 - `[Spinbox]` Fixed a bug where spinbox and its border is not properly rendered on responsive view. ([#5146](https://github.com/infor-design/enterprise/issues/5146))
 - `[Searchfield]` Fixed a bug where the close button is not rendered properly on mobile view. ([#5182](https://github.com/infor-design/enterprise/issues/5182))
 - `[Searchfield]` Fixed a bug where the search icon in search field is not aligned properly on firefox view. ([#5290](https://github.com/infor-design/enterprise/issues/5290))
