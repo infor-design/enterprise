@@ -162,7 +162,7 @@ ApplicationMenu.prototype = {
       });
 
       this.searchfield.on(`cleared.${COMPONENT_NAME}`, () => {
-        self.accordionAPI.unfilter();
+        self.accordionAPI.unfilter(null, true);
       });
     }
 
@@ -253,6 +253,8 @@ ApplicationMenu.prototype = {
     if (key === 8 || key === 46) {
       if (!this.element.find('.searchfield').val() && !this.element.find('.searchfield').val()?.length) {
         this.accordionAPI.unfilter(null, true);
+      } else {
+        this.accordionAPI.unfilter(null);
       }
     }
 
