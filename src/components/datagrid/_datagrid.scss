@@ -3564,8 +3564,10 @@ $datagrid-small-row-height: 25px;
     left: -8px;
     margin-right: 8px;
     margin-top: 0;
-    padding-left: 8.3px;
 
+    .icon.plus-minus {
+      left: -6.15px;
+    }
     .icon.plus-minus::before,
     .icon.plus-minus::after {
       left: 8px;
@@ -4013,6 +4015,17 @@ td .btn-actions {
   font-size: $ids-size-font-base;
   position: relative;
   top: 0;
+}
+
+.ie-edge {
+  .datagrid-rowgroup-header {
+    .datagrid-expand-btn {
+      .plus-minus {
+        top: -7px;
+        left: -5.75px;
+      }
+    } 
+  }
 }
 
 .is-firefox {
