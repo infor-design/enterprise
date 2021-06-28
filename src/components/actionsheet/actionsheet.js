@@ -219,6 +219,7 @@ ActionSheet.prototype = {
       autoFocus: this.settings.autoFocus,
       attributes: this.settings.attributes,
       menu: $menuEl,
+      offset: { y: 10 },
       trigger: 'immediate',
       removeOnDestroy: true
     });
