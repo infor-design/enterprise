@@ -1984,6 +1984,7 @@ Dropdown.prototype = {
       .addClass('is-open');
 
     this.searchInput.attr('aria-activedescendant', current.children('a').attr('id'));
+    this.searchInput.prop('readonly', this.settings.noSearch);
     if (this.settings.showSearchUnderSelected) {
       this.list.find('.trigger').find('.icon').attr('class', 'icon search').changeIcon('search');
     }
@@ -3012,6 +3013,7 @@ Dropdown.prototype = {
     }
 
     let isAdded = true;
+    let doAnnounce = true;
     let currentValue = this.selectedValues;
     let clearSelection = false;
 
@@ -3025,18 +3027,24 @@ Dropdown.prototype = {
     }
 
     // In a multi-select setting, it's possible for deselection to happen instead of selection.
+    if (!Array.isArray(currentValue)) {
+      currentValue = [currentValue];
+    }
+
+    const isSameValue = currentValue.indexOf(optionVal) > -1;
     if (this.settings.multiple) {
-      if (!Array.isArray(currentValue)) {
-        currentValue = [currentValue];
-      }
-      if (currentValue.indexOf(optionVal) > -1) {
+      if (isSameValue) {
         isAdded = false;
       }
     }
 
     if (isAdded) {
-      this.select(option[0]);
-      this.previousActiveDescendant = optionVal;
+      if (isSameValue) {
+        doAnnounce = false;
+      } else {
+        this.select(option[0]);
+        this.previousActiveDescendant = optionVal;
+      }
     } else {
       this.deselect(option[0]);
       this.previousActiveDescendant = undefined;
@@ -3057,7 +3065,7 @@ Dropdown.prototype = {
     * @memberof Dropdown
     * @property {object} event The jquery event object
     */
-    if (!noTrigger) {
+    if (!noTrigger && doAnnounce) {
       // Fire the change event with the new value if the noTrigger flag isn't set
       this.element.trigger('change').triggerHandler('selected', [option, isAdded]);
       this.toggleTooltip();
