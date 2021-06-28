@@ -28,10 +28,9 @@
   }
 
   function onCancel() {
-    $('body').toast({
-      title: 'Cancelled',
-      message: 'The Action Sheet was cancelled'
-    });
+    if (console) {
+      console.info('`onCancel` was triggered');
+    }
   }
 
   $('#action-sheet-trigger').actionsheet({

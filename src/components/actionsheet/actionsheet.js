@@ -3,6 +3,7 @@ import { breakpoints } from '../../utils/breakpoints';
 
 // jQuery Components
 import '../../utils/behaviors';
+import '../button/button.jquery';
 import '../icons/icons.jquery';
 import '../popupmenu/popupmenu.jquery';
 
@@ -50,8 +51,14 @@ ActionSheet.prototype = {
     }
 
     // Decorate trigger element
-    this.element[0].classList.add('ids-actionsheet-trigger');
+    const el = this.element[0];
+    el.classList.add('ids-actionsheet-trigger');
     utils.addAttributes(this.element, this, this.settings.attributes, 'trigger');
+
+    // Invoke an IDS Button component, if applicable
+    if (el.tagName === 'BUTTON' || el.className.includes('btn')) {
+      this.element.button();
+    }
 
     // Render this action sheet
     if (!this.actionSheetElem) {
@@ -95,6 +102,9 @@ ActionSheet.prototype = {
       // Attach to the root elem
       this.actionSheetElem.insertAdjacentHTML('afterbegin', actionSheetHTML);
       this.rootElem.append(this.actionSheetElem);
+
+      // Invoke an IDS Button component on each action, if applicable
+      $(this.actionSheetElem).find('button').button();
     }
   },
 
@@ -140,6 +150,9 @@ ActionSheet.prototype = {
    * @returns {boolean} true if the Action Sheet is currently visible
    */
   get visible() {
+    if (this.popupmenuAPI) {
+      return this.hasOpenPopupMenu;
+    }
     return this.rootElem.classList.contains('engaged');
   },
 
@@ -155,13 +168,13 @@ ActionSheet.prototype = {
    * @returns {void}
    */
   open() {
-    if (!this.currentlyNeedsActionSheet) {
-      this.openPopupMenu();
+    // Don't try to open if the Action Sheet is currently open
+    if (this.visible) {
       return;
     }
 
-    // Don't try to open if the Action Sheet is currently open
-    if (this.visible) {
+    if (!this.currentlyNeedsActionSheet) {
+      this.openPopupMenu();
       return;
     }
 
@@ -522,6 +535,12 @@ ActionSheet.prototype = {
       this.close();
     }
     this.element.off('click.trigger');
+
+    // Remove the Action Sheet Element
+    if (this.actionSheetElem) {
+      $(this.actionSheetElem).find('button').destroy();
+      this.actionSheetElem.remove();
+    }
 
     // Undecorate
     this.element[0].classList.remove('ids-actionsheet-trigger');
