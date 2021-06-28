@@ -321,6 +321,20 @@
   }
 }
 
+// Rules for multiselect with dismissible tags
+.multiselect {
+  ~ .dropdown-wrapper .dropdown.has-tags {
+    .tag-list .tag.is-dismissible {
+      .btn-dismissible {
+        .icon {
+          top: -2px;
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+}
+
 .tag {
   display: inline-flex;
 }
@@ -453,8 +467,32 @@ html.theme-new-contrast {
     vertical-align: middle;
   }
 
-  .tag.is-dismissible .btn-dismissible .icon {
-    vertical-align: middle;
+  .multiselect {
+    ~ .dropdown-wrapper .dropdown.has-tags {
+      .tag-list .tag.is-dismissible {
+        .btn-dismissible {
+          .icon {
+            top: 0;
+            vertical-align: middle;
+          }
+        }
+      }
+    }
+  }
+}
+
+// For Safari
+.is-safari {
+  .multiselect {
+    ~ .dropdown-wrapper .dropdown.has-tags {
+      .tag-list .tag.is-dismissible {
+        .btn-dismissible {
+          .icon {
+            top: -1px;
+          }
+        }
+      }
+    }
   }
 }
 
