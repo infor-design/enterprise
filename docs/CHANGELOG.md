@@ -5,6 +5,7 @@
 - `[Action Sheet]` Added a mobile device-friendly action sheet component. ([#5256](https://github.com/infor-design/enterprise/issues/5256))
 - `[Cards]` Added card variations (Status, Hyperlink and Photo Card) with improve hitboxes for tapping. ([#5250](https://github.com/infor-design/enterprise/issues/5250))
 - `[Cards]` Added improvements to the expandable cards and made a jQuery instance to be available in the angular wrapper. ([#5252](https://github.com/infor-design/enterprise/issues/5252))
+- `[ContextualActionPanel]` Added vertical tabs example on the Contextual Action Panel. ([#5234](https://github.com/infor-design/enterprise/issues/5234))
 
 ## v4.53.0 Fixes
 
