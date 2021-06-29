@@ -87,6 +87,8 @@
     }
 
     .tab-container.vertical {
+      z-index: 3;
+
       @media (min-width: $breakpoint-phone-to-tablet) {
         height: 100%;
         position: absolute;
