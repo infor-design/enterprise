@@ -237,25 +237,20 @@ ApplicationMenu.prototype = {
       self.handleKeyDown(e);
     });
 
-    $(document).on('keyup.applicationmenu', (e) => {
-      self.handleKeyUp(e);
+    $(document).on('input.applicationmenu', () => {
+      self.handleInput();
     });
   },
 
   /**
-   * Handles Keyup Events on the App Menu
-   * @param {jQuery.Event} e `keyup` events
+   * Handles Input Events on the App Menu
    * @returns {boolean} whether or not the keydown event was successful
    */
-  handleKeyUp(e) {
-    const key = e.which;
-
-    if (key === 8 || key === 46) {
-      if (!this.element.find('.searchfield').val() && !this.element.find('.searchfield').val()?.length) {
-        this.accordionAPI.unfilter(null, true);
-      } else {
-        this.accordionAPI.unfilter(null);
-      }
+  handleInput() {
+    if (!this.element.find('.searchfield').val() && !this.element.find('.searchfield').val()?.length) {
+      this.accordionAPI.unfilter(null, true);
+    } else {
+      this.accordionAPI.unfilter(null);
     }
 
     return true;
@@ -743,7 +738,7 @@ ApplicationMenu.prototype = {
       'close-applicationmenu',
       'dismiss-applicationmenu',
       'keydown.applicationmenu',
-      'keyup.applicationmenu'
+      'input.applicationmenu'
     ].join(' '));
 
     this.element.find('.expandable-area').off([
