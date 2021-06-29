@@ -50,6 +50,7 @@ export { Sparkline } from './sparkline/sparkline';
 export { Spinbox } from './spinbox/spinbox';
 export { Splitter } from './splitter/splitter';
 export { StepChart } from './stepchart/stepchart';
+export { SwipeAction } from './swipe-action/swipe-action';
 export { Tabs } from './tabs/tabs';
 export { Tag, TagList } from './tag/tag.list';
 export { Textarea } from './textarea/textarea';

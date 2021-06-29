@@ -1,0 +1,118 @@
+.swipe-container {
+  display: flex;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+  scroll-snap-type: x proximity;
+  width: 100%;
+
+  &.continuous {
+    scroll-snap-type: x proximity;
+
+    .swipe-action-left,
+    .swipe-action-right {
+      scroll-snap-align: initial;
+    }
+  }
+
+  // Button should remain sticky TODO
+  button {
+    // display: contents;
+    position: sticky;
+  }
+}
+
+// Hide scroll bar
+.swipe-container::-webkit-scrollbar {
+  display: none;
+}
+
+// Snaps into view
+.swipe-element {
+  align-items: center;
+  display: flex;
+  min-width: 100%;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+// Actions and element should be 100% wide
+.swipe-action {
+  align-items: center;
+  border-radius: 6px;
+  display: flex;
+  min-width: 100%;
+}
+
+// Style the action buttons
+.swipe-action-left {
+  background-color: $swipeaction-left-bg-color;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.swipe-action-right {
+  background-color: $swipeaction-right-bg-color;
+  justify-content: flex-end;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+// Firefox only
+@-moz-document url-prefix() {
+  .ids-swipe-container {
+    overflow-x: hidden;
+  }
+
+  .ids-swipe-action-left {
+    display: none;
+  }
+}
+
+// Style the buttons
+.btn-swipe-action-left,
+.btn-swipe-action-right {
+  background-color: $swipeaction-left-bg-color;
+  border-radius: 0;
+  display: block;
+  height: 100%;
+  margin: 0;
+  padding: 0 8px 8px;
+  white-space: inherit;
+  width: 85px;
+
+  .icon {
+    display: block;
+    height: 10px;
+    margin: 5px auto;
+    width: 10px;
+  }
+
+  &:focus {
+    border-color: transparent;
+    box-shadow: none;
+  }
+
+  &:active {
+    background-color: $swipeaction-left-active-bg-color;
+  }
+
+  &:hover {
+    background-color: $swipeaction-left-hover-bg-color;
+    border-color: transparent;
+    box-shadow: none;
+  }
+}
+
+.btn-swipe-action-right {
+  background-color: $swipeaction-right-bg-color;
+  color: $swipeaction-right-color;
+
+  &:hover {
+    background-color: $swipeaction-right-hover-bg-color;
+    color: $swipeaction-right-hover-color;
+  }
+
+  &:active {
+    background-color: $swipeaction-right-active-bg-color;
+  }
+}

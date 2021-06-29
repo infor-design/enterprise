@@ -955,5 +955,15 @@ $actionsheet-bg-color: $popupmenu-bg-color;
 $actionsheet-box-shadow: 0 0 8px $drop-shadow-depth;
 $actionsheet-color: $popupmenu-color;
 
+// Swipe Action
+$swipeaction-left-bg-color: $ids-color-palette-graphite-30;
+$swipeaction-left-active-bg-color: $ids-color-palette-graphite-40;
+$swipeaction-left-hover-bg-color: $ids-color-palette-graphite-40;
+$swipeaction-right-bg-color: $ids-color-palette-azure-50;
+$swipeaction-right-color: $ids-color-palette-white;
+$swipeaction-right-active-bg-color: $ids-color-palette-azure-60;
+$swipeaction-right-hover-bg-color: $ids-color-palette-azure-60;
+$swipeaction-right-hover-color: $ids-color-palette-white;
+
 //Misc
 $cubic-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);

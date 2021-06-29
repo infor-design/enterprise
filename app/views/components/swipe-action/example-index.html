@@ -1,0 +1,166 @@
+<div class="row">
+  <div class="six columns">
+    <span class="label">Swipe Action (Reveal)</span>
+    <div class="card card-variant">
+      <div class="swipe-action">
+        <div class="swipe-container">
+          <div class="swipe-action-left">
+            <button id="action-left-reveal" class="btn-swipe-action-left">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-reply"></use>
+              </svg>
+              <span>Left Action</span>
+            </button>
+          </div>
+          <div class="swipe-element">
+            <div class="card-content">
+              <div class="card-content-header">Tuesday, 21nd September</div>
+              <div class="card-content-sub">8:40AM-2:00PM</div>
+            </div>
+            <div class="card-buttonset">
+              <div class="card-content-action">
+                  <button class="btn-actions" title="Actions" type="button" data-popupmenu="popupmenu">
+                      <span class="audible">Actions</span>
+                      <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                          <use href="#icon-drag"></use>
+                      </svg>
+                  </button>
+                  <ul class="popupmenu actions top" id="popupmenu" role="menu">
+                      <li role="presentation"><a href="#" role="menuitem" id="sales"><span>Left Action</span></a></li>
+                      <li role="presentation"><a href="#" tabindex="-1" role="menuitem" id="filter">Right Action</a></li>
+                      <li role="presentation"><a href="#" tabindex="-1" role="menuitem" id="filter">Desktop Only Action</a></li>
+                  </ul>
+              </div>
+            </div>
+          </div>
+          <div class="swipe-action-right">
+            <button id="action-right-reveal" class="btn-swipe-action-right">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-tack"></use>
+              </svg>
+              <span>Right Action</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+    <span class="label">Swipe Action (Reveal / One Action)</span>
+    <div class="card card-variant">
+      <div class="swipe-action">
+        <div class="swipe-container">
+          <div class="swipe-element">
+            <div class="card-content">
+              <div class="card-content-header">Wednesday, 22nd September</div>
+              <div class="card-content-sub">8:40AM-2:00PM</div>
+            </div>
+            <div class="card-buttonset">
+              <div class="card-content-action">
+                  <button class="btn-actions" title="Actions" type="button" data-popupmenu="popupmenu">
+                      <span class="audible">Actions</span>
+                      <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                          <use href="#icon-drag"></use>
+                      </svg>
+                  </button>
+                  <ul class="popupmenu actions top" id="popupmenu" role="menu">
+                      <li role="presentation"><a href="#" role="menuitem" id="sales"><span>Left Action</span></a></li>
+                      <li role="presentation"><a href="#" tabindex="-1" role="menuitem" id="filter">Right Action</a></li>
+                      <li role="presentation"><a href="#" tabindex="-1" role="menuitem" id="filter">Desktop Only Action</a></li>
+                  </ul>
+              </div>
+            </div>
+          </div>
+          <div class="swipe-action-right">
+            <button id="action-right-reveal-one" class="btn-swipe-action-right">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-tack"></use>
+              </svg>
+              <span>Right Action</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="six columns">
+    <span class="label">Swipe Action (Continuous)</span>
+    <div class="card card-variant">
+      <div class="swipe-action" data-options="{'swipeType': 'continuous'}">
+        <div class="swipe-container">
+          <div class="swipe-action-left">
+            <button id="action-left-continuous" class="btn-swipe-action-left">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-reply"></use>
+              </svg>
+              <span>Left Action</span>
+            </button>
+          </div>
+          <div class="swipe-element">
+            <div class="card-content">
+              <div class="card-content-header">Thursday, 23nd September</div>
+              <div class="card-content-sub">9:40AM-3:00PM</div>
+            </div>
+            <div class="card-buttonset">
+              <div class="card-content-action">
+                  <button class="btn-actions" title="Actions" type="button" data-popupmenu="popupmenu">
+                    <span class="audible">Actions</span>
+                    <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                        <use href="#icon-drag"></use>
+                    </svg>
+                  </button>
+                  <ul class="popupmenu actions top" id="popupmenu" role="menu">
+                    <li role="presentation"><a href="#" role="menuitem" id="sales"><span>Left Action</span></a></li>
+                    <li role="presentation"><a href="#" tabindex="-1" role="menuitem" id="filter">Right Action</a></li>
+                    <li role="presentation"><a href="#" tabindex="-1" role="menuitem" id="filter">Desktop Only Action</a></li>
+                  </ul>
+              </div>
+            </div>
+          </div>
+          <div class="swipe-action-right">
+            <button id="action-right-continuous" class="btn-swipe-action-right">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-tack"></use>
+              </svg>
+              <span>Right Action</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+    <span class="label" id="output">&nbsp;</h2>
+  </div>
+</div>
+
+<script>
+  // Setup normal click events on the actions
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelector('#action-left-reveal').addEventListener('click', () => {
+      document.querySelector('#output').textContent = 'Left Action (Reveal Mode) was chosen';
+    });
+    document.querySelector('#action-right-reveal').addEventListener('click', () => {
+      document.querySelector('#output').textContent = 'Right Action (Reveal Mode) was chosen';
+    });
+    document.querySelector('#action-right-reveal-one').addEventListener('click', () => {
+      document.querySelector('#output').textContent = 'Right Action (Reveal Mode) was chosen';
+    });
+    document.querySelector('#action-left-continuous').addEventListener('click', () => {
+      document.querySelector('#output').textContent = 'Left Action (Continuous Mode) was chosen';
+    });
+    document.querySelector('#action-right-continuous').addEventListener('click', () => {
+      document.querySelector('#output').textContent = 'Right Action (Continuous Mode) was chosen';
+    });
+  });
+</script>
