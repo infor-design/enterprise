@@ -68,6 +68,71 @@
   }
 }
 
+// Rules for tabs-vertical inside of CAP
+.modal.contextual-action-panel.tabs-modal {
+  .modal-body {
+    padding: 0;
+
+    @media (min-width: $breakpoint-phone-to-tablet) {
+      min-height: 700px;
+      position: relative;
+    }
+
+    @media only screen and (max-height: 820px) {
+      min-height: 600px;
+    }
+
+    @media only screen and (max-height: 720px) {
+      min-height: 550px;
+    }
+
+    .tab-container.vertical {
+      @media (min-width: $breakpoint-phone-to-tablet) {
+        height: 100%;
+        position: absolute;
+      }
+
+      @media screen and (min-width: $breakpoint-phone-to-tablet) and (max-width: $breakpoint-tablet-reduced){
+        height: 90vh;
+      }
+
+      .tab-list-container {
+        min-height: 600px;
+      }
+    }
+
+    .tab-panel-container {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      overflow-y: scroll;
+
+      &::-webkit-scrollbar {
+        width: 0;
+      }
+
+      @media (min-width: $breakpoint-phone-to-tablet) {
+        max-height: 700px;
+        min-width: 400px;
+        padding-left: 260px;
+        width: 100%;
+
+        @media only screen and (max-height: 820px) {
+          max-height: 600px;
+        }
+    
+        @media only screen and (max-height: 720px) {
+          max-height: 550px;
+        }
+      }
+
+      .tab-panel {
+        margin-top: 30px;
+        padding: 0 15px;
+      }
+    }
+  }
+}
+
 .header {
   + .page-container {
     @media (max-width: $breakpoint-phone-to-tablet - 1) {
