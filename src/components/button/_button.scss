@@ -509,6 +509,16 @@ a.btn-close {
   }
 }
 
+// Some Actions Buttons can be vertical
+.btn-icon,
+.btn-actions {
+  &.vertical {
+    svg {
+      transform: rotate(90deg);
+    }
+  }
+}
+
 // Set the size of the "X"
 .btn-close {
   > .icon {
