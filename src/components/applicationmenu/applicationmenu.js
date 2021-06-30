@@ -162,7 +162,7 @@ ApplicationMenu.prototype = {
       });
 
       this.searchfield.on(`cleared.${COMPONENT_NAME}`, () => {
-        self.accordionAPI.unfilter();
+        self.accordionAPI.unfilter(null, true);
       });
     }
 
@@ -236,6 +236,24 @@ ApplicationMenu.prototype = {
     $(document).on('keydown.applicationmenu', (e) => {
       self.handleKeyDown(e);
     });
+
+    $(document).on('input.applicationmenu', () => {
+      self.handleInput();
+    });
+  },
+
+  /**
+   * Handles Input Events on the App Menu
+   * @returns {boolean} whether or not the keydown event was successful
+   */
+  handleInput() {
+    if (!this.element.find('.searchfield').val() && !this.element.find('.searchfield').val()?.length) {
+      this.accordionAPI.unfilter(null, true);
+    } else {
+      this.accordionAPI.unfilter(null);
+    }
+
+    return true;
   },
 
   /**
@@ -719,7 +737,8 @@ ApplicationMenu.prototype = {
       'open-applicationmenu',
       'close-applicationmenu',
       'dismiss-applicationmenu',
-      'keydown.applicationmenu'
+      'keydown.applicationmenu',
+      'input.applicationmenu'
     ].join(' '));
 
     this.element.find('.expandable-area').off([
