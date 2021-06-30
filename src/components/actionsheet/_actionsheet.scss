@@ -22,19 +22,6 @@
   right: 0;
   -webkit-touch-callout: none;
   z-index: 4000;
-
-  // Alignment of the items is different when icons are present
-  // ==============================
-  &.has-icons {
-    [class^='btn'] {
-      text-align: left;
-    }
-
-    .btn-primary,
-    .btn-secondary {
-      padding: 0 36px;
-    }
-  }
 }
 
 .ids-actionsheet-container {
