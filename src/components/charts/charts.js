@@ -324,6 +324,8 @@ charts.addLegend = function (series, chartType, settings, container) {
     return;
   }
 
+  const isBottom = series[0].placement && series[0].placement === 'bottom';
+
   const isTwoColumn = series[0].display && series[0].display === 'twocolumn';
   let legend = isTwoColumn ? $(`<div class="chart-legend ${
     series[0].placement ? `is-${series[0].placement}` : 'is-bottom'}"></div>`) :
@@ -336,16 +338,31 @@ charts.addLegend = function (series, chartType, settings, container) {
   // Legend width
   let width = 0;
   let currentWidth;
+  let totalWidth = 0;
 
-  for (i = 0; i < series.length; i++) {
+  let maxLength = isBottom ? 3 : series.length;
+
+  let currentTotalWidthPercent;
+  for (i = 0; i < maxLength; i++) {
     currentWidth = series[i].name ? series[i].name.length * 6 : 6;
     width = (series[i].name && currentWidth > width) ? currentWidth : width;
+
+    totalWidth += currentWidth;
+    currentTotalWidthPercent = totalWidth / $(container).width() * 100;
+    if (isBottom && currentTotalWidthPercent > 30) {
+      maxLength = i + 1;
+    }
   }
 
   width += 55;
   const widthPercent = width / $(container).width() * 100;
+  const exceedsMaxWidth = widthPercent > 45;
+console.log('height', $(container).height())
+  if (!exceedsMaxWidth) {
+    maxLength = series.length;
+  }
 
-  for (i = 0; i < series.length; i++) {
+  for (i = 0; i < maxLength; i++) {
     if (!series[i].name) {
       continue; // eslint-disable-line
     }
@@ -392,7 +409,7 @@ charts.addLegend = function (series, chartType, settings, container) {
     }
 
     if (isTwoColumn) {
-      if (widthPercent > 45 && settings.legendPlacement !== 'right') {
+      if (exceedsMaxWidth && settings.legendPlacement !== 'right') {
         seriesLine = `<span class="chart-legend-item${extraClass}" tabindex="0" role="button"></span>`;
       } else {
         seriesLine = `<span class="chart-legend-item${extraClass} is-two-column" tabindex="0" role="button"></span>`;
@@ -408,7 +425,7 @@ charts.addLegend = function (series, chartType, settings, container) {
       legend.append(seriesLine);
     }
 
-    if ((series[i].display && series[i].display === 'block') || (isTwoColumn && widthPercent > 45 && settings.legendPlacement !== 'right')) {
+    if ((series[i].display && series[i].display === 'block') || (isTwoColumn && exceedsMaxWidth && settings.legendPlacement !== 'right')) {
       seriesLine.css({
         float: 'none',
         display: 'block',
@@ -447,6 +464,27 @@ charts.addLegend = function (series, chartType, settings, container) {
         charts.handleElementClick(this, series, settings);
       }
     });
+
+    if (isBottom && exceedsMaxWidth && series.length > maxLength) {
+      const listButton = $(`<button class="list-button">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation" style="min-height: 0">
+            <use href="#icon-bullet-steps"></use>
+          </svg>
+        </button>`)
+        .on('click', () => {
+          console.log('list button clicked');
+        });
+
+      legend.css({
+        'max-height': '50px',
+        'min-height': '30px',
+        display: 'flex'
+      });
+
+      $('.widget').addClass('auto-height');
+
+      legend.append(listButton);
+    }
 
     $(container).append(legend);
   }

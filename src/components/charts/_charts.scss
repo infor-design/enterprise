@@ -79,6 +79,12 @@
     @include opacity(0);
   }
 
+  .list-button {
+    float: right;
+    padding: 0 7px;
+    margin-right: 17px;
+  }
+
   // Right aligned Legend
   &.has-right-legend {
     align-content: center;
