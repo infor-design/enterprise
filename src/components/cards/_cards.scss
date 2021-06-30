@@ -131,7 +131,7 @@
 
           &:hover {
             color: $card-content-button-color;
-        
+
             .icon {
               color: $card-content-button-color;
             }
@@ -168,12 +168,6 @@
     .widget-content {
       height: auto;
       min-height: 0;
-    }
-  }
-
-  .btn-actions.vertical {
-    svg {
-      transform: rotate(90deg);
     }
   }
 
