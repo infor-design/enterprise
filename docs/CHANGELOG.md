@@ -10,6 +10,7 @@
 
 ## v4.53.0 Fixes
 
+- `[Application Menu]` Fixed a bug where the menu list will not properly rendered on autocomplete if you type a character that is not available in the list. ([#4863](https://github.com/infor-design/enterprise/issues/4863))
 - `[Calendar]` Fixed a bug where calendar event is not rendered on WeekView if add event (modal) is used before add event (api). ([#5236](https://github.com/infor-design/enterprise/issues/5236))
 - `[Circle Pager]` Fixed size interactions and changes for mobile view port. ([#5251](https://github.com/infor-design/enterprise/issues/5251))
 - `[Datagrid]` Fixed an issue where personalize column headers were not rendering properly. ([#5361](https://github.com/infor-design/enterprise/issues/5361))
@@ -34,6 +35,7 @@
 - `[Pager]` Fixed an issue where tooltip was not working after switch to 2nd page for disable/enable buttons with standalone Pager. ([#1047](https://github.com/infor-design/enterprise-ng/issues/1047))
 - `[Personalization]` Fixed a bug where user was unable to see highlighted text in the header when using the new light default theme. ([#5219](https://github.com/infor-design/enterprise/issues/5219))
 - `[Personalization]` Fixed an issue where hyperlinks were not showing up for dark theme. ([#5144](https://github.com/infor-design/enterprise-ng/issues/5144))
+- `[Popupmenu]` Fixed a bug where unwanted link/hash occurs if the menu if the menu is destroyed when clicking a menu item. ([#NG1046](https://github.com/infor-design/enterprise-ng/issues/1046))
 - `[Spinbox]` Fixed a bug where spinbox and its border is not properly rendered on responsive view. ([#5146](https://github.com/infor-design/enterprise/issues/5146))
 - `[Searchfield]` Fixed a bug where the close button is not rendered properly on mobile view. ([#5182](https://github.com/infor-design/enterprise/issues/5182))
 - `[Searchfield]` Fixed a bug where the search icon in search field is not aligned properly on firefox view. ([#5290](https://github.com/infor-design/enterprise/issues/5290))
