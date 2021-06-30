@@ -9,6 +9,7 @@
 
 ## v4.53.0 Fixes
 
+- `[Application Menu]` Fixed a bug where the menu list will not properly rendered on autocomplete if you type a character that is not available in the list. ([#4863](https://github.com/infor-design/enterprise/issues/4863))
 - `[Calendar]` Fixed a bug where calendar event is not rendered on WeekView if add event (modal) is used before add event (api). ([#5236](https://github.com/infor-design/enterprise/issues/5236))
 - `[Circle Pager]` Fixed size interactions and changes for mobile view port. ([#5251](https://github.com/infor-design/enterprise/issues/5251))
 - `[Datagrid]` Fixed an issue where personalize column headers were not rendering properly. ([#5361](https://github.com/infor-design/enterprise/issues/5361))
