@@ -1618,6 +1618,9 @@ Dropdown.prototype = {
         }
         self.toggle();
       }
+    } else if (this.settings.noSearch === true) {
+      // In `noSearch` mode, this enables typeahead while the list is opened
+      this.handleAutoComplete(e);
     }
 
     this.searchKeyMode = true;
@@ -1756,6 +1759,7 @@ Dropdown.prototype = {
         } else {
           self.selectStartsWith(self.filterTerm);
         }
+        self.filterTerm = '';
         return;
       }
 

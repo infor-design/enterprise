@@ -739,32 +739,25 @@ describe('Dropdown "No Search" stay-open behavior', () => {
   });
 
   it('Highlights items that match search terms when the list is opened', async () => {
-    // Find pseudo-elem and click
+    // Find pseudo-elem and click to open the list
     const dropdownEl = element(by.css('div.dropdown'));
     await browser.driver.sleep(config.sleep);
     await dropdownEl.click();
 
-    // Find search input
-    await browser.driver.sleep(config.sleep);
-    const searchInput = await element(by.id('dropdown-search'));
-
     // Find numbers that exist
-    await searchInput.click();
-    await searchInput.clear().sendKeys('102');
+    await dropdownEl.sendKeys('102');
     await browser.driver.sleep(config.sleep);
 
     expect(await element(by.className('is-focused')).getText()).toEqual('102');
 
     // Click to reset selection cursor, then find another
-    await searchInput.click();
-    await searchInput.clear().sendKeys('93');
+    await dropdownEl.sendKeys('93');
     await browser.driver.sleep(config.sleep);
 
     expect(await element(by.className('is-focused')).getText()).toEqual('93');
 
     // Try to find one that doesn't exist. The blank item will become highlighted.
-    await searchInput.click();
-    await searchInput.clear().sendKeys('104');
+    await dropdownEl.sendKeys('104');
     await browser.driver.sleep(config.sleep);
 
     expect(await element(by.className('is-focused')).getText()).toEqual(' ');
@@ -776,13 +769,8 @@ describe('Dropdown "No Search" stay-open behavior', () => {
     await browser.driver.sleep(config.sleep);
     await dropdownEl.click();
 
-    // Find search input
-    await browser.driver.sleep(config.sleep);
-    const searchInput = await element(by.id('dropdown-search'));
-
     // Highlight "102" and hit ENTER. 102 Should be selected.
-    await searchInput.click();
-    await searchInput.clear().sendKeys('102');
+    await dropdownEl.sendKeys('102');
     await browser.switchTo().activeElement().sendKeys(protractor.Key.ENTER);
     await browser.driver.sleep(config.sleep);
 
@@ -795,13 +783,8 @@ describe('Dropdown "No Search" stay-open behavior', () => {
     await browser.driver.sleep(config.sleep);
     await dropdownEl.click();
 
-    // Find search input
-    await browser.driver.sleep(config.sleep);
-    const searchInput = await element(by.id('dropdown-search'));
-
     // Highlight "75" and press ESCAPE. Nothing should be selected.
-    await searchInput.click();
-    await searchInput.clear().sendKeys('75');
+    await dropdownEl.sendKeys('75');
     await browser.switchTo().activeElement().sendKeys(protractor.Key.ESCAPE);
     await browser.driver.sleep(config.sleep);
 
