@@ -56,8 +56,6 @@
       padding: 15px;
 
       div {
-        padding: 3px;
-
         &.card-content-status {
           margin-left: -4px;
           color: $card-content-status-success-color;
@@ -95,26 +93,29 @@
         }
 
         &.card-content-header {
+          margin-top: 8px;
           font-size: 16px;
+          color: $card-content-header-color;
 
           .header-status {
-            color: $card-header-status-available-color;
+            color: $card-content-header-status-available-color;
 
             &.available {
-              color: $card-header-status-available-color;
+              color: $card-content-header-status-available-color;
             }
 
             &.busy {
-              color: $card-header-status-busy-color;
+              color: $card-content-header-status-busy-color;
             }
 
             &.away {
-              color: $card-header-status-away-color;
+              color: $card-content-header-status-away-color;
             }
           }
         }
 
         &.card-content-sub {
+          margin-top: 8px;
           color: $card-content-sub-color;
 
           .hyperlink {
@@ -146,8 +147,8 @@
           border-radius: 50% !important;
           margin-right: 24px;
           transform: rotate(90deg);
-          border-radius: unset;
-          width: unset;
+          width: 44px;
+          height: 44px;
 
           &:hover {
             color: $card-content-button-color;
