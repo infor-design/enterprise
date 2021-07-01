@@ -56,18 +56,22 @@ SwipeAction.prototype = {
 
     // Close on click
     if (this.swipeType === 'reveal') {
-      this.element.find('button').on('click', () => {
+      this.element.find('.btn-swipe-action-right, .btn-swipe-action-left').on('click.swipe-action', () => {
         this.container.scrollLeft = 85;
+        this.element.focus();
+      });
+      $(this.container).on('scroll.swipe-action', () => {
+        this.element.find('.btn-actions')?.data('popupmenu')?.close();
       });
       return;
     }
 
     // For continuous swipe type setup a "swipe" event with touch start and end
-    this.element.on('touchstart.swipe', (e) => {
+    this.element.on('touchstart.swipe-action', (e) => {
       touchstartX = e.changedTouches[0].screenX;
     }, { passive: true });
 
-    this.element.on('touchend.swipe', (e) => {
+    this.element.on('touchend.swipe-action', (e) => {
       touchendX = e.changedTouches[0].screenX;
       let direction = '';
 
@@ -82,12 +86,14 @@ SwipeAction.prototype = {
       }
 
       this.element.find(`.swipe-action-${direction === 'left' ? 'right' : 'left'} button`).click();
+      this.element.find('.btn-actions')?.data('popupmenu')?.close();
     }, { passive: true });
 
     // Treat scroll like swipe as it works on chrome with the magic mouse
-    $(this.container).on('scroll', (e) => {
+    $(this.container).on('scroll.swipe-action', (e) => {
       const eventTarget = e.target;
       const scrollPercentage = 100 * (eventTarget.scrollLeft / (eventTarget.scrollWidth - eventTarget.clientWidth));
+      this.element.find('.btn-actions')?.data('popupmenu')?.close();
 
       if (Math.abs(lastPercentage - scrollPercentage) < 1) {
         return;
@@ -145,7 +151,11 @@ SwipeAction.prototype = {
    * @returns {void}
    */
   teardown() {
-    this.element.off('swipe.trigger');
+    this.element.find('.btn-swipe-action-right, .btn-swipe-action-left').off('click.swipe-action');
+    this.element.off('scroll.swipe-action').off('click.swipe-action');
+    this.element.off('touchstart.swipe-action');
+    this.element.off('touchend.swipe-action');
+    $(this.container).off('scroll.swipe-action');
   },
 
   /**
