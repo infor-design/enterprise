@@ -532,6 +532,10 @@ Modal.prototype = {
         // Set a unique ID attribute if one wasn't predefined.
         btn.element[0].setAttribute('id', buttons[i].id || utils.uniqueId(btn.element, 'button', 'modal'));
 
+        if (buttons[i].tabindex) {
+          btn.element[0].setAttribute('tabindex', buttons[i].tabindex);
+        }
+
         // Setup a user-defined click handler, if one was provided.
         // Do not attach this handler in some scenarios.
         $(btn.element).on(`click.${self.namespace}`, (e) => {
@@ -682,7 +686,7 @@ Modal.prototype = {
       utils.addAttributes(btn, self, props.attributes, '', true);
 
       const attrs = {};
-      const attrTypes = ['id', 'name', 'text'];
+      const attrTypes = ['id', 'name', 'text', 'tabindex'];
 
       for (let k = 0; k < attrTypes.length; k++) {
         if (props[attrTypes[k]]) {
