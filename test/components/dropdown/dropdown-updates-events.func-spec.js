@@ -184,6 +184,22 @@ describe('Dropdown updates, events', () => {
     done();
   });
 
+  it('does not trigger change events when the same item is selected', (done) => {
+    // Open the dropdown and click the second option once to pre-select it
+    dropdownObj.open();
+    document.body.querySelectorAll('.dropdown-option')[1].click();
+
+    // Begin listening for change events
+    const spyEvent = spyOnEvent('.dropdown', 'change');
+
+    // Open the dropdown and click the second option another time.  It should not be re-selected.
+    dropdownObj.open();
+    document.body.querySelectorAll('.dropdown-option')[1].click();
+
+    expect(spyEvent).not.toHaveBeenTriggered();
+    done();
+  });
+
   it('should trigger change event on duplicate label', () => {
     // Make some dup labels
     const options = document.body.querySelectorAll('option');
