@@ -193,7 +193,7 @@ Modal.prototype = {
     return (this.settings.fullsize === 'always' ||
       (this.settings.fullsize === 'responsive' && breakpoints.isBelow(this.settings.breakpoint)) ||
       (this.settings.fullsize === 'responsive' && this.isAndroid() && this.settings.breakpoint === 'phone-to-tablet') ||
-      (this.settings.fullsize === 'responsive' && breakpoints.isBelow(this.settings.breakpoint) && window.matchMedia("(orientation: landscape)").matches));
+      (this.settings.fullsize === 'responsive' && breakpoints.isBelow(this.settings.breakpoint) && window.matchMedia('(orientation: landscape)').matches));
   },
 
   /**
