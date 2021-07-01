@@ -5,6 +5,8 @@ import { DOM } from '../../utils/dom';
 import { theme } from '../theme/theme';
 import { Locale } from '../locale/locale';
 
+import '../popupmenu/popupmenu.jquery';
+
 const charts = {};
 
 charts.destroy = function destroy(el) {
@@ -357,7 +359,7 @@ charts.addLegend = function (series, chartType, settings, container) {
   width += 55;
   const widthPercent = width / $(container).width() * 100;
   const exceedsMaxWidth = widthPercent > 45;
-console.log('height', $(container).height())
+
   if (!exceedsMaxWidth) {
     maxLength = series.length;
   }
@@ -466,14 +468,36 @@ console.log('height', $(container).height())
     });
 
     if (isBottom && exceedsMaxWidth && series.length > maxLength) {
-      const listButton = $(`<button class="list-button">
-          <svg class="icon" focusable="false" aria-hidden="true" role="presentation" style="min-height: 0">
-            <use href="#icon-bullet-steps"></use>
-          </svg>
-        </button>`)
-        .on('click', () => {
-          console.log('list button clicked');
-        });
+      const listButton = $(`
+      <button class="btn-actions list-button" type="button">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation" style="min-height: 0">
+          <use href="#icon-bullet-steps"></use>
+        </svg>
+      </button>
+      `);
+
+      const popupList = $('<ul class="popupmenu actions bottom"></ul>');
+
+      for (let j = maxLength; j < series.length; j++) {
+        const listItem = $('<li><a href="#"><div class="chart-popup-menu"></div></a></li>');
+        const textBlock = $(`<span class="chart-popup-menu-text">${xssUtils.stripTags(series[j].name)}</span>`);
+
+        const hexColor = charts.chartColor(j, chartType || (series.length === 1 ? 'bar-single' : 'bar'), series[j]);
+        const colorName = charts.chartColorName(j, chartType || (series.length === 1 ? 'bar-single' : 'bar'), series[j]);
+
+        let color = '';
+        if (colorName.substr(0, 1) === '#') {
+          color = $('<span class="chart-popup-menu-color"></span>');
+          if (!series[i].pattern) {
+            color.css('background-color', hexColor);
+          }
+        } else {
+          color = $(`<span class="chart-popup-menu-color ${series[i].pattern ? '' : colorName}"></span>`);
+        }
+
+        listItem.find('div').append(color, textBlock);
+        popupList.append(listItem);
+      }
 
       legend.css({
         'max-height': '50px',
@@ -484,9 +508,15 @@ console.log('height', $(container).height())
       $('.widget').addClass('auto-height');
 
       legend.append(listButton);
-    }
+      $(container).append(legend);
 
-    $(container).append(legend);
+      popupList.insertAfter(listButton);
+      listButton.popupmenu({
+        menu: popupList
+      });
+    } else {
+      $(container).append(legend);
+    }
   }
 };
 

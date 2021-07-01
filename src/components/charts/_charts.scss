@@ -286,6 +286,23 @@
       vertical-align: super;
     }
   }
+
+}
+
+// Legend Popup Styling
+.chart-popup-menu {
+  display: flex;
+  
+  .chart-popup-menu-color {
+    height: 15px;
+    width: 15px;
+    margin: 8% 5px
+  }
+
+  .chart-popup-menu-text {
+    font-family: $ids-font-family-base;
+    font-size: $ids-size-font-xs;
+  }
 }
 
 // Spark Line Charts
