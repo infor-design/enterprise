@@ -9,6 +9,7 @@
 
 ## v4.53.0 Fixes
 
+- `[Application Menu]` Fixed a bug where the menu list will not properly rendered on autocomplete if you type a character that is not available in the list. ([#4863](https://github.com/infor-design/enterprise/issues/4863))
 - `[Calendar]` Fixed a bug where calendar event is not rendered on WeekView if add event (modal) is used before add event (api). ([#5236](https://github.com/infor-design/enterprise/issues/5236))
 - `[Circle Pager]` Fixed size interactions and changes for mobile view port. ([#5251](https://github.com/infor-design/enterprise/issues/5251))
 - `[Datagrid]` Fixed an issue where personalize column headers were not rendering properly. ([#5361](https://github.com/infor-design/enterprise/issues/5361))
@@ -27,8 +28,9 @@
 - `[Locale]` Fixed a bug where very large numbers with negative added an extra zero in formatNumber. ([#5318](https://github.com/infor-design/enterprise/issues/5318))
 - `[Lookup]` Fixed a regression bug where the close/clear icon were not properly aligned on mobile and tablet viewport. ([#5299](https://github.com/infor-design/enterprise/issues/5299))
 - `[Lookup]` Fixed a bug where rows become unselected when reopened. ([#5261](https://github.com/infor-design/enterprise/issues/5261))
-- `[Multiselect]` Fixed a regression bug where close icon in badge/tags were not properly aligned. ([#5351](https://github.com/infor-design/enterprise/issues/5351))
+- `[Modal]` Added the ability to set the tabindex. ([#5358](https://github.com/infor-design/enterprise/issues/5358))
 - `[Monthview]` Fixed an issue where month year pick list was misaligning for inpage. ([#5345](https://github.com/infor-design/enterprise/issues/5345))
+- `[Multiselect]` Fixed a regression bug where close icon in badge/tags were not properly aligned. ([#5351](https://github.com/infor-design/enterprise/issues/5351))
 - `[Page-Patterns]` Fixed an issue where the weight range slider was overlapping the sales amount text area. ([#5284](https://github.com/infor-design/enterprise/issues/5284))
 - `[Pager]` Fixed an issue where tooltip was not working after switch to 2nd page for disable/enable buttons with standalone Pager. ([#1047](https://github.com/infor-design/enterprise-ng/issues/1047))
 - `[Personalization]` Fixed a bug where user was unable to see highlighted text in the header when using the new light default theme. ([#5219](https://github.com/infor-design/enterprise/issues/5219))
