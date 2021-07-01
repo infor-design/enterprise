@@ -93,9 +93,9 @@
         }
 
         &.card-content-header {
-          margin-top: 8px;
-          font-size: 16px;
           color: $card-content-header-color;
+          font-size: 16px;
+          margin-top: 0;
 
           .header-status {
             color: $card-content-header-status-available-color;
@@ -115,11 +115,11 @@
         }
 
         &.card-content-sub {
-          margin-top: 8px;
           color: $card-content-sub-color;
+          margin-top: 2px;
 
           .hyperlink {
-            padding: 4px 3px 4px 3px
+            padding: 4px 3px;
           }
         }
       }
