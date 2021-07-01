@@ -73,34 +73,8 @@
   .modal-body {
     padding: 0;
 
-    @media (min-width: $breakpoint-phone-to-tablet) {
-      min-height: 700px;
-      position: relative;
-    }
-
-    @media only screen and (max-height: 820px) {
-      min-height: 600px;
-    }
-
-    @media only screen and (max-height: 720px) {
-      min-height: 550px;
-    }
-
     .tab-container.vertical {
       z-index: 3;
-
-      @media (min-width: $breakpoint-phone-to-tablet) {
-        height: 100%;
-        position: absolute;
-      }
-
-      @media screen and (min-width: $breakpoint-phone-to-tablet) and (max-width: $breakpoint-tablet-reduced){
-        height: 90vh;
-      }
-
-      .tab-list-container {
-        min-height: 600px;
-      }
     }
 
     .tab-panel-container {
@@ -112,24 +86,73 @@
         width: 0;
       }
 
-      @media (min-width: $breakpoint-phone-to-tablet) {
-        max-height: 700px;
-        min-width: 400px;
-        padding-left: 260px;
-        width: 100%;
-
-        @media only screen and (max-height: 820px) {
-          max-height: 600px;
-        }
-    
-        @media only screen and (max-height: 720px) {
-          max-height: 550px;
-        }
-      }
-
       .tab-panel {
         margin-top: 30px;
         padding: 0 15px;
+      }
+    }
+  }
+
+  &.display-fullsize {
+    .tab-container.vertical {
+      height: 100vh;
+      overflow: hidden;
+
+      .tab-list-container {
+        height: 100vh;
+      }
+    }
+
+    .tab-panel-container {
+      height: 100vh;
+    }
+  }
+
+  &:not(.display-fullsize) {
+    .modal-body {
+      @media (min-width: $breakpoint-phone-to-tablet) {
+        min-height: 700px;
+        position: relative;
+      }
+  
+      @media only screen and (max-height: 820px) {
+        min-height: 600px;
+      }
+  
+      @media only screen and (max-height: 720px) {
+        min-height: 550px;
+      }
+
+      .tab-container.vertical {
+        @media (min-width: $breakpoint-phone-to-tablet) {
+          height: 100%;
+          position: absolute;
+        }
+  
+        @media screen and (min-width: $breakpoint-phone-to-tablet) and (max-width: $breakpoint-tablet-reduced){
+          height: 90vh;
+        }
+  
+        .tab-list-container {
+          min-height: 600px;
+        }
+      }
+
+      .tab-panel-container {
+        @media (min-width: $breakpoint-phone-to-tablet) {
+          max-height: 700px;
+          min-width: 400px;
+          padding-left: 260px;
+          width: 100%;
+  
+          @media only screen and (max-height: 820px) {
+            max-height: 600px;
+          }
+      
+          @media only screen and (max-height: 720px) {
+            max-height: 550px;
+          }
+        }
       }
     }
   }
