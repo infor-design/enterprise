@@ -72,4 +72,14 @@
       }
     ]
   });
+
+  $('body').on('initialized', function () {
+    $('select.dropdown').on('change.test', function (e) {
+      var newVal = $(e.target).find(':checked').val();
+      $('body').toast({
+        title: "Value changed!",
+        message: 'New value: "'+ newVal +'"'
+      });
+    });
+  });
 </script>
