@@ -49,6 +49,8 @@
 - `[Splitter]` Fixed position of splitter button. ([#5121](https://github.com/infor-design/enterprise/issues/5121))
 - `[Tooltip/Popover]` Split the Popover and Tooltip into separate components. ([#5197](https://github.com/infor-design/enterprise/issues/5197))
 
+(52 Issues Solved This Release, Backlog Enterprise 147, Backlog Ng 28, 1095 Functional Tests, 1668 e2e Tests)
+
 ## v4.52.0
 
 ### v4.52.0 Markup Changes
@@ -81,7 +83,7 @@
 - `[Spinbox]` Fixed a bug where spinbox and its border is not properly rendered on responsive view. ([#5146](https://github.com/infor-design/enterprise/issues/5146))
 - `[Tabs Module]` Fixed a bug where long tab labels overflowed behind the close icon. ([#5187](https://github.com/infor-design/enterprise/issues/5187))
 
-(33 Issues Solved This Release, Backlog Enterprise 134, Backlog Ng 34, 2835 1652 Functional Tests, 1652 e2e Tests)
+(33 Issues Solved This Release, Backlog Enterprise 134, Backlog Ng 34, 1183 Functional Tests, 1652 e2e Tests)
 
 ## v4.51.4
 
