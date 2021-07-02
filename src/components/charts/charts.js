@@ -377,7 +377,7 @@ charts.addLegend = function (series, chartType, settings, container) {
       extraClass += ` ${series[i].option}`;
     }
 
-    let seriesLine = `<span class="chart-legend-item${extraClass}" tabindex="0" role="button"></span>`;
+    let seriesLine = `<span id="chart-legend-${i}" class="chart-legend-item${extraClass}" tabindex="0" role="button"></span>`;
     const hexColor = charts.chartColor(i, chartType || (series.length === 1 ? 'bar-single' : 'bar'), series[i]);
     const colorName = charts.chartColorName(i, chartType || (series.length === 1 ? 'bar-single' : 'bar'), series[i]);
 
@@ -412,9 +412,9 @@ charts.addLegend = function (series, chartType, settings, container) {
 
     if (isTwoColumn) {
       if (exceedsMaxWidth && settings.legendPlacement !== 'right') {
-        seriesLine = `<span class="chart-legend-item${extraClass}" tabindex="0" role="button"></span>`;
+        seriesLine = `<span id="chart-legend-${i}" class="chart-legend-item${extraClass}" tabindex="0" role="button"></span>`;
       } else {
-        seriesLine = `<span class="chart-legend-item${extraClass} is-two-column" tabindex="0" role="button"></span>`;
+        seriesLine = `<span id="chart-legend-${i}" class="chart-legend-item${extraClass} is-two-column" tabindex="0" role="button"></span>`;
       }
     }
     seriesLine = $(seriesLine);
@@ -459,11 +459,15 @@ charts.addLegend = function (series, chartType, settings, container) {
   }
 
   if (legend instanceof $) {
+    const regex = /^chart-legend-(.+)/;
+
     legend.on('click.chart', '.chart-legend-item', function () {
-      charts.handleElementClick(this, series, settings);
+      const idx = this.id.match(regex)[1];
+      charts.handleElementClick(idx, this, series, settings);
     }).on('keypress.chart', '.chart-legend-item', function (e) {
       if (e.which === 13 || e.which === 32) {
-        charts.handleElementClick(this, series, settings);
+        const idx = this.id.match(regex)[1];
+        charts.handleElementClick(idx, this, series, settings);
       }
     });
 
@@ -479,7 +483,7 @@ charts.addLegend = function (series, chartType, settings, container) {
       const popupList = $('<ul class="popupmenu actions bottom"></ul>');
 
       for (let j = maxLength; j < series.length; j++) {
-        const listItem = $('<li><a href="#"><div class="chart-popup-menu"></div></a></li>');
+        const listItem = $(`<li><a id="chart-legend-${j}" href="#"><div class="chart-popup-menu"></div></a></li>`);
         const textBlock = $(`<span class="chart-popup-menu-text">${xssUtils.stripTags(series[j].name)}</span>`);
 
         const hexColor = charts.chartColor(j, chartType || (series.length === 1 ? 'bar-single' : 'bar'), series[j]);
@@ -511,8 +515,14 @@ charts.addLegend = function (series, chartType, settings, container) {
       $(container).append(legend);
 
       popupList.insertAfter(listButton);
+
       listButton.popupmenu({
         menu: popupList
+      });
+
+      listButton.on('selected', (e, args) => {
+        const idx = args[0].id.match(regex)[1];
+        charts.handleElementClick(idx, this, series, settings);
       });
     } else {
       $(container).append(legend);
@@ -523,14 +533,14 @@ charts.addLegend = function (series, chartType, settings, container) {
 /**
  * Helper Function to Select from legend click
  * @private
+ * @param {number} idx Index of clicked element.
  * @param {object} line The element that was clicked.
  * @param {array} series The data series.
  * @param {object} settings [description]
  */
-charts.handleElementClick = function (line, series, settings) {
+charts.handleElementClick = function (idx, line, series, settings) {
   const api = $(settings?.svg?.node()).closest('.chart-container').data('chart');
   const noTrigger = api?.initialSelectCall;
-  const idx = $(line).index();
   const elem = series[idx];
   let selector;
 
