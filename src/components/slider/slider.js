@@ -993,17 +993,20 @@ Slider.prototype = {
 
     // if an array is passed as the first argument, break it apart
     if (minVal && $.isArray(minVal)) {
-      if (minVal[1] !== undefined) {
+      if (minVal[1] !== undefined && !isNaN(minVal[1])) {
         maxVal = minVal[1];
       }
-      minVal = minVal[0];
+
+      if (!isNaN(minVal[0])) {
+        minVal = minVal[0];
+      }
     }
 
     // set the values back to the existing one if they aren't passed.
-    if (minVal === undefined && $.isArray(self._value) && self._value[0] !== undefined) {
+    if ((minVal === undefined || isNaN(minVal)) && $.isArray(self._value) && self._value[0] !== undefined) {
       minVal = self._value[0];
     }
-    if (maxVal === undefined && $.isArray(self._value) && self._value[1] !== undefined) {
+    if ((maxVal === undefined || isNaN(maxVal)) && $.isArray(self._value) && self._value[1] !== undefined) {
       maxVal = self._value[1];
     }
 
