@@ -766,6 +766,16 @@ $builder-sidebar-bg-color: $panel-bg-color;
   border: 1px solid $ids-color-palette-slate-40;
 }
 
+// Swipe Action
+$swipeaction-left-bg-color: $ids-color-palette-graphite-60;
+$swipeaction-left-active-bg-color: $ids-color-palette-graphite-70;
+$swipeaction-left-hover-bg-color: $ids-color-palette-graphite-70;
+$swipeaction-right-bg-color: $ids-color-palette-azure-50;
+$swipeaction-right-color: $ids-color-palette-white;
+$swipeaction-right-active-bg-color: $ids-color-palette-azure-60;
+$swipeaction-right-hover-bg-color: $ids-color-palette-azure-60;
+$swipeaction-right-hover-color: $ids-color-palette-white;
+
 //================================================== //
 // Core Components
 

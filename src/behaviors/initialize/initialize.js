@@ -379,6 +379,9 @@ const PLUGIN_MAPPINGS = [
   // Breadcrumb
   ['breadcrumb', '.breadcrumb'],
 
+  // Swipe Action
+  ['swipeaction', '.swipe-action'],
+
   // Form Compact Component
   ['formcompact', '.form-compact-container', function (rootElem, pluginName, selector) {
     matchedItems(rootElem, selector).each((i, item) => {

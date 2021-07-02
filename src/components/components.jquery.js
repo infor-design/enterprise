@@ -55,6 +55,7 @@ import './slider/slider.jquery';
 import './spinbox/spinbox.jquery';
 import './splitter/splitter.jquery';
 import './swaplist/swaplist.jquery';
+import './swipe-action/swipe-action.jquery';
 import './scrollaction/scrollaction.jquery';
 import './stepchart/stepchart.jquery';
 import './tabs/tabs.jquery';

@@ -783,6 +783,16 @@ $calendar-hover-bg-color: rgba(74, 74, 74, 0.1);
 $calendar-disabled-bg-color: $input-color-readonly-background;
 $calendar-disabled-color: $ids-color-palette-slate-80;
 
+// Swipe Action
+$swipeaction-left-bg-color: $ids-color-palette-slate-30;
+$swipeaction-left-active-bg-color: $ids-color-palette-slate-40;
+$swipeaction-left-hover-bg-color: $ids-color-palette-slate-40;
+$swipeaction-right-bg-color: $ids-color-palette-azure-50;
+$swipeaction-right-color: $ids-color-palette-white;
+$swipeaction-right-active-bg-color: $ids-color-palette-azure-60;
+$swipeaction-right-hover-bg-color: $ids-color-palette-azure-60;
+$swipeaction-right-hover-color: $ids-color-palette-white;
+
 // New Theme Only Variables
 $new-acc-border-radius: 6px;
 $new-acc-header-text-color: $ids-color-palette-slate-10;
