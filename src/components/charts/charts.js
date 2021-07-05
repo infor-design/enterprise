@@ -345,13 +345,13 @@ charts.addLegend = function (series, chartType, settings, container) {
   let maxLength = isBottom ? 3 : series.length;
 
   let currentTotalWidthPercent;
-  for (i = 0; i < maxLength; i++) {
+  for (i = 0; i < series.length; i++) {
     currentWidth = series[i].name ? series[i].name.length * 6 : 6;
     width = (series[i].name && currentWidth > width) ? currentWidth : width;
 
     totalWidth += currentWidth;
     currentTotalWidthPercent = totalWidth / $(container).width() * 100;
-    if (isBottom && currentTotalWidthPercent > 30) {
+    if (isBottom && currentTotalWidthPercent <= 45) {
       maxLength = i + 1;
     }
   }
@@ -412,7 +412,7 @@ charts.addLegend = function (series, chartType, settings, container) {
 
     if (isTwoColumn) {
       if (exceedsMaxWidth && settings.legendPlacement !== 'right') {
-        seriesLine = `<span id="chart-legend-${i}" class="chart-legend-item${extraClass}" tabindex="0" role="button"></span>`;
+        seriesLine = `<span id="chart-legend-${i}" class="chart-legend-item${extraClass} is-one-line" tabindex="0" role="button"></span>`;
       } else {
         seriesLine = `<span id="chart-legend-${i}" class="chart-legend-item${extraClass} is-two-column" tabindex="0" role="button"></span>`;
       }
@@ -480,7 +480,7 @@ charts.addLegend = function (series, chartType, settings, container) {
       </button>
       `);
 
-      const popupList = $('<ul class="popupmenu actions bottom"></ul>');
+      const popupList = $('<ul class="popupmenu"></ul>');
 
       for (let j = maxLength; j < series.length; j++) {
         const listItem = $(`<li><a id="chart-legend-${j}" href="#"><div class="chart-popup-menu"></div></a></li>`);
@@ -504,8 +504,7 @@ charts.addLegend = function (series, chartType, settings, container) {
       }
 
       legend.css({
-        'max-height': '50px',
-        'min-height': '30px',
+        height: '40px',
         display: 'flex'
       });
 

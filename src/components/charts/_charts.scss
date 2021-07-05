@@ -257,6 +257,10 @@
       width: 50%;
     }
 
+    &.is-one-line {
+      height: inherit;
+    }
+
   }
 
   .chart-legend-color {
@@ -284,6 +288,7 @@
 
     .chart-legend-item-text {
       vertical-align: super;
+      white-space: normal;
     }
   }
 
