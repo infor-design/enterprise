@@ -466,7 +466,7 @@ charts.addLegend = function (series, chartType, settings, container) {
       charts.handleElementClick(idx, this, series, settings);
     }).on('keypress.chart', '.chart-legend-item', function (e) {
       if (e.which === 13 || e.which === 32) {
-        const idx = this.id.match(regex)[1];
+        const idx = $(this).attr('index-id').match(regex)[1];
         charts.handleElementClick(idx, this, series, settings);
       }
     });
