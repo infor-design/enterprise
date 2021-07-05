@@ -377,7 +377,7 @@ charts.addLegend = function (series, chartType, settings, container) {
       extraClass += ` ${series[i].option}`;
     }
 
-    let seriesLine = `<span id="chart-legend-${i}" class="chart-legend-item${extraClass}" tabindex="0" role="button"></span>`;
+    let seriesLine = `<span index-id="chart-legend-${i}" class="chart-legend-item${extraClass}" tabindex="0" role="button"></span>`;
     const hexColor = charts.chartColor(i, chartType || (series.length === 1 ? 'bar-single' : 'bar'), series[i]);
     const colorName = charts.chartColorName(i, chartType || (series.length === 1 ? 'bar-single' : 'bar'), series[i]);
 
@@ -412,9 +412,9 @@ charts.addLegend = function (series, chartType, settings, container) {
 
     if (isTwoColumn) {
       if (exceedsMaxWidth && settings.legendPlacement !== 'right') {
-        seriesLine = `<span id="chart-legend-${i}" class="chart-legend-item${extraClass} is-one-line" tabindex="0" role="button"></span>`;
+        seriesLine = `<span index-id="chart-legend-${i}" class="chart-legend-item${extraClass} is-one-line" tabindex="0" role="button"></span>`;
       } else {
-        seriesLine = `<span id="chart-legend-${i}" class="chart-legend-item${extraClass} is-two-column" tabindex="0" role="button"></span>`;
+        seriesLine = `<span index-id="chart-legend-${i}" class="chart-legend-item${extraClass} is-two-column" tabindex="0" role="button"></span>`;
       }
     }
     seriesLine = $(seriesLine);
@@ -462,7 +462,7 @@ charts.addLegend = function (series, chartType, settings, container) {
     const regex = /^chart-legend-(.+)/;
 
     legend.on('click.chart', '.chart-legend-item', function () {
-      const idx = this.id.match(regex)[1];
+      const idx = $(this).attr('index-id').match(regex)[1];
       charts.handleElementClick(idx, this, series, settings);
     }).on('keypress.chart', '.chart-legend-item', function (e) {
       if (e.which === 13 || e.which === 32) {
@@ -483,7 +483,7 @@ charts.addLegend = function (series, chartType, settings, container) {
       const popupList = $('<ul class="popupmenu"></ul>');
 
       for (let j = maxLength; j < series.length; j++) {
-        const listItem = $(`<li><a id="chart-legend-${j}" href="#"><div class="chart-popup-menu"></div></a></li>`);
+        const listItem = $(`<li><a index-id="chart-legend-${j}" href="#"><div class="chart-popup-menu"></div></a></li>`);
         const textBlock = $(`<span class="chart-popup-menu-text">${xssUtils.stripTags(series[j].name)}</span>`);
 
         const hexColor = charts.chartColor(j, chartType || (series.length === 1 ? 'bar-single' : 'bar'), series[j]);
@@ -520,7 +520,7 @@ charts.addLegend = function (series, chartType, settings, container) {
       });
 
       listButton.on('selected', (e, args) => {
-        const idx = args[0].id.match(regex)[1];
+        const idx = $(args[0]).attr('index-id').match(regex)[1];
         charts.handleElementClick(idx, this, series, settings);
       });
     } else {
