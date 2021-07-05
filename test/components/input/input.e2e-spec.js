@@ -180,3 +180,29 @@ describe('Input Password Field tests', () => {
     expect(await inputEl.getAttribute('class')).toEqual('input-show-text');
   });
 });
+
+fdescribe('Input example-clearable tests', () => {
+    beforeEach(async () => {
+      await utils.setPage('/components/input/example-clearable?theme=classic&layout=nofrills');
+      await browser.driver.sleep(config.sleep);
+    });
+
+    it ('should not have errors', async () => {
+      await utils.checkForErrors();
+    });
+
+    if (utils.isChrome() && utils.isCI()) {
+      it('should not visual regress', async () => {
+        const inputEl = await element(by.id('clearable'));
+        await browser.driver
+          .wait(protractor.ExpectedConditions.presenceOf(inputEl), config.waitsFor);
+
+        await inputEl.clear();
+        await inputEl.sendKeys('ea');
+
+        await browser.driver.sleep(config.sleep);
+
+        expect(await browser.imageComparison.checkElement(inputEl, 'clearable-input')).toEqual(0);
+      });
+    }
+});

@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.54.0 Fixes
+
+- `[Input]` Fixed a bug where clear icon were not properly aligned with the input field in classic mode. ([#5324](https://github.com/infor-design/enterprise/issues/5324))
+
 ## v4.53.0 Features
 
 - `[Action Sheet]` Added a mobile device-friendly action sheet component. ([#5256](https://github.com/infor-design/enterprise/issues/5256))
