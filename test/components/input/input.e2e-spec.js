@@ -181,7 +181,7 @@ describe('Input Password Field tests', () => {
   });
 });
 
-fdescribe('Input example-clearable tests', () => {
+describe('Input example-clearable tests', () => {
     beforeEach(async () => {
       await utils.setPage('/components/input/example-clearable?theme=classic&layout=nofrills');
       await browser.driver.sleep(config.sleep);
