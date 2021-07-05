@@ -6,6 +6,7 @@
 - `[Cards]` Added card variations (Status, Hyperlink and Photo Card) with improve hitboxes for tapping. ([#5250](https://github.com/infor-design/enterprise/issues/5250))
 - `[Cards]` Added improvements to the expandable cards and made a jQuery instance to be available in the angular wrapper. ([#5252](https://github.com/infor-design/enterprise/issues/5252))
 - `[ContextualActionPanel]` Added vertical tabs example on the Contextual Action Panel. ([#5234](https://github.com/infor-design/enterprise/issues/5234))
+- `[Swipe Action]` Added a mobile device-friendly swipe action component. ([#5254](https://github.com/infor-design/enterprise/issues/5254))
 
 ## v4.53.0 Fixes
 
@@ -21,6 +22,8 @@
 - `[Datepicker]` Fixed a bug where the selection range was not being properly rendered in mobile. ([#5211](https://github.com/infor-design/enterprise/issues/5211))
 - `[Datepicker]` Made the `autocomplete` attribute configurable by using the `autocompleteAttribute` setting. ([#5092](https://github.com/infor-design/enterprise/issues/5092))
 - `[Donut]` Changed legend design when item exceeds maximum width of chart. ([#5292](https://github.com/infor-design/enterprise/issues/5292))
+- `[Dropdown]` Made the `noSearch` setting prevent filtering using the Dropdown's search input element as expected. ([#5159](https://github.com/infor-design/enterprise/issues/5159))
+- `[Dropdown]` Prevented the Dropdown from re-selecting and firing change events if the same value is picked from its list. ([#5159](https://github.com/infor-design/enterprise/issues/5159))
 - `[Dropdown]` Fixed a bug that resulted in the updatable dropdown value being changed when selecting the more actions button. ([#5222](https://github.com/infor-design/enterprise/issues/5222))
 - `[Editor]` Fixed a bug where automation id attributes are not properly rendered on editor elements. ([#5082](https://github.com/infor-design/enterprise/issues/5082))
 - `[Lookup]` Fixed a bug where lookup attributes are not added in the cancel and apply/save button. ([#5202](https://github.com/infor-design/enterprise/issues/5202))
@@ -43,8 +46,11 @@
 - `[Searchfield]` Made the `autocomplete` attribute configurable by using the `autocompleteAttribute` setting. ([#5092](https://github.com/infor-design/enterprise/issues/5092))
 - `[Searchfield]` Fixed a bug where the button does not have the same height as the searchfield input. ([#5314](https://github.com/infor-design/enterprise/issues/5314))
 - `[Searchbar]` Fixed a bug where searchbar overlapped the "Websites" header when browser is minimized or viewed in mobile. ([#5248](https://github.com/infor-design/enterprise/issues/5248))
+- `[Slider]` Fixed a bug where the slider produces NaN value on tooltip. ([#5336](https://github.com/infor-design/enterprise/issues/5336))
 - `[Splitter]` Fixed position of splitter button. ([#5121](https://github.com/infor-design/enterprise/issues/5121))
 - `[Tooltip/Popover]` Split the Popover and Tooltip into separate components. ([#5197](https://github.com/infor-design/enterprise/issues/5197))
+
+(52 Issues Solved This Release, Backlog Enterprise 147, Backlog Ng 28, 1095 Functional Tests, 1668 e2e Tests)
 
 ## v4.52.0
 
@@ -78,7 +84,7 @@
 - `[Spinbox]` Fixed a bug where spinbox and its border is not properly rendered on responsive view. ([#5146](https://github.com/infor-design/enterprise/issues/5146))
 - `[Tabs Module]` Fixed a bug where long tab labels overflowed behind the close icon. ([#5187](https://github.com/infor-design/enterprise/issues/5187))
 
-(33 Issues Solved This Release, Backlog Enterprise 134, Backlog Ng 34, 2835 1652 Functional Tests, 1652 e2e Tests)
+(33 Issues Solved This Release, Backlog Enterprise 134, Backlog Ng 34, 1183 Functional Tests, 1652 e2e Tests)
 
 ## v4.51.4
 
