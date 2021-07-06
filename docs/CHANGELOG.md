@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.54.0 Fixes
+
+- `[Donut]` Changed legend design when item exceeds maximum width of chart. ([#5292](https://github.com/infor-design/enterprise/issues/5292))
+
 ## v4.53.0 Features
 
 - `[Action Sheet]` Added a mobile device-friendly action sheet component. ([#5256](https://github.com/infor-design/enterprise/issues/5256))
@@ -21,7 +25,6 @@
 - `[Datepicker]` Fixed a bug where the setting attributes were missing in datepicker input and datepicker trigger on NG wrapper. ([#1044](https://github.com/infor-design/enterprise-ng/issues/1044))
 - `[Datepicker]` Fixed a bug where the selection range was not being properly rendered in mobile. ([#5211](https://github.com/infor-design/enterprise/issues/5211))
 - `[Datepicker]` Made the `autocomplete` attribute configurable by using the `autocompleteAttribute` setting. ([#5092](https://github.com/infor-design/enterprise/issues/5092))
-- `[Donut]` Changed legend design when item exceeds maximum width of chart. ([#5292](https://github.com/infor-design/enterprise/issues/5292))
 - `[Dropdown]` Made the `noSearch` setting prevent filtering using the Dropdown's search input element as expected. ([#5159](https://github.com/infor-design/enterprise/issues/5159))
 - `[Dropdown]` Prevented the Dropdown from re-selecting and firing change events if the same value is picked from its list. ([#5159](https://github.com/infor-design/enterprise/issues/5159))
 - `[Dropdown]` Fixed a bug that resulted in the updatable dropdown value being changed when selecting the more actions button. ([#5222](https://github.com/infor-design/enterprise/issues/5222))
