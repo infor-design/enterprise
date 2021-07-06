@@ -325,24 +325,12 @@ charts.addLegend = function (series, chartType, settings, container) {
   if (series.length === 0) {
     return;
   }
-
-  const isBottom = series[0].placement && series[0].placement === 'bottom';
-
-  const isTwoColumn = series[0].display && series[0].display === 'twocolumn';
-  let legend = isTwoColumn ? $(`<div class="chart-legend ${
-    series[0].placement ? `is-${series[0].placement}` : 'is-bottom'}"></div>`) :
-    $('<div class="chart-legend"></div>');
-
-  if ((chartType === 'pie' || chartType === 'donut') && settings.showMobile) {
-    legend = $('<div class="chart-legend"><div class="container"></div></div>');
-  }
-
   // Legend width
   let width = 0;
   let currentWidth;
   let totalWidth = 0;
 
-  let maxLength = isBottom ? 3 : series.length;
+  let maxLength = series.length;
 
   let currentTotalWidthPercent;
   for (i = 0; i < series.length; i++) {
@@ -351,7 +339,7 @@ charts.addLegend = function (series, chartType, settings, container) {
 
     totalWidth += currentWidth;
     currentTotalWidthPercent = totalWidth / $(container).width() * 100;
-    if (isBottom && currentTotalWidthPercent <= 45) {
+    if (currentTotalWidthPercent <= 45) {
       maxLength = i + 1;
     }
   }
@@ -360,8 +348,23 @@ charts.addLegend = function (series, chartType, settings, container) {
   const widthPercent = width / $(container).width() * 100;
   const exceedsMaxWidth = widthPercent > 45;
 
+  const isBottom = exceedsMaxWidth || (series[0].placement && series[0].placement === 'bottom');
+
   if (!exceedsMaxWidth) {
     maxLength = series.length;
+  }
+
+  if (isBottom && $(container).hasClass('has-right-legend')) {
+    $(container).removeClass('has-right-legend');
+  }
+
+  const isTwoColumn = series[0].display && series[0].display === 'twocolumn';
+  let legend = isTwoColumn ? $(`<div class="chart-legend ${
+    series[0].placement && !isBottom ? `is-${series[0].placement}` : 'is-bottom'}"></div>`) :
+    $('<div class="chart-legend"></div>');
+
+  if ((chartType === 'pie' || chartType === 'donut') && settings.showMobile) {
+    legend = $('<div class="chart-legend"><div class="container"></div></div>');
   }
 
   for (i = 0; i < maxLength; i++) {
@@ -411,7 +414,7 @@ charts.addLegend = function (series, chartType, settings, container) {
     }
 
     if (isTwoColumn) {
-      if (exceedsMaxWidth && settings.legendPlacement !== 'right') {
+      if (exceedsMaxWidth && isBottom) {
         seriesLine = `<span index-id="chart-legend-${i}" class="chart-legend-item${extraClass} is-one-line" tabindex="0" role="button"></span>`;
       } else {
         seriesLine = `<span index-id="chart-legend-${i}" class="chart-legend-item${extraClass} is-two-column" tabindex="0" role="button"></span>`;
@@ -427,7 +430,7 @@ charts.addLegend = function (series, chartType, settings, container) {
       legend.append(seriesLine);
     }
 
-    if ((series[i].display && series[i].display === 'block') || (isTwoColumn && exceedsMaxWidth && settings.legendPlacement !== 'right')) {
+    if ((series[i].display && series[i].display === 'block') || (isTwoColumn && exceedsMaxWidth && isBottom)) {
       seriesLine.css({
         float: 'none',
         display: 'block',
@@ -504,7 +507,8 @@ charts.addLegend = function (series, chartType, settings, container) {
       }
 
       legend.css({
-        height: '40px',
+        'min-height': '40px',
+        'max-height': '50px',
         display: 'flex'
       });
 
