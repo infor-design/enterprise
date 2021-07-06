@@ -581,7 +581,7 @@
     &.monthview {
       border: 1px solid  $calendar-line-color;
       overflow-x: hidden;
-      overflow-y: auto;
+      overflow-y: hidden;
 
       td {
         border: 1px solid  $calendar-line-color;
