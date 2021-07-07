@@ -1687,7 +1687,7 @@ Dropdown.prototype = {
     // Mac OSX: "backspace" delete key
     // Everything else: DEL key (numpad, control keys)
     const isOSX = env.os.name === 'Mac OS X';
-    if ((!isOSX && key === 'Delete') || (isOSX && key === 'Backspace') || key === 'Backspace' && this.settings.noSearch) {
+    if ((!isOSX && key === 'Delete') || (isOSX && key === 'Backspace')) {
       this.selectBlank();
 
       // Stop the backspace key from navigating back a page
