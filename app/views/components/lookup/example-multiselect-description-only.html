@@ -1263,7 +1263,7 @@
 
   var columns = [
     {
-      id: 'selectionCheckbox',
+      id: '111',
       sortable: false,
       resizable: false,
       width: 40,
@@ -1277,7 +1277,7 @@
     },
     { id: 'pa.id', field: 'id', hidden: true },
     {
-      id: 'pa.application_name',
+      id: '222',
       name: 'Application Instance Name',
       sortable: true,
       field: 'applicationInstanceName',
@@ -1286,7 +1286,7 @@
       filterConditions: ['contains', 'equals']
     },
     {
-      id: 'apt.application_name',
+      id: '333',
       name: 'Application',
       sortable: true,
       field: 'applicationType',
@@ -1298,16 +1298,14 @@
 
   // Initialize the Lookup
   $('#product-lookup').lookup({
-     field: function (row, field, grid) {
-        if (row && row.applicationInstanceName) {
-          console.log(row, field, grid, this);
-          return row.applicationInstanceName + '|' + row.applicationType;
-        }
+      field: function (row, field, grid) {
+        return row.id + '|' + row.applicationInstanceName;
       },
       match: function (value, row, field, grid) {
-        console.log(row, field, grid);
-        return row.applicationInstanceName + '|' + row.applicationType === value;
+        return row.id + '|' + row.applicationInstanceName === value;
       },
+     // Or Can just use this instead of field/match
+     // field: 'id',
      options: {
         columns: columns,
         dataset: [],
@@ -1332,6 +1330,11 @@
 
           req.total = appInstanceData.length;
           response(pageData, req);
+
+          // Workaround
+          // setTimeout(() => {
+          //  response(pageData, req);
+          // }, 100);
         }
      }
   });

@@ -795,8 +795,10 @@ Datagrid.prototype = {
       * @property {object} event - The jquery event object
       * @property {object} pagingInfo - The paging info object
       */
-      self.element.trigger('afterpaging', pagingInfo);
-      self.afterPaging(pagingInfo);
+      setTimeout(() => {
+        self.element.trigger('afterpaging', pagingInfo);
+        self.afterPaging(pagingInfo);
+      });
     }
 
     if (this.sortColumn && this.sortColumn.sortId) {
