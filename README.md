@@ -43,7 +43,9 @@ For additional usage methods, see [Installing IDS](docs/DEVELOPER.md#installing-
 - [Change Log](docs/CHANGELOG.md) (Includes latest release changes)
 
 ## Contribution
+
 ⚠️ Please Use [Github Issues](https://github.com/infor-design/enterprise/issues) to report all requests, bugs, questions, and feature requests
+
 - [Contribution Guidelines](docs/CONTRIBUTING.md)
 - [Developer Guide](docs/DEVELOPER.md)
 - [Review source code changes](https://github.com/infor-design/enterprise/pulls)

@@ -32,7 +32,7 @@ npm i
 
 Optional: We use [`nvm`](https://github.com/creationix/nvm) in development so the team is consistently on the same version of Node. If you want to use the version we've set for development, run `nvm use` from within the project folder.
 
-#### Basic commands
+### Basic commands
 
 - `npm start` : builds the IDS library and runs the demo server.  After running this, open a browser to [`localhost:4000`](http://localhost:4000).
 - `npm run documentation` : builds a local copy of the documentation for the IDS components based on the source code in this package.  You can also view [the most current stable release's documentation](https://design.infor.com/code/ids-enterprise/latest).
@@ -40,7 +40,7 @@ Optional: We use [`nvm`](https://github.com/creationix/nvm) in development so th
 
 See the `scripts` object in [package.json](../package.json) for a full list of commands.
 
-#### Debugging the Demo Application
+### Debugging the Demo Application
 
 Debugging the Demo App can be done in the usual manner for Node applications, with the `--inspect` or `--inspect-brk` flags:
 

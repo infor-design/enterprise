@@ -5,7 +5,7 @@
 - See if it can be done with only css.
 - be sure to consider and follow [accessibility guidelines](./ACCESSIBILITY.md)
 
-# Steps
+## Steps
 
 - Add `_*.scss` file to sass/controls folder similar to current examples
 - Add new entry for new file in `_controls.scss`

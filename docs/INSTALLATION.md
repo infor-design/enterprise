@@ -105,4 +105,3 @@ It's also possible to run a custom build of IDS with your choice of components. 
 ```sh
 npm run build -- --components=button,input,masks,popupmenu,listview
 ```
-
