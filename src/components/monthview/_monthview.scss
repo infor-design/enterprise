@@ -581,7 +581,14 @@
     &.monthview {
       border: 1px solid  $calendar-line-color;
       overflow-x: hidden;
-      overflow-y: hidden;
+
+      @media only screen and (max-height: 681px) {
+        overflow-y: hidden;
+      }
+
+      @media only screen and (max-height: 680px) {
+        overflow-y: auto;
+      }
 
       td {
         border: 1px solid  $calendar-line-color;
