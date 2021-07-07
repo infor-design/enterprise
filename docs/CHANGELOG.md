@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.54.0 Fixes
+
+- `[Dropdown]` Fixed a bug where backspace in Dropdown is not working when pressed. ([#5113](https://github.com/infor-design/enterprise/issues/5113))
+
 ## v4.53.0 Features
 
 - `[Action Sheet]` Added a mobile device-friendly action sheet component. ([#5256](https://github.com/infor-design/enterprise/issues/5256))
