@@ -39,15 +39,13 @@ For additional usage methods, see [Installing IDS](docs/DEVELOPER.md#installing-
 
 ## Documentation
 
-- [Latest Release Docs](https://design.infor.com/code/ids-enterprise/latest)
+- [Latest Release Component Web Documentation](https://design.infor.com/code/ids-enterprise/latest)
 - [Change Log](docs/CHANGELOG.md) (Includes latest release changes)
-- [How to build the documentation from source](docs/DEVELOPER.md#basic-commands)
 
-## Contributing
-
+## Contribution
+⚠️ Please Use [Github Issues](https://github.com/infor-design/enterprise/issues) to report all requests, bugs, questions, and feature requests
 - [Contribution Guidelines](docs/CONTRIBUTING.md)
-- [Developer Information](docs/DEVELOPER.md)
-- Use [Github Issues](https://github.com/infor-design/enterprise/issues) to report all requests, bugs, questions, and feature requests
+- [Developer Guide](docs/DEVELOPER.md)
 - [Review source code changes](https://github.com/infor-design/enterprise/pulls)
 - [Releases, previous and upcoming](https://github.com/infor-design/enterprise/releases)
 - [Microsoft Teams Group](https://teams.microsoft.com/l/team/19%3a2b0c9ce520b0481a9ce115f0ca4a326f%40thread.skype/conversations?groupId=4f50ef7d-e88d-4ccb-98ca-65f26e57fe35&tenantId=457d5685-0467-4d05-b23b-8f817adda47c) (Infor Employees only)
