@@ -58,7 +58,7 @@ describe('Donut Chart alerts tests', () => {
   }
 });
 
-fdescribe('Donut Chart popup tests', () => {
+describe('Donut Chart popup tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/donut/example-legend-bottom-popup?layout=nofrills');
   });
