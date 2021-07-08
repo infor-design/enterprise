@@ -3,9 +3,6 @@ import { utils } from '../../utils/utils';
 import { DOM } from '../../utils/dom';
 import { Locale } from '../locale/locale';
 import { renderLoop, RenderLoopItem } from '../../utils/renderloop';
-import { warnAboutDeprecation } from '../../utils/deprecated';
-
-// jQuery Components
 
 // Component Name
 const COMPONENT_NAME = 'popdown';
@@ -45,7 +42,6 @@ function Popdown(element, settings) {
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
   debug.logTimeEnd(COMPONENT_NAME);
-  warnAboutDeprecation('Popover', 'Popdown');
 }
 
 Popdown.prototype = {
