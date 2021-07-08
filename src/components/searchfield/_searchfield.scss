@@ -600,9 +600,6 @@ html[dir='rtl'] {
  */
 html[class*='theme-classic-'] {
   .btn-icon.close {
-    top: 50%;
-    transform: translateY(-50%);
-
     & > svg.close.icon {
       position: relative;
       right: unset;
