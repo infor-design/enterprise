@@ -469,3 +469,24 @@ describe('Multiselect select all behavior tests', () => {
     expect(selected).toEqual(4);
   });
 });
+
+describe('Multiselect example-compact tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/multiselect/example-compact?layout=nofrills');
+  });
+
+  it('should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('should not visually regress', async () => {
+      const multiselectEl = await element(by.css('.dropdown.has-tags:first-of-type'));
+
+      await browser.driver
+        .wait(protractor.ExpectedConditions..presenceOf(multiselectEl), config.waitsFor);
+      
+      expect(await browser.imageComparison.checkElement(multiselectEl, 'multiselect-compact-mode')).toEqual(0);
+    });
+  }
+});
