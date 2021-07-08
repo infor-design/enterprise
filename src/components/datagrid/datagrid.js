@@ -3151,6 +3151,7 @@ Datagrid.prototype = {
             .on('dragend.datagrid', (evt, pos) => {
               const moveDown = pos.top > startRow.rect.top;
               const endRow = getTarget(pos);
+              let isMoved = false;
               if (endRow !== null) {
                 let targetNode;
                 if (startRow.role === 'rowgroup' && startRow.group !== endRow.group) {
@@ -3168,34 +3169,44 @@ Datagrid.prototype = {
                     nodesToMove.insertBefore(targetNode);
                   }
                   self.arrayIndexMove(s.dataset, startRow.group, endRow.group);
+                  isMoved = true;
                 } else if (startRow.role === 'row' &&
                   startRow.role === endRow.role && startRow.group === endRow.group) {
                   // Role: row
                   self.arrayIndexMove(s.dataset[startRow.group].values, startRow.node, endRow.node);
                   targetNode = endRow.row;
                   nodesToMove[moveDown ? 'insertAfter' : 'insertBefore'](targetNode);
+                  isMoved = true;
                 }
-                self.resetGroupArray();
-                self.resequenceGroupRows();
-                self.syncSelectedRowsIdx();
 
-                const args = {
-                  start: {
-                    rowIndex: startRow.idx,
-                    group: startRow.group,
-                    node: startRow.node !== -1 ? startRow.node : null
-                  },
-                  end: {
-                    rowIndex: endRow.idx,
-                    group: endRow.group,
-                    node: startRow.node !== -1 ? endRow.node : null
-                  },
-                  rowreorderRows: nodesToMove,
-                  role: startRow.role
-                };
-                self.element.trigger('rowreorder', [args]);
+                if (isMoved) {
+                  self.resetGroupArray();
+                  self.resequenceGroupRows();
+                  self.syncSelectedRowsIdx();
+
+                  const args = {
+                    start: {
+                      rowIndex: startRow.idx,
+                      group: startRow.group,
+                      node: startRow.node !== -1 ? startRow.node : null
+                    },
+                    end: {
+                      rowIndex: endRow.idx,
+                      group: endRow.group,
+                      node: startRow.node !== -1 ? endRow.node : null
+                    },
+                    rowreorderRows: nodesToMove,
+                    role: startRow.role
+                  };
+                  self.element.trigger('rowreorder', [args]);
+                }
               }
               nodesToMove.css('opacity', '');
+              isReady = false;
+
+              // Destroy drag
+              const dragApi = handle.closest('tr').data('drag');
+              dragApi?.destroy();
             });
         });
       });
