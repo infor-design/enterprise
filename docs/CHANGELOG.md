@@ -26,6 +26,7 @@
 - `[Dropdown]` Fixed a bug that resulted in the updatable dropdown value being changed when selecting the more actions button. ([#5222](https://github.com/infor-design/enterprise/issues/5222))
 - `[Editor]` Fixed a bug where automation id attributes are not properly rendered on editor elements. ([#5082](https://github.com/infor-design/enterprise/issues/5082))
 - `[Lookup]` Fixed a bug where lookup attributes are not added in the cancel and apply/save button. ([#5202](https://github.com/infor-design/enterprise/issues/5202))
+- `[Lookup]` Exposed two events from the datagrid `afterpaging` and `selected` for more flexibility. ([#986](https://github.com/infor-design/enterprise-ng/issues/986))
 - `[Locale]` Fixed a bug where very large numbers with negative added an extra zero in formatNumber. ([#5308](https://github.com/infor-design/enterprise/issues/5308))
 - `[Locale]` Fixed a bug where very large numbers would get a zero added. ([#5308](https://github.com/infor-design/enterprise/issues/5308))
 - `[Locale]` Fixed a bug where very large numbers with negative added an extra zero in formatNumber. ([#5318](https://github.com/infor-design/enterprise/issues/5318))

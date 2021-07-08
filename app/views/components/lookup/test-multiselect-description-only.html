@@ -1296,24 +1296,19 @@
     }
   ];
 
+  let previouslySelectedRows = [];
+
   // Initialize the Lookup
   $('#product-lookup').lookup({
-      field: function (row, field, grid) {
-        return row.id + '|' + row.applicationInstanceName;
-      },
-      match: function (value, row, field, grid) {
-        return row.id + '|' + row.applicationInstanceName === value;
-      },
-     // Or Can just use this instead of field/match
-     // field: 'id',
+     field: 'applicationInstanceName',
      options: {
         columns: columns,
         dataset: [],
         paging: true,
         pagesize: 5,
+        allowSelectAcrossPages: true,
         pagesizes: [5, 10, 25],
         selectable: 'multiple',
-        allowSelectAcrossPages: true,
         toolbar: {
           results: true,
           keywordFilter: false,
@@ -1330,12 +1325,14 @@
 
           req.total = appInstanceData.length;
           response(pageData, req);
-
-          // Workaround
-          // setTimeout(() => {
-          //  response(pageData, req);
-          // }, 100);
         }
      }
+  }).on('selected', function(e, selectedRows, op, rowData){
+    previouslySelectedRows = selectedRows.slice();
+    console.log('selected', previouslySelectedRows);
+  }).on('afterpaging', function(e, pagingInfo, lookup){
+    for (let i = 0; i < previouslySelectedRows.length; i++) {
+      lookup.selectRowByValue('id', previouslySelectedRows[i]);
+    }
   });
 </script>

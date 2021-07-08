@@ -592,6 +592,7 @@ Lookup.prototype = {
     search = null;
 
     if (this.grid && this.grid.destroy) {
+      $(this.grid.element).off('selected.lookup');
       this.grid.deSelectAllRows();
       this.grid.clearFilter();
       this.grid.destroy();
@@ -693,9 +694,10 @@ Lookup.prototype = {
 
     // Restore selected rows when pages change
     if (this.settings.options.source) {
-      lookupGrid.off('afterpaging.lookup').on('afterpaging.lookup', () => {
+      lookupGrid.off('afterpaging.lookup').on('afterpaging.lookup', (e, pagingInfo) => {
         const fieldVal = self.element.val();
         this.selectGridRows(fieldVal);
+        this.element.trigger('afterpaging', [pagingInfo, this]);
       });
     }
 
@@ -721,6 +723,7 @@ Lookup.prototype = {
           self.modal.close();
           self.insertRows();
         }
+        self.element.trigger('selected', [selectedRows, op, rowData]);
       });
     }
 
