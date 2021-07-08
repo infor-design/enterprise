@@ -2979,14 +2979,226 @@ Datagrid.prototype = {
   },
 
   /**
-  * Move an array element to a different position. May be dups of this function.
-  * @private
-  * @param {array} arr The array
-  * @param {array} from The from position
-  * @param {array} to The to position
-  */
+   * Move an array element to a different position. May be dups of this function.
+   * @private
+   * @param {array} arr The array
+   * @param {array} from The from position
+   * @param {array} to The to position
+   * @returns {void}
+   */
   arrayIndexMove(arr, from, to) {
     arr.splice(to, 0, arr.splice(from, 1)[0]);
+  },
+
+  /**
+   * Reset group array.
+   * @private
+   * @returns {void}
+   */
+  resetGroupArray() {
+    if (this.settings.groupable) {
+      this.groupArray = [];
+      for (let group = 0, l = this.settings.dataset.length; group < l; group++) {
+        const groupData = this.settings.dataset[group];
+        for (let node = 0, l2 = groupData.values.length; node < l2; node++) {
+          this.groupArray.push({ group, node });
+        }
+      }
+    }
+  },
+
+  /**
+   * Resequence the rows.
+   * @private
+   * @returns {void}
+   */
+  resequenceGroupRows() {
+    if (this.settings.groupable) {
+      const allRows = this.tableBody.find('tr:not(.datagrid-rowgroup-header)');
+      for (let i = 0; i < allRows.length; i++) {
+        allRows[i].setAttribute('aria-rowindex', this.pagingRowIndex(i + 1));
+      }
+    }
+  },
+
+  /**
+  * Attach Drag Events to Groupable Rows
+  * @private
+  * @returns {void}
+  */
+  createDraggableRowsGroupable() {
+    const self = this;
+    const s = this.settings;
+    if (!s.rowReorder || !s.groupable) {
+      return;
+    }
+
+    // Set handle icon column to not resize
+    if (s.columns[0].id === 'rowReorder') {
+      s.columns[0].resizable = false;
+      this.tableBody.find('> [role="row"] td:first-child')
+        .removeClass('l-center-text').addClass('reorder-group-child-col');
+    }
+
+    const rowSelector = '> tr:not(.is-dragging-clone)';
+
+    // Set targets
+    let targets;
+    const setTargets = () => {
+      targets = [];
+      const rows = this.tableBody.find(rowSelector);
+      for (let i = 0, group = -1, node = -1, l = rows.length; i < l; i++) {
+        const row = rows[i];
+        if (row.getAttribute('role') === 'rowgroup') {
+          group++;
+          node = -1;
+        } else {
+          node++;
+        }
+        targets.push({
+          group,
+          node,
+          row,
+          idx: i,
+          rect: row.getBoundingClientRect(),
+          role: row.getAttribute('role')
+        });
+      }
+    };
+
+    // Get target
+    const getTarget = (pos) => {
+      for (let i = 0, l = targets.length; i < l; i++) {
+        const rect = targets[i].rect;
+        if (pos.top >= rect.top && pos.top < rect.bottom) {
+          return { ...targets[i] };
+        }
+      }
+      return null;
+    };
+
+    this.tableBody.find(rowSelector)
+      .find('.datagrid-reorder-icon').each(function () {
+        let clone = null;
+        let nodesToMove = null;
+        let startRow = null;
+        let isReady = false;
+
+        const handle = $(this);
+        handle.off('mousedown.datagrid').on('mousedown.datagrid', (e) => {
+          e.preventDefault();
+
+          handle.closest('tr').drag({
+            axis: 'y',
+            clone: true,
+            cloneAppendTo: handle.closest('tbody'),
+            clonePosIsFixed: true
+          })
+
+            // Drag start =======================================
+            .off('dragstart.datagrid')
+            .on('dragstart.datagrid', function (evt, pos, thisClone) {
+              clone = thisClone;
+
+              clone.removeAttr('id').addClass('is-dragging-clone groupable');
+              clone.css({ top: `${pos.top}px` });
+              const cloneColumns = clone.find('> td');
+              $(this).find('> td').each((i, el) => cloneColumns.eq(i).width($(el).width()));
+
+              setTargets();
+              startRow = {
+                idx: self.tableBody.find(rowSelector).index(this),
+                rect: this.getBoundingClientRect(),
+                role: this.getAttribute('role'),
+                row: this
+              };
+              startRow.group = targets[startRow.idx].group;
+              startRow.node = targets[startRow.idx].node;
+
+              const rowJQ = $(this);
+              if (startRow.role === 'rowgroup') {
+                nodesToMove = rowJQ.add(rowJQ.nextUntil('.datagrid-rowgroup-header'));
+              } else if (startRow.role === 'row') {
+                nodesToMove = rowJQ;
+              }
+              nodesToMove.css('opacity', '.4');
+              isReady = true;
+            })
+
+            // While dragging ===================================
+            .on('drag.datagrid', (evt, pos) => {
+              if (!clone || !isReady) {
+                return;
+              }
+              isReady = false;
+              let allowed = false;
+              const overRow = getTarget(pos);
+              if (overRow !== null) {
+                if (startRow.role === 'rowgroup') {
+                  allowed = startRow.group !== overRow.group;
+                }
+                if (startRow.role === 'row') {
+                  allowed = startRow.role === overRow.role && startRow.group === overRow.group;
+                }
+              }
+              const cursorVal = allowed ? '' : 'not-allowed';
+              clone.add(clone.find('.datagrid-reorder-icon')).css('cursor', cursorVal);
+              isReady = true;
+            })
+
+            // Drag end =========================================
+            .off('dragend.datagrid')
+            .on('dragend.datagrid', (evt, pos) => {
+              const moveDown = pos.top > startRow.rect.top;
+              const endRow = getTarget(pos);
+              if (endRow !== null) {
+                let targetNode;
+                if (startRow.role === 'rowgroup' && startRow.group !== endRow.group) {
+                  // Role: rowgroup
+                  const groupSel = '.datagrid-rowgroup-header';
+                  if (moveDown) {
+                    targetNode = $(endRow.row).nextUntil(groupSel).last();
+                    nodesToMove.insertAfter(targetNode);
+                  } else {
+                    if (endRow.role === 'rowgroup') {
+                      targetNode = endRow.row;
+                    } else {
+                      targetNode = $(endRow.row).prevUntil(groupSel).last().prev(groupSel);
+                    }
+                    nodesToMove.insertBefore(targetNode);
+                  }
+                  self.arrayIndexMove(s.dataset, startRow.group, endRow.group);
+                } else if (startRow.role === 'row' &&
+                  startRow.role === endRow.role && startRow.group === endRow.group) {
+                  // Role: row
+                  self.arrayIndexMove(s.dataset[startRow.group].values, startRow.node, endRow.node);
+                  targetNode = endRow.row;
+                  nodesToMove[moveDown ? 'insertAfter' : 'insertBefore'](targetNode);
+                }
+                self.resetGroupArray();
+                self.resequenceGroupRows();
+                self.syncSelectedRowsIdx();
+
+                const args = {
+                  start: {
+                    rowIndex: startRow.idx,
+                    group: startRow.group,
+                    node: startRow.node !== -1 ? startRow.node : null
+                  },
+                  end: {
+                    rowIndex: endRow.idx,
+                    group: endRow.group,
+                    node: startRow.node !== -1 ? endRow.node : null
+                  },
+                  rowreorderRows: nodesToMove,
+                  role: startRow.role
+                };
+                self.element.trigger('rowreorder', [args]);
+              }
+              nodesToMove.css('opacity', '');
+            });
+        });
+      });
   },
 
   /**
@@ -2997,6 +3209,10 @@ Datagrid.prototype = {
     const self = this;
 
     if (!this.settings.rowReorder) {
+      return;
+    }
+    if (this.settings.groupable) {
+      this.createDraggableRowsGroupable();
       return;
     }
 
@@ -4791,7 +5007,7 @@ Datagrid.prototype = {
     }
 
     if (col.id === 'rowReorder') {
-      colWidth = 62;
+      colWidth = this.settings.groupable ? 105 : 62;
       col.width = colWidth;
     }
 
@@ -5481,13 +5697,7 @@ Datagrid.prototype = {
     this.settings.columns[idx].hidden = true;
     this.headerNodeCheckbox = this.headerNodes().eq(idx);
     if (!this.settings?.frozenColumns?.left.length) this.headerNodes().eq(idx).addClass('is-hidden');
-
-    if (idx === 0 && id === 'selectionCheckbox') {
-      this.headerNodes().eq(idx).off().remove();
-    } else {
-      this.headerNodes().eq(idx).addClass('is-hidden');
-    }
-
+    this.headerNodes().eq(idx).off().remove();
     this.colGroupNodes().eq(idx).addClass('is-hidden');
 
     const frozenLeft = this.settings?.frozenColumns?.left.length || 0;
