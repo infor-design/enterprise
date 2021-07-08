@@ -796,8 +796,8 @@ Datagrid.prototype = {
       * @property {object} pagingInfo - The paging info object
       */
       setTimeout(() => {
-        self.element.trigger('afterpaging', pagingInfo);
         self.afterPaging(pagingInfo);
+        self.element.trigger('afterpaging', pagingInfo);
       });
     }
 
@@ -7990,8 +7990,9 @@ Datagrid.prototype = {
       }).animateClosed();
     }
 
-    if (this._selectedRows.length > 0 && this.contextualToolbar.height() === 0) {
-      this.contextualToolbar.css('display', 'block').one('animateopencomplete.datagrid', function () {
+    if (this._selectedRows.length > 0 && (this.contextualToolbar.height() === 0 || !this.contextualToolbar.is(':visible') || !this.contextualToolbar.hasClass('is-hidden'))) {
+      this.contextualToolbar.find('.selection-count').text(`${this._selectedRows.length} ${Locale.translate('Selected')}`);
+      this.contextualToolbar.removeClass('is-hidden').css('display', 'block').one('animateopencomplete.datagrid', function () {
         $(this).removeClass('is-hidden').triggerHandler('recalculate-buttons');
       }).animateOpen();
     }

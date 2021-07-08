@@ -1263,7 +1263,7 @@
 
   var columns = [
     {
-      id: '111',
+      id: 'selectionCheckbox',
       sortable: false,
       resizable: false,
       width: 40,
@@ -1297,6 +1297,7 @@
   ];
 
   let previouslySelectedRows = [];
+  let processing = false;
 
   // Initialize the Lookup
   $('#product-lookup').lookup({
@@ -1306,9 +1307,9 @@
         dataset: [],
         paging: true,
         pagesize: 5,
-        allowSelectAcrossPages: true,
         pagesizes: [5, 10, 25],
         selectable: 'multiple',
+        allowSelectAcrossPages: true,
         toolbar: {
           results: true,
           keywordFilter: false,
@@ -1327,12 +1328,26 @@
           response(pageData, req);
         }
      }
-  }).on('selected', function(e, selectedRows, op, rowData){
+  })
+  .on('selected', function(e, selectedRows, op, rowData) {
+    if (processing) {
+      return;
+    }
     previouslySelectedRows = selectedRows.slice();
     console.log('selected', previouslySelectedRows);
-  }).on('afterpaging', function(e, pagingInfo, lookup){
+  }).on('afterpaging', function(e, pagingInfo, lookup) {
+    processing = true;
+    lookup.grid.unSelectAllRows(true);
     for (let i = 0; i < previouslySelectedRows.length; i++) {
-      lookup.selectRowByValue('id', previouslySelectedRows[i]);
+      lookup.selectRowByValue('id', previouslySelectedRows[i].data.id);
     }
+
+    // If using the contextual toolbar
+    if (lookup.grid.contextualToolbar) {
+      lookup.grid.syncSelectedUI();
+      lookup.grid.contextualToolbar.find('.selection-count').text(`${previouslySelectedRows.length} ${Locale.translate('Selected')}`);
+    }
+    lookup.isChanged = false;
+    processing = false;
   });
 </script>

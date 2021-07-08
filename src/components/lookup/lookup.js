@@ -335,6 +335,7 @@ Lookup.prototype = {
    */
   openDialog(e) {
     const self = this;
+    this.isChanged = false;
 
     // Don't try to re-open the lookup if it's already open.
     if (this.isOpen) {
@@ -703,6 +704,7 @@ Lookup.prototype = {
 
     if (this.settings.options) {
       lookupGrid.on('selected.lookup', (e, selectedRows, op, rowData) => {
+        this.isChanged = true;
         if (op === 'deselect') {
           if (!self.grid.recentlyRemoved) {
             self.grid.recentlyRemoved = [];
@@ -948,6 +950,9 @@ Lookup.prototype = {
    * @returns {void}
    */
   insertRows() {
+    if (!this.isChanged) {
+      return;
+    }
     let value = [];
 
     this.selectedRows = this.grid.selectedRows();
