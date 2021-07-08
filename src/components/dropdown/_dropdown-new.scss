@@ -423,13 +423,30 @@ html.is-firefox:not([dir='rtl']) {
       padding: 2px 16px 2px 5px;
 
       + .icon {
-        top: 0;
+        top: 3px;
       }
 
       &.has-tags {
         .tag-content {
           line-height: 17px;
         }
+      }
+    }
+  }
+
+  .form-layout-compact .field {
+    .dropdown.has-tags {
+      + .icon {
+        height: 31px;
+        top: 1px;
+      }
+    }
+  }
+
+  .field {
+    .dropdown.has-tags {
+      + .icon {
+        height: 35px;
       }
     }
   }
