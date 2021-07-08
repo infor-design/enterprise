@@ -417,16 +417,18 @@ DatePicker.prototype = {
         this.setToday();
       }
 
-      // '-' decrements day
-      if (key === 189 && !e.shiftKey && (!hasMinusPattern)) {
-        handled = true;
-        this.adjustDay(false);
-      }
+      if (!hasMinusPattern) {
+        // '-' decrements day
+        if (key === 189 || key === 109) {
+          handled = true;
+          this.adjustDay(false);
+        }
 
-      // '+' increments day
-      if (key === 187 && e.shiftKey && (!hasMinusPattern)) {
-        handled = true;
-        this.adjustDay(true);
+        // '+' increments day
+        if (key === 187 || key === 107) {
+          handled = true;
+          this.adjustDay(true);
+        }
       }
 
       if (handled) {
