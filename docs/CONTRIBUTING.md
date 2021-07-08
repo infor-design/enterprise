@@ -1,4 +1,4 @@
-# Contributing
+# Contributing Guidelines
 
 So you're interested in giving us a hand? That's awesome! We've put together some brief guidelines that should help you get started quickly and easily.
 
@@ -41,8 +41,8 @@ Guidelines for bug reports:
     - Send a link to your application
     - Just send an image of the source code
 
-    If a video is useful to show the problem please use a cross platform format such as `MP4` and `.webm` for the video.
-    We have found [Chrome plugin Screencastify - Screen Video Recorder](https://chrome.google.com/webstore/detail/screencastify-screen-vide/mmeijimgabbpbgpdklnllpncmdofkcpn?hl=en) to be useful.
+    If a video is useful to show the problem please use a cross platform format such as `.MP4`, `.gif` or `.webm` for the video.
+    We have found [the MacOS app, Kap](https://getkap.co) for GIF/H264, and [the Chrome plugin Screencastify](https://chrome.google.com/webstore/detail/screencastify-screen-vide/mmeijimgabbpbgpdklnllpncmdofkcpn?hl=en) for video recording to be useful.
 
 ### Feature Requests
 
