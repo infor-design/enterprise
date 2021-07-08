@@ -484,8 +484,8 @@ describe('Multiselect example-compact tests', () => {
       const multiselectEl = await element(by.css('.dropdown.has-tags:first-of-type'));
 
       await browser.driver
-        .wait(protractor.ExpectedConditions..presenceOf(multiselectEl), config.waitsFor);
-      
+        .wait(protractor.ExpectedConditions.presenceOf(multiselectEl), config.waitsFor);
+
       expect(await browser.imageComparison.checkElement(multiselectEl, 'multiselect-compact-mode')).toEqual(0);
     });
   }
