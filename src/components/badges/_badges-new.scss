@@ -100,4 +100,18 @@
       }
     }
   }
+
+  .form-layout-compact {
+    .multiselect {
+      ~ .dropdown-wrapper .dropdown.has-tags {
+        .tag-list .tag.is-dismissible {
+          .btn-dismissible {
+            .icon {
+              top: 0;
+            }
+          }
+        }
+      }
+    }
+  }
 }
