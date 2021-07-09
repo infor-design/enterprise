@@ -79,6 +79,12 @@
     @include opacity(0);
   }
 
+  .list-button {
+    float: right;
+    padding: 10px 7px;
+    margin-right: 17px;
+  }
+
   // Right aligned Legend
   &.has-right-legend {
     align-content: center;
@@ -108,7 +114,8 @@
         height: 15px;
         margin: 0;
         top: 1px;
-        width: 15px;
+        min-width: 15px;
+        max-width: 15px;
       }
 
       .chart-legend-item-text {
@@ -251,6 +258,11 @@
       width: 50%;
     }
 
+    &.is-one-line {
+      height: inherit;
+      padding: 7px 0 0 7px;
+    }
+
   }
 
   .chart-legend-color {
@@ -278,7 +290,25 @@
 
     .chart-legend-item-text {
       vertical-align: super;
+      white-space: normal;
     }
+  }
+
+}
+
+// Legend Popup Styling
+.chart-popup-menu {
+  display: flex;
+  
+  .chart-popup-menu-color {
+    height: 15px;
+    width: 15px;
+    margin: 8% 5px
+  }
+
+  .chart-popup-menu-text {
+    font-family: $ids-font-family-base;
+    font-size: $ids-size-font-xs;
   }
 }
 
