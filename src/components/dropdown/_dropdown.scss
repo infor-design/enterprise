@@ -1091,10 +1091,17 @@ div.dropdown-xs,
     div.multiselect {
       font-size: $input-size-compact-font-size;
       height: $input-size-compact-height !important;
-      padding: $dropdown-size-compact-padding !important;
+      padding: 0;
 
       &.has-tags {
         height: auto !important;
+      }
+    }
+
+    form:not(.form-layout-compact) .field {
+      div.dropdown,
+      div.multiselect {
+        padding: $dropdown-size-compact-padding;
       }
     }
   }

@@ -5,6 +5,8 @@ import { DOM } from '../../utils/dom';
 import { theme } from '../theme/theme';
 import { Locale } from '../locale/locale';
 
+import '../popupmenu/popupmenu.jquery';
+
 const charts = {};
 
 charts.destroy = function destroy(el) {
@@ -323,29 +325,49 @@ charts.addLegend = function (series, chartType, settings, container) {
   if (series.length === 0) {
     return;
   }
+  // Legend width
+  let width = 0;
+  let currentWidth;
+  let totalWidth = 0;
+
+  let maxLength = series.length;
+
+  let currentTotalWidthPercent;
+  for (i = 0; i < series.length; i++) {
+    currentWidth = series[i].name ? series[i].name.length * 6 : 6;
+    width = (series[i].name && currentWidth > width) ? currentWidth : width;
+
+    totalWidth += currentWidth;
+    currentTotalWidthPercent = totalWidth / $(container).width() * 100;
+    if (currentTotalWidthPercent <= 45) {
+      maxLength = i + 1;
+    }
+  }
+
+  width += 55;
+  const widthPercent = width / $(container).width() * 100;
+  const exceedsMaxWidth = widthPercent > 45;
+
+  const isBottom = exceedsMaxWidth || (series[0].placement && series[0].placement === 'bottom');
+
+  if (!exceedsMaxWidth) {
+    maxLength = series.length;
+  }
+
+  if (isBottom && $(container).hasClass('has-right-legend')) {
+    $(container).removeClass('has-right-legend');
+  }
 
   const isTwoColumn = series[0].display && series[0].display === 'twocolumn';
   let legend = isTwoColumn ? $(`<div class="chart-legend ${
-    series[0].placement ? `is-${series[0].placement}` : 'is-bottom'}"></div>`) :
+    series[0].placement && !isBottom ? `is-${series[0].placement}` : 'is-bottom'}"></div>`) :
     $('<div class="chart-legend"></div>');
 
   if ((chartType === 'pie' || chartType === 'donut') && settings.showMobile) {
     legend = $('<div class="chart-legend"><div class="container"></div></div>');
   }
 
-  // Legend width
-  let width = 0;
-  let currentWidth;
-
-  for (i = 0; i < series.length; i++) {
-    currentWidth = series[i].name ? series[i].name.length * 6 : 6;
-    width = (series[i].name && currentWidth > width) ? currentWidth : width;
-  }
-
-  width += 55;
-  const widthPercent = width / $(container).width() * 100;
-
-  for (i = 0; i < series.length; i++) {
+  for (i = 0; i < maxLength; i++) {
     if (!series[i].name) {
       continue; // eslint-disable-line
     }
@@ -358,7 +380,7 @@ charts.addLegend = function (series, chartType, settings, container) {
       extraClass += ` ${series[i].option}`;
     }
 
-    let seriesLine = `<span class="chart-legend-item${extraClass}" tabindex="0" role="button"></span>`;
+    let seriesLine = `<span index-id="chart-legend-${i}" class="chart-legend-item${extraClass}" tabindex="0" role="button"></span>`;
     const hexColor = charts.chartColor(i, chartType || (series.length === 1 ? 'bar-single' : 'bar'), series[i]);
     const colorName = charts.chartColorName(i, chartType || (series.length === 1 ? 'bar-single' : 'bar'), series[i]);
 
@@ -392,10 +414,10 @@ charts.addLegend = function (series, chartType, settings, container) {
     }
 
     if (isTwoColumn) {
-      if (widthPercent > 45 && settings.legendPlacement !== 'right') {
-        seriesLine = `<span class="chart-legend-item${extraClass}" tabindex="0" role="button"></span>`;
+      if (exceedsMaxWidth && isBottom) {
+        seriesLine = `<span index-id="chart-legend-${i}" class="chart-legend-item${extraClass} is-one-line" tabindex="0" role="button"></span>`;
       } else {
-        seriesLine = `<span class="chart-legend-item${extraClass} is-two-column" tabindex="0" role="button"></span>`;
+        seriesLine = `<span index-id="chart-legend-${i}" class="chart-legend-item${extraClass} is-two-column" tabindex="0" role="button"></span>`;
       }
     }
     seriesLine = $(seriesLine);
@@ -408,7 +430,7 @@ charts.addLegend = function (series, chartType, settings, container) {
       legend.append(seriesLine);
     }
 
-    if ((series[i].display && series[i].display === 'block') || (isTwoColumn && widthPercent > 45 && settings.legendPlacement !== 'right')) {
+    if ((series[i].display && series[i].display === 'block') || (isTwoColumn && exceedsMaxWidth && isBottom)) {
       seriesLine.css({
         float: 'none',
         display: 'block',
@@ -440,29 +462,88 @@ charts.addLegend = function (series, chartType, settings, container) {
   }
 
   if (legend instanceof $) {
+    const regex = /^chart-legend-(.+)/;
+
     legend.on('click.chart', '.chart-legend-item', function () {
-      charts.handleElementClick(this, series, settings);
+      const idx = $(this).attr('index-id').match(regex)[1];
+      charts.handleElementClick(idx, this, series, settings);
     }).on('keypress.chart', '.chart-legend-item', function (e) {
       if (e.which === 13 || e.which === 32) {
-        charts.handleElementClick(this, series, settings);
+        const idx = $(this).attr('index-id').match(regex)[1];
+        charts.handleElementClick(idx, this, series, settings);
       }
     });
 
-    $(container).append(legend);
+    if (isBottom && exceedsMaxWidth && series.length > maxLength) {
+      const listButton = $(`
+      <button class="btn-actions list-button" type="button">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation" style="min-height: 0">
+          <use href="#icon-bullet-steps"></use>
+        </svg>
+      </button>
+      `);
+
+      const popupList = $('<ul class="popupmenu"></ul>');
+
+      for (let j = maxLength; j < series.length; j++) {
+        const listItem = $(`<li><a index-id="chart-legend-${j}" href="#"><div class="chart-popup-menu"></div></a></li>`);
+        const textBlock = $(`<span class="chart-popup-menu-text">${xssUtils.stripTags(series[j].name)}</span>`);
+
+        const hexColor = charts.chartColor(j, chartType || (series.length === 1 ? 'bar-single' : 'bar'), series[j]);
+        const colorName = charts.chartColorName(j, chartType || (series.length === 1 ? 'bar-single' : 'bar'), series[j]);
+
+        let color = '';
+        if (colorName.substr(0, 1) === '#') {
+          color = $('<span class="chart-popup-menu-color"></span>');
+          if (!series[i].pattern) {
+            color.css('background-color', hexColor);
+          }
+        } else {
+          color = $(`<span class="chart-popup-menu-color ${series[i].pattern ? '' : colorName}"></span>`);
+        }
+
+        listItem.find('div').append(color, textBlock);
+        popupList.append(listItem);
+      }
+
+      legend.css({
+        'min-height': '40px',
+        'max-height': '50px',
+        display: 'flex'
+      });
+
+      $('.widget').addClass('auto-height');
+
+      legend.append(listButton);
+      $(container).append(legend);
+
+      popupList.insertAfter(listButton);
+
+      listButton.popupmenu({
+        menu: popupList
+      });
+
+      listButton.on('selected', (e, args) => {
+        const idx = $(args[0]).attr('index-id').match(regex)[1];
+        charts.handleElementClick(idx, this, series, settings);
+      });
+    } else {
+      $(container).append(legend);
+    }
   }
 };
 
 /**
  * Helper Function to Select from legend click
  * @private
+ * @param {number} idx Index of clicked element.
  * @param {object} line The element that was clicked.
  * @param {array} series The data series.
  * @param {object} settings [description]
  */
-charts.handleElementClick = function (line, series, settings) {
+charts.handleElementClick = function (idx, line, series, settings) {
   const api = $(settings?.svg?.node()).closest('.chart-container').data('chart');
   const noTrigger = api?.initialSelectCall;
-  const idx = $(line).index();
   const elem = series[idx];
   let selector;
 
