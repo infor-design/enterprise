@@ -43,8 +43,11 @@ For additional usage methods, see [Installing IDS](docs/DEVELOPER.md#installing-
 - [Change Log](docs/CHANGELOG.md) (Includes latest release changes)
 
 ## Contribution
-
-⚠️ Please Use [Github Issues](https://github.com/infor-design/enterprise/issues) to report all requests, bugs, questions, and feature requests
+<!-- markdownlint-disable MD033 -->
+<span>
+⚠️&nbsp;&nbsp;Please Use [Github Issues](https://github.com/infor-design/enterprise/issues) to report all requests, bugs, questions, and feature requests
+</span>
+<!-- markdownlint-restore -->
 
 - [Contribution Guidelines](docs/CONTRIBUTING.md)
 - [Developer Guide](docs/DEVELOPER.md)
