@@ -93,6 +93,10 @@ describe('Datepicker example-index tests', () => {
 
     await element(by.id('date-field-normal')).sendKeys(protractor.Key.ADD);
 
+    expect(await element(by.id('date-field-normal')).getAttribute('value')).toEqual('7/5/2020');
+
+    await element(by.id('date-field-normal')).sendKeys(protractor.Key.SUBTRACT);
+
     expect(await element(by.id('date-field-normal')).getAttribute('value')).toEqual('7/4/2020');
   });
 
