@@ -335,6 +335,7 @@ Lookup.prototype = {
    */
   openDialog(e) {
     const self = this;
+    this.isChanged = false;
 
     // Don't try to re-open the lookup if it's already open.
     if (this.isOpen) {
@@ -592,6 +593,7 @@ Lookup.prototype = {
     search = null;
 
     if (this.grid && this.grid.destroy) {
+      $(this.grid.element).off('selected.lookup');
       this.grid.deSelectAllRows();
       this.grid.clearFilter();
       this.grid.destroy();
@@ -693,14 +695,16 @@ Lookup.prototype = {
 
     // Restore selected rows when pages change
     if (this.settings.options.source) {
-      lookupGrid.off('afterpaging.lookup').on('afterpaging.lookup', () => {
+      lookupGrid.off('afterpaging.lookup').on('afterpaging.lookup', (e, pagingInfo) => {
         const fieldVal = self.element.val();
         this.selectGridRows(fieldVal);
+        this.element.trigger('afterpaging', [pagingInfo, this]);
       });
     }
 
     if (this.settings.options) {
       lookupGrid.on('selected.lookup', (e, selectedRows, op, rowData) => {
+        this.isChanged = true;
         if (op === 'deselect') {
           if (!self.grid.recentlyRemoved) {
             self.grid.recentlyRemoved = [];
@@ -721,6 +725,7 @@ Lookup.prototype = {
           self.modal.close();
           self.insertRows();
         }
+        self.element.trigger('selected', [selectedRows, op, rowData]);
       });
     }
 
@@ -945,6 +950,9 @@ Lookup.prototype = {
    * @returns {void}
    */
   insertRows() {
+    if (!this.isChanged) {
+      return;
+    }
     let value = [];
 
     this.selectedRows = this.grid.selectedRows();
