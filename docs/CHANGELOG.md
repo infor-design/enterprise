@@ -2,6 +2,7 @@
 
 ## v4.54.0 Fixes
 
+- `[Datepicker]` Fixed a bug where the -/+ keys were not detected in datepicker. ([#5353](https://github.com/infor-design/enterprise/issues/5353))
 - `[Donut]` Changed legend design when item exceeds maximum width of chart. ([#5292](https://github.com/infor-design/enterprise/issues/5292))
 - `[Dropdown]` Fixed a bug where backspace in Dropdown is not working when pressed. ([#5113](https://github.com/infor-design/enterprise/issues/5113))
 - `[Input]` Fixed a bug where clear icon were not properly aligned with the input field in classic mode. ([#5324](https://github.com/infor-design/enterprise/issues/5324))

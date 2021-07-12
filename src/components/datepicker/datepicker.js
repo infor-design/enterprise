@@ -417,16 +417,21 @@ DatePicker.prototype = {
         this.setToday();
       }
 
-      // '-' decrements day
-      if (key === 189 && !e.shiftKey && (!hasMinusPattern)) {
-        handled = true;
-        this.adjustDay(false);
-      }
+      if (!hasMinusPattern) {
+        // get input value
+        const inputVal = $(e.currentTarget).val();
 
-      // '+' increments day
-      if (key === 187 && e.shiftKey && (!hasMinusPattern)) {
-        handled = true;
-        this.adjustDay(true);
+        // '-' decrements day
+        if (key === 189 || key === 109) {
+          handled = true;
+          this.adjustDay(false, inputVal);
+        }
+
+        // '+' increments day
+        if (key === 187 || key === 107) {
+          handled = true;
+          this.adjustDay(true, inputVal);
+        }
       }
 
       if (handled) {
@@ -1944,15 +1949,21 @@ DatePicker.prototype = {
   /**
    * Set the date to one more or one less day.
    * @param  {boolean} plusMinus True for increment, false for decrement
+   * @param {string} inputVal Value in input of datepicker
    */
-  adjustDay(plusMinus) {
+  adjustDay(plusMinus, inputVal) {
     if (this.isReadonly() || this.isDisabled()) {
       return;
     }
 
     if (!this.currentDate) {
-      this.setToday();
+      if (inputVal.length > 0 && /(0?[1-9]|1[012])\/(0?[1-9]|[12][0-9]|3[01])\/\d{4}/.test(inputVal)) {
+        this.setValue(new Date(inputVal), true, true);
+      } else {
+        this.setToday();
+      }
     }
+
     const options = { pattern: this.pattern, locale: this.locale.name };
     let currentDate = this.isIslamic ? this.currentDateIslamic : this.currentDate;
     if (this.isIslamic) {
