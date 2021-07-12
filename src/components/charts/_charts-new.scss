@@ -3,7 +3,7 @@
 
 .chart-container {
   .chart-legend.is-bottom {
-    padding-bottom: 0.5em;
+    padding-bottom: 0;
     padding-top: 0.7em;
   }
 
@@ -16,5 +16,15 @@
 
   .chart-donut-text {
     font-size: 1.8rem;
+
+    ::selection {
+      color: $inverse-color;
+      fill: $inverse-color;
+    }
+
+    ::-moz-selection {
+      color: $inverse-color;
+      fill: $inverse-color;
+    }
   }
 }
