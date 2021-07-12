@@ -50,7 +50,7 @@
 - `[Splitter]` Fixed position of splitter button. ([#5121](https://github.com/infor-design/enterprise/issues/5121))
 - `[Tooltip/Popover]` Split the Popover and Tooltip into separate components. ([#5197](https://github.com/infor-design/enterprise/issues/5197))
 
-(52 Issues Solved This Release, Backlog Enterprise 147, Backlog Ng 28, 1095 Functional Tests, 1668 e2e Tests)
+(54 Issues Solved This Release, Backlog Enterprise 147, Backlog Ng 28, 1095 Functional Tests, 1668 e2e Tests)
 
 ## v4.52.0
 
