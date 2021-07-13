@@ -2014,7 +2014,7 @@ $datagrid-small-row-height: 25px;
 
       .tag:not(.info):not(.good):not(.error):not(.alert) {
         background-color: $badge-neutral-hover-bg-color;
-        color: $ids-color-palette-black;
+        color: $ids-color-palette-white;
         transition: none;
       }
 
@@ -4024,7 +4024,7 @@ td .btn-actions {
         top: -7px;
         left: -5.75px;
       }
-    } 
+    }
   }
 }
 
