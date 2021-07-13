@@ -1,0 +1,114 @@
+<div class="row">
+  <div class="six columns">
+    <h1 class="label font-size-px-20">The CAP uses <span class="text-strong">modalSettings</span> to change the title.</h1>
+    <button id="test-cap-1-modal-settings" data-init="false" type="button" class="btn-secondary contextual-action-panel-trigger">
+      Contextual Action Panel
+    </button>
+    <div class="contextual-action-panel">
+      <div class="row">
+        <div class="six columns">
+          <div class="field">
+            <label for="company-name">Company Name</label>
+            <select id="company-name" name="company-name" class="dropdown">
+              <option value="">None</option>
+              <option value="jawbone" selected>Jawbone, Inc.</option>
+              <option value="infor">Infor</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="purchase-form">Purchase Form</label>
+            <select id="purchase-form" name="purchase-form" class="dropdown">
+              <option value="">None</option>
+              <option value="3567" selected>3567</option>
+              <option value="3568">3568</option>
+              <option value="3569">3569</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="template">Template</label>
+            <select id="template" name="template" class="dropdown">
+              <option value="" selected>None</option>
+              <option value="1">Template #1</option>
+              <option value="2">Template #2</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="notes">Notes</label>
+            <textarea id="notes" name="notes"></textarea>
+          </div>
+
+        </div>
+        <div class="six columns">
+
+          <div class="field">
+            <label for="ship-terms">Ship Terms</label>
+            <select id="ship-terms" name="ship-terms" class="dropdown">
+              <option value="">None</option>
+              <option value="default" selected>Default</option>
+              <option value="alternate">Alternate</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="ship-via">Ship Via</label>
+            <select id="ship-via" name="ship-via" class="dropdown">
+              <option value="">None</option>
+              <option value="freight" selected>Freight</option>
+              <option value="air">USPS Air</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="issue-method">Issue Method</label>
+            <select id="issue-method" name="issue-method" class="dropdown">
+              <option value="">None</option>
+              <option value="phone">Telephone</option>
+              <option value="email" selected>E-mail</option>
+              <option value="sms">SMS Message</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <input type="checkbox" id="po-box" name="po-box" class="checkbox" checked/>
+            <label for="po-box" class="checkbox-label">Freight</label>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<style type="text/css" id="test-style">
+  /* Mimic the "phone-to-tablet" breakpoint */
+  @media (min-width: 767px) {
+    .contextual-action-panel {
+      min-width: 600px;
+    }
+  }
+</style>
+
+<script id="test-script">
+  $('body').on('initialized', function() {
+    $('#test-cap-1-modal-settings').contextualactionpanel({
+      title: 'Company Information',
+      modalSettings: {
+        showCloseBtn: true,
+        useFlexToolbar: true,
+        title: 'Title using modalSettings',
+      }
+    })
+    .on('beforeclose', function(e) {
+      console.log('triggered!', e);
+    })
+    .on('beforeopen', function(e) {
+      console.log("Title", modalSettingsTitle);
+    });
+
+    var modalSettingsTitle = $('#test-cap-1-modal-settings').data('contextualactionpanel').settings.modalSettings;
+  });
+</script>
