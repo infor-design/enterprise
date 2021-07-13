@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.54.0 Features
+
+- `[Datagrid]` Added support to row reorder for groupable settings. ([#5233](https://github.com/infor-design/enterprise/issues/5233))
+
 ## v4.54.0 Fixes
 
 - `[Datepicker]` Fixed a bug where the -/+ keys were not detected in datepicker. ([#5353](https://github.com/infor-design/enterprise/issues/5353))
