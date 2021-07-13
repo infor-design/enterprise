@@ -1,0 +1,74 @@
+
+<div class="row bottom-padding">
+  <div class="twelve columns">
+    <div class="toolbar">
+      <div class="title">
+        Compressors
+        <span class="datagrid-group-count">N</span>
+      </div>
+      <div class="buttonset">
+      </div>
+      <div class="more">
+        <button class="btn-actions" type="button">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-more"></use>
+          </svg>
+          <span class="audible">More Actions</span>
+        </button>
+        <ul class="popupmenu">
+          <li><a data-option="personalize-columns" href="#" data-translate="text">PersonalizeColumns</a></li>
+          <li><a data-option="reset-layout" href="#" data-translate="text">ResetDefault</a></li>
+          <li class="separator single-selectable-section"></li>
+          <li class="heading">Row Height</li>
+          <li class="is-selectable"><a data-option="row-extra-small" href="#" data-translate="text">ExtraSmall</a></li>
+          <li class="is-selectable"><a data-option="row-small" href="#" data-translate="text">Small</a></li>
+          <li class="is-selectable"><a data-option="row-medium" href="#" data-translate="text">Medium</a></li>
+          <li class="is-selectable is-checked"><a data-option="row-large" href="#" data-translate="text">Large</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+
+<script>
+  $('body').one('initialized', function () {
+
+      var grid,
+        columns = [],
+        data = [];
+
+      //Define Columns for the Grid.
+      columns.push({ id: 'rowReorder', name: '', field: 'id', sortable: false, formatter: Formatters.RowReorder });
+
+      columns.push({ id: 'id', name: 'Customer Id', field: 'id'});
+      columns.push({ id: 'type', name: 'Type', field: 'type'});
+      columns.push({ id: 'location', name: 'Location', field: 'location', formatter: Formatters.Hyperlink});
+      columns.push({ id: 'firstname', name: 'First Name', field: 'firstname'});
+      columns.push({ id: 'lastname', name: 'Last Name', field: 'lastname'});
+      columns.push({ id: 'phone', name: 'Phone', field: 'phone'});
+      columns.push({ id: 'purchases', name: 'Purchases', field: 'purchases'});
+
+      //Get some data via ajax
+      var url = '{{basepath}}api/accounts';
+
+      $.getJSON(url, function(res) {
+        $('#datagrid').datagrid({
+          columns: columns,
+          dataset: res,
+          showHoverState: false,
+          rowReorder: true,
+          groupable: {
+            fields: ['type'],
+            expanded: true
+          },
+          toolbar: {title: 'Accounts', results: true, personalize: true, actions: true, rowHeight: true, keywordFilter: false}
+        }).on('rowreorder', function (e, args) {
+          console.log(args);
+        });
+      });
+ });
+
+</script>

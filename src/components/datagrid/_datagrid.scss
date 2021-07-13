@@ -1932,6 +1932,27 @@ $datagrid-small-row-height: 25px;
   > tbody > tr {
     line-height: $datagrid-row-height;
 
+    &.is-dragging-clone {
+      min-width: 100px !important;
+      position: fixed;
+      z-index: 3;
+
+      &.groupable {
+        -webkit-box-shadow: 0 0 10px 0 $datagrid-cell-border-color;
+        box-shadow: 0 0 10px 0 $datagrid-cell-border-color;
+        display: flex;
+
+        > td {
+          border-bottom: 1px solid $datagrid-cell-border-color;
+          border-top: 1px solid $datagrid-cell-border-color;
+        }
+      }
+
+      .handle {
+        top: 2px;
+      }
+    }
+
     &.is-active-row {
       outline: 1px solid $ids-color-brand-primary-base;
       outline-offset: -1px;
@@ -1968,6 +1989,10 @@ $datagrid-small-row-height: 25px;
           color: $button-color-tertiary-active-font;
         }
       }
+    }
+
+    .reorder-group-child-col .datagrid-reorder-icon {
+      padding-left: 36px;
     }
 
     &.arrange-dragging {
@@ -3558,6 +3583,11 @@ $datagrid-small-row-height: 25px;
     .icon {
       color: $datagrid-rowgroup-color;
     }
+
+    .datagrid-reorder-icon {
+      display: inline-block;
+      margin-right: 15px;
+    }
   }
 
   .datagrid-expand-btn {
@@ -4024,7 +4054,7 @@ td .btn-actions {
         top: -7px;
         left: -5.75px;
       }
-    } 
+    }
   }
 }
 
