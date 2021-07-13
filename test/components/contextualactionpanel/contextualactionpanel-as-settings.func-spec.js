@@ -7,11 +7,11 @@ const triggerHTML = require('../../../app/views/components/contextualactionpanel
 
 // Standard Contextual Action Panel settings
 const capSettings = {
-  title: 'Expenses: $50,000.00',
   content: '<div class="row"> <div class="six columns"> <div class="field"> <label for="expense-type">Expense Type</label> <select id="expense-type" class="dropdown"> <option selected>Meal</option> <option>Flight</option> </select> </div> <div class="field"> <label for="purchase-form">Purchase Form</label> <select id="purchase-form" name="purchase-form" class="dropdown"> <option value=""></option> <option value="3567" selected>3567</option> <option value="3568">3568</option> <option value="3569">3569</option> </select> </div> <div class="field"> <label for="template">Template</label> <select id="template" name="template" class="dropdown"> <option value="" selected>None</option> <option value="1">Template #1</option> <option value="2">Template #2</option> </select> </div> </div> <div class="six columns"><div class="field"> <label for="notes">Notes</label> <textarea id="notes" name="notes"></textarea> </div> </div> </div> </div>',
   modalSettings: {
     id: 'contextual-action-modal-xyz',
     trigger: 'immediate',
+    title: 'Expenses: $50,000.00',
     buttons: [
       {
         type: 'input',
@@ -129,6 +129,17 @@ describe('Contextual Action Panel - Defined Through Settings', () => {
 
     expect(modalSettings.fullsize).toEqual('always');
     expect(modalSettings.breakpoint).toEqual('phone');
+  });
+
+  it('can pass a `title` setting to the underlying Modal component', () => {
+    capAPI = new ContextualActionPanel(document.body, {
+      modalSettings: {
+        title: 'Expenses: $50,000.00'
+      }
+    });
+    const modalSettings = capAPI.modalAPI.settings;
+
+    expect(modalSettings.title).toEqual('Expenses: $50,000.00');
   });
 });
 

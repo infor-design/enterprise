@@ -263,3 +263,21 @@ describe('CAP Flex Toolbar API Tests', () => {
     expect(await element(by.id('modal-button-3')).getAttribute('disabled')).toBeTruthy();
   });
 });
+
+describe('CAP modalSettings title tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/contextualactionpanel/test-title-using-modal-settings.html');
+  });
+
+  it('should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should display the title using modalSettings', async () => {
+    await element(by.id('test-cap-1-modal-settings')).click();
+    await browser.driver.sleep(config.sleepLonger);
+
+    expect(await element(by.css('#contextual-action-modal-1')).isDisplayed()).toBe(true);
+    expect(await element(by.css('#contextual-action-modal-1 .title h2')).getText()).toEqual('Title using modalSettings');
+  });
+});
