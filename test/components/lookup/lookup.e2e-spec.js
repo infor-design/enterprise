@@ -345,7 +345,7 @@ describe('Lookup multiselect serverside paging tests', () => {
     await element(by.css('#lookup-datagrid .datagrid-wrapper tbody tr:nth-child(1) td:nth-child(1)')).click();
     await element(by.css('#lookup-datagrid .datagrid-wrapper tbody tr:nth-child(2) td:nth-child(1)')).click();
 
-    await element(by.css('.btn-modal-primary')).click();
+    await element.all(by.css('.btn-modal-primary')).first().click();
 
     expect(await lookupEl.getAttribute('value')).toEqual('214220,214221');
   });
@@ -368,7 +368,7 @@ describe('Lookup multiselect serverside paging tests', () => {
     await element(by.css('#lookup-datagrid .datagrid-wrapper tbody tr:nth-child(1) td:nth-child(1)')).click();
     await element(by.css('#lookup-datagrid .datagrid-wrapper tbody tr:nth-child(2) td:nth-child(1)')).click();
 
-    await element(by.css('.btn-modal-primary')).click();
+    await element.all(by.css('.btn-modal-primary')).first().click();
 
     expect(await lookupEl.getAttribute('value')).toEqual('214220,214221,214225,214226');
   });

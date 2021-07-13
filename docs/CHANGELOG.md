@@ -2,10 +2,12 @@
 
 ## v4.54.0 Fixes
 
+- `[Datepicker]` Fixed a bug where the -/+ keys were not detected in datepicker. ([#5353](https://github.com/infor-design/enterprise/issues/5353))
 - `[Donut]` Changed legend design when item exceeds maximum width of chart. ([#5292](https://github.com/infor-design/enterprise/issues/5292))
 - `[Dropdown]` Fixed a bug where backspace in Dropdown is not working when pressed. ([#5113](https://github.com/infor-design/enterprise/issues/5113))
 - `[Icon]` Changed button icon colors to slate6 ([#5307](https://github.com/infor-design/enterprise/issues/5307))
 - `[Input]` Fixed a bug where clear icon were not properly aligned with the input field in classic mode. ([#5324](https://github.com/infor-design/enterprise/issues/5324))
+- `[Monthview]` Fixed a bug where a vertical scroll is showing when it is unnecessary. ([#5350](https://github.com/infor-design/enterprise/issues/5350))
 - `[Multiselect]` Fixed a regression bug where clear icon were not properly aligned on compact mode. ([#5396](https://github.com/infor-design/enterprise/issues/5396))
 - `[Popdown]` Remove deprecation console warning. We still consider this component deprecated but will not remove until 5.0 version. The warning was only removed for now. ([#1070](https://github.com/infor-design/enterprise-ng/issues/1070))
 
@@ -35,6 +37,7 @@
 - `[Dropdown]` Fixed a bug that resulted in the updatable dropdown value being changed when selecting the more actions button. ([#5222](https://github.com/infor-design/enterprise/issues/5222))
 - `[Editor]` Fixed a bug where automation id attributes are not properly rendered on editor elements. ([#5082](https://github.com/infor-design/enterprise/issues/5082))
 - `[Lookup]` Fixed a bug where lookup attributes are not added in the cancel and apply/save button. ([#5202](https://github.com/infor-design/enterprise/issues/5202))
+- `[Lookup]` Exposed two events from the datagrid `afterpaging` and `selected` for more flexibility. ([#986](https://github.com/infor-design/enterprise-ng/issues/986))
 - `[Locale]` Fixed a bug where very large numbers with negative added an extra zero in formatNumber. ([#5308](https://github.com/infor-design/enterprise/issues/5308))
 - `[Locale]` Fixed a bug where very large numbers would get a zero added. ([#5308](https://github.com/infor-design/enterprise/issues/5308))
 - `[Locale]` Fixed a bug where very large numbers with negative added an extra zero in formatNumber. ([#5318](https://github.com/infor-design/enterprise/issues/5318))
