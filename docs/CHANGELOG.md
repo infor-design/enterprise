@@ -10,6 +10,7 @@
 - `[Datepicker]` Fixed a bug where the -/+ keys were not detected in datepicker. ([#5353](https://github.com/infor-design/enterprise/issues/5353))
 - `[Donut]` Changed legend design when item exceeds maximum width of chart. ([#5292](https://github.com/infor-design/enterprise/issues/5292))
 - `[Dropdown]` Fixed a bug where backspace in Dropdown is not working when pressed. ([#5113](https://github.com/infor-design/enterprise/issues/5113))
+- `[Icon]` Changed button icon colors to slate6 ([#5307](https://github.com/infor-design/enterprise/issues/5307))
 - `[Input]` Fixed a bug where clear icon were not properly aligned with the input field in classic mode. ([#5324](https://github.com/infor-design/enterprise/issues/5324))
 - `[Lookup]` Added api setting to allow duplicate selected value to input element. ([#986](https://github.com/infor-design/enterprise-ng/issues/986))
 - `[Monthview]` Fixed a bug where a vertical scroll is showing when it is unnecessary. ([#5350](https://github.com/infor-design/enterprise/issues/5350))
