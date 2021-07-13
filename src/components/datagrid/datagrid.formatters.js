@@ -399,6 +399,7 @@ const formatters = {
   GroupRow(row, cell, value, col, item, api) {
     const groupSettings = api.settings.groupable;
     const rowHtml = { left: '', center: '', right: '' };
+    const rowReorderHtml = api?.settings?.rowReorder ? this.RowReorder() : '';
     let groups = '';
     let isOpen = groupSettings.expanded === undefined ? true : groupSettings.expanded;
 
@@ -417,7 +418,7 @@ const formatters = {
     const button = `<button type="button" class="btn-icon datagrid-expand-btn${(isOpen ? ' is-expanded' : '')}" tabindex="-1">
     <span class="icon plus-minus${(isOpen ? ' active' : '')}"></span>
     <span class="audible">${Locale.translate('ExpandCollapse')}</span>
-    </button><span> ${groups}</span>`;
+    </button>${rowReorderHtml}<span> ${groups}</span>`;
 
     // Take the first
     const container = api.getContainer(groupSettings.fields ? groupSettings.fields[0] : '');
