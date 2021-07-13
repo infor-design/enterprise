@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.54.0 Features
+
+- `[Datagrid]` Added support to row reorder for groupable settings. ([#5233](https://github.com/infor-design/enterprise/issues/5233))
+
 ## v4.54.0 Fixes
 
 - `[ContextualActionPanel]` Added `title` prop in CAP to control the title via `modaSettings`, and added missing `beforeclose` event. ([NG#1048](https://github.com/infor-design/enterprise-ng/issues/1048))
