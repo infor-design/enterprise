@@ -71,6 +71,15 @@
 
 (52 Issues Solved This Release, Backlog Enterprise 147, Backlog Ng 28, 1095 Functional Tests, 1668 e2e Tests)
 
+## v4.52.2 Fixes
+
+- `[Locale]` Fixed a bug where very large numbers would get a zero added. ([#5308](https://github.com/infor-design/enterprise/issues/5308))
+- `[Locale]` Fixed a bug where very large numbers with negative added an extra zero in formatNumber. ([#5318](https://github.com/infor-design/enterprise/issues/5318))
+
+## v4.52.1 Fixes
+
+- `[Datagrid]` Fixed an issue where personalize column headers were not rendering properly. ([#5361](https://github.com/infor-design/enterprise/issues/5361))
+
 ## v4.52.0
 
 ### v4.52.0 Markup Changes
