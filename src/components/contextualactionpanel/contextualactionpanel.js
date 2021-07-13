@@ -22,6 +22,7 @@ const COMPONENT_NAME = 'contextualactionpanel';
 * @param {string} [settings.modalSettings.id = `contextual-action-modal-[number]`] The id to use for the CAP, or defaults to generated.
 * @param {boolean} [settings.modalSettings.showCloseBtn = false] if true, displays a "close (X)" button in the button row that cancels the CAP's Modal action.
 * @param {string} [settings.modalSettings.trigger = 'click'] Can be 'click' or 'immediate'.
+* @param {string} [settings.modalSettings.title = undefined] Ability to set title via modalSettings.
 * @param {boolean} [settings.modalSettings.useFlexToolbar = false] If true the new flex toolbar will be used (For CAP)
 * @param {string} [settings.modalSettings.attributes] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
 */
@@ -34,6 +35,7 @@ const CONTEXTUALACTIONPANEL_DEFAULTS = {
     centerTitle: false,
     id: null,
     showCloseBtn: false,
+    title: undefined,
     trigger: 'click',
     useFlexToolbar: false
   }
@@ -221,6 +223,8 @@ ContextualActionPanel.prototype = {
     let hasSearchfield = false;
     let predefined = true;
 
+    this.title = !this.settings.modalSettings.title ? this.settings.title : this.settings.modalSettings.title;
+
     // Invoke Icons
     this.panel.find('svg').icon();
 
@@ -265,12 +269,13 @@ ContextualActionPanel.prototype = {
         });
       }
 
-      if (this.settings.title && this.settings.modalSettings.centerTitle) {
+      if ((this.settings.title && this.settings.modalSettings.centerTitle) ||
+        (this.settings.modalSettings.title && this.settings.modalSettings.centerTitle)) {
         const toolbarSearchfieldSection = hasSearchfield ? '<div class="toolbar-section search"></div>' : '';
         const toolbarHTML = `<div class="flex-toolbar">
           <div class="toolbar-section static"></div>
           <div class="toolbar-section title center-text">
-            <h2>${this.settings.title}</h2>
+            <h2>${this.title}</h2>
           </div>
           ${toolbarSearchfieldSection}
           <div class="toolbar-section buttonset static"></div>
@@ -279,7 +284,7 @@ ContextualActionPanel.prototype = {
         this.toolbar = $(toolbarHTML);
       } else if (!buttonset.length) {
         const toolbarCSSClass = this.settings.modalSettings.useFlexToolbar ? 'flex-toolbar' : 'toolbar';
-        const toolbarTitleSection = this.settings.modalSettings.useFlexToolbar ? `<div class="toolbar-section title"><h2>${this.settings.title}</h2></div>` : '';
+        const toolbarTitleSection = this.settings.modalSettings.useFlexToolbar ? `<div class="toolbar-section title"><h2>${this.title}</h2></div>` : '';
         const toolbarButtonsetCSSClass = this.settings.modalSettings.useFlexToolbar ? 'toolbar-section buttonset' : 'buttonset';
         const toolbarButtonsetSection = `<div class="${toolbarButtonsetCSSClass}"></div>`;
         const toolbarSearchfieldSection = this.settings.modalSettings.useFlexToolbar && hasSearchfield ? '<div class="toolbar-section search"></div>' : '';
@@ -310,7 +315,7 @@ ContextualActionPanel.prototype = {
         const centerTextCSS = this.settings.modalSettings.centerTitle ? ' center-text' : '';
         toolbarTitle = $(`
           <div class="toolbar-section title${centerTextCSS}">
-            <h2>${this.settings.title}</h2>
+            <h2>${this.title}</h2>
           </div>
         `);
 
@@ -324,7 +329,7 @@ ContextualActionPanel.prototype = {
       if (!toolbarTitle.length) {
         toolbarTitle = $(`
           <div class="title">
-            ${this.settings.title}
+            ${this.title}
           </div>
         `);
         this.toolbar.prepend(toolbarTitle);
@@ -410,6 +415,10 @@ ContextualActionPanel.prototype = {
       .on('close.contextualactionpanel', (e) => {
         passEvent(e);
       })
+      .off('beforeclose.contextualactionpanel')
+      .on('beforeclose.contextualactionpanel', function (e) {
+        passEvent(e);
+      })
       .off('beforeopen.contextualactionpanel')
       .on('beforeopen.contextualactionpanel', function (e) {
         if (self.settings.initializeContent) {
@@ -476,7 +485,7 @@ ContextualActionPanel.prototype = {
     const buttonset = self.toolbar.children('.buttonset');
 
     this.panel.off('open.contextualactionpanel close.contextualactionpanel ' +
-      'beforeopen.contextualactionpanel afterclose.contextualactionpanel');
+      'beforeclose.contextualactionpanel beforeopen.contextualactionpanel afterclose.contextualactionpanel');
 
     buttonset.children('*:not(.searchfield)')
       .off('click.contextualactionpanel');
