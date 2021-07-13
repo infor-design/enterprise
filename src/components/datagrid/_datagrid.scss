@@ -2014,7 +2014,7 @@ $datagrid-small-row-height: 25px;
 
       .tag:not(.info):not(.good):not(.error):not(.alert) {
         background-color: $badge-neutral-hover-bg-color;
-        color: $ids-color-palette-white;
+        color: $datagrid-badges-hover-font-color;
         transition: none;
       }
 
@@ -2189,7 +2189,7 @@ $datagrid-small-row-height: 25px;
       vertical-align: middle;
 
       &[class*='azure'] {
-        color: $ids-color-palette-white;
+        color: $datagrid-badges-azure-font-color;
       }
     }
 
