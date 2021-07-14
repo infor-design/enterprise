@@ -109,6 +109,12 @@
   td {
     .chart-completion-target {
       height: 28px; // makes the target bar match the height of progress bar; for new needs to be 28px
+      .target {
+        margin-top: 6px;
+      }
+      .chart-targeted-text {
+        margin-top: -41px;
+      }
     }
   }
 
