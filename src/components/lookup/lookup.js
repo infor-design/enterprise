@@ -74,6 +74,7 @@ function addSuffixToAttributes(parentAttrs = [], childAttrs = [], suffix) {
  * @param {int} [settings.minWidth=400] Applys a minimum width to the lookup
  * @param {boolean} [settings.clearable=false] Add an ability to clear the lookup field. If "true", it will affix an "x" button to the right section of the field.
  * @param {boolean} [settings.tabbable=true] If true, causes the Lookup's trigger icon to be focusable with the keyboard.
+ * @param {boolean} [settings.allowDuplicates=false] If true, will show all duplicate selected values in input element.
  */
 const LOOKUP_DEFAULTS = {
   click: null,
@@ -94,6 +95,7 @@ const LOOKUP_DEFAULTS = {
   clearable: false,
   attributes: null,
   tabbable: true,
+  allowDuplicates: false,
 };
 
 function Lookup(element, settings) {
@@ -977,7 +979,9 @@ Lookup.prototype = {
     }
 
     // Eliminate duplicate values.
-    value = value.filter((a, b) => value.indexOf(a) === b);
+    if (!this.settings.allowDuplicates) {
+      value = value.filter((a, b) => value.indexOf(a) === b);
+    }
 
     /**
       * Fires on input value change.
