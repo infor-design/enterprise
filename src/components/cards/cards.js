@@ -12,6 +12,7 @@ const COMPONENT_NAME = 'cards';
  * @param {boolean} [settings.expandableHeader] Abilty to expand the card header
  * @param {boolean} [settings.verticalButtonAction] Ability to rotate the button action vertically
  * @param {array} [settings.dataset=[]] An array of data objects that will be represented as cards.
+ * @param {string} [settings.template] Hyml Template String.
  * @param {string} [settings.selectable=false] Ability to enable the selection state e.g. 'single', 'multiple' or false.
  * @param {string} [settings.attributes=null] Add extra attributes like id's to the element. e.g. `attributes: { name: 'id', value: 'my-unique-id' }`
  */
@@ -62,6 +63,10 @@ Cards.prototype = {
     this.cardHeader = this.element.children('.card-header');
     this.cardContentPane = this.element.children('.card-pane');
     this.buttonAction = this.cardHeader.children('.btn-actions');
+    
+    if (this.settings.selectable !== false) {
+      this.cards = this.element;
+    }
 
     return this;
   },
@@ -72,7 +77,22 @@ Cards.prototype = {
    * @private
    */
   build() {
+    const s = this.settings;
+    const cardsDataset = s.dataset;
     const expanded = this.element.hasClass('is-expanded');
+    let cardElements = '';
+
+    if (this.settings.selectable !== false) {
+      cardElements += `
+        <div class="card auto-height">
+          <p>Test</p>
+          <p>Test</p>
+          <p>Test</p>
+        </div>
+      `;
+
+      this.cards.append(cardElements);
+    }
 
     this.cardContentPane.attr({
       id: `${this.id}-content`,

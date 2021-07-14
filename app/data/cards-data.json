@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "time": "5:30AM-8:00AM",
+    "job": "Cashier II",
+    "location": "NE Campus",
+    "Team": "NE_FLR",
+    "Department": "DEPT A"
+  },
+  {
+    "id": 2,
+    "time": "9:00AM-12:00PM",
+    "job": "Cashier II",
+    "location": "NE Campus",
+    "Team": "NE_FLR",
+    "Department": "DEPT A"
+  },
+  {
+    "id": 3,
+    "time": "1:00PM-5:00PM",
+    "job": "Cashier II",
+    "location": "NE Campus",
+    "Team": "NE_FLR",
+    "Department": "DEPT A"
+  }
+]

@@ -2,13 +2,20 @@
   <div class="six columns">
     <p>Cards: Single Selection</p>
   </div>
-  <div class="twelve columns">
+</div>
+
+<div class="row top-padding">
+  <div class="six columns">
     <div id="cards-single-select" class="cards"></div>
   </div>
 </div>
 
 <script>
-$('#cards-single-select').cards({
-  selectable: 'single'
-});
+  $('body').on('initialized', function () {
+    var data = [];
+
+    $('#cards-single-select').cards({
+      selectable: 'single'
+    });
+  });
 </script>
