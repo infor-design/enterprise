@@ -106,6 +106,12 @@
     color: $font-color-highcontrast;
   }
 
+  td {
+    .chart-completion-target {
+      height: 28px;
+    }
+  }
+
   td.is-editing {
     .lookup-wrapper {
       padding-top: 5px;
