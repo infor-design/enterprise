@@ -25,6 +25,17 @@
   }
 }
 
+// For Cards selection that uses .cards as parent class
+.cards {
+  .card .card-content {
+    padding: 16px;
+
+    p:not(:first-child){
+      color: $card-expandable-sub-heading;
+    }
+  }
+}
+
 .card,
 .small-widget,
 .widget {
