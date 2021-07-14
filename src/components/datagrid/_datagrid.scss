@@ -2037,12 +2037,6 @@ $datagrid-small-row-height: 25px;
         background-color: $datagrid-row-hover-color;
       }
 
-      .tag:not(.info):not(.good):not(.error):not(.alert) {
-        background-color: $badge-neutral-hover-bg-color;
-        color: $datagrid-badges-hover-font-color;
-        transition: none;
-      }
-
       .datagrid-expand-btn .icon {
         background-color: transparent;
         box-shadow: none;
