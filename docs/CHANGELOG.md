@@ -20,6 +20,10 @@
 - `[Popdown]` Remove deprecation console warning. We still consider this component deprecated but will not remove until 5.0 version. The warning was only removed for now. ([#1070](https://github.com/infor-design/enterprise-ng/issues/1070))
 -`[Datagrid]` Fixed a bug where the font color on tags was black when a row was hovered over in dark mode. Font color now white. ([#5289](https://github.com/infor-design/enterprise/issues/5289))
 
+### v4.54.0 Markup Changes
+
+- `[TrackDirty]` Removed Track Dirty from the main components list and integrated the underlying examples into their corresponding individual components.
+
 ## v4.53.0 Features
 
 - `[Action Sheet]` Added a mobile device-friendly action sheet component. ([#5256](https://github.com/infor-design/enterprise/issues/5256))
