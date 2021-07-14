@@ -6,6 +6,7 @@
 
 ## v4.54.0 Fixes
 
+- `[CirclePager]` Fixed a bug where the CSS was the same for all of the circles in homepage/example-hero-widget ([#5337](https://github.com/infor-design/enterprise/issues/5337))
 - `[ContextualActionPanel]` Added `title` prop in CAP to control the title via `modaSettings`, and added missing `beforeclose` event. ([NG#1048](https://github.com/infor-design/enterprise-ng/issues/1048))
 - `[Datepicker]` Fixed a bug where the -/+ keys were not detected in datepicker. ([#5353](https://github.com/infor-design/enterprise/issues/5353))
 - `[Donut]` Changed legend design when item exceeds maximum width of chart. ([#5292](https://github.com/infor-design/enterprise/issues/5292))
@@ -13,10 +14,15 @@
 - `[Icon]` Changed button icon colors to slate6 ([#5307](https://github.com/infor-design/enterprise/issues/5307))
 - `[Input]` Fixed a bug where clear icon were not properly aligned with the input field in classic mode. ([#5324](https://github.com/infor-design/enterprise/issues/5324))
 - `[Lookup]` Added api setting to allow duplicate selected value to input element. ([#986](https://github.com/infor-design/enterprise-ng/issues/986))
+- `[Modal]` Enter key will trigger primary button when in an input field. ([#5198](https://github.com/infor-design/enterprise/issues/5198))
 - `[Monthview]` Fixed a bug where a vertical scroll is showing when it is unnecessary. ([#5350](https://github.com/infor-design/enterprise/issues/5350))
 - `[Multiselect]` Fixed a regression bug where clear icon were not properly aligned on compact mode. ([#5396](https://github.com/infor-design/enterprise/issues/5396))
 - `[Popdown]` Remove deprecation console warning. We still consider this component deprecated but will not remove until 5.0 version. The warning was only removed for now. ([#1070](https://github.com/infor-design/enterprise-ng/issues/1070))
--`[Datagrid]` Fixed a bug where the font color on tags was black when a row was hovered over in dark mode. Font color now white. ([#5289] (https://github.com/infor-design/enterprise/issues/5289))
+-`[Datagrid]` Fixed a bug where the font color on tags was black when a row was hovered over in dark mode. Font color now white. ([#5289](https://github.com/infor-design/enterprise/issues/5289))
+
+### v4.54.0 Markup Changes
+
+- `[TrackDirty]` Removed Track Dirty from the main components list and integrated the underlying examples into their corresponding individual components.
 
 ## v4.53.0 Features
 
@@ -69,6 +75,15 @@
 - `[Tooltip/Popover]` Split the Popover and Tooltip into separate components. ([#5197](https://github.com/infor-design/enterprise/issues/5197))
 
 (52 Issues Solved This Release, Backlog Enterprise 147, Backlog Ng 28, 1095 Functional Tests, 1668 e2e Tests)
+
+## v4.52.2 Fixes
+
+- `[Locale]` Fixed a bug where very large numbers would get a zero added. ([#5308](https://github.com/infor-design/enterprise/issues/5308))
+- `[Locale]` Fixed a bug where very large numbers with negative added an extra zero in formatNumber. ([#5318](https://github.com/infor-design/enterprise/issues/5318))
+
+## v4.52.1 Fixes
+
+- `[Datagrid]` Fixed an issue where personalize column headers were not rendering properly. ([#5361](https://github.com/infor-design/enterprise/issues/5361))
 
 ## v4.52.0
 
