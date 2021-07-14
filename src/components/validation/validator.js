@@ -495,7 +495,7 @@ Validator.prototype = {
       }
 
       // Add icon to main tab area
-      if (!($(`.icon-${type}`, iconContainer).length)) {
+      if (!($(`.icon-${type}`, iconContainer).length) && !parentContainer.hasClass('module-tabs')) {
         iconContainer.addClass(`is-${type}`).append(errorIcon);
       }
 

@@ -146,6 +146,7 @@
 // This helps break overflow issues and simplifies the CSS
 .tab-focus-indicator {
   @include tab-outline;
+  border-bottom: 6px solid $tab-selected-color;
 
   pointer-events: none;
   z-index: 10;

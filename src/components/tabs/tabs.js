@@ -452,14 +452,14 @@ Tabs.prototype = {
 
     this.positionFocusState(selectedAnchor);
 
-    if (this.hasAnimatedBar()) {
-      this.animatedBar.addClass('no-transition');
-      this.focusBar(undefined, () => {
-        setTimeout(() => {
-          this.animatedBar.removeClass('no-transition');
-        }, 0);
-      });
-    }
+    // if (this.hasAnimatedBar()) {
+    //   // this.animatedBar.addClass('no-transition');
+    //   this.focusBar(undefined, () => {
+    //     setTimeout(() => {
+    //       this.animatedBar.removeClass('no-transition');
+    //     }, 0);
+    //   });
+    // }
 
     // Setup Edge Fades
     if (this.tablistContainer) {
@@ -530,10 +530,10 @@ Tabs.prototype = {
       }
       this.tablist.on('arrangeupdate.tabs', () => {
         tabContainer?.classList.remove(className);
-        if (this.hasAnimatedBar()) {
-          const selected = this.tablist.find('.tab.is-selected');
-          this.focusBar(selected);
-        }
+        // if (this.hasAnimatedBar()) {
+        //   const selected = this.tablist.find('.tab.is-selected');
+        //   this.focusBar(selected);
+        // }
       });
 
       this.element.on('aftertabadded.tabs', () => {
@@ -560,16 +560,16 @@ Tabs.prototype = {
     }
 
     // Animated Bar
-    if (this.hasAnimatedBar()) {
-      this.animatedBar = this.element.find('.animated-bar');
-      if (!this.animatedBar.length) {
-        this.animatedBar = $('<div class="animated-bar" role="presentation"></div>');
-      }
-      this.animatedBar.insertBefore(this.tablist);
-    } else if (this.animatedBar && this.animatedBar.length) {
-      this.animatedBar.off().removeData().remove();
-      this.animatedBar = undefined;
-    }
+    // if (this.hasAnimatedBar()) {
+    //   this.animatedBar = this.element.find('.animated-bar');
+    //   if (!this.animatedBar.length) {
+    //     this.animatedBar = $('<div class="animated-bar" role="presentation"></div>');
+    //   }
+    //   this.animatedBar.insertBefore(this.tablist);
+    // } else if (this.animatedBar && this.animatedBar.length) {
+    //   this.animatedBar.off().removeData().remove();
+    //   this.animatedBar = undefined;
+    // }
 
     // Add the markup for the "More" button if it doesn't exist.
     if (!this.moreButton) {
@@ -687,7 +687,7 @@ Tabs.prototype = {
       modal.on('afteropen.tabs', () => {
         if (self.hasAnimatedBar()) {
           const selected = $('.tab.is-selected');
-          self.focusBar(selected);
+          // self.focusBar(selected);
         }
       });
     }
@@ -805,7 +805,7 @@ Tabs.prototype = {
         self.positionFocusState(a);
 
         if (self.hasAnimatedBar()) {
-          self.focusBar(popupLi);
+          // self.focusBar(popupLi);
         }
 
         a.focus();
@@ -868,7 +868,7 @@ Tabs.prototype = {
     // Resize the tab to show the error
     $('.tab-panel input').on('error.tabs, valid.tabs', () => {
       const currentLi = $('.tab.is-selected');
-      self.focusBar(currentLi);
+      // self.focusBar(currentLi);
     });
 
     return this;
@@ -1025,7 +1025,7 @@ Tabs.prototype = {
     }
 
     // Hide these states
-    this.focusBar(li);
+    // this.focusBar(li);
     this.positionFocusState(a);
 
     if (this.settings.lazyLoad === true && this.isURL(href)) {
@@ -1315,7 +1315,7 @@ Tabs.prototype = {
       }
 
       self.changeHash(href);
-      self.focusBar(currentLi);
+      // self.focusBar(currentLi);
       checkAngularClick();
       currentA[0].focus();
       self.hideFocusState();
@@ -1735,7 +1735,7 @@ Tabs.prototype = {
       this.defocusBar();
       this.hideFocusState();
     } else {
-      this.focusBar(selected);
+      // this.focusBar(selected);
       this.positionFocusState(selected);
     }
 
@@ -2093,7 +2093,7 @@ Tabs.prototype = {
       a.focus();
     }
     this.positionFocusState(a);
-    this.focusBar(target);
+    // this.focusBar(target);
 
     return target;
   },
@@ -2232,7 +2232,7 @@ Tabs.prototype = {
         activeStateTarget = self.moreButton;
         selectedStateTarget = self.moreButton;
       }
-      self.focusBar(activeStateTarget);
+      // self.focusBar(activeStateTarget);
 
       if (selectedStateTarget) {
         selectedStateTarget.addClass('is-selected');
@@ -2650,7 +2650,7 @@ Tabs.prototype = {
     // If started from zero, position the focus state/bar and activate the tab
     if (startFromZero) {
       this.positionFocusState(anchorMarkup);
-      this.focusBar(tabHeaderMarkup);
+      // this.focusBar(tabHeaderMarkup);
       if (!this.activate(anchorMarkup.attr('href'))) {
         this.triggerEventAfterTabAdded(tabId);
         return this;
@@ -2822,7 +2822,7 @@ Tabs.prototype = {
       }
     }
 
-    this.focusBar(prevLi);
+    // this.focusBar(prevLi);
     a.focus();
 
     /**
@@ -2982,7 +2982,7 @@ Tabs.prototype = {
       this.select(a[0].hash);
     }
 
-    this.focusBar();
+    // this.focusBar();
     this.positionFocusState();
     return this;
   },
@@ -3002,7 +3002,7 @@ Tabs.prototype = {
       this.select(a[0].hash);
     }
 
-    this.focusBar();
+    // this.focusBar();
     this.positionFocusState();
     return this;
   },
@@ -3019,7 +3019,7 @@ Tabs.prototype = {
     this.activateAdjacentTab(e, tabId);
 
     tab.addClass('is-disabled');
-    this.focusBar();
+    // this.focusBar();
     this.positionFocusState();
     return this;
   },
@@ -3034,7 +3034,7 @@ Tabs.prototype = {
     const tab = this.doGetTab(e, tabId);
 
     tab.removeClass('is-disabled');
-    this.focusBar();
+    // this.focusBar();
     this.positionFocusState();
     return this;
   },
@@ -3093,7 +3093,7 @@ Tabs.prototype = {
     const doesTabExist = this.tablist.children('li').length < 2 ? tab : undefined;
 
     this.positionFocusState(doesTabExist);
-    this.focusBar(doesTabExist);
+    // this.focusBar(doesTabExist);
   },
 
   /**
@@ -3121,7 +3121,7 @@ Tabs.prototype = {
     const doesTabExist = this.tablist.children('li').length < 2 ? tab : undefined;
 
     this.positionFocusState(doesTabExist);
-    this.focusBar(doesTabExist);
+    // this.focusBar(doesTabExist);
   },
 
   /**
@@ -3339,7 +3339,7 @@ Tabs.prototype = {
     const anchor = this.getAnchor(modHref);
 
     this.positionFocusState(undefined, false);
-    this.focusBar(anchor.parent());
+    // this.focusBar(anchor.parent());
 
     if (!this.activate(anchor.attr('href'))) {
       return;
@@ -3481,7 +3481,7 @@ Tabs.prototype = {
       $(this).off('close.tabs selected.tabs');
       self.moreButton.removeClass('popup-is-open');
       self.positionFocusState(undefined);
-      self.focusBar();
+      // self.focusBar();
     }
 
     function selectMenuOption(e, anchor) {
@@ -3714,35 +3714,35 @@ Tabs.prototype = {
    * @returns {void}
    */
   focusBar(li, callback) {
-    if (!this.hasAnimatedBar()) {
-      return;
-    }
+    // if (!this.hasAnimatedBar()) {
+    //   return;
+    // }
 
-    if (!(li instanceof $) || !li.length) {
-      return;
-    }
+    // if (!(li instanceof $) || !li.length) {
+    //   return;
+    // }
 
-    const self = this;
-    const target = li;
+    // const self = this;
+    // const target = li;
 
-    this.animatedBar.removeClass('no-transition');
+    // this.animatedBar.removeClass('no-transition');
 
-    if (!target || target === undefined || !target.length || !self.anchors.length) {
-      this.animatedBar.removeClass('visible');
-      return;
-    }
-    clearTimeout(self.animationTimeout);
-    this.animatedBar.addClass('visible');
+    // if (!target || target === undefined || !target.length || !self.anchors.length) {
+    //   this.animatedBar.removeClass('visible');
+    //   return;
+    // }
+    // clearTimeout(self.animationTimeout);
+    // this.animatedBar.addClass('visible');
 
-    function animationTimeout(cb) {
-      self.sizeBar(target);
+    // function animationTimeout(cb) {
+    //   self.sizeBar(target);
 
-      if (cb && typeof cb === 'function') {
-        cb();
-      }
-    }
+    //   if (cb && typeof cb === 'function') {
+    //     cb();
+    //   }
+    // }
 
-    animationTimeout(callback);
+    // animationTimeout(callback);
   },
 
   /**
@@ -4242,10 +4242,10 @@ Tabs.prototype = {
     this.focusState.removeData().remove();
     this.focusState = undefined;
 
-    if (this.hasAnimatedBar()) {
-      this.animatedBar.removeData().remove();
-      this.animatedBar = undefined;
-    }
+    // if (this.hasAnimatedBar()) {
+    //   this.animatedBar.removeData().remove();
+    //   this.animatedBar = undefined;
+    // }
     $('.tab-panel input').off('error.tabs valid.tabs');
 
     if (this.addTabButton) {
