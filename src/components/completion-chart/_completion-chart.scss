@@ -120,7 +120,7 @@
 
   .chart-targeted-text {
     left: 50%;
-    margin-top: -38px;
+    margin-top: -41px; // centers text on Large
     position: relative;
 
     &.l-center {
@@ -220,7 +220,7 @@
   .target {
     background-color: $chart-progressbar-target-fill;
     height: 10px;
-    margin-top: 8px;
+    margin-top: 6px; // adjust size of right rows to match left rows for Medium
     position: relative;
     transition: width 0.5s ease 0s;
     width: 60%;

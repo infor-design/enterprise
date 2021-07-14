@@ -1296,7 +1296,7 @@ $datagrid-small-row-height: 25px;
     }
 
     .datagrid-cell-wrapper {
-      min-height: 46px;
+      min-height: 40px;
 
       .icon-calendar,
       .icon-fileupload {
@@ -2413,7 +2413,8 @@ $datagrid-small-row-height: 25px;
     }
 
     .chart-completion-target {
-      height: 25px;
+      height: 28px; // makes the target bar match the height of progress bar for Large and Medium
+      border-radius: 2px; // round out the corners of the gray target bar
       position: relative;
       vertical-align: middle;
 
