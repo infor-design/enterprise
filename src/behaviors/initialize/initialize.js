@@ -150,7 +150,7 @@ const PLUGIN_MAPPINGS = [
   ['autocomplete', '.autocomplete:not([data-init])'],
 
   // Cards
-  ['cards', '.card:not([data-init])'],
+  ['cards', '.card:not([data-init]), .cards:not([data-init])'],
 
   // Multiselect
   ['multiselect', 'select[multiple]:not(.dropdown), .multiselect:not([data-init])'],

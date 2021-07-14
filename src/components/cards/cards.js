@@ -11,10 +11,14 @@ const COMPONENT_NAME = 'cards';
  * @param {string} [settings] The settings element.
  * @param {boolean} [settings.expandableHeader] Abilty to expand the card header
  * @param {boolean} [settings.verticalButtonAction] Ability to rotate the button action vertically
+ * @param {array} [settings.dataset=[]] An array of data objects that will be represented as cards.
+ * @param {string} [settings.selectable=false] Ability to enable the selection state e.g. 'single', 'multiple' or false.
  * @param {string} [settings.attributes=null] Add extra attributes like id's to the element. e.g. `attributes: { name: 'id', value: 'my-unique-id' }`
  */
 
 const CARDS_DEFAULTS = {
+  dataset: [],
+  selectable: false,
   expandableHeader: false,
   verticalButtonAction: false,
   attributes: null
@@ -40,6 +44,7 @@ Cards.prototype = {
       .setup()
       .build()
       .handleEvents();
+      console.log(this);
   },
 
   setup() {
