@@ -719,11 +719,6 @@ html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.i
   fill: ${colors.text};
 }
 
-.hero-widget.is-personalizable .hero-header .chart-container .axis path, .chart-container .axis line,
-.hero-widget.is-personalizable .hero-header .chart-container .axis .tick0 line {
-  stroke: ${colors.subtext} !important;
-}
-
 .hero-widget.is-personalizable .hero-header .title,
 .hero-widget.is-personalizable .hero-content .title,
 .hero-widget.is-personalizable .hero-footer .title {

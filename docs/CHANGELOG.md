@@ -7,6 +7,7 @@
 ## v4.54.0 Fixes
 
 - `[Blockgrid]` Added additional design with no image ([#5379](https://github.com/infor-design/enterprise/issues/5379))
+- `[Charts]` Fixed a bug where the vertical grid line strokes were invisible when in High Contrast and Colors was non-Default ([#5301](https://github.com/infor-design/enterprise/issues/5301))
 - `[CirclePager]` Fixed a bug where the CSS was the same for all of the circles in homepage/example-hero-widget ([#5337](https://github.com/infor-design/enterprise/issues/5337))
 - `[ContextualActionPanel]` Added `title` prop in CAP to control the title via `modaSettings`, and added missing `beforeclose` event. ([NG#1048](https://github.com/infor-design/enterprise-ng/issues/1048))
 - `[Datagrid]` - Fixed a bug where the first two columns row heights did not match the others for the Medium setting ([#5366](https://github.com/infor-design/enterprise/issues/5366))
