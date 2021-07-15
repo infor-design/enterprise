@@ -228,8 +228,10 @@
   }
 
   &.medium-rowheight {
+    [class^='btn'] {
+      min-height: 0px;
+    }
     .datagrid-cell-wrapper {
-      min-height: 42px;
       padding: 5px 16px 0;
     }
     .datagrid-trigger-cell {
