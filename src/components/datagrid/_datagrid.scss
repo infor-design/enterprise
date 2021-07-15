@@ -2413,7 +2413,8 @@ $datagrid-small-row-height: 25px;
     }
 
     .chart-completion-target {
-      height: 25px;
+      height: 26px; // makes the target bar match the height of progress bar; for classic needs to be 26px
+      border-radius: 2px; // round out the corners of the gray target bar
       position: relative;
       vertical-align: middle;
 
