@@ -1,7 +1,7 @@
 import { Trackdirty } from '../../../src/components/trackdirty/trackdirty';
 import { cleanup } from '../../helpers/func-utils';
 
-const dirtyHTML = require('../../../app/views/components/trackdirty/example-index.html');
+const dirtyHTML = require('../../../app/views/components/input/example-track-dirty.html');
 const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 let inputEl;
