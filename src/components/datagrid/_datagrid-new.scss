@@ -106,6 +106,18 @@
     color: $font-color-highcontrast;
   }
 
+  td {
+    .chart-completion-target {
+      height: 28px; // makes the target bar match the height of progress bar; for new needs to be 28px
+      .target {
+        margin-top: 6px;
+      }
+      .chart-targeted-text {
+        margin-top: -41px;
+      }
+    }
+  }
+
   td.is-editing {
     .lookup-wrapper {
       padding-top: 5px;
@@ -250,8 +262,6 @@
   }
 
   > tbody > tr .datagrid-cell-wrapper {
-    padding: 7px 16px 4px !important;
-
     .datagrid-checkbox-wrapper {
       margin-top: -14px;
     }
