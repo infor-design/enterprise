@@ -248,7 +248,10 @@
       // Removed box shadow to match current style
       box-shadow: 0 0 4px 1px $focus-box-shadow-color;
       outline: none;
-      min-height: 35px;
+
+      &.is-one-line {
+        min-height: 35px;
+      }
     }
 
     &.is-two-column {
