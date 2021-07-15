@@ -228,11 +228,11 @@ const formatters = {
     let formatted = value;
 
     if (typeof Locale !== 'undefined' &&
-        formatted !== null && formatted !== undefined && formatted !== '') {
+        formatted !== null && formatted !== undefined && formatted !== '' && !isNaN(formatted)) {
       formatted = Locale.formatNumber(value, col.numberFormat);
     }
 
-    formatted = (formatted === null || formatted === undefined || formatted === 'NaN') ? '' : formatted;
+    formatted = (formatted === null || formatted === undefined || isNaN(formatted)) ? '' : formatted;
 
     const placeholder = calculatePlaceholder(formatted, row, cell, value, col, item);
     if (placeholder !== '') {
