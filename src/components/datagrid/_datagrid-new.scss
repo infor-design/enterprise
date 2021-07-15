@@ -152,7 +152,7 @@
 
   &.extra-small-rowheight {
     .datagrid-cell-wrapper {
-      padding: 2px 5px 0;
+      padding: 0px 5px 0;
     }
     td.is-editing {
       input.timepicker {
@@ -170,6 +170,9 @@
 
   // Short Row Height
   &.small-rowheight {
+    .datagrid-cell-wrapper {
+      padding: 2px 5px 0;
+    }
     tbody {
       tr {
         td {
@@ -225,6 +228,10 @@
   }
 
   &.medium-rowheight {
+    .datagrid-cell-wrapper {
+      min-height: 42px;
+      padding: 5px 16px 0;
+    }
     .datagrid-trigger-cell {
       .icon.icon-calendar {
         left: 5px;
