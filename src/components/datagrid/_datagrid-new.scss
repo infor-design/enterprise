@@ -151,6 +151,9 @@
   }
 
   &.extra-small-rowheight {
+    .datagrid-cell-wrapper {
+      padding: 2px 5px 0;
+    }
     td.is-editing {
       input.timepicker {
         + .trigger {
