@@ -1,3 +1,4 @@
+import { breakpoints } from '../../utils/breakpoints';
 import * as debug from '../../utils/debug';
 import { deprecateMethod, warnAboutDeprecation } from '../../utils/deprecated';
 import { utils } from '../../utils/utils';
@@ -23,6 +24,7 @@ const BLOCKGRID_DEFAULTS = {
   dataset: [],
   selectable: false, // false, 'single' or 'multiple' or mixed
   paging: false,
+  withImage: true,
   pagerSettings: {
     pagesize: 25,
     pagesizes: [10, 25, 50, 75],
@@ -332,17 +334,38 @@ Blockgrid.prototype = {
         checked = ' checked';
       }
 
-      // Set image alt text
-      const imageAlt = data.imgAlt || data.imageAlt || `${data.maintxt || data.title} ${Locale.translate('Image')}`;
+      let blockElement;
+      if (s.withImage) {
+        // Set image alt text
+        const imageAlt = data.imgAlt || data.imageAlt || `${data.maintxt || data.title} ${Locale.translate('Image')}`;
 
-      blockelements += `<div class="block is-selectable${selected}" role="listitem" tabindex="0">
+        blockElement = `<div class="block is-selectable${selected}" role="listitem" tabindex="0">
+          <input type="checkbox" aria-hidden="true" role="presentation" class="checkbox" id="checkbox${i}" tabindex="${tabindex}" data-idx="${data.id || i}"${checked}>
+          <label for="checkbox${i}" class="checkbox-label">
+            <span class="audible">${selectText}</span>
+          </label>
+          <img alt="${imageAlt}" src="${data.img || data.image}" class="image-round">
+          <p> ${data.maintxt || data.title} <br> ${data.subtxt || data.subtitle} </p>
+        </div>`;
+      } else {
+        let text = '';
+
+        if (data.content) {
+          data.content.forEach((content) => {
+            text += `<br>${content}`;
+          });
+        }
+
+        blockElement = `<div class="block text-block is-selectable${selected}" role="listitem" tabindex="0">
         <input type="checkbox" aria-hidden="true" role="presentation" class="checkbox" id="checkbox${i}" tabindex="${tabindex}" data-idx="${data.id || i}"${checked}>
-        <label for="checkbox${i}" class="checkbox-label">
+        <label for="checkbox${i}" class="checkbox-label text-block">
           <span class="audible">${selectText}</span>
         </label>
-        <img alt="${imageAlt}" src="${data.img || data.image}" class="image-round">
-        <p> ${data.maintxt || data.title} <br> ${data.subtxt || data.subtitle} </p>
-      </div>`;
+        <p><b>${data.title}</b>${text}</p>
+        </div>`;
+      }
+
+      blockelements += blockElement;
     }
 
     this.element.attr('role', 'list').append(blockelements);
