@@ -1,0 +1,72 @@
+<div class="row">
+    <div class="twelve columns">
+      <h1 class="section-title">Block Grid multiple Selection</h1>
+      <div class="row blockgrid l-center" id="blockgrid-txt"></div>
+    </div>
+  </div>
+  
+  <script>
+      const data = [
+        {
+          id: 1,
+          title: '5:30 AM - 8:00 AM',
+          content: [
+            'Job: Cashier 11',
+            'Location: NE Campus',
+            'Team: NE_FLR',
+            'Department: DEPT A'
+          ]
+        },
+        {
+          id: 2,
+          title: '5:30 AM - 8:00 AM',
+          content: [
+            'Job: Cashier 11',
+            'Location: NE Campus',
+            'Team: NE_FLR',
+            'Department: DEPT A'
+          ]
+        },
+        {
+          id: 3,
+          title: '5:30 AM - 8:00 AM',
+          content: [
+            'Job: Cashier 11',
+            'Location: NE Campus',
+            'Team: NE_FLR',
+            'Department: DEPT A'
+          ]
+        },
+        {
+          id: 4,
+          title: '5:30 AM - 8:00 AM',
+          content: [
+            'Job: Cashier 11',
+            'Location: NE Campus',
+            'Team: NE_FLR',
+            'Department: DEPT A'
+          ]
+        },
+        {
+          id: 5,
+          title: '5:30 AM - 8:00 AM',
+          content: [
+            'Job: Cashier 11',
+            'Location: NE Campus',
+            'Team: NE_FLR',
+            'Department: DEPT A'
+          ]
+        }
+      ];
+  
+      $('#blockgrid-txt').blockgrid({
+        dataset: data,
+        withImage: false,
+        selectable: 'multiple'
+      }).on('selected', function (e, args) {
+        console.log(args);
+      }).on('unselected', function (e, args) {
+        console.log(args);
+      });
+  </script>
+  

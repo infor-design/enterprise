@@ -2037,12 +2037,6 @@ $datagrid-small-row-height: 25px;
         background-color: $datagrid-row-hover-color;
       }
 
-      .tag:not(.info):not(.good):not(.error):not(.alert) {
-        background-color: $badge-neutral-hover-bg-color;
-        color: $ids-color-palette-black;
-        transition: none;
-      }
-
       .datagrid-expand-btn .icon {
         background-color: transparent;
         box-shadow: none;
@@ -2214,7 +2208,7 @@ $datagrid-small-row-height: 25px;
       vertical-align: middle;
 
       &[class*='azure'] {
-        color: $ids-color-palette-white;
+        color: $datagrid-badges-azure-font-color;
       }
     }
 
@@ -2413,7 +2407,8 @@ $datagrid-small-row-height: 25px;
     }
 
     .chart-completion-target {
-      height: 25px;
+      height: 26px; // makes the target bar match the height of progress bar; for classic needs to be 26px
+      border-radius: 2px; // round out the corners of the gray target bar
       position: relative;
       vertical-align: middle;
 
