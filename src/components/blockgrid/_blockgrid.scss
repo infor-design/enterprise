@@ -37,6 +37,16 @@
       margin-bottom: 10px;
     }
 
+    &.text-block {
+      width: 300px;
+
+      p {
+        text-align: left;
+        padding: 5%;
+        padding-left: 45px;
+      }
+    }
+
     &.is-selected {
       background-color: $blockgrid-selected-bg-color;
       box-shadow: 0 0 0 1px $blockgrid-selected-bg-color;
@@ -113,6 +123,11 @@
         right: 0;
         top: 7px;
         z-index: 100;
+
+        &.text-block {
+          right: 87%;
+          top: 45%;
+        }
       }
     }
   }
