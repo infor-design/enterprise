@@ -1,4 +1,3 @@
-import { breakpoints } from '../../utils/breakpoints';
 import * as debug from '../../utils/debug';
 import { deprecateMethod, warnAboutDeprecation } from '../../utils/deprecated';
 import { utils } from '../../utils/utils';
