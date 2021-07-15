@@ -7,7 +7,6 @@ import { Cards, COMPONENT_NAME } from './cards';
  * @returns {jQuery[]} elements being acted on
  */
 $.fn.cards = function (settings) {
-
   const cs = $(this);
   const attr = cs.attr('data-dataset');
   const tmpl = cs.attr('data-tmpl');

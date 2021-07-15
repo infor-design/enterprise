@@ -1,6 +1,5 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
-import { DOM } from '../../utils/dom';
 import { stringUtils as str } from '../../utils/string';
 import { Tmpl } from '../tmpl/tmpl';
 
@@ -53,8 +52,6 @@ Cards.prototype = {
       .setup()
       .build()
       .handleEvents();
-
-      console.log(this);
   },
 
   setup() {
@@ -99,9 +96,10 @@ Cards.prototype = {
       this.cards.addClass(this.isSingle ? 'single' : 'multiple');
 
       this.element.attr('role', 'list');
-      console.log("->", this.element.find('.card'));
-
-      this.element.find('.card').attr('role', 'listitem');
+      this.element.find('.card').attr({
+        role: 'listitem',
+        tabindex: '0'
+      });
     }
 
     this.cardContentPane.attr({
@@ -150,15 +148,11 @@ Cards.prototype = {
   /**
    * Select the card.
    * @param {jQuery} activeCard the actual jQuery card element.
-   * @param {boolean} noTrigger Do not trigger the selected event.
    */
-  select(activeCard, noTrigger) {
+  select(activeCard) {
     const allCards = this.element.find('.card');
     const isSelected = activeCard.hasClass('is-selected');
     let action = '';
-
-    console.log("isSelected", isSelected);
-    console.log("allCards", allCards);
 
     if (this.settings.selectable === 'single') {
       this.selectedRows = [];
@@ -166,7 +160,6 @@ Cards.prototype = {
     }
 
     if (this.settings.selectable !== false) {
-
       activeCard.addClass('is-selected');
 
       this.selectedRows.push({ data: this.settings.dataset, elem: activeCard });
@@ -189,7 +182,7 @@ Cards.prototype = {
      * @property {object} event - The jQuery event object
      * @property {object} ui - The dialog object
      */
-    this.element.triggerHandler(isSelected ? 'deselected' : 'selected', [{ selectedRows: this.selectedRows, action}]);
+    this.element.triggerHandler(isSelected ? 'deselected' : 'selected', [{ selectedRows: this.selectedRows, action }]);
   },
 
   /**
@@ -214,7 +207,7 @@ Cards.prototype = {
 
     const renderedTmpl = Tmpl.compile(this.settings.template, {
       dataset: s.dataset,
-    })
+    });
 
     if (s.dataset.length > 0) {
       this.cards.html(renderedTmpl);
