@@ -74,9 +74,9 @@ $datagrid-row-height: 43px;
 $datagrid-medium-header-height: 30px;
 $datagrid-medium-row-height: 33px;
 $datagrid-extra-small-header-height: 19px;
-$datagrid-extra-small-row-height: 25px; // or 28px
+$datagrid-extra-small-row-height: 28px;
 $datagrid-small-header-height: 25px;
-$datagrid-small-row-height: 25px;
+$datagrid-small-row-height: 26px;
 
 // Main Datagrid Container
 .datagrid-container {
@@ -1809,7 +1809,7 @@ $datagrid-small-row-height: 25px;
 
     .datagrid-cell-wrapper {
       min-height: $datagrid-extra-small-row-height + 4;
-      padding: 2px 5px 0;
+      padding: 3px 5px 0;
 
       .dropdown-trigger {
         margin-top: -2px;
@@ -2407,8 +2407,8 @@ $datagrid-small-row-height: 25px;
     }
 
     .chart-completion-target {
-      height: 26px; // makes the target bar match the height of progress bar; for classic needs to be 26px
-      border-radius: 2px; // round out the corners of the gray target bar
+      height: 26px;
+      border-radius: 2px;
       position: relative;
       vertical-align: middle;
 
