@@ -48,16 +48,20 @@ Cards.prototype = {
    * @private
    */
   init() {
+    this.selectedRows = [];
     this
       .setup()
       .build()
       .handleEvents();
-    this.selectedItems = [];
+
       console.log(this);
   },
 
   setup() {
     this.id = this.element.attr('id');
+    this.isSingle = this.settings.selectable === 'single';
+    this.isMultiple = this.settings.selectable === 'multiple';
+
     if (!this.id || this.id === undefined) {
       this.id = `expandable-card-${$('body').find('.card').index(this.element)}`;
       this.element.attr('id', this.id);
@@ -88,6 +92,17 @@ Cards.prototype = {
     const expanded = this.element.hasClass('is-expanded');
 
     this.renderTemplate();
+
+    // This is basically the build for the selection state cards (single and multiple)
+    if (this.settings.selectable !== false) {
+      this.cards.find('.card').addClass('is-selectable');
+      this.cards.addClass(this.isSingle ? 'single' : 'multiple');
+
+      this.element.attr('role', 'list');
+      console.log("->", this.element.find('.card'));
+
+      this.element.find('.card').attr('role', 'listitem');
+    }
 
     this.cardContentPane.attr({
       id: `${this.id}-content`,
@@ -133,6 +148,51 @@ Cards.prototype = {
   },
 
   /**
+   * Select the card.
+   * @param {jQuery} activeCard the actual jQuery card element.
+   * @param {boolean} noTrigger Do not trigger the selected event.
+   */
+  select(activeCard, noTrigger) {
+    const allCards = this.element.find('.card');
+    const isSelected = activeCard.hasClass('is-selected');
+    let action = '';
+
+    console.log("isSelected", isSelected);
+    console.log("allCards", allCards);
+
+    if (this.settings.selectable === 'single') {
+      this.selectedRows = [];
+      allCards.removeClass('is-selected');
+    }
+
+    if (this.settings.selectable !== false) {
+
+      activeCard.addClass('is-selected');
+
+      this.selectedRows.push({ data: this.settings.dataset, elem: activeCard });
+      action = isSelected ? 'deselected' : 'selected';
+    }
+
+    /**
+     * Fires when a card is selected
+     * 
+     * @event selected
+     * @memberof Card
+     * @property {object} event - The jQuery event object
+     * @property {object} ui - The dialog object
+     */
+    /**
+     * Fires when a card is unselected
+     * 
+     * @event deselected
+     * @memberof Card
+     * @property {object} event - The jQuery event object
+     * @property {object} ui - The dialog object
+     */
+    this.element.triggerHandler(isSelected ? 'deselected' : 'selected', [{ selectedRows: this.selectedRows, action}]);
+  },
+
+  /**
    * Render the template using mustache
    */
   renderTemplate() {
@@ -170,6 +230,8 @@ Cards.prototype = {
    */
   updated(settings) {
     this.settings = utils.mergeSettings(this.element, settings, this.settings);
+    
+    this.teardown();
     return this;
   },
 
@@ -275,9 +337,44 @@ Cards.prototype = {
         self.toggleExpanded();
       }
     });
-    return this;
-  }
 
+    if (this.settings.selectable !== false) {
+      this.element.on(`click.${COMPONENT_NAME}`, '.card', (e) => {
+        const activeCard = $(e.currentTarget);
+        const target = $(e.target);
+        const isCheckbox = target.is('.checkbox');
+
+        setTimeout(() => {
+          self.select(activeCard, isCheckbox);
+        }, 0);
+
+        e.stopPropagation();
+        e.preventDefault();
+      });
+    }
+
+    return this;
+  },
+
+  /**
+   * Simple Teardown - remove events & rebuildable markup.
+   * @returns {object} The Component prototype, useful for chaining.
+   * @private
+   */
+  teardown() {
+    this.element.off(`click.${COMPONENT_NAME}`);
+
+    this.selectedRows = [];
+    return this;
+  },
+
+  /**
+   * Destroy - Remove added markup and events.
+   */
+  destroy() {
+    this.teardown();
+    $.removeData(this.element[0], COMPONENT_NAME);
+  }
 };
 
 export { Cards, COMPONENT_NAME };
