@@ -1136,7 +1136,6 @@ $datagrid-small-row-height: 25px;
 
         .row-btn {
           height: 32px;
-          top: -2px;
         }
 
         .hyperlink {
@@ -1472,7 +1471,7 @@ $datagrid-small-row-height: 25px;
           }
 
           &.btn-primary {
-            top: -1px;
+            top: 0px;
           }
 
           .icon {
@@ -1914,7 +1913,7 @@ $datagrid-small-row-height: 25px;
         height: 21px;
         line-height: 19px;
         min-height: 21px;
-        top: -1px;
+        top: 0px;
       }
     }
 
@@ -2236,7 +2235,7 @@ $datagrid-small-row-height: 25px;
       display: block;
       min-height: $datagrid-row-height + 6;
       overflow: hidden;
-      padding: 4px 16px 0;
+      padding: 3px 16px 0;
 
       .colorpicker-container {
         background-color: transparent;

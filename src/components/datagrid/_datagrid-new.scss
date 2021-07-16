@@ -106,6 +106,10 @@
     color: $font-color-highcontrast;
   }
 
+  > tbody > tr .datagrid-cell-wrapper {
+    padding: 4px 16px 0;
+  }
+
   td {
     .chart-completion-target {
       height: 28px;
@@ -226,13 +230,13 @@
       }
     }
   }
-
+  
   &.medium-rowheight {
-    .row-btn {
-      min-height: 32px;
-    }
     .datagrid-cell-wrapper {
-      padding: 5px 16px 0;
+      .row-btn {
+        min-height: 32px;
+      }
+      padding: 4px 16px 0;
     }
     .datagrid-trigger-cell {
       .icon.icon-calendar {
