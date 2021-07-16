@@ -11,7 +11,7 @@
       <svg class="icon" focusable="false" aria-hidden="true" role="presenation">
         <use href="#icon-checkbox"></use>
       </svg>
-      <span>Show Partially Checkable Menu</span>
+      <span>Partially Selectable Menu</span>
     </button>
     <ul class="popupmenu">
       <li><a href="#">Non-selectable Item #1</a></li>
@@ -61,3 +61,30 @@
     </ul>
   </div>
 </div>
+
+<div class="row top-padding">
+  <div class="six columns">
+    <button id="partially-checkable-menu-2" class="btn-menu">
+      <svg class="icon" focusable="false" aria-hidden="true" role="presenation">
+        <use href="#icon-checkbox"></use>
+      </svg>
+      <span>Another Partially Selectable Example</span>
+    </button>
+    <ul class="popupmenu">
+      <li class="separator multi-selectable-section"></li>
+      <li class="heading">Type</li>
+      <li class="is-multiselectable is-checked"><a href="#">Table</a></li>
+      <li class="is-multiselectable is-checked"><a href="#">View</a></li>
+      <li class="is-multiselectable"><a href="#">Materialized View</a></li>
+      <li class="separator single-selectable-section"></li>
+      <li class="heading">Items with Existing Metadata</li>
+      <li class="is-selectable is-checked"><a href="#">Show only These Items</a></li>
+      <li class="is-selectable"><a href="#">Hide These Items</a></li>
+      <li class="is-selectable"><a href="#">Show All Items</a></li>
+      <li class="separator"></li>
+      <li class="heading">More Non-Selectable Items</li>
+      <li><a href="#">Reset Filter</a></li>
+    </ul>
+  </div>
+</div>
+
