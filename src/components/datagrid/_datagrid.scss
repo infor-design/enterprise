@@ -1455,8 +1455,8 @@ $datagrid-small-row-height: 25px;
         }
 
         .row-btn {
-          // height: 24px;
-          height: 25px;
+          height: 24px;
+          // height: 25px;
           line-height: 18px;
           min-width: 80px;
           top: -12px;
@@ -1487,10 +1487,10 @@ $datagrid-small-row-height: 25px;
         }
 
         .btn-secondary.row-btn {
-          min-height: 25px;
-          top: -2px;
-          // min-height: 24px;
-          // top: -1px;
+          // min-height: 25px;
+          // top: -2px;
+          min-height: 24px;
+          top: -1px;
         }
 
         &.datagrid-trigger-cell {
