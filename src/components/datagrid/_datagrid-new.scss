@@ -106,9 +106,9 @@
     color: $font-color-highcontrast;
   }
 
-  > tbody > tr .datagrid-cell-wrapper {
-    padding: 4px 16px 0;
-  }
+  // > tbody > tr .datagrid-cell-wrapper {
+  //   padding: 4px 16px 0;
+  // }
 
   td {
     .chart-completion-target {
@@ -155,9 +155,9 @@
   }
 
   &.extra-small-rowheight {
-    .datagrid-cell-wrapper {
-      padding: 0px 5px 0;
-    }
+    // .datagrid-cell-wrapper {
+    //   padding: 0px 5px 0;
+    // }
     td.is-editing {
       input.timepicker {
         + .trigger {
@@ -174,9 +174,9 @@
 
   // Short Row Height
   &.small-rowheight {
-    .datagrid-cell-wrapper {
-      padding: 2px 5px 0;
-    }
+    // .datagrid-cell-wrapper {
+    //   padding: 2px 5px 0;
+    // }
     tbody {
       tr {
         td {
@@ -236,7 +236,7 @@
       .row-btn {
         min-height: 32px;
       }
-      padding: 4px 16px 0;
+    //   padding: 4px 16px 0;
     }
     .datagrid-trigger-cell {
       .icon.icon-calendar {
