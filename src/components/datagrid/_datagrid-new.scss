@@ -228,7 +228,7 @@
   }
 
   &.medium-rowheight {
-    [class^='btn'] {
+    .row-btn {
       min-height: 32px;
     }
     .datagrid-cell-wrapper {
