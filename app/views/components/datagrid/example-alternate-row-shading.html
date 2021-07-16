@@ -26,7 +26,7 @@
       columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 200, formatter: Formatters.Hyperlink});
       columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 120});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 120});
-      columns.push({ id: 'status', name: 'Tag', field: 'price', width: 120, align: 'center', formatter: Formatters.Tag, ranges: [{'min': 151, 'max': 9999, 'classes': 'azure07'}]});
+      columns.push({ id: 'status', name: 'Tag', field: 'price', width: 120, align: 'center', formatter: Formatters.Tag, ranges: [{'min': 151, 'max': 9999, 'classes': 'azure07'}, {'min': 0, 'max': 150, 'classes': 'slate03'}]});
       columns.push({ id: 'price', name: 'Price', field: 'price', width: 120, formatter: Formatters.Decimal});
       columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
 
