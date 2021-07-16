@@ -76,7 +76,7 @@ $datagrid-medium-row-height: 33px;
 $datagrid-extra-small-header-height: 19px;
 $datagrid-extra-small-row-height: 28px;
 $datagrid-small-header-height: 25px;
-$datagrid-small-row-height: 26px;
+$datagrid-small-row-height: 25px;
 
 // Main Datagrid Container
 .datagrid-container {
@@ -1455,7 +1455,7 @@ $datagrid-small-row-height: 26px;
         }
 
         .row-btn {
-          height: 25px;
+          height: 24px;
           line-height: 18px;
           min-width: 80px;
           top: -12px;
@@ -1485,8 +1485,8 @@ $datagrid-small-row-height: 26px;
         }
 
         .btn-secondary.row-btn {
-          min-height: 25px;
-          top: -2px;
+          min-height: 24px;
+          top: -1px;
         }
 
         &.datagrid-trigger-cell {
