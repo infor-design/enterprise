@@ -1456,10 +1456,8 @@ $datagrid-small-row-height: 25px;
 
         .row-btn {
           height: 24px;
-          // height: 25px;
           line-height: 18px;
           min-width: 80px;
-          top: -12px;
           vertical-align: middle;
 
           span {
@@ -1487,10 +1485,7 @@ $datagrid-small-row-height: 25px;
         }
 
         .btn-secondary.row-btn {
-          // min-height: 25px;
-          // top: -2px;
           min-height: 24px;
-          top: -1px;
         }
 
         &.datagrid-trigger-cell {
@@ -1805,6 +1800,9 @@ $datagrid-small-row-height: 25px;
     font-size: $input-size-compact-font-size;
 
     tbody tr {
+      .row-btn {
+        top: 1px;
+      }
       .datagrid-reorder-icon .icon {
         height: 18px;
         width: 21px;
@@ -1813,8 +1811,7 @@ $datagrid-small-row-height: 25px;
 
     .datagrid-cell-wrapper {
       min-height: $datagrid-extra-small-row-height + 4;
-      // padding: 3px 5px 0;
-      padding: 2px 5px 0;
+      padding: 0px 5px 0;
 
       .dropdown-trigger {
         margin-top: -2px;
@@ -1919,8 +1916,6 @@ $datagrid-small-row-height: 25px;
         height: 21px;
         line-height: 19px;
         min-height: 21px;
-        top: -1px;
-        // top: 0px;
       }
     }
 
