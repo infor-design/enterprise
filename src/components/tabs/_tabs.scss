@@ -146,7 +146,6 @@
 // This helps break overflow issues and simplifies the CSS
 .tab-focus-indicator {
   @include tab-outline;
-  border-bottom: 6px solid $tab-selected-color;
 
   pointer-events: none;
   z-index: 10;
@@ -443,13 +442,17 @@
         &.is-success,
         &.is-alert {
           a[role='tab'] {
-            padding: 12px 20px 12px 5px;
+            padding: 12px 22px 6px 5px;
           }
         }
       }
 
-      &::before {
-        @include tab-after-off;
+      &:hover {
+        border-bottom: 22px solid $tab-hover-color;
+      }
+
+      &.is-selected {
+        border-bottom: 22px solid $tab-selected-color;
       }
 
       &:not(.separator):hover {

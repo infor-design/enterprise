@@ -656,16 +656,6 @@ Tabs.prototype = {
   setupEvents() {
     const self = this;
 
-    // Set animation bar if tabs under modal
-    const modal = self.element.closest('.modal');
-    if (modal.length) {
-      modal.on('afteropen.tabs', () => {
-        if (self.hasAnimatedBar()) {
-          const selected = $('.tab.is-selected');
-        }
-      });
-    }
-
     // Clicking the 'a' triggers the click on the 'li'
     function routeAnchorClick(e) {
       const a = $(e.currentTarget);
@@ -834,11 +824,6 @@ Tabs.prototype = {
       self.handleResize();
     });
     self.handleResize(true);
-
-    // Resize the tab to show the error
-    $('.tab-panel input').on('error.tabs, valid.tabs', () => {
-      const currentLi = $('.tab.is-selected');
-    });
 
     return this;
   },
@@ -1699,7 +1684,6 @@ Tabs.prototype = {
     }
 
     if (!selected.length) {
-      this.defocusBar();
       this.hideFocusState();
     } else {
       this.positionFocusState(selected);
@@ -1801,14 +1785,6 @@ Tabs.prototype = {
     }
 
     window.location = href;
-  },
-
-  /**
-   * Determines whether or not this tabset's tab list should display an animated selected state on a tab.
-   * @returns {boolean} whether or not the animated selected state should display.
-   */
-  hasAnimatedBar() {
-    return !this.isModuleTabs() && !this.isVerticalTabs();
   },
 
   /**
@@ -2047,7 +2023,6 @@ Tabs.prototype = {
 
     if (!target.length) {
       this.hideFocusState();
-      this.defocusBar();
       return target;
     }
 
@@ -2765,7 +2740,6 @@ Tabs.prototype = {
     // If there's really nothing, kick on out and defocus everything.
     if (!prevLi.length) {
       this.hideFocusState();
-      this.defocusBar();
 
       this.element.trigger('afterclose', [targetLi]);
       return this;
@@ -3662,69 +3636,6 @@ Tabs.prototype = {
   },
 
   /**
-   * Recalculate the sizes on the animated bar
-   * @param {jQuery} target The target tab element
-   * @private
-   * @returns {void}
-   */
-  sizeBar(target) {
-    if ((!this.animatedBar || (this.animatedBar && !this.animatedBar[0]))) {
-      return;
-    }
-    target = target || this.element.find('.tab.is-selected');
-    const style = this.animatedBar[0].style;
-    const scrollingTablist = this.tablistContainer;
-    const tablistScrollLeft = scrollingTablist[0].scrollLeft;
-    const tablistScrollWidth = scrollingTablist[0].scrollWidth;
-    const tabListDifferWidth = tablistScrollWidth - this.tablistContainer[0].offsetWidth;
-
-    const targetStyle = window.getComputedStyle(target[0], null);
-    let paddingRight = parseInt(targetStyle.getPropertyValue('padding-right'), 10) || 0;
-    const width = parseInt(targetStyle.getPropertyValue('width'), 10) || 0;
-
-    if (target.is('.tab')) {
-      const anchorStyle = window.getComputedStyle(target.children('a')[0]);
-      paddingRight += parseInt(anchorStyle.getPropertyValue('padding-right'), 10) || 0;
-    }
-
-    const left = Locale.isRTL() ?
-      (paddingRight + target.position().left + target.outerWidth(true)) : (target.position().left);
-
-    if (Locale.isRTL()) {
-      style.right = `${tablistScrollWidth + paddingRight - (left + tablistScrollLeft) - tabListDifferWidth}px`;
-    } else {
-      style.left = `${left + tablistScrollLeft}px`;
-    }
-    style.width = `${width}px`;
-    this.focusState[0].style.width = `${width}px`;
-  },
-
-  /**
-   * Clears the animated "selected" state bar away.
-   * @returns {void}
-   */
-  defocusBar() {
-    if (!this.hasAnimatedBar()) {
-      return;
-    }
-
-    const self = this;
-    const left = Locale.isRTL() ? 0 :
-      (self.animatedBar.position().left + (self.animatedBar.outerWidth() / 2));
-
-    clearTimeout(self.animationTimeout);
-
-    this.animatedBar[0].style.left = `${left}px`;
-    this.animatedBar[0].style.width = 0;
-
-    this.animationTimeout = setTimeout(() => {
-      if (self.animatedBar && self.animatedBar.length) {
-        self.animatedBar.removeClass('visible').removeAttr('style');
-      }
-    }, 350);
-  },
-
-  /**
    * Wrapper for the Soho behavior _smoothScrollTo()_ that will determine scroll distance.
    * @param {jQuery[]} target - the target <li> or <a> tag
    * @param {number} duration - the time it will take to scroll
@@ -3875,6 +3786,7 @@ Tabs.prototype = {
       }
       targetPosString += `${key}: ${targetPos[key]}px;`;
     });
+    // targetPosString += `border-bottom: 6px solid red;`;
     focusStateElem.style.cssText = targetPosString;
 
     const selected = targetClassList.contains('is-selected') ? 'add' : 'remove';
@@ -4158,10 +4070,6 @@ Tabs.prototype = {
     this.focusState.removeData().remove();
     this.focusState = undefined;
 
-    // if (this.hasAnimatedBar()) {
-    //   this.animatedBar.removeData().remove();
-    //   this.animatedBar = undefined;
-    // }
     $('.tab-panel input').off('error.tabs valid.tabs');
 
     if (this.addTabButton) {

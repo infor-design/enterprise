@@ -18,6 +18,7 @@
 - `[Monthview]` Fixed a bug where a vertical scroll is showing when it is unnecessary. ([#5350](https://github.com/infor-design/enterprise/issues/5350))
 - `[Multiselect]` Fixed a regression bug where clear icon were not properly aligned on compact mode. ([#5396](https://github.com/infor-design/enterprise/issues/5396))
 - `[Popdown]` Remove deprecation console warning. We still consider this component deprecated but will not remove until 5.0 version. The warning was only removed for now. ([#1070](https://github.com/infor-design/enterprise-ng/issues/1070))
+- `[Tabs]` Remove tabs animation when clicking tabs. ([#4818](https://github.com/infor-design/enterprise-ng/issues/4818))
 
 ### v4.54.0 Markup Changes
 
