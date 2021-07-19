@@ -15,9 +15,7 @@ const COMPONENT_NAME = 'cards';
  * @param {boolean} [settings.expandableHeader] Abilty to expand the card header
  * @param {boolean} [settings.verticalButtonAction] Ability to rotate the button action vertically
  * @param {array} [settings.dataset=[]] An array of data objects that will be represented as cards.
- * @param {string} [settings.template] Hyml Template String.
- * @param {string} [settings.source] f source is a string then it serves as
-  the url for an ajax call that returns the dataset. If its a function it is a call back for getting the data asyncronously.
+ * @param {string} [settings.template] Html Template String.
  * @param {string} [settings.selectable=false] Ability to enable the selection state e.g. 'single', 'multiple' or false.
  * @param {string} [settings.attributes=null] Add extra attributes like id's to the element. e.g. `attributes: { name: 'id', value: 'my-unique-id' }`
  */
@@ -25,7 +23,6 @@ const COMPONENT_NAME = 'cards';
 const CARDS_DEFAULTS = {
   dataset: [],
   template: null,
-  source: null,
   selectable: false,
   expandableHeader: false,
   verticalButtonAction: false,
@@ -154,9 +151,18 @@ Cards.prototype = {
     }
 
     utils.addAttributes(this.element, this, this.settings.attributes, 'card', true);
-    utils.addAttributes(this.expandableCardHeader, this, this.settings.attributes, 'expander', true);
-    utils.addAttributes(this.buttonAction, this, this.settings.attributes, 'action', true);
-    utils.addAttributes(this.cardContentPane, this, this.settings.attributes, 'content', true);
+    utils.addAttributes(this.element.find('.card .card-content'), this, this.settings.attributes, 'card-content', true);
+
+    if (!this.settings.selectable) {
+      utils.addAttributes(this.expandableCardHeader, this, this.settings.attributes, 'expander', true);
+      utils.addAttributes(this.buttonAction, this, this.settings.attributes, 'action', true);
+      utils.addAttributes(this.cardContentPane, this, this.settings.attributes, 'content', true);
+    }
+
+    if (this.settings.selectable === 'multiple') {
+      utils.addAttributes(this.cards.find('.card-content .checkbox-label'), this, this.settings.attributes, 'checkbox-label', true);
+      utils.addAttributes(this.cards.find('.card-content .checkbox'), this, this.settings.attributes, 'checkbox', true);
+    }
 
     return this;
   },

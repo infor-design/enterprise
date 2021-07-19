@@ -59,7 +59,16 @@
     $('#cards-single-select').cards({
       dataset: data,
       selectable: 'single',
-      template: 'cards-data-tmpl'
+      template: 'cards-data-tmpl',
+      attributes: [{
+          name: 'id',
+          value: 'single-card-id'
+        },
+        {
+          name: 'data-automation-id',
+          value: 'single-card-automation-id'
+        }
+      ]
     })
   });
 
