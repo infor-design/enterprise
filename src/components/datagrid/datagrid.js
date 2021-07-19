@@ -10352,7 +10352,7 @@ Datagrid.prototype = {
    */
   coerceValue(value, oldVal, col, row, cell) {
     let newVal;
-    let nonNumberCharacters = /[A-Za-z!@#$%^&*()_+\-=\[\]{};':"\\|<>\/?]/
+    const nonNumberCharacters = /[A-Za-z!@#$%^&*()_+\-=\[\]{};':"\\|<>\/?]/
 
     if (col.serialize) {
       const s = this.settings;
