@@ -1,5 +1,6 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { Locale } from '../locale/locale';
 import { stringUtils as str } from '../../utils/string';
 import { Tmpl } from '../tmpl/tmpl';
 
@@ -56,8 +57,6 @@ Cards.prototype = {
 
   setup() {
     this.id = this.element.attr('id');
-    this.isSingle = this.settings.selectable === 'single';
-    this.isMultiple = this.settings.selectable === 'multiple';
 
     if (!this.id || this.id === undefined) {
       this.id = `expandable-card-${$('body').find('.card').index(this.element)}`;
@@ -87,18 +86,40 @@ Cards.prototype = {
    */
   build() {
     const expanded = this.element.hasClass('is-expanded');
-
+    const selectText = (Locale ? Locale.translate('Select') : 'Select');
+    const isSingle = this.settings.selectable === 'single';
     this.renderTemplate();
 
     // This is basically the build for the selection state cards (single and multiple)
     if (this.settings.selectable !== false) {
       this.cards.find('.card').addClass('is-selectable');
-      this.cards.addClass(this.isSingle ? 'single' : 'multiple');
+      this.cards.addClass(isSingle ? 'single' : 'multiple');
 
       this.element.attr('role', 'list');
       this.element.find('.card').attr({
         role: 'listitem',
         tabindex: '0'
+      });
+    }
+
+    if (this.settings.selectable === 'multiple') {
+      const items = this.cards.find('.card');
+
+      items.each(function (i) {
+        const item = $(this).find('.card-content');
+
+        item.prepend(`
+          <input type="checkbox" id="checkbox-${i}" aria-hidden="true" tabindex="0" role="presentation"
+            class="checkbox">
+            <label for="checkbox-${i}" class="checkbox-label">
+              <span class="audible">${selectText}</span>
+            </label>
+        `);
+
+        console.log({
+          i: i,
+          item: item
+        });
       });
     }
 
@@ -151,16 +172,30 @@ Cards.prototype = {
    */
   select(activeCard) {
     const allCards = this.element.find('.card');
+    const activeCheckbox = activeCard.find('.checkbox');
     const isSelected = activeCard.hasClass('is-selected');
     let action = '';
 
     if (this.settings.selectable === 'single') {
       this.selectedRows = [];
-      allCards.removeClass('is-selected');
+      allCards.removeClass('is-selected').removeAttr('aria-selected');
+    }
+
+    if (this.settings.selectable === 'multiple' && isSelected) {
+      activeCard.removeClass('is-selected').removeAttr('aria-selected');
+      activeCheckbox.prop('checked', false);
+
+      this.element.triggerHandler('deselected', [{ selectedRows: this.selectedRows, action: 'deselect' }]);
+
+      return;
     }
 
     if (this.settings.selectable !== false) {
-      activeCard.addClass('is-selected');
+      activeCard.addClass('is-selected').attr('aria-selected', 'true');
+
+      if (this.settings.selectable === 'multiple') {
+        activeCheckbox.prop('checked', true);
+      }
 
       this.selectedRows.push({ data: this.settings.dataset, elem: activeCard });
       action = isSelected ? 'deselected' : 'selected';

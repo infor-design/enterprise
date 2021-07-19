@@ -38,6 +38,16 @@
     .card-content {
       padding: 16px;
 
+      .checkbox-label {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+
+        ~ p {
+          margin-left: 35px;
+        }
+      }
+
       p:not(:first-child) {
         color: $card-expandable-sub-heading;
       }
