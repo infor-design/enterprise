@@ -10352,7 +10352,8 @@ Datagrid.prototype = {
    */
   coerceValue(value, oldVal, col, row, cell) {
     let newVal;
-    const nonNumberCharacters = /[A-Za-z!@#$%^&*()_+\-=\[\]{};':"\\|<>\/?]/;
+    // eslint-disable-next-line no-useless-escape
+    const nonNumberCharacters = /[A-Za-z!@#$%^&*()_+\-=\[\]{};':"\\|<>/?]/;
 
     if (col.serialize) {
       const s = this.settings;
