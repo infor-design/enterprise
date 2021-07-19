@@ -705,7 +705,7 @@ Lookup.prototype = {
     if (this.settings.options) {
       lookupGrid.on('selected.lookup', (e, selectedRows, op, rowData) => {
         if (self.settings.options.source) {
-          self.element.trigger('selected', [selectedRows, op, rowData]);
+          self.element.trigger('selected', [selectedRows, op, rowData, self]);
           return;
         }
 
@@ -720,7 +720,7 @@ Lookup.prototype = {
         // Only proceed if a row is selected
         if (!selectedRows || selectedRows.length === 0) {
           if (op === 'deselect') {
-            self.element.trigger('selected', [selectedRows, op, rowData]);
+            self.element.trigger('selected', [selectedRows, op, rowData, self]);
           }
           return;
         }
@@ -733,7 +733,7 @@ Lookup.prototype = {
           self.modal.close();
           self.insertRows();
         }
-        self.element.trigger('selected', [selectedRows, op, rowData]);
+        self.element.trigger('selected', [selectedRows, op, rowData, self]);
       });
     }
 
@@ -1024,14 +1024,6 @@ Lookup.prototype = {
     this.element.trigger('input', [this.selectedRows]);
     this.applyAutoWidth();
     this.element.focus();
-  },
-
-  /**
-   * Get currently selected rows.
-   * @returns {array} Selected rows
-   */
-  getSelectedRows() {
-    return this.selectedRows || [];
   },
 
   /**

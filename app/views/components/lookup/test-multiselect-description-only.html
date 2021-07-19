@@ -1342,7 +1342,7 @@
   var lookupApi = elem.data('lookup');
   $('#btn-show-selected').on('click', function() {
     if (lookupApi) {
-      console.log('Selected: ', lookupApi.getSelectedRows());
+      console.log('Selected: ', lookupApi.selectedRows || []);
     }
   });
 
