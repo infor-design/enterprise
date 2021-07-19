@@ -10352,6 +10352,7 @@ Datagrid.prototype = {
    */
   coerceValue(value, oldVal, col, row, cell) {
     let newVal;
+    let nonNumberCharacters = /[A-Za-z!@#$%^&*()_+\-=\[\]{};':"\\|<>\/?]/
 
     if (col.serialize) {
       const s = this.settings;
@@ -10368,7 +10369,7 @@ Datagrid.prototype = {
       } else {
         newVal = Locale.formatDate(value, { pattern: col.sourceFormat });
       }
-    } else if (typeof oldVal === 'number' && value) {
+    } else if (typeof oldVal === 'number' && value && !nonNumberCharacters.test(value)) {
       newVal = Locale.parseNumber(value); // remove thousands sep , keep a number a number
     }
 
