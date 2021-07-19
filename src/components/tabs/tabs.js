@@ -3765,10 +3765,8 @@ Tabs.prototype = {
         }
       }
 
-      // Alternate Header Tabs have 1px removed from bottom to prevent overlap
-      // onto the bottom border
       if (isNotHeaderTabs && !isVerticalTabs) {
-        targetRectObj.height -= 1;
+        targetRectObj.height += 23;
       }
 
       return targetRectObj;
@@ -3786,7 +3784,6 @@ Tabs.prototype = {
       }
       targetPosString += `${key}: ${targetPos[key]}px;`;
     });
-    // targetPosString += `border-bottom: 6px solid red;`;
     focusStateElem.style.cssText = targetPosString;
 
     const selected = targetClassList.contains('is-selected') ? 'add' : 'remove';

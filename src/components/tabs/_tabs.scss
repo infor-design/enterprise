@@ -448,11 +448,11 @@
       }
 
       &:hover {
-        border-bottom: 22px solid $tab-hover-color;
+        border-bottom: 23px solid $tab-hover-color;
       }
 
       &.is-selected {
-        border-bottom: 22px solid $tab-selected-color;
+        border-bottom: 23px solid $tab-selected-color;
       }
 
       &:not(.separator):hover {
