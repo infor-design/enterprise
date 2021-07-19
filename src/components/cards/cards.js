@@ -115,11 +115,6 @@ Cards.prototype = {
               <span class="audible">${selectText}</span>
             </label>
         `);
-
-        console.log({
-          i: i,
-          item: item
-        });
       });
     }
 
