@@ -57,3 +57,57 @@ describe('Cards example-expandable-cards tests', () => {
     expect(await element(by.id('card-id-1-content')).getAttribute('data-automation-id')).toEqual('card-automation-id-1-content');
   });
 });
+
+fdescribe('Cards example-single-select tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/cards/example-single-select?layout=nofrills');
+  });
+
+  it('should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('should be single selectable', async () => {
+    expect(await element(by.className('single')).isPresent()).toBeTruthy();
+  });
+
+  it('should have a cards single select', async () => {
+    expect(await element(by.className('cards')).isPresent()).toBeTruthy();
+  });
+
+  it('should have a card single select', async () => {
+    expect(await element(by.className('card')).isPresent()).toBeTruthy();
+  });
+
+  it('should have single select cards be selectable', async () => {
+    expect(await element.all(by.className('is-selectable')).isPresent()).toBeTruthy();
+  });
+
+  it('should select only 1 card', async () => {
+    const cardEl1 = await element.all(by.css('.card.is-selectable')).get(0);
+    const cardEl2 = await element.all(by.css('.card.is-selectable')).get(1);
+    const cardEl3 = await element.all(by.css('.card.is-selectable')).get(2);
+
+    await cardEl1.click();
+    await cardEl2.click();
+    await cardEl3.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.is-selected'))), config.waitsFor);
+
+    expect(await element.all(by.css('.card.is-selectable')).get(0).getAttribute('class')).not.toContain('is-selected');
+    expect(await element.all(by.css('.card.is-selectable')).get(1).getAttribute('class')).not.toContain('is-selected');
+    expect(await element.all(by.css('.card.is-selectable')).get(2).getAttribute('class')).toContain('is-selected');
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      const cardEl = await element.all(by.css('.card.is-selectable')).get(0);
+
+      await cardEl.click();
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.imageComparison.checkElement(containerEl, 'card-single-select')).toEqual(0);
+    });
+  }
+});
