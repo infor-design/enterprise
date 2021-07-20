@@ -158,7 +158,7 @@ fdescribe('Cards example-multi-select tests', () => {
     expect(await element.all(by.css('.card.is-selectable')).get(2).getAttribute('class')).toContain('is-selected');
   });
 
-  fit('should checked all the cards', async () => {
+  it('should checked all the cards', async () => {
     const cardEl1 = await element.all(by.css('.card.is-selectable')).get(0);
     const cardEl2 = await element.all(by.css('.card.is-selectable')).get(1);
     const cardEl3 = await element.all(by.css('.card.is-selectable')).get(2);
@@ -168,7 +168,7 @@ fdescribe('Cards example-multi-select tests', () => {
     await cardEl3.click();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.is-selected'))), config.waitsFor);
-    
+
     await browser.driver.sleep(config.sleep);
 
     expect(await browser.executeScript("return window.getComputedStyle(document.querySelector('label#multiple-card-id-checkbox-label-0'), ':before').getPropertyValue('background-color')")).toEqual('rgb(0, 114, 237)');
