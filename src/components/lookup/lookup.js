@@ -698,13 +698,17 @@ Lookup.prototype = {
     // Restore selected rows when pages change
     if (this.settings.options.source) {
       lookupGrid.off('afterpaging.lookup').on('afterpaging.lookup', (e, pagingInfo) => {
+        if (!(self.settings.options.source && self.settings.options.selectable === 'multiple')) {
+          const fieldVal = self.element.val();
+          this.selectGridRows(fieldVal);
+        }
         this.element.trigger('afterpaging', [pagingInfo, this]);
       });
     }
 
     if (this.settings.options) {
       lookupGrid.on('selected.lookup', (e, selectedRows, op, rowData) => {
-        if (self.settings.options.source) {
+        if (self.settings.options.source && self.settings.options.selectable === 'multiple') {
           self.element.trigger('selected', [selectedRows, op, rowData, self]);
           return;
         }
