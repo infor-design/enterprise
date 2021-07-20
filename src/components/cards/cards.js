@@ -167,7 +167,7 @@ Cards.prototype = {
           const opt = $(this);
           utils.addAttributes(opt.find('.checkbox-label'), self, self.settings.attributes, `checkbox-label-${i}`, true);
           utils.addAttributes(opt.find('.card-content .checkbox'), self, self.settings.attributes, `checkbox-${i}`, true);
-        })
+        });
       }, 1);
     }
 
