@@ -196,7 +196,9 @@ $(() => {
   if (elements.length) {
     elements.each(function () {
       if ($(this).is(':disabled')) {
-        $(this).disable();
+        $(this)
+          .closest('.field')
+          .addClass('is-disabled');
       }
     });
   }
