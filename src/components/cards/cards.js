@@ -160,8 +160,15 @@ Cards.prototype = {
     }
 
     if (this.settings.selectable === 'multiple') {
-      utils.addAttributes(this.cards.find('.card-content .checkbox-label'), this, this.settings.attributes, 'checkbox-label', true);
-      utils.addAttributes(this.cards.find('.card-content .checkbox'), this, this.settings.attributes, 'checkbox', true);
+      const self = this;
+      setTimeout(() => {
+        const options = this.cards.find('.card');
+        options.each(function (i) {
+          const opt = $(this);
+          utils.addAttributes(opt.find('.checkbox-label'), self, self.settings.attributes, `checkbox-label-${i}`, true);
+          utils.addAttributes(opt.find('.card-content .checkbox'), self, self.settings.attributes, `checkbox-${i}`, true);
+        })
+      }, 1);
     }
 
     return this;
