@@ -58,7 +58,7 @@ describe('Cards example-expandable-cards tests', () => {
   });
 });
 
-fdescribe('Cards example-single-select tests', () => {
+describe('Cards example-single-select tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/cards/example-single-select?layout=nofrills');
   });
