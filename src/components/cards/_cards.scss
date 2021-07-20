@@ -33,6 +33,16 @@
     &.is-selected {
       background-color: $card-selected-background-color;
       border: 2px solid $card-selected-border-color;
+
+      .card-content {
+        border: none;
+      }
+    }
+
+    &:not(.is-selected) {
+      .card-content {
+        border: 1px solid transparent;
+      }
     }
 
     .card-content {
