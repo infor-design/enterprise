@@ -112,7 +112,7 @@ describe('Cards example-single-select tests', () => {
   }
 });
 
-fdescribe('Cards example-multi-select tests', () => {
+describe('Cards example-multi-select tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/cards/example-multi-select?layout=nofrills');
   });
