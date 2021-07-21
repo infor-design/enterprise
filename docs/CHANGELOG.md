@@ -6,6 +6,7 @@
 
 ## v4.54.0 Fixes
 
+- `[CirclePager] Fixed a bug where the slides were not properly showing for RTL languages ([#2885](https://github.com/infor-design/enterprise/issues/2885))
 - `[Blockgrid]` Added additional design with no image ([#5379](https://github.com/infor-design/enterprise/issues/5379))
 - `[Charts]` Fixed a bug where the vertical grid line strokes were invisible when in High Contrast and Colors was non-Default ([#5301](https://github.com/infor-design/enterprise/issues/5301))
 - `[CirclePager]` Fixed a bug where the CSS was the same for all of the circles in homepage/example-hero-widget ([#5337](https://github.com/infor-design/enterprise/issues/5337))
