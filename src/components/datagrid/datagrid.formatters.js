@@ -226,13 +226,15 @@ const formatters = {
 
   Decimal(row, cell, value, col, item) {
     let formatted = value;
+    // eslint-disable-next-line no-useless-escape
+    const checkIfNaN = /[\s]*($)?[#,0-9\s\.]+%?[\s]*/;
 
     if (typeof Locale !== 'undefined' &&
-        formatted !== null && formatted !== undefined && formatted !== '') {
+        formatted !== null && formatted !== undefined && formatted !== '' && checkIfNaN.test(formatted)) {
       formatted = Locale.formatNumber(value, col.numberFormat);
     }
 
-    formatted = (formatted === null || formatted === undefined || formatted === 'NaN') ? '' : formatted;
+    formatted = (formatted === null || formatted === undefined || formatted === 'NaN' || !checkIfNaN.test(formatted)) ? '' : formatted;
 
     const placeholder = calculatePlaceholder(formatted, row, cell, value, col, item);
     if (placeholder !== '') {
