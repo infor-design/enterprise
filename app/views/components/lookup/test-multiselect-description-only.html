@@ -1,3 +1,11 @@
+<div class="row top-padding">
+  <div class="twelve columns">
+    <div class="field">
+      <button class="btn-secondary" type="button" id="btn-show-selected">Show Selected</button>
+    </div>
+  </div>
+</div>
+
 <div class="row">
   <div class="twelve columns">
     <div class="field">
@@ -1275,7 +1283,7 @@
       field: 'applicationInstanceGuid',
       hidden: true
     },
-    { id: 'pa.id', field: 'id', hidden: true },
+    { id: 'pa.id', field: 'id', hidden: false },
     {
       id: '222',
       name: 'Application Instance Name',
@@ -1296,11 +1304,10 @@
     }
   ];
 
-  let previouslySelectedRows = [];
-  let processing = false;
+  var elem = $('#product-lookup');
 
   // Initialize the Lookup
-  $('#product-lookup').lookup({
+  elem.lookup({
      field: 'applicationInstanceName',
      allowDuplicates: true,
      options: {
@@ -1311,6 +1318,7 @@
         pagesizes: [5, 10, 25],
         selectable: 'multiple',
         allowSelectAcrossPages: true,
+        columnIds: ['applicationInstanceName', 'applicationInstanceGuid'], // Required, in order to work server-side selection
         toolbar: {
           results: true,
           keywordFilter: false,
@@ -1329,26 +1337,13 @@
           response(pageData, req);
         }
      }
-  })
-  .on('selected', function(e, selectedRows, op, rowData) {
-    if (processing) {
-      return;
-    }
-    previouslySelectedRows = selectedRows.slice();
-    console.log('selected', previouslySelectedRows);
-  }).on('afterpaging', function(e, pagingInfo, lookup) {
-    processing = true;
-    lookup.grid.unSelectAllRows(true);
-    for (let i = 0; i < previouslySelectedRows.length; i++) {
-      lookup.selectRowByValue('id', previouslySelectedRows[i].data.id);
-    }
-
-    // If using the contextual toolbar
-    if (lookup.grid.contextualToolbar) {
-      lookup.grid.syncSelectedUI();
-      lookup.grid.contextualToolbar.find('.selection-count').text(`${previouslySelectedRows.length} ${Locale.translate('Selected')}`);
-    }
-    lookup.isChanged = false;
-    processing = false;
   });
+
+  var lookupApi = elem.data('lookup');
+  $('#btn-show-selected').on('click', function() {
+    if (lookupApi) {
+      console.log('Selected: ', lookupApi.selectedRows || []);
+    }
+  });
+
 </script>
