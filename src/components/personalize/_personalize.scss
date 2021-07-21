@@ -23,7 +23,12 @@
 
 .is-personalizable.has-more-button.tab-container.horizontal {
   &::after {
-    background-image: none;
+    background-image: linear-gradient(
+      to left,
+      rgba($header-bg-color, 1),
+      rgba($header-bg-color, 0)
+    );
+    height: 39px;
   }
 }
 
