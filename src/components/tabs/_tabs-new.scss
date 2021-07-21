@@ -19,6 +19,14 @@
   }
 }
 
+.tab-container.has-counts {
+  > .tab-list-container {
+    .tab-list {
+      padding: unset;
+    }
+  }
+}
+
 .tab-container.horizontal,
 .tab-container.header-tabs {
   > .tab-list-container {

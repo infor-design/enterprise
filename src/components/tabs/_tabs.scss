@@ -297,6 +297,25 @@
   }
 }
 
+.tab-container.has-counts {
+  > .tab-list-container {
+    .tab-list {
+      padding: 1px 0px 17px 0px;
+      .tab {
+        border-bottom: 5px solid transparent;
+
+        &:hover {
+          border-bottom: 5px solid $tab-hover-color;
+        }
+  
+        &.is-selected {
+          border-bottom: 5px solid $tab-selected-color;
+        }
+      }
+    }
+  }
+}
+
 // Common styles between Horizontal and Header tabs
 .tab-container.horizontal,
 .tab-container.header-tabs {
