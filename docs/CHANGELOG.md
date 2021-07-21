@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.53.3 Fixes
+
+- `[Lookup]` Fixed an issue where selection for server side and paging was not working. ([#986](https://github.com/infor-design/enterprise-ng/issues/986))
+
 ## v4.53.0 Features
 
 - `[Action Sheet]` Added a mobile device-friendly action sheet component. ([#5256](https://github.com/infor-design/enterprise/issues/5256))
