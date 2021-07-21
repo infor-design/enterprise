@@ -275,6 +275,28 @@
   }
 }
 
+.tab-container.header-tabs {
+  &:not(.alternate) {
+    > .tab-list-container {
+      .tab-focus-indicator {
+        margin-top: 2px !important;
+      }
+
+      .tab {
+        top: -2px !important;
+
+        &:hover {
+          border-bottom: 4px solid $header-tab-hover-color;
+        }
+
+        &.is-selected {
+          border-bottom: 4px solid $header-tab-hover-color;
+        }
+      }
+    }
+  }
+}
+
 // Common styles between Horizontal and Header tabs
 .tab-container.horizontal,
 .tab-container.header-tabs {

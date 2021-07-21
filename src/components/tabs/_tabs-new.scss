@@ -9,6 +9,16 @@
   padding: 5px 11px 10px;
 }
 
+.tab-container.header-tabs {
+  &:not(.alternate) {
+    > .tab-list-container {
+      .tab {
+        top: unset !important;
+      }
+    }
+  }
+}
+
 .tab-container.horizontal,
 .tab-container.header-tabs {
   > .tab-list-container {
