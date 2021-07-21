@@ -429,7 +429,8 @@
 
     .tab {
       @include css3(transition, background-color 0.25s ease);
-
+      top: 1px;
+      border-bottom: 4px solid transparent;
       border-radius: 2px 2px 0 0;
       height: inherit;
       padding: 0;
@@ -448,11 +449,11 @@
       }
 
       &:hover {
-        border-bottom: 23px solid $tab-hover-color;
+        border-bottom: 4px solid $tab-hover-color;
       }
 
       &.is-selected {
-        border-bottom: 23px solid $tab-selected-color;
+        border-bottom: 4px solid $tab-selected-color;
       }
 
       &:not(.separator):hover {

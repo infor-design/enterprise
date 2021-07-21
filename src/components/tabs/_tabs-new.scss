@@ -12,11 +12,13 @@
 .tab-container.horizontal,
 .tab-container.header-tabs {
   > .tab-list-container {
-    margin-bottom: -20px;
+    margin-bottom: -1px;
 
     .tab {
+      top: 0px;
+
       a {
-        padding: 12px 11px 6px 11px;
+        padding: 12px 11px 6px 11px !important;
       }
 
       &.is-disabled {
