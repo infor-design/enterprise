@@ -227,7 +227,11 @@ Lookup.prototype = {
       this.element.attr('readonly', 'true').addClass('is-not-editable');
     }
 
-    this.makeTabbable(this.settings.tabbable);
+    this.makeTabbable(
+      !this.element.is(':disabled') &&
+      this.element.attr('tabindex') !== '-1' &&
+      this.settings.tabbable
+    );
 
     if (this.settings.clearable) {
       lookup.searchfield({
@@ -698,14 +702,21 @@ Lookup.prototype = {
     // Restore selected rows when pages change
     if (this.settings.options.source) {
       lookupGrid.off('afterpaging.lookup').on('afterpaging.lookup', (e, pagingInfo) => {
-        const fieldVal = self.element.val();
-        this.selectGridRows(fieldVal);
+        if (!(self.settings.options.source && self.settings.options.selectable === 'multiple')) {
+          const fieldVal = self.element.val();
+          this.selectGridRows(fieldVal);
+        }
         this.element.trigger('afterpaging', [pagingInfo, this]);
       });
     }
 
     if (this.settings.options) {
       lookupGrid.on('selected.lookup', (e, selectedRows, op, rowData) => {
+        if (self.settings.options.source && self.settings.options.selectable === 'multiple') {
+          self.element.trigger('selected', [selectedRows, op, rowData, self]);
+          return;
+        }
+
         this.isChanged = true;
         if (op === 'deselect') {
           if (!self.grid.recentlyRemoved) {
@@ -716,6 +727,9 @@ Lookup.prototype = {
 
         // Only proceed if a row is selected
         if (!selectedRows || selectedRows.length === 0) {
+          if (op === 'deselect') {
+            self.element.trigger('selected', [selectedRows, op, rowData, self]);
+          }
           return;
         }
 
@@ -727,26 +741,49 @@ Lookup.prototype = {
           self.modal.close();
           self.insertRows();
         }
-        self.element.trigger('selected', [selectedRows, op, rowData]);
+        self.element.trigger('selected', [selectedRows, op, rowData, self]);
       });
     }
 
     // Set init values after render the grid
     if (this.settings.options.source) {
       this.grid.element.one('afterrender.lookup', () => {
-        if (!this.initValues || (this.initValues && !this.initValues.length)) {
+        const hasServersideSelection = this.settings.options.source && this.selectedRows?.length;
+        if (!this.initValues || (this.initValues && !this.initValues.length) || hasServersideSelection) {
           this.initValues = [];
-          const isMatch = (node, v) => ((node[this.settings.field] || '').toString() === v.toString());
-          const fieldVal = this.element.val();
-          if (fieldVal) {
-            const fieldValues = (fieldVal.indexOf(this.settings.delimiter) > 1) ?
-              fieldVal.split(this.settings.delimiter) : [fieldVal];
-            fieldValues.forEach((v) => {
-              this.initValues.push({
-                value: v,
-                visited: !!(this.grid.settings.dataset.filter(node => isMatch(node, v)).length) // eslint-disable-line
+          if (hasServersideSelection) {
+            setTimeout(() => {
+              const pagingInfo = this.grid?.pagerAPI?.state;
+              if (pagingInfo) {
+                const records = {
+                  min: ((pagingInfo.activePage * pagingInfo.pagesize) - pagingInfo.pagesize),
+                  max: ((pagingInfo.activePage * pagingInfo.pagesize) - 1)
+                };
+                const inRange = x => x.pagingIdx >= records.min && x.pagingIdx <= records.max;
+                this.selectedRows.forEach((row) => {
+                  this.initValues.push({
+                    value: row.data[this.settings.field],
+                    visited: inRange(row)
+                  });
+                });
+                this.grid._selectedRows = this.selectedRows.slice();
+                this.grid.syncSelectedRows();
+                this.grid.syncSelectedUI();
+              }
+            }, 310);
+          } else {
+            const isMatch = (node, v) => ((node[this.settings.field] || '').toString() === v.toString());
+            const fieldVal = this.element.val();
+            if (fieldVal) {
+              const fieldValues = (fieldVal.indexOf(this.settings.delimiter) > 1) ?
+                fieldVal.split(this.settings.delimiter) : [fieldVal];
+              fieldValues.forEach((v) => {
+                this.initValues.push({
+                  value: v,
+                  visited: !!(this.grid.settings.dataset.filter(node => isMatch(node, v)).length) // eslint-disable-line
+                });
               });
-            });
+            }
           }
         }
       });
@@ -952,12 +989,12 @@ Lookup.prototype = {
    * @returns {void}
    */
   insertRows() {
-    if (!this.isChanged) {
+    if (!this.isChanged && !this.settings.options.source) {
       return;
     }
     let value = [];
 
-    this.selectedRows = this.grid.selectedRows();
+    this.selectedRows = this.grid.selectedRows().slice();
 
     for (let i = 0; i < this.selectedRows.length; i++) {
       let currValue = '';
@@ -1013,7 +1050,7 @@ Lookup.prototype = {
    */
   disable() {
     this.element.prop('disabled', true);
-    this.element.parent().addClass('is-disabled');
+    this.element.closest('.field').addClass('is-disabled');
     this.icon.prop('disabled', true);
   },
 

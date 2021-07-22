@@ -74,7 +74,7 @@ $datagrid-row-height: 43px;
 $datagrid-medium-header-height: 30px;
 $datagrid-medium-row-height: 33px;
 $datagrid-extra-small-header-height: 19px;
-$datagrid-extra-small-row-height: 25px; // or 28px
+$datagrid-extra-small-row-height: 25px;
 $datagrid-small-header-height: 25px;
 $datagrid-small-row-height: 25px;
 
@@ -1135,8 +1135,7 @@ $datagrid-small-row-height: 25px;
         }
 
         .row-btn {
-          height: 32px;
-          top: -2px;
+          height: 31px;
         }
 
         .hyperlink {
@@ -1455,10 +1454,9 @@ $datagrid-small-row-height: 25px;
         }
 
         .row-btn {
-          height: 25px;
+          height: 24px;
           line-height: 18px;
           min-width: 80px;
-          top: -12px;
           vertical-align: middle;
 
           span {
@@ -1485,8 +1483,7 @@ $datagrid-small-row-height: 25px;
         }
 
         .btn-secondary.row-btn {
-          min-height: 25px;
-          top: -2px;
+          min-height: 24px;
         }
 
         &.datagrid-trigger-cell {
@@ -1801,6 +1798,9 @@ $datagrid-small-row-height: 25px;
     font-size: $input-size-compact-font-size;
 
     tbody tr {
+      .row-btn {
+        top: 1px;
+      }
       .datagrid-reorder-icon .icon {
         height: 18px;
         width: 21px;
@@ -1809,7 +1809,7 @@ $datagrid-small-row-height: 25px;
 
     .datagrid-cell-wrapper {
       min-height: $datagrid-extra-small-row-height + 4;
-      padding: 2px 5px 0;
+      padding: 0px 5px 0;
 
       .dropdown-trigger {
         margin-top: -2px;
@@ -1914,7 +1914,6 @@ $datagrid-small-row-height: 25px;
         height: 21px;
         line-height: 19px;
         min-height: 21px;
-        top: -1px;
       }
     }
 
@@ -2035,12 +2034,6 @@ $datagrid-small-row-height: 25px;
 
       .is-readonly {
         background-color: $datagrid-row-hover-color;
-      }
-
-      .tag:not(.info):not(.good):not(.error):not(.alert) {
-        background-color: $badge-neutral-hover-bg-color;
-        color: $ids-color-palette-black;
-        transition: none;
       }
 
       .datagrid-expand-btn .icon {
@@ -2214,7 +2207,7 @@ $datagrid-small-row-height: 25px;
       vertical-align: middle;
 
       &[class*='azure'] {
-        color: $ids-color-palette-white;
+        color: $datagrid-badges-azure-font-color;
       }
     }
 
@@ -2413,7 +2406,8 @@ $datagrid-small-row-height: 25px;
     }
 
     .chart-completion-target {
-      height: 25px;
+      height: 26px;
+      border-radius: 2px;
       position: relative;
       vertical-align: middle;
 

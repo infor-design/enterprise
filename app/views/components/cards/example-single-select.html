@@ -1,0 +1,75 @@
+<div class="row">
+  <div class="six columns">
+    <p class="section-title">Cards: Single Selection</p>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="six columns">
+    <div id="cards-single-select" class="cards">
+    </div>
+  </div>
+
+  {{={{{ }}}=}}
+  <script id="cards-data-tmpl" type="text/html">
+    {{#dataset}}
+    <div class="card auto-height">
+      <div class="card-content">
+        <p class="text-strong">{{time}}</p>
+        <p>Job: {{job}}</p>
+        <p>Location: {{location}}</p>
+        <p>Team: {{team}}</p>
+        <p>Department: {{department}}</p>
+      </div>
+    </div>
+    {{/dataset}}
+
+  </script>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+
+    var data = [{
+        "id": 1,
+        "time": "5:30AM-8:00AM",
+        "job": "Cashier II",
+        "location": "NE Campus",
+        "team": "NE_FLR",
+        "department": "DEPT A"
+      },
+      {
+        "id": 2,
+        "time": "9:00AM-12:00PM",
+        "job": "Cashier II",
+        "location": "NE Campus",
+        "team": "NE_FLR",
+        "department": "DEPT A"
+      },
+      {
+        "id": 3,
+        "time": "1:00PM-5:00PM",
+        "job": "Cashier II",
+        "location": "NE Campus",
+        "team": "NE_FLR",
+        "department": "DEPT A"
+      }
+    ]
+
+    $('#cards-single-select').cards({
+      dataset: data,
+      selectable: 'single',
+      template: 'cards-data-tmpl',
+      attributes: [{
+          name: 'id',
+          value: 'single-card-id'
+        },
+        {
+          name: 'data-automation-id',
+          value: 'single-card-automation-id'
+        }
+      ]
+    })
+  });
+
+</script>

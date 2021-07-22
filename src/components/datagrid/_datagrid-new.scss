@@ -106,6 +106,18 @@
     color: $font-color-highcontrast;
   }
 
+  td {
+    .chart-completion-target {
+      height: 28px;
+      .target {
+        margin-top: 6px;
+      }
+      .chart-targeted-text {
+        margin-top: -41px;
+      }
+    }
+  }
+
   td.is-editing {
     .lookup-wrapper {
       padding-top: 5px;
@@ -139,6 +151,9 @@
   }
 
   &.extra-small-rowheight {
+    tbody tr td .row-btn {
+      top: 0px;
+    }
     td.is-editing {
       input.timepicker {
         + .trigger {
@@ -208,8 +223,13 @@
       }
     }
   }
-
+  
   &.medium-rowheight {
+    .datagrid-cell-wrapper {
+      .row-btn {
+        min-height: 32px;
+      }
+    }
     .datagrid-trigger-cell {
       .icon.icon-calendar {
         left: 5px;
@@ -250,8 +270,6 @@
   }
 
   > tbody > tr .datagrid-cell-wrapper {
-    padding: 7px 16px 4px !important;
-
     .datagrid-checkbox-wrapper {
       margin-top: -14px;
     }

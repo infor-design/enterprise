@@ -81,8 +81,8 @@
 
   .list-button {
     float: right;
-    padding: 10px 7px;
     margin-right: 17px;
+    padding-top: 1%;
   }
 
   // Right aligned Legend
@@ -261,6 +261,7 @@
     &.is-one-line {
       height: inherit;
       padding: 7px 0 0 7px;
+      min-height: 35px;
     }
 
   }
