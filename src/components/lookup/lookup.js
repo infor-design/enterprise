@@ -227,7 +227,11 @@ Lookup.prototype = {
       this.element.attr('readonly', 'true').addClass('is-not-editable');
     }
 
-    this.makeTabbable(this.settings.tabbable);
+    this.makeTabbable(
+      !this.element.is(':disabled') &&
+      this.element.attr('tabindex') !== '-1' &&
+      this.settings.tabbable
+    );
 
     if (this.settings.clearable) {
       lookup.searchfield({
@@ -1046,7 +1050,7 @@ Lookup.prototype = {
    */
   disable() {
     this.element.prop('disabled', true);
-    this.element.parent().addClass('is-disabled');
+    this.element.closest('.field').addClass('is-disabled');
     this.icon.prop('disabled', true);
   },
 

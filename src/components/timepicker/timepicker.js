@@ -197,7 +197,16 @@ TimePicker.prototype = {
       </button>`).insertAfter(this.element);
     }
 
-    this.makeTabbable(this.settings.tabbable);
+    // Add "is-disabled" css class to closest ".field" if element is disabled
+    if (this.element.is(':disabled')) {
+      this.disable();
+    }
+
+    this.makeTabbable(
+      !this.element.is(':disabled') &&
+      this.element.attr('tabindex') !== '-1' &&
+      this.settings.tabbable
+    );
 
     this.addAria()
       .addMask()
