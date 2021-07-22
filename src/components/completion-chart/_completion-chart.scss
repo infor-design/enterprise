@@ -120,7 +120,7 @@
 
   .chart-targeted-text {
     left: 50%;
-    margin-top: -38px; // centers text vertically on bar on Large setting; needs to be -38px for classic, needs to be -41px for new
+    margin-top: -38px;
     position: relative;
 
     &.l-center {
@@ -220,7 +220,7 @@
   .target {
     background-color: $chart-progressbar-target-fill;
     height: 10px;
-    margin-top: 8px; // adjusts height of right rows to match left rows for Medium; needs to be 8px for classic; needs to be 6px for new;
+    margin-top: 8px;
     position: relative;
     transition: width 0.5s ease 0s;
     width: 60%;
