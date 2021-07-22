@@ -187,3 +187,19 @@ $(() => {
     }
   });
 });
+
+// Adds css class 'is-disabled' to field if input has disabled attribute
+// Gray color should apply to label if input is disabled
+$(() => {
+  const elements = $('input[type="text"]');
+
+  if (elements.length) {
+    elements.each(function () {
+      if ($(this).is(':disabled')) {
+        $(this)
+          .closest('.field')
+          .addClass('is-disabled');
+      }
+    });
+  }
+});
