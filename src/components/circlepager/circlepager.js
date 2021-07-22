@@ -367,8 +367,8 @@ CirclePager.prototype = {
     }
     index = typeof index !== 'undefined' ? index : this.activeIndex;
     this.activeIndex = index;
-
-    const left = index > 0 ? (`${(Locale.isRTL() ? '' : '-') + (index * 100)}%`) : 0;
+    const slidesLength = this.slides.length;
+    const left = index > -1 ? (`${(Locale.isRTL() ? ((slidesLength - index - 1) * 100) : (0 - index * 100))}%`) : 0;
     this.controlButtons.removeClass('is-active').eq(index).addClass('is-active');
     this.container[0].style.left = left;
 
