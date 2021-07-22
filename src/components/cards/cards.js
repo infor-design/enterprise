@@ -85,6 +85,7 @@ Cards.prototype = {
     const expanded = this.element.hasClass('is-expanded');
     const selectText = (Locale ? Locale.translate('Select') : 'Select');
     const isSingle = this.settings.selectable === 'single';
+
     this.renderTemplate();
 
     // This is basically the build for the selection state cards (single and multiple)
@@ -232,13 +233,13 @@ Cards.prototype = {
    * Render the template using mustache
    */
   renderTemplate() {
-    if (this.settings.selectable === false) {
+    if (!this.settings.template) {
       return;
     }
 
     const s = this.settings;
 
-    if (typeof Tmpl === 'object' && this.settings.template) {
+    if (typeof Tmpl === 'object' && s.dataset && this.settings.template) {
       if (this.settings.template instanceof $) {
         this.settings.template = `${this.settings.template.html()}`;
       } else if (typeof this.settings.template === 'string') {
