@@ -2,21 +2,27 @@
 
 ## v4.54.0 Features
 
+- `[Cards]` Added the ability of single and multi selection of cards. ([#5253](https://github.com/infor-design/enterprise/issues/5253))
 - `[Datagrid]` Added support to row reorder for groupable settings. ([#5233](https://github.com/infor-design/enterprise/issues/5233))
 
 ## v4.54.0 Fixes
 
 - `[Blockgrid]` Added additional design with no image ([#5379](https://github.com/infor-design/enterprise/issues/5379))
 - `[Charts]` Fixed a bug where the vertical grid line strokes were invisible when in High Contrast and Colors was non-Default ([#5301](https://github.com/infor-design/enterprise/issues/5301))
+- `[CirclePager]` Fixed a bug where the slides were not properly showing for RTL languages ([#2885](https://github.com/infor-design/enterprise/issues/2885))
 - `[CirclePager]` Fixed a bug where the CSS was the same for all of the circles in homepage/example-hero-widget ([#5337](https://github.com/infor-design/enterprise/issues/5337))
 - `[ContextualActionPanel]` Added `title` prop in CAP to control the title via `modaSettings`, and added missing `beforeclose` event. ([NG#1048](https://github.com/infor-design/enterprise-ng/issues/1048))
 - `[Datagrid]` - Fixed a bug where the first two columns row heights did not match the others for the Medium setting ([#5366](https://github.com/infor-design/enterprise/issues/5366))
 - `[Datagrid]` - Fixed a bug where the font color on tags was black when a row was hovered over in dark mode. Font color now white. ([#5289](https://github.com/infor-design/enterprise/issues/5289))
+- `[Datagrid]` Fixed a bug where the font color on tags was black when a row was hovered over in dark mode. Font color now white. ([#5289](https://github.com/infor-design/enterprise/issues/5289))
+- `[Datagrid]` Fixed issues with NaN displaying on Decimal and Dropdown inputs when blank options are selected. ([#5395](https://github.com/infor-design/enterprise/issues/5395))
+- `[Datagrid]` - Fixed a bug where the row height cut off the focus ring on the Action Item buttons for Classic/New mode and XS, S, M settings ([#5394](https://github.com/infor-design/enterprise/issues/5394))
 - `[Datepicker]` Fixed a bug where the -/+ keys were not detected in datepicker. ([#5353](https://github.com/infor-design/enterprise/issues/5353))
 - `[Donut]` Changed legend design when item exceeds maximum width of chart. ([#5292](https://github.com/infor-design/enterprise/issues/5292))
 - `[Dropdown]` Fixed a bug where backspace in Dropdown is not working when pressed. ([#5113](https://github.com/infor-design/enterprise/issues/5113))
 - `[Icon]` Changed button icon colors to slate6 ([#5307](https://github.com/infor-design/enterprise/issues/5307))
 - `[Input]` Fixed a bug where clear icon were not properly aligned with the input field in classic mode. ([#5324](https://github.com/infor-design/enterprise/issues/5324))
+- `[Lookup]` Fixed an issue where selection for server side and paging was not working. ([#986](https://github.com/infor-design/enterprise-ng/issues/986))
 - `[Lookup]` Added api setting to allow duplicate selected value to input element. ([#986](https://github.com/infor-design/enterprise-ng/issues/986))
 - `[Modal]` Enter key will trigger primary button when in an input field. ([#5198](https://github.com/infor-design/enterprise/issues/5198))
 - `[Monthview]` Fixed a bug where a vertical scroll is showing when it is unnecessary. ([#5350](https://github.com/infor-design/enterprise/issues/5350))
@@ -27,6 +33,10 @@
 ### v4.54.0 Markup Changes
 
 - `[TrackDirty]` Removed Track Dirty from the main components list and integrated the underlying examples into their corresponding individual components.
+
+## v4.53.3 Fixes
+
+- `[Lookup]` Fixed an issue where selection for server side and paging was not working. ([#986](https://github.com/infor-design/enterprise-ng/issues/986))
 
 ## v4.53.0 Features
 

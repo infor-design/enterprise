@@ -108,7 +108,7 @@
 
   td {
     .chart-completion-target {
-      height: 28px; // makes the target bar match the height of progress bar; for new needs to be 28px
+      height: 28px;
       .target {
         margin-top: 6px;
       }
@@ -151,6 +151,9 @@
   }
 
   &.extra-small-rowheight {
+    tbody tr td .row-btn {
+      top: 0px;
+    }
     td.is-editing {
       input.timepicker {
         + .trigger {
@@ -220,8 +223,13 @@
       }
     }
   }
-
+  
   &.medium-rowheight {
+    .datagrid-cell-wrapper {
+      .row-btn {
+        min-height: 32px;
+      }
+    }
     .datagrid-trigger-cell {
       .icon.icon-calendar {
         left: 5px;
