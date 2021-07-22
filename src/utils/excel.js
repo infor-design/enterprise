@@ -1,7 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import { Environment as env } from './environment';
 import { Formatters } from '../components/datagrid/datagrid.formatters';
-import { html } from 'd3';
 
 /* eslint-disable import/prefer-default-export */
 const excel = {};
@@ -79,8 +78,8 @@ excel.cleanExtra = function (customDs, self) {
   } else {
     const dataset = self.settings.groupable ? self.originalDataset : self.settings.dataset;
     const clonedTable = $(self.table[0].cloneNode(true));
-    
-    if (self.settings.frozenColumns.left.length || self.settings.frozenColumns.right.length){
+
+    if (self.settings.frozenColumns.left.length || self.settings.frozenColumns.right.length ){
       clonedTable.find('.datagrid-header tr:first()').html(self.headerNodes()); 
     }
 
