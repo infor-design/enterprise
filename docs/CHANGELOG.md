@@ -4,6 +4,7 @@
 
 - `[Cards]` Added the ability of single and multi selection of cards. ([#5253](https://github.com/infor-design/enterprise/issues/5253))
 - `[Datagrid]` Added support to row reorder for groupable settings. ([#5233](https://github.com/infor-design/enterprise/issues/5233))
+- `[Notification Badge]` Added Notification Badge component that has the ability to move to any corner of the icon element. ([#5344](https://github.com/infor-design/enterprise/issues/5344))
 
 ## v4.54.0 Fixes
 
