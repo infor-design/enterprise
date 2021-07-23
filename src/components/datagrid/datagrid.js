@@ -3079,6 +3079,12 @@ Datagrid.prototype = {
       return null;
     };
 
+    // Detect left mouse button
+    const isLeftButton = (e) => {
+      const btn = e.buttons || e.which || e.button;
+      return !(e.metaKey || e.ctrlKey || e.altKey || e.shiftKey) ? btn === 1 : false;
+    };
+
     this.tableBody.find(rowSelector)
       .find('.datagrid-reorder-icon').each(function () {
         let clone = null;
@@ -3089,6 +3095,10 @@ Datagrid.prototype = {
         const handle = $(this);
         handle.off('mousedown.datagrid').on('mousedown.datagrid', (e) => {
           e.preventDefault();
+          // Only use left mouse button
+          if (!isLeftButton(e)) {
+            return;
+          }
 
           handle.closest('tr').drag({
             axis: 'y',
