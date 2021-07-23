@@ -1,19 +1,34 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 
+// jQuery Components
+import '../icons/icons.jquery';
+
 // Settings and Options
 const COMPONENT_NAME = 'notificationbadge';
 
+// Options for the position of dot
+const NOTIFICATION_BADGE_POSITION_OPTIONS = ['upper-left', 'upper-right', 'lower-left', 'lower-right'];
+
+// Options for the color of dot
+const NOTIFICATION_BADGE_COLOR_OPTIONS = ['alert', 'warning', 'yield', 'complete', 'progress', 'caution'];
+
 const NOTIFICATION_BADGE_DEFAULTS = {
-  propertyName: 'notificationbadge'
+  position: NOTIFICATION_BADGE_POSITION_OPTIONS[1],
+  icon: 'mail',
+  color: NOTIFICATION_BADGE_COLOR_OPTIONS[0]
 };
 
 /**
- * Notification Badge - show and indicates that there are new events
+ * Notification Badge - show and indicates that something has change.
  * @class NotificationBadge
  * @param {string} element The plugin element for the constuctor
  * @param {string} [settings] The settings element.
+ * @param {string} [settings.position] The placement of notification badge.
+ * @param {string} [settings.color] The color of the notification badge.
+ * @param {string} [settings.icon] The icon to display.
  */
+
 function NotificationBadge(element, settings) {
   this.settings = utils.mergeSettings(element, settings, NOTIFICATION_BADGE_DEFAULTS);
   this.element = $(element);
@@ -42,7 +57,18 @@ NotificationBadge.prototype = {
    * @private
    */
   build() {
-    console.log('test');
+    this.notificationBadgeContainerEl = this.element.append('<span class="notification-badge-container"></span>');
+
+    const htmlIcon = `
+      <svg class="icon notification-badge-${this.settings.icon}" focusable="false" aria-hidden="true" role="presentation">
+        <use href="#icon-${this.settings.icon}"></use>
+      </svg>`;
+
+    const htmlNotificationBadge = `
+      <span class="notification-badge notification-badge-${this.settings.position} notification-badge-${this.settings.color}"></span>`;
+
+    this.notificationBadgeContainerEl.find('.notification-badge-container').append(htmlIcon, htmlNotificationBadge);
+
     return this;
   },
 

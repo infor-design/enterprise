@@ -1,0 +1,27 @@
+// Notification Badge
+//================================================== //
+
+.notification-badge-container {
+  display: inline-flex;
+  position: relative;
+  vertical-align: middle;
+
+  .notification-badge {
+    border-radius: 4px;
+    flex-wrap: wrap;
+    height: 6px;
+    position: absolute;
+    width: 6px;
+
+    &.notification-badge-alert {
+      background-color: $ids-color-status-danger;
+    }
+
+    &.notification-badge-upper-right {
+      right: 3px;
+      top: 3px;
+      transform: scale(1) translate(50%, -50%);
+      transform-origin: 100% 0%;
+    }
+  }
+}
