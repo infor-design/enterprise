@@ -43,6 +43,16 @@
     margin-bottom: -1px;
 
     .tab {
+
+      &.has-popupmenu {
+        .icon {
+          height: 16px;
+          margin: 7px 0 0 -5px;
+          position: static;
+          width: 32px;
+        }
+      }
+
       top: 0px;
 
       a {
