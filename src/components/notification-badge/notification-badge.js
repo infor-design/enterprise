@@ -15,7 +15,7 @@ const NOTIFICATION_BADGE_COLOR_OPTIONS = ['alert', 'warning', 'yield', 'complete
 
 const NOTIFICATION_BADGE_DEFAULTS = {
   position: NOTIFICATION_BADGE_POSITION_OPTIONS[1],
-  icon: 'mail',
+  icon: 'menu',
   color: NOTIFICATION_BADGE_COLOR_OPTIONS[0]
 };
 

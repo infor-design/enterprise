@@ -1,6 +1,7 @@
 <div class="row top-padding">
   <div class="twelve columns">
-    <p class="section-title">Notification Badge</p>
+    <p class="section-title">Notification Badge Placements</p>
+    <p class="text-descriptive">Notification dots will be placed at the corner of icons.</p>
   </div>
 </div>
 
@@ -18,26 +19,31 @@
 <script>
 $('#notification-badge-1').notificationbadge({
   color: 'alert',
+  position: 'upper-left'
 });
 $('#notification-badge-2').notificationbadge({
   icon: 'phone-linear',
   color: 'warning',
+  position: 'upper-right'
 });
 $('#notification-badge-3').notificationbadge({
-  icon: 'success',
-  color: 'yield',
+  icon: 'checkbox',
+  color: 'caution',
+  position: 'lower-left'
 });
 $('#notification-badge-4').notificationbadge({
-  icon: 'mail',
+  icon: 'folder',
   color: 'complete',
+  position: 'lower-right'
 });
 $('#notification-badge-5').notificationbadge({
-  icon: 'stop',
+  icon: 'bookmark-outlined',
   color: 'progress',
+  position: 'upper-left'
 });
 $('#notification-badge-6').notificationbadge({
-  icon: 'check',
-  color: 'caution'
+  icon: 'stop',
+  color: 'yield'
 });
 </script>
 
