@@ -443,7 +443,13 @@
     overflow-x: auto; // facilitates scrolling of the tabset
     overflow-y: hidden; // prevents vertical scrolling
     position: relative;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;
     width: calc(100% - 51px);
+  }
+
+  .tab-list-container::-webkit-scrollbar {
+    display: none;
   }
 
   &.has-add-button {
