@@ -17,6 +17,26 @@
       background-color: $ids-color-status-danger;
     }
 
+    &.notification-badge-warning {
+      background-color: $ids-color-status-warning;
+    }
+
+    &.notification-badge-yield {
+      background-color: $ids-color-status-caution;
+    }
+
+    &.notification-badge-complete {
+      background-color: $ids-color-status-success;
+    }
+
+    &.notification-badge-progress {
+      background-color: $ids-color-brand-primary-alt;
+    }
+
+    &.notification-badge-caution {
+      background-color: $ids-color-palette-amethyst-60;
+    }
+
     &.notification-badge-upper-right {
       right: 3px;
       top: 3px;

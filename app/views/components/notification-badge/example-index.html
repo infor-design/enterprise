@@ -1,9 +1,48 @@
 <div class="row top-padding">
-  <div class="twelve columns">
-    <div id="notification-badge-1"></div>
+  <div class="six columns">
+    <h2 class="section-title">Notification Badge</h2>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns" style="display: flex;">
+    <div id="notification-badge-1" class="container-spacer"></div>
+    <div id="notification-badge-2" class="container-spacer"></div>
+    <div id="notification-badge-3" class="container-spacer"></div>
+    <div id="notification-badge-4" class="container-spacer"></div>
+    <div id="notification-badge-5" class="container-spacer"></div>
+    <div id="notification-badge-6" class="container-spacer"></div>
   </div>
 </div>
 
 <script>
-$('#notification-badge-1').notificationbadge();
+$('#notification-badge-1').notificationbadge({
+  color: 'alert'
+});
+$('#notification-badge-2').notificationbadge({
+  icon: 'phone-linear',
+  color: 'warning'
+});
+$('#notification-badge-3').notificationbadge({
+  icon: 'new-document',
+  color: 'yield'
+});
+$('#notification-badge-4').notificationbadge({
+  icon: 'timer',
+  color: 'complete'
+});
+$('#notification-badge-5').notificationbadge({
+  icon: 'stop',
+  color: 'progress'
+});
+$('#notification-badge-6').notificationbadge({
+  icon: 'double-chevron',
+  color: 'caution'
+});
 </script>
+
+<style>
+.container-spacer {
+  flex-grow: 1;
+}
+</style>
