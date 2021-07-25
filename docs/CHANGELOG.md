@@ -21,7 +21,7 @@
 -`[Datagrid]` Fixed issues with NaN displaying on Decimal and Dropdown inputs when blank options are selected. ([#5395](https://github.com/infor-design/enterprise/issues/5395))
 - `[Donut]` Changed legend design when item exceeds maximum width of chart. ([#5292](https://github.com/infor-design/enterprise/issues/5292))
 - `[Dropdown]` Fixed a bug where backspace in Dropdown is not working when pressed. ([#5113](https://github.com/infor-design/enterprise/issues/5113))
-- `[Fileupload]` Fixed a bug where the required asterisk does not appear on the labels associated with required fields. ([#5385](https://github.com/infor-design/enterprise/issues/5385))
+- `[Fileupload]` Fixed a bug where the required asterisk does not appear on the labels associated with required fields. ([#5285](https://github.com/infor-design/enterprise/issues/5285))
 - `[Icon]` Changed button icon colors to slate6 ([#5307](https://github.com/infor-design/enterprise/issues/5307))
 - `[Input]` Fixed a bug where clear icon were not properly aligned with the input field in classic mode. ([#5324](https://github.com/infor-design/enterprise/issues/5324))
 - `[Lookup]` Fixed an issue where selection for server side and paging was not working. ([#986](https://github.com/infor-design/enterprise-ng/issues/986))
