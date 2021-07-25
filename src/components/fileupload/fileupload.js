@@ -135,6 +135,7 @@ FileUpload.prototype = {
     if (this.fileInput.attr('data-validate')) {
       this.textInput.attr('data-validate', this.fileInput.attr('data-validate'));
       this.textInput.validate();
+      this.shadowLabel.addClass(this.fileInput.attr('data-validate'));
     }
 
     if (this.fileInput.attr('readonly')) {
