@@ -66,6 +66,10 @@ FileUpload.prototype = {
         orgLabel = elem.parent().prev('label');
       }
 
+      if (orgLabel.hasClass('required')) {
+        this.shadowLabel.addClass('required');
+      }
+
       this.shadowLabel.html(`${orgLabel.text()} <span class="audible">${instructions}</span>`);
       orgLabel.addClass('audible').add(this.fileInput).attr('tabindex', '-1').attr('aria-hidden', 'true');
     }
