@@ -1791,6 +1791,10 @@ $datagrid-small-row-height: 25px;
           }
         }
       }
+
+      &.reorder-group-child-col .datagrid-reorder-icon {
+        padding-left: 39px;
+      }
     }
   }
 
@@ -1833,6 +1837,10 @@ $datagrid-small-row-height: 25px;
           height: $datagrid-extra-small-row-height - 53;
           line-height: $datagrid-extra-small-row-height - 5;
         }
+      }
+
+      &.reorder-group-child-col .datagrid-reorder-icon {
+        padding-left: 42px;
       }
 
       .hyperlink {
