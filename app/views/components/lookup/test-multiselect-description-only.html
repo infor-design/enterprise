@@ -1352,7 +1352,7 @@
       var removeSelectedIdx = 0;
       var updatedRows = lookupApi.selectedRows.slice();
 
-      if (updatedRows && updatedRows.length > 0) {
+      if (updatedRows && updatedRows.length > removeSelectedIdx) {
         updatedRows.splice(removeSelectedIdx, 1);
         // lookupApi.updateSelectedRows(); // clear selection
         lookupApi.updateSelectedRows(updatedRows); // list of updated selected rows
