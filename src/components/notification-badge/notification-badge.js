@@ -1,9 +1,6 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 
-// jQuery Components
-import '../icons/icons.jquery';
-
 // Settings and Options
 const COMPONENT_NAME = 'notificationbadge';
 
@@ -91,14 +88,6 @@ NotificationBadge.prototype = {
     });
 
     return this;
-  },
-
-  /**
-   * Example Method.
-   * @returns {void}
-   */
-  someMethod() {
-    // do something with this.settings not settings.
   },
 
   /**
