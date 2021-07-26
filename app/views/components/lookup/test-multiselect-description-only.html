@@ -2,6 +2,7 @@
   <div class="twelve columns">
     <div class="field">
       <button class="btn-secondary" type="button" id="btn-show-selected">Show Selected</button>
+      <button class="btn-secondary" type="button" id="btn-update-selected">Update Selected</button>
     </div>
   </div>
 </div>
@@ -1329,9 +1330,9 @@
           contextualToolbar: true
         },
         source: function (req, response) {
-          const startIndex = (req.activePage - 1) * req.pagesize;
-          const endIndex = req.activePage * req.pagesize;
-          const pageData = appInstanceData.slice(startIndex, endIndex);
+          var startIndex = (req.activePage - 1) * req.pagesize;
+          var endIndex = req.activePage * req.pagesize;
+          var pageData = appInstanceData.slice(startIndex, endIndex);
 
           req.total = appInstanceData.length;
           response(pageData, req);
@@ -1343,6 +1344,19 @@
   $('#btn-show-selected').on('click', function() {
     if (lookupApi) {
       console.log('Selected: ', lookupApi.selectedRows || []);
+    }
+  });
+
+  $('#btn-update-selected').on('click', function() {
+    if (lookupApi) {
+      var removeSelectedIdx = 0;
+      var updatedRows = lookupApi.selectedRows.slice();
+
+      if (updatedRows && updatedRows.length > 0) {
+        updatedRows.splice(removeSelectedIdx, 1);
+        // lookupApi.updateSelectedRows(); // clear selection
+        lookupApi.updateSelectedRows(updatedRows); // list of updated selected rows
+      }
     }
   });
 
