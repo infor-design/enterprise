@@ -5,7 +5,7 @@
   </div>
 </div>
 
-<div class="row top-padding">
+<div class="row top-padding bottom-padding">
   <div class="twelve columns" style="display: flex;">
     <div id="notification-badge-1" class="container-spacer"></div>
     <div id="notification-badge-2" class="container-spacer"></div>
@@ -19,31 +19,55 @@
 <script>
 $('#notification-badge-1').notificationbadge({
   color: 'alert',
-  position: 'upper-left'
+  position: 'upper-left',
+  attributes: [
+    { name: 'id', value: 'notification-badge-id-1' },
+    { name: 'data-automation-id', value: 'notification-badge-automation-id-1' }
+  ],
 });
 $('#notification-badge-2').notificationbadge({
   icon: 'phone-linear',
   color: 'warning',
-  position: 'upper-right'
+  position: 'upper-right',
+  attributes: [
+    { name: 'id', value: 'notification-badge-id-2' },
+    { name: 'data-automation-id', value: 'notification-badge-automation-id-2' }
+  ],
 });
 $('#notification-badge-3').notificationbadge({
   icon: 'checkbox',
   color: 'caution',
-  position: 'lower-left'
+  position: 'lower-left',
+  attributes: [
+    { name: 'id', value: 'notification-badge-id-3' },
+    { name: 'data-automation-id', value: 'notification-badge-automation-id-3' }
+  ],
 });
 $('#notification-badge-4').notificationbadge({
   icon: 'folder',
   color: 'complete',
-  position: 'lower-right'
+  position: 'lower-right',
+  attributes: [
+    { name: 'id', value: 'notification-badge-id-4' },
+    { name: 'data-automation-id', value: 'notification-badge-automation-id-4' }
+  ],
 });
 $('#notification-badge-5').notificationbadge({
   icon: 'bookmark-outlined',
   color: 'progress',
-  position: 'upper-left'
+  position: 'upper-left',
+  attributes: [
+  { name: 'id', value: 'notification-badge-id-5' },
+    { name: 'data-automation-id', value: 'notification-badge-automation-id-5' }
+  ],
 });
 $('#notification-badge-6').notificationbadge({
   icon: 'stop',
-  color: 'yield'
+  color: 'yield',
+  attributes: [
+    { name: 'id', value: 'notification-badge-id-6' },
+    { name: 'data-automation-id', value: 'notification-badge-automation-id-6' }
+  ],
 });
 </script>
 

@@ -4,8 +4,8 @@ const config = requireHelper('e2e-config');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('Notification Badge example-badge-placement tests', () => {
-  beforeEach(async() => {
+describe('Notification Badge example-badge-placement tests', () => {
+  beforeEach(async () => {
     await utils.setPage('/components/notification-badge/example-badge-placement?layout=nofrills');
   });
 
