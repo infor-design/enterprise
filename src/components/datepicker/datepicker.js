@@ -200,7 +200,11 @@ DatePicker.prototype = {
       this.readonly();
     }
 
-    this.makeTabbable(this.settings.tabbable);
+    this.makeTabbable(
+      !this.element.is(':disabled') &&
+      this.element.attr('tabindex') !== '-1' &&
+      this.settings.tabbable
+    );
 
     this.setExtraAttributes();
 
