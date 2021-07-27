@@ -24,8 +24,10 @@
 -`[Datagrid]` Fixed issues with NaN displaying on Decimal and Dropdown inputs when blank options are selected. ([#5395](https://github.com/infor-design/enterprise/issues/5395))
 - `[Donut]` Changed legend design when item exceeds maximum width of chart. ([#5292](https://github.com/infor-design/enterprise/issues/5292))
 - `[Dropdown]` Fixed a bug where backspace in Dropdown is not working when pressed. ([#5113](https://github.com/infor-design/enterprise/issues/5113))
+- `[Fileupload]` Fixed a bug where the required asterisk does not appear on the labels associated with required fields. ([#5285](https://github.com/infor-design/enterprise/issues/5285))
 - `[Icon]` Changed button icon colors to slate6 ([#5307](https://github.com/infor-design/enterprise/issues/5307))
 - `[Input]` Fixed a bug where clear icon were not properly aligned with the input field in classic mode. ([#5324](https://github.com/infor-design/enterprise/issues/5324))
+- `[Locale]` Fixed an issue with the finish time format. ([#5447](https://github.com/infor-design/enterprise/issues/5447))
 - `[Lookup]` Fixed an issue where selection for server side and paging was not working. ([#986](https://github.com/infor-design/enterprise-ng/issues/986))
 - `[Lookup]` Added api setting to allow duplicate selected value to input element. ([#986](https://github.com/infor-design/enterprise-ng/issues/986))
 - `[Modal]` Enter key will trigger primary button when in an input field. ([#5198](https://github.com/infor-design/enterprise/issues/5198))
@@ -36,7 +38,7 @@
 
 ### v4.54.0 Markup Changes
 
-- `[TrackDirty]` Removed Track Dirty from the main components list and integrated the underlying examples into their corresponding individual components.
+- `[TrackDirty]` Removed Track Dirty from the main components list and integrated the underlying examples into their corresponding individual components.([#5319](https://github.com/infor-design/enterprise/issues/5319))
 
 ## v4.53.3 Fixes
 
