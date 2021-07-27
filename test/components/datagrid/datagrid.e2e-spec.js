@@ -204,7 +204,7 @@ describe('Datagrid Colspan Frozen Column Tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-colspan-frozen')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-colspan-frozen2')).toEqual(0);
     });
   }
 });
