@@ -506,9 +506,9 @@ Lookup.prototype = {
       }, {
         text: Locale.translate('Apply'),
         click(e, modal) {
+          self.insertRows();
           modal.oldActive = self.icon;
           modal.close();
-          self.insertRows();
         },
         isDefault: true
       }];
