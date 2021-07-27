@@ -791,6 +791,31 @@ Lookup.prototype = {
   },
 
   /**
+   * Update currently selected rows
+   * @param {array} rows The list of updated selected rows
+   * @returns {void}
+   */
+  updateSelectedRows(rows) {
+    if (this.settings.options.source) {
+      rows = Array.isArray(rows) ? rows : [];
+      if (this.selectedRows.length !== rows.length) {
+        this.selectedRows = rows.slice();
+        const value = this.selectedRows
+          .map(r => (r.data ? r.data[this.settings.field] : ''))
+          .join(this.settings.delimiter);
+
+        if (this.grid) {
+          this.grid._selectedRows = this.selectedRows.slice();
+          this.grid.syncSelectedRows();
+          this.grid.syncSelectedUI();
+        }
+        this.element.val(value).trigger('change', [this.selectedRows]);
+        this.element.trigger('input', [this.selectedRows]);
+      }
+    }
+  },
+
+  /**
    * Given a field value, select the row
    * @param {object} val incoming value from the grid row
    * @returns {void}
