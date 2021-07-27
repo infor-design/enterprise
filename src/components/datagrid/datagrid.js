@@ -6459,6 +6459,12 @@ Datagrid.prototype = {
         }
         self.saveUserSettings();
         self.render(null, pagingInfo);
+        console.log("pagingInfo", pagingInfo);
+        const btn = self.currentHeader.find('.datagrid-filter-wrapper button');
+        if (btn && btn.data('popupmenu')) {
+          btn.data('popupmenu').close(true, true);
+        }
+
         self.afterPaging(pagingInfo);
       }).on(`pagesizechange.${COMPONENT_NAME}`, (e, pagingInfo) => {
         pagingInfo.preserveSelected = true;
