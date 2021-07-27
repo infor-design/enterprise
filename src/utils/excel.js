@@ -77,7 +77,13 @@ excel.cleanExtra = function (customDs, self) {
     table = excel.datasetToHtml(customDs);
   } else {
     const dataset = self.settings.groupable ? self.originalDataset : self.settings.dataset;
-    table = excel.appendRows(dataset, self.table[0].cloneNode(true), self);
+    const clonedTable = self.table.clone(true);
+
+    if (self.settings.frozenColumns.left.length || self.settings.frozenColumns.right.length) {
+      clonedTable.find('.datagrid-header tr:first()').html(self.headerNodes().clone(true)); 
+    }
+
+    table = excel.appendRows(dataset, clonedTable[0], self);
   }
 
   // Create the header row
@@ -99,7 +105,6 @@ excel.cleanExtra = function (customDs, self) {
     }
     tbody.parentNode.insertBefore(header, tbody);
   }
-
   table = clean(table);
 
   // Exporting data with trailing negative signs moved in front
