@@ -238,7 +238,7 @@ describe('Datagrid Colspan Frozen Column and Single Select Tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-colspan-frozen-single')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'datagrid-colspan-frozen-single2')).toEqual(0);
     });
   }
 });
