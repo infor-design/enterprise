@@ -46,6 +46,11 @@
 
 - `[TrackDirty]` Removed Track Dirty from the main components list and integrated the underlying examples into their corresponding individual components.([#5319](https://github.com/infor-design/enterprise/issues/5319))
 
+## v4.53.5 Fixes
+
+- `[Lookup]` Fixed two additional issues where selection for server side and paging was not working. ([#986](https://github.com/infor-design/enterprise-ng/issues/986))
+- `[Lookup]` Fixed an issue where in autoApply with single select the modal will close when paging. ([#5466](https://github.com/infor-design/enterprise/issues/5466))
+
 ## v4.53.3 Fixes
 
 - `[Lookup]` Fixed an issue where selection for server side and paging was not working. ([#986](https://github.com/infor-design/enterprise-ng/issues/986))
