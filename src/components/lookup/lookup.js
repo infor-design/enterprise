@@ -737,7 +737,7 @@ Lookup.prototype = {
           self.settings.validator(self.element, self.modal, self.grid);
         }
 
-        if (self.settings.options.selectable === 'single' && self.settings.autoApply) {
+        if (self.settings.options.selectable === 'single' && self.settings.autoApply && op !== 'deselectall') {
           self.modal.close();
           self.insertRows();
         }

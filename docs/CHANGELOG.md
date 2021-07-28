@@ -31,6 +31,7 @@
 - `[Icon]` Changed button icon colors to slate6 ([#5307](https://github.com/infor-design/enterprise/issues/5307))
 - `[Input]` Fixed a bug where clear icon were not properly aligned with the input field in classic mode. ([#5324](https://github.com/infor-design/enterprise/issues/5324))
 - `[Locale]` Fixed an issue with the finish time format. ([#5447](https://github.com/infor-design/enterprise/issues/5447))
+- `[Lookup]` Fixed an issue where in autoApply with single select the modal will close when paging. ([#5466](https://github.com/infor-design/enterprise/issues/5466))
 - `[Lookup]` Fixed an issue where selection for server side and paging was not working. ([#986](https://github.com/infor-design/enterprise-ng/issues/986))
 - `[Lookup]` Added api setting to allow duplicate selected value to input element. ([#986](https://github.com/infor-design/enterprise-ng/issues/986))
 - `[Modal]` Enter key will trigger primary button when in an input field. ([#5198](https://github.com/infor-design/enterprise/issues/5198))
