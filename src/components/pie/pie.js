@@ -37,11 +37,12 @@ const COMPONENT_NAME = 'pie';
  * @param {string} [settings.legend.show='label (percent)'] Controls what is visible
   in the legend, this can be value, value (percent), label or percent or your own custom function.
  * @param {string} [settings.legend.formatter='.0f'] The d3.formatter string.
- * @param {boolean} [settings.showTooltips=true] If false now tooltips will be shown
+ * @param {boolean} [settings.showTooltips=true] If false no tooltips will be shown
  * @param {object} [settings.tooltip] A setting that controls the tooltip values and format.
  * @param {string} [settings.tooltip.show='label (value)'] Controls what is visible in
   the tooltip, this can be value, label or percent or custom function.
  * @param {string} [settings.tooltip.formatter='.0f'] The d3.formatter string.
+ * @param {boolean} [settings.showCenterTooltip=false] If true center tooltip will be shown
  * @param {boolean} [settings.fitHeight=true] If true chart height will fit in parent available height.
  * @param {object} [settings.emptyMessage] An empty message will be displayed when there is no chart data.
  * This accepts an object of the form emptyMessage:
@@ -74,6 +75,7 @@ const PIE_DEFAULTS = {
     show: 'label (value)', // value, label, label (value) or percent or custom function
     formatter: '.0f'
   },
+  showCenterTooltip: false,
   fitHeight: true,
   emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' }
 };
@@ -274,7 +276,7 @@ Pie.prototype = {
     }
 
     self.updateData(self.chartData);
-    if (s.showTooltips) {
+    if (s.showTooltips || s.showCenterTooltip) {
       charts.appendTooltip('is-pie');
     }
 
@@ -425,6 +427,32 @@ Pie.prototype = {
     let prevent = false;
     let timer = 0;
     // Make sure the default to get prevent not bubble up.
+
+    if (self.settings?.showCenterTooltip) {
+      setTimeout(() => {
+        $('.chart-donut-text')
+          .off('mouseenter.text')
+          .on('mouseenter.text', function () {
+            const target = self.element.find('.slices').get(0);
+            const offset = getOffset(target);
+
+            const content = self.settings.dataset[0]?.centerTooltip;
+            const x = offset.left;
+            const y = offset.top + 15;
+
+            $('.is-pie').addClass('is-center');
+            charts.showTooltip(x, y, content, 'top');
+          });
+
+        $('.chart-donut-text')
+          .off('mouseleave.text')
+          .on('mouseleave.text', function () {
+            charts.hideTooltip();
+            $('.is-pie').removeClass('is-center');
+          });
+      }, 100);
+    }
+
     self.element
       .off(`dblclick.${self.namespace}`)
       .on(`dblclick.${self.namespace}`, '*', (e) => {
