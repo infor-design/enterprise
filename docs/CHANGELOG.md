@@ -31,6 +31,7 @@
 - `[Multiselect]` Fixed a regression bug where clear icon were not properly aligned on compact mode. ([#5396](https://github.com/infor-design/enterprise/issues/5396))
 - `[Personalize]` Added css to remove color gradient on overflowing horizontal tab headers. fix is limited to personalize styling ([#5303](https://github.com/infor-design/enterprise/issues/5303))
 - `[Popdown]` Remove deprecation console warning. We still consider this component deprecated but will not remove until 5.0 version. The warning was only removed for now. ([#1070](https://github.com/infor-design/enterprise-ng/issues/1070))
+- `[ToolbarFlex]` updated logic to account for the AllowTabs property and set toolbar items with a tab-index of 0 when allowTabs is ture ([#5387](https://github.com/infor-design/enterprise/issues/5387))
 
 ### v4.54.0 Markup Changes
 
