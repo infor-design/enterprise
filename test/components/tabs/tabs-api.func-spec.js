@@ -40,10 +40,6 @@ describe('Tabs API', () => {
     expect(window.location).toEqual(window.location);
   });
 
-  it('Should not have animated bar', () => {
-    expect(tabsObj.hasAnimatedBar()).toBeTruthy();
-  });
-
   it('Should not have more button', () => {
     expect(tabsObj.hasMoreButton()).toBeFalsy();
   });
@@ -375,19 +371,6 @@ describe('Tabs API', () => {
     tabsObj.focusFirstVisibleTab();
 
     expect(document.querySelector('.tab a')).toEqual(document.activeElement);
-  });
-
-  it('Should set focus the bar on tab', () => {
-    tabsObj.focusBar($(document.querySelector('.tab a')));
-
-    expect(parseInt(document.querySelector('.animated-bar').style.left, 10)).toBeCloseTo(0, 1);
-  });
-
-  it('Should defocus the bar on tab', () => {
-    tabsObj.focusBar($(document.querySelector('.tab a')));
-    tabsObj.defocusBar();
-
-    expect(parseInt(document.querySelector('.animated-bar').style.width, 10)).toBeCloseTo(0, 1);
   });
 
   it('Should disable all tabs except selected tab', () => {

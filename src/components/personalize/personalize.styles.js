@@ -370,7 +370,7 @@ html[dir='rtl'] .scrollable-flex-header.is-personalizable .breadcrumb.truncated:
 
 .is-personalizable .tab-container.header-tabs:not(.alternate)::before,
 .is-personalizable.tab-container.header-tabs:not(.alternate)::before {
-  background-image: linear-gradient(to right, ${colors.dark} , ${colorUtils.hexToRgba(colors.dark, 0)}) !important;
+  background-image: linear-gradient(to right, ${colors.base} , ${colorUtils.hexToRgba(colors.base, 0)}) !important;
 }
 html[dir='rtl'] .is-personalizable .tab-container.header-tabs:not(.alternate)::before,
 html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::before {
@@ -379,11 +379,11 @@ html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::be
 
 .is-personalizable .tab-container.header-tabs:not(.alternate)::after,
 .is-personalizable.tab-container.header-tabs:not(.alternate)::after {
-  background-image: linear-gradient(to right, ${colorUtils.hexToRgba(colors.dark, 0)}, ${colors.dark}) !important;
+  background-image: linear-gradient(to right, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base}) !important;
 }
 html[dir='rtl'] .is-personalizable .tab-container.header-tabs:not(.alternate)::after,
 html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::after {
-  background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.dark, 0)}, ${colors.dark}) !important;
+  background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base}) !important;
 }
 
 .hero-widget.is-personalizable {

@@ -2,16 +2,20 @@
   <div class="twelve columns">
     <div class="field">
       <button class="btn-secondary" type="button" id="btn-show-selected">Show Selected</button>
-      <button class="btn-secondary" type="button" id="btn-update-selected">Update Selected</button>
     </div>
   </div>
 </div>
 
 <div class="row">
-  <div class="twelve columns">
+  <div class="six columns">
     <div class="field">
       <label for="product-lookup" class="label">Products</label>
       <input id="product-lookup" data-init="false" class="lookup" name="product-lookup" type="text"/>
+      <br><br>
+      <div id="selectedListView" class="listview" data-init="false">
+        <ul role="listbox" aria-label="List"></ul>
+      </div>
+
     </div>
   </div>
 </div>
@@ -1341,23 +1345,65 @@
   });
 
   var lookupApi = elem.data('lookup');
-  $('#btn-show-selected').on('click', function() {
+  var selectedRows = [];
+  var selectedListView = $('#selectedListView');
+  var listEl = selectedListView.find('> ul');
+
+  function getListViewItem(text, posinset, setsize) {
+    return '' +
+      '<li role="option" aria-posinset="' + posinset +'" aria-setsize="' + setsize +'">' +
+        '<p>' + text +'</p>' +
+        '<div class="l-pull-right">' +
+          '<button class="btn-icon trigger hide-focus btn-delete" type="button" tabindex="0">' +
+            '<span class="audible">Delete Selected Row (' + posinset +')</span>' +
+            '<svg class="icon" focusable="false" aria-hidden="true" role="presentation">' +
+              '<use href="#icon-close"></use>' +
+            '</svg>' +
+          '</button>' +
+        '</div>' +
+      '</li>';
+  }
+
+  function setListView() {
+    var fieldName = 'applicationInstanceName';
+    var len = selectedRows.length;
+    if (!len) {
+      listEl.html('');
+      selectedListView.hide();
+    } else {
+      var content = '';
+      for (var i = 0; i < len; i++) {
+        var text = selectedRows[i].data[fieldName];
+        content += getListViewItem(text, i, len);
+      }
+      listEl.html(content);
+      selectedListView.show();
+
+      const delButtons = selectedListView.find('.btn-delete');
+
+      delButtons.one('click', function() {
+        if (lookupApi) {
+          var idx = delButtons.index(this);
+          var updatedRows = selectedRows;
+
+          if (updatedRows.length > idx) {
+            updatedRows.splice(idx, 1);
+            lookupApi.updateSelectedRows(updatedRows);
+          }
+        }
+      });
+    }
+  }
+
+  elem.on('change', function() {
     if (lookupApi) {
-      console.log('Selected: ', lookupApi.selectedRows || []);
+      selectedRows = (lookupApi.selectedRows || []).slice();
+      setListView();
     }
   });
 
-  $('#btn-update-selected').on('click', function() {
-    if (lookupApi) {
-      var removeSelectedIdx = 0;
-      var updatedRows = lookupApi.selectedRows.slice();
-
-      if (updatedRows && updatedRows.length > removeSelectedIdx) {
-        updatedRows.splice(removeSelectedIdx, 1);
-        // lookupApi.updateSelectedRows(); // clear selection
-        lookupApi.updateSelectedRows(updatedRows); // list of updated selected rows
-      }
-    }
+  $('#btn-show-selected').on('click', function() {
+    console.log('Selected: ', selectedRows || []);
   });
 
 </script>
