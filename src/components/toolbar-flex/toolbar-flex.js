@@ -372,7 +372,11 @@ ToolbarFlex.prototype = {
     }
 
     for (let i = 0; i < this.items.length; i++) {
-      this.items[i].focused = false;
+      if (this.items[i].settings.allowTabs) {
+        this.items[i].focused = true;
+      } else {
+        this.items[i].focused = false;
+      }
     }
     item.focused = true;
     this.trueFocusedItem = item;

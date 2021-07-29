@@ -1,0 +1,17 @@
+<div class="flex-toolbar" data-options="{ 'attributes': [ { 'name': 'data-automation-id', 'value': 'my-toolbar'} ] }" role="toolbar" data-automation-id="my-toolbar">
+  <div class="toolbar-section buttonset">
+    <button class="btn" tabindex="0" data-automation-id="my-toolbar-button-0">
+      <span>Text Button</span>
+    </button>
+    <button class="btn" tabindex="0" data-automation-id="my-toolbar-button-0">
+      <span>Text Button 2</span>
+    </button>
+  </div>
+
+  <div class="more toolbar-section"><button class="btn-actions" aria-haspopup="true"><svg class="icon "><use xlink:href="#icon-more"></use></svg></button><div class="popupmenu-wrapper bottom"><div class="arrow"></div></div></div>
+</div>
+
+<script>
+  let toolbarShowing = false;
+  const toolbarElem = $(".flex-toolbar").toolbarflex({ allowTabs: true });
+</script>
