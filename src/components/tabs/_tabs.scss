@@ -275,6 +275,52 @@
   }
 }
 
+.tab-container.header-tabs {
+  &:not(.alternate) {
+    > .tab-list-container {
+      .tab-focus-indicator {
+        margin-top: 2px !important;
+      }
+
+      .tab {
+        top: -2px !important;
+
+        &:hover {
+          border-bottom: 4px solid $header-tab-hover-color;
+        }
+
+        &.is-selected {
+          border-bottom: 4px solid $header-tab-hover-color;
+        }
+      }
+    }
+  }
+}
+
+.tab-container.has-counts {
+  > .tab-list-container {
+    .tab-list {
+      padding: 1px 0px 17px 0px;
+
+      .separator {
+        margin-bottom: -6px;
+      }
+
+      .tab {
+        border-bottom: 5px solid transparent;
+
+        &:hover {
+          border-bottom: 5px solid $tab-hover-color;
+        }
+  
+        &.is-selected {
+          border-bottom: 5px solid $tab-selected-color;
+        }
+      }
+    }
+  }
+}
+
 // Common styles between Horizontal and Header tabs
 .tab-container.horizontal,
 .tab-container.header-tabs {
@@ -397,7 +443,13 @@
     overflow-x: auto; // facilitates scrolling of the tabset
     overflow-y: hidden; // prevents vertical scrolling
     position: relative;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;
     width: calc(100% - 51px);
+  }
+
+  .tab-list-container::-webkit-scrollbar {
+    display: none;
   }
 
   &.has-add-button {
@@ -429,7 +481,8 @@
 
     .tab {
       @include css3(transition, background-color 0.25s ease);
-
+      top: 1px;
+      border-bottom: 4px solid transparent;
       border-radius: 2px 2px 0 0;
       height: inherit;
       padding: 0;
@@ -442,13 +495,17 @@
         &.is-success,
         &.is-alert {
           a[role='tab'] {
-            padding: 12px 20px 12px 5px;
+            padding: 12px 22px 6px 5px;
           }
         }
       }
 
-      &::before {
-        @include tab-after-off;
+      &:hover {
+        border-bottom: 4px solid $tab-hover-color;
+      }
+
+      &.is-selected {
+        border-bottom: 4px solid $tab-selected-color;
       }
 
       &:not(.separator):hover {
@@ -491,7 +548,7 @@
           &.close {
             height: 10px;
             margin-left: -3px;
-            margin-top: -1px;
+            margin-top: 2px;
             padding-right: 0;
             right: -1px;
             top: 1px;
@@ -511,7 +568,7 @@
       &.has-popupmenu {
         .icon {
           height: 16px;
-          margin: 0 0 0 -5px;
+          margin: 3px 0 0 -5px;
           position: static;
           width: 32px;
         }

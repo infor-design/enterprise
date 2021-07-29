@@ -7,10 +7,15 @@
 </div>
 
 <div class="row">
-  <div class="twelve columns">
+  <div class="six columns">
     <div class="field">
       <label for="product-lookup" class="label">Products</label>
       <input id="product-lookup" data-init="false" class="lookup" name="product-lookup" type="text"/>
+      <br><br>
+      <div id="selectedListView" class="listview" data-init="false">
+        <ul role="listbox" aria-label="List"></ul>
+      </div>
+
     </div>
   </div>
 </div>
@@ -1329,9 +1334,9 @@
           contextualToolbar: true
         },
         source: function (req, response) {
-          const startIndex = (req.activePage - 1) * req.pagesize;
-          const endIndex = req.activePage * req.pagesize;
-          const pageData = appInstanceData.slice(startIndex, endIndex);
+          var startIndex = (req.activePage - 1) * req.pagesize;
+          var endIndex = req.activePage * req.pagesize;
+          var pageData = appInstanceData.slice(startIndex, endIndex);
 
           req.total = appInstanceData.length;
           response(pageData, req);
@@ -1340,10 +1345,65 @@
   });
 
   var lookupApi = elem.data('lookup');
-  $('#btn-show-selected').on('click', function() {
-    if (lookupApi) {
-      console.log('Selected: ', lookupApi.selectedRows || []);
+  var selectedRows = [];
+  var selectedListView = $('#selectedListView');
+  var listEl = selectedListView.find('> ul');
+
+  function getListViewItem(text, posinset, setsize) {
+    return '' +
+      '<li role="option" aria-posinset="' + posinset +'" aria-setsize="' + setsize +'">' +
+        '<p>' + text +'</p>' +
+        '<div class="l-pull-right">' +
+          '<button class="btn-icon trigger hide-focus btn-delete" type="button" tabindex="0">' +
+            '<span class="audible">Delete Selected Row (' + posinset +')</span>' +
+            '<svg class="icon" focusable="false" aria-hidden="true" role="presentation">' +
+              '<use href="#icon-close"></use>' +
+            '</svg>' +
+          '</button>' +
+        '</div>' +
+      '</li>';
+  }
+
+  function setListView() {
+    var fieldName = 'applicationInstanceName';
+    var len = selectedRows.length;
+    if (!len) {
+      listEl.html('');
+      selectedListView.hide();
+    } else {
+      var content = '';
+      for (var i = 0; i < len; i++) {
+        var text = selectedRows[i].data[fieldName];
+        content += getListViewItem(text, i, len);
+      }
+      listEl.html(content);
+      selectedListView.show();
+
+      const delButtons = selectedListView.find('.btn-delete');
+
+      delButtons.one('click', function() {
+        if (lookupApi) {
+          var idx = delButtons.index(this);
+          var updatedRows = selectedRows;
+
+          if (updatedRows.length > idx) {
+            updatedRows.splice(idx, 1);
+            lookupApi.updateSelectedRows(updatedRows);
+          }
+        }
+      });
     }
+  }
+
+  elem.on('change', function() {
+    if (lookupApi) {
+      selectedRows = (lookupApi.selectedRows || []).slice();
+      setListView();
+    }
+  });
+
+  $('#btn-show-selected').on('click', function() {
+    console.log('Selected: ', selectedRows || []);
   });
 
 </script>

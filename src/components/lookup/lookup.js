@@ -506,9 +506,9 @@ Lookup.prototype = {
       }, {
         text: Locale.translate('Apply'),
         click(e, modal) {
+          self.insertRows();
           modal.oldActive = self.icon;
           modal.close();
-          self.insertRows();
         },
         isDefault: true
       }];
@@ -737,7 +737,7 @@ Lookup.prototype = {
           self.settings.validator(self.element, self.modal, self.grid);
         }
 
-        if (self.settings.options.selectable === 'single' && self.settings.autoApply) {
+        if (self.settings.options.selectable === 'single' && self.settings.autoApply && op !== 'deselectall') {
           self.modal.close();
           self.insertRows();
         }
@@ -787,6 +787,31 @@ Lookup.prototype = {
           }
         }
       });
+    }
+  },
+
+  /**
+   * Update currently selected rows
+   * @param {array} rows The list of updated selected rows
+   * @returns {void}
+   */
+  updateSelectedRows(rows) {
+    if (this.settings.options.source) {
+      rows = Array.isArray(rows) ? rows : [];
+      if (this.selectedRows.length !== rows.length) {
+        this.selectedRows = rows.slice();
+        const value = this.selectedRows
+          .map(r => (r.data ? r.data[this.settings.field] : ''))
+          .join(this.settings.delimiter);
+
+        if (this.grid) {
+          this.grid._selectedRows = this.selectedRows.slice();
+          this.grid.syncSelectedRows();
+          this.grid.syncSelectedUI();
+        }
+        this.element.val(value).trigger('change', [this.selectedRows]);
+        this.element.trigger('input', [this.selectedRows]);
+      }
     }
   },
 

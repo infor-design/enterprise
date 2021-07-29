@@ -452,15 +452,6 @@ Tabs.prototype = {
 
     this.positionFocusState(selectedAnchor);
 
-    if (this.hasAnimatedBar()) {
-      this.animatedBar.addClass('no-transition');
-      this.focusBar(undefined, () => {
-        setTimeout(() => {
-          this.animatedBar.removeClass('no-transition');
-        }, 0);
-      });
-    }
-
     // Setup Edge Fades
     if (this.tablistContainer) {
       this.tablistContainer.on('scroll.tabs', () => {
@@ -530,10 +521,6 @@ Tabs.prototype = {
       }
       this.tablist.on('arrangeupdate.tabs', () => {
         tabContainer?.classList.remove(className);
-        if (this.hasAnimatedBar()) {
-          const selected = this.tablist.find('.tab.is-selected');
-          this.focusBar(selected);
-        }
       });
 
       this.element.on('aftertabadded.tabs', () => {
@@ -557,18 +544,6 @@ Tabs.prototype = {
     this.focusState = this.element.find('.tab-focus-indicator');
     if (!this.focusState.length) {
       this.focusState = $('<div class="tab-focus-indicator" role="presentation"></div>').insertBefore(this.tablist);
-    }
-
-    // Animated Bar
-    if (this.hasAnimatedBar()) {
-      this.animatedBar = this.element.find('.animated-bar');
-      if (!this.animatedBar.length) {
-        this.animatedBar = $('<div class="animated-bar" role="presentation"></div>');
-      }
-      this.animatedBar.insertBefore(this.tablist);
-    } else if (this.animatedBar && this.animatedBar.length) {
-      this.animatedBar.off().removeData().remove();
-      this.animatedBar = undefined;
     }
 
     // Add the markup for the "More" button if it doesn't exist.
@@ -680,17 +655,6 @@ Tabs.prototype = {
    */
   setupEvents() {
     const self = this;
-
-    // Set animation bar if tabs under modal
-    const modal = self.element.closest('.modal');
-    if (modal.length) {
-      modal.on('afteropen.tabs', () => {
-        if (self.hasAnimatedBar()) {
-          const selected = $('.tab.is-selected');
-          self.focusBar(selected);
-        }
-      });
-    }
 
     // Clicking the 'a' triggers the click on the 'li'
     function routeAnchorClick(e) {
@@ -804,10 +768,6 @@ Tabs.prototype = {
 
         self.positionFocusState(a);
 
-        if (self.hasAnimatedBar()) {
-          self.focusBar(popupLi);
-        }
-
         a.focus();
         self.scrollTabList(popupLi);
 
@@ -864,12 +824,6 @@ Tabs.prototype = {
       self.handleResize();
     });
     self.handleResize(true);
-
-    // Resize the tab to show the error
-    $('.tab-panel input').on('error.tabs, valid.tabs', () => {
-      const currentLi = $('.tab.is-selected');
-      self.focusBar(currentLi);
-    });
 
     return this;
   },
@@ -1025,7 +979,6 @@ Tabs.prototype = {
     }
 
     // Hide these states
-    this.focusBar(li);
     this.positionFocusState(a);
 
     if (this.settings.lazyLoad === true && this.isURL(href)) {
@@ -1315,7 +1268,6 @@ Tabs.prototype = {
       }
 
       self.changeHash(href);
-      self.focusBar(currentLi);
       checkAngularClick();
       currentA[0].focus();
       self.hideFocusState();
@@ -1732,10 +1684,8 @@ Tabs.prototype = {
     }
 
     if (!selected.length) {
-      this.defocusBar();
       this.hideFocusState();
     } else {
-      this.focusBar(selected);
       this.positionFocusState(selected);
     }
 
@@ -1835,14 +1785,6 @@ Tabs.prototype = {
     }
 
     window.location = href;
-  },
-
-  /**
-   * Determines whether or not this tabset's tab list should display an animated selected state on a tab.
-   * @returns {boolean} whether or not the animated selected state should display.
-   */
-  hasAnimatedBar() {
-    return !this.isModuleTabs() && !this.isVerticalTabs();
   },
 
   /**
@@ -2081,7 +2023,6 @@ Tabs.prototype = {
 
     if (!target.length) {
       this.hideFocusState();
-      this.defocusBar();
       return target;
     }
 
@@ -2093,7 +2034,6 @@ Tabs.prototype = {
       a.focus();
     }
     this.positionFocusState(a);
-    this.focusBar(target);
 
     return target;
   },
@@ -2232,7 +2172,6 @@ Tabs.prototype = {
         activeStateTarget = self.moreButton;
         selectedStateTarget = self.moreButton;
       }
-      self.focusBar(activeStateTarget);
 
       if (selectedStateTarget) {
         selectedStateTarget.addClass('is-selected');
@@ -2650,7 +2589,6 @@ Tabs.prototype = {
     // If started from zero, position the focus state/bar and activate the tab
     if (startFromZero) {
       this.positionFocusState(anchorMarkup);
-      this.focusBar(tabHeaderMarkup);
       if (!this.activate(anchorMarkup.attr('href'))) {
         this.triggerEventAfterTabAdded(tabId);
         return this;
@@ -2802,7 +2740,6 @@ Tabs.prototype = {
     // If there's really nothing, kick on out and defocus everything.
     if (!prevLi.length) {
       this.hideFocusState();
-      this.defocusBar();
 
       this.element.trigger('afterclose', [targetLi]);
       return this;
@@ -2822,7 +2759,6 @@ Tabs.prototype = {
       }
     }
 
-    this.focusBar(prevLi);
     a.focus();
 
     /**
@@ -2982,7 +2918,6 @@ Tabs.prototype = {
       this.select(a[0].hash);
     }
 
-    this.focusBar();
     this.positionFocusState();
     return this;
   },
@@ -3002,7 +2937,6 @@ Tabs.prototype = {
       this.select(a[0].hash);
     }
 
-    this.focusBar();
     this.positionFocusState();
     return this;
   },
@@ -3019,7 +2953,6 @@ Tabs.prototype = {
     this.activateAdjacentTab(e, tabId);
 
     tab.addClass('is-disabled');
-    this.focusBar();
     this.positionFocusState();
     return this;
   },
@@ -3034,7 +2967,6 @@ Tabs.prototype = {
     const tab = this.doGetTab(e, tabId);
 
     tab.removeClass('is-disabled');
-    this.focusBar();
     this.positionFocusState();
     return this;
   },
@@ -3093,7 +3025,6 @@ Tabs.prototype = {
     const doesTabExist = this.tablist.children('li').length < 2 ? tab : undefined;
 
     this.positionFocusState(doesTabExist);
-    this.focusBar(doesTabExist);
   },
 
   /**
@@ -3121,7 +3052,6 @@ Tabs.prototype = {
     const doesTabExist = this.tablist.children('li').length < 2 ? tab : undefined;
 
     this.positionFocusState(doesTabExist);
-    this.focusBar(doesTabExist);
   },
 
   /**
@@ -3339,7 +3269,6 @@ Tabs.prototype = {
     const anchor = this.getAnchor(modHref);
 
     this.positionFocusState(undefined, false);
-    this.focusBar(anchor.parent());
 
     if (!this.activate(anchor.attr('href'))) {
       return;
@@ -3481,7 +3410,6 @@ Tabs.prototype = {
       $(this).off('close.tabs selected.tabs');
       self.moreButton.removeClass('popup-is-open');
       self.positionFocusState(undefined);
-      self.focusBar();
     }
 
     function selectMenuOption(e, anchor) {
@@ -3708,107 +3636,6 @@ Tabs.prototype = {
   },
 
   /**
-   * Moves the animated "selected" state bar to a new tab
-   * @param {jQuery} li the new tab list item
-   * @param {function} callback fires after the animation is completed.
-   * @returns {void}
-   */
-  focusBar(li, callback) {
-    if (!this.hasAnimatedBar()) {
-      return;
-    }
-
-    if (!(li instanceof $) || !li.length) {
-      return;
-    }
-
-    const self = this;
-    const target = li;
-
-    this.animatedBar.removeClass('no-transition');
-
-    if (!target || target === undefined || !target.length || !self.anchors.length) {
-      this.animatedBar.removeClass('visible');
-      return;
-    }
-    clearTimeout(self.animationTimeout);
-    this.animatedBar.addClass('visible');
-
-    function animationTimeout(cb) {
-      self.sizeBar(target);
-
-      if (cb && typeof cb === 'function') {
-        cb();
-      }
-    }
-
-    animationTimeout(callback);
-  },
-
-  /**
-   * Recalculate the sizes on the animated bar
-   * @param {jQuery} target The target tab element
-   * @private
-   * @returns {void}
-   */
-  sizeBar(target) {
-    if ((!this.animatedBar || (this.animatedBar && !this.animatedBar[0]))) {
-      return;
-    }
-    target = target || this.element.find('.tab.is-selected');
-    const style = this.animatedBar[0].style;
-    const scrollingTablist = this.tablistContainer;
-    const tablistScrollLeft = scrollingTablist[0].scrollLeft;
-    const tablistScrollWidth = scrollingTablist[0].scrollWidth;
-    const tabListDifferWidth = tablistScrollWidth - this.tablistContainer[0].offsetWidth;
-
-    const targetStyle = window.getComputedStyle(target[0], null);
-    let paddingRight = parseInt(targetStyle.getPropertyValue('padding-right'), 10) || 0;
-    const width = parseInt(targetStyle.getPropertyValue('width'), 10) || 0;
-
-    if (target.is('.tab')) {
-      const anchorStyle = window.getComputedStyle(target.children('a')[0]);
-      paddingRight += parseInt(anchorStyle.getPropertyValue('padding-right'), 10) || 0;
-    }
-
-    const left = Locale.isRTL() ?
-      (paddingRight + target.position().left + target.outerWidth(true)) : (target.position().left);
-
-    if (Locale.isRTL()) {
-      style.right = `${tablistScrollWidth + paddingRight - (left + tablistScrollLeft) - tabListDifferWidth}px`;
-    } else {
-      style.left = `${left + tablistScrollLeft}px`;
-    }
-    style.width = `${width}px`;
-    this.focusState[0].style.width = `${width}px`;
-  },
-
-  /**
-   * Clears the animated "selected" state bar away.
-   * @returns {void}
-   */
-  defocusBar() {
-    if (!this.hasAnimatedBar()) {
-      return;
-    }
-
-    const self = this;
-    const left = Locale.isRTL() ? 0 :
-      (self.animatedBar.position().left + (self.animatedBar.outerWidth() / 2));
-
-    clearTimeout(self.animationTimeout);
-
-    this.animatedBar[0].style.left = `${left}px`;
-    this.animatedBar[0].style.width = 0;
-
-    this.animationTimeout = setTimeout(() => {
-      if (self.animatedBar && self.animatedBar.length) {
-        self.animatedBar.removeClass('visible').removeAttr('style');
-      }
-    }, 350);
-  },
-
-  /**
    * Wrapper for the Soho behavior _smoothScrollTo()_ that will determine scroll distance.
    * @param {jQuery[]} target - the target <li> or <a> tag
    * @param {number} duration - the time it will take to scroll
@@ -3938,10 +3765,8 @@ Tabs.prototype = {
         }
       }
 
-      // Alternate Header Tabs have 1px removed from bottom to prevent overlap
-      // onto the bottom border
       if (isNotHeaderTabs && !isVerticalTabs) {
-        targetRectObj.height -= 1;
+        targetRectObj.height += 23;
       }
 
       return targetRectObj;
@@ -4242,10 +4067,6 @@ Tabs.prototype = {
     this.focusState.removeData().remove();
     this.focusState = undefined;
 
-    if (this.hasAnimatedBar()) {
-      this.animatedBar.removeData().remove();
-      this.animatedBar = undefined;
-    }
     $('.tab-panel input').off('error.tabs valid.tabs');
 
     if (this.addTabButton) {
