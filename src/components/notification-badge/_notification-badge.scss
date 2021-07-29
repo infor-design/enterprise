@@ -1,0 +1,72 @@
+// Notification Badge
+//================================================== //
+
+.notification-badge-container {
+  display: inline-flex;
+  position: relative;
+  vertical-align: middle;
+
+  .icon {
+    width: 18px;
+  }
+
+  .notification-dot {
+    border-radius: 4px;
+    flex-wrap: wrap;
+    height: 6px;
+    position: absolute;
+    width: 6px;
+
+    &.notification-dot-alert {
+      background-color: $ids-color-status-danger;
+    }
+
+    &.notification-dot-warning {
+      background-color: $ids-color-status-warning;
+    }
+
+    &.notification-dot-yield {
+      background-color: $ids-color-status-caution;
+    }
+
+    &.notification-dot-complete {
+      background-color: $ids-color-status-success;
+    }
+
+    &.notification-dot-progress {
+      background-color: $ids-color-brand-primary-alt;
+    }
+
+    &.notification-dot-caution {
+      background-color: $ids-color-palette-amethyst-60;
+    }
+
+    &.notification-dot-upper-right {
+      right: 3px;
+      top: 3px;
+      transform: scale(1) translate(50%, -50%);
+      transform-origin: 100% 0%;
+    }
+
+    &.notification-dot-upper-left {
+      top: 3px;
+      left: 3px;
+      transform: scale(1) translate(-50%, -50%);
+      transform-origin: 0% 0%;
+    }
+
+    &.notification-dot-lower-right {
+      top: 9px;
+      left: 9px;
+      transform: scale(1) translate(50%, 50%);
+      transform-origin: 100% 100%;
+    }
+
+    &.notification-dot-lower-left {
+      top: 9px;
+      left: 3px;
+      transform: scale(1) translate(-50%, 50%);
+      transform-origin: 0% 100%;
+    }
+  }
+}

@@ -4,26 +4,35 @@
 
 - `[Cards]` Added the ability of single and multi selection of cards. ([#5253](https://github.com/infor-design/enterprise/issues/5253))
 - `[Datagrid]` Added support to row reorder for groupable settings. ([#5233](https://github.com/infor-design/enterprise/issues/5233))
+- `[Notification Badge]` Added Notification Badge component that has the ability to move to any corner of the icon element. ([#5344](https://github.com/infor-design/enterprise/issues/5344))
 
 ## v4.54.0 Fixes
 
-- `[Datagrid]` - Fixed a bug where the row height cut off the focus ring on the Action Item buttons for Classic/New mode and XS, S, M settings ([#5394](https://github.com/infor-design/enterprise/issues/5394))
-- `[Datagrid]` Fixed an issue where row reorder handle align was not right for extra small and small height. ([#5233](https://github.com/infor-design/enterprise/issues/5233))
 - `[Blockgrid]` Added additional design with no image ([#5379](https://github.com/infor-design/enterprise/issues/5379))
 - `[Charts]` Fixed a bug where the vertical grid line strokes were invisible when in High Contrast and Colors was non-Default ([#5301](https://github.com/infor-design/enterprise/issues/5301))
 - `[CirclePager]` Fixed a bug where the slides were not properly showing for RTL languages ([#2885](https://github.com/infor-design/enterprise/issues/2885))
 - `[CirclePager]` Fixed a bug where the CSS was the same for all of the circles in homepage/example-hero-widget ([#5337](https://github.com/infor-design/enterprise/issues/5337))
 - `[ContextualActionPanel]` Added `title` prop in CAP to control the title via `modaSettings`, and added missing `beforeclose` event. ([NG#1048](https://github.com/infor-design/enterprise-ng/issues/1048))
+- `[Datagrid]` - Fixed a bug where the row height cut off the focus ring on the Action Item buttons for Classic/New mode and XS, S, M settings ([#5394](https://github.com/infor-design/enterprise/issues/5394))
+- `[Datagrid]` Fixed an issue where row reorder handle align was not right for extra small and small height. ([#5233](https://github.com/infor-design/enterprise/issues/5233))
 - `[Datagrid]` - Fixed a bug where the first two columns row heights did not match the others for the Medium setting ([#5366](https://github.com/infor-design/enterprise/issues/5366))
--`[Datagrid]` Fixed a bug where the font color on tags was black when a row was hovered over in dark mode. Font color now white. ([#5289](https://github.com/infor-design/enterprise/issues/5289))
--`[Datagrid]` Fixed issues with NaN displaying on Decimal and Dropdown inputs when blank options are selected. ([#5395](https://github.com/infor-design/enterprise/issues/5395))
+- `[Datagrid]` - Fixed a bug where the font color on tags was black when a row was hovered over in dark mode. Font color now white. ([#5289](https://github.com/infor-design/enterprise/issues/5289))
+- `[Datagrid]` Fixed a bug where the font color on tags was black when a row was hovered over in dark mode. Font color now white. ([#5289](https://github.com/infor-design/enterprise/issues/5289))
+- `[Datagrid]` Fixed issues with NaN displaying on Decimal and Dropdown inputs when blank options are selected. ([#5395](https://github.com/infor-design/enterprise/issues/5395))
+- `[Datagrid]` - Fixed a bug where the row height cut off the focus ring on the Action Item buttons for Classic/New mode and XS, S, M settings ([#5394](https://github.com/infor-design/enterprise/issues/5394))
+- `[Datagrid]` Fixed a bug where the font color on tags was black when a row was hovered over in dark mode. Font color now white. ([#5289](https://github.com/infor-design/enterprise/issues/5289))
+- `[Datagrid]` Fixed issues with NaN displaying on Decimal and Dropdown inputs when blank options are selected. ([#5395](https://github.com/infor-design/enterprise/issues/5395))
 - `[Datepicker]` Fixed a bug where the -/+ keys were not detected in datepicker. ([#5353](https://github.com/infor-design/enterprise/issues/5353))
--`[Datagrid]` Fixed a bug where the font color on tags was black when a row was hovered over in dark mode. Font color now white. ([#5289](https://github.com/infor-design/enterprise/issues/5289))
--`[Datagrid]` Fixed issues with NaN displaying on Decimal and Dropdown inputs when blank options are selected. ([#5395](https://github.com/infor-design/enterprise/issues/5395))
+- `[Datagrid]` Fixed a bug that prevented the headers of the right frozen columns from being exported properly. ([#5332](https://github.com/infor-design/enterprise/issues/5332))
+- `[Datagrid]` Fixed a bug where the font color on tags was black when a row was hovered over in dark mode. Font color now white. ([#5289](https://github.com/infor-design/enterprise/issues/5289))
+- `[Datagrid]` Fixed issues with NaN displaying on Decimal and Dropdown inputs when blank options are selected. ([#5395](https://github.com/infor-design/enterprise/issues/5395))
 - `[Donut]` Changed legend design when item exceeds maximum width of chart. ([#5292](https://github.com/infor-design/enterprise/issues/5292))
 - `[Dropdown]` Fixed a bug where backspace in Dropdown is not working when pressed. ([#5113](https://github.com/infor-design/enterprise/issues/5113))
+- `[Fileupload]` Fixed a bug where the required asterisk does not appear on the labels associated with required fields. ([#5285](https://github.com/infor-design/enterprise/issues/5285))
 - `[Icon]` Changed button icon colors to slate6 ([#5307](https://github.com/infor-design/enterprise/issues/5307))
 - `[Input]` Fixed a bug where clear icon were not properly aligned with the input field in classic mode. ([#5324](https://github.com/infor-design/enterprise/issues/5324))
+- `[Locale]` Fixed an issue with the finish time format. ([#5447](https://github.com/infor-design/enterprise/issues/5447))
+- `[Lookup]` Fixed an issue where in autoApply with single select the modal will close when paging. ([#5466](https://github.com/infor-design/enterprise/issues/5466))
 - `[Lookup]` Fixed an issue where selection for server side and paging was not working. ([#986](https://github.com/infor-design/enterprise-ng/issues/986))
 - `[Lookup]` Added api setting to allow duplicate selected value to input element. ([#986](https://github.com/infor-design/enterprise-ng/issues/986))
 - `[Modal]` Enter key will trigger primary button when in an input field. ([#5198](https://github.com/infor-design/enterprise/issues/5198))
@@ -32,10 +41,16 @@
 - `[Personalize]` Added css to remove color gradient on overflowing horizontal tab headers. fix is limited to personalize styling ([#5303](https://github.com/infor-design/enterprise/issues/5303))
 - `[Popdown]` Remove deprecation console warning. We still consider this component deprecated but will not remove until 5.0 version. The warning was only removed for now. ([#1070](https://github.com/infor-design/enterprise-ng/issues/1070))
 - `[ToolbarFlex]` updated logic to account for the AllowTabs property and set toolbar items with a tab-index of 0 when allowTabs is ture ([#5387](https://github.com/infor-design/enterprise/issues/5387))
+- `[Tabs]` Remove tabs animation when clicking tabs. ([#4818](https://github.com/infor-design/enterprise-ng/issues/4818))
 
 ### v4.54.0 Markup Changes
 
-- `[TrackDirty]` Removed Track Dirty from the main components list and integrated the underlying examples into their corresponding individual components.
+- `[TrackDirty]` Removed Track Dirty from the main components list and integrated the underlying examples into their corresponding individual components.([#5319](https://github.com/infor-design/enterprise/issues/5319))
+
+## v4.53.5 Fixes
+
+- `[Lookup]` Fixed two additional issues where selection for server side and paging was not working. ([#986](https://github.com/infor-design/enterprise-ng/issues/986))
+- `[Lookup]` Fixed an issue where in autoApply with single select the modal will close when paging. ([#5466](https://github.com/infor-design/enterprise/issues/5466))
 
 ## v4.53.3 Fixes
 
