@@ -267,13 +267,13 @@
   const bar = $('#bar-grouped-example');
   const area = $('#area-example');
 
-  donut.chart({type: 'donut', dataset: getDonutData()});
-  bar.chart({type: 'bar-grouped', dataset: getBarData(), showLegend: false});
-  area.chart({type: 'area', dataset: getAreaData()});
-  
   $(window).resize(() => {
     location.reload();
   });
+
+  donut.chart({type: 'donut', dataset: getDonutData()});
+  bar.chart({type: 'bar-grouped', dataset: getBarData(), showLegend: false});
+  area.chart({type: 'area', dataset: getAreaData()});
 
   if ($('body').width() < 610) {
     const width = $('body').width() < 320 ? 280 : 300;
