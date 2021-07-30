@@ -57,6 +57,11 @@ const COMPONENT_NAME_DEFAULTS = {
     selectBackward: false, // Only in backward direction
     includeDisabled: false // if true range will include disable dates in it
   },
+  displayRange: {
+    useRange: false, // true - if calendar using range dates
+    start: '', // Start date '03/05/2018'
+    end: '', // End date '03/21/2018'
+  },
   selectable: true,
   onSelected: null,
   onKeyDown: null,
@@ -162,7 +167,11 @@ MonthView.prototype = {
       this.language = lang || this.settings.language || this.locale.language;
       this.settings.language = this.language;
       this.setCurrentCalendar();
-      this.build().handleEvents();
+      if (this.settings.displayRange.useRange) {
+        this.buildRange().handleEvents();
+      } else {
+        this.build().handleEvents();
+      }
     });
   },
 
@@ -292,6 +301,116 @@ MonthView.prototype = {
     } else if (this.settings.showToday) {
       this.header.find('.btn-icon.prev').before(`<a class="hyperlink today" href="#">${Locale.translate('Today', { locale: this.locale.name, language: this.language })}</a>`);
     }
+
+    this.showMonth(this.settings.month, this.settings.year);
+    this.calendar = this.element.addClass('monthview').append(this.header, this.monthYearPane, useElement);
+
+    if (!(this.settings.isPopup || this.settings.inPage)) {
+      this.element.addClass('is-fullsize');
+    }
+
+    // Add Legend
+    this.addLegend();
+
+    // Invoke the toolbar
+    this.calendarToolbarEl = this.header.find('.calendar-toolbar');
+    this.calendarToolbarAPI = new CalendarToolbar(this.calendarToolbarEl[0], {
+      onOpenCalendar: () => this.currentDate,
+      locale: this.settings.locale,
+      language: this.settings.language,
+      year: this.currentYear,
+      month: this.currentMonth,
+      showToday: this.settings.showToday,
+      showNextPrevious: this.settings.showNextPrevious,
+      isMonthPicker: this.settings.headerStyle === 'full',
+      isAlternate: this.settings.headerStyle !== 'full',
+      isMenuButton: (this.settings.headerStyle !== 'full' || this.settings.inPage) ? this.settings.showMonthYearPicker : false,
+      showViewChanger: this.settings.showViewChanger,
+      onChangeView: this.settings.onChangeView,
+      attributes: this.settings.attributes,
+      inPage: this.settings.inPage,
+      inPageTitleAsButton: this.settings.inPageTitleAsButton,
+    });
+
+    this.handleEvents();
+    utils.addAttributes(this.element, this, this.settings.attributes);
+    return this;
+  },
+
+  /**
+   * Add any needed markup to the component.
+   * @private
+   * @returns {object} The Calendar prototype, useful for chaining.
+   */
+  buildRange() {
+    const rangeStart = new Date(this.settings.displayRange.start);
+    const rangeEnd = new Date(this.settings.displayRange.end);
+
+    const numberOfWeeks = Math.ceil((rangeEnd - rangeStart) / (7 * 24 * 60 * 60 * 1000));
+    this.settings.showMonthYearPicker = false;
+    this.settings.inPage = stringUtils.toBoolean(this.settings.inPage);
+    if (this.settings.inPage) {
+      const cssClass = `is-inpage${!this.settings.inPageToggleable ? ' not-toggleable' : ''}`;
+      this.element.addClass(cssClass);
+      this.settings.yearsAhead = 4;
+      this.settings.yearsBack = 1;
+    }
+
+    this.setCurrentCalendar();
+
+    this.table = $(`<table class="monthview-table" aria-label="${Locale.translate('Calendar', { locale: this.locale.name })}" role="application"></table>`);
+
+    this.dayNames = $('' +
+      `<thead>
+        <tr>
+          <th>SU</th>
+          <th>MO</th>
+          <th>TU</th>
+          <th>WE</th>
+          <th>TH</th>
+          <th>FR</th>
+          <th>SA</th>
+        </tr>
+      </thead>`).appendTo(this.table);
+    this.day = `
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    `;
+    this.days = $('' +
+      `<tbody>
+       ${Array(numberOfWeeks).fill(this.day).join('')}
+      </tbody>`).appendTo(this.table);
+
+    if (this.settings.showMonthYearPicker && (this.settings.isPopup || this.settings.inPage)) {
+      this.monthYearPane = $(`<div class="monthview-monthyear-pane expandable-area ${this.settings.hideDays ? ' is-expanded' : ''}">
+        <div class="expandable-pane">
+          <div class="content"><div class="picklist-section is-month"></div><div class="picklist-section is-year"></div></div>
+        </div>
+      </div>`);
+    }
+
+    let inPageCalendarPane = '';
+    if (this.settings.inPage && this.settings.inPageToggleable) {
+      inPageCalendarPane = $(`<div class="monthview-inpage-calendar expandable-area${this.settings.inPageExpanded ? ' is-expanded' : ''}"><div class="expandable-pane"></div></div>`);
+      inPageCalendarPane.find('.expandable-pane').append(this.table);
+    }
+
+    if (this.settings.hideDays) {
+      this.table = '';
+    }
+
+    const useElement = this.settings.inPage && this.settings.inPageToggleable && this.table !== '' ? inPageCalendarPane : this.table;
+
+    // Reconfigure the header
+    this.header = $('<div class="monthview-header"><div class="calendar-toolbar"></div></div>');
+    this.header.addClass('hidden');
 
     this.showMonth(this.settings.month, this.settings.year);
     this.calendar = this.element.addClass('monthview').append(this.header, this.monthYearPane, useElement);
