@@ -34,7 +34,7 @@
 
             <div class="slide">
               <div style="height: 325px; width: 400px;">
-                <div id="donut-alert1" class="chart-container"></div>
+                <div  id="donut-alert1" class="chart-container"></div>
               </div>
             </div>
             <div class="slide">
@@ -263,9 +263,32 @@
     return d;
   };
 
-  $('#donut-alert1').chart({type: 'donut', dataset: getDonutData()});
-  $('#bar-grouped-example').chart({type: 'bar-grouped', dataset: getBarData(), showLegend: false});
-  $('#area-example').chart({type: 'area', dataset: getAreaData()});
+  const donut =  $('#donut-alert1');
+  const bar = $('#bar-grouped-example');
+  const area = $('#area-example');
+
+  donut.chart({type: 'donut', dataset: getDonutData()});
+  bar.chart({type: 'bar-grouped', dataset: getBarData(), showLegend: false});
+  area.chart({type: 'area', dataset: getAreaData()});
+  
+  $(window).resize(() => {
+    location.reload();
+  });
+
+  if ($('body').width() < 610) {
+    const width = $('body').width() < 320 ? 280 : 300;
+
+    donut.width(width);
+    donut.parent().css({
+      height: '225px',
+      width: '280px',
+      'margin-left': `${$('body').width() < 320 ? '0' : '3%'}`
+    });
+    bar.width(width);
+    bar.parent().width(width);
+    area.width(width);
+    area.parent().width(width);
+  }
 
   // Wait for initialize
   $('body').on('initialized', function() {
@@ -291,9 +314,9 @@
     // Init
     setView(homepageApi.settings.columns);
 
-    var donutApi = $('#donut-alert1').data('pie');
-    var barApi = $('#bar-grouped-example').data('bar');
-    var areaApi = $('#area-example').data('line');
+    var donutApi = donut.data('pie');
+    var barApi = bar.data('bar');
+    var areaApi = area.data('line');
 
     $('html')
       .on('colorschanged themechanged', function (e, a) {
