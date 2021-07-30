@@ -14,6 +14,7 @@
 - `[CirclePager]` Fixed a bug where the slides were not properly showing for RTL languages ([#2885](https://github.com/infor-design/enterprise/issues/2885))
 - `[CirclePager]` Fixed a bug where the CSS was the same for all of the circles in homepage/example-hero-widget ([#5337](https://github.com/infor-design/enterprise/issues/5337))
 - `[ContextualActionPanel]` Added `title` prop in CAP to control the title via `modaSettings`, and added missing `beforeclose` event. ([NG#1048](https://github.com/infor-design/enterprise-ng/issues/1048))
+- `[ContextMenu]` Fixed a bug where field option is not rendered properly on mobile ([#5335](https://github.com/infor-design/enterprise/issues/5335))
 - `[Datagrid]` - Fixed a bug where the row height cut off the focus ring on the Action Item buttons for Classic/New mode and XS, S, M settings ([#5394](https://github.com/infor-design/enterprise/issues/5394))
 - `[Datagrid]` Fixed an issue where row reorder handle align was not right for extra small and small height. ([#5233](https://github.com/infor-design/enterprise/issues/5233))
 - `[Datagrid]` - Fixed a bug where the first two columns row heights did not match the others for the Medium setting ([#5366](https://github.com/infor-design/enterprise/issues/5366))
