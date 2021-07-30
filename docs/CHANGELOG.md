@@ -4,6 +4,7 @@
 
 - `[Cards]` Added the ability of single and multi selection of cards. ([#5253](https://github.com/infor-design/enterprise/issues/5253))
 - `[Datagrid]` Added support to row reorder for groupable settings. ([#5233](https://github.com/infor-design/enterprise/issues/5233))
+- `[Donut]` Added the ability to add center tooltip for Donut. ([#5302](https://github.com/infor-design/enterprise/issues/5302))
 - `[Notification Badge]` Added Notification Badge component that has the ability to move to any corner of the icon element. ([#5344](https://github.com/infor-design/enterprise/issues/5344))
 
 ## v4.54.0 Fixes
@@ -40,6 +41,7 @@
 - `[Multiselect]` Fixed a regression bug where clear icon were not properly aligned on compact mode. ([#5396](https://github.com/infor-design/enterprise/issues/5396))
 - `[Personalize]` Added css to remove color gradient on overflowing horizontal tab headers. fix is limited to personalize styling ([#5303](https://github.com/infor-design/enterprise/issues/5303))
 - `[Popdown]` Remove deprecation console warning. We still consider this component deprecated but will not remove until 5.0 version. The warning was only removed for now. ([#1070](https://github.com/infor-design/enterprise-ng/issues/1070))
+- `[ToolbarFlex]` updated logic to account for the AllowTabs property and set toolbar items with a tab-index of 0 when allowTabs is ture ([#5387](https://github.com/infor-design/enterprise/issues/5387))
 - `[Tabs]` Remove tabs animation when clicking tabs. ([#4818](https://github.com/infor-design/enterprise-ng/issues/4818))
 
 ### v4.54.0 Markup Changes
