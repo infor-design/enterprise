@@ -38,7 +38,10 @@ excel.cleanExtra = function (customDs, self) {
         // THEAD
         const attrExportable = el.getAttribute('data-exportable');
         if (attrExportable && attrExportable === 'no') {
-          const index = parseInt(el.id.slice(-1), 10);
+          let index = el.id.match(/-header-\d+/g);
+          index = index ? index[0].match(/\d+/g) : null;
+          index = index ? index[0] : el.id.slice(-1);
+          index = parseInt(index, 10);
           nonExportables.push(index + 1);
           removeNode(el);
           return;
@@ -80,7 +83,7 @@ excel.cleanExtra = function (customDs, self) {
     const clonedTable = self.table.clone(true);
 
     if (self.settings.frozenColumns.left.length || self.settings.frozenColumns.right.length) {
-      clonedTable.find('.datagrid-header tr:first()').html(self.headerNodes().clone(true)); 
+      clonedTable.find('.datagrid-header tr:first()').html(self.headerNodes().clone(true));
     }
 
     table = excel.appendRows(dataset, clonedTable[0], self);
