@@ -33,17 +33,17 @@
           <div class="slides">
 
             <div class="slide">
-              <div style="height: 325px; width: 400px;">
+              <div style="height: 325px; width: 400px; margin: 0 auto;">
                 <div  id="donut-alert1" class="chart-container"></div>
               </div>
             </div>
             <div class="slide">
-              <div style="height: 325px; width: 400px;">
+              <div style="height: 325px; width: 400px; margin: 0 auto;">
                 <div id="bar-grouped-example" class="chart-container"></div>
               </div>
             </div>
             <div class="slide">
-              <div style="height: 300px; width: 400px; margin-top: -15px">
+              <div style="height: 300px; width: 400px; margin-top: -15px; margin: 0 auto;">
                 <div id="area-example" class="chart-container"></div>
               </div>
             </div>
@@ -275,14 +275,13 @@
   bar.chart({type: 'bar-grouped', dataset: getBarData(), showLegend: false});
   area.chart({type: 'area', dataset: getAreaData()});
 
-  if ($('body').width() < 610) {
-    const width = $('body').width() < 320 ? 280 : 300;
+  if (Soho.breakpoints.isBelow('phablet')) {
+    const width = Soho.breakpoints.isBelow('slim') ? 250 : 375;
 
     donut.width(width);
     donut.parent().css({
       height: '225px',
-      width: '280px',
-      'margin-left': `${$('body').width() < 320 ? '0' : '3%'}`
+      width: `${width}px`
     });
     bar.width(width);
     bar.parent().width(width);
