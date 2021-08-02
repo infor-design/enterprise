@@ -394,6 +394,12 @@
         color: $header-text-color;
         fill: $header-text-color;
       }
+
+      .list-button {
+        .icon {
+          color: $header-text-color;
+        }
+      }
     }
 
     .circlepager.is-active .controls .control-button {
