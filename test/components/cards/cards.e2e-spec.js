@@ -191,7 +191,7 @@ describe('Cards example-multi-select tests', () => {
   }
 });
 
-describe('Cards example-variations-hitboxes Visual Test', () => {
+fdescribe('Cards example-variations-hitboxes Visual Test', () => {
   beforeEach(async () => {
     await utils.setPage('/components/cards/example-variations-hitboxes.html?layout=nofrills');
   });
