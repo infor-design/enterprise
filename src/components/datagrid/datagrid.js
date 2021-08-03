@@ -1614,7 +1614,6 @@ Datagrid.prototype = {
       const filterBtn = $(this);
       const popupOpts = { trigger: 'immediate', offset: { y: 15 }, placementOpts: { strategies: ['flip', 'nudge'] } };
       const popupmenu = filterBtn.data('popupmenu');
-
       if (popupmenu) {
         popupmenu.close(true, true);
       } else {
@@ -1626,6 +1625,7 @@ Datagrid.prototype = {
           .on('selected.datagrid-filter', () => {
             const data = $(this).data('popupmenu');
             if (data) {
+              debugger;
               data.destroy();
             }
             activeMenu = null;
@@ -6438,6 +6438,8 @@ Datagrid.prototype = {
   handleEvents() {
     const self = this;
 
+    console.log("self", self);
+
     // Set Focus on rows
     if (!self.settings.cellNavigation && self.settings.rowNavigation) {
       self.element
@@ -6453,20 +6455,20 @@ Datagrid.prototype = {
 
     // Handle Paging
     if (this.settings.paging) {
-      this.tableBody.on(`page.${COMPONENT_NAME}`, (e, pagingInfo) => {
+      // Need to store the original id to work the wrapping and unwrapping in popupmenu
+      // before the paging initiate
+      this.pagerId = $('.pager-toolbar .btn-menu').attr('aria-controls');
+
+      this.tableBody.off(`page.${COMPONENT_NAME}`).on(`page.${COMPONENT_NAME}`, function (e, pagingInfo) {
         if (pagingInfo.type === 'filtered' && this.settings.source) {
           return;
         }
+        self.closePopupmenuOnPaging();
         self.saveUserSettings();
         self.render(null, pagingInfo);
-        console.log("pagingInfo", pagingInfo);
-        const btn = self.currentHeader.find('.datagrid-filter-wrapper button');
-        if (btn && btn.data('popupmenu')) {
-          btn.data('popupmenu').close(true, true);
-        }
-
         self.afterPaging(pagingInfo);
-      }).on(`pagesizechange.${COMPONENT_NAME}`, (e, pagingInfo) => {
+      })
+      .on(`pagesizechange.${COMPONENT_NAME}`, function (e, pagingInfo) {
         pagingInfo.preserveSelected = true;
         self.render(null, pagingInfo);
         self.afterPaging(pagingInfo);
@@ -6989,6 +6991,23 @@ Datagrid.prototype = {
         self.commitCellEdit();
       }
     });
+  },
+
+  /**
+   * Close opened popupmenus when paging.
+   * @private
+   * @returns {void}
+   */
+  closePopupmenuOnPaging() {
+    const btn = this.currentHeader.find('.datagrid-filter-wrapper .btn-filter');
+    const popupmenu = btn.data('popupmenu');
+    const pagerMenu = $('.pager-toolbar .btn-menu');
+    // passing the original aria-controls id
+    const pagerMenuNewId = $('.pager-toolbar .btn-menu').attr('aria-controls', this.pagerId);
+
+    if (pagerMenuNewId.length) {
+      popupmenu?.close(true, true);
+    }
   },
 
   /**
