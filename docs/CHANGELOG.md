@@ -28,6 +28,7 @@
 - `[Datagrid]` Fixed a bug that prevented the headers of the right frozen columns as well as the order date column from being exported properly. ([#5332](https://github.com/infor-design/enterprise/issues/5332))
 - `[Datagrid]` Fixed a bug where the font color on tags was black when a row was hovered over in dark mode. Font color now white. ([#5289](https://github.com/infor-design/enterprise/issues/5289))
 - `[Datagrid]` Fixed issues with NaN displaying on Decimal and Dropdown inputs when blank options are selected. ([#5395](https://github.com/infor-design/enterprise/issues/5395))
+- `[Datagrid]` Fixed a bug where filter options were unable to reopen after doing pagination and clicking other filter options. ([#5286](https://github.com/infor-design/enterprise/issues/5286))
 - `[Donut]` Changed legend design when item exceeds maximum width of chart. ([#5292](https://github.com/infor-design/enterprise/issues/5292))
 - `[Dropdown]` Fixed a bug where backspace in Dropdown is not working when pressed. ([#5113](https://github.com/infor-design/enterprise/issues/5113))
 - `[Fileupload]` Fixed a bug where the required asterisk does not appear on the labels associated with required fields. ([#5285](https://github.com/infor-design/enterprise/issues/5285))
