@@ -6992,7 +6992,7 @@ Datagrid.prototype = {
    * @returns {void}
    */
   closePopupmenuOnPaging() {
-    const btn = this.currentHeader?.find('.datagrid-filter-wrapper .btn-filter');
+    const btn = this.element.find('.datagrid-filter-wrapper .btn-filter.is-open');
     const popupmenu = btn?.data('popupmenu');
 
     popupmenu?.close(true, true);
