@@ -422,7 +422,13 @@ charts.addLegend = function (series, chartType, settings, container) {
     }
     seriesLine = $(seriesLine);
     seriesLine.append(color, `<span class="audible">${Locale.translate('Highlight')}</span>`, textBlock);
-    utils.addAttributes(seriesLine, series[i], series[i]?.data?.attributes, 'legend');
+    
+    const suffix = `legend-${i}`;
+    if (settings.attributes) {
+      utils.addAttributes(seriesLine, series[i], settings.attributes, suffix, true);
+    } else {
+      utils.addAttributes(seriesLine, series[i], series[i]?.data?.attributes, suffix, true);
+    }
 
     if ((chartType === 'pie' || chartType === 'donut') && settings.showMobile) {
       legend.find('.container').append(seriesLine);
