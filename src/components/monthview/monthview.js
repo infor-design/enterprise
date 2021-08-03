@@ -59,7 +59,6 @@ const COMPONENT_NAME_DEFAULTS = {
     includeDisabled: false // if true range will include disable dates in it
   },
   displayRange: {
-    useRange: false, // true - if calendar using range dates
     start: '', // Start date '03/05/2018'
     end: '', // End date '03/21/2018'
   },
@@ -976,7 +975,7 @@ MonthView.prototype = {
 
       self.setDisabled(th, rangeCurrentYear, rangeCurrentMonth, dayCnt);
       self.setLegendColor(th, rangeCurrentYear, rangeCurrentMonth, dayCnt);
-
+      self.setMonthLabel(th, rangeCurrentYear, rangeCurrentMonth, dayCnt, startDate);
       th.attr('role', 'link');
       dayCnt++;
     });
@@ -1242,6 +1241,37 @@ MonthView.prototype = {
         (!dateIsDisabled && s.disable.isEnable)) {
         makeDisable();
       }
+    }
+  },
+
+  /**
+   * Set month label on first enabled date of each month
+   * @private
+   * @param {object} elem Node element to set.
+   * @param {string} year to check.
+   * @param {string} month to check.
+   * @param {string} date to check.
+   * @param {array} startDate to check.
+   * @returns {void}
+   */
+  setMonthLabel(elem, year, month, date, startDate) {
+    const s = this.settings;
+    let minDate;
+    // starts labeling month from the first enabled date
+    let labelStartDate;
+    if (s.disable.minDate) {
+      minDate = new Date(s.disable.minDate);
+      labelStartDate = new Date(minDate.getTime() + 60 * 60 * 24 * 1000);
+    } else {
+      labelStartDate = dateUtils.firstDayOfWeek(startDate);
+    }
+    const dateIsDisabled = this.isDateDisabled(year, month, date);
+    if (!dateIsDisabled &&
+        (month === startDate.getMonth() && labelStartDate && labelStartDate.getDate() === date || date === 1) ||
+      (!s.disable.minDate && (month === labelStartDate.getMonth() && labelStartDate.getDate() === date))) {
+      const dateText = elem.text();
+      elem
+        .text(`${this.currentCalendar.months.wide[month]} ${dateText}`);
     }
   },
 
