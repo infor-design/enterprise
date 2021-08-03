@@ -1,6 +1,6 @@
 # What's New with Enterprise
 
-## v4.54.0 Fixes
+## v4.55.0 Fixes
 
 - `[Charts]` Fixed a bug where automation ids is not properly rendered on legend, text and slices. ([#5441](https://github.com/infor-design/enterprise/issues/5441))
 
