@@ -6,6 +6,7 @@ import { theme } from '../theme/theme';
 import { xssUtils } from '../../utils/xss';
 import { colorUtils } from '../../utils/color';
 import { CalendarToolbar } from '../calendar/calendar-toolbar';
+import { dateUtils } from '../../utils/date';
 
 // jQuery Components
 import '../expandablearea/expandablearea.jquery';
@@ -167,7 +168,7 @@ MonthView.prototype = {
       this.language = lang || this.settings.language || this.locale.language;
       this.settings.language = this.language;
       this.setCurrentCalendar();
-      if (this.settings.displayRange.useRange) {
+      if (this.settings.displayRange.start && this.settings.displayRange.end) {
         this.buildRange().handleEvents();
       } else {
         this.build().handleEvents();
@@ -343,10 +344,13 @@ MonthView.prototype = {
    * @returns {object} The Calendar prototype, useful for chaining.
    */
   buildRange() {
+    const dayMilliseconds = 60 * 60 * 24 * 1000;
     const rangeStart = new Date(this.settings.displayRange.start);
-    const rangeEnd = new Date(this.settings.displayRange.end);
-
-    const numberOfWeeks = Math.ceil((rangeEnd - rangeStart) / (7 * 24 * 60 * 60 * 1000));
+    const originalEnd = new Date(this.settings.displayRange.end);
+    // add one more day to make the last day inclusive
+    const inclusiveEnd = new Date(originalEnd.getTime() + dayMilliseconds);
+    const leadDays = dateUtils.firstDayOfWeek(rangeStart);
+    const numberOfWeeks = Math.ceil((inclusiveEnd - leadDays) / (7 * dayMilliseconds));
     this.settings.showMonthYearPicker = false;
     this.settings.inPage = stringUtils.toBoolean(this.settings.inPage);
     if (this.settings.inPage) {
@@ -412,7 +416,7 @@ MonthView.prototype = {
     this.header = $('<div class="monthview-header"><div class="calendar-toolbar"></div></div>');
     this.header.addClass('hidden');
 
-    this.showMonth(this.settings.month, this.settings.year);
+    this.showRange(this.settings.displayRange.start, this.settings.displayRange.end);
     this.calendar = this.element.addClass('monthview').append(this.header, this.monthYearPane, useElement);
 
     if (!(this.settings.isPopup || this.settings.inPage)) {
@@ -749,6 +753,290 @@ MonthView.prototype = {
     * @property {object} args.api - The MonthView api
     */
     this.element.trigger('monthrendered', { year, month, elem: this.element, api: this });
+  },
+
+  /**
+   * Update the calendar to show the given range
+   * @param {string} rangeStart The start of the range
+   * @param {string} rangeEnd The end of the range
+   * @returns {void}
+   */
+  showRange(rangeStart, rangeEnd) {
+    const self = this;
+    const now = new Date();
+    const startDate = new Date(rangeStart);
+    const endDate = new Date(rangeEnd);
+    let month = parseInt(startDate.getMonth(), 10);
+    let year = parseInt(startDate.getFullYear(), 10);
+    const s = this.settings;
+
+    now.setHours(0);
+    now.setMinutes(0);
+    now.setSeconds(0);
+
+    let elementDate;
+    if (this.isIslamic) {
+      elementDate = s.activeDate || Locale.gregorianToUmalqura(now);
+    } else {
+      elementDate = (s.activeDate && s.activeDate.getDate()) ? s.activeDate : now;
+    }
+    this.setCurrentCalendar();
+
+    if (this.isIslamic) {
+      if (!s.activeDateIslamic) {
+        const gregorianDate = new Date(year, month, this.currentDay || this.settings.day);
+        const islamicDate = Locale.gregorianToUmalqura(gregorianDate);
+        this.todayDateIslamic = Locale.gregorianToUmalqura(now);
+        s.activeDateIslamic = [];
+        s.activeDateIslamic[0] = islamicDate[0];
+        s.activeDateIslamic[1] = islamicDate[1];
+        s.activeDateIslamic[2] = islamicDate[2];
+        year = islamicDate[0];
+        month = islamicDate[1];
+        elementDate = islamicDate;
+        this.currentDay = islamicDate[2];
+      } else {
+        elementDate = s.activeDateIslamic;
+      }
+    }
+
+    if (year.toString().length < 4) {
+      year = new Date().getFullYear();
+    }
+
+    if (month === 12) {
+      year++;
+      month = 0;
+      this.currentMonth = month;
+      this.currentYear = year;
+      this.currentDate.setFullYear(year);
+      this.currentDate.setMonth(month);
+    }
+
+    if (month < 0) {
+      year--;
+      month = 11;
+      this.currentMonth = month;
+      this.currentYear = year;
+      this.currentDate.setFullYear(year);
+      this.currentDate.setMonth(month);
+    }
+
+    this.currentDay = this.currentDay || this.settings.day;
+    if (!this.currentCalendar || !this.currentCalendar.days) {
+      this.currentCalendar = Locale.calendar(
+        this.locale.name,
+        this.language,
+        this.settings.calendarName
+      );
+    }
+
+    let days = this.currentCalendar.days.narrow;
+    days = days || this.currentCalendar.days.abbreviated;
+
+    if (!(s.isPopup || s.inPage)) {
+      days = this.currentCalendar.days.abbreviated;
+    }
+    const monthName = this.currentCalendar.months.wide[month];
+
+    this.currentMonth = month;
+    this.currentYear = year;
+
+    // Set the Days of the week
+    let firstDayofWeek = (this.currentCalendar.firstDayofWeek || 0);
+
+    if (s.firstDayOfWeek) {
+      firstDayofWeek = s.firstDayOfWeek;
+    }
+
+    this.dayNames.find('th').each(function (i) {
+      $(this).text(days[(i + firstDayofWeek) % 7]);
+    });
+
+    // Localize Month Name
+    this.yearFirst = this.currentCalendar.dateFormat.year && this.currentCalendar.dateFormat.year.substr(1, 1) === 'y';
+    this.header.find('.month').attr('data-month', month).text(`${xssUtils.stripTags(monthName)} `);
+    this.header.find('.year').text(` ${year}`);
+
+    // Adjust days of the week
+    // lead days
+    const leadDays = dateUtils.firstDayOfWeek(startDate).getDate();
+    const thisMonthDays = this.daysInMonth(year, month + (this.isIslamic ? 0 : 1));
+    const lastMonthDays = this.daysInMonth(year, month + (this.isIslamic ? 1 : 0));
+    let nextMonthDayCnt = 1;
+    let dayCnt = leadDays;
+    let exYear;
+    let exMonth;
+    let exDay;
+    let foundSelected = false;
+    // Set selected state
+    const setSelected = (el, isFound) => {
+      foundSelected = isFound;
+      el.addClass(`is-selected${(s.range.useRange ? ' range' : '')}`).attr('aria-selected', 'true').attr('tabindex', '0');
+    };
+
+    this.dayMap = [];
+    this.days.find('td').each(function (i) {
+      // starting index should start from first day of the week that the start date is in
+      i += leadDays;
+      const th = $(this).removeClass('alternate prev-month next-month is-selected range is-today');
+      const isRippleClass = s.inPage ? ' is-ripple' : '';
+      th.removeAttr('aria-selected');
+      th.removeAttr('tabindex');
+
+      self.dayMap.push({ key: stringUtils.padDate(year, month, dayCnt), elem: th });
+      th.html(`<span class="day-container${isRippleClass}"><span aria-hidden="true" class="day-text">${xssUtils.stripTags(dayCnt)}</span></span>`);
+      th.attr('data-key', stringUtils.padDate(year, month, dayCnt));
+
+      // Add Selected Class to Selected Date
+      if (self.isIslamic) {
+        if (dayCnt === elementDate[2]) {
+          setSelected(th, true);
+        }
+      } else {
+        const tHours = elementDate.getHours();
+        const tMinutes = elementDate.getMinutes();
+        const tSeconds = self.isSeconds ? elementDate.getSeconds() : 0;
+        const setHours = el => (el ? el.setHours(tHours, tMinutes, tSeconds, 0) : 0);
+
+        const newDate = setHours(new Date(year, month, dayCnt));
+        const comparisonDate = self.currentDate || elementDate;
+        if (newDate === setHours(comparisonDate)) {
+          setSelected(th, true);
+        }
+      }
+
+      if (dayCnt === self.todayDay &&
+          self.currentMonth === self.todayMonth &&
+          self.currentYear === self.todayYear
+      ) {
+        th.addClass('is-today');
+      }
+
+      if (i < leadDays) {
+        exDay = lastMonthDays - (lastMonthDays - leadDays);
+        exMonth = (month === 0) ? 11 : month - 1;
+        exYear = (month === 0) ? year - 1 : year;
+
+        self.setDisabled(th, exYear, exMonth, exDay);
+        self.setLegendColor(th, exYear, exMonth, exDay);
+        self.dayMap.push({ key: stringUtils.padDate(exYear, exMonth, exDay), elem: th });
+        th.addClass('alternate prev-month').html(`<span class="day-container${isRippleClass}"><span aria-hidden="true" class="day-text">${xssUtils.stripTags(exDay)}</span></span>`);
+        th.attr('data-key', stringUtils.padDate(exYear, exMonth, exDay));
+      }
+
+      if (i >= leadDays && dayCnt <= thisMonthDays) {
+        self.dayMap.push({ key: stringUtils.padDate(year, month, dayCnt), elem: th });
+        th.html(`<span class="day-container${isRippleClass}"><span aria-hidden="true" class="day-text">${xssUtils.stripTags(dayCnt)}</span></span>`);
+        th.attr('data-key', stringUtils.padDate(year, month, dayCnt));
+
+        // Add Selected Class to Selected Date
+        if (self.isIslamic) {
+          if (dayCnt === elementDate[2]) {
+            setSelected(th, true);
+          }
+        } else {
+          const tHours = elementDate.getHours();
+          const tMinutes = elementDate.getMinutes();
+          const tSeconds = self.isSeconds ? elementDate.getSeconds() : 0;
+          const setHours = el => (el ? el.setHours(tHours, tMinutes, tSeconds, 0) : 0);
+
+          const newDate = setHours(new Date(year, month, dayCnt));
+          const comparisonDate = self.currentDate || elementDate;
+          if (newDate === setHours(comparisonDate)) {
+            setSelected(th, true);
+          }
+        }
+
+        if (dayCnt === self.todayDay &&
+            self.currentMonth === self.todayMonth &&
+            self.currentYear === self.todayYear
+        ) {
+          th.addClass('is-today');
+        }
+
+        th.attr('aria-label', Locale.formatDate(new Date(self.currentYear, self.currentMonth, dayCnt), {
+          date: 'full',
+          locale: self.locale.name
+        }));
+        const startKey = stringUtils.padDate(
+          self.currentYear,
+          self.currentMonth,
+          dayCnt
+        );
+        th.attr('data-key', startKey);
+
+        self.setDisabled(th, year, month, dayCnt);
+        self.setLegendColor(th, year, month, dayCnt);
+
+        th.attr('role', 'link');
+        dayCnt++;
+        return;
+      }
+
+      if (dayCnt >= thisMonthDays + 1) {
+        exDay = nextMonthDayCnt;
+        exMonth = (month === 11) ? 0 : month + 1;
+        exYear = (month === 11) ? year + 1 : year;
+
+        self.dayMap.push({ key: stringUtils.padDate(exYear, exMonth, exDay), elem: th });
+        self.setDisabled(th, exYear, exMonth, exDay);
+        self.setLegendColor(th, exYear, exMonth, exDay);
+
+        th.addClass('alternate next-month').html(`<span class="day-container${isRippleClass}"><span aria-hidden="true" class="day-text">${nextMonthDayCnt}</span></span>`);
+        th.attr('data-key', stringUtils.padDate(exYear, exMonth, exDay));
+        nextMonthDayCnt++;
+      }
+    });
+
+    if (!foundSelected && !s.range.useRange) {
+      const firstDay = self.dayMap.filter(d => d.key === stringUtils.padDate(
+        year,
+        month,
+        this.settings.day
+      ));
+      if (firstDay.length) {
+        setSelected(firstDay[0].elem, false);
+      }
+    }
+
+    if (!this.currentDate) {
+      if (this.isIslamic) {
+        this.currentDateIslamic = [this.currentYear, this.currentMonth, this.currentDay];
+        this.currentDate = Locale.umalquraToGregorian(
+          this.currentYear,
+          this.currentMonth,
+          this.currentDay
+        );
+      } else {
+        this.currentDate = new Date(this.currentYear, this.currentMonth, this.currentDay);
+      }
+    }
+
+    this.setRangeSelection();
+    this.validatePrevNext();
+
+    // Allow focus on the same day as last month
+    if (!s.range.useRange && this.element.find('td.is-selected').length === 0) {
+      this.element.find('td[tabindex]').removeAttr('tabindex');
+      this.element
+        .find('td:not(.alternate) .day-text')
+        .first()
+        .closest('td')
+        .attr('tabindex', '0');
+    }
+
+    /**
+    * Fires as the calendar popup is opened.
+    * @event rangerendered
+    * @memberof MonthView
+    * @property {object} event - The jquery event object
+    * @property {object} args - The event arguments
+    * @property {number} args.year - The rendered year
+    * @property {object} args.elem - The DOM object
+    * @property {object} args.api - The MonthView api
+    */
+    this.element.trigger('rangerendered', { year, month, elem: this.element, api: this });
   },
 
   /**
