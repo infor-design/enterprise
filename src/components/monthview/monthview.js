@@ -768,6 +768,7 @@ MonthView.prototype = {
     const endDate = new Date(rangeEnd);
     let month = parseInt(startDate.getMonth(), 10);
     let year = parseInt(startDate.getFullYear(), 10);
+    const monthDifference = dateUtils.monthDiff(startDate, endDate);
     const s = this.settings;
 
     now.setHours(0);
@@ -861,24 +862,34 @@ MonthView.prototype = {
     // Adjust days of the week
     // lead days
     const leadDays = dateUtils.firstDayOfWeek(startDate).getDate();
-    const thisMonthDays = this.daysInMonth(year, month + (this.isIslamic ? 0 : 1));
-    const lastMonthDays = this.daysInMonth(year, month + (this.isIslamic ? 1 : 0));
-    let nextMonthDayCnt = 1;
     let dayCnt = leadDays;
-    let exYear;
-    let exMonth;
-    let exDay;
     let foundSelected = false;
+
+    // get the number of days in each month for the given range
+    let rangeCurrentMonth = month;
+    let rangeCurrentYear = year;
+    const monthDaysMap = {};
+    let rangeMonth = month;
+    let rangeYear = year;
+    for (let i = 0; i <= monthDifference; i++) {
+      rangeMonth = month + i;
+      if (rangeMonth > 11) {
+        rangeYear += 1;
+        rangeMonth = 0;
+      }
+      monthDaysMap[rangeMonth] = this.daysInMonth(rangeYear, rangeMonth + (this.isIslamic ? 0 : 1));
+    }
+
     // Set selected state
     const setSelected = (el, isFound) => {
       foundSelected = isFound;
       el.addClass(`is-selected${(s.range.useRange ? ' range' : '')}`).attr('aria-selected', 'true').attr('tabindex', '0');
     };
 
+    let thisMonthDays = monthDaysMap[rangeCurrentMonth];
     this.dayMap = [];
-    this.days.find('td').each(function (i) {
+    this.days.find('td').each(function () {
       // starting index should start from first day of the week that the start date is in
-      i += leadDays;
       const th = $(this).removeClass('alternate prev-month next-month is-selected range is-today');
       const isRippleClass = s.inPage ? ' is-ripple' : '';
       th.removeAttr('aria-selected');
@@ -906,87 +917,68 @@ MonthView.prototype = {
         }
       }
 
+      if (dayCnt > thisMonthDays) {
+        rangeCurrentMonth++;
+        if (rangeCurrentMonth > 11) {
+          rangeCurrentMonth = 0;
+          rangeCurrentYear++;
+        }
+        thisMonthDays = monthDaysMap[rangeCurrentMonth];
+        dayCnt = 1;
+      }
+
       if (dayCnt === self.todayDay &&
-          self.currentMonth === self.todayMonth &&
-          self.currentYear === self.todayYear
+        rangeCurrentMonth === self.todayMonth &&
+        rangeCurrentYear === self.todayYear
       ) {
         th.addClass('is-today');
       }
 
-      if (i < leadDays) {
-        exDay = lastMonthDays - (lastMonthDays - leadDays);
-        exMonth = (month === 0) ? 11 : month - 1;
-        exYear = (month === 0) ? year - 1 : year;
+      self.dayMap.push({ key: stringUtils.padDate(year, month, dayCnt), elem: th });
+      th.html(`<span class="day-container${isRippleClass}"><span aria-hidden="true" class="day-text">${xssUtils.stripTags(dayCnt)}</span></span>`);
+      th.attr('data-key', stringUtils.padDate(year, month, dayCnt));
 
-        self.setDisabled(th, exYear, exMonth, exDay);
-        self.setLegendColor(th, exYear, exMonth, exDay);
-        self.dayMap.push({ key: stringUtils.padDate(exYear, exMonth, exDay), elem: th });
-        th.addClass('alternate prev-month').html(`<span class="day-container${isRippleClass}"><span aria-hidden="true" class="day-text">${xssUtils.stripTags(exDay)}</span></span>`);
-        th.attr('data-key', stringUtils.padDate(exYear, exMonth, exDay));
-      }
-
-      if (i >= leadDays && dayCnt <= thisMonthDays) {
-        self.dayMap.push({ key: stringUtils.padDate(year, month, dayCnt), elem: th });
-        th.html(`<span class="day-container${isRippleClass}"><span aria-hidden="true" class="day-text">${xssUtils.stripTags(dayCnt)}</span></span>`);
-        th.attr('data-key', stringUtils.padDate(year, month, dayCnt));
-
-        // Add Selected Class to Selected Date
-        if (self.isIslamic) {
-          if (dayCnt === elementDate[2]) {
-            setSelected(th, true);
-          }
-        } else {
-          const tHours = elementDate.getHours();
-          const tMinutes = elementDate.getMinutes();
-          const tSeconds = self.isSeconds ? elementDate.getSeconds() : 0;
-          const setHours = el => (el ? el.setHours(tHours, tMinutes, tSeconds, 0) : 0);
-
-          const newDate = setHours(new Date(year, month, dayCnt));
-          const comparisonDate = self.currentDate || elementDate;
-          if (newDate === setHours(comparisonDate)) {
-            setSelected(th, true);
-          }
+      // Add Selected Class to Selected Date
+      if (self.isIslamic) {
+        if (dayCnt === elementDate[2]) {
+          setSelected(th, true);
         }
+      } else {
+        const tHours = elementDate.getHours();
+        const tMinutes = elementDate.getMinutes();
+        const tSeconds = self.isSeconds ? elementDate.getSeconds() : 0;
+        const setHours = el => (el ? el.setHours(tHours, tMinutes, tSeconds, 0) : 0);
 
-        if (dayCnt === self.todayDay &&
-            self.currentMonth === self.todayMonth &&
-            self.currentYear === self.todayYear
-        ) {
-          th.addClass('is-today');
+        const newDate = setHours(new Date(year, month, dayCnt));
+        const comparisonDate = self.currentDate || elementDate;
+        if (newDate === setHours(comparisonDate)) {
+          setSelected(th, true);
         }
-
-        th.attr('aria-label', Locale.formatDate(new Date(self.currentYear, self.currentMonth, dayCnt), {
-          date: 'full',
-          locale: self.locale.name
-        }));
-        const startKey = stringUtils.padDate(
-          self.currentYear,
-          self.currentMonth,
-          dayCnt
-        );
-        th.attr('data-key', startKey);
-
-        self.setDisabled(th, year, month, dayCnt);
-        self.setLegendColor(th, year, month, dayCnt);
-
-        th.attr('role', 'link');
-        dayCnt++;
-        return;
       }
 
-      if (dayCnt >= thisMonthDays + 1) {
-        exDay = nextMonthDayCnt;
-        exMonth = (month === 11) ? 0 : month + 1;
-        exYear = (month === 11) ? year + 1 : year;
-
-        self.dayMap.push({ key: stringUtils.padDate(exYear, exMonth, exDay), elem: th });
-        self.setDisabled(th, exYear, exMonth, exDay);
-        self.setLegendColor(th, exYear, exMonth, exDay);
-
-        th.addClass('alternate next-month').html(`<span class="day-container${isRippleClass}"><span aria-hidden="true" class="day-text">${nextMonthDayCnt}</span></span>`);
-        th.attr('data-key', stringUtils.padDate(exYear, exMonth, exDay));
-        nextMonthDayCnt++;
+      if (dayCnt === self.todayDay &&
+          rangeCurrentMonth === self.todayMonth &&
+          rangeCurrentYear === self.todayYear
+      ) {
+        th.addClass('is-today');
       }
+
+      th.attr('aria-label', Locale.formatDate(new Date(rangeCurrentYear, rangeCurrentMonth, dayCnt), {
+        date: 'full',
+        locale: self.locale.name
+      }));
+      const startKey = stringUtils.padDate(
+        rangeCurrentYear,
+        rangeCurrentMonth,
+        dayCnt
+      );
+      th.attr('data-key', startKey);
+
+      self.setDisabled(th, rangeCurrentYear, rangeCurrentMonth, dayCnt);
+      self.setLegendColor(th, rangeCurrentYear, rangeCurrentMonth, dayCnt);
+
+      th.attr('role', 'link');
+      dayCnt++;
     });
 
     if (!foundSelected && !s.range.useRange) {

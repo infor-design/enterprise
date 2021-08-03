@@ -57,4 +57,19 @@ dateUtils.dateDiff = function (first, second, useHours) {
     (useHours ? 1 : Math.abs(dtoday.getTimezoneOffset()))));
 };
 
+/**
+ * Get the month difference between two dates.
+ * @param {date} first The first date.
+ * @param {date} second The second date.
+ * @param {boolean} useHours The different in hours if true, otherways days.
+* @returns {number} The difference between the two dates.
+ */
+dateUtils.monthDiff = function (first, second) {
+  let months;
+  months = (second.getFullYear() - first.getFullYear()) * 12;
+  months -= first.getMonth();
+  months += second.getMonth();
+  return months <= 0 ? 0 : months;
+};
+
 export { dateUtils }; //eslint-disable-line
