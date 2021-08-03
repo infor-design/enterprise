@@ -190,3 +190,21 @@ describe('Cards example-multi-select tests', () => {
     });
   }
 });
+
+describe('Cards example-variations-hitboxes Visual Test', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/cards/example-variations-hitboxes.html?layout=nofrills');
+  });
+
+  it('should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+
+      expect(await browser.imageComparison.checkElement(containerEl, 'cards-hitboxes')).toEqual(0);
+    });
+  }
+});
