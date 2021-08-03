@@ -1625,7 +1625,6 @@ Datagrid.prototype = {
           .on('selected.datagrid-filter', () => {
             const data = $(this).data('popupmenu');
             if (data) {
-              debugger;
               data.destroy();
             }
             activeMenu = null;
@@ -6438,8 +6437,6 @@ Datagrid.prototype = {
   handleEvents() {
     const self = this;
 
-    console.log("self", self);
-
     // Set Focus on rows
     if (!self.settings.cellNavigation && self.settings.rowNavigation) {
       self.element
@@ -6455,11 +6452,7 @@ Datagrid.prototype = {
 
     // Handle Paging
     if (this.settings.paging) {
-      // Need to store the original id to work the wrapping and unwrapping in popupmenu
-      // before the paging initiate
-      this.pagerId = $('.pager-toolbar .btn-menu').attr('aria-controls');
-
-      this.tableBody.off(`page.${COMPONENT_NAME}`).on(`page.${COMPONENT_NAME}`, function (e, pagingInfo) {
+      this.tableBody.on(`page.${COMPONENT_NAME}`, (e, pagingInfo) => {
         if (pagingInfo.type === 'filtered' && this.settings.source) {
           return;
         }
@@ -6467,9 +6460,9 @@ Datagrid.prototype = {
         self.saveUserSettings();
         self.render(null, pagingInfo);
         self.afterPaging(pagingInfo);
-      })
-      .on(`pagesizechange.${COMPONENT_NAME}`, function (e, pagingInfo) {
+      }).on(`pagesizechange.${COMPONENT_NAME}`, (e, pagingInfo) => {
         pagingInfo.preserveSelected = true;
+        self.closePopupmenuOnPaging();
         self.render(null, pagingInfo);
         self.afterPaging(pagingInfo);
       });
@@ -7001,11 +6994,8 @@ Datagrid.prototype = {
   closePopupmenuOnPaging() {
     const btn = this.currentHeader.find('.datagrid-filter-wrapper .btn-filter');
     const popupmenu = btn.data('popupmenu');
-    const pagerMenu = $('.pager-toolbar .btn-menu');
-    // passing the original aria-controls id
-    const pagerMenuNewId = $('.pager-toolbar .btn-menu').attr('aria-controls', this.pagerId);
 
-    if (pagerMenuNewId.length) {
+    if (popupmenu) {
       popupmenu?.close(true, true);
     }
   },
