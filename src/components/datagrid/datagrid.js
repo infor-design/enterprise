@@ -6995,9 +6995,7 @@ Datagrid.prototype = {
     const btn = this.currentHeader.find('.datagrid-filter-wrapper .btn-filter');
     const popupmenu = btn.data('popupmenu');
 
-    if (popupmenu) {
-      popupmenu?.close(true, true);
-    }
+    popupmenu?.close(true, true);
   },
 
   /**
