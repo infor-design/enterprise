@@ -1614,6 +1614,7 @@ Datagrid.prototype = {
       const filterBtn = $(this);
       const popupOpts = { trigger: 'immediate', offset: { y: 15 }, placementOpts: { strategies: ['flip', 'nudge'] } };
       const popupmenu = filterBtn.data('popupmenu');
+
       if (popupmenu) {
         popupmenu.close(true, true);
       } else {
@@ -6452,6 +6453,9 @@ Datagrid.prototype = {
 
     // Handle Paging
     if (this.settings.paging) {
+      // Need to store the original id to work the wrapping and unwrapping in popupmenu
+      // before the paging initiate
+      this.pagerId = $('.pager-toolbar .btn-menu').attr('aria-controls');
       this.tableBody.on(`page.${COMPONENT_NAME}`, (e, pagingInfo) => {
         if (pagingInfo.type === 'filtered' && this.settings.source) {
           return;
@@ -6995,7 +6999,12 @@ Datagrid.prototype = {
     const btn = this.element.find('.datagrid-filter-wrapper .btn-filter.is-open');
     const popupmenu = btn?.data('popupmenu');
 
-    popupmenu?.close(true, true);
+    // passing the original aria-controls id
+    const pagerMenuNewId = $('.pager-toolbar .btn-menu').attr('aria-controls', this.pagerId);
+
+    if (pagerMenuNewId.length) {
+      popupmenu?.close(true, true);
+    }
   },
 
   /**

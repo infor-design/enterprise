@@ -2513,9 +2513,10 @@ PopupMenu.prototype = {
     // Only unwrap/move this menu if there are no other menus attempting to control it (shared instance)
     const menuId = this.menu[0]?.id;
     const otherTriggers = $(`[aria-controls="${menuId}"]`).not(this.element);
-    const hasTheSameTriggerId = otherTriggers?.attr('aria-controls') === this.element.attr('aria-controls');
+    // Needs to check to unwrap and wrap the menu in datagrid
+    const datagridFilterWrapper = $('.datagrid-filter-wrapper');
 
-    if (!otherTriggers.length || hasTheSameTriggerId) {
+    if (!otherTriggers.length || datagridFilterWrapper.length > 0) {
       const parentNode = this.menu.parent();
       parentNode.find('.arrow').remove();
       parentNode.off('contextmenu.popupmenu');
