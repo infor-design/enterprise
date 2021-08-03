@@ -512,7 +512,7 @@ charts.addLegend = function (series, chartType, settings, container) {
         display: 'flex'
       });
 
-      $('.widget').addClass('auto-height');
+      $(container).addClass('auto-height');
 
       legend.append(listButton);
       $(container).append(legend);
