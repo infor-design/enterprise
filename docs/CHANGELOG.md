@@ -46,6 +46,8 @@
 - `[ToolbarFlex]` updated logic to account for the AllowTabs property and set toolbar items with a tab-index of 0 when allowTabs is ture ([#5387](https://github.com/infor-design/enterprise/issues/5387))
 - `[Tabs]` Remove tabs animation when clicking tabs. ([#4818](https://github.com/infor-design/enterprise-ng/issues/4818))
 
+(40 Issues Solved This Release, Backlog Enterprise 145, Backlog Ng 24, 1195 Functional Tests, 1697 e2e Tests)
+
 ### v4.54.0 Markup Changes
 
 - `[TrackDirty]` Removed Track Dirty from the main components list and integrated the underlying examples into their corresponding individual components.([#5319](https://github.com/infor-design/enterprise/issues/5319))
