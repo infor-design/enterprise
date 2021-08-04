@@ -66,6 +66,7 @@ const MODAL_DEFAULTS = {
   beforeShow: null,
   useFlexToolbar: false,
   showCloseBtn: false,
+  closeBtnTooltip: 'Close',
   maxWidth: null,
   fullsize: MODAL_FULLSIZE_SETTINGS[0],
   breakpoint: 'phone-to-tablet',
@@ -308,7 +309,7 @@ Modal.prototype = {
     // part of the Modal Buttonset
     if (this.settings.showCloseBtn && !this.isCAP) {
       const closeBtn = $(`
-        <button type="button" class="btn-icon btn-close" title="${Locale.translate('Close')}" aria-hidden="true">
+        <button type="button" class="btn-icon btn-close" title="${Locale.translate(this.settings.closeBtnTooltip)}" aria-hidden="true">
           ${$.createIcon('close')}
           <span class="audible">${Locale.translate('Close')}</span>
         </button>
