@@ -58,8 +58,8 @@ describe('Bar (Stacked) Chart example-index tests', () => {
     expect(await element(by.id('barstacked-s2-2010-bar')).getAttribute('id')).toEqual('barstacked-s2-2010-bar');
     expect(await element(by.id('barstacked-s2-2010-bar')).getAttribute('data-automation-id')).toEqual('automation-id-barstacked-s2-2010-bar');
 
-    expect(await element(by.id('barstacked-series1-legend')).getAttribute('data-automation-id')).toEqual('automation-id-barstacked-series1-legend-0');
-    expect(await element(by.id('barstacked-series2-legend')).getAttribute('data-automation-id')).toEqual('automation-id-barstacked-series2-legend-1');
+    expect(await element(by.id('barstacked-series1-legend-0')).getAttribute('data-automation-id')).toEqual('automation-id-barstacked-series1-legend-0');
+    expect(await element(by.id('barstacked-series2-legend-1')).getAttribute('data-automation-id')).toEqual('automation-id-barstacked-series2-legend-1');
   });
 
   if (utils.isChrome() && utils.isCI()) {
