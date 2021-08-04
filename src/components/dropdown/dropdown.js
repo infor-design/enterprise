@@ -1420,7 +1420,7 @@ Dropdown.prototype = {
     blank[0].selected = true;
     blank[0].setAttribute('selected', true);
     this.element.triggerHandler('updated');
-    this.element.triggerHandler('change');
+    this.element.trigger('change').triggerHandler('selected');
   },
 
   /**
