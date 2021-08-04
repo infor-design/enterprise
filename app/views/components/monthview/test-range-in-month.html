@@ -1,13 +1,16 @@
 <div class="row">
   <div class="twelve columns">
-    <div class="monthview" data-init="false">
+    <div class="calendar" data-init="false">
+      <div class="calendar-monthview">
+      </div>
     </div>
   </div>
 </div>
 
 <script>
   $('body').on('initialized', function () {
-    $('.monthview').monthview({
+
+    $('.calendar').calendar({
       headerStyle: 'none',
       disable: {
         minDate: '07/18/2021',
@@ -17,6 +20,107 @@
         start: '07/15/2021',
         end: '09/25/2021',
       },
+      eventTypes: [
+        {
+          "checked": true,
+          "color": "azure",
+          "id": "dto",
+          "label": "RN Night Shift",
+          "translationKey": "NightShift"
+        }
+      ],
+      events: [
+        {
+          "id": "9",
+          "subject": "RN Night Shift",
+          "comments": "RN Night Shift",
+          "status": "Pending",
+          "starts": "2021-07-11T00:00:00.000",
+          "ends": "2021-07-11T23:59:59.999",
+          "type": "dto",
+          "isAllDay": "false"
+        },
+        {
+          "id": "9",
+          "subject": "RN Night Shift",
+          "comments": "RN Night Shift",
+          "status": "Pending",
+          "starts": "2021-07-11T00:00:00.000",
+          "ends": "2021-07-11T23:59:59.999",
+          "type": "dto",
+          "isAllDay": "false"
+        },
+        {
+          "id": "9",
+          "subject": "RN Night Shift",
+          "comments": "RN Night Shift",
+          "status": "Pending",
+          "starts": "2021-07-11T00:00:00.000",
+          "ends": "2021-07-11T23:59:59.999",
+          "type": "dto",
+          "isAllDay": "false"
+        },
+        {
+          "id": "9",
+          "subject": "RN Night Shift",
+          "comments": "RN Night Shift",
+          "status": "Pending",
+          "starts": "2021-08-06T00:00:00.000",
+          "ends": "2021-08-06T23:59:59.999",
+          "type": "dto",
+          "isAllDay": "false"
+        },
+        {
+          "id": "9",
+          "subject": "RN Night Shift",
+          "comments": "RN Night Shift",
+          "status": "Pending",
+          "starts": "2021-08-07T00:00:00.000",
+          "ends": "2021-08-07T23:59:59.999",
+          "type": "dto",
+          "isAllDay": "false"
+        },
+        {
+          "id": "9",
+          "subject": "RN Night Shift",
+          "comments": "RN Night Shift",
+          "status": "Pending",
+          "starts": "2021-08-07T00:00:00.000",
+          "ends": "2021-08-07T23:59:59.999",
+          "type": "dto",
+          "isAllDay": "false"
+        },
+        {
+          "id": "9",
+          "subject": "RN Night Shift",
+          "comments": "RN Night Shift",
+          "status": "Pending",
+          "starts": "2021-08-07T00:00:00.000",
+          "ends": "2021-08-07T23:59:59.999",
+          "type": "dto",
+          "isAllDay": "false"
+        },
+        {
+          "id": "9",
+          "subject": "RN Night Shift",
+          "comments": "RN Night Shift",
+          "status": "Pending",
+          "starts": "2021-08-07T00:00:00.000",
+          "ends": "2021-08-07T23:59:59.999",
+          "type": "dto",
+          "isAllDay": "false"
+        },
+        {
+          "id": "9",
+          "subject": "RN Night Shift",
+          "comments": "RN Night Shift",
+          "status": "Pending",
+          "starts": "2021-08-08T00:00:00.000",
+          "ends": "2021-08-08T23:59:59.999",
+          "type": "dto",
+          "isAllDay": "false"
+        }
+      ]
     });
   });
 </script>

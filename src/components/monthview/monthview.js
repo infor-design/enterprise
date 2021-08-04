@@ -391,6 +391,8 @@ MonthView.prototype = {
        ${Array(numberOfWeeks).fill(this.day).join('')}
       </tbody>`).appendTo(this.table);
 
+    this.monthYearPane = $('');
+
     if (this.settings.showMonthYearPicker && (this.settings.isPopup || this.settings.inPage)) {
       this.monthYearPane = $(`<div class="monthview-monthyear-pane expandable-area ${this.settings.hideDays ? ' is-expanded' : ''}">
         <div class="expandable-pane">
@@ -804,25 +806,6 @@ MonthView.prototype = {
       year = new Date().getFullYear();
     }
 
-    if (month === 12) {
-      year++;
-      month = 0;
-      this.currentMonth = month;
-      this.currentYear = year;
-      this.currentDate.setFullYear(year);
-      this.currentDate.setMonth(month);
-    }
-
-    if (month < 0) {
-      year--;
-      month = 11;
-      this.currentMonth = month;
-      this.currentYear = year;
-      this.currentDate.setFullYear(year);
-      this.currentDate.setMonth(month);
-    }
-
-    this.currentDay = this.currentDay || this.settings.day;
     if (!this.currentCalendar || !this.currentCalendar.days) {
       this.currentCalendar = Locale.calendar(
         this.locale.name,
@@ -838,9 +821,6 @@ MonthView.prototype = {
       days = this.currentCalendar.days.abbreviated;
     }
     const monthName = this.currentCalendar.months.wide[month];
-
-    this.currentMonth = month;
-    this.currentYear = year;
 
     // Set the Days of the week
     let firstDayofWeek = (this.currentCalendar.firstDayofWeek || 0);
@@ -867,9 +847,9 @@ MonthView.prototype = {
     // get the number of days in each month for the given range
     let rangeCurrentMonth = month;
     let rangeCurrentYear = year;
-    const monthDaysMap = {};
     let rangeMonth = month;
     let rangeYear = year;
+    const monthDaysMap = {};
     for (let i = 0; i <= monthDifference; i++) {
       rangeMonth = month + i;
       if (rangeMonth > 11) {
@@ -987,21 +967,7 @@ MonthView.prototype = {
       }
     }
 
-    if (!this.currentDate) {
-      if (this.isIslamic) {
-        this.currentDateIslamic = [this.currentYear, this.currentMonth, this.currentDay];
-        this.currentDate = Locale.umalquraToGregorian(
-          this.currentYear,
-          this.currentMonth,
-          this.currentDay
-        );
-      } else {
-        this.currentDate = new Date(this.currentYear, this.currentMonth, this.currentDay);
-      }
-    }
-
     this.setRangeSelection();
-    this.validatePrevNext();
 
     // Allow focus on the same day as last month
     if (!s.range.useRange && this.element.find('td.is-selected').length === 0) {
