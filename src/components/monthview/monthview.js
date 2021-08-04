@@ -894,10 +894,6 @@ MonthView.prototype = {
       th.removeAttr('aria-selected');
       th.removeAttr('tabindex');
 
-      self.dayMap.push({ key: stringUtils.padDate(year, month, dayCnt), elem: th });
-      th.html(`<span class="day-container${isRippleClass}"><span aria-hidden="true" class="day-text">${xssUtils.stripTags(dayCnt)}</span></span>`);
-      th.attr('data-key', stringUtils.padDate(year, month, dayCnt));
-
       // Add Selected Class to Selected Date
       if (self.isIslamic) {
         if (dayCnt === elementDate[2]) {
@@ -933,9 +929,9 @@ MonthView.prototype = {
         th.addClass('is-today');
       }
 
-      self.dayMap.push({ key: stringUtils.padDate(year, month, dayCnt), elem: th });
+      self.dayMap.push({ key: stringUtils.padDate(rangeCurrentYear, rangeCurrentMonth, dayCnt), elem: th });
       th.html(`<span class="day-container${isRippleClass}"><span aria-hidden="true" class="day-text">${xssUtils.stripTags(dayCnt)}</span></span>`);
-      th.attr('data-key', stringUtils.padDate(year, month, dayCnt));
+      th.attr('data-key', stringUtils.padDate(rangeCurrentYear, rangeCurrentMonth, dayCnt));
 
       // Add Selected Class to Selected Date
       if (self.isIslamic) {
@@ -948,7 +944,7 @@ MonthView.prototype = {
         const tSeconds = self.isSeconds ? elementDate.getSeconds() : 0;
         const setHours = el => (el ? el.setHours(tHours, tMinutes, tSeconds, 0) : 0);
 
-        const newDate = setHours(new Date(year, month, dayCnt));
+        const newDate = setHours(new Date(rangeYear, rangeMonth, dayCnt));
         const comparisonDate = self.currentDate || elementDate;
         if (newDate === setHours(comparisonDate)) {
           setSelected(th, true);
