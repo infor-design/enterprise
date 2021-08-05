@@ -952,27 +952,15 @@ MonthView.prototype = {
       dayCnt++;
     });
 
-    if (!foundSelected && !s.range.useRange) {
-      const firstDay = self.dayMap.filter(d => d.key === stringUtils.padDate(
-        year,
-        month,
-        this.settings.day
+    if (!foundSelected) {
+      const today = self.dayMap.filter(d => d.key === stringUtils.padDate(
+        now.getFullYear(),
+        now.getMonth(),
+        now.getDate()
       ));
-      if (firstDay.length) {
-        setSelected(firstDay[0].elem, false);
+      if (today.length) {
+        setSelected(today[0].elem, false);
       }
-    }
-
-    this.setRangeSelection();
-
-    // Allow focus on the same day as last month
-    if (!s.range.useRange && this.element.find('td.is-selected').length === 0) {
-      this.element.find('td[tabindex]').removeAttr('tabindex');
-      this.element
-        .find('td:not(.alternate) .day-text')
-        .first()
-        .closest('td')
-        .attr('tabindex', '0');
     }
 
     /**
