@@ -173,13 +173,15 @@ ApplicationMenu.prototype = {
       this.openMenu(false, false, true);
 
       this.element.after('<div class="resizer"></div>');
-      $('#application-menu, .resizer, .page-container[role="main"]').wrapAll('<div class="resize-app-menu-container" />');
+      $('#application-menu, .resizer, .page-container')
+        .wrapAll('<div class="resize-app-menu-container" />');
 
       const resizer = document.querySelector('.resizer');
       const navMenu = document.querySelector('#application-menu');
 
       resizer.addEventListener('mousedown', (event) => {
         document.addEventListener('mousemove', resize, false);
+        event.preventDefault();
         document.addEventListener('mouseup', () => {
           document.removeEventListener('mousemove', resize, false);
         }, false);
@@ -188,7 +190,6 @@ ApplicationMenu.prototype = {
       function resize(e) {
         const width = `${e.x}.px`;
         navMenu.style.width = width;
-        navMenu.style.minWidth = `300px`;
       }
 
       console.log(this);
