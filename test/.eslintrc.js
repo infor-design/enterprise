@@ -19,10 +19,13 @@ module.exports = {
     jasmine: true,
     jquery: true,
     node: true,
-    protractor: true
+    protractor: true,
+    browser: true
   },
 
   globals: {
+    page: true,
+    browser: true,
     document: true,
     requireHelper: true,
     spyOnEvent: true,
@@ -49,6 +52,9 @@ module.exports = {
     'jasmine/no-suite-dupes': [1, 'branch'],
 
     // Allow toHaveBeenCalledWith
-    'jasmine/prefer-toHaveBeenCalledWith': ['off']
+    'jasmine/prefer-toHaveBeenCalledWith': ['off'],
+
+    // Dont worry about the extra lines
+    'jasmine/new-line-before-expect': ['off']
   }
 };
