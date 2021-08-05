@@ -823,11 +823,6 @@ MonthView.prototype = {
     let days = this.currentCalendar.days.narrow;
     days = days || this.currentCalendar.days.abbreviated;
 
-    if (!(s.isPopup || s.inPage)) {
-      days = this.currentCalendar.days.abbreviated;
-    }
-    const monthName = this.currentCalendar.months.wide[month];
-
     // Set the Days of the week
     let firstDayofWeek = (this.currentCalendar.firstDayofWeek || 0);
 
@@ -838,11 +833,6 @@ MonthView.prototype = {
     this.dayNames.find('th').each(function (i) {
       $(this).text(days[(i + firstDayofWeek) % 7]);
     });
-
-    // Localize Month Name
-    this.yearFirst = this.currentCalendar.dateFormat.year && this.currentCalendar.dateFormat.year.substr(1, 1) === 'y';
-    this.header.find('.month').attr('data-month', month).text(`${xssUtils.stripTags(monthName)} `);
-    this.header.find('.year').text(` ${year}`);
 
     // Adjust days of the week
     // lead days
@@ -2351,20 +2341,33 @@ MonthView.prototype = {
    * @returns {boolean} Whether if selected date is within range
    */
   validateDisplayRange(selectedDate) {
-    if (this.settings.displayRange.start && this.settings.displayRange.end) {
-      const rangeStart = new Date(this.settings.displayRange.start);
-      if ((rangeStart.getDate() > selectedDate.getDate() &&
-      rangeStart.getMonth() === selectedDate.getMonth()) ||
-      rangeStart.getMonth() > selectedDate.getMonth()) {
-        return false;
-      }
+    let minDate;
+    let maxDate;
+    const date = stringUtils.padDate(
+      selectedDate.getFullYear(),
+      selectedDate.getMonth(),
+      selectedDate.getDate()
+    );
+
+    if (!this.dayMap.map(d => d.key).includes(date)) return false;
+    if (this.settings.disable.minDate && this.settings.disable.maxDate) {
+      minDate = new Date(this.settings.disable.minDate);
+      maxDate = new Date(this.settings.disable.maxDate);
+    } else if (this.settings.displayRange.start && this.settings.displayRange.end) {
+      minDate = new Date(this.settings.displayRange.start);
+      maxDate = new Date(this.settings.displayRange.end);
     }
 
-    if (this.settings.displayRange.start && this.settings.displayRange.end) {
-      const rangeEnd = new Date(this.settings.displayRange.end);
-      if ((rangeEnd.getDate() < selectedDate.getDate() &&
-      rangeEnd.getMonth() === selectedDate.getMonth()) ||
-      rangeEnd.getMonth() < selectedDate.getMonth()) {
+    if (minDate && maxDate) {
+      if ((minDate.getDate() >= selectedDate.getDate() &&
+      minDate.getMonth() === selectedDate.getMonth()) ||
+      minDate.getMonth() > selectedDate.getMonth()) {
+        return false;
+      }
+
+      if ((maxDate.getDate() <= selectedDate.getDate() &&
+      maxDate.getMonth() === selectedDate.getMonth()) ||
+      maxDate.getMonth() < selectedDate.getMonth()) {
         return false;
       }
     }
