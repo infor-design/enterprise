@@ -43,6 +43,8 @@ const MODAL_FULLSIZE_SETTINGS = [false, 'responsive', 'always'];
 * @param {function} [settings.beforeShow=null] A call back function that can be used to return data for the modal.
 * @param {boolean} [settings.useFlexToolbar] If true the new flex toolbar will be used (For CAP)
 * @param {boolean} [settings.showCloseBtn] If true, show a close icon button on the top right of the modal.
+* @param {array} [settings.closeBtnOptions.attributes] Adds attributes on the close button.
+* @param {string} [settings.closeBtnOptions.closeBtnTooltip='Close'] Adds the ability to change the tooltip for Close button. Default is Close.
 * @param {number} [settings.maxWidth=null] Optional max width to add in pixels.
 * @param {boolean} [settings.fullsize=false] If true, ignore any sizing algorithms and
 * return the markup in the response and this will be shown in the modal. The busy indicator will be shown while waiting for a response.
@@ -66,7 +68,10 @@ const MODAL_DEFAULTS = {
   beforeShow: null,
   useFlexToolbar: false,
   showCloseBtn: false,
-  closeBtnTooltip: 'Close',
+  closeBtnOptions : {
+    attributes: [],
+    closeBtnTooltip: 'Close'
+  },
   maxWidth: null,
   fullsize: MODAL_FULLSIZE_SETTINGS[0],
   breakpoint: 'phone-to-tablet',
@@ -309,13 +314,17 @@ Modal.prototype = {
     // part of the Modal Buttonset
     if (this.settings.showCloseBtn && !this.isCAP) {
       const closeBtn = $(`
-        <button type="button" class="btn-icon btn-close" title="${Locale.translate(this.settings.closeBtnTooltip)}" aria-hidden="true">
+        <button type="button" class="btn-icon btn-close" title="${Locale.translate(this.settings.closeBtnOptions.closeBtnTooltip)}" aria-hidden="true">
           ${$.createIcon('close')}
           <span class="audible">${Locale.translate('Close')}</span>
         </button>
       `);
       this.element.find('.modal-content').append(closeBtn);
       closeBtn.on(`click.${this.namespace}`, () => this.close()).tooltip();
+
+      if (this.settings.closeBtnOptions.attributes) {
+        utils.addAttributes(closeBtn, this, this.settings.closeBtnOptions.attributes, '', true)
+      }
     }
 
     if (this.settings.id) {
