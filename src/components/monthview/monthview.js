@@ -772,6 +772,12 @@ MonthView.prototype = {
     const monthDifference = dateUtils.monthDiff(startDate, endDate);
     const s = this.settings;
 
+    // if disable dates not provided, disable dates outside of the range by default
+    if (!s.disable.minDate && !s.disable.MaxDate) {
+      s.disable.minDate = dateUtils.subtract(startDate, 1, 'days').toISOString();
+      s.disable.maxDate = dateUtils.add(endDate, 1, 'days').toISOString();
+    }
+
     now.setHours(0);
     now.setMinutes(0);
     now.setSeconds(0);
@@ -1218,6 +1224,7 @@ MonthView.prototype = {
    */
   setMonthLabel(elem, year, month, date, startDate) {
     const s = this.settings;
+    const isRippleClass = s.inPage ? ' class="is-ripple"' : '';
     let minDate;
     // starts labeling month from the first enabled date
     let labelStartDate;
@@ -1233,7 +1240,7 @@ MonthView.prototype = {
       (!s.disable.minDate && (month === labelStartDate.getMonth() && labelStartDate.getDate() === date))) {
       const dateText = elem.text();
       elem
-        .text(`${this.currentCalendar.months.wide[month]} ${dateText}`);
+        .html(`<span class="day-container${isRippleClass}"><span aria-hidden="true" class="day-text month-label">${this.currentCalendar.months.wide[month]} ${dateText}</span></span>`);
     }
   },
 
@@ -2087,6 +2094,7 @@ MonthView.prototype = {
       // Arrow Down: select same day of the week in the next week
       if (key === 40) {
         handled = true;
+        if (!this.validateDisplayRange(dateUtils.add(this.currentDate, 7, 'days'))) return false;
         if (s.range.useRange) {
           idx = allCell.index(e.target) + 7;
           selector = allCell.eq(idx);
@@ -2112,6 +2120,7 @@ MonthView.prototype = {
       // Arrow Up: select same day of the week in the previous week
       if (key === 38) {
         handled = true;
+        if (!this.validateDisplayRange(dateUtils.subtract(this.currentDate, 7, 'days'))) return false;
         if (s.range.useRange) {
           idx = allCell.index(e.target) - 7;
           selector = allCell.eq(idx);
@@ -2137,6 +2146,7 @@ MonthView.prototype = {
       // Arrow Left or - key
       if (key === 37 || (key === 189 && !e.shiftKey)) {
         handled = true;
+        if (!this.validateDisplayRange(dateUtils.subtract(this.currentDate, 1, 'days'))) return false;
         if (s.range.useRange) {
           idx = allCell.index(e.target) - 1;
           selector = allCell.eq(idx);
@@ -2162,6 +2172,7 @@ MonthView.prototype = {
       // Arrow Right or + key
       if (key === 39 || (key === 187 && e.shiftKey)) {
         handled = true;
+        if (!this.validateDisplayRange(dateUtils.add(this.currentDate, 1, 'days'))) return false;
         if (s.range.useRange) {
           idx = allCell.index(e.target) + 1;
           selector = allCell.eq(idx);
@@ -2331,6 +2342,33 @@ MonthView.prototype = {
       }
       return true;
     });
+  },
+
+  /**
+   * Validate the selected date is within dateRange
+   * @private
+   * @param {date} selectedDate date to check
+   * @returns {boolean} Whether if selected date is within range
+   */
+  validateDisplayRange(selectedDate) {
+    if (this.settings.displayRange.start && this.settings.displayRange.end) {
+      const rangeStart = new Date(this.settings.displayRange.start);
+      if ((rangeStart.getDate() > selectedDate.getDate() &&
+      rangeStart.getMonth() === selectedDate.getMonth()) ||
+      rangeStart.getMonth() > selectedDate.getMonth()) {
+        return false;
+      }
+    }
+
+    if (this.settings.displayRange.start && this.settings.displayRange.end) {
+      const rangeEnd = new Date(this.settings.displayRange.end);
+      if ((rangeEnd.getDate() < selectedDate.getDate() &&
+      rangeEnd.getMonth() === selectedDate.getMonth()) ||
+      rangeEnd.getMonth() < selectedDate.getMonth()) {
+        return false;
+      }
+    }
+    return true;
   },
 
   /**

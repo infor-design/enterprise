@@ -72,4 +72,46 @@ dateUtils.monthDiff = function (first, second) {
   return months <= 0 ? 0 : months;
 };
 
+/**
+ * Add a number of units to original date
+ * @param {date} date original date.
+ * @param {int} number of unit to add to the date.
+ * @param {string} unit days
+* @returns {date} new date after addition.
+ */
+dateUtils.add = function (date, number, unit) {
+  let newDate = null;
+  const originalDate = date instanceof Date ?
+    new Date(date.toISOString()) : new Date(date);
+  switch (unit) {
+    case 'days':
+      newDate = new Date(originalDate.setDate(originalDate.getDate() + number));
+      break;
+    default:
+      break;
+  }
+  return newDate;
+};
+
+/**
+ * Subtract a number of units to original date
+ * @param {date} date original date.
+ * @param {int} number of unit to subtract from the given date.
+ * @param {string} unit days
+* @returns {date} new date after subtraction.
+ */
+dateUtils.subtract = function (date, number, unit) {
+  let newDate = null;
+  const originalDate = date instanceof Date ?
+    new Date(date.toISOString()) : new Date(date);
+  switch (unit) {
+    case 'days':
+      newDate = new Date(originalDate.setDate(originalDate.getDate() - number));
+      break;
+    default:
+      break;
+  }
+  return newDate;
+};
+
 export { dateUtils }; //eslint-disable-line
