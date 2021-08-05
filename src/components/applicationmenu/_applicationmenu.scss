@@ -7,6 +7,23 @@ body.is-open-touch {
   overflow: hidden;
 }
 
+.resize-app-menu-container {
+  display: flex;
+
+  .application-menu.is-open {
+    height: 100vh !important;
+    position: relative;
+  }
+
+  .resizer {
+    cursor: col-resize;
+    flex-basis: 2px;
+    height: 100vh;
+    position: relative;
+    z-index: 2;
+  }
+}
+
 .application-menu {
   @include css3(transform, translateZ(0));
   @include transition(left 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94),

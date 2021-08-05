@@ -24,6 +24,7 @@ const COMPONENT_NAME = 'applicationmenu';
  * @param {boolean} [settings.dismissOnClickMobile=false] If true, causes a clicked menu option to dismiss on click when the responsive view is shown.
  * @param {boolean} [settings.filterable=false] If true a search / filter option will be added.
  * @param {boolean} [settings.filterMode='contains'] corresponds to a ListFilter component's `filterMode` for matching results.
+ * @param {boolean} [settings.resizable=false] If true, the app menu will be resizeable.
  * @param {boolean} [settings.openOnLarge=false]  If true, will automatically open the Application Menu when a large screen-width breakpoint is met.
  * @param {array} [settings.triggers=[]]  An Array of jQuery-wrapped elements that are able to open/close this nav menu.
  */
@@ -32,6 +33,7 @@ const APPLICATIONMENU_DEFAULTS = {
   dismissOnClickMobile: false,
   filterable: false,
   filterMode: 'contains',
+  resizable: false,
   openOnLarge: false,
   triggers: ['.application-menu-trigger'],
   onExpandSwitcher: null,
@@ -164,6 +166,32 @@ ApplicationMenu.prototype = {
       this.searchfield.on(`cleared.${COMPONENT_NAME}`, () => {
         self.accordionAPI.unfilter(null, true);
       });
+    }
+
+    if (this.settings.resizable) {
+      // Menu should always opened when resizable is activated.
+      this.openMenu(false, false, true);
+
+      this.element.after('<div class="resizer"></div>');
+      $('#application-menu, .resizer, .page-container[role="main"]').wrapAll('<div class="resize-app-menu-container" />');
+
+      const resizer = document.querySelector('.resizer');
+      const navMenu = document.querySelector('#application-menu');
+
+      resizer.addEventListener('mousedown', (event) => {
+        document.addEventListener('mousemove', resize, false);
+        document.addEventListener('mouseup', () => {
+          document.removeEventListener('mousemove', resize, false);
+        }, false);
+      });
+
+      function resize(e) {
+        const width = `${e.x}.px`;
+        navMenu.style.width = width;
+        navMenu.style.minWidth = `300px`;
+      }
+
+      console.log(this);
     }
 
     // Sync with application menus that have an 'is-open' CSS class.
