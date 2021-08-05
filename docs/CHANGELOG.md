@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.55.0 Features
+
+- `[Modal]` Added the ability to have a custom tooltip on modal close button. ([#5391](https://github.com/infor-design/enterprise/issues/5391))
+
 ## v4.54.0 Features
 
 - `[Cards]` Added the ability of single and multi selection of cards. ([#5253](https://github.com/infor-design/enterprise/issues/5253))

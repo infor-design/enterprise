@@ -68,7 +68,7 @@ const MODAL_DEFAULTS = {
   beforeShow: null,
   useFlexToolbar: false,
   showCloseBtn: false,
-  closeBtnOptions : {
+  closeBtnOptions: {
     attributes: [],
     closeBtnTooltip: 'Close'
   },
@@ -323,7 +323,7 @@ Modal.prototype = {
       closeBtn.on(`click.${this.namespace}`, () => this.close()).tooltip();
 
       if (this.settings.closeBtnOptions.attributes) {
-        utils.addAttributes(closeBtn, this, this.settings.closeBtnOptions.attributes, '', true)
+        utils.addAttributes(closeBtn, this, this.settings.closeBtnOptions.attributes, '', true);
       }
     }
 
