@@ -4283,7 +4283,6 @@ Datagrid.prototype = {
       }${isSelected ? this.settings.selectable === 'mixed' ? ' is-selected hide-selected-color' : ' is-selected' : ''
       }${self.settings.alternateRowShading && !isEven ? ' alt-shading' : ''
       }${isSummaryRow ? ' datagrid-summary-row' : ''
-      }${!self.settings.cellNavigation && self.settings.selectable !== false ? ' is-clickable' : ''
       }${self.settings.treeGrid ? (rowData.children ? ' datagrid-tree-parent' : (depth > 1 ? ' datagrid-tree-child' : '')) : ''
       }"${dynamicRowHeight}>`;
 
@@ -6439,17 +6438,25 @@ Datagrid.prototype = {
     const self = this;
 
     // Set Focus on rows
-    if (!self.settings.cellNavigation && self.settings.rowNavigation) {
-      self.element
-        .on('focus.datagrid', 'tbody > tr', function () {
+    self.element
+      .on('focus.datagrid', 'tbody > tr', function () {
+        if (!self.settings.cellNavigation && self.settings.rowNavigation) {
           const rowNodes = self.rowNodes($(this));
-          rowNodes.addClass('is-active-row');
-        })
-        .on('blur.datagrid', 'tbody > tr', function () {
+
+          if (!rowNodes.hasClass('is-active-row')) {
+            rowNodes.addClass('is-active-row');
+          }
+        }
+      })
+      .on('blur.datagrid', 'tbody > tr', function () {
+        if (!self.settings.cellNavigation && self.settings.rowNavigation) {
           const rowNodes = self.rowNodes($(this));
-          rowNodes.removeClass('is-active-row');
-        });
-    }
+
+          if (rowNodes.hasClass('is-active-row')) {
+            rowNodes.removeClass('is-active-row');
+          }
+        }
+      });
 
     // Handle Paging
     if (this.settings.paging) {
@@ -6478,7 +6485,13 @@ Datagrid.prototype = {
         .off('mouseenter.datagrid, mouseleave.datagrid')
         .on('mouseenter.datagrid', 'tbody > tr', function () {
           const rowNodes = self.rowNodes($(this));
-          rowNodes.addClass('is-hover-row');
+          rowNodes
+            .addClass('is-hover-row')
+            .removeClass('is-clickable');
+
+          if (!self.settings.cellNavigation && self.settings.selectable !== false) {
+            rowNodes.addClass('is-clickable');
+          }
         }).on('mouseleave.datagrid', 'tbody > tr', function () {
           const rowNodes = self.rowNodes($(this));
           rowNodes.removeClass('is-hover-row');
