@@ -1,0 +1,49 @@
+
+<div class="row">
+    <div class="two-thirds column">
+        <div class="widget">
+          <div class="widget-header">
+            <h2 class="widget-title">Pie Chart Center Tooltip</h2>
+          </div>
+          <div class="widget-content">
+            <div id="pie-chart-example" class="chart-container">
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+  
+  <script>
+  $('body').on('initialized', function () {
+  
+    var pieData = [{
+      data: [{
+          name: 'Resources',
+          shortName: 'Resources',
+          value: 16000,
+          color: 'good'
+        }, {
+          name: 'Expenses',
+          shortName: 'Expenses',
+          value: 5500,
+          color: 'error'
+        }],
+        centerLabel: '<tspan  x="0" dy="-0.4em">Total Value</tspan> <tspan x="0" dy="1.4em">$16,000</tspan>'
+      }];
+  
+    $('#pie-chart-example').chart({
+      type: 'donut',
+      dataset: pieData,
+      labels: {
+        contentsTop: 'value',
+        formatterTop: '$,.2f',// f or .2f for decimals
+      },
+      attributes: [
+        { name: 'data-automation-id', value: 'chart-donut-automation' }
+      ],
+      showTooltips: true
+    });
+  
+  });
+  </script>
+  

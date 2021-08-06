@@ -15,10 +15,10 @@ describe('Pie Chart tests', () => {
   });
 
   it('Should be able to set id/automation id', async () => {
-    expect(await element(by.id('item-a')).getAttribute('id')).toEqual('item-a');
-    expect(await element(by.id('item-a')).getAttribute('data-automation-id')).toEqual('item-a-automation-id');
-    expect(await element(by.id('item-a-legend')).getAttribute('id')).toEqual('item-a-legend');
-    expect(await element(by.id('item-a-legend')).getAttribute('data-automation-id')).toEqual('item-a-automation-id-legend');
+    expect(await element(by.id('item-a-slice-0')).getAttribute('id')).toEqual('item-a-slice-0');
+    expect(await element(by.id('item-a-slice-0')).getAttribute('data-automation-id')).toEqual('item-a-automation-id-slice-0');
+    expect(await element(by.id('item-a-legend-0')).getAttribute('id')).toEqual('item-a-legend-0');
+    expect(await element(by.id('item-a-legend-0')).getAttribute('data-automation-id')).toEqual('item-a-automation-id-legend-0');
   });
 
   if (utils.isChrome() && utils.isCI()) {
