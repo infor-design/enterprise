@@ -2337,10 +2337,6 @@ MonthView.prototype = {
       selectedDate.getDate()
     );
 
-    if (this.settings.displayRange.start && this.settings.displayRange.end) {
-      if (!this.dayMap.map(d => d.key).includes(date)) return false;
-    }
-
     if (this.settings.disable.minDate && this.settings.disable.maxDate) {
       minDate = new Date(this.settings.disable.minDate);
       maxDate = new Date(this.settings.disable.maxDate);
@@ -2349,17 +2345,21 @@ MonthView.prototype = {
       maxDate = new Date(this.settings.displayRange.end);
     }
 
-    if (minDate && maxDate) {
-      if ((minDate.getDate() >= selectedDate.getDate() &&
-      minDate.getMonth() === selectedDate.getMonth()) ||
-      minDate.getMonth() > selectedDate.getMonth()) {
-        return false;
-      }
+    if (this.settings.displayRange.start && this.settings.displayRange.end) {
+      if (!this.dayMap.map(d => d.key).includes(date)) return false;
 
-      if ((maxDate.getDate() <= selectedDate.getDate() &&
-      maxDate.getMonth() === selectedDate.getMonth()) ||
-      maxDate.getMonth() < selectedDate.getMonth()) {
-        return false;
+      if (minDate && maxDate) {
+        if ((minDate.getDate() >= selectedDate.getDate() &&
+        minDate.getMonth() === selectedDate.getMonth()) ||
+        minDate.getMonth() > selectedDate.getMonth()) {
+          return false;
+        }
+
+        if ((maxDate.getDate() <= selectedDate.getDate() &&
+        maxDate.getMonth() === selectedDate.getMonth()) ||
+        maxDate.getMonth() < selectedDate.getMonth()) {
+          return false;
+        }
       }
     }
     return true;
