@@ -85,7 +85,6 @@ describe('About Puppeteer Tests', () => {
 
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-      await pauseAnimations();
     });
 
     it('should fire the close event', async () => {
@@ -105,7 +104,6 @@ describe('About Puppeteer Tests', () => {
 
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-      await pauseAnimations();
     });
 
     it('should be able to use both close buttons', async () => {

@@ -24,7 +24,6 @@ module.exports = {
   },
 
   globals: {
-    pauseAnimations: true,
     jestPuppeteer: true,
     page: true,
     browser: true,
