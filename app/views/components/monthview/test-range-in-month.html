@@ -1,8 +1,6 @@
-<div class="row">
-  <div class="twelve columns">
-    <div class="calendar" data-init="false">
-      <div class="calendar-monthview">
-      </div>
+<div class="full-height full-width">
+  <div class="calendar" data-init="false">
+    <div class="calendar-monthview">
     </div>
   </div>
 </div>
@@ -10,6 +8,7 @@
 <script>
   $('body').on('initialized', function () {
     $('.calendar').calendar({
+      showViewChanger: false,
       disable: {
         dates: ['07/22/2021/', '08/02/2021', '09/08/2021', '08/16/2021'],
         minDate: '07/11/2021',
