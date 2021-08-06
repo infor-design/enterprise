@@ -63,12 +63,12 @@ describe('Area Chart tests', () => {
     expect(await element(by.id('area-comp-c-line')).getAttribute('id')).toEqual('area-comp-c-line');
     expect(await element(by.id('area-comp-c-line')).getAttribute('data-automation-id')).toEqual('automation-id-area-comp-c-line');
 
-    expect(await element(by.id('area-comp-a-legend')).getAttribute('id')).toEqual('area-comp-a-legend');
-    expect(await element(by.id('area-comp-a-legend')).getAttribute('data-automation-id')).toEqual('automation-id-area-comp-a-legend');
-    expect(await element(by.id('area-comp-b-legend')).getAttribute('id')).toEqual('area-comp-b-legend');
-    expect(await element(by.id('area-comp-b-legend')).getAttribute('data-automation-id')).toEqual('automation-id-area-comp-b-legend');
-    expect(await element(by.id('area-comp-c-legend')).getAttribute('id')).toEqual('area-comp-c-legend');
-    expect(await element(by.id('area-comp-c-legend')).getAttribute('data-automation-id')).toEqual('automation-id-area-comp-c-legend');
+    expect(await element(by.id('area-comp-a-legend-0')).getAttribute('id')).toEqual('area-comp-a-legend-0');
+    expect(await element(by.id('area-comp-a-legend-0')).getAttribute('data-automation-id')).toEqual('automation-id-area-comp-a-legend-0');
+    expect(await element(by.id('area-comp-b-legend-1')).getAttribute('id')).toEqual('area-comp-b-legend-1');
+    expect(await element(by.id('area-comp-b-legend-1')).getAttribute('data-automation-id')).toEqual('automation-id-area-comp-b-legend-1');
+    expect(await element(by.id('area-comp-c-legend-2')).getAttribute('id')).toEqual('area-comp-c-legend-2');
+    expect(await element(by.id('area-comp-c-legend-2')).getAttribute('data-automation-id')).toEqual('automation-id-area-comp-c-legend-2');
   });
 });
 

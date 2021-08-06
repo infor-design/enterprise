@@ -6453,15 +6453,20 @@ Datagrid.prototype = {
 
     // Handle Paging
     if (this.settings.paging) {
+      // Need to store the original id to work the wrapping and unwrapping in popupmenu
+      // before the paging initiate
+      this.pagerId = $('.pager-toolbar .btn-menu').attr('aria-controls');
       this.tableBody.on(`page.${COMPONENT_NAME}`, (e, pagingInfo) => {
         if (pagingInfo.type === 'filtered' && this.settings.source) {
           return;
         }
+        self.closePopupmenuOnPaging();
         self.saveUserSettings();
         self.render(null, pagingInfo);
         self.afterPaging(pagingInfo);
       }).on(`pagesizechange.${COMPONENT_NAME}`, (e, pagingInfo) => {
         pagingInfo.preserveSelected = true;
+        self.closePopupmenuOnPaging();
         self.render(null, pagingInfo);
         self.afterPaging(pagingInfo);
       });
@@ -6983,6 +6988,23 @@ Datagrid.prototype = {
         self.commitCellEdit();
       }
     });
+  },
+
+  /**
+   * Close opened popupmenus when paging.
+   * @private
+   * @returns {void}
+   */
+  closePopupmenuOnPaging() {
+    const btn = this.element.find('.datagrid-filter-wrapper .btn-filter.is-open');
+    const popupmenu = btn?.data('popupmenu');
+
+    // passing the original aria-controls id
+    const pagerMenuNewId = $('.pager-toolbar .btn-menu').attr('aria-controls', this.pagerId);
+
+    if (pagerMenuNewId.length) {
+      popupmenu?.close(true, true);
+    }
   },
 
   /**

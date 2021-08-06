@@ -95,13 +95,13 @@ describe('Column Stacked Chart tests', () => {
     expect(await element(by.id('columnstacked-2016-dec-bar')).getAttribute('id')).toEqual('columnstacked-2016-dec-bar');
     expect(await element(by.id('columnstacked-2016-dec-bar')).getAttribute('data-automation-id')).toEqual('automation-id-columnstacked-2016-dec-bar');
 
-    expect(await element(by.id('columnstacked-2018-legend')).getAttribute('id')).toEqual('columnstacked-2018-legend');
-    expect(await element(by.id('columnstacked-2018-legend')).getAttribute('data-automation-id')).toEqual('automation-id-columnstacked-2018-legend');
+    expect(await element(by.id('columnstacked-2018-legend-0')).getAttribute('id')).toEqual('columnstacked-2018-legend-0');
+    expect(await element(by.id('columnstacked-2018-legend-0')).getAttribute('data-automation-id')).toEqual('automation-id-columnstacked-2018-legend-0');
 
-    expect(await element(by.id('columnstacked-2017-legend')).getAttribute('id')).toEqual('columnstacked-2017-legend');
-    expect(await element(by.id('columnstacked-2017-legend')).getAttribute('data-automation-id')).toEqual('automation-id-columnstacked-2017-legend');
+    expect(await element(by.id('columnstacked-2017-legend-1')).getAttribute('id')).toEqual('columnstacked-2017-legend-1');
+    expect(await element(by.id('columnstacked-2017-legend-1')).getAttribute('data-automation-id')).toEqual('automation-id-columnstacked-2017-legend-1');
 
-    expect(await element(by.id('columnstacked-2016-legend')).getAttribute('id')).toEqual('columnstacked-2016-legend');
-    expect(await element(by.id('columnstacked-2016-legend')).getAttribute('data-automation-id')).toEqual('automation-id-columnstacked-2016-legend');
+    expect(await element(by.id('columnstacked-2016-legend-2')).getAttribute('id')).toEqual('columnstacked-2016-legend-2');
+    expect(await element(by.id('columnstacked-2016-legend-2')).getAttribute('data-automation-id')).toEqual('automation-id-columnstacked-2016-legend-2');
   });
 });
