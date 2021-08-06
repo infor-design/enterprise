@@ -65,10 +65,10 @@ describe('Grouped Bar Chart example-index tests', () => {
     expect(await element(by.id('bargroup-c-apr-bar')).getAttribute('id')).toEqual('bargroup-c-apr-bar');
     expect(await element(by.id('bargroup-c-apr-bar')).getAttribute('data-automation-id')).toEqual('automation-id-bargroup-c-apr-bar');
 
-    expect(await element(by.id('bargroup-a-jan-legend')).getAttribute('data-automation-id')).toEqual('automation-id-bargroup-a-jan-legend');
-    expect(await element(by.id('bargroup-a-feb-legend')).getAttribute('data-automation-id')).toEqual('automation-id-bargroup-a-feb-legend');
-    expect(await element(by.id('bargroup-a-mar-legend')).getAttribute('data-automation-id')).toEqual('automation-id-bargroup-a-mar-legend');
-    expect(await element(by.id('bargroup-a-apr-legend')).getAttribute('data-automation-id')).toEqual('automation-id-bargroup-a-apr-legend');
+    expect(await element(by.id('bargroup-a-jan-legend-0')).getAttribute('data-automation-id')).toEqual('automation-id-bargroup-a-jan-legend-0');
+    expect(await element(by.id('bargroup-a-feb-legend-1')).getAttribute('data-automation-id')).toEqual('automation-id-bargroup-a-feb-legend-1');
+    expect(await element(by.id('bargroup-a-mar-legend-2')).getAttribute('data-automation-id')).toEqual('automation-id-bargroup-a-mar-legend-2');
+    expect(await element(by.id('bargroup-a-apr-legend-3')).getAttribute('data-automation-id')).toEqual('automation-id-bargroup-a-apr-legend-3');
   });
 
   if (utils.isChrome() && utils.isCI()) {

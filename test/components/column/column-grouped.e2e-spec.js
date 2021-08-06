@@ -58,22 +58,22 @@ describe('Column Grouped Chart example-index tests', () => {
     expect(await element(by.id('columngrouped-c3-jun-bar')).getAttribute('id')).toEqual('columngrouped-c3-jun-bar');
     expect(await element(by.id('columngrouped-c3-jun-bar')).getAttribute('data-automation-id')).toEqual('automation-id-columngrouped-c3-jun-bar');
 
-    expect(await element(by.id('columngrouped-c1-jan-legend')).getAttribute('id')).toEqual('columngrouped-c1-jan-legend');
-    expect(await element(by.id('columngrouped-c1-jan-legend')).getAttribute('data-automation-id')).toEqual('automation-id-columngrouped-c1-jan-legend');
+    expect(await element(by.id('columngrouped-c1-jan-legend-0')).getAttribute('id')).toEqual('columngrouped-c1-jan-legend-0');
+    expect(await element(by.id('columngrouped-c1-jan-legend-0')).getAttribute('data-automation-id')).toEqual('automation-id-columngrouped-c1-jan-legend-0');
 
-    expect(await element(by.id('columngrouped-c1-feb-legend')).getAttribute('id')).toEqual('columngrouped-c1-feb-legend');
-    expect(await element(by.id('columngrouped-c1-feb-legend')).getAttribute('data-automation-id')).toEqual('automation-id-columngrouped-c1-feb-legend');
+    expect(await element(by.id('columngrouped-c1-feb-legend-1')).getAttribute('id')).toEqual('columngrouped-c1-feb-legend-1');
+    expect(await element(by.id('columngrouped-c1-feb-legend-1')).getAttribute('data-automation-id')).toEqual('automation-id-columngrouped-c1-feb-legend-1');
 
-    expect(await element(by.id('columngrouped-c1-mar-legend')).getAttribute('id')).toEqual('columngrouped-c1-mar-legend');
-    expect(await element(by.id('columngrouped-c1-mar-legend')).getAttribute('data-automation-id')).toEqual('automation-id-columngrouped-c1-mar-legend');
+    expect(await element(by.id('columngrouped-c1-mar-legend-2')).getAttribute('id')).toEqual('columngrouped-c1-mar-legend-2');
+    expect(await element(by.id('columngrouped-c1-mar-legend-2')).getAttribute('data-automation-id')).toEqual('automation-id-columngrouped-c1-mar-legend-2');
 
-    expect(await element(by.id('columngrouped-c1-apr-legend')).getAttribute('id')).toEqual('columngrouped-c1-apr-legend');
-    expect(await element(by.id('columngrouped-c1-apr-legend')).getAttribute('data-automation-id')).toEqual('automation-id-columngrouped-c1-apr-legend');
+    expect(await element(by.id('columngrouped-c1-apr-legend-3')).getAttribute('id')).toEqual('columngrouped-c1-apr-legend-3');
+    expect(await element(by.id('columngrouped-c1-apr-legend-3')).getAttribute('data-automation-id')).toEqual('automation-id-columngrouped-c1-apr-legend-3');
 
-    expect(await element(by.id('columngrouped-c1-may-legend')).getAttribute('id')).toEqual('columngrouped-c1-may-legend');
-    expect(await element(by.id('columngrouped-c1-may-legend')).getAttribute('data-automation-id')).toEqual('automation-id-columngrouped-c1-may-legend');
+    expect(await element(by.id('columngrouped-c1-may-legend-4')).getAttribute('id')).toEqual('columngrouped-c1-may-legend-4');
+    expect(await element(by.id('columngrouped-c1-may-legend-4')).getAttribute('data-automation-id')).toEqual('automation-id-columngrouped-c1-may-legend-4');
 
-    expect(await element(by.id('columngrouped-c1-jun-legend')).getAttribute('id')).toEqual('columngrouped-c1-jun-legend');
-    expect(await element(by.id('columngrouped-c1-jun-legend')).getAttribute('data-automation-id')).toEqual('automation-id-columngrouped-c1-jun-legend');
+    expect(await element(by.id('columngrouped-c1-jun-legend-5')).getAttribute('id')).toEqual('columngrouped-c1-jun-legend-5');
+    expect(await element(by.id('columngrouped-c1-jun-legend-5')).getAttribute('data-automation-id')).toEqual('automation-id-columngrouped-c1-jun-legend-5');
   });
 });

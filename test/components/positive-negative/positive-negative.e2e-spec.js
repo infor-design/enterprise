@@ -67,14 +67,14 @@ describe('Positive Negative Chart tests', () => {
     expect(await element(by.id('positive-negative-dec-bar')).getAttribute('id')).toEqual('positive-negative-dec-bar');
     expect(await element(by.id('positive-negative-dec-bar')).getAttribute('data-automation-id')).toEqual('automation-id-positive-negative-dec-bar');
 
-    expect(await element(by.id('positive-negative-revenue-legend')).getAttribute('id')).toEqual('positive-negative-revenue-legend');
-    expect(await element(by.id('positive-negative-revenue-legend')).getAttribute('data-automation-id')).toEqual('automation-id-positive-negative-revenue-legend');
+    expect(await element(by.id('positive-negative-revenue-legend-0')).getAttribute('id')).toEqual('positive-negative-revenue-legend-0');
+    expect(await element(by.id('positive-negative-revenue-legend-0')).getAttribute('data-automation-id')).toEqual('automation-id-positive-negative-revenue-legend-0');
 
-    expect(await element(by.id('positive-negative-profit-legend')).getAttribute('id')).toEqual('positive-negative-profit-legend');
-    expect(await element(by.id('positive-negative-profit-legend')).getAttribute('data-automation-id')).toEqual('automation-id-positive-negative-profit-legend');
+    expect(await element(by.id('positive-negative-profit-legend-1')).getAttribute('id')).toEqual('positive-negative-profit-legend-1');
+    expect(await element(by.id('positive-negative-profit-legend-1')).getAttribute('data-automation-id')).toEqual('automation-id-positive-negative-profit-legend-1');
 
-    expect(await element(by.id('positive-negative-loss-legend')).getAttribute('id')).toEqual('positive-negative-loss-legend');
-    expect(await element(by.id('positive-negative-loss-legend')).getAttribute('data-automation-id')).toEqual('automation-id-positive-negative-loss-legend');
+    expect(await element(by.id('positive-negative-loss-legend-2')).getAttribute('id')).toEqual('positive-negative-loss-legend-2');
+    expect(await element(by.id('positive-negative-loss-legend-2')).getAttribute('data-automation-id')).toEqual('automation-id-positive-negative-loss-legend-2');
   });
 
   if (utils.isChrome() && utils.isCI()) {
