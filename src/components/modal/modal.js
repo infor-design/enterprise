@@ -314,7 +314,8 @@ Modal.prototype = {
     // part of the Modal Buttonset
     if (this.settings.showCloseBtn && !this.isCAP) {
       const closeBtn = $(`
-        <button type="button" class="btn-icon btn-close" title="${Locale.translate(this.settings.closeBtnOptions.closeBtnTooltip)}" aria-hidden="true">
+        <button type="button" class="btn-icon btn-close" title="${Locale.translate(this.settings.closeBtnOptions.closeBtnTooltip, 
+          { showAsUndefined: false, showBrackets: false })}" aria-hidden="true">
           ${$.createIcon('close')}
           <span class="audible">${Locale.translate('Close')}</span>
         </button>
