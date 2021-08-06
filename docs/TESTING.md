@@ -87,6 +87,7 @@ npm run e2e:puppeteer
 We could improve this...
 
 - Add a puppeteer debug stop with `debugger` and use `await jestPuppeteer.debug();` to pause the browser
+
 ```js
   test('adds 1 + 2 to equal 3', () => {
     debugger;
@@ -94,6 +95,7 @@ We could improve this...
     await jestPuppeteer.debug();
   });
 ```
+
 - Also check out `await jestPuppeteer.debug();`
 - edit the jest-puppeteer.config.js and set `devtools: true` and `headless: false`
 - run `npm run e2e:puppeteer -- tooltip`
@@ -103,61 +105,71 @@ We could improve this...
 1. Click an element
 
 Protractor:
+
 ```js
 const buttonEl = await element(by.id('about-trigger'));
 await buttonEl.click();
 ```
 
 Puppeteer:
+
 ```js
 await page.click('#about-trigger');
 ```
 
-2. Waiting for an element to be visible
+1. Waiting for an element to be visible
 
 Protractor:
+
 ```js
 await browser.driver
     .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('myId'))), config.waitsFor);
 ```
 
 Puppeteer:
+
 ```js
 page.waitForSelector('#myId', { visible: true });
 ```
 
-3. Check an element's text
+1. Check an element's text
 
 Protractor:
+
 ```js
 const text = await element(by.css('.modal-body')).getText()
 ```
 
 Puppeteer:
+
 ```js
 await page.$eval('.modal-body .version', el => el.textContent));
 ```
 
-4. Get an elements attributes
+1. Get an elements attributes
 
 Protractor:
+
 ```js
 await element(by.css('html')).getAttribute('data-sohoxi-version'));
 ```
 
 Puppeteer:
+
 ```js
 await page.$eval('html', el => el.data-sohoxi-version));
 ```
 
-5. Send a key
+1. Send a key
 
 Protractor:
+
 ```js
 await browser.driver.actions().sendKeys(protractor.Key.ESCAPE).perform();
-
 ```
+
 Puppeteer:
+
 ```js
 await page.keyboard.press('Escape');
 ```
