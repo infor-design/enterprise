@@ -173,8 +173,11 @@ ApplicationMenu.prototype = {
       this.openMenu(false, false, true);
 
       this.element.after('<div class="resizer"></div>');
-      $('#application-menu, .resizer, .page-container')
+      $('#application-menu, .resizer')
         .wrapAll('<div class="resize-app-menu-container" />');
+      
+      $('.page-container').wrapAll('<div class="resize-page-container" />');
+      $('.resize-page-container').insertAfter('.resizer');
 
       const resizer = document.querySelector('.resizer');
       const navMenu = document.querySelector('#application-menu');

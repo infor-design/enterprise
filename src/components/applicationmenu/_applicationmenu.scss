@@ -53,6 +53,11 @@ body.is-open-touch {
     margin-top: 100px;
     top: 0;
   }
+
+  .resize-page-container {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 .application-menu {
