@@ -57,4 +57,61 @@ dateUtils.dateDiff = function (first, second, useHours) {
     (useHours ? 1 : Math.abs(dtoday.getTimezoneOffset()))));
 };
 
+/**
+ * Get the month difference between two dates.
+ * @param {date} first The first date.
+ * @param {date} second The second date.
+ * @param {boolean} useHours The different in hours if true, otherways days.
+* @returns {number} The difference between the two dates.
+ */
+dateUtils.monthDiff = function (first, second) {
+  let months;
+  months = (second.getFullYear() - first.getFullYear()) * 12;
+  months -= first.getMonth();
+  months += second.getMonth();
+  return months <= 0 ? 0 : months;
+};
+
+/**
+ * Add a number of units to original date
+ * @param {date} date original date.
+ * @param {int} number of unit to add to the date.
+ * @param {string} unit days
+* @returns {date} new date after addition.
+ */
+dateUtils.add = function (date, number, unit) {
+  let newDate = null;
+  const originalDate = date instanceof Date ?
+    new Date(date.toISOString()) : new Date(date);
+  switch (unit) {
+    case 'days':
+      newDate = new Date(originalDate.setDate(originalDate.getDate() + number));
+      break;
+    default:
+      break;
+  }
+  return newDate;
+};
+
+/**
+ * Subtract a number of units to original date
+ * @param {date} date original date.
+ * @param {int} number of unit to subtract from the given date.
+ * @param {string} unit days
+* @returns {date} new date after subtraction.
+ */
+dateUtils.subtract = function (date, number, unit) {
+  let newDate = null;
+  const originalDate = date instanceof Date ?
+    new Date(date.toISOString()) : new Date(date);
+  switch (unit) {
+    case 'days':
+      newDate = new Date(originalDate.setDate(originalDate.getDate() - number));
+      break;
+    default:
+      break;
+  }
+  return newDate;
+};
+
 export { dateUtils }; //eslint-disable-line
