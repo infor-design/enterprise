@@ -2337,7 +2337,10 @@ MonthView.prototype = {
       selectedDate.getDate()
     );
 
-    if (!this.dayMap.map(d => d.key).includes(date)) return false;
+    if (this.settings.displayRange.start && this.settings.displayRange.end) {
+      if (!this.dayMap.map(d => d.key).includes(date)) return false;
+    }
+
     if (this.settings.disable.minDate && this.settings.disable.maxDate) {
       minDate = new Date(this.settings.disable.minDate);
       maxDate = new Date(this.settings.disable.maxDate);
