@@ -179,20 +179,19 @@ ApplicationMenu.prototype = {
       const resizer = document.querySelector('.resizer');
       const navMenu = document.querySelector('#application-menu');
 
-      resizer.addEventListener('mousedown', (event) => {
-        document.addEventListener('mousemove', resize, false);
-        event.preventDefault();
-        document.addEventListener('mouseup', () => {
-          document.removeEventListener('mousemove', resize, false);
-        }, false);
+      resizer.addEventListener('mousedown', function (e) {
+        e.preventDefault();
+        window.addEventListener('mousemove', resize);
+        window.addEventListener('mouseup', stopResize);
       });
 
       function resize(e) {
-        const width = `${e.x}.px`;
-        navMenu.style.width = width;
+        navMenu.style.flexBasis = e.pageX - navMenu.getBoundingClientRect().left + 'px';
       }
 
-      console.log(this);
+      function stopResize() {
+        window.removeEventListener('mousemove', resize);
+      }
     }
 
     // Sync with application menus that have an 'is-open' CSS class.

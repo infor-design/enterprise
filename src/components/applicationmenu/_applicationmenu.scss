@@ -42,6 +42,17 @@ body.is-open-touch {
 
     left: -$application-menu-width;
   }
+
+  .application-menu {
+    ~ .page-container {
+      @include transition(height 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94),
+      margin 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94),
+      left 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94),
+      width 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
+
+      right: 0;
+    }
+  }
 }
 
 .application-menu {
