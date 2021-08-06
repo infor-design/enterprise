@@ -178,6 +178,12 @@ ApplicationMenu.prototype = {
 
       const resizer = document.querySelector('.resizer');
       const navMenu = document.querySelector('#application-menu');
+      const tabPanel = $('.tab-panel-container.page-container');
+
+      // calculates the correct width of the .tab-panel-container
+      if (tabPanel) {
+        tabPanel.css('width', 'calc(100% - 300px)');
+      }
 
       resizer.addEventListener('mousedown', function (e) {
         e.preventDefault();
@@ -187,10 +193,11 @@ ApplicationMenu.prototype = {
 
       function resize(e) {
         navMenu.style.flexBasis = e.pageX - navMenu.getBoundingClientRect().left + 'px';
+        $('.page-container').css('width', `calc(100% - ${e.pageX < 300 ? 300 : e.pageX}px)`);
       }
 
       function stopResize() {
-        window.removeEventListener('mousemove', resize);
+        window.removeEventListener('mousemove', resize, false);
       }
     }
 
@@ -604,6 +611,10 @@ ApplicationMenu.prototype = {
 
     this.menu.removeClass('is-open show-shadow').find('[tabindex]');
     $(document).off('click.applicationmenu');
+
+    if (this.settings.resizable) {
+      $('.page-container').css('width', '100%');
+    }
 
     if (env.features.touch) {
       $('body').removeClass('is-open-touch');
