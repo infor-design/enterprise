@@ -4,7 +4,6 @@ describe('About Puppeteer Tests', () => {
 
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-      await page._client.send('Animation.setPlaybackRate', { playbackRate: 10 });
     });
 
     it('should show the title', async () => {
@@ -61,7 +60,6 @@ describe('About Puppeteer Tests', () => {
 
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-      await page._client.send('Animation.setPlaybackRate', { playbackRate: 10 });
     });
 
     it('should show the about dialog in ukranian', async () => {
