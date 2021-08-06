@@ -24,8 +24,11 @@ module.exports = {
   },
 
   globals: {
+    pauseAnimations: true,
+    jestPuppeteer: true,
     page: true,
     browser: true,
+    jest: true,
     document: true,
     requireHelper: true,
     spyOnEvent: true,
@@ -55,6 +58,9 @@ module.exports = {
     'jasmine/prefer-toHaveBeenCalledWith': ['off'],
 
     // Dont worry about the extra lines
-    'jasmine/new-line-before-expect': ['off']
+    'jasmine/new-line-before-expect': ['off'],
+
+    // set "no-underscore-dangle" to only a warning (also shouldn't fail builds)
+    'no-underscore-dangle': ['warn', { allow: ['_client'] }]
   }
 };
