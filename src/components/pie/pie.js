@@ -428,8 +428,8 @@ Pie.prototype = {
     let timer = 0;
     // Make sure the default to get prevent not bubble up.
 
-    if (self.settings?.showCenterTooltip) {
-      setTimeout(() => {
+    setTimeout(() => {
+      if (self.settings?.showCenterTooltip) {
         $('.chart-donut-text')
           .off('mouseenter.text')
           .on('mouseenter.text', function () {
@@ -450,8 +450,18 @@ Pie.prototype = {
             charts.hideTooltip();
             $('.is-pie').removeClass('is-center');
           });
-      }, 100);
-    }
+      }
+
+      if (self.settings.attributes) {
+        utils.addAttributes($('.chart-donut-text'), self, self.settings.attributes, 'text', true);
+        utils.addAttributes(self.element.find('.slices'), self, self.settings.attributes, 'slices', true);
+        utils.addAttributes(self.element.find('.labels'), self, self.settings.attributes, 'labels', true);
+        utils.addAttributes(self.element.find('.labels').children(), self, self.settings.attributes, 'label', true);
+        utils.addAttributes(self.element.find('.lines'), self, self.settings.attributes, 'lines', true);
+        utils.addAttributes(self.element.find('.lines').children('polyline'), self, self.settings.attributes, 'polyline', true);
+        utils.addAttributes(self.element.find('.lines').children('.circles'), self, self.settings.attributes, 'circle', true);
+      }
+    }, 100);
 
     self.element
       .off(`dblclick.${self.namespace}`)
@@ -466,9 +476,14 @@ Pie.prototype = {
       .attr('class', 'slice')
       .call((d) => {
         d._groups.forEach((slices) => {
-          slices.forEach((pieSlice) => {
+          slices.forEach((pieSlice, index) => {
             const dat = pieSlice.__data__;
-            utils.addAttributes($(pieSlice), dat, dat.data.attributes);
+            const suffix = `slice-${index}`;
+            if (self.settings.attributes) {
+              utils.addAttributes($(pieSlice), dat, self.settings.attributes, suffix, true);
+            } else {
+              utils.addAttributes($(pieSlice), dat, dat.data.attributes, suffix, true);
+            }
           });
         });
       })

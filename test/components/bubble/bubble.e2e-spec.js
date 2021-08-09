@@ -83,9 +83,9 @@ describe('Bubble example-index tests', () => {
     expect(await element(by.id('bubble-series2-line')).getAttribute('id')).toEqual('bubble-series2-line');
     expect(await element(by.id('bubble-series2-line')).getAttribute('data-automation-id')).toEqual('automation-id-bubble-series2-line');
 
-    expect(await element(by.id('bubble-series1-legend')).getAttribute('id')).toEqual('bubble-series1-legend');
-    expect(await element(by.id('bubble-series1-legend')).getAttribute('data-automation-id')).toEqual('automation-id-bubble-series1-legend');
-    expect(await element(by.id('bubble-series2-legend')).getAttribute('id')).toEqual('bubble-series2-legend');
-    expect(await element(by.id('bubble-series2-legend')).getAttribute('data-automation-id')).toEqual('automation-id-bubble-series2-legend');
+    expect(await element(by.id('bubble-series1-legend-0')).getAttribute('id')).toEqual('bubble-series1-legend-0');
+    expect(await element(by.id('bubble-series1-legend-0')).getAttribute('data-automation-id')).toEqual('automation-id-bubble-series1-legend-0');
+    expect(await element(by.id('bubble-series2-legend-1')).getAttribute('id')).toEqual('bubble-series2-legend-1');
+    expect(await element(by.id('bubble-series2-legend-1')).getAttribute('data-automation-id')).toEqual('automation-id-bubble-series2-legend-1');
   });
 });

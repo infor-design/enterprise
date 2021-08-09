@@ -4283,7 +4283,6 @@ Datagrid.prototype = {
       }${isSelected ? this.settings.selectable === 'mixed' ? ' is-selected hide-selected-color' : ' is-selected' : ''
       }${self.settings.alternateRowShading && !isEven ? ' alt-shading' : ''
       }${isSummaryRow ? ' datagrid-summary-row' : ''
-      }${!self.settings.cellNavigation && self.settings.selectable !== false ? ' is-clickable' : ''
       }${self.settings.treeGrid ? (rowData.children ? ' datagrid-tree-parent' : (depth > 1 ? ' datagrid-tree-child' : '')) : ''
       }"${dynamicRowHeight}>`;
 
@@ -5721,7 +5720,7 @@ Datagrid.prototype = {
     this.headerNodeCheckbox = this.headerNodes().eq(idx);
     if (!this.settings?.frozenColumns?.left.length) this.headerNodes().eq(idx).addClass('is-hidden');
 
-    if (idx === 0 && id === 'selectionCheckbox') {
+    if (idx === 0 && id === 'selectionCheckbox' && this.settings?.frozenColumns?.left.length) {
       this.headerNodes().eq(idx).off().remove();
     } else {
       this.headerNodes().eq(idx).addClass('is-hidden');
@@ -6439,29 +6438,42 @@ Datagrid.prototype = {
     const self = this;
 
     // Set Focus on rows
-    if (!self.settings.cellNavigation && self.settings.rowNavigation) {
-      self.element
-        .on('focus.datagrid', 'tbody > tr', function () {
+    self.element
+      .on('focus.datagrid', 'tbody > tr', function () {
+        if (!self.settings.cellNavigation && self.settings.rowNavigation) {
           const rowNodes = self.rowNodes($(this));
-          rowNodes.addClass('is-active-row');
-        })
-        .on('blur.datagrid', 'tbody > tr', function () {
+
+          if (!rowNodes.hasClass('is-active-row')) {
+            rowNodes.addClass('is-active-row');
+          }
+        }
+      })
+      .on('blur.datagrid', 'tbody > tr', function () {
+        if (!self.settings.cellNavigation && self.settings.rowNavigation) {
           const rowNodes = self.rowNodes($(this));
-          rowNodes.removeClass('is-active-row');
-        });
-    }
+
+          if (rowNodes.hasClass('is-active-row')) {
+            rowNodes.removeClass('is-active-row');
+          }
+        }
+      });
 
     // Handle Paging
     if (this.settings.paging) {
+      // Need to store the original id to work the wrapping and unwrapping in popupmenu
+      // before the paging initiate
+      this.pagerId = $('.pager-toolbar .btn-menu').attr('aria-controls');
       this.tableBody.on(`page.${COMPONENT_NAME}`, (e, pagingInfo) => {
         if (pagingInfo.type === 'filtered' && this.settings.source) {
           return;
         }
+        self.closePopupmenuOnPaging();
         self.saveUserSettings();
         self.render(null, pagingInfo);
         self.afterPaging(pagingInfo);
       }).on(`pagesizechange.${COMPONENT_NAME}`, (e, pagingInfo) => {
         pagingInfo.preserveSelected = true;
+        self.closePopupmenuOnPaging();
         self.render(null, pagingInfo);
         self.afterPaging(pagingInfo);
       });
@@ -6473,7 +6485,13 @@ Datagrid.prototype = {
         .off('mouseenter.datagrid, mouseleave.datagrid')
         .on('mouseenter.datagrid', 'tbody > tr', function () {
           const rowNodes = self.rowNodes($(this));
-          rowNodes.addClass('is-hover-row');
+          rowNodes
+            .addClass('is-hover-row')
+            .removeClass('is-clickable');
+
+          if (!self.settings.cellNavigation && self.settings.selectable !== false) {
+            rowNodes.addClass('is-clickable');
+          }
         }).on('mouseleave.datagrid', 'tbody > tr', function () {
           const rowNodes = self.rowNodes($(this));
           rowNodes.removeClass('is-hover-row');
@@ -6983,6 +7001,23 @@ Datagrid.prototype = {
         self.commitCellEdit();
       }
     });
+  },
+
+  /**
+   * Close opened popupmenus when paging.
+   * @private
+   * @returns {void}
+   */
+  closePopupmenuOnPaging() {
+    const btn = this.element.find('.datagrid-filter-wrapper .btn-filter.is-open');
+    const popupmenu = btn?.data('popupmenu');
+
+    // passing the original aria-controls id
+    const pagerMenuNewId = $('.pager-toolbar .btn-menu').attr('aria-controls', this.pagerId);
+
+    if (pagerMenuNewId.length) {
+      popupmenu?.close(true, true);
+    }
   },
 
   /**

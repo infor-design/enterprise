@@ -76,12 +76,12 @@ describe('Radar example-index tests', () => {
     expect(await element(by.id('radar-nokia-stroke')).getAttribute('id')).toEqual('radar-nokia-stroke');
     expect(await element(by.id('radar-nokia-stroke')).getAttribute('data-automation-id')).toEqual('automation-id-radar-nokia-stroke');
 
-    expect(await element(by.id('radar-iphone-legend')).getAttribute('id')).toEqual('radar-iphone-legend');
-    expect(await element(by.id('radar-iphone-legend')).getAttribute('data-automation-id')).toEqual('automation-id-radar-iphone-legend');
-    expect(await element(by.id('radar-samsung-legend')).getAttribute('id')).toEqual('radar-samsung-legend');
-    expect(await element(by.id('radar-samsung-legend')).getAttribute('data-automation-id')).toEqual('automation-id-radar-samsung-legend');
-    expect(await element(by.id('radar-nokia-legend')).getAttribute('id')).toEqual('radar-nokia-legend');
-    expect(await element(by.id('radar-nokia-legend')).getAttribute('data-automation-id')).toEqual('automation-id-radar-nokia-legend');
+    expect(await element(by.id('radar-iphone-legend-0')).getAttribute('id')).toEqual('radar-iphone-legend-0');
+    expect(await element(by.id('radar-iphone-legend-0')).getAttribute('data-automation-id')).toEqual('automation-id-radar-iphone-legend-0');
+    expect(await element(by.id('radar-samsung-legend-1')).getAttribute('id')).toEqual('radar-samsung-legend-1');
+    expect(await element(by.id('radar-samsung-legend-1')).getAttribute('data-automation-id')).toEqual('automation-id-radar-samsung-legend-1');
+    expect(await element(by.id('radar-nokia-legend-2')).getAttribute('id')).toEqual('radar-nokia-legend-2');
+    expect(await element(by.id('radar-nokia-legend-2')).getAttribute('data-automation-id')).toEqual('automation-id-radar-nokia-legend-2');
   });
 
   if (utils.isChrome() && utils.isCI()) {

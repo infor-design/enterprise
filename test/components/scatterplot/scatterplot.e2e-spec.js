@@ -72,9 +72,9 @@ describe('Scatterplot Chart tests', () => {
     expect(await element(by.id('scatterplot-series2-line')).getAttribute('id')).toEqual('scatterplot-series2-line');
     expect(await element(by.id('scatterplot-series2-line')).getAttribute('data-automation-id')).toEqual('automation-id-scatterplot-series2-line');
 
-    expect(await element(by.id('scatterplot-series1-legend')).getAttribute('id')).toEqual('scatterplot-series1-legend');
-    expect(await element(by.id('scatterplot-series1-legend')).getAttribute('data-automation-id')).toEqual('automation-id-scatterplot-series1-legend');
-    expect(await element(by.id('scatterplot-series2-legend')).getAttribute('id')).toEqual('scatterplot-series2-legend');
-    expect(await element(by.id('scatterplot-series2-legend')).getAttribute('data-automation-id')).toEqual('automation-id-scatterplot-series2-legend');
+    expect(await element(by.id('scatterplot-series1-legend-0')).getAttribute('id')).toEqual('scatterplot-series1-legend-0');
+    expect(await element(by.id('scatterplot-series1-legend-0')).getAttribute('data-automation-id')).toEqual('automation-id-scatterplot-series1-legend-0');
+    expect(await element(by.id('scatterplot-series2-legend-1')).getAttribute('id')).toEqual('scatterplot-series2-legend-1');
+    expect(await element(by.id('scatterplot-series2-legend-1')).getAttribute('data-automation-id')).toEqual('automation-id-scatterplot-series2-legend-1');
   });
 });
