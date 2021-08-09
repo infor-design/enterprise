@@ -3,7 +3,7 @@
 <body class="no-scroll">
   <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
   {{> includes/svg-inline-refs}}
-  {{> includes/applicationmenu-personalized-role-switcher}}
+  {{> includes/applicationmenu-all-plusminus}}
 
   <div class="page-container scrollable">
 
@@ -80,7 +80,6 @@
         switcherPanelTriggerSpan.text(args.innerText)
         appMenuAPI.closeSwitcherPanel();
       });
-      $('.application-menu').applicationmenu({ resizable: true });
     });
   </script>
 </body>
