@@ -16,8 +16,9 @@ demo:
     slug: example-personalized-roles
   - name: Application Menu Can Change have a role switcher
     slug: example-personalized-role-switcher
+  - name: Resizable Application Menu
+    slug: example-resizable-menu
 ---
-
 
 ## Code Example
 
@@ -103,6 +104,12 @@ In another place (usually the header toolbar) you should have a button with the 
   <div class="buttonset">
   </div
 </div>
+```
+
+You can also do resizing via activating the `resizable` settings. It will wrapped the application menu to a parent `resize-app-menu-container` class, and the page container/s including the tab panel container to a `resize-page-container` class to have a proper structure for flex.
+
+```javascript
+$('.application-menu').applicationmenu({ resizable: true });
 ```
 
 ## Behavior Guidelines
