@@ -168,9 +168,9 @@ MonthView.prototype = {
       this.settings.language = this.language;
       this.setCurrentCalendar();
       if (this.settings.displayRange.start && this.settings.displayRange.end) {
-        this.buildRange().handleEvents();
+        this.buildRange();
       } else {
-        this.build().handleEvents();
+        this.build();
       }
     });
   },

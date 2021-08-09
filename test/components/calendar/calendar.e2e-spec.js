@@ -464,7 +464,7 @@ describe('Calendar Color Overrides tests', () => {
 
 describe('Calendar display range tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/monthview/test-range-in-month');
+    await utils.setPage('/components/calendar/test-range-in-month');
     const calendar = await element(by.css('.calendar-monthview'));
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(calendar), config.waitsFor);
