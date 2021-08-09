@@ -111,7 +111,7 @@ const EDITOR_DEFAULTS = {
   formatterTabsize: 4,
   fontpickerSettings: {
     popupmenuSettings: {
-      showArrow: true,
+      showArrow: false,
       offset: {
         y: 0
       }
