@@ -5720,7 +5720,7 @@ Datagrid.prototype = {
     this.headerNodeCheckbox = this.headerNodes().eq(idx);
     if (!this.settings?.frozenColumns?.left.length) this.headerNodes().eq(idx).addClass('is-hidden');
 
-    if (idx === 0 && id === 'selectionCheckbox') {
+    if (idx === 0 && id === 'selectionCheckbox' && this.settings?.frozenColumns?.left.length) {
       this.headerNodes().eq(idx).off().remove();
     } else {
       this.headerNodes().eq(idx).addClass('is-hidden');
