@@ -168,41 +168,7 @@ ApplicationMenu.prototype = {
       });
     }
 
-    if (this.settings.resizable) {
-      // Menu should always opened when resizable is activated.
-      this.openMenu(false, false, true);
-
-      this.element.after('<div class="resizer"></div>');
-      $('#application-menu, .resizer')
-        .wrapAll('<div class="resize-app-menu-container" />');
-      
-      $('.page-container').wrapAll('<div class="resize-page-container" />');
-      $('.resize-page-container').insertAfter('.resizer');
-
-      const resizer = document.querySelector('.resizer');
-      const navMenu = document.querySelector('#application-menu');
-      const tabPanel = $('.tab-panel-container.page-container');
-
-      // calculates the correct width of the .tab-panel-container
-      if (tabPanel) {
-        tabPanel.css('width', 'calc(100% - 300px)');
-      }
-
-      resizer.addEventListener('mousedown', function (e) {
-        e.preventDefault();
-        window.addEventListener('mousemove', resize);
-        window.addEventListener('mouseup', stopResize);
-      });
-
-      function resize(e) {
-        navMenu.style.flexBasis = e.pageX - navMenu.getBoundingClientRect().left + 'px';
-        $('.page-container').css('width', `calc(100% - ${e.pageX < 300 ? 300 : e.pageX}px)`);
-      }
-
-      function stopResize() {
-        window.removeEventListener('mousemove', resize, false);
-      }
-    }
+    this.renderResizableAppMenu();
 
     // Sync with application menus that have an 'is-open' CSS class.
     // Otherwise, just adjust the height.
@@ -442,6 +408,48 @@ ApplicationMenu.prototype = {
     this.openMenu(true);
   },
 
+  renderResizableAppMenu() {
+    if (!this.settings.resizable) {
+      return;
+    }
+
+    // Menu should always opened when resizable is activated.
+    this.openMenu(false, false, true);
+
+    // Adding element that will act as the resizer/dragger.
+    this.element.after('<div class="resizer"></div>');
+    // Wrapping it to a parent container (.resize-app-menu-container) for flex purposes.
+    $('#application-menu, .resizer')
+      .wrapAll('<div class="resize-app-menu-container" />');
+
+    $('.page-container').wrapAll('<div class="resize-page-container" />');
+    $('.resize-page-container').insertAfter('.resizer');
+
+    const resizer = document.querySelector('.resizer');
+    const navMenu = document.querySelector('#application-menu');
+    const tabPanel = $('.tab-panel-container.page-container');
+
+    // calculates the correct width of the .tab-panel-container
+    if (tabPanel) {
+      tabPanel.css('width', 'calc(100% - 300px)');
+    }
+
+    function resize(e) {
+      navMenu.style.flexBasis = `${e.pageX - navMenu.getBoundingClientRect().left}px`;
+      $('.page-container').css('width', `calc(100% - ${e.pageX < 300 ? 300 : e.pageX}px)`);
+    }
+
+    function stopResize() {
+      window.removeEventListener('mousemove', resize, false);
+    }
+
+    resizer.addEventListener('mousedown', function (e) {
+      e.preventDefault();
+      window.addEventListener('mousemove', resize);
+      window.addEventListener('mouseup', stopResize);
+    });
+  },
+
   /**
    * Opens the Application Menu
    * @param {boolean} noFocus If true, sets focus on the first item in the application menu.
@@ -491,6 +499,17 @@ ApplicationMenu.prototype = {
       self.toggleScrollClass();
       self.menu.removeClass('no-transition');
       $('.page-container').removeClass('no-transition');
+    }
+
+    if (this.settings.resizable) {
+      // Getting the size of the app menu to calculate when it's opened.
+      let menuWidth = parseInt(this.element[0].style.flexBasis, 10);
+
+      if (menuWidth < 300 || isNaN(menuWidth)) {
+        menuWidth = 300;
+      }
+
+      $('.page-container').css('width', `calc(100% - ${menuWidth}px)`);
     }
 
     this.triggers.each(function () {

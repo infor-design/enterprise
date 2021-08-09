@@ -16,6 +16,7 @@ body.is-open-touch {
   height: 100vh; // this is needed for the popupmenu to work properly
 
   .application-menu.is-open {
+    flex-basis: 300px;
     height: 100vh !important;
     min-width: 300px;
     position: relative;
@@ -57,6 +58,10 @@ body.is-open-touch {
   .resize-page-container {
     display: flex;
     flex-direction: column;
+
+    .page-container {
+      width: calc(100% - 300px);
+    }
   }
 }
 
