@@ -37,6 +37,7 @@
 - `[Datepicker]` Fixed a bug where the -/+ keys were not detected in datepicker. ([#5353](https://github.com/infor-design/enterprise/issues/5353))
 - `[Donut]` Changed legend design when item exceeds maximum width of chart. ([#5292](https://github.com/infor-design/enterprise/issues/5292))
 - `[Dropdown]` Fixed a bug where backspace in Dropdown is not working when pressed. ([#5113](https://github.com/infor-design/enterprise/issues/5113))
+- `[Editor]` Added tooltip in fontpicker. ([#5472](https://github.com/infor-design/enterprise/issues/5472))
 - `[Fileupload]` Fixed a bug where the required asterisk does not appear on the labels associated with required fields. ([#5285](https://github.com/infor-design/enterprise/issues/5285))
 - `[Homepage]` Adjusted height and width of example homepage ([#5425](https://github.com/infor-design/enterprise/issues/5425))
 - `[Icon]` Changed button icon colors to slate6 ([#5307](https://github.com/infor-design/enterprise/issues/5307))
