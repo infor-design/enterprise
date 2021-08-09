@@ -279,7 +279,8 @@ $datagrid-small-row-height: 25px;
       background-color: $datagrid-empty-bg-color;
     }
 
-    td:first-child {
+    td:first-child,
+    td.is-hidden:first-child + td {
       border-left: 0;
     }
 
@@ -1805,6 +1806,7 @@ $datagrid-small-row-height: 25px;
       .row-btn {
         top: 1px;
       }
+
       .datagrid-reorder-icon .icon {
         height: 18px;
         width: 21px;
@@ -1813,7 +1815,7 @@ $datagrid-small-row-height: 25px;
 
     .datagrid-cell-wrapper {
       min-height: $datagrid-extra-small-row-height + 4;
-      padding: 0px 5px 0;
+      padding: 0 5px;
 
       .dropdown-trigger {
         margin-top: -2px;
@@ -2414,8 +2416,8 @@ $datagrid-small-row-height: 25px;
     }
 
     .chart-completion-target {
-      height: 26px;
       border-radius: 2px;
+      height: 26px;
       position: relative;
       vertical-align: middle;
 
@@ -3043,7 +3045,8 @@ $datagrid-small-row-height: 25px;
 
   &.center,
   &.left {
-    th:first-child {
+    th:first-child,
+    th.is-hidden:first-child + th {
       border-left: 0;
     }
   }
@@ -3600,6 +3603,7 @@ $datagrid-small-row-height: 25px;
     .icon.plus-minus {
       left: -6.15px;
     }
+
     .icon.plus-minus::before,
     .icon.plus-minus::after {
       left: 8px;
@@ -4053,8 +4057,8 @@ td .btn-actions {
   .datagrid-rowgroup-header {
     .datagrid-expand-btn {
       .plus-minus {
-        top: -7px;
         left: -5.75px;
+        top: -7px;
       }
     }
   }
