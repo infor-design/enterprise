@@ -111,7 +111,7 @@ const EDITOR_DEFAULTS = {
   formatterTabsize: 4,
   fontpickerSettings: {
     popupmenuSettings: {
-      showArrow: false,
+      showArrow: true,
       offset: {
         y: 0
       }
@@ -489,9 +489,13 @@ Editor.prototype = {
           this.settings.fontpickerSettings.popupmenuSettings = { attributes: fpAttributes };
         }
       }
-
       fpElement.fontpicker(this.settings.fontpickerSettings);
       this.fontPickerElem = fpElement;
+      this.fontPickerElem.tooltip({
+        placementOpts: {
+          x: 40
+        }
+      });
     }
 
     // Invoke Colorpicker, if applicable
@@ -1589,7 +1593,7 @@ Editor.prototype = {
   },
 
   /**
-   * Check and set the active states on toolba rbuttons.
+   * Check and set the active states on toolbar buttons.
    * @private
    */
   checkActiveButtons() {
