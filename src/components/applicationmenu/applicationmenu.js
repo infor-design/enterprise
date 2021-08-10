@@ -461,7 +461,6 @@ ApplicationMenu.prototype = {
     // Applying the stored width of app menu
     if (localStorage && localStorage.navMenuWidth) {
       navMenu.style.flexBasis = localStorage.navMenuWidth;
-      console.log("testing pushing commit")
     }
   },
 
