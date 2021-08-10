@@ -1,0 +1,72 @@
+<div class="row">
+	<div class="twelve columns">
+
+		<button class="btn-secondary" type="button" id="add-context">Show Modal</button><br/><br/>
+
+		<!-- Modal Example -->
+		<div id="modal-add-context" class="hidden">
+			<div class="field">
+				<label for="subject">Problem</label>
+				<input type="text" id="subject" name="subject" />
+			</div>
+
+      <div class="field">
+        <label for="location" class="label">Location</label>
+        <select id="location" name="location" class="dropdown">
+          <option value="N">North</option>
+          <option value="S">South</option>
+          <option value="E">East</option>
+          <option value="W">West</option>
+        </select>
+      </div>
+
+			<div class="field">
+				<label for="notes-max">Notes (maxlength)</label>
+				<textarea id="notes-max" class="textarea" maxlength="90" name="notes-max">Line One</textarea>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<script>
+var modals = {
+    'add-context': {
+      title: 'Add Context',
+      id: 'my-id',
+      content: $('#modal-add-context'),
+      showCloseBtn: true,
+      closeBtnOptions : {
+        closeBtnTooltip: 'Custom Tooltip for Close Button',
+        attributes: [{ name: 'tabIndex', value: '-1' }]
+      },
+      triggerButton: $('#add-context'),
+      attributes: [{ name: 'id', value: 'add-context-modal' }, { name: 'data-automation-id', value: 'add-context-modal-tooltip' } ],
+    },
+  },
+
+  setModal = function (opt) {
+    opt = $.extend({
+      buttons: [{
+        text: 'Cancel',
+        click: function(e, modal) {
+          modal.close();
+        }
+      }, {
+        text: 'Save',
+        click: function(e, modal) {
+          modal.close();
+        },
+        validate: false,
+        isDefault: true
+      }],
+    }, opt);
+
+    $('body').modal(opt);
+  };
+
+  $('#add-context').on('click', function () {
+    setModal(modals[this.id]);
+  });
+
+</script>

@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.55.0 Features
+
+- `[Modal]` Added the ability to have a custom tooltip on modal close button. ([#5391](https://github.com/infor-design/enterprise/issues/5391))
+
 ## v4.55.0 Fixes
 
 - `[Charts]` Fixed a bug where automation ids is not properly rendered on legend, text and slices. ([#5441](https://github.com/infor-design/enterprise/issues/5441))
