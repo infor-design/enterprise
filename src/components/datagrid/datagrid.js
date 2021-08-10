@@ -1260,7 +1260,7 @@ Datagrid.prototype = {
       const isSortable = (column.sortable === undefined ? true : column.sortable);
       const isResizable = (column.resizable === undefined ? true : column.resizable);
       const isExportable = (column.exportable === undefined ? true : column.exportable);
-      const isSelection = column.id === 'selectionCheckbox';
+      const isSelection = column.id === 'selectionCheckbox' ? true : column.id === 'selectionRadio' ? true : false;
       const headerAlignmentClass = this.getHeaderAlignmentClass(column);
 
       // Make frozen columns hideable: false

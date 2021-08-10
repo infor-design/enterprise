@@ -30,7 +30,6 @@
 
         // Define Columns for the Grid.
         columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
-        // columns.push({ id: 'selectionRadio', sortable: false, resizable: false, formatter: Formatters.SelectionRadio, align: 'center'});
         columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Readonly});
         columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, editor: Editors.Input});
 	      columns.push({ id: 'price', name: 'Price', field: 'price', align: 'right', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input, mask: '###.000'});
