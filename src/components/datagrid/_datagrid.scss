@@ -279,7 +279,8 @@ $datagrid-small-row-height: 25px;
       background-color: $datagrid-empty-bg-color;
     }
 
-    td:first-child {
+    td:first-child,
+    td.is-hidden:first-child + td {
       border-left: 0;
     }
 
@@ -3043,7 +3044,8 @@ $datagrid-small-row-height: 25px;
 
   &.center,
   &.left {
-    th:first-child {
+    th:first-child,
+    th.is-hidden:first-child + th {
       border-left: 0;
     }
   }
@@ -3387,7 +3389,7 @@ $datagrid-small-row-height: 25px;
         color: $datagrid-filter-icon-color;
         height: 13px;
         right: 4px;
-        top: -1px;
+        top: -0.6px;
         width: 13px;
       }
 

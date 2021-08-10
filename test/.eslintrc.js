@@ -19,10 +19,15 @@ module.exports = {
     jasmine: true,
     jquery: true,
     node: true,
-    protractor: true
+    protractor: true,
+    browser: true
   },
 
   globals: {
+    jestPuppeteer: true,
+    page: true,
+    browser: true,
+    jest: true,
     document: true,
     requireHelper: true,
     spyOnEvent: true,
@@ -49,6 +54,12 @@ module.exports = {
     'jasmine/no-suite-dupes': [1, 'branch'],
 
     // Allow toHaveBeenCalledWith
-    'jasmine/prefer-toHaveBeenCalledWith': ['off']
+    'jasmine/prefer-toHaveBeenCalledWith': ['off'],
+
+    // Dont worry about the extra lines
+    'jasmine/new-line-before-expect': ['off'],
+
+    // set "no-underscore-dangle" to only a warning (also shouldn't fail builds)
+    'no-underscore-dangle': ['warn', { allow: ['_client'] }]
   }
 };
