@@ -41,6 +41,7 @@
           columns.push({ id: 'comments', name: 'Comments', field: 'comments', formatter: Formatters.Input, isEditable: isEditable, editor: Editors.Input});
           columns.push({ id: 'isFiltered', name: 'Filtered', field: 'isFiltered', formatter: Formatters.Checkbox, isEditable: isEditable, editor: Editors.Checkbox});
   
+
           // Init and get the api for the grid
           $('#datagrid').datagrid({
             columns: columns,
