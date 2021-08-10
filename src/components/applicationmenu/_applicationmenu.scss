@@ -24,7 +24,7 @@ body.is-open-touch {
     + .resizer {
       background: $application-menu-border-color;
       cursor: col-resize;
-      flex-basis: 5px;
+      flex-basis: 1px;
       height: 100vh;
       left: 0;
       position: relative;
