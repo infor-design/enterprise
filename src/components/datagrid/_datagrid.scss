@@ -3734,6 +3734,56 @@ td .btn-actions {
   }
 }
 
+.datagrid-radio {
+  cursor: pointer;
+  display: inline-block;
+  font-size: $ids-size-font-sm;
+  left: -9px;
+  position: relative;
+
+  &::before {
+    background-color: $radio-color-unchecked-initial-background;
+    border: 1px solid $radio-color-unchecked-initial-border;
+    border-radius: 50%;
+    content: '';
+    height: 14px;
+    margin-top: 3px;
+    position: absolute;
+    width: 14px;
+  }
+
+  &.is-checked::before {
+    background-color: $radio-color-checked-initial-fill;
+    border: 1px solid $radio-color-checked-initial-fill;
+  }
+
+  &.is-checked::after {
+    background-color: $radio-color-checked-initial-background;
+    border: 2px solid $radio-color-checked-initial-background;
+    border-radius: 50%;
+    content: '';
+    height: 4px;
+    left: 4px;
+    position: absolute;
+    top: 7px;
+    transition: all 0.2s ease 0s;
+    width: 4px;
+  }
+
+  // &::after {
+  //   background-color: $radio-color-checked-initial-background;
+  //   border: 2px solid $radio-color-checked-initial-background;
+  //   border-radius: 50%;
+  //   content: '';
+  //   height: 4px;
+  //   left: 5px;
+  //   position: absolute;
+  //   top: 7px;
+  //   transition: all 0.2s ease 0s;
+  //   width: 4px;
+  // }
+}
+
 // Grid Checkboxes
 .datagrid-checkbox-wrapper {
   margin-top: -13px;

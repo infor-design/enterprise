@@ -362,6 +362,12 @@ const formatters = {
     return `<div class="datagrid-checkbox-wrapper"><span role="checkbox" aria-label="${(col.name ? col.name : Locale.translate('Select') + ariaString)}" class="datagrid-checkbox datagrid-selection-checkbox${(isChecked ? ' is-checked no-animate' : '')}"></span></div>`;
   },
 
+  SelectionRadio(row, cell, value, col, item, api) {
+    let isChecked = false;
+    let ariaString = ' ';
+    return `<div class="datagrid-checkbox-wrapper"><span role="radio" aria-label="${(col.name ? col.name : Locale.translate('Select') + ariaString)}" class="datagrid-radio datagrid-selection-radio ${(isChecked ? ' is-checked no-animate' : '')}"></span></div>`;
+  },
+
   Actions(row, cell, value, col) {
     // Render an Action Formatter
     return (
