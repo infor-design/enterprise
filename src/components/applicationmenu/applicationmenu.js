@@ -408,6 +408,10 @@ ApplicationMenu.prototype = {
     this.openMenu(true);
   },
 
+  /**
+   * Build for resizable app menu.
+   * @private
+   */
   renderResizableAppMenu() {
     if (!this.settings.resizable) {
       return;
@@ -437,6 +441,11 @@ ApplicationMenu.prototype = {
     function resize(e) {
       navMenu.style.flexBasis = `${e.pageX - navMenu.getBoundingClientRect().left}px`;
       $('.page-container').css('width', `calc(100% - ${e.pageX < 300 ? 300 : e.pageX}px)`);
+
+      // Save the same position of the app menu
+      if (localStorage) {
+        localStorage.navMenuWidth = navMenu.style.flexBasis;
+      }
     }
 
     function stopResize() {
@@ -448,6 +457,11 @@ ApplicationMenu.prototype = {
       window.addEventListener('mousemove', resize);
       window.addEventListener('mouseup', stopResize);
     });
+
+    // Applying the stored width of app menu
+    if (localStorage && localStorage.navMenuWidth) {
+      navMenu.style.flexBasis = localStorage.navMenuWidth;
+    }
   },
 
   /**
