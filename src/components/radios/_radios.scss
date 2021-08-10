@@ -1,6 +1,18 @@
 // Radio Buttons
 //================================================== //
 
+@mixin radio-unchecked-before-style {
+  background-color: $radio-color-unchecked-initial-background;
+  border: 1px solid $radio-color-unchecked-initial-border;
+  border-radius: 50%;
+  content: '';
+  height: 14px;
+  margin-left: -25px;
+  margin-top: 3px;
+  position: absolute;
+  width: 14px;
+}
+
 .radio {
   margin: 0;
   opacity: 0;
@@ -28,15 +40,7 @@
 
 .inline .radio ~ .label-text::before,
 .radio + label::before {
-  background-color: $radio-color-unchecked-initial-background;
-  border: 1px solid $radio-color-unchecked-initial-border;
-  border-radius: 50%;
-  content: '';
-  height: 14px;
-  margin-left: -25px;
-  margin-top: 3px;
-  position: absolute;
-  width: 14px;
+  @include radio-unchecked-before-style;
 }
 
 .inline .radio ~ .label-text::before {

@@ -11,6 +11,7 @@
 @import '../listview/listview';
 @import '../modal/modal';
 @import '../popupmenu/popupmenu';
+@import '../radios/radios';
 @import '../searchfield/searchfield';
 @import '../tag/tag';
 @import '../toolbar/toolbar';
@@ -3742,14 +3743,15 @@ td .btn-actions {
   position: relative;
 
   &::before {
-    background-color: $radio-color-unchecked-initial-background;
-    border: 1px solid $radio-color-unchecked-initial-border;
-    border-radius: 50%;
-    content: '';
-    height: 14px;
-    margin-top: 3px;
-    position: absolute;
-    width: 14px;
+    @include radio-unchecked-before-style;
+    // background-color: $radio-color-unchecked-initial-background;
+    // border: 1px solid $radio-color-unchecked-initial-border;
+    // border-radius: 50%;
+    // content: '';
+    // height: 14px;
+    // margin-top: 3px;
+    // position: absolute;
+    // width: 14px;
   }
 
   &.is-checked::before {
