@@ -97,6 +97,7 @@ Message.prototype = {
     if (this.settings.width !== 'auto') {
       this.content.closest('.modal')[0].style.maxWidth = 'none';
       this.content.closest('.modal')[0].style.width = this.settings.width + (/(px|%)/i.test(`${this.settings.width}`) ? '' : 'px');
+      this.content.find('#message-text')[0].style.maxWidth = 'none';
     }
 
     if (this.settings.cssClass) {
