@@ -24,7 +24,7 @@ body.is-open-touch {
     + .resizer {
       background: $application-menu-border-color;
       cursor: col-resize;
-      flex-basis: 1px;
+      flex-basis: 3px;
       height: 100vh;
       left: 0;
       position: relative;
@@ -58,10 +58,6 @@ body.is-open-touch {
   .resize-page-container {
     display: flex;
     flex-direction: column;
-
-    .page-container {
-      width: calc(100% - 300px);
-    }
   }
 }
 

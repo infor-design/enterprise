@@ -420,7 +420,7 @@ ApplicationMenu.prototype = {
     }
 
     // Menu should always opened when resizable is activated.
-    this.openMenu(false, false, true);
+    this.openMenu(false, false, false);
 
     // Adding element that will act as the resizer/dragger.
     this.element.after('<div class="resizer"></div>');
@@ -434,14 +434,10 @@ ApplicationMenu.prototype = {
     const resizer = document.querySelector('.resizer');
     const navMenu = document.querySelector('#application-menu');
     const tabPanel = $('.tab-panel-container.page-container');
-
-    // calculates the correct width of the .tab-panel-container
-    if (tabPanel) {
-      tabPanel.css('width', 'calc(100% - 300px)');
-    }
+    const pageContainer = $('.page-container');
 
     function resize(e) {
-      navMenu.style.flexBasis = `${e.pageX - navMenu.getBoundingClientRect().left}px`;
+      navMenu.style.flexBasis = `${(e.pageX < 300 ? 300 : e.pageX) - navMenu.getBoundingClientRect().left}px`;
       $('.page-container').css('width', `calc(100% - ${e.pageX < 300 ? 300 : e.pageX}px)`);
     }
 
@@ -463,6 +459,16 @@ ApplicationMenu.prototype = {
     // Applying the stored width of app menu
     if (localStorage && localStorage.navMenuWidth && this.settings.savePosition) {
       navMenu.style.flexBasis = localStorage.navMenuWidth;
+    }
+
+    if (this.settings.savePosition) {
+      // Correct the page container width
+      pageContainer.css('width', `calc(100% - ${localStorage.navMenuWidth})`);
+
+      // Calculates the correct width of the .tab-panel-container
+      if (tabPanel) {
+        tabPanel.css('width', `calc(100% - ${localStorage.navMenuWidth})`);
+      }
     }
   },
 
@@ -525,7 +531,11 @@ ApplicationMenu.prototype = {
         menuWidth = 300;
       }
 
-      $('.page-container').css('width', `calc(100% - ${menuWidth}px)`);
+      if (this.settings.savePosition) {
+        $('.page-container').css('width', `calc(100% - ${localStorage.navMenuWidth})`);
+      } else {
+        $('.page-container').css('width', `calc(100% - ${menuWidth}px)`);
+      }
     }
 
     this.triggers.each(function () {
