@@ -454,7 +454,7 @@ ApplicationMenu.prototype = {
       }
     }
 
-    resizer.addEventListener(`mousedown`, function (e) {
+    resizer.addEventListener('mousedown', function (e) {
       e.preventDefault();
       window.addEventListener('mousemove', resize);
       window.addEventListener('mouseup', stopResize);
