@@ -461,3 +461,46 @@ describe('Calendar Color Overrides tests', () => {
     expect(await element.all(by.css('.monthview-legend-item')).get(1).getText()).toEqual('Other');
   });
 });
+
+describe('Calendar display range tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/calendar/test-range-in-month');
+    const calendar = await element(by.css('.calendar-monthview'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(calendar), config.waitsFor);
+  });
+
+  it('Should render without error', async () => {
+    expect(await element.all(by.css('.monthview-table td')).count()).toEqual(84);
+    await utils.checkForErrors();
+  });
+
+  it('Should disable dates outside of range', async () => {
+    expect(await element(by.css('[data-key="20210711"]')).getAttribute('class')).toMatch('is-disabled');
+    expect(await element(by.css('[data-key="20210925"]')).getAttribute('class')).toMatch('is-disabled');
+    expect(await element(by.css('[data-key="20210926"]')).getAttribute('class')).toMatch('is-disabled');
+    expect(await element(by.css('[data-key="20210927"]')).getAttribute('class')).toMatch('is-disabled');
+    expect(await element(by.css('[data-key="20210928"]')).getAttribute('class')).toMatch('is-disabled');
+    expect(await element(by.css('[data-key="20210930"]')).getAttribute('class')).toMatch('is-disabled');
+    expect(await element(by.css('[data-key="20211001"]')).getAttribute('class')).toMatch('is-disabled');
+    expect(await element(by.css('[data-key="20211002"]')).getAttribute('class')).toMatch('is-disabled');
+  });
+
+  it('Should disable specific dates in the range', async () => {
+    expect(await element(by.css('[data-key="20210722"]')).getAttribute('class')).toMatch('is-disabled');
+    expect(await element(by.css('[data-key="20210802"]')).getAttribute('class')).toMatch('is-disabled');
+    expect(await element(by.css('[data-key="20210816"]')).getAttribute('class')).toMatch('is-disabled');
+    expect(await element(by.css('[data-key="20210908"]')).getAttribute('class')).toMatch('is-disabled');
+  });
+
+  it('Should have month label for the first enable date of the month', async () => {
+    expect(await element(by.css('[data-key="20210712"]')).getText()).toEqual('July 12');
+    expect(await element(by.css('[data-key="20210801"]')).getText()).toEqual('August 1');
+    expect(await element(by.css('[data-key="20210901"]')).getText()).toEqual('September 1');
+    await utils.checkForErrors();
+  });
+
+  it('Should have rendered correct number of events on the calendar', async () => {
+    expect(await element.all(by.css('.calendar-event')).count()).toEqual(8);
+  });
+});

@@ -98,6 +98,7 @@ We could improve this...
 
 - Also check out `await jestPuppeteer.debug();`
 - edit the jest-puppeteer.config.js and set `devtools: true` and `headless: false`
+- may need to set `testTimeout: 6000` temporarily
 - run `npm run e2e:puppeteer -- tooltip`
 
 ## Puppeteer Conversion Notes
@@ -157,7 +158,7 @@ await element(by.css('html')).getAttribute('data-sohoxi-version'));
 Puppeteer:
 
 ```js
-await page.$eval('html', el => el.data-sohoxi-version));
+await page.$eval('html', el => el.getAttribute('data-sohoxi-version'));
 ```
 
 1. Send a key
