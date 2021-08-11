@@ -2,6 +2,7 @@
 
 ## v4.55.0 Features
 
+- `[ApplicationMenu]` Added the ability to resize the app menu. ([#5193](https://github.com/infor-design/enterprise/issues/5193))
 - `[Modal]` Added the ability to have a custom tooltip on modal close button. ([#5391](https://github.com/infor-design/enterprise/issues/5391))
 
 ## v4.55.0 Fixes
@@ -10,7 +11,6 @@
 
 ## v4.54.0 Features
 
-- `[ApplicationMenu]` Added the ability to resize the app menu. ([#5193](https://github.com/infor-design/enterprise/issues/5193))
 - `[Cards]` Added the ability of single and multi selection of cards. ([#5253](https://github.com/infor-design/enterprise/issues/5253))
 - `[Datagrid]` Added support to row reorder for groupable settings. ([#5233](https://github.com/infor-design/enterprise/issues/5233))
 - `[Donut]` Added the ability to add center tooltip for Donut. ([#5302](https://github.com/infor-design/enterprise/issues/5302))
