@@ -363,9 +363,21 @@ const formatters = {
   },
 
   SelectionRadio(row, cell, value, col, item, api) {
-    let isChecked = false;
+    let isChecked = (value === undefined ? false : value === true);
+    if (!value) {
+      isChecked = api.isRowSelected(item);
+    }
+
     let ariaString = ' ';
-    return `<div class="datagrid-checkbox-wrapper"><span role="radio" aria-label="${(col.name ? col.name : Locale.translate('Select') + ariaString)}" class="datagrid-radio datagrid-selection-radio ${(isChecked ? ' is-checked no-animate' : '')}"></span></div>`;
+
+    if (api.settings.columnIds.length > 0) {
+      for (let i = 0; i < api.settings.columnIds.length; i++) {
+        ariaString += item[api.settings.columnIds[i]];
+      }
+    }
+
+    ariaString = xssUtils.ensureAlphaNumericWithSpaces(ariaString);
+    return `<div class="datagrid-checkbox-wrapper"><span role="radio" aria-label="${(col.name ? col.name : Locale.translate('Select') + ariaString)}" class="datagrid-radio datagrid-selection-radio ${(isChecked ? ' is-checked' : '')}"></span></div>`;
   },
 
   Actions(row, cell, value, col) {

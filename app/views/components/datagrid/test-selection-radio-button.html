@@ -32,7 +32,7 @@
           columns.push({ id: 'selectionRadio', sortable: false, resizable: false, formatter: Formatters.SelectionRadio, align: 'center'});
           columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Readonly});
           columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, editor: Editors.Input});
-            columns.push({ id: 'price', name: 'Price', field: 'price', align: 'right', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input, mask: '###.000'});
+          columns.push({ id: 'price', name: 'Price', field: 'price', align: 'right', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input, mask: '###.000'});
           columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date});
           columns.push({ id: 'portable', name: 'Portable', field: 'portable', formatter: Formatters.Checkbox, isEditable: isEditable, editor: Editors.Checkbox});
           columns.push({ id: 'used', name: 'Used', field: 'used', formatter: Formatters.Checkbox, isEditable: isEditable, editor: Editors.Checkbox});
