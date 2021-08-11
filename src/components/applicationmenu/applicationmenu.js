@@ -25,6 +25,7 @@ const COMPONENT_NAME = 'applicationmenu';
  * @param {boolean} [settings.filterable=false] If true a search / filter option will be added.
  * @param {boolean} [settings.filterMode='contains'] corresponds to a ListFilter component's `filterMode` for matching results.
  * @param {boolean} [settings.resizable=false] If true, the app menu will be resizeable.
+ * @param {boolean} [settings.savePosition=false] It save the last position of app menu via localStorage.
  * @param {boolean} [settings.openOnLarge=false]  If true, will automatically open the Application Menu when a large screen-width breakpoint is met.
  * @param {array} [settings.triggers=[]]  An Array of jQuery-wrapped elements that are able to open/close this nav menu.
  */
@@ -34,6 +35,7 @@ const APPLICATIONMENU_DEFAULTS = {
   filterable: false,
   filterMode: 'contains',
   resizable: false,
+  savePosition: false,
   openOnLarge: false,
   triggers: ['.application-menu-trigger'],
   onExpandSwitcher: null,
@@ -441,6 +443,10 @@ ApplicationMenu.prototype = {
     function resize(e) {
       navMenu.style.flexBasis = `${e.pageX - navMenu.getBoundingClientRect().left}px`;
       $('.page-container').css('width', `calc(100% - ${e.pageX < 300 ? 300 : e.pageX}px)`);
+    }
+
+    function stopResize() {
+      window.removeEventListener('mousemove', resize, false);
 
       // Save the same position of the app menu
       if (localStorage) {
@@ -448,18 +454,14 @@ ApplicationMenu.prototype = {
       }
     }
 
-    function stopResize() {
-      window.removeEventListener('mousemove', resize, false);
-    }
-
-    resizer.addEventListener('mousedown', function (e) {
+    resizer.addEventListener(`mousedown`, function (e) {
       e.preventDefault();
       window.addEventListener('mousemove', resize);
       window.addEventListener('mouseup', stopResize);
     });
 
     // Applying the stored width of app menu
-    if (localStorage && localStorage.navMenuWidth) {
+    if (localStorage && localStorage.navMenuWidth && this.settings.savePosition) {
       navMenu.style.flexBasis = localStorage.navMenuWidth;
     }
   },
