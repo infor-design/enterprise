@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.55.0 Features
+
+- `[Datagrid]` Adds the ability to have a selection radio buttons on Datagrid. ([#5384](https://github.com/infor-design/enterprise/issues/5384))
+
 ## v4.55.0 Fixes
 
 - `[Charts]` Fixed a bug where automation ids is not properly rendered on legend, text and slices. ([#5441](https://github.com/infor-design/enterprise/issues/5441))

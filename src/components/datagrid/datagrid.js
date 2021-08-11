@@ -6650,8 +6650,9 @@ Datagrid.prototype = {
 
       const isSelectionCheckbox = target.is('.datagrid-selection-checkbox') ||
                                 target.find('.datagrid-selection-checkbox').length === 1;
-      // let canSelect = self.settings.clickToSelect ? true : isSelectionCheckbox;
-      let canSelect = true;
+      const isSelectionRadio = target.is('.datagrid-selection-radio') ||
+                                target.find('.datagrid-selection-radio').length === 1;
+      let canSelect = self.settings.clickToSelect ? true : isSelectionCheckbox ? true : isSelectionRadio;
 
       if (target.is('.datagrid-drilldown')) {
         canSelect = false;
