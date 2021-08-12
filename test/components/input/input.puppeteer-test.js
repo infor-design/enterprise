@@ -25,16 +25,11 @@ describe('Input Puppeteer Tests', () => {
         await page.waitForSelector('input.required.error"', {
           visible: true,
         })
-        //expect(emailVal.toBe('required error'));
-
-        await page.waitForSelector('input.required.error', {
-          visible: false,
-        })
 
         await page.click('input[name="email-address-ok"]');
         await page.type('input[name="email-address-ok"]', 'jaundelacruz2@infor.com');
         await page.waitForSelector('input.required.error', {
-          visible: true,
+          visible: false,
         })
 
 
