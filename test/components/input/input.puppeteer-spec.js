@@ -5,11 +5,23 @@ describe('Input Puppeteer Tests', () => {
 
       beforeAll(async () => {
         await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-        await page.screenshot({ path: 'input.png' });
+        //await page.screenshot({ path: 'input.png' });
       });
 
       it('should show the title', async () => {
         await expect(page.title()).resolves.toMatch('IDS Enterprise');     
+      });
+
+      it('should pass Axe accessibility tests', async () => {
+        await page.setBypassCSP(true);
+        await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+        await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport'] });
+      });
+
+      it('should --', async () => {
+        await page.click('#first-name');
+        //const element = await page.waitForSelector('#about-modal', { visible: true });
+        expect(element).toBeTruthy();
       });
 
       /*(async () => {
