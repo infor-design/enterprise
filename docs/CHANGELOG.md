@@ -7,6 +7,7 @@
 ## v4.55.0 Fixes
 
 - `[Charts]` Fixed a bug where automation ids is not properly rendered on legend, text and slices. ([#5441](https://github.com/infor-design/enterprise/issues/5441))
+- `[Tree]` Fixed an issue where lengthy node text doesn't wrap to lines and cuts off. ([#5499](https://github.com/infor-design/enterprise/issues/5499))
 
 ## v4.54.0 Features
 
