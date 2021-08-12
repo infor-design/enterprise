@@ -28,7 +28,7 @@ describe('Input Puppeteer Tests', () => {
         (input) => input.emailVal
         );
 
-        await page.waitForSelector('input.required.error"]', {
+        await page.waitForSelector('input.required.error"', {
           visible: true,
         })
         //expect(emailVal.toBe('required error'));
