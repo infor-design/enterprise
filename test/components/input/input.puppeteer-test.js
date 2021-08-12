@@ -9,6 +9,9 @@ describe('Input Puppeteer Tests', () => {
 
       it('should show the title', async () => {
         await expect(page.title()).resolves.toMatch('IDS Enterprise');  
+        
+        //populate fields
+        /*
         await page.click('input[name="first-name"]');
         await page.type('input[name="first-name"]', 'Juan');
 
@@ -18,7 +21,7 @@ describe('Input Puppeteer Tests', () => {
 
         await page.click('input[name="email-address"]');
         await page.type('input[name="email-address"]', 'jaundelacruz@infor.com');
-
+        */
         await page.click('input[name="email-address-ok"]');
         await page.click('input[name="department-code-trackdirty"]');
 
