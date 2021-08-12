@@ -30,6 +30,7 @@ describe('Input Puppeteer Tests', () => {
         (input) => input.emailVal
         );
         expect(emailVal.toBe(true));
+        await browser.close();
 
 
         //await page.waitForSelector('input#email-addres-ok.required.error', {
