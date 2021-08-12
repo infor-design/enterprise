@@ -9,6 +9,7 @@ describe('Input Puppeteer Tests', () => {
         await page.goto('http://localhost:4000/components/input/example-index.html');
         await page.screenshot({ path: 'input.png' });
       
+        await jestPuppeteer.debug()
         await browser.close();
       })();
     
