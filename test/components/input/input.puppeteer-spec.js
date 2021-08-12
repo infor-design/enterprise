@@ -11,8 +11,8 @@ describe('Input Puppeteer Tests', () => {
       it('should show the title', async () => {
         await expect(page.title()).resolves.toMatch('IDS Enterprise');  
         await page.waitForSelector('input[name="first-name"]');   
-        await page.$eval('input[name="first-name"]', el => el.value = 'Adenosine triphosphate');
-        await page.waitForTimeout(8000);
+        await page.$eval('input[name="first-name"]', el => el.value = 'Juan Dela Cruz');
+        jest.setTimeout('10000')
         await page.waitForSelector('#mw-content-text');
 
         const text = await page.evaluate(() => {
@@ -20,6 +20,7 @@ describe('Input Puppeteer Tests', () => {
             return anchor.textContent;
         });
         console.log(text);
+        jest.setTimeout('10000')
         await browser.close();
 
 
