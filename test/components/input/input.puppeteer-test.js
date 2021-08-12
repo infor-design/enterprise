@@ -21,6 +21,13 @@ describe('Input Puppeteer Tests', () => {
 
         await page.click('input[name="email-address-ok"]');
         await page.click('input[name="department-code-trackdirty"]');
+        await page.waitForSelector('#required-error');
+        const text = await page.evaluate(() => {
+            const anchor = document.querySelector('#required-error');
+            return anchor.textContent;
+        });
+        console.log(text);
+        await browser.close();
         
         
         
