@@ -28,7 +28,7 @@ describe('Input Puppeteer Tests', () => {
         await page.type('input[name="email-address"]', 'jaundelacruz@infor.com');
         */
         await page.click('input#email-address');
-        await page.keyboard.type('input#email-address', 'jaundelacruz2@infor.com');
+        await page.keyboard.type('jaundelacruz2@infor.com');
         await page.click('input#email-address-ok');
 
         await page.waitForSelector('#email-address-ok-error', {visible: false});
