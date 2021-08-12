@@ -1,16 +1,14 @@
 describe('Input Puppeteer Tests', () => {
     describe('Index Tests', () => {
-    browser = await puppeteer.launch(
-        {
-            headless: false,
-            slowMo:35
-        }
-    );
 
       const url = 'http://localhost:4000/components/input/example-index.html';
       //const puppeteer = require('puppeteer');
 
       beforeAll(async () => {
+        browser = await puppeteer.launch({
+            headless: false,
+            slowMo:35 
+        });  
         await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
         //await page.screenshot({ path: 'input.png' });
       });
