@@ -21,14 +21,14 @@ describe('Input Puppeteer Tests', () => {
 
         await page.click('input[name="email-address-ok"]');
         await page.click('input[name="department-code-trackdirty"]');
-        await page.waitForSelector('#required error');
+        //await page.waitForSelector('#required error');
 
 
-        let emailVal = await page.$eval('input[class="required error"]', 
+        let emailVal = await page.$eval('input[name="email-address-ok"]', 
         (input) => input.emailVal
         );
 
-        expect(lastNameValidation.toBe('invalid'));
+        expect(lastNameValidation.toBe('required error'));
         await browser.close();
         
         /*const text = await page.evaluate(() => {
