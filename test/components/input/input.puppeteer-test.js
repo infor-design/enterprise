@@ -26,25 +26,11 @@ describe('Input Puppeteer Tests', () => {
         await page.click('input[name="department-code-trackdirty"]');
 
         //validate
-        let emailVal = await page.waitForSelector('input#email-addres-ok.required.error', //await page.$eval('input#email-addres-ok.required.error', 
-        (input) => input.emailVal
-        );
-        expect(emailVal.toBe(true));
-        await browser.close();
-
-
-        //await page.waitForSelector('input#email-addres-ok.required.error', {
-        //  visible: true,
-        //})
-
-/*
         await page.click('input[name="email-address-ok"]');
         await page.type('input[name="email-address-ok"]', 'jaundelacruz2@infor.com');
-        await page.waitForSelector('input.required.error', {
+        await page.waitForSelector('#email-address-ok-error.error-message', {
           visible: true,
         })
-
-*/
 
 
 
