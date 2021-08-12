@@ -7,10 +7,6 @@ describe('Input Puppeteer Tests', () => {
       //const puppeteer = require('puppeteer');
 
       beforeAll(async () => {
-        browser = await puppeteer.launch({
-            headless: false,
-            slowMo:35 
-        });  
         await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
         //await page.screenshot({ path: 'input.png' });
       });
