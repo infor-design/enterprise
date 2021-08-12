@@ -32,7 +32,7 @@ describe('Input Puppeteer Tests', () => {
         await page.click('input[name="department-code-trackdirty"]');
 
         //validate
-        await page.waitForSelector('#email-address-ok-error', {visible: true});
+        await page.waitForSelector('#email-address-ok-error', {visible: false});
 
 
 
