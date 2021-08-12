@@ -27,7 +27,7 @@ describe('Input Puppeteer Tests', () => {
             return anchor.textContent;
         });
         console.log(text);
-        //await browser.close();
+        await browser.close();
         
         /*let lastNameValidation = await page.$eval('input[name="first-name"]', 
         (input) => input.lastNameValidation
