@@ -25,7 +25,7 @@ describe('Input Puppeteer Tests', () => {
 
 
 
-        await browser.close(); 
+        //await browser.close(); 
 
 
         /*
