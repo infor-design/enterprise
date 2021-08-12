@@ -36,6 +36,6 @@ describe('Input Puppeteer Tests', () => {
 
       });
     
-    });
+    },10000);
 
 });
