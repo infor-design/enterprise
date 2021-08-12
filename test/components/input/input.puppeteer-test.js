@@ -7,34 +7,34 @@ describe('Input Puppeteer Tests', () => {
         await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
       });
 
-      it('should show the title', async () => {
+      it('should test input fields', async () => {
         await expect(page.title()).resolves.toMatch('IDS Enterprise');  
-/*
-        await page.click('input#last-name');
-        await page.keyboard.press('Tab');
-       // await page.keyboard.type('test');
-        await page.waitForSelector('#last-name-error', { visible: true });
- */       
+      
         //populate fields
-        /*
         await page.click('input[name="first-name"]');
         await page.type('input[name="first-name"]', 'Juan');
 
         await page.click('input[name="last-name"]');
         await page.type('input[name="last-name"]', 'Dela Cruz');
         
-
         await page.click('input[name="email-address"]');
         await page.type('input[name="email-address"]', 'jaundelacruz@infor.com');
-        */
+        
         await page.click('input#email-address');
         await page.keyboard.type('jaundelacruz2@infor.com');
         await page.click('input#email-address-ok');
+        await page.click('#maincontent');
 
         await page.waitForSelector('#email-address-ok-error', {visible: false});
 
+        
 
-
+/*
+        await page.click('input#last-name');
+        await page.keyboard.press('Tab');
+       // await page.keyboard.type('test');
+        await page.waitForSelector('#last-name-error', { visible: true });
+ */ 
 /* 
        let emailVal = await page.$eval('input.required.error', 
         (input) => input.emailVal

@@ -10,7 +10,7 @@ module.exports = {
   // executing the test
   collectCoverage: false,
 
-  testTimeout: 10000,
+  testTimeout: 6000,
 
   // A preset that is used as a base for Jest's configuration
   preset: 'jest-puppeteer',
