@@ -28,7 +28,7 @@ describe('Input Puppeteer Tests', () => {
         (input) => input.emailVal
         );
 
-        expect(lastNameValidation.toBe('required error'));
+        expect(emailVal.toBe('required error'));
         await browser.close();
         
         /*const text = await page.evaluate(() => {
