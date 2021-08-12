@@ -22,15 +22,6 @@ describe('Input Puppeteer Tests', () => {
         await page.click('input[name="email-address-ok"]');
         await page.click('input[name="department-code-trackdirty"]');
 
-        let emailVal = await page.$eval('input.required.error', 
-        (input) => input.emailVal
-        );
-        expect(emailVal.toBe(true));
-        //await browser.close(); 
-
-
-
-/*
         await page.waitForSelector('input.required.error"', {
           visible: true,
         })
@@ -45,20 +36,15 @@ describe('Input Puppeteer Tests', () => {
         await page.waitForSelector('input.required.error', {
           visible: true,
         })
-*/
 
 
-        /*
-        let emailVal = await page.$eval('input[name="email-address-ok"]', 
+
+/* 
+       let emailVal = await page.$eval('input.required.error', 
         (input) => input.emailVal
         );
-
-        await page.waitForSelector('input.required.error"', {
-          visible: true,
-        })
-        //expect(emailVal.toBe('required error'));
-        await browser.close(); 
-        */
+        expect(emailVal.toBe(true));
+*/
         
         /*const text = await page.evaluate(() => {
             const anchor = document.querySelector('#required-error');
