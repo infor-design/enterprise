@@ -22,9 +22,9 @@ describe('Input Puppeteer Tests', () => {
         await page.click('input[name="email-address-ok"]');
         await page.click('input[name="department-code-trackdirty"]');
         //await page.waitForSelector('input.required.error');
-        let emailVal = await page.$eval('input[name="email-address-ok"]', 
-        (input) => input.emailVal
-        );
+        //let emailVal = await page.$eval('input[name="email-address-ok"]', 
+        //(input) => input.emailVal
+        //);
 
         await page.waitForSelector('input.required.error', {
           visible: true,
