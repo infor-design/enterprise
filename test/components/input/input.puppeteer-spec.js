@@ -1,3 +1,5 @@
+import puppeteer from 'puppeteer';
+
 describe('Input Puppeteer Tests', () => {
     describe('Index Tests', () => {
 
