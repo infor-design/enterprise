@@ -9,29 +9,20 @@ describe('Input Puppeteer Tests', () => {
       });
 
       it('should show the title', async () => {
-        await expect(page.title()).resolves.toMatch('IDS Enterprise');     
-      });
+        await expect(page.title()).resolves.toMatch('IDS Enterprise');  
+        await page.waitForSelector('input[name="first-name"]');   
+        await page.$eval('input[name="first-name"]', el => el.value = 'Adenosine triphosphate');
 
-      it('should pass Axe accessibility tests', async () => {
-        await page.setBypassCSP(true);
-        await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-        await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport'] });
-      });
-
-      it('should --', async () => {
-        await page.click('#first-name');
-        //const element = await page.waitForSelector('#about-modal', { visible: true });
-        expect(element).toBeTruthy();
-      });
-
-      /*(async () => {
-        const browser = await puppeteer.launch();
-        const page = await browser.newPage();
-
-      
-        await jestPuppeteer.debug();
+        const text = await page.evaluate(() => {
+            const anchor = document.querySelector('#mw-content-text');
+            return anchor.textContent;
+        });
+        console.log(text);
         await browser.close();
-      })();*/
+
+
+      });
     
     });
+
 });
