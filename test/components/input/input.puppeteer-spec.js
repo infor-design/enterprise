@@ -1,5 +1,7 @@
 describe('Input Puppeteer Tests', () => {
     describe('Index Tests', () => {
+    headless: false,
+    slowMo: 35
       const url = 'http://localhost:4000/components/input/example-index.html';
       //const puppeteer = require('puppeteer');
 
