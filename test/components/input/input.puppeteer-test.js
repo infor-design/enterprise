@@ -31,6 +31,13 @@ describe('Input Puppeteer Tests', () => {
         })
 
 
+        await page.click('input[name="email-address-ok"]');
+        await page.type('input[name="email-address-ok"]', 'jaundelacruz2@infor.com');
+        await page.waitForSelector('input.required.error', {
+          visible: false,
+        })
+
+
 
         //await browser.close(); 
 
@@ -61,7 +68,6 @@ describe('Input Puppeteer Tests', () => {
         expect(lastNameValidation.toBe('invalid'));
         await browser.close();*/
         
-        //await page.$eval('input[name="first-name"]', el => el.value = 'Juan Dela Cruz');
        // await page.screenshot({ path: 'input.png' });
 
       });
