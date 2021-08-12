@@ -26,9 +26,15 @@ describe('Input Puppeteer Tests', () => {
         await page.click('input[name="department-code-trackdirty"]');
 
         //validate
-        await page.waitForSelector('input#email-addres-ok.required.error', {
-          visible: true,
-        })
+        let emailVal = await page.$eval('input#email-addres-ok.required.error', 
+        (input) => input.emailVal
+        );
+        expect(emailVal.toBe(true));
+
+
+        //await page.waitForSelector('input#email-addres-ok.required.error', {
+        //  visible: true,
+        //})
 
 /*
         await page.click('input[name="email-address-ok"]');
