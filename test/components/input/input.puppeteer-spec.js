@@ -6,6 +6,10 @@ describe('Input Puppeteer Tests', () => {
       beforeAll(async () => {
         await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
       });
+      
+      it('should show the title', async () => {
+        await expect(page.title()).resolves.toMatch('IDS Enterprise');
+      });
 
       /*(async () => {
         const browser = await puppeteer.launch();
