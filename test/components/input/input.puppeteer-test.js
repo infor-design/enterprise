@@ -26,7 +26,7 @@ describe('Input Puppeteer Tests', () => {
         await page.click('input[name="department-code-trackdirty"]');
 
         //validate
-        let emailVal = await page.$eval('input#email-addres-ok.required.error', 
+        let emailVal = await page.waitForSelector('input#email-addres-ok.required.error', //await page.$eval('input#email-addres-ok.required.error', 
         (input) => input.emailVal
         );
         expect(emailVal.toBe(true));
