@@ -9,16 +9,20 @@ describe('Input Puppeteer Tests', () => {
 
       it('should show the title', async () => {
         await expect(page.title()).resolves.toMatch('IDS Enterprise');  
-        await page.waitForSelector('input[name="first-name"]');   
-        await page.$eval('input[name="first-name"]', el => el.value = 'Juan Dela Cruz');
-       // await page.screenshot({ path: 'input.png' });
+        await page.click('input[name="first-name"]');
+        await page.type('input[name="first-name"]', 'Juan Dela Cruz');
 
-       /* const text = await page.evaluate(() => {
-            const anchor = document.querySelector('#mw-content-text');
-            return anchor.textContent;
-        });
-        console.log(text);
-        await browser.close();*/
+        await page.click('input[name="first-name"]');
+        await page.click('input[name="last-name"]');
+        let lastNameValidation = await page.$eval('input[name="first-name"]', 
+        (input) => input.lastNameValidation
+        );
+
+        expect(lastNameValidation.toBe('invalid'));
+        await browser.close();
+        
+        //await page.$eval('input[name="first-name"]', el => el.value = 'Juan Dela Cruz');
+       // await page.screenshot({ path: 'input.png' });
 
       });
     
