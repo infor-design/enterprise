@@ -28,7 +28,10 @@ describe('Input Puppeteer Tests', () => {
         (input) => input.emailVal
         );
 
-        expect(emailVal.toBe('required error'));
+        await page.waitForSelector('input.required.error"]', {
+          visible: true,
+        })
+        //expect(emailVal.toBe('required error'));
         await browser.close();
         
         /*const text = await page.evaluate(() => {
