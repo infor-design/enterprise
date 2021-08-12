@@ -4,11 +4,9 @@ describe('Input Puppeteer Tests', () => {
     describe('Index Tests', () => {
 
       const url = 'http://localhost:4000/components/input/example-index.html';
-      //const puppeteer = require('puppeteer');
 
       beforeAll(async () => {
         await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-        //await page.screenshot({ path: 'input.png' });
       });
 
       it('should show the title', async () => {
