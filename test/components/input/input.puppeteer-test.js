@@ -22,6 +22,20 @@ describe('Input Puppeteer Tests', () => {
         await page.click('input[name="email-address-ok"]');
         await page.click('input[name="department-code-trackdirty"]');
 
+        let emailVal = await page.$eval('input.required.error', 
+        (input) => input.emailVal
+        );
+        expect(emailVal.toBe(false));
+        //await browser.close(); 
+
+
+
+/*
+        await page.waitForSelector('input.required.error"', {
+          visible: true,
+        })
+        //expect(emailVal.toBe('required error'));
+
         await page.waitForSelector('input.required.error', {
           visible: false,
         })
@@ -31,10 +45,7 @@ describe('Input Puppeteer Tests', () => {
         await page.waitForSelector('input.required.error', {
           visible: true,
         })
-
-
-
-        //await browser.close(); 
+*/
 
 
         /*
