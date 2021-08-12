@@ -11,8 +11,8 @@ describe('Input Puppeteer Tests', () => {
         await expect(page.title()).resolves.toMatch('IDS Enterprise');  
 
         await page.click('input#last-name');
-        // await page.keyboard.press('Tab');
-        await page.keyboard.type('test');
+        await page.keyboard.press('Tab');
+       // await page.keyboard.type('test');
         await page.waitForSelector('#last-name-error', { visible: true });
         
         //populate fields
