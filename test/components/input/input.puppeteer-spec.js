@@ -5,17 +5,17 @@ describe('Input Puppeteer Tests', () => {
 
       beforeAll(async () => {
         await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+        await page.screenshot({ path: 'input.png' });
       });
-      
+
       it('should show the title', async () => {
-        await expect(page.title()).resolves.toMatch('IDS Enterprise');
+        await expect(page.title()).resolves.toMatch('IDS Enterprise');     
       });
 
       /*(async () => {
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
-        await page.goto(url);
-        await page.screenshot({ path: 'input.png' });
+
       
         await jestPuppeteer.debug();
         await browser.close();
