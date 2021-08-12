@@ -25,7 +25,7 @@ describe('Input Puppeteer Tests', () => {
         let emailVal = await page.$eval('input.required.error', 
         (input) => input.emailVal
         );
-        expect(emailVal.toBe(false));
+        expect(emailVal.toBe(true));
         //await browser.close(); 
 
 
