@@ -487,7 +487,7 @@ const formatters = {
     }
 
     // Tabsize as button width (+/-)
-    const tabsize = api.settings.rowHeight === 'short' ? 22 : 30;
+    const tabsize = api.settings.rowHeight === 'extra-small' || api.settings.rowHeight === 'small' ? 24 : 27;
 
     const button = `<button type="button" class="btn-icon datagrid-expand-btn${(isOpen ? ' is-expanded' : '')}" tabindex="-1"${(depth ? ` style="margin-left: ${(depth ? `${(tabsize * (depth - 1))}px` : '')}"` : '')}${expandedBtnDisabledHtml}>
       <span class="icon plus-minus ${(isOpen ? ' active' : '')}"></span>
