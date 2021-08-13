@@ -20,43 +20,24 @@ describe('Input Puppeteer Tests', () => {
         await page.click('input[name="email-address"]');
         await page.type('input[name="email-address"]', 'jaundelacruz@infor.com');
         
-        await page.click('input#email-address');
-        await page.keyboard.type('jaundelacruz2@infor.com');
+/* FIELD VALIDATION */
+
         await page.click('input#email-address-ok');
-        await page.click('#maincontent');
+        //await page.type('input[name="email-address-ok"]', 'jaundelacruz4@infor.com'); //if you comment this, it will fail.
+        await page.click('input#email-address');
+        await page.waitForTimeout(200);
 
-        await page.waitForSelector('#email-address-ok-error', {visible: false});
+        await page.waitForSelector('#email-address-ok')
+        let element = await page.evaluate(() => {
+          return !!document.querySelector('input.required.error') // !! converts anything to boolean
+        })
+        console.log(element);
 
-        
-
-/*
-        await page.click('input#last-name');
-        await page.keyboard.press('Tab');
-       // await page.keyboard.type('test');
-        await page.waitForSelector('#last-name-error', { visible: true });
- */ 
-/* 
-       let emailVal = await page.$eval('input.required.error', 
-        (input) => input.emailVal
-        );
-        expect(emailVal.toBe(true));
-*/
-        
-        /*const text = await page.evaluate(() => {
-            const anchor = document.querySelector('#required-error');
-            return anchor.textContent;
-        });
-        console.log(text);
-        await browser.close();*/
-        
-        /*let lastNameValidation = await page.$eval('input[name="first-name"]', 
-        (input) => input.lastNameValidation
-        );
-
-        expect(lastNameValidation.toBe('invalid'));
-        await browser.close();*/
-        
-       // await page.screenshot({ path: 'input.png' });
+        if(element == true){
+          throw console.error('FIELD REQUIRED');
+        }else{
+          console.log('FIELD VALIDATED');
+        }
 
       });
     
