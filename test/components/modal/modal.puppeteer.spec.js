@@ -7,12 +7,12 @@ describe('Modal Puppeteer Tests', () => {
         await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
       });
 
-      it('should test modal tooltip', async () => {
+      it('should test modal tooltip ', async () => {
         await expect(page.title()).resolves.toMatch('IDS Enterprise');  
         await page.click('#add-context');
         await page.waitForTimeout(200);
 
-        await page.waitForSelector('#add-context-modal');
+        await page.waitForSelector('#add-context-modal'); 
         await page.hover('#add-context-modal-btn-close');
         await page.waitForTimeout(200);
 
