@@ -1260,7 +1260,7 @@ Datagrid.prototype = {
       const isSortable = (column.sortable === undefined ? true : column.sortable);
       const isResizable = (column.resizable === undefined ? true : column.resizable);
       const isExportable = (column.exportable === undefined ? true : column.exportable);
-      const isSelection = column.id === 'selectionCheckbox' ? true : column.id === 'selectionRadio' ? true : false;
+      const isSelection = column.id === 'selectionCheckbox';
       const headerAlignmentClass = this.getHeaderAlignmentClass(column);
 
       // Make frozen columns hideable: false
@@ -5004,7 +5004,7 @@ Datagrid.prototype = {
     }
 
     // Some Built in columns
-    if (col.id === 'selectionCheckbox' || col.id === 'favorite') {
+    if (col.id === 'selectionCheckbox' || col.id === 'selectionRadio' || col.id === 'favorite') {
       colWidth = 43;
       col.width = colWidth;
     }
@@ -7765,14 +7765,16 @@ Datagrid.prototype = {
     }
 
     elem.addClass(selectClasses).attr('aria-selected', 'true');
-    
     checkbox = elem.find('.datagrid-selection-checkbox').closest('td');
     if (checkbox.length) {
       checkbox.attr('aria-checked', 'true');
       checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
         .addClass('is-checked');
-    } else {
-      radio = elem.find('.datagrid-selection-radio').closest('td');
+    } 
+    
+    radio = elem.find('.datagrid-selection-radio').closest('td');
+    if (radio.length) {
+      this.unSelectAllRows();
       radio.attr('aria-checked', 'true');
       radio.find('.datagrid-cell-wrapper .datagrid-radio')
         .addClass('is-checked');
