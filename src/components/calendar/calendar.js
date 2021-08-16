@@ -61,7 +61,11 @@ const COMPONENT_NAME_DEFAULTS = {
     isEnable: false,
     restrictMonths: false
   },
-  dayLegend: null
+  dayLegend: null,
+  displayRange: {
+    start: '',
+    end: ''
+  }
 };
 
 /**
@@ -266,7 +270,11 @@ Calendar.prototype = {
       disable: this.settings.disable,
       showLegend: this.settings.dayLegend !== null,
       legend: this.settings.dayLegend,
-      attributes: this.settings.attributes
+      attributes: this.settings.attributes,
+      displayRange: {
+        start: this.settings.displayRange.start,
+        end: this.settings.displayRange.end
+      }
     });
     this.monthViewHeader = document.querySelector('.calendar .monthview-header');
     this.renderAllEvents();

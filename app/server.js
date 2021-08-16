@@ -18,7 +18,7 @@ const chalk = require('chalk');
 const app = require('./app');
 
 // With the express server and routes defined, we can start to listen for requests.
-const port = 4000;
+const port = process.env.PORT || 4000;
 app.listen(port);
 
 /* eslint-disable no-console */

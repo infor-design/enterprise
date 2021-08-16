@@ -69,6 +69,112 @@ To run the tests as a CI environment would (Git Hub Actions), use:
 npm run functional:ci
 ```
 
+## Puppeteer e2e test
+
+We introduced Puppeteer for e2e tests since protractor is deprecated. For all new e2e tests try to use Puppeteer now. Also slowly work to convert the old tests to Puppeteer.
+To run the Puppeteer tests run it this way:
+
+```sh
+npm run build
+# start server to test example pages
+npm quickstart
+# In a new shell / terminal window
+npm run e2e:puppeteer
+```
+
+## Debugging puppeteer Tests
+
+We could improve this...
+
+- Add a puppeteer debug stop with `debugger` and use `await jestPuppeteer.debug();` to pause the browser
+
+```js
+  test('adds 1 + 2 to equal 3', () => {
+    debugger;
+    expect(1 + 2).toBe(3);
+    await jestPuppeteer.debug();
+  });
+```
+
+- Also check out `await jestPuppeteer.debug();`
+- edit the jest-puppeteer.config.js and set `devtools: true` and `headless: false`
+- may need to set `testTimeout: 6000` temporarily
+- run `npm run e2e:puppeteer -- tooltip`
+
+## Puppeteer Conversion Notes
+
+1. Click an element
+
+Protractor:
+
+```js
+const buttonEl = await element(by.id('about-trigger'));
+await buttonEl.click();
+```
+
+Puppeteer:
+
+```js
+await page.click('#about-trigger');
+```
+
+1. Waiting for an element to be visible
+
+Protractor:
+
+```js
+await browser.driver
+    .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('myId'))), config.waitsFor);
+```
+
+Puppeteer:
+
+```js
+page.waitForSelector('#myId', { visible: true });
+```
+
+1. Check an element's text
+
+Protractor:
+
+```js
+const text = await element(by.css('.modal-body')).getText()
+```
+
+Puppeteer:
+
+```js
+await page.$eval('.modal-body .version', el => el.textContent));
+```
+
+1. Get an elements attributes
+
+Protractor:
+
+```js
+await element(by.css('html')).getAttribute('data-sohoxi-version'));
+```
+
+Puppeteer:
+
+```js
+await page.$eval('html', el => el.getAttribute('data-sohoxi-version'));
+```
+
+1. Send a key
+
+Protractor:
+
+```js
+await browser.driver.actions().sendKeys(protractor.Key.ESCAPE).perform();
+```
+
+Puppeteer:
+
+```js
+await page.keyboard.press('Escape');
+```
+
 ## Sequence for Running e2e tests locally
 
 ```sh
@@ -80,7 +186,7 @@ npm quickstart
 npm run e2e:ci
 ```
 
-## Running E2E Tests Locally
+## Debugging E2E Tests Locally
 
 Run a specific E2E component locally (Only Chrome or Firefox)
 
