@@ -44,7 +44,7 @@
         title: '<span>Application Alert</span>',
         status: 'alert',
         returnFocus: $(this),
-        attributes: [{ name: 'id', value: 'message-acknowledge' }, { name: 'data-automation-id', value: 'message-acknowledge-auto' } ],
+        attributes: [ { name: 'id', value: 'message-acknowledge' }, { name: 'data-automation-id', value: 'message-acknowledge-auto' } ],
         message: 'This application has experienced a security alert. Please acknowledge the alert to proceed or cancel to abort.',
         buttons: [{
             text: 'Acknowledge',
@@ -102,6 +102,7 @@
     $('#show-delete-confirmation').on('click', function() {
       $('body').message({
         title: 'Delete this Application?',
+        status: 'alert',
         message: 'You are about to delete<br/>this application permanently.<br/>Would you like to proceed?',
         returnFocus: $(this),
         buttons: [{
