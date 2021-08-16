@@ -32,6 +32,7 @@ const MESSAGE_DEFAULTS = {
   status: '',
   message: 'Message Summary',
   width: 'auto',
+  maxWidth: null,
   buttons: null,
   cssClass: null,
   returnFocus: null,
@@ -97,6 +98,11 @@ Message.prototype = {
     if (this.settings.width !== 'auto') {
       this.content.closest('.modal')[0].style.maxWidth = 'none';
       this.content.closest('.modal')[0].style.width = this.settings.width + (/(px|%)/i.test(`${this.settings.width}`) ? '' : 'px');
+    }
+
+    // Adjust Max Width if Set as a Setting
+    if (this.settings.maxWidth) {
+      this.content.find('.message')[0].style.maxWidth = this.settings.maxWidth;
     }
 
     if (this.settings.cssClass) {
