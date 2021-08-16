@@ -386,3 +386,24 @@ describe('Timepicker specific locale/language tests', () => {
     expect(await timepickerEl.getAttribute('value')).toEqual('01:00');
   });
 });
+
+describe('Timepicker chinese time and period tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/timepicker/example-index.html?locale=zh-CN');
+  });
+
+  it('should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should set the time and period without any error message', async () => {
+    const timepickerEl = element(by.id('timepicker-id-1'));
+    const errorMessage = element(by.className('error-message'));
+
+    await element(by.css('#timepicker-id-1 + .trigger')).click();
+    await element(by.css('.set-time')).sendKeys(protractor.Key.SPACE);
+
+    expect(await timepickerEl.getAttribute('value')).toEqual('1:00 上午');
+    expect(await errorMessage.isPresent()).toBe(false);
+  });
+});
