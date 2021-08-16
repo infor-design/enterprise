@@ -8,6 +8,7 @@
 
 - `[Charts]` Fixed a bug where automation ids is not properly rendered on legend, text and slices. ([#5441](https://github.com/infor-design/enterprise/issues/5441))
 - `[Timepicker]` Fixed a bug where the chinese time format doesn't render correctly after selecting time and periods (AM/PM). ([#5420](https://github.com/infor-design/enterprise/issues/5420))
+- `[Message]` Added maxWidth setting to allow message to go full width when title is long. ([#5443](https://github.com/infor-design/enterprise/issues/5443))
 
 ## v4.54.0 Features
 
