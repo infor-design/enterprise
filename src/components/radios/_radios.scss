@@ -1,6 +1,36 @@
 // Radio Buttons
 //================================================== //
 
+@mixin radio-unchecked-before-style {
+  background-color: $radio-color-unchecked-initial-background;
+  border: 1px solid $radio-color-unchecked-initial-border;
+  border-radius: 50%;
+  content: '';
+  height: 14px;
+  margin-left: -25px;
+  margin-top: 3px;
+  position: absolute;
+  width: 14px;
+}
+
+@mixin radio-checked-before-style {
+  background-color: $radio-color-checked-initial-fill;
+  border: 1px solid $radio-color-checked-initial-fill;
+}
+
+@mixin radio-checked-after-style {
+  background-color: $radio-color-checked-initial-background;
+  border: 2px solid $radio-color-checked-initial-background;
+  border-radius: 50%;
+  content: '';
+  height: 4px;
+  left: 5px;
+  position: absolute;
+  top: 7px;
+  transition: all 0.2s ease 0s;
+  width: 4px;
+}
+
 .radio {
   margin: 0;
   opacity: 0;
@@ -28,15 +58,7 @@
 
 .inline .radio ~ .label-text::before,
 .radio + label::before {
-  background-color: $radio-color-unchecked-initial-background;
-  border: 1px solid $radio-color-unchecked-initial-border;
-  border-radius: 50%;
-  content: '';
-  height: 14px;
-  margin-left: -25px;
-  margin-top: 3px;
-  position: absolute;
-  width: 14px;
+  @include radio-unchecked-before-style;
 }
 
 .inline .radio ~ .label-text::before {
@@ -62,16 +84,7 @@
 
 .inline .radio ~ .label-text::after,
 .radio + label::after {
-  background-color: $radio-color-checked-initial-background;
-  border: 2px solid $radio-color-checked-initial-background;
-  border-radius: 50%;
-  content: '';
-  height: 4px;
-  left: 5px;
-  position: absolute;
-  top: 7px;
-  transition: all 0.2s ease 0s;
-  width: 4px;
+  @include radio-checked-after-style;
 }
 
 .inline .radio ~ .label-text::after {
@@ -80,8 +93,7 @@
 
 .inline .radio:checked ~ .label-text::before,
 .radio:checked + label::before {
-  background-color: $radio-color-checked-initial-fill;
-  border: 1px solid $radio-color-checked-initial-fill;
+  @include radio-checked-before-style;
 }
 
 // checked mark aspect changes
