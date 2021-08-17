@@ -5,7 +5,8 @@ module.exports = {
   // },
   // https://github.com/puppeteer/puppeteer/blob/main/docs/api.md#puppeteerlaunchoptions
   launch: {
-    headless: true,
+    headless: false,
+    slowMo:50,
     devtools: false,
     ignoreHTTPSErrors: true,
     dumpio: false
