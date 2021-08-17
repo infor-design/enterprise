@@ -4,6 +4,7 @@
 
 - `[Datagrid]` Adds the ability to have a selection radio buttons on Datagrid. ([#5384](https://github.com/infor-design/enterprise/issues/5384))
 - `[Modal]` Added the ability to have a custom tooltip on modal close button. ([#5391](https://github.com/infor-design/enterprise/issues/5391))
+- `[Typography]` New typography paragraph text style. ([#5325](https://github.com/infor-design/enterprise/issues/5325))
 
 ## v4.55.0 Fixes
 
