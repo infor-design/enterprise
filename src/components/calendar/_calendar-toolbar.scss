@@ -50,12 +50,22 @@
     top: 1px;
   }
 
+  .today-small {
+    float: left;
+    left: 28%;
+    top: -5px;
+  }
+
   // View Switcher
   .dropdown-wrapper {
     right: 20px;
     text-indent: 0;
     top: 9px;
     width: 105px;
+
+    &.dropdown-wrapper-small {
+      right: 7px;
+    }
   }
 
   // No Month Year Picker
