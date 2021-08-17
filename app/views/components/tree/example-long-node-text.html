@@ -1,0 +1,52 @@
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <ul role="tree" aria-label="Asset Types" class="tree" data-init="false" id="json-tree">
+    </ul>
+
+  </div>
+</div>
+
+<script>
+  var sampleData;
+
+
+  sampleData = [{
+    "id": "node1",
+    "text": "Node One",
+    "open": false,
+    "selected": false,
+    "href": '/somelink/'
+  }, {
+    "id": "node2",
+    "text": "Node Two <svg class=\"icon icon-info\" focusable=\"false\" aria-hidden=\"true\" role=\"presentation\"><use href=\"#icon-info-alert\"></use></svg>",
+    "open": true,
+    "selected": false,
+    "children": [{
+        "id": "node3",
+        "text": "Node 2.1 About() method called from ABCD script.  Provided message was ''Failure when creating qwert record. Note that the abcdef (and any preceding children) will already have been created. Parent key:IRP幸福財務だÄÈÇÃÓ-I. Message Text: (0000) Data not found; please re-enter"
+      }, {
+        "id": "node4",
+        "text": "Node 2.2 About() method called from ABCD script.  Provided message was ''Failure when creating qwert record. Note that the abcdef (and any preceding children) will already have been created. Parent key:IRP幸福財務だÄÈÇÃÓ-I. Message Text: (0000) Data not found; please re-enter",
+        "children": [{
+          "id": "node5",
+          "text": "Node 2.2.1 About() method called from ABCD script.  Provided message was ''Failure when creating qwert record. Note that the abcdef (and any preceding children) will already have been created. Parent key:IRP幸福財務だÄÈÇÃÓ-I. Message Text: (0000) Data not found; please re-enter",
+          "children": [{
+            "id": "node6",
+            "text": "Node 2.2.1.1 About() method called from ABCD script.  Provided message was ''Failure when creating qwert record. Note that the abcdef (and any preceding children) will already have been created. Parent key:IRP幸福財務だÄÈÇÃÓ-I. Message Text: (0000) Data not found; please re-enter",
+            "icon": "icon-tree-chart"
+          }]
+        }]
+      }]
+  }];
+
+
+  var api = $('#json-tree').tree({
+    dataset: sampleData,
+    folderIconOpen: 'plusminus-folder-open',
+    folderIconClosed: 'plusminus-folder-closed'
+  }).data('tree');
+
+  api.addNode({text: 'New Item <svg class="icon icon-info" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-info-alert"></use></svg>', parent: 'new1', disabled: true});
+
+</script>
