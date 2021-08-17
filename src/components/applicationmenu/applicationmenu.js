@@ -24,6 +24,8 @@ const COMPONENT_NAME = 'applicationmenu';
  * @param {boolean} [settings.dismissOnClickMobile=false] If true, causes a clicked menu option to dismiss on click when the responsive view is shown.
  * @param {boolean} [settings.filterable=false] If true a search / filter option will be added.
  * @param {boolean} [settings.filterMode='contains'] corresponds to a ListFilter component's `filterMode` for matching results.
+ * @param {boolean} [settings.resizable=false] If true, the app menu will be resizeable.
+ * @param {boolean} [settings.savePosition=false] It save the last position of app menu via localStorage.
  * @param {boolean} [settings.openOnLarge=false]  If true, will automatically open the Application Menu when a large screen-width breakpoint is met.
  * @param {array} [settings.triggers=[]]  An Array of jQuery-wrapped elements that are able to open/close this nav menu.
  */
@@ -32,6 +34,8 @@ const APPLICATIONMENU_DEFAULTS = {
   dismissOnClickMobile: false,
   filterable: false,
   filterMode: 'contains',
+  resizable: false,
+  savePosition: false,
   openOnLarge: false,
   triggers: ['.application-menu-trigger'],
   onExpandSwitcher: null,
@@ -165,6 +169,8 @@ ApplicationMenu.prototype = {
         self.accordionAPI.unfilter(null, true);
       });
     }
+
+    this.renderResizableAppMenu();
 
     // Sync with application menus that have an 'is-open' CSS class.
     // Otherwise, just adjust the height.
@@ -405,6 +411,68 @@ ApplicationMenu.prototype = {
   },
 
   /**
+   * Build for resizable app menu.
+   * @private
+   */
+  renderResizableAppMenu() {
+    if (!this.settings.resizable) {
+      return;
+    }
+
+    // Menu should always opened when resizable is activated.
+    this.openMenu(false, false, false);
+
+    // Adding element that will act as the resizer/dragger.
+    this.element.after('<div class="resizer"></div>');
+    // Wrapping it to a parent container (.resize-app-menu-container) for flex purposes.
+    $('#application-menu, .resizer')
+      .wrapAll('<div class="resize-app-menu-container" />');
+
+    $('.page-container').wrapAll('<div class="resize-page-container" />');
+    $('.resize-page-container').insertAfter('.resizer');
+
+    const resizer = document.querySelector('.resizer');
+    const navMenu = document.querySelector('#application-menu');
+    const tabPanel = $('.tab-panel-container.page-container');
+    const pageContainer = $('.page-container');
+
+    function resize(e) {
+      navMenu.style.flexBasis = `${(e.pageX < 300 ? 300 : e.pageX) - navMenu.getBoundingClientRect().left}px`;
+      $('.page-container').css('width', `calc(100% - ${e.pageX < 300 ? 300 : e.pageX}px)`);
+    }
+
+    function stopResize() {
+      window.removeEventListener('mousemove', resize, false);
+
+      // Save the same position of the app menu
+      if (localStorage) {
+        localStorage.navMenuWidth = navMenu.style.flexBasis;
+      }
+    }
+
+    resizer.addEventListener('mousedown', function (e) {
+      e.preventDefault();
+      window.addEventListener('mousemove', resize);
+      window.addEventListener('mouseup', stopResize);
+    });
+
+    // Applying the stored width of app menu
+    if (localStorage && localStorage.navMenuWidth && this.settings.savePosition) {
+      navMenu.style.flexBasis = localStorage.navMenuWidth;
+    }
+
+    if (this.settings.savePosition) {
+      // Correct the page container width
+      pageContainer.css('width', `calc(100% - ${localStorage.navMenuWidth})`);
+
+      // Calculates the correct width of the .tab-panel-container
+      if (tabPanel) {
+        tabPanel.css('width', `calc(100% - ${localStorage.navMenuWidth})`);
+      }
+    }
+  },
+
+  /**
    * Opens the Application Menu
    * @param {boolean} noFocus If true, sets focus on the first item in the application menu.
    * @param {boolean} [userOpened] If true, notifies the component that the menu was
@@ -453,6 +521,21 @@ ApplicationMenu.prototype = {
       self.toggleScrollClass();
       self.menu.removeClass('no-transition');
       $('.page-container').removeClass('no-transition');
+    }
+
+    if (this.settings.resizable) {
+      // Getting the size of the app menu to calculate when it's opened.
+      let menuWidth = parseInt(this.element[0].style.flexBasis, 10);
+
+      if (menuWidth < 300 || isNaN(menuWidth)) {
+        menuWidth = 300;
+      }
+
+      if (this.settings.savePosition) {
+        $('.page-container').css('width', `calc(100% - ${localStorage.navMenuWidth})`);
+      } else {
+        $('.page-container').css('width', `calc(100% - ${menuWidth}px)`);
+      }
     }
 
     this.triggers.each(function () {
@@ -576,6 +659,10 @@ ApplicationMenu.prototype = {
 
     this.menu.removeClass('is-open show-shadow').find('[tabindex]');
     $(document).off('click.applicationmenu');
+
+    if (this.settings.resizable) {
+      $('.page-container').css('width', '100%');
+    }
 
     if (env.features.touch) {
       $('body').removeClass('is-open-touch');

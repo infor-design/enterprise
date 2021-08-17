@@ -7,6 +7,60 @@ body.is-open-touch {
   overflow: hidden;
 }
 
+.resize-app-menu-container {
+  @include css3(transform, translateZ(0));
+  @include transition(left 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94),
+  box-shadow 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
+
+  display: flex;
+  height: 100vh; // this is needed for the popupmenu to work properly
+
+  .application-menu.is-open {
+    flex-basis: 300px;
+    height: 100vh !important;
+    min-width: 300px;
+    position: relative;
+
+    + .resizer {
+      background: $application-menu-border-color;
+      cursor: col-resize;
+      flex-basis: 3px;
+      height: 100vh;
+      left: 0;
+      position: relative;
+      z-index: 2;
+
+      + .page-container {
+        position: relative;
+      }
+    }
+  }
+
+  .resizer {
+    @include css3(transform, translateZ(0));
+    @include transition(left 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94),
+    box-shadow 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
+
+    left: -$application-menu-width;
+  }
+
+  .application-menu {
+    ~ .page-container {
+      right: 0;
+    }
+  }
+
+  .page-container.tab-panel-container {
+    margin-top: 100px;
+    top: 0;
+  }
+
+  .resize-page-container {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
 .application-menu {
   @include css3(transform, translateZ(0));
   @include transition(left 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94),
