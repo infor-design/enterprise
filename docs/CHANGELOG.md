@@ -8,6 +8,7 @@
 ## v4.55.0 Fixes
 
 - `[Charts]` Fixed a bug where automation ids is not properly rendered on legend, text and slices. ([#5441](https://github.com/infor-design/enterprise/issues/5441))
+- `[Datagrid]` Fixed a bug where the checkbox overlaps with the label when `editorOption` `multiple` is set to true. ([NG#1075](https://github.com/infor-design/enterprise-ng/issues/1075))
 - `[Message]` Added maxWidth setting to allow message to go full width when title is long. ([#5443](https://github.com/infor-design/enterprise/issues/5443))
 - `[Datagrid]` Fixed an issue where tree list indentation is not left aligned when row has no children and datagrid row height is extra small or small. ([#5487](https://github.com/infor-design/enterprise/issues/5487))
 
