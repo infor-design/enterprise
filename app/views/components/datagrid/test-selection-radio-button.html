@@ -1,0 +1,57 @@
+<div class="row">
+    <div class="twelve columns">
+      <div id="datagrid">
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    var gridApi = null;
+  
+    $('body').one('initialized', function () {
+  
+      Locale.set('en-US').done(function () {
+          var grid,
+            data = [],
+            columns = [];
+  
+          // Some Sample Data
+          data.push({ id: 1, productId: 2142201, productName: 'Compressor', portable: true, used: false, electric: true, pneumatic: false, quantity: 1, price: 210.99, status: 'OK', state:'California', orderDate:  new Date(2019, 2, 15, 12, 30, 36), action: 'ac', isFiltered: true});
+          data.push({ id: 2, productId: 2241202, productName: 'Different Compressor', portable: false, used: true, electric: false, pneumatic: true, quantity: 2, price: 210.991, status: '', state:'Oklahoma', orderDate: new Date(2019, 2, 15, 0, 30, 36), action: 'oh', isFiltered: true});
+          data.push({ id: 3, productId: 2342203, productName: 'Portable Compressor', portable: false, used: true, electric: false, pneumatic: true, quantity: 1, price: 120.992, status: null, state:'Wisconsin', orderDate: new Date(2019, 6, 3), action: 'ac', isFiltered: true});
+          data.push({ id: 4, productId: 2445204, productName: 'Another Compressor', portable: false, used: false, electric: false, pneumatic: true, quantity: 3, price: null, status: 'OK', state:'Michigan', orderDate: new Date(2019, 3, 3), action: 'ac', description: 'Comes with with air tool kit', isFiltered: false});
+          data.push({ id: 5, productId: 2542205, productName: 'De Wallt Compressor', portable: false, used: false, electric: false, pneumatic: false, quantity: 4, price: 210.99, status: 'OK', state:'Northern Mariana Island Teritory', orderDate: new Date(2019, 5, 5), action: 'oh', isFiltered: false});
+          data.push({ id: 6, productId: 2642205, productName: 'Air Compressors', portable: true, used: false, electric: true, pneumatic: false, quantity: 41, price: 120.99, status: 'OK', state:'New York', orderDate: new Date(2019, 6, 9), action: 'oh', isFiltered: true});
+          data.push({ id: 7, productId: 2642206, productName: 'Some Compressor', portable: false, used: true, electric: false, pneumatic: true, quantity: 41, price: 123.99, status: 'OK', state:'Idaho', orderDate: new Date(2019, 6, 9), action: 'oh', isFiltered: false});
+  
+          var isEditable = function(row, cell) {
+            return row % 2 && cell % 2; //somewhat random
+          };
+  
+          // Define Columns for the Grid.
+          columns.push({ id: 'selectionRadio', sortable: false, resizable: false, formatter: Formatters.SelectionRadio, align: 'center'});
+          columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Readonly});
+          columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, editor: Editors.Input});
+          columns.push({ id: 'price', name: 'Price', field: 'price', align: 'right', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input, mask: '###.000'});
+          columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date});
+          columns.push({ id: 'portable', name: 'Portable', field: 'portable', formatter: Formatters.Checkbox, isEditable: isEditable, editor: Editors.Checkbox});
+          columns.push({ id: 'used', name: 'Used', field: 'used', formatter: Formatters.Checkbox, isEditable: isEditable, editor: Editors.Checkbox});
+          columns.push({ id: 'electric', name: 'electric', field: 'Electric', formatter: Formatters.Checkbox, isEditable: isEditable, editor: Editors.Checkbox});
+          columns.push({ id: 'pneumatic', name: 'Pneumatic', field: 'pneumatic', formatter: Formatters.Checkbox, isEditable: isEditable, editor: Editors.Checkbox});
+          columns.push({ id: 'comments', name: 'Comments', field: 'comments', formatter: Formatters.Input, isEditable: isEditable, editor: Editors.Input});
+          columns.push({ id: 'isFiltered', name: 'Filtered', field: 'isFiltered', formatter: Formatters.Checkbox, isEditable: isEditable, editor: Editors.Checkbox});
+  
+
+          // Init and get the api for the grid
+          $('#datagrid').datagrid({
+            columns: columns,
+            dataset: data,
+            editable: true,
+            clickToSelect: false,
+            selectable: 'multiple',
+            toolbar: {title: 'Compressors', results: true, actions: true, rowHeight: true}
+          });
+      });
+    });
+  </script>
+  
