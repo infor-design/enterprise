@@ -5003,7 +5003,7 @@ Datagrid.prototype = {
     }
 
     // Some Built in columns
-    if (col.id === 'selectionCheckbox' || col.id === 'favorite') {
+    if (col.id === 'selectionCheckbox' || col.id === 'selectionRadio' || col.id === 'favorite') {
       colWidth = 43;
       col.width = colWidth;
     }
@@ -6663,7 +6663,9 @@ Datagrid.prototype = {
 
       const isSelectionCheckbox = target.is('.datagrid-selection-checkbox') ||
                                 target.find('.datagrid-selection-checkbox').length === 1;
-      let canSelect = self.settings.clickToSelect ? true : isSelectionCheckbox;
+      const isSelectionRadio = target.is('.datagrid-selection-radio') ||
+                                target.find('.datagrid-selection-radio').length === 1;
+      let canSelect = self.settings.clickToSelect ? true : isSelectionCheckbox ? true : isSelectionRadio;
 
       if (target.is('.datagrid-drilldown')) {
         canSelect = false;
@@ -7766,6 +7768,7 @@ Datagrid.prototype = {
    */
   selectNode(elem, index, data, force) {
     let checkbox = null;
+    let radio = null;
     const self = this;
     const selectClasses = `is-selected${self.settings.selectable === 'mixed' ? ' hide-selected-color' : ''}`;
 
@@ -7774,11 +7777,21 @@ Datagrid.prototype = {
       return;
     }
 
-    checkbox = elem.find('.datagrid-selection-checkbox').closest('td');
     elem.addClass(selectClasses).attr('aria-selected', 'true');
-    checkbox.attr('aria-checked', 'true');
-    checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
-      .addClass('is-checked');
+    checkbox = elem.find('.datagrid-selection-checkbox').closest('td');
+    if (checkbox.length) {
+      checkbox.attr('aria-checked', 'true');
+      checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
+        .addClass('is-checked');
+    } 
+    
+    radio = elem.find('.datagrid-selection-radio').closest('td');
+    if (radio.length) {
+      this.unSelectAllRows();
+      radio.attr('aria-checked', 'true');
+      radio.find('.datagrid-cell-wrapper .datagrid-radio')
+        .addClass('is-checked');
+    }
 
     if (data) {
       data._selected = true;
@@ -8550,6 +8563,7 @@ Datagrid.prototype = {
     const rowNode = this.settings.groupable ? this.rowNodesByDataIndex(idx) : this.rowNodes(idx);
     const isServerSideMultiSelect = s.source && s.selectable === 'multiple' && s.allowSelectAcrossPages;
     let checkbox = null;
+    let radio = null;
 
     if (!rowNode || idx === undefined) {
       return;
@@ -8584,7 +8598,6 @@ Datagrid.prototype = {
       };
 
       const selectClasses = 'is-selected hide-selected-color';
-      checkbox = self.cellNode(elem, self.columnIdxById('selectionCheckbox'));
       elem.removeClass(selectClasses).removeAttr('aria-selected');
 
       if (self.columnIdxById('selectionCheckbox') !== -1) {
@@ -8592,6 +8605,15 @@ Datagrid.prototype = {
         checkbox.attr('aria-checked', 'false');
 
         checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
+          .removeClass('is-checked no-animate')
+          .removeAttr('aria-label');
+      }
+
+      if (self.columnIdxById('selectionRadio') !== -1) {
+        radio = self.cellNode(elem, self.columnIdxById('selectionRadio'));
+        radio.attr('aria-checked', 'false');
+
+        radio.find('.datagrid-cell-wrapper .datagrid-radio')
           .removeClass('is-checked no-animate')
           .removeAttr('aria-label');
       }

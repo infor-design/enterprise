@@ -362,6 +362,24 @@ const formatters = {
     return `<div class="datagrid-checkbox-wrapper"><span role="checkbox" aria-label="${(col.name ? col.name : Locale.translate('Select') + ariaString)}" class="datagrid-checkbox datagrid-selection-checkbox${(isChecked ? ' is-checked no-animate' : '')}"></span></div>`;
   },
 
+  SelectionRadio(row, cell, value, col, item, api) {
+    let isChecked = (value === undefined ? false : value === true);
+    if (!value) {
+      isChecked = api.isRowSelected(item);
+    }
+
+    let ariaString = ' ';
+
+    if (api.settings.columnIds.length > 0) {
+      for (let i = 0; i < api.settings.columnIds.length; i++) {
+        ariaString += item[api.settings.columnIds[i]];
+      }
+    }
+
+    ariaString = xssUtils.ensureAlphaNumericWithSpaces(ariaString);
+    return `<div class="datagrid-checkbox-wrapper"><span role="radio" aria-label="${(col.name ? col.name : Locale.translate('Select') + ariaString)}" class="datagrid-radio datagrid-selection-radio ${(isChecked ? ' is-checked' : '')}"></span></div>`;
+  },
+
   Actions(row, cell, value, col) {
     // Render an Action Formatter
     return (
@@ -487,7 +505,7 @@ const formatters = {
     }
 
     // Tabsize as button width (+/-)
-    const tabsize = api.settings.rowHeight === 'short' ? 22 : 30;
+    const tabsize = api.settings.rowHeight === 'extra-small' || api.settings.rowHeight === 'small' ? 24 : 27;
 
     const button = `<button type="button" class="btn-icon datagrid-expand-btn${(isOpen ? ' is-expanded' : '')}" tabindex="-1"${(depth ? ` style="margin-left: ${(depth ? `${(tabsize * (depth - 1))}px` : '')}"` : '')}${expandedBtnDisabledHtml}>
       <span class="icon plus-minus ${(isOpen ? ' active' : '')}"></span>

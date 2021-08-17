@@ -26,7 +26,6 @@
     line-height: 28px;
     padding: 6px 5px 3px;
     text-decoration: none;
-    white-space: nowrap;
 
     //Badge in the tree items
     .tree-badge {
@@ -209,6 +208,7 @@
   ul {
     display: none;
     left: 13px;
+    width: calc(100% - 13px);
     overflow: hidden;
     position: relative;
     top: -7px;
@@ -219,6 +219,7 @@
 
     ul {
       left: 15px;
+      width: calc(100% - 15px);
     }
 
     li:first-child {
@@ -438,10 +439,6 @@
 .sidebar .tree {
   min-width: 200px;
   padding: 20px;
-
-  a {
-    white-space: normal;
-  }
 }
 
 //IE
