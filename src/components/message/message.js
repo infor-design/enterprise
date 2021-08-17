@@ -15,7 +15,7 @@ const COMPONENT_NAME = 'message';
  * @param {object} element The component element.
  * @param {object} [settings] The component settings.
  * @param {string} [settings.title='Message Title']  Title text or content shown in the message. An HTML string containing the follow tags may also be used `<div><span><a><small><img><svg><i><b><use><br><strong><em>`.
- * @param {string} [settings.status='']  Pass a status to style icon and title color ('error', 'alert', 'success')
+ * @param {string} [settings.status='']  Pass a status to style icon and title color ('error', 'alert', 'success', 'info')
  * @param {string} [settings.message='Message Summary']  The message content or text
  * @param {number} [settings.width='auto']  Pass a specific with or defaults to auto
  * @param {object} [settings.buttons=null]  Array of buttons to add to the message (see modal examples as well)
