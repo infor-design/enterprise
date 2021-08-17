@@ -150,7 +150,7 @@ Message.prototype = {
     } else if(this.settings.status === 'info') {
       this.title.addClass('has-status is-info').prepend($.createIconElement('info'));
     } else {
-      this.title.removeClass('has-status is-error is-alert is-success').find('svg').remove();
+      this.title.removeClass('has-status is-error is-alert is-success is-info').find('svg').remove();
     }
   },
 
