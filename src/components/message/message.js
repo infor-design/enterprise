@@ -147,7 +147,7 @@ Message.prototype = {
       this.title.addClass('has-status is-alert').prepend($.createIconElement('alert'));
     } else if (this.settings.status === 'success') {
       this.title.addClass('has-status is-success').prepend($.createIconElement('success'));
-    } else if(this.settings.status === 'info') {
+    } else if (this.settings.status === 'info') {
       this.title.addClass('has-status is-info').prepend($.createIconElement('info'));
     } else {
       this.title.removeClass('has-status is-error is-alert is-success is-info').find('svg').remove();
