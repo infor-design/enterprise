@@ -3736,6 +3736,32 @@ td .btn-actions {
   }
 }
 
+.datagrid-radio {
+  cursor: pointer;
+  display: inline-block;
+  font-size: $ids-size-font-sm;
+  left: -9px;
+  position: relative;
+
+  &::before {
+    @include radio-unchecked-before-style;
+
+    margin-top: 1px;
+    margin-left: unset;
+  }
+
+  &.is-checked::before {
+    @include radio-checked-before-style;
+  }
+
+  &.is-checked::after {
+    @include radio-checked-after-style;
+
+    top: 5px;
+    left: 4px;
+  }
+}
+
 // Grid Checkboxes
 .datagrid-checkbox-wrapper {
   margin-top: -13px;
