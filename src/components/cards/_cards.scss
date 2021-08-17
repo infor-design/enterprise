@@ -217,6 +217,55 @@
     }
   }
 
+  &.typography {
+    min-height: 250px;
+    width: 265px;
+
+    .card-content {
+      height: auto;
+      min-height: 0;
+
+      .card-empty-icon {
+        padding-top: 32px;
+        padding-bottom: 24px;
+      }
+
+      .card-empty-info {
+        margin: 0 auto;
+        width: 205px;
+        line-height: 140%;
+        font-size: 14px;
+      }
+    }
+
+    &.no-border {
+      border: 1px solid transparent;
+      box-shadow: unset;
+    }
+
+    &.inverted {
+      background-color: $typography-background-inverted;
+
+      .card-empty-title {
+        color: $typography-card-title-inverted;
+      }
+
+      .card-empty-info {
+        color: $typography-card-info-inverted;
+      }
+    }
+
+    &.is-medium {
+      min-height: 250px;
+      width: unset;
+
+      .card-empty-info {
+        width: 375px;
+        font-size: 16px;
+      }
+    } 
+  }
+
   // Expandable card headers set auto-height automatically
   &.expandable-area {
     @include auto-height;
