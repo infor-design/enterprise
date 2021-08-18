@@ -218,13 +218,7 @@
   }
 
   &.typography {
-    min-height: 250px;
-    width: 265px;
-
     .card-content {
-      height: auto;
-      min-height: 0;
-
       .card-empty-icon {
         padding-top: 32px;
         padding-bottom: 24px;
@@ -232,7 +226,7 @@
 
       .card-empty-info {
         margin: 0 auto;
-        width: 205px;
+        width: 190px;
         line-height: 140%;
         font-size: 14px;
       }
@@ -256,14 +250,15 @@
     }
 
     &.is-medium {
-      min-height: 250px;
-      width: unset;
-
       .card-empty-info {
         width: 375px;
         font-size: 16px;
       }
-    } 
+    }
+
+    .card-empty-actions {
+      padding: 0px 0px 24px;
+    }
   }
 
   // Expandable card headers set auto-height automatically
