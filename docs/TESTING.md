@@ -411,7 +411,9 @@ Some tests will most likely fail.  These failures are due to visual differences.
 
 1. Remove the file from the baseline using a command like `rm test/baseline/<name-of-test-file.png>`
 1. Run the tests and it should say `Failed - Image not found, saving current image as new baseline.`
+
   - UPDATE (Aug, 18, 2021): this now says:
+
     ```sh
     #####################################################################################
      INFO:
@@ -419,6 +421,7 @@ Some tests will most likely fail.  These failures are due to visual differences.
      /root/enterprise/test/baseline/message-open-chrome-1200x800-dpr-1.png
     #####################################################################################
     ```
+
 1. Open a new shell on your local machine and copy the file and check it using: `docker cp <CONTAINER_ID>:/home/travis/enterprise/test/.tmp/actual/<name-of-test-file.png> /Users/<your_user_name>/<target_path>`
 1. If it looks visually as expected then go back to your docker session and copy it to the baseline directory
 
