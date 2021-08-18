@@ -13,9 +13,9 @@
 
       // Define Some Sample Data
       data.push({ id: 1, productId: undefined, productName: 'Compressor', inStock: true, activity:  'Assemble', quantity: 1, price: 410.99, orderDate: new Date(2014, 12, 8), time: '1:30:45 AM', action: 'Action', status: 'Error'});
-      data.push({ id: 2, productId: 2241202, productName: '1 Different Compressor', inStock: true, activity:  'Inspect and Repair', quantity: 2, price: 310.99, orderDate: new Date(2015, 7, 3), time: '2:00 AM', action: 'On Hold', status: 'Error'});
+      data.push({ id: 2, productId: 2241202, productName: '1 Different Compressor', inStock: true, activity:  'Inspect and Repair', quantity: 2, price: 310.99, orderDate: new Date(2015, 7, 3), time: '2:00 AM', action: 'On Hold', status: 'En file d\'attente'});
       data.push({ id: 3, productId: 2342203, productName: 'Compressor', inStock: true, activity:  'Inspect and Repair', quantity: 1, price: 620.99, orderDate: new Date(2014, 6, 3), time: '1:40:00 AM', action: 'Action', status: 'Error'});
-      data.push({ id: 4, productId: 2445204, productName: undefined, inStock: false, activity:  'Assemble Paint', quantity: 3, price: 1210.99, orderDate: new Date(2015, 3, 3), time: '5:00:45 PM', action: 'Action', status: 'Confirmed'});
+      data.push({ id: 4, productId: 2445204, productName: undefined, inStock: false, activity:  'Assemble Paint', quantity: 3, price: 1210.99, orderDate: new Date(2015, 3, 3), time: '5:00:45 PM', action: 'Action', status: 'En file d\'attente'});
       data.push({ id: 5, productId: 2542205, productName: 'I Love Compressors', inStock: true, activity:  'Inspect and Repair', quantity: 4, price: 810.99, orderDate: new Date(2015, 5, 5), time: '5:30 PM', action: 'On Hold', status: 'Confirmed'});
       data.push({ id: 5, productId: 2642205, productName: 'Air Compressors', inStock: false, activity:  'Inspect and Repair', quantity: 41, price: 1120.99, orderDate: new Date(2014, 6, 9), time: '11:59:59 PM', action: 'On Hold', status: 'Error'});
       data.push({ id: 6, productId: null, productName: 'Some Compressor', inStock: true, activity:  'inspect and Repair', quantity: 41, price: 123.99, orderDate: new Date(2014, 6, 9), time: '1:31 PM', action: 'On Hold', status: 'Confirmed'});
@@ -24,6 +24,7 @@
 
       var statuses = [{id: '', value: '', label:'&nbsp;'},
                       {id:'Confirmed', value:'Confirmed', label:'Confirmed'},
+                      {id:'En file d\'attente', value:'En file d\'attente', label:'En file d\'attente'},
                       {id:'Error', value:'Error', label:'Error'}];
 
       var activities = [{id: 'Assemble Paint', value:'Assemble Paint', label: 'Assemble Paint'},
