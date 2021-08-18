@@ -80,3 +80,9 @@ html[dir='rtl'] {
     }
   }
 }
+
+html:not([lang='en-US']) {
+  #timepicker-popup .dropdown.period + .dropdown-wrapper .dropdown {
+    width: 75px;
+  }
+}
