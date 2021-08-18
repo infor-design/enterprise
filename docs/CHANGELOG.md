@@ -4,6 +4,7 @@
 
 - `[ApplicationMenu]` Added the ability to resize the app menu. ([#5193](https://github.com/infor-design/enterprise/issues/5193))
 - `[Datagrid]` Adds the ability to have a selection radio buttons on Datagrid. ([#5384](https://github.com/infor-design/enterprise/issues/5384))
+- `[Editor]` Added support for `ol` type attribute to be able to use the other list styles (`alphabetically ordered (lowercase and uppercase)`, and `roman numbers (lowercase and uppercase)`) of `ol` tag. ([#5462](https://github.com/infor-design/enterprise/issues/5462))
 - `[Modal]` Added the ability to have a custom tooltip on modal close button. ([#5391](https://github.com/infor-design/enterprise/issues/5391))
 
 ## v4.55.0 Fixes
