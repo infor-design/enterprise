@@ -96,7 +96,7 @@ CalendarToolbar.prototype = {
     }
 
     todayLink.class += ` hyperlink${isRippleClass}`;
-    const todayStr = s.showToday || s.inPage ? `<a id="today-link" class="${todayLink.class}}" href="#">${todayLink.text}</a>` : '';
+    const todayStr = s.showToday || s.inPage ? `<br id="today-break" style="display: none;"><a id="today-link" class="${todayLink.class}}" href="#">${todayLink.text}</a>` : '';
 
     // Next Previous Buttons
     const nextPrevClass = s.showNextPrevious ? '' : ' no-next-previous';
@@ -396,10 +396,14 @@ CalendarToolbar.prototype = {
         this.viewChanger.next().find('.dropdown').css({
           width: `${breakpoints.isBelow('phone') ? '60' : '80'}px`
         });
+        $('#today-link').removeAttr('style');
+        $('#today-break').removeAttr('style');
         $('#today-link').addClass('today-small');
       } else {
         this.viewChanger.next().removeClass('dropdown-wrapper-small');
         this.viewChanger.next().find('.dropdown').removeAttr('style');
+        $('#today-link').removeAttr('style');
+        $('#today-break').css({ display: 'none' });
         $('#today-link').removeClass('today-small');
       }
     };
