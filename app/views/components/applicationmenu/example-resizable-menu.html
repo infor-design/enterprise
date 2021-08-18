@@ -1,0 +1,86 @@
+{{> includes/head}}
+
+<body class="no-scroll">
+  <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
+  {{> includes/svg-inline-refs}}
+  {{> includes/applicationmenu-deep-menu-level}}
+
+  <div class="page-container scrollable">
+
+      <header class="header is-personalizable has-tabs">
+        <div class="toolbar">
+          <div class="title">
+            {{> includes/header-appmenu-trigger}}
+            <h1><span data-translate="text">UserProfile</span></h1>
+          </div>
+
+          <div class="buttonset">
+            <button class="btn" type="button">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-edit"></use>
+              </svg>
+              <span>Update Details</span>
+            </button>
+          </div>
+
+          {{> includes/header-actionbutton}}
+        </div>
+
+        <div class="tab-container" data-options='{ "containerElement": "#maincontent" }'>
+          <ul class="tab-list">
+            <li class="tab"><a href="#header-dos">Dates of Service</a></li>
+            <li class="tab"><a href="#header-pi">Personal Information</a></li>
+            <li class="tab"><a href="#header-mp">My Password</a></li>
+          </ul>
+        </div>
+
+      </header>
+
+    <div id="maincontent" class="page-container scrollable" role="main">
+      <div id="header-dos" class="tab-panel">
+        <div class="row top-padding">
+          <div class="twelve columns">
+            <p>Man bun portland venmo, reprehenderit cillum exercitation culpa adaptogen pitchfork unicorn. Jianbing mlkshk cloud bread id. Qui forage twee meditation hammock commodo heirloom gochujang shaman tattooed. Ethical commodo woke, ea est in artisan farm-to-table asymmetrical four loko ut cleanse thundercats. Gochujang reprehenderit schlitz cred squid tote bag tempor literally consequat exercitation.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div id="header-pi" class="tab-panel">
+        <div class="row top-padding">
+          <div class="twelve columns">
+            <p>Aute est literally, salvia fam esse dolor. Banh mi scenester velit franzen trust fund esse dolore truffaut XOXO, shabby chic nisi nostrud typewriter cliche. Cray fanny pack blue bottle dreamcatcher, pariatur iPhone cronut vaporware offal franzen. Ennui selvage man bun cronut kombucha aesthetic gastropub.</p>
+          </div>
+        </div>
+      </div>
+      <div id="header-mp" class="tab-panel">
+        <div class="row top-padding">
+          <div class="twelve columns">
+            <p>
+              Kale chips meditation freegan commodo jean shorts, kickstarter vegan. Enim taxidermy austin, forage marfa cillum gluten-free freegan activated charcoal salvia pariatur vape magna. Woke mlkshk bespoke, vaporware roof party squid kitsch green juice labore. Tacos tempor blog, poutine normcore try-hard dolore tattooed celiac deep v ipsum aute tofu pop-up.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {{> includes/footer}}
+
+  <script>
+    $('body').on('initialized', function() {
+      const appMenuAPI = $('.application-menu').data('applicationmenu');
+      const switcherPanelAcc = $('.application-menu-switcher-panel .accordion');
+      const switcherPanelTriggerSpan = $('.application-menu-switcher-trigger span');
+
+      switcherPanelAcc.on('selected.test', function (e, args) {
+        $('body').toast({
+          title: 'Role ' + args.innerText + ' Selected',
+          message: 'In a real application, you could refresh the app menu with new contents for the selected role.'
+        });
+        switcherPanelTriggerSpan.text(args.innerText)
+        appMenuAPI.closeSwitcherPanel();
+      });
+    });
+  </script>
+</body>
+</html>
