@@ -221,11 +221,19 @@
   }
 
   &.type-l-roman {
-    list-style: lower-roman;
+    ol {
+      &[type='i'] {
+        list-style: lower-roman;
+      }
+    }
   }
 
   &.type-u-roman {
-    list-style: upper-roman;
+    ol {
+      &[type='I'] {
+        list-style: upper-roman;
+      }
+    }
   }
 
   blockquote {
