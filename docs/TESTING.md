@@ -412,7 +412,7 @@ Some tests will most likely fail.  These failures are due to visual differences.
 1. Remove the file from the baseline using a command like `rm test/baseline/<name-of-test-file.png>`
 1. Run the tests and it should say `Failed - Image not found, saving current image as new baseline.`
 
-  - UPDATE (Aug, 18, 2021): this now says:
+- UPDATE (Aug, 18, 2021): this now says:
 
     ```sh
     #####################################################################################
