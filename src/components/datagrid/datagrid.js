@@ -313,6 +313,7 @@ Datagrid.prototype = {
     this.setRowGrouping();
     this.setTreeRootNodes();
     this.firstRender();
+    this.hasScrollbarY();
     this.handleEvents();
     this.handleKeys();
 
@@ -485,6 +486,18 @@ Datagrid.prototype = {
 
     this.handlePaging();
     this.triggerSource('initial');
+  },
+
+  /**
+   * Checks if the datagrid body has vertical scrollbar.
+   * @private
+   */
+  hasScrollbarY() {
+    const self = this;
+    const height = parseInt(self.bodyWrapperCenter[0].offsetHeight, 10);
+    const hasVerticalScrollbar = parseInt(self.bodyWrapperCenter[0].scrollHeight, 10) > height + 2;
+
+    self.hasVerticalScrollbar = hasVerticalScrollbar ? true : false;
   },
 
   /**
@@ -6499,7 +6512,7 @@ Datagrid.prototype = {
     }
 
     // Sync Header and Body During scrolling
-    if (this.hasLeftPane || this.hasRightPane) {
+    if (this.hasLeftPane || this.hasRightPane || this.hasVerticalScrollbar) {
       self.element.find('.datagrid-wrapper')
         .on('scroll.table', (e) => {
           self.handleScrollY(e);

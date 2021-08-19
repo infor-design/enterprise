@@ -1,0 +1,39 @@
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <div id="datagrid" style="height: 300px;">
+    </div>
+
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+
+      var grid,
+        columns = [];
+
+      //Define Columns for the Grid.
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Readonly});
+      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 150, formatter: Formatters.Hyperlink});
+      columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125});
+      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
+      columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+
+      var url = '{{basepath}}api/compressors?pageNum=1&pageSize=75';
+
+      $.getJSON(url, function(res) {
+
+        //Show the grid
+        $('#datagrid').datagrid({
+          columns: columns,
+          dataset: res.data,
+          columnReorder: true,
+          rowHeight: 'small',
+          toolbar: {title: 'Data Grid Header Title', results: true, dateFilter: false ,keywordFilter: false, advancedFilter: false, actions: true, views: true, rowHeight: true}
+        });
+
+      });
+  });
+</script>
