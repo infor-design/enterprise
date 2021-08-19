@@ -5,6 +5,7 @@
 - `[ApplicationMenu]` Added the ability to resize the app menu. ([#5193](https://github.com/infor-design/enterprise/issues/5193))
 - `[Datagrid]` Adds the ability to have a selection radio buttons on Datagrid. ([#5384](https://github.com/infor-design/enterprise/issues/5384))
 - `[Editor]` Added support for `ol` type attribute to be able to use the other list styles (`alphabetically ordered (lowercase and uppercase)`, and `roman numbers (lowercase and uppercase)`) of `ol` tag. ([#5462](https://github.com/infor-design/enterprise/issues/5462))
+- `[Message]` Add an optional close button setting to dismiss the message. ([#5464](https://github.com/infor-design/enterprise/issues/5464))
 - `[Modal]` Added the ability to have a custom tooltip on modal close button. ([#5391](https://github.com/infor-design/enterprise/issues/5391))
 
 ## v4.55.0 Fixes
@@ -31,6 +32,7 @@
 - `[ContextualActionPanel]` Added `title` prop in CAP to control the title via `modaSettings`, and added missing `beforeclose` event. ([NG#1048](https://github.com/infor-design/enterprise-ng/issues/1048))
 - `[ContextMenu]` Fixed a bug where field option is not rendered properly on mobile ([#5335](https://github.com/infor-design/enterprise/issues/5335))
 - `[Datagrid]` - Fixed a bug where the row height cut off the focus ring on the Action Item buttons for Classic/New mode and XS, S, M settings ([#5394](https://github.com/infor-design/enterprise/issues/5394))
+- `[Datagrid]` - Fixed a bug where the selection color would bleed through clickable tags. ([#5533](https://github.com/infor-design/enterprise/issues/5533))
 - `[Datagrid]` Fixed an issue where toggling the selectable setting did not correctly enable the checkbox. ([#5482](https://github.com/infor-design/enterprise/issues/5482))
 - `[Datagrid]` Fixed an issue where row reorder handle align was not right for extra small and small height. ([#5233](https://github.com/infor-design/enterprise/issues/5233))
 - `[Datagrid]` - Fixed a bug where the first two columns row heights did not match the others for the Medium setting ([#5366](https://github.com/infor-design/enterprise/issues/5366))
