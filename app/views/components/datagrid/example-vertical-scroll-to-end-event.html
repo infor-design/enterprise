@@ -34,6 +34,15 @@
           toolbar: {title: 'Data Grid Header Title', results: true, dateFilter: false ,keywordFilter: false, advancedFilter: false, actions: true, views: true, rowHeight: true}
         });
 
+        $('.datagrid-wrapper.center').on('scroll', function() {
+          if ($('#datagrid').data('datagrid').isVerticalScrollToEnd) {
+            $('body').toast({
+              title: 'Vertical Scroll to End',
+              message: 'Hooray! You reached the bottom of the list.',
+            });
+          }
+        });
+
       });
   });
 </script>

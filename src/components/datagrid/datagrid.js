@@ -491,13 +491,14 @@ Datagrid.prototype = {
   /**
    * Checks if the datagrid body has vertical scrollbar.
    * @private
+   * @returns {boolean}
    */
   hasScrollbarY() {
     const self = this;
     const height = parseInt(self.bodyWrapperCenter[0].offsetHeight, 10);
     const hasVerticalScrollbar = parseInt(self.bodyWrapperCenter[0].scrollHeight, 10) > height + 2;
 
-    self.hasVerticalScrollbar = hasVerticalScrollbar ? true : false;
+    self.hasVerticalScrollbar = hasVerticalScrollbar !== false;
   },
 
   /**
@@ -6410,6 +6411,20 @@ Datagrid.prototype = {
   },
 
   /**
+   * Adds support when the datagrid container scrolls to the end of the list.
+   * @private
+   * @param {jQuery} e The event object.
+   * @returns {boolean}
+   */
+  verticalScrollToEnd(e) {
+    const el = e.currentTarget;
+    const isAtTheBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 1;
+
+    // Has the control to do some logic when it's at the bottom of the list
+    this.isVerticalScrollToEnd = isAtTheBottom !== false;
+  },
+
+  /**
    * Sync the containers when scrolling on the y axis.
    * @private
    * @param  {jQuery} e The event object
@@ -6516,6 +6531,7 @@ Datagrid.prototype = {
       self.element.find('.datagrid-wrapper')
         .on('scroll.table', (e) => {
           self.handleScrollY(e);
+          self.verticalScrollToEnd(e);
         });
 
       self.element.find('.datagrid-wrapper')
@@ -6524,6 +6540,7 @@ Datagrid.prototype = {
             e.currentTarget.scrollTop += (e.originalEvent.deltaY);
             e.preventDefault();
             self.handleScrollY(e);
+            self.verticalScrollToEnd(e);
           }
         });
     }
