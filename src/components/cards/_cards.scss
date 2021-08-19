@@ -481,15 +481,18 @@
   }
 }
 
+.card-content {
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+}
+
 .widget-content,
 .card-content {
   height: 318px;
   min-height: 318px;
   overflow: auto;
   width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  flex-direction: column;
 
   &.contained,
   .contained {
