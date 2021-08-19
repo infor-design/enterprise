@@ -210,28 +210,6 @@
   &.is-empty {
     min-height: 0;
 
-    .card-content,
-    .widget-content {
-      height: auto;
-      min-height: 0;
-    }
-  }
-
-  &.typography {
-    .card-content {
-      .card-empty-icon {
-        padding-top: 32px;
-        padding-bottom: 24px;
-      }
-
-      .card-empty-info {
-        margin: 0 auto;
-        width: 190px;
-        line-height: 140%;
-        font-size: 14px;
-      }
-    }
-
     &.no-border {
       border: 1px solid transparent;
       box-shadow: unset;
@@ -245,23 +223,31 @@
       }
 
       .card-empty-info {
-        color: $typography-card-info-inverted;
-      }
-    }
-
-    &.is-medium {
-      .card-empty-info {
-        width: 375px;
-        font-size: 16px;
-
-        @media only screen and (max-width: $breakpoint-tablet-reduced - 16px) {
-          width: unset;
+        p {
+          color: $typography-card-info-inverted;
         }
       }
     }
 
-    .card-empty-actions {
-      padding: 0px 0px 24px;
+    .card-content,
+    .widget-content {
+      height: auto;
+      min-height: 0;
+    }
+
+    .card-content {
+      padding-top: 12px;
+
+      .card-empty-info {
+        .font-size-px-14 {
+          margin: 0 auto;
+          width: 150px;
+
+          @media only screen and (max-width: $breakpoint-tablet-reduced - 16px) {
+            width: unset;
+          }
+        }
+      }
     }
   }
 
@@ -674,7 +660,7 @@
 .card-empty-actions,
 .widget-empty-actions,
 .empty-actions {
-  padding: 0 0 40px;
+  padding: 0 0 32px;
 }
 
 // RTL Styles
