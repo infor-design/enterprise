@@ -17,8 +17,10 @@ const COMPONENT_NAME = 'message';
  * @param {string} [settings.title='Message Title']  Title text or content shown in the message. An HTML string containing the follow tags may also be used `<div><span><a><small><img><svg><i><b><use><br><strong><em>`.
  * @param {string} [settings.status='']  Pass a status to style icon and title color ('error', 'alert', 'success', 'info')
  * @param {string} [settings.message='Message Summary']  The message content or text
- * @param {number} [settings.width='auto']  Pass a specific with or defaults to auto
+ * @param {number} [settings.width='auto']  Pass a specific width or defaults to auto
+ * @param {string} [settings.maxWidth=null]  Pass a specific string or defaults to null
  * @param {object} [settings.buttons=null]  Array of buttons to add to the message (see modal examples as well)
+ * @param {boolean} [settings.showCloseBtn] If true, show a close icon button on the top right of the message.
  * @param {string} [settings.cssClass=null]  Extra Class to add to the dialog for customization.
  * @param {string} [settings.returnFocus=null]  JQuery Element selector to focus on return.
  * @param {string} [settings.allowedTags='<a><b><br><br/><del><em><i><ins><mark><small><strong><sub><sup>']  String of allowed HTML tags.
@@ -34,6 +36,7 @@ const MESSAGE_DEFAULTS = {
   width: 'auto',
   maxWidth: null,
   buttons: null,
+  showCloseBtn: false,
   cssClass: null,
   returnFocus: null,
   allowedTags: '<a><b><br><br/><del><em><i><ins><mark><small><strong><sub><sup>',
@@ -87,6 +90,7 @@ Message.prototype = {
       buttons: this.settings.buttons,
       resizable: this.settings.resizable,
       close: this.settings.close,
+      showCloseBtn: this.settings.showCloseBtn,
       isAlert: true,
       overlayOpacity: this.settings.overlayOpacity,
       hideUnderneath: this.settings.hideUnderneath,
@@ -107,6 +111,17 @@ Message.prototype = {
 
     if (this.settings.cssClass) {
       this.message.addClass(this.settings.cssClass);
+    }
+
+    if (this.settings.showCloseBtn) {
+      const closeBtn = $(`
+        <button type="button" class="btn-icon btn-close" title="${Locale.translate('Close')}" aria-hidden="true">
+          ${$.createIcon('close')}
+          <span class="audible">${Locale.translate('Close')}</span>
+        </button>
+      `);
+      this.message.find('.modal-content').append(closeBtn);
+      closeBtn.on('click', () => this.destroy());
     }
 
     // Setup the destroy event to fire on close.
