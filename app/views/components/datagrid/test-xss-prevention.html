@@ -62,8 +62,8 @@
         //Define Columns for the Grid.
         columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
         columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, editor: Editors.Input});
-        columns.push({ id: 'activity', name: 'Activity', field: 'activity', editor: Editors.Input});
-        columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', align: 'right', editor: Editors.Input, mask: '###'});
+        columns.push({ id: 'activity', name: '<script>alert(1)<\/script>', field: 'activity', editor: Editors.Input});
+        columns.push({ id: 'quantity', name: '<img src=x onerror=alert("kocicka")>test', field: 'quantity', align: 'right', editor: Editors.Input, mask: '###'});
 
         //Init and get the api for the grid
         grid = $('#datagrid').datagrid({
