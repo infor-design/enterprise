@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('Icon Soho (Subtle) tests', () => {
+describe('Icon Soho (Subtle) tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/icons/example-index?layout=nofrills');
     await browser.driver.sleep(config.sleep);
@@ -25,7 +25,7 @@ fdescribe('Icon Soho (Subtle) tests', () => {
   }
 });
 
-fdescribe('Icon New Theme tests', () => {
+describe('Icon New Theme tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/icons/example-index?theme=new&layout=nofrills');
     await browser.driver.sleep(config.sleep);
@@ -40,7 +40,7 @@ fdescribe('Icon New Theme tests', () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.imageComparison.checkElement(containerEl, 'icons-index')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(containerEl, 'icons-index-new')).toEqual(0);
     });
   }
 });
