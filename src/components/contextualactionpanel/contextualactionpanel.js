@@ -416,11 +416,11 @@ ContextualActionPanel.prototype = {
         passEvent(e);
       })
       .off('beforeclose.contextualactionpanel')
-      .on('beforeclose.contextualactionpanel', function (e) {
+      .on('beforeclose.contextualactionpanel', (e) => {
         passEvent(e);
       })
       .off('beforeopen.contextualactionpanel')
-      .on('beforeopen.contextualactionpanel', function (e) {
+      .on('beforeopen.contextualactionpanel', (e) => {
         if (self.settings.initializeContent) {
           $(this).initialize();
         }

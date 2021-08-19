@@ -487,6 +487,9 @@
   min-height: 318px;
   overflow: auto;
   width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
 
   &.contained,
   .contained {

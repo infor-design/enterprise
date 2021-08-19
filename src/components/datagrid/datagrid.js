@@ -7783,8 +7783,8 @@ Datagrid.prototype = {
       checkbox.attr('aria-checked', 'true');
       checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
         .addClass('is-checked');
-    } 
-    
+    }
+
     radio = elem.find('.datagrid-selection-radio').closest('td');
     if (radio.length) {
       this.unSelectAllRows();
