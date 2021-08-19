@@ -14,6 +14,15 @@ describe('Icon Soho (Subtle) tests', () => {
   it('Should render without any error', async () => {
     await utils.checkForErrors();
   });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.imageComparison.checkElement(containerEl, 'icons-index')).toEqual(0);
+    });
+  }
 });
 
 describe('Icon New Theme tests', () => {
@@ -25,4 +34,13 @@ describe('Icon New Theme tests', () => {
   it('Should render without error', async () => {
     await utils.checkForErrors();
   });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
+      const containerEl = await element(by.className('container'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.imageComparison.checkElement(containerEl, 'icons-index')).toEqual(0);
+    });
+  }
 });
