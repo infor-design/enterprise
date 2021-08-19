@@ -532,7 +532,10 @@ const formatters = {
         text = (ranges[i].text ? ranges[i].text : classes.split(' ')[0]);
       }
 
-      if (value === ranges[i].value) {
+      const escapedHTMLRangeValue = xssUtils.escapeHTML(ranges[i].value);
+      console.log('value', value, '---', 'ranges[i].value', ranges[i].value);
+
+      if (value === escapedHTMLRangeValue) {
         classes = ranges[i].classes;
         text = (ranges[i].text ? ranges[i].text : value);
       }
