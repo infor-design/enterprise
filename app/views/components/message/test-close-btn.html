@@ -1,0 +1,33 @@
+
+<div class="row">
+  <div class="twelve columns">
+    <button class="btn-secondary" type="button" id="huge-title">Message close btn</button><br/><br/>
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function() {
+    $('#huge-title').on('click', function() {
+      $('body').message({
+        title: 'Message with close btn',
+        message: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.',
+        showCloseBtn: true,
+        returnFocus: $(this),
+        buttons: [{
+          text: 'Ok',
+          click: function(e, modal) {
+            console.log('Ok');
+            modal.close();
+          },
+          isDefault: true
+        }, {
+          text: 'Dismiss',
+          click: function(e, modal) {
+            console.log('Dismiss');
+            modal.close();
+          }
+        }]
+      });
+    });
+  });
+</script>
