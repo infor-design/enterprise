@@ -96,7 +96,7 @@ CalendarToolbar.prototype = {
     }
 
     todayLink.class += ` hyperlink${isRippleClass}`;
-    const todayStr = s.showToday || s.inPage ? `<br id="today-break" style="display: none;"><a class="${todayLink.class}}" href="#">${todayLink.text}</a>` : '';
+    const todayStr = s.showToday || s.inPage ? `<a class="${todayLink.class}}" href="#">${todayLink.text}</a>` : '';
 
     // Next Previous Buttons
     const nextPrevClass = s.showNextPrevious ? '' : ' no-next-previous';
@@ -256,10 +256,6 @@ CalendarToolbar.prototype = {
       this.currentDate = date;
     }
 
-    this.monthPicker.text(Locale.formatDate(
-      new Date(this.currentYear, this.currentMonth, this.currentDay),
-      { date: 'year', locale: this.locale.name, language: this.settings.language }
-    ));
     if (!this.currentCalendar || !this.currentCalendar.months) {
       this.currentCalendar = Locale.calendar(
         this.locale.name,
@@ -267,6 +263,13 @@ CalendarToolbar.prototype = {
         this.settings.calendarName
       );
     }
+
+    const monthPickerText = breakpoints.isBelow('slim') && this.currentCalendar.months ? `${this.currentCalendar.months.abbreviated[this.currentMonth]} ${this.currentYear}` : Locale.formatDate(
+      new Date(this.currentYear, this.currentMonth, this.currentDay),
+      { date: 'year', locale: this.locale.name, language: this.settings.language }
+    );
+
+    this.monthPicker.text(monthPickerText);
 
     const monthName = this.currentCalendar.months ? this.currentCalendar.months.wide[this.currentMonth] : '';
     this.element.find('span.month').attr('data-month', this.currentMonth).text(monthName);
@@ -392,19 +395,26 @@ CalendarToolbar.prototype = {
   handleResize() {
     const resize = () => {
       if (this.viewChanger) {
-        if (breakpoints.isBelow('slim')) {
+        if (breakpoints.isBelow('phablet')) {
           this.viewChanger.next().addClass('dropdown-wrapper-small');
           this.viewChanger.next().find('.dropdown').css({
-            width: `${breakpoints.isBelow('phone') ? '60' : '80'}px`
+            width: `${breakpoints.isBelow('phone') ? '60' : '90'}px`
           });
-          $('#today-break').removeAttr('style');
-          $('.today').addClass('today-small');
+          $('.today').css(breakpoints.isBelow('slim') ? { display: 'none' } : {});
         } else {
           this.viewChanger.next().removeClass('dropdown-wrapper-small');
           this.viewChanger.next().find('.dropdown').removeAttr('style');
-          $('#today-break').css({ display: 'none' });
-          $('.today').removeClass('today-small');
+          $('.today').removeAttr('style');
         }
+      }
+
+      if (this.monthPicker) {
+        const monthPickerText = breakpoints.isBelow('slim') && this.currentCalendar.months ? `${this.currentCalendar.months.abbreviated[this.currentMonth]} ${this.currentYear}` : Locale.formatDate(
+          new Date(this.currentYear, this.currentMonth, this.currentDay),
+          { date: 'year', locale: this.locale.name, language: this.settings.language }
+        );
+
+        this.monthPicker.text(monthPickerText);
       }
     };
 
