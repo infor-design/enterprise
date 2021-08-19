@@ -802,12 +802,13 @@ TimePicker.prototype = {
     val = val.replace('午', `午${sep}`);
     parts = val.split(sep);
 
+    const isStandardTimeFormatOnly = timeFormat.slice(0, 2) === 'ah' && !$('.datepicker').length > 0;
     const aLoc = this.currentCalendar.timeFormat.toLowerCase().indexOf('a');
     const isAmFirst = aLoc !== -1 && (aLoc <
       this.currentCalendar.timeFormat.toLowerCase().indexOf('h'));
 
     // If am is before time move it in the array to last
-    if (!this.is24HourFormat() && isAmFirst) {
+    if (!this.is24HourFormat() && isAmFirst && !isStandardTimeFormatOnly) {
       parts = [parts[1], parts[2], parts[0]];
     }
 
