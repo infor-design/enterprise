@@ -2055,7 +2055,7 @@ $datagrid-small-row-height: 25px;
     &.is-selected:not(.hide-selected-color) td:not(.is-editing) .datagrid-cell-wrapper {
       background-color: $datagrid-row-selected-color;
 
-      .icon:not(.icon-rowstatus):not(.plus-minus) {
+      .icon:not(.icon-rowstatus):not(.plus-minus):not(.caret-right) {
         @include trigger-icon-background($datagrid-row-selected-color);
       }
     }

@@ -6,6 +6,7 @@ import { stringUtils } from '../../utils/string';
 import '../../utils/behaviors'; // hidefocus
 import '../dropdown/dropdown.jquery';
 import '../toolbar-flex/toolbar-flex.jquery';
+import { breakpoints } from '../../utils/breakpoints';
 
 // Default Settings
 const COMPONENT_NAME = 'calendartoolbar';
@@ -64,7 +65,8 @@ CalendarToolbar.prototype = {
     this
       .setLocale()
       .build()
-      .handleEvents();
+      .handleEvents()
+      .handleResize();
   },
 
   /**
@@ -94,7 +96,7 @@ CalendarToolbar.prototype = {
     }
 
     todayLink.class += ` hyperlink${isRippleClass}`;
-    const todayStr = s.showToday || s.inPage ? `<a class="${todayLink.class}" href="#">${todayLink.text}</a>` : '';
+    const todayStr = s.showToday || s.inPage ? `<a class="${todayLink.class}}" href="#">${todayLink.text}</a>` : '';
 
     // Next Previous Buttons
     const nextPrevClass = s.showNextPrevious ? '' : ' no-next-previous';
@@ -254,10 +256,6 @@ CalendarToolbar.prototype = {
       this.currentDate = date;
     }
 
-    this.monthPicker.text(Locale.formatDate(
-      new Date(this.currentYear, this.currentMonth, this.currentDay),
-      { date: 'year', locale: this.locale.name, language: this.settings.language }
-    ));
     if (!this.currentCalendar || !this.currentCalendar.months) {
       this.currentCalendar = Locale.calendar(
         this.locale.name,
@@ -265,6 +263,13 @@ CalendarToolbar.prototype = {
         this.settings.calendarName
       );
     }
+
+    const monthPickerText = breakpoints.isBelow('slim') && this.currentCalendar.months ? `${this.currentCalendar.months.abbreviated[this.currentMonth]} ${this.currentYear}` : Locale.formatDate(
+      new Date(this.currentYear, this.currentMonth, this.currentDay),
+      { date: 'year', locale: this.locale.name, language: this.settings.language }
+    );
+
+    this.monthPicker.text(monthPickerText);
 
     const monthName = this.currentCalendar.months ? this.currentCalendar.months.wide[this.currentMonth] : '';
     this.element.find('span.month').attr('data-month', this.currentMonth).text(monthName);
@@ -378,6 +383,47 @@ CalendarToolbar.prototype = {
         });
       });
     }
+
+    return this;
+  },
+
+  /**
+   * Handle resize of calendar.
+   * @private
+   * @returns {void}
+   */
+  handleResize() {
+    const resize = () => {
+      if (this.viewChanger) {
+        if (breakpoints.isBelow('phablet')) {
+          this.viewChanger.next().addClass('dropdown-wrapper-small');
+          this.viewChanger.next().find('.dropdown').css({
+            width: `${breakpoints.isBelow('phone') ? '60' : '90'}px`
+          });
+          $('.today').css(breakpoints.isBelow('slim') ? { display: 'none' } : {});
+        } else {
+          this.viewChanger.next().removeClass('dropdown-wrapper-small');
+          this.viewChanger.next().find('.dropdown').removeAttr('style');
+          $('.today').removeAttr('style');
+        }
+      }
+
+      if (this.monthPicker) {
+        const monthPickerText = breakpoints.isBelow('slim') && this.currentCalendar.months ? `${this.currentCalendar.months.abbreviated[this.currentMonth]} ${this.currentYear}` : Locale.formatDate(
+          new Date(this.currentYear, this.currentMonth, this.currentDay),
+          { date: 'year', locale: this.locale.name, language: this.settings.language }
+        );
+
+        this.monthPicker.text(monthPickerText);
+      }
+    };
+
+    resize();
+
+    $(window).on('resize', () => {
+      resize();
+    });
+
     return this;
   },
 
