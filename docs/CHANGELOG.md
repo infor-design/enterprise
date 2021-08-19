@@ -4,6 +4,7 @@
 
 - `[ApplicationMenu]` Added the ability to resize the app menu. ([#5193](https://github.com/infor-design/enterprise/issues/5193))
 - `[Datagrid]` Adds the ability to have a selection radio buttons on Datagrid. ([#5384](https://github.com/infor-design/enterprise/issues/5384))
+- `[Message]` Add an optional close button setting to dismiss the message. ([#5464](https://github.com/infor-design/enterprise/issues/5464))
 - `[Modal]` Added the ability to have a custom tooltip on modal close button. ([#5391](https://github.com/infor-design/enterprise/issues/5391))
 
 ## v4.55.0 Fixes
@@ -11,7 +12,9 @@
 - `[Charts]` Fixed a bug where automation ids is not properly rendered on legend, text and slices. ([#5441](https://github.com/infor-design/enterprise/issues/5441))
 - `[Datagrid]` Fixed an issue where tree list indentation is not left aligned when row has no children and datagrid row height is extra small or small. ([#5487](https://github.com/infor-design/enterprise/issues/5487))
 - `[Datagrid]` Fix an XSS vulnerability in the name property of the columns objects array. ([#5428](https://github.com/infor-design/enterprise/issues/5428))
+- `[Datagrid]` Fixed an issue where the excel export did not download in MS Edge. ([#5507](https://github.com/infor-design/enterprise/issues/5507))
 - `[Message]` Added maxWidth setting to allow message to go full width when title is long. ([#5443](https://github.com/infor-design/enterprise/issues/5443))
+- `[Timepicker]` Fixed a bug where the chinese time format doesn't render correctly after selecting time and periods (AM/PM). ([#5420](https://github.com/infor-design/enterprise/issues/5420))
 - `[Tree]` Fixed an issue where lengthy node text doesn't wrap to lines and cuts off. ([#5499](https://github.com/infor-design/enterprise/issues/5499))
 
 ## v4.54.0 Features
@@ -30,6 +33,7 @@
 - `[ContextualActionPanel]` Added `title` prop in CAP to control the title via `modaSettings`, and added missing `beforeclose` event. ([NG#1048](https://github.com/infor-design/enterprise-ng/issues/1048))
 - `[ContextMenu]` Fixed a bug where field option is not rendered properly on mobile ([#5335](https://github.com/infor-design/enterprise/issues/5335))
 - `[Datagrid]` - Fixed a bug where the row height cut off the focus ring on the Action Item buttons for Classic/New mode and XS, S, M settings ([#5394](https://github.com/infor-design/enterprise/issues/5394))
+- `[Datagrid]` - Fixed a bug where the selection color would bleed through clickable tags. ([#5533](https://github.com/infor-design/enterprise/issues/5533))
 - `[Datagrid]` Fixed an issue where toggling the selectable setting did not correctly enable the checkbox. ([#5482](https://github.com/infor-design/enterprise/issues/5482))
 - `[Datagrid]` Fixed an issue where row reorder handle align was not right for extra small and small height. ([#5233](https://github.com/infor-design/enterprise/issues/5233))
 - `[Datagrid]` - Fixed a bug where the first two columns row heights did not match the others for the Medium setting ([#5366](https://github.com/infor-design/enterprise/issues/5366))
