@@ -1154,8 +1154,7 @@ Datagrid.prototype = {
   * @returns {string} The current header text
   */
   headerText(col) {
-    let text = col.name ? col.name : '';
-
+    let text = col.name ? xssUtils.stripTags(col.name, '<div><span><a><small><svg><i><b><use><br><strong><em>') : '';
     if (!text && col.id === 'drilldown') {
       text = Locale.translate('Drilldown');
       return `<span class="audible">${text}</span>`;
