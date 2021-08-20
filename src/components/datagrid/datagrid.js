@@ -1503,7 +1503,7 @@ Datagrid.prototype = {
             process: 'number'
           };
 
-          col.maskOptions = utils.extend(true, {}, integerDefaults, col.maskOptions);
+          col.filterMaskOptions = utils.extend(true, {}, integerDefaults, col.filterMaskOptions);
           filterMarkup += `<input${col.filterDisabled ? ' disabled' : ''} type="text" ${attrs} />`;
           break;
         }
@@ -1527,15 +1527,15 @@ Datagrid.prototype = {
               patternOptions: { decimalLimit: col.numberFormat.maximumFractionDigits }
             };
 
-            col.maskOptions = utils.extend(
+            col.filterMaskOptions = utils.extend(
               true,
               {},
               integerDefaults,
               decimalDefaults,
-              col.maskOptions
+              col.filterMaskOptions
             );
           } else {
-            col.maskOptions = utils.extend(true, {}, decimalDefaults, col.maskOptions);
+            col.filterMaskOptions = utils.extend(true, {}, decimalDefaults, col.filterMaskOptions);
           }
 
           filterMarkup += `<input${col.filterDisabled ? ' disabled' : ''} type="text" ${attrs} />`;
@@ -1639,7 +1639,7 @@ Datagrid.prototype = {
               if (col.filterType === 'date') {
                 self.filterSetDatepicker(input, operator, col.editorOptions);
               } else {
-                const rangeDelimeter = col.maskOptions?.rangeNumberDelimeter || '-';
+                const rangeDelimeter = col.filterMaskOptions?.rangeNumberDelimeter || '-';
                 const isRange = operator === 'in-range';
                 const maskApi = input.data('mask');
                 const settings = isRange ?
@@ -1647,7 +1647,7 @@ Datagrid.prototype = {
                   { process: 'number', patternOptions: { delimeter: '' } };
 
                 if (maskApi && maskApi.settings.process !== settings.process) {
-                  col.maskOptions = utils.extend(true, {}, col.maskOptions, settings);
+                  col.filterMaskOptions = utils.extend(true, {}, col.filterMaskOptions, settings);
                   maskApi.updated(settings);
                 }
               }
@@ -1766,12 +1766,12 @@ Datagrid.prototype = {
         };
       });
 
-      if (col.maskOptions) {
-        elem.find('input').mask(col.maskOptions);
+      if (col.filterMaskOptions) {
+        elem.find('input').mask(col.filterMaskOptions);
       }
 
-      if (col.mask) {
-        elem.find('input').mask(col.mask);
+      if (col.filterMask) {
+        elem.find('input').mask(col.filterMask);
       }
 
       const datepickerEl = elem.find('.datepicker');
@@ -1819,8 +1819,8 @@ Datagrid.prototype = {
       }
 
       // Attach Mask
-      if (col.mask) {
-        elem.find('input').mask({ pattern: col.mask, mode: col.maskMode });
+      if (col.filterMask) {
+        elem.find('input').mask({ pattern: col.filterMask, mode: col.maskMode });
       }
 
       return null;
