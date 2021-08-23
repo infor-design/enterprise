@@ -139,6 +139,11 @@ Popdown.prototype = {
       .on('click.popdown', () => {
         self.toggle();
       })
+      .on('blur.popdown', (e) => { 
+        if (!self.settings.keepOpen) {
+          self.handleFocusOut(e);
+        }
+      })
       .on('updated.popdown', () => {
         self.updated();
       });
@@ -393,6 +398,28 @@ Popdown.prototype = {
   isOpen() {
     return this.trigger.attr('aria-expanded') === 'true';
   },
+ 
+  /**
+   * Generic function for checking Popdown focus before closing.
+   * @private
+   * @param  {object} e The key event, to detect which will be target for the focus out.
+   * @returns {void}
+   */
+  handleFocusOut(e) {
+    const self = this;
+    if (self.focusableElems.includes(e.target) || self.hasFocus(e.target)) {
+      self.keyTarget = e.target;
+      return;
+    }
+    // Using `keydown` sometimes prematurely causes the Popdown to close if elements
+    // near the front or back are focused. `keyTarget` detects what was previously clicked
+    // and is used as an additional element check in these cases.
+    if (e.target.tagName === 'BODY' && self.keyTarget) {
+      delete self.keyTarget;
+      return;
+    }
+    self.close();
+  },
 
   /**
    * Open the popdown.
@@ -416,22 +443,6 @@ Popdown.prototype = {
       focusElem.focus();
     }
 
-    // Generic function for checking Popdown focus before closing
-    function handleFocusOut(e) {
-      if (self.focusableElems.includes(e.target) || self.hasFocus(e.target)) {
-        self.keyTarget = e.target;
-        return;
-      }
-      // Using `keydown` sometimes prematurely causes the Popdown to close if elements
-      // near the front or back are focused. `keyTarget` detects what was previously clicked
-      // and is used as an additional element check in these cases.
-      if (e.target.tagName === 'BODY' && self.keyTarget) {
-        delete self.keyTarget;
-        return;
-      }
-      self.close();
-    }
-
     // Setup events that happen on open
     // Needs to be on a timer to prevent automatic closing of popdown.
     if (this.addEventsTimer) {
@@ -442,14 +453,14 @@ Popdown.prototype = {
       duration: loopDuration,
       timeoutCallback() {
         $('body').on('resize.popdown', (e) => {
-          handleFocusOut(e);
+          self.handleFocusOut(e);
         });
 
         // Only allow $(document).click() to close the Popdown if `keepOpen` isn't set.
         // Also run this on `focusout` events that occur outside the Popdown, for keyboard access.
         if (!self.settings.keepOpen) {
           $(document).on('click.popdown', (e) => {
-            handleFocusOut(e);
+            self.handleFocusOut(e);
           });
         }
 
@@ -466,7 +477,7 @@ Popdown.prototype = {
               break;
             // Tab Key
             case 9:
-              handleFocusOut(e);
+              self.handleFocusOut(e);
               break;
             default:
               break;
