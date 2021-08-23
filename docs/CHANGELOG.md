@@ -4,8 +4,10 @@
 
 - `[ApplicationMenu]` Added the ability to resize the app menu. ([#5193](https://github.com/infor-design/enterprise/issues/5193))
 - `[Datagrid]` Adds the ability to have a selection radio buttons on Datagrid. ([#5384](https://github.com/infor-design/enterprise/issues/5384))
+- `[Message]` Add info status handling to message.([#5459](https://github.com/infor-design/enterprise/issues/5459))
 - `[Message]` Add an optional close button setting to dismiss the message. ([#5464](https://github.com/infor-design/enterprise/issues/5464))
 - `[Modal]` Added the ability to have a custom tooltip on modal close button. ([#5391](https://github.com/infor-design/enterprise/issues/5391))
+- `[Typography]` New typography paragraph text style. ([#5325](https://github.com/infor-design/enterprise/issues/5325))
 
 ## v4.55.0 Fixes
 
@@ -15,6 +17,7 @@
 - `[Datagrid]` Fixed an issue where tree list indentation is not left aligned when row has no children and datagrid row height is extra small or small. ([#5487](https://github.com/infor-design/enterprise/issues/5487))
 - `[Datagrid]` Fixed an issue where tree list indentation is not left aligned when row has no children and datagrid row height is extra small or small. ([#5487](https://github.com/infor-design/enterprise/issues/5487))
 - `[Message]` Added maxWidth setting to allow message to go full width when title is long. ([#5443](https://github.com/infor-design/enterprise/issues/5443))
+- `[Datagrid]` Fix unescaped HTML of range value to match escaped HTML of data value. ([#4832](https://github.com/infor-design/enterprise/issues/4832))
 - `[Datagrid]` Fix an XSS vulnerability in the name property of the columns objects array. ([#5428](https://github.com/infor-design/enterprise/issues/5428))
 - `[Datagrid]` Fixed an issue where the excel export did not download in MS Edge. ([#5507](https://github.com/infor-design/enterprise/issues/5507))
 - `[Message]` Added maxWidth setting to allow message to go full width when title is long. ([#5443](https://github.com/infor-design/enterprise/issues/5443))
