@@ -1,7 +1,5 @@
 describe('Modal Puppeteer Test', () => {
-
 const url = 'http://localhost:4000/components/modal/example-index';
-
   beforeAll(async () => {
     await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
   });
@@ -14,11 +12,11 @@ const url = 'http://localhost:4000/components/modal/example-index';
   });
 
   it('Should open modal on tab, and enter', async () => {
-    await page.keyboard.press("Tab");
-    await page.keyboard.press("Tab");
-    await page.keyboard.press("Enter");
+    await page.keyboard.press('Tab');
+    await page.keyboard.press('Tab');
+    await page.keyboard.press('Enter');
     await page.waitForTimeout(200);
-    const visibleModal = await page.waitForSelector('.modal.is-visible.is-active', {visible:true});
+    const visibleModal = await page.waitForSelector('.modal.is-visible.is-active', { visible:true });
     expect(visibleModal).toBeTruthy();
   });
 
@@ -35,9 +33,7 @@ const url = 'http://localhost:4000/components/modal/example-index';
   }); 
 
 });
-
 describe('Modal example-validation-editor tests', () => {
-
   const url = 'http://localhost:4000/components/modal/test-validation-editor';
   beforeAll(async () => {
     await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
@@ -64,11 +60,8 @@ describe('Modal example-validation-editor tests', () => {
     await page.click('#submit');
   });
 });
-
 describe('Modal Tooltip Test', () => {
-
   const url = 'http://localhost:4000/components/modal/test-custom-tooltip-close-btn.html';
-
   beforeAll(async () => {
     await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
   });
@@ -85,3 +78,4 @@ describe('Modal Tooltip Test', () => {
     expect(element).toBeTruthy();
   });
 });
+
