@@ -212,9 +212,11 @@ ListView.prototype = {
     const cardWidgetContent = this.element.parent('.card-content, .widget-content');
     if (cardWidgetContent[0]) {
       cardWidgetContent[0].style.overflow = 'hidden';
-      cardWidgetContent.css('display', 'flex');
-      cardWidgetContent.css('justify-content', 'flex-end');
-      cardWidgetContent.css('flex-direction', 'column');
+      cardWidgetContent.css({
+        'display': 'flex',
+        'justify-content': 'flex-end',
+        'flex-direction': 'column'
+      });
     }
 
     // Associate with an existing searchfield, if applicable
