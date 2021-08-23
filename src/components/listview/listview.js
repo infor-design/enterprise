@@ -213,7 +213,7 @@ ListView.prototype = {
     if (cardWidgetContent[0]) {
       cardWidgetContent[0].style.overflow = 'hidden';
       cardWidgetContent.css({
-        'display': 'flex',
+        display: 'flex',
         'justify-content': 'flex-end',
         'flex-direction': 'column'
       });
