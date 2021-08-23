@@ -1,5 +1,6 @@
 describe('Modal Puppeteer Test', () => {
   const url = 'http://localhost:4000/components/modal/example-index';
+
   beforeAll(async () => {
     await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
   });
@@ -8,7 +9,7 @@ describe('Modal Puppeteer Test', () => {
     await page.on('error', function (err) {
       const theTempValue = err.toString();
       console.log(`Error: ${theTempValue}`);
-      });
+    });
   });
 
   it('Should open modal on tab, and enter', async () => {
@@ -16,7 +17,8 @@ describe('Modal Puppeteer Test', () => {
     await page.keyboard.press('Tab');
     await page.keyboard.press('Enter');
     await page.waitForTimeout(200);
-    const visibleModal = await page.waitForSelector('.modal.is-visible.is-active' , { visible:true });
+
+    const visibleModal = await page.waitForSelector('.modal.is-visible.is-active', { visible: true });
     expect(visibleModal).toBeTruthy();
   });
 
@@ -30,17 +32,17 @@ describe('Modal Puppeteer Test', () => {
     await page.waitForTimeout(600);
     const closeModal = await page.$('.modal.is-visible.is-active');
     expect(closeModal).toBeFalsy();
-  }); 
-
+  });
 });
+
 describe('Modal example-validation-editor tests', () => {
   const url = 'http://localhost:4000/components/modal/test-validation-editor';
+
   beforeAll(async () => {
     await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
   });
 
-it('Should enable submit after add text to all fields', async () => {
-
+  it('Should enable submit after add text to all fields', async () => {
     await page.click('.btn-secondary');
     await page.waitForSelector('#submit');
     await page.waitForSelector('.modal div.dropdown');
@@ -53,15 +55,17 @@ it('Should enable submit after add text to all fields', async () => {
     await page.waitForTimeout(200);
     await page.type('#context-name', 'test@test.com');
     await page.type('#context-desc', 'test description');
-    await page.type('.editor','test description!^');
+    await page.type('.editor', 'test description!^');
     await page.waitForTimeout(200);
     const element = await page.waitForSelector('#submit');
     expect(element).toBeTruthy();
     await page.click('#submit');
   });
 });
+
 describe('Modal Tooltip Test', () => {
   const url = 'http://localhost:4000/components/modal/test-custom-tooltip-close-btn.html';
+
   beforeAll(async () => {
     await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
   });
@@ -73,10 +77,7 @@ describe('Modal Tooltip Test', () => {
     await page.waitForTimeout(200);
     await page.hover('#add-context-modal-btn-close');
     await page.waitForTimeout(200);
-
     const element = await page.waitForSelector('.has-open-tooltip');
     expect(element).toBeTruthy();
   });
 });
-
-
