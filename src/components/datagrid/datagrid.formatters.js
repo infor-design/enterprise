@@ -637,6 +637,7 @@ const formatters = {
         option = col.options[i];
         optionValue = col.caseInsensitive && typeof option.value === 'string' ? option.value.toLowerCase() : option.value;
 
+        // Converting the array of values to it's label to display the correct information.
         if ((typeof compareValue === 'object' || Array.isArray(compareValue)) && col.editorOptions.multiple) {
           for (let j = 0; j < compareValue.length; j++) {
             console.log(compareValue[j]);
