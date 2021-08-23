@@ -375,6 +375,185 @@ const editors = {
     this.init();
   },
 
+  MultiSelect(row, cell, value, container, column, event, grid, rowData) {
+    this.name = 'multiselect';
+    this.originalValue = value;
+    this.useValue = true; // use the data set value not cell value
+    this.cell = grid.activeCell;
+
+    this.init = function () {
+      if (column.inlineEditor) {
+        this.input = container.find('select');
+        return;
+      }
+
+      this.input = $('<select class="multiselect"></select>').appendTo(container);
+
+      if (column.options) {
+        let html;
+        let opt;
+        let optionValue;
+        value = grid.fieldValue(rowData, column.field);
+
+        const compareValue = column.caseInsensitive && typeof value === 'string' ? value.toLowerCase() : value;
+
+        for (let i = 0; i < column.options.length; i++) {
+          html = $('<option></option>');
+          opt = column.options[i];
+          optionValue = column.caseInsensitive && typeof opt.value === 'string' ? opt.value.toLowerCase() : opt.value;
+
+          if (opt.selected || compareValue === optionValue) {
+            html.attr('selected', 'true');
+            this.originalValue = optionValue;
+          }
+
+          html.attr('value', opt.value).attr('id', opt.id).attr('data-type', typeof opt.value);
+          html.text(opt.label);
+          this.input.append(html);
+        }
+      }
+
+      const editorOptions = column.editorOptions || {};
+
+      function hasEditingClass() {
+        return editorOptions.cssClass && /is-editing/g.test(editorOptions.cssClass);
+      }
+      // Add the class to both the options being passed, as well as the column's original options
+      if (!hasEditingClass()) {
+        editorOptions.cssClass = editorOptions.cssClass || '';
+        editorOptions.cssClass += ' is-editing';
+      }
+
+      this.input.multiselect(editorOptions);
+
+      // Append the Multiselect's sourceArguments with some row/col meta-data
+      const api = this.input.data('multiselect');
+      api.settings.sourceArguments = {
+        column,
+        container,
+        grid,
+        cell,
+        event,
+        row,
+        rowData,
+        value
+      };
+    };
+
+    this.multiple = function() {
+      if (editorOptions.multiple) {
+        return true;
+      }
+    }
+
+    this.val = function (v) {
+      this.datasetValue = v;
+
+      if (v !== undefined) {
+        const compareValue = column.caseInsensitive && typeof v === 'string' ? v.toLowerCase() : v;
+        this.input.val(v);
+
+        this.input.find('option').each(function () {
+          const opt = $(this);
+          const valueAttr = opt.attr('value');
+          const type = opt.attr('data-type');
+          let optionValue = valueAttr;
+
+          // Get option value in proper type before checking equality
+          if (type === 'number') {
+            optionValue = parseFloat(valueAttr);
+          } else if (type === 'boolean') {
+            optionValue = valueAttr === 'true';
+          } else if (type === 'string' && column.caseInsensitive) {
+            optionValue = valueAttr.toLowerCase();
+          }
+
+          if (optionValue === compareValue) {
+            opt.attr('selected', 'true');
+          }
+        });
+      }
+
+      const selected = this.input.find(':selected');
+      let val = selected.attr('value');
+      const dataType = selected.attr('data-type');
+
+      // passing all selected items
+      if (selected.length > 1) {
+        val = [];
+
+        selected.map((i, el) => {
+          val.push(el.value)
+        });
+      }
+
+      // For non-string option values (number, boolean, etc.),
+      // convert string attr value to proper type
+      if (dataType === 'number') {
+        val = parseFloat(val);
+      } else if (dataType === 'boolean') {
+        val = val === 'true';
+      }
+
+      if (val === undefined) {
+        val = selected.text();
+      }
+
+      return val;
+    };
+
+    this.focus = function () {
+      // debugger;
+      const self = this;
+
+      // Check if isClick or cell touch and just open the list
+      if (event.type === 'click') {
+        this.input.trigger('openlist');
+        const rowNodes = grid.rowNodes(row);
+        rowNodes.removeClass('is-hover-row');
+        $('#dropdown-list input').focus();
+      } else {
+        this.input[0].parentNode.querySelector('div.dropdown').focus();
+      }
+
+      // Unselect dropdown search, and move cursor at end
+      if (!grid.settings.selectOnEdit) {
+        const ddSearch = $('#dropdown-search')[0];
+        if (ddSearch) {
+          if (typeof ddSearch.selectionStart === 'number') {
+            ddSearch.selectionEnd = ddSearch.value.length;
+            ddSearch.selectionStart = ddSearch.selectionEnd;
+          } else if (typeof ddSearch.createTextRange !== 'undefined') {
+            const range = ddSearch.createTextRange();
+            range.collapse(false);
+            range.select();
+          }
+        }
+      }
+
+      this.input.off('listclosed').on('listclosed', (e, type) => {
+        grid.commitCellEdit(self.input);
+
+        if (type === 'select') {
+          container.parent('td').focus();
+          return;
+        }
+
+        if (type === 'tab') {
+          setTimeout(() => {
+            container.parent('td').focus();
+          }, 100);
+        }
+      });
+    };
+
+    this.destroy = function () {
+      // We dont need to destroy since it will when the list is closed
+    };
+    
+    this.init();
+  },
+
   Dropdown(row, cell, value, container, column, event, grid, rowData) {
     this.name = 'dropdown';
     this.originalValue = value;

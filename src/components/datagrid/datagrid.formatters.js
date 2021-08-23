@@ -619,6 +619,77 @@ const formatters = {
     return markup;
   },
 
+  MultiSelect(row, cell, value, col, item) {
+    let formattedValue = value;
+    let compareValue;
+    let option;
+    let optionValue;
+    let isPlaceholder = false;
+
+    if (col.options && value !== undefined) {
+      compareValue = col.caseInsensitive && typeof value === 'string' ? value.toLowerCase() : value;
+
+      if (typeof compareValue === 'object' || Array.isArray(compareValue)) {
+        formattedValue = '';
+      }
+
+      for (let i = 0, l = col.options.length; i < l; i++) {
+        option = col.options[i];
+        optionValue = col.caseInsensitive && typeof option.value === 'string' ? option.value.toLowerCase() : option.value;
+
+        if ((typeof compareValue === 'object' || Array.isArray(compareValue)) && col.editorOptions.multiple) {
+          for (let j = 0; j < compareValue.length; j++) {
+            console.log(compareValue[j]);
+            if (col.options[i].value === compareValue[j]) {
+              formattedValue += `${option.label}, `;
+            }
+          }
+        }
+
+        if (optionValue === compareValue) {
+          formattedValue = option.label;
+          break;
+        }
+      }
+
+      // Removing trailing comma at the end of the value
+      formattedValue = formattedValue.replace(/,\s*$/, '');
+    }
+
+    const placeholder = calculatePlaceholder(formattedValue, row, cell, value, col, item);
+    if (placeholder !== '') {
+      isPlaceholder = true;
+      formattedValue = placeholder;
+    }
+
+    let html = `<span class="trigger dropdown-trigger ${isPlaceholder ? 'is-placeholder' : ''}">${formattedValue}</span>${$.createIcon({ icon: 'dropdown' })}`;
+
+    if (col.inlineEditor) {
+      html = `<label for="full-dropdown" class="audible">${col.name}</label><select id="datagrid-dropdown${row}" class="dropdown">`;
+
+      for (let i = 0, l = col.options.length; i < l; i++) {
+        const opt = col.options[i];
+        let labelOrValue;
+        if (opt.label !== undefined) {
+          labelOrValue = opt.label;
+        } else {
+          labelOrValue = opt.value !== undefined ? opt.value : '';
+        }
+        html += `<option${(opt.id === undefined ? '' : ` id="${opt.id}"`)}  value="${opt.value}"${(opt.selected || opt.value === compareValue ? ' selected ' : '')}>${labelOrValue}</option>`;
+      }
+
+      html += `</select>
+      <div class="dropdown-wrapper is-inline">
+        <div class="dropdown"><span>${formattedValue}</span></div>
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-dropdown"></use>
+        </svg>
+      </div>`;
+    }
+
+    return html;
+  },
+
   Dropdown(row, cell, value, col, item) {
     let formattedValue = value;
     let compareValue;
