@@ -1,0 +1,30 @@
+<div class="row">
+  <div class="twelve columns">
+    <h2>Custom Mask Function</h2>
+    <p>This input field will only accept commas and digits
+    </p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+    <div class="field">
+      <label for="test-input">Numbers and Commas</label>
+      <input id="test-input" name="test-input" value="100,101,102" />
+    </div>
+  </div>
+</div>
+
+<script id="test-script">
+  $('#test-input').mask({
+    patternOptions: {
+      onlyUseNumbersAndCommas: true
+    },
+    pattern: function customMask(rawValue, options) {
+      // Returns an array matching the length of the rawValue
+      // that will be used to match only commas and digits.
+      const match = /[,\d]/;
+      return rawValue.split('').map(() => match);
+    }
+  });
+</script>
