@@ -440,12 +440,6 @@ const editors = {
       };
     };
 
-    this.multiple = function() {
-      if (editorOptions.multiple) {
-        return true;
-      }
-    }
-
     this.val = function (v) {
       this.datasetValue = v;
 
@@ -482,9 +476,7 @@ const editors = {
       if (selected.length > 1) {
         val = [];
 
-        selected.map((i, el) => {
-          val.push(el.value)
-        });
+        selected.map((i, el) => val.push(el.value));
       }
 
       // For non-string option values (number, boolean, etc.),
