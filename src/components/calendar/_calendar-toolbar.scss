@@ -56,6 +56,10 @@
     text-indent: 0;
     top: 9px;
     width: 105px;
+
+    &.dropdown-wrapper-small {
+      right: 7px;
+    }
   }
 
   // No Month Year Picker
