@@ -385,6 +385,12 @@ body.modal-engaged {
         color: $success-color;
       }
     }
+
+    &.is-info {
+      .icon {
+        color: $info-color;
+      }
+    }
   }
 
   h2 {
