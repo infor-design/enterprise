@@ -1,5 +1,4 @@
 /* eslint-disable no-underscore-dangle */
-import { Environment as env } from './environment';
 import { Formatters } from '../components/datagrid/datagrid.formatters';
 
 /* eslint-disable import/prefer-default-export */
@@ -148,11 +147,7 @@ excel.save = function (content, fileName, isUtf16) {
     });
   }
 
-  if (env.browser.name === 'ie' || env.browser.name === 'edge') {
-    if (window.navigator.msSaveBlob) {
-      navigator.msSaveBlob(blob, fileName);
-    }
-  } else if (window.URL.createObjectURL) { // createObjectURL api allows downloading larger files
+  if (window.URL.createObjectURL) { // createObjectURL api allows downloading larger files
     if (isTypeExcel) {
       blob = new Blob([content], {
         type: 'application/vnd.ms-excel;charset=utf-8;'
