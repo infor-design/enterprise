@@ -15,7 +15,6 @@ describe('Modal Puppeteer Test', () => {
     await page.keyboard.press('Tab');
     await page.keyboard.press('Tab');
     await page.keyboard.press('Enter');
-    await page.waitForTimeout(200);
     const visibleModal = await page.waitForSelector('.modal.is-visible.is-active' , { visible:true });
     expect(visibleModal).toBeTruthy();
   });
@@ -25,9 +24,8 @@ describe('Modal Puppeteer Test', () => {
     await page.keyboard.press('Tab');
     await page.keyboard.press('Tab');
     await page.keyboard.press('Enter');
-    await page.waitForTimeout(200);
+    await page.waitForSelector('.modal.is-visible.is-active' , { visible:true });
     await page.keyboard.press('Escape');
-    await page.waitForTimeout(600);
     const closeModal = await page.$('.modal.is-visible.is-active');
     expect(closeModal).toBeFalsy();
   }); 
@@ -43,18 +41,15 @@ it('Should enable submit after add text to all fields', async () => {
 
     await page.click('.btn-secondary');
     await page.waitForSelector('#submit');
-    await page.waitForSelector('.modal div.dropdown');
+    await page.waitForSelector('.modal div.dropdown' , { visible:true });
     await page.click('.modal div.dropdown');
-    await page.waitForTimeout(200);
-    await page.waitForSelector('#dropdown-search');
+    await page.waitForSelector('#dropdown-search' , { visible:true });
     await page.keyboard.press('ArrowDown');
     await page.keyboard.press('ArrowDown');
     await page.keyboard.press('Enter');
-    await page.waitForTimeout(200);
     await page.type('#context-name', 'test@test.com');
     await page.type('#context-desc', 'test description');
     await page.type('.editor','test description!^');
-    await page.waitForTimeout(200);
     const element = await page.waitForSelector('#submit');
     expect(element).toBeTruthy();
     await page.click('#submit');
@@ -72,11 +67,10 @@ describe('Modal Tooltip Test', () => {
     await page.waitForSelector('#add-context-modal');
     await page.waitForTimeout(200);
     await page.hover('#add-context-modal-btn-close');
+    await page.waitForSelector('#add-context-modal-btn-close');
     await page.waitForTimeout(200);
 
     const element = await page.waitForSelector('.has-open-tooltip');
     expect(element).toBeTruthy();
   });
 });
-
-
