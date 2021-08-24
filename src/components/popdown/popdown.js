@@ -140,12 +140,15 @@ Popdown.prototype = {
         self.toggle();
       })
       .on('blur.popdown', (e) => { 
-        if (!self.settings.keepOpen) {
-          self.handleFocusOut(e);
-        }
+        $('#popdown-example-trigger').trigger('clickoutside.popdown');
       })
       .on('updated.popdown', () => {
         self.updated();
+      })
+      .on('clickoutside.popdown', (e) => {
+        if (!self.settings.keepOpen) {
+          self.handleFocusOut(e);
+        }
       });
 
     // First and last tab
