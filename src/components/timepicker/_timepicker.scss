@@ -269,3 +269,22 @@ html {
     }
   }
 }
+
+// Firefox Chinese Locale
+html.is-firefox {
+  &[lang='zh-CN'],
+  &[lang='zh-Hans'],
+  &[lang='zh-Hant'] {
+    #timepicker-popup {
+      .dropdown {
+        padding-top: 9px;
+      }
+
+      select.period + .dropdown-wrapper {
+        .dropdown {
+          padding-top: 5px;
+        }
+      }
+    }
+  }
+}

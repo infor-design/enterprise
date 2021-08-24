@@ -102,4 +102,28 @@ html {
       }
     }
   }
-} 
+}
+
+// Firefox Chinese Locale
+html.is-firefox {
+  &[lang='zh-CN'],
+  &[lang='zh-Hans'],
+  &[lang='zh-Hant'] {
+    #timepicker-popup {
+      .dropdown {
+        padding: 6px 30px 8px 10px;
+
+        + .icon {
+          top: 3px;
+        }
+      }
+
+      select.period + .dropdown-wrapper {
+        .dropdown {
+          padding-top: 6px;
+        }
+      }
+    }
+  }
+}
+
