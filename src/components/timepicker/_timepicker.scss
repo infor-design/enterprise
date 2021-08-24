@@ -256,11 +256,15 @@ html[dir='rtl'] {
 }
 
 // Fix for Chinese locale only
-html[lang='zh-CN'] {
-  #timepicker-popup {
-    select.period + .dropdown-wrapper {
-      .dropdown {
-        padding-top: 6px;
+html {
+  &[lang='zh-CN'],
+  &[lang='zh-Hans'],
+  &[lang='zh-Hant'] {
+    #timepicker-popup {
+      select.period + .dropdown-wrapper {
+        .dropdown {
+          padding-top: 6px;
+        }
       }
     }
   }

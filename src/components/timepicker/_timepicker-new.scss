@@ -88,14 +88,18 @@ html:not([lang='en-US']) {
 }
 
 // For Chinese Locale fix only
-html[lang='zh-CN'] {
-  #timepicker-popup {
-    .dropdown {
-      padding: 6px 30px 8px 10px;
-
-      + .icon {
-        top: 4px;
+html {
+  &[lang='zh-CN'],
+  &[lang='zh-Hans'],
+  &[lang='zh-Hant'] {
+    #timepicker-popup {
+      .dropdown {
+        padding: 6px 30px 8px 10px;
+  
+        + .icon {
+          top: 4px;
+        }
       }
     }
   }
-}
+} 
