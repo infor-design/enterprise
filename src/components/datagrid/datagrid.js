@@ -1504,7 +1504,14 @@ Datagrid.prototype = {
             process: 'number'
           };
 
-          col.maskOptions = utils.extend(true, {}, integerDefaults, col.maskOptions);
+          if (col.filterMaskOptions) {
+            col.filterMaskOptions = utils.extend(true, {}, integerDefaults, col.filterMaskOptions);
+          }
+
+          if (col.maskOptions) {
+            col.maskOptions = utils.extend(true, {}, integerDefaults, col.maskOptions);
+          }
+
           filterMarkup += `<input${col.filterDisabled ? ' disabled' : ''} type="text" ${attrs} />`;
           break;
         }
@@ -1528,15 +1535,33 @@ Datagrid.prototype = {
               patternOptions: { decimalLimit: col.numberFormat.maximumFractionDigits }
             };
 
-            col.maskOptions = utils.extend(
-              true,
-              {},
-              integerDefaults,
-              decimalDefaults,
-              col.maskOptions
-            );
+            if (col.filterMaskOptions) {
+              col.filterMaskOptions = utils.extend(
+                true,
+                {},
+                integerDefaults,
+                decimalDefaults,
+                col.filterMaskOptions
+              );
+            }
+
+            if (col.maskOptions) {
+              col.maskOptions = utils.extend(
+                true,
+                {},
+                integerDefaults,
+                decimalDefaults,
+                col.maskOptions
+              );
+            }
           } else {
-            col.maskOptions = utils.extend(true, {}, decimalDefaults, col.maskOptions);
+            if (col.filterMaskOptions) {
+              col.filterMaskOptions = utils.extend(true, {}, decimalDefaults, col.filterMaskOptions);
+            }
+
+            if (col.maskOptions) {
+              col.maskOptions = utils.extend(true, {}, decimalDefaults, col.maskOptions);
+            }
           }
 
           filterMarkup += `<input${col.filterDisabled ? ' disabled' : ''} type="text" ${attrs} />`;
@@ -1640,7 +1665,8 @@ Datagrid.prototype = {
               if (col.filterType === 'date') {
                 self.filterSetDatepicker(input, operator, col.editorOptions);
               } else {
-                const rangeDelimeter = col.maskOptions?.rangeNumberDelimeter || '-';
+                const maskOptions = col.filterMaskOptions ? col.filterMaskOptions : col.maskOptions;
+                const rangeDelimeter = maskOptions?.rangeNumberDelimeter || '-';
                 const isRange = operator === 'in-range';
                 const maskApi = input.data('mask');
                 const settings = isRange ?
@@ -1648,7 +1674,13 @@ Datagrid.prototype = {
                   { process: 'number', patternOptions: { delimeter: '' } };
 
                 if (maskApi && maskApi.settings.process !== settings.process) {
-                  col.maskOptions = utils.extend(true, {}, col.maskOptions, settings);
+                  if (col.filterMaskOptions) {
+                    col.filterMaskOptions = utils.extend(true, {}, col.filterMaskOptions, settings);
+                  }
+
+                  if (col.maskOptions) {
+                    col.maskOptions = utils.extend(true, {}, col.maskOptions, settings);
+                  }
                   maskApi.updated(settings);
                 }
               }
@@ -1767,11 +1799,15 @@ Datagrid.prototype = {
         };
       });
 
-      if (col.maskOptions) {
+      if (col.filterMaskOptions) {
+        elem.find('input').mask(col.filterMaskOptions);
+      } else if (col.maskOptions) {
         elem.find('input').mask(col.maskOptions);
       }
 
-      if (col.mask) {
+      if (col.filterMask) {
+        elem.find('input').mask(col.filterMask);
+      } else if (col.mask) {
         elem.find('input').mask(col.mask);
       }
 
@@ -1820,7 +1856,9 @@ Datagrid.prototype = {
       }
 
       // Attach Mask
-      if (col.mask) {
+      if (col.filterMask) {
+        elem.find('input').mask({ pattern: col.filterMask, mode: col.maskMode });
+      } else if (col.mask) {
         elem.find('input').mask({ pattern: col.mask, mode: col.maskMode });
       }
 

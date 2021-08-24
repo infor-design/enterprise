@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.54.1 Fixes
+
+- `[Datagrid]` Added seperate mask options for filter row. ([#5519](https://github.com/infor-design/enterprise/issues/5519))
+
 ## v4.54.0 Features
 
 - `[Cards]` Added the ability of single and multi selection of cards. ([#5253](https://github.com/infor-design/enterprise/issues/5253))
