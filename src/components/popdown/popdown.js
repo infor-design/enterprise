@@ -139,7 +139,7 @@ Popdown.prototype = {
       .on('click.popdown', () => {
         self.toggle();
       })
-      .on('blur.popdown', (e) => { 
+      .on('blur.popdown', () => { 
         $('#popdown-example-trigger').trigger('clickoutside.popdown');
       })
       .on('updated.popdown', () => {
