@@ -686,6 +686,41 @@ Editor.prototype = {
   },
 
   /**
+   * Add support for `ol` types
+   * @private
+   * @returns {void}
+   */
+  orderedListTypeStyling() {
+    const currentElement = this.getCurrentElement();
+    const editor = this.element;
+    const types = {
+      loweralpha: 'a',
+      upperalpha: 'A',
+      lowerroman: 'i',
+      upperroman: 'I'
+    };
+
+    const orderedListTag = currentElement.find('ol');
+
+    switch (orderedListTag.attr('type')) {
+      case types.loweralpha:
+        editor.addClass('type-l-alpha');
+        break;
+      case types.upperalpha:
+        editor.addClass('type-u-alpha');
+        break;
+      case types.lowerroman:
+        editor.addClass('type-l-roman');
+        break;
+      case types.upperroman:
+        editor.addClass('type-u-roman');
+        break;
+      default:
+        break;
+    }
+  },
+
+  /**
    * Do creation and setup on the editor.
    * @private
    * @returns {object} The proto object for chaining.
@@ -2025,7 +2060,7 @@ Editor.prototype = {
     s = s.replace(/\s\s+/g, ' ').replace(/\s>+/g, '>');
 
     // Remove extra attributes from list elements
-    s = s.replace(/<(ul|ol)(.*?)>/gi, '<$1>');
+    s = s.replace(/<(ul)(.*?)>/gi, '<$1>');
 
     // Remove empty list
     s = s.replace(/<li><\/li>/gi, '');
@@ -2301,6 +2336,8 @@ Editor.prototype = {
       this.textarea.off('input.editor-firechange');
 
       setTimeout(() => {
+        this.orderedListTypeStyling();
+
         this.element[0].innerHTML = content;
         content = this.element[0].innerHTML;
         /**
