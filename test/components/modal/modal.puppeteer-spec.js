@@ -24,7 +24,7 @@ describe('Modal Puppeteer Test', () => {
     await page.keyboard.press('Tab');
     await page.keyboard.press('Tab');
     await page.keyboard.press('Enter');
-    await page.waitForSelector('.modal.is-visible.is-active', { visible:true });
+    await page.waitForSelector('.modal.is-visible.is-active', { visible: true });
     await page.keyboard.press('Escape');
     const closeModal = await page.$('.modal.is-visible.is-active');
     expect(closeModal).toBeFalsy();
