@@ -4,13 +4,6 @@ describe('Modal Puppeteer Test', () => {
     await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
   });
 
-  it('should not have error', async () => {
-    await page.on('error', function (err) {
-      const theTempValue = err.toString();
-      console.log(`Error: ${theTempValue}`);
-    }); 
-  });
-
   it('Should open modal on tab, and enter', async () => {
     await page.keyboard.press('Tab');
     await page.keyboard.press('Tab');
@@ -53,6 +46,7 @@ describe('Modal example-validation-editor tests', () => {
     await page.click('#submit');
   });
 });
+
 describe('Modal Tooltip Test', () => {
   const url = 'http://localhost:4000/components/modal/test-custom-tooltip-close-btn.html';
   beforeAll(async () => {
@@ -62,7 +56,7 @@ describe('Modal Tooltip Test', () => {
   it('should test modal tooltip', async () => {
     await page.waitForSelector('#add-context');
     await page.click('#add-context');
-    await page.waitForSelector('#add-context-modal', {visible: true});
+    await page.waitForSelector('#add-context-modal', { visible: true });
     await page.waitForTimeout(200);
     await page.hover('#add-context-modal-btn-close');
     await page.waitForSelector('#add-context-modal-btn-close');
