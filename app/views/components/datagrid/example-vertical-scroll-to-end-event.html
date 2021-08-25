@@ -24,7 +24,6 @@
       var url = '{{basepath}}api/compressors?pageNum=1&pageSize=75';
 
       $.getJSON(url, function(res) {
-
         //Show the grid
         $('#datagrid').datagrid({
           columns: columns,
@@ -34,15 +33,25 @@
           toolbar: {title: 'Data Grid Header Title', results: true, dateFilter: false ,keywordFilter: false, advancedFilter: false, actions: true, views: true, rowHeight: true}
         });
 
-        $('.datagrid-wrapper.center').on('scroll', function() {
-          if ($('#datagrid').data('datagrid').isVerticalScrollToEnd) {
-            $('body').toast({
-              title: 'Vertical Scroll to End',
-              message: 'Hooray! You reached the bottom of the list.',
-            });
+        $('#datagrid').on('scroll', function(e, args) {
+          console.log(args.percent + '% scrolled');
+          if (args.percent >= 90 && args.percent < 100) {
+            console.log(args.percent + '% scrolled. Almost there!');
+          } else if (args.percent === 100) {
+            console.log(args.percent + '% scrolled. Hooray! You reached the bottom of the list!');
           }
         });
 
+        $('.datagrid-wrapper').on('scroll', function() {
+          var datagridApi = $('#datagrid').data('datagrid');
+
+          if (datagridApi.isVerticalScrollToEnd) {
+            $('body').toast({
+              title: 'Vertical Scroll to End',
+              message: 'Hooray! You reached the bottom of the list!'
+            });
+          }
+        });
       });
   });
 </script>

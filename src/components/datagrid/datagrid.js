@@ -6455,7 +6455,19 @@ Datagrid.prototype = {
    */
   verticalScrollToEnd(e) {
     const el = e.currentTarget;
-    const isAtTheBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 1;
+    const getPercentage = ((el.scrollTop + el.clientHeight) / el.scrollHeight) * 100;
+    const currentPercentage = Math.round(getPercentage);
+    const isAtTheBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 1 && currentPercentage === 100;
+
+    /**
+    * Fires when scrolling into the grid's list.
+    * @event scroll
+    * @memberof Datagrid
+    * @property {object} args Additional arguments
+    * @property {number} args.percent The dynamic percentage of the grid when scrolling
+    * @property {number} args.percentScrolled A placeholder value
+    */
+    this.element.trigger('scroll', { percent: currentPercentage, percentScrolled: 100 });
 
     // Has the control to do some logic when it's at the bottom of the list
     this.isVerticalScrollToEnd = isAtTheBottom !== false;
