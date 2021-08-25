@@ -204,6 +204,38 @@
     margin-bottom: 10px;
   }
 
+  &.type-l-alpha {
+    ol {
+      &[type='a'] {
+        list-style: lower-alpha;
+      }
+    }
+  }
+
+  &.type-u-alpha {
+    ol {
+      &[type='A'] {
+        list-style: upper-alpha;
+      }
+    }
+  }
+
+  &.type-l-roman {
+    ol {
+      &[type='i'] {
+        list-style: lower-roman;
+      }
+    }
+  }
+
+  &.type-u-roman {
+    ol {
+      &[type='I'] {
+        list-style: upper-roman;
+      }
+    }
+  }
+
   blockquote {
     margin-bottom: 15px;
   }
