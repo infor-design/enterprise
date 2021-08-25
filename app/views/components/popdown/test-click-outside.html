@@ -43,8 +43,9 @@
 
   <script>
     $('#popdown-example-trigger').popdown({
-      keepOpen: true,
-    }).on('blur', function (e) {
+      keepOpen: true, // change this one so you can check
+    })
+    .on('clickoutside.popdown', function (e) {
         console.log('click outside', e);
     });
   </script>

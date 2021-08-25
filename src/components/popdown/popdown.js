@@ -139,9 +139,6 @@ Popdown.prototype = {
       .on('click.popdown', () => {
         self.toggle();
       })
-      .on('blur.popdown', () => { 
-        $('#popdown-example-trigger').trigger('clickoutside.popdown');
-      })
       .on('updated.popdown', () => {
         self.updated();
       })
@@ -461,11 +458,9 @@ Popdown.prototype = {
 
         // Only allow $(document).click() to close the Popdown if `keepOpen` isn't set.
         // Also run this on `focusout` events that occur outside the Popdown, for keyboard access.
-        if (!self.settings.keepOpen) {
-          $(document).on('click.popdown', (e) => {
-            self.handleFocusOut(e);
-          });
-        }
+        $(document).on('click.popdown', () => {
+          $('#popdown-example-trigger').trigger('clickoutside.popdown');
+        });
 
         // Setup a global keydown event that can handle the closing of modals in the proper order.
         $(document).on('keydown.popdown', (e) => {
@@ -697,7 +692,7 @@ Popdown.prototype = {
 
     if (this.trigger) {
       this.trigger
-        .off('updated.popdown click.popdown focus.popdown')
+        .off('updated.popdown click.popdown focus.popdown clickoutside.popdown')
         .removeAttr('aria-controls')
         .removeAttr('aria-expanded');
     }
