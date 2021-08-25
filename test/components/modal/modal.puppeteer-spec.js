@@ -29,7 +29,6 @@ describe('Modal Puppeteer Test', () => {
     const closeModal = await page.$('.modal.is-visible.is-active');
     expect(closeModal).toBeFalsy();
   });
-
 });
 describe('Modal example-validation-editor tests', () => {
   const url = 'http://localhost:4000/components/modal/test-validation-editor';
