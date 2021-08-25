@@ -68,7 +68,7 @@ Cards.prototype = {
     this.cardHeader = this.element.children('.card-header');
     this.cardContentPane = this.element.children('.card-pane');
     this.buttonAction = this.cardHeader.children('.btn-actions');
-    
+
     if (this.settings.selectable !== false) {
       this.cards = this.element;
     }
@@ -212,7 +212,7 @@ Cards.prototype = {
 
     /**
      * Fires when a card is selected
-     * 
+     *
      * @event selected
      * @memberof Card
      * @property {object} event - The jQuery event object
@@ -220,7 +220,7 @@ Cards.prototype = {
      */
     /**
      * Fires when a card is unselected
-     * 
+     *
      * @event deselected
      * @memberof Card
      * @property {object} event - The jQuery event object
@@ -267,7 +267,7 @@ Cards.prototype = {
    */
   updated(settings) {
     this.settings = utils.mergeSettings(this.element, settings, this.settings);
-    
+
     this.teardown();
     return this;
   },

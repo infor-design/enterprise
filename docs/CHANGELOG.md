@@ -13,6 +13,7 @@
 
 ## v4.55.0 Fixes
 
+- `[Cards]` Fixed a bug card group toolbar overlaps then disappears after clicking the checkboxes. ([#5445](https://github.com/infor-design/enterprise/issues/5445))
 - `[Calendar]` Fix on overlap in today text and calendar view changer when in mobile. ([#5438](https://github.com/infor-design/enterprise/issues/5438))
 - `[Charts]` Fixed a bug where automation ids is not properly rendered on legend, text and slices. ([#5441](https://github.com/infor-design/enterprise/issues/5441))
 - `[Datagrid]` Fixed an issue where tree list indentation is not left aligned when row has no children and datagrid row height is extra small or small. ([#5487](https://github.com/infor-design/enterprise/issues/5487))
