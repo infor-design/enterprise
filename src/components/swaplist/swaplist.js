@@ -777,15 +777,15 @@ SwapList.prototype = {
             for (let ownerIndex = 0, l3 = ownerDataList.length; ownerIndex < l3; ownerIndex++) {
               const ownerItem = ownerDataList[ownerIndex];
               if (isMoved(ownerItem.node[0], item[0])) {
-                if (!(this.isCopy(droptarget) && ownerDataList.some(ot => ot.id === item.data().id))) {
+                if (!(this.isCopy(droptarget) && dtDataList.some(dt => dt.id === ownerItem.id))) {
                   dtDataList.push(ownerItem);
+                  this.arrayIndexMove(dtDataList, dtDataList.length - 1, dtIndex);
                 }
 
                 if (!this.isCopy(owner)) {
                   ownerDataList.splice(ownerIndex, 1);
                 }
 
-                this.arrayIndexMove(dtDataList, dtDataList.length - 1, dtIndex);
                 canLoop = false;
                 break;
               }
