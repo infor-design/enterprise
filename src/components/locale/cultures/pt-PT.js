@@ -331,7 +331,7 @@ Soho.Locale.addCulture('pt-PT', {
     MoveToLeft: { id: 'MoveToLeft', value: 'Mover para a esquerda', comment: 'Button tooltip used in a list of movable items' },
     MoveToRight: { id: 'MoveToRight', value: 'Mover para a direita', comment: 'Button tooltip used in a list of movable items' },
     MsgDirty: { id: 'MsgDirty', value: ', Modificado', comment: 'for modified form fields' },
-    New: { id: 'New', value: 'Novo(a)', comment: 'Add new rowstatus in datagrid' },
+    New: { id: 'New', value: 'Nova', comment: 'Add new rowstatus in datagrid' },
     NewDarkTheme: { id: 'NewDarkTheme', value: 'Novo escuro', comment: 'The name of an application Theme' },
     NewHighContrastTheme: { id: 'NewHighContrastTheme', value: 'Novo de alto contraste', comment: 'The name of an application Theme' },
     NewLightTheme: { id: 'NewLightTheme', value: 'Novo claro', comment: 'The name of an application Theme' },

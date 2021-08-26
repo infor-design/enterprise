@@ -415,7 +415,7 @@ Soho.Locale.addCulture('et-EE', {
     SearchColumnName: { id: 'SearchColumnName', value: 'Otsi veeru nime järgi', comment: 'Search for a datagrid column by name' },
     SearchFolder: { id: 'SearchFolder', value: 'Otsi kaustast', comment: 'Search Folder tooltip' },
     SearchList: { id: 'SearchList', value: 'Otsi loendit', comment: 'Search List tooltip' },
-    Select: { id: 'Select', value: 'Valit', comment: 'text describing a select action' },
+    Select: { id: 'Select', value: 'Vali', comment: 'text describing a select action' },
     SelectDay: { id: 'SelectDay', value: 'Vali päev', comment: 'Select a day in the calendar picker' },
     Selected: { id: 'Selected', value: 'Valitud', comment: 'text describing a selected object' },
     SelectAll: { id: 'SelectAll', value: 'Vali kõik', comment: 'describes the action of selecting all items available in a list' },
