@@ -2073,6 +2073,7 @@ Editor.prototype = {
     s = s.replace(/<head\b[^>]*>(.*?)<\/head>/gi, '');
 
     // Remove empty tags
+    s = s.replace(/<(div|span|p)> <\/(div|span|p)>/gi, ' ');
     s = s.replace(/<[^(br|/>)]+>[\s]*<\/[^>]+>/gi, '');
 
     if (s.indexOf('·') > -1) {
@@ -3250,7 +3251,7 @@ Editor.prototype = {
       let strStyle = '';
       for (let i = 0; i < attributes.length; i++) {
         const entry = attributes[i].split(':');
-        strStyle += (stylesToKeep.indexOf(entry[0]) > -1) ? `${entry[0]}:${entry[1]};` : '';
+        strStyle += (stylesToKeep.indexOf((entry[0] || '').trim()) > -1) ? `${entry[0]}:${entry[1]};` : '';
       }
       return (strStyle !== '') ? ` style="${strStyle}"` : '';
     });
