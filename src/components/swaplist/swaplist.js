@@ -37,7 +37,7 @@ const SWAPLIST_DEFAULTS = {
     additional: true
   },
 
-  copy: {
+  keepInList: {
     available: false,
     selected: false,
     additional: false
@@ -393,10 +393,10 @@ SwapList.prototype = {
         const toList = this.getDataList(to);
         for (let i = 0, l = this.selections.items.length; i < l; i++) {
           const selection = $(this.selections.items[i]);
-          if (this.isCopy(to) && toList.some(item => item.id === selection.data().id)) {
+          if (this.isKeepInList(to) && toList.some(item => item.id === selection.data().id)) {
             selection.remove();
           } else {
-            const val = this.isCopy(from) ? selection.clone() : selection;
+            const val = this.isKeepInList(from) ? selection.clone() : selection;
             val.attr({ 'aria-posinset': currentSize + i + 1, 'aria-setsize': size }).find('mark.highlight').contents().unwrap();
             ul.append(val);
           }
@@ -777,12 +777,12 @@ SwapList.prototype = {
             for (let ownerIndex = 0, l3 = ownerDataList.length; ownerIndex < l3; ownerIndex++) {
               const ownerItem = ownerDataList[ownerIndex];
               if (isMoved(ownerItem.node[0], item[0])) {
-                if (!(this.isCopy(droptarget) && dtDataList.some(dt => dt.id === ownerItem.id))) {
+                if (!(this.isKeepInList(droptarget) && dtDataList.some(dt => dt.id === ownerItem.id))) {
                   dtDataList.push(ownerItem);
                   this.arrayIndexMove(dtDataList, dtDataList.length - 1, dtIndex);
                 }
 
-                if (!this.isCopy(owner)) {
+                if (!this.isKeepInList(owner)) {
                   ownerDataList.splice(ownerIndex, 1);
                 }
 
@@ -811,16 +811,16 @@ SwapList.prototype = {
   },
 
   /**
-   * Check if the list copies items instead of moving them
+   * Check if the list retains items when moved
    * @private
    * @param {jQuery} list list to be checked
-   * @returns {boolean} whether or not the list copies items
+   * @returns {boolean} whether or not the list retains items
    */
-  isCopy(list) {
+  isKeepInList(list) {
     const s = this.settings;
-    return (list.is(s.availableClass) && s.copy.available) ||
-      (list.is(s.selectedClass) && s.copy.selected) ||
-      (list.is(s.additionalClass) && s.copy.additional);
+    return (list.is(s.availableClass) && s.keepInList.available) ||
+      (list.is(s.selectedClass) && s.keepInList.selected) ||
+      (list.is(s.additionalClass) && s.keepInList.additional);
   },
 
   /**
