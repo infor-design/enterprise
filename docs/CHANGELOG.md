@@ -10,10 +10,12 @@
 - `[Message]` Add an optional close button setting to dismiss the message. ([#5464](https://github.com/infor-design/enterprise/issues/5464))
 - `[Modal]` Added the ability to have a custom tooltip on modal close button. ([#5391](https://github.com/infor-design/enterprise/issues/5391))
 - `[Swaplist]` Added option to copy items from lists instead of moving them. ([#5513](https://github.com/infor-design/enterprise/issues/5513))
+- `[Popdown]` Added a click outside event in popdown. ([#3618](https://github.com/infor-design/enterprise/issues/3618))
 - `[Typography]` New typography paragraph text style. ([#5325](https://github.com/infor-design/enterprise/issues/5325))
 
 ## v4.55.0 Fixes
 
+- `[Cards]` Fixed a bug card group toolbar overlaps then disappears after clicking the checkboxes. ([#5445](https://github.com/infor-design/enterprise/issues/5445))
 - `[Calendar]` Fix on overlap in today text and calendar view changer when in mobile. ([#5438](https://github.com/infor-design/enterprise/issues/5438))
 - `[Charts]` Fixed a bug where automation ids is not properly rendered on legend, text and slices. ([#5441](https://github.com/infor-design/enterprise/issues/5441))
 - `[Datagrid]` Fixed an issue where tree list indentation is not left aligned when row has no children and datagrid row height is extra small or small. ([#5487](https://github.com/infor-design/enterprise/issues/5487))
@@ -23,6 +25,10 @@
 - `[Message]` Added maxWidth setting to allow message to go full width when title is long. ([#5443](https://github.com/infor-design/enterprise/issues/5443))
 - `[Timepicker]` Fixed a bug where the chinese time format doesn't render correctly after selecting time and periods (AM/PM). ([#5420](https://github.com/infor-design/enterprise/issues/5420))
 - `[Tree]` Fixed an issue where lengthy node text doesn't wrap to lines and cuts off. ([#5499](https://github.com/infor-design/enterprise/issues/5499))
+
+## v4.54.1 Fixes
+
+- `[Datagrid]` Added separate mask options for filter row. ([#5519](https://github.com/infor-design/enterprise/issues/5519))
 
 ## v4.54.0 Features
 
