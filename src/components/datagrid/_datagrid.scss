@@ -4201,26 +4201,27 @@ td .btn-actions {
   &.multiple {
     ul[role='listbox'] .dropdown-option {
       a {
-        left: 10px;
+        bottom: 1px;
+        left: 12px;
         position: relative;
       }
     }
 
     &.medium-rowheight {
       ul[role='listbox'] .dropdown-option a {
-        left: 15px;
+        left: 17px;
       }
     }
 
     &.small-rowheight {
       ul[role='listbox'] .dropdown-option a {
-        left: 20px;
+        left: 22px;
       }
     }
 
     &.extra-small-rowheight {
       ul[role='listbox'] .dropdown-option a {
-        left: 20px;
+        left: 22px;
       }
     }
   }
