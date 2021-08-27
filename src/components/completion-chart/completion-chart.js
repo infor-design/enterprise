@@ -297,10 +297,23 @@ CompletionChart.prototype = {
     const updateBars = function (ds) {
       let w;
       ds = ds || dataset;
+
       // Update completed bar width
       if (ds.completed) {
         w = fixPercent(ds.completed.value, ds);
         updateWidth(c.completed.bar, w, ds);
+
+        const completeToolTipApi = c.completed.bar.data('tooltip');
+        const content = typeof ds.completed.value === 'string' ? ds.completed.value : `${Math.round((ds.completed.value / ds.total.value) * 100)}%`;
+
+        if (completeToolTipApi) {
+          completeToolTipApi.setContent(content, false);
+        } else {
+          c.completed.bar.tooltip({
+            content,
+            parentElement: c.total.bar
+          });
+        }
       }
 
       // Update remaining bar width
@@ -308,6 +321,18 @@ CompletionChart.prototype = {
         w = fixPercent(ds.completed.value, ds) + fixPercent(ds.remaining.value, ds);
         updateWidth(c.remaining.bar, w, ds);
         setOverlap();
+
+        const remainingToolTipApi = c.remaining.bar.data('tooltip');
+        const content = typeof ds.remaining.value === 'string' ? ds.remaining.value : `${Math.round((ds.remaining.value / ds.total.value) * 100)}%`;
+
+        if (remainingToolTipApi) {
+          remainingToolTipApi.setContent(content, false);
+        } else {
+          c.remaining.bar.tooltip({
+            content,
+            parentElement: c.total.bar
+          });
+        }
       }
 
       // Update target line bar position
