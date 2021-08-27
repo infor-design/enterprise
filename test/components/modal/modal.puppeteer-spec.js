@@ -52,20 +52,3 @@ describe('Modal example-validation-editor tests', () => {
     await page.click('#submit');
   });
 });
-describe('Modal Tooltip Test', () => {
-  const url = 'http://localhost:4000/components/modal/test-custom-tooltip-close-btn.html';
-  beforeAll(async () => {
-    await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-  });
-
-  it('should test modal tooltip', async () => {
-    await page.click('#add-context');
-    await page.waitForSelector('.modal-wrapper', { visible: true });
-    await page.waitForTimeout(200);
-    await page.hover('#add-context-modal-btn-close');
-    await page.waitForSelector('#add-context-modal-btn-close', { visible: true });
-
-    const element = await page.waitForSelector('.has-open-tooltip');
-    expect(element).toBeTruthy();
-  });
-});
