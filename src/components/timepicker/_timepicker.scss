@@ -254,3 +254,37 @@ html[dir='rtl'] {
     }
   }
 }
+
+// Fix for Chinese locale only
+html {
+  &[lang='zh-CN'],
+  &[lang='zh-Hans'],
+  &[lang='zh-Hant'] {
+    #timepicker-popup {
+      select.period + .dropdown-wrapper {
+        .dropdown {
+          padding-top: 6px;
+        }
+      }
+    }
+  }
+}
+
+// Firefox Chinese Locale
+html.is-firefox {
+  &[lang='zh-CN'],
+  &[lang='zh-Hans'],
+  &[lang='zh-Hant'] {
+    #timepicker-popup {
+      .dropdown {
+        padding-top: 9px;
+      }
+
+      select.period + .dropdown-wrapper {
+        .dropdown {
+          padding-top: 5px;
+        }
+      }
+    }
+  }
+}

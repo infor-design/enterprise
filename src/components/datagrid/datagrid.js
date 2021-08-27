@@ -313,6 +313,7 @@ Datagrid.prototype = {
     this.setRowGrouping();
     this.setTreeRootNodes();
     this.firstRender();
+    this.hasScrollbarY();
     this.handleEvents();
     this.handleKeys();
 
@@ -485,6 +486,19 @@ Datagrid.prototype = {
 
     this.handlePaging();
     this.triggerSource('initial');
+  },
+
+  /**
+   * Checks if the datagrid body has vertical scrollbar.
+   * @private
+   * @returns {boolean}
+   */
+  hasScrollbarY() {
+    const self = this;
+    const height = parseInt(self.bodyWrapperCenter[0].offsetHeight, 10);
+    const hasVerticalScrollbar = parseInt(self.bodyWrapperCenter[0].scrollHeight, 10) > height + 2;
+
+    self.hasVerticalScrollbar = hasVerticalScrollbar !== false;
   },
 
   /**
@@ -6434,6 +6448,32 @@ Datagrid.prototype = {
   },
 
   /**
+   * Adds support when the datagrid container scrolls to the end of the list.
+   * @private
+   * @param {jQuery} e The event object.
+   * @returns {boolean}
+   */
+  verticalScrollToEnd(e) {
+    const el = e.currentTarget;
+    const getPercentage = ((el.scrollTop + el.clientHeight) / el.scrollHeight) * 100;
+    const currentPercentage = Math.round(getPercentage);
+    const isAtTheBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 1 && currentPercentage === 100;
+
+    /**
+    * Fires when scrolling into the grid's list.
+    * @event scroll
+    * @memberof Datagrid
+    * @property {object} args Additional arguments
+    * @property {number} args.percent The dynamic percentage of the grid when scrolling
+    * @property {number} args.percentScrolled A placeholder value
+    */
+    this.element.trigger('scroll', { percent: currentPercentage, percentScrolled: 100 });
+
+    // Has the control to do some logic when it's at the bottom of the list
+    this.isVerticalScrollToEnd = isAtTheBottom !== false;
+  },
+
+  /**
    * Sync the containers when scrolling on the y axis.
    * @private
    * @param  {jQuery} e The event object
@@ -6536,10 +6576,11 @@ Datagrid.prototype = {
     }
 
     // Sync Header and Body During scrolling
-    if (this.hasLeftPane || this.hasRightPane) {
+    if (this.hasLeftPane || this.hasRightPane || this.hasVerticalScrollbar) {
       self.element.find('.datagrid-wrapper')
         .on('scroll.table', (e) => {
           self.handleScrollY(e);
+          self.verticalScrollToEnd(e);
         });
 
       self.element.find('.datagrid-wrapper')
@@ -6548,6 +6589,7 @@ Datagrid.prototype = {
             e.currentTarget.scrollTop += (e.originalEvent.deltaY);
             e.preventDefault();
             self.handleScrollY(e);
+            self.verticalScrollToEnd(e);
           }
         });
     }
