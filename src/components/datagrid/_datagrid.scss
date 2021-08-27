@@ -4205,6 +4205,24 @@ td .btn-actions {
         position: relative;
       }
     }
+
+    &.medium-rowheight {
+      ul[role='listbox'] .dropdown-option a {
+        left: 15px;
+      }
+    }
+
+    &.small-rowheight {
+      ul[role='listbox'] .dropdown-option a {
+        left: 20px;
+      }
+    }
+
+    &.extra-small-rowheight {
+      ul[role='listbox'] .dropdown-option a {
+        left: 20px;
+      }
+    }
   }
 
   &.is-editing {
