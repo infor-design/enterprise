@@ -1,0 +1,96 @@
+<div class="full-height full-width">
+  <div role="toolbar" class="toolbar">
+
+    <div class="title">
+      Data Grid Header Title
+      <span class="datagrid-result-count">(N Results)</span>
+    </div>
+
+    <div class="buttonset">
+        <button type="button" id="toggle-row-status" class="btn">
+          <span>Add Row Status</span>
+        </button>
+    </div>
+
+    <div class="more">
+      <button class="btn-actions" type="button">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-more"></use>
+        </svg>
+        <span class="audible">More Actions</span>
+      </button>
+      <ul class="popupmenu">
+        <li class="single-selectable-section"></li>
+        <li class="heading">Row Height</li>
+        <li class="is-selectable"><a data-option="row-extra-small" href="#" data-translate="text">ExtraSmall</a></li>
+        <li class="is-selectable"><a data-option="row-small" href="#" data-translate="text">Small</a></li>
+        <li class="is-selectable"><a data-option="row-medium" href="#" data-translate="text">Medium</a></li>
+        <li class="is-selectable is-checked"><a data-option="row-large" href="#" data-translate="text">Large</a></li>
+      </ul>
+
+    </div>
+  </div>
+
+  <div id="datagrid" >
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+
+      var grid,
+        columns = [];
+
+      //Define Columns for the Grid.
+      columns.push({ id: 'taskName', hideable: false, name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Formatters.Tree});
+      columns.push({ id: 'id', name: 'Id', field: 'id'});
+      columns.push({ id: 'desc', name: 'Description', field: 'desc'});
+      columns.push({ id: 'comments', name: 'Comments', field: 'comments',  formatter: Formatters.Hyperlink});
+      columns.push({ id: 'time', name: 'Time', field: 'time'});
+
+      //Get some data via ajax
+      var url = '{{basepath}}api/tree-tasks';
+
+      $.getJSON(url, function(data) {
+
+        $('#datagrid').datagrid({
+          columns: columns,
+          dataset: data,
+          treeGrid: true,
+          selectable: 'mixed',
+          toolbar: {title: 'Tasks (Hierarchical)', results: true, personalize: true, actions: true, rowHeight: true}
+          }).on('selected', function (e, args) {
+            console.log(args);
+          }).on('rowactivated', function (e, args) {
+            console.log(args);
+          });
+      });
+
+    //Example row status
+    $('#toggle-row-status').on('click', function () {
+      var gridApi = $('#datagrid').data('datagrid');
+
+      var btn = $(this).find('span');
+      var status = {
+        add: 'Add Status',
+        remove: 'Remove Status'
+      };
+      if (btn.text() === status.add) {
+        btn.text(status.remove);
+        gridApi.rowStatus(0, 'error', 'Error');
+        gridApi.rowStatus(0, 'error', 'Error 2');
+        gridApi.rowStatus(0, 'error', 'Error 3');
+        gridApi.rowStatus(1, 'alert', 'Alert');
+        gridApi.rowStatus(2, 'info', 'Info');
+        gridApi.rowStatus(3, 'in-progress', 'inProgress');
+        gridApi.rowStatus(4, 'success', 'Confirm');
+        gridApi.rowStatus(6, 'new', 'new');
+        gridApi.rowStatus(6, 'error', 'This row has errors');
+      } else {
+        btn.text(status.add);
+        gridApi.resetRowStatus();
+      }
+    });
+
+  });
+</script>

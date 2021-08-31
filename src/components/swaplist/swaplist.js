@@ -37,6 +37,12 @@ const SWAPLIST_DEFAULTS = {
     additional: true
   },
 
+  keepInList: {
+    available: false,
+    selected: false,
+    additional: false
+  },
+
   attributes: null,
   attributesOverride: true,
 
@@ -348,7 +354,6 @@ SwapList.prototype = {
     if (to === null) {
       return;
     }
-
     from = (typeof from !== 'string') ? from : $(from, this.element);
     to = (typeof to !== 'string') ? to : $(to, this.element);
     const list = $('.listview', from).data('listview');
@@ -385,10 +390,16 @@ SwapList.prototype = {
       const size = this.selections.items.length + currentSize;
 
       if (this.selections.items) {
+        const toList = this.getDataList(to);
         for (let i = 0, l = this.selections.items.length; i < l; i++) {
-          const val = $(this.selections.items[i]);
-          val.attr({ 'aria-posinset': currentSize + i + 1, 'aria-setsize': size }).find('mark.highlight').contents().unwrap();
-          ul.append(val);
+          const selection = $(this.selections.items[i]);
+          if (this.isKeepInList(to) && toList.some(item => item.id === selection.data().id)) {
+            selection.remove();
+          } else {
+            const val = this.isKeepInList(from) ? selection.clone() : selection;
+            val.attr({ 'aria-posinset': currentSize + i + 1, 'aria-setsize': size }).find('mark.highlight').contents().unwrap();
+            ul.append(val);
+          }
         }
       }
 
@@ -624,7 +635,6 @@ SwapList.prototype = {
     const containerAPI = container.find('.listview').data('listview');
     let dataList = this.getDataList(container);
     let isFiltered = false;
-
     if (containerAPI && containerAPI.filteredDataset) {
       dataList = [...containerAPI.filteredDataset];
       isFiltered = true;
@@ -762,13 +772,20 @@ SwapList.prototype = {
         const item = this.selections.items[i];
         let canLoop = true;
         for (let dtIndex = 0, l2 = droptargetNodes.length; dtIndex < l2 && canLoop; dtIndex++) {
-          if ($(droptargetNodes[dtIndex]).is(item)) {
+          const droptargetNode = $(droptargetNodes[dtIndex]);
+          if (droptargetNode.data().id === item.data().id) {
             for (let ownerIndex = 0, l3 = ownerDataList.length; ownerIndex < l3; ownerIndex++) {
               const ownerItem = ownerDataList[ownerIndex];
               if (isMoved(ownerItem.node[0], item[0])) {
-                dtDataList.push(ownerItem);
-                ownerDataList.splice(ownerIndex, 1);
-                this.arrayIndexMove(dtDataList, dtDataList.length - 1, dtIndex);
+                if (!(this.isKeepInList(droptarget) && dtDataList.some(dt => dt.id === ownerItem.id))) {
+                  dtDataList.push(ownerItem);
+                  this.arrayIndexMove(dtDataList, dtDataList.length - 1, dtIndex);
+                }
+
+                if (!this.isKeepInList(owner)) {
+                  ownerDataList.splice(ownerIndex, 1);
+                }
+
                 canLoop = false;
                 break;
               }
@@ -791,6 +808,19 @@ SwapList.prototype = {
    */
   isjQuery(obj) {
     return (obj && (obj instanceof jQuery || obj.constructor.prototype.jquery));
+  },
+
+  /**
+   * Check if the list retains items when moved
+   * @private
+   * @param {jQuery} list list to be checked
+   * @returns {boolean} whether or not the list retains items
+   */
+  isKeepInList(list) {
+    const s = this.settings;
+    return (list.is(s.availableClass) && s.keepInList.available) ||
+      (list.is(s.selectedClass) && s.keepInList.selected) ||
+      (list.is(s.additionalClass) && s.keepInList.additional);
   },
 
   /**

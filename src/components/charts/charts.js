@@ -422,7 +422,7 @@ charts.addLegend = function (series, chartType, settings, container) {
     }
     seriesLine = $(seriesLine);
     seriesLine.append(color, `<span class="audible">${Locale.translate('Highlight')}</span>`, textBlock);
-    
+
     const suffix = `legend-${i}`;
     if (settings.attributes) {
       utils.addAttributes(seriesLine, series[i], settings.attributes, suffix, true);

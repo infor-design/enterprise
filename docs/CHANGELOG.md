@@ -4,24 +4,36 @@
 
 - `[ApplicationMenu]` Added the ability to resize the app menu. ([#5193](https://github.com/infor-design/enterprise/issues/5193))
 - `[Datagrid]` Adds the ability to have a selection radio buttons on Datagrid. ([#5384](https://github.com/infor-design/enterprise/issues/5384))
+- `[Datagrid]` Added a `verticalScrollToEnd` property when you reached the end of the datagrid list. ([#5435](https://github.com/infor-design/enterprise/issues/5435))
 - `[Datagrid]` Added seperate mask options for filter row. ([#5519](https://github.com/infor-design/enterprise/issues/5519))
 - `[Editor]` Added support for `ol` type attribute to be able to use the other list styles (`alphabetically ordered (lowercase and uppercase)`, and `roman numbers (lowercase and uppercase)`) of `ol` tag. ([#5462](https://github.com/infor-design/enterprise/issues/5462))
 - `[Message]` Add info status handling to message.([#5459](https://github.com/infor-design/enterprise/issues/5459))
 - `[Message]` Add an optional close button setting to dismiss the message. ([#5464](https://github.com/infor-design/enterprise/issues/5464))
 - `[Modal]` Added the ability to have a custom tooltip on modal close button. ([#5391](https://github.com/infor-design/enterprise/issues/5391))
+- `[Swaplist]` Added option to copy items from lists instead of moving them. ([#5513](https://github.com/infor-design/enterprise/issues/5513))
+- `[Popdown]` Added a click outside event in popdown. ([#3618](https://github.com/infor-design/enterprise/issues/3618))
 - `[Typography]` New typography paragraph text style. ([#5325](https://github.com/infor-design/enterprise/issues/5325))
 
 ## v4.55.0 Fixes
 
+- `[Cards]` Fixed a bug card group toolbar overlaps then disappears after clicking the checkboxes. ([#5445](https://github.com/infor-design/enterprise/issues/5445))
 - `[Calendar]` Fix on overlap in today text and calendar view changer when in mobile. ([#5438](https://github.com/infor-design/enterprise/issues/5438))
 - `[Charts]` Fixed a bug where automation ids is not properly rendered on legend, text and slices. ([#5441](https://github.com/infor-design/enterprise/issues/5441))
+- `[Datagrid]` Fixed a bug where the checkbox overlaps with the label when `editorOptions.multiple` is set to true. Also added formatters and editor for multiselect. ([NG#1075](https://github.com/infor-design/enterprise-ng/issues/1075))
 - `[Datagrid]` Fixed an issue where tree list indentation is not left aligned when row has no children and datagrid row height is extra small or small. ([#5487](https://github.com/infor-design/enterprise/issues/5487))
+- `[Datagrid]` Fixed an issue where tree list indentation is not left aligned when row has no children and datagrid row height is extra small or small. ([#5487](https://github.com/infor-design/enterprise/issues/5487))
+- `[Message]` Added maxWidth setting to allow message to go full width when title is long. ([#5443](https://github.com/infor-design/enterprise/issues/5443))
 - `[Datagrid]` Fix unescaped HTML of range value to match escaped HTML of data value. ([#4832](https://github.com/infor-design/enterprise/issues/4832))
 - `[Datagrid]` Fix an XSS vulnerability in the name property of the columns objects array. ([#5428](https://github.com/infor-design/enterprise/issues/5428))
 - `[Datagrid]` Fixed an issue where the excel export did not download in MS Edge. ([#5507](https://github.com/infor-design/enterprise/issues/5507))
 - `[Message]` Added maxWidth setting to allow message to go full width when title is long. ([#5443](https://github.com/infor-design/enterprise/issues/5443))
+- `[Modal]` Fixed a bug where events are not properly called when calling stacked dialogs. ([#5471](https://github.com/infor-design/enterprise/issues/5471))
 - `[Timepicker]` Fixed a bug where the chinese time format doesn't render correctly after selecting time and periods (AM/PM). ([#5420](https://github.com/infor-design/enterprise/issues/5420))
 - `[Tree]` Fixed an issue where lengthy node text doesn't wrap to lines and cuts off. ([#5499](https://github.com/infor-design/enterprise/issues/5499))
+
+## v4.54.1 Fixes
+
+- `[Datagrid]` Added separate mask options for filter row. ([#5519](https://github.com/infor-design/enterprise/issues/5519))
 
 ## v4.54.0 Features
 

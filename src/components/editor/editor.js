@@ -705,15 +705,19 @@ Editor.prototype = {
     switch (orderedListTag.attr('type')) {
       case types.loweralpha:
         editor.addClass('type-l-alpha');
+        editor.removeClass('type-u-alpha');
         break;
       case types.upperalpha:
         editor.addClass('type-u-alpha');
+        editor.removeClass('type-l-alpha');
         break;
       case types.lowerroman:
         editor.addClass('type-l-roman');
+        editor.removeClass('type-u-roman');
         break;
       case types.upperroman:
         editor.addClass('type-u-roman');
+        editor.removeClass('type-l-roman');
         break;
       default:
         break;

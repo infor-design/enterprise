@@ -4198,6 +4198,15 @@ td .btn-actions {
   border-radius: 0 0 3px 3px;
   margin-top: -1px;
 
+  &.multiple {
+    ul[role='listbox'] .dropdown-option {
+      a {
+        left: 10px;
+        position: relative;
+      }
+    }
+  }
+
   &.is-editing {
     margin-top: -2.5px;
 
