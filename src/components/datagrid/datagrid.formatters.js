@@ -640,7 +640,6 @@ const formatters = {
         // Converting the array of values to it's label to display the correct information.
         if ((typeof compareValue === 'object' || Array.isArray(compareValue)) && col.editorOptions.multiple) {
           for (let j = 0; j < compareValue.length; j++) {
-            console.log(compareValue[j]);
             if (col.options[i].value === compareValue[j]) {
               formattedValue += `${option.label}, `;
             }
