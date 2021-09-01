@@ -1,4 +1,7 @@
-
+// .hierarchy .container .chart.has-single-child .root + .sub-level > li .leaf::before {
+//   border-left: 0;
+// }
+// html[dir='rtl'] .hierarchy .chart.has-single-child .root + .sub-level > li > ul .leaf::before, html[dir='rtl'] .hierarchy .sub-level > li > ul .leaf::before
 // RTL Styles
 html[dir='rtl'] {
   .hierarchy {
@@ -71,8 +74,8 @@ html[dir='rtl'] {
     ul > li > .leaf {
       .btn-expand,
       .btn-collapse {
-        left: auto;
-        right: calc(100% - 40px);
+        left: 13px;
+        right: auto;
       }
     }
 
@@ -98,11 +101,19 @@ html[dir='rtl'] {
     }
 
     //The Bottom Levels - Flow Down and Up
+    .chart.has-single-child .root + .sub-level,
     .sub-level {
+      padding-left: 0;
+      padding-right: 35px; 
+      
+      &::before {
+          content: none;
+      }
+
       // Top Level Nodes still follow left to right
       > li {
         //Draw Line Up and Left
-        &::before {
+         &::before {
           border-bottom: 0;
           border-left: 0 solid $hierarchy-line-color;
           border-right: $hierarchy-line-width solid $hierarchy-line-color;
@@ -116,6 +127,7 @@ html[dir='rtl'] {
           width: 0;
         }
 
+        .leaf::before,
         > ul .leaf::before {
           border-left: 0;
           border-right: $hierarchy-line-width solid $hierarchy-line-color;
