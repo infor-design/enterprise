@@ -58,12 +58,14 @@ html[dir='rtl'] {
 
       //Styling for objects in the leafs
       img,
+      .image-initials,
       .image-placeholder {
         float: right;
         margin-left: 0;
         margin-right: 14px;
       }
 
+      &.root .btn-icon,
       .btn-icon {
         left: auto;
         right: 0;
