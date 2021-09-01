@@ -91,6 +91,7 @@ describe('Modal example-validation tests', () => {
 
 describe('Modal example-validation-editor tests', () => {
   const url = 'http://localhost:4000/components/modal/test-validation-editor';
+
   beforeAll(async () => {
     await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     await page.waitForSelector('.btn-secondary');
