@@ -1348,7 +1348,7 @@ Modal.prototype = {
    * @param {boolean} [force = false] if true, forces the modal closed and ignores open subcomponents/visibility.
    * @returns {boolean} If the dialog was open returns false. If the dialog was closed is true.
    */
-  close(destroy, noRefresh, force = false) {
+  close(destroy, noRefresh, force = false, customId) {
     if (!force && (!this.visible || this.openSubComponents.length)) {
       return true;
     }
@@ -1383,7 +1383,11 @@ Modal.prototype = {
     delete this.dontCheckFocus;
 
     // Fire Events
-    self.element.trigger('close', self.isCancelled);
+    if (customId) {
+      self.element.trigger(`close.${customId}`, self.isCancelled);
+    } else {
+      self.element.trigger('close', self.isCancelled);
+    }
 
     if (!this.settings.noRefocus && this.isFocused) {
       document.activeElement.blur();
@@ -1405,7 +1409,11 @@ Modal.prototype = {
     const afterCloseTimer = new RenderLoopItem({
       duration: modalManager.modalFadeDuration,
       timeoutCallback() {
-        self.element.trigger('afterclose');
+        if (customId) {
+          self.element.trigger(`afterclose.${customId}`, self.isCancelled);
+        } else {
+          self.element.trigger('afterclose');
+        }
 
         if (closeBtnTooltipAPI) {
           delete closeBtnTooltipAPI.reopenDelay;
@@ -1557,7 +1565,7 @@ Modal.prototype = {
       return;
     }
 
-    this.element.one(`afterclose.${self.namespace}`, () => {
+    this.element.on(`afterclose.${self.namespace}`, () => {
       destroyCallback();
     });
 

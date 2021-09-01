@@ -65,6 +65,16 @@
           },
           toolbar: {title: 'Accounts', results: true, personalize: true, actions: true, rowHeight: true, keywordFilter: false}
         });
+
+        $('#datagrid').on('expandrow', function (e, args) {
+          if (args.detail && args.detail.length > 0) {
+            console.log('expandrow', args.detail[0].getAttribute('aria-rowindex') -1);
+          }
+        });
+
+        $('#datagrid').on('collapserow', function (e, args) {
+          console.log('collapserow', args);
+        });
       });
  });
 

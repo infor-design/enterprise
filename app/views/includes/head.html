@@ -177,18 +177,24 @@
         if (parts[1] !== shortThemeName) {
           shortThemeName = parts[1];
           shortThemeName = shortThemeName.replace('soho', 'classic').replace('uplift', 'new');
+          var path = window.location.pathname;
 
-          $.get('{{basepath}}api/icons?theme=' + shortThemeName, function(htmlStr) {
-            htmlStr = htmlStr.replace('</div>', '');
-            htmlStr = htmlStr.replace('<div class="svg-icons">', '');
-            $('div.svg-icons').empty().append(htmlStr);
-          },'html');
+          if (path.indexOf('/icons/') > -1) {
+            $('body').append('<div class="personalize-overlay" style="background: rgb(240, 240, 240); opacity: 0.933013;"></div>')
+            location.reload();
+          } else {
+            $.get('{{basepath}}api/icons?theme=' + shortThemeName, function(htmlStr) {
+              htmlStr = htmlStr.replace('</div>', '');
+              htmlStr = htmlStr.replace('<div class="svg-icons">', '');
+              $('div.svg-icons').empty().append(htmlStr);
+            },'html');
 
-          $.get('{{basepath}}api/icons-empty?theme=' + shortThemeName, function(htmlStr) {
-            htmlStr = htmlStr.replace('</div>', '');
-            htmlStr = htmlStr.replace('<div class="svg-icons-empty">', '');
-            $('div.svg-icons-empty').empty().append(htmlStr);
-          },'html');
+            $.get('{{basepath}}api/icons-empty?theme=' + shortThemeName, function(htmlStr) {
+              htmlStr = htmlStr.replace('</div>', '');
+              htmlStr = htmlStr.replace('<div class="svg-icons-empty">', '');
+              $('div.svg-icons-empty').empty().append(htmlStr);
+            },'html');
+          }
         }
       });
   </script>

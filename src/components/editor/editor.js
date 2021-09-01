@@ -705,15 +705,19 @@ Editor.prototype = {
     switch (orderedListTag.attr('type')) {
       case types.loweralpha:
         editor.addClass('type-l-alpha');
+        editor.removeClass('type-u-alpha');
         break;
       case types.upperalpha:
         editor.addClass('type-u-alpha');
+        editor.removeClass('type-l-alpha');
         break;
       case types.lowerroman:
         editor.addClass('type-l-roman');
+        editor.removeClass('type-u-roman');
         break;
       case types.upperroman:
         editor.addClass('type-u-roman');
+        editor.removeClass('type-l-roman');
         break;
       default:
         break;
@@ -2073,6 +2077,7 @@ Editor.prototype = {
     s = s.replace(/<head\b[^>]*>(.*?)<\/head>/gi, '');
 
     // Remove empty tags
+    s = s.replace(/<(div|span|p)> <\/(div|span|p)>/gi, ' ');
     s = s.replace(/<[^(br|/>)]+>[\s]*<\/[^>]+>/gi, '');
 
     if (s.indexOf('·') > -1) {
@@ -3250,7 +3255,7 @@ Editor.prototype = {
       let strStyle = '';
       for (let i = 0; i < attributes.length; i++) {
         const entry = attributes[i].split(':');
-        strStyle += (stylesToKeep.indexOf(entry[0]) > -1) ? `${entry[0]}:${entry[1]};` : '';
+        strStyle += (stylesToKeep.indexOf((entry[0] || '').trim()) > -1) ? `${entry[0]}:${entry[1]};` : '';
       }
       return (strStyle !== '') ? ` style="${strStyle}"` : '';
     });
