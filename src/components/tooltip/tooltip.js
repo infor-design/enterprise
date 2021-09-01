@@ -26,7 +26,7 @@ const TOOLTIP_TRIGGER_METHODS = ['hover', 'immediate', 'click', 'focus'];
  * @param {object} [settings] The component settings.
  * @param {string|function} [settings.content] Takes title attribute or feed content. Can be a string or jQuery markup.
  * @param {object} [settings.offset={top: 10, left: 10}] How much room to leave.
- * @param {string} [settings.placement='top'] Supports 'top'|'bottom'|'right'|'offset'.
+ * @param {string} [settings.placement='top'] Supports 'top'|'bottom'|'right'|'left'.
  * @param {string} [settings.trigger='hover'] Supports click and immediate and hover and focus
  * @param {string} [settings.showOnKeyboardFocus] If the object with the tooltip is tabbed to, will also show the tooltip.
  * @param {string} [settings.title] Title for Infor Tips.
