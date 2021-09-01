@@ -25,6 +25,7 @@ const COMPONENT_NAME = 'column';
 * @param {boolean} [settings.showLegend = true] If false the legend will not be shown.
 * @param {boolean|string} [settings.animate = true] true|false - will do or not do the animation. 'initial' will do only first time the animation.
 * @param {boolean} [settings.redrawOnResize = true]  If set to false the component will not redraw when the page or parent is resized.
+* @param {boolean} [settings.useLine = false] The ability to use line chart if set to true. This will need a target value to the dataset.
 * @param {string} [settings.format = null] The d3 axis format
 * @param {string} [settings.formatterString] Use d3 format some examples can be found on http://bit.ly/1IKVhHh
 * @param {number} [settings.ticks = 9] The number of ticks to show.
@@ -51,6 +52,7 @@ const COLUMN_DEFAULTS = {
   animate: true,
   format: null,
   redrawOnResize: true,
+  useLine: false,
   ticks: 9,
   fitHeight: true,
   emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' }
@@ -102,6 +104,7 @@ Column.prototype = {
    * @private
    */
   build() {
+    debugger;
     const self = this;
     const isPersonalizable = this.element.closest('.is-personalizable').length > 0;
     const format = value => d3.format(self.settings.formatterString || ',')(value);
@@ -331,6 +334,18 @@ Column.prototype = {
       }
     }
 
+    if (this.settings.useLine) {
+      const d = this.settings.dataset;
+      let lineDataset = [];
+      d.forEach(function (i) {
+        i.data.map(function (j) {
+          if (j.isLine) {
+            lineDataset.push(j);
+          }
+        });
+      });
+    }
+
     const svg = d3.select(this.element[0])
       .append('svg')
       .attr('width', width + margin.left + margin.right)
@@ -440,6 +455,16 @@ Column.prototype = {
       dataArray = [];
       names = dataset[0].data.forEach(function (d) {
         dataArray.push(d);
+      });
+    }
+
+    if (this.settings.useLine) {
+      dataArray.forEach(function (i) {
+        i.data.map(function (j, idx) {
+          if (j.isLine) {
+            i.data.splice(idx);
+          }
+        });
       });
     }
 

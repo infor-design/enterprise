@@ -1,0 +1,81 @@
+<div class="row">
+  <div class="two-thirds column">
+    <div class="widget">
+      <div class="widget-header">
+        <h2 class="widget-title">Grouped Column with Line Chart</h2>
+      </div>
+      <div class="widget-content">
+        <div id="column-grouped-example" class="chart-container">
+        </div>
+      </div>
+      <div class="widget-content">
+        <div id="line-example" class="chart-container">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+
+    var dataset = [
+      {
+        'data': [
+          { 'name': 'Quantity', 'value': 10 },
+          { 'name': 'Future Orders', 'value': 9 },
+          { 'name': 'Margins', 'value': 9, 'isLine': true }
+        ],
+        'name': 'Apples'
+      },
+      {
+        'data': [
+          { 'name': 'Quantity', 'value': 12 },
+          { 'name': 'Future Orders', 'value': 0 },
+          { 'name': 'Margins', 'value': 11, 'isLine': true }
+        ],
+        'name': 'Snozberry'
+      },
+      {
+        'data': [
+          { 'name': 'Quantity', 'value': 8 },
+          { 'name': 'Future Orders', 'value': 5 },
+          { 'name': 'Margins', 'value': 4, 'isLine': true }
+        ],
+        'name': 'Oranges'
+      },
+      {
+        'data': [
+          { 'name': 'Quantity', 'value': 21 },
+          { 'name': 'Future Orders', 'value': 20 },
+          { 'name': 'Margins', 'value': 9, 'isLine': true }
+        ],
+        'name': 'Bananas'
+      },
+      {
+        'data': [
+          { 'name': 'Quantity', 'value': 15 },
+          { 'name': 'Future Orders', 'value': 11 },
+          { 'name': 'Margins', 'value': 6, 'isLine': true }
+        ],
+        'name': 'Grapes'
+      },
+      {
+        'data': [
+          { 'name': 'Quantity', 'value': 17 },
+          { 'name': 'Future Orders', 'value': 7 },
+          { 'name': 'Margins', 'value': 15, 'isLine': true }
+        ],
+        'name': 'Pears'
+      }
+    ];
+
+    $('#column-grouped-example').chart({
+      type: 'column-grouped',
+      dataset: dataset,
+      useLine: true,
+    });
+
+  });
+
+</script>
