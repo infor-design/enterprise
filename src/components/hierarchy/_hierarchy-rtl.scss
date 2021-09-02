@@ -1,7 +1,3 @@
-// .hierarchy .container .chart.has-single-child .root + .sub-level > li .leaf::before {
-//   border-left: 0;
-// }
-// html[dir='rtl'] .hierarchy .chart.has-single-child .root + .sub-level > li > ul .leaf::before, html[dir='rtl'] .hierarchy .sub-level > li > ul .leaf::before
 // RTL Styles
 html[dir='rtl'] {
   .hierarchy {
@@ -69,6 +65,52 @@ html[dir='rtl'] {
       .btn-icon {
         left: auto;
         right: 0;
+      }
+    }
+
+    // Paging
+    &.layout-is-paging {
+      .leaf.root {
+        margin: 0;
+      }
+
+      .chart {
+        &::after {
+          left: 385px;
+        }
+
+        &.has-back {
+          ul {
+            margin-right: 35px;
+          }
+
+          &::after {
+            left: 410px;
+          }
+          .root::after {
+            left: 150px;
+          }
+          .child-nodes > li .leaf {
+            &::after {
+              left: 188px;
+            }
+          }
+        }
+
+        .back-container .back {
+          left: 10px;
+        }
+        
+        .child-nodes {
+          padding-left: 0;
+          padding-right: 55px; 
+
+          > li .leaf {
+            &::after  {
+              left: 198px;
+            }
+          }
+        }
       }
     }
 
