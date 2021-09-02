@@ -670,9 +670,7 @@ Validator.prototype = {
       Validation.ValidationTypes.error;
 
     if (!isHelpMessage) {
-      setTimeout(() => {
-        loc.addClass(rule.type === 'icon' ? 'custom-icon' : rule.type);
-      }, 100);
+      loc.addClass(rule.type === 'icon' ? 'custom-icon' : rule.type);
     }
 
     // Inline messages are now an array
@@ -947,9 +945,7 @@ Validator.prototype = {
     }
 
     if (!isHelpMessage) {
-      setTimeout(() => {
-        loc.addClass(rule.type === 'icon' ? 'custom-icon' : rule.type); 
-      }, 100);
+      loc.addClass(rule.type === 'icon' ? 'custom-icon' : rule.type);
     }
 
     if (field.is('.spinbox')) {
