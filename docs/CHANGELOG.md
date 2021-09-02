@@ -3,7 +3,7 @@
 ## v4.56.0 Fixes
 
 - `[Lookup]` Fixed a bug for short field and its icons not rendering properly. ([#5541](https://github.com/infor-design/enterprise/issues/5541))
-- `[Timepicker]` Fixed a bug timepicker icon not rendering properly. ([#5558](https://github.com/infor-design/enterprise/issues/5558))
+- `[Timepicker]` Fixed a bug for timepicker icon not rendering properly. ([#5558](https://github.com/infor-design/enterprise/issues/5558))
 
 ## v4.55.0 Features
 

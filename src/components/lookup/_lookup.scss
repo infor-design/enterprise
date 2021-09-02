@@ -305,6 +305,22 @@
   }
 }
 
+html.is-safari {
+  .lookup-wrapper {
+    .trigger {
+      position: relative;
+    }
+  }
+
+  .field-short {
+    .lookup-wrapper {
+      .trigger {
+        top: 3px;
+      }
+    }
+  }
+}
+
 // RTL Styles
 html[dir='rtl'] {
   .lookup-wrapper .trigger {
