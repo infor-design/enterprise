@@ -31,6 +31,7 @@
 - `[Modal]` Fixed a bug where events are not properly called when calling stacked dialogs. ([#5471](https://github.com/infor-design/enterprise/issues/5471))
 - `[Timepicker]` Fixed a bug where the chinese time format doesn't render correctly after selecting time and periods (AM/PM). ([#5420](https://github.com/infor-design/enterprise/issues/5420))
 - `[Tree]` Fixed an issue where lengthy node text doesn't wrap to lines and cuts off. ([#5499](https://github.com/infor-design/enterprise/issues/5499))
+- `[Calendar]` fixed month label not set on first enabled date of the month. ([#5581](https://github.com/infor-design/enterprise/issues/5581))
 
 ## v4.54.1 Fixes
 
