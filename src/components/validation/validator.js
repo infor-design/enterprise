@@ -670,7 +670,9 @@ Validator.prototype = {
       Validation.ValidationTypes.error;
 
     if (!isHelpMessage) {
-      loc.addClass(rule.type === 'icon' ? 'custom-icon' : rule.type);
+      setTimeout(() => {
+        loc.addClass(rule.type === 'icon' ? 'custom-icon' : rule.type);
+      }, 100);
     }
 
     // Inline messages are now an array
@@ -936,16 +938,18 @@ Validator.prototype = {
         </div>`;
     }
 
-    if (!isHelpMessage) {
-      loc.addClass(rule.type === 'icon' ? 'custom-icon' : rule.type);
-    }
-
     if (field.is(':radio')) {
       this.toggleRadioMessage(field, rule.message, validationType.type, markup, true);
     } else { // All other components
       loc.closest('.field, .field-short').find('.formatter-toolbar').addClass(validationType.type === 'icon' ? 'custom-icon' : validationType.type);
       loc.closest('.field, .field-short').append(markup);
       loc.closest('.field, .field-short').find('.colorpicker-container').addClass(validationType.type === 'icon' ? 'custom-icon' : validationType.type);
+    }
+
+    if (!isHelpMessage) {
+      setTimeout(() => {
+        loc.addClass(rule.type === 'icon' ? 'custom-icon' : rule.type); 
+      }, 100);
     }
 
     if (field.is('.spinbox')) {
