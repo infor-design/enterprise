@@ -104,7 +104,6 @@ Column.prototype = {
    * @private
    */
   build() {
-    debugger;
     const self = this;
     const isPersonalizable = this.element.closest('.is-personalizable').length > 0;
     const format = value => d3.format(self.settings.formatterString || ',')(value);
@@ -334,18 +333,6 @@ Column.prototype = {
       }
     }
 
-    if (this.settings.useLine) {
-      const d = this.settings.dataset;
-      let lineDataset = [];
-      d.forEach(function (i) {
-        i.data.map(function (j) {
-          if (j.isLine) {
-            lineDataset.push(j);
-          }
-        });
-      });
-    }
-
     const svg = d3.select(this.element[0])
       .append('svg')
       .attr('width', width + margin.left + margin.right)
@@ -458,11 +445,14 @@ Column.prototype = {
       });
     }
 
+    let lineDataset = [{ data: [] }];
     if (this.settings.useLine) {
       dataArray.forEach(function (i) {
         i.data.map(function (j, idx) {
           if (j.isLine) {
             i.data.splice(idx);
+            lineDataset[0].data.push(j);
+            lineDataset[0]['name'] = j.name;
           }
         });
       });
