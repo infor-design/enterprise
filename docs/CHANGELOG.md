@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.56.0 Fixes
+
+- `[Lookup/Validation]` Fixed a bug for short field and its icons not rendering properly. ([#5541](https://github.com/infor-design/enterprise/issues/5541))
+
 ## v4.55.0 Features
 
 - `[ApplicationMenu]` Added the ability to resize the app menu. ([#5193](https://github.com/infor-design/enterprise/issues/5193))
