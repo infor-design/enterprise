@@ -7,11 +7,13 @@
 - `[Datagrid]` Added a `verticalScrollToEnd` property when you reached the end of the datagrid list. ([#5435](https://github.com/infor-design/enterprise/issues/5435))
 - `[Datagrid]` Added seperate mask options for filter row. ([#5519](https://github.com/infor-design/enterprise/issues/5519))
 - `[Editor]` Added support for `ol` type attribute to be able to use the other list styles (`alphabetically ordered (lowercase and uppercase)`, and `roman numbers (lowercase and uppercase)`) of `ol` tag. ([#5462](https://github.com/infor-design/enterprise/issues/5462))
+- `[Lookup]` Fixed a bug for short field and its icons not rendering properly. ([#5541](https://github.com/infor-design/enterprise/issues/5541))
 - `[Message]` Add info status handling to message.([#5459](https://github.com/infor-design/enterprise/issues/5459))
 - `[Message]` Add an optional close button setting to dismiss the message. ([#5464](https://github.com/infor-design/enterprise/issues/5464))
 - `[Modal]` Added the ability to have a custom tooltip on modal close button. ([#5391](https://github.com/infor-design/enterprise/issues/5391))
 - `[Swaplist]` Added option to copy items from lists instead of moving them. ([#5513](https://github.com/infor-design/enterprise/issues/5513))
 - `[Popdown]` Added a click outside event in popdown. ([#3618](https://github.com/infor-design/enterprise/issues/3618))
+- `[Timepicker]` Fixed a bug for timepicker icon not rendering properly. ([#5558](https://github.com/infor-design/enterprise/issues/5558))
 - `[Typography]` New typography paragraph text style. ([#5325](https://github.com/infor-design/enterprise/issues/5325))
 
 ## v4.55.0 Fixes
