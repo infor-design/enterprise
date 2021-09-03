@@ -304,14 +304,19 @@ CompletionChart.prototype = {
         updateWidth(c.completed.bar, w, ds);
 
         const completeToolTipApi = c.completed.bar.data('tooltip');
-        const content = typeof ds.completed.value === 'string' ? ds.completed.value : `${Math.round((ds.completed.value / ds.total.value) * 100)}%`;
+        let content;
+
+        if (ds.completed.tipText) {
+          content = ds.completed.tipText;
+        } else {
+          content = typeof ds.completed.value === 'string' ? ds.completed.value : `${Math.round((ds.completed.value / ds.total.value) * 100)}%`;
+        }
 
         if (completeToolTipApi) {
           completeToolTipApi.setContent(content, false);
         } else {
           c.completed.bar.tooltip({
-            content,
-            parentElement: c.total.bar
+            content
           });
         }
       }
@@ -323,14 +328,22 @@ CompletionChart.prototype = {
         setOverlap();
 
         const remainingToolTipApi = c.remaining.bar.data('tooltip');
-        const content = typeof ds.remaining.value === 'string' ? ds.remaining.value : `${Math.round((ds.remaining.value / ds.total.value) * 100)}%`;
+        let content;
+
+        if (ds.remaining.tipText) {
+          content = ds.remaining.tipText;
+        } else {
+          content = typeof ds.remaining.value === 'string' ? ds.remaining.value : `${Math.round((ds.remaining.value / ds.total.value) * 100)}%`;
+        }
 
         if (remainingToolTipApi) {
           remainingToolTipApi.setContent(content, false);
         } else {
           c.remaining.bar.tooltip({
             content,
-            parentElement: c.total.bar
+            placementOpts: {
+              x: ds.completed.bar.width() + 20
+            }
           });
         }
       }
