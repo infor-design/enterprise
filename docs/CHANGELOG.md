@@ -27,6 +27,7 @@
 - `[Datagrid]` Fix an XSS vulnerability in the name property of the columns objects array. ([#5428](https://github.com/infor-design/enterprise/issues/5428))
 - `[Datagrid]` Fixed an issue where the excel export did not download in MS Edge. ([#5507](https://github.com/infor-design/enterprise/issues/5507))
 - `[Editor]` Fixed an issue where font color was not working and extra spaces were get removed. ([#5137](https://github.com/infor-design/enterprise/issues/5137))
+- `[Hierarchy]` Fixed line and icon alignment in hierarchy when in rtl format. ([#5544](https://github.com/infor-design/enterprise/issues/5544))
 - `[Message]` Added maxWidth setting to allow message to go full width when title is long. ([#5443](https://github.com/infor-design/enterprise/issues/5443))
 - `[Modal]` Fixed a bug where events are not properly called when calling stacked dialogs. ([#5471](https://github.com/infor-design/enterprise/issues/5471))
 - `[Timepicker]` Fixed a bug where the chinese time format doesn't render correctly after selecting time and periods (AM/PM). ([#5420](https://github.com/infor-design/enterprise/issues/5420))
