@@ -121,11 +121,16 @@ CompletionChart.prototype = {
       return value;
     };
 
-    const updateWidth = function (elem, value, ds) {
+    const updateWidth = function (elem, value, start, ds) {
       let percent = toPercent(value, ds);
       percent = (percent < 0 ? 0 : percent);
       const w = percent > 100 ? 100 : percent;
       elem[0].style.width = `${w}%`;
+
+      if (start > 0) {
+        const startPercent = toPercent(start, ds);
+        elem[0].style.left = `${startPercent}%`;
+      }
 
       if (w === 0) {
         elem[0].className += 'is-empty';
@@ -301,7 +306,7 @@ CompletionChart.prototype = {
       // Update completed bar width
       if (ds.completed) {
         w = fixPercent(ds.completed.value, ds);
-        updateWidth(c.completed.bar, w, ds);
+        updateWidth(c.completed.bar, w, 0, ds);
 
         const completeToolTipApi = c.completed.bar.data('tooltip');
         let content;
@@ -315,16 +320,14 @@ CompletionChart.prototype = {
         if (completeToolTipApi) {
           completeToolTipApi.setContent(content, false);
         } else {
-          c.completed.bar.tooltip({
-            content
-          });
+          c.completed.bar.tooltip({ content });
         }
       }
 
       // Update remaining bar width
       if (ds.remaining) {
-        w = fixPercent(ds.completed.value, ds) + fixPercent(ds.remaining.value, ds);
-        updateWidth(c.remaining.bar, w, ds);
+        w = fixPercent(ds.remaining.value, ds);
+        updateWidth(c.remaining.bar, w, fixPercent(ds.completed.value, ds), ds);
         setOverlap();
 
         const remainingToolTipApi = c.remaining.bar.data('tooltip');
@@ -339,12 +342,7 @@ CompletionChart.prototype = {
         if (remainingToolTipApi) {
           remainingToolTipApi.setContent(content, false);
         } else {
-          c.remaining.bar.tooltip({
-            content,
-            placementOpts: {
-              x: ds.completed.bar.width() + 20
-            }
-          });
+          c.remaining.bar.tooltip({ content });
         }
       }
 
