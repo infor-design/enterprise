@@ -6,16 +6,13 @@ html[dir='rtl'] {
         margin-left: 20px;
         margin-right: inherit;
       }
-
-      .key {
-        float: right;
-      }
     }
 
     // A node in the tree
     .leaf {
       border-left: 1px solid $panel-border-color;
       border-right: 5px solid $ids-color-palette-slate-60;
+      padding-left: 5px;
 
       &.azure08 {
         border-left-color: $panel-border-color;
@@ -65,6 +62,7 @@ html[dir='rtl'] {
       .btn-icon {
         left: auto;
         right: 0;
+        margin-right: 10px;
       }
     }
 
@@ -87,9 +85,11 @@ html[dir='rtl'] {
           &::after {
             left: 410px;
           }
+
           .root::after {
             left: 150px;
           }
+
           .child-nodes > li .leaf {
             &::after {
               left: 188px;
@@ -111,6 +111,13 @@ html[dir='rtl'] {
             }
           }
         }
+      }
+    }
+
+    // Stacked
+    &.layout-is-stacked {
+      legend .key {
+        margin-left: 10px;
       }
     }
 
