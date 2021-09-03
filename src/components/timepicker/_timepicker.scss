@@ -216,7 +216,11 @@ html.is-safari {
   .field-short {
     .timepicker {
       + .trigger {
-        top: 3px;
+        top: 2px;
+
+        .icon {
+          margin-top: unset;
+        }
       }
     }
   }
