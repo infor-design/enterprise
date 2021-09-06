@@ -4,15 +4,18 @@
 
 - `[ApplicationMenu]` Added the ability to resize the app menu. ([#5193](https://github.com/infor-design/enterprise/issues/5193))
 - `[Completion Chart]` Added tooltip in completion chart. ([#5346](https://github.com/infor-design/enterprise/issues/5346))
+- `[Custom Builds]` Fixed a bug where importing the base Charts API directly would cause an error. ([#5463](https://github.com/infor-design/enterprise/issues/5463))
 - `[Datagrid]` Adds the ability to have a selection radio buttons on Datagrid. ([#5384](https://github.com/infor-design/enterprise/issues/5384))
 - `[Datagrid]` Added a `verticalScrollToEnd` property when you reached the end of the datagrid list. ([#5435](https://github.com/infor-design/enterprise/issues/5435))
 - `[Datagrid]` Added seperate mask options for filter row. ([#5519](https://github.com/infor-design/enterprise/issues/5519))
 - `[Editor]` Added support for `ol` type attribute to be able to use the other list styles (`alphabetically ordered (lowercase and uppercase)`, and `roman numbers (lowercase and uppercase)`) of `ol` tag. ([#5462](https://github.com/infor-design/enterprise/issues/5462))
+- `[Lookup]` Fixed a bug for short field and its icons not rendering properly. ([#5541](https://github.com/infor-design/enterprise/issues/5541))
 - `[Message]` Add info status handling to message.([#5459](https://github.com/infor-design/enterprise/issues/5459))
 - `[Message]` Add an optional close button setting to dismiss the message. ([#5464](https://github.com/infor-design/enterprise/issues/5464))
 - `[Modal]` Added the ability to have a custom tooltip on modal close button. ([#5391](https://github.com/infor-design/enterprise/issues/5391))
 - `[Swaplist]` Added option to copy items from lists instead of moving them. ([#5513](https://github.com/infor-design/enterprise/issues/5513))
 - `[Popdown]` Added a click outside event in popdown. ([#3618](https://github.com/infor-design/enterprise/issues/3618))
+- `[Timepicker]` Fixed a bug for timepicker icon not rendering properly. ([#5558](https://github.com/infor-design/enterprise/issues/5558))
 - `[Typography]` New typography paragraph text style. ([#5325](https://github.com/infor-design/enterprise/issues/5325))
 
 ## v4.55.0 Fixes
@@ -28,6 +31,8 @@
 - `[Datagrid]` Fix an XSS vulnerability in the name property of the columns objects array. ([#5428](https://github.com/infor-design/enterprise/issues/5428))
 - `[Datagrid]` Fixed an issue where the excel export did not download in MS Edge. ([#5507](https://github.com/infor-design/enterprise/issues/5507))
 - `[Editor]` Fixed an issue where font color was not working and extra spaces were get removed. ([#5137](https://github.com/infor-design/enterprise/issues/5137))
+- `[EmptyMessage]` Fixed a bug where the empty message chart were not properly rendered when using auto height widget/card. ([#5527](https://github.com/infor-design/enterprise/issues/5527))
+- `[Hierarchy]` Fixed line and icon alignment in hierarchy when in rtl format. ([#5544](https://github.com/infor-design/enterprise/issues/5544))
 - `[Message]` Added maxWidth setting to allow message to go full width when title is long. ([#5443](https://github.com/infor-design/enterprise/issues/5443))
 - `[Modal]` Fixed a bug where events are not properly called when calling stacked dialogs. ([#5471](https://github.com/infor-design/enterprise/issues/5471))
 - `[Timepicker]` Fixed a bug where the chinese time format doesn't render correctly after selecting time and periods (AM/PM). ([#5420](https://github.com/infor-design/enterprise/issues/5420))

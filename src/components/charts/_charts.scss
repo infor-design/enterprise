@@ -1,6 +1,9 @@
 // Chart - Svg and Css
 //==================================================//
 
+@import '../popupmenu/popupmenu';
+@import '../tooltip/tooltip';
+
 // Alternate Text message
 .chart-message {
   background-color: $ids-color-palette-ruby-10;
@@ -300,7 +303,7 @@
 // Legend Popup Styling
 .chart-popup-menu {
   display: flex;
-  
+
   .chart-popup-menu-color {
     height: 15px;
     width: 15px;

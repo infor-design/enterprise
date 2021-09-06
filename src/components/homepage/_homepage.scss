@@ -168,7 +168,9 @@
   @include auto-height;
 
   .chart-container {
+    margin-top: 0;
     padding-bottom: 20px;
+    transform: translateY(0);
   }
 }
 

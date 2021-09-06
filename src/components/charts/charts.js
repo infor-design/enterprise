@@ -5,6 +5,7 @@ import { DOM } from '../../utils/dom';
 import { theme } from '../theme/theme';
 import { Locale } from '../locale/locale';
 
+import '../popover/popover.jquery';
 import '../popupmenu/popupmenu.jquery';
 
 const charts = {};

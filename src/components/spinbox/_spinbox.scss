@@ -177,7 +177,7 @@ input::-webkit-inner-spin-button {
 .spinbox-md,
 .spinbox-lg {
   input {
-    width: calc(100% - 66px) !important;
+    width: calc(100% - 50px) !important;
   }
 }
 
@@ -196,19 +196,19 @@ input::-webkit-inner-spin-button {
 }
 
 .spinbox-sm {
-  width: 150px;
+  width: 130px;
 }
 
 .spinbox-mm {
-  width: 226px;
+  width: 206px;
 }
 
 .spinbox-md {
-  width: 300px;
+  width: 280px;
 }
 
 .spinbox-lg {
-  width: 400px;
+  width: 380px;
 }
 
 // When on smaller form factors make 400px fields go down to medium size.
