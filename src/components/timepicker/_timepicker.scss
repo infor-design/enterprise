@@ -206,6 +206,26 @@
   }
 }
 
+html.is-safari {
+  .timepicker {
+    + .trigger {
+      position: relative;
+    }
+  }
+
+  .field-short {
+    .timepicker {
+      + .trigger {
+        top: 2px;
+
+        .icon {
+          margin-top: unset;
+        }
+      }
+    }
+  }
+}
+
 // RTL Styles
 html[dir='rtl'] {
   .timepicker {

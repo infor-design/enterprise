@@ -305,6 +305,26 @@
   }
 }
 
+html.is-safari {
+  .lookup-wrapper {
+    .trigger {
+      position: relative;
+    }
+  }
+
+  .field-short {
+    .lookup-wrapper {
+      .trigger {
+        top: 2px;
+
+        .icon {
+          margin-top: unset;
+        }
+      }
+    }
+  }
+}
+
 // RTL Styles
 html[dir='rtl'] {
   .lookup-wrapper .trigger {
