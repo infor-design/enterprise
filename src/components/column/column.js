@@ -445,19 +445,6 @@ Column.prototype = {
       });
     }
 
-    let lineDataset = [{ data: [] }];
-    if (this.settings.useLine) {
-      dataArray.forEach(function (i) {
-        i.data.map(function (j, idx) {
-          if (j.isLine) {
-            i.data.splice(idx);
-            lineDataset[0].data.push(j);
-            lineDataset[0]['name'] = j.name;
-          }
-        });
-      });
-    }
-
     let targetBars;
     let pnBars;
     const barMaxWidth = 35;
@@ -483,6 +470,7 @@ Column.prototype = {
 
     const drawBars = function (isTargetBars) {
       let bars; //eslint-disable-line
+      let line; //eslint-disable-line
       isTargetBars = isPositiveNegative && isTargetBars;
 
       // Add the bars - done different depending on if grouped or singlular
@@ -647,6 +635,45 @@ Column.prototype = {
           })
           .attr('y', function () { return y(0) > height ? height : y(0); })
           .attr('height', function () { return 0; });
+
+        const parent = this.element.parent();
+        const width = parent.width() - 65 - 55;
+        // Get the max values
+        const getMaxes = (d, opt) => d3.max(d.data, d2 => (opt ? d2.value[opt] : d2.value));
+
+        // Calculate the Domain X and Y Ranges
+        const maxes = dataset.map(d => getMaxes(d));
+        const maxDataLen = d3.max(dataset.map(d => d.data.length));
+        
+        let lineDataset = [{ data: [] }];
+        const line = d3.line()
+          .x(d => d.value.x)
+          .y(d => d.value);
+        if (self.settings.useLine) {
+          dataArray.forEach(function (i, dIdx) {
+            i.data.map(function (j, idx) {
+              if (j.isLine) {
+                // i.data.splice(idx);
+                lineDataset[0].data.push(j);
+                lineDataset[0]['name'] = j.name;
+              }
+            });
+          });
+
+          lineDataset.forEach(function (d, lineIdx) {
+            const lineGroups = self.svg.append('g')
+              .attr('data-group-id', lineIdx)
+              .attr('class', 'line-group');
+
+            lineGroups.append('path')
+              .datum(d.data)
+              .attr('d', line(d.data))
+              .attr('stroke', '#000')
+              .attr('stroke-width', 2)
+              .attr('fill', 'none')
+              .attr('class', 'line')
+          })
+        }
 
         bars
           .transition().duration(self.settings.animate ? 600 : 0)

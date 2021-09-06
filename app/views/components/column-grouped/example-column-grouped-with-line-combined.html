@@ -22,6 +22,7 @@
           { 'name': 'Future Orders', 'value': 9 },
           { 'name': 'Margins', 'value': 9, 'isLine': true }
         ],
+        'line': 9,
         'name': 'Apples'
       },
       {
@@ -30,6 +31,7 @@
           { 'name': 'Future Orders', 'value': 0 },
           { 'name': 'Margins', 'value': 11, 'isLine': true }
         ],
+        'line': 11,
         'name': 'Snozberry'
       },
       {
@@ -38,6 +40,7 @@
           { 'name': 'Future Orders', 'value': 5 },
           { 'name': 'Margins', 'value': 4, 'isLine': true }
         ],
+        'line': 4,
         'name': 'Oranges'
       },
       {
@@ -46,6 +49,7 @@
           { 'name': 'Future Orders', 'value': 20 },
           { 'name': 'Margins', 'value': 9, 'isLine': true }
         ],
+        'value': 9,
         'name': 'Bananas'
       },
       {
@@ -54,6 +58,7 @@
           { 'name': 'Future Orders', 'value': 11 },
           { 'name': 'Margins', 'value': 6, 'isLine': true }
         ],
+        'value': 6,
         'name': 'Grapes'
       },
       {
@@ -62,6 +67,7 @@
           { 'name': 'Future Orders', 'value': 7 },
           { 'name': 'Margins', 'value': 15, 'isLine': true }
         ],
+        'value': 15,
         'name': 'Pears'
       }
     ];
@@ -71,6 +77,9 @@
       dataset: dataset,
       useLine: true,
     });
+
+    console.log($('#column-grouped-example').data('chart'));
+    console.log(dataset)
 
   });
 
