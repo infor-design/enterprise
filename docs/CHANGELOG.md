@@ -17,6 +17,7 @@
 ## v4.55.0 Fixes
 
 - `[Cards]` Fixed a bug card group toolbar overlaps then disappears after clicking the checkboxes. ([#5445](https://github.com/infor-design/enterprise/issues/5445))
+- `[Calendar]` Fixed month label not set on first enabled date of the month. ([#5581](https://github.com/infor-design/enterprise/issues/5581))
 - `[Calendar]` Fix on overlap in today text and calendar view changer when in mobile. ([#5438](https://github.com/infor-design/enterprise/issues/5438))
 - `[Charts]` Fixed a bug where automation ids is not properly rendered on legend, text and slices. ([#5441](https://github.com/infor-design/enterprise/issues/5441))
 - `[Datagrid]` Fixed a bug where the checkbox overlaps with the label when `editorOptions.multiple` is set to true. Also added formatters and editor for multiselect. ([NG#1075](https://github.com/infor-design/enterprise-ng/issues/1075))
@@ -31,7 +32,6 @@
 - `[Modal]` Fixed a bug where events are not properly called when calling stacked dialogs. ([#5471](https://github.com/infor-design/enterprise/issues/5471))
 - `[Timepicker]` Fixed a bug where the chinese time format doesn't render correctly after selecting time and periods (AM/PM). ([#5420](https://github.com/infor-design/enterprise/issues/5420))
 - `[Tree]` Fixed an issue where lengthy node text doesn't wrap to lines and cuts off. ([#5499](https://github.com/infor-design/enterprise/issues/5499))
-- `[Calendar]` fixed month label not set on first enabled date of the month. ([#5581](https://github.com/infor-design/enterprise/issues/5581))
 
 ## v4.54.1 Fixes
 
