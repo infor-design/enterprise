@@ -845,14 +845,14 @@ MonthView.prototype = {
     let rangeCurrentYear = year;
     let rangeMonth = month;
     let rangeYear = year;
-    const monthDaysMap = {};
+    const monthDaysMap = new Map();
     for (let i = 0; i <= monthDifference; i++) {
       rangeMonth = month + i;
       if (rangeMonth > 11) {
         rangeYear += 1;
         rangeMonth = 0;
       }
-      monthDaysMap[rangeMonth] = this.daysInMonth(rangeYear, rangeMonth + (this.isIslamic ? 0 : 1));
+      monthDaysMap.set(rangeMonth, this.daysInMonth(rangeYear, rangeMonth + (this.isIslamic ? 0 : 1)));
     }
 
     // Set selected state
@@ -861,7 +861,8 @@ MonthView.prototype = {
       el.addClass(`is-selected${(s.range.useRange ? ' range' : '')}`).attr('aria-selected', 'true').attr('tabindex', '0');
     };
 
-    let thisMonthDays = monthDaysMap[rangeCurrentMonth];
+    let thisMonthDays = monthDaysMap.get(rangeCurrentMonth);
+    const monthLabelsToSet = new Set(monthDaysMap.keys());
     this.dayMap = [];
     this.days.find('td').each(function () {
       // starting index should start from first day of the week that the start date is in
@@ -894,7 +895,7 @@ MonthView.prototype = {
           rangeCurrentMonth = 0;
           rangeCurrentYear++;
         }
-        thisMonthDays = monthDaysMap[rangeCurrentMonth];
+        thisMonthDays = monthDaysMap.get(rangeCurrentMonth);
         dayCnt = 1;
       }
 
@@ -947,7 +948,7 @@ MonthView.prototype = {
 
       self.setDisabled(th, rangeCurrentYear, rangeCurrentMonth, dayCnt);
       self.setLegendColor(th, rangeCurrentYear, rangeCurrentMonth, dayCnt);
-      self.setMonthLabel(th, rangeCurrentYear, rangeCurrentMonth, dayCnt, startDate);
+      self.setMonthLabel(th, rangeCurrentYear, rangeCurrentMonth, dayCnt, monthLabelsToSet);
       th.attr('role', 'link');
       dayCnt++;
     });
@@ -1200,23 +1201,13 @@ MonthView.prototype = {
    * @param {array} startDate to check.
    * @returns {void}
    */
-  setMonthLabel(elem, year, month, date, startDate) {
+  setMonthLabel(elem, year, month, date, monthLabelsToSet) {
     const s = this.settings;
     const isRippleClass = s.inPage ? ' class="is-ripple"' : '';
-    let minDate;
-    // starts labeling month from the first enabled date
-    let labelStartDate;
-    if (s.disable.minDate) {
-      minDate = new Date(s.disable.minDate);
-      labelStartDate = new Date(minDate.getTime() + 60 * 60 * 24 * 1000);
-    } else {
-      labelStartDate = dateUtils.firstDayOfWeek(startDate);
-    }
     const dateIsDisabled = this.isDateDisabled(year, month, date);
-    if (!dateIsDisabled &&
-        (month === startDate.getMonth() && labelStartDate && labelStartDate.getDate() === date || date === 1) ||
-      (!s.disable.minDate && (month === labelStartDate.getMonth() && labelStartDate.getDate() === date))) {
+    if (!dateIsDisabled && monthLabelsToSet.has(month)) {
       const dateText = elem.text();
+      monthLabelsToSet.delete(month);
       elem
         .html(`<span class="day-container${isRippleClass}"><span aria-hidden="true" class="day-text month-label">${this.currentCalendar.months.wide[month]} ${dateText}</span></span>`);
     }
