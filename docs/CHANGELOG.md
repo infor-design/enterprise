@@ -7,7 +7,7 @@
 - `[Custom Builds]` Fixed a bug where importing the base Charts API directly would cause an error. ([#5463](https://github.com/infor-design/enterprise/issues/5463))
 - `[Datagrid]` Adds the ability to have a selection radio buttons on Datagrid. ([#5384](https://github.com/infor-design/enterprise/issues/5384))
 - `[Datagrid]` Added a `verticalScrollToEnd` property when you reached the end of the datagrid list. ([#5435](https://github.com/infor-design/enterprise/issues/5435))
-- `[Datagrid]` Added seperate mask options for filter row. ([#5519](https://github.com/infor-design/enterprise/issues/5519))
+- `[Datagrid]` Added separate mask options for filter row. ([#5519](https://github.com/infor-design/enterprise/issues/5519))
 - `[Editor]` Added support for `ol` type attribute to be able to use the other list styles (`alphabetically ordered (lowercase and uppercase)`, and `roman numbers (lowercase and uppercase)`) of `ol` tag. ([#5462](https://github.com/infor-design/enterprise/issues/5462))
 - `[Lookup]` Fixed a bug for short field and its icons not rendering properly. ([#5541](https://github.com/infor-design/enterprise/issues/5541))
 - `[Message]` Add info status handling to message.([#5459](https://github.com/infor-design/enterprise/issues/5459))
@@ -38,6 +38,8 @@
 - `[Modal]` Fixed a bug where events are not properly called when calling stacked dialogs. ([#5471](https://github.com/infor-design/enterprise/issues/5471))
 - `[Timepicker]` Fixed a bug where the chinese time format doesn't render correctly after selecting time and periods (AM/PM). ([#5420](https://github.com/infor-design/enterprise/issues/5420))
 - `[Tree]` Fixed an issue where lengthy node text doesn't wrap to lines and cuts off. ([#5499](https://github.com/infor-design/enterprise/issues/5499))
+
+(51 Issues Solved This Release, Backlog Enterprise 129, Backlog Ng 29, 1222 Functional Tests, 1693 e2e Tests)
 
 ## v4.54.1 Fixes
 
