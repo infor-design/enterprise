@@ -10540,12 +10540,22 @@ Datagrid.prototype = {
     this.updateCellNode(row, cell, value, true);
   },
 
-  updateColumn(columnNumber, items) {
-    if (items instanceof Array) {
-      $.each(items, (index, item) => {
-        this.updateCell(index, columnNumber, Object.values(item)[0]);
-      });
+  /**
+   * Update values of one column from the dataset
+   * @param {string} columnId  The name of the column.
+   * @returns {void}
+   */
+  updateColumn(columnId) {
+    if (!columnId || !columnId.length) {
+      return;
     }
+
+    const self = this;
+    const columnNumber = self.columnIdxById(columnId);
+
+    $.each(self.settings.dataset, (index, item) => {
+      self.updateCell(index, columnNumber, item[columnId]);
+    });
   },
 
   /**

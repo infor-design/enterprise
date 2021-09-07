@@ -63,15 +63,29 @@
       });
 
       $('#load-column').click(function() {
-        const dataset3 = [{
-          activity: 'Assemble Paint 1',
-        }, {
-          activity: 'Inspect and Repair 2',
-        }, {
-          activity: 'Cleaning 3',
-        }];
+        const dataset2 = [{
+            productId: 1,
+            productName: 'Bumpers',
+            activity: 'Assemble Paint 1',
+            quantity: 1
+          }, {
+            productId: 2,
+            productName: 'Wheels',
+            activity: 'Inspect and Repair 2',
+            quantity: 2
+          }, {
+            productId: 3,
+            productName: 'Suspension',
+            activity: 'Cleaning 3',
+            quantity: 1
+          }
+        ];
 
-        $('#datagrid1').datagrid({ columns }).data('datagrid').updateColumn(2, dataset3);
+        $('#datagrid1').datagrid({
+            dataset: dataset2
+        });
+
+        $('#datagrid1').datagrid({ columns }).data('datagrid').updateColumn('activity');
       });
     });
   </script>
