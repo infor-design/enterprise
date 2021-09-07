@@ -636,19 +636,24 @@ Column.prototype = {
           .attr('y', function () { return y(0) > height ? height : y(0); })
           .attr('height', function () { return 0; });
 
-        const parent = this.element.parent();
-        const width = parent.width() - 65 - 55;
+        const x = d3.scaleLinear().range([0, width]);
         // Get the max values
         const getMaxes = (d, opt) => d3.max(d.data, d2 => (opt ? d2.value[opt] : d2.value));
 
         // Calculate the Domain X and Y Ranges
         const maxes = dataset.map(d => getMaxes(d));
+
         const maxDataLen = d3.max(dataset.map(d => d.data.length));
+        const entries = maxDataLen <= 1 ? maxDataLen : maxDataLen - 1;
+        const xScale = x.domain([0, d3.max(entries)]);
+        const yScale = y.domain([0, d3.max(maxes)]).nice();
+
+        const line = d3.line()
+          .x((d, n) => xScale(n))
+          .y(d => yScale(d.value));
         
         let lineDataset = [{ data: [] }];
-        const line = d3.line()
-          .x(d => d.value.x)
-          .y(d => d.value);
+
         if (self.settings.useLine) {
           dataArray.forEach(function (i, dIdx) {
             i.data.map(function (j, idx) {
