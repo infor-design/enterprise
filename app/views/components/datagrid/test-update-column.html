@@ -1,0 +1,77 @@
+<div class="row">
+    <div class="twelve columns">
+      <div class="toolbar" role="toolbar">
+        <div class="title">
+          Compressors
+        </div>
+        <div class="buttonset">
+
+          <label class="audible" for="common-toolbar-searchfield">Keyword Search</label>
+          <input id="common-toolbar-searchfield" name="common-toolbar-searchfield" class="searchfield" />
+
+          <button type="button" class="btn" id="load-column">
+            <span>Load Column</span>
+          </button>
+        </div>
+      </div>
+      <div id="datagrid1"></div>
+    </div>
+  </div>
+
+  <script>
+    $('body').one('initialized', function() {
+      const columns = [{
+          field: 'productId',
+          id: 'productId',
+          name: 'Product Id'
+        }, {
+          field: 'productName',
+          id: 'productName',
+          name: 'Product Name'
+        }, {
+          field: 'activity',
+          id: 'activity',
+          name: 'Activity'
+        }, {
+          field: 'quantity',
+          id: 'quantity',
+          name: 'Quantity'
+        }
+      ];
+      const dataset = [{
+          productId: 1,
+          productName: 'Bumpers',
+          activity: 'Assemble Paint',
+          quantity: 1
+        }, {
+          productId: 2,
+          productName: 'Wheels',
+          activity: 'Inspect and Repair',
+          quantity: 2
+        }, {
+          productId: 3,
+          productName: 'Suspension',
+          activity: 'Inspect and Repair',
+          quantity: 1
+        }
+      ];
+
+      $('#datagrid1').datagrid({
+        columns: columns,
+        dataset: dataset,
+        toolbar: {title: 'Data Grid Header Title', collapsibleFilter: true, results: true, keywordFilter: true, actions: true, rowHeight: true}
+      });
+
+      $('#load-column').click(function() {
+        const dataset3 = [{
+          activity: 'Assemble Paint 1',
+        }, {
+          activity: 'Inspect and Repair 2',
+        }, {
+          activity: 'Cleaning 3',
+        }];
+
+        $('#datagrid1').datagrid({ columns }).data('datagrid').updateColumn(2, dataset3);
+      });
+    });
+  </script>
