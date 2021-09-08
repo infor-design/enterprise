@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Dropdown: Disabled Function Keys</h2>
+    <p>Hitting function keys F1 to F12 should do nothing.</p>
+    <p></p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <label for="big-dropdown">Test Dropdown</label>
+      <select id="big-dropdown" class="dropdown no-init"></select>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+    var elem = $('#big-dropdown'),
+      cache;
+
+    function dropdownSource(response, term) {
+      if (cache !== undefined) {
+        return response(cache);
+      }
+
+      var request = $.getJSON('{{basepath}}api/garbage?size=2000&return=json');
+
+      request.done(function (data) {
+        cache = data;
+        response(data);
+      });
+    }
+
+    elem.dropdown({
+      source: dropdownSource
+    });
+  });
+</script>
