@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.56.0 Fixes
+
+- `[Dropdown]` Fixed disabling of function keys F1 to F12. ([#4976](https://github.com/infor-design/enterprise/issues/4976))
+
 ## v4.55.0 Features
 
 - `[ApplicationMenu]` Added the ability to resize the app menu. ([#5193](https://github.com/infor-design/enterprise/issues/5193))
