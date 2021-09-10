@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.56.0 Features
+
+- `[Icon]` Updated the launch icon to be less bulky. ([#5595](https://github.com/infor-design/enterprise/issues/5595))
+
 ## v4.55.0 Features
 
 - `[ApplicationMenu]` Added the ability to resize the app menu. ([#5193](https://github.com/infor-design/enterprise/issues/5193))
