@@ -148,6 +148,43 @@ describe('Popdown Puppeteer Tests', () => {
     });
   });
 
+  describe('Popdown/Lookup integration Tests', () => {
+    const url = 'http://localhost:4000/components/popdown/test-contains-lookup.html?layout=nofrills';
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
+    });
+
+    it('should show the title', async () => {
+      await expect(page.title()).resolves.toMatch('IDS Enterprise');
+    });
+
+    it('Should remain open when an inner Lookup component is opened', async () => {
+    // Open the Popdown
+      await page.click('#popdown-trigger');
+      // await page.waitForSelector('.popdown.bottom.visible', { visible: true });
+      const popdown = () => page.evaluate(() => !!document.querySelector('.popdown.bottom.visible'));
+      expect(await popdown()).toBe(true);
+
+      // Open the Lookup
+      await page.click('.btn-icon');
+      // await page.waitForSelector('.lookup-modal', { visible: true });
+      const modal = await page.evaluate(() => !!document.querySelector('.lookup-modal'));
+      expect(modal).toBe(true);
+
+      // Test that the Popdown remained open
+      expect(await popdown()).toBe(true);
+
+      // Choose an option from the Lookup
+      await page.click('#lookup-datagrid > div.datagrid-wrapper.center.scrollable-x.scrollable-y > table > tbody > tr:nth-child(1) > td:nth-child(2) > div > a');
+      const element = await page.$('#lookup-input');
+      const input = await (await element.getProperty('value')).jsonValue();
+      expect(input).toBe('2142201');
+
+      // Test that the Popdown remained open
+      expect(await popdown()).toBe(true);
+    });
+  });
+
   describe('Outside Event Tests', () => {
     const url = 'http://localhost:4000/components/popdown/test-click-outside.html';
     beforeAll(async () => {
@@ -179,4 +216,3 @@ describe('Popdown Puppeteer Tests', () => {
     });
   });
 });
-
