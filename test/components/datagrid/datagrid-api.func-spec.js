@@ -480,13 +480,13 @@ describe('Datagrid API', () => { //eslint-disable-line
     expect(document.querySelector('tr:nth-child(2) td:nth-child(2)').innerText.substr(0, 4)).toEqual('Test');
   });
 
-  fit('Should be able to update a cells in a column with the api', () => {
-    let dataset2 = JSON.parse(JSON.stringify(originalData));
-    dataset2[0].activity = "Assemble Paint 1"; // Updated another column besides product name
-    dataset2[0].productName = "Compressor 1";
-    dataset2[1].productName = "Different Compressor 2";
-    dataset2[2].productName = "Compressor 3";
-    dataset2[6].productName = "Some Compressor 7";
+  it('Should be able to update a cells in a column with the api', () => {
+    const dataset2 = JSON.parse(JSON.stringify(originalData));
+    dataset2[0].activity = 'Assemble Paint 1'; // Updated another column besides product name
+    dataset2[0].productName = 'Compressor 1';
+    dataset2[1].productName = 'Different Compressor 2';
+    dataset2[2].productName = 'Compressor 3';
+    dataset2[6].productName = 'Some Compressor 7';
 
     datagridObj.settings.dataset = dataset2;
     datagridObj.updateColumn('productName');
