@@ -1948,7 +1948,7 @@ Tree.prototype = {
       // Icon
       const classAttribute = node.getAttribute('class');
       if (classAttribute && classAttribute.indexOf('icon') > -1) {
-        entry.icon = classAttribute;
+        entry.icon = classAttribute.replace(/\s?hide-focus\s?/g, '');
       }
 
       // Children
