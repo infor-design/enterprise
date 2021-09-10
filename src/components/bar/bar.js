@@ -32,6 +32,7 @@ const COMPONENT_NAME = 'bar';
  * @param {boolean} [settings.useLogScale=false] If true log scale is enabled.
  * @param {object} [settings.ticks=null] Settings for the chart ticks. Can set ticks: {format: d3Format, number: n}
  * @param {boolean} [settings.showLines=true] Show the in the axis lines or not.
+ * @param {boolean} [settings.selectable=true] Ability to disable selections of the charts.
  * @param {number} [settings.labelFactor=1.27] How far out than the outer circle should the labels be placed, this
  * may be useful to adjust for some labels.
  * @param {number} [settings.wrapWidth=60] The number of pixels after which a label needs to be given a new line.
@@ -62,6 +63,7 @@ const BAR_DEFAULTS = {
   tooltip: null,
   useLogScale: false,
   ticks: null,
+  selectable: true,
   showLines: true,
   labelFactor: 1.27,
   wrapWidth: 60,
@@ -664,7 +666,9 @@ Bar.prototype = {
         timer = setTimeout(function () {
           if (!prevent) {
             // Run click action
-            self.doClickAction(d, i, selector);
+            if (self.settings.selectable) {
+              self.doClickAction(d, i, selector);
+            }
           }
           prevent = false;
         }, delay);
