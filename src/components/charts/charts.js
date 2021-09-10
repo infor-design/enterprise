@@ -591,7 +591,6 @@ charts.handleElementClick = function (idx, line, series, settings) {
   }
 
   if (elem.selectionObj && settings?.selectable) {
-    console.log("elem.data", elem.data);
     charts.selectElement(d3.select(elem.selectionObj.nodes()[idx]), elem.selectionInverse, elem.data, undefined, settings.dataset, noTrigger); // eslint-disable-line
   }
 };
