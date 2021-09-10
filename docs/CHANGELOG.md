@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.56.0 Features
+
+- `[Charts]` Added ability to disable the selection of the charts including the legend. ([#2736](https://github.com/infor-design/enterprise/issues/2736))
+
 ## v4.55.0 Features
 
 - `[ApplicationMenu]` Added the ability to resize the app menu. ([#5193](https://github.com/infor-design/enterprise/issues/5193))
@@ -25,7 +29,6 @@
 - `[Calendar]` Fix on overlap in today text and calendar view changer when in mobile. ([#5438](https://github.com/infor-design/enterprise/issues/5438))
 - `[Charts]` Fixed a bug where automation ids is not properly rendered on legend, text and slices. ([#5441](https://github.com/infor-design/enterprise/issues/5441))
 - `[Datagrid]` Fixed a bug where the checkbox overlaps with the label when `editorOptions.multiple` is set to true. Also added formatters and editor for multiselect. ([NG#1075](https://github.com/infor-design/enterprise-ng/issues/1075))
-- `[Datagrid]` Fixed an issue where tree list indentation is not left aligned when row has no children and datagrid row height is extra small or small. ([#5487](https://github.com/infor-design/enterprise/issues/5487))
 - `[Datagrid]` Fixed an issue where tree list indentation is not left aligned when row has no children and datagrid row height is extra small or small. ([#5487](https://github.com/infor-design/enterprise/issues/5487))
 - `[Message]` Added maxWidth setting to allow message to go full width when title is long. ([#5443](https://github.com/infor-design/enterprise/issues/5443))
 - `[Datagrid]` Fix unescaped HTML of range value to match escaped HTML of data value. ([#4832](https://github.com/infor-design/enterprise/issues/4832))
