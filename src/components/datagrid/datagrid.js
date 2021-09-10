@@ -1435,6 +1435,7 @@ Datagrid.prototype = {
       if (datepickerApi && typeof datepickerApi.destroy === 'function') {
         datepickerApi.destroy();
       }
+
       input.datepicker(options);
     };
 
@@ -1676,7 +1677,13 @@ Datagrid.prototype = {
               const svg = rowElem.find('.btn-filter .icon-dropdown:first');
               const operator = svg.getIconName().replace('filter-', '');
               if (col.filterType === 'date') {
-                self.filterSetDatepicker(input, operator, col.editorOptions);
+                const datepickerOptions = col.editorOptions || {};
+
+                if (col.dateFormat) {
+                  datepickerOptions.dateFormat = col.dateFormat;
+                }
+
+                self.filterSetDatepicker(input, operator, datepickerOptions);
               } else {
                 const maskOptions = col.filterMaskOptions ? col.filterMaskOptions : col.maskOptions;
                 const rangeDelimeter = maskOptions?.rangeNumberDelimeter || '-';
