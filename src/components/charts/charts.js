@@ -411,14 +411,14 @@ charts.addLegend = function (series, chartType, settings, container) {
     }
 
     if (series[i].display && series[i].display === 'block') {
-      seriesLine = `<span class="chart-legend-item${extraClass}" tabindex="0" role="button"></span>`;
+      seriesLine = `<span class="chart-legend-item${extraClass}" tabindex="${settings.selectable ? 0 : -1}" role="button"></span>`;
     }
 
     if (isTwoColumn) {
       if (exceedsMaxWidth && isBottom) {
-        seriesLine = `<span index-id="chart-legend-${i}" class="chart-legend-item${extraClass} is-one-line" tabindex="0" role="button"></span>`;
+        seriesLine = `<span index-id="chart-legend-${i}" class="chart-legend-item${extraClass} is-one-line" tabindex="${settings.selectable ? 0 : -1}" role="button"></span>`;
       } else {
-        seriesLine = `<span index-id="chart-legend-${i}" class="chart-legend-item${extraClass} is-two-column" tabindex="0" role="button"></span>`;
+        seriesLine = `<span index-id="chart-legend-${i}" class="chart-legend-item${extraClass} is-two-column" tabindex="${settings.selectable ? 0 : -1}" role="button"></span>`;
       }
     }
     seriesLine = $(seriesLine);
