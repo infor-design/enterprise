@@ -3,6 +3,7 @@
 ## v4.56.0 Fixes
 
 - `[Datagrid]` Date format should reflect in date filter when range option is selected. ([#4864](https://github.com/infor-design/enterprise/issues/4864))
+- `[Dropdown]` Fixed disabling of function keys F1 to F12. ([#4976](https://github.com/infor-design/enterprise/issues/4976))
 
 ## v4.55.0 Features
 
