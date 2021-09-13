@@ -4,13 +4,18 @@
 
 - `[Datagrid]` Adds the ability to update values of a specific column on Datagrid. ([#3491](https://github.com/infor-design/enterprise/issues/3491))
 
+## v4.56.0 Fixes
+
+- `[Dropdown]` Fixed disabling of function keys F1 to F12. ([#4976](https://github.com/infor-design/enterprise/issues/4976))
+
 ## v4.55.0 Features
 
 - `[ApplicationMenu]` Added the ability to resize the app menu. ([#5193](https://github.com/infor-design/enterprise/issues/5193))
+- `[Completion Chart]` Added tooltip in completion chart. ([#5346](https://github.com/infor-design/enterprise/issues/5346))
 - `[Custom Builds]` Fixed a bug where importing the base Charts API directly would cause an error. ([#5463](https://github.com/infor-design/enterprise/issues/5463))
 - `[Datagrid]` Adds the ability to have a selection radio buttons on Datagrid. ([#5384](https://github.com/infor-design/enterprise/issues/5384))
 - `[Datagrid]` Added a `verticalScrollToEnd` property when you reached the end of the datagrid list. ([#5435](https://github.com/infor-design/enterprise/issues/5435))
-- `[Datagrid]` Added seperate mask options for filter row. ([#5519](https://github.com/infor-design/enterprise/issues/5519))
+- `[Datagrid]` Added separate mask options for filter row. ([#5519](https://github.com/infor-design/enterprise/issues/5519))
 - `[Editor]` Added support for `ol` type attribute to be able to use the other list styles (`alphabetically ordered (lowercase and uppercase)`, and `roman numbers (lowercase and uppercase)`) of `ol` tag. ([#5462](https://github.com/infor-design/enterprise/issues/5462))
 - `[Lookup]` Fixed a bug for short field and its icons not rendering properly. ([#5541](https://github.com/infor-design/enterprise/issues/5541))
 - `[Message]` Add info status handling to message.([#5459](https://github.com/infor-design/enterprise/issues/5459))
@@ -24,6 +29,7 @@
 ## v4.55.0 Fixes
 
 - `[Cards]` Fixed a bug card group toolbar overlaps then disappears after clicking the checkboxes. ([#5445](https://github.com/infor-design/enterprise/issues/5445))
+- `[Calendar]` Fixed month label not set on first enabled date of the month. ([#5581](https://github.com/infor-design/enterprise/issues/5581))
 - `[Calendar]` Fix on overlap in today text and calendar view changer when in mobile. ([#5438](https://github.com/infor-design/enterprise/issues/5438))
 - `[Charts]` Fixed a bug where automation ids is not properly rendered on legend, text and slices. ([#5441](https://github.com/infor-design/enterprise/issues/5441))
 - `[Datagrid]` Fixed a bug where the checkbox overlaps with the label when `editorOptions.multiple` is set to true. Also added formatters and editor for multiselect. ([NG#1075](https://github.com/infor-design/enterprise-ng/issues/1075))
@@ -40,6 +46,8 @@
 - `[Modal]` Fixed a bug where events are not properly called when calling stacked dialogs. ([#5471](https://github.com/infor-design/enterprise/issues/5471))
 - `[Timepicker]` Fixed a bug where the chinese time format doesn't render correctly after selecting time and periods (AM/PM). ([#5420](https://github.com/infor-design/enterprise/issues/5420))
 - `[Tree]` Fixed an issue where lengthy node text doesn't wrap to lines and cuts off. ([#5499](https://github.com/infor-design/enterprise/issues/5499))
+
+(51 Issues Solved This Release, Backlog Enterprise 129, Backlog Ng 29, 1222 Functional Tests, 1693 e2e Tests)
 
 ## v4.54.1 Fixes
 
