@@ -1,5 +1,8 @@
 # What's New with Enterprise
 
+## v4.56.0 Fixes
+
+- `[Datagrid]` Date format should reflect in date filter when range option is selected. ([#4864](https://github.com/infor-design/enterprise/issues/4864))
 ## v4.55.0 Features
 
 - `[ApplicationMenu]` Added the ability to resize the app menu. ([#5193](https://github.com/infor-design/enterprise/issues/5193))
@@ -27,7 +30,6 @@
 - `[Datagrid]` Fixed a bug where the checkbox overlaps with the label when `editorOptions.multiple` is set to true. Also added formatters and editor for multiselect. ([NG#1075](https://github.com/infor-design/enterprise-ng/issues/1075))
 - `[Datagrid]` Fixed an issue where tree list indentation is not left aligned when row has no children and datagrid row height is extra small or small. ([#5487](https://github.com/infor-design/enterprise/issues/5487))
 - `[Datagrid]` Fixed an issue where tree list indentation is not left aligned when row has no children and datagrid row height is extra small or small. ([#5487](https://github.com/infor-design/enterprise/issues/5487))
-- `[Datagrid]` Date format should reflect in date filter when range option is selected. ([#4864](https://github.com/infor-design/enterprise/issues/4864))
 - `[Message]` Added maxWidth setting to allow message to go full width when title is long. ([#5443](https://github.com/infor-design/enterprise/issues/5443))
 - `[Datagrid]` Fix unescaped HTML of range value to match escaped HTML of data value. ([#4832](https://github.com/infor-design/enterprise/issues/4832))
 - `[Datagrid]` Fix an XSS vulnerability in the name property of the columns objects array. ([#5428](https://github.com/infor-design/enterprise/issues/5428))
