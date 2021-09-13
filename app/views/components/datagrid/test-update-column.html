@@ -1,0 +1,91 @@
+<div class="row">
+    <div class="twelve columns">
+      <div class="toolbar" role="toolbar">
+        <div class="title">
+          Compressors
+        </div>
+        <div class="buttonset">
+
+          <label class="audible" for="common-toolbar-searchfield">Keyword Search</label>
+          <input id="common-toolbar-searchfield" name="common-toolbar-searchfield" class="searchfield" />
+
+          <button type="button" class="btn" id="load-activity">
+            <span>Load Activity</span>
+          </button>
+        </div>
+      </div>
+      <div id="datagrid1"></div>
+    </div>
+  </div>
+
+  <script>
+    var api = null;
+    $('body').one('initialized', function() {
+      const columns = [{
+          field: 'productId',
+          id: 'productId',
+          name: 'Product Id'
+        }, {
+          field: 'productName',
+          id: 'productName',
+          name: 'Product Name'
+        }, {
+          field: 'activity',
+          id: 'activity',
+          name: 'Activity'
+        }, {
+          field: 'quantity',
+          id: 'quantity',
+          name: 'Quantity'
+        }
+      ];
+      const dataset = [{
+          productId: 1,
+          productName: 'Bumpers',
+          activity: 'Assemble Paint',
+          quantity: 1
+        }, {
+          productId: 2,
+          productName: 'Wheels',
+          activity: 'Inspect and Repair',
+          quantity: 2
+        }, {
+          productId: 3,
+          productName: 'Suspension',
+          activity: 'Inspect and Repair',
+          quantity: 1
+        }
+      ];
+
+      $('#datagrid1').datagrid({
+        columns: columns,
+        dataset: dataset,
+        toolbar: {title: 'Data Grid Header Title', collapsibleFilter: true, results: true, keywordFilter: true, actions: true, rowHeight: true}
+      });
+
+      api = $('#datagrid1').data('datagrid');
+
+      $('#load-activity').click(function() {
+        const dataset2 = [{
+            productId: 1,
+            productName: 'Bumpers 1',
+            activity: 'Assemble Paint 1',
+            quantity: 1
+          }, {
+            productId: 2,
+            productName: 'Wheels 2',
+            activity: 'Inspect and Repair 2',
+            quantity: 2
+          }, {
+            productId: 3,
+            productName: 'Suspension 3',
+            activity: 'Cleaning 3',
+            quantity: 1
+          }
+        ];
+
+        api.settings.dataset = dataset2;
+        api.updateColumn('activity');
+      });
+    });
+  </script>
