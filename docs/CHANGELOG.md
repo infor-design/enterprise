@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.56.0 Features
+
+- `[Datagrid]` Adds the ability to update values of a specific column on Datagrid. ([#3491](https://github.com/infor-design/enterprise/issues/3491))
+
 ## v4.56.0 Fixes
 
 - `[Dropdown]` Fixed disabling of function keys F1 to F12. ([#4976](https://github.com/infor-design/enterprise/issues/4976))
