@@ -10541,6 +10541,24 @@ Datagrid.prototype = {
   },
 
   /**
+   * Update values of one column from the dataset
+   * @param {string} columnId  The name of the column.
+   * @returns {void}
+   */
+  updateColumn(columnId) {
+    if (!columnId || !columnId.length) {
+      return;
+    }
+
+    const self = this;
+    const columnNumber = self.columnIdxById(columnId);
+
+    $.each(self.settings.dataset, (index, item) => {
+      self.updateCell(index, columnNumber, item[columnId]);
+    });
+  },
+
+  /**
    * Update one cell with a specific value
    * @private
    * @param {number} row  The row index.
