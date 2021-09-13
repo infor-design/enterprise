@@ -3,6 +3,7 @@
 ## v4.56.0 Features
 
 - `[Charts]` Added ability to disable the selection of the charts including the legend. ([#2736](https://github.com/infor-design/enterprise/issues/2736))
+
 ## v4.56.0 Fixes
 
 - `[Dropdown]` Fixed disabling of function keys F1 to F12. ([#4976](https://github.com/infor-design/enterprise/issues/4976))
