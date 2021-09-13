@@ -878,9 +878,9 @@ Line.prototype = {
       }
     });
 
-    if (selected > 0 && self.setings.selectable) {
+    if (selected > 0 && self.settings.selectable) {
       self.initialSelectCall = true;
-      charts.selectElement(selector, self.svg.selectAll('.line-group'), selectorData, self.element, self.settings.dataset, self.initialSelectCall, self.settings.selectable);
+      charts.selectElement(selector, self.svg.selectAll('.line-group'), selectorData, self.element, self.settings.dataset, self.initialSelectCall);
     }
     self.initialSelectCall = false;
   },
