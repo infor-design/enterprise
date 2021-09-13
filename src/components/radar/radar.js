@@ -24,6 +24,7 @@ const RADAR_DEFAULTS = {
   dotRadius: 3,
   opacityCircles: 0,
   strokeWidth: 1,
+  selectable: true,
   roundStrokes: true,
   showCrosslines: true,
   showAxisLabels: true,
@@ -59,6 +60,7 @@ const RADAR_DEFAULTS = {
  * @param {boolean} [settings.showCrosslines = true] Set to false to hide the cross line axes.
  * @param {boolean} [settings.showAxisLabels = true] Set to false to hide percent labels.
  * @param {number} [settings.opacityArea = 0.2] The opacity value of the blobs. This is set to the correct Infor Style.
+ * @param {boolean} [settings.selectable=true] Ability to enable/disable the selection of chart.
  * @param {number} [settings.dotRadius = 3] The size of the colored circles of each blog. Set to zero to remove dots.
  * @param {number} [settings.opacityCircles  = 0]The opacity of the circles of each blob 0 or .1 are good values.
  * This is set to the correct Infor Style.
@@ -383,13 +385,16 @@ Radar.prototype = {
       // It alow to cancel when the double click event happens
       .on(`click.${self.namespace}`, function (d, i) {
         const selector = this;
-        timer = setTimeout(function () {
-          if (!prevent) {
-            // Run click action
-            self.doClickAction(d, i, selector, tooltipInterval, svg);
-          }
-          prevent = false;
-        }, delay);
+
+        if (self.settings.selectable) {
+          timer = setTimeout(function () {
+            if (!prevent) {
+              // Run click action
+              self.doClickAction(d, i, selector, tooltipInterval, svg);
+            }
+            prevent = false;
+          }, delay);
+        }
       })
       .on(`dblclick.${self.namespace}`, function (d, i) {
         const selector = this;
