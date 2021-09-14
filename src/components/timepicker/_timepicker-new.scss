@@ -47,6 +47,17 @@ html.is-firefox {
   }
 }
 
+html.is-safari {
+  .form-layout-compact {
+    .timepicker {
+      + .trigger,
+      + .tooltip-description + .trigger {
+        top: 2px;
+      }
+    }
+  }
+}
+
 html[dir='rtl'] {
   .timepicker {
     + .trigger,
