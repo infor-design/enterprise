@@ -479,83 +479,6 @@ Tabs.prototype = {
     return this;
   },
 
-  createDraggable() {
-    // Sortable with touch devices, only support to module and vertical tabs.
-    if (env.features.touch && !(this.isModuleTabs() || this.isVerticalTabs())) {
-      return;
-    }
-
-    const self = this;
-    const tablist = this.tablist ? this.tablist[0] : null;
-    if (tablist) {
-      const excludeSel = '.is-disabled, .separator, .application-menu-trigger';
-      const excludeEl = [].slice.call(tablist.querySelectorAll(excludeSel));
-      excludeEl.forEach(el => el.setAttribute('data-arrange-exclude', 'true'));
-      tablist.setAttribute('data-options', '{"placeholderCssClass": "tab arrange-placeholder", "useItemDimensions": "true"}');
-
-      // Set arrange
-      tablist.classList.add('arrange');
-      let arrangeApi = this.tablist.data('arrange');
-      if (!arrangeApi) {
-        arrangeApi = this.tablist.arrange().data('arrange');
-      }
-
-      const className = 'has-placeholder';
-      let tabContainer = null;
-      if (!this.isModuleTabs() && !this.isVerticalTabs() && !this.isHeaderTabs()) {
-        this.tablist
-          .on('beforearrange.tabs', function () {
-            tabContainer = $(this).closest('.tab-container')[0];
-          })
-          .on('draggingarrange.tabs', () => {
-            tabContainer?.classList.add(className);
-          });
-      }
-
-      this.tablist.on('dragend.tabs', function (dragendEvent, pos) {
-        const targetElement = $(document.elementFromPoint(dragendEvent.pageX, dragendEvent.pageY));
-        const selectedTab = $(dragendEvent.target).attr('href').replace('#', ''); // tabId (multitabs)
-        const targetTabsetName = targetElement.parents('.module-tabs'); // tabContainer
-        const tabId = targetTabsetName.attr('data-multitabs'); // tabId (tabs)
-
-        let tabMarkup;
-        let panelMarkup;
-        const api = targetTabsetName.data('tabs');
-        const tab = api.getTab(null, $(dragendEvent.target));
-        
-        if (self.element.parent()[0] == api.element.parent()[0]) {
-          return;
-        }
-        
-        tabMarkup = tab.clone();
-        panelMarkup = self.getPanel(selectedTab).children();
-
-        self.remove(selectedTab);
-        api.add(tabId, {
-          name: tabMarkup.children('a').text().trim(),
-          content: panelMarkup,
-          doActivate: true
-        });
-        
-        if (self.element.children('.tab-list').children().length < 1) {
-          self.element.parent().addClass('is-hidden');
-        }
-
-        if (api.element.children('.tab-list').children().length < 1) {
-          api.element.parent().removeClass('is-hidden');
-        }
-      });
-
-      this.tablist.on('arrangeupdate.tabs', () => {
-        tabContainer?.classList.remove(className);
-      })
-
-      this.element.on('aftertabadded.tabs', () => {
-        arrangeApi?.updated();
-      });
-    }
-  },
-
   /**
    * Create tabs to be sortable by drag and drop.
    * @private
@@ -563,6 +486,7 @@ Tabs.prototype = {
    */
   createSortable() {
     const s = this.settings;
+    const self = this;
     if (!s.sortable) {
       return;
     }
@@ -596,6 +520,54 @@ Tabs.prototype = {
             tabContainer?.classList.add(className);
           });
       }
+
+      this.tablist.on('dragend.tabs', (dragendEvent) => {
+        const dragElement = $(dragendEvent.target);
+        const targetElement = $(document.elementFromPoint(dragendEvent.pageX, dragendEvent.pageY));
+
+        let targetTabsetName = targetElement.parents('.module-tabs');
+        if (dragElement.get(0) !== targetElement.get(0)) {
+          if (dragElement.parents('.multitabs-section')[0] === targetElement.parents('.multitabs-section')[0]) {
+            $('.multitabs-section').each((index, item) => {
+              if (dragElement.parents('.multitabs-section')[0] !== item) {
+                targetTabsetName = $(item).children('.module-tabs');
+              }
+            });
+          }
+        }
+
+        const selectedTab = dragElement.attr('href').replace('#', '');
+        const api = targetTabsetName.data('tabs');
+
+        if (api === undefined) {
+          return;
+        }
+
+        const tab = api.getTab(null, dragElement);
+
+        if (self.element.parent()[0] === api.element.parent()[0]) {
+          return;
+        }
+
+        const tabMarkup = tab.clone();
+        const panelMarkup = self.getPanel(selectedTab).children();
+
+        self.remove(selectedTab);
+        api.add(selectedTab, {
+          name: tabMarkup.children('a').text().trim(),
+          content: panelMarkup,
+          doActivate: true
+        });
+
+        if (self.element.children('.tab-list').children().length < 1) {
+          self.element.parent().addClass('is-hidden');
+        }
+
+        if (api.element.children('.tab-list').children().length > 0) {
+          api.element.parent().removeClass('is-hidden');
+        }
+      });
+
       this.tablist.on('arrangeupdate.tabs', () => {
         tabContainer?.classList.remove(className);
       });
@@ -2552,8 +2524,8 @@ Tabs.prototype = {
     }
 
     // Build
-    const tabHeaderMarkup = $('<li role="presentation" class="tab"></li>');
-    const anchorMarkup = $(`<a href="#${tabId}" role="tab" aria-expanded="false" aria-selected="false" tabindex="-1">${xssUtils.escapeHTML(options.name)}</a>`);
+    const tabHeaderMarkup = $('<li class="tab" role="presentation"></li>');
+    const anchorMarkup = $(`<a id="#${tabId}" href="#${tabId}" role="tab" aria-expanded="false" aria-selected="false" tabindex="-1">${xssUtils.escapeHTML(options.name)}</a>`);
     const tabContentMarkup = this.createTabPanel(tabId, options.content);
     let iconMarkup;
 

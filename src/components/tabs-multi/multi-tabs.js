@@ -8,7 +8,8 @@ const COMPONENT_NAME = 'multitabs';
 
 // Default Settings for MultiTabs
 const MULTITABS_DEFAULTS = {
-  tabContainers: []
+  tabContainers: [],
+  sortableTabs: false
 };
 
 // Pre-defined names used internally for tab containers
@@ -78,11 +79,10 @@ MultiTabs.prototype = {
         tabContainer.tabs();
         api = tabContainer.data('tabs');
       }
-      // api.settings.sortable = true;
-      api.multitabsID = propname;
 
-      api.createDraggable();
-      // api.createSortable();
+      api.settings.sortable = self.settings.sortableTabs;
+      api.multitabsID = propname;
+      api.createSortable();
 
       tabContainer.attr('data-multitabs', propname);
       self.tabContainers[propname] = tabContainer;
@@ -143,7 +143,7 @@ MultiTabs.prototype = {
 
     allTabContainers.each(function () {
       const api = $(this).data('tabs');
-      const tab  = api.getTab(null, tabId);
+      const tab = api.getTab(null, tabId);
       // No tabs exist by this id
       if (tab === null) {
         return;
