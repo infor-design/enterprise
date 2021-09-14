@@ -21,6 +21,13 @@ describe('Column Grouped Puppeteer Tests', () => {
       expect(seriesGroup).toBeTruthy();
     });
 
+    it('should not show pointer as a cursor', async () => {
+      await page.hover('#columngrouped-c2-jan-bar');
+      await page.waitForTimeout(200);
+
+      expect(await page.evaluate(() => document.querySelector('#columngrouped-c2-jan-bar').style.cursor)).toContain('inherit');
+    });
+
     it('should not able to tab through the legends', async () => {
       // eslint-disable-next-line
       const legendTabIndex = await page.evaluate(() => Array.from(document.querySelectorAll('.chart-legend-item')).map(el => el.tabIndex));

@@ -377,6 +377,7 @@ Radar.prototype = {
       .attr('d', d => radarLine(d))
       .style('fill', (d, i) => colors(i))
       .style('fill-opacity', s.opacityArea)
+      .style('cursor', !self.settings.selectable ? 'inherit' : 'pointer')
       .on(`contextmenu.${self.namespace}`, function (d) {
         charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], d);
       })
@@ -418,6 +419,7 @@ Radar.prototype = {
       .attr('d', d => radarLine(d))
       .style('stroke-width', `${s.strokeWidth}px`)
       .style('stroke', (d, i) => colors(i))
+      .style('cursor', !self.settings.selectable ? 'inherit' : 'pointer')
       .style('fill', 'none')
       .style('filter', s.opacityCircles > 0 ? 'url(#glow)' : '');
 

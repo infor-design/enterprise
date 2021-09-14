@@ -645,6 +645,7 @@ Line.prototype = {
             .attr('cy', function (de) { return yScale(s.isBubble || s.isScatterPlot ? 0 : de.value); })
             .attr('r', dots.radius)
             .style('stroke-width', dots.strokeWidth)
+            .style('cursor', !self.settings.selectable ? 'inherit' : 'pointer')
             .style('fill', function () { return charts.chartColor(lineIdx, 'line', d); })
             .style('opacity', (s.isBubble || s.isScatterPlot ? '.7' : '1'))
             .on(`mouseenter.${self.namespace}`, function (mouseEnterData) {
@@ -910,6 +911,10 @@ Line.prototype = {
     yAxis.width = yAxis.el.getBBox().width;
     line.width = line.el.getBBox().width;
     brief.xDiff = yAxis.width - line.width;
+
+    if (!this.settings.selectable) {
+      this.element.find('.line').css('cursor', 'inherit');
+    }
 
     ticks.forEach((tick, i) => {
       const text = tick.textContent;

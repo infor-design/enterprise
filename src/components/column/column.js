@@ -514,6 +514,7 @@ Column.prototype = {
                   (pnPatterns.positive ? `url(#${pnPatterns.positive})` : null))
               );
           })
+          .style('cursor', !self.settings.selectable ? 'inherit' : 'pointer')
           .style('fill', function (d) {
             return !isPositiveNegative ? null :
               color(isTargetBars ? pnColors.target :
@@ -675,6 +676,7 @@ Column.prototype = {
               charts.chartColor(i, 'column-single', dataset[0].data[i]) :
               charts.chartColor(i, 'bar', series[i]);
           })
+          .style('cursor', !self.settings.selectable ? 'inherit' : 'pointer')
           .attr('mask', function (d, i) {
             return isSingle ?
               (dataset[0].data[i].pattern ? `url(#${dataset[0].data[i].pattern})` : null) :
@@ -682,6 +684,7 @@ Column.prototype = {
           });
       } else if (self.settings.isStacked && !isSingle) {
         bars
+          .style('cursor', !self.settings.selectable ? 'inherit' : 'pointer')
           .style('fill', function () {
             const thisGroup = d3.select(this.parentNode).attr('data-group-id');
             return charts.chartColor(thisGroup, 'bar', dataset[thisGroup]);

@@ -844,6 +844,10 @@ Bar.prototype = {
       return r;
     };
 
+    if (!this.settings.selectable) {
+      this.element.find('.bar').css('cursor', 'inherit');
+    }
+
     if (this.settings.isGrouped) {
       dataset.forEach((d, i) => {
         elems[i].textContent = getText(d, i);
