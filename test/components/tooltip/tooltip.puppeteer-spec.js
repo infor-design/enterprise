@@ -202,7 +202,7 @@ describe('Tooltip Puppeteer Tests', () => {
     try {
       await page.waitForSelector(parentEL);
       await page.hover(parentEL);
-      await page.waitForSelector(tooltipEL, { visible: true });
+      // await page.waitForSelector(tooltipEL, { visible: true });
       const tooltipHandle = await page.$(elHandle);
       const tooltipValue = await page.evaluate(el => el.innerText, tooltipHandle);
       // console.log(`Tooltip Value: ${chalk.cyan(tooltipValue)}`);
@@ -342,6 +342,8 @@ describe('Tooltip Puppeteer Tests', () => {
       const txtcreditcard = '#credit-card';
       const txtCode = '#credit-code';
       const txtCode2 = '#credit-code2';
+      const dropdown = '#test > div:nth-child(6) > div > div';
+      const editor = '.editor.has-tooltip';
       const tooltip = '#tooltip';
       const tooltipOnElement = 'span > #tooltip .tooltip-content';
       const tooltipContent = '#tooltip .tooltip-content';
@@ -351,6 +353,8 @@ describe('Tooltip Puppeteer Tests', () => {
       isFailed.push(await checkTooltip(txtcreditcard, tooltip, tooltipContent, 'Enter a credit card number'));// check if tooltip in credit card field is exist
       isFailed.push(await checkTooltip(txtCode, tooltip, tooltipContent, 'Enter a credit code'));// check if tooltip in code field is exist
       isFailed.push(await checkTooltip(txtCode2, tooltip, tooltipContent, 'Look up a credit code'));// check if tooltip in Look up code field is exist
+      isFailed.push(await checkTooltip(dropdown, tooltip, tooltipContent, 'Select a state'));// check if tooltip in state dropdown field is exist
+      isFailed.push(await checkTooltip(editor, tooltip, tooltipContent, 'Enter some rich text'));// check if tooltip in editor field is exist
       expect(isFailed).not.toContain('true');
     });
   });
