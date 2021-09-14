@@ -9,6 +9,12 @@ describe('Popdown Puppeteer Tests', () => {
       await expect(page.title()).resolves.toMatch('IDS Enterprise');
     });
 
+    it('should check the test page with Axe', async () => {
+      await page.setBypassCSP(true);
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+      await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport', 'aria-valid-attr-value', 'region'] });
+    });
+
     it('should display on click', async () => {
       await page.click('#popdown-example-trigger');
       await page.waitForSelector('.popdown', { visible: true });
@@ -45,6 +51,12 @@ describe('Popdown Puppeteer Tests', () => {
       await expect(page.title()).resolves.toMatch('IDS Enterprise');
     });
 
+    it('should check the test page with Axe', async () => {
+      await page.setBypassCSP(true);
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+      await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport', 'aria-valid-attr-value', 'region'] });
+    });
+
     it('should keep the Popdown open while focused on an inline-Dropdown component\'s list', async () => {
       // Open the Popdown
       await page.click('#popdown-example-trigger');
@@ -75,6 +87,12 @@ describe('Popdown Puppeteer Tests', () => {
 
     it('should show the title', async () => {
       await expect(page.title()).resolves.toMatch('IDS Enterprise');
+    });
+
+    it('should check the test page with Axe', async () => {
+      await page.setBypassCSP(true);
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+      await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport', 'aria-valid-attr-value', 'region'] });
     });
 
     // 1. On open first input should be focused.
@@ -158,6 +176,12 @@ describe('Popdown Puppeteer Tests', () => {
       await expect(page.title()).resolves.toMatch('IDS Enterprise');
     });
 
+    it('should check the test page with Axe', async () => {
+      await page.setBypassCSP(true);
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+      await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport', 'aria-valid-attr-value', 'region'] });
+    });
+
     it('Should remain open when an inner Lookup component is opened', async () => {
     // Open the Popdown
       await page.click('#popdown-trigger');
@@ -193,6 +217,12 @@ describe('Popdown Puppeteer Tests', () => {
 
     it('should show the title', async () => {
       await expect(page.title()).resolves.toMatch('IDS Enterprise');
+    });
+
+    it('should check the test page with Axe', async () => {
+      await page.setBypassCSP(true);
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+      await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport', 'aria-valid-attr-value', 'region'] });
     });
 
     it('should show have outside event', async () => {
