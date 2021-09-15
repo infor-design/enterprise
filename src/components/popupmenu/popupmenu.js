@@ -1282,7 +1282,7 @@ PopupMenu.prototype = {
         return undefined;
       });
 
-      $(document).off(`click.btn.${this.id}`).on(`click.btn-menu.${this.id}`, (e) => {
+      $(document).off(`click.btn-menu.${this.id}`).on(`click.btn-menu.${this.id}`, (e) => {
         e.preventDefault();
         return false;
       });
