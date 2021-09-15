@@ -70,7 +70,7 @@ numberUtils.toFixed = function toFixed(number, decimals = 2) {
     parsedNum = firstPart + parsedNum;
   }
   if (lastPart && lastPart.substr(0, 1) === '0') {
-    parsedNum = `${firstPart}0${parsedNum}`;
+    parsedNum = `${firstPart}${parsedNum}`;
   }
   if (hasMinus) {
     return `-${parsedNum}`;
