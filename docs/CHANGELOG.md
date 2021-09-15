@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.54.2 Fixes
+
+- `[Locale]` Fixed an additional case where large numbers cannot be formatted correctly. ([#5605](https://github.com/infor-design/enterprise/issues/5605))
+
 ## v4.54.1 Fixes
 
 - `[Datagrid]` Added seperate mask options for filter row. ([#5519](https://github.com/infor-design/enterprise/issues/5519))
