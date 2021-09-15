@@ -1,0 +1,104 @@
+<div class="row">
+  <div class="twelve columns">
+    <h2>Disable Selection of Chart</h2>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Column Chart Example</h2>
+        </div>
+        <div class="widget-content">
+          <div id="column-bar-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="two-thirds column">
+      <button class="btn-secondary" type="button" id="btn-toggle-legend">Toggle Legend</button>
+  </div>
+</div>
+
+<script>
+$('body').on('initialized', function () {
+
+    var dataset = [{
+            data: [{
+                name: 'Automotive',
+                shortName: 'Auto',
+                abbrName: 'A',
+                value: 7
+            }, {
+                name: 'Distribution',
+                shortName: 'Dist',
+                abbrName: 'D',
+                value: 10
+            }, {
+                name: 'Equipment',
+                shortName: 'Equip',
+                abbrName: 'E',
+                value: 14
+            }, {
+                name: 'Fashion',
+                shortName: 'Fash',
+                abbrName: 'F',
+                value: 10
+            }, {
+                name: 'Food & Beverage',
+                shortName: 'Food',
+                abbrName: 'F&B',
+                value: 14
+            }, {
+                name: 'Healthcare',
+                shortName: 'Health',
+                abbrName: 'H',
+                value: 8
+            }, {
+                name: 'Other',
+                shortName: 'Other',
+                abbrName: 'O',
+                value: 7
+            }],
+            name: 'Monthly Target'
+        }];
+
+    // Set variables
+    var api,
+      elem = $('#column-bar-example'),
+      btnToggle = $('#btn-toggle-legend'),
+      options = {type: 'column', dataset: dataset, showLegend: false, selectable: false},
+
+      // Toggle api option "showLegend"
+      showLegendToggle = function() {
+        options.showLegend = !options.showLegend;
+      },
+
+      // Initialize charts
+      init = function() {
+        api = elem.chart(options).data('chart');
+      },
+
+      // Destroy charts
+      destroy = function() {
+        if (api && api.destroy) {
+          api.destroy();
+        }
+      };
+
+    // Bind toggle button
+    btnToggle.on('click', function() {
+      showLegendToggle();
+      destroy();
+      init();
+    });
+
+    // Initialize charts first time
+    init();
+
+});
+</script>
