@@ -1023,10 +1023,6 @@ PopupMenu.prototype = {
       self.handleItemClick(e, a);
     });
 
-    this.menu.on(`click.btn-menu.${this.id}`, function (e) {
-      e.preventDefault();
-    });
-
     const excludes = 'li:not(.separator):not(.hidden):not(.heading):not(.group):not(.is-disabled):not(.is-placeholder)';
 
     // Select on Focus
@@ -1284,6 +1280,11 @@ PopupMenu.prototype = {
           self.element[0].value = val;
         }
         return undefined;
+      });
+
+      $(document).off(`click.btn.${this.id}`).on(`click.btn-menu.${this.id}`, (e) => {
+        e.preventDefault();
+        return false;
       });
     }, 1);
   },
@@ -2333,12 +2334,6 @@ PopupMenu.prototype = {
     if (this.menu && this.menu.length) {
       this.menu.off('click.popupmenu touchend.popupmenu touchcancel.popupmenu dragstart.popupmenu');
     }
-
-    setTimeout(() => {
-      if (this.menu && this.menu.length) {
-        this.menu.off(`click.btn-menu.${this.id}`);
-      }
-    }, 1);
 
     $('iframe').each(function () {
       const frame = $(this);
