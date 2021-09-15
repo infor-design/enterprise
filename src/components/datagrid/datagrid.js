@@ -1435,6 +1435,7 @@ Datagrid.prototype = {
       if (datepickerApi && typeof datepickerApi.destroy === 'function') {
         datepickerApi.destroy();
       }
+
       input.datepicker(options);
     };
 
@@ -1676,7 +1677,13 @@ Datagrid.prototype = {
               const svg = rowElem.find('.btn-filter .icon-dropdown:first');
               const operator = svg.getIconName().replace('filter-', '');
               if (col.filterType === 'date') {
-                self.filterSetDatepicker(input, operator, col.editorOptions);
+                const datepickerOptions = col.editorOptions || {};
+
+                if (col.dateFormat) {
+                  datepickerOptions.dateFormat = col.dateFormat;
+                }
+
+                self.filterSetDatepicker(input, operator, datepickerOptions);
               } else {
                 const maskOptions = col.filterMaskOptions ? col.filterMaskOptions : col.maskOptions;
                 const rangeDelimeter = maskOptions?.rangeNumberDelimeter || '-';
@@ -10538,6 +10545,24 @@ Datagrid.prototype = {
     }
 
     this.updateCellNode(row, cell, value, true);
+  },
+
+  /**
+   * Update values of one column from the dataset
+   * @param {string} columnId  The name of the column.
+   * @returns {void}
+   */
+  updateColumn(columnId) {
+    if (!columnId || !columnId.length) {
+      return;
+    }
+
+    const self = this;
+    const columnNumber = self.columnIdxById(columnId);
+
+    $.each(self.settings.dataset, (index, item) => {
+      self.updateCell(index, columnNumber, item[columnId]);
+    });
   },
 
   /**
