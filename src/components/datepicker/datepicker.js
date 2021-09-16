@@ -13,6 +13,7 @@ import '../popover/popover.jquery';
 import '../timepicker/timepicker.jquery';
 import '../validation/validation.jquery';
 import '../validation/validation.utils';
+import { breakpoints } from '../../utils/breakpoints';
 
 // Component Name
 const COMPONENT_NAME = 'datepicker';
@@ -867,6 +868,12 @@ DatePicker.prototype = {
             height: ''
           });
           this.popupClosestScrollable.css('min-height', '375px');
+        }
+
+        // Move position if calendar will exceed max height (so that header will fit)
+        if (this.popup.hasClass('top') && ((window.innerHeight - this.popup.height()) / window.innerHeight) < 0.5) {
+          this.popup.css({ top: `${this.popup.position().top + 50}px` });
+          this.popup.find('.arrow').hide();
         }
 
         // Hide calendar until range to be pre selected
