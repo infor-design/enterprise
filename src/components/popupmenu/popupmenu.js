@@ -1282,10 +1282,12 @@ PopupMenu.prototype = {
         return undefined;
       });
 
-      $(document).off(`click.btn-menu.${this.id}`).on(`click.btn-menu.${this.id}`, (e) => {
-        e.preventDefault();
-        return false;
-      });
+      if (!self.element.hasClass('ids-actionsheet-trigger')) {
+        $(document).off(`click.btn-menu.${this.id}`).on(`click.btn-menu.${this.id}`, (e) => {
+          e.preventDefault();
+          return false;
+        });
+      }
     }, 1);
   },
 
