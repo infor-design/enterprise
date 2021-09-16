@@ -9,7 +9,7 @@ const COMPONENT_NAME = 'multitabs';
 // Default Settings for MultiTabs
 const MULTITABS_DEFAULTS = {
   tabContainers: [],
-  sortableTabs: false
+  sortable: false
 };
 
 // Pre-defined names used internally for tab containers
@@ -22,7 +22,7 @@ const TAB_CONTAINER_NAMES = ['primary', 'secondary', 'tertiary'];
  * @param {jQuery[]|HTMLElement} element base element
  * @param {object} [settings] incoming settings
  * @param {array} [settings.tabContainers] contains pre-set tab containers
- * @param {boolean} [settings.sortableTabs=false] If true, tabs can be sortable by drag and drop from tab to another tab
+ * @param {boolean} [settings.sortable=false] If true, tabs can be sortable by drag and drop from tab to another tab
  */
 function MultiTabs(element, settings) {
   this.element = $(element);
@@ -81,7 +81,7 @@ MultiTabs.prototype = {
         api = tabContainer.data('tabs');
       }
 
-      api.settings.sortable = self.settings.sortableTabs;
+      api.settings.sortable = self.settings.sortable;
       api.multitabsID = propname;
       api.createSortable();
 
