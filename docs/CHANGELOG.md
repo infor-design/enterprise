@@ -10,7 +10,7 @@
 - `[Datagrid]` Date format should reflect in date filter when range option is selected. ([#4864](https://github.com/infor-design/enterprise/issues/4864))
 - `[Datagrid]` Add test page for `selectAllCurrentPage` with toolbar count. ([#4921](https://github.com/infor-design/enterprise/issues/4921))
 - `[Dropdown]` Fixed disabling of function keys F1 to F12. ([#4976](https://github.com/infor-design/enterprise/issues/4976))
-- `[Dropdown]` Fixed a bug where error message were referenced to the dropdown aria-label. ([#5130](https://github.com/infor-design/enterprise/issues/5130))
+- `[Dropdown]` Fixed an accessibility issue where the error message was unannounced using a screen reader. ([#5130](https://github.com/infor-design/enterprise/issues/5130))
 - `[Locale]` Fixed an additional case where large numbers cannot be formatted correctly. ([#5605](https://github.com/infor-design/enterprise/issues/5605))
 
 ## v4.55.0 Features
