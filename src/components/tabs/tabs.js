@@ -485,8 +485,8 @@ Tabs.prototype = {
    * @returns {void}
    */
   createSortable() {
-    const s = this.settings;
     const self = this;
+    const s = this.settings;
     if (!s.sortable) {
       return;
     }
@@ -496,6 +496,7 @@ Tabs.prototype = {
     }
 
     const tablist = this.tablist ? this.tablist[0] : null;
+    const tabContainers = $('.tab-panel-container');
     if (tablist) {
       const excludeSel = '.is-disabled, .separator, .application-menu-trigger';
       const excludeEl = [].slice.call(tablist.querySelectorAll(excludeSel));
@@ -521,15 +522,23 @@ Tabs.prototype = {
           });
       }
 
-      this.tablist.on('dragend.tabs', (dragendEvent) => {
-        const dragElement = $(dragendEvent.target);
-        const targetElement = $(document.elementFromPoint(dragendEvent.pageX, dragendEvent.pageY));
+      this.tablist.on('dragover.tabs', (e) => {
+        e.preventDefault();
+      });
+
+      tabContainers.on('dragover.tabpanel', (e) => {
+        e.preventDefault();
+      });
+
+      this.tablist.on('dragend.tabs', (event) => {
+        const dragElement = $(event.target);
+        const targetElement = $(document.elementFromPoint(event.pageX, event.pageY));
 
         let targetTabsetName = targetElement.parents('.module-tabs');
         if (dragElement.get(0) !== targetElement.get(0)) {
           if (dragElement.parents('.multitabs-section')[0] === targetElement.parents('.multitabs-section')[0]) {
             $('.multitabs-section').each((index, item) => {
-              if (dragElement.parents('.multitabs-section')[0] !== item) {
+              if (dragElement.parents('.multitabs-section')[0] !== item && $(item).hasClass('is-hidden')) {
                 targetTabsetName = $(item).children('.module-tabs');
               }
             });
