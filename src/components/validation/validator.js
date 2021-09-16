@@ -960,6 +960,16 @@ Validator.prototype = {
     field.attr('aria-describedby', messageId);
     field.attr('aria-invalid', 'true');
 
+    // Append the error message text to aria-label of dropdown error
+    const dropdownError = field.parent().find('.dropdown.error');
+    const currentVal = dropdownError.attr('aria-label');
+    const updatedAriaLabelVal = `${currentVal}${rule.message}`;
+
+    // Update the aria-label values with error message text
+    if (dropdownError) {
+      dropdownError.attr('aria-label', updatedAriaLabelVal);
+    }
+
     // Trigger an event
     field.triggerHandler(validationType.type, { field, message: rule.message });
     field.closest('form').triggerHandler(validationType.type, { field, message: rule.message });
