@@ -42,12 +42,9 @@
 
         // transform
         var options = {
-          decimal: '.',
-          group: '',
           maximumFractionDigits: 15,
           minimumFractionDigits: 15,
-          round: true,
-          style: 'decimal'
+          round: true
         }
         var nbr = Soho.Locale.formatNumber(value, options);
         $('#parsed-number-field').val(nbr);
