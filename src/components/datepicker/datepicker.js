@@ -870,8 +870,8 @@ DatePicker.prototype = {
           this.popupClosestScrollable.css('min-height', '375px');
         }
 
-        // Move position if calendar will exceed max height (so that header will fit)
-        if (this.popup.hasClass('top') && ((window.innerHeight - this.popup.height()) / window.innerHeight) < 0.5) {
+        // Move position if calendar top will exceed max height (so that header will fit)
+        if (this.popup.hasClass('top') && this.popup.offset().top < 50) {
           this.popup.css({ top: `${this.popup.position().top + 50}px` });
           this.popup.find('.arrow').hide();
         }

@@ -10,6 +10,7 @@
 
 - `[Datagrid]` Date format should reflect in date filter when range option is selected. ([#4864](https://github.com/infor-design/enterprise/issues/4864))
 - `[Datagrid]` Add test page for `selectAllCurrentPage` with toolbar count. ([#4921](https://github.com/infor-design/enterprise/issues/4921))
+- `[Datepicker]` Fix on datepicker header not being shown in smaller screens. ([#5550](https://github.com/infor-design/enterprise/issues/5550))
 - `[Dropdown]` Fixed disabling of function keys F1 to F12. ([#4976](https://github.com/infor-design/enterprise/issues/4976))
 - `[Locale]` Fixed an additional case where large numbers cannot be formatted correctly. ([#5605](https://github.com/infor-design/enterprise/issues/5605))
 
