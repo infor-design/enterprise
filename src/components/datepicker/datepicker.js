@@ -13,7 +13,6 @@ import '../popover/popover.jquery';
 import '../timepicker/timepicker.jquery';
 import '../validation/validation.jquery';
 import '../validation/validation.utils';
-import { breakpoints } from '../../utils/breakpoints';
 
 // Component Name
 const COMPONENT_NAME = 'datepicker';
