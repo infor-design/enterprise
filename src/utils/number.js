@@ -33,6 +33,9 @@ numberUtils.round = function round(number, decimals = 2) {
  * @returns {string} The string formatted to the precision.
  */
 numberUtils.fixTo = function toFixed(number, decimals = 2) {
+  if (decimals > 10 && number.toString().indexOf('.') > -1) {
+    return number.toLocaleString('en-US', { useGrouping: false, minimumFractionDigits: decimals });
+  }
   return (+(Math.round(+(number + 'e' + decimals)) + 'e' + -decimals)).toFixed(decimals); //eslint-disable-line
 };
 
