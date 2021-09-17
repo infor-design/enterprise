@@ -932,6 +932,27 @@ html.is-firefox {
   }
 }
 
+.tab-panel-container {
+  .tab-overlay {
+    position: fixed;
+    display: flex;
+    height: 100%;
+    width: 100%;
+
+    .overlay-right {
+      flex: 1;
+    }
+
+    .overlay-left {
+      flex: 1;
+    }
+
+    .has-overlay {
+      background-color: rgba(0,0,0,0.5);
+    }
+  }
+}
+
 // Special Style introduced on SOHO-5680
 .tab-container.tab-borders {
   background-color: $panel-bg-color;

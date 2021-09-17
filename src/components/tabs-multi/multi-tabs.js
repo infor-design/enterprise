@@ -90,6 +90,11 @@ MultiTabs.prototype = {
       didAdd = true;
     });
 
+    if (self.settings.sortable) {
+      const tabPanelContainer = $(tabContainer.siblings('.tab-panel-container'));
+      tabPanelContainer.prepend('<div class="tab-overlay"><div class="overlay-left"></div><div class="overlay-right"></div></div>');
+    }
+
     if (!didAdd) {
       throw new Error('all tab-container slots in MultiTabs component are taken, so a new tabs container was not invoked and stored');
     }

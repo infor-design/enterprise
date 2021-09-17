@@ -530,15 +530,32 @@ Tabs.prototype = {
         e.preventDefault();
       });
 
+      this.tablist.on('drag.tabs', (event) => {
+        if ($('.multitabs-section.is-hidden').length) {
+          const dragElement = $(event.target);
+          const parentElement = dragElement.parents('.multitabs-section');
+
+          if (!parentElement.hasClass('alternate')) {
+            parentElement.find('.overlay-right').addClass('has-overlay');
+          } else {
+            parentElement.find('.overlay-left').addClass('has-overlay');
+          }
+        }
+      });
+
       this.tablist.on('dragend.tabs', (event) => {
         const dragElement = $(event.target);
         const targetElement = $(document.elementFromPoint(event.pageX, event.pageY));
+        const parentElement = dragElement.parents('.multitabs-section');
+
+        parentElement.find('.overlay-left').removeClass('has-overlay');
+        parentElement.find('.overlay-right').removeClass('has-overlay');
 
         let targetTabsetName = targetElement.parents('.module-tabs');
         if (dragElement.get(0) !== targetElement.get(0)) {
-          if (dragElement.parents('.multitabs-section')[0] === targetElement.parents('.multitabs-section')[0]) {
+          if (parentElement[0] === targetElement.parents('.multitabs-section')[0]) {
             $('.multitabs-section').each((index, item) => {
-              if (dragElement.parents('.multitabs-section')[0] !== item && $(item).hasClass('is-hidden')) {
+              if (parentElement[0] !== item && $(item).hasClass('is-hidden')) {
                 targetTabsetName = $(item).children('.module-tabs');
               }
             });

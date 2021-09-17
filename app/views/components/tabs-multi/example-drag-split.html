@@ -3,28 +3,21 @@
     {{> includes/svg-inline-refs}}
   
     <section id="test-multitabs" class="multitabs-container side-by-side" data-options='{"sortable": true}'>
-      <div class="multitabs-section">
+      <div class="multitabs-section is-hidden">
         <div id="tab-list-one" class="tab-container module-tabs">
           <ul class="tab-list">
-            <li class="tab is-selected">
-              <a id="tabs-one-contracts-1" data-automation-id="tabs-one-contracts-1-a" href="#tabs-one-contracts">Contracts (and then a few more Contracts)</a>
-            </li>
           </ul>
         </div> <!-- #tab-list-one -->
         <div id="tab-container-one" class="tab-panel-container">
-          <div id="tabs-one-contracts" data-automation-id="tabs-one-contracts-1-panel" class="tab-panel">
-            <div class="row top-padding">
-              <div class="twelve columns">
-                <h3>Contracts</h3>
-              </div>
-            </div>
-          </div> <!-- #tabs-one-contracts -->
         </div> <!-- #tab-container-one -->
       </div> <!-- .six-columns -->
   
       <div class="multitabs-section alternate">
         <div id="tab-list-two" class="tab-container module-tabs">
           <ul class="tab-list">
+            <li class="tab is-selected">
+              <a id="tabs-one-contracts-1" data-automation-id="tabs-one-contracts-1-a" href="#tabs-one-contracts">Contracts (and then a few more Contracts)</a>
+            </li>
             <li class="tab">
               <a id="tabs-one-opportunities-1" data-automation-id="tabs-one-opportunites-1-a" href="#tabs-one-opportunities">Opportunities</a>
             </li>
@@ -40,6 +33,17 @@
           </ul>
         </div> <!-- #tab-list-two -->
         <div id="tab-container-two" class="tab-panel-container">
+          <!-- <div class="tab-overlay">
+            <div class="overlay-left"></div>
+            <div class="overlay-right"></div>
+          </div> -->
+          <div id="tabs-one-contracts" data-automation-id="tabs-one-contracts-1-panel" class="tab-panel">
+            <div class="row top-padding">
+              <div class="twelve columns">
+                <h3>Contracts</h3>
+              </div>
+            </div>
+          </div> <!-- #tabs-one-contracts -->
           <div id="tabs-one-opportunities" data-automation-id="tabs-one-opportunities-1-panel" class="tab-panel">
             <div class="row top-padding">
               <div class="twelve columns">
