@@ -315,11 +315,30 @@ html.is-safari {
   .field-short {
     .lookup-wrapper {
       .trigger {
-        top: 2px;
+        top: unset;
 
         .icon {
           margin-top: unset;
         }
+      }
+    }
+  }
+
+  .form-layout-compact {
+    .lookup-wrapper {
+      .trigger,
+      .tooltip-description + .trigger {
+        top: unset;
+      }
+    }
+  }
+}
+
+html.is-firefox {
+  .field-short {
+    .lookup-wrapper {
+      .trigger {
+        top: 1px;
       }
     }
   }

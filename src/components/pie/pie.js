@@ -35,6 +35,7 @@ const COMPONENT_NAME = 'pie';
  * @param {string} [settings.legendPlacement='right'] Where to locate the legend. This can be bottom or right at the moment.
  * @param {object} [settings.legend] A setting that controls the legend values and format.
  * @param {string} [settings.legend.show='label (percent)'] Controls what is visible
+ * @param {boolean} [settings.selectable=true] Ability to enable/disable the selection of chart.
   in the legend, this can be value, value (percent), label or percent or your own custom function.
  * @param {string} [settings.legend.formatter='.0f'] The d3.formatter string.
  * @param {boolean} [settings.showTooltips=true] If false no tooltips will be shown
@@ -60,6 +61,7 @@ const PIE_DEFAULTS = {
   hideCenterLabel: false,
   showLines: true,
   showLinesMobile: false,
+  selectable: true,
   lines: {
     show: 'value', // value, label or percent or custom function
     formatter: '.0f'
@@ -496,13 +498,16 @@ Pie.prototype = {
       // It alow to cancel when the double click event happens
       .on(`click.${self.namespace}`, function (d, i) {
         const selector = this;
-        timer = setTimeout(function () {
-          if (!prevent) {
-            // Run click action
-            self.doClickAction(d, i, selector, tooltipInterval);
-          }
-          prevent = false;
-        }, delay);
+
+        if (self.settings.selectable) {
+          timer = setTimeout(function () {
+            if (!prevent) {
+              // Run click action
+              self.doClickAction(d, i, selector, tooltipInterval);
+            }
+            prevent = false;
+          }, delay);
+        }
       })
       .on(`dblclick.${self.namespace}`, function (d, i) {
         const selector = this;

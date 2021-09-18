@@ -33,6 +33,9 @@ numberUtils.round = function round(number, decimals = 2) {
  * @returns {string} The string formatted to the precision.
  */
 numberUtils.fixTo = function toFixed(number, decimals = 2) {
+  if (decimals > 10 && number.toString().indexOf('.') > -1) {
+    return number.toLocaleString('en-US', { useGrouping: false, minimumFractionDigits: decimals });
+  }
   return (+(Math.round(+(number + 'e' + decimals)) + 'e' + -decimals)).toFixed(decimals); //eslint-disable-line
 };
 
@@ -46,7 +49,7 @@ numberUtils.fixTo = function toFixed(number, decimals = 2) {
  * @returns {string} The string formatted to the precision.
  */
 numberUtils.toFixed = function toFixed(number, decimals = 2) {
-  // Parse the number into three parts. Max supported number is 18.6
+  // Parse the number into three parts. Max supported number is 18.15
   let numStr = number.toString();
   let hasMinus = false;
   if (numStr.substr(0, 1) === '-') {
@@ -70,7 +73,7 @@ numberUtils.toFixed = function toFixed(number, decimals = 2) {
     parsedNum = firstPart + parsedNum;
   }
   if (lastPart && lastPart.substr(0, 1) === '0') {
-    parsedNum = `${firstPart}0${parsedNum}`;
+    parsedNum = `${firstPart}${parsedNum}`;
   }
   if (hasMinus) {
     return `-${parsedNum}`;
