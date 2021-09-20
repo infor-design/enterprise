@@ -13,6 +13,7 @@ import '../popover/popover.jquery';
 import '../timepicker/timepicker.jquery';
 import '../validation/validation.jquery';
 import '../validation/validation.utils';
+import { breakpoints } from '../../utils/breakpoints';
 
 // Component Name
 const COMPONENT_NAME = 'datepicker';
@@ -846,7 +847,7 @@ DatePicker.prototype = {
         parentXAlignment: placementParentXAlignment,
         strategies: ['flip', 'nudge', 'shrink']
       },
-      placement: 'bottom',
+      placement: `${parent.offset().top < 325 ? 'right' : 'bottom'}`,
       popover: true,
       trigger: 'immediate',
       extraClass: this.settings.range.selectWeek ? 'monthview-popup is-range-week' : 'monthview-popup',
@@ -869,9 +870,7 @@ DatePicker.prototype = {
           this.popupClosestScrollable.css('min-height', '375px');
         }
 
-        // Move position if calendar top will exceed max height (so that header will fit)
-        if (this.popup.hasClass('top') && this.popup.offset().top < 50) {
-          this.popup.css({ top: `${this.popup.position().top + 50}px` });
+        if (!(this.popup.hasClass('top') || this.popup.hasClass('bottom')) && breakpoints.isBelow('slim')) {
           this.popup.find('.arrow').hide();
         }
 
