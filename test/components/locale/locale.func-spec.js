@@ -710,6 +710,7 @@ describe('Locale API', () => {
     expect(Locale.formatNumber(123.54, { maximumFractionDigits: 15, minimumFractionDigits: 15 })).toEqual('123.540000000000000');
     expect(Locale.formatNumber(123.54, { maximumFractionDigits: 20, minimumFractionDigits: 20 })).toEqual('123.54000000000000000000');
     expect(Locale.formatNumber(123, { maximumFractionDigits: 20, minimumFractionDigits: 20 })).toEqual('123.00000000000000000000');
+    expect(Locale.formatNumber('1234567890123456.77', { maximumFractionDigits: 15, minimumFractionDigits: 15 })).toEqual('1,234,567,890,123,456.770000000000000');
 
     Locale.set('de-DE');
     expect(Locale.formatNumber(123.54, { maximumFractionDigits: 15, minimumFractionDigits: 15 })).toEqual('123,540000000000000');
