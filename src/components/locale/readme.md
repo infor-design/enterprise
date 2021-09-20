@@ -124,6 +124,8 @@ Locale.convertNumberToEnglish('१२३४५६७८९०');         // Deva
 
 You can use the formatNumber to display a numeric type in a localized format. You can use parseNumber to convert that number back to the numeric type. Note that by default the formatNumber function uses truncation (.129 becomes .12). To use rounding add the `round: true` option.
 
+The maximum number that can be formatted is 21 significantDigits and 20 fractionDigits.
+
 ```javascript
 Soho.Locale.formatNumber(20.1, {style: 'decimal', round: true, minimumFractionDigits: 2}));
 // Returns 20.10

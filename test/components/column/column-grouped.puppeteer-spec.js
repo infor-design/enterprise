@@ -1,0 +1,38 @@
+describe('Column Grouped Puppeteer Tests', () => {
+  describe('Column Grouped selection disable tests', () => {
+    const url = 'http://localhost:4000/components/column-grouped/example-disable-selection-state';
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('should show the tooltip with data', async () => {
+      await page.hover('#columngrouped-c2-jan-bar');
+      await page.waitForTimeout(300);
+      const tooltipElement = await page.evaluate(() => !!document.querySelector('.tooltip.top.is-hidden') !== true);
+
+      expect(tooltipElement).toBeTruthy();
+    });
+
+    it('should not be selected when clicking on a column grouped', async () => {
+      await page.click('#columngrouped-c2-jan-bar');
+      const seriesGroup = await page.evaluate(() => !!document.querySelector('.series-group.is-selected') !== true);
+
+      expect(seriesGroup).toBeTruthy();
+    });
+
+    it('should not show pointer as a cursor', async () => {
+      await page.hover('#columngrouped-c2-jan-bar');
+      await page.waitForTimeout(200);
+
+      expect(await page.evaluate(() => document.querySelector('#columngrouped-c2-jan-bar').style.cursor)).toContain('inherit');
+    });
+
+    it('should not able to tab through the legends', async () => {
+      // eslint-disable-next-line
+      const legendTabIndex = await page.evaluate(() => Array.from(document.querySelectorAll('.chart-legend-item')).map(el => el.tabIndex));
+
+      expect(legendTabIndex).toEqual([-1, -1, -1, -1, -1, -1]); // These are the values of tabindex of all the legends.
+    });
+  });
+});

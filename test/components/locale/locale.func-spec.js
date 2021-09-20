@@ -705,16 +705,47 @@ describe('Locale API', () => {
     expect(Locale.parseNumber('-1,482,409,800.81')).toEqual(-1482409800.81);
   });
 
+  it('should format big decimal numbers', () => {
+    Locale.set('en-US');
+    expect(Locale.formatNumber(123.54, { maximumFractionDigits: 15, minimumFractionDigits: 15 })).toEqual('123.540000000000000');
+    expect(Locale.formatNumber(123.54, { maximumFractionDigits: 20, minimumFractionDigits: 20 })).toEqual('123.54000000000000000000');
+    expect(Locale.formatNumber(123, { maximumFractionDigits: 20, minimumFractionDigits: 20 })).toEqual('123.00000000000000000000');
+
+    Locale.set('de-DE');
+    expect(Locale.formatNumber(123.54, { maximumFractionDigits: 15, minimumFractionDigits: 15 })).toEqual('123,540000000000000');
+    expect(Locale.formatNumber(123.54, { maximumFractionDigits: 20, minimumFractionDigits: 20 })).toEqual('123,54000000000000000000');
+    expect(Locale.formatNumber(123, { maximumFractionDigits: 20, minimumFractionDigits: 20 })).toEqual('123,00000000000000000000');
+  });
+
   it('handle other big numbers', () => {
     expect(Locale.formatNumber('123456789012345671')).toEqual('123,456,789,012,345,671.00');
     expect(Locale.parseNumber('123456789012345671')).toEqual('123456789012345671');
     expect(Locale.formatNumber('123456789012345678')).toEqual('123,456,789,012,345,678.00');
     expect(Locale.parseNumber('123456789012345678')).toEqual('123456789012345678');
+    expect(Locale.parseNumber('123456789012345680')).toEqual('123456789012345680');
     expect(Locale.parseNumber('12345678910')).toEqual(12345678910);
     expect(Locale.parseNumber('12345678900')).toEqual(12345678900);
     expect(Locale.parseNumber('123456789100')).toEqual(123456789100);
     expect(Locale.parseNumber('1234567890123456710')).toEqual('1234567890123456710');
     expect(Locale.parseNumber('1234567890123456700')).toEqual('1234567890123456700');
+    expect(Locale.parseNumber('9007199254740991')).toEqual(9007199254740991);
+  });
+
+  it('more other big number tests', () => {
+    expect(Locale.formatNumber('1234567890.11')).toEqual('1,234,567,890.11');
+    expect(Locale.parseNumber('1234567890.11')).toEqual(1234567890.11);
+
+    expect(Locale.formatNumber('12345678910.11')).toEqual('12,345,678,910.11');
+    expect(Locale.parseNumber('12345678910.11')).toEqual(12345678910.11);
+
+    expect(Locale.formatNumber('123456789120.11')).toEqual('123,456,789,120.11');
+    expect(Locale.parseNumber('123456789120.11')).toEqual(123456789120.11);
+
+    expect(Locale.formatNumber('1234567891230.11')).toEqual('1,234,567,891,230.11');
+    expect(Locale.parseNumber('1234567891230.11')).toEqual(1234567891230.11);
+
+    expect(Locale.formatNumber('12345678912340.11')).toEqual('12,345,678,912,340.11');
+    expect(Locale.parseNumber('12345678912340.11')).toEqual(12345678912340.11);
   });
 
   it('Should be able to parse UTC toISOString', () => {
