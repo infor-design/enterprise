@@ -3760,8 +3760,8 @@ Tabs.prototype = {
 
         if (accountForPadding) {
           parentPadding = parseInt(window.getComputedStyle(parentElement[0])[`padding${isRTL ? 'Right' : 'Left'}`], 10);
-          targetRectObj.left += (isRTL ? parentPadding : (parentPadding * -1));
-          targetRectObj.right += (isRTL ? parentPadding : (parentPadding * -1));
+          targetRectObj.left += (isRTL ? parentPadding : (parentPadding * -1)) - 41; 
+          targetRectObj.right += (isRTL ? parentPadding : (parentPadding * -1)) - 41;
         }
       }
 
