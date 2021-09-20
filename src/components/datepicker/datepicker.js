@@ -847,7 +847,7 @@ DatePicker.prototype = {
         parentXAlignment: placementParentXAlignment,
         strategies: ['flip', 'nudge', 'shrink']
       },
-      placement: `${parent.offset().top < 400 && parent.offset().top > 185 && window.innerHeight < 815 ? 'right' : 'bottom'}`,
+      placement: `${parent.offset().top < 400 && parent.offset().top > 185 && window.innerHeight < 800 ? 'right' : 'bottom'}`,
       popover: true,
       trigger: 'immediate',
       extraClass: this.settings.range.selectWeek ? 'monthview-popup is-range-week' : 'monthview-popup',
