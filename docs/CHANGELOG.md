@@ -11,6 +11,7 @@
 - `[Datagrid]` Date format should reflect in date filter when range option is selected. ([#4864](https://github.com/infor-design/enterprise/issues/4864))
 - `[Datagrid]` Add test page for `selectAllCurrentPage` with toolbar count. ([#4921](https://github.com/infor-design/enterprise/issues/4921))
 - `[Dropdown]` Fixed disabling of function keys F1 to F12. ([#4976](https://github.com/infor-design/enterprise/issues/4976))
+- `[Dropdown]` Fixed a bug where selecting the first item on the list doesn't trigger the `change` event that will select the value immediately. ([NG#1102](https://github.com/infor-design/enterprise-ng/issues/1102))
 - `[Locale]` Fixed an additional case where large numbers cannot be formatted correctly. ([#5605](https://github.com/infor-design/enterprise/issues/5605))
 - `[Locale]` Expanded support from 10 to 20 decimal places. Max number is 21, 20 now. ([#5622](https://github.com/infor-design/enterprise/issues/5622))
 
