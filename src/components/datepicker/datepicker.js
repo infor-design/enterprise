@@ -875,9 +875,9 @@ DatePicker.prototype = {
           this.popupClosestScrollable.css('min-height', '375px');
         }
 
-        // Move calendar if it exceeds max height so header will show
-        if (!this.popup.hasClass('bottom') && ((window.innerHeight - this.popup.height()) / window.innerHeight) < 0.1) {
-          this.popup.css({ top: `${this.popup.position().top + 50}px` });
+        // Move calendar if top position exceeds max height so header will show
+        if ((window.innerHeight - this.popup.height()) / window.innerHeight < 0.15) {
+          this.popup.css({ top: `${this.popup.position().top < 0 ? 0 : this.popup.position().top + 50}px` });
         }
 
         // Hide calendar until range to be pre selected
