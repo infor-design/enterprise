@@ -11,6 +11,10 @@
   flex: 1;
   height: 100%;
 
+  &.is-hidden {
+    display: none !important;
+  }
+
   + .multitabs-section {
     border-left: 1px solid $mutlitabs-section-border-color;
   }
