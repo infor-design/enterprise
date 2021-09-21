@@ -840,6 +840,12 @@ DatePicker.prototype = {
       placementParent = this.element.next('.icon, .trigger');
     }
 
+    let popPlacement = 'bottom';
+
+    if (parent.offset().top < 400 && parent.offset().top > 185 && window.innerHeight < 800) {
+      popPlacement = Locale.isRTL() ? 'left' : 'right';
+    }
+
     const popoverOpts = {
       content: this.calendar,
       placementOpts: {
@@ -847,7 +853,7 @@ DatePicker.prototype = {
         parentXAlignment: placementParentXAlignment,
         strategies: ['flip', 'nudge', 'shrink']
       },
-      placement: `${parent.offset().top < 400 && parent.offset().top > 185 && window.innerHeight < 800 ? 'right' : 'bottom'}`,
+      placement: popPlacement,
       popover: true,
       trigger: 'immediate',
       extraClass: this.settings.range.selectWeek ? 'monthview-popup is-range-week' : 'monthview-popup',
@@ -868,10 +874,6 @@ DatePicker.prototype = {
             height: ''
           });
           this.popupClosestScrollable.css('min-height', '375px');
-        }
-
-        if (!(this.popup.hasClass('top') || this.popup.hasClass('bottom')) && breakpoints.isBelow('slim')) {
-          this.popup.find('.arrow').hide();
         }
 
         // Hide calendar until range to be pre selected
