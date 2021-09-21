@@ -740,6 +740,11 @@ describe('Locale API', () => {
     expect(Locale.formatNumber('1234567890123456.77000000000000000', { style: 'decimal', round: true, minimumFractionDigits: 15, maximumFractionDigits: 15, locale: 'en-US', group: '' })).toEqual('1234567890123456.770000000000000');
   });
 
+  it('can skip parseNumber in formatNumber', () => {
+    Locale.set('el-GR');
+    expect(Locale.formatNumber('1234567890123456.770000000000000', { maximumFractionDigits: 15, minimumFractionDigits: 15, round: false, style: 'decimal', locale: 'el-GR', parseNumber: false })).toEqual('1.234.567.890.123.456,770000000000000');
+  });
+
   it('handle other big numbers', () => {
     expect(Locale.formatNumber('123456789012345671')).toEqual('123,456,789,012,345,671.00');
     expect(Locale.parseNumber('123456789012345671')).toEqual('123456789012345671');

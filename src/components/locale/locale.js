@@ -1508,7 +1508,7 @@ const Locale = {  // eslint-disable-line
       percentFormat = percentFormat.replace('¤', percentSign);
     }
 
-    if (typeof number === 'string') {
+    if (typeof number === 'string' && !(options?.parseNumber === false)) {
       number = Locale.parseNumber(number, options);
     }
 
