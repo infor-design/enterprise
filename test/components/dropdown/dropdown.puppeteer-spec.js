@@ -60,4 +60,25 @@ describe('Dropdown Puppeteer Tests', () => {
       expect(await page.evaluate(el => el.value, dropdownEl)).toEqual('');
     });
   });
+
+  describe('Announced Error Message Text Tests', () => {
+    const url = 'http://localhost:4000/components/dropdown/example-validation.html';
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('Should include the error message in aria-label of dropdown error', async () => {
+      const dropdownEl = await page.evaluate('document.querySelector("div.dropdown").getAttribute("aria-label")');
+      expect(dropdownEl).toEqual('Validated Dropdown, '); // This is the initial value of aria-label when error message is not visible.
+
+      await page.click('div.dropdown');
+      await page.waitForTimeout(200);
+      await page.click('#list-option-0');
+      await page.keyboard.press('Tab');
+
+      const newVal = await page.evaluate('document.querySelector("div.dropdown.error").getAttribute("aria-label")');
+      expect(newVal).toEqual('Validated Dropdown, Required'); // Required text should append to the aria-label
+    });
+  });
 });
