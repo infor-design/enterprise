@@ -742,6 +742,7 @@ Datagrid.prototype = {
     }
 
     this.loadData(dataset, pagerInfo);
+    this.syncSelectedRowsIdx();
   },
 
   /**
@@ -8289,18 +8290,18 @@ Datagrid.prototype = {
    * @returns {void}
    */
   syncSelectedRowsIdx() {
-    const dataset = this.settings.groupable && this.originalDataset ?
-      this.originalDataset : this.settings.dataset;
+    const dataset = this.getActiveDataset();
     if (this._selectedRows.length === 0 || dataset.length === 0) {
       return;
     }
     this._selectedRows = [];
 
     for (let i = 0; i < dataset.length; i++) {
-      if (dataset[i]._selected) {
+      const node = this.settings.treeGrid ? dataset[i].node : dataset[i];
+      if (node._selected) {
         const selectedRow = {
           idx: i,
-          data: dataset[i],
+          data: node,
           elem: this.dataRowNode(i),
           pagingIdx: i,
           pagesize: this.settings.pagesize
