@@ -914,7 +914,7 @@ Calendar.prototype = {
     if (typeof item === 'string') {
       return item;
     }
-    return item ? null : item.toString();
+    return item ? item.toString() : null;
   },
 
   /**
