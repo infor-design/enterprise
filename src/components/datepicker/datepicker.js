@@ -872,6 +872,11 @@ DatePicker.prototype = {
               `${(this.popupClosestScrollable[0].scrollHeight - 521)}px`,
             height: ''
           });
+
+          if ((window.innerHeight - this.popup.height()) / window.innerHeight < 0.15) {
+            this.popupClosestScrollable.children().not('.popover').css('padding-top', '80px');
+          }
+
           this.popupClosestScrollable.css('min-height', '375px');
         }
 
@@ -911,6 +916,7 @@ DatePicker.prototype = {
       })
       .off('hide.datepicker')
       .on('hide.datepicker', () => {
+        this.popupClosestScrollable.children().not('.popover').css('padding-top', '');
         this.popupClosestScrollable.add(this.popup).css('min-height', '');
         this.closeCalendar();
       });
