@@ -836,7 +836,7 @@ Calendar.prototype = {
       const children = eventHead[0].parentNode.children;
       for (let i = container.querySelector('.day-container').children.length; i < children.length; i++) {
         const dataid = children[i].getAttribute('data-id');
-        if (this.getValue(dataid) === this.getValue(event.id)) {
+        if (this.getString(dataid) === this.getString(event.id)) {
           break;
         }
         if (!children[i].classList.contains('day-text')) {
@@ -910,7 +910,10 @@ Calendar.prototype = {
    * @param {any} item Item to convert to string
    * @returns {string} String value
    */
-  getValue(item) {
+  getString(item) {
+    if (typeof item === 'string') {
+      return item;
+    }
     return item ? null : item.toString();
   },
 
