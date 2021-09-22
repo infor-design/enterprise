@@ -68,6 +68,12 @@
 
 (51 Issues Solved This Release, Backlog Enterprise 129, Backlog Ng 29, 1222 Functional Tests, 1693 e2e Tests)
 
+## v4.54.3 Fixes
+
+- `[Locale]` Fixed a bug where very large numbers would get a zero added. ([#5308](https://github.com/infor-design/enterprise/issues/5308))
+- `[Locale]` Fixed a bug where very large numbers with negative added an extra zero in formatNumber. ([#5318](https://github.com/infor-design/enterprise/issues/5318))
+- `[Locale]` Expanded support from 10 to 20 decimal places. Max number is 21, 20 now. ([#5622](https://github.com/infor-design/enterprise/issues/5622))
+
 ## v4.54.2 Fixes
 
 - `[Locale]` Fixed an additional case where large numbers cannot be formatted correctly. ([#5605](https://github.com/infor-design/enterprise/issues/5605))
