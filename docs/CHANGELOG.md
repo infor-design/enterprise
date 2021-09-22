@@ -2,6 +2,7 @@
 
 ## v4.55.3 Fixes
 
+- `[Datagrid]` Fixed an issue where the selection idx was not updating after append/update data to child nodes for tree. ([#5631](https://github.com/infor-design/enterprise/issues/5631))
 - `[Locale]` Fixed a bug where very large numbers would get a zero added. ([#5308](https://github.com/infor-design/enterprise/issues/5308))
 - `[Locale]` Fixed a bug where very large numbers with negative added an extra zero in formatNumber. ([#5318](https://github.com/infor-design/enterprise/issues/5318))
 - `[Locale]` Expanded support from 10 to 20 decimal places. Max number is 21, 20 now. ([#5622](https://github.com/infor-design/enterprise/issues/5622))
