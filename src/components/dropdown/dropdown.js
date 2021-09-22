@@ -3020,6 +3020,7 @@ Dropdown.prototype = {
       li = this.listUl.find(`li[data-val="${optionVal}"]`);
     }
 
+    const isFirstItemSelected = this.listUl.find('li').first().hasClass('is-selected');
     let isAdded = true;
     let doAnnounce = true;
     let currentValue = this.selectedValues;
@@ -3047,7 +3048,7 @@ Dropdown.prototype = {
     }
 
     if (isAdded) {
-      if (isSameValue) {
+      if (isSameValue && !isFirstItemSelected) {
         doAnnounce = false;
       } else {
         this.select(option[0]);
