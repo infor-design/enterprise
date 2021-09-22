@@ -5,6 +5,7 @@ import { Locale } from '../locale/locale';
 import { ToolbarFlexItem, TOOLBAR_ELEMENTS } from './toolbar-flex.item';
 
 // jQuery Components
+import '../button/button.set.jquery';
 import './toolbar-flex.item.jquery';
 
 // Component Name
@@ -53,7 +54,6 @@ ToolbarFlex.prototype = {
    */
   init() {
     this.uniqueId = utils.uniqueId(this.element);
-    this.sections = utils.getArrayFromList(this.element.querySelectorAll('.toolbar-section'));
     this.items = this.getElements().map((item) => {
       let itemComponentSettings = {};
       const isActionButton = $(item).hasClass('btn-actions');
@@ -75,10 +75,19 @@ ToolbarFlex.prototype = {
       });
       return $(item).data('toolbarflexitem');
     });
-
     if (!this.items) {
       return;
     }
+
+    // Connect Toolbar sections and apply `ButtonSet` component to any relevant sections
+    this.sections = utils.getArrayFromList(this.element.querySelectorAll('.toolbar-section'));
+    this.sections.forEach((section) => {
+      if (section.classList.contains('buttonset')) {
+        $(section).buttonset({
+          detectHTMLButtons: true
+        });
+      }
+    });
 
     // Check for a focused item
     if (!this.settings.allowTabs) {
@@ -330,6 +339,22 @@ ToolbarFlex.prototype = {
     }
 
     return item;
+  },
+
+  /**
+   * @readonly
+   * @returns {Array<HTMLElement>} references to all Toolbar sections labelled "buttonset"
+   */
+  get buttonsets() {
+    return this.sections.filter(el => el.classList.contains('buttonset'));
+  },
+
+  /**
+   * @readonly
+   * @returns {Array<ButtonSet>} references to all Toolbar Section buttonset APIs
+   */
+  get buttonsetAPIs() {
+    return this.buttonsets.map(e => $(e).data('buttonset'));
   },
 
   /**
