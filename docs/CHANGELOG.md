@@ -5,6 +5,7 @@
 - `[Charts]` Added ability to disable the selection of the charts including the legend. ([#2736](https://github.com/infor-design/enterprise/issues/2736))
 - `[Datagrid]` Adds the ability to update values of a specific column on Datagrid. ([#3491](https://github.com/infor-design/enterprise/issues/3491))
 - `[Icon]` Updated the launch icon to be less bulky. ([#5595](https://github.com/infor-design/enterprise/issues/5595))
+- `[Tabs]` Adds the ability to split the tabs. ([#4600](https://github.com/infor-design/enterprise/issues/4600))
 
 ## v4.56.0 Fixes
 
@@ -12,8 +13,14 @@
 - `[Datagrid]` Date format should reflect in date filter when range option is selected. ([#4864](https://github.com/infor-design/enterprise/issues/4864))
 - `[Datagrid]` Add test page for `selectAllCurrentPage` with toolbar count. ([#4921](https://github.com/infor-design/enterprise/issues/4921))
 - `[Dropdown]` Fixed disabling of function keys F1 to F12. ([#4976](https://github.com/infor-design/enterprise/issues/4976))
+- `[Dropdown]` Fixed an accessibility issue where the error message was unannounced using a screen reader. ([#5130](https://github.com/infor-design/enterprise/issues/5130))
+- `[Icons]` Fix sizes on some of the icons in classic mode. ([#5626](https://github.com/infor-design/enterprise/issues/5626))
 - `[Locale]` Fixed an additional case where large numbers cannot be formatted correctly. ([#5605](https://github.com/infor-design/enterprise/issues/5605))
 - `[Locale]` Expanded support from 10 to 20 decimal places. Max number is 21, 20 now. ([#5622](https://github.com/infor-design/enterprise/issues/5622))
+
+## v4.55.2 Fixes
+
+- `[Icons]` Fix sizes on some of the icons in classic mode. ([#5626](https://github.com/infor-design/enterprise/issues/5626))
 
 ## v4.55.1 Fixes
 
@@ -28,7 +35,7 @@
 - `[Datagrid]` Added a `verticalScrollToEnd` property when you reached the end of the datagrid list. ([#5435](https://github.com/infor-design/enterprise/issues/5435))
 - `[Datagrid]` Added separate mask options for filter row. ([#5519](https://github.com/infor-design/enterprise/issues/5519))
 - `[Editor]` Added support for `ol` type attribute to be able to use the other list styles (`alphabetically ordered (lowercase and uppercase)`, and `roman numbers (lowercase and uppercase)`) of `ol` tag. ([#5462](https://github.com/infor-design/enterprise/issues/5462))
-- `[Icons]` Now generating the icons from figma instead of sketch, this should be of low impact but keep your eye on icons in general as they have all changed in generation and log any issues found. (#5170)
+- `[Icons]` Now generating the icons from figma instead of sketch, this should be of low impact but keep your eye on icons in general as they have all changed in generation and log any issues found. ([#5170](https://github.com/infor-design/enterprise/issues/5170))
 - `[Lookup]` Fixed a bug for short field and its icons not rendering properly. ([#5541](https://github.com/infor-design/enterprise/issues/5541))
 - `[Message]` Add info status handling to message.([#5459](https://github.com/infor-design/enterprise/issues/5459))
 - `[Message]` Add an optional close button setting to dismiss the message. ([#5464](https://github.com/infor-design/enterprise/issues/5464))
