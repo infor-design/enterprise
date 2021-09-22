@@ -718,6 +718,34 @@ describe('Locale API', () => {
     expect(Locale.formatNumber(123, { maximumFractionDigits: 20, minimumFractionDigits: 20 })).toEqual('123,00000000000000000000');
   });
 
+  it('should format big decimal numbers in different locales', () => {
+    Locale.set('el-GR');
+    expect(Locale.parseNumber('1234567890123456.77', { decimal: '.', group: '', round: false, style: 'decimal' })).toEqual('1234567890123456.77');
+    expect(Locale.formatNumber('1234567890123456.77', { decimal: '.', group: '', maximumFractionDigits: 15, minimumFractionDigits: 15, round: false, style: 'decimal' })).toEqual('1234567890123456.770000000000000');
+    expect(Locale.formatNumber('1234567890123456.77', { decimal: '.', group: '', maximumFractionDigits: 15, minimumFractionDigits: 15, round: false, style: 'decimal', locale: 'el-GR' })).toEqual('1234567890123456.770000000000000');
+    expect(Locale.formatNumber('1234567890123456.77', { style: 'decimal', round: true, minimumFractionDigits: 15, maximumFractionDigits: 15, locale: 'en-US', group: '' })).toEqual('1234567890123456.770000000000000');
+    expect(Locale.formatNumber('1234567890123456.77000000000000000', { style: 'decimal', round: true, minimumFractionDigits: 15, maximumFractionDigits: 15, locale: 'en-US', group: '' })).toEqual('1234567890123456.770000000000000');
+
+    Locale.set('es-ES');
+    expect(Locale.parseNumber('1234567890123456.77', { decimal: '.', group: '', round: false, style: 'decimal' })).toEqual('1234567890123456.77');
+    expect(Locale.formatNumber('1234567890123456.77', { decimal: '.', group: '', maximumFractionDigits: 15, minimumFractionDigits: 15, round: false, style: 'decimal' })).toEqual('1234567890123456.770000000000000');
+    expect(Locale.formatNumber('1234567890123456.77', { decimal: '.', group: '', maximumFractionDigits: 15, minimumFractionDigits: 15, round: false, style: 'decimal', locale: 'el-GR' })).toEqual('1234567890123456.770000000000000');
+    expect(Locale.formatNumber('1234567890123456.77', { style: 'decimal', round: true, minimumFractionDigits: 15, maximumFractionDigits: 15, locale: 'en-US', group: '' })).toEqual('1234567890123456.770000000000000');
+    expect(Locale.formatNumber('1234567890123456.77000000000000000', { style: 'decimal', round: true, minimumFractionDigits: 15, maximumFractionDigits: 15, locale: 'en-US', group: '' })).toEqual('1234567890123456.770000000000000');
+
+    Locale.set('en-US');
+    expect(Locale.parseNumber('1234567890123456.77', { decimal: '.', group: '', round: false, style: 'decimal' })).toEqual('1234567890123456.77');
+    expect(Locale.formatNumber('1234567890123456.77', { decimal: '.', group: '', maximumFractionDigits: 15, minimumFractionDigits: 15, round: false, style: 'decimal' })).toEqual('1234567890123456.770000000000000');
+    expect(Locale.formatNumber('1234567890123456.77', { decimal: '.', group: '', maximumFractionDigits: 15, minimumFractionDigits: 15, round: false, style: 'decimal', locale: 'el-GR' })).toEqual('1234567890123456.770000000000000');
+    expect(Locale.formatNumber('1234567890123456.77', { style: 'decimal', round: true, minimumFractionDigits: 15, maximumFractionDigits: 15, locale: 'en-US', group: '' })).toEqual('1234567890123456.770000000000000');
+    expect(Locale.formatNumber('1234567890123456.77000000000000000', { style: 'decimal', round: true, minimumFractionDigits: 15, maximumFractionDigits: 15, locale: 'en-US', group: '' })).toEqual('1234567890123456.770000000000000');
+  });
+
+  it('can skip parseNumber in formatNumber', () => {
+    Locale.set('el-GR');
+    expect(Locale.formatNumber('1234567890123456.770000000000000', { maximumFractionDigits: 15, minimumFractionDigits: 15, round: false, style: 'decimal', locale: 'el-GR', parseNumber: false })).toEqual('1.234.567.890.123.456,770000000000000');
+  });
+
   it('handle other big numbers', () => {
     expect(Locale.formatNumber('123456789012345671')).toEqual('123,456,789,012,345,671.00');
     expect(Locale.parseNumber('123456789012345671')).toEqual('123456789012345671');

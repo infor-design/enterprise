@@ -1508,8 +1508,8 @@ const Locale = {  // eslint-disable-line
       percentFormat = percentFormat.replace('¤', percentSign);
     }
 
-    if (typeof number === 'string') {
-      number = Locale.parseNumber(number);
+    if (typeof number === 'string' && !(options?.parseNumber === false)) {
+      number = Locale.parseNumber(number, options);
     }
 
     if (number.toString().indexOf('e') > -1) {
@@ -1654,12 +1654,12 @@ const Locale = {  // eslint-disable-line
       numString = numString.toString();
     }
 
-    const group = options && options.group ? options.group : numSettings ? numSettings.group : ',';
+    const group = options && options.group !== undefined ? options.group : numSettings ? numSettings.group : ',';
     const decimal = options && options.decimal ? options.decimal : numSettings ? numSettings.decimal : '.';
     const percentSign = options && options.percentSign ? options.percentSign : numSettings ? numSettings.percentSign : '%';
     const currencySign = options && options.currencySign ? options.currencySign : localeData.currencySign || '$';
 
-    const exp = (group === ' ') ? new RegExp(/\s/g) : new RegExp(`\\${group}`, 'g');
+    const exp = (group === ' ' || group === '') ? new RegExp(/\s/g) : new RegExp(`\\${group}`, 'g');
     numString = numString.replace(exp, '');
     numString = numString.replace(decimal, '.');
     numString = numString.replace(percentSign, '');
