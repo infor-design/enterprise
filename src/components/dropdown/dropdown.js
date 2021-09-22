@@ -481,6 +481,10 @@ Dropdown.prototype = {
     // NOTE: this doesn't use the ID to get the label due to
     // potentially not being placed in the page yet (in jQuery cache).
     const label = this.element.prev();
+    const errorMessage = this.element.parent().find('.error-message .message-text');
+    const hasErrorMessage = this.pseudoElem?.hasClass('error');
+    const errorMessageText = errorMessage.text();
+
     let labelText = '';
     this.selectedOptions.forEach((option) => {
       if (labelText.length) {
@@ -490,7 +494,7 @@ Dropdown.prototype = {
     });
 
     this.pseudoElem.attr({
-      'aria-label': `${label.text()}, ${labelText}`
+      'aria-label': `${label.text()}, ${hasErrorMessage ? errorMessageText : labelText}`
     });
   },
 
