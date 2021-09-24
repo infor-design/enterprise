@@ -117,7 +117,7 @@ input + .busy-indicator-container,
   .busy-indicator {
     background-color: transparent;
     height: 22px;
-    margin: 6px 1px 1px;
+    margin: 9px 1px 1px;
     position: absolute;
     right: 0;
     width: 40px;
@@ -130,6 +130,18 @@ input + .busy-indicator-container,
       &:last-child {
         margin-right: 0;
       }
+    }
+  }
+}
+
+.form-layout-compact input + .busy-indicator-container,
+.form-layout-compact .dropdown-wrapper > .busy-indicator-container {
+  .busy-indicator {
+    height: 18px;
+    margin-top: 5px;
+
+    .bar {
+      height: 18px;
     }
   }
 }
