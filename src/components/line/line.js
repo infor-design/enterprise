@@ -841,6 +841,21 @@ Line.prototype = {
       }
     };
 
+    // By default, if the all the values are zero, the line-group will be centered
+    // With this, it will be more consistent in terms of look even if it has only one y-axis tick
+    // It should be positioned close contact with the names
+    self.svg._groups.forEach((gLine) => {
+      gLine.forEach((g) => {
+        const tickLength = $(g).find('g.y.axis .tick').length;
+        const gLineGroup = $(g).find('g.line-group');
+        const gYAxis = $(g).find('g.y.axis');
+
+        if (tickLength < 2) {
+          gYAxis.add(gLineGroup).css('transform', 'translateY(38%)');
+        }
+      });
+    });
+
     this.setInitialSelected();
     this.setTextValues();
     this.element.trigger('rendered');
