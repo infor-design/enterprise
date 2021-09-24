@@ -10,6 +10,7 @@
 ## v4.56.0 Fixes
 
 - `[Calendar]` Calendar event IDs can support numbers. ([#5556](https://github.com/infor-design/enterprise/issues/5556))
+- `[Calendar]` Fixed wrong color on icons on the header. ([#5647](https://github.com/infor-design/enterprise/issues/5647))
 - `[Datagrid]` Date format should reflect in date filter when range option is selected. ([#4864](https://github.com/infor-design/enterprise/issues/4864))
 - `[Datagrid]` Add test page for `selectAllCurrentPage` with toolbar count. ([#4921](https://github.com/infor-design/enterprise/issues/4921))
 - `[Datagrid]` Fixed an issue where the selection idx was not updating after append/update data to child nodes for tree. ([#5631](https://github.com/infor-design/enterprise/issues/5631))
