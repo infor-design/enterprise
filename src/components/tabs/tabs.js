@@ -3725,9 +3725,11 @@ Tabs.prototype = {
     const tabMoreWidth = !isVerticalTabs ? this.moreButton.outerWidth(true) - 8 : 0;
     const parentContainer = this.element;
     const scrollingTablist = this.tablistContainer;
+    const hasCompositeForm = parentContainer.parents('.composite-form').length;
     const accountForPadding = scrollingTablist && this.focusState.parent().is(scrollingTablist);
+    const widthPercentage = target[0].getBoundingClientRect().width / target[0].offsetWidth * 100;
 
-    function adjustForParentContainer(targetRectObj, parentElement, tablistContainer) {
+    function adjustForParentContainer(targetRectObj, parentElement, tablistContainer, transformPercentage) {
       const parentRect = parentElement[0].getBoundingClientRect();
       let parentPadding;
       let tablistScrollLeft;
@@ -3758,10 +3760,25 @@ Tabs.prototype = {
           targetRectObj.right -= tabMoreWidth;
         }
 
+        // Composite Form has additional padding on the right
+        if (hasCompositeForm) {
+          targetRectObj.right -= 42;
+          targetRectObj.width -= 1;
+        }
+
+        // Scaling
+        targetRectObj.width = (targetRectObj.width * 100) / transformPercentage;
+        targetRectObj.left = (targetRectObj.left * 100) / transformPercentage;
+        targetRectObj.right = (targetRectObj.right * 100) / transformPercentage;
+
         if (accountForPadding) {
           parentPadding = parseInt(window.getComputedStyle(parentElement[0])[`padding${isRTL ? 'Right' : 'Left'}`], 10);
-          targetRectObj.left += (isRTL ? parentPadding : (parentPadding * -1)) - 41; 
-          targetRectObj.right += (isRTL ? parentPadding : (parentPadding * -1)) - 41;
+          targetRectObj.left += (isRTL ? parentPadding : (parentPadding * -1)); 
+          targetRectObj.right += (isRTL ? parentPadding : (parentPadding * -1));
+        }
+
+        if (targetRectObj.right < 0) {
+          targetRectObj.right = 0;
         }
       }
 
@@ -3774,7 +3791,7 @@ Tabs.prototype = {
 
     // Adjust the values one more time if we have tabs contained inside of a
     // page-container, or some other scrollable container.
-    targetPos = adjustForParentContainer(targetPos, parentContainer, scrollingTablist);
+    targetPos = adjustForParentContainer(targetPos, parentContainer, scrollingTablist, widthPercentage);
 
     // build CSS string containing each prop and set it:
     let targetPosString = '';
