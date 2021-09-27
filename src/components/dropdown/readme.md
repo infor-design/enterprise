@@ -27,7 +27,7 @@ demo:
   - name: Readonly
     slug: example-readonly
   - name: Set value
-    slug: example-set-value
+    slug: example-setvalue
   - name: Tooltips
     slug: example-tooltips
   - name: Updating the Contents

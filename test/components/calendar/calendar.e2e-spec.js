@@ -487,16 +487,19 @@ describe('Calendar display range tests', () => {
   });
 
   it('Should disable specific dates in the range', async () => {
+    expect(await element(by.css('[data-key="20210712"]')).getAttribute('class')).toMatch('is-disabled');
     expect(await element(by.css('[data-key="20210722"]')).getAttribute('class')).toMatch('is-disabled');
+    expect(await element(by.css('[data-key="20210801"]')).getAttribute('class')).toMatch('is-disabled');
     expect(await element(by.css('[data-key="20210802"]')).getAttribute('class')).toMatch('is-disabled');
     expect(await element(by.css('[data-key="20210816"]')).getAttribute('class')).toMatch('is-disabled');
+    expect(await element(by.css('[data-key="20210901"]')).getAttribute('class')).toMatch('is-disabled');
     expect(await element(by.css('[data-key="20210908"]')).getAttribute('class')).toMatch('is-disabled');
   });
 
   it('Should have month label for the first enable date of the month', async () => {
-    expect(await element(by.css('[data-key="20210712"]')).getText()).toEqual('July 12');
-    expect(await element(by.css('[data-key="20210801"]')).getText()).toEqual('August 1');
-    expect(await element(by.css('[data-key="20210901"]')).getText()).toEqual('September 1');
+    expect(await element(by.css('[data-key="20210713"]')).getText()).toEqual('July 13');
+    expect(await element(by.css('[data-key="20210803"]')).getText()).toEqual('August 3');
+    expect(await element(by.css('[data-key="20210902"]')).getText()).toEqual('September 2');
     await utils.checkForErrors();
   });
 

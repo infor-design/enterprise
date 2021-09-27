@@ -1046,7 +1046,7 @@ Modal.prototype = {
 
       // Making default focus when there's no default button set
       // for non contextual action panel.
-      if (!self.capAPI && self.buttonsetAPI) {
+      if (self.buttonsetAPI) {
         if (thisElem.buttonsetElem.find('.btn-modal-primary').length === 0) {
           const firstBtn = $('.modal-buttonset button')[0];
           focusElem = thisElem.buttonsetElem.find(firstBtn);

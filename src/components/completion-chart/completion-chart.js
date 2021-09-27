@@ -121,11 +121,16 @@ CompletionChart.prototype = {
       return value;
     };
 
-    const updateWidth = function (elem, value, ds) {
+    const updateWidth = function (elem, value, start, ds) {
       let percent = toPercent(value, ds);
       percent = (percent < 0 ? 0 : percent);
       const w = percent > 100 ? 100 : percent;
       elem[0].style.width = `${w}%`;
+
+      if (start > 0) {
+        const startPercent = toPercent(start, ds);
+        elem[0].style.left = `${startPercent}%`;
+      }
 
       if (w === 0) {
         elem[0].className += 'is-empty';
@@ -297,17 +302,48 @@ CompletionChart.prototype = {
     const updateBars = function (ds) {
       let w;
       ds = ds || dataset;
+
       // Update completed bar width
       if (ds.completed) {
         w = fixPercent(ds.completed.value, ds);
-        updateWidth(c.completed.bar, w, ds);
+        updateWidth(c.completed.bar, w, 0, ds);
+
+        const completeToolTipApi = c.completed.bar.data('tooltip');
+        let content;
+
+        if (ds.completed.tipText) {
+          content = ds.completed.tipText;
+        } else {
+          content = typeof ds.completed.value === 'string' ? ds.completed.value : `${Math.round((ds.completed.value / ds.total.value) * 100)}%`;
+        }
+
+        if (completeToolTipApi) {
+          completeToolTipApi.setContent(content, false);
+        } else {
+          c.completed.bar.tooltip({ content });
+        }
       }
 
       // Update remaining bar width
       if (ds.remaining) {
-        w = fixPercent(ds.completed.value, ds) + fixPercent(ds.remaining.value, ds);
-        updateWidth(c.remaining.bar, w, ds);
+        w = fixPercent(ds.remaining.value, ds);
+        updateWidth(c.remaining.bar, w, fixPercent(ds.completed.value, ds), ds);
         setOverlap();
+
+        const remainingToolTipApi = c.remaining.bar.data('tooltip');
+        let content;
+
+        if (ds.remaining.tipText) {
+          content = ds.remaining.tipText;
+        } else {
+          content = typeof ds.remaining.value === 'string' ? ds.remaining.value : `${Math.round((ds.remaining.value / ds.total.value) * 100)}%`;
+        }
+
+        if (remainingToolTipApi) {
+          remainingToolTipApi.setContent(content, false);
+        } else {
+          c.remaining.bar.tooltip({ content });
+        }
       }
 
       // Update target line bar position

@@ -124,6 +124,15 @@ ContextualActionPanel.prototype = {
   },
 
   /**
+   * @readonly
+   * @returns {Array<ButtonSet>} references to ButtonSet components inside CAP Toolbars, if available
+   */
+  get buttonsetAPI() {
+    const buttonsetEls = utils.getArrayFromList(this.panel[0].querySelectorAll('.buttonset'));
+    return $(buttonsetEls[0]).data('buttonset');
+  },
+
+  /**
   * Initialize the CAP.
   * @private
   */

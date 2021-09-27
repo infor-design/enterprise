@@ -1,0 +1,58 @@
+<div class="row">
+  <div class="six columns">
+    <p>When changing the contents of the first field below, the second field will display the output of the same number passed through `Soho.Locale.formatNumber()`.</p>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="six columns">
+    <div class="field">
+      <label for="number-field">Number Field</label>
+      <input id="number-field" />
+    </div>
+
+    <div class="field">
+      <label for="parsed-number-field">Formatted Number result</label>
+      <input id="parsed-number-field" readonly/>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function(locale, args) {
+    const numberInfo = Locale.currentLocale.data.numbers;
+
+    $('#number-field').mask({
+      process       : 'number',
+      patternOptions: {
+        allowDecimal           : true,
+        allowNegative          : false,
+        allowThousandsSeparator: true,
+        decimalLimit           : 2,
+        integerLimit           : 20,
+        symbols                : {
+          decimal  : numberInfo.decimal,
+          negative : numberInfo.minusSign,
+          thousands: numberInfo.group
+        }
+      }
+    })
+      .on('change', function() {
+        var value = $('#number-field').val();
+
+        // transform
+        var options = {
+          maximumFractionDigits: 15,
+          minimumFractionDigits: 15,
+          round: true
+        }
+        var nbr = Soho.Locale.formatNumber(value, options);
+        $('#parsed-number-field').val(nbr);
+
+        $('body').toast({
+          title: 'Change Event Fired!',
+          message: 'Parsed Number: <b>'+ nbr +'</b>'
+        });
+      });
+  });
+</script>

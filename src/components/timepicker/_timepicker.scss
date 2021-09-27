@@ -224,6 +224,15 @@ html.is-safari {
       }
     }
   }
+
+  .form-layout-compact {
+    .timepicker {
+      + .trigger,
+      + .tooltip-description + .trigger {
+        top: 1px;
+      }
+    }
+  }
 }
 
 // RTL Styles
