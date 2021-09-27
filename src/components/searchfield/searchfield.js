@@ -474,7 +474,7 @@ SearchField.prototype = {
       self.calculateSearchfieldWidth();
     });
 
-    if (this.settings.collapsible === false || (this.settings.collapsible === 'mobile' && breakpoints.isAbove('phone-to-tablet'))) {
+    if (this.settings.collapsible === false) {
       this.expand(true);
     }
 
@@ -1726,7 +1726,7 @@ SearchField.prototype = {
         buttonset: buttonsetElemWidth
       };
 
-      if (!this.isContainedByFlexToolbar || breakpoints.isAbove('phone-to-tablet')) {
+      if (!this.isContainedByFlexToolbar && breakpoints.isAbove('phone-to-tablet')) {
         this.wrapper[0].classList.add('is-open');
       }
       this.calculateOpenWidth();

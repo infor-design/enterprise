@@ -301,6 +301,20 @@ describe('Flex Toolbar', () => { //eslint-disable-line
         done();
       }, 500);
     });
+
+    it('Can control buttons inside of buttonset sections', () => {
+      const buttonsetEl = toolbarAPI.buttonsets[0];
+      const buttonsetAPI = $(buttonsetEl).data('buttonset');
+
+      // Use ButtonSetAPI to switch disabled state
+      buttonsetAPI.buttons[1].disabled = true;
+
+      expect(toolbarAPI.items[1].disabled).toBeTruthy();
+
+      buttonsetAPI.buttons[1].disabled = false;
+
+      expect(toolbarAPI.items[1].disabled).toBeFalsy();
+    });
   });
 });
 

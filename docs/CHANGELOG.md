@@ -6,12 +6,14 @@
 - `[Datagrid]` Adds the ability to update values of a specific column on Datagrid. ([#3491](https://github.com/infor-design/enterprise/issues/3491))
 - `[Icon]` Updated the launch icon to be less bulky. ([#5595](https://github.com/infor-design/enterprise/issues/5595))
 - `[Tabs]` Adds the ability to split the tabs. ([#4600](https://github.com/infor-design/enterprise/issues/4600))
+- `[Toolbar Flex]` Adds control of buttonset areas via the Buttonset API. ([NG#1101](https://github.com/infor-design/enterprise-ng/issues/1101))
 
 ## v4.56.0 Fixes
 
 - `[Calendar]` Calendar event IDs can support numbers. ([#5556](https://github.com/infor-design/enterprise/issues/5556))
 - `[Datagrid]` Date format should reflect in date filter when range option is selected. ([#4864](https://github.com/infor-design/enterprise/issues/4864))
 - `[Datagrid]` Add test page for `selectAllCurrentPage` with toolbar count. ([#4921](https://github.com/infor-design/enterprise/issues/4921))
+- `[Datepicker]` Fix on datepicker header not being shown in smaller screens. ([#5550](https://github.com/infor-design/enterprise/issues/5550))
 - `[Datagrid]` Fixed an issue where the selection idx was not updating after append/update data to child nodes for tree. ([#5631](https://github.com/infor-design/enterprise/issues/5631))
 - `[Dropdown]` Fixed disabling of function keys F1 to F12. ([#4976](https://github.com/infor-design/enterprise/issues/4976))
 - `[Dropdown]` Fixed a bug where selecting the first item on the list doesn't trigger the `change` event that will select the value immediately. ([NG#1102](https://github.com/infor-design/enterprise-ng/issues/1102))
