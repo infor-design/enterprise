@@ -862,7 +862,6 @@ MonthView.prototype = {
     };
 
     let thisMonthDays = monthDaysMap.get(rangeCurrentMonth);
-    console.log(rangeCurrentMonth, thisMonthDays, monthDaysMap);
     const monthLabelsToSet = new Set(monthDaysMap.keys());
     this.dayMap = [];
     this.days.find('td').each(function () {
