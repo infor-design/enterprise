@@ -48,7 +48,7 @@ describe('Tree example-index tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    fit('Should not visual regress', async () => {
+    it('Should not visual regress', async () => {
       const link = await element.all(by.css('a[role="treeitem"]')).first();
       await link.click();
 
