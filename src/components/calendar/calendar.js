@@ -1561,8 +1561,11 @@ Calendar.prototype = {
         this.weekViews.settings
       );
     }
-
-    this.monthView.showMonth(this.settings.month, this.settings.year);
+    if (this.settings.displayRange.start && this.settings.displayRange.end) {
+      this.monthView.showRange(this.settings.displayRange.start, this.settings.displayRange.end);
+    } else {
+      this.monthView.showMonth(this.settings.month, this.settings.year);
+    }
     this.renderAllEvents();
 
     if (this.weekView && settings.weekViewSettings) {
