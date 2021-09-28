@@ -1023,7 +1023,7 @@ PopupMenu.prototype = {
       self.handleItemClick(e, a);
     });
 
-    this.menu.on(`click.btn-menu.${this.id}`, function (e) {
+    this.menu.on(`click.btn-menu.${this.id}`, (e) => {
       e.preventDefault();
     });
 
@@ -2345,7 +2345,7 @@ PopupMenu.prototype = {
       try {
         frame.contents().find('body').off('click.popupmenu touchend.popupmenu touchcancel.popupmenu');
       } catch (e) {
-        // Ignore security errors on out of iframe
+        // Ignore security errors on iframes
       }
     });
   },

@@ -1,17 +1,63 @@
 # What's New with Enterprise
 
+## v4.56.0 Features
+
+- `[Charts]` Added ability to disable the selection of the charts including the legend. ([#2736](https://github.com/infor-design/enterprise/issues/2736))
+- `[Datagrid]` Adds the ability to update values of a specific column on Datagrid. ([#3491](https://github.com/infor-design/enterprise/issues/3491))
+- `[Icon]` Updated the launch icon to be less bulky. ([#5595](https://github.com/infor-design/enterprise/issues/5595))
+- `[Tabs]` Adds the ability to split the tabs. ([#4600](https://github.com/infor-design/enterprise/issues/4600))
+- `[Toolbar Flex]` Adds control of buttonset areas via the Buttonset API. ([NG#1101](https://github.com/infor-design/enterprise-ng/issues/1101))
+
+## v4.56.0 Fixes
+
+- `[Calendar]` Calendar event IDs can support numbers. ([#5556](https://github.com/infor-design/enterprise/issues/5556))
+- `[Calendar]` Fixed wrong color on icons on the header. ([#5647](https://github.com/infor-design/enterprise/issues/5647))
+- `[Datagrid]` Date format should reflect in date filter when range option is selected. ([#4864](https://github.com/infor-design/enterprise/issues/4864))
+- `[Datagrid]` Add test page for `selectAllCurrentPage` with toolbar count. ([#4921](https://github.com/infor-design/enterprise/issues/4921))
+- `[Datepicker]` Fix on datepicker header not being shown in smaller screens. ([#5550](https://github.com/infor-design/enterprise/issues/5550))
+- `[Datagrid]` Fixed an issue where the selection idx was not updating after append/update data to child nodes for tree. ([#5631](https://github.com/infor-design/enterprise/issues/5631))
+- `[Dropdown]` Fixed disabling of function keys F1 to F12. ([#4976](https://github.com/infor-design/enterprise/issues/4976))
+- `[Dropdown]` Fixed a bug where selecting the first item on the list doesn't trigger the `change` event that will select the value immediately. ([NG#1102](https://github.com/infor-design/enterprise-ng/issues/1102))
+- `[Dropdown]` Fixed an accessibility issue where the error message was unannounced using a screen reader. ([#5130](https://github.com/infor-design/enterprise/issues/5130))
+- `[Popupmenu]` Fixed an not released issue where opening menus limited the ability to click after. ([#5648/#5649](https://github.com/infor-design/enterprise/issues/5648))
+- `[Icons]` Fix sizes on some of the icons in classic mode. ([#5626](https://github.com/infor-design/enterprise/issues/5626))
+- `[Locale]` Fixed an additional case where large numbers cannot be formatted correctly. ([#5605](https://github.com/infor-design/enterprise/issues/5605))
+- `[Locale]` Expanded support from 10 to 20 decimal places. Max number is 21, 20 now. ([#5622](https://github.com/infor-design/enterprise/issues/5622))
+- `[Tabs]` Fix a bug where tabs indicator is not aligned when scaled down. ([#5164](https://github.com/infor-design/enterprise/issues/5164))
+- `[Tabs]` Fix a bug where tabs indicator is not aligned on RTL. ([#5541](https://github.com/infor-design/enterprise/issues/5541))
+
+## v4.55.3 Fixes
+
+- `[Datagrid]` Fixed an issue where the selection idx was not updating after append/update data to child nodes for tree. ([#5631](https://github.com/infor-design/enterprise/issues/5631))
+- `[Locale]` Fixed a bug where very large numbers would get a zero added. ([#5308](https://github.com/infor-design/enterprise/issues/5308))
+- `[Locale]` Fixed a bug where very large numbers with negative added an extra zero in formatNumber. ([#5318](https://github.com/infor-design/enterprise/issues/5318))
+- `[Locale]` Expanded support from 10 to 20 decimal places. Max number is 21, 20 now. ([#5622](https://github.com/infor-design/enterprise/issues/5622))
+
+## v4.55.2 Fixes
+
+- `[Icons]` Fix sizes on some of the icons in classic mode. ([#5626](https://github.com/infor-design/enterprise/issues/5626))
+
+## v4.55.1 Fixes
+
+- `[Locale]` Fixed an additional case where large numbers cannot be formatted correctly. ([#5605](https://github.com/infor-design/enterprise/issues/5605))
+
 ## v4.55.0 Features
 
 - `[ApplicationMenu]` Added the ability to resize the app menu. ([#5193](https://github.com/infor-design/enterprise/issues/5193))
+- `[Completion Chart]` Added tooltip in completion chart. ([#5346](https://github.com/infor-design/enterprise/issues/5346))
+- `[Custom Builds]` Fixed a bug where importing the base Charts API directly would cause an error. ([#5463](https://github.com/infor-design/enterprise/issues/5463))
 - `[Datagrid]` Adds the ability to have a selection radio buttons on Datagrid. ([#5384](https://github.com/infor-design/enterprise/issues/5384))
 - `[Datagrid]` Added a `verticalScrollToEnd` property when you reached the end of the datagrid list. ([#5435](https://github.com/infor-design/enterprise/issues/5435))
-- `[Datagrid]` Added seperate mask options for filter row. ([#5519](https://github.com/infor-design/enterprise/issues/5519))
+- `[Datagrid]` Added separate mask options for filter row. ([#5519](https://github.com/infor-design/enterprise/issues/5519))
 - `[Editor]` Added support for `ol` type attribute to be able to use the other list styles (`alphabetically ordered (lowercase and uppercase)`, and `roman numbers (lowercase and uppercase)`) of `ol` tag. ([#5462](https://github.com/infor-design/enterprise/issues/5462))
+- `[Icons]` Now generating the icons from figma instead of sketch, this should be of low impact but keep your eye on icons in general as they have all changed in generation and log any issues found. ([#5170](https://github.com/infor-design/enterprise/issues/5170))
+- `[Lookup]` Fixed a bug for short field and its icons not rendering properly. ([#5541](https://github.com/infor-design/enterprise/issues/5541))
 - `[Message]` Add info status handling to message.([#5459](https://github.com/infor-design/enterprise/issues/5459))
 - `[Message]` Add an optional close button setting to dismiss the message. ([#5464](https://github.com/infor-design/enterprise/issues/5464))
 - `[Modal]` Added the ability to have a custom tooltip on modal close button. ([#5391](https://github.com/infor-design/enterprise/issues/5391))
 - `[Swaplist]` Added option to copy items from lists instead of moving them. ([#5513](https://github.com/infor-design/enterprise/issues/5513))
 - `[Popdown]` Added a click outside event in popdown. ([#3618](https://github.com/infor-design/enterprise/issues/3618))
+- `[Timepicker]` Fixed a bug for timepicker icon not rendering properly. ([#5558](https://github.com/infor-design/enterprise/issues/5558))
 - `[Typography]` New typography paragraph text style. ([#5325](https://github.com/infor-design/enterprise/issues/5325))
 
 ## v4.55.0 Fixes
@@ -22,16 +68,29 @@
 - `[Charts]` Fixed a bug where automation ids is not properly rendered on legend, text and slices. ([#5441](https://github.com/infor-design/enterprise/issues/5441))
 - `[Datagrid]` Fixed a bug where the checkbox overlaps with the label when `editorOptions.multiple` is set to true. Also added formatters and editor for multiselect. ([NG#1075](https://github.com/infor-design/enterprise-ng/issues/1075))
 - `[Datagrid]` Fixed an issue where tree list indentation is not left aligned when row has no children and datagrid row height is extra small or small. ([#5487](https://github.com/infor-design/enterprise/issues/5487))
-- `[Datagrid]` Fixed an issue where tree list indentation is not left aligned when row has no children and datagrid row height is extra small or small. ([#5487](https://github.com/infor-design/enterprise/issues/5487))
 - `[Message]` Added maxWidth setting to allow message to go full width when title is long. ([#5443](https://github.com/infor-design/enterprise/issues/5443))
 - `[Datagrid]` Fix unescaped HTML of range value to match escaped HTML of data value. ([#4832](https://github.com/infor-design/enterprise/issues/4832))
 - `[Datagrid]` Fix an XSS vulnerability in the name property of the columns objects array. ([#5428](https://github.com/infor-design/enterprise/issues/5428))
 - `[Datagrid]` Fixed an issue where the excel export did not download in MS Edge. ([#5507](https://github.com/infor-design/enterprise/issues/5507))
 - `[Editor]` Fixed an issue where font color was not working and extra spaces were get removed. ([#5137](https://github.com/infor-design/enterprise/issues/5137))
+- `[EmptyMessage]` Fixed a bug where the empty message chart were not properly rendered when using auto height widget/card. ([#5527](https://github.com/infor-design/enterprise/issues/5527))
+- `[Hierarchy]` Fixed line and icon alignment in hierarchy when in rtl format. ([#5544](https://github.com/infor-design/enterprise/issues/5544))
 - `[Message]` Added maxWidth setting to allow message to go full width when title is long. ([#5443](https://github.com/infor-design/enterprise/issues/5443))
 - `[Modal]` Fixed a bug where events are not properly called when calling stacked dialogs. ([#5471](https://github.com/infor-design/enterprise/issues/5471))
 - `[Timepicker]` Fixed a bug where the chinese time format doesn't render correctly after selecting time and periods (AM/PM). ([#5420](https://github.com/infor-design/enterprise/issues/5420))
 - `[Tree]` Fixed an issue where lengthy node text doesn't wrap to lines and cuts off. ([#5499](https://github.com/infor-design/enterprise/issues/5499))
+
+(51 Issues Solved This Release, Backlog Enterprise 129, Backlog Ng 29, 1222 Functional Tests, 1693 e2e Tests)
+
+## v4.54.3 Fixes
+
+- `[Locale]` Fixed a bug where very large numbers would get a zero added. ([#5308](https://github.com/infor-design/enterprise/issues/5308))
+- `[Locale]` Fixed a bug where very large numbers with negative added an extra zero in formatNumber. ([#5318](https://github.com/infor-design/enterprise/issues/5318))
+- `[Locale]` Expanded support from 10 to 20 decimal places. Max number is 21, 20 now. ([#5622](https://github.com/infor-design/enterprise/issues/5622))
+
+## v4.54.2 Fixes
+
+- `[Locale]` Fixed an additional case where large numbers cannot be formatted correctly. ([#5605](https://github.com/infor-design/enterprise/issues/5605))
 
 ## v4.54.1 Fixes
 
@@ -155,6 +214,10 @@
 - `[Tooltip/Popover]` Split the Popover and Tooltip into separate components. ([#5197](https://github.com/infor-design/enterprise/issues/5197))
 
 (52 Issues Solved This Release, Backlog Enterprise 147, Backlog Ng 28, 1095 Functional Tests, 1668 e2e Tests)
+
+## v4.52.3 Fixes
+
+- `[Locale]` Expanded support from 10 to 20 decimal places. Max number is 21, 20 now. ([#5622](https://github.com/infor-design/enterprise/issues/5622))
 
 ## v4.52.2 Fixes
 

@@ -238,6 +238,7 @@ const changedExportNames = {
 };
 
 const lowercaseConstructorNames = {
+  charts: 'charts',
   masks: 'masks',
   longpress: 'longPress',
   renderloop: 'renderLoop'

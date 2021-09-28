@@ -1,6 +1,9 @@
 // Chart - Svg and Css
 //==================================================//
 
+@import '../popupmenu/popupmenu';
+@import '../tooltip/tooltip';
+
 // Alternate Text message
 .chart-message {
   background-color: $ids-color-palette-ruby-10;
@@ -243,7 +246,11 @@
     outline: none;
     padding: 7px;
 
-    &:focus {
+    &[tabindex="-1"] {
+      cursor: inherit;
+    }
+
+    &[tabindex='0']:focus {
       border-color: $input-color-focus-border;
       // Removed box shadow to match current style
       box-shadow: 0 0 4px 1px $focus-box-shadow-color;
@@ -300,7 +307,7 @@
 // Legend Popup Styling
 .chart-popup-menu {
   display: flex;
-  
+
   .chart-popup-menu-color {
     height: 15px;
     width: 15px;

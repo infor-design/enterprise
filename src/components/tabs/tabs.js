@@ -485,6 +485,7 @@ Tabs.prototype = {
    * @returns {void}
    */
   createSortable() {
+    const self = this;
     const s = this.settings;
     if (!s.sortable) {
       return;
@@ -495,6 +496,7 @@ Tabs.prototype = {
     }
 
     const tablist = this.tablist ? this.tablist[0] : null;
+    const tabContainers = $('.tab-panel-container');
     if (tablist) {
       const excludeSel = '.is-disabled, .separator, .application-menu-trigger';
       const excludeEl = [].slice.call(tablist.querySelectorAll(excludeSel));
@@ -519,6 +521,79 @@ Tabs.prototype = {
             tabContainer?.classList.add(className);
           });
       }
+
+      this.tablist.on('dragover.tabs', (e) => {
+        e.preventDefault();
+      });
+
+      tabContainers.on('dragover.tabpanel', (e) => {
+        e.preventDefault();
+      });
+
+      this.tablist.on('drag.tabs', (event) => {
+        if ($('.multitabs-section.is-hidden').length) {
+          const dragElement = $(event.target);
+          const parentElement = dragElement.parents('.multitabs-section');
+
+          if (!parentElement.hasClass('alternate')) {
+            parentElement.find('.overlay-right').addClass('has-overlay');
+          } else {
+            parentElement.find('.overlay-left').addClass('has-overlay');
+          }
+        }
+      });
+
+      this.tablist.on('dragend.tabs', (event) => {
+        const dragElement = $(event.target);
+        const targetElement = $(document.elementFromPoint(event.pageX, event.pageY));
+        const parentElement = dragElement.parents('.multitabs-section');
+
+        parentElement.find('.overlay-left').removeClass('has-overlay');
+        parentElement.find('.overlay-right').removeClass('has-overlay');
+
+        let targetTabsetName = targetElement.parents('.module-tabs');
+        if (dragElement.get(0) !== targetElement.get(0)) {
+          if (parentElement[0] === targetElement.parents('.multitabs-section')[0]) {
+            $('.multitabs-section').each((index, item) => {
+              if (parentElement[0] !== item && $(item).hasClass('is-hidden')) {
+                targetTabsetName = $(item).children('.module-tabs');
+              }
+            });
+          }
+        }
+
+        const selectedTab = dragElement.attr('href').replace('#', '');
+        const api = targetTabsetName.data('tabs');
+
+        if (api === undefined) {
+          return;
+        }
+
+        const tab = api.getTab(null, dragElement);
+
+        if (self.element.parent()[0] === api.element.parent()[0]) {
+          return;
+        }
+
+        const tabMarkup = tab.clone();
+        const panelMarkup = self.getPanel(selectedTab).children();
+
+        self.remove(selectedTab);
+        api.add(selectedTab, {
+          name: tabMarkup.children('a').text().trim(),
+          content: panelMarkup,
+          doActivate: true
+        });
+
+        if (self.element.children('.tab-list').children().length < 1) {
+          self.element.parent().addClass('is-hidden');
+        }
+
+        if (api.element.children('.tab-list').children().length > 0) {
+          api.element.parent().removeClass('is-hidden');
+        }
+      });
+
       this.tablist.on('arrangeupdate.tabs', () => {
         tabContainer?.classList.remove(className);
       });
@@ -2475,8 +2550,8 @@ Tabs.prototype = {
     }
 
     // Build
-    const tabHeaderMarkup = $('<li role="presentation" class="tab"></li>');
-    const anchorMarkup = $(`<a href="#${tabId}" role="tab" aria-expanded="false" aria-selected="false" tabindex="-1">${xssUtils.escapeHTML(options.name)}</a>`);
+    const tabHeaderMarkup = $('<li class="tab" role="presentation"></li>');
+    const anchorMarkup = $(`<a id="#${tabId}" href="#${tabId}" role="tab" aria-expanded="false" aria-selected="false" tabindex="-1">${xssUtils.escapeHTML(options.name)}</a>`);
     const tabContentMarkup = this.createTabPanel(tabId, options.content);
     let iconMarkup;
 
@@ -2788,7 +2863,7 @@ Tabs.prototype = {
     // If content is text/string, simply inline it.
     const markup = $(`<div id="${xssUtils.stripTags(tabId)}" class="tab-panel" role="tabpanel"></div>`);
     if (content instanceof $) {
-      content = content[0];
+      content = content[0].outerHTML;
     }
     DOM.html(markup[0], content || '', '*');
 
@@ -3725,9 +3800,11 @@ Tabs.prototype = {
     const tabMoreWidth = !isVerticalTabs ? this.moreButton.outerWidth(true) - 8 : 0;
     const parentContainer = this.element;
     const scrollingTablist = this.tablistContainer;
+    const hasCompositeForm = parentContainer.parents('.composite-form').length;
     const accountForPadding = scrollingTablist && this.focusState.parent().is(scrollingTablist);
+    const widthPercentage = target[0].getBoundingClientRect().width / target[0].offsetWidth * 100;
 
-    function adjustForParentContainer(targetRectObj, parentElement, tablistContainer) {
+    function adjustForParentContainer(targetRectObj, parentElement, tablistContainer, transformPercentage) {
       const parentRect = parentElement[0].getBoundingClientRect();
       let parentPadding;
       let tablistScrollLeft;
@@ -3758,10 +3835,25 @@ Tabs.prototype = {
           targetRectObj.right -= tabMoreWidth;
         }
 
+        // Composite Form has additional padding on the right
+        if (hasCompositeForm) {
+          targetRectObj.right -= 42;
+          targetRectObj.width -= 1;
+        }
+
+        // Scaling
+        targetRectObj.width = (targetRectObj.width * 100) / transformPercentage;
+        targetRectObj.left = (targetRectObj.left * 100) / transformPercentage;
+        targetRectObj.right = (targetRectObj.right * 100) / transformPercentage;
+
         if (accountForPadding) {
           parentPadding = parseInt(window.getComputedStyle(parentElement[0])[`padding${isRTL ? 'Right' : 'Left'}`], 10);
-          targetRectObj.left += (isRTL ? parentPadding : (parentPadding * -1));
+          targetRectObj.left += (isRTL ? parentPadding : (parentPadding * -1)); 
           targetRectObj.right += (isRTL ? parentPadding : (parentPadding * -1));
+        }
+
+        if (targetRectObj.right < 0) {
+          targetRectObj.right = 0;
         }
       }
 
@@ -3774,7 +3866,7 @@ Tabs.prototype = {
 
     // Adjust the values one more time if we have tabs contained inside of a
     // page-container, or some other scrollable container.
-    targetPos = adjustForParentContainer(targetPos, parentContainer, scrollingTablist);
+    targetPos = adjustForParentContainer(targetPos, parentContainer, scrollingTablist, widthPercentage);
 
     // build CSS string containing each prop and set it:
     let targetPosString = '';

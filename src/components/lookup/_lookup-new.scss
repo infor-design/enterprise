@@ -49,6 +49,36 @@ html.is-firefox {
     .trigger {
       .icon {
         top: 0;
+        margin-top: -10px !important;
+      }
+    }
+  }
+
+  .field-short,
+  .form-layout-compact .field {
+    .lookup-wrapper {
+      .trigger {
+        margin-top: 2px;
+      }
+    }
+  }
+
+}
+
+html.is-safari {
+  .field-short {
+    .lookup-wrapper {
+      .trigger {
+        top: 2px;
+      }
+    }
+  }
+
+  .form-layout-compact {
+    .lookup-wrapper {
+      .trigger,
+      .tooltip-description + .trigger {
+        top: 2px;
       }
     }
   }

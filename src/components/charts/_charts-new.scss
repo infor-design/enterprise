@@ -1,6 +1,9 @@
 // Uplift Chart - Svg and Css
 //================================================== //
 
+@import '../popupmenu/popupmenu-new';
+@import '../tooltip/tooltip-new';
+
 .chart-container {
   .chart-legend.is-bottom {
     padding-bottom: 0;
