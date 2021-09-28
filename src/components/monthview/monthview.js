@@ -346,8 +346,10 @@ MonthView.prototype = {
     const dayMilliseconds = 60 * 60 * 24 * 1000;
     const rangeStart = new Date(this.settings.displayRange.start);
     const originalEnd = new Date(this.settings.displayRange.end);
+    // add one more day to make the last day inclusive
+    const inclusiveEnd = new Date(originalEnd.getTime() + dayMilliseconds);
     const leadDays = dateUtils.firstDayOfWeek(rangeStart);
-    const numberOfWeeks = Math.ceil((originalEnd - leadDays) / (7 * dayMilliseconds));
+    const numberOfWeeks = Math.ceil((inclusiveEnd - leadDays) / (7 * dayMilliseconds));
     this.settings.showMonthYearPicker = false;
     this.settings.inPage = stringUtils.toBoolean(this.settings.inPage);
     if (this.settings.inPage) {
@@ -848,7 +850,7 @@ MonthView.prototype = {
       rangeMonth = month + i;
       if (rangeMonth > 11) {
         rangeYear += 1;
-        rangeMonth = 0;
+        rangeMonth %= 12;
       }
       monthDaysMap.set(rangeMonth, this.daysInMonth(rangeYear, rangeMonth + (this.isIslamic ? 0 : 1)));
     }
@@ -860,6 +862,7 @@ MonthView.prototype = {
     };
 
     let thisMonthDays = monthDaysMap.get(rangeCurrentMonth);
+    console.log(rangeCurrentMonth, thisMonthDays, monthDaysMap);
     const monthLabelsToSet = new Set(monthDaysMap.keys());
     this.dayMap = [];
     this.days.find('td').each(function () {
