@@ -81,5 +81,76 @@ module.exports = {
       const expected = protractor.ExpectedConditions;
       await browser.driver.wait(expected[condition](el), config.waitsFor);
     }
+  },
+  getWidthandCompare: async (el, width) => {
+    const elem = await page.$eval(el, e => getComputedStyle(e).width);
+    expect(elem).toBe(width);
+  },
+  getCssPropsandCompare: async (el, style, value) => {
+    let isFailed = false;
+    try {
+      const elem = await page.$eval(el, e => JSON.parse(JSON.stringify(getComputedStyle(e))));
+      const { [style]: props } = elem;
+      expect(elem[props]).toBe(value);
+    } catch (error) {
+      isFailed = true;
+    }
+    return isFailed;
+  },
+  checkDataAutomationID: async (el, val) => {
+    let isFailed = false;
+    try {
+      const elemHandle = await page.$(el);
+      const elemID = await page.evaluate(elem => elem.getAttribute('data-automation-id'), elemHandle);
+      expect(elemID).toEqual(val);
+    } catch (error) {
+      isFailed = true;
+    }
+    return isFailed;
+  },
+  compareInnerHTML: async (el, value) => {
+    let isFailed = false;
+    try {
+      const elem = await page.$eval(el, element => element.innerHTML);
+      expect(elem).toContain(value);
+    } catch (error) {
+      isFailed = true;
+    }
+    return isFailed;
+  },
+  checkTooltip: async (parentEL, tooltipEL, elHandle, expectedValue) => {
+    let isFailed = false;
+    try {
+      await page.waitForSelector(parentEL);
+      await page.hover(parentEL);
+      await page.waitForSelector(tooltipEL, { visible: true });
+      const tooltipHandle = await page.$(elHandle);
+      const tooltipValue = await page.evaluate(el => el.innerText, tooltipHandle);
+      expect(tooltipValue).toEqual(expectedValue);
+    } catch (error) {
+      isFailed = true;
+    }
+    return isFailed;
+  },
+  isExist: async (element) => {
+    let isFailed = false;
+    try {
+      const elem = await page.$eval(element, el => el !== null);
+      expect(elem).toBe(true);
+    } catch (error) {
+      isFailed = true;
+    }
+    return isFailed;
+  },
+  checkClassName: async (el, val) => {
+    let isFailed = false;
+    try {
+      const elemHandle = await page.$(el);
+      const elemID = await page.evaluate(elem => elem.getAttribute('class'), elemHandle);
+      expect(elemID).toEqual(val);
+    } catch (error) {
+      isFailed = true;
+    }
+    return isFailed;
   }
 };
