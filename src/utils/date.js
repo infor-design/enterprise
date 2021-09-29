@@ -114,4 +114,10 @@ dateUtils.subtract = function (date, number, unit) {
   return newDate;
 };
 
+dateUtils.isDST = function (d) {
+  const jan = new Date(d.getFullYear(), 0, 1).getTimezoneOffset();
+  const jul = new Date(d.getFullYear(), 6, 1).getTimezoneOffset();
+  return Math.max(jan, jul) !== d.getTimezoneOffset();
+};
+
 export { dateUtils }; //eslint-disable-line
