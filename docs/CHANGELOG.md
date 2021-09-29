@@ -12,6 +12,9 @@
 
 - `[Calendar]` Calendar event IDs can support numbers. ([#5556](https://github.com/infor-design/enterprise/issues/5556))
 - `[Calendar]` Fixed wrong color on icons on the header. ([#5647](https://github.com/infor-design/enterprise/issues/5647))
+- `[Calendar]` Fixed markForRefresh for display range in calendar. ([#5675](https://github.com/infor-design/enterprise/issues/5675))
+- `[Calendar]` Adds the ability to support cross year date range in calendar. ([#5675](https://github.com/infor-design/enterprise/issues/5675))
+- `[Calendar]` Fixed dditional row due to DST for display range in calendar. ([#5675](https://github.com/infor-design/enterprise/issues/5675))
 - `[Datagrid]` Date format should reflect in date filter when range option is selected. ([#4864](https://github.com/infor-design/enterprise/issues/4864))
 - `[Datagrid]` Add test page for `selectAllCurrentPage` with toolbar count. ([#4921](https://github.com/infor-design/enterprise/issues/4921))
 - `[Datepicker]` Fix on datepicker header not being shown in smaller screens. ([#5550](https://github.com/infor-design/enterprise/issues/5550))
