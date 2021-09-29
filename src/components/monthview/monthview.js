@@ -346,10 +346,8 @@ MonthView.prototype = {
     const dayMilliseconds = 60 * 60 * 24 * 1000;
     const rangeStart = new Date(this.settings.displayRange.start);
     const originalEnd = new Date(this.settings.displayRange.end);
-    // add one more day to make the last day inclusive
-    const inclusiveEnd = new Date(originalEnd.getTime() + dayMilliseconds);
     const leadDays = dateUtils.firstDayOfWeek(rangeStart);
-    const numberOfWeeks = Math.ceil((inclusiveEnd - leadDays) / (7 * dayMilliseconds));
+    const numberOfWeeks = Math.ceil((originalEnd - leadDays) / (7 * dayMilliseconds));
     this.settings.showMonthYearPicker = false;
     this.settings.inPage = stringUtils.toBoolean(this.settings.inPage);
     if (this.settings.inPage) {
