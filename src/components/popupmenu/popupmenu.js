@@ -1023,6 +1023,10 @@ PopupMenu.prototype = {
       self.handleItemClick(e, a);
     });
 
+    this.menu.on(`click.btn-menu.${this.id}`, (e) => {
+      e.preventDefault();
+    });
+
     const excludes = 'li:not(.separator):not(.hidden):not(.heading):not(.group):not(.is-disabled):not(.is-placeholder)';
 
     // Select on Focus
@@ -1281,13 +1285,6 @@ PopupMenu.prototype = {
         }
         return undefined;
       });
-
-      if (!self.element.hasClass('ids-actionsheet-trigger')) {
-        $(document).off(`click.btn-menu.${this.id}`).on(`click.btn-menu.${this.id}`, (e) => {
-          e.preventDefault();
-          return false;
-        });
-      }
     }, 1);
   },
 
@@ -2337,12 +2334,18 @@ PopupMenu.prototype = {
       this.menu.off('click.popupmenu touchend.popupmenu touchcancel.popupmenu dragstart.popupmenu');
     }
 
+    setTimeout(() => {
+      if (this.menu && this.menu.length) {
+        this.menu.off(`click.btn-menu.${this.id}`);
+      }
+    }, 1);
+
     $('iframe').each(function () {
       const frame = $(this);
       try {
         frame.contents().find('body').off('click.popupmenu touchend.popupmenu touchcancel.popupmenu');
       } catch (e) {
-        // Ignore security errors on out of iframe
+        // Ignore security errors on iframes
       }
     });
   },
