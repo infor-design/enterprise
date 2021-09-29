@@ -10,6 +10,7 @@
 
 ## v4.56.0 Fixes
 
+- `[BusyIndicator]` Sized and Aligned busy indicator within a compact form field. ([#5655](https://github.com/infor-design/enterprise/issues/5655))
 - `[Calendar]` Calendar event IDs can support numbers. ([#5556](https://github.com/infor-design/enterprise/issues/5556))
 - `[Calendar]` Fixed wrong color on icons on the header. ([#5647](https://github.com/infor-design/enterprise/issues/5647))
 - `[Datagrid]` Date format should reflect in date filter when range option is selected. ([#4864](https://github.com/infor-design/enterprise/issues/4864))
