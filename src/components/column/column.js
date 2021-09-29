@@ -472,7 +472,6 @@ Column.prototype = {
 
     const drawBars = function (isTargetBars) {
       let bars; //eslint-disable-line
-      let line; //eslint-disable-line
       isTargetBars = isPositiveNegative && isTargetBars;
 
       // Add the bars - done different depending on if grouped or singlular
@@ -644,27 +643,28 @@ Column.prototype = {
         const getMaxes = (d, opt) => d3.max(d.data, d2 => (opt ? d2.value[opt] : d2.value));
 
         // Calculate the Domain X and Y Ranges
-        const maxes = dataset.map(d => getMaxes(d));
+        const lineMaxes = dataset.map(d => getMaxes(d));
 
         const maxDataLen = d3.max(dataset.map(d => d.data.length));
         const entries = maxDataLen <= 1 ? maxDataLen : maxDataLen - 1;
-        const xScale = x.domain([0, d3.max(entries)]);
-        const yScale = y.domain([0, d3.max(maxes)]).nice();
+        const xScaleLine = x.domain([0, d3.max(entries)]);
+        const yScaleLine = y.domain([0, d3.max(lineMaxes)]).nice();
 
         const line = d3.line()
-          .x((d, n) => xScale(n))
-          .y(d => yScale(d.value));
+          .x((d, n) => xScaleLine(n))
+          .y(d => yScaleLine(d.value));
         
-        let lineDataset = [{ data: [] }];
+        const lineDataset = [{ data: [] }];
 
         if (self.settings.useLine) {
           dataArray.forEach(function (i, dIdx) {
             i.data.map(function (j, idx) {
               if (j.isLine) {
-                // i.data.splice(idx);
                 lineDataset[0].data.push(j);
-                lineDataset[0]['name'] = j.name;
+                lineDataset[0].name = j.name;
               }
+
+              return lineDataset;
             });
           });
 
@@ -679,8 +679,8 @@ Column.prototype = {
               .attr('stroke', '#000')
               .attr('stroke-width', 2)
               .attr('fill', 'none')
-              .attr('class', 'line')
-          })
+              .attr('class', 'line');
+          });
         }
 
         bars

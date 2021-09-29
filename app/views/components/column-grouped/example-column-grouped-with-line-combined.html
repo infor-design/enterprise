@@ -15,71 +15,159 @@
 <script>
   $('body').on('initialized', function () {
 
-    var dataset = [
-      {
-        'data': [
-          { 'name': 'Quantity', 'value': 10 },
-          { 'name': 'Future Orders', 'value': 9 },
-          { 'name': 'Margins', 'value': 9, 'isLine': true }
+    var dataset = [{
+        data: [{
+            name: 'Jan',
+            value: 12,
+        }, {
+            name: 'Feb',
+            value: 11,
+            attributes: [
+             { name: 'id', value: 'columngrouped-c1-feb' },
+             { name: 'data-automation-id', value: 'automation-id-columngrouped-c1-feb' }
+           ]
+        }, {
+            name: 'Mar',
+            value: 14,
+            attributes: [
+             { name: 'id', value: 'columngrouped-c1-mar' },
+             { name: 'data-automation-id', value: 'automation-id-columngrouped-c1-mar' }
+           ]
+        }, {
+            name: 'Apr',
+            value: 10,
+            attributes: [
+             { name: 'id', value: 'columngrouped-c1-apr' },
+             { name: 'data-automation-id', value: 'automation-id-columngrouped-c1-apr' }
+           ]
+        }, {
+            name: 'May',
+            value: 14,
+            attributes: [
+             { name: 'id', value: 'columngrouped-c1-may' },
+             { name: 'data-automation-id', value: 'automation-id-columngrouped-c1-may' }
+           ]
+        }, {
+            name: 'Jun',
+            value: 8,
+            attributes: [
+             { name: 'id', value: 'columngrouped-c1-jun' },
+             { name: 'data-automation-id', value: 'automation-id-columngrouped-c1-jun' }
+           ]
+        }, {
+            name: 'Margins',
+            value: 9,
+            isLine: true
+          }
         ],
-        'line': 9,
-        'name': 'Apples'
-      },
-      {
-        'data': [
-          { 'name': 'Quantity', 'value': 12 },
-          { 'name': 'Future Orders', 'value': 0 },
-          { 'name': 'Margins', 'value': 11, 'isLine': true }
+        name: 'Component A'
+      }, {
+        data: [{
+            name: 'Jan',
+            value: 22,
+            attributes: [
+             { name: 'id', value: 'columngrouped-c2-jan' },
+             { name: 'data-automation-id', value: 'automation-id-columngrouped-c2-jan' }
+           ]
+        }, {
+            name: 'Feb',
+            value: 21,
+            attributes: [
+             { name: 'id', value: 'columngrouped-c2-feb' },
+             { name: 'data-automation-id', value: 'automation-id-columngrouped-c2-feb' }
+           ]
+        }, {
+            name: 'Mar',
+            value: 24,
+            attributes: [
+             { name: 'id', value: 'columngrouped-c2-mar' },
+             { name: 'data-automation-id', value: 'automation-id-columngrouped-c2-mar' }
+           ]
+        }, {
+            name: 'Apr',
+            value: 20,
+            attributes: [
+             { name: 'id', value: 'columngrouped-c2-apr' },
+             { name: 'data-automation-id', value: 'automation-id-columngrouped-c2-apr' }
+           ]
+        }, {
+            name: 'May',
+            value: 24,
+            attributes: [
+             { name: 'id', value: 'columngrouped-c2-may' },
+             { name: 'data-automation-id', value: 'automation-id-columngrouped-c2-may' }
+           ]
+        }, {
+            name: 'Jun',
+            value: 28,
+            attributes: [
+             { name: 'id', value: 'columngrouped-c2-jun' },
+             { name: 'data-automation-id', value: 'automation-id-columngrouped-c2-jun' }
+           ]
+        }, {
+            name: 'Margins',
+            value: 11,
+            isLine: true
+          }
         ],
-        'line': 11,
-        'name': 'Snozberry'
-      },
-      {
-        'data': [
-          { 'name': 'Quantity', 'value': 8 },
-          { 'name': 'Future Orders', 'value': 5 },
-          { 'name': 'Margins', 'value': 4, 'isLine': true }
+        name: 'Component B'
+      }, {
+        data: [{
+            name: 'Jan',
+            value: 32,
+            attributes: [
+             { name: 'id', value: 'columngrouped-c3-jan' },
+             { name: 'data-automation-id', value: 'automation-id-columngrouped-c3-jan' }
+           ]
+        }, {
+            name: 'Feb',
+            value: 31,
+            attributes: [
+             { name: 'id', value: 'columngrouped-c3-feb' },
+             { name: 'data-automation-id', value: 'automation-id-columngrouped-c3-feb' }
+           ]
+        }, {
+            name: 'Mar',
+            value: 34,
+            attributes: [
+             { name: 'id', value: 'columngrouped-c3-mar' },
+             { name: 'data-automation-id', value: 'automation-id-columngrouped-c3-mar' }
+           ]
+        }, {
+            name: 'Apr',
+            value: 30,
+            attributes: [
+             { name: 'id', value: 'columngrouped-c3-apr' },
+             { name: 'data-automation-id', value: 'automation-id-columngrouped-c3-apr' }
+           ]
+        }, {
+            name: 'May',
+            value: 34,
+            attributes: [
+             { name: 'id', value: 'columngrouped-c3-may' },
+             { name: 'data-automation-id', value: 'automation-id-columngrouped-c3-may' }
+           ]
+        }, {
+            name: 'Jun',
+            value: 38,
+            attributes: [
+             { name: 'id', value: 'columngrouped-c3-jun' },
+             { name: 'data-automation-id', value: 'automation-id-columngrouped-c3-jun' }
+           ]
+        }, {
+            name: 'Margins',
+            value: 4,
+            isLine: true
+          }
         ],
-        'line': 4,
-        'name': 'Oranges'
-      },
-      {
-        'data': [
-          { 'name': 'Quantity', 'value': 21 },
-          { 'name': 'Future Orders', 'value': 20 },
-          { 'name': 'Margins', 'value': 9, 'isLine': true }
-        ],
-        'value': 9,
-        'name': 'Bananas'
-      },
-      {
-        'data': [
-          { 'name': 'Quantity', 'value': 15 },
-          { 'name': 'Future Orders', 'value': 11 },
-          { 'name': 'Margins', 'value': 6, 'isLine': true }
-        ],
-        'value': 6,
-        'name': 'Grapes'
-      },
-      {
-        'data': [
-          { 'name': 'Quantity', 'value': 17 },
-          { 'name': 'Future Orders', 'value': 7 },
-          { 'name': 'Margins', 'value': 15, 'isLine': true }
-        ],
-        'value': 15,
-        'name': 'Pears'
-      }
-    ];
+        name: 'Component C'
+      }];
 
     $('#column-grouped-example').chart({
       type: 'column-grouped',
       dataset: dataset,
       useLine: true,
     });
-
-    console.log($('#column-grouped-example').data('chart'));
-    console.log(dataset)
 
   });
 
