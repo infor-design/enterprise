@@ -271,32 +271,14 @@
     location.reload();
   });
 
-  donut.chart({type: 'donut', dataset: getDonutData()});
-  bar.chart({type: 'bar-grouped', dataset: getBarData(), showLegend: false});
-  area.chart({type: 'area', dataset: getAreaData()});
-
-  if (Soho.breakpoints.isBelow('phablet')) {
-    const width = Soho.breakpoints.isBelow('slim') ? 250 : 375;
-
-    donut.width(width);
-    donut.parent().css({
-      height: '225px',
-      width: `${width}px`
-    });
-    bar.width(width);
-    bar.parent().width(width);
-    area.width(width);
-    area.parent().width(width);
-  }
-
   // Wait for initialize
   $('body').on('initialized', function() {
     var homepageApi = $('.homepage').data('homepage');
     var circlepagerApi = $('.circlepager').data('circlepager');
 
     // Set view type
-    var setView = function(numberOfColumns) {
-      if (numberOfColumns > 2) {
+    var setView = function() {
+      if (Soho.breakpoints.isAbove('tablet-to-desktop')) {
         circlepagerApi.showExpandedView();
       } else {
         circlepagerApi.showCollapsedView();
@@ -304,14 +286,31 @@
     };
 
     // Bind resize
-    homepageApi.element.on('resize', function(e, numberOfColumns, metaData) {
-      console.log(this, 'columns:', this.offsetHeight, 'metaData:', metaData);
-      setView(numberOfColumns);
+    homepageApi.element.on('resize', function(e, metaData) {
+      console.log(this, 'metaData:', metaData);
+      setView();
     });
 
-
     // Init
-    setView(homepageApi.settings.columns);
+    setView();
+
+    if (Soho.breakpoints.isBelow('phablet')) {
+      const width = Soho.breakpoints.isBelow('slim') ? 250 : 375;
+
+      donut.width(width);
+      donut.parent().css({
+        height: '225px',
+        width: `${width}px`
+      });
+      bar.width(width);
+      bar.parent().width(width);
+      area.width(width);
+      area.parent().width(width);
+    }
+
+    donut.chart({type: 'donut', dataset: getDonutData()});
+    bar.chart({type: 'bar-grouped', dataset: getBarData(), showLegend: false});
+    area.chart({type: 'area', dataset: getAreaData()});
 
     var donutApi = donut.data('pie');
     var barApi = bar.data('bar');

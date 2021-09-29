@@ -839,6 +839,12 @@ DatePicker.prototype = {
       placementParent = this.element.next('.icon, .trigger');
     }
 
+    let popPlacement = 'bottom';
+
+    if (parent.offset().top < 400 && parent.offset().top > 185 && window.innerHeight < 800) {
+      popPlacement = Locale.isRTL() ? 'left' : 'right';
+    }
+
     const popoverOpts = {
       content: this.calendar,
       placementOpts: {
@@ -846,7 +852,7 @@ DatePicker.prototype = {
         parentXAlignment: placementParentXAlignment,
         strategies: ['flip', 'nudge', 'shrink']
       },
-      placement: 'bottom',
+      placement: popPlacement,
       popover: true,
       trigger: 'immediate',
       extraClass: this.settings.range.selectWeek ? 'monthview-popup is-range-week' : 'monthview-popup',
@@ -866,7 +872,17 @@ DatePicker.prototype = {
               `${(this.popupClosestScrollable[0].scrollHeight - 521)}px`,
             height: ''
           });
+
+          if ((window.innerHeight - this.popup.height()) / window.innerHeight < 0.15) {
+            this.popupClosestScrollable.children().not('.popover').css('padding-top', '80px');
+          }
+
           this.popupClosestScrollable.css('min-height', '375px');
+        }
+
+        // Move calendar if top position exceeds max height so header will show
+        if ((window.innerHeight - this.popup.height()) / window.innerHeight < 0.15) {
+          this.popup.css({ top: `${this.popup.position().top < 0 ? 0 : this.popup.position().top + 50}px` });
         }
 
         // Hide calendar until range to be pre selected
@@ -900,6 +916,7 @@ DatePicker.prototype = {
       })
       .off('hide.datepicker')
       .on('hide.datepicker', () => {
+        this.popupClosestScrollable.children().not('.popover').css('padding-top', '');
         this.popupClosestScrollable.add(this.popup).css('min-height', '');
         this.closeCalendar();
       });
