@@ -67,7 +67,7 @@
     "e2e:local:debug": "npm run webdriver:update && npx protractor test/protractor.local.debug.conf.js",
     "e2e:puppeteer": "npx --no-install jest --config=test/jest.config.js --runInBand --detectOpenHandles --forceExit",
     "webdriver:clean": "npx webdriver-manager clean",
-    "webdriver:update": "npx webdriver-manager update --versions.chrome 93.0.4577.63 --standalone false --quiet --gecko=false",
+    "webdriver:update": "npx webdriver-manager update --versions.chrome 92.0.4515.43 --standalone false --quiet --gecko=false",
     "zip-dist": "npx grunt zip-dist",
     "documentation": "node ./scripts/deploy-documentation.js",
     "release:dev": "node scripts/publish-nightly-manual",
@@ -79,7 +79,7 @@
     "node-version-check": "npx check-node-version --node 12",
     "node-updates-check": "npx ncu"
   },
-  "chrome-version": "94",
+  "chrome-version": "92",
   "dependencies": {
     "d3": "^5.16.0",
     "jquery": "^3.6.0",
