@@ -9,7 +9,7 @@
 - `[Toolbar Flex]` Adds control of buttonset areas via the Buttonset API. ([NG#1101](https://github.com/infor-design/enterprise-ng/issues/1101))
 
 ## v4.56.0 Fixes
--
+
 - `[BusyIndicator]` Sized and Aligned busy indicator within a compact form field. ([#5655](https://github.com/infor-design/enterprise/issues/5655))
 - `[Calendar]` Calendar event IDs can support numbers. ([#5556](https://github.com/infor-design/enterprise/issues/5556))
 - `[Calendar]` Fixed wrong color on icons on the header. ([#5647](https://github.com/infor-design/enterprise/issues/5647))
