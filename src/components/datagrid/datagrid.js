@@ -9802,9 +9802,17 @@ Datagrid.prototype = {
     if (this.settings.groupable) {
       return this.originalDataset[rowIdx];
     }
-    return this.settings.treeGrid ?
+
+    const rowData = this.settings.treeGrid ?
       this.settings.treeDepth[rowIdx].node :
       this.settings.dataset[rowIdx];
+
+    // Tree Grid have different object structure than normal dataset
+    if (this.settings.treeGrid && this.settings.treeDepth[rowIdx].rowStatus) {
+      this.settings.treeDepth[rowIdx].node.rowStatus = this.settings.treeDepth[rowIdx].rowStatus;
+    }
+    
+    return rowData;
   },
 
   /**
