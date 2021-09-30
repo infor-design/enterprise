@@ -26,6 +26,7 @@
 - `[Locale]` Expanded support from 10 to 20 decimal places. Max number is 21, 20 now. ([#5622](https://github.com/infor-design/enterprise/issues/5622))
 - `[Tabs]` Fix a bug where tabs indicator is not aligned when scaled down. ([#5164](https://github.com/infor-design/enterprise/issues/5164))
 - `[Tabs]` Fix a bug where tabs indicator is not aligned on RTL. ([#5541](https://github.com/infor-design/enterprise/issues/5541))
+- `[Tree]` Fix on return item when calling addNode. ([#5334](https://github.com/infor-design/enterprise/issues/5334))
 
 ## v4.55.3 Fixes
 
