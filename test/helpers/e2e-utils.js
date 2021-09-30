@@ -91,7 +91,7 @@ module.exports = {
     try {
       const elem = await page.$eval(el, e => JSON.parse(JSON.stringify(getComputedStyle(e))));
       const { [style]: props } = elem;
-      expect(elem[props]).toBe(value);
+      expect(props).toBe(value);
     } catch (error) {
       isFailed = true;
     }
@@ -152,5 +152,27 @@ module.exports = {
       isFailed = true;
     }
     return isFailed;
+  },
+  checkListItemValue: async (listElement, firstItem, LastItem) => {
+    let hasFailed = false;
+    const elHandleArray = await page.$$(listElement);
+    const lastIndex = elHandleArray.length - 1;
+    // eslint-disable-next-line compat/compat
+    await Promise.all(elHandleArray.map(async (el, index) => {
+      try {
+        if (index === 0) {
+          expect(await page.$eval(`${listElement}:first-child`, items => items.textContent))
+            .toContain(firstItem);
+        }
+        if (index === lastIndex) {
+          expect(await page.$eval(`${listElement}:last-child`, items => items.textContent))
+            .toContain(LastItem);
+        }
+      } catch (error) {
+        hasFailed = true;
+      }
+      index += 1;
+    }));
+    return hasFailed;
   }
 };
