@@ -19,6 +19,7 @@
 - `[Dropdown]` Fixed disabling of function keys F1 to F12. ([#4976](https://github.com/infor-design/enterprise/issues/4976))
 - `[Dropdown]` Fixed a bug where selecting the first item on the list doesn't trigger the `change` event that will select the value immediately. ([NG#1102](https://github.com/infor-design/enterprise-ng/issues/1102))
 - `[Dropdown]` Fixed an accessibility issue where the error message was unannounced using a screen reader. ([#5130](https://github.com/infor-design/enterprise/issues/5130))
+- `[Homepage]` Fix on homepage example charts misaligned when on mobile. ([#5650](https://github.com/infor-design/enterprise/issues/5650))
 - `[Popupmenu]` Fixed an not released issue where opening menus limited the ability to click after. ([#5648/#5649](https://github.com/infor-design/enterprise/issues/5648))
 - `[Popupmenu]` Allow switches to be clickable in popupmenu for backwards compatibility. ([#1127](https://github.com/infor-design/enterprise-ng/issues/1127))
 - `[Icons]` Fix sizes on some of the icons in classic mode. ([#5626](https://github.com/infor-design/enterprise/issues/5626))
