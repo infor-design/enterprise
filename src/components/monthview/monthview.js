@@ -346,7 +346,7 @@ MonthView.prototype = {
     const dayMilliseconds = 60 * 60 * 24 * 1000;
     const rangeStart = new Date(this.settings.displayRange.start);
     const originalEnd = new Date(this.settings.displayRange.end);
-    const inclusiveEnd = dateUtils.isDST(rangeStart) && !dateUtils.isDST(originalEnd) ?
+    const inclusiveEnd = dateUtils.isDaylightSavingTime(rangeStart) && !dateUtils.isDaylightSavingTime(originalEnd) ?
       originalEnd : new Date(originalEnd.getTime() + dayMilliseconds);
     const leadDays = dateUtils.firstDayOfWeek(rangeStart);
     const numberOfWeeks = Math.ceil((inclusiveEnd - leadDays) / (7 * dayMilliseconds));
