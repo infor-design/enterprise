@@ -646,4 +646,267 @@ Object {
       expect(isFailed).not.toContain(true); // check if each assertions fails
     });
   });
+
+  describe('Listview Tests', () => {
+    const url = 'http://localhost:4000/components/pager/example-listview.html';
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
+    });
+
+    it('should show the title', async () => {
+      await expect(page.title()).resolves.toMatch('IDS Enterprise');
+    });
+
+    it('should check the test page with Axe', async () => {
+      await page.setBypassCSP(true);
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+      await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport', 'label', 'aria-allowed-role', 'aria-required-parent'] });
+    });
+
+    it('should have Accessibility', async () => {
+      const webArea = await page.accessibility.snapshot();
+      expect(webArea).toMatchInlineSnapshot(`
+Object {
+  "children": Array [
+    Object {
+      "name": "Skip to Main Content",
+      "role": "link",
+    },
+    Object {
+      "level": 1,
+      "name": "IDS Enterprise",
+      "role": "heading",
+    },
+    Object {
+      "haspopup": "menu",
+      "name": "Header More Actions Button",
+      "role": "combobox",
+    },
+    Object {
+      "level": 2,
+      "name": "Pagable Listview",
+      "role": "heading",
+    },
+    Object {
+      "children": Array [
+        Object {
+          "children": Array [
+            Object {
+              "name": "8 Mile Resurfacing City of Detroit",
+              "role": "option",
+            },
+            Object {
+              "name": "Bishop Park City of Detroit",
+              "role": "option",
+            },
+            Object {
+              "name": "Fort Woods Swimming Pool City of Dearborn",
+              "role": "option",
+            },
+            Object {
+              "name": "Maplewood St. Resurfacing Garden City",
+              "role": "option",
+            },
+            Object {
+              "name": "Middle School Parking Lot Cinnaminson Township",
+              "role": "option",
+            },
+            Object {
+              "name": "Wood Park Tennis Court Cinnaminson Township",
+              "role": "option",
+            },
+            Object {
+              "name": "Beechtree Dr. Resurfacing Cinnaminson Township",
+              "role": "option",
+            },
+            Object {
+              "name": "Track Resurfacing Maple Shade Boro",
+              "role": "option",
+            },
+            Object {
+              "name": "8 Mile Resurfacing City of Detroit",
+              "role": "option",
+            },
+            Object {
+              "name": "Bishop Park City of Detroit",
+              "role": "option",
+            },
+          ],
+          "name": "Pagable Listview",
+          "role": "listbox",
+        },
+      ],
+      "name": "Pagination",
+      "role": "region",
+    },
+    Object {
+      "disabled": true,
+      "name": "Previous Page",
+      "role": "button",
+    },
+    Object {
+      "disabled": true,
+      "name": "You are currently on page 1",
+      "role": "button",
+    },
+    Object {
+      "name": "page 2",
+      "role": "button",
+    },
+    Object {
+      "name": "page 3",
+      "role": "button",
+    },
+    Object {
+      "name": "Next Page",
+      "role": "button",
+    },
+  ],
+  "name": "IDS Enterprise",
+  "role": "RootWebArea",
+}
+`);
+    });
+
+    it('should check pager onClick', async () => {
+      const isFailed = [];
+      const pagerNext = 'li.pager-next';
+      const pagerPrev = 'li.pager-prev';
+      const page1 = 'button[data-page="1"]';
+      const page2 = 'button[data-page="2"]';
+      const page3 = 'button[data-page="3"]';
+      const list = 'div.paginated.listview.is-selectable > ul > li';
+
+      // verify default
+      isFailed.push(await isExist('li.pager-prev > button[disabled]'));
+      isFailed.push(await isExist(pagerNext));
+      isFailed.push(await getCssPropsandCompare(page1, 'fontWeight', '600'));
+      isFailed.push(await getCssPropsandCompare(page2, 'fontWeight', '400'));
+      isFailed.push(await getCssPropsandCompare(page3, 'fontWeight', '400'));
+      isFailed.push(await checkListItemValue(list, '8 Mile Resurfacing', 'Bishop Park')); // check if  List's first and last items contains the given value
+
+      // verify page 2
+      await page.click(page2);
+      isFailed.push(!await isExist('li.pager-prev > button[disabled]'));
+      isFailed.push(await isExist(pagerPrev));
+      isFailed.push(await isExist(pagerNext));
+      isFailed.push(await getCssPropsandCompare(page1, 'fontWeight', '400'));
+      isFailed.push(await getCssPropsandCompare(page2, 'fontWeight', '600'));
+      isFailed.push(await getCssPropsandCompare(page3, 'fontWeight', '400'));
+      isFailed.push(await checkListItemValue(list, 'Fort Woods Swimming Pool', 'Maplewood St. Resurfacing')); // check if  List's first and last items contains the given value
+
+      // verify page 3
+      await page.click(page3);
+      isFailed.push(await isExist('li.pager-next > button[disabled]'));
+      isFailed.push(await isExist(pagerPrev));
+      isFailed.push(await getCssPropsandCompare(page1, 'fontWeight', '400'));
+      isFailed.push(await getCssPropsandCompare(page2, 'fontWeight', '400'));
+      isFailed.push(await getCssPropsandCompare(page3, 'fontWeight', '600'));
+      isFailed.push(await checkListItemValue(list, 'Middle School Parking Lot', 'Track Resurfacing')); // check if  List's first and last items contains the given value
+      expect(isFailed).not.toContain(true); // check if each assertions fails
+    });
+
+    it('should check pager using keyboard press', async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
+      const isFailed = [];
+      const pagerNext = 'li.pager-next';
+      const pagerPrev = 'li.pager-prev';
+      const page1 = 'button[data-page="1"]';
+      const page2 = 'button[data-page="2"]';
+      const page3 = 'button[data-page="3"]';
+      const list = 'ul.paginated.listview.is-selectable > li';
+
+      // verify default
+      isFailed.push(await isExist('li.pager-prev > button[disabled]'));
+      isFailed.push(await isExist(pagerNext));
+      isFailed.push(await getCssPropsandCompare(page1, 'fontWeight', '600'));
+      isFailed.push(await getCssPropsandCompare(page2, 'fontWeight', '400'));
+      isFailed.push(await getCssPropsandCompare(page3, 'fontWeight', '400'));
+      isFailed.push(await checkListItemValue(list, '8 Mile Resurfacing', 'Bishop Park')); // check if  List's first and last items contains the given value
+
+      // verify page 2
+      const pager1 = await page.$('button[data-page="1"]');
+      await pager1.press('Tab');
+      await pager1.press('Tab');
+      await page.keyboard.press('Enter');
+      isFailed.push(!await isExist('li.pager-prev > button[disabled]'));
+      isFailed.push(await isExist(pagerPrev));
+      isFailed.push(await isExist(pagerNext));
+      isFailed.push(await getCssPropsandCompare(page1, 'fontWeight', '400'));
+      isFailed.push(await getCssPropsandCompare(page2, 'fontWeight', '600'));
+      isFailed.push(await getCssPropsandCompare(page3, 'fontWeight', '400'));
+      isFailed.push(await checkListItemValue(list, 'Fort Woods Swimming Pool', 'Maplewood St. Resurfacing')); // check if  List's first and last items contains the given value
+
+      // verify page 3
+      const pager2 = await page.$('button[data-page="2"]');
+      await pager2.press('Tab');
+      await pager2.press('Tab');
+      await page.keyboard.press('Enter');
+      isFailed.push(await isExist('li.pager-next > button[disabled]'));
+      isFailed.push(await isExist(pagerPrev));
+      isFailed.push(await getCssPropsandCompare(page1, 'fontWeight', '400'));
+      isFailed.push(await getCssPropsandCompare(page2, 'fontWeight', '400'));
+      isFailed.push(await getCssPropsandCompare(page3, 'fontWeight', '600'));
+      isFailed.push(await checkListItemValue(list, 'Middle School Parking Lot', 'Track Resurfacing')); // check if  List's first and last items contains the given value
+      expect(isFailed).not.toContain(true); // check if each assertions fails
+    });
+
+    it('should check pager next and previous buttons', async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
+      const isFailed = [];
+      const pagerNext = 'li.pager-next';
+      const pagerPrev = 'li.pager-prev';
+      const page1 = 'button[data-page="1"]';
+      const page2 = 'button[data-page="2"]';
+      const page3 = 'button[data-page="3"]';
+      const list = 'ul.paginated.listview.is-selectable > li';
+
+      // verify default
+      isFailed.push(await isExist('li.pager-prev > button[disabled]'));
+      isFailed.push(await isExist(pagerNext));
+      isFailed.push(await getCssPropsandCompare(page1, 'fontWeight', '600'));
+      isFailed.push(await getCssPropsandCompare(page2, 'fontWeight', '400'));
+      isFailed.push(await getCssPropsandCompare(page3, 'fontWeight', '400'));
+      isFailed.push(await checkListItemValue(list, '8 Mile Resurfacing', 'Bishop Park')); // check if  List's first and last items contains the given value
+
+      // verify page 2
+      await page.click('li.pager-next');
+      isFailed.push(!await isExist('li.pager-prev > button[disabled]'));
+      isFailed.push(await isExist(pagerPrev));
+      isFailed.push(await isExist(pagerNext));
+      isFailed.push(await getCssPropsandCompare(page1, 'fontWeight', '400'));
+      isFailed.push(await getCssPropsandCompare(page2, 'fontWeight', '600'));
+      isFailed.push(await getCssPropsandCompare(page3, 'fontWeight', '400'));
+      isFailed.push(await checkListItemValue(list, 'Fort Woods Swimming Pool', 'Maplewood St. Resurfacing')); // check if  List's first and last items contains the given value
+
+      // verify page 3
+      await page.click('li.pager-next');
+      isFailed.push(await isExist('li.pager-next > button[disabled]'));
+      isFailed.push(await isExist(pagerPrev));
+      isFailed.push(await getCssPropsandCompare(page1, 'fontWeight', '400'));
+      isFailed.push(await getCssPropsandCompare(page2, 'fontWeight', '400'));
+      isFailed.push(await getCssPropsandCompare(page3, 'fontWeight', '600'));
+      isFailed.push(await checkListItemValue(list, 'Middle School Parking Lot', 'Track Resurfacing')); // check if  List's first and last items contains the given value
+
+      // verify go back to page 2
+      await page.click('li.pager-prev');
+      isFailed.push(!await isExist('li.pager-next > button[disabled]'));
+      isFailed.push(await isExist(pagerPrev));
+      isFailed.push(await isExist(pagerNext));
+      isFailed.push(await getCssPropsandCompare(page1, 'fontWeight', '400'));
+      isFailed.push(await getCssPropsandCompare(page2, 'fontWeight', '600'));
+      isFailed.push(await getCssPropsandCompare(page3, 'fontWeight', '400'));
+      isFailed.push(await checkListItemValue(list, 'Fort Woods Swimming Pool', 'Maplewood St. Resurfacing')); // check if  List's first and last items contains the given value
+
+      // verify go back to page 1
+      await page.click('li.pager-prev');
+      isFailed.push(await isExist('li.pager-prev > button[disabled]'));
+      isFailed.push(await isExist(pagerNext));
+      isFailed.push(await getCssPropsandCompare(page1, 'fontWeight', '600'));
+      isFailed.push(await getCssPropsandCompare(page2, 'fontWeight', '400'));
+      isFailed.push(await getCssPropsandCompare(page3, 'fontWeight', '400'));
+      isFailed.push(await checkListItemValue(list, '8 Mile Resurfacing', 'Bishop Park')); // check if  List's first and last items contains the given value
+      expect(isFailed).not.toContain(true); // check if each assertions fails
+    });
+  });
 });
