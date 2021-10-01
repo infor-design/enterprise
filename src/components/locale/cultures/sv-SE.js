@@ -106,6 +106,7 @@ Soho.Locale.addCulture('sv-SE', {
     ChangeView: { id: 'ChangeView', value: 'Ändra vy', comment: 'Change the current page from a list of options' },
     Checkbox: { id: 'Checkbox', value: 'Kryssruta', comment: 'Checkbox tooltip' },
     Checked: { id: 'Checked', value: 'Markerad', comment: 'Checked tooltip' },
+    ChooseFont: { id: 'ChooseFont', value: 'Välj teckenstil', comment: 'Choose a font style' },
     Clear: { id: 'Clear', value: 'Rensa', comment: 'Tooltip for a Clear Action' },
     ClearFilter: { id: 'ClearFilter', value: 'Rensa filter', comment: 'Clear the current filter criteria' },
     ClearFormatting: { id: 'ClearFormatting', value: 'Rensa formatering', comment: 'Clear the formatting in editor' },

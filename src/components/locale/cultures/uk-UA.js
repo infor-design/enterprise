@@ -106,6 +106,7 @@ Soho.Locale.addCulture('uk-UA', {
     ChangeView: { id: 'ChangeView', value: 'Змінити подання', comment: 'Change the current page from a list of options' },
     Checkbox: { id: 'Checkbox', value: 'Прапорець', comment: 'Checkbox tooltip' },
     Checked: { id: 'Checked', value: 'Установлено', comment: 'Checked tooltip' },
+    ChooseFont: { id: 'ChooseFont', value: 'Виберіть стиль шрифту', comment: 'Choose a font style' },
     Clear: { id: 'Clear', value: 'Очистити', comment: 'Tooltip for a Clear Action' },
     ClearFilter: { id: 'ClearFilter', value: 'Очистить фільтр', comment: 'Clear the current filter criteria' },
     ClearFormatting: { id: 'ClearFormatting', value: 'Очистить формат', comment: 'Clear the formatting in editor' },
