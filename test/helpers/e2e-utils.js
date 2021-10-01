@@ -121,7 +121,6 @@ module.exports = {
   checkTooltip: async (parentEL, tooltipEL, elHandle, expectedValue) => {
     let isFailed = false;
     try {
-      await page.waitForSelector(parentEL);
       await page.hover(parentEL);
       await page.waitForSelector(tooltipEL, { visible: true });
       const tooltipHandle = await page.$(elHandle);

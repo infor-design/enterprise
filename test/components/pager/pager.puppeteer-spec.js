@@ -223,7 +223,7 @@ Object {
       isFailed.push(await checkDataAutomationID('#standalone-pager-pagesize-opt-20', 'standalone-pager-auto-id-pagesize-opt-20'));
       isFailed.push(await checkDataAutomationID('#standalone-pager-pagesize-opt-30', 'standalone-pager-auto-id-pagesize-opt-30'));
       isFailed.push(await checkDataAutomationID('#standalone-pager-pagesize-opt-40', 'standalone-pager-auto-id-pagesize-opt-40'));
-      expect(isFailed).not.toContain('true');
+      expect(isFailed).not.toContain(true);
     });
 
     it('should toggle page size selector', async () => {
@@ -649,7 +649,7 @@ Object {
 
   describe('Listview Tests', () => {
     const url = 'http://localhost:4000/components/pager/example-listview.html';
-    beforeAll(async () => {
+    beforeEach(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
     });
 
@@ -659,7 +659,7 @@ Object {
 
     it('should check the test page with Axe', async () => {
       await page.setBypassCSP(true);
-      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
       await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport', 'label', 'aria-allowed-role', 'aria-required-parent'] });
     });
 
@@ -736,29 +736,29 @@ Object {
           "role": "listbox",
         },
       ],
-      "name": "Pagination",
+      "name": "[Pagination]",
       "role": "region",
     },
     Object {
       "disabled": true,
-      "name": "Previous Page",
+      "name": "[PreviousPage]",
       "role": "button",
     },
     Object {
       "disabled": true,
-      "name": "You are currently on page 1",
+      "name": "[PageOn] 1",
       "role": "button",
     },
     Object {
-      "name": "page 2",
+      "name": "[Page] 2",
       "role": "button",
     },
     Object {
-      "name": "page 3",
+      "name": "[Page] 3",
       "role": "button",
     },
     Object {
-      "name": "Next Page",
+      "name": "[NextPage]",
       "role": "button",
     },
   ],
@@ -807,7 +807,6 @@ Object {
     });
 
     it('should check pager using keyboard press', async () => {
-      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
       const isFailed = [];
       const pagerNext = 'li.pager-next';
       const pagerPrev = 'li.pager-prev';
@@ -852,7 +851,6 @@ Object {
     });
 
     it('should check pager next and previous buttons', async () => {
-      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
       const isFailed = [];
       const pagerNext = 'li.pager-next';
       const pagerPrev = 'li.pager-prev';
@@ -907,6 +905,670 @@ Object {
       isFailed.push(await getCssPropsandCompare(page3, 'fontWeight', '400'));
       isFailed.push(await checkListItemValue(list, '8 Mile Resurfacing', 'Bishop Park')); // check if  List's first and last items contains the given value
       expect(isFailed).not.toContain(true); // check if each assertions fails
+    });
+  });
+
+  describe('Datagrid Tests', () => {
+    const url = 'http://localhost:4000/components/pager/example-datagrid.html';
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
+    });
+
+    it('should show the title', async () => {
+      await expect(page.title()).resolves.toMatch('IDS Enterprise');
+    });
+
+    it('should check the test page with Axe', async () => {
+      await page.setBypassCSP(true);
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+      await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport', 'label', 'aria-allowed-role', 'aria-required-parent', 'aria-allowed-attr'] });
+    });
+
+    it('should have Accessibility', async () => {
+      const webArea = await page.accessibility.snapshot();
+      expect(webArea).toMatchInlineSnapshot(`
+Object {
+  "children": Array [
+    Object {
+      "name": "Skip to Main Content",
+      "role": "link",
+    },
+    Object {
+      "level": 1,
+      "name": "IDS Enterprise",
+      "role": "heading",
+    },
+    Object {
+      "haspopup": "menu",
+      "name": "Header More Actions Button",
+      "role": "combobox",
+    },
+    Object {
+      "name": "Data Grid Header Title",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "(all 1000)",
+      "role": "StaticText",
+    },
+    Object {
+      "haspopup": "menu",
+      "name": "Grid Features",
+      "role": "combobox",
+    },
+    Object {
+      "checked": false,
+      "name": "Selection",
+      "role": "checkbox",
+    },
+    Object {
+      "name": "Id",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "Filter",
+      "role": "button",
+    },
+    Object {
+      "name": "Id",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "Id",
+      "role": "textbox",
+    },
+    Object {
+      "name": "Product Id",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "Filter",
+      "role": "button",
+    },
+    Object {
+      "name": "Product Id",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "Product Id",
+      "role": "textbox",
+    },
+    Object {
+      "name": "Product Name",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "Filter",
+      "role": "button",
+    },
+    Object {
+      "name": "Product Name",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "Product Name",
+      "role": "textbox",
+    },
+    Object {
+      "name": "Quantity",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "Filter",
+      "role": "button",
+    },
+    Object {
+      "name": "Quantity",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "Quantity",
+      "role": "textbox",
+    },
+    Object {
+      "name": "Price",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "Filter",
+      "role": "button",
+    },
+    Object {
+      "name": "Price",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "Price",
+      "role": "textbox",
+    },
+    Object {
+      "name": "Order Date",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "Filter",
+      "role": "button",
+    },
+    Object {
+      "name": "Order Date",
+      "role": "StaticText",
+    },
+    Object {
+      "name": ". Press Down arrow to select",
+      "role": "StaticText",
+    },
+    Object {
+      "haspopup": "listbox",
+      "name": "Order Date . Press Down arrow to select",
+      "role": "combobox",
+    },
+    Object {
+      "haspopup": "dialog",
+      "name": "Date Picker Trigger",
+      "role": "combobox",
+    },
+    Object {
+      "description": "Selection",
+      "name": "Select Compressor 0Induction214220",
+      "role": "gridcell",
+    },
+    Object {
+      "name": "0",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "214220",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "Compressor 0",
+      "role": "link",
+    },
+    Object {
+      "name": "1",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "210.99",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "1/1/2015",
+      "role": "StaticText",
+    },
+    Object {
+      "checked": false,
+      "name": "Select Compressor 1Induction214221",
+      "role": "checkbox",
+    },
+    Object {
+      "name": "1",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "214221",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "Compressor 1",
+      "role": "link",
+    },
+    Object {
+      "name": "2",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "209.99",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "1/2/2015",
+      "role": "StaticText",
+    },
+    Object {
+      "checked": false,
+      "name": "Select Compressor 2Induction214222",
+      "role": "checkbox",
+    },
+    Object {
+      "name": "2",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "214222",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "Compressor 2",
+      "role": "link",
+    },
+    Object {
+      "name": "3",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "208.99",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "1/3/2015",
+      "role": "StaticText",
+    },
+    Object {
+      "checked": false,
+      "name": "Select Compressor 3Induction214223",
+      "role": "checkbox",
+    },
+    Object {
+      "name": "3",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "214223",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "Compressor 3",
+      "role": "link",
+    },
+    Object {
+      "name": "4",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "207.99",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "1/4/2015",
+      "role": "StaticText",
+    },
+    Object {
+      "checked": false,
+      "name": "Select Compressor 4Induction214224",
+      "role": "checkbox",
+    },
+    Object {
+      "name": "4",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "214224",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "Compressor 4",
+      "role": "link",
+    },
+    Object {
+      "name": "5",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "206.99",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "1/5/2015",
+      "role": "StaticText",
+    },
+    Object {
+      "checked": false,
+      "name": "Select Compressor 5Induction214225",
+      "role": "checkbox",
+    },
+    Object {
+      "name": "5",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "214225",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "Compressor 5",
+      "role": "link",
+    },
+    Object {
+      "name": "6",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "205.99",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "1/6/2015",
+      "role": "StaticText",
+    },
+    Object {
+      "checked": false,
+      "name": "Select Compressor 6Induction214226",
+      "role": "checkbox",
+    },
+    Object {
+      "name": "6",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "214226",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "Compressor 6",
+      "role": "link",
+    },
+    Object {
+      "name": "7",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "204.99",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "1/7/2015",
+      "role": "StaticText",
+    },
+    Object {
+      "checked": false,
+      "name": "Select Compressor 7Induction214227",
+      "role": "checkbox",
+    },
+    Object {
+      "name": "7",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "214227",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "Compressor 7",
+      "role": "link",
+    },
+    Object {
+      "name": "8",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "203.99",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "1/8/2015",
+      "role": "StaticText",
+    },
+    Object {
+      "checked": false,
+      "name": "Select Compressor 8Induction214228",
+      "role": "checkbox",
+    },
+    Object {
+      "name": "8",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "214228",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "Compressor 8",
+      "role": "link",
+    },
+    Object {
+      "name": "9",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "202.99",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "1/9/2015",
+      "role": "StaticText",
+    },
+    Object {
+      "checked": false,
+      "name": "Select Compressor 9Induction214229",
+      "role": "checkbox",
+    },
+    Object {
+      "name": "9",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "214229",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "Compressor 9",
+      "role": "link",
+    },
+    Object {
+      "name": "10",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "201.99",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "1/10/2015",
+      "role": "StaticText",
+    },
+    Object {
+      "disabled": true,
+      "name": "First Page",
+      "role": "button",
+    },
+    Object {
+      "disabled": true,
+      "name": "Previous Page",
+      "role": "button",
+    },
+    Object {
+      "name": "Page",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "Page of 100",
+      "role": "textbox",
+      "value": "1",
+    },
+    Object {
+      "name": "of",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "100",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "Next Page",
+      "role": "button",
+    },
+    Object {
+      "name": "Last Page",
+      "role": "button",
+    },
+    Object {
+      "haspopup": "menu",
+      "name": "10 Records per page",
+      "role": "combobox",
+    },
+  ],
+  "name": "IDS Enterprise",
+  "role": "RootWebArea",
+}
+`);
+    });
+    const validatePagerToolbarText = async (page1, page100) => {
+      const pagercountFrom = 'li.pager-count > label > input';
+      const pagercountTo = 'li.pager-count > label > span';
+      try {
+        expect(await page.$eval(pagercountFrom, e => e.value)).toEqual(page1);
+        expect(await page.$eval(pagercountTo, e => e.textContent)).toEqual(page100);
+        return false;
+      } catch (error) {
+        return true;
+      }
+    };
+    it('should check pager onClick', async () => {
+      const isFailed = [];
+      const pagerNext = 'li.pager-next';
+      const pagerPrev = 'li.pager-prev';
+      const pagerFirst = 'li.pager-first';
+      const pagerLast = 'li.pager-last';
+      const list = 'table > tbody > tr';
+
+      // verify default
+      isFailed.push(await isExist(`${pagerFirst} > button[disabled]`));
+      isFailed.push(await isExist(`${pagerPrev} > button[disabled]`));
+      isFailed.push(await isExist(pagerNext));
+      isFailed.push(await isExist(pagerLast));
+      isFailed.push(await checkListItemValue(list, 'Compressor 0', 'Compressor 9')); // check if  List's first and last row contains the given value
+      isFailed.push(await validatePagerToolbarText('1', '100')); // check if [pager-toolbar] page 1 of 100 contains the given value
+
+      // verify Next page
+      await page.click(pagerNext);
+      isFailed.push(!await isExist(`${pagerFirst} > button[disabled]`));
+      isFailed.push(!await isExist(`${pagerPrev} > button[disabled]`));
+      isFailed.push(await isExist(pagerFirst));
+      isFailed.push(await isExist(pagerPrev));
+      isFailed.push(await checkListItemValue(list, 'Compressor 10', 'Compressor 19')); // check if  List's first and last row contains the given value
+      isFailed.push(await validatePagerToolbarText('2', '100')); // check if [pager-toolbar] page 2 of 100 contains the given value
+
+      // verify Prev page
+      await page.click(pagerPrev);
+      isFailed.push(await isExist(`${pagerFirst} > button[disabled]`));
+      isFailed.push(await isExist(`${pagerPrev} > button[disabled]`));
+      isFailed.push(await isExist(pagerNext));
+      isFailed.push(await isExist(pagerLast));
+      isFailed.push(await checkListItemValue(list, 'Compressor 0', 'Compressor 9')); // check if  List's first and last row contains the given value
+      isFailed.push(await validatePagerToolbarText('1', '100')); // check if [pager-toolbar] page 1 of 100 contains the given value
+
+      // verify Last page
+      await page.click(pagerLast);
+      isFailed.push(await isExist(`${pagerNext} > button[disabled]`));
+      isFailed.push(await isExist(`${pagerLast} > button[disabled]`));
+      isFailed.push(await isExist(pagerFirst));
+      isFailed.push(await isExist(pagerPrev));
+      isFailed.push(await checkListItemValue(list, 'Compressor 990', 'Compressor 999')); // check if  List's first and last row contains the given value
+      isFailed.push(await validatePagerToolbarText('100', '100')); // check if [pager-toolbar] page 100 of 100 contains the given value
+
+      // verify First page
+      await page.click(pagerFirst);
+      isFailed.push(!await isExist(`${pagerNext} > button[disabled]`));
+      isFailed.push(!await isExist(`${pagerLast} > button[disabled]`));
+      isFailed.push(await isExist(`${pagerFirst} > button[disabled]`));
+      isFailed.push(await isExist(`${pagerPrev} > button[disabled]`));
+      isFailed.push(await checkListItemValue(list, 'Compressor 0', 'Compressor 9')); // check if  List's first and last row contains the given value
+      isFailed.push(await validatePagerToolbarText('1', '100')); // check if [pager-toolbar] page 1 of 100 contains the given value
+      expect(isFailed).not.toContain(true); // check if each assertions fails
+    });
+
+    it('should check pager using keyboard press', async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
+      const isFailed = [];
+      const pagerNext = 'li.pager-next';
+      const pagerPrev = 'li.pager-prev';
+      const pagerFirst = 'li.pager-first';
+      const pagerLast = 'li.pager-last';
+      const list = 'table > tbody > tr';
+
+      // verify default
+      isFailed.push(await isExist(`${pagerFirst} > button[disabled]`));
+      isFailed.push(await isExist(`${pagerPrev} > button[disabled]`));
+      isFailed.push(await isExist(pagerNext));
+      isFailed.push(await isExist(pagerLast));
+      isFailed.push(await checkListItemValue(list, 'Compressor 0', 'Compressor 9')); // check if  List's first and last row contains the given value
+      isFailed.push(await validatePagerToolbarText('1', '100')); // check if [pager-toolbar] page 1 of 100 contains the given value
+
+      // verify Next page
+      await page.click('li.pager-count > label > input');
+      await page.keyboard.press('Tab');
+      await page.keyboard.press('Enter');
+      isFailed.push(!await isExist(`${pagerFirst} > button[disabled]`));
+      isFailed.push(!await isExist(`${pagerPrev} > button[disabled]`));
+      isFailed.push(await isExist(pagerFirst));
+      isFailed.push(await isExist(pagerPrev));
+      isFailed.push(await checkListItemValue(list, 'Compressor 10', 'Compressor 19')); // check if  List's first and last row contains the given value
+      isFailed.push(await validatePagerToolbarText('2', '100')); // check if [pager-toolbar] page 2 of 100 contains the given value
+
+      // verify Prev page
+      await page.click('li.pager-count > label > input');
+      await page.keyboard.down('Shift');
+      await page.keyboard.down('Tab');
+      await page.keyboard.up('Shift');
+      await page.keyboard.up('Tab');
+      await page.keyboard.press('Enter');
+      isFailed.push(await isExist(`${pagerFirst} > button[disabled]`));
+      isFailed.push(await isExist(`${pagerPrev} > button[disabled]`));
+      isFailed.push(await isExist(pagerNext));
+      isFailed.push(await isExist(pagerLast));
+      isFailed.push(await checkListItemValue(list, 'Compressor 0', 'Compressor 9')); // check if  List's first and last row contains the given value
+      isFailed.push(await validatePagerToolbarText('1', '100')); // check if [pager-toolbar] page 1 of 100 contains the given value
+
+      // verify Last page
+      await page.click('li.pager-count > label > input');
+      await page.keyboard.press('Tab');
+      await page.keyboard.press('Tab');
+      await page.keyboard.press('Enter');
+      isFailed.push(await isExist(`${pagerNext} > button[disabled]`));
+      isFailed.push(await isExist(`${pagerLast} > button[disabled]`));
+      isFailed.push(await isExist(pagerFirst));
+      isFailed.push(await isExist(pagerPrev));
+      isFailed.push(await checkListItemValue(list, 'Compressor 990', 'Compressor 999')); // check if  List's first and last row contains the given value
+      isFailed.push(await validatePagerToolbarText('100', '100')); // check if [pager-toolbar] page 100 of 100 contains the given value
+
+      // verify First page
+      await page.click('li.pager-count > label > input');
+      await page.keyboard.down('Shift');
+      await page.keyboard.down('Tab');
+      await page.keyboard.down('Tab');
+      await page.keyboard.up('Shift');
+      await page.keyboard.up('Tab');
+      await page.keyboard.up('Tab');
+      await page.keyboard.press('Enter');
+      await page.click(pagerFirst);
+      isFailed.push(!await isExist(`${pagerNext} > button[disabled]`));
+      isFailed.push(!await isExist(`${pagerLast} > button[disabled]`));
+      isFailed.push(await isExist(`${pagerFirst} > button[disabled]`));
+      isFailed.push(await isExist(`${pagerPrev} > button[disabled]`));
+      isFailed.push(await checkListItemValue(list, 'Compressor 0', 'Compressor 9')); // check if  List's first and last row contains the given value
+      isFailed.push(await validatePagerToolbarText('1', '100')); // check if [pager-toolbar] page 1 of 100 contains the given value
+      expect(isFailed).not.toContain(true); // check if each assertions fails
+    });
+
+    it('should change records per page', async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
+      const pageSize = 'li.pager-pagesize > button > span';
+      const lastRow = 'table > tbody > tr';
+
+      // verify 25 records per page
+      await page.click(pageSize);
+      await page.click('#popupmenu-3 > li:nth-child(2) > a');
+      await page.waitForTimeout(300);
+      expect((await page.$$(lastRow)).length).toBe(25);
+
+      // verify 50 records per page
+      await page.click(pageSize);
+      await page.click('#popupmenu-3 > li:nth-child(3)');
+      await page.waitForTimeout(300);
+      expect((await page.$$(lastRow)).length).toBe(50);
+
+      // verify 75 records per page
+      await page.click(pageSize);
+      await page.click('#popupmenu-3 > li:nth-child(4)');
+      await page.waitForTimeout(300);
+      expect((await page.$$(lastRow)).length).toBe(75);
+
+      // verify 10 records per page
+      await page.click(pageSize);
+      await page.click('#popupmenu-3 > li:nth-child(1)');
+      await page.waitForTimeout(300);
+      expect((await page.$$(lastRow)).length).toBe(10);
     });
   });
 });
