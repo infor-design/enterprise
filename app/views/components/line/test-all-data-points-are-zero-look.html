@@ -1,0 +1,78 @@
+<div class="row">
+  <div class="one-half column">
+    <div class="widget">
+      <div class="widget-header">
+        <h2 class="widget-title">Standard Height: Zero Value</h2>
+      </div>
+      <div class="widget-content">
+        <div id="line-example" class="chart-container">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="one-half column">
+    <div class="widget double-height">
+      <div class="widget-header">
+        <h2 class="widget-title">Double Height: Zero Value</h2>
+      </div>
+      <div class="widget-content">
+        <div id="line-example2" class="chart-container">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+
+    var dataset = [{
+      "data": [{
+          "name": "test 1",
+          "value": 0
+        },
+        {
+          "name": "test 2",
+          "value": 0
+        },
+        {
+          "name": "test 3",
+          "value": 0
+        },
+        {
+          "name": "test 4",
+          "value": 0
+        },
+        {
+          "name": "test 5",
+          "value": 0
+        }
+      ],
+      name: 'Component C'
+    }];
+
+    $('#line-example').chart({
+      type: 'line',
+      dataset: dataset,
+      yAxis: {
+        ticks: {
+          number: 5,
+          format: 's'
+        }
+      }
+    });
+
+    $('#line-example2').chart({
+      type: 'line',
+      dataset: dataset,
+      yAxis: {
+        ticks: {
+          number: 5,
+          format: 's'
+        }
+      }
+    });
+
+  });
+
+</script>
