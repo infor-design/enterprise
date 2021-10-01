@@ -2,6 +2,7 @@
 
 ## v4.56.0 Features
 
+- `[ContextualActionPanel]` Changed the color of the toolbar header in the new theme. ([#5685](https://github.com/infor-design/enterprise/issues/5685))
 - `[Charts]` Added ability to disable the selection of the charts including the legend. ([#2736](https://github.com/infor-design/enterprise/issues/2736))
 - `[Datagrid]` Adds the ability to update values of a specific column on Datagrid. ([#3491](https://github.com/infor-design/enterprise/issues/3491))
 - `[Icon]` Updated the launch icon to be less bulky. ([#5595](https://github.com/infor-design/enterprise/issues/5595))
@@ -22,12 +23,14 @@
 - `[Homepage]` Fix on homepage example charts misaligned when on mobile. ([#5650](https://github.com/infor-design/enterprise/issues/5650))
 - `[Popupmenu]` Fixed an not released issue where opening menus limited the ability to click after. ([#5648/#5649](https://github.com/infor-design/enterprise/issues/5648))
 - `[Icons]` Fix sizes on some of the icons in classic mode. ([#5626](https://github.com/infor-design/enterprise/issues/5626))
-- `[Listview]` Fixed the links example to better show disabled links. ([#5678](https://github.com/infor-design/enterprise/issues/5678))
+- `[Icons]` Fix sizes on some of the icons in tree in classic mode. ([#5626](https://github.com/infor-design/enterprise/issues/5626))
 - `[Line Chart]` Fixed a bug where the line chart was not positioned correctly when all the values were zero. ([#5640](https://github.com/infor-design/enterprise/issues/5640))
+- `[Listview]` Fixed the links example to better show disabled links. ([#5678](https://github.com/infor-design/enterprise/issues/5678))
 - `[Locale]` Fixed an additional case where large numbers cannot be formatted correctly. ([#5605](https://github.com/infor-design/enterprise/issues/5605))
 - `[Locale]` Expanded support from 10 to 20 decimal places. Max number is 21, 20 now. ([#5622](https://github.com/infor-design/enterprise/issues/5622))
 - `[Tabs]` Fix a bug where tabs indicator is not aligned when scaled down. ([#5164](https://github.com/infor-design/enterprise/issues/5164))
 - `[Tabs]` Fix a bug where tabs indicator is not aligned on RTL. ([#5541](https://github.com/infor-design/enterprise/issues/5541))
+- `[Tree]` Fix on return item when calling addNode. ([#5334](https://github.com/infor-design/enterprise/issues/5334))
 
 ## v4.55.3 Fixes
 
