@@ -841,10 +841,41 @@ Line.prototype = {
       }
     };
 
+    // By default, if the all the values are zero, the line-group will be centered
+    // With this, it will be more consistent in terms of look even if it has only one y-axis tick
+    // It should be positioned close contact with the names
+    self.svg._groups.forEach((gLine) => {
+      gLine.forEach((g) => {
+        const yAxisTick = $(g).find('g.y.axis .tick');
+        const gLineGroup = $(g).find('g.line-group');
+        const gYAxis = $(g).find('g.y.axis');
+        const translateProp = yAxisTick.attr('transform');
+        const yAxisValue = self.getTransformYAxisValue(translateProp); // current y-axis value
+
+        if (yAxisTick.length < 2) {
+          gYAxis.add(gLineGroup).attr('transform', `translate(0,${yAxisValue})`);
+        }
+      });
+    });
+
     this.setInitialSelected();
     this.setTextValues();
     this.element.trigger('rendered');
     return this;
+  },
+
+  /**
+   * Get the Y-Axis value of transform property
+   * @private
+   * @param {string} str the y axis property value to be trim
+   * @returns {string} the current y-axis value
+   */
+  getTransformYAxisValue(str) {
+    const arrayValue = str.split(',');
+    arrayValue.splice(0, 1).join('');
+    const stringOfYAxis = arrayValue.join(',');
+
+    return stringOfYAxis.slice(0, -1);
   },
 
   /**
