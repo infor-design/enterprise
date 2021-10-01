@@ -3431,7 +3431,7 @@ Datagrid.prototype = {
     const iterate = function (node, depth, parent = []) {
       idx++;
       self.settings.treeDepth.push({ idx, depth, parents: parent.slice(), node });
-      const len = node.children?.length;
+      const len = node?.children?.length;
       if (len) {
         parent.push(idx - 1);
         for (let i = 0; i < len; i++) {
@@ -3769,12 +3769,12 @@ Datagrid.prototype = {
         tableHtmlRight += rowHtml.right;
       }
 
-      if (!s.dataset[i]._isFilteredOut) {
+      if (!s.dataset[i]?._isFilteredOut) {
         this.recordCount++;
       }
       this.visibleRowCount = currentCount + 1;
 
-      if (s.dataset[i].rowStatus) {
+      if (s.dataset[i]?.rowStatus) {
         rowStatusTooltip = true;
       }
     }
