@@ -60,10 +60,10 @@
       @include transition(fill 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
 
       color: $tree-icon-color;
-      height: 15px;
-      margin: 0 5px 0 0;
-      top: 2px;
-      width: 15px;
+      height: 18px;
+      margin: 0 2px 0 0;
+      top: 4px;
+      width: 18px;
 
       &.rotate-forward {
         animation-duration: 0.4s;
@@ -208,10 +208,10 @@
   ul {
     display: none;
     left: 13px;
-    width: calc(100% - 13px);
     overflow: hidden;
     position: relative;
     top: -7px;
+    width: calc(100% - 13px);
 
     a {
       margin: 0 0 0 5px;
