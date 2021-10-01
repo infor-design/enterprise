@@ -22,6 +22,7 @@
 - `[Homepage]` Fix on homepage example charts misaligned when on mobile. ([#5650](https://github.com/infor-design/enterprise/issues/5650))
 - `[Popupmenu]` Fixed an not released issue where opening menus limited the ability to click after. ([#5648/#5649](https://github.com/infor-design/enterprise/issues/5648))
 - `[Icons]` Fix sizes on some of the icons in classic mode. ([#5626](https://github.com/infor-design/enterprise/issues/5626))
+- `[Line Chart]` Fixed a bug where the line chart was not positioned correctly when all the values were zero. ([#5640](https://github.com/infor-design/enterprise/issues/5640))
 - `[Locale]` Fixed an additional case where large numbers cannot be formatted correctly. ([#5605](https://github.com/infor-design/enterprise/issues/5605))
 - `[Locale]` Expanded support from 10 to 20 decimal places. Max number is 21, 20 now. ([#5622](https://github.com/infor-design/enterprise/issues/5622))
 - `[Tabs]` Fix a bug where tabs indicator is not aligned when scaled down. ([#5164](https://github.com/infor-design/enterprise/issues/5164))
