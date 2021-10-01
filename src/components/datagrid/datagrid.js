@@ -9807,7 +9807,7 @@ Datagrid.prototype = {
       this.settings.treeDepth[rowIdx].node :
       this.settings.dataset[rowIdx];
 
-    // Tree Grid have different object structure than normal dataset
+    // Tree Grid have different object structure than normal dataset so we need to add rowstatus outside of the node.
     if (this.settings.treeGrid && this.settings.treeDepth[rowIdx].rowStatus) {
       this.settings.treeDepth[rowIdx].node.rowStatus = this.settings.treeDepth[rowIdx].rowStatus;
     }
