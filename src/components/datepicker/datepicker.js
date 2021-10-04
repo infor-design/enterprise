@@ -150,7 +150,8 @@ const DATEPICKER_DEFAULTS = {
 function DatePicker(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(this.element[0], settings, DATEPICKER_DEFAULTS);
-  if (this.settings.legend.length === 0) {
+  // assign legend defaults
+  if (this.settings.legend && this.settings.legend.length === 0) {
     this.settings.legend = LEGEND_DEFAULTS;
   }
   debug.logTimeStart(COMPONENT_NAME);

@@ -141,7 +141,7 @@ const COMPONENT_NAME_DEFAULTS = {
 function MonthView(element, settings) {
   this.settings = utils.mergeSettings(element, settings, COMPONENT_NAME_DEFAULTS);
   // assign legend defaults
-  if (this.settings.legend.length === 0) {
+  if (this.settings.legend && this.settings.legend.length === 0) {
     this.settings.legend = LEGEND_DEFAULTS;
   }
   this.element = $(element);
