@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.57.0 Fixes
+
+- `[Datepicker]` Fix on default legends being shown regardless if settings have custom legends. ([#5683](https://github.com/infor-design/enterprise/issues/5683))
+
 ## v4.56.0 Features
 
 - `[ContextualActionPanel]` Changed the color of the toolbar header in the new theme. ([#5685](https://github.com/infor-design/enterprise/issues/5685))
@@ -8,9 +12,6 @@
 - `[Icon]` Updated the launch icon to be less bulky. ([#5595](https://github.com/infor-design/enterprise/issues/5595))
 - `[Tabs]` Adds the ability to split the tabs. ([#4600](https://github.com/infor-design/enterprise/issues/4600))
 - `[Toolbar Flex]` Adds control of buttonset areas via the Buttonset API. ([NG#1101](https://github.com/infor-design/enterprise-ng/issues/1101))
-
-## v4.57.0 Fixes
-- `[Datepicker]` Fix on default legends being shown regardless if settings have custom legends. ([#5683](https://github.com/infor-design/enterprise/issues/5683))
 
 ## v4.56.0 Fixes
 
