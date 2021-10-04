@@ -14,6 +14,11 @@ import '../expandablearea/expandablearea.jquery';
 // Settings and Options
 const COMPONENT_NAME = 'monthview';
 
+const LEGEND_DEFAULTS = [
+  { name: 'Public Holiday', color: 'azure06', dates: [] },
+  { name: 'Weekends', color: 'turquoise06', dayOfWeek: [] }
+];
+
 const COMPONENT_NAME_DEFAULTS = {
   locale: null,
   language: null,
@@ -39,10 +44,7 @@ const COMPONENT_NAME_DEFAULTS = {
     isEnable: false,
     restrictMonths: false
   },
-  legend: [
-    { name: 'Public Holiday', color: 'azure06', dates: [] },
-    { name: 'Weekends', color: 'turquoise06', dayOfWeek: [] }
-  ],
+  legend: [],
   hideDays: false, // TODO
   showMonthYearPicker: true,
   yearsAhead: 5,
@@ -138,6 +140,10 @@ const COMPONENT_NAME_DEFAULTS = {
 */
 function MonthView(element, settings) {
   this.settings = utils.mergeSettings(element, settings, COMPONENT_NAME_DEFAULTS);
+  // assign legend defaults
+  if (this.settings.legend.length === 0) {
+    this.settings.legend = LEGEND_DEFAULTS;
+  }
   this.element = $(element);
   this.init();
 }
