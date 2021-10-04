@@ -9,6 +9,9 @@
 - `[Tabs]` Adds the ability to split the tabs. ([#4600](https://github.com/infor-design/enterprise/issues/4600))
 - `[Toolbar Flex]` Adds control of buttonset areas via the Buttonset API. ([NG#1101](https://github.com/infor-design/enterprise-ng/issues/1101))
 
+## v4.57.0 Fixes
+- `[Datepicker]` Fix on default legends being shown regardless if settings have custom legends. ([#5683](https://github.com/infor-design/enterprise/issues/5683))
+
 ## v4.56.0 Fixes
 
 - `[BusyIndicator]` Sized and Aligned busy indicator within a compact form field. ([#5655](https://github.com/infor-design/enterprise/issues/5655))
@@ -17,13 +20,13 @@
 - `[Datagrid]` Date format should reflect in date filter when range option is selected. ([#4864](https://github.com/infor-design/enterprise/issues/4864))
 - `[Datagrid]` Add test page for `selectAllCurrentPage` with toolbar count. ([#4921](https://github.com/infor-design/enterprise/issues/4921))
 - `[Datepicker]` Fix on datepicker header not being shown in smaller screens. ([#5550](https://github.com/infor-design/enterprise/issues/5550))
-- `[Datepicker]` Fix on default legends being shown regardless if settings have custom legends. ([#5683](https://github.com/infor-design/enterprise/issues/5683))
 - `[Datagrid]` Fixed an issue where the selection idx was not updating after append/update data to child nodes for tree. ([#5631](https://github.com/infor-design/enterprise/issues/5631))
 - `[Dropdown]` Fixed disabling of function keys F1 to F12. ([#4976](https://github.com/infor-design/enterprise/issues/4976))
 - `[Dropdown]` Fixed a bug where selecting the first item on the list doesn't trigger the `change` event that will select the value immediately. ([NG#1102](https://github.com/infor-design/enterprise-ng/issues/1102))
 - `[Dropdown]` Fixed an accessibility issue where the error message was unannounced using a screen reader. ([#5130](https://github.com/infor-design/enterprise/issues/5130))
 - `[Homepage]` Fix on homepage example charts misaligned when on mobile. ([#5650](https://github.com/infor-design/enterprise/issues/5650))
 - `[Popupmenu]` Fixed an not released issue where opening menus limited the ability to click after. ([#5648/#5649](https://github.com/infor-design/enterprise/issues/5648))
+- `[Popupmenu]` Allow switches to be clickable in popupmenu for backwards compatibility. ([#1127](https://github.com/infor-design/enterprise-ng/issues/1127))
 - `[Icons]` Fix sizes on some of the icons in classic mode. ([#5626](https://github.com/infor-design/enterprise/issues/5626))
 - `[Icons]` Fix sizes on some of the icons in tree in classic mode. ([#5626](https://github.com/infor-design/enterprise/issues/5626))
 - `[Line Chart]` Fixed a bug where the line chart was not positioned correctly when all the values were zero. ([#5640](https://github.com/infor-design/enterprise/issues/5640))
