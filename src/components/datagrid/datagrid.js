@@ -10292,6 +10292,13 @@ Datagrid.prototype = {
     const errors = this.settings.dataset.filter(row => row.rowStatus);
     for (let i = 0; i < errors.length; i++) {
       delete errors[i].rowStatus;
+
+      // Tree Grid Children Structure
+      if (errors[i]?.children.length) {
+        for (let j = 0; j < errors[i].children.length; j++) {
+          delete errors[i].children[j].rowStatus;
+        }
+      }
     }
     if (errors.length > 0) {
       this.render();
