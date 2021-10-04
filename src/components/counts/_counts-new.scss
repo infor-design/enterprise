@@ -16,14 +16,3 @@
     right: 24px;
   }
 }
-
-// RTL styles
-html[dir='rtl'] {
-  .instance-count {
-    svg.icon {
-      &.icon-alert {
-        right: 2px;
-      }
-    }
-  }
-}

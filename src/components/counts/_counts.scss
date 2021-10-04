@@ -99,23 +99,10 @@
 // RTL Styles
 html[dir='rtl'] {
   .instance-count {
-    .count {
-      float: right;
-    }
-
-    svg.icon {
-      &.icon-alert,
-      &.icon-success {
-        right: 4px;
-      }
-    }
-
     .title {
-      float: right;
       padding-left: inherit;
       padding-right: 0;
       text-align: center;
-      width: 80px;
     }
   }
 }
