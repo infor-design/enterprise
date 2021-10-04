@@ -1,5 +1,10 @@
 # What's New with Enterprise
 
+## v4.57.0 Fixes
+
+- `[Counts]` Updated the font size of `xl-text` from `50px` to `45px`. ([#5588](https://github.com/infor-design/enterprise/issues/5588))
+- `[Counts]` Fixed title and icon position when in RTL. ([#5566](https://github.com/infor-design/enterprise/issues/5566))
+
 ## v4.56.0 Features
 
 - `[ContextualActionPanel]` Changed the color of the toolbar header in the new theme. ([#5685](https://github.com/infor-design/enterprise/issues/5685))

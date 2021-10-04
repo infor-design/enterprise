@@ -4,7 +4,6 @@
     border: 1px solid;
     color: $ids-color-font-base;
     height: 80px;
-    line-height: 75px;
     width: 80px;
 
     &[class=count] {
@@ -15,5 +14,16 @@
   svg.icon {
     background: $cardlist-bg-color;
     right: 24px;
+  }
+}
+
+// RTL styles
+html[dir='rtl'] {
+  .instance-count {
+    svg.icon {
+      &.icon-alert {
+        right: 2px;
+      }
+    }
   }
 }

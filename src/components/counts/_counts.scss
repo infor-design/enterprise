@@ -82,6 +82,10 @@
     color: inherit;
     display: block;
   }
+
+  .xl-text {
+    @include font-size(45);
+  }
 }
 
 .form-layout-compact {
@@ -99,11 +103,19 @@ html[dir='rtl'] {
       float: right;
     }
 
+    svg.icon {
+      &.icon-alert,
+      &.icon-success {
+        right: 4px;
+      }
+    }
+
     .title {
       float: right;
       padding-left: inherit;
-      padding-right: 11px;
-      text-align: right;
+      padding-right: 0;
+      text-align: center;
+      width: 80px;
     }
   }
 }
