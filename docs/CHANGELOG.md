@@ -9,6 +9,9 @@
 - `[Tabs]` Adds the ability to split the tabs. ([#4600](https://github.com/infor-design/enterprise/issues/4600))
 - `[Toolbar Flex]` Adds control of buttonset areas via the Buttonset API. ([NG#1101](https://github.com/infor-design/enterprise-ng/issues/1101))
 
+## v4.57.0 Fixes
+- `[Searchfield]` Fix on uneven searchfield in firefox. ([#5620](https://github.com/infor-design/enterprise/issues/5620))
+
 ## v4.56.0 Fixes
 
 - `[BusyIndicator]` Sized and Aligned busy indicator within a compact form field. ([#5655](https://github.com/infor-design/enterprise/issues/5655))
