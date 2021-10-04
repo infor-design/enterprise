@@ -315,6 +315,17 @@ In order to do this we clean the folders, update chrome and do a fresh `npm i`.
   npm i
   ```
 
+  Or a specific version.
+
+  ```sh
+  CHROME_VERSION="93.0.4577.82-1"
+  rm -rf node_modules
+  wget https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${CHROME_VERSION}_amd64.deb
+  sudo dpkg -i google-chrome*.deb
+  rm google-chrome-stable_{CHROME_VERSION}_amd64.deb
+  npm i
+  ```
+
 This is good step to follow if you see an error similar to this one when running the test suite:
 
   ```sh
