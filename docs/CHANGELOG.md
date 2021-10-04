@@ -39,6 +39,8 @@
 - `[Tabs]` Fix a bug where tabs indicator is not aligned on RTL. ([#5541](https://github.com/infor-design/enterprise/issues/5541))
 - `[Tree]` Fix on return item when calling addNode. ([#5334](https://github.com/infor-design/enterprise/issues/5334))
 
+(44 Issues Solved This Release, Backlog Enterprise 176, Backlog Ng 25, 1134 Functional Tests, 1693 e2e Tests)
+
 ## v4.55.3 Fixes
 
 - `[Datagrid]` Fixed an issue where the selection idx was not updating after append/update data to child nodes for tree. ([#5631](https://github.com/infor-design/enterprise/issues/5631))
