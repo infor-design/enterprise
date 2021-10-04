@@ -36,16 +36,22 @@
         {{#dataset}}
           {{#disabled}}
             <li class="is-disabled">
+              <p class="listview-heading">{{task}}</p>
+              <p class="listview-subheading">
+                <a class="hyperlink" href="http://www.google.com" disabled tabindex="-1" target="_blank">{{desc}}</a>
+              </p>
+              <p class="listview-micro">Due: {{date}}</p>
+            </li>
           {{/disabled}}
           {{^disabled}}
             <li>
+              <p class="listview-heading">{{task}}</p>
+              <p class="listview-subheading">
+                <a class="hyperlink" href="http://www.google.com" target="_blank">{{desc}}</a>
+              </p>
+              <p class="listview-micro">Due: {{date}}</p>
+            </li>
           {{/disabled}}
-            <p class="listview-heading">{{task}}</p>
-            <p class="listview-subheading">
-              <a class="hyperlink" href="http://www.google.com" target="_blank">{{desc}}</a>
-            </p>
-            <p class="listview-micro">Due: {{date}}</p>
-          </li>
         {{/dataset}}
       </ul>
     </script>
