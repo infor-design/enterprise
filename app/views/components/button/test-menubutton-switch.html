@@ -1,0 +1,23 @@
+
+<div class="row">
+  <div class="twelve columns">
+
+      <button type="button" id="test" class="btn-menu" data-options="{ 'attributes': [ { 'name': 'data-automation-id', 'value': 'menu-button' } ] }">
+        <span>Add Item</span>
+      </button>
+      <ul class="popupmenu is-selectable has-icons">
+        <li>
+          <div class="switch field">
+            <input class="switch" type="checkbox" id="cpf-switch-setting" />
+            <label for="cpf-switch-setting">Test Switch</label>
+          </div>
+      </ul>
+
+  </div>
+</div>
+
+<script>
+  $('#test').on('selected', function (e, args) {
+    console.log(args);
+  });
+</script>
