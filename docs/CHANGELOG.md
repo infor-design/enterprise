@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.57.0 Fixes
+
+- `[Searchfield]` Fix on uneven searchfield in firefox. ([#5620](https://github.com/infor-design/enterprise/issues/5620))
+
 ## v4.56.0 Features
 
 - `[ContextualActionPanel]` Changed the color of the toolbar header in the new theme. ([#5685](https://github.com/infor-design/enterprise/issues/5685))
