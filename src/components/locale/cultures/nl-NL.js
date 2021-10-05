@@ -106,6 +106,7 @@ Soho.Locale.addCulture('nl-NL', {
     ChangeView: { id: 'ChangeView', value: 'Weergave wijzigen', comment: 'Change the current page from a list of options' },
     Checkbox: { id: 'Checkbox', value: 'Selectievakje', comment: 'Checkbox tooltip' },
     Checked: { id: 'Checked', value: 'Ingeschakeld', comment: 'Checked tooltip' },
+    ChooseFont: { id: 'ChooseFont', value: 'Lettertypestijl kiezen', comment: 'Choose a font style' },
     Clear: { id: 'Clear', value: 'Wissen', comment: 'Tooltip for a Clear Action' },
     ClearFilter: { id: 'ClearFilter', value: 'Filter wissen', comment: 'Clear the current filter criteria' },
     ClearFormatting: { id: 'ClearFormatting', value: 'Opmaak wissen', comment: 'Clear the formatting in editor' },

@@ -106,6 +106,7 @@ Soho.Locale.addCulture('ru-RU', {
     ChangeView: { id: 'ChangeView', value: 'Изменить представление', comment: 'Change the current page from a list of options' },
     Checkbox: { id: 'Checkbox', value: 'Флажок', comment: 'Checkbox tooltip' },
     Checked: { id: 'Checked', value: 'Отмечено', comment: 'Checked tooltip' },
+    ChooseFont: { id: 'ChooseFont', value: 'Выберите стиль шрифта', comment: 'Choose a font style' },
     Clear: { id: 'Clear', value: 'Очистить', comment: 'Tooltip for a Clear Action' },
     ClearFilter: { id: 'ClearFilter', value: 'Очистить фильтр', comment: 'Clear the current filter criteria' },
     ClearFormatting: { id: 'ClearFormatting', value: 'Очистить форматирование', comment: 'Clear the formatting in editor' },

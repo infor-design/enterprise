@@ -106,6 +106,7 @@ Soho.Locale.addCulture('es-ES', {
     ChangeView: { id: 'ChangeView', value: 'Cambiar vista', comment: 'Change the current page from a list of options' },
     Checkbox: { id: 'Checkbox', value: 'Casilla', comment: 'Checkbox tooltip' },
     Checked: { id: 'Checked', value: 'Activado', comment: 'Checked tooltip' },
+    ChooseFont: { id: 'ChooseFont', value: 'Escoger estilo de fuente', comment: 'Choose a font style' },
     Clear: { id: 'Clear', value: 'Borrar', comment: 'Tooltip for a Clear Action' },
     ClearFilter: { id: 'ClearFilter', value: 'Borrar filtro', comment: 'Clear the current filter criteria' },
     ClearFormatting: { id: 'ClearFormatting', value: 'Borrar formato', comment: 'Clear the formatting in editor' },

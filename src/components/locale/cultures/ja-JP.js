@@ -106,6 +106,7 @@ Soho.Locale.addCulture('ja-JP', {
     ChangeView: { id: 'ChangeView', value: 'ビューの変更', comment: 'Change the current page from a list of options' },
     Checkbox: { id: 'Checkbox', value: 'チェックボックス', comment: 'Checkbox tooltip' },
     Checked: { id: 'Checked', value: 'チェック済', comment: 'Checked tooltip' },
+    ChooseFont: { id: 'ChooseFont', value: 'フォントスタイルの選択', comment: 'Choose a font style' },
     Clear: { id: 'Clear', value: 'クリア', comment: 'Tooltip for a Clear Action' },
     ClearFilter: { id: 'ClearFilter', value: 'フィルターのクリア', comment: 'Clear the current filter criteria' },
     ClearFormatting: { id: 'ClearFormatting', value: '書式のクリア', comment: 'Clear the formatting in editor' },
