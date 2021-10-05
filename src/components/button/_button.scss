@@ -128,6 +128,13 @@ button {
   &.hitbox {
     overflow: visible; // making the button visible to make hitbox work.
 
+    &.btn-icon,
+    &.btn-actions {
+      &::after {
+        transform: translate(-4px, -50%);
+      }
+    }
+
     &::after {
       content: '';
       height: 44px;
