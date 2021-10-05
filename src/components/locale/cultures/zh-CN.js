@@ -106,6 +106,7 @@ Soho.Locale.addCulture('zh-CN', {
     ChangeView: { id: 'ChangeView', value: '更改视图', comment: 'Change the current page from a list of options' },
     Checkbox: { id: 'Checkbox', value: '复选框', comment: 'Checkbox tooltip' },
     Checked: { id: 'Checked', value: '已选中', comment: 'Checked tooltip' },
+    ChooseFont: { id: 'ChooseFont', value: '选择字形', comment: 'Choose a font style' },
     Clear: { id: 'Clear', value: '清除', comment: 'Tooltip for a Clear Action' },
     ClearFilter: { id: 'ClearFilter', value: '清除筛选器', comment: 'Clear the current filter criteria' },
     ClearFormatting: { id: 'ClearFormatting', value: '清除格式', comment: 'Clear the formatting in editor' },

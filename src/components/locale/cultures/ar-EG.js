@@ -345,6 +345,7 @@ Soho.Locale.addCulture('ar-EG', {
     ChangeView: { id: 'ChangeView', value: 'تغيير طريقة العرض', comment: 'Change the current page from a list of options' },
     Checkbox: { id: 'Checkbox', value: 'خانة الاختيار', comment: 'Checkbox tooltip' },
     Checked: { id: 'Checked', value: 'محدّد', comment: 'Checked tooltip' },
+    ChooseFont: { id: 'ChooseFont', value: 'اختيار نمط الخط', comment: 'Choose a font style' },
     Clear: { id: 'Clear', value: 'مسح', comment: 'Tooltip for a Clear Action' },
     ClearFilter: { id: 'ClearFilter', value: 'مسح عامل التصفية', comment: 'Clear the current filter criteria' },
     ClearFormatting: { id: 'ClearFormatting', value: 'مسح التنسيق', comment: 'Clear the formatting in editor' },
