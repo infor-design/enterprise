@@ -48,6 +48,7 @@ require('../../../src/components/locale/cultures/sl-SI.js');
 require('../../../src/components/locale/cultures/sv-SE.js');
 require('../../../src/components/locale/cultures/sk-SK.js');
 require('../../../src/components/locale/cultures/th-TH.js');
+require('../../../src/components/locale/cultures/tl-PH.js');
 require('../../../src/components/locale/cultures/tr-TR.js');
 require('../../../src/components/locale/cultures/uk-UA.js');
 require('../../../src/components/locale/cultures/vi-VN.js');
@@ -2208,5 +2209,11 @@ describe('Locale API', () => {
 
     expect(Locale.translate('StrikeThrough')).toEqual('穿透');
     expect(Locale.translate('InsertAnchor')).toEqual('插入定位标记');
+  });
+
+  it('Should correct some missing translations', () => {
+    Locale.set('tl-PH');
+
+    expect(Locale.translate('ExtraSmall')).toEqual('Pinaka Maliit');
   });
 });
