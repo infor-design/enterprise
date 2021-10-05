@@ -124,6 +124,21 @@ button {
       top: 0;
     }
   }
+
+  &.hitbox {
+    overflow: visible; // making the button visible to make hitbox work.
+
+    &::after {
+      content: '';
+      height: 44px;
+      left: -1px;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: calc(100% + 2px);
+      z-index: 0;
+    }
+  }
 }
 
 .btn-primary,

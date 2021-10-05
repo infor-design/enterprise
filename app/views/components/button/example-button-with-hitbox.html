@@ -1,0 +1,58 @@
+<style>
+  /** Purpose of showing the hitbox area */
+
+  .hitbox-border::after {
+    left: -2px !important;
+    width: calc(100% + 2px) !important;
+    border: 1px dashed red;
+  }
+
+  .border-normal {
+    border: 1px dashed black;
+  }
+
+</style>
+
+<div class="row">
+  <div class="columns six">
+    <h2 class="section-title">Buttons with Hitbox</h2>
+    <button class="btn-primary hitbox-border" type="button" id="btn-hitbox-1" data-options="{hitbox: true}">Hitbox
+      #1</button><br><br>
+    <button class="btn-secondary hitbox-border" type="button" id="btn-hitbox-2" data-options="{hitbox: true}">Hitbox
+      #2</button><br><br>
+
+    <button type="button" class="btn-tertiary hitbox-border" id="btn-hitbox-3" data-options="{hitbox: true}">
+      <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+        <use href="#icon-filter"></use>
+      </svg>
+      <span>Action</span>
+    </button><br><br>
+
+    <button class="btn-secondary hitbox-border" type="button" id="btn-hitbox-4" data-options="{hitbox: true}">
+      <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+        <use href="#icon-settings"></use>
+      </svg>
+      <span>Secondary Button</span>
+    </button>
+  </div>
+
+  <div class="columns six">
+    <h2 class="section-title">Buttons without Hitbox</h2>
+    <button class="btn-primary border-normal" type="button" id="btn-normal-1">Normal Button #1</button><br><br>
+    <button class="btn-secondary border-normal" type="button" id="btn-normal-2">Normal Button #2</button><br><br>
+
+    <button type="button" class="btn-tertiary border-normal" id="btn-normal-3">
+      <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+        <use href="#icon-filter"></use>
+      </svg>
+      <span>Action</span>
+    </button><br><br>
+
+    <button class="btn-secondary border-normal" type="button" id="btn-normal-3">
+      <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+        <use href="#icon-settings"></use>
+      </svg>
+      <span>Secondary Button</span>
+    </button>
+  </div>
+</div>

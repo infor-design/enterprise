@@ -44,6 +44,7 @@ const pressableTypes = ['icon-favorite', 'btn-toggle'];
  * @param {string} [settings.toggleOnIcon=null]  The icon to use for on state on toggle buttons
  * @param {string} [settings.toggleOffIcon=null]  The icon to use for off state on toggle buttons
  * @param {string} [settings.replaceText=false]  If true the selection will be used to replace the content
+ * @param {boolean} [settings.hitbox=false] If true, it will add an invisible and clickable area around the button
  */
 const BUTTON_DEFAULTS = {
   style: buttonStyles[0],
@@ -53,6 +54,7 @@ const BUTTON_DEFAULTS = {
   hideMenuArrow: null,
   replaceText: false,
   ripple: true,
+  hitbox: false,
   validate: false,
   attributes: null
 };
@@ -269,6 +271,11 @@ Button.prototype = {
     // Add extra, user-defined CSS classes, if applicable
     if (typeof this.settings.cssClass === 'string') {
       this.element[0].className += xssUtils.stripHTML(this.settings.cssClass);
+    }
+
+    // Add class hitbox to work the stylings
+    if (this.settings.hitbox) {
+      this.element.addClass('hitbox');
     }
 
     // Handle a one-time `disabled` setting, if defined.
