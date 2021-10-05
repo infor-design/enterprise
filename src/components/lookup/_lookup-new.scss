@@ -45,15 +45,6 @@
 }
 
 html.is-firefox {
-  .lookup-wrapper {
-    .trigger {
-      .icon {
-        top: 0;
-        margin-top: -10px !important;
-      }
-    }
-  }
-
   .field-short,
   .form-layout-compact .field {
     .lookup-wrapper {
@@ -62,7 +53,6 @@ html.is-firefox {
       }
     }
   }
-
 }
 
 html.is-safari {
