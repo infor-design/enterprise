@@ -170,7 +170,7 @@ Soho.Locale.addCulture('tl-PH', {
     Default: { id: 'Default', value: 'Default', comment: 'Refers to a default object of a generic type' },
     Delete: { id: 'Delete', value: 'Tanggalin', comment: 'Delete Toolbar Action Tooltip' },
     DeleteEvent: { id: 'DeleteEvent', value: 'Tanggalin ang Kaganapan', comment: 'Delete an Event (from a calendar)' },
-    DeviceName: { id: 'Device', value: 'Pangalan ng aparato', comment: 'Name of the Device' },
+    Device: { id: 'Device', value: 'Pangalan ng aparato', comment: 'Name of the Device' },
     DistributeHoriz: { id: 'DistributeHoriz', value: 'Ipamahagi nang Pahalang', comment: 'Icon button tooltip for action that distributes elements across Horizontally' },
     Document: { id: 'Document', value: 'Dokumento', comment: 'Document tooltip' },
     DiscretionaryTimeOff: { id: 'DiscretionaryTimeOff', value: 'Discretionary na Oras ng Pahinga', comment: 'As in work time off' },

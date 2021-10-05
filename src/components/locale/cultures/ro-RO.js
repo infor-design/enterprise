@@ -169,7 +169,7 @@ Soho.Locale.addCulture('ro-RO', {
     Default: { id: 'Default', value: 'Implicit', comment: 'Refers to a default object of a generic type' },
     Delete: { id: 'Delete', value: 'Ștergere', comment: 'Delete Toolbar Action Tooltip' },
     DeleteEvent: { id: 'DeleteEvent', value: 'Ștergere eveniment', comment: 'Delete an Event (from a calendar)' },
-    DeviceName: { id: 'Device', value: 'Dispozitiv', comment: 'Name of the Device' },
+    Device: { id: 'Device', value: 'Dispozitiv', comment: 'Name of the Device' },
     DistributeHoriz: { id: 'DistributeHoriz', value: 'Distribuire pe orizontală', comment: 'Icon button tooltip for action that distributes elements across Horizontally' },
     Document: { id: 'Document', value: 'Document', comment: 'Document tooltip' },
     DiscretionaryTimeOff: { id: 'DiscretionaryTimeOff', value: 'Ora discreționară este dezactivată', comment: 'As in work time off' },

@@ -169,7 +169,7 @@ Soho.Locale.addCulture('th-TH', {
     Default: { id: 'Default', value: 'ค่าเริ่มต้น', comment: 'Refers to a default object of a generic type' },
     Delete: { id: 'Delete', value: 'ลบ', comment: 'Delete Toolbar Action Tooltip' },
     DeleteEvent: { id: 'DeleteEvent', value: 'ลบกิจกรรม', comment: 'Delete an Event (from a calendar)' },
-    DeviceName: { id: 'Device', value: 'อุปกรณ์', comment: 'Name of the Device' },
+    Device: { id: 'Device', value: 'อุปกรณ์', comment: 'Name of the Device' },
     DistributeHoriz: { id: 'DistributeHoriz', value: 'กระจายแนวนอน', comment: 'Icon button tooltip for action that distributes elements across Horizontally' },
     Document: { id: 'Document', value: 'เอกสาร', comment: 'Document tooltip' },
     DiscretionaryTimeOff: { id: 'DiscretionaryTimeOff', value: 'การตัดสินใจหยุดงาน', comment: 'As in work time off' },
