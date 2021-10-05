@@ -2214,6 +2214,15 @@ describe('Locale API', () => {
   it('Should correct some missing translations', () => {
     Locale.set('tl-PH');
 
+    expect(Locale.translate('Clickable')).toEqual('Napipindot sa editor');
+    expect(Locale.translate('Columns')).toEqual('Mga kolum');
+    expect(Locale.translate('Component')).toEqual('Bahagi');
+    expect(Locale.translate('Classic')).toEqual('Klasiko');
+    expect(Locale.translate('ClassicDarkTheme')).toEqual('Klasiko Dark');
+    expect(Locale.translate('ClassicLightTheme')).toEqual('Klasiko Light');
+    expect(Locale.translate('ClassicHighContrastTheme')).toEqual('Klasiko High Contrast');
+    expect(Locale.translate('Device')).toEqual('Pangalan ng aparato');
     expect(Locale.translate('ExtraSmall')).toEqual('Pinaka Maliit');
+    expect(Locale.translate('Roles')).toEqual('Mga tungkulin');
   });
 });
