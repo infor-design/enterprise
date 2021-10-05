@@ -1024,6 +1024,10 @@ PopupMenu.prototype = {
     });
 
     this.menu.on(`click.btn-menu.${this.id}`, (e) => {
+      // Allow switches (wierd use case)
+      if (e.target.closest('.switch')) {
+        return;
+      }
       e.preventDefault();
     });
 

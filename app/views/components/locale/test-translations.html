@@ -176,11 +176,23 @@ $('body').one('initialized', function () {
   columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center' }),
   columns.push({ id: 'id', name: Locale.translate('Id'), field: 'id', filterType: 'text', width: 100});
   columns.push({ id: 'value', name: Locale.translate('String'), field: 'value', filterType: 'text', width: 400, textOverflow: 'ellipsis'});
+  columns.push({ id: 'price', align: 'right', name: 'Currency', field: 'price', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: Soho.Locale.currentLocale.data.currencySign}});
+  columns.push({ id: 'percent', align: 'right', name: 'Percent', field: 'percent', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'percent'}});
+  columns.push({ id: 'decimal', align: 'right', name: 'Decimal', field: 'decimal', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 2, maximumFractionDigits: 2 }});
+  columns.push({ id: 'date', name: 'Date', field: 'date', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+
+  const localeData = Object.values(Locale.currentLanguage.messages);
+  for (let i = 0; i < localeData.length; i++) {
+    localeData[i].price = 21 + i;
+    localeData[i].percent = i / 100;
+    localeData[i].decimal = Number(100 + i) + .25;
+    localeData[i].date = new Date(2021, 10, i);
+  }
 
   // Init and get the api for the grid
   grid = $('#datagrid').datagrid({
     columns: columns,
-    dataset: Object.values(Locale.currentLanguage.messages),
+    dataset: localeData,
     selectable: 'multiple',
     paging: true,
     pagesize: 10,
