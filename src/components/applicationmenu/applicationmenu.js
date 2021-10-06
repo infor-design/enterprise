@@ -470,6 +470,11 @@ ApplicationMenu.prototype = {
         tabPanel.css('width', `calc(100% - ${localStorage.navMenuWidth})`);
       }
     }
+
+    // For some reason, the fix will not work if used in scss style.
+    if ($('html.is-safari')) {
+      $('.resize-app-menu-container').css('display', 'flex');
+    }
   },
 
   /**

@@ -2,6 +2,7 @@
 
 ## v4.57.0 Fixes
 
+- `[ApplicationMenu]` Fix for broken UI in Safari when hiding and expanding the navigation menu. ([#5620](https://github.com/infor-design/enterprise/issues/5620))
 - `[Datepicker]` Fix on default legends being shown regardless if settings have custom legends. ([#5683](https://github.com/infor-design/enterprise/issues/5683))
 - `[Searchfield]` Fix on uneven searchfield in firefox. ([#5620](https://github.com/infor-design/enterprise/issues/5620))
 
