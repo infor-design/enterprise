@@ -472,7 +472,7 @@ ApplicationMenu.prototype = {
     }
 
     // For some reason, the fix will not work if used in scss style.
-    if ($('html.is-safari')) {
+    if ($('html.is-safari') && this.settings.resizable) {
       $('.resize-app-menu-container').css('display', 'flex');
     }
   },
