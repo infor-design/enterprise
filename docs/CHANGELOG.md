@@ -4,6 +4,7 @@
 
 - `[Counts]` Updated the font size of `xl-text` from `50px` to `45px`. ([#5588](https://github.com/infor-design/enterprise/issues/5588))
 - `[Counts]` Fixed title and icon position when in RTL. ([#5566](https://github.com/infor-design/enterprise/issues/5566))
+- `[Datepicker]` Fix on default legends being shown regardless if settings have custom legends. ([#5683](https://github.com/infor-design/enterprise/issues/5683))
 - `[Searchfield]` Fix on uneven searchfield in firefox. ([#5620](https://github.com/infor-design/enterprise/issues/5620))
 
 ## v4.56.0 Features
