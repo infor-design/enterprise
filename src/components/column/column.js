@@ -26,6 +26,7 @@ const COMPONENT_NAME = 'column';
 * @param {boolean|string} [settings.animate = true] true|false - will do or not do the animation. 'initial' will do only first time the animation.
 * @param {boolean} [settings.redrawOnResize = true]  If set to false the component will not redraw when the page or parent is resized.
 * @param {boolean} [settings.useLine = false] The ability to use line chart if set to true. This will need a target value to the dataset.
+* @param {boolean} [settings.hideDots=false] If true no dots are shown, along the line chart
 * @param {string} [settings.format = null] The d3 axis format
 * @param {string} [settings.formatterString] Use d3 format some examples can be found on http://bit.ly/1IKVhHh
 * @param {number} [settings.ticks = 9] The number of ticks to show.
@@ -55,6 +56,7 @@ const COLUMN_DEFAULTS = {
   format: null,
   redrawOnResize: true,
   useLine: false,
+  hideDots: false,
   ticks: 9,
   fitHeight: true,
   emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' }
@@ -638,53 +640,72 @@ Column.prototype = {
           .attr('y', function () { return y(0) > height ? height : y(0); })
           .attr('height', function () { return 0; });
 
-        const x = d3.scaleLinear().range([0, width]);
-        // Get the max values
-        const getMaxes = (d, opt) => d3.max(d.data, d2 => (opt ? d2.value[opt] : d2.value));
-
-        // Calculate the Domain X and Y Ranges
-        const lineMaxes = dataset.map(d => getMaxes(d));
-
-        const maxDataLen = d3.max(dataset.map(d => d.data.length));
-        const entries = maxDataLen <= 1 ? maxDataLen : maxDataLen - 1;
-        const xScaleLine = x.domain([0, d3.max(entries)]);
-        const yScaleLine = y.domain([0, d3.max(lineMaxes)]).nice();
-
-        const line = d3.line()
-          .x((d, n) => xScaleLine(n))
-          .y(d => yScaleLine(d.value));
-        
-        const lineDataset = [{ data: [] }];
-
         if (self.settings.useLine) {
-          dataArray.forEach(function (i, dIdx) {
-            i.data.map(function (j, idx) {
-              if (j.isLine) {
-                lineDataset[0].data.push(j);
-                lineDataset[0].name = j.name;
-              }
+          if (dataset.length === dataset.map(d => d.line).length) {
+            const xScaleLine = d3.scaleBand()
+              .rangeRound([0, width])
+              .domain(dataset.map(d => d.name));
 
-              return lineDataset;
-            });
-          });
+            const yScaleLine = d3.scaleLinear()
+              .range([height, 0])
+              .domain([0, d3.max(maxes)]).nice();
 
-          lineDataset.forEach(function (d, lineIdx) {
-            const lineGroups = self.svg.append('g')
-              .attr('data-group-id', lineIdx)
+            const line = d3.line()
+              .x(d => (xScaleLine(d.name) + xScaleLine.bandwidth() / 2))
+              .y(d => yScaleLine(d.line.value));
+
+            const lineGroup = svg.append('g')
               .attr('class', 'line-group');
 
-            lineGroups.append('path')
-              .datum(d.data)
-              .attr('d', line(d.data))
+            lineGroup.append('path')
+              .datum(dataset)
+              .attr('d', line(dataset))
+              .attr('class', 'line')
+              .style('opacity', 0)
               .attr('stroke', '#000')
               .attr('stroke-width', 2)
-              .attr('fill', 'none')
-              .attr('class', 'line');
-          });
+              .attr('fill', 'none');
+
+            if (!self.settings.hideDots) {
+              lineGroup.selectAll('circle')
+                .data(dataset)
+                .enter()
+                .append('circle')
+                .attr('class', 'dot')
+                .style('opacity', 0)
+                .attr('cx', d => (xScaleLine(d.name) + xScaleLine.bandwidth() / 2))
+                .attr('cy', d => yScaleLine(d.line.value))
+                .attr('r', 5)
+                .style('fill', '#000')
+                .style('stroke-width', 2)
+                .style('cursor', 'pointer');
+            }
+          }
         }
 
         bars
           .transition().duration(self.settings.animate ? 600 : 0)
+          .call(onEndAllTransition, function () {
+            // Add animation to line chart
+            if (self.settings.useLine) {
+              const line = svg.select('.line');
+              const totalLength = line.node().getTotalLength();
+              line
+                .style('opacity', 1)
+                .attr('stroke-dasharray', `${totalLength} ${totalLength}`)
+                .attr('stroke-dashoffset', totalLength)
+                .transition()
+                .duration(self.settings.animate ? 300 : 0)
+                .ease(d3.easeCubic)
+                .attr('stroke-dashoffset', 0)
+                .call(onEndAllTransition, function () {
+                  svg.selectAll('.dot')
+                    .transition()
+                    .duration(self.settings.animate ? 100 : 0)
+                    .style('opacity', 1);
+                });
+            }
+          })
           .attr('y', function (d) {
             const r = self.settings.isStacked ?
               (height - yScale(d.y) - yScale(d.y0)) : (d.value < 0 ? y(0) : y(d.value));
