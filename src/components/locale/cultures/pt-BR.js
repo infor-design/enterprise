@@ -169,7 +169,7 @@ Soho.Locale.addCulture('pt-BR', {
     Default: { id: 'Default', value: 'Padrão', comment: 'Refers to a default object of a generic type' },
     Delete: { id: 'Delete', value: 'Excluir', comment: 'Delete Toolbar Action Tooltip' },
     DeleteEvent: { id: 'DeleteEvent', value: 'Excluir evento', comment: 'Delete an Event (from a calendar)' },
-    DeviceName: { id: 'Device', value: 'Dispositivo', comment: 'Name of the Device' },
+    Device: { id: 'Device', value: 'Dispositivo', comment: 'Name of the Device' },
     DistributeHoriz: { id: 'DistributeHoriz', value: 'Distribuir horizontalmente', comment: 'Icon button tooltip for action that distributes elements across Horizontally' },
     Document: { id: 'Document', value: 'Documento', comment: 'Document tooltip' },
     DiscretionaryTimeOff: { id: 'DiscretionaryTimeOff', value: 'Folgas compensatórias', comment: 'As in work time off' },

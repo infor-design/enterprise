@@ -169,7 +169,7 @@ Soho.Locale.addCulture('vi-VN', {
     Default: { id: 'Default', value: 'Mặc định', comment: 'Refers to a default object of a generic type' },
     Delete: { id: 'Delete', value: 'Xóa', comment: 'Delete Toolbar Action Tooltip' },
     DeleteEvent: { id: 'DeleteEvent', value: 'Xóa Sự kiện', comment: 'Delete an Event (from a calendar)' },
-    DeviceName: { id: 'Device', value: 'Thiết bị', comment: 'Name of the Device' },
+    Device: { id: 'Device', value: 'Thiết bị', comment: 'Name of the Device' },
     DistributeHoriz: { id: 'DistributeHoriz', value: 'Phân bổ theo chiều ngang', comment: 'Icon button tooltip for action that distributes elements across Horizontally' },
     Document: { id: 'Document', value: 'Tài liệu', comment: 'Document tooltip' },
     DiscretionaryTimeOff: { id: 'DiscretionaryTimeOff', value: 'Tắt thời gian tùy ý', comment: 'As in work time off' },
