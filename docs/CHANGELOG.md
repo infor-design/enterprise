@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.57.0 Features
+
+- `[File Upload]` Show progress percent while file is uploading. ([#3934](https://github.com/infor-design/enterprise/issues/3934))
+
 ## v4.57.0 Fixes
 
 - `[Datepicker]` Fix on default legends being shown regardless if settings have custom legends. ([#5683](https://github.com/infor-design/enterprise/issues/5683))
