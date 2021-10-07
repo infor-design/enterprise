@@ -128,23 +128,24 @@ button {
   &.hitbox {
     overflow: visible; // making the button visible to make hitbox work.
 
-    &.btn-icon,
-    &.btn-actions {
-      &::after {
-        transform: translate(-4px, -50%);
-      }
-    }
-
-    &::after {
-      content: '';
+    span.hitbox-area {
+      display: block !important;
       height: 44px;
       left: -1px;
       min-width: 44px;
+      overflow: hidden;
       position: absolute;
-      top: 50%;
+      pointer-events: auto !important;
       transform: translateY(-50%);
+      top: 50%;
       width: calc(100% + 2px);
-      z-index: 0;
+    }
+
+    &.btn-icon,
+    &.btn-actions {
+      span.hitbox-area {
+        transform: translate(-4px, -50%);
+      }
     }
   }
 }

@@ -193,7 +193,12 @@ Button.prototype = {
     </svg>`);
     ripple[0].style.left = `${xPos}px`;
     ripple[0].style.top = `${yPos}px`;
-    this.element.prepend(ripple);
+
+    if (this.settings.hitbox) {
+      $(this.hitboxArea).prepend(ripple);
+    } else {
+      this.element.prepend(ripple);
+    }
 
     // Start the JS Animation Loop if IE9
     // Or Safari/Firefox has bug with combination like: animation, overflow, position,
@@ -273,9 +278,14 @@ Button.prototype = {
       this.element[0].className += xssUtils.stripHTML(this.settings.cssClass);
     }
 
-    // Add class hitbox to work the stylings
+    // Add hitbox area element.
+    // The ripple effect also goes inside of here so it will not scatter outside
+    // of this element if button's overflow is set to visible.
     if (this.settings.hitbox) {
       this.element.addClass('hitbox');
+      this.hitboxArea = document.createElement('span');
+      this.hitboxArea.classList.add('hitbox-area');
+      this.element.prepend(this.hitboxArea);
     }
 
     // Handle a one-time `disabled` setting, if defined.
