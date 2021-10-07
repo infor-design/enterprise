@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.57.0 Features
+
+- `[Button]` Added the ability to have a hitbox. With this feature, it will have a better tapping/clicking on smaller devices. ([#5568](https://github.com/infor-design/enterprise/issues/5568))
+
 ## v4.57.0 Fixes
 
 - `[Datepicker]` Fix on default legends being shown regardless if settings have custom legends. ([#5683](https://github.com/infor-design/enterprise/issues/5683))
