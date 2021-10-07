@@ -169,7 +169,7 @@ Soho.Locale.addCulture('tr-TR', {
     Default: { id: 'Default', value: 'Varsayılan', comment: 'Refers to a default object of a generic type' },
     Delete: { id: 'Delete', value: 'Sil', comment: 'Delete Toolbar Action Tooltip' },
     DeleteEvent: { id: 'DeleteEvent', value: 'Olayı Sil', comment: 'Delete an Event (from a calendar)' },
-    DeviceName: { id: 'Device', value: 'Aygıt', comment: 'Name of the Device' },
+    Device: { id: 'Device', value: 'Aygıt', comment: 'Name of the Device' },
     DistributeHoriz: { id: 'DistributeHoriz', value: 'Yatay Olarak Dağıt', comment: 'Icon button tooltip for action that distributes elements across Horizontally' },
     Document: { id: 'Document', value: 'Belge', comment: 'Document tooltip' },
     DiscretionaryTimeOff: { id: 'DiscretionaryTimeOff', value: 'İsteğe Bağlı İzin', comment: 'As in work time off' },
