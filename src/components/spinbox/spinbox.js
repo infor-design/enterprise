@@ -323,7 +323,7 @@ Spinbox.prototype = {
    */
   handleKeyDown(e, self) {
     const key = e.which;
-    const validKeycodes = [35, 36, 37, 38, 39, 40];
+    const validKeycodes = [37, 38, 39, 40];
 
     if ($.inArray(key, validKeycodes) === -1) {
       return;
@@ -333,14 +333,8 @@ Spinbox.prototype = {
       return;
     }
 
-    // If the keycode got this far, it's an arrow key, HOME, or END.
+    // If the keycode got this far, it's an arrow key.
     switch (key) {
-      case 35: // End key sets the spinbox to its minimum value
-        if (self.element.attr('min')) { self.element.val(self.element.attr('min')); }
-        break;
-      case 36: // Home key sets the spinbox to its maximum value
-        if (self.element.attr('max')) { self.element.val(self.element.attr('max')); }
-        break;
       case 38: // Up increases the spinbox value
         self.addButtonStyle(self.buttons.up);
         self.increaseValue();
