@@ -169,7 +169,7 @@ Soho.Locale.addCulture('lt-LT', {
     Default: { id: 'Default', value: 'Numatyt.', comment: 'Refers to a default object of a generic type' },
     Delete: { id: 'Delete', value: 'Naikinti', comment: 'Delete Toolbar Action Tooltip' },
     DeleteEvent: { id: 'DeleteEvent', value: 'Naikinti įvykį', comment: 'Delete an Event (from a calendar)' },
-    DeviceName: { id: 'Device', value: 'Įrenginys', comment: 'Name of the Device' },
+    Device: { id: 'Device', value: 'Įrenginys', comment: 'Name of the Device' },
     DistributeHoriz: { id: 'DistributeHoriz', value: 'Paskirstyti horizontaliai', comment: 'Icon button tooltip for action that distributes elements across Horizontally' },
     Document: { id: 'Document', value: 'Dokumentas', comment: 'Document tooltip' },
     DiscretionaryTimeOff: { id: 'DiscretionaryTimeOff', value: 'Atostogos savo nuožiūra', comment: 'As in work time off' },
