@@ -130,7 +130,7 @@ Soho.Locale.addCulture('la-IT', {
     DaysOverdue: { id: 'DaysOverdue', value: 'Scaduto da {0} giorni', comment: 'For a task /date UI' },
     DaysRemaining: { id: 'DaysRemaining', value: '{0} Available diebus', comment: 'For a task /date UI' },
     Delete: { id: 'Delete', value: 'delere', comment: 'Delete Toolbar Action Tooltip' },
-    DeviceName: { id: 'Device', value: 'Fabrica', comment: 'Name of the Device' },
+    Device: { id: 'Device', value: 'Fabrica', comment: 'Name of the Device' },
     DistributeHoriz: { id: 'DistributeHoriz', value: 'furorem divide in Horizontally', comment: 'Icon button tooltip for action that distributes elements across Horizontally' },
     Document: { id: 'Document', value: 'documento', comment: 'Document tooltip' },
     DiscretionaryTimeOff: { id: 'Tempus off Discretionary', value: 'Ferie/Permessi discrezionali', comment: 'As in work time off' },

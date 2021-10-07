@@ -169,7 +169,7 @@ Soho.Locale.addCulture('sl-SI', {
     Default: { id: 'Default', value: 'Privzeto', comment: 'Refers to a default object of a generic type' },
     Delete: { id: 'Delete', value: 'Izbriši', comment: 'Delete Toolbar Action Tooltip' },
     DeleteEvent: { id: 'DeleteEvent', value: 'Izbriši dogodek', comment: 'Delete an Event (from a calendar)' },
-    DeviceName: { id: 'Device', value: 'Naprava', comment: 'Name of the Device' },
+    Device: { id: 'Device', value: 'Naprava', comment: 'Name of the Device' },
     DistributeHoriz: { id: 'DistributeHoriz', value: 'Porazdeli vodoravno', comment: 'Icon button tooltip for action that distributes elements across Horizontally' },
     Document: { id: 'Document', value: 'Dokument', comment: 'Document tooltip' },
     DiscretionaryTimeOff: { id: 'DiscretionaryTimeOff', value: 'Letni dopust', comment: 'As in work time off' },

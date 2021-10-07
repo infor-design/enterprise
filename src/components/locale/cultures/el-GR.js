@@ -169,7 +169,7 @@ Soho.Locale.addCulture('el-GR', {
     Default: { id: 'Default', value: 'Προεπιλογή', comment: 'Refers to a default object of a generic type' },
     Delete: { id: 'Delete', value: 'Διαγραφή', comment: 'Delete Toolbar Action Tooltip' },
     DeleteEvent: { id: 'DeleteEvent', value: 'Διαγραφή συμβάντος', comment: 'Delete an Event (from a calendar)' },
-    DeviceName: { id: 'Device', value: 'Συσκευή', comment: 'Name of the Device' },
+    Device: { id: 'Device', value: 'Συσκευή', comment: 'Name of the Device' },
     DistributeHoriz: { id: 'DistributeHoriz', value: 'Διανομή οριζοντίως', comment: 'Icon button tooltip for action that distributes elements across Horizontally' },
     Document: { id: 'Document', value: 'Έγγραφο', comment: 'Document tooltip' },
     DiscretionaryTimeOff: { id: 'DiscretionaryTimeOff', value: 'Επιλεκτικό ρεπό', comment: 'As in work time off' },

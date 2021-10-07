@@ -169,7 +169,7 @@ Soho.Locale.addCulture('lv-LV', {
     Default: { id: 'Default', value: 'Noklusējums', comment: 'Refers to a default object of a generic type' },
     Delete: { id: 'Delete', value: 'Dzēst', comment: 'Delete Toolbar Action Tooltip' },
     DeleteEvent: { id: 'DeleteEvent', value: 'Dzēst notikumu', comment: 'Delete an Event (from a calendar)' },
-    DeviceName: { id: 'Device', value: 'Ierīce', comment: 'Name of the Device' },
+    Device: { id: 'Device', value: 'Ierīce', comment: 'Name of the Device' },
     DistributeHoriz: { id: 'DistributeHoriz', value: 'Izkliedēt horizontāli', comment: 'Icon button tooltip for action that distributes elements across Horizontally' },
     Document: { id: 'Document', value: 'Dokuments', comment: 'Document tooltip' },
     DiscretionaryTimeOff: { id: 'DiscretionaryTimeOff', value: 'Papildu brīvais laiks', comment: 'As in work time off' },
