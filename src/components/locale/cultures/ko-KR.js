@@ -169,7 +169,7 @@ Soho.Locale.addCulture('ko-KR', {
     Default: { id: 'Default', value: '기본값', comment: 'Refers to a default object of a generic type' },
     Delete: { id: 'Delete', value: '삭제', comment: 'Delete Toolbar Action Tooltip' },
     DeleteEvent: { id: 'DeleteEvent', value: '이벤트 삭제', comment: 'Delete an Event (from a calendar)' },
-    DeviceName: { id: 'Device', value: '기기', comment: 'Name of the Device' },
+    Device: { id: 'Device', value: '기기', comment: 'Name of the Device' },
     DistributeHoriz: { id: 'DistributeHoriz', value: '가로 간격을 동일하게', comment: 'Icon button tooltip for action that distributes elements across Horizontally' },
     Document: { id: 'Document', value: '문서', comment: 'Document tooltip' },
     DiscretionaryTimeOff: { id: 'DiscretionaryTimeOff', value: '재량에 따른 휴가', comment: 'As in work time off' },

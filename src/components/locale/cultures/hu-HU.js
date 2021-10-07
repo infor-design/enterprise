@@ -169,7 +169,7 @@ Soho.Locale.addCulture('hu-HU', {
     Default: { id: 'Default', value: 'Alapértelmezett', comment: 'Refers to a default object of a generic type' },
     Delete: { id: 'Delete', value: 'Törlés', comment: 'Delete Toolbar Action Tooltip' },
     DeleteEvent: { id: 'DeleteEvent', value: 'Esemény törlése', comment: 'Delete an Event (from a calendar)' },
-    DeviceName: { id: 'Device', value: 'Eszköz', comment: 'Name of the Device' },
+    Device: { id: 'Device', value: 'Eszköz', comment: 'Name of the Device' },
     DistributeHoriz: { id: 'DistributeHoriz', value: 'Vízszintes elosztás', comment: 'Icon button tooltip for action that distributes elements across Horizontally' },
     Document: { id: 'Document', value: 'Dokumentum', comment: 'Document tooltip' },
     DiscretionaryTimeOff: { id: 'DiscretionaryTimeOff', value: 'Jutalomszabadság', comment: 'As in work time off' },
