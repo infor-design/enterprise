@@ -169,7 +169,7 @@ Soho.Locale.addCulture('id-ID', {
     Default: { id: 'Default', value: 'Default', comment: 'Refers to a default object of a generic type' },
     Delete: { id: 'Delete', value: 'Hapus', comment: 'Delete Toolbar Action Tooltip' },
     DeleteEvent: { id: 'DeleteEvent', value: 'Hapus Event', comment: 'Delete an Event (from a calendar)' },
-    DeviceName: { id: 'Device', value: 'Perangkat', comment: 'Name of the Device' },
+    Device: { id: 'Device', value: 'Perangkat', comment: 'Name of the Device' },
     DistributeHoriz: { id: 'DistributeHoriz', value: 'Distribusikan Horizontal', comment: 'Icon button tooltip for action that distributes elements across Horizontally' },
     Document: { id: 'Document', value: 'Dokumen', comment: 'Document tooltip' },
     DiscretionaryTimeOff: { id: 'DiscretionaryTimeOff', value: 'Waktu Libur Khusus', comment: 'As in work time off' },
