@@ -170,7 +170,7 @@ Soho.Locale.addCulture('zh-TW', {
     Default: { id: 'Default', value: '預設', comment: 'Refers to a default object of a generic type' },
     Delete: { id: 'Delete', value: '刪除', comment: 'Delete Toolbar Action Tooltip' },
     DeleteEvent: { id: 'DeleteEvent', value: '刪除事件', comment: 'Delete an Event (from a calendar)' },
-    DeviceName: { id: 'Device', value: '裝置', comment: 'Name of the Device' },
+    Device: { id: 'Device', value: '裝置', comment: 'Name of the Device' },
     DistributeHoriz: { id: 'DistributeHoriz', value: '水平均分', comment: 'Icon button tooltip for action that distributes elements across Horizontally' },
     Document: { id: 'Document', value: '文件', comment: 'Document tooltip' },
     DiscretionaryTimeOff: { id: 'DiscretionaryTimeOff', value: '自主休假', comment: 'As in work time off' },

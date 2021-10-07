@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.57.0 Fixes
+
+- `[Datepicker]` Fix on default legends being shown regardless if settings have custom legends. ([#5683](https://github.com/infor-design/enterprise/issues/5683))
+- `[Locale]` Fixed currency position and a translation on tl-PH locale. ([#5695](https://github.com/infor-design/enterprise/issues/5695))
+- `[Searchfield]` Fix on uneven searchfield in firefox. ([#5695](https://github.com/infor-design/enterprise/issues/5695))
+
 ## v4.56.0 Features
 
 - `[ContextualActionPanel]` Changed the color of the toolbar header in the new theme. ([#5685](https://github.com/infor-design/enterprise/issues/5685))
