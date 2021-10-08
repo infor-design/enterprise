@@ -331,7 +331,12 @@
         color: $fileupload-secondary-color;
         line-height: 36px;
         margin-right: 42px;
-        max-width: 75px;
+        max-width: 115px;
+
+        .percent {
+          color: $fileupload-progress-color;
+          font-weight: bold;
+        }
       }
 
       .action {
