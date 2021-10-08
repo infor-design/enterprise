@@ -114,10 +114,15 @@ dateUtils.subtract = function (date, number, unit) {
   return newDate;
 };
 
-dateUtils.isDST = function (d) {
-  const jan = new Date(d.getFullYear(), 0, 1).getTimezoneOffset();
-  const jul = new Date(d.getFullYear(), 6, 1).getTimezoneOffset();
-  return Math.max(jan, jul) !== d.getTimezoneOffset();
+/**
+ * Check if a date is using daylight saving time
+ * @param {date} date original date.
+* @returns {boolean} true if given date is using daylight saving time, false otherwise.
+ */
+dateUtils.isDaylightSavingTime = function (date) {
+  const jan = new Date(date.getFullYear(), 0, 1).getTimezoneOffset();
+  const jul = new Date(date.getFullYear(), 6, 1).getTimezoneOffset();
+  return Math.max(jan, jul) !== date.getTimezoneOffset();
 };
 
 export { dateUtils }; //eslint-disable-line

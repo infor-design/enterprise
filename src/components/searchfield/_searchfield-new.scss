@@ -129,6 +129,12 @@ html.is-firefox {
     .searchfield-category-button {
       height: inherit;
     }
+
+    &.context {
+      > .searchfield {
+        height: 38px;
+      }
+    }
   }
 
   .toolbar-searchfield-wrapper {

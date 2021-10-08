@@ -14,159 +14,120 @@
 
 <script>
   $('body').on('initialized', function () {
-
     var dataset = [{
-        data: [{
-            name: 'Jan',
-            value: 12,
-        }, {
-            name: 'Feb',
-            value: 11,
-            attributes: [
-             { name: 'id', value: 'columngrouped-c1-feb' },
-             { name: 'data-automation-id', value: 'automation-id-columngrouped-c1-feb' }
-           ]
-        }, {
-            name: 'Mar',
-            value: 14,
-            attributes: [
-             { name: 'id', value: 'columngrouped-c1-mar' },
-             { name: 'data-automation-id', value: 'automation-id-columngrouped-c1-mar' }
-           ]
-        }, {
-            name: 'Apr',
-            value: 10,
-            attributes: [
-             { name: 'id', value: 'columngrouped-c1-apr' },
-             { name: 'data-automation-id', value: 'automation-id-columngrouped-c1-apr' }
-           ]
-        }, {
-            name: 'May',
-            value: 14,
-            attributes: [
-             { name: 'id', value: 'columngrouped-c1-may' },
-             { name: 'data-automation-id', value: 'automation-id-columngrouped-c1-may' }
-           ]
-        }, {
-            name: 'Jun',
-            value: 8,
-            attributes: [
-             { name: 'id', value: 'columngrouped-c1-jun' },
-             { name: 'data-automation-id', value: 'automation-id-columngrouped-c1-jun' }
-           ]
-        }, {
-            name: 'Margins',
-            value: 9,
-            isLine: true
-          }
-        ],
-        name: 'Component A'
+      data: [{
+        name: 'Principal',
+        value: 100,
+        attributes: [
+          { name: 'id', value: 'cg1-principal' },
+          { name: 'data-automation-id', value: 'automation-cg1-principal' }
+        ]
       }, {
-        data: [{
-            name: 'Jan',
-            value: 22,
-            attributes: [
-             { name: 'id', value: 'columngrouped-c2-jan' },
-             { name: 'data-automation-id', value: 'automation-id-columngrouped-c2-jan' }
-           ]
-        }, {
-            name: 'Feb',
-            value: 21,
-            attributes: [
-             { name: 'id', value: 'columngrouped-c2-feb' },
-             { name: 'data-automation-id', value: 'automation-id-columngrouped-c2-feb' }
-           ]
-        }, {
-            name: 'Mar',
-            value: 24,
-            attributes: [
-             { name: 'id', value: 'columngrouped-c2-mar' },
-             { name: 'data-automation-id', value: 'automation-id-columngrouped-c2-mar' }
-           ]
-        }, {
-            name: 'Apr',
-            value: 20,
-            attributes: [
-             { name: 'id', value: 'columngrouped-c2-apr' },
-             { name: 'data-automation-id', value: 'automation-id-columngrouped-c2-apr' }
-           ]
-        }, {
-            name: 'May',
-            value: 24,
-            attributes: [
-             { name: 'id', value: 'columngrouped-c2-may' },
-             { name: 'data-automation-id', value: 'automation-id-columngrouped-c2-may' }
-           ]
-        }, {
-            name: 'Jun',
-            value: 28,
-            attributes: [
-             { name: 'id', value: 'columngrouped-c2-jun' },
-             { name: 'data-automation-id', value: 'automation-id-columngrouped-c2-jun' }
-           ]
-        }, {
-            name: 'Margins',
-            value: 11,
-            isLine: true
-          }
-        ],
-        name: 'Component B'
+        name: 'Cost',
+        value: 50,
+        attributes: [
+          { name: 'id', value: 'cg1-cost' },
+          { name: 'data-automation-id', value: 'automation-cg1-cost' }
+        ]
+      }],
+      line: { name: 'Margins', value: 51 },
+      name: '1'
+    }, {
+      data: [{
+        name: 'Principal',
+        value: 120,
+        attributes: [
+          { name: 'id', value: 'cg2-principal' },
+          { name: 'data-automation-id', value: 'automation-cg2-principal' }
+        ]
       }, {
-        data: [{
-            name: 'Jan',
-            value: 32,
-            attributes: [
-             { name: 'id', value: 'columngrouped-c3-jan' },
-             { name: 'data-automation-id', value: 'automation-id-columngrouped-c3-jan' }
-           ]
-        }, {
-            name: 'Feb',
-            value: 31,
-            attributes: [
-             { name: 'id', value: 'columngrouped-c3-feb' },
-             { name: 'data-automation-id', value: 'automation-id-columngrouped-c3-feb' }
-           ]
-        }, {
-            name: 'Mar',
-            value: 34,
-            attributes: [
-             { name: 'id', value: 'columngrouped-c3-mar' },
-             { name: 'data-automation-id', value: 'automation-id-columngrouped-c3-mar' }
-           ]
-        }, {
-            name: 'Apr',
-            value: 30,
-            attributes: [
-             { name: 'id', value: 'columngrouped-c3-apr' },
-             { name: 'data-automation-id', value: 'automation-id-columngrouped-c3-apr' }
-           ]
-        }, {
-            name: 'May',
-            value: 34,
-            attributes: [
-             { name: 'id', value: 'columngrouped-c3-may' },
-             { name: 'data-automation-id', value: 'automation-id-columngrouped-c3-may' }
-           ]
-        }, {
-            name: 'Jun',
-            value: 38,
-            attributes: [
-             { name: 'id', value: 'columngrouped-c3-jun' },
-             { name: 'data-automation-id', value: 'automation-id-columngrouped-c3-jun' }
-           ]
-        }, {
-            name: 'Margins',
-            value: 4,
-            isLine: true
-          }
-        ],
-        name: 'Component C'
-      }];
+        name: 'Cost',
+        value: 76,
+        attributes: [
+          { name: 'id', value: 'cg1-cost' },
+          { name: 'data-automation-id', value: 'automation-cg1-cost' }
+        ]
+      }],
+      line: { name: 'Margins', value: 45 },
+      name: '2'
+    }, {
+      data: [{
+        name: 'Principal',
+        value: 105,
+        attributes: [
+          { name: 'id', value: 'cg3-principal' },
+          { name: 'data-automation-id', value: 'automation-cg3-principal' }
+        ]
+      }, {
+        name: 'Cost',
+        value: 65,
+        attributes: [
+          { name: 'id', value: 'cg3-cost' },
+          { name: 'data-automation-id', value: 'automation-cg3-cost' }
+        ]
+      }],
+      line: { name: 'Margins', value: 38 },
+      name: '3'
+    }, {
+      data: [{
+        name: 'Principal',
+        value: 98,
+        attributes: [
+          { name: 'id', value: 'cg4-principal' },
+          { name: 'data-automation-id', value: 'automation-cg4-principal' }
+        ]
+      }, {
+        name: 'Cost',
+        value: 43,
+        attributes: [
+          { name: 'id', value: 'cg4-cost' },
+          { name: 'data-automation-id', value: 'automation-cg4-cost' }
+        ]
+      }],
+      line: { name: 'Margins', value: 58 },
+      name: '4'
+    }, {
+      data: [{
+        name: 'Principal',
+        value: 116,
+        attributes: [
+          { name: 'id', value: 'cg5-principal' },
+          { name: 'data-automation-id', value: 'automation-cg5-principal' }
+        ]
+      }, {
+        name: 'Cost',
+        value: 90,
+        attributes: [
+          { name: 'id', value: 'cg5-cost' },
+          { name: 'data-automation-id', value: 'automation-cg5-cost' }
+        ]
+      }],
+      line: { name: 'Margins', value: 25 },
+      name: '5'
+    }, {
+      data: [{
+        name: 'Principal',
+        value: 131,
+        attributes: [
+          { name: 'id', value: 'cg6-principal' },
+          { name: 'data-automation-id', value: 'automation-cg6-principal' }
+        ]
+      }, {
+        name: 'Cost',
+        value: 60,
+        attributes: [
+          { name: 'id', value: 'cg6-cost' },
+          { name: 'data-automation-id', value: 'automation-cg6-cost' }
+        ]
+      }],
+      line: { name: 'Margins', value: 65 },
+      name: '6'
+    }];
 
     $('#column-grouped-example').chart({
       type: 'column-grouped',
       dataset: dataset,
-      useLine: true,
+      useLine: true
     });
 
   });

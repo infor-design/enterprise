@@ -1,15 +1,31 @@
 # What's New with Enterprise
 
+## v4.57.0 Features
+
+- `[File Upload]` Show progress percent while file is uploading. ([#3934](https://github.com/infor-design/enterprise/issues/3934))
+
+## v4.57.0 Fixes
+
+- `[Datepicker]` Fix on default legends being shown regardless if settings have custom legends. ([#5683](https://github.com/infor-design/enterprise/issues/5683))
+- `[Locale]` Fixed currency position and a translation on tl-PH locale. ([#5695](https://github.com/infor-design/enterprise/issues/5695))
+- `[Lookup]` Fix an uncentered lookup icon in composite form. ([#5657](https://github.com/infor-design/enterprise/issues/5657))
+- `[Searchfield]` Fix on uneven searchfield in firefox. ([#5620](https://github.com/infor-design/enterprise/issues/5620))
+- `[Searchfield]` Fix on uneven searchfield in firefox. ([#5695](https://github.com/infor-design/enterprise/issues/5695))
+- `[Spinbox]` Remove functionality of Home and End buttons on Spinbox. ([#5659](https://github.com/infor-design/enterprise/issues/5659))
+
 ## v4.56.0 Features
 
+- `[ContextualActionPanel]` Changed the color of the toolbar header in the new theme. ([#5685](https://github.com/infor-design/enterprise/issues/5685))
 - `[Charts]` Added ability to disable the selection of the charts including the legend. ([#2736](https://github.com/infor-design/enterprise/issues/2736))
 - `[Datagrid]` Adds the ability to update values of a specific column on Datagrid. ([#3491](https://github.com/infor-design/enterprise/issues/3491))
 - `[Icon]` Updated the launch icon to be less bulky. ([#5595](https://github.com/infor-design/enterprise/issues/5595))
+- `[Locale]` Added a new locale tl-PH for phillipines (tagalog). ([#5695](https://github.com/infor-design/enterprise/issues/5695))
 - `[Tabs]` Adds the ability to split the tabs. ([#4600](https://github.com/infor-design/enterprise/issues/4600))
 - `[Toolbar Flex]` Adds control of buttonset areas via the Buttonset API. ([NG#1101](https://github.com/infor-design/enterprise-ng/issues/1101))
 
 ## v4.56.0 Fixes
 
+- `[BusyIndicator]` Sized and Aligned busy indicator within a compact form field. ([#5655](https://github.com/infor-design/enterprise/issues/5655))
 - `[Calendar]` Calendar event IDs can support numbers. ([#5556](https://github.com/infor-design/enterprise/issues/5556))
 - `[Calendar]` Fixed wrong color on icons on the header. ([#5647](https://github.com/infor-design/enterprise/issues/5647))
 - `[Calendar]` Fixed markForRefresh for display range in calendar. ([#5675](https://github.com/infor-design/enterprise/issues/5675))
@@ -19,16 +35,24 @@
 - `[Datagrid]` Add test page for `selectAllCurrentPage` with toolbar count. ([#4921](https://github.com/infor-design/enterprise/issues/4921))
 - `[Datepicker]` Fix on datepicker header not being shown in smaller screens. ([#5550](https://github.com/infor-design/enterprise/issues/5550))
 - `[Datagrid]` Fixed an issue where the selection idx was not updating after append/update data to child nodes for tree. ([#5631](https://github.com/infor-design/enterprise/issues/5631))
+- `[Datagrid]` Fixed a bug where row status is not properly rendered on Tree List. ([#5552](https://github.com/infor-design/enterprise/issues/5552))
 - `[Dropdown]` Fixed disabling of function keys F1 to F12. ([#4976](https://github.com/infor-design/enterprise/issues/4976))
 - `[Dropdown]` Fixed a bug where selecting the first item on the list doesn't trigger the `change` event that will select the value immediately. ([NG#1102](https://github.com/infor-design/enterprise-ng/issues/1102))
 - `[Dropdown]` Fixed an accessibility issue where the error message was unannounced using a screen reader. ([#5130](https://github.com/infor-design/enterprise/issues/5130))
 - `[Homepage]` Fix on homepage example charts misaligned when on mobile. ([#5650](https://github.com/infor-design/enterprise/issues/5650))
 - `[Popupmenu]` Fixed an not released issue where opening menus limited the ability to click after. ([#5648/#5649](https://github.com/infor-design/enterprise/issues/5648))
+- `[Popupmenu]` Allow switches to be clickable in popupmenu for backwards compatibility. ([#1127](https://github.com/infor-design/enterprise-ng/issues/1127))
 - `[Icons]` Fix sizes on some of the icons in classic mode. ([#5626](https://github.com/infor-design/enterprise/issues/5626))
+- `[Icons]` Fix sizes on some of the icons in tree in classic mode. ([#5626](https://github.com/infor-design/enterprise/issues/5626))
+- `[Line Chart]` Fixed a bug where the line chart was not positioned correctly when all the values were zero. ([#5640](https://github.com/infor-design/enterprise/issues/5640))
+- `[Listview]` Fixed the links example to better show disabled links. ([#5678](https://github.com/infor-design/enterprise/issues/5678))
 - `[Locale]` Fixed an additional case where large numbers cannot be formatted correctly. ([#5605](https://github.com/infor-design/enterprise/issues/5605))
 - `[Locale]` Expanded support from 10 to 20 decimal places. Max number is 21, 20 now. ([#5622](https://github.com/infor-design/enterprise/issues/5622))
 - `[Tabs]` Fix a bug where tabs indicator is not aligned when scaled down. ([#5164](https://github.com/infor-design/enterprise/issues/5164))
 - `[Tabs]` Fix a bug where tabs indicator is not aligned on RTL. ([#5541](https://github.com/infor-design/enterprise/issues/5541))
+- `[Tree]` Fix on return item when calling addNode. ([#5334](https://github.com/infor-design/enterprise/issues/5334))
+
+(44 Issues Solved This Release, Backlog Enterprise 176, Backlog Ng 25, 1134 Functional Tests, 1693 e2e Tests)
 
 ## v4.55.3 Fixes
 

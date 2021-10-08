@@ -14,6 +14,11 @@ import '../expandablearea/expandablearea.jquery';
 // Settings and Options
 const COMPONENT_NAME = 'monthview';
 
+const LEGEND_DEFAULTS = [
+  { name: 'Public Holiday', color: 'azure06', dates: [] },
+  { name: 'Weekends', color: 'turquoise06', dayOfWeek: [] }
+];
+
 const COMPONENT_NAME_DEFAULTS = {
   locale: null,
   language: null,
@@ -39,10 +44,7 @@ const COMPONENT_NAME_DEFAULTS = {
     isEnable: false,
     restrictMonths: false
   },
-  legend: [
-    { name: 'Public Holiday', color: 'azure06', dates: [] },
-    { name: 'Weekends', color: 'turquoise06', dayOfWeek: [] }
-  ],
+  legend: [],
   hideDays: false, // TODO
   showMonthYearPicker: true,
   yearsAhead: 5,
@@ -138,6 +140,10 @@ const COMPONENT_NAME_DEFAULTS = {
 */
 function MonthView(element, settings) {
   this.settings = utils.mergeSettings(element, settings, COMPONENT_NAME_DEFAULTS);
+  // assign legend defaults
+  if (this.settings.legend && this.settings.legend.length === 0) {
+    this.settings.legend = LEGEND_DEFAULTS;
+  }
   this.element = $(element);
   this.init();
 }
@@ -346,7 +352,7 @@ MonthView.prototype = {
     const dayMilliseconds = 60 * 60 * 24 * 1000;
     const rangeStart = new Date(this.settings.displayRange.start);
     const originalEnd = new Date(this.settings.displayRange.end);
-    const inclusiveEnd = dateUtils.isDST(rangeStart) && !dateUtils.isDST(originalEnd) ?
+    const inclusiveEnd = dateUtils.isDaylightSavingTime(rangeStart) && !dateUtils.isDaylightSavingTime(originalEnd) ?
       originalEnd : new Date(originalEnd.getTime() + dayMilliseconds);
     const leadDays = dateUtils.firstDayOfWeek(rangeStart);
     const numberOfWeeks = Math.ceil((inclusiveEnd - leadDays) / (7 * dayMilliseconds));
