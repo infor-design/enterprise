@@ -332,7 +332,7 @@ body.modal-engaged {
 }
 
 .modal-header {
-  padding: 20px;
+  padding: 16px;
 }
 
 .modal-content {
@@ -425,10 +425,6 @@ body.modal-engaged {
   .modal-body-wrapper {
     overflow: auto;
     padding: 4px 16px;
-
-    @media screen and (min-width: $breakpoint-big-phone + 1) {
-      padding: 4px 24px;
-    }
 
     .field:not(.label-left).last-child {
       margin-bottom: 0;
