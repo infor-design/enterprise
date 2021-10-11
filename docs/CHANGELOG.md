@@ -3,6 +3,7 @@
 ## v4.57.0 Features
 
 - `[File Upload]` Show progress percent while file is uploading. ([#3934](https://github.com/infor-design/enterprise/issues/3934))
+- `[Message]` Changed some stylings on mobile experience. ([#5567](https://github.com/infor-design/enterprise/issues/5567))
 
 ## v4.57.0 Fixes
 
