@@ -3883,7 +3883,6 @@ Tabs.prototype = {
     }
 
     // build CSS string containing each prop and set it:
-    
 
     const selected = targetClassList.contains('is-selected') ? 'add' : 'remove';
     focusStateElem.classList[selected]('is-selected');
