@@ -126,9 +126,8 @@ Notification.prototype = {
     const textEl = $(this.notificationEl).find('.notification-text')[0];
     const tooltipApi = $(this.notificationEl).data('tooltip');
 
-    // don't show tooltip if browser is safari, safari pops out a tooltip after 3 seconds for overflowing text
-    if (!env.browser.isSafari() &&
-      (textEl.offsetHeight < textEl.scrollHeight || textEl.offsetWidth < textEl.scrollWidth)) {
+    // check if text overflows
+    if (textEl.offsetHeight < textEl.scrollHeight || textEl.offsetWidth < textEl.scrollWidth) {
       if (!tooltipApi) {
         $(this.notificationEl).tooltip({ content: this.settings.message });
       } else {
