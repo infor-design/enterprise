@@ -1,6 +1,5 @@
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
-import { Environment as env } from '../../utils/environment';
 
 // Settings and Options
 const COMPONENT_NAME = 'notification';
