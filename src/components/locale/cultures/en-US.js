@@ -294,7 +294,7 @@ Soho.Locale.addCulture('en-US', {
     NewHighContrastTheme: { id: 'NewHighContrastTheme', value: 'New High Contrast', comment: 'The name of an application Theme' },
     NewItem: { id: 'NewItem', value: 'New item', comment: 'New item in listbuilder' },
     NewLightTheme: { id: 'NewLightTheme', value: 'New Light', comment: 'The name of an application Theme' },
-    NewRow: { id: 'NewRow', value: 'New Row', comment: 'Add new row in the datagrid' },
+    NewRow: { id: 'NewRow', value: 'New Row', comment: 'Indicates a new row added in the datagrid' },
     NewWindow: { id: 'NewWindow', value: 'New Window', comment: 'Contents open in a new browser window.' },
     Next: { id: 'Next', value: 'Next', comment: 'Next in icons tooltip' },
     NextPage: { id: 'NextPage', value: 'Next Page', comment: 'Next on Pager' },
