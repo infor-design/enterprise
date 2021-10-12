@@ -8,12 +8,14 @@
 
 ## v4.57.0 Fixes
 
+- `[ApplicationMenu]` Fix for broken UI in Safari when hiding and expanding the navigation menu. ([#5620](https://github.com/infor-design/enterprise/issues/5620))
 - `[Datepicker]` Fix on default legends being shown regardless if settings have custom legends. ([#5683](https://github.com/infor-design/enterprise/issues/5683))
 - `[Locale]` Fixed currency position and a translation on tl-PH locale. ([#5695](https://github.com/infor-design/enterprise/issues/5695))
 - `[Lookup]` Fix an uncentered lookup icon in composite form. ([#5657](https://github.com/infor-design/enterprise/issues/5657))
 - `[Searchfield]` Fix on uneven searchfield in firefox. ([#5620](https://github.com/infor-design/enterprise/issues/5620))
 - `[Searchfield]` Fix on uneven searchfield in firefox. ([#5695](https://github.com/infor-design/enterprise/issues/5695))
 - `[Spinbox]` Remove functionality of Home and End buttons on Spinbox. ([#5659](https://github.com/infor-design/enterprise/issues/5659))
+- `[Tabs]` Fix a bug on vertical tabs scroll on panel containers. ([#5565](https://github.com/infor-design/enterprise/issues/5565))
 
 ## v4.56.0 Features
 
