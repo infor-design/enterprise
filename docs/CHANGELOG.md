@@ -4,6 +4,7 @@
 
 - `[File Upload]` Show progress percent while file is uploading. ([#3934](https://github.com/infor-design/enterprise/issues/3934))
 - `[Notification]` Added tooltip in notification. ([#5562](https://github.com/infor-design/enterprise/issues/5562))
+- `[Notification]` Added close functions (by ID and latest) in notification. ([#5562](https://github.com/infor-design/enterprise/issues/5562))
 
 ## v4.57.0 Fixes
 

@@ -1,26 +1,40 @@
 <div>
   <div id="mock-header"></div>
   <br />
+  <button id="open" class="btn-secondary">Create Notification</button>
   <button id="close" class="btn-secondary">Close Notification</button>
+  <button id="close-all" class="btn-secondary">Close All Notifications</button>
 </div>
 
 <script>
-  $('#mock-header').notification({
-    type: 'error',
-    message: 'DTO rejected by your manager for Sept 30, 2018.',
-    parent: '#mock-header',
-    link: '#',
-    linkText: 'Click to view',
-    attributes: [
-      { name: 'id', value: 'notification-id-1'},
-      { name: 'data-automation-id', value: 'notification-automation-id-1' }
-    ]
-  });
+  let counter = 0;
+
+  $('#open').on('click', () => {
+    $('#mock-header').notification({
+      id: `test${counter++}`,
+      type: 'error',
+      message: `${counter}) DTO rejected by your manager for Sept 30, 2018.`,
+      parent: '#mock-header',
+      link: '#',
+      linkText: 'Click to view',
+      attributes: [
+        { name: 'id', value: 'notification-id-1'},
+        { name: 'data-automation-id', value: 'notification-automation-id-1' }
+      ]
+    }).data('notification').registerNotification();
+  })
 
   $('#close').on('click', function() {
     const data = $('#mock-header').data('notification');
     if (data) {
-      data.close();
+      data.closeById(`test${--counter}`);
+    }
+  });
+
+  $('#close-all').on('click', function() {
+    const data = $('#mock-header').data('notification');
+    if (data) {
+      data.closeAll();
     }
   });
 </script>
