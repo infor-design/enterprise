@@ -23,6 +23,7 @@
       position: relative;
       z-index: 3;
     }
+
     > .listoption-icon {
       left: 1px;
       position: relative;
@@ -33,7 +34,8 @@
 
 .field-short {
   .icon,
-  span.trigger {
+  span.trigger,
+  button.trigger {
     z-index: 2;
   }
 
