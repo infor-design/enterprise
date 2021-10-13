@@ -50,6 +50,11 @@ body.is-open-touch {
     }
   }
 
+  .page-container:nth-child(2) {
+    margin-top: 65px;
+    top: 0;
+  }
+
   .page-container.tab-panel-container {
     margin-top: 100px;
     top: 0;
