@@ -12,6 +12,8 @@ demo:
     slug: example-horizontal
   - name: Colored Checkboxes for legends
     slug: example-legend-colors
+  - name: Checkboxes with Hitboxes
+    slug: example-checkboxes-with-hitboxes
 ---
 
 ## Attributes and Classes
@@ -48,6 +50,30 @@ The checkbox is a CSS-only control so principals of the `<input type="checkbox">
   <label for="checkbox5" class="checkbox-label">Disabled and Checked</label>
 </div>
 
+```
+
+The checkbox has now a hitbox style. With this feature, the checkbox has more room for tapping/hitting/pressing or clicking for a better experience, especially on the mobile experience. To implement this, you just need to add `hitbox` class together with the `checkbox-label`. The html structure will look like this:
+
+```html
+<div class="field">
+  <input type="checkbox" class="checkbox" id="starts-nolabel-checked" checked />
+  <label for="starts-nolabel-checked" class="checkbox-label hitbox"><span class="audible">Checked</span></label>
+</div>
+
+<div class="field">
+  <input type="checkbox" class="checkbox" name="checkbox1" id="checkbox1" />
+  <label for="checkbox1" class="checkbox-label hitbox">Unchecked</label>
+</div>
+
+<div class="field">
+  <input type="checkbox" class="checkbox" id="checkbox2" checked="true" />
+  <label for="checkbox2" class="checkbox-label hitbox">Checked</label>
+</div>
+
+<div class="field">
+  <input type="checkbox" data-trackdirty="true" class="checkbox" id="checkbox3" />
+  <label for="checkbox3" class="checkbox-label hitbox" checked>Dirty tracking</label>
+</div>
 ```
 
 ## Implementation Tips
