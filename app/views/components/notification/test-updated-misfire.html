@@ -27,7 +27,7 @@
   $('#close').on('click', function() {
     const data = $('#mock-header').data('notification');
     if (data) {
-      data.closeById(`test${--counter}`);
+      data.close(`test${--counter}`);
     }
   });
 

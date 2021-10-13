@@ -150,8 +150,12 @@ Notification.prototype = {
    * Close notification
    * @param {string} id Notification ID
    */
-  closeById(id) {
-    notificationManager.closeById(id);
+  close(id) {
+    if (id) {
+      notificationManager.closeById(id);
+    } else {
+      this.destroy();
+    }
   },
 
   /**
@@ -205,13 +209,6 @@ Notification.prototype = {
 
     this.teardown();
     $.removeData(this.element[0], COMPONENT_NAME);
-  },
-
-  /**
-   * Close and remove added markup and detatch events.
-   */
-  close() {
-    this.destroy();
   }
 };
 
