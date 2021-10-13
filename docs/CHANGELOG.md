@@ -7,6 +7,7 @@
 - `[Message]` Changed some stylings on mobile experience. ([#5567](https://github.com/infor-design/enterprise/issues/5567))
 - `[Modal]` Adjusted stylings on mobile viewport. ([#5601](https://github.com/infor-design/enterprise/issues/5601))
 - `[Notification]` Added tooltip in notification. ([#5562](https://github.com/infor-design/enterprise/issues/5562))
+- `[Notification]` Added close functions (by ID and latest) in notification. ([#5562](https://github.com/infor-design/enterprise/issues/5562))
 
 ## v4.57.0 Fixes
 
