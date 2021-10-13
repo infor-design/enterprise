@@ -70,5 +70,10 @@ html[dir='rtl'] {
         right: auto;
       }
     }
+
+    h2 ~ svg.icon.has-tooltip {
+      margin-right: 5px;
+      top: 8px;
+    }
   }
 }
