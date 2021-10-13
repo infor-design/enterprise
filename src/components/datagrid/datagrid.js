@@ -491,7 +491,6 @@ Datagrid.prototype = {
   /**
    * Checks if the datagrid body has vertical scrollbar.
    * @private
-   * @returns {boolean}
    */
   hasScrollbarY() {
     const self = this;
@@ -531,7 +530,7 @@ Datagrid.prototype = {
     }
 
     // Add row status
-    const newRowStatus = { icon: 'new', text: Locale.translate('New'), tooltip: Locale.translate('New') };
+    const newRowStatus = { icon: 'new', text: Locale.translate('NewRow'), tooltip: Locale.translate('NewRow') };
 
     data = data || {};
     data.rowStatus = data.rowStatus || newRowStatus;
@@ -6459,7 +6458,6 @@ Datagrid.prototype = {
    * Adds support when the datagrid container scrolls to the end of the list.
    * @private
    * @param {jQuery} e The event object.
-   * @returns {boolean}
    */
   verticalScrollToEnd(e) {
     const el = e.currentTarget;
@@ -9811,7 +9809,7 @@ Datagrid.prototype = {
     if (this.settings.treeGrid && this.settings.treeDepth[rowIdx].rowStatus) {
       this.settings.treeDepth[rowIdx].node.rowStatus = this.settings.treeDepth[rowIdx].rowStatus;
     }
-    
+
     return rowData;
   },
 

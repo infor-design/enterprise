@@ -17,9 +17,7 @@ import '../popover/popover.jquery';
 const COMPONENT_NAME = 'calendar';
 
 const COMPONENT_NAME_DEFAULTS = {
-  eventTypes: [
-    { id: 'example', label: 'Example', color: 'emerald07', checked: true, click: () => {} },
-  ],
+  eventTypes: [],
   events: [],
   locale: null,
   language: null,
