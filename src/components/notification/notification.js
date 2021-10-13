@@ -83,6 +83,7 @@ Notification.prototype = {
     const parentEl = document.querySelector(this.settings.parent);
 
     parentEl.parentNode.insertBefore(this.notificationEl, parentEl.nextSibling);
+
     $(this.notificationEl).animateOpen();
 
     utils.addAttributes($(this.notificationEl), this, this.settings.attributes);
@@ -91,6 +92,8 @@ Notification.prototype = {
     utils.addAttributes($(this.notificationEl).find('.notification-text a'), this, this.settings.attributes, 'link');
     utils.addAttributes($(this.notificationEl).find('button.notification-close'), this, this.settings.attributes, 'btn-close');
     utils.addAttributes($(this.notificationEl).find('button.notification-close .icon'), this, this.settings.attributes, 'icon-close');
+
+    this.setTooltip();
 
     return this;
   },
@@ -107,7 +110,31 @@ Notification.prototype = {
       self.destroy();
     });
 
+    $(window).on(`resize.${COMPONENT_NAME}`, () => {
+      this.setTooltip();
+    });
+
     return this;
+  },
+
+  /**
+   * Set tooltip for notification
+   * @private
+   */
+  setTooltip() {
+    const textEl = $(this.notificationEl).find('.notification-text')[0];
+    const tooltipApi = $(this.notificationEl).data('tooltip');
+
+    // check if text overflows
+    if (textEl.offsetHeight < textEl.scrollHeight || textEl.offsetWidth < textEl.scrollWidth) {
+      if (!tooltipApi) {
+        $(this.notificationEl).tooltip({ content: this.settings.message });
+      } else {
+        tooltipApi.setContent(this.settings.message);
+      }
+    } else if (tooltipApi) {
+      tooltipApi.destroy();
+    }
   },
 
   /**
