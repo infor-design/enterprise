@@ -82,6 +82,10 @@
     color: inherit;
     display: block;
   }
+
+  .xl-text {
+    @include font-size(45);
+  }
 }
 
 .form-layout-compact {
@@ -95,15 +99,10 @@
 // RTL Styles
 html[dir='rtl'] {
   .instance-count {
-    .count {
-      float: right;
-    }
-
     .title {
-      float: right;
       padding-left: inherit;
-      padding-right: 11px;
-      text-align: right;
+      padding-right: 0;
+      text-align: center;
     }
   }
 }

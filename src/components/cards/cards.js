@@ -172,7 +172,30 @@ Cards.prototype = {
       }, 1);
     }
 
+    // Removing the info icon tooltip in RTL
+    if (Locale.isRTL()) {
+      this.removeInfoIconTooltip();
+    }
+
     return this;
+  },
+
+  /**
+   * Remove the icon tooltip on smaller size of card.
+   * @private
+   * @returns {void}
+   */
+  removeInfoIconTooltip() {
+    // This is needed due to the fact that an element can be a .cards class as a wrapper
+    // It should only target a single card
+    if (!this.element.hasClass('card')) {
+      return;
+    }
+
+    const isMobileViewport = this.element.width() <= 360;
+    const infoIcon = this.cardHeader.find('> .icon');
+
+    infoIcon.css('display', `${isMobileViewport ? 'none' : ''}`);
   },
 
   /**
@@ -389,6 +412,12 @@ Cards.prototype = {
         e.preventDefault();
       });
     }
+
+    $('body').on('resize.card', () => {
+      if (Locale.isRTL()) {
+        this.removeInfoIconTooltip();
+      }
+    });
 
     return this;
   },
