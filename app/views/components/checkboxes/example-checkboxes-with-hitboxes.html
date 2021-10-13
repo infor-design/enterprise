@@ -1,0 +1,69 @@
+<style>
+  .hitbox-style {
+    border: 1px dashed #0072ed;
+  }
+</style>
+<div class="row">
+  <div class="six columns">
+    <h2 class="section-title">Checkboxes with hitboxes</h2>
+    <p>The border color is just for visualization of the hitbox area.</p>
+  </div>
+</div>
+<div class="row top-padding">
+  <div class="six columns">
+    <form id="test-form">
+      <div class="field">
+        <input type="checkbox" class="checkbox" id="starts-nolabel-checked" checked />
+        <label for="starts-nolabel-checked" class="checkbox-label hitbox hitbox-style"><span class="audible">Checked</span></label>
+      </div>
+      <div class="field">
+        <input type="checkbox" class="checkbox" name="checkbox1" id="checkbox1" />
+        <label for="checkbox1" class="checkbox-label hitbox hitbox-style">Unchecked</label>
+      </div>
+
+      <div class="field">
+        <input type="checkbox" class="checkbox" id="checkbox2" checked="true" />
+        <label for="checkbox2" class="checkbox-label hitbox hitbox-style">Checked</label>
+      </div>
+
+      <div class="field">
+        <input type="checkbox" data-trackdirty="true" class="checkbox" id="checkbox3" />
+        <label for="checkbox3" class="checkbox-label hitbox hitbox-style" checked>Dirty tracking</label>
+      </div>
+
+      <div class="field">
+        <input type="checkbox" class="checkbox" id="checkbox4" disabled="true" />
+        <label for="checkbox4" class="checkbox-label hitbox hitbox-style">Disabled and unchecked</label>
+      </div>
+
+      <div class="field">
+        <input type="checkbox" class="checkbox" id="checkbox5" disabled="true" checked="true" />
+        <label for="checkbox5" class="checkbox-label hitbox hitbox-style">Disabled and checked</label>
+      </div>
+
+      <div class="field">
+        <input type="checkbox" aria-checked="mixed" class="checkbox partial" checked="true" id="checkbox8" />
+        <label for="checkbox8" class="checkbox-label hitbox hitbox-style"><span class="audible">Partial (not
+            accessible)</span>Partial</label>
+      </div>
+
+      <div class="field">
+        <input type="checkbox" class="checkbox error" id="checkbox9" />
+        <label for="checkbox9" class="checkbox-label hitbox hitbox-style">Error</label>
+      </div>
+
+
+      <div class="field">
+        <input type="checkbox" class="checkbox" name="checkbox10" id="checkbox10" data-validate="required" />
+        <label for="checkbox10" class="checkbox-label hitbox hitbox-style">Required<span class="required"
+            aria-hidden="true"></span></label>
+      </div>
+
+      <div class="field">
+        <input type="checkbox" class="checkbox" name="checkbox11" id="checkbox11" data-validate="required" />
+        <label for="checkbox11" class="checkbox-label hitbox hitbox-style required">Required (No indicator)</label>
+      </div>
+    </form>
+
+  </div>
+</div>
