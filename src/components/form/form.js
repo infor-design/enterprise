@@ -149,6 +149,17 @@ $(() => {
   };
   addCssClassToParent($('.field > input:checkbox, .field > .inline-checkbox'), 'field-checkbox');
   addCssClassToParent($('.field > input:radio, .field > .inline-radio'), 'field-radio');
+  addCssClassToParent($('.field > input:checkbox ~ label.checkbox-label.hitbox'), 'field-hitbox');
+});
+
+// Hitbox style changes for no label checkbox
+$(() => {
+  const checkboxes = $('.field-checkbox input:checkbox ~ label.checkbox-label.hitbox');
+  checkboxes.each((idx, val) => {
+    if ($(val).innerWidth() > 44) {
+      $(val).addClass('hitbox-padding');
+    }
+  });
 });
 
 $(() => {
