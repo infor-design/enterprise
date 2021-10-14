@@ -6,7 +6,6 @@ describe('Modal example-widget tests', () => {
 
   it('Should show the tooltip when notification is hovered', async () => {
     await page.hover('.notification.alert p.notification-text');
-    await page.waitForTimeout(200);
     const tooltip1 = await page.waitForSelector('.has-open-tooltip', { visible: true });
     expect(tooltip1).toBeTruthy();
   });
