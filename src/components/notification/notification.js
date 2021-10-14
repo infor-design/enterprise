@@ -1,5 +1,6 @@
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
+import { notificationManager } from './notification.manager';
 
 // Settings and Options
 const COMPONENT_NAME = 'notification';
@@ -18,6 +19,7 @@ const NOTIFICATION_DEFAULTS = {
  * @class Notification
  * @param {string} element The plugin element for the constuctor
  * @param {string} [settings] The settings element.
+ * @param {string} [settings.id=null] Optionally tag a notification with an id.
  * @param {string} [settings.message] The text message to show in the notification.
  * @param {string} [settings.type] The message type, this influences the icon and color, possible types are 'error', 'alert', 'info' and 'success'
  * @param {string} [settings.parent] The jQuery selector to find where to insert the message into (prepended). By default this will appear under the .header on the page.
@@ -138,6 +140,39 @@ Notification.prototype = {
   },
 
   /**
+   * Register notification
+   */
+  registerNotification() {
+    notificationManager.register(this);
+  },
+
+  /**
+   * Close notification
+   * @param {string} id Notification ID
+   */
+  close(id) {
+    if (id) {
+      notificationManager.closeById(id);
+    } else {
+      this.destroy();
+    }
+  },
+
+  /**
+   * Close most recently created notification
+   */
+  closeLatest() {
+    notificationManager.closeLatest();
+  },
+
+  /**
+   * Close all notifications
+   */
+  closeAll() {
+    notificationManager.closeAll();
+  },
+
+  /**
    * Handle updated settings and values.
    * @param {object} [settings] incoming settings
    * @returns {object} [description]
@@ -170,15 +205,10 @@ Notification.prototype = {
       this.notificationEl.parentNode.removeChild(this.notificationEl);
     }
 
+    notificationManager.unregister(this);
+
     this.teardown();
     $.removeData(this.element[0], COMPONENT_NAME);
-  },
-
-  /**
-   * Close and remove added markup and detatch events.
-   */
-  close() {
-    this.destroy();
   }
 };
 
