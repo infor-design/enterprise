@@ -1,5 +1,5 @@
 describe('Message Puppeteer Tests', () => {
-  describe('Message x button Tests', () => {
+  describe('Message close button Tests', () => {
     const url = 'http://localhost:4000/components/message/test-close-btn.html?theme=classic&mode=light&layout=nofrills';
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
