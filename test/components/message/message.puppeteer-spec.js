@@ -5,11 +5,11 @@ describe('Message Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
     });
 
-    it(' should show the title', async () => {
+    it('should show the title', async () => {
       await expect(page.title()).resolves.toMatch('IDS Enterprise');
     });
 
-    it(' should show have close button on message, similar to Modal', async () => {
+    it('should show have a close button on message, similar to Modal', async () => {
       await page.click('#huge-title');
       const el = await page.$eval('.btn-icon.btn-close', element => element.innerHTML);
       expect(el).toContain('<use href="#icon-close"></use>');
@@ -26,11 +26,11 @@ describe('Message Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
     });
 
-    it(' should show the title', async () => {
+    it('should show the title', async () => {
       await expect(page.title()).resolves.toMatch('IDS Enterprise');
     });
 
-    it(' should show have modal that resizes toward max-width if the message text is long', async () => {
+    it('should show a modal that resizes toward max-width if the message text is long', async () => {
       await page.waitForSelector('#huge-title');
       await page.click('#huge-title');
       expect(await page.waitForSelector('#message-title', { visible: true }));
