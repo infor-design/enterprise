@@ -1,4 +1,4 @@
-describe('Modal example-widget tests', () => {
+describe('Notification example-index puppeteer test', () => {
   const url = 'http://localhost:4000/components/notification/example-index.html';
   beforeAll(async () => {
     await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
@@ -29,7 +29,7 @@ describe('Modal example-widget tests', () => {
   });
 });
 
-describe('Modal example-widget tests', () => {
+describe('Notification example-widget tests', () => {
   const url = 'http://localhost:4000/components/notification/example-widget.html';
   beforeAll(async () => {
     await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
@@ -42,7 +42,7 @@ describe('Modal example-widget tests', () => {
   });
 });
 
-describe('Modal test-custom-tooltip-close-btn tests', () => {
+describe('Notification test-custom-tooltip-close-btn tests', () => {
   const url = 'http://localhost:4000/components/notification/test-updated-misfire.html';
   beforeAll(async () => {
     await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
