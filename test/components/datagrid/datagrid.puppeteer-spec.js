@@ -44,10 +44,10 @@ describe('Datagrid test-tree-rowstatus tests', () => {
 
   it('Should add and remove row status when button is toggled', async () => {
     await page.click('#toggle-row-status');
-    const row = await page.waitForSelector('.icon-rowstatus', {visible: true});
+    const row = await page.waitForSelector('.icon-rowstatus', { visible: true });
     expect(row).toBeTruthy();
     await page.click('#toggle-row-status');
-    const rowRemove = await page.waitForSelector('.icon-rowstatus', {hidden: true});
+    const rowRemove = await page.waitForSelector('.icon-rowstatus', { hidden: true });
     expect(rowRemove).toBeFalsy();
   });
 
