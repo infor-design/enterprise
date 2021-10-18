@@ -215,6 +215,29 @@ button.close {
   }
 }
 
+// Input with Hitbox Style
+input.hitbox {
+  height: 44px;
+  padding: 0 16px;
+
+  &.hitbox-email-positive {
+    overflow: hidden;
+    padding: 0 48px 0 16px;
+    text-overflow: ellipsis;
+  }
+
+  ~ svg.icon {
+    &.icon-success,
+    &.icon-error {
+      margin-left: -33px;
+      margin-top: -3px;
+      position: absolute;
+      top: 50%;
+      transform: translateY(50%);
+    }
+  }
+}
+
 // Input Style
 input,
 textarea {

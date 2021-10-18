@@ -65,3 +65,13 @@ button.close {
     width: 14px;
   }
 }
+
+// Input with Hitbox Style
+input.hitbox {
+  ~ svg.icon {
+    &.icon-success,
+    &.icon-error {
+      margin-top: 0;
+    }
+  }
+}
