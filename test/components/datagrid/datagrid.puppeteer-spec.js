@@ -54,12 +54,12 @@ describe('Datagrid test-tree-rowstatus tests', () => {
   it('Should show row status when + is toggled', async () => {
     await page.click('#toggle-row-status');
     await page.waitForSelector('tr.datagrid-row.datagrid-tree-child.rowstatus-row-info', { hidden: true });
-    const a1 = await page.$eval('tr.datagrid-row.datagrid-tree-parent', element => element.getAttribute('aria-expanded'));
-    expect(a1).toMatch('false');
+    const ariaExpanded1 = await page.$eval('tr.datagrid-row.datagrid-tree-parent', element => element.getAttribute('aria-expanded'));
+    expect(ariaExpanded1).toMatch('false');
 
     await page.click('.datagrid-expand-btn');
-    const a2 = await page.$eval('tr.datagrid-row.datagrid-tree-parent', element => element.getAttribute('aria-expanded'));
-    expect(a2).toMatch('true');
+    const ariaExpanded2 = await page.$eval('tr.datagrid-row.datagrid-tree-parent', element => element.getAttribute('aria-expanded'));
+    expect(ariaExpanded2).toMatch('true');
 
     const status = await page.waitForSelector('tr.datagrid-row.datagrid-tree-child.rowstatus-row-info', { visible: true });
     expect(status).toBeTruthy();
