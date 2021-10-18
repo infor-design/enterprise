@@ -36,7 +36,7 @@ describe('Datagrid Puppeteer Tests', () => {
   });
 });
 
-fdescribe('Datagrid test-tree-rowstatus tests', () => {
+describe('Datagrid test-tree-rowstatus tests', () => {
   const url = 'http://localhost:4000/components/datagrid/test-tree-rowstatus.html';
   beforeAll(async () => {
     await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
