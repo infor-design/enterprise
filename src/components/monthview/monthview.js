@@ -70,7 +70,8 @@ const COMPONENT_NAME_DEFAULTS = {
   showToday: true,
   showNextPrevious: true,
   onChangeView: null,
-  isMonthPicker: false
+  isMonthPicker: false,
+  enableHitbox: false
 };
 
 /**
@@ -136,6 +137,7 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {boolean} [settings.showToday=true] If true the today button is shown on the header.
  * @param {boolean} [settings.showNextPrevious=true] If true the Next Previous buttons will shown on the header.
  * @param {function} [settings.onChangeView] Call back for when the view changer is changed.
+ * @param {boolean} [settings.enableHitbox=false] Enable hitbox for toolbar buttons.
  * @param {string} [settings.attributes] Add extra attributes like id's to the element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
 */
 function MonthView(element, settings) {
@@ -336,6 +338,7 @@ MonthView.prototype = {
       attributes: this.settings.attributes,
       inPage: this.settings.inPage,
       inPageTitleAsButton: this.settings.inPageTitleAsButton,
+      enableHitbox: this.settings.enableHitbox
     });
 
     this.handleEvents();

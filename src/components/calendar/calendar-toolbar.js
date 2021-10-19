@@ -34,6 +34,7 @@ const COMPONENT_NAME = 'calendartoolbar';
  * @param {string} [settings.attributes] Add extra attributes like id's to the element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
  * @param {boolean} [settings.inPage=false] If true, will set inPage style for the month view in page option.
  * @param {boolean} [settings.inPageTitleAsButton=true] if true, will set the month-year title as button for inPage.
+ * @param {boolean} [settings.enableHitbox=false] if true, add hitbox to the buttons.
 */
 const COMPONENT_DEFAULTS = {
   month: new Date().getMonth(),
@@ -49,7 +50,8 @@ const COMPONENT_DEFAULTS = {
   viewChangerValue: 'month',
   isMonthPicker: false,
   inPage: false,
-  inPageTitleAsButton: true
+  inPageTitleAsButton: true,
+  enableHitbox: false
 };
 
 function CalendarToolbar(element, settings) {
@@ -97,17 +99,18 @@ CalendarToolbar.prototype = {
 
     todayLink.class += ` hyperlink${isRippleClass}`;
     const todayStr = s.showToday || s.inPage ? `<a class="${todayLink.class}}" href="#">${todayLink.text}</a>` : '';
-
+    console.log(todayStr)
+    const hitboxAttr = s.enableHitbox ? 'data-options="{hitbox: true}"' : '';
     // Next Previous Buttons
     const nextPrevClass = s.showNextPrevious ? '' : ' no-next-previous';
     const nextPrevButtonsHtml = !s.showNextPrevious ? '' :
-      `<button type="button" class="btn-icon prev">
+      `<button type="button" class="btn-icon prev" ${hitboxAttr}">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
           <use href="#icon-caret-left"></use>
         </svg>
         <span>${translate('PreviousMonth')}</span>
       </button>
-      <button type="button" class="btn-icon next">
+      <button type="button" class="btn-icon next" ${hitboxAttr}>
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use href="#icon-caret-right"></use>
           </svg>
@@ -206,7 +209,8 @@ CalendarToolbar.prototype = {
       language: s.language,
       onOpenCalendar: s.onOpenCalendar,
       isMonthPicker: s.isMonthPicker,
-      showToday: s.showToday
+      showToday: s.showToday,
+      enableHitbox: s.enableHitbox
     });
 
     if (s.showViewChanger) {

@@ -84,6 +84,7 @@ const COMPONENT_NAME = 'datepicker';
  * implemented https://jira.infor.com/browse/SOHO-3437
  * @param {boolean} [settings.hideButtons=false] If true bottom and next/prev buttons will be not shown.
  * @param {boolean} [settings.showToday=true] If true the today button is shown on the header.
+ * @param {boolean} [settings.enableHitbox=false] Enable hitbox in button.
  * @param {function} [settings.onOpenCalendar] Call back for when the calendar is open, allows you to set the date.
  * @param {boolean} [settings.isMonthPicker] Indicates this is a month picker on the month and week view. Has some slight different behavior.
  * @param {string} [settings.attributes] Add extra attributes like id's to the element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
@@ -119,6 +120,7 @@ const DATEPICKER_DEFAULTS = {
   showLegend: false,
   showMonthYearPicker: true,
   hideDays: false,
+  enableHitbox: false,
   yearsAhead: 5,
   yearsBack: 4,
   legend: [],
@@ -185,7 +187,7 @@ DatePicker.prototype = {
     if (next.is('button.trigger')) {
       this.trigger = next;
     } else {
-      this.trigger = $(`<button class="btn-icon trigger" type="button">
+      this.trigger = $(`<button class="btn-icon trigger" type="button" ${this.settings.enableHitbox ? 'data-options="{hitbox: true}"' : ''}>
         <span class="audible"></span>
         ${$.createIcon('calendar')}
       </button>`).insertAfter(this.element);

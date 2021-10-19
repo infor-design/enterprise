@@ -26,6 +26,7 @@ const COMPONENT_NAME_DEFAULTS = {
   endHour: 19,
   showToday: true,
   showViewChanger: true,
+  enableHitbox: false,
   onChangeView: null,
   onChangeWeek: null,
   onRenderWeek: null,
@@ -51,6 +52,7 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {number} [settings.endHour=19] The hour (0-24) to end on each day.
  * @param {boolean} [settings.showToday=true] Deterimines if the today button should be shown.
  * @param {boolean} [settings.showViewChanger] If false the dropdown to change views will not be shown.
+ * @param {boolean} [settings.enableHitbox] Enable hitbox for toolbar buttons.
  * @param {function} [settings.onChangeView] Call back for when the view changer is changed.
  * @param {function} [settings.onChangeWeek] Call back for when the week is changed.
  * @param {function} [settings.onRenderMonth] Fires when a week is rendered, allowing you to pass back events or event types to show.
@@ -668,6 +670,7 @@ WeekView.prototype = {
       isAlternate: false,
       isMenuButton: true,
       showViewChanger: this.settings.showViewChanger,
+      enableHitbox: this.settings.enableHitbox,
       onChangeView: this.settings.onChangeView,
       viewChangerValue: !this.isDayView ? 'week' : 'day',
       attributes: this.settings.attributes
