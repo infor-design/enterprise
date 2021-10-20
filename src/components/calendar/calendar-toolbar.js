@@ -34,7 +34,7 @@ const COMPONENT_NAME = 'calendartoolbar';
  * @param {string} [settings.attributes] Add extra attributes like id's to the element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
  * @param {boolean} [settings.inPage=false] If true, will set inPage style for the month view in page option.
  * @param {boolean} [settings.inPageTitleAsButton=true] if true, will set the month-year title as button for inPage.
- * @param {boolean} [settings.enableHitbox=false] if true, add hitbox to the buttons.
+ * @param {boolean} [settings.hitbox=false] if true, add hitbox to the buttons.
 */
 const COMPONENT_DEFAULTS = {
   month: new Date().getMonth(),
@@ -51,7 +51,7 @@ const COMPONENT_DEFAULTS = {
   isMonthPicker: false,
   inPage: false,
   inPageTitleAsButton: true,
-  enableHitbox: false
+  hitbox: false
 };
 
 function CalendarToolbar(element, settings) {
@@ -100,7 +100,7 @@ CalendarToolbar.prototype = {
     todayLink.class += ` hyperlink${isRippleClass}`;
     const todayStr = s.showToday || s.inPage ? `<a class="${todayLink.class}}" href="#">${todayLink.text}</a>` : '';
 
-    const hitboxAttr = s.enableHitbox ? 'data-options="{hitbox: true}"' : '';
+    const hitboxAttr = s.hitbox ? 'data-options="{hitbox: true}"' : '';
 
     // Next Previous Buttons
     const nextPrevClass = s.showNextPrevious ? '' : ' no-next-previous';
@@ -224,7 +224,7 @@ CalendarToolbar.prototype = {
       onOpenCalendar: s.onOpenCalendar,
       isMonthPicker: s.isMonthPicker,
       showToday: s.showToday,
-      enableHitbox: s.enableHitbox
+      hitbox: s.hitbox
     });
 
     if (s.showViewChanger) {
