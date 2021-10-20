@@ -7088,6 +7088,33 @@ Datagrid.prototype = {
         self.commitCellEdit();
       }
     });
+
+    function changeImage(e) {
+      const targetEl = $(e.target);
+      const parentEl = targetEl.parent();
+
+      switch (targetEl.width()) {
+        case 60: 
+          parentEl.append('<div class="image-sm placeholder"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-insert-image"></use></svg><span class="audible">Placeholder Image</span></div>');
+          break;
+        case 154:
+          parentEl.append('<div class="image-md placeholder"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-insert-image"></use></svg><span class="audible">Placeholder Image</span></div>');
+          break;
+        case 350:
+          parentEl.append('<div class="image-lg placeholder"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-insert-image"></use></svg><span class="audible">Placeholder Image</span></div>');
+          break;
+        default:
+      }
+
+      targetEl.remove();
+    }
+
+    const imageEls = document.querySelectorAll('.datagrid-img');
+    for (let i = 0; i < imageEls.length; i++) {
+      const imageEl = imageEls[i];
+      imageEl.removeEventListener('error', changeImage);
+      imageEl.addEventListener('error', changeImage);
+    }    
   },
 
   /**

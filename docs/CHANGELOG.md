@@ -4,6 +4,7 @@
 
 - `[Button]` Added the ability to have a hitbox. With this feature, it will have a better tapping/clicking on smaller devices. ([#5568](https://github.com/infor-design/enterprise/issues/5568))
 - `[Checkbox]` Added hitbox area styles for checkboxes. ([#5603](https://github.com/infor-design/enterprise/issues/5603))
+- `[Datagrid]` Added Datagrid Fallback Image when image cannot be loaded. ([#5442](https://github.com/infor-design/enterprise/issues/5442))
 - `[File Upload]` Show progress percent while file is uploading. ([#3934](https://github.com/infor-design/enterprise/issues/3934))
 - `[Message]` Changed some stylings on mobile experience. ([#5567](https://github.com/infor-design/enterprise/issues/5567))
 - `[Modal]` Adjusted stylings on mobile viewport. ([#5601](https://github.com/infor-design/enterprise/issues/5601))
