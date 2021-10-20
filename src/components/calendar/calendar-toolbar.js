@@ -99,18 +99,32 @@ CalendarToolbar.prototype = {
 
     todayLink.class += ` hyperlink${isRippleClass}`;
     const todayStr = s.showToday || s.inPage ? `<a class="${todayLink.class}}" href="#">${todayLink.text}</a>` : '';
-    console.log(todayStr)
+
     const hitboxAttr = s.enableHitbox ? 'data-options="{hitbox: true}"' : '';
+
     // Next Previous Buttons
     const nextPrevClass = s.showNextPrevious ? '' : ' no-next-previous';
     const nextPrevButtonsHtml = !s.showNextPrevious ? '' :
-      `<button type="button" class="btn-icon prev" ${hitboxAttr}">
+      `<button type="button" class="btn-icon prev" ${hitboxAttr}>
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
           <use href="#icon-caret-left"></use>
         </svg>
         <span>${translate('PreviousMonth')}</span>
       </button>
       <button type="button" class="btn-icon next" ${hitboxAttr}>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-caret-right"></use>
+          </svg>
+          <span>${translate('NextMonth')}</span>
+      </button>`;
+    const nextPrevButtonsDatepicker = !s.showNextPrevious ? '' :
+      `<button type="button" class="btn-icon prev">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-caret-left"></use>
+        </svg>
+        <span>${translate('PreviousMonth')}</span>
+      </button>
+      <button type="button" class="btn-icon next">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use href="#icon-caret-right"></use>
           </svg>
@@ -139,7 +153,7 @@ CalendarToolbar.prototype = {
       const endSectionHtml = `
         <div class="toolbar-section buttonset l-align-${this.isRTL ? 'left' : 'right'}${nextPrevClass}">
           ${todayStr}
-          ${nextPrevButtonsHtml}
+          ${nextPrevButtonsDatepicker}
         </div>`;
 
       let inPageHtml = '';

@@ -22,22 +22,14 @@
         </div>
     </div>
   </div>
+</div>
   
   <script>
     $('body').on('initialized', function() {
       $('#toolbar-with-hitbox').calendartoolbar({
-        enableHitbox: true,
-        attributes: [
-          { name: 'id', value: 'calendar-toolbar-id' },
-          { name: 'data-automation-id', value: 'calendar-toolbar-automation-id' }
-        ]
+        enableHitbox: true
       });
 
-      $('#toolbar-without-hitbox').calendartoolbar({
-        attributes: [
-          { name: 'id', value: 'calendar-toolbar-id' },
-          { name: 'data-automation-id', value: 'calendar-toolbar-automation-id' }
-        ]
-      });
+      $('#toolbar-without-hitbox').calendartoolbar();
     });
   </script>  
