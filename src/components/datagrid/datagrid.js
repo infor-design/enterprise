@@ -7089,7 +7089,7 @@ Datagrid.prototype = {
       }
     });
 
-    $('.datagrid-img').off('error.datagrid').on('error.datagrid', (e) => {
+    this.element.find('.datagrid-img').off('error.datagrid').on('error.datagrid', (e) => {
       const targetEl = $(e.target);
       const parentEl = targetEl.parent();
 
