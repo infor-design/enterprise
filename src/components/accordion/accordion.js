@@ -1283,6 +1283,7 @@ Accordion.prototype = {
     }
 
     const self = this;
+    console.log(targets);
 
     // Reset all the things
     this.headers.removeClass('filtered has-filtered-children hide-focus');
@@ -1296,6 +1297,7 @@ Accordion.prototype = {
 
     // Store a list of all modified parent headers
     let allParentHeaders = $();
+    let tempHeaders = [];
     const allContentAreas = $();
 
     // Perform filtering
@@ -1318,9 +1320,15 @@ Accordion.prototype = {
       if (allParentPanes.length) {
         const parentHeaders = allParentPanes.prev('.accordion-header').filter((j, item) => allParentPanes.index(item) === -1);
         allParentHeaders = allParentHeaders.add(parentHeaders);
+        parentHeaders.each((index, val) => {
+          return tempHeaders.push(val);
+        });
       }
     });
 
+
+    console.log(tempHeaders); 
+    // console.log(allParentHeaders);
     allParentHeaders.addClass('has-filtered-children');
     const expandPromise = this.expand(allParentHeaders, true);
 
@@ -1338,40 +1346,40 @@ Accordion.prototype = {
    * if there are no headers filtered when typing a character that is not available on the accordion list.
    */
   unfilter(headers, isReset) {
-    if (!this.currentlyFiltered.length && !isReset) {
-      return;
-    }
+    // if (!this.currentlyFiltered.length && !isReset) {
+    //   return;
+    // }
 
-    if (!headers || !headers.length) {
-      headers = this.currentlyFiltered;
-    }
+    // if (!headers || !headers.length) {
+    //   headers = this.currentlyFiltered;
+    // }
 
-    // Store a list of all modified parent headers
-    let allParentHeaders = $();
+    // // Store a list of all modified parent headers
+    // let allParentHeaders = $();
 
-    // Reset all the things
-    this.headers.removeClass('filtered has-filtered-children hide-focus');
-    this.panes.removeClass('all-children-filtered no-transition');
-    this.contentAreas.removeClass('filtered');
+    // // Reset all the things
+    // this.headers.removeClass('filtered has-filtered-children hide-focus');
+    // this.panes.removeClass('all-children-filtered no-transition');
+    // this.contentAreas.removeClass('filtered');
 
-    headers.each((i, header) => {
-      const parentPanes = $(header).parents('.accordion-pane');
-      if (parentPanes.length) {
-        const parentHeaders = parentPanes.prev('.accordion-header').filter((j, item) => allParentHeaders.index(item) === -1);
-        allParentHeaders = allParentHeaders.add(parentHeaders);
-      }
-    });
+    // headers.each((i, header) => {
+    //   const parentPanes = $(header).parents('.accordion-pane');
+    //   if (parentPanes.length) {
+    //     const parentHeaders = parentPanes.prev('.accordion-header').filter((j, item) => allParentHeaders.index(item) === -1);
+    //     allParentHeaders = allParentHeaders.add(parentHeaders);
+    //   }
+    // });
 
-    allParentHeaders.removeClass('has-filtered-children');
+    // allParentHeaders.removeClass('has-filtered-children');
 
-    const collapseDfds = [
-      this.collapse(headers),
-      this.collapse(allParentHeaders)
-    ];
+    // const collapseDfds = [
+    //   this.collapse(headers),
+    //   this.collapse(allParentHeaders)
+    // ];
 
-    $.when(collapseDfds).done(() => {
-      this.currentlyFiltered = this.currentlyFiltered.not(headers);
-    });
+    // $.when(collapseDfds).done(() => {
+    //   this.currentlyFiltered = this.currentlyFiltered.not(headers);
+    // });
   },
 
   /**
