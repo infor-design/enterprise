@@ -7089,7 +7089,7 @@ Datagrid.prototype = {
       }
     });
 
-    function changeImage(e) {
+    $('.datagrid-img').off('error.datagrid').on('error.datagrid', (e) => {
       const targetEl = $(e.target);
       const parentEl = targetEl.parent();
 
@@ -7107,14 +7107,7 @@ Datagrid.prototype = {
       }
 
       targetEl.remove();
-    }
-
-    const imageEls = document.querySelectorAll('.datagrid-img');
-    for (let i = 0; i < imageEls.length; i++) {
-      const imageEl = imageEls[i];
-      imageEl.removeEventListener('error', changeImage);
-      imageEl.addEventListener('error', changeImage);
-    }    
+    });
   },
 
   /**
