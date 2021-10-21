@@ -16,6 +16,7 @@
 - `[Calendar]` Removed the example legend in the default settings. ([#1130](https://github.com/infor-design/enterprise-ng/issues/1130))
 - `[Counts]` Updated the font size of `xl-text` from `50px` to `48px`. ([#5588](https://github.com/infor-design/enterprise/issues/5588))
 - `[Counts]` Fixed title and icon position when in RTL. ([#5566](https://github.com/infor-design/enterprise/issues/5566))
+- `[Datagrid]` Removed margin in icon when size is small or extra small. ([#5726](https://github.com/infor-design/enterprise/issues/5726))
 - `[Datepicker]` Fix on default legends being shown regardless if settings have custom legends. ([#5683](https://github.com/infor-design/enterprise/issues/5683))
 - `[EmptyMessage]` Added `16px` spacings in the empty message container. ([#5639](https://github.com/infor-design/enterprise/issues/5639))
 - `[FieldFilter]` Fixed missing trigger icons on short field filter options. ([#5727](https://github.com/infor-design/enterprise/issues/5727))
