@@ -1282,8 +1282,8 @@ Accordion.prototype = {
       return;
     }
 
+    const startTime = performance.now()
     const self = this;
-    console.log(targets);
 
     // Reset all the things
     this.headers.removeClass('filtered has-filtered-children hide-focus');
@@ -1296,8 +1296,7 @@ Accordion.prototype = {
     const toFilter = targets.not(this.currentlyFiltered);
 
     // Store a list of all modified parent headers
-    let allParentHeaders = $();
-    let tempHeaders = [];
+    let allTempHeaders = [];
     const allContentAreas = $();
 
     // Perform filtering
@@ -1312,25 +1311,31 @@ Accordion.prototype = {
         const thisParentPane = $(allParentPanes[0]);
         const thisParentHeader = thisParentPane.prev('.accordion-header').filter((j, item) => allParentHeaders.index(item) === -1);
         if (thisParentHeader.length) {
-          allParentHeaders = allParentHeaders.add(thisParentHeader);
+          if (allTempHeaders.indexOf(thisParentHeader) < 0) {
+            allTempHeaders.push(thisParentHeader);
+          }
         }
       }
 
       // Handle Labeling of Parent Headers
       if (allParentPanes.length) {
         const parentHeaders = allParentPanes.prev('.accordion-header').filter((j, item) => allParentPanes.index(item) === -1);
-        allParentHeaders = allParentHeaders.add(parentHeaders);
         parentHeaders.each((index, val) => {
-          return tempHeaders.push(val);
+          if (allTempHeaders.indexOf(val) < 0) {
+            allTempHeaders.push(val);
+          }
+          return allTempHeaders;
         });
       }
     });
 
-
-    console.log(tempHeaders); 
-    // console.log(allParentHeaders);
+    const allParentHeaders = $(allTempHeaders);
     allParentHeaders.addClass('has-filtered-children');
+
     const expandPromise = this.expand(allParentHeaders, true);
+
+    const endTime = performance.now()
+    console.log(`function filter => Call to doSomething took ${endTime - startTime} milliseconds`);
 
     $.when(expandPromise).done(() => {
       this.currentlyFiltered = toFilter;
