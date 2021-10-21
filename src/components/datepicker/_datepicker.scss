@@ -252,6 +252,14 @@ html.is-safari {
   .datepicker {
     + .trigger {
       position: relative;
+    }
+  }
+}
+
+html.is-safari {
+  .field-short,
+  .form-layout-compact {
+    .datepicker + .trigger {
       top: 2px;
     }
   }
