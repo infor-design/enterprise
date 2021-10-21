@@ -90,6 +90,11 @@ const COMPONENT_NAME = 'datepicker';
  * @param {string} [settings.autocompleteAttribute="off"] Allows prevention of built-in browser typeahead by changing/removing an `autocomplete` attribute to the field.
  * @param {boolean} [settings.tabbable=true] If true, causes the Datepicker's trigger icon to be focusable with the keyboard.
 */
+const LEGEND_DEFAULTS = [
+  { name: 'Public Holiday', color: 'azure06', dates: [] },
+  { name: 'Weekends', color: 'turquoise06', dayOfWeek: [] }
+];
+
 const DATEPICKER_DEFAULTS = {
   showTime: false,
   useCurrentTime: false,
@@ -116,11 +121,7 @@ const DATEPICKER_DEFAULTS = {
   hideDays: false,
   yearsAhead: 5,
   yearsBack: 4,
-  legend: [
-    // Legend Build up exampleazure07
-    { name: 'Public Holiday', color: 'azure06', dates: [] },
-    { name: 'Weekends', color: 'turquoise06', dayOfWeek: [] }
-  ],
+  legend: [],
   range: {
     useRange: false, // true - if datepicker using range dates
     start: '', // Start date '03/05/2018'
@@ -149,6 +150,10 @@ const DATEPICKER_DEFAULTS = {
 function DatePicker(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(this.element[0], settings, DATEPICKER_DEFAULTS);
+  // assign legend defaults
+  if (this.settings.legend && this.settings.legend.length === 0) {
+    this.settings.legend = LEGEND_DEFAULTS;
+  }
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
   debug.logTimeEnd(COMPONENT_NAME);
@@ -839,6 +844,12 @@ DatePicker.prototype = {
       placementParent = this.element.next('.icon, .trigger');
     }
 
+    let popPlacement = 'bottom';
+
+    if (parent.offset().top < 400 && parent.offset().top > 185 && window.innerHeight < 800) {
+      popPlacement = Locale.isRTL() ? 'left' : 'right';
+    }
+
     const popoverOpts = {
       content: this.calendar,
       placementOpts: {
@@ -846,7 +857,7 @@ DatePicker.prototype = {
         parentXAlignment: placementParentXAlignment,
         strategies: ['flip', 'nudge', 'shrink']
       },
-      placement: 'bottom',
+      placement: popPlacement,
       popover: true,
       trigger: 'immediate',
       extraClass: this.settings.range.selectWeek ? 'monthview-popup is-range-week' : 'monthview-popup',
@@ -866,7 +877,17 @@ DatePicker.prototype = {
               `${(this.popupClosestScrollable[0].scrollHeight - 521)}px`,
             height: ''
           });
+
+          if ((window.innerHeight - this.popup.height()) / window.innerHeight < 0.15) {
+            this.popupClosestScrollable.children().not('.popover').css('padding-top', '80px');
+          }
+
           this.popupClosestScrollable.css('min-height', '375px');
+        }
+
+        // Move calendar if top position exceeds max height so header will show
+        if ((window.innerHeight - this.popup.height()) / window.innerHeight < 0.15) {
+          this.popup.css({ top: `${this.popup.position().top < 0 ? 0 : this.popup.position().top + 50}px` });
         }
 
         // Hide calendar until range to be pre selected
@@ -900,6 +921,7 @@ DatePicker.prototype = {
       })
       .off('hide.datepicker')
       .on('hide.datepicker', () => {
+        this.popupClosestScrollable.children().not('.popover').css('padding-top', '');
         this.popupClosestScrollable.add(this.popup).css('min-height', '');
         this.closeCalendar();
       });

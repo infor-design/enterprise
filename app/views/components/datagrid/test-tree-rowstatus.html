@@ -6,7 +6,7 @@
       <span class="datagrid-result-count">(N Results)</span>
     </div>
 
-    <div class="buttonset">
+    <div class="buttonset" style="padding-right: 175px;">
         <button type="button" id="toggle-row-status" class="btn">
           <span>Add Row Status</span>
         </button>
@@ -72,8 +72,8 @@
 
       var btn = $(this).find('span');
       var status = {
-        add: 'Add Status',
-        remove: 'Remove Status'
+        add: 'Add Row Status',
+        remove: 'Remove Row Status'
       };
       if (btn.text() === status.add) {
         btn.text(status.remove);

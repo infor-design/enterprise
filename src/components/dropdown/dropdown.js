@@ -481,6 +481,10 @@ Dropdown.prototype = {
     // NOTE: this doesn't use the ID to get the label due to
     // potentially not being placed in the page yet (in jQuery cache).
     const label = this.element.prev();
+    const errorMessage = this.element.parent().find('.error-message .message-text');
+    const hasErrorMessage = this.pseudoElem?.hasClass('error');
+    const errorMessageText = errorMessage.text();
+
     let labelText = '';
     this.selectedOptions.forEach((option) => {
       if (labelText.length) {
@@ -490,7 +494,7 @@ Dropdown.prototype = {
     });
 
     this.pseudoElem.attr({
-      'aria-label': `${label.text()}, ${labelText}`
+      'aria-label': `${label.text()}, ${hasErrorMessage ? errorMessageText : labelText}`
     });
   },
 
@@ -1177,7 +1181,7 @@ Dropdown.prototype = {
     const charCode = e.which;
 
     // Needed for browsers that use keypress events to manipulate the window.
-    if (e.altKey && (charCode === 38)) {
+    if (e.altKey && (charCode === 38) || charCode > 111 && charCode < 124) {
       e.stopPropagation();
       e.preventDefault();
       return false;
@@ -3016,6 +3020,7 @@ Dropdown.prototype = {
       li = this.listUl.find(`li[data-val="${optionVal}"]`);
     }
 
+    const isFirstItemSelected = this.listUl.find('li').first().hasClass('is-selected');
     let isAdded = true;
     let doAnnounce = true;
     let currentValue = this.selectedValues;
@@ -3043,7 +3048,7 @@ Dropdown.prototype = {
     }
 
     if (isAdded) {
-      if (isSameValue) {
+      if (isSameValue && !isFirstItemSelected) {
         doAnnounce = false;
       } else {
         this.select(option[0]);

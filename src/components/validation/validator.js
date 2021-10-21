@@ -936,16 +936,16 @@ Validator.prototype = {
         </div>`;
     }
 
-    if (!isHelpMessage) {
-      loc.addClass(rule.type === 'icon' ? 'custom-icon' : rule.type);
-    }
-
     if (field.is(':radio')) {
       this.toggleRadioMessage(field, rule.message, validationType.type, markup, true);
     } else { // All other components
       loc.closest('.field, .field-short').find('.formatter-toolbar').addClass(validationType.type === 'icon' ? 'custom-icon' : validationType.type);
       loc.closest('.field, .field-short').append(markup);
       loc.closest('.field, .field-short').find('.colorpicker-container').addClass(validationType.type === 'icon' ? 'custom-icon' : validationType.type);
+    }
+
+    if (!isHelpMessage) {
+      loc.addClass(rule.type === 'icon' ? 'custom-icon' : rule.type);
     }
 
     if (field.is('.spinbox')) {
@@ -959,6 +959,16 @@ Validator.prototype = {
     // Add aria
     field.attr('aria-describedby', messageId);
     field.attr('aria-invalid', 'true');
+
+    // Append the error message text to aria-label of dropdown error
+    const dropdownError = field.parent().find('.dropdown.error');
+    const currentVal = dropdownError.attr('aria-label');
+    const updatedAriaLabelVal = `${currentVal}${rule.message}`;
+
+    // Update the aria-label values with error message text
+    if (dropdownError) {
+      dropdownError.attr('aria-label', updatedAriaLabelVal);
+    }
 
     // Trigger an event
     field.triggerHandler(validationType.type, { field, message: rule.message });

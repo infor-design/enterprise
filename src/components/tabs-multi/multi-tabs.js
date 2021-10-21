@@ -8,7 +8,8 @@ const COMPONENT_NAME = 'multitabs';
 
 // Default Settings for MultiTabs
 const MULTITABS_DEFAULTS = {
-  tabContainers: []
+  tabContainers: [],
+  sortable: false
 };
 
 // Pre-defined names used internally for tab containers
@@ -21,6 +22,7 @@ const TAB_CONTAINER_NAMES = ['primary', 'secondary', 'tertiary'];
  * @param {jQuery[]|HTMLElement} element base element
  * @param {object} [settings] incoming settings
  * @param {array} [settings.tabContainers] contains pre-set tab containers
+ * @param {boolean} [settings.sortable=false] If true, tabs can be sortable by drag and drop from tab to another tab
  */
 function MultiTabs(element, settings) {
   this.element = $(element);
@@ -78,12 +80,20 @@ MultiTabs.prototype = {
         tabContainer.tabs();
         api = tabContainer.data('tabs');
       }
+
+      api.settings.sortable = self.settings.sortable;
       api.multitabsID = propname;
+      api.createSortable();
 
       tabContainer.attr('data-multitabs', propname);
       self.tabContainers[propname] = tabContainer;
       didAdd = true;
     });
+
+    if (self.settings.sortable) {
+      const tabPanelContainer = $(tabContainer.siblings('.tab-panel-container'));
+      tabPanelContainer.prepend('<div class="tab-overlay"><div class="overlay-left"></div><div class="overlay-right"></div></div>');
+    }
 
     if (!didAdd) {
       throw new Error('all tab-container slots in MultiTabs component are taken, so a new tabs container was not invoked and stored');
@@ -140,7 +150,6 @@ MultiTabs.prototype = {
     allTabContainers.each(function () {
       const api = $(this).data('tabs');
       const tab = api.getTab(null, tabId);
-
       // No tabs exist by this id
       if (tab === null) {
         return;

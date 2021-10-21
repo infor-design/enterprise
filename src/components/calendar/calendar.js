@@ -17,9 +17,7 @@ import '../popover/popover.jquery';
 const COMPONENT_NAME = 'calendar';
 
 const COMPONENT_NAME_DEFAULTS = {
-  eventTypes: [
-    { id: 'example', label: 'Example', color: 'emerald07', checked: true, click: () => {} },
-  ],
+  eventTypes: [],
   events: [],
   locale: null,
   language: null,
@@ -836,7 +834,7 @@ Calendar.prototype = {
       const children = eventHead[0].parentNode.children;
       for (let i = container.querySelector('.day-container').children.length; i < children.length; i++) {
         const dataid = children[i].getAttribute('data-id');
-        if (dataid === event.id) {
+        if (this.getString(dataid) === this.getString(event.id)) {
           break;
         }
         if (!children[i].classList.contains('day-text')) {
@@ -902,6 +900,19 @@ Calendar.prototype = {
     }
 
     return this;
+  },
+
+  /**
+   * Get string value of item
+   * @private
+   * @param {any} item Item to convert to string
+   * @returns {string} String value
+   */
+  getString(item) {
+    if (typeof item === 'string') {
+      return item;
+    }
+    return item ? item.toString() : null;
   },
 
   /**
@@ -1561,8 +1572,11 @@ Calendar.prototype = {
         this.weekViews.settings
       );
     }
-
-    this.monthView.showMonth(this.settings.month, this.settings.year);
+    if (this.settings.displayRange.start && this.settings.displayRange.end) {
+      this.monthView.showRange(this.settings.displayRange.start, this.settings.displayRange.end);
+    } else {
+      this.monthView.showMonth(this.settings.month, this.settings.year);
+    }
     this.renderAllEvents();
 
     if (this.weekView && settings.weekViewSettings) {

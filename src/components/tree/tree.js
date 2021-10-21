@@ -1948,7 +1948,7 @@ Tree.prototype = {
       // Icon
       const classAttribute = node.getAttribute('class');
       if (classAttribute && classAttribute.indexOf('icon') > -1) {
-        entry.icon = classAttribute;
+        entry.icon = classAttribute.replace(/\s?hide-focus\s?/g, '');
       }
 
       // Children
@@ -2020,6 +2020,7 @@ Tree.prototype = {
     let selectedOptionText;
     let selectHtml;
     let option;
+    let returnListItem;
 
     const badgeAttr = typeof nodeData.badge === 'object' ? JSON.stringify(nodeData.badge) : nodeData.badge;
 
@@ -2028,6 +2029,7 @@ Tree.prototype = {
     location = (!location ? 'bottom' : location); // supports button or top or jquery node
 
     let a = document.createElement('a');
+
     if (typeof nodeData.id !== 'undefined') {
       a.setAttribute('id', nodeData.id);
     }
@@ -2053,6 +2055,7 @@ Tree.prototype = {
 
     let li = document.createElement('li');
     li.setAttribute('role', 'none');
+    returnListItem = li;
 
     if (nodeData.open) {
       DOM.addClass(li, 'is-open');
@@ -2153,7 +2156,7 @@ Tree.prototype = {
         if (!nodeData.disabled && li.is('.is-selected') && typeof nodeData.selected === 'undefined') {
           nodeData.selected = true;
         }
-        this.addAsChild(nodeData, li, locationToAdd);
+        returnListItem = this.addAsChild(nodeData, li, locationToAdd);
       }
 
       if (nodeData.parent && nodeData.parent instanceof jQuery) {
@@ -2161,7 +2164,7 @@ Tree.prototype = {
         if (nodeData.parent.is('a')) {
           li = nodeData.parent.parent();
         }
-        this.addAsChild(nodeData, li, locationToAdd);
+        returnListItem = this.addAsChild(nodeData, li, locationToAdd);
       }
       if (this.isjQuery(li)) {
         nodeData.node = li.find(`ul li a#${nodeData.id}`);
@@ -2189,7 +2192,7 @@ Tree.prototype = {
     a.data(`${COMPONENT_NAME}Api`, self);
     this.addAutomationAttributes(a, nodeData);
     this.createSortable();
-    return li;
+    return $(returnListItem);
   },
 
   /**
@@ -2198,7 +2201,7 @@ Tree.prototype = {
    * @param {object} nodeData data for node to be added.
    * @param {object} li parent node to add node.
    * @param {string} location top|bottom optional.
-   * @returns {void}
+   * @returns {object} li added
    */
   addAsChild(nodeData, li, location) {
     li = this.isjQuery(li) ? li[0] : li;
@@ -2222,7 +2225,7 @@ Tree.prototype = {
       nodeData.tempidsparent = nodeData.parent;
     }
     nodeData.parent = '';
-    this.addNode(nodeData, $(ul), location);
+    return this.addNode(nodeData, $(ul), location);
   },
 
   /**

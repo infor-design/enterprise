@@ -1,0 +1,49 @@
+<div class="row">
+  <div class="twelve columns">
+
+    <h2>Dropdown Test</h2>
+    <p>Selecting the first on the list should show the value above the dropdown element.</p>
+    <hr />
+    <br />
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+      <div class="field">
+        <p class="dd-value">
+          Selected: <span></span>
+        </p>
+      </div>
+    <div class="field">
+      <label for="dd-test">Dropdown</label>
+      <select id="dd-test" name="dd-test" class="dropdown" data-init="false"></select>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+
+    $('#dd-test').dropdown({
+      source: function (response, term) {
+        var apiRoute = '{{basepath}}api/states';
+        if (term && typeof term === 'string' && term.length) {
+          apiRoute += '?term=' + term;
+        }
+
+        $.getJSON(apiRoute, function (data) {
+          response(data);
+        });
+      },
+      reload: 'typeahead'
+    });
+
+    $('#dd-test').on('selected', function (v, i) {
+      const span = document.createElement('span');
+      $('.dd-value span').text(i[0].text);
+    });
+
+  });
+</script>

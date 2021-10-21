@@ -14,6 +14,11 @@ import '../expandablearea/expandablearea.jquery';
 // Settings and Options
 const COMPONENT_NAME = 'monthview';
 
+const LEGEND_DEFAULTS = [
+  { name: 'Public Holiday', color: 'azure06', dates: [] },
+  { name: 'Weekends', color: 'turquoise06', dayOfWeek: [] }
+];
+
 const COMPONENT_NAME_DEFAULTS = {
   locale: null,
   language: null,
@@ -39,10 +44,7 @@ const COMPONENT_NAME_DEFAULTS = {
     isEnable: false,
     restrictMonths: false
   },
-  legend: [
-    { name: 'Public Holiday', color: 'azure06', dates: [] },
-    { name: 'Weekends', color: 'turquoise06', dayOfWeek: [] }
-  ],
+  legend: [],
   hideDays: false, // TODO
   showMonthYearPicker: true,
   yearsAhead: 5,
@@ -138,6 +140,10 @@ const COMPONENT_NAME_DEFAULTS = {
 */
 function MonthView(element, settings) {
   this.settings = utils.mergeSettings(element, settings, COMPONENT_NAME_DEFAULTS);
+  // assign legend defaults
+  if (this.settings.legend && this.settings.legend.length === 0) {
+    this.settings.legend = LEGEND_DEFAULTS;
+  }
   this.element = $(element);
   this.init();
 }
@@ -346,8 +352,8 @@ MonthView.prototype = {
     const dayMilliseconds = 60 * 60 * 24 * 1000;
     const rangeStart = new Date(this.settings.displayRange.start);
     const originalEnd = new Date(this.settings.displayRange.end);
-    // add one more day to make the last day inclusive
-    const inclusiveEnd = new Date(originalEnd.getTime() + dayMilliseconds);
+    const inclusiveEnd = dateUtils.isDaylightSavingTime(rangeStart) && !dateUtils.isDaylightSavingTime(originalEnd) ?
+      originalEnd : new Date(originalEnd.getTime() + dayMilliseconds);
     const leadDays = dateUtils.firstDayOfWeek(rangeStart);
     const numberOfWeeks = Math.ceil((inclusiveEnd - leadDays) / (7 * dayMilliseconds));
     this.settings.showMonthYearPicker = false;
@@ -769,7 +775,7 @@ MonthView.prototype = {
     const endDate = new Date(rangeEnd);
     let month = parseInt(startDate.getMonth(), 10);
     let year = parseInt(startDate.getFullYear(), 10);
-    const monthDifference = dateUtils.monthDiff(startDate, endDate);
+    let monthDifference = dateUtils.monthDiff(startDate, endDate);
     const s = this.settings;
 
     // if disable dates not provided, disable dates outside of the range by default
@@ -836,23 +842,23 @@ MonthView.prototype = {
 
     // Adjust days of the week
     // lead days
-    const leadDays = dateUtils.firstDayOfWeek(startDate).getDate();
-    let dayCnt = leadDays;
+    const leadDays = dateUtils.firstDayOfWeek(startDate);
+    let dayCnt = leadDays.getDate();
     let foundSelected = false;
-
     // get the number of days in each month for the given range
-    let rangeCurrentMonth = month;
-    let rangeCurrentYear = year;
-    let rangeMonth = month;
-    let rangeYear = year;
-    const monthDaysMap = {};
+    let rangeCurrentMonth = leadDays.getMonth();
+    let rangeCurrentYear = leadDays.getFullYear();
+    let rangeMonth = rangeCurrentMonth;
+    let rangeYear = rangeCurrentYear;
+    monthDifference = dateUtils.monthDiff(leadDays, endDate);
+    const monthDaysMap = new Map();
     for (let i = 0; i <= monthDifference; i++) {
-      rangeMonth = month + i;
+      rangeMonth = rangeCurrentMonth + i;
       if (rangeMonth > 11) {
         rangeYear += 1;
-        rangeMonth = 0;
+        rangeMonth %= 12;
       }
-      monthDaysMap[rangeMonth] = this.daysInMonth(rangeYear, rangeMonth + (this.isIslamic ? 0 : 1));
+      monthDaysMap.set(rangeMonth, this.daysInMonth(rangeYear, rangeMonth + (this.isIslamic ? 0 : 1)));
     }
 
     // Set selected state
@@ -861,7 +867,8 @@ MonthView.prototype = {
       el.addClass(`is-selected${(s.range.useRange ? ' range' : '')}`).attr('aria-selected', 'true').attr('tabindex', '0');
     };
 
-    let thisMonthDays = monthDaysMap[rangeCurrentMonth];
+    let thisMonthDays = monthDaysMap.get(rangeCurrentMonth);
+    const monthLabelsToSet = new Set(monthDaysMap.keys());
     this.dayMap = [];
     this.days.find('td').each(function () {
       // starting index should start from first day of the week that the start date is in
@@ -881,7 +888,7 @@ MonthView.prototype = {
         const tSeconds = self.isSeconds ? elementDate.getSeconds() : 0;
         const setHours = el => (el ? el.setHours(tHours, tMinutes, tSeconds, 0) : 0);
 
-        const newDate = setHours(new Date(year, month, dayCnt));
+        const newDate = setHours(new Date(rangeCurrentYear, rangeCurrentMonth, dayCnt));
         const comparisonDate = self.currentDate || elementDate;
         if (newDate === setHours(comparisonDate)) {
           setSelected(th, true);
@@ -894,7 +901,7 @@ MonthView.prototype = {
           rangeCurrentMonth = 0;
           rangeCurrentYear++;
         }
-        thisMonthDays = monthDaysMap[rangeCurrentMonth];
+        thisMonthDays = monthDaysMap.get(rangeCurrentMonth);
         dayCnt = 1;
       }
 
@@ -947,7 +954,7 @@ MonthView.prototype = {
 
       self.setDisabled(th, rangeCurrentYear, rangeCurrentMonth, dayCnt);
       self.setLegendColor(th, rangeCurrentYear, rangeCurrentMonth, dayCnt);
-      self.setMonthLabel(th, rangeCurrentYear, rangeCurrentMonth, dayCnt, startDate);
+      self.setMonthLabel(th, rangeCurrentYear, rangeCurrentMonth, dayCnt, monthLabelsToSet);
       th.attr('role', 'link');
       dayCnt++;
     });
@@ -1200,23 +1207,13 @@ MonthView.prototype = {
    * @param {array} startDate to check.
    * @returns {void}
    */
-  setMonthLabel(elem, year, month, date, startDate) {
+  setMonthLabel(elem, year, month, date, monthLabelsToSet) {
     const s = this.settings;
     const isRippleClass = s.inPage ? ' class="is-ripple"' : '';
-    let minDate;
-    // starts labeling month from the first enabled date
-    let labelStartDate;
-    if (s.disable.minDate) {
-      minDate = new Date(s.disable.minDate);
-      labelStartDate = new Date(minDate.getTime() + 60 * 60 * 24 * 1000);
-    } else {
-      labelStartDate = dateUtils.firstDayOfWeek(startDate);
-    }
     const dateIsDisabled = this.isDateDisabled(year, month, date);
-    if (!dateIsDisabled &&
-        (month === startDate.getMonth() && labelStartDate && labelStartDate.getDate() === date || date === 1) ||
-      (!s.disable.minDate && (month === labelStartDate.getMonth() && labelStartDate.getDate() === date))) {
+    if (!dateIsDisabled && monthLabelsToSet.has(month)) {
       const dateText = elem.text();
+      monthLabelsToSet.delete(month);
       elem
         .html(`<span class="day-container${isRippleClass}"><span aria-hidden="true" class="day-text month-label">${this.currentCalendar.months.wide[month]} ${dateText}</span></span>`);
     }

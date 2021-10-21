@@ -24,6 +24,7 @@ const RADAR_DEFAULTS = {
   dotRadius: 3,
   opacityCircles: 0,
   strokeWidth: 1,
+  selectable: true,
   roundStrokes: true,
   showCrosslines: true,
   showAxisLabels: true,
@@ -59,6 +60,7 @@ const RADAR_DEFAULTS = {
  * @param {boolean} [settings.showCrosslines = true] Set to false to hide the cross line axes.
  * @param {boolean} [settings.showAxisLabels = true] Set to false to hide percent labels.
  * @param {number} [settings.opacityArea = 0.2] The opacity value of the blobs. This is set to the correct Infor Style.
+ * @param {boolean} [settings.selectable=true] Ability to enable/disable the selection of chart.
  * @param {number} [settings.dotRadius = 3] The size of the colored circles of each blog. Set to zero to remove dots.
  * @param {number} [settings.opacityCircles  = 0]The opacity of the circles of each blob 0 or .1 are good values.
  * This is set to the correct Infor Style.
@@ -375,6 +377,7 @@ Radar.prototype = {
       .attr('d', d => radarLine(d))
       .style('fill', (d, i) => colors(i))
       .style('fill-opacity', s.opacityArea)
+      .style('cursor', !self.settings.selectable ? 'inherit' : 'pointer')
       .on(`contextmenu.${self.namespace}`, function (d) {
         charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], d);
       })
@@ -383,13 +386,16 @@ Radar.prototype = {
       // It alow to cancel when the double click event happens
       .on(`click.${self.namespace}`, function (d, i) {
         const selector = this;
-        timer = setTimeout(function () {
-          if (!prevent) {
-            // Run click action
-            self.doClickAction(d, i, selector, tooltipInterval, svg);
-          }
-          prevent = false;
-        }, delay);
+
+        if (self.settings.selectable) {
+          timer = setTimeout(function () {
+            if (!prevent) {
+              // Run click action
+              self.doClickAction(d, i, selector, tooltipInterval, svg);
+            }
+            prevent = false;
+          }, delay);
+        }
       })
       .on(`dblclick.${self.namespace}`, function (d, i) {
         const selector = this;
@@ -413,6 +419,7 @@ Radar.prototype = {
       .attr('d', d => radarLine(d))
       .style('stroke-width', `${s.strokeWidth}px`)
       .style('stroke', (d, i) => colors(i))
+      .style('cursor', !self.settings.selectable ? 'inherit' : 'pointer')
       .style('fill', 'none')
       .style('filter', s.opacityCircles > 0 ? 'url(#glow)' : '');
 

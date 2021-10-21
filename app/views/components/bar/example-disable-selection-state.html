@@ -1,0 +1,55 @@
+<div class="row">
+  <div class="twelve columns">
+    <h2>Disable Selection of Chart</h2>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Vertical Bar Chart Title</h2>
+        </div>
+        <div class="widget-content">
+          <div id="bar-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<script id="test-script">
+$('body').on('initialized', function () {
+
+ var dataset = [{
+      data: [{
+          name: 'Category A',
+          value: 373,
+          url: 'test',
+          tooltip: 'Tooltip by Data <br> Component A <br> Information',
+          attributes: [
+           { name: 'id', value: 'bar-a' },
+           { name: 'data-automation-id', value: 'automation-id-bar-a' }
+         ]
+      }, {
+          name: 'Category B',
+          value: 372,
+          attributes: [
+           { name: 'id', value: 'bar-b' },
+           { name: 'data-automation-id', value: 'automation-id-bar-b' }
+         ]
+      }, {
+          name: 'Category C',
+          value: 236.35,
+          attributes: [
+           { name: 'id', value: 'bar-c' },
+           { name: 'data-automation-id', value: 'automation-id-bar-c' }
+         ]
+      }],
+      name: ''  //Can be optionally passed in makes less sense with one: Group 1
+    }];
+
+  $('#bar-example').chart({type: 'bar', dataset: dataset, selectable: false, animate: false});
+
+});
+</script>

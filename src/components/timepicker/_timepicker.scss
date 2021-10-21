@@ -206,6 +206,35 @@
   }
 }
 
+html.is-safari {
+  .timepicker {
+    + .trigger {
+      position: relative;
+    }
+  }
+
+  .field-short {
+    .timepicker {
+      + .trigger {
+        top: 2px;
+
+        .icon {
+          margin-top: unset;
+        }
+      }
+    }
+  }
+
+  .form-layout-compact {
+    .timepicker {
+      + .trigger,
+      + .tooltip-description + .trigger {
+        top: 1px;
+      }
+    }
+  }
+}
+
 // RTL Styles
 html[dir='rtl'] {
   .timepicker {

@@ -170,7 +170,7 @@ Soho.Locale.addCulture('da-DK', {
     Default: { id: 'Default', value: 'Standard', comment: 'Refers to a default object of a generic type' },
     Delete: { id: 'Delete', value: 'Slet', comment: 'Delete Toolbar Action Tooltip' },
     DeleteEvent: { id: 'DeleteEvent', value: 'Slet begivenhed', comment: 'Delete an Event (from a calendar)' },
-    DeviceName: { id: 'Device', value: 'Enhed', comment: 'Name of the Device' },
+    Device: { id: 'Device', value: 'Enhed', comment: 'Name of the Device' },
     DistributeHoriz: { id: 'DistributeHoriz', value: 'Distribuer horisontalt', comment: 'Icon button tooltip for action that distributes elements across Horizontally' },
     Document: { id: 'Document', value: 'Dokument', comment: 'Document tooltip' },
     DiscretionaryTimeOff: { id: 'DiscretionaryTimeOff', value: 'Ekstra fri', comment: 'As in work time off' },

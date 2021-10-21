@@ -477,7 +477,7 @@
     background-color: transparent;
 
     .icon {
-      color: $cardlist-icon-color;
+      color: $cardlist-actions-color;
     }
 
     .audible {
@@ -694,7 +694,7 @@ html[dir='rtl'] {
     > h2,
     > h1 {
       float: right;
-      width: 100%;
+      width: auto;
     }
   }
 

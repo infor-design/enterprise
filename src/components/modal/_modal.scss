@@ -54,14 +54,19 @@
   bottom: 0;
   height: auto;
   max-height: 90%;
-  max-width: 90%;
+  max-width: 100%;
   min-width: 200px;
   opacity: 0;
   pointer-events: none;
   position: relative;
   vertical-align: middle;
-  width: auto;
+  width: 100%;
   z-index: 1001;
+
+  @media screen and (min-width: $breakpoint-big-phone + 1) {
+    max-width: 90%;
+    width: auto;
+  }
 
   &.is-visible.is-active {
     @include css3(transform, scale(1, 1));
@@ -328,7 +333,7 @@ body.modal-engaged {
 }
 
 .modal-header {
-  padding: 20px;
+  padding: 16px;
 }
 
 .modal-content {
@@ -337,8 +342,12 @@ body.modal-engaged {
   border-radius: 2px;
   box-shadow: $modal-box-shadow;
   color: $modal-secondary-color;
-  margin: 10px;
+  margin: 16px;
   position: relative;
+
+  @media screen and (min-width: $breakpoint-big-phone + 1) {
+    margin: 10px;
+  }
 
   // Messages/Content
   h1 {
@@ -416,7 +425,7 @@ body.modal-engaged {
 
   .modal-body-wrapper {
     overflow: auto;
-    padding: 5px 20px;
+    padding: 4px 16px;
 
     .field:not(.label-left).last-child {
       margin-bottom: 0;

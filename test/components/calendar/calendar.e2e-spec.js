@@ -471,32 +471,31 @@ describe('Calendar display range tests', () => {
   });
 
   it('Should render without error', async () => {
-    expect(await element.all(by.css('.monthview-table td')).count()).toEqual(84);
+    expect(await element.all(by.css('.monthview-table td')).count()).toEqual(210);
     await utils.checkForErrors();
   });
 
   it('Should disable dates outside of range', async () => {
     expect(await element(by.css('[data-key="20210711"]')).getAttribute('class')).toMatch('is-disabled');
-    expect(await element(by.css('[data-key="20210925"]')).getAttribute('class')).toMatch('is-disabled');
-    expect(await element(by.css('[data-key="20210926"]')).getAttribute('class')).toMatch('is-disabled');
-    expect(await element(by.css('[data-key="20210927"]')).getAttribute('class')).toMatch('is-disabled');
-    expect(await element(by.css('[data-key="20210928"]')).getAttribute('class')).toMatch('is-disabled');
-    expect(await element(by.css('[data-key="20210930"]')).getAttribute('class')).toMatch('is-disabled');
-    expect(await element(by.css('[data-key="20211001"]')).getAttribute('class')).toMatch('is-disabled');
-    expect(await element(by.css('[data-key="20211002"]')).getAttribute('class')).toMatch('is-disabled');
+    expect(await element(by.css('[data-key="20220203"]')).getAttribute('class')).toMatch('is-disabled');
+    expect(await element(by.css('[data-key="20220204"]')).getAttribute('class')).toMatch('is-disabled');
+    expect(await element(by.css('[data-key="20220205"]')).getAttribute('class')).toMatch('is-disabled');
   });
 
   it('Should disable specific dates in the range', async () => {
+    expect(await element(by.css('[data-key="20210712"]')).getAttribute('class')).toMatch('is-disabled');
     expect(await element(by.css('[data-key="20210722"]')).getAttribute('class')).toMatch('is-disabled');
+    expect(await element(by.css('[data-key="20210801"]')).getAttribute('class')).toMatch('is-disabled');
     expect(await element(by.css('[data-key="20210802"]')).getAttribute('class')).toMatch('is-disabled');
     expect(await element(by.css('[data-key="20210816"]')).getAttribute('class')).toMatch('is-disabled');
+    expect(await element(by.css('[data-key="20210901"]')).getAttribute('class')).toMatch('is-disabled');
     expect(await element(by.css('[data-key="20210908"]')).getAttribute('class')).toMatch('is-disabled');
   });
 
   it('Should have month label for the first enable date of the month', async () => {
-    expect(await element(by.css('[data-key="20210712"]')).getText()).toEqual('July 12');
-    expect(await element(by.css('[data-key="20210801"]')).getText()).toEqual('August 1');
-    expect(await element(by.css('[data-key="20210901"]')).getText()).toEqual('September 1');
+    expect(await element(by.css('[data-key="20210713"]')).getText()).toEqual('July 13');
+    expect(await element(by.css('[data-key="20210803"]')).getText()).toEqual('August 3');
+    expect(await element(by.css('[data-key="20210902"]')).getText()).toEqual('September 2');
     await utils.checkForErrors();
   });
 

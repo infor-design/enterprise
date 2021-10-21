@@ -5,6 +5,7 @@ import { DOM } from '../../utils/dom';
 import { theme } from '../theme/theme';
 import { Locale } from '../locale/locale';
 
+import '../popover/popover.jquery';
 import '../popupmenu/popupmenu.jquery';
 
 const charts = {};
@@ -380,7 +381,7 @@ charts.addLegend = function (series, chartType, settings, container) {
       extraClass += ` ${series[i].option}`;
     }
 
-    let seriesLine = `<span index-id="chart-legend-${i}" class="chart-legend-item${extraClass}" tabindex="0" role="button"></span>`;
+    let seriesLine = `<span index-id="chart-legend-${i}" class="chart-legend-item${extraClass}" tabindex="${settings?.selectable ? 0 : -1}" role="button"></span>`;
     const hexColor = charts.chartColor(i, chartType || (series.length === 1 ? 'bar-single' : 'bar'), series[i]);
     const colorName = charts.chartColorName(i, chartType || (series.length === 1 ? 'bar-single' : 'bar'), series[i]);
 
@@ -410,14 +411,14 @@ charts.addLegend = function (series, chartType, settings, container) {
     }
 
     if (series[i].display && series[i].display === 'block') {
-      seriesLine = `<span class="chart-legend-item${extraClass}" tabindex="0" role="button"></span>`;
+      seriesLine = `<span class="chart-legend-item${extraClass}" tabindex="${settings.selectable ? 0 : -1}" role="button"></span>`;
     }
 
     if (isTwoColumn) {
       if (exceedsMaxWidth && isBottom) {
-        seriesLine = `<span index-id="chart-legend-${i}" class="chart-legend-item${extraClass} is-one-line" tabindex="0" role="button"></span>`;
+        seriesLine = `<span index-id="chart-legend-${i}" class="chart-legend-item${extraClass} is-one-line" tabindex="${settings.selectable ? 0 : -1}" role="button"></span>`;
       } else {
-        seriesLine = `<span index-id="chart-legend-${i}" class="chart-legend-item${extraClass} is-two-column" tabindex="0" role="button"></span>`;
+        seriesLine = `<span index-id="chart-legend-${i}" class="chart-legend-item${extraClass} is-two-column" tabindex="${settings.selectable ? 0 : -1}" role="button"></span>`;
       }
     }
     seriesLine = $(seriesLine);
@@ -577,7 +578,7 @@ charts.handleElementClick = function (idx, line, series, settings) {
   }
 
   if (['radar', 'pie', 'donut', 'column', 'bar', 'bar-stacked', 'bar-grouped', 'bar-normalized',
-    'column-grouped', 'column-stacked', 'column-positive-negative', 'positive-negative'].indexOf(settings.type) !== -1) {
+    'column-grouped', 'column-stacked', 'column-positive-negative', 'positive-negative'].indexOf(settings.type) !== -1 && settings?.selectable) {
     const lineElem = $(line);
     const isPressed = lineElem.attr('aria-pressed') === 'true';
 
@@ -589,7 +590,7 @@ charts.handleElementClick = function (idx, line, series, settings) {
     }
   }
 
-  if (elem.selectionObj) {
+  if (elem.selectionObj && settings?.selectable) {
     charts.selectElement(d3.select(elem.selectionObj.nodes()[idx]), elem.selectionInverse, elem.data, undefined, settings.dataset, noTrigger); // eslint-disable-line
   }
 };

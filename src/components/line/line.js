@@ -38,6 +38,7 @@ const COMPONENT_NAME = 'line';
  * For example you could use tspans to wrap the strings or color them.
  * @param {object} [settings.yAxis] A series of options for the yAxis
  * @param {function} [settings.yAxis.formatter] A d3 formatter for the yAxis points.
+ * @param {boolean} [settings.selectable=true] Ability to disable selections of the charts.
  * @param {boolean} [settings.hideDots=false] If true no dots are shown
  * @param {array} [settings.axisLabels]  Option to a label to one of the four sides. For Example
  * `{left: 'Left axis label', top: 'Top axis label',
@@ -65,6 +66,7 @@ const LINE_DEFAULTS = {
   isBubble: false,
   isScatterPlot: false,
   showLegend: true,
+  selectable: true,
   hideDots: false,
   animate: true,
   redrawOnResize: true,
@@ -501,13 +503,16 @@ Line.prototype = {
         // It alow to cancel when the double click event happens
         .on(`click.${self.namespace}`, function () {
           const selector = this;
-          clickStatus.line.timer = setTimeout(function () {
-            if (!clickStatus.line.prevent) {
-              // Run click action
-              charts.selectElement(d3.select(selector.parentNode), self.svg.selectAll('.line-group'), d, self.element, dataset, self.initialSelectCall);
-            }
-            clickStatus.line.prevent = false;
-          }, clickStatus.line.delay);
+
+          if (self.settings.selectable) {
+            clickStatus.line.timer = setTimeout(function () {
+              if (!clickStatus.line.prevent) {
+                // Run click action
+                charts.selectElement(d3.select(selector.parentNode), self.svg.selectAll('.line-group'), d, self.element, dataset, self.initialSelectCall, self.settings.selectable);
+              }
+              clickStatus.line.prevent = false;
+            }, clickStatus.line.delay);
+          }
         })
         .on(`dblclick.${self.namespace}`, function () {
           // const selector = this;
@@ -640,6 +645,7 @@ Line.prototype = {
             .attr('cy', function (de) { return yScale(s.isBubble || s.isScatterPlot ? 0 : de.value); })
             .attr('r', dots.radius)
             .style('stroke-width', dots.strokeWidth)
+            .style('cursor', !self.settings.selectable ? 'inherit' : 'pointer')
             .style('fill', function () { return charts.chartColor(lineIdx, 'line', d); })
             .style('opacity', (s.isBubble || s.isScatterPlot ? '.7' : '1'))
             .on(`mouseenter.${self.namespace}`, function (mouseEnterData) {
@@ -659,13 +665,16 @@ Line.prototype = {
             // It alow to cancel when the double click event happens
             .on(`click.${self.namespace}`, function (dh) {
               const selector = this;
-              clickStatus.dot.timer = setTimeout(function () {
-                if (!clickStatus.dot.prevent) {
-                  // Run click action
-                  charts.selectElement(d3.select(selector.parentNode), self.svg.selectAll('.line-group'), dh, self.element, dataset, self.initialSelectCall);
-                }
-                clickStatus.dot.prevent = false;
-              }, clickStatus.dot.delay);
+
+              if (self.settings.selectable) {
+                clickStatus.dot.timer = setTimeout(function () {
+                  if (!clickStatus.dot.prevent) {
+                    // Run click action
+                    charts.selectElement(d3.select(selector.parentNode), self.svg.selectAll('.line-group'), dh, self.element, dataset, self.initialSelectCall, self.settings.selectable);
+                  }
+                  clickStatus.dot.prevent = false;
+                }, clickStatus.dot.delay);
+              }
             })
             .on(`dblclick.${self.namespace}`, function (dh) {
               // const selector = this;
@@ -717,13 +726,16 @@ Line.prototype = {
             // It alow to cancel when the double click event happens
             .on(`click.${self.namespace}`, function (dh) {
               const selector = this;
-              clickStatus.symbol.timer = setTimeout(function () {
-                if (!clickStatus.symbol.prevent) {
-                  // Run click action
-                  charts.selectElement(d3.select(selector.parentNode), self.svg.selectAll('.line-group'), dh, self.element, dataset, self.initialSelectCall);
-                }
-                clickStatus.symbol.prevent = false;
-              }, clickStatus.symbol.delay);
+
+              if (self.settings.selectable) {
+                clickStatus.symbol.timer = setTimeout(function () {
+                  if (!clickStatus.symbol.prevent) {
+                    // Run click action
+                    charts.selectElement(d3.select(selector.parentNode), self.svg.selectAll('.line-group'), dh, self.element, dataset, self.initialSelectCall, self.settings.selectable);
+                  }
+                  clickStatus.symbol.prevent = false;
+                }, clickStatus.symbol.delay);
+              }
             })
             .on(`dblclick.${self.namespace}`, function (dh) {
               // const selector = this;
@@ -824,15 +836,46 @@ Line.prototype = {
         }
       });
 
-      if (selected > 0 && (isToggle || !selector.classed('is-selected'))) {
+      if (selected > 0 && (isToggle || !selector.classed('is-selected')) && self.settings.selectable) {
         charts.selectElement(selector, self.svg.selectAll('.line-group'), selectorData, self.element, dataset, self.initialSelectCall);
       }
     };
+
+    // By default, if the all the values are zero, the line-group will be centered
+    // With this, it will be more consistent in terms of look even if it has only one y-axis tick
+    // It should be positioned close contact with the names
+    self.svg._groups.forEach((gLine) => {
+      gLine.forEach((g) => {
+        const yAxisTick = $(g).find('g.y.axis .tick');
+        const gLineGroup = $(g).find('g.line-group');
+        const gYAxis = $(g).find('g.y.axis');
+        const translateProp = yAxisTick.attr('transform');
+        const yAxisValue = self.getTransformYAxisValue(translateProp); // current y-axis value
+
+        if (yAxisTick.length < 2) {
+          gYAxis.add(gLineGroup).attr('transform', `translate(0,${yAxisValue})`);
+        }
+      });
+    });
 
     this.setInitialSelected();
     this.setTextValues();
     this.element.trigger('rendered');
     return this;
+  },
+
+  /**
+   * Get the Y-Axis value of transform property
+   * @private
+   * @param {string} str the y axis property value to be trim
+   * @returns {string} the current y-axis value
+   */
+  getTransformYAxisValue(str) {
+    const arrayValue = str.split(',');
+    arrayValue.splice(0, 1).join('');
+    const stringOfYAxis = arrayValue.join(',');
+
+    return stringOfYAxis.slice(0, -1);
   },
 
   /**
@@ -867,7 +910,7 @@ Line.prototype = {
       }
     });
 
-    if (selected > 0) {
+    if (selected > 0 && self.settings.selectable) {
       self.initialSelectCall = true;
       charts.selectElement(selector, self.svg.selectAll('.line-group'), selectorData, self.element, self.settings.dataset, self.initialSelectCall);
     }
@@ -899,6 +942,10 @@ Line.prototype = {
     yAxis.width = yAxis.el.getBBox().width;
     line.width = line.el.getBBox().width;
     brief.xDiff = yAxis.width - line.width;
+
+    if (!this.settings.selectable) {
+      this.element.find('.line').css('cursor', 'inherit');
+    }
 
     ticks.forEach((tick, i) => {
       const text = tick.textContent;

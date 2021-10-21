@@ -491,7 +491,6 @@ Datagrid.prototype = {
   /**
    * Checks if the datagrid body has vertical scrollbar.
    * @private
-   * @returns {boolean}
    */
   hasScrollbarY() {
     const self = this;
@@ -531,7 +530,7 @@ Datagrid.prototype = {
     }
 
     // Add row status
-    const newRowStatus = { icon: 'new', text: Locale.translate('New'), tooltip: Locale.translate('New') };
+    const newRowStatus = { icon: 'new', text: Locale.translate('NewRow'), tooltip: Locale.translate('NewRow') };
 
     data = data || {};
     data.rowStatus = data.rowStatus || newRowStatus;
@@ -742,6 +741,7 @@ Datagrid.prototype = {
     }
 
     this.loadData(dataset, pagerInfo);
+    this.syncSelectedRowsIdx();
   },
 
   /**
@@ -1435,6 +1435,7 @@ Datagrid.prototype = {
       if (datepickerApi && typeof datepickerApi.destroy === 'function') {
         datepickerApi.destroy();
       }
+
       input.datepicker(options);
     };
 
@@ -1676,7 +1677,13 @@ Datagrid.prototype = {
               const svg = rowElem.find('.btn-filter .icon-dropdown:first');
               const operator = svg.getIconName().replace('filter-', '');
               if (col.filterType === 'date') {
-                self.filterSetDatepicker(input, operator, col.editorOptions);
+                const datepickerOptions = col.editorOptions || {};
+
+                if (col.dateFormat) {
+                  datepickerOptions.dateFormat = col.dateFormat;
+                }
+
+                self.filterSetDatepicker(input, operator, datepickerOptions);
               } else {
                 const maskOptions = col.filterMaskOptions ? col.filterMaskOptions : col.maskOptions;
                 const rangeDelimeter = maskOptions?.rangeNumberDelimeter || '-';
@@ -3423,7 +3430,7 @@ Datagrid.prototype = {
     const iterate = function (node, depth, parent = []) {
       idx++;
       self.settings.treeDepth.push({ idx, depth, parents: parent.slice(), node });
-      const len = node.children?.length;
+      const len = node?.children?.length;
       if (len) {
         parent.push(idx - 1);
         for (let i = 0; i < len; i++) {
@@ -3761,12 +3768,12 @@ Datagrid.prototype = {
         tableHtmlRight += rowHtml.right;
       }
 
-      if (!s.dataset[i]._isFilteredOut) {
+      if (!s.dataset[i]?._isFilteredOut) {
         this.recordCount++;
       }
       this.visibleRowCount = currentCount + 1;
 
-      if (s.dataset[i].rowStatus) {
+      if (s.dataset[i]?.rowStatus) {
         rowStatusTooltip = true;
       }
     }
@@ -6451,7 +6458,6 @@ Datagrid.prototype = {
    * Adds support when the datagrid container scrolls to the end of the list.
    * @private
    * @param {jQuery} e The event object.
-   * @returns {boolean}
    */
   verticalScrollToEnd(e) {
     const el = e.currentTarget;
@@ -8282,18 +8288,18 @@ Datagrid.prototype = {
    * @returns {void}
    */
   syncSelectedRowsIdx() {
-    const dataset = this.settings.groupable && this.originalDataset ?
-      this.originalDataset : this.settings.dataset;
+    const dataset = this.getActiveDataset();
     if (this._selectedRows.length === 0 || dataset.length === 0) {
       return;
     }
     this._selectedRows = [];
 
     for (let i = 0; i < dataset.length; i++) {
-      if (dataset[i]._selected) {
+      const node = this.settings.treeGrid ? dataset[i].node : dataset[i];
+      if (node._selected) {
         const selectedRow = {
           idx: i,
-          data: dataset[i],
+          data: node,
           elem: this.dataRowNode(i),
           pagingIdx: i,
           pagesize: this.settings.pagesize
@@ -9794,9 +9800,17 @@ Datagrid.prototype = {
     if (this.settings.groupable) {
       return this.originalDataset[rowIdx];
     }
-    return this.settings.treeGrid ?
+
+    const rowData = this.settings.treeGrid ?
       this.settings.treeDepth[rowIdx].node :
       this.settings.dataset[rowIdx];
+
+    // Tree Grid have different object structure than normal dataset so we need to add rowstatus outside of the node.
+    if (this.settings.treeGrid && this.settings.treeDepth[rowIdx].rowStatus) {
+      this.settings.treeDepth[rowIdx].node.rowStatus = this.settings.treeDepth[rowIdx].rowStatus;
+    }
+
+    return rowData;
   },
 
   /**
@@ -10276,6 +10290,13 @@ Datagrid.prototype = {
     const errors = this.settings.dataset.filter(row => row.rowStatus);
     for (let i = 0; i < errors.length; i++) {
       delete errors[i].rowStatus;
+
+      // Tree Grid Children Structure
+      if (errors[i]?.children?.length) {
+        for (let j = 0; j < errors[i].children.length; j++) {
+          delete errors[i].children[j].rowStatus;
+        }
+      }
     }
     if (errors.length > 0) {
       this.render();
@@ -10538,6 +10559,24 @@ Datagrid.prototype = {
     }
 
     this.updateCellNode(row, cell, value, true);
+  },
+
+  /**
+   * Update values of one column from the dataset
+   * @param {string} columnId  The name of the column.
+   * @returns {void}
+   */
+  updateColumn(columnId) {
+    if (!columnId || !columnId.length) {
+      return;
+    }
+
+    const self = this;
+    const columnNumber = self.columnIdxById(columnId);
+
+    $.each(self.settings.dataset, (index, item) => {
+      self.updateCell(index, columnNumber, item[columnId]);
+    });
   },
 
   /**

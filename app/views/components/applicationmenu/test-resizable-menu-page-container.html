@@ -1,0 +1,125 @@
+{{> includes/head}}
+
+<body class="no-scroll">
+  <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
+  {{> includes/svg-inline-refs}}
+  {{> includes/applicationmenu-deep-menu-level}}
+
+  <div class="page-container scrollable">
+
+      <header class="header is-personalizable">
+        <div class="toolbar">
+          <div class="title">
+            {{> includes/header-appmenu-trigger}}
+            <h1><span data-translate="text">UserProfile</span></h1>
+          </div>
+          {{> includes/header-actionbutton}}
+        </div>
+
+      </header>
+
+    <div id="maincontent" class="page-container scrollable" role="main">
+      <div class="row is-personalizable">
+        <div class="four columns">
+          <span class="label">Primary</span>
+          <button class="btn-primary" type="button" id="primary-action-two">Action</button><br><br><br>
+          <button class="btn-primary" type="button" id="primary-action-three" disabled>Action</button><br><br><br>
+      
+          <button class="btn-primary" type="button" id="primary-alert">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-alert"></use>
+            </svg>
+            <span>Primary Button</span>
+          </button>
+      
+          <br><br><br><br>
+        </div>
+      
+        <div class="three columns">
+          <span class="label">Secondary</span>
+          <button class="btn-secondary" type="button" id="secondary-action-one">Action</button><br><br><br>
+          <button class="btn-secondary" type="button" id="secondary-action-two" disabled>Action</button><br><br><br>
+      
+          <button class="btn-secondary" type="button" id="secondary-alert">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-settings"></use>
+            </svg>
+            <span>Secondary Button</span>
+          </button>
+      
+          <br><br><br><br>
+        </div>
+      
+        <div class="three columns">
+          <span class="label">Tertiary</span>
+      
+          <button type="button" class="btn-tertiary" id="tertiary-filter-one">
+            <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+              <use href="#icon-filter"></use>
+            </svg>
+            <span>Action</span>
+          </button>
+          <br><br>
+      
+          <button type="button" class="btn-tertiary" id="tertiary-filter-two" disabled>
+            <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+              <use href="#icon-filter"></use>
+            </svg>
+            <span>Action</span>
+          </button>
+          <br><br>
+      
+          <button type="button" class="btn btn-link" id="tertiary-filter-three">
+            <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+              <use href="#icon-filter"></use>
+            </svg>
+            <span>Action</span>
+          </button>
+      
+          <br><br><br><br>
+        </div>
+      
+        <div class="two columns">
+          <span class="label">Icon</span>
+      
+          <button type="button" class="btn-icon" id="calendar-enabled">
+            <span>Date</span>
+            <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+              <use href="#icon-calendar"></use>
+            </svg>
+          </button>
+          <br><br>
+      
+          <button type="button" class="btn-icon" id="calendar-disabled" disabled>
+            <span>Date</span>
+            <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+              <use href="#icon-calendar"></use>
+            </svg>
+          </button>
+      
+          <br><br><br><br>
+        </div>
+      </div>      
+    </div>
+  </div>
+
+  {{> includes/footer}}
+
+  <script>
+    $('body').on('initialized', function() {
+      const appMenuAPI = $('.application-menu').data('applicationmenu');
+      const switcherPanelAcc = $('.application-menu-switcher-panel .accordion');
+      const switcherPanelTriggerSpan = $('.application-menu-switcher-trigger span');
+
+      switcherPanelAcc.on('selected.test', function (e, args) {
+        $('body').toast({
+          title: 'Role ' + args.innerText + ' Selected',
+          message: 'In a real application, you could refresh the app menu with new contents for the selected role.'
+        });
+        switcherPanelTriggerSpan.text(args.innerText)
+        appMenuAPI.closeSwitcherPanel();
+      });
+    });
+  </script>
+</body>
+</html>

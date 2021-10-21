@@ -381,6 +381,7 @@ $color-border-color: rgba(0, 0, 0, 0.2);
 $fileupload-primary-color: $ids-color-font-base;
 $fileupload-secondary-color: $ids-color-palette-graphite-60;
 $fileupload-hover-color: $ids-color-font-base;
+$fileupload-progress-color: $ids-color-palette-azure-60;
 $fileupload-completed-color: $ids-color-palette-emerald-80;
 $fileupload-completed-border-color: $ids-color-palette-emerald-80;
 $fileupload-error-color: $ids-color-status-danger;
@@ -449,9 +450,8 @@ $expandable-area-title-color: $ids-color-font-base;
 $cardlist-bg-color: $ids-color-palette-white;
 $cardlist-border-color: $ids-color-palette-graphite-30;
 $cardlist-header-color: $ids-color-font-base;
-$cardlist-actions-color: $ids-color-font-base;
+$cardlist-actions-color: $ids-color-palette-slate-60;
 $cardlist-text-color: $font-color;
-$cardlist-icon-color: $ids-color-palette-slate-60;
 
 // Checkboxes
 $checkbox-disabled-text-color: $checkbox-color-unchecked-disabled-font;

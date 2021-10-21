@@ -44,6 +44,7 @@ const pressableTypes = ['icon-favorite', 'btn-toggle'];
  * @param {string} [settings.toggleOnIcon=null]  The icon to use for on state on toggle buttons
  * @param {string} [settings.toggleOffIcon=null]  The icon to use for off state on toggle buttons
  * @param {string} [settings.replaceText=false]  If true the selection will be used to replace the content
+ * @param {boolean} [settings.hitbox=false] If true, it will add an invisible and clickable area around the button
  */
 const BUTTON_DEFAULTS = {
   style: buttonStyles[0],
@@ -53,6 +54,7 @@ const BUTTON_DEFAULTS = {
   hideMenuArrow: null,
   replaceText: false,
   ripple: true,
+  hitbox: false,
   validate: false,
   attributes: null
 };
@@ -191,7 +193,12 @@ Button.prototype = {
     </svg>`);
     ripple[0].style.left = `${xPos}px`;
     ripple[0].style.top = `${yPos}px`;
-    this.element.prepend(ripple);
+
+    if (this.settings.hitbox) {
+      $(this.hitboxArea).prepend(ripple);
+    } else {
+      this.element.prepend(ripple);
+    }
 
     // Start the JS Animation Loop if IE9
     // Or Safari/Firefox has bug with combination like: animation, overflow, position,
@@ -269,6 +276,16 @@ Button.prototype = {
     // Add extra, user-defined CSS classes, if applicable
     if (typeof this.settings.cssClass === 'string') {
       this.element[0].className += xssUtils.stripHTML(this.settings.cssClass);
+    }
+
+    // Add hitbox area element.
+    // The ripple effect also goes inside of here so it will not scatter outside
+    // of this element if button's overflow is set to visible.
+    if (this.settings.hitbox) {
+      this.element.addClass('hitbox');
+      this.hitboxArea = document.createElement('span');
+      this.hitboxArea.classList.add('hitbox-area');
+      this.element.prepend(this.hitboxArea);
     }
 
     // Handle a one-time `disabled` setting, if defined.

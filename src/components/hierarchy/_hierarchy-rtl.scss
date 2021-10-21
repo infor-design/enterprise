@@ -1,4 +1,3 @@
-
 // RTL Styles
 html[dir='rtl'] {
   .hierarchy {
@@ -7,16 +6,13 @@ html[dir='rtl'] {
         margin-left: 20px;
         margin-right: inherit;
       }
-
-      .key {
-        float: right;
-      }
     }
 
     // A node in the tree
     .leaf {
       border-left: 1px solid $panel-border-color;
       border-right: 5px solid $ids-color-palette-slate-60;
+      padding-left: 5px;
 
       &.azure08 {
         border-left-color: $panel-border-color;
@@ -55,15 +51,73 @@ html[dir='rtl'] {
 
       //Styling for objects in the leafs
       img,
+      .image-initials,
       .image-placeholder {
         float: right;
         margin-left: 0;
         margin-right: 14px;
       }
 
+      &.root .btn-icon,
       .btn-icon {
         left: auto;
         right: 0;
+        margin-right: 10px;
+      }
+    }
+
+    // Paging
+    &.layout-is-paging {
+      .leaf.root {
+        margin: 0;
+      }
+
+      .chart {
+        &::after {
+          left: 385px;
+        }
+
+        &.has-back {
+          ul {
+            margin-right: 35px;
+          }
+
+          &::after {
+            left: 410px;
+          }
+
+          .root::after {
+            left: 150px;
+          }
+
+          .child-nodes > li .leaf {
+            &::after {
+              left: 188px;
+            }
+          }
+        }
+
+        .back-container .back {
+          left: 10px;
+        }
+        
+        .child-nodes {
+          padding-left: 0;
+          padding-right: 55px; 
+
+          > li .leaf {
+            &::after  {
+              left: 198px;
+            }
+          }
+        }
+      }
+    }
+
+    // Stacked
+    &.layout-is-stacked {
+      legend .key {
+        margin-left: 10px;
       }
     }
 
@@ -71,8 +125,8 @@ html[dir='rtl'] {
     ul > li > .leaf {
       .btn-expand,
       .btn-collapse {
-        left: auto;
-        right: calc(100% - 40px);
+        left: 13px;
+        right: auto;
       }
     }
 
@@ -98,11 +152,19 @@ html[dir='rtl'] {
     }
 
     //The Bottom Levels - Flow Down and Up
+    .chart.has-single-child .root + .sub-level,
     .sub-level {
+      padding-left: 0;
+      padding-right: 35px; 
+      
+      &::before {
+          content: none;
+      }
+
       // Top Level Nodes still follow left to right
       > li {
         //Draw Line Up and Left
-        &::before {
+         &::before {
           border-bottom: 0;
           border-left: 0 solid $hierarchy-line-color;
           border-right: $hierarchy-line-width solid $hierarchy-line-color;
@@ -116,6 +178,7 @@ html[dir='rtl'] {
           width: 0;
         }
 
+        .leaf::before,
         > ul .leaf::before {
           border-left: 0;
           border-right: $hierarchy-line-width solid $hierarchy-line-color;

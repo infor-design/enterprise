@@ -198,4 +198,14 @@ describe('Contextual Action Panel - Button API Access', () => {
 
     expect(toolbarEl.className.indexOf('is-disabled')).toEqual(-1);
   });
+
+  it('can control toolbar buttonsets and their buttons', () => {
+    capAPI = new ContextualActionPanel(document.body, simpleCAPSettings);
+    const capEl = document.querySelector('.contextual-action-panel');
+    const buttonsetAPI = capAPI.buttonsetAPI;
+    const settingsBtn = buttonsetAPI.buttons[0];
+    settingsBtn.disabled = true;
+
+    expect(capEl.querySelector('.btn').disabled).toBeTruthy();
+  });
 });

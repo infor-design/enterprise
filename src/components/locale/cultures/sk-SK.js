@@ -169,7 +169,7 @@ Soho.Locale.addCulture('sk-SK', {
     Default: { id: 'Default', value: 'Predvolené', comment: 'Refers to a default object of a generic type' },
     Delete: { id: 'Delete', value: 'Odstrániť', comment: 'Delete Toolbar Action Tooltip' },
     DeleteEvent: { id: 'DeleteEvent', value: 'Odstrániť udalosť', comment: 'Delete an Event (from a calendar)' },
-    DeviceName: { id: 'Device', value: 'Zariadenie', comment: 'Name of the Device' },
+    Device: { id: 'Device', value: 'Zariadenie', comment: 'Name of the Device' },
     DistributeHoriz: { id: 'DistributeHoriz', value: 'Prerozdeliť vodorovne', comment: 'Icon button tooltip for action that distributes elements across Horizontally' },
     Document: { id: 'Document', value: 'Dokument', comment: 'Document tooltip' },
     DiscretionaryTimeOff: { id: 'DiscretionaryTimeOff', value: 'Dobrovoľné voľno', comment: 'As in work time off' },

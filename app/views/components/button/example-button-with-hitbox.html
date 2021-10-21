@@ -1,0 +1,226 @@
+<style>
+  /** Purpose of showing the hitbox area */
+
+  .margin-right-20 {
+    margin-right: 20px;
+  }
+
+  .hitbox-area {
+    border: 1px dashed black;
+  }
+
+</style>
+
+<div class="row top-padding">
+  <div class="columns six">
+    <p>The dashed border indicates the added hitbox area of the button compare without using the hitbox setting. This will not include the actual hitbox buttons.</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="columns six">
+    <h2 class="section-title">Buttons with Hitbox</h2>
+    <a id="btn-hitbox-7" class="btn-menu btn-primary" href="#" data-options="{hitbox: true}">
+      <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+        <use href="#icon-settings"></use>
+      </svg>
+      <span>Settings</span>
+    </a>
+    <ul class="popupmenu">
+      <li><a href="#">One</a></li>
+      <li><a href="#">Two</a></li>
+      <li><a href="#">Three</a></li>
+    </ul>
+    <br><br>
+    <button class="btn-primary hitbox-border" type="button" id="btn-hitbox-1" data-options="{hitbox: true}">Hitbox#1</button><br><br>
+    <button class="btn-secondary hitbox-border" type="button" id="btn-hitbox-2" data-options="{hitbox: true}">Hitbox#2</button><br><br>
+    <button class="btn-secondary hitbox-border" type="button" id="btn-hitbox-3" data-options="{hitbox: true}">
+      <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+        <use href="#icon-settings"></use>
+      </svg>
+      <span>Secondary Button</span>
+    </button><br><br>
+    <button type="button" class="btn-tertiary hitbox-border margin-right-20" id="btn-hitbox-4" data-options="{hitbox: true}">
+      <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+        <use href="#icon-filter"></use>
+      </svg>
+      <span>Action</span>
+    </button>
+    <button type="button" class="btn-icon hitbox-border margin-right-20" id="btn-hitbox-5" data-options="{hitbox: true}">
+      <span>Date</span>
+      <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+        <use href="#icon-calendar"></use>
+      </svg>
+    </button>
+    <button class="btn-actions hitbox-border" id="btn-hitbox-6" type="button" data-options="{hitbox: true}">
+      <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+        <use href="#icon-more"></use>
+      </svg>
+      <span class="audible" data-translate="text">More</span>
+    </button>
+    <ul class="popupmenu is-selectable">
+      <li class="submenu">
+        <a href="#">Actions</a>
+        <ul class="popupmenu has-icons">
+          <li>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-search"></use>
+            </svg>
+            <a href="#">Search</a>
+          </li>
+
+          <li>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-print"></use>
+            </svg>
+            <a href="#">Print to PDF</a>
+          </li>
+
+          <li>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-export"></use>
+            </svg>
+            <a href="#">Export to CSV</a>
+          </li>
+
+          <li>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-inventory"></use>
+            </svg>
+            <a href="#">Create Report</a>
+          </li>
+
+          <li>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-user"></use>
+            </svg>
+            <a href="#">Personalize</a>
+          </li>
+
+          <li>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-refresh"></use>
+            </svg>
+            <a href="#">Refresh</a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a href="#">Options</a>
+      </li>
+      <li>
+        <a href="#">Drill Around&trade;</a>
+      </li>
+    </ul>
+    <br><br>
+    <a id="tertiary-aslink-hitbox" class="btn-tertiary" href="#" data-options="{hitbox: true}">
+      <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+        <use href="#icon-delete"></use>
+      </svg>
+      <span>Add to Trash</span>
+    </a>
+  </div>
+
+  <div class="columns six">
+    <h2 class="section-title">Buttons without Hitbox</h2>
+    <a id="btn-normal-7" class="btn-menu btn-primary" href="#">
+      <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+        <use href="#icon-settings"></use>
+      </svg>
+      <span>Settings</span>
+    </a>
+    <ul class="popupmenu">
+      <li><a href="#">One</a></li>
+      <li><a href="#">Two</a></li>
+      <li><a href="#">Three</a></li>
+    </ul>
+    <br><br>
+    <button class="btn-primary" type="button" id="btn-normal-1">Normal Button #1</button><br><br>
+    <button class="btn-secondary" type="button" id="btn-normal-2">Normal Button #2</button><br><br>
+    <button class="btn-secondary" type="button" id="btn-normal-3">
+      <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+        <use href="#icon-settings"></use>
+      </svg>
+      <span>Secondary Button</span>
+    </button><br><br>
+    <button type="button" class="btn-tertiary margin-right-20" id="btn-normal-4">
+      <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+        <use href="#icon-filter"></use>
+      </svg>
+      <span>Action</span>
+    </button>
+    <button type="button" class="btn-icon margin-right-20" id="btn-normal-5">
+      <span>Date</span>
+      <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+        <use href="#icon-calendar"></use>
+      </svg>
+    </button>
+    <button class="btn-actions" id="btn-normal-6" type="button">
+      <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+        <use href="#icon-more"></use>
+      </svg>
+      <span class="audible" data-translate="text">More</span>
+    </button>
+    <ul class="popupmenu is-selectable">
+      <li class="submenu">
+        <a href="#">Actions</a>
+        <ul class="popupmenu has-icons">
+          <li>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-search"></use>
+            </svg>
+            <a href="#">Search</a>
+          </li>
+
+          <li>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-print"></use>
+            </svg>
+            <a href="#">Print to PDF</a>
+          </li>
+
+          <li>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-export"></use>
+            </svg>
+            <a href="#">Export to CSV</a>
+          </li>
+
+          <li>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-inventory"></use>
+            </svg>
+            <a href="#">Create Report</a>
+          </li>
+
+          <li>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-user"></use>
+            </svg>
+            <a href="#">Personalize</a>
+          </li>
+
+          <li>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-refresh"></use>
+            </svg>
+            <a href="#">Refresh</a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a href="#">Options</a>
+      </li>
+      <li>
+        <a href="#">Drill Around&trade;</a>
+      </li>
+    </ul>
+    <br><br>
+    <a id="tertiary-aslink-normal" class="btn-tertiary" href="#">
+      <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+        <use href="#icon-delete"></use>
+      </svg>
+      <span>Add to Trash</span>
+    </a>
+  </div>
+</div>

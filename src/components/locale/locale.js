@@ -76,6 +76,7 @@ const Locale = {  // eslint-disable-line
     { lang: 'sl', default: 'sl-SI' },
     { lang: 'sv', default: 'sv-SE' },
     { lang: 'th', default: 'th-TH' },
+    { lang: 'tl', default: 'tl-PH' },
     { lang: 'tr', default: 'tr-TR' },
     { lang: 'uk', default: 'uk-UA' },
     { lang: 'vi', default: 'vi-VN' },
@@ -85,7 +86,7 @@ const Locale = {  // eslint-disable-line
     'en-AU', 'en-GB', 'en-IN', 'en-NZ', 'en-US', 'en-ZA', 'es-AR', 'es-ES', 'es-419', 'es-MX',
     'es-US', 'et-EE', 'fi-FI', 'fr-CA', 'fr-FR', 'he-IL', 'hi-IN', 'hr-HR',
     'hu-HU', 'id-ID', 'it-IT', 'ja-JP', 'ko-KR', 'lt-LT', 'lv-LV', 'ms-bn', 'ms-my', 'nb-NO', 'nn-NO',
-    'nl-NL', 'no-NO', 'pl-PL', 'pt-BR', 'pt-PT', 'ro-RO', 'ru-RU', 'sk-SK', 'sl-SI', 'sv-SE', 'th-TH', 'tr-TR',
+    'nl-NL', 'no-NO', 'pl-PL', 'pt-BR', 'pt-PT', 'ro-RO', 'ru-RU', 'sk-SK', 'sl-SI', 'sv-SE', 'th-TH', 'tl-PH', 'tr-TR',
     'uk-UA', 'vi-VN', 'zh-CN', 'zh-Hans', 'zh-Hant', 'zh-TW'],
   translatedLocales: ['fr-CA', 'fr-FR', 'pt-BR', 'pt-PT'],
   defaultLocale: 'en-US',
@@ -1508,8 +1509,8 @@ const Locale = {  // eslint-disable-line
       percentFormat = percentFormat.replace('¤', percentSign);
     }
 
-    if (typeof number === 'string') {
-      number = Locale.parseNumber(number);
+    if (typeof number === 'string' && !(options?.parseNumber === false)) {
+      number = Locale.parseNumber(number, options);
     }
 
     if (number.toString().indexOf('e') > -1) {
@@ -1654,12 +1655,12 @@ const Locale = {  // eslint-disable-line
       numString = numString.toString();
     }
 
-    const group = options && options.group ? options.group : numSettings ? numSettings.group : ',';
+    const group = options && options.group !== undefined ? options.group : numSettings ? numSettings.group : ',';
     const decimal = options && options.decimal ? options.decimal : numSettings ? numSettings.decimal : '.';
     const percentSign = options && options.percentSign ? options.percentSign : numSettings ? numSettings.percentSign : '%';
     const currencySign = options && options.currencySign ? options.currencySign : localeData.currencySign || '$';
 
-    const exp = (group === ' ') ? new RegExp(/\s/g) : new RegExp(`\\${group}`, 'g');
+    const exp = (group === ' ' || group === '') ? new RegExp(/\s/g) : new RegExp(`\\${group}`, 'g');
     numString = numString.replace(exp, '');
     numString = numString.replace(decimal, '.');
     numString = numString.replace(percentSign, '');
