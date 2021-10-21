@@ -871,7 +871,7 @@ Accordion.prototype = {
       if (pane.hasClass('no-transition')) {
         handleAfterExpand();
       } else {
-        pane.one('animateopencomplete', handleAfterExpand).animateOpen();
+        pane.on('animateopencomplete', handleAfterExpand).animateOpen();
       }
     }
 
@@ -1309,18 +1309,17 @@ Accordion.prototype = {
       if (isContentArea) {
         allContentAreas.push($(target));
         const thisParentPane = $(allParentPanes[0]);
-        const thisParentHeader = thisParentPane.prev('.accordion-header').filter((j, item) => allParentHeaders.index(item) === -1);
-        if (thisParentHeader.length) {
-          if (allTempHeaders.indexOf(thisParentHeader) < 0) {
-            allTempHeaders.push(thisParentHeader);
+        thisParentPane.prev('.accordion-header').each((index, val) => {
+          if (allTempHeaders.indexOf(val) < 0) {
+            allTempHeaders.push(val);
           }
-        }
+          return allTempHeaders;
+        });
       }
 
       // Handle Labeling of Parent Headers
       if (allParentPanes.length) {
-        const parentHeaders = allParentPanes.prev('.accordion-header').filter((j, item) => allParentPanes.index(item) === -1);
-        parentHeaders.each((index, val) => {
+        allParentPanes.prev('.accordion-header').each((index, val) => {
           if (allTempHeaders.indexOf(val) < 0) {
             allTempHeaders.push(val);
           }
@@ -1334,7 +1333,7 @@ Accordion.prototype = {
 
     const expandPromise = this.expand(allParentHeaders, true);
 
-    const endTime = performance.now()
+    const endTime = performance.now();
     console.log(`function filter => Call to doSomething took ${endTime - startTime} milliseconds`);
 
     $.when(expandPromise).done(() => {
@@ -1351,40 +1350,45 @@ Accordion.prototype = {
    * if there are no headers filtered when typing a character that is not available on the accordion list.
    */
   unfilter(headers, isReset) {
-    // if (!this.currentlyFiltered.length && !isReset) {
-    //   return;
-    // }
+    if (!this.currentlyFiltered.length && !isReset) {
+      return;
+    }
 
-    // if (!headers || !headers.length) {
-    //   headers = this.currentlyFiltered;
-    // }
+    if (!headers || !headers.length) {
+      headers = this.currentlyFiltered;
+    }
 
-    // // Store a list of all modified parent headers
-    // let allParentHeaders = $();
+    // Store a list of all modified parent headers
+    let allTempHeaders = [];
 
-    // // Reset all the things
-    // this.headers.removeClass('filtered has-filtered-children hide-focus');
-    // this.panes.removeClass('all-children-filtered no-transition');
-    // this.contentAreas.removeClass('filtered');
+    // Reset all the things
+    this.headers.removeClass('filtered has-filtered-children hide-focus');
+    this.panes.removeClass('all-children-filtered no-transition');
+    this.contentAreas.removeClass('filtered');
 
-    // headers.each((i, header) => {
-    //   const parentPanes = $(header).parents('.accordion-pane');
-    //   if (parentPanes.length) {
-    //     const parentHeaders = parentPanes.prev('.accordion-header').filter((j, item) => allParentHeaders.index(item) === -1);
-    //     allParentHeaders = allParentHeaders.add(parentHeaders);
-    //   }
-    // });
+    headers.each((i, header) => {
+      const parentPanes = $(header).parents('.accordion-pane');
+      if (parentPanes.length) {
+        parentPanes.prev('.accordion-header').each((index, val) => {
+          if (allTempHeaders.indexOf(val) < 0) {
+            allTempHeaders.push(val);
+          }
+          return allTempHeaders;
+        });
+      }
+    });
 
-    // allParentHeaders.removeClass('has-filtered-children');
+    const allParentHeaders = $(allTempHeaders);
+    allParentHeaders.removeClass('has-filtered-children');
 
-    // const collapseDfds = [
-    //   this.collapse(headers),
-    //   this.collapse(allParentHeaders)
-    // ];
+    const collapseDfds = [
+      this.collapse(headers),
+      this.collapse(allParentHeaders)
+    ];
 
-    // $.when(collapseDfds).done(() => {
-    //   this.currentlyFiltered = this.currentlyFiltered.not(headers);
-    // });
+    $.when(collapseDfds).done(() => {
+      this.currentlyFiltered = this.currentlyFiltered.not(headers);
+    });
   },
 
   /**
