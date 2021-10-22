@@ -871,7 +871,7 @@ Accordion.prototype = {
       if (pane.hasClass('no-transition')) {
         handleAfterExpand();
       } else {
-        pane.on('animateopencomplete', handleAfterExpand).animateOpen();
+        pane.one('animateopencomplete', handleAfterExpand).animateOpen();
       }
     }
 
@@ -1282,7 +1282,6 @@ Accordion.prototype = {
       return;
     }
 
-    const startTime = performance.now();
     const self = this;
 
     // Reset all the things
@@ -1333,9 +1332,6 @@ Accordion.prototype = {
 
     const expandPromise = this.expand(allParentHeaders, true);
 
-    const endTime = performance.now();
-    console.log(`function filter => Call to doSomething took ${endTime - startTime} milliseconds`);
-
     $.when(expandPromise).done(() => {
       this.currentlyFiltered = toFilter;
       self.build(undefined, true);
@@ -1357,8 +1353,6 @@ Accordion.prototype = {
     if (!headers || !headers.length) {
       headers = this.currentlyFiltered;
     }
-
-    const startTime = performance.now();
 
     // Store a list of all modified parent headers
     let allTempHeaders = [];
@@ -1387,9 +1381,6 @@ Accordion.prototype = {
       this.collapse(headers),
       this.collapse(allParentHeaders)
     ];
-
-    const endTime = performance.now();
-    console.log(`function unfilter => Call to doSomething took ${endTime - startTime} milliseconds`);
 
     $.when(collapseDfds).done(() => {
       this.currentlyFiltered = this.currentlyFiltered.not(headers);
