@@ -271,6 +271,7 @@ Calendar.prototype = {
       showLegend: this.settings.dayLegend !== null,
       legend: this.settings.dayLegend,
       attributes: this.settings.attributes,
+      firstDayOfWeek: this.settings.firstDayOfWeek,
       displayRange: {
         start: this.settings.displayRange.start,
         end: this.settings.displayRange.end

@@ -348,7 +348,7 @@ MonthView.prototype = {
     const originalEnd = new Date(this.settings.displayRange.end);
     const inclusiveEnd = dateUtils.isDaylightSavingTime(rangeStart) && !dateUtils.isDaylightSavingTime(originalEnd) ?
       originalEnd : new Date(originalEnd.getTime() + dayMilliseconds);
-    const leadDays = dateUtils.firstDayOfWeek(rangeStart);
+    const leadDays = dateUtils.firstDayOfWeek(rangeStart, this.settings.firstDayOfWeek, true);
     const numberOfWeeks = Math.ceil((inclusiveEnd - leadDays) / (7 * dayMilliseconds));
     this.settings.showMonthYearPicker = false;
     this.settings.inPage = stringUtils.toBoolean(this.settings.inPage);
@@ -825,7 +825,6 @@ MonthView.prototype = {
 
     // Set the Days of the week
     let firstDayofWeek = (this.currentCalendar.firstDayofWeek || 0);
-
     if (s.firstDayOfWeek) {
       firstDayofWeek = s.firstDayOfWeek;
     }
@@ -833,10 +832,8 @@ MonthView.prototype = {
     this.dayNames.find('th').each(function (i) {
       $(this).text(days[(i + firstDayofWeek) % 7]);
     });
-
     // Adjust days of the week
-    // lead days
-    const leadDays = dateUtils.firstDayOfWeek(startDate);
+    const leadDays = dateUtils.firstDayOfWeek(startDate, this.settings.firstDayOfWeek, true);
     let dayCnt = leadDays.getDate();
     let foundSelected = false;
     // get the number of days in each month for the given range
