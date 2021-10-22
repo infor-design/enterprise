@@ -1282,7 +1282,7 @@ Accordion.prototype = {
       return;
     }
 
-    const startTime = performance.now()
+    const startTime = performance.now();
     const self = this;
 
     // Reset all the things
@@ -1358,6 +1358,8 @@ Accordion.prototype = {
       headers = this.currentlyFiltered;
     }
 
+    const startTime = performance.now();
+
     // Store a list of all modified parent headers
     let allTempHeaders = [];
 
@@ -1385,6 +1387,9 @@ Accordion.prototype = {
       this.collapse(headers),
       this.collapse(allParentHeaders)
     ];
+
+    const endTime = performance.now();
+    console.log(`function unfilter => Call to doSomething took ${endTime - startTime} milliseconds`);
 
     $.when(collapseDfds).done(() => {
       this.currentlyFiltered = this.currentlyFiltered.not(headers);
