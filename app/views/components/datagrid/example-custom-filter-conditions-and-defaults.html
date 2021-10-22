@@ -1,0 +1,44 @@
+
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+      var grid,
+        columns = [],
+        data = [];
+
+      // Define Some Sample Data
+      data.push({ id: 1, productId: undefined, productName: 'Compressor', inStock: true, activity:  'Assemble Paint', quantity: 1, price: 410.99, orderDate: new Date(2014, 12, 8), action: 'Action', status: 'Error'});
+      data.push({ id: 2, productId: 2241202, productName: '1 Different Compressor', inStock: true, activity:  'Inspect and Repair', quantity: 2, price: 310.99, orderDate: new Date(2015, 7, 3), action: 'On Hold', status: 'Error'});
+      data.push({ id: 3, productId: 2342203, productName: 'Compressor', inStock: true, activity:  'Inspect and Repair', quantity: 1, price: 620.99, orderDate: new Date(2014, 6, 3), action: 'Action', status: 'Error'});
+      data.push({ id: 4, productId: 2445204, productName: undefined, inStock: false, activity:  'Assemble Paint', quantity: 3, price: 1210.99, orderDate: new Date(2015, 3, 3), action: 'Action', status: 'Confirmed'});
+      data.push({ id: 5, productId: 2542205, productName: 'I Love Compressors', inStock: true, activity:  'Inspect and Repair', quantity: 4, price: 810.99, orderDate: new Date(2015, 5, 5), action: 'On Hold', status: 'Confirmed'});
+      data.push({ id: 5, productId: 2642205, productName: 'Air Compressors', inStock: false, activity:  'Inspect and Repair', quantity: 41, price: 1120.99, orderDate: new Date(2014, 6, 9), action: 'On Hold', status: 'Error'});
+      data.push({ id: 6, productId: null, productName: 'Some Compressor', inStock: true, activity:  'inspect and Repair', quantity: 41, price: 123.99, orderDate: new Date(2014, 6, 9), action: 'On Hold', status: 'Confirmed'});
+      data.push({ id: 7, productId: null, productName: null, activity:  '', quantity: null, price: null, orderDate: null, action: 'Blank Row', status: 'Confirmed'});
+      data.push({ id: 8, productId: null, productName: null, activity:  null, quantity: null, price: null, orderDate: null, action: 'Blank Row', status: 'Confirmed'});
+
+      // Define Columns for the Grid.
+      columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Readonly, filterConditions: [{value: 'contains'}, {value: 'equals', selected: true}], filterType: 'text'});
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly, filterConditions: ['equals', 'does-not-equal', 'contains', 'does-not-contain', 'is-empty', 'is-not-empty', 'end-with', 'does-not-end-with', 'start-with', 'does-not-start-with'], filterType: 'text'});
+      columns.push({ id: 'productName', name: 'Product Name', field: 'productName',  formatter: Formatters.Hyperlink, filterConditions: ['contains', 'equals'], filterType: 'text'});
+      columns.push({ id: 'date', name: 'Date', field: 'orderDate', filterType: 'date', filterConditions: ['equals', 'does-not-equal', {value: 'in-range', selected: true}, 'less-than', 'less-equals', 'greater-than', 'greater-equals'], width: 240, formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy'});
+
+      // Init and get the api for the grid
+      $('#datagrid').datagrid({
+        columns: columns,
+        dataset: data,
+        filterable: true,
+        selectable: 'single',
+        editable: true,
+        emptyMessage: {title: Locale.translate('NoData'), info: Locale.translate('NoDataFilter'), icon: 'icon-empty-no-data'},
+        toolbar: {title: 'Filterable Datagrid', filterRow: true, results: true, dateFilter: false ,keywordFilter: false, actions: true, views: false, rowHeight: true, collapsibleFilter: false}
+      });
+ });
+
+</script>
