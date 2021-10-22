@@ -1295,7 +1295,7 @@ Accordion.prototype = {
     const toFilter = targets.not(this.currentlyFiltered);
 
     // Store a list of all modified parent headers
-    let allTempHeaders = [];
+    const allTempHeaders = [];
     const allContentAreas = $();
 
     // Perform filtering
@@ -1355,7 +1355,7 @@ Accordion.prototype = {
     }
 
     // Store a list of all modified parent headers
-    let allTempHeaders = [];
+    const allTempHeaders = [];
 
     // Reset all the things
     this.headers.removeClass('filtered has-filtered-children hide-focus');
