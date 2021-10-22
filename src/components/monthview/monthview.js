@@ -14,6 +14,11 @@ import '../expandablearea/expandablearea.jquery';
 // Settings and Options
 const COMPONENT_NAME = 'monthview';
 
+const LEGEND_DEFAULTS = [
+  { name: 'Public Holiday', color: 'azure06', dates: [] },
+  { name: 'Weekends', color: 'turquoise06', dayOfWeek: [] }
+];
+
 const COMPONENT_NAME_DEFAULTS = {
   locale: null,
   language: null,
@@ -39,10 +44,7 @@ const COMPONENT_NAME_DEFAULTS = {
     isEnable: false,
     restrictMonths: false
   },
-  legend: [
-    { name: 'Public Holiday', color: 'azure06', dates: [] },
-    { name: 'Weekends', color: 'turquoise06', dayOfWeek: [] }
-  ],
+  legend: [],
   hideDays: false, // TODO
   showMonthYearPicker: true,
   yearsAhead: 5,
@@ -68,7 +70,8 @@ const COMPONENT_NAME_DEFAULTS = {
   showToday: true,
   showNextPrevious: true,
   onChangeView: null,
-  isMonthPicker: false
+  isMonthPicker: false,
+  hitbox: false
 };
 
 /**
@@ -134,10 +137,15 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {boolean} [settings.showToday=true] If true the today button is shown on the header.
  * @param {boolean} [settings.showNextPrevious=true] If true the Next Previous buttons will shown on the header.
  * @param {function} [settings.onChangeView] Call back for when the view changer is changed.
+ * @param {boolean} [settings.hitbox=false] Enable hitbox for toolbar buttons.
  * @param {string} [settings.attributes] Add extra attributes like id's to the element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
 */
 function MonthView(element, settings) {
   this.settings = utils.mergeSettings(element, settings, COMPONENT_NAME_DEFAULTS);
+  // assign legend defaults
+  if (this.settings.legend && this.settings.legend.length === 0) {
+    this.settings.legend = LEGEND_DEFAULTS;
+  }
   this.element = $(element);
   this.init();
 }
@@ -330,6 +338,7 @@ MonthView.prototype = {
       attributes: this.settings.attributes,
       inPage: this.settings.inPage,
       inPageTitleAsButton: this.settings.inPageTitleAsButton,
+      hitbox: this.settings.hitbox
     });
 
     this.handleEvents();

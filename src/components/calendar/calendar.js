@@ -17,9 +17,7 @@ import '../popover/popover.jquery';
 const COMPONENT_NAME = 'calendar';
 
 const COMPONENT_NAME_DEFAULTS = {
-  eventTypes: [
-    { id: 'example', label: 'Example', color: 'emerald07', checked: true, click: () => {} },
-  ],
+  eventTypes: [],
   events: [],
   locale: null,
   language: null,
@@ -44,6 +42,7 @@ const COMPONENT_NAME_DEFAULTS = {
   },
   onChangeView: null,
   showToday: true,
+  hitbox: false,
   weekViewSettings: {
     firstDayOfWeek: 0,
     startHour: 7,
@@ -94,6 +93,7 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {string | function} [settings.eventTooltip] The content of event tooltip. Default value is 'overflow'
  * @param {string | function} [settings.iconTooltip] The content of event icon tooltip. Default value is 'overflow'
  * @param {boolean} [settings.showToday=true] Deterimines if the today button should be shown.
+ * @param {boolean} [settings.hitbox=false] Enable hitbox in calendar header.
  * @param {object} [settings.weekViewSettings = {}] an object containing settings for the internal weekview component.
  * @param {number} [settings.weekViewSettings.firstDayOfWeek=0] Set first day of the week. '1' would be Monday.
  * @param {number} [settings.weekViewSettings.startHour=7] The hour (0-24) to end on each day.
@@ -270,6 +270,7 @@ Calendar.prototype = {
       disable: this.settings.disable,
       showLegend: this.settings.dayLegend !== null,
       legend: this.settings.dayLegend,
+      hitbox: this.settings.hitbox,
       attributes: this.settings.attributes,
       firstDayOfWeek: this.settings.firstDayOfWeek,
       displayRange: {
@@ -332,6 +333,7 @@ Calendar.prototype = {
       endHour: this.settings.weekViewSettings.endHour,
       showToday: this.settings.showToday,
       showViewChanger: this.settings.showViewChanger,
+      hitbox: this.settings.hitbox,
       onChangeView: this.onChangeToWeekDay,
       eventTooltip: this.settings.eventTooltip,
       iconTooltip: this.settings.iconTooltip,

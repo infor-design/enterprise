@@ -491,7 +491,6 @@ Datagrid.prototype = {
   /**
    * Checks if the datagrid body has vertical scrollbar.
    * @private
-   * @returns {boolean}
    */
   hasScrollbarY() {
     const self = this;
@@ -531,7 +530,7 @@ Datagrid.prototype = {
     }
 
     // Add row status
-    const newRowStatus = { icon: 'new', text: Locale.translate('New'), tooltip: Locale.translate('New') };
+    const newRowStatus = { icon: 'new', text: Locale.translate('NewRow'), tooltip: Locale.translate('NewRow') };
 
     data = data || {};
     data.rowStatus = data.rowStatus || newRowStatus;
@@ -1916,14 +1915,43 @@ Datagrid.prototype = {
     const self = this;
     const isDisabled = col.filterDisabled;
     const filterConditions = $.isArray(col.filterConditions) ? col.filterConditions : [];
+
+    const hasUserDefinedDefault = function (fConditions) {
+      const hasDefinedDefault = fConditions.some((condition) => {
+        if (!(typeof condition === 'string')) {
+          return condition.selected;
+        }
+        return false;
+      });
+
+      return hasDefinedDefault;
+    };
+    const useDefaultChecked = !hasUserDefinedDefault(filterConditions);
     const inArray = function (s, array) {
       array = array || filterConditions;
       return ($.inArray(s, array) > -1);
     };
     const render = function (icon, text, checked) {
-      const isChecked = filterConditions.length && filterConditions[0] === icon ? true : checked;
-      return filterConditions.length && !inArray(icon) ?
-        '' : self.filterItemHtml(icon, text, isChecked);
+      let isChecked;
+      let valueArray;
+      if (useDefaultChecked) {
+        isChecked = filterConditions.length && filterConditions[0] === icon ? true : checked;
+        valueArray = filterConditions;
+      } else {
+        // there is a passed in selected option, only set that one to checked
+        valueArray = [];
+        isChecked = typeof icon === 'string' ? false : icon.selected;
+        filterConditions.forEach((condition) => {
+          if (typeof condition === 'string') {
+            valueArray.push(condition);
+          } else {
+            valueArray.push(condition.value);
+          }
+        });
+      }
+      const tempIcon = typeof icon === 'string' ? icon : icon.value;
+      return filterConditions.length && !inArray(tempIcon, valueArray) ?
+        '' : self.filterItemHtml(tempIcon, text, isChecked);
     };
     const attrs = utils.stringAttributes(this, this.settings.attributes, `btn-filter-${col.id?.toLowerCase()}`);
 
@@ -1934,7 +1962,12 @@ Datagrid.prototype = {
       }</button><ul class="popupmenu has-icons is-translatable is-selectable">`;
     };
     const formatFilterText = function (str) {
-      str = str
+      let tempStr = str;
+      // Need to determine if passed in str is a string or an object
+      if (!(typeof tempStr === 'string')) {
+        tempStr = str.value;
+      }
+      str = tempStr
         .split('-')
         .map((s) => {
           s = s.charAt(0).toUpperCase() + s.slice(1);
@@ -1961,6 +1994,20 @@ Datagrid.prototype = {
       return str;
     };
 
+    // filterConditions can be an array of string, or an array of objects. If passed in as an array of objects,
+    // then see if one of them should be selected instead of the original defaultValue
+    const determineFilterDefaultValue = function (fConditions, defaultValue) {
+      let returnValue = defaultValue;
+      fConditions.forEach((condition) => {
+        if (!(typeof condition === 'string')) {
+          if (condition.selected) {
+            returnValue = condition.value;
+          }
+        }
+      });
+      return returnValue;
+    };
+
     let btnMarkup = '';
     let btnDefault = '';
 
@@ -1970,7 +2017,7 @@ Datagrid.prototype = {
     }
 
     if (col.filterType === 'text') {
-      btnDefault = filterConditions.length ? filterConditions[0] : 'contains';
+      btnDefault = determineFilterDefaultValue(filterConditions, filterConditions.length ? filterConditions[0] : 'contains');
       if (filterConditions.length === 0) {
         btnMarkup = renderButton(btnDefault) +
           render('contains', 'Contains', true) +
@@ -6459,7 +6506,6 @@ Datagrid.prototype = {
    * Adds support when the datagrid container scrolls to the end of the list.
    * @private
    * @param {jQuery} e The event object.
-   * @returns {boolean}
    */
   verticalScrollToEnd(e) {
     const el = e.currentTarget;
@@ -9811,7 +9857,7 @@ Datagrid.prototype = {
     if (this.settings.treeGrid && this.settings.treeDepth[rowIdx].rowStatus) {
       this.settings.treeDepth[rowIdx].node.rowStatus = this.settings.treeDepth[rowIdx].rowStatus;
     }
-    
+
     return rowData;
   },
 
@@ -10292,6 +10338,13 @@ Datagrid.prototype = {
     const errors = this.settings.dataset.filter(row => row.rowStatus);
     for (let i = 0; i < errors.length; i++) {
       delete errors[i].rowStatus;
+
+      // Tree Grid Children Structure
+      if (errors[i]?.children?.length) {
+        for (let j = 0; j < errors[i].children.length; j++) {
+          delete errors[i].children[j].rowStatus;
+        }
+      }
     }
     if (errors.length > 0) {
       this.render();

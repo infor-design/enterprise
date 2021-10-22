@@ -346,7 +346,7 @@ FileUploadAdvanced.prototype = {
           </span>
           <span class="description">${file.name}</span>
           <div class="l-pull-right">
-            <span class="size">${this.formatFileSize(file.size)}</span>
+            <span class="size">${this.formatFileSize(file.size)}<span id="bar"> | </span><span class="percent">0%</span></span>
           </div>
         </div>
         <div class="progress-row">
@@ -359,6 +359,8 @@ FileUploadAdvanced.prototype = {
     const btnCancel = $('.action', container).button();
     const rightSide = $('.l-pull-right', container);
     const progressBar = $('.progress-bar', container).progress({ animationLength: 10 });
+    const percent = $('.percent', container);
+    const bar = $('#bar', container);
 
     // Add this container
     this.dropArea.after(container);
@@ -374,6 +376,12 @@ FileUploadAdvanced.prototype = {
       * @property {object} status - `{ file, progress }`
       */
       this.element.triggerHandler('fileprogress', [{ file, progress }]);
+
+      percent.text(progress <= 100 ? `${progress}%` : '');
+      if (progress > 100) {
+        bar.text('');
+      }
+
       progressBar.attr('data-value', progress).triggerHandler('updated');
     };
 

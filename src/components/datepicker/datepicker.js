@@ -84,12 +84,18 @@ const COMPONENT_NAME = 'datepicker';
  * implemented https://jira.infor.com/browse/SOHO-3437
  * @param {boolean} [settings.hideButtons=false] If true bottom and next/prev buttons will be not shown.
  * @param {boolean} [settings.showToday=true] If true the today button is shown on the header.
+ * @param {boolean} [settings.hitbox=false] Enable hitbox in button.
  * @param {function} [settings.onOpenCalendar] Call back for when the calendar is open, allows you to set the date.
  * @param {boolean} [settings.isMonthPicker] Indicates this is a month picker on the month and week view. Has some slight different behavior.
  * @param {string} [settings.attributes] Add extra attributes like id's to the element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
  * @param {string} [settings.autocompleteAttribute="off"] Allows prevention of built-in browser typeahead by changing/removing an `autocomplete` attribute to the field.
  * @param {boolean} [settings.tabbable=true] If true, causes the Datepicker's trigger icon to be focusable with the keyboard.
 */
+const LEGEND_DEFAULTS = [
+  { name: 'Public Holiday', color: 'azure06', dates: [] },
+  { name: 'Weekends', color: 'turquoise06', dayOfWeek: [] }
+];
+
 const DATEPICKER_DEFAULTS = {
   showTime: false,
   useCurrentTime: false,
@@ -114,13 +120,10 @@ const DATEPICKER_DEFAULTS = {
   showLegend: false,
   showMonthYearPicker: true,
   hideDays: false,
+  hitbox: false,
   yearsAhead: 5,
   yearsBack: 4,
-  legend: [
-    // Legend Build up exampleazure07
-    { name: 'Public Holiday', color: 'azure06', dates: [] },
-    { name: 'Weekends', color: 'turquoise06', dayOfWeek: [] }
-  ],
+  legend: [],
   range: {
     useRange: false, // true - if datepicker using range dates
     start: '', // Start date '03/05/2018'
@@ -149,6 +152,10 @@ const DATEPICKER_DEFAULTS = {
 function DatePicker(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(this.element[0], settings, DATEPICKER_DEFAULTS);
+  // assign legend defaults
+  if (this.settings.legend && this.settings.legend.length === 0) {
+    this.settings.legend = LEGEND_DEFAULTS;
+  }
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
   debug.logTimeEnd(COMPONENT_NAME);
@@ -180,7 +187,7 @@ DatePicker.prototype = {
     if (next.is('button.trigger')) {
       this.trigger = next;
     } else {
-      this.trigger = $(`<button class="btn-icon trigger" type="button">
+      this.trigger = $(`<button class="btn-icon trigger" type="button" ${this.settings.hitbox ? 'data-options="{hitbox: true}"' : ''}>
         <span class="audible"></span>
         ${$.createIcon('calendar')}
       </button>`).insertAfter(this.element);

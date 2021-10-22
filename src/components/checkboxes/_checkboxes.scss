@@ -199,6 +199,49 @@ span.checkbox > input:not(:checked):not(.error):not(:disabled):hover + label::be
   @include checkbox-hover-state;
 }
 
+// Checkboxes with hitboxes
+.field-checkbox.field-hitbox {
+  span.dirty-checkbox.is-checked {
+    left: 13px;
+    top: 14px !important;
+    position: absolute;
+  }
+}
+
+input.checkbox ~ label.checkbox-label {
+  &.hitbox {
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    vertical-align: middle;
+    min-width: 44px;
+    height: 44px;
+
+    &.hitbox-padding {
+      padding-right: 14px;
+    }
+
+    &::before {
+      margin-left: -12px;
+      margin-right: 12px;
+      position: relative;
+    }
+
+    &::after {
+      left: 15px;
+      top: 50%;
+    }
+  }
+}
+
+input.checkbox.partial:checked + label.checkbox-label {
+  &.hitbox {
+    &::after {
+      top: 10px;
+    }
+  }
+}
+
 // Labels
 label.inline .checkbox ~ .label-text,
 .checkbox-label {
