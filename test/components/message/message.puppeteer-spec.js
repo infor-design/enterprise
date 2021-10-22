@@ -1,3 +1,8 @@
+// const { toMatchImageSnapshot } = require('jest-image-snapshot');
+
+// expect.extend({ toMatchImageSnapshot });
+const percySnapshot = require('@percy/puppeteer');
+
 describe('Message Puppeteer Tests', () => {
   describe('Index Tests', () => {
     const url = 'http://localhost:4000/components/message/example-index.html';
@@ -389,6 +394,58 @@ describe('Message Puppeteer Tests', () => {
       });
 
       expect(titleWidth).toEqual(textWidth);
+    });
+  });
+
+  describe.skip('Message visual regression tests', () => {
+    // const basePath = __dirname;
+    // const baselineFolder = `${basePath}/baseline`;
+    // const screenshotPath = `${basePath}/.tmp/`;
+    // const getConfig = (customSnapshotIdentifier, customDiffDir) => ({
+    //   customSnapshotIdentifier,
+    //   customDiffDir
+    // });
+    it('Should not visual regress on lists example', async () => {
+      const url = 'http://localhost:4000/components/message/test-lists.html';
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
+      await page.click('#show-message');
+      await page.waitForSelector('.modal-content');
+
+      /**
+  |---------------------------------------|
+  | Generate jest ImageSnaphsot           |
+  |---------------------------------------|
+  * */
+      // const image = await page.screenshot({ fullPage: true });
+      // const config = getConfig(baselineFolder, screenshotPath);
+      // expect(image).toMatchImageSnapshot(config);
+      /**
+  |---------------------------------------|
+  | Generate percy Snaphsot               |
+  |---------------------------------------|
+  * */
+      await percySnapshot(page, 'message-open-list');
+    });
+
+    it('Should not visual regress on error example', async () => {
+      const url = 'http://localhost:4000/components/message/example-index.html?theme=classic';
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
+      await page.click('#show-application-error');
+      await page.waitForSelector('.modal-content');
+      /**
+  |---------------------------------------|
+  | Generate jest ImageSnaphsot           |
+  |---------------------------------------|
+  * */
+      // const image = await page.screenshot({ fullPage: true });
+      // const config = getConfig(baselineFolder, screenshotPath);
+      // expect(image).toMatchImageSnapshot(config);
+      /**
+|---------------------------------------|
+| Generate percy Snaphsot               |
+|---------------------------------------|
+* */
+      await percySnapshot(page, 'message-open');
     });
   });
 });
