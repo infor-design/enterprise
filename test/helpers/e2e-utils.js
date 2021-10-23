@@ -82,14 +82,29 @@ module.exports = {
       await browser.driver.wait(expected[condition](el), config.waitsFor);
     }
   },
-  getWidthandCompare: async (el, width) => {
-    const elem = await page.$eval(el, e => getComputedStyle(e).width);
-    expect(elem).toBe(width);
+
+  /**
+     * Get the computed style of a particular element.
+     * param {string} selector - The selector for the element to get the property for.
+     * returns {string} style - The css property of the element.
+     */
+  getComputedStyle: async (selector, style) => {
+    const elem = await page.$eval(selector, e => JSON.parse(JSON.stringify(getComputedStyle(e))));
+    const { [style]: props } = elem;
+    return props;
   },
-  getCssPropsandCompare: async (el, style, value) => {
+
+  /**
+     * Checks the computed style of a particular element with strict equality.
+     * param {string} selector - The selector for the element.
+     * param {string} style - The css property to look for.
+     * param {string} value - The value to compare. Expected Value.
+     * returns {boolean} isFailed - return true if the comparison is failed, return false otherwise.
+     */
+  checkElementCssProperty: async (selector, style, value) => {
     let isFailed = false;
     try {
-      const elem = await page.$eval(el, e => JSON.parse(JSON.stringify(getComputedStyle(e))));
+      const elem = await page.$eval(selector, e => JSON.parse(JSON.stringify(getComputedStyle(e))));
       const { [style]: props } = elem;
       expect(props).toBe(value);
     } catch (error) {
@@ -97,28 +112,51 @@ module.exports = {
     }
     return isFailed;
   },
-  checkDataAutomationID: async (el, val) => {
+
+  /**
+     * Checks if data automation id matches the given value.
+     * param {string} selector - The selector for the element to get the property value for.
+     * param {string} value - The value to compare. Expected Value.
+     * returns {boolean} isFailed - return true if the comparison is failed, return false otherwise.
+     */
+  checkDataAutomationID: async (selector, value) => {
     let isFailed = false;
     try {
-      const elemHandle = await page.$(el);
+      const elemHandle = await page.$(selector);
       const elemID = await page.evaluate(elem => elem.getAttribute('data-automation-id'), elemHandle);
-      expect(elemID).toEqual(val);
+      expect(elemID).toEqual(value);
     } catch (error) {
       isFailed = true;
     }
     return isFailed;
   },
-  compareInnerHTML: async (el, value) => {
+
+  /**
+     * Checks if Inner HTML contains the given value.
+     * param {string} selector - The selector for the element.
+     * param {string} value - The value to compare. Expected Value.
+     * returns {boolean} isFailed - return true if the comparison is failed, return false otherwise.
+     */
+  checkInnerHTMLValue: async (selector, value) => {
     let isFailed = false;
     try {
-      const elem = await page.$eval(el, element => element.innerHTML);
+      const elem = await page.$eval(selector, element => element.innerHTML);
       expect(elem).toContain(value);
     } catch (error) {
       isFailed = true;
     }
     return isFailed;
   },
-  checkTooltip: async (parentEL, tooltipEL, elHandle, expectedValue) => {
+
+  /**
+     * Checks if tooltip of the element matches the given value.
+     * param {string} parentEL - The selector for the element you want to see the tooltip.
+     * param {string} tooltipEL - The selector for the tooltip element.
+     * param {string} elHandle - The selector for the tooltip content.
+     * param {string} expectedValue - The tooltip value to compare.
+     * returns {boolean} isFailed - return true if the comparison is failed, return false otherwise.
+     */
+  checkTooltipValue: async (parentEL, tooltipEL, elHandle, expectedValue) => {
     let isFailed = false;
     try {
       await page.hover(parentEL);
@@ -131,28 +169,67 @@ module.exports = {
     }
     return isFailed;
   },
-  isExist: async (element) => {
+
+  /**
+     * Checks if the element exists on the page.
+     * param {string} selector - The selector for the element to get the property value for
+     * returns {boolean} isFailed - return true if the comparison is failed, return false otherwise
+     */
+  checkIfElementExist: async (selector) => {
     let isFailed = false;
     try {
-      const elem = await page.$eval(element, el => el !== null);
+      const elem = await page.$eval(selector, el => el !== null);
       expect(elem).toBe(true);
     } catch (error) {
       isFailed = true;
     }
     return isFailed;
   },
-  checkClassName: async (el, val) => {
+
+  /**
+     * Checks if the element has focused.
+     * param {string} selector - The selector for the element.
+     * returns {boolean} isFailed - return true if the comparison is failed, return false otherwise
+     */
+  checkIfElementHasFocused: async (selector) => {
     let isFailed = false;
     try {
-      const elemHandle = await page.$(el);
-      const elemID = await page.evaluate(elem => elem.getAttribute('class'), elemHandle);
-      expect(elemID).toEqual(val);
+      // const elemHandle = await page.$(selector);
+      // const element = await page.evaluate(elem => elem === document.activeElement, elemHandle);
+      const elem = await page.$eval(selector, el => el === document.activeElement);
+      expect(elem).toBe(true);
     } catch (error) {
       isFailed = true;
     }
     return isFailed;
   },
-  checkListItemValue: async (listElement, firstItem, LastItem) => {
+
+  /**
+     * Checks if the Class Name of an element contains the given value.
+     * param {string} selector - The selector for the element.
+     * param {string} value - The value to compare. Expected Value.
+     * returns {boolean} isFailed - return true if the comparison is failed, return false otherwise.
+     */
+  checkClassNameValue: async (selector, value) => {
+    let isFailed = false;
+    try {
+      const elemHandle = await page.$(selector);
+      const elemID = await page.evaluate(elem => elem.getAttribute('class'), elemHandle);
+      expect(elemID).toEqual(value);
+    } catch (error) {
+      isFailed = true;
+    }
+    return isFailed;
+  },
+
+  /**
+     * Checks if the 1st and Last item on the list contains the given value.
+     * param {string} listElement - The selector for the element to get the property value for.
+     * param {string} firstItem - The selector of the first item on the list.
+     * param {string} lasttItem - The selector of the last item on the list.
+     * returns {boolean} isFailed - return true if the comparison is failed, return false otherwise.
+     */
+  checkList_1stnLast_ItemValue: async (listElement, firstItem, lastItem) => {
     let hasFailed = false;
     const elHandleArray = await page.$$(listElement);
     const lastIndex = elHandleArray.length - 1;
@@ -165,7 +242,7 @@ module.exports = {
         }
         if (index === lastIndex) {
           expect(await page.$eval(`${listElement}:last-child`, items => items.textContent))
-            .toContain(LastItem);
+            .toContain(lastItem);
         }
       } catch (error) {
         hasFailed = true;
@@ -173,5 +250,5 @@ module.exports = {
       index += 1;
     }));
     return hasFailed;
-  }
+  },
 };
