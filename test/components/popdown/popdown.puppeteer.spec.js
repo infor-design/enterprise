@@ -3,7 +3,7 @@ const { checkDataAutomationID, checkIfElementHasFocused, checkIfElementExist } =
 describe('Popdown Puppeteer Tests', () => {
   describe('Index Tests', () => {
     const url = 'http://localhost:4000/components/popdown/example-index?layout=nofrills';
-    beforeAll(async () => {
+    beforeEach(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
     });
 
@@ -14,7 +14,15 @@ describe('Popdown Puppeteer Tests', () => {
     it('should check the test page with Axe', async () => {
       await page.setBypassCSP(true);
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+      /* Violations found:
+      Rule: "color-contrast" (Elements must have sufficient color contrast)
+      Rule: "region" (All page content should be contained by landmarks)
+      Rule: "meta-viewport" (Zooming and scaling should not be disabled)
+      */
       await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport', 'aria-valid-attr-value', 'region'] });
+      await page.click('#popdown-example-trigger');
+      await page.waitForSelector('.popdown', { visible: true });
+      await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport', 'color-contrast', 'region'] });
     });
 
     it('should have Accessibility', async () => {
@@ -45,6 +53,42 @@ describe('Popdown Puppeteer Tests', () => {
         name: 'Checkout',
         role: 'button'
       });
+      await page.click('#popdown-example-trigger');
+      await page.waitForSelector('.popdown', { visible: true });
+      expect(webArea).toMatchInlineSnapshot(`
+Object {
+  "children": Array [
+    Object {
+      "level": 1,
+      "name": "Component Example Page",
+      "role": "heading",
+    },
+    Object {
+      "name": "My Cart",
+      "role": "button",
+    },
+    Object {
+      "level": 2,
+      "name": "My Cart (8 Items)",
+      "role": "heading",
+    },
+    Object {
+      "name": "",
+      "role": "generic",
+    },
+    Object {
+      "name": "Edit Cart",
+      "role": "button",
+    },
+    Object {
+      "name": "Checkout",
+      "role": "button",
+    },
+  ],
+  "name": "IDS Enterprise",
+  "role": "RootWebArea",
+}
+`);
     });
 
     it('should display on click', async () => {
@@ -66,7 +110,7 @@ describe('Popdown Puppeteer Tests', () => {
 
   describe('Popdown (with Dropdown) Tests', () => {
     const url = 'http://localhost:4000/components/popdown/test-contains-dropdown?layout=nofrills';
-    beforeAll(async () => {
+    beforeEach(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
     });
 
@@ -77,7 +121,22 @@ describe('Popdown Puppeteer Tests', () => {
     it('should check the test page with Axe', async () => {
       await page.setBypassCSP(true);
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+      /* Violations found:
+      Rule: "color-contrast" (Elements must have sufficient color contrast)
+      Rule: "region" (All page content should be contained by landmarks)
+      Rule: "meta-viewport" (Zooming and scaling should not be disabled)
+      Rule: "aria-valid-attr-value" (ARIA attributes must conform to valid values)
+      */
       await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport', 'aria-valid-attr-value', 'region'] });
+      // Open the Popdown
+      await page.click('#popdown-example-trigger');
+      await page.waitForSelector('.popdown', { visible: true });
+
+      // Open the Dropdown List
+      await page.click('.popdown div.dropdown');
+      await page.waitForSelector('.dropdown-list', { visible: true });
+
+      await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport', 'color-contrast', 'region'] });
     });
 
     it('should have Accessibility', async () => {
@@ -113,6 +172,53 @@ describe('Popdown Puppeteer Tests', () => {
         name: 'Submit',
         role: 'button'
       });
+      // Open the Popdown
+      await page.click('#popdown-example-trigger');
+      await page.waitForSelector('.popdown', { visible: true });
+
+      // Open the Dropdown List
+      await page.click('.popdown div.dropdown');
+      await page.waitForSelector('.dropdown-list', { visible: true });
+
+      expect(webArea).toMatchInlineSnapshot(`
+Object {
+  "children": Array [
+    Object {
+      "level": 1,
+      "name": "Component Example Page",
+      "role": "heading",
+    },
+    Object {
+      "name": "Choose an option...",
+      "role": "button",
+    },
+    Object {
+      "level": 2,
+      "name": "Dropdown Container",
+      "role": "heading",
+    },
+    Object {
+      "name": "Option Picker",
+      "role": "StaticText",
+    },
+    Object {
+      "haspopup": "listbox",
+      "name": "Option Picker, (please select)",
+      "role": "combobox",
+    },
+    Object {
+      "name": "Clear",
+      "role": "button",
+    },
+    Object {
+      "name": "Submit",
+      "role": "button",
+    },
+  ],
+  "name": "IDS Enterprise",
+  "role": "RootWebArea",
+}
+`);
     });
 
     it('should keep the Popdown open while focused on an inline-Dropdown component\'s list', async () => {
@@ -139,7 +245,7 @@ describe('Popdown Puppeteer Tests', () => {
 
   describe('Popdown first last tab Tests', () => {
     const url = 'http://localhost:4000/components/popdown/test-first-last-tab?layout=nofrills';
-    beforeAll(async () => {
+    beforeEach(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
     });
 
@@ -150,7 +256,16 @@ describe('Popdown Puppeteer Tests', () => {
     it('should check the test page with Axe', async () => {
       await page.setBypassCSP(true);
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+      /* Violations found:
+      Rule: "color-contrast" (Elements must have sufficient color contrast)
+      Rule: "region" (All page content should be contained by landmarks)
+      Rule: "meta-viewport" (Zooming and scaling should not be disabled)
+      Rule: "aria-valid-attr-value" (ARIA attributes must conform to valid values)
+      */
       await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport', 'aria-valid-attr-value', 'region'] });
+      await page.click('#popdown-example-trigger');
+      await page.waitForSelector('.popdown', { visible: true });
+      await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport', 'region', 'color-contrast'] });
     });
 
     it('should have Accessibility', async () => {
@@ -179,6 +294,88 @@ describe('Popdown Puppeteer Tests', () => {
         ]
       };
       expect(webArea).toMatchObject(root);
+      await page.click('#popdown-example-trigger');
+      await page.waitForSelector('.popdown', { visible: true });
+      expect(webArea).toMatchInlineSnapshot(`
+Object {
+  "children": Array [
+    Object {
+      "level": 1,
+      "name": "Component Example Page",
+      "role": "heading",
+    },
+    Object {
+      "level": 2,
+      "name": "Popdown Example: Tabbing into and out from a popdown.",
+      "role": "heading",
+    },
+    Object {
+      "name": "1. When compound field opens, the first input in the popdown should be focused.",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "2. Shift + Tab on first input in the popdown should close the popdown and focus to previous element (Date Field).",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "3. Tab on last input in the popdown should close the popdown and focus to next element (Another Field).",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "Date Field",
+      "role": "StaticText",
+    },
+    Object {
+      "name": ". Press Down arrow to select",
+      "role": "StaticText",
+    },
+    Object {
+      "haspopup": "listbox",
+      "name": "Date Field . Press Down arrow to select",
+      "role": "combobox",
+    },
+    Object {
+      "haspopup": "dialog",
+      "name": "Date Picker Trigger",
+      "role": "combobox",
+    },
+    Object {
+      "name": "Compound Field, mouse click or tab into",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "JoeSmith",
+      "role": "generic",
+    },
+    Object {
+      "name": "Another Field",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "Another Field",
+      "role": "textbox",
+    },
+    Object {
+      "name": "First Name",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "First Name",
+      "role": "textbox",
+    },
+    Object {
+      "name": "Last Name",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "Last Name",
+      "role": "textbox",
+    },
+  ],
+  "name": "IDS Enterprise",
+  "role": "RootWebArea",
+}
+`);
     });
 
     // 1. On open first input should be focused.
@@ -262,7 +459,7 @@ describe('Popdown Puppeteer Tests', () => {
 
   describe('Popdown/Lookup integration Tests', () => {
     const url = 'http://localhost:4000/components/popdown/test-contains-lookup.html?layout=nofrills';
-    beforeAll(async () => {
+    beforeEach(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
     });
 
@@ -273,7 +470,15 @@ describe('Popdown Puppeteer Tests', () => {
     it('should check the test page with Axe', async () => {
       await page.setBypassCSP(true);
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+      /* Violations found:
+      Rule: "color-contrast" (Elements must have sufficient color contrast)
+      Rule: "region" (All page content should be contained by landmarks)
+      Rule: "meta-viewport" (Zooming and scaling should not be disabled)
+      */
       await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport', 'aria-valid-attr-value', 'region'] });
+      await page.click('#popdown-trigger');
+      await page.click('.btn-icon');
+      await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport', 'color-contrast', 'region'] });
     });
 
     it('should have Accessibility', async () => {
@@ -316,6 +521,54 @@ describe('Popdown Puppeteer Tests', () => {
         name: 'Accept',
         role: 'button'
       });
+      await page.click('#popdown-trigger');
+      await page.click('.btn-icon');
+      expect(webArea).toMatchInlineSnapshot(`
+Object {
+  "children": Array [
+    Object {
+      "level": 1,
+      "name": "Component Example Page",
+      "role": "heading",
+    },
+    Object {
+      "name": "Trigger Popdown",
+      "role": "button",
+    },
+    Object {
+      "level": 2,
+      "name": "Look Up Something",
+      "role": "heading",
+    },
+    Object {
+      "name": "Lookup",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "[Lookup]. [PressDown]",
+      "role": "StaticText",
+    },
+    Object {
+      "name": "Lookup [Lookup]. [PressDown]",
+      "role": "textbox",
+    },
+    Object {
+      "name": "[LookupTriggerButton]",
+      "role": "button",
+    },
+    Object {
+      "name": "Reset",
+      "role": "button",
+    },
+    Object {
+      "name": "Accept",
+      "role": "button",
+    },
+  ],
+  "name": "IDS Enterprise",
+  "role": "RootWebArea",
+}
+`);
     });
 
     it('Should remain open when an inner Lookup component is opened', async () => {
@@ -353,7 +606,7 @@ describe('Popdown Puppeteer Tests', () => {
 
   describe('Outside Event Tests', () => {
     const url = 'http://localhost:4000/components/popdown/test-click-outside.html';
-    beforeAll(async () => {
+    beforeEach(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
     });
 
@@ -364,7 +617,15 @@ describe('Popdown Puppeteer Tests', () => {
     it('should check the test page with Axe', async () => {
       await page.setBypassCSP(true);
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+      /* Violations found:
+      Rule: "color-contrast" (Elements must have sufficient color contrast)
+      Rule: "region" (All page content should be contained by landmarks)
+      Rule: "meta-viewport" (Zooming and scaling should not be disabled)
+      */
       await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport', 'aria-valid-attr-value', 'region'] });
+      await page.click('#popdown-example-trigger');
+      await page.waitForSelector('#maincontent');
+      await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport', 'color-contrast', 'region'] });
     });
 
     it('should have Accessibility', async () => {
@@ -404,6 +665,51 @@ describe('Popdown Puppeteer Tests', () => {
         name: 'Checkout',
         role: 'button'
       });
+      await page.click('#popdown-example-trigger');
+      await page.waitForSelector('#maincontent');
+      expect(webArea).toMatchInlineSnapshot(`
+Object {
+  "children": Array [
+    Object {
+      "name": "Skip to Main Content",
+      "role": "link",
+    },
+    Object {
+      "level": 1,
+      "name": "IDS Enterprise",
+      "role": "heading",
+    },
+    Object {
+      "haspopup": "menu",
+      "name": "Header More Actions Button",
+      "role": "combobox",
+    },
+    Object {
+      "name": "My Cart",
+      "role": "button",
+    },
+    Object {
+      "level": 2,
+      "name": "My Cart (8 Items)",
+      "role": "heading",
+    },
+    Object {
+      "name": "",
+      "role": "generic",
+    },
+    Object {
+      "name": "Edit Cart",
+      "role": "button",
+    },
+    Object {
+      "name": "Checkout",
+      "role": "button",
+    },
+  ],
+  "name": "IDS Enterprise",
+  "role": "RootWebArea",
+}
+`);
     });
 
     it('should show have outside event', async () => {
