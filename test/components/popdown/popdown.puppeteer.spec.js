@@ -1,3 +1,7 @@
+// const { toMatchImageSnapshot } = require('jest-image-snapshot');
+
+// expect.extend({ toMatchImageSnapshot });
+const percySnapshot = require('@percy/puppeteer');
 const { checkDataAutomationID, checkIfElementHasFocused, checkIfElementExist } = require('../../helpers/e2e-utils.js');
 
 describe('Popdown Puppeteer Tests', () => {
@@ -731,6 +735,46 @@ Object {
       await page.waitForSelector('#maincontent');
       await page.click('#maincontent', { delay: 500 });
       await page.click('[data-automation-id="popover-listview-example-automation-id"]', { delay: 500 });
+    });
+  });
+
+  describe.skip('Popdown visual regression tests', () => {
+    // const basePath = __dirname;
+    // const baselineFolder = `${basePath}/baseline`;
+    // const screenshotPath = `${basePath}/.tmp/`;
+    // const getConfig = (customSnapshotIdentifier, customDiffDir) => ({
+    //   customSnapshotIdentifier,
+    //   customDiffDir
+    // });
+    beforeEach(async () => {
+      await page.setViewport({
+        width: 1200,
+        height: 800,
+        deviceScaleFactor: 1,
+      });
+      const url = 'http://localhost:4000/components/popdown/example-index?layout=nofrills';
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
+    });
+    it('should not visual regress on index example', async () => {
+      await page.waitForSelector('.container');
+      await page.click('#popdown-example-trigger');
+      await page.waitForSelector('#popdown', { visible: true });
+      await page.waitForTimeout(500);
+
+      /**
+  |---------------------------------------|
+  | Generate jest ImageSnaphsot           |
+  |---------------------------------------|
+  * */
+      // const image = await page.screenshot({ fullPage: true });
+      // const config = getConfig(baselineFolder, screenshotPath);
+      // expect(image).toMatchImageSnapshot(config);
+      /**
+  |---------------------------------------|
+  | Generate percy Snaphsot               |
+  |---------------------------------------|
+  * */
+      await percySnapshot(page, 'popdown');
     });
   });
 });
