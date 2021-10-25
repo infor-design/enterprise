@@ -12548,6 +12548,8 @@ Datagrid.prototype = {
 
     $('html').off(`themechanged.${COMPONENT_NAME}`);
 
+    this.element.find('.datagrid-img').off('error.datagrid');
+
     // Unbind context menu events
     this.element.add(this.element.find('*'))
       .off('selected.gridpopupth close.gridpopupth selected.gridpopuptr close.gridpopuptr selected.gridpopupbtn close.gridpopupbtn');
