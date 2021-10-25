@@ -7,13 +7,17 @@
       &::after {
         padding-left: 0;
         padding-right: 0;
+        position: relative;
+        top: -1px;
       }
 
       a.hyperlink,
       span.breadcrumb-text {
         font-size: 16px;
+        line-height: 1.5em;
         margin: 0 8px;
         padding: 0;
+        width: fit-content;
 
         &::after {
           content: '';
@@ -23,7 +27,7 @@
           margin: 2px -8px 0;
           padding: 0 8px;
           position: relative;
-          top: -19px;
+          top: -14px;
           transform: translateY(-50%);
           width: 100%;
         }
@@ -360,6 +364,17 @@
     background-color: $header-bg-color;
     display: block;
     padding: 1px 10px 0;
+
+    &.truncated.hitbox {
+      ol.breadcrumb-list li.breadcrumb-item {
+        padding-left: 0;
+
+        .hyperlink,
+        .breadcrumb-text {
+          text-align: center;
+        }
+      }
+    }
 
     .hyperlink,
     .breadcrumb-text {
