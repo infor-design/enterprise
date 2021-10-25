@@ -3,6 +3,7 @@
 ## v4.57.0 Features
 
 - `[Button]` Added the ability to have a hitbox. With this feature, it will have a better tapping/clicking on smaller devices. ([#5568](https://github.com/infor-design/enterprise/issues/5568))
+- `[Calendar]` Added hitbox option for calendar. ([#5602](https://github.com/infor-design/enterprise/issues/5602))
 - `[Checkbox]` Added hitbox area styles for checkboxes. ([#5603](https://github.com/infor-design/enterprise/issues/5603))
 - `[Datagrid]` Added Datagrid Fallback Image when image cannot be loaded. ([#5442](https://github.com/infor-design/enterprise/issues/5442))
 - `[File Upload]` Show progress percent while file is uploading. ([#3934](https://github.com/infor-design/enterprise/issues/3934))
@@ -10,6 +11,7 @@
 - `[Modal]` Adjusted stylings on mobile viewport. ([#5601](https://github.com/infor-design/enterprise/issues/5601))
 - `[Notification]` Added tooltip in notification. ([#5562](https://github.com/infor-design/enterprise/issues/5562))
 - `[Notification]` Added close functions (by ID and latest) in notification. ([#5562](https://github.com/infor-design/enterprise/issues/5562))
+- `[Datagrid]` Added support for text filter types to specify a selected filter condition. ([#5750](https://github.com/infor-design/enterprise/issues/5750))
 
 ## v4.57.0 Fixes
 
@@ -17,6 +19,7 @@
 - `[Calendar]` Removed the example legend in the default settings. ([#1130](https://github.com/infor-design/enterprise-ng/issues/1130))
 - `[Counts]` Updated the font size of `xl-text` from `50px` to `48px`. ([#5588](https://github.com/infor-design/enterprise/issues/5588))
 - `[Counts]` Fixed title and icon position when in RTL. ([#5566](https://github.com/infor-design/enterprise/issues/5566))
+- `[Datagrid]` Removed margin in icon when size is small or extra small. ([#5726](https://github.com/infor-design/enterprise/issues/5726))
 - `[Datepicker]` Fix on default legends being shown regardless if settings have custom legends. ([#5683](https://github.com/infor-design/enterprise/issues/5683))
 - `[EmptyMessage]` Added `16px` spacings in the empty message container. ([#5639](https://github.com/infor-design/enterprise/issues/5639))
 - `[FieldFilter]` Fixed missing trigger icons on short field filter options. ([#5727](https://github.com/infor-design/enterprise/issues/5727))
