@@ -475,6 +475,11 @@ ApplicationMenu.prototype = {
     if ($('html.is-safari') && this.settings.resizable) {
       $('.resize-app-menu-container').css('display', 'flex');
     }
+
+    if (!localStorage.navMenuWidth) {
+      const resizerPos = $('.resizer').position();
+      $('.page-container').css('width', `calc(100% - ${resizerPos.left < 300 ? 300 : resizerPos.left}px)`);
+    }
   },
 
   /**

@@ -15,6 +15,7 @@
 ## v4.57.0 Fixes
 
 - `[ApplicationMenu]` Fix for broken UI in Safari when hiding and expanding the navigation menu. ([#5620](https://github.com/infor-design/enterprise/issues/5620))
+- `[ApplicationMenu]` Fix application menu broken UI on first render. ([#5766](https://github.com/infor-design/enterprise/issues/5766))
 - `[Calendar]` Removed the example legend in the default settings. ([#1130](https://github.com/infor-design/enterprise-ng/issues/1130))
 - `[Counts]` Updated the font size of `xl-text` from `50px` to `48px`. ([#5588](https://github.com/infor-design/enterprise/issues/5588))
 - `[Counts]` Fixed title and icon position when in RTL. ([#5566](https://github.com/infor-design/enterprise/issues/5566))
