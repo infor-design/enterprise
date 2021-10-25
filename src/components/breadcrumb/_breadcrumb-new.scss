@@ -60,6 +60,14 @@
   }
 }
 
+.scrollable-flex-header {
+  .breadcrumb.hitbox.truncated {
+    .breadcrumb-overflow-container::after {
+      margin-top: 4px;
+    }
+  }
+}
+
 html[dir='rtl'] {
   .scrollable-flex-header {
     .breadcrumb.truncated {
