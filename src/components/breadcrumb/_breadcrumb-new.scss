@@ -1,6 +1,17 @@
 // Breadcrumbs (Uplift)
 //================================================== //
 .breadcrumb {
+  &.hitbox {
+    ol.breadcrumb-list li {
+      a.hyperlink,
+      span.breadcrumb-text {
+        &::after {
+          top: -15px;
+        }
+      }
+    }
+  }
+
   .hyperlink,
   .breadcrumb-text,
   li > span {
