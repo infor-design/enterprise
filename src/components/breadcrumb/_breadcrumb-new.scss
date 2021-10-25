@@ -56,6 +56,20 @@
       .breadcrumb-overflow-container::after {
         margin-top: 6px;
       }
+
+      &.hitbox {
+        ol.breadcrumb-list li.breadcrumb-item {
+          &::after {
+            margin-top: 4px;
+          }
+        }
+
+        .breadcrumb-overflow-container {
+          &::after {
+            margin-top: 6px;
+          }
+        }
+      }
     }
   }
 }
