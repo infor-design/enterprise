@@ -39,7 +39,6 @@ describe('Monthview API', () => {
       month: 8,
       year: 2018,
       activeDate: new Date(2018, 8, 10),
-      firstDayOfWeek: 1,
     });
   });
 
@@ -191,8 +190,13 @@ describe('Monthview API', () => {
   });
 
   it('Should populate header starting from given day of the week', () => {
-    monthviewAPI.showMonth(9, 2021);
-    expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('October 2021');
+    monthviewAPI.destroy();
+    monthviewAPI = new MonthView(monthviewEl, {
+      month: 8,
+      year: 2018,
+      activeDate: new Date(2018, 8, 10),
+      firstDayOfWeek: 1
+    });
     expect(document.getElementsByClassName('monthview-table')[0].children[0].children[0].children[0].innerHTML).toEqual('Mon');
   });
 });
