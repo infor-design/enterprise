@@ -495,7 +495,8 @@ Datagrid.prototype = {
   hasScrollbarY() {
     const self = this;
     const height = parseInt(self.bodyWrapperCenter[0].offsetHeight, 10);
-    const hasVerticalScrollbar = parseInt(self.bodyWrapperCenter[0].scrollHeight, 10) > height + 2;
+    const hasVerticalScrollbar = parseInt(self.bodyWrapperCenter[0].scrollHeight, 10) > height + 2 ||
+                                  self.element[0].scrollHeight > self.element[0].clientHeight;
 
     self.hasVerticalScrollbar = hasVerticalScrollbar !== false;
   },
