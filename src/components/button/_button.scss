@@ -99,6 +99,42 @@ button {
     }
   }
 
+  .notification-badge-container {
+    position: absolute;
+
+    .notification-dot {
+      display: block !important;
+
+      &.notification-dot-upper-right {
+        right: -26px;
+        top: -3px;
+        transform: scale(1) translate(50%, -50%);
+        transform-origin: 100% 0%;
+      }
+  
+      &.notification-dot-upper-left {
+        top: -2px;
+        left: -70px;
+        transform: scale(1) translate(-50%, -50%);
+        transform-origin: 0% 0%;
+      }
+  
+      &.notification-dot-lower-right {
+        top: 17px;
+        left: 20px;
+        transform: scale(1) translate(50%, 50%);
+        transform-origin: 0% 100%;
+      }
+  
+      &.notification-dot-lower-left {
+        top: 17px;
+        left: -70px;
+        transform: scale(1) translate(-50%, 50%);
+        transform-origin: 0% 100%;
+      }
+    }
+  }
+
   // Stackable buttons take up 100% of their container width and stack
   &.stackable {
     margin-bottom: 10px;

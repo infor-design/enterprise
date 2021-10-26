@@ -14,6 +14,7 @@ const NOTIFICATION_BADGE_DEFAULTS = {
   position: NOTIFICATION_BADGE_POSITION_OPTIONS[1],
   icon: 'menu',
   color: NOTIFICATION_BADGE_COLOR_OPTIONS[0],
+  badge: false,
   attribute: null
 };
 
@@ -66,7 +67,11 @@ NotificationBadge.prototype = {
     const htmlNotificationBadge = `
       <span class="notification-dot notification-dot-${this.settings.position} notification-dot-${this.settings.color}"></span>`;
 
-    this.notificationBadgeContainerEl.find('.notification-badge-container').append(htmlIcon, htmlNotificationBadge);
+    if (this.settings.badge) {
+      this.notificationBadgeContainerEl.find('.notification-badge-container').append(htmlNotificationBadge);
+    } else {
+      this.notificationBadgeContainerEl.find('.notification-badge-container').append(htmlIcon, htmlNotificationBadge);
+    }
 
     utils.addAttributes(this.notificationBadgeContainerEl.find('.notification-badge-container'), this, this.settings.attributes, 'container');
     utils.addAttributes(this.notificationBadgeContainerEl.find('.notification-badge-container svg.icon'), this, this.settings.attributes, 'icon');
@@ -98,6 +103,22 @@ NotificationBadge.prototype = {
     return this
       .teardown()
       .init();
+  },
+
+  /**
+    * Enable a disabled badge.
+    * @returns {void}
+    */
+  enable() {
+    this.element.find('.notification-dot').removeClass('is-disabled');
+  },
+
+  /**
+    * Disable a badge.
+    * @returns {void}
+    */
+  disable() {
+    this.element.find('.notification-dot').addClass('is-disabled');
   },
 
   /**

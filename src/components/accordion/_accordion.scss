@@ -538,6 +538,16 @@
     width: 18px;
   }
 
+  .notification-badge-container {
+    margin: 0 18px;
+    width: 18px;
+
+    + a {
+      width: calc(100% - 56px);
+      padding: 9px 0px 7px !important;
+    }
+  }
+
   // NOT the same as the above rule.
   > .icon {
     margin: 0 18px;
