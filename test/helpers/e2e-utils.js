@@ -263,46 +263,57 @@ module.exports = {
       const ob = await origin.boundingBox();
       const db = await destination.boundingBox();
 
-      logger('info', `Dragging from ${ob.x + ob.width / 2}, ${ob.y + ob.height / 2}`);
+      // logger('info', `Dragging from ${ob.x + ob.width / 2}, ${ob.y + ob.height / 2}`);
       await page.mouse.move(ob.x + ob.width / 2, ob.y + ob.height / 2);
       await page.mouse.down();
-      logger('info', `Dropping at ${db.x + db.width / 2}, ${db.y + db.height / 2}`);
+      // logger('info', `Dropping at ${db.x + db.width / 2}, ${db.y + db.height / 2}`);
       await page.mouse.move(db.x + db.width / 2, db.y + db.height / 2);
       await page.mouse.up();
     };
     const DroptoLocation = async (x, y) => {
-      logger('info', `x is: ${parseFloat(x)}  ${typeof x}`);
-      logger('info', `y is: ${parseFloat(y)}  ${typeof y}`);
-
-      const example = await page.$(originSelector);
+      // logger('info', `x is: ${parseFloat(x)}  ${typeof x}`);
+      // logger('info', `y is: ${parseFloat(y)}  ${typeof y}`);
+      const element = await page.$(originSelector);
       // eslint-disable-next-line camelcase
-      const bounding_box = await example.boundingBox();
+      const bounding_box = await element.boundingBox();
       await page.mouse.move(bounding_box.x + bounding_box.width / 2, bounding_box.y + bounding_box.height / 2);
-      logger('info', `dragging from: x: ${bounding_box.x + bounding_box.width / 2}  y: ${bounding_box.y + bounding_box.height / 2}`);
+      // logger('info', `dragging from: x: ${bounding_box.x + bounding_box.width / 2}  y: ${bounding_box.y + bounding_box.height / 2}`);
       await page.mouse.down();
-      logger('info', `dropping at   ${parseFloat(x)}, ${parseFloat(y)}`);
+      // logger('info', `dropping at   ${parseFloat(x)}, ${parseFloat(y)}`);
       await page.mouse.move(parseFloat(x), parseFloat(y));
       await page.mouse.up();
     };
-    if ((getType(originSelector) === '[object String]' && getType(destinationSelector) === '[object String]')) {
-      await DroptoElement();
-    } else if ((typeof originSelector === 'string' && destinationSelector === 'number')) {
-      await DroptoLocation();
-    } else if ((getType(originSelector) === '[object String]' && getType(destinationSelector) === '[object Array]')) {
-      const { x } = destinationSelector[0];
-      const { y } = destinationSelector[0];
-      await DroptoLocation(x, y);
-    } else if ((getType(originSelector) === '[object Object]' && getType(destinationSelector) === '[object Object]')) {
-      const origin = originSelector;
-      const destination = destinationSelector;
-      const ob = await origin.boundingBox();
-      const db = await destination.boundingBox();
-      logger('info', `Dragging from ${ob.x + ob.width / 2}, ${ob.y + ob.height / 2}`);
-      await page.mouse.move(ob.x + ob.width / 2, ob.y + ob.height / 2);
-      await page.mouse.down();
-      logger('info', `Dropping at   ${db.x + db.width / 2}, ${db.y + db.height / 2}`);
-      await page.mouse.move(db.x + db.width / 2, db.y + db.height / 2);
-      await page.mouse.up();
+
+    switch (getType(destinationSelector)) {
+      case '[object String]':
+        await DroptoElement();
+        break;
+      case 'number':
+        await DroptoLocation();
+        break;
+      case '[object Array]':
+        // eslint-disable-next-line no-case-declarations
+        const { x } = destinationSelector[0];
+        // eslint-disable-next-line no-case-declarations
+        const { y } = destinationSelector[0];
+        await DroptoLocation(x, y);
+        break;
+      case '[object Object]':
+      default:
+        if ((getType(originSelector) === '[object Object]')) {
+          const origin = originSelector;
+          const destination = destinationSelector;
+          const ob = await origin.boundingBox();
+          const db = await destination.boundingBox();
+          // logger('info', `Dragging from ${ob.x + ob.width / 2}, ${ob.y + ob.height / 2}`);
+          await page.mouse.move(ob.x + ob.width / 2, ob.y + ob.height / 2);
+          await page.mouse.down();
+          // logger('info', `Dropping at   ${db.x + db.width / 2}, ${db.y + db.height / 2}`);
+          await page.mouse.move(db.x + db.width / 2, db.y + db.height / 2);
+          await page.mouse.up();
+          break;
+        }
+        break;
     }
   },
 };
