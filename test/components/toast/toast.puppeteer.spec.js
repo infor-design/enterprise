@@ -1,7 +1,9 @@
+/* eslint-disable no-case-declarations */
 // const { toMatchImageSnapshot } = require('jest-image-snapshot');
 
 // expect.extend({ toMatchImageSnapshot });
 const percySnapshot = require('@percy/puppeteer');
+const logger = require('../../../scripts/logger');
 
 describe('Toast Puppeteer Tests', () => {
   describe('Index Tests', () => {
@@ -124,7 +126,7 @@ Object {
     });
   });
 
-  describe('Toast example-positions tests', () => {
+  describe('Example-positions tests', () => {
     const url = 'http://localhost:4000/components/toast/test-positions';
     beforeEach(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
@@ -257,7 +259,152 @@ Object {
     });
   });
 
-  describe.skip('Toast visual regression tests', () => {
+  describe('Example-draggable tests', () => {
+    const url = 'http://localhost:4000/components/toast/example-draggable.html';
+    beforeEach(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
+    });
+
+    it('should show the title', async () => {
+      await expect(page.title()).resolves.toMatch('IDS Enterprise');
+    });
+
+    it('should check the test page with Axe', async () => {
+      await page.setBypassCSP(true);
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+      /* Violations found:
+      Rule: "color-contrast" (Elements must have sufficient color contrast)
+      Rule: "meta-viewport" (Zooming and scaling should not be disabled)
+      */
+      await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport'] });
+    });
+
+    it('should have Accessibility', async () => {
+      const webArea = await page.accessibility.snapshot();
+      expect(webArea).toMatchInlineSnapshot(`
+Object {
+  "children": Array [
+    Object {
+      "name": "Skip to Main Content",
+      "role": "link",
+    },
+    Object {
+      "level": 1,
+      "name": "IDS Enterprise",
+      "role": "heading",
+    },
+    Object {
+      "haspopup": "menu",
+      "name": "Header More Actions Button",
+      "role": "combobox",
+    },
+    Object {
+      "name": "Show Toast Message (1)",
+      "role": "button",
+    },
+    Object {
+      "name": "Show Toast Message (2)",
+      "role": "button",
+    },
+  ],
+  "name": "IDS Enterprise",
+  "role": "RootWebArea",
+}
+`);
+    });
+    async function dragAndDrop(originSelector, destinationSelector) {
+      // console.log('origine type:', `${typeof originSelector}, destination type:${typeof destinationSelector}`);
+      // console.log('destinationSelector', destinationSelector);
+      // console.log('origine type:', `${Object.prototype.toString.call(originSelector)}, destination type: ${Object.prototype.toString.call(destinationSelector)}`);
+
+      const getType = value => (
+        Object.prototype.toString.call(value)
+      );
+      const DroptoElement = async () => {
+        await page.waitForSelector(originSelector);
+        await page.waitForSelector(destinationSelector);
+        const origin = await page.$(originSelector);
+        const destination = await page.$(destinationSelector);
+        const ob = await origin.boundingBox();
+        const db = await destination.boundingBox();
+
+        logger('info', `Dragging from ${ob.x + ob.width / 2}, ${ob.y + ob.height / 2}`);
+        await page.mouse.move(ob.x + ob.width / 2, ob.y + ob.height / 2);
+        await page.mouse.down();
+        logger('info', `Dropping at ${db.x + db.width / 2}, ${db.y + db.height / 2}`);
+        await page.mouse.move(db.x + db.width / 2, db.y + db.height / 2);
+        await page.mouse.up();
+      };
+      const DroptoLocation = async (x, y) => {
+        logger('info', `x is: ${parseFloat(x)}  ${typeof x}`);
+        logger('info', `y is: ${parseFloat(y)}  ${typeof y}`);
+
+        const example = await page.$(originSelector);
+        // eslint-disable-next-line camelcase
+        const bounding_box = await example.boundingBox();
+        await page.mouse.move(bounding_box.x + bounding_box.width / 2, bounding_box.y + bounding_box.height / 2);
+        logger('info', `dragging from: x: ${bounding_box.x + bounding_box.width / 2}  y: ${bounding_box.y + bounding_box.height / 2}`);
+        await page.mouse.down();
+        logger('info', `dropping at   ${parseFloat(x)}, ${parseFloat(y)}`);
+        await page.mouse.move(parseFloat(x), parseFloat(y));
+        await page.mouse.up();
+      };
+      if ((getType(originSelector) === '[object String]' && getType(destinationSelector) === '[object String]')) {
+        await DroptoElement();
+      } else if ((typeof originSelector === 'string' && destinationSelector === 'number')) {
+        await DroptoLocation();
+      } else if ((getType(originSelector) === '[object String]' && getType(destinationSelector) === '[object Array]')) {
+        const { x } = destinationSelector[0];
+        const { y } = destinationSelector[0];
+        await DroptoLocation(x, y);
+      } else if ((getType(originSelector) === '[object Object]' && getType(destinationSelector) === '[object Object]')) {
+        const origin = originSelector;
+        const destination = destinationSelector;
+        const ob = await origin.boundingBox();
+        const db = await destination.boundingBox();
+        logger('info', `Dragging from ${ob.x + ob.width / 2}, ${ob.y + ob.height / 2}`);
+        await page.mouse.move(ob.x + ob.width / 2, ob.y + ob.height / 2);
+        await page.mouse.down();
+        logger('info', `Dropping at   ${db.x + db.width / 2}, ${db.y + db.height / 2}`);
+        await page.mouse.move(db.x + db.width / 2, db.y + db.height / 2);
+        await page.mouse.up();
+      }
+    }
+
+    it('should be able to change toast position', async () => {
+      await page.click('#show-toast-message1');
+      await page.waitForSelector('#toast-containertoast-some-uniqueid-usersettings-position', { visible: true });
+      const toast1 = await page.$('#toast-containertoast-some-uniqueid-usersettings-position');
+      const button1 = await page.$('#show-toast-message1');
+      await page.waitForTimeout(500);
+      await dragAndDrop(toast1, button1);
+      const db = await toast1.boundingBox();
+      const toastXLocation = db.x + db.width / 2;
+      const toastYLocation = db.y + db.height / 2;
+
+      // verify if the first toast has moved to drop location
+      expect(toastXLocation).toEqual(143.328125);
+      expect(toastYLocation).toEqual(97);
+
+      // close the first toast
+      await page.keyboard.press('Escape');
+
+      // change location of the second toast
+      await page.click('#show-toast-message2');
+      await page.waitForSelector('#toast-containertoast-some-another-uniqueid-usersettings-position', { visible: true });
+      const toast2 = await page.$('#toast-containertoast-some-another-uniqueid-usersettings-position');
+      const location = [{ x: 126, y: 9 }];
+      await page.waitForTimeout(500);
+      await dragAndDrop('.toast', location);
+      const db2 = await toast2.boundingBox();
+
+      // verify if the second toast has moved to drop location
+      expect(db2.x).toEqual(7.65625);
+      expect(db2.y).toEqual(0);
+    });
+  });
+
+  describe.skip('Visual regression tests', () => {
     // const basePath = __dirname;
     // const baselineFolder = `${basePath}/baseline`;
     // const screenshotPath = `${basePath}/.tmp/`;
