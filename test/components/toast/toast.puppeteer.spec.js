@@ -1,9 +1,8 @@
-/* eslint-disable no-case-declarations */
 // const { toMatchImageSnapshot } = require('jest-image-snapshot');
 
 // expect.extend({ toMatchImageSnapshot });
 const percySnapshot = require('@percy/puppeteer');
-const logger = require('../../../scripts/logger');
+const { dragAndDrop } = require('../../helpers/e2e-utils.js');
 
 describe('Toast Puppeteer Tests', () => {
   describe('Index Tests', () => {
@@ -312,64 +311,6 @@ Object {
 }
 `);
     });
-    async function dragAndDrop(originSelector, destinationSelector) {
-      // console.log('origine type:', `${typeof originSelector}, destination type:${typeof destinationSelector}`);
-      // console.log('destinationSelector', destinationSelector);
-      // console.log('origine type:', `${Object.prototype.toString.call(originSelector)}, destination type: ${Object.prototype.toString.call(destinationSelector)}`);
-
-      const getType = value => (
-        Object.prototype.toString.call(value)
-      );
-      const DroptoElement = async () => {
-        await page.waitForSelector(originSelector);
-        await page.waitForSelector(destinationSelector);
-        const origin = await page.$(originSelector);
-        const destination = await page.$(destinationSelector);
-        const ob = await origin.boundingBox();
-        const db = await destination.boundingBox();
-
-        logger('info', `Dragging from ${ob.x + ob.width / 2}, ${ob.y + ob.height / 2}`);
-        await page.mouse.move(ob.x + ob.width / 2, ob.y + ob.height / 2);
-        await page.mouse.down();
-        logger('info', `Dropping at ${db.x + db.width / 2}, ${db.y + db.height / 2}`);
-        await page.mouse.move(db.x + db.width / 2, db.y + db.height / 2);
-        await page.mouse.up();
-      };
-      const DroptoLocation = async (x, y) => {
-        logger('info', `x is: ${parseFloat(x)}  ${typeof x}`);
-        logger('info', `y is: ${parseFloat(y)}  ${typeof y}`);
-
-        const example = await page.$(originSelector);
-        // eslint-disable-next-line camelcase
-        const bounding_box = await example.boundingBox();
-        await page.mouse.move(bounding_box.x + bounding_box.width / 2, bounding_box.y + bounding_box.height / 2);
-        logger('info', `dragging from: x: ${bounding_box.x + bounding_box.width / 2}  y: ${bounding_box.y + bounding_box.height / 2}`);
-        await page.mouse.down();
-        logger('info', `dropping at   ${parseFloat(x)}, ${parseFloat(y)}`);
-        await page.mouse.move(parseFloat(x), parseFloat(y));
-        await page.mouse.up();
-      };
-      if ((getType(originSelector) === '[object String]' && getType(destinationSelector) === '[object String]')) {
-        await DroptoElement();
-      } else if ((typeof originSelector === 'string' && destinationSelector === 'number')) {
-        await DroptoLocation();
-      } else if ((getType(originSelector) === '[object String]' && getType(destinationSelector) === '[object Array]')) {
-        const { x } = destinationSelector[0];
-        const { y } = destinationSelector[0];
-        await DroptoLocation(x, y);
-      } else if ((getType(originSelector) === '[object Object]' && getType(destinationSelector) === '[object Object]')) {
-        const origin = originSelector;
-        const destination = destinationSelector;
-        const ob = await origin.boundingBox();
-        const db = await destination.boundingBox();
-        logger('info', `Dragging from ${ob.x + ob.width / 2}, ${ob.y + ob.height / 2}`);
-        await page.mouse.move(ob.x + ob.width / 2, ob.y + ob.height / 2);
-        await page.mouse.down();
-        logger('info', `Dropping at   ${db.x + db.width / 2}, ${db.y + db.height / 2}`);
-        await page.mouse.move(db.x + db.width / 2, db.y + db.height / 2);
-        await page.mouse.up();
-      }
-    }
 
     it('should be able to change toast position', async () => {
       await page.click('#show-toast-message1');
