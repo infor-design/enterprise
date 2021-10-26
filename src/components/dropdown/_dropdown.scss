@@ -881,7 +881,9 @@ input.dropdown.error:focus {
     div.dropdown,
     div.multiselect {
       + .icon {
-        top: -2px;
+        position: absolute;
+        top: 50% !important;
+        transform: translateY(-50%);
       }
     }
   }
