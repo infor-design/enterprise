@@ -478,7 +478,7 @@ ApplicationMenu.prototype = {
 
     if (!localStorage.navMenuWidth) {
       const resizerPos = $('.resizer').position();
-      $('.page-container').css('width', `calc(100% - ${resizerPos.left < 300 ? 300 : resizerPos.left}px)`);
+      pageContainer.css('width', `calc(100% - ${resizerPos.left < 300 ? 300 : resizerPos.left}px)`);
     }
   },
 
