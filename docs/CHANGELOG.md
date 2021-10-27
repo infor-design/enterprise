@@ -2,6 +2,7 @@
 
 ## v4.57.0 Features
 
+- `[Breadcrumb]` Added hitbox styles for breadcrumb. ([#5408](https://github.com/infor-design/enterprise/issues/5408))
 - `[Button]` Added the ability to have a hitbox. With this feature, it will have a better tapping/clicking on smaller devices. ([#5568](https://github.com/infor-design/enterprise/issues/5568))
 - `[Calendar]` Added hitbox option for calendar. ([#5602](https://github.com/infor-design/enterprise/issues/5602))
 - `[Checkbox]` Added hitbox area styles for checkboxes. ([#5603](https://github.com/infor-design/enterprise/issues/5603))
