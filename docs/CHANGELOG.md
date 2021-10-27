@@ -18,6 +18,7 @@
 
 - `[ApplicationMenu]` Fix for broken UI in Safari when hiding and expanding the navigation menu. ([#5620](https://github.com/infor-design/enterprise/issues/5620))
 - `[Calendar]` Removed the example legend in the default settings. ([#1130](https://github.com/infor-design/enterprise-ng/issues/1130))
+- `[Cards]` Fixed misaligned list within expandable cards pane. ([#5223](https://github.com/infor-design/enterprise/issues/5223))
 - `[Counts]` Updated the font size of `xl-text` from `50px` to `48px`. ([#5588](https://github.com/infor-design/enterprise/issues/5588))
 - `[Counts]` Fixed title and icon position when in RTL. ([#5566](https://github.com/infor-design/enterprise/issues/5566))
 - `[Datagrid]` Removed margin in icon when size is small or extra small. ([#5726](https://github.com/infor-design/enterprise/issues/5726))
