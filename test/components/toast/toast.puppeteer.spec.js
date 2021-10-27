@@ -316,6 +316,7 @@ Object {
       await page.click('#show-toast-message1');
       await page.waitForSelector('#toast-containertoast-some-uniqueid-usersettings-position', { visible: true });
       const toast1 = await page.$('#toast-containertoast-some-uniqueid-usersettings-position');
+      const ob = await toast1.boundingBox();
       const button1 = await page.$('#show-toast-message1');
       await page.waitForTimeout(500);
       await dragAndDrop(toast1, button1);
@@ -324,8 +325,8 @@ Object {
       const toastYLocation = db.y + db.height / 2;
 
       // verify if the first toast has moved to drop location
-      expect(toastXLocation).toEqual(143.328125);
-      expect(toastYLocation).toEqual(97);
+      expect(toastXLocation).not.toEqual(ob.x);
+      expect(toastYLocation).not.toEqual(ob.y);
 
       // close the first toast
       await page.keyboard.press('Escape');
@@ -334,14 +335,15 @@ Object {
       await page.click('#show-toast-message2');
       await page.waitForSelector('#toast-containertoast-some-another-uniqueid-usersettings-position', { visible: true });
       const toast2 = await page.$('#toast-containertoast-some-another-uniqueid-usersettings-position');
+      const ob2 = await toast2.boundingBox();
       const location = [{ x: 126, y: 9 }];
       await page.waitForTimeout(500);
       await dragAndDrop('.toast', location);
       const db2 = await toast2.boundingBox();
 
       // verify if the second toast has moved to drop location
-      expect(db2.x).toEqual(7.65625);
-      expect(db2.y).toEqual(0);
+      expect(db2.x).not.toEqual(ob2.x);
+      expect(db2.y).not.toEqual(ob2.y);
     });
   });
 
