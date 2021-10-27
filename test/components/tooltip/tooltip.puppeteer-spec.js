@@ -2,7 +2,7 @@
 
 // expect.extend({ toMatchImageSnapshot });
 const percySnapshot = require('@percy/puppeteer');
-const { checkTooltipValue, checkDataAutomationID } = require('../../helpers/e2e-utils.js');
+const { checkTooltipValue, checkDataAutomationID, checkIfElementExist } = require('../../helpers/e2e-utils.js');
 
 describe('Tooltip Puppeteer Tests', () => {
   // const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
@@ -501,10 +501,24 @@ describe('Tooltip Puppeteer Tests', () => {
     });
 
     it('should show the HTML Tooltip', async () => {
+      const isFailed = [];
       await page.hover('#test-link');
       await page.waitForSelector('#tooltip', { visible: true });
       await page.mouse.move(1000, 40);
-      expect(await page.waitForSelector('.tooltip.is-open', { visible: true })).toBeTruthy();
+      isFailed.push(await checkIfElementExist('.tooltip.is-open'));
+      /**
+  |---------------------------------------------------------|
+  |  https://github.com/infor-design/enterprise/issues/5787 |
+  |---------------------------------------------------------|
+  * */
+      const url2 = 'http://localhost:4000/components/tooltip/example-keep-open.html';
+      await page.goto(url2, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+      await page.hover('#test-link');
+      await page.waitForSelector('#tooltip', { visible: true });
+      await page.hover('.header');
+      await page.waitForTimeout(1000);
+      isFailed.push(await checkIfElementExist('.tooltip.is-open'));
+      expect(isFailed).not.toContain(true);
     });
   });
 
