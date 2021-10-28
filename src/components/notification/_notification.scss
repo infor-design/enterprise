@@ -34,6 +34,11 @@
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+
+      &::after {
+        content: '';
+        display: block;
+      }
     }
 
     .notification-link,

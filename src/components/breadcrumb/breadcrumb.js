@@ -808,7 +808,7 @@ Breadcrumb.prototype = {
     // Setup truncation, if applicable
     // Truncation only occurs when the list of breadcrumbs is larger than the container
     if (this.canDetectResize) {
-      this.element.classList[this.overflowed.length ? 'add' : 'remove']('truncated');
+      this.element.classList[this.overflowed.length || this.element.scrollHeight > 55 ? 'add' : 'remove']('truncated');
     } else {
       this.element.classList.remove('truncated');
       this.element.classList.add('no-truncate');

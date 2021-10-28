@@ -137,7 +137,7 @@ div.multiselect {
   .trigger {
     .icon {
       left: -1px;
-      top: 6px;
+      top: 5px;
       width: 16px;
     }
   }
@@ -401,7 +401,7 @@ html.is-firefox:not([dir='rtl']) {
 
     &.dropdown-short {
       .dropdown-search {
-        padding: 3px 16px 2px 5px;
+        padding: 2px 16px 5px 5px !important;
       }
 
       > .trigger .icon {

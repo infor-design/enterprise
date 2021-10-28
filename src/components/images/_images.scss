@@ -44,6 +44,10 @@ $images-size: (
 
     &.placeholder {
       @include image-placeholder(nth($value, 1), nth($value, 2), $placeholder-icon-height);
+
+      &:focus {
+        @include focus-state();
+      }
     }
   }
 }
