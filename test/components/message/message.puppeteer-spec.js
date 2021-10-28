@@ -138,7 +138,7 @@ describe('Message Puppeteer Tests', () => {
       // Check the modal-body-wrapper class, and it should have a padding of 4px 16px
       await page.click('#show-application-error');
       const modalBodyWrapperPadding = () => page.$eval('.modal-body-wrapper', e => JSON.parse(JSON.stringify(getComputedStyle(e).padding)));
-      expect(await modalBodyWrapperPadding()).toEqual('4px 16px');
+      expect(await modalBodyWrapperPadding()).toEqual('32px 16px');
 
       // Check the modal class and it should have a width of 100%
       const modalClassWidth = () => page.evaluate(() => {
@@ -153,6 +153,12 @@ describe('Message Puppeteer Tests', () => {
       const modalContentMargin = () => page.$eval('.modal-content', e => JSON.parse(JSON.stringify(getComputedStyle(e).margin)));
       expect(await modalContentMargin()).toEqual('16px');
 
+      // steps for PR#5767
+      const buttonSetMargin = () => page.$eval('.buttonset', e => JSON.parse(JSON.stringify(getComputedStyle(e).margin)));
+      expect(await buttonSetMargin()).toEqual('0px');
+      const modalHeaderPadding = () => page.$eval('.modal-header', e => JSON.parse(JSON.stringify(getComputedStyle(e).padding)));
+      expect(await modalHeaderPadding()).toEqual('24px 16px 0px');
+
       // When testing it to 480px above
       await page.setViewport({
         width: 500,
@@ -162,13 +168,17 @@ describe('Message Puppeteer Tests', () => {
 
       // Check the modal-body-wrapper class, and it should have a padding of 4px 16px
       await page.click('#show-application-error');
-      // expect(await modalBodyWrapperPadding()).toEqual('4px 24px'); //TODO clarify to devs
+      expect(await modalBodyWrapperPadding()).toEqual('32px 16px');
 
       // Check the modal class and it should have a width of 100%
       expect(await modalClassWidth()).toBe('auto');
 
       // modal-content should have margin: 10px
       expect(await modalContentMargin()).toEqual('10px');
+
+      // steps for PR#5767
+      expect(await buttonSetMargin()).toEqual('0px');
+      expect(await modalHeaderPadding()).toEqual('24px 16px 0px');
     });
   });
 
