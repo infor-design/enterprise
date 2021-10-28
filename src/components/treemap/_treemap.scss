@@ -55,4 +55,8 @@
   height: 60px;
   margin-top: -28px;
   overflow: hidden;
+
+  .label {
+    white-space: nowrap;
+  }
 }
