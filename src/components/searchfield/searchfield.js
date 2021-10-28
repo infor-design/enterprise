@@ -1811,6 +1811,7 @@ SearchField.prototype = {
       }
 
       self.isCollapsing = true;
+
       self.wrapper.removeAttr('style');
 
       // Puts the input wrapper back where it should be if it's been moved due to small form factors.
