@@ -473,11 +473,13 @@ SearchField.prototype = {
     // does not overflow the buttons/icons contained
     // in it
     $('body').on(`resize.${this.id}`, () => {
-      if (self.wrapper.width() >= self.wrapper.parent().width() ||
-      (self.wrapper.width() !== wrapperWidth && wrapperWidth >= self.wrapper.parent().width())) {
-        self.wrapper.width(`${self.wrapper.parent().width() - (self.wrapper.parent().width() * 0.1)}px`);
-      } else {
-        self.wrapper.css('width', '');
+      // searchfield wrapper only changes width if it's in a splitter container
+      if (self.wrapper.parents('.splitter-container').length > 0) {
+        if (self.wrapper.width() >= self.wrapper.parent().width() || wrapperWidth >= self.wrapper.parent().width()) {
+          self.wrapper.width(`${self.wrapper.parent().width() - (self.wrapper.parent().width() * 0.1)}px`);
+        } else {
+          self.wrapper.css('width', '');
+        }
       }
       self.calculateSearchfieldWidth();
     });
