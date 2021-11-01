@@ -33,6 +33,7 @@
 - `[Lookup]` Fix an uncentered lookup icon in composite form. ([#5657](https://github.com/infor-design/enterprise/issues/5657))
 - `[Searchfield]` Fix on uneven searchfield in firefox. ([#5620](https://github.com/infor-design/enterprise/issues/5620))
 - `[Searchfield]` Fix on uneven searchfield in firefox. ([#5695](https://github.com/infor-design/enterprise/issues/5695))
+- `[Searchfield]` Change width when parent container becomes smaller. ([#4696](https://github.com/infor-design/enterprise/issues/4696))
 - `[Spinbox]` Remove functionality of Home and End buttons on Spinbox. ([#5659](https://github.com/infor-design/enterprise/issues/5659))
 - `[Spinbox]` Fix spinbox misalignment on sample sizes. ([#5733](https://github.com/infor-design/enterprise/issues/5733))
 - `[Tabs]` Fix a bug on vertical tabs scroll on panel containers. ([#5565](https://github.com/infor-design/enterprise/issues/5565))
