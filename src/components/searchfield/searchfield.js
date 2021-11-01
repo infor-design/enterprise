@@ -466,17 +466,29 @@ SearchField.prototype = {
     });
     renderLoop.register(resizeTimer);
 
+    let wrapperWidth = 0;
+
     // when the window size changes, searchfield
     // should calculate its width so that the input
     // does not overflow the buttons/icons contained
     // in it
     $('body').on(`resize.${this.id}`, () => {
+      // searchfield wrapper only changes width if it's in a splitter container
+      if (self.wrapper.parents('.splitter-container').length > 0) {
+        if (self.wrapper.width() >= self.wrapper.parent().width() || wrapperWidth >= self.wrapper.parent().width()) {
+          self.wrapper.width(`${self.wrapper.parent().width() - (self.wrapper.parent().width() * 0.1)}px`);
+        } else {
+          self.wrapper.css('width', '');
+        }
+      }
       self.calculateSearchfieldWidth();
     });
 
     if (this.settings.collapsible === false) {
       this.expand(true);
     }
+
+    wrapperWidth = self.wrapper.width();
 
     return this;
   },
