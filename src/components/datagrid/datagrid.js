@@ -7137,6 +7137,14 @@ Datagrid.prototype = {
         self.commitCellEdit();
       }
     });
+
+    this.element.find('.datagrid-img').off('error.datagrid').on('error.datagrid', (e) => {
+      const targetEl = $(e.target);
+      const parentEl = targetEl.parent();
+
+      parentEl.append('<svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-insert-image"></use></svg>');
+      targetEl.remove();
+    });
   },
 
   /**
@@ -12540,6 +12548,8 @@ Datagrid.prototype = {
     this.removeTooltip();
 
     $('html').off(`themechanged.${COMPONENT_NAME}`);
+
+    this.element.find('.datagrid-img').off('error.datagrid');
 
     // Unbind context menu events
     this.element.add(this.element.find('*'))
