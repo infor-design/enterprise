@@ -1,6 +1,6 @@
 # What's New with Enterprise
 
-## v4.58.o Fixes
+## v4.58.0 Fixes
 
 - `[Toolbar Searchfield]` Fixed the height the collapse button on a smaller viewport (`766px` and below). ([#5791](https://github.com/infor-design/enterprise/issues/5791))
 
