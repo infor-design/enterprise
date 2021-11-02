@@ -12,7 +12,7 @@
 
 @include respond-to(phone) {
   .toolbar-section {
-    .searchfield-wrapper {
+    .searchfield-wrapper.non-collapsible {
       &.is-open {
         .collapse-button {
           height: 38px;

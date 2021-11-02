@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.58.o Fixes
+
+- `[Toolbar Searchfield]` - Fixed the height the collapse button on a smaller viewport (`766px` and below). ([#5791](https://github.com/infor-design/enterprise/issues/5791))
+
 ## v4.57.0 Features
 
 - `[Breadcrumb]` Added hitbox styles for breadcrumb. ([#5408](https://github.com/infor-design/enterprise/issues/5408))
