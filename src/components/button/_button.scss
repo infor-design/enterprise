@@ -100,35 +100,33 @@ button {
   }
 
   .notification-badge-container {
-    position: absolute;
-
     .notification-dot {
       display: block !important;
 
       &.notification-dot-upper-right {
-        right: -26px;
-        top: -3px;
+        right: 7px;
+        top: 4px;
         transform: scale(1) translate(50%, -50%);
         transform-origin: 100% 0%;
       }
   
       &.notification-dot-upper-left {
-        top: -2px;
-        left: -70px;
+        top: 4px;
+        left: -16px;
         transform: scale(1) translate(-50%, -50%);
         transform-origin: 0% 0%;
       }
   
       &.notification-dot-lower-right {
-        top: 17px;
-        left: 20px;
+        top: 11px;
+        left: -8px;
         transform: scale(1) translate(50%, 50%);
         transform-origin: 0% 100%;
       }
   
       &.notification-dot-lower-left {
-        top: 17px;
-        left: -70px;
+        top: 11px;
+        left: -16px;
         transform: scale(1) translate(-50%, 50%);
         transform-origin: 0% 100%;
       }

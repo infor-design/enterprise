@@ -12,9 +12,7 @@ const NOTIFICATION_BADGE_COLOR_OPTIONS = ['alert', 'warning', 'yield', 'complete
 
 const NOTIFICATION_BADGE_DEFAULTS = {
   position: NOTIFICATION_BADGE_POSITION_OPTIONS[1],
-  icon: 'menu',
   color: NOTIFICATION_BADGE_COLOR_OPTIONS[0],
-  badge: false,
   attribute: null
 };
 
@@ -59,19 +57,10 @@ NotificationBadge.prototype = {
   build() {
     this.notificationBadgeContainerEl = this.element.append('<span class="notification-badge-container"></span>');
 
-    const htmlIcon = `
-      <svg class="icon notification-badge-${this.settings.icon}" focusable="false" aria-hidden="true" role="presentation">
-        <use href="#icon-${this.settings.icon}"></use>
-      </svg>`;
-
     const htmlNotificationBadge = `
       <span class="notification-dot notification-dot-${this.settings.position} notification-dot-${this.settings.color}"></span>`;
 
-    if (this.settings.badge) {
-      this.notificationBadgeContainerEl.find('.notification-badge-container').append(htmlNotificationBadge);
-    } else {
-      this.notificationBadgeContainerEl.find('.notification-badge-container').append(htmlIcon, htmlNotificationBadge);
-    }
+    this.notificationBadgeContainerEl.find('.notification-badge-container').append(htmlNotificationBadge);
 
     utils.addAttributes(this.notificationBadgeContainerEl.find('.notification-badge-container'), this, this.settings.attributes, 'container');
     utils.addAttributes(this.notificationBadgeContainerEl.find('.notification-badge-container svg.icon'), this, this.settings.attributes, 'icon');
