@@ -1,6 +1,7 @@
 # What's New with Enterprise
 
 ## v4.58.0 Fixes
+
 - `[Searchfield]` Save input value when searchfield collapses but is not cleared via button click or key. ([#5792](https://github.com/infor-design/enterprise/issues/5792))
 
 ## v4.57.0 Features
