@@ -19,7 +19,14 @@
         { name: 'Principal', value: 100 },
         { name: 'Cost', value: 50 }
       ],
-      line: { name: 'Margins', value: 51 },
+      line: {
+        name: 'Margins',
+        value: 51,
+        attributes: [
+          { name: 'id', value: 'line-with-hide-dot-id' },
+          { name: 'data-automation-id', value: 'automation-line-with-hide-dot-id'}
+        ]
+      },
       name: '1'
     }, {
       data: [

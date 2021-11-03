@@ -5,6 +5,7 @@ import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { DOM } from '../../utils/dom';
 import { charts } from '../charts/charts';
+import { theme } from '../theme/theme';
 import { Locale } from '../locale/locale';
 
 import '../emptymessage/emptymessage.jquery';
@@ -672,7 +673,7 @@ Column.prototype = {
               .attr('d', line(dataset))
               .attr('class', 'line')
               .style('opacity', 0)
-              .attr('stroke', '#000')
+              .attr('stroke', theme.new ? '#2F2F32' : '#1C1819')
               .attr('stroke-width', 2)
               .attr('fill', 'none');
 
@@ -693,7 +694,7 @@ Column.prototype = {
                 .attr('cx', d => (xScaleLine(d.name) + xScaleLine.bandwidth() / 2))
                 .attr('cy', d => yScaleLine(d.line.value))
                 .attr('r', 5)
-                .style('fill', '#000')
+                .style('fill', theme.new ? '#2F2F32' : '#1C1819')
                 .style('stroke-width', 2)
                 .style('cursor', 'pointer');
             }
