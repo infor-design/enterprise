@@ -63,7 +63,6 @@ NotificationBadge.prototype = {
     this.notificationBadgeContainerEl.find('.notification-badge-container').append(htmlNotificationBadge);
 
     utils.addAttributes(this.notificationBadgeContainerEl.find('.notification-badge-container'), this, this.settings.attributes, 'container');
-    utils.addAttributes(this.notificationBadgeContainerEl.find('.notification-badge-container svg.icon'), this, this.settings.attributes, 'icon');
     utils.addAttributes(this.notificationBadgeContainerEl.find('.notification-badge-container .notification-dot'), this, this.settings.attributes, 'dot');
 
     return this;
