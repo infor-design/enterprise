@@ -853,7 +853,7 @@ SearchField.prototype = {
     // Setup a listener for the Clearable behavior, if applicable
     if (self.settings.clearable) {
       self.element.on(`cleared.${this.id}`, () => {
-        // if collapse value exists add the val?
+        // add the input value back if last event was collapse
         if (self.settings.value && self.settings.value.length > 0) {
           self.element.val(self.settings.value);
           delete self.settings.value;
@@ -1040,6 +1040,7 @@ SearchField.prototype = {
         return;
       }
 
+      // Save input value when searchfield collapses
       self.settings.value = $(self.element).val();
 
       const wrapperElem = self.wrapper[0];
