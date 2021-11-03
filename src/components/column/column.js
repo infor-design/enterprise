@@ -661,6 +661,26 @@ Column.prototype = {
             // getting the attributes of line for automation id
             const lineAttr = dataset.map(d => d.line).filter(i => i?.attributes);
 
+            const lineTooltip = function (elem, lineTooltipData) {
+              const rect = elem.getBoundingClientRect();
+              let content = `<p><b>${lineTooltipData.name}</b> ${lineTooltipData.value}</p>`;
+
+              const show = function() {
+                const size = charts.tooltipSize(content);
+                let posX = rect.left - (size.width / 2) + 6;
+                const posY = rect.top - size.height - 18;
+
+                if (content !== '') {
+                  if (charts.tooltip && charts.tooltip.length) {
+                    charts.tooltip[isPersonalizable ? 'addClass' : 'removeClass']('is-personalizable');
+                  }
+                  charts.showTooltip(posX, posY, content, 'top');
+                }
+              }
+
+              show();
+            }
+
             lineGroup.append('path')
               .call((d) => {
                 d._groups.forEach((thisLine) => {
@@ -673,7 +693,7 @@ Column.prototype = {
               .attr('d', line(dataset))
               .attr('class', 'line')
               .style('opacity', 0)
-              .attr('stroke', theme.new ? '#2F2F32' : '#1C1819')
+              .attr('stroke', theme.new ? '#47474C' : '#313236')
               .attr('stroke-width', 2)
               .attr('fill', 'none');
 
@@ -694,9 +714,14 @@ Column.prototype = {
                 .attr('cx', d => (xScaleLine(d.name) + xScaleLine.bandwidth() / 2))
                 .attr('cy', d => yScaleLine(d.line.value))
                 .attr('r', 5)
-                .style('fill', theme.new ? '#2F2F32' : '#1C1819')
+                .style('fill', theme.new ? '#47474C' : '#313236')
                 .style('stroke-width', 2)
-                .style('cursor', 'pointer');
+                .style('cursor', 'default')
+                .on(`mouseenter.${self.namespace}`, function (lineTooltipData) {
+                  lineTooltip(this, lineTooltipData.line);
+                }).on(`mouseleave.${self.namespace}`, function () {
+                  charts.hideTooltip();
+                });
             }
           }
         }
@@ -1095,6 +1120,9 @@ Column.prototype = {
     self.settings.svg = this.svg;
 
     if (self.settings.showLegend) {
+      let lineLegend;
+      const lineData = dataset.map(d => d.line);
+
       if (isSingle && dataset[0].name) {
         charts.addLegend(dataset, 'column-single', self.settings, self.element);
       } else if (isPositiveNegative) {
@@ -1103,6 +1131,12 @@ Column.prototype = {
         charts.addLegend(series, self.settings.type, self.settings, self.element);
       } else if (!isSingle) {
         let legendSeries = self.settings.isStacked ? seriesStacked : series;
+
+        if (self.settings.useLine) {
+          lineLegend = lineData.filter(i => i.name);
+          legendSeries.push(lineLegend[0]);
+        }
+
         legendSeries = legendSeries.map((d) => {
           if (d.attributes && !d.data?.attributes) {
             if (d.data) {
@@ -1114,6 +1148,14 @@ Column.prototype = {
           return d;
         });
         charts.addLegend(legendSeries, self.settings.type, self.settings, self.element);
+      }
+
+      if (self.settings.useLine && lineData.length) {
+        const chartLegendItemText = $('.chart-legend-item-text');
+        if (lineLegend[0].name === chartLegendItemText.last().text()) {
+          $('.chart-legend-color').last().addClass('slate08');
+          self.element.find('.chart-legend-item').last().attr('style', 'pointer-events: none');
+        }
       }
     }
 
