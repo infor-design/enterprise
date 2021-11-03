@@ -856,12 +856,13 @@ SearchField.prototype = {
         // add the input value back if last event was collapse
         if (self.settings.value && self.settings.value.length > 0) {
           self.element.val(self.settings.value);
-          delete self.settings.value;
         }
 
         if (self.autocomplete) {
           self.autocomplete.closeList();
         }
+
+        delete self.settings.value;
       });
 
       self.xButton.on(`blur.${this.id}`, (e) => {
@@ -1037,10 +1038,11 @@ SearchField.prototype = {
     function safeBlurHandler() {
       // Do a check for searchfield-specific elements
       if (self.isFocused) {
+        delete self.settings.value;
         return;
       }
 
-      // Save input value when searchfield collapses
+      // Retain input value until clear event
       self.settings.value = $(self.element).val();
 
       const wrapperElem = self.wrapper[0];
