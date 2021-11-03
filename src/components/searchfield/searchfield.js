@@ -853,6 +853,12 @@ SearchField.prototype = {
     // Setup a listener for the Clearable behavior, if applicable
     if (self.settings.clearable) {
       self.element.on(`cleared.${this.id}`, () => {
+        // if collapse value exists add the val?
+        if (self.settings.value && self.settings.value.length > 0) {
+          self.element.val(self.settings.value);
+          delete self.settings.value;
+        }
+
         if (self.autocomplete) {
           self.autocomplete.closeList();
         }
@@ -1033,6 +1039,8 @@ SearchField.prototype = {
       if (self.isFocused) {
         return;
       }
+
+      self.settings.value = $(self.element).val();
 
       const wrapperElem = self.wrapper[0];
       wrapperElem.classList.remove('has-focus', 'active');
