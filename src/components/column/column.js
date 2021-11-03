@@ -663,11 +663,11 @@ Column.prototype = {
 
             const lineTooltip = function (elem, lineTooltipData) {
               const rect = elem.getBoundingClientRect();
-              let content = `<p><b>${lineTooltipData.name}</b> ${lineTooltipData.value}</p>`;
+              const content = `<p><b>${lineTooltipData.name}</b> ${lineTooltipData.value}</p>`;
 
-              const show = function() {
+              const show = function () {
                 const size = charts.tooltipSize(content);
-                let posX = rect.left - (size.width / 2) + 6;
+                const posX = rect.left - (size.width / 2) + 6;
                 const posY = rect.top - size.height - 18;
 
                 if (content !== '') {
@@ -676,16 +676,16 @@ Column.prototype = {
                   }
                   charts.showTooltip(posX, posY, content, 'top');
                 }
-              }
+              };
 
               show();
-            }
+            };
 
             lineGroup.append('path')
               .call((d) => {
                 d._groups.forEach((thisLine) => {
-                  thisLine.forEach((line) => {
-                    utils.addAttributes($(line), lineAttr[0], lineAttr[0]?.attributes);
+                  thisLine.forEach((lineEl) => {
+                    utils.addAttributes($(lineEl), lineAttr[0], lineAttr[0]?.attributes);
                   });
                 });
               })
@@ -719,7 +719,8 @@ Column.prototype = {
                 .style('cursor', 'default')
                 .on(`mouseenter.${self.namespace}`, function (lineTooltipData) {
                   lineTooltip(this, lineTooltipData.line);
-                }).on(`mouseleave.${self.namespace}`, function () {
+                })
+                .on(`mouseleave.${self.namespace}`, function () {
                   charts.hideTooltip();
                 });
             }
