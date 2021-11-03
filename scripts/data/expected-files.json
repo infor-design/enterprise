@@ -304,6 +304,7 @@
 	"/dist/sass/src/components/tree/_tree.scss",
 	"/dist/sass/src/components/tree/_tree-new.scss",
 	"/dist/sass/src/components/treemap/_treemap.scss",
+	"/dist/sass/src/components/treemap/_treemap-new.scss",
 	"/dist/sass/src/components/typography/_typography-new.scss",
 	"/dist/sass/src/components/typography/_typography.scss",
 	"/dist/sass/src/components/visibility/_visibility.scss",
