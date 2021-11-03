@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.58.0 Features
+
+- `[Column]` Added support to add a line chart in column-grouped. ([#4598](https://github.com/infor-design/enterprise/issues/4598))
+
 ## v4.57.0 Features
 
 - `[Breadcrumb]` Added hitbox styles for breadcrumb. ([#5408](https://github.com/infor-design/enterprise/issues/5408))

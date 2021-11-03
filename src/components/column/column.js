@@ -657,7 +657,17 @@ Column.prototype = {
             const lineGroup = svg.append('g')
               .attr('class', 'line-group');
 
+            // getting the attributes of line for automation id
+            const lineAttr = dataset.map(d => d.line).filter(i => i?.attributes);
+
             lineGroup.append('path')
+              .call((d) => {
+                d._groups.forEach((thisLine) => {
+                  thisLine.forEach((line) => {
+                    utils.addAttributes($(line), lineAttr[0], lineAttr[0]?.attributes);
+                  });
+                });
+              })
               .datum(dataset)
               .attr('d', line(dataset))
               .attr('class', 'line')
@@ -671,6 +681,13 @@ Column.prototype = {
                 .data(dataset)
                 .enter()
                 .append('circle')
+                .call((d) => {
+                  d._groups.forEach((thisDot) => {
+                    thisDot.forEach((dot, i) => {
+                      utils.addAttributes($(dot), lineAttr[0], lineAttr[0].attributes, `dot-${i + 1}`);
+                    });
+                  });
+                })
                 .attr('class', 'dot')
                 .style('opacity', 0)
                 .attr('cx', d => (xScaleLine(d.name) + xScaleLine.bandwidth() / 2))
