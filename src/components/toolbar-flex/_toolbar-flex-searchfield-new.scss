@@ -11,6 +11,14 @@
 }
 
 @include respond-to(phone) {
+  .flex-toolbar {
+    .searchfield-wrapper:not(.non-collapsible) {
+      > .icon.close {
+        right: 48px;
+      }
+    }
+  }
+
   .toolbar-section {
     .searchfield-wrapper.non-collapsible {
       &.is-open {
