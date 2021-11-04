@@ -3,11 +3,14 @@
 ## v4.58.0 Fixes
 
 - `[Searchfield]` Save input value when searchfield collapses but is not cleared via button click or key. ([#5792](https://github.com/infor-design/enterprise/issues/5792))
+- `[Toolbar Searchfield]` Fixed the height the collapse button on a smaller viewport (`766px` and below). ([#5791](https://github.com/infor-design/enterprise/issues/5791))
 
 ## v4.57.0 Features
 
+- `[Accordion]` Added the ability to have a notification badge in accordion headers. ([#5594](https://github.com/infor-design/enterprise/issues/5594))
 - `[Breadcrumb]` Added hitbox styles for breadcrumb. ([#5408](https://github.com/infor-design/enterprise/issues/5408))
 - `[Button]` Added the ability to have a hitbox. With this feature, it will have a better tapping/clicking on smaller devices. ([#5568](https://github.com/infor-design/enterprise/issues/5568))
+- `[Button]` Added the ability to have a notification badge in buttons. ([#5594](https://github.com/infor-design/enterprise/issues/5594))
 - `[Calendar]` Added hitbox option for calendar. ([#5602](https://github.com/infor-design/enterprise/issues/5602))
 - `[Checkbox]` Added hitbox area styles for checkboxes. ([#5603](https://github.com/infor-design/enterprise/issues/5603))
 - `[Datagrid]` Added Datagrid Fallback Image when image cannot be loaded. ([#5442](https://github.com/infor-design/enterprise/issues/5442))

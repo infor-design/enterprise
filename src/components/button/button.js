@@ -7,6 +7,7 @@ import { xssUtils } from '../../utils/xss';
 // jQuery components
 import '../icons/icons.jquery';
 import '../tooltip/tooltip.jquery';
+import '../notification-badge/notification-badge.jquery';
 
 // The name of this component.
 const COMPONENT_NAME = 'button';
@@ -56,6 +57,11 @@ const BUTTON_DEFAULTS = {
   ripple: true,
   hitbox: false,
   validate: false,
+  badge: false,
+  badgeOptions: {
+    position: 'upper-right',
+    color: 'alert'
+  },
   attributes: null
 };
 
@@ -115,7 +121,25 @@ Button.prototype = {
     }
 
     this.getSettingsFromElement();
+    this.createNotificationBadge();
     this.render();
+  },
+
+  /**
+    * Builds notification badge for button
+    * @returns {void}
+    */
+  createNotificationBadge() {
+    if (!this.settings.badge) {
+      return;
+    }
+
+    // const badgeEl = this.element.append(`<div id="notification-badge"></div>`);
+    this.element.notificationbadge({
+      position: this.settings.badgeOptions.position,
+      color: this.settings.badgeOptions.color,
+      badge: this.settings.badge
+    });
   },
 
   /**
