@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.58.0 Fixes
+
+- `[Tabs-Vertical]` Fixed on Tabs Vertical Aria and Roles. ([#5712](https://github.com/infor-design/enterprise/issues/5712))
+
 ## v4.57.0 Features
 
 - `[Accordion]` Added the ability to have a notification badge in accordion headers. ([#5594](https://github.com/infor-design/enterprise/issues/5594))
