@@ -4,10 +4,16 @@
 
 - `[Column]` Added support to add a line chart in column-grouped. ([#4598](https://github.com/infor-design/enterprise/issues/4598))
 
+## v4.58.0 Fixes
+
+- `[Toolbar Searchfield]` Fixed the height the collapse button on a smaller viewport (`766px` and below). ([#5791](https://github.com/infor-design/enterprise/issues/5791))
+
 ## v4.57.0 Features
 
+- `[Accordion]` Added the ability to have a notification badge in accordion headers. ([#5594](https://github.com/infor-design/enterprise/issues/5594))
 - `[Breadcrumb]` Added hitbox styles for breadcrumb. ([#5408](https://github.com/infor-design/enterprise/issues/5408))
 - `[Button]` Added the ability to have a hitbox. With this feature, it will have a better tapping/clicking on smaller devices. ([#5568](https://github.com/infor-design/enterprise/issues/5568))
+- `[Button]` Added the ability to have a notification badge in buttons. ([#5594](https://github.com/infor-design/enterprise/issues/5594))
 - `[Calendar]` Added hitbox option for calendar. ([#5602](https://github.com/infor-design/enterprise/issues/5602))
 - `[Checkbox]` Added hitbox area styles for checkboxes. ([#5603](https://github.com/infor-design/enterprise/issues/5603))
 - `[Datagrid]` Added Datagrid Fallback Image when image cannot be loaded. ([#5442](https://github.com/infor-design/enterprise/issues/5442))
@@ -44,6 +50,7 @@
 - `[Spinbox]` Remove functionality of Home and End buttons on Spinbox. ([#5659](https://github.com/infor-design/enterprise/issues/5659))
 - `[Spinbox]` Fix spinbox misalignment on sample sizes. ([#5733](https://github.com/infor-design/enterprise/issues/5733))
 - `[Tabs]` Fix a bug on vertical tabs scroll on panel containers. ([#5565](https://github.com/infor-design/enterprise/issues/5565))
+- `[Treemap]` Fix Treemap's misaligned footer-text on the new theme. ([#5365](https://github.com/infor-design/enterprise/issues/5365))
 
 ## v4.56.0 Features
 
