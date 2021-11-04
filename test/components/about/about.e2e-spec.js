@@ -6,19 +6,22 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('About Visual Tests', () => {
+describe('About Visual Tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/about/example-index?theme=new');
+    await utils.setPage('/components/about/example-index?theme=new&layout=nofrills');
   });
 
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
-      const mainEl = await element(by.css('div[role=main]'));
+      const buttonEl = await element(by.id('about-trigger'));
+      await buttonEl.click();
       await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(mainEl), config.waitsFor);
-      await browser.driver.sleep(config.sleepLonger);
+        .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('about-modal'))), config.waitsFor);
 
-      expect(await browser.imageComparison.checkScreen('about-new')).toEqual(0);
+      const containerEl = await element(by.className('no-frills'));
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.imageComparison.checkElement(containerEl, 'about-index')).toEqual(0);
     });
   }
 });
