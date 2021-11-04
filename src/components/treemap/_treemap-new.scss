@@ -1,0 +1,18 @@
+.chart-treemap-footer {
+  height: 65px;
+  margin-top: -33px;
+  overflow: hidden;
+
+  .data {
+    line-height: 1em;
+  }
+
+  .label {
+    font-size: 1.4rem;
+    white-space: nowrap;
+  }
+
+  .text-emphasis {
+    font-size: 1.4rem;
+  }
+}

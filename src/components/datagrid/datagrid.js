@@ -495,7 +495,8 @@ Datagrid.prototype = {
   hasScrollbarY() {
     const self = this;
     const height = parseInt(self.bodyWrapperCenter[0].offsetHeight, 10);
-    const hasVerticalScrollbar = parseInt(self.bodyWrapperCenter[0].scrollHeight, 10) > height + 2;
+    const hasVerticalScrollbar = parseInt(self.bodyWrapperCenter[0].scrollHeight, 10) > height + 2 ||
+                                  self.element[0].scrollHeight > self.element[0].clientHeight;
 
     self.hasVerticalScrollbar = hasVerticalScrollbar !== false;
   },
@@ -1915,14 +1916,43 @@ Datagrid.prototype = {
     const self = this;
     const isDisabled = col.filterDisabled;
     const filterConditions = $.isArray(col.filterConditions) ? col.filterConditions : [];
+
+    const hasUserDefinedDefault = function (fConditions) {
+      const hasDefinedDefault = fConditions.some((condition) => {
+        if (!(typeof condition === 'string')) {
+          return condition.selected;
+        }
+        return false;
+      });
+
+      return hasDefinedDefault;
+    };
+    const useDefaultChecked = !hasUserDefinedDefault(filterConditions);
     const inArray = function (s, array) {
       array = array || filterConditions;
       return ($.inArray(s, array) > -1);
     };
     const render = function (icon, text, checked) {
-      const isChecked = filterConditions.length && filterConditions[0] === icon ? true : checked;
-      return filterConditions.length && !inArray(icon) ?
-        '' : self.filterItemHtml(icon, text, isChecked);
+      let isChecked;
+      let valueArray;
+      if (useDefaultChecked) {
+        isChecked = filterConditions.length && filterConditions[0] === icon ? true : checked;
+        valueArray = filterConditions;
+      } else {
+        // there is a passed in selected option, only set that one to checked
+        valueArray = [];
+        isChecked = typeof icon === 'string' ? false : icon.selected;
+        filterConditions.forEach((condition) => {
+          if (typeof condition === 'string') {
+            valueArray.push(condition);
+          } else {
+            valueArray.push(condition.value);
+          }
+        });
+      }
+      const tempIcon = typeof icon === 'string' ? icon : icon.value;
+      return filterConditions.length && !inArray(tempIcon, valueArray) ?
+        '' : self.filterItemHtml(tempIcon, text, isChecked);
     };
     const attrs = utils.stringAttributes(this, this.settings.attributes, `btn-filter-${col.id?.toLowerCase()}`);
 
@@ -1933,7 +1963,12 @@ Datagrid.prototype = {
       }</button><ul class="popupmenu has-icons is-translatable is-selectable">`;
     };
     const formatFilterText = function (str) {
-      str = str
+      let tempStr = str;
+      // Need to determine if passed in str is a string or an object
+      if (!(typeof tempStr === 'string')) {
+        tempStr = str.value;
+      }
+      str = tempStr
         .split('-')
         .map((s) => {
           s = s.charAt(0).toUpperCase() + s.slice(1);
@@ -1960,6 +1995,20 @@ Datagrid.prototype = {
       return str;
     };
 
+    // filterConditions can be an array of string, or an array of objects. If passed in as an array of objects,
+    // then see if one of them should be selected instead of the original defaultValue
+    const determineFilterDefaultValue = function (fConditions, defaultValue) {
+      let returnValue = defaultValue;
+      fConditions.forEach((condition) => {
+        if (!(typeof condition === 'string')) {
+          if (condition.selected) {
+            returnValue = condition.value;
+          }
+        }
+      });
+      return returnValue;
+    };
+
     let btnMarkup = '';
     let btnDefault = '';
 
@@ -1969,7 +2018,7 @@ Datagrid.prototype = {
     }
 
     if (col.filterType === 'text') {
-      btnDefault = filterConditions.length ? filterConditions[0] : 'contains';
+      btnDefault = determineFilterDefaultValue(filterConditions, filterConditions.length ? filterConditions[0] : 'contains');
       if (filterConditions.length === 0) {
         btnMarkup = renderButton(btnDefault) +
           render('contains', 'Contains', true) +
@@ -7087,6 +7136,14 @@ Datagrid.prototype = {
       if (self.editor && self.editor.input) {
         self.commitCellEdit();
       }
+    });
+
+    this.element.find('.datagrid-img').off('error.datagrid').on('error.datagrid', (e) => {
+      const targetEl = $(e.target);
+      const parentEl = targetEl.parent();
+
+      parentEl.append('<svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-insert-image"></use></svg>');
+      targetEl.remove();
     });
   },
 
@@ -12491,6 +12548,8 @@ Datagrid.prototype = {
     this.removeTooltip();
 
     $('html').off(`themechanged.${COMPONENT_NAME}`);
+
+    this.element.find('.datagrid-img').off('error.datagrid');
 
     // Unbind context menu events
     this.element.add(this.element.find('*'))

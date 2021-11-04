@@ -567,6 +567,14 @@ span.required::after {
   }
 }
 
+.field-large,
+.form-layout-large .field {
+  input {
+    height: $input-size-regular-height + 0.6;
+    padding: 0 16px;
+  }
+}
+
 .is-firefox {
   .field-short,
   .form-layout-compact .field {

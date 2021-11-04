@@ -70,7 +70,8 @@ const COMPONENT_NAME_DEFAULTS = {
   showToday: true,
   showNextPrevious: true,
   onChangeView: null,
-  isMonthPicker: false
+  isMonthPicker: false,
+  hitbox: false
 };
 
 /**
@@ -136,6 +137,7 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {boolean} [settings.showToday=true] If true the today button is shown on the header.
  * @param {boolean} [settings.showNextPrevious=true] If true the Next Previous buttons will shown on the header.
  * @param {function} [settings.onChangeView] Call back for when the view changer is changed.
+ * @param {boolean} [settings.hitbox=false] Enable hitbox for toolbar buttons.
  * @param {string} [settings.attributes] Add extra attributes like id's to the element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
 */
 function MonthView(element, settings) {
@@ -336,6 +338,7 @@ MonthView.prototype = {
       attributes: this.settings.attributes,
       inPage: this.settings.inPage,
       inPageTitleAsButton: this.settings.inPageTitleAsButton,
+      hitbox: this.settings.hitbox
     });
 
     this.handleEvents();
@@ -354,7 +357,7 @@ MonthView.prototype = {
     const originalEnd = new Date(this.settings.displayRange.end);
     const inclusiveEnd = dateUtils.isDaylightSavingTime(rangeStart) && !dateUtils.isDaylightSavingTime(originalEnd) ?
       originalEnd : new Date(originalEnd.getTime() + dayMilliseconds);
-    const leadDays = dateUtils.firstDayOfWeek(rangeStart);
+    const leadDays = dateUtils.firstDayOfWeek(rangeStart, this.settings.firstDayOfWeek, true);
     const numberOfWeeks = Math.ceil((inclusiveEnd - leadDays) / (7 * dayMilliseconds));
     this.settings.showMonthYearPicker = false;
     this.settings.inPage = stringUtils.toBoolean(this.settings.inPage);
@@ -831,7 +834,6 @@ MonthView.prototype = {
 
     // Set the Days of the week
     let firstDayofWeek = (this.currentCalendar.firstDayofWeek || 0);
-
     if (s.firstDayOfWeek) {
       firstDayofWeek = s.firstDayOfWeek;
     }
@@ -839,10 +841,8 @@ MonthView.prototype = {
     this.dayNames.find('th').each(function (i) {
       $(this).text(days[(i + firstDayofWeek) % 7]);
     });
-
     // Adjust days of the week
-    // lead days
-    const leadDays = dateUtils.firstDayOfWeek(startDate);
+    const leadDays = dateUtils.firstDayOfWeek(startDate, this.settings.firstDayOfWeek, true);
     let dayCnt = leadDays.getDate();
     let foundSelected = false;
     // get the number of days in each month for the given range
