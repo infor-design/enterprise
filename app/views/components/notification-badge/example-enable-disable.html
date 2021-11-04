@@ -1,0 +1,64 @@
+<div class="row top-padding">
+  <div class="twelve columns">
+    <p class="section-title">Enable & Disable Badge</p>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+    <div id="notification-badge-1">
+      <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+        <use href="#icon-menu"></use>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+    <button type="button" id="disable" class="btn-secondary">
+      <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+        <use href="#icon-alert"></use>
+      </svg>
+      <span>Disable Badge</span>
+    </button>
+    <button type="button" id="enable" class="btn-secondary" disabled>
+      <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+        <use href="#icon-success"></use>
+      </svg>
+      <span>Enable Badge</span>
+    </button>
+  </div>
+</div>
+
+<script>
+  $('#notification-badge-1').notificationbadge({
+    color: 'alert',
+  });
+
+  $('body').on('initialized', function() {
+    var badge = $('#notification-badge-1');
+
+
+    $('#disable').on('click.demo', function() {
+      if (badge.is('.is-disabled')) {
+        return;
+      }
+
+      $(this).disable();
+      $('#enable').enable();
+      badge.disable();
+    });
+
+    $('#enable').on('click.demo', function() {
+      if (badge.is('.is-disabled')) {
+        return;
+      }
+
+      $(this).disable();
+      $('#disable').enable();
+      badge.enable();
+    });
+
+  });
+</script>

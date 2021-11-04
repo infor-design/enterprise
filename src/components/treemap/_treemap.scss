@@ -55,4 +55,16 @@
   height: 60px;
   margin-top: -28px;
   overflow: hidden;
+
+  .data {
+    white-space: nowrap;
+  }
+
+  .label {
+    white-space: nowrap;
+  }
+
+  .text-emphasis {
+    line-height: 1em;
+  }
 }
