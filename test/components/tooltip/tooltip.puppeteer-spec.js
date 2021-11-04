@@ -1,11 +1,6 @@
-// const { toMatchImageSnapshot } = require('jest-image-snapshot');
-
-// expect.extend({ toMatchImageSnapshot });
-const percySnapshot = require('@percy/puppeteer');
 const { checkTooltipValue, checkDataAutomationID, checkIfElementExist } = require('../../helpers/e2e-utils.js');
 
 describe('Tooltip Puppeteer Tests', () => {
-  // const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
   describe('Index tests', () => {
     const url = 'http://localhost:4000/components/tooltip/example-index?theme=classic&mode=light&layout=nofrills';
 
@@ -821,45 +816,6 @@ describe('Tooltip Puppeteer Tests', () => {
       // get the new page object:
       const newPage = await newTarget.page();
       await expect(newPage.title()).resolves.toMatch('ERP Cloud Software | AI ERP Cloud Products for Enterprise | Infor'); // if this fail just turn on your internet connection
-    });
-  });
-
-  describe.skip('Tooltip visual regression tests', () => {
-    // const basePath = __dirname;
-    // const baselineFolder = `${basePath}/baseline`;
-    // const screenshotPath = `${basePath}/.tmp/`;
-    // const getConfig = (customSnapshotIdentifier, customDiffDir) => ({
-    //   customSnapshotIdentifier,
-    //   customDiffDir
-    // });
-    beforeEach(async () => {
-      await page.setViewport({
-        width: 1200,
-        height: 800,
-        deviceScaleFactor: 1,
-      });
-      const url = 'http://localhost:4000/components/tooltip/example-index?theme=classic&mode=light&layout=nofrills';
-      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
-    });
-    it('Should not visual regress on index example', async () => {
-      await page.waitForSelector('.container');
-      await page.hover('#tooltip-btn');
-      await page.waitForSelector('#tooltip > div.tooltip-content', { visible: true });
-
-      /**
-  |---------------------------------------|
-  | Generate jest ImageSnaphsot           |
-  |---------------------------------------|
-  * */
-      // const image = await page.screenshot({ fullPage: true });
-      // const config = getConfig(baselineFolder, screenshotPath);
-      // expect(image).toMatchImageSnapshot(config);
-      /**
-  |---------------------------------------|
-  | Generate percy Snaphsot               |
-  |---------------------------------------|
-  * */
-      await percySnapshot(page, 'tooltip');
     });
   });
 });
