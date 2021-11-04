@@ -96,7 +96,7 @@ About.prototype = {
         .append(`<span>${Locale.translate('Close')}'</span>`))
       .appendTo(header);
 
-    $.createIconElement({ icon: 'logo-trademark', classes: ['icon', 'about-logo'] }).attr({ viewBox: '0 0 44 44' }).appendTo(header);
+    $.createIconElement({ icon: 'logo', classes: ['icon', 'about-logo'] }).attr({ viewBox: '0 0 44 44' }).appendTo(header);
     this.title = $('<h1 class="title"></h1>').text(this.settings.appName).appendTo(this.modal.find('.modal-header'));
 
     const body = $('<div class="modal-body"></div>').appendTo(this.modal.find('.modal-content'));
