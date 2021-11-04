@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.58.0 Fixes
+
+- `[Toolbar Searchfield]` Fixed the height the collapse button on a smaller viewport (`766px` and below). ([#5791](https://github.com/infor-design/enterprise/issues/5791))
+
 ## v4.57.0 Features
 
 - `[Accordion]` Added the ability to have a notification badge in accordion headers. ([#5594](https://github.com/infor-design/enterprise/issues/5594))
