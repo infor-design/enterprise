@@ -125,7 +125,8 @@ describe('Datagrid Settings', () => { //eslint-disable-line
       searchExpandableRow: true,
       allowChildExpandOnMatchOnly: false,
       allowChildExpandOnMatch: false,
-      allowPasteFromExcel: false
+      allowPasteFromExcel: false,
+      fallbackImage: 'insert-image'
     };
     datagridObj = new Datagrid(datagridEl, { dataset: data, columns });
   });
