@@ -501,17 +501,11 @@ describe('Tooltip Puppeteer Tests', () => {
       await page.waitForSelector('#tooltip', { visible: true });
       await page.mouse.move(1000, 40);
       isFailed.push(await checkIfElementExist('.tooltip.is-open'));
-      /**
-  |---------------------------------------------------------|
-  |  https://github.com/infor-design/enterprise/issues/5787 |
-  |---------------------------------------------------------|
-  * */
-      const url2 = 'http://localhost:4000/components/tooltip/example-keep-open.html';
-      await page.goto(url2, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-      await page.hover('#test-link');
-      await page.waitForSelector('#tooltip', { visible: true });
-      await page.hover('.header');
-      await page.waitForTimeout(1000);
+      await page.mouse.move(515, 115);
+      isFailed.push(await checkIfElementExist('.tooltip.is-open'));
+      await page.hover('#tooltip');
+      isFailed.push(await checkIfElementExist('.tooltip.is-open'));
+      await page.mouse.move(255, 180);
       isFailed.push(await checkIfElementExist('.tooltip.is-open'));
       expect(isFailed).not.toContain(true);
     });
