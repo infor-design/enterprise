@@ -194,8 +194,6 @@ module.exports = {
   checkIfElementHasFocused: async (selector) => {
     let isFailed = false;
     try {
-      // const elemHandle = await page.$(selector);
-      // const element = await page.evaluate(elem => elem === document.activeElement, elemHandle);
       const elem = await page.$eval(selector, el => el === document.activeElement);
       expect(elem).toBe(true);
     } catch (error) {
@@ -229,7 +227,7 @@ module.exports = {
      * param {string} lasttItem - The selector of the last item on the list.
      * returns {boolean} isFailed - return true if the comparison is failed, return false otherwise.
      */
-  checkList_1stnLast_ItemValue: async (listElement, firstItem, lastItem) => {
+  checkListItem_1stnLastValue: async (listElement, firstItem, lastItem) => {
     let hasFailed = false;
     const elHandleArray = await page.$$(listElement);
     const lastIndex = elHandleArray.length - 1;
@@ -251,10 +249,18 @@ module.exports = {
     }));
     return hasFailed;
   },
+
+  /**
+     * Drag and Drop element to a specific location.
+     * param {string} || {object} originSelector - The selector for the origin element. could be [object Object] or [object String]
+     * param {string} || {object} destinationSelector - The selector of the destination element. could be [object Object] or [object String] or [object Array]
+     * usage : dragAndDrop(selector, selector)
+     * usage : dragAndDrop('selector', 'selector')
+     * usage : dragAndDrop(selector, 'selector')
+     * usage : dragAndDrop(selector,[{x:100, y:50}])
+     */
   dragAndDrop: async (originSelector, destinationSelector) => {
-    const getType = value => (
-      Object.prototype.toString.call(value)
-    );
+    const getType = value => (Object.prototype.toString.call(value));
     const DroptoElement = async () => {
       await page.waitForSelector(originSelector);
       await page.waitForSelector(destinationSelector);
@@ -263,23 +269,17 @@ module.exports = {
       const ob = await origin.boundingBox();
       const db = await destination.boundingBox();
 
-      // logger('info', `Dragging from ${ob.x + ob.width / 2}, ${ob.y + ob.height / 2}`);
       await page.mouse.move(ob.x + ob.width / 2, ob.y + ob.height / 2);
       await page.mouse.down();
-      // logger('info', `Dropping at ${db.x + db.width / 2}, ${db.y + db.height / 2}`);
       await page.mouse.move(db.x + db.width / 2, db.y + db.height / 2);
       await page.mouse.up();
     };
     const DroptoLocation = async (x, y) => {
-      // logger('info', `x is: ${parseFloat(x)}  ${typeof x}`);
-      // logger('info', `y is: ${parseFloat(y)}  ${typeof y}`);
       const element = await page.$(originSelector);
       // eslint-disable-next-line camelcase
       const bounding_box = await element.boundingBox();
       await page.mouse.move(bounding_box.x + bounding_box.width / 2, bounding_box.y + bounding_box.height / 2);
-      // logger('info', `dragging from: x: ${bounding_box.x + bounding_box.width / 2}  y: ${bounding_box.y + bounding_box.height / 2}`);
       await page.mouse.down();
-      // logger('info', `dropping at   ${parseFloat(x)}, ${parseFloat(y)}`);
       await page.mouse.move(parseFloat(x), parseFloat(y));
       await page.mouse.up();
     };
@@ -305,10 +305,8 @@ module.exports = {
           const destination = destinationSelector;
           const ob = await origin.boundingBox();
           const db = await destination.boundingBox();
-          // logger('info', `Dragging from ${ob.x + ob.width / 2}, ${ob.y + ob.height / 2}`);
           await page.mouse.move(ob.x + ob.width / 2, ob.y + ob.height / 2);
           await page.mouse.down();
-          // logger('info', `Dropping at   ${db.x + db.width / 2}, ${db.y + db.height / 2}`);
           await page.mouse.move(db.x + db.width / 2, db.y + db.height / 2);
           await page.mouse.up();
           break;
@@ -317,4 +315,3 @@ module.exports = {
     }
   },
 };
-

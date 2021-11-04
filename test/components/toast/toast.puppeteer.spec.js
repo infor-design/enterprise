@@ -1,7 +1,3 @@
-// const { toMatchImageSnapshot } = require('jest-image-snapshot');
-
-// expect.extend({ toMatchImageSnapshot });
-const percySnapshot = require('@percy/puppeteer');
 const { dragAndDrop } = require('../../helpers/e2e-utils.js');
 
 describe('Toast Puppeteer Tests', () => {
@@ -86,7 +82,7 @@ Object {
 `);
     });
 
-    it('should button enabled', async () => {
+    it('should have button enabled', async () => {
       const isEnabled = await page.$('button#show-toast-message:not([disabled])') !== null;
       expect(isEnabled).toBe(true);
     });
@@ -195,7 +191,7 @@ Object {
 `);
     });
 
-    it('should top left button enabled', async () => {
+    it('should have top left button enabled', async () => {
       const isToastTopLeftEnabled = await page.$('button#show-toast-top-left:not([disabled])') !== null;
       expect(isToastTopLeftEnabled).toBe(true);
     });
@@ -206,7 +202,7 @@ Object {
       expect(isToastTopLeftExist).toBeTruthy();
     });
 
-    it('should top right button enabled', async () => {
+    it('should have top right button enabled', async () => {
       const isToastTopRightEnabled = await page.$('button#show-toast-top-right:not([disabled])') !== null;
       expect(isToastTopRightEnabled).toBe(true);
     });
@@ -217,7 +213,7 @@ Object {
       expect(isToastTopRightExist).toBeTruthy();
     });
 
-    it('should bottom left button enabled', async () => {
+    it('should have bottom left button enabled', async () => {
       const isToastBottomLeftEnabled = await page.$('button#show-toast-bottom-left:not([disabled])') !== null;
       expect(isToastBottomLeftEnabled).toBe(true);
     });
@@ -228,7 +224,7 @@ Object {
       expect(isToastBottomLeftExist).toBeTruthy();
     });
 
-    it('should bottom right button enabled', async () => {
+    it('should have bottom right button enabled', async () => {
       const isToastBottomRightEnabled = await page.$('button#show-toast-bottom-right:not([disabled])') !== null;
       expect(isToastBottomRightEnabled).toBe(true);
     });
@@ -239,7 +235,7 @@ Object {
       expect(isToastBottomRightExist).toBeTruthy();
     });
 
-    it('should big text button enabled', async () => {
+    it('should have big text button enabled', async () => {
       const isToastBigTxtEnabled = await page.$('button#show-toast-big-text:not([disabled])') !== null;
       expect(isToastBigTxtEnabled).toBe(true);
     });
@@ -250,7 +246,7 @@ Object {
       expect(isToastBigTxtExist).toBeTruthy();
     });
 
-    it('should toast destroy button enabled', async () => {
+    it('should have toast destroy button enabled', async () => {
       await page.click('#show-toast-big-text');
       const toastMessage = await page.$eval('#toast-container', items => items.textContent);
       const expectedValue = '\n        \n          Longer Application Offline (1)\n          This is a Toast message that is much longer. It is so long it might wrap but that does not cause any issues.\n        \n      \n        \n        Close\n      ';
@@ -344,44 +340,6 @@ Object {
       // verify if the second toast has moved to drop location
       expect(db2.x).not.toEqual(ob2.x);
       expect(db2.y).not.toEqual(ob2.y);
-    });
-  });
-
-  describe.skip('Visual regression tests', () => {
-    // const basePath = __dirname;
-    // const baselineFolder = `${basePath}/baseline`;
-    // const screenshotPath = `${basePath}/.tmp/`;
-    // const getConfig = (customSnapshotIdentifier, customDiffDir) => ({
-    //   customSnapshotIdentifier,
-    //   customDiffDir
-    // });
-    beforeEach(async () => {
-      await page.setViewport({
-        width: 1200,
-        height: 800,
-        deviceScaleFactor: 1,
-      });
-      const url = 'http://localhost:4000/components/toast/example-index.html';
-      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
-    });
-    it('should not visual regress on index example', async () => {
-      await page.click('#show-toast-message');
-      await page.waitForSelector('div[style="width: 52.9617%;"]', { visible: true });
-
-      /**
-  |---------------------------------------|
-  | Generate jest ImageSnaphsot           |
-  |---------------------------------------|
-  * */
-      // const image = await page.screenshot({ fullPage: true });
-      // const config = getConfig(baselineFolder, screenshotPath);
-      // expect(image).toMatchImageSnapshot(config);
-      /**
-  |---------------------------------------|
-  | Generate percy Snaphsot               |
-  |---------------------------------------|
-  * */
-      await percySnapshot(page, 'popdown');
     });
   });
 });
