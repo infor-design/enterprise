@@ -1,8 +1,5 @@
-/* eslint-disable camelcase */
-// const { toMatchImageSnapshot } = require('jest-image-snapshot');
-// expect.extend({ toMatchImageSnapshot });
-const percySnapshot = require('@percy/puppeteer');
-const { checkInnerHTMLValue, checkDataAutomationID, checkIfElementExist, checkClassNameValue, checkTooltipValue, checkElementCssProperty, checkList_1stnLast_ItemValue } = require('../../helpers/e2e-utils.js');
+// eslint-disable-next-line camelcase
+const { checkInnerHTMLValue, checkDataAutomationID, checkIfElementExist, checkClassNameValue, checkTooltipValue, checkElementCssProperty, checkListItem_1stnLastValue } = require('../../helpers/e2e-utils.js');
 
 describe('Pager Puppeteer Tests', () => {
   describe('Standalone tests', () => {
@@ -524,7 +521,7 @@ Object {
       isFailed.push(await checkElementCssProperty(page1, 'fontWeight', '600'));
       isFailed.push(await checkElementCssProperty(page2, 'fontWeight', '400'));
       isFailed.push(await checkElementCssProperty(page3, 'fontWeight', '400'));
-      isFailed.push(await checkList_1stnLast_ItemValue(list, 'Item One', 'Item Eight')); // check if  List's first and last items contains the given value
+      isFailed.push(await checkListItem_1stnLastValue(list, 'Item One', 'Item Eight')); // check if  List's first and last items contains the given value
 
       // verify page 2
       await page.click(page2);
@@ -534,7 +531,7 @@ Object {
       isFailed.push(await checkElementCssProperty(page1, 'fontWeight', '400'));
       isFailed.push(await checkElementCssProperty(page2, 'fontWeight', '600'));
       isFailed.push(await checkElementCssProperty(page3, 'fontWeight', '400'));
-      isFailed.push(await checkList_1stnLast_ItemValue(list, 'Item Nine', 'Item Sixteen')); // check if  List's first and last items contains the given value
+      isFailed.push(await checkListItem_1stnLastValue(list, 'Item Nine', 'Item Sixteen')); // check if  List's first and last items contains the given value
 
       // verify page 3
       await page.click(page3);
@@ -543,7 +540,7 @@ Object {
       isFailed.push(await checkElementCssProperty(page1, 'fontWeight', '400'));
       isFailed.push(await checkElementCssProperty(page2, 'fontWeight', '400'));
       isFailed.push(await checkElementCssProperty(page3, 'fontWeight', '600'));
-      isFailed.push(await checkList_1stnLast_ItemValue(list, 'Item Seventeen', 'Item Twenty Three')); // check if  List's first and last items contains the given value
+      isFailed.push(await checkListItem_1stnLastValue(list, 'Item Seventeen', 'Item Twenty Three')); // check if  List's first and last items contains the given value
       expect(isFailed).not.toContain(true); // check if each assertions fails
     });
 
@@ -563,7 +560,7 @@ Object {
       isFailed.push(await checkElementCssProperty(page1, 'fontWeight', '600'));
       isFailed.push(await checkElementCssProperty(page2, 'fontWeight', '400'));
       isFailed.push(await checkElementCssProperty(page3, 'fontWeight', '400'));
-      isFailed.push(await checkList_1stnLast_ItemValue(list, 'Item One', 'Item Eight')); // check if  List's first and last items contains the given value
+      isFailed.push(await checkListItem_1stnLastValue(list, 'Item One', 'Item Eight')); // check if  List's first and last items contains the given value
 
       // verify page 2
       const pager1 = await page.$('button[data-page="1"]');
@@ -576,7 +573,7 @@ Object {
       isFailed.push(await checkElementCssProperty(page1, 'fontWeight', '400'));
       isFailed.push(await checkElementCssProperty(page2, 'fontWeight', '600'));
       isFailed.push(await checkElementCssProperty(page3, 'fontWeight', '400'));
-      isFailed.push(await checkList_1stnLast_ItemValue(list, 'Item Nine', 'Item Sixteen')); // check if  List's first and last items contains the given value
+      isFailed.push(await checkListItem_1stnLastValue(list, 'Item Nine', 'Item Sixteen')); // check if  List's first and last items contains the given value
 
       // verify page 3
       const pager2 = await page.$('button[data-page="2"]');
@@ -588,7 +585,7 @@ Object {
       isFailed.push(await checkElementCssProperty(page1, 'fontWeight', '400'));
       isFailed.push(await checkElementCssProperty(page2, 'fontWeight', '400'));
       isFailed.push(await checkElementCssProperty(page3, 'fontWeight', '600'));
-      isFailed.push(await checkList_1stnLast_ItemValue(list, 'Item Seventeen', 'Item Twenty Three')); // check if  List's first and last items contains the given value
+      isFailed.push(await checkListItem_1stnLastValue(list, 'Item Seventeen', 'Item Twenty Three')); // check if  List's first and last items contains the given value
       expect(isFailed).not.toContain(true); // check if each assertions fails
     });
 
@@ -608,7 +605,7 @@ Object {
       isFailed.push(await checkElementCssProperty(page1, 'fontWeight', '600'));
       isFailed.push(await checkElementCssProperty(page2, 'fontWeight', '400'));
       isFailed.push(await checkElementCssProperty(page3, 'fontWeight', '400'));
-      isFailed.push(await checkList_1stnLast_ItemValue(list, 'Item One', 'Item Eight')); // check if  List's first and last items contains the given value
+      isFailed.push(await checkListItem_1stnLastValue(list, 'Item One', 'Item Eight')); // check if  List's first and last items contains the given value
 
       // verify page 2
       await page.click('li.pager-next');
@@ -618,7 +615,7 @@ Object {
       isFailed.push(await checkElementCssProperty(page1, 'fontWeight', '400'));
       isFailed.push(await checkElementCssProperty(page2, 'fontWeight', '600'));
       isFailed.push(await checkElementCssProperty(page3, 'fontWeight', '400'));
-      isFailed.push(await checkList_1stnLast_ItemValue(list, 'Item Nine', 'Item Sixteen')); // check if  List's first and last items contains the given value
+      isFailed.push(await checkListItem_1stnLastValue(list, 'Item Nine', 'Item Sixteen')); // check if  List's first and last items contains the given value
 
       // verify page 3
       await page.click('li.pager-next');
@@ -627,7 +624,7 @@ Object {
       isFailed.push(await checkElementCssProperty(page1, 'fontWeight', '400'));
       isFailed.push(await checkElementCssProperty(page2, 'fontWeight', '400'));
       isFailed.push(await checkElementCssProperty(page3, 'fontWeight', '600'));
-      isFailed.push(await checkList_1stnLast_ItemValue(list, 'Item Seventeen', 'Item Twenty Three')); // check if  List's first and last items contains the given value
+      isFailed.push(await checkListItem_1stnLastValue(list, 'Item Seventeen', 'Item Twenty Three')); // check if  List's first and last items contains the given value
 
       // verify go back to page 2
       await page.click('li.pager-prev');
@@ -637,7 +634,7 @@ Object {
       isFailed.push(await checkElementCssProperty(page1, 'fontWeight', '400'));
       isFailed.push(await checkElementCssProperty(page2, 'fontWeight', '600'));
       isFailed.push(await checkElementCssProperty(page3, 'fontWeight', '400'));
-      isFailed.push(await checkList_1stnLast_ItemValue(list, 'Item Nine', 'Item Sixteen')); // check if  List's first and last items contains the given value
+      isFailed.push(await checkListItem_1stnLastValue(list, 'Item Nine', 'Item Sixteen')); // check if  List's first and last items contains the given value
 
       // verify go back to page 1
       await page.click('li.pager-prev');
@@ -646,7 +643,7 @@ Object {
       isFailed.push(await checkElementCssProperty(page1, 'fontWeight', '600'));
       isFailed.push(await checkElementCssProperty(page2, 'fontWeight', '400'));
       isFailed.push(await checkElementCssProperty(page3, 'fontWeight', '400'));
-      isFailed.push(await checkList_1stnLast_ItemValue(list, 'Item One', 'Item Eight')); // check if  List's first and last items contains the given value
+      isFailed.push(await checkListItem_1stnLastValue(list, 'Item One', 'Item Eight')); // check if  List's first and last items contains the given value
       expect(isFailed).not.toContain(true); // check if each assertions fails
     });
   });
@@ -787,7 +784,7 @@ Object {
       isFailed.push(await checkElementCssProperty(page1, 'fontWeight', '600'));
       isFailed.push(await checkElementCssProperty(page2, 'fontWeight', '400'));
       isFailed.push(await checkElementCssProperty(page3, 'fontWeight', '400'));
-      isFailed.push(await checkList_1stnLast_ItemValue(list, '8 Mile Resurfacing', 'Bishop Park')); // check if  List's first and last items contains the given value
+      isFailed.push(await checkListItem_1stnLastValue(list, '8 Mile Resurfacing', 'Bishop Park')); // check if  List's first and last items contains the given value
 
       // verify page 2
       await page.click(page2);
@@ -797,7 +794,7 @@ Object {
       isFailed.push(await checkElementCssProperty(page1, 'fontWeight', '400'));
       isFailed.push(await checkElementCssProperty(page2, 'fontWeight', '600'));
       isFailed.push(await checkElementCssProperty(page3, 'fontWeight', '400'));
-      isFailed.push(await checkList_1stnLast_ItemValue(list, 'Fort Woods Swimming Pool', 'Maplewood St. Resurfacing')); // check if  List's first and last items contains the given value
+      isFailed.push(await checkListItem_1stnLastValue(list, 'Fort Woods Swimming Pool', 'Maplewood St. Resurfacing')); // check if  List's first and last items contains the given value
 
       // verify page 3
       await page.click(page3);
@@ -806,7 +803,7 @@ Object {
       isFailed.push(await checkElementCssProperty(page1, 'fontWeight', '400'));
       isFailed.push(await checkElementCssProperty(page2, 'fontWeight', '400'));
       isFailed.push(await checkElementCssProperty(page3, 'fontWeight', '600'));
-      isFailed.push(await checkList_1stnLast_ItemValue(list, 'Middle School Parking Lot', 'Track Resurfacing')); // check if  List's first and last items contains the given value
+      isFailed.push(await checkListItem_1stnLastValue(list, 'Middle School Parking Lot', 'Track Resurfacing')); // check if  List's first and last items contains the given value
       expect(isFailed).not.toContain(true); // check if each assertions fails
     });
 
@@ -825,7 +822,7 @@ Object {
       isFailed.push(await checkElementCssProperty(page1, 'fontWeight', '600'));
       isFailed.push(await checkElementCssProperty(page2, 'fontWeight', '400'));
       isFailed.push(await checkElementCssProperty(page3, 'fontWeight', '400'));
-      isFailed.push(await checkList_1stnLast_ItemValue(list, '8 Mile Resurfacing', 'Bishop Park')); // check if  List's first and last items contains the given value
+      isFailed.push(await checkListItem_1stnLastValue(list, '8 Mile Resurfacing', 'Bishop Park')); // check if  List's first and last items contains the given value
 
       // verify page 2
       const pager1 = await page.$('button[data-page="1"]');
@@ -838,7 +835,7 @@ Object {
       isFailed.push(await checkElementCssProperty(page1, 'fontWeight', '400'));
       isFailed.push(await checkElementCssProperty(page2, 'fontWeight', '600'));
       isFailed.push(await checkElementCssProperty(page3, 'fontWeight', '400'));
-      isFailed.push(await checkList_1stnLast_ItemValue(list, 'Fort Woods Swimming Pool', 'Maplewood St. Resurfacing')); // check if  List's first and last items contains the given value
+      isFailed.push(await checkListItem_1stnLastValue(list, 'Fort Woods Swimming Pool', 'Maplewood St. Resurfacing')); // check if  List's first and last items contains the given value
 
       // verify page 3
       const pager2 = await page.$('button[data-page="2"]');
@@ -850,7 +847,7 @@ Object {
       isFailed.push(await checkElementCssProperty(page1, 'fontWeight', '400'));
       isFailed.push(await checkElementCssProperty(page2, 'fontWeight', '400'));
       isFailed.push(await checkElementCssProperty(page3, 'fontWeight', '600'));
-      isFailed.push(await checkList_1stnLast_ItemValue(list, 'Middle School Parking Lot', 'Track Resurfacing')); // check if  List's first and last items contains the given value
+      isFailed.push(await checkListItem_1stnLastValue(list, 'Middle School Parking Lot', 'Track Resurfacing')); // check if  List's first and last items contains the given value
       expect(isFailed).not.toContain(true); // check if each assertions fails
     });
 
@@ -869,7 +866,7 @@ Object {
       isFailed.push(await checkElementCssProperty(page1, 'fontWeight', '600'));
       isFailed.push(await checkElementCssProperty(page2, 'fontWeight', '400'));
       isFailed.push(await checkElementCssProperty(page3, 'fontWeight', '400'));
-      isFailed.push(await checkList_1stnLast_ItemValue(list, '8 Mile Resurfacing', 'Bishop Park')); // check if  List's first and last items contains the given value
+      isFailed.push(await checkListItem_1stnLastValue(list, '8 Mile Resurfacing', 'Bishop Park')); // check if  List's first and last items contains the given value
 
       // verify page 2
       await page.click('li.pager-next');
@@ -879,7 +876,7 @@ Object {
       isFailed.push(await checkElementCssProperty(page1, 'fontWeight', '400'));
       isFailed.push(await checkElementCssProperty(page2, 'fontWeight', '600'));
       isFailed.push(await checkElementCssProperty(page3, 'fontWeight', '400'));
-      isFailed.push(await checkList_1stnLast_ItemValue(list, 'Fort Woods Swimming Pool', 'Maplewood St. Resurfacing')); // check if  List's first and last items contains the given value
+      isFailed.push(await checkListItem_1stnLastValue(list, 'Fort Woods Swimming Pool', 'Maplewood St. Resurfacing')); // check if  List's first and last items contains the given value
 
       // verify page 3
       await page.click('li.pager-next');
@@ -888,7 +885,7 @@ Object {
       isFailed.push(await checkElementCssProperty(page1, 'fontWeight', '400'));
       isFailed.push(await checkElementCssProperty(page2, 'fontWeight', '400'));
       isFailed.push(await checkElementCssProperty(page3, 'fontWeight', '600'));
-      isFailed.push(await checkList_1stnLast_ItemValue(list, 'Middle School Parking Lot', 'Track Resurfacing')); // check if  List's first and last items contains the given value
+      isFailed.push(await checkListItem_1stnLastValue(list, 'Middle School Parking Lot', 'Track Resurfacing')); // check if  List's first and last items contains the given value
 
       // verify go back to page 2
       await page.click('li.pager-prev');
@@ -898,7 +895,7 @@ Object {
       isFailed.push(await checkElementCssProperty(page1, 'fontWeight', '400'));
       isFailed.push(await checkElementCssProperty(page2, 'fontWeight', '600'));
       isFailed.push(await checkElementCssProperty(page3, 'fontWeight', '400'));
-      isFailed.push(await checkList_1stnLast_ItemValue(list, 'Fort Woods Swimming Pool', 'Maplewood St. Resurfacing')); // check if  List's first and last items contains the given value
+      isFailed.push(await checkListItem_1stnLastValue(list, 'Fort Woods Swimming Pool', 'Maplewood St. Resurfacing')); // check if  List's first and last items contains the given value
 
       // verify go back to page 1
       await page.click('li.pager-prev');
@@ -907,7 +904,7 @@ Object {
       isFailed.push(await checkElementCssProperty(page1, 'fontWeight', '600'));
       isFailed.push(await checkElementCssProperty(page2, 'fontWeight', '400'));
       isFailed.push(await checkElementCssProperty(page3, 'fontWeight', '400'));
-      isFailed.push(await checkList_1stnLast_ItemValue(list, '8 Mile Resurfacing', 'Bishop Park')); // check if  List's first and last items contains the given value
+      isFailed.push(await checkListItem_1stnLastValue(list, '8 Mile Resurfacing', 'Bishop Park')); // check if  List's first and last items contains the given value
       expect(isFailed).not.toContain(true); // check if each assertions fails
     });
   });
@@ -1431,7 +1428,7 @@ Object {
       isFailed.push(await checkIfElementExist(`${pagerPrev} > button[disabled]`));
       isFailed.push(await checkIfElementExist(pagerNext));
       isFailed.push(await checkIfElementExist(pagerLast));
-      isFailed.push(await checkList_1stnLast_ItemValue(list, 'Compressor 0', 'Compressor 9')); // check if  List's first and last row contains the given value
+      isFailed.push(await checkListItem_1stnLastValue(list, 'Compressor 0', 'Compressor 9')); // check if  List's first and last row contains the given value
       isFailed.push(await validatePagerToolbarText('1', '100')); // check if [pager-toolbar] page 1 of 100 contains the given value
 
       // verify Next page
@@ -1440,7 +1437,7 @@ Object {
       isFailed.push(!await checkIfElementExist(`${pagerPrev} > button[disabled]`));
       isFailed.push(await checkIfElementExist(pagerFirst));
       isFailed.push(await checkIfElementExist(pagerPrev));
-      isFailed.push(await checkList_1stnLast_ItemValue(list, 'Compressor 10', 'Compressor 19')); // check if  List's first and last row contains the given value
+      isFailed.push(await checkListItem_1stnLastValue(list, 'Compressor 10', 'Compressor 19')); // check if  List's first and last row contains the given value
       isFailed.push(await validatePagerToolbarText('2', '100')); // check if [pager-toolbar] page 2 of 100 contains the given value
 
       // verify Prev page
@@ -1449,7 +1446,7 @@ Object {
       isFailed.push(await checkIfElementExist(`${pagerPrev} > button[disabled]`));
       isFailed.push(await checkIfElementExist(pagerNext));
       isFailed.push(await checkIfElementExist(pagerLast));
-      isFailed.push(await checkList_1stnLast_ItemValue(list, 'Compressor 0', 'Compressor 9')); // check if  List's first and last row contains the given value
+      isFailed.push(await checkListItem_1stnLastValue(list, 'Compressor 0', 'Compressor 9')); // check if  List's first and last row contains the given value
       isFailed.push(await validatePagerToolbarText('1', '100')); // check if [pager-toolbar] page 1 of 100 contains the given value
 
       // verify Last page
@@ -1458,7 +1455,7 @@ Object {
       isFailed.push(await checkIfElementExist(`${pagerLast} > button[disabled]`));
       isFailed.push(await checkIfElementExist(pagerFirst));
       isFailed.push(await checkIfElementExist(pagerPrev));
-      isFailed.push(await checkList_1stnLast_ItemValue(list, 'Compressor 990', 'Compressor 999')); // check if  List's first and last row contains the given value
+      isFailed.push(await checkListItem_1stnLastValue(list, 'Compressor 990', 'Compressor 999')); // check if  List's first and last row contains the given value
       isFailed.push(await validatePagerToolbarText('100', '100')); // check if [pager-toolbar] page 100 of 100 contains the given value
 
       // verify First page
@@ -1467,7 +1464,7 @@ Object {
       isFailed.push(!await checkIfElementExist(`${pagerLast} > button[disabled]`));
       isFailed.push(await checkIfElementExist(`${pagerFirst} > button[disabled]`));
       isFailed.push(await checkIfElementExist(`${pagerPrev} > button[disabled]`));
-      isFailed.push(await checkList_1stnLast_ItemValue(list, 'Compressor 0', 'Compressor 9')); // check if  List's first and last row contains the given value
+      isFailed.push(await checkListItem_1stnLastValue(list, 'Compressor 0', 'Compressor 9')); // check if  List's first and last row contains the given value
       isFailed.push(await validatePagerToolbarText('1', '100')); // check if [pager-toolbar] page 1 of 100 contains the given value
       expect(isFailed).not.toContain(true); // check if each assertions fails
     });
@@ -1486,7 +1483,7 @@ Object {
       isFailed.push(await checkIfElementExist(`${pagerPrev} > button[disabled]`));
       isFailed.push(await checkIfElementExist(pagerNext));
       isFailed.push(await checkIfElementExist(pagerLast));
-      isFailed.push(await checkList_1stnLast_ItemValue(list, 'Compressor 0', 'Compressor 9')); // check if  List's first and last row contains the given value
+      isFailed.push(await checkListItem_1stnLastValue(list, 'Compressor 0', 'Compressor 9')); // check if  List's first and last row contains the given value
       isFailed.push(await validatePagerToolbarText('1', '100')); // check if [pager-toolbar] page 1 of 100 contains the given value
 
       // verify Next page
@@ -1497,7 +1494,7 @@ Object {
       isFailed.push(!await checkIfElementExist(`${pagerPrev} > button[disabled]`));
       isFailed.push(await checkIfElementExist(pagerFirst));
       isFailed.push(await checkIfElementExist(pagerPrev));
-      isFailed.push(await checkList_1stnLast_ItemValue(list, 'Compressor 10', 'Compressor 19')); // check if  List's first and last row contains the given value
+      isFailed.push(await checkListItem_1stnLastValue(list, 'Compressor 10', 'Compressor 19')); // check if  List's first and last row contains the given value
       isFailed.push(await validatePagerToolbarText('2', '100')); // check if [pager-toolbar] page 2 of 100 contains the given value
 
       // verify Prev page
@@ -1511,7 +1508,7 @@ Object {
       isFailed.push(await checkIfElementExist(`${pagerPrev} > button[disabled]`));
       isFailed.push(await checkIfElementExist(pagerNext));
       isFailed.push(await checkIfElementExist(pagerLast));
-      isFailed.push(await checkList_1stnLast_ItemValue(list, 'Compressor 0', 'Compressor 9')); // check if  List's first and last row contains the given value
+      isFailed.push(await checkListItem_1stnLastValue(list, 'Compressor 0', 'Compressor 9')); // check if  List's first and last row contains the given value
       isFailed.push(await validatePagerToolbarText('1', '100')); // check if [pager-toolbar] page 1 of 100 contains the given value
 
       // verify Last page
@@ -1523,7 +1520,7 @@ Object {
       isFailed.push(await checkIfElementExist(`${pagerLast} > button[disabled]`));
       isFailed.push(await checkIfElementExist(pagerFirst));
       isFailed.push(await checkIfElementExist(pagerPrev));
-      isFailed.push(await checkList_1stnLast_ItemValue(list, 'Compressor 990', 'Compressor 999')); // check if  List's first and last row contains the given value
+      isFailed.push(await checkListItem_1stnLastValue(list, 'Compressor 990', 'Compressor 999')); // check if  List's first and last row contains the given value
       isFailed.push(await validatePagerToolbarText('100', '100')); // check if [pager-toolbar] page 100 of 100 contains the given value
 
       // verify First page
@@ -1540,7 +1537,7 @@ Object {
       isFailed.push(!await checkIfElementExist(`${pagerLast} > button[disabled]`));
       isFailed.push(await checkIfElementExist(`${pagerFirst} > button[disabled]`));
       isFailed.push(await checkIfElementExist(`${pagerPrev} > button[disabled]`));
-      isFailed.push(await checkList_1stnLast_ItemValue(list, 'Compressor 0', 'Compressor 9')); // check if  List's first and last row contains the given value
+      isFailed.push(await checkListItem_1stnLastValue(list, 'Compressor 0', 'Compressor 9')); // check if  List's first and last row contains the given value
       isFailed.push(await validatePagerToolbarText('1', '100')); // check if [pager-toolbar] page 1 of 100 contains the given value
       expect(isFailed).not.toContain(true); // check if each assertions fails
     });
@@ -1573,36 +1570,6 @@ Object {
       await page.click('#popupmenu-3 > li:nth-child(1)');
       await page.waitForTimeout(300);
       expect((await page.$$(lastRow)).length).toBe(10);
-    });
-  });
-
-  describe.skip('Pager visual regression tests', () => {
-    // const basePath = __dirname;
-    // const baselineFolder = `${basePath}/baseline`;
-    // const screenshotPath = `${basePath}/.tmp/`;
-    // const getConfig = (customSnapshotIdentifier, customDiffDir) => ({
-    //   customSnapshotIdentifier,
-    //   customDiffDir
-    // });
-    it('Should not visual regress on index example', async () => {
-      const url = 'http://localhost:4000/components/pager/example-index?theme=classic&layout=nofrills';
-      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
-      await page.waitForSelector('.container');
-
-      /**
-  |---------------------------------------|
-  | Generate jest ImageSnaphsot           |
-  |---------------------------------------|
-  * */
-      // const image = await page.screenshot({ fullPage: true });
-      // const config = getConfig(baselineFolder, screenshotPath);
-      // expect(image).toMatchImageSnapshot(config);
-      /**
-  |---------------------------------------|
-  | Generate percy Snaphsot               |
-  |---------------------------------------|
-  * */
-      await percySnapshot(page, 'pager');
     });
   });
 });
