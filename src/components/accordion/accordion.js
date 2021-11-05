@@ -810,6 +810,8 @@ Accordion.prototype = {
   *  collapse animation (or immediately, if animation is disabled).
   */
   expand(header, dontCollapseHeaders) {
+    console.log('header', header);
+    console.log('dontCollapseHeaders', dontCollapseHeaders);
     if (typeof header === 'string') {
       header = this.element.find(`#${header}`).first();
     }
@@ -895,14 +897,15 @@ Accordion.prototype = {
           dfd.resolve();
         });
         pane.triggerHandler('afterexpand', [a]);
+        pane.css('height', 'auto');
         self.element.trigger('afterexpand', [a]);
       }
 
-      if (pane.hasClass('no-transition')) {
+      // if (pane.hasClass('no-transition')) {
         handleAfterExpand();
-      } else {
-        pane.one('animateopencomplete', handleAfterExpand).animateOpen();
-      }
+      // } else {
+        // pane.one('animateopencomplete', handleAfterExpand).animateOpen();
+      // }
     }
 
     // Load from an external source, if applicable
@@ -949,6 +952,7 @@ Accordion.prototype = {
   *  collapse animation (or immediately, if animation is disabled).
   */
   collapse(header, closeChildren = true) {
+    console.log('headerCol', header);
     if (typeof header === 'string') {
       header = this.element.find(`#${header}`).first();
     }
