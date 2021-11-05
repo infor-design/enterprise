@@ -345,7 +345,7 @@ Object {
     it('should check the test page with Axe', async () => {
       await page.setBypassCSP(true);
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-      await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport', 'aria-required-attr', 'color-contrast'] });
+      await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport', 'aria-required-attr', 'color-contrast', 'aria-required-parent', 'nested-interactive'] });
     });
 
     it('should have Accessibility', async () => {
@@ -454,22 +454,35 @@ Object {
       "role": "combobox",
     },
     Object {
-      "expanded": true,
+      "children": Array [
+        Object {
+          "name": "Dates of Service",
+          "role": "tab",
+          "selected": true,
+        },
+      ],
       "name": "Dates of Service",
       "role": "tab",
-      "selected": true,
     },
     Object {
+      "children": Array [
+        Object {
+          "name": "Personal Information",
+          "role": "tab",
+        },
+      ],
       "name": "Personal Information",
       "role": "tab",
     },
     Object {
+      "children": Array [
+        Object {
+          "name": "My Password",
+          "role": "tab",
+        },
+      ],
       "name": "My Password",
       "role": "tab",
-    },
-    Object {
-      "name": "",
-      "role": "generic",
     },
     Object {
       "name": "Man bun portland venmo, reprehenderit cillum exercitation culpa adaptogen pitchfork unicorn. Jianbing mlkshk cloud bread id. Qui forage twee meditation hammock commodo heirloom gochujang shaman tattooed. Ethical commodo woke, ea est in artisan farm-to-table asymmetrical four loko ut cleanse thundercats. Gochujang reprehenderit schlitz cred squid tote bag tempor literally consequat exercitation.",
