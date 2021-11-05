@@ -696,7 +696,7 @@ Column.prototype = {
               .attr('d', line(dataset))
               .attr('class', 'line')
               .style('opacity', 0)
-              .attr('stroke', classicDark ? '#888b94' : newDark ? '#97979B' : theme.new && theme.currentTheme.modeId !== 'dark' ? '#47474c' : '#313236')
+              .attr('stroke', classicDark ? '#BDBDBD' : newDark ? '#B7B7BA' : theme.new && theme.currentTheme.modeId !== 'dark' ? '#47474c' : '#313236')
               .attr('stroke-width', 2)
               .attr('fill', 'none');
 
@@ -717,7 +717,7 @@ Column.prototype = {
                 .attr('cx', d => (xScaleLine(d.name) + xScaleLine.bandwidth() / 2))
                 .attr('cy', d => yScaleLine(d.line.value))
                 .attr('r', 5)
-                .style('fill', classicDark ? '#888b94' : newDark ? '#97979B' : theme.new && theme.currentTheme.modeId !== 'dark' ? '#47474c' : '#313236')
+                .style('fill', classicDark ? '#BDBDBD' : newDark ? '#B7B7BA' : theme.new && theme.currentTheme.modeId !== 'dark' ? '#47474c' : '#313236')
                 .style('stroke-width', 2)
                 .style('cursor', 'default')
                 .on(`mouseenter.${self.namespace}`, function (lineTooltipData) {
@@ -1157,7 +1157,7 @@ Column.prototype = {
       if (self.settings.useLine && lineData.length) {
         const chartLegendItemText = $('.chart-legend-item-text');
         if (lineLegend[0].name === chartLegendItemText.last().text()) {
-          $('.chart-legend-color').last().addClass(theme.currentTheme.modeId === 'dark' ? 'slate04' : 'slate08');
+          $('.chart-legend-color').last().addClass(theme.currentTheme.modeId === 'dark' ? 'slate03' : 'slate08');
           self.element.find('.chart-legend-item').last().attr('style', 'pointer-events: none');
         }
       }
