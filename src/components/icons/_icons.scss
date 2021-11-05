@@ -188,7 +188,24 @@ svg use {
 
 svg.icon-logo {
   height: 34px;
-  width: 34px;
+  width: 35px;
+}
+
+// Missing fill hack
+#icon-logo-dark {
+  fill: #000;
+}
+
+#icon-logo-dark:first-child {
+  fill: #fff;
+}
+
+#icon-logo-white {
+  fill: #000;
+}
+
+#icon-logo-dark:first-child {
+  fill: #fff;
 }
 
 .icon-dirty {

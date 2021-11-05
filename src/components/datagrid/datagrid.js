@@ -148,6 +148,7 @@ const COMPONENT_NAME = 'datagrid';
  * or if one or more child node got match then add parent node and only matching children nodes
  * @param {string} [settings.attributes] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
  * @param {boolean} [settings.allowPasteFromExcel=false] If true will allow data copy/paste from excel
+ * @param {string} [settings.fallbackImage='insert-image'] Will set a fall back image if the image formatter cannot load an image.
 */
 const DATAGRID_DEFAULTS = {
   // F2 - toggles actionableMode "true" and "false"
@@ -242,6 +243,7 @@ const DATAGRID_DEFAULTS = {
   allowChildExpandOnMatch: false,
   attributes: null,
   allowPasteFromExcel: false,
+  fallbackImage: 'insert-image'
 };
 
 function Datagrid(element, settings) {
@@ -7142,7 +7144,7 @@ Datagrid.prototype = {
       const targetEl = $(e.target);
       const parentEl = targetEl.parent();
 
-      parentEl.append('<svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-insert-image"></use></svg>');
+      parentEl.append(`<svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-${this.settings.fallbackImage}"></use></svg>`);
       targetEl.remove();
     });
   },
