@@ -333,7 +333,7 @@ body.modal-engaged {
 }
 
 .modal-header {
-  padding: 16px;
+  padding: 24px 16px 0;
 }
 
 .modal-content {
@@ -425,7 +425,7 @@ body.modal-engaged {
 
   .modal-body-wrapper {
     overflow: auto;
-    padding: 4px 16px;
+    padding: 32px 16px;
 
     .field:not(.label-left).last-child {
       margin-bottom: 0;
@@ -513,7 +513,6 @@ body.modal-engaged {
 .modal-buttonset {
   border-top: 1px solid $modal-btn-border-color;
   height: 50px;
-  margin-top: 20px;
 
   button {
     @include css3(transition, color 0.3s ease 0s);

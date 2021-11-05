@@ -1,0 +1,35 @@
+<style>
+    /** Purpose of showing the hitbox area */
+  
+    .margin-right-20 {
+      margin-right: 20px;
+    }
+  
+    .hitbox-area {
+      border: 1px dashed black;
+    }  
+</style>
+
+<div class="full-height full-width">
+    <div class="row">
+        <div class="columns six">
+            <h2 class="section-title">With Hitbox</h2>
+            <div id="toolbar-with-hitbox" class="calendar-toolbar" data-init="false"></div>
+        </div>
+        <div class="columns six">
+            <h2 class="section-title">Without Hitbox</h2>
+            <div id="toolbar-without-hitbox" class="calendar-toolbar" data-init="false"></div>
+        </div>
+    </div>
+  </div>
+</div>
+  
+  <script>
+    $('body').on('initialized', function() {
+      $('#toolbar-with-hitbox').calendartoolbar({
+        hitbox: true
+      });
+
+      $('#toolbar-without-hitbox').calendartoolbar();
+    });
+  </script>  

@@ -9,6 +9,7 @@ import { warnAboutDeprecation } from '../../utils/deprecated';
 import '../icons/icons.jquery';
 import '../../utils/animations';
 import '../../utils/behaviors';
+import '../notification-badge/notification-badge.jquery';
 
 // Component Name
 const COMPONENT_NAME = 'accordion';
@@ -41,6 +42,7 @@ const ACCORDION_DEFAULTS = {
   expanderDisplay: expanderDisplayModes[0],
   enableTooltips: true,
   rerouteOnLinkClick: true,
+  badge: false,
   source: null
 };
 
@@ -300,8 +302,36 @@ Accordion.prototype = {
     if (!noFilterReset) {
       this.currentlyFiltered = $();
     }
+ 
+    this.createNotificationBadge();
 
     return this;
+  },
+
+  /**
+    * Builds notification badge for accordion headers
+    * @returns {void}
+    */
+  createNotificationBadge() {
+    if (!this.settings.badge) {
+      return;
+    }
+
+    this.element.find('.accordion-header').each((index, val) => {
+      const headerEl = $(val);
+      const headerData = headerEl.data();
+
+      headerEl.notificationbadge({
+        position: headerData.options.position,
+        color: headerData.options.color,
+        badge: this.settings.badge
+      });
+
+      const icon = headerEl.find('.icon');
+      const badgeEl = headerEl.find('.notification-badge-container');
+      badgeEl.prepend(icon);
+      headerEl.prepend(badgeEl);
+    });
   },
 
   /**

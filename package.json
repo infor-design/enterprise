@@ -1,7 +1,7 @@
 {
   "name": "ids-enterprise",
   "slug": "ids-enterprise",
-  "version": "4.57.0-dev",
+  "version": "4.58.0-dev",
   "description": "Infor Design System (IDS) Enterprise Components for the web",
   "repository": {
     "type": "git",
@@ -67,7 +67,7 @@
     "e2e:local:debug": "npm run webdriver:update && npx protractor test/protractor.local.debug.conf.js",
     "e2e:puppeteer": "npx --no-install jest --config=test/jest.config.js --runInBand --detectOpenHandles --forceExit",
     "webdriver:clean": "npx webdriver-manager clean",
-    "webdriver:update": "npx webdriver-manager update --standalone false --quiet --gecko=false",
+    "webdriver:update": "npx webdriver-manager update --versions.chrome=94.0.4606.61 --standalone false --quiet --gecko=false",
     "zip-dist": "npx grunt zip-dist",
     "documentation": "node ./scripts/deploy-documentation.js",
     "release:dev": "node scripts/publish-nightly-manual",
@@ -82,6 +82,7 @@
   "chrome-version": "94",
   "dependencies": {
     "d3": "^5.16.0",
+    "ids-identity": "4.7.10",
     "jquery": "^3.6.0",
     "promise-polyfill": "^8.2.0"
   },
@@ -132,7 +133,6 @@
     "handlebars-registrar": "^1.5.2",
     "html-loader": "^1.1.0",
     "ids-css": "^1.5.0",
-    "ids-identity": "4.7.5",
     "jasmine-core": "^3.9.0",
     "jasmine-jquery": "^2.1.1",
     "jasmine-spec-reporter": "^5.0.2",

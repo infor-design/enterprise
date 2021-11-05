@@ -30,6 +30,14 @@
     margin-left: -10px;
   }
 
+  button.prev span.hitbox-area {
+    left: -5px
+  }
+
+  button.next span.hitbox-area {
+    left: 4px;
+  }
+
   .monthview-datepicker {
     margin-left: -5px;
     position: relative;
@@ -38,6 +46,10 @@
     .trigger {
       margin-left: -29px;
       margin-top: 4px;
+
+      span.hitbox-area {
+        left: -7px;
+      }
     }
   }
 

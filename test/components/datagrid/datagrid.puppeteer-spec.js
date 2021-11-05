@@ -34,6 +34,20 @@ describe('Datagrid Puppeteer Tests', () => {
       expect(await page.evaluate(el => el.value, dateFilter)).toEqual(`${testDate.getFullYear()}${testMonth}${testDay}`);
     });
   });
+  describe('Datagrid Filter Custom Filter Conditions', () => {
+    const url = 'http://localhost:4000/components/datagrid/example-custom-filter-conditions-and-defaults.html';
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('Check default selected options', async () => {
+      await page.click('#example-custom-filter-conditions-and-defaults-datagrid-1-header-0 .datagrid-filter-wrapper button');
+
+      expect(await page.waitForSelector('.contains.is-selectable', { visible: true })).toBeTruthy();
+      expect(await page.waitForSelector('.equals.is-selectable.is-checked', { visible: true })).toBeTruthy();
+    });
+  });
 });
 
 describe('Datagrid test-tree-rowstatus tests', () => {

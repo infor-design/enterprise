@@ -2,6 +2,53 @@
 //================================================== //
 
 .breadcrumb {
+  &.hitbox {
+    ol.breadcrumb-list li {
+      &::after {
+        padding-left: 0;
+        padding-right: 0;
+        position: relative;
+      }
+
+      .breadcrumb-text-truncated {
+        &.hyperlink,
+        &.breadcrumb-text {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          top: 6px;
+          white-space: nowrap;
+          width: 70px;
+        }
+
+        &.breadcrumb-text {
+          position: relative;
+        }
+      }
+
+      a.hyperlink,
+      span.breadcrumb-text {
+        font-size: 16px;
+        line-height: 1.5em;
+        margin: 0 8px;
+        padding: 0;
+        width: fit-content;
+
+        &::after {
+          content: '';
+          display: block;
+          height: 44px;
+          left: 0;
+          margin: 2px -8px 0;
+          padding: 0 8px;
+          position: relative;
+          top: -14px;
+          transform: translateY(-50%);
+          width: 100%;
+        }
+      }
+    }
+  }
+
   .hyperlink,
   .breadcrumb-text,
   li > span {
@@ -325,12 +372,42 @@
   }
 }
 
+.breadcrumb.hitbox.truncated {
+  .breadcrumb-list li {
+    a.breadcrumb-text-truncated {
+      top: 0;
+    }
+  }
+}
+
 // Scrollable-Flex Headers can change background color of the breadcrumb list
 .scrollable-flex-header {
   .breadcrumb {
     background-color: $header-bg-color;
     display: block;
     padding: 1px 10px 0;
+
+    &.truncated.hitbox {
+      ol.breadcrumb-list li.breadcrumb-item {
+        padding-left: 0;
+
+        &::after {
+          margin-top: 5px;
+        }
+
+        .hyperlink,
+        .breadcrumb-text {
+          overflow: initial;
+          text-align: center;
+        }
+      }
+
+      .breadcrumb-overflow-container {
+        &::after {
+          margin-top: 7px;
+        }
+      }
+    }
 
     .hyperlink,
     .breadcrumb-text {
