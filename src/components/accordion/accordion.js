@@ -810,8 +810,6 @@ Accordion.prototype = {
   *  collapse animation (or immediately, if animation is disabled).
   */
   expand(header, dontCollapseHeaders) {
-    console.log('header', header);
-    console.log('dontCollapseHeaders', dontCollapseHeaders);
     if (typeof header === 'string') {
       header = this.element.find(`#${header}`).first();
     }
@@ -952,7 +950,6 @@ Accordion.prototype = {
   *  collapse animation (or immediately, if animation is disabled).
   */
   collapse(header, closeChildren = true) {
-    console.log('headerCol', header);
     if (typeof header === 'string') {
       header = this.element.find(`#${header}`).first();
     }
