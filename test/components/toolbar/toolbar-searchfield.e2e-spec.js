@@ -9,6 +9,8 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 const sfId = 'regular-toolbar-searchfield';
 const searchfieldInput = 'toolbar-searchfield-01';
 
+const containerElClass = '.container'; 
+
 describe('Toolbar Searchfield (no-reinvoke)', () => {
   beforeEach(async () => {
     await utils.setPage('/components/toolbar/test-searchfield-no-reinvoke-update?layout=nofrills');
@@ -70,4 +72,38 @@ describe('Toolbar Input tests', () => {
   it('Should be visible have errors', async () => {
     expect(await element(by.id('toolbar-searchfield')).isDisplayed()).toBeTruthy();
   });
+});
+
+describe('Toolbar Searchfield example-flex-toolbar-align-with-searchfield tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/toolbarsearchfield/example-flex-toolbar-align-with-searchfield?layout=nofrills');
+  });
+
+  it('should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('should have the same height with the collapse button on smaller viewport (collapsible)', async () => {
+      const containerEl = await element(by.css(containerElClass));
+      await browser.driver.manage().window().setSize(766, 700);
+      await browser.driver.sleep(config.sleep);
+
+      await element(by.id('toolbar-searchfield-01')).click();
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.imageComparison.checkElement(containerEl, 'toolbar-flex-searchfield-collapsible')).toEqual(0);
+    });
+
+    it('should have the same height with the collapse button on smaller viewport (non-collapsible)', async () => {
+      const containerEl = await element(by.css(containerElClass));
+      await browser.driver.manage().window().setSize(766, 700);
+      await browser.driver.sleep(config.sleep);
+
+      await element(by.id('toolbar-searchfield-02')).click();
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.imageComparison.checkElement(containerEl, 'toolbar-flex-searchfield-non-collapsible')).toEqual(0);
+    });
+  }
 });

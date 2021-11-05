@@ -11,6 +11,18 @@
     position: relative;
   }
 
+  .modal-content .modal-body-wrapper {
+    padding: 16px 16px 0;
+  }
+
+  .modal.about .modal-body {
+    margin: 0 10px 16px;
+  }
+
+  .modal-body p:first-of-type {
+    padding-top: 10px;
+  }
+
   .close-container {
     position: absolute;
     right: 8px;
@@ -39,11 +51,11 @@
     overflow-y: scroll;
 
     @media only screen and (max-height: $breakpoint-slim + 25) {
-      max-height: 175px; 
+      max-height: 175px;
     }
 
     @media only screen and (max-height: $breakpoint-slim) {
-      max-height: 145px; 
+      max-height: 145px;
     }
 
     @media only screen and (max-height: $breakpoint-slim - 50) {
