@@ -70,7 +70,7 @@ describe('Notification-Badge Puppeteer Tests', () => {
 
     it('should have Icons 18x18 pixels, and the dot should be 6x6', async () => {
       let hasFailed = false;
-      const checkElementSize = async (element, style, value) => {
+      const checkdotSize = async (element, style, value) => {
         const elHandleArray = await page.$$('.container-spacer');
         let index = 0;
         // eslint-disable-next-line no-restricted-syntax
@@ -86,8 +86,25 @@ describe('Notification-Badge Puppeteer Tests', () => {
         }
         return hasFailed;
       };
-      await checkElementSize('icon', 'width', '18px');
-      await checkElementSize('dot', 'width', '6px');
+
+      const checkiconSize = async (style, value) => {
+        const elHandleArray = await page.$$('.container-spacer');
+        let index = 0;
+        // eslint-disable-next-line no-restricted-syntax
+        for await (const eL of elHandleArray) {
+          await eL.click();
+          try {
+            const width = await getComputedStyle(`#notification-badge-${index + 1} > svg`, style);
+            expect(width).toBe(value);
+          } catch (err) {
+            hasFailed = true;
+          }
+          index += 1;
+        }
+        return hasFailed;
+      };
+      await checkiconSize('width', '22px');
+      await checkdotSize('dot', 'width', '6px');
       expect(hasFailed).toBe(false);
     });
 
@@ -99,7 +116,6 @@ describe('Notification-Badge Puppeteer Tests', () => {
       for await (const eL of elHandleArray) {
         await eL.click();
         isFailed.push(await checkDataAutomationID(`#notification-badge-id-${index + 1}-container`, `notification-badge-automation-id-${index + 1}-container`));
-        isFailed.push(await checkDataAutomationID(`#notification-badge-id-${index + 1}-icon`, `notification-badge-automation-id-${index + 1}-icon`));
         isFailed.push(await checkDataAutomationID(`#notification-badge-id-${index + 1}-dot`, `notification-badge-automation-id-${index + 1}-dot`));
         index += 1;
       }
