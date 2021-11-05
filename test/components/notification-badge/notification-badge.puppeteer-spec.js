@@ -350,149 +350,18 @@ Object {
 
     it('should have Accessibility', async () => {
       const webArea = await page.accessibility.snapshot();
-      expect(webArea).toMatchInlineSnapshot(`
-Object {
-  "children": Array [
-    Object {
-      "name": "Skip to Main Content",
-      "role": "link",
-    },
-    Object {
-      "name": "Photo of Richard Fairbanks",
-      "role": "img",
-    },
-    Object {
-      "name": "Employee",
-      "role": "button",
-    },
-    Object {
-      "name": "Richard",
-      "role": "StaticText",
-    },
-    Object {
-      "name": "Fairbanks",
-      "role": "StaticText",
-    },
-    Object {
-      "name": "Download",
-      "role": "button",
-    },
-    Object {
-      "name": "Print",
-      "role": "button",
-    },
-    Object {
-      "name": "Purchasing",
-      "role": "button",
-    },
-    Object {
-      "name": "Notification",
-      "role": "button",
-    },
-    Object {
-      "name": "Inventory",
-      "role": "button",
-    },
-    Object {
-      "name": "Search",
-      "role": "StaticText",
-    },
-    Object {
-      "haspopup": "listbox",
-      "name": "Look up menu items",
-      "role": "combobox",
-    },
-    Object {
-      "name": "Home",
-      "role": "link",
-    },
-    Object {
-      "name": "Profile",
-      "role": "link",
-    },
-    Object {
-      "name": "Pay",
-      "role": "link",
-    },
-    Object {
-      "name": "Time Off",
-      "role": "link",
-    },
-    Object {
-      "name": "Settings",
-      "role": "button",
-    },
-    Object {
-      "name": "Proxy as user",
-      "role": "button",
-    },
-    Object {
-      "name": "About this App",
-      "role": "button",
-    },
-    Object {
-      "name": "Log Out",
-      "role": "button",
-    },
-    Object {
-      "expanded": true,
-      "name": "Application Menu Trigger",
-      "role": "button",
-    },
-    Object {
-      "level": 1,
-      "name": "User Profile",
-      "role": "heading",
-    },
-    Object {
-      "name": "Update Details",
-      "role": "button",
-    },
-    Object {
-      "haspopup": "menu",
-      "name": "Header More Actions Button",
-      "role": "combobox",
-    },
-    Object {
-      "children": Array [
-        Object {
-          "name": "Dates of Service",
-          "role": "tab",
-          "selected": true,
-        },
-      ],
-      "name": "Dates of Service",
-      "role": "tab",
-    },
-    Object {
-      "children": Array [
-        Object {
-          "name": "Personal Information",
-          "role": "tab",
-        },
-      ],
-      "name": "Personal Information",
-      "role": "tab",
-    },
-    Object {
-      "children": Array [
-        Object {
-          "name": "My Password",
-          "role": "tab",
-        },
-      ],
-      "name": "My Password",
-      "role": "tab",
-    },
-    Object {
-      "name": "Man bun portland venmo, reprehenderit cillum exercitation culpa adaptogen pitchfork unicorn. Jianbing mlkshk cloud bread id. Qui forage twee meditation hammock commodo heirloom gochujang shaman tattooed. Ethical commodo woke, ea est in artisan farm-to-table asymmetrical four loko ut cleanse thundercats. Gochujang reprehenderit schlitz cred squid tote bag tempor literally consequat exercitation.",
-      "role": "StaticText",
-    },
-  ],
-  "name": "IDS Enterprise",
-  "role": "RootWebArea",
-}
-`);
+      expect(webArea.children[0]).toMatchObject({ role: 'link', name: 'Skip to Main Content' });
+      expect(webArea.children[1]).toMatchObject({ role: 'img', name: 'Photo of Richard Fairbanks' });
+      expect(webArea.children[2]).toMatchObject({ role: 'button', name: 'Employee' });
+      expect(webArea.children[3]).toMatchObject({ role: 'StaticText', name: 'Richard' });
+      expect(webArea.children[4]).toMatchObject({ role: 'StaticText', name: 'Fairbanks' });
+      expect(webArea.children[5]).toMatchObject({ role: 'button', name: 'Download' });
+      expect(webArea.children[6]).toMatchObject({ role: 'button', name: 'Print' });
+      expect(webArea.children[7]).toMatchObject({ role: 'button', name: 'Purchasing' });
+      expect(webArea.children[8]).toMatchObject({ role: 'button', name: 'Notification' });
+      expect(webArea.children[9]).toMatchObject({ role: 'button', name: 'Inventory' });
+      expect(webArea.children[10]).toMatchObject({ role: 'StaticText', name: 'Search' });
+      expect(webArea.children[11]).toMatchObject({ role: 'combobox', name: 'Look up menu items', haspopup: 'listbox' });
     });
 
     it('should have four notification badges with different colors on different dot placements', async () => {
