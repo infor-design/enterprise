@@ -5,6 +5,7 @@ import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { DOM } from '../../utils/dom';
 import { charts } from '../charts/charts';
+import { theme } from '../theme/theme';
 import { Locale } from '../locale/locale';
 
 import '../emptymessage/emptymessage.jquery';
@@ -25,6 +26,8 @@ const COMPONENT_NAME = 'column';
 * @param {boolean} [settings.showLegend = true] If false the legend will not be shown.
 * @param {boolean|string} [settings.animate = true] true|false - will do or not do the animation. 'initial' will do only first time the animation.
 * @param {boolean} [settings.redrawOnResize = true]  If set to false the component will not redraw when the page or parent is resized.
+* @param {boolean} [settings.useLine = false] The ability to use line chart if set to true. This will need a target value to the dataset.
+* @param {boolean} [settings.hideDots=false] If true no dots are shown, along the line chart
 * @param {string} [settings.format = null] The d3 axis format
 * @param {string} [settings.formatterString] Use d3 format some examples can be found on http://bit.ly/1IKVhHh
 * @param {number} [settings.ticks = 9] The number of ticks to show.
@@ -53,6 +56,8 @@ const COLUMN_DEFAULTS = {
   selectable: true,
   format: null,
   redrawOnResize: true,
+  useLine: false,
+  hideDots: false,
   ticks: 9,
   fitHeight: true,
   emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' }
@@ -636,8 +641,118 @@ Column.prototype = {
           .attr('y', function () { return y(0) > height ? height : y(0); })
           .attr('height', function () { return 0; });
 
+        if (self.settings.useLine) {
+          if (dataset.length === dataset.map(d => d.line).length) {
+            const xScaleLine = d3.scaleBand()
+              .rangeRound([0, width])
+              .domain(dataset.map(d => d.name));
+
+            const yScaleLine = d3.scaleLinear()
+              .range([height, 0])
+              .domain([0, d3.max(maxes)]).nice();
+
+            const line = d3.line()
+              .x(d => (xScaleLine(d.name) + xScaleLine.bandwidth() / 2))
+              .y(d => yScaleLine(d.line.value));
+
+            const lineGroup = svg.append('g')
+              .attr('class', 'line-group');
+
+            // getting the attributes of line for automation id
+            const lineAttr = dataset.map(d => d.line).filter(i => i?.attributes);
+
+            const lineTooltip = function (elem, lineTooltipData) {
+              const rect = elem.getBoundingClientRect();
+              const content = `<p><b>${lineTooltipData.name}</b> ${lineTooltipData.value}</p>`;
+
+              const show = function () {
+                const size = charts.tooltipSize(content);
+                const posX = rect.left - (size.width / 2) + 6;
+                const posY = rect.top - size.height - 18;
+
+                if (content !== '') {
+                  if (charts.tooltip && charts.tooltip.length) {
+                    charts.tooltip[isPersonalizable ? 'addClass' : 'removeClass']('is-personalizable');
+                  }
+                  charts.showTooltip(posX, posY, content, 'top');
+                }
+              };
+
+              show();
+            };
+
+            const newDark = theme.currentTheme.modeId === 'dark' && theme.new;
+            const classicDark = theme.currentTheme.modeId === 'dark' && !theme.new;
+
+            lineGroup.append('path')
+              .call((d) => {
+                d._groups.forEach((thisLine) => {
+                  thisLine.forEach((lineEl) => {
+                    utils.addAttributes($(lineEl), lineAttr[0], lineAttr[0]?.attributes);
+                  });
+                });
+              })
+              .datum(dataset)
+              .attr('d', line(dataset))
+              .attr('class', 'line')
+              .style('opacity', 0)
+              .attr('stroke', classicDark ? '#BDBDBD' : newDark ? '#B7B7BA' : theme.new && theme.currentTheme.modeId !== 'dark' ? '#47474c' : '#313236')
+              .attr('stroke-width', 2)
+              .attr('fill', 'none');
+
+            if (!self.settings.hideDots) {
+              lineGroup.selectAll('circle')
+                .data(dataset)
+                .enter()
+                .append('circle')
+                .call((d) => {
+                  d._groups.forEach((thisDot) => {
+                    thisDot.forEach((dot, i) => {
+                      utils.addAttributes($(dot), lineAttr[0], lineAttr[0].attributes, `dot-${i + 1}`);
+                    });
+                  });
+                })
+                .attr('class', 'dot')
+                .style('opacity', 0)
+                .attr('cx', d => (xScaleLine(d.name) + xScaleLine.bandwidth() / 2))
+                .attr('cy', d => yScaleLine(d.line.value))
+                .attr('r', 5)
+                .style('fill', classicDark ? '#BDBDBD' : newDark ? '#B7B7BA' : theme.new && theme.currentTheme.modeId !== 'dark' ? '#47474c' : '#313236')
+                .style('stroke-width', 2)
+                .style('cursor', 'default')
+                .on(`mouseenter.${self.namespace}`, function (lineTooltipData) {
+                  lineTooltip(this, lineTooltipData.line);
+                })
+                .on(`mouseleave.${self.namespace}`, function () {
+                  charts.hideTooltip();
+                });
+            }
+          }
+        }
+
         bars
           .transition().duration(self.settings.animate ? 600 : 0)
+          .call(onEndAllTransition, function () {
+            // Add animation to line chart
+            if (self.settings.useLine) {
+              const line = svg.select('.line');
+              const totalLength = line.node().getTotalLength();
+              line
+                .style('opacity', 1)
+                .attr('stroke-dasharray', `${totalLength} ${totalLength}`)
+                .attr('stroke-dashoffset', totalLength)
+                .transition()
+                .duration(self.settings.animate ? 300 : 0)
+                .ease(d3.easeCubic)
+                .attr('stroke-dashoffset', 0)
+                .call(onEndAllTransition, function () {
+                  svg.selectAll('.dot')
+                    .transition()
+                    .duration(self.settings.animate ? 100 : 0)
+                    .style('opacity', 1);
+                });
+            }
+          })
           .attr('y', function (d) {
             const r = self.settings.isStacked ?
               (height - yScale(d.y) - yScale(d.y0)) : (d.value < 0 ? y(0) : y(d.value));
@@ -1009,6 +1124,9 @@ Column.prototype = {
     self.settings.svg = this.svg;
 
     if (self.settings.showLegend) {
+      let lineLegend;
+      const lineData = dataset.map(d => d.line);
+
       if (isSingle && dataset[0].name) {
         charts.addLegend(dataset, 'column-single', self.settings, self.element);
       } else if (isPositiveNegative) {
@@ -1017,6 +1135,12 @@ Column.prototype = {
         charts.addLegend(series, self.settings.type, self.settings, self.element);
       } else if (!isSingle) {
         let legendSeries = self.settings.isStacked ? seriesStacked : series;
+
+        if (self.settings.useLine) {
+          lineLegend = lineData.filter(i => i.name);
+          legendSeries.push(lineLegend[0]);
+        }
+
         legendSeries = legendSeries.map((d) => {
           if (d.attributes && !d.data?.attributes) {
             if (d.data) {
@@ -1028,6 +1152,14 @@ Column.prototype = {
           return d;
         });
         charts.addLegend(legendSeries, self.settings.type, self.settings, self.element);
+      }
+
+      if (self.settings.useLine && lineData.length) {
+        const chartLegendItemText = $('.chart-legend-item-text');
+        if (lineLegend[0].name === chartLegendItemText.last().text()) {
+          $('.chart-legend-color').last().addClass(theme.currentTheme.modeId === 'dark' ? 'slate03' : 'slate08');
+          self.element.find('.chart-legend-item').last().attr('style', 'pointer-events: none');
+        }
       }
     }
 
