@@ -6,6 +6,7 @@
 
 ## v4.58.0 Fixes
 
+- `[Tabs-Vertical]` Fixed on Tabs Vertical Aria and Roles. ([#5712](https://github.com/infor-design/enterprise/issues/5712))
 - `[Toolbar Searchfield]` Fixed the height the collapse button on a smaller viewport (`766px` and below). ([#5791](https://github.com/infor-design/enterprise/issues/5791))
 
 ## v4.57.0 Features
@@ -19,12 +20,15 @@
 - `[Datagrid]` Added Datagrid Fallback Image when image cannot be loaded. ([#5442](https://github.com/infor-design/enterprise/issues/5442))
 - `[File Upload]` Show progress percent while file is uploading. ([#3934](https://github.com/infor-design/enterprise/issues/3934))
 - `[Input]` Added a new form style `form-layout-large` to input component. ([#5606](https://github.com/infor-design/enterprise/issues/5606))
+- `[Icon]` Updated several icons see issue for details. ([#5774](https://github.com/infor-design/enterprise/issues/5774))
 - `[Message]` Changed some stylings on mobile experience. ([#5567](https://github.com/infor-design/enterprise/issues/5567))
 - `[Modal]` Adjusted stylings on mobile viewport. ([#5601](https://github.com/infor-design/enterprise/issues/5601))
 - `[Notification]` Added tooltip in notification. ([#5562](https://github.com/infor-design/enterprise/issues/5562))
 - `[Notification]` Added close functions (by ID and latest) in notification. ([#5562](https://github.com/infor-design/enterprise/issues/5562))
 - `[Datagrid]` Added support for text filter types to specify a selected filter condition. ([#5750](https://github.com/infor-design/enterprise/issues/5750))
 - `[Environment]` Fixed `ie` css class included to html tag for Edge browser. ([#5587](https://github.com/infor-design/enterprise/issues/5587))
+
+(41 Issues Solved This Release, Backlog Enterprise 192, Backlog Ng 28, 1166 Functional Tests, 1712 e2e Tests, 150 Puppeteer Tests)
 
 ## v4.57.0 Fixes
 
