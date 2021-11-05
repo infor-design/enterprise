@@ -215,6 +215,10 @@ $datagrid-small-row-height: 25px;
   }
 
   .datagrid-wrapper {
+    .datagrid-cell-wrapper > .icon {
+      vertical-align: middle;
+    }
+
     &:first-of-type {
       tr.rowstatus-row-error td:first-child {
         @include rowstatusEndBorders($ids-color-status-danger);
@@ -1466,7 +1470,6 @@ $datagrid-small-row-height: 25px;
 
           &.btn-icon {
             height: 20px;
-            margin-bottom: -20px;
             min-width: 20px;
           }
 

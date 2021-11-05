@@ -5,6 +5,7 @@ import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { DOM } from '../../utils/dom';
 import { charts } from '../charts/charts';
+import { theme } from '../theme/theme';
 import { Locale } from '../locale/locale';
 
 import '../emptymessage/emptymessage.jquery';
@@ -657,12 +658,45 @@ Column.prototype = {
             const lineGroup = svg.append('g')
               .attr('class', 'line-group');
 
+            // getting the attributes of line for automation id
+            const lineAttr = dataset.map(d => d.line).filter(i => i?.attributes);
+
+            const lineTooltip = function (elem, lineTooltipData) {
+              const rect = elem.getBoundingClientRect();
+              const content = `<p><b>${lineTooltipData.name}</b> ${lineTooltipData.value}</p>`;
+
+              const show = function () {
+                const size = charts.tooltipSize(content);
+                const posX = rect.left - (size.width / 2) + 6;
+                const posY = rect.top - size.height - 18;
+
+                if (content !== '') {
+                  if (charts.tooltip && charts.tooltip.length) {
+                    charts.tooltip[isPersonalizable ? 'addClass' : 'removeClass']('is-personalizable');
+                  }
+                  charts.showTooltip(posX, posY, content, 'top');
+                }
+              };
+
+              show();
+            };
+
+            const newDark = theme.currentTheme.modeId === 'dark' && theme.new;
+            const classicDark = theme.currentTheme.modeId === 'dark' && !theme.new;
+
             lineGroup.append('path')
+              .call((d) => {
+                d._groups.forEach((thisLine) => {
+                  thisLine.forEach((lineEl) => {
+                    utils.addAttributes($(lineEl), lineAttr[0], lineAttr[0]?.attributes);
+                  });
+                });
+              })
               .datum(dataset)
               .attr('d', line(dataset))
               .attr('class', 'line')
               .style('opacity', 0)
-              .attr('stroke', '#000')
+              .attr('stroke', classicDark ? '#888b94' : newDark ? '#97979B' : theme.new && theme.currentTheme.modeId !== 'dark' ? '#47474c' : '#313236')
               .attr('stroke-width', 2)
               .attr('fill', 'none');
 
@@ -671,14 +705,27 @@ Column.prototype = {
                 .data(dataset)
                 .enter()
                 .append('circle')
+                .call((d) => {
+                  d._groups.forEach((thisDot) => {
+                    thisDot.forEach((dot, i) => {
+                      utils.addAttributes($(dot), lineAttr[0], lineAttr[0].attributes, `dot-${i + 1}`);
+                    });
+                  });
+                })
                 .attr('class', 'dot')
                 .style('opacity', 0)
                 .attr('cx', d => (xScaleLine(d.name) + xScaleLine.bandwidth() / 2))
                 .attr('cy', d => yScaleLine(d.line.value))
                 .attr('r', 5)
-                .style('fill', '#000')
+                .style('fill', classicDark ? '#888b94' : newDark ? '#97979B' : theme.new && theme.currentTheme.modeId !== 'dark' ? '#47474c' : '#313236')
                 .style('stroke-width', 2)
-                .style('cursor', 'pointer');
+                .style('cursor', 'default')
+                .on(`mouseenter.${self.namespace}`, function (lineTooltipData) {
+                  lineTooltip(this, lineTooltipData.line);
+                })
+                .on(`mouseleave.${self.namespace}`, function () {
+                  charts.hideTooltip();
+                });
             }
           }
         }
@@ -1077,6 +1124,9 @@ Column.prototype = {
     self.settings.svg = this.svg;
 
     if (self.settings.showLegend) {
+      let lineLegend;
+      const lineData = dataset.map(d => d.line);
+
       if (isSingle && dataset[0].name) {
         charts.addLegend(dataset, 'column-single', self.settings, self.element);
       } else if (isPositiveNegative) {
@@ -1085,6 +1135,12 @@ Column.prototype = {
         charts.addLegend(series, self.settings.type, self.settings, self.element);
       } else if (!isSingle) {
         let legendSeries = self.settings.isStacked ? seriesStacked : series;
+
+        if (self.settings.useLine) {
+          lineLegend = lineData.filter(i => i.name);
+          legendSeries.push(lineLegend[0]);
+        }
+
         legendSeries = legendSeries.map((d) => {
           if (d.attributes && !d.data?.attributes) {
             if (d.data) {
@@ -1096,6 +1152,14 @@ Column.prototype = {
           return d;
         });
         charts.addLegend(legendSeries, self.settings.type, self.settings, self.element);
+      }
+
+      if (self.settings.useLine && lineData.length) {
+        const chartLegendItemText = $('.chart-legend-item-text');
+        if (lineLegend[0].name === chartLegendItemText.last().text()) {
+          $('.chart-legend-color').last().addClass(theme.currentTheme.modeId === 'dark' ? 'slate04' : 'slate08');
+          self.element.find('.chart-legend-item').last().attr('style', 'pointer-events: none');
+        }
       }
     }
 

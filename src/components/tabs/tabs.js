@@ -245,8 +245,7 @@ Tabs.prototype = {
     self.tablist
       .attr({
         class: 'tab-list',
-        role: 'tablist',
-        'aria-multiselectable': 'false'
+        role: 'tablist'
       });
 
     // Conditionally Change layout classes if veritcal tabs is in responsive
@@ -263,8 +262,8 @@ Tabs.prototype = {
       const a = $(this);
       const attrPart = a[0].textContent.toLowerCase().trim().split(' ').join('-');
 
-      a.attr({ role: 'tab', 'aria-expanded': 'false', 'aria-selected': 'false', tabindex: '-1' })
-        .parent().attr('role', 'presentation').addClass('tab');
+      a.attr({ role: 'tab', 'aria-selected': 'false', tabindex: '-1' })
+        .parent().attr('role', 'tab').addClass('tab');
 
       let dismissibleIcon;
       if (a.parent().hasClass('dismissible') && !a.parent().children('.icon').length) {
@@ -611,14 +610,17 @@ Tabs.prototype = {
    * @returns {this} component instance
    */
   renderHelperMarkup() {
+    const self = this;
     let auxilaryButtonLocation = this.tablistContainer || this.tablist;
     if (this.isModuleTabs()) {
       auxilaryButtonLocation = this.tablist;
     }
 
-    this.focusState = this.element.find('.tab-focus-indicator');
-    if (!this.focusState.length) {
-      this.focusState = $('<div class="tab-focus-indicator" role="presentation"></div>').insertBefore(this.tablist);
+    if (!self.element.parents('.modal-content').length) {
+      this.focusState = this.element.find('.tab-focus-indicator');
+      if (!this.focusState.length) {
+        this.focusState = $('<div class="tab-focus-indicator" role="presentation"></div>').insertBefore(this.tablist);
+      }
     }
 
     // Add the markup for the "More" button if it doesn't exist.
@@ -2453,7 +2455,6 @@ Tabs.prototype = {
     // hide old tabs
     this.anchors.attr({
       'aria-selected': 'false',
-      'aria-expanded': 'false',
       tabindex: '-1'
     });
     this.moreButton.attr({
@@ -2466,7 +2467,6 @@ Tabs.prototype = {
       if (!this.isTabOverflowed(a.parent())) {
         a.attr({
           'aria-selected': 'true',
-          'aria-expanded': 'true',
           tabindex: '0'
         }).parent().addClass('is-selected');
       } else {
@@ -3866,17 +3866,20 @@ Tabs.prototype = {
 
     // Adjust the values one more time if we have tabs contained inside of a
     // page-container, or some other scrollable container.
-    targetPos = adjustForParentContainer(targetPos, parentContainer, scrollingTablist, widthPercentage);
+    if (!self.element.parents('.modal-content').length) {
+      targetPos = adjustForParentContainer(targetPos, parentContainer, scrollingTablist, widthPercentage);
+
+      let targetPosString = '';
+      Object.keys(targetPos).forEach((key) => {
+        if (targetPosString.length) {
+          targetPosString += ' ';
+        }
+        targetPosString += `${key}: ${targetPos[key]}px;`;
+      });
+      focusStateElem.style.cssText = targetPosString;
+    }
 
     // build CSS string containing each prop and set it:
-    let targetPosString = '';
-    Object.keys(targetPos).forEach((key) => {
-      if (targetPosString.length) {
-        targetPosString += ' ';
-      }
-      targetPosString += `${key}: ${targetPos[key]}px;`;
-    });
-    focusStateElem.style.cssText = targetPosString;
 
     const selected = targetClassList.contains('is-selected') ? 'add' : 'remove';
     focusStateElem.classList[selected]('is-selected');

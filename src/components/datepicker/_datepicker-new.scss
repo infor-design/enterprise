@@ -70,3 +70,12 @@ html[dir='rtl'] {
     }
   }
 }
+
+html.is-safari {
+  .field-short,
+  .form-layout-compact {
+    .datepicker + .trigger {
+      top: 2px;
+    }
+  }
+}

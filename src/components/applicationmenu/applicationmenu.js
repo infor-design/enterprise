@@ -470,6 +470,16 @@ ApplicationMenu.prototype = {
         tabPanel.css('width', `calc(100% - ${localStorage.navMenuWidth})`);
       }
     }
+
+    // For some reason, the fix will not work if used in scss style.
+    if ($('html.is-safari') && this.settings.resizable) {
+      $('.resize-app-menu-container').css('display', 'flex');
+    }
+
+    if (!localStorage.navMenuWidth) {
+      const resizerPos = $('.resizer').position();
+      pageContainer.css('width', `calc(100% - ${resizerPos.left < 300 ? 300 : resizerPos.left}px)`);
+    }
   },
 
   /**

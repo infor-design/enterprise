@@ -1,17 +1,60 @@
 # What's New with Enterprise
 
+## v4.58.0 Features
+
+- `[Column]` Added support to add a line chart in column-grouped. ([#4598](https://github.com/infor-design/enterprise/issues/4598))
+
+## v4.58.0 Fixes
+
+- `[Tabs-Vertical]` Fixed on Tabs Vertical Aria and Roles. ([#5712](https://github.com/infor-design/enterprise/issues/5712))
+- `[Toolbar Searchfield]` Fixed the height the collapse button on a smaller viewport (`766px` and below). ([#5791](https://github.com/infor-design/enterprise/issues/5791))
+
 ## v4.57.0 Features
 
+- `[Accordion]` Added the ability to have a notification badge in accordion headers. ([#5594](https://github.com/infor-design/enterprise/issues/5594))
+- `[Breadcrumb]` Added hitbox styles for breadcrumb. ([#5408](https://github.com/infor-design/enterprise/issues/5408))
+- `[Button]` Added the ability to have a hitbox. With this feature, it will have a better tapping/clicking on smaller devices. ([#5568](https://github.com/infor-design/enterprise/issues/5568))
+- `[Button]` Added the ability to have a notification badge in buttons. ([#5594](https://github.com/infor-design/enterprise/issues/5594))
+- `[Calendar]` Added hitbox option for calendar. ([#5602](https://github.com/infor-design/enterprise/issues/5602))
+- `[Checkbox]` Added hitbox area styles for checkboxes. ([#5603](https://github.com/infor-design/enterprise/issues/5603))
+- `[Datagrid]` Added Datagrid Fallback Image when image cannot be loaded. ([#5442](https://github.com/infor-design/enterprise/issues/5442))
 - `[File Upload]` Show progress percent while file is uploading. ([#3934](https://github.com/infor-design/enterprise/issues/3934))
+- `[Input]` Added a new form style `form-layout-large` to input component. ([#5606](https://github.com/infor-design/enterprise/issues/5606))
+- `[Icon]` Updated several icons see issue for details. ([#5774](https://github.com/infor-design/enterprise/issues/5774))
+- `[Message]` Changed some stylings on mobile experience. ([#5567](https://github.com/infor-design/enterprise/issues/5567))
+- `[Modal]` Adjusted stylings on mobile viewport. ([#5601](https://github.com/infor-design/enterprise/issues/5601))
+- `[Notification]` Added tooltip in notification. ([#5562](https://github.com/infor-design/enterprise/issues/5562))
+- `[Notification]` Added close functions (by ID and latest) in notification. ([#5562](https://github.com/infor-design/enterprise/issues/5562))
+- `[Datagrid]` Added support for text filter types to specify a selected filter condition. ([#5750](https://github.com/infor-design/enterprise/issues/5750))
+- `[Environment]` Fixed `ie` css class included to html tag for Edge browser. ([#5587](https://github.com/infor-design/enterprise/issues/5587))
+
+(41 Issues Solved This Release, Backlog Enterprise 192, Backlog Ng 28, 1166 Functional Tests, 1712 e2e Tests, 150 Puppeteer Tests)
 
 ## v4.57.0 Fixes
 
+- `[ApplicationMenu]` Fix for broken UI in Safari when hiding and expanding the navigation menu. ([#5620](https://github.com/infor-design/enterprise/issues/5620))
+- `[ApplicationMenu]` Fix application menu broken UI on first render. ([#5766](https://github.com/infor-design/enterprise/issues/5766))
+- `[Calendar]` Removed the example legend in the default settings. ([#1130](https://github.com/infor-design/enterprise-ng/issues/1130))
+- `[Cards]` Fixed misaligned list within expandable cards pane. ([#5223](https://github.com/infor-design/enterprise/issues/5223))
+- `[Counts]` Updated the font size of `xl-text` from `50px` to `48px`. ([#5588](https://github.com/infor-design/enterprise/issues/5588))
+- `[Counts]` Fixed title and icon position when in RTL. ([#5566](https://github.com/infor-design/enterprise/issues/5566))
+- `[Datagrid]` Removed margin in icon when size is small or extra small. ([#5726](https://github.com/infor-design/enterprise/issues/5726))
+- `[Datagrid]` Added additional check for vertical scroll. ([#1154](https://github.com/infor-design/enterprise-ng/issues/1154))
 - `[Datepicker]` Fix on default legends being shown regardless if settings have custom legends. ([#5683](https://github.com/infor-design/enterprise/issues/5683))
+- `[EmptyMessage]` Added `16px` spacings in the empty message container. ([#5639](https://github.com/infor-design/enterprise/issues/5639))
+- `[FieldFilter]` Fixed missing trigger icons on short field filter options. ([#5727](https://github.com/infor-design/enterprise/issues/5727))
+- `[Form]` Fixed misaligned trigger icon of datepicker on safari. ([#5751](https://github.com/infor-design/enterprise/issues/5751))
+- `[Header]` Fix on Advanced Search not seen on headers when changing colors. ([#5782](https://github.com/infor-design/enterprise/issues/5782))
 - `[Locale]` Fixed currency position and a translation on tl-PH locale. ([#5695](https://github.com/infor-design/enterprise/issues/5695))
 - `[Lookup]` Fix an uncentered lookup icon in composite form. ([#5657](https://github.com/infor-design/enterprise/issues/5657))
 - `[Searchfield]` Fix on uneven searchfield in firefox. ([#5620](https://github.com/infor-design/enterprise/issues/5620))
 - `[Searchfield]` Fix on uneven searchfield in firefox. ([#5695](https://github.com/infor-design/enterprise/issues/5695))
+- `[Searchfield]` Fix on misaligned close button on mobile view. ([#5782](https://github.com/infor-design/enterprise/issues/5782))
+- `[Searchfield]` Change width when parent container becomes smaller. ([#4696](https://github.com/infor-design/enterprise/issues/4696))
 - `[Spinbox]` Remove functionality of Home and End buttons on Spinbox. ([#5659](https://github.com/infor-design/enterprise/issues/5659))
+- `[Spinbox]` Fix spinbox misalignment on sample sizes. ([#5733](https://github.com/infor-design/enterprise/issues/5733))
+- `[Tabs]` Fix a bug on vertical tabs scroll on panel containers. ([#5565](https://github.com/infor-design/enterprise/issues/5565))
+- `[Treemap]` Fix Treemap's misaligned footer-text on the new theme. ([#5365](https://github.com/infor-design/enterprise/issues/5365))
 
 ## v4.56.0 Features
 

@@ -38,7 +38,7 @@ describe('Monthview API', () => {
     monthviewAPI = new MonthView(monthviewEl, {
       month: 8,
       year: 2018,
-      activeDate: new Date(2018, 8, 10)
+      activeDate: new Date(2018, 8, 10),
     });
   });
 
@@ -187,5 +187,16 @@ describe('Monthview API', () => {
 
     expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('September 2018');
     expect(document.body.querySelector('.monthview .is-selected .day-text').innerText).toEqual('22');
+  });
+
+  it('Should populate header starting from given day of the week', () => {
+    monthviewAPI.destroy();
+    monthviewAPI = new MonthView(monthviewEl, {
+      month: 8,
+      year: 2018,
+      activeDate: new Date(2018, 8, 10),
+      firstDayOfWeek: 1
+    });
+    expect(document.getElementsByClassName('monthview-table')[0].children[0].children[0].children[0].innerHTML).toEqual('Mon');
   });
 });

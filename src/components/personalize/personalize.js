@@ -287,9 +287,9 @@ Personalize.prototype = {
     colors.baseDisabled = disabledBGColor;
 
     // Hyperlink/Text Selection
-    colors.hyperlinkText = dark ? colors.dark : colors.lighter;
-    colors.hyperlinkTextHover = dark ? colors.darker : colors.lightest;
-    colors.selection = dark ? colors.darker : colors.lightest;
+    colors.hyperlinkText = colors.text;
+    colors.hyperlinkTextHover = defaultColors.subtext;
+    colors.selection = defaultColors.subtext;
 
     const tooltipContrast = colorUtils.getContrastColor(colors.darkest);
     defaultColors.tooltipText = tooltipContrast === 'white' ? 'ffffff' : '000000';
