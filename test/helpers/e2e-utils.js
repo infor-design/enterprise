@@ -221,36 +221,6 @@ module.exports = {
   },
 
   /**
-     * Checks if the 1st and Last item on the list contains the given value.
-     * param {string} listElement - The selector for the element to get the property value for.
-     * param {string} firstItem - The selector of the first item on the list.
-     * param {string} lasttItem - The selector of the last item on the list.
-     * returns {boolean} isFailed - return true if the comparison is failed, return false otherwise.
-     */
-  checkListItem_1stnLastValue: async (listElement, firstItem, lastItem) => {
-    let hasFailed = false;
-    const elHandleArray = await page.$$(listElement);
-    const lastIndex = elHandleArray.length - 1;
-    // eslint-disable-next-line compat/compat
-    await Promise.all(elHandleArray.map(async (el, index) => {
-      try {
-        if (index === 0) {
-          expect(await page.$eval(`${listElement}:first-child`, items => items.textContent))
-            .toContain(firstItem);
-        }
-        if (index === lastIndex) {
-          expect(await page.$eval(`${listElement}:last-child`, items => items.textContent))
-            .toContain(lastItem);
-        }
-      } catch (error) {
-        hasFailed = true;
-      }
-      index += 1;
-    }));
-    return hasFailed;
-  },
-
-  /**
      * Drag and Drop element to a specific location.
      * param {string} || {object} originSelector - The selector for the origin element. could be [object Object] or [object String]
      * param {string} || {object} destinationSelector - The selector of the destination element. could be [object Object] or [object String] or [object Array]
