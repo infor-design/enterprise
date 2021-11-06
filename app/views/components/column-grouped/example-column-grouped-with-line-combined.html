@@ -1,0 +1,142 @@
+<div class="row">
+  <div class="two-thirds column">
+    <div class="widget">
+      <div class="widget-header">
+        <h2 class="widget-title">Grouped Column with Line Chart</h2>
+      </div>
+      <div class="widget-content">
+        <div id="column-grouped-example" class="chart-container">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+    var dataset = [{
+      data: [{
+        name: 'Principal',
+        value: 100,
+        attributes: [
+          { name: 'id', value: 'cg1-principal' },
+          { name: 'data-automation-id', value: 'automation-cg1-principal' }
+        ]
+      }, {
+        name: 'Cost',
+        value: 50,
+        attributes: [
+          { name: 'id', value: 'cg1-cost' },
+          { name: 'data-automation-id', value: 'automation-cg1-cost' }
+        ]
+      }],
+      line: { name: 'Margins', value: 51 },
+      name: '1'
+    }, {
+      data: [{
+        name: 'Principal',
+        value: 120,
+        attributes: [
+          { name: 'id', value: 'cg2-principal' },
+          { name: 'data-automation-id', value: 'automation-cg2-principal' }
+        ]
+      }, {
+        name: 'Cost',
+        value: 76,
+        attributes: [
+          { name: 'id', value: 'cg1-cost' },
+          { name: 'data-automation-id', value: 'automation-cg1-cost' }
+        ]
+      }],
+      line: {
+        name: 'Margins',
+        value: 45,
+        attributes: [
+          { name: 'id', value: 'column-line-id' },
+          { name: 'data-automation-id', value: 'automation-column-line' }
+        ]
+      },
+      name: '2'
+    }, {
+      data: [{
+        name: 'Principal',
+        value: 105,
+        attributes: [
+          { name: 'id', value: 'cg3-principal' },
+          { name: 'data-automation-id', value: 'automation-cg3-principal' }
+        ]
+      }, {
+        name: 'Cost',
+        value: 65,
+        attributes: [
+          { name: 'id', value: 'cg3-cost' },
+          { name: 'data-automation-id', value: 'automation-cg3-cost' }
+        ]
+      }],
+      line: { name: 'Margins', value: 38 },
+      name: '3'
+    }, {
+      data: [{
+        name: 'Principal',
+        value: 98,
+        attributes: [
+          { name: 'id', value: 'cg4-principal' },
+          { name: 'data-automation-id', value: 'automation-cg4-principal' }
+        ]
+      }, {
+        name: 'Cost',
+        value: 43,
+        attributes: [
+          { name: 'id', value: 'cg4-cost' },
+          { name: 'data-automation-id', value: 'automation-cg4-cost' }
+        ]
+      }],
+      line: { name: 'Margins', value: 58 },
+      name: '4'
+    }, {
+      data: [{
+        name: 'Principal',
+        value: 116,
+        attributes: [
+          { name: 'id', value: 'cg5-principal' },
+          { name: 'data-automation-id', value: 'automation-cg5-principal' }
+        ]
+      }, {
+        name: 'Cost',
+        value: 90,
+        attributes: [
+          { name: 'id', value: 'cg5-cost' },
+          { name: 'data-automation-id', value: 'automation-cg5-cost' }
+        ]
+      }],
+      line: { name: 'Margins', value: 25 },
+      name: '5'
+    }, {
+      data: [{
+        name: 'Principal',
+        value: 131,
+        attributes: [
+          { name: 'id', value: 'cg6-principal' },
+          { name: 'data-automation-id', value: 'automation-cg6-principal' }
+        ]
+      }, {
+        name: 'Cost',
+        value: 60,
+        attributes: [
+          { name: 'id', value: 'cg6-cost' },
+          { name: 'data-automation-id', value: 'automation-cg6-cost' }
+        ]
+      }],
+      line: { name: 'Margins', value: 65 },
+      name: '6'
+    }];
+
+    $('#column-grouped-example').chart({
+      type: 'column-grouped',
+      dataset: dataset,
+      useLine: true
+    });
+
+  });
+
+</script>

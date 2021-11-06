@@ -1,7 +1,12 @@
 # What's New with Enterprise
 
+## v4.58.0 Features
+
+- `[Column]` Added support to add a line chart in column-grouped. ([#4598](https://github.com/infor-design/enterprise/issues/4598))
+
 ## v4.58.0 Fixes
 
+- `[Searchfield]` Save input value when searchfield collapses but is not cleared via button click or key. ([#5792](https://github.com/infor-design/enterprise/issues/5792))
 - `[Tabs-Vertical]` Fixed on Tabs Vertical Aria and Roles. ([#5712](https://github.com/infor-design/enterprise/issues/5712))
 - `[Toolbar Searchfield]` Fixed the height the collapse button on a smaller viewport (`766px` and below). ([#5791](https://github.com/infor-design/enterprise/issues/5791))
 
