@@ -899,11 +899,7 @@ Accordion.prototype = {
         self.element.trigger('afterexpand', [a]);
       }
 
-      // if (pane.hasClass('no-transition')) {
-        handleAfterExpand();
-      // } else {
-        // pane.one('animateopencomplete', handleAfterExpand).animateOpen();
-      // }
+      handleAfterExpand();
     }
 
     // Load from an external source, if applicable
