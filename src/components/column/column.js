@@ -1203,7 +1203,7 @@ Column.prototype = {
       }
     }
 
-    if (isAxisXRotate && self.settings.xAxis && self.settings.xAxis.rotate) {
+    if (isAxisXRotate && self.settings.xAxis && self.settings.xAxis?.rotate) {
       self.svg.selectAll('.x.axis .tick text')
         .attr('y', 0)
         .attr('x', function () {
@@ -1243,7 +1243,7 @@ Column.prototype = {
 
     // See if any labels overlap and use shorter */
     // [applyAltLabels] - function(svg, dataArray, elem, selector, isNoEclipse)
-    if (!isAxisXRotate && !self.settings.xAxis && !self.settings.xAxis.rotate) {
+    if (!isAxisXRotate && !self.settings.xAxis && !self.settings.xAxis?.rotate) {
       if (charts.labelsColide(svg)) {
         charts.applyAltLabels(svg, dataArray, 'shortName');
       }
