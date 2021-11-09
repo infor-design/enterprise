@@ -1,7 +1,7 @@
 const { dragAndDrop } = require('../../helpers/e2e-utils.js');
 
 describe('Toast Puppeteer Tests', () => {
-  describe('Index Tests', () => {
+  describe('Toast Index Tests', () => {
     const url = 'http://localhost:4000/components/toast/example-index.html';
     beforeEach(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
@@ -24,7 +24,7 @@ describe('Toast Puppeteer Tests', () => {
       await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport', 'color-contrast'] });
     });
 
-    it('should have Accessibility', async () => {
+    it('should pass accessibility checks', async () => {
       const webArea = await page.accessibility.snapshot();
       expect(webArea).toMatchInlineSnapshot(`
 Object {
@@ -87,7 +87,7 @@ Object {
       expect(isEnabled).toBe(true);
     });
 
-    it('should display', async () => {
+    it('should display toast message', async () => {
       await page.click('#show-toast-message');
       await page.waitForSelector('#toast-container', { visible: true });
       const toast = await page.evaluate(() => !!document.querySelector('#toast-container'));
@@ -121,74 +121,10 @@ Object {
     });
   });
 
-  describe('Example-positions tests', () => {
+  describe('Toast test-position tests', () => {
     const url = 'http://localhost:4000/components/toast/test-positions';
     beforeEach(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
-    });
-
-    it('should show the title', async () => {
-      await expect(page.title()).resolves.toMatch('IDS Enterprise');
-    });
-
-    it('should check the test page with Axe', async () => {
-      await page.setBypassCSP(true);
-      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-      /* Violations found:
-      Rule: "color-contrast" (Elements must have sufficient color contrast)
-      Rule: "meta-viewport" (Zooming and scaling should not be disabled)
-      */
-      await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport'] });
-    });
-
-    it('should have Accessibility', async () => {
-      const webArea = await page.accessibility.snapshot();
-      expect(webArea).toMatchInlineSnapshot(`
-Object {
-  "children": Array [
-    Object {
-      "name": "Skip to Main Content",
-      "role": "link",
-    },
-    Object {
-      "level": 1,
-      "name": "IDS Enterprise",
-      "role": "heading",
-    },
-    Object {
-      "haspopup": "menu",
-      "name": "Header More Actions Button",
-      "role": "combobox",
-    },
-    Object {
-      "name": "Show Toast Top left",
-      "role": "button",
-    },
-    Object {
-      "name": "Show Toast Top Right",
-      "role": "button",
-    },
-    Object {
-      "name": "Show Toast Bottom Left",
-      "role": "button",
-    },
-    Object {
-      "name": "Show Toast Bottom Right",
-      "role": "button",
-    },
-    Object {
-      "name": "Show Toast Long Text",
-      "role": "button",
-    },
-    Object {
-      "name": "Toast Destroy",
-      "role": "button",
-    },
-  ],
-  "name": "IDS Enterprise",
-  "role": "RootWebArea",
-}
-`);
     });
 
     it('should have top left button enabled', async () => {
@@ -240,7 +176,7 @@ Object {
       expect(isToastBigTxtEnabled).toBe(true);
     });
 
-    it('should have Toast with Long Text ', async () => {
+    it('should have toast with long text ', async () => {
       await page.click('#show-toast-big-text');
       const isToastBigTxtExist = await page.$eval('.toast-bottom-right', el => el !== null);
       expect(isToastBigTxtExist).toBeTruthy();
@@ -254,58 +190,10 @@ Object {
     });
   });
 
-  describe('Example-draggable tests', () => {
+  describe('Toast Example-draggable tests', () => {
     const url = 'http://localhost:4000/components/toast/example-draggable.html';
     beforeEach(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
-    });
-
-    it('should show the title', async () => {
-      await expect(page.title()).resolves.toMatch('IDS Enterprise');
-    });
-
-    it('should check the test page with Axe', async () => {
-      await page.setBypassCSP(true);
-      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-      /* Violations found:
-      Rule: "color-contrast" (Elements must have sufficient color contrast)
-      Rule: "meta-viewport" (Zooming and scaling should not be disabled)
-      */
-      await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport'] });
-    });
-
-    it('should have Accessibility', async () => {
-      const webArea = await page.accessibility.snapshot();
-      expect(webArea).toMatchInlineSnapshot(`
-Object {
-  "children": Array [
-    Object {
-      "name": "Skip to Main Content",
-      "role": "link",
-    },
-    Object {
-      "level": 1,
-      "name": "IDS Enterprise",
-      "role": "heading",
-    },
-    Object {
-      "haspopup": "menu",
-      "name": "Header More Actions Button",
-      "role": "combobox",
-    },
-    Object {
-      "name": "Show Toast Message (1)",
-      "role": "button",
-    },
-    Object {
-      "name": "Show Toast Message (2)",
-      "role": "button",
-    },
-  ],
-  "name": "IDS Enterprise",
-  "role": "RootWebArea",
-}
-`);
     });
 
     it('should be able to change toast position', async () => {
