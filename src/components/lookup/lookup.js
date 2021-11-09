@@ -694,9 +694,16 @@ Lookup.prototype = {
 
     // Mark selected rows
     lookupGrid.off('selected.lookup');
-    const val = self.element.val();
-    if (val && !this.settings.options.source) {
-      self.selectGridRows(val);
+    if (self.initValues) {
+      self.initValues.forEach(initval => self.selectGridRows(initval.value.toString()));
+      delete self.initValues;
+    } else {
+      const fieldVal = self.element.val();
+      if (fieldVal && !self.settings.options.source) {
+        const fieldValues = self.settings.options.selectable === 'multiple' && (fieldVal.indexOf(this.settings.delimiter) > 1) ?
+          fieldVal.split(this.settings.delimiter) : [fieldVal];
+        fieldValues.forEach(fieldval => self.selectGridRows(fieldval.toString()));
+      }
     }
 
     // Restore selected rows when pages change
