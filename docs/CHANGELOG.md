@@ -3,6 +3,7 @@
 ## v4.58.0 Features
 
 - `[Column]` Added support to add a line chart in column-grouped. ([#4598](https://github.com/infor-design/enterprise/issues/4598))
+- `[Column]` Added feature to rotate labels. ([#5773](https://github.com/infor-design/enterprise/issues/5773))
 
 ## v4.58.0 Fixes
 
