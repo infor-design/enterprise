@@ -2,7 +2,7 @@ const { getComputedStyle, checkDataAutomationID, checkInnerHTMLValue } = require
 
 describe('Notification-Badge Puppeteer Tests', () => {
   describe('Badge Placement Tests', () => {
-    const url = 'http://localhost:4000/components/notification-badge/example-badge-placement.html?theme=classic&mode=new&layout=nofrills';
+    const url = 'http://localhost:4000/components/notification-badge/example-badge-placement.html?theme=new&mode=light&layout=nofrills';
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
     });
@@ -103,7 +103,7 @@ describe('Notification-Badge Puppeteer Tests', () => {
         }
         return hasFailed;
       };
-      await checkiconSize('width', '22px');
+      await checkiconSize('width', '18px');
       await checkdotSize('dot', 'width', '6px');
       expect(hasFailed).toBe(false);
     });
@@ -139,7 +139,7 @@ describe('Notification-Badge Puppeteer Tests', () => {
       await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport'] });
     });
 
-    it('should have Accessibility', async () => {
+    it('should be accessible', async () => {
       const webArea = await page.accessibility.snapshot();
       expect(webArea).toMatchObject({
         name: 'IDS Enterprise',
@@ -178,69 +178,9 @@ describe('Notification-Badge Puppeteer Tests', () => {
   });
 
   describe('Buttons Tests', () => {
-    /*
-    |-------------------------------------------------------|
-    | https://github.com/infor-design/enterprise/pull/5790  |
-    |-------------------------------------------------------| */
     const url = 'http://localhost:4000/components/button/example-badge.html';
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
-    });
-
-    it('should show the title', async () => {
-      await expect(page.title()).resolves.toMatch('IDS Enterprise');
-    });
-
-    it('should check the test page with Axe', async () => {
-      await page.setBypassCSP(true);
-      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-      await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport'] });
-    });
-
-    it('should have Accessibility', async () => {
-      const webArea = await page.accessibility.snapshot();
-      expect(webArea).toMatchInlineSnapshot(`
-Object {
-  "children": Array [
-    Object {
-      "name": "Skip to Main Content",
-      "role": "link",
-    },
-    Object {
-      "level": 1,
-      "name": "IDS Enterprise",
-      "role": "heading",
-    },
-    Object {
-      "haspopup": "menu",
-      "name": "Header More Actions Button",
-      "role": "combobox",
-    },
-    Object {
-      "name": "Icon",
-      "role": "StaticText",
-    },
-    Object {
-      "name": "Date",
-      "role": "button",
-    },
-    Object {
-      "name": "Date",
-      "role": "button",
-    },
-    Object {
-      "name": "Date",
-      "role": "button",
-    },
-    Object {
-      "name": "Date",
-      "role": "button",
-    },
-  ],
-  "name": "IDS Enterprise",
-  "role": "RootWebArea",
-}
-`);
     });
 
     it('should have four notification badges with different colors on different dot placements', async () => {
@@ -287,81 +227,12 @@ Object {
       expect(await checkBadgePlacement()).not.toBeTruthy();
     });
 
-    it('should have Icons 22x22 pixels, and the dot should be 6x6', async () => {
-      let hasFailed = false;
-      const checkdotSize = async (element, style, value) => {
-        const elHandleArray = await page.$$('.container-spacer');
-        let index = 0;
-        // eslint-disable-next-line no-restricted-syntax
-        for await (const eL of elHandleArray) {
-          await eL.click();
-          try {
-            const width = await getComputedStyle(`#notification-badge-id-${index + 1}-${element}`, style);
-            expect(width).toBe(value);
-          } catch (err) {
-            hasFailed = true;
-          }
-          index += 1;
-        }
-        return hasFailed;
-      };
-
-      const checkiconSize = async (style, value) => {
-        const elHandleArray = await page.$$('.container-spacer');
-        let index = 0;
-        // eslint-disable-next-line no-restricted-syntax
-        for await (const eL of elHandleArray) {
-          await eL.click();
-          try {
-            const width = await getComputedStyle(`#notification-badge-${index + 1} > svg`, style);
-            expect(width).toBe(value);
-          } catch (err) {
-            hasFailed = true;
-          }
-          index += 1;
-        }
-        return hasFailed;
-      };
-      await checkiconSize('width', '22px');
-      await checkdotSize('dot', 'width', '6px');
-      expect(hasFailed).toBe(false);
-    });
   });
 
   describe('Appmenu Tests', () => {
-    /*
-    |-------------------------------------------------------|
-    | https://github.com/infor-design/enterprise/pull/5790  |
-    |-------------------------------------------------------| */
     const url = 'http://localhost:4000/components/applicationmenu/example-menu-notification.html';
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
-    });
-
-    it('should show the title', async () => {
-      await expect(page.title()).resolves.toMatch('IDS Enterprise');
-    });
-
-    it('should check the test page with Axe', async () => {
-      await page.setBypassCSP(true);
-      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-      await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport', 'aria-required-attr', 'color-contrast', 'aria-required-parent', 'nested-interactive'] });
-    });
-
-    it('should have Accessibility', async () => {
-      const webArea = await page.accessibility.snapshot();
-      expect(webArea.children[0]).toMatchObject({ role: 'link', name: 'Skip to Main Content' });
-      expect(webArea.children[1]).toMatchObject({ role: 'img', name: 'Photo of Richard Fairbanks' });
-      expect(webArea.children[2]).toMatchObject({ role: 'button', name: 'Employee' });
-      expect(webArea.children[3]).toMatchObject({ role: 'StaticText', name: 'Richard' });
-      expect(webArea.children[4]).toMatchObject({ role: 'StaticText', name: 'Fairbanks' });
-      expect(webArea.children[5]).toMatchObject({ role: 'button', name: 'Download' });
-      expect(webArea.children[6]).toMatchObject({ role: 'button', name: 'Print' });
-      expect(webArea.children[7]).toMatchObject({ role: 'button', name: 'Purchasing' });
-      expect(webArea.children[8]).toMatchObject({ role: 'button', name: 'Notification' });
-      expect(webArea.children[9]).toMatchObject({ role: 'button', name: 'Inventory' });
-      expect(webArea.children[10]).toMatchObject({ role: 'StaticText', name: 'Search' });
-      expect(webArea.children[11]).toMatchObject({ role: 'combobox', name: 'Look up menu items', haspopup: 'listbox' });
     });
 
     it('should have four notification badges with different colors on different dot placements', async () => {
@@ -391,28 +262,6 @@ Object {
               default:
                 hasFailed = true;
             }
-
-            /*           try {
-            if (index === 0) {
-              const notifbadge = await page.$eval(`#primary-action-${count} > span.notification-badge-container`, element => element.innerHTML);
-              expect(notifbadge).toContain('notification-dot-lower-left');
-            }
-
-            if (index === 1) {
-              const notifbadge = await page.$eval(`#primary-action-${count} > span.notification-badge-container`, element => element.innerHTML);
-              expect(notifbadge).toContain('notification-dot-upper-left');
-            }
-
-            if (index === 2) {
-              const notifbadge = await page.$eval(`#primary-action-${count} > span.notification-badge-container`, element => element.innerHTML);
-              expect(notifbadge).toContain('notification-dot-lower-right');
-            }
-
-            if (index === 3) {
-              const notifbadge = await page.$eval(`#primary-action-${count} > span.notification-badge-container`, element => element.innerHTML);
-              expect(notifbadge).toContain('notification-dot-upper-right');
-            }
-          }  */
           } catch (error) {
             hasFailed = true;
           }
@@ -423,104 +272,12 @@ Object {
       expect(await checkBadgePlacement()).not.toBeTruthy();
     });
 
-    it('should have Icons 18x18 pixels, and the dot should be 6x6', async () => {
-      let hasFailed = false;
-      const checkdotSize = async (style, value) => {
-        const elHandleArray = await page.$$('.notification-badge-container');
-        let index = 0;
-        // eslint-disable-next-line no-restricted-syntax
-        for await (const eL of elHandleArray) {
-          await eL.click();
-          try {
-            const width = await getComputedStyle(`div:nth-child(${index + 1}) > span > span`, style);
-            expect(width).toBe(value);
-          } catch (err) {
-            hasFailed = true;
-          }
-          index += 1;
-        }
-        return hasFailed;
-      };
-
-      const checkiconSize = async (style, value) => {
-        const elHandleArray = await page.$$('.notification-badge-container');
-        let index = 0;
-        // eslint-disable-next-line no-restricted-syntax
-        for await (const eL of elHandleArray) {
-          await eL.click();
-          try {
-            const width = await getComputedStyle(`div:nth-child(${index + 1}) > span > svg`, style);
-            expect(width).toBe(value);
-          } catch (err) {
-            hasFailed = true;
-          }
-          index += 1;
-        }
-        return hasFailed;
-      };
-      await checkiconSize('width', '18px');
-      await checkdotSize('width', '6px');
-      expect(hasFailed).toBe(false);
-    });
   });
 
   describe('Enable/Disable Tests', () => {
-    /*
-    |-------------------------------------------------------|
-    | https://github.com/infor-design/enterprise/pull/5790  |
-    |-------------------------------------------------------| */
     const url = 'http://localhost:4000/components/notification-badge/example-enable-disable.html';
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
-    });
-
-    it('should show the title', async () => {
-      await expect(page.title()).resolves.toMatch('IDS Enterprise');
-    });
-
-    it('should check the test page with Axe', async () => {
-      await page.setBypassCSP(true);
-      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-      await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport'] });
-    });
-
-    it('should have Accessibility', async () => {
-      const webArea = await page.accessibility.snapshot();
-      expect(webArea).toMatchInlineSnapshot(`
-Object {
-  "children": Array [
-    Object {
-      "name": "Skip to Main Content",
-      "role": "link",
-    },
-    Object {
-      "level": 1,
-      "name": "IDS Enterprise",
-      "role": "heading",
-    },
-    Object {
-      "haspopup": "menu",
-      "name": "Header More Actions Button",
-      "role": "combobox",
-    },
-    Object {
-      "name": "Enable & Disable Badge",
-      "role": "StaticText",
-    },
-    Object {
-      "name": "Disable Badge",
-      "role": "button",
-    },
-    Object {
-      "disabled": true,
-      "name": "Enable Badge",
-      "role": "button",
-    },
-  ],
-  "name": "IDS Enterprise",
-  "role": "RootWebArea",
-}
-`);
     });
 
     it('should be able to enable/disable badge', async () => {
@@ -537,7 +294,7 @@ Object {
       expect(await badge()).toBe(false);
     });
 
-    it('should have Icons 18x18 pixels, and the dot should be 6x6', async () => {
+    it('should have the correct sizes', async () => {
       const dotSize = await getComputedStyle('.notification-dot-upper-right', 'width');
       const iconSize = await getComputedStyle('#notification-badge-1 > svg', 'width');
 
