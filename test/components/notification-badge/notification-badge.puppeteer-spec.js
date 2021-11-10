@@ -2,7 +2,7 @@ const { getComputedStyle, checkDataAutomationID, checkInnerHTMLValue } = require
 
 describe('Notification-Badge Puppeteer Tests', () => {
   describe('Badge Placement Tests', () => {
-    const url = 'http://localhost:4000/components/notification-badge/example-badge-placement.html?theme=classic&mode=light&layout=nofrills';
+    const url = 'http://localhost:4000/components/notification-badge/example-badge-placement.html?theme=classic&mode=new&layout=nofrills';
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
     });
@@ -17,7 +17,7 @@ describe('Notification-Badge Puppeteer Tests', () => {
       await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport'] });
     });
 
-    it('should have Accessibility', async () => {
+    it('should be accessible', async () => {
       const webArea = await page.accessibility.snapshot();
       expect(webArea).toMatchObject({
         name: 'IDS Enterprise',
@@ -68,7 +68,7 @@ describe('Notification-Badge Puppeteer Tests', () => {
       expect(await checkBadgePlacement()).not.toBeTruthy();
     });
 
-    it('should have Icons 22x22 pixels, and the dot should be 6x6', async () => {
+    it('should have the correct sizes', async () => {
       let hasFailed = false;
       const checkdotSize = async (element, style, value) => {
         const elHandleArray = await page.$$('.container-spacer');
