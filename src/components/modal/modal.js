@@ -998,10 +998,10 @@ Modal.prototype = {
           this.element.find('.btn-modal-primary:enabled').length) {
         e.stopPropagation();
         e.preventDefault();
-        console.log('enter', e, target.val())
-        // if (!target.hasClass('fileupload') || target.hasClass('colorpicker')) {
-        //   this.element.find('.btn-modal-primary:enabled').trigger('click');
-        // }
+
+        if (!target.hasClass('fileupload') || target.hasClass('colorpicker')) {
+          this.element.find('.btn-modal-primary:enabled').trigger('click');
+        }
       }
     });
 
