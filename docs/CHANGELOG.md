@@ -29,8 +29,6 @@
 - `[Datagrid]` Added support for text filter types to specify a selected filter condition. ([#5750](https://github.com/infor-design/enterprise/issues/5750))
 - `[Environment]` Fixed `ie` css class included to html tag for Edge browser. ([#5587](https://github.com/infor-design/enterprise/issues/5587))
 
-(41 Issues Solved This Release, Backlog Enterprise 192, Backlog Ng 28, 1166 Functional Tests, 1712 e2e Tests, 150 Puppeteer Tests)
-
 ## v4.57.0 Fixes
 
 - `[ApplicationMenu]` Fix for broken UI in Safari when hiding and expanding the navigation menu. ([#5620](https://github.com/infor-design/enterprise/issues/5620))
@@ -56,6 +54,8 @@
 - `[Spinbox]` Fix spinbox misalignment on sample sizes. ([#5733](https://github.com/infor-design/enterprise/issues/5733))
 - `[Tabs]` Fix a bug on vertical tabs scroll on panel containers. ([#5565](https://github.com/infor-design/enterprise/issues/5565))
 - `[Treemap]` Fix Treemap's misaligned footer-text on the new theme. ([#5365](https://github.com/infor-design/enterprise/issues/5365))
+
+(41 Issues Solved This Release, Backlog Enterprise 192, Backlog Ng 28, 1166 Functional Tests, 1712 e2e Tests, 150 Puppeteer Tests)
 
 ## v4.56.0 Features
 
