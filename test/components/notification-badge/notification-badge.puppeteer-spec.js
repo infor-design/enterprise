@@ -226,7 +226,6 @@ describe('Notification-Badge Puppeteer Tests', () => {
       };
       expect(await checkBadgePlacement()).not.toBeTruthy();
     });
-
   });
 
   describe('Appmenu Tests', () => {
@@ -271,7 +270,6 @@ describe('Notification-Badge Puppeteer Tests', () => {
       };
       expect(await checkBadgePlacement()).not.toBeTruthy();
     });
-
   });
 
   describe('Enable/Disable Tests', () => {
