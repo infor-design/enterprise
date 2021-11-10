@@ -425,7 +425,7 @@ body.modal-engaged {
 
   .modal-body-wrapper {
     overflow: auto;
-    padding: 4px 16px 32px;
+    padding: 4px 16px;
 
     .field:not(.label-left).last-child {
       margin-bottom: 0;
@@ -466,7 +466,7 @@ body.modal-engaged {
     line-height: 20px;
     margin-bottom: 0;
     max-width: 369px;
-    padding: 0;
+    padding: 28px 0;
     text-align: left;
 
     .modal-body-wrapper {
