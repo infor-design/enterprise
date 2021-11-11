@@ -128,7 +128,15 @@
         columnReorder: true,
         filterable: true,
         dataset: data.slice(0, 2),
-        toolbar: {personalize: true, results: true}
+        toolbar: {personalize: true, results: true},
+        saveUserSettings: {
+          columns: true,
+          rowHeight: true,
+          sortOrder: true,
+          pagesize: true,
+          activePage: true,
+          filter: true
+        }
       });
 
       $('#datagrid2').datagrid({
@@ -136,7 +144,15 @@
         columnReorder: true,
         filterable: true,
         dataset: data,
-        toolbar: {personalize: true, results: true}
+        toolbar: {personalize: true, results: true},
+        saveUserSettings: {
+          columns: true,
+          rowHeight: true,
+          sortOrder: true,
+          pagesize: true,
+          activePage: true,
+          filter: true
+        }
       });
 
  });
