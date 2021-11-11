@@ -22,6 +22,12 @@ const ACTION_SHEET_DEFAULTS = {
   overlayOpacity: 0.7,
   onSelect: null,
   onCancel: null,
+  tray: false,
+  trayOpts: {
+    text: null,
+    icon: null,
+    backgroundColor: undefined
+  },
   showCancelButton: true
 };
 
@@ -36,6 +42,7 @@ ActionSheet.prototype = {
   init() {
     this.render();
     this.handleEvents();
+    console.log('this', this);
   },
 
   /**
@@ -105,6 +112,11 @@ ActionSheet.prototype = {
 
       // Invoke an IDS Button component on each action, if applicable
       $(this.actionSheetElem).find('button').button();
+
+      // Add tray element
+      if (this.settings.tray) {
+        this.renderTrayElement();
+      }
     }
   },
 
@@ -131,6 +143,21 @@ ActionSheet.prototype = {
     document.body.appendChild(rootElem);
     this.rootElem = rootElem;
     this.overlayElem = overlay;
+  },
+
+  /**
+   * Creates tray element and insert on top of the actionsheet.
+   * @private
+   * @returns {void}
+   */
+  renderTrayElement() {
+    const trayContainer = document.createElement('div');
+    const trayTextElem = document.createElement('span');
+
+    trayContainer.classList.add('ids-actionsheet-tray-container');
+    this.rootElem.insertBefore(trayContainer, this.rootElem.childNodes[1]);
+
+    this.trayContainer = trayContainer;
   },
 
   /**
