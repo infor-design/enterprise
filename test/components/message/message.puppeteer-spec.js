@@ -138,7 +138,7 @@ describe('Message Puppeteer Tests', () => {
       // Check the modal-body-wrapper class, and it should have a padding of 4px 16px
       await page.click('#show-application-error');
       const modalBodyWrapperPadding = () => page.$eval('.modal-body-wrapper', e => JSON.parse(JSON.stringify(getComputedStyle(e).padding)));
-      expect(await modalBodyWrapperPadding()).toEqual('4px 16px');
+      expect(await modalBodyWrapperPadding()).toEqual('32px 16px');
 
       // Check the modal class and it should have a width of 100%
       const modalClassWidth = () => page.evaluate(() => {
@@ -168,7 +168,7 @@ describe('Message Puppeteer Tests', () => {
 
       // Check the modal-body-wrapper class, and it should have a padding of 4px 16px
       await page.click('#show-application-error');
-      expect(await modalBodyWrapperPadding()).toEqual('4px 16px');
+      expect(await modalBodyWrapperPadding()).toEqual('32px 16px');
 
       // Check the modal class and it should have a width of 100%
       expect(await modalClassWidth()).toBe('auto');
