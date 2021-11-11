@@ -16,6 +16,7 @@ describe('Modal Puppeteer init example-modal tests', () => {
     await page.keyboard.press('Tab');
     await page.keyboard.press('Tab');
     await page.keyboard.press('Tab');
+    await page.keyboard.press('Tab');
     await page.keyboard.press('Enter');
     await page.waitForSelector('.modal.is-visible.is-active', { visible: true });
     await page.keyboard.press('Escape');
