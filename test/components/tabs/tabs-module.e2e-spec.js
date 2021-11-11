@@ -60,14 +60,8 @@ describe('Tabs Module (rename API)', () => {
 
   // Tests infor-design/enterprise#5105
   it('should rename the "More Tabs" menu link corresponding to a renamed tab', async () => {
-    const buttonClicks = [];
-    for (let i = 0; i < 10; i++) {
-      buttonClicks.push(element(by.css('.add-tab-button')).click());
-    }
-
-    // eslint-disable-next-line
-    await Promise.all(buttonClicks).then(() => {
-      expect(element(by.css('[href="#new-tab-9"]')).getText()).toEqual('9 Tab');
-    });
+    await element(by.css('.add-tab-button')).click();
+    await element(by.css('.add-tab-button')).click();
+    expect(await element(by.css('[href="#new-tab-1"]')).getText()).toEqual('1 Tab');
   });
 });
