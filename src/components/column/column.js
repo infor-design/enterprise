@@ -33,6 +33,8 @@ const COMPONENT_NAME = 'column';
 * @param {number} [settings.ticks = 9] The number of ticks to show.
 * @param {boolean} [settings.selectable = true] Ability to disable selections of the charts.
 * @param {boolean} [settings.fitHeight=true] If true chart height will fit in parent available height.
+* @param {object} [settings.xAxis] A series of options for the xAxis
+* @param {number} [settings.xAxis.rotate] Rotate the elements on the x axis.
 * @param {function} [settings.xAxis.formatText] A function that passes the text element and a counter.
 * You can return a formatted svg markup element to replace the current element.
 * For example you could use tspans to wrap the strings or color them.
@@ -123,7 +125,44 @@ Column.prototype = {
       return this;
     }
 
+    // Axis Rotate Feature (Start)
+    let longestLabel = '';
+    let xRotateMarginBot = 0;
     const parent = this.element.parent();
+    const isViewSmall = parent.width() < 450;
+    const getRotateValue = (v) => {
+      const defaultAngle = '-45';
+      return (typeof v !== 'undefined' && typeof v !== 'function' && v !== null) ?
+        (typeof v === 'boolean' ? (v ? defaultAngle : null) : v) : null;
+    };
+
+    const xRotate = {
+      large: getRotateValue(this.settings.xAxis?.rotate),
+      small: getRotateValue(this.settings.xAxis?.rotateOnSmallView)
+    };
+
+    let isAxisXRotate = !!xRotate.large;
+    if (isAxisXRotate) {
+      xRotate.use = xRotate.large;
+    }
+    if (isViewSmall && !!xRotate.small) {
+      isAxisXRotate = true;
+      xRotate.use = xRotate.small;
+    }
+
+    if (isAxisXRotate) {
+      // get the longeset label
+      dataset[0].data.forEach((d) => {
+        if (d.name.length > longestLabel.length) {
+          longestLabel = d.name;
+        }
+      });
+      let angle = Math.abs(xRotate.use);
+      angle = !isNaN(angle) ? angle : 0;
+      xRotateMarginBot = longestLabel.length * (angle > 50 ? 5 : 2);
+    }
+    // Axis Rotate Feature (End)
+
     const isRTL = Locale.isRTL();
     const isPositiveNegative = (this.settings.type === 'column-positive-negative' ||
        this.settings.type === 'positive-negative');
@@ -136,9 +175,10 @@ Column.prototype = {
       top: 40,
       right: 40,
       bottom: (isSingle && dataset[0].name === undefined ?
-        (self.settings.isStacked ? 20 : 50) : 35),
+        (self.settings.isStacked ? 20 : (isAxisXRotate ? xRotateMarginBot + 35 : 50)) : 35),
       left: 45
     };
+
     const legendHeight = 40;
     const parentAvailableHeight = utils.getParentAvailableHeight(self.element[0]);
     const useHeight = this.settings.fitHeight ?
@@ -1163,6 +1203,17 @@ Column.prototype = {
       }
     }
 
+    if (isAxisXRotate && self.settings.xAxis && self.settings.xAxis?.rotate) {
+      self.svg.selectAll('.x.axis .tick text')
+        .attr('y', 0)
+        .attr('x', function () {
+          return -(this.getBBox().width + 10);
+        })
+        .attr('dy', '1em')
+        .attr('transform', `rotate(${xRotate.use})`)
+        .style('text-anchor', 'start');
+    }
+
     if (self.settings.xAxis && self.settings.xAxis.formatText) {
       self.svg.selectAll('.x.axis .tick text').each(function (m) {
         const elem = d3.select(this);
@@ -1192,22 +1243,24 @@ Column.prototype = {
 
     // See if any labels overlap and use shorter */
     // [applyAltLabels] - function(svg, dataArray, elem, selector, isNoEclipse)
-    if (charts.labelsColide(svg)) {
-      charts.applyAltLabels(svg, dataArray, 'shortName');
-    }
+    if (!isAxisXRotate && !self.settings.xAxis && !self.settings.xAxis?.rotate) {
+      if (charts.labelsColide(svg)) {
+        charts.applyAltLabels(svg, dataArray, 'shortName');
+      }
 
-    if (charts.labelsColide(svg)) {
-      charts.applyAltLabels(svg, dataArray, 'abbrName');
-    }
+      if (charts.labelsColide(svg)) {
+        charts.applyAltLabels(svg, dataArray, 'abbrName');
+      }
 
-    if (charts.labelsColide(svg)) {
-      charts.applyAltLabels(svg, dataArray, null, null, true);
+      if (charts.labelsColide(svg)) {
+        charts.applyAltLabels(svg, dataArray, null, null, true);
 
-      // Adjust extra(x) space with short name for RTL
-      if (isPositiveNegative) {
-        svg.selectAll('.target-bartext, .bartext').attr('x', function () {
-          return +d3.select(this).attr('x') - (isRTL ? -6 : 6);
-        });
+        // Adjust extra(x) space with short name for RTL
+        if (isPositiveNegative) {
+          svg.selectAll('.target-bartext, .bartext').attr('x', function () {
+            return +d3.select(this).attr('x') - (isRTL ? -6 : 6);
+          });
+        }
       }
     }
 
