@@ -999,7 +999,7 @@ Modal.prototype = {
         e.stopPropagation();
         e.preventDefault();
 
-        if (!target.data().disablePrimary && (!target.hasClass('fileupload') || target.hasClass('colorpicker'))) {
+        if (!target.hasClass('fileupload') || target.hasClass('colorpicker')) {
           this.element.find('.btn-modal-primary:enabled').trigger('click');
         }
       }
