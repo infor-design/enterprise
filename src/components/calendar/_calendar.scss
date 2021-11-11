@@ -67,7 +67,12 @@
     }
 
     .monthview-header {
-      height: 46px;
+      height: 50px;
+      background-color: $calendar-bg-color;
+      position: -webkit-sticky;
+      position: sticky;
+      top: 0px;
+      z-index: 3;
     }
 
     .monthview-legend {
