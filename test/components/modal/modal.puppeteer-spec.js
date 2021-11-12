@@ -1,4 +1,4 @@
-fdescribe('Modal Puppeteer init example-modal tests', () => {
+describe('Modal Puppeteer init example-modal tests', () => {
   const url = 'http://localhost:4000/components/modal/example-index';
   beforeAll(async () => {
     await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
