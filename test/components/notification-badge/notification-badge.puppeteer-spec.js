@@ -17,7 +17,7 @@ describe('Notification-Badge Puppeteer Tests', () => {
       await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport'] });
     });
 
-    it('should be accessible', async () => {
+    it('should pass accessibility checks', async () => {
       const webArea = await page.accessibility.snapshot();
       expect(webArea).toMatchObject({
         name: 'IDS Enterprise',
@@ -139,7 +139,7 @@ describe('Notification-Badge Puppeteer Tests', () => {
       await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport'] });
     });
 
-    it('should be accessible', async () => {
+    it('should pass accessibility checks', async () => {
       const webArea = await page.accessibility.snapshot();
       expect(webArea).toMatchObject({
         name: 'IDS Enterprise',
