@@ -12,6 +12,7 @@ const COMPONENT_NAME = 'actionsheet';
 const ROOT_ELEM_ID = 'ids-actionsheet-root';
 
 const DISPLAY_AS_ACTION_SHEET_OPTIONS = [false, 'responsive', 'always'];
+const TRAY_BACKGROUND_COLOR_OPTIONS = ['slate', 'ruby', 'amber', 'emerald', 'azure', 'turquoise', 'amethyst'];
 
 const ACTION_SHEET_DEFAULTS = {
   actions: [],
@@ -26,7 +27,7 @@ const ACTION_SHEET_DEFAULTS = {
   trayOpts: {
     text: null,
     icon: null,
-    backgroundColor: undefined
+    backgroundColor: TRAY_BACKGROUND_COLOR_OPTIONS[0]
   },
   showCancelButton: true
 };
@@ -155,18 +156,26 @@ ActionSheet.prototype = {
     const trayBtn = document.createElement('button');
     const trayTextElem = document.createElement('span');
 
+    if (this.settings.trayOpts.icon) {
+      trayBtn.innerHTML = $.createIcon({ icon: this.settings.trayOpts.icon });
+    }
+
+    const trayIconElem = trayBtn.firstChild;
+
     trayTextElem.innerHTML = this.settings.trayOpts.text;
 
-    trayContainer.classList.add('ids-actionsheet-tray-container');
+    trayContainer.classList.add('ids-actionsheet-tray-container', this.settings.trayOpts.backgroundColor);
     trayBtn.classList.add('ids-actionsheet-tray-btn');
     trayTextElem.classList.add('ids-actionsheet-tray-btn-text');
 
     trayContainer.appendChild(trayBtn);
     trayBtn.appendChild(trayTextElem);
+
     this.rootElem.insertBefore(trayContainer, this.rootElem.childNodes[1]);
 
     this.trayContainer = trayContainer;
     this.trayBtn = trayBtn;
+    this.trayIconElem = trayIconElem;
     this.trayTextElem = trayTextElem;
   },
 
@@ -188,6 +197,10 @@ ActionSheet.prototype = {
     $('body').on('resize', () => {
       if (this.settings.tray) {
         this.trayContainer.style.visibility = breakpoints.isAbove('phone-to-tablet') ? 'hidden' : '';
+
+        if (!this.visible) {
+          this.trayContainer.style.bottom = '0';
+        }
       }
     });
   },
@@ -334,7 +347,11 @@ ActionSheet.prototype = {
     this.removeActionSheetOpenEvents();
     this.element[0].setAttribute('aria-hidden', 'true');
     this.rootElem.classList.remove('engaged');
-    this.trayContainer.style.bottom = '0';
+
+    if (this.trayContainer) {
+      this.trayContainer.style.bottom = '0';
+    }
+
     this.setOverlayVisibility();
     utils.waitForTransitionEnd(this.overlayElem, 'opacity').then(() => {
       this.overlayElem.setAttribute('hidden', '');

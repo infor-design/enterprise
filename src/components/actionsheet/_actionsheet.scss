@@ -28,7 +28,6 @@
   @include css3(transform, translate(1, 100%));
   @include transition(transform 200ms $cubic-ease);
 
-  background: $actionsheet-tray-container-bg-color;
   border-radius: 10px 10px 0px 0px;
   bottom: 0;
   box-shadow: $actionsheet-tray-box-shadow;
@@ -46,9 +45,43 @@
   -webkit-touch-callout: none;
   z-index: 4000;
 
+  &.ruby {
+    background: $ids-color-palette-ruby-70;
+  }
+
+  &.amber {
+    background: $ids-color-palette-amber-70;
+  }
+
+  &.emerald {
+    background: $ids-color-palette-emerald-70;
+  }
+
+  &.azure {
+    background: $ids-color-palette-azure-70;
+  }
+
+  &.turquoise {
+    background: $ids-color-palette-turquoise-70;
+  }
+
+  &.amethyst {
+    background: $ids-color-palette-amethyst-70;
+  }
+
+  &.slate {
+    background: $ids-color-palette-slate-70;
+  }
+
   button.ids-actionsheet-tray-btn {
     color: $actionsheet-tray-btn-action-color;
     width: 100%;
+
+    svg.icon {
+      color: $actionsheet-tray-btn-action-color;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
 
     .ids-actionsheet-tray-btn-text {
       line-height: 40px;
