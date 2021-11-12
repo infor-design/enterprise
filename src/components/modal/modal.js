@@ -53,6 +53,7 @@ const MODAL_FULLSIZE_SETTINGS = [false, 'responsive', 'always'];
 * @param {boolean} [settings.noRefocus=false] If true, causes the modal's trigger element not to become focused once the modal is closed.
 * @param {htmlObject|jqueryObject|srting} [settings.triggerButton=null] The modal's trigger element to keep refocused once the modal is closed. This can be html or jquery object or query selector as string
 * @param {boolean} [settings.hideUnderneath=false] if true, causes this modal instance to become hidden when another modal is displayed over top.
+* @param {boolean} [settings.suppressEnterKey=false] if true, causes the modal to not exit when the enter key is pressed.
 * @param {string} [settings.attributes] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
 */
 const MODAL_DEFAULTS = {
@@ -79,6 +80,7 @@ const MODAL_DEFAULTS = {
   noRefocus: false,
   triggerButton: null,
   hideUnderneath: false,
+  suppressEnterKey: false
 };
 
 // Resets some string-based Modal settings to their defaults
@@ -999,7 +1001,7 @@ Modal.prototype = {
         e.stopPropagation();
         e.preventDefault();
 
-        if (!target.data().disablePrimary && (!target.hasClass('fileupload') || target.hasClass('colorpicker'))) {
+        if (!self.settings.suppressEnterKey && (!target.hasClass('fileupload') || target.hasClass('colorpicker'))) {
           this.element.find('.btn-modal-primary:enabled').trigger('click');
         }
       }

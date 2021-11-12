@@ -3,16 +3,13 @@
 
 		<button class="btn-secondary" type="button" id="add-context">Show Modal</button><br/><br/>
 
+    <button class="btn-secondary" type="button" id="suppress-key">Show Modal (Suppressed Enter)</button>
+
 		<!-- Modal Example -->
 		<div id="modal-add-context" class="hidden">
 			<div class="field">
 				<label for="subject">Problem</label>
 				<input type="text" id="subject" name="subject"/>
-			</div>
-
-      <div class="field">
-				<label for="subject2">Problem (primary trigger disabled)</label>
-				<input type="text" id="subject2" name="subject2" data-disable-primary="true"/>
 			</div>
 
       <div class="field">
@@ -40,6 +37,12 @@ var modals = {
       'title': 'Add Context',
       'id': 'my-id',
       'content': $('#modal-add-context')
+    },
+    'suppress-key': {
+      'title': 'Suppress Key',
+      'id': 'my-id',
+      'content': $('#modal-add-context'),
+      'suppressEnterKey': true
     }
   },
 
@@ -66,6 +69,11 @@ var modals = {
   };
 
   $('#add-context').on('click', function () {
+		$(this).focus();
+    setModal(modals[this.id]);
+  });
+
+  $('#suppress-key').on('click', function () {
 		$(this).focus();
     setModal(modals[this.id]);
   });

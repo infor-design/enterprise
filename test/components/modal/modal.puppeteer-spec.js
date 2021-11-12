@@ -1,4 +1,4 @@
-describe('Modal Puppeteer init example-modal tests', () => {
+fdescribe('Modal Puppeteer init example-modal tests', () => {
   const url = 'http://localhost:4000/components/modal/example-index';
   beforeAll(async () => {
     await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
@@ -13,7 +13,6 @@ describe('Modal Puppeteer init example-modal tests', () => {
   });
 
   it('should close modal on tab, and escape', async () => {
-    await page.keyboard.press('Tab');
     await page.keyboard.press('Tab');
     await page.keyboard.press('Tab');
     await page.keyboard.press('Tab');
