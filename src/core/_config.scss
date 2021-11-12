@@ -30,6 +30,7 @@ $panel-border-color: $ids-color-palette-graphite-30;
 $panel-light-border-color: $ids-color-palette-graphite-20;
 $panel-header-bg-color: $ids-color-palette-graphite-20;
 $drop-shadow-depth: rgba(0, 0, 0, 0.2);
+$drop-shadow-depth-tray: rgba(0, 0, 0, 0.1);
 
 $focus-box-shadow-color: rgba(54, 138, 192, 0.3);
 $focus-box-shadow-transparent: 0 0 4px 3px transparent; //Should be same size as $focus-box-shadow (only color transparent)
@@ -965,6 +966,9 @@ $field-full: 100%;
 $actionsheet-bg-color: $popupmenu-bg-color;
 $actionsheet-box-shadow: 0 0 8px $drop-shadow-depth;
 $actionsheet-color: $popupmenu-color;
+$actionsheet-tray-box-shadow: 0px -4px 8px $drop-shadow-depth-tray;
+$actionsheet-tray-container-bg-color: $ids-color-palette-slate-70;
+$actionsheet-tray-btn-action-color: $ids-color-palette-white;
 
 // Swipe Action
 $swipeaction-left-bg-color: $ids-color-palette-graphite-30;

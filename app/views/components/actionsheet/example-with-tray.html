@@ -43,10 +43,11 @@
         value: 'my-actions'
       }
     ],
-    tray: true
-    // Uncomment below to use callbacks instead
-    // onSelect: onSelect,
-    // onCancel: onCancel
+    tray: true,
+    trayOpts: {
+      text: 'Cashier - Clocked In at 8:59 AM',
+      icon: 'clock'
+    }
   });
 
   $('#action-sheet-trigger')
