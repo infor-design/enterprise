@@ -1,5 +1,17 @@
 # What's New with Enterprise
 
+## v4.58.0 Features
+
+- `[Column]` Added support to add a line chart in column-grouped. ([#4598](https://github.com/infor-design/enterprise/issues/4598))
+- `[Column]` Added feature to rotate labels. ([#5773](https://github.com/infor-design/enterprise/issues/5773))
+
+## v4.58.0 Fixes
+
+- `[Calendar]` Fix the header days where it should be seen when scrolled down. ([#5742](https://github.com/infor-design/enterprise/issues/5742))
+- `[Searchfield]` Save input value when searchfield collapses but is not cleared via button click or key. ([#5792](https://github.com/infor-design/enterprise/issues/5792))
+- `[Tabs-Vertical]` Fixed on Tabs Vertical Aria and Roles. ([#5712](https://github.com/infor-design/enterprise/issues/5712))
+- `[Toolbar Searchfield]` Fixed the height the collapse button on a smaller viewport (`766px` and below). ([#5791](https://github.com/infor-design/enterprise/issues/5791))
+
 ## v4.57.0 Features
 
 - `[Accordion]` Added the ability to have a notification badge in accordion headers. ([#5594](https://github.com/infor-design/enterprise/issues/5594))
@@ -11,6 +23,7 @@
 - `[Datagrid]` Added Datagrid Fallback Image when image cannot be loaded. ([#5442](https://github.com/infor-design/enterprise/issues/5442))
 - `[File Upload]` Show progress percent while file is uploading. ([#3934](https://github.com/infor-design/enterprise/issues/3934))
 - `[Input]` Added a new form style `form-layout-large` to input component. ([#5606](https://github.com/infor-design/enterprise/issues/5606))
+- `[Icon]` Updated several icons see issue for details. ([#5774](https://github.com/infor-design/enterprise/issues/5774))
 - `[Message]` Changed some stylings on mobile experience. ([#5567](https://github.com/infor-design/enterprise/issues/5567))
 - `[Modal]` Adjusted stylings on mobile viewport. ([#5601](https://github.com/infor-design/enterprise/issues/5601))
 - `[Notification]` Added tooltip in notification. ([#5562](https://github.com/infor-design/enterprise/issues/5562))
@@ -43,6 +56,8 @@
 - `[Spinbox]` Fix spinbox misalignment on sample sizes. ([#5733](https://github.com/infor-design/enterprise/issues/5733))
 - `[Tabs]` Fix a bug on vertical tabs scroll on panel containers. ([#5565](https://github.com/infor-design/enterprise/issues/5565))
 - `[Treemap]` Fix Treemap's misaligned footer-text on the new theme. ([#5365](https://github.com/infor-design/enterprise/issues/5365))
+
+(41 Issues Solved This Release, Backlog Enterprise 192, Backlog Ng 28, 1166 Functional Tests, 1712 e2e Tests, 150 Puppeteer Tests)
 
 ## v4.56.0 Features
 

@@ -245,8 +245,7 @@ Tabs.prototype = {
     self.tablist
       .attr({
         class: 'tab-list',
-        role: 'tablist',
-        'aria-multiselectable': 'false'
+        role: 'tablist'
       });
 
     // Conditionally Change layout classes if veritcal tabs is in responsive
@@ -263,8 +262,8 @@ Tabs.prototype = {
       const a = $(this);
       const attrPart = a[0].textContent.toLowerCase().trim().split(' ').join('-');
 
-      a.attr({ role: 'tab', 'aria-expanded': 'false', 'aria-selected': 'false', tabindex: '-1' })
-        .parent().attr('role', 'presentation').addClass('tab');
+      a.attr({ role: 'tab', 'aria-selected': 'false', tabindex: '-1' })
+        .parent().attr('role', 'tab').addClass('tab');
 
       let dismissibleIcon;
       if (a.parent().hasClass('dismissible') && !a.parent().children('.icon').length) {
@@ -2456,7 +2455,6 @@ Tabs.prototype = {
     // hide old tabs
     this.anchors.attr({
       'aria-selected': 'false',
-      'aria-expanded': 'false',
       tabindex: '-1'
     });
     this.moreButton.attr({
@@ -2469,7 +2467,6 @@ Tabs.prototype = {
       if (!this.isTabOverflowed(a.parent())) {
         a.attr({
           'aria-selected': 'true',
-          'aria-expanded': 'true',
           tabindex: '0'
         }).parent().addClass('is-selected');
       } else {

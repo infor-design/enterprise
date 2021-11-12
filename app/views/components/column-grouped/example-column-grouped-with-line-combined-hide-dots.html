@@ -1,0 +1,77 @@
+<div class="row">
+  <div class="two-thirds column">
+    <div class="widget">
+      <div class="widget-header">
+        <h2 class="widget-title">Grouped Column with Line Chart and hide dots</h2>
+      </div>
+      <div class="widget-content">
+        <div id="column-grouped-example" class="chart-container">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+    var dataset = [{
+      data: [
+        { name: 'Principal', value: 100 },
+        { name: 'Cost', value: 50 }
+      ],
+      line: {
+        name: 'Margins',
+        value: 51,
+        attributes: [
+          { name: 'id', value: 'line-with-hide-dot-id' },
+          { name: 'data-automation-id', value: 'automation-line-with-hide-dot-id'}
+        ]
+      },
+      name: '1'
+    }, {
+      data: [
+        { name: 'Principal', value: 120 },
+        { name: 'Cost', value: 76 }
+      ],
+      line: { name: 'Margins', value: 45 },
+      name: '2'
+    }, {
+      data: [
+        { name: 'Principal', value: 105 },
+        { name: 'Cost', value: 65 }
+      ],
+      line: { name: 'Margins', value: 38 },
+      name: '3'
+    }, {
+      data: [
+        { name: 'Principal', value: 98 },
+        { name: 'Cost', value: 43 }
+      ],
+      line: { name: 'Margins', value: 58 },
+      name: '4'
+    }, {
+      data: [
+        { name: 'Principal', value: 116 },
+        { name: 'Cost', value: 90 }
+      ],
+      line: { name: 'Margins', value: 25 },
+      name: '5'
+    }, {
+      data: [
+        { name: 'Principal', value: 131 },
+        { name: 'Cost', value: 60 }
+      ],
+      line: { name: 'Margins', value: 65 },
+      name: '6'
+    }];
+
+    $('#column-grouped-example').chart({
+      type: 'column-grouped',
+      dataset: dataset,
+      useLine: true,
+      hideDots: true
+    });
+
+  });
+
+</script>
