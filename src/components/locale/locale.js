@@ -1236,7 +1236,6 @@ const Locale = {  // eslint-disable-line
 
           if ((value.toLowerCase() === amSetting) ||
            (value.toUpperCase() === amSetting)) {
-             console.log('AM');
             dateObj.a = 'AM';
 
             if (dateObj.h) {
@@ -1248,7 +1247,6 @@ const Locale = {  // eslint-disable-line
 
           if ((value.toLowerCase() === pmSetting) ||
            (value.toUpperCase() === pmSetting)) {
-            console.log('PM');
             dateObj.a = 'PM';
 
             if (dateObj.h) {
