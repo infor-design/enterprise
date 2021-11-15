@@ -1190,11 +1190,19 @@ const Locale = {  // eslint-disable-line
           if (numberValue < 0 || numberValue > 12) {
             return undefined;
           }
+
+          if (dateObj.h) {
+            break;
+          }
           dateObj.h = hasAmFirst ? dateObj.h : value;
           break;
         case 'hh':
           if (numberValue < 0 || numberValue > 12) {
             return undefined;
+          }
+
+          if (dateObj.h) {
+            break;
           }
           dateObj.h = hasAmFirst ? dateObj.h : value.length === 1 ? `0${value}` : value;
           break;
@@ -1202,11 +1210,19 @@ const Locale = {  // eslint-disable-line
           if (numberValue < 0 || numberValue > 24) {
             return undefined;
           }
+
+          if (dateObj.h) {
+            break;
+          }
           dateObj.h = hasAmFirst ? dateObj.h : value;
           break;
         case 'HH':
           if (numberValue < 0 || numberValue > 24) {
             return undefined;
+          }
+
+          if (dateObj.h) {
+            break;
           }
           dateObj.h = hasAmFirst ? dateObj.h : value.length === 1 ? `0${value}` : value;
           break;
@@ -1228,6 +1244,10 @@ const Locale = {  // eslint-disable-line
           dateObj.mm = value;
           break;
         case 'a':
+          if (!dateObj.h) { // Setting for Date Format the AM/PM comes first before hours [a:hh:mm]
+            dateObj.h = dateStringParts[i + 1];
+          }
+
           if ((value.toLowerCase() === amSetting) ||
            (value.toUpperCase() === amSetting)) {
             dateObj.a = 'AM';
