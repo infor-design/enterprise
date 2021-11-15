@@ -3842,9 +3842,11 @@ Tabs.prototype = {
         }
 
         // Scaling
-        targetRectObj.width = (targetRectObj.width * 100) / transformPercentage;
-        targetRectObj.left = (targetRectObj.left * 100) / transformPercentage;
-        targetRectObj.right = (targetRectObj.right * 100) / transformPercentage;
+        if (transformPercentage < 99) {
+          targetRectObj.width = (targetRectObj.width * 100) / transformPercentage;
+          targetRectObj.left = (targetRectObj.left * 100) / transformPercentage;
+          targetRectObj.right = (targetRectObj.right * 100) / transformPercentage;
+        }
 
         if (accountForPadding) {
           parentPadding = parseInt(window.getComputedStyle(parentElement[0])[`padding${isRTL ? 'Right' : 'Left'}`], 10);
