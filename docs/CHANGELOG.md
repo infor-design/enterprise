@@ -7,9 +7,10 @@
 
 ## v4.58.0 Fixes
 
-- `[Modal]` Added option to disable primary trigger on field. ([#5728](https://github.com/infor-design/enterprise/issues/5728))
 - `[Calendar]` Fix the header days where it should be seen when scrolled down. ([#5742](https://github.com/infor-design/enterprise/issues/5742))
 - `[Datagrid]` Tab doesn't go to cells if cellNavigation is false. ([#5734](https://github.com/infor-design/enterprise/issues/5734))
+- `[Locale]` Fix issue in parsing date when AM/PM comes first before Hours (a:hh:mm). ([#5129](https://github.com/infor-design/enterprise/issues/5129))
+- `[Modal]` Added option to disable primary trigger on field. ([#5728](https://github.com/infor-design/enterprise/issues/5728))
 - `[Searchfield]` Save input value when searchfield collapses but is not cleared via button click or key. ([#5792](https://github.com/infor-design/enterprise/issues/5792))
 - `[Tabs]` Fix focus indicator in Sink Page. ([#5714](https://github.com/infor-design/enterprise/issues/5714))
 - `[Tabs-Vertical]` Fixed on Tabs Vertical Aria and Roles. ([#5712](https://github.com/infor-design/enterprise/issues/5712))
