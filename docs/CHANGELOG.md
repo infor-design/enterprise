@@ -36,6 +36,10 @@
 - `[Datagrid]` Added support for text filter types to specify a selected filter condition. ([#5750](https://github.com/infor-design/enterprise/issues/5750))
 - `[Environment]` Fixed `ie` css class included to html tag for Edge browser. ([#5587](https://github.com/infor-design/enterprise/issues/5587))
 
+### v4.57.0 Markup Changes
+
+- `[Tabs]` Some of the aria attributes have been changed, see the issue for details.([#5712](https://github.com/infor-design/enterprise/issues/5712))
+
 ## v4.57.0 Fixes
 
 - `[ApplicationMenu]` Fix for broken UI in Safari when hiding and expanding the navigation menu. ([#5620](https://github.com/infor-design/enterprise/issues/5620))
