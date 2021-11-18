@@ -24,6 +24,7 @@ const SLIDER_DEFAULTS = {
   tooltipContent: undefined,
   tooltipPosition: 'top',
   persistTooltip: false,
+  showTooltipOnLoad: false,
   attributes: null
 };
 
@@ -373,6 +374,15 @@ Slider.prototype = {
     for (let i = 0, l = this.ticks.length; i < l; i++) {
       const ticks = $(this.ticks[i].element);
       utils.addAttributes(ticks, this, this.settings.attributes, `tick-${i + 1}`);
+    }
+
+    if (this.settings.showTooltipOnLoad) {
+      setTimeout(() => {
+        $.each(self.handles, (i, handle) => {
+          const tooltip = handle.data('tooltip');
+          tooltip.show();
+        });
+      });
     }
 
     return self;
