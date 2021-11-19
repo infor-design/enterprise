@@ -116,6 +116,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {boolean}  [settings.sizeColumnsEqually=false] If true make all the columns equal width
  * @param {boolean}  [settings.expandableRow=false] If true we append an expandable row area without the rowTemplate feature being needed.
  * @param {boolean}  [settings.exportConvertNegative=false] If set to true export data with trailing negative signs moved in front.
+ * @param {boolean}  [settings.formatOnExport=false] If set to true export data with number and date values will be formatted according to browser's locale.
  * @param {array}    [settings.columnGroups=null] An array of columns to use for grouped column headers.
  * @param {boolean}  [settings.treeGrid=false] If true a tree grid is expected so addition calculations will be used to calculate of the row children
  * @param {Function} [settings.onPostRenderCell=null] A call back function that will fire and send you the cell container and related information for any cells cells with a component attribute in the column definition.
@@ -228,6 +229,7 @@ const DATAGRID_DEFAULTS = {
   sizeColumnsEqually: false, // If true make all the columns equal width
   expandableRow: false, // Supply an empty expandable row template
   exportConvertNegative: false, // Export data with trailing negative signs moved in front
+  formatOnExport: false,
   columnGroups: null, // The columns to use for grouped column headings
   treeGrid: false,
   onPostRenderCell: null,
@@ -5942,7 +5944,7 @@ Datagrid.prototype = {
   * @param {string} separator (optional) If user's machine is configured for a locale with alternate default separator.
   */
   exportToCsv(fileName, customDs, separator) {
-    excel.exportToCsv(fileName, customDs, separator, this);
+    excel.exportToCsv(fileName, customDs, separator, this.settings.formatOnExport, this);
   },
 
   /**
@@ -5954,7 +5956,7 @@ Datagrid.prototype = {
   * @param {string} customDs An optional customized version of the data to use.
   */
   exportToExcel(fileName, worksheetName, customDs) {
-    excel.exportToExcel(fileName, worksheetName, customDs, this);
+    excel.exportToExcel(fileName, worksheetName, customDs, this.settings.formatOnExport, this);
   },
 
   copyToDataSet(pastedValue, rowCount, colIndex, dataSet) {
