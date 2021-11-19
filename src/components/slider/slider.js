@@ -25,6 +25,7 @@ const SLIDER_DEFAULTS = {
   tooltipPosition: 'top',
   persistTooltip: false,
   showTooltipOnLoad: false,
+  sliderBox: false,
   attributes: null
 };
 
@@ -42,6 +43,8 @@ const SLIDER_DEFAULTS = {
  * @param {undefined|Array} [settings.tooltipContent] Special customizable tooltip content.
  * @param {string} [settings.tooltipPosition = 'top'] Option to control the position of tooltip. ['top' , 'bottom']
  * @param {boolean} [settings.persistTooltip = false] If true the tooltip will stay visible.
+ * @param {boolean} [settings.showTooltipOnLoad = false] If true the tooltip will be visible on load.
+ * @param {boolean} [settings.sliderBox = false] If true the slider will have input box beside it showing its value.
  * @param {string} [settings.attributes=null] Add extra attributes like id's to the element. e.g. `attributes: { name: 'id', value: 'my-unique-id' }`
  */
 function Slider(element, settings) {
@@ -340,6 +343,12 @@ Slider.prototype = {
     self.ticks.forEach((tick) => {
       positionTick(tick);
     });
+
+    if (this.settings.sliderBox) {
+      self.wrapper.addClass('has-slider-box');
+      const inputEl = $('<input type="text" class="slider-box" aria-required="true"></input>');
+      inputEl.insertAfter(self.wrapper);
+    }
 
     self.value(self.settings.value);
     self.updateRange();
@@ -865,6 +874,11 @@ Slider.prototype = {
       // attribute on the Min handle for better screen reading compatability
       this.handles[0].attr('aria-valuemax', newVal[1]);
       this.handles[1].attr('aria-valuemin', newVal[0]);
+    }
+
+    if (this.settings.sliderBox) {
+      const inputEl = self.wrapper.siblings('.slider-box');
+      inputEl.val(Math.trunc(percentages[0]));
     }
   },
 

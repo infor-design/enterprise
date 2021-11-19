@@ -1,37 +1,15 @@
 <div class="row">
   <div class="six columns">
-    <h1>Slider Example: Tooltip On Load</h1>
-    <p>It has an option to set tooltip on load.</p>
+    <h1>Slider Example: Tooltip On Load and Slider Box</h1>
+    <p>Setting: <strong>showTooltipOnLoad</strong> has an option to set tooltip on load. <br>
+    Setting <strong>sliderBox</strong> has an input box beside slider showing the the slider value.</p>
   </div>
 
   <div class="twelve columns">
     <div class="field">
       <label for="slider-regular">Tooltip Position: <strong>Bottom</strong></label>
-    </div>
-    <div class="row">
-      <div class="one-third column">
-        <input id="slider-regular" name="slider-regular" value="53" class="slider" type="range"
-          data-options="{'persistTooltip': true, tooltipContent: [''], 'tooltipPosition': 'bottom', 'showTooltipOnLoad': 'true'}" />
-      </div>
-      <div class="one-third column">
-        <input type="text" id="slider-text" class="input-xs" aria-required="true" name="xs-input-example" readonly style="width: 60px;" data-validate="required">
-      </div>
+      <input id="slider-regular" name="slider-regular" value="53" class="slider" type="range"
+          data-options="{'persistTooltip': true, tooltipContent: [''], 'tooltipPosition': 'bottom', 'showTooltipOnLoad': 'true', 'sliderBox': 'true'}" />
     </div>
   </div>
 </div>
-
-<script>
-  setTimeout(() => {
-    const inputComponent = $('#slider-text');
-    const slider = $('#slider-regular').data('slider');
-    inputComponent.val(slider.value()[0]);
-
-    $('.slider-wrapper').on('click.slider', () => {
-      inputComponent.val(slider.value()[0]);
-    });
-
-    $('.slider-handle').drag().on('drag.slider', () => {
-      inputComponent.val(Math.trunc (slider.value()[0]));
-    });
-  }, 100);
-</script>
