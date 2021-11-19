@@ -1,0 +1,133 @@
+<div class="row">
+    <div class="twelve columns">
+      <br />
+      <h3>Grid Example: Format Numbers and Dates</h3>
+      <p>
+      Data with numbers and dates will be formatted according to current locale.
+      </p>
+      <hr class="fieldset-hr"/>
+    </div>
+  </div>
+
+  <div class="twelve columns">
+    <label for="locale" class="label">Locale</label>
+    <select id="locale" name="locale" class="dropdown"></select>
+  </div>
+  
+  <div class="row">
+    <div class="twelve columns">
+  
+      <div class="toolbar" role="toolbar">
+        <div class="title">
+          Compressors
+          <span class="datagrid-result-count">(10 Results)</span>
+        </div>
+        <div class="buttonset">
+          <button type="button" class="btn" id="export-to-csv">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-export-spreadsheet"></use>
+            </svg>
+            <span>Export To Csv</span>
+          </button>
+          <button type="button" class="btn" id="export-to-excel">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-export-spreadsheet"></use>
+            </svg>
+            <span>Export To Excel</span>
+          </button>
+        </div>
+  
+        <div class="more">
+          <button type="button" class="btn-actions">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-more"></use>
+            </svg>
+            <span class="audible">More Actions</span>
+          </button>
+          <ul class="popupmenu">
+            <li><a data-option="personalize-columns" href="#">Personalize Columns</a></li>
+            <li><a data-option="reset-layout" href="#">Reset to Default</a></li>
+            <li class="separator"></li>
+            <li class="heading">Row Height</li>
+            <li class="is-selectable"><a data-option="row-extra-small" href="#" data-translate="text">ExtraSmall</a></li>
+            <li class="is-selectable"><a data-option="row-small" href="#" data-translate="text">Small</a></li>
+            <li class="is-selectable"><a data-option="row-medium" href="#" data-translate="text">Medium</a></li>
+            <li class="is-selectable is-checked"><a data-option="row-large" href="#" data-translate="text">Large</a></li>
+          </ul>
+        </div>
+      </div>
+      <div id="datagrid">
+      </div>
+  
+    </div>
+  </div>
+  
+  <script>
+    $('body').one('initialized', function () {
+      var grid,
+        columns = [],
+        data = [];
+  
+      // Some Sample Data
+      data.push({ id: 1, productId: 2142201, productName: 'Compressor', activity:  'Assemble Paint', quantity: 1, price: '500', status: 'OK', orderDate: new Date(2014, 12, 8), action: 'Action', ex: 'ç ñ ÄËÏÖÜ äëïöü', isFiltered: true});
+      data.push({ id: 2, productId: 2241202, productName: 'Different Compressor', activity:  'Inspect and Repair', quantity: '2', price: 210.99, status: '', orderDate: new Date(2015, 7, 3), action: 'On Hold', ex:'àèìòù', isFiltered: true});
+      data.push({ id: 3, productId: 2342203, productName: 'Compressor', activity:  'Inspect and Repair', quantity: 1, price: '120.99', status: null, orderDate: new Date(2014, 6, 3), action: 'Action', ex:'áéíóú'});
+      data.push({ id: 4, productId: 2445204, productName: 'Another Compressor', activity:  'Assemble Paint', quantity: 3, price: '2345', status: 'OK', orderDate: new Date(2015, 3, 3), action: 'Action', ex:'ية (مصر', isFiltered: true});
+      data.push({ id: 5, productId: 2542205, productName: 'I Love Compressors', activity:  'Inspect and Repair', quantity: 4, price: '210.99', status: 'OK', orderDate: new Date(2015, 5, 5), action: 'On Hold', ex:'=HYPERLINK("http://www.google.com","Please Click For More Info")'});
+      data.push({ id: 5, productId: 2642205, productName: 'Air Compressors', activity:  'Inspect and Repair', quantity: 41, price: '120.99', status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
+      data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: '123.99', status: 'OK', orderDate: null, action: 'On Hold', isFiltered: true});
+  
+      // Define Columns for the Grid.
+      columns.push({ id: 'drilldown', name: '', field: '', resizable: false, exportable: false, formatter: Formatters.Drilldown, click: function(e, args) {
+        console.log(args);
+      }, align: 'center', sortable: false});
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly});
+      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink});
+      columns.push({ id: 'activity', name: 'Activity', field: 'activity', formatter: Formatters.Hyperlink, exportable: false});
+      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
+      columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy', exportable: true});
+      columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Formatters.Text, exportable: true});
+      columns.push({ id: 'action', name: 'Action Item', field: 'action', exportable: false});
+      columns.push({ id: 'ex', name: 'Extra', field: 'ex', exportable: true});
+      columns.push({ id: 'isFiltered', name: 'Filtered', field: 'isFiltered', exportable: true});
+  
+      // Init and get the api for the grid
+      grid = $('#datagrid').datagrid({
+        columns: columns,
+        columnReorder: true,
+        dataset: data,
+        formatOnExport: true,
+        toolbar: {personalize: true, results: true, exportToExcel: false}
+      }).on('columnchange', function (e, args) {
+        console.log('Changed', args.columns);
+      });
+  
+      $('#export-to-csv').on('click', function () {
+        grid.data('datagrid').exportToCsv('myExport');
+      });
+      $('#export-to-excel').on('click', function () {
+        grid.data('datagrid').exportToExcel('myExport');
+      });
+
+      Locale.supportedLocales.forEach(locale => {
+        if (locale === Locale.currentLocale.name) {
+            $('#locale').append(`<option value=${locale} selected>${locale}</option>`);
+        } else {
+            $('#locale').append(`<option value=${locale}>${locale}</option>`);
+        }
+      });
+
+      $('#locale').dropdown();
+
+      $('#locale').on('change', function () {
+        Locale.set($(this).val());
+        $('body').toast({
+            'title': 'Locale Changed',
+            'message': 'Locale changed to <span class="text-strong">' + $(this).val() + '</span> '
+        });
+     });
+  
+    });
+  </script>
+  
