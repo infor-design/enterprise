@@ -35,6 +35,7 @@ const COMPONENT_NAME = 'column';
 * @param {boolean} [settings.fitHeight=true] If true chart height will fit in parent available height.
 * @param {object} [settings.xAxis] A series of options for the xAxis
 * @param {number} [settings.xAxis.rotate] Rotate the elements on the x axis.
+* @param {array} [settings.axisLabels] Option to add label to any of the four sides.
 * @param {function} [settings.xAxis.formatText] A function that passes the text element and a counter.
 * You can return a formatted svg markup element to replace the current element.
 * For example you could use tspans to wrap the strings or color them.
@@ -112,6 +113,7 @@ Column.prototype = {
    */
   build() {
     const self = this;
+    const s = this.settings;
     const isPersonalizable = this.element.closest('.is-personalizable').length > 0;
     const format = value => d3.format(self.settings.formatterString || ',')(value);
 
@@ -129,6 +131,7 @@ Column.prototype = {
     let longestLabel = '';
     let xRotateMarginBot = 0;
     const parent = this.element.parent();
+    const isCardAction = !!$('.widget-chart-action', parent).length;
     const isViewSmall = parent.width() < 450;
     const getRotateValue = (v) => {
       const defaultAngle = '-45';
@@ -163,6 +166,34 @@ Column.prototype = {
     }
     // Axis Rotate Feature (End)
 
+    // Config for axis labels
+    let idx;
+    let axisArr;
+    const axisLabels = {};
+    const isAxisLabels = { atLeastOne: false };
+    const axisArray = ['left', 'top', 'right', 'bottom'];
+
+    if (s.axisLabels) {
+      $.extend(true, axisLabels, s.axisLabels);
+    }
+
+    if (!$.isEmptyObject(axisLabels)) {
+      for (idx = 0, axisArr = axisArray.length; idx < axisArr; idx++) {
+        const thisAxis = axisLabels[axisArray[idx]];
+        if (thisAxis && typeof thisAxis === 'string' && $.trim(thisAxis) !== '') {
+          isAxisLabels[axisArray[idx]] = true;
+          isAxisLabels.atLeastOne = true;
+        }
+      }
+    }
+
+    const axisLabelsMargin = {
+      top: (isAxisLabels.top ? (isCardAction ? 15 : 40) : (isCardAction ? 5 : 30)),
+      right: (isAxisLabels.right ? 65 : 55),
+      bottom: (isAxisLabels.bottom ? 50 : 0),
+      left: (isAxisLabels.left ? 75 : 65)
+    };
+
     const isRTL = Locale.isRTL();
     const isPositiveNegative = (this.settings.type === 'column-positive-negative' ||
        this.settings.type === 'positive-negative');
@@ -181,10 +212,10 @@ Column.prototype = {
 
     const legendHeight = 40;
     const parentAvailableHeight = utils.getParentAvailableHeight(self.element[0]);
-    const useHeight = this.settings.fitHeight ?
+    const useHeight = s.fitHeight ?
       parentAvailableHeight : parseInt(parent.height(), 10);
     const width = parent.width() - margin.left - margin.right - 10;
-    const height = useHeight - margin.top - margin.bottom -
+    let height = useHeight - margin.top - margin.bottom -
         (isSingle && dataset[0].name === undefined ?
           (self.settings.isStacked || isPositiveNegative ? (legendHeight - 10) : 0) : legendHeight);
     let yMinTarget;
@@ -381,9 +412,9 @@ Column.prototype = {
     const svg = d3.select(this.element[0])
       .append('svg')
       .attr('width', width + margin.left + margin.right)
-      .attr('height', height + margin.top + margin.bottom)
+      .attr('height', height + margin.top + margin.bottom + (isAxisLabels.atLeastOne ? 12 : 0))
       .append('g')
-      .attr('transform', `translate(${margin.left},${margin.top})`);
+      .attr('transform', `translate(${isAxisLabels.atLeastOne ? margin.left + 11 : margin.left},${margin.top - (isAxisLabels.atLeastOne ? 5 : 0)})`);
 
     this.svg = svg;
 
@@ -475,6 +506,42 @@ Column.prototype = {
         .attr('x', function (d) {
           return (yMaxLength * (d < 0 ? 9 : 5));
         });
+    }
+
+    if (isAxisLabels.atLeastOne) {
+      const axisLabelGroup = self.svg.append('g').attr('class', 'axis-labels');
+      const widthAxisLabel = width - 45;
+      height -= 5;
+
+      const place = {
+        top: `translate(${widthAxisLabel / 2},${-10})`,
+        right: `translate(${widthAxisLabel + 53},${height / 2})rotate(90)`,
+        bottom: `translate(${widthAxisLabel / 2},${height + 47})`,
+        left: `translate(${-35},${height / 2})rotate(-90)`
+      };
+
+      const placeStyle = {
+        top: `rotate(0deg) scaleX(-1) translate(-${widthAxisLabel / 2}px, ${-10}px)`,
+        right: `rotate(90deg) scaleX(-1) translate(-${(height / 2) + 5}px, -${widthAxisLabel + 28}px)`,
+        bottom: `rotate(0deg) scaleX(-1) translate(-${widthAxisLabel / 2}px, ${height + 40}px)`,
+        left: `rotate(90deg) scaleX(-1) translate(-${(height / 2 - 5)}px, ${55}px)`
+      };
+
+      const addAxis = (pos) => {
+        if (isAxisLabels[pos]) {
+          axisLabelGroup.append('text')
+            .attr('class', `axis-label-${pos}`)
+            .attr('text-anchor', 'middle')
+            .attr('transform', isRTL ? '' : place[pos])
+            .style('font-size', '1.25em')
+            .style('transform', isRTL ? placeStyle[pos] : '')
+            .text(axisLabels[pos]);
+        }
+      };
+
+      for (idx = 0, axisArr = axisArray.length; idx < axisArr; idx++) {
+        addAxis(axisArray[idx]);
+      }
     }
 
     // Make an Array of objects with name + array of all values
