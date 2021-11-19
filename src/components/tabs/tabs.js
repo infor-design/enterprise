@@ -610,17 +610,14 @@ Tabs.prototype = {
    * @returns {this} component instance
    */
   renderHelperMarkup() {
-    const self = this;
     let auxilaryButtonLocation = this.tablistContainer || this.tablist;
     if (this.isModuleTabs()) {
       auxilaryButtonLocation = this.tablist;
     }
 
-    if (!self.element.parents('.modal-content').length) {
-      this.focusState = this.element.find('.tab-focus-indicator');
-      if (!this.focusState.length) {
-        this.focusState = $('<div class="tab-focus-indicator" role="presentation"></div>').insertBefore(this.tablist);
-      }
+    this.focusState = this.element.find('.tab-focus-indicator');
+    if (!this.focusState.length) {
+      this.focusState = $('<div class="tab-focus-indicator" role="presentation"></div>').insertBefore(this.tablist);
     }
 
     // Add the markup for the "More" button if it doesn't exist.
@@ -3868,18 +3865,16 @@ Tabs.prototype = {
 
     // Adjust the values one more time if we have tabs contained inside of a
     // page-container, or some other scrollable container.
-    if (!self.element.parents('.modal-content').length) {
-      targetPos = adjustForParentContainer(targetPos, parentContainer, scrollingTablist, widthPercentage);
+    targetPos = adjustForParentContainer(targetPos, parentContainer, scrollingTablist, widthPercentage);
 
-      let targetPosString = '';
-      Object.keys(targetPos).forEach((key) => {
-        if (targetPosString.length) {
-          targetPosString += ' ';
-        }
-        targetPosString += `${key}: ${targetPos[key]}px;`;
-      });
-      focusStateElem.style.cssText = targetPosString;
-    }
+    let targetPosString = '';
+    Object.keys(targetPos).forEach((key) => {
+      if (targetPosString.length) {
+        targetPosString += ' ';
+      }
+      targetPosString += `${key}: ${targetPos[key]}px;`;
+    });
+    focusStateElem.style.cssText = targetPosString;
 
     // build CSS string containing each prop and set it:
 
