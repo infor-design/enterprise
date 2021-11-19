@@ -414,7 +414,8 @@ Column.prototype = {
       .attr('width', width + margin.left + margin.right)
       .attr('height', height + margin.top + margin.bottom + (isAxisLabels.atLeastOne ? 12 : 0))
       .append('g')
-      .attr('transform', `translate(${isAxisLabels.atLeastOne ? margin.left + 11 : margin.left},${margin.top - (isAxisLabels.atLeastOne ? 5 : 0)})`);
+      .attr('transform', `translate(${isRTL ? margin.left + 5 : (isAxisLabels.atLeastOne ? margin.left + 11 : margin.left)}
+        ,${margin.top - (isAxisLabels.atLeastOne ? 5 : 0)})`);
 
     this.svg = svg;
 
@@ -522,9 +523,9 @@ Column.prototype = {
 
       const placeStyle = {
         top: `rotate(0deg) scaleX(-1) translate(-${widthAxisLabel / 2}px, ${-10}px)`,
-        right: `rotate(90deg) scaleX(-1) translate(-${(height / 2) + 5}px, -${widthAxisLabel + 28}px)`,
-        bottom: `rotate(0deg) scaleX(-1) translate(-${widthAxisLabel / 2}px, ${height + 40}px)`,
-        left: `rotate(90deg) scaleX(-1) translate(-${(height / 2 - 5)}px, ${55}px)`
+        right: `rotate(90deg) scaleX(-1) translate(-${(height / 2) + 5}px, -${widthAxisLabel + (isRTL ? 55 : 28)}px)`,
+        bottom: `rotate(0deg) scaleX(-1) translate(-${widthAxisLabel / 2}px, ${height + 47}px)`,
+        left: `rotate(90deg) scaleX(-1) translate(-${(height / 2 - 5)}px, ${isRTL ? 35 : 55}px)`
       };
 
       const addAxis = (pos) => {
