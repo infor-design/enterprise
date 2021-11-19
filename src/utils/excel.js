@@ -241,6 +241,7 @@ excel.appendRows = function (dataset, table, format = false, self) {
 
 /**
  * Format data based on locale
+ * @private
  * @param {object} data The data object to format
  * @returns {object} The formatted data object
  */
