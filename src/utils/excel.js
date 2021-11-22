@@ -86,7 +86,7 @@ excel.cleanExtra = function (customDs, format = false, self) {
       clonedTable.find('.datagrid-header tr:first()').html(self.headerNodes().clone(true));
     }
 
-    table = excel.appendRows(dataset, clonedTable[0], format, self);
+    table = excel.appendRows(dataset, clonedTable[0], self);
   }
 
   // Create the header row
@@ -182,11 +182,25 @@ excel.save = function (content, fileName, isUtf16) {
 excel.datasetToHtml = function (dataset, format = false) {
   let tableHtml = '<tbody>';
   for (let i = 0, l = dataset.length; i < l; i++) {
-    const val = format ? this.formatData(dataset[i]) : dataset[i];
     tableHtml += '<tr>';
-    Object.keys(val).forEach((key, index) => { //eslint-disable-line
-      if (val && Object.prototype.hasOwnProperty.call(val, key)) {
-        tableHtml += `<td>${val[key]}</td>`;
+    Object.keys(dataset[i]).forEach((key, index) => { //eslint-disable-line
+      const d = dataset[i];
+
+      if (format && !(key === 'id' || key.includes('Id'))) {
+        if (!isNaN(d[key])) {
+          const numVal = parseFloat(d[key]);
+          d[key] = Locale.formatNumber(numVal, { style: Number.isInteger(numVal) ? 'integer' : 'decimal' });
+        } else {
+          const dateVal = Date.parse(d[key]);
+
+          if (!isNaN(dateVal)) {
+            d[key] = Locale.formatDate(dateVal);
+          }
+        }
+      }
+
+      if (d && Object.prototype.hasOwnProperty.call(d, key)) {
+        tableHtml += `<td>${d[key]}</td>`;
       }
     });
     tableHtml += '</tr>';
@@ -201,11 +215,10 @@ excel.datasetToHtml = function (dataset, format = false) {
 * @private
 * @param {array} dataset The array of objects to convert.
 * @param {object} table The table object.
-* @param {boolean} format if true, date and number values will be formatted based on browser locale
 * @param {object} self The grid API.
 * @returns {object} The table with rows appended.
 */
-excel.appendRows = function (dataset, table, format = false, self) {
+excel.appendRows = function (dataset, table, self) {
   const isjQuery = obj => (obj && (obj instanceof jQuery || obj.constructor.prototype.jquery));
   const tableJq = isjQuery(table) ? table : $(table);
   table = tableJq[0];
@@ -215,7 +228,7 @@ excel.appendRows = function (dataset, table, format = false, self) {
   body.innerHTML = '';
   const appendRow = function (d, i) {
     if (!d._isFilteredOut) {
-      const rowHtml = self.rowHtml(d, i, i, false, false, i, true);
+      const rowHtml = self.rowHtml(d, i, i, false, false, i, true, true);
       const tr = document.createElement('tr');
       tr.innerHTML = rowHtml.left + rowHtml.center + rowHtml.right;
       tableHtml += tr.outerHTML;
@@ -223,51 +236,18 @@ excel.appendRows = function (dataset, table, format = false, self) {
       // Add tree rows
       if (d.children) {
         for (let j = 0, l = d.children.length; j < l; j++) {
-          const val = format ? this.formatData(d.children[j]) : d.children[j];
-          appendRow(val, j);
+          appendRow(d.children[j], j);
         }
       }
     }
   };
 
   dataset.forEach((d, i) => {
-    const val = format ? this.formatData(d) : d;
-    appendRow(val, i);
+    appendRow(d, i);
   });
 
   body.insertAdjacentHTML('beforeend', tableHtml);
   return tableJq;
-};
-
-/**
- * Format data based on locale
- * @private
- * @param {object} data The data object to format
- * @returns {object} The formatted data object
- */
-excel.formatData = function (data) {
-  const fData = $.extend({}, data);
-  Object.keys(fData).forEach((key) => {
-    if (!(key === 'id' || key.includes('Id'))) {
-      if (typeof fData[key] === 'number') {
-        fData[key] = Locale.formatNumber(fData[key]);
-      } else {
-        const numVal = parseFloat(fData[key]);
-
-        if (!isNaN(numVal)) {
-          fData[key] = Locale.formatNumber(numVal);
-        } else {
-          const dateVal = Date.parse(fData[key]);
-
-          if (!isNaN(dateVal)) {
-            fData[key] = Locale.formatDate(dateVal);
-          }
-        }
-      }
-    }
-  });
-
-  return fData;
 };
 
 /**

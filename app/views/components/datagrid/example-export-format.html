@@ -62,7 +62,7 @@
   </div>
   
   <script>
-    $('body').one('initialized', function () {
+  $('body').one('initialized', function () {
       var grid,
         columns = [],
         data = [];
@@ -98,8 +98,6 @@
         dataset: data,
         formatOnExport: true,
         toolbar: {personalize: true, results: true, exportToExcel: false}
-      }).on('columnchange', function (e, args) {
-        console.log('Changed', args.columns);
       });
   
       $('#export-to-csv').on('click', function () {
@@ -120,13 +118,27 @@
       $('#locale').dropdown();
 
       $('#locale').on('change', function () {
-        Locale.set($(this).val());
-        $('body').toast({
-            'title': 'Locale Changed',
-            'message': 'Locale changed to <span class="text-strong">' + $(this).val() + '</span> '
-        });
+        console.log(location.href)
+        location.href = `${removeParam('locale', location.href)}?locale=${$(this).val()}`;
     });
-  
-    });
+  });
+
+  function removeParam(key, sourceURL) {
+    var rtn = sourceURL.split("?")[0],
+        param,
+        params_arr = [],
+        queryString = (sourceURL.indexOf("?") !== -1) ? sourceURL.split("?")[1] : "";
+    if (queryString !== "") {
+        params_arr = queryString.split("&");
+        for (var i = params_arr.length - 1; i >= 0; i -= 1) {
+            param = params_arr[i].split("=")[0];
+            if (param === key) {
+                params_arr.splice(i, 1);
+            }
+        }
+        if (params_arr.length) rtn = rtn + "?" + params_arr.join("&");
+    }
+    return rtn;
+  };
   </script>
   

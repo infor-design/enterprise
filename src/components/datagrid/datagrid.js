@@ -3454,6 +3454,7 @@ Datagrid.prototype = {
 
     let value = (rawValue || rawValue === 0 || rawValue === false ? rawValue : '');
     value = xssUtils.escapeHTML(value);
+
     return value;
   },
 
@@ -4211,10 +4212,13 @@ Datagrid.prototype = {
    * @param  {object} columnDef The column settings.
    * @param  {object} rowData The current row data.
    * @param  {object} api The grid API reference.
+   * @param  {boolean} forExport Formatting for export or not.
    * @returns {void}
    */
-  formatValue(formatter, row, cell, fieldValue, columnDef, rowData, api) {
+  formatValue(formatter, row, cell, fieldValue, columnDef, rowData, api, forExport) {
     let formattedValue;
+    let value = fieldValue;
+    const localeStrict = forExport && this.settings.formatOnExport;
     api = api || this;
 
     // Use default formatter if undefined
@@ -4222,12 +4226,20 @@ Datagrid.prototype = {
       formatter = this.defaultFormatter;
     }
 
+    if (localeStrict) {
+      const numVal = typeof fieldValue === 'number' ? fieldValue : parseFloat(fieldValue);
+      if (!isNaN(numVal)) {
+        value = Locale.formatNumber(numVal, { style: Number.isInteger(numVal) ? 'integer' : 'decimal' });
+      }
+    }
+
     if (typeof formatter === 'string') {
-      formattedValue = Formatters[formatter](row, cell, fieldValue, columnDef, rowData, api);
+      formattedValue = Formatters[formatter](row, cell, value, columnDef, rowData, api);
       formattedValue = formattedValue.toString();
     } else {
-      formattedValue = formatter(row, cell, fieldValue, columnDef, rowData, api).toString();
+      formattedValue = formatter(row, cell, value, columnDef, rowData, api, localeStrict).toString();
     }
+
     return formattedValue;
   },
 
@@ -4241,9 +4253,10 @@ Datagrid.prototype = {
    * @param  {object} isFooter If true we are building a footer row.
    * @param  {string} actualIndexLineage Series of actualIndex values to reach a child actualIndex in a tree
    * @param  {boolean} skipChildren If true we dont append children.
+   * @param  {boolean} forExport If this is for exporting to excel or not.
    * @returns {string} The html used to construct the row.
    */
-  rowHtml(rowData, dataRowIdx, actualIndex, isGroup, isFooter, actualIndexLineage, skipChildren) {
+  rowHtml(rowData, dataRowIdx, actualIndex, isGroup, isFooter, actualIndexLineage, skipChildren, forExport = false) {
     let isEven = false;
     const self = this;
     const isSummaryRow = this.settings.summaryRow && !isGroup && isFooter;
@@ -4413,7 +4426,8 @@ Datagrid.prototype = {
         self.fieldValue(rowData, self.settings.columns[j].field),
         self.settings.columns[j],
         rowData,
-        self
+        self,
+        forExport
       );
 
       if (formatted.indexOf('<span class="is-readonly">') === 0) {
