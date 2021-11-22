@@ -347,7 +347,7 @@ Slider.prototype = {
 
     if (this.settings.sliderBox) {
       self.wrapper.addClass('has-slider-box');
-      const inputEl = $(`<input type="text" class="slider-box" aria-required="true" data-mask data-options='{ "pattern" : "###" }' ></input>`);
+      const inputEl = $('<input type="text" class="slider-box" aria-required="true" data-mask data-options="{ \'pattern\' : \'###\' }" ></input>');
       inputEl.insertAfter(self.wrapper);
     }
 
@@ -623,7 +623,7 @@ Slider.prototype = {
     }
 
     const inputEl = handle.parent().siblings('.slider-box');
-    inputEl.on('keyup.slider' + [index], (e) => {
+    inputEl.on('keyup.slider${index}', (e) => {
       const newValue = $(e.currentTarget).val();
       this.value(newValue);
       this.updateRange();
