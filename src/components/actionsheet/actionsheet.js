@@ -122,6 +122,16 @@ ActionSheet.prototype = {
   },
 
   /**
+   * Calculates the position of tray whenever it opens
+   * to match the animation with actionsheet action dialog
+   * @private
+   * @returns {void}
+   */
+  trayTransform() {
+    this.trayContainer.style.transform = `translate(0, -${this.actionSheetElem.offsetHeight - 39}px)`;
+  },
+
+  /**
    * Draws a container and overlay element into the page body.
    * Other action sheet instances may also use these elements.
    * @private
@@ -189,17 +199,20 @@ ActionSheet.prototype = {
       if (!this.visible) {
         this.open();
         if (this.trayContainer) {
-          this.trayContainer.style.bottom = `${this.actionSheetElem.offsetHeight}px`;
+          // Fix the animation when opening and closing
+          this.trayTransform();
         }
       }
     });
 
     $('body').on('resize', () => {
-      if (this.settings.tray) {
+      if (this.settings.tray && this.trayContainer) {
         this.trayContainer.style.visibility = breakpoints.isAbove('phone-to-tablet') ? 'hidden' : '';
 
-        if (!this.visible) {
-          this.trayContainer.style.bottom = '0';
+        if (this.visible) {
+          this.trayTransform();
+        } else {
+          this.trayContainer.style.removeProperty('transform');
         }
       }
     });
@@ -349,7 +362,7 @@ ActionSheet.prototype = {
     this.rootElem.classList.remove('engaged');
 
     if (this.trayContainer) {
-      this.trayContainer.style.bottom = '0';
+      this.trayContainer.style.removeProperty('transform');
     }
 
     this.setOverlayVisibility();
@@ -598,7 +611,6 @@ ActionSheet.prototype = {
   teardown() {
     if (this.visible) {
       this.close();
-      this.trayContainer.style.bottom = '0';
     }
     this.element.add($(this.trayBtn)).off('click.trigger');
 

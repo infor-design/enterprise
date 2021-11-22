@@ -25,11 +25,11 @@
 }
 
 .ids-actionsheet-tray-container {
-  @include css3(transform, translate(1, 100%));
+  @include css3(transform, translate(0, 100%));
   @include transition(transform 200ms $cubic-ease);
 
   border-radius: 10px 10px 0px 0px;
-  bottom: 0;
+  bottom: 40px;
   box-shadow: $actionsheet-tray-box-shadow;
   display: inline-block;
   height: 40px;
@@ -110,8 +110,7 @@
   &.engaged {
     pointer-events: auto;
 
-    .ids-actionsheet,
-    .ids-actionsheet-tray-container {
+    .ids-actionsheet {
       transform: translate(0);
     }
 
