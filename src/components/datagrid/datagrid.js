@@ -9318,7 +9318,7 @@ Datagrid.prototype = {
 
       // Tab, Left and Right arrow keys.
       if ([9, 37, 39].indexOf(key) !== -1) {
-        if (key === 9 && !self.settings.actionableMode) {
+        if (key === 9 && !self.settings.actionableMode || !self.settings.cellNavigation) {
           return;
         }
 
@@ -9339,7 +9339,7 @@ Datagrid.prototype = {
             }
           }
 
-          if (cell === -1 && !self.settings.actionableMode) {
+          if (cell === -1 && !self.settings.actionableMode || !self.settings.cellNavigation) {
             return;
           }
 

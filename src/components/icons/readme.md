@@ -6,24 +6,12 @@ demo:
   - name: Basic Icons
     slug: example-index
   pages:
-  - name: Extended Icon Set
-    slug: example-extended
-  - name: Tree Folder Icons
-    slug: example-tree
   - name: Empty Widget Icons
     slug: example-empty-widgets
-  - name: Grid Filter Drop Down Menu Icons
-    slug: example-filter-dropdown
   - name: Infor / SoHo Logos
     slug: example-logos
   - name: Animated Pseudo Elements (Hamburger / Back) / SoHo Logos
     slug: example-pseudo-elements
-  - name: Icons Indicating Contents
-    slug: example-full-style
-  - name: Caret Icons
-    slug: example-caret
-  - name: Checkmarks
-    slug: example-checks
 ---
 
 ## SVG Icons Support

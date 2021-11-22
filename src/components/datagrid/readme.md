@@ -88,8 +88,8 @@ A Read-Only Datagrid uses "Formatters" to render cell content. A number of these
 
 ```javascript
 // Define Columns for the Grid.
-columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: '50%', formatter: Formatters.Readonly});
-columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: '50%', formatter: Formatters.Hyperlink});
+columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: '50%', formatter: Soho.Formatters.Readonly});
+columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: '50%', formatter: Soho.Formatters.Hyperlink});
 
 // Init and get the api for the grid
 $('#datagrid').datagrid({

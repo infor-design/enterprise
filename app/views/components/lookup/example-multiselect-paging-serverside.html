@@ -5,6 +5,13 @@
       <input id="product-lookup" data-init="false" class="lookup" name="product-lookup" type="text"/>
     </div>
   </div>
+  <br/>
+  <div class="twelve columns">
+    <div class="field">
+      <label for="product-lookup-2" class="label">Products (with initial values)</label>
+      <input id="product-lookup-2" data-init="false" class="lookup" name="product-lookup" type="text" value="214220,214221"/>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -19,6 +26,53 @@
 
   // Initialize the Lookup
   $('#product-lookup').lookup({
+     field: 'productId',
+     options: {
+        columns: columns,
+        dataset: [],
+        paging: true,
+        pagesize: 5,
+        pagesizes: [5, 10, 25],
+        selectable: 'multiple',
+        allowSelectAcrossPages: true,
+        toolbar: {
+          results: true,
+          keywordFilter: false,
+          actions: true,
+          rowHeight: false,
+          collapsibleFilter: false,
+          fullWidth: true,
+          contextualToolbar: true
+        },
+        source: function (req, response) {
+          var url = '{{basepath}}api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
+
+          if (req.sortField) {
+            url += '&sortField=' + req.sortField + '&sortAsc=' + req.sortAsc;
+          }
+
+          if (req.filterExpr && req.filterExpr[0]) {
+            url += '&filterValue=' + req.filterExpr[0].value;
+            url += '&filterOp=' + req.filterExpr[0].operator;
+            url += '&filterColumn=' + req.filterExpr[0].columnId;
+          }
+
+          // Get Page Based on info in Req, return results into response;
+          $.getJSON(url, function(res) {
+            // This is the total going into the grid so the pager works (filtered total or total)
+            req.total = res.total;
+
+            if ((req.filterExpr && req.filterExpr[0])) {
+              req.total = res.total;
+              req.grandTotal = res.grandTotal; // This is the total amount on the server
+            }
+            response(res.data, req);
+          });
+        }
+     }
+  });
+
+  $('#product-lookup-2').lookup({
      field: 'productId',
      options: {
         columns: columns,

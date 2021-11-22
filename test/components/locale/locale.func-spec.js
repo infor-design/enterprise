@@ -339,7 +339,7 @@ describe('Locale API', () => {
       .toEqual(new Date(2020, 1, 26, 12, 0, 0).getTime());
 
     expect(Locale.parseDate('2020/3/4 下午9:00', { pattern: 'yyyy/M/d ah:mm' }).getTime())
-      .toEqual(new Date(2020, 2, 4, 9, 0, 0).getTime());
+      .toEqual(new Date(2020, 2, 4, 21, 0, 0).getTime());
   });
 
   it('Should format en-US dates', () => {

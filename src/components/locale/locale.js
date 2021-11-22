@@ -1109,7 +1109,7 @@ const Locale = {  // eslint-disable-line
     const month = this.getDatePart(formatParts, dateStringParts, 'M', 'MM', 'MMM', 'MMMM');
     const year = this.getDatePart(formatParts, dateStringParts, 'y', 'yy', 'yyyy');
     let hasDays = false;
-    let hasAmFirst = false;
+    let hasDayPeriodsFirst = false;
     let amSetting = thisLocaleCalendar.dayPeriods[0];
     let pmSetting = thisLocaleCalendar.dayPeriods[1];
 
@@ -1190,25 +1190,25 @@ const Locale = {  // eslint-disable-line
           if (numberValue < 0 || numberValue > 12) {
             return undefined;
           }
-          dateObj.h = hasAmFirst ? dateObj.h : value;
+          dateObj.h = hasDayPeriodsFirst ? dateObj.h : value;
           break;
         case 'hh':
           if (numberValue < 0 || numberValue > 12) {
             return undefined;
           }
-          dateObj.h = hasAmFirst ? dateObj.h : value.length === 1 ? `0${value}` : value;
+          dateObj.h = hasDayPeriodsFirst ? dateObj.h : value.length === 1 ? `0${value}` : value;
           break;
         case 'H':
           if (numberValue < 0 || numberValue > 24) {
             return undefined;
           }
-          dateObj.h = hasAmFirst ? dateObj.h : value;
+          dateObj.h = hasDayPeriodsFirst ? dateObj.h : value;
           break;
         case 'HH':
           if (numberValue < 0 || numberValue > 24) {
             return undefined;
           }
-          dateObj.h = hasAmFirst ? dateObj.h : value.length === 1 ? `0${value}` : value;
+          dateObj.h = hasDayPeriodsFirst ? dateObj.h : value.length === 1 ? `0${value}` : value;
           break;
         case 'ss':
           if (numberValue < 0 || numberValue > 60) {
@@ -1228,15 +1228,16 @@ const Locale = {  // eslint-disable-line
           dateObj.mm = value;
           break;
         case 'a':
+          if (!dateObj.h && formatParts[i + 1] && formatParts[i + 1].toLowerCase().substr(0, 1) === 'h') {
+            // in a few cases am/pm is before hours
+            dateObj.h = dateStringParts[i + 1];
+            hasDayPeriodsFirst = true;
+          }
+
           if ((value.toLowerCase() === amSetting) ||
            (value.toUpperCase() === amSetting)) {
             dateObj.a = 'AM';
 
-            if (!dateObj.h && formatParts[i + 1] && formatParts[i + 1].toLowerCase().substr(0, 1) === 'h') {
-              // in a few cases am/pm is before hours
-              dateObj.h = dateStringParts[i + 1];
-              hasAmFirst = true;
-            }
             if (dateObj.h) {
               if (dateObj.h === 12 || dateObj.h === '12') {
                 dateObj.h = 0;
