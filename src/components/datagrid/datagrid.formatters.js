@@ -110,29 +110,28 @@ const formatters = {
     return `<span class="is-readonly">${rowNumber}</span>`;
   },
 
-  Date(row, cell, value, col, isReturnValue, localeStrict = false) {
+  Date(row, cell, value, col, isReturnValue) {
     let formatted = ((value === null || value === undefined) ? '' : value);
-    const dateFormat = localeStrict ? null : col.dateFormat;
     let value2;
 
     if (typeof value === 'string' && value) {
       if (col.sourceFormat) {
         value2 = Locale.parseDate(value, (typeof col.sourceFormat === 'string' ? { pattern: col.sourceFormat } : col.sourceFormat));
       } else {
-        value2 = Locale.parseDate(value, (typeof dateFormat === 'string' ? { pattern: dateFormat } : dateFormat));
+        value2 = Locale.parseDate(value, (typeof col.dateFormat === 'string' ? { pattern: col.dateFormat } : col.dateFormat));
       }
 
       if (value2) {
-        formatted = Locale.formatDate(value2, (typeof dateFormat === 'string' ? { pattern: dateFormat } : dateFormat));
+        formatted = Locale.formatDate(value2, (typeof col.dateFormat === 'string' ? { pattern: col.dateFormat } : col.dateFormat));
       } else {
-        formatted = Locale.formatDate(value, (typeof dateFormat === 'string' ? { pattern: dateFormat } : dateFormat));
+        formatted = Locale.formatDate(value, (typeof col.dateFormat === 'string' ? { pattern: col.dateFormat } : col.dateFormat));
 
         if ((formatted === 'NaN/NaN/NaN' || !formatted) && formatted !== '') { // show invalid dates not NaN/NaN/NaN
           formatted = value;
         }
       }
     } else if (value) {
-      formatted = Locale.formatDate(value, (typeof dateFormat === 'string' && !localeStrict ? { pattern: dateFormat } : dateFormat));
+      formatted = Locale.formatDate(value, (typeof col.dateFormat === 'string' ? { pattern: col.dateFormat } : col.dateFormat));
     }
 
     if (!col.editor || isReturnValue === true) {

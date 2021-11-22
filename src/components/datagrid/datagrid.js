@@ -4215,10 +4215,8 @@ Datagrid.prototype = {
    * @param  {boolean} forExport Formatting for export or not.
    * @returns {void}
    */
-  formatValue(formatter, row, cell, fieldValue, columnDef, rowData, api, forExport) {
+  formatValue(formatter, row, cell, fieldValue, columnDef, rowData, api) {
     let formattedValue;
-    let value = fieldValue;
-    const localeStrict = forExport && this.settings.formatOnExport;
     api = api || this;
 
     // Use default formatter if undefined
@@ -4226,18 +4224,11 @@ Datagrid.prototype = {
       formatter = this.defaultFormatter;
     }
 
-    if (localeStrict) {
-      const numVal = typeof fieldValue === 'number' ? fieldValue : parseFloat(fieldValue);
-      if (!isNaN(numVal)) {
-        value = Locale.formatNumber(numVal, { style: Number.isInteger(numVal) ? 'integer' : 'decimal' });
-      }
-    }
-
     if (typeof formatter === 'string') {
-      formattedValue = Formatters[formatter](row, cell, value, columnDef, rowData, api);
+      formattedValue = Formatters[formatter](row, cell, fieldValue, columnDef, rowData, api);
       formattedValue = formattedValue.toString();
     } else {
-      formattedValue = formatter(row, cell, value, columnDef, rowData, api, localeStrict).toString();
+      formattedValue = formatter(row, cell, fieldValue, columnDef, rowData, api).toString();
     }
 
     return formattedValue;
