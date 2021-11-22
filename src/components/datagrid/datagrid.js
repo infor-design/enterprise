@@ -3454,7 +3454,6 @@ Datagrid.prototype = {
 
     let value = (rawValue || rawValue === 0 || rawValue === false ? rawValue : '');
     value = xssUtils.escapeHTML(value);
-
     return value;
   },
 
@@ -4230,7 +4229,6 @@ Datagrid.prototype = {
     } else {
       formattedValue = formatter(row, cell, fieldValue, columnDef, rowData, api).toString();
     }
-
     return formattedValue;
   },
 
