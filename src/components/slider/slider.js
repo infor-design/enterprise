@@ -8,6 +8,7 @@ import { Locale } from '../locale/locale';
 
 // jQuery Components
 import '../drag/drag.jquery';
+import '../mask/mask-input.jquery';
 import '../tooltip/tooltip.jquery';
 
 // Component Name
@@ -346,7 +347,7 @@ Slider.prototype = {
 
     if (this.settings.sliderBox) {
       self.wrapper.addClass('has-slider-box');
-      const inputEl = $('<input type="text" class="slider-box" aria-required="true"></input>');
+      const inputEl = $(`<input type="text" class="slider-box" aria-required="true" data-mask data-options='{ "pattern" : "###" }' ></input>`);
       inputEl.insertAfter(self.wrapper);
     }
 
@@ -614,6 +615,20 @@ Slider.prototype = {
     if (dragAPI) {
       dragAPI.destroy();
     }
+  },
+
+  bindInputSliderEvent(handle, index) {
+    if (!this.settings.sliderBox) {
+      return;
+    }
+
+    const inputEl = handle.parent().siblings('.slider-box');
+    inputEl.on('keyup.slider' + [index], (e) => {
+      const newValue = $(e.currentTarget).val();
+      this.value(newValue);
+      this.updateRange();
+      this.updateTooltip(handle);
+    });
   },
 
   /**
@@ -1249,6 +1264,7 @@ Slider.prototype = {
         });
 
       self.enableHandleDrag(handle);
+      self.bindInputSliderEvent(handle, i);
     });
 
     self.wrapper.on('click.slider touchend.slider touchcancel.slider', (e) => {
