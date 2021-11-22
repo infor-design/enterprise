@@ -42,7 +42,6 @@ function ActionSheet(element, settings) {
 ActionSheet.prototype = {
   init() {
     this.render();
-    console.log('this', this);
     this.handleEvents();
   },
 
