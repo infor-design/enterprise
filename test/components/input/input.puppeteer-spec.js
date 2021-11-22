@@ -2,7 +2,7 @@ describe('Input mobile and style changes tests', () => {
   const url = 'http://localhost:4000/components/input/example-form-layouts.html';
   beforeAll(async () => {
     await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-    await page.setViewport({ width: 1920, height: 1080});
+    await page.setViewport({ width: 1920, height: 1080 });
   });
 
   it('should have 44px height for large input', async () => {
@@ -20,8 +20,7 @@ describe('Input mobile and style changes tests', () => {
     const largeDTimeHeight = await page.$eval('input[id="datetime-input"]', el => getComputedStyle(el).getPropertyValue('height'));
     const largeTimeHeight = await page.$eval('input[id="time-input"]', el => getComputedStyle(el).getPropertyValue('height'));
     const largeCCardHeight = await page.$eval('input[id="credit-card"]', el => getComputedStyle(el).getPropertyValue('height'));
-    expect(largeFNAmeHeight && largeLNAmeHeight && largeEmailHeight && largeEmailOKHeight && largeDisabledHeight && largeDepCodeHeight && largeDirtyHeight
-      && largeAlphaHeight && largeDecHeight && largePhoneHeight && largeDateHeight && largeDTimeHeight && largeTimeHeight && largeCCardHeight).toMatch('44px');
+    expect(largeFNAmeHeight && largeLNAmeHeight && largeEmailHeight && largeEmailOKHeight && largeDisabledHeight && largeDepCodeHeight && largeDirtyHeight && largeAlphaHeight && largeDecHeight && largePhoneHeight && largeDateHeight && largeDTimeHeight && largeTimeHeight && largeCCardHeight).toMatch('44px');
   });
 
   it('should have 16px left and right padding', async () => {
@@ -39,8 +38,7 @@ describe('Input mobile and style changes tests', () => {
     const leftDTimeHeight = await page.$eval('input[id="datetime-input"]', el => getComputedStyle(el).getPropertyValue('padding-left'));
     const leftTimeHeight = await page.$eval('input[id="time-input"]', el => getComputedStyle(el).getPropertyValue('padding-left'));
     const leftCCardHeight = await page.$eval('input[id="credit-card"]', el => getComputedStyle(el).getPropertyValue('padding-left'));
-    expect(leftFNAmeHeight && leftLNAmeHeight && leftEmailHeight && leftEmailOKHeight && leftDisabledHeight && leftDepCodeHeight && leftDirtyHeight
-      && leftAlphaHeight && leftDecHeight && leftPhoneHeight && leftDateHeight && leftDTimeHeight && leftTimeHeight && leftCCardHeight).toMatch('16px');
+    expect(leftFNAmeHeight && leftLNAmeHeight && leftEmailHeight && leftEmailOKHeight && leftDisabledHeight && leftDepCodeHeight && leftDirtyHeight && leftAlphaHeight && leftDecHeight && leftPhoneHeight && leftDateHeight && leftDTimeHeight && leftTimeHeight && leftCCardHeight).toMatch('16px');
 
     const rightFNAmeHeight = await page.$eval('input[id="first-name"]', el => getComputedStyle(el).getPropertyValue('padding-right'));
     const rightLNAmeHeight = await page.$eval('input[id="last-name"]', el => getComputedStyle(el).getPropertyValue('padding-right'));
@@ -56,7 +54,6 @@ describe('Input mobile and style changes tests', () => {
     const rightDTimeHeight = await page.$eval('input[id="datetime-input"]', el => getComputedStyle(el).getPropertyValue('padding-right'));
     const rightTimeHeight = await page.$eval('input[id="time-input"]', el => getComputedStyle(el).getPropertyValue('padding-right'));
     const rightCCardHeight = await page.$eval('input[id="credit-card"]', el => getComputedStyle(el).getPropertyValue('padding-right'));
-    expect(rightFNAmeHeight && rightLNAmeHeight && rightEmailHeight && rightEmailOKHeight && rightDisabledHeight && rightDepCodeHeight && rightDirtyHeight
-      && rightAlphaHeight && rightDecHeight && rightPhoneHeight && rightDateHeight && rightDTimeHeight && rightTimeHeight && rightCCardHeight).toMatch('16px');
+    expect(rightFNAmeHeight && rightLNAmeHeight && rightEmailHeight && rightEmailOKHeight && rightDisabledHeight && rightDepCodeHeight && rightDirtyHeight && rightAlphaHeight && rightDecHeight && rightPhoneHeight && rightDateHeight && rightDTimeHeight && rightTimeHeight && rightCCardHeight).toMatch('16px');
   });
 });
