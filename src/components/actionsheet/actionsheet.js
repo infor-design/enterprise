@@ -127,7 +127,7 @@ ActionSheet.prototype = {
    * @returns {void}
    */
   trayTransform() {
-    this.trayContainer.style.transform = `translate(0, -${this.actionSheetElem.offsetHeight - 39}px)`;
+    this.trayContainer.style.transform = `translate(0, -${this.actionSheetElem.offsetHeight - 40}px)`;
   },
 
   /**
