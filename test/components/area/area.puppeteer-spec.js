@@ -1,4 +1,4 @@
-const { checkDataAutomationID, checkClassNameValue, checkTooltipValue, checkIfElementHasFocused, checkIfElementExist } = require('../../helpers/e2e-utils.js');
+const { checkDataAutomationID, checkClassNameValue, checkTooltipValue } = require('../../helpers/e2e-utils.js');
 
 describe('Area Puppeteer Tests', () => {
   describe('Area Disable Selection  State Tests', () => {
