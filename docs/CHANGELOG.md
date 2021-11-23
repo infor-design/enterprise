@@ -1,9 +1,23 @@
 # What's New with Enterprise
 
+## v4.58.0 Features
+
+- `[Column]` Added support to add a line chart in column-grouped. ([#4598](https://github.com/infor-design/enterprise/issues/4598))
+- `[Column]` Added feature to rotate labels. ([#5773](https://github.com/infor-design/enterprise/issues/5773))
+- `[Column Chart]` Added the ability to add axis labels in column-grouped chart. ([#5721](https://github.com/infor-design/enterprise/issues/5721))
+
 ## v4.58.0 Fixes
 
+- `[Calendar]` Fix the header days where it should be seen when scrolled down. ([#5742](https://github.com/infor-design/enterprise/issues/5742))
+- `[Datagrid]` Tab doesn't go to cells if cellNavigation is false. ([#5734](https://github.com/infor-design/enterprise/issues/5734))
+- `[Locale]` Fix issue in parsing date when AM/PM comes first before Hours (a:hh:mm). ([#5129](https://github.com/infor-design/enterprise/issues/5129))
+- `[Modal]` Added option to disable primary trigger on field. ([#5728](https://github.com/infor-design/enterprise/issues/5728))
+- `[Searchfield]` Save input value when searchfield collapses but is not cleared via button click or key. ([#5792](https://github.com/infor-design/enterprise/issues/5792))
+- `[Tabs]` Fixed regression bug where tabs are no longer working inside the modal. ([#5867](https://github.com/infor-design/enterprise/issues/5867))
+- `[Tabs]` Fix focus indicator in Sink Page. ([#5714](https://github.com/infor-design/enterprise/issues/5714))
 - `[Tabs-Vertical]` Fixed on Tabs Vertical Aria and Roles. ([#5712](https://github.com/infor-design/enterprise/issues/5712))
 - `[Toolbar Searchfield]` Fixed the height the collapse button on a smaller viewport (`766px` and below). ([#5791](https://github.com/infor-design/enterprise/issues/5791))
+- `[Lookup]` Rows are selected based on the initial values in the input field. ([#1132](https://github.com/infor-design/enterprise-ng/issues/1132))
 
 ## v4.57.0 Features
 
@@ -24,7 +38,9 @@
 - `[Datagrid]` Added support for text filter types to specify a selected filter condition. ([#5750](https://github.com/infor-design/enterprise/issues/5750))
 - `[Environment]` Fixed `ie` css class included to html tag for Edge browser. ([#5587](https://github.com/infor-design/enterprise/issues/5587))
 
-(41 Issues Solved This Release, Backlog Enterprise 192, Backlog Ng 28, 1166 Functional Tests, 1712 e2e Tests, 150 Puppeteer Tests)
+### v4.57.0 Markup Changes
+
+- `[Tabs]` Some of the aria attributes have been changed, see the issue for details.([#5712](https://github.com/infor-design/enterprise/issues/5712))
 
 ## v4.57.0 Fixes
 
@@ -51,6 +67,8 @@
 - `[Spinbox]` Fix spinbox misalignment on sample sizes. ([#5733](https://github.com/infor-design/enterprise/issues/5733))
 - `[Tabs]` Fix a bug on vertical tabs scroll on panel containers. ([#5565](https://github.com/infor-design/enterprise/issues/5565))
 - `[Treemap]` Fix Treemap's misaligned footer-text on the new theme. ([#5365](https://github.com/infor-design/enterprise/issues/5365))
+
+(41 Issues Solved This Release, Backlog Enterprise 192, Backlog Ng 28, 1166 Functional Tests, 1712 e2e Tests, 150 Puppeteer Tests)
 
 ## v4.56.0 Features
 

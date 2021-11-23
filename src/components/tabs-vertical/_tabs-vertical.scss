@@ -75,6 +75,11 @@
 
     .tab-container.vertical {
       z-index: 3;
+
+      .tab-list-container > .tab-focus-indicator.is-visible {
+        border-color: transparent;
+        box-shadow: none;
+      }
     }
 
     .tab-panel-container {

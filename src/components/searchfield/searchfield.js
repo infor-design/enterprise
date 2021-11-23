@@ -853,9 +853,16 @@ SearchField.prototype = {
     // Setup a listener for the Clearable behavior, if applicable
     if (self.settings.clearable) {
       self.element.on(`cleared.${this.id}`, () => {
+        // Add the input value back if settings have a value
+        if (self.settings.value && self.settings.value.length > 0) {
+          self.element.val(self.settings.value);
+        }
+
         if (self.autocomplete) {
           self.autocomplete.closeList();
         }
+
+        delete self.settings.value;
       });
 
       self.xButton.on(`blur.${this.id}`, (e) => {
@@ -1031,8 +1038,12 @@ SearchField.prototype = {
     function safeBlurHandler() {
       // Do a check for searchfield-specific elements
       if (self.isFocused) {
+        delete self.settings.value;
         return;
       }
+
+      // Retain input value if searchfield is not focused
+      self.settings.value = $(self.element).val();
 
       const wrapperElem = self.wrapper[0];
       wrapperElem.classList.remove('has-focus', 'active');
