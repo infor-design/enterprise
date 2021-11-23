@@ -164,7 +164,7 @@ describe('Personalization form short tests', () => {
   }
 });
 
-describe('Personalization form2 tests', () => {
+fdescribe('Personalization form2 tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/personalize/example-form2.html?theme=classic&layout=nofrills');
   });
