@@ -1,4 +1,4 @@
-const { checkTooltipValue, checkClassNameValue } = require('../../helpers/e2e-utils.js');
+const { checkClassNameValue } = require('../../helpers/e2e-utils.js');
 
 describe('Column Chart Puppeteer Tests', () => {
   describe('Column Disable Selection  State tests', () => {
@@ -6,53 +6,6 @@ describe('Column Chart Puppeteer Tests', () => {
 
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-    });
-
-    it('should show the tooltip with data', async () => {
-      await page.setViewport({
-        width: 1200,
-        height: 800,
-        deviceScaleFactor: 1,
-      });
-      const tooltip = '#svg-tooltip';
-      const tooltipContent = '#svg-tooltip .tooltip-content';
-      const isFailed = [];
-
-      isFailed.push(await checkTooltipValue('rect.bar.series-0', tooltip, tooltipContent, '7 Automotive'));
-      isFailed.push(await checkTooltipValue('rect.bar.series-1', tooltip, tooltipContent, '10 Distribution'));
-      isFailed.push(await checkTooltipValue('rect.bar.series-2', tooltip, tooltipContent, '14 Equipment'));
-      isFailed.push(await checkTooltipValue('rect.bar.series-3', tooltip, tooltipContent, '10 Fashion'));
-      isFailed.push(await checkTooltipValue('rect.bar.series-4', tooltip, tooltipContent, '14 Food & Beverage'));
-      await page.waitForTimeout(150);
-      isFailed.push(await checkTooltipValue('rect.bar.series-5', tooltip, tooltipContent, '8 Healthcare'));
-      isFailed.push(await checkTooltipValue('rect.bar.series-6', tooltip, tooltipContent, '7 Other'));
-      expect(isFailed).not.toContain(true);
-    });
-
-    it('should not show pointer as a cursor', async () => {
-      const checkCursor = async el => page.$eval(el, e => e.style.cursor);
-      // series 1
-      await page.hover('rect.bar.series-0');
-      await page.waitForTimeout(100);
-      expect(await checkCursor('rect.bar.series-0')).toContain('inherit');
-      await page.hover('rect.bar.series-1');
-      await page.waitForTimeout(100);
-      expect(await checkCursor('rect.bar.series-1')).toContain('inherit');
-      await page.hover('rect.bar.series-2');
-      await page.waitForTimeout(100);
-      expect(await checkCursor('rect.bar.series-2')).toContain('inherit');
-      await page.hover('rect.bar.series-3');
-      await page.waitForTimeout(100);
-      expect(await checkCursor('rect.bar.series-3')).toContain('inherit');
-      await page.hover('rect.bar.series-4');
-      await page.waitForTimeout(100);
-      expect(await checkCursor('rect.bar.series-4')).toContain('inherit');
-      await page.hover('rect.bar.series-5');
-      await page.waitForTimeout(100);
-      expect(await checkCursor('rect.bar.series-5')).toContain('inherit');
-      await page.hover('rect.bar.series-6');
-      await page.waitForTimeout(100);
-      expect(await checkCursor('rect.bar.series-6')).toContain('inherit');
     });
 
     it('should not able to tab through the legends', async () => {
