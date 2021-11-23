@@ -86,7 +86,7 @@ excel.cleanExtra = function (customDs, format = false, self) {
       clonedTable.find('.datagrid-header tr:first()').html(self.headerNodes().clone(true));
     }
 
-    table = excel.appendRows(dataset, clonedTable[0], self);
+    table = excel.appendRows(dataset, clonedTable[0], self, format);
   }
 
   // Create the header row
@@ -216,9 +216,10 @@ excel.datasetToHtml = function (dataset, format = false) {
 * @param {array} dataset The array of objects to convert.
 * @param {object} table The table object.
 * @param {object} self The grid API.
+* @param {boolean} format Format numbers and dates to locale or not
 * @returns {object} The table with rows appended.
 */
-excel.appendRows = function (dataset, table, self) {
+excel.appendRows = function (dataset, table, self, format = false) {
   const isjQuery = obj => (obj && (obj instanceof jQuery || obj.constructor.prototype.jquery));
   const tableJq = isjQuery(table) ? table : $(table);
   table = tableJq[0];
@@ -228,7 +229,7 @@ excel.appendRows = function (dataset, table, self) {
   body.innerHTML = '';
   const appendRow = function (d, i) {
     if (!d._isFilteredOut) {
-      const rowHtml = self.rowHtml(d, i, i, false, false, i, true, true);
+      const rowHtml = self.rowHtml(d, i, i, false, false, i, true, format);
       const tr = document.createElement('tr');
       tr.innerHTML = rowHtml.left + rowHtml.center + rowHtml.right;
       tableHtml += tr.outerHTML;

@@ -1,10 +1,11 @@
 <div class="row">
     <div class="twelve columns">
       <br />
-      <h3>Grid Example: Format Numbers and Dates</h3>
+      <h2>Grid Example: Format Numbers and Dates</h2>
       <p>
-      Data with numbers and dates will be formatted according to current locale.
+      Data with numbers and dates will be formatted according to current locale. If a formatter is already assigned to a column, that will be used for export regardless if format is set to true or false. Date patterns will be ignored if export will format on locale.
       </p>
+      <p>Select the options in More to export unformatted.</p>
       <hr class="fieldset-hr"/>
     </div>
     <div class="twelve columns">
@@ -22,37 +23,30 @@
           <span class="datagrid-result-count">(10 Results)</span>
         </div>
         <div class="buttonset">
+          <button type="button" class="btn" id="export-to-csv-format">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-export-spreadsheet"></use>
+            </svg>
+            <span>Export To Csv (Format)</span>
+          </button>
+          <button type="button" class="btn" id="export-to-excel-format">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-export-spreadsheet"></use>
+            </svg>
+            <span>Export To Excel (Format)</span>
+          </button>
           <button type="button" class="btn" id="export-to-csv">
             <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
               <use href="#icon-export-spreadsheet"></use>
             </svg>
-            <span>Export To Csv</span>
+            <span>Export To Csv (No Format)</span>
           </button>
           <button type="button" class="btn" id="export-to-excel">
             <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
               <use href="#icon-export-spreadsheet"></use>
             </svg>
-            <span>Export To Excel</span>
+            <span>Export To Excel (No Format)</span>
           </button>
-        </div>
-  
-        <div class="more">
-          <button type="button" class="btn-actions">
-            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-              <use href="#icon-more"></use>
-            </svg>
-            <span class="audible">More Actions</span>
-          </button>
-          <ul class="popupmenu">
-            <li><a data-option="personalize-columns" href="#">Personalize Columns</a></li>
-            <li><a data-option="reset-layout" href="#">Reset to Default</a></li>
-            <li class="separator"></li>
-            <li class="heading">Row Height</li>
-            <li class="is-selectable"><a data-option="row-extra-small" href="#" data-translate="text">ExtraSmall</a></li>
-            <li class="is-selectable"><a data-option="row-small" href="#" data-translate="text">Small</a></li>
-            <li class="is-selectable"><a data-option="row-medium" href="#" data-translate="text">Medium</a></li>
-            <li class="is-selectable is-checked"><a data-option="row-large" href="#" data-translate="text">Large</a></li>
-          </ul>
         </div>
       </div>
       <div id="datagrid">
@@ -82,14 +76,15 @@
       }, align: 'center', sortable: false});
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly});
       columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink});
-      columns.push({ id: 'activity', name: 'Activity', field: 'activity', formatter: Formatters.Hyperlink, exportable: true});
+      columns.push({ id: 'activity', name: 'Activity', field: 'activity', formatter: Formatters.Hyperlink, exportable: false});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
-      columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal});
-      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, exportable: true});
+      columns.push({ id: 'price', name: 'Price', field: 'price'});
+      columns.push({ id: 'orderDate', name: 'Order Date (With Formatter)', field: 'orderDate',  formatter: Formatters.Date, dateFormat: 'M/d/yyyy', exportable: true});
+      columns.push({ id: 'orderDate', name: 'Order Date (No Formatter)', field: 'orderDate',  exportable: true});
       columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Formatters.Text, exportable: true});
-      columns.push({ id: 'action', name: 'Action Item', field: 'action', exportable: true});
+      columns.push({ id: 'action', name: 'Action Item', field: 'action', exportable: false});
       columns.push({ id: 'ex', name: 'Extra', field: 'ex', exportable: true});
-      columns.push({ id: 'isFiltered', name: 'Filtered', field: 'isFiltered', exportable: true});
+      columns.push({ id: 'isFiltered', name: 'Filtered', field: 'isFiltered', exportable: false});
   
       // Init and get the api for the grid
       grid = $('#datagrid').datagrid({
@@ -104,6 +99,13 @@
       });
       $('#export-to-excel').on('click', function () {
         grid.data('datagrid').exportToExcel('myExport');
+      });
+
+      $('#export-to-csv-format').on('click', function () {
+        grid.data('datagrid').exportToCsv('myExport', null, null, true);
+      });
+      $('#export-to-excel-format').on('click', function () {
+        grid.data('datagrid').exportToExcel('myExport', null, null, true);
       });
 
       Locale.supportedLocales.forEach(locale => {

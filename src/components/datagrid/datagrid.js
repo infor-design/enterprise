@@ -116,7 +116,6 @@ const COMPONENT_NAME = 'datagrid';
  * @param {boolean}  [settings.sizeColumnsEqually=false] If true make all the columns equal width
  * @param {boolean}  [settings.expandableRow=false] If true we append an expandable row area without the rowTemplate feature being needed.
  * @param {boolean}  [settings.exportConvertNegative=false] If set to true export data with trailing negative signs moved in front.
- * @param {boolean}  [settings.formatOnExport=false] If set to true export data with number and date values will be formatted according to browser's locale.
  * @param {array}    [settings.columnGroups=null] An array of columns to use for grouped column headers.
  * @param {boolean}  [settings.treeGrid=false] If true a tree grid is expected so addition calculations will be used to calculate of the row children
  * @param {Function} [settings.onPostRenderCell=null] A call back function that will fire and send you the cell container and related information for any cells cells with a component attribute in the column definition.
@@ -229,7 +228,6 @@ const DATAGRID_DEFAULTS = {
   sizeColumnsEqually: false, // If true make all the columns equal width
   expandableRow: false, // Supply an empty expandable row template
   exportConvertNegative: false, // Export data with trailing negative signs moved in front
-  formatOnExport: false,
   columnGroups: null, // The columns to use for grouped column headings
   treeGrid: false,
   onPostRenderCell: null,
@@ -4211,10 +4209,10 @@ Datagrid.prototype = {
    * @param  {object} columnDef The column settings.
    * @param  {object} rowData The current row data.
    * @param  {object} api The grid API reference.
-   * @param  {boolean} forExport Formatting for export or not.
+   * @param  {boolean} formatLocale Formatting for export or not.
    * @returns {void}
    */
-  formatValue(formatter, row, cell, fieldValue, columnDef, rowData, api) {
+  formatValue(formatter, row, cell, fieldValue, columnDef, rowData, api, formatLocale = false) {
     let formattedValue;
     api = api || this;
 
@@ -4224,10 +4222,10 @@ Datagrid.prototype = {
     }
 
     if (typeof formatter === 'string') {
-      formattedValue = Formatters[formatter](row, cell, fieldValue, columnDef, rowData, api);
+      formattedValue = Formatters[formatter](row, cell, fieldValue, columnDef, rowData, api, formatLocale);
       formattedValue = formattedValue.toString();
     } else {
-      formattedValue = formatter(row, cell, fieldValue, columnDef, rowData, api).toString();
+      formattedValue = formatter(row, cell, fieldValue, columnDef, rowData, api, formatLocale).toString();
     }
     return formattedValue;
   },
@@ -4242,10 +4240,10 @@ Datagrid.prototype = {
    * @param  {object} isFooter If true we are building a footer row.
    * @param  {string} actualIndexLineage Series of actualIndex values to reach a child actualIndex in a tree
    * @param  {boolean} skipChildren If true we dont append children.
-   * @param  {boolean} forExport If this is for exporting to excel or not.
+   * @param  {boolean} formatLocale For exporting, format numbers and dates to locale or not.
    * @returns {string} The html used to construct the row.
    */
-  rowHtml(rowData, dataRowIdx, actualIndex, isGroup, isFooter, actualIndexLineage, skipChildren, forExport = false) {
+  rowHtml(rowData, dataRowIdx, actualIndex, isGroup, isFooter, actualIndexLineage, skipChildren, formatLocale = false) {
     let isEven = false;
     const self = this;
     const isSummaryRow = this.settings.summaryRow && !isGroup && isFooter;
@@ -4416,7 +4414,7 @@ Datagrid.prototype = {
         self.settings.columns[j],
         rowData,
         self,
-        forExport
+        formatLocale
       );
 
       if (formatted.indexOf('<span class="is-readonly">') === 0) {
@@ -5945,9 +5943,10 @@ Datagrid.prototype = {
   * @param {string} fileName The desired export filename in the download.
   * @param {string} customDs An optional customized version of the data to use.
   * @param {string} separator (optional) If user's machine is configured for a locale with alternate default separator.
+  * @param {boolean} format Format numbers and dates based on locale
   */
-  exportToCsv(fileName, customDs, separator) {
-    excel.exportToCsv(fileName, customDs, separator, this.settings.formatOnExport, this);
+  exportToCsv(fileName, customDs, separator, format = false) {
+    excel.exportToCsv(fileName, customDs, separator, format, this);
   },
 
   /**
@@ -5957,9 +5956,10 @@ Datagrid.prototype = {
   * @param {string} fileName The desired export filename in the download.
   * @param {string} worksheetName A name to give the excel worksheet tab.
   * @param {string} customDs An optional customized version of the data to use.
+  * @param {boolean} format Format numbers and dates based on locale
   */
-  exportToExcel(fileName, worksheetName, customDs) {
-    excel.exportToExcel(fileName, worksheetName, customDs, this.settings.formatOnExport, this);
+  exportToExcel(fileName, worksheetName, customDs, format = false) {
+    excel.exportToExcel(fileName, worksheetName, customDs, format, this);
   },
 
   copyToDataSet(pastedValue, rowCount, colIndex, dataSet) {
@@ -12080,9 +12080,25 @@ Datagrid.prototype = {
    * @param  {number} row The rowindex
    * @param  {number} cell The cell index
    * @param  {any} value The data value
+   * @param  {number} col The column index
+   * @param  {number} item The item index
+   * @param  {any} api The datagrid api
+   * @param  {any} formatLocale Format numbers and date to local or not
    * @returns {string} The html string
    */
-  defaultFormatter(row, cell, value) {
+  defaultFormatter(row, cell, value, col, item, api, formatLocale = false) {
+    if (formatLocale) {
+      const numVal = parseFloat(value);
+      if (!isNaN(numVal)) {
+        value = Locale.formatNumber(numVal, { style: Number.isInteger(numVal) ? 'integer' : 'decimal' });
+      } else {
+        const dateVal = Date.parse(value);
+        if (!isNaN(dateVal)) {
+          value = Locale.formatDate(dateVal);
+        }
+      }
+    }
+
     return ((value === null || value === undefined || value === '') ? '' : value.toString());
   },
 
