@@ -9,11 +9,11 @@ const excel = {};
  * Remove Hidden Columns and Non Exportable Columns.
  * @private
  * @param {string} customDs An optional customized version of the data to use.
- * @param {boolean} format if true, date and number values will be formatted based on browser locale
  * @param {string} self The grid api to use (if customDs is not used)
+ * @param {boolean} format if true, date and number values will be formatted based on browser locale
  * @returns {object} an table element cleaned extra stuff
  */
-excel.cleanExtra = function (customDs, format = false, self) {
+excel.cleanExtra = function (customDs, self, format = false) {
   const clean = function (table) {
     const removeNode = (node) => {
       if (node.parentNode) {
@@ -370,7 +370,7 @@ excel.exportToExcel = function (fileName, worksheetName, customDs, format = fals
     return s.replace(/{(\w+)}/g, (m, p) => c[p]);
   };
 
-  const table = excel.cleanExtra(customDs, format, self);
+  const table = excel.cleanExtra(customDs, self, format);
   const ctx = { worksheet: (worksheetName || 'Worksheet'), table: table[0].innerHTML };
 
   fileName = `${fileName || self.element[0].id || 'Export'}.xls`;
@@ -436,7 +436,7 @@ excel.exportToCsv = function (fileName, customDs, sep = 'sep=,', format = false,
     return `${!separator.flexUtf8 ? '\uFEFF' : ''}"${csv.join('"\n"')}"`;
   };
 
-  const table = excel.cleanExtra(customDs, format, self);
+  const table = excel.cleanExtra(customDs, self, format);
   // ref: https://stackoverflow.com/a/2551031
   const isUtf16 = !(/^[\u0000-\u007f]*$/.test(table[0].textContent)) && separator.flexUtf8; // eslint-disable-line
   const data = formatCsv(table, isUtf16);
