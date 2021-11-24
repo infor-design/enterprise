@@ -114,10 +114,19 @@ ActionSheet.prototype = {
       $(this.actionSheetElem).find('button').button();
 
       // Add tray element
-      if (this.settings.tray && breakpoints.isBelow('phone-to-tablet')) {
+      if (this.settings.tray) {
         this.renderTrayElement();
       }
     }
+  },
+
+  /**
+   * The visibility of tray element.
+   * @private
+   * @returns {void}
+   */
+  trayBreakpoint() {
+    this.trayContainer.style.visibility = breakpoints.isAbove('phone-to-tablet') ? 'hidden' : '';
   },
 
   /**
@@ -186,6 +195,9 @@ ActionSheet.prototype = {
     this.trayBtn = trayBtn;
     this.trayIconElem = trayIconElem;
     this.trayTextElem = trayTextElem;
+
+    // Triggering the visibility of tray element
+    this.trayBreakpoint();
   },
 
   /**
@@ -205,8 +217,8 @@ ActionSheet.prototype = {
     });
 
     $('body').on('resize', () => {
-      if (this.settings.tray && this.trayContainer) {
-        this.trayContainer.style.visibility = breakpoints.isAbove('phone-to-tablet') ? 'hidden' : '';
+      if (this.settings.tray) {
+        this.trayBreakpoint();
 
         if (this.visible) {
           this.trayTransform();
