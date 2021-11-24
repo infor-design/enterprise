@@ -623,7 +623,7 @@ Slider.prototype = {
     }
 
     const inputEl = handle.parent().siblings('.slider-box');
-    inputEl.on('keyup.slider${index}', (e) => {
+    inputEl.on(`keyup.slider${index}`, (e) => {
       if (e.keyCode === 13) {
         const newValue = $(e.currentTarget).val();
         this.value(newValue);
