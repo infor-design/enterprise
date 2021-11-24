@@ -624,10 +624,12 @@ Slider.prototype = {
 
     const inputEl = handle.parent().siblings('.slider-box');
     inputEl.on('keyup.slider${index}', (e) => {
-      const newValue = $(e.currentTarget).val();
-      this.value(newValue);
-      this.updateRange();
-      this.updateTooltip(handle);
+      if (e.keyCode === 13) {
+        const newValue = $(e.currentTarget).val();
+        this.value(newValue);
+        this.updateRange();
+        this.updateTooltip(handle);
+      }
     });
   },
 
