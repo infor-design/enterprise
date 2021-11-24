@@ -5,6 +5,7 @@
 - `[Column]` Added support to add a line chart in column-grouped. ([#4598](https://github.com/infor-design/enterprise/issues/4598))
 - `[Column]` Added feature to rotate labels. ([#5773](https://github.com/infor-design/enterprise/issues/5773))
 - `[Slider]` Added support for tooltip to show on load in slider. ([#3747](https://github.com/infor-design/enterprise/issues/3747))
+- `[Column Chart]` Added the ability to add axis labels in column-grouped chart. ([#5721](https://github.com/infor-design/enterprise/issues/5721))
 
 ## v4.58.0 Fixes
 
@@ -13,6 +14,7 @@
 - `[Locale]` Fix issue in parsing date when AM/PM comes first before Hours (a:hh:mm). ([#5129](https://github.com/infor-design/enterprise/issues/5129))
 - `[Modal]` Added option to disable primary trigger on field. ([#5728](https://github.com/infor-design/enterprise/issues/5728))
 - `[Searchfield]` Save input value when searchfield collapses but is not cleared via button click or key. ([#5792](https://github.com/infor-design/enterprise/issues/5792))
+- `[Tabs]` Fixed regression bug where tabs are no longer working inside the modal. ([#5867](https://github.com/infor-design/enterprise/issues/5867))
 - `[Tabs]` Fix focus indicator in Sink Page. ([#5714](https://github.com/infor-design/enterprise/issues/5714))
 - `[Tabs-Vertical]` Fixed on Tabs Vertical Aria and Roles. ([#5712](https://github.com/infor-design/enterprise/issues/5712))
 - `[Toolbar Searchfield]` Fixed the height the collapse button on a smaller viewport (`766px` and below). ([#5791](https://github.com/infor-design/enterprise/issues/5791))
