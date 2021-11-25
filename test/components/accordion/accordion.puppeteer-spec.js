@@ -1,13 +1,11 @@
 describe('Accordion Puppeteer Test', () => {
+  const baseUrl = 'http://localhost:4000/components/accordion';
+
   describe('Allow One Pane', () => {
-    const url = 'http://localhost:4000/components/accordion/example-allow-one-pane';
+    const url = `${baseUrl}/example-allow-one-pane`;
 
     beforeEach(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
-    });
-
-    it('should show the title', async () => {
-      await expect(page.title()).resolves.toMatch('IDS Enterprise');
     });
 
     it('Should only allow one pane open at a time', async () => {
@@ -18,6 +16,172 @@ describe('Accordion Puppeteer Test', () => {
       page.waitForSelector('#accordion-one-pane .accordion-pane.is-expanded', { visible: true });
 
       expect((await page.$$('.accordion-pane.is-expanded')).length).toEqual(1);
+    });
+  });
+
+  describe('Panels', () => {
+    const url = `${baseUrl}/example-accordion-panels`;
+
+    beforeEach(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
+    });
+
+    it('Should have panels', async () => {
+      expect((await page.$('.accordion.panel'))).toBeTruthy();
+    });
+  });
+
+  describe('Ajax', () => {
+    const url = `${baseUrl}/test-ajax`;
+
+    beforeEach(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
+
+      page.waitForSelector('#ajax-accordion .accordion-header', { visible: true });
+    });
+
+    it('Ajax data is in headers', async () => {
+      await page.click('#ajax-accordion .accordion-header button');
+
+      page.waitForSelector('#ajax-accordion .accordion-pane.is-expanded > .accordion-header:first-child', { visible: true });
+
+      expect(await page.$eval('#ajax-accordion .accordion-pane.is-expanded > .accordion-header:first-child', el => el.textContent.trim())).toEqual('Apples');
+    });
+  });
+
+  describe('Lazy Loading', () => {
+    const url = `${baseUrl}/test-lazy-loading`;
+
+    beforeEach(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
+    });
+
+    it('Should load data when header is clicked', async () => {
+      await page.click('#ajax-accordion .accordion-header button');
+
+      page.waitForSelector('#ajax-accordion .accordion-pane.is-expanded > .accordion-header:first-child', { visible: true });
+      await page.waitForTimeout(600);
+
+      expect(await page.$eval('#ajax-accordion .accordion-pane.is-expanded > .accordion-header:first-child', el => el.textContent.trim())).toEqual('Apples');
+    });
+  });
+
+  describe('Collapse Children', () => {
+    const url = `${baseUrl}/test-close-children-on-collapse`;
+
+    beforeEach(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
+    });
+
+    it('Should close all children components', async () => {
+      await page.click('#start-test');
+      await page.waitForTimeout(2600);
+
+      expect((await page.$$('#dropdown-list')).length).toBe(0);
+      expect((await page.$$('#monthview-popup')).length).toBe(0);
+    });
+  });
+
+  describe('Disabled', () => {
+    const url = `${baseUrl}/example-disabled?theme=classic&layout=nofrills`;
+
+    beforeEach(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
+    });
+
+    it('Should be disabled', async () => {
+      expect((await page.$$('.accordion-header.is-disabled')).length).toBe(4);
+      expect((await page.$$('.accordion.is-disabled')).length).toBe(1);
+    });
+  });
+
+  describe('Index', () => {
+    const url = `${baseUrl}/example-index?theme=classic&layout=nofrills`;
+
+    beforeEach(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
+    });
+
+    it('Accordion should be displayed', async () => {
+      expect(await page.$('.accordion')).toBeTruthy();
+    });
+
+    it('Can be expanded', async () => {
+      await (await page.$$('button'))[0].click();
+
+      expect(await page.$('[aria-expanded="true"]')).toBeTruthy();
+    });
+
+    it('Keyboard should be working on focus', async () => {
+      const accordionEl = (await page.$$('.accordion-header'))[0];
+
+      await page.mouse.move(1000, 40);
+      await accordionEl.click();
+
+      expect(await page.$('.is-focused')).toBeTruthy();
+
+      await accordionEl.click();
+      await page.keyboard.press('ArrowDown');
+
+      expect(await page.$('.is-focused')).toBeTruthy();
+    });
+
+    it('Keyboard should be working on expand', async () => {
+      const accordionEl = (await page.$$('.accordion-header'))[0];
+
+      await page.mouse.move(1000, 40);
+      await accordionEl.click();
+
+      expect(await page.$('.is-expanded')).toBeTruthy();
+
+      await page.keyboard.press('ArrowDown');
+      await page.keyboard.press('Enter');
+
+      expect(await page.$('.is-expanded')).toBeTruthy();
+    });
+  });
+
+  describe('Expand', () => {
+    const url = `${baseUrl}/test-expand-all`;
+
+    beforeEach(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
+    });
+
+    it('Should expand both panes', async () => {
+      expect((await page.$$('#nested-accordion > .accordion-header.is-expanded')).length).toEqual(2);
+
+      const panes = await page.$$('#nested-accordion > .accordion-header.is-expanded + .accordion-pane.is-expanded');
+
+      expect((await panes[0].boundingBox()).height).not.toBeLessThan(50);
+      expect((await panes[1].boundingBox()).height).not.toBeLessThan(50);
+    });
+  });
+
+  describe('Adding Headers Dynamically', () => {
+    const url = `${baseUrl}/test-add-dynamically.html?layout=nofrills`;
+
+    beforeEach(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
+    });
+
+    it('Can dynamically add and navigate to new accordion headers', async () => {
+      await page.click('#addFavs');
+      await page.click('#addFavs');
+
+      const header = await page.$$('#test-accordion > .accordion-header');
+
+      await header[header.length - 1].click();
+
+      await page.keyboard.press('Tab');
+      await page.keyboard.press('Tab');
+      await page.keyboard.press('Tab');
+      await page.keyboard.press('Tab');
+      await page.keyboard.press('Tab');
+
+      const focusedElem = await page.evaluateHandle(() => document.activeElement.textContent);
+      // eslint-disable-next-line no-underscore-dangle
+      expect(focusedElem._remoteObject.value).toEqual('Dynamically-Added Favorite (1)');
     });
   });
 });
