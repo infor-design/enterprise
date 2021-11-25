@@ -8,7 +8,7 @@ describe('Accordion Puppeteer Test', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
     });
 
-    it('Should only allow one pane open at a time', async () => {
+    it('should only allow one pane open at a time', async () => {
       expect((await page.$$('.accordion-pane.is-expanded')).length).toEqual(0);
 
       await page.click('#accordion-one-pane > div:nth-child(1) button');
@@ -26,7 +26,7 @@ describe('Accordion Puppeteer Test', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
     });
 
-    it('Should have panels', async () => {
+    it('should have panels', async () => {
       expect((await page.$('.accordion.panel'))).toBeTruthy();
     });
   });
@@ -40,7 +40,7 @@ describe('Accordion Puppeteer Test', () => {
       page.waitForSelector('#ajax-accordion .accordion-header', { visible: true });
     });
 
-    it('Ajax data is in headers', async () => {
+    it('should have ajax data in headers', async () => {
       await page.click('#ajax-accordion .accordion-header button');
 
       page.waitForSelector('#ajax-accordion .accordion-pane.is-expanded > .accordion-header:first-child', { visible: true });
@@ -56,7 +56,7 @@ describe('Accordion Puppeteer Test', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
     });
 
-    it('Should load data when header is clicked', async () => {
+    it('should load data when header is clicked', async () => {
       await page.click('#ajax-accordion .accordion-header button');
 
       page.waitForSelector('#ajax-accordion .accordion-pane.is-expanded > .accordion-header:first-child', { visible: true });
@@ -73,7 +73,7 @@ describe('Accordion Puppeteer Test', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
     });
 
-    it('Should close all children components', async () => {
+    it('should close all children components', async () => {
       await page.click('#start-test');
       await page.waitForTimeout(2600);
 
@@ -89,7 +89,7 @@ describe('Accordion Puppeteer Test', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
     });
 
-    it('Should be disabled', async () => {
+    it('should be disabled', async () => {
       expect((await page.$$('.accordion-header.is-disabled')).length).toBe(4);
       expect((await page.$$('.accordion.is-disabled')).length).toBe(1);
     });
@@ -102,17 +102,17 @@ describe('Accordion Puppeteer Test', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
     });
 
-    it('Accordion should be displayed', async () => {
+    it('should display accordion', async () => {
       expect(await page.$('.accordion')).toBeTruthy();
     });
 
-    it('Can be expanded', async () => {
+    it('should be expanded', async () => {
       await (await page.$$('button'))[0].click();
 
       expect(await page.$('[aria-expanded="true"]')).toBeTruthy();
     });
 
-    it('Keyboard should be working on focus', async () => {
+    it('should have keyboard be working on focus', async () => {
       const accordionEl = (await page.$$('.accordion-header'))[0];
 
       await page.mouse.move(1000, 40);
@@ -126,7 +126,7 @@ describe('Accordion Puppeteer Test', () => {
       expect(await page.$('.is-focused')).toBeTruthy();
     });
 
-    it('Keyboard should be working on expand', async () => {
+    it('should expand using keyboard', async () => {
       const accordionEl = (await page.$$('.accordion-header'))[0];
 
       await page.mouse.move(1000, 40);
@@ -148,7 +148,7 @@ describe('Accordion Puppeteer Test', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
     });
 
-    it('Should expand both panes', async () => {
+    it('should expand both panes', async () => {
       expect((await page.$$('#nested-accordion > .accordion-header.is-expanded')).length).toEqual(2);
 
       const panes = await page.$$('#nested-accordion > .accordion-header.is-expanded + .accordion-pane.is-expanded');
@@ -165,7 +165,7 @@ describe('Accordion Puppeteer Test', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
     });
 
-    it('Can dynamically add and navigate to new accordion headers', async () => {
+    it('should dynamically add and navigate to new accordion headers', async () => {
       await page.click('#addFavs');
       await page.click('#addFavs');
 
