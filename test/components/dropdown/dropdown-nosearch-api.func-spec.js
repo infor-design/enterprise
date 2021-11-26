@@ -28,16 +28,16 @@ describe('Dropdown API (No Search Mode)', () => {
 
     expect(dropdownObj.element.val()).toBe('T');
 
-    dropdownObj.selectStartsWith('t');
+    dropdownObj.selectStartsWith('a');
 
-    expect(dropdownObj.element.val()).toBe('T2');
-
-    dropdownObj.selectStartsWith('t');
-
-    expect(dropdownObj.element.val()).toBe('T3');
+    expect(dropdownObj.element.val()).toBe('A');
 
     dropdownObj.selectStartsWith('t');
 
     expect(dropdownObj.element.val()).toBe('T');
+
+    dropdownObj.selectStartsWith('n');
+
+    expect(dropdownObj.element.val()).toBe('N');
   });
 });
