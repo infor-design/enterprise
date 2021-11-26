@@ -3235,6 +3235,10 @@ Dropdown.prototype = {
       }
     }
 
+    if (this.settings.noSearch) {
+      delete this.searchMatches;
+    }
+
     return elem.options[newIdx]; //eslint-disable-line
   },
 
