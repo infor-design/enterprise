@@ -4209,9 +4209,10 @@ Datagrid.prototype = {
    * @param  {object} columnDef The column settings.
    * @param  {object} rowData The current row data.
    * @param  {object} api The grid API reference.
+   * @param  {boolean} formatLocale Formatting for export or not.
    * @returns {void}
    */
-  formatValue(formatter, row, cell, fieldValue, columnDef, rowData, api) {
+  formatValue(formatter, row, cell, fieldValue, columnDef, rowData, api, formatLocale = false) {
     let formattedValue;
     api = api || this;
 
@@ -4221,10 +4222,10 @@ Datagrid.prototype = {
     }
 
     if (typeof formatter === 'string') {
-      formattedValue = Formatters[formatter](row, cell, fieldValue, columnDef, rowData, api);
+      formattedValue = Formatters[formatter](row, cell, fieldValue, columnDef, rowData, api, formatLocale);
       formattedValue = formattedValue.toString();
     } else {
-      formattedValue = formatter(row, cell, fieldValue, columnDef, rowData, api).toString();
+      formattedValue = formatter(row, cell, fieldValue, columnDef, rowData, api, formatLocale).toString();
     }
     return formattedValue;
   },
@@ -4239,9 +4240,10 @@ Datagrid.prototype = {
    * @param  {object} isFooter If true we are building a footer row.
    * @param  {string} actualIndexLineage Series of actualIndex values to reach a child actualIndex in a tree
    * @param  {boolean} skipChildren If true we dont append children.
+   * @param  {boolean} formatLocale For exporting, format numbers and dates to locale or not.
    * @returns {string} The html used to construct the row.
    */
-  rowHtml(rowData, dataRowIdx, actualIndex, isGroup, isFooter, actualIndexLineage, skipChildren) {
+  rowHtml(rowData, dataRowIdx, actualIndex, isGroup, isFooter, actualIndexLineage, skipChildren, formatLocale = false) {
     let isEven = false;
     const self = this;
     const isSummaryRow = this.settings.summaryRow && !isGroup && isFooter;
@@ -4411,7 +4413,8 @@ Datagrid.prototype = {
         self.fieldValue(rowData, self.settings.columns[j].field),
         self.settings.columns[j],
         rowData,
-        self
+        self,
+        formatLocale
       );
 
       if (formatted.indexOf('<span class="is-readonly">') === 0) {
@@ -5940,9 +5943,10 @@ Datagrid.prototype = {
   * @param {string} fileName The desired export filename in the download.
   * @param {string} customDs An optional customized version of the data to use.
   * @param {string} separator (optional) If user's machine is configured for a locale with alternate default separator.
+  * @param {boolean} format Format numbers and dates based on locale
   */
-  exportToCsv(fileName, customDs, separator) {
-    excel.exportToCsv(fileName, customDs, separator, this);
+  exportToCsv(fileName, customDs, separator, format = false) {
+    excel.exportToCsv(fileName, customDs, separator, format, this);
   },
 
   /**
@@ -5952,9 +5956,10 @@ Datagrid.prototype = {
   * @param {string} fileName The desired export filename in the download.
   * @param {string} worksheetName A name to give the excel worksheet tab.
   * @param {string} customDs An optional customized version of the data to use.
+  * @param {boolean} format Format numbers and dates based on locale
   */
-  exportToExcel(fileName, worksheetName, customDs) {
-    excel.exportToExcel(fileName, worksheetName, customDs, this);
+  exportToExcel(fileName, worksheetName, customDs, format = false) {
+    excel.exportToExcel(fileName, worksheetName, customDs, format, this);
   },
 
   copyToDataSet(pastedValue, rowCount, colIndex, dataSet) {
@@ -12075,9 +12080,25 @@ Datagrid.prototype = {
    * @param  {number} row The rowindex
    * @param  {number} cell The cell index
    * @param  {any} value The data value
+   * @param  {number} col The column index
+   * @param  {number} item The item index
+   * @param  {any} api The datagrid api
+   * @param  {any} formatLocale Format numbers and date to local or not
    * @returns {string} The html string
    */
-  defaultFormatter(row, cell, value) {
+  defaultFormatter(row, cell, value, col, item, api, formatLocale = false) {
+    if (formatLocale) {
+      const numVal = parseFloat(value);
+      if (!isNaN(numVal)) {
+        value = Locale.formatNumber(numVal, { style: Number.isInteger(numVal) ? 'integer' : 'decimal' });
+      } else {
+        const dateVal = Date.parse(value);
+        if (!isNaN(dateVal)) {
+          value = Locale.formatDate(dateVal);
+        }
+      }
+    }
+
     return ((value === null || value === undefined || value === '') ? '' : value.toString());
   },
 
