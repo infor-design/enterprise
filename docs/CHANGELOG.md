@@ -2,6 +2,7 @@
 
 ## v4.58.0 Features
 
+- `[Accordion]` Added puppeteer tests for accordion. ([#5836](https://github.com/infor-design/enterprise/issues/5836))
 - `[Column]` Added support to add a line chart in column-grouped. ([#4598](https://github.com/infor-design/enterprise/issues/4598))
 - `[Column]` Added feature to rotate labels. ([#5773](https://github.com/infor-design/enterprise/issues/5773))
 - `[Column Chart]` Added the ability to add axis labels in column-grouped chart. ([#5721](https://github.com/infor-design/enterprise/issues/5721))
