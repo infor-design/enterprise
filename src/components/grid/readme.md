@@ -85,7 +85,7 @@ There are 7 breakpoint sizes you can target to tailor your layout to the specifi
 - `breakpoint-tablet-to-desktop`
 - `breakpoint-desktop-to-extralarge`
 
-See [`sass/_config.scss`](src/core/_config.scss) and search for "breakpoint sizes".
+See [`src/core/_config.scss`](https://github.com/infor-design/enterprise/blob/main/src/core/_config.scss#L945-L954) and search for "breakpoint sizes".
 
 For guidance on how to use the breakpoints to tailor your layout for different device sizes, see the [Grid & Breakpoints guidelines](https://design.infor.com/guidelines/layout/grid)
 
