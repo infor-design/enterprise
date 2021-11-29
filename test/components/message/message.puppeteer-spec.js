@@ -1,5 +1,4 @@
-describe('Message Puppeteer Tests', () => {
-  describe('Index Tests', () => {
+describe('Index Tests', () => {
     const url = 'http://localhost:4000/components/message/example-index.html';
     beforeEach(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
@@ -180,7 +179,7 @@ describe('Message Puppeteer Tests', () => {
       expect(await buttonSetMargin()).toEqual('0px');
       expect(await modalHeaderPadding()).toEqual('24px 16px 0px');
     });
-  });
+});
 
   describe('Message xss tests', () => {
     const url = 'http://localhost:4000/components/message/test-escaped-title.html';
@@ -229,9 +228,9 @@ describe('Message Puppeteer Tests', () => {
       expect(modalTitle).toEqual('<script>alert("menuXSS")</script>');
       await page.click('#id-cancel');
     });
-  });
+});
 
-  describe('Message overlay opacity tests', () => {
+describe('Message overlay opacity tests', () => {
     const url = 'http://localhost:4000/components/message/test-overlay-opacity.html';
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
@@ -312,7 +311,7 @@ describe('Message Puppeteer Tests', () => {
       expect(everlayEl).toBe('0.1');
       await page.click('.btn-modal');
     });
-  });
+});
 
   describe('Message close button Tests', () => {
     const url = 'http://localhost:4000/components/message/test-close-btn.html?theme=classic&mode=light&layout=nofrills';
@@ -352,9 +351,9 @@ describe('Message Puppeteer Tests', () => {
       expect(xButton).toBeFalsy();
       await page.click('#huge-title');
     });
-  });
+});
 
-  describe('Message long title Tests', () => {
+describe('Message long title Tests', () => {
     const url = 'http://localhost:4000/components/message/test-long-title.html?theme=classic&mode=light&layout=nofrills';
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
@@ -400,5 +399,44 @@ describe('Message Puppeteer Tests', () => {
 
       expect(titleWidth).toEqual(textWidth);
     });
+});
+
+describe('Message Mobile Enhancement & Style Test', () => {
+  const url = 'http://localhost:4000/components/message/example-index.html'
+  beforeAll(async () => {
+    await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
+  });
+
+  it('should have modal-body-wrapper padding to 32px top and bottom, 16px left and right ', async () => {
+    await expect(page.title()).resolves.toMatch('IDS Enterprise');
+    await page.click('#show-application-error');
+    const modalPadTop = await page.$eval('div[class="modal-body-wrapper"]', el => getComputedStyle(el).paddingTop);
+    const modalPadBot = await page.$eval('div[class="modal-body-wrapper"]', el => getComputedStyle(el).paddingBottom);
+    const modalPadLeft = await page.$eval('div[class="modal-body-wrapper"]', el => getComputedStyle(el).paddingLeft);
+    const modalPadRight = await page.$eval('div[class="modal-body-wrapper"]', el => getComputedStyle(el).paddingRight);
+    expect(modalPadTop).toMatch('32px');
+    expect(modalPadBot).toMatch('32px');
+    expect(modalPadLeft).toMatch('16px');
+    expect(modalPadRight).toMatch('16px');
+  });
+
+  it('should have modal header should have padding top of 24px, bottom 0, and 16px left and right  ', async () => {
+    await expect(page.title()).resolves.toMatch('IDS Enterprise');
+    await page.click('#show-application-success');
+    const headerPadTop = await page.$eval('div[class="modal-header"]', el => getComputedStyle(el).paddingTop);
+    const headerPadBot = await page.$eval('div[class="modal-header"]', el => getComputedStyle(el).paddingBottom);
+    const headerPadLeft = await page.$eval('div[class="modal-header"]', el => getComputedStyle(el).paddingLeft);
+    const headerPadRight = await page.$eval('div[class="modal-header"]', el => getComputedStyle(el).paddingRight);
+    expect(headerPadLeft).toMatch('16px');
+    expect(headerPadRight).toMatch('16px');
+    expect(headerPadTop).toMatch('24px');
+    expect(headerPadBot).toMatch('0px');
+
+  });
+  
+  it('should have 0px margin-top on buttonset ', async () => {
+    await expect(page.title()).resolves.toMatch('IDS Enterprise');
+    const btnTop = await page.$eval('button[class="btn-secondary hide-focus"]', el => getComputedStyle(el).marginTop);
+    expect(btnTop).toMatch('0px');
   });
 });

@@ -79,3 +79,40 @@ describe('Datagrid test-tree-rowstatus tests', () => {
     expect(status).toBeTruthy();
   });
 });
+
+fdescribe('Datagrid custom filter tests', () => {
+  const url = 'http://localhost:4000/components/datagrid/example-custom-filter-conditions-and-defaults.html';
+  beforeAll(async () => {
+    await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+  });
+
+  it('should see the Id column defaults to equal onload', async () => {
+    const filter = await page.$eval('button.btn-menu.btn-filter',
+      element => element.getAttribute('data-default'));
+    expect(filter).toEqual('equals');
+  });
+
+  it('should open the filter', async () => {
+    await page.click('button.btn-menu.btn-filter');
+    const filterCheck = await page.$eval('button.btn-menu.btn-filter',
+      element => element.getAttribute('class'));
+    expect(filterCheck).toContain('is-open');
+  });
+
+  it('should see the Equal filter is checked after clicking Id filter', async () => {
+    const isChecked = await page.$eval('li.equals',
+      element => element.getAttribute('class'));
+    expect(isChecked).toContain('is-checked');
+  });
+
+  it('should select other filter', async () => {
+    await page.click('li.contains.is-selectable');
+    //await page.evaluate(()=>document.querySelector('li.contains').click());
+    await page.click('button.btn-menu.btn-filter');
+    await page.waitForTimeout(200);
+    const isClicked = await page.$eval('li.contains',
+      element => element.getAttribute('class'));
+    //expect(isClicked).toContain('is-checked');
+    console.log(isClicked);
+  });
+});
