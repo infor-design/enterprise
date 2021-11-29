@@ -317,13 +317,13 @@ describe('Dropdown example-no-search-lsf tests', () => {
 
     expect(await element.all(by.css('div.dropdown')).first().getText()).toEqual('T - Thor');
 
-    await dropdownPseudoEl.sendKeys('t');
+    await dropdownPseudoEl.sendKeys('t2');
     await browser.driver
       .wait(protractor.ExpectedConditions.textToBePresentInElement(await element.all(by.css('.dropdown span')).first(), 'T2 - Thanos'), config.waitsFor);
 
     expect(await element.all(by.css('div.dropdown')).first().getText()).toEqual('T2 - Thanos');
 
-    await dropdownPseudoEl.sendKeys('t');
+    await dropdownPseudoEl.sendKeys('t3');
     await browser.driver
       .wait(protractor.ExpectedConditions.textToBePresentInElement(await element.all(by.css('.dropdown span')).first(), 'T3 - That other one that won\'t get selected'), config.waitsFor);
 
@@ -359,7 +359,7 @@ describe('Dropdown example-no-search-filtering tests', () => {
 
     expect(await element.all(by.css('div.dropdown')).first().getText()).toEqual('10');
 
-    await dropdownPseudoEl.sendKeys('1');
+    await dropdownPseudoEl.sendKeys('11');
     await browser.driver
       .wait(protractor.ExpectedConditions.textToBePresentInElement(await element.all(by.css('.dropdown span')).first(), '11'), config.waitsFor);
 
