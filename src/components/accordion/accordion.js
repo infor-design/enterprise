@@ -319,18 +319,20 @@ Accordion.prototype = {
 
     this.element.find('.accordion-header').each((index, val) => {
       const headerEl = $(val);
-      const headerData = headerEl.data();
 
-      headerEl.notificationbadge({
-        position: headerData.options.position,
-        color: headerData.options.color,
-        badge: this.settings.badge
-      });
+      if (!headerEl.children('.notification-badge-container')) {
+        const headerData = headerEl.data();
+        headerEl.notificationbadge({
+          position: headerData.options.position,
+          color: headerData.options.color,
+          badge: this.settings.badge
+        });
 
-      const icon = headerEl.find('.icon');
-      const badgeEl = headerEl.find('.notification-badge-container');
-      badgeEl.prepend(icon);
-      headerEl.prepend(badgeEl);
+        const icon = headerEl.find('.icon');
+        const badgeEl = headerEl.find('.notification-badge-container');
+        badgeEl.prepend(icon);
+        headerEl.prepend(badgeEl);
+      }
     });
   },
 
