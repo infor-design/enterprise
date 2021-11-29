@@ -12,6 +12,7 @@ const COMPONENT_NAME = 'actionsheet';
 const ROOT_ELEM_ID = 'ids-actionsheet-root';
 
 const DISPLAY_AS_ACTION_SHEET_OPTIONS = [false, 'responsive', 'always'];
+const TRAY_BACKGROUND_COLOR_OPTIONS = ['slate', 'ruby', 'amber', 'emerald', 'azure', 'turquoise', 'amethyst'];
 
 const ACTION_SHEET_DEFAULTS = {
   actions: [],
@@ -22,6 +23,12 @@ const ACTION_SHEET_DEFAULTS = {
   overlayOpacity: 0.7,
   onSelect: null,
   onCancel: null,
+  tray: false,
+  trayOpts: {
+    text: null,
+    icon: null,
+    backgroundColor: TRAY_BACKGROUND_COLOR_OPTIONS[0]
+  },
   showCancelButton: true
 };
 
@@ -105,7 +112,31 @@ ActionSheet.prototype = {
 
       // Invoke an IDS Button component on each action, if applicable
       $(this.actionSheetElem).find('button').button();
+
+      // Add tray element
+      if (this.settings.tray) {
+        this.renderTrayElement();
+      }
     }
+  },
+
+  /**
+   * The visibility of tray element.
+   * @private
+   * @returns {void}
+   */
+  trayBreakpoint() {
+    this.trayContainer.style.visibility = breakpoints.isAbove('phone-to-tablet') ? 'hidden' : '';
+  },
+
+  /**
+   * Calculates the position of tray whenever it opens
+   * to match the animation with actionsheet action dialog
+   * @private
+   * @returns {void}
+   */
+  trayTransform() {
+    this.trayContainer.style.transform = `translate(0, -${this.actionSheetElem.offsetHeight - 40}px)`;
   },
 
   /**
@@ -134,14 +165,66 @@ ActionSheet.prototype = {
   },
 
   /**
+   * Creates tray element and insert on top of the actionsheet.
+   * @private
+   * @returns {void}
+   */
+  renderTrayElement() {
+    const trayContainer = document.createElement('div');
+    const trayBtn = document.createElement('button');
+    const trayTextElem = document.createElement('span');
+
+    if (this.settings.trayOpts.icon) {
+      trayBtn.innerHTML = $.createIcon({ icon: this.settings.trayOpts.icon });
+    }
+
+    const trayIconElem = trayBtn.firstChild;
+
+    trayTextElem.innerHTML = this.settings.trayOpts.text;
+
+    trayContainer.classList.add('ids-actionsheet-tray-container', this.settings.trayOpts.backgroundColor);
+    trayBtn.classList.add('ids-actionsheet-tray-btn');
+    trayTextElem.classList.add('ids-actionsheet-tray-btn-text');
+
+    trayContainer.appendChild(trayBtn);
+    trayBtn.appendChild(trayTextElem);
+
+    this.rootElem.insertBefore(trayContainer, this.rootElem.childNodes[1]);
+
+    this.trayContainer = trayContainer;
+    this.trayBtn = trayBtn;
+    this.trayIconElem = trayIconElem;
+    this.trayTextElem = trayTextElem;
+
+    // Triggering the visibility of tray element
+    this.trayBreakpoint();
+  },
+
+  /**
    * Sets up component event listeners
    * @private
    * @returns {void}
    */
   handleEvents() {
-    this.element.on('click.trigger', () => {
+    this.element.add($(this.trayBtn)).on('click.trigger', () => {
       if (!this.visible) {
         this.open();
+        if (this.trayContainer) {
+          // Fix the animation when opening and closing
+          this.trayTransform();
+        }
+      }
+    });
+
+    $('body').on('resize', () => {
+      if (this.settings.tray) {
+        this.trayBreakpoint();
+
+        if (this.visible) {
+          this.trayTransform();
+        } else {
+          this.trayContainer.style.removeProperty('transform');
+        }
       }
     });
   },
@@ -288,6 +371,11 @@ ActionSheet.prototype = {
     this.removeActionSheetOpenEvents();
     this.element[0].setAttribute('aria-hidden', 'true');
     this.rootElem.classList.remove('engaged');
+
+    if (this.trayContainer) {
+      this.trayContainer.style.removeProperty('transform');
+    }
+
     this.setOverlayVisibility();
     utils.waitForTransitionEnd(this.overlayElem, 'opacity').then(() => {
       this.overlayElem.setAttribute('hidden', '');
@@ -535,7 +623,7 @@ ActionSheet.prototype = {
     if (this.visible) {
       this.close();
     }
-    this.element.off('click.trigger');
+    this.element.add($(this.trayBtn)).off('click.trigger');
 
     // Remove the Action Sheet Element
     if (this.actionSheetElem) {
