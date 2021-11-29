@@ -9976,14 +9976,14 @@ Datagrid.prototype = {
     * @memberof Datagrid
     * @property {object} event The jquery event object
     * @property {object} args Additional arguments
-    * @property {number} args.row An array of selected rows.
-    * @property {number} args.cell An array of selected rows.
-    * @property {object} args.item The current sort column.
-    * @property {HTMLElement} args.target The cell html element that was entered.
-    * @property {any} args.value The cell value.
-    * @property {any} args.oldValue The previous cell value.
+    * @property {number} args.row The row that exited edit mode
+    * @property {number} args.cell The cell that exited edit mode
+    * @property {object} args.item The data for the row that exited edit mode
+    * @property {HTMLElement} args.target The cell html element that was entered
+    * @property {any} args.value The current cell value
+    * @property {any} args.oldValue The previous cell value
     * @property {object} args.column The column object
-    * @property {object} args.editor The editor object.
+    * @property {object} args.editor The editor object
     */
     this.element.triggerHandler('exiteditmode', [{
       row: rowIndex,
