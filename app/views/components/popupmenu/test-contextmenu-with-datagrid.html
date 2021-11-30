@@ -1,0 +1,124 @@
+<div class="row">
+  <div class="twelve columns">
+    <button id="popup-destroy-1" class="btn-secondary" type="button">
+      <span>Destroy 1st Field</span>
+    </button>
+
+    <button id="popup-destroy-2" class="btn-secondary" type="button">
+      <span>Destroy 2nd Field</span>
+    </button>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <div class="field" id="field1">
+      <label for="input-menu">Label</label>
+      <input type="text" value="Right Click Me" id="input-menu"/>
+    </div>
+
+    <div class="field" id="field2">
+      <label for="input-menu2">Label2</label>
+      <input type="text" value="Right Click Me" id="input-menu2"/>
+    </div>
+
+    <ul id="action-popupmenu" class="popupmenu">
+      <li><a href="#">Cut</a></li>
+      <li><a href="#">Copy</a></li>
+      <li><a href="#">Paste</a></li>
+      <li>
+        <a href="#">Paste Special</a>
+        <ul class="popupmenu">
+          <li><a href="#">Sub Menu 1</a></li>
+          <li><a href="#">Sub Menu 2</a></li>
+          <li class="separator"></li>
+          <li>
+            <a href="#">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-settings"></use>
+              </svg>
+              Settings
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li class="separator"></li>
+      <li><a href="#">Name and project range</a></li>
+      <li class="is-disabled"><a id='x' href="#" disabled>Insert comment</a></li>
+      <li class="is-disabled"><a href="#" disabled>Insert note</a></li>
+      <li><a href="#">Clear notes</a></li>
+      <li class="separator single-selectable-section"></li>
+      <li class="heading">Additional Options</li>
+      <li class="is-selectable is-checked"><a href="#">Conditional formatting</a></li>
+      <li class="is-selectable"><a href="#">Data validation</a></li>
+      <li class="separator"></li>
+      <li>
+        <a href="#">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-settings"></use>
+          </svg>
+          Settings
+        </a>
+      </li>
+    </ul>
+
+  </div>
+
+  <script>
+    // Like Angular
+    const input1 = $('#input-menu');
+    input1.popupmenu({trigger:'rightClick', menu: "action-popupmenu" })
+    const inputAPI1 = input1.data('popupmenu');
+
+    const input2 = $('#input-menu2')
+    input2.popupmenu({trigger:'rightClick', menu: "action-popupmenu" });
+    const inputAPI2 = input2.data('popupmenu');
+
+    $('#popup-destroy-1').click(function() {
+      input1.off();
+      inputAPI1.destroy();
+      input1.parent().remove();
+    });
+
+    $('#popup-destroy-2').click(function () {
+      input2.off();
+      inputAPI2.destroy();
+      input2.parent().remove();
+    });
+  </script>
+
+</div>
+
+<div class="row">
+  <div id="datagrid" data-automation-id="datagrid-automation-id" class="datagrid"></div>
+</div>
+
+<script id="datagrid-script">
+  $('body').one('initialized', function () {
+
+      var columns = [];
+
+      $.getJSON('{{basepath}}api/datagrid-sample-data', function(res) {
+
+        // Define Columns for the Grid.
+        columns.push({ id: 'productId', hideable: false, name: 'Id', field: 'productId', formatter: Formatters.Text });
+        columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, click: function(e) { console.log('Click Fired') } });
+        columns.push({ id: 'activity', name: 'Activity', field: 'activity'});
+        columns.push({ id: 'hidden', hidden: true, name: 'Hidden', field: 'hidden'});
+        columns.push({ id: 'price', align: 'right', name: 'Actual Price', field: 'price', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
+        columns.push({ id: 'percent', align: 'right', name: 'Actual %', field: 'percent', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'percent'}});
+        columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+        columns.push({ id: 'phone', name: 'Phone', field: 'phone', formatter: Formatters.Text});
+
+        // Init and get the api for the grid
+        $('#datagrid').datagrid({
+          columns: columns,
+          dataset: res,
+          saveColumns: false,
+          attributes: [{ name: 'id', value: 'custom-id' }, { name: 'data-automation-id', value: 'custom-automation-id' } ],
+          toolbar: {title: 'Compressors', results: true, actions: true, rowHeight: true, personalize: true}
+        });
+      });
+ });
+</script>
