@@ -633,7 +633,7 @@ Slider.prototype = {
       }
     });
 
-    inputEl.on(`blur.slider${index}`, (e) => {
+    inputEl.on(`blur.slider${index}`, () => {
       inputEl.val(self.value()[0]);
     });
   },
