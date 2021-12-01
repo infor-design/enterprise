@@ -1,6 +1,6 @@
 # What's New with Enterprise
 
-## v4.58.0 Fixes
+## v4.59.0 Fixes
 
 - `[Fieldset]` Implemented design improvements. ([#5638](https://github.com/infor-design/enterprise/issues/5638))
 
