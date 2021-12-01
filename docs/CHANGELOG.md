@@ -26,6 +26,8 @@
 - `[Toolbar Searchfield]` Fixed the height the collapse button on a smaller viewport (`766px` and below). ([#5791](https://github.com/infor-design/enterprise/issues/5791))
 - `[Lookup]` Rows are selected based on the initial values in the input field. ([#1132](https://github.com/infor-design/enterprise-ng/issues/1132))
 
+(30 Issues Solved This Release, Backlog Enterprise 224, Backlog Ng 33, 1269 Functional Tests, 1689 e2e Tests, 167 Puppeteer Tests)
+
 ## v4.57.0 Features
 
 - `[Accordion]` Added the ability to have a notification badge in accordion headers. ([#5594](https://github.com/infor-design/enterprise/issues/5594))
