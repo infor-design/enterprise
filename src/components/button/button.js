@@ -57,8 +57,8 @@ const BUTTON_DEFAULTS = {
   ripple: true,
   hitbox: false,
   validate: false,
-  badge: false,
-  badgeOptions: {
+  notificationBadge: false,
+  notificationBadgeOptions: {
     position: 'upper-right',
     color: 'alert'
   },
@@ -130,15 +130,14 @@ Button.prototype = {
     * @returns {void}
     */
   createNotificationBadge() {
-    if (!this.settings.badge) {
+    if (!this.settings.notificationBadge) {
       return;
     }
 
     // const badgeEl = this.element.append(`<div id="notification-badge"></div>`);
     this.element.notificationbadge({
-      position: this.settings.badgeOptions.position,
-      color: this.settings.badgeOptions.color,
-      badge: this.settings.badge
+      position: this.settings.notificationBadgeOptions.position,
+      color: this.settings.notificationBadgeOptions.color
     });
   },
 

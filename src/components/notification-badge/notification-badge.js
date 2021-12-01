@@ -97,7 +97,7 @@ NotificationBadge.prototype = {
     * Enable a disabled badge.
     * @returns {void}
     */
-  enable() {
+  show() {
     this.element.find('.notification-dot').removeClass('is-disabled');
   },
 
@@ -105,7 +105,7 @@ NotificationBadge.prototype = {
     * Disable a badge.
     * @returns {void}
     */
-  disable() {
+  hide() {
     this.element.find('.notification-dot').addClass('is-disabled');
   },
 
