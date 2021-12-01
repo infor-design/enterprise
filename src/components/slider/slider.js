@@ -622,6 +622,7 @@ Slider.prototype = {
       return;
     }
 
+    const self = this;
     const inputEl = handle.parent().siblings('.slider-box');
     inputEl.on(`keyup.slider${index}`, (e) => {
       if (e.keyCode === 13) {
@@ -630,6 +631,10 @@ Slider.prototype = {
         this.updateRange();
         this.updateTooltip(handle);
       }
+    });
+
+    inputEl.on(`blur.slider${index}`, (e) => {
+      inputEl.val(self.value()[0]);
     });
   },
 
