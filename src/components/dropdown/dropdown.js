@@ -3053,6 +3053,15 @@ Dropdown.prototype = {
       } else {
         this.select(option[0]);
         this.previousActiveDescendant = optionVal;
+
+        if (this.settings.noSearch && this.searchMatches) {
+          const char = option[0].innerText.toLowerCase().charAt(0);
+          Object.keys(this.searchMatches).forEach((key) => {
+            if (char !== key) {
+              this.searchMatches[key].length = 0;
+            }
+          });
+        }
       }
     } else {
       this.deselect(option[0]);
@@ -3233,10 +3242,6 @@ Dropdown.prototype = {
         newIdx = this.searchMatches[char][0];
         this.searchMatches[char].length = 1; // reset
       }
-    }
-
-    if (this.settings.noSearch) {
-      delete this.searchMatches;
     }
 
     return elem.options[newIdx]; //eslint-disable-line
