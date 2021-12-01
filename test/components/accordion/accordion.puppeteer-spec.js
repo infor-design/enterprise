@@ -44,6 +44,7 @@ describe('Accordion Puppeteer Test', () => {
       await page.click('#ajax-accordion .accordion-header button');
 
       page.waitForSelector('#ajax-accordion .accordion-pane.is-expanded > .accordion-header:first-child', { visible: true });
+      await page.waitForTimeout(600);
 
       expect(await page.$eval('#ajax-accordion .accordion-pane.is-expanded > .accordion-header:first-child', el => el.textContent.trim())).toEqual('Apples');
     });
