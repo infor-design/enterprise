@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.58.0 Fixes
+
+- `[Fieldset]` Implemented design improvements. ([#5638](https://github.com/infor-design/enterprise/issues/5638))
+
 ## v4.58.0 Features
 
 - `[Accordion]` Added puppeteer tests for accordion. ([#5836](https://github.com/infor-design/enterprise/issues/5836))
