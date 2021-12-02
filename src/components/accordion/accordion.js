@@ -1005,12 +1005,7 @@ Accordion.prototype = {
       dfd.resolve();
     }
 
-    if (pane.hasClass('no-transition')) {
-      handleAfterCollapse();
-    } else {
-      pane.one('animateclosedcomplete', handleAfterCollapse).animateClosed();
-    }
-
+    handleAfterCollapse();
     return dfd;
   },
 
