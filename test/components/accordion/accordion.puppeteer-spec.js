@@ -42,7 +42,7 @@ describe('Accordion Puppeteer Test', () => {
 
     it('should have ajax data in headers', async () => {
       await page.click('#ajax-accordion .accordion-header button');
-
+      await page.waitForTimeout(100);
       page.waitForSelector('#ajax-accordion .accordion-pane.is-expanded > .accordion-header:first-child', { visible: true });
 
       expect(await page.$eval('#ajax-accordion .accordion-pane.is-expanded > .accordion-header:first-child', el => el.textContent.trim())).toEqual('Apples');
