@@ -50,6 +50,7 @@
 ### v4.57.0 Markup Changes
 
 - `[Tabs]` Some of the aria attributes have been changed, see the issue for details.([#5712](https://github.com/infor-design/enterprise/issues/5712))
+- `[Notification Badge]` Rename methods in Notification Badge for better readability. ([#1169](https://github.com/infor-design/enterprise-ng/issues/1169))
 
 ## v4.57.0 Fixes
 

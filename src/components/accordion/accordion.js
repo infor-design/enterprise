@@ -42,7 +42,7 @@ const ACCORDION_DEFAULTS = {
   expanderDisplay: expanderDisplayModes[0],
   enableTooltips: true,
   rerouteOnLinkClick: true,
-  badge: false,
+  notificationBadge: false,
   source: null
 };
 
@@ -313,19 +313,18 @@ Accordion.prototype = {
     * @returns {void}
     */
   createNotificationBadge() {
-    if (!this.settings.badge) {
+    if (!this.settings.notificationBadge) {
       return;
     }
 
     this.element.find('.accordion-header').each((index, val) => {
       const headerEl = $(val);
 
-      if (!headerEl.children('.notification-badge-container')) {
+      if (headerEl.children('.notification-badge-container').length < 1) {
         const headerData = headerEl.data();
         headerEl.notificationbadge({
           position: headerData.options.position,
-          color: headerData.options.color,
-          badge: this.settings.badge
+          color: headerData.options.color
         });
 
         const icon = headerEl.find('.icon');
