@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import { Formatters } from '../components/datagrid/datagrid.formatters';
+import { Locale } from '../components/locale/locale';
 
 /* eslint-disable import/prefer-default-export */
 const excel = {};
@@ -9,9 +10,10 @@ const excel = {};
  * @private
  * @param {string} customDs An optional customized version of the data to use.
  * @param {string} self The grid api to use (if customDs is not used)
+ * @param {boolean} format if true, date and number values will be formatted based on browser locale
  * @returns {object} an table element cleaned extra stuff
  */
-excel.cleanExtra = function (customDs, self) {
+excel.cleanExtra = function (customDs, self, format = false) {
   const clean = function (table) {
     const removeNode = (node) => {
       if (node.parentNode) {
@@ -76,16 +78,15 @@ excel.cleanExtra = function (customDs, self) {
 
   let table = [];
   if (!self && customDs) {
-    table = excel.datasetToHtml(customDs);
+    table = excel.datasetToHtml(customDs, format);
   } else {
     const dataset = self.settings.groupable ? self.originalDataset : self.settings.dataset;
     const clonedTable = self.table.clone(true);
-
     if (self.settings.frozenColumns.left.length || self.settings.frozenColumns.right.length) {
       clonedTable.find('.datagrid-header tr:first()').html(self.headerNodes().clone(true));
     }
 
-    table = excel.appendRows(dataset, clonedTable[0], self);
+    table = excel.appendRows(dataset, clonedTable[0], self, format);
   }
 
   // Create the header row
@@ -175,15 +176,31 @@ excel.save = function (content, fileName, isUtf16) {
 * Convert a dataset to a html table for conversion to excel.
 * @private
 * @param {string} dataset The array of objects to convert
+* @param {boolean} format if true, date and number values will be formatted based on browser locale
 * @returns {string} an html table as a string
 */
-excel.datasetToHtml = function (dataset) {
+excel.datasetToHtml = function (dataset, format = false) {
   let tableHtml = '<tbody>';
   for (let i = 0, l = dataset.length; i < l; i++) {
     tableHtml += '<tr>';
     Object.keys(dataset[i]).forEach((key, index) => { //eslint-disable-line
-      if (dataset[i] && Object.prototype.hasOwnProperty.call(dataset[i], key)) {
-        tableHtml += `<td>${dataset[i][key]}</td>`;
+      const d = dataset[i];
+
+      if (format && !(key === 'id' || key.includes('Id'))) {
+        if (!isNaN(d[key])) {
+          const numVal = parseFloat(d[key]);
+          d[key] = Locale.formatNumber(numVal, { style: Number.isInteger(numVal) ? 'integer' : 'decimal' });
+        } else {
+          const dateVal = Date.parse(d[key]);
+
+          if (!isNaN(dateVal)) {
+            d[key] = Locale.formatDate(dateVal);
+          }
+        }
+      }
+
+      if (d && Object.prototype.hasOwnProperty.call(d, key)) {
+        tableHtml += `<td>${d[key]}</td>`;
       }
     });
     tableHtml += '</tr>';
@@ -199,9 +216,10 @@ excel.datasetToHtml = function (dataset) {
 * @param {array} dataset The array of objects to convert.
 * @param {object} table The table object.
 * @param {object} self The grid API.
+* @param {boolean} format Format numbers and dates to locale or not
 * @returns {object} The table with rows appended.
 */
-excel.appendRows = function (dataset, table, self) {
+excel.appendRows = function (dataset, table, self, format = false) {
   const isjQuery = obj => (obj && (obj instanceof jQuery || obj.constructor.prototype.jquery));
   const tableJq = isjQuery(table) ? table : $(table);
   table = tableJq[0];
@@ -211,7 +229,7 @@ excel.appendRows = function (dataset, table, self) {
   body.innerHTML = '';
   const appendRow = function (d, i) {
     if (!d._isFilteredOut) {
-      const rowHtml = self.rowHtml(d, i, i, false, false, i, true);
+      const rowHtml = self.rowHtml(d, i, i, false, false, i, true, format);
       const tr = document.createElement('tr');
       tr.innerHTML = rowHtml.left + rowHtml.center + rowHtml.right;
       tableHtml += tr.outerHTML;
@@ -318,10 +336,11 @@ excel.copyToDataSet = function (pastedData, rowCount, colIndex, dataSet, self) {
  * @param {string} fileName The desired export filename in the download.
  * @param {string} worksheetName A name to give the excel worksheet tab.
  * @param {string} customDs An optional customized version of the data to use.
+ * @param {boolean} format if true, date and number values will be formatted based on browser locale
  * @param {object} self The grid api if customDS is not used
  * @returns {void}
  */
-excel.exportToExcel = function (fileName, worksheetName, customDs, self) {
+excel.exportToExcel = function (fileName, worksheetName, customDs, format = false, self) {
   const template = '' +
     '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">' +
       '<head>' +
@@ -351,7 +370,7 @@ excel.exportToExcel = function (fileName, worksheetName, customDs, self) {
     return s.replace(/{(\w+)}/g, (m, p) => c[p]);
   };
 
-  const table = excel.cleanExtra(customDs, self);
+  const table = excel.cleanExtra(customDs, self, format);
   const ctx = { worksheet: (worksheetName || 'Worksheet'), table: table[0].innerHTML };
 
   fileName = `${fileName || self.element[0].id || 'Export'}.xls`;
@@ -369,10 +388,11 @@ excel.exportToExcel = function (fileName, worksheetName, customDs, self) {
  * @param {string} [sep.char=','] custom separator char
  * @param {boolean} [sep.flexChar=true] if false `char` will not be auto change to `\t` tab in case utf-16 encode for csv file
  * @param {boolean} [sep.flexUtf8=true] if false `utf-8` will not be auto change to `utf-16le` in case utf-16 encode for csv file
+ * @param {boolean} format if true, date and number values will be formatted based on browser locale
  * @param {string} self The grid api to use (if customDs is not used)
  * @returns {void}
  */
-excel.exportToCsv = function (fileName, customDs, sep = 'sep=,', self) {
+excel.exportToCsv = function (fileName, customDs, sep = 'sep=,', format = false, self) {
   const isObject = v => (v && typeof v === 'object' && v.constructor === Object);
   const isFalse = v => /^(false|0+|null)$/gi.test(v);
 
@@ -416,7 +436,7 @@ excel.exportToCsv = function (fileName, customDs, sep = 'sep=,', self) {
     return `${!separator.flexUtf8 ? '\uFEFF' : ''}"${csv.join('"\n"')}"`;
   };
 
-  const table = excel.cleanExtra(customDs, self);
+  const table = excel.cleanExtra(customDs, self, format);
   // ref: https://stackoverflow.com/a/2551031
   const isUtf16 = !(/^[\u0000-\u007f]*$/.test(table[0].textContent)) && separator.flexUtf8; // eslint-disable-line
   const data = formatCsv(table, isUtf16);
