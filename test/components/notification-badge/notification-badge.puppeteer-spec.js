@@ -273,7 +273,7 @@ describe('Notification-Badge Puppeteer Tests', () => {
   });
 
   describe('Enable/Disable Tests', () => {
-    const url = 'http://localhost:4000/components/notification-badge/example-enable-disable.html';
+    const url = 'http://localhost:4000/components/notification-badge/example-show-hide.html';
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
     });
