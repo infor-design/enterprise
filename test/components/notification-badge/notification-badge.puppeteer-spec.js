@@ -273,7 +273,7 @@ describe('Notification-Badge Puppeteer Tests', () => {
   });
 
   describe('Enable/Disable Tests', () => {
-    const url = 'http://localhost:4000/components/notification-badge/example-enable-disable.html';
+    const url = 'http://localhost:4000/components/notification-badge/example-show-hide.html';
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
     });
@@ -284,10 +284,10 @@ describe('Notification-Badge Puppeteer Tests', () => {
       await disable.click();
       const badge = () => page.evaluate(() => !!document.querySelector('.notification-dot-upper-right.is-disabled'));
       expect(await badge()).toBe(true);
-      const isDisabled = await page.$eval('div[disabled]', e => e !== null);
+      const isDisabled = await page.$('button[disabled]') !== null;
       expect(isDisabled).toBe(true);
       await enable.click();
-      const isEnabled = await page.$('div:not([disabled])') !== null;
+      const isEnabled = await page.$('button:not([disabled])') !== null;
       expect(isEnabled).toBe(true);
       expect(await badge()).toBe(false);
     });
