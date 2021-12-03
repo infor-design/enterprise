@@ -633,8 +633,11 @@ Slider.prototype = {
       }
     });
 
-    inputEl.on(`blur.slider${index}`, () => {
-      inputEl.val(self.value()[0]);
+    inputEl.on(`blur.slider${index}`, (e) => {
+      const newValue = $(e.currentTarget).val();
+      this.value(newValue);
+      this.updateRange();
+      this.updateTooltip(handle);
     });
   },
 
