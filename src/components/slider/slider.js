@@ -622,7 +622,6 @@ Slider.prototype = {
       return;
     }
 
-    const self = this;
     const inputEl = handle.parent().siblings('.slider-box');
     inputEl.on(`keyup.slider${index}`, (e) => {
       if (e.keyCode === 13) {
