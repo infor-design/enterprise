@@ -2,7 +2,7 @@
 
 ## v4.59.0 Fixes
 
-- `[Colorpicker]` Fixed a bug where the red diagonal line goes beyond it's border when field-short/form-layout-compact is used. ([#5744](https://github.com/infor-design/enterprise/issues/5744))
+- `[Colorpicker]` Fixed a bug where the red diagonal line that goes beyond its border when field-short/form-layout-compact is used. ([#5744](https://github.com/infor-design/enterprise/issues/5744))
 
 ## v4.58.0 Features
 
