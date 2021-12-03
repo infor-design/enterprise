@@ -95,6 +95,15 @@ $('body').one('initialized', function () {
       },
       toolbar: {title: 'Accounts', results: true, personalize: true, actions: true, rowHeight: true, keywordFilter: false}
     }).data('datagrid');
+
+
+    $('#datagrid').on('cellchange', function (e, args) {
+      console.log('cellchange', args);
+    })
+
+    $('#datagrid').on('click', function (e, args) {
+      console.log('click', args);
+    })
   });
 
   var newId = 17;

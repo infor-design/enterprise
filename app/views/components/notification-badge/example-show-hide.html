@@ -1,6 +1,6 @@
 <div class="row top-padding">
   <div class="twelve columns">
-    <p class="section-title">Enable & Disable Badge</p>
+    <p class="section-title">Show & Hide Badge</p>
   </div>
 </div>
 
@@ -16,17 +16,17 @@
 
 <div class="row top-padding">
   <div class="twelve columns">
-    <button type="button" id="disable" class="btn-secondary">
+    <button type="button" id="enable" class="btn-secondary" disabled>
       <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
         <use href="#icon-alert"></use>
       </svg>
-      <span>Disable Badge</span>
+      <span>Show Badge</span>
     </button>
-    <button type="button" id="enable" class="btn-secondary" disabled>
+    <button type="button" id="disable" class="btn-secondary">
       <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
         <use href="#icon-success"></use>
       </svg>
-      <span>Enable Badge</span>
+      <span>Hide Badge</span>
     </button>
   </div>
 </div>
@@ -47,7 +47,7 @@
 
       $(this).disable();
       $('#enable').enable();
-      badge.disable();
+      badge.data('notificationbadge').hide();
     });
 
     $('#enable').on('click.demo', function() {
@@ -57,7 +57,7 @@
 
       $(this).disable();
       $('#disable').enable();
-      badge.enable();
+      badge.data('notificationbadge').show();
     });
 
   });
