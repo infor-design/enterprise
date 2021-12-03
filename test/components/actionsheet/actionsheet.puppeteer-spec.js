@@ -2,7 +2,6 @@ describe('ActionSheet Puppeteer Tests', () => {
   const baseUrl = 'http://localhost:4000/components/actionsheet';
 
   const triggerId = 'action-sheet-trigger';
-  const popupmenuId = 'my-actions-popupmenu';
   const containerId = 'ids-actionsheet-root';
 
   describe('Index', () => {
