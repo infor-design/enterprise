@@ -42,11 +42,11 @@ describe('Accordion Puppeteer Test', () => {
 
     it('should have ajax data in headers', async () => {
       await page.click('#ajax-accordion .accordion-header button');
-      await page.waitForTimeout(100);
-      page.waitForSelector('#ajax-accordion .accordion-pane.is-expanded > .accordion-header:first-child', { visible: true });
-      await page.waitForTimeout(600);
 
-      expect(await page.$eval('#ajax-accordion .accordion-pane.is-expanded > .accordion-header:first-child', el => el.textContent.trim())).toEqual('Apples');
+      await page.waitForSelector('#ajax-accordion .accordion-pane.is-expanded > .accordion-header:first-child span', { visible: true })
+        .then(element => element.getProperty('textContent'))
+        .then(textContent => textContent.jsonValue())
+        .then(textContentString => expect(textContentString).toEqual('Apples'));
     });
   });
 
@@ -60,10 +60,10 @@ describe('Accordion Puppeteer Test', () => {
     it('should load data when header is clicked', async () => {
       await page.click('#ajax-accordion .accordion-header button');
 
-      page.waitForSelector('#ajax-accordion .accordion-pane.is-expanded > .accordion-header:first-child', { visible: true });
-      await page.waitForTimeout(600);
-
-      expect(await page.$eval('#ajax-accordion .accordion-pane.is-expanded > .accordion-header:first-child', el => el.textContent.trim())).toEqual('Apples');
+      await page.waitForSelector('#ajax-accordion .accordion-pane.is-expanded > .accordion-header:first-child span', { visible: true })
+        .then(element => element.getProperty('textContent'))
+        .then(textContent => textContent.jsonValue())
+        .then(textContentString => expect(textContentString).toEqual('Apples'));
     });
   });
 
@@ -180,9 +180,9 @@ describe('Accordion Puppeteer Test', () => {
       await page.keyboard.press('Tab');
       await page.keyboard.press('Tab');
 
-      const focusedElem = await page.evaluateHandle(() => document.activeElement.textContent);
-      // eslint-disable-next-line no-underscore-dangle
-      expect(focusedElem._remoteObject.value).toEqual('Dynamically-Added Favorite (1)');
+      await page.evaluateHandle(() => document.activeElement.textContent)
+        .then(textContent => textContent.jsonValue())
+        .then(textContentString => expect(textContentString).toEqual('Dynamically-Added Favorite (1)'));
     });
   });
 });
