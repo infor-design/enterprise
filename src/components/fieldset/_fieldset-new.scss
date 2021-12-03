@@ -5,3 +5,9 @@ fieldset > legend,
   font-size: 2.0rem;
   width: 100%;
 }
+
+fieldset {
+  .field {
+    margin-bottom: 16px;
+  }
+}

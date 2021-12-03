@@ -71,7 +71,7 @@
 }
 
 .field {
-  margin-bottom: 16px;
+  margin-bottom: $form-size-field-regular-margin-bottom;
   position: relative;
 
   &.less-margin {
