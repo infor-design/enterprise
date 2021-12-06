@@ -13,9 +13,8 @@ describe('ActionSheet Puppeteer Tests', () => {
       windowSize = await page.viewport();
     });
 
-    afterEach(async () => {
+    afterAll(async () => {
       await page.setViewport(windowSize);
-      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
     it('should display a Popupmenu if above the correct breakpoint', async () => {
@@ -38,7 +37,7 @@ describe('ActionSheet Puppeteer Tests', () => {
         .then(classNameString => expect(classNameString).toContain('engaged'));
     });
 
-    it('should cancel an Action Sheet when pressing the Escape key', async () => {
+    it('should hide an Action Sheet when pressing the Escape key', async () => {
       await page.setViewport({ width: 500, height: 600 });
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
       await page.click(`#${triggerId}`);
@@ -56,7 +55,7 @@ describe('ActionSheet Puppeteer Tests', () => {
         .then(classNameString => expect(classNameString).not.toContain('engaged'));
     });
 
-    it('should cancel an Action Sheet when clicking the "cancel" button', async () => {
+    it('should hide an Action Sheet when clicking the "cancel" button', async () => {
       await page.setViewport({ width: 500, height: 600 });
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
       await page.click(`#${triggerId}`);
@@ -79,7 +78,7 @@ describe('ActionSheet Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('can open at different breakpoints', async () => {
+    it('should open at different breakpoints', async () => {
       await page.click(`#${triggerId}`);
 
       await page.waitForSelector(`#${triggerId}.is-open`, { visible: true })
@@ -105,7 +104,7 @@ describe('ActionSheet Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('does not display a cancel button', async () => {
+    it('should not display a cancel button', async () => {
       await page.click(`#${triggerId}`);
 
       await page.waitForSelector(`#${containerId}`, { visible: true })
