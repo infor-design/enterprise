@@ -1,5 +1,10 @@
 # What's New with Enterprise
 
+## v4.59.0 Fixes
+
+- `[Colorpicker]` Fixed a bug where the red diagonal line that goes beyond its border when field-short/form-layout-compact is used. ([#5744](https://github.com/infor-design/enterprise/issues/5744))
+- `[Searchfield]` Fixed a bug where the close button icon is overlapping with the search icon in RTL. ([#5807](https://github.com/infor-design/enterprise/issues/5807))
+
 ## v4.58.0 Features
 
 - `[Accordion]` Added puppeteer tests for accordion. ([#5836](https://github.com/infor-design/enterprise/issues/5836))
