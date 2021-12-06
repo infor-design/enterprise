@@ -51,6 +51,12 @@ html.is-firefox {
 }
 
 html[dir='rtl'] {
+  .listview ul li {
+    .alert-text::before {
+      margin-right: 28px;
+    }
+  }
+
   .listview-search {
     .searchfield-wrapper {
       .icon:not(.close):not(.icon-error) {
