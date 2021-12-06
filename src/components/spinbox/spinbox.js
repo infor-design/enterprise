@@ -608,6 +608,7 @@ Spinbox.prototype = {
       !((!isDisabled || isDisabled === 'enable'));
 
     button[isDisabled ? 'addClass' : 'removeClass']('is-disabled');
+    button[0].disabled = isDisabled;
   },
 
   /**
@@ -744,6 +745,12 @@ Spinbox.prototype = {
           preventClick = false;
           self.element.focus();
         });
+      }
+    });
+
+    buttons.on('click.spinbox-control', () => {
+      if (buttons.hasClass('is-disabled')) {
+        $('svg.ripple-effect').remove();
       }
     });
 
