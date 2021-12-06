@@ -644,6 +644,7 @@ Spinbox.prototype = {
     this.buttons.up.off('click.spinbox mousedown.spinbox');
     this.buttons.up.remove();
     this.buttons.down.off('click.spinbox mousedown.spinbox');
+    this.buttons.up.add(this.buttons.down).off('click.spinbox-control');
     this.buttons.down.remove();
     this.element.off('focus.spinbox blur.spinbox keydown.spinbox keyup.spinbox');
     this.element.unwrap();
