@@ -1,0 +1,123 @@
+
+<div class="row">
+    <div class="two-thirds column">
+        <div class="widget">
+          <div class="widget-header">
+            <h2 class="widget-title">Column Chart Example</h2>
+          </div>
+          <div class="widget-content">
+            <div id="column-bar-example" class="chart-container">
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+  
+  <div class="twelve columns">
+    <div class="field">
+        <button class="btn-secondary" type="button" id="btn-toggle-legend">Change Color</button>
+    </div>
+    <div class="field">
+        <input class="colorpicker" id="background-color" type="text" data-init="false"/>
+    </div>
+  </div>
+
+  <script>
+  $('body').on('initialized', function () {
+    var columnColor = '#B94E4E';
+    var picker = $('#background-color');
+    picker.colorpicker( {
+      attributes: { name: 'id', value: 'background-color' }
+    });
+    
+    picker.val(columnColor).trigger('change');
+    picker.on('change', () => {
+        columnColor = picker.val();
+    })
+  
+    var dataset = [{
+              data: [{
+                  name: 'Automotive',
+                  shortName: 'Auto',
+                  abbrName: 'A',
+                  value: 7,
+                  color: columnColor
+              }, {
+                  name: 'Distribution',
+                  shortName: 'Dist',
+                  abbrName: 'D',
+                  value: 10,
+                  color: columnColor
+              }, {
+                  name: 'Equipment',
+                  shortName: 'Equip',
+                  abbrName: 'E',
+                  value: 14,
+                  color: columnColor
+              }, {
+                  name: 'Fashion',
+                  shortName: 'Fash',
+                  abbrName: 'F',
+                  value: 10,
+                  color: columnColor
+              }, {
+                  name: 'Food & Beverage',
+                  shortName: 'Food',
+                  abbrName: 'F&B',
+                  value: 14,
+                  color: columnColor
+              }, {
+                  name: 'Healthcare',
+                  shortName: 'Health',
+                  abbrName: 'H',
+                  value: 8,
+                  color: columnColor
+              }, {
+                  name: 'Other',
+                  shortName: 'Other',
+                  abbrName: 'O',
+                  value: 7,
+                  color: columnColor
+              }],
+            name: 'Monthly Target',
+            color: columnColor
+          }];
+  
+      // Set variables
+      var api,
+        elem = $('#column-bar-example'),
+        btnChange = $('#btn-toggle-legend'),
+        options = {type: 'column', dataset: dataset, showLegend: true},
+  
+        // Change legend color
+        colorLegendChange = function() {
+          dataset[0].color = columnColor;
+          dataset[0].data.forEach(data => {
+              data.color = columnColor;
+          });
+        },
+  
+        // Initialize charts
+        init = function() {
+          api = elem.chart(options).data('chart');
+        },
+  
+        // Destroy charts
+        destroy = function() {
+          if (api && api.destroy) {
+            api.destroy();
+          }
+        };
+  
+      // Bind change button
+      btnChange.on('click', function() {
+        colorLegendChange();
+        destroy();
+        init();
+      });
+  
+      // Initialize charts first time
+      init();
+  });
+  </script>
+  

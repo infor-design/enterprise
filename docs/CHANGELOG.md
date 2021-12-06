@@ -2,7 +2,13 @@
 
 ## v4.59.0 Fixes
 
+- `[Colorpicker]` Fixed a bug where the red diagonal line that goes beyond its border when field-short/form-layout-compact is used. ([#5744](https://github.com/infor-design/enterprise/issues/5744))
 - `[Fieldset]` Implemented design improvements. ([#5638](https://github.com/infor-design/enterprise/issues/5638))
+- `[Searchfield]` Fixed a bug where the close button icon is overlapping with the search icon in RTL. ([#5807](https://github.com/infor-design/enterprise/issues/5807))
+
+## v4.59.0 Features
+
+- `[Column]` Added example page for legend colors. ([#5761](https://github.com/infor-design/enterprise/issues/5761))
 
 ## v4.58.0 Features
 
@@ -20,6 +26,7 @@
 - `[Calendar]` Fix the header days where it should be seen when scrolled down. ([#5742](https://github.com/infor-design/enterprise/issues/5742))
 - `[Contextmenu/Popupmenu]` Fixed breaking of shared menu if a datagrid is present on the page. ([#5818](https://github.com/infor-design/enterprise/issues/5818))
 - `[Datagrid]` Tab doesn't go to cells if cellNavigation is false. ([#5734](https://github.com/infor-design/enterprise/issues/5734))
+- `[Dropdown]` Clear search matches after an item is selected. ([#5632](https://github.com/infor-design/enterprise/issues/5632))
 - `[Locale]` Fix issue in parsing date when AM/PM comes first before Hours (a:hh:mm). ([#5129](https://github.com/infor-design/enterprise/issues/5129))
 - `[Modal]` Added option to disable primary trigger on field. ([#5728](https://github.com/infor-design/enterprise/issues/5728))
 - `[Searchfield]` Save input value when searchfield collapses but is not cleared via button click or key. ([#5792](https://github.com/infor-design/enterprise/issues/5792))
@@ -28,6 +35,8 @@
 - `[Tabs-Vertical]` Fixed on Tabs Vertical Aria and Roles. ([#5712](https://github.com/infor-design/enterprise/issues/5712))
 - `[Toolbar Searchfield]` Fixed the height the collapse button on a smaller viewport (`766px` and below). ([#5791](https://github.com/infor-design/enterprise/issues/5791))
 - `[Lookup]` Rows are selected based on the initial values in the input field. ([#1132](https://github.com/infor-design/enterprise-ng/issues/1132))
+
+(30 Issues Solved This Release, Backlog Enterprise 224, Backlog Ng 33, 1269 Functional Tests, 1689 e2e Tests, 167 Puppeteer Tests)
 
 ## v4.57.0 Features
 
@@ -51,6 +60,7 @@
 ### v4.57.0 Markup Changes
 
 - `[Tabs]` Some of the aria attributes have been changed, see the issue for details.([#5712](https://github.com/infor-design/enterprise/issues/5712))
+- `[Notification Badge]` Rename methods in Notification Badge for better readability. ([#1169](https://github.com/infor-design/enterprise-ng/issues/1169))
 
 ## v4.57.0 Fixes
 

@@ -360,6 +360,7 @@ $trigger-size: 30px;
 
     .swatch {
       height: $input-size-compact-height - 0.4;
+      min-width: $input-size-compact-height - 0.4;
       width: $input-size-compact-height - 0.4;
 
       &.is-empty,
