@@ -17,8 +17,9 @@
 - `[Actionsheet]` Added puppeteer tests for actionsheet. ([#5832](https://github.com/infor-design/enterprise/issues/5832))
 - `[Column]` Added support to add a line chart in column-grouped. ([#4598](https://github.com/infor-design/enterprise/issues/4598))
 - `[Column]` Added feature to rotate labels. ([#5773](https://github.com/infor-design/enterprise/issues/5773))
-- `[Datagrid]` Added option to format numbers and dates based on current locale. ([#5663](https://github.com/infor-design/enterprise/issues/5663))
 - `[Column Chart]` Added the ability to add axis labels in column-grouped chart. ([#5721](https://github.com/infor-design/enterprise/issues/5721))
+- `[Datagrid]` Added option to format numbers and dates based on current locale. ([#5663](https://github.com/infor-design/enterprise/issues/5663))
+- `[Slider]` Added support for tooltip to show on load in slider. ([#3747](https://github.com/infor-design/enterprise/issues/3747))
 
 ## v4.58.0 Fixes
 
