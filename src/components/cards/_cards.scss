@@ -28,8 +28,7 @@
 // For Cards selection that uses .cards as parent class
 .cards {
   &.single .card.is-selectable:focus-visible {
-    box-shadow: 0 0 0 2px transparent, 0 0 0 1px $listview-toolbar-button-text-selected-color;
-    outline: none;
+    @include focus-state();
   }
 
   .card {
