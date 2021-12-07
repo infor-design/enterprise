@@ -608,6 +608,7 @@ Spinbox.prototype = {
       !((!isDisabled || isDisabled === 'enable'));
 
     button[isDisabled ? 'addClass' : 'removeClass']('is-disabled');
+    button[0].disabled = isDisabled;
   },
 
   /**
@@ -643,6 +644,7 @@ Spinbox.prototype = {
     this.buttons.up.off('click.spinbox mousedown.spinbox');
     this.buttons.up.remove();
     this.buttons.down.off('click.spinbox mousedown.spinbox');
+    this.buttons.up.add(this.buttons.down).off('click.spinbox-control');
     this.buttons.down.remove();
     this.element.off('focus.spinbox blur.spinbox keydown.spinbox keyup.spinbox');
     this.element.unwrap();
@@ -744,6 +746,12 @@ Spinbox.prototype = {
           preventClick = false;
           self.element.focus();
         });
+      }
+    });
+
+    buttons.on('click.spinbox-control', () => {
+      if (buttons.hasClass('is-disabled')) {
+        $('svg.ripple-effect').remove();
       }
     });
 
