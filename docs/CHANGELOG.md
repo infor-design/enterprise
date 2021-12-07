@@ -1,13 +1,26 @@
 # What's New with Enterprise
 
+## v4.59.0 Fixes
+
+- `[Colorpicker]` Fixed a bug where the red diagonal line that goes beyond its border when field-short/form-layout-compact is used. ([#5744](https://github.com/infor-design/enterprise/issues/5744))
+- `[Listview]` Fixed a bug where the alert icons in RTL were missing. ([#5827](https://github.com/infor-design/enterprise/issues/5827))
+- `[Searchfield]` Fixed a bug where the close button icon is overlapping with the search icon in RTL. ([#5807](https://github.com/infor-design/enterprise/issues/5807))
+- `[Spinbox]` Fixed a bug where the spinbox controls still show the ripple effect even it's disabled. ([#5719](https://github.com/infor-design/enterprise/issues/5719))
+
+## v4.59.0 Features
+
+- `[Column]` Added example page for legend colors. ([#5761](https://github.com/infor-design/enterprise/issues/5761))
+
 ## v4.58.0 Features
 
 - `[Accordion]` Added puppeteer tests for accordion. ([#5836](https://github.com/infor-design/enterprise/issues/5836))
 - `[App Menu]` Fixed a bug causing re-invoke of the entire Application Menu and its child components whenever a new App Menu trigger is added to the stored `triggers` array. ([#5480](https://github.com/infor-design/enterprise/issues/5480))
+- `[Actionsheet]` Added puppeteer tests for actionsheet. ([#5832](https://github.com/infor-design/enterprise/issues/5832))
 - `[Column]` Added support to add a line chart in column-grouped. ([#4598](https://github.com/infor-design/enterprise/issues/4598))
 - `[Column]` Added feature to rotate labels. ([#5773](https://github.com/infor-design/enterprise/issues/5773))
-- `[Datagrid]` Added option to format numbers and dates based on current locale. ([#5663](https://github.com/infor-design/enterprise/issues/5663))
 - `[Column Chart]` Added the ability to add axis labels in column-grouped chart. ([#5721](https://github.com/infor-design/enterprise/issues/5721))
+- `[Datagrid]` Added option to format numbers and dates based on current locale. ([#5663](https://github.com/infor-design/enterprise/issues/5663))
+- `[Slider]` Added support for tooltip to show on load in slider. ([#3747](https://github.com/infor-design/enterprise/issues/3747))
 
 ## v4.58.0 Fixes
 
@@ -51,6 +64,7 @@
 ### v4.57.0 Markup Changes
 
 - `[Tabs]` Some of the aria attributes have been changed, see the issue for details.([#5712](https://github.com/infor-design/enterprise/issues/5712))
+- `[Notification Badge]` Rename methods in Notification Badge for better readability. ([#1169](https://github.com/infor-design/enterprise-ng/issues/1169))
 
 ## v4.57.0 Fixes
 

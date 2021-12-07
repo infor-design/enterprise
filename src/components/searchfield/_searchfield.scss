@@ -411,6 +411,19 @@ html[dir='rtl'] {
       padding-right: 34px;
     }
 
+    &.has-close-icon-button {
+      .searchfield.autocomplete {
+        padding-left: 28px;
+      }
+
+      &.has-text {
+        .btn-icon.close {
+          right: calc(300px - 10%);
+          top: 5px;
+        }
+      }
+    }
+
     .go-button {
       margin-left: 0;
       margin-right: 10px;
