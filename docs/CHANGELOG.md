@@ -3,6 +3,7 @@
 ## v4.59.0 Fixes
 
 - `[Colorpicker]` Fixed a bug where the red diagonal line that goes beyond its border when field-short/form-layout-compact is used. ([#5744](https://github.com/infor-design/enterprise/issues/5744))
+- `[Listview]` Fixed a bug where the alert icons in RTL were missing. ([#5827](https://github.com/infor-design/enterprise/issues/5827))
 - `[Searchfield]` Fixed a bug where the close button icon is overlapping with the search icon in RTL. ([#5807](https://github.com/infor-design/enterprise/issues/5807))
 - `[Spinbox]` Fixed a bug where the spinbox controls still show the ripple effect even it's disabled. ([#5719](https://github.com/infor-design/enterprise/issues/5719))
 
