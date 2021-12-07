@@ -4,7 +4,9 @@
 
 - `[Colorpicker]` Fixed a bug where the red diagonal line that goes beyond its border when field-short/form-layout-compact is used. ([#5744](https://github.com/infor-design/enterprise/issues/5744))
 - `[Fieldset]` Implemented design improvements. ([#5638](https://github.com/infor-design/enterprise/issues/5638))
+- `[Listview]` Fixed a bug where the alert icons in RTL were missing. ([#5827](https://github.com/infor-design/enterprise/issues/5827))
 - `[Searchfield]` Fixed a bug where the close button icon is overlapping with the search icon in RTL. ([#5807](https://github.com/infor-design/enterprise/issues/5807))
+- `[Spinbox]` Fixed a bug where the spinbox controls still show the ripple effect even it's disabled. ([#5719](https://github.com/infor-design/enterprise/issues/5719))
 
 ## v4.59.0 Features
 
@@ -13,6 +15,7 @@
 ## v4.58.0 Features
 
 - `[Accordion]` Added puppeteer tests for accordion. ([#5836](https://github.com/infor-design/enterprise/issues/5836))
+- `[Actionsheet]` Added puppeteer tests for actionsheet. ([#5832](https://github.com/infor-design/enterprise/issues/5832))
 - `[Column]` Added support to add a line chart in column-grouped. ([#4598](https://github.com/infor-design/enterprise/issues/4598))
 - `[Column]` Added feature to rotate labels. ([#5773](https://github.com/infor-design/enterprise/issues/5773))
 - `[Datagrid]` Added option to format numbers and dates based on current locale. ([#5663](https://github.com/infor-design/enterprise/issues/5663))
