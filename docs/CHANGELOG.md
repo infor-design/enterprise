@@ -14,6 +14,7 @@
 ## v4.58.0 Features
 
 - `[Accordion]` Added puppeteer tests for accordion. ([#5836](https://github.com/infor-design/enterprise/issues/5836))
+- `[App Menu]` Fixed a bug causing re-invoke of the entire Application Menu and its child components whenever a new App Menu trigger is added to the stored `triggers` array. ([#5480](https://github.com/infor-design/enterprise/issues/5480))
 - `[Actionsheet]` Added puppeteer tests for actionsheet. ([#5832](https://github.com/infor-design/enterprise/issues/5832))
 - `[Column]` Added support to add a line chart in column-grouped. ([#4598](https://github.com/infor-design/enterprise/issues/4598))
 - `[Column]` Added feature to rotate labels. ([#5773](https://github.com/infor-design/enterprise/issues/5773))
