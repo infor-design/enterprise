@@ -10,6 +10,7 @@
 ## v4.59.0 Features
 
 - `[Column]` Added example page for legend colors. ([#5761](https://github.com/infor-design/enterprise/issues/5761))
+- `[Datagrid]` Added datagrid feature using arrow keys to select. ([#5713](https://github.com/infor-design/enterprise/issues/5713))
 
 ## v4.58.0 Features
 
