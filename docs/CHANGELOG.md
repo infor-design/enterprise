@@ -46,11 +46,11 @@
 
 (30 Issues Solved This Release, Backlog Enterprise 224, Backlog Ng 33, 1269 Functional Tests, 1689 e2e Tests, 167 Puppeteer Tests)
 
-## v4.57.2 Fixes 
+## v4.57.2 Fixes
 
 - `[Misc]` Fixed several security issues with xss (details hidden). ([#GSHA](https://github.com/infor-design/enterprise/security/advisories))
 
-## v4.57.1 Fixes 
+## v4.57.1 Fixes
 
 - `[Tabs]` Fixed regression bug where tabs are no longer working inside the modal. ([#5867](https://github.com/infor-design/enterprise/issues/5867))
 
