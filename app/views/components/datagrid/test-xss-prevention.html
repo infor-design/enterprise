@@ -58,11 +58,12 @@
         data.push({ id: 5, productId: 2542205, productName: 'De Wallt Compressor', activity:  'Inspect and Repair', portable: false, quantity: 4, price: 210.99, status: 'OK', orderDate: new Date(2015, 5, 5), action: 'oh'});
         data.push({ id: 6, productId: 2642205, productName: 'Air Compressors', activity:  'Inspect and Repair', portable: false, quantity: 41, price: 120.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'oh'});
         data.push({ id: 7, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', portable: true, quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'oh'});
+        data.push({ id: 8, productId: 2642207, productName: 'Img Compressor', activity:  'PENTESTING<img src=\'a\'onerror=\'alert(0)\'>', portable: true, quantity: 12, price: 12.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'oh'});
 
         //Define Columns for the Grid.
         columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
         columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, editor: Editors.Input});
-        columns.push({ id: 'activity', name: '<script>alert(1)<\/script>', field: 'activity', editor: Editors.Input});
+        columns.push({ id: 'activity', name: '<script>alert(1)<\/script>', field: 'activity', singleline: true, formatter: Formatters.Editor});
         columns.push({ id: 'quantity', name: '<img src=x onerror=alert("kocicka")>test', field: 'quantity', align: 'right', editor: Editors.Input, mask: '###'});
 
         //Init and get the api for the grid

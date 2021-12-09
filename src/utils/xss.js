@@ -70,7 +70,7 @@ xssUtils.sanitizeConsoleMethods = function (html) {
 xssUtils.sanitizeHTML = function (html) {
   let santizedHtml = html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/g, '');
   santizedHtml = santizedHtml.replace(/<[^>]+/g, (match) => {
-    const expr = /(\/|\s)on\w+=('|")?/g;
+    const expr = /(\/|\s|\\\')on\w+=('|")?/g;
     let str = match;
     if ((str.match(expr) || []).length > 0) {
       str = str.replace(/(\/|\s)title=('|")(.*)('|")/g, (m) => {
@@ -80,7 +80,7 @@ xssUtils.sanitizeHTML = function (html) {
         return m;
       });
     }
-    return str.replace(/(\/|\s)on\w+=('|")?[^"]*('|")?/g, '');
+    return str.replace(/(\/|\s|\\\')on\w+=('|")?[^"]*('|")?/g, '');
   });
 
   // Remove console methods
