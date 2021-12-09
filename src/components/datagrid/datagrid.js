@@ -5310,7 +5310,6 @@ Datagrid.prototype = {
         const containerEl = isHeaderColumn ? elem.parentNode : elem;
         const width = self.getOuterWidth(containerEl);
         if (tooltip && (tooltip.forced || (tooltip.textwidth > (width - 35))) && !isPopup) {
-          // debugger;
           self.showTooltip(tooltip);
         }
       }, delay);
