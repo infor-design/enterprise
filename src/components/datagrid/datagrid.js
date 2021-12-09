@@ -6579,11 +6579,15 @@ Datagrid.prototype = {
     // Set Focus on rows
     self.element
       .on('focus.datagrid', 'tbody > tr', function () {
+        console.log('hotdog');
         if (!self.settings.cellNavigation && self.settings.rowNavigation) {
           const rowNodes = self.rowNodes($(this));
 
-          if (!rowNodes.hasClass('is-active-row')) {
+          if (!rowNodes.hasClass('is-active-row')) { 
             rowNodes.addClass('is-active-row');
+            const dataRowIndex = self.actualRowIndex(rowNodes);
+            const rowData = self.rowData(dataRowIndex);
+            self.selectNode(rowNodes, dataRowIndex, rowData);
           }
         }
       })
@@ -6593,6 +6597,9 @@ Datagrid.prototype = {
 
           if (rowNodes.hasClass('is-active-row')) {
             rowNodes.removeClass('is-active-row');
+            const dataRowIndex = self.actualRowIndex(rowNodes);
+            const rowData = self.rowData(dataRowIndex);
+            self.unSelectNode(rowNodes, dataRowIndex, rowData);
           }
         }
       });
