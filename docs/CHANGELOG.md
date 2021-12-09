@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.58.1 Fixes
+
+- `[Misc]` Fixed several security issues with xss (details hidden). ([#GSHA](https://github.com/infor-design/enterprise/security/advisories))
+
 ## v4.58.0 Fixes
 
 - `[Calendar]` Fix the header days where it should be seen when scrolled down. ([#5742](https://github.com/infor-design/enterprise/issues/5742))
@@ -12,7 +16,11 @@
 - `[Tabs-Vertical]` Fixed on Tabs Vertical Aria and Roles. ([#5712](https://github.com/infor-design/enterprise/issues/5712))
 - `[Toolbar Searchfield]` Fixed the height the collapse button on a smaller viewport (`766px` and below). ([#5791](https://github.com/infor-design/enterprise/issues/5791))
 
-## v4.51.0 Fixes 
+## v4.57.2 Fixes 
+
+- `[Misc]` Fixed several security issues with xss (details hidden). ([#GSHA](https://github.com/infor-design/enterprise/security/advisories))
+
+## v4.57.1 Fixes 
 
 - `[Tabs]` Fixed regression bug where tabs are no longer working inside the modal. ([#5867](https://github.com/infor-design/enterprise/issues/5867))
 
