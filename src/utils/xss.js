@@ -147,9 +147,10 @@ xssUtils.escapeHTML = function (value) {
       '<': '&lt;',
       '>': '&gt;',
       '"': '&quot;',
-      "'": '&apos;'
+      "'": '&apos;',
+      "\\": '&bsol;'
     };
-    const reg = /[&<>"']/ig;
+    const reg = /[&<>"'\\]/ig;
     return newValue.replace(reg, match => (map[match]));
   }
   return newValue;
@@ -172,7 +173,7 @@ xssUtils.unescapeHTML = function (value) {
     const doc = new DOMParser().parseFromString(value, 'text/html');
 
     // Keep leading/trailing spaces
-    return `${match(/^\s*/)}${doc.documentElement.textContent.trim()}${match(/\s*$/)}`;
+    return `${match(/^\s*|\\/)}${doc.documentElement.textContent.trim()}${match(/\s*$|\\/)}`;
   }
   return value;
 };
@@ -191,6 +192,7 @@ xssUtils.htmlEntities = function (string) {
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
+    .replace(/\\/g, '&bsol;')
     .replace(/"/g, '&quot;');
 };
 
