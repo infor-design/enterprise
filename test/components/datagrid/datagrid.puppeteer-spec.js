@@ -1,5 +1,3 @@
-const { element } = require("protractor");
-
 describe('Datagrid Puppeteer Tests', () => {
   describe('Datagrid Filter Format Test', () => {
     const url = 'http://localhost:4000/components/datagrid/example-filter.html';
