@@ -302,7 +302,7 @@ Accordion.prototype = {
     if (!noFilterReset) {
       this.currentlyFiltered = $();
     }
- 
+
     this.createNotificationBadge();
 
     return this;
@@ -1630,6 +1630,8 @@ Accordion.prototype = {
         self.updated(settings);
       });
     }
+
+    this.element.trigger('rendered');
 
     return this;
   },

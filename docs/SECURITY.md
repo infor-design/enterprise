@@ -4,7 +4,7 @@ Outlined in this document are the practices and policies that IDS applies to hel
 
 ## Reporting Security Issues
 
-If you need to report a security issue. Please use the [issue template](https://github.com/infor-design/enterprise/issues/new/choose), be careful not reveal any secure information and send that if needed on a private channel. We triage most issues by the next business day.
+If reporting a security issue such as a xss vulnerability.  Please use the [security advisories feature](https://github.com/infor-design/enterprise/security/advisories) in github. This will ensure only the necessary people are seeing the issue so as not to reveal any secure information. We triage most issues by the next business day.
 
 ## Onboarding Developers
 
