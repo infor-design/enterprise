@@ -10,6 +10,7 @@
 ## v4.59.0 Features
 
 - `[Column]` Added example page for legend colors. ([#5761](https://github.com/infor-design/enterprise/issues/5761))
+- `[Datagrid]` Added exportToCsv option for datagrid toolbar. ([#5786](https://github.com/infor-design/enterprise/issues/5786))
 
 ## v4.58.1 Fixes
 
