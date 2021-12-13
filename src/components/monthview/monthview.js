@@ -783,7 +783,6 @@ MonthView.prototype = {
     let year = parseInt(startDate.getFullYear(), 10);
     let monthDifference = dateUtils.monthDiff(startDate, endDate);
     const s = this.settings;
-    console.log(s.displayRange)
 
     // if disable dates not provided, disable dates outside of the range by default
     if (!s.disable.minDate && !s.disable.MaxDate) {
