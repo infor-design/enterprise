@@ -9134,6 +9134,7 @@ Datagrid.prototype = {
         return;
       }
 
+
       // Enter or Space
       if (key === 13 || key === 32) {
         triggerEl = (self.settings.selectable === 'multiple' && index === 0) ? $('.datagrid-checkbox', th) : th;
@@ -9217,6 +9218,13 @@ Datagrid.prototype = {
       if (key === 113 && !this.inlineMode) {
         self.settings.actionableMode = !self.settings.actionableMode;
         handled = true;
+      }
+
+      // If datagrid is in modal, close modal on Escape key
+      const modalParent = self.element.parents('.modal');
+      if (key === 27 && modalParent.length !== 0) {
+        const modalApi = modalParent.data().modal;
+        modalApi.close();
       }
 
       if (handled) {
