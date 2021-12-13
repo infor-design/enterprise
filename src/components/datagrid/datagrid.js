@@ -9134,7 +9134,6 @@ Datagrid.prototype = {
         return;
       }
 
-
       // Enter or Space
       if (key === 13 || key === 32) {
         triggerEl = (self.settings.selectable === 'multiple' && index === 0) ? $('.datagrid-checkbox', th) : th;
