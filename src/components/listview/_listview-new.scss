@@ -50,10 +50,22 @@ html.is-firefox {
   }
 }
 
+html[dir="rtl"] {
+  &.is-firefox {
+    .listview .alert-text {
+      &::before {
+        margin-top: 6px;
+      }
+    }
+  }
+}
+
 html[dir='rtl'] {
-  .listview ul li {
-    .alert-text::before {
-      margin-right: 28px;
+  &:not(.is-firefox) {
+    .listview ul li {
+      .alert-text::before {
+        margin-right: 28px;
+      }
     }
   }
 
@@ -62,6 +74,20 @@ html[dir='rtl'] {
       .icon:not(.close):not(.icon-error) {
         left: auto;
         right: 18px;
+      }
+    }
+  }
+}
+
+html[dir='rtl'] {
+  &.is-safari {
+    .listview ul li {
+      .alert-text {
+        &::before {
+          margin-right: 0;
+          position: absolute;
+          right: 0;
+        }
       }
     }
   }
