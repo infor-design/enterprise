@@ -189,6 +189,7 @@ Soho.Locale.addCulture('en-US', {
     ExamplePlaceholder: { id: 'ExamplePlaceholder', value: 'Example Placeholder', comment: 'Translated text for an example form placeholder text' },
     Export: { id: 'Export', value: 'Export', comment: 'Export tooltip' },
     ExportToExcel: { id: 'ExportToExcel', value: 'Export To Excel', comment: 'Export To Excel menu option in datagrid' },
+    ExportToCsv: { id: 'ExportToCsv', value: 'Export To CSV', comment: 'Export To CSV menu option in datagrid' },
     ExtraSmall: { id: 'ExtraSmall', value: 'Extra Small', comment: 'A smaller font size and compressed mode for datagrid rows. NOTE: Please change french to Très petite (Masculine form)' },
     Favorite: { id: 'Favorite', value: 'Favorite', comment: 'A favorite item' },
     FileUpload: { id: 'FileUpload', value: 'File Upload. Press Enter to Browse for a file', comment: 'Screen Reader instructions' },
