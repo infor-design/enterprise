@@ -63,7 +63,10 @@ const COMPONENT_NAME_DEFAULTS = {
   dayLegend: null,
   displayRange: {
     start: '',
-    end: ''
+    end: '',
+    months: {
+      showAbbr: false
+    }
   }
 };
 
@@ -275,7 +278,10 @@ Calendar.prototype = {
       firstDayOfWeek: this.settings.firstDayOfWeek,
       displayRange: {
         start: this.settings.displayRange.start,
-        end: this.settings.displayRange.end
+        end: this.settings.displayRange.end,
+        months: {
+          showAbbr: this.settings.displayRange.months.showAbbr
+        }
       }
     });
     this.monthViewHeader = document.querySelector('.calendar .monthview-header');
