@@ -866,3 +866,13 @@ html[dir='rtl'] {
 
   }
 }
+
+html[dir="rtl"] {
+  &.is-firefox {
+    .listview .alert-text {
+      &::before {
+        margin-top: 5px;
+      }
+    }
+  }
+}
