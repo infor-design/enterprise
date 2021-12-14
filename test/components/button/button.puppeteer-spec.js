@@ -11,7 +11,6 @@ describe('Button with hitbox test', () => {
 
   it('should have the hitbox area clickable', async () => {
     await page.click('a.btn-menu span.hitbox-area');
-    await page.waitForTimeout(200);
     await page.waitForSelector('#popupmenu-2', { visible: true });
   });
 });
