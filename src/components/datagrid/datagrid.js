@@ -9226,6 +9226,13 @@ Datagrid.prototype = {
         handled = true;
       }
 
+      // If datagrid is in modal, close modal on Escape key
+      const modalParent = self.element.parents('.modal');
+      if (key === 27 && modalParent.length !== 0) {
+        const modalApi = modalParent.data().modal;
+        modalApi.close();
+      }
+
       if (handled) {
         e.preventDefault();
         e.stopPropagation();
