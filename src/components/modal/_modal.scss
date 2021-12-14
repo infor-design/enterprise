@@ -55,7 +55,7 @@
   height: auto;
   max-height: 90%;
   max-width: 100%;
-  min-width: 400px;
+  min-width: 200px;
   opacity: 0;
   pointer-events: none;
   position: relative;
@@ -66,6 +66,10 @@
   @media screen and (min-width: $breakpoint-big-phone + 1) {
     max-width: 90%;
     width: auto;
+  }
+
+  &.has-close-btn {
+    min-width: 400px;
   }
 
   &.is-visible.is-active {
