@@ -27,6 +27,10 @@
 
 // For Cards selection that uses .cards as parent class
 .cards {
+  &.single .card.is-selectable:focus-visible {
+    @include focus-state();
+  }
+
   .card {
     cursor: pointer;
 
