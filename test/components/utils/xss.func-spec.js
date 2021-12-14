@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 import { xssUtils } from '../../../src/utils/xss';
 
 describe('Xss Utils', () => {
@@ -111,20 +112,31 @@ describe('Xss Utils', () => {
 
   it('Should santize html tags', () => {
     let result = xssUtils.sanitizeHTML('<strong>hello world</strong>');
-
     expect(result).toEqual('<strong>hello world</strong>');
 
     result = xssUtils.sanitizeHTML('<img src=x onerror=alert(\'img\') />');
-
-    expect(result).toEqual('<img src=x>');
+    expect(result).toEqual('<img src=x  />');
 
     result = xssUtils.sanitizeHTML('<script>alert(\'hello world\')</script>');
-
     expect(result).toEqual('');
 
     result = xssUtils.sanitizeHTML('<script><script>alert(\'hello world\')</script></script>');
-
     expect(result).toEqual('');
+
+    result = xssUtils.sanitizeHTML(`script<img src='a'onerror='alert(0)'>`);
+    expect(result).toEqual(`script<img src='a'>`);
+
+    result = xssUtils.sanitizeHTML(`&lt;svg/onload=alert(1)&gt;`);
+    expect(result).toEqual(`&lt;svg/&gt;`);
+
+    result = xssUtils.sanitizeHTML(`<svg/onload=alert(1)>`);
+    expect(result).toEqual(`<svg/>`);
+
+    result = xssUtils.sanitizeHTML(`<img src=x onerror=alert('img') />`);
+    expect(result).toEqual(`<img src=x  />`);
+
+    result = xssUtils.sanitizeHTML(`<test onerror='xxx'>`);
+    expect(result).toEqual(`<test >`);
   });
 
   it('Should santize console methods', () => {
@@ -147,16 +159,16 @@ describe('Xss Utils', () => {
     /* eslint-disable */
     const str = [{
       in: `<span id="test123" title="&#x27; onx=y">a</span>`,
-      out: `<span id="test123" title="&#x27; x=y">a</span>`
+      out: `<span id="test123" title="&#x27; ">a</span>`
     }, {
-      in: `<span id="test123" title="&#x27; onx='y'">a</span>`,
-      out: `<span id="test123" title="&#x27; x='y'">a</span>`
+      in: `<span id="test123" title="&#x27; >a</span>`,
+      out: `<span id="test123" title="&#x27; >a</span>`
     }, {
       in: `<span id="test123" title='&#x27; onx="y"'>a</span>`,
-      out: `<span id="test123" title='&#x27; x="y"'>a</span>`
+      out: `<span id="test123" title='&#x27; "'>a</span>`
     }, {
       in: `<span id="test123" title='&#x27; onx=y'>a</span>`,
-      out: `<span id="test123" title='&#x27; x=y'>a</span>`
+      out: `<span id="test123" title='&#x27; >a</span>`
     }];
     /* eslint-enable */
 

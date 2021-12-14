@@ -7319,6 +7319,10 @@ Datagrid.prototype = {
         menu.append(`<li><a href="#" data-option="export-to-excel">${Locale.translate('ExportToExcel')}</a></li>`);
       }
 
+      if (this.settings.toolbar.exportToCsv) {
+        menu.append(`<li><a href="#" data-option="export-to-csv">${Locale.translate('ExportToCsv')}</a></li>`);
+      }
+
       if (this.settings.toolbar.advancedFilter) {
         menu.append(`<li><a href="#">${Locale.translate('AdvancedFilter')}</a></li>`);
       }
@@ -7407,6 +7411,10 @@ Datagrid.prototype = {
 
       if (action === 'export-to-excel') {
         self.exportToExcel();
+      }
+
+      if (action === 'export-to-csv') {
+        self.exportToCsv();
       }
 
       // Filter actions
@@ -12397,7 +12405,7 @@ Datagrid.prototype = {
       const tooltip = $(this.tooltip);
       const tooltipContentEl = this.tooltip.querySelector('.tooltip-content');
       if (tooltipContentEl) {
-        tooltipContentEl.innerHTML = options.content;
+        tooltipContentEl.innerHTML = xssUtils.sanitizeHTML(options.content);
         this.tooltip.classList.remove('is-hidden', 'top', 'right', 'bottom', 'left');
         this.tooltip.style.display = '';
         this.tooltip.classList.add(options.placement || 'top');
