@@ -12397,7 +12397,7 @@ Datagrid.prototype = {
       const tooltip = $(this.tooltip);
       const tooltipContentEl = this.tooltip.querySelector('.tooltip-content');
       if (tooltipContentEl) {
-        tooltipContentEl.innerHTML = options.content;
+        tooltipContentEl.innerHTML = xssUtils.sanitizeHTML(options.content);
         this.tooltip.classList.remove('is-hidden', 'top', 'right', 'bottom', 'left');
         this.tooltip.style.display = '';
         this.tooltip.classList.add(options.placement || 'top');

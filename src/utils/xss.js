@@ -68,24 +68,13 @@ xssUtils.sanitizeConsoleMethods = function (html) {
  * @returns {string} the modified value
  */
 xssUtils.sanitizeHTML = function (html) {
-  let santizedHtml = html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/g, '');
-  santizedHtml = santizedHtml.replace(/<[^>]+/g, (match) => {
-    const expr = /(\/|\s)on\w+=('|")?/g;
-    let str = match;
-    if ((str.match(expr) || []).length > 0) {
-      str = str.replace(/(\/|\s)title=('|")(.*)('|")/g, (m) => {
-        if ((m.match(expr) || []).length > 0) {
-          return m.replace(expr, m2 => m2.replace('on', ''));
-        }
-        return m;
-      });
-    }
-    return str.replace(/(\/|\s)on\w+=('|")?[^"]*('|")?/g, '');
-  });
+  // Remove on xxx functions https://regex101.com/r/hsLeFl/1/
+  let santizedHtml = html.replace(/\bon\w+=\S+?(?=(>|&|<| |"))/g, '');
+  // Remove Script tags
+  santizedHtml = santizedHtml.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/g, '');
 
   // Remove console methods
   santizedHtml = this.sanitizeConsoleMethods(santizedHtml);
-
   // Remove nested script tags
   santizedHtml = santizedHtml.replace(/<\/script>/g, '');
 
@@ -147,9 +136,10 @@ xssUtils.escapeHTML = function (value) {
       '<': '&lt;',
       '>': '&gt;',
       '"': '&quot;',
-      "'": '&apos;'
+      "'": '&apos;',
+      '\\': '&bsol;'
     };
-    const reg = /[&<>"']/ig;
+    const reg = /[&<>"'\\]/ig;
     return newValue.replace(reg, match => (map[match]));
   }
   return newValue;
@@ -172,7 +162,7 @@ xssUtils.unescapeHTML = function (value) {
     const doc = new DOMParser().parseFromString(value, 'text/html');
 
     // Keep leading/trailing spaces
-    return `${match(/^\s*/)}${doc.documentElement.textContent.trim()}${match(/\s*$/)}`;
+    return `${match(/^\s*|\\/)}${doc.documentElement.textContent.trim()}${match(/\s*$|\\/)}`;
   }
   return value;
 };
@@ -191,6 +181,7 @@ xssUtils.htmlEntities = function (string) {
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
+    .replace(/\\/g, '&bsol;')
     .replace(/"/g, '&quot;');
 };
 

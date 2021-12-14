@@ -218,7 +218,7 @@ const editors = {
 
       container[0].innerHTML =
         `<div class="editor-wrapper" style="width: ${this.editorWidth};">
-          <div class="editor" data-init="false">${xssUtils.unescapeHTML(value)}</div>
+          <div class="editor" data-init="false">${xssUtils.sanitizeHTML(xssUtils.unescapeHTML(value))}</div>
         </div>`;
       this.td = container.closest('td');
       this.input = $('.editor', container);
@@ -542,7 +542,7 @@ const editors = {
     this.destroy = function () {
       // We dont need to destroy since it will when the list is closed
     };
-    
+
     this.init();
   },
 
