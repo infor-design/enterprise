@@ -58,6 +58,7 @@
   <script>
   $('body').one('initialized', function () {
       var grid,
+        gridApi,
         columns = [],
         data = [];
   
@@ -85,27 +86,38 @@
       columns.push({ id: 'action', name: 'Action Item', field: 'action', exportable: false});
       columns.push({ id: 'ex', name: 'Extra', field: 'ex', exportable: true});
       columns.push({ id: 'isFiltered', name: 'Filtered', field: 'isFiltered', exportable: false});
-  
-      // Init and get the api for the grid
-      grid = $('#datagrid').datagrid({
-        columns: columns,
-        columnReorder: true,
-        dataset: data,
-        toolbar: {personalize: true, results: true, exportToExcel: false}
-      });
-  
+
+      var init, destroy;
+
+      init = () => {
+        // Init and get the api for the grid
+        grid = $('#datagrid').datagrid({
+          columns: columns,
+          columnReorder: true,
+          dataset: data,
+          toolbar: {personalize: true, results: true, exportToExcel: false}
+        });
+        gridApi = grid.data('datagrid');
+      }
+      
+      destroy = () => {
+        if (gridApi && gridApi.destroy) {
+          gridApi.destroy();
+        }
+      }
+
       $('#export-to-csv').on('click', function () {
-        grid.data('datagrid').exportToCsv('myExport');
+        gridApi.exportToCsv('myExport');
       });
       $('#export-to-excel').on('click', function () {
-        grid.data('datagrid').exportToExcel('myExport');
+        gridApi.exportToExcel('myExport');
       });
 
       $('#export-to-csv-format').on('click', function () {
-        grid.data('datagrid').exportToCsv('myExport', null, null, true);
+        gridApi.exportToCsv('myExport', null, null, true);
       });
       $('#export-to-excel-format').on('click', function () {
-        grid.data('datagrid').exportToExcel('myExport', null, null, true);
+        gridApi.exportToExcel('myExport', null, null, true);
       });
 
       Locale.supportedLocales.forEach(locale => {
@@ -119,8 +131,12 @@
       $('#locale').dropdown();
 
       $('#locale').on('change', function () {
-        location.href = `http://localhost:4000/components/datagrid/example-export-format.html?locale=${$(this).val()}`;
-    });
+        Locale.set($(this).val());
+        destroy();
+        init();
+      });
+
+      init();
   });
   </script>
   
