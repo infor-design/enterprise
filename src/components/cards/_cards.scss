@@ -97,7 +97,7 @@
     }
 
     .card-content {
-      padding: 15px;
+      padding: 15px 16px;
 
       div {
         &.card-content-status {
@@ -189,7 +189,7 @@
 
         .btn-actions {
           border-radius: 50% !important;
-          margin-right: 24px;
+          margin-right: 8px;
           transform: rotate(90deg);
           width: 44px;
           height: 44px;
