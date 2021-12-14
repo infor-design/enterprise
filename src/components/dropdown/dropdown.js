@@ -3055,12 +3055,7 @@ Dropdown.prototype = {
         this.previousActiveDescendant = optionVal;
 
         if (this.settings.noSearch && this.searchMatches) {
-          const char = option[0].innerText.toLowerCase().charAt(0);
-          Object.keys(this.searchMatches).forEach((key) => {
-            if (char !== key) {
-              this.searchMatches[key].length = 0;
-            }
-          });
+          delete this.searchMatches;
         }
       }
     } else {

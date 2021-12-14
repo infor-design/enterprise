@@ -1,0 +1,166 @@
+
+
+
+<body class="no-scroll">
+
+  <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
+  {{> includes/svg-inline-refs}}
+  {{> includes/applicationmenu-m3}}
+
+  <div class="page-container no-scroll">
+
+    <!-- Module Tabs -->
+    <section id="module-tabs-example" class="tab-container module-tabs" data-init="false">
+      <div class="tab-list-container">
+        <ul class="tab-list">
+          <li class="tab is-selected"><a href="#module-tabs-controls">New Tab Builder</a></li>
+          <li class="tab dismissible"><a href="#order-entry">Order Entry</a></li>
+          <li class="tab dismissible"><a href="#order-123456">Order 123456</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <div id="module-tabs-container" class="page-container no-scroll">
+
+      <!-- Tab Panels -->
+      <div id="module-tabs-controls" class="tab-panel no-scroll">
+        <header class="header is-personalizable">
+          <div class="toolbar">
+            <div class="title">
+              <h1>Module Tabs Example: App Menu Trigger</h1>
+            </div>
+            <div class="buttonset"></div>
+            {{> includes/header-actionbutton}}
+          </div>
+        </header>
+        <div class="page-container scrollable">
+
+          <div class="row">
+            <div class="twelve columns">
+
+              <p>Github Ticket: <a class="hyperlink" href="https://github.com/infor-design/enterprise/issues/5480" target="_blank">EP #5480</a></p>
+              <p>Click the button below to rebuild the Module Tabs component, then try to expand/collapse App Menu Accordion Headers.</p>
+              <p>
+                <button id="btn-rebuild" class="btn-secondary">Rebuild Module Tabs</button>
+              </p>
+              <p>
+                <span>Invoke Count: <span id="count">0</span></span><br />
+                <span>Timestamp of last completed Accordion Render: <span id="render-timestamp">0</span></span>
+              </p>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div id="order-entry" class="tab-panel no-scroll">
+        <header class="header is-personalizable">
+          <div class="toolbar">
+            <div class="title">
+              <h1>Order Entry</h1>
+            </div>
+            <div class="buttonset"></div>
+          </div>
+        </header>
+        <div class="page-container scrollable">
+
+          <div class="row no-top-padding">
+            <div class="twelve columns">
+
+              <div class="expandable-area is-expanded">
+                <div class="expandable-header">
+                  <a class="title"><span>Basic</span></a>
+                </div>
+                <div class="expandable-pane">
+                  <div class="content">
+                    TODO: Write Content
+                  </div>
+                </div>
+              </div>
+
+              <div class="expandable-area is-expanded">
+                <div class="expandable-header">
+                  <a class="title"><span>Extended</span></a>
+                </div>
+                <div class="expandable-pane">
+                  <div class="content">
+                    TODO: Write Content
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div id="order-123456" class="tab-panel">
+        <header class="header is-personalizable">
+          <div class="toolbar">
+            <div class="title">
+              <h1>Order #123456</h1>
+            </div>
+            <div class="buttonset"></div>
+          </div>
+        </header>
+        <div class="page-container scrollable">
+          <div class="row">
+            <div class="six columns">
+              <p>This is Order #123456</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+<script>
+  var moduleTabsEl = $('#module-tabs-example');
+  var accordionEl = $('.accordion');
+  var rebuildBtn = $('#btn-rebuild');
+  var invokeCountEl = $('#count');
+  var invokeCount = 0;
+  var timestampEl = $('#render-timestamp');
+  var timestamp = 0;
+
+  function updateCount() {
+    invokeCount++;
+    invokeCountEl.text(invokeCount);
+    console.log('invoke count: ' + invokeCount);
+  }
+
+  function updateTimestamp(val) {
+    timestamp = val;
+    timestampEl.text(timestamp);
+    console.log('accordion render at timestamp ' + timestamp);
+  }
+
+  function invokeTabs() {
+    moduleTabsEl.tabs({
+      appMenuTrigger: true,
+      containerElement: '#module-tabs-container',
+      changeTabOnHashChange: true
+    });
+    updateCount();
+  }
+
+  // Rebuild the Module Tabs whenever the trigger is clicked
+  rebuildBtn.on('click.test', function () {
+    invokeTabs();
+  });
+
+  // Notify whenever the Accordion component is re-rendered
+  accordionEl.on('rendered.test', function (e) {
+    updateTimestamp(e.timeStamp);
+  });
+
+  // Invoke tabs when initialization completes
+  $('body').on('initialized', () => {
+    invokeTabs();
+  });
+</script>
+
+</body>

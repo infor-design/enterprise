@@ -687,7 +687,7 @@ Tabs.prototype = {
       }
 
       // Add it to the App Menu's list of triggers to adjust on open/close
-      $('#application-menu').data('applicationmenu')?.modifyTriggers([appMenuTrigger.children('a')]);
+      $('#application-menu').data('applicationmenu')?.modifyTriggers([appMenuTrigger.children('a')], null, true);
     }
 
     // Add Tab Button
@@ -3847,7 +3847,7 @@ Tabs.prototype = {
 
         if (accountForPadding) {
           parentPadding = parseInt(window.getComputedStyle(parentElement[0])[`padding${isRTL ? 'Right' : 'Left'}`], 10);
-          targetRectObj.left += (isRTL ? parentPadding : (parentPadding * -1)); 
+          targetRectObj.left += (isRTL ? parentPadding : (parentPadding * -1));
           targetRectObj.right += (isRTL ? parentPadding : (parentPadding * -1));
         }
 

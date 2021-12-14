@@ -2,7 +2,9 @@
 
 ## v4.59.0 Fixes
 
+- `[Cards]` Added focus state on selected cards. ([#5684](https://github.com/infor-design/enterprise/issues/5684))
 - `[Colorpicker]` Fixed a bug where the red diagonal line that goes beyond its border when field-short/form-layout-compact is used. ([#5744](https://github.com/infor-design/enterprise/issues/5744))
+- `[Dropdown]` Clear search matches after an item is selected. ([#5632](https://github.com/infor-design/enterprise/issues/5632))
 - `[Listview]` Fixed a bug where the alert icons in RTL were missing. ([#5827](https://github.com/infor-design/enterprise/issues/5827))
 - `[Modal]` Fixed a close button overlapped when title is long. ([#5795](https://github.com/infor-design/enterprise/issues/5795))
 - `[Searchfield]` Fixed a bug where the close button icon is overlapping with the search icon in RTL. ([#5807](https://github.com/infor-design/enterprise/issues/5807))
@@ -11,14 +13,22 @@
 ## v4.59.0 Features
 
 - `[Column]` Added example page for legend colors. ([#5761](https://github.com/infor-design/enterprise/issues/5761))
+- `[Datagrid]` Added exportToCsv option for datagrid toolbar. ([#5786](https://github.com/infor-design/enterprise/issues/5786))
+
+## v4.58.1 Fixes
+
+- `[Misc]` Fixed several security issues with xss (details hidden). ([#GSHA](https://github.com/infor-design/enterprise/security/advisories))
 
 ## v4.58.0 Features
 
 - `[Accordion]` Added puppeteer tests for accordion. ([#5836](https://github.com/infor-design/enterprise/issues/5836))
+- `[App Menu]` Fixed a bug causing re-invoke of the entire Application Menu and its child components whenever a new App Menu trigger is added to the stored `triggers` array. ([#5480](https://github.com/infor-design/enterprise/issues/5480))
+- `[Actionsheet]` Added puppeteer tests for actionsheet. ([#5832](https://github.com/infor-design/enterprise/issues/5832))
 - `[Column]` Added support to add a line chart in column-grouped. ([#4598](https://github.com/infor-design/enterprise/issues/4598))
 - `[Column]` Added feature to rotate labels. ([#5773](https://github.com/infor-design/enterprise/issues/5773))
-- `[Datagrid]` Added option to format numbers and dates based on current locale. ([#5663](https://github.com/infor-design/enterprise/issues/5663))
 - `[Column Chart]` Added the ability to add axis labels in column-grouped chart. ([#5721](https://github.com/infor-design/enterprise/issues/5721))
+- `[Datagrid]` Added option to format numbers and dates based on current locale. ([#5663](https://github.com/infor-design/enterprise/issues/5663))
+- `[Slider]` Added support for tooltip to show on load in slider. ([#3747](https://github.com/infor-design/enterprise/issues/3747))
 
 ## v4.58.0 Fixes
 
@@ -39,6 +49,14 @@
 - `[Lookup]` Rows are selected based on the initial values in the input field. ([#1132](https://github.com/infor-design/enterprise-ng/issues/1132))
 
 (30 Issues Solved This Release, Backlog Enterprise 224, Backlog Ng 33, 1269 Functional Tests, 1689 e2e Tests, 167 Puppeteer Tests)
+
+## v4.57.2 Fixes
+
+- `[Misc]` Fixed several security issues with xss (details hidden). ([#GSHA](https://github.com/infor-design/enterprise/security/advisories))
+
+## v4.57.1 Fixes
+
+- `[Tabs]` Fixed regression bug where tabs are no longer working inside the modal. ([#5867](https://github.com/infor-design/enterprise/issues/5867))
 
 ## v4.57.0 Features
 

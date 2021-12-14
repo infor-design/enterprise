@@ -16,6 +16,13 @@ input[type='range'] {
   }
 }
 
+.slider-box {
+  display: inline-block;
+  width: 60px;
+  margin-left: 24px;
+  vertical-align: middle;
+}
+
 .slider-wrapper {
   background-color: $slider-bg-color;
   position: relative;
@@ -27,6 +34,12 @@ input[type='range'] {
     height: 4px;
     margin: 25px 4% 50px;
     width: 92%;
+
+    &.has-slider-box {
+      display: inline-block;
+      margin: unset;
+      width: 400px;
+    }
 
     .slider-hit-area {
       bottom: -10px;
