@@ -1,0 +1,33 @@
+<div class="row">
+  <div class="twelve columns">
+    <div class="field">
+      <label for="timepicker-id-1" class="label">Timepicker: 12hr Format</label>
+      <input id="timepicker-id-1" class="timepicker" type="text" data-init="false"/>
+    </div>
+    <div class="field">
+      <label for="timepicker-id-2" class="label">Timepicker: 24hr Format</label>
+      <input id="timepicker-id-2" class="timepicker" type="text" data-init="false"/>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+    $('#timepicker-id-1').timepicker({
+      hourRange: [0, 18],
+      attributes: [
+        { name: 'id', value: 'timepicker-id-1' },
+        { name: 'data-automation-id', value: 'timepicker-automation-id-1' }
+      ]
+    });
+
+    $('#timepicker-id-2').timepicker({
+      hourRange: [0, 14],
+      timeFormat: 'HH:mm',
+      attributes: [
+        { name: 'id', value: 'timepicker-id-2' },
+        { name: 'data-automation-id', value: 'timepicker-automation-id-2' }
+      ]
+    });
+  });
+</script>
