@@ -79,3 +79,20 @@ describe('Datagrid test-tree-rowstatus tests', () => {
     expect(status).toBeTruthy();
   });
 });
+
+describe('Datagrid example-key-row-select tests', () => {
+  const url = 'http://localhost:4000/components/datagrid/example-key-row-select.html';
+  beforeAll(async () => {
+    await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+  });
+
+  it('Should be able to use arrow keys for row selection', async () => {
+    await page.click('tr.datagrid-row');
+    const row1 = await page.$eval('tr.datagrid-row.is-selected', element => element.getAttribute('class'));
+    expect(row1).toEqual('datagrid-row is-hover-row is-clickable is-active-row is-selected');
+    
+    await page.keyboard.press('ArrowDown');
+    const row2 = await page.$eval('tr.datagrid-row.is-selected', element => element.getAttribute('class'));
+    expect(row2).toEqual('datagrid-row is-active-row is-selected');
+  });
+});

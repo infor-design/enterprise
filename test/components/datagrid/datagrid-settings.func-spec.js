@@ -82,6 +82,7 @@ describe('Datagrid Settings', () => { //eslint-disable-line
       columnSizing: 'all',
       twoLineHeader: false,
       clickToSelect: true,
+      keyRowSelect: false,
       toolbar: false,
       initializeToolbar: true,
       columnIds: [],

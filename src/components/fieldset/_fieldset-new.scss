@@ -2,5 +2,12 @@
 .section-title,
 fieldset > legend,
 .fieldset > legend {
-  font-size: $ids-size-font-md;
+  font-size: 2.0rem;
+  width: 100%;
+}
+
+fieldset {
+  .field {
+    margin-bottom: 16px;
+  }
 }
