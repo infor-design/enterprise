@@ -1749,6 +1749,7 @@ Dropdown.prototype = {
 
     const delay = self.filterTerm.length > 1 ? self.settings.delay : 0;
 
+    // if called by `open()`, runs in the context of this Dropdown's API
     function filter() {
       if (self.filterTerm === '') {
         self.resetList();
@@ -1777,6 +1778,7 @@ Dropdown.prototype = {
       if (this.list.find('ul li.hidden').length === 0) {
         this.list.find(' > svg.listoption-icon:not(.swatch)').changeIcon('icon-empty-circle');
       }
+
       filter();
     }, delay);
   },
