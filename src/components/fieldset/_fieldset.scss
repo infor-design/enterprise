@@ -75,3 +75,13 @@ fieldset,
     margin-top: 45px;
   }
 }
+
+html[dir='rtl'] {
+  &.is-safari {
+    .fieldset-title {
+      &::after {
+        content: '\200E'; // fix for rlm character
+      }
+    }
+  }
+}
