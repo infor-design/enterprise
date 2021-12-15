@@ -1747,7 +1747,8 @@ Dropdown.prototype = {
       }
     }
 
-    // if called by `open()`, runs in the context of this Dropdown's API
+    const delay = self.filterTerm.length > 1 ? self.settings.delay : 0;
+
     function filter() {
       if (self.filterTerm === '') {
         self.resetList();
@@ -1776,9 +1777,8 @@ Dropdown.prototype = {
       if (this.list.find('ul li.hidden').length === 0) {
         this.list.find(' > svg.listoption-icon:not(.swatch)').changeIcon('icon-empty-circle');
       }
-
       filter();
-    }, self.settings.delay);
+    }, delay);
   },
 
   /**
@@ -1805,7 +1805,6 @@ Dropdown.prototype = {
   activate(useSearchInput) {
     const self = this;
     let input = this.pseudoElem;
-
     if (useSearchInput || self.isMobile()) {
       input = this.searchInput;
     }

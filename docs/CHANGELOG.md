@@ -6,6 +6,7 @@
 - `[Colorpicker]` Fixed a bug where the red diagonal line that goes beyond its border when field-short/form-layout-compact is used. ([#5744](https://github.com/infor-design/enterprise/issues/5744))
 - `[Fieldset]` Implemented design improvements. ([#5638](https://github.com/infor-design/enterprise/issues/5638))
 - `[Dropdown]` Clear search matches after an item is selected. ([#5632](https://github.com/infor-design/enterprise/issues/5632))
+- `[Dropdown]` Shorten filter delay for single character entries. ([#5793](https://github.com/infor-design/enterprise/issues/5793))
 - `[Listview]` Fixed a bug where the alert icons in RTL were missing. ([#5827](https://github.com/infor-design/enterprise/issues/5827))
 - `[Modal]` Modal exits if Escape key is pressed in datagrid. ([#5796](https://github.com/infor-design/enterprise/issues/5796))
 - `[Searchfield]` Fixed a bug where the close button icon is overlapping with the search icon in RTL. ([#5807](https://github.com/infor-design/enterprise/issues/5807))
