@@ -112,18 +112,19 @@
   border-radius: 0;
   display: block;
   height: 100%;
+  line-height: 0;
   margin: 0;
   padding: 0 16px;
   text-align: center;
   white-space: inherit;
-  width: 120px;
+  width: 100px;
 
   .icon {
     color: inherit;
     display: block;
-    height: 18px;
-    margin: 5px auto;
-    width: 18px;
+    height: 16px;
+    margin: 0 auto 5px;
+    width: 16px;
   }
 
   &:focus {
