@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.58.2 Fixes
+
+- `[Toolbar]` Fixed an issue where things in the page get scrambled if you have a button with undefined ids. ([#1194](https://github.com/infor-design/enterprise-ng/issues/1194))
+
 ## v4.58.1 Fixes
 
 - `[Misc]` Fixed several security issues with xss (details hidden). ([#GSHA](https://github.com/infor-design/enterprise/security/advisories))
@@ -36,7 +40,7 @@
 
 - `[Misc]` Fixed several security issues with xss (details hidden). ([#GSHA](https://github.com/infor-design/enterprise/security/advisories))
 
-## v4.57.1 Fixes 
+## v4.57.1 Fixes
 
 - `[Tabs]` Fixed regression bug where tabs are no longer working inside the modal. ([#5867](https://github.com/infor-design/enterprise/issues/5867))
 
