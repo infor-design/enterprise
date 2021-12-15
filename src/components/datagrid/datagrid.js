@@ -84,6 +84,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {boolean}  [settings.stickyHeader=false] If true the data grid headers will stick to the top of the container the grid is in when scrolling down.
  * @param {boolean}  [settings.columnSizing='both'] Determines the sizing method for the auto sizing columns. Options are: both | data | header (including filter)
  * @param {boolean}  [settings.clickToSelect=true] Controls if using a selection mode if you can click the rows to select
+ * @param {boolean}  [settings.keyRowSelect=false] Controls if using a selection mode if you can use arrow keys to select rows
  * @param {object}   [settings.toolbar=false]  Toggles and appends various toolbar features for example `{title: 'Data Grid Header Title', results: true, keywordFilter: true, filter: true, rowHeight: true, views: true}`
  * @param {boolean}  [settings.selectChildren=true] Will prevent selecting of all child nodes on a multiselect tree.
  * @param {boolean}  [settings.allowSelectAcrossPages=null] Makes it possible to save selections when changing pages on server side paging. You may want to also use showSelectAllCheckBox: false
@@ -197,6 +198,7 @@ const DATAGRID_DEFAULTS = {
   columnSizing: 'all',
   twoLineHeader: false,
   clickToSelect: true,
+  keyRowSelect: false,
   toolbar: false,
   initializeToolbar: true, // can set to false if you will initialize the toolbar yourself
   columnIds: [],
@@ -6582,8 +6584,13 @@ Datagrid.prototype = {
         if (!self.settings.cellNavigation && self.settings.rowNavigation) {
           const rowNodes = self.rowNodes($(this));
 
-          if (!rowNodes.hasClass('is-active-row')) {
+          if (!rowNodes.hasClass('is-active-row')) { 
             rowNodes.addClass('is-active-row');
+            const index = self.actualRowIndex(rowNodes);
+
+            if (self.settings.keyRowSelect) {
+              self.selectRow(index);
+            }
           }
         }
       })
@@ -7319,6 +7326,10 @@ Datagrid.prototype = {
         menu.append(`<li><a href="#" data-option="export-to-excel">${Locale.translate('ExportToExcel')}</a></li>`);
       }
 
+      if (this.settings.toolbar.exportToCsv) {
+        menu.append(`<li><a href="#" data-option="export-to-csv">${Locale.translate('ExportToCsv')}</a></li>`);
+      }
+
       if (this.settings.toolbar.advancedFilter) {
         menu.append(`<li><a href="#">${Locale.translate('AdvancedFilter')}</a></li>`);
       }
@@ -7407,6 +7418,10 @@ Datagrid.prototype = {
 
       if (action === 'export-to-excel') {
         self.exportToExcel();
+      }
+
+      if (action === 'export-to-csv') {
+        self.exportToCsv();
       }
 
       // Filter actions
@@ -9209,6 +9224,13 @@ Datagrid.prototype = {
       if (key === 113 && !this.inlineMode) {
         self.settings.actionableMode = !self.settings.actionableMode;
         handled = true;
+      }
+
+      // If datagrid is in modal, close modal on Escape key
+      const modalParent = self.element.parents('.modal');
+      if (key === 27 && modalParent.length !== 0) {
+        const modalApi = modalParent.data().modal;
+        modalApi.close();
       }
 
       if (handled) {
