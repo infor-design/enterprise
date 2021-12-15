@@ -220,7 +220,7 @@ Toolbar.prototype = {
 
     if (!popupMenuInstance) {
       this.moreMenu = $(`#${moreAriaAttr}`);
-      if (!this.moreMenu.length) {
+      if (!this.moreMenu.length || moreAriaAttr === undefined) {
         this.moreMenu = this.more.next('.popupmenu, .popupmenu-wrapper');
       }
       if (!this.moreMenu.length) {
