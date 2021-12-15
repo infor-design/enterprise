@@ -50,11 +50,14 @@ html.is-firefox {
   }
 }
 
-html[dir="rtl"] {
+html[dir='rtl'] {
   &.is-firefox {
     .listview .alert-text {
       &::before {
-        margin-top: 7px;
+        margin: 0 -4px 0 0;
+        right: 0;
+        top: 50%;
+        transform: translate(-50%, -50%);
       }
     }
   }
