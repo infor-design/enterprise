@@ -492,10 +492,10 @@ describe('Calendar display range tests', () => {
     expect(await element(by.css('[data-key="20210908"]')).getAttribute('class')).toMatch('is-disabled');
   });
 
-  it('Should have month label for the first enable date of the month', async () => {
-    expect(await element(by.css('[data-key="20210713"]')).getText()).toEqual('July 13');
-    expect(await element(by.css('[data-key="20210803"]')).getText()).toEqual('August 3');
-    expect(await element(by.css('[data-key="20210902"]')).getText()).toEqual('September 2');
+  it('Should have month label for the first date of the month rendered', async () => {
+    expect(await element(by.css('[data-key="20210711"]')).getText()).toEqual('Jul 11');
+    expect(await element(by.css('[data-key="20210801"]')).getText()).toEqual('Aug 1');
+    expect(await element(by.css('[data-key="20210901"]')).getText()).toEqual('Sep 1');
     await utils.checkForErrors();
   });
 

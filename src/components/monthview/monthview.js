@@ -62,7 +62,10 @@ const COMPONENT_NAME_DEFAULTS = {
   },
   displayRange: {
     start: '', // Start date '03/05/2018'
-    end: '', // End date '03/21/2018'
+    end: '', // End date '03/21/2018',
+    months: {
+      showAbbr: false, // Show abbr month labels
+    }
   },
   selectable: true,
   onSelected: null,
@@ -954,7 +957,8 @@ MonthView.prototype = {
 
       self.setDisabled(th, rangeCurrentYear, rangeCurrentMonth, dayCnt);
       self.setLegendColor(th, rangeCurrentYear, rangeCurrentMonth, dayCnt);
-      self.setMonthLabel(th, rangeCurrentYear, rangeCurrentMonth, dayCnt, monthLabelsToSet);
+      self.setMonthLabel(th, rangeCurrentYear, rangeCurrentMonth, dayCnt,
+        monthLabelsToSet, s.displayRange.months?.showAbbr);
       th.attr('role', 'link');
       dayCnt++;
     });
@@ -1204,18 +1208,20 @@ MonthView.prototype = {
    * @param {string} year to check.
    * @param {string} month to check.
    * @param {string} date to check.
-   * @param {array} startDate to check.
+   * @param {array} monthLabelsToSet list of month labels to set in calendar.
+   * @param {boolean} showAbbr whether should show month label in abbreviation or wide.
    * @returns {void}
    */
-  setMonthLabel(elem, year, month, date, monthLabelsToSet) {
+  setMonthLabel(elem, year, month, date, monthLabelsToSet, showAbbr) {
     const s = this.settings;
     const isRippleClass = s.inPage ? ' class="is-ripple"' : '';
-    const dateIsDisabled = this.isDateDisabled(year, month, date);
-    if (!dateIsDisabled && monthLabelsToSet.has(month)) {
+    if (monthLabelsToSet.has(month)) {
       const dateText = elem.text();
+      const monthLabel = showAbbr ?
+        this.currentCalendar.months.abbreviated[month] : this.currentCalendar.months.wide[month];
       monthLabelsToSet.delete(month);
       elem
-        .html(`<span class="day-container${isRippleClass}"><span aria-hidden="true" class="day-text month-label">${this.currentCalendar.months.wide[month]} ${dateText}</span></span>`);
+        .html(`<span class="day-container${isRippleClass}"><span aria-hidden="true" class="day-text month-label">${monthLabel} ${dateText}</span></span>`);
     }
   },
 
