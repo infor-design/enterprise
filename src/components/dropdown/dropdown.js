@@ -1805,6 +1805,7 @@ Dropdown.prototype = {
   activate(useSearchInput) {
     const self = this;
     let input = this.pseudoElem;
+
     if (useSearchInput || self.isMobile()) {
       input = this.searchInput;
     }
