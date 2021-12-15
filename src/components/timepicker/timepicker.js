@@ -449,7 +449,7 @@ TimePicker.prototype = {
   getMaxHourRange(initValues, hasDayPeriods, period) {
     const self = this;
     let maxValue = 12;
-    let timePeriod = (!period) ? initValues.period : period;
+    const timePeriod = (!period) ? initValues.period : period;
 
     if (hasDayPeriods) {
       if (timePeriod === 'AM') {
@@ -1071,12 +1071,13 @@ TimePicker.prototype = {
 
     setTimeout(() => {
       $('select.period.dropdown').on('change', (e) => {
-        var period = $(e.target).find(':checked').val();
+        const period = $(e.target).find(':checked').val();
 
-        let selected, resetValue = false;
+        let selected;
+        let resetValue = false;
         this.initValues = self.getTimeFromField();
         const is24HourFormat = this.is24HourFormat();
-        let hourCounter = is24HourFormat ? 0 : 1
+        let hourCounter = is24HourFormat ? 0 : 1;
         const maxHourCount = is24HourFormat ? 24 : 13;
         const hourSelect = $('select.hours.dropdown');
         hourSelect.empty();
@@ -1092,13 +1093,14 @@ TimePicker.prototype = {
           if (!resetValue) {
             selected = ' selected';
             resetValue = true;
-            $('select.hours.dropdown').siblings('.dropdown-wrapper').find('.dropdown').children('span').html('1');
+            $('select.hours.dropdown').siblings('.dropdown-wrapper').find('.dropdown').children('span')
+            .html('1');
           }
           
           hourSelect.append($(`<option${selected}>${self.hourText(hourCounter)}</option>`));
           hourCounter++;
         }
-      })
+      });
     }, 10);
   },
 
