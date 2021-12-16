@@ -1093,8 +1093,11 @@ TimePicker.prototype = {
           if (!resetValue) {
             selected = ' selected';
             resetValue = true;
-            $('select.hours.dropdown').siblings('.dropdown-wrapper')
-              .find('.dropdown').children('span').html('1');
+            $('select.hours.dropdown')
+              .siblings('.dropdown-wrapper')
+              .find('.dropdown')
+              .children('span')
+              .html('1');
           }
           
           hourSelect.append($(`<option${selected}>${self.hourText(hourCounter)}</option>`));
