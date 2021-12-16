@@ -51,9 +51,24 @@ html.is-firefox {
 }
 
 html[dir='rtl'] {
-  .listview ul li {
-    .alert-text::before {
-      margin-right: 28px;
+  &.is-firefox {
+    .listview .alert-text {
+      &::before {
+        margin: 0 -4px 0 0;
+        right: 0;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+}
+
+html[dir='rtl'] {
+  &:not(.is-firefox) {
+    .listview ul li {
+      .alert-text::before {
+        margin-right: 28px;
+      }
     }
   }
 
@@ -62,6 +77,20 @@ html[dir='rtl'] {
       .icon:not(.close):not(.icon-error) {
         left: auto;
         right: 18px;
+      }
+    }
+  }
+}
+
+html[dir='rtl'] {
+  &.is-safari {
+    .listview ul li {
+      .alert-text {
+        &::before {
+          margin-right: 0;
+          position: absolute;
+          right: 0;
+        }
       }
     }
   }
