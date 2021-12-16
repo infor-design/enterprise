@@ -74,7 +74,7 @@ Toast.prototype = {
     let isPausePlay = false;
     let percentage = 100;
 
-    this.uniqueId = s.uniqueid ? s.uniqueid : this.generateUniqueId('usersettings-position');
+    this.uniqueId = s.uniqueid ? this.generateUniqueId('usersettings-position') : '';
 
     let container = $(`#toast-container${this.uniqueId}`);
     const toast = $(`
