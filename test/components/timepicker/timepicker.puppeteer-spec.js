@@ -33,6 +33,36 @@ describe('Timepicker Puppeteer Tests', () => {
     });
   });
 
+  describe('Timepicker Example Hour Range Tests', () => {
+    const url = 'http://localhost:4000/components/timepicker/example-hour-range.html';
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('should not have errors', async () => {
+      await page.on('error', function (err) {
+        const theTempValue = err.toString();
+        console.log(`Error: ${theTempValue}`);
+      });
+    });
+
+    it('should set the time and period', async () => {
+      const timepickerEl = await page.$('#timepicker-id-1');
+
+      await page.click('#timepicker-id-1-trigger');
+      await page.click('#timepicker-id-1-period');
+      await page.click('#list-option-1');
+      await page.click('#timepicker-id-1-hours');
+
+      // VERIFY IF 7 PM ONWARDS IS NOT AVAILABLE
+      await expect(page).not.toMatchElement('#list-option-6');
+      
+      await page.click('.set-time');
+      expect(await page.evaluate(el => el.value, timepickerEl)).toEqual('1:00 PM');
+    });
+  });
+
   describe('Timepicker Chinese Localization Tests', () => {
     const url = 'http://localhost:4000/components/timepicker/example-index.html?locale=zh-CN';
 
