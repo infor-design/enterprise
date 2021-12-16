@@ -1747,8 +1747,6 @@ Dropdown.prototype = {
       }
     }
 
-    const delay = self.filterTerm.length > 1 ? self.settings.delay : 0;
-
     // if called by `open()`, runs in the context of this Dropdown's API
     function filter() {
       if (self.filterTerm === '') {
@@ -1758,7 +1756,7 @@ Dropdown.prototype = {
       }
     }
 
-    this.timer = setTimeout(() => {
+    function selectItem() {
       if (self.settings.noSearch) {
         if (self.isOpen()) {
           self.highlightStartsWith(self.filterTerm);
@@ -1769,18 +1767,26 @@ Dropdown.prototype = {
         return;
       }
 
-      this.searchKeyMode = true;
+      self.searchKeyMode = true;
       if (!self.isOpen()) {
         self.open(filter);
         return;
       }
 
-      if (this.list.find('ul li.hidden').length === 0) {
-        this.list.find(' > svg.listoption-icon:not(.swatch)').changeIcon('icon-empty-circle');
+      if (self.list.find('ul li.hidden').length === 0) {
+        self.list.find(' > svg.listoption-icon:not(.swatch)').changeIcon('icon-empty-circle');
       }
 
       filter();
-    }, delay);
+    }
+
+    if (self.filterTerm.length === 1) {
+      selectItem();
+    } else {
+      this.timer = setTimeout(() => {
+        selectItem();
+      }, self.settings.delay);
+    }
   },
 
   /**
