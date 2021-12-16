@@ -254,6 +254,12 @@ $subheader-height: 60px;
     }
   }
 
+  .toolbar-section.search {
+    .searchfield-wrapper.toolbar-searchfield-wrapper {
+      width: 100%;
+    }
+  }
+
 }
 
 // Application Subheaders
@@ -388,6 +394,64 @@ $subheader-height: 60px;
         background-color: $header-text-color;
       }
 
+    }
+
+    .toolbar-section {
+      &.buttonset,
+      &.search-categories {
+        display: flex;
+      }
+
+      &.title {
+        display: none;
+
+        @media (min-width: $breakpoint-phone-to-tablet) {
+          display: flex;
+        }
+      }
+
+      &.search-categories {
+        &.search {
+          .btn.searchfield-category-button {
+            height: 38px;
+            padding-right: 20px;
+
+            @media (min-width: $breakpoint-phone-to-tablet) {
+              height: 34px;
+              padding-right: 10px;
+            }
+          }
+
+          .has-close-icon-button {
+            .btn-icon {
+              height: auto;
+              right: 7px;
+              top: 50%;
+
+              .icon.close {
+                top: 0 !important;
+              }
+            }
+          }
+        }
+
+        .searchfield-wrapper.has-categories,
+        .toolbar-searchfield-wrapper {
+          width: 100%;
+        }
+      }
+
+      &.flex-end {
+        justify-content: flex-end;
+      }
+
+      &.flex-grow-1 {
+        flex-grow: 1;
+      }
+
+      &.flex-grow-2 {
+        flex-grow: 2;
+      }
     }
   }
 
