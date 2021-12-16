@@ -398,16 +398,9 @@ $subheader-height: 60px;
 
     .toolbar-section {
       &.buttonset,
+      &.title,
       &.search-categories {
         display: flex;
-      }
-
-      &.title {
-        display: none;
-
-        @media (min-width: $breakpoint-phone-to-tablet) {
-          display: flex;
-        }
       }
 
       &.search-categories {
@@ -427,6 +420,7 @@ $subheader-height: 60px;
               height: auto;
               right: 7px;
               top: 50%;
+              transform: translateY(-50%);
 
               .icon.close {
                 top: 0 !important;
