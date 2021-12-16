@@ -81,7 +81,7 @@ EmptyMessage.prototype = {
 
     if (opts.button && !isHeightSmall) {
       const buttonMarkup = `<div class="empty-actions">
-          <button type="button" class="${opts.button.isPrimary ? 'btn-primary' : 'btn-secondary'} ${opts.button.cssClass} hide-focus" id="${opts.button.id}">
+          <button type="button" class="${opts.button.isPrimary ? 'btn-primary' : 'btn-secondary'} ${opts.button.cssClass} hide-focus" ${opts.button.id ? `id="${opts.button.id}"` : ''}>
             <span>${opts.button.text}</span>
           </button>
         </div>`;

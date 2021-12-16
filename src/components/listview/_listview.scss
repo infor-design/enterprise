@@ -728,6 +728,16 @@
 
 // RTL Styles
 html[dir='rtl'] {
+  &.is-safari {
+    .listview ul li {
+      .alert-text {
+        &::after {
+          content: '\200E'; // fix for rlm character
+        }
+      }
+    }
+  }
+
   .listview {
     &[aria-label^='Icons'] li {
       padding: 16px 12px 15px;
@@ -854,5 +864,15 @@ html[dir='rtl'] {
       right: unset !important;
     }
 
+  }
+}
+
+html[dir="rtl"] {
+  &.is-firefox {
+    .listview .alert-text {
+      &::before {
+        margin-top: 5px;
+      }
+    }
   }
 }
