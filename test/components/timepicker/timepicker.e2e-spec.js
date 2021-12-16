@@ -216,7 +216,7 @@ describe('Timepicker with seconds example tests', () => {
       await element(by.css('.set-time')).click();
       await browser.driver.sleep(config.sleep);
 
-      expect(await timepickerEl.getAttribute('value')).toEqual('03:10:15 PM');
+      expect(await timepickerEl.getAttribute('value')).toEqual('01:10:15 PM');
     });
   }
 
@@ -264,7 +264,7 @@ describe('Timepicker Intervals tests', () => {
     await browser.driver
       .wait(protractor.ExpectedConditions.invisibilityOf(element(by.id('dropdown-list'))), config.waitsFor);
 
-    expect(await timepickerEl.getAttribute('value')).toEqual('2:10 PM');
+    expect(await timepickerEl.getAttribute('value')).toEqual('1:10 PM');
   });
 
   it('Should rounds minutes to the nearest interval', async () => {
