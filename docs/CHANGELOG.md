@@ -2,18 +2,28 @@
 
 ## v4.59.0 Fixes
 
+- `[Calendar]` Added an option to configure month label to use abbreviation and changed month label to display on the first day of the months rendered in calendar. ([#5941](https://github.com/infor-design/enterprise/issues/5941))
 - `[Cards]` Added focus state on selected cards. ([#5684](https://github.com/infor-design/enterprise/issues/5684))
 - `[Colorpicker]` Fixed a bug where the red diagonal line that goes beyond its border when field-short/form-layout-compact is used. ([#5744](https://github.com/infor-design/enterprise/issues/5744))
+- `[Fieldset]` Implemented design improvements. ([#5638](https://github.com/infor-design/enterprise/issues/5638))
 - `[Dropdown]` Clear search matches after an item is selected. ([#5632](https://github.com/infor-design/enterprise/issues/5632))
 - `[Listview]` Fixed a bug where the alert icons in RTL were missing. ([#5827](https://github.com/infor-design/enterprise/issues/5827))
 - `[Modal]` Fixed a close button overlapped when title is long. ([#5795](https://github.com/infor-design/enterprise/issues/5795))
+- `[Modal]` Modal exits if Escape key is pressed in datagrid. ([#5796](https://github.com/infor-design/enterprise/issues/5796))
 - `[Searchfield]` Fixed a bug where the close button icon is overlapping with the search icon in RTL. ([#5807](https://github.com/infor-design/enterprise/issues/5807))
 - `[Spinbox]` Fixed a bug where the spinbox controls still show the ripple effect even it's disabled. ([#5719](https://github.com/infor-design/enterprise/issues/5719))
+- `[Toolbar]` Fixed an issue where things in the page get scrambled if you have a button with undefined ids. ([#1194](https://github.com/infor-design/enterprise-ng/issues/1194))
 
 ## v4.59.0 Features
 
+- `[Button]` Added test scripts for button. ([#5851](https://github.com/infor-design/enterprise/issues/5851))
 - `[Column]` Added example page for legend colors. ([#5761](https://github.com/infor-design/enterprise/issues/5761))
+- `[Datagrid]` Added datagrid feature using arrow keys to select. ([#5713](https://github.com/infor-design/enterprise/issues/5713))
 - `[Datagrid]` Added exportToCsv option for datagrid toolbar. ([#5786](https://github.com/infor-design/enterprise/issues/5786))
+
+## v4.58.2 Fixes
+
+- `[Toolbar]` Fixed an issue where things in the page get scrambled if you have a button with undefined ids. ([#1194](https://github.com/infor-design/enterprise-ng/issues/1194))
 
 ## v4.58.1 Fixes
 
