@@ -1027,3 +1027,15 @@ html[class*='theme-new-'] .header > .toolbar > .buttonset > .toolbar-searchfield
     top: 1px !important;
   }
 }
+
+html[dir='rtl'] {
+  &.is-mac {
+    .toolbar-searchfield-wrapper.non-collapsible .searchfield {
+      padding-top: 6px !important;
+    }
+
+    .toolbar-searchfield-wrapper.non-collapsible .icon:not(.close) {
+      top: 10px;
+    }
+  }
+}

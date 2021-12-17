@@ -66,9 +66,17 @@ html[dir='rtl'] {
           right: calc(100% - 30px);
         }
       }
+    }
+  }
+}
 
-      .icon:not(.close) {
-        top: 10px;
+html[dir='rtl'] {
+  &.is-firefox {
+    .toolbar-section.search {
+      .toolbar-searchfield-wrapper {
+        .icon:not(.close) {
+          top: 10px;
+        }
       }
     }
   }
