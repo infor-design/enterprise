@@ -68,6 +68,10 @@
     width: auto;
   }
 
+  &.has-close-btn {
+    min-width: 400px;
+  }
+
   &.is-visible.is-active {
     @include css3(transform, scale(1, 1));
 
@@ -333,7 +337,7 @@ body.modal-engaged {
 }
 
 .modal-header {
-  padding: 24px 16px 0;
+  padding: 16px 16px 0;
 }
 
 .modal-content {
