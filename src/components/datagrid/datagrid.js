@@ -1578,7 +1578,7 @@ Datagrid.prototype = {
               col.filterMaskOptions = utils.extend(true, {}, decimalDefaults, col.filterMaskOptions);
             }
 
-            if (col.maskOptions && typeof col.maskOptions != 'function') {
+            if (col.maskOptions && typeof col.maskOptions !== 'function') {
               col.maskOptions = utils.extend(true, {}, decimalDefaults, col.maskOptions);
             }
           }
