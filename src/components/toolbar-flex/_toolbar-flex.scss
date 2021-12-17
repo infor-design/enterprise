@@ -190,4 +190,16 @@ html[dir='rtl'] {
     }
   }
 
+  .toolbar-section.search {
+    .toolbar-searchfield-wrapper {
+      .btn-icon.close {
+        right: calc(100% - 65px);
+
+        @media (min-width: $breakpoint-phone-to-tablet) {
+          right: calc(100% - 30px);
+        }
+      }
+    }
+  }
+
 }

@@ -54,3 +54,18 @@
     }
   }
 }
+
+html[dir='rtl'] {
+  .toolbar-section.search {
+    .toolbar-searchfield-wrapper {
+      .btn-icon.close {
+        right: calc(100% - 110px);
+        top: 50%;
+
+        @media (min-width: $breakpoint-phone-to-tablet) {
+          right: calc(100% - 30px);
+        }
+      }
+    }
+  }
+}
