@@ -1488,7 +1488,9 @@ Dropdown.prototype = {
         // If search mode is on, Tab should 'select' the currently highlighted
         // option in the list, update the SearchInput and close the list.
         if (self.isOpen()) {
-          if (!this.settings.multiple && options.length && selectedIndex > -1) {
+          if (self.filterTerm && self.filterTerm.length === 1) {
+            self.selectStartsWith(self.filterTerm);
+          } else if (!this.settings.multiple && options.length && selectedIndex > -1) {
             // store the current selection
             // selectValue
             self.selectOption(this.correctValue($(options[selectedIndex])));
@@ -1756,7 +1758,7 @@ Dropdown.prototype = {
       }
     }
 
-    function selectItem() {
+    this.timer = setTimeout(() => {
       if (self.settings.noSearch) {
         if (self.isOpen()) {
           self.highlightStartsWith(self.filterTerm);
@@ -1768,25 +1770,17 @@ Dropdown.prototype = {
       }
 
       self.searchKeyMode = true;
-      if (!self.isOpen()) {
+      if (!self.isOpen() && self.filterTerm !== '') {
         self.open(filter);
         return;
       }
 
-      if (self.list.find('ul li.hidden').length === 0) {
-        self.list.find(' > svg.listoption-icon:not(.swatch)').changeIcon('icon-empty-circle');
+      if (this.list.find('ul li.hidden').length === 0) {
+        this.list.find(' > svg.listoption-icon:not(.swatch)').changeIcon('icon-empty-circle');
       }
 
       filter();
-    }
-
-    if (self.filterTerm.length === 1) {
-      selectItem();
-    } else {
-      this.timer = setTimeout(() => {
-        selectItem();
-      }, self.settings.delay);
-    }
+    }, self.settings.delay);
   },
 
   /**
