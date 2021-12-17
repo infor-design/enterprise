@@ -29,6 +29,7 @@ const TIMEPICKER_DEFAULTS = function () {
     returnFocus: true,
     attributes: null,
     tabbable: true,
+    hourRange: [0, 24]
   };
 };
 
@@ -51,6 +52,7 @@ const TIMEPICKER_DEFAULTS = function () {
  *  the calling element. It usually should be for accessibility purposes.
  * @param {string} [settings.attributes] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
  * @param {boolean} [settings.tabbable=true] If true, causes the Timepicker's trigger icon to be focusable with the keyboard.
+ * @param {number[]} [settings.hourRange=] Sets the range of hours in the timepicker.
  */
 function TimePicker(element, settings) {
   this.element = $(element);
@@ -444,6 +446,24 @@ TimePicker.prototype = {
     return this;
   },
 
+  getMaxHourRange(initValues, hasDayPeriods, period) {
+    const self = this;
+    let maxValue = 12;
+    const timePeriod = (!period) ? initValues.period : period;
+
+    if (hasDayPeriods) {
+      if (timePeriod === 'AM') {
+        maxValue = (self.settings.hourRange[1] > 12) ? 12 : self.settings.hourRange[1];
+      } else {
+        maxValue = (self.settings.hourRange[1] > 12) ? self.settings.hourRange[1] - 12 : 12;
+      }
+    } else {
+      maxValue = self.settings.hourRange[1];
+    }
+
+    return maxValue;
+  },
+
   /**
    * Constructs all markup and subcomponents needed to build the standard Timepicker popup.
    * @private
@@ -470,6 +490,12 @@ TimePicker.prototype = {
 
     while (hourCounter < maxHourCount) {
       selected = '';
+
+      const maxHourRange = self.getMaxHourRange(this.initValues, hasDayPeriods);
+      if (hourCounter > maxHourRange) {
+        break;
+      }
+
       if (parseInt(self.initValues.hours, 10) === hourCounter) {
         selected = ' selected';
       }
@@ -1042,6 +1068,43 @@ TimePicker.prototype = {
     }
 
     this.popup.find('div.dropdown').first().focus();
+
+    setTimeout(() => {
+      $('select.period.dropdown').on('change', (e) => {
+        const period = $(e.target).find(':checked').val();
+
+        let selected;
+        let resetValue = false;
+        this.initValues = self.getTimeFromField();
+        const is24HourFormat = this.is24HourFormat();
+        let hourCounter = is24HourFormat ? 0 : 1;
+        const maxHourCount = is24HourFormat ? 24 : 13;
+        const hourSelect = $('select.hours.dropdown');
+        hourSelect.empty();
+
+        while (hourCounter < maxHourCount) {
+          selected = '';
+    
+          const maxHourRange = self.getMaxHourRange(this.initValues, this.hasDayPeriods(), period);
+          if (hourCounter > maxHourRange) {
+            break;
+          }
+
+          if (!resetValue) {
+            selected = ' selected';
+            resetValue = true;
+            $('select.hours.dropdown')
+              .siblings('.dropdown-wrapper')
+              .find('.dropdown')
+              .children('span')
+              .html('1');
+          }
+          
+          hourSelect.append($(`<option${selected}>${self.hourText(hourCounter)}</option>`));
+          hourCounter++;
+        }
+      });
+    }, 10);
   },
 
   /**

@@ -37,7 +37,8 @@ describe('TimePicker settings', () => {
       parentElement: null,
       returnFocus: true,
       attributes: null,
-      tabbable: true
+      tabbable: true,
+      hourRange: [0, 24]
     };
 
     expect(timepickerObj.settings).toEqual(settings);
@@ -55,7 +56,8 @@ describe('TimePicker settings', () => {
       parentElement: null,
       returnFocus: true,
       attributes: null,
-      tabbable: true
+      tabbable: true,
+      hourRange: [0, 24]
     };
 
     timepickerObj.updated();
@@ -77,7 +79,8 @@ describe('TimePicker settings', () => {
       parentElement: null,
       returnFocus: true,
       attributes: null,
-      tabbable: true
+      tabbable: true,
+      hourRange: [0, 24]
     };
     timepickerObj.updated(settings);
 
