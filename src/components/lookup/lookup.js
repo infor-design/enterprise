@@ -114,7 +114,7 @@ Lookup.prototype = {
   get isFocused() {
     const active = document.activeElement;
     const inputIsActive = this.element.is(active);
-    const wrapperHasActive = this.element.parent('.lookup-wrapper')[0].contains(active);
+    const wrapperHasActive = this.element.parent('.lookup-wrapper')[0]?.contains(active);
     const lookupModalHasActive = this.modal?.element[0].contains(active);
     return (inputIsActive || wrapperHasActive || lookupModalHasActive);
   },
