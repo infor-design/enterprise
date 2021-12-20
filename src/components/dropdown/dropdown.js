@@ -1759,11 +1759,7 @@ Dropdown.prototype = {
     }
 
     this.timer = setTimeout(() => {
-      if (self.filterTerm === '') {
-        return;
-      }
-
-      if (self.settings.noSearch) {
+      if (self.settings.noSearch && self.filterTerm !== '') {
         if (self.isOpen()) {
           self.highlightStartsWith(self.filterTerm);
         } else {
@@ -1774,7 +1770,7 @@ Dropdown.prototype = {
       }
 
       self.searchKeyMode = true;
-      if (!self.isOpen()) {
+      if (!self.isOpen() && self.filterTerm !== '') {
         self.open(filter);
         return;
       }
