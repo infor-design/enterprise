@@ -19,7 +19,6 @@ import '../spinbox/spinbox.jquery';
 import '../textarea/textarea.jquery';
 import '../timepicker/timepicker.jquery';
 import '../tooltip/tooltip.jquery';
-import { resolve } from 'promise-polyfill';
 
 // Adds all the basic input features to any Datagrid Editor.
 function addStandardInputFeatures(input, row, cell, value, container, column, e, api, item) {
@@ -829,7 +828,7 @@ const editors = {
       return new Promise((resolve) => {
         setTimeout(() => {
           resolve(getVal(v));
-        }, 200);
+        }, 300);
       });
     };
 

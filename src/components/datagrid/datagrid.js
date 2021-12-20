@@ -9918,12 +9918,17 @@ Datagrid.prototype = {
 
     // Editor.getValue
     if (typeof this.editor.val === 'function') {
-      newValue = this.editor.val();
+      this.editor.val().then((v) => {
+        newValue = v;
+        console.log('1', newValue)
+      });
+      // or I was thinking of doing newValue = await this.editor.val()
     }
 
     if (isEditor) {
       cellNode = this.editor.td;
     } else if (isFileupload) {
+      console.log('2', newValue)
       if (this.editor.status === 'clear') {
         newValue = '';
       } else if (this.editor.status === 'init' || this.editor.status === 'cancel') {
