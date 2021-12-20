@@ -156,7 +156,7 @@ describe('Index Tests', () => {
     const buttonSetMargin = () => page.$eval('.buttonset', e => JSON.parse(JSON.stringify(getComputedStyle(e).margin)));
     expect(await buttonSetMargin()).toEqual('0px');
     const modalHeaderPadding = () => page.$eval('.modal-header', e => JSON.parse(JSON.stringify(getComputedStyle(e).padding)));
-    expect(await modalHeaderPadding()).toEqual('24px 16px 0px');
+    expect(await modalHeaderPadding()).toEqual('16px 16px 0px');
 
     // When testing it to 480px above
     await page.setViewport({
@@ -177,7 +177,7 @@ describe('Index Tests', () => {
 
     // steps for PR#5767
     expect(await buttonSetMargin()).toEqual('0px');
-    expect(await modalHeaderPadding()).toEqual('24px 16px 0px');
+    expect(await modalHeaderPadding()).toEqual('16px 16px 0px');
   });
 });
 
@@ -429,7 +429,7 @@ describe('Message Mobile Enhancement & Style Test', () => {
     const headerPadRight = await page.$eval('div[class="modal-header"]', el => getComputedStyle(el).paddingRight);
     expect(headerPadLeft).toMatch('16px');
     expect(headerPadRight).toMatch('16px');
-    expect(headerPadTop).toMatch('24px');
+    expect(headerPadTop).toMatch('16px');
     expect(headerPadBot).toMatch('0px');
   });
   
