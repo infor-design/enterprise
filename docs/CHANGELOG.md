@@ -16,6 +16,7 @@
 
 ## v4.59.0 Features
 
+- `[Cards]` Added mobile enhancements and style changes. ([#5609](https://github.com/infor-design/enterprise/issues/5609))
 - `[Button]` Added test scripts for button. ([#5851](https://github.com/infor-design/enterprise/issues/5851))
 - `[Column]` Added example page for legend colors. ([#5761](https://github.com/infor-design/enterprise/issues/5761))
 - `[Datagrid]` Added datagrid feature using arrow keys to select. ([#5713](https://github.com/infor-design/enterprise/issues/5713))
