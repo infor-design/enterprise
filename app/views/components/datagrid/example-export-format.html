@@ -89,22 +89,12 @@
 
       var init, destroy;
 
-      init = () => {
-        // Init and get the api for the grid
-        grid = $('#datagrid').datagrid({
-          columns: columns,
-          columnReorder: true,
-          dataset: data,
-          toolbar: {personalize: true, results: true, exportToExcel: false}
-        });
-        gridApi = grid.data('datagrid');
-      }
-      
-      destroy = () => {
-        if (gridApi && gridApi.destroy) {
-          gridApi.destroy();
-        }
-      }
+      grid = $('#datagrid').datagrid({
+        columns: columns,
+        columnReorder: true,
+        dataset: data,
+        toolbar: {personalize: true, results: true, exportToExcel: false}
+      });
 
       $('#export-to-csv').on('click', function () {
         gridApi.exportToCsv('myExport');
@@ -131,12 +121,29 @@
       $('#locale').dropdown();
 
       $('#locale').on('change', function () {
-        Locale.set($(this).val());
-        destroy();
-        init();
-      });
+        const url = location.href.split('?');
+        const query = url[1].split('&')
+        
+        let noLocation = true;
+        let queryParams = {}
 
-      init();
+        query.forEach(q => {
+          const pair = q.split('=');
+
+          if (pair[0] === 'locale') {
+            queryParams[pair[0]] = $(this).val();
+            noLocation = false;
+          } else {
+            queryParams[pair[0]] = pair[1]
+          }
+        });
+        
+        if (noLocation) {
+          queryParams['locale'] = $(this.val());
+        }
+
+        location.href = window.location.origin + window.location.pathname + `?${$.param(queryParams)}`;
+      });
   });
   </script>
   
