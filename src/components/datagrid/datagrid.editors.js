@@ -19,6 +19,7 @@ import '../spinbox/spinbox.jquery';
 import '../textarea/textarea.jquery';
 import '../timepicker/timepicker.jquery';
 import '../tooltip/tooltip.jquery';
+import { resolve } from 'promise-polyfill';
 
 // Adds all the basic input features to any Datagrid Editor.
 function addStandardInputFeatures(input, row, cell, value, container, column, e, api, item) {
@@ -814,13 +815,22 @@ const editors = {
       this.input.closest('td').addClass('is-fileupload').find('label:eq(1)').addClass('audible');
     };
 
-    this.val = function (v) {
+    const self = this;
+    const getVal = function (v) {
       if (v) {
         v = xssUtils.stripTags(v);
-        this.input.attr('value', v);
+        self.input.attr('value', v);
         return v;
       }
-      return this.input.val();
+      return self.input.val();
+    };
+
+    this.val = function (v) {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve(getVal(v));
+        }, 200);
+      });
     };
 
     this.focus = () => {
