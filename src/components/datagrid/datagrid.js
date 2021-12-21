@@ -1716,14 +1716,14 @@ Datagrid.prototype = {
 
             const lookupValue = input.val();
             const columnId = rowElem.attr('data-column-id');
-            const options = { 
-              operator, 
-              defaultOperator, 
-              value: lookupValue, 
+            const options = {
+              operator,
+              defaultOperator,
+              value: lookupValue,
               columnId
             };
 
-            self.element.triggerHandler('filterOperatorChanged', [options]);
+            self.element.triggerHandler('filteroperatorchanged', [options]);
             self.applyFilter(null, 'selected');
           });
       }
