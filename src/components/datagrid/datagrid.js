@@ -1717,10 +1717,10 @@ Datagrid.prototype = {
             const lookupValue = input.val();
             const columnId = rowElem.attr('data-column-id');
             const options = { 
-              operator: operator, 
-              defaultOperator: defaultOperator, 
+              operator, 
+              defaultOperator, 
               value: lookupValue, 
-              columnId: columnId
+              columnId
             };
 
             self.element.triggerHandler('filterOperatorChanged', [options]);
