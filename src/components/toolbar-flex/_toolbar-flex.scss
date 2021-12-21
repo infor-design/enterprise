@@ -98,6 +98,10 @@
   &.buttonset {
     padding: 4px;
 
+    &.flex-end {
+      justify-content: flex-end;
+    }
+
     [class^='btn'] {
       margin-right: 0;
 
@@ -114,9 +118,21 @@
   &.search {
     padding: 0 10px;
 
+    &.flex-grow-2 {
+      flex-grow: 2;
+
+      .toolbar-searchfield-wrapper {
+        width: 100%;
+      }
+    }
+
     + .buttonset {
       display: flex;
       flex-grow: 0;
+
+      &.flex-grow-1 {
+        flex-grow: 1;
+      }
     }
   }
 
@@ -170,6 +186,18 @@ html[dir='rtl'] {
     &.more {
       button {
         margin-left: 0;
+      }
+    }
+  }
+
+  .toolbar-section.search {
+    .toolbar-searchfield-wrapper {
+      .btn-icon.close {
+        right: calc(100% - 65px);
+
+        @media (min-width: $breakpoint-phone-to-tablet) {
+          right: calc(100% - 30px);
+        }
       }
     }
   }

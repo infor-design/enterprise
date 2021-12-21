@@ -1574,11 +1574,11 @@ Datagrid.prototype = {
               );
             }
           } else {
-            if (col.filterMaskOptions) {
+            if (col.filterMaskOptions && typeof col.filterMaskOptions !== 'function') {
               col.filterMaskOptions = utils.extend(true, {}, decimalDefaults, col.filterMaskOptions);
             }
 
-            if (col.maskOptions) {
+            if (col.maskOptions && typeof col.maskOptions !== 'function') {
               col.maskOptions = utils.extend(true, {}, decimalDefaults, col.maskOptions);
             }
           }
@@ -6584,7 +6584,7 @@ Datagrid.prototype = {
         if (!self.settings.cellNavigation && self.settings.rowNavigation) {
           const rowNodes = self.rowNodes($(this));
 
-          if (!rowNodes.hasClass('is-active-row')) { 
+          if (!rowNodes.hasClass('is-active-row')) {
             rowNodes.addClass('is-active-row');
             const index = self.actualRowIndex(rowNodes);
 

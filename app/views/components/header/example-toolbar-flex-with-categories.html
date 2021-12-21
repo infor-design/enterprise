@@ -1,0 +1,69 @@
+<header class="header is-personalizable ">
+  <div class="flex-toolbar">
+    <div class="toolbar-section title flex-grow-1">
+      <h2 class="page-title">Item Overview</h2>
+    </div>
+    <div class="toolbar-section search-categories search flex-grow-2">
+      <div class="searchfield-wrapper">
+        <label class="audible" for="maincontent"></label>
+        <input id="maincontent" data-init="false" class="searchfield context" data-options="{ clearable: true }" />
+      </div>
+    </div>
+    <div class="toolbar-section buttonset flex-grow-1 flex-end">
+      <button class="btn-icon">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-settings"></use>
+        </svg>
+        <span class="audible">Settings</span>
+      </button>
+
+      <button class="btn-icon">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-delete"></use>
+        </svg>
+        <span class="audible">Trash</span>
+      </button>
+    </div>
+    <div class="toolbar-section more">
+      <button class="btn-actions">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-more"></use>
+        </svg>
+        <span class="audible">More Actions</span>
+      </button>
+      <ul class="popupmenu">
+        <li><a href="#">Pre-defined Item #1</a></li>
+        <li><a href="#">Pre-defined Item #2</a></li>
+        <li><a href="#">Pre-defined Item #3</a></li>
+      </ul>
+    </div>
+  </div>
+  <script>
+    //Init category search
+    var categoryData = [{
+        name: 'Product: 1',
+        id: 'sales',
+        value: 'sales',
+        checked: true
+      },
+      {
+        name: 'Product: 2',
+        id: 'sup',
+        value: 'sup',
+        checked: false
+      },
+      {
+        name: 'Product: 3',
+        id: 'ref',
+        value: 'ref',
+        checked: true
+      },
+    ];
+
+    $('#maincontent').searchfield({
+      categories: categoryData,
+      showCategoryText: true
+    });
+  </script>
+
+</header>
