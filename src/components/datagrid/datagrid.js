@@ -1715,7 +1715,15 @@ Datagrid.prototype = {
             }
 
             const lookupValue = input.val();
-            self.element.triggerHandler('filterOperatorChanged', {operator: operator, defaultOperator: defaultOperator, value: lookupValue, columnId: rowElem.attr('data-column-id')});
+            const columnId = rowElem.attr('data-column-id');
+            const options = { 
+              operator: operator, 
+              defaultOperator: defaultOperator, 
+              value: lookupValue, 
+              columnId: columnId
+            };
+
+            self.element.triggerHandler('filterOperatorChanged', [options]);
             self.applyFilter(null, 'selected');
           });
       }
