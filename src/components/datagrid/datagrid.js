@@ -1658,6 +1658,8 @@ Datagrid.prototype = {
       const filterBtn = $(this);
       const popupOpts = { trigger: 'immediate', offset: { y: 15 }, placementOpts: { strategies: ['flip', 'nudge'] } };
       const popupmenu = filterBtn.data('popupmenu');
+      const rowElem = filterBtn.closest('th[role="columnheader"]');
+      let defaultOperator = '';
 
       if (popupmenu) {
         popupmenu.close(true, true);
@@ -1665,6 +1667,7 @@ Datagrid.prototype = {
         filterBtn.off('beforeopen.datagrid-filter').on('beforeopen.datagrid-filter', (e, menu, api) => {
           self.hideTooltip();
           activeMenu = api;
+          defaultOperator = rowElem.find('.btn-filter .icon-dropdown:first').getIconName().replace('filter-', '');
         }).popupmenu(popupOpts)
           .off('selected.datagrid-filter')
           .on('selected.datagrid-filter', () => {
@@ -1672,15 +1675,15 @@ Datagrid.prototype = {
             if (data) {
               data.destroy();
             }
+
             activeMenu = null;
-            const rowElem = filterBtn.closest('th[role="columnheader"]');
             const col = self.columnById(rowElem.attr('data-column-id'))[0];
+            const input = rowElem.find('input');
+            const svg = rowElem.find('.btn-filter .icon-dropdown:first');
+            const operator = svg.getIconName().replace('filter-', '');
 
             // Set datepicker and numbers filter with range/single
             if (col && /date|integer|decimal/.test(col.filterType)) {
-              const input = rowElem.find('input');
-              const svg = rowElem.find('.btn-filter .icon-dropdown:first');
-              const operator = svg.getIconName().replace('filter-', '');
               if (col.filterType === 'date') {
                 const datepickerOptions = col.editorOptions || {};
 
@@ -1710,6 +1713,9 @@ Datagrid.prototype = {
                 }
               }
             }
+
+            const lookupValue = input.val();
+            self.element.triggerHandler('filterOperatorChanged', {operator: operator, defaultOperator: defaultOperator, value: lookupValue, columnId: rowElem.attr('data-column-id')});
             self.applyFilter(null, 'selected');
           });
       }
