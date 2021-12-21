@@ -5,6 +5,7 @@
 - `[Calendar]` Added an option to configure month label to use abbreviation and changed month label to display on the first day of the months rendered in calendar. ([#5941](https://github.com/infor-design/enterprise/issues/5941))
 - `[Cards]` Added focus state on selected cards. ([#5684](https://github.com/infor-design/enterprise/issues/5684))
 - `[Colorpicker]` Fixed a bug where the red diagonal line that goes beyond its border when field-short/form-layout-compact is used. ([#5744](https://github.com/infor-design/enterprise/issues/5744))
+- `[Datagrid]` Fixed a bug where the maskOptions function is never called when the grid has filtering. ([#5847](https://github.com/infor-design/enterprise/issues/5847))
 - `[Fieldset]` Implemented design improvements. ([#5638](https://github.com/infor-design/enterprise/issues/5638))
 - `[Dropdown]` Clear search matches after an item is selected. ([#5632](https://github.com/infor-design/enterprise/issues/5632))
 - `[Dropdown]` Shorten filter delay for single character entries. ([#5793](https://github.com/infor-design/enterprise/issues/5793))
@@ -17,10 +18,12 @@
 
 ## v4.59.0 Features
 
+- `[Cards]` Added mobile enhancements and style changes. ([#5609](https://github.com/infor-design/enterprise/issues/5609))
 - `[Button]` Added test scripts for button. ([#5851](https://github.com/infor-design/enterprise/issues/5851))
 - `[Column]` Added example page for legend colors. ([#5761](https://github.com/infor-design/enterprise/issues/5761))
 - `[Datagrid]` Added datagrid feature using arrow keys to select. ([#5713](https://github.com/infor-design/enterprise/issues/5713))
 - `[Datagrid]` Added exportToCsv option for datagrid toolbar. ([#5786](https://github.com/infor-design/enterprise/issues/5786))
+- `[Toolbar-Flex]` Added responsive design for searchfield with categories and basic searchfield. ([#5619](https://github.com/infor-design/enterprise/issues/5619))
 - `[Timepicker]` Added settings in timepicker to limit the hours that can be selected. ([#5880](https://github.com/infor-design/enterprise/issues/5880))
 
 ## v4.58.2 Fixes
