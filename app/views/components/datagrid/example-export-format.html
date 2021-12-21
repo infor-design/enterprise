@@ -122,27 +122,29 @@
 
       $('#locale').on('change', function () {
         const url = location.href.split('?');
-        const query = url[1].split('&')
-        
-        let noLocation = true;
+        let noLocale = true;
         let queryParams = {}
 
-        query.forEach(q => {
-          const pair = q.split('=');
-
-          if (pair[0] === 'locale') {
-            queryParams[pair[0]] = $(this).val();
-            noLocation = false;
-          } else {
-            queryParams[pair[0]] = pair[1]
-          }
-        });
-        
-        if (noLocation) {
-          queryParams['locale'] = $(this.val());
+        if (url.length > 1) {
+          const query = url[1].split('&')
+          
+          query.forEach(q => {
+            const pair = q.split('=');
+  
+            if (pair[0] === 'locale') {
+              queryParams[pair[0]] = $(this).val();
+              noLocale = false;
+            } else {
+              queryParams[pair[0]] = pair[1]
+            }
+          });
         }
 
-        location.href = window.location.origin + window.location.pathname + `?${$.param(queryParams)}`;
+        if (noLocale) {
+          queryParams['locale'] = $(this).val();
+        }
+
+        location.href = `${url[0]}?${$.param(queryParams)}`;
       });
   });
   </script>
