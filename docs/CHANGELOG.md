@@ -27,6 +27,10 @@
 - `[Toolbar-Flex]` Added responsive design for searchfield with categories and basic searchfield. ([#5619](https://github.com/infor-design/enterprise/issues/5619))
 - `[Timepicker]` Added settings in timepicker to limit the hours that can be selected. ([#5880](https://github.com/infor-design/enterprise/issues/5880))
 
+## v4.58.3 Fixes
+
+- `[Datagrid]` Added new event `filteroperatorchanged` to datagrid. ([#5899](https://github.com/infor-design/enterprise/issues/5899))
+
 ## v4.58.2 Fixes
 
 - `[Toolbar]` Fixed an issue where things in the page get scrambled if you have a button with undefined ids. ([#1194](https://github.com/infor-design/enterprise-ng/issues/1194))
