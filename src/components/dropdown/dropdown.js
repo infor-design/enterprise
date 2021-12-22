@@ -1488,7 +1488,7 @@ Dropdown.prototype = {
         // If search mode is on, Tab should 'select' the currently highlighted
         // option in the list, update the SearchInput and close the list.
         if (self.isOpen()) {
-          if (self.filterTerm && self.filterTerm.length === 1) {
+          if (self.filterTerm.length === 1) {
             self.selectStartsWith(self.filterTerm);
           } else if (!this.settings.multiple && options.length && selectedIndex > -1) {
             // store the current selection
@@ -1498,6 +1498,8 @@ Dropdown.prototype = {
 
           self.closeList('tab');
           this.activate();
+        } else if (self.filterTerm.length === 1) {
+          self.selectStartsWith(self.filterTerm);
         }
         // allow tab to propagate otherwise
         return true;   //eslint-disable-line
@@ -1707,7 +1709,7 @@ Dropdown.prototype = {
     if (isEscapeKey || key === 'Tab') {
       // In nosearch mode, bypass the typeahead autocomplete and pass keydown events
       // along to the list elements
-      if (this.settings.noSearch && this.isOpen()) {
+      if (this.filterTerm.length === 1 || (this.settings.noSearch && this.isOpen())) {
         return this.handleKeyDown(target, e);
       }
 
