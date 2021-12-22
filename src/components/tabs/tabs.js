@@ -129,7 +129,7 @@ Tabs.prototype = {
     const self = this;
     let tabPanelContainer;
     let moveTabPanelContainer = false;
-    const localeExemptions = ['en-US', 'de-DE', 'fr-FR', 'ja-JP', 'zh-CN', 'zh-Hans', 'zh-tw', 'zh-Hant'];
+    const localeExemptions = ['en-US', 'de-DE', 'ja-JP', 'zh-CN', 'zh-Hans', 'zh-TW', 'zh-Hant'];
 
     // Check for a tab panel container immediately after the `.tab-container`
     // element (default as of IDS Enterprise 4.3.0)
