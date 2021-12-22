@@ -729,6 +729,12 @@
   }
 }
 
+.tab-list-spillover {
+  li a > .count {
+    display: none;
+  }
+}
+
 .popupmenu.tab-list-spillover,
 .popupmenu.dropdown-tab {
   .icon {
