@@ -281,6 +281,7 @@ BusyIndicator.prototype = {
       self.overlay = undefined;
       self.element.trigger('aftercomplete.busyindicator');
       self.element.off('complete.busyindicator');
+      self.element.trigger('hide.busyindicator');
     }, 600);
   },
 
