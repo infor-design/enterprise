@@ -58,6 +58,7 @@
   <script>
   $('body').one('initialized', function () {
       var grid,
+      gridApi,
         columns = [],
         data = [];
   
@@ -90,6 +91,8 @@
         dataset: data,
         toolbar: {personalize: true, results: true, exportToExcel: false}
       });
+
+      gridApi = grid.data('datagrid');
 
       $('#export-to-csv').on('click', function () {
         gridApi.exportToCsv('myExport');
