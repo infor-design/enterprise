@@ -97,7 +97,7 @@ describe('Editor example-index tests', () => {
     expect(await element(by.css('.editor img')).isPresent()).toBeFalsy();
   });
 
-  fit('Should insert placeholder image if the image button is clicked and modal confirmed', async () => {
+  it('Should insert placeholder image if the image button is clicked and modal confirmed', async () => {
     const imageBtn = await element(by.css('.editor-toolbar .btn[data-action="image"]'));
 
     // Open the Image Modal
