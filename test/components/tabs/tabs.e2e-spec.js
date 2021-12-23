@@ -628,7 +628,7 @@ if (utils.isChrome() && utils.isCI()) {
       tabMore.click();
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.imageComparison.checkElement(maincontent, 'tabs-count-top')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(maincontent, 'tabs-count-bottom')).toEqual(0);
     });
   });
 }
