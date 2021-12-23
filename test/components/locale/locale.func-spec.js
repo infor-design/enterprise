@@ -2214,7 +2214,7 @@ describe('Locale API', () => {
   it('Should correct some missing translations', () => {
     Locale.set('tl-PH');
 
-    expect(Locale.translate('Clickable')).toEqual('Napipindot sa editor');
+    expect(Locale.translate('Clickable')).toEqual('Clickable sa editor');
     expect(Locale.translate('Columns')).toEqual('Mga kolum');
     expect(Locale.translate('Component')).toEqual('Bahagi');
     expect(Locale.translate('Classic')).toEqual('Klasiko');
