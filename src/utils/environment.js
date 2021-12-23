@@ -89,7 +89,7 @@ const Environment = {
     const macosPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'];
     if (macosPlatforms.indexOf(platform) > -1 && !/Linux/.test(platform)) {
       cssClasses += 'is-mac ';
-      this.os.name = 'Mac OS X';
+      this.os.name = 'mac';
     }
 
     if (ua.indexOf('Firefox') > 0) {
@@ -256,8 +256,14 @@ const Environment = {
     }
 
     switch (os) { //eslint-disable-line
+      case 'Windows 10':
+        osVersion = '';
+        os = 'Windows';
+        break;
+
       case 'Mac OS X':
-        osVersion = /Mac OS X ([1-9][0-9][\.\_\d]+)/.exec(nUAgent)[1].replace(/\_/g, '.'); //eslint-disable-line
+        osVersion = '';
+        os = 'Mac OS';
         break;
 
       case 'Android':
