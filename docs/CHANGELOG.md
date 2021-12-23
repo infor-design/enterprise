@@ -2,7 +2,7 @@
 
 ## v4.59.0 Markup Changes
 
-- `[About]` Changed the OS Version to not show the version. This is because this information is incorrect and the correct information is no longer given by the browser. Also using the userAgent is deprecated in newer browsers. ([#5813](https://github.com/infor-design/enterprise/issues/5813))
+- `[About]` Changed the OS Version to not show the version. This is because this information is incorrect and the correct information is no longer given by newer versions of Operating systems in any browser. or this reason the version is removed from the OS field on the about dialog. ([#5813](https://github.com/infor-design/enterprise/issues/5813))
 
 ## v4.59.0 Fixes
 
