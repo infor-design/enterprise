@@ -19,6 +19,34 @@
     // display: contents;
     position: sticky;
   }
+
+  .swipe-action-right,
+  .btn-swipe-action-left {
+    .btn-swipe-action-right,
+    .btn-swipe-action-left {
+      span {
+        padding-left: 0 !important;
+
+        &:nth-child(3) {
+          display: inline-block;
+          overflow: hidden;
+          padding-left: 5px !important;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          width: 87px;
+        }
+      }
+    }
+  }
+}
+
+.swipe-action-text-container {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 87px;
 }
 
 // Hide scroll bar
@@ -46,12 +74,16 @@
 // Style the action buttons
 .swipe-action-left {
   background-color: $swipeaction-left-bg-color;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
   scroll-snap-align: start;
   scroll-snap-stop: always;
 }
 
 .swipe-action-right {
   background-color: $swipeaction-right-bg-color;
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
   justify-content: flex-end;
   scroll-snap-align: start;
   scroll-snap-stop: always;
@@ -68,6 +100,11 @@
   }
 }
 
+.btn-swipe-action-left {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
 // Style the buttons
 .btn-swipe-action-left,
 .btn-swipe-action-right {
@@ -75,16 +112,19 @@
   border-radius: 0;
   display: block;
   height: 100%;
+  line-height: 0;
   margin: 0;
-  padding: 0 8px 8px;
+  padding: 0 16px;
+  text-align: center;
   white-space: inherit;
-  width: 85px;
+  width: 100px;
 
   .icon {
+    color: inherit;
     display: block;
-    height: 10px;
-    margin: 5px auto;
-    width: 10px;
+    height: 16px;
+    margin: 0 auto 5px;
+    width: 16px;
   }
 
   &:focus {
@@ -105,6 +145,8 @@
 
 .btn-swipe-action-right {
   background-color: $swipeaction-right-bg-color;
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
   color: $swipeaction-right-color;
 
   &:hover {

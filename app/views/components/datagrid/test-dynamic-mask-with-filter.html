@@ -1,0 +1,71 @@
+<div class="row">
+  <div class="twelve columns">
+    <br />
+    <h3>Grid Example: Customization</h3>
+    <p>
+    Shows you can dynamically set a mask on different cells.
+    In this example the last row (Gold Pieces) allows decimals in the quantity column.
+    The other cells allow just integer values (no decimal).
+    </p>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+    <div id="readonly-datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+    $('body').on('initialized', function () {
+     //Locale.set('en-US').done(function () {
+      var grid,
+        columns = [],
+        data = [];
+
+      // Some Sample Data
+      data.push({ id: 1, productId: 2142201, productName: 'Camera', activity:  'Assemble Paint', quantity: 1, price: 210.99, status: 'OK', orderDate: new Date(2014, 12, 8), action: 'Action', ordered: 1});
+      data.push({ id: 2, productId: 2241202, productName: 'Camera', activity:  'Inspect and Repair', quantity: 1, price: 210.99, status: '', orderDate: new Date(2015, 7, 3), action: 'On Hold'});
+      data.push({ id: 3, productId: 2342203, productName: 'Phone', activity:  'Inspect and Repair', quantity: 1, price: 120.99, status: null, orderDate: new Date(2014, 6, 3), action: 'Action', });
+      data.push({ id: 4, productId: 2445204, productName: 'Gold Pieces', activity:  'Assemble Paint', quantity: 9.25, price: 210.99, status: 'OK', orderDate: new Date(2015, 3, 3), action: 'Action', pieces: true});
+
+      var maskFormatter = function (row, cell, value, column, item) {
+        console.log('maskFormatter is called');
+
+        var defaults = {
+          patternOptions: {allowNegative: true,
+          allowDecimal: item.pieces ? true : false,
+          allowThousandsSeparator: false,
+          integerLimit: 4, decimalLimit: item.pieces ? 2 : 0,
+          symbols: {
+            thousands: ',',
+            decimal: '.',
+            negative: '-'
+          }},
+          process: 'number'
+        };
+
+        return defaults;
+      };
+
+      //Define Columns for the Grid.
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', filterType: 'integer', editor: Editors.Input});
+      columns.push({ id: 'productDesc', name: 'Product Desc', sortable: false, field: 'productName', filterType: 'text', editor: Editors.Input});
+      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', maskOptions: maskFormatter, filterType: 'decimal', editor: Editors.Input,
+        filterMaskOptions: {process: 'number', patternOptions: {allowDecimal: true, allowNegative: true, allowLeadingZeros: true, allowThousandsSeparator: false, integerLimit: 4, decimalLimit: 3}}});
+      columns.push({ id: 'activity', name: 'Activity', field: 'activity', filterType: 'text', editor: Editors.Input});
+
+      //Init and get the api for the grid
+      $('#readonly-datagrid').datagrid({
+        columns: columns,
+        dataset: data,
+        editable: true,
+        clickToSelect: false,
+        filterable: true,
+        filterWhenTyping: false,
+        selectable: 'multiple',
+      });
+    });
+
+</script>

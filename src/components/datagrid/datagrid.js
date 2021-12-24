@@ -1574,11 +1574,11 @@ Datagrid.prototype = {
               );
             }
           } else {
-            if (col.filterMaskOptions) {
+            if (col.filterMaskOptions && typeof col.filterMaskOptions !== 'function') {
               col.filterMaskOptions = utils.extend(true, {}, decimalDefaults, col.filterMaskOptions);
             }
 
-            if (col.maskOptions) {
+            if (col.maskOptions && typeof col.maskOptions !== 'function') {
               col.maskOptions = utils.extend(true, {}, decimalDefaults, col.maskOptions);
             }
           }
@@ -1658,6 +1658,8 @@ Datagrid.prototype = {
       const filterBtn = $(this);
       const popupOpts = { trigger: 'immediate', offset: { y: 15 }, placementOpts: { strategies: ['flip', 'nudge'] } };
       const popupmenu = filterBtn.data('popupmenu');
+      const rowElem = filterBtn.closest('th[role="columnheader"]');
+      let defaultOperator = '';
 
       if (popupmenu) {
         popupmenu.close(true, true);
@@ -1665,6 +1667,7 @@ Datagrid.prototype = {
         filterBtn.off('beforeopen.datagrid-filter').on('beforeopen.datagrid-filter', (e, menu, api) => {
           self.hideTooltip();
           activeMenu = api;
+          defaultOperator = rowElem.find('.btn-filter .icon-dropdown:first').getIconName().replace('filter-', '');
         }).popupmenu(popupOpts)
           .off('selected.datagrid-filter')
           .on('selected.datagrid-filter', () => {
@@ -1672,15 +1675,15 @@ Datagrid.prototype = {
             if (data) {
               data.destroy();
             }
+
             activeMenu = null;
-            const rowElem = filterBtn.closest('th[role="columnheader"]');
             const col = self.columnById(rowElem.attr('data-column-id'))[0];
+            const input = rowElem.find('input');
+            const svg = rowElem.find('.btn-filter .icon-dropdown:first');
+            const operator = svg.getIconName().replace('filter-', '');
 
             // Set datepicker and numbers filter with range/single
             if (col && /date|integer|decimal/.test(col.filterType)) {
-              const input = rowElem.find('input');
-              const svg = rowElem.find('.btn-filter .icon-dropdown:first');
-              const operator = svg.getIconName().replace('filter-', '');
               if (col.filterType === 'date') {
                 const datepickerOptions = col.editorOptions || {};
 
@@ -1710,6 +1713,17 @@ Datagrid.prototype = {
                 }
               }
             }
+
+            const lookupValue = input.val();
+            const columnId = rowElem.attr('data-column-id');
+            const options = {
+              operator,
+              defaultOperator,
+              value: lookupValue,
+              columnId
+            };
+
+            self.element.triggerHandler('filteroperatorchanged', [options]);
             self.applyFilter(null, 'selected');
           });
       }
@@ -6584,7 +6598,7 @@ Datagrid.prototype = {
         if (!self.settings.cellNavigation && self.settings.rowNavigation) {
           const rowNodes = self.rowNodes($(this));
 
-          if (!rowNodes.hasClass('is-active-row')) { 
+          if (!rowNodes.hasClass('is-active-row')) {
             rowNodes.addClass('is-active-row');
             const index = self.actualRowIndex(rowNodes);
 
