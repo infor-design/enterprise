@@ -825,6 +825,7 @@ const editors = {
     };
 
     this.val = function (v) {
+      // eslint-disable-next-line compat/compat
       return new Promise((resolve) => {
         setTimeout(() => {
           resolve(getVal(v));

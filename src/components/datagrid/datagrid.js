@@ -9922,6 +9922,7 @@ Datagrid.prototype = {
       return;
     }
 
+    const self = this;
     const input = this.editor.input;
     let newValue;
     let cellNode;
@@ -9932,110 +9933,111 @@ Datagrid.prototype = {
 
     // Editor.getValue
     if (typeof this.editor.val === 'function') {
-      this.editor.val().then((v) => {
-        newValue = v;
-        console.log('1', newValue)
-      });
-      // or I was thinking of doing newValue = await this.editor.val()
+      newValue = this.editor.val();
     }
 
-    if (isEditor) {
-      cellNode = this.editor.td;
-    } else if (isFileupload) {
-      console.log('2', newValue)
-      if (this.editor.status === 'clear') {
-        newValue = '';
-      } else if (this.editor.status === 'init' || this.editor.status === 'cancel') {
-        newValue = this.editor.originalValue;
+    // eslint-disable-next-line compat/compat
+    Promise.resolve(newValue).then((v) => {
+      newValue = v;
+      if (isEditor) {
+        cellNode = self.editor.td;
+      } else if (isFileupload) {
+        if (self.editor) {
+          if (self.editor.status === 'clear') {
+            newValue = '';
+          } else if (self.editor.status === 'init' || self.editor.status === 'cancel') {
+            newValue = self.editor.originalValue;
+          }
+        }
+        // Fix: Not sure why, but `input.closest('td')` did not work
+        cellNode = self.tableBody.find(`#${input.attr('id')}`).closest('td');
+        newValue = xssUtils.escapeHTML(newValue);
+      } else {
+        cellNode = input.closest('td');
+        newValue = xssUtils.escapeHTML(newValue);
       }
-      // Fix: Not sure why, but `input.closest('td')` did not work
-      cellNode = this.tableBody.find(`#${input.attr('id')}`).closest('td');
-      newValue = xssUtils.escapeHTML(newValue);
-    } else {
-      cellNode = input.closest('td');
-      newValue = xssUtils.escapeHTML(newValue);
-    }
 
-    let rowIndex;
-    let dataRowIndex;
-    if (this.settings.source !== null && isUseActiveRow) {
-      rowIndex = this.activeCell.rowIndex;
-      dataRowIndex = this.activeCell.dataRow;
-    } else {
-      rowIndex = this.actualRowIndex(cellNode.parent());
-      dataRowIndex = this.dataRowIndex(cellNode.parent());
-    }
+      let rowIndex;
+      let dataRowIndex;
+      if (self.settings.source !== null && isUseActiveRow) {
+        rowIndex = self.activeCell.rowIndex;
+        dataRowIndex = self.activeCell.dataRow;
+      } else {
+        rowIndex = self.actualRowIndex(cellNode.parent());
+        dataRowIndex = self.dataRowIndex(cellNode.parent());
+      }
 
-    const cell = cellNode.attr('aria-colindex') - 1;
-    const col = this.columnSettings(cell);
-    const rowData = this.settings.treeGrid ? this.settings.treeDepth[dataRowIndex].node :
-      this.getActiveDataset()[dataRowIndex];
-    let oldValue = this.fieldValue(rowData, col.field);
-    if (col.beforeCommitCellEdit && !isCallback) {
-      const vetoCommit = col.beforeCommitCellEdit({
-        cell,
-        row: dataRowIndex,
-        item: rowData,
-        editor: this.editor,
-        api: this
-      });
+      const cell = cellNode.attr('aria-colindex') - 1;
+      const col = self.columnSettings(cell);
+      const rowData = self.settings.treeGrid ? self.settings.treeDepth[dataRowIndex].node :
+        self.getActiveDataset()[dataRowIndex];
+      let oldValue = self.fieldValue(rowData, col.field);
+      if (col.beforeCommitCellEdit && !isCallback) {
+        const vetoCommit = col.beforeCommitCellEdit({
+          cell,
+          row: dataRowIndex,
+          item: rowData,
+          editor: self.editor,
+          api: self
+        });
 
-      if (vetoCommit === false) {
+        if (vetoCommit === false) {
+          return;
+        }
+      }
+
+      if (!self.editor) {
         return;
       }
-    }
 
-    if (!this.editor) {
-      return;
-    }
+      // Sanitize console methods
+      oldValue = xssUtils.sanitizeConsoleMethods(oldValue);
+      newValue = xssUtils.sanitizeConsoleMethods(newValue);
 
-    // Sanitize console methods
-    oldValue = xssUtils.sanitizeConsoleMethods(oldValue);
-    newValue = xssUtils.sanitizeConsoleMethods(newValue);
+      // Format Cell again
+      const isInline = cellNode.hasClass('is-editing-inline');
+      cellNode.removeClass('is-editing is-editing-inline has-singlecolumn');
 
-    // Format Cell again
-    const isInline = cellNode.hasClass('is-editing-inline');
-    cellNode.removeClass('is-editing is-editing-inline has-singlecolumn');
+      // Editor.destroy
+      self.editor.destroy();
+      self.editor = null;
 
-    // Editor.destroy
-    this.editor.destroy();
-    this.editor = null;
+      // Save the Cell Edit back to the data set
+      self.updateCellNode(
+        self.settings.groupable ? dataRowIndex : rowIndex,
+        cell,
+        newValue,
+        false,
+        isInline
+      );
+      const value = self.fieldValue(rowData, col.field);
 
-    // Save the Cell Edit back to the data set
-    this.updateCellNode(
-      this.settings.groupable ? dataRowIndex : rowIndex,
-      cell,
-      newValue,
-      false,
-      isInline
-    );
-    const value = this.fieldValue(rowData, col.field);
-
-    /**
-    * Fires after a cell goes out of edit mode.
-    * @event exiteditmode
-    * @memberof Datagrid
-    * @property {object} event The jquery event object
-    * @property {object} args Additional arguments
-    * @property {number} args.row The row that exited edit mode
-    * @property {number} args.cell The cell that exited edit mode
-    * @property {object} args.item The data for the row that exited edit mode
-    * @property {HTMLElement} args.target The cell html element that was entered
-    * @property {any} args.value The current cell value
-    * @property {any} args.oldValue The previous cell value
-    * @property {object} args.column The column object
-    * @property {object} args.editor The editor object
-    */
-    this.element.triggerHandler('exiteditmode', [{
-      row: rowIndex,
-      cell,
-      item: rowData,
-      target: cellNode,
-      value,
-      oldValue,
-      column: col,
-      editor: this.editor
-    }]);
+      /**
+      * Fires after a cell goes out of edit mode.
+      * @event exiteditmode
+      * @memberof Datagrid
+      * @property {object} event The jquery event object
+      * @property {object} args Additional arguments
+      * @property {number} args.row The row that exited edit mode
+      * @property {number} args.cell The cell that exited edit mode
+      * @property {object} args.item The data for the row that exited edit mode
+      * @property {HTMLElement} args.target The cell html element that was entered
+      * @property {any} args.value The current cell value
+      * @property {any} args.oldValue The previous cell value
+      * @property {object} args.column The column object
+      * @property {object} args.editor The editor object
+      */
+      self.element.triggerHandler('exiteditmode', [{
+        row: rowIndex,
+        cell,
+        item: rowData,
+        target: cellNode,
+        value,
+        oldValue,
+        column: col,
+        editor: self.editor
+      }]);
+    });
   },
 
   /**
