@@ -1,0 +1,51 @@
+<div class="row">
+    <div class="two-thirds column">
+        <div class="widget">
+          <div class="widget-header">
+            <h2 class="widget-title">Line Chart Title</h2>
+          </div>
+          <div class="widget-content">
+            <div id="line-example" class="chart-container">
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+  
+  <script id="line-script">
+  $('body').on('initialized', function () {
+  
+    var dataset = [{
+      data: [],
+      name: 'Component A',
+      legendShortName: 'Comp A',
+      legendAbbrName: 'A',
+      attributes: [
+       { name: 'id', value: 'line-comp-a' },
+       { name: 'data-automation-id', value: 'automation-id-line-comp-a' }
+     ]
+    }, {
+      data: [],
+      name: 'Component B',
+      legendShortName: 'Comp B',
+      legendAbbrName: 'B',
+      attributes: [
+       { name: 'id', value: 'line-comp-b' },
+       { name: 'data-automation-id', value: 'automation-id-line-comp-b' }
+     ]
+    }, {
+      data: [],
+      name: 'Component C',
+      legendShortName: 'Comp C',
+      legendAbbrName: 'C',
+      attributes: [
+       { name: 'id', value: 'line-comp-c' },
+       { name: 'data-automation-id', value: 'automation-id-line-comp-c' }
+     ]
+    }];
+  
+    $('#line-example').chart({type: 'line', dataset: dataset, yAxis: {ticks: {number: 10, format: 's'} } });
+  
+  });
+  </script>
+  
