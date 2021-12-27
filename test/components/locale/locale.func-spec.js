@@ -2210,19 +2210,4 @@ describe('Locale API', () => {
     expect(Locale.translate('StrikeThrough')).toEqual('穿透');
     expect(Locale.translate('InsertAnchor')).toEqual('插入定位标记');
   });
-
-  it('Should correct some missing translations', () => {
-    Locale.set('tl-PH');
-
-    expect(Locale.translate('Clickable')).toEqual('Clickable sa editor');
-    expect(Locale.translate('Columns')).toEqual('Mga Column');
-    expect(Locale.translate('Component')).toEqual('Bahagi');
-    expect(Locale.translate('Classic')).toEqual('Klasiko');
-    expect(Locale.translate('ClassicDarkTheme')).toEqual('Klasiko Dark');
-    expect(Locale.translate('ClassicLightTheme')).toEqual('Klasiko Light');
-    expect(Locale.translate('ClassicHighContrastTheme')).toEqual('Klasiko High Contrast');
-    expect(Locale.translate('Device')).toEqual('Pangalan ng aparato');
-    expect(Locale.translate('ExtraSmall')).toEqual('Pinaka Maliit');
-    expect(Locale.translate('Roles')).toEqual('Mga tungkulin');
-  });
 });
