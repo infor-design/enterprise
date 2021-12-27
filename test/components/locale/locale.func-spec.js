@@ -2215,7 +2215,7 @@ describe('Locale API', () => {
     Locale.set('tl-PH');
 
     expect(Locale.translate('Clickable')).toEqual('Clickable sa editor');
-    expect(Locale.translate('Columns')).toEqual('Mga kolum');
+    expect(Locale.translate('Columns')).toEqual('Mga Column');
     expect(Locale.translate('Component')).toEqual('Bahagi');
     expect(Locale.translate('Classic')).toEqual('Klasiko');
     expect(Locale.translate('ClassicDarkTheme')).toEqual('Klasiko Dark');
