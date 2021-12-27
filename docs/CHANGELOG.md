@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.59.0 Markup Changes
+
+- `[About]` Changed the OS Version to not show the version. This is because this information is incorrect and the correct information is no longer given by newer versions of Operating systems in any browser. or this reason the version is removed from the OS field on the about dialog. ([#5813](https://github.com/infor-design/enterprise/issues/5813))
+
 ## v4.59.0 Fixes
 
 - `[Calendar]` Added an option to configure month label to use abbreviation and changed month label to display on the first day of the months rendered in calendar. ([#5941](https://github.com/infor-design/enterprise/issues/5941))
