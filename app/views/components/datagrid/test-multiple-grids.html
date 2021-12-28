@@ -101,6 +101,7 @@
     //Locale.set('en-US').done(function () {
       var grid,
         columns = [],
+        columns2 = [],
         data = [];
 
       // Some Sample Data
@@ -122,6 +123,16 @@
       columns.push({ id: 'status', name: 'Status', field: 'status', filterType: 'text', formatter: Formatters.Text});
       columns.push({ id: 'action', name: 'Action Item', field: 'action', filterType: 'text'});
 
+      //Define Columns2 for the Grid.
+      columns2.push({ id: 'productId', name: 'Product Id', field: 'productId', filterType: 'text', formatter: Formatters.Readonly});
+      columns2.push({ id: 'productName', name: 'Product Name', field: 'productName', filterType: 'text', formatter: Formatters.Hyperlink});
+      columns2.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', filterType: 'text'});
+      columns2.push({ id: 'quantity', name: 'Quantity', field: 'quantity', filterType: 'integer'});
+      columns2.push({ id: 'price', name: 'Price', field: 'price', filterType: 'text', formatter: Formatters.Decimal});
+      columns2.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', filterType: 'text', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+      columns2.push({ id: 'status', name: 'Status', field: 'status', filterType: 'text', formatter: Formatters.Text});
+      columns2.push({ id: 'action', name: 'Action Item', field: 'action', filterType: 'text'});
+
       //Init and get the api for the grid
       $('#datagrid').datagrid({
         columns: columns,
@@ -140,7 +151,7 @@
       });
 
       $('#datagrid2').datagrid({
-        columns: columns,
+        columns: columns2,
         columnReorder: true,
         filterable: true,
         dataset: data,

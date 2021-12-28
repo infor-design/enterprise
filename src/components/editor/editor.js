@@ -857,7 +857,7 @@ Editor.prototype = {
     // Open link in new windows/tab, if clicked with command-key(for mac) or ctrl-key(for windows)
     this.element.on('mousedown.editor', 'a', function (e) {
       const href = $(this).attr('href');
-      if (env.browser.name !== 'firefox' && (env.os.name === 'Mac OS X' && (e.metaKey || e.ctrlKey))) {
+      if (env.browser.name !== 'firefox' && (env.os.name === 'mac' && (e.metaKey || e.ctrlKey))) {
         window.open(href, '_blank');
         e.preventDefault();
       }
