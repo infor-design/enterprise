@@ -1039,7 +1039,8 @@ Modal.prototype = {
       self.changeObserver.observe(self.element[0], { childList: true, subtree: true });
       self.setFocusableElems();
 
-      let focusElem = $(self.focusableElems).not('.modal-header .searchfield').first();
+      let focusElem = $(self.focusableElems).not('.modal-header .searchfield')
+        .not('[style*="display: none"]').first();
       if (focusElem.length === 0) {
         focusElem = thisElem.element.find('.btn-modal-primary');
       }
