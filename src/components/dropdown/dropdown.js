@@ -1694,7 +1694,7 @@ Dropdown.prototype = {
 
     // Mac OSX: "backspace" delete key
     // Everything else: DEL key (numpad, control keys)
-    const isOSX = env.os.name === 'Mac OS X';
+    const isOSX = env.os.name === 'mac';
     if ((!isOSX && key === 'Delete') || (isOSX && key === 'Backspace') || key === 'Backspace' && this.settings.noSearch) {
       this.selectBlank();
 
