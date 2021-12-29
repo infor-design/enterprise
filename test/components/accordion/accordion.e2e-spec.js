@@ -125,7 +125,7 @@ describe('Accordion example-disabled tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    fit('Should not visual regress on example-disabled', async () => {
+    it('Should not visual regress on example-disabled', async () => {
       const mainEl = await element(by.css('div[role=main]'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(mainEl), config.waitsFor);
@@ -185,7 +185,7 @@ describe('Accordion example-index tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    fit('Should not visual regress', async () => {
+    it('Should not visual regress', async () => {
       const buttonEl = await element.all(by.tagName('button')).get(2);
       await buttonEl.click();
 
