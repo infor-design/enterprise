@@ -33,7 +33,7 @@ describe('Application Menu index tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('should not visually regress on example-index', async () => {
+    fit('should not visually regress on example-index', async () => {
       const button = await element(by.css('.application-menu-trigger'));
       await button.click();
 
@@ -65,7 +65,7 @@ describe('Application Menu filter tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('should not visually regress when filtered', async () => {
+    fit('should not visually regress when filtered', async () => {
       // Set window size
       const windowSize = await browser.driver.manage().window().getSize();
       await browser.driver.manage().window().setSize(1280, 718);
@@ -203,7 +203,7 @@ describe('Application Menu personalize roles tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('should not visually regress on personalize roles', async () => {
+    fit('should not visually regress on personalize roles', async () => {
       const windowSize = await browser.driver.manage().window().getSize();
       await browser.driver.manage().window().setSize(1280, 718);
       const section = await element(by.css('body.no-scroll'));
