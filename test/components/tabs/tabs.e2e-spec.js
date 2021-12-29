@@ -592,3 +592,43 @@ describe('Tabs attributes tests', () => {
     expect(await newTab.getAttribute('data-automation-id')).toEqual('tabs-test-new-tab-0-a');
   });
 });
+
+if (utils.isChrome() && utils.isCI()) {
+  describe('Tabs counts position visual regression tests', () => {
+    it('Should show the counts on top of the labels', async () => {
+      await utils.setPage('/components/tabs/example-counts?locale=de-DE');
+      const maincontent = await element(by.id('maincontent'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.visibilityOf(maincontent), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
+
+      // Resize the page to show the spillover
+      await browser.driver.manage().window().setSize(766, 600);
+      await browser.driver.sleep(config.sleepLonger);
+
+      const tabMore = await element(by.css('.tab-more'));
+      tabMore.click();
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.imageComparison.checkElement(maincontent, 'tabs-count-top')).toEqual(0);
+    });
+
+    it('Should show the counts at the bottom of the labels', async () => {
+      await utils.setPage('/components/tabs/example-counts?locale=pt-PT');
+      const maincontent = await element(by.id('maincontent'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.visibilityOf(maincontent), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
+
+      // Resize the page to show the spillover
+      await browser.driver.manage().window().setSize(766, 600);
+      await browser.driver.sleep(config.sleepLonger);
+
+      const tabMore = await element(by.css('.tab-more'));
+      tabMore.click();
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.imageComparison.checkElement(maincontent, 'tabs-count-bottom')).toEqual(0);
+    });
+  });
+}
