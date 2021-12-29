@@ -1353,6 +1353,7 @@ MonthView.prototype = {
     el.off('mouseenter.legend mouseleave.legend');
     let hoverColor = '';
     const opacity = '0.7';
+    let normalColor = '';
 
     if (hex) {
       if (this.settings.customColors) {
@@ -1369,9 +1370,8 @@ MonthView.prototype = {
           hex = theme.themeColors().palette[name][number].value;
         }
         // set color on elem at .3 of provided color as per design
-        const normalColor = colorUtils.hexToRgba(hex, 0.3);
+        normalColor = colorUtils.hexToRgba(hex, 0.3);
         hoverColor = colorUtils.hexToRgba(hex, 0.7);
-        
 
         if (self.settings.inPage) {
           el[0].style.setProperty('--legendcolor', normalColor);
