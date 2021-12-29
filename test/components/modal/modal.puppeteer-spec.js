@@ -38,7 +38,7 @@ describe('Modal open example-modal tests on click', () => {
   });
 });
 
-fdescribe('Modal with hidden field tests on click', () => {
+describe('Modal with hidden field tests on click', () => {
   const url = 'http://localhost:4000/components/modal/example-hidden-field';
   beforeEach(async () => {
     await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
