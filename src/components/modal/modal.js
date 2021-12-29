@@ -1040,7 +1040,7 @@ Modal.prototype = {
       self.setFocusableElems();
 
       let focusElem = $(self.focusableElems).not('.modal-header .searchfield')
-        .not('[style*="display: none"]').first();
+        .not(':hidden').first();
       if (focusElem.length === 0) {
         focusElem = thisElem.element.find('.btn-modal-primary');
       }
