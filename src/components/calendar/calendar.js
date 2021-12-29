@@ -61,6 +61,7 @@ const COMPONENT_NAME_DEFAULTS = {
     restrictMonths: false
   },
   dayLegend: null,
+  customColors: false,
   displayRange: {
     start: '',
     end: '',
@@ -272,6 +273,7 @@ Calendar.prototype = {
       onChangeView: this.onChangeToMonth,
       disable: this.settings.disable,
       showLegend: this.settings.dayLegend !== null,
+      customColors: this.settings.customColors,
       legend: this.settings.dayLegend,
       hitbox: this.settings.hitbox,
       attributes: this.settings.attributes,

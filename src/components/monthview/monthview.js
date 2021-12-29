@@ -44,6 +44,7 @@ const COMPONENT_NAME_DEFAULTS = {
     isEnable: false,
     restrictMonths: false
   },
+  customColors: false,
   legend: [],
   hideDays: false, // TODO
   showMonthYearPicker: true,
@@ -1352,24 +1353,33 @@ MonthView.prototype = {
     el.off('mouseenter.legend mouseleave.legend');
 
     if (hex) {
-      if (hex.indexOf('#') === -1) {
-        const name = hex.replace(/[0-9]/g, '');
-        const number = hex.substr(hex.length - 2, 2) * 10;
-        hex = theme.themeColors().palette[name][number].value;
+      if (this.settings.customColors) {
+        if (self.settings.inPage) {
+          el[0].style.setProperty('--legendcolor', hex);
+        } else {
+          el[0].style.backgroundColor = hex;
+        }
+      } else {
+        if (hex.indexOf('#') === -1) {
+          const name = hex.replace(/[0-9]/g, '');
+          const number = hex.substr(hex.length - 2, 2) * 10;
+          hex = theme.themeColors().palette[name][number].value;
+        }
+        // set color on elem at .3 of provided color as per design
+        const normalColor = colorUtils.hexToRgba(hex, 0.3);
+        const hoverColor = colorUtils.hexToRgba(hex, 0.7);
+        const th = this.table[0]?.querySelector('thead th');
+
+        if (self.settings.inPage) {
+          el[0].style.setProperty('--legendcolor', normalColor);
+        } else {
+          el[0].style.backgroundColor = normalColor;
+        }
       }
-      // set color on elem at .3 of provided color as per design
-      const normalColor = colorUtils.hexToRgba(hex, 0.3);
-      const hoverColor = colorUtils.hexToRgba(hex, 0.7);
-      const th = this.table[0]?.querySelector('thead th');
 
       elem.addClass('is-colored');
       el[0].setAttribute('data-hex', hex);
-      if (self.settings.inPage) {
-        el[0].style.setProperty('--legendcolor', normalColor);
-      } else {
-        el[0].style.backgroundColor = normalColor;
-      }
-
+      
       // handle hover states
       el.on('mouseenter.legend', function () {
         const thisElem = $(this);
@@ -2421,17 +2431,27 @@ MonthView.prototype = {
       const series = s.legend[i];
       let hex = series.color;
 
-      if (hex.indexOf('#') === -1) {
+      if (hex.indexOf('#') === -1 && !s.customColors) {
         const name = hex.replace(/[0-9]/g, '');
         const number = hex.substr(hex.length - 2, 2) * 10;
         hex = theme.themeColors().palette[name][number].value;
       }
-
-      const item = '' +
+      
+      let item = '';
+      if (!s.customColors) {
+        item = '' +
         `<div class="monthview-legend-item">
           <span class="monthview-legend-swatch" style="background-color: ${colorUtils.hexToRgba(hex, 0.3)}"></span>
           <span class="monthview-legend-text">${series.name}</span>
         </div>`;
+      } else {
+        item = '' +
+        `<div class="monthview-legend-item">
+          <span class="monthview-legend-swatch" style="background-color: ${series.color}"></span>
+          <span class="monthview-legend-text">${series.name}</span>
+        </div>`;
+      }
+      
 
       this.legend.append(item);
     }
