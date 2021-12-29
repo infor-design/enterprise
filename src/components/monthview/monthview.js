@@ -1351,6 +1351,8 @@ MonthView.prototype = {
     let hex = this.getLegendColor(year, month, date);
     el[0].style.backgroundColor = '';
     el.off('mouseenter.legend mouseleave.legend');
+    let hoverColor = '';
+    const opacity = '0.7';
 
     if (hex) {
       if (this.settings.customColors) {
@@ -1359,6 +1361,7 @@ MonthView.prototype = {
         } else {
           el[0].style.backgroundColor = hex;
         }
+        hoverColor = hex;
       } else {
         if (hex.indexOf('#') === -1) {
           const name = hex.replace(/[0-9]/g, '');
@@ -1367,8 +1370,8 @@ MonthView.prototype = {
         }
         // set color on elem at .3 of provided color as per design
         const normalColor = colorUtils.hexToRgba(hex, 0.3);
-        const hoverColor = colorUtils.hexToRgba(hex, 0.7);
-        const th = this.table[0]?.querySelector('thead th');
+        hoverColor = colorUtils.hexToRgba(hex, 0.7);
+        
 
         if (self.settings.inPage) {
           el[0].style.setProperty('--legendcolor', normalColor);
@@ -1376,6 +1379,8 @@ MonthView.prototype = {
           el[0].style.backgroundColor = normalColor;
         }
       }
+
+      const th = this.table[0]?.querySelector('thead th');
 
       elem.addClass('is-colored');
       el[0].setAttribute('data-hex', hex);
@@ -1388,6 +1393,10 @@ MonthView.prototype = {
         const textColor = window.getComputedStyle(th).getPropertyValue('color');
 
         this.style.backgroundColor = hoverColor;
+
+        if (this.settings.customColors) {
+          this.style.opacity = opacity;
+        }
 
         if (self.settings.inPage) {
           this.style.color = textColor;
@@ -1415,6 +1424,8 @@ MonthView.prototype = {
         if (dayText) {
           dayText.style.backgroundColor = '';
         }
+
+        this.style.opacity = 1;
       });
     }
   },
@@ -2451,7 +2462,6 @@ MonthView.prototype = {
           <span class="monthview-legend-text">${series.name}</span>
         </div>`;
       }
-      
 
       this.legend.append(item);
     }
