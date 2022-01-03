@@ -1,19 +1,30 @@
 # What's New with Enterprise
 
+## v4.59.0 Markup Changes
+
+- `[About]` Changed the OS Version to not show the version. This is because this information is incorrect and the correct information is no longer given by newer versions of Operating systems in any browser. or this reason the version is removed from the OS field on the about dialog. ([#5813](https://github.com/infor-design/enterprise/issues/5813))
+
 ## v4.59.0 Fixes
 
 - `[Calendar]` Added an option to configure month label to use abbreviation and changed month label to display on the first day of the months rendered in calendar. ([#5941](https://github.com/infor-design/enterprise/issues/5941))
+- `[Calendar]` Fixed the personalize column checkbox not syncing when having two datagrids. ([#5859](https://github.com/infor-design/enterprise/issues/5859))
 - `[Cards]` Added focus state on selected cards. ([#5684](https://github.com/infor-design/enterprise/issues/5684))
 - `[Colorpicker]` Fixed a bug where the red diagonal line that goes beyond its border when field-short/form-layout-compact is used. ([#5744](https://github.com/infor-design/enterprise/issues/5744))
 - `[Datagrid]` Fixed a bug where the maskOptions function is never called when the grid has filtering. ([#5847](https://github.com/infor-design/enterprise/issues/5847))
 - `[Editor]` Removed duplicate attribute name value pair declaration in example page which causes image insertion to break. ([#5915](https://github.com/infor-design/enterprise/issues/5915))
 - `[Fieldset]` Implemented design improvements. ([#5638](https://github.com/infor-design/enterprise/issues/5638))
 - `[Dropdown]` Clear search matches after an item is selected. ([#5632](https://github.com/infor-design/enterprise/issues/5632))
+- `[Linechart]` Added default values on line width and y-axis when data in dataset is blank. ([#1172](https://github.com/infor-design/enterprise-ng/issues/1172))
 - `[Listview]` Fixed a bug where the alert icons in RTL were missing. ([#5827](https://github.com/infor-design/enterprise/issues/5827))
+- `[Locale]` Fixed latvian translation for records per page. ([#5969](https://github.com/infor-design/enterprise/issues/5969))
+- `[Locale]` Fixed latvian translation for Select All. ([#5895](https://github.com/infor-design/enterprise/issues/5895))
+- `[Locale]` Capitalized the finnished translation for seconds. ([#5894](https://github.com/infor-design/enterprise/issues/5894))
+- `[Locale]` Added missing translations for font picker. ([#5784](https://github.com/infor-design/enterprise/issues/5784))
 - `[Modal]` Fixed a close button overlapped when title is long. ([#5795](https://github.com/infor-design/enterprise/issues/5795))
 - `[Modal]` Modal exits if Escape key is pressed in datagrid. ([#5796](https://github.com/infor-design/enterprise/issues/5796))
 - `[Searchfield]` Fixed a bug where the close button icon is overlapping with the search icon in RTL. ([#5807](https://github.com/infor-design/enterprise/issues/5807))
 - `[Spinbox]` Fixed a bug where the spinbox controls still show the ripple effect even it's disabled. ([#5719](https://github.com/infor-design/enterprise/issues/5719))
+- `[Tabs]` Added the ability to set the position of counts via settings (top & bottom), removed the counts in spillover, and positioned the counts depending on the current locale. ([#5258](https://github.com/infor-design/enterprise/issues/5258))
 - `[Toolbar]` Fixed an issue where things in the page get scrambled if you have a button with undefined ids. ([#1194](https://github.com/infor-design/enterprise-ng/issues/1194))
 
 ## v4.59.0 Features
