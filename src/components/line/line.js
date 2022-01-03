@@ -138,7 +138,18 @@ Line.prototype = {
     this.element.addClass(cssClass);
 
     // Handle Empty Data Set
-    if (s.dataset.length === 0) {
+    let isEmpty = s.dataset.length === 0;
+    if (!isEmpty) {
+      let count = 0;
+      s.dataset.forEach((set) => {
+        if (set.data.length === 0) {
+          count++;
+        }
+      });
+      isEmpty = count === s.dataset.length;
+    }
+
+    if (isEmpty) {
       self.element.emptymessage(s.emptyMessage);
       return this;
     }
@@ -871,11 +882,14 @@ Line.prototype = {
    * @returns {string} the current y-axis value
    */
   getTransformYAxisValue(str) {
-    const arrayValue = str.split(',');
-    arrayValue.splice(0, 1).join('');
-    const stringOfYAxis = arrayValue.join(',');
+    if (str) {
+      const arrayValue = str.split(',');
+      arrayValue.splice(0, 1).join('');
+      const stringOfYAxis = arrayValue.join(',');
+      return stringOfYAxis.slice(0, -1);
+    }
 
-    return stringOfYAxis.slice(0, -1);
+    return '0';
   },
 
   /**
@@ -940,7 +954,7 @@ Line.prototype = {
     });
 
     yAxis.width = yAxis.el.getBBox().width;
-    line.width = line.el.getBBox().width;
+    line.width = line.el ? line.el.getBBox().width : 0;
     brief.xDiff = yAxis.width - line.width;
 
     if (!this.settings.selectable) {
@@ -1001,7 +1015,7 @@ Line.prototype = {
     if (!isLeftAxis) {
       // Reasign values, could be truncation applied
       yAxis.width = yAxis.el.getBBox().width;
-      line.width = line.el.getBBox().width;
+      line.width = line.el ? line.el.getBBox().width : 0;
       brief.xDiff = yAxis.width - line.width;
       const variations = [
         { min: 0, max: 23, val: 62 },

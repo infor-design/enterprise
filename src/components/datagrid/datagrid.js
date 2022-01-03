@@ -6012,7 +6012,7 @@ Datagrid.prototype = {
         modal.element.find('.searchfield').searchfield({ clearable: true, tabbable: false });
         modal.element.find('.listview')
           .listview({
-            source: this.settings.columns,
+            source: self.settings.columns,
             template: `
             <ul>
             {{#dataset}}

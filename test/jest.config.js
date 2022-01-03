@@ -27,7 +27,6 @@ module.exports = {
 
   // The glob patterns Jest uses to detect test files
   testMatch: [
-    // '**/test/components/**/*puppeteer*.js'
-    '**/test/components/message/message.puppeteer-spec.js'
+    '**/test/components/**/*puppeteer*.js'
   ]
 };
