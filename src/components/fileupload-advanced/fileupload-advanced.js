@@ -231,6 +231,11 @@ FileUploadAdvanced.prototype = {
           e.stopPropagation();
           self.handleFileUpload(this.files);
         });
+
+      label.find('.hyperlink').on('click.fileuploadadvanced', function (e) {
+        e.stopPropagation();
+        self.handleFileUpload(this.files);
+      });
     }
 
     // If the files are dropped outside the div, files will open in the browser window.
@@ -260,7 +265,7 @@ FileUploadAdvanced.prototype = {
     this.totalCompleted = this.totalCompleted || 0;
 
     // Max files can be upload
-    const filesLen = this.totalCompleted + files.length + $('.progress', this.element).length;
+    const filesLen = this.totalCompleted + files?.length + $('.progress', this.element)?.length;
     if (filesLen > s.maxFiles) {
       this.showError(s.errorMaxFiles);
       return;
@@ -269,11 +274,10 @@ FileUploadAdvanced.prototype = {
       this.showError(s.errorMaxFilesInProcess);
       return;
     }
-
     const fileName = s.fileName.replace('[]', '');
 
     /* eslint-disable no-continue */
-    for (let i = 0, l = files.length; i < l; i++) {
+    for (let i = 0, l = files?.length; i < l; i++) {
       // Check if file type allowed
       if (!this.isFileTypeAllowed(files[i].name)) {
         this.showError(s.errorAllowedTypes, files[i]);
@@ -423,7 +427,24 @@ FileUploadAdvanced.prototype = {
       // Set "Remove from server" button action
       $('.action', rightSide).button().on('click.fileuploadadvanced', function () {
         $(this).off('click.fileuploadadvanced');
+
+        /**
+         * Fires before the attached file is removed.
+         *
+         * @event beforefileremove
+         * @memberof FileUploadAdvanced
+         * @property {object} event - The jquery event object
+         * @property {object} file uploaded
+         */
+        self.element.triggerHandler('beforefileremove', [file]);
+
         container.remove();
+
+        // Reverting back to zero to able to add a file again.
+        // This will only work when the maxFilesInProcess is 1.
+        if (self.settings.maxFilesInProcess === '1' && self.totalCompleted === 1) {
+          self.totalCompleted = 0;
+        }
 
         // TODO: server call for removing data
         data.remove();
@@ -534,6 +555,16 @@ FileUploadAdvanced.prototype = {
     }
 
     $('.action', container).button().on('click.fileuploadadvanced', () => {
+      /**
+      * Fires before the error message closes.
+      *
+      * @event beforeerrormessageremove
+      * @memberof FileUploadAdvanced
+      * @property {object} event - The jquery event object
+      * @property {object} status - `{ error, file }`
+      */
+      this.element.triggerHandler('beforeerrormessageremove', [{ error, file }]);
+
       container.remove();
     });
 
