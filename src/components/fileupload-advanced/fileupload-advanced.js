@@ -230,12 +230,8 @@ FileUploadAdvanced.prototype = {
         .on('change.fileuploadadvanced', function (e) {
           e.stopPropagation();
           self.handleFileUpload(this.files);
+          this.value = '';
         });
-
-      label.find('.hyperlink').on('click.fileuploadadvanced', function (e) {
-        e.stopPropagation();
-        self.handleFileUpload(this.files);
-      });
     }
 
     // If the files are dropped outside the div, files will open in the browser window.
@@ -256,6 +252,10 @@ FileUploadAdvanced.prototype = {
   * @returns {void}
   */
   handleFileUpload(files) {
+    if (!files?.length) {
+      return;
+    }
+
     const s = this.settings;
 
     // Clear previous errors in general area
@@ -264,20 +264,23 @@ FileUploadAdvanced.prototype = {
     // Total files completed
     this.totalCompleted = this.totalCompleted || 0;
 
+    // Currently files in progress
+    const totalInProgress = $('.progress', this.element).length;
+
     // Max files can be upload
-    const filesLen = this.totalCompleted + files?.length + $('.progress', this.element)?.length;
+    const filesLen = this.totalCompleted + files.length + totalInProgress;
     if (filesLen > s.maxFiles) {
       this.showError(s.errorMaxFiles);
       return;
     }
-    if (filesLen > s.maxFilesInProcess) {
+    if (totalInProgress >= s.maxFilesInProcess) {
       this.showError(s.errorMaxFilesInProcess);
       return;
     }
     const fileName = s.fileName.replace('[]', '');
 
     /* eslint-disable no-continue */
-    for (let i = 0, l = files?.length; i < l; i++) {
+    for (let i = 0, l = files.length; i < l; i++) {
       // Check if file type allowed
       if (!this.isFileTypeAllowed(files[i].name)) {
         this.showError(s.errorAllowedTypes, files[i]);
@@ -406,6 +409,7 @@ FileUploadAdvanced.prototype = {
         }
         btnCancel.off('click.fileuploadadvanced');
         container.remove();
+        self.totalCompleted--;
       });
     };
 
@@ -439,12 +443,6 @@ FileUploadAdvanced.prototype = {
         self.element.triggerHandler('beforefileremove', [file]);
 
         container.remove();
-
-        // Reverting back to zero to able to add a file again.
-        // This will only work when the maxFilesInProcess is 1.
-        if (self.settings.maxFilesInProcess === '1' && self.totalCompleted === 1) {
-          self.totalCompleted = 0;
-        }
 
         // TODO: server call for removing data
         data.remove();
