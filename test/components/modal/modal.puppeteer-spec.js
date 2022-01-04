@@ -38,6 +38,22 @@ describe('Modal open example-modal tests on click', () => {
   });
 });
 
+describe('Modal with hidden field tests on click', () => {
+  const url = 'http://localhost:4000/components/modal/example-hidden-field';
+  beforeEach(async () => {
+    await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    await page.waitForSelector('#add-context');
+    await page.click('#add-context');
+    await page.waitForSelector('.overlay');
+  });
+
+  it('Should open modal on click', async () => {
+    expect(await page.waitForSelector('.modal, is-visible')).toBeTruthy();
+    const subjectEl = await page.evaluateHandle(() => document.activeElement);
+    await subjectEl.type('input#subject');
+  });
+});
+
 describe('Modal example-close-btn tests', () => {
   const url = 'http://localhost:4000/components/modal/example-close-btn';
   beforeEach(async () => {
