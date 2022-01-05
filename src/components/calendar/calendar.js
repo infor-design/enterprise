@@ -674,16 +674,11 @@ Calendar.prototype = {
    */
   renderEvent(event) {
     const self = this;
-    let startKey = '';
-
-    if (event.id === "78") {
-      startKey = 'x';
-    }
 
     // Check for events starting on this day , or only on this day.
     const startDate = Locale.newDateObj(event.starts);
     const isIslamic = Locale.isIslamic(this.locale.name);
-    startKey = stringUtils.padDate(
+    let startKey = stringUtils.padDate(
       startDate.getFullYear(),
       startDate.getMonth(),
       startDate.getDate()
