@@ -523,6 +523,9 @@
 
   > [class^='btn'] {
     @include btn-chevron-style;
+    width: 44px;
+    height: 44px;
+    margin: unset;
   }
 
   > [class^='btn'],
@@ -580,7 +583,7 @@
 
   // NOT the same as the above rule.
   > .icon {
-    margin: 0 18px;
+    margin: 0 16px;
 
     + a {
       width: calc(100% - 56px);
@@ -624,7 +627,7 @@
 
     > .icon {
       + a {
-        width: calc(100% - 109px);
+        width: calc(100% - 104px);
       }
     }
   }

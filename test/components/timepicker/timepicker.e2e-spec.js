@@ -174,7 +174,8 @@ describe('Timepicker with seconds example tests', () => {
   });
 
   if (!utils.isBS()) {
-    it('Should pick time from picker and set to field with seconds', async () => {
+    // Please try to make a test for this when converting to puppeteer
+    xit('Should pick time from picker and set to field with seconds', async () => {
       const timepickerEl = await element(by.id('time-field'));
       await element(by.css('.timepicker + .trigger')).click();
       let dropdownEl = await element(by.css(ddSelector('hours')));
