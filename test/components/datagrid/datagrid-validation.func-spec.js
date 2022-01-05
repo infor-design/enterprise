@@ -3,6 +3,7 @@ import { Formatters } from '../../../src/components/datagrid/datagrid.formatters
 import { Editors } from '../../../src/components/datagrid/datagrid.editors';
 import { cleanup } from '../../helpers/func-utils';
 
+const config = require('../../helpers/e2e-config.js');
 const datagridHTML = require('../../../app/views/components/datagrid/example-editable.html');
 const svg = require('../../../src/components/icons/theme-new-svg.html');
 const originalData = require('../../../app/data/datagrid-sample-data-editable');
@@ -249,7 +250,7 @@ describe('Datagrid Validation API', () => {
     }, 0);
   });
 
-  it('Should show currently dirty rows', () => {
+  it('Should show currently dirty rows', async () => {
     datagridObj.destroy();
     datagridObj = new Datagrid(datagridEl, { dataset: data, columns, editable: true, showDirty: true }); // eslint-disable-line max-len
 
@@ -266,6 +267,9 @@ describe('Datagrid Validation API', () => {
     input = cell2.querySelector('input');
     input.value = 'Cell test value 2';
     cell3.click();
+
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.is-dirty-cell'))), config.waitsFor);
 
     expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(2);
     expect(cell1.classList.contains('is-dirty-cell')).toBeTruthy();
@@ -273,7 +277,7 @@ describe('Datagrid Validation API', () => {
     expect(datagridObj.dirtyRows().length).toEqual(2);
   });
 
-  it('Should reset all dirty rows', () => {
+  it('Should reset all dirty rows', async () => {
     datagridObj.destroy();
     datagridObj = new Datagrid(datagridEl, { dataset: data, columns, editable: true, showDirty: true }); // eslint-disable-line max-len
 
@@ -290,6 +294,9 @@ describe('Datagrid Validation API', () => {
     input = cell2.querySelector('input');
     input.value = 'Cell test value 2';
     cell3.click();
+
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.is-dirty-cell'))), config.waitsFor);
 
     expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(2);
     expect(cell1.classList.contains('is-dirty-cell')).toBeTruthy();
@@ -304,7 +311,7 @@ describe('Datagrid Validation API', () => {
     expect(datagridObj.dirtyRows().length).toEqual(0);
   });
 
-  it('Should clear dirty all cells', () => {
+  it('Should clear dirty all cells', async () => {
     datagridObj.destroy();
     datagridObj = new Datagrid(datagridEl, { dataset: data, columns, editable: true, showDirty: true }); // eslint-disable-line max-len
 
@@ -323,6 +330,9 @@ describe('Datagrid Validation API', () => {
     input = cell2.querySelector('input');
     input.value = 'Cell test value 2';
     cell3.click();
+
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.is-dirty-cell'))), config.waitsFor);
 
     expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(2);
     expect(cell1.classList.contains('is-dirty-cell')).toBeTruthy();
@@ -339,7 +349,7 @@ describe('Datagrid Validation API', () => {
     expect(datagridObj.dirtyRows().length).toEqual(0);
   });
 
-  it('Should clear dirty all cells in row', () => {
+  it('Should clear dirty all cells in row', async () => {
     datagridObj.destroy();
     datagridObj = new Datagrid(datagridEl, { dataset: data, columns, editable: true, showDirty: true }); // eslint-disable-line max-len
 
@@ -363,6 +373,9 @@ describe('Datagrid Validation API', () => {
     input.value = 'Cell test value 3';
     cell4.click();
 
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.is-dirty-cell'))), config.waitsFor);
+
     expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(3);
     expect(cell1.classList.contains('is-dirty-cell')).toBeTruthy();
     expect(cell2.classList.contains('is-dirty-cell')).toBeTruthy();
@@ -381,7 +394,7 @@ describe('Datagrid Validation API', () => {
     expect(datagridObj.dirtyRows().length).toEqual(1);
   });
 
-  it('Should clear dirty a specific cell', () => {
+  it('Should clear dirty a specific cell', async () => {
     datagridObj.destroy();
     datagridObj = new Datagrid(datagridEl, { dataset: data, columns, editable: true, showDirty: true }); // eslint-disable-line max-len
 
@@ -401,6 +414,9 @@ describe('Datagrid Validation API', () => {
     input.value = 'Cell test value 2';
     cell3.click();
 
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.is-dirty-cell'))), config.waitsFor);
+
     expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(2);
     expect(cell1.classList.contains('is-dirty-cell')).toBeTruthy();
     expect(cell2.classList.contains('is-dirty-cell')).toBeTruthy();
@@ -418,7 +434,7 @@ describe('Datagrid Validation API', () => {
     expect(datagridObj.dirtyRows().length).toEqual(1);
   });
 
-  it('Should show currently dirty rows with row-status error', () => {
+  it('Should show currently dirty rows with row-status error', async () => {
     datagridObj.destroy();
     datagridObj = new Datagrid(datagridEl, { dataset: data, columns, editable: true, showDirty: true }); // eslint-disable-line max-len
 
@@ -440,6 +456,9 @@ describe('Datagrid Validation API', () => {
 
     expect(document.querySelector('tr:nth-child(2)').classList.contains('rowstatus-row-error')).toBeTruthy();
     expect(document.querySelector('tr:nth-child(2)').querySelectorAll('.icon-rowstatus').length).toEqual(1);
+
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.is-dirty-cell'))), config.waitsFor);
 
     expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(2);
     expect(cell1.classList.contains('is-dirty-cell')).toBeTruthy();

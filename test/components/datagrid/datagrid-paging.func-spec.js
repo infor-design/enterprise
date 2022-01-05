@@ -3,7 +3,6 @@ import { Formatters } from '../../../src/components/datagrid/datagrid.formatters
 import { Editors } from '../../../src/components/datagrid/datagrid.editors';
 import { cleanup } from '../../helpers/func-utils';
 
-const config = require('../../helpers/e2e-config.js');
 const datagridHTML = require('../../../app/views/components/datagrid/example-index.html');
 const svg = require('../../../src/components/icons/theme-new-svg.html');
 const sampleData = require('../../../app/data/datagrid-sample-data');
@@ -91,7 +90,7 @@ describe('Datagrid Paging API', () => {
       let cell2;
       let input;
 
-      setTimeout(async () => {
+      setTimeout(() => {
         cell1 = document.querySelector('tr:nth-child(1) td:nth-child(2)');
         cell2 = document.querySelector('tr:nth-child(1) td:nth-child(3)');
 
@@ -103,9 +102,6 @@ describe('Datagrid Paging API', () => {
         const originalVal = input.value;
         input.value = 'Cell test value';
         cell2.click();
-
-        await browser.driver
-          .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.is-dirty-cell'))), config.waitsFor);
 
         expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(1);
         expect(cell1.classList.contains('is-dirty-cell')).toBeTruthy();
@@ -145,9 +141,9 @@ describe('Datagrid Paging API', () => {
             expect(cell1.classList.contains('is-dirty-cell')).toBeFalsy();
 
             done();
-          }, 1);
-        }, 1);
-      }, 1);
+          }, 2);
+        }, 2);
+      }, 2);
     });
   });
 
