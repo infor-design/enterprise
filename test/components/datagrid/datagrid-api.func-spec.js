@@ -3,6 +3,7 @@ import { Formatters } from '../../../src/components/datagrid/datagrid.formatters
 import { Editors } from '../../../src/components/datagrid/datagrid.editors';
 import { cleanup } from '../../helpers/func-utils';
 
+const config = require('../../helpers/e2e-config.js');
 const datagridHTML = require('../../../app/views/components/datagrid/example-index.html');
 const svg = require('../../../src/components/icons/theme-new-svg.html');
 const originalData = require('../../../app/data/datagrid-sample-data');
@@ -394,7 +395,7 @@ describe('Datagrid API', () => { //eslint-disable-line
     expect(document.querySelectorAll('.icon-rowstatus').length).toEqual(0);
   });
 
-  it('Should be able to track dirty cells', () => {
+  it('Should be able to track dirty cells', async () => {
     datagridObj.destroy();
     datagridObj = new Datagrid(datagridEl, { dataset: data, columns, editable: true, showDirty: true }); // eslint-disable-line max-len
 
@@ -408,6 +409,9 @@ describe('Datagrid API', () => { //eslint-disable-line
     const originalVal = input.value;
     input.value = 'Cell test value';
     cell2.click();
+
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.is-dirty-cell'))), config.waitsFor);
 
     expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(1);
     expect(cell1.classList.contains('is-dirty-cell')).toBeTruthy();
@@ -575,7 +579,7 @@ describe('Datagrid API', () => { //eslint-disable-line
     expect(document.querySelector('tr:nth-child(1) td:nth-child(2)').innerText.substr(0, 15)).toEqual('Air Compressors');
   });
 
-  it('Should be able to track dirty cells with sort column', () => {
+  it('Should be able to track dirty cells with sort column', async () => {
     datagridObj.destroy();
     datagridObj = new Datagrid(datagridEl, { dataset: data, columns, editable: true, showDirty: true }); // eslint-disable-line max-len
 
@@ -592,6 +596,9 @@ describe('Datagrid API', () => { //eslint-disable-line
     const originalVal = input.value;
     input.value = 'Cell test value';
     cell2.click();
+
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.is-dirty-cell'))), config.waitsFor);
 
     expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(1);
     expect(cell1.classList.contains('is-dirty-cell')).toBeTruthy();

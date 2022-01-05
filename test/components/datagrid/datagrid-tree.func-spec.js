@@ -79,7 +79,7 @@ describe('Datagrid Tree', () => { //eslint-disable-line
     $(datagridEl).off('rowactivated');
   });
 
-  it('Should be able to track dirty cells with treeGrid', () => {
+  it('Should be able to track dirty cells with treeGrid', async () => {
     datagridObj.destroy();
     datagridObj = new Datagrid(datagridEl, { dataset: data, columns, treeGrid: true, editable: true, showDirty: true }); // eslint-disable-line max-len
 
@@ -95,6 +95,9 @@ describe('Datagrid Tree', () => { //eslint-disable-line
     const originalVal = input.value;
     input.value = 'Cell test value';
     cell2.click();
+
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.is-dirty-cell'))), config.waitsFor);
 
     expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(1);
     expect(cell1.classList.contains('is-dirty-cell')).toBeTruthy();
@@ -130,6 +133,7 @@ describe('Datagrid Tree', () => { //eslint-disable-line
 
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.is-dirty-cell'))), config.waitsFor);
+
     expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(1);
     expect(cell1.classList.contains('is-dirty-cell')).toBeTruthy();
 
