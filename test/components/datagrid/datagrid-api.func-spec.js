@@ -3,7 +3,6 @@ import { Formatters } from '../../../src/components/datagrid/datagrid.formatters
 import { Editors } from '../../../src/components/datagrid/datagrid.editors';
 import { cleanup } from '../../helpers/func-utils';
 
-const config = require('../../helpers/e2e-config.js');
 const datagridHTML = require('../../../app/views/components/datagrid/example-index.html');
 const svg = require('../../../src/components/icons/theme-new-svg.html');
 const originalData = require('../../../app/data/datagrid-sample-data');
