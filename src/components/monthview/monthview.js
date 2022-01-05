@@ -44,7 +44,6 @@ const COMPONENT_NAME_DEFAULTS = {
     isEnable: false,
     restrictMonths: false
   },
-  customColors: false,
   legend: [],
   hideDays: false, // TODO
   showMonthYearPicker: true,
@@ -1351,40 +1350,26 @@ MonthView.prototype = {
     let hex = this.getLegendColor(year, month, date);
     el[0].style.backgroundColor = '';
     el.off('mouseenter.legend mouseleave.legend');
-    let hoverColor = '';
-    const opacity = '0.7';
-    let normalColor = '';
 
     if (hex) {
-      if (this.settings.customColors) {
-        if (self.settings.inPage) {
-          el[0].style.setProperty('--legendcolor', hex);
-        } else {
-          el[0].style.backgroundColor = hex;
-        }
-        hoverColor = hex;
-      } else {
-        if (hex.indexOf('#') === -1) {
-          const name = hex.replace(/[0-9]/g, '');
-          const number = hex.substr(hex.length - 2, 2) * 10;
-          hex = theme.themeColors().palette[name][number].value;
-        }
-        // set color on elem at .3 of provided color as per design
-        normalColor = colorUtils.hexToRgba(hex, 0.3);
-        hoverColor = colorUtils.hexToRgba(hex, 0.7);
-
-        if (self.settings.inPage) {
-          el[0].style.setProperty('--legendcolor', normalColor);
-        } else {
-          el[0].style.backgroundColor = normalColor;
-        }
+      if (hex.indexOf('#') === -1) {
+        const name = hex.replace(/[0-9]/g, '');
+        const number = hex.substr(hex.length - 2, 2) * 10;
+        hex = theme.themeColors().palette[name][number].value;
       }
-
+      // set color on elem at .3 of provided color as per design
+      const normalColor = colorUtils.hexToRgba(hex, 0.3);
+      const hoverColor = colorUtils.hexToRgba(hex, 0.7);
       const th = this.table[0]?.querySelector('thead th');
 
       elem.addClass('is-colored');
       el[0].setAttribute('data-hex', hex);
-      
+      if (self.settings.inPage) {
+        el[0].style.setProperty('--legendcolor', normalColor);
+      } else {
+        el[0].style.backgroundColor = normalColor;
+      }
+
       // handle hover states
       el.on('mouseenter.legend', function () {
         const thisElem = $(this);
@@ -1393,10 +1378,6 @@ MonthView.prototype = {
         const textColor = window.getComputedStyle(th).getPropertyValue('color');
 
         this.style.backgroundColor = hoverColor;
-
-        if (this.settings.customColors) {
-          this.style.opacity = opacity;
-        }
 
         if (self.settings.inPage) {
           this.style.color = textColor;
@@ -1424,8 +1405,6 @@ MonthView.prototype = {
         if (dayText) {
           dayText.style.backgroundColor = '';
         }
-
-        this.style.opacity = 1;
       });
     }
   },
@@ -2442,26 +2421,17 @@ MonthView.prototype = {
       const series = s.legend[i];
       let hex = series.color;
 
-      if (hex.indexOf('#') === -1 && !s.customColors) {
+      if (hex.indexOf('#') === -1) {
         const name = hex.replace(/[0-9]/g, '');
         const number = hex.substr(hex.length - 2, 2) * 10;
         hex = theme.themeColors().palette[name][number].value;
       }
-      
-      let item = '';
-      if (!s.customColors) {
-        item = '' +
+
+      const item = '' +
         `<div class="monthview-legend-item">
           <span class="monthview-legend-swatch" style="background-color: ${colorUtils.hexToRgba(hex, 0.3)}"></span>
           <span class="monthview-legend-text">${series.name}</span>
         </div>`;
-      } else {
-        item = '' +
-        `<div class="monthview-legend-item">
-          <span class="monthview-legend-swatch" style="background-color: ${series.color}"></span>
-          <span class="monthview-legend-text">${series.name}</span>
-        </div>`;
-      }
 
       this.legend.append(item);
     }

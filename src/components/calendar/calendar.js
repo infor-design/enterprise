@@ -61,7 +61,6 @@ const COMPONENT_NAME_DEFAULTS = {
     restrictMonths: false
   },
   dayLegend: null,
-  customColors: false,
   displayRange: {
     start: '',
     end: '',
@@ -273,7 +272,6 @@ Calendar.prototype = {
       onChangeView: this.onChangeToMonth,
       disable: this.settings.disable,
       showLegend: this.settings.dayLegend !== null,
-      customColors: this.settings.customColors,
       legend: this.settings.dayLegend,
       hitbox: this.settings.hitbox,
       attributes: this.settings.attributes,
@@ -676,11 +674,16 @@ Calendar.prototype = {
    */
   renderEvent(event) {
     const self = this;
+    let startKey = '';
+
+    if (event.id === "78") {
+      startKey = 'x';
+    }
 
     // Check for events starting on this day , or only on this day.
     const startDate = Locale.newDateObj(event.starts);
     const isIslamic = Locale.isIslamic(this.locale.name);
-    let startKey = stringUtils.padDate(
+    startKey = stringUtils.padDate(
       startDate.getFullYear(),
       startDate.getMonth(),
       startDate.getDate()
@@ -826,12 +829,12 @@ Calendar.prototype = {
     node.setAttribute('data-key', event.startKey);
 
     // Let the border color / color be overriden
-    if (event.color?.substr(0, 1) === '#') {
+    if (event.color?.substr(0, 1) === '#' || event.color) {
       node.style.backgroundColor = event.color;
       node.classList.remove(event.color);
     }
 
-    if (event.borderColor?.substr(0, 1) === '#') {
+    if (event.borderColor?.substr(0, 1) === '#' || event.borderColor) {
       node.style.borderLeftColor = event.borderColor;
     }
 

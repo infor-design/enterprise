@@ -27,7 +27,7 @@
 
 ## v4.59.0 Features
 
-- `[Calendar]` Added setting to accept color names in calendar events. ([#5743](https://github.com/infor-design/enterprise/issues/5743))
+- `[Calendar]` Modify validations to allow custom colors. ([#5743](https://github.com/infor-design/enterprise/issues/5743))
 - `[Cards]` Added mobile enhancements and style changes. ([#5609](https://github.com/infor-design/enterprise/issues/5609))
 - `[Button]` Added test scripts for button. ([#5851](https://github.com/infor-design/enterprise/issues/5851))
 - `[BusyIndicator]` Added hide event. ([#5794](https://github.com/infor-design/enterprise/issues/5794))

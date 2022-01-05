@@ -221,7 +221,7 @@ calendarShared.getEventTypeColor = function getEventTypeColor(event, eventTypes)
     return color;
   }
 
-  if (event.color?.substr(0, 1) === '#') {
+  if (event.color?.substr(0, 1) === '#' || event.color) {
     return event.color;
   }
 
