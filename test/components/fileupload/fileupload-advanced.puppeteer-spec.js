@@ -3,7 +3,7 @@ const path = require('path');
 
 describe('File Upload Advanced Puppeteer Tests', () => {
   const baseUrl = 'http://localhost:4000/components/fileupload-advanced';
-  const fileName = 'test.txt'
+  const fileName = 'test.txt';
 
   describe('File Progress', () => {
     const url = `${baseUrl}/example-index.html`;
