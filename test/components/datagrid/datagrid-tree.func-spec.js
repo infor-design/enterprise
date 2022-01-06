@@ -3,7 +3,6 @@ import { Formatters } from '../../../src/components/datagrid/datagrid.formatters
 import { Editors } from '../../../src/components/datagrid/datagrid.editors';
 import { cleanup } from '../../helpers/func-utils';
 
-const config = require('../../helpers/e2e-config.js');
 const datagridHTML = require('../../../app/views/components/datagrid/example-tree.html');
 const svg = require('../../../src/components/icons/theme-new-svg.html');
 const originalData = require('../../../app/data/datagrid-sample-data-tree');
@@ -79,7 +78,7 @@ describe('Datagrid Tree', () => { //eslint-disable-line
     $(datagridEl).off('rowactivated');
   });
 
-  it('Should be able to track dirty cells with treeGrid', async () => {
+  it('Should be able to track dirty cells with treeGrid', () => {
     datagridObj.destroy();
     datagridObj = new Datagrid(datagridEl, { dataset: data, columns, treeGrid: true, editable: true, showDirty: true }); // eslint-disable-line max-len
 
@@ -96,11 +95,10 @@ describe('Datagrid Tree', () => { //eslint-disable-line
     input.value = 'Cell test value';
     cell2.click();
 
-    await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.is-dirty-cell'))), config.waitsFor);
-
-    expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(1);
-    expect(cell1.classList.contains('is-dirty-cell')).toBeTruthy();
+    setTimeout(() => {
+      expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(1);
+      expect(cell1.classList.contains('is-dirty-cell')).toBeTruthy();
+    }, 2);
 
     cell1.click();
     input = cell1.querySelector('input');
@@ -110,7 +108,7 @@ describe('Datagrid Tree', () => { //eslint-disable-line
     expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(0);
   });
 
-  it('Should be able to track dirty cells with sort column and treeGrid', async () => {
+  it('Should be able to track dirty cells with sort column and treeGrid', () => {
     datagridObj.destroy();
     datagridObj = new Datagrid(datagridEl, { dataset: data, columns, treeGrid: true, editable: true, showDirty: true }); // eslint-disable-line max-len
 
@@ -131,11 +129,10 @@ describe('Datagrid Tree', () => { //eslint-disable-line
     input.value = 'Cell test value';
     cell2.click();
 
-    await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.is-dirty-cell'))), config.waitsFor);
-
-    expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(1);
-    expect(cell1.classList.contains('is-dirty-cell')).toBeTruthy();
+    setTimeout(() => {
+      expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(1);
+      expect(cell1.classList.contains('is-dirty-cell')).toBeTruthy();
+    }, 2);
 
     datagridObj.setSortColumn('id', false);
 
