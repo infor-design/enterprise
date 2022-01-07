@@ -1,3 +1,5 @@
+const { parseHTML } = require("jquery");
+
 describe('Dropdown Puppeteer Tests', () => {
   describe('Disabling Function Keys Tests', () => {
     const url = 'http://localhost:4000/components/dropdown/test-disabling-function-keys';
@@ -79,6 +81,33 @@ describe('Dropdown Puppeteer Tests', () => {
 
       const newVal = await page.evaluate('document.querySelector("div.dropdown.error").getAttribute("aria-label")');
       expect(newVal).toEqual('Validated Dropdown, Required'); // Required text should append to the aria-label
+    });
+  });
+
+describe('Dropdown for Enter key opens dropdown list, when it should only be used to select items within an open list', () => {
+    const url = 'http://localhost:4000/components/dropdown/test-allow-custom-keystroke.html';
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('should have the enter key stroke to be disabled  ', async () => {
+      await page.keyboard.press('Tab');
+      await page.keyboard.press('Tab');
+      await page.keyboard.press('Enter');
+      const ariaEx = await page.$eval('div[class="dropdown"]', el => el.getAttribute('aria-expanded'));
+      expect(ariaEx).toMatch('false');
+    });
+
+    it('should select value when hovered and press enter', async () => {
+      await page.reload({ waitUntil: ["networkidle0", "domcontentloaded"] });
+      await page.hover('.dropdown-wrapper')
+      await page.click('.dropdown-wrapper');
+      await page.hover('#list-option-3');
+      await page.keyboard.press('Enter');
+      const ariaLbl = await page.$eval('div[class="dropdown"]', el => el.getAttribute('aria-label'));
+      console.log('test>>> ' + ariaLbl);
+      expect(ariaLbl).toContain('Fire Level E4');
     });
   });
 });
