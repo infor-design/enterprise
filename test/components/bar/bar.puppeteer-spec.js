@@ -34,6 +34,7 @@ describe('Bar Chart Puppeteer Tests', () => {
 
     it('should not show pointer as a cursor', async () => {
       const checkCursor = async el => page.$eval(el, e => e.style.cursor);
+      await page.waitForSelector('#bar-a-bar', { visible: true });
       await page.hover('#bar-a-bar');
       await page.waitForTimeout(100);
       expect(await checkCursor('#bar-a-bar')).toContain('inherit');
