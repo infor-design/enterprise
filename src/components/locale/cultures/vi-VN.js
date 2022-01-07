@@ -253,7 +253,7 @@ Soho.Locale.addCulture('vi-VN', {
     InfoOnPage: { id: 'InfoOnPage', value: '(Các) tin nhắn thông tin trên trang', comment: 'Information message(s) on page n' },
     InProgress: { id: 'In Progress', value: 'Đang tiến hành', comment: 'Info tooltip that an action is in progress' },
     Insert: { id: 'Insert', value: 'Chèn', comment: 'Insert Modal Dialog Button' },
-    InsertAnchor: { id: 'InsertAnchor', value: 'Chèn ký tự liên kết', comment: 'Insert a hyperlink in an editor' },
+    InsertHyperlink: { id: 'InsertHyperlink', value: 'Chèn ký tự liên kết', comment: 'Insert a hyperlink in an editor' },
     InsertImage: { id: 'InsertImage', value: 'Chèn hình ảnh', comment: 'Insert Image in an editor' },
     InsertLink: { id: 'InsertLink', value: 'Chèn liên kết', comment: 'Insert Link in an editor' },
     InsertUrl: { id: 'InsertUrl', value: 'Chèn Url', comment: 'Insert a Url in an editor' },

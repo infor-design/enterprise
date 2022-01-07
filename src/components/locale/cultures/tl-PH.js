@@ -254,7 +254,7 @@ Soho.Locale.addCulture('tl-PH', {
     InfoOnPage: { id: 'InfoOnPage', value: 'Impormasyon ng (mga) mensahe sa pahina', comment: 'Information message(s) on page n' },
     InProgress: { id: 'In Progress', value: 'Isinasagawa', comment: 'Info tooltip that an action is in progress' },
     Insert: { id: 'Insert', value: 'Isingit', comment: 'Insert Modal Dialog Button' },
-    InsertAnchor: { id: 'InsertAnchor', value: 'Isingit ang Anchor', comment: 'Insert a hyperlink in an editor' },
+    InsertHyperlink: { id: 'InsertHyperlink', value: 'Isingit ang Anchor', comment: 'Insert a hyperlink in an editor' },
     InsertImage: { id: 'InsertImage', value: 'Isingit ang Imahe', comment: 'Insert Image in an editor' },
     InsertLink: { id: 'InsertLink', value: 'Isingit ang Link', comment: 'Insert Link in an editor' },
     InsertUrl: { id: 'InsertUrl', value: 'Isingit ang Url', comment: 'Insert a Url in an editor' },

@@ -254,7 +254,7 @@ Soho.Locale.addCulture('zh-TW', {
     InfoOnPage: { id: 'InfoOnPage', value: '資訊訊息，頁面', comment: 'Information message(s) on page n' },
     InProgress: { id: 'In Progress', value: '進行中', comment: 'Info tooltip that an action is in progress' },
     Insert: { id: 'Insert', value: '插入', comment: 'Insert Modal Dialog Button' },
-    InsertAnchor: { id: 'InsertAnchor', value: '插入錨點', comment: 'Insert a hyperlink in an editor' },
+    InsertHyperlink: { id: 'InsertHyperlink', value: '插入錨點', comment: 'Insert a hyperlink in an editor' },
     InsertImage: { id: 'InsertImage', value: '插入影像', comment: 'Insert Image in an editor' },
     InsertLink: { id: 'InsertLink', value: '插入連結', comment: 'Insert Link in an editor' },
     InsertUrl: { id: 'InsertUrl', value: '插入 URL', comment: 'Insert a Url in an editor' },
