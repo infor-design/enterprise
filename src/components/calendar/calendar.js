@@ -824,7 +824,7 @@ Calendar.prototype = {
     node.setAttribute('data-key', event.startKey);
 
     // Let the border color / color be overriden
-    if (event.color?.substr(0, 1) === '#' || event.color) {
+    if (event.color?.substr(0, 1) === '#' || (event.color && event.borderColor)) {
       node.style.backgroundColor = event.color;
       node.classList.remove(event.color);
     }
