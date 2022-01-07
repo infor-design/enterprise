@@ -1,7 +1,7 @@
 describe('Track Dirty Puppeteer Tests', () => {
   const baseUrl = 'http://localhost:4000/components/input';
 
-  describe('Index Tests', () => {
+  describe('Track Dirty Tests', () => {
     const url = `${baseUrl}/example-track-dirty?layout=nofrills`;
 
     beforeAll(async () => {
