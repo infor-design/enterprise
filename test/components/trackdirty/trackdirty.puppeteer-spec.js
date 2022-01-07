@@ -15,7 +15,7 @@ describe('Track Dirty Puppeteer Tests', () => {
       await page.keyboard.press('Backspace');
       await page.keyboard.press('Tab');
 
-      await page.waitForSelector('#department-code-trackdirty', {visible: true})
+      await page.waitForSelector('#department-code-trackdirty', { visible: true })
         .then(element => element.getProperty('className'))
         .then(className => className.jsonValue())
         .then(classNameValue => expect(classNameValue).not.toContain('dirty'));
@@ -25,10 +25,10 @@ describe('Track Dirty Puppeteer Tests', () => {
       await page.type('#department-code-trackdirty', 't');
       await page.keyboard.press('Tab');
 
-      await page.waitForSelector('#department-code-trackdirty', {visible: true})
+      await page.waitForSelector('#department-code-trackdirty', { visible: true })
         .then(element => element.getProperty('className'))
         .then(className => className.jsonValue())
         .then(classNameValue => expect(classNameValue).toContain('dirty'));
     });
-  })
+  });
 });
