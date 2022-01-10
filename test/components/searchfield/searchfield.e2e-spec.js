@@ -227,9 +227,9 @@ if (utils.isChrome() && utils.isCI()) {
 
         await compactButton.click();
         await browser.driver
-          .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id(searchfieldClearable))), config.waitsFor);
+          .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('example-searchfield-clearable'))), config.waitsFor);
         await browser.driver.sleep(config.sleep);
-        
+
         expect(await browser.imageComparison.checkElement(searchfieldClearable, 'clearable-icon-searchfield')).toEqual(0);
       });
     }
