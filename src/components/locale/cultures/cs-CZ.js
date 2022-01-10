@@ -253,7 +253,7 @@ Soho.Locale.addCulture('cs-CZ', {
     InfoOnPage: { id: 'InfoOnPage', value: 'Informační zprávy na stránce', comment: 'Information message(s) on page n' },
     InProgress: { id: 'In Progress', value: 'Probíhá', comment: 'Info tooltip that an action is in progress' },
     Insert: { id: 'Insert', value: 'Vložit', comment: 'Insert Modal Dialog Button' },
-    InsertAnchor: { id: 'InsertAnchor', value: 'Vložit odkaz', comment: 'Insert a hyperlink in an editor' },
+    InsertHyperlink: { id: 'InsertHyperlink', value: 'Vložit odkaz', comment: 'Insert a hyperlink in an editor' },
     InsertImage: { id: 'InsertImage', value: 'Vložit obrázek', comment: 'Insert Image in an editor' },
     InsertLink: { id: 'InsertLink', value: 'Vložit propojení', comment: 'Insert Link in an editor' },
     InsertUrl: { id: 'InsertUrl', value: 'Vložit URL', comment: 'Insert a Url in an editor' },

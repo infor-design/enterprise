@@ -253,7 +253,7 @@ Soho.Locale.addCulture('sk-SK', {
     InfoOnPage: { id: 'InfoOnPage', value: 'Informačné správy na stránke', comment: 'Information message(s) on page n' },
     InProgress: { id: 'In Progress', value: 'Prebieha', comment: 'Info tooltip that an action is in progress' },
     Insert: { id: 'Insert', value: 'Vložiť', comment: 'Insert Modal Dialog Button' },
-    InsertAnchor: { id: 'InsertAnchor', value: 'Vložiť ukotvenie', comment: 'Insert a hyperlink in an editor' },
+    InsertHyperlink: { id: 'InsertHyperlink', value: 'Vložiť ukotvenie', comment: 'Insert a hyperlink in an editor' },
     InsertImage: { id: 'InsertImage', value: 'Vložiť obrázok', comment: 'Insert Image in an editor' },
     InsertLink: { id: 'InsertLink', value: 'Vložiť prepojenie', comment: 'Insert Link in an editor' },
     InsertUrl: { id: 'InsertUrl', value: 'Vložiť adresu URL', comment: 'Insert a Url in an editor' },

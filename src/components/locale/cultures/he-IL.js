@@ -253,7 +253,7 @@ Soho.Locale.addCulture('he-IL', {
     InfoOnPage: { id: 'InfoOnPage', value: 'הודע(ו)ת מידע בדף', comment: 'Information message(s) on page n' },
     InProgress: { id: 'In Progress', value: 'מתבצע...', comment: 'Info tooltip that an action is in progress' },
     Insert: { id: 'Insert', value: 'הוסף', comment: 'Insert Modal Dialog Button' },
-    InsertAnchor: { id: 'InsertAnchor', value: 'הכנס עוגן', comment: 'Insert a hyperlink in an editor' },
+    InsertHyperlink: { id: 'InsertHyperlink', value: 'הכנס עוגן', comment: 'Insert a hyperlink in an editor' },
     InsertImage: { id: 'InsertImage', value: 'הכנס תמונה', comment: 'Insert Image in an editor' },
     InsertLink: { id: 'InsertLink', value: 'הוסף קישור', comment: 'Insert Link in an editor' },
     InsertUrl: { id: 'InsertUrl', value: 'הוסף כתובת URL', comment: 'Insert a Url in an editor' },
