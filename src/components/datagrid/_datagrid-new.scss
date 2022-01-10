@@ -240,8 +240,7 @@
     td.is-editing {
       .datepicker {
         + .trigger {
-          margin-left: 15px;
-          margin-top: 0;
+          margin-left: -1px;
         }
       }
 
@@ -294,8 +293,8 @@
     }
 
     .datepicker {
-      margin-top: -1px;
-      padding-left: 1px;
+      margin-top: 7px;
+      padding-left: 17px;
       padding-top: 0;
     }
 
