@@ -9924,17 +9924,43 @@ Datagrid.prototype = {
 
     const input = this.editor.input;
     let newValue;
-    let cellNode;
     const editorName = this.getEditorName(this.editor);
     const isEditor = editorName === 'editor';
     const isFileupload = editorName === 'fileupload';
     const isUseActiveRow = !(input.is('.timepicker, .datepicker, .lookup, .spinbox, .colorpicker'));
 
-    // Editor.getValue
-    if (typeof this.editor.val === 'function') {
-      newValue = this.editor.val();
+    if (isFileupload) {
+      if (typeof this.editor.val === 'function') {
+        newValue = this.editor.val();
+      }
+      Promise.resolve(newValue).then((v) => {
+        this.commitCellEditUtil(input, v, isEditor, isFileupload, isUseActiveRow, isCallback);
+      });
+    } else {
+      // Editor.getValue
+      if (typeof this.editor.val === 'function') {
+        newValue = this.editor.val();
+      }
+      this.commitCellEditUtil(input, newValue, isEditor, isFileupload, isUseActiveRow, isCallback);
+    }
+  },
+
+  /**
+   * Utility function to commit cell edit
+   * @private
+   * @param {any} input editor input
+   * @param {any} newValue new value to be put in cell
+   * @param {boolean} isEditor check if cell is editor
+   * @param {boolean} isFileupload check if cell is file upload
+   * @param {boolean} isUseActiveRow check if active row
+   * @param {boolean} isCallback Indicates a call back so beforeCommitCellEdit is not called.
+   */
+  commitCellEditUtil(input, newValue, isEditor, isFileupload, isUseActiveRow, isCallback) {
+    if (!this.editor) {
+      return;
     }
 
+    let cellNode;
     if (isEditor) {
       cellNode = this.editor.td;
     } else if (isFileupload) {
