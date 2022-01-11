@@ -138,7 +138,7 @@
       }
 
       + .trigger {
-        margin-top: 11px;
+        margin-top: 15px;
       }
     }
 
@@ -154,6 +154,14 @@
     tbody tr td .row-btn {
       top: 0px;
     }
+
+    .datagrid-trigger-cell {
+      .icon.icon-calendar {
+        left: -2px !important;
+        top: 0px !important;
+      }
+    }
+
     td.is-editing {
       input.timepicker {
         + .trigger {
@@ -176,7 +184,7 @@
           &.datagrid-trigger-cell {
             .icon.icon-calendar {
               left: -2px;
-              top: 1px;
+              top: -1px;
             }
           }
 
@@ -207,7 +215,7 @@
       .datepicker {
         + .trigger {
           margin-left: 1px;
-          margin-top: -1px;
+          margin-top: 1px;
         }
       }
 
