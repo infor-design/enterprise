@@ -1347,7 +1347,7 @@ $datagrid-small-row-height: 25px;
         }
 
         &.icon-calendar {
-          top: 2px;
+          top: -2px;
         }
       }
 
@@ -1508,7 +1508,7 @@ $datagrid-small-row-height: 25px;
             &.icon-fileupload {
               height: 15px;
               left: 1px;
-              top: 2px;
+              top: -2px;
             }
 
             &.icon-clock {
@@ -1870,7 +1870,7 @@ $datagrid-small-row-height: 25px;
         .icon.icon-calendar {
           height: 14px;
           left: -2px;
-          top: 2px;
+          top: 0px;
         }
       }
 
@@ -3892,7 +3892,7 @@ td .btn-actions {
   .icon-fileupload {
     height: 16px;
     left: 5px;
-    top: 2px;
+    top: -2px;
     width: 16px;
   }
 
