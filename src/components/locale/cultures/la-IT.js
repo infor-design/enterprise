@@ -195,7 +195,7 @@ Soho.Locale.addCulture('la-IT', {
     InfoOnPage: { id: 'InfoOnPage', value: 'Information nuntius (s) on page', comment: 'Information message(s) on page n' },
     InProgress: { id: 'In Progress', value: 'In corso', comment: 'Info tooltip that an action is in progress' },
     Insert: { id: 'Insert', value: 'Inserere', comment: 'Insert Modal Dialog Button' },
-    InsertAnchor: { id: 'InsertAnchor', value: 'Insert ceratas ancora puppes,', comment: 'Insert Acnhor (link) in an editor' },
+    InsertHyperlink: { id: 'InsertHyperlink', value: 'Insert ceratas ancora puppes,', comment: 'Insert Acnhor (link) in an editor' },
     InsertImage: { id: 'InsertImage', value: 'Insert imago', comment: 'Insert Image in an editor' },
     InsertLink: { id: 'InsertLink', value: 'Insert collegamento', comment: 'Insert Link in an editor' },
     InsertUrl: { id: 'InsertUrl', value: 'Insert URL', comment: 'Insert a Url in an editor' },

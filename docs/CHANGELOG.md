@@ -3,6 +3,7 @@
 ## v4.60.0 Fixes
 
 - `[Datagrid]` Fix Edit Input Date Field on medium row height in Datagrid. ([#5955](https://github.com/infor-design/enterprise/issues/5955))
+- `[Locale]` Changed the text from Insert Anchor to Insert Hyperlink. Some translations my still reference anchor until updated from the translation team. ([#5987](https://github.com/infor-design/enterprise/issues/5987))
 
 ## v4.59.0 Markup Changes
 
