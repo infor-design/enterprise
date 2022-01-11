@@ -4,6 +4,10 @@
 
 - `[Locale]` Changed the text from Insert Anchor to Insert Hyperlink. Some translations my still reference anchor until updated from the translation team. ([#5987](https://github.com/infor-design/enterprise/issues/5987))
 
+## v4.60.0 Features
+
+- `[Badges/Tags]` Corrected the colors of badges/tags for better accessibility contrast. ([#5673](https://github.com/infor-design/enterprise/issues/5673))
+
 ## v4.59.0 Markup Changes
 
 - `[About]` Changed the OS Version to not show the version. This is because this information is incorrect and the correct information is no longer given by newer versions of Operating systems in any browser. or this reason the version is removed from the OS field on the about dialog. ([#5813](https://github.com/infor-design/enterprise/issues/5813))

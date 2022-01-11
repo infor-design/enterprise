@@ -14,6 +14,9 @@
 // Enterprise vars
 @import '../core/config';
 
+// Theme Overrides
+$body-color-primary-background: $ids-color-palette-slate-100;
+
 // Form Background Color
 $header-bg-color: $ids-color-brand-primary-base;
 $subhead-bg-color: $ids-color-brand-primary-alt;
@@ -123,13 +126,23 @@ $badge-alert-icon-color: $ids-color-palette-slate-60;
 $badge-alert-hover-icon-color: $ids-color-palette-slate-100;
 $badge-good-color: $ids-color-palette-slate-100;
 $badge-good-icon-color: $ids-color-palette-slate-60;
-$badge-good-hover-icon-color: $ids-color-palette-slate-100;
+$badge-good-hover-icon-color: $ids-color-palette-slate-60;
 $badge-info-color: $ids-color-palette-white;
 $badge-info-icon-color: $ids-color-palette-slate-30;
 $badge-info-hover-icon-color: $ids-color-palette-white;
 $badge-info-bg-color: $ids-color-brand-primary-base;
 $badge-neutral-icon-color: $ids-color-palette-slate-30;
 $badge-neutral-hover-icon-color: $ids-color-palette-white;
+$badge-error-bg-color: $ids-color-palette-ruby-50;
+$badge-good-bg-color: $ids-color-palette-emerald-50;
+$badge-alert-bg-color: $ids-color-palette-amber-50;
+
+// Status Colors
+$status-01-bg-color: $ids-color-palette-ruby-50;
+$status-02-bg-color: $ids-color-palette-amber-50;
+$status-03-bg-color: $ids-color-palette-amber-50;
+$status-04-bg-color: $ids-color-palette-emerald-50;
+$status-05-bg-color: $ids-color-palette-azure-60;
 
 // Cards
 $card-content-button-color: $ids-color-palette-slate-10;
