@@ -253,7 +253,7 @@ Soho.Locale.addCulture('el-GR', {
     InfoOnPage: { id: 'InfoOnPage', value: 'Μήνυμα(τα) ενημέρωσης στη σελίδα', comment: 'Information message(s) on page n' },
     InProgress: { id: 'In Progress', value: 'Σε εξέλιξη', comment: 'Info tooltip that an action is in progress' },
     Insert: { id: 'Insert', value: 'Εισαγωγή', comment: 'Insert Modal Dialog Button' },
-    InsertAnchor: { id: 'InsertAnchor', value: 'Εισαγωγή αγκύρωσης', comment: 'Insert a hyperlink in an editor' },
+    InsertHyperlink: { id: 'InsertHyperlink', value: 'Εισαγωγή αγκύρωσης', comment: 'Insert a hyperlink in an editor' },
     InsertImage: { id: 'InsertImage', value: 'Εισαγωγή εικόνας', comment: 'Insert Image in an editor' },
     InsertLink: { id: 'InsertLink', value: 'Εισαγωγή σύνδεσης', comment: 'Insert Link in an editor' },
     InsertUrl: { id: 'InsertUrl', value: 'Εισαγωγή Url', comment: 'Insert a Url in an editor' },

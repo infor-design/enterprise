@@ -254,7 +254,7 @@ Soho.Locale.addCulture('fr-FR', {
     InfoOnPage: { id: 'InfoOnPage', value: 'Message(s) d\'information sur page', comment: 'Information message(s) on page n' },
     InProgress: { id: 'In Progress', value: 'En cours', comment: 'Info tooltip that an action is in progress' },
     Insert: { id: 'Insert', value: 'Insérer', comment: 'Insert Modal Dialog Button' },
-    InsertAnchor: { id: 'InsertAnchor', value: 'Insérer point d\'ancrage', comment: 'Insert a hyperlink in an editor' },
+    InsertHyperlink: { id: 'InsertHyperlink', value: 'Insérer point d\'ancrage', comment: 'Insert a hyperlink in an editor' },
     InsertImage: { id: 'InsertImage', value: 'Insérer image', comment: 'Insert Image in an editor' },
     InsertLink: { id: 'InsertLink', value: 'Insérer lien', comment: 'Insert Link in an editor' },
     InsertUrl: { id: 'InsertUrl', value: 'Insérer URL', comment: 'Insert a Url in an editor' },

@@ -200,7 +200,6 @@ Soho.Locale.addCulture('sv-SE', {
     InfoOnPage: { id: 'InfoOnPage', value: 'Informationsmeddelanden på sidan', comment: 'Information message(s) on page n' },
     InProgress: { id: 'In Progress', value: 'Pågår', comment: 'Info tooltip that an action is in progress' },
     Insert: { id: 'Insert', value: 'Infoga', comment: 'Insert Modal Dialog Button' },
-    InsertAnchor: { id: 'InsertAnchor', value: 'Infoga fästpunktslänk', comment: 'Insert Acnhor (link) in an editor' },
     InsertImage: { id: 'InsertImage', value: 'Infoga bild', comment: 'Insert Image in an editor' },
     InsertLink: { id: 'InsertLink', value: 'Infoga länk', comment: 'Insert Link in an editor' },
     InsertUrl: { id: 'InsertUrl', value: 'Infoga URL', comment: 'Insert a Url in an editor' },

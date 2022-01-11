@@ -253,7 +253,7 @@ Soho.Locale.addCulture('lv-LV', {
     InfoOnPage: { id: 'InfoOnPage', value: 'Informācijas ziņojums(-i) lapā', comment: 'Information message(s) on page n' },
     InProgress: { id: 'In Progress', value: 'Notiekošs', comment: 'Info tooltip that an action is in progress' },
     Insert: { id: 'Insert', value: 'Ievietot', comment: 'Insert Modal Dialog Button' },
-    InsertAnchor: { id: 'InsertAnchor', value: 'Ievietot hipersaiti', comment: 'Insert a hyperlink in an editor' },
+    InsertHyperlink: { id: 'InsertHyperlink', value: 'Ievietot hipersaiti', comment: 'Insert a hyperlink in an editor' },
     InsertImage: { id: 'InsertImage', value: 'Ievietot attēlu', comment: 'Insert Image in an editor' },
     InsertLink: { id: 'InsertLink', value: 'Ievietot saiti', comment: 'Insert Link in an editor' },
     InsertUrl: { id: 'InsertUrl', value: 'Ievietot vietrādi URL', comment: 'Insert a Url in an editor' },
