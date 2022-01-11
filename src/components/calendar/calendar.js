@@ -785,6 +785,7 @@ Calendar.prototype = {
   appendEvent(container, event, type, idx) {
     let node;
     const eventCnt = container.querySelectorAll('.calendar-event').length;
+    const colorList = ['ruby', 'amber', 'emerald', 'azure', 'turqoise', 'amethyst', 'graphite', 'slate' ];
 
     if (idx > -1) {
       if (!this.monthView.dayMap[idx].events) {
@@ -825,7 +826,7 @@ Calendar.prototype = {
     node.setAttribute('data-key', event.startKey);
 
     // Let the border color / color be overriden
-    if (event.color?.substr(0, 1) === '#' || (event.color && event.borderColor)) {
+    if ((event.color?.substr(0, 1) === '#' || event.color) && colorList.indexOf(event.color) < 0) {
       node.style.backgroundColor = event.color;
       node.classList.remove(event.color);
     }
