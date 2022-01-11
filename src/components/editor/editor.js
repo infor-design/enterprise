@@ -1049,7 +1049,7 @@ Editor.prototype = {
 
       separator: '<div class="separator"></div>',
 
-      anchor: `<button type="button" class="btn btn-editor" title="${Locale.translate('InsertAnchor')}" data-action="anchor" data-modal="modal-url-${this.id}" data-element="a">${buttonLabels.anchor}</button>`,
+      anchor: `<button type="button" class="btn btn-editor" title="${Locale.translate('InsertHyperlink')}" data-action="anchor" data-modal="modal-url-${this.id}" data-element="a">${buttonLabels.anchor}</button>`,
 
       image: `<button type="button" class="btn btn-editor" title="${Locale.translate('InsertImage')}" data-action="image" data-modal="modal-image-${this.id}" data-element="img">${buttonLabels.image}</button>`,
 
@@ -1094,7 +1094,7 @@ Editor.prototype = {
       strikethrough: this.getIcon('StrikeThrough', 'strike-through'),
       foreColor: this.getIcon('TextColor', 'fore-color'),
       backColor: this.getIcon('BackgroundColor', 'back-color'),
-      anchor: this.getIcon('InsertAnchor', 'link'),
+      anchor: this.getIcon('InsertHyperlink', 'link'),
       image: this.getIcon('InsertImage', 'insert-image'),
       header1: this.getIcon('ToggleH3', 'h3'),
       header2: this.getIcon('ToggleH4', 'h4'),
@@ -1312,7 +1312,7 @@ Editor.prototype = {
     const output = $(`<div class="modal editor-modal-url" id="modal-url-${this.id}"></div>`)
       .html(`<div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title">${Locale.translate('InsertAnchor')}</h1>
+          <h1 class="modal-title">${Locale.translate('InsertHyperlink')}</h1>
         </div>
         <div class="modal-body">
           <div class="field">

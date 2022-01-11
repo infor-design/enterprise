@@ -254,7 +254,7 @@ Soho.Locale.addCulture('ru-RU', {
     InfoOnPage: { id: 'InfoOnPage', value: 'Информационные сообщения на странице', comment: 'Information message(s) on page n' },
     InProgress: { id: 'In Progress', value: 'Выполняется', comment: 'Info tooltip that an action is in progress' },
     Insert: { id: 'Insert', value: 'Вставить', comment: 'Insert Modal Dialog Button' },
-    InsertAnchor: { id: 'InsertAnchor', value: 'Вставить привязку', comment: 'Insert a hyperlink in an editor' },
+    InsertHyperlink: { id: 'InsertHyperlink', value: 'Вставить привязку', comment: 'Insert a hyperlink in an editor' },
     InsertImage: { id: 'InsertImage', value: 'Вставить изображение', comment: 'Insert Image in an editor' },
     InsertLink: { id: 'InsertLink', value: 'Вставить ссылку', comment: 'Insert Link in an editor' },
     InsertUrl: { id: 'InsertUrl', value: 'Вставить URL-адрес', comment: 'Insert a Url in an editor' },

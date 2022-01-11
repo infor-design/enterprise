@@ -253,7 +253,7 @@ Soho.Locale.addCulture('ko-KR', {
     InfoOnPage: { id: 'InfoOnPage', value: '페이지에서 정보 메시지 표시', comment: 'Information message(s) on page n' },
     InProgress: { id: 'In Progress', value: '진행 중', comment: 'Info tooltip that an action is in progress' },
     Insert: { id: 'Insert', value: '삽입', comment: 'Insert Modal Dialog Button' },
-    InsertAnchor: { id: 'InsertAnchor', value: '기준 위치 삽입', comment: 'Insert a hyperlink in an editor' },
+    InsertHyperlink: { id: 'InsertHyperlink', value: '기준 위치 삽입', comment: 'Insert a hyperlink in an editor' },
     InsertImage: { id: 'InsertImage', value: '이미지 삽입', comment: 'Insert Image in an editor' },
     InsertLink: { id: 'InsertLink', value: '링크 삽입', comment: 'Insert Link in an editor' },
     InsertUrl: { id: 'InsertUrl', value: 'URL 삽입', comment: 'Insert a Url in an editor' },

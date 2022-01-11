@@ -254,7 +254,7 @@ Soho.Locale.addCulture('bg-BG', {
     InfoOnPage: { id: 'InfoOnPage', value: 'Информационно(и) съобщение(я) на страница', comment: 'Information message(s) on page n' },
     InProgress: { id: 'In Progress', value: 'В ход...', comment: 'Info tooltip that an action is in progress' },
     Insert: { id: 'Insert', value: 'Вмъкване', comment: 'Insert Modal Dialog Button' },
-    InsertAnchor: { id: 'InsertAnchor', value: 'Вмъкване на котва', comment: 'Insert a hyperlink in an editor' },
+    InsertHyperlink: { id: 'InsertHyperlink', value: 'Вмъкване на котва', comment: 'Insert a hyperlink in an editor' },
     InsertImage: { id: 'InsertImage', value: 'Вмъкване на изображение', comment: 'Insert Image in an editor' },
     InsertLink: { id: 'InsertLink', value: 'Вмъкване на връзка', comment: 'Insert Link in an editor' },
     InsertUrl: { id: 'InsertUrl', value: 'Вмъкване на Url', comment: 'Insert a Url in an editor' },
