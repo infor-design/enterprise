@@ -1,3 +1,15 @@
+<style>
+  input.checkbox.tomato + label::before {
+    background-color: tomato;
+    border-color: tomato;
+  }
+
+  input.checkbox.powderblue + label::before {
+    background-color: powderblue;
+    border-color: powderblue;
+  }
+</style>
+
 <div class="calendar" data-init="false">
   <div class="calendar-events">
     <div class="accordion" data-options="{'allowOnePane': false}">
@@ -38,10 +50,10 @@ $('body').one('initialized', function () {
   var eventTypes = [];
   var events = [];
 
-  $.getJSON('{{basepath}}api/event-types', function(res) {
+  $.getJSON('{{basepath}}api/customEvent-types', function(res) {
     eventTypes = res;
 
-    $.getJSON('{{basepath}}api/events', function(res) {
+    $.getJSON('{{basepath}}api/customEvents', function(res) {
       events = res;
       $('.calendar').calendar({
         month: 6,

@@ -1,0 +1,7 @@
+[
+  { "id": "dto", "label": "Discretionary Time Off", "translationKey": "DiscretionaryTimeOff", "color": "powderblue", "checked": true, "custom": true },
+  { "id": "admin", "label": "Admin", "translationKey": "AdministrativeLeave", "color": "amethyst", "checked": true },
+  { "id": "team", "label": "Team Event", "translationKey": "TeamEvent", "color": "emerald", "checked": true },
+  { "id": "sick", "label": "Sick Time", "translationKey": "SickTime", "color": "tomato", "checked": true, "custom": true },
+  { "id": "holiday", "label": "Company Holiday", "translationKey": "CompanyHoliday", "color": "slate", "checked": true, "disabled": true }
+]

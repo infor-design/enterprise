@@ -765,25 +765,5 @@
     "starts": "2020-10-23T08:00:00.000",
     "ends": "2020-10-23T09:00:00.000",
     "type": "dto"
-  },
-  {
-    "id": "78",
-    "subject": "Today is the Day!",
-    "starts": "2020-07-28T00:00:00.000",
-    "ends": "2020-07-28T23:59:59.999",
-    "icon": "icon-success-alert",
-    "type": "dto",
-    "color": "papayawhip",
-    "borderColor": "aqua"
-  },
-  {
-    "id": "79",
-    "subject": "Dog Event!",
-    "starts": "2020-07-27T00:00:00.000",
-    "ends": "2020-07-27T23:59:59.999",
-    "icon": "icon-success-alert",
-    "type": "dto",
-    "color": "powderblue",
-    "borderColor": "khaki"
   }
 ]
