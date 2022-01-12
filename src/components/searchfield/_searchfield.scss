@@ -28,7 +28,7 @@
   box-shadow 300ms $cubic-ease);
 
   &.non-collapsible.is-open {
-    > .icon:not(.close):not(.icon-error) { 
+    > .icon:not(.close):not(.icon-error) {
       left: 8px;
     }
   }
@@ -39,7 +39,6 @@
     height: 14px;
     position: absolute;
     top: 10px;
-
 
     &:not(.close):not(.icon-error) {
       left: 6px;
@@ -122,7 +121,6 @@
       &.input-xl {
         height: 60px;
       }
-
     }
 
     > .icon {
@@ -200,7 +198,6 @@
         border-color: $ids-color-brand-primary-base;
       }
     }
-
   }
 
   &.is-hovered {

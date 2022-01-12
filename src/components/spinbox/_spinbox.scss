@@ -101,7 +101,7 @@ input::-webkit-inner-spin-button {
 .spinbox-wrapper {
   display: inline-block;
 
-  input:hover  {
+  input:hover {
     border: 1px solid $input-color-initial-border;
   }
 
@@ -146,7 +146,6 @@ input::-webkit-inner-spin-button {
         cursor: default;
       }
     }
-
   }
 
   &.is-disabled {
@@ -290,7 +289,6 @@ html[dir='rtl'] {
           border-color: $input-color-disabled-border;
         }
       }
-
     }
 
     &.is-disabled {

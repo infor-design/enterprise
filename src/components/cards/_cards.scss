@@ -90,13 +90,14 @@
 
   &.card-variant {
     @include auto-height;
+
     align-items: center;
     display: flex;
     flex-flow: nowrap;
     justify-content: space-between;
 
     .card-image {
-      padding: 15px 0px 15px 15px;
+      padding: 15px 0 15px 15px;
       flex: 0 0 auto;
     }
 
@@ -247,7 +248,7 @@
           margin: 0 auto;
           width: 150px;
 
-          @media only screen and (max-width: $breakpoint-tablet-reduced - 16px) {
+          @media only screen and (max-width: ($breakpoint-tablet-reduced - 16px)) {
             width: unset;
           }
         }
@@ -490,7 +491,6 @@
   }
 
   &:not(.has-toolbar) {
-
     > .btn-actions,
     > .btn-expander {
       line-height: normal;
@@ -565,7 +565,6 @@
     a {
       margin: 2px 4px 0;
     }
-
   }
 }
 
@@ -581,7 +580,6 @@
   &.alternate {
     background-color: $body-color-primary-background;
   }
-
 }
 
 .card-list-item-thumbnail {
@@ -671,7 +669,6 @@
 html[dir='rtl'] {
   .card-header,
   .widget-header {
-
     > h2,
     > h1,
     > button {
@@ -704,7 +701,6 @@ html[dir='rtl'] {
 
   .card-content,
   .widget-content {
-
     .card-group-action,
     .widget-group-action {
       padding: 0 20px 0 10px;

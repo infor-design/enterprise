@@ -5,6 +5,7 @@
   @include rotate(90);
 
   border-radius: 2px 2px 0 0;
+
   //border-radius: top-right | bottom-right | bottom-left | top-left
   clip-path: inset(0 0 0 0);
   height: 22px;
@@ -300,6 +301,7 @@
         }
       }
     }
+
     ~ .btn-actions {
       left: -10px;
     }
@@ -871,10 +873,10 @@
 
       .dropdown,
       .multiselect {
-      ~ .btn-actions {
-        top: 1px;
+        ~ .btn-actions {
+          top: 1px;
+        }
       }
-    }
 
       .spinbox-wrapper .btn-actions {
         top: 5px !important;
@@ -1152,7 +1154,6 @@ html[dir='rtl'] {
         right: -10px;
       }
     }
-
   }
 
   // RTL with Safari
@@ -1222,7 +1223,6 @@ html[dir='rtl'] {
         right: -10px;
       }
     }
-
   }
 
   // RTL with IE
@@ -1234,5 +1234,4 @@ html[dir='rtl'] {
       }
     }
   }
-
 }

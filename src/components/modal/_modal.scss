@@ -50,6 +50,7 @@
 .modal {
   @include css3(transform, scale(0.9, 0.9));
   @include css3(transition, opacity 0.2s, transform 0.2s);
+
   //Added after size calc
   bottom: 0;
   height: auto;
@@ -193,7 +194,6 @@
         padding: 0;
       }
     }
-
   }
 
   .listview-search {

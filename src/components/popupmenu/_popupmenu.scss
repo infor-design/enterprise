@@ -196,7 +196,6 @@
       .heading {
         color: $popupmenu-dark-heading-color;
       }
-
     }
 
     &.top {
@@ -714,7 +713,6 @@ html[dir='rtl'] {
     }
 
     li {
-
       // Selected
       &.is-checked > a::before,
       &.is-checked.is-selected > a::before {
