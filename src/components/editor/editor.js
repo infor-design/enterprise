@@ -1264,7 +1264,7 @@ Editor.prototype = {
             self.createLink($(`[name="em-url-${self.id}"]`, this));
           }
         } else {
-          self.insertImage($(`#image-${self.id}`).val());
+          self.insertImage($(`[name="image-${self.id}"]`).val());
         }
       });
 
