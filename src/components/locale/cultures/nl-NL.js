@@ -254,7 +254,7 @@ Soho.Locale.addCulture('nl-NL', {
     InfoOnPage: { id: 'InfoOnPage', value: 'Informatiebericht(en) op pagina', comment: 'Information message(s) on page n' },
     InProgress: { id: 'In Progress', value: 'In uitvoering', comment: 'Info tooltip that an action is in progress' },
     Insert: { id: 'Insert', value: 'Invoegen', comment: 'Insert Modal Dialog Button' },
-    InsertAnchor: { id: 'InsertAnchor', value: 'Anker invoegen', comment: 'Insert a hyperlink in an editor' },
+    InsertHyperlink: { id: 'InsertHyperlink', value: 'Anker invoegen', comment: 'Insert a hyperlink in an editor' },
     InsertImage: { id: 'InsertImage', value: 'Afbeelding invoegen', comment: 'Insert Image in an editor' },
     InsertLink: { id: 'InsertLink', value: 'Koppeling invoegen', comment: 'Insert Link in an editor' },
     InsertUrl: { id: 'InsertUrl', value: 'URL invoegen', comment: 'Insert a Url in an editor' },

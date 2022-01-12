@@ -253,7 +253,7 @@ Soho.Locale.addCulture('af-ZA', {
     InfoOnPage: { id: 'InfoOnPage', value: 'Inligtingsboodskap(pe) op bladsy', comment: 'Information message(s) on page n' },
     InProgress: { id: 'In Progress', value: 'Tans aan die gang', comment: 'Info tooltip that an action is in progress' },
     Insert: { id: 'Insert', value: 'Voeg in', comment: 'Insert Modal Dialog Button' },
-    InsertAnchor: { id: 'InsertAnchor', value: 'Voer anker in', comment: 'Insert a hyperlink in an editor' },
+    InsertHyperlink: { id: 'InsertHyperlink', value: 'Voer anker in', comment: 'Insert a hyperlink (synonymous with link or anchor tag) into an editor' },
     InsertImage: { id: 'InsertImage', value: 'Voeg prent in', comment: 'Insert Image in an editor' },
     InsertLink: { id: 'InsertLink', value: 'Voeg skakel in', comment: 'Insert Link in an editor' },
     InsertUrl: { id: 'InsertUrl', value: 'Voeg URL in', comment: 'Insert a Url in an editor' },
