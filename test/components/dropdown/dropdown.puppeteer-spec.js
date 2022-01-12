@@ -104,9 +104,9 @@ describe('Dropdown Puppeteer Tests', () => {
       await page.hover('#list-option-3');
       await page.keyboard.press('Enter');
       await page.keyboard.press('Tab');
-      await page.waitForSelector('.dropdown', {visible: true});
+      await page.waitForSelector('.dropdown');
       const ariaLbl = await page.$eval('div[class="dropdown"]', el => el.getAttribute('aria-label'));
-      expect(ariaLbl).toContain('Fire Level E4');
+      expect(ariaLbl).toContain('Fire Level E4'); 
     });
   });
 });
