@@ -849,15 +849,21 @@ ListBuilder.prototype = {
    * @returns {void}
    */
   disable() {
-    this.element.addClass('is-disabled')
-      .find('.toolbar .buttonset button[disabled]').attr('data-original-disabled', 'disabled').end()
-      .find('.toolbar .buttonset button')
-      .attr('disabled', 'disabled');
+    const isDisabled = element => element.hasClass('is-disabled') || element.attr('data-original-disabled') === 'is-disabled' || element.attr('disabled') === 'disabled';
 
-    this.ul
-      .find('li.is-disabled').attr('data-original-disabled', 'is-disabled').end()
-      .find('li')
-      .addClass('is-disabled');
+    if (!isDisabled(this.element) && !isDisabled(this.element.find('.toolbar .buttonset button'))) {
+      this.element.addClass('is-disabled')
+        .find('.toolbar .buttonset button[disabled]').attr('data-original-disabled', 'disabled').end()
+        .find('.toolbar .buttonset button')
+        .attr('disabled', 'disabled');
+    }
+
+    if (!isDisabled(this.ul.find('li'))) {
+      this.ul
+        .find('li.is-disabled').attr('data-original-disabled', 'is-disabled').end()
+        .find('li')
+        .addClass('is-disabled');
+    }
   },
 
   /**
