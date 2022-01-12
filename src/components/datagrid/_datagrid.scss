@@ -60,7 +60,7 @@
 }
 
 @mixin trigger-icon-background($color: $datagrid-cell-bg-color) {
-  $trigger-icon-box-shadow:  -3px 0 1px 0 $color, 8px 0 0 0 $color;
+  $trigger-icon-box-shadow: -3px 0 1px 0 $color, 8px 0 0 0 $color;
 
   background-color: $color;
   -webkit-box-shadow: $trigger-icon-box-shadow;
