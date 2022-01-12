@@ -8,7 +8,6 @@ describe('Dropdown Puppeteer Tests', () => {
     });
 
     it('should disable function keys F1 to F12', async () => {
-      const dropdownEl = await page.$('.dropdown');
       await page.keyboard.press('Tab');
       await page.keyboard.press('Tab');
 
