@@ -82,7 +82,7 @@ describe('Dropdown Puppeteer Tests', () => {
     });
   });
 
-  fdescribe('Supports custom keystrokes', () => {
+  describe('Supports custom keystrokes', () => {
     const url = 'http://localhost:4000/components/dropdown/test-allow-custom-keystroke.html';
 
     beforeAll(async () => {
@@ -93,20 +93,20 @@ describe('Dropdown Puppeteer Tests', () => {
       await page.keyboard.press('Tab');
       await page.keyboard.press('Tab');
       await page.keyboard.press('Enter');
-      const ariaEx = await page.$eval('div[class="dropdown"]', el => el.getAttribute('aria-expanded'));
-      expect(ariaEx).toMatch('false');
+
+      const ariaExpanded = await page.evaluate(() => document.querySelector('div.dropdown').getAttribute('aria-expanded'));
+      expect(ariaExpanded).toContain('false');
     });
 
     it('should support using the enter key to select while using the onKeyDown function', async () => {
-      await page.reload({ waitUntil: ['domcontentloaded', 'networkidle0'] });
       await page.hover('.dropdown-wrapper');
       await page.click('.dropdown-wrapper');
       await page.hover('#list-option-3');
       await page.keyboard.press('Enter');
       await page.keyboard.press('Tab');
-      await page.waitForSelector('.dropdown');
-      const ariaLbl = await page.$eval('div[class="dropdown"]', el => el.getAttribute('aria-label'));
-      expect(ariaLbl).toContain('Fire Level E4'); 
+
+      const ariaLabel = await page.evaluate(() => document.querySelector('div.dropdown').getAttribute('aria-label'));
+      expect(ariaLabel).toContain('Dropdown allows custom keystroke, Fire Level E4'); 
     });
   });
 });
