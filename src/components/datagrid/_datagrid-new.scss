@@ -84,7 +84,7 @@
 // Adjust some trigger cells
 .datagrid-trigger-cell {
   .icon-calendar {
-    top: 0;
+    top: -2px;
   }
 
   .btn-icon > .icon {
@@ -138,7 +138,7 @@
       }
 
       + .trigger {
-        margin-top: 15px;
+        margin-top: 13px;
       }
     }
 
@@ -183,8 +183,8 @@
         td {
           &.datagrid-trigger-cell {
             .icon.icon-calendar {
-              left: -2px;
-              top: -1px;
+              left: -1px;
+              top: -2px;
             }
           }
 
@@ -215,7 +215,7 @@
       .datepicker {
         + .trigger {
           margin-left: 1px;
-          margin-top: 1px;
+          margin-top: 0px;
         }
       }
 
@@ -237,18 +237,26 @@
       .row-btn {
         min-height: 32px;
       }
+
+      .dropdown-trigger {
+        + .icon {
+          top: 3px !important;
+          left: 4px !important;
+        }
+      }
     }
     .datagrid-trigger-cell {
       .icon.icon-calendar {
         left: 5px;
-        top: 1px;
+        top: 0px;
       }
     }
 
     td.is-editing {
       .datepicker {
         + .trigger {
-          margin-left: -1px;
+          margin-top: 7px;
+          margin-left: -2px;
         }
       }
 
