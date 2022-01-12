@@ -1,6 +1,7 @@
 describe('Dropdown Puppeteer Tests', () => {
+  const baseUrl = 'http://localhost:4000/components/dropdown';
   describe('Disabling Function Keys Tests', () => {
-    const url = 'http://localhost:4000/components/dropdown/test-disabling-function-keys';
+    const url = `${baseUrl}/test-disabling-function-keys`;
 
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
@@ -62,28 +63,28 @@ describe('Dropdown Puppeteer Tests', () => {
   });
 
   describe('Announced Error Message Text Tests', () => {
-    const url = 'http://localhost:4000/components/dropdown/example-validation.html';
+    const url = `${baseUrl}/example-validation.html`;
 
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
     it('Should include the error message in aria-label of dropdown error', async () => {
-      const dropdownEl = await page.evaluate('document.querySelector("div.dropdown").getAttribute("aria-label")');
-      expect(dropdownEl).toEqual('Validated Dropdown, '); // This is the initial value of aria-label when error message is not visible.
+      await page.evaluate(() => document.querySelector('div.dropdown').getAttribute('aria-label'))
+        .then(el => expect(el).toEqual('Validated Dropdown, '));
 
       await page.click('div.dropdown');
       await page.waitForTimeout(200);
       await page.click('#list-option-0');
       await page.keyboard.press('Tab');
 
-      const newVal = await page.evaluate('document.querySelector("div.dropdown.error").getAttribute("aria-label")');
-      expect(newVal).toEqual('Validated Dropdown, Required'); // Required text should append to the aria-label
+      await page.evaluate(() => document.querySelector('div.dropdown.error').getAttribute('aria-label'))
+        .then(el => expect(el).toEqual('Validated Dropdown, Required'));
     });
   });
 
   describe('Supports custom keystrokes', () => {
-    const url = 'http://localhost:4000/components/dropdown/test-allow-custom-keystroke.html';
+    const url = `${baseUrl}/test-allow-custom-keystroke.html`;
 
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
