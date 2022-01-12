@@ -2,6 +2,7 @@
 
 ## v4.60.0 Fixes
 
+- `[Editor]` Changed selector for for image value selction from id to name. ([#5915](https://github.com/infor-design/enterprise/issues/5915))
 - `[Field Options]` Fixed UI alignment of close icon button (searchfield) in Field Options. ([#5983](https://github.com/infor-design/enterprise/issues/5983))
 - `[Searchfield]` Fixed UI alignment of close icon button (searchfield) in Datagrid. ([#5954](https://github.com/infor-design/enterprise/issues/5954))
 - `[Locale]` Changed the text from Insert Anchor to Insert Hyperlink. Some translations my still reference anchor until updated from the translation team. ([#5987](https://github.com/infor-design/enterprise/issues/5987))
@@ -17,7 +18,6 @@
 - `[Cards]` Added focus state on selected cards. ([#5684](https://github.com/infor-design/enterprise/issues/5684))
 - `[Colorpicker]` Fixed a bug where the red diagonal line that goes beyond its border when field-short/form-layout-compact is used. ([#5744](https://github.com/infor-design/enterprise/issues/5744))
 - `[Datagrid]` Fixed a bug where the maskOptions function is never called when the grid has filtering. ([#5847](https://github.com/infor-design/enterprise/issues/5847))
-- `[Editor]` Removed duplicate attribute name value pair declaration in example page which causes image insertion to break. ([#5915](https://github.com/infor-design/enterprise/issues/5915))
 - `[Calendar]` Fixed the personalize column checkbox not syncing when having two datagrids. ([#5859](https://github.com/infor-design/enterprise/issues/5859))
 - `[Fieldset]` Implemented design improvements. ([#5638](https://github.com/infor-design/enterprise/issues/5638))
 - `[Fileupload-Advanced]` Fixed a bug where it cannot add a new file after removing the old one. ([#5598](https://github.com/infor-design/enterprise/issues/5598))
