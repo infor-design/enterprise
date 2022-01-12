@@ -1264,7 +1264,7 @@ Editor.prototype = {
             self.createLink($(`[name="em-url-${self.id}"]`, this));
           }
         } else {
-          self.insertImage($(`[name="image-${self.id}"]`).val());
+          self.insertImage($(`#${self.settings.attributes[0].value}-editor-modal-input0`).val());
         }
       });
 
