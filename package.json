@@ -1,7 +1,7 @@
 {
   "name": "ids-enterprise",
   "slug": "ids-enterprise",
-  "version": "4.59.0-dev",
+  "version": "4.60.0-dev",
   "description": "Infor Design System (IDS) Enterprise Components for the web",
   "repository": {
     "type": "git",
@@ -67,7 +67,7 @@
     "e2e:local:debug": "npm run webdriver:update && npx protractor test/protractor.local.debug.conf.js",
     "e2e:puppeteer": "npx --no-install jest --config=test/jest.config.js --runInBand --detectOpenHandles --forceExit",
     "webdriver:clean": "npx webdriver-manager clean",
-    "webdriver:update": "npx webdriver-manager update --standalone false --quiet --gecko=false",
+    "webdriver:update": "npx webdriver-manager update --versions.chrome=96.0.4664.45 --standalone false --quiet --gecko=false",
     "zip-dist": "npx grunt zip-dist",
     "documentation": "node ./scripts/deploy-documentation.js",
     "release:dev": "node scripts/publish-nightly-manual",

@@ -410,8 +410,9 @@
   .searchfield-wrapper.has-focus:not(.toolbar-searchfield-wrapper),
   .searchfield-wrapper {
     .btn-icon.close {
+      height: 26px;
       right: 41px;
-      top: 13px;
+      top: 0;
     }
 
     .btn-actions {

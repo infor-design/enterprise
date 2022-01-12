@@ -253,7 +253,7 @@ Soho.Locale.addCulture('fi-FI', {
     InfoOnPage: { id: 'InfoOnPage', value: 'Tietoviesti tai -viestejä sivulla', comment: 'Information message(s) on page n' },
     InProgress: { id: 'In Progress', value: 'Käynnissä', comment: 'Info tooltip that an action is in progress' },
     Insert: { id: 'Insert', value: 'Lisää', comment: 'Insert Modal Dialog Button' },
-    InsertAnchor: { id: 'InsertAnchor', value: 'Lisää ankkuri', comment: 'Insert a hyperlink in an editor' },
+    InsertHyperlink: { id: 'InsertHyperlink', value: 'Lisää ankkuri', comment: 'Insert a hyperlink in an editor' },
     InsertImage: { id: 'InsertImage', value: 'Lisää kuva', comment: 'Insert Image in an editor' },
     InsertLink: { id: 'InsertLink', value: 'Lisää linkki', comment: 'Insert Link in an editor' },
     InsertUrl: { id: 'InsertUrl', value: 'Lisää URL', comment: 'Insert a Url in an editor' },

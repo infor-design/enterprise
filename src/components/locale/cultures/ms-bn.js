@@ -253,7 +253,7 @@ Soho.Locale.addCulture('ms-bn', {
     InfoOnPage: { id: 'InfoOnPage', value: 'Mesej maklumat pada halaman', comment: 'Information message(s) on page n' },
     InProgress: { id: 'In Progress', value: 'Sedang Berjalan', comment: 'Info tooltip that an action is in progress' },
     Insert: { id: 'Insert', value: 'Sisip', comment: 'Insert Modal Dialog Button' },
-    InsertAnchor: { id: 'InsertAnchor', value: 'Sisipkan Sauh', comment: 'Insert a hyperlink in an editor' },
+    InsertHyperlink: { id: 'InsertHyperlink', value: 'Sisipkan Sauh', comment: 'Insert a hyperlink in an editor' },
     InsertImage: { id: 'InsertImage', value: 'Sisipkan Imej', comment: 'Insert Image in an editor' },
     InsertLink: { id: 'InsertLink', value: 'Sisipkan Pautan', comment: 'Insert Link in an editor' },
     InsertUrl: { id: 'InsertUrl', value: 'Sisipkan Url', comment: 'Insert a Url in an editor' },
