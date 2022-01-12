@@ -3882,6 +3882,17 @@ td .btn-actions {
       left: -1px;
       top: 4px;
     }
+
+    &.icon-close {
+      visibility: visible;
+      height: 11px !important;
+      margin-top: -4px;
+      margin-left: -22px;
+    }
+
+    &.icon-fileupload {
+      visibility: visible;
+    }
   }
 
   .icon-clock {
@@ -3929,11 +3940,6 @@ td .btn-actions {
     &:focus {
       .icon {
         visibility: visible;
-      }
-
-      .icon-close {
-        margin-top: -5px;
-        margin-left: -22px;
       }
 
       .icon-error,
