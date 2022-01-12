@@ -253,7 +253,7 @@ Soho.Locale.addCulture('hr-HR', {
     InfoOnPage: { id: 'InfoOnPage', value: 'Informativne poruke na stranici', comment: 'Information message(s) on page n' },
     InProgress: { id: 'In Progress', value: 'U tijeku', comment: 'Info tooltip that an action is in progress' },
     Insert: { id: 'Insert', value: 'Umetni', comment: 'Insert Modal Dialog Button' },
-    InsertAnchor: { id: 'InsertAnchor', value: 'Umetni sidrenu oznaku', comment: 'Insert a hyperlink in an editor' },
+    InsertHyperlink: { id: 'InsertHyperlink', value: 'Umetni sidrenu oznaku', comment: 'Insert a hyperlink in an editor' },
     InsertImage: { id: 'InsertImage', value: 'Umetni sliku', comment: 'Insert Image in an editor' },
     InsertLink: { id: 'InsertLink', value: 'Umetni vezu', comment: 'Insert Link in an editor' },
     InsertUrl: { id: 'InsertUrl', value: 'Umetni Url', comment: 'Insert a Url in an editor' },

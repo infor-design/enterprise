@@ -493,7 +493,7 @@ Soho.Locale.addCulture('ar-EG', {
     InfoOnPage: { id: 'InfoOnPage', value: 'رسالة(رسائل) المعلومات موجودة على الصفحة', comment: 'Information message(s) on page n' },
     InProgress: { id: 'In Progress', value: 'قيد التنفيذ', comment: 'Info tooltip that an action is in progress' },
     Insert: { id: 'Insert', value: 'إدراج', comment: 'Insert Modal Dialog Button' },
-    InsertAnchor: { id: 'InsertAnchor', value: 'إدراج ارتساء', comment: 'Insert a hyperlink in an editor' },
+    InsertHyperlink: { id: 'InsertHyperlink', value: 'إدراج ارتساء', comment: 'Insert a hyperlink in an editor' },
     InsertImage: { id: 'InsertImage', value: 'إدراج صورة', comment: 'Insert Image in an editor' },
     InsertLink: { id: 'InsertLink', value: 'إدراج رابط', comment: 'Insert Link in an editor' },
     InsertUrl: { id: 'InsertUrl', value: 'إدراج عنوان Url', comment: 'Insert a Url in an editor' },
