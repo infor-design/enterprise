@@ -82,14 +82,14 @@ describe('Dropdown Puppeteer Tests', () => {
     });
   });
 
-  describe('Dropdown for Enter key opens dropdown list, when it should only be used to select items within an open list', () => {
+  fdescribe('Supports custom keystrokes', () => {
     const url = 'http://localhost:4000/components/dropdown/test-allow-custom-keystroke.html';
 
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should have the enter key stroke to be disabled  ', async () => {
+    it('should support disabling the enter key when closed with the onKeyDown function', async () => {
       await page.keyboard.press('Tab');
       await page.keyboard.press('Tab');
       await page.keyboard.press('Enter');
@@ -97,12 +97,14 @@ describe('Dropdown Puppeteer Tests', () => {
       expect(ariaEx).toMatch('false');
     });
 
-    it('should select value when hovered and press enter', async () => {
-      await page.reload({ waitUntil: ['networkidle0', 'domcontentloaded'] });
+    it('should support using the enter key to select while using the onKeyDown function', async () => {
+      await page.reload({ waitUntil: ['domcontentloaded', 'networkidle0'] });
       await page.hover('.dropdown-wrapper');
       await page.click('.dropdown-wrapper');
       await page.hover('#list-option-3');
       await page.keyboard.press('Enter');
+      await page.keyboard.press('Tab');
+      await page.waitForSelector('.dropdown', {visible: true});
       const ariaLbl = await page.$eval('div[class="dropdown"]', el => el.getAttribute('aria-label'));
       expect(ariaLbl).toContain('Fire Level E4');
     });
