@@ -94,8 +94,8 @@ describe('Dropdown Puppeteer Tests', () => {
       await page.keyboard.press('Tab');
       await page.keyboard.press('Enter');
 
-      const ariaExpanded = await page.evaluate(() => document.querySelector('div.dropdown').getAttribute('aria-expanded'));
-      expect(ariaExpanded).toContain('false');
+      await page.evaluate(() => document.querySelector('div.dropdown').getAttribute('aria-expanded'))
+        .then(ariaExpanded => expect(ariaExpanded).toContain('false'));
     });
 
     it('should support using the enter key to select while using the onKeyDown function', async () => {
@@ -105,8 +105,8 @@ describe('Dropdown Puppeteer Tests', () => {
       await page.keyboard.press('Enter');
       await page.keyboard.press('Tab');
 
-      const ariaLabel = await page.evaluate(() => document.querySelector('div.dropdown').getAttribute('aria-label'));
-      expect(ariaLabel).toContain('Dropdown allows custom keystroke, Fire Level E4'); 
+      await page.evaluate(() => document.querySelector('div.dropdown').getAttribute('aria-label'))
+        .then(ariaLabel => expect(ariaLabel).toContain('Dropdown allows custom keystroke, Fire Level E4'));
     });
   });
 });
