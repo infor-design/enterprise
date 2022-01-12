@@ -12,52 +12,52 @@ describe('Dropdown Puppeteer Tests', () => {
       await page.keyboard.press('Tab');
 
       await page.keyboard.press('F1');
-      await page.waitForTimeout(100); // this is needed because dropdown has some sort of delay to show
-      expect(await page.evaluate(el => el.value, dropdownEl)).toEqual('');
+      await page.evaluate(() => document.querySelector('select.dropdown').value)
+        .then(el => expect(el).toEqual(''));
 
       await page.keyboard.press('F2');
-      await page.waitForTimeout(100); // this is needed because dropdown has some sort of delay to show
-      expect(await page.evaluate(el => el.value, dropdownEl)).toEqual('');
+      await page.evaluate(() => document.querySelector('select.dropdown').value)
+        .then(el => expect(el).toEqual(''));
 
       await page.keyboard.press('F3');
-      await page.waitForTimeout(100); // this is needed because dropdown has some sort of delay to show
-      expect(await page.evaluate(el => el.value, dropdownEl)).toEqual('');
+      await page.evaluate(() => document.querySelector('select.dropdown').value)
+        .then(el => expect(el).toEqual(''));
 
       await page.keyboard.press('F4');
-      await page.waitForTimeout(100); // this is needed because dropdown has some sort of delay to show
-      expect(await page.evaluate(el => el.value, dropdownEl)).toEqual('');
+      await page.evaluate(() => document.querySelector('select.dropdown').value)
+        .then(el => expect(el).toEqual(''));
 
       await page.keyboard.press('F5');
-      await page.waitForTimeout(100); // this is needed because dropdown has some sort of delay to show
-      expect(await page.evaluate(el => el.value, dropdownEl)).toEqual('');
+      await page.evaluate(() => document.querySelector('select.dropdown').value)
+        .then(el => expect(el).toEqual(''));
 
       await page.keyboard.press('F6');
-      await page.waitForTimeout(100); // this is needed because dropdown has some sort of delay to show
-      expect(await page.evaluate(el => el.value, dropdownEl)).toEqual('');
+      await page.evaluate(() => document.querySelector('select.dropdown').value)
+        .then(el => expect(el).toEqual(''));
 
       await page.keyboard.press('F7');
-      await page.waitForTimeout(100); // this is needed because dropdown has some sort of delay to show
-      expect(await page.evaluate(el => el.value, dropdownEl)).toEqual('');
+      await page.evaluate(() => document.querySelector('select.dropdown').value)
+        .then(el => expect(el).toEqual(''));
 
       await page.keyboard.press('F8');
-      await page.waitForTimeout(100); // this is needed because dropdown has some sort of delay to show
-      expect(await page.evaluate(el => el.value, dropdownEl)).toEqual('');
+      await page.evaluate(() => document.querySelector('select.dropdown').value)
+        .then(el => expect(el).toEqual(''));
 
       await page.keyboard.press('F9');
-      await page.waitForTimeout(100); // this is needed because dropdown has some sort of delay to show
-      expect(await page.evaluate(el => el.value, dropdownEl)).toEqual('');
+      await page.evaluate(() => document.querySelector('select.dropdown').value)
+        .then(el => expect(el).toEqual(''));
 
       await page.keyboard.press('F10');
-      await page.waitForTimeout(100); // this is needed because dropdown has some sort of delay to show
-      expect(await page.evaluate(el => el.value, dropdownEl)).toEqual('');
+      await page.evaluate(() => document.querySelector('select.dropdown').value)
+        .then(el => expect(el).toEqual(''));
 
       await page.keyboard.press('F11');
-      await page.waitForTimeout(100); // this is needed because dropdown has some sort of delay to show
-      expect(await page.evaluate(el => el.value, dropdownEl)).toEqual('');
+      await page.evaluate(() => document.querySelector('select.dropdown').value)
+        .then(el => expect(el).toEqual(''));
 
       await page.keyboard.press('F12');
-      await page.waitForTimeout(100); // this is needed because dropdown has some sort of delay to show
-      expect(await page.evaluate(el => el.value, dropdownEl)).toEqual('');
+      await page.evaluate(() => document.querySelector('select.dropdown').value)
+        .then(el => expect(el).toEqual(''));
     });
   });
 
