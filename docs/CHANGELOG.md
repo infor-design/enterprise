@@ -2,7 +2,6 @@
 
 ## v4.60.0 Fixes
 
-- `[Dropdown]` Create a Puppeteer Script for Enter key opens dropdown list, when it should only be used to select items within an open list. ([#5842](https://github.com/infor-design/enterprise/issues/5842))
 - `[Field Options]` Fixed UI alignment of close icon button (searchfield) in Field Options. ([#5983](https://github.com/infor-design/enterprise/issues/5983))
 - `[Searchfield]` Fixed UI alignment of close icon button (searchfield) in Datagrid. ([#5954](https://github.com/infor-design/enterprise/issues/5954))
 - `[Locale]` Changed the text from Insert Anchor to Insert Hyperlink. Some translations my still reference anchor until updated from the translation team. ([#5987](https://github.com/infor-design/enterprise/issues/5987))
@@ -48,6 +47,7 @@
 - `[Datagrid]` Added datagrid feature using arrow keys to select. ([#5713](https://github.com/infor-design/enterprise/issues/5713))
 - `[Datagrid]` Added exportToCsv option for datagrid toolbar. ([#5786](https://github.com/infor-design/enterprise/issues/5786))
 - `[Datagrid]` Added new event `filteroperatorchanged` to datagrid. ([#5899](https://github.com/infor-design/enterprise/issues/5899))
+- `[Dropdown]` Create a Puppeteer Script for Enter key opens dropdown list, when it should only be used to select items within an open list. ([#5842](https://github.com/infor-design/enterprise/issues/5842))
 - `[File Upload]` Added puppeteer tests for file upload. ([#5808](https://github.com/infor-design/enterprise/issues/5808))
 - `[Toolbar-Flex]` Added responsive design for searchfield with categories and basic searchfield. ([#5619](https://github.com/infor-design/enterprise/issues/5619))
 - `[Timepicker]` Added settings in timepicker to limit the hours that can be selected. ([#5880](https://github.com/infor-design/enterprise/issues/5880))
