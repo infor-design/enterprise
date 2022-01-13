@@ -2242,6 +2242,9 @@ $datagrid-small-row-height: 25px;
       }
     }
 
+    .is-editing .datagrid-cell-wrapper {
+      padding: 4px 16px 0 !important;
+    }
     .datagrid-cell-wrapper {
       border: 1px solid transparent;
       display: block;
@@ -2843,6 +2846,17 @@ $datagrid-small-row-height: 25px;
         left: auto;
         top: 5px;
         visibility: visible;
+
+        &.icon-fileupload {
+          left: 5px;
+          top: 2px;
+        }
+
+        &.icon-close {
+          margin-top: -6px;
+          margin-right: -3px;
+          margin-left: 13px;
+        }
       }
 
       .colorpicker-container .icon {
@@ -3882,17 +3896,12 @@ td .btn-actions {
       left: -1px;
       top: 4px;
     }
+  }
 
-    &.icon-close {
-      visibility: visible;
-      height: 11px !important;
-      margin-top: -4px;
-      margin-left: -22px;
-    }
-
-    &.icon-fileupload {
-      visibility: visible;
-    }
+  .icon-close {
+    height: 12px !important;
+    margin-top: -5px;
+    margin-left: -22px;
   }
 
   .icon-clock {
@@ -3962,6 +3971,10 @@ td .btn-actions {
       height: inherit;
       margin-bottom: 0;
       width: inherit;
+    }
+
+    .trigger.is-clearable {
+      width: calc(100% - 64px);
     }
   }
 }
