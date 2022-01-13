@@ -38,9 +38,9 @@
 
   .searchfield-wrapper {
     @include transition(
-    left 300ms $cubic-ease,
-    right 300ms $cubic-ease,
-    box-shadow 300ms $cubic-ease);
+      left 300ms $cubic-ease,
+      right 300ms $cubic-ease,
+      box-shadow 300ms $cubic-ease);
   }
 }
 
@@ -89,7 +89,7 @@
 
     &.rotate {
       transform: rotate(0deg);
-      left: 4px
+      left: 4px;
     }
   }
 

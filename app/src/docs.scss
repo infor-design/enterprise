@@ -1,3 +1,11 @@
+/* stylelint-disable no-descending-specificity */
+/* stylelint-disable block-closing-brace-empty-line-before */
+/* stylelint-disable scss/double-slash-comment-empty-line-before */
+/* stylelint-disable property-no-vendor-prefix */
+/* stylelint-disable scss/dollar-variable-empty-line-before */
+/* stylelint-disable alpha-value-notation */
+/* stylelint-disable color-function-notation */
+/* stylelint-disable selector-class-pattern */
 // Docs Site Styling
 // Compiles down to what used to be `site.css`
 //================================================== //
@@ -194,7 +202,6 @@ p strong {
     width: 100%;
 
     > * {
-      display: inline-block;
       float: left;
     }
   }
@@ -272,7 +279,7 @@ p strong {
 }
 
 // Media Queries for Header Area
-@media (min-width: 0) and (max-width: $breakpoint-wide-tablet - 1) {
+@media (min-width: 0) and (max-width: ($breakpoint-wide-tablet - 1)) {
   .doc-header .doc-header-secondary-links {
     clear: both;
     display: block;
@@ -286,12 +293,6 @@ p strong {
     margin-top: 15px;
   }
 
-}
-
-@media (min-width: 0) and (max-width: $breakpoint-slim - 1) {
-  .doc-header {
-    //background-color: orange;
-  }
 }
 
 // Pandoc code highlight styles - customized
