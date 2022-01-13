@@ -84,7 +84,7 @@
 // Adjust some trigger cells
 .datagrid-trigger-cell {
   .icon-calendar {
-    top: -2px;
+    top: -3px;
   }
 
   .btn-icon > .icon {
@@ -138,7 +138,7 @@
       }
 
       + .trigger {
-        margin-top: 13px;
+        margin-top: 12px;
       }
     }
 
@@ -499,10 +499,10 @@
     padding: 6px 22px 0 5px;
   }
 
-  tbody tr td.is-editing .dropdown + .icon {
+  tbody tr td.is-editing .dropdown-wrapper .dropdown + .icon {
     height: 16px;
     right: 4px;
-    top: 6px;
+    top: 6px !important;
     width: 16px;
   }
 
@@ -527,7 +527,8 @@
   }
 
   tbody tr td.datagrid-trigger-cell .dropdown-trigger + .icon {
-    top: 4px !important;
+    top: 1px !important;
+    left: -5px !important;
   }
 
   tbody tr td .datagrid-checkbox-wrapper {
