@@ -1,7 +1,6 @@
 // Timeline
 //================================================== //
-//
-// See also:  /sass/controls/_processindicator.scss
+// See also: /sass/controls/_processindicator.scss
 
 .timeline {
   min-height: 44px;
@@ -30,7 +29,6 @@
       border: 2px solid $timeline-indicator-complete-color;
     }
   }
-
 }
 
 .timeline-block {
@@ -99,7 +97,6 @@
       color: $timeline-header-color;
     }
   }
-
 }
 
 @mixin mobile-timeline() {
@@ -180,7 +177,6 @@ html[dir='rtl'] {
       margin-left: inherit;
       margin-right: 6em;
     }
-
   }
 
   @media (min-width: $breakpoint-phone-to-tablet) {

@@ -78,7 +78,6 @@
   > .busy-indicator-container {
     font-size: $ids-size-font-base;
   }
-
 }
 
 .tab-list {
@@ -198,7 +197,6 @@
     p {
       color: inherit;
     }
-
   }
 
   // This rule fixes an IE bug where contents of all tab panels are shown.
@@ -211,7 +209,6 @@
       margin-top: 0;
     }
   }
-
 }
 
 // Page containers that directly house '.tab-panel' elements will allow them to fill the height of the container
@@ -234,7 +231,6 @@
   > .busy-indicator-container {
     font-size: $ids-size-font-base;
   }
-
 }
 
 // Page containers without scroll
@@ -300,7 +296,7 @@
 .tab-container.has-counts {
   > .tab-list-container {
     .tab-list {
-      padding: 1px 0px 17px 0px;
+      padding: 1px 0 17px;
 
       .separator {
         margin-bottom: -6px;
@@ -312,7 +308,7 @@
         &:hover {
           border-bottom: 5px solid $tab-hover-color;
         }
-  
+
         &.is-selected {
           border-bottom: 5px solid $tab-selected-color;
         }
@@ -481,6 +477,7 @@
 
     .tab {
       @include css3(transition, background-color 0.25s ease);
+
       top: 1px;
       border-bottom: 4px solid transparent;
       border-radius: 2px 2px 0 0;
@@ -561,7 +558,6 @@
             top: -1px;
             width: 16px;
           }
-
         }
       }
 
@@ -709,7 +705,6 @@
       .icon {
         color: $disabled-color !important;
       }
-
     }
 
     .separator {
@@ -725,7 +720,6 @@
         background-color: rgba($disabled-color, 1);
       }
     }
-
   }
 }
 
@@ -995,5 +989,4 @@ html.is-firefox {
     height: 5px;
     margin-top: -2px;
   }
-
 }

@@ -276,9 +276,7 @@ $gutter-neg-size: -20px;
         text-align: center;
       }
     }
-
   }
-
 }
 
 @include respond-to(phabletdown) {
@@ -289,7 +287,6 @@ $gutter-neg-size: -20px;
     + .one-half-mobile {
       padding-left: 20px;
     }
-
   }
 
   .row.no-indent {
@@ -468,5 +465,4 @@ html[dir='rtl'] {
       margin-right: $gutter-size;
     }
   }
-
 }

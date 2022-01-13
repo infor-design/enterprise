@@ -4,7 +4,7 @@
 @import '../button/button';
 @import '../icons/icons';
 
-// NOTE:  this element gets a margin dynamically set in the "resize" method of modal.js
+// NOTE: this element gets a margin dynamically set in the "resize" method of modal.js
 .modal-wrapper {
   align-items: center;
   display: flex;
@@ -50,6 +50,7 @@
 .modal {
   @include css3(transform, scale(0.9, 0.9));
   @include css3(transition, opacity 0.2s, transform 0.2s);
+
   //Added after size calc
   bottom: 0;
   height: auto;
@@ -193,7 +194,6 @@
         padding: 0;
       }
     }
-
   }
 
   .listview-search {

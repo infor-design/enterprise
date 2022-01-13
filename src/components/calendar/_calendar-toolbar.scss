@@ -1,3 +1,5 @@
+/* stylelint-disable media-feature-name-no-vendor-prefix */
+/* stylelint-disable media-feature-name-no-unknown */
 // Calendar Toolbar
 //================================================== //
 
@@ -31,7 +33,7 @@
   }
 
   button.prev span.hitbox-area {
-    left: -5px
+    left: -5px;
   }
 
   button.next span.hitbox-area {
@@ -93,8 +95,8 @@
       padding: 4px 5px;
 
       @media only screen
-        and (min-device-width: $breakpoint-phone)
-        and (max-device-width: $breakpoint-big-phone + 88)
+        and (minwidth: $breakpoint-phone)
+        and (max-device-width: ($breakpoint-big-phone + 88))
         and (-webkit-min-device-pixel-ratio: 2)
         and (orientation: portrait) {
         margin-left: 5px;
@@ -194,8 +196,8 @@
     padding: 0 5px 0 20px;
 
     @media only screen
-      and (min-device-width: $breakpoint-phone)
-      and (max-device-width: $breakpoint-big-phone + 88)
+      and (minwidth: $breakpoint-phone)
+      and (ax-device-width: (m$breakpoint-big-phone + 88))
       and (-webkit-min-device-pixel-ratio: 2)
       and (orientation: portrait) {
       padding: 0 5px;
