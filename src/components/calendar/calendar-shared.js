@@ -241,7 +241,7 @@ calendarShared.getEventTypeColor = function getEventTypeColor(event, eventTypes)
  * @param {object} eventTypes The event types to use
  * @returns {object} The Calendar prototype, useful for chaining.
  */
- calendarShared.getEventTypeBorderColor = function getEventTypeBorderColor(event, eventTypes) {
+calendarShared.getEventTypeBorderColor = function getEventTypeBorderColor(event, eventTypes) {
   let borderColor = '';
   if (event.borderColor?.substr(0, 1) === '#' || event.borderColor) {
     return event.borderColor;
