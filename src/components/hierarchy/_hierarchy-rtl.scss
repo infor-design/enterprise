@@ -100,13 +100,13 @@ html[dir='rtl'] {
         .back-container .back {
           left: 10px;
         }
-        
+
         .child-nodes {
           padding-left: 0;
-          padding-right: 55px; 
+          padding-right: 55px;
 
           > li .leaf {
-            &::after  {
+            &::after {
               left: 198px;
             }
           }
@@ -132,7 +132,6 @@ html[dir='rtl'] {
 
     //The Top Level Node
     .root {
-
       //draw a line down
       &::after {
         margin-left: inherit;
@@ -155,16 +154,16 @@ html[dir='rtl'] {
     .chart.has-single-child .root + .sub-level,
     .sub-level {
       padding-left: 0;
-      padding-right: 35px; 
-      
+      padding-right: 35px;
+
       &::before {
-          content: none;
+        content: none;
       }
 
       // Top Level Nodes still follow left to right
       > li {
         //Draw Line Up and Left
-         &::before {
+        &::before {
           border-bottom: 0;
           border-left: 0 solid $hierarchy-line-color;
           border-right: $hierarchy-line-width solid $hierarchy-line-color;

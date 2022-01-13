@@ -422,14 +422,12 @@ html[dir='rtl'] {
     left: auto;
     right: -99999px;
   }
-
 }
 
 // Short Fields
 .field-short,
 .form-layout-compact .field,
 .form-layout-compact .field-checkbox {
-
   // Reduce Checkbox Size
   .checkbox-label,
   .checkbox > label {

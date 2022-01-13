@@ -1,6 +1,5 @@
 // Process Indicators
 //================================================== //
-//
 // Also see: /sass/controls/_timeline.scss
 
 $indicator-darkest: $ids-color-palette-azure-80;
@@ -45,7 +44,7 @@ $indicator-current-size: ($indicator-size * 1.6);
     display: none !important;
   }
 
-  // Main blocks:  .display, .header, .details
+  // Main blocks: .display, .header, .details
   .display {
     align-items: center;
     display: flex;
@@ -81,7 +80,6 @@ $indicator-current-size: ($indicator-size * 1.6);
       &.minor {
         width: ($indicator-size / 2);
       }
-
     }
   }
 
@@ -340,7 +338,6 @@ $indicator-current-size: ($indicator-size * 1.6);
         top: 0.98em;
       }
     }
-
   }
 
   &.more-info {
@@ -416,7 +413,6 @@ $indicator-current-size: ($indicator-size * 1.6);
       width: 20px;
     }
   }
-
 }
 
 .process-indicator {
@@ -464,7 +460,6 @@ $indicator-current-size: ($indicator-size * 1.6);
     line-height: 1.5;
     margin-bottom: 10px;
   }
-
 }
 
 // Keyframes for the  "processing" animation

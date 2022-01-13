@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.60.0 Features
+
+- `[Dropdown]` Create a Puppeteer Script for Enter key opens dropdown list, when it should only be used to select items within an open list. ([#5842](https://github.com/infor-design/enterprise/issues/5842))
+
 ## v4.60.0 Fixes
 
 - `[Export]` Added data sanitization in Export to CSV. ([#5982](https://github.com/infor-design/enterprise/issues/5982))

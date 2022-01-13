@@ -63,6 +63,7 @@ body.is-open-touch {
   .resize-page-container {
     display: flex;
     flex-direction: column;
+
     .page-container.scrollable {
       @include transition(height 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94),
       margin 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94),
@@ -203,7 +204,6 @@ body.is-open-touch {
       align-items: center;
       justify-content: center;
       top: 5px;
-
 
       &:focus:not(.hide-focus) {
         box-shadow: 0 0 0 1px $body-color-primary-background, 0 0 0 2px transparent, 0 0 4px 3px rgba(33, 34, 36, 0.3);
@@ -643,7 +643,6 @@ html[dir='rtl'] {
       left: inherit;
       right: 43px;
     }
-
   }
 
   &.ie11 {
@@ -664,6 +663,7 @@ html[dir='rtl'] {
       left: 0;
       margin: 0 0 0 auto;
       width: 100%;
+
       //Effects menu calculation
       //@include css3(transform, translateZ(0));
     }
@@ -688,5 +688,4 @@ html[dir='rtl'] {
       right: auto;
     }
   }
-
 }
