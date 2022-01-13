@@ -109,9 +109,11 @@
   td {
     .chart-completion-target {
       height: 28px;
+
       .target {
         margin-top: 6px;
       }
+
       .chart-targeted-text {
         margin-top: -41px;
       }
@@ -152,8 +154,9 @@
 
   &.extra-small-rowheight {
     tbody tr td .row-btn {
-      top: 0px;
+      top: 0;
     }
+
     td.is-editing {
       input.timepicker {
         + .trigger {
@@ -223,13 +226,14 @@
       }
     }
   }
-  
+
   &.medium-rowheight {
     .datagrid-cell-wrapper {
       .row-btn {
         min-height: 32px;
       }
     }
+
     .datagrid-trigger-cell {
       .icon.icon-calendar {
         left: 5px;

@@ -1,3 +1,4 @@
+/* stylelint-disable media-feature-name-no-unknown */
 //* Date Picker
 //================================================== *
 
@@ -104,14 +105,14 @@
 .monthview-popup.popover {
   max-width: inherit;
 
-  @media screen and (max-height: $breakpoint-big-phone + 50) {
+  @media screen and (max-height: ($breakpoint-big-phone + 50)) {
     overflow-y: auto;
   }
 
   // Supports landscape orientation for small iPhone (5, 5S, 5C and 5SE)
   @media only screen
-    and (min-device-width: $breakpoint-phone)
-    and (max-device-width: $breakpoint-big-phone + 88)
+    and (minwidth: $breakpoint-phone)
+    and (max-device-width: ($breakpoint-big-phone + 88))
     and (-webkit-min-device-pixel-ratio: 2)
     and (orientation: landscape) {
     height: 250px;
@@ -261,8 +262,8 @@ html.is-safari {
     min-width: 310px;
 
     @media only screen
-      and (min-device-width: $breakpoint-phone)
-      and (max-device-width: $breakpoint-big-phone + 88)
+      and (minwidth: $breakpoint-phone)
+      and (max-device-width: ($breakpoint-big-phone + 88))
       and (-webkit-min-device-pixel-ratio: 2)
       and (orientation: portrait) {
       min-width: 280px;

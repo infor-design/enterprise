@@ -15,7 +15,7 @@ $header-primary-btn-background-color: $ids-color-palette-azure-50;
 $header-primary-btn-background-hover-color: $ids-color-brand-primary-base;
 $header-text-color: $ids-color-palette-white;
 $header-disabled-color: $ids-color-palette-slate-50;
-$header-focus-box-shadow:  0 0 4px 3px rgba(255, 255, 255, 0.3);
+$header-focus-box-shadow: 0 0 4px 3px rgba(255, 255, 255, 0.3);
 
 $masthead-bg-color: $ids-color-palette-slate-80;
 $masthead-border-color: $ids-color-palette-slate-80;
@@ -32,9 +32,9 @@ $panel-header-bg-color: $ids-color-palette-graphite-20;
 $drop-shadow-depth: rgba(0, 0, 0, 0.2);
 $drop-shadow-depth-tray: rgba(0, 0, 0, 0.1);
 
-$focus-box-shadow-color: rgba(54, 138, 192, 0.3);
-$focus-box-shadow-transparent: 0 0 4px 3px transparent; //Should be same size as $focus-box-shadow (only color transparent)
-$focus-box-shadow: 0 0 4px 3px $focus-box-shadow-color; //Old Style:  0 0 5px rgba(8, 150, 233, .2)
+$focus-box-shadow-color: rgba(54, 138, 192, 0.3); //Should be same size as $focus-box-shadow (only color transparent)
+$focus-box-shadow-transparent: 0 0 4px 3px transparent;
+$focus-box-shadow: 0 0 4px 3px $focus-box-shadow-color; //Old Style: 0 0 5px rgba(8, 150, 233, .2)
 $focus-box-shadow-spinbox: 0 3px 3px 0 $focus-box-shadow-color,
   0 -3px 3px 0 $focus-box-shadow-color;
 
@@ -123,7 +123,7 @@ $tooltip-border-color: $ids-color-palette-slate-80;
 $tooltip-box-shadow: 0 2px 5px $drop-shadow-depth;
 $tooltip-color: $ids-color-palette-white;
 $tooltip-error-bg-color: $ids-color-status-danger;
-$tooltip-error-border-color:  $ids-color-status-danger;
+$tooltip-error-border-color: $ids-color-status-danger;
 $tooltip-error-color: $ids-color-palette-white;
 
 // Badges
@@ -216,9 +216,9 @@ $tertiary-btn-dark-hover-color: $ids-color-palette-white;
 $tertiary-btn-dark-active-color: $ids-color-palette-white;
 
 // Secondary with Border
-$secondary-border-btn-color:  $ids-color-palette-graphite-60;
+$secondary-border-btn-color: $ids-color-palette-graphite-60;
 $secondary-border-btn-border-color: $ids-color-brand-secondary-alt;
-$secondary-border-btn-hover-color:  $ids-color-font-base;
+$secondary-border-btn-hover-color: $ids-color-font-base;
 $secondary-border-btn-hover-border-color: $ids-color-palette-graphite-100;
 $secondary-border-btn-ripple-color: $ids-color-palette-azure-30;
 
@@ -236,7 +236,7 @@ $error-color: $ids-color-status-danger;
 $error-text-color: $ids-color-status-danger;
 $error-border-color: $ids-color-status-danger;
 $error-color-transparent: rgba($ids-color-status-danger, 0.3);
-$error-focus-box-shadow:  0 0 4px 2px $error-color-transparent;
+$error-focus-box-shadow: 0 0 4px 2px $error-color-transparent;
 $alert-color: $ids-color-status-warning;
 $success-color: $ids-color-status-success;
 $info-color: $ids-color-brand-primary-base;
@@ -545,7 +545,7 @@ $modal-btn-hover-color: $ids-color-font-base;
 $modal-btn-primary-color: $ids-color-brand-primary-alt;
 $modal-btn-primary-hover-color: $ids-color-palette-azure-80;
 $modal-btn-primary-disabled-color: $ids-color-brand-primary-alt;
-$modal-btn-primary-disabled-opacity:  0.5;
+$modal-btn-primary-disabled-opacity: 0.5;
 $modal-btn-disabled-color: $ids-color-palette-graphite-60;
 $modal-btn-disabled-opacity: 0.5;
 $modal-color: $ids-color-palette-graphite-60;
@@ -602,7 +602,7 @@ $application-menu-border-color: $ids-color-palette-slate-50;
 $application-menu-searchfield-icon-color: $ids-color-palette-slate-50;
 $application-menu-searchfield-placeholder-color: $ids-color-palette-slate-50;
 $application-menu-searchfield-text-color: $ids-color-palette-slate-30;
-$application-menu-trigger-icon-fill-color:$trigger-icon-fill-color;
+$application-menu-trigger-icon-fill-color: $trigger-icon-fill-color;
 
 $application-menu-searchfield-icon-active-color: $ids-color-palette-white;
 $application-menu-searchfield-text-active-color: $ids-color-palette-white;

@@ -152,7 +152,6 @@
         }
       }
     }
-
   }
 
   .container {
@@ -335,7 +334,7 @@
 
         .percent {
           color: $fileupload-progress-color;
-          font-weight: bold;
+          font-weight: 800;
         }
       }
 
@@ -535,5 +534,4 @@ html[dir='rtl'] {
       }
     }
   }
-
 }

@@ -223,11 +223,12 @@
 
       // Enlarges the faded edge of the `.breadcrumb-list`
       &::before {
-        background-image: linear-gradient(
-          to right,
-          rgba($body-color-primary-background, 1),
-          rgba($body-color-primary-background, 0)
-        );
+        background-image:
+          linear-gradient(
+            to right,
+            rgba($body-color-primary-background, 1),
+            rgba($body-color-primary-background, 0)
+          );
         width: 32px;
       }
 
@@ -437,7 +438,8 @@
       }
 
       &:focus:not(.hide-focus) {
-        box-shadow: 0 0 0 2px transparent,
+        box-shadow:
+          0 0 0 2px transparent,
           0 0 0 1px $header-breadcrumb-color,
           0 0 1px 2px rgba($header-breadcrumb-color, 0.3);
       }
@@ -491,7 +493,8 @@
         }
 
         &:focus:not(.hide-focus) {
-          box-shadow: 0 0 0 2px transparent,
+          box-shadow:
+            0 0 0 2px transparent,
             0 0 0 1px $header-breadcrumb-alt-color,
             0 0 1px 2px rgba($header-breadcrumb-alt-color, 0.3);
         }
@@ -503,11 +506,12 @@
 
         // Change the faded edge to match the header background color
         &::before {
-          background-image: linear-gradient(
-            to right,
-            rgba($header-breadcrumb-alt-bg-color, 1),
-            rgba($header-breadcrumb-alt-bg-color, 0)
-          );
+          background-image:
+            linear-gradient(
+              to right,
+              rgba($header-breadcrumb-alt-bg-color, 1),
+              rgba($header-breadcrumb-alt-bg-color, 0)
+            );
         }
 
         li {
@@ -531,11 +535,12 @@
       .breadcrumb-list,
       ol {
         &::before {
-          background-image: linear-gradient(
-            to right,
-            rgba($header-bg-color, 1),
-            rgba($header-bg-color, 0)
-          );
+          background-image:
+            linear-gradient(
+              to right,
+              rgba($header-bg-color, 1),
+              rgba($header-bg-color, 0)
+            );
         }
       }
 
@@ -544,11 +549,12 @@
         .breadcrumb-list,
         ol {
           &::before {
-            background-image: linear-gradient(
-              to right,
-              rgba($header-breadcrumb-alt-bg-color, 1),
-              rgba($header-breadcrumb-alt-bg-color, 0)
-            );
+            background-image:
+              linear-gradient(
+                to right,
+                rgba($header-breadcrumb-alt-bg-color, 1),
+                rgba($header-breadcrumb-alt-bg-color, 0)
+              );
           }
         }
       }
@@ -610,11 +616,12 @@ html[dir='rtl'] {
       .breadcrumb-list,
       ol {
         &::before {
-          background-image: linear-gradient(
-            to right,
-            rgba($body-color-primary-background, 0),
-            rgba($body-color-primary-background, 1)
-          );
+          background-image:
+            linear-gradient(
+              to right,
+              rgba($body-color-primary-background, 0),
+              rgba($body-color-primary-background, 1)
+            );
         }
 
         li {
@@ -657,11 +664,12 @@ html[dir='rtl'] {
       .breadcrumb-list,
       ol {
         &::before {
-          background-image: linear-gradient(
-            to right,
-            rgba($header-bg-color, 0),
-            rgba($header-bg-color, 1)
-          );
+          background-image:
+            linear-gradient(
+              to right,
+              rgba($header-bg-color, 0),
+              rgba($header-bg-color, 1)
+            );
         }
       }
 
@@ -669,11 +677,12 @@ html[dir='rtl'] {
         .breadcrumb-list,
         ol {
           &::before {
-            background-image: linear-gradient(
-              to right,
-              rgba($header-breadcrumb-alt-bg-color, 0),
-              rgba($header-breadcrumb-alt-bg-color, 1)
-            );
+            background-image:
+              linear-gradient(
+                to right,
+                rgba($header-breadcrumb-alt-bg-color, 0),
+                rgba($header-breadcrumb-alt-bg-color, 1)
+              );
           }
         }
       }

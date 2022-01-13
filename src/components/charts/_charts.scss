@@ -246,12 +246,13 @@
     outline: none;
     padding: 7px;
 
-    &[tabindex="-1"] {
+    &[tabindex='-1'] {
       cursor: inherit;
     }
 
     &[tabindex='0']:focus {
       border-color: $input-color-focus-border;
+
       // Removed box shadow to match current style
       box-shadow: 0 0 4px 1px $focus-box-shadow-color;
       outline: none;
@@ -270,7 +271,6 @@
       padding: 7px 0 0 7px;
       min-height: 35px;
     }
-
   }
 
   .chart-legend-color {
@@ -301,7 +301,6 @@
       white-space: normal;
     }
   }
-
 }
 
 // Legend Popup Styling
@@ -311,7 +310,7 @@
   .chart-popup-menu-color {
     height: 15px;
     width: 15px;
-    margin: 8% 5px
+    margin: 8% 5px;
   }
 
   .chart-popup-menu-text {
@@ -377,13 +376,14 @@
   }
 
   .remaining {
-    background: repeating-linear-gradient(
-      150deg,
-      $ids-color-palette-azure-40,
-      $ids-color-palette-azure-40 1px,
-      $ids-color-palette-azure-20 1px,
-      $ids-color-palette-azure-20 10px
-    );
+    background:
+      repeating-linear-gradient(
+        150deg,
+        $ids-color-palette-azure-40,
+        $ids-color-palette-azure-40 1px,
+        $ids-color-palette-azure-20 1px,
+        $ids-color-palette-azure-20 10px
+      );
   }
 
   //Labels
@@ -412,7 +412,6 @@
     margin-right: 0;
     width: 16px;
   }
-
 }
 
 .colored.label {
@@ -591,7 +590,6 @@ html[dir='rtl'] {
           @include css3(transform, inherit);
         }
       }
-
     }
   }
 }
