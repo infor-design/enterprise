@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.60.0 Features
+
+- `[Dropdown]` Create a Puppeteer Script for Enter key opens dropdown list, when it should only be used to select items within an open list. ([#5842](https://github.com/infor-design/enterprise/issues/5842))
+
 ## v4.60.0 Fixes
 
 - `[Field Options]` Fixed UI alignment of close icon button (searchfield) in Field Options. ([#5983](https://github.com/infor-design/enterprise/issues/5983))

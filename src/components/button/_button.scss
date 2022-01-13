@@ -1,3 +1,4 @@
+/* stylelint-disable function-url-quotes */
 // Buttons
 //================================================== //
 
@@ -109,21 +110,21 @@ button {
         transform: scale(1) translate(50%, -50%);
         transform-origin: 100% 0%;
       }
-  
+
       &.notification-dot-upper-left {
         top: 4px;
         left: -16px;
         transform: scale(1) translate(-50%, -50%);
         transform-origin: 0% 0%;
       }
-  
+
       &.notification-dot-lower-right {
         top: 11px;
         left: -8px;
         transform: scale(1) translate(50%, 50%);
         transform-origin: 0% 100%;
       }
-  
+
       &.notification-dot-lower-left {
         top: 11px;
         left: -16px;
@@ -271,7 +272,6 @@ button {
         color: $button-color-primary-initial-font;
       }
     }
-
   }
 }
 
@@ -400,7 +400,6 @@ a.btn-close {
       }
     }
   }
-
 }
 
 // Destructive Actions / Third Level Button
@@ -465,7 +464,6 @@ a.btn-close {
   .ripple-effect {
     background-color: $tertiary-btn-ripple-color;
   }
-
 }
 
 .btn,
@@ -517,7 +515,6 @@ a.btn-close {
         color: $tertiary-btn-dark-hover-color;
       }
     }
-
   }
 }
 

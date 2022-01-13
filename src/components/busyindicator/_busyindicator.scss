@@ -70,7 +70,6 @@ $busy-indicator-check-color: $inverse-color;
     &.four { @include css3(animation-delay, -0.2s); }
     &.five { @include css3(animation-delay, -0.1s); }
   }
-
 }
 
 // Overlay Override for Busy Indicator

@@ -28,7 +28,7 @@
   @include css3(transform, translate(0, 100%));
   @include transition(transform 200ms $cubic-ease);
 
-  border-radius: 10px 10px 0px 0px;
+  border-radius: 10px 10px 0 0;
   bottom: 40px;
   box-shadow: $actionsheet-tray-box-shadow;
   display: inline-block;

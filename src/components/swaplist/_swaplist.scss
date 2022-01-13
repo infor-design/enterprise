@@ -74,7 +74,8 @@
         }
 
         &::before { //border top and bottom
-          box-shadow: 13px 0 0 $swaplist-icon-color,
+          box-shadow:
+            13px 0 0 $swaplist-icon-color,
             0 16px 0 $swaplist-icon-color,
             13px 16px 0 $swaplist-icon-color;
           height: 2px;
@@ -89,7 +90,8 @@
           }
 
           &::after {
-            box-shadow: 0 6px 0 $swaplist-icon-color-hover,
+            box-shadow:
+              0 6px 0 $swaplist-icon-color-hover,
               0 12px 0 $swaplist-icon-color-hover,
               16px 0 0 $swaplist-icon-color-hover,
               16px 6px 0 $swaplist-icon-color-hover,
@@ -97,7 +99,8 @@
           }
 
           &::before {
-            box-shadow: 13px 0 0 $swaplist-icon-color-hover,
+            box-shadow:
+              13px 0 0 $swaplist-icon-color-hover,
               0 16px 0 $swaplist-icon-color-hover,
               13px 16px 0 $swaplist-icon-color-hover;
           }
@@ -131,7 +134,8 @@
 
         &[disabled] {
           &::before {
-            box-shadow: 13px 0 0 $swaplist-icon-color-disabled,
+            box-shadow:
+              13px 0 0 $swaplist-icon-color-disabled,
               0 16px 0 $swaplist-icon-color-disabled,
               13px 16px 0 $swaplist-icon-color-disabled;
           }
@@ -259,7 +263,6 @@
               display: none;
             }
           }
-
         }
       }
     }

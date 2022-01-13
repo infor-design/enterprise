@@ -234,7 +234,6 @@ svg.icon-logo {
       z-index: 2;
     }
   }
-
 }
 
 .inline {
@@ -275,7 +274,6 @@ svg.icon-logo {
     position: relative;
     width: 45px;
   }
-
 }
 
 .drilldown.btn-icon {
@@ -347,7 +345,6 @@ svg.icon-dirty {
       @include css3(transform, rotate(180deg));
     }
   }
-
 }
 
 // Hamburger by default,
@@ -658,7 +655,6 @@ html[dir='rtl'] {
     left: auto;
     margin: 1px 1px 0 0;
   }
-
 }
 
 .is-firefox {

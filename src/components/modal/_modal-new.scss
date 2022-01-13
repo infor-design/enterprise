@@ -65,6 +65,7 @@
 
 .modal .modal-content h1 {
   @include font-size(24);
+
   line-height: 3rem;
 
   @media screen and (min-width: $breakpoint-big-phone + 1) {
