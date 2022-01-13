@@ -1129,11 +1129,11 @@ $datagrid-small-row-height: 25px;
 
         .datagrid-cell-wrapper {
           .dropdown-trigger {
-            margin-left: -1px; 
+            margin-left: -1px;
             margin-top: -1px;
 
             + .icon {
-              top: 0px;
+              top: 0;
               left: 4px;
             }
           }
@@ -1548,9 +1548,10 @@ $datagrid-small-row-height: 25px;
           .dropdown-trigger {
             margin-left: 2px;
             margin-top: 1px;
+
             + .icon {
               left: -5px;
-              top: 0px;
+              top: 0;
             }
           }
 
@@ -1588,7 +1589,7 @@ $datagrid-small-row-height: 25px;
           .datepicker {
             height: 3rem;
             margin-top: -1px;
-            margin-left: 0px;
+            margin-left: 0;
             padding: 0 0 0 10px;
 
             + .icon {
@@ -1887,7 +1888,7 @@ $datagrid-small-row-height: 25px;
         .icon.icon-calendar {
           height: 14px;
           left: -2px;
-          top: 0px;
+          top: 0;
         }
       }
 

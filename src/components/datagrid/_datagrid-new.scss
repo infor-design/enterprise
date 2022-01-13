@@ -109,9 +109,11 @@
   td {
     .chart-completion-target {
       height: 28px;
+
       .target {
         margin-top: 6px;
       }
+
       .chart-targeted-text {
         margin-top: -41px;
       }
@@ -152,13 +154,13 @@
 
   &.extra-small-rowheight {
     tbody tr td .row-btn {
-      top: 0px;
+      top: 0;
     }
 
     .datagrid-trigger-cell {
       .icon.icon-calendar {
         left: -2px !important;
-        top: 0px !important;
+        top: 0 !important;
       }
     }
 
@@ -215,7 +217,7 @@
       .datepicker {
         + .trigger {
           margin-left: 1px;
-          margin-top: 0px;
+          margin-top: 0;
         }
       }
 
@@ -231,7 +233,7 @@
       }
     }
   }
-  
+
   &.medium-rowheight {
     .datagrid-cell-wrapper {
       .row-btn {
@@ -245,10 +247,11 @@
         }
       }
     }
+
     .datagrid-trigger-cell {
       .icon.icon-calendar {
         left: 5px;
-        top: 0px;
+        top: 0;
       }
     }
 
