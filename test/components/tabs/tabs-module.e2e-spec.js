@@ -66,7 +66,7 @@ describe('Tabs Module (rename API)', () => {
   });
 });
 
-describe('Tabs Module Searchfield close icon tests', async () => {
+describe('Tabs Module Searchfield close icon tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/tabs-module/example-category-searchfield.html');
     const tabsEl = await element(by.id('module-tabs-example'));
