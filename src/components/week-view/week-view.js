@@ -910,6 +910,8 @@ WeekView.prototype = {
     this.teardown();
     this.element.empty();
     $.removeData(this.element[0], COMPONENT_NAME);
+    $.removeData(this.element[0], 'init');
+    $.removeData(this.element[0], 'automationId');
     return this;
   }
 };
