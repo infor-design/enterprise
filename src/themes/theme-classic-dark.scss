@@ -26,7 +26,7 @@ $header-button-focus-color: rgba($ids-color-palette-white, 1);
 $header-button-hover-color: rgba($ids-color-palette-white, 1);
 $header-button-disabled-color: rgba($ids-color-palette-white, 0.3);
 $header-disabled-color: $ids-color-palette-slate-50;
-$header-focus-box-shadow:  0 0 4px 3px rgba(255, 255, 255, 0.3);
+$header-focus-box-shadow: 0 0 4px 3px rgba(255, 255, 255, 0.3);
 
 $dropdown-search-bg-color: $ids-color-palette-slate-80;
 $panel-bg-color: $ids-color-palette-slate-70;
@@ -168,9 +168,9 @@ $popupmenu-hover-color: $ids-color-palette-slate-50;
 $popupmenu-checked-color-inverse: $ids-color-brand-primary-base;
 
 // Secondary With Border
-$secondary-border-btn-color:  $ids-color-palette-slate-30;
+$secondary-border-btn-color: $ids-color-palette-slate-30;
 $secondary-border-btn-border-color: $ids-color-palette-slate-40;
-$secondary-border-btn-hover-color:  $ids-color-palette-white;
+$secondary-border-btn-hover-color: $ids-color-palette-white;
 $secondary-border-btn-hover-border-color: $ids-color-palette-white;
 $secondary-border-btn-ripple-color: $ids-color-palette-white;
 
@@ -183,7 +183,7 @@ $input-readonly-color: $input-color-readonly-font;
 
 // States
 $error-color: $ids-color-status-danger;
-$error-focus-box-shadow:  0 0 4px 2px rgba(222, 129, 129, 0.3);
+$error-focus-box-shadow: 0 0 4px 2px rgba(222, 129, 129, 0.3);
 $error-icon-fill: $ids-color-status-danger;
 $dirty-icon-fill: $ids-color-status-caution;
 $success-icon-fill: $ids-color-status-success;
@@ -365,7 +365,7 @@ $switch-unchecked-bar-color: $ids-color-palette-slate-40;
 $switch-unchecked-border-color: $ids-color-palette-slate-60;
 $switch-unchecked-color: $ids-color-palette-slate-50;
 $switch-unchecked-pressed-bg-color: $ids-color-palette-slate-40;
-$switch-checked-disabled-bar-color:  $ids-color-palette-azure-20;
+$switch-checked-disabled-bar-color: $ids-color-palette-azure-20;
 $switch-disabled-border-color: $ids-color-palette-slate-60;
 $switch-disabled-bg-color: $ids-color-palette-slate-70;
 $switch-disabled-bar-color: $ids-color-palette-slate-60;
@@ -794,4 +794,5 @@ $swipeaction-right-hover-color: $ids-color-palette-white;
 //================================================== //
 // Core Components
 
+/* stylelint-disable-next-line no-invalid-position-at-import-rule */
 @import '../core/controls';

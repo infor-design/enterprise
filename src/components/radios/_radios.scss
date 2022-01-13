@@ -306,7 +306,6 @@
       border-top: 1px solid $ids-color-palette-slate-30;
       padding-top: 15px;
     }
-
   }
 }
 
@@ -456,6 +455,7 @@ html[dir='rtl'] {
     border-color: $error-color;
   }
 }
+
 // disabled radio
 .inline .radio.error:disabled ~ .label-text,
 .radio.error:disabled + label {

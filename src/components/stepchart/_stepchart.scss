@@ -51,9 +51,7 @@
     &.is-complete {
       background-color: $step-chart-completed-bg-color;
     }
-
   }
-
 }
 
 html[dir='rtl'] {
@@ -66,7 +64,5 @@ html[dir='rtl'] {
       float: left;
       margin: 0 5px 0 0;
     }
-
   }
-
 }

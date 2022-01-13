@@ -210,7 +210,6 @@
       a {
         padding: 10px 35px 10px 10px;
       }
-
     }
 
     &.application-menu-trigger {
@@ -232,7 +231,6 @@
       font-size: $ids-size-font-xl;
       font-weight: $ids-number-font-weight-base;
     }
-
   }
 
   .tab-focus-indicator {
@@ -537,7 +535,6 @@
         right: 45px;
         top: 0;
       }
-
     }
   }
 
@@ -658,7 +655,8 @@
 
           &:not(.hide-focus) {
             border-color: transparent;
-            box-shadow: 0 0 0 2px transparent,
+            box-shadow:
+              0 0 0 2px transparent,
               0 0 0 1px $module-tabs-disabled-text-color;
           }
         }
@@ -772,7 +770,6 @@ html[dir='rtl'] {
         right: auto;
       }
     }
-
   }
 }
 
