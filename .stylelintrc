@@ -3,6 +3,7 @@
     "stylelint-scss"
   ],
   "extends": ["stylelint-config-standard-scss"],
+  "ignoreFiles": ["**/*.js", "**/*.md", "**/*.MD", "**/*.html"],
   "rules": {
     "alpha-value-notation": "number",
     "at-rule-empty-line-before": [

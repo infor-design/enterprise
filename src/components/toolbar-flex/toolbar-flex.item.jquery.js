@@ -19,7 +19,7 @@ $.fn.toolbarflexitem = function (settings) {
         if (typeof oldDestroy === 'function') {
           oldDestroy.call(this);
         }
-        $.removeData(this, COMPONENT_NAME);
+        $.removeData(this.element, COMPONENT_NAME);
       };
     }
   });
