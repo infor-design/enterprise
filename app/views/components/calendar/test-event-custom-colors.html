@@ -53,7 +53,7 @@ $('body').one('initialized', function () {
   $.getJSON('{{basepath}}api/custom-event-colors', function(res) {
     eventTypes = res;
 
-    $.getJSON('{{basepath}}api/customEvents', function(res) {
+    $.getJSON('{{basepath}}api/custom-events', function(res) {
       events = res;
       $('.calendar').calendar({
         month: 6,
