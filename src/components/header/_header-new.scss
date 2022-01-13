@@ -20,7 +20,7 @@
               border: 1px solid $header-button-focus-color;
               box-shadow: none !important;
 
-              &:after {
+              &::after {
                 content: none;
               }
             }

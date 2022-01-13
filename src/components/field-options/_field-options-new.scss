@@ -64,6 +64,7 @@
           top: 0;
         }
       }
+
       &.is-empty {
         ~ .btn-actions {
           left: -12px;
@@ -456,7 +457,7 @@
           top: 2px;
         }
       }
-  
+
       .lookup-wrapper,
       .spinbox-wrapper {
         .btn-actions:not(.is-checkbox) {
@@ -475,7 +476,7 @@
           left: auto;
         }
       }
-  
+
       .btn-actions:not(.is-checkbox) {
         left: -12px;
       }
@@ -523,6 +524,7 @@
       ~ .trigger-close.is-visible ~ .btn-actions {
         left: 27px !important;
       }
+
       ~ .btn-actions {
         left: -1px !important;
       }

@@ -231,7 +231,7 @@
 
     // Adjust cell size for IOS
     @media only screen
-      and (max-width: $breakpoint-phone-to-tablet - 1)
+      and (max-width: ($breakpoint-phone-to-tablet - 1))
       and (-webkit-min-device-pixel-ratio: 2)
       and (orientation: landscape) {
       height: 36px;
@@ -239,7 +239,7 @@
     }
 
     @media only screen
-      and (max-width: $breakpoint-phone-to-tablet - 1)
+      and (max-width: ($breakpoint-phone-to-tablet - 1))
       and (-webkit-min-device-pixel-ratio: 2)
       and (orientation: portrait) {
       height: 36px;
@@ -262,7 +262,7 @@
 
       @media only screen
         and (min-device-width: $breakpoint-phone)
-        and (max-device-width: $breakpoint-big-phone + 88)
+        and (max-device-width: ($breakpoint-big-phone + 88))
         and (-webkit-min-device-pixel-ratio: 2)
         and (orientation: portrait) {
         height: 36px;
@@ -433,7 +433,7 @@
           width: 35px;
 
           @media only screen
-            and (max-width: $breakpoint-phone-to-tablet - 1)
+            and (max-width: ($breakpoint-phone-to-tablet - 1))
             and (-webkit-min-device-pixel-ratio: 2)
             and (orientation: landscape) {
             height: 34px;
@@ -441,7 +441,7 @@
           }
 
           @media only screen
-            and (max-width: $breakpoint-phone-to-tablet - 1)
+            and (max-width: ($breakpoint-phone-to-tablet - 1))
             and (-webkit-min-device-pixel-ratio: 2)
             and (orientation: portrait) {
             height: 34px;
@@ -536,7 +536,6 @@
       background-color: $datepicker-selected-bg-color;
       color: $datepicker-selected-color;
     }
-
   }
 
   &.is-timepicker {
@@ -564,7 +563,7 @@
 
     @media only screen
       and (min-device-width: $breakpoint-phone)
-      and (max-device-width: $breakpoint-big-phone + 88)
+      and (max-device-width: ($breakpoint-big-phone + 88))
       and (-webkit-min-device-pixel-ratio: 2)
       and (orientation: portrait) {
       padding: 0;
@@ -607,6 +606,7 @@
           position: relative;
           top: 0;
           width: 10px;
+
           &.month-label {
             font-weight: 600;
             left: auto;
@@ -648,7 +648,6 @@
 
         &.is-selected {
           background-color: $calendar-selected-bg-color;
-          // border-top: 4px solid $calendar-selected-border-color;
           box-shadow: inset 0 5px 0 0 $calendar-selected-border-color;
 
           .day-text {

@@ -52,8 +52,9 @@
       height: 24px;
       right: 9px;
       top: 8px;
+
       & > svg.close.icon {
-        top: 0px;
+        top: 0;
       }
     }
   }
@@ -451,7 +452,6 @@
 }
 
 html.is-firefox {
-
   // Reset the Searchfield Wrapper height on Firefox
   .application-menu {
     .searchfield-wrapper {
@@ -547,7 +547,6 @@ html[dir='rtl'] {
 //================================================== //
 
 .application-menu {
-
   // Level 1 Pane
   .accordion-pane {
     @include left-align-cascade-styles-pane(21px, 46px, 21px);
@@ -684,7 +683,6 @@ html[dir='rtl'] {
 
 html[dir='rtl'] {
   .application-menu {
-
     // Level 1 Pane
     .accordion-pane {
       @include right-align-cascade-styles-pane(21px, 46px, 21px);

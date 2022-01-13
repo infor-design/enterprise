@@ -196,7 +196,6 @@ $subheader-height: 60px;
           top: 0;
         }
       }
-
     }
   }
 
@@ -259,7 +258,6 @@ $subheader-height: 60px;
       width: 100%;
     }
   }
-
 }
 
 // Application Subheaders
@@ -393,7 +391,6 @@ $subheader-height: 60px;
       .ripple-effect {
         background-color: $header-text-color;
       }
-
     }
 
     .toolbar-section {
@@ -476,7 +473,6 @@ $subheader-height: 60px;
       &:active::after {
         border-color: $ids-color-palette-white;
       }
-
     }
   }
 
@@ -568,7 +564,6 @@ $subheader-height: 60px;
         &:hover:not([disabled]) {
           border-bottom: 1px solid $header-breadcrumb-alt-color;
         }
-
       }
 
       li {
@@ -579,7 +574,6 @@ $subheader-height: 60px;
         }
       }
     }
-
   }
 }
 
@@ -620,7 +614,6 @@ $subheader-height: 60px;
           }
         }
       }
-
     }
   }
 }
@@ -691,7 +684,6 @@ html[dir='rtl'] {
       }
     }
   }
-
 }
 
 // Print Style Sheet

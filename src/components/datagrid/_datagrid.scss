@@ -60,7 +60,7 @@
 }
 
 @mixin trigger-icon-background($color: $datagrid-cell-bg-color) {
-  $trigger-icon-box-shadow:  -3px 0 1px 0 $color, 8px 0 0 0 $color;
+  $trigger-icon-box-shadow: -3px 0 1px 0 $color, 8px 0 0 0 $color;
 
   background-color: $color;
   -webkit-box-shadow: $trigger-icon-box-shadow;
@@ -689,7 +689,6 @@ $datagrid-small-row-height: 25px;
             top: -1px;
           }
         }
-
       }
     }
 
@@ -1110,6 +1109,7 @@ $datagrid-small-row-height: 25px;
   border-collapse: separate;
   border-spacing: 0;
   font-size: $ids-size-font-base;
+
   //This lets us resize to lower than content width but it causes layout issues with default col sizes
   table-layout: fixed;
   width: 100%;
@@ -1213,7 +1213,6 @@ $datagrid-small-row-height: 25px;
                 top: calc(50% - 17px);
               }
             }
-
           }
 
           .spinbox-wrapper {
@@ -1236,7 +1235,6 @@ $datagrid-small-row-height: 25px;
                 border-left: 1px solid  $input-color-focus-border;
               }
             }
-
           }
 
           .dropdown-wrapper {
@@ -1253,7 +1251,6 @@ $datagrid-small-row-height: 25px;
             left: auto;
             top: 4px;
           }
-
         }
 
         //validation
@@ -1321,7 +1318,6 @@ $datagrid-small-row-height: 25px;
           top: 10px;
         }
       }
-
     }
 
     .lookup-wrapper {
@@ -1376,7 +1372,6 @@ $datagrid-small-row-height: 25px;
         margin-top: -33px;
       }
     }
-
   }
 
   &.medium-rowheight,
@@ -1637,7 +1632,6 @@ $datagrid-small-row-height: 25px;
               }
             }
           }
-
         }
 
         //validation
@@ -1684,7 +1678,6 @@ $datagrid-small-row-height: 25px;
             top: 6px;
           }
         }
-
       }
 
       &.rowstatus-row-error,
@@ -1768,7 +1761,6 @@ $datagrid-small-row-height: 25px;
         }
       }
     }
-
   }
 
   &.small-rowheight {
@@ -1809,6 +1801,7 @@ $datagrid-small-row-height: 25px;
       .row-btn {
         top: 1px;
       }
+
       .datagrid-reorder-icon .icon {
         height: 18px;
         width: 21px;
@@ -1817,7 +1810,7 @@ $datagrid-small-row-height: 25px;
 
     .datagrid-cell-wrapper {
       min-height: $datagrid-extra-small-row-height + 4;
-      padding: 0px 5px 0;
+      padding: 0 5px;
 
       .dropdown-trigger {
         margin-top: -2px;
@@ -3363,7 +3356,6 @@ $datagrid-small-row-height: 25px;
         color: inherit;
         width: calc(100% - 16px);
       }
-
     }
 
     .dropdown-wrapper {
@@ -3561,7 +3553,6 @@ $datagrid-small-row-height: 25px;
 
 // Grouped Headers
 .datagrid-rowgroup-header {
-
   // Animating while closing
   &.is-animating {
     opacity: 0.2;
@@ -3605,6 +3596,7 @@ $datagrid-small-row-height: 25px;
     .icon.plus-minus {
       left: -6.15px;
     }
+
     .icon.plus-minus::before,
     .icon.plus-minus::after {
       left: 8px;
@@ -4025,7 +4017,6 @@ td .btn-actions {
       color: transparent;
     }
   }
-
 }
 
 //Grid Expandable Area
@@ -4134,7 +4125,6 @@ td .btn-actions {
           top: calc(50% - 16px);
         }
       }
-
     }
 
     &.medium-rowheight {
@@ -4181,7 +4171,6 @@ td .btn-actions {
             top: calc(50% - 15px);
           }
         }
-
       }
     }
 
@@ -5018,7 +5007,6 @@ html[dir='rtl'] {
       border-bottom: 5px solid $datagrid-header-hover-color;
       bottom: -9px;
     }
-
   }
 
   th {
@@ -5183,7 +5171,6 @@ html[dir='rtl'] {
         }
       }
     }
-
   }
 
   .datagrid {
@@ -5240,7 +5227,6 @@ html[dir='rtl'] {
   .listview-search {
     min-width: 360px;
   }
-
 }
 
 // Filter Dropdown Style
@@ -5341,7 +5327,6 @@ html[dir='rtl'] {
       vertical-align: middle;
     }
   }
-
 }
 
 // Modal

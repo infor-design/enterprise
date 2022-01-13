@@ -4,7 +4,6 @@
 @import '../button/button-chevron';
 
 .expandable-area {
-
   //Header Area
   .expandable-header {
     border-top: 1px solid $expandable-area-border-color;
@@ -71,7 +70,6 @@
     .summary-form .field:last-child {
       margin-bottom: 20px;
     }
-
   }
 
   .expandable-visible-pane {

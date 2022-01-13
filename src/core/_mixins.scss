@@ -1,3 +1,6 @@
+/* stylelint-disable scss/at-else-empty-line-before */
+/* stylelint-disable scss/at-if-closing-brace-newline-after */
+/* stylelint-disable scss/at-if-closing-brace-space-after */
 // Sass Mix In's
 //==================================================//
 
@@ -153,7 +156,7 @@ $prefixes: -webkit-, -moz-, -o-, -ms-, '';
 
   @for $i from 1 through $max {
     $value: strip-unit(nth($values, $i));
-    $px-values: #{$px-values + $value*16}px;
+    $px-values: #{$px-values + $value * 16}px;
 
     @if $i < $max {
       $px-values: #{$px-values + ' '};
@@ -176,19 +179,19 @@ $prefixes: -webkit-, -moz-, -o-, -ms-, '';
 // Respond-To different device sizes (Responsive Breakpoints)
 @mixin respond-to($media) {
   @if $media == phone {
-    @media (max-width: $breakpoint-phone-to-tablet - 1) { @content; }
+    @media (max-width: ($breakpoint-phone-to-tablet - 1)) { @content; }
   }
 
   @else if $media == phonedown {
-    @media (min-width: 0) and (max-width: $breakpoint-big-phone - 1) { @content; }
+    @media (min-width: 0) and (max-width: ($breakpoint-big-phone - 1)) { @content; }
   }
 
   @else if $media == tabletdown {
-    @media (max-width: $breakpoint-tablet-to-desktop - 1) { @content; }
+    @media (max-width: ($breakpoint-tablet-to-desktop - 1)) { @content; }
   }
 
   @else if $media == tablet {
-    @media (min-width: $breakpoint-phone-to-tablet) and (max-width: $breakpoint-tablet-to-desktop - 1) { @content; }
+    @media (min-width: $breakpoint-phone-to-tablet) and (max-width: ($breakpoint-tablet-to-desktop - 1)) { @content; }
   }
 
   @else if $media == phablet {
@@ -196,11 +199,11 @@ $prefixes: -webkit-, -moz-, -o-, -ms-, '';
   }
 
   @else if $media == phabletdown {
-    @media (min-width: 0) and (max-width: $breakpoint-wide-tablet - 1) { @content; }
+    @media (min-width: 0) and (max-width: ($breakpoint-wide-tablet - 1)) { @content; }
   }
 
   @else if $media == phabletup {
-    @media (min-width: $breakpoint-wide-tablet - 1) { @content; }
+    @media (min-width: ($breakpoint-wide-tablet - 1)) { @content; }
   }
 
   @else if $media == tabletup {
@@ -208,11 +211,11 @@ $prefixes: -webkit-, -moz-, -o-, -ms-, '';
   }
 
   @else if $media == smphabletdown {
-    @media (min-width: 0) and (max-width: $breakpoint-phablet - 1) { @content; }
+    @media (min-width: 0) and (max-width: ($breakpoint-phablet - 1)) { @content; }
   }
 
   @else if $media == desktop {
-    @media (min-width: $breakpoint-tablet-to-desktop) and (max-width: $breakpoint-desktop-to-extralarge - 1) { @content; }
+    @media (min-width: $breakpoint-tablet-to-desktop) and (max-width: ($breakpoint-desktop-to-extralarge - 1)) { @content; }
   }
 
   @else if $media == extralarge {
@@ -361,7 +364,6 @@ $prefixes: -webkit-, -moz-, -o-, -ms-, '';
   flex-direction: $value;
   -ms-flexbox-direction: $value;
 }
-// END: Flexbox
 
 // Re-usable box shadow statement for drawer-style stuff
 $box-shadow-on-color: rgba(0, 0, 0, 0.75);

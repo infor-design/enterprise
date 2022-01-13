@@ -7,20 +7,22 @@
   padding: 0 0 0 20px;
 
   &::before {
-    background-image: linear-gradient(
-      to right,
-      rgba($header-bg-color, 1),
-      rgba($header-bg-color, 0)
-    );
+    background-image:
+      linear-gradient(
+        to right,
+        rgba($header-bg-color, 1),
+        rgba($header-bg-color, 0)
+      );
     left: 20px;
   }
 
   &::after {
-    background-image: linear-gradient(
-      to right,
-      rgba($header-bg-color, 0),
-      rgba($header-bg-color, 1)
-    );
+    background-image:
+      linear-gradient(
+        to right,
+        rgba($header-bg-color, 0),
+        rgba($header-bg-color, 1)
+      );
   }
 
   .tab-list-info {
@@ -42,7 +44,7 @@
 
       a {
         overflow: hidden;
-        padding: 14px 11px 9px 11px;
+        padding: 14px 11px 9px;
         text-overflow: ellipsis;
         white-space: nowrap;
       }
@@ -167,19 +169,21 @@
     }
 
     &::before {
-      background-image: linear-gradient(
-        to right,
-        rgba($header-tab-alt-bg-color, 1),
-        rgba($header-tab-alt-bg-color, 0)
-      );
+      background-image:
+        linear-gradient(
+          to right,
+          rgba($header-tab-alt-bg-color, 1),
+          rgba($header-tab-alt-bg-color, 0)
+        );
     }
 
     &::after {
-      background-image: linear-gradient(
-        to right,
-        rgba($header-tab-alt-bg-color, 0),
-        rgba($header-tab-alt-bg-color, 1)
-      );
+      background-image:
+        linear-gradient(
+          to right,
+          rgba($header-tab-alt-bg-color, 0),
+          rgba($header-tab-alt-bg-color, 1)
+        );
     }
 
     > .tab-list-container {
@@ -215,7 +219,6 @@
           }
         }
       }
-
     }
 
     .animated-bar {
@@ -266,42 +269,45 @@ html[dir='rtl'] {
     padding: 0 20px 0 0;
 
     &::before {
-      background-image: linear-gradient(
-        to left,
-        rgba($header-bg-color, 1),
-        rgba($header-bg-color, 0)
-      );
+      background-image:
+        linear-gradient(
+          to left,
+          rgba($header-bg-color, 1),
+          rgba($header-bg-color, 0)
+        );
       left: auto;
       right: 20px;
     }
 
     &::after {
-      background-image: linear-gradient(
-        to left,
-        rgba($header-bg-color, 0),
-        rgba($header-bg-color, 1)
-      );
+      background-image:
+        linear-gradient(
+          to left,
+          rgba($header-bg-color, 0),
+          rgba($header-bg-color, 1)
+        );
       left: 51px;
       right: auto;
     }
 
     &.alternate {
       &::before {
-        background-image: linear-gradient(
-          to left,
-          rgba($header-tab-alt-bg-color, 1),
-          rgba($header-tab-alt-bg-color, 0)
-        );
+        background-image:
+          linear-gradient(
+            to left,
+            rgba($header-tab-alt-bg-color, 1),
+            rgba($header-tab-alt-bg-color, 0)
+          );
       }
 
       &::after {
-        background-image: linear-gradient(
-          to left,
-          rgba($header-tab-alt-bg-color, 0),
-          rgba($header-tab-alt-bg-color, 1)
-        );
+        background-image:
+          linear-gradient(
+            to left,
+            rgba($header-tab-alt-bg-color, 0),
+            rgba($header-tab-alt-bg-color, 1)
+          );
       }
     }
   }
-
 }
