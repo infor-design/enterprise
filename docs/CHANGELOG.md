@@ -2,6 +2,7 @@
 
 ## v4.60.0 Fixes
 
+- `[Dropdown]` Create a Puppeteer Script for Enter key opens dropdown list, when it should only be used to select items within an open list. ([#5842](https://github.com/infor-design/enterprise/issues/5842))
 - `[Field Options]` Fixed UI alignment of close icon button (searchfield) in Field Options. ([#5983](https://github.com/infor-design/enterprise/issues/5983))
 - `[Searchfield]` Fixed UI alignment of close icon button (searchfield) in Datagrid. ([#5954](https://github.com/infor-design/enterprise/issues/5954))
 - `[Locale]` Changed the text from Insert Anchor to Insert Hyperlink. Some translations my still reference anchor until updated from the translation team. ([#5987](https://github.com/infor-design/enterprise/issues/5987))
