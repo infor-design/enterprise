@@ -7,7 +7,7 @@
     "icon": "icon-success-alert",
     "type": "dto",
     "color": "powderblue",
-    "borderColor": "khaki"
+    "borderColor": "royalblue"
   },
   {
     "id": "79",
@@ -17,7 +17,7 @@
     "icon": "icon-success-alert",
     "type": "dto",
     "color": "powderblue",
-    "borderColor": "khaki"
+    "borderColor": "royalblue"
   },
   {
     "id": "80",
@@ -26,7 +26,7 @@
     "ends": "2020-07-29T23:59:59.999",
     "icon": "icon-success-alert",
     "type": "sick",
-    "color": "tomato",
-    "borderColor": "aqua"
+    "color": "lightsalmon",
+    "borderColor": "orangered"
   }
 ]
