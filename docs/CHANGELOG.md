@@ -6,6 +6,8 @@
 
 ## v4.60.0 Fixes
 
+- `[Datagrid]` Fixed close icon alignment on mobile viewport. ([#6023](https://github.com/infor-design/enterprise/issues/6023))
+- `[Datagrid]` Fixed close icon alignment on mobile viewport, Safari browser. ([#5946](https://github.com/infor-design/enterprise/issues/5946))
 - `[Export]` Added data sanitization in Export to CSV. ([#5982](https://github.com/infor-design/enterprise/issues/5982))
 - `[Field Options]` Fixed UI alignment of close icon button (searchfield) in Field Options. ([#5983](https://github.com/infor-design/enterprise/issues/5983))
 - `[General]` Fixed several memory leaks with the attached data object. ([#6020](https://github.com/infor-design/enterprise/issues/6020))
