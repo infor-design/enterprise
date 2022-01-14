@@ -18,7 +18,7 @@ describe('ColorPicker tests', () => {
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
       const windowSize = await browser.driver.manage().window().getSize();
-      await browser.driver.manage().window().setSize(1100, 1100);
+      await browser.driver.manage().window().setSize(1100, 1380);
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
@@ -44,7 +44,7 @@ describe('Color New Theme tests', () => {
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
       const windowSize = await browser.driver.manage().window().getSize();
-      await browser.driver.manage().window().setSize(1100, 1100);
+      await browser.driver.manage().window().setSize(1100, 1380);
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
