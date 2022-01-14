@@ -34,6 +34,7 @@ describe('Datagrid Puppeteer Tests', () => {
       expect(await page.evaluate(el => el.value, dateFilter)).toEqual(`${testDate.getFullYear()}${testMonth}${testDay}`);
     });
   });
+
   describe('Datagrid Filter Custom Filter Conditions', () => {
     const url = 'http://localhost:4000/components/datagrid/example-custom-filter-conditions-and-defaults.html';
 
@@ -90,7 +91,7 @@ describe('Datagrid example-key-row-select tests', () => {
     await page.click('tr.datagrid-row');
     const row1 = await page.$eval('tr.datagrid-row.is-selected', element => element.getAttribute('class'));
     expect(row1).toEqual('datagrid-row is-hover-row is-clickable is-active-row is-selected');
-    
+
     await page.keyboard.press('ArrowDown');
     const row2 = await page.$eval('tr.datagrid-row.is-selected', element => element.getAttribute('class'));
     expect(row2).toEqual('datagrid-row is-active-row is-selected');

@@ -174,11 +174,20 @@ StepChart.prototype = {
    * Tear down and remove.
    * @returns {this} component instance
    */
-  destroy() {
+  teardown() {
     this.element.empty();
     this.settings = null;
     $.removeData(this.element[0], COMPONENT_NAME);
 
+    return this;
+  },
+
+  /**
+   * Tear down and remove.
+   * @returns {this} component instance
+   */
+  destroy() {
+    this.teardown();
     return this;
   }
 };

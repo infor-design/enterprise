@@ -14,7 +14,8 @@ $.fn.stepchart = function (settings) {
       instance = $.data(this, COMPONENT_NAME, new StepChart(this, settings));
       instance.destroy = function destroy() {
         this.teardown();
-        $.removeData(this, COMPONENT_NAME);
+        $.removeData(this.element, COMPONENT_NAME);
+        $.removeData(this.element, 'options');
       };
     }
   });
