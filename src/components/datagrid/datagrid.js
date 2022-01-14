@@ -9802,6 +9802,8 @@ Datagrid.prototype = {
       if (isEditor) {
         cellNode.css({ position: 'static', height: cellNode.outerHeight() });
       }
+
+      cellParent.addClass('is-editing');
     } else {
       cellParent.addClass('is-editing-inline');
     }
