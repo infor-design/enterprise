@@ -105,6 +105,27 @@
   background-color: $ids-color-palette-white;
 }
 
+// Status Colors
+.status-01 {
+  background-color: $status-01-bg-color;
+}
+
+.status-02 {
+  background-color: $status-02-bg-color;
+}
+
+.status-03 {
+  background-color: $status-03-bg-color;
+}
+
+.status-04 {
+  background-color: $status-04-bg-color;
+}
+
+.status-05 {
+  background-color: $status-05-bg-color;
+}
+
 // RTL Styles
 html[dir='rtl'] {
   .palette-column {

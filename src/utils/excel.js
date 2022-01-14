@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import { Formatters } from '../components/datagrid/datagrid.formatters';
 import { Locale } from '../components/locale/locale';
+import { xssUtils } from './xss';
 
 /* eslint-disable import/prefer-default-export */
 const excel = {};
@@ -207,6 +208,7 @@ excel.datasetToHtml = function (dataset, format = false) {
   }
 
   tableHtml += '</tbody>';
+  tableHtml = xssUtils.sanitizeHTML(tableHtml);
   return $('<table></table>').append(tableHtml);
 };
 
@@ -247,6 +249,7 @@ excel.appendRows = function (dataset, table, self, format = false) {
     appendRow(d, i);
   });
 
+  tableHtml = xssUtils.sanitizeHTML(tableHtml);
   body.insertAdjacentHTML('beforeend', tableHtml);
   return tableJq;
 };

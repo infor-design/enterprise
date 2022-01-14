@@ -1,0 +1,294 @@
+<section id="maincontent" class="page-container scrollable" role="main">
+  <div class="row">
+    <div class="twelve columns">
+      <button id="enable-button" class="btn-secondary">Enable</button>
+      <button id="disable-button" class="btn-secondary">Disable</button>
+    </div>
+  </div>
+
+  <div class="row top-padding">
+    <div class="columns four">
+
+      <div class="listbuilder" id="example-listbuilder" data-init="false">
+        <div class="toolbar formatter-toolbar do-resize" role="toolbar" aria-label="Toolbar">
+          <div class="buttonset">
+
+            <button type="button" class="btn-secondary has-tooltip hide-focus" data-action="add" id="example1-listbuilder-btn-add" data-automation-id="automation-id-example1-listbuilder-btn-add" tabindex="0">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-add"></use>
+              </svg>
+              <span class="audible">Add New</span>
+            </button>
+
+            <div class="separator"></div>
+
+            <button type="button" class="btn-secondary has-tooltip hide-focus" data-action="goup" id="example1-listbuilder-btn-goup" data-automation-id="automation-id-example1-listbuilder-btn-goup" tabindex="0">
+                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-up-arrow"></use>
+                </svg>
+                <span class="audible">Go Up</span>
+            </button>
+
+            <button type="button" class="btn-secondary has-tooltip hide-focus" data-action="godown" id="example1-listbuilder-btn-godown" data-automation-id="automation-id-example1-listbuilder-btn-godown" tabindex="0">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-down-arrow"></use>
+              </svg>
+              <span class="audible">Go Down</span>
+            </button>
+
+            <div class="separator"></div>
+
+            <button type="button" class="btn-secondary has-tooltip hide-focus" data-action="edit" id="example1-listbuilder-btn-edit" data-automation-id="automation-id-example1-listbuilder-btn-edit" tabindex="0">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-edit"></use>
+              </svg>
+              <span class="audible">Edit</span>
+            </button>
+            <button type="button" class="btn-secondary has-tooltip hide-focus" data-action="delete" id="example1-listbuilder-btn-delete" data-automation-id="automation-id-example1-listbuilder-btn-delete" tabindex="0">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-delete"></use>
+              </svg>
+              <span class="audible">Delete</span>
+            </button>
+
+          </div>
+        <div class="more"><button class="btn-actions hide-focus has-tooltip" type="button" aria-haspopup="true" aria-controls="popupmenu-toolbar-1" tabindex="-1"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-more"></use></svg><span class="audible">More Actions</span></button></div></div>
+        <div class="listbuilder-content">
+          <div class="listview is-selectable" tabindex="-1" x-ms-format-detection="none" id="example1-listbuilder-listview" data-automation-id="automation-id-example1-listbuilder-listview">
+  <ul data-arrange-handle=".handle" role="listbox" aria-label="List">
+
+
+      <li data-value="opt-1" tabindex="0" role="option" id="example1-listbuilder-listview-item-0" data-automation-id="automation-id-example1-listbuilder-listview-item-0" aria-posinset="1" aria-setsize="12" draggable="true">
+        <span class="handle draggable" focusable="false" aria-hidden="true" role="presentation">⁞</span>
+        <div class="item-content">
+          <p>Argentina</p>
+        </div>
+      </li>
+
+
+
+      <li data-value="opt-2" role="option" id="example1-listbuilder-listview-item-1" data-automation-id="automation-id-example1-listbuilder-listview-item-1" aria-posinset="2" aria-setsize="12" draggable="true">
+        <span class="handle draggable" focusable="false" aria-hidden="true" role="presentation">⁞</span>
+        <div class="item-content">
+          <p>Belize</p>
+        </div>
+      </li>
+
+
+
+      <li data-value="opt-3" role="option" id="example1-listbuilder-listview-item-2" data-automation-id="automation-id-example1-listbuilder-listview-item-2" aria-posinset="3" aria-setsize="12" draggable="true">
+        <span class="handle draggable" focusable="false" aria-hidden="true" role="presentation">⁞</span>
+        <div class="item-content">
+          <p>Colombia</p>
+        </div>
+      </li>
+
+
+
+      <li data-value="opt-4" role="option" id="example1-listbuilder-listview-item-3" data-automation-id="automation-id-example1-listbuilder-listview-item-3" aria-posinset="4" aria-setsize="12" draggable="true">
+        <span class="handle draggable" focusable="false" aria-hidden="true" role="presentation">⁞</span>
+        <div class="item-content">
+          <p>Dominican Republic</p>
+        </div>
+      </li>
+
+
+
+      <li data-value="opt-5" class="is-disabled" role="option" id="example1-listbuilder-listview-item-4" data-automation-id="automation-id-example1-listbuilder-listview-item-4" aria-posinset="5" aria-setsize="12" aria-disabled="true" draggable="true">
+        <span class="handle draggable" focusable="false" aria-hidden="true" role="presentation">⁞</span>
+        <div class="item-content">
+          <p>Ecuador</p>
+        </div>
+      </li>
+
+
+
+      <li data-value="opt-6" role="option" id="example1-listbuilder-listview-item-5" data-automation-id="automation-id-example1-listbuilder-listview-item-5" aria-posinset="6" aria-setsize="12" draggable="true">
+        <span class="handle draggable" focusable="false" aria-hidden="true" role="presentation">⁞</span>
+        <div class="item-content">
+          <p>France</p>
+        </div>
+      </li>
+
+
+
+      <li data-value="opt-7" role="option" id="example1-listbuilder-listview-item-6" data-automation-id="automation-id-example1-listbuilder-listview-item-6" aria-posinset="7" aria-setsize="12" draggable="true">
+        <span class="handle draggable" focusable="false" aria-hidden="true" role="presentation">⁞</span>
+        <div class="item-content">
+          <p>Germany</p>
+        </div>
+      </li>
+
+
+
+      <li data-value="opt-8" role="option" id="example1-listbuilder-listview-item-7" data-automation-id="automation-id-example1-listbuilder-listview-item-7" aria-posinset="8" aria-setsize="12" draggable="true">
+        <span class="handle draggable" focusable="false" aria-hidden="true" role="presentation">⁞</span>
+        <div class="item-content">
+          <p>Hong Kong</p>
+        </div>
+      </li>
+
+
+
+      <li data-value="opt-9" role="option" id="example1-listbuilder-listview-item-8" data-automation-id="automation-id-example1-listbuilder-listview-item-8" aria-posinset="9" aria-setsize="12" draggable="true">
+        <span class="handle draggable" focusable="false" aria-hidden="true" role="presentation">⁞</span>
+        <div class="item-content">
+          <p>India</p>
+        </div>
+      </li>
+
+
+
+      <li data-value="opt-10" role="option" id="example1-listbuilder-listview-item-9" data-automation-id="automation-id-example1-listbuilder-listview-item-9" aria-posinset="10" aria-setsize="12" draggable="true">
+        <span class="handle draggable" focusable="false" aria-hidden="true" role="presentation">⁞</span>
+        <div class="item-content">
+          <p>Japan</p>
+        </div>
+      </li>
+
+
+
+      <li data-value="opt-11" role="option" id="example1-listbuilder-listview-item-10" data-automation-id="automation-id-example1-listbuilder-listview-item-10" aria-posinset="11" aria-setsize="12" draggable="true">
+        <span class="handle draggable" focusable="false" aria-hidden="true" role="presentation">⁞</span>
+        <div class="item-content">
+          <p>Kuwait</p>
+        </div>
+      </li>
+
+
+
+      <li data-value="opt-12" role="option" id="example1-listbuilder-listview-item-11" data-automation-id="automation-id-example1-listbuilder-listview-item-11" aria-posinset="12" aria-setsize="12" draggable="true">
+        <span class="handle draggable" focusable="false" aria-hidden="true" role="presentation">⁞</span>
+        <div class="item-content">
+          <p>Libya</p>
+        </div>
+      </li>
+
+
+  </ul>
+  </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!--This is only needed because it renders first on the server on the first one-->
+{{={{{ }}}=}}
+
+<script nonce="" id="listbuilder-tmpl" type="text/html">
+    <ul data-arrange-handle=".handle">
+      {{#dataset}}
+      {{#text}}
+        <li
+        {{#value}}
+          data-value="{{value}}"
+        {{/value}}
+        {{#selected}}
+          selected="selected"
+        {{/selected}}
+        {{#disabled}}
+          class="is-disabled"
+        {{/disabled}}
+        >
+          <span class="handle" focusable="false" aria-hidden="true" role="presentation">&#8286;</span>
+          <div class="item-content">
+            <p>{{text}}</p>
+          </div>
+        </li>
+      {{/text}}
+      {{/dataset}}
+    </ul>
+</script>
+
+<script>
+    $(function () {
+      var ds = [];
+
+      ds.push({id: 1, value: 'opt-1', text: 'Argentina'});
+      ds.push({id: 2, value: 'opt-2', text: 'Belize'});
+      ds.push({id: 3, value: 'opt-3', text: 'Colombia'});
+      ds.push({id: 4, value: 'opt-4', text: 'Dominican Republic'});
+      ds.push({id: 5, value: 'opt-5', text: 'Ecuador', disabled: true});
+      ds.push({id: 6, value: 'opt-6', text: 'France'});
+      ds.push({id: 7, value: 'opt-7', text: 'Germany'});
+      ds.push({id: 8, value: 'opt-8', text: 'Hong Kong'});
+      ds.push({id: 9, value: 'opt-9', text: 'India'});
+      ds.push({id: 10, value: 'opt-10', text: 'Japan'});
+      ds.push({id: 11, value: 'opt-11', text: 'Kuwait'});
+      ds.push({id: 12, value: 'opt-12', text: 'Libya'});
+
+
+      var api = $('#example-listbuilder').listbuilder({
+        dataset: ds,
+        template: $('#listbuilder-tmpl').html(),
+        attributes: [
+          { name: 'id', value: 'example1' },
+          { name: 'data-automation-id', value: 'automation-id-example1' }
+        ]
+      }).data('listbuilder');
+
+      // Add
+      api.element.on('afteradd', function(e, args) {
+        // console.log('afteradd: ', args);
+        console.log('dataset: ', api.dataset);
+      });
+
+      // Go up
+      api.element.on('aftergoup', function(e, args) {
+        console.log('aftergoup: ', args);
+      });
+
+      // Go down
+      api.element.on('aftergodown', function(e, args) {
+        console.log('aftergodown: ', args);
+      });
+
+      // After Edit
+      api.element.on('exiteditmode', function(e, args) {
+        // console.log('exiteditmode: ', args);
+        console.log('dataset: ', api.dataset);
+      });
+
+      // Before delete
+      api.element.on('beforedelete', function(e, args) {
+        console.log('beforedelete: ', args);
+      });
+
+      // After delete
+      api.element.on('afterdelete', function(e, args) {
+        console.log('dataset: ', api.dataset);
+      });
+
+      // DRAGGABLE ===============================================================
+      // After drag update
+      api.element.on('arrangeupdate', function(e, args) {
+        // console.log('arrangeupdate: ', args);
+        console.log('dataset: ', api.dataset);
+      });
+
+    });
+
+    $('body').on('initialized', function() {
+      $('#enable-button').on('click', function() {
+        updateState(true);
+      })
+
+      $('#disable-button').on('click', function() {
+          updateState(false);
+      })
+    });
+
+    $('body').initialize();
+
+    function updateState(state) {
+      if(state == true) {
+        console.log('enable');
+        $('.listbuilder').enable();
+      } else {
+        console.log('disable');
+        $('.listbuilder').disable();
+      }
+    }
+  </script>
