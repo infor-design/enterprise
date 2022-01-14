@@ -104,7 +104,7 @@
         min-width: 10px;
 
         @media only screen
-          and (min-device-width: $breakpoint-phone)
+          and (minwidth: $breakpoint-phone)
           and (max-device-width: $breakpoint-big-phone + 88)
           and (-webkit-min-device-pixel-ratio: 2)
           and (orientation: portrait) {
@@ -122,7 +122,7 @@
       width: 72px;
 
       @media only screen
-        and (min-device-width: $breakpoint-phone)
+        and (minwidth: $breakpoint-phone)
         and (max-device-width: $breakpoint-big-phone + 88)
         and (-webkit-min-device-pixel-ratio: 2)
         and (orientation: portrait) {
@@ -139,7 +139,7 @@
     width: 70px;
 
     @media only screen
-      and (min-device-width: $breakpoint-phone)
+      and (minwidth: $breakpoint-phone)
       and (max-device-width: $breakpoint-big-phone + 88)
       and (-webkit-min-device-pixel-ratio: 2)
       and (orientation: portrait) {
@@ -151,7 +151,7 @@
         width: 70px;
 
         @media only screen
-          and (min-device-width: $breakpoint-phone)
+          and (minwidth: $breakpoint-phone)
           and (max-device-width: $breakpoint-big-phone + 88)
           and (-webkit-min-device-pixel-ratio: 2)
           and (orientation: portrait) {
@@ -202,7 +202,6 @@
     ~ .icon-error {
       margin-left: -40px;
     }
-
   }
 }
 
