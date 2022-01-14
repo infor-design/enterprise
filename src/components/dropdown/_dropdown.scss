@@ -1195,7 +1195,7 @@ div.dropdown-xs,
     > .trigger {
       .icon {
         &.close {
-          top: 10px;
+          top: 6px;
         }
       }
     }
@@ -1297,7 +1297,7 @@ div.dropdown-xs,
     > .trigger {
       .icon {
         &.close {
-          top: 10px;
+          top: 6px;
         }
       }
     }
@@ -1592,6 +1592,16 @@ html[dir='rtl'] {
     div.multiselect {
       &.has-tags {
         padding: 0;
+      }
+    }
+  }
+}
+
+.ie-edge {
+  .dropdown-list {
+    > .trigger {
+      .icon.close {
+        top: 6px;
       }
     }
   }
