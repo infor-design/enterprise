@@ -53,4 +53,12 @@
       width: 18px;
     }
   }
+
+  .toolbar .buttonset {
+    .toolbar-searchfield-wrapper.has-close-icon-button {
+      svg.close.icon {
+        transform: translateY(-50%);
+      }
+    }
+  }
 }
