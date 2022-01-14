@@ -840,7 +840,6 @@ ListBuilder.prototype = {
     this.ul
       .find('li').removeClass('is-disabled').end()
       .find('li[data-original-disabled]')
-      .addClass('is-disabled')
       .removeAttr('data-original-disabled');
   },
 
