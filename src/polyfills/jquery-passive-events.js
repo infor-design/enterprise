@@ -8,9 +8,15 @@ const isIE11 = !!window.MSInputMethodContext && !!document.documentMode;
 if (!isIE11) {
   jQuery.event.special.touchstart = {
     setup(_, ns, handle) {
-      this.addEventListener('touchstart', handle, {
-        passive: true
-      });
+      if (ns.includes('noPreventDefault')) {
+        this.addEventListener('touchstart', handle, {
+          passive: false
+        });
+      } else {
+        this.addEventListener('touchstart', handle, {
+          passive: true
+        });
+      }
     }
   };
   jQuery.event.special.touchmove = {
