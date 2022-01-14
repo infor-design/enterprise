@@ -1,9 +1,5 @@
 # What's New with Enterprise
 
-## v4.60.0 Features
-
-- `[Dropdown]` Create a Puppeteer Script for Enter key opens dropdown list, when it should only be used to select items within an open list. ([#5842](https://github.com/infor-design/enterprise/issues/5842))
-
 ## v4.60.0 Fixes
 
 - `[Datagrid]` Fixed UI alignment of close icon button on mobile view. ([#5947](https://github.com/infor-design/enterprise/issues/5947))
@@ -19,6 +15,7 @@
 ## v4.60.0 Features
 
 - `[Badges/Tags]` Corrected the colors of badges/tags for better accessibility contrast. ([#5673](https://github.com/infor-design/enterprise/issues/5673))
+- `[Dropdown]` Create a Puppeteer Script for Enter key opens dropdown list, when it should only be used to select items within an open list. ([#5842](https://github.com/infor-design/enterprise/issues/5842))
 
 ## v4.59.0 Markup Changes
 
