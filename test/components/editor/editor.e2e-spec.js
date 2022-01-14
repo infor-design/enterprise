@@ -97,6 +97,25 @@ describe('Editor example-index tests', () => {
     expect(await element(by.css('.editor img')).isPresent()).toBeFalsy();
   });
 
+  it('Should insert placeholder image if the image button is clicked and modal confirmed', async () => {
+    const imageBtn = await element(by.css('.editor-toolbar .btn[data-action="image"]'));
+
+    // Open the Image Modal
+    await imageBtn.click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.editor-modal-image.is-visible'))), config.waitsFor);
+
+    // Press the escape key and wait for the modal to close
+    await browser.driver.sleep(config.sleep);
+    await browser.driver.actions().sendKeys(protractor.Key.ENTER).perform();
+    await browser.driver.sleep(config.sleep);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.invisibilityOf(await element(by.css('.editor-modal-image'))), config.waitsFor);
+
+    // Scan the editor content for image tags and make sure none exist
+    expect(await element(by.css('.editor img[src*="/images/placeholder-80x80.png"]')).isPresent());
+  });
+
   it('should update fontpicker\'s displayed text type when the selected text\'s block is modified', async () => {
     const elem = await element(by.css('.editor'));
 
