@@ -15,6 +15,7 @@
 - `[General]` Fixed several memory leaks with the attached data object. ([#6020](https://github.com/infor-design/enterprise/issues/6020))
 - `[Listbuilder]` Fix on disable bug: Will not enable on call to enable() after disable() twice. ([#5885](https://github.com/infor-design/enterprise/issues/5885))
 - `[Locale]` Changed the text from Insert Anchor to Insert Hyperlink. Some translations my still reference anchor until updated from the translation team. ([#5987](https://github.com/infor-design/enterprise/issues/5987))
+- `[Modal]` Fixed a regression bug where elements inside of the tab panel were being disabled when its `li` tab is not selected (is-selected class) initially. ([NG#1210](https://github.com/infor-design/enterprise-ng/issues/1210))
 - `[Searchfield]` Fixed UI alignment of close icon button (searchfield) in Datagrid. ([#5954](https://github.com/infor-design/enterprise/issues/5954))
 - `[Tabs Module]` Fixed UI alignment of close icon button on mobile view([#5951](https://github.com/infor-design/enterprise/issues/5951))
 
