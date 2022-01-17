@@ -780,3 +780,9 @@ html[dir='rtl'] {
     }
   }
 }
+
+.android.is-firefox {
+  .dropdown-list > .trigger .icon.close {
+    top: 6px !important;
+  }
+}
