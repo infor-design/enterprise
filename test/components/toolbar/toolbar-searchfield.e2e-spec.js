@@ -9,7 +9,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 const sfId = 'regular-toolbar-searchfield';
 const searchfieldInput = 'toolbar-searchfield-01';
 
-const containerElClass = '.container'; 
+const containerElClass = '.container';
 
 describe('Toolbar Searchfield (no-reinvoke)', () => {
   beforeEach(async () => {
