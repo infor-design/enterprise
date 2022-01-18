@@ -1040,8 +1040,14 @@ Modal.prototype = {
       self.setFocusableElems();
 
       const focusableElements = $(self.focusableElems).not('.modal-header .searchfield');
-      focusableElements.not(':visible').attr('disabled', 'disabled');
+
+      // The element/s will be disabled if detects that it has inline display: none; style.
+      if (focusableElements.css('display') === 'none') {
+        focusableElements.not(':visible').attr('disabled', 'disabled');
+      }
+
       let focusElem = focusableElements.not(':hidden').first();
+
       if (focusElem.length === 0) {
         focusElem = thisElem.element.find('.btn-modal-primary');
       }
