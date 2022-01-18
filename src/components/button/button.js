@@ -312,10 +312,7 @@ Button.prototype = {
     }
 
     // Handle a one-time `disabled` setting, if defined.
-    if (this.settings.disabled) {
-      this.disabled = this.settings.disabled === true;
-      delete this.settings.disabled;
-    }
+    this.disabled = this.settings.disabled === true;
 
     const audibleTextBtnTypes = ['btn-icon', 'btn-actions'];
 

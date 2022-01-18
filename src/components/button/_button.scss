@@ -437,11 +437,11 @@ a.btn-close {
 
   &[disabled],
   &[disabled]:hover {
-    color: $button-color-tertiary-disabled-font;
+    color: $button-color-tertiary-disabled-font !important;
     cursor: default;
 
     .icon {
-      color: $button-color-tertiary-disabled-font;
+      color: $button-color-tertiary-disabled-font !important;
     }
   }
 
