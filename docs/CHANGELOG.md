@@ -2,6 +2,7 @@
 
 ## v4.60.0 Features
 
+- `[Card]` Added actionable button card by using `<button>` or `<a>` tags. ([#5768](https://github.com/infor-design/enterprise/issues/5768))
 - `[Badges/Tags]` Corrected the colors of badges/tags for better accessibility contrast. ([#5673](https://github.com/infor-design/enterprise/issues/5673))
 - `[Dropdown]` Create a Puppeteer Script for Enter key opens dropdown list, when it should only be used to select items within an open list. ([#5842](https://github.com/infor-design/enterprise/issues/5842))
 
