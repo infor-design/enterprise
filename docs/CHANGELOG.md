@@ -7,6 +7,8 @@
 
 ## v4.60.0 Fixes
 
+- `[Datagrid]` Fixed close icon alignment on mobile viewport. ([#6023](https://github.com/infor-design/enterprise/issues/6023))
+- `[Datagrid]` Fixed close icon alignment on mobile viewport, Safari browser. ([#5946](https://github.com/infor-design/enterprise/issues/5946))
 - `[Datagrid]` Fixed UI alignment of close icon button on mobile view. ([#5947](https://github.com/infor-design/enterprise/issues/5947))
 - `[Editor]` Changed selector for for image value selction from id to name. ([#5915](https://github.com/infor-design/enterprise/issues/5915))
 - `[Field Options]` Fixed UI alignment of close icon button (searchfield) in Field Options. ([#5983](https://github.com/infor-design/enterprise/issues/5983))
