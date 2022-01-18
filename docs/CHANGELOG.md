@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.59.1 Fixes
+
+- `[Modal]` Fixed a regression bug where elements inside of the tab panel were being disabled when its `li` tab is not selected (is-selected class) initially. ([NG#1210](https://github.com/infor-design/enterprise-ng/issues/1210))
+
 ## v4.59.0 Markup Changes
 
 - `[About]` Changed the OS Version to not show the version. This is because this information is incorrect and the correct information is no longer given by newer versions of Operating systems in any browser. or this reason the version is removed from the OS field on the about dialog. ([#5813](https://github.com/infor-design/enterprise/issues/5813))
