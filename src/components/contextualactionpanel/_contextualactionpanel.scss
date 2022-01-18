@@ -96,7 +96,7 @@
     }
 
     .buttonset {
-      button[class^='btn'] {
+      button[class^='btn']:not([disabled]) {
         color: $contextual-panel-button-color;
 
         &:hover {
