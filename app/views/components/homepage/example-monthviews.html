@@ -1,0 +1,95 @@
+<div class="homepage page-container scrollable" data-init="false" id="maincontent" data-columns="3" role="main">
+  <div class="content">
+
+    <div class="widget">
+      <div class="widget-header">
+        <h2 class="widget-title">Calendar One</h2>
+        <button class="btn-actions" type="button">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-more"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu actions top">
+          <li><a href="#">Action One</a></li>
+          <li><a href="#">Action Two</a></li>
+        </ul>
+      </div>
+
+      <div class="widget-content">
+        <div id="monthview-one" class="monthview" data-init="false">
+        </div>
+      </div>
+    </div>
+
+    <div class="widget">
+      <div class="widget-header">
+        <h2 class="widget-title">Calendar Two</h2>
+        <button class="btn-actions" type="button">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-more"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu actions top">
+          <li><a href="#">Action One</a></li>
+          <li><a href="#">Action Two</a></li>
+        </ul>
+      </div>
+
+      <div class="widget-content">
+        <div id="monthview-two" class="monthview" data-init="false">
+        </div>
+      </div>
+    </div>
+
+    <div class="widget">
+      <div class="widget-header">
+        <h2 class="widget-title">Calendar Three</h2>
+        <button class="btn-actions" type="button">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-more"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu actions top">
+          <li><a href="#">Action One</a></li>
+          <li><a href="#">Action Two</a></li>
+        </ul>
+      </div>
+
+      <div class="widget-content">
+        <div id="monthview-three" class="monthview" data-init="false">
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+    $('.homepage').homepage();
+
+    $('#monthview-one').monthview({
+      inPage: true,
+      day: 7,
+      month: 1,
+      year: 2021
+    });
+
+    $('#monthview-two').monthview({
+      inPage: true,
+      day: 7,
+      month: 2,
+      year: 2021
+    });
+
+    $('#monthview-three').monthview({
+      inPage: true,
+      day: 7,
+      month: 3,
+      year: 2021
+    });
+  });
+</script>
