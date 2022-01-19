@@ -244,7 +244,7 @@ Calendar.prototype = {
    * @private
    */
   renderMonthView() {
-    this.monthViewContainer = document.querySelector('.calendar .calendar-monthview');
+    this.monthViewContainer = this.element[0].querySelector('.calendar-monthview');
 
     // Handle changing view
     this.activeView = 'month';

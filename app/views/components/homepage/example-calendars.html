@@ -1,0 +1,97 @@
+<style>
+  .monthview-header  {
+    display: none;
+  }
+</style>
+
+<div class="homepage page-container scrollable" data-init="false" id="maincontent" data-columns="3" role="main">
+  <div class="content">
+
+    <div class="widget">
+      <div class="widget-header">
+        <h2 class="widget-title">No Calendar</h2>
+        <button class="btn-actions" type="button">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-more"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu actions top">
+          <li><a href="#">Action One</a></li>
+          <li><a href="#">Action Two</a></li>
+        </ul>
+      </div>
+
+      <div class="widget-content">
+      </div>
+    </div>
+
+    <div class="widget">
+      <div class="widget-header">
+        <h2 class="widget-title">Calendar (Feb 2021)</h2>
+        <button class="btn-actions" type="button">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-more"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu actions top">
+          <li><a href="#">Action One</a></li>
+          <li><a href="#">Action Two</a></li>
+        </ul>
+      </div>
+
+      <div class="widget-content">
+        <div class="calendar" data-init="false" id="calendar-one">
+          <div class="calendar-monthview">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="widget">
+      <div class="widget-header">
+        <h2 class="widget-title">Calendar (March 2022)</h2>
+        <button class="btn-actions" type="button">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-more"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu actions top">
+          <li><a href="#">Action One</a></li>
+          <li><a href="#">Action Two</a></li>
+        </ul>
+      </div>
+
+      <div class="widget-content">
+        <div class="calendar" data-init="false" id="calendar-two">
+          <div class="calendar-monthview">
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+    $('.homepage').homepage();
+
+    $('#calendar-one').calendar({
+      month: 1,
+      day: 2,
+      year: 2022,
+      showToday: false,
+      showViewChanger: false,
+    });
+    $('#calendar-two').calendar({
+      month: 2,
+      year: 2022,
+      day: 4,
+      showToday: false,
+      showViewChanger: false,
+    });
+  });
+</script>
