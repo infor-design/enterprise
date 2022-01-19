@@ -230,11 +230,12 @@ describe('Actionable Button Cards tests', () => {
 
     it('should show the focus border when tabbing', async () => {
       const actionableBtnCard = await element(by.id('actionable-btn-1'));
+      const mainContent = await element(by.id('maincontent'));
 
       actionableBtnCard.sendKeys(protractor.Key.TAB);
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.imageComparison.checkElement(actionableBtnCard, 'actionable-button-card-focus')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(mainContent, 'actionable-button-card-focus')).toEqual(0);
     });
   }
 });
