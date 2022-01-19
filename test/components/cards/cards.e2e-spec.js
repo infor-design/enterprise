@@ -223,6 +223,7 @@ describe('Actionable Button Cards tests', () => {
   if (utils.isChrome() && utils.isCI()) {
     it('should not visual regress', async () => {
       const mainContent = await element(by.id('maincontent'));
+      await browser.driver.sleep(config.sleep);
 
       expect(await browser.imageComparison.checkElement(mainContent, 'actionable-button-card')).toEqual(0);
     });
