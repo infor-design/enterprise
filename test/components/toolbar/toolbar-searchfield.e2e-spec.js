@@ -9,7 +9,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 const sfId = 'regular-toolbar-searchfield';
 const searchfieldInput = 'toolbar-searchfield-01';
 
-const containerElClass = '.container'; 
+const containerElClass = '.container';
 
 describe('Toolbar Searchfield (no-reinvoke)', () => {
   beforeEach(async () => {
@@ -85,14 +85,14 @@ describe('Toolbar Searchfield example-flex-toolbar-align-with-searchfield tests'
 
   if (utils.isChrome() && utils.isCI()) {
     it('should have the same height with the collapse button on smaller viewport (collapsible)', async () => {
-      const containerEl = await element(by.css(containerElClass));
+      const searchEl = await element(by.css('.toolbar-section.search'));
       await browser.driver.manage().window().setSize(766, 700);
       await browser.driver.sleep(config.sleep);
 
       await element(by.id('toolbar-searchfield-01')).click();
       await browser.driver.sleep(config.sleep);
 
-      expect(await browser.imageComparison.checkElement(containerEl, 'toolbar-flex-searchfield-collapsible')).toEqual(0);
+      expect(await browser.imageComparison.checkElement(searchEl, 'toolbar-flex-searchfield-collapsible')).toEqual(0);
     });
 
     it('should have the same height with the collapse button on smaller viewport (non-collapsible)', async () => {
