@@ -213,7 +213,7 @@ describe('Cards example-variations-hitboxes Visual Test', () => {
 
 describe('Actionable Button Cards tests', () => {
   beforeEach(async () => {
-    await utils.setPage('components/cards/example-actionable');
+    await utils.setPage('/components/cards/example-actionable');
   });
 
   it('should not have errors', async () => {
