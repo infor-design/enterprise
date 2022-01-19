@@ -40,6 +40,7 @@
 - `[Fieldset]` Implemented design improvements. ([#5638](https://github.com/infor-design/enterprise/issues/5638))
 - `[Fileupload-Advanced]` Fixed a bug where it cannot add a new file after removing the old one. ([#5598](https://github.com/infor-design/enterprise/issues/5598))
 - `[Datagrid]` Fixed a bug where the maskOptions function is never called when the grid has filtering. ([#5847](https://github.com/infor-design/enterprise/issues/5847))
+- `[Datagrid]` Fixed a bug where fileupload value is undefined when trying to upload. ([#5846](https://github.com/infor-design/enterprise/issues/5846))
 - `[Dropdown]` Clear search matches after an item is selected. ([#5632](https://github.com/infor-design/enterprise/issues/5632))
 - `[Dropdown]` Shorten filter delay for single character entries. ([#5793](https://github.com/infor-design/enterprise/issues/5793))
 - `[Fieldset]` Implemented design improvements. ([#5638](https://github.com/infor-design/enterprise/issues/5638))

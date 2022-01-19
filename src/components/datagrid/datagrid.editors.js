@@ -815,12 +815,20 @@ const editors = {
     };
 
     this.val = function (v) {
-      if (v) {
-        v = xssUtils.stripTags(v);
-        this.input.attr('value', v);
-        return v;
-      }
-      return this.input.val();
+      // eslint-disable-next-line compat/compat
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          let output;
+          if (v) {
+            v = xssUtils.stripTags(v);
+            this.input.attr('value', v);
+            output = v;
+          } else {
+            output = this.input.val();
+          }
+          resolve(output);
+        }, 300);
+      });
     };
 
     this.focus = () => {
