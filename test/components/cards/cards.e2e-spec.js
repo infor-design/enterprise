@@ -1,3 +1,5 @@
+const { element, browser } = require("protractor");
+
 const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
 const utils = requireHelper('e2e-utils');
 const config = requireHelper('e2e-config');
@@ -205,6 +207,34 @@ describe('Cards example-variations-hitboxes Visual Test', () => {
       const containerEl = await element(by.className('container'));
 
       expect(await browser.imageComparison.checkElement(containerEl, 'cards-hitboxes')).toEqual(0);
+    });
+  }
+});
+
+describe('Actionable Button Cards tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('components/cards/example-actionable');
+  });
+
+  it('should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('should not visual regress', async () => {
+      const mainContent = await element(by.id('maincontent'));
+
+      expect(await browser.imageComparison.checkElement(mainContent, 'actionable-button-card')).toEqual(0);
+    });
+
+    it('should show the focus border when tabbing', async () => {
+      const actionableBtnCard = await element(by.id('actionable-btn-1'));
+      const mainContent = await element(by.id('maincontent'));
+
+      actionableBtnCard.sendKeys(protractor.Key.TAB);
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.imageComparison.checkElement(mainContent, 'actionable-button-card-focus')).toEqual(0);
     });
   }
 });
