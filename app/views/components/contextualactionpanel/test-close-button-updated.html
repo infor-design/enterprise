@@ -1,0 +1,55 @@
+
+<div class="row">
+  <div class="six columns">
+
+    <button type="button" class="btn-secondary contextual-action-panel-trigger" data-options='{ fullsize: "responsive" }'>
+      Contextual Action Panel
+    </button>
+    <div class="contextual-action-panel">
+      <div class="toolbar">
+        <div class="title">Context</div>
+        <div class="buttonset">
+          <button id="save" class="btn" type="button">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-save"></use>
+            </svg>
+            <span>Save</span>
+          </button>
+          <div class="separator"></div>
+          <button id="close" name="close" class="btn" type="button">
+            <svg class="icon icon-close" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-close"></use>
+            </svg>
+            <span>Close</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="twelve columns">
+          <div class="field">
+            <label class="inline">
+               <span class="label-text">Name</span>
+               <input id="name" type="text" />
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  $('#close').button().data('button').updated({ disabled: true });
+  $('#save').button().data('button').updated({ disabled: true });
+  $('#name').on('keyup.test', () => {
+    if ($('#name').val()) {
+      console.log('Button is enabled');
+      $('#close').button().data('button').updated({ forceDisable: true, disabled: false });
+    } else {
+      console.log('Button is disabled');
+      $('#close').button().data('button').updated({ forceDisable: true, disabled: true });
+    }
+  })
+</script>

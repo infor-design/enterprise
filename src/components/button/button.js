@@ -311,7 +311,14 @@ Button.prototype = {
       this.element.prepend(this.hitboxArea);
     }
 
-    // Handle a one-time `disabled` setting, if defined.
+    // Handling force disabling buttons since disabled setting is used also in button().data('button').disabled = 'true' and updated(settings)
+    if (this.settings.forceDisable) {
+      this.disabled = this.settings.disabled;
+      delete this.settings.disabled;
+      delete this.settings.forceDisable;
+    }
+
+    // // Handle a one-time `disabled` setting, if defined.
     if (this.settings.disabled) {
       this.disabled = this.settings.disabled === true;
       delete this.settings.disabled;
