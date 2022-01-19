@@ -8,6 +8,7 @@
 
 ## v4.60.0 Fixes
 
+- `[Calendar]` Fixed an issue where you could not have more than one in the same page. ([#6042](https://github.com/infor-design/enterprise/issues/6042))
 - `[Datagrid]` Fix Edit Input Date Field on medium row height in Datagrid. ([#5955](https://github.com/infor-design/enterprise/issues/5955))
 - `[Datagrid]` Fixed close icon alignment on mobile viewport. ([#6023](https://github.com/infor-design/enterprise/issues/6023))
 - `[Datagrid]` Fixed close icon alignment on mobile viewport, Safari browser. ([#5946](https://github.com/infor-design/enterprise/issues/5946))
