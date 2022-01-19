@@ -413,6 +413,12 @@
   &.medium-rowheight th.text-ellipsis .datagrid-header-text {
     margin: 5px 0 0 !important;
   }
+
+  &:not(.extra-small-rowheight) .datagrid-header {
+    .datagrid-filter-wrapper .dropdown + .icon {
+      top: 1px;
+    }
+  }
 }
 
 .datagrid.small-rowheight tbody tr td.datagrid-trigger-cell .trigger {
@@ -797,6 +803,12 @@ html[dir='rtl'] {
 }
 
 .android.is-firefox {
+  .datagrid-header .datagrid-filter-wrapper {
+    .dropdown + .icon:not(.close) {
+      top: 1px;
+    }
+  }
+
   .dropdown-list > .trigger .icon.close {
     top: 6px;
   }

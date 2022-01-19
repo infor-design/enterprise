@@ -5493,6 +5493,26 @@ html[dir='rtl'] {
   }
 }
 
+.android.is-firefox {
+  .mobile {
+    &.dropdown-list {
+    .trigger {
+      position: absolute;
+
+      .icon.close {
+        top: 6px;
+      }
+    }
+  }
+  }
+
+  .datagrid-header .datagrid-filter-wrapper {
+    .dropdown + .icon:not(.close) {
+      top: -2px;
+    }
+  }
+}
+
 .table-errors {
   display: inline-block;
   height: 35px;
