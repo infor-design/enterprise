@@ -34,6 +34,7 @@ calendarShared.addCalculatedFields = function addCalculatedFields(event, locale,
   const translate = str => Locale.translate(str, { locale: locale.name, language });
 
   event.color = this.getEventTypeColor(event, eventTypes);
+  event.borderColor = this.getEventTypeBorderColor(event, eventTypes);
   event.duration = Math.abs(dateUtils.dateDiff(
     new Date(event.ends),
     new Date(event.starts),
@@ -221,7 +222,7 @@ calendarShared.getEventTypeColor = function getEventTypeColor(event, eventTypes)
     return color;
   }
 
-  if (event.color?.substr(0, 1) === '#') {
+  if (event.color?.substr(0, 1) === '#' || event.color) {
     return event.color;
   }
 
@@ -232,6 +233,27 @@ calendarShared.getEventTypeColor = function getEventTypeColor(event, eventTypes)
   }
 
   return color;
+};
+
+/**
+ * Find the matching type and get the border color.
+ * @param {object} event The eventType type or color to find.
+ * @param {object} eventTypes The event types to use
+ * @returns {object} The Calendar prototype, useful for chaining.
+ */
+calendarShared.getEventTypeBorderColor = function getEventTypeBorderColor(event, eventTypes) {
+  let borderColor = '';
+  if (event.borderColor?.substr(0, 1) === '#' || event.borderColor) {
+    return event.borderColor;
+  }
+
+  const eventInfo = eventTypes.filter(eventType => eventType.id === event.type);
+  if (eventInfo.length === 1) {
+    borderColor = eventInfo[0].borderColor || 'azure';
+    return borderColor;
+  }
+
+  return borderColor;
 };
 
 /**

@@ -665,6 +665,29 @@
   padding: 0 0 32px;
 }
 
+// Actionable Button Card
+button,
+a {
+  &.btn.card {
+    min-height: 50px;
+
+    &:focus {
+      &:not(.hide-focus) {
+        box-shadow: 0 0 0 2px $body-color-primary-background, 0 0 0 3px $button-color-secondary-focus-border, $focus-box-shadow;
+      }
+    }
+  }
+}
+
+a {
+  &.btn.card {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+}
+
 // RTL Styles
 html[dir='rtl'] {
   .card-header,

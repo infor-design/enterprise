@@ -1,0 +1,32 @@
+[
+  {
+    "id": "78",
+    "subject": "Today is the Day!",
+    "starts": "2020-07-27T00:00:00.000",
+    "ends": "2020-07-27T23:59:59.999",
+    "icon": "icon-success-alert",
+    "type": "dto",
+    "color": "powderblue",
+    "borderColor": "royalblue"
+  },
+  {
+    "id": "79",
+    "subject": "Dog Event!",
+    "starts": "2020-07-28T00:00:00.000",
+    "ends": "2020-07-28T23:59:59.999",
+    "icon": "icon-success-alert",
+    "type": "dto",
+    "color": "powderblue",
+    "borderColor": "royalblue"
+  },
+  {
+    "id": "80",
+    "subject": "Not Feeling Well",
+    "starts": "2020-07-29T00:00:00.000",
+    "ends": "2020-07-29T23:59:59.999",
+    "icon": "icon-success-alert",
+    "type": "sick",
+    "color": "lightsalmon",
+    "borderColor": "orangered"
+  }
+]

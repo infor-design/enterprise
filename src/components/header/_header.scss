@@ -394,20 +394,13 @@ $subheader-height: 60px;
     }
 
     .toolbar-section {
-      &.buttonset,
-      &.title,
-      &.search-categories {
-        display: flex;
-      }
-
       &.search-categories {
         &.search {
           .btn.searchfield-category-button {
-            height: 38px;
+            height: 33px;
             padding-right: 20px;
 
             @media (min-width: $breakpoint-phone-to-tablet) {
-              height: 34px;
               padding-right: 10px;
             }
           }
@@ -415,9 +408,13 @@ $subheader-height: 60px;
           .has-close-icon-button {
             .btn-icon {
               height: auto;
-              right: 7px;
+              right: 40px;
               top: 50%;
               transform: translateY(-50%);
+
+              @media (min-width: $breakpoint-phone-to-tablet) {
+                right: 7px;
+              }
 
               .icon.close {
                 top: 0 !important;
