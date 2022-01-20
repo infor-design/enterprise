@@ -6,6 +6,7 @@
 - `[Badges/Tags]` Corrected the colors of badges/tags for better accessibility contrast. ([#5673](https://github.com/infor-design/enterprise/issues/5673))
 - `[Button]` Fix a bug where updated settings not properly rendering disabled state. ([#5928](https://github.com/infor-design/enterprise/issues/5928))
 - `[Dropdown]` Create a Puppeteer Script for Enter key opens dropdown list, when it should only be used to select items within an open list. ([#5842](https://github.com/infor-design/enterprise/issues/5842))
+- `[Tooltip]` Converted the tooltip protractor test suites to puppeteer. ([#5830](https://github.com/infor-design/enterprise/issues/5830))
 
 ## v4.60.0 Fixes
 
