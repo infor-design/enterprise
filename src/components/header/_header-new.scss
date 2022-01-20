@@ -20,10 +20,20 @@
               border: 1px solid $header-button-focus-color;
               box-shadow: none !important;
 
-              &:after {
+              &::after {
                 content: none;
               }
             }
+          }
+        }
+
+        .btn.searchfield-category-button {
+          height: 38px;
+          padding-right: 20px;
+
+          @media (min-width: $breakpoint-phone-to-tablet) {
+            height: 34px;
+            padding-right: 10px;
           }
         }
       }

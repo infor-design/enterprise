@@ -196,7 +196,6 @@ $subheader-height: 60px;
           top: 0;
         }
       }
-
     }
   }
 
@@ -259,7 +258,6 @@ $subheader-height: 60px;
       width: 100%;
     }
   }
-
 }
 
 // Application Subheaders
@@ -393,20 +391,13 @@ $subheader-height: 60px;
       .ripple-effect {
         background-color: $header-text-color;
       }
-
     }
 
     .toolbar-section {
-      &.buttonset,
-      &.title,
-      &.search-categories {
-        display: flex;
-      }
-
       &.search-categories {
         &.search {
           .btn.searchfield-category-button {
-            height: 38px;
+            height: 33px;
             padding-right: 20px;
 
             @media (min-width: $breakpoint-phone-to-tablet) {
@@ -418,9 +409,13 @@ $subheader-height: 60px;
           .has-close-icon-button {
             .btn-icon {
               height: auto;
-              right: 7px;
+              right: 40px;
               top: 50%;
               transform: translateY(-50%);
+
+              @media (min-width: $breakpoint-phone-to-tablet) {
+                right: 7px;
+              }
 
               .icon.close {
                 top: 0 !important;
@@ -476,7 +471,6 @@ $subheader-height: 60px;
       &:active::after {
         border-color: $ids-color-palette-white;
       }
-
     }
   }
 
@@ -568,7 +562,6 @@ $subheader-height: 60px;
         &:hover:not([disabled]) {
           border-bottom: 1px solid $header-breadcrumb-alt-color;
         }
-
       }
 
       li {
@@ -579,7 +572,6 @@ $subheader-height: 60px;
         }
       }
     }
-
   }
 }
 
@@ -620,7 +612,6 @@ $subheader-height: 60px;
           }
         }
       }
-
     }
   }
 }
@@ -691,7 +682,6 @@ html[dir='rtl'] {
       }
     }
   }
-
 }
 
 // Print Style Sheet

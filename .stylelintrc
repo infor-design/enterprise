@@ -1,8 +1,11 @@
 {
   "plugins": [
-    "stylelint-order"
+    "stylelint-scss"
   ],
+  "extends": ["stylelint-config-standard-scss"],
+  "ignoreFiles": ["**/*.js", "**/*.md", "**/*.MD", "**/*.html"],
   "rules": {
+    "alpha-value-notation": "number",
     "at-rule-empty-line-before": [
       "always",
       {
@@ -17,6 +20,7 @@
     ],
     "at-rule-name-case": "lower",
     "at-rule-name-space-after": "always-single-line",
+    "at-rule-no-vendor-prefix": null,
     "at-rule-semicolon-newline-after": "always",
     "block-closing-brace-newline-after": "always",
     "block-closing-brace-newline-before": "always-multi-line",
@@ -29,6 +33,7 @@
     "color-hex-case": "lower",
     "color-hex-length": "short",
     "color-no-invalid-hex": true,
+    "color-function-notation": null,
     "comment-empty-line-before": [
       "always",
       {
@@ -95,44 +100,49 @@
         ]
       }
     ],
+    "declaration-block-no-redundant-longhand-properties": null,
     "function-calc-no-unspaced-operator": true,
     "function-comma-newline-after": "always-multi-line",
     "function-comma-space-after": "always-single-line",
     "function-comma-space-before": "never",
     "function-linear-gradient-no-nonstandard-direction": true,
     "function-max-empty-lines": 0,
+    "function-url-quotes": null,
     "function-name-case": "lower",
     "function-parentheses-newline-inside": "always-multi-line",
     "function-parentheses-space-inside": "never-single-line",
     "function-whitespace-after": "always",
     "indentation":2,
     "keyframe-declaration-no-important": true,
+    "keyframes-name-pattern": null,
     "length-zero-no-unit": true,
     "max-empty-lines": 1,
     "max-nesting-depth": 10,
+    "max-line-length": 250,
     "media-feature-colon-space-after": "always",
     "media-feature-colon-space-before": "never",
     "media-feature-name-case": "lower",
-    "media-feature-name-no-unknown": true,
+    "media-feature-name-no-unknown": null,
     "media-feature-parentheses-space-inside": "never",
     "media-feature-range-operator-space-after": "always",
     "media-feature-range-operator-space-before": "always",
     "media-query-list-comma-newline-after": "always-multi-line",
     "media-query-list-comma-space-after": "always-single-line",
     "media-query-list-comma-space-before": "never",
+    "media-feature-name-no-vendor-prefix": null,
+    "no-descending-specificity": null,
+    "no-duplicate-selectors": null,
     "no-empty-source": true,
     "no-eol-whitespace": true,
     "no-extra-semicolons": true,
     "no-invalid-double-slash-comments": true,
+    "no-invalid-position-at-import-rule": null,
     "no-missing-end-of-source-newline": true,
-    "order/order": [
-      "custom-properties",
-      "declarations"
-    ],
-    "order/properties-alphabetical-order": true,
     "number-leading-zero": "always",
     "number-no-trailing-zeros": true,
+    "number-max-precision": 15,
     "property-case": "lower",
+    "property-no-vendor-prefix": null,
     "rule-empty-line-before": [
       "always-multi-line",
       {
@@ -144,17 +154,27 @@
         ]
       }
     ],
+    "scss/at-else-closing-brace-newline-after": null,
+    "scss/at-else-closing-brace-space-after": null,
+    "scss/at-mixin-argumentless-call-parentheses": null,
+    "scss/at-mixin-pattern": null,
+    "scss/double-slash-comment-whitespace-inside": null,
+    "scss/dollar-variable-empty-line-before": null,
+    "scss/no-global-function-names": null,
+    "scss/at-import-partial-extension": null,
     "selector-attribute-brackets-space-inside": "never",
     "selector-attribute-operator-space-after": "never",
     "selector-attribute-operator-space-before": "never",
     "selector-combinator-space-after": "always",
     "selector-combinator-space-before": "always",
+    "selector-class-pattern": null,
     "selector-descendant-combinator-no-non-space": true,
     "selector-list-comma-newline-after": "always",
     "selector-list-comma-space-before": "never",
     "selector-max-compound-selectors": null,
     "selector-max-empty-lines": 0,
     "selector-max-id": 1,
+    "selector-no-vendor-prefix": null,
     "selector-pseudo-class-case": "lower",
     "selector-pseudo-class-no-unknown": true,
     "selector-pseudo-class-parentheses-space-inside": "never",
@@ -172,6 +192,7 @@
     "value-list-comma-newline-after": "always-multi-line",
     "value-list-comma-space-after": "always-single-line",
     "value-list-comma-space-before": "never",
-    "value-list-max-empty-lines": 0
+    "value-list-max-empty-lines": 0,
+    "value-no-vendor-prefix": null
   }
 }

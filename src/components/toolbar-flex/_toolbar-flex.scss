@@ -29,6 +29,17 @@
       display: flex;
       position: relative;
     }
+
+    &.toolbar-searchfield-wrapper.has-close-icon-button {
+      .btn-icon.close {
+        right: 45px;
+        top: 6px;
+
+        @media (min-width: $breakpoint-phone-to-tablet) {
+          right: 7px;
+        }
+      }
+    }
   }
 }
 
@@ -201,5 +212,4 @@ html[dir='rtl'] {
       }
     }
   }
-
 }

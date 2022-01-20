@@ -1,0 +1,54 @@
+<header class="header is-personalizable">
+  <div class="flex-toolbar">
+    <div class="toolbar-section">
+      {{> includes/header-appmenu-trigger}}
+    </div>
+    <div class="toolbar-section title">
+      <h1><span class="page-title">Page Title</span></h1>
+    </div>
+
+    <div class="toolbar-section buttonset">
+      <button id="settings-button" class="btn">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-settings"></use>
+        </svg>
+        <span>Settings</span>
+      </button>
+
+      <button id="delete-button" class="btn">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-delete"></use>
+        </svg>
+        <span>Delete</span>
+      </button>
+
+      <button id="filter-button" class="btn">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-filter"></use>
+        </svg>
+        <span>Filter</span>
+      </button>
+    </div>
+
+    <div id="more-button" class="toolbar-section more">
+      <button class="btn-actions" type="button">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-more"></use>
+        </svg>
+        <span class="audible" data-translate="text">More</span>
+      </button>
+      <ul class="popupmenu">
+        <li><a href="#">Item One</a></li>
+        <li><a href="#">Item Two</a></li>
+        <li class="submenu">
+          <a href="#">Item Three</a>
+          <ul class="popupmenu">
+            <li><a href="#">Sub-Item One</a></li>
+            <li><a href="#">Sub-Item Two</a></li>
+          </ul>
+        </li>
+        <li><a href="#">Item Four</a></li>
+      </ul>
+    </div>
+  </div>
+</header>
