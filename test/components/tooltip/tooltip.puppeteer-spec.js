@@ -14,27 +14,14 @@ describe('Tooltip Puppeteer Tests', () => {
       const button = await page.$('#tooltip-btn');
       button.hover();
 
-      await page.waitForTimeout(100);
-      const tooltip = page.waitForSelector('.tooltip.is-open', { visible: true });
-      await expect(tooltip).toBeTruthy();
+      await page.waitForSelector('.tooltip.is-open', { visible: true })
+        .then(element => expect(element).toBeTruthy());
     });
 
     it('should show the tooltip on keyboard tab', async () => {
       page.keyboard.press('Tab');
-      const tooltip = page.waitForSelector('.tooltip.is-open', { visible: true });
-      await expect(tooltip).toBeTruthy();
-    });
-
-    it('should not display when tabbing through', async () => {
-      page.keyboard.press('Tab');
-      await page.waitForTimeout(100);
-      const tooltip = page.waitForSelector('.tooltip.is-open', { visible: true });
-      await expect(tooltip).toBeTruthy();
-
-      page.keyboard.press('Tab');
-      await page.waitForTimeout(100);
-      const tooltip2 = page.waitForSelector('.tooltip.top.is-hidden', { visible: true });
-      await expect(tooltip2).toBeTruthy();
+      await page.waitForSelector('.tooltip.is-open', { visible: true })
+        .then(element => expect(element).toBeTruthy());
     });
   });
 
@@ -53,9 +40,8 @@ describe('Tooltip Puppeteer Tests', () => {
       const button = await page.$('#standalone-delete-icon');
       button.hover();
 
-      await page.waitForTimeout(100);
-      const tooltip = page.waitForSelector('.tooltip.is-open', { visible: true });
-      await expect(tooltip).toBeTruthy();
+      await page.waitForSelector('.tooltip.is-open', { visible: true })
+        .then(element => expect(element).toBeTruthy());
     });
   });
 
