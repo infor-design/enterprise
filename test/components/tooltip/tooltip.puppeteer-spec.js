@@ -1,6 +1,7 @@
 describe('Tooltip Puppeteer Tests', () => {
+  const baseUrl = 'http://localhost:4000/components/tooltip/';
   describe('Tooltips Index Page Tests', () => {
-    const url = 'http://localhost:4000/components/tooltip/example-index?theme=classic&layout=nofrills';
+    const url = `${baseUrl}/tooltip/example-index?theme=classic&layout=nofrills`;
 
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
@@ -26,7 +27,7 @@ describe('Tooltip Puppeteer Tests', () => {
   });
 
   describe('Tooltips on icon tests', () => {
-    const url = 'http://localhost:4000/components/tooltip/test-svg-icons';
+    const url = `${baseUrl}/test-svg-icons`;
 
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
@@ -46,7 +47,7 @@ describe('Tooltip Puppeteer Tests', () => {
   });
 
   describe('Tooltips icons page tests', () => {
-    const url = 'http://localhost:4000/components/tooltip/example-icon-in-tooltip?theme=classic&layout=nofrills';
+    const url = `${baseUrl}/example-icon-in-tooltip?theme=classic&layout=nofrills`;
 
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
