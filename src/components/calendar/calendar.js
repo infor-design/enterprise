@@ -226,8 +226,9 @@ Calendar.prototype = {
 
     for (let i = 0; i < this.settings.eventTypes.length; i++) {
       const eventType = this.settings.eventTypes[i];
-      const eventTypeMarkup = `<input type="checkbox" class="checkbox ${eventType.color}07" name="${eventType.id}" id="${eventType.id}" ${eventType.checked ? 'checked="true"' : ''} ${eventType.disabled ? 'disabled="true"' : ''} />
-        <label for="${eventType.id}" class="checkbox-label">${eventType.translationKey ? Locale.translate(eventType.translationKey, { locale: this.locale.name, language: this.language }) : eventType.label}</label><br/>`;
+      const classColor = eventType.custom ? eventType.color : `${eventType.color}07`;
+      const eventTypeMarkup = `<input type="checkbox" class="checkbox ${classColor}" name="${eventType.id}" id="${eventType.id}" ${eventType.checked ? 'checked="true"' : ''} ${eventType.disabled ? 'disabled="true"' : ''} />
+          <label for="${eventType.id}" class="checkbox-label">${eventType.translationKey ? Locale.translate(eventType.translationKey, { locale: this.locale.name, language: this.language }) : eventType.label}</label><br/>`;
       this.eventTypeContainer.insertAdjacentHTML('beforeend', eventTypeMarkup);
 
       // Add attributes to the checkbox, copy the ID to its label's [for] attribute.
@@ -784,6 +785,7 @@ Calendar.prototype = {
   appendEvent(container, event, type, idx) {
     let node;
     const eventCnt = container.querySelectorAll('.calendar-event').length;
+    const colorList = ['ruby', 'amber', 'emerald', 'azure', 'turqoise', 'amethyst', 'graphite', 'slate'];
 
     if (idx > -1) {
       if (!this.monthView.dayMap[idx].events) {
@@ -824,12 +826,12 @@ Calendar.prototype = {
     node.setAttribute('data-key', event.startKey);
 
     // Let the border color / color be overriden
-    if (event.color?.substr(0, 1) === '#') {
+    if ((event.color?.substr(0, 1) === '#' || event.color) && colorList.indexOf(event.color) < 0) {
       node.style.backgroundColor = event.color;
       node.classList.remove(event.color);
     }
 
-    if (event.borderColor?.substr(0, 1) === '#') {
+    if (event.borderColor?.substr(0, 1) === '#' || event.borderColor) {
       node.style.borderLeftColor = event.borderColor;
     }
 

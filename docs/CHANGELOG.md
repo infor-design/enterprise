@@ -67,6 +67,7 @@
 
 ## v4.59.0 Features
 
+- `[Calendar]` Modify validations to allow custom colors. ([#5743](https://github.com/infor-design/enterprise/issues/5743))
 - `[Accordion]` Adjusted spacing and hitboxes for Mobile Enhancements. ([#5611](https://github.com/infor-design/enterprise/issues/5611))
 - `[Area]` Converted the area protractor test suites to puppeteer. ([#5834](https://github.com/infor-design/enterprise/issues/5834))
 - `[Cards]` Added mobile enhancements and style changes. ([#5609](https://github.com/infor-design/enterprise/issues/5609))
