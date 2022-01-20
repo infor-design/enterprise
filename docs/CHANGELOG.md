@@ -29,6 +29,11 @@
 - `[Searchfield]` Fixed UI alignment of close icon button (searchfield) in Datagrid. ([#5954](https://github.com/infor-design/enterprise/issues/5954))
 - `[Tabs Module]` Fixed UI alignment of close icon button on mobile view([#5951](https://github.com/infor-design/enterprise/issues/5951))
 
+## v4.59.2 Fixes
+
+- `[Calendar]` Fixed an issue where you could not have more than one in the same page. ([#6042](https://github.com/infor-design/enterprise/issues/6042))
+- `[Header]` Fixed a regression bug where the buttonset was not properly aligned correctly. ([#6039](https://github.com/infor-design/enterprise/issues/6039))
+
 ## v4.59.1 Fixes
 
 - `[Modal]` Fixed a regression bug where elements inside of the tab panel were being disabled when its `li` tab is not selected (is-selected class) initially. ([NG#1210](https://github.com/infor-design/enterprise-ng/issues/1210))
