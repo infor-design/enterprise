@@ -870,8 +870,9 @@ Column.prototype = {
             let r;
             if (self.settings.isStacked) {
               r = yScale(d.y);
-            } else if (d.value < 0) {
+            } else if (d.value <= 0) {
               r = (height - y(0)) - (height - y(d.value));
+              return r;
             } else {
               r = (height - y(d.value)) - (height - y(0));
             }
