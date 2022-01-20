@@ -1,5 +1,5 @@
 describe('Tooltip Puppeteer Tests', () => {
-  const baseUrl = 'http://localhost:4000/components/tooltip/';
+  const baseUrl = 'http://localhost:4000/components/tooltip';
   describe('Tooltips Index Page Tests', () => {
     const url = `${baseUrl}/tooltip/example-index?theme=classic&layout=nofrills`;
 
