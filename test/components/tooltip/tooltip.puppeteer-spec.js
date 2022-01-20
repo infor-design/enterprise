@@ -60,9 +60,8 @@ describe('Tooltip Puppeteer Tests', () => {
       const button = await page.$('#tooltip-btn');
       button.hover();
 
-      await page.waitForTimeout(100);
-      const tooltip = page.waitForSelector('.tooltip.is-open', { visible: true });
-      await expect(tooltip).toBeTruthy();
+      await page.waitForSelector('.tooltip.is-open', { visible: true })
+        .then(element => expect(element).toBeTruthy());
     });
   });
 });
