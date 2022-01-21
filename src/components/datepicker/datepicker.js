@@ -81,7 +81,7 @@ const COMPONENT_NAME = 'datepicker';
  * @param {string} [settings.locale] The name of the locale to use for this instance. If not set the current locale will be used.
  * @param {string} [settings.language] The name of the language to use for this instance. If not set the current locale will be used or the passed locale will be used.
  * @param {boolean} [settings.useUTC=false] If true the dates will use UTC format. This is only partially
- * implemented https://jira.infor.com/browse/SOHO-3437
+ * implemented #SOHO-3437
  * @param {boolean} [settings.hideButtons=false] If true bottom and next/prev buttons will be not shown.
  * @param {boolean} [settings.showToday=true] If true the today button is shown on the header.
  * @param {boolean} [settings.hitbox=false] Enable hitbox in button.

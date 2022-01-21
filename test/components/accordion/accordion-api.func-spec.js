@@ -137,21 +137,6 @@ describe('Accordion API', () => {
   });
 });
 
-describe('Accordion API (settings)', () => {
-  beforeEach(() => {
-    accordionEl = null;
-    accordionObj = null;
-    document.body.insertAdjacentHTML('afterbegin', svg);
-    document.body.insertAdjacentHTML('afterbegin', accordionHTML);
-    accordionEl = document.body.querySelector('.accordion');
-  });
-
-  afterEach(() => {
-    accordionObj.destroy();
-    cleanup();
-  });
-});
-
 describe('Accordion API (data)', () => {
   beforeEach(() => {
     accordionEl = null;

@@ -499,20 +499,4 @@ describe('Datagrid Paging API', () => {
       }, 1);
     });
   });
-
-  describe('Check DataGrid.loadData with paging events', () => {
-    beforeEach(() => {
-      datagridEl = null;
-      datagridObj = null;
-      document.body.insertAdjacentHTML('afterbegin', svg);
-      document.body.insertAdjacentHTML('afterbegin', datagridHTML);
-      datagridEl = document.body.querySelector('#datagrid');
-      Locale.set('en-US');
-    });
-
-    afterEach(() => {
-      datagridObj.destroy();
-      cleanup();
-    });
-  });
 });
