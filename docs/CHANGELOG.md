@@ -12,6 +12,7 @@
 
 - `[Calendar]` Fixed an issue where you could not have more than one in the same page. ([#6042](https://github.com/infor-design/enterprise/issues/6042))
 - `[Column]` Fix a bug where bar size is still showing even the value is zero in column chart. ([#5911](https://github.com/infor-design/enterprise/issues/5911))
+- `[Datagrid]` Fix a bug where leading spaces not triggering dirty indicator in editable data cell. ([#5927](https://github.com/infor-design/enterprise/issues/5927))
 - `[Datagrid]` Fix Edit Input Date Field on medium row height in Datagrid. ([#5955](https://github.com/infor-design/enterprise/issues/5955))
 - `[Datagrid]` Fixed close icon alignment on mobile viewport. ([#6023](https://github.com/infor-design/enterprise/issues/6023))
 - `[Datagrid]` Fixed close icon alignment on mobile viewport, Safari browser. ([#5946](https://github.com/infor-design/enterprise/issues/5946))

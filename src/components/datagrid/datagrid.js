@@ -11005,7 +11005,7 @@ Datagrid.prototype = {
     }
 
     if (typeof d.originalVal === 'string' || d.originalVal instanceof String) {
-      if (d.originalVal?.trim() === d.value?.trim()) {
+      if (d?.originalVal === d?.value) {
         this.dirtyArray[row][cell].isDirty = false;
         this.setDirtyIndicator(row, cell, false);
       }
