@@ -3933,11 +3933,17 @@ td .btn-actions {
     }
   }
 
-  .icon-calendar,
-  .icon-fileupload {
+  .icon-calendar {
     height: 16px;
     left: 5px;
     top: -2px;
+    width: 16px;
+  }
+
+  .icon-fileupload {
+    height: 16px;
+    left: 5px;
+    top: 2px;
     width: 16px;
   }
 
