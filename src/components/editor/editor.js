@@ -259,7 +259,6 @@ Editor.prototype = {
     this.modals = {};
 
     this.initElements()
-      .bindSelect()
       .bindPaste()
       .setPlaceholders()
       .bindWindowActions()
@@ -585,7 +584,7 @@ Editor.prototype = {
     this.setupTextareaEvents();
     this.createToolbar();
     this.bindButtons().bindModals().bindAnchorPreview();
-    this.bindSelect().bindPaste().setupKeyboardEvents();
+    this.bindPaste().setupKeyboardEvents();
     this.toolbar.find('button').button();
   },
 
@@ -1539,25 +1538,6 @@ Editor.prototype = {
       return value;
     }
     return `http://${value}`;
-  },
-
-  // Setup Events For Text Selection
-  bindSelect() {
-    let selectionTimer = '';
-
-    this.selectionHandler = () => {
-      clearTimeout(selectionTimer);
-      selectionTimer = setTimeout(() => {
-        this.checkSelection();
-      }, this.settings.delay);
-    };
-
-    const currentElement = this.getCurrentElement();
-
-    currentElement.off('mouseup.editor keyup.editor')
-      .on('mouseup.editor keyup.editor', this.selectionHandler);
-
-    return this;
   },
 
   checkSelection() {
