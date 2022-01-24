@@ -31,16 +31,14 @@ describe('Header Index Tests', () => {
 
 describe('Header toolbar categories tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/header/example-toolbar-flex-with-categories.html?theme=classic&mode=light');
-    await browser.driver
-      .wait(protractor.ExpectedConditions
-        .presenceOf(element(by.className('searchfield'))), config.waitsFor);
+    await utils.setPage('/components/header/example-toolbar-flex-with-categories.html?theme=classic&mode=light&layout=nofrills');
   });
 
   if (utils.isChrome() && utils.isCI()) {
     fit('should not visual regress', async () => {
       const searchCategories = await element(by.className('search-categories'));
-      await browser.driver.sleep(config.sleep);
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(searchCategories), config.waitsFor);
 
       await searchCategories.clear();
       await searchCategories.sendKeys('ea');
