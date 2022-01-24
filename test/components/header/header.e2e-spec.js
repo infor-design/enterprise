@@ -37,7 +37,7 @@ describe('Header toolbar categories tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    fit('should not visual regress', async () => {
+    it('should not visual regress', async () => {
       const searchCategories = await element(by.className('search-categories'));
       const searchfieldInput = await element(by.className('searchfield'));
       await browser.driver
