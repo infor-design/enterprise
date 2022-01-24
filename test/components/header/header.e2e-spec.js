@@ -1,3 +1,5 @@
+const { element } = require("protractor");
+
 const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
 const utils = requireHelper('e2e-utils');
 const config = requireHelper('e2e-config');
@@ -37,11 +39,12 @@ describe('Header toolbar categories tests', () => {
   if (utils.isChrome() && utils.isCI()) {
     fit('should not visual regress', async () => {
       const searchCategories = await element(by.className('search-categories'));
+      const searchfieldInput = await element(by.className('searchfield'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(searchCategories), config.waitsFor);
 
-      await searchCategories.clear();
-      await searchCategories.sendKeys('ea');
+      await searchfieldInput.clear();
+      await searchfieldInput.sendKeys('ea');
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.imageComparison.checkElement(searchCategories, 'close-icon-in-classic')).toEqual(0);
