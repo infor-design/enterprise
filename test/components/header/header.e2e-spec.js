@@ -1,3 +1,5 @@
+const { element, browser } = require("protractor");
+
 const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
 const utils = requireHelper('e2e-utils');
 const config = requireHelper('e2e-config');
@@ -25,6 +27,30 @@ describe('Header Index Tests', () => {
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.imageComparison.checkElement(containerEl, 'header-index')).toEqual(0);
+    });
+  }
+});
+
+describe('Header toolbar categories tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/header/example-toolbar-flex-with-categories.html?theme=classic&mode=light');
+    await browser.driver
+      .wait(protractor.ExpectedConditions
+        .presenceOf(element(by.className('searchfield'))), config.waitsFor);
+  });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('should not visual regress', async () => {
+      const searchCategories = await element(by.className('search-categories'));
+      await browser.driver.sleep(config.sleep);
+
+      await element(by.id('input#maincontent')).click();
+      await browser.driver.sleep(config.sleep);
+
+      await searchCategories.sendKeys('ea');
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.imageComparison.checkElement(searchCategories, 'close-icon-in-classic')).toEqual(0);
     });
   }
 });
