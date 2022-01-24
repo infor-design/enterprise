@@ -27,7 +27,9 @@ describe('Accordion Puppeteer Test', () => {
     });
 
     it('should have panels', async () => {
-      expect((await page.$('.accordion.panel'))).toBeTruthy();
+      page.waitForSelector('.accordion.panel', { visible: true });
+
+      expect((await page.$$('.accordion.panel')).length).toEqual(4);
     });
   });
 

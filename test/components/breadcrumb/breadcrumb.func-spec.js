@@ -14,7 +14,7 @@ const fullBreadcrumbTmpl = `<nav id="${id}" class="breadcrumb">
       <span>Second Item</span>
     </li>
     <li id="third-item" class="breadcrumb-item">
-      <a href="https://infor.com/">Third Item</a>
+      <a href="https://design.infor.com/">Third Item</a>
     </li>
     <li id="fourth-item" class="breadcrumb-item current">
       <span>Fourth Item</span>
@@ -35,7 +35,7 @@ const TEST_BREADCRUMBS = [
   },
   {
     content: 'Third Item',
-    href: 'https://infor.com/',
+    href: 'https://design.infor.com/',
     id: 'third-item'
   },
   {

@@ -62,7 +62,7 @@ Soho.Locale.addCulture('en-US', {
   },
   // Resx - Provided By Translation Team
   messages: {
-    AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. All rights reserved. The word and design marks set forth herein are trademarks and/or registered trademarks of Infor and/or its affiliates and subsidiaries. All rights reserved. All other trademarks listed herein are the property of their respective owners' },
+    AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. All rights reserved. The word and design marks set forth herein are trademarks and/or registered trademarks of Infor and/or its affiliates and subsidiaries. All other trademarks listed herein are the property of their respective owners' },
     Actions: { id: 'Actions', value: 'Actions', comment: 'Tooltip text for the action button with additional in context actions' },
     Add: { id: 'Add', value: 'Add', comment: 'Add' },
     AddComments: { id: 'AddComments', value: 'Add Comments', comment: 'Add comments to a form of data' },
