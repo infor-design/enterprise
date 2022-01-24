@@ -38,13 +38,11 @@ describe('Header toolbar categories tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('should not visual regress', async () => {
+    fit('should not visual regress', async () => {
       const searchCategories = await element(by.className('search-categories'));
       await browser.driver.sleep(config.sleep);
 
-      await element(by.id('input#maincontent')).click();
-      await browser.driver.sleep(config.sleep);
-
+      await searchCategories.clear();
       await searchCategories.sendKeys('ea');
       await browser.driver.sleep(config.sleep);
 
