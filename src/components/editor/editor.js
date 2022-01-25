@@ -321,46 +321,45 @@ Editor.prototype = {
   },
 
   bindSelect() {
-    let selectionTimer = '';
+    const selectionTimer = '';
     const currentElement = this.getCurrentElement();
-
     currentElement.off('mouseup.editor')
       .on('mouseup.editor', () => {
-        this.bindSelection(selectionTimer);
+      this.bindSelection(selectionTimer);
     });
 
     return this;
   },
 
   bindParagraphCreation() {
-    let selectionTimer = '';
-
+    const selectionTimer = '';
     const currentElement = this.getCurrentElement();
     currentElement.off('keyup.editor')
       .on('keyup.editor', (e) => {
-        let node = this.getSelectionStart();
-        let tagName;
+      let node = this.getSelectionStart();
+      let tagName;
 
-        if (node && node.getAttribute('data-editor') && node.children.length === 0) {
-          document.execCommand('formatBlock', false, 'p');
-        }
+      if (node && node.getAttribute('data-editor') && node.children.length === 0) {
+        document.execCommand('formatBlock', false, 'p');
+      }
 
-        if (e.which === 13) {
-          node = this.getSelectionStart();
-          tagName = node.tagName.toLowerCase();
+      if (e.which === 13) {
+        node = this.getSelectionStart();
+        tagName = node.tagName.toLowerCase();
 
-          if (tagName !== 'li' && !this.isListItemChild(node)) {
-            if (!e.shiftKey) {
-              document.execCommand('formatBlock', false, 'p');
-            }
-            if (tagName === 'a') {
-              document.execCommand('unlink', false, null);
-            }
+        if (tagName !== 'li' && !this.isListItemChild(node)) {
+          if (!e.shiftKey) {
+            document.execCommand('formatBlock', false, 'p');
+          }
+          if (tagName === 'a') {
+            document.execCommand('unlink', false, null);
           }
         }
+      }
 
-        this.bindSelection(selectionTimer);
+      this.bindSelection(selectionTimer);
     });
+
     return this;
   },
 
