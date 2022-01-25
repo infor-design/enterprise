@@ -313,7 +313,25 @@ Editor.prototype = {
     return this.sourceViewActive() ? this.textarea : this.element;
   },
 
+  bindSelection(selectionTimer) {
+    clearTimeout(selectionTimer);
+    selectionTimer = setTimeout(() => {
+      this.checkSelection();
+    }, this.settings.delay);
+  },
+
+  bindSelect() {
+    const selectionTimer = '';
+    const currentElement = this.getCurrentElement();
+    currentElement.on('mouseup.editor', () => {
+      this.bindSelection(selectionTimer);
+    });
+
+    return this;
+  },
+
   bindParagraphCreation() {
+    const selectionTimer = '';
     const currentElement = this.getCurrentElement();
     currentElement.on('keyup.editor', (e) => {
       let node = this.getSelectionStart();
@@ -336,7 +354,10 @@ Editor.prototype = {
           }
         }
       }
+
+      this.bindSelection(selectionTimer);
     });
+
     return this;
   },
 
@@ -1539,25 +1560,6 @@ Editor.prototype = {
       return value;
     }
     return `http://${value}`;
-  },
-
-  // Setup Events For Text Selection
-  bindSelect() {
-    let selectionTimer = '';
-
-    this.selectionHandler = () => {
-      clearTimeout(selectionTimer);
-      selectionTimer = setTimeout(() => {
-        this.checkSelection();
-      }, this.settings.delay);
-    };
-
-    const currentElement = this.getCurrentElement();
-
-    currentElement.off('mouseup.editor keyup.editor')
-      .on('mouseup.editor keyup.editor', this.selectionHandler);
-
-    return this;
   },
 
   checkSelection() {
@@ -3063,6 +3065,7 @@ Editor.prototype = {
 
   teardown() {
     this.destroyToolbar();
+    const currentElement = this.getCurrentElement();
 
     // Cleanup Source View elements and events
     if (this.sourceView) {
@@ -3081,6 +3084,10 @@ Editor.prototype = {
     if (this.selectionRange) {
       delete this.selectionRange;
     }
+
+    // Cleanup editor binds
+    currentElement.off('keyup.editor');
+    currentElement.off('mouseup.editor');
 
     // Cleanup container
     this.container.off([

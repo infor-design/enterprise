@@ -19,6 +19,7 @@
 - `[Datagrid]` Fixed close icon alignment on mobile viewport, Safari browser. ([#5946](https://github.com/infor-design/enterprise/issues/5946))
 - `[Datagrid]` Fixed UI alignment of close icon button on mobile view. ([#5947](https://github.com/infor-design/enterprise/issues/5947))
 - `[Editor]` Changed selector for for image value selction from id to name. ([#5915](https://github.com/infor-design/enterprise/issues/5915))
+- `[Editor]` Fix a bug which changes the approach intended by the user after typing in editor. ([#5937](https://github.com/infor-design/enterprise/issues/5937))
 - `[Field Options]` Fixed UI alignment of close icon button (searchfield) in Field Options. ([#5983](https://github.com/infor-design/enterprise/issues/5983))
 - `[Export]` Added data sanitization in Export to CSV. ([#5982](https://github.com/infor-design/enterprise/issues/5982))
 - `[Field Options]` Fixed UI alignment of close icon button (searchfield) in Field Options. ([#5983](https://github.com/infor-design/enterprise/issues/5983))
