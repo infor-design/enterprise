@@ -323,8 +323,7 @@ Editor.prototype = {
   bindSelect() {
     const selectionTimer = '';
     const currentElement = this.getCurrentElement();
-    currentElement.off('mouseup.editor')
-      .on('mouseup.editor', () => {
+    currentElement.on('mouseup.editor', () => {
       this.bindSelection(selectionTimer);
     });
 
@@ -334,8 +333,7 @@ Editor.prototype = {
   bindParagraphCreation() {
     const selectionTimer = '';
     const currentElement = this.getCurrentElement();
-    currentElement.off('keyup.editor')
-      .on('keyup.editor', (e) => {
+    currentElement.on('keyup.editor', (e) => {
       let node = this.getSelectionStart();
       let tagName;
 
@@ -3067,6 +3065,7 @@ Editor.prototype = {
 
   teardown() {
     this.destroyToolbar();
+    const currentElement = this.getCurrentElement();
 
     // Cleanup Source View elements and events
     if (this.sourceView) {
@@ -3085,6 +3084,10 @@ Editor.prototype = {
     if (this.selectionRange) {
       delete this.selectionRange;
     }
+
+    // Cleanup editor binds
+    currentElement.off('keyup.editor');
+    currentElement.off('mouseup.editor');
 
     // Cleanup container
     this.container.off([
