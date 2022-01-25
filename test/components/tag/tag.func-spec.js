@@ -52,11 +52,11 @@ describe('Tag API (as span)', () => {
   it('can be a hyperlnk if defined with an `href` setting', () => {
     tagEl.insertAdjacentHTML('afterbegin', '<span class="tag-content">This is a Tag!</span>');
     tagAPI = new Tag(tagEl, {
-      href: 'https://infor.com'
+      href: 'https://www.example.com'
     });
 
     expect(tagAPI.element.querySelector('.tag-content').tagName).toEqual('A');
-    expect(tagAPI.element.querySelector('.tag-content').getAttribute('href')).toEqual('https://infor.com');
+    expect(tagAPI.element.querySelector('.tag-content').getAttribute('href')).toEqual('https://www.example.com');
   });
 
   it('should remain a hyperlink if invoked as a hyperlink/anchor with no "href" attribute', () => {

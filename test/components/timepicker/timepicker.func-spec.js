@@ -107,8 +107,7 @@ describe('TimePicker Methods', () => {
 
     expect(timepickerObj.value(true)).toEqual(output);
 
-    // This one something special
-    // https://jira.infor.com/browse/SOHO-7589
+    // This one was something special see SOHO-7589
     input = '01:00 AM';
     output = '0100 AM';
     timepickerEl.value = input;

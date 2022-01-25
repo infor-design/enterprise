@@ -1,7 +1,7 @@
 <div class="row top-padding">
   <div class="six columns">
     <h2>Toolbar Searchfield Test:  Invoked as Regular Searchfield inside of a Toolbar</h2>
-    <p><a class="hyperlink" href="https://jira.infor.com/browse/SOHO-6448" target="_blank">Related JIRA Ticket</a>.  Prior to version 4.3.1, in cases where the initialization component of the Soho library isn't used, Searchfield components were not aware of their existence inside of a toolbar parent.  When used inside of a Toolbar, a searchfield should be invoked as a Toolbar Searchfield instead of a normal Searchfield.  This test demonstrates functionality added to the regular Searchfield component that allows it to detect a toolbar parent, and pre-emptively invoke itself as a Toolbar Searchfield instead.</p>
+    <p>Related JIRA Ticket: SOHO-6448.  Prior to version 4.3.1, in cases where the initialization component of the Soho library isn't used, Searchfield components were not aware of their existence inside of a toolbar parent.  When used inside of a Toolbar, a searchfield should be invoked as a Toolbar Searchfield instead of a normal Searchfield.  This test demonstrates functionality added to the regular Searchfield component that allows it to detect a toolbar parent, and pre-emptively invoke itself as a Toolbar Searchfield instead.</p>
     <p>When this test completes, use a developer tools console and run this code: <span class="code">$('#test-searchfield').data('toolbarsearchfield');</span> - it should return an instance of a ToolbarSearchfield and not be undefined.</p>
   </div>
 </div>

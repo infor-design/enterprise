@@ -216,7 +216,7 @@ MaskInput.prototype = {
 
         // in IE11 or Edge, change event doesn't fire for some unknown reason.
         // Added this for backwards compatility with this OS/Browser combo.
-        // See http://jira.infor.com/browse/SOHO-6895
+        // See SOHO-6895
         if (self._hasChangedValue() && (self._isEdgeIE() || !self.hasTriggeredChangeEvent)) {
           $(self.element).trigger('change');
           self.hasTriggeredChangeEvent = true;

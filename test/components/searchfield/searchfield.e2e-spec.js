@@ -217,22 +217,16 @@ if (utils.isChrome() && utils.isCI()) {
 
   describe('Searchfield close icon placement tests', () => {
     beforeEach(async () => {
-      await utils.setPage('/components/field-options/example-index.html?theme=classic&mode=light&layout=nofrills');
+      await utils.setPage('/components/searchfield/example-index.html?theme=new&mode=light&layout=nofrills');
     });
 
     if (utils.isChrome() && utils.isCI()) {
       it('should not visual regress', async () => {
-        const searchfieldClearable = await element(by.id('example-searchfield-clearable'));
-        const compactButton = await element(by.id('toggle-compact'));
-
-        await compactButton.click();
-        await searchfieldClearable.clear();
+        const searchfieldClearable = await element(by.id('searchfield'));
         await searchfieldClearable.sendKeys('co');
-        await browser.driver
-          .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('example-searchfield-clearable'))), config.waitsFor);
         await browser.driver.sleep(config.sleep);
 
-        expect(await browser.imageComparison.checkElement(searchfieldClearable, 'clearable-icon-searchfield')).toEqual(0);
+        expect(await browser.imageComparison.checkElement(searchfieldClearable, 'searchfield-clear2')).toEqual(0);
       });
     }
   });

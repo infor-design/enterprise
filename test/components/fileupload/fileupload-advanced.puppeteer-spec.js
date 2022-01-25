@@ -13,7 +13,7 @@ describe('File Upload Advanced Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
     });
 
-    it('should upload a file', async () => {
+    it('should upload a file and show description', async () => {
       // click on Select File
       // file upload should pop up
       const [fileChooser] = await Promise.all([
@@ -23,7 +23,7 @@ describe('File Upload Advanced Puppeteer Tests', () => {
 
       await fileChooser.accept([filePath]);
 
-      // Progress bar
+      // Description bar
       await page.waitForSelector('.file-row', { visible: true })
         .then(async (element) => {
           const description = await element.$eval('.description', e => e.textContent);
@@ -34,6 +34,20 @@ describe('File Upload Advanced Puppeteer Tests', () => {
           expect(progress[1]).toEqual('KB');
           expect(progress[3]).toContain('%');
         });
+    });
+
+    it('should upload a file and show progress bar', async () => {
+      const [fileChooser] = await Promise.all([
+        page.waitForFileChooser(),
+        page.click('.hyperlink')
+      ]);
+
+      await fileChooser.accept([filePath]);
+
+      // Progress bar
+      await page.waitForSelector('.progress-row', { visible: true })
+        .then(element => element.$('.progress'))
+        .then(progress => expect(progress).toBeDefined());
     });
   });
 });
