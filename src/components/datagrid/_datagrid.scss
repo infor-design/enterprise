@@ -1269,6 +1269,11 @@ $datagrid-small-row-height: 25px;
             left: auto;
             top: 4px;
           }
+
+          &.datagrid-trigger-cell .icon.icon-close {
+            margin-left: 8px;
+            left: -2px;
+          }
         }
 
         //validation
@@ -1362,6 +1367,16 @@ $datagrid-small-row-height: 25px;
 
         &.icon-calendar {
           top: -2px;
+        }
+
+        &.icon-close {
+          margin-top: 0px;
+          top: 3px;
+          left: -1px;
+        }
+
+        &.icon-fileupload {
+          top: 2.5px;
         }
       }
 
@@ -1517,11 +1532,16 @@ $datagrid-small-row-height: 25px;
             height: 16px;
             top: 4px;
 
-            &.icon-calendar,
-            &.icon-fileupload {
+            &.icon-calendar {
               height: 15px;
               left: 1px;
               top: -2px;
+            }
+
+            &.icon-fileupload {
+              height: 15px;
+              left: -2px;
+              top: 0;
             }
 
             &.icon-clock {
@@ -1530,8 +1550,8 @@ $datagrid-small-row-height: 25px;
             }
 
             &.icon-close {
-              margin-left: -30px !important;
-              margin-right: 10px;
+              margin-left: -25px !important;
+              left: -3px;
             }
 
             &.icon-error {
@@ -2868,13 +2888,14 @@ $datagrid-small-row-height: 25px;
 
         &.icon-fileupload {
           left: 5px;
-          top: 2px;
+          top: 1px;
         }
 
         &.icon-close {
+          top: 4px;
           margin-top: -6px;
           margin-right: -3px;
-          margin-left: 13px;
+          margin-left: 10px;
         }
       }
 
@@ -3757,6 +3778,10 @@ td .btn-actions {
   &.has-filterable-columns .datagrid-header th .datagrid-checkbox-wrapper .datagrid-checkbox {
     top: 14px;
   }
+
+  .datagrid-trigger-cell span.trigger.is-clearable:not(.colorpicker-container) {
+    margin-top: 0;
+  }
 }
 
 .small-rowheight,
@@ -3918,8 +3943,8 @@ td .btn-actions {
 
   .icon-close {
     height: 12px !important;
-    margin-top: -5px;
-    margin-left: -22px;
+    margin-top: -7px;
+    margin-left: -25px;
   }
 
   .icon-clock {
@@ -3943,7 +3968,7 @@ td .btn-actions {
   .icon-fileupload {
     height: 16px;
     left: 5px;
-    top: 2px;
+    top: 1px;
     width: 16px;
   }
 
@@ -3961,6 +3986,7 @@ td .btn-actions {
         vertical-align: middle;
         white-space: nowrap;
         margin-left: 4px;
+        margin-top: -5px;
       }
     }
 
