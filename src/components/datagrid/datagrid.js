@@ -9228,18 +9228,13 @@ Datagrid.prototype = {
       }
 
       // Button Filter Tabbing Issue #5735
-      if (key === 9) {
-        if (targetJq.parents('.modal').length > 0 && targetJq.hasClass('btn-filter')) {
-          e.preventDefault();
-          targetJq.siblings('input').trigger('focus');
-        }
-      }
-
-      // Button Filter Tabbing Issue #5735
-      if (e.shiftKey && key === 9) {
-        if (targetJq.parents('.modal').length > 0 && targetJq.hasClass('btn-filter')) {
+      if (targetJq.parents('.modal').length > 0 && targetJq.hasClass('btn-filter')) {
+        if (e.shiftKey && key === 9) {
           e.preventDefault();
           targetJq.parents('th').prev('th').find('input').trigger('focus');
+        } else if (key === 9) {
+          e.preventDefault();
+          targetJq.siblings('input').trigger('focus');
         }
       }
     });
