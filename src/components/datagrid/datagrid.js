@@ -1975,7 +1975,7 @@ Datagrid.prototype = {
     const attrs = utils.stringAttributes(this, this.settings.attributes, `btn-filter-${col.id?.toLowerCase()}`);
 
     const renderButton = function (defaultValue, extraClass) {
-      return `<button type="button" ${attrs} class="btn-menu btn-filter${extraClass ? ` ${extraClass}` : ''}" data-init="false" ${isDisabled ? ' disabled' : ''}${defaultValue ? ` data-default="${defaultValue}"` : ''} type="button"><span class="audible">Filter</span>` +
+      return `<button type="button" ${attrs} class="btn-menu btn-filter${extraClass ? ` ${extraClass}` : ''}" data-init="false" ${isDisabled ? ' disabled' : ''}${defaultValue ? ` data-default="${defaultValue}"` : ''} tabindex="0" type="button"><span class="audible">Filter</span>` +
       `<svg class="icon-dropdown icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-filter-{{icon}}"></use></svg>${
         $.createIcon({ icon: 'dropdown', classes: 'icon-dropdown' })
       }</button><ul class="popupmenu has-icons is-translatable is-selectable">`;
@@ -9225,6 +9225,14 @@ Datagrid.prototype = {
         th.removeAttr('tabindex');
         self.activeCell.node = self.cellNode(0, self.settings.groupable ? 0 : self.activeCell.cell).attr('tabindex', '0').focus();
         e.preventDefault();
+      }
+
+      // Button Filters Tabbing Issue #5735
+      if (key === 9) {
+        if (targetJq.parents('.modal').length > 0 && targetJq.hasClass('btn-filter')) {
+          e.preventDefault();
+          targetJq.siblings('input').trigger('focus');
+        }
       }
     });
 
