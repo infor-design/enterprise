@@ -82,7 +82,7 @@
   "chrome-version": "97",
   "dependencies": {
     "d3": "^5.16.0",
-    "ids-identity": "4.7.10",
+    "ids-identity": "4.9.0",
     "jquery": "^3.6.0",
     "promise-polyfill": "^8.2.0"
   },
