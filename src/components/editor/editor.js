@@ -609,7 +609,7 @@ Editor.prototype = {
     this.setupTextareaEvents();
     this.createToolbar();
     this.bindButtons().bindModals().bindAnchorPreview();
-    this.bindPaste().setupKeyboardEvents();
+    this.bindSelect().bindPaste().setupKeyboardEvents();
     this.toolbar.find('button').button();
   },
 
