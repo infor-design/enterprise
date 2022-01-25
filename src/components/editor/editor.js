@@ -259,6 +259,7 @@ Editor.prototype = {
     this.modals = {};
 
     this.initElements()
+      .bindSelect()
       .bindPaste()
       .setPlaceholders()
       .bindWindowActions()
@@ -312,29 +313,53 @@ Editor.prototype = {
     return this.sourceViewActive() ? this.textarea : this.element;
   },
 
-  bindParagraphCreation() {
+  bindSelection(selectionTimer) {
+    clearTimeout(selectionTimer);
+    selectionTimer = setTimeout(() => {
+      this.checkSelection();
+    }, this.settings.delay);
+  },
+
+  bindSelect() {
+    let selectionTimer = '';
     const currentElement = this.getCurrentElement();
-    currentElement.on('keyup.editor', (e) => {
-      let node = this.getSelectionStart();
-      let tagName;
 
-      if (node && node.getAttribute('data-editor') && node.children.length === 0) {
-        document.execCommand('formatBlock', false, 'p');
-      }
+    currentElement.off('mouseup.editor')
+      .on('mouseup.editor', () => {
+        this.bindSelection(selectionTimer);
+    });
 
-      if (e.which === 13) {
-        node = this.getSelectionStart();
-        tagName = node.tagName.toLowerCase();
+    return this;
+  },
 
-        if (tagName !== 'li' && !this.isListItemChild(node)) {
-          if (!e.shiftKey) {
-            document.execCommand('formatBlock', false, 'p');
-          }
-          if (tagName === 'a') {
-            document.execCommand('unlink', false, null);
+  bindParagraphCreation() {
+    let selectionTimer = '';
+
+    const currentElement = this.getCurrentElement();
+    currentElement.off('keyup.editor')
+      .on('keyup.editor', (e) => {
+        let node = this.getSelectionStart();
+        let tagName;
+
+        if (node && node.getAttribute('data-editor') && node.children.length === 0) {
+          document.execCommand('formatBlock', false, 'p');
+        }
+
+        if (e.which === 13) {
+          node = this.getSelectionStart();
+          tagName = node.tagName.toLowerCase();
+
+          if (tagName !== 'li' && !this.isListItemChild(node)) {
+            if (!e.shiftKey) {
+              document.execCommand('formatBlock', false, 'p');
+            }
+            if (tagName === 'a') {
+              document.execCommand('unlink', false, null);
+            }
           }
         }
-      }
+
+        this.bindSelection(selectionTimer);
     });
     return this;
   },
