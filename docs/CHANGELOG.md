@@ -6,12 +6,14 @@
 - `[Badges/Tags]` Corrected the colors of badges/tags for better accessibility contrast. ([#5673](https://github.com/infor-design/enterprise/issues/5673))
 - `[Button]` Fix a bug where updated settings not properly rendering disabled state. ([#5928](https://github.com/infor-design/enterprise/issues/5928))
 - `[Dropdown]` Create a Puppeteer Script for Enter key opens dropdown list, when it should only be used to select items within an open list. ([#5842](https://github.com/infor-design/enterprise/issues/5842))
+- `[Fileupload]` Added puppeteer test to check that progress bar is present when uploading a file. ([#5808](https://github.com/infor-design/enterprise/issues/5808))
 - `[Tooltip]` Converted the tooltip protractor test suites to puppeteer. ([#5830](https://github.com/infor-design/enterprise/issues/5830))
 
 ## v4.60.0 Fixes
 
 - `[Calendar]` Fixed an issue where you could not have more than one in the same page. ([#6042](https://github.com/infor-design/enterprise/issues/6042))
 - `[Column]` Fix a bug where bar size is still showing even the value is zero in column chart. ([#5911](https://github.com/infor-design/enterprise/issues/5911))
+- `[Datagrid]` Fix a bug where leading spaces not triggering dirty indicator in editable data cell. ([#5927](https://github.com/infor-design/enterprise/issues/5927))
 - `[Datagrid]` Fix Edit Input Date Field on medium row height in Datagrid. ([#5955](https://github.com/infor-design/enterprise/issues/5955))
 - `[Datagrid]` Fixed close icon alignment on mobile viewport. ([#6023](https://github.com/infor-design/enterprise/issues/6023))
 - `[Datagrid]` Fixed close icon alignment on mobile viewport, Safari browser. ([#5946](https://github.com/infor-design/enterprise/issues/5946))
