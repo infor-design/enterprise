@@ -805,8 +805,10 @@ const formatters = {
       col.numberFormat || { minimumFractionDigits: 2, maximumFractionDigits: 2 }
     );
 
+    const en_perc = perc.replace(',', '.');
+
     let text = `${perc}%`;
-    const ranges = formatters.ClassRange(row, cell, perc, col);
+    const ranges = formatters.ClassRange(row, cell, en_perc, col);
     const target = col.target;
 
     if (col.text) {
@@ -825,7 +827,7 @@ const formatters = {
     const barClass = (col.ranges && ranges.classes ? ranges.classes : 'primary');
     return `<div class="total bar chart-completion-target chart-targeted-achievement">
               <div class="target remaining bar" style="width: ${(target || 0)}%;"></div>
-              <div class="completed bar ${barClass}" style="width: ${perc}%;"></div>
+              <div class="completed bar ${barClass}" style="width: ${en_perc}%;"></div>
               ${(col.showPercentText ? `<div class="chart-targeted-text l-center">${text}</div>
             </div>` : `<div class="audible">${perc}%</div>`)}`;
   },
