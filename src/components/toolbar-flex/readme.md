@@ -58,7 +58,7 @@ To build an IDS Flex Toolbar that is similar to a [legacy IDS Toolbar]('./toolba
     </ul>
     <!-- End More Actions Button -->
   </div>
-</div>  
+</div>
 ```
 
 ### Customize with CSS
@@ -147,7 +147,7 @@ Conversely, the Flex Toolbar allows for a more configurable placement of the Sea
 
 The `.toolbar-section.search` container for the Searchfield facilitates this, as well as an improved Responsive feature that better allows it to take up space on a smaller screen.
 
-### "More Actions" menu button behavior
+### "More Actions" / Overflow menu button behavior
 
 The "More Actions" button is a special Menu Button component that contains additional actions for your workflow/process that cannot be displayed on the Toolbar, either purposefully, or because there are already too many other actions present.
 
@@ -166,9 +166,30 @@ The "More Actions" button has its own `.toolbar-section.more` container:
 
 When the area of your page containing the toolbar is resized, or is otherwise too small to contain all actions present on the Toolbar, the "More Actions" button's attached [IDS Popupmenu component]('./popupmenu') will begin to display these actions as menu items instead of buttons.
 
+Because some of the buttons may not be visible at some breakpoints they can not always be clicked in order to fire a click event. To handle this the flex toolbar will instead omit a `selected` event that will fire when any item in the overflow menu is clicked from the menu or when any toolbar item is clicked. So it my be advisable to always use the `selected` event fire handling when any toolbar item is clicked or selected from the menu. For example:
+
+```js
+  $('.flex-toolbar').on('selected.test', function(e, item, secondArg) {
+    var text = $(item.element).text().trim();
+    var selectedItem;
+
+    if (secondArg) {
+      selectedItem = 'Selected Menu Item: ' + $(secondArg).text().trim() + '<br />';
+    }
+
+    $('body').toast({
+      title: 'Toolbar Item Selected',
+      message: '<p>' +
+        'text content: "<b>'+ text +'</b>"<br/>' +
+        'item type: "<b>'+ item.type +'</b>"' +
+        (selectedItem ? '<br />' + selectedItem : '') +
+        '</p>'
+    });
+```
+
 #### Never Display a More Actions button
 
-The legacy IDS Toolbar automatically displays a "More Actions" button when too many items are present with not enough space.  
+The legacy IDS Toolbar automatically displays a "More Actions" button when too many items are present with not enough space.
 
 The same behavior will occur when a "More Actions" button is present on the Flex Toolbar.  However, instead of configuring this via Javascript settings, disabling this feature is now done by simply not including a More Actions menu on the Flex Toolbar.  Note that in this configuration, buttons will simply be cut off and unavailable if there are too many to display:
 
@@ -218,7 +239,7 @@ The `favorButtonset`, `favorTitle`, and `rightAligned` settings are all now cont
 
 ### Number of Toolbar actions displayed is now more configurable
 
-The `maxVisibleButtons` setting that was present on the previous toolbar no longer exists. Due to the sheer number of cases we couldn't make a configuration for this that worked for everyone, so instead we removed it in favor of user-definable sections and pre-defined menu items.  
+The `maxVisibleButtons` setting that was present on the previous toolbar no longer exists. Due to the sheer number of cases we couldn't make a configuration for this that worked for everyone, so instead we removed it in favor of user-definable sections and pre-defined menu items.
 
 The Flex Toolbar is different in that it allows for multiple, indeterminate numbers of `buttonset`-style sections, instead of one.  However, it's still possible to limit the number of items shown in any of these sections.  For example, in a case where 10 buttons would be available in a section, but we only want to show three of them, setting a hard CSS max-width on the toolbar section in question that contains space for the first three.  You could also only explicitly create three buttons, and preload the rest of the items as "More Actions" menu list items, since that's where they'll end up anyway.
 
