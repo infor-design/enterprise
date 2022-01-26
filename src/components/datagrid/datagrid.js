@@ -1622,7 +1622,7 @@ Datagrid.prototype = {
           filterMarkup += `<input ${col.filterDisabled ? ' disabled' : ''} type="text" class="lookup" ${attrs} >`;
           break;
         default:
-          filterMarkup += `<input${col.filterDisabled ? ' disabled' : ''} type="text" ${attrs}/>`;
+          filterMarkup += `<input${col.filterDisabled ? ' disabled' : ''} tabindex="0" type="text" ${attrs}/>`;
           break;
       }
 
@@ -9230,8 +9230,14 @@ Datagrid.prototype = {
       // Button Filter Tabbing Issue #5735
       if (targetJq.parents('.modal').length > 0 && targetJq.hasClass('btn-filter')) {
         if (e.shiftKey && key === 9) {
-          e.preventDefault();
-          targetJq.parents('th').prev('th').find('input').trigger('focus');
+          if (targetJq.parents('th').prev('th').length > 0) {
+            e.preventDefault();
+            targetJq.parents('th').prev('th').find('[tabindex=0]').trigger('focus');
+          } else if (targetJq.parents('.modal-content').find('.toolbar').length > 0) {
+            e.preventDefault();
+            e.stopPropagation();
+            targetJq.parents('.modal-content').find('.toolbar').find('button[tabindex=0]').trigger('focus');
+          }
         } else if (key === 9) {
           e.preventDefault();
           targetJq.siblings('input').trigger('focus');
