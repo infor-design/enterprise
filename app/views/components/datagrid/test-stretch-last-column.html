@@ -39,7 +39,7 @@
         columns: columns,
         dataset: data,
         selectable: 'single',
-        stretchColumn: columns[columns.length -1].id,
+        stretchColumn: columns[columns.length -1].id, // 'last' used to work see #6063
         toolbar: {title: 'Data Grid Header Title', collapsibleFilter: true, results: true, keywordFilter: true, actions: true, rowHeight: true}
       });
     });
