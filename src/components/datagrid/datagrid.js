@@ -9807,10 +9807,10 @@ Datagrid.prototype = {
 
       if (this.isFileUpload) {
         this.isFileUpload = false;
-      } else {
-        if (!col.doNotEmptyCellWhenEditing) {
-          cellNode.empty();
-        }
+      } 
+      
+      if (!col.doNotEmptyCellWhenEditing) {
+        cellNode.empty();
       }
     } else {
       cellParent.addClass('is-editing-inline');
