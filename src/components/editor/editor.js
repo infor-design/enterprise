@@ -2534,6 +2534,25 @@ Editor.prototype = {
       }
     };
 
+    // Check if selection contains given node
+    const containsNodeInSelection = (node) => {
+      const sel = window.getSelection();
+      let r = false;
+      if (env.browser.isIE11()) {
+        const rangeAt = sel.getRangeAt(0);
+        const range = document.createRange();
+        range.selectNode(node);
+        const s2s = rangeAt.compareBoundaryPoints(Range.START_TO_END, range);
+        const s2e = rangeAt.compareBoundaryPoints(Range.START_TO_START, range);
+        const e2s = rangeAt.compareBoundaryPoints(Range.END_TO_START, range);
+        const e2e = rangeAt.compareBoundaryPoints(Range.END_TO_END, range);
+        r = ((s2s !== s2e) || (e2s !== e2e) || (s2s !== e2e));
+      } else {
+        r = sel.containsNode(node, true);
+      }
+      return r;
+    };
+
     // Clear all lists belongs to selection area
     const clearLists = () => {
       const normalizeList = (list) => {
@@ -2557,30 +2576,16 @@ Editor.prototype = {
       } else {
         const setEl = () => ($(parentEl).closest('.editor').length ? parentEl.parentNode : null);
         const elem = parentEl.classList.contains('editor') ? parentEl : setEl();
+
         if (elem) {
           const lists = [].slice.call(elem.querySelectorAll('ul, ol'));
-          lists.forEach(list => normalizeList(list));
+          lists.forEach((list) => {
+            if (containsNodeInSelection(list)) {
+              normalizeList(list);
+            }
+          });
         }
       }
-    };
-
-    // Check if selection contains given node
-    const containsNodeInSelection = (node) => {
-      const sel = window.getSelection();
-      let r = false;
-      if (env.browser.isIE11()) {
-        const rangeAt = sel.getRangeAt(0);
-        const range = document.createRange();
-        range.selectNode(node);
-        const s2s = rangeAt.compareBoundaryPoints(Range.START_TO_END, range);
-        const s2e = rangeAt.compareBoundaryPoints(Range.START_TO_START, range);
-        const e2s = rangeAt.compareBoundaryPoints(Range.END_TO_START, range);
-        const e2e = rangeAt.compareBoundaryPoints(Range.END_TO_END, range);
-        r = ((s2s !== s2e) || (e2s !== e2e) || (s2s !== e2e));
-      } else {
-        r = sel.containsNode(node, true);
-      }
-      return r;
     };
 
     // Convert hyperlinks to plain text in selected area.
