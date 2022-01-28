@@ -13,6 +13,7 @@
 
 - `[Calendar]` Fixed an issue where you could not have more than one in the same page. ([#6042](https://github.com/infor-design/enterprise/issues/6042))
 - `[Column]` Fix a bug where bar size is still showing even the value is zero in column chart. ([#5911](https://github.com/infor-design/enterprise/issues/5911))
+- `[Datagrid]` Fix a bug where targeted achievement colors are not displaying correctly when using other locales. ([#5972](https://github.com/infor-design/enterprise/issues/5972))
 - `[Datagrid]` Fix a bug in datagrid where filterable headers cannot be tab through in modal. ([#5735](https://github.com/infor-design/enterprise/issues/5735))
 - `[Datagrid]` Fix a bug in datagrid where stretch column last broke and the resize would loose the last column. ([#6063](https://github.com/infor-design/enterprise/issues/6063))
 - `[Datagrid]` Fix a bug where leading spaces not triggering dirty indicator in editable data cell. ([#5927](https://github.com/infor-design/enterprise/issues/5927))
