@@ -5191,8 +5191,8 @@ Datagrid.prototype = {
         if (diff < colWidth) {
           this.stretchColumnWidth = colWidth;
         } else {
+          colWidth = diff;
           this.stretchColumnDiff = colWidth;
-          this.stretchColumnDiff = diff;
         }
       }
 
