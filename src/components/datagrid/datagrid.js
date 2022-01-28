@@ -9824,7 +9824,9 @@ Datagrid.prototype = {
 
       if (this.isFileUpload) {
         this.isFileUpload = false;
-      } else {
+      } 
+      
+      if (!col.doNotEmptyCellWhenEditing) {
         cellNode.empty();
       }
     } else {
