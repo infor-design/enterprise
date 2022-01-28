@@ -805,7 +805,8 @@ const formatters = {
       col.numberFormat || { minimumFractionDigits: 2, maximumFractionDigits: 2 }
     );
 
-    const en_perc = perc.replace(',', '.');
+    // For percentages put into the style, we need to convert commas used by other locales to decimal periods
+    const enPerc = perc.replace(',', '.');
 
     let text = `${perc}%`;
     const ranges = formatters.ClassRange(row, cell, en_perc, col);
