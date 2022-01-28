@@ -7,6 +7,7 @@
 - `[Button]` Fix a bug where updated settings not properly rendering disabled state. ([#5928](https://github.com/infor-design/enterprise/issues/5928))
 - `[Dropdown]` Create a Puppeteer Script for Enter key opens dropdown list, when it should only be used to select items within an open list. ([#5842](https://github.com/infor-design/enterprise/issues/5842))
 - `[Fileupload]` Added puppeteer test to check that progress bar is present when uploading a file. ([#5808](https://github.com/infor-design/enterprise/issues/5808))
+- `[Monthview]` Added ability to update legend on month change. ([#5988](https://github.com/infor-design/enterprise/issues/5988))
 - `[Tooltip]` Converted the tooltip protractor test suites to puppeteer. ([#5830](https://github.com/infor-design/enterprise/issues/5830))
 
 ## v4.60.0 Fixes
