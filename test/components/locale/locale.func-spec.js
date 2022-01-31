@@ -2209,5 +2209,9 @@ fdescribe('Locale API', () => {
 
     expect(Locale.translate('StrikeThrough')).toEqual('穿透');
     expect(Locale.translate('InsertAnchor')).toEqual('插入定位标记');
+
+    Locale.set('sv-SE');
+
+    expect(Locale.translate('NewWindow')).toEqual('Nästa fönster');
   });
 });

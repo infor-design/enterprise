@@ -343,7 +343,7 @@ Soho.Locale.addCulture('sv-SE', {
     NewItem: { id: 'NewItem', value: 'Nytt objekt', comment: 'New item in listbuilder' },
     NewLightTheme: { id: 'NewLightTheme', value: 'Nytt ljust', comment: 'The name of an application Theme' },
     NewRow: { id: 'New', value: 'Nytt', comment: 'Indicates a new row added in the datagrid' },
-    NewWindow: { id: 'NewWindow', value: 'Nytt fönster', comment: 'Contents open in a new browser window. p' },
+    NewWindow: { id: 'NewWindow', value: 'Nästa fönster', comment: 'Contents open in a new browser window.' },
     Next: { id: 'Next', value: 'Nästa', comment: 'Next in icons tooltip' },
     NextPage: { id: 'NextPage', value: 'Nästa sida', comment: 'Next on Pager' },
     NextMonth: { id: 'NextMonth', value: 'Nästa månad', comment: 'the label for the button that moves calendar to next/prev' },
