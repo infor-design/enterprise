@@ -86,7 +86,7 @@
   }
 }
 
-@media (max-width: $breakpoint-phone-to-tablet + 1) {
+@media (max-width: ($breakpoint-phone-to-tablet + 1)) {
   .page-container,
   .container {
     .form-responsive {
@@ -128,6 +128,17 @@
         div.multiselect {
           width: inherit;
         }
+      }
+    }
+  }
+}
+
+// Field with Label Left in fr Locale
+html {
+  &[lang^='fr'] {
+    .field.label-left {
+      .label::after {
+        padding-left: 8px;
       }
     }
   }

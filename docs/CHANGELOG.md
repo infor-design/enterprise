@@ -12,6 +12,7 @@
 
 ## v4.60.0 Fixes
 
+- `[About/Form]` Fixed a translation issue where there's a space before the colon that is incorrect in French Locales. ([#5817](https://github.com/infor-design/enterprise/issues/5817))
 - `[Calendar]` Fixed an issue where you could not have more than one in the same page. ([#6042](https://github.com/infor-design/enterprise/issues/6042))
 - `[Column]` Fix a bug where bar size is still showing even the value is zero in column chart. ([#5911](https://github.com/infor-design/enterprise/issues/5911))
 - `[Datagrid]` Fix a bug where targeted achievement colors are not displaying correctly when using other locales. ([#5972](https://github.com/infor-design/enterprise/issues/5972))
