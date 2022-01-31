@@ -116,6 +116,7 @@ $('#datagrid').datagrid({
 |`colSpan` | The cells can be split over a header. When set to an integer > 1 this next number of columns will be split over this header.|
 |`uppercase` | If true the text will be transformed to upper case in readonly view. Also in edit mode uppercase will be enforced.|
 |`expandOnActivate` | If true the cell can be expanded on focus to show additional / all content.|
+|`doNotEmptyCellWhenEditing`| If true the cell will not clear while editing.
 
 ## Column Settings (Formatter Specific)
 

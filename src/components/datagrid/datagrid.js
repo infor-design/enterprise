@@ -5191,8 +5191,8 @@ Datagrid.prototype = {
         if (diff < colWidth) {
           this.stretchColumnWidth = colWidth;
         } else {
+          colWidth = diff;
           this.stretchColumnDiff = colWidth;
-          this.stretchColumnDiff = diff;
         }
       }
 
@@ -9824,7 +9824,9 @@ Datagrid.prototype = {
 
       if (this.isFileUpload) {
         this.isFileUpload = false;
-      } else {
+      } 
+      
+      if (!col.doNotEmptyCellWhenEditing) {
         cellNode.empty();
       }
     } else {
