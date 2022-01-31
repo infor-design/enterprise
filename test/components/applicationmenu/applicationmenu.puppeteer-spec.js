@@ -1,3 +1,4 @@
+/* eslint-disable compat/compat */
 const { dragAndDrop } = require('../../helpers/e2e-utils');
 
 describe('Application Menu Puppeteer Test', () => {
@@ -13,15 +14,14 @@ describe('Application Menu Puppeteer Test', () => {
      */
     function checkVisibility(selector, isVisible) {
       return page.waitForSelector(selector, { visible: isVisible, hidden: !isVisible })
-        .then(async (element) => {
-          const display = await element.evaluate(dom => getComputedStyle(dom).getPropertyValue('display'));
+        .then(element => Promise.all([element, element.evaluate(dom => getComputedStyle(dom).getPropertyValue('display'))]))
+        .then((output) => {
           if (isVisible) {
-            expect(display).not.toEqual('none');
+            expect(output[1]).not.toEqual('none');
           } else {
-            expect(display).toEqual('none');
+            expect(output[1]).toEqual('none');
           }
-
-          return element;
+          return output[0];
         });
     }
 
@@ -36,16 +36,18 @@ describe('Application Menu Puppeteer Test', () => {
       await dragAndDrop('.resizer', location);
 
       // hamburger icon should be visible
-      const hamburger = await page.waitForSelector('button#header-hamburger', { visible: true });
+      let hamburger = await page.waitForSelector('button#header-hamburger', { visible: true });
       expect(hamburger).toBeDefined();
 
       // Menu size after being dragged
       const menuSize = await checkVisibility('nav#application-menu', true).then(element => element.boundingBox());
 
+      hamburger = await page.waitForSelector('button#header-hamburger', { visible: true });
       await hamburger.click();
 
       await checkVisibility('nav#application-menu', false);
 
+      hamburger = await page.waitForSelector('button#header-hamburger', { visible: true });
       await hamburger.click();
 
       await checkVisibility('nav#application-menu', true)
@@ -60,16 +62,18 @@ describe('Application Menu Puppeteer Test', () => {
       await dragAndDrop('.resizer', location);
 
       // hamburger icon should be visible
-      const hamburger = await page.waitForSelector('button#header-hamburger', { visible: true });
+      let hamburger = await page.waitForSelector('button#header-hamburger', { visible: true });
       expect(hamburger).toBeDefined();
 
       // Menu size after being dragged
       const menuSize = await checkVisibility('nav#application-menu', true).then(element => element.boundingBox());
 
+      hamburger = await page.waitForSelector('button#header-hamburger', { visible: true });
       await hamburger.click();
 
       await checkVisibility('nav#application-menu', false);
 
+      hamburger = await page.waitForSelector('button#header-hamburger', { visible: true });
       await hamburger.click();
 
       await checkVisibility('nav#application-menu', true)
@@ -85,11 +89,12 @@ describe('Application Menu Puppeteer Test', () => {
 
       const menuSize = await checkVisibility('nav#application-menu', true).then(element => element.boundingBox());
 
-      const hamburger = await page.waitForSelector('button#header-hamburger', { visible: true });
+      let hamburger = await page.waitForSelector('button#header-hamburger', { visible: true });
       await hamburger.click();
 
       await checkVisibility('nav#application-menu', false);
 
+      hamburger = await page.waitForSelector('button#header-hamburger', { visible: true });
       await hamburger.click();
 
       await checkVisibility('nav#application-menu', true)
