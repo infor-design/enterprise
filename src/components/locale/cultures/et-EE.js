@@ -253,7 +253,7 @@ Soho.Locale.addCulture('et-EE', {
     InfoOnPage: { id: 'InfoOnPage', value: 'Infoteated leheküljel', comment: 'Information message(s) on page n' },
     InProgress: { id: 'In Progress', value: 'Pooleli', comment: 'Info tooltip that an action is in progress' },
     Insert: { id: 'Insert', value: 'Lisa', comment: 'Insert Modal Dialog Button' },
-    InsertHyperlink: { id: 'InsertHyperlink', value: 'Lisa ankur', comment: 'Insert a hyperlink in an editor' },
+    InsertAnchor: { id: 'InsertAnchor', value: 'Lisa ankur', comment: 'Insert a hyperlink in an editor' },
     InsertImage: { id: 'InsertImage', value: 'Lisa pilt', comment: 'Insert Image in an editor' },
     InsertLink: { id: 'InsertLink', value: 'Lisa link', comment: 'Insert Link in an editor' },
     InsertUrl: { id: 'InsertUrl', value: 'Lisa URL', comment: 'Insert a Url in an editor' },

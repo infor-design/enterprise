@@ -57,7 +57,7 @@ require('../../../src/components/locale/cultures/zh-Hans.js');
 require('../../../src/components/locale/cultures/zh-Hant.js');
 require('../../../src/components/locale/cultures/zh-TW.js');
 
-describe('Locale API', () => {
+fdescribe('Locale API', () => {
   const Locale = window.Soho.Locale;
 
   afterEach(() => {
@@ -2208,6 +2208,6 @@ describe('Locale API', () => {
     Locale.set('zh-CN');
 
     expect(Locale.translate('StrikeThrough')).toEqual('穿透');
-    expect(Locale.translate('InsertHyperlink')).toEqual('插入定位标记');
+    expect(Locale.translate('InsertAnchor')).toEqual('插入定位标记');
   });
 });

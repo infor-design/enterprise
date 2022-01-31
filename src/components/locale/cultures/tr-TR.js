@@ -253,7 +253,7 @@ Soho.Locale.addCulture('tr-TR', {
     InfoOnPage: { id: 'InfoOnPage', value: 'Sayfada bilgi mesajları', comment: 'Information message(s) on page n' },
     InProgress: { id: 'In Progress', value: 'Devam Ediyor', comment: 'Info tooltip that an action is in progress' },
     Insert: { id: 'Insert', value: 'Ekle', comment: 'Insert Modal Dialog Button' },
-    InsertHyperlink: { id: 'InsertHyperlink', value: 'Bağlayıcı Ekle', comment: 'Insert a hyperlink in an editor' },
+    InsertAnchor: { id: 'InsertAnchor', value: 'Bağlayıcı Ekle', comment: 'Insert a hyperlink in an editor' },
     InsertImage: { id: 'InsertImage', value: 'Görüntü Ekle', comment: 'Insert Image in an editor' },
     InsertLink: { id: 'InsertLink', value: 'Bağlantı Ekle', comment: 'Insert Link in an editor' },
     InsertUrl: { id: 'InsertUrl', value: 'Url Ekle', comment: 'Insert a Url in an editor' },
