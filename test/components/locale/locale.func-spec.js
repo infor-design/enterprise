@@ -57,7 +57,7 @@ require('../../../src/components/locale/cultures/zh-Hans.js');
 require('../../../src/components/locale/cultures/zh-Hant.js');
 require('../../../src/components/locale/cultures/zh-TW.js');
 
-fdescribe('Locale API', () => {
+describe('Locale API', () => {
   const Locale = window.Soho.Locale;
 
   afterEach(() => {
