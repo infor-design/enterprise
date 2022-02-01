@@ -133,9 +133,17 @@
   }
 }
 
-// Field with Label Left in fr Locale
 html {
+  // Field with Label Left in fr Locale
   &[lang^='fr'] {
+    .field.label-left {
+      .label::after {
+        padding-left: 0;
+      }
+    }
+  }
+
+  &:not([lang^='fr']) {
     .field.label-left {
       .label::after {
         padding-left: 8px;
