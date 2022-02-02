@@ -52,7 +52,21 @@ ActionSheet.prototype = {
    */
   render() {
     // Render root elements
-    this.renderRootElems();
+    const hasRoot = document.querySelector(`#${ROOT_ELEM_ID}`);
+
+    if (!hasRoot) {
+      this.renderRootElems();
+    }
+
+    if (hasRoot && this.rootElem === undefined) {
+      const rootElem = document.getElementById('ids-actionsheet-root');
+
+      // Eliminate duplication of actionsheet root
+      rootElem.remove();
+
+      // Re-initialize the root elements after removing it
+      this.renderRootElems();
+    }
 
     // Decorate trigger element
     const el = this.element[0];
