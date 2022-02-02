@@ -2,6 +2,7 @@
 
 ## v4.60.0 Features
 
+- `[Application Menu]` Added puppeteer tests for resizable application menu. ([#5755](https://github.com/infor-design/enterprise/issues/5755))
 - `[Card]` Added actionable button card by using `<button>` or `<a>` tags. ([#5768](https://github.com/infor-design/enterprise/issues/5768))
 - `[Badges/Tags]` Corrected the colors of badges/tags for better accessibility contrast. ([#5673](https://github.com/infor-design/enterprise/issues/5673))
 - `[Button]` Fix a bug where updated settings not properly rendering disabled state. ([#5928](https://github.com/infor-design/enterprise/issues/5928))
