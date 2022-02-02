@@ -51,11 +51,8 @@ ActionSheet.prototype = {
    * @returns {void}
    */
   render() {
-    // Render root elements, if needed
-    const hasRoot = document.querySelector(`#${ROOT_ELEM_ID}`);
-    if (!hasRoot) {
-      this.renderRootElems();
-    }
+    // Render root elements
+    this.renderRootElems();
 
     // Decorate trigger element
     const el = this.element[0];
