@@ -51,7 +51,7 @@ ActionSheet.prototype = {
    * @returns {void}
    */
   render() {
-    // Render root elements
+    // Render root elements, if needed
     const hasRoot = document.querySelector(`#${ROOT_ELEM_ID}`);
 
     if (!hasRoot) {
