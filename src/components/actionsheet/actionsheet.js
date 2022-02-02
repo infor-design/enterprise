@@ -127,8 +127,6 @@ ActionSheet.prototype = {
       // Add tray element
       if (this.settings.tray) {
         this.renderTrayElement();
-      } else if ($('.ids-actionsheet-tray-container') && !this.settings.tray) {
-        $('.ids-actionsheet-tray-container').remove();
       }
     }
   },
