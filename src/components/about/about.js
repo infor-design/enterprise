@@ -217,6 +217,7 @@ About.prototype = {
      * @property {object} event - The jquery event object
      * @property {object} ui - The dialog object
      */
+    this.element.trigger('afterclose.about');
     if (this.isBody) {
       this.destroy();
       return;
@@ -229,6 +230,7 @@ About.prototype = {
      * @property {object} event - The jquery event object
      * @property {object} ui - The dialog object
      */
+    this.element.trigger('close.about');
     const modalApi = this.modal.data('modal');
     if (modalApi) {
       modalApi.close();
@@ -281,6 +283,7 @@ About.prototype = {
     * @property {object} event The jquery event object.
     * @property {object} ui The dialog object
     */
+    this.element.trigger('beforeopen.about');
     this.modal.data('modal').element.on('beforeopen.about', () => {
       this.modal.find('.modal-body').scrollTop(0);
     });
