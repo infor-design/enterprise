@@ -13,6 +13,7 @@
 
 ## v4.60.0 Fixes
 
+- `[Actionsheet]` Fixed an Angular issue where the `renderRootElems` method was not re-rendered when going to other action sheet test pages due to SPA routing concept. ([NG#1188](https://github.com/infor-design/enterprise-ng/issues/1188))
 - `[Calendar]` Fixed an issue where you could not have more than one in the same page. ([#6042](https://github.com/infor-design/enterprise/issues/6042))
 - `[Column]` Fix a bug where bar size is still showing even the value is zero in column chart. ([#5911](https://github.com/infor-design/enterprise/issues/5911))
 - `[Datagrid]` Fix a bug where targeted achievement colors are not displaying correctly when using other locales. ([#5972](https://github.com/infor-design/enterprise/issues/5972))
