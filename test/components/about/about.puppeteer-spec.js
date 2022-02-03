@@ -25,7 +25,7 @@ describe('About Puppeteer Tests', () => {
     it('should display the version', async () => {
       await page.click('#about-trigger');
       const element = await page.waitForSelector('.modal-body .version', { visible: true });
-      expect(await element.evaluate(el => el.textContent)).toContain('IDS Version : 4.');
+      expect(await element.evaluate(el => el.textContent)).toContain('IDS Version: 4.');
     });
 
     it('should show the version in the html', async () => {
@@ -76,7 +76,7 @@ describe('About Puppeteer Tests', () => {
       await page.waitForSelector('.modal-body', { visible: true });
 
       // Its not inverted here but this is correct
-      expect(await page.$eval('.version', el => el.textContent)).toContain('إصدار :');
+      expect(await page.$eval('.version', el => el.textContent)).toContain('إصدار:');
     });
   });
 
