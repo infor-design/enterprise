@@ -1047,10 +1047,8 @@ Modal.prototype = {
         const observer = new MutationObserver((mutationList) => {
           mutationList.forEach((mutation) => {
             const mutationTarget = $(mutation.target);
-            // mutationTarget.is(':visible') ? mutationTarget.attr('tabindex', '0') : mutationTarget.attr('tabindex', '-1');
-
             if (mutationTarget.is(':visible')) {
-              mutationTarget.attr('tabindex', '0')
+              mutationTarget.attr('tabindex', '0');
             } else {
               mutationTarget.attr('tabindex', '-1');
             }
