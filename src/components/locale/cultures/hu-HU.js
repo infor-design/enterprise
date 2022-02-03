@@ -253,7 +253,7 @@ Soho.Locale.addCulture('hu-HU', {
     InfoOnPage: { id: 'InfoOnPage', value: 'Tájékoztató üzenet(ek) ezen az oldalon:', comment: 'Information message(s) on page n' },
     InProgress: { id: 'In Progress', value: 'Folyamatban', comment: 'Info tooltip that an action is in progress' },
     Insert: { id: 'Insert', value: 'Beszúrás', comment: 'Insert Modal Dialog Button' },
-    InsertHyperlink: { id: 'InsertHyperlink', value: 'Horgony beszúrása', comment: 'Insert a hyperlink in an editor' },
+    InsertAnchor: { id: 'InsertAnchor', value: 'Horgony beszúrása', comment: 'Insert a hyperlink in an editor' },
     InsertImage: { id: 'InsertImage', value: 'Kép beszúrása', comment: 'Insert Image in an editor' },
     InsertLink: { id: 'InsertLink', value: 'Hivatkozás beszúrása', comment: 'Insert Link in an editor' },
     InsertUrl: { id: 'InsertUrl', value: 'URL-cím beszúrása', comment: 'Insert a Url in an editor' },
