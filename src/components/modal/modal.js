@@ -1033,23 +1033,31 @@ Modal.prototype = {
 
       self.setFocusableElems();
       const focusableElements = $(self.focusableElems).not('.modal-header .searchfield');
+      const hiddenFieldTagNames = ['INPUT', 'BUTTON'];
 
       // When changes happen within the subtree on the Modal, rebuilds the internal hash of
       // tabbable elements used for retaining focus.
       self.changeObserver = new MutationObserver((mutationsList) => {
+        let updateFocusableElems = false;
+
         mutationsList.forEach((mutation) => {
           if (['childList', 'subtree'].includes(mutation.type)) {
-            self.setFocusableElems();
-          }
-          if (self.focusableElems.includes(mutation.target)) {
+            updateFocusableElems = true;
+          } else {
             const mutationTarget = $(mutation.target);
-            if (mutationTarget.is(':visible')) {
-              mutationTarget.attr('tabindex', '0');
-            } else {
-              mutationTarget.attr('tabindex', '-1');
+              if (hiddenFieldTagNames.includes(mutation.target.tagName)) {
+                if (mutationTarget.is(':visible')) {
+                  mutationTarget.attr('tabindex', '0');
+                } else {
+                  mutationTarget.attr('tabindex', '-1');
+              }
             }
           }
         });
+
+        if (updateFocusableElems) {
+          self.setFocusableElems();
+        }
       });
       self.changeObserver.observe(self.element[0], {
         attributes: true,
@@ -1325,6 +1333,13 @@ Modal.prototype = {
     const ignoredSelectors = [
       'option'
     ];
+
+    // Pre-configure some element types that can be visually-hidden when the Modal opens
+    // to make it impossible to become focused while hidden (see infor-design/enterprise#6806)
+    const nonFocusableElems = $(this.element).find('input:hidden');
+    nonFocusableElems.each((i, elem) => {
+      elem.tabIndex = -1;
+    });
 
     const elems = DOM.focusableElems(this.element[0], extraSelectors, ignoredSelectors);
     this.focusableElems = elems;
