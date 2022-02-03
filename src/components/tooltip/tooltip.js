@@ -283,6 +283,8 @@ Tooltip.prototype = {
         <div class="arrow"></div>
         <div class="tooltip-content"></div>
       </div>`);
+
+      xssUtils.removeWhiteSpaceCharacters(this.tooltip);
     }
 
     this.tooltip.place({
