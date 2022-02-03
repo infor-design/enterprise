@@ -118,7 +118,7 @@ About.prototype = {
 
     if (this.settings.deviceSpecs) {
       const frLocales = Locale.currentLocale.name === 'fr-FR' || Locale.currentLocale.name === 'fr-CA';
-      const localeColon = frLocales ? ':' : ' :';
+      const localeColon = frLocales ? ' :' : ':';
       const specs = this.getDeviceSpecs();
       const text = `<span class="ds">${Locale.translate('OperatingSystem')}${localeColon}  ${env.devicespecs.os.replace(env.devicespecs.currentOSVersion, '')} ${env.devicespecs.currentOSVersion}</span><br>
         <span class="platform">${Locale.translate('Platform')}${localeColon} ${specs.os}</span><br>
