@@ -210,14 +210,6 @@ About.prototype = {
    * @returns {void}
    */
   close() {
-    /**
-     * Fires after the dialog is done closing and removed.
-     * @event afterclose
-     * @memberof About
-     * @property {object} event - The jquery event object
-     * @property {object} ui - The dialog object
-     */
-    this.element.trigger('afterclose.about');
     if (this.isBody) {
       this.destroy();
       return;
@@ -235,6 +227,15 @@ About.prototype = {
     if (modalApi) {
       modalApi.close();
     }
+
+    /**
+     * Fires after the dialog is done closing and removed.
+     * @event afterclose
+     * @memberof About
+     * @property {object} event - The jquery event object
+     * @property {object} ui - The dialog object
+     */
+     this.element.trigger('afterclose.about');
   },
 
   /**
