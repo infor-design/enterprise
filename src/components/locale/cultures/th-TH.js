@@ -253,7 +253,7 @@ Soho.Locale.addCulture('th-TH', {
     InfoOnPage: { id: 'InfoOnPage', value: 'ข้อความข้อมูลในหน้า', comment: 'Information message(s) on page n' },
     InProgress: { id: 'In Progress', value: 'กำลังดำเนินการ', comment: 'Info tooltip that an action is in progress' },
     Insert: { id: 'Insert', value: 'แทรก', comment: 'Insert Modal Dialog Button' },
-    InsertHyperlink: { id: 'InsertHyperlink', value: 'แทรกจุดยึด', comment: 'Insert a hyperlink in an editor' },
+    InsertAnchor: { id: 'InsertAnchor', value: 'แทรกจุดยึด', comment: 'Insert a hyperlink in an editor' },
     InsertImage: { id: 'InsertImage', value: 'แทรกรูปภาพ', comment: 'Insert Image in an editor' },
     InsertLink: { id: 'InsertLink', value: 'แทรกลิงก์', comment: 'Insert Link in an editor' },
     InsertUrl: { id: 'InsertUrl', value: 'แทรก Url', comment: 'Insert a Url in an editor' },

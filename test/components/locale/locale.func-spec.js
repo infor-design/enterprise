@@ -2208,6 +2208,10 @@ describe('Locale API', () => {
     Locale.set('zh-CN');
 
     expect(Locale.translate('StrikeThrough')).toEqual('穿透');
-    expect(Locale.translate('InsertHyperlink')).toEqual('插入定位标记');
+    expect(Locale.translate('InsertAnchor')).toEqual('插入定位标记');
+
+    Locale.set('sv-SE');
+
+    expect(Locale.translate('NewWindow')).toEqual('Nästa fönster');
   });
 });
