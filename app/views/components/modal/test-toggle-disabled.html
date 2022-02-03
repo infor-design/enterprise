@@ -1,0 +1,73 @@
+<style>
+  .is-hidden { display: none; }
+  .is-visible { display: inline-block; }
+</style>
+
+<div class="row">
+	<div class="twelve columns">
+
+		<button class="btn-secondary" type="button" id="add-context">Show Modal</button><br/><br/>
+
+		<!-- Modal Example -->
+		<div id="modal-add-context" class="hidden">
+			<div class="field">
+				<input type="text" id="subject" name="subject" class="is-hidden"/>
+			</div>
+      <button id="test">Test</button>
+		</div>
+
+	</div>
+</div>
+
+<script>
+var modals = {
+    'add-context': {
+      'title': 'Add Context',
+      'id': 'my-id',
+      'content': $('#modal-add-context')
+    },
+    'suppress-key': {
+      'title': 'Suppress Key',
+      'id': 'my-id',
+      'content': $('#modal-add-context'),
+      'suppressEnterKey': true
+    }
+  },
+
+  setModal = function (opt) {
+    opt = $.extend({
+      buttons: [{
+        text: 'Cancel',
+      //  id: 'modal-button-1',
+        click: function(e, modal) {
+          modal.close();
+        }
+      }, {
+        text: 'Save',
+      //  id: 'modal-button-2',
+        click: function(e, modal) {
+          modal.close();
+        },
+        validate: false,
+        isDefault: true
+      }]
+    }, opt);
+
+    $('body').modal(opt);
+  };
+
+  $('#add-context').on('click', function () {
+		$(this).focus();
+    setModal(modals[this.id]);
+  });
+
+  $('#test').on('click', function () {
+    if ($('#subject').hasClass('is-hidden')) {
+      $('#subject').removeClass('is-hidden');
+      $('#subject').addClass('is-visible');
+    } else {
+      $('#subject').removeClass('is-visible');
+      $('#subject').addClass('is-hidden');
+    }
+  });
+</script>

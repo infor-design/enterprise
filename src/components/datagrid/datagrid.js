@@ -9822,10 +9822,12 @@ Datagrid.prototype = {
 
       cellParent.addClass('is-editing');
 
-      if (this.isFileUpload) {
-        this.isFileUpload = false;
-      } else {
-        cellNode.empty();
+      if (!col.doNotEmptyCellWhenEditing) {
+        if (this.isFileUpload) {
+          this.isFileUpload = false;
+        } else {
+          cellNode.empty();
+        }
       }
     } else {
       cellParent.addClass('is-editing-inline');
