@@ -26,6 +26,7 @@
 - `[Datagrid]` Fixed close icon alignment on mobile viewport, Safari browser. ([#5946](https://github.com/infor-design/enterprise/issues/5946))
 - `[Datagrid]` Fixed UI alignment of close icon button on mobile view. ([#5947](https://github.com/infor-design/enterprise/issues/5947))
 - `[Datagrid]` Fixed file upload icon alignment in datagrid. ([#5846](https://github.com/infor-design/enterprise/issues/5846))
+- `[Datepicker]` Fix on initial range values not showing in datepicker. ([NG#1200](https://github.com/infor-design/enterprise-ng/issues/1200))
 - `[Editor]` Changed selector for for image value selction from id to name. ([#5915](https://github.com/infor-design/enterprise/issues/5915))
 - `[Editor]` Fix a bug which changes the approach intended by the user after typing in editor. ([#5937](https://github.com/infor-design/enterprise/issues/5937))
 - `[Editor]` Fix a bug which clears list format when it's not part of the selected text. ([#5592](https://github.com/infor-design/enterprise/issues/5592))
