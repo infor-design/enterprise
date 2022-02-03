@@ -254,7 +254,7 @@ Soho.Locale.addCulture('zh-CN', {
     InfoOnPage: { id: 'InfoOnPage', value: '页面的信息性消息', comment: 'Information message(s) on page n' },
     InProgress: { id: 'In Progress', value: '进行中', comment: 'Info tooltip that an action is in progress' },
     Insert: { id: 'Insert', value: '插入', comment: 'Insert Modal Dialog Button' },
-    InsertHyperlink: { id: 'InsertHyperlink', value: '插入定位标记', comment: 'Insert a hyperlink in an editor' },
+    InsertAnchor: { id: 'InsertAnchor', value: '插入定位标记', comment: 'Insert a hyperlink in an editor' },
     InsertImage: { id: 'InsertImage', value: '插入图像', comment: 'Insert Image in an editor' },
     InsertLink: { id: 'InsertLink', value: '插入链接', comment: 'Insert Link in an editor' },
     InsertUrl: { id: 'InsertUrl', value: '插入 URL', comment: 'Insert a Url in an editor' },

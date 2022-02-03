@@ -254,7 +254,7 @@ Soho.Locale.addCulture('uk-UA', {
     InfoOnPage: { id: 'InfoOnPage', value: 'Інформаційні повідомлення на сторінці', comment: 'Information message(s) on page n' },
     InProgress: { id: 'In Progress', value: 'Виконується', comment: 'Info tooltip that an action is in progress' },
     Insert: { id: 'Insert', value: 'Вставити', comment: 'Insert Modal Dialog Button' },
-    InsertHyperlink: { id: 'InsertHyperlink', value: 'Вставити прив\'язку', comment: 'Insert a hyperlink in an editor' },
+    InsertAnchor: { id: 'InsertAnchor', value: 'Вставити прив\'язку', comment: 'Insert a hyperlink in an editor' },
     InsertImage: { id: 'InsertImage', value: 'Вставити зображення', comment: 'Insert Image in an editor' },
     InsertLink: { id: 'InsertLink', value: 'Вставити посилання', comment: 'Insert Link in an editor' },
     InsertUrl: { id: 'InsertUrl', value: 'Вставити URL-адресу', comment: 'Insert a Url in an editor' },

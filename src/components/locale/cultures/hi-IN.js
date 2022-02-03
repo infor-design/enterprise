@@ -254,7 +254,7 @@ Soho.Locale.addCulture('hi-IN', {
     InfoOnPage: { id: 'InfoOnPage', value: 'पृष्ठ पर जानकारी संदेश', comment: 'Information message(s) on page n' },
     InProgress: { id: 'In Progress', value: 'प्रगति में', comment: 'Info tooltip that an action is in progress' },
     Insert: { id: 'Insert', value: 'सम्मिलित करें', comment: 'Insert Modal Dialog Button' },
-    InsertHyperlink: { id: 'InsertHyperlink', value: 'एंकर सम्मिलित करें', comment: 'Insert a hyperlink in an editor' },
+    InsertAnchor: { id: 'InsertAnchor', value: 'एंकर सम्मिलित करें', comment: 'Insert a hyperlink in an editor' },
     InsertImage: { id: 'InsertImage', value: 'छवि सम्मिलित करें', comment: 'Insert Image in an editor' },
     InsertLink: { id: 'InsertLink', value: 'लिंक सम्मिलित करें', comment: 'Insert Link in an editor' },
     InsertUrl: { id: 'InsertUrl', value: 'Url सम्मिलित करें', comment: 'Insert a Url in an editor' },
