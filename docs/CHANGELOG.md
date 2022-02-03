@@ -3,17 +3,20 @@
 ## v4.60.0 Features
 
 - `[Application Menu]` Added puppeteer tests for resizable application menu. ([#5755](https://github.com/infor-design/enterprise/issues/5755))
-- `[Card]` Added actionable button card by using `<button>` or `<a>` tags. ([#5768](https://github.com/infor-design/enterprise/issues/5768))
 - `[Badges]` Update styling of badges. ([#5608](https://github.com/infor-design/enterprise/issues/5608))
 - `[Badges/Tags]` Corrected the colors of badges/tags for better accessibility contrast. ([#5673](https://github.com/infor-design/enterprise/issues/5673))
 - `[Button]` Fix a bug where updated settings not properly rendering disabled state. ([#5928](https://github.com/infor-design/enterprise/issues/5928))
+- `[Card]` Added actionable button card by using `<button>` or `<a>` tags. ([#5768](https://github.com/infor-design/enterprise/issues/5768))
+- `[Card]` Added actionable button card by using `<button>` or `<a>` tags. ([#5768](https://github.com/infor-design/enterprise/issues/5768))
 - `[Datagrid]` Fix a will add a setting in column to toggle the clearing of cells. ([#5849](https://github.com/infor-design/enterprise/issues/5849))
 - `[Dropdown]` Create a Puppeteer Script for Enter key opens dropdown list, when it should only be used to select items within an open list. ([#5842](https://github.com/infor-design/enterprise/issues/5842))
 - `[Fileupload]` Added puppeteer test to check that progress bar is present when uploading a file. ([#5808](https://github.com/infor-design/enterprise/issues/5808))
+- `[Swipe Container]` Added mobile enhancements and style changes. ([#5615](https://github.com/infor-design/enterprise/issues/5615))
 - `[Tooltip]` Converted the tooltip protractor test suites to puppeteer. ([#5830](https://github.com/infor-design/enterprise/issues/5830))
 
 ## v4.60.0 Fixes
 
+- `[Actionsheet]` Fixed an Angular issue where the `renderRootElems` method was not re-rendered when going to other action sheet test pages due to SPA routing concept. ([NG#1188](https://github.com/infor-design/enterprise-ng/issues/1188))
 - `[Calendar]` Fixed an issue where you could not have more than one in the same page. ([#6042](https://github.com/infor-design/enterprise/issues/6042))
 - `[Column]` Fix a bug where bar size is still showing even the value is zero in column chart. ([#5911](https://github.com/infor-design/enterprise/issues/5911))
 - `[Datagrid]` Fix a bug where targeted achievement colors are not displaying correctly when using other locales. ([#5972](https://github.com/infor-design/enterprise/issues/5972))
@@ -24,12 +27,13 @@
 - `[Datagrid]` Fixed close icon alignment on mobile viewport. ([#6023](https://github.com/infor-design/enterprise/issues/6023))
 - `[Datagrid]` Fixed close icon alignment on mobile viewport, Safari browser. ([#5946](https://github.com/infor-design/enterprise/issues/5946))
 - `[Datagrid]` Fixed UI alignment of close icon button on mobile view. ([#5947](https://github.com/infor-design/enterprise/issues/5947))
+- `[Datagrid]` Fixed file upload icon alignment in datagrid. ([#5846](https://github.com/infor-design/enterprise/issues/5846))
 - `[Editor]` Changed selector for for image value selction from id to name. ([#5915](https://github.com/infor-design/enterprise/issues/5915))
 - `[Editor]` Fix a bug which changes the approach intended by the user after typing in editor. ([#5937](https://github.com/infor-design/enterprise/issues/5937))
 - `[Editor]` Fix a bug which clears list format when it's not part of the selected text. ([#5592](https://github.com/infor-design/enterprise/issues/5592))
+- `[Editor]` Changed language on the link dialog to use the term "link" for better translations. ([#5987](https://github.com/infor-design/enterprise/issues/5987))
 - `[Field Options]` Fixed UI alignment of close icon button (searchfield) in Field Options. ([#5983](https://github.com/infor-design/enterprise/issues/5983))
 - `[Export]` Added data sanitization in Export to CSV. ([#5982](https://github.com/infor-design/enterprise/issues/5982))
-- `[Field Options]` Fixed UI alignment of close icon button (searchfield) in Field Options. ([#5983](https://github.com/infor-design/enterprise/issues/5983))
 - `[Field Options]` Fixed UI alignment of close icon button (searchfield) in Field Options. ([#5983](https://github.com/infor-design/enterprise/issues/5983))
 - `[General]` Fixed several memory leaks with the attached data object. ([#6020](https://github.com/infor-design/enterprise/issues/6020))
 - `[Header]` Fixed a regression bug where the buttonset was not properly aligned correctly. ([#6039](https://github.com/infor-design/enterprise/issues/6039))
