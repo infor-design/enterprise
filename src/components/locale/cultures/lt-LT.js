@@ -253,7 +253,7 @@ Soho.Locale.addCulture('lt-LT', {
     InfoOnPage: { id: 'InfoOnPage', value: 'Informacinis (-iai) pranešimas (-ai) puslapyje', comment: 'Information message(s) on page n' },
     InProgress: { id: 'In Progress', value: 'Vykdoma', comment: 'Info tooltip that an action is in progress' },
     Insert: { id: 'Insert', value: 'Įterpti', comment: 'Insert Modal Dialog Button' },
-    InsertHyperlink: { id: 'InsertHyperlink', value: 'Įterpti prieraišą', comment: 'Insert a hyperlink in an editor' },
+    InsertAnchor: { id: 'InsertAnchor', value: 'Įterpti prieraišą', comment: 'Insert a hyperlink in an editor' },
     InsertImage: { id: 'InsertImage', value: 'Įterpti atvaizdą', comment: 'Insert Image in an editor' },
     InsertLink: { id: 'InsertLink', value: 'Įterpti nuorodą', comment: 'Insert Link in an editor' },
     InsertUrl: { id: 'InsertUrl', value: 'Įterpti URL', comment: 'Insert a Url in an editor' },

@@ -253,7 +253,7 @@ Soho.Locale.addCulture('id-ID', {
     InfoOnPage: { id: 'InfoOnPage', value: 'Pesan informasi pada halaman', comment: 'Information message(s) on page n' },
     InProgress: { id: 'In Progress', value: 'Pencarian berlangsung', comment: 'Info tooltip that an action is in progress' },
     Insert: { id: 'Insert', value: 'Sisipkan', comment: 'Insert Modal Dialog Button' },
-    InsertHyperlink: { id: 'InsertHyperlink', value: 'Sisipkan Jangkar', comment: 'Insert a hyperlink in an editor' },
+    InsertAnchor: { id: 'InsertAnchor', value: 'Sisipkan Jangkar', comment: 'Insert a hyperlink in an editor' },
     InsertImage: { id: 'InsertImage', value: 'Sisipkan Gambar', comment: 'Insert Image in an editor' },
     InsertLink: { id: 'InsertLink', value: 'Sisipkan Tautan', comment: 'Insert Link in an editor' },
     InsertUrl: { id: 'InsertUrl', value: 'Sisipkan Url', comment: 'Insert a Url in an editor' },

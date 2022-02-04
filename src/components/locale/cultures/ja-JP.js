@@ -254,7 +254,7 @@ Soho.Locale.addCulture('ja-JP', {
     InfoOnPage: { id: 'InfoOnPage', value: 'ページの情報メッセージ', comment: 'Information message(s) on page n' },
     InProgress: { id: 'In Progress', value: '処理中', comment: 'Info tooltip that an action is in progress' },
     Insert: { id: 'Insert', value: '挿入', comment: 'Insert Modal Dialog Button' },
-    InsertHyperlink: { id: 'InsertHyperlink', value: 'アンカーの挿入', comment: 'Insert a hyperlink in an editor' },
+    InsertAnchor: { id: 'InsertAnchor', value: 'アンカーの挿入', comment: 'Insert a hyperlink in an editor' },
     InsertImage: { id: 'InsertImage', value: '画像の挿入', comment: 'Insert Image in an editor' },
     InsertLink: { id: 'InsertLink', value: 'リンクの挿入', comment: 'Insert Link in an editor' },
     InsertUrl: { id: 'InsertUrl', value: 'URL の挿入', comment: 'Insert a Url in an editor' },
