@@ -3,7 +3,7 @@
   .is-visible { display: inline-block; }
 </style>
 
-<div class="row">
+<div class="row" style="padding-top: 20px;">
 	<div class="twelve columns">
 
 		<button class="btn-secondary" type="button" id="add-context">Show Modal</button><br/><br/>
@@ -11,9 +11,9 @@
 		<!-- Modal Example -->
 		<div id="modal-add-context" class="hidden">
 			<div class="field">
-				<input type="text" id="subject" name="subject" class="is-hidden"/>
+				<input type="text" id="subject" name="subject" class="is-hidden" />
 			</div>
-      <button id="test">Test</button>
+      <button class="btn-secondary" type="button" id="test-btn">Test</button>
 		</div>
 
 	</div>
@@ -61,7 +61,7 @@ var modals = {
     setModal(modals[this.id]);
   });
 
-  $('#test').on('click', function () {
+  $('#test-btn').on('click', function () {
     if ($('#subject').hasClass('is-hidden')) {
       $('#subject').removeClass('is-hidden');
       $('#subject').addClass('is-visible');
