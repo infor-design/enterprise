@@ -1045,11 +1045,11 @@ Modal.prototype = {
             updateFocusableElems = true;
           } else {
             const mutationTarget = $(mutation.target);
-              if (hiddenFieldTagNames.includes(mutation.target.tagName)) {
-                if (mutationTarget.is(':visible')) {
-                  mutationTarget.attr('tabindex', '0');
-                } else {
-                  mutationTarget.attr('tabindex', '-1');
+            if (hiddenFieldTagNames.includes(mutation.target.tagName)) {
+              if (mutationTarget.is(':visible')) {
+                mutationTarget.attr('tabindex', '0');
+              } else {
+                mutationTarget.attr('tabindex', '-1');
               }
             }
           }
