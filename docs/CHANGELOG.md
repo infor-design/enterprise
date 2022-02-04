@@ -5,7 +5,7 @@
 - `[Application Menu]` Added puppeteer tests for resizable application menu. ([#5755](https://github.com/infor-design/enterprise/issues/5755))
 - `[Badges/Tags]` Corrected the colors of badges/tags for better accessibility contrast. ([#5673](https://github.com/infor-design/enterprise/issues/5673))
 - `[Button]` Fix a bug where updated settings not properly rendering disabled state. ([#5928](https://github.com/infor-design/enterprise/issues/5928))
-- `[Calendar]` Added puppeteer script for event colors. ([#6084](https://github.com/infor-design/enterprise/pull/6084))
+- `[Calendar]` Added puppeteer script for event colors and legend. ([#6084](https://github.com/infor-design/enterprise/pull/6084))
 - `[Card]` Added actionable button card by using `<button>` or `<a>` tags. ([#5768](https://github.com/infor-design/enterprise/issues/5768))
 - `[Datagrid]` Fix a will add a setting in column to toggle the clearing of cells. ([#5849](https://github.com/infor-design/enterprise/issues/5849))
 - `[Dropdown]` Create a Puppeteer Script for Enter key opens dropdown list, when it should only be used to select items within an open list. ([#5842](https://github.com/infor-design/enterprise/issues/5842))
