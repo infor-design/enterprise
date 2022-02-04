@@ -505,3 +505,22 @@ describe('Modal focusable elements tests', () => {
     expect(focusedElem.getAttribute('class')).toContain('dropdown');
   });
 });
+
+describe('Modal inner element visibility tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/modal/test-toggle-disabled?layout=nofrills');
+    const buttonEl = await element(by.id('add-context'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(buttonEl), config.waitsFor);
+    await buttonEl.click();
+    await browser.driver.sleep(config.sleep);
+  });
+
+  it('Should adjust tabindex of fields that change visiblity after the modal opens', async () => {
+    const testBtn = await element(by.id('test-btn'));
+    await testBtn.click();
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.id('subject')).getAttribute('tabindex')).toBe('0');
+  });
+});
