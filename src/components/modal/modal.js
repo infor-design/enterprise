@@ -1043,7 +1043,26 @@ Modal.prototype = {
 
       // The element/s will be disabled if detects that it has inline display: none; style.
       if (focusableElements.css('display') === 'none') {
-        focusableElements.not(':visible').attr('disabled', 'disabled');
+        // Added MutationObserver for tabbing issue on display none styles instead of using disabled attribute (#5875 and #6086)
+        const observer = new MutationObserver((mutationList) => {
+          mutationList.forEach((mutation) => {
+            const mutationTarget = $(mutation.target);
+            if (mutationTarget.is(':visible')) {
+              mutationTarget.attr('tabindex', '0');
+            } else {
+              mutationTarget.attr('tabindex', '-1');
+            }
+          });
+        });
+
+        const hiddenElements = focusableElements.not(':visible');
+        hiddenElements.attr('tabindex', '-1');
+        hiddenElements.each((index, val) => {
+          observer.observe(val, {
+            attributes: true, 
+            attributeFilter: ['class', 'style']
+          });
+        });
       }
 
       let focusElem = focusableElements.not(':hidden').first();
