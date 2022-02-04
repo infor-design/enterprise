@@ -13,7 +13,7 @@
 			<div class="field">
 				<input type="text" id="subject" name="subject" class="is-hidden" />
 			</div>
-      <button id="test">Test</button>
+      <button class="btn-secondary" type="button" id="test-btn">Test</button>
 		</div>
 
 	</div>
@@ -61,7 +61,7 @@ var modals = {
     setModal(modals[this.id]);
   });
 
-  $('#test').on('click', function () {
+  $('#test-btn').on('click', function () {
     if ($('#subject').hasClass('is-hidden')) {
       $('#subject').removeClass('is-hidden');
       $('#subject').addClass('is-visible');

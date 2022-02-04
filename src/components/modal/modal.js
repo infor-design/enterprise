@@ -1031,39 +1031,40 @@ Modal.prototype = {
         return;
       }
 
+      self.setFocusableElems();
+      const focusableElements = $(self.focusableElems).not('.modal-header .searchfield');
+      const hiddenFieldTagNames = ['INPUT', 'BUTTON'];
+
       // When changes happen within the subtree on the Modal, rebuilds the internal hash of
       // tabbable elements used for retaining focus.
-      self.changeObserver = new MutationObserver(() => {
-        self.setFocusableElems();
-      });
-      self.changeObserver.observe(self.element[0], { childList: true, subtree: true });
-      self.setFocusableElems();
+      self.changeObserver = new MutationObserver((mutationsList) => {
+        let updateFocusableElems = false;
 
-      const focusableElements = $(self.focusableElems).not('.modal-header .searchfield');
-
-      // The element/s will be disabled if detects that it has inline display: none; style.
-      if (focusableElements.css('display') === 'none') {
-        // Added MutationObserver for tabbing issue on display none styles instead of using disabled attribute (#5875 and #6086)
-        const observer = new MutationObserver((mutationList) => {
-          mutationList.forEach((mutation) => {
+        mutationsList.forEach((mutation) => {
+          if (['childList', 'subtree'].includes(mutation.type)) {
+            updateFocusableElems = true;
+          } else {
             const mutationTarget = $(mutation.target);
-            if (mutationTarget.is(':visible')) {
-              mutationTarget.attr('tabindex', '0');
-            } else {
-              mutationTarget.attr('tabindex', '-1');
+            if (hiddenFieldTagNames.includes(mutation.target.tagName)) {
+              if (mutationTarget.is(':visible')) {
+                mutationTarget.attr('tabindex', '0');
+              } else {
+                mutationTarget.attr('tabindex', '-1');
+              }
             }
-          });
+          }
         });
 
-        const hiddenElements = focusableElements.not(':visible');
-        hiddenElements.attr('tabindex', '-1');
-        hiddenElements.each((index, val) => {
-          observer.observe(val, {
-            attributes: true, 
-            attributeFilter: ['class', 'style']
-          });
-        });
-      }
+        if (updateFocusableElems) {
+          self.setFocusableElems();
+        }
+      });
+      self.changeObserver.observe(self.element[0], {
+        attributes: true,
+        attributeFilter: ['class', 'style'],
+        childList: true,
+        subtree: true,
+      });
 
       let focusElem = focusableElements.not(':hidden').first();
 
@@ -1332,6 +1333,13 @@ Modal.prototype = {
     const ignoredSelectors = [
       'option'
     ];
+
+    // Pre-configure some element types that can be visually-hidden when the Modal opens
+    // to make it impossible to become focused while hidden (see infor-design/enterprise#6806)
+    const nonFocusableElems = $(this.element).find('input:hidden');
+    nonFocusableElems.each((i, elem) => {
+      elem.tabIndex = -1;
+    });
 
     const elems = DOM.focusableElems(this.element[0], extraSelectors, ignoredSelectors);
     this.focusableElems = elems;
