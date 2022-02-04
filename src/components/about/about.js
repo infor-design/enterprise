@@ -235,7 +235,7 @@ About.prototype = {
      * @property {object} event - The jquery event object
      * @property {object} ui - The dialog object
      */
-     this.element.trigger('afterclose.about');
+    this.element.trigger('afterclose.about');
   },
 
   /**
