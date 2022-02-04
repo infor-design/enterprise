@@ -497,19 +497,14 @@ MonthView.prototype = {
    * Loads legend list to the monthview settings.
    * @returns {void}
    */
-  loadLegend(legendList, isReset) {
+  loadLegend(legendList) {
     if (legendList === undefined || legendList.length < 1) {
       return;
     }
 
-    if (isReset) {
-      this.settings.legend = legendList;
-    } else {
-      // Push new dates into legend list in the monthview settings.
-      legendList.forEach((value) => {
-        this.settings.legend.push(value);
-      });
-    }
+    this.settings.legend = legendList;
+    this.legend.empty();
+    this.addLegend();
   },
 
   /**
