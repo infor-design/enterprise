@@ -421,12 +421,33 @@
   }
 }
 
-.datagrid.small-rowheight tbody tr td.datagrid-trigger-cell .trigger {
-  top: 4px;
-}
+.datagrid.small-rowheight tbody tr td {
+  &.datagrid-trigger-cell {
+    .trigger {
+      top: 4px;
+    }
 
-.datagrid.small-rowheight tbody tr td .hyperlink {
-  margin-top: -4px;
+    span.trigger.is-clearable {
+      width: calc(100% - 32px);
+    }
+
+    &.is-editing .datagrid-cell-wrapper {
+      padding: 2px 8px !important;
+
+      .icon-close {
+        margin-left: -21px !important;
+        left: -7px;
+      }
+
+      .icon-fileupload {
+        left: -3px;
+      }
+    }
+  }
+
+  .hyperlink {
+    margin-top: -4px;
+  }
 }
 
 // Small mode adjustments

@@ -61,7 +61,7 @@ Soho.Locale.addCulture('ko-KR', {
   },
   // Resx - Provided By Translation Team
   messages: {
-    AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. All rights reserved. 여기에 명시된 용어와 디자인 마크는 Infor 및 해당 자회사 및/또는 계열사의 상표 및/또는 등록 상표입니다. 여기에 나열된 모든 기타 상표는 각 소유주의 재산입니다.' },
+    AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. All rights reserved. 여기에 명시된 용어와 디자인 마크는 Infor 및 해당 자회사 및/또는 계열사의 상표 및/또는 등록 상표입니다. All rights reserved. 여기에 나열된 모든 기타 상표는 각 소유주의 재산입니다.' },
     Actions: { id: 'Actions', value: '작업', comment: 'Tooltip text for the action button with additional in context actions' },
     Add: { id: 'Add', value: '추가', comment: 'Add' },
     AddComments: { id: 'AddComments', value: '댓글 추가', comment: 'Add comments to a form of data' },
@@ -253,7 +253,7 @@ Soho.Locale.addCulture('ko-KR', {
     InfoOnPage: { id: 'InfoOnPage', value: '페이지에서 정보 메시지 표시', comment: 'Information message(s) on page n' },
     InProgress: { id: 'In Progress', value: '진행 중', comment: 'Info tooltip that an action is in progress' },
     Insert: { id: 'Insert', value: '삽입', comment: 'Insert Modal Dialog Button' },
-    InsertHyperlink: { id: 'InsertHyperlink', value: '기준 위치 삽입', comment: 'Insert a hyperlink in an editor' },
+    InsertAnchor: { id: 'InsertAnchor', value: '기준 위치 삽입', comment: 'Insert a hyperlink in an editor' },
     InsertImage: { id: 'InsertImage', value: '이미지 삽입', comment: 'Insert Image in an editor' },
     InsertLink: { id: 'InsertLink', value: '링크 삽입', comment: 'Insert Link in an editor' },
     InsertUrl: { id: 'InsertUrl', value: 'URL 삽입', comment: 'Insert a Url in an editor' },
