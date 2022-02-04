@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.59.3 Fixes
+
+- `[Modal]` Fixed a bug on hidden elements not focusable when it is turned visible. ([#6086](https://github.com/infor-design/enterprise/issues/6086))
+
 ## v4.59.2 Fixes
 
 - `[Calendar]` Fixed an issue where you could not have more than one in the same page. ([#6042](https://github.com/infor-design/enterprise/issues/6042))
