@@ -253,7 +253,7 @@ Soho.Locale.addCulture('ro-RO', {
     InfoOnPage: { id: 'InfoOnPage', value: 'Mesaj(e) de informare pe pagină', comment: 'Information message(s) on page n' },
     InProgress: { id: 'In Progress', value: 'În curs...', comment: 'Info tooltip that an action is in progress' },
     Insert: { id: 'Insert', value: 'Inserare', comment: 'Insert Modal Dialog Button' },
-    InsertHyperlink: { id: 'InsertHyperlink', value: 'Inserare ancoră', comment: 'Insert a hyperlink in an editor' },
+    InsertAnchor: { id: 'InsertAnchor', value: 'Inserare ancoră', comment: 'Insert a hyperlink in an editor' },
     InsertImage: { id: 'InsertImage', value: 'Inserare imagine', comment: 'Insert Image in an editor' },
     InsertLink: { id: 'InsertLink', value: 'Inserare legătură', comment: 'Insert Link in an editor' },
     InsertUrl: { id: 'InsertUrl', value: 'Inserare URL', comment: 'Insert a Url in an editor' },
