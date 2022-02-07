@@ -1445,6 +1445,18 @@ DatePicker.prototype = {
         s.range.second = s.range.second || {};
         s.range.first.date = d;
         s.range.second.date = d;
+
+        if (s.range.end) {
+          if (typeof s.range.end === 'string') {
+            s.range.second.date = Locale.parseDate(s.range.end, {
+              pattern: this.pattern,
+              locale: this.locale.name
+            }, false);
+          } else {
+            s.range.second.date = s.range.end;
+          }
+        }
+
         value = this.getRangeValue();
       }
     } else {
