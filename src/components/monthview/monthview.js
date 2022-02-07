@@ -494,12 +494,28 @@ MonthView.prototype = {
   },
 
   /**
+   * Loads legend list to the monthview settings.
+   * @returns {void}
+   */
+  loadLegend(legendList) {
+    if (legendList === undefined || legendList.length < 1) {
+      return;
+    }
+
+    this.settings.legend = legendList;
+    this.legend.empty();
+    this.addLegend();
+  },
+
+  /**
    * Update the calendar to show the given month and year
    * @param {number} month The zero based month to display
    * @param {number} year The year to display
    * @returns {void}
    */
   showMonth(month, year) {
+    this.element.trigger('beforemonthrendered');
+
     const self = this;
     const s = this.settings;
     const now = new Date();
@@ -507,7 +523,7 @@ MonthView.prototype = {
     now.setHours(0);
     now.setMinutes(0);
     now.setSeconds(0);
-
+    
     let elementDate;
     if (this.isIslamic) {
       elementDate = s.activeDate || Locale.gregorianToUmalqura(now);
@@ -766,6 +782,7 @@ MonthView.prototype = {
     * @property {object} args.api - The MonthView api
     */
     this.element.trigger('monthrendered', { year, month, elem: this.element, api: this });
+    this.element.trigger('aftermonthrendered');
   },
 
   /**

@@ -1,0 +1,43 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Legend</h2>
+    <div id="inpage-legend" class="monthview" data-init="false">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+    var monthviewEl, monthviewAPI;
+    // Legend
+    monthviewEl = $('#inpage-legend').monthview({
+      inPage: true,
+      day: 5,
+      month: 0,
+      year: 2017,
+      showLegend: true,
+      legend: [
+        { name: 'Public Holiday', color: 'emerald06', dates: ['1/1/2017', '1/2/2017', '1/12/2017'] },
+        { name: 'Weekends', color: 'amber06', dayOfWeek: [0, 6] },
+        { name: 'Other', color: 'ruby03', dates: ['1/8/2017', '1/9/2017', '1/23/2017'] },
+        { name: 'Half Days', color: 'amethyst06', dates: ['1/21/2017', '1/22/2017'] },
+        { name: 'Full Days', color: 'azure03', dates: ['1/24/2017', '1/25/2017'] }
+      ]
+    }).on('beforemonthrendered', (e) => {
+      console.log('beforemonthrendered', e);
+      loadLegend();
+    }).on('aftermonthrendered', (e) => {
+      console.log('aftermonthrendered', e);
+    });
+
+    monthviewAPI = monthviewEl.data('monthview');
+
+    function loadLegend() {
+      var febLegend = [
+        { name: 'Other', color: 'ruby03', dates: ['2/8/2017', '2/9/2017', '2/23/2017'] }
+      ]
+      monthviewAPI.loadLegend(febLegend);
+    }
+  });
+  
+</script>
