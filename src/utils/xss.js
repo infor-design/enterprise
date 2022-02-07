@@ -82,6 +82,26 @@ xssUtils.sanitizeHTML = function (html) {
 };
 
 /**
+ * Changing all of white-spaces characters to a single
+ * space in the whole string then removes all exceeding
+ * white-spaces before and after the text.
+ * @private
+ * @param {object} html the HTML object to get the inner html value.
+ * @returns {string} the new value of inner html.
+ */
+xssUtils.removeWhiteSpaceCharacters = function (html) {
+  if (!html) {
+    return '';
+  }
+
+  let value = html[0].innerHTML;
+  value = value.replace(/\s+/g, ' ').trim();
+  html[0].innerHTML = value;
+
+  return html[0].innerHTML;
+};
+
+/**
  * Make sure a string is only alphanumeric (with dashes allowed.)
  * @private
  * @param {string} string HTML in string form
