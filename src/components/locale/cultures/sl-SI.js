@@ -253,7 +253,7 @@ Soho.Locale.addCulture('sl-SI', {
     InfoOnPage: { id: 'InfoOnPage', value: 'Informacijsko(-a) sporočilo(-a) na strani', comment: 'Information message(s) on page n' },
     InProgress: { id: 'In Progress', value: 'Poteka', comment: 'Info tooltip that an action is in progress' },
     Insert: { id: 'Insert', value: 'Vstavi', comment: 'Insert Modal Dialog Button' },
-    InsertHyperlink: { id: 'InsertHyperlink', value: 'Vstavi povezavo', comment: 'Insert a hyperlink in an editor' },
+    InsertAnchor: { id: 'InsertAnchor', value: 'Vstavi povezavo', comment: 'Insert a hyperlink in an editor' },
     InsertImage: { id: 'InsertImage', value: 'Vstavi sliko', comment: 'Insert Image in an editor' },
     InsertLink: { id: 'InsertLink', value: 'Vstavi povezavo', comment: 'Insert Link in an editor' },
     InsertUrl: { id: 'InsertUrl', value: 'Vstavi URL', comment: 'Insert a Url in an editor' },

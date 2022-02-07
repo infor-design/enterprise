@@ -1181,7 +1181,7 @@ Dropdown.prototype = {
     const charCode = e.which;
 
     // Needed for browsers that use keypress events to manipulate the window.
-    if (e.altKey && (charCode === 38) || charCode > 111 && charCode < 124) {
+    if (e.altKey && (charCode === 38) || charCode > 111 && charCode < 124 && !this.settings.onKeyDown) {
       e.stopPropagation();
       e.preventDefault();
       return false;

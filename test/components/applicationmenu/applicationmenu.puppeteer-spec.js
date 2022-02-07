@@ -55,7 +55,7 @@ describe('Application Menu Puppeteer Test', () => {
         .then(boundingBox => expect(boundingBox.width).toEqual(menuSize.width));
     });
 
-    it('should resize at the near end of the page', async () => {
+    it.skip('should resize at the near end of the page', async () => {
       const windowSize = await page.viewport();
       const location = [{ y: 0, x: windowSize.width - (windowSize.width * 0.1) }];
 
@@ -81,7 +81,7 @@ describe('Application Menu Puppeteer Test', () => {
         .then(boundingBox => expect(boundingBox.width).toEqual(menuSize.width));
     });
 
-    it('should save last resize', async () => {
+    it.skip('should save last resize', async () => {
       const windowSize = await page.viewport();
       const location = [{ y: 0, x: windowSize.width - (windowSize.width * 0.1) }];
 
