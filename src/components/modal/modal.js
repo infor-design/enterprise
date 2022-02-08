@@ -1018,8 +1018,8 @@ Modal.prototype = {
       targetElem.focus();
 
       // Trigger an optional callback that can further modify changes on focus
-      if (typeof this.settings.onFocusChange === 'function') {
-        this.settings.onFocusChange(this, targetElem);
+      if (typeof self.settings.onFocusChange === 'function') {
+        self.settings.onFocusChange(self, targetElem[0]);
       }
     });
 
@@ -1090,8 +1090,8 @@ Modal.prototype = {
       focusElem.focus();
 
       // Trigger an optional callback that can further modify changes on focus
-      if (typeof this.settings.onFocusChange === 'function') {
-        this.settings.onFocusChange(this, focusElem);
+      if (typeof self.settings.onFocusChange === 'function') {
+        self.settings.onFocusChange(self, focusElem[0]);
       }
     }
 
