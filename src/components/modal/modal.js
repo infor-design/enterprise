@@ -55,6 +55,7 @@ const MODAL_FULLSIZE_SETTINGS = [false, 'responsive', 'always'];
 * @param {boolean} [settings.hideUnderneath=false] if true, causes this modal instance to become hidden when another modal is displayed over top.
 * @param {boolean} [settings.suppressEnterKey=false] if true, causes the modal to not exit when the enter key is pressed.
 * @param {string} [settings.attributes] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
+* @param {function} [settings.onFocusChange] an optional callback that runs whenever the Modal API attempts to change the focused element inside of its boundaries
 */
 const MODAL_DEFAULTS = {
   trigger: 'click',
@@ -1012,7 +1013,14 @@ Modal.prototype = {
     // of this element if it's clicked.
     $('.skip-link').on(`focus.${this.namespace}`, (e) => {
       e.preventDefault();
-      this.element.find(':focusable').first().focus();
+
+      const targetElem = this.element.find(':focusable').first();
+      targetElem.focus();
+
+      // Trigger an optional callback that can further modify changes on focus
+      if (typeof this.settings.onFocusChange === 'function') {
+        this.settings.onFocusChange(this, targetElem);
+      }
     });
 
     function callOpenEvent(thisElem) {
@@ -1080,6 +1088,11 @@ Modal.prototype = {
 
       // Otherwise, just focus
       focusElem.focus();
+
+      // Trigger an optional callback that can further modify changes on focus
+      if (typeof this.settings.onFocusChange === 'function') {
+        this.settings.onFocusChange(this, focusElem);
+      }
     }
 
     const pagerElem = this.element.find('.paginated');
@@ -1344,6 +1357,11 @@ Modal.prototype = {
     if (target) {
       target.focus();
       target.classList.remove('hide-focus');
+
+      // Trigger an optional callback that can further modify changes on focus
+      if (typeof this.settings.onFocusChange === 'function') {
+        this.settings.onFocusChange(this, target);
+      }
     }
   },
 
