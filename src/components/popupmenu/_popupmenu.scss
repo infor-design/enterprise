@@ -112,12 +112,12 @@
           .icon {
             &.close {
               height: 15px;
-              margin-top: -7.5px;
               padding-left: 6px;
               padding-right: 6px;
               position: absolute;
-              right: 0;
-              top: 50%;
+              right: 1px;
+              top: 0;
+              transform: translateY(50%);
             }
           }
         }
