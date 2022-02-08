@@ -280,9 +280,9 @@ Tooltip.prototype = {
     if (!this.tooltip.length) {
       const name = (elem ? elem.substring(1, elem.length) : this.componentName);
       this.tooltip = $(`<div class="${className} bottom is-hidden" id="${name}">
-        <div class="arrow"></div>
-        <div class="tooltip-content"></div>
-      </div>`);
+        <div class="arrow"></div><div class="tooltip-content"></div></div>`);
+
+      xssUtils.removeWhiteSpaceCharacters(this.tooltip);
     }
 
     this.tooltip.place({
