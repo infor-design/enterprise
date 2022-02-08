@@ -17,6 +17,7 @@
 - `[Dropdown]` Create a Puppeteer Script for Enter key opens dropdown list, when it should only be used to select items within an open list. ([#5842](https://github.com/infor-design/enterprise/issues/5842))
 - `[Fileupload]` Added puppeteer test to check that progress bar is present when uploading a file. ([#5808](https://github.com/infor-design/enterprise/issues/5808))
 - `[Monthview]` Added ability to update legend on month change. ([#5988](https://github.com/infor-design/enterprise/issues/5988))
+- `[Popupmenu]` Correctly position dismissible close icon inside popupmenu. ([#6083](https://github.com/infor-design/enterprise/issues/6083))
 - `[Swipe Container]` Added mobile enhancements and style changes. ([#5615](https://github.com/infor-design/enterprise/issues/5615))
 - `[Tooltip]` Converted the tooltip protractor test suites to puppeteer. ([#5830](https://github.com/infor-design/enterprise/issues/5830))
 
@@ -42,7 +43,6 @@
 - `[Editor]` Fix a bug which changes the approach intended by the user after typing in editor. ([#5937](https://github.com/infor-design/enterprise/issues/5937))
 - `[Editor]` Fix a bug which clears list format when it's not part of the selected text. ([#5592](https://github.com/infor-design/enterprise/issues/5592))
 - `[Editor]` Changed language on the link dialog to use the term "link" for better translations. ([#5987](https://github.com/infor-design/enterprise/issues/5987))
-- `[Field Options]` Fixed UI alignment of close icon button (searchfield) in Field Options. ([#5983](https://github.com/infor-design/enterprise/issues/5983))
 - `[Export]` Added data sanitization in Export to CSV. ([#5982](https://github.com/infor-design/enterprise/issues/5982))
 - `[Field Options]` Fixed UI alignment of close icon button (searchfield) in Field Options. ([#5983](https://github.com/infor-design/enterprise/issues/5983))
 - `[General]` Fixed several memory leaks with the attached data object. ([#6020](https://github.com/infor-design/enterprise/issues/6020))
