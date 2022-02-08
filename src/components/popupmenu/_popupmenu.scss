@@ -762,6 +762,23 @@ html[dir='rtl'] {
     }
   }
 
+  .popupmenu-wrapper {
+    &.bottom {
+      .popupmenu {
+        &.has-submenu {
+          .dismissible {
+            .icon {
+              &.close {
+                left: 1px;
+                right: auto;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
   .popup-footer {
     button {
       margin-left: inherit;
