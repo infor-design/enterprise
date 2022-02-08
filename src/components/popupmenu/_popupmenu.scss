@@ -115,8 +115,9 @@
               padding-left: 6px;
               padding-right: 6px;
               position: absolute;
-              right: 17px;
-              top: 2px;
+              right: 1px;
+              top: 1px;
+              transform: translateY(50%);
             }
           }
         }
@@ -758,6 +759,23 @@ html[dir='rtl'] {
     .popupmenu .image-initials,
     .popupmenu .image-round {
       top: -2px;
+    }
+  }
+
+  .popupmenu-wrapper {
+    &.bottom {
+      .popupmenu {
+        &.has-submenu {
+          .dismissible {
+            .icon {
+              &.close {
+                left: 1px;
+                right: auto;
+              }
+            }
+          }
+        }
+      }
     }
   }
 
