@@ -109,7 +109,7 @@ describe('Hierarchy Stacked Tests', () => {
         .then(ancestorCount => expect(ancestorCount).toEqual(3));
     });
 
-    it('should go back to the initial page', async () => {
+    it.skip('should go back to the initial page', async () => {
       await page.waitForSelector('#hierarchy', { visible: true })
         .then(idValue => expect(idValue).toBeTruthy());
 
