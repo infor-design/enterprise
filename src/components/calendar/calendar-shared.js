@@ -224,7 +224,7 @@ calendarShared.getEventTypeColor = function getEventTypeColor(event, eventTypes)
 
   // Revalidates if the event type and current event has the same color.
   const eventInfo = eventTypes.filter(eventType => eventType.id === event.type);
-  if (event.color != undefined && eventInfo.length === 1) {
+  if (event.color !== undefined && eventInfo.length === 1) {
     if (eventInfo[0].color !== event.color) {
       return eventInfo[0].color;
     }
@@ -234,7 +234,6 @@ calendarShared.getEventTypeColor = function getEventTypeColor(event, eventTypes)
     return event.color;
   }
 
-  
   if (eventInfo.length === 1) {
     color = eventInfo[0].color || 'azure';
     return color;
@@ -254,7 +253,7 @@ calendarShared.getEventTypeBorderColor = function getEventTypeBorderColor(event,
 
   // Revalidates if the event type and current event has the same border color.
   const eventInfo = eventTypes.filter(eventType => eventType.id === event.type);
-  if (event.borderColor != undefined && eventInfo.length === 1) {
+  if (event.borderColor !== undefined && eventInfo.length === 1) {
     if (eventInfo[0].borderColor !== event.borderColor) {
       return eventInfo[0].borderColor;
     }
