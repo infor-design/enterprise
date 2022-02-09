@@ -55,6 +55,7 @@ const MODAL_FULLSIZE_SETTINGS = [false, 'responsive', 'always'];
 * @param {boolean} [settings.hideUnderneath=false] if true, causes this modal instance to become hidden when another modal is displayed over top.
 * @param {boolean} [settings.suppressEnterKey=false] if true, causes the modal to not exit when the enter key is pressed.
 * @param {string} [settings.attributes] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
+* @param {function} [settings.onFocusChange] an optional callback that runs whenever the Modal API attempts to change the focused element inside of its boundaries
 */
 const MODAL_DEFAULTS = {
   trigger: 'click',
@@ -1012,7 +1013,14 @@ Modal.prototype = {
     // of this element if it's clicked.
     $('.skip-link').on(`focus.${this.namespace}`, (e) => {
       e.preventDefault();
-      this.element.find(':focusable').first().focus();
+
+      const targetElem = this.element.find(':focusable').first();
+      targetElem.focus();
+
+      // Trigger an optional callback that can further modify changes on focus
+      if (typeof self.settings.onFocusChange === 'function') {
+        self.settings.onFocusChange(self, targetElem[0]);
+      }
     });
 
     function callOpenEvent(thisElem) {
@@ -1031,43 +1039,18 @@ Modal.prototype = {
         return;
       }
 
-      self.setFocusableElems();
-      const focusableElements = $(self.focusableElems).not('.modal-header .searchfield');
-      const hiddenFieldTagNames = ['INPUT', 'BUTTON'];
-
       // When changes happen within the subtree on the Modal, rebuilds the internal hash of
       // tabbable elements used for retaining focus.
-      self.changeObserver = new MutationObserver((mutationsList) => {
-        let updateFocusableElems = false;
-
-        mutationsList.forEach((mutation) => {
-          if (['childList', 'subtree'].includes(mutation.type)) {
-            updateFocusableElems = true;
-          } else {
-            const mutationTarget = $(mutation.target);
-            if (hiddenFieldTagNames.includes(mutation.target.tagName)) {
-              if (mutationTarget.is(':visible')) {
-                mutationTarget.attr('tabindex', '0');
-              } else {
-                mutationTarget.attr('tabindex', '-1');
-              }
-            }
-          }
-        });
-
-        if (updateFocusableElems) {
-          self.setFocusableElems();
-        }
+      self.changeObserver = new MutationObserver(() => {
+        self.setFocusableElems();
       });
       self.changeObserver.observe(self.element[0], {
-        attributes: true,
-        attributeFilter: ['class', 'style'],
         childList: true,
         subtree: true,
       });
+      self.setFocusableElems();
 
-      let focusElem = focusableElements.not(':hidden').first();
-
+      let focusElem = $(self.focusableElems).not(':hidden').first();
       if (focusElem.length === 0) {
         focusElem = thisElem.element.find('.btn-modal-primary');
       }
@@ -1105,6 +1088,11 @@ Modal.prototype = {
 
       // Otherwise, just focus
       focusElem.focus();
+
+      // Trigger an optional callback that can further modify changes on focus
+      if (typeof self.settings.onFocusChange === 'function') {
+        self.settings.onFocusChange(self, focusElem[0]);
+      }
     }
 
     const pagerElem = this.element.find('.paginated');
@@ -1334,13 +1322,6 @@ Modal.prototype = {
       'option'
     ];
 
-    // Pre-configure some element types that can be visually-hidden when the Modal opens
-    // to make it impossible to become focused while hidden (see infor-design/enterprise#6806)
-    const nonFocusableElems = $(this.element).find('input:hidden');
-    nonFocusableElems.each((i, elem) => {
-      elem.tabIndex = -1;
-    });
-
     const elems = DOM.focusableElems(this.element[0], extraSelectors, ignoredSelectors);
     this.focusableElems = elems;
     this.focusableElems.first = elems[0];
@@ -1376,6 +1357,11 @@ Modal.prototype = {
     if (target) {
       target.focus();
       target.classList.remove('hide-focus');
+
+      // Trigger an optional callback that can further modify changes on focus
+      if (typeof this.settings.onFocusChange === 'function') {
+        this.settings.onFocusChange(this, target);
+      }
     }
   },
 
