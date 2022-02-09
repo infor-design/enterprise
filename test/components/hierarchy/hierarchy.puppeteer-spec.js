@@ -1,6 +1,6 @@
 const baseUrl = 'http://localhost:4000/components/hierarchy';
 
-describe.only('Hierarchy Puppeteer Tests', () => {
+describe('Hierarchy Puppeteer Tests', () => {
   describe('Hierarchy context menu', () => {
     const url = `${baseUrl}/example-context-menu-with-details?layout=nofrills`;
 
