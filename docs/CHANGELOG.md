@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.61.0 Features
+
+- `[Hierarchy]` Converted the old protractor e2e test suites to puppeteer tests. ([#5833](https://github.com/infor-design/enterprise/issues/5833))
+
 ## v4.60.0 Features
 
 - `[Application Menu]` Added puppeteer tests for resizable application menu. ([#5755](https://github.com/infor-design/enterprise/issues/5755))
