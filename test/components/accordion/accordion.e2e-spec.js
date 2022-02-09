@@ -30,7 +30,7 @@ describe('Accordion allow one pane tests', () => {
 
 describe('Accordion example-accordion-panels tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/accordion/example-accordion-panels');
+    await utils.setPage('/components/accordion/test-accordion-panels');
   });
 
   it('Should not have errors', async () => {
