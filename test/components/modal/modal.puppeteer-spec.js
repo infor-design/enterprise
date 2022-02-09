@@ -11,6 +11,11 @@ describe('Modal Puppeteer Tests', () => {
       await page.waitForSelector('#add-context', { visible: true });
     });
 
+    it('should have modal closed by default', async () => {
+      await page.evaluate(() => document.querySelector('body').getAttribute('class'))
+        .then(el => expect(el).not.toContain('modal-engaged'));
+    });
+
     it('should not visual regress', async () => {
       await page.setViewport({ width: 1200, height: 800 });
       await page.click('#add-context');
