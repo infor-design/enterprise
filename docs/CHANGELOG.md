@@ -58,6 +58,10 @@
 
 (52 Issues Solved This Release, Backlog Enterprise 222, Backlog Ng 35, 1100 Functional Tests, 1695 e2e Tests, 263 Puppeteer Tests)
 
+## v4.59.4 Fixes
+
+- `[Modal]` Reverted problematic issue. ([#6086](https://github.com/infor-design/enterprise/issues/6086))
+
 ## v4.59.3 Fixes
 
 - `[Modal]` Fixed a bug on hidden elements not focusable when it is turned visible. ([#6086](https://github.com/infor-design/enterprise/issues/6086))
