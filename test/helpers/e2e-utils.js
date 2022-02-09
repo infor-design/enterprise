@@ -94,7 +94,6 @@ module.exports = {
       customSnapshotIdentifier,
       // anything less than 0.5 percent difference passes as the same
       failureThreshold: 0.005,
-      failureThresholdType: 'percent',
     };
   },
 
