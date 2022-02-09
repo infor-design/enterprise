@@ -50,7 +50,13 @@ var modals = {
         },
         validate: false,
         isDefault: true
-      }]
+      }],
+      onFocusChange: function (modal, el) {
+        if (el.classList.contains('is-hidden')) {
+          console.info('Modal focus switched to element:', el, modal)
+          $('#test-btn').focus();
+        }
+      }
     }, opt);
 
     $('body').modal(opt);
