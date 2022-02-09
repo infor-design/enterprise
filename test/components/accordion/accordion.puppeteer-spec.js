@@ -20,7 +20,7 @@ describe('Accordion Puppeteer Test', () => {
   });
 
   describe('Panels', () => {
-    const url = `${baseUrl}/example-accordion-panels`;
+    const url = `${baseUrl}/test-accordion-panels`;
 
     beforeEach(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
