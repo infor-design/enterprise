@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.61.0 Features
+
+- `[Hierarchy]` Converted the old protractor e2e test suites to puppeteer tests. ([#5833](https://github.com/infor-design/enterprise/issues/5833))
+
 ## v4.60.0 Features
 
 - `[Application Menu]` Added puppeteer tests for resizable application menu. ([#5755](https://github.com/infor-design/enterprise/issues/5755))
@@ -13,6 +17,7 @@
 - `[Dropdown]` Create a Puppeteer Script for Enter key opens dropdown list, when it should only be used to select items within an open list. ([#5842](https://github.com/infor-design/enterprise/issues/5842))
 - `[Fileupload]` Added puppeteer test to check that progress bar is present when uploading a file. ([#5808](https://github.com/infor-design/enterprise/issues/5808))
 - `[Monthview]` Added ability to update legend on month change. ([#5988](https://github.com/infor-design/enterprise/issues/5988))
+- `[Popupmenu]` Correctly position dismissible close icon inside Popupmenu. ([#6083](https://github.com/infor-design/enterprise/issues/6083))
 - `[Swipe Container]` Added mobile enhancements and style changes. ([#5615](https://github.com/infor-design/enterprise/issues/5615))
 - `[Tooltip]` Converted the tooltip protractor test suites to puppeteer. ([#5830](https://github.com/infor-design/enterprise/issues/5830))
 
@@ -34,11 +39,10 @@
 - `[Datagrid]` Fixed file upload icon alignment in datagrid. ([#5846](https://github.com/infor-design/enterprise/issues/5846))
 - `[Datepicker]` Fix on initial range values not showing in datepicker. ([NG#1200](https://github.com/infor-design/enterprise-ng/issues/1200))
 - `[Dropdown]` Fixed a regression bug where pressing function keys while the dropdown has focus causes letters to be typed. ([#4976](https://github.com/infor-design/enterprise/issues/4976))
-- `[Editor]` Changed selector for for image value selction from id to name. ([#5915](https://github.com/infor-design/enterprise/issues/5915))
+- `[Editor]` Changed selector for for image value selection from id to name. ([#5915](https://github.com/infor-design/enterprise/issues/5915))
 - `[Editor]` Fix a bug which changes the approach intended by the user after typing in editor. ([#5937](https://github.com/infor-design/enterprise/issues/5937))
 - `[Editor]` Fix a bug which clears list format when it's not part of the selected text. ([#5592](https://github.com/infor-design/enterprise/issues/5592))
 - `[Editor]` Changed language on the link dialog to use the term "link" for better translations. ([#5987](https://github.com/infor-design/enterprise/issues/5987))
-- `[Field Options]` Fixed UI alignment of close icon button (searchfield) in Field Options. ([#5983](https://github.com/infor-design/enterprise/issues/5983))
 - `[Export]` Added data sanitization in Export to CSV. ([#5982](https://github.com/infor-design/enterprise/issues/5982))
 - `[Field Options]` Fixed UI alignment of close icon button (searchfield) in Field Options. ([#5983](https://github.com/infor-design/enterprise/issues/5983))
 - `[General]` Fixed several memory leaks with the attached data object. ([#6020](https://github.com/infor-design/enterprise/issues/6020))
@@ -51,6 +55,8 @@
 - `[Searchfield]` Fixed UI alignment of close icon button (searchfield) in Datagrid. ([#5954](https://github.com/infor-design/enterprise/issues/5954))
 - `[Tabs Module]` Fixed UI alignment of close icon button on mobile view([#5951](https://github.com/infor-design/enterprise/issues/5951))
 - `[Tooltip]` Fixed a bug where the inner html value of the tooltip adds unnecessary whitespace and new line when getting the text value. ([#6059](https://github.com/infor-design/enterprise/issues/6059))
+
+(52 Issues Solved This Release, Backlog Enterprise 222, Backlog Ng 35, 1100 Functional Tests, 1695 e2e Tests, 263 Puppeteer Tests)
 
 ## v4.59.3 Fixes
 
@@ -88,7 +94,7 @@
 - `[Listview]` Fixed a bug where the alert icons in RTL were missing. ([#5827](https://github.com/infor-design/enterprise/issues/5827))
 - `[Locale]` Fixed latvian translation for records per page. ([#5969](https://github.com/infor-design/enterprise/issues/5969))
 - `[Locale]` Fixed latvian translation for Select All. ([#5895](https://github.com/infor-design/enterprise/issues/5895))
-- `[Locale]` Capitalized the finnished translation for seconds. ([#5894](https://github.com/infor-design/enterprise/issues/5894))
+- `[Locale]` Capitalized the finnish translation for seconds. ([#5894](https://github.com/infor-design/enterprise/issues/5894))
 - `[Locale]` Added missing translations for font picker. ([#5784](https://github.com/infor-design/enterprise/issues/5784))
 - `[Modal]` Fixed a close button overlapped when title is long. ([#5795](https://github.com/infor-design/enterprise/issues/5795))
 - `[Modal]` Modal exits if Escape key is pressed in datagrid. ([#5796](https://github.com/infor-design/enterprise/issues/5796))
@@ -207,7 +213,7 @@
 - `[FieldFilter]` Fixed missing trigger icons on short field filter options. ([#5727](https://github.com/infor-design/enterprise/issues/5727))
 - `[Form]` Fixed misaligned trigger icon of datepicker on safari. ([#5751](https://github.com/infor-design/enterprise/issues/5751))
 - `[Header]` Fix on Advanced Search not seen on headers when changing colors. ([#5782](https://github.com/infor-design/enterprise/issues/5782))
-- `[Locale]` Fixed currency position and a translation on tl-PH locale. ([#5695](https://github.com/infor-design/enterprise/issues/5695))
+- `[Locale]` Fixed currency position and a translation on `tl-PH` locale. ([#5695](https://github.com/infor-design/enterprise/issues/5695))
 - `[Lookup]` Fix an uncentered lookup icon in composite form. ([#5657](https://github.com/infor-design/enterprise/issues/5657))
 - `[Searchfield]` Fix on uneven searchfield in firefox. ([#5620](https://github.com/infor-design/enterprise/issues/5620))
 - `[Searchfield]` Fix on uneven searchfield in firefox. ([#5695](https://github.com/infor-design/enterprise/issues/5695))

@@ -269,7 +269,7 @@ Object {
       await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport', 'aria-valid-attr-value', 'region'] });
       await page.click('#popdown-example-trigger');
       await page.waitForSelector('.popdown', { visible: true });
-      await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport', 'region', 'color-contrast'] });
+      await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport', 'aria-valid-attr-value', 'region', 'color-contrast'] });
     });
 
     it('should have Accessibility', async () => {

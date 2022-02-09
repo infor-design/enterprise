@@ -222,11 +222,18 @@ calendarShared.getEventTypeColor = function getEventTypeColor(event, eventTypes)
     return color;
   }
 
+  // Revalidates if the event type and current event has the same color.
+  const eventInfo = eventTypes.filter(eventType => eventType.id === event.type);
+  if (event.color !== undefined && eventInfo.length === 1) {
+    if (eventInfo[0].color !== event.color) {
+      return eventInfo[0].color;
+    }
+  }
+
   if (event.color?.substr(0, 1) === '#' || event.color) {
     return event.color;
   }
 
-  const eventInfo = eventTypes.filter(eventType => eventType.id === event.type);
   if (eventInfo.length === 1) {
     color = eventInfo[0].color || 'azure';
     return color;
@@ -243,11 +250,19 @@ calendarShared.getEventTypeColor = function getEventTypeColor(event, eventTypes)
  */
 calendarShared.getEventTypeBorderColor = function getEventTypeBorderColor(event, eventTypes) {
   let borderColor = '';
+
+  // Revalidates if the event type and current event has the same border color.
+  const eventInfo = eventTypes.filter(eventType => eventType.id === event.type);
+  if (event.borderColor !== undefined && eventInfo.length === 1) {
+    if (eventInfo[0].borderColor !== event.borderColor) {
+      return eventInfo[0].borderColor;
+    }
+  }
+
   if (event.borderColor?.substr(0, 1) === '#' || event.borderColor) {
     return event.borderColor;
   }
 
-  const eventInfo = eventTypes.filter(eventType => eventType.id === event.type);
   if (eventInfo.length === 1) {
     borderColor = eventInfo[0].borderColor || 'azure';
     return borderColor;

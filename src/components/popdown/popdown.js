@@ -119,7 +119,7 @@ Popdown.prototype = {
     // Expand if necessary
     const ariaExpanded = this.trigger.attr('aria-expanded');
     if (!ariaExpanded || ariaExpanded === undefined) {
-      this.trigger.attr('aria-expanded', '');
+      this.trigger.removeAttr('aria-expanded');
     }
     if (ariaExpanded === 'true') {
       this.open();
@@ -153,6 +153,7 @@ Popdown.prototype = {
 
     // When changes happen within the subtree on the Popdown, rebuilds the internal hash of
     // tabbable elements used for retaining focus.
+    // eslint-disable-next-line compat/compat
     this.changeObserver = new MutationObserver(() => {
       this.setFocusableElems();
     });
@@ -398,7 +399,7 @@ Popdown.prototype = {
   isOpen() {
     return this.trigger.attr('aria-expanded') === 'true';
   },
- 
+
   /**
    * Generic function for checking Popdown focus before closing.
    * @private

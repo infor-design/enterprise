@@ -441,13 +441,13 @@ describe('Calendar Color Overrides tests', () => {
   });
 
   it('Should override event colors correctly', async () => {
-    expect(await element.all(by.css('.calendar-event')).get(0).getAttribute('class')).toEqual('calendar-event event-day-start-end has-tooltip');
+    expect(await element.all(by.css('.calendar-event')).get(0).getAttribute('class')).toEqual('calendar-event azure event-day-start-end has-tooltip');
     // expect(await element.all(by.css('.calendar-event')).get(0).getCssValue('background-color')).toEqual('rgba(173, 219, 235, 1)');
     // expect(await element.all(by.css('.calendar-event')).get(0).getCssValue('border-left-color')).toEqual('rgba(128, 206, 77, 1)');
 
-    expect(await element.all(by.css('.calendar-event')).get(1).getAttribute('class')).toEqual('calendar-event event-day-start-end has-tooltip');
-    expect(await element.all(by.css('.calendar-event')).get(1).getCssValue('background-color')).toEqual('rgba(246, 202, 202, 1)');
-    expect(await element.all(by.css('.calendar-event')).get(1).getCssValue('border-left-color')).toEqual('rgba(232, 79, 79, 1)');
+    expect(await element.all(by.css('.calendar-event')).get(1).getAttribute('class')).toEqual('calendar-event amethyst event-day-start-end has-tooltip');
+    expect(await element.all(by.css('.calendar-event')).get(1).getCssValue('background-color')).toEqual('rgba(194, 161, 241, 1)');
+    expect(await element.all(by.css('.calendar-event')).get(1).getCssValue('border-left-color')).toEqual('rgba(108, 35, 201, 1)');
   });
 
   it('Should disable weekends', async () => {
