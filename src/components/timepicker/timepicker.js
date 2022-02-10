@@ -1072,7 +1072,6 @@ TimePicker.prototype = {
     setTimeout(() => {
       $('select.period.dropdown').on('change', (e) => {
         const period = $(e.target).find(':checked').val();
-
         let selected;
         let resetValue = false;
         this.initValues = self.getTimeFromField();
@@ -1080,11 +1079,14 @@ TimePicker.prototype = {
         let hourCounter = is24HourFormat ? 0 : 1;
         const maxHourCount = is24HourFormat ? 24 : 13;
         const hourSelect = $('select.hours.dropdown');
-        hourSelect.empty();
+        let hourValue = hourSelect.siblings('.dropdown-wrapper').find('.dropdown').children('span').text();
+        if (hourValue.indexOf('Hours') > -1) {
+          hourValue = hourValue.split(' ')[1];
+        }
 
+        hourSelect.empty();
         while (hourCounter < maxHourCount) {
           selected = '';
-    
           const maxHourRange = self.getMaxHourRange(this.initValues, this.hasDayPeriods(), period);
           if (hourCounter > maxHourRange) {
             break;
@@ -1093,11 +1095,16 @@ TimePicker.prototype = {
           if (!resetValue) {
             selected = ' selected';
             resetValue = true;
+
+            if (hourValue > maxHourRange) {
+              hourValue = 1;
+            }
+
             $('select.hours.dropdown')
-              .siblings('.dropdown-wrapper')
-              .find('.dropdown')
-              .children('span')
-              .html('1');
+            .siblings('.dropdown-wrapper')
+            .find('.dropdown')
+            .children('span')
+            .html(hourValue);
           }
           
           hourSelect.append($(`<option${selected}>${self.hourText(hourCounter)}</option>`));
