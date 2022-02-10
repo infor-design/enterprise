@@ -92,8 +92,8 @@ module.exports = {
   getConfig: (customSnapshotIdentifier) => {
     return {
       customSnapshotIdentifier,
-      // anything less than 0.5 percent difference passes as the same
-      failureThreshold: 0.005,
+      // anything less than 0.6 percent difference passes as the same
+      failureThreshold: 0.006,
     };
   },
 
