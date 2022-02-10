@@ -61,7 +61,7 @@ Soho.Locale.addCulture('ja-JP', {
   },
   // Resx - Provided By Translation Team
   messages: {
-    AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. All rights reserved. ここに示す文字標章及び図形標章は、Infor及び/またはその関連会社ならびに子会社の商標または登録商標、あるいはその両方です。無断複製・転載を禁ず。本書に記載されるその他すべての商標名は各所有者の所有物です。' },
+    AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. All rights reserved. ここに示す文字標章及び図形標章は、Infor及び/またはその関連会社ならびに子会社の商標または登録商標、あるいはその両方です。本書に記載されるその他すべての商標名は各所有者の所有物です。', comment: 'Please recheck as duplicate "all rights reserved" was removed.' },
     Actions: { id: 'Actions', value: 'アクション', comment: 'Tooltip text for the action button with additional in context actions' },
     Add: { id: 'Add', value: '追加', comment: 'Add' },
     AddComments: { id: 'AddComments', value: 'コメントの追加', comment: 'Add comments to a form of data' },
@@ -211,6 +211,7 @@ Soho.Locale.addCulture('ja-JP', {
     ExampleData: { id: 'ExampleData', value: 'データの例', comment: 'Translated text for an example piece of data instance' },
     ExamplePlaceholder: { id: 'ExamplePlaceholder', value: 'プレースホルダーの例', comment: 'Translated text for an example form placeholder text' },
     Export: { id: 'Export', value: 'エクスポート', comment: 'Export tooltip' },
+    ExportToCsv: { id: 'ExportToCsv', value: 'CSV にエクスポート', comment: 'Export To CSV menu option in datagrid' },
     ExportToExcel: { id: 'ExportToExcel', value: 'Excel にエクスポート', comment: 'Export To Excel menu option in datagrid' },
     ExtraSmall: { id: 'ExtraSmall', value: '極小', comment: 'A smaller font size and compressed mode for datagrid rows.' },
     Favorite: { id: 'Favorite', value: 'お気に入り', comment: 'A favorite item' },
@@ -255,6 +256,7 @@ Soho.Locale.addCulture('ja-JP', {
     InProgress: { id: 'In Progress', value: '処理中', comment: 'Info tooltip that an action is in progress' },
     Insert: { id: 'Insert', value: '挿入', comment: 'Insert Modal Dialog Button' },
     InsertAnchor: { id: 'InsertAnchor', value: 'アンカーの挿入', comment: 'Insert a hyperlink in an editor' },
+    InsertHyperlink: { id: 'InsertHyperlink', value: 'ハイパーリンクの挿入', comment: 'Insert a hyperlink in an editor' },
     InsertImage: { id: 'InsertImage', value: '画像の挿入', comment: 'Insert Image in an editor' },
     InsertLink: { id: 'InsertLink', value: 'リンクの挿入', comment: 'Insert Link in an editor' },
     InsertUrl: { id: 'InsertUrl', value: 'URL の挿入', comment: 'Insert a Url in an editor' },
@@ -423,6 +425,7 @@ Soho.Locale.addCulture('ja-JP', {
     SelectDay: { id: 'SelectDay', value: '日付の選択', comment: 'Select a day in the calendar picker' },
     Selected: { id: 'Selected', value: '選択済', comment: 'text describing a selected object' },
     SelectAll: { id: 'SelectAll', value: 'すべて選択', comment: 'describes the action of selecting all items available in a list' },
+    SelectedOptions: { id: 'SelectedOptions', value: '選択済オプション', comment: 'shown on a list of selected dropdown options (generic)' },
     Send: { id: 'Send', value: '送信', comment: 'Send tooltip' },
     SetTime: { id: 'SetTime', value: '時間の設定', comment: 'button the sets time in a field' },
     Settings: { id: 'Settings', value: '設定', comment: 'Settings tooltip' },
