@@ -26,9 +26,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - uses: browser-actions/setup-chrome@latest
-    - run: chrome --version
-
     - name: Setup timezone
       uses: szenius/set-timezone@v1.0
       with:
