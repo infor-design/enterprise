@@ -35,9 +35,9 @@ jobs:
     - uses: nanasess/setup-chromedriver@v1
 
     - name: Setup timezone
-      uses: zcong1993/setup-timezone@master
+      uses: szenius/set-timezone@v1.0
       with:
-        timezone: America/New_York
+        timezoneMacos: "America/New_York"
 
     - name: Install Dependencies
       run: npm i
