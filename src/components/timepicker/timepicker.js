@@ -1091,7 +1091,7 @@ TimePicker.prototype = {
           }
           
           selected = '';
-          if (parseInt(hourValue) === hourCounter) {
+          if (parseInt(hourValue, 10) === hourCounter) {
             selected = ' selected';
           }
 
@@ -1104,10 +1104,10 @@ TimePicker.prototype = {
         }
 
         $('select.hours.dropdown')
-            .siblings('.dropdown-wrapper')
-            .find('.dropdown')
-            .children('span')
-            .html(hourValue);
+          .siblings('.dropdown-wrapper')
+          .find('.dropdown')
+          .children('span')
+          .html(hourValue);
       });
     }, 10);
   },
