@@ -487,7 +487,6 @@ TimePicker.prototype = {
     const maxHourCount = is24HourFormat ? 24 : 13;
 
     this.hourSelect = $(`<select id="${this.hoursId}" data-options="{'noSearch': 'true'}" class="hours dropdown"></select>`);
-
     while (hourCounter < maxHourCount) {
       selected = '';
 
@@ -1073,7 +1072,6 @@ TimePicker.prototype = {
       $('select.period.dropdown').on('change', (e) => {
         const period = $(e.target).find(':checked').val();
         let selected;
-        let resetValue = false;
         this.initValues = self.getTimeFromField();
         const is24HourFormat = this.is24HourFormat();
         let hourCounter = is24HourFormat ? 0 : 1;
@@ -1085,31 +1083,31 @@ TimePicker.prototype = {
         }
 
         hourSelect.empty();
+        const maxHourRange = self.getMaxHourRange(this.initValues, this.hasDayPeriods(), period);
+
         while (hourCounter < maxHourCount) {
-          selected = '';
-          const maxHourRange = self.getMaxHourRange(this.initValues, this.hasDayPeriods(), period);
           if (hourCounter > maxHourRange) {
             break;
           }
-
-          if (!resetValue) {
+          
+          selected = '';
+          if (parseInt(hourValue) === hourCounter) {
             selected = ' selected';
-            resetValue = true;
+          }
 
-            if (hourValue > maxHourRange) {
-              hourValue = 1;
-            }
+          hourSelect.append($(`<option${selected}>${self.hourText(hourCounter)}</option>`));
+          hourCounter++;
+        }
 
-            $('select.hours.dropdown')
+        if (hourValue > maxHourRange) {
+          hourValue = 1;
+        }
+
+        $('select.hours.dropdown')
             .siblings('.dropdown-wrapper')
             .find('.dropdown')
             .children('span')
             .html(hourValue);
-          }
-          
-          hourSelect.append($(`<option${selected}>${self.hourText(hourCounter)}</option>`));
-          hourCounter++;
-        }
       });
     }, 10);
   },
