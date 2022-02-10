@@ -26,12 +26,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: Cache multiple paths
-      uses: actions/cache@v2
-      with:
-        path: node_modules
-        key: enterprise-1017
-
     - uses: browser-actions/setup-chrome@latest
     - run: chrome --version
 
