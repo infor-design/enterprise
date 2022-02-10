@@ -39,6 +39,9 @@ jobs:
       with:
         timezoneMacos: "America/New_York"
 
+    - name: Build Sass
+      run: npm rebuild node-sass
+
     - name: Install Dependencies
       run: npm i
 
