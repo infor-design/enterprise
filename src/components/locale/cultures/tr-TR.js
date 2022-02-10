@@ -61,7 +61,7 @@ Soho.Locale.addCulture('tr-TR', {
   },
   // Resx - Provided By Translation Team
   messages: {
-    AboutText: { id: 'AboutText', value: 'Telif hakkı &copy; {0} Infor. Tüm hakları saklıdır. Bu belgede belirtilen marka isimleri ve tasarımları, Infor ve/veya bağlı şirketleri ve iştiraklerinin ticari markaları ve/veya tescilli ticari markalarıdır. Burada belirtilen diğer tüm ticari markalar ilgili sahiplerinin mülkiyetindedir', comment: 'Please recheck as duplicate "all rights reserved" was removed.' },
+    AboutText: { id: 'AboutText', value: 'Telif hakkı &copy; {0} Infor. Tüm hakları saklıdır. Bu belgede belirtilen marka isimleri ve tasarımları, Infor ve/veya bağlı şirketleri ve iştiraklerinin ticari markaları ve/veya tescilli ticari markalarıdır. Burada belirtilen diğer tüm ticari markalar ilgili sahiplerinin mülkiyetindedir' },
     Actions: { id: 'Actions', value: 'Eylemler', comment: 'Tooltip text for the action button with additional in context actions' },
     Add: { id: 'Add', value: 'Ekle', comment: 'Add' },
     AddComments: { id: 'AddComments', value: 'Yorumlar Ekle', comment: 'Add comments to a form of data' },

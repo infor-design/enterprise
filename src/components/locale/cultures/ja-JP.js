@@ -61,7 +61,7 @@ Soho.Locale.addCulture('ja-JP', {
   },
   // Resx - Provided By Translation Team
   messages: {
-    AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. All rights reserved. ここに示す文字標章及び図形標章は、Infor及び/またはその関連会社ならびに子会社の商標または登録商標、あるいはその両方です。本書に記載されるその他すべての商標名は各所有者の所有物です。', comment: 'Please recheck as duplicate "all rights reserved" was removed.' },
+    AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. All rights reserved. ここに示す文字標章及び図形標章は、Infor及び/またはその関連会社ならびに子会社の商標または登録商標、あるいはその両方です。本書に記載されるその他すべての商標名は各所有者の所有物です。' },
     Actions: { id: 'Actions', value: 'アクション', comment: 'Tooltip text for the action button with additional in context actions' },
     Add: { id: 'Add', value: '追加', comment: 'Add' },
     AddComments: { id: 'AddComments', value: 'コメントの追加', comment: 'Add comments to a form of data' },

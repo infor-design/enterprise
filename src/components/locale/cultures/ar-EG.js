@@ -300,7 +300,7 @@ Soho.Locale.addCulture('ar-EG', {
   },
   // Resx - Provided By Translation Team
   messages: {
-    AboutText: { id: 'AboutText', value: 'حقوق النشر &copy; {0} Infor. جميع الحقوق محفوظة. تعتبر الكلمات والعلامات المنصوص عليها بهذه الوثيقة علامات تجارية و/أو علامات تجارية مسجلة لشركة Infor و/أو الشركات التابعة لها والفرعية. تعتبر كافة العلامات التجارية المدرجة هنا ملكية خاصة بأصحابها.', comment: 'Please recheck as duplicate "all rights reserved" was removed.' },
+    AboutText: { id: 'AboutText', value: 'حقوق النشر &copy; {0} Infor. جميع الحقوق محفوظة. تعتبر الكلمات والعلامات المنصوص عليها بهذه الوثيقة علامات تجارية و/أو علامات تجارية مسجلة لشركة Infor و/أو الشركات التابعة لها والفرعية. تعتبر كافة العلامات التجارية المدرجة هنا ملكية خاصة بأصحابها.' },
     Actions: { id: 'Actions', value: 'الإجراءات', comment: 'Tooltip text for the action button with additional in context actions' },
     Add: { id: 'Add', value: 'إضافة', comment: 'Add' },
     AddComments: { id: 'AddComments', value: 'إضافة تعليقات', comment: 'Add comments to a form of data' },
@@ -758,7 +758,7 @@ Soho.Locale.addCulture('ar-EG', {
     User: { id: 'User', value: 'مستخدم', comment: 'User tooltip' },
     UserProfile: { id: 'UserProfile', value: 'ملف تعريف المستخدم', comment: 'User Profile tooltip' },
     Variant: { id: 'Variant', value: 'المتغير', comment: 'Refers to an application variant (a slight UI change/variation)' },
-    Version: { id: 'Version', value: 'إصدار IDS', comment: 'Version of IDS' },
+    Version: { id: 'Version', value: 'IDS إصدار', comment: 'Version of IDS' },
     Versions: { id: 'Versions', value: 'الإصدارات', comment: 'A selection of versions of the styles' },
     VerticalMiddleAlign: { id: 'VerticalMiddleAlign', value: 'محاذاة عمودية إلى الوسط', comment: 'Vertical Align tooltip' },
     Vibrant: { id: 'Vibrant', value: 'متألق', comment: 'The title of one of the application themes.' },

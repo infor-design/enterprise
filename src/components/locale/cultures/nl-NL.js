@@ -61,7 +61,7 @@ Soho.Locale.addCulture('nl-NL', {
   },
   // Resx - Provided By Translation Team
   messages: {
-    AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. Alle rechten voorbehouden. De woord- en merktekens die in dit document worden gebruikt zijn handelsmerken en/of geregistreerde handelsmerken van Infor en/of haar vestigingen en gelieerde bedrijven. Alle overige handelsmerken in dit document zijn eigendom van de respectievelijke eigenaren.', comment: 'Please recheck as duplicate "all rights reserved" was removed.' },
+    AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. Alle rechten voorbehouden. De woord- en merktekens die in dit document worden gebruikt zijn handelsmerken en/of geregistreerde handelsmerken van Infor en/of haar vestigingen en gelieerde bedrijven. Alle overige handelsmerken in dit document zijn eigendom van de respectievelijke eigenaren.' },
     Actions: { id: 'Actions', value: 'Acties', comment: 'Tooltip text for the action button with additional in context actions' },
     Add: { id: 'Add', value: 'Toevoegen', comment: 'Add' },
     AddComments: { id: 'AddComments', value: 'Opmerkingen toevoegen', comment: 'Add comments to a form of data' },

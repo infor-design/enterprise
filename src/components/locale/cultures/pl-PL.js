@@ -61,7 +61,7 @@ Soho.Locale.addCulture('pl-PL', {
   },
   // Resx - Provided By Translation Team
   messages: {
-    AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. Wszelkie prawa zastrzeżone. Wymienione tu znaki słowne i graficzne są znakami towarowymi lub zastrzeżonymi znakami towarowymi firmy Infor lub jej podmiotów stowarzyszonych i przedstawicielstw. Wszystkie pozostałe znaki towarowe są własnością odpowiednich podmiotów', comment: 'Please recheck as duplicate "all rights reserved" was removed.' },
+    AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. Wszelkie prawa zastrzeżone. Wymienione tu znaki słowne i graficzne są znakami towarowymi lub zastrzeżonymi znakami towarowymi firmy Infor lub jej podmiotów stowarzyszonych i przedstawicielstw. Wszystkie pozostałe znaki towarowe są własnością odpowiednich podmiotów' },
     Actions: { id: 'Actions', value: 'Akcje', comment: 'Tooltip text for the action button with additional in context actions' },
     Add: { id: 'Add', value: 'Dodaj', comment: 'Add' },
     AddComments: { id: 'AddComments', value: 'Dodaj komentarze', comment: 'Add comments to a form of data' },

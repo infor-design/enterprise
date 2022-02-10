@@ -61,7 +61,7 @@ Soho.Locale.addCulture('tl-PH', {
   },
   // Resx - Provided By Translation Team
   messages: {
-    AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. Nakalaan ang lahat ng mga karapatan. Ang mga marka ng salita at disenyo na nakalagay dito ay mga trademark at / o rehistradong trademark ng Infor at / o mga kaakibat at subsidiary nito. Nakalaan ang lahat ng mga karapatan. Ang lahat ng iba pang mga trademark na nakalista dito ay pag-aari ng kani-kanilang mga may-ari.', comment: 'Please recheck as duplicate "all rights reserved" was removed.' },
+    AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. Nakalaan ang lahat ng mga karapatan. Ang mga marka ng salita at disenyo na nakalagay dito ay mga trademark at / o rehistradong trademark ng Infor at / o mga kaakibat at subsidiary nito. Nakalaan ang lahat ng mga karapatan. Ang lahat ng iba pang mga trademark na nakalista dito ay pag-aari ng kani-kanilang mga may-ari.' },
     Actions: { id: 'Actions', value: 'Mga Aksyon', comment: 'Tooltip text for the action button with additional in context actions' },
     Add: { id: 'Add', value: 'Idagdag', comment: 'Add' },
     AddComments: { id: 'AddComments', value: 'Magdagdag ng mga komento', comment: 'Add comments to a form of data' },

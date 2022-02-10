@@ -65,8 +65,7 @@ describe('About Puppeteer Tests', () => {
     it('should show the about dialog in ukranian', async () => {
       await page.click('#about-trigger');
       await page.waitForSelector('.modal-body', { visible: true });
-
-      const ukText = `Авторські права © Infor, ${new Date().getFullYear()}. Усі права збережено. Усі зазначені у цьому документі назви та дизайн елементів є товарними знаками або захищеними товарними знаками Infor та/або афілійованих організацій і філіалів Infor. Усі права збережено. Усі інші товарні знаки, перелічені тут, є власністю відповідних власників. www.infor.com.`;
+      const ukText = `Авторські права © Infor, ${new Date().getFullYear()}. Усі права збережено. Усі зазначені у цьому документі назви та дизайн елементів є товарними знаками або захищеними товарними знаками Infor та/або афілійованих організацій і філіалів Infor. Усі інші товарні знаки, перелічені тут, є власністю відповідних власників. www.infor.com.`;
       expect(await page.$eval('.additional-content + p', el => el.textContent)).toEqual(ukText);
     });
 

@@ -61,7 +61,7 @@ Soho.Locale.addCulture('hu-HU', {
   },
   // Resx - Provided By Translation Team
   messages: {
-    AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. Minden jog fenntartva. Az itt felsorolt szó- és ábrás megjelölések az Infor és/vagy kapcsolt vállalkozásainak és leányvállalatainak védjegyei és/vagy bejegyzett védjegyei. Minden más felsorolt védjegy a védjegytulajdonos tulajdonát képezi.', comment: 'Please recheck as duplicate "all rights reserved" was removed.' },
+    AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. Minden jog fenntartva. Az itt felsorolt szó- és ábrás megjelölések az Infor és/vagy kapcsolt vállalkozásainak és leányvállalatainak védjegyei és/vagy bejegyzett védjegyei. Minden más felsorolt védjegy a védjegytulajdonos tulajdonát képezi.' },
     Actions: { id: 'Actions', value: 'Műveletek', comment: 'Tooltip text for the action button with additional in context actions' },
     Add: { id: 'Add', value: 'Hozzáadás', comment: 'Add' },
     AddComments: { id: 'AddComments', value: 'Megjegyzések hozzáfűzése', comment: 'Add comments to a form of data' },

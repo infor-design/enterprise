@@ -61,7 +61,7 @@ Soho.Locale.addCulture('sv-SE', {
   },
   // Resx - Provided By Translation Team
   messages: {
-    AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. Med ensamrätt. Ord- och figurmärken i den här publikationen är varumärken och/eller registrerade varumärken som tillhör Infor och/eller dess dotterbolag. Alla andra varumärken i den här publikationen tillhör respektive ägare', comment: 'Please recheck as duplicate "all rights reserved" was removed.' },
+    AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. Med ensamrätt. Ord- och figurmärken i den här publikationen är varumärken och/eller registrerade varumärken som tillhör Infor och/eller dess dotterbolag. Alla andra varumärken i den här publikationen tillhör respektive ägare' },
     Actions: { id: 'Actions', value: 'Åtgärder', comment: 'Tooltip text for the action button with additional in context actions' },
     Add: { id: 'Add', value: 'Lägg till', comment: 'Add' },
     AddComments: { id: 'AddComments', value: 'Lägg till kommentarer', comment: 'Add comments to a form of data' },

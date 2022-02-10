@@ -61,7 +61,7 @@ Soho.Locale.addCulture('he-IL', {
   },
   // Resx - Provided By Translation Team
   messages: {
-    AboutText: { id: 'AboutText', value: 'זכויות יוצרים &copy; {0} Infor. כל הזכויות שמורות. סימני המילים והעיצוב המתוארים במסמך הם סימני מסחר ו/או סימני מסחר רשומים של Infor ו/או של חברות מסונפות או חברות-בנות. כל שאר סימני המסחר המצוינים במסמך הם רכושם של בעליהם, בהתאמה.', comment: 'Please recheck as duplicate "all rights reserved" was removed.' },
+    AboutText: { id: 'AboutText', value: 'זכויות יוצרים &copy; {0} Infor. כל הזכויות שמורות. סימני המילים והעיצוב המתוארים במסמך הם סימני מסחר ו/או סימני מסחר רשומים של Infor ו/או של חברות מסונפות או חברות-בנות. כל שאר סימני המסחר המצוינים במסמך הם רכושם של בעליהם, בהתאמה.' },
     Actions: { id: 'Actions', value: 'פעולות', comment: 'Tooltip text for the action button with additional in context actions' },
     Add: { id: 'Add', value: 'הוסף', comment: 'Add' },
     AddComments: { id: 'AddComments', value: 'הוסף תגובות', comment: 'Add comments to a form of data' },

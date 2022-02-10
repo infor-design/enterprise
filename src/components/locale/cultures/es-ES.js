@@ -61,7 +61,7 @@ Soho.Locale.addCulture('es-ES', {
   },
   // Resx
   messages: {
-    AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. Todos los derechos están reservados. Las marcas denominativas y figurativas mencionadas a continuación son marcas comerciales y marcas comerciales registradas de Infor y/o sus empresas filiales y subsidiarias. Las demás marcas comerciales mencionadas a continuación son propiedad de sus respectivos propietarios.', comment: 'Please recheck as duplicate "all rights reserved" was removed.' },
+    AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. Todos los derechos están reservados. Las marcas denominativas y figurativas mencionadas a continuación son marcas comerciales y marcas comerciales registradas de Infor y/o sus empresas filiales y subsidiarias. Las demás marcas comerciales mencionadas a continuación son propiedad de sus respectivos propietarios.' },
     Actions: { id: 'Actions', value: 'Acciones', comment: 'Tooltip text for the action button with additional in context actions' },
     Add: { id: 'Add', value: 'Añadir', comment: 'Add' },
     AddComments: { id: 'AddComments', value: 'Añadir comentarios', comment: 'Add comments to a form of data' },

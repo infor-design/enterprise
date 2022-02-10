@@ -62,7 +62,7 @@ Soho.Locale.addCulture('da-DK', {
   },
   // Resx - Provided By Translation Team
   messages: {
-    AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. Alle rettigheder forbeholdes. Ord- og designmærkerne anført heri er varemærker og/eller registrerede varemærker tilhørende Infor og/eller dennes affilierede selskaber og datterselskaber. Alle andre varemærker angivet heri tilhører de respektive ejere.', comment: 'Please recheck as duplicate "all rights reserved" was removed.' },
+    AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. Alle rettigheder forbeholdes. Ord- og designmærkerne anført heri er varemærker og/eller registrerede varemærker tilhørende Infor og/eller dennes affilierede selskaber og datterselskaber. Alle andre varemærker angivet heri tilhører de respektive ejere.' },
     Actions: { id: 'Actions', value: 'Handlinger', comment: 'Tooltip text for the action button with additional in context actions' },
     Add: { id: 'Add', value: 'Tilføj', comment: 'Add' },
     AddComments: { id: 'AddComments', value: 'Tilføj kommentarer', comment: 'Add comments to a form of data' },

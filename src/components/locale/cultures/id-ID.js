@@ -61,7 +61,7 @@ Soho.Locale.addCulture('id-ID', {
   },
   // Resx - Provided By Translation Team
   messages: {
-    AboutText: { id: 'AboutText', value: 'Hak Cipta &copy; {0} Infor. Hak cipta dilindungi undang-undang. Kata dan merek desain yang tercantum di sini adalah merek dagang dan/atau merek dagang terdaftar Infor dan/atau afiliasi dan anak perusahaannya. Semua merek dagang lain yang tercantum di sini adalah properti dari pemilik masing-masing merek', comment: 'Please recheck as duplicate "all rights reserved" was removed.' },
+    AboutText: { id: 'AboutText', value: 'Hak Cipta &copy; {0} Infor. Hak cipta dilindungi undang-undang. Kata dan merek desain yang tercantum di sini adalah merek dagang dan/atau merek dagang terdaftar Infor dan/atau afiliasi dan anak perusahaannya. Semua merek dagang lain yang tercantum di sini adalah properti dari pemilik masing-masing merek' },
     Actions: { id: 'Actions', value: 'Tindakan', comment: 'Tooltip text for the action button with additional in context actions' },
     Add: { id: 'Add', value: 'Tambahkan', comment: 'Add' },
     AddComments: { id: 'AddComments', value: 'Tambahkan Komentar', comment: 'Add comments to a form of data' },

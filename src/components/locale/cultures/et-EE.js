@@ -61,7 +61,7 @@ Soho.Locale.addCulture('et-EE', {
   },
   // Resx - Provided By Translation Team
   messages: {
-    AboutText: { id: 'AboutText', value: 'Autoriõigus &copy; {0} Infor. Kõik õigused on kaitstud. Kõik siin esitatud sõnalised ja kujundusmärgid on ettevõtte Infor ja/või selle sidus- ja tütarettevõtete kaubamärgid ja/või registreeritud kaubamärgid. Kõik teised siin loetletud kaubamärgid kuuluvad nende omanikele.', comment: 'Please recheck as duplicate "all rights reserved" was removed.' },
+    AboutText: { id: 'AboutText', value: 'Autoriõigus &copy; {0} Infor. Kõik õigused on kaitstud. Kõik siin esitatud sõnalised ja kujundusmärgid on ettevõtte Infor ja/või selle sidus- ja tütarettevõtete kaubamärgid ja/või registreeritud kaubamärgid. Kõik teised siin loetletud kaubamärgid kuuluvad nende omanikele.' },
     Actions: { id: 'Actions', value: 'Toimingud', comment: 'Tooltip text for the action button with additional in context actions' },
     Add: { id: 'Add', value: 'Lisa', comment: 'Add' },
     AddComments: { id: 'AddComments', value: 'Lisa kommentaarid', comment: 'Add comments to a form of data' },

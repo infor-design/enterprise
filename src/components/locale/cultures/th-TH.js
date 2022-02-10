@@ -61,7 +61,7 @@ Soho.Locale.addCulture('th-TH', {
   },
   // Resx - Provided By Translation Team
   messages: {
-    AboutText: { id: 'AboutText', value: 'ลิขสิทธิ์ &copy; {0} Infor. ขอสงวนลิขสิทธิ์ คำและเครื่องหมายการออกแบบที่ระบุในที่นี้เป็นเครื่องหมายการค้า และ/หรือเครื่องหมายการค้าจดทะเบียนของ Infor และ/หรือบริษัทในเครือและบริษัทสาขา สำหรับเครื่องหมายการค้าอื่นที่ระบุไว้ที่นี่ทั้งหมดถือเป็นทรัพย์สินของเจ้าของที่เกี่ยวข้อง', comment: 'Please recheck as duplicate "all rights reserved" was removed.' },
+    AboutText: { id: 'AboutText', value: 'ลิขสิทธิ์ &copy; {0} Infor. ขอสงวนลิขสิทธิ์ คำและเครื่องหมายการออกแบบที่ระบุในที่นี้เป็นเครื่องหมายการค้า และ/หรือเครื่องหมายการค้าจดทะเบียนของ Infor และ/หรือบริษัทในเครือและบริษัทสาขา สำหรับเครื่องหมายการค้าอื่นที่ระบุไว้ที่นี่ทั้งหมดถือเป็นทรัพย์สินของเจ้าของที่เกี่ยวข้อง' },
     Actions: { id: 'Actions', value: 'การดำเนินการ', comment: 'Tooltip text for the action button with additional in context actions' },
     Add: { id: 'Add', value: 'เพิ่ม', comment: 'Add' },
     AddComments: { id: 'AddComments', value: 'เพิ่มความคิดเห็น', comment: 'Add comments to a form of data' },

@@ -61,7 +61,7 @@ Soho.Locale.addCulture('zh-CN', {
   },
   // Resx - Provided By Translation Team
   messages: {
-    AboutText: { id: 'AboutText', value: '版权所有 &copy; {0} Infor。保留所有权利。此处的文字信息和设计标志均为 Infor 和/或其关联公司及子公司的商标和/或注册商标。在此所列举的其它商标则属于其各自拥有人的财产。', comment: 'Please recheck as duplicate "all rights reserved" was removed.' },
+    AboutText: { id: 'AboutText', value: '版权所有 &copy; {0} Infor。保留所有权利。此处的文字信息和设计标志均为 Infor 和/或其关联公司及子公司的商标和/或注册商标。在此所列举的其它商标则属于其各自拥有人的财产。' },
     Actions: { id: 'Actions', value: '操作', comment: 'Tooltip text for the action button with additional in context actions' },
     Add: { id: 'Add', value: '添加', comment: 'Add' },
     AddComments: { id: 'AddComments', value: '添加备注', comment: 'Add comments to a form of data' },

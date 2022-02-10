@@ -61,7 +61,7 @@ Soho.Locale.addCulture('ro-RO', {
   },
   // Resx - Provided By Translation Team
   messages: {
-    AboutText: { id: 'AboutText', value: 'Drepturi de autor &copy; {0} Infor. Toate drepturile rezervate. Grupul de simboluri și mărcile de design menționate în acest document sunt mărci comerciale și/sau mărci comerciale înregistrate ale Infor și/sau ale afiliaților și filialelor sale. Toate celelalte mărci comerciale menționate în acest document aparțin deținătorilor respectivi.', comment: 'Please recheck as duplicate "all rights reserved" was removed.' },
+    AboutText: { id: 'AboutText', value: 'Drepturi de autor &copy; {0} Infor. Toate drepturile rezervate. Grupul de simboluri și mărcile de design menționate în acest document sunt mărci comerciale și/sau mărci comerciale înregistrate ale Infor și/sau ale afiliaților și filialelor sale. Toate celelalte mărci comerciale menționate în acest document aparțin deținătorilor respectivi.' },
     Actions: { id: 'Actions', value: 'Acțiuni', comment: 'Tooltip text for the action button with additional in context actions' },
     Add: { id: 'Add', value: 'Adăugare', comment: 'Add' },
     AddComments: { id: 'AddComments', value: 'Adăugare comentarii', comment: 'Add comments to a form of data' },

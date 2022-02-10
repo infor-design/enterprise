@@ -61,7 +61,7 @@ Soho.Locale.addCulture('uk-UA', {
   },
   // Resx - Provided By Translation Team
   messages: {
-    AboutText: { id: 'AboutText', value: 'Авторські права &copy; Infor, {0}. Усі права збережено. Усі зазначені у цьому документі назви та дизайн елементів є товарними знаками або захищеними товарними знаками Infor та/або афілійованих організацій і філіалів Infor. Усі інші товарні знаки, перелічені тут, є власністю відповідних власників.', comment: 'Please recheck as duplicate "all rights reserved" was removed.' },
+    AboutText: { id: 'AboutText', value: 'Авторські права &copy; Infor, {0}. Усі права збережено. Усі зазначені у цьому документі назви та дизайн елементів є товарними знаками або захищеними товарними знаками Infor та/або афілійованих організацій і філіалів Infor. Усі інші товарні знаки, перелічені тут, є власністю відповідних власників.' },
     Actions: { id: 'Actions', value: 'Дії', comment: 'Tooltip text for the action button with additional in context actions' },
     Add: { id: 'Add', value: 'Додати', comment: 'Add' },
     AddComments: { id: 'AddComments', value: 'Додати коментарі', comment: 'Add comments to a form of data' },

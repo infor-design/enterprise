@@ -61,7 +61,7 @@ Soho.Locale.addCulture('hi-IN', {
   },
   // Resx - Provided By Translation Team
   messages: {
-    AboutText: { id: 'AboutText', value: 'Infor &copy; {0} कॉपीराइट| सर्वाधिकार सुरक्षित| यहाँ दिए गए शब्द और डिज़ाइन मार्क्स Infor और/या Infor के सहयोगियों और संबंधित सहायकों के लिए सेट किये गए ट्रेडमार्क्स और/या पंजीकृत ट्रेडमार्क्स हैं| यहाँ सूचित किये गए अन्य सभी ट्रेडमार्क्स उनके सम्बंधित स्वामियों की संपत्ति है|', comment: 'Please recheck as duplicate "all rights reserved" was removed.' },
+    AboutText: { id: 'AboutText', value: 'Infor &copy; {0} कॉपीराइट| सर्वाधिकार सुरक्षित| यहाँ दिए गए शब्द और डिज़ाइन मार्क्स Infor और/या Infor के सहयोगियों और संबंधित सहायकों के लिए सेट किये गए ट्रेडमार्क्स और/या पंजीकृत ट्रेडमार्क्स हैं| यहाँ सूचित किये गए अन्य सभी ट्रेडमार्क्स उनके सम्बंधित स्वामियों की संपत्ति है|' },
     Actions: { id: 'Actions', value: 'क्रियाएँ', comment: 'Tooltip text for the action button with additional in context actions' },
     Add: { id: 'Add', value: 'जोड़ें', comment: 'Add' },
     AddComments: { id: 'AddComments', value: 'टिप्पणी जोड़ें', comment: 'Add comments to a form of data' },

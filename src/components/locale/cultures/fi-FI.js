@@ -61,7 +61,7 @@ Soho.Locale.addCulture('fi-FI', {
   },
   // Resx - Provided By Translation Team
   messages: {
-    AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. Kaikki oikeudet pidätetään. Tässä esitetyt sanamerkit ja suunnittelumerkit ovat Inforin ja/tai sen konserniyhtiöiden tavaramerkkejä ja/tai rekisteröityjä tavaramerkkejä. Kaikki muut tässä esitetyt tavaramerkit ovat omistajiensa omaisuutta', comment: 'Please recheck as duplicate "all rights reserved" was removed.' },
+    AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. Kaikki oikeudet pidätetään. Tässä esitetyt sanamerkit ja suunnittelumerkit ovat Inforin ja/tai sen konserniyhtiöiden tavaramerkkejä ja/tai rekisteröityjä tavaramerkkejä. Kaikki muut tässä esitetyt tavaramerkit ovat omistajiensa omaisuutta' },
     Actions: { id: 'Actions', value: 'Toiminnot', comment: 'Tooltip text for the action button with additional in context actions' },
     Add: { id: 'Add', value: 'Lisää', comment: 'Add' },
     AddComments: { id: 'AddComments', value: 'Lisää kommentteja', comment: 'Add comments to a form of data' },

@@ -61,7 +61,7 @@ Soho.Locale.addCulture('ms-bn', {
   },
   // Resx - Provided By Translation Team
   messages: {
-    AboutText: { id: 'AboutText', value: 'Hak Cipta &copy; {0} Infor. Hak cipta terpelihara. Perkataan dan tanda reka bentuk yang ditetapkan di sini ialah tanda dagangan dan/atau tanda dagangan berdaftar Infor dan/atau ahli gabungan dan anak syarikatnya. Semua tanda dagangan lain yang disenaraikan di sini ialah hak milik pemiliknya masing-masing.', comment: 'Please recheck as duplicate "all rights reserved" was removed.' },
+    AboutText: { id: 'AboutText', value: 'Hak Cipta &copy; {0} Infor. Hak cipta terpelihara. Perkataan dan tanda reka bentuk yang ditetapkan di sini ialah tanda dagangan dan/atau tanda dagangan berdaftar Infor dan/atau ahli gabungan dan anak syarikatnya. Semua tanda dagangan lain yang disenaraikan di sini ialah hak milik pemiliknya masing-masing.' },
     Actions: { id: 'Actions', value: 'Tindakan', comment: 'Tooltip text for the action button with additional in context actions' },
     Add: { id: 'Add', value: 'Tambah', comment: 'Add' },
     AddComments: { id: 'AddComments', value: 'Tambah Komen', comment: 'Add comments to a form of data' },

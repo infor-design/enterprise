@@ -62,7 +62,7 @@ Soho.Locale.addCulture('bg-BG', {
   },
   // Resx - Provided By Translation Team
   messages: {
-    AboutText: { id: 'AboutText', value: 'Авторско право &copy; {0} Infor. Всички права запазени. Словните и фигуративните марки, представени в този документ, представляват търговски марки и/или регистрирани търговски марки на Infor и/или свързани с тях дружества и подразделения. Всички други търговски марки, изброени по-долу, са собственост на съответните им притежатели', comment: 'Please recheck as duplicate "all rights reserved" was removed.' },
+    AboutText: { id: 'AboutText', value: 'Авторско право &copy; {0} Infor. Всички права запазени. Словните и фигуративните марки, представени в този документ, представляват търговски марки и/или регистрирани търговски марки на Infor и/или свързани с тях дружества и подразделения. Всички други търговски марки, изброени по-долу, са собственост на съответните им притежатели' },
     Actions: { id: 'Actions', value: 'Действия', comment: 'Tooltip text for the action button with additional in context actions' },
     Add: { id: 'Add', value: 'Добавяне', comment: 'Add' },
     AddComments: { id: 'AddComments', value: 'Добавяне на коментари', comment: 'Add comments to a form of data' },

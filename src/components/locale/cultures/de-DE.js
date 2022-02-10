@@ -62,7 +62,7 @@ Soho.Locale.addCulture('de-DE', {
   },
   // Resx
   messages: {
-    AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. Alle Rechte vorbehalten. Die hier aufgelisteten Wort- und Designmarken sind Markenzeichen und/oder geschützte Marken der Infor und/oder verbundener Unternehmen. Alle anderen hier genannten Markenzeichen sind das Eigentum der betreffenden Unternehmen.', comment: 'Please recheck as duplicate "all rights reserved" was removed.' },
+    AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. Alle Rechte vorbehalten. Die hier aufgelisteten Wort- und Designmarken sind Markenzeichen und/oder geschützte Marken der Infor und/oder verbundener Unternehmen. Alle anderen hier genannten Markenzeichen sind das Eigentum der betreffenden Unternehmen.' },
     Actions: { id: 'Actions', value: 'Aktionen', comment: 'Tooltip text for the action button with additional in context actions' },
     Add: { id: 'Add', value: 'Hinzufügen', comment: 'Add' },
     AddComments: { id: 'AddComments', value: 'Anmerkungen hinzufügen', comment: 'Add comments to a form of data' },

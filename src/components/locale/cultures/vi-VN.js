@@ -61,7 +61,7 @@ Soho.Locale.addCulture('vi-VN', {
   },
   // Resx - Provided By Translation Team
   messages: {
-    AboutText: { id: 'AboutText', value: 'Bản quyền &copy; {0} Infor. Bảo lưu mọi quyền. Từ ngữ và các nhãn hiệu thiết kế trong đây là các thương hiệu và/hoặc thương hiệu đã được đăng ký của công ty và/hoặc các chi nhánh và công ty con của Infor. Tất cả thương hiệu khác được liệt kê ở đây là tài sản của chủ sở hữu tương ứng', comment: 'Please recheck as duplicate "all rights reserved" was removed.' },
+    AboutText: { id: 'AboutText', value: 'Bản quyền &copy; {0} Infor. Bảo lưu mọi quyền. Từ ngữ và các nhãn hiệu thiết kế trong đây là các thương hiệu và/hoặc thương hiệu đã được đăng ký của công ty và/hoặc các chi nhánh và công ty con của Infor. Tất cả thương hiệu khác được liệt kê ở đây là tài sản của chủ sở hữu tương ứng' },
     Actions: { id: 'Actions', value: 'Hành động', comment: 'Tooltip text for the action button with additional in context actions' },
     Add: { id: 'Add', value: 'Thêm', comment: 'Add' },
     AddComments: { id: 'AddComments', value: 'Thêm Bình luận', comment: 'Add comments to a form of data' },

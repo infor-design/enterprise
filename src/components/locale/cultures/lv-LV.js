@@ -61,7 +61,7 @@ Soho.Locale.addCulture('lv-LV', {
   },
   // Resx - Provided By Translation Team
   messages: {
-    AboutText: { id: 'AboutText', value: 'Autortiesības &copy; {0} Infor. Visas tiesības paturētas. Šeit norādītie vārdi un dizaina apzīmējumi ir Infor un/vai tā saistīto uzņēmumu un filiāļu preču zīmes un/vai reģistrētas preču zīmes. Visas citas šeit norādītās preču zīmes pieder to attiecīgajiem īpašniekiem.', comment: 'Please recheck as duplicate "all rights reserved" was removed.' },
+    AboutText: { id: 'AboutText', value: 'Autortiesības &copy; {0} Infor. Visas tiesības paturētas. Šeit norādītie vārdi un dizaina apzīmējumi ir Infor un/vai tā saistīto uzņēmumu un filiāļu preču zīmes un/vai reģistrētas preču zīmes. Visas citas šeit norādītās preču zīmes pieder to attiecīgajiem īpašniekiem.' },
     Actions: { id: 'Actions', value: 'Darbības', comment: 'Tooltip text for the action button with additional in context actions' },
     Add: { id: 'Add', value: 'Pievienot', comment: 'Add' },
     AddComments: { id: 'AddComments', value: 'Pievienot komentārus', comment: 'Add comments to a form of data' },

@@ -60,7 +60,7 @@ Soho.Locale.addCulture('pt-BR', {
     groupSizes: [3, 3]
   },
   messages: {
-    AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. Todos os direitos reservados. Os nomes e os logotipos de marcas aqui contidos são marcas comerciais e/ou marcas registradas da Infor e/ou de suas afiliadas e subsidiárias. Todas as outras marcas comerciais relacionadas aqui são de propriedade de seus respectivos proprietários.', comment: 'Please recheck as duplicate "all rights reserved" was removed.' },
+    AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. Todos os direitos reservados. Os nomes e os logotipos de marcas aqui contidos são marcas comerciais e/ou marcas registradas da Infor e/ou de suas afiliadas e subsidiárias. Todas as outras marcas comerciais relacionadas aqui são de propriedade de seus respectivos proprietários.' },
     Actions: { id: 'Actions', value: 'Ações', comment: 'Tooltip text for the action button with additional in context actions' },
     Add: { id: 'Add', value: 'Adicionar', comment: 'Add' },
     AddComments: { id: 'AddComments', value: 'Adicionar comentários', comment: 'Add comments to a form of data' },

@@ -61,7 +61,7 @@ Soho.Locale.addCulture('hr-HR', {
   },
   // Resx - Provided By Translation Team
   messages: {
-    AboutText: { id: 'AboutText', value: 'Autorska prava &copy; {0} Infor. Sva prava pridržana. Riječi i znakovi navedeni u ovom dokumentu predstavljaju zaštitne znakove i/ili registrirane zaštitne znakove tvrtke Infor i/ili povezanih društava i podružnica. Svi su drugi ovdje navedeni zaštitni znakovi u vlasništvu odgovarajućih vlasnika.', comment: 'Please recheck as duplicate "all rights reserved" was removed.' },
+    AboutText: { id: 'AboutText', value: 'Autorska prava &copy; {0} Infor. Sva prava pridržana. Riječi i znakovi navedeni u ovom dokumentu predstavljaju zaštitne znakove i/ili registrirane zaštitne znakove tvrtke Infor i/ili povezanih društava i podružnica. Svi su drugi ovdje navedeni zaštitni znakovi u vlasništvu odgovarajućih vlasnika.' },
     Actions: { id: 'Actions', value: 'Radnje', comment: 'Tooltip text for the action button with additional in context actions' },
     Add: { id: 'Add', value: 'Dodaj', comment: 'Add' },
     AddComments: { id: 'AddComments', value: 'Dodaj komentare', comment: 'Add comments to a form of data' },
