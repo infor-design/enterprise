@@ -84,6 +84,7 @@ module.exports = function (config) {
         flags: ['--no-sandbox']
       }
     },
+    browserNoActivityTimeout: 50000,
     singleRun: false
   });
 };
