@@ -182,7 +182,7 @@ describe('Bar API', () => {
       expect(barObj.getSelected()).toBeTruthy();
       expect(barObj.getSelected()[0].data.name).toEqual('Component B');
       done();
-    }, 201);
+    }, 300);
   });
 
   it('Should toggle selected bar', () => {
