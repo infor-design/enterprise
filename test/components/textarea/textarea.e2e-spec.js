@@ -83,7 +83,7 @@ describe('Textarea example-index tests', () => {
 
     await element(by.id('description-dirty')).sendKeys(protractor.Key.chord(protractor.Key.CONTROL, 'v'));
 
-    expect(await element(by.id('description-dirty')).getAttribute('value')).toEqual(sampleStr);
+    expect(await element(by.id('description-dirty')).getAttribute('value')).toContain(sampleStr);
   });
 
   it('Should allow special characters', async () => {
