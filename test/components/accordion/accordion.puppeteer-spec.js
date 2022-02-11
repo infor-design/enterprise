@@ -28,6 +28,7 @@ describe('Accordion Puppeteer Test', () => {
 
     it('should have panels', async () => {
       await page.waitForSelector('.accordion.panel', { visible: true });
+      await page.waitForTimeout(200);
 
       expect((await page.$$('.accordion.panel')).length).toEqual(4);
     });
