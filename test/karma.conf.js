@@ -27,6 +27,9 @@ module.exports = function (config) {
     basePath: '..',
     frameworks: ['jasmine'],
     files,
+    logLevel: config.LOG_ERROR,
+    browserNoActivityTimeout: 50000,
+    browserDisconnectTolerance: 15,
     exclude: [
       'node_modules'
     ],
@@ -84,7 +87,6 @@ module.exports = function (config) {
         flags: ['--no-sandbox']
       }
     },
-    browserNoActivityTimeout: 50000,
     singleRun: false
   });
 };
