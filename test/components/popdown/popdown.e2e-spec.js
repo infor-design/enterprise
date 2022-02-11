@@ -81,7 +81,6 @@ describe('Popdown first last tab Tests', () => {
   it('Should not have errors', async () => {
     await utils.checkForErrors();
   });
-
 });
 
 describe('Popdown/Lookup integration Tests', () => {
