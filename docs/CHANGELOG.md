@@ -4,6 +4,11 @@
 
 - `[Hierarchy]` Converted the old protractor e2e test suites to puppeteer tests. ([#5833](https://github.com/infor-design/enterprise/issues/5833))
 
+## v4.61.0 Fixes
+
+- `[Timepicker]` Fix a bug in timepicker where hours reset to 1 when changing period. ([#6049](https://github.com/infor-design/enterprise/issues/6049))
+- `[Timepicker]` Fix a bug in timepicker where hours is not properly created when changing from AM/PM. ([#6104](https://github.com/infor-design/enterprise/issues/6104))
+
 ## v4.60.0 Features
 
 - `[Application Menu]` Added puppeteer tests for resizable application menu. ([#5755](https://github.com/infor-design/enterprise/issues/5755))
