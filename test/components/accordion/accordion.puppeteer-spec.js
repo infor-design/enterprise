@@ -13,7 +13,7 @@ describe('Accordion Puppeteer Test', () => {
 
       await page.click('#accordion-one-pane > div:nth-child(1) button');
 
-      page.waitForSelector('#accordion-one-pane .accordion-pane.is-expanded', { visible: true });
+      await page.waitForSelector('#accordion-one-pane .accordion-pane.is-expanded', { visible: true });
 
       expect((await page.$$('.accordion-pane.is-expanded')).length).toEqual(1);
     });
@@ -27,7 +27,7 @@ describe('Accordion Puppeteer Test', () => {
     });
 
     it('should have panels', async () => {
-      page.waitForSelector('.accordion.panel', { visible: true });
+      await page.waitForSelector('.accordion.panel', { visible: true });
 
       expect((await page.$$('.accordion.panel')).length).toEqual(4);
     });
@@ -38,8 +38,7 @@ describe('Accordion Puppeteer Test', () => {
 
     beforeEach(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
-
-      page.waitForSelector('#ajax-accordion .accordion-header', { visible: true });
+      await page.waitForSelector('#ajax-accordion .accordion-header', { visible: true });
     });
 
     it('should have ajax data in headers', async () => {
