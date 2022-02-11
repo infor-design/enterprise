@@ -180,7 +180,7 @@ describe('Bar API', () => {
 
     setTimeout(() => {
       expect(barObj.getSelected()).toBeTruthy();
-      expect(barObj.getSelected()[0].data.name).toEqual('Category C');
+      expect(barObj.getSelected()[0].data.name).toEqual('Component B');
       done();
     }, 201);
   });
