@@ -143,7 +143,7 @@ const stackedSettings = {
 };
 
 describe('Bar API', () => {
-  beforeEach((done) => {
+  beforeEach(() => {
     barEl = null;
     barObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
@@ -156,9 +156,6 @@ describe('Bar API', () => {
     Soho.Locale.set('en-US'); //eslint-disable-line
 
     barObj = new Bar(barEl, settings);
-    setTimeout(() => {
-      done();
-    });
   });
 
   afterEach(() => {

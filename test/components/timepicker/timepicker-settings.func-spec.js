@@ -29,7 +29,7 @@ describe('TimePicker settings', () => {
     const settings = {
       locale: null,
       language: null,
-      timeFormat: 'HH:mm:ss',
+      timeFormat: 'h:mm a',
       minuteInterval: 5,
       secondInterval: 5,
       mode: TIMEPICKER_MODES[0],
@@ -48,7 +48,7 @@ describe('TimePicker settings', () => {
     const settings = {
       locale: null,
       language: null,
-      timeFormat: 'HH:mm:ss',
+      timeFormat: 'h:mm a',
       minuteInterval: 10,
       secondInterval: 10,
       mode: TIMEPICKER_MODES[0],
@@ -71,7 +71,7 @@ describe('TimePicker settings', () => {
     const settings = {
       locale: null,
       language: null,
-      timeFormat: 'HH:mm:ss',
+      timeFormat: 'h:mm a',
       minuteInterval: 10,
       secondInterval: 10,
       mode: TIMEPICKER_MODES[0],

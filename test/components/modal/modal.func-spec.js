@@ -196,10 +196,9 @@ describe('Modal Manager API', () => {
     });
 
     // Modals should be registered upon creation, even if they aren't shown yet.
-    expect(modalManager.modals.length).toEqual(1);
-
     modalAPI.open();
     setTimeout(() => {
+      expect(modalManager.modals.length).toEqual(1);
       expect(modalManager.currentlyActive).toBeDefined();
       expect(modalManager.currentlyOpen.length).toEqual(1);
 

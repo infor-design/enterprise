@@ -46,16 +46,13 @@ const dataset = [{
 }];
 
 describe('Radar API', () => {
-  beforeEach((done) => {
+  beforeEach(() => {
     radarEl = null;
     radarObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', radarHTML);
     radarEl = document.body.querySelector('#radar-chart-example');
     radarObj = new Radar(radarEl, { type: 'radar', dataset, animate: false });
-    setTimeout(() => {
-      done();
-    });
   });
 
   afterEach(() => {
