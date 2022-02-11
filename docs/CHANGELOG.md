@@ -7,6 +7,7 @@
 - `[Locale]` Refined some Latvian translations. ([#5969](https://github.com/infor-design/enterprise/issues/5969))
 - `[Locale]` Refined some Lithuanian translations. ([#5960](https://github.com/infor-design/enterprise/issues/5960))
 - `[Locale]` Refined some Filipino translations. ([#5864](https://github.com/infor-design/enterprise/issues/5864))
+- `[Locale]` Refined some Japanese translations. ([#6115](https://github.com/infor-design/enterprise/issues/6115))
 
 ## v4.60.0 Features
 
