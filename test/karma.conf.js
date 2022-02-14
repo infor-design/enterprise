@@ -89,9 +89,7 @@ module.exports = function (config) {
         flags: [
           '--headless',
           '--disable-gpu',
-          '--window-size=1200,800',
-          '--disable-dev-shm-usage',
-          '--disable-web-security',
+          '--source-map=false',
           '--no-sandbox'
         ]
       }
