@@ -133,7 +133,7 @@ describe('Lookup API', () => {
     }, 300);
   });
 
-  it('Should be able to open the dialog and select', (done) => {
+  it.skip('Should be able to open the dialog and select', (done) => {
     lookupObj.openDialog();
 
     setTimeout(() => {
