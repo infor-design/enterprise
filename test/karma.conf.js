@@ -90,6 +90,7 @@ module.exports = function (config) {
           '--headless',
           '--disable-gpu',
           '--source-map=false',
+          '--js-flags=--max-old-space-size=8196',
           '--no-sandbox'
         ]
       }
