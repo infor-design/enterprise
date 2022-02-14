@@ -74,7 +74,7 @@ describe('Textarea example-index tests', () => {
   });
 
   // Showing '' on ci
-  it.skip('Should allow copy/paste', async () => {
+  xit('Should allow copy/paste', async () => {
     const sampleStr = 'Lorem ipsum';
 
     await element(by.id('description-dirty')).clear();
