@@ -26,13 +26,16 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
+    - name: Cache multiple paths
+      uses: actions/cache@v2
+      with:
+        path: node_modules
+        key: enterprise-1020
+
     - name: Setup timezone
       uses: szenius/set-timezone@v1.0
       with:
         timezoneMacos: "America/New_York"
-
-    - name: Build Sass
-      run: npm rebuild node-sass
 
     - name: Install Dependencies
       run: npm i
@@ -40,11 +43,11 @@ jobs:
     - name: Build
       run: npm run build
 
-    - name: Run Lint Checks
-      run: npm run lint:ci
-
     - name: Run functional tests
       run: npm run functional:ci
+
+    - name: Run Lint Checks
+      run: npm run lint:ci
 
     - name: Run puppeteer tests
       run:  (npm run quickstart &) && sleep 5; npm run e2e:puppeteer;
