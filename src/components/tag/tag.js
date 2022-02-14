@@ -164,6 +164,7 @@ Tag.prototype = {
       elemClasses.add('is-linkable');
       linkableBtn = `<button class="btn-linkable" focusable="false" tabIndex="-1">
         ${$.createIcon('caret-right')}
+        <span class="audible">${Locale.translate('Link')}</span>
       </button>`;
     }
     const content = `<${contentTagType} class="tag-content"${href}${tabIndex}>${xssUtils.sanitizeHTML(this.settings.content)}</${contentTagType}>`;

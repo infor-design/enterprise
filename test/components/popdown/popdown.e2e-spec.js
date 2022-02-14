@@ -81,69 +81,6 @@ describe('Popdown first last tab Tests', () => {
   it('Should not have errors', async () => {
     await utils.checkForErrors();
   });
-
-  // 1. On open first input should be focused.
-  // 2. On first input (Shift + Tab) should close and focus to previous.
-  // 3. On last input Tab should close and focus to next.
-  it('Should let close the popdown and if available focus to prev/next', async () => {
-    const focusedId = () => browser.driver.switchTo().activeElement().getAttribute('id');
-
-    // Tab on date field
-    const dateField = await element(by.css('#date-field-normal'));
-    await browser.actions().mouseMove(dateField).perform();
-    await browser.actions().click(dateField).perform();
-    await browser.actions().sendKeys(protractor.Key.TAB).perform();
-    await browser.actions().sendKeys(protractor.Key.TAB).perform();
-    await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.popdown'))), config.waitsFor);
-    await browser.driver.sleep(config.sleepLonger);
-
-    // Popdown should open and first input should be focused.
-    expect(await element(by.css('.popdown')).isDisplayed()).toBeTruthy();
-    expect(await element(by.css('#first-name')).isDisplayed()).toBeTruthy();
-    expect(await element(by.css('#last-name')).isDisplayed()).toBeTruthy();
-    expect(focusedId()).toEqual('first-name');
-
-    // Tab on first input
-    await element(by.css('#first-name')).sendKeys(protractor.Key.TAB);
-    await browser.driver.sleep(config.sleepLonger);
-
-    // Last input should be focused in popdown.
-    expect(await focusedId()).toEqual('last-name');
-
-    // Tab on last input in popdown
-    await element(by.css('#last-name')).sendKeys(protractor.Key.TAB);
-    await browser.driver.sleep(config.sleepLonger);
-
-    // Popdown should close and next input (another-field) should be focused.
-    expect(await element(by.css('.popdown')).isDisplayed()).toBeFalsy();
-    expect(await element(by.css('#first-name')).isDisplayed()).toBeFalsy();
-    expect(await element(by.css('#last-name')).isDisplayed()).toBeFalsy();
-    expect(await focusedId()).toEqual('another-field');
-
-    // Shift + Tab on this next to popdown input (another-field)
-    await element(by.css('#another-field'))
-      .sendKeys(protractor.Key.chord(protractor.Key.SHIFT, protractor.Key.TAB));
-    await browser.driver.sleep(config.sleepLonger);
-
-    // Popdown should open again and first input should be focused.
-    expect(await element(by.css('.popdown')).isDisplayed()).toBeTruthy();
-    expect(await element(by.css('#first-name')).isDisplayed()).toBeTruthy();
-    expect(await element(by.css('#last-name')).isDisplayed()).toBeTruthy();
-    expect(await focusedId()).toEqual('first-name');
-
-    // Shift + Tab on first input in popdown
-    const shiftTab = protractor.Key.chord(protractor.Key.SHIFT, protractor.Key.TAB);
-    await browser.actions().sendKeys(shiftTab).perform();
-    await browser.actions().sendKeys(shiftTab).perform();
-    await browser.driver.sleep(config.sleepLonger);
-
-    // Popdown should close and previous input (date field) should be focused.
-    expect(await element(by.css('.popdown')).isDisplayed()).toBeFalsy();
-    expect(await element(by.css('#first-name')).isDisplayed()).toBeFalsy();
-    expect(await element(by.css('#last-name')).isDisplayed()).toBeFalsy();
-    expect(await focusedId()).toEqual('date-field-normal');
-  });
 });
 
 describe('Popdown/Lookup integration Tests', () => {
