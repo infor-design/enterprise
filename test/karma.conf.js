@@ -1,5 +1,4 @@
 const specs = require('./helpers/detect-custom-spec-list')('functional', process.env.PROTRACTOR_SPECS);
-process.env.CHROME_BIN = require('puppeteer').executablePath();
 
 // Preprend `test/` to the spec list results
 specs.forEach((spec, i) => {
@@ -28,7 +27,7 @@ module.exports = function (config) {
     basePath: '..',
     frameworks: ['jasmine'],
     files,
-    logLevel: config.LOG_ERROR,
+    logLevel: config.LOG_INFO,
     browserNoActivityTimeout: 50000,
     browserDisconnectTolerance: 15,
     captureTimeout: 10000,
@@ -91,6 +90,7 @@ module.exports = function (config) {
           '--disable-gpu',
           '--source-map=false',
           '--js-flags=--max-old-space-size=8196',
+          '--disable-dev-shm-usage',
           '--no-sandbox'
         ]
       }
