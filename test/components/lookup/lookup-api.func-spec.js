@@ -58,22 +58,20 @@ const settings = {
 };
 
 describe('Lookup API', () => {
-  beforeEach((done) => {
+  beforeEach(() => {
     lookupEl = null;
     lookupObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', lookupHTML);
     lookupEl = document.body.querySelector('.lookup');
     lookupObj = new Lookup(lookupEl, settings);
-    done();
   });
 
-  afterEach((done) => {
+  afterEach(() => {
     if (lookupObj) {
       lookupObj.destroy();
     }
     cleanup();
-    done();
   });
 
   it('Should be defined', () => {

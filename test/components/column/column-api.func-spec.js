@@ -238,7 +238,7 @@ const stackedSettings = {
 };
 
 describe('Column Chart API', () => {
-  beforeEach((done) => {
+  beforeEach(() => {
     columnEl = null;
     columnObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
@@ -246,7 +246,6 @@ describe('Column Chart API', () => {
     columnEl = document.body.querySelector('#column-bar-example');
 
     columnObj = new Column(columnEl, { type: 'column', dataset: JSON.parse(JSON.stringify(dataset)), animate: false });
-    setTimeout(done());
   });
 
   afterEach(() => {

@@ -8,7 +8,7 @@ let dropdownEl;
 let dropdownObj;
 
 describe('Dropdown ARIA', () => {
-  beforeEach((done) => {
+  beforeEach(() => {
     dropdownEl = null;
     dropdownObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
@@ -16,7 +16,6 @@ describe('Dropdown ARIA', () => {
     dropdownEl = document.body.querySelector('.dropdown');
     dropdownEl.classList.add('no-init');
     dropdownObj = new Dropdown(dropdownEl);
-    done();
   });
 
   afterEach(() => {

@@ -929,10 +929,10 @@ describe('Locale API', () => {
   it('Should cleanly handle non dates', () => {
     Locale.set('en-US');
 
-    expect(Locale.parseDate('111/81/20001')).toEqual(undefined);
-    expect(Locale.formatNumber(undefined, { date: 'timestamp' })).toEqual(undefined);
-    expect(Locale.parseDate('13/28/2015', 'MM/d/yyyy')).toEqual(undefined);
-    expect(Locale.parseDate('10/32/2015', 'MM/dd/yyyy')).toEqual(undefined);
+    expect(Locale.parseDate('111/81/20001')).toBeFalsy();
+    expect(Locale.formatNumber(undefined, { date: 'timestamp' })).toBeFalsy();
+    expect(Locale.parseDate('13/28/2015', 'MM/d/yyyy')).toBeFalsy();
+    expect(Locale.parseDate('10/32/2015', 'MM/dd/yyyy')).toBeFalsy();
   });
 
   it('Should parse text months', () => {

@@ -21,7 +21,7 @@ describe('Keyboard Manager Tests', () => {
 
   it('Can be trigger a keys event', (done) => {
     const spyEvent = spyOnEvent('body', 'keys');
-    $('body').on('keys', (e, a) => {
+    $('body').one('keys', (e, a) => {
       expect(a[0]).toEqual('Ctrl');
       done();
     });

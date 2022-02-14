@@ -62,7 +62,7 @@ function formatToUnits(num, digits) {
 }
 
 describe('Bullet Chart API', () => {
-  beforeEach((done) => {
+  beforeEach(() => {
     bulletEl = null;
     bulletObj = null;
     document.body.insertAdjacentHTML('afterbegin', svg);
@@ -70,7 +70,6 @@ describe('Bullet Chart API', () => {
     bulletEl = document.body.querySelector('#bullet-example1');
 
     bulletObj = new Bullet(bulletEl, { dataset: dataset1, animate: false });
-    setTimeout(done(), 300);
   });
 
   afterEach(() => {

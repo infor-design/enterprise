@@ -75,16 +75,13 @@ describe('Contextual Action Panel - Defined Through Settings', () => {
     document.body.insertAdjacentHTML('afterbegin', triggerHTML);
   });
 
-  afterEach((done) => {
+  afterEach(() => {
     cleanup();
 
     if (capAPI) {
       capAPI.destroy();
     }
     document.body.removeAttribute('data-modal');
-    setTimeout(() => {
-      done();
-    }, 500);
   });
 
   it('can be invoked', () => {
@@ -133,16 +130,13 @@ describe('Contextual Action Panel - Button API Access', () => {
     document.body.insertAdjacentHTML('afterbegin', triggerHTML);
   });
 
-  afterEach((done) => {
+  afterEach(() => {
     cleanup();
 
     if (capAPI) {
       capAPI.destroy();
     }
     document.body.removeAttribute('data-modal');
-    setTimeout(() => {
-      done();
-    }, 500);
   });
 
   it('can provide access to its Toolbar API', () => {

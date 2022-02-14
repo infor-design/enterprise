@@ -337,7 +337,7 @@ describe('Datagrid Selection API', () => {
     }, 1);
   });
 
-  it('Should test paging select indeterminate Single', (done) => {
+  xit('Should test paging select indeterminate Single', (done) => {
     datagridObj.destroy();
     const options = { columns, selectable: 'single', paging: true, pagesize: 3, indeterminate: true, source: pagingDataSource };
     datagridObj = new Datagrid(datagridEl, options);

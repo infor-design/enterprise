@@ -173,7 +173,7 @@ xdescribe('Modal Manager API', () => {
     modalPanelEl2 = document.querySelector('#modal-panel-2');
   });
 
-  afterEach((done) => {
+  afterEach(() => {
     if (modalAPI) {
       modalAPI.destroy();
     }
@@ -181,9 +181,6 @@ xdescribe('Modal Manager API', () => {
       modalAPI2.destroy();
     }
     cleanup();
-    setTimeout(() => {
-      done();
-    }, 500);
   });
 
   it('should exist as part of the global Soho object', () => {
