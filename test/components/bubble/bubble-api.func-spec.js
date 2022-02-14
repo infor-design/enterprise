@@ -216,7 +216,7 @@ describe('Bubble Chart API', () => {
   it('Should show on page', () => {
     expect(document.body.querySelectorAll('.dot').length).toEqual(24);
     expect(document.body.querySelectorAll('.line-group').length).toEqual(2);
-    expect(document.body.querySelectorAll('.chart-legend')[0].innerText.replace(/[\r\n]+/g, '')).toEqual('HighlightSeries 01HighlightSeries 02');
+    expect(document.body.querySelectorAll('.chart-legend')[0].innerText.replace(/[\r\n]+/g, '')).toContain('Series 01');
   });
 
   it('Should be able to get the get and set the selected bubble', () => {
