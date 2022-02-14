@@ -75,7 +75,7 @@
     "release:beta": "release-it --preRelease=beta --npm.tag=beta --no-github.release",
     "release:rc": "release-it --preRelease=rc --npm.tag=rc --no-github.release",
     "release:final": "release-it",
-    "test": "npm run mdlint && npm run eslint && npm run stylelint && npm run functional:ci && npm run e2e:ci",
+    "test": "npm run mdlint && npm run eslint && npm run stylelint && npm run functional:ci && npm run e2e:ci npm run e2e:puppeteer --",
     "node-version-check": "npx check-node-version --node 14",
     "node-updates-check": "npx ncu"
   },
