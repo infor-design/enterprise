@@ -1,4 +1,5 @@
 const specs = require('./helpers/detect-custom-spec-list')('functional', process.env.PROTRACTOR_SPECS);
+process.env.CHROME_BIN = require('puppeteer').executablePath();
 
 // Preprend `test/` to the spec list results
 specs.forEach((spec, i) => {
@@ -30,6 +31,7 @@ module.exports = function (config) {
     logLevel: config.LOG_ERROR,
     browserNoActivityTimeout: 50000,
     browserDisconnectTolerance: 15,
+    captureTimeout: 10000,
     exclude: [
       'node_modules'
     ],
@@ -80,11 +82,11 @@ module.exports = function (config) {
     },
     port: 9876,
     colors: true,
-    browsers: ['ChromeHeadlessNoSandbox'],
+    browsers: ['ChromeHeadlessCustom'],
     customLaunchers: {
-      ChromeHeadlessNoSandbox: {
+      ChromeHeadlessCustom: {
         base: 'ChromeHeadless',
-        flags: ['--no-sandbox']
+        flags: ['--no-sandbox', '--disable-web-security']
       }
     },
     singleRun: false

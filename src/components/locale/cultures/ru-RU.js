@@ -61,7 +61,7 @@ Soho.Locale.addCulture('ru-RU', {
   },
   // Resx - Provided By Translation Team
   messages: {
-    AboutText: { id: 'AboutText', value: 'Авторские права &copy; Infor, {0}. Все права сохранены. Настоящим представленные названия и дизайн элементов являются товарными знаками либо охраняемыми товарными знаками Infor и/или аффилированных организаций и филиалов Infor. Все права сохранены. Все другие товарные знаки, перечисленные здесь, являются собственностью соответствующих владельцев.' },
+    AboutText: { id: 'AboutText', value: 'Авторские права &copy; Infor, {0}. Все права сохранены. Настоящим представленные названия и дизайн элементов являются товарными знаками либо охраняемыми товарными знаками Infor и/или аффилированных организаций и филиалов Infor. Все другие товарные знаки, перечисленные здесь, являются собственностью соответствующих владельцев.' },
     Actions: { id: 'Actions', value: 'Действия', comment: 'Tooltip text for the action button with additional in context actions' },
     Add: { id: 'Add', value: 'Добавить', comment: 'Add' },
     AddComments: { id: 'AddComments', value: 'Добавить комментарии', comment: 'Add comments to a form of data' },
@@ -211,6 +211,7 @@ Soho.Locale.addCulture('ru-RU', {
     ExampleData: { id: 'ExampleData', value: 'Данные примера', comment: 'Translated text for an example piece of data instance' },
     ExamplePlaceholder: { id: 'ExamplePlaceholder', value: 'Заполнитель примера', comment: 'Translated text for an example form placeholder text' },
     Export: { id: 'Export', value: 'Экспортировать', comment: 'Export tooltip' },
+    ExportToCsv: { id: 'ExportToCsv', value: 'Экспортировать в CSV', comment: 'Export To CSV menu option in datagrid' },
     ExportToExcel: { id: 'ExportToExcel', value: 'Экспортировать в Excel', comment: 'Export To Excel menu option in datagrid' },
     ExtraSmall: { id: 'ExtraSmall', value: 'Очень мелкая', comment: 'A smaller font size and compressed mode for datagrid rows.' },
     Favorite: { id: 'Favorite', value: 'Избранное', comment: 'A favorite item' },
@@ -255,6 +256,7 @@ Soho.Locale.addCulture('ru-RU', {
     InProgress: { id: 'In Progress', value: 'Выполняется', comment: 'Info tooltip that an action is in progress' },
     Insert: { id: 'Insert', value: 'Вставить', comment: 'Insert Modal Dialog Button' },
     InsertAnchor: { id: 'InsertAnchor', value: 'Вставить привязку', comment: 'Insert a hyperlink in an editor' },
+    InsertHyperlink: { id: 'InsertHyperlink', value: 'Вставить гиперссылку', comment: 'Insert a hyperlink in an editor' },
     InsertImage: { id: 'InsertImage', value: 'Вставить изображение', comment: 'Insert Image in an editor' },
     InsertLink: { id: 'InsertLink', value: 'Вставить ссылку', comment: 'Insert Link in an editor' },
     InsertUrl: { id: 'InsertUrl', value: 'Вставить URL-адрес', comment: 'Insert a Url in an editor' },
@@ -423,6 +425,7 @@ Soho.Locale.addCulture('ru-RU', {
     SelectDay: { id: 'SelectDay', value: 'Выберите день', comment: 'Select a day in the calendar picker' },
     Selected: { id: 'Selected', value: 'Выбрано', comment: 'text describing a selected object' },
     SelectAll: { id: 'SelectAll', value: 'Выбрать все', comment: 'describes the action of selecting all items available in a list' },
+    SelectedOptions: { id: 'SelectedOptions', value: 'Выбранные параметры', comment: 'shown on a list of selected dropdown options (generic)' },
     Send: { id: 'Send', value: 'Отправить', comment: 'Send tooltip' },
     SetTime: { id: 'SetTime', value: 'Установить время', comment: 'button the sets time in a field' },
     Settings: { id: 'Settings', value: 'Настройки', comment: 'Settings tooltip' },
