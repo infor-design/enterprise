@@ -862,6 +862,7 @@ DatePicker.prototype = {
       placement: popPlacement,
       popover: true,
       trigger: 'immediate',
+      isRangeDatepicker: s.range.useRange,
       extraClass: this.settings.range.selectWeek ? 'monthview-popup is-range-week' : 'monthview-popup',
       tooltipElement: '#monthview-popup',
       initializeContent: false
@@ -890,13 +891,6 @@ DatePicker.prototype = {
         // Move calendar if top position exceeds max height so header will show
         if ((window.innerHeight - this.popup.height()) / window.innerHeight < 0.15) {
           this.popup.css({ top: `${this.popup.position().top < 0 ? 0 : this.popup.position().top + 50}px` });
-        }
-
-        // Hide calendar until range to be pre selected
-        if (s.range.useRange &&
-            s.range.first && s.range.first.date &&
-            s.range.second && s.range.second.date) {
-          this.popup.addClass('is-hidden');
         }
 
         if (this.settings.hideButtons) {
