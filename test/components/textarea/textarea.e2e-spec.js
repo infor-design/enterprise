@@ -8,7 +8,7 @@ const axePageObjects = requireHelper('axe-page-objects');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('Textarea example-index tests', () => {
+describe('Textarea example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/textarea/example-index?theme=classic');
   });
