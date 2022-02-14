@@ -91,15 +91,14 @@ module.exports = {
   // eslint-disable-next-line arrow-body-style
   getConfig: (customSnapshotIdentifier) => {
     return {
-      // anything less than 0.001 percent difference passes as the same
-      failureThreshold: 0.00001,
+      // anything less than 0.006 percent difference passes as the same
+      failureThreshold: 0.00006,
       failureThresholdType: 'percent',
       customSnapshotIdentifier,
       customSnapshotsDir: './test/baseline-images',
       customDiffDir: './test/baseline-images/diff',
       // Reduced false positives (failing tests when the images look the same)
-      comparisonMethod: 'ssim',
-      updatePassedSnapshot: true
+      comparisonMethod: 'ssim'
     };
   },
 
