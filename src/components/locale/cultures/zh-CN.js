@@ -61,7 +61,7 @@ Soho.Locale.addCulture('zh-CN', {
   },
   // Resx - Provided By Translation Team
   messages: {
-    AboutText: { id: 'AboutText', value: '版权所有 &copy; {0} Infor。保留所有权利。此处的文字信息和设计标志均为 Infor 和/或其关联公司及子公司的商标和/或注册商标。保留所有权利。在此所列举的其它商标则属于其各自拥有人的财产。' },
+    AboutText: { id: 'AboutText', value: '版权所有 &copy; {0} Infor。保留所有权利。此处的文字信息和设计标志均为 Infor 和/或其关联公司及子公司的商标和/或注册商标。在此所列举的其它商标则属于其各自拥有人的财产。' },
     Actions: { id: 'Actions', value: '操作', comment: 'Tooltip text for the action button with additional in context actions' },
     Add: { id: 'Add', value: '添加', comment: 'Add' },
     AddComments: { id: 'AddComments', value: '添加备注', comment: 'Add comments to a form of data' },
@@ -211,6 +211,7 @@ Soho.Locale.addCulture('zh-CN', {
     ExampleData: { id: 'ExampleData', value: '示例数据', comment: 'Translated text for an example piece of data instance' },
     ExamplePlaceholder: { id: 'ExamplePlaceholder', value: '示例占位符', comment: 'Translated text for an example form placeholder text' },
     Export: { id: 'Export', value: '导出', comment: 'Export tooltip' },
+    ExportToCsv: { id: 'ExportToCsv', value: '导出至 CSV', comment: 'Export To CSV menu option in datagrid' },
     ExportToExcel: { id: 'ExportToExcel', value: '导出至 Excel', comment: 'Export To Excel menu option in datagrid' },
     ExtraSmall: { id: 'ExtraSmall', value: '特小', comment: 'A smaller font size and compressed mode for datagrid rows.' },
     Favorite: { id: 'Favorite', value: '收藏夹', comment: 'A favorite item' },
@@ -255,6 +256,7 @@ Soho.Locale.addCulture('zh-CN', {
     InProgress: { id: 'In Progress', value: '进行中', comment: 'Info tooltip that an action is in progress' },
     Insert: { id: 'Insert', value: '插入', comment: 'Insert Modal Dialog Button' },
     InsertAnchor: { id: 'InsertAnchor', value: '插入定位标记', comment: 'Insert a hyperlink in an editor' },
+    InsertHyperlink: { id: 'InsertHyperlink', value: '插入超链接', comment: 'Insert a hyperlink in an editor' },
     InsertImage: { id: 'InsertImage', value: '插入图像', comment: 'Insert Image in an editor' },
     InsertLink: { id: 'InsertLink', value: '插入链接', comment: 'Insert Link in an editor' },
     InsertUrl: { id: 'InsertUrl', value: '插入 URL', comment: 'Insert a Url in an editor' },
@@ -423,6 +425,7 @@ Soho.Locale.addCulture('zh-CN', {
     SelectDay: { id: 'SelectDay', value: '选择一个日期', comment: 'Select a day in the calendar picker' },
     Selected: { id: 'Selected', value: '选定项', comment: 'text describing a selected object' },
     SelectAll: { id: 'SelectAll', value: '全选', comment: 'describes the action of selecting all items available in a list' },
+    SelectedOptions: { id: 'SelectedOptions', value: '选定项', comment: 'shown on a list of selected dropdown options (generic)' },
     Send: { id: 'Send', value: '发送', comment: 'Send tooltip' },
     SetTime: { id: 'SetTime', value: '设置时间', comment: 'button the sets time in a field' },
     Settings: { id: 'Settings', value: '设置', comment: 'Settings tooltip' },

@@ -61,7 +61,7 @@ Soho.Locale.addCulture('uk-UA', {
   },
   // Resx - Provided By Translation Team
   messages: {
-    AboutText: { id: 'AboutText', value: 'Авторські права &copy; Infor, {0}. Усі права збережено. Усі зазначені у цьому документі назви та дизайн елементів є товарними знаками або захищеними товарними знаками Infor та/або афілійованих організацій і філіалів Infor. Усі права збережено. Усі інші товарні знаки, перелічені тут, є власністю відповідних власників.' },
+    AboutText: { id: 'AboutText', value: 'Авторські права &copy; Infor, {0}. Усі права збережено. Усі зазначені у цьому документі назви та дизайн елементів є товарними знаками або захищеними товарними знаками Infor та/або афілійованих організацій і філіалів Infor. Усі інші товарні знаки, перелічені тут, є власністю відповідних власників.' },
     Actions: { id: 'Actions', value: 'Дії', comment: 'Tooltip text for the action button with additional in context actions' },
     Add: { id: 'Add', value: 'Додати', comment: 'Add' },
     AddComments: { id: 'AddComments', value: 'Додати коментарі', comment: 'Add comments to a form of data' },
@@ -211,6 +211,7 @@ Soho.Locale.addCulture('uk-UA', {
     ExampleData: { id: 'ExampleData', value: 'Дані прикладу', comment: 'Translated text for an example piece of data instance' },
     ExamplePlaceholder: { id: 'ExamplePlaceholder', value: 'Покажчик місця заповнення прикладу', comment: 'Translated text for an example form placeholder text' },
     Export: { id: 'Export', value: 'Експортувати', comment: 'Export tooltip' },
+    ExportToCsv: { id: 'ExportToCsv', value: 'Експортувати в CSV', comment: 'Export To CSV menu option in datagrid' },
     ExportToExcel: { id: 'ExportToExcel', value: 'Експортувати в Excel', comment: 'Export To Excel menu option in datagrid' },
     ExtraSmall: { id: 'ExtraSmall', value: 'Дуже дрібний', comment: 'A smaller font size and compressed mode for datagrid rows.' },
     Favorite: { id: 'Favorite', value: 'Уподобання', comment: 'A favorite item' },
@@ -255,6 +256,7 @@ Soho.Locale.addCulture('uk-UA', {
     InProgress: { id: 'In Progress', value: 'Виконується', comment: 'Info tooltip that an action is in progress' },
     Insert: { id: 'Insert', value: 'Вставити', comment: 'Insert Modal Dialog Button' },
     InsertAnchor: { id: 'InsertAnchor', value: 'Вставити прив\'язку', comment: 'Insert a hyperlink in an editor' },
+    InsertHyperlink: { id: 'InsertHyperlink', value: 'Вставити гіперпосилання', comment: 'Insert a hyperlink in an editor' },
     InsertImage: { id: 'InsertImage', value: 'Вставити зображення', comment: 'Insert Image in an editor' },
     InsertLink: { id: 'InsertLink', value: 'Вставити посилання', comment: 'Insert Link in an editor' },
     InsertUrl: { id: 'InsertUrl', value: 'Вставити URL-адресу', comment: 'Insert a Url in an editor' },
@@ -423,6 +425,7 @@ Soho.Locale.addCulture('uk-UA', {
     SelectDay: { id: 'SelectDay', value: 'Виберіть день', comment: 'Select a day in the calendar picker' },
     Selected: { id: 'Selected', value: 'Вибрано', comment: 'text describing a selected object' },
     SelectAll: { id: 'SelectAll', value: 'Виділити всі', comment: 'describes the action of selecting all items available in a list' },
+    SelectedOptions: { id: 'SelectedOptions', value: 'Вибрані параметри', comment: 'shown on a list of selected dropdown options (generic)' },
     Send: { id: 'Send', value: 'Надіслати', comment: 'Send tooltip' },
     SetTime: { id: 'SetTime', value: 'Визначити час', comment: 'button the sets time in a field' },
     Settings: { id: 'Settings', value: 'Настройки', comment: 'Settings tooltip' },

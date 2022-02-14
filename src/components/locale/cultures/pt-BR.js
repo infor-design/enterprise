@@ -60,7 +60,7 @@ Soho.Locale.addCulture('pt-BR', {
     groupSizes: [3, 3]
   },
   messages: {
-    AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. Todos os direitos reservados. Os nomes e os logotipos de marcas aqui contidos são marcas comerciais e/ou marcas registradas da Infor e/ou de suas afiliadas e subsidiárias. Todos os direitos reservados. Todas as outras marcas comerciais relacionadas aqui são de propriedade de seus respectivos proprietários.' },
+    AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. Todos os direitos reservados. Os nomes e os logotipos de marcas aqui contidos são marcas comerciais e/ou marcas registradas da Infor e/ou de suas afiliadas e subsidiárias. Todas as outras marcas comerciais relacionadas aqui são de propriedade de seus respectivos proprietários.' },
     Actions: { id: 'Actions', value: 'Ações', comment: 'Tooltip text for the action button with additional in context actions' },
     Add: { id: 'Add', value: 'Adicionar', comment: 'Add' },
     AddComments: { id: 'AddComments', value: 'Adicionar comentários', comment: 'Add comments to a form of data' },
@@ -210,6 +210,7 @@ Soho.Locale.addCulture('pt-BR', {
     ExampleData: { id: 'ExampleData', value: 'Dados de exemplos', comment: 'Translated text for an example piece of data instance' },
     ExamplePlaceholder: { id: 'ExamplePlaceholder', value: 'Espaço reservado de exemplo', comment: 'Translated text for an example form placeholder text' },
     Export: { id: 'Export', value: 'Exportar', comment: 'Export tooltip' },
+    ExportToCsv: { id: 'ExportToCsv', value: 'Exportar para CSV', comment: 'Export To CSV menu option in datagrid' },
     ExportToExcel: { id: 'ExportToExcel', value: 'Exportar para Excel', comment: 'Export To Excel menu option in datagrid' },
     ExtraSmall: { id: 'ExtraSmall', value: 'Muito pequeno', comment: 'A smaller font size and compressed mode for datagrid rows.' },
     Favorite: { id: 'Favorite', value: 'Favoritos', comment: 'A favorite item' },
@@ -254,6 +255,7 @@ Soho.Locale.addCulture('pt-BR', {
     InProgress: { id: 'In Progress', value: 'Em andamento', comment: 'Info tooltip that an action is in progress' },
     Insert: { id: 'Insert', value: 'Inserir', comment: 'Insert Modal Dialog Button' },
     InsertAnchor: { id: 'InsertAnchor', value: 'Inserir âncora', comment: 'Insert a hyperlink in an editor' },
+    InsertHyperlink: { id: 'InsertHyperlink', value: 'Inserir hiperlink', comment: 'Insert a hyperlink in an editor' },
     InsertImage: { id: 'InsertImage', value: 'Inserir imagem', comment: 'Insert Image in an editor' },
     InsertLink: { id: 'InsertLink', value: 'Inserir link', comment: 'Insert Link in an editor' },
     InsertUrl: { id: 'InsertUrl', value: 'Inserir Url', comment: 'Insert a Url in an editor' },
@@ -422,6 +424,7 @@ Soho.Locale.addCulture('pt-BR', {
     SelectDay: { id: 'SelectDay', value: 'Selecionar um dia', comment: 'Select a day in the calendar picker' },
     Selected: { id: 'Selected', value: 'Selecionado', comment: 'text describing a selected object' },
     SelectAll: { id: 'SelectAll', value: 'Selecionar tudo', comment: 'describes the action of selecting all items available in a list' },
+    SelectedOptions: { id: 'SelectedOptions', value: 'Opções selecionadas', comment: 'shown on a list of selected dropdown options (generic)' },
     Send: { id: 'Send', value: 'Enviar', comment: 'Send tooltip' },
     SetTime: { id: 'SetTime', value: 'Definir hora', comment: 'button the sets time in a field' },
     Settings: { id: 'Settings', value: 'Configurações', comment: 'Settings tooltip' },
