@@ -61,7 +61,7 @@ Soho.Locale.addCulture('hi-IN', {
   },
   // Resx - Provided By Translation Team
   messages: {
-    AboutText: { id: 'AboutText', value: 'Infor &copy; {0} कॉपीराइट| सर्वाधिकार सुरक्षित| यहाँ दिए गए शब्द और डिज़ाइन मार्क्स Infor और/या Infor के सहयोगियों और संबंधित सहायकों के लिए सेट किये गए ट्रेडमार्क्स और/या पंजीकृत ट्रेडमार्क्स हैं| सर्वाधिकार सुरक्षित| यहाँ सूचित किये गए अन्य सभी ट्रेडमार्क्स उनके सम्बंधित स्वामियों की संपत्ति है|' },
+    AboutText: { id: 'AboutText', value: 'Infor &copy; {0} कॉपीराइट| सर्वाधिकार सुरक्षित| यहाँ दिए गए शब्द और डिज़ाइन मार्क्स Infor और/या Infor के सहयोगियों और संबंधित सहायकों के लिए सेट किये गए ट्रेडमार्क्स और/या पंजीकृत ट्रेडमार्क्स हैं| यहाँ सूचित किये गए अन्य सभी ट्रेडमार्क्स उनके सम्बंधित स्वामियों की संपत्ति है|' },
     Actions: { id: 'Actions', value: 'क्रियाएँ', comment: 'Tooltip text for the action button with additional in context actions' },
     Add: { id: 'Add', value: 'जोड़ें', comment: 'Add' },
     AddComments: { id: 'AddComments', value: 'टिप्पणी जोड़ें', comment: 'Add comments to a form of data' },
@@ -211,6 +211,7 @@ Soho.Locale.addCulture('hi-IN', {
     ExampleData: { id: 'ExampleData', value: 'उदाहरण डेटा', comment: 'Translated text for an example piece of data instance' },
     ExamplePlaceholder: { id: 'ExamplePlaceholder', value: 'उदाहरण प्लेसहोल्डर', comment: 'Translated text for an example form placeholder text' },
     Export: { id: 'Export', value: 'निर्यात', comment: 'Export tooltip' },
+    ExportToCsv: { id: 'ExportToCsv', value: 'CSV में निर्यात करें', comment: 'Export To CSV menu option in datagrid' },
     ExportToExcel: { id: 'ExportToExcel', value: 'एक्सेल में निर्यात करें', comment: 'Export To Excel menu option in datagrid' },
     ExtraSmall: { id: 'ExtraSmall', value: 'अधिक छोटा', comment: 'A smaller font size and compressed mode for datagrid rows.' },
     Favorite: { id: 'Favorite', value: 'पसंदीदा', comment: 'A favorite item' },
@@ -255,6 +256,7 @@ Soho.Locale.addCulture('hi-IN', {
     InProgress: { id: 'In Progress', value: 'प्रगति में', comment: 'Info tooltip that an action is in progress' },
     Insert: { id: 'Insert', value: 'सम्मिलित करें', comment: 'Insert Modal Dialog Button' },
     InsertAnchor: { id: 'InsertAnchor', value: 'एंकर सम्मिलित करें', comment: 'Insert a hyperlink in an editor' },
+    InsertHyperlink: { id: 'InsertHyperlink', value: 'लिंक सम्मिलित करें', comment: 'Insert a hyperlink in an editor' },
     InsertImage: { id: 'InsertImage', value: 'छवि सम्मिलित करें', comment: 'Insert Image in an editor' },
     InsertLink: { id: 'InsertLink', value: 'लिंक सम्मिलित करें', comment: 'Insert Link in an editor' },
     InsertUrl: { id: 'InsertUrl', value: 'Url सम्मिलित करें', comment: 'Insert a Url in an editor' },
@@ -423,6 +425,7 @@ Soho.Locale.addCulture('hi-IN', {
     SelectDay: { id: 'SelectDay', value: 'दिन चयन करें', comment: 'Select a day in the calendar picker' },
     Selected: { id: 'Selected', value: 'चयनित', comment: 'text describing a selected object' },
     SelectAll: { id: 'SelectAll', value: 'सभी चयन करें', comment: 'describes the action of selecting all items available in a list' },
+    SelectedOptions: { id: 'SelectedOptions', value: 'चयनित विकल्प', comment: 'shown on a list of selected dropdown options (generic)' },
     Send: { id: 'Send', value: 'भेजें', comment: 'Send tooltip' },
     SetTime: { id: 'SetTime', value: 'समय सेट करें', comment: 'button the sets time in a field' },
     Settings: { id: 'Settings', value: 'सेटिंग्स', comment: 'Settings tooltip' },
