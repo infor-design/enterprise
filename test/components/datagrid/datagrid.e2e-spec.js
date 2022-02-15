@@ -3854,6 +3854,7 @@ describe('Datagrid paging serverside multi select tests 2nd page', () => {
     const checkboxTd = await element(by.css('#datagrid .datagrid-header th .datagrid-checkbox'));
     await browser.actions().mouseMove(checkboxTd).perform();
     await browser.actions().click(checkboxTd).perform();
+    await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(10);
     expect(await element(by.css('#datagrid .datagrid-header th .datagrid-checkbox.is-checked.is-partial')).isPresent()).toBeFalsy();
@@ -3861,6 +3862,7 @@ describe('Datagrid paging serverside multi select tests 2nd page', () => {
 
     await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(1) td:nth-child(1)')).click();
     await element(by.css('#datagrid .datagrid-wrapper tbody tr:nth-child(2) td:nth-child(1)')).click();
+    await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.datagrid-row.is-selected')).count()).toEqual(8);
     expect(await element(by.css('#datagrid .datagrid-header th .datagrid-checkbox.is-checked.is-partial')).isPresent()).toBeTruthy();
