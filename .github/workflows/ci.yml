@@ -16,7 +16,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.x]
+        node-version: [16.x]
 
     steps:
     - uses: actions/checkout@v2
@@ -30,6 +30,15 @@ jobs:
       uses: szenius/set-timezone@v1.0
       with:
         timezoneMacos: "America/New_York"
+
+    - uses: nanasess/setup-chromedriver@v1
+      with:
+        # Optional: do not specify to match Chrome's version
+        chromedriver-version: '98.0.4758.80'
+    - run: |
+        export DISPLAY=:99
+        chromedriver --url-base=/wd/hub &
+        sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 & # optional
 
     - name: Install Dependencies
       run: npm ci
