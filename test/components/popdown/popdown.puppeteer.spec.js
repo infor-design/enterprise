@@ -288,7 +288,7 @@ Object {
           { role: 'combobox', name: 'Date Field . Press Down arrow to select', haspopup: 'listbox' },
           { role: 'combobox', name: 'Date Picker Trigger', haspopup: 'dialog' },
           { role: 'StaticText', name: 'Compound Field, mouse click or tab into' },
-          { role: 'generic', name: 'JoeSmith' },
+          { role: 'generic', name: 'Joe Smith' },
           { role: 'StaticText', name: 'Another Field' },
           { role: 'textbox', name: 'Another Field' },
           { role: 'StaticText', name: 'First Name' },
@@ -348,7 +348,7 @@ Object {
       "role": "StaticText",
     },
     Object {
-      "name": "JoeSmith",
+      "name": "Joe Smith",
       "role": "generic",
     },
     Object {
