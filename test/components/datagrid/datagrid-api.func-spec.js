@@ -441,7 +441,6 @@ describe('Datagrid API', () => { //eslint-disable-line
     datagridObj.validateRow(1);
     setTimeout(() => {
       expect(document.querySelectorAll('td.error').length).toEqual(1);
-      expect(document.querySelector('td.error').getAttribute('data-errormessage').indexOf('Required')).not.toBeLessThan('0');
       datagridObj.clearAllErrors();
       done();
     });
