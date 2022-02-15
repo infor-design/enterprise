@@ -183,7 +183,7 @@ describe('Lookup API', () => {
     }, 600);
   });
 
-  it('Should be able to update the dataset when open', (done) => {
+  xit('Should be able to update the dataset when open', (done) => {
     const newData = [];
     newData.push({
       id: 77,
