@@ -30,14 +30,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: node_modules
-        key: enterprise-1017
-
-    - name: Update Chrome
-      run: |
-        sudo apt-get update
-        sudo apt-get --only-upgrade install google-chrome-stable
-
-        google-chrome --version
+        key: enterprise-1019
 
     - name: Setup timezone
       uses: zcong1993/setup-timezone@master
