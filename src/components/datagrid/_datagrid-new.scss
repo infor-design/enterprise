@@ -160,8 +160,8 @@
       }
 
       + .btn-icon.trigger {
-        margin-left: 9px;
-        margin-top: 9px;
+        margin-left: 9px !important; 
+        margin-top: 9px !important;
       }
     }
   }
@@ -320,8 +320,8 @@
 
       input.timepicker {
         + .trigger {
-          margin-left: 13px;
-          margin-top: 3px;
+          margin-left: 13px !important;
+          margin-top: 3px !important;
         }
       }
     }
@@ -654,6 +654,7 @@
 
 .datagrid.medium-rowheight td.is-editing input.timepicker {
   padding: 0 !important;
+  margin-top: 3px !important;
 
   ~ .icon {
     margin-left: 16px !important;
@@ -669,8 +670,8 @@
         padding: unset !important;
 
         + .btn-icon.trigger {
-          margin-left: 5px;
-          margin-top: 0;
+          margin-left: 5px !important;
+          margin-top: 0 !important;
         }
       }
     }
@@ -679,10 +680,12 @@
   &.small-rowheight {
     td.is-editing {
       .timepicker {
+        margin-left: 1px !important;
         padding: unset !important;
 
         + .btn-icon.trigger {
-          margin-left: 6px;
+          margin-left: 4px !important;
+          margin-top: -1px !important;
         }
       }
     }

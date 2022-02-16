@@ -159,7 +159,10 @@ const formatters = {
       const getValue = v => (!isNaN(parseInt(v, 10)) ? parseInt(v, 10) : 0);
       const d = new Date();
       let hours = getValue(time[1]);
-      hours += (time[4] ? 12 : 0);
+      if (timeString.indexOf('AM') > -1 || timeString.indexOf('PM') > -1) {
+        hours -= (hours === 12 ? 12 : 0);
+        hours += (time[4] ? 12 : 0);
+      }
       d.setHours(hours);
       d.setMinutes(getValue(time[2]));
       d.setSeconds(getValue(time[3]));
