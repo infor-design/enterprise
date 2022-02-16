@@ -44,15 +44,23 @@ jobs:
       run: npm run build
 
     - name: Run functional tests
+      env:
+        NODE_OPTIONS: "--max-old-space-size=8192"
       run: npm run functional:ci
 
     - name: Run Lint Checks
+      env:
+        NODE_OPTIONS: "--max-old-space-size=8192"
       run: npm run lint:ci
 
     - name: Run puppeteer tests
+      env:
+        NODE_OPTIONS: "--max-old-space-size=8192"
       run:  (npm run quickstart &) && sleep 5; npm run e2e:puppeteer;
 
     - name: Run e2e tests
+      env:
+        NODE_OPTIONS: "--max-old-space-size=8192"
       run:  (npm run quickstart &) && sleep 5; npm run e2e:ci:debug;
 
     - name: Deploy Main
