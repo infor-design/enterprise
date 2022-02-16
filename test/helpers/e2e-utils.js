@@ -91,8 +91,8 @@ module.exports = {
   // eslint-disable-next-line arrow-body-style
   getConfig: (customSnapshotIdentifier) => {
     return {
-      // anything less than 0.006 percent difference passes as the same
-      failureThreshold: 0.00006,
+      // anything less than 0.005 percent difference passes as the same
+      failureThreshold: 0.005,
       failureThresholdType: 'percent',
       customSnapshotIdentifier,
       customSnapshotsDir: './test/baseline-images',
