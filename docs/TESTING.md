@@ -9,6 +9,7 @@ The IDS components are backed by both functional and end-to-end (e2e) test suite
 - [Running E2E Tests Locally](#running-e2e-tests-locally)
 - [Debugging Functional Tests](#debugging-functional-tests)
 - [Working with Visual Regression Tests](#working-with-visual-regression-tests)
+- [Visual Regression testing in Puppeteer](#visual-regression-testing-in-puppeteer)
 - [Making Accessibility e2e Tests with Axe](#making-accessibility-e2e-tests-with-axe)
 - [Testing Resources](#testing-resources)
 
@@ -80,6 +81,12 @@ npm run build
 npm quickstart
 # In a new shell / terminal window
 npm run e2e:puppeteer
+```
+
+If you want to test a specific component, you can do:
+
+```sh
+npm run e2e:puppeteer component-name
 ```
 
 ## Debugging puppeteer Tests
@@ -174,6 +181,38 @@ Puppeteer:
 ```js
 await page.keyboard.press('Escape');
 ```
+
+## Visual Regression testing in Puppeteer
+
+We use jest image snapshots to provide the visual regression testing. We still need to use VM to generate the baseline images that will pass in the CI.
+
+Here's the example code:
+
+```javascript
+it('should not visual regress', async () => {
+  await page.setViewport({ width: 1200, height: 800 });
+  await page.click('#add-context');
+  await page.waitForSelector('.overlay', { visible: true });
+
+  expect(await page.waitForSelector('.modal.is-visible.is-active')).toBeTruthy();
+
+  // Need a bit of delay to show the modal perfectly
+  await page.waitForTimeout(200);
+
+  // Screenshot of the page
+  const image = await page.screenshot();
+
+  // Set a custom name of the snapshot
+  const config = getConfig('modal-open');
+  expect(image).toMatchImageSnapshot(config);
+});
+```
+
+To generate the baseline image, you need to run `npm run e2e:puppeteer component-name`. Running the same command to check if the image passed. You will see the generated image/s under `test/baseline-images`.
+
+As of now, if you generate this to your local environment, it will pass but it will fail in the CI because our pipeline is running on ubuntu. Suggesting to generate it via VM. See the - [Working with Visual Regression Tests](#working-with-visual-regression-tests) for docker image.
+
+If you need to update the baseline image, run `npm run e2e:puppeteer component-name -u`. `-u` is an alias of `--updateSnapshot`. See the available options in [jest options](https://jestjs.io/docs/cli#options)
 
 ## Sequence for Running e2e tests locally
 
