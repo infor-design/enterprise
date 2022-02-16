@@ -31,13 +31,7 @@ jobs:
       with:
         timezoneMacos: "America/New_York"
 
-    - name: Clean up
-      run: rm -rf node_modules
-
     - uses: nanasess/setup-chromedriver@v1
-      with:
-        # Optional: do not specify to match Chrome's version
-        chromedriver-version: '98.0.4758.80'
     - run: |
         export DISPLAY=:99
         chromedriver --url-base=/wd/hub &
