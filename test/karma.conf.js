@@ -27,10 +27,11 @@ module.exports = function (config) {
     basePath: '..',
     frameworks: ['jasmine'],
     files,
-    logLevel: config.LOG_INFO,
-    browserNoActivityTimeout: 50000,
-    browserDisconnectTolerance: 15,
-    captureTimeout: 10000,
+    logLevel: config.LOG_ERROR,
+    browserNoActivityTimeout: 60000,
+    browserDisconnectTolerance: 20,
+    browserDisconnectTimeout: 10000,
+    captureTimeout: 60000,
     exclude: [
       'node_modules'
     ],
