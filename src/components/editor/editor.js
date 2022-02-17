@@ -622,7 +622,7 @@ Editor.prototype = {
 
     self.container.on('input.editor keyup.editor', '.editor', debounce((e) => {
       /// The last savedSelection was always replaced on this section so we need to disabled this event when CTRL+H was used.
-      if (e.keyCode !== 72 && !e.ctrlKey) {
+      if (e.keyCode !== 72 && !e.ctrlKey && $('.modal.is-visible').length < 1) {
         this.textarea.text(xssUtils.sanitizeHTML(this.element.html().toString()));
         this.resetEmptyEditor(e);
         this.element.trigger('change');
