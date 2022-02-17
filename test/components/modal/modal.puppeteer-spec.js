@@ -43,12 +43,6 @@ describe('Modal Puppeteer Tests', () => {
       expect(await page.waitForSelector('.modal.is-visible.is-active')).toBeTruthy();
       await page.keyboard.press('Escape');
       await page.waitForSelector('.modal', { visible: false });
-      await page.waitForTimeout(200);
-
-      await page.waitForSelector('.modal', { visible: false })
-        .then(el => el.getProperty('className'))
-        .then(className => className.jsonValue())
-        .then(classNameString => expect(classNameString).not.toContain('is-visible'));
     });
   });
 
