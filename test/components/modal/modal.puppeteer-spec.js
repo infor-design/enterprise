@@ -1,3 +1,5 @@
+const { getConfig } = require('../../helpers/e2e-utils.js');
+
 describe('Modal Puppeteer Tests', () => {
   const baseUrl = 'http://localhost:4000/components/modal';
 
@@ -5,26 +7,43 @@ describe('Modal Puppeteer Tests', () => {
     const url = `${baseUrl}/example-index`;
 
     beforeAll(async () => {
-      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
+      await page.waitForSelector('#add-context', { visible: true });
     });
 
-    it('Should open modal on tab, and enter', async () => {
-      await page.keyboard.press('Tab');
-      await page.keyboard.press('Tab');
-      await page.keyboard.press('Enter');
-      const visibleModal = await page.waitForSelector('.modal.is-visible.is-active', { visible: true });
-      expect(visibleModal).toBeTruthy();
+    it('should have modal closed by default', async () => {
+      await page.evaluate(() => document.querySelector('body').getAttribute('class'))
+        .then(el => expect(el).not.toContain('modal-engaged'));
+    });
+
+    it('should not visual regress', async () => {
+      await page.setViewport({ width: 1200, height: 800 });
+      await page.click('#add-context');
+      await page.waitForSelector('.overlay', { visible: true });
+
+      expect(await page.waitForSelector('.modal.is-visible.is-active')).toBeTruthy();
+
+      // Need a bit of delay to show the modal perfectly
+      await page.waitForTimeout(200);
+
+      // Screenshot of the page
+      const image = await page.screenshot();
+
+      // Set a custom name of the snapshot
+      const config = getConfig('modal-open');
+      expect(image).toMatchImageSnapshot(config);
     });
 
     it('should close modal on tab, and escape', async () => {
       await page.keyboard.press('Tab');
       await page.keyboard.press('Tab');
-      await page.keyboard.press('Tab');
       await page.keyboard.press('Enter');
-      await page.waitForSelector('.modal.is-visible.is-active', { visible: true });
+      expect(await page.waitForSelector('.modal.is-visible.is-active')).toBeTruthy();
       await page.keyboard.press('Escape');
-      const closeModal = await page.$('.modal.is-visible.is-active');
-      expect(closeModal).toBeFalsy();
+      await page.waitForSelector('.modal', { visible: false })
+        .then(el => el.getProperty('className'))
+        .then(className => className.jsonValue())
+        .then(classNameString => expect(classNameString).not.toContain('is-visible'));
     });
   });
 
@@ -38,7 +57,7 @@ describe('Modal Puppeteer Tests', () => {
     });
 
     it('Should open modal on click', async () => {
-      expect(await page.waitForSelector('.modal, is-visible')).toBeTruthy();
+      expect(await page.waitForSelector('.modal.is-visible')).toBeTruthy();
     });
   });
 

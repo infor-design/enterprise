@@ -75,7 +75,7 @@
     "release:beta": "release-it --preRelease=beta --npm.tag=beta --no-github.release",
     "release:rc": "release-it --preRelease=rc --npm.tag=rc --no-github.release",
     "release:final": "release-it",
-    "test": "npm run mdlint && npm run eslint && npm run stylelint && npm run functional:ci && npm run e2e:ci",
+    "test": "npm run mdlint && npm run eslint && npm run stylelint && npm run functional:ci && npm run e2e:ci npm run e2e:puppeteer --",
     "node-version-check": "npx check-node-version --node 14",
     "node-updates-check": "npx ncu"
   },
@@ -137,6 +137,7 @@
     "jasmine-jquery": "^2.1.1",
     "jasmine-spec-reporter": "^5.0.2",
     "jest": "^27.5.1",
+    "jest-image-snapshot": "^4.5.1",
     "jest-puppeteer": "^5.0.4",
     "js-yaml": "^3.13.1",
     "karma": "5.0.9",
