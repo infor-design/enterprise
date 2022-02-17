@@ -27,7 +27,7 @@ describe('Modal Puppeteer Tests', () => {
       await page.waitForTimeout(200);
 
       // Click title to have no focus
-      await page.click('.modal-title');	
+      await page.click('.modal-title');
       // Screenshot of the page
       const image = await page.screenshot();
 
@@ -42,6 +42,9 @@ describe('Modal Puppeteer Tests', () => {
       await page.keyboard.press('Enter');
       expect(await page.waitForSelector('.modal.is-visible.is-active')).toBeTruthy();
       await page.keyboard.press('Escape');
+      await page.waitForSelector('.modal', { visible: false });
+      await page.waitForTimeout(200);
+
       await page.waitForSelector('.modal', { visible: false })
         .then(el => el.getProperty('className'))
         .then(className => className.jsonValue())
@@ -182,9 +185,8 @@ describe('Modal Puppeteer Tests', () => {
 
       const tabIndex = await page.$eval('#add-context-modal-btn-close',
         element => element.getAttribute('tabindex'));
-      if (tabIndex !== '-1') {
-        throw console.error('Tab Index value changed');
-      }
+
+      expect(tabIndex).not.toEqual(-1);
     });
   });
 });
