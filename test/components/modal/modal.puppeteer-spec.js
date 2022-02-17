@@ -26,6 +26,8 @@ describe('Modal Puppeteer Tests', () => {
       // Need a bit of delay to show the modal perfectly
       await page.waitForTimeout(200);
 
+      // Click title to have no focus
+      await page.click('.modal-title');	
       // Screenshot of the page
       const image = await page.screenshot();
 
