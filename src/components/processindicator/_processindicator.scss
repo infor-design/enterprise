@@ -54,25 +54,33 @@ $indicator-current-size: ($indicator-size * 1.6);
       white-space: nowrap;
     }
 
+    /* Addition of background-color to .separator */
+    /* fixes a Windows10 Chrome double line bug */
+    /* https://github.com/infor-design/enterprise/issues/5997 */
     .separator {
+      background-color: $indicator-blank;
       border: 1px solid $indicator-blank;
       display: inline-block;
       height: 0;
       width: $indicator-size;
 
       &.darkest {
+        background-color: $indicator-darkest;
         border-color: $indicator-darkest;
       }
 
       &.darker {
+        background-color: $indicator-darker;
         border-color: $indicator-darker;
       }
 
       &.lighter {
+        background-color: $indicator-lighter;
         border-color: $indicator-lighter;
       }
 
       &.lightest {
+        background-color: $indicator-lightest;
         border-color: $indicator-lightest;
       }
 
