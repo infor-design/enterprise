@@ -917,11 +917,9 @@ DatePicker.prototype = {
       })
       .off('hide.datepicker')
       .on('hide.datepicker', () => {
-        setTimeout(() => {
-          this.popupClosestScrollable.children().not('.popover').css('padding-top', '');
-          this.popupClosestScrollable.add(this.popup).css('min-height', '');
-          this.closeCalendar();
-        }, 1);
+        this.popupClosestScrollable.children().not('.popover').css('padding-top', '');
+        this.popupClosestScrollable.add(this.popup).css('min-height', '');
+        this.closeCalendar();
       });
 
     this.handleKeys($('#monthview-popup'));

@@ -807,7 +807,9 @@ Tooltip.prototype = {
 
           if (target.closest('.popover').length === 0 &&
               target.closest('.dropdown-list').length === 0) {
-            self.hide();
+            if (!target.is('button') && !target.siblings().hasClass('datepicker')) {
+              self.hide();
+            }
           }
 
           // Closes patepicker dialog closes when clicking on a parent popover
