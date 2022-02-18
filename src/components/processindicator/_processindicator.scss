@@ -54,9 +54,9 @@ $indicator-current-size: ($indicator-size * 1.6);
       white-space: nowrap;
     }
 
-    /* Addition of background-color to .separator */
-    /* fixes a Windows10 Chrome double line bug */
-    /* https://github.com/infor-design/enterprise/issues/5997 */
+    // Addition of background-color to .separator
+    // fixes a Windows10 Chrome double line bug
+    // https://github.com/infor-design/enterprise/issues/5997
     .separator {
       background-color: $indicator-blank;
       border: 1px solid $indicator-blank;
