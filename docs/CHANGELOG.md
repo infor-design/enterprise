@@ -9,6 +9,7 @@
 - `[Locale]` Refined some Lithuanian translations. ([#5960](https://github.com/infor-design/enterprise/issues/5960))
 - `[Locale]` Refined some Filipino translations. ([#5864](https://github.com/infor-design/enterprise/issues/5864))
 - `[Locale]` Refined some Japanese translations. ([#6115](https://github.com/infor-design/enterprise/issues/6115))
+- `[Process Indicator]` Fixes a double line separator issue on Windows10 Chrome. ([#5997](https://github.com/infor-design/enterprise/issues/5997))
 
 ## v4.61.0 Fixes
 
