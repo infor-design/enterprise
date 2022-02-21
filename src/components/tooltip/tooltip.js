@@ -807,7 +807,7 @@ Tooltip.prototype = {
 
           if (target.closest('.popover').length === 0 &&
               target.closest('.dropdown-list').length === 0) {
-            if (!target.is('button') && !target.siblings().hasClass('datepicker')) {
+            if (!(target.is('button') && target.siblings().hasClass('datepicker') && self.element.get(0) === target.get(0))) {
               self.hide();
             }
           }
