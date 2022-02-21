@@ -1447,11 +1447,25 @@ Datagrid.prototype = {
     // invoke datepicker
     if ((!datepickerApi || !isRange) && operator === 'in-range') {
       input.data('is-range', true);
-      options.range = { useRange: true };
+
+      if (input.val().length !== 0 && input.val().indexOf('-') === -1) {
+        const tempVal = Locale.formatDate(new Date(input.val()), { pattern: 'MM/dd/yyyy' });
+        input.val(tempVal + ' - ' + tempVal);
+
+        options.range = { 
+          useRange: true,
+          start: tempVal,
+          end: tempVal
+        };
+      } else {
+        options.range = { useRange: true };
+      }
+
       initDatepicker();
     } else if ((!datepickerApi || isRange) && operator !== 'in-range') {
       options.range = { useRange: false };
       input.removeData('is-range');
+      input.val(input.val().split(' - ')[0]);
       initDatepicker();
     }
   },
