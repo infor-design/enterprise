@@ -1450,7 +1450,7 @@ Datagrid.prototype = {
 
       if (input.val().length !== 0 && input.val().indexOf('-') === -1) {
         const tempVal = Locale.formatDate(new Date(input.val()), { pattern: 'MM/dd/yyyy' });
-        input.val(tempVal + ' - ' + tempVal);
+        input.val(`${tempVal} - ${tempVal}`);
 
         options.range = { 
           useRange: true,
