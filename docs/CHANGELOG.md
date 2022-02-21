@@ -13,6 +13,7 @@
 
 ## v4.61.0 Fixes
 
+- `[ContextualActionPanel]` Fixed UI issues where the toolbars inside of the body moved to the CAPs header instead of retaining to its original place. ([#6041](https://github.com/infor-design/enterprise/issues/6041))
 - `[Timepicker]` Fix a bug in timepicker where hours reset to 1 when changing period. ([#6049](https://github.com/infor-design/enterprise/issues/6049))
 - `[Timepicker]` Fix a bug in timepicker where hours is not properly created when changing from AM/PM. ([#6104](https://github.com/infor-design/enterprise/issues/6104))
 
