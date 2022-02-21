@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="twelve columns">
+    <button class="btn-secondary" type="button" id="add-context">Show Modal</button><br/><br/>
+  </div>
+</div>
+
+<div class="modal" id="modal-chgQuantity">
+  <div class="modal-content">
+
+  <div class="modal-header">
+    <h1 class="modal-title">change quantity</h1>
+  </div>
+
+  <div class="modal-body">
+    <div class="row">
+      <div class="ten columns">  
+          <div class="field">
+            <label for="limited-spinbox">Spinbox (init 0, min -5, max 10)</label>
+            <input id="limited-spinbox" name="limited-spinbox" type="text" class="spinbox" min="-5" max="10" value="0" />
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-buttonset">
+    <button type="button" class="btn-modal" style="width: 50%;">Close</button>
+    <button type="button" id="change"
+      class="btn-modal-primary" style="width: 50%;">Change</button>
+</div>
+
+<script>
+    $('#change').on('click', () => {
+      const qty=$("#limited-spinbox").val();
+      $('body').toast({
+				title : 'title',
+				message : 'quantity changed: ' + qty
+			});
+    });
+
+    $('#add-context').on('click', () => {
+      $("#modal-chgQuantity").modal('open');
+    });
+</script>

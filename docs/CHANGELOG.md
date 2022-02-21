@@ -12,6 +12,7 @@
 
 ## v4.61.0 Fixes
 
+- `[Spinbox]` Spinbox should update to correct value when Enter is pressed. ([#6036](https://github.com/infor-design/enterprise/issues/6036))
 - `[Timepicker]` Fix a bug in timepicker where hours reset to 1 when changing period. ([#6049](https://github.com/infor-design/enterprise/issues/6049))
 - `[Timepicker]` Fix a bug in timepicker where hours is not properly created when changing from AM/PM. ([#6104](https://github.com/infor-design/enterprise/issues/6104))
 
