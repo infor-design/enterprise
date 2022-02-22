@@ -75,7 +75,7 @@ describe('Editor example-index tests', () => {
     await element(by.css('.fontpicker')).click();
     await element(by.css('a[data-val="header1"]')).click();
 
-    expect(await element(by.css('.editor')).getAttribute('innerHTML')).toEqual('<h3>test test</h3>');
+    expect(await element(by.css('.editor')).getAttribute('innerHTML')).toContain('<h3>');
   });
 
   it('Should not insert images if the modals are cancelled', async () => {

@@ -82,6 +82,25 @@ module.exports = {
       await browser.driver.wait(expected[condition](el), config.waitsFor);
     }
   },
+  /**
+   * Configuration for jest image snapshot
+   * See https://github.com/americanexpress/jest-image-snapshot#%EF%B8%8F-api for the API needed.
+   * @param {string} customSnapshotIdentifier A custom name to give this snapshot.
+   * @returns {object} takes an optional options object.
+   */
+  // eslint-disable-next-line arrow-body-style
+  getConfig: (customSnapshotIdentifier) => {
+    return {
+      // anything less than 0.02 percent difference passes as the same
+      failureThreshold: 0.0002,
+      failureThresholdType: 'percent',
+      customSnapshotIdentifier,
+      customSnapshotsDir: './test/baseline-images',
+      customDiffDir: './test/baseline-images/diff',
+      // Reduced false positives (failing tests when the images look the same)
+      comparisonMethod: 'ssim'
+    };
+  },
 
   /**
      * Get the computed style of a particular element.

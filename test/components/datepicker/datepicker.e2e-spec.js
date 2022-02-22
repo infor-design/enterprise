@@ -1146,7 +1146,7 @@ describe('Datepicker Range Tests', () => {
     await datepickerEl.sendKeys('81020201220AM81820201240AM');
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
     await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.monthview-popup.is-open'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.monthview-popup.is-open'))), 3500);
 
     await element.all(by.cssContainingText('.monthview-table td', '16')).get(0).click();
     await element.all(by.cssContainingText('.monthview-table td', '17')).get(0).click();
