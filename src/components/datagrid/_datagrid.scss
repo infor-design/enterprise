@@ -3374,6 +3374,10 @@ $datagrid-small-row-height: 25px;
       vertical-align: top;
       width: calc(100% - 45px);
 
+      &.lookup.is-number-mask {
+        text-align: left;
+      }
+
       &.timepicker,
       &.datepicker {
         padding: 1px 24px 2px 5px;
