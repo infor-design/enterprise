@@ -157,9 +157,10 @@ const formatters = {
         return null;
       }
       const getValue = v => (!isNaN(parseInt(v, 10)) ? parseInt(v, 10) : 0);
+      const dayPeriods = Locale.currentLocale.data.calendars[0].dayPeriods;
       const d = new Date();
       let hours = getValue(time[1]);
-      if (timeString.indexOf('AM') > -1 || timeString.indexOf('PM') > -1) {
+      if (timeString.indexOf(dayPeriods[0]) > -1 || timeString.indexOf(dayPeriods[0]) > -1) {
         hours -= (hours === 12 ? 12 : 0);
         hours += (time[4] ? 12 : 0);
       }
