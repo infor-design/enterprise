@@ -862,6 +862,7 @@ DatePicker.prototype = {
       placement: popPlacement,
       popover: true,
       trigger: 'immediate',
+      isRangeDatepicker: s.range.useRange,
       extraClass: this.settings.range.selectWeek ? 'monthview-popup is-range-week' : 'monthview-popup',
       tooltipElement: '#monthview-popup',
       initializeContent: false
@@ -892,13 +893,6 @@ DatePicker.prototype = {
           this.popup.css({ top: `${this.popup.position().top < 0 ? 0 : this.popup.position().top + 50}px` });
         }
 
-        // Hide calendar until range to be pre selected
-        if (s.range.useRange &&
-            s.range.first && s.range.first.date &&
-            s.range.second && s.range.second.date) {
-          this.popup.addClass('is-hidden');
-        }
-
         if (this.settings.hideButtons) {
           this.popup.addClass('hide-buttons');
         }
@@ -923,9 +917,11 @@ DatePicker.prototype = {
       })
       .off('hide.datepicker')
       .on('hide.datepicker', () => {
-        this.popupClosestScrollable.children().not('.popover').css('padding-top', '');
-        this.popupClosestScrollable.add(this.popup).css('min-height', '');
-        this.closeCalendar();
+        setTimeout(() => {
+          this.popupClosestScrollable.children().not('.popover').css('padding-top', '');
+          this.popupClosestScrollable.add(this.popup).css('min-height', '');
+          this.closeCalendar();
+        }, 1);
       });
 
     this.handleKeys($('#monthview-popup'));
