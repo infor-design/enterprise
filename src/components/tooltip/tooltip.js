@@ -64,6 +64,7 @@ const TOOLTIP_DEFAULTS = {
   tooltipElement: null,
   parentElement: null,
   keepOpen: false,
+  isRangeDatepicker: false,
   extraClass: null,
   placementOpts: {},
   maxWidth: null,
@@ -806,7 +807,9 @@ Tooltip.prototype = {
 
           if (target.closest('.popover').length === 0 &&
               target.closest('.dropdown-list').length === 0) {
-            self.hide();
+            if (!(target.is('button') && target.siblings().hasClass('datepicker') && self.element.get(0) === target.get(0))) {
+              self.hide();
+            }
           }
 
           // Closes patepicker dialog closes when clicking on a parent popover
@@ -937,7 +940,11 @@ Tooltip.prototype = {
    */
   position() {
     this.setTargetContainer();
-    this.tooltip[0].classList.remove('is-hidden');
+
+    // Popup is range datepicker and should not be shown until range is selected
+    if (!this.settings.isRangeDatepicker) {
+      this.tooltip[0].classList.remove('is-hidden');
+    }
 
     const self = this;
     const distance = this.isPopover ? 20 : 10;
