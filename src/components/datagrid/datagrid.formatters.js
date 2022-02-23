@@ -160,9 +160,9 @@ const formatters = {
       const dayPeriods = Locale.currentLocale.data.calendars[0].dayPeriods;
       const d = new Date();
       let hours = getValue(time[1]);
-      if (timeString.indexOf(dayPeriods[0]) > -1 || timeString.indexOf(dayPeriods[0]) > -1) {
+      if (timeString.indexOf(dayPeriods[0]) > -1 || timeString.indexOf(dayPeriods[1]) > -1) {
         hours -= (hours === 12 ? 12 : 0);
-        hours += (time[4] ? 12 : 0);
+        hours += (timeString.indexOf(dayPeriods[1]) > -1 ? 12 : 0);
       }
       d.setHours(hours);
       d.setMinutes(getValue(time[2]));
