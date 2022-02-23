@@ -11,3 +11,15 @@
     font-size: 2.2rem;
   }
 }
+
+.modal.contextual-action-panel.is-visible {
+  .modal-body-wrapper {
+    .flex-toolbar {
+      padding: 0 5px 5px;
+
+      .title h2 {
+        font-size: 1.8rem;
+      }
+    }
+  }
+}

@@ -262,11 +262,11 @@ ContextualActionPanel.prototype = {
     this.header = modalHeader;
 
     // Detect existence of buttonset for later
-    let buttonset = this.panel.find('.toolbar .buttonset, .flex-toolbar .buttonset');
+    let buttonset = this.panel.find('.toolbar .buttonset, .flex-toolbar .buttonset').first();
 
     // Build/reference the CAP header toolbar
     if (!this.toolbar) {
-      this.toolbar = this.panel.find('.toolbar, .flex-toolbar');
+      this.toolbar = this.panel.find('.toolbar, .flex-toolbar').first();
     }
     if (!this.toolbar.length) {
       predefined = false;
