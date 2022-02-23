@@ -1452,7 +1452,8 @@ Datagrid.prototype = {
         const columnId = input.parents('th').attr('data-column-id');
         const defaultDateFormat = 'MM/dd/yyyy';
         const dateFormat = this.columnById(columnId)[0].dateFormat;
-        const dateVal = dateFormat === defaultDateFormat ? Locale.formatDate(new Date(input.val()), { pattern: dateFormat }) : 
+        const dateVal = dateFormat === defaultDateFormat ? 
+          Locale.formatDate(new Date(input.val()), { pattern: dateFormat }) : 
           Locale.formatDate(input.val(), { pattern: dateFormat });
 
         input.val(`${dateVal} - ${dateVal}`);
