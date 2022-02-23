@@ -325,6 +325,11 @@ Spinbox.prototype = {
     const key = e.which;
     const validKeycodes = [37, 38, 39, 40];
 
+    if (key === 13) {
+      self.correctValue();
+      return;
+    }
+
     if ($.inArray(key, validKeycodes) === -1) {
       return;
     }
