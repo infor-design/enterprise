@@ -13,6 +13,7 @@
 
 ## v4.61.0 Fixes
 
+- `[ContextualActionPanel]` Fixed UI issues where the toolbars inside of the body moved to the CAPs header instead of retaining to its original place. ([#6041](https://github.com/infor-design/enterprise/issues/6041))
 - `[Datepicker]` Fix on the flickering behavior when range datepicker is shown. ([#6098](https://github.com/infor-design/enterprise/issues/6098))
 - `[Editor]` Fix a bug in editor where CTRL-H (add hyperlink) breaks the interface. ([#6015](https://github.com/infor-design/enterprise/issues/6015))
 - `[Spinbox]` Spinbox should update to correct value when Enter is pressed. ([#6036](https://github.com/infor-design/enterprise/issues/6036))
