@@ -1812,6 +1812,11 @@ $datagrid-small-row-height: 25px;
   &.small-rowheight {
     tbody tr td {
       &.datagrid-trigger-cell {
+        &.has-editor {
+          .icon.icon-search-list {
+            top: 0 !important;
+          }
+        }
         .icon.icon-search-list {
           left: -5px;
           top: 3px;
@@ -1903,6 +1908,10 @@ $datagrid-small-row-height: 25px;
         .dropdown-trigger + .icon {
           left: -6px !important;
           top: 2px !important;
+        }
+
+        &.has-editor .icon.icon-search-list {
+          top: 0;
         }
 
         .icon.icon-search-list {
@@ -3932,11 +3941,20 @@ td .btn-actions {
       overflow: hidden;
     }
 
+    &.has-editor {
+      span.trigger {
+        padding-bottom: 5px;
+      }
+      
+      .icon-search-list {
+        top: -1px;
+      }  
+    } 
+
     span.trigger {
       line-height: normal;
       overflow: hidden;
       padding-right: 4px;
-      padding-bottom: 5px;
       text-overflow: ellipsis;
       vertical-align: middle;
     }
@@ -3958,7 +3976,7 @@ td .btn-actions {
 
     &.icon-search-list {
       left: -1px;
-      top: -1px;
+      top: 4px;
     }
   }
 
