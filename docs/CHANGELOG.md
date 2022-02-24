@@ -2,6 +2,7 @@
 
 ## v4.61.0 Features
 
+- `[Datagrid]` Added visual test for responsive view with puppeteer. ([#5844](https://github.com/infor-design/enterprise/issues/5844))
 - `[General]` Added jest image snapshot for visual regression testing with puppeteer. ([#6105](https://github.com/infor-design/enterprise/issues/6105))
 - `[General]` Removed global inline function that adds disabled labels to disabled inputs. ([#6131](https://github.com/infor-design/enterprise/issues/6131))
 - `[Hierarchy]` Converted the old protractor e2e test suites to puppeteer tests. ([#5833](https://github.com/infor-design/enterprise/issues/5833))
@@ -10,6 +11,7 @@
 - `[Locale]` Refined some Lithuanian translations. ([#5960](https://github.com/infor-design/enterprise/issues/5960))
 - `[Locale]` Refined some Filipino translations. ([#5864](https://github.com/infor-design/enterprise/issues/5864))
 - `[Locale]` Refined some Japanese translations. ([#6115](https://github.com/infor-design/enterprise/issues/6115))
+- `[Swipe-action]` Added a Puppeteer Script for Swipe Container. ([#6129](https://github.com/infor-design/enterprise/issues/6129))
 
 ## v4.61.0 Fixes
 
