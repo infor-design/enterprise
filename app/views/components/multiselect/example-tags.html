@@ -4,3 +4,11 @@
     {{> components/multiselect/_samples-tagged}}
   </div>
 </div>
+
+<script>
+  $('body').on('initialized', function () {
+    $('#multi-tagged').on('change', (e) => {
+      console.log('change', e);
+    });
+  });
+</script>
