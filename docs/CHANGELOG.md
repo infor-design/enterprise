@@ -2,6 +2,7 @@
 
 ## v4.61.0 Features
 
+- `[Datagrid]` Added visual test for responsive view with puppeteer. ([#5844](https://github.com/infor-design/enterprise/issues/5844))
 - `[General]` Added jest image snapshot for visual regression testing with puppeteer. ([#6105](https://github.com/infor-design/enterprise/issues/6105))
 - `[General]` Removed global inline function that adds disabled labels to disabled inputs. ([#6131](https://github.com/infor-design/enterprise/issues/6131))
 - `[Hierarchy]` Converted the old protractor e2e test suites to puppeteer tests. ([#5833](https://github.com/infor-design/enterprise/issues/5833))
@@ -10,10 +11,13 @@
 - `[Locale]` Refined some Lithuanian translations. ([#5960](https://github.com/infor-design/enterprise/issues/5960))
 - `[Locale]` Refined some Filipino translations. ([#5864](https://github.com/infor-design/enterprise/issues/5864))
 - `[Locale]` Refined some Japanese translations. ([#6115](https://github.com/infor-design/enterprise/issues/6115))
+- `[Swipe-action]` Added a Puppeteer Script for Swipe Container. ([#6129](https://github.com/infor-design/enterprise/issues/6129))
 
 ## v4.61.0 Fixes
 
 - `[ContextualActionPanel]` Fixed UI issues where the toolbars inside of the body moved to the CAPs header instead of retaining to its original place. ([#6041](https://github.com/infor-design/enterprise/issues/6041))
+- `[Datagrid]` Fix a bug in datagrid where text is align right when using mask options in filter. ([#5999](https://github.com/infor-design/enterprise/issues/5999))
+- `[Datagrid]` Fix a bug in datagrid where datepicker range having an exception when having values before changing to range type. ([#6008](https://github.com/infor-design/enterprise/issues/6008))
 - `[Datepicker]` Fix on the flickering behavior when range datepicker is shown. ([#6098](https://github.com/infor-design/enterprise/issues/6098))
 - `[Editor]` Fix a bug in editor where CTRL-H (add hyperlink) breaks the interface. ([#6015](https://github.com/infor-design/enterprise/issues/6015))
 - `[Dropdown]` Fix on dropdown multiselect where change event is not triggered when clicking X. ([#6098](https://github.com/infor-design/enterprise/issues/6098))
