@@ -3936,6 +3936,7 @@ td .btn-actions {
       line-height: normal;
       overflow: hidden;
       padding-right: 4px;
+      padding-bottom: 5px;
       text-overflow: ellipsis;
       vertical-align: middle;
     }
@@ -3957,7 +3958,7 @@ td .btn-actions {
 
     &.icon-search-list {
       left: -1px;
-      top: 4px;
+      top: -1px;
     }
   }
 
