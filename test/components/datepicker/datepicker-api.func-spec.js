@@ -480,4 +480,12 @@ describe('DatePicker API', () => {
       done();
     }, 100);
   });
+
+  it('Should be able to not use mask on input', () => {
+    datepickerAPI.destroy();
+    datepickerAPI = new DatePicker(datepickerEl, { useMask: false });
+    datepickerAPI.setToday();
+    
+    expect($(datepickerEl).data('mask')).toBeFalsy();
+  });
 });
