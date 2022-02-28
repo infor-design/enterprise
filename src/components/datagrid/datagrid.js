@@ -4474,6 +4474,10 @@ Datagrid.prototype = {
         }
       }
 
+      if (formatter.name && formatter.name === 'Fileupload') {
+        cssClass += ' is-fileupload';
+      }
+
       if (col.editor && this.settings.editable) {
         cssClass += ' has-editor';
       }
@@ -7159,7 +7163,7 @@ Datagrid.prototype = {
           const focusElem = $('*:focus');
 
           if (!$('.lookup-modal.is-visible, #timepicker-popup, #monthview-popup, #colorpicker-menu').length &&
-              self.editor) {
+              self.editor && !self.isSafari) {
             if (focusElem.is('.spinbox, .trigger, .code-block-actions') || !$(target).is(':visible')) {
               return;
             }
@@ -7168,6 +7172,7 @@ Datagrid.prototype = {
               focusElem.closest(self.editor.className).length > 0) {
               return;
             }
+
             self.commitCellEdit();
           }
         }, 150);
