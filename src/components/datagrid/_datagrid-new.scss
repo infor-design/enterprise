@@ -338,6 +338,10 @@
       padding: 0;
     }
 
+    &.has-editor .lookup-wrapper {
+      padding: 8px 16px;
+    }
+
     .datepicker {
       margin-top: 2px;
       padding-left: 0;

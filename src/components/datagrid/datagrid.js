@@ -4474,6 +4474,10 @@ Datagrid.prototype = {
         }
       }
 
+      if (formatter.name && formatter.name === 'Fileupload') {
+        cssClass += ' is-fileupload';
+      }
+
       if (col.editor && this.settings.editable) {
         cssClass += ' has-editor';
       }

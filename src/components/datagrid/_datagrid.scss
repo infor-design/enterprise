@@ -2311,7 +2311,7 @@ $datagrid-small-row-height: 25px;
       }
     }
 
-    .is-editing .datagrid-cell-wrapper {
+    .is-editing.is-fileupload .datagrid-cell-wrapper {
       padding: 4px 16px 0 !important;
     }
 
@@ -3947,6 +3947,10 @@ td .btn-actions {
     }
 
     &.has-editor {
+      &.is-editing span.trigger {
+        padding: 8px 0 0 5px;
+      }
+
       span.trigger {
         padding-bottom: 5px;
       }
