@@ -3,6 +3,7 @@
 ## v4.61.0 Features
 
 - `[Datagrid]` Added visual test for responsive view with puppeteer. ([#5844](https://github.com/infor-design/enterprise/issues/5844))
+- `[Datepicker]` Added setting in datepicker where you can disable masking input. ([#6080](https://github.com/infor-design/enterprise/issues/6080))
 - `[General]` Added jest image snapshot for visual regression testing with puppeteer. ([#6105](https://github.com/infor-design/enterprise/issues/6105))
 - `[General]` Removed global inline function that adds disabled labels to disabled inputs. ([#6131](https://github.com/infor-design/enterprise/issues/6131))
 - `[Hierarchy]` Converted the old protractor e2e test suites to puppeteer tests. ([#5833](https://github.com/infor-design/enterprise/issues/5833))
