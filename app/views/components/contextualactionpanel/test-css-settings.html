@@ -1,0 +1,139 @@
+
+<div class="row">
+  <div class="six columns">
+
+    <button type="button" id="show-cap" class="btn-secondary contextual-action-panel-trigger" data-init="false">
+      Show Contextual Action Panel
+    </button>
+    <div class="contextual-action-panel">
+      <div class="flex-toolbar">
+        <div class="toolbar-section">
+          <button id="btn-cancel" data-automation-id="btn-cancel-automation" class="btn">
+            <span>Cancel</span>
+          </button>
+        </div>
+
+        <div class="toolbar-section title center-text">
+          <h2>
+            <span>Promote Pearl Reynolds Promote Pearl Reynolds</span>
+            <button id="btn-launch" data-automation-id="btn-launch-automation" class="btn-icon">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-launch"></use>
+              </svg>
+              <span>Launch</span>
+            </button>
+          </h2>
+        </div>
+
+        <div class="toolbar-section">
+          <button id="btn-submit" data-automation-id="btn-submit-automation" class="btn">
+            <span>Submit</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="header-section">
+        <div class="row top-padding bottom-padding">
+          <div class="twelve columns">
+            <h2>Pearl Reynolds Details</h2>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="two columns">
+            <img alt="Placeholder Image" src="{{basepath}}images/placeholder-80x80.png"/>
+          </div>
+          <div class="five columns">
+            <div class="field label-left">
+              <span class="label">Role</span>
+              <span class="data">Nurse</span>
+            </div>
+            <div class="field label-left">
+              <span class="label">Employee Type</span>
+              <span class="data">Full Time</span>
+            </div>
+            <div class="field label-left">
+              <span class="label">Pay Rate</span>
+              <span class="data">$50/hour minimum</span>
+            </div>
+          </div>
+          <div class="five columns">
+            <div class="field label-left">
+              <span class="label">Date Hired</span>
+              <span class="data">01/10/10</span>
+            </div>
+            <div class="field label-left">
+              <span class="label">Manager</span>
+              <span class="data">Janice Brown</span>
+            </div>
+            <div class="field label-left">
+              <span class="label">Work Assignments</span>
+              <span class="data">3</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="detail-section">
+        <div class="row top-padding">
+          <div class="six columns">
+
+            <div class="field">
+              <label for="new-pay-rate">New Pay Rate Name</label>
+              <select id="new-pay-rate" name="new-pay-rate" class="dropdown">
+                <option value="">50$/hr</option>
+                <option value="60">60$/hr</option>
+                <option value="70">70$/hr</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="promo-reason">Promo Reason Code</label>
+              <select id="promo-reason" name="promo-reason" class="dropdown">
+                <option value="1">Performance</option>
+                <option value="2">Other</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="promo-no">Promo Number</label>
+              <select id="promo-no" name="promo-no" class="dropdown">
+                <option value="1">100</option>
+                <option value="2">200</option>
+                <option value="3">300</option>
+              </select>
+            </div>
+          </div>
+          <div class="six columns">
+            <div class="field">
+              <label for="description">Comment</label>
+              <textarea id="description" class="textarea taller" name="description" placeholder="Type your notes here..."></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script id="test-script">
+  $('body').on('initialized', function() {
+    $('#btn-submit, #btn-cancel').on('click', function() {
+      $('#show-cap').data('contextualactionpanel').close();
+    });
+
+    $('#show-cap').contextualactionpanel({
+        cssClass: 'my-custom-panel-test',
+        modalSettings: {
+          fullsize: 'responsive',
+          attributes: [
+            { name: 'id', value: 'cap' },
+            { name: 'data-automation-id', value: 'cap-automation-id' }
+          ]
+        }
+    });
+  });
+</script>
+w
