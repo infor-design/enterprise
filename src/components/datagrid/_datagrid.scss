@@ -1817,6 +1817,12 @@ $datagrid-small-row-height: 25px;
   &.small-rowheight {
     tbody tr td {
       &.datagrid-trigger-cell {
+        &.has-editor {
+          .icon.icon-search-list {
+            top: 0 !important;
+          }
+        }
+
         .icon.icon-search-list {
           left: -5px;
           top: 3px;
@@ -1908,6 +1914,10 @@ $datagrid-small-row-height: 25px;
         .dropdown-trigger + .icon {
           left: -6px !important;
           top: 2px !important;
+        }
+
+        &.has-editor .icon.icon-search-list {
+          top: 0;
         }
 
         .icon.icon-search-list {
@@ -2306,7 +2316,7 @@ $datagrid-small-row-height: 25px;
       }
     }
 
-    .is-editing .datagrid-cell-wrapper {
+    .is-editing.is-fileupload .datagrid-cell-wrapper {
       padding: 4px 16px 0 !important;
     }
 
@@ -3458,6 +3468,10 @@ $datagrid-small-row-height: 25px;
       vertical-align: top;
       width: calc(100% - 45px);
 
+      &.lookup.is-number-mask {
+        text-align: left;
+      }
+
       &.timepicker,
       &.datepicker {
         padding: 1px 24px 2px 5px;
@@ -4014,6 +4028,20 @@ td .btn-actions {
 
     &.datagrid-no-default-formatter .datagrid-cell-wrapper {
       overflow: hidden;
+    }
+
+    &.has-editor {
+      &.is-editing span.trigger {
+        padding: 8px 0 0 5px;
+      }
+
+      span.trigger {
+        padding-bottom: 5px;
+      }
+
+      .icon-search-list {
+        top: -1px;
+      }
     }
 
     span.trigger {

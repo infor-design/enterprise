@@ -3162,6 +3162,7 @@ Dropdown.prototype = {
     }
 
     optionEl.selected = false;
+    this.element.trigger('change');
   },
 
   /**
