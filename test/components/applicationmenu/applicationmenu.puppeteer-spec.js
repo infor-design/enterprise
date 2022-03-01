@@ -270,8 +270,6 @@ describe('Application Menu Puppeteer Test', () => {
     });
 
     it('should assign proper aria roles to the trigger button', async () => {
-      await page.waitForSelector('#trigger-btn', { visible: true });
-
       await page.evaluate(() => document.getElementById('trigger-btn').getAttribute('aria-controls'))
         .then(ariaControls => expect(ariaControls).toBe('expandable-area-0-content'));
 
@@ -314,14 +312,6 @@ describe('Application Menu Puppeteer Test', () => {
 
       await page.evaluate(() => document.querySelectorAll('.accordion-header.filtered').length)
         .then(filtered => expect(filtered).toEqual(0));
-    });
-  });
-
-  describe('Many Items', () => {
-    const url = `${baseUrl}/test-filterable-many-items`;
-
-    beforeEach(async () => {
-      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
     });
   });
 
