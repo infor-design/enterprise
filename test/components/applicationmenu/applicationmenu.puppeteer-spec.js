@@ -139,7 +139,7 @@ describe('Application Menu Puppeteer Test', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
     });
 
-    it.only('should show a tooltip on truncated text', async () => {
+    it('should show a tooltip on truncated text', async () => {
       await page.hover('#truncated-text');
       await page.waitForSelector('#tooltip', { visible: true })
         .then(element => element.getProperty('className'))
@@ -186,9 +186,73 @@ describe('Application Menu Puppeteer Test', () => {
       await page.waitForSelector('body.no-scroll', { visible: true })
         .then(async () => {
           const image = await page.screenshot();
-          const config = getConfig('applicationmenu-personalize');
+          const config = getConfig('applicationmenu-personalize-roles');
           expect(image).toMatchImageSnapshot(config);
         });
+    });
+  });
+
+  describe('Personalize Roles Switcher', () => {
+    const url = `${baseUrl}/example-personalized-role-switcher?theme=classic`;
+
+    beforeEach(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('should show the app menu', async () => {
+      expect(await page.waitForSelector('#application-menu', { visible: true })).toBeTruthy();
+    });
+
+    it('should not visually regress on personalize roles switcher', async () => {
+      await page.setViewport({ width: 1280, height: 718 });
+      await page.waitForSelector('body.no-scroll', { visible: true })
+        .then(async () => {
+          const image = await page.screenshot();
+          const config = getConfig('applicationmenu-personalize-roles-switcher');
+          expect(image).toMatchImageSnapshot(config);
+        });
+    });
+
+    it('should dismiss the application menu when clicking on a popupmenu trigger', async () => {
+      // Simulate iPhone X device size.
+      // Shrinking the screen causes the menu to be dismissed.
+      await page.setViewport({ width: 375, height: 812 });
+
+      await page.waitForSelector('#header-hamburger', { visible: true })
+        .then(async el => el.click());
+
+      await page.waitForSelector('#header-more-actions', { visible: true })
+        .then(async el => el.click());
+
+      await page.evaluate(() => document.getElementById('application-menu').getAttribute('class'))
+        .then(className => expect(className).not.toContain('is-open'));
+    });
+
+    it('should dismiss the application menu when clicking on one of the menus toolbar buttons', async () => {
+      await page.setViewport({ width: 375, height: 812 });
+
+      // need a delay for the page to fully visible before clicking the button.
+      // lower than 250 milliseconds will cause issue.
+      await page.waitForTimeout(250);
+
+      const hamburger = await page.waitForSelector('#header-hamburger', { visible: true });
+      await hamburger.click();
+
+      // need another delay to fully show the app menu
+      // lower than 150 milliseconds will cause issue.
+      await page.waitForTimeout(150);
+      await page.evaluate(() => document.getElementById('application-menu').getAttribute('class'))
+        .then(el => expect(el).toContain('is-open'));
+
+      const btnToolbar = await page.waitForSelector('button#appmenu-header-toolbar-btn-download', { visible: true });
+
+      // need another delay to fully show the element
+      // lower than 100 milliseconds will cause issue.
+      await page.waitForTimeout(100);
+      await btnToolbar.click();
+
+      await page.evaluate(() => document.getElementById('application-menu').getAttribute('class'))
+        .then(className => expect(className).not.toContain('is-open'));
     });
   });
 
