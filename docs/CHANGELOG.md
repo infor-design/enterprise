@@ -16,6 +16,7 @@
 
 ## v4.61.0 Fixes
 
+- `[Datagrid]` Fix on value not shown in lookup cell in safari. ([#6003](https://github.com/infor-design/enterprise/issues/6003))
 - `[ContextualActionPanel]` Fixed UI issues where the toolbars inside of the body moved to the CAPs header instead of retaining to its original place. ([#6041](https://github.com/infor-design/enterprise/issues/6041))
 - `[Datagrid]` Fix a bug in datagrid where text is align right when using mask options in filter. ([#5999](https://github.com/infor-design/enterprise/issues/5999))
 - `[Datagrid]` Fix a bug in datagrid where datepicker range having an exception when having values before changing to range type. ([#6008](https://github.com/infor-design/enterprise/issues/6008))
