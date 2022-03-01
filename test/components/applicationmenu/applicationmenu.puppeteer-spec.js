@@ -230,6 +230,44 @@ describe('Application Menu Puppeteer Test', () => {
     });
   });
 
+  describe('Custom Search', () => {
+    const url = `${baseUrl}/test-filterable-custom`;
+
+    beforeEach(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
+    });
+
+    it('should show the search even though filterable is false', async () => {
+      expect(await page.waitForSelector('#application-menu-searchfield', { visible: true })).toBeTruthy();
+    });
+
+    it('should have a search but not filter the menu when filterable is false', async () => {
+      await page.waitForSelector('#application-menu-searchfield', { visible: true });
+
+      await page.type('#application-menu-searchfield', 'Role');
+
+      await page.evaluate(() => document.querySelectorAll('.accordion-header.filtered').length)
+        .then(filtered => expect(filtered).toEqual(0));
+    });
+  });
+
+  describe('Event Propagation', () => {
+    const url = `${baseUrl}/test-click-event-propagation`;
+
+    beforeEach(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
+
+      await page.waitForSelector('#application-menu.is-open', { visible: true });
+    });
+
+    it('should fire a toast when its accordion headers are clicked', async () => {
+      await page.waitForSelector('#application-menu > div > div:nth-child(3)', { visible: true })
+        .then(accordionHeader => accordionHeader.click());
+
+      expect(await page.waitForSelector('#toast-container', { visible: true })).toBeTruthy();
+    });
+  });
+
   describe('Personalize Roles Switcher', () => {
     const url = `${baseUrl}/example-personalized-role-switcher?theme=classic`;
 
@@ -291,44 +329,6 @@ describe('Application Menu Puppeteer Test', () => {
 
       await page.evaluate(() => document.getElementById('application-menu').getAttribute('class'))
         .then(className => expect(className).not.toContain('is-open'));
-    });
-  });
-
-  describe('Custom Search', () => {
-    const url = `${baseUrl}/test-filterable-custom`;
-
-    beforeEach(async () => {
-      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
-    });
-
-    it('should show the search even though filterable is false', async () => {
-      expect(await page.waitForSelector('#application-menu-searchfield', { visible: true })).toBeTruthy();
-    });
-
-    it('should have a search but not filter the menu when filterable is false', async () => {
-      await page.waitForSelector('#application-menu-searchfield', { visible: true });
-
-      await page.type('#application-menu-searchfield', 'Role');
-
-      await page.evaluate(() => document.querySelectorAll('.accordion-header.filtered').length)
-        .then(filtered => expect(filtered).toEqual(0));
-    });
-  });
-
-  describe('Event Propagation', () => {
-    const url = `${baseUrl}/test-click-event-propagation`;
-
-    beforeEach(async () => {
-      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
-
-      await page.waitForSelector('#application-menu.is-open', { visible: true });
-    });
-
-    it('should fire a toast when its accordion headers are clicked', async () => {
-      await page.waitForSelector('#application-menu > div > div:nth-child(3)', { visible: true })
-        .then(accordionHeader => accordionHeader.click());
-
-      expect(await page.waitForSelector('#toast-container', { visible: true })).toBeTruthy();
     });
   });
 
