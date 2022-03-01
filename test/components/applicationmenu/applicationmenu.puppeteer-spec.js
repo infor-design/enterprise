@@ -362,7 +362,7 @@ describe('Application Menu Puppeteer Test', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
     });
 
-    it.only('should open when the hamburger button is clicked', async () => {
+    it('should open when the hamburger button is clicked', async () => {
       const menuTrigger = await page.$('.application-menu-trigger');
       await menuTrigger.click();
 
