@@ -1,8 +1,91 @@
 /* eslint-disable compat/compat */
 const { dragAndDrop } = require('../../helpers/e2e-utils');
+const { getConfig } = require('../../helpers/e2e-utils.js');
 
 describe('Application Menu Puppeteer Test', () => {
   const baseUrl = 'http://localhost:4000/components/applicationmenu';
+
+  describe('Index', () => {
+    const url = `${baseUrl}/example-index?theme=classic`;
+
+    beforeEach(async () => {
+      await page.goto(url, { waitUnitl: ['domcontentloaded', 'networkidle2'] });
+    });
+
+    it('should open when the hamburger button is clicked', async () => {
+      const button = await page.waitForSelector('.application-menu-trigger', { visible: true });
+      await button.click();
+      await page.waitForSelector('#application-menu', { visible: true })
+        .then(element => element.getProperty('className'))
+        .then(className => className.jsonValue())
+        .then(classNameString => expect(classNameString).toContain('is-open'));
+    });
+
+    it('should put accurate aria attributes on the trigger button', async () => {
+      await page.evaluate(() => document.getElementById('header-hamburger').getAttribute('aria-controls'))
+        .then(ariaControls => expect(ariaControls).toBe('application-menu'));
+
+      await page.evaluate(() => document.getElementById('header-hamburger').getAttribute('aria-expanded'))
+        .then(ariaExpanded => expect(ariaExpanded).toBe('false'));
+
+      const headerHamburger = await page.waitForSelector('#header-hamburger', { visible: true });
+      await headerHamburger.click();
+
+      await page.evaluate(() => document.getElementById('header-hamburger').getAttribute('aria-expanded'))
+        .then(ariaExpanded => expect(ariaExpanded).toBe('true'));
+    });
+
+    it('should not visual regress', async () => {
+      await page.setViewport({ width: 1200, height: 800 });
+      const button = await page.waitForSelector('.application-menu-trigger', { visible: true });
+      await button.click();
+
+      const isOpen = await page.waitForSelector('.application-menu.is-open', { visible: true });
+      await page.waitForTimeout(800); // needed for the animation transition to finish before the screenshot
+
+      if (isOpen) {
+        const image = await page.screenshot();
+        const config = getConfig('applicationmenu');
+        expect(image).toMatchImageSnapshot(config);
+      }
+    });
+  });
+
+  describe('Filter', () => {
+    const url = `${baseUrl}/example-filterable?theme=classic`;
+
+    beforeEach(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
+    });
+
+    it('should filter', async () => {
+      await page.type('#appmenu-searchfield', 'Role');
+      await page.waitForSelector('.has-filtered-children', { visible: true })
+        .then(async () => {
+          await page.evaluate(() => document.querySelectorAll('.accordion-header.filtered').length)
+            .then(filteredEl => expect(filteredEl).toEqual(8));
+
+          await page.evaluate(() => document.querySelectorAll('.accordion-header').length)
+            .then(filteredEl => expect(filteredEl).toEqual(19));
+        });
+    });
+
+    it.only('should not visually regress when filtered', async () => {
+      await page.setViewport({ width: 1280, height: 718 });
+      const search = await page.waitForSelector('#appmenu-searchfield', { visible: true });
+      await search.click();
+      await page.type('#appmenu-searchfield', '#3');
+
+      await page.waitForSelector('.has-filtered-children', { visible: true })
+        .then(async () => {
+          // target a specific element in the page to screenshot
+          const appmenu = await page.$('#application-menu');
+          const image = await appmenu.screenshot();
+          const config = getConfig('applicationmenu-filtered');
+          expect(image).toMatchImageSnapshot(config);
+        });
+    });
+  });
 
   describe('Resize', () => {
     const url = `${baseUrl}/example-resizable-menu`;
