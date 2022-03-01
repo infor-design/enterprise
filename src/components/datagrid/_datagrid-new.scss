@@ -338,6 +338,10 @@
       padding: 0;
     }
 
+    &.has-editor .lookup-wrapper {
+      padding: 8px 16px;
+    }
+
     .datepicker {
       margin-top: 2px;
       padding-left: 0;
@@ -348,6 +352,10 @@
       margin-left: 11px;
       top: calc(50% - 19px) !important;
     }
+  }
+
+  .datagrid-trigger-cell.has-editor .icon.icon-search-list {
+    top: -1px;
   }
 
   .datagrid-trigger-cell .icon.icon-search-list {
