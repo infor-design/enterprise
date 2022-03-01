@@ -1,3 +1,5 @@
+const { getConfig } = require('../../helpers/e2e-utils.js');
+
 describe('Datagrid Puppeteer Tests', () => {
   describe('Datagrid Filter Format Test', () => {
     const url = 'http://localhost:4000/components/datagrid/example-filter.html';
@@ -95,5 +97,20 @@ describe('Datagrid example-key-row-select tests', () => {
     await page.keyboard.press('ArrowDown');
     const row2 = await page.$eval('tr.datagrid-row.is-selected', element => element.getAttribute('class'));
     expect(row2).toEqual('datagrid-row is-active-row is-selected');
+  });
+});
+
+describe('Datagrid test to keep the column strech in responsive view', () => {
+  const url = 'http://localhost:4000/components/datagrid/example-index.html';
+  beforeAll(async () => {
+    await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+  });
+
+  it('should run visual test in responsive view', async () => {
+    await page.setViewport({ width: 900, height: 600 });
+    await page.waitForSelector('#custom-id-col-phone');
+    const img = await page.screenshot();
+    const config = getConfig('datagrid-col');
+    expect(img).toMatchImageSnapshot(config);
   });
 });
