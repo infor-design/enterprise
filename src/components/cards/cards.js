@@ -290,8 +290,8 @@ Cards.prototype = {
    */
   updated(settings) {
     this.settings = utils.mergeSettings(this.element, settings, this.settings);
-
     this.teardown();
+    this.handleEvents();
     return this;
   },
 
