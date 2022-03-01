@@ -62,6 +62,7 @@
   position: relative;
   vertical-align: middle;
   z-index: 1001;
+  width: 100%;
 
   @media screen and (min-width: $breakpoint-big-phone + 1) {
     max-width: 90%;

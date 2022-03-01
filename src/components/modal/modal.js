@@ -1148,7 +1148,7 @@ Modal.prototype = {
     } else {
       this.element[0].classList.remove('display-fullsize');
       calcHeight = ($(window).height() * 0.9) - this.settings.frameHeight;
-      calcWidth = ($(window).width() * 1) - this.settings.frameWidth;
+      calcWidth = $(window).width();
     }
 
     const wrapper = this.element.find('.modal-body-wrapper');
