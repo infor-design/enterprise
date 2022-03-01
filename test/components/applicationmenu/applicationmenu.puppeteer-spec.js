@@ -1,6 +1,7 @@
 /* eslint-disable compat/compat */
 const { dragAndDrop } = require('../../helpers/e2e-utils');
 const { getConfig } = require('../../helpers/e2e-utils.js');
+const { logger } = require('../../../scripts/logger.js');
 
 describe('Application Menu Puppeteer Test', () => {
   const baseUrl = 'http://localhost:4000/components/applicationmenu';
@@ -71,7 +72,6 @@ describe('Application Menu Puppeteer Test', () => {
     });
 
     it('should not visually regress when filtered', async () => {
-      await page.setViewport({ width: 1280, height: 718 });
       const search = await page.waitForSelector('#appmenu-searchfield', { visible: true });
       await search.click();
       await page.type('#appmenu-searchfield', '#3');
@@ -196,7 +196,7 @@ describe('Application Menu Puppeteer Test', () => {
     const url = `${baseUrl}/example-personalized-role-switcher?theme=classic`;
 
     beforeEach(async () => {
-      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
     });
 
     it('should show the app menu', async () => {
@@ -219,10 +219,10 @@ describe('Application Menu Puppeteer Test', () => {
       await page.setViewport({ width: 375, height: 812 });
 
       await page.waitForSelector('#header-hamburger', { visible: true })
-        .then(async el => el.click());
+        .then(el => el.click());
 
       await page.waitForSelector('#header-more-actions', { visible: true })
-        .then(async el => el.click());
+        .then(el => el.click());
 
       await page.evaluate(() => document.getElementById('application-menu').getAttribute('class'))
         .then(className => expect(className).not.toContain('is-open'));
@@ -253,6 +253,127 @@ describe('Application Menu Puppeteer Test', () => {
 
       await page.evaluate(() => document.getElementById('application-menu').getAttribute('class'))
         .then(className => expect(className).not.toContain('is-open'));
+    });
+  });
+
+  describe('Role Switcher', () => {
+    const url = `${baseUrl}/test-personalized-role-switcher-long-title`;
+
+    beforeEach(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
+    });
+
+    it('should have a working role switcher with long title', async () => {
+      await page.waitForSelector('.application-menu-switcher-trigger', { visible: true })
+        .then(el => el.click());
+
+      expect(await page.waitForSelector('.application-menu-switcher-panel', { visible: true })).toBeTruthy();
+    });
+
+    it('should assign proper aria roles to the trigger button', async () => {
+      await page.waitForSelector('#trigger-btn', { visible: true });
+
+      await page.evaluate(() => document.getElementById('trigger-btn').getAttribute('aria-controls'))
+        .then(ariaControls => expect(ariaControls).toBe('expandable-area-0-content'));
+
+      await page.evaluate(() => document.getElementById('trigger-btn').getAttribute('aria-expanded'))
+        .then(ariaExpanded => expect(ariaExpanded).toBe('false'));
+
+      await page.waitForSelector('#trigger-btn', { visible: true })
+        .then(el => el.click());
+
+      await page.evaluate(() => document.getElementById('trigger-btn').getAttribute('aria-expanded'))
+        .then(ariaExpanded => expect(ariaExpanded).toBe('true'));
+    });
+
+    it('should dismiss the role switcher by pressing Escape', async () => {
+      await page.waitForSelector('.application-menu-switcher-trigger', { visible: true })
+        .then(el => el.click());
+
+      expect(await page.waitForSelector('.application-menu-switcher-panel', { visible: true })).toBeTruthy();
+
+      await page.keyboard.press('Escape');
+      expect(await page.waitForSelector('.application-menu-switcher-panel', { hidden: true })).toBeTruthy();
+    });
+  });
+
+  describe('Custom Search', () => {
+    const url = `${baseUrl}/test-filterable-custom`;
+
+    beforeEach(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
+    });
+
+    it('should show the search even though filterable is false', async () => {
+      expect(await page.waitForSelector('#application-menu-searchfield', { visible: true })).toBeTruthy();
+    });
+
+    it('should have a search but not filter the menu when filterable is false', async () => {
+      await page.waitForSelector('#application-menu-searchfield', { visible: true });
+
+      await page.type('#application-menu-searchfield', 'Role');
+
+      await page.evaluate(() => document.querySelectorAll('.accordion-header.filtered').length)
+        .then(filtered => expect(filtered).toEqual(0));
+    });
+  });
+
+  describe('Many Items', () => {
+    const url = `${baseUrl}/test-filterable-many-items`;
+
+    beforeEach(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
+    });
+
+    it('should not have errors', async () => {
+      await page.on('error', (err) => {
+        logger('Error:', err);
+      });
+    });
+  });
+
+  describe('Event Propagation', () => {
+    const url = `${baseUrl}/test-click-event-propagation`;
+
+    beforeEach(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
+
+      await page.waitForSelector('#application-menu.is-open', { visible: true });
+    });
+
+    it('should not have errors', async () => {
+      await page.on('error', (err) => {
+        logger('Error:', err);
+      });
+    });
+
+    it('should fire a toast when its accordion headers are clicked', async () => {
+      await page.waitForSelector('#application-menu > div > div:nth-child(3)', { visible: true })
+        .then(accordionHeader => accordionHeader.click());
+
+      expect(await page.waitForSelector('#toast-container', { visible: true })).toBeTruthy();
+    });
+  });
+
+  describe('Manual Init', () => {
+    const url = `${baseUrl}/test-manual-init`;
+
+    beforeEach(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
+    });
+
+    it.only('should open when the hamburger button is clicked', async () => {
+      const menuTrigger = await page.$('.application-menu-trigger');
+      await menuTrigger.click();
+
+      // Add delay to fully show the app menu
+      await page.waitForTimeout(200);
+
+      await page.on('error', (err) => {
+        logger('Error:', err);
+      });
+
+      expect(await page.waitForSelector('#application-menu', { visible: true })).toBeTruthy();
     });
   });
 
