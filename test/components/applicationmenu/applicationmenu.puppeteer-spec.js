@@ -266,7 +266,6 @@ describe('Application Menu Puppeteer Test', () => {
       const triggerBtn = await page.waitForSelector('#trigger-btn', { visible: true });
       await triggerBtn.click();
 
-      await page.waitForTimeout(300);
       expect(await page.waitForSelector('.application-menu-switcher-panel', { visible: true })).toBeTruthy();
     });
 
