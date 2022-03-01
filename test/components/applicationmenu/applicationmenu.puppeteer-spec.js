@@ -263,8 +263,8 @@ describe('Application Menu Puppeteer Test', () => {
     });
 
     it('should have a working role switcher with long title', async () => {
-      const switcherTrigger = await page.$('.application-menu-switcher-trigger');
-      await switcherTrigger.click();
+      const triggerBtn = await page.waitForSelector('#trigger-btn', { visible: true });
+       await triggerBtn.click();
 
       await page.waitForTimeout(300);
       expect(await page.waitForSelector('.application-menu-switcher-panel', { visible: true })).toBeTruthy();
