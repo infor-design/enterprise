@@ -11,8 +11,6 @@ describe('ProcessIndicator Puppeteer Tests', () => {
     });
 
     it('Should not visual regress', async () => {
-      expect(await page.waitForSelector('.container')).toBeTruthy();
-
       // Need a bit of delay to make sure everything is showing
       await page.waitForTimeout(200);
 
@@ -33,8 +31,6 @@ describe('ProcessIndicator Puppeteer Tests', () => {
     });
 
     it('Should not visual regress', async () => {
-      expect(await page.waitForSelector('.container')).toBeTruthy();
-
       // Need a bit of delay to make sure everything is showing
       await page.waitForTimeout(200);
 
