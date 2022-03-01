@@ -94,7 +94,7 @@ describe('Application Menu Puppeteer Test', () => {
     });
 
     it('should have a working menu button', async () => {
-      const menuButton = await page.waitForSelector('.btn-menu', { visible: true });
+      const menuButton = await page.$('.btn-menu');
       await menuButton.click();
 
       expect(await page.waitForSelector('#popupmenu-2', { visible: true })).toBeTruthy();
