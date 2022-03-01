@@ -30,6 +30,7 @@ const CONTEXTUALACTIONPANEL_DEFAULTS = {
   content: null,
   initializeContent: true, // initialize content before opening
   title: 'Contextual Action Panel',
+  cssClass: null,
   modalSettings: {
     buttons: null,
     centerTitle: false,
@@ -214,6 +215,10 @@ ContextualActionPanel.prototype = {
         this.panel = $(`<div class="contextual-action-panel">${modalContent}</div>`).appendTo('body');
         this.panel.addClass('modal').attr('id', this.settings.modalSettings.id);
       }
+    }
+
+    if (this.settings.cssClass) {
+      this.panel.addClass(`${this.settings.cssClass}`);
     }
 
     this.completeBuild();
