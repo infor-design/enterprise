@@ -3,9 +3,7 @@
 
 		<button class="btn-secondary" type="button" id="add-context">Show Modal</button><br/><br/>
 
-    <button class="btn-secondary" type="button" id="suppress-key">Show Modal (Suppressed Enter)</button><br/><br/>
-
-    <button class="btn-secondary" type="button" id="fullsize-field">Show Modal (Fullsize Field)</button>
+    <button class="btn-secondary" type="button" id="suppress-key">Show Modal (Suppressed Enter)</button>
 
 		<!-- Modal Example -->
 		<div id="modal-add-context" class="hidden">
@@ -34,49 +32,33 @@
 </div>
 
 <script>
-const modalAddContext = $('#modal-add-context');
-
-const modals = {
+var modals = {
     'add-context': {
       'title': 'Add Context',
       'id': 'my-id',
-      'content': modalAddContext
+      'content': $('#modal-add-context')
     },
     'suppress-key': {
       'title': 'Suppress Key',
       'id': 'my-id',
-      'content': modalAddContext,
+      'content': $('#modal-add-context'),
       'suppressEnterKey': true
-    },
-    'fullsize-field': {
-      'title': 'Fullsize Fields',
-      'id': 'my-id',
-      'content': modalAddContext
     }
-  },
-
-  close = function (modal) {
-    $('#subject').removeAttr('style');
-    $('#notes-max').removeAttr('style');
-    
-    const dropdown = $('.dropdown-wrapper')
-    dropdown.removeAttr('style');
-    dropdown.find('.dropdown').removeAttr('style');
-
-    modal.close();
   },
 
   setModal = function (opt) {
     opt = $.extend({
       buttons: [{
         text: 'Cancel',
+      //  id: 'modal-button-1',
         click: function(e, modal) {
-          close(modal);
+          modal.close();
         }
       }, {
         text: 'Save',
+      //  id: 'modal-button-2',
         click: function(e, modal) {
-          close(modal);
+          modal.close();
         },
         validate: false,
         isDefault: true
@@ -92,20 +74,6 @@ const modals = {
   });
 
   $('#suppress-key').on('click', function () {
-		$(this).focus();
-    setModal(modals[this.id]);
-  });
-
-  $('#fullsize-field').on('click', function () {
-    // check if fields have equal space on full width
-    if ($(window).width() <= 480) {
-      $('#subject').width('100%');
-      $('#notes-max').css({ width: '100%', maxWidth: '100%'});
-
-      const dropdown = $('.dropdown-wrapper')
-      dropdown.width('100%');
-      dropdown.find('.dropdown').width('100%');
-    }
 		$(this).focus();
     setModal(modals[this.id]);
   });
