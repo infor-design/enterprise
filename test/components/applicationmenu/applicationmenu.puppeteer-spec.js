@@ -70,7 +70,7 @@ describe('Application Menu Puppeteer Test', () => {
         });
     });
 
-    it.only('should not visually regress when filtered', async () => {
+    it('should not visually regress when filtered', async () => {
       await page.setViewport({ width: 1280, height: 718 });
       const search = await page.waitForSelector('#appmenu-searchfield', { visible: true });
       await search.click();
