@@ -13,6 +13,8 @@
 - `[Locale]` Refined some Filipino translations. ([#5864](https://github.com/infor-design/enterprise/issues/5864))
 - `[Locale]` Refined some Japanese translations. ([#6115](https://github.com/infor-design/enterprise/issues/6115))
 - `[Swipe-action]` Added a Puppeteer Script for Swipe Container. ([#6129](https://github.com/infor-design/enterprise/issues/6129))
+- `[Tag]` The dismiss button was missing a button type causing the form to submit. ([#6149](https://github.com/infor-design/enterprise/issues/6149))
+
 
 ## v4.61.0 Fixes
 
