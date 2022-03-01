@@ -102,7 +102,7 @@ describe('Application Menu Puppeteer Test', () => {
     });
   });
 
-  describe('App Menu open on large', () => {
+  describe('Open on large', () => {
     const url = `${baseUrl}/example-open-on-large`;
 
     beforeEach(async () => {
@@ -114,14 +114,14 @@ describe('Application Menu Puppeteer Test', () => {
     });
   });
 
-  describe('App Menu container', () => {
+  describe('Container', () => {
     const url = `${baseUrl}/test-container`;
 
     beforeEach(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
     });
 
-    it.only('should display without visual bugs', async () => {
+    it('should display without visual bugs', async () => {
       const button = await page.waitForSelector('.application-menu-trigger', { visible: true });
       await button.click();
 
@@ -129,6 +129,66 @@ describe('Application Menu Puppeteer Test', () => {
       await page.evaluate(() => document.querySelectorAll('.accordion-header').length)
         .then(accordionHeader => expect(accordionHeader).toEqual(17));
       expect(await page.waitForSelector('.accordion-header', { visible: true })).toBeTruthy();
+    });
+  });
+
+  describe('Truncated text tooltip', () => {
+    const url = `${baseUrl}/test-tooltips`;
+
+    beforeEach(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
+    });
+
+    it.only('should show a tooltip on truncated text', async () => {
+      await page.hover('#truncated-text');
+      await page.waitForSelector('#tooltip', { visible: true })
+        .then(element => element.getProperty('className'))
+        .then(className => className.jsonValue())
+        .then(classNameString => expect(classNameString).not.toContain('is-hidden'));
+    });
+  });
+
+  describe('Personalize', () => {
+    const url = `${baseUrl}/example-personalized?theme=classic`;
+
+    beforeEach(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
+    });
+
+    it('should show the app menu', async () => {
+      expect(await page.waitForSelector('#application-menu', { visible: true })).toBeTruthy();
+    });
+
+    it('should not visually regress when personalized', async () => {
+      await page.setViewport({ width: 1280, height: 718 });
+      await page.waitForSelector('body.no-scroll', { visible: true })
+        .then(async () => {
+          const image = await page.screenshot();
+          const config = getConfig('applicationmenu-personalize');
+          expect(image).toMatchImageSnapshot(config);
+        });
+    });
+  });
+
+  describe('Personalize Roles', () => {
+    const url = `${baseUrl}/example-personalized-roles.html?colors=390567`;
+
+    beforeEach(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
+    });
+
+    it('should show the app menu', async () => {
+      expect(await page.waitForSelector('#application-menu', { visible: true })).toBeTruthy();
+    });
+
+    it('should not visually regress on personalize roles', async () => {
+      await page.setViewport({ width: 1280, height: 718 });
+      await page.waitForSelector('body.no-scroll', { visible: true })
+        .then(async () => {
+          const image = await page.screenshot();
+          const config = getConfig('applicationmenu-personalize');
+          expect(image).toMatchImageSnapshot(config);
+        });
     });
   });
 
