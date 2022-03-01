@@ -1,7 +1,6 @@
 /* eslint-disable compat/compat */
 const { dragAndDrop } = require('../../helpers/e2e-utils');
 const { getConfig } = require('../../helpers/e2e-utils.js');
-const { logger } = require('../../../scripts/logger.js');
 
 describe('Application Menu Puppeteer Test', () => {
   const baseUrl = 'http://localhost:4000/components/applicationmenu';
@@ -324,12 +323,6 @@ describe('Application Menu Puppeteer Test', () => {
     beforeEach(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
     });
-
-    it('should not have errors', async () => {
-      await page.on('error', (err) => {
-        logger('Error:', err);
-      });
-    });
   });
 
   describe('Event Propagation', () => {
@@ -339,12 +332,6 @@ describe('Application Menu Puppeteer Test', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
 
       await page.waitForSelector('#application-menu.is-open', { visible: true });
-    });
-
-    it('should not have errors', async () => {
-      await page.on('error', (err) => {
-        logger('Error:', err);
-      });
     });
 
     it('should fire a toast when its accordion headers are clicked', async () => {
@@ -368,10 +355,6 @@ describe('Application Menu Puppeteer Test', () => {
 
       // Add delay to fully show the app menu
       await page.waitForTimeout(200);
-
-      await page.on('error', (err) => {
-        logger('Error:', err);
-      });
 
       expect(await page.waitForSelector('#application-menu', { visible: true })).toBeTruthy();
     });
