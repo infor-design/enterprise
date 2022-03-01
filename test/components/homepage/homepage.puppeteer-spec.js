@@ -77,8 +77,9 @@ describe('Homepage Puppeteer Tests', () => {
 
       await page.setViewport({ width: 1920, height: 1080 });
       const elPositions = await page.evaluate(() => {
+        // eslint-disable-next-line
         const homepageEls = Array.from(document.querySelectorAll('.homepage .widget'));
-        const positions = homepageEls.map(element => getComputedStyle(element).left + ',' + getComputedStyle(element).top);
+        const positions = homepageEls.map(element => `${getComputedStyle(element).left},${getComputedStyle(element).top}`);
 
         return positions;
       });
@@ -110,8 +111,9 @@ describe('Homepage Puppeteer Tests', () => {
 
       await page.setViewport({ width: 1680, height: 1050 });
       const elPositions = await page.evaluate(() => {
+        // eslint-disable-next-line
         const homepageEls = Array.from(document.querySelectorAll('.homepage .widget'));
-        const positions = homepageEls.map(element => getComputedStyle(element).left + ',' + getComputedStyle(element).top);
+        const positions = homepageEls.map(element => `${getComputedStyle(element).left},${getComputedStyle(element).top}`);
 
         return positions;
       });
@@ -143,8 +145,9 @@ describe('Homepage Puppeteer Tests', () => {
 
       await page.setViewport({ width: 1200, height: 1600 });
       const elPositions = await page.evaluate(() => {
+        // eslint-disable-next-line
         const homepageEls = Array.from(document.querySelectorAll('.homepage .widget'));
-        const positions = homepageEls.map(element => getComputedStyle(element).left + ',' + getComputedStyle(element).top);
+        const positions = homepageEls.map(element => `${getComputedStyle(element).left},${getComputedStyle(element).top}`);
 
         return positions;
       });
@@ -176,8 +179,9 @@ describe('Homepage Puppeteer Tests', () => {
 
       await page.setViewport({ width: 768, height: 1024 });
       const elPositions = await page.evaluate(() => {
+        // eslint-disable-next-line
         const homepageEls = Array.from(document.querySelectorAll('.homepage .widget'));
-        const positions = homepageEls.map(element => getComputedStyle(element).left + ',' + getComputedStyle(element).top);
+        const positions = homepageEls.map(element => `${getComputedStyle(element).left},${getComputedStyle(element).top}`);
 
         return positions;
       });
@@ -209,8 +213,9 @@ describe('Homepage Puppeteer Tests', () => {
 
       await page.setViewport({ width: 320, height: 480 });
       const elPositions = await page.evaluate(() => {
+        // eslint-disable-next-line
         const homepageEls = Array.from(document.querySelectorAll('.homepage .widget'));
-        const positions = homepageEls.map(element => getComputedStyle(element).left + ',' + getComputedStyle(element).top);
+        const positions = homepageEls.map(element => `${getComputedStyle(element).left},${getComputedStyle(element).top}`);
 
         return positions;
       });
