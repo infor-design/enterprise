@@ -7,8 +7,7 @@ describe('ProcessIndicator Puppeteer Tests', () => {
     const url = `${baseUrl}/example-index`;
 
     beforeAll(async () => {
-      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
-      await page.waitForSelector('.container', { visible: true });
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
     it('Should not visual regress', async () => {
@@ -30,8 +29,7 @@ describe('ProcessIndicator Puppeteer Tests', () => {
     const url = `${baseUrl}/example-labels`;
 
     beforeAll(async () => {
-      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
-      await page.waitForSelector('.container', { visible: true });
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
     it('Should not visual regress', async () => {
