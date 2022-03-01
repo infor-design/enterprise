@@ -1626,7 +1626,7 @@ Dropdown.prototype = {
         }
         self.toggle();
       }
-    } else if (this.settings.noSearch === true) {
+    } else if (this.settings.noSearch === true && !self.isControl(key)) {
       // In `noSearch` mode, this enables typeahead while the list is opened
       this.handleAutoComplete(e);
     }
