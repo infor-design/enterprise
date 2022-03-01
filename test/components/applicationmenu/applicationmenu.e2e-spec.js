@@ -5,61 +5,6 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Application Menu MenuButton tests', () => {
-  beforeEach(async () => {
-    await utils.setPage('/components/applicationmenu/example-menubutton');
-  });
-
-  it('should have a working menu button', async () => {
-    await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element.all(by.css('.btn-menu')).last()), config.waitsFor);
-
-    const menuButton = await element(by.css('.btn-menu'));
-    await menuButton.click();
-
-    expect(await element(by.id('popupmenu-2')).isDisplayed()).toBeTruthy();
-  });
-
-  it('should not have errors', async () => {
-    await utils.checkForErrors();
-  });
-});
-
-describe('Application Menu open on large tests', () => {
-  beforeEach(async () => {
-    await utils.setPage('/components/applicationmenu/example-open-on-large');
-    await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.id('application-menu'))), config.waitsFor);
-  });
-
-  it('should be open on intialization', async () => {
-    expect(await element(by.id('application-menu')).isDisplayed()).toBeTruthy();
-  });
-
-  it('should not have errors', async () => {
-    await utils.checkForErrors();
-  });
-});
-
-describe('Application Menu container tests', () => {
-  beforeEach(async () => {
-    await utils.setPage('/components/applicationmenu/test-container');
-    await browser.driver.sleep(config.sleep);
-  });
-
-  it('should display without visual bugs', async () => {
-    const button = await element(by.css('.application-menu-trigger'));
-    await button.click();
-    await browser.driver.sleep(config.sleep);
-
-    expect(await element(by.id('application-menu')).isDisplayed()).toBeTruthy();
-    expect(await element.all(by.css('.accordion-header')).count()).toEqual(17);
-    expect(await element.all(by.css('.accordion-header')).first().isDisplayed()).toBeTruthy();
-
-    await utils.checkForErrors();
-  });
-});
-
 describe('Application Menu accordion truncated text tooltip tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/applicationmenu/test-tooltips');

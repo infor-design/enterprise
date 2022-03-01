@@ -87,6 +87,51 @@ describe('Application Menu Puppeteer Test', () => {
     });
   });
 
+  describe('Menu Button', () => {
+    const url = `${baseUrl}/example-menubutton`;
+
+    beforeEach(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
+    });
+
+    it('should have a working menu button', async () => {
+      const menuButton = await page.waitForSelector('.btn-menu', { visible: true });
+      await menuButton.click();
+
+      expect(await page.waitForSelector('#popupmenu-2', { visible: true })).toBeTruthy();
+    });
+  });
+
+  describe('App Menu open on large', () => {
+    const url = `${baseUrl}/example-open-on-large`;
+
+    beforeEach(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
+    });
+
+    it('should be open on initialization', async () => {
+      expect(await page.waitForSelector('#application-menu', { visible: true })).toBeTruthy();
+    });
+  });
+
+  describe('App Menu container', () => {
+    const url = `${baseUrl}/test-container`;
+
+    beforeEach(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
+    });
+
+    it.only('should display without visual bugs', async () => {
+      const button = await page.waitForSelector('.application-menu-trigger', { visible: true });
+      await button.click();
+
+      expect(await page.waitForSelector('#application-menu', { visible: true })).toBeTruthy();
+      await page.evaluate(() => document.querySelectorAll('.accordion-header').length)
+        .then(accordionHeader => expect(accordionHeader).toEqual(17));
+      expect(await page.waitForSelector('.accordion-header', { visible: true })).toBeTruthy();
+    });
+  });
+
   describe('Resize', () => {
     const url = `${baseUrl}/example-resizable-menu`;
 
