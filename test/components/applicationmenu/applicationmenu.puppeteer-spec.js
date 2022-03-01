@@ -266,7 +266,8 @@ describe('Application Menu Puppeteer Test', () => {
       const switcherTrigger = await page.$('.application-menu-switcher-trigger');
       await switcherTrigger.click();
 
-      expect(await page.waitForSelector('.application-menu-switcher-panel', { visible: true, timeout: 200 })).toBeTruthy();
+      await page.waitForTimeout(300);
+      expect(await page.waitForSelector('.application-menu-switcher-panel', { visible: true })).toBeTruthy();
     });
 
     it('should assign proper aria roles to the trigger button', async () => {
