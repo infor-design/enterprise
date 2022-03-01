@@ -191,6 +191,45 @@ describe('Application Menu Puppeteer Test', () => {
     });
   });
 
+  describe('Role Switcher', () => {
+    const url = `${baseUrl}/test-personalized-role-switcher-long-title`;
+
+    beforeEach(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
+    });
+
+    it('should have a working role switcher with long title', async () => {
+      const triggerBtn = await page.waitForSelector('#trigger-btn', { visible: true });
+      await triggerBtn.click();
+
+      expect(await page.waitForSelector('.application-menu-switcher-panel', { visible: true })).toBeTruthy();
+    });
+
+    it('should assign proper aria roles to the trigger button', async () => {
+      await page.evaluate(() => document.getElementById('trigger-btn').getAttribute('aria-controls'))
+        .then(ariaControls => expect(ariaControls).toBe('expandable-area-0-content'));
+
+      await page.evaluate(() => document.getElementById('trigger-btn').getAttribute('aria-expanded'))
+        .then(ariaExpanded => expect(ariaExpanded).toBe('false'));
+
+      await page.waitForSelector('#trigger-btn', { visible: true })
+        .then(el => el.click());
+
+      await page.evaluate(() => document.getElementById('trigger-btn').getAttribute('aria-expanded'))
+        .then(ariaExpanded => expect(ariaExpanded).toBe('true'));
+    });
+
+    it('should dismiss the role switcher by pressing Escape', async () => {
+      await page.waitForSelector('.application-menu-switcher-trigger', { visible: true })
+        .then(el => el.click());
+
+      expect(await page.waitForSelector('.application-menu-switcher-panel', { visible: true })).toBeTruthy();
+
+      await page.keyboard.press('Escape');
+      expect(await page.waitForSelector('.application-menu-switcher-panel', { hidden: true })).toBeTruthy();
+    });
+  });
+
   describe('Personalize Roles Switcher', () => {
     const url = `${baseUrl}/example-personalized-role-switcher?theme=classic`;
 
@@ -252,45 +291,6 @@ describe('Application Menu Puppeteer Test', () => {
 
       await page.evaluate(() => document.getElementById('application-menu').getAttribute('class'))
         .then(className => expect(className).not.toContain('is-open'));
-    });
-  });
-
-  describe('Role Switcher', () => {
-    const url = `${baseUrl}/test-personalized-role-switcher-long-title`;
-
-    beforeEach(async () => {
-      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
-    });
-
-    it('should have a working role switcher with long title', async () => {
-      const triggerBtn = await page.waitForSelector('#trigger-btn', { visible: true });
-      await triggerBtn.click();
-
-      expect(await page.waitForSelector('.application-menu-switcher-panel', { visible: true })).toBeTruthy();
-    });
-
-    it('should assign proper aria roles to the trigger button', async () => {
-      await page.evaluate(() => document.getElementById('trigger-btn').getAttribute('aria-controls'))
-        .then(ariaControls => expect(ariaControls).toBe('expandable-area-0-content'));
-
-      await page.evaluate(() => document.getElementById('trigger-btn').getAttribute('aria-expanded'))
-        .then(ariaExpanded => expect(ariaExpanded).toBe('false'));
-
-      await page.waitForSelector('#trigger-btn', { visible: true })
-        .then(el => el.click());
-
-      await page.evaluate(() => document.getElementById('trigger-btn').getAttribute('aria-expanded'))
-        .then(ariaExpanded => expect(ariaExpanded).toBe('true'));
-    });
-
-    it('should dismiss the role switcher by pressing Escape', async () => {
-      await page.waitForSelector('.application-menu-switcher-trigger', { visible: true })
-        .then(el => el.click());
-
-      expect(await page.waitForSelector('.application-menu-switcher-panel', { visible: true })).toBeTruthy();
-
-      await page.keyboard.press('Escape');
-      expect(await page.waitForSelector('.application-menu-switcher-panel', { hidden: true })).toBeTruthy();
     });
   });
 
