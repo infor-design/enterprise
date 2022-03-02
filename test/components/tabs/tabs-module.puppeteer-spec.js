@@ -41,8 +41,8 @@ describe('Tabs module Puppeteer tests', () => {
       // Add a delay before pressing a key
       await page.waitForTimeout(200);
 
-      // Set the value of the input
-      await page.$eval('.searchfield', el => el.value = 'Hi');
+      // Press a key to enter into the input
+      page.keyboard.press('hi');
 
       // Add another delay before taking the screenshot
       await page.waitForTimeout(200);
