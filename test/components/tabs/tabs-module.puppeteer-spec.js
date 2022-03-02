@@ -42,7 +42,7 @@ describe('Tabs module Puppeteer tests', () => {
       await page.waitForTimeout(200);
 
       // Press a key to enter into the input
-      page.keyboard.press('hi');
+      page.keyboard.press('a');
 
       // Add another delay before taking the screenshot
       await page.waitForTimeout(200);
