@@ -1,3 +1,5 @@
+const { getConfig } = require('../../helpers/e2e-utils.js');
+
 describe('Homepage Puppeteer Tests', () => {
   const baseUrl = 'http://localhost:4000/components/homepage';
 
