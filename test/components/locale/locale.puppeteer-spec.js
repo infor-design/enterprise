@@ -1,7 +1,6 @@
 const { getConfig } = require('../../helpers/e2e-utils.js');
 
 describe('Locale visual test for PH - Translation', () => {
-
   const url = 'http://localhost:4000/components/locale/test-translations.html?locale=tl-PH';
 
   beforeAll(async () => {
@@ -14,7 +13,5 @@ describe('Locale visual test for PH - Translation', () => {
     const img = await page.screenshot();
     const config = getConfig('locale-ph');
     expect(img).toMatchImageSnapshot(config);
-
   });
-
 });

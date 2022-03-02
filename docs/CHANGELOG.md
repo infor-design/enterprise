@@ -14,6 +14,7 @@
 - `[Locale]` Refined some Lithuanian translations. ([#5960](https://github.com/infor-design/enterprise/issues/5960))
 - `[Locale]` Refined some Filipino translations. ([#5864](https://github.com/infor-design/enterprise/issues/5864))
 - `[Locale]` Refined some Japanese translations. ([#6115](https://github.com/infor-design/enterprise/issues/6115))
+- `[Locale]` Added puppeteer script for PH translation ([#6150](https://github.com/infor-design/enterprise/pull/6150))
 - `[Swipe-action]` Added a Puppeteer Script for Swipe Container. ([#6129](https://github.com/infor-design/enterprise/issues/6129))
 
 ## v4.61.0 Fixes
