@@ -6,6 +6,39 @@ describe('Homepage Puppeteer Tests', () => {
     expect(pos1.top).toEqual(pos2[1]);
   }
 
+  describe('Homepage example index', () => {
+    const url = `${baseUrl}/example-index.html`;
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('should show the title', async () => {
+      await expect(page.title()).resolves.toMatch('IDS Enterprise');
+    });
+
+    it('should show the homepage column', async () => {
+      await page.waitForSelector('.homepage', { visible: true })
+        .then(element => expect(element).toBeTruthy());
+    });
+
+    it('should not visual regress', async () => {
+      await page.setViewport({ width: 1200, height: 800 });
+    
+      expect(await page.waitForSelector('.homepage')).toBeTruthy();
+    
+      // Need a bit of delay to show the modal perfectly
+      await page.waitForTimeout(200);
+    
+      // Screenshot of the page
+      const image = await page.screenshot();
+    
+      // Set a custom name of the snapshot
+      const config = getConfig('homepage-index');
+      expect(image).toMatchImageSnapshot(config);
+    });
+  });
+
   describe('Homepage example hero widget tests', () => {
     const url = `${baseUrl}/example-hero-widget.html?theme=classic`;
 
@@ -20,6 +53,22 @@ describe('Homepage Puppeteer Tests', () => {
     it('should show the homepage column', async () => {
       await page.waitForSelector('.homepage', { visible: true })
         .then(element => expect(element).toBeTruthy());
+    });
+
+    it('should not visual regress', async () => {
+      await page.setViewport({ width: 1200, height: 800 });
+    
+      expect(await page.waitForSelector('.homepage')).toBeTruthy();
+    
+      // Need a bit of delay to show the modal perfectly
+      await page.waitForTimeout(200);
+    
+      // Screenshot of the page
+      const image = await page.screenshot();
+    
+      // Set a custom name of the snapshot
+      const config = getConfig('homepage-hero');
+      expect(image).toMatchImageSnapshot(config);
     });
   });
 
@@ -37,6 +86,22 @@ describe('Homepage Puppeteer Tests', () => {
     it('should show the homepage column', async () => {
       await page.waitForSelector('.homepage', { visible: true })
         .then(element => expect(element).toBeTruthy());
+    });
+
+    it('should not visual regress', async () => {
+      await page.setViewport({ width: 1200, height: 800 });
+    
+      expect(await page.waitForSelector('.homepage')).toBeTruthy();
+    
+      // Need a bit of delay to show the modal perfectly
+      await page.waitForTimeout(200);
+    
+      // Screenshot of the page
+      const image = await page.screenshot();
+    
+      // Set a custom name of the snapshot
+      const config = getConfig('homepage-editable');
+      expect(image).toMatchImageSnapshot(config);
     });
   });
 
@@ -224,6 +289,22 @@ describe('Homepage Puppeteer Tests', () => {
         const positionList = elPositions[i].split(',');
         checkPos(pos[i], positionList);
       }
+    });
+
+    it('should not visual regress', async () => {
+      await page.setViewport({ width: 1200, height: 800 });
+    
+      expect(await page.waitForSelector('.homepage')).toBeTruthy();
+    
+      // Need a bit of delay to show the modal perfectly
+      await page.waitForTimeout(200);
+    
+      // Screenshot of the page
+      const image = await page.screenshot();
+    
+      // Set a custom name of the snapshot
+      const config = getConfig('homepage-five-column');
+      expect(image).toMatchImageSnapshot(config);
     });
   });
 });
