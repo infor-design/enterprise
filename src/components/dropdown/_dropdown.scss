@@ -1091,7 +1091,7 @@ div.dropdown-xs,
     div.multiselect {
       font-size: $input-size-compact-font-size;
       height: $input-size-compact-height !important;
-      padding: 0;
+      padding: 4px 0 0 4px;
 
       &.has-tags {
         height: auto !important;
