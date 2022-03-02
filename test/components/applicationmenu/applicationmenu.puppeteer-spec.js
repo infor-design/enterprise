@@ -333,7 +333,7 @@ describe('Application Menu Puppeteer Test', () => {
       await page.waitForSelector('#application-menu', { visible: true })
         .then(element => element.getProperty('className'))
         .then(className => className.jsonValue())
-        .then(classNameString => expect(classNameString).toContain('is-open'));
+        .then(classNameString => expect(classNameString).not.toContain('is-open'));
     });
   });
 
