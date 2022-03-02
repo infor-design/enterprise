@@ -25,4 +25,23 @@ describe('Contextual Action Panel Puppeteer Tests', () => {
         .then(disabledValue => expect(disabledValue).toEqual(null));
     });
   });
+
+  describe('CAP Tabs Vertical tests', () => {
+    const url = `${baseUrl}/test-css-settings.html`;
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('should show the title', async () => {
+      await expect(page.title()).resolves.toMatch('IDS Enterprise');
+    });
+
+    it('should have css class', async () => {
+      await page.click('#show-cap');
+
+      await page.waitForSelector('.my-custom-panel-test', { visible: true })
+        .then(element => expect(element).toBeTruthy());
+    });
+  });
 });

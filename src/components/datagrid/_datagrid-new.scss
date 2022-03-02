@@ -151,9 +151,17 @@
     }
 
     input.timepicker {
+      margin-top: 2px;
+      padding: unset;
+
       ~ .trigger {
         margin-left: -7px;
         margin-top: 14px;
+      }
+
+      + .btn-icon.trigger {
+        margin-left: 9px !important;
+        margin-top: 9px !important;
       }
     }
   }
@@ -256,8 +264,28 @@
     }
   }
 
+  &.extra-small-rowheight {
+    .datagrid-cell-wrapper {
+      .icon-clock.icon {
+        top: -2px !important;
+      }
+    }
+  }
+
+  &.small-rowheight {
+    .datagrid-cell-wrapper {
+      .icon-clock.icon {
+        top: -1px !important;
+      }
+    }
+  }
+
   &.medium-rowheight {
     .datagrid-cell-wrapper {
+      .icon-clock.icon {
+        top: 0;
+      }
+
       .row-btn {
         min-height: 32px;
       }
@@ -292,8 +320,8 @@
 
       input.timepicker {
         + .trigger {
-          margin-left: 13px;
-          margin-top: 3px;
+          margin-left: 13px !important;
+          margin-top: 3px !important;
         }
       }
     }
@@ -343,7 +371,7 @@
     }
 
     .datepicker {
-      margin-top: 2px;
+      margin-top: 4px !important;
       padding-left: 0;
       padding-top: 0;
     }
@@ -632,24 +660,51 @@
   top: 8px;
 }
 
-// Timepicker
-.datagrid td.is-editing input.timepicker {
-  margin-top: 5px;
-  padding: 0 0 0 15px;
-
-  ~ .icon {
-    left: auto;
-    margin-left: -4px;
-  }
-}
-
 .datagrid.medium-rowheight td.is-editing input.timepicker {
-  margin-top: -1px !important;
   padding: 0 !important;
+  margin-top: 3px !important;
 
   ~ .icon {
     margin-left: 16px !important;
     top: calc(50% - 18px) !important;
+  }
+}
+
+.datagrid {
+  &.extra-small-rowheight {
+    td.is-editing {
+      .timepicker {
+        margin: 0 !important;
+        padding: unset !important;
+
+        + .btn-icon.trigger {
+          margin-left: 5px !important;
+          margin-top: 0 !important;
+        }
+      }
+    }
+  }
+
+  &.small-rowheight {
+    td.is-editing {
+      .timepicker {
+        margin-left: 1px !important;
+        padding: unset !important;
+
+        + .btn-icon.trigger {
+          margin-left: 4px !important;
+          margin-top: -1px !important;
+        }
+      }
+    }
+  }
+
+  &.medium-rowheight {
+    td.is-editing {
+      .timepicker {
+        margin-top: 4px;
+      }
+    }
   }
 }
 
