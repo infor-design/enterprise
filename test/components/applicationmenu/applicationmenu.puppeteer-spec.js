@@ -327,12 +327,12 @@ describe('Application Menu Puppeteer Test', () => {
       await page.waitForTimeout(100);
       await btnToolbar.click();
 
+      await page.waitForTimeout(100);
+
       await page.waitForSelector('#application-menu', { visible: true })
         .then(element => element.getProperty('className'))
         .then(className => className.jsonValue())
         .then(classNameString => expect(classNameString).not.toContain('is-open'));
-
-      await page.waitForTimeout(100);
     });
   });
 
