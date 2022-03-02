@@ -127,19 +127,19 @@ describe('Homepage Puppeteer Tests', () => {
       const pos = [
         { left: '0px', top: '0px' },
         { left: '380px', top: '0px' },
+        { left: '760px', top: '0px' },
         { left: '0px', top: '390px' },
         { left: '380px', top: '390px' },
+        { left: '760px', top: '390px' },
         { left: '0px', top: '780px' },
         { left: '380px', top: '780px' },
+        { left: '760px', top: '780px' },
         { left: '0px', top: '1170px' },
         { left: '380px', top: '1170px' },
+        { left: '760px', top: '1170px' },
         { left: '0px', top: '1560px' },
         { left: '380px', top: '1560px' },
-        { left: '0px', top: '1950px' },
-        { left: '380px', top: '1950px' },
-        { left: '0px', top: '2340px' },
-        { left: '380px', top: '2340px' },
-        { left: '0px', top: '2730px' }
+        { left: '760px', top: '1560px' }
       ];
 
       await page.setViewport({ width: 1920, height: 1080 });
@@ -153,6 +153,7 @@ describe('Homepage Puppeteer Tests', () => {
 
       for (let i = 0; i < elPositions.length; i++) {
         const positionList = elPositions[i].split(',');
+        // console.log(i + ' ~~~ ' + positionList);
         checkPos(pos[i], positionList);
       }
     });
@@ -161,19 +162,19 @@ describe('Homepage Puppeteer Tests', () => {
       const pos = [
         { left: '0px', top: '0px' },
         { left: '380px', top: '0px' },
+        { left: '760px', top: '0px' },
         { left: '0px', top: '390px' },
         { left: '380px', top: '390px' },
+        { left: '760px', top: '390px' },
         { left: '0px', top: '780px' },
         { left: '380px', top: '780px' },
+        { left: '760px', top: '780px' },
         { left: '0px', top: '1170px' },
         { left: '380px', top: '1170px' },
+        { left: '760px', top: '1170px' },
         { left: '0px', top: '1560px' },
         { left: '380px', top: '1560px' },
-        { left: '0px', top: '1950px' },
-        { left: '380px', top: '1950px' },
-        { left: '0px', top: '2340px' },
-        { left: '380px', top: '2340px' },
-        { left: '0px', top: '2730px' }
+        { left: '760px', top: '1560px' }
       ];
 
       await page.setViewport({ width: 1680, height: 1050 });
@@ -195,19 +196,19 @@ describe('Homepage Puppeteer Tests', () => {
       const pos = [
         { left: '0px', top: '0px' },
         { left: '380px', top: '0px' },
+        { left: '760px', top: '0px' },
         { left: '0px', top: '390px' },
         { left: '380px', top: '390px' },
+        { left: '760px', top: '390px' },
         { left: '0px', top: '780px' },
         { left: '380px', top: '780px' },
+        { left: '760px', top: '780px' },
         { left: '0px', top: '1170px' },
         { left: '380px', top: '1170px' },
+        { left: '760px', top: '1170px' },
         { left: '0px', top: '1560px' },
         { left: '380px', top: '1560px' },
-        { left: '0px', top: '1950px' },
-        { left: '380px', top: '1950px' },
-        { left: '0px', top: '2340px' },
-        { left: '380px', top: '2340px' },
-        { left: '0px', top: '2730px' }
+        { left: '760px', top: '1560px' }
       ];
 
       await page.setViewport({ width: 1200, height: 1600 });
@@ -229,19 +230,19 @@ describe('Homepage Puppeteer Tests', () => {
       const pos = [
         { left: '0px', top: '0px' },
         { left: '380px', top: '0px' },
+        { left: '760px', top: '0px' },
         { left: '0px', top: '390px' },
         { left: '380px', top: '390px' },
+        { left: '760px', top: '390px' },
         { left: '0px', top: '780px' },
         { left: '380px', top: '780px' },
+        { left: '760px', top: '780px' },
         { left: '0px', top: '1170px' },
         { left: '380px', top: '1170px' },
+        { left: '760px', top: '1170px' },
         { left: '0px', top: '1560px' },
         { left: '380px', top: '1560px' },
-        { left: '0px', top: '1950px' },
-        { left: '380px', top: '1950px' },
-        { left: '0px', top: '2340px' },
-        { left: '380px', top: '2340px' },
-        { left: '0px', top: '2730px' }
+        { left: '760px', top: '1560px' }
       ];
 
       await page.setViewport({ width: 768, height: 1024 });
@@ -263,19 +264,19 @@ describe('Homepage Puppeteer Tests', () => {
       const pos = [
         { left: '0px', top: '0px' },
         { left: '380px', top: '0px' },
+        { left: '760px', top: '0px' },
         { left: '0px', top: '390px' },
         { left: '380px', top: '390px' },
+        { left: '760px', top: '390px' },
         { left: '0px', top: '780px' },
         { left: '380px', top: '780px' },
+        { left: '760px', top: '780px' },
         { left: '0px', top: '1170px' },
         { left: '380px', top: '1170px' },
+        { left: '760px', top: '1170px' },
         { left: '0px', top: '1560px' },
         { left: '380px', top: '1560px' },
-        { left: '0px', top: '1950px' },
-        { left: '380px', top: '1950px' },
-        { left: '0px', top: '2340px' },
-        { left: '380px', top: '2340px' },
-        { left: '0px', top: '2730px' }
+        { left: '760px', top: '1560px' }
       ];
 
       await page.setViewport({ width: 320, height: 480 });
