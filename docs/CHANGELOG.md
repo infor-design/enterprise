@@ -31,6 +31,7 @@
 - `[Dropdown]` Fix on dropdown multiselect where change event is not triggered when clicking X. ([#6098](https://github.com/infor-design/enterprise/issues/6098))
 - `[Editor]` Fix a bug in editor where CTRL-H (add hyperlink) breaks the interface. ([#6015](https://github.com/infor-design/enterprise/issues/6015))
 - `[Spinbox]` Spinbox should update to correct value when Enter is pressed. ([#6036](https://github.com/infor-design/enterprise/issues/6036))
+- `[Tabs]` Fixed a bug where the tabs container is focused in Windows10 on Firefox. ([#6110](https://github.com/infor-design/enterprise/issues/6110))
 - `[Timepicker]` Fix a bug in timepicker where hours reset to 1 when changing period. ([#6049](https://github.com/infor-design/enterprise/issues/6049))
 - `[Timepicker]` Fix a bug in timepicker where hours is not properly created when changing from AM/PM. ([#6104](https://github.com/infor-design/enterprise/issues/6104))
 
