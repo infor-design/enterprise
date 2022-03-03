@@ -1467,6 +1467,20 @@ Dropdown.prototype = {
           selectedIndex = index;
         }
       });
+
+      // Mac OSX: "backspace" delete key
+      // Everything else: DEL key (numpad, control keys)
+      const isOSX = env.os.name === 'mac';
+      if (((!isOSX && e.key === 'Delete') || (isOSX && e.key === 'Backspace') || e.key === 'Backspace') && this.settings.noSearch) {
+        const first = $(options[0]);
+        this.highlightOption(first);
+
+        // Stop the backspace key from navigating back a page
+        if (e.key === 'Backspace') {
+          e.stopPropagation();
+          e.preventDefault();
+        }
+      }
     }
 
     switch (key) {  //eslint-disable-line
@@ -1626,7 +1640,7 @@ Dropdown.prototype = {
         }
         self.toggle();
       }
-    } else if (this.settings.noSearch === true) {
+    } else if (this.settings.noSearch === true && !self.isControl(key)) {
       // In `noSearch` mode, this enables typeahead while the list is opened
       this.handleAutoComplete(e);
     }
