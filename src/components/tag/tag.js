@@ -173,7 +173,7 @@ Tag.prototype = {
     let dismissibleBtn = '';
     if (this.settings.dismissible) {
       elemClasses.add('is-dismissible');
-      dismissibleBtn = `<button class="btn-dismissible" focusable="false" tabIndex="-1">
+      dismissibleBtn = `<button class="btn-dismissible" focusable="false" tabindex="-1" type="button">
         ${$.createIcon('close')}
         <span class="audible">${Locale.translate('Close')}</span>
       </button>`;
