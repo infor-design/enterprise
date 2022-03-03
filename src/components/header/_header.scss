@@ -254,7 +254,7 @@ $subheader-height: 60px;
   }
 
   .toolbar-section.search {
-    .searchfield-wrapper.toolbar-searchfield-wrapper {
+    .searchfield-wrapper.toolbar-searchfield-wrapper:not(.has-collapse-button) {
       width: 100%;
     }
   }
