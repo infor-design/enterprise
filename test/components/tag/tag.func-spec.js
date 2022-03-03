@@ -39,6 +39,7 @@ describe('Tag API (as span)', () => {
     });
 
     expect(tagAPI.element.querySelector('.btn-dismissible')).toBeDefined();
+    expect(tagAPI.element.querySelector('.btn-dismissible').getAttribute('type')).toEqual('button');
   });
 
   it('can be a hyperlink if defined with an anchor', () => {
