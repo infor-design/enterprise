@@ -1096,6 +1096,10 @@ div.dropdown-xs,
       &.has-tags {
         height: auto !important;
       }
+
+      &.text-align-reverse {
+        padding-right: 16px;
+      }
     }
 
     form:not(.form-layout-compact) .field {
