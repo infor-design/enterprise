@@ -29,6 +29,7 @@
 - `[Datagrid]` Fix a bug in datagrid where text is align right when using mask options in filter. ([#5999](https://github.com/infor-design/enterprise/issues/5999))
 - `[Datagrid]` Fix a bug in datagrid where datepicker range having an exception when having values before changing to range type. ([#6008](https://github.com/infor-design/enterprise/issues/6008))
 - `[Datepicker]` Fix on the flickering behavior when range datepicker is shown. ([#6098](https://github.com/infor-design/enterprise/issues/6098))
+- `[Dropdown]` Fix a misaligned input in Classic Theme in Firefox. ([#6096](https://github.com/infor-design/enterprise/issues/6096))
 - `[Dropdown]` Fix an issue specific to Windows 10 and Chrome where entering a capital letter (Shift + T, e.g.) after opening the dropdown does not focus the entry associated with the letter pressed. ([#6069](https://github.com/infor-design/enterprise/issues/6069))
 - `[Dropdown]` Fix on dropdown multiselect where change event is not triggered when clicking X. ([#6098](https://github.com/infor-design/enterprise/issues/6098))
 - `[Editor]` Fix a bug in editor where CTRL-H (add hyperlink) breaks the interface. ([#6015](https://github.com/infor-design/enterprise/issues/6015))
