@@ -16,6 +16,7 @@
 - `[Locale]` Refined some Japanese translations. ([#6115](https://github.com/infor-design/enterprise/issues/6115))
 - `[Locale]` Added puppeteer script for PH translation ([#6150](https://github.com/infor-design/enterprise/pull/6150))
 - `[Swipe-action]` Added a Puppeteer Script for Swipe Container. ([#6129](https://github.com/infor-design/enterprise/issues/6129))
+- `[Tag]` The dismiss button was missing a button type causing the form to submit. ([#6149](https://github.com/infor-design/enterprise/issues/6149))
 
 ## v4.61.0 Fixes
 
