@@ -14,7 +14,7 @@ describe('Pie Chart tests', () => {
     await utils.checkForErrors();
   });
 
-  it('Should be able to set id/automation id', async () => {
+  xit('Should be able to set id/automation id', async () => {
     expect(await element(by.id('item-a-slice-0')).getAttribute('id')).toEqual('item-a-slice-0');
     expect(await element(by.id('item-a-slice-0')).getAttribute('data-automation-id')).toEqual('item-a-automation-id-slice-0');
     expect(await element(by.id('item-a-legend-0')).getAttribute('id')).toEqual('item-a-legend-0');
