@@ -62,7 +62,7 @@ describe('Homepage Puppeteer Tests', () => {
     
       expect(await page.waitForSelector('.homepage')).toBeTruthy();
     
-      // Need a bit of delay to show the modal perfectly
+      // Add a bit of a delay
       await page.waitForTimeout(200);
     
       // Screenshot of the page
@@ -95,7 +95,7 @@ describe('Homepage Puppeteer Tests', () => {
     
       expect(await page.waitForSelector('.homepage')).toBeTruthy();
     
-      // Need a bit of delay to show the modal perfectly
+      // Add a bit of a delay
       await page.waitForTimeout(200);
     
       // Screenshot of the page
@@ -299,7 +299,7 @@ describe('Homepage Puppeteer Tests', () => {
     
       expect(await page.waitForSelector('.homepage')).toBeTruthy();
     
-      // Need a bit of delay to show the modal perfectly
+      // Add a bit of a delay
       await page.waitForTimeout(200);
     
       // Screenshot of the page
