@@ -30,12 +30,15 @@ jobs:
       uses: actions/cache@v2
       with:
         path: node_modules
-        key: enterprise-1020
+        key: enterprise-1021
 
     - name: Setup timezone
       uses: zcong1993/setup-timezone@master
       with:
         timezone: America/New_York
+
+    - name: Clear cache
+      run: rm -rf node_modules
 
     - name: Install Dependencies
       run: npm i
