@@ -96,4 +96,4 @@ describe('Donut Chart Puppeteer Tests', () => {
       expect(image).toMatchImageSnapshot(config);
     });
   });
- });
+});
