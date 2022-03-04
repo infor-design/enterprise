@@ -1,6 +1,5 @@
 const utils = require('../../helpers/e2e-utils.js');
 const { getConfig } = require('../../helpers/e2e-utils.js');
-const baseUrl = 'http://localhost:4000/components';
 
 describe('Donut Chart Puppeteer Tests', () => {
   const baseUrl = 'http://localhost:4000/components';
