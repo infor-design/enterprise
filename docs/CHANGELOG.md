@@ -32,6 +32,7 @@
 - `[Dropdown]` Fix a misaligned input in Classic Theme in Firefox. ([#6096](https://github.com/infor-design/enterprise/issues/6096))
 - `[Dropdown]` Fix an issue specific to Windows 10 and Chrome where entering a capital letter (Shift + T, e.g.) after opening the dropdown does not focus the entry associated with the letter pressed. ([#6069](https://github.com/infor-design/enterprise/issues/6069))
 - `[Dropdown]` Fix on dropdown multiselect where change event is not triggered when clicking X. ([#6098](https://github.com/infor-design/enterprise/issues/6098))
+- `[Donut]` Fix center tooltip showing on wrong donut chart when multiple donut charts. ([#6103](https://github.com/infor-design/enterprise/issues/6103))
 - `[Editor]` Fix a bug in editor where CTRL-H (add hyperlink) breaks the interface. ([#6015](https://github.com/infor-design/enterprise/issues/6015))
 - `[Searchfield]` Fix a bug in NG where searchfield is in full width even when it's collapsible. ([NG#1225](https://github.com/infor-design/enterprise-ng/issues/1225))
 - `[Spinbox]` Spinbox should update to correct value when Enter is pressed. ([#6036](https://github.com/infor-design/enterprise/issues/6036))

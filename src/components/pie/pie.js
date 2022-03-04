@@ -432,7 +432,7 @@ Pie.prototype = {
 
     setTimeout(() => {
       if (self.settings?.showCenterTooltip) {
-        $('.chart-donut-text')
+        self.element.find('.chart-donut-text')
           .off('mouseenter.text')
           .on('mouseenter.text', function () {
             const target = self.element.find('.slices').get(0);
@@ -446,7 +446,7 @@ Pie.prototype = {
             charts.showTooltip(x, y, content, 'top');
           });
 
-        $('.chart-donut-text')
+        self.element.find('.chart-donut-text')
           .off('mouseleave.text')
           .on('mouseleave.text', function () {
             charts.hideTooltip();
