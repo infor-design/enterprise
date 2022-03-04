@@ -1,6 +1,5 @@
 const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
 const utils = requireHelper('e2e-utils');
-const config = requireHelper('e2e-config');
 requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
