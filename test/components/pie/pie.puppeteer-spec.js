@@ -2,7 +2,7 @@ const utils = require('../../helpers/e2e-utils.js');
 const { getConfig } = require('../../helpers/e2e-utils.js');
 
 describe('Pie Chart tests', () => {
-  const baseUrl = 'http://localhost:3000/components';
+  const baseUrl = 'http://localhost:4000/components';
 
   beforeEach(async () => {
     const url = `${baseUrl}/pie/example-index?theme=classic&layout=nofrills`;
