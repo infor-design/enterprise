@@ -1,4 +1,5 @@
-const utils = requireHelper('e2e-utils');
+const utils = require('../../helpers/e2e-utils.js');
+const { getConfig } = require('../../helpers/e2e-utils.js');
 
 describe('Pie Chart tests', () => {
   const baseUrl = 'http://localhost:3000/components';
