@@ -13,23 +13,23 @@ describe('Pie Chart tests', () => {
     await utils.checkForErrors();
   });
 
-    it('Should not visual regress', async () => {
-      // Resize the viewport
-      await page.setViewport({ width: 1200, height: 800 });
+  it('Should not visual regress', async () => {
+    // Resize the viewport
+    await page.setViewport({ width: 1200, height: 800 });
 
-      // Make sure element is on the page
-      expect(await page.waitForSelector('.container')).toBeTruthy();
+    // Make sure element is on the page
+    expect(await page.waitForSelector('.container')).toBeTruthy();
 
-      // Add a bit of a delay
-      await page.waitForTimeout(200);
+    // Add a bit of a delay
+    await page.waitForTimeout(200);
 
-      // Screenshot of the page
-      const image = await page.screenshot();
+    // Screenshot of the page
+    const image = await page.screenshot();
 
-      // Set a custom name of the snapshot
-      const config = getConfig('pie');
+    // Set a custom name of the snapshot
+    const config = getConfig('pie');
 
-      // Compare the images
-      expect(image).toMatchImageSnapshot(config);
-    });
+    // Compare the images
+    expect(image).toMatchImageSnapshot(config);
+  });
 });
