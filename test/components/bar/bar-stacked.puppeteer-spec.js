@@ -4,7 +4,7 @@ const { getConfig } = require('../../helpers/e2e-utils.js');
 describe('Bar (Stacked) Chart  Puppeteer Tests', () => {
   const baseUrl = 'http://localhost:4000/components/bar-stacked';
 
-  describe.only('Index', () => {
+  describe('Index', () => {
     const url = `${baseUrl}/example-index?theme=classic&layout=nofrills`;
 
     beforeEach(async () => {
@@ -78,6 +78,19 @@ describe('Bar (Stacked) Chart  Puppeteer Tests', () => {
       const image = await page.screenshot();
       const config = getConfig('bar-stacked-index');
       expect(image).toMatchImageSnapshot(config);
+    });
+  });
+
+  describe('Example Colors', () => {
+    const url = `${baseUrl}/example-stacked-colors`;
+
+    beforeEach(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
+    });
+
+    it.only('should detect the first bar is green', async () => {
+      await page.evaluate(() => document.querySelectorAll('.series-group .bar.series-0')[0].getAttribute('style'))
+        .then(cssVal => expect(cssVal).toBe('fill: rgb(168, 225, 225);'));
     });
   });
 
