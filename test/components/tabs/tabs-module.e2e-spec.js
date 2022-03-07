@@ -45,7 +45,7 @@ describe('Tabs Module Appmenu Tests', () => {
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.imageComparison.checkElement(appMenuTrigger, 'tabs-module-appmenu-trigger-audible')).toEqual(0);
-      expect(appMenuTrigger.getText()).toBe('Menu');
+      expect(await appMenuTrigger.getText()).toBe('Menu');
     });
   }
 });
