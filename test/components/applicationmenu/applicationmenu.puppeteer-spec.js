@@ -410,7 +410,7 @@ describe('Application Menu Puppeteer Test', () => {
         .then(className => expect(className).not.toContain('is-open'));
     });
 
-    it('should dismiss the application menu when clicking on one of the menus toolbar buttons', async () => {
+    it.skip('should dismiss the application menu when clicking on one of the menus toolbar buttons', async () => {
       await page.setViewport({ width: 375, height: 812 });
 
       // need a delay for the page to fully visible before clicking the button.
