@@ -39,7 +39,7 @@ const MODAL_FULLSIZE_SETTINGS = [false, 'responsive', 'always'];
 * @param {boolean} [settings.autoFocus=true] If true, when the modal is opened, the first available input/button in its content area will be focused.
 * @param {string} [settings.id=null] Optionally tag a dialog with an id.
 * @param {number} [settings.frameHeight=180] Optional extra height to add.
-* @param {number} [settings.frameWidth=46] Optional extra width to add.
+* @param {number} [settings.frameWidth=0] Optional extra width to add.
 * @param {function} [settings.beforeShow=null] A call back function that can be used to return data for the modal.
 * @param {boolean} [settings.useFlexToolbar] If true the new flex toolbar will be used (For CAP)
 * @param {boolean} [settings.showCloseBtn] If true, show a close icon button on the top right of the modal.
@@ -66,7 +66,7 @@ const MODAL_DEFAULTS = {
   autoFocus: true,
   id: null,
   frameHeight: 180,
-  frameWidth: 46,
+  frameWidth: 0,
   beforeShow: null,
   useFlexToolbar: false,
   showCloseBtn: false,
@@ -1148,7 +1148,7 @@ Modal.prototype = {
     } else {
       this.element[0].classList.remove('display-fullsize');
       calcHeight = ($(window).height() * 0.9) - this.settings.frameHeight;
-      calcWidth = $(window).width();
+      calcWidth = ($(window).width() * 1) - this.settings.frameWidth;
     }
 
     const wrapper = this.element.find('.modal-body-wrapper');
