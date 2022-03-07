@@ -23,6 +23,7 @@
 
 ## v4.61.0 Fixes
 
+- `[Column Grouped]` Fix an issue where columns with small values were floating above the baseline axis. ([#6109](https://github.com/infor-design/enterprise/issues/6109))
 - `[ContextualActionPanel]` Fixed UI issues where the toolbars inside of the body moved to the CAPs header instead of retaining to its original place. ([#6041](https://github.com/infor-design/enterprise/issues/6041))
 - `[Datagrid]` Fix a bug in timepicker inside datagrid where hours is reset 0 when changing it to 12. ([#6076](https://github.com/infor-design/enterprise/issues/6076))
 - `[Datagrid]` Fix on value not shown in lookup cell in safari. ([#6003](https://github.com/infor-design/enterprise/issues/6003))
