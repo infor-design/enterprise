@@ -11,13 +11,13 @@ describe('Grouped Bar Chart Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should not be able to tab through the legends', async () => {
+    it('Should not be able to tab through the legends', async () => {
       // eslint-disable-next-line
         const legendTabIndex = await page.$$eval('.chart-legend-item', e => e.map(el => el.tabIndex));
       expect(legendTabIndex).toEqual([-1, -1, -1, -1]); // These are the values of tabindex of all the legends.
     });
 
-    it('should not select bar on click', async () => {
+    it('Should not select bar on click', async () => {
       const isFailed = [];
       const seriesA = '#bar-grouped-example > svg > g > g:nth-child(3)';
       const seriesB = '#bar-grouped-example > svg > g > g:nth-child(4)';
@@ -53,7 +53,7 @@ describe('Grouped Bar Chart Puppeteer Tests', () => {
       expect(isFailed).not.toContain(true);
     });
 
-    it('should not select bar group on click in legends', async () => {
+    it('Should not select bar group on click in legends', async () => {
       const elHandleArray = await page.$$('.chart-legend-item');
       const isFailed = [];
       let index = 0;
@@ -83,7 +83,7 @@ describe('Grouped Bar Chart Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should not have errors', async () => {
+    it('Should not have errors', async () => {
       await utils.checkForErrors();
     });
 
