@@ -26,15 +26,15 @@ describe('Homepage Puppeteer Tests', () => {
 
     it('should not visual regress', async () => {
       await page.setViewport({ width: 1200, height: 800 });
-    
+
       expect(await page.waitForSelector('.homepage')).toBeTruthy();
-    
+
       // Need a bit of delay to show the modal perfectly
-      await page.waitForTimeout(200);
-    
+      await page.waitForTimeout(400);
+
       // Screenshot of the page
       const image = await page.screenshot();
-    
+
       // Set a custom name of the snapshot
       const config = getConfig('homepage-index');
       expect(image).toMatchImageSnapshot(config);
@@ -59,15 +59,15 @@ describe('Homepage Puppeteer Tests', () => {
 
     it('should not visual regress', async () => {
       await page.setViewport({ width: 1200, height: 800 });
-    
+
       expect(await page.waitForSelector('.homepage')).toBeTruthy();
-    
+
       // Need a bit of delay to show the modal perfectly
-      await page.waitForTimeout(200);
-    
+      await page.waitForTimeout(400);
+
       // Screenshot of the page
       const image = await page.screenshot();
-    
+
       // Set a custom name of the snapshot
       const config = getConfig('homepage-hero');
       expect(image).toMatchImageSnapshot(config);
@@ -92,15 +92,15 @@ describe('Homepage Puppeteer Tests', () => {
 
     it('should not visual regress', async () => {
       await page.setViewport({ width: 1200, height: 800 });
-    
+
       expect(await page.waitForSelector('.homepage')).toBeTruthy();
-    
+
       // Need a bit of delay to show the modal perfectly
       await page.waitForTimeout(200);
-    
+
       // Screenshot of the page
       const image = await page.screenshot();
-    
+
       // Set a custom name of the snapshot
       const config = getConfig('homepage-editable');
       expect(image).toMatchImageSnapshot(config);
@@ -296,15 +296,15 @@ describe('Homepage Puppeteer Tests', () => {
 
     it('should not visual regress', async () => {
       await page.setViewport({ width: 1200, height: 800 });
-    
+
       expect(await page.waitForSelector('.homepage')).toBeTruthy();
-    
+
       // Need a bit of delay to show the modal perfectly
       await page.waitForTimeout(200);
-    
+
       // Screenshot of the page
       const image = await page.screenshot();
-    
+
       // Set a custom name of the snapshot
       const config = getConfig('homepage-five-column');
       expect(image).toMatchImageSnapshot(config);

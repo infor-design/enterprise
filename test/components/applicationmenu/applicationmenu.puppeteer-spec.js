@@ -81,6 +81,7 @@ describe('Application Menu Puppeteer Test', () => {
       const location = [{ y: 0, x: windowSize.width / 2 }];
 
       await dragAndDrop('.resizer', location);
+      await page.waitForTimeout(300);
 
       // hamburger icon should be visible
       let hamburger = await page.waitForSelector('button#header-hamburger', { visible: true });
