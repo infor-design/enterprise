@@ -9,6 +9,7 @@ describe('Bar (Stacked) Chart  Puppeteer Tests', () => {
 
     beforeEach(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
+      await page.setViewport({ width: 1200, height: 800 });
     });
 
     it('should have names for graphs', async () => {
@@ -70,12 +71,8 @@ describe('Bar (Stacked) Chart  Puppeteer Tests', () => {
     });
 
     it('should not visually regress the bar stacked', async () => {
-      await page.setViewport({ width: 1200, height: 800 });
-
-      // add delay to display the bar stacked correctly
-      await page.waitForTimeout(200);
-
-      const image = await page.screenshot();
+      const container = await page.$('.container');
+      const image = await container.screenshot();
       const config = getConfig('bar-stacked-index');
       expect(image).toMatchImageSnapshot(config);
     });
