@@ -19,7 +19,7 @@ describe('Flex toobar ajax tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    fit('Should not visually regress', async () => {
+    it('Should not visually regress', async () => {
       const flexToolbarEl = await element(by.className('no-frills'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(flexToolbarEl), config.waitsFor);
