@@ -245,10 +245,32 @@ describe('Grouped Bar Chart Puppeteer Tests', () => {
       await utils.checkForErrors();
     });
 
-    fit('Should have negative values', async () => {
+    it('Should have negative values', async () => {
       const valueEl = await page.$$('.axis.x .tick .negative-value');
 
       expect(valueEl.length).toBe(2);
+    });
+  });
+
+  describe('Grouped Bar Chart example-selected tests', () => {
+    const url = `${baseUrl}/components/bar-grouped/test-selected`;
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('Should not have errors', async () => {
+      await utils.checkForErrors();
+    });
+
+    it('Should be highlighted when selected', async () => {
+      page.waitForSelector('.group .series-group', { visible: true });
+
+      const fGroupEl = await page.$$('.group .series-group');
+
+      const hasClassname = await checkClassNameValue(fGroupEl, 'is-selected');
+
+      expect(hasClassname).toBe(true);
     });
   });
 });
