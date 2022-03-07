@@ -12,56 +12,6 @@ describe('Bar (Stacked) Chart example-index tests', () => {
     await browser.driver.sleep(config.sleep);
   });
 
-  it('Should not have errors', async () => {
-    await utils.checkForErrors();
-  });
-
-  it('Should have names for the graphs', async () => {
-    const namesEl = await element.all(by.css('.axis.y .tick text')).count();
-
-    expect(await namesEl).toBe(3);
-  });
-
-  it('Should have bar groups', async () => {
-    const groupEl = await element.all(by.css('.group .series-group')).count();
-
-    expect(await groupEl).toBe(2);
-  });
-
-  it('Should be a stacked bar', async () => {
-    const barEl = await element(by.css('.bar-chart-stacked'));
-
-    expect(await barEl).toBeTruthy();
-  });
-
-  it('Should highlight when selected', async () => {
-    await element(by.css('.series-group:nth-child(-n+3) .bar:nth-child(1)')).click();
-    await browser.driver.sleep(config.sleep);
-
-    expect(await element(by.css('.series-group:nth-child(-n+3) .bar:nth-child(1)')).getAttribute('class')).toContain('is-selected');
-  });
-
-  it('Should be able to set id/automation id', async () => {
-    await browser.driver.sleep(config.sleep);
-
-    expect(await element(by.id('barstacked-s1-2008-bar')).getAttribute('id')).toEqual('barstacked-s1-2008-bar');
-    expect(await element(by.id('barstacked-s1-2008-bar')).getAttribute('data-automation-id')).toEqual('automation-id-barstacked-s1-2008-bar');
-    expect(await element(by.id('barstacked-s1-2009-bar')).getAttribute('id')).toEqual('barstacked-s1-2009-bar');
-    expect(await element(by.id('barstacked-s1-2009-bar')).getAttribute('data-automation-id')).toEqual('automation-id-barstacked-s1-2009-bar');
-    expect(await element(by.id('barstacked-s1-2010-bar')).getAttribute('id')).toEqual('barstacked-s1-2010-bar');
-    expect(await element(by.id('barstacked-s1-2010-bar')).getAttribute('data-automation-id')).toEqual('automation-id-barstacked-s1-2010-bar');
-
-    expect(await element(by.id('barstacked-s2-2008-bar')).getAttribute('id')).toEqual('barstacked-s2-2008-bar');
-    expect(await element(by.id('barstacked-s2-2008-bar')).getAttribute('data-automation-id')).toEqual('automation-id-barstacked-s2-2008-bar');
-    expect(await element(by.id('barstacked-s2-2009-bar')).getAttribute('id')).toEqual('barstacked-s2-2009-bar');
-    expect(await element(by.id('barstacked-s2-2009-bar')).getAttribute('data-automation-id')).toEqual('automation-id-barstacked-s2-2009-bar');
-    expect(await element(by.id('barstacked-s2-2010-bar')).getAttribute('id')).toEqual('barstacked-s2-2010-bar');
-    expect(await element(by.id('barstacked-s2-2010-bar')).getAttribute('data-automation-id')).toEqual('automation-id-barstacked-s2-2010-bar');
-
-    expect(await element(by.id('barstacked-series1-legend-0')).getAttribute('data-automation-id')).toEqual('automation-id-barstacked-series1-legend-0');
-    expect(await element(by.id('barstacked-series2-legend-1')).getAttribute('data-automation-id')).toEqual('automation-id-barstacked-series2-legend-1');
-  });
-
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress', async () => {
       const containerEl = await element(by.className('container'));

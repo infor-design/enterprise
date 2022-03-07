@@ -1,8 +1,76 @@
 const { checkClassNameValue } = require('../../helpers/e2e-utils.js');
 
 describe('Bar (Stacked) Chart  Puppeteer Tests', () => {
-  describe('Bar (Stacked) Chart Disable Selection  State Tests', () => {
-    const url = 'http://localhost:4000/components/bar-stacked/example-disable-selection-state.html';
+  const baseUrl = 'http://localhost:4000/components/bar-stacked';
+
+  describe.only('Index', () => {
+    const url = `${baseUrl}/example-index?theme=classic&layout=nofrills`;
+
+    beforeEach(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
+    });
+
+    it('should have names for graphs', async () => {
+      expect(await page.evaluate(() => document.querySelectorAll('.axis.y .tick text').length)).toBe(3);
+    });
+
+    it('should have bar groups', async () => {
+      expect(await page.evaluate(() => document.querySelectorAll('.group .series-group').length)).toBe(2);
+    });
+
+    it('should be a stacked bar', async () => {
+      expect(await page.waitForSelector('.bar-chart-stacked', { visible: true })).toBeTruthy();
+    });
+
+    it('should highlight when selected', async () => {
+      const bar = await page.waitForSelector('.series-group:nth-child(-n+3) .bar.series-0', { visible: true });
+      await bar.click();
+
+      // wait to show the element to have 'is-selected' class instead of using page.waitForTimeout
+      const showSelectedBar = await page.waitForSelector('.series-group:nth-child(-n+3) .bar.series-0.is-selected', { visible: true });
+
+      if (showSelectedBar) {
+        await page.evaluate(() => document.querySelector('.series-group:nth-child(-n+3) .bar.series-0').getAttribute('class'))
+          .then(classValue => expect(classValue).toContain('is-selected'));
+      }
+    });
+
+    it('should be able to set id/automation id', async () => {
+      await page.evaluate(() => document.getElementById('barstacked-s1-2008-bar').getAttribute('id'))
+        .then(idValue => expect(idValue).toEqual('barstacked-s1-2008-bar'));
+      await page.evaluate(() => document.getElementById('barstacked-s1-2008-bar').getAttribute('data-automation-id'))
+        .then(idValue => expect(idValue).toEqual('automation-id-barstacked-s1-2008-bar'));
+      await page.evaluate(() => document.getElementById('barstacked-s1-2009-bar').getAttribute('id'))
+        .then(idValue => expect(idValue).toEqual('barstacked-s1-2009-bar'));
+      await page.evaluate(() => document.getElementById('barstacked-s1-2009-bar').getAttribute('data-automation-id'))
+        .then(idValue => expect(idValue).toEqual('automation-id-barstacked-s1-2009-bar'));
+      await page.evaluate(() => document.getElementById('barstacked-s1-2010-bar').getAttribute('id'))
+        .then(idValue => expect(idValue).toEqual('barstacked-s1-2010-bar'));
+      await page.evaluate(() => document.getElementById('barstacked-s1-2010-bar').getAttribute('data-automation-id'))
+        .then(idValue => expect(idValue).toEqual('automation-id-barstacked-s1-2010-bar'));
+
+      await page.evaluate(() => document.getElementById('barstacked-s2-2008-bar').getAttribute('id'))
+        .then(idValue => expect(idValue).toEqual('barstacked-s2-2008-bar'));
+      await page.evaluate(() => document.getElementById('barstacked-s2-2008-bar').getAttribute('data-automation-id'))
+        .then(idValue => expect(idValue).toEqual('automation-id-barstacked-s2-2008-bar'));
+      await page.evaluate(() => document.getElementById('barstacked-s2-2009-bar').getAttribute('id'))
+        .then(idValue => expect(idValue).toEqual('barstacked-s2-2009-bar'));
+      await page.evaluate(() => document.getElementById('barstacked-s2-2009-bar').getAttribute('data-automation-id'))
+        .then(idValue => expect(idValue).toEqual('automation-id-barstacked-s2-2009-bar'));
+      await page.evaluate(() => document.getElementById('barstacked-s2-2010-bar').getAttribute('id'))
+        .then(idValue => expect(idValue).toEqual('barstacked-s2-2010-bar'));
+      await page.evaluate(() => document.getElementById('barstacked-s2-2010-bar').getAttribute('data-automation-id'))
+        .then(idValue => expect(idValue).toEqual('automation-id-barstacked-s2-2010-bar'));
+
+      await page.evaluate(() => document.getElementById('barstacked-series1-legend-0').getAttribute('data-automation-id'))
+        .then(idValue => expect(idValue).toEqual('automation-id-barstacked-series1-legend-0'));
+      await page.evaluate(() => document.getElementById('barstacked-series2-legend-1').getAttribute('data-automation-id'))
+        .then(idValue => expect(idValue).toEqual('automation-id-barstacked-series2-legend-1'));
+    });
+  });
+
+  describe('Selection State', () => {
+    const url = `${baseUrl}/example-disable-selection-state.html`;
 
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
