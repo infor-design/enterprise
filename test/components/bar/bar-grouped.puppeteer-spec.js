@@ -159,6 +159,9 @@ describe('Grouped Bar Chart Puppeteer Tests', () => {
     });
 
     it('Should not visual regress', async () => {
+      // Add a bit of a delay
+      await page.waitForTimeout(200);
+
       // Resize the viewport
       await page.setViewport({ width: 1200, height: 800 });
 
