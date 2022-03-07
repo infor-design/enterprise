@@ -1,4 +1,5 @@
 const { checkClassNameValue } = require('../../helpers/e2e-utils.js');
+const { getConfig } = require('../../helpers/e2e-utils.js');
 
 describe('Bar (Stacked) Chart  Puppeteer Tests', () => {
   const baseUrl = 'http://localhost:4000/components/bar-stacked';
@@ -66,6 +67,17 @@ describe('Bar (Stacked) Chart  Puppeteer Tests', () => {
         .then(idValue => expect(idValue).toEqual('automation-id-barstacked-series1-legend-0'));
       await page.evaluate(() => document.getElementById('barstacked-series2-legend-1').getAttribute('data-automation-id'))
         .then(idValue => expect(idValue).toEqual('automation-id-barstacked-series2-legend-1'));
+    });
+
+    it('should not visually regress the bar stacked', async () => {
+      await page.setViewport({ width: 1200, height: 800 });
+
+      // add delay to display the bar stacked correctly
+      await page.waitForTimeout(200);
+
+      const image = await page.screenshot();
+      const config = getConfig('bar-stacked-index');
+      expect(image).toMatchImageSnapshot(config);
     });
   });
 
