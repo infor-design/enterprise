@@ -133,7 +133,7 @@ describe('Bar (Stacked) Chart  Puppeteer Tests', () => {
         .then(idValue => expect(idValue).toEqual('automation-id-barstacked-comp2-legend-1'));
     });
 
-    it.only('should not visual regress', async () => {
+    it('should not visual regress', async () => {
       const container = await page.waitForSelector('.container');
       const image = await container.screenshot();
       const config = getConfig('bar-stacked-100');
