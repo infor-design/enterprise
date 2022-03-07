@@ -1452,12 +1452,12 @@ Datagrid.prototype = {
         const columnId = input.parents('th').attr('data-column-id');
         const defaultDateFormat = 'MM/dd/yyyy';
         const dateFormat = this.columnById(columnId)[0].dateFormat;
-        const dateVal = dateFormat === defaultDateFormat ? 
-          Locale.formatDate(new Date(input.val()), { pattern: dateFormat }) : 
+        const dateVal = dateFormat === defaultDateFormat ?
+          Locale.formatDate(new Date(input.val()), { pattern: dateFormat }) :
           Locale.formatDate(input.val(), { pattern: dateFormat });
 
         input.val(`${dateVal} - ${dateVal}`);
-        options.range = { 
+        options.range = {
           useRange: true,
           start: dateVal,
           end: dateVal
@@ -4054,6 +4054,14 @@ Datagrid.prototype = {
       const currentCol = this.bodyColGroup.find('col').eq(self.getStretchColumnIdx())[0];
       currentCol.style.width = `${this.stretchColumnWidth}px`;
     }
+
+    this.element.find('.datagrid-img').off('error.datagrid').on('error.datagrid', (e) => {
+      const targetEl = $(e.target);
+      const parentEl = targetEl.parent();
+
+      parentEl.append(`<svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-${this.settings.fallbackImage}"></use></svg>`);
+      targetEl.remove();
+    });
 
     /**
     * Fires after the entire grid is rendered.
@@ -7188,14 +7196,6 @@ Datagrid.prototype = {
       if (self.editor && self.editor.input) {
         self.commitCellEdit();
       }
-    });
-
-    this.element.find('.datagrid-img').off('error.datagrid').on('error.datagrid', (e) => {
-      const targetEl = $(e.target);
-      const parentEl = targetEl.parent();
-
-      parentEl.append(`<svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-${this.settings.fallbackImage}"></use></svg>`);
-      targetEl.remove();
     });
   },
 
