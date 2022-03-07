@@ -17,6 +17,7 @@ temp/
 templates/**/doc.html
 test-reports/
 views/docs
+test/baseline-images/diff/
 
 # Packages #
 ############
