@@ -175,4 +175,33 @@ describe('Grouped Bar Chart Puppeteer Tests', () => {
       expect(image).toMatchImageSnapshot(config);
     });
   });
+
+  describe('Grouped Bar formatter tests', () => {
+    const url = `${baseUrl}/components/bar-grouped/example-formatter?theme=classic&layout=nofrills`;
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('Should not have errors', async () => {
+      await utils.checkForErrors();
+    });
+
+    it('Should not visual regress', async () => {
+      // Resize the viewport
+      await page.setViewport({ width: 1200, height: 800 });
+
+      // Add a bit of a delay
+      await page.waitForTimeout(200);
+
+      // Screenshot of the page
+      const image = await page.screenshot();
+
+      // Set a custom name of the snapshot
+      const config = getConfig('bar-grouped-formatter');
+
+      // Compare the images
+      expect(image).toMatchImageSnapshot(config);
+    });
+  });
 });
