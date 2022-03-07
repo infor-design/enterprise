@@ -26,16 +26,13 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: Cache multiple paths
-      uses: actions/cache@v2
-      with:
-        path: node_modules
-        key: enterprise-1022
-
     - name: Setup timezone
       uses: zcong1993/setup-timezone@master
       with:
         timezone: America/New_York
+
+    - name: Clear cache
+      run: npx kill-port 4000
 
     - name: Clear cache
       run: rm -rf node_modules
