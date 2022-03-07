@@ -1,4 +1,4 @@
-const { checkClassNameValue } = require('../../helpers/e2e-utils.js');
+const { checkClassNameValue, getConfig } = require('../../helpers/e2e-utils.js');
 const utils = require('../../helpers/e2e-utils.js');
 
 describe('Grouped Bar Chart Puppeteer Tests', () => {
