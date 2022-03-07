@@ -233,4 +233,22 @@ describe('Grouped Bar Chart Puppeteer Tests', () => {
       expect(image).toMatchImageSnapshot(config);
     });
   });
+
+  describe('Grouped Bar Chart example-negative-value tests', () => {
+    const url = `${baseUrl}/components/bar-grouped/example-negative`;
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('Should not have errors', async () => {
+      await utils.checkForErrors();
+    });
+
+    fit('Should have negative values', async () => {
+      const valueEl = await page.$$('.axis.x .tick .negative-value');
+
+      expect(valueEl.length).toBe(2);
+    });
+  });
 });
