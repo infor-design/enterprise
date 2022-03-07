@@ -88,9 +88,56 @@ describe('Bar (Stacked) Chart  Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
     });
 
-    it.only('should detect the first bar is green', async () => {
+    it('should detect the first bar is green', async () => {
       await page.evaluate(() => document.querySelectorAll('.series-group .bar.series-0')[0].getAttribute('style'))
         .then(cssVal => expect(cssVal).toBe('fill: rgb(168, 225, 225);'));
+    });
+
+    it('should detect the second bar is violet', async () => {
+      await page.evaluate(() => document.querySelectorAll('.series-group .bar.series-0')[1].getAttribute('style'))
+        .then(cssVal => expect(cssVal).toBe('fill: rgb(121, 40, 225);'));
+    });
+  });
+
+  describe('Chart 100%', () => {
+    const url = `${baseUrl}/example-stacked-100?theme=classic&layout=nofrills`;
+
+    beforeEach(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+      await page.setViewport({ width: 1200, height: 800 });
+    });
+
+    it('should be able to set id/automation id', async () => {
+      await page.evaluate(() => document.getElementById('barstacked-c1-2014-bar').getAttribute('id'))
+        .then(idValue => expect(idValue).toEqual('barstacked-c1-2014-bar'));
+      await page.evaluate(() => document.getElementById('barstacked-c1-2014-bar').getAttribute('data-automation-id'))
+        .then(idValue => expect(idValue).toEqual('automation-id-barstacked-c1-2014-bar'));
+      await page.evaluate(() => document.getElementById('barstacked-c1-2015-bar').getAttribute('id'))
+        .then(idValue => expect(idValue).toEqual('barstacked-c1-2015-bar'));
+      await page.evaluate(() => document.getElementById('barstacked-c1-2015-bar').getAttribute('data-automation-id'))
+        .then(idValue => expect(idValue).toEqual('automation-id-barstacked-c1-2015-bar'));
+
+      await page.evaluate(() => document.getElementById('barstacked-c2-2014-bar').getAttribute('id'))
+        .then(idValue => expect(idValue).toEqual('barstacked-c2-2014-bar'));
+      await page.evaluate(() => document.getElementById('barstacked-c2-2014-bar').getAttribute('data-automation-id'))
+        .then(idValue => expect(idValue).toEqual('automation-id-barstacked-c2-2014-bar'));
+
+      await page.evaluate(() => document.getElementById('barstacked-c2-2015-bar').getAttribute('id'))
+        .then(idValue => expect(idValue).toEqual('barstacked-c2-2015-bar'));
+      await page.evaluate(() => document.getElementById('barstacked-c2-2015-bar').getAttribute('data-automation-id'))
+        .then(idValue => expect(idValue).toEqual('automation-id-barstacked-c2-2015-bar'));
+
+      await page.evaluate(() => document.getElementById('barstacked-comp1-legend-0').getAttribute('data-automation-id'))
+        .then(idValue => expect(idValue).toEqual('automation-id-barstacked-comp1-legend-0'));
+      await page.evaluate(() => document.getElementById('barstacked-comp2-legend-1').getAttribute('data-automation-id'))
+        .then(idValue => expect(idValue).toEqual('automation-id-barstacked-comp2-legend-1'));
+    });
+
+    it.only('should not visual regress', async () => {
+      const container = await page.waitForSelector('.container');
+      const image = await container.screenshot();
+      const config = getConfig('bar-stacked-100');
+      expect(image).toMatchImageSnapshot(config);
     });
   });
 
