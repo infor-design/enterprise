@@ -215,7 +215,7 @@ Column.prototype = {
     const useHeight = s.fitHeight ?
       parentAvailableHeight : parseInt(parent.height(), 10);
     const width = parent.width() - margin.left - margin.right - 10;
-    let height = useHeight - margin.top - margin.bottom -
+    const height = useHeight - margin.top - margin.bottom -
         (isSingle && dataset[0].name === undefined ?
           (self.settings.isStacked || isPositiveNegative ? (legendHeight - 10) : 0) : legendHeight);
     let yMinTarget;
