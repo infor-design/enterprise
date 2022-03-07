@@ -90,7 +90,7 @@ describe('Homepage Puppeteer Tests', () => {
         .then(element => expect(element).toBeTruthy());
     });
 
-    it('should not visual regress', async () => {
+    it.skip('should not visual regress', async () => {
       await page.setViewport({ width: 1200, height: 800 });
 
       expect(await page.waitForSelector('.homepage')).toBeTruthy();
