@@ -512,7 +512,6 @@ Column.prototype = {
     if (isAxisLabels.atLeastOne) {
       const axisLabelGroup = self.svg.append('g').attr('class', 'axis-labels');
       const widthAxisLabel = width - 45;
-      height -= 5;
 
       const place = {
         top: `translate(${widthAxisLabel / 2},${-10})`,
