@@ -24,6 +24,7 @@
 ## v4.61.0 Fixes
 
 - `[ContextualActionPanel]` Fixed UI issues where the toolbars inside of the body moved to the CAPs header instead of retaining to its original place. ([#6041](https://github.com/infor-design/enterprise/issues/6041))
+- `[ContextualActionPanel]` Update and fix example-markup page to a working example. ([#6065](https://github.com/infor-design/enterprise/issues/6065))
 - `[Datagrid]` Fix a bug in timepicker inside datagrid where hours is reset 0 when changing it to 12. ([#6076](https://github.com/infor-design/enterprise/issues/6076))
 - `[Datagrid]` Fix on value not shown in lookup cell in safari. ([#6003](https://github.com/infor-design/enterprise/issues/6003))
 - `[Datagrid]` Fix a bug in datagrid where text is align right when using mask options in filter. ([#5999](https://github.com/infor-design/enterprise/issues/5999))
