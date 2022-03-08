@@ -76,7 +76,7 @@ describe('Application Menu Puppeteer Test', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
     });
 
-    it('should resize at middle of the page', async () => {
+    it.skip('should resize at middle of the page', async () => {
       const windowSize = await page.viewport();
       const location = [{ y: 0, x: windowSize.width / 2 }];
 
