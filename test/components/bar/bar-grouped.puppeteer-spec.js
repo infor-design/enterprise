@@ -1,5 +1,4 @@
 const { checkClassNameValue, getConfig } = require('../../helpers/e2e-utils.js');
-const utils = require('../../helpers/e2e-utils.js');
 
 describe('Grouped Bar Chart Puppeteer Tests', () => {
   const baseUrl = 'http://localhost:4000';
@@ -81,10 +80,6 @@ describe('Grouped Bar Chart Puppeteer Tests', () => {
 
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-    });
-
-    it('should not have errors', async () => {
-      await utils.checkForErrors();
     });
 
     it('should have names for the graphs', async () => {
@@ -183,10 +178,6 @@ describe('Grouped Bar Chart Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('Should not have errors', async () => {
-      await utils.checkForErrors();
-    });
-
     it('Should not visual regress', async () => {
       // Resize the viewport
       await page.setViewport({ width: 1200, height: 800 });
@@ -210,10 +201,6 @@ describe('Grouped Bar Chart Puppeteer Tests', () => {
 
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-    });
-
-    it('Should not have errors', async () => {
-      await utils.checkForErrors();
     });
 
     it('Should not visual regress', async () => {
@@ -241,10 +228,6 @@ describe('Grouped Bar Chart Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should not have errors', async () => {
-      await utils.checkForErrors();
-    });
-
     it('should have negative values', async () => {
       const valueEl = await page.$$('.axis.x .tick .negative-value');
 
@@ -257,10 +240,6 @@ describe('Grouped Bar Chart Puppeteer Tests', () => {
 
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-    });
-
-    it('should not have errors', async () => {
-      await utils.checkForErrors();
     });
 
     it('should be highlighted when selected', async () => {
