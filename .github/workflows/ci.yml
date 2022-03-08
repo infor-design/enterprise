@@ -21,22 +21,14 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-
-    - name: Install Specific Chrome Version
-      run: wget --no-verbose -O /tmp/chrome.deb https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_98.0.4758.102-1_amd64.deb && apt install -y /tmp/chrome.deb && rm /tmp/chrome.deb
-
-    - name: Report Version
-      run: chrome --version
-
     - name: Cache multiple paths
       uses: actions/cache@v2
       with:
         path: node_modules
-        key: enterprise-1020
+        key: enterprise-1019
+
+    - name: Report Version
+      run: chrome --version
 
     - name: Setup timezone
       uses: zcong1993/setup-timezone@master
