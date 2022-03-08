@@ -26,6 +26,7 @@
 
 ## v4.61.0 Fixes
 
+- `[Column Grouped]` Fix an issue where columns with small values were floating above the baseline axis. ([#6109](https://github.com/infor-design/enterprise/issues/6109))
 - `[Chart]` Fix collision of legend text and color block. ([#6113](https://github.com/infor-design/enterprise/issues/6113))
 - `[ContextualActionPanel]` Fixed UI issues where the toolbars inside of the body moved to the CAPs header instead of retaining to its original place. ([#6041](https://github.com/infor-design/enterprise/issues/6041))
 - `[ContextualActionPanel]` Update and fix example-markup page to a working example. ([#6065](https://github.com/infor-design/enterprise/issues/6065))
