@@ -1,4 +1,3 @@
-
 const utils = require('../../helpers/e2e-utils.js');
 
 describe('Tabs modal test-modal-error tests', () => {

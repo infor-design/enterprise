@@ -3,15 +3,18 @@
 ## v4.61.0 Features
 
 - `[ApplicationMenu]` Converted protractor test suites to puppeteer. ([#5835](https://github.com/infor-design/enterprise/issues/5835))
+- `[Bar Stacked]` Converted protractor test suites to puppeteer. ([#5840](https://github.com/infor-design/enterprise/issues/5840))
 - `[ContextualActionPanel]` Added setting for cssClass option. ([#1215](https://github.com/infor-design/enterprise-ng/issues/1215))
 - `[Datagrid]` Added visual test for responsive view with puppeteer. ([#5844](https://github.com/infor-design/enterprise/issues/5844))
 - `[Datepicker]` Added setting in datepicker where you can disable masking input. ([#6080](https://github.com/infor-design/enterprise/issues/6080))
 - `[Card]` Fix a memory leak on events. ([#6155](https://github.com/infor-design/enterprise/issues/6155))
+- `[Card]` Create a Puppeteer Script for Actionable Button Card ([#6062](https://github.com/infor-design/enterprise/issues/6062))
 - `[General]` Added jest image snapshot for visual regression testing with puppeteer. ([#6105](https://github.com/infor-design/enterprise/issues/6105))
 - `[General]` Removed global inline function that adds disabled labels to disabled inputs. ([#6131](https://github.com/infor-design/enterprise/issues/6131))
 - `[Hierarchy]` Converted the old protractor e2e test suites to puppeteer tests. ([#5833](https://github.com/infor-design/enterprise/issues/5833))
 - `[Homepage]` Added homepage puppeteer test scripts and snapshots. ([#5831](https://github.com/infor-design/enterprise/issues/5831))
 - `[Icons]` Design removed some deprecated icons. If you are using `info-field` -> should use `icon-info`. If you are using `info-field-solid` -> should use `icon-info-alert`. If you are using `info-field-alert` -> should use `icon-info-alert`. ([#6091](https://github.com/infor-design/enterprise/issues/6091))
+- `[Icons]` Update icon design for `icon-mobile`. ([#6144](https://github.com/infor-design/enterprise/issues/6144))
 - `[Locale]` Refined some Latvian translations. ([#5969](https://github.com/infor-design/enterprise/issues/5969))
 - `[Locale]` Refined some Lithuanian translations. ([#5960](https://github.com/infor-design/enterprise/issues/5960))
 - `[Locale]` Refined some Filipino translations. ([#5864](https://github.com/infor-design/enterprise/issues/5864))
@@ -23,12 +26,17 @@
 
 ## v4.61.0 Fixes
 
+- `[Chart]` Fix collision of legend text and color block. ([#6113](https://github.com/infor-design/enterprise/issues/6113))
 - `[ContextualActionPanel]` Fixed UI issues where the toolbars inside of the body moved to the CAPs header instead of retaining to its original place. ([#6041](https://github.com/infor-design/enterprise/issues/6041))
+- `[ContextualActionPanel]` Update and fix example-markup page to a working example. ([#6065](https://github.com/infor-design/enterprise/issues/6065))
 - `[Datagrid]` Fix a bug in timepicker inside datagrid where hours is reset 0 when changing it to 12. ([#6076](https://github.com/infor-design/enterprise/issues/6076))
 - `[Datagrid]` Fix on value not shown in lookup cell in safari. ([#6003](https://github.com/infor-design/enterprise/issues/6003))
 - `[Datagrid]` Fix a bug in datagrid where text is align right when using mask options in filter. ([#5999](https://github.com/infor-design/enterprise/issues/5999))
 - `[Datagrid]` Fix a bug in datagrid where datepicker range having an exception when having values before changing to range type. ([#6008](https://github.com/infor-design/enterprise/issues/6008))
 - `[Datepicker]` Fix on the flickering behavior when range datepicker is shown. ([#6098](https://github.com/infor-design/enterprise/issues/6098))
+- `[Dropdown]` Fix on dropdown multiselect where change event is not triggered when clicking X. ([#6098](https://github.com/infor-design/enterprise/issues/6098))
+- `[Editor]` Fix a bug in editor where CTRL-H (add hyperlink) breaks the interface. ([#6015](https://github.com/infor-design/enterprise/issues/6015))
+- `[Modal]` Changed maximum modal width. ([#6024](https://github.com/infor-design/enterprise/issues/6024))
 - `[Dropdown]` Fix a misaligned input in Classic Theme in Firefox. ([#6096](https://github.com/infor-design/enterprise/issues/6096))
 - `[Dropdown]` Fix an issue specific to Windows 10 and Chrome where entering a capital letter (Shift + T, e.g.) after opening the dropdown does not focus the entry associated with the letter pressed. ([#6069](https://github.com/infor-design/enterprise/issues/6069))
 - `[Dropdown]` Fix on dropdown multiselect where change event is not triggered when clicking X. ([#6098](https://github.com/infor-design/enterprise/issues/6098))
@@ -41,6 +49,8 @@
 - `[Tabs Module]` Fixes a misaligned search field close button icon. ([#6126](https://github.com/infor-design/enterprise/issues/6126))
 - `[Timepicker]` Fix a bug in timepicker where hours reset to 1 when changing period. ([#6049](https://github.com/infor-design/enterprise/issues/6049))
 - `[Timepicker]` Fix a bug in timepicker where hours is not properly created when changing from AM/PM. ([#6104](https://github.com/infor-design/enterprise/issues/6104))
+
+(41 Issues Solved This Release, Backlog Enterprise 198, Backlog Ng 38, 1100 Functional Tests, 1635 e2e Tests, 321 Puppeteer Tests)
 
 ## v4.60.0 Features
 
