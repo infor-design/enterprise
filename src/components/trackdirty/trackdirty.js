@@ -252,6 +252,11 @@ Trackdirty.prototype = {
           current = this.trimEditorText(current);
         }
 
+        // Edge Issue in #6032
+        if (current.indexOf('&nbsp;') > -1) {
+          current = current.replaceAll('&nbsp;', ' ');
+        }
+
         if (current === original || (input.attr('multiple') && utils.equals(current, original))) {
           input.removeClass('dirty');
           $('.icon-dirty, .msg-dirty', field).add(d.icon).add(d.msg).remove();
