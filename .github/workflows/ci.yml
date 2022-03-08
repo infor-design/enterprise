@@ -26,10 +26,13 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - uses: browser-actions/setup-chrome@latest
-    - run: chrome --version
+    - name: Cache multiple paths
+      uses: browser-actions/setup-chrome@latest
       with:
         chrome-version: 97.0.4692.99
+
+    - name: Report Version
+      run: chrome --version
 
     - name: Cache multiple paths
       uses: actions/cache@v2
