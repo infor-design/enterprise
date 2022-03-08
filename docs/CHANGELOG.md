@@ -1,6 +1,7 @@
 # What's New with Enterprise
 
 ## v4.62.0 Features
+
 - `[Editor]` Fix a bug where dirty tracker is not reset when using lots of new line in Edge. ([#6032](https://github.com/infor-design/enterprise/issues/6032))
 
 ## v4.61.0 Features
