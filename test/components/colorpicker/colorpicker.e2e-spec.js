@@ -283,7 +283,7 @@ describe('Colorpicker modal tests', () => {
     await utils.setPage('/components/colorpicker/test-modal');
   });
 
-  it('Should open colorpicker modal', async () => {
+  xit('Should open colorpicker modal', async () => {
     const modalBtnEl = await element(by.id('add-comment'));
     await modalBtnEl.click();
     await browser.driver
