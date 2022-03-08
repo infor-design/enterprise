@@ -3,6 +3,7 @@
 ## v4.61.0 Features
 
 - `[ApplicationMenu]` Converted protractor test suites to puppeteer. ([#5835](https://github.com/infor-design/enterprise/issues/5835))
+- `[Bar Stacked]` Converted protractor test suites to puppeteer. ([#5840](https://github.com/infor-design/enterprise/issues/5840))
 - `[ContextualActionPanel]` Added setting for cssClass option. ([#1215](https://github.com/infor-design/enterprise-ng/issues/1215))
 - `[Datagrid]` Added visual test for responsive view with puppeteer. ([#5844](https://github.com/infor-design/enterprise/issues/5844))
 - `[Datepicker]` Added setting in datepicker where you can disable masking input. ([#6080](https://github.com/infor-design/enterprise/issues/6080))
@@ -12,6 +13,7 @@
 - `[Hierarchy]` Converted the old protractor e2e test suites to puppeteer tests. ([#5833](https://github.com/infor-design/enterprise/issues/5833))
 - `[Homepage]` Added homepage puppeteer test scripts and snapshots. ([#5831](https://github.com/infor-design/enterprise/issues/5831))
 - `[Icons]` Design removed some deprecated icons. If you are using `info-field` -> should use `icon-info`. If you are using `info-field-solid` -> should use `icon-info-alert`. If you are using `info-field-alert` -> should use `icon-info-alert`. ([#6091](https://github.com/infor-design/enterprise/issues/6091))
+- `[Icons]` Update icon design for `icon-mobile`. ([#6144](https://github.com/infor-design/enterprise/issues/6144))
 - `[Locale]` Refined some Latvian translations. ([#5969](https://github.com/infor-design/enterprise/issues/5969))
 - `[Locale]` Refined some Lithuanian translations. ([#5960](https://github.com/infor-design/enterprise/issues/5960))
 - `[Locale]` Refined some Filipino translations. ([#5864](https://github.com/infor-design/enterprise/issues/5864))
@@ -24,6 +26,7 @@
 ## v4.61.0 Fixes
 
 - `[ContextualActionPanel]` Fixed UI issues where the toolbars inside of the body moved to the CAPs header instead of retaining to its original place. ([#6041](https://github.com/infor-design/enterprise/issues/6041))
+- `[ContextualActionPanel]` Update and fix example-markup page to a working example. ([#6065](https://github.com/infor-design/enterprise/issues/6065))
 - `[Datagrid]` Fix a bug in timepicker inside datagrid where hours is reset 0 when changing it to 12. ([#6076](https://github.com/infor-design/enterprise/issues/6076))
 - `[Datagrid]` Fix on value not shown in lookup cell in safari. ([#6003](https://github.com/infor-design/enterprise/issues/6003))
 - `[Datagrid]` Fix a bug in datagrid where text is align right when using mask options in filter. ([#5999](https://github.com/infor-design/enterprise/issues/5999))
