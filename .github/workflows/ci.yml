@@ -30,7 +30,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: node_modules
-        key: enterprise-1019
+        key: enterprise-1020
 
     - name: Setup timezone
       uses: zcong1993/setup-timezone@master
@@ -43,6 +43,9 @@ jobs:
     - name: Build
       run: npm run build
 
+    - name: Run e2e tests
+      run:  (npm run quickstart &) && sleep 5; npm run e2e:ci:debug;
+
     - name: Run Lint Checks
       run: npm run lint:ci
 
@@ -50,10 +53,7 @@ jobs:
       run: npm run functional:ci
 
     - name: Run puppeteer tests
-      run:  (npm run quickstart &) && sleep 5; npm run e2e:puppeteer;
-
-    - name: Run e2e tests
-      run:  (npm run quickstart &) && sleep 5; npm run e2e:ci:debug;
+      run:  npm run e2e:puppeteer;
 
     - name: Deploy Main
       env:

@@ -152,7 +152,8 @@
 
     input.timepicker {
       margin-top: 2px;
-      padding: unset;
+      padding-left: 14px;
+      padding-top: 6px;
 
       ~ .trigger {
         margin-left: -7px;
@@ -160,8 +161,8 @@
       }
 
       + .btn-icon.trigger {
-        margin-left: 9px !important;
-        margin-top: 9px !important;
+        margin-left: -7px !important;
+        margin-top: 13px !important;
       }
     }
   }
@@ -320,8 +321,8 @@
 
       input.timepicker {
         + .trigger {
-          margin-left: 13px !important;
-          margin-top: 3px !important;
+          margin-left: -3px !important;
+          margin-top: 7px !important;
         }
       }
     }
@@ -661,7 +662,7 @@
 }
 
 .datagrid.medium-rowheight td.is-editing input.timepicker {
-  padding: 0 !important;
+  padding: 15px !important;
   margin-top: 3px !important;
 
   ~ .icon {
