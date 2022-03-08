@@ -10,6 +10,7 @@
 - `[Bar Stacked]` Converted protractor test suites to puppeteer. ([#5840](https://github.com/infor-design/enterprise/issues/5840))
 - `[ContextualActionPanel]` Added setting for cssClass option. ([#1215](https://github.com/infor-design/enterprise-ng/issues/1215))
 - `[Datagrid]` Added visual test for responsive view with puppeteer. ([#5844](https://github.com/infor-design/enterprise/issues/5844))
+- `[Datagrid]` Changed where image events are added. ([#5442](https://github.com/infor-design/enterprise/issues/5442))
 - `[Datepicker]` Added setting in datepicker where you can disable masking input. ([#6080](https://github.com/infor-design/enterprise/issues/6080))
 - `[Card]` Fix a memory leak on events. ([#6155](https://github.com/infor-design/enterprise/issues/6155))
 - `[Card]` Create a Puppeteer Script for Actionable Button Card ([#6062](https://github.com/infor-design/enterprise/issues/6062))
