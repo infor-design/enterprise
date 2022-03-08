@@ -41,6 +41,8 @@
 - `[Timepicker]` Fix a bug in timepicker where hours reset to 1 when changing period. ([#6049](https://github.com/infor-design/enterprise/issues/6049))
 - `[Timepicker]` Fix a bug in timepicker where hours is not properly created when changing from AM/PM. ([#6104](https://github.com/infor-design/enterprise/issues/6104))
 
+(41 Issues Solved This Release, Backlog Enterprise 198, Backlog Ng 38, 1100 Functional Tests, 1635 e2e Tests, 321 Puppeteer Tests)
+
 ## v4.60.0 Features
 
 - `[Application Menu]` Added puppeteer tests for resizable application menu. ([#5755](https://github.com/infor-design/enterprise/issues/5755))
