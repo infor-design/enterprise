@@ -11,13 +11,13 @@ describe('Grouped Bar Chart Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('Should not be able to tab through the legends', async () => {
+    it('should not be able to tab through the legends', async () => {
       // eslint-disable-next-line
         const legendTabIndex = await page.$$eval('.chart-legend-item', e => e.map(el => el.tabIndex));
       expect(legendTabIndex).toEqual([-1, -1, -1, -1]); // These are the values of tabindex of all the legends.
     });
 
-    it('Should not select bar on click', async () => {
+    it('should not select bar on click', async () => {
       const isFailed = [];
       const seriesA = '#bar-grouped-example > svg > g > g:nth-child(3)';
       const seriesB = '#bar-grouped-example > svg > g > g:nth-child(4)';
@@ -53,7 +53,7 @@ describe('Grouped Bar Chart Puppeteer Tests', () => {
       expect(isFailed).not.toContain(true);
     });
 
-    it('Should not select bar group on click in legends', async () => {
+    it('should not select bar group on click in legends', async () => {
       const elHandleArray = await page.$$('.chart-legend-item');
       const isFailed = [];
       let index = 0;
@@ -83,23 +83,23 @@ describe('Grouped Bar Chart Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('Should not have errors', async () => {
+    it('should not have errors', async () => {
       await utils.checkForErrors();
     });
 
-    it('Should have names for the graphs', async () => {
+    it('should have names for the graphs', async () => {
       const namesEl = await page.$$('.axis.y .tick text');
 
       expect(namesEl.length).toBe(3);
     });
 
-    it('Should have bar groups', async () => {
+    it('should have bar groups', async () => {
       const groupEl = await page.$$('.group .series-group');
 
       expect(groupEl.length).toBe(3);
     });
 
-    it('Should highlight when selected', async () => {
+    it('should highlight when selected', async () => {
       page.waitForSelector('.series-group:nth-child(-n+3)', { visible: true });
 
       const seriesGroupEl = await page.$$('.series-group:nth-child(-n+3)');
@@ -111,7 +111,7 @@ describe('Grouped Bar Chart Puppeteer Tests', () => {
       expect(hasClassname).toBe(true);
     });
 
-    it('Should be able to set id/automation id', async () => {
+    it('should be able to set id/automation id', async () => {
       // A
       expect(await page.$eval('#bargroup-a-jan-bar', el => el.getAttribute('id'))).toBe('bargroup-a-jan-bar');
       expect(await page.$eval('#bargroup-a-jan-bar', el => el.getAttribute('data-automation-id'))).toBe('automation-id-bargroup-a-jan-bar');
@@ -158,7 +158,7 @@ describe('Grouped Bar Chart Puppeteer Tests', () => {
       expect(await page.$eval('#bargroup-a-apr-legend-3', el => el.getAttribute('data-automation-id'))).toBe('automation-id-bargroup-a-apr-legend-3');
     });
 
-    it('Should not visual regress', async () => {
+    it('should not visual regress', async () => {
       // Resize the viewport
       await page.setViewport({ width: 1200, height: 800 });
 
@@ -241,11 +241,11 @@ describe('Grouped Bar Chart Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('Should not have errors', async () => {
+    it('should not have errors', async () => {
       await utils.checkForErrors();
     });
 
-    it('Should have negative values', async () => {
+    it('should have negative values', async () => {
       const valueEl = await page.$$('.axis.x .tick .negative-value');
 
       expect(valueEl.length).toBe(2);
@@ -259,11 +259,11 @@ describe('Grouped Bar Chart Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('Should not have errors', async () => {
+    it('should not have errors', async () => {
       await utils.checkForErrors();
     });
 
-    it('Should be highlighted when selected', async () => {
+    it('should be highlighted when selected', async () => {
       page.waitForSelector('.group .series-group', { visible: true });
 
       const fGroupEl = await page.$$('.group .series-group');
