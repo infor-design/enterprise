@@ -76,7 +76,7 @@ describe('Application Menu Puppeteer Test', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
     });
 
-    it('should resize at middle of the page', async () => {
+    it.skip('should resize at middle of the page', async () => {
       const windowSize = await page.viewport();
       const location = [{ y: 0, x: windowSize.width / 2 }];
 
@@ -410,7 +410,7 @@ describe('Application Menu Puppeteer Test', () => {
         .then(className => expect(className).not.toContain('is-open'));
     });
 
-    it('should dismiss the application menu when clicking on one of the menus toolbar buttons', async () => {
+    it.skip('should dismiss the application menu when clicking on one of the menus toolbar buttons', async () => {
       await page.setViewport({ width: 375, height: 812 });
 
       // need a delay for the page to fully visible before clicking the button.

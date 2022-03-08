@@ -103,5 +103,5 @@ git push origin main
 1. Check the [npm link](https://www.npmjs.com/package/ids-enterprise) page that the expected version is the latest. If you patched it could change. If you need to reset this then run a command such as:
 
 ```sh
-npm dist-tags add ids-enterprise@4.29.3 latest
+npm dist-tags add ids-enterprise@4.61.0 latest
 ```

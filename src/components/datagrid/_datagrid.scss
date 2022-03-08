@@ -2421,12 +2421,12 @@ $datagrid-small-row-height: 25px;
   &.medium-rowheight {
     td.is-editing {
       .timepicker {
-        padding: unset !important;
-        margin-top: 0 !important;
+        padding: unset;
+        margin-top: 0;
 
         + .btn-icon.trigger {
-          margin-top: 5px;
-          margin-left: 16px;
+          margin-top: 9px;
+          margin-left: 0;
         }
       }
 
@@ -2445,12 +2445,12 @@ $datagrid-small-row-height: 25px;
   &.small-rowheight {
     td.is-editing {
       .timepicker {
-        padding: unset !important;
+        padding: 14px 15px !important;
         margin-left: -8px !important;
 
         + .btn-icon.trigger {
-          margin-top: 2px;
-          margin-left: 23px;
+          margin-top: 3px;
+          margin-left: 8px;
         }
       }
 
@@ -2881,12 +2881,13 @@ $datagrid-small-row-height: 25px;
         }
 
         &.timepicker {
-          margin-top: 4px;
+          margin-top: 7px;
+          padding: 0 15px;
           width: calc(100% - 26px);
 
           + .btn-icon.trigger {
-            margin-left: 11px;
-            margin-top: 9px;
+            margin-left: -5px;
+            margin-top: 13px;
           }
 
           + .trigger {
