@@ -27,9 +27,6 @@ jobs:
         path: node_modules
         key: enterprise-1019
 
-    - name: Report Version
-      run: chrome --version
-
     - name: Setup timezone
       uses: zcong1993/setup-timezone@master
       with:
