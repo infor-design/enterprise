@@ -4,7 +4,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Radar example-index tests', () => {
+describe('Sparkline example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/sparkline/example-index?layout=nofrills');
   });
