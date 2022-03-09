@@ -46,6 +46,7 @@ describe.skip('Homepage Puppeteer Tests', () => {
 
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+      await page.setViewport({ width: 1200, height: 800 });
     });
 
     it('should show the title', async () => {
@@ -58,8 +59,6 @@ describe.skip('Homepage Puppeteer Tests', () => {
     });
 
     it('should not visual regress', async () => {
-      await page.setViewport({ width: 1200, height: 800 });
-
       expect(await page.waitForSelector('.homepage')).toBeTruthy();
 
       // Need a bit of delay to show the modal perfectly
