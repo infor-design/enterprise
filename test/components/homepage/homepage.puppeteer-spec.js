@@ -1,6 +1,6 @@
 const { getConfig } = require('../../helpers/e2e-utils.js');
 
-describe.skip('Homepage Puppeteer Tests', () => {
+describe('Homepage Puppeteer Tests', () => {
   const baseUrl = 'http://localhost:4000/components/homepage';
 
   function checkPos(pos1, pos2) {
@@ -58,7 +58,7 @@ describe.skip('Homepage Puppeteer Tests', () => {
         .then(element => expect(element).toBeTruthy());
     });
 
-    it('should not visual regress', async () => {
+    it.only('should not visual regress', async () => {
       expect(await page.waitForSelector('.homepage')).toBeTruthy();
 
       // Need a bit of delay to show the modal perfectly
