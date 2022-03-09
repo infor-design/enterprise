@@ -58,13 +58,7 @@ describe('Homepage Puppeteer Tests', () => {
         .then(element => expect(element).toBeTruthy());
     });
 
-<<<<<<< HEAD
-    it.only('should not visual regress', async () => {
-      expect(await page.waitForSelector('.homepage')).toBeTruthy();
-
-=======
     it('should not visual regress', async () => {
->>>>>>> 0b6a9a4d0d1f1a286e44d3568af0909e150d29a0
       // Need a bit of delay to show the modal perfectly
       await page.waitForTimeout(200);
 
