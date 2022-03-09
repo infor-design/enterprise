@@ -1,4 +1,18 @@
-<div class="row">
+<style>
+  .container {
+    width: 100%;
+  }
+  input {
+    min-width: 300px;
+  }
+  .modal-content .modal-body-wrapper {
+    padding-bottom: 0;
+  }
+  .row:last-child {
+    margin-bottom: 0px;
+  }
+</style>
+<div class="row top-padding">
 	<div class="twelve columns">
 
 		<button class="btn-secondary" type="button" id="add-context">Show Modal</button><br/><br/>
@@ -7,27 +21,33 @@
 
 		<!-- Modal Example -->
 		<div id="modal-add-context" class="hidden">
-			<div class="field">
-				<label for="subject">Problem</label>
-				<input type="text" id="subject" name="subject"/>
-			</div>
+      <div class="container">
+        <div class="form-responsive row no-indent">
+          <div class="full-width column">
 
-      <div class="field">
-        <label for="location" class="label">Location</label>
-        <select id="location" name="location" class="dropdown">
-          <option value="N">North</option>
-          <option value="S">South</option>
-          <option value="E">East</option>
-          <option value="W">West</option>
-        </select>
+              <div class="field">
+                <label for="subject">Problem</label>
+                <input type="text" id="subject" name="subject"/>
+              </div>
+
+              <div class="field">
+                <label for="location" class="label">Location</label>
+                <select id="location" name="location" class="dropdown">
+                  <option value="N">North</option>
+                  <option value="S">South</option>
+                  <option value="E">East</option>
+                  <option value="W">West</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="notes-max">Notes (maxlength)</label>
+                <textarea id="notes-max" class="textarea" maxlength="90" name="notes-max">Line One</textarea>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-
-			<div class="field">
-				<label for="notes-max">Notes (maxlength)</label>
-				<textarea id="notes-max" class="textarea" maxlength="90" name="notes-max">Line One</textarea>
-			</div>
-		</div>
-
 	</div>
 </div>
 

@@ -320,7 +320,7 @@ describe('Breadcrumb API', () => {
     expect(currentA).toEqual(li4);
   });
 
-  it('should render a popupmenu with overflowed breadcrumb items', (done) => {
+  xit('should render a popupmenu with overflowed breadcrumb items', (done) => {
     document.body.insertAdjacentHTML('afterbegin', breadcrumbTmpl);
     breadcrumbEl = document.querySelector(`#${id}`);
     breadcrumbAPI = new Breadcrumb(breadcrumbEl, {

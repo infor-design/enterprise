@@ -455,7 +455,7 @@ Pie.prototype = {
       }
 
       if (self.settings.attributes) {
-        utils.addAttributes($('.chart-donut-text'), self, self.settings.attributes, 'text', true);
+        utils.addAttributes(self.element.find('.chart-donut-text'), self, self.settings.attributes, 'text', true);
         utils.addAttributes(self.element.find('.slices'), self, self.settings.attributes, 'slices', true);
         utils.addAttributes(self.element.find('.labels'), self, self.settings.attributes, 'labels', true);
         utils.addAttributes(self.element.find('.labels').children(), self, self.settings.attributes, 'label', true);
