@@ -82,6 +82,7 @@ describe('Input Test Reset', () => {
 
     expect(await element.all(by.css('.icon-dirty')).count()).toEqual(4);
     await element(by.id('btn-save')).click();
+    await browser.driver.sleep(config.sleepShort);
 
     expect(await element.all(by.css('.icon-dirty')).count()).toEqual(0);
   });
@@ -93,10 +94,6 @@ describe('Input tooltip tests', () => {
     await browser.driver
       .wait(protractor.ExpectedConditions
         .presenceOf(element(by.id('first-name'))), config.waitsFor);
-  });
-
-  it('Should not have errors', async () => {
-    await utils.checkForErrors();
   });
 
   // This test is more important as a windows test
