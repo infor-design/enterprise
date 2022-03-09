@@ -68,7 +68,7 @@ describe('Index Tests', () => {
     });
   });
 
-  it('should not be able to tab out of message modal', async () => {
+  it.skip('should not be able to tab out of message modal', async () => {
     const buttonEl = await page.$('#show-delete-confirmation');
     await buttonEl.click();
     await page.waitForSelector('.btn-modal-primary', { visible: true });
@@ -432,7 +432,7 @@ describe('Message Mobile Enhancement & Style Test', () => {
     expect(headerPadTop).toMatch('16px');
     expect(headerPadBot).toMatch('0px');
   });
-  
+
   it('should have 0px margin-top on buttonset ', async () => {
     await expect(page.title()).resolves.toMatch('IDS Enterprise');
     const btnTop = await page.$eval('button[class="btn-secondary hide-focus"]', el => getComputedStyle(el).marginTop);

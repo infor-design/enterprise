@@ -217,8 +217,8 @@ ContextualActionPanel.prototype = {
       }
     }
 
-    if (this.settings.cssClass) {
-      this.panel.addClass(`${this.settings.cssClass}`);
+    if (this.settings.modalSettings.cssClass) {
+      this.panel.addClass(`${this.settings.modalSettings.cssClass}`);
     }
 
     this.completeBuild();

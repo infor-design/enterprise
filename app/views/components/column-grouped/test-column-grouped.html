@@ -1,0 +1,114 @@
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Grouped Column Chart</h2>
+        </div>
+        <div class="widget-content">
+          <div id="column-grouped-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+    var dataset = [
+      {
+        data: [
+          {
+            name: "Beginning Balance",
+            value: 1.7572450137
+          },
+          {
+            name: "Ending Balance",
+            value: 1.8089577737
+          },
+          {
+            name: "Posted Balance",
+            value: 517127.6000000015
+          }
+        ],
+        name: "11200 - 0000"
+      },
+      {
+        data: [
+          {
+            name: "Beginning Balance",
+            value: 1.2172658197
+          },
+          {
+            name: "Ending Balance",
+            value: 1.2234822137
+          },
+          {
+            name: "Posted Balance",
+            value: 62163.94000000134
+          }
+        ],
+        name: "12100 - 0000"
+      },
+      {
+        data: [
+          {
+            name: "Beginning Balance",
+            value: 4335422.69
+          },
+          {
+            name: "Ending Balance",
+            value: 4357033.65
+          },
+          {
+            name: "Posted Balance",
+            value: 21610.959999999963
+          }
+        ],
+        name: "11300 - 0000"
+      },
+      {
+        data: [
+          {
+            name: "Beginning Balance",
+            value: 1.1774981627
+          },
+          {
+            name: "Ending Balance",
+            value: 1.1781039367
+          },
+          {
+            name: "Posted Balance",
+            value: 6057.7400000002235
+          }
+        ],
+        name: "11100 - 0000"
+      },
+      {
+        data: [
+          {
+            name: "Beginning Balance",
+            value: 131504.81,
+          },
+          {
+            name: "Ending Balance",
+            value: 134570.44
+          },
+          {
+            name: "Posted Balance",
+            value: 3065.6300000000047
+          }
+        ],
+        name: "11400 - 0000"
+      }
+    ];
+
+    $('#column-grouped-example').chart({
+      type: 'column-grouped',
+      dataset: dataset,
+      axisLabels: {
+       top: 'Top axis label',
+       right: 'Right axis label',
+       bottom: 'Bottom axis label'
+     }});
+   });
+</script>
