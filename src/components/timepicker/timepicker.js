@@ -487,7 +487,6 @@ TimePicker.prototype = {
     const maxHourCount = is24HourFormat ? 24 : 13;
 
     this.hourSelect = $(`<select id="${this.hoursId}" data-options="{'noSearch': 'true'}" class="hours dropdown"></select>`);
-
     while (hourCounter < maxHourCount) {
       selected = '';
 
@@ -1072,37 +1071,43 @@ TimePicker.prototype = {
     setTimeout(() => {
       $('select.period.dropdown').on('change', (e) => {
         const period = $(e.target).find(':checked').val();
-
         let selected;
-        let resetValue = false;
         this.initValues = self.getTimeFromField();
         const is24HourFormat = this.is24HourFormat();
         let hourCounter = is24HourFormat ? 0 : 1;
         const maxHourCount = is24HourFormat ? 24 : 13;
         const hourSelect = $('select.hours.dropdown');
+        let hourValue = hourSelect.siblings('.dropdown-wrapper').find('.dropdown').children('span').text();
+        if (hourValue.indexOf('Hours') > -1) {
+          hourValue = hourValue.split(' ')[1];
+        }
+
         hourSelect.empty();
+        const maxHourRange = self.getMaxHourRange(this.initValues, this.hasDayPeriods(), period);
 
         while (hourCounter < maxHourCount) {
-          selected = '';
-    
-          const maxHourRange = self.getMaxHourRange(this.initValues, this.hasDayPeriods(), period);
           if (hourCounter > maxHourRange) {
             break;
           }
 
-          if (!resetValue) {
+          selected = '';
+          if (parseInt(hourValue, 10) === hourCounter) {
             selected = ' selected';
-            resetValue = true;
-            $('select.hours.dropdown')
-              .siblings('.dropdown-wrapper')
-              .find('.dropdown')
-              .children('span')
-              .html('1');
           }
-          
+
           hourSelect.append($(`<option${selected}>${self.hourText(hourCounter)}</option>`));
           hourCounter++;
         }
+
+        if (hourValue > maxHourRange) {
+          hourValue = 1;
+        }
+
+        $('select.hours.dropdown')
+          .siblings('.dropdown-wrapper')
+          .find('.dropdown')
+          .children('span')
+          .html(hourValue);
       });
     }, 10);
   },

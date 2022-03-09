@@ -264,8 +264,7 @@ describe('Timepicker Intervals tests', () => {
     await browser.driver.sleep(config.sleep);
     await browser.driver
       .wait(protractor.ExpectedConditions.invisibilityOf(element(by.id('dropdown-list'))), config.waitsFor);
-
-    expect(await timepickerEl.getAttribute('value')).toEqual('1:10 PM');
+    expect(await timepickerEl.getAttribute('value')).toEqual('2:10 PM');
   });
 
   it('Should rounds minutes to the nearest interval', async () => {

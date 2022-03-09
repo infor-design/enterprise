@@ -146,6 +146,7 @@ const DATEPICKER_DEFAULTS = {
   isMonthPicker: false,
   attributes: null,
   autocompleteAttribute: 'off',
+  useMask: true,
   tabbable: true
 };
 
@@ -526,6 +527,9 @@ DatePicker.prototype = {
    * @returns {void}
    */
   mask() {
+    if (!this.settings.useMask) {
+      return;
+    }
     this.setFormat();
     const s = this.settings;
     const maskOptions = {
