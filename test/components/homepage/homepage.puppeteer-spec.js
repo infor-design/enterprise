@@ -59,10 +59,10 @@ describe.skip('Homepage Puppeteer Tests', () => {
     });
 
     it('should not visual regress', async () => {
-      expect(await page.waitForSelector('.homepage')).toBeTruthy();
-
       // Need a bit of delay to show the modal perfectly
       await page.waitForTimeout(200);
+
+      expect(await page.waitForSelector('.homepage')).toBeTruthy();
 
       // Screenshot of the page
       const image = await page.screenshot();
