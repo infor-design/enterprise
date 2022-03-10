@@ -18,5 +18,16 @@ describe('Icons Puppeteer Tests', () => {
       const config = getConfig('icon-launch');
       expect(image).toMatchImageSnapshot(config);
     });
+
+    it('should have new ids identity for mobile icon', async () => {
+      // https://github.com/infor-design/enterprise/issues/6144
+      const launchIcon = await page.$eval('div.demo-svg[title=mobile]', element => element.innerHTML);
+      expect(launchIcon).toContain('<use href="#icon-mobile"></use>');
+
+      const icon = await page.$('div.demo-svg[title=mobile]');
+      const image = await icon.screenshot();
+      const config = getConfig('icon-mobile');
+      expect(image).toMatchImageSnapshot(config);
+    });
   });
 });
