@@ -178,7 +178,7 @@ describe('Grouped Bar Chart Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('Should not visual regress', async () => {
+    it('should not visual regress', async () => {
       // Resize the viewport
       await page.setViewport({ width: 1200, height: 800 });
 
@@ -203,7 +203,7 @@ describe('Grouped Bar Chart Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('Should not visual regress', async () => {
+    it('should not visual regress', async () => {
       // Resize the viewport
       await page.setViewport({ width: 1200, height: 800 });
 
