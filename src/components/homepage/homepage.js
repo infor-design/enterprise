@@ -337,6 +337,7 @@ Homepage.prototype = {
         .on('dragstart.card', function () {
           const card = $(this);
           card.addClass('is-dragging');
+          card.css('opacity', '0.99');
         })
         .on('dragover.card', (event) => {
           // For mac chrome/safari to remove animation
@@ -368,6 +369,7 @@ Homepage.prototype = {
           // Make sure this is not from a resize event, card should have is-dragging class
           if (card.hasClass('is-dragging')) {
             const cardOver = $(cards).has('.drop-indicator');
+            card.css('opacity', '');
             if (card.index() < cardOver.index()) {
               card.insertAfter(cardOver);
             } else {

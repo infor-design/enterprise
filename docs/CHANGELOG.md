@@ -2,6 +2,10 @@
 
 ## v4.62.0 Features
 
+## v4.62.0 Fixes
+
+- `[Widget]` Fix on drag image including the overflow area. ([NG#1216](https://github.com/infor-design/enterprise-ng/issues/1216))
+
 ## v4.61.0 Features
 
 - `[ApplicationMenu]` Converted protractor test suites to puppeteer. ([#5835](https://github.com/infor-design/enterprise/issues/5835))
