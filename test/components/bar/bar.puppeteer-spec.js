@@ -1,8 +1,10 @@
 const { checkDataAutomationID, checkTooltipValue, checkClassNameValue } = require('../../helpers/e2e-utils.js');
 
 describe('Bar Chart Puppeteer Tests', () => {
-  describe('Bar Chart Disable Selection  State Tests', () => {
-    const url = 'http://localhost:4000/components/bar/example-disable-selection-state.html';
+  const baseUrl = 'http://localhost:4000/components';
+
+  describe('Bar Chart Disable Selection State Tests', () => {
+    const url = `${baseUrl}/bar/example-disable-selection-state.html`;
 
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
@@ -81,6 +83,64 @@ describe('Bar Chart Puppeteer Tests', () => {
       await page.waitForTimeout(100);
 
       expect(isFailed).not.toContain(true);
+    });
+  });
+
+  describe('Bar Chart example-index tests', () => {
+    const url = `${baseUrl}/bar/example-index?theme=classic&layout=nofrills`;
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('should have names for the graphs', async () => {
+      const namesEl = await page.$$('.axis.y .tick text');
+
+      expect(namesEl.length).toBe(3);
+    });
+
+    it('should have greyed out bars when not selected', async () => {
+      const barEl = await page.$$('.bar.series-0');
+      const barTestEl = await page.$$('.bar.series-1');
+
+      await page.click('.bar.series-0');
+
+      await page.waitForSelector('.bar.series-0', { visible: true });
+
+      const hasClassname = await checkClassNameValue(barEl, 'is-selected');
+      expect(hasClassname).toBe(true);
+
+      await page.waitForTimeout(200);
+
+      expect(await page.$eval('.bar.series-1', e => getComputedStyle(e).opacity)).toBe('0.6');
+    });
+
+    it('should be able to set id/automation id', async () => {
+      await page.waitForTimeout(200);
+
+
+      expect(await page.$eval('#bar-a-bar', el => el.getAttribute('id'))).toBe('bar-a-bar');
+      expect(await page.$eval('#bar-a-bar', el => el.getAttribute('data-automation-id'))).toBe('automation-id-bar-a-bar');
+
+      expect(await page.$eval('#bar-b-bar', el => el.getAttribute('id'))).toBe('bar-b-bar');
+      expect(await page.$eval('#bar-b-bar', el => el.getAttribute('data-automation-id'))).toBe('automation-id-bar-b-bar');
+
+      expect(await page.$eval('#bar-c-bar', el => el.getAttribute('id'))).toBe('bar-c-bar');
+      expect(await page.$eval('#bar-c-bar', el => el.getAttribute('data-automation-id'))).toBe('automation-id-bar-c-bar');
+    });
+
+    it('Should not visual regress', async () => {
+      // Add a bit of a delay
+      await page.waitForTimeout(200);
+
+      // Screenshot of the page
+      const image = await page.screenshot();
+
+      // Set a custom name of the snapshot
+      const config = getConfig('bar-index');
+
+      // Compare the images
+      expect(image).toMatchImageSnapshot(config);
     });
   });
 });
