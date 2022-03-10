@@ -9,8 +9,9 @@
 ## v4.61.0 Features
 
 - `[ApplicationMenu]` Converted protractor test suites to puppeteer. ([#5835](https://github.com/infor-design/enterprise/issues/5835))
-- `[Bar Stacked]` Converted protractor test suites to puppeteer. ([#5840](https://github.com/infor-design/enterprise/issues/5840))
 - `[Bar]` Fixed an issue with legend text overlapping. ([#6113](https://github.com/infor-design/enterprise/issues/6113)
+- `[Bar]` Converted protractor test suites to puppeteer. ([#5838](https://github.com/infor-design/enterprise/issues/5838)
+- `[Bar Stacked]` Converted protractor test suites to puppeteer. ([#5840](https://github.com/infor-design/enterprise/issues/5840))
 - `[ContextualActionPanel]` Added setting for cssClass option. ([#1215](https://github.com/infor-design/enterprise-ng/issues/1215))
 - `[Datagrid]` Added visual test for responsive view with puppeteer. ([#5844](https://github.com/infor-design/enterprise/issues/5844))
 - `[Datagrid]` Changed where image events are added. ([#5442](https://github.com/infor-design/enterprise/issues/5442))
