@@ -257,7 +257,7 @@ Trackdirty.prototype = {
           current = current.replaceAll('&nbsp;', ' ');
         }
 
-        if ((current === original || (input.attr('multiple') && utils.equals(current, original)))) {
+        if (current === original || (input.attr('multiple') && utils.equals(current, original))) {
           input.removeClass('dirty');
           $('.icon-dirty, .msg-dirty', field).add(d.icon).add(d.msg).remove();
           input.trigger(e.type === 'doresetdirty' ? 'afterresetdirty' : 'pristine');
