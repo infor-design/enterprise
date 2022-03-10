@@ -212,7 +212,7 @@ To generate the baseline image, you need to run `npm run e2e:puppeteer component
 
 As of now, if you generate this to your local environment, it will pass but it will fail in the CI because our pipeline is running on ubuntu. Suggesting to generate it via VM. See the - [Working with Visual Regression Tests](#working-with-visual-regression-tests) for docker image.
 
-If you need to update the baseline image, run `npm run e2e:puppeteer component-name -u`. `-u` is an alias of `--updateSnapshot`. See the available options in [jest options](https://jestjs.io/docs/cli#options)
+If you need to update ALL components baseline images, run `npm run e2e:update-imagesnapshots`. If you just need to update the baseline image of a specific component, run `npm run e2e:update-imagesnapshots component-name`.
 
 ## Sequence for Running e2e tests locally
 
