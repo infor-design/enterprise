@@ -2,6 +2,10 @@
 
 ## v4.62.0 Features
 
+## v4.62.0 Fixes
+
+- `[Homepage]` Fixed instability of the visual tests. ([#6179](https://github.com/infor-design/enterprise/issues/6179))
+
 ## v4.61.0 Features
 
 - `[ApplicationMenu]` Converted protractor test suites to puppeteer. ([#5835](https://github.com/infor-design/enterprise/issues/5835))
