@@ -678,10 +678,6 @@ Tooltip.prototype = {
     if (this.settings.initializeContent) {
       content.initialize();
     }
-
-    if (this.settings.maxWidth) {
-      console.log(this);
-    }
   },
 
   /**
