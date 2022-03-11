@@ -129,7 +129,7 @@ describe('Bar Chart Puppeteer Tests', () => {
       expect(await page.$eval('#bar-c-bar', el => el.getAttribute('data-automation-id'))).toBe('automation-id-bar-c-bar');
     });
 
-    it('Should not visual regress', async () => {
+    it('should not visual regress', async () => {
       // Add a bit of a delay
       await page.waitForTimeout(200);
 
