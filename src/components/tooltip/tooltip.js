@@ -678,6 +678,10 @@ Tooltip.prototype = {
     if (this.settings.initializeContent) {
       content.initialize();
     }
+
+    if (this.settings.maxWidth) {
+      console.log(this);
+    }
   },
 
   /**
@@ -986,6 +990,11 @@ Tooltip.prototype = {
       this.tooltip.place(opts);
       this.tooltip.data('place').place(opts);
     }
+
+    if (this.settings.maxWidth) {
+      $(this.tooltip).css('max-width', this.settings.maxWidth);
+    }
+
     return this;
   },
 
@@ -1019,6 +1028,7 @@ Tooltip.prototype = {
     this.tooltip[0].classList.add('is-hidden');
     this.tooltip[0].style.left = '';
     this.tooltip[0].style.top = '';
+    this.tooltip[0].style.maxWidth = '';
     this.tooltip.find('.arrow').removeAttr('style');
 
     this.detachOpenEvents();
