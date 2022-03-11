@@ -523,7 +523,7 @@ MonthView.prototype = {
     now.setHours(0);
     now.setMinutes(0);
     now.setSeconds(0);
-    
+
     let elementDate;
     if (this.isIslamic) {
       elementDate = s.activeDate || Locale.gregorianToUmalqura(now);
@@ -849,8 +849,7 @@ MonthView.prototype = {
       );
     }
 
-    let days = this.currentCalendar.days.narrow;
-    days = days || this.currentCalendar.days.abbreviated;
+    const days = this.currentCalendar.days.abbreviated;
 
     // Set the Days of the week
     let firstDayofWeek = (this.currentCalendar.firstDayofWeek || 0);
