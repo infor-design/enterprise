@@ -253,7 +253,7 @@ Trackdirty.prototype = {
         }
 
         // Edge Issue in #6032
-        if (current.indexOf('&nbsp;') > -1) {
+        if (typeof current === 'string' && current?.indexOf('&nbsp;') > -1) {
           current = current.replaceAll('&nbsp;', ' ');
         }
 
