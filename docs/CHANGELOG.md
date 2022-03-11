@@ -54,6 +54,7 @@
 - `[Donut]` Fix center tooltip showing on wrong donut chart when multiple donut charts. ([#6103](https://github.com/infor-design/enterprise/issues/6103))
 - `[Editor]` Fix a bug in editor where CTRL-H (add hyperlink) breaks the interface. ([#6015](https://github.com/infor-design/enterprise/issues/6015))
 - `[Hyperlinks]` Remove margin and padding from hyperlinks. ([#5991](https://github.com/infor-design/enterprise/issues/5991))
+- `[Masthead]` Remove actions button from header in example page. ([#5959](https://github.com/infor-design/enterprise/issues/5959))
 - `[Searchfield]` Fix a bug in NG where searchfield is in full width even when it's collapsible. ([NG#1225](https://github.com/infor-design/enterprise-ng/issues/1225))
 - `[Spinbox]` Spinbox should update to correct value when Enter is pressed. ([#6036](https://github.com/infor-design/enterprise/issues/6036))
 - `[Tabs]` Fixed a bug where the tabs container is focused in Windows10 on Firefox. ([#6110](https://github.com/infor-design/enterprise/issues/6110))
