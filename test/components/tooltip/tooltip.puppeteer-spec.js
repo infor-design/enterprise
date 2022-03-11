@@ -65,4 +65,20 @@ describe('Tooltip Puppeteer Tests', () => {
         .then(element => expect(element).toBeTruthy());
     });
   });
+
+  describe('Tooltip with maxWidth', () => {
+    const url = `${baseUrl}/example-tooltip-using-max-width-setting`;
+
+    beforeEach(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
+    });
+
+    it('should work the maxWidth setting', async () => {
+      const popoverBtn = await page.waitForSelector('#popover-trigger', { visible: true });
+      await popoverBtn.click();
+
+      await page.evaluate(() => document.querySelector('.popover.is-open').style.maxWidth)
+        .then(maxWidth => expect(maxWidth).toBe('250px'));
+    });
+  });
 });
