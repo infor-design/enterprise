@@ -849,7 +849,12 @@ MonthView.prototype = {
       );
     }
 
-    const days = this.currentCalendar.days.abbreviated;
+    let days = this.currentCalendar.days.narrow;
+    days = days || this.currentCalendar.days.abbreviated;
+
+    if (!(s.isPopup || s.inPage)) {
+      days = this.currentCalendar.days.abbreviated;
+    }
 
     // Set the Days of the week
     let firstDayofWeek = (this.currentCalendar.firstDayofWeek || 0);
