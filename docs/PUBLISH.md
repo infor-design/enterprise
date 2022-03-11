@@ -79,7 +79,7 @@ git config --global credential.helper wincred
 1. Set the main branch to the next minor dev version. For example if we made branch `4.23.x`, then the `main` package.json version should now be changed to `4.24.0-dev`
 1. Check that the build is running after for the deploy on the [Jenkins Server](http://jenkins.design.infor.com:8080/job/soho-kubernetes-deploy/)
 1. Watch Ms Teams for a posted release and notify QA for beta and minor
-1. Update the Stackblitz https://stackblitz.com/edit/ids-enterprise-4610 under my account but can be under any
+1. Update the [Stackblitz](https://stackblitz.com/edit/ids-enterprise-4610) under my account but can be under any
 
 For a final release, finish with:
 
