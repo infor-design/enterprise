@@ -101,7 +101,6 @@ describe('Bar Chart Puppeteer Tests', () => {
 
     it('should have greyed out bars when not selected', async () => {
       const barEl = await page.$$('.bar.series-0');
-      const barTestEl = await page.$$('.bar.series-1');
 
       await page.click('.bar.series-0');
 
@@ -117,7 +116,6 @@ describe('Bar Chart Puppeteer Tests', () => {
 
     it('should be able to set id/automation id', async () => {
       await page.waitForTimeout(200);
-
 
       expect(await page.$eval('#bar-a-bar', el => el.getAttribute('id'))).toBe('bar-a-bar');
       expect(await page.$eval('#bar-a-bar', el => el.getAttribute('data-automation-id'))).toBe('automation-id-bar-a-bar');
