@@ -361,6 +361,20 @@
   }
 }
 
+.searchfield-filter-wrapper {
+  display: inline-block;
+  border: 1px solid #97979B;
+  height: 38px;
+  position: relative;
+  top: -1px;
+  left: -1px;
+  
+  .searchfield-filters {
+    height: 24px;
+    width: 24px;
+  }
+}
+
 .searchfield-category-button {
   .category {
     margin-bottom: 2px;

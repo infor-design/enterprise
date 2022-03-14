@@ -38,6 +38,8 @@ const SEARCHFIELD_DEFAULTS = {
   collapsible: SEARCHFIELD_COLLAPSE_MODES[0],
   collapseSize: undefined,
   tabbable: true,
+  hasFilter: false,
+  hasSort: false,
   autocompleteAttribute: 'off'
 };
 
@@ -345,6 +347,39 @@ SearchField.prototype = {
     // Swap icon position to in-front if we have "context/has-categories" CSS class.
     const insertIconInFront = this.wrapper.hasClass('context') || this.wrapper.hasClass('has-categories');
     icon[insertIconInFront ? 'insertBefore' : 'insertAfter'](this.element).icon();
+
+    if (this.settings.hasFilter || this.settings.hasSort) {
+      const filterWrapper = $(`<div class="searchfield-filter-wrapper"></div>`);
+      this.wrapper.after(filterWrapper);
+      let filterCount = 0;
+
+      if (this.settings.hasFilter) {
+        const filterButton = `<button type="button" class="btn-icon searchfield-filters" title="Filter" class="filter">
+            <svg class="icon filter-icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-filter"></use>
+            </svg>
+            <span class="audible">Filter</span>
+        </button>`;
+        filterWrapper.append(filterButton);
+        filterCount++;
+      }
+      
+      if (this.settings.hasSort) {
+        const sortButton = `<button type="button" class="btn-icon searchfield-filters" title="Filter" class="sort">
+            <svg class="icon filter-icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-sort-down"></use>
+            </svg>
+            <span class="audible">Sort</span>
+        </button>`;
+        filterWrapper.append(sortButton);
+        filterCount++;
+      }
+
+      let filterWidth = filterCount > 1 ? 80 : 40;
+      let filterClass = filterCount > 1 ? 'has-searchfield-filters' : 'has-searchfield-filter';
+      filterWrapper.css('width', `${filterWidth}px`);      
+      this.wrapper.addClass(filterClass);
+    }
 
     // Change icon to a trigger button if we're dealing with categories
     if (this.hasCategories()) {

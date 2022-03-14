@@ -633,6 +633,14 @@
     margin-bottom: 0;
     width: 100%;
 
+    &.has-searchfield-filter {
+      width: calc(100% - 40px);
+    }
+
+    &.has-searchfield-filters {
+      width: calc(100% - 80px);
+    }
+
     &.has-focus {
       input {
         border: 1px solid $ids-color-brand-primary-base;
@@ -640,7 +648,11 @@
     }
   }
 
-  .icon:not(.close) {
+  .searchfield-filter-wrapper {
+    left: 0;
+  }
+
+  .icon:not(.close):not(.filter-icon) {
     left: 10px;
     top: 10px;
   }
