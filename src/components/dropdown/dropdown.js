@@ -268,8 +268,9 @@ Dropdown.prototype = {
     this.pseudoElem
       .attr(attributesToCopy.obj)
       .attr({
-        role: 'button',
+        role: 'combobox',
         'aria-haspopup': 'listbox',
+        'aria-autocomplete': 'list',
         'aria-expanded': 'false'
       });
     this.renderPseudoElemLabel();
@@ -2591,7 +2592,7 @@ Dropdown.prototype = {
 
     this.pseudoElem
       .removeClass('is-open')
-      .removeAttr('aria-expanded');
+      .attr('aria-expanded', 'false');
 
     this.searchInput
       .removeAttr('aria-activedescendant');
