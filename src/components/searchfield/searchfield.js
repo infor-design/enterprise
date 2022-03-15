@@ -349,7 +349,7 @@ SearchField.prototype = {
     icon[insertIconInFront ? 'insertBefore' : 'insertAfter'](this.element).icon();
 
     if (this.settings.hasFilter || this.settings.hasSort) {
-      const filterWrapper = $(`<div class="searchfield-filter-wrapper"></div>`);
+      const filterWrapper = $(`<div class='searchfield-filter-wrapper'></div>`);
       this.wrapper.after(filterWrapper);
       let filterCount = 0;
 
@@ -375,8 +375,8 @@ SearchField.prototype = {
         filterCount++;
       }
 
-      let filterWidth = filterCount > 1 ? 80 : 40;
-      let filterClass = filterCount > 1 ? 'has-searchfield-filters' : 'has-searchfield-filter';
+      const filterWidth = filterCount > 1 ? 80 : 40;
+      const filterClass = filterCount > 1 ? 'has-searchfield-filters' : 'has-searchfield-filter';
       filterWrapper.css('width', `${filterWidth}px`);      
       this.wrapper.addClass(filterClass);
     }
