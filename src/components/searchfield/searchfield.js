@@ -349,7 +349,7 @@ SearchField.prototype = {
     icon[insertIconInFront ? 'insertBefore' : 'insertAfter'](this.element).icon();
 
     if (this.settings.hasFilter || this.settings.hasSort) {
-      const filterWrapper = $(`<div class='searchfield-filter-wrapper'></div>`);
+      const filterWrapper = $('<div class="searchfield-filter-wrapper"></div>');
       this.wrapper.after(filterWrapper);
       let filterCount = 0;
 
