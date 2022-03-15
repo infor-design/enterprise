@@ -2,6 +2,8 @@
 
 ## v4.62.0 Features
 
+- `[Searchfield]` Added filter and sort settings in Searchfield Component. ([#6007](https://github.com/infor-design/enterprise/issues/6007))
+
 ## v4.62.0 Fixes
 
 - `[Homepage]` Fixed instability of the visual tests. ([#6179](https://github.com/infor-design/enterprise/issues/6179))
