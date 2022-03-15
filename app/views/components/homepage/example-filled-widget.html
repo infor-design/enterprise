@@ -1,0 +1,95 @@
+<div id="maincontent" class="page-container scrollable" role="main">
+  <div class="homepage" data-columns="3">
+    <div class="content">
+
+      <div class="widget">
+        <div class="widget-header">
+          <h1 tabindex="0" class="widget-title">Red Widget</h1>
+        </div>
+        <div class="widget-content" style="background-color: red;">
+          <div class="field">
+            <label class="label">Input Red 1</label>
+            <input data-clearable="false"/>
+          </div>
+          <div class="field">
+            <label class="label">Input Red 2</label>
+            <input data-clearable="false"/>
+          </div><div class="field">
+            <label class="label">Input Red 3</label>
+            <input data-clearable="false"/>
+          </div>
+          <div class="field">
+            <label class="label">Input Red 4</label>
+            <input data-clearable="false"/>
+          </div>
+          <div class="field">
+            <label class="label">Input Red 5</label>
+            <input data-clearable="false"/>
+          </div>
+          <div class="field">
+            <label class="label">Input Red 6</label>
+            <input data-clearable="false"/>
+          </div>
+        </div>
+      </div>
+
+      <div class="widget">
+        <div class="widget-header">
+          <h1 tabindex="0" class="widget-title">Green Widget</h1>
+        </div>
+        <div class="widget-content" style="background-color: green;"></div>
+      </div>
+
+      <div class="widget">
+        <div class="widget-header" >
+          <h1 tabindex="0" class="widget-title">Blue Widget</h1>
+        </div>
+        <div class="widget-content" style="background-color: blue;"></div>
+      </div>
+
+      <div class="widget">
+        <div class="widget-header" >
+          <h1 tabindex="0" class="widget-title">Orange Widget</h1>
+        </div>
+        <div class="widget-content" style="background-color: orange;"></div>
+      </div>
+
+      <div class="widget">
+        <div class="widget-header" >
+          <h1 tabindex="0" class="widget-title">Yellow Widget</h1>
+        </div>
+        <div class="widget-content" style="background-color: yellow;"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<script>
+  $('body').on('initialized', function () {
+    const homepageApi = $('.homepage').data('homepage');
+    homepageApi.setEdit(true);
+    homepageApi.settings.onBeforeRemoveCard = function (card) {
+      var result = new Promise(function(resolve, reject){
+        $('body').message({
+          title: 'Remove this widget?',
+          buttons: [{
+            id: 'id-cancel',
+            text: 'Cancel',
+            click: function (e, modal) {
+              modal.close();
+              reject();
+            },
+            isDefault: true
+          }, {
+            text: 'Remove',
+            click: function (e, modal) {
+              modal.close();
+              resolve();
+            }
+          }]
+        })
+      });
+      return result;
+    }
+  });
+</script>
