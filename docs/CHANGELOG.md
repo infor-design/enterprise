@@ -2,7 +2,7 @@
 
 ## v4.62.0 Features
 
-- `[Searchfield]` Added filter and sort settings in Searchfield Component. ([#6007](https://github.com/infor-design/enterprise/issues/6007))
+- `[Searchfield]` Added filter and sort setting in Searchfield Component. ([#6007](https://github.com/infor-design/enterprise/issues/6007))
 
 ## v4.62.0 Fixes
 
