@@ -2,7 +2,7 @@
 
 ## v4.62.0 Features
 
-- `[Listview]` Added filter and sort setting in Listview Component. ([#6007](https://github.com/infor-design/enterprise/issues/6007))
+- `[Listview]` Added filters setting in Listview Component. ([#6007](https://github.com/infor-design/enterprise/issues/6007))
 
 ## v4.62.0 Fixes
 

@@ -633,13 +633,7 @@
     margin-bottom: 0;
     width: 100%;
 
-    &.has-listview-filter {
-      width: calc(100% - 40px);
-      z-index: 1;
-    }
-
     &.has-listview-filters {
-      width: calc(100% - 80px);
       z-index: 1;
     }
 

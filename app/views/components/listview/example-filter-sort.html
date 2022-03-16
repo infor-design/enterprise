@@ -48,8 +48,8 @@
       template: 'search-tmpl',
       source: '/api/tasks',
       searchable: true,
-      hasFilter: true,
-      hasSort: true,
+      hasFilters: true,
+      filters: ['filter', 'add', 'alert'],
       listFilterSettings: {
         filterMode: 'contains',
         searchableTextCallback: function(item) {
