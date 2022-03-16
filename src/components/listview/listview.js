@@ -76,6 +76,8 @@ const LISTVIEW_DEFAULTS = {
   },
   searchTermMinSize: 1,
   initializeContents: false,
+  hasFilter: false,
+  hasSort: false,
   attributes: null,
   attributesOverride: null
 };
@@ -148,6 +150,41 @@ ListView.prototype = {
     const card = this.element.closest('.card, .widget');
     const selectable = this.element.attr('data-selectable');
     const selectOnFocus = this.element.attr('data-select-onfocus');
+
+    if (this.settings.hasFilter || this.settings.hasSort) {
+      const filterWrapper = $('<div class="listview-filter-wrapper"></div>');
+      const listViewWrapper = self.element.siblings('.listview-search');
+      listViewWrapper.append(filterWrapper);
+      const searchFieldWrapper = listViewWrapper.find('.searchfield-wrapper');
+      let filterCount = 0;
+
+      if (this.settings.hasFilter) {
+        const filterButton = `<button type="button" class="btn-icon listview-filters" title="Filter" class="filter">
+            <svg class="icon filter-icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-filter"></use>
+            </svg>
+            <span class="audible">Filter</span>
+        </button>`;
+        filterWrapper.append(filterButton);
+        filterCount++;
+      }
+      
+      if (this.settings.hasSort) {
+        const sortButton = `<button type="button" class="btn-icon listview-filters" title="Filter" class="sort">
+            <svg class="icon filter-icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-sort-down"></use>
+            </svg>
+            <span class="audible">Sort</span>
+        </button>`;
+        filterWrapper.append(sortButton);
+        filterCount++;
+      }
+
+      const filterWidth = filterCount > 1 ? 80 : 40;
+      const filterClass = filterCount > 1 ? 'has-listview-filters' : 'has-listview-filter';
+      filterWrapper.css('width', `${filterWidth}px`);
+      searchFieldWrapper.addClass(filterClass);
+    }
 
     // Check for legacy data attributes
     if (this.element.attr('data-pagesize')) {

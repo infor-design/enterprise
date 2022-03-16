@@ -633,12 +633,14 @@
     margin-bottom: 0;
     width: 100%;
 
-    &.has-searchfield-filter {
+    &.has-listview-filter {
       width: calc(100% - 40px);
+      z-index: 1;
     }
 
-    &.has-searchfield-filters {
+    &.has-listview-filters {
       width: calc(100% - 80px);
+      z-index: 1;
     }
 
     &.has-focus {
@@ -700,6 +702,24 @@
 
   + .listview {
     height: calc(100% - 36px);
+  }
+}
+
+.listview-filter-wrapper {
+  display: inline-block;
+  border-top: 1px solid $ids-color-palette-slate-20;
+  border-bottom: 1px solid $ids-color-palette-slate-20;
+  border-left: 1px solid $ids-color-palette-slate-20;
+  background-color: $ids-color-palette-slate-10;
+  height: 38px;
+  position: relative;
+  top: -1px;
+  left: 1px;
+  margin-left: -4px;
+
+  .listview-filters {
+    height: 24px;
+    width: 24px;
   }
 }
 

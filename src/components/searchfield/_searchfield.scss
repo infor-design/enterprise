@@ -27,10 +27,6 @@
   right 300ms $cubic-ease,
   box-shadow 300ms $cubic-ease);
 
-  &.has-searchfield-filters {
-    z-index: 1;
-  }
-
   &.non-collapsible.is-open {
     > .icon:not(.close):not(.icon-error) {
       left: 8px;
@@ -362,20 +358,6 @@
 
   + .error-message {
     margin-top: -7px;
-  }
-}
-
-.searchfield-filter-wrapper {
-  display: inline-block;
-  border: 1px solid $ids-color-palette-slate-40;
-  height: 38px;
-  position: relative;
-  top: -1px;
-  left: -1px;
-
-  .searchfield-filters {
-    height: 24px;
-    width: 24px;
   }
 }
 
