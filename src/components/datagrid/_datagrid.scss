@@ -2455,13 +2455,12 @@ $datagrid-small-row-height: 25px;
       }
 
       .datepicker {
-        margin-left: -7px !important;
         margin-top: unset !important;
         padding: unset !important;
 
         + .btn-icon.trigger {
           margin-top: 2px;
-          margin-left: 26px;
+          margin-left: 11px;
         }
       }
     }
@@ -3026,7 +3025,7 @@ $datagrid-small-row-height: 25px;
           margin-top: 13px;
 
           .icon {
-            top: -2px;
+            top: -1px;
           }
         }
 
@@ -4158,10 +4157,6 @@ td .btn-actions {
   &.is-editing {
     padding: 0;
 
-    .datagrid-cell-wrapper {
-      padding: 0;
-    }
-
     .dropdown-wrapper {
       height: inherit;
       margin-bottom: 0;
@@ -4400,6 +4395,20 @@ td .btn-actions {
     tbody tr.arrange-dragging td {
       font-size: $ids-size-font-base;
       height: $datagrid-row-height;
+    }
+  }
+
+  .datagrid {
+    &.small-rowheight {
+      tbody tr td.is-editing {
+        .datepicker {
+          height: 2rem;
+
+          + .btn-icon.trigger {
+            margin-top: 0;
+          }
+        }
+      }
     }
   }
 }

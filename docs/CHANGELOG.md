@@ -5,6 +5,7 @@
 ## v4.62.0 Fixes
 
 - `[Calendar]` Fix day of the week to show three letters as default in range calendar ([#6193](https://github.com/infor-design/enterprise/issues/6193))
+- `[Datagrid]` Fixed a regression bug where the datepicker icon button and time value upon click were misaligned when is in editing mode. ([#6198](https://github.com/infor-design/enterprise/issues/6198))
 - `[Homepage]` Fixed instability of the visual tests. ([#6179](https://github.com/infor-design/enterprise/issues/6179))
 - `[Widget]` Fix on drag image including the overflow area. ([NG#1216](https://github.com/infor-design/enterprise-ng/issues/1216))
 

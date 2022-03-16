@@ -459,10 +459,6 @@
   }
 }
 
-.datagrid-trigger-cell.is-editing .datagrid-cell-wrapper {
-  padding: 0 !important;
-}
-
 // Fix header alignment
 .datagrid-container {
   th.text-ellipsis .datagrid-header-text {
@@ -673,6 +669,14 @@
 
 .datagrid {
   &.extra-small-rowheight {
+    tbody tr {
+      td.is-editing {
+        .datepicker + .btn-icon.trigger {
+          margin-top: 3px;
+        }
+      }
+    }
+
     td.is-editing {
       .timepicker {
         margin: 0 !important;
@@ -687,6 +691,14 @@
   }
 
   &.small-rowheight {
+    tbody tr {
+      td.is-editing {
+        .datepicker {
+          height: 2rem;
+        }
+      }
+    }
+
     td.is-editing {
       .timepicker {
         margin-left: 1px !important;
