@@ -11,20 +11,6 @@ describe('Popdown Puppeteer Tests', () => {
       await expect(page.title()).resolves.toMatch('IDS Enterprise');
     });
 
-    it('should check the test page with Axe', async () => {
-      await page.setBypassCSP(true);
-      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-      /* Violations found:
-      Rule: "color-contrast" (Elements must have sufficient color contrast)
-      Rule: "region" (All page content should be contained by landmarks)
-      Rule: "meta-viewport" (Zooming and scaling should not be disabled)
-      */
-      await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport', 'aria-valid-attr-value', 'region'] });
-      await page.click('#popdown-example-trigger');
-      await page.waitForSelector('.popdown', { visible: true });
-      await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport', 'color-contrast', 'region'] });
-    });
-
     it('should display on click', async () => {
       await page.click('#popdown-example-trigger');
       await page.waitForSelector('.popdown', { visible: true });
@@ -50,27 +36,6 @@ describe('Popdown Puppeteer Tests', () => {
 
     it('should show the title', async () => {
       await expect(page.title()).resolves.toMatch('IDS Enterprise');
-    });
-
-    it('should check the test page with Axe', async () => {
-      await page.setBypassCSP(true);
-      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-      /* Violations found:
-      Rule: "color-contrast" (Elements must have sufficient color contrast)
-      Rule: "region" (All page content should be contained by landmarks)
-      Rule: "meta-viewport" (Zooming and scaling should not be disabled)
-      Rule: "aria-valid-attr-value" (ARIA attributes must conform to valid values)
-      */
-      await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport', 'aria-valid-attr-value', 'region'] });
-      // Open the Popdown
-      await page.click('#popdown-example-trigger');
-      await page.waitForSelector('.popdown', { visible: true });
-
-      // Open the Dropdown List
-      await page.click('.popdown div.dropdown');
-      await page.waitForSelector('.dropdown-list', { visible: true });
-
-      await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport', 'color-contrast', 'region'] });
     });
 
     it('should keep the Popdown open while focused on an inline-Dropdown component\'s list', async () => {
@@ -105,21 +70,6 @@ describe('Popdown Puppeteer Tests', () => {
       await expect(page.title()).resolves.toMatch('IDS Enterprise');
     });
 
-    it.skip('should check the test page with Axe', async () => {
-      await page.setBypassCSP(true);
-      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-      /* Violations found:
-      Rule: "color-contrast" (Elements must have sufficient color contrast)
-      Rule: "region" (All page content should be contained by landmarks)
-      Rule: "meta-viewport" (Zooming and scaling should not be disabled)
-      Rule: "aria-valid-attr-value" (ARIA attributes must conform to valid values)
-      */
-      await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport', 'aria-valid-attr-value', 'region'] });
-      await page.click('#popdown-example-trigger');
-      await page.waitForSelector('.popdown', { visible: true });
-      await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport', 'aria-valid-attr-value', 'region', 'color-contrast'] });
-    });
-
     // 1. On open first input should be focused.
     // 2. On first input (Shift + Tab) should close and focus to previous.
     // 3. On last input Tab should close and focus to next.
@@ -135,8 +85,6 @@ describe('Popdown Puppeteer Tests', () => {
 
       // Popdown should open and first input should be focused.
 
-      /* const focusedId = () => page.evaluate(() => document.activeElement.getAttribute('id'));
-      const popdown = () => page.evaluate(() => !!document.querySelector('.popdown.bottom.visible')); */
       const firstName = await page.$('#first-name');
       const lastName = await page.$('#last-name');
 
@@ -173,8 +121,6 @@ describe('Popdown Puppeteer Tests', () => {
 
       // Popdown should open again and first input should be focused.
 
-      /* expect(await popdown()).toBe(true);
-      expect(await focusedId()).toEqual('first-name'); */
       isFailed.push(await checkIfElementExist('.popdown.bottom.visible'));
       isFailed.push(await checkIfElementHasFocused('#first-name'));
 
@@ -191,8 +137,6 @@ describe('Popdown Puppeteer Tests', () => {
 
       // Popdown should close and previous input (date field) should be focused.
 
-      /* expect(await popdown()).toBe(false);
-      expect(await focusedId()).toEqual('date-field-normal'); */
       isFailed.push(!await checkIfElementExist('.popdown.bottom.visible'));
       isFailed.push(await checkIfElementHasFocused('#date-field-normal'));
       expect(isFailed).not.toContain(true);
@@ -209,39 +153,18 @@ describe('Popdown Puppeteer Tests', () => {
       await expect(page.title()).resolves.toMatch('IDS Enterprise');
     });
 
-    it('should check the test page with Axe', async () => {
-      await page.setBypassCSP(true);
-      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-      /* Violations found:
-      Rule: "color-contrast" (Elements must have sufficient color contrast)
-      Rule: "region" (All page content should be contained by landmarks)
-      Rule: "meta-viewport" (Zooming and scaling should not be disabled)
-      */
-      await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport', 'aria-valid-attr-value', 'region'] });
-      await page.click('#popdown-trigger');
-      await page.click('.btn-icon');
-      await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport', 'color-contrast', 'region'] });
-    });
-
     it('Should remain open when an inner Lookup component is opened', async () => {
       const isFailed = [];
       // Open the Popdown
       await page.click('#popdown-trigger');
       isFailed.push(await checkIfElementExist('.popdown.bottom.visible'));
-      // await page.waitForSelector('.popdown.bottom.visible', { visible: true });
-      /*       const popdown = () => page.evaluate(() => !!document.querySelector('.popdown.bottom.visible'));
-      expect(await popdown()).toBe(true); */
 
       // Open the Lookup
       await page.click('.btn-icon');
       isFailed.push(await checkIfElementExist('.lookup-modal'));
-      // await page.waitForSelector('.lookup-modal', { visible: true });
-      /*       const modal = await page.evaluate(() => !!document.querySelector('.lookup-modal'));
-      expect(modal).toBe(true); */
 
       // Test that the Popdown remained open
       isFailed.push(await checkIfElementExist('.popdown.bottom.visible'));
-      /*  expect(await popdown()).toBe(true); */
 
       // Choose an option from the Lookup
       await page.click('#lookup-datagrid > div.datagrid-wrapper.center.scrollable-x.scrollable-y > table > tbody > tr:nth-child(1) > td:nth-child(2) > div > a');
@@ -251,7 +174,6 @@ describe('Popdown Puppeteer Tests', () => {
 
       // Test that the Popdown remained open
       isFailed.push(await checkIfElementExist('.popdown.bottom.visible'));
-      /*  expect(await popdown()).toBe(true); */
       expect(isFailed).not.toContain(true);
     });
   });
@@ -264,20 +186,6 @@ describe('Popdown Puppeteer Tests', () => {
 
     it('should show the title', async () => {
       await expect(page.title()).resolves.toMatch('IDS Enterprise');
-    });
-
-    it('should check the test page with Axe', async () => {
-      await page.setBypassCSP(true);
-      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-      /* Violations found:
-      Rule: "color-contrast" (Elements must have sufficient color contrast)
-      Rule: "region" (All page content should be contained by landmarks)
-      Rule: "meta-viewport" (Zooming and scaling should not be disabled)
-      */
-      await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport', 'aria-valid-attr-value', 'region'] });
-      await page.click('#popdown-example-trigger');
-      await page.waitForSelector('#maincontent');
-      await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport', 'color-contrast', 'region'] });
     });
 
     it('should show have outside event', async () => {
