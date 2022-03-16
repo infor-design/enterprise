@@ -1370,6 +1370,7 @@ Modal.prototype = {
    * @param {boolean} destroy Call the destroy method.
    * @param {boolean} [noRefresh=false] if true, prevents the ModalManager from refreshing state when the close is complete.
    * @param {boolean} [force = false] if true, forces the modal closed and ignores open subcomponents/visibility.
+   * @param {string} customId ID of element
    * @returns {boolean} If the dialog was open returns false. If the dialog was closed is true.
    */
   close(destroy, noRefresh, force = false, customId) {
@@ -1469,6 +1470,15 @@ Modal.prototype = {
     renderLoop.register(afterCloseTimer);
 
     return false;
+  },
+
+  /**
+   * Close the modal, for modal buttons
+   * @param {object} param object containing close parameters
+   * @returns {boolean} If the dialog was open returns false. If the dialog was closed is true.
+   */
+  closeButton({ destroy, noRefresh, force, customId } = { force: true }) {
+    return this.close(destroy, noRefresh, force, customId);
   },
 
   /**
