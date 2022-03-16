@@ -946,6 +946,10 @@ Tooltip.prototype = {
       this.tooltip[0].classList.remove('is-hidden');
     }
 
+    if (this.settings.maxWidth) {
+      $(this.tooltip).css('max-width', this.settings.maxWidth);
+    }
+
     const self = this;
     const distance = this.isPopover ? 20 : 10;
     const tooltipPlacementOpts = this.settings.placementOpts || {};
@@ -985,10 +989,6 @@ Tooltip.prototype = {
     } else {
       this.tooltip.place(opts);
       this.tooltip.data('place').place(opts);
-    }
-
-    if (this.settings.maxWidth) {
-      $(this.tooltip).css('max-width', this.settings.maxWidth);
     }
 
     return this;
