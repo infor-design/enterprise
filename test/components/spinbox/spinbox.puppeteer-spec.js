@@ -26,7 +26,6 @@ describe('Spinbox Puppeteer Tests', () => {
       await page.emulate(iPhone);
       await page.goto('http://localhost:4000/components/spinbox/example-sizes.html?theme=uplift&variant=light', { waitUntil: ['domcontentloaded', 'networkidle0'] });
       await page.waitForSelector('#xs-spinbox-example', { visible: true });
-      await page.click('#xs-spinbox-example');
       const image = await page.screenshot();
       const config = getConfig('xs-spinbox');
       expect(image).toMatchImageSnapshot(config);
