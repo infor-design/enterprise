@@ -540,6 +540,12 @@
     top: -2px;
   }
 
+  .datagrid {
+    .datagrid-trigger-cell .icon.icon-clock {
+      top: -2px;
+    }
+  }
+
   // Main Grid for firefox
   .datagrid {
     td {

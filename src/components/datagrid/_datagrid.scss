@@ -4303,6 +4303,18 @@ td .btn-actions {
     }
   }
 
+  .datagrid {
+    &.medium-rowheight {
+      .datagrid-trigger-cell .icon.icon-clock {
+        top: 0;
+      }
+    }
+
+    .datagrid-trigger-cell .icon.icon-clock {
+      top: 0;
+    }
+  }
+
   .datagrid-expand-btn {
     line-height: 27px !important;
   }
@@ -4333,8 +4345,6 @@ td .btn-actions {
       }
 
       .timepicker {
-        margin-top: 17px;
-
         ~ .icon {
           top: calc(50% - 16px);
         }
@@ -4360,8 +4370,6 @@ td .btn-actions {
         }
 
         .timepicker {
-          margin-top: 12px;
-
           ~ .icon {
             top: calc(50% - 16px);
           }
@@ -4379,8 +4387,6 @@ td .btn-actions {
         }
 
         .timepicker {
-          margin-top: 7px;
-
           ~ .icon {
             top: calc(50% - 15px);
           }
