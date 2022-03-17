@@ -21,6 +21,26 @@
         <div class="listview-search">
           <label class="audible" for="gridfilter">Search</label>
           <input class="searchfield" placeholder="Search My Alerts" name="searchfield" id="gridfilter" data-options="{clearable: true}"/>
+          <div class="listview-filter-wrapper">
+            <button type="button" class="btn-icon listview-filters btn-list-filter" title="Filter">
+              <svg class="icon filter-icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-filter"></use>
+              </svg>
+              <span class="audible">Filter</span>
+            </button>
+            <button type="button" class="btn-icon listview-filters btn-list-sort" title="Sort">
+              <svg class="icon filter-icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-sort-down"></use>
+              </svg>
+              <span class="audible">Sort</span>
+            </button>
+            <button type="button" class="btn-icon listview-filters btn-list-add" title="Add">
+              <svg class="icon filter-icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-add"></use>
+              </svg>
+              <span class="audible">add</span>
+            </button>
+          </div>
         </div>
 
         <div class="listview" id="search-listview" data-init="false"></div>
@@ -48,14 +68,24 @@
       template: 'search-tmpl',
       source: '/api/tasks',
       searchable: true,
-      hasFilters: true,
-      filters: ['filter', 'add', 'alert'],
       listFilterSettings: {
         filterMode: 'contains',
         searchableTextCallback: function(item) {
           return item.desc;
         }
       }
+    });
+
+    $('.btn-list-filter').on('click', (e) => {
+      console.log('filter', e);
+    });
+
+    $('.btn-list-sort').on('click', (e) => {
+      console.log('sort', e);
+    });
+
+    $('.btn-list-add').on('click', (e) => {
+      console.log('add', e);
     });
   });
 </script>

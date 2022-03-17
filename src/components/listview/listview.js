@@ -76,8 +76,6 @@ const LISTVIEW_DEFAULTS = {
   },
   searchTermMinSize: 1,
   initializeContents: false,
-  hasFilters: false,
-  filters: [],
   attributes: null,
   attributesOverride: null
 };
@@ -151,31 +149,12 @@ ListView.prototype = {
     const selectable = this.element.attr('data-selectable');
     const selectOnFocus = this.element.attr('data-select-onfocus');
 
-    if (this.settings.hasFilters && this.settings.filters.length > 0) {
-      const filterWrapper = $('<div class="listview-filter-wrapper"></div>');
-      const listViewWrapper = self.element.siblings('.listview-search');
-      const filters = this.settings.filters;
-      listViewWrapper.append(filterWrapper);
-      const searchFieldWrapper = listViewWrapper.find('.searchfield-wrapper');
-      let filterCount = 0;
-
-      for (let i = 0; i < filters.length; i++) {
-        const filterName = filters[i];
-        const filterButton = `<button type="button" class="btn-icon listview-filters" title="${filterName}" class="filter">
-            <svg class="icon filter-icon" focusable="false" aria-hidden="true" role="presentation">
-                <use href="#icon-${filterName}"></use>
-            </svg>
-            <span class="audible">${filterName}</span>
-        </button>`;
-
-        filterWrapper.append(filterButton);
-        filterCount++;
-      }
-
-      const filterWidth = filterCount * 40;
-      filterWrapper.css('width', `${filterWidth}px`);
+    if ($('.listview-filter-wrapper').length > 0) {
+      const filterWrapper = $('.listview-filter-wrapper');
+      const searchFieldWrapper = filterWrapper.siblings('.searchfield-wrapper');
+      const filterWidth = filterWrapper.css('width');
       searchFieldWrapper.addClass('has-listview-filters');
-      searchFieldWrapper.css('width', `calc(100% - ${filterWidth}px)`);
+      searchFieldWrapper.css('width', `calc(100% - ${filterWidth})`);
     }
 
     // Check for legacy data attributes
