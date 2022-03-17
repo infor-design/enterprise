@@ -152,8 +152,6 @@
 
     input.timepicker {
       margin-top: 2px;
-      padding-left: 14px;
-      padding-top: 6px;
 
       ~ .trigger {
         margin-left: -7px;
@@ -161,8 +159,8 @@
       }
 
       + .btn-icon.trigger {
-        margin-left: -7px !important;
-        margin-top: 13px !important;
+        margin-left: -2px;
+        margin-top: 9px;
       }
     }
   }
@@ -320,9 +318,9 @@
       }
 
       input.timepicker {
-        + .trigger {
+        + .btn-icon.trigger {
           margin-left: -3px !important;
-          margin-top: 7px !important;
+          margin-top: 3px !important;
         }
       }
     }
@@ -658,7 +656,6 @@
 }
 
 .datagrid.medium-rowheight td.is-editing input.timepicker {
-  padding: 15px !important;
   margin-top: 3px !important;
 
   ~ .icon {
@@ -684,7 +681,7 @@
 
         + .btn-icon.trigger {
           margin-left: 5px !important;
-          margin-top: 0 !important;
+          margin-top: 1px !important;
         }
       }
     }
@@ -701,12 +698,13 @@
 
     td.is-editing {
       .timepicker {
-        margin-left: 1px !important;
+        margin-left: 0 !important;
         padding: unset !important;
+        width: calc(100% - 25px);
 
         + .btn-icon.trigger {
           margin-left: 4px !important;
-          margin-top: -1px !important;
+          margin-top: 0;
         }
       }
     }
