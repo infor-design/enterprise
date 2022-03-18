@@ -795,7 +795,7 @@ input.dropdown.error:focus {
   div.dropdown {
     font-size: $input-size-compact-font-size;
     margin-bottom: 0;
-    padding: $dropdown-size-compact-padding;
+    padding: 5px 18px 5px 5px;
 
     > .listoption-icon {
       height: 14px;
@@ -1105,7 +1105,7 @@ div.dropdown-xs,
     form:not(.form-layout-compact) .field {
       div.dropdown,
       div.multiselect {
-        padding: $dropdown-size-compact-padding;
+        padding: 5px 18px 5px 5px;
       }
     }
   }
