@@ -183,7 +183,12 @@ TagList.prototype = {
    */
   render() {
     this.tags.forEach((tag) => {
-      tag.render();
+      if ($(this.element).has(tag.element).length === 0) {
+        $(this.element).append(tag.element);
+        tag.init();
+      } else {
+        tag.render();
+      }
     });
     this.element.classList[this.tags.length ? 'remove' : 'add']('empty');
   },
