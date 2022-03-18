@@ -2,6 +2,8 @@
 
 ## v4.62.0 Features
 
+- `[File Upload]` Added setFailed status ([#5671](https://github.com/infor-design/enterprise/issues/5671))
+
 ## v4.62.0 Fixes
 
 - `[Calendar]` Fix day of the week to show three letters as default in range calendar ([#6193](https://github.com/infor-design/enterprise/issues/6193))

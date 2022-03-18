@@ -477,7 +477,13 @@ FileUploadAdvanced.prototype = {
       self.element.triggerHandler('filecompleteuploading', [file]);
     };
 
-    return { file, container, setProgress, setAbort, setCompleted };
+    const setFailed = function (error) {
+      container.remove();
+      self.totalCompleted--;
+      self.showError(error, file);
+    };
+
+    return { file, container, setProgress, setAbort, setCompleted, setFailed };
   },
 
   /**

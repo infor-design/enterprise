@@ -1,0 +1,37 @@
+
+<div class="row">
+  <div class="four columns">
+
+    <div class="fileupload-advanced" data-init="false">
+    </div>
+
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function() {
+    const sendFileToServer = function (formData, status) {
+      let percent = 0;
+      const total = parseFloat(status.file.size);
+
+      const failTimer = new $.fn.timer(() => {
+        status.setFailed('Example failed message (will fail at 10%)');
+      }, total/10);
+
+      $(failTimer.event)
+        .on('update', (e, data) => {
+          percent = Math.ceil((data.counter / total) * 100);
+          status.setProgress(percent);
+        });
+    };
+
+    $('.fileupload-advanced').fileuploadadvanced({
+      send: sendFileToServer
+    }).on('beforeerrormessageremove', (e, data) => {
+      $('body').toast({
+        title: `Error: ${data.error}`,
+        message: data.file && data.file.name ? data.file.name : ''
+      });
+    })
+  });
+</script>
