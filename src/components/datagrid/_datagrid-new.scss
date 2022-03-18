@@ -152,8 +152,6 @@
 
     input.timepicker {
       margin-top: 2px;
-      padding-left: 14px;
-      padding-top: 6px;
 
       ~ .trigger {
         margin-left: -7px;
@@ -161,8 +159,8 @@
       }
 
       + .btn-icon.trigger {
-        margin-left: -7px !important;
-        margin-top: 13px !important;
+        margin-left: -2px;
+        margin-top: 9px;
       }
     }
   }
@@ -320,9 +318,9 @@
       }
 
       input.timepicker {
-        + .trigger {
+        + .btn-icon.trigger {
           margin-left: -3px !important;
-          margin-top: 7px !important;
+          margin-top: 3px !important;
         }
       }
     }
@@ -459,10 +457,6 @@
   }
 }
 
-.datagrid-trigger-cell.is-editing .datagrid-cell-wrapper {
-  padding: 0 !important;
-}
-
 // Fix header alignment
 .datagrid-container {
   th.text-ellipsis .datagrid-header-text {
@@ -544,6 +538,12 @@
   // Adjust icon for firefox
   .datagrid-header .datagrid-filter-wrapper .timepicker + .trigger {
     top: -2px;
+  }
+
+  .datagrid {
+    .datagrid-trigger-cell .icon.icon-clock {
+      top: -2px;
+    }
   }
 
   // Main Grid for firefox
@@ -662,7 +662,6 @@
 }
 
 .datagrid.medium-rowheight td.is-editing input.timepicker {
-  padding: 15px !important;
   margin-top: 3px !important;
 
   ~ .icon {
@@ -673,6 +672,14 @@
 
 .datagrid {
   &.extra-small-rowheight {
+    tbody tr {
+      td.is-editing {
+        .datepicker + .btn-icon.trigger {
+          margin-top: 3px;
+        }
+      }
+    }
+
     td.is-editing {
       .timepicker {
         margin: 0 !important;
@@ -680,21 +687,30 @@
 
         + .btn-icon.trigger {
           margin-left: 5px !important;
-          margin-top: 0 !important;
+          margin-top: 1px !important;
         }
       }
     }
   }
 
   &.small-rowheight {
+    tbody tr {
+      td.is-editing {
+        .datepicker {
+          height: 2rem;
+        }
+      }
+    }
+
     td.is-editing {
       .timepicker {
-        margin-left: 1px !important;
+        margin-left: 0 !important;
         padding: unset !important;
+        width: calc(100% - 25px);
 
         + .btn-icon.trigger {
           margin-left: 4px !important;
-          margin-top: -1px !important;
+          margin-top: 0;
         }
       }
     }

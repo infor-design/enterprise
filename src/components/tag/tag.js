@@ -167,7 +167,9 @@ Tag.prototype = {
         <span class="audible">${Locale.translate('Link')}</span>
       </button>`;
     }
-    const content = `<${contentTagType} class="tag-content"${href}${tabIndex}>${xssUtils.sanitizeHTML(this.settings.content)}</${contentTagType}>`;
+
+    const contentText = this.settings.content.length === 0 ? this.contentElement.textContent : this.settings.content;
+    const content = `<${contentTagType} class="tag-content"${href}${tabIndex}>${xssUtils.sanitizeHTML(contentText)}</${contentTagType}>`;
 
     // Dismissible Button
     let dismissibleBtn = '';
