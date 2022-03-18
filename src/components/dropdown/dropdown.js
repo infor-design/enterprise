@@ -268,8 +268,9 @@ Dropdown.prototype = {
     this.pseudoElem
       .attr(attributesToCopy.obj)
       .attr({
-        role: 'button',
+        role: 'combobox',
         'aria-haspopup': 'listbox',
+        'aria-autocomplete': 'list',
         'aria-expanded': 'false'
       });
     this.renderPseudoElemLabel();
@@ -1066,7 +1067,7 @@ Dropdown.prototype = {
     }
 
     liMarkup += `<li class="dropdown-option${isSelected}${isDisabled}${liCssClasses}" data-val="${trueValue}" ${copiedDataAttrs}${hasTitle} role="none">
-      <a id="list-option-${index}" href="#" ${aCssClasses} role="option" ${isSelected ? 'aria-selected="true"' : ''}${tabIndex}>${iconHtml}${text}${badgeHtml}</a></li>`;
+      <a id="list-option-${index}" href="#" ${aCssClasses} role="option" ${isSelected ? 'aria-selected="true"' : 'aria-selected="false"'}${tabIndex}>${iconHtml}${text}${badgeHtml}</a></li>`;
 
     return liMarkup;
   },
@@ -2591,7 +2592,7 @@ Dropdown.prototype = {
 
     this.pseudoElem
       .removeClass('is-open')
-      .removeAttr('aria-expanded');
+      .attr('aria-expanded', 'false');
 
     this.searchInput
       .removeAttr('aria-activedescendant');

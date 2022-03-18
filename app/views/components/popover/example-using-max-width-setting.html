@@ -1,0 +1,44 @@
+<div class="row top-padding">
+  <div class="twelve columns">
+    <div class="field">
+      <button id="popover-trigger" class="btn-secondary" type="button" aria-haspopup="true" title="Display the Purchase Popover">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-upload"></use>
+        </svg>
+        <span>Click To Show Popover</span>
+      </button>
+    </div>
+  </div>
+
+  <div id="popover-contents" class="popover-content-area hidden">
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+      commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+      velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+      occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+      mollit anim id est laborum.
+    </p>
+    <div class="modal-buttonset">
+      <button type="button" class="btn-modal-primary" id="popover-btn-view-more" data-automation-id="popover-btn-view-more-automation-id">
+        View more
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  var POPOVER_OPTIONS = {
+    closebutton: true,
+    content: $('#popover-contents'),
+    extraClass: 'alternate',
+    placement: 'right',
+    popover: true,
+    maxWidth: '250px',
+    title: 'Lorem ipsum',
+    trigger: 'click',
+  };
+
+  $('#popover-trigger').popover(POPOVER_OPTIONS);
+</script>
