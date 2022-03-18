@@ -13,6 +13,12 @@
 - `[Widget]` Fix on drag image including the overflow area. ([NG#1216](https://github.com/infor-design/enterprise-ng/issues/1216))
 - `[Widget]` Fix on drag image including the overflow area. ([NG#1216](https://github.com/infor-design/enterprise-ng/issues/1216))
 
+## v4.61.1
+
+## v4.61.1 Fixes
+
+- `[Datagrid]` Fixed a regression bug where the datepicker icon button and time value upon click were misaligned. ([#6198](https://github.com/infor-design/enterprise/issues/6198))
+
 ## v4.61.0 Features
 
 - `[ApplicationMenu]` Converted protractor test suites to puppeteer. ([#5835](https://github.com/infor-design/enterprise/issues/5835))
