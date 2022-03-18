@@ -580,7 +580,7 @@ Modal.prototype = {
             self.isCancelled = true;
           }
 
-          if (this.openSubComponents.length) {
+          if (this.openSubComponents.length === 0) {
             self.close();
           }
         });
@@ -645,7 +645,7 @@ Modal.prototype = {
             self.isCancelled = true;
           }
 
-          if (this.openSubComponents.length) {
+          if (this.openSubComponents.length === 0) {
             self.close();
           }
         });
@@ -744,7 +744,7 @@ Modal.prototype = {
           return;
         }
 
-        if (this.openSubComponents.length) {
+        if (this.openSubComponents.length === 0) {
           self.close();
         }
       });
