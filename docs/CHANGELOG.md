@@ -1,5 +1,40 @@
 # What's New with Enterprise
 
+## v4.61.1
+
+## v4.61.1 Fixes
+
+- `[Datagrid]` Fixed a regression bug where the datepicker icon button and time value upon click were misaligned. ([#6198](https://github.com/infor-design/enterprise/issues/6198))
+
+## v4.61.0
+
+## v4.61.0 Features
+
+- `[ApplicationMenu]` Converted protractor test suites to puppeteer. ([#5835](https://github.com/infor-design/enterprise/issues/5835))
+- `[Bar Stacked]` Converted protractor test suites to puppeteer. ([#5840](https://github.com/infor-design/enterprise/issues/5840))
+- `[Bar]` Fixed an issue with legend text overlapping. ([#6113](https://github.com/infor-design/enterprise/issues/6113)
+- `[ContextualActionPanel]` Added setting for cssClass option. ([#1215](https://github.com/infor-design/enterprise-ng/issues/1215))
+- `[Datagrid]` Added visual test for responsive view with puppeteer. ([#5844](https://github.com/infor-design/enterprise/issues/5844))
+- `[Datagrid]` Changed where image events are added. ([#5442](https://github.com/infor-design/enterprise/issues/5442))
+- `[Datepicker]` Added setting in datepicker where you can disable masking input. ([#6080](https://github.com/infor-design/enterprise/issues/6080))
+- `[Editor]` Fix a bug where dirty tracker is not reset when using lots of new line in Edge. ([#6032](https://github.com/infor-design/enterprise/issues/6032))
+- `[Card]` Fix a memory leak on events. ([#6155](https://github.com/infor-design/enterprise/issues/6155))
+- `[Card]` Create a Puppeteer Script for Actionable Button Card ([#6062](https://github.com/infor-design/enterprise/issues/6062))
+- `[General]` Added jest image snapshot for visual regression testing with puppeteer. ([#6105](https://github.com/infor-design/enterprise/issues/6105))
+- `[General]` Removed global inline function that adds disabled labels to disabled inputs. ([#6131](https://github.com/infor-design/enterprise/issues/6131))
+- `[Hierarchy]` Converted the old protractor e2e test suites to puppeteer tests. ([#5833](https://github.com/infor-design/enterprise/issues/5833))
+- `[Homepage]` Added homepage puppeteer test scripts and snapshots. ([#5831](https://github.com/infor-design/enterprise/issues/5831))
+- `[Icons]` Design removed some deprecated icons. If you are using `info-field` -> should use `icon-info`. If you are using `info-field-solid` -> should use `icon-info-alert`. If you are using `info-field-alert` -> should use `icon-info-alert`. ([#6091](https://github.com/infor-design/enterprise/issues/6091))
+- `[Icons]` Update icon design for `icon-mobile`. ([#6144](https://github.com/infor-design/enterprise/issues/6144))
+- `[Locale]` Refined some Latvian translations. ([#5969](https://github.com/infor-design/enterprise/issues/5969))
+- `[Locale]` Refined some Lithuanian translations. ([#5960](https://github.com/infor-design/enterprise/issues/5960))
+- `[Locale]` Refined some Filipino translations. ([#5864](https://github.com/infor-design/enterprise/issues/5864))
+- `[Locale]` Refined some Japanese translations. ([#6115](https://github.com/infor-design/enterprise/issues/6115))
+- `[Locale]` Added puppeteer script for PH translation ([#6150](https://github.com/infor-design/enterprise/pull/6150))
+- `[Process Indicator]` Fixes a double line separator issue on Windows10 Chrome. ([#5997](https://github.com/infor-design/enterprise/issues/5997))
+- `[Swipe-action]` Added a Puppeteer Script for Swipe Container. ([#6129](https://github.com/infor-design/enterprise/issues/6129))
+- `[Tag]` The dismiss button was missing a button type causing the form to submit. ([#6149](https://github.com/infor-design/enterprise/issues/6149))
+
 ## v4.61.0 Fixes
 
 - `[Column Grouped]` Fix an issue where columns with small values were floating above the baseline axis. ([#6109](https://github.com/infor-design/enterprise/issues/6109))
