@@ -1,6 +1,12 @@
 # What's New with Enterprise
 
-## v4.62.0 Features
+## v4.61.1
+
+## v4.61.1 Fixes
+
+- `[Datagrid]` Fixed a regression bug where the datepicker icon button and time value upon click were misaligned. ([#6198](https://github.com/infor-design/enterprise/issues/6198))
+
+## v4.61.0
 
 ## v4.61.0 Features
 
