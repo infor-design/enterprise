@@ -1062,6 +1062,14 @@ div.dropdown-xs,
     }
   }
 
+  .dropdown-list {
+    &.text-align-reverse {
+      li {
+        padding-right: 12px;
+      }
+    }
+  }
+
   div.dropdown,
   div.multiselect {
     padding: $dropdown-size-regular-padding;
