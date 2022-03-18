@@ -5,11 +5,13 @@
 ## v4.62.0 Fixes
 
 - `[Calendar]` Fix day of the week to show three letters as default in range calendar ([#6193](https://github.com/infor-design/enterprise/issues/6193))
+- `[Datagrid]` Fixed a regression bug where the datepicker icon button and time value upon click were misaligned. ([#6198](https://github.com/infor-design/enterprise/issues/6198))
 - `[Dropdown]` Fixed multiple accessibility issues with multiselect dropdown. ([#6075](https://github.com/infor-design/enterprise/issues/6075))
 - `[Homepage]` Fixed instability of the visual tests. ([#6179](https://github.com/infor-design/enterprise/issues/6179))
 - `[Tag]` Fix on tag text not showing when placed inside a popover. ([#6092](https://github.com/infor-design/enterprise/issues/6092))
-- `[Widget]` Fix on drag image including the overflow area. ([NG#1216](https://github.com/infor-design/enterprise-ng/issues/1216))
 - `[Tooltip]` Fixed the `maxWidth` setting to work properly. ([#6100](https://github.com/infor-design/enterprise/issues/6100))
+- `[Widget]` Fix on drag image including the overflow area. ([NG#1216](https://github.com/infor-design/enterprise-ng/issues/1216))
+- `[Widget]` Fix on drag image including the overflow area. ([NG#1216](https://github.com/infor-design/enterprise-ng/issues/1216))
 
 ## v4.61.0 Features
 
