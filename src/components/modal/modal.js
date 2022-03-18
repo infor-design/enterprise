@@ -579,7 +579,10 @@ Modal.prototype = {
           if ($(e.target).is('.btn-cancel')) {
             self.isCancelled = true;
           }
-          self.close();
+
+          if (this.openSubComponents.length) {
+            self.close();
+          }
         });
 
         // Handle Validation
@@ -641,7 +644,10 @@ Modal.prototype = {
           if ($(e.target).is('.btn-cancel')) {
             self.isCancelled = true;
           }
-          self.close();
+
+          if (this.openSubComponents.length) {
+            self.close();
+          }
         });
       return;
     }
@@ -737,7 +743,10 @@ Modal.prototype = {
           func.apply(self.element[0], [e, self]);
           return;
         }
-        self.close();
+
+        if (this.openSubComponents.length) {
+          self.close();
+        }
       });
 
       if (!isPanel) {
@@ -1374,7 +1383,7 @@ Modal.prototype = {
    * @returns {boolean} If the dialog was open returns false. If the dialog was closed is true.
    */
   close(destroy, noRefresh, force = false, customId) {
-    if (!force && (!this.visible || this.openSubComponents.length)) {
+    if (!force && !this.visible) {
       return true;
     }
 
@@ -1470,15 +1479,6 @@ Modal.prototype = {
     renderLoop.register(afterCloseTimer);
 
     return false;
-  },
-
-  /**
-   * Close the modal, for modal buttons
-   * @param {object} param object containing close parameters
-   * @returns {boolean} If the dialog was open returns false. If the dialog was closed is true.
-   */
-  closeButton({ destroy, noRefresh, force, customId } = { force: true }) {
-    return this.close(destroy, noRefresh, force, customId);
   },
 
   /**
