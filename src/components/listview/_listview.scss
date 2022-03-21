@@ -634,11 +634,12 @@
     width: 100%;
 
     &.has-listview-filters {
-      height: 40px;
+      height: 38px;
+      top: 1px;
       z-index: 1;
 
       .searchfield {
-        height: 40px;
+        height: 38px;
       }
     }
 
@@ -710,9 +711,8 @@
   border-bottom: 1px solid $ids-color-palette-slate-20;
   border-left: 1px solid $ids-color-palette-slate-20;
   background-color: $ids-color-palette-slate-10;
-  height: 40px;
+  height: 38px;
   position: relative;
-  top: -2px;
   left: 1px;
   margin-left: -4px;
 
