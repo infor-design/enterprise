@@ -2,6 +2,8 @@
 
 ## v4.62.0 Features
 
+- `[Spinbox]` Create a puppeteer script for Spinbox Field sizes on mobile. ([#6197](https://github.com/infor-design/enterprise/pull/6197))
+
 ## v4.62.0 Fixes
 
 - `[Calendar]` Fix day of the week to show three letters as default in range calendar ([#6193](https://github.com/infor-design/enterprise/issues/6193))
