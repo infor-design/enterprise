@@ -3842,7 +3842,7 @@ Tabs.prototype = {
         }
 
         // Composite Form has additional padding on the right
-        if (hasCompositeForm) {
+        if (!isRTL && hasCompositeForm) {
           targetRectObj.right -= 42;
           targetRectObj.width -= 1;
         }
