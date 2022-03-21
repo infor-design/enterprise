@@ -478,6 +478,16 @@ FileUploadAdvanced.prototype = {
     };
 
     const setFailed = function (error) {
+      /**
+        * Fires when file status is failed.
+        *
+        * @event filefailed
+        * @memberof FileUploadAdvanced
+        * @property {object} event - The jquery event object
+        * @property {object} file - aborted
+        */
+      self.element.triggerHandler('filefailed', [{ error, file }]);
+
       container.remove();
       self.totalCompleted--;
       self.showError(error, file);

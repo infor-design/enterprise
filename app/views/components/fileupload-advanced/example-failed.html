@@ -27,7 +27,7 @@
 
     $('.fileupload-advanced').fileuploadadvanced({
       send: sendFileToServer
-    }).on('beforeerrormessageremove', (e, data) => {
+    }).on('filefailed', (e, data) => {
       $('body').toast({
         title: `Error: ${data.error}`,
         message: data.file && data.file.name ? data.file.name : ''
