@@ -1,15 +1,13 @@
-const puppeteer = require('puppeteer');
-
 const { getConfig } = require('../../helpers/e2e-utils.js');
 
 describe('Spinbox Puppeteer Tests', () => {
   describe('Example-sizes', () => {
     const url = 'http://localhost:4000/components/spinbox/example-sizes.html?theme=uplift&variant=light';
     beforeAll(async () => {
-      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
       await page.setViewport({
         width: 320,
-        height: 480,
+        height: 1250,
         isMobile: true,
         deviceScaleFactor: 2,
       });
@@ -22,10 +20,8 @@ describe('Spinbox Puppeteer Tests', () => {
     });
 
     it('should run visual test', async () => {
-      const iPhone = puppeteer.devices['iPhone X'];
-      await page.emulate(iPhone);
-      await page.goto('http://localhost:4000/components/spinbox/example-sizes.html?theme=uplift&variant=light', { waitUntil: ['domcontentloaded', 'networkidle0'] });
       await page.waitForSelector('#xs-spinbox-example', { visible: true });
+      await page.waitForTimeout(200);
       const image = await page.screenshot();
       const config = getConfig('xs-spinbox');
       expect(image).toMatchImageSnapshot(config);
