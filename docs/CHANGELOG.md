@@ -8,6 +8,7 @@
 
 - `[Calendar]` Fix day of the week to show three letters as default in range calendar ([#6193](https://github.com/infor-design/enterprise/issues/6193))
 - `[Datagrid]` Fixed a regression bug where the datepicker icon button and time value upon click were misaligned. ([#6198](https://github.com/infor-design/enterprise/issues/6198))
+- `[Datagrid]` Remove widths in demo app page to prevent truncation of column. ([#5495](https://github.com/infor-design/enterprise/issues/5495))
 - `[Dropdown]` Fixed multiple accessibility issues with multiselect dropdown. ([#6075](https://github.com/infor-design/enterprise/issues/6075))
 - `[Homepage]` Fixed instability of the visual tests. ([#6179](https://github.com/infor-design/enterprise/issues/6179))
 - `[Modal]` Updated close method that will close even if there are subcomponents opened. ([#6048](https://github.com/infor-design/enterprise/issues/6048))
