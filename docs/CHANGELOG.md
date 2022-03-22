@@ -6,6 +6,7 @@
 
 ## v4.62.0 Fixes
 
+- `[Arrange]` Fix an alignment issue in the demo app ([#5281](https://github.com/infor-design/enterprise/issues/5281))
 - `[Calendar]` Fix day of the week to show three letters as default in range calendar ([#6193](https://github.com/infor-design/enterprise/issues/6193))
 - `[Datagrid]` Fixed a regression bug where the datepicker icon button and time value upon click were misaligned. ([#6198](https://github.com/infor-design/enterprise/issues/6198))
 - `[Dropdown]` Fixed multiple accessibility issues with multiselect dropdown. ([#6075](https://github.com/infor-design/enterprise/issues/6075))
