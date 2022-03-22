@@ -47,6 +47,10 @@ button {
     position: static;
     width: 18px;
 
+    + .notification-badge-container {
+      padding-left: 5px;
+    }
+
     + span:not(.audible):not(:empty) {
       padding-left: 5px;
     }
@@ -99,6 +103,79 @@ button {
       display: none;
     }
   }
+
+  span.audible {
+    + .notification-badge-container {
+      .notification-dot {
+        display: block !important;
+
+        &.notification-dot-upper-right {
+          right: 9px;
+          top: 9px;
+          transform: scale(1) translate(50%, -50%);
+          transform-origin: 100% 0%;
+        }
+
+        &.notification-dot-upper-left {
+          top: 9px;
+          left: -24px;
+          transform: scale(1) translate(-50%, -50%);
+          transform-origin: 0% 0%;
+        }
+  
+        &.notification-dot-lower-right {
+          top: 16px;
+          left: -14px;
+          transform: scale(1) translate(50%, 50%);
+          transform-origin: 0% 100%;
+        }
+  
+        &.notification-dot-lower-left {
+          top: 16px;
+          left: -24px;
+          transform: scale(1) translate(-50%, 50%);
+          transform-origin: 0% 100%;
+        }
+      }
+    }
+  }
+  
+  .icon.app-header {
+    + .notification-badge-container {
+      .notification-dot {
+        display: block !important;
+
+        &.notification-dot-upper-right {
+          right: 13px;
+          top: 9px;
+          transform: scale(1) translate(50%, -50%);
+          transform-origin: 100% 0%;
+        }
+
+        &.notification-dot-upper-left {
+          top: 9px;
+          left: -24px;
+          transform: scale(1) translate(-50%, -50%);
+          transform-origin: 0% 0%;
+        }
+  
+        &.notification-dot-lower-right {
+          top: 16px;
+          left: -14px;
+          transform: scale(1) translate(50%, 50%);
+          transform-origin: 0% 100%;
+        }
+  
+        &.notification-dot-lower-left {
+          top: 16px;
+          left: -24px;
+          transform: scale(1) translate(-50%, 50%);
+          transform-origin: 0% 100%;
+        }
+      }
+    }
+  }
+
 
   .notification-badge-container {
     .notification-dot {
