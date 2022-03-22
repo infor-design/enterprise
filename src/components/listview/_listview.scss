@@ -633,9 +633,12 @@
     margin-bottom: 0;
     width: 100%;
 
+    .searchfield {
+      height: 38px;
+    }
+
     &.has-listview-filters {
       height: 38px;
-      top: 1px;
       z-index: 1;
 
       .searchfield {
@@ -707,13 +710,13 @@
 
 .listview-filter-wrapper {
   display: inline-block;
-  border-top: 1px solid $ids-color-palette-slate-20;
-  border-bottom: 1px solid $ids-color-palette-slate-20;
-  border-left: 1px solid $ids-color-palette-slate-20;
-  background-color: $ids-color-palette-slate-10;
+  border-bottom: 1px solid $listview-border-color;
+  border-left: 1px solid $listview-border-color;
+  background-color: $listview-full-width-bg-color;
   height: 38px;
   position: relative;
   left: 1px;
+  top: -2px;
   margin-left: -4px;
 
   .listview-filters {
