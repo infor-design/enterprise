@@ -3,6 +3,7 @@
 ## v4.62.0 Features
 
 - `[File Upload]` Added setFailed status ([#5671](https://github.com/infor-design/enterprise/issues/5671))
+- `[Spinbox]` Create a puppeteer script for Spinbox Field sizes on mobile. ([#6197](https://github.com/infor-design/enterprise/pull/6197))
 
 ## v4.62.0 Fixes
 
@@ -10,9 +11,10 @@
 - `[Datagrid]` Fixed a regression bug where the datepicker icon button and time value upon click were misaligned. ([#6198](https://github.com/infor-design/enterprise/issues/6198))
 - `[Dropdown]` Fixed multiple accessibility issues with multiselect dropdown. ([#6075](https://github.com/infor-design/enterprise/issues/6075))
 - `[Homepage]` Fixed instability of the visual tests. ([#6179](https://github.com/infor-design/enterprise/issues/6179))
+- `[Modal]` Updated close method that will close even if there are subcomponents opened. ([#6048](https://github.com/infor-design/enterprise/issues/6048))
+- `[Tabs]` Fix a bug where tabs indicator is not properly aligned in RTL. ([#6068](https://github.com/infor-design/enterprise/issues/6068))
 - `[Tag]` Fix on tag text not showing when placed inside a popover. ([#6092](https://github.com/infor-design/enterprise/issues/6092))
 - `[Tooltip]` Fixed the `maxWidth` setting to work properly. ([#6100](https://github.com/infor-design/enterprise/issues/6100))
-- `[Widget]` Fix on drag image including the overflow area. ([NG#1216](https://github.com/infor-design/enterprise-ng/issues/1216))
 - `[Widget]` Fix on drag image including the overflow area. ([NG#1216](https://github.com/infor-design/enterprise-ng/issues/1216))
 
 ## v4.61.1
@@ -20,6 +22,9 @@
 ## v4.61.1 Fixes
 
 - `[Datagrid]` Fixed a regression bug where the datepicker icon button and time value upon click were misaligned. ([#6198](https://github.com/infor-design/enterprise/issues/6198))
+- `[Tag]` Fix on tag text not showing when placed inside a popover. ([#6092](https://github.com/infor-design/enterprise/issues/6092))
+- `[Tooltip]` Fixed the `maxWidth` setting to work properly. ([#6100](https://github.com/infor-design/enterprise/issues/6100))
+- `[Widget]` Fix on drag image including the overflow area. ([NG#1216](https://github.com/infor-design/enterprise-ng/issues/1216))
 
 ## v4.61.0 Features
 

@@ -579,7 +579,10 @@ Modal.prototype = {
           if ($(e.target).is('.btn-cancel')) {
             self.isCancelled = true;
           }
-          self.close();
+
+          if (this.openSubComponents.length === 0) {
+            self.close();
+          }
         });
 
         // Handle Validation
@@ -641,7 +644,10 @@ Modal.prototype = {
           if ($(e.target).is('.btn-cancel')) {
             self.isCancelled = true;
           }
-          self.close();
+
+          if (this.openSubComponents.length === 0) {
+            self.close();
+          }
         });
       return;
     }
@@ -737,7 +743,10 @@ Modal.prototype = {
           func.apply(self.element[0], [e, self]);
           return;
         }
-        self.close();
+
+        if (this.openSubComponents.length === 0) {
+          self.close();
+        }
       });
 
       if (!isPanel) {
@@ -1370,10 +1379,11 @@ Modal.prototype = {
    * @param {boolean} destroy Call the destroy method.
    * @param {boolean} [noRefresh=false] if true, prevents the ModalManager from refreshing state when the close is complete.
    * @param {boolean} [force = false] if true, forces the modal closed and ignores open subcomponents/visibility.
+   * @param {string} customId ID of element
    * @returns {boolean} If the dialog was open returns false. If the dialog was closed is true.
    */
   close(destroy, noRefresh, force = false, customId) {
-    if (!force && (!this.visible || this.openSubComponents.length)) {
+    if (!force && !this.visible) {
       return true;
     }
 
