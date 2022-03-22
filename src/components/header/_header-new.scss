@@ -47,6 +47,47 @@
   }
 }
 
+.subheader {
+  .full-searchfield-container {
+    .searchfield-wrapper.context .searchfield-category-button {
+      background-color: $subheader-searchfield-context-bg;
+    }
+
+    .searchfield-wrapper.has-categories.show-category .searchfield {
+      border-left-color: $subheader-input-color-focus-border;
+    }
+
+    .searchfield-wrapper.context.has-focus {
+      .searchfield,
+      .btn {
+        border-color: $subheader-input-color-focus-border;
+      }
+    }
+
+    .searchfield-wrapper.context > .searchfield {
+      background-color: $subheader-searchfield-context-bg;
+    }
+
+    .searchfield-wrapper .btn {
+      &.is-open,
+      &.is-open .icon {
+        color: $subheader-input-text-color-focus;
+      }
+    }
+
+    .searchfield-wrapper.has-focus .btn {
+      &:focus,
+      &:active {
+        color: $subheader-input-text-color-focus;
+
+        .icon {
+          color: $subheader-input-text-color-focus;
+        }
+      }
+    }
+  }
+}
+
 html[dir='rtl'] {
   .header {
     .flex-toolbar .toolbar-section {
