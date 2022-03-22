@@ -264,6 +264,11 @@ FileUploadAdvanced.prototype = {
     // Total files completed
     this.totalCompleted = this.totalCompleted || 0;
 
+    // File list
+    this.totalFileList = this.totalFileList || [];
+
+    this.counter = this.counter || 0;
+
     // Currently files in progress
     const totalInProgress = $('.progress', this.element).length;
 
@@ -309,6 +314,8 @@ FileUploadAdvanced.prototype = {
 
       const status = this.createStatus(files[i]);
       status.container.find('.status-icon .action').focus();
+
+      this.totalFileList.push(status);
 
       /**
       * Fires after create the progress status object.
@@ -369,8 +376,19 @@ FileUploadAdvanced.prototype = {
     const percent = $('.percent', container);
     const bar = $('#bar', container);
 
+    const index = this.counter;
+
     // Add this container
     this.dropArea.after(container);
+
+    const removeFromList = () => {
+      if (this.totalFileList) {
+        const idx = this.totalFileList.findIndex(element => element.index === index);
+        if (idx >= 0) {
+          this.totalFileList.splice(idx, 1);
+        }
+      }
+    };
 
     // Update progress-bar
     const setProgress = (progress) => {
@@ -410,6 +428,7 @@ FileUploadAdvanced.prototype = {
         btnCancel.off('click.fileuploadadvanced');
         container.remove();
         self.totalCompleted--;
+        removeFromList();
       });
     };
 
@@ -465,7 +484,7 @@ FileUploadAdvanced.prototype = {
 
       // Increment to total files completed
       self.totalCompleted++;
-
+      removeFromList();
       /**
       * Fires when file complete uploading.
       *
@@ -487,13 +506,14 @@ FileUploadAdvanced.prototype = {
         * @property {object} file - aborted
         */
       self.element.triggerHandler('filefailed', [{ error, file }]);
-
+      removeFromList();
       container.remove();
-      self.totalCompleted--;
       self.showError(error, file);
     };
 
-    return { file, container, setProgress, setAbort, setCompleted, setFailed };
+    this.counter++;
+
+    return { file, container, index, setProgress, setAbort, setCompleted, setFailed };
   },
 
   /**
@@ -520,6 +540,18 @@ FileUploadAdvanced.prototype = {
       });
 
     status.setAbort(jqXHR);
+  },
+
+  /**
+   * Set status of a file in progress to failed
+   * @public
+   * @param {string} error Error message
+   * @param {number} fileIndex Index of file in file list
+   */
+  setFailed(error, fileIndex = 0) {
+    if (this.totalFileList && this.totalFileList.length > 0) {
+      this.totalFileList[fileIndex].setFailed(error);
+    }
   },
 
   /**

@@ -1,37 +1,26 @@
 
 <div class="row">
   <div class="four columns">
-
+    <button type="button" class="btn-primary" id="set-failed">Set Failed</button>
     <div class="fileupload-advanced" data-init="false">
     </div>
-
   </div>
 </div>
 
 <script>
   $('body').on('initialized', function() {
-    const sendFileToServer = function (formData, status) {
-      let percent = 0;
-      const total = parseFloat(status.file.size);
+    const failMessage = 'File failed error message';
+    const api = $('.fileupload-advanced').fileuploadadvanced().data('fileuploadadvanced');
 
-      const failTimer = new $.fn.timer(() => {
-        status.setFailed('Example failed message (will fail at 10%)');
-      }, total/10);
-
-      $(failTimer.event)
-        .on('update', (e, data) => {
-          percent = Math.ceil((data.counter / total) * 100);
-          status.setProgress(percent);
-        });
-    };
-
-    $('.fileupload-advanced').fileuploadadvanced({
-      send: sendFileToServer
-    }).on('filefailed', (e, data) => {
+    $('.fileupload-advanced').on('filefailed', (e, data) => {
       $('body').toast({
-        title: `Error: ${data.error}`,
-        message: data.file && data.file.name ? data.file.name : ''
+        title: `Error: ${data.file && data.file.name ? data.file.name : ''}`,
+        message: data.error
       });
-    })
+    });
+
+    $('#set-failed').on('click', () => {
+      api.setFailed(failMessage);
+    });
   });
 </script>
