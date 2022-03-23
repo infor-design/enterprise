@@ -10,7 +10,8 @@
 ## v4.62.0 Fixes
 
 - `[ApplicationMenu]` Remove a Safari-specific style rule the misaligns the button svg arrow. ([#5722](https://github.com/infor-design/enterprise/issues/5722))
-- `[Calendar]` Fix day of the week to show three letters as default in range calendar ([#6193](https://github.com/infor-design/enterprise/issues/6193))
+- `[Arrange]` Fix an alignment issue in the demo app. ([#5281](https://github.com/infor-design/enterprise/issues/5281))
+- `[Calendar]` Fix day of the week to show three letters as default in range calendar. ([#6193](https://github.com/infor-design/enterprise/issues/6193))
 - `[Datagrid]` Fixed a regression bug where the datepicker icon button and time value upon click were misaligned. ([#6198](https://github.com/infor-design/enterprise/issues/6198))
 - `[Datagrid]` Show pagesize selector even in hidePagerOnOnePage mode ([#3706](https://github.com/infor-design/enterprise/issues/3706))
 - `[Dropdown]` Fixed multiple accessibility issues with multiselect dropdown. ([#6075](https://github.com/infor-design/enterprise/issues/6075))
@@ -28,7 +29,6 @@
 ## v4.61.1 Fixes
 
 - `[Datagrid]` Fixed a regression bug where the datepicker icon button and time value upon click were misaligned. ([#6198](https://github.com/infor-design/enterprise/issues/6198))
-
 - `[Tag]` Fix on tag text not showing when placed inside a popover. ([#6092](https://github.com/infor-design/enterprise/issues/6092))
 - `[Tooltip]` Fixed the `maxWidth` setting to work properly. ([#6100](https://github.com/infor-design/enterprise/issues/6100))
 - `[Widget]` Fix on drag image including the overflow area. ([NG#1216](https://github.com/infor-design/enterprise-ng/issues/1216))
