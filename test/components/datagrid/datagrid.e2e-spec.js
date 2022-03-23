@@ -4725,7 +4725,13 @@ describe('Datagrid hide pager on one page tests', () => {
     await filterOpt.click();
     await browser.driver.sleep(config.sleep);
 
-    expect(await pagerBar.getAttribute('class')).toContain('hidden');
+    const pagerClassList = ['.pager-first', '.pager-prev', '.pager-next', '.pager-last', '.pager-count'];
+
+    pagerClassList.forEach(async (pagerClass) => {
+      const pe = await pagerBar.all(by.css(pagerClass)).first();
+      expect(await pe.getAttribute('class')).toContain('hidden');
+    });
+
     expect(await element.all(by.css(selector.rows)).count()).toEqual(2);
     await filterOpt.click();
     await browser.driver.sleep(config.sleep);
