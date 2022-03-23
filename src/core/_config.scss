@@ -228,7 +228,7 @@ $menubutton-height: $button-size-height;
 // Input Fields
 $input-color: $input-color-initial-font;
 $input-disabled-color: $input-color-disabled-font;
-$input-placeholder-color: $input-color-initial-placeholder;
+$input-placeholder-color: $ids-color-palette-slate-60;
 $input-readonly-color: $input-color-readonly-font;
 
 //States
@@ -860,7 +860,7 @@ $about-text-border-color: $ids-color-palette-graphite-30;
 $about-text-hover-border-color: $ids-color-palette-graphite-70;
 
 // Header
-$subheader-searchfield-context-bg: $searchfield-context-bg;
+$subheader-searchfield-context-bg: $ids-color-palette-white;
 $subheader-input-color-focus-border: $input-color-focus-border;
 $subheader-input-text-color-focus:$input-color-focus-border;
 

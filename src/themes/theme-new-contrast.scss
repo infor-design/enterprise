@@ -184,7 +184,7 @@ $secondary-border-btn-ripple-color: $ids-color-brand-primary-alt;
 // Input Fields
 $input-color: $input-color-initial-font;
 $input-disabled-color: $input-color-disabled-font;
-$input-placeholder-color: $input-color-initial-placeholder;
+$input-placeholder-color: $ids-color-palette-slate-60;
 $input-readonly-color: $input-color-readonly-font;
 
 // States
@@ -715,6 +715,14 @@ $about-header-color: $ids-color-palette-black;
 $about-text-color: $ids-color-palette-black;
 $about-text-border-color: $ids-color-palette-slate-60;
 $about-text-hover-border-color: $ids-color-palette-black;
+
+// Header
+$header-bg-color: $ids-color-palette-azure-80;
+$subheader-searchfield-context-bg: $ids-color-palette-white;
+$subheader-input-color-focus-border: $ids-color-palette-slate-100;
+$subheader-input-text-color-focus: $ids-color-palette-slate-80;
+$header-primary-btn-background-color: $ids-color-palette-azure-70;
+$header-primary-btn-background-hover-color: $ids-color-palette-azure-80;
 
 // Header Tabs
 $header-tabcontainer-border-color: $ids-color-brand-secondary-alt;
