@@ -2,7 +2,9 @@
 
 ## v4.62.0 Features
 
-- `[Spinbox]` Create a puppeteer script for Spinbox Field sizes on mobile. ([#6197](https://github.com/infor-design/enterprise/pull/6197))
+- `[Icon]` Created a puppeteer script for the new launch icon. ([#5854](https://github.com/infor-design/enterprise/issues/5854))
+- `[Icon]` Created a puppeteer script for the new mobile icon. ([#6199](https://github.com/infor-design/enterprise/issues/6199))
+- `[Spinbox]` Created a puppeteer script for Spinbox Field sizes on mobile. ([#5843](https://github.com/infor-design/enterprise/issues/5843))
 
 ## v4.62.0 Fixes
 
