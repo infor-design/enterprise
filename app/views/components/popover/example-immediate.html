@@ -17,13 +17,14 @@
       content: $('#popover-contents'),
       placement: 'right',
       parentElement: $('body'),
-      offset: {
-        x: 0,
-        y: 0
-      },
       placementOpts: {
-        strategies: ['flip', 'nudge', 'shrink']
-      },
+        strategies: ['flip', 'nudge', 'shrink'],
+        callback: (placementObj) => {
+          placementObj.x += 10;
+          placementObj.y += 0;
+          return placementObj;
+        }
+       },
       trigger: 'immediate',
       keepOpen: true,
       attachToBody: true
