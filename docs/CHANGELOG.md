@@ -17,6 +17,7 @@
 - `[Modal]` Updated close method that will close even if there are subcomponents opened. ([#6048](https://github.com/infor-design/enterprise/issues/6048))
 - `[Tabs]` Fix a bug where tabs indicator is not properly aligned in RTL. ([#6068](https://github.com/infor-design/enterprise/issues/6068))
 - `[Tag]` Fix on tag text not showing when placed inside a popover. ([#6092](https://github.com/infor-design/enterprise/issues/6092))
+- `[Toolbar]` Fixed an issue where the input disappears in toolbar at mobile size. ([#5388](https://github.com/infor-design/enterprise/issues/5388))
 - `[Tooltip]` Fixed the `maxWidth` setting to work properly. ([#6100](https://github.com/infor-design/enterprise/issues/6100))
 - `[Widget]` Fix on drag image including the overflow area. ([NG#1216](https://github.com/infor-design/enterprise-ng/issues/1216))
 
@@ -25,6 +26,7 @@
 ## v4.61.1 Fixes
 
 - `[Datagrid]` Fixed a regression bug where the datepicker icon button and time value upon click were misaligned. ([#6198](https://github.com/infor-design/enterprise/issues/6198))
+
 - `[Tag]` Fix on tag text not showing when placed inside a popover. ([#6092](https://github.com/infor-design/enterprise/issues/6092))
 - `[Tooltip]` Fixed the `maxWidth` setting to work properly. ([#6100](https://github.com/infor-design/enterprise/issues/6100))
 - `[Widget]` Fix on drag image including the overflow area. ([NG#1216](https://github.com/infor-design/enterprise-ng/issues/1216))
