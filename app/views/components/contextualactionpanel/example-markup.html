@@ -56,7 +56,6 @@
 
   function openPanel() {
     const panelHTML = $($('#cap-template')[0].innerHTML).attr('id', 'panel-' + count);
-    console.log(panelHTML);
     panelHTML.insertAfter('#trigger-1');
     count++;
 
