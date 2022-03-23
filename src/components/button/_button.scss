@@ -122,14 +122,14 @@ button {
           transform: scale(1) translate(-50%, -50%);
           transform-origin: 0% 0%;
         }
-  
+
         &.notification-dot-lower-right {
           top: 16px;
           left: -14px;
           transform: scale(1) translate(50%, 50%);
           transform-origin: 0% 100%;
         }
-  
+
         &.notification-dot-lower-left {
           top: 16px;
           left: -24px;
@@ -139,7 +139,7 @@ button {
       }
     }
   }
-  
+
   .icon.app-header {
     + .notification-badge-container {
       .notification-dot {
@@ -158,14 +158,14 @@ button {
           transform: scale(1) translate(-50%, -50%);
           transform-origin: 0% 0%;
         }
-  
+
         &.notification-dot-lower-right {
           top: 16px;
           left: -14px;
           transform: scale(1) translate(50%, 50%);
           transform-origin: 0% 100%;
         }
-  
+
         &.notification-dot-lower-left {
           top: 16px;
           left: -24px;
@@ -175,7 +175,6 @@ button {
       }
     }
   }
-
 
   .notification-badge-container {
     .notification-dot {
