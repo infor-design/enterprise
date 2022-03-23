@@ -1,0 +1,35 @@
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+    </div>
+
+  </div>
+</div>
+
+<div id="popover-contents" class="hidden">
+  <p>Im New - Check Me out</p>
+</div>
+
+<script>
+  setTimeout(() => {
+    var POPOVER_OPTIONS = {
+      content: $('#popover-contents'),
+      placement: 'right',
+      parentElement: $('body'),
+      offset: {
+        x: 0,
+        y: 0
+      },
+      placementOpts: {
+        strategies: ['flip', 'nudge', 'shrink']
+      },
+      trigger: 'immediate',
+      keepOpen: true,
+      attachToBody: true
+    };
+
+    // Invoke Popover
+    $("#header-more-actions").popover(POPOVER_OPTIONS);
+  }, 3000)
+</script>
