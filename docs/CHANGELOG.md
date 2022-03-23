@@ -3,17 +3,27 @@
 ## v4.62.0 Features
 
 - `[Spinbox]` Create a puppeteer script for Spinbox Field sizes on mobile. ([#6197](https://github.com/infor-design/enterprise/pull/6197))
+- `[ToolbarFlex]` Allow toolbar flex navigation buttons to have notification badge. ([NG#1235](https://github.com/infor-design/enterprise-ng/issues/1235))
+- `[File Upload]` Added setFailed status ([#5671](https://github.com/infor-design/enterprise/issues/5671))
+- `[Icon]` Created a puppeteer script for the new launch icon. ([#5854](https://github.com/infor-design/enterprise/issues/5854))
+- `[Icon]` Created a puppeteer script for the new mobile icon. ([#6199](https://github.com/infor-design/enterprise/issues/6199))
+- `[Spinbox]` Created a puppeteer script for Spinbox Field sizes on mobile. ([#5843](https://github.com/infor-design/enterprise/issues/5843))
 
 ## v4.62.0 Fixes
 
-- `[Calendar]` Fix day of the week to show three letters as default in range calendar ([#6193](https://github.com/infor-design/enterprise/issues/6193))
-- `[Datagrid]` Fixed a regression bug where the datepicker icon button and time value upon click were misaligned. ([#6198](https://github.com/infor-design/enterprise/issues/6198))
+- `[ApplicationMenu]` Remove a Safari-specific style rule the misaligns the button svg arrow. ([#5722](https://github.com/infor-design/enterprise/issues/5722))
+- `[Arrange]` Fix an alignment issue in the demo app. ([#5281](https://github.com/infor-design/enterprise/issues/5281))
+- `[Calendar]` Fix day of the week to show three letters as default in range calendar. ([#6193](https://github.com/infor-design/enterprise/issues/6193))
+- `[Datagrid]` Show pagesize selector even in hidePagerOnOnePage mode ([#3706](https://github.com/infor-design/enterprise/issues/3706))
 - `[Datagrid]` Remove widths in demo app page to prevent truncation of column. ([#5495](https://github.com/infor-design/enterprise/issues/5495))
+- `[Datagrid]` Fixed a regression bug where the datepicker icon button and time value upon click were misaligned. ([#6198](https://github.com/infor-design/enterprise/issues/6198))
 - `[Dropdown]` Fixed multiple accessibility issues with multiselect dropdown. ([#6075](https://github.com/infor-design/enterprise/issues/6075))
+- `[Dropdown]` Fixed an overflow issue on Windows 10 Chrome. ([#4940](https://github.com/infor-design/enterprise/issues/4940))
 - `[Homepage]` Fixed instability of the visual tests. ([#6179](https://github.com/infor-design/enterprise/issues/6179))
 - `[Modal]` Updated close method that will close even if there are subcomponents opened. ([#6048](https://github.com/infor-design/enterprise/issues/6048))
 - `[Tabs]` Fix a bug where tabs indicator is not properly aligned in RTL. ([#6068](https://github.com/infor-design/enterprise/issues/6068))
 - `[Tag]` Fix on tag text not showing when placed inside a popover. ([#6092](https://github.com/infor-design/enterprise/issues/6092))
+- `[Toolbar]` Fixed an issue where the input disappears in toolbar at mobile size. ([#5388](https://github.com/infor-design/enterprise/issues/5388))
 - `[Tooltip]` Fixed the `maxWidth` setting to work properly. ([#6100](https://github.com/infor-design/enterprise/issues/6100))
 - `[Widget]` Fix on drag image including the overflow area. ([NG#1216](https://github.com/infor-design/enterprise-ng/issues/1216))
 

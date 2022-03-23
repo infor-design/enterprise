@@ -30,10 +30,11 @@
         columns: columns,
         selectable: 'multiple',
         selectAllCurrentPage: true,
+        hidePagerOnOnePage: true,
         toolbar: {title: 'Data Grid Header Title', results: true, selectCount: true},
         paging: true,
         pagesize: 10,
-        pagesizes: [5, 10, 25, 50]
+        pagesizes: [5, 10, 25, 50, 100]
       }).on('selected', function (e, args) {
         console.log(args);
       });

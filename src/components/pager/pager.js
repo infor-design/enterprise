@@ -1251,10 +1251,25 @@ Pager.prototype = {
     }
 
     const classList = this.pagerBar[0] ? this.pagerBar[0].classList : null;
-    if (this.hidePagerBar(pagingInfo) && classList) {
+    const pagerClassList = ['.pager-first', '.pager-prev', '.pager-next', '.pager-last', '.pager-count'];
+
+    const toggleHide = (classNames = [], addHide = true) => {
+      classNames.forEach((className) => {
+        if (addHide) {
+          self.pagerBar.find(className).addClass('hidden');
+        } else {
+          self.pagerBar.find(className).removeClass('hidden');
+        }
+      });
+    };
+
+    if (this.settings.hideOnOnePage && pagingInfo.total <= pagingInfo.pagesize) {
+      toggleHide(pagerClassList);
+    } else if (this.hidePagerBar(pagingInfo) && classList) {
       classList.add('hidden');
     } else if (this.settings.hideOnOnePage && classList && classList.contains('hidden')) {
       classList.remove('hidden');
+      toggleHide(pagerClassList, false);
     }
 
     this.initTabIndexes();
@@ -1529,10 +1544,6 @@ Pager.prototype = {
    * @returns {void}
    */
   hidePagerBar(pagingInfo) {
-    if (this.settings.hideOnOnePage && pagingInfo.total <= pagingInfo.pagesize) {
-      return true;
-    }
-
     if (pagingInfo && (pagingInfo.firstPage === true && pagingInfo.lastPage === true) &&
       pagingInfo.hideDisabledPagers) {
       return true;
