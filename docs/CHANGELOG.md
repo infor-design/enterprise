@@ -12,6 +12,7 @@
 - `[ApplicationMenu]` Remove a Safari-specific style rule the misaligns the button svg arrow. ([#5722](https://github.com/infor-design/enterprise/issues/5722))
 - `[Calendar]` Fix day of the week to show three letters as default in range calendar ([#6193](https://github.com/infor-design/enterprise/issues/6193))
 - `[Datagrid]` Fixed a regression bug where the datepicker icon button and time value upon click were misaligned. ([#6198](https://github.com/infor-design/enterprise/issues/6198))
+- `[Datagrid]` Show pagesize selector even in hidePagerOnOnePage mode ([#3706](https://github.com/infor-design/enterprise/issues/3706))
 - `[Dropdown]` Fixed multiple accessibility issues with multiselect dropdown. ([#6075](https://github.com/infor-design/enterprise/issues/6075))
 - `[Dropdown]` Fixed an overflow issue on Windows 10 Chrome. ([#4940](https://github.com/infor-design/enterprise/issues/4940))
 - `[Homepage]` Fixed instability of the visual tests. ([#6179](https://github.com/infor-design/enterprise/issues/6179))
