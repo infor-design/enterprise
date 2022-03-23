@@ -21,3 +21,12 @@
     height: 41px;
   }
 }
+
+@media (max-width: $breakpoint-phablet) {
+  .toolbar {
+    .buttonset {
+      height: auto;
+      overflow: auto;
+    }
+  }
+}
