@@ -24,6 +24,10 @@
       top: 14px;
     }
 
+    &.has-listview-filters {
+      top: 1px;
+    }
+
     &.is-hovered {
       .searchfield {
         &[disabled] {
@@ -36,6 +40,11 @@
       }
     }
   }
+}
+
+.listview-filter-wrapper {
+  border-top: 1px solid $listview-border-color;
+  top: unset;
 }
 
 // Firefox/Safari icon placement adjustments

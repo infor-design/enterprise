@@ -2,12 +2,12 @@
 
 ## v4.62.0 Features
 
-- `[Spinbox]` Create a puppeteer script for Spinbox Field sizes on mobile. ([#6197](https://github.com/infor-design/enterprise/pull/6197))
-- `[ToolbarFlex]` Allow toolbar flex navigation buttons to have notification badge. ([NG#1235](https://github.com/infor-design/enterprise-ng/issues/1235))
 - `[File Upload]` Added setFailed status ([#5671](https://github.com/infor-design/enterprise/issues/5671))
 - `[Icon]` Created a puppeteer script for the new launch icon. ([#5854](https://github.com/infor-design/enterprise/issues/5854))
 - `[Icon]` Created a puppeteer script for the new mobile icon. ([#6199](https://github.com/infor-design/enterprise/issues/6199))
+- `[Listview]` Added filters in Listview Component. ([#6007](https://github.com/infor-design/enterprise/issues/6007))
 - `[Spinbox]` Created a puppeteer script for Spinbox Field sizes on mobile. ([#5843](https://github.com/infor-design/enterprise/issues/5843))
+- `[ToolbarFlex]` Allow toolbar flex navigation buttons to have notification badge. ([NG#1235](https://github.com/infor-design/enterprise-ng/issues/1235))
 
 ## v4.62.0 Fixes
 

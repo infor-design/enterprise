@@ -149,6 +149,14 @@ ListView.prototype = {
     const selectable = this.element.attr('data-selectable');
     const selectOnFocus = this.element.attr('data-select-onfocus');
 
+    if ($('.listview-filter-wrapper').length > 0) {
+      const filterWrapper = $('.listview-filter-wrapper');
+      const searchFieldWrapper = filterWrapper.siblings('.searchfield-wrapper');
+      const filterWidth = filterWrapper.css('width');
+      searchFieldWrapper.addClass('has-listview-filters');
+      searchFieldWrapper.css('width', `calc(100% - ${filterWidth})`);
+    }
+
     // Check for legacy data attributes
     if (this.element.attr('data-pagesize')) {
       const pagesize = Number(this.element.attr('data-pagesize'));
