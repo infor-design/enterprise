@@ -18,27 +18,29 @@
 </div>
 
 <script>
-  let data = [
-    {name: 'Animals', id: 'animals-multi', value: 'an', checked: true},
-    {name: 'Baby', id: 'baby-multi', value: 'ba', checked: false},
-    {name: 'Clothing', id: 'clothing-multi', value: 'cl', checked: true},
-    {name: 'Images', id: 'images-multi', value: 'im', checked: true},
-    {name: 'People', id: 'people-multi', value: 'pe', checked: false},
-    {name: 'Places', id: 'places-multi', value: 'pl', checked: true}
-  ];
+  $('body').on('initialized', function() {
+    let data = [
+      {name: 'Animals', id: 'animals-multi', value: 'an', checked: true},
+      {name: 'Baby', id: 'baby-multi', value: 'ba', checked: false},
+      {name: 'Clothing', id: 'clothing-multi', value: 'cl', checked: true},
+      {name: 'Images', id: 'images-multi', value: 'im', checked: true},
+      {name: 'People', id: 'people-multi', value: 'pe', checked: false},
+      {name: 'Places', id: 'places-multi', value: 'pl', checked: true}
+    ];
 
-  const api = $('#searchfield').searchfield({
-    categories: data,
-    categoryMultiselect: true,
-    showCategoryText: true,
-  }).data('searchfield');
+    const api = $('#searchfield').searchfield({
+      categories: data,
+      categoryMultiselect: true,
+      showCategoryText: true,
+    }).data('searchfield');
 
-  $('#update-btn').on('click', () => {
-    data.forEach(d => {
-      d.checked = !d.checked;
+    $('#update-btn').on('click', () => {
+      data.forEach(d => {
+        d.checked = !d.checked;
+      })
+      api.updated({
+        categories: data
+      });
     })
-    api.updated({
-      categories: data
-    });
-  })
+  });
 </script>
