@@ -296,6 +296,15 @@ $subheader-height: 60px;
       box-shadow: 0 0 0 1px $body-color-primary-background, 0 0 0 2px $button-color-secondary-focus-border, $focus-box-shadow;
     }
   }
+
+  .searchfield-wrapper.context.non-collapsible {
+    &.has-go-button {
+      .btn-icon.close {
+        right: 50px;
+        width: 34px;
+      }
+    }
+  }
 }
 
 .header,
@@ -323,7 +332,7 @@ $subheader-height: 60px;
 
       &.is-open .icon,
       &.btn-menu.is-open .icon {
-        color: $header-button-hover-color !important;
+        color: $header-button-hover-color;
       }
 
       .audible {

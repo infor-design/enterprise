@@ -44,6 +44,44 @@
         }
       }
     }
+
+    // new design for M3 scenario
+    .toolbar-section.search-categories {
+      .searchfield-wrapper.non-collapsible {
+        &.has-categories {
+          .searchfield {
+            @include placeholderTextColor() {
+              @include placeholder();
+            }
+
+            background-color: $subheader-searchfield-context-bg;
+            border-left-color: $subheader-input-color-focus-border;
+            color: $header-flex-toolbar-input-searchfield-color;
+
+            + .btn-icon.close {
+              svg {
+                color: $header-flex-toolbar-close-icon-color;
+              }
+            }
+          }
+
+          .btn.searchfield-category-button {
+            background-color: $subheader-searchfield-context-bg;
+            color: $subheader-searchfield-category-button-font-color;
+
+            svg.icon {
+              color: $subheader-searchfield-category-button-font-color;
+            }
+          }
+        }
+
+        &.context.has-focus {
+          .searchfield {
+            border-color: $subheader-input-color-focus-border;
+          }
+        }
+      }
+    }
   }
 }
 
@@ -51,6 +89,16 @@
   .full-searchfield-container {
     .searchfield-wrapper.context .searchfield-category-button {
       background-color: $subheader-searchfield-context-bg;
+      color: $subheader-searchfield-category-button-font-color;
+    }
+
+    .searchfield-wrapper.context.non-collapsible {
+      &.has-go-button {
+        .btn-icon.close {
+          right: 50px;
+          width: 34px;
+        }
+      }
     }
 
     .searchfield-wrapper.has-categories.show-category .searchfield {

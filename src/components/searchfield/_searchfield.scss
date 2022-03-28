@@ -341,7 +341,7 @@
 
       svg.close {
         left: 0;
-        top: 8px !important;
+        top: 0;
       }
     }
   }
@@ -590,7 +590,6 @@ html[class*='theme-classic-'] {
     & > svg.close.icon {
       position: relative;
       right: unset;
-      top: -1px;
     }
   }
 
