@@ -2213,5 +2213,9 @@ describe('Locale API', () => {
     Locale.set('sv-SE');
 
     expect(Locale.translate('NewWindow')).toEqual('Nästa fönster');
+
+    Locale.set('fr-FR');
+
+    expect(Locale.translate('TextDropAreaWithBrowse')).toEqual('Glisser déplacer ou <span class="hyperlink">sélectionner les fichiers</span> à charger');
   });
 });
