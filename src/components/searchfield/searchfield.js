@@ -2096,6 +2096,11 @@ SearchField.prototype = {
     }
 
     if (this.categoryButton && this.categoryButton.length) {
+      const api = this.categoryButton.data('popupmenu');
+      if (api) {
+        api.destroy();
+        api.wrapper.off().remove();
+      }
       this.categoryButton.off().remove();
       delete this.categoryButton;
     }
