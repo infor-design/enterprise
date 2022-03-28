@@ -297,6 +297,36 @@ $subheader-height: 60px;
     }
   }
 
+  .full-searchfield-container {
+    .searchfield-wrapper.context.has-focus {
+      .searchfield,
+      .btn {
+        border-color: $header-searchfield-input-border-color;
+      }
+    }
+
+    .searchfield-wrapper .btn.is-open {
+      color: $header-searchfield-btn-font-color;
+
+      .icon {
+        color: $header-searchfield-btn-font-color;
+      }
+    }
+
+    .searchfield-wrapper.has-focus {
+      .btn {
+        &:focus,
+        &:active {
+          color: $header-searchfield-btn-font-color;
+
+          .icon {
+            color: $header-searchfield-btn-font-color;
+          }
+        }
+      }
+    }
+  }
+
   .searchfield-wrapper.context.non-collapsible {
     &.has-go-button {
       .btn-icon.close {
