@@ -1,0 +1,91 @@
+<div class="row">
+  <div class="four columns">
+
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title">Tasks</h2>
+        <button class="btn-actions" type="button">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-more"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Add new action item</a></li>
+          <li><a href="#">Regular action</a></li>
+          <li><a href="#">Individual Action</a></li>
+        </ul>
+      </div>
+
+      <div class="card-content">
+        <div class="listview-search">
+          <label class="audible" for="gridfilter">Search</label>
+          <input class="searchfield" placeholder="Search My Alerts" name="searchfield" id="gridfilter" data-options="{clearable: true}"/>
+          <div class="listview-filter-wrapper">
+            <button type="button" class="btn-icon listview-filters btn-list-filter" title="Filter">
+              <svg class="icon filter-icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-filter"></use>
+              </svg>
+              <span class="audible">Filter</span>
+            </button>
+            <button type="button" class="btn-icon listview-filters btn-list-sort" title="Sort">
+              <svg class="icon filter-icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-sort-down"></use>
+              </svg>
+              <span class="audible">Sort</span>
+            </button>
+            <button type="button" class="btn-icon listview-filters btn-list-add" title="Add">
+              <svg class="icon filter-icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-add"></use>
+              </svg>
+              <span class="audible">add</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="listview" id="search-listview" data-init="false"></div>
+
+        {{={{{ }}}=}}
+        <script id="search-tmpl" type="text/html">
+            <ul>
+              {{#dataset}}
+                 <li>
+                  <p>{{desc}}</p>
+                </li>
+              {{/dataset}}
+            </ul>
+        </script>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script id="test-script">
+  $('body').on('initialized', function() {
+    var listviewEl = $('#search-listview');
+    listviewEl.listview({
+      template: 'search-tmpl',
+      source: '/api/tasks',
+      searchable: true,
+      listFilterSettings: {
+        filterMode: 'contains',
+        searchableTextCallback: function(item) {
+          return item.desc;
+        }
+      }
+    });
+
+    $('.btn-list-filter').on('click', (e) => {
+      console.log('filter', e);
+    });
+
+    $('.btn-list-sort').on('click', (e) => {
+      console.log('sort', e);
+    });
+
+    $('.btn-list-add').on('click', (e) => {
+      console.log('add', e);
+    });
+  });
+</script>
