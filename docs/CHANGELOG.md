@@ -14,6 +14,8 @@
 - `[ApplicationMenu]` Remove a Safari-specific style rule the misaligns the button svg arrow. ([#5722](https://github.com/infor-design/enterprise/issues/5722))
 - `[Arrange]` Fix an alignment issue in the demo app. ([#5281](https://github.com/infor-design/enterprise/issues/5281))
 - `[Calendar]` Fix day of the week to show three letters as default in range calendar. ([#6193](https://github.com/infor-design/enterprise/issues/6193))
+- `[ContextualActionPanel]` Fix an issue with the example page where the Contextual Action Panel is not initialized on open. ([#6065](https://github.com/infor-design/enterprise/issues/6065))
+- `[Datagrid]` Fixed a regression bug where the datepicker icon button and time value upon click were misaligned. ([#6198](https://github.com/infor-design/enterprise/issues/6198))
 - `[Datagrid]` Show pagesize selector even in hidePagerOnOnePage mode ([#3706](https://github.com/infor-design/enterprise/issues/3706))
 - `[Datagrid]` Corrected a filter type in a demo app page. ([#5497](https://github.com/infor-design/enterprise/issues/5497))
 - `[Datagrid]` Remove widths in demo app page to prevent truncation of column. ([#5495](https://github.com/infor-design/enterprise/issues/5495))
