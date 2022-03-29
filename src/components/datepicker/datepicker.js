@@ -618,6 +618,18 @@ DatePicker.prototype = {
   },
 
   /**
+   * Loads legend list to the monthview settings.
+   * @returns {void}
+   */
+  loadLegend(legendList) {
+    if (legendList === undefined || legendList.length < 1) {
+      return;
+    }
+
+    this.calendarAPI.loadLegend(legendList);
+  },
+
+  /**
    * Open the calendar in a popup
    * @private
    * @returns {void}
@@ -827,6 +839,10 @@ DatePicker.prototype = {
 
     this.calendarAPI = new MonthView(this.calendarContainer, this.settings);
     this.calendar = this.calendarAPI.element;
+
+    this.calendar.on('beforemonthrendered', () => {
+      this.element.trigger('beforemonthrendered');
+    });
 
     if (s.showTime) {
       this.calendar.addClass('is-timepicker');
