@@ -1,4 +1,4 @@
-const { getConfig } = require('../../helpers/e2e-utils.js');
+const { getConfig, getComputedStyle } = require('../../helpers/e2e-utils.js');
 
 describe('Datagrid Puppeteer Tests', () => {
   describe('Datagrid Filter Format Test', () => {
@@ -112,5 +112,39 @@ describe('Datagrid test to keep the column strech in responsive view', () => {
     const img = await page.screenshot();
     const config = getConfig('datagrid-col');
     expect(img).toMatchImageSnapshot(config);
+  });
+});
+
+describe('Datagrid test-count-in-select-all-current-page-setting tests', () => {
+  const url = 'http://localhost:4000/components/datagrid/test-count-in-select-all-current-page-setting.html';
+  beforeAll(async () => {
+    await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+  });
+
+  const isNotVisible = async (selector) => {
+    const display = await getComputedStyle(selector, 'display');
+    const visibilty = await getComputedStyle(selector, 'visibility');
+    expect(display).toBe('none');
+    expect(visibilty).toBe('hidden');
+  };
+
+  it('Should hide the pager when you select pagesize to 100', async () => {
+    await page.waitForSelector('.pager-toolbar', { visible: true });
+    await page.waitForSelector('.btn-menu', { visible: true });
+    await page.click('.btn-menu');
+    await page.click('#popupmenu-4 > li:nth-child(5) > a');
+
+    const hiddenElems = (await page.$$('ul.pager-toolbar > li.hidden')).length;
+    expect(hiddenElems).toBe(5);
+
+    // hide only the pager
+    await isNotVisible('ul > li.pager-first');
+    await isNotVisible('ul > li.pager-prev');
+    await isNotVisible('ul > li.pager-count');
+    await isNotVisible('ul > li.pager-next');
+    await isNotVisible('ul > li.pager-last');
+    // and not the pagesize selector.
+    const pageSizeselector = await getComputedStyle('ul > li.pager-pagesize', 'visibility');
+    expect(pageSizeselector).toBe('visible');
   });
 });
