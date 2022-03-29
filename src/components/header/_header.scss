@@ -436,7 +436,7 @@ $subheader-height: 60px;
       &.search-categories {
         &.search {
           .btn.searchfield-category-button {
-            height: 33px;
+            height: 38px;
             padding-right: 20px;
 
             @media (min-width: $breakpoint-phone-to-tablet) {
@@ -489,15 +489,15 @@ $subheader-height: 60px;
   .full-searchfield-container {
     margin: 0 auto;
     max-width: $breakpoint-tablet-to-desktop;
-    padding: 1.4rem 2rem 0;
+    padding: 1.1rem 2rem 0;
     vertical-align: middle;
 
     @media (max-width: $breakpoint-slim) {
-      padding: 1.4rem 0.5rem 0;
+      padding: 1.1rem 0.5rem 0;
     }
 
     @media (min-width: $breakpoint-phone-to-tablet) {
-      padding: 1.4rem 4rem 0;
+      padding: 1.1rem 4rem 0;
     }
 
     .hyperlink {

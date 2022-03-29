@@ -110,7 +110,7 @@
       border-left: 0;
       border-right: 0;
       border-top: 0;
-      height: 33px;
+      height: 38px;
       padding-left: 32px;
       width: 100%;
 
@@ -148,7 +148,7 @@
       background-color: $searchfield-context-bg;
       border: 0;
       border-bottom: 1px solid $searchfield-context-border-color;
-      height: 33px;
+      height: 38px;
 
       + .searchfield {
         margin-left: 0;
@@ -286,12 +286,17 @@
       border-bottom-left-radius: 0;
       border-left: 1px solid transparent;
       border-top-left-radius: 0;
-      padding-left: 10px;
+      padding-left: 8px;
     }
 
     .icon {
       color: $font-color;
-      width: 14px;
+      width: 18px;
+
+      &.icon-dropdown {
+        height: 16px;
+        width: 16px;
+      }
     }
 
     // Disable default focus state
@@ -315,7 +320,8 @@
 
     &.show-category {
       .btn {
-        padding-right: 10px;
+        padding-left: 8px;
+        padding-right: 8px;
       }
 
       .searchfield {
@@ -348,6 +354,7 @@
 
   //Call to action button
   .go-button {
+    height: 38px;
     margin-left: 10px;
     margin-top: 0;
     min-width: 0;
