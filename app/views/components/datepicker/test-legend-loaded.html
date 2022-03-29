@@ -30,7 +30,11 @@
     console.log('listopened', e);
   }).on('beforemonthrendered', (e) => {
     console.log('beforemonthrendered', e);
-    loadLegend();
+    if (datepickerAPI.currentMonth !== undefined) {
+      loadLegend();
+    }
+  }).on('listclosed', (e) => {
+    console.log('listclosed', e);
   });
 
   var datepickerAPI = $('#date-field').data('datepicker');
