@@ -350,7 +350,7 @@ $subheader-height: 60px;
     [class^='btn'] {
       background-color: transparent;
       border: 1px solid transparent;
-      color: $header-button-color;
+      color: $header-searchfield-btn-font-color;
 
       .icon {
         color: $header-button-color;
@@ -375,7 +375,7 @@ $subheader-height: 60px;
         color: $header-button-hover-color;
 
         .icon {
-          color: $header-button-hover-color;
+          color: $header-searchfield-btn-font-color;
         }
       }
 
@@ -392,7 +392,7 @@ $subheader-height: 60px;
         color: $header-button-focus-color;
 
         .icon {
-          color: $header-button-focus-color;
+          color: $header-searchfield-btn-font-color;
         }
       }
 
@@ -436,6 +436,7 @@ $subheader-height: 60px;
       &.search-categories {
         &.search {
           .btn.searchfield-category-button {
+            color: $header-searchfield-btn-font-color;
             height: 38px;
             padding-right: 20px;
 

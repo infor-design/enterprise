@@ -69,7 +69,7 @@ $toolbarsearchfield-category-empty-width: 51px;
   &.non-collapsible {
     .searchfield {
       padding-bottom: 6px !important;
-      padding-top: 4px !important;
+      padding-top: 6px !important;
     }
 
     .collapse-button {
@@ -81,7 +81,7 @@ $toolbarsearchfield-category-empty-width: 51px;
     }
 
     .icon:not(.close) {
-      height: 14px;
+      height: 18px;
 
       @media only screen and (max-width: $breakpoint-phone-to-tablet) {
         top: 12px;
@@ -146,7 +146,7 @@ $toolbarsearchfield-category-empty-width: 51px;
   .searchfield-category-button,
   .go-button {
     &:focus {
-      border: 1px solid transparent;
+      // border: 1px solid transparent;
 
       &:not(.hide-focus) {
         box-shadow: none !important;
@@ -239,7 +239,7 @@ $toolbarsearchfield-category-empty-width: 51px;
 
     .icon {
       color: $searchfield-text-color;
-      height: 14px;
+      height: 18px;
       top: 10px;
     }
 
@@ -320,7 +320,7 @@ $toolbarsearchfield-category-empty-width: 51px;
             box-shadow: $focus-box-shadow-input;
 
             &:focus {
-              border-color: $ids-color-palette-white;
+              border-color: $header-searchfield-input-border-color;
             }
           }
         }
@@ -370,7 +370,6 @@ $toolbarsearchfield-category-empty-width: 51px;
     }
 
     .searchfield {
-      border: 1px solid transparent;
       width: calc(100% - 39px);
     }
 
@@ -381,7 +380,7 @@ $toolbarsearchfield-category-empty-width: 51px;
     }
 
     .btn {
-      border: 1px solid transparent;
+      // border: 1px solid transparent;
       height: 34px;
     }
 
@@ -408,7 +407,7 @@ $toolbarsearchfield-category-empty-width: 51px;
 
     &.searchfield-wrapper.show-category {
       .searchfield {
-        border-left-color: transparent;
+        border-left-color: $header-searchfield-input-border-color;
       }
     }
   }
@@ -509,7 +508,6 @@ $toolbarsearchfield-category-empty-width: 51px;
   .toolbar-searchfield-wrapper {
     .icon:not(.close) {
       color: $searchfield-header-icon-color;
-      opacity: 0.7;
     }
 
     .searchfield {
@@ -569,7 +567,7 @@ $toolbarsearchfield-category-empty-width: 51px;
     .searchfield-category-button,
     .go-button {
       &:focus {
-        border: 1px solid transparent;
+        // border: 1px solid transparent;
 
         &:not(.hide-focus) {
           box-shadow: none;
@@ -592,7 +590,7 @@ $toolbarsearchfield-category-empty-width: 51px;
 
     .searchfield-category-button {
       &.btn {
-        background-color: rgba($searchfield-header-bg-color, 0.5);
+        background-color: $searchfield-header-bg-color;
         border-bottom-color: rgba($searchfield-header-border-color, 0.7);
       }
     }
@@ -619,7 +617,7 @@ $toolbarsearchfield-category-empty-width: 51px;
     &.is-open {
       .searchfield,
       .btn {
-        background-color: rgba($searchfield-header-bg-color, 0.5);
+        background-color: $searchfield-header-bg-color;
         border-bottom-color: rgba($searchfield-header-border-color, 0.7);
       }
     }
@@ -628,7 +626,7 @@ $toolbarsearchfield-category-empty-width: 51px;
       .searchfield,
       .collapse-button,
       .btn {
-        background-color: rgba($searchfield-header-bg-color, 0.5);
+        background-color: $searchfield-header-bg-color;
         border-bottom-color: rgba($searchfield-header-border-color, 0.7);
       }
 
@@ -641,7 +639,7 @@ $toolbarsearchfield-category-empty-width: 51px;
       &.is-open {
         .searchfield,
         .btn {
-          color: $searchfield-header-text-color;
+          color: $header-flex-toolbar-input-searchfield-color;
 
           &::-webkit-input-placeholder {
             color: $searchfield-header-placeholder-text-color;
@@ -795,9 +793,13 @@ html.is-firefox {
     .toolbar-searchfield-wrapper.non-collapsible {
       // reset all the styling for the searchfield to correctly appear open.
       .searchfield {
-        background-color: rgba($searchfield-header-bg-color, 0.3);
+        @include placeholderTextColor() {
+          @include placeholder();
+        }
+
+        background-color: $subheader-searchfield-context-bg;
         border-bottom-color: rgba($searchfield-header-border-color, 0.7);
-        color: $searchfield-header-text-color;
+        color: $header-flex-toolbar-input-searchfield-color;
 
         &::-webkit-input-placeholder {
           color: $searchfield-header-placeholder-text-color;

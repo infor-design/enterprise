@@ -18,8 +18,8 @@
 //================================================== //
 
 // Form Background Color
-$header-bg-color: $ids-color-palette-slate-90;
-$subhead-bg-color: $ids-color-palette-slate-60;
+$header-bg-color: $ids-color-palette-slate-60;
+$subhead-bg-color: $ids-color-palette-slate-50;
 $header-border-color: $ids-color-palette-slate-100;
 $header-button-color: rgba($ids-color-palette-white, 0.7);
 $header-button-focus-color: rgba($ids-color-palette-white, 1);
@@ -702,6 +702,7 @@ $header-primary-btn-background-color: $ids-color-palette-slate-70;
 $header-primary-btn-background-hover-color: $ids-color-palette-slate-80;
 $header-searchfield-input-border-color: $ids-color-palette-slate-40;
 $header-searchfield-btn-font-color: $ids-color-palette-slate-30;
+$subheader-searchfield-context-bg: $ids-color-palette-slate-100;
 
 // Header Tabs
 $header-tabcontainer-border-color: $ids-color-palette-slate-90;

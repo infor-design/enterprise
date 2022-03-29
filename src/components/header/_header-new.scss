@@ -61,6 +61,10 @@
               svg {
                 color: $header-flex-toolbar-close-icon-color;
               }
+
+              &:hover svg {
+                color: $header-flex-toolbar-close-icon-color-hover;
+              }
             }
           }
 
@@ -96,6 +100,10 @@
         .btn-icon.close {
           right: 50px;
           width: 34px;
+
+          &:hover svg {
+            color: $header-flex-toolbar-close-icon-color-hover;
+          }
         }
       }
     }
