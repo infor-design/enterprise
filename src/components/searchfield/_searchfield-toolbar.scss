@@ -153,8 +153,8 @@ $toolbarsearchfield-category-empty-width: 51px;
         color: $button-color-secondary-initial-font;
 
         &::after {
-          border: 1px solid $button-color-secondary-focus-background;
-          border-radius: 2px;
+          border-right: 1px solid $header-searchfield-input-border-color;
+          border-radius: 0;
           bottom: 0;
           content: '';
           display: inline-block;
@@ -518,9 +518,9 @@ $toolbarsearchfield-category-empty-width: 51px;
 
     &.non-collapsible {
       .searchfield {
-        background-color: rgba($searchfield-header-bg-color, 0.3);
+        background-color: $searchfield-header-bg-color;
         border-bottom-color: rgba($searchfield-header-border-color, 0.7);
-        color: $searchfield-header-text-color;
+        color: $header-flex-toolbar-input-searchfield-color
       }
     }
 
@@ -574,8 +574,8 @@ $toolbarsearchfield-category-empty-width: 51px;
           color: $button-color-secondary-initial-font;
 
           &::after {
-            border: 1px solid $header-button-focus-color;
-            border-radius: 2px;
+            border-right: 1px solid $header-searchfield-input-border-color;
+            border-radius: 0;
             bottom: 0;
             content: '';
             display: inline-block;
@@ -628,6 +628,7 @@ $toolbarsearchfield-category-empty-width: 51px;
       .btn {
         background-color: $searchfield-header-bg-color;
         border-bottom-color: rgba($searchfield-header-border-color, 0.7);
+        height: 38px;
       }
 
       .collapse-button,
