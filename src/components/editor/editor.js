@@ -2291,7 +2291,6 @@ Editor.prototype = {
   // Run the CE action.
   execAction(action) {
     const currentElement = this.getCurrentElement();
-
     // Visual Mode
     if (currentElement === this.element) {
       if (action.indexOf('append-') > -1) {
@@ -2771,6 +2770,11 @@ Editor.prototype = {
     }
 
     if (!this.selection || !(this.selection instanceof Selection)) {
+      return;
+    }
+
+    // Check if selected text is in current editor
+    if (this.element.get(0) !== $(this.selection.anchorNode.parentNode).parent().get(0)) {
       return;
     }
 
