@@ -22,6 +22,7 @@
 - `[Datagrid]` Fixed a regression bug where the datepicker icon button and time value upon click were misaligned. ([#6198](https://github.com/infor-design/enterprise/issues/6198))
 - `[Dropdown]` Fixed multiple accessibility issues with multiselect dropdown. ([#6075](https://github.com/infor-design/enterprise/issues/6075))
 - `[Dropdown]` Fixed an overflow issue on Windows 10 Chrome. ([#4940](https://github.com/infor-design/enterprise/issues/4940))
+- `[Editor]` Fix on editor changing text in another editor. ([NG#1232](https://github.com/infor-design/enterprise-ng/issues/1232))
 - `[FileUploadAdvanced]` Fixed a missing link in french locale. ([#6226](https://github.com/infor-design/enterprise/issues/6226))
 - `[Homepage]` Fixed instability of the visual tests. ([#6179](https://github.com/infor-design/enterprise/issues/6179))
 - `[Modal]` Updated close method that will close even if there are subcomponents opened. ([#6048](https://github.com/infor-design/enterprise/issues/6048))
