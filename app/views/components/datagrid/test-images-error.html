@@ -1,5 +1,17 @@
 <div class="row">
   <div class="twelve columns">
+    <div role="toolbar" class="toolbar">
+
+      <div class="title">
+        Example illustrates selected row issue with Save and New.
+       </div>
+
+      <div class="buttonset">
+        <button type="button" id="add-row-button" class="btn">
+          <span>Add Row</span>
+        </button>
+      </div>
+    </div>
     <div id="readonly-datagrid">
     </div>
   </div>
@@ -30,9 +42,13 @@
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
 
       //Init and get the api for the grid
-      $('#readonly-datagrid').datagrid({
+      var gridApi = $('#readonly-datagrid').datagrid({
         columns: columns,
         dataset: data
+      }).data('datagrid');
+
+      $('#add-row-button').on('click', function () {
+        gridApi.addRow({ productName: '', productId: '0', image: imgExample }, 0);
       });
     });
 

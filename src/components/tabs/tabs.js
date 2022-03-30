@@ -185,7 +185,7 @@ Tabs.prototype = {
     // Composite Form tabs.
     let tablistContainer = this.element.children('.tab-list-container');
     if (!tablistContainer.length && this.isScrollableTabs()) {
-      tablistContainer = $('<div class="tab-list-container"></div>').prependTo(this.element);
+      tablistContainer = $('<div class="tab-list-container" tabindex="-1"></div>').prependTo(this.element);
     }
     if (tablistContainer.length) {
       this.tablistContainer = tablistContainer;
@@ -3842,7 +3842,7 @@ Tabs.prototype = {
         }
 
         // Composite Form has additional padding on the right
-        if (hasCompositeForm) {
+        if (!isRTL && hasCompositeForm) {
           targetRectObj.right -= 42;
           targetRectObj.width -= 1;
         }

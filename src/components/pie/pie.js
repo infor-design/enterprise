@@ -432,7 +432,7 @@ Pie.prototype = {
 
     setTimeout(() => {
       if (self.settings?.showCenterTooltip) {
-        $('.chart-donut-text')
+        self.element.find('.chart-donut-text')
           .off('mouseenter.text')
           .on('mouseenter.text', function () {
             const target = self.element.find('.slices').get(0);
@@ -446,7 +446,7 @@ Pie.prototype = {
             charts.showTooltip(x, y, content, 'top');
           });
 
-        $('.chart-donut-text')
+        self.element.find('.chart-donut-text')
           .off('mouseleave.text')
           .on('mouseleave.text', function () {
             charts.hideTooltip();
@@ -455,7 +455,7 @@ Pie.prototype = {
       }
 
       if (self.settings.attributes) {
-        utils.addAttributes($('.chart-donut-text'), self, self.settings.attributes, 'text', true);
+        utils.addAttributes(self.element.find('.chart-donut-text'), self, self.settings.attributes, 'text', true);
         utils.addAttributes(self.element.find('.slices'), self, self.settings.attributes, 'slices', true);
         utils.addAttributes(self.element.find('.labels'), self, self.settings.attributes, 'labels', true);
         utils.addAttributes(self.element.find('.labels').children(), self, self.settings.attributes, 'label', true);

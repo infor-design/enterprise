@@ -213,7 +213,7 @@ describe('Multiselect example-clear-all tests', () => {
   });
 
   if (!utils.isSafari()) {
-    it('Should clear all', async () => {
+    xit('Should clear all', async () => {
       const buttonEl = await element(by.id('btn-clear'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(buttonEl), config.waitsFor);
@@ -236,7 +236,7 @@ describe('Multiselect typeahead-reloading tests', () => {
   // Added to check highlighting of text characters
   // See Github #4141
   if (utils.isChrome() && utils.isCI()) {
-    it('Highlights matched filter terms and should not visually regress', async () => {
+    xit('Highlights matched filter terms and should not visually regress', async () => {
       const multiselectEl = await element(by.css('div.dropdown'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(multiselectEl), config.waitsFor);

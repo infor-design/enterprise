@@ -1,0 +1,46 @@
+<div class="row">
+  <div class="twelve columns">
+    <h2>Searchfield Example: Update categories</h2>
+    <p>Inspect page and check elements. Popup wrapper should not duplicate when updating.</p>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+    <div class="field">
+      <label for="searchfield">Search</label>
+      <input id="searchfield" data-init="false" placeholder="Search" type="text" class="searchfield"/>
+    </div>
+    <button type="button" id="update-btn" class="btn-primary">
+      <span>Update</span>
+    </button>
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function() {
+    let data = [
+      {name: 'Animals', id: 'animals-multi', value: 'an', checked: true},
+      {name: 'Baby', id: 'baby-multi', value: 'ba', checked: false},
+      {name: 'Clothing', id: 'clothing-multi', value: 'cl', checked: true},
+      {name: 'Images', id: 'images-multi', value: 'im', checked: true},
+      {name: 'People', id: 'people-multi', value: 'pe', checked: false},
+      {name: 'Places', id: 'places-multi', value: 'pl', checked: true}
+    ];
+
+    const api = $('#searchfield').searchfield({
+      categories: data,
+      categoryMultiselect: true,
+      showCategoryText: true,
+    }).data('searchfield');
+
+    $('#update-btn').on('click', () => {
+      data.forEach(d => {
+        d.checked = !d.checked;
+      })
+      api.updated({
+        categories: data
+      });
+    })
+  });
+</script>

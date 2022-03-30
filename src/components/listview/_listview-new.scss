@@ -24,6 +24,10 @@
       top: 14px;
     }
 
+    &.has-listview-filters {
+      top: 1px;
+    }
+
     &.is-hovered {
       .searchfield {
         &[disabled] {
@@ -33,6 +37,21 @@
             border-top-color: $listview-border-color;
           }
         }
+      }
+    }
+  }
+}
+
+.listview-filter-wrapper {
+  border-top: 1px solid $listview-border-color;
+  top: unset;
+}
+
+html.is-safari {
+  .listview-search {
+    .searchfield-wrapper {
+      &.has-listview-filters {
+        top: 2px;
       }
     }
   }

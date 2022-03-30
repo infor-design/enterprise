@@ -54,7 +54,7 @@ describe('Input Test Reset', () => {
         .presenceOf(element(by.id('department-code'))), config.waitsFor);
   });
 
-  it('Should be able to reset the dirty indicator', async () => {
+  xit('Should be able to reset the dirty indicator', async () => {
     // Change the input
     await element(by.id('department-code')).sendKeys('Test');
     await element(by.id('department-code')).sendKeys(protractor.Key.TAB);
@@ -82,6 +82,7 @@ describe('Input Test Reset', () => {
 
     expect(await element.all(by.css('.icon-dirty')).count()).toEqual(4);
     await element(by.id('btn-save')).click();
+    await browser.driver.sleep(config.sleepShort);
 
     expect(await element.all(by.css('.icon-dirty')).count()).toEqual(0);
   });
@@ -93,10 +94,6 @@ describe('Input tooltip tests', () => {
     await browser.driver
       .wait(protractor.ExpectedConditions
         .presenceOf(element(by.id('first-name'))), config.waitsFor);
-  });
-
-  it('Should not have errors', async () => {
-    await utils.checkForErrors();
   });
 
   // This test is more important as a windows test
@@ -122,10 +119,6 @@ describe('Input Short Field Sizes tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/input/test-short-field-sizes?theme=classic&layout=nofrills');
     await browser.driver.sleep(config.sleep);
-  });
-
-  it('Should not have errors', async () => {
-    await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {

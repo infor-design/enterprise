@@ -39,7 +39,7 @@ const MODAL_FULLSIZE_SETTINGS = [false, 'responsive', 'always'];
 * @param {boolean} [settings.autoFocus=true] If true, when the modal is opened, the first available input/button in its content area will be focused.
 * @param {string} [settings.id=null] Optionally tag a dialog with an id.
 * @param {number} [settings.frameHeight=180] Optional extra height to add.
-* @param {number} [settings.frameWidth=46] Optional extra width to add.
+* @param {number} [settings.frameWidth=0] Optional extra width to add.
 * @param {function} [settings.beforeShow=null] A call back function that can be used to return data for the modal.
 * @param {boolean} [settings.useFlexToolbar] If true the new flex toolbar will be used (For CAP)
 * @param {boolean} [settings.showCloseBtn] If true, show a close icon button on the top right of the modal.
@@ -66,7 +66,7 @@ const MODAL_DEFAULTS = {
   autoFocus: true,
   id: null,
   frameHeight: 180,
-  frameWidth: 46,
+  frameWidth: 0,
   beforeShow: null,
   useFlexToolbar: false,
   showCloseBtn: false,
@@ -579,7 +579,10 @@ Modal.prototype = {
           if ($(e.target).is('.btn-cancel')) {
             self.isCancelled = true;
           }
-          self.close();
+
+          if (this.openSubComponents.length === 0) {
+            self.close();
+          }
         });
 
         // Handle Validation
@@ -641,7 +644,10 @@ Modal.prototype = {
           if ($(e.target).is('.btn-cancel')) {
             self.isCancelled = true;
           }
-          self.close();
+
+          if (this.openSubComponents.length === 0) {
+            self.close();
+          }
         });
       return;
     }
@@ -737,7 +743,10 @@ Modal.prototype = {
           func.apply(self.element[0], [e, self]);
           return;
         }
-        self.close();
+
+        if (this.openSubComponents.length === 0) {
+          self.close();
+        }
       });
 
       if (!isPanel) {
@@ -1370,10 +1379,11 @@ Modal.prototype = {
    * @param {boolean} destroy Call the destroy method.
    * @param {boolean} [noRefresh=false] if true, prevents the ModalManager from refreshing state when the close is complete.
    * @param {boolean} [force = false] if true, forces the modal closed and ignores open subcomponents/visibility.
+   * @param {string} customId ID of element
    * @returns {boolean} If the dialog was open returns false. If the dialog was closed is true.
    */
   close(destroy, noRefresh, force = false, customId) {
-    if (!force && (!this.visible || this.openSubComponents.length)) {
+    if (!force && !this.visible) {
       return true;
     }
 

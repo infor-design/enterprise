@@ -637,7 +637,7 @@ div.multiselect {
 
   &.text-align-reverse {
     li {
-      padding: 0 10px;
+      padding: 0 10px 0 0;
     }
 
     &.dropdown-list {
@@ -648,7 +648,7 @@ div.multiselect {
 
     input.dropdown-search {
       &.text-align-reverse {
-        padding-right: 16px !important;
+        padding-right: 18px !important;
       }
     }
 
@@ -795,7 +795,7 @@ input.dropdown.error:focus {
   div.dropdown {
     font-size: $input-size-compact-font-size;
     margin-bottom: 0;
-    padding: $dropdown-size-compact-padding;
+    padding: 5px 18px 5px 5px;
 
     > .listoption-icon {
       height: 14px;
@@ -1062,6 +1062,14 @@ div.dropdown-xs,
     }
   }
 
+  .dropdown-list {
+    &.text-align-reverse {
+      li {
+        padding-right: 12px;
+      }
+    }
+  }
+
   div.dropdown,
   div.multiselect {
     padding: $dropdown-size-regular-padding;
@@ -1091,17 +1099,21 @@ div.dropdown-xs,
     div.multiselect {
       font-size: $input-size-compact-font-size;
       height: $input-size-compact-height !important;
-      padding: 0;
+      padding: 4px 0 0 4px;
 
       &.has-tags {
         height: auto !important;
+      }
+
+      &.text-align-reverse {
+        padding-right: 16px;
       }
     }
 
     form:not(.form-layout-compact) .field {
       div.dropdown,
       div.multiselect {
-        padding: $dropdown-size-compact-padding;
+        padding: 5px 18px 5px 5px;
       }
     }
   }
