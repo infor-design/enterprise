@@ -47,6 +47,16 @@
   top: unset;
 }
 
+html.is-safari {
+  .listview-search {
+    .searchfield-wrapper {
+      &.has-listview-filters {
+        top: 2px;
+      }
+    }
+  }
+}
+
 // Firefox/Safari icon placement adjustments
 html.is-safari,
 html.is-firefox {
