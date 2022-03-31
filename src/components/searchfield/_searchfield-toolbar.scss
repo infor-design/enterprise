@@ -240,7 +240,8 @@ $toolbarsearchfield-category-empty-width: 51px;
     .icon {
       color: $searchfield-text-color;
       height: 18px;
-      top: 10px;
+      top: 0;
+      transform: translateY(50%);
     }
 
     &:not(.non-collapsible) {
