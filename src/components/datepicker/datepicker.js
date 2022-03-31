@@ -618,6 +618,18 @@ DatePicker.prototype = {
   },
 
   /**
+   * Loads legend list to the monthview settings.
+   * @returns {void}
+   */
+  loadLegend(legendList) {
+    if (legendList === undefined || legendList.length < 1) {
+      return;
+    }
+
+    this.calendarAPI.loadLegend(legendList);
+  },
+
+  /**
    * Open the calendar in a popup
    * @private
    * @returns {void}
@@ -640,6 +652,7 @@ DatePicker.prototype = {
     * @property {object} event - The jquery event object
     */
     this.element.addClass('is-active is-open').trigger('listopened');
+    this.element.trigger('beforemonthrendered');
     this.timepickerContainer = $('<div class="datepicker-time-container"></div>');
     const clearButton = `<button type="button" class="is-cancel btn-tertiary">
       ${Locale.translate(this.settings.isMonthPicker ? 'Cancel' : 'Clear', { locale: this.locale.name, language: this.language })}
@@ -827,6 +840,10 @@ DatePicker.prototype = {
 
     this.calendarAPI = new MonthView(this.calendarContainer, this.settings);
     this.calendar = this.calendarAPI.element;
+
+    this.calendar.on('beforemonthrendered', () => {
+      this.element.trigger('beforemonthrendered');
+    });
 
     if (s.showTime) {
       this.calendar.addClass('is-timepicker');
