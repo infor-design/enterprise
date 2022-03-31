@@ -237,6 +237,10 @@ $toolbarsearchfield-category-empty-width: 51px;
       }
     }
 
+    .collapse-button .icon {
+      transform: translateY(0);
+    }
+
     .icon {
       color: $searchfield-text-color;
       height: 18px;
