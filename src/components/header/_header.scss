@@ -258,6 +258,13 @@ $subheader-height: 60px;
       width: 100%;
     }
   }
+
+  .buttonset .toolbar-searchfield-wrapper:not(.is-open) {
+    svg.icon:not(.close) {
+      color: $header-tab-normal-color;
+      opacity: 0.7;
+    }
+  }
 }
 
 // Application Subheaders
