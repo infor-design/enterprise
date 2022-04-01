@@ -31,6 +31,7 @@
 - `[Modal]` Fix a demo app issue where the proper settings were not added to the required key in the validation object. ([#5571](https://github.com/infor-design/enterprise/issues/5571))
 - `[Searchfield]` Fix on searchfield categories where popup wrapper gets duplicated whenever update is called. ([NG#1186](https://github.com/infor-design/enterprise-ng/issues/1186))
 - `[Tabs]` Fix a bug where tabs indicator is not properly aligned in RTL. ([#6068](https://github.com/infor-design/enterprise/issues/6068))
+- `[Tabs/Module]` Fixed a bug the personalization color was the same as the tab color. ([#6236](https://github.com/infor-design/enterprise/issues/6236))
 - `[Tag]` Fix on tag text not showing when placed inside a popover. ([#6092](https://github.com/infor-design/enterprise/issues/6092))
 - `[Toolbar]` Fixed an issue where the input disappears in toolbar at mobile size. ([#5388](https://github.com/infor-design/enterprise/issues/5388))
 - `[Tooltip]` Fixed the `maxWidth` setting to work properly. ([#6100](https://github.com/infor-design/enterprise/issues/6100))
