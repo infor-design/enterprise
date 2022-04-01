@@ -32,6 +32,7 @@
 - `[Searchfield]` Fix on searchfield categories where popup wrapper gets duplicated whenever update is called. ([NG#1186](https://github.com/infor-design/enterprise-ng/issues/1186))
 - `[Searchfield/Header]` Enhanced the font colors, background colors for the searchfield inside of the header & subheader. ([#6047](https://github.com/infor-design/enterprise/issues/6047))
 - `[Tabs]` Fix a bug where tabs indicator is not properly aligned in RTL. ([#6068](https://github.com/infor-design/enterprise/issues/6068))
+- `[Tabs/Module]` Fixed a bug the personalization color was the same as the tab color. ([#6236](https://github.com/infor-design/enterprise/issues/6236))
 - `[Tag]` Fix on tag text not showing when placed inside a popover. ([#6092](https://github.com/infor-design/enterprise/issues/6092))
 - `[Toolbar]` Fixed an issue where the input disappears in toolbar at mobile size. ([#5388](https://github.com/infor-design/enterprise/issues/5388))
 - `[Tooltip]` Fixed the `maxWidth` setting to work properly. ([#6100](https://github.com/infor-design/enterprise/issues/6100))
@@ -103,6 +104,12 @@
 - `[Timepicker]` Fix a bug in timepicker where hours is not properly created when changing from AM/PM. ([#6104](https://github.com/infor-design/enterprise/issues/6104))
 
 (41 Issues Solved This Release, Backlog Enterprise 198, Backlog Ng 38, 1100 Functional Tests, 1635 e2e Tests, 321 Puppeteer Tests)
+
+## v4.60.3
+
+## v4.60.3 Fixes
+
+- `[Tabs/Module]` Fixed a bug the personalization color was the same as the tab color. ([#6236](https://github.com/infor-design/enterprise/issues/6236))
 
 ## v4.60.2
 
