@@ -29,6 +29,12 @@
 - `[Swipe-action]` Added a Puppeteer Script for Swipe Container. ([#6129](https://github.com/infor-design/enterprise/issues/6129))
 - `[Tag]` The dismiss button was missing a button type causing the form to submit. ([#6149](https://github.com/infor-design/enterprise/issues/6149))
 
+## v4.60.3
+
+## v4.60.3 Fixes
+
+- `[Tabs/Module]` Fixed a bug the personalization color was the same as the tab color. ([#6236](https://github.com/infor-design/enterprise/issues/6236))
+
 ## v4.60.2
 
 ## v4.60.2 Fixes
