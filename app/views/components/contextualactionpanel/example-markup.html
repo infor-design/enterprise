@@ -14,7 +14,7 @@
   </div>
 </div>
 
-<div id="cap-template" style="display:none">
+<div id="cap-template" style="display: none;">
   <div class="row">
     <div class="six columns">
       <div class="field">
@@ -52,12 +52,8 @@
 </div>
 
 <script id="test-script">
-  var count = 0;
-
   function openPanel() {
-    const panelHTML = $($('#cap-template')[0].innerHTML).attr('id', 'panel-' + count);
-    panelHTML.insertAfter('#trigger-1');
-    count++;
+    const panelHTML = $($('#cap-template')[0].innerHTML);
 
     $('body').contextualactionpanel({
       content: panelHTML,
