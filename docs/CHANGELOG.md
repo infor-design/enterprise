@@ -104,6 +104,12 @@
 
 (41 Issues Solved This Release, Backlog Enterprise 198, Backlog Ng 38, 1100 Functional Tests, 1635 e2e Tests, 321 Puppeteer Tests)
 
+## v4.60.3
+
+## v4.60.3 Fixes
+
+- `[Tabs/Module]` Fixed a bug the personalization color was the same as the tab color. ([#6236](https://github.com/infor-design/enterprise/issues/6236))
+
 ## v4.60.2
 
 ## v4.60.2 Fixes
