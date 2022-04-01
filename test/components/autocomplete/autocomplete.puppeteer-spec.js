@@ -1,4 +1,5 @@
 const config = require('../../helpers/e2e-config');
+const { getConfig } = require('../../helpers/e2e-utils.js');
 
 describe('Autocomplete Puppeteer Test', () => {
   const baseUrl = 'http://localhost:4000/components/autocomplete';
@@ -75,6 +76,19 @@ describe('Autocomplete Puppeteer Test', () => {
       await checkAttr('#autocomplete-list-option2', 'autocomplete-list-option2', 'autocomplete-automation-id-list-option2');
       await checkAttr('#autocomplete-list-option3', 'autocomplete-list-option3', 'autocomplete-automation-id-list-option3');
       await checkAttr('#autocomplete-list-option4', 'autocomplete-list-option4', 'autocomplete-automation-id-list-option4');
+    });
+
+    it('should not visual regress', async () => {
+      await page.setViewport({ width: 1920, height: 1080 });
+      const autocompleteEl = await clickOnAutocomplete();
+      autocompleteEl.type('a');
+
+      await page.waitForSelector('#maincontent', { visible: true });
+      await page.waitForTimeout(config.sleep);
+
+      const img = await page.screenshot();
+      const sConfig = getConfig('autocomplete');
+      expect(img).toMatchImageSnapshot(sConfig);
     });
   });
 
