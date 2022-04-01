@@ -207,6 +207,14 @@ $subheader-height: 60px;
     &.has-title-button + .breadcrumb {
       padding-left: 56px;
     }
+
+    .toolbar-section.search-categories {
+      .toolbar-searchfield-wrapper.has-categories .btn.searchfield-category-button {
+        svg.icon {
+          transform: translateY(0); 
+        }
+      }
+    }
   }
 
   &.has-alternate-breadcrumb {
@@ -464,7 +472,8 @@ $subheader-height: 60px;
               }
 
               .icon.close {
-                top: 0 !important;
+                top: 0 ;
+                transform: translateY(0);
               }
             }
           }
