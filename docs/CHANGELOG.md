@@ -40,6 +40,8 @@
 - `[Tooltip]` Fixed the `maxWidth` setting to work properly. ([#6100](https://github.com/infor-design/enterprise/issues/6100))
 - `[Widget]` Fix on drag image including the overflow area. ([NG#1216](https://github.com/infor-design/enterprise-ng/issues/1216))
 
+(47 Issues Solved This Release, Backlog Enterprise 187, Backlog Ng 37, 1101 Functional Tests, 1574 e2e Tests, 293 Puppeteer Tests)
+
 ## v4.61.1
 
 ## v4.61.1 Fixes
