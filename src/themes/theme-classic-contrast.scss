@@ -680,11 +680,11 @@ $searchfield-card-border-color: $ids-color-palette-graphite-30;
 $searchfield-card-icon-color: $ids-color-palette-graphite-30;
 $searchfield-card-text-color: $font-color;
 
-$searchfield-header-bg-color: $ids-color-palette-graphite-80;
+$searchfield-header-bg-color: $ids-color-palette-white;
 $searchfield-header-border-color: $ids-color-palette-graphite-90;
 $searchfield-header-text-color: $ids-color-palette-white;
 $searchfield-header-placeholder-text-color: rgba(255, 255, 255, 0.7);
-$searchfield-header-icon-color: $header-button-color;
+$searchfield-header-icon-color: $ids-color-palette-slate-60;
 $searchfield-readonly-icon-color: $ids-color-palette-graphite-80;
 
 //Image Border Color
@@ -707,6 +707,12 @@ $about-header-color: $ids-color-palette-black;
 $about-text-color: $ids-color-palette-black;
 $about-text-border-color: $ids-color-palette-graphite-60;
 $about-text-hover-border-color: $ids-color-palette-black;
+
+// Header
+$header-searchfield-btn-font-color: $ids-color-palette-slate-100;
+$header-primary-btn-background-hover-color: $ids-color-palette-azure-100;
+$input-placeholder-color: $ids-color-palette-slate-60;
+$header-searchfield-input-border-color: $ids-color-palette-slate-80;
 
 // Header Tabs
 $header-tabcontainer-border-color: $ids-color-brand-secondary-alt;

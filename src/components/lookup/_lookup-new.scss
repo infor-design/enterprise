@@ -12,8 +12,8 @@
           margin-right: 0;
         }
 
-        > .icon.close {
-          top: -1px;
+        .close.icon {
+          transform: translateY(50%);
         }
       }
     }
