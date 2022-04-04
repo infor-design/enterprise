@@ -2,6 +2,7 @@
 
 ## v4.62.0 Features
 
+- `[Datagrid]` Added tooltip for fallback image. ([#6178](https://github.com/infor-design/enterprise/issues/6178))
 - `[Datepicker]` Added legend load for datepicker. ([NG#1261](https://github.com/infor-design/enterprise-ng/issues/1261))
 - `[File Upload]` Added setFailed status ([#5671](https://github.com/infor-design/enterprise/issues/5671))
 - `[Icon]` Created a puppeteer script for the new launch icon. ([#5854](https://github.com/infor-design/enterprise/issues/5854))

@@ -245,7 +245,12 @@ const DATAGRID_DEFAULTS = {
   allowChildExpandOnMatch: false,
   attributes: null,
   allowPasteFromExcel: false,
-  fallbackImage: 'insert-image'
+  fallbackImage: 'insert-image',
+  fallbackSize: { height: 40, width: 40 },
+  fallbackTooltip: {
+    content: 'Image could not load',
+    delay: 200
+  }
 };
 
 function Datagrid(element, settings) {
@@ -4058,8 +4063,12 @@ Datagrid.prototype = {
     this.element.find('.datagrid-img').off('error.datagrid').on('error.datagrid', (e) => {
       const targetEl = $(e.target);
       const parentEl = targetEl.parent();
+      const noImageEl = $(`<svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-${this.settings.fallbackImage}"></use></svg>`);
 
-      parentEl.append(`<svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-${this.settings.fallbackImage}"></use></svg>`);
+      noImageEl.tooltip(this.settings.fallbackTooltip);
+      noImageEl.css(this.settings.fallbackSize);
+
+      parentEl.append(noImageEl);
       targetEl.remove();
     });
 
