@@ -44,7 +44,10 @@
       //Init and get the api for the grid
       var gridApi = $('#readonly-datagrid').datagrid({
         columns: columns,
-        dataset: data
+        dataset: data,
+        fallbackTooltip: {
+          content: 'Custom Fallback Message'
+        }
       }).data('datagrid');
 
       $('#add-row-button').on('click', function () {
