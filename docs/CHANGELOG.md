@@ -5,6 +5,7 @@
 - `[Datagrid]` Added tooltip for fallback image. ([#6178](https://github.com/infor-design/enterprise/issues/6178))
 - `[Datepicker]` Added legend load for datepicker. ([NG#1261](https://github.com/infor-design/enterprise-ng/issues/1261))
 - `[File Upload]` Added setFailed status ([#5671](https://github.com/infor-design/enterprise/issues/5671))
+- `[File Upload]` Added close button on file error message ([#6229](https://github.com/infor-design/enterprise/issues/6229))
 - `[Icon]` Created a puppeteer script for the new launch icon. ([#5854](https://github.com/infor-design/enterprise/issues/5854))
 - `[Icon]` Created a puppeteer script for the new mobile icon. ([#6199](https://github.com/infor-design/enterprise/issues/6199))
 - `[Listview]` Added filters in Listview Component. ([#6007](https://github.com/infor-design/enterprise/issues/6007))

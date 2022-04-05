@@ -12,8 +12,18 @@
       .status-icon {
         margin-top: 12px;
 
+        &.file-error {
+          margin-top: 15px;
+          background-color: transparent;
+        }
+
         > .icon {
           top: -3px;
+
+          &.icon-error {
+            height: 18px !important;
+            width: 18px;
+          }
         }
 
         button {
@@ -35,6 +45,10 @@
 
     .l-pull-right {
       margin-top: 1px;
+
+      &.file-error .size {
+        margin-right: 0;
+      }
     }
   }
 }
