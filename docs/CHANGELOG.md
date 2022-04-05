@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.63.0 Fixes
+
+- `[Datepicker]` Fix a bug on setValue() when pass an empty string for clearing field. ([#6168](https://github.com/infor-design/enterprise/issues/6168))
+
 ## v4.62.0 Features
 
 - `[Datagrid]` Added tooltip for fallback image. ([#6178](https://github.com/infor-design/enterprise/issues/6178))
