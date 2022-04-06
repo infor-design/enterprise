@@ -1388,7 +1388,7 @@ DatePicker.prototype = {
     const s = this.settings;
     this.currentDate = date;
 
-    if (date === "") {
+    if (date === '') {
       this.element.text('');
       return;
     }
