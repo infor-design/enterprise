@@ -841,14 +841,9 @@ html[dir='rtl'] {
  */
 .tab-container > .toolbar > .buttonset {
   > .searchfield-wrapper.toolbar-searchfield-wrapper > .btn-icon.close {
-    height: auto;
-    margin-top: 0;
+    height: 24px; // matches min-height declaration of button.close in input.scss
     top: 50%;
     transform: translateY(-50%);
-    width: 24px;
-
-    svg.icon.close {
-      top: 0;
-    }
+    width: 18px;
   }
 }
