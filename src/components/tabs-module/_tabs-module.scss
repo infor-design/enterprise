@@ -699,6 +699,14 @@
       }
     }
   }
+
+  &.is-personalizable {
+    .toolbar-searchfield-wrapper {
+      > svg.icon:not(.close) {
+        fill: transparent !important;
+      }
+    }
+  }
 }
 
 // Make the tab-panel-container stretch to the full height of the page-container
