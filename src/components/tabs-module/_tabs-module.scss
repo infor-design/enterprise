@@ -700,6 +700,8 @@
     }
   }
 
+  // Overrides soho-personalization <style> injection
+  // https://github.com/infor-design/enterprise/issues/6207
   &.is-personalizable {
     .toolbar-searchfield-wrapper {
       > svg.icon:not(.close) {
