@@ -25,7 +25,7 @@ describe('Masthead tests', () => {
   }
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress on soho theme', async () => {
+    xit('Should not visual regress on soho theme', async () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
