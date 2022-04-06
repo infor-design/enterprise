@@ -1,6 +1,6 @@
 # What's New with Enterprise
 
-## v4.62.1 Features
+## v4.63.0 Features
 
 - `[File Upload]` Added close button on file error message ([#6229](https://github.com/infor-design/enterprise/issues/6229))
 
