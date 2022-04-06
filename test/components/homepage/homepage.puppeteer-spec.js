@@ -8,7 +8,7 @@ describe('Homepage Puppeteer Tests', () => {
     expect(pos1.top).toEqual(pos2[1]);
   }
 
-  describe('Homepage example index', () => {
+  describe.skip('Homepage example index', () => {
     const url = `${baseUrl}/example-index.html`;
 
     beforeAll(async () => {
