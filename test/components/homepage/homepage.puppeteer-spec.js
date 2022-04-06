@@ -1,6 +1,6 @@
 const { getConfig } = require('../../helpers/e2e-utils.js');
 
-describe('Homepage Puppeteer Tests', () => {
+describe.skip('Homepage Puppeteer Tests', () => {
   const baseUrl = 'http://localhost:4000/components/homepage';
 
   function checkPos(pos1, pos2) {
