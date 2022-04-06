@@ -3740,6 +3740,12 @@ Dropdown.prototype = {
       return false;
     }
 
+    $('body').on('keydown.dropdown', (e) => {
+      if (this.isOpen()) {
+        this.handleKeyDown($(e.target), e);
+      }
+    });
+
     let isTag = false;
     this.pseudoElem
       .on('keydown.dropdown', e => this.handlePseudoElemKeydown(e))
