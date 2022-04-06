@@ -3,9 +3,9 @@
   <div class="one-half column">
     <div class="field">
       <label for="datetime-input">Date Input with Time</label>
-      <input id="datefilter" style="margin-left: 5px"  />
+      <input id="datefilter" />
     </div>
-    <button class="btn-primary btn-clear" type="button" id="primary-action-two">Clear Field</button>
+    <button class="btn-secondary btn-clear" type="button" id="button-1">Clear Field</button>
   </div>
 </div>
 
@@ -18,7 +18,7 @@
       useRange: true
     },
   });
-  
+
   function onClear() {
     var dp = $('#datefilter').data('datepicker');
     dp.setValue('', false, false);
