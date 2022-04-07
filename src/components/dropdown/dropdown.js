@@ -2281,6 +2281,11 @@ Dropdown.prototype = {
       if (window.orientation === undefined) {
         self.closeList('cancel');
       }
+    }).on('keydown.dropdown', (e) => {
+      const target = $(e.target);
+      if (this.isOpen() && !target.hasClass('dropdown-search')) {
+        this.handleKeyDown(target, e);
+      }
     });
 
     // In mobile environments, close the list on an orientation change.
@@ -3739,12 +3744,6 @@ Dropdown.prototype = {
 
       return false;
     }
-
-    $('body').on('keydown.dropdown', (e) => {
-      if (this.isOpen()) {
-        this.handleKeyDown($(e.target), e);
-      }
-    });
 
     let isTag = false;
     this.pseudoElem
