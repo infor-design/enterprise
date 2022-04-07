@@ -1,5 +1,13 @@
 # What's New with Enterprise
 
+## v4.63.0
+
+## v4.63.0 Fixes
+
+- `[Dropdown]` Fix on keydown events not working when dropdown is nested in label. ([NG#1262](https://github.com/infor-design/enterprise-ng/issues/1262))
+
+## v4.62.0
+
 ## v4.62.0 Features
 
 - `[Datagrid]` Added tooltip for fallback image. ([#6178](https://github.com/infor-design/enterprise/issues/6178))
