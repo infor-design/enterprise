@@ -3,6 +3,13 @@
 ## v4.63.0 Fixes
 
 - `[Datagrid]` Fix a bug where tooltip is not displayed even when settings is turned on in disabled rows. ([#6128](https://github.com/infor-design/enterprise/issues/6128))
+- `[Datepicker]` Fix a bug on setValue() when pass an empty string for clearing field. ([#6168](https://github.com/infor-design/enterprise/issues/6168))
+
+## v4.63.0 Features
+
+- `[File Upload]` Added close button on file error message ([#6229](https://github.com/infor-design/enterprise/issues/6229))
+
+## v4.62.0
 
 ## v4.62.0 Features
 
