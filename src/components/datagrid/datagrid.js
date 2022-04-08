@@ -4322,7 +4322,7 @@ Datagrid.prototype = {
       return '';
     }
 
-    let isEnabledTooltips = self.settings.enableTooltips;
+    const isEnabledTooltips = self.settings.enableTooltips;
     let isRowDisabled = false;
 
     // Run a function that helps check if disabled
