@@ -6,6 +6,8 @@
 
 ## v4.62.0 Features
 
+- `[Datagrid]` Added tooltip for fallback image. ([#6178](https://github.com/infor-design/enterprise/issues/6178))
+- `[Datepicker]` Added legend load for datepicker. ([NG#1261](https://github.com/infor-design/enterprise-ng/issues/1261))
 - `[File Upload]` Added setFailed status ([#5671](https://github.com/infor-design/enterprise/issues/5671))
 - `[Icon]` Created a puppeteer script for the new launch icon. ([#5854](https://github.com/infor-design/enterprise/issues/5854))
 - `[Icon]` Created a puppeteer script for the new mobile icon. ([#6199](https://github.com/infor-design/enterprise/issues/6199))
@@ -18,19 +20,31 @@
 - `[ApplicationMenu]` Remove a Safari-specific style rule the misaligns the button svg arrow. ([#5722](https://github.com/infor-design/enterprise/issues/5722))
 - `[Arrange]` Fix an alignment issue in the demo app. ([#5281](https://github.com/infor-design/enterprise/issues/5281))
 - `[Calendar]` Fix day of the week to show three letters as default in range calendar. ([#6193](https://github.com/infor-design/enterprise/issues/6193))
+- `[ContextualActionPanel]` Fix an issue with the example page where the Contextual Action Panel is not initialized on open. ([#6065](https://github.com/infor-design/enterprise/issues/6065))
+- `[ContextualActionPanel]` Remove unnecessary markup injection behavior from example. ([#6065](https://github.com/infor-design/enterprise/issues/6065))
+- `[Datagrid]` Fixed a regression bug where the datepicker icon button and time value upon click were misaligned. ([#6198](https://github.com/infor-design/enterprise/issues/6198))
 - `[Datagrid]` Show pagesize selector even in hidePagerOnOnePage mode ([#3706](https://github.com/infor-design/enterprise/issues/3706))
+- `[Datagrid]` Corrected a filter type in a demo app page. ([#5497](https://github.com/infor-design/enterprise/issues/5497))
 - `[Datagrid]` Remove widths in demo app page to prevent truncation of column. ([#5495](https://github.com/infor-design/enterprise/issues/5495))
 - `[Datagrid]` Fixed a regression bug where the datepicker icon button and time value upon click were misaligned. ([#6198](https://github.com/infor-design/enterprise/issues/6198))
 - `[Dropdown]` Fixed multiple accessibility issues with multiselect dropdown. ([#6075](https://github.com/infor-design/enterprise/issues/6075))
 - `[Dropdown]` Fixed an overflow issue on Windows 10 Chrome. ([#4940](https://github.com/infor-design/enterprise/issues/4940))
+- `[Editor]` Fix on editor changing text in another editor. ([NG#1232](https://github.com/infor-design/enterprise-ng/issues/1232))
+- `[FileUploadAdvanced]` Fixed a missing link in french locale. ([#6226](https://github.com/infor-design/enterprise/issues/6226))
 - `[Homepage]` Fixed instability of the visual tests. ([#6179](https://github.com/infor-design/enterprise/issues/6179))
+- `[Lookup]` Remove unnecessary filter from example page. ([#5677](https://github.com/infor-design/enterprise/issues/5677))
 - `[Modal]` Updated close method that will close even if there are subcomponents opened. ([#6048](https://github.com/infor-design/enterprise/issues/6048))
 - `[Modal]` Fix a demo app issue where the proper settings were not added to the required key in the validation object. ([#5571](https://github.com/infor-design/enterprise/issues/5571))
+- `[Searchfield]` Fix on searchfield categories where popup wrapper gets duplicated whenever update is called. ([NG#1186](https://github.com/infor-design/enterprise-ng/issues/1186))
+- `[Searchfield/Header]` Enhanced the font colors, background colors for the searchfield inside of the header & subheader. ([#6047](https://github.com/infor-design/enterprise/issues/6047))
 - `[Tabs]` Fix a bug where tabs indicator is not properly aligned in RTL. ([#6068](https://github.com/infor-design/enterprise/issues/6068))
+- `[Tabs/Module]` Fixed a bug the personalization color was the same as the tab color. ([#6236](https://github.com/infor-design/enterprise/issues/6236))
 - `[Tag]` Fix on tag text not showing when placed inside a popover. ([#6092](https://github.com/infor-design/enterprise/issues/6092))
 - `[Toolbar]` Fixed an issue where the input disappears in toolbar at mobile size. ([#5388](https://github.com/infor-design/enterprise/issues/5388))
 - `[Tooltip]` Fixed the `maxWidth` setting to work properly. ([#6100](https://github.com/infor-design/enterprise/issues/6100))
 - `[Widget]` Fix on drag image including the overflow area. ([NG#1216](https://github.com/infor-design/enterprise-ng/issues/1216))
+
+(47 Issues Solved This Release, Backlog Enterprise 187, Backlog Ng 37, 1101 Functional Tests, 1574 e2e Tests, 293 Puppeteer Tests)
 
 ## v4.61.1
 
@@ -98,6 +112,12 @@
 - `[Timepicker]` Fix a bug in timepicker where hours is not properly created when changing from AM/PM. ([#6104](https://github.com/infor-design/enterprise/issues/6104))
 
 (41 Issues Solved This Release, Backlog Enterprise 198, Backlog Ng 38, 1100 Functional Tests, 1635 e2e Tests, 321 Puppeteer Tests)
+
+## v4.60.3
+
+## v4.60.3 Fixes
+
+- `[Tabs/Module]` Fixed a bug the personalization color was the same as the tab color. ([#6236](https://github.com/infor-design/enterprise/issues/6236))
 
 ## v4.60.2
 

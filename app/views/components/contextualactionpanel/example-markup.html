@@ -14,7 +14,7 @@
   </div>
 </div>
 
-<div id="cap-template" style="display:none">
+<div id="cap-template" style="display: none;">
   <div class="row">
     <div class="six columns">
       <div class="field">
@@ -52,45 +52,46 @@
 </div>
 
 <script id="test-script">
-  var count = 0;
-
   function openPanel() {
-    const panelHTML = $($('#cap-template')[0].innerHTML).attr('id', 'panel-' + count);
-    panelHTML.insertAfter('#trigger-1');
-    count++;
+    const panelHTML = $($('#cap-template')[0].innerHTML);
 
     $('body').contextualactionpanel({
-      title: 'Expenses: $50,000.00',
       content: panelHTML,
-      trigger: 'immediate',
-      buttons: [
-        {
-          type: 'input',
-          text: 'Keyword',
-          id: 'filter',
-          name: 'filter',
-          cssClass: 'searchfield',
-          searchfieldSettings: {
-            clearable: true,
-            collapsible: true
+      modalSettings: {
+        id: 'contextual-action-modal-xyz',
+        title: 'Expenses: $50,000.00',
+        trigger: 'immediate',
+        buttons: [
+          {
+            type: 'input',
+            text: 'Keyword',
+            id: 'filter',
+            name: 'filter',
+            cssClass: 'searchfield',
+            searchfieldSettings: {
+              clearable: true,
+              collapsible: true
+            }
+          },
+          {
+            cssClass: 'separator'
+          },
+          {
+            text: 'Close',
+            cssClass: 'btn-icon',
+            audible: true,
+            icon: '#icon-close',
+            click: function() {
+              var api = $(this).data('modal');
+              api.close();
+            }
           }
-        },
-        {
-          cssClass: 'separator'
-        },
-        {
-          text: 'Close',
-          cssClass: 'btn-icon',
-          audible: true,
-          icon: '#icon-close',
-          click: function() {
-            var api = $(this).data('modal');
-            api.close();
-          }
-        }
-      ]
-    }).one('close', function () {
-      console.log('Close Fired');
+        ]
+      },
+    }).on('open', function () {
+      $(this).initialize();
+    }).on('close', function () {
+      console.log('close');
     });
   };
 

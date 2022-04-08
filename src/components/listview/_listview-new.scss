@@ -47,16 +47,16 @@
   top: unset;
 }
 
-.listview {
-  .listview-heading {
-    font-size: 1.6rem;
-    color: $listview-color;
+html.is-safari {
+  .listview-search {
+    .searchfield-wrapper {
+      &.has-listview-filters {
+        top: 2px;
+      }
+    }
   }
+}
 
-  .listview-subheading {
-    font-size: 1.4rem;
-    color: $listview-color;
-  }
 
   .listview-micro {
     font-size: 1.4rem;

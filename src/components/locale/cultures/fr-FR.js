@@ -472,7 +472,7 @@ Soho.Locale.addCulture('fr-FR', {
     TestLocaleDefaults: { id: 'TestLocaleDefaults', value: 'Tester les valeurs par défaut des paramètres régionaux', comment: 'Do not translate' },
     TextColor: { id: 'TextColor', value: 'Couleur du texte', comment: 'add or edit text color in the editor' },
     TextDropArea: { id: 'DropArea', value: 'Glisser déplacer les fichiers à charger', comment: 'text for drop area for advanced fileupload' },
-    TextDropAreaWithBrowse: { id: 'TextDropAreaWithBrowse', value: 'Glisser déplacer ou <span class="hyperlink »>sélectionner les fichiers</span> à charger', comment: 'text for drop area with browse for advanced fileupload' },
+    TextDropAreaWithBrowse: { id: 'TextDropAreaWithBrowse', value: 'Glisser déplacer ou <span class="hyperlink">sélectionner les fichiers</span> à charger', comment: 'text for drop area with browse for advanced fileupload' },
     TextBtnCancel: { id: 'TextBtnCancel', value: 'Annuler le chargement de ce fichier', comment: 'text for cancel button for advanced fileupload' },
     TextBtnCloseError: { id: 'TextBtnCloseError', value: 'Fermer cette erreur', comment: 'text for error close button for advanced fileupload' },
     TextBtnRemove: { id: 'TextBtnRemove', value: 'Fermer cette erreur', comment: 'text for remove button for advanced fileupload' },

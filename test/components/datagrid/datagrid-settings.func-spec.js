@@ -127,7 +127,12 @@ describe('Datagrid Settings', () => { //eslint-disable-line
       allowChildExpandOnMatchOnly: false,
       allowChildExpandOnMatch: false,
       allowPasteFromExcel: false,
-      fallbackImage: 'insert-image'
+      fallbackImage: 'insert-image',
+      fallbackSize: { height: 40, width: 40 },
+      fallbackTooltip: {
+        content: 'Image could not load',
+        delay: 200
+      }
     };
     datagridObj = new Datagrid(datagridEl, { dataset: data, columns });
   });
