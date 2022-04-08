@@ -2,7 +2,14 @@
 
 ## v4.63.0 Fixes
 
+- `[Datepicker]` Fix a bug on setValue() when pass an empty string for clearing field. ([#6168](https://github.com/infor-design/enterprise/issues/6168))
 - `[Listview]` Change the font size of heading, subheading, and micro in Listview Component. ([#4996](https://github.com/infor-design/enterprise/issues/4996))
+
+## v4.63.0 Features
+
+- `[File Upload]` Added close button on file error message ([#6229](https://github.com/infor-design/enterprise/issues/6229))
+
+## v4.62.0
 
 ## v4.62.0 Features
 
