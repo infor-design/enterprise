@@ -5360,7 +5360,6 @@ Datagrid.prototype = {
     const handleShow = (elem, delay) => {
       delay = typeof delay === 'undefined' ? defaultDelay : delay;
       tooltipTimer = setTimeout(() => {
-        console.log('handleShow');
         const isHeaderColumn = DOM.hasClass(elem, 'datagrid-column-wrapper');
         const isHeaderFilter = DOM.hasClass(elem.parentNode, 'datagrid-filter-wrapper');
         const isPopup = isHeaderFilter ?
@@ -5368,9 +5367,9 @@ Datagrid.prototype = {
         const tooltip = $(elem).data('gridtooltip') || self.cacheTooltip(elem);
         const containerEl = isHeaderColumn ? elem.parentNode : elem;
         const width = self.getOuterWidth(containerEl);
-        // if (tooltip && (tooltip.forced || (tooltip.textwidth > (width - 35))) && !isPopup) {
+        if (tooltip && (tooltip.forced || (tooltip.textwidth > (width - 35))) && !isPopup) {
           self.showTooltip(tooltip);
-        // }
+        }
       }, delay);
     };
 
@@ -5391,7 +5390,6 @@ Datagrid.prototype = {
     this.element
       .off('mouseenter.gridtooltip focus.gridtooltip', selector.str)
       .on('mouseenter.gridtooltip focus.gridtooltip', selector.str, function () {
-        console.log('mouseenter');
         handleShow(this);
       })
       .off('mouseleave.gridtooltip click.gridtooltip blur.gridtooltip', selector.str)
@@ -12517,7 +12515,6 @@ Datagrid.prototype = {
    * @returns {void}
    */
   showTooltip(options) {
-    console.log('tools');
     if (this.tooltip) {
       const tooltip = $(this.tooltip);
       const tooltipContentEl = this.tooltip.querySelector('.tooltip-content');
