@@ -47,6 +47,23 @@
   top: unset;
 }
 
+.listview {
+  .listview-heading {
+    font-size: 1.6rem;
+    color: $listview-color;
+  }
+
+  .listview-subheading {
+    font-size: 1.4rem;
+    color: $listview-color;
+  }
+
+  .listview-micro {
+    font-size: 1.4rem;
+    color: $listview-color;
+  }
+}
+
 // Firefox/Safari icon placement adjustments
 html.is-safari,
 html.is-firefox {

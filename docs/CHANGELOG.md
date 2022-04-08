@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.63.0 Fixes
+
+- `[Listview]` Change the font size of heading, subheading, and micro in Listview Component. ([#4996](https://github.com/infor-design/enterprise/issues/4996))
+
 ## v4.62.0 Features
 
 - `[File Upload]` Added setFailed status ([#5671](https://github.com/infor-design/enterprise/issues/5671))
