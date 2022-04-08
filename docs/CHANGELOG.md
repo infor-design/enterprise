@@ -4,7 +4,12 @@
 
 ## v4.63.0 Fixes
 
+- `[Datepicker]` Fix a bug on setValue() when pass an empty string for clearing field. ([#6168](https://github.com/infor-design/enterprise/issues/6168))
 - `[Dropdown]` Fix on keydown events not working when dropdown is nested in label. ([NG#1262](https://github.com/infor-design/enterprise-ng/issues/1262))
+
+## v4.63.0 Features
+
+- `[File Upload]` Added close button on file error message ([#6229](https://github.com/infor-design/enterprise/issues/6229))
 
 ## v4.62.0
 
