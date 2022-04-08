@@ -1388,6 +1388,11 @@ DatePicker.prototype = {
     const s = this.settings;
     this.currentDate = date;
 
+    if (this.currentDate === '' || this.currentDate === undefined) {
+      this.element.val('');
+      return;
+    }
+
     if (date instanceof Array) {
       this.currentDateIslamic = date;
       this.currentDate = Locale.umalquraToGregorian(
