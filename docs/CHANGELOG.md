@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.63.0 Fixes
+
+- `[Datagrid]` Fix a bug where tooltip is not displayed even when settings is turned on in disabled rows. ([#6128](https://github.com/infor-design/enterprise/issues/6128))
+
 ## v4.62.0 Features
 
 - `[Datagrid]` Added tooltip for fallback image. ([#6178](https://github.com/infor-design/enterprise/issues/6178))
