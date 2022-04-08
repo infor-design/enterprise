@@ -570,28 +570,30 @@ FileUploadAdvanced.prototype = {
       container = $('' +
         `<div class="container error">
           <div class="file-row">
-            <span class="status-icon">
-              <button type="button" class="btn-icon action">
-                ${$.createIcon({ classes: ['icon-close'], icon: 'close' })}
-                <span>${s.textBtnCloseError}</span>
-              </button>
+            <span class="status-icon file-error">
+              ${$.createIcon({ classes: ['icon-error'], icon: 'error' })}
             </span>
             <span class="msg">${error}</span>
+            <div class="l-pull-right">
+              <button type="button" class="btn-icon action">
+                ${$.createIcon({ classes: ['icon-close'], icon: 'close' })}
+              </button>
+            </div>
           </div>
         </div>`);
     } else {
       container = $('' +
         `<div class="container error">
           <div class="file-row">
-            <span class="status-icon">
-              <button type="button" class="btn-icon action">
-                ${$.createIcon({ classes: ['icon-close'], icon: 'close' })}
-                <span>${s.textBtnCloseError}</span>
-              </button>
+            <span class="status-icon file-error">
+              ${$.createIcon({ classes: ['icon-error'], icon: 'error' })}
             </span>
             <span class="description">${file.name}</span>
-            <div class="l-pull-right">
+            <div class="l-pull-right file-error">
               <span class="size">${this.formatFileSize(file.size)}</span>
+              <button type="button" class="btn-icon action">
+                ${$.createIcon({ classes: ['icon-close'], icon: 'close' })}
+              </button>
             </div>
           </div>
           <div class="msg">
