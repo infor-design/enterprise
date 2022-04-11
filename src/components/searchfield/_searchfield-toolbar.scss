@@ -134,10 +134,6 @@ $toolbarsearchfield-category-empty-width: 51px;
     top: 11px;
   }
 
-  .icon.close {
-    top: 10px;
-  }
-
   .btn {
     background-color: rgba(0, 0, 0, 0);
     border-radius: 2px 0 0 2px;
@@ -244,8 +240,6 @@ $toolbarsearchfield-category-empty-width: 51px;
     .icon {
       color: $searchfield-text-color;
       height: 18px;
-      top: 0;
-      transform: translateY(50%);
     }
 
     &:not(.non-collapsible) {
@@ -382,11 +376,6 @@ $toolbarsearchfield-category-empty-width: 51px;
       .searchfield {
         padding-left: 8px;
       }
-    }
-
-    .btn {
-      // border: 1px solid transparent;
-      height: 34px;
     }
 
     &.has-go-button {

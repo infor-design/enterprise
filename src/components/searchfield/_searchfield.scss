@@ -341,10 +341,6 @@
       position: absolute;
       top: 0;
 
-      @media (min-width: $breakpoint-phone-to-tablet) {
-        right: 45px;
-      }
-
       svg.close {
         left: 0;
         top: 0;
