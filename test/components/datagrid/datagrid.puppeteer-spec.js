@@ -115,7 +115,7 @@ describe('Datagrid test to keep the column strech in responsive view', () => {
   });
 });
 
-describe('Datagrid test-count-in-select-all-current-page-setting tests', () => {
+describe('Datagrid test count in select all tests', () => {
   const url = 'http://localhost:4000/components/datagrid/test-count-in-select-all-current-page-setting.html';
   beforeAll(async () => {
     await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
