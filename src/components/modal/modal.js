@@ -322,7 +322,11 @@ Modal.prototype = {
           <span class="audible">${Locale.translate('Close')}</span>
         </button>
       `);
-      this.element.addClass('has-close-btn');
+
+      if ($(window).width() >= 400) {
+        this.element.addClass('has-close-btn');
+      }
+
       this.element.find('.modal-content').append(closeBtn);
       closeBtn.on(`click.${this.namespace}`, () => this.close()).tooltip();
 

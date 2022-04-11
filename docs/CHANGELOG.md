@@ -3,6 +3,7 @@
 ## v4.63.0 Fixes
 
 - `[Datepicker]` Fix a bug on setValue() when pass an empty string for clearing field. ([#6168](https://github.com/infor-design/enterprise/issues/6168))
+- `[Modal]` Fix on too wide minimum width when close button is enabled. ([NG#1240](https://github.com/infor-design/enterprise-ng/issues/1240))
 
 ## v4.63.0 Features
 
