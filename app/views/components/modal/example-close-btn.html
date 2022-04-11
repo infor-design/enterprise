@@ -3,6 +3,8 @@
 
 		<button class="btn-secondary" type="button" id="add-context">Show Modal</button><br/><br/>
 
+    <button class="btn-secondary" type="button" id="add-context-full">Show Modal (Full)</button><br/><br/>
+
 		<!-- Modal Example -->
 		<div id="modal-add-context" class="hidden">
 			<div class="field">
@@ -39,6 +41,15 @@ var modals = {
 			'triggerButton': $('#add-context'),
       attributes: [ { name: 'id', value: 'add-context-modal' }, { name: 'data-automation-id', value: 'add-context-modal-auto' } ],
     },
+    'add-context-full': {
+      'title': 'Add Context',
+      'id': 'my-id',
+      'content': $('#modal-add-context'),
+      'showCloseBtn': true,
+			'triggerButton': $('#add-context'),
+      fullsize: 'responsive',
+      attributes: [ { name: 'id', value: 'add-context-modal' }, { name: 'data-automation-id', value: 'add-context-modal-auto' } ],
+    },
   },
 
   setModal = function (opt) {
@@ -64,6 +75,10 @@ var modals = {
   };
 
   $('#add-context').on('click', function () {
+    setModal(modals[this.id]);
+  });
+
+  $('#add-context-full').on('click', function () {
     setModal(modals[this.id]);
   });
 
