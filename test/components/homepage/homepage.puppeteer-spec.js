@@ -1,6 +1,6 @@
 const { getConfig } = require('../../helpers/e2e-utils.js');
 
-describe('Homepage Puppeteer Tests', () => {
+describe.skip('Homepage Puppeteer Tests', () => {
   const baseUrl = 'http://localhost:4000/components/homepage';
 
   function checkPos(pos1, pos2) {
@@ -8,7 +8,7 @@ describe('Homepage Puppeteer Tests', () => {
     expect(pos1.top).toEqual(pos2[1]);
   }
 
-  describe('Homepage example index', () => {
+  describe.skip('Homepage example index', () => {
     const url = `${baseUrl}/example-index.html`;
 
     beforeAll(async () => {
@@ -24,7 +24,7 @@ describe('Homepage Puppeteer Tests', () => {
         .then(element => expect(element).toBeTruthy());
     });
 
-    it('should not visual regress', async () => {
+    it.skip('should not visual regress', async () => {
       await page.setViewport({ width: 1200, height: 800 });
 
       expect(await page.waitForSelector('.homepage')).toBeTruthy();
@@ -89,7 +89,7 @@ describe('Homepage Puppeteer Tests', () => {
         .then(element => expect(element).toBeTruthy());
     });
 
-    it('should not visual regress', async () => {
+    it.skip('should not visual regress', async () => {
       await page.setViewport({ width: 1200, height: 800 });
 
       expect(await page.waitForSelector('.homepage')).toBeTruthy();
@@ -293,7 +293,7 @@ describe('Homepage Puppeteer Tests', () => {
       }
     });
 
-    it('should not visual regress', async () => {
+    it.skip('should not visual regress', async () => {
       await page.setViewport({ width: 1200, height: 800 });
 
       expect(await page.waitForSelector('.homepage')).toBeTruthy();

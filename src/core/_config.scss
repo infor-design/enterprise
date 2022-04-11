@@ -228,7 +228,7 @@ $menubutton-height: $button-size-height;
 // Input Fields
 $input-color: $input-color-initial-font;
 $input-disabled-color: $input-color-disabled-font;
-$input-placeholder-color: $input-color-initial-placeholder;
+$input-placeholder-color: $ids-color-palette-slate-60;
 $input-readonly-color: $input-color-readonly-font;
 
 //States
@@ -824,11 +824,11 @@ $searchfield-card-border-color: $ids-color-palette-graphite-20;
 $searchfield-card-icon-color: $ids-color-brand-secondary-base;
 $searchfield-card-text-color: $font-color;
 
-$searchfield-header-bg-color: $ids-color-palette-slate-80;
+$searchfield-header-bg-color: $ids-color-palette-white;
 $searchfield-header-border-color: $ids-color-palette-slate-90;
 $searchfield-header-text-color: $ids-color-palette-white;
 $searchfield-header-placeholder-text-color: rgba(255, 255, 255, 0.5);
-$searchfield-header-icon-color: $header-button-color;
+$searchfield-header-icon-color: $ids-color-palette-slate-100;
 
 $searchfield-moduletabs-bg-color: $ids-color-palette-slate-90;
 $searchfield-moduletabs-border-color: $ids-color-palette-slate-100;
@@ -858,6 +858,17 @@ $about-header-color: $ids-color-font-base;
 $about-text-color: $ids-color-font-base;
 $about-text-border-color: $ids-color-palette-graphite-30;
 $about-text-hover-border-color: $ids-color-palette-graphite-70;
+
+// Header
+$header-flex-toolbar-input-searchfield-color: $ids-color-palette-slate-100;
+$header-flex-toolbar-close-icon-color: $ids-color-palette-slate-60;
+$header-flex-toolbar-close-icon-color-hover: $ids-color-palette-slate-80;
+$subheader-searchfield-context-bg: $ids-color-palette-white;
+$subheader-input-color-focus-border: $input-color-focus-border;
+$subheader-input-text-color-focus:$input-color-focus-border;
+$subheader-searchfield-category-button-font-color: $ids-color-palette-slate-80;
+$header-searchfield-input-border-color: $ids-color-palette-slate-40;
+$header-searchfield-btn-font-color: $ids-color-palette-slate-80;
 
 // Header Tabs
 $header-tabcontainer-border-color: $ids-color-palette-graphite-30;

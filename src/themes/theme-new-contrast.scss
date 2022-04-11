@@ -184,7 +184,7 @@ $secondary-border-btn-ripple-color: $ids-color-brand-primary-alt;
 // Input Fields
 $input-color: $input-color-initial-font;
 $input-disabled-color: $input-color-disabled-font;
-$input-placeholder-color: $input-color-initial-placeholder;
+$input-placeholder-color: $ids-color-palette-slate-60;
 $input-readonly-color: $input-color-readonly-font;
 
 // States
@@ -689,11 +689,11 @@ $searchfield-card-border-color: $ids-color-palette-slate-30;
 $searchfield-card-icon-color: $ids-color-palette-slate-30;
 $searchfield-card-text-color: $font-color;
 
-$searchfield-header-bg-color: $ids-color-palette-slate-80;
+$searchfield-header-bg-color: $ids-color-palette-white;
 $searchfield-header-border-color: $ids-color-palette-slate-90;
 $searchfield-header-text-color: $ids-color-palette-white;
 $searchfield-header-placeholder-text-color: rgba(255, 255, 255, 0.7);
-$searchfield-header-icon-color: $header-button-color;
+$searchfield-header-icon-color: $ids-color-palette-slate-60;
 
 //Image Border Color
 $image-border-color: $ids-color-palette-slate-30;
@@ -715,6 +715,15 @@ $about-header-color: $ids-color-palette-black;
 $about-text-color: $ids-color-palette-black;
 $about-text-border-color: $ids-color-palette-slate-60;
 $about-text-hover-border-color: $ids-color-palette-black;
+
+// Header
+$header-bg-color: $ids-color-palette-azure-80;
+$subheader-searchfield-context-bg: $ids-color-palette-white;
+$subheader-input-color-focus-border: $ids-color-palette-slate-100;
+$subheader-input-text-color-focus: $ids-color-palette-slate-80;
+$header-primary-btn-background-color: $ids-color-palette-azure-70;
+$header-primary-btn-background-hover-color: $ids-color-palette-azure-80;
+$subheader-searchfield-category-button-font-color: $ids-color-palette-slate-100;
 
 // Header Tabs
 $header-tabcontainer-border-color: $ids-color-brand-secondary-alt;

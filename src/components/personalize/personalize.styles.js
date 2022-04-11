@@ -141,7 +141,7 @@ a.is-personalizable svg.ripple-effect {
 }
 
 .module-tabs.is-personalizable .tab.is-selected {
-  background-color: ${colors.base} !important;
+  background-color: ${colors.lighter} !important;
 }
 
 .tab-container.vertical.is-personalizable > .tab-list-container > .tab-list > .tab.is-selected {

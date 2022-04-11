@@ -310,6 +310,10 @@
           left: 3px;
           top: 2px;
           width: 10px;
+
+          &.icon-error {
+            left: 0;
+          }
         }
 
         &:hover {
@@ -323,7 +327,7 @@
 
       .description {
         color: $fileupload-primary-color;
-        max-width: 55%;
+        max-width: calc(100% - 185px);
       }
 
       .size {
@@ -417,7 +421,7 @@
         display: inline-block;
         font-size: $ids-size-font-base;
         padding: 10px 10px 10px 0;
-        width: calc(100% - 36px);
+        width: calc(100% - 77px);
       }
     }
   }
