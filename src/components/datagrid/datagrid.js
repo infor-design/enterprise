@@ -12531,7 +12531,7 @@ Datagrid.prototype = {
           options.extraClassList.map(className => this.tooltip.classList.add(className));
         }
 
-        const distance = typeof options.distance === 'number' ? options.distance : 8;
+        const distance = typeof options.distance === 'number' ? options.distance : 0;
         const placeOptions = {
           x: 0,
           y: distance,
