@@ -28,6 +28,33 @@
 			</div>
 		</div>
 
+    <!-- Modal Full Example -->
+    <div id="modal-add-context-full" class="hidden">
+      <div class="form-responsive row">
+        <div class="full column">
+          <div class="field">
+            <label for="subject">Problem</label>
+            <input type="text" id="subject-full" name="subject" />
+          </div>
+          
+          <div class="field">
+            <label for="location" class="label">Location</label>
+            <select id="location-full" name="location" class="dropdown">
+              <option value="N">North</option>
+              <option value="S">South</option>
+              <option value="E">East</option>
+              <option value="W">West</option>
+            </select>
+          </div>
+    
+          <div class="field">
+            <label for="notes-max">Notes (maxlength)</label>
+            <textarea id="notes-max-full" class="textarea" maxlength="90" name="notes-max">Line One</textarea>
+          </div>
+        </div>
+      </div>
+		</div>
+
 	</div>
 </div>
 
@@ -42,11 +69,11 @@ var modals = {
       attributes: [ { name: 'id', value: 'add-context-modal' }, { name: 'data-automation-id', value: 'add-context-modal-auto' } ],
     },
     'add-context-full': {
-      'title': 'Add Context',
+      'title': 'Add Context Full',
       'id': 'my-id',
-      'content': $('#modal-add-context'),
+      'content': $('#modal-add-context-full'),
       'showCloseBtn': true,
-			'triggerButton': $('#add-context'),
+			'triggerButton': $('#add-context-full'),
       fullsize: 'responsive',
       attributes: [ { name: 'id', value: 'add-context-modal' }, { name: 'data-automation-id', value: 'add-context-modal-auto' } ],
     },
