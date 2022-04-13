@@ -19,6 +19,42 @@
   flex-flow: row nowrap;
   justify-content: space-between;
 
+  &.contextual-toolbar {
+    font-size: 0;
+    position: relative;
+    text-align: left;
+    -webkit-touch-callout: none;
+
+    .toolbar-section {
+      @include enable-select();
+
+      height: 40px;
+      overflow: hidden;
+      position: relative;
+      text-align: left;
+      text-overflow: ellipsis;
+      top: 0;
+      white-space: nowrap;
+      width: 45%; // Overridden by sizing calculation.
+
+      &.title {
+        -webkit-font-smoothing: antialiased;
+
+         // Acts as a spacer that causes the toolbar items to vertically align.
+        &::before {
+          @include vertical-alignment-spacer;
+        }
+      }
+
+      &.buttonset {
+        width: calc(55% - 1px);
+        user-select: none;
+        overflow: hidden;
+        padding-left: 1px;
+      }
+    }
+  }
+
   .toolbar-section {
     &.title {
       padding: 1px 0;

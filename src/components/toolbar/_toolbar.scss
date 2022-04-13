@@ -16,8 +16,7 @@ $toolbar-buttonset-height: 40px;
 
 // See also Colors.scss
 .toolbar,
-.formatter-toolbar,
-.flex-toolbar {
+.formatter-toolbar {
   position: relative;
   text-align: left;
   -webkit-touch-callout: none;
@@ -213,8 +212,7 @@ $toolbar-buttonset-height: 40px;
 }
 
 // Styles for regular toolbar only
-.toolbar,
-.flex-toolbar {
+.toolbar {
   font-size: 0;
   margin-bottom: 5px;
 
@@ -266,7 +264,8 @@ $toolbar-buttonset-height: 40px;
 
   // Updated changes from listview button and font sizes
   // Override Toolbar styles
-  &.toolbar, &.flex-toolbar {
+  &.toolbar, 
+  &.flex-toolbar {
     height: 42px;
     margin-bottom: 0;
     padding: 0 20px;

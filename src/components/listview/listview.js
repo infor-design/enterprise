@@ -1113,7 +1113,7 @@ ListView.prototype = {
         self.element.addClass('is-toolbar-open');
         toolbar.trigger('recalculate-buttons').removeClass('is-hidden');
       });
-      if (toolbar[0]) {
+      if (toolbar[0] && !toolbar.hasClass('flex-toolbar')) {
         toolbar[0].style.display = 'block';
       }
       // toolbar.animateOpen({distance: 52});
@@ -1121,7 +1121,7 @@ ListView.prototype = {
 
       let title = toolbar.find('.title, .selection-count');
       if (!title || !title.length) {
-        title = $('<div class="title selection-count"></div>');
+        title = $(toolbar.hasClass('flex-toolbar') ? '<div class="toolbar-section title selection-count"></div>' : '<div class="title selection-count"></div>');
         toolbar.prepend(title);
       }
       title.text(`${self.selectedItems.length} ${Locale ? Locale.translate('Selected') : 'Selected'}`);
