@@ -6,6 +6,7 @@
 
 - `[Datepicker]` Fix a bug on setValue() when pass an empty string for clearing field. ([#6168](https://github.com/infor-design/enterprise/issues/6168))
 - `[Dropdown]` Fix on keydown events not working when dropdown is nested in label. ([NG#1262](https://github.com/infor-design/enterprise-ng/issues/1262))
+- `[Listview]` Adjusted spaces between the search icon and filter wrapper. ([#6007](https://github.com/infor-design/enterprise/issues/6007))
 
 ## v4.63.0 Features
 
