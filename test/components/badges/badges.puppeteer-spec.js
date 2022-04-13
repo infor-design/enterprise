@@ -21,7 +21,7 @@ describe('Badges/Tag accessibility color tests for New Theme', () => {
     await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
   });
 
-  fit('should run visual test new  theme - contrast', async () => {
+  it('should run visual test new  theme - contrast', async () => {
     await page.setViewport({ width: 1920, height: 1080 });
     await page.waitForSelector('.twelve');
     const img = await page.screenshot();
