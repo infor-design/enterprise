@@ -353,9 +353,9 @@
       border-radius: 50%;
       content: '';
       height: 14px;
-      left: 2px;
+      left: 3px;
       position: absolute;
-      top: 2px;
+      top: 3px;
       width: 14px;
     }
 
@@ -365,9 +365,9 @@
       border-left: 1px solid $badge-alert-color;
       content: '';
       height: 6px;
-      left: 10px;
+      left: 9px;
       position: absolute;
-      top: 5px;
+      top: 7px;
       width: 5px;
     }
 
@@ -444,7 +444,6 @@ html.theme-classic-contrast,
 html.theme-new-contrast {
   .tag,
   .badge {
-    border: 1px solid transparent;
 
     &.secondary {
       border-color: $badge-secondary-border-color;
