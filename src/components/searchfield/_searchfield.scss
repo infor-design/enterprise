@@ -33,6 +33,11 @@
     }
   }
 
+  &.non-collapsible > .icon:not(.close):not(.icon-error) {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
   > .icon {
     background-color: rgba($ids-color-palette-white, 0); // IE 10
     color: $trigger-icon-fill-color;

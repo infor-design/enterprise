@@ -45,16 +45,6 @@
         height: 38px;
       }
     }
-
-    > .icon:not(.close) {
-      top: 10px;
-    }
-  }
-
-  &:not(.is-open) {
-    .icon:not(.close) {
-      top: 8px;
-    }
   }
 
   .btn-icon.close {
