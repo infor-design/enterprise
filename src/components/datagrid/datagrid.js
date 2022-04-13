@@ -4322,6 +4322,7 @@ Datagrid.prototype = {
       return '';
     }
 
+    const isEnabledTooltips = self.settings.enableTooltips;
     let isRowDisabled = false;
 
     // Run a function that helps check if disabled
@@ -4443,6 +4444,7 @@ Datagrid.prototype = {
         rowData._isFilteredOut ? ' is-filtered' : ''
       }${isActivated ? ' is-rowactivated' : ''
       }${isRowDisabled ? ' is-rowdisabled' : ''
+      }${isEnabledTooltips ? ' is-tooltips-enabled' : ''
       }${isSelected ? this.settings.selectable === 'mixed' ? ' is-selected hide-selected-color' : ' is-selected' : ''
       }${self.settings.alternateRowShading && !isEven ? ' alt-shading' : ''
       }${isSummaryRow ? ' datagrid-summary-row' : ''
@@ -12529,7 +12531,7 @@ Datagrid.prototype = {
           options.extraClassList.map(className => this.tooltip.classList.add(className));
         }
 
-        const distance = typeof options.distance === 'number' ? options.distance : 10;
+        const distance = typeof options.distance === 'number' ? options.distance : 0;
         const placeOptions = {
           x: 0,
           y: distance,

@@ -5,6 +5,7 @@
 ## v4.63.0 Fixes
 
 - `[Badges]` Fix a bug where in badges is not properly aligned in Contrast Mode. ([#6273](https://github.com/infor-design/enterprise/issues/6273))
+- `[Datagrid]` Fix a bug where tooltip is not displayed even when settings is turned on in disabled rows. ([#6128](https://github.com/infor-design/enterprise/issues/6128))
 - `[Datepicker]` Fix a bug on setValue() when pass an empty string for clearing field. ([#6168](https://github.com/infor-design/enterprise/issues/6168))
 - `[Dropdown]` Fix on keydown events not working when dropdown is nested in label. ([NG#1262](https://github.com/infor-design/enterprise-ng/issues/1262))
 
