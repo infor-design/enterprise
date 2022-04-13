@@ -403,7 +403,7 @@ ListView.prototype = {
         self.element.addClass('is-multiselect');
 
         // Create a Toolbar for the "Selected Items" area
-        const selectedToolbar = self.element.prevAll('.toolbar');
+        const selectedToolbar = self.element.prevAll('.toolbar, .flex-toolbar');
         if (selectedToolbar.length && selectedToolbar.data('toolbar')) {
           selectedToolbar.data('toolbar').toggleMoreMenu();
         }
@@ -1100,7 +1100,7 @@ ListView.prototype = {
       parent = this.element.parent();
     }
 
-    const toolbar = parent.find('.listview-toolbar, .contextual-toolbar');
+    const toolbar = parent.find('.listview-toolbar, .contextual-toolbar, .flex-toolbar');
     const toolbarControl = toolbar.data('toolbar');
 
     if (self.selectedItems.length > 0) {
