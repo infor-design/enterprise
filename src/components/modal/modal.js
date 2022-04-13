@@ -1210,6 +1210,14 @@ Modal.prototype = {
       }
     }
 
+    if (this.settings.showCloseBtn && !this.isCAP) {
+      if ($(window).width() < 400 && this.element.hasClass('has-close-btn')) {
+        this.element.removeClass('has-close-btn');
+      } else if ($(window).width() >= 400 && !this.element.hasClass('has-close-btn')) {
+        this.element.addClass('has-close-btn');
+      }
+    }
+
     const toolbars = this.element.find('.toolbar');
     if (toolbars.length) {
       toolbars.triggerHandler('recalculate-buttons');
