@@ -9,7 +9,8 @@
     "starts": "2018-08-22T00:00:00.000",
     "ends": "2018-08-22T23:59:59.999",
     "type": "dto",
-    "isAllDay": "true"
+    "isAllDay": "true",
+    "cssClass": "dto"
   },
   {
     "id": "2",
