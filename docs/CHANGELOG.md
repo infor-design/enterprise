@@ -3,7 +3,7 @@
 ## v4.63.0
 
 ## v4.63.0 Fixes
-- `[Calendar]` allow product devs to add custom css class to event labels in calendar component. ([#6304](https://github.com/infor-design/enterprise/issues/6304))
+- `[Calendar]` Allow product devs to add custom css class to event labels in calendar component. ([#6304](https://github.com/infor-design/enterprise/issues/6304))
 - `[Listview]` Change the font size of heading, subheading, and micro in Listview Component. ([#4996](https://github.com/infor-design/enterprise/issues/4996))
 - `[Datagrid]` Fix a bug where tooltip is not displayed even when settings is turned on in disabled rows. ([#6128](https://github.com/infor-design/enterprise/issues/6128))
 - `[Datepicker]` Fix a bug on setValue() when pass an empty string for clearing field. ([#6168](https://github.com/infor-design/enterprise/issues/6168))
