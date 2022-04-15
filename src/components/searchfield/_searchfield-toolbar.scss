@@ -394,6 +394,7 @@ $toolbarsearchfield-category-empty-width: 51px;
       .go-button {
         border-bottom-left-radius: 0;
         border-top-left-radius: 0;
+        height: 34px;
         position: relative;
         right: 0;
       }
@@ -1023,6 +1024,10 @@ html[class*='theme-new-'] .header > .toolbar > .buttonset > .toolbar-searchfield
   button.close:not(.is-empty) svg.close {
     top: 1px !important;
   }
+}
+
+html[class*='theme-new-'] .toolbar-searchfield-wrapper.has-categories.has-go-button .go-button {
+  height: 38px;
 }
 
 html[dir='rtl'] {
