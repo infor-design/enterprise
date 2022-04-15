@@ -26,10 +26,16 @@
                 clearable: false,
                 collapsible: true
               }
-            }, {
+            },
+            {
               text: 'Close',
-              cssClass: 'btn',
-              icon: '#icon-close'
+              cssClass: 'btn-icon',
+              audible: true,
+              icon: '#icon-close',
+              click: function() {
+                var api = $(this).data('modal');
+                api.close();
+              }
             }
           ]
         },
