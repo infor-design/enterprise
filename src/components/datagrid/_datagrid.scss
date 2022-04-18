@@ -2813,7 +2813,7 @@ $datagrid-small-row-height: 25px;
 
       .lookup-wrapper {
         margin-bottom: 0;
-        padding-left: 18px;
+        padding-left: 0;
         padding-top: 8px;
         vertical-align: top;
         width: 100%;
@@ -2862,11 +2862,12 @@ $datagrid-small-row-height: 25px;
 
         &.lookup {
           margin-left: -1px;
-          padding-right: 33px;
+          padding-bottom: 8px;
+          padding-right: 20px;
 
           + .trigger {
-            margin-left: -29px;
-            margin-top: 5px;
+            margin-left: -13px;
+            margin-top: 2px;
 
             > .icon {
               top: 0;
