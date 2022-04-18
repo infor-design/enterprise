@@ -4,12 +4,15 @@
 
 ## v4.63.0 Fixes
 
+- `[Badges]` Fix a bug where in badges is not properly aligned in Contrast Mode. ([#6273](https://github.com/infor-design/enterprise/issues/6273))
+- `[ContextualActionPanel]` Add close CAP function to a demo example. ([#6274](https://github.com/infor-design/enterprise/issues/6274))
 - `[Datagrid]` Fix a bug where tooltip is not displayed even when settings is turned on in disabled rows. ([#6128](https://github.com/infor-design/enterprise/issues/6128))
 - `[Datepicker]` Fix a bug on setValue() when pass an empty string for clearing field. ([#6168](https://github.com/infor-design/enterprise/issues/6168))
 - `[Dropdown]` Fix on keydown events not working when dropdown is nested in label. ([NG#1262](https://github.com/infor-design/enterprise-ng/issues/1262))
 - `[Listview]` Adjusted spaces between the search icon and filter wrapper. ([#6007](https://github.com/infor-design/enterprise/issues/6007))
 - `[Listview]` Change the font size of heading, subheading, and micro in Listview Component. ([#4996](https://github.com/infor-design/enterprise/issues/4996))
 - `[Modal]` Fix on too wide minimum width when close button is enabled. ([NG#1240](https://github.com/infor-design/enterprise-ng/issues/1240))
+- `[Validation]` Update example page to include validation event for email field. ([#6296](https://github.com/infor-design/enterprise/issues/6296))
 
 ## v4.63.0 Features
 
