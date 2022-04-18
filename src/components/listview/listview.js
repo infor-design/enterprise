@@ -152,6 +152,7 @@ ListView.prototype = {
     if ($('.listview-filter-wrapper').length > 0) {
       const filterWrapper = $('.listview-filter-wrapper');
       const searchFieldWrapper = filterWrapper.siblings('.searchfield-wrapper');
+      searchFieldWrapper.addClass('no-animate');
       const filterWidth = filterWrapper.css('width');
       searchFieldWrapper.addClass('has-listview-filters');
       searchFieldWrapper.css('width', `calc(100% - ${filterWidth})`);

@@ -648,6 +648,11 @@
       .btn-icon {
         top: 7px;
       }
+
+      svg.icon {
+        top: 12px;
+        left: 16px !important;
+      }
     }
 
     &.has-focus {
@@ -729,8 +734,12 @@
     top: 1px;
   }
 
+  .listview-filters:first-child {
+    margin-left: 5px;
+  }
+
   .listview-filters:last-child {
-    margin-right: 2px;
+    margin-right: 5px;
   }
 }
 
