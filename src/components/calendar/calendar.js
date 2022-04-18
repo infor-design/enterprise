@@ -821,7 +821,7 @@ Calendar.prototype = {
     }
 
     node = document.createElement('a');
-    DOM.addClass(node, 'calendar-event', event.color, type, event.cssClass ?? '');
+    DOM.addClass(node, 'calendar-event', event.cssClass ?? event.color, type);
     node.setAttribute('data-id', event.id);
     node.setAttribute('data-key', event.startKey);
 
