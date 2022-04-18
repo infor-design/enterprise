@@ -322,7 +322,11 @@ Modal.prototype = {
           <span class="audible">${Locale.translate('Close')}</span>
         </button>
       `);
-      this.element.addClass('has-close-btn');
+
+      if ($(window).width() >= 400) {
+        this.element.addClass('has-close-btn');
+      }
+
       this.element.find('.modal-content').append(closeBtn);
       closeBtn.on(`click.${this.namespace}`, () => this.close()).tooltip();
 
@@ -1203,6 +1207,14 @@ Modal.prototype = {
         this.element.find('.listview.alternate-bg')[0].style.maxHeight = `${calcHeight - 41}px`;
         this.element.find('.listview.alternate-bg')[0].style.height = `${calcHeight - 41}px`;
         this.element.find('.listview.alternate-bg')[0].style.minHeight = 0;
+      }
+    }
+
+    if (this.settings.showCloseBtn && !this.isCAP) {
+      if ($(window).width() < 400 && this.element.hasClass('has-close-btn')) {
+        this.element.removeClass('has-close-btn');
+      } else if ($(window).width() >= 400 && !this.element.hasClass('has-close-btn')) {
+        this.element.addClass('has-close-btn');
       }
     }
 

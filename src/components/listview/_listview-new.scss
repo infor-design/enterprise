@@ -47,6 +47,24 @@
   top: unset;
 }
 
+.listview {
+  .listview-heading {
+    font-size: 1.6rem;
+    color: $listview-color;
+    font-weight: 600;
+  }
+
+  .listview-subheading {
+    font-size: 1.6rem;
+    color: $listview-secondary-color;
+  }
+
+  .listview-micro {
+    font-size: 1.4rem;
+    color: $listview-tertiary-color;
+  }
+}
+
 html.is-safari {
   .listview-search {
     .searchfield-wrapper {
