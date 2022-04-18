@@ -1113,7 +1113,7 @@ ListView.prototype = {
         self.element.addClass('is-toolbar-open');
         toolbar.trigger('recalculate-buttons').removeClass('is-hidden');
       });
-      if (toolbar[0] && !toolbar.hasClass('flex-toolbar')) {
+      if (toolbar[0]) {
         toolbar[0].style.display = 'block';
       }
       // toolbar.animateOpen({distance: 52});

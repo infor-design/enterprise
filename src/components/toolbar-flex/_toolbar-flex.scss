@@ -53,6 +53,11 @@
         padding-left: 1px;
       }
     }
+
+    > * {
+      display: inline-block;
+      vertical-align: middle;
+    }
   }
 
   .toolbar-section {
