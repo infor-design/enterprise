@@ -444,8 +444,6 @@ html.theme-classic-contrast,
 html.theme-new-contrast {
   .tag,
   .badge {
-    border: 1px solid transparent;
-
     &.secondary {
       border-color: $badge-secondary-border-color;
     }
