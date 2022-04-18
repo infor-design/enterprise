@@ -352,21 +352,21 @@
       height: 22px !important;
       margin-left: 0;
       margin-top: 1px;
+
+      &.lookup {
+        margin-left: -1px;
+      }
     }
 
     input.lookup {
       + .trigger {
-        margin-left: -13px;
-        margin-top: 1px;
+        margin-left: -16px;
+        margin-top: 2px;
       }
     }
 
     .lookup-wrapper {
       padding: 0;
-    }
-
-    &.has-editor .lookup-wrapper {
-      padding: 8px 16px;
     }
 
     .datepicker {
@@ -382,7 +382,7 @@
   }
 
   .datagrid-trigger-cell.has-editor .icon.icon-search-list {
-    top: -1px;
+    top: 1px;
   }
 
   .datagrid-trigger-cell .icon.icon-search-list {
@@ -407,14 +407,14 @@
 
   tbody tr td.is-editing {
     .lookup-wrapper {
-      padding-left: 10px;
+      padding-left: 0;
       padding-top: 0;
     }
 
     input.lookup {
-      margin-left: -4px;
-      margin-top: 2px;
-      padding-right: 5px;
+      margin-left: -1px;
+      margin-top: -1px;
+      padding-right: 15px;
     }
 
     input {
@@ -423,8 +423,9 @@
 
     input.lookup {
       + .trigger {
-        margin-left: -21px;
+        margin-left: -16px;
         margin-top: 0;
+        top: 3px;
 
         > .icon {
           top: -2px;
@@ -449,7 +450,7 @@
     &.is-editing {
       input.lookup {
         + .trigger {
-          margin-left: -21px;
+          margin-left: -22px;
           margin-top: 1px;
         }
       }
@@ -587,6 +588,11 @@
 .datagrid.extra-small-rowheight {
   tbody tr td.is-editing input {
     height: 24px;
+
+    &.lookup {
+      height: 27px;
+      margin-top: -1px;
+    }
   }
 
   tbody tr td.is-editing .dropdown {
