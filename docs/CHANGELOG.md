@@ -11,7 +11,9 @@
 - `[Dropdown]` Fix on keydown events not working when dropdown is nested in label. ([NG#1262](https://github.com/infor-design/enterprise-ng/issues/1262))
 - `[Listview]` Added flex toolbar for multiselect listview. ([NG#1249](https://github.com/infor-design/enterprise-ng/issues/1249))
 - `[Modal]` Fix on too wide minimum width when close button is enabled. ([NG#1240](https://github.com/infor-design/enterprise-ng/issues/1240))
+- `[Listview]` Adjusted spaces between the search icon and filter wrapper. ([#6007](https://github.com/infor-design/enterprise/issues/6007))
 - `[Listview]` Change the font size of heading, subheading, and micro in Listview Component. ([#4996](https://github.com/infor-design/enterprise/issues/4996))
+- `[Modal]` Fix on too wide minimum width when close button is enabled. ([NG#1240](https://github.com/infor-design/enterprise-ng/issues/1240))
 - `[Validation]` Update example page to include validation event for email field. ([#6296](https://github.com/infor-design/enterprise/issues/6296))
 
 ## v4.63.0 Features
