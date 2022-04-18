@@ -1189,7 +1189,8 @@ $datagrid-small-row-height: 25px;
           }
 
           .lookup-wrapper {
-            padding-left: 15px;
+            padding-left: 0;
+            padding-top: 6px;
           }
 
           input {
@@ -1203,11 +1204,11 @@ $datagrid-small-row-height: 25px;
 
             &.lookup {
               height: inherit;
-              padding: 2px 0 0;
+              padding: 2px 16px 0 0;
               width: 100%;
 
               + .trigger {
-                margin-left: -26px;
+                margin-left: -13px;
                 margin-top: 0;
 
                 > .icon {
@@ -1360,7 +1361,8 @@ $datagrid-small-row-height: 25px;
         top: 5px;
 
         &.icon-search-list {
-          top: 4px;
+          left: 0;
+          top: 0;
         }
 
         &.icon-calendar {
@@ -1655,7 +1657,6 @@ $datagrid-small-row-height: 25px;
           }
 
           .lookup-wrapper {
-            padding-left: 10px;
             padding-top: 0;
           }
 
@@ -1829,12 +1830,12 @@ $datagrid-small-row-height: 25px;
 
       &.is-editing {
         input.lookup {
-          margin-left: -4px;
           padding-right: 20px;
+          padding-top: 8px;
 
           + .trigger {
-            margin-left: -22px;
-            margin-top: 3px;
+            margin-left: -17px;
+            margin-top: 2px;
 
             > .icon {
               top: -1px;
@@ -1938,13 +1939,14 @@ $datagrid-small-row-height: 25px;
         }
 
         input.lookup {
-          height: 23px;
-          margin-left: -6px;
-          padding-top: 4px;
+          height: 30px;
+          margin-left: 0;
+          padding-right: 20px;
+          padding-top: 0;
 
           + .trigger {
-            margin-left: -18px;
-            margin-top: 1px;
+            margin-left: -20px;
+            margin-top: 2px;
 
             > .icon {
               top: -1px;
