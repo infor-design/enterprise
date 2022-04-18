@@ -3,7 +3,7 @@
 ## v4.63.0
 
 ## v4.63.0 Fixes
-- `[Calendar]` Allow product devs to add custom css class to event labels in calendar component. ([#6304](https://github.com/infor-design/enterprise/issues/6304))
+- `[Calendar]` Allow product devs to add custom css class to event labels in Calendar Component. ([#6304](https://github.com/infor-design/enterprise/issues/6304))
 - `[Listview]` Change the font size of heading, subheading, and micro in Listview Component. ([#4996](https://github.com/infor-design/enterprise/issues/4996))
 
 - `[Badges]` Fix a bug where in badges is not properly aligned in Contrast Mode. ([#6273](https://github.com/infor-design/enterprise/issues/6273))
