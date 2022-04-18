@@ -40,7 +40,6 @@
       &.title {
         -webkit-font-smoothing: antialiased;
 
-         // Acts as a spacer that causes the toolbar items to vertically align.
         &::before {
           @include vertical-alignment-spacer;
         }
