@@ -466,9 +466,18 @@ ContextualActionPanel.prototype = {
           }
         }
 
+        // Store the modal body wrapper
+        const modalBodyWrapper = self.panel.find('.modal-body-wrapper');
+
         // Focus the first focusable element inside the Contextual Panel's Body
-        self.panel.find('.modal-body-wrapper').find(':focusable').first().focus();
+        modalBodyWrapper.find(':focusable').first().focus();
         utils.fixSVGIcons(self.panel);
+
+        // If notification exists inside CAP, move notification after CAP is open
+        const notificationEl = self.panel.find('.notification');
+        if (notificationEl.length > 0) {
+          notificationEl.detach().prependTo(modalBodyWrapper);
+        }
       });
 
     if (self.closeButton && self.closeButton.length) {
