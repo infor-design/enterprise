@@ -24,6 +24,7 @@
     position: relative;
     text-align: left;
     -webkit-touch-callout: none;
+    padding: 0 15px;
 
     .toolbar-section {
       @include enable-select();
@@ -39,6 +40,9 @@
 
       &.title {
         -webkit-font-smoothing: antialiased;
+        color: $contextual-toolbar-color;
+        font-size: $ids-size-font-base;
+        height: 42px;
 
         &::before {
           @include vertical-alignment-spacer;
@@ -47,9 +51,19 @@
 
       &.buttonset {
         width: calc(55% - 1px);
+        height: 42px;
         user-select: none;
         overflow: hidden;
         padding-left: 1px;
+
+        > * {
+          margin: -1px 0 0 2px;
+          vertical-align: top;
+        }
+      }
+
+      [class^='btn'] {
+        color: $contextual-toolbar-button-color;
       }
     }
 
