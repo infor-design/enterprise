@@ -82,6 +82,7 @@ $toolbarsearchfield-category-empty-width: 51px;
 
     .icon:not(.close) {
       height: 18px;
+      width: 18px;
 
       @media only screen and (max-width: $breakpoint-phone-to-tablet) {
         top: 12px;
@@ -113,7 +114,7 @@ $toolbarsearchfield-category-empty-width: 51px;
   }
 
   .icon {
-    color: $searchfield-text-color;
+    color: $searchfield-icon-color;
 
     &.close {
       background-color: rgba($searchfield-bg-color, 0);
@@ -185,9 +186,6 @@ $toolbarsearchfield-category-empty-width: 51px;
 
     &.active,
     &.is-open {
-      .searchfield {
-        border-bottom-color: rgba($searchfield-border-color, 1);
-      }
 
       .btn,
       .collapse-btn {
@@ -717,9 +715,9 @@ html.is-firefox {
 
     // reset all the styling for the searchfield to correctly appear open.
     .searchfield {
-      background-color: rgba($searchfield-bg-color, 1);
-      border-bottom-color: rgba($searchfield-border-color, 1);
-      border-radius: 0;
+      background-color: $searchfield-toolbar-bg-color;
+      border: 1px solid $searchfield-toolbar-border-color;
+      border-radius: 2px;
       color: $searchfield-text-color;
       font-size: $ids-size-font-base;
       font-weight: $ids-number-font-weight-base;
@@ -759,7 +757,8 @@ html.is-firefox {
       }
     }
 
-    &.is-open {
+    &.is-open,
+    &.is-hovered {
       .icon {
         color: $searchfield-text-color;
       }

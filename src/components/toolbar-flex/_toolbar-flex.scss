@@ -32,6 +32,7 @@
       &.toolbar-searchfield-wrapper.has-close-icon-button {
         .btn-icon.close {
           right: 45px;
+          top: 5px;
 
           @media (min-width: $breakpoint-phone-to-tablet) {
             right: 7px;
