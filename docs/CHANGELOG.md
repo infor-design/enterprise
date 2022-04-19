@@ -4,11 +4,15 @@
 
 ## v4.63.0 Fixes
 
+- `[Badges]` Fix a bug where in badges is not properly aligned in Contrast Mode. ([#6273](https://github.com/infor-design/enterprise/issues/6273))
+- `[ContextualActionPanel]` Add close CAP function to a demo example. ([#6274](https://github.com/infor-design/enterprise/issues/6274))
 - `[Datagrid]` Fix a bug where tooltip is not displayed even when settings is turned on in disabled rows. ([#6128](https://github.com/infor-design/enterprise/issues/6128))
 - `[Datepicker]` Fix a bug on setValue() when pass an empty string for clearing field. ([#6168](https://github.com/infor-design/enterprise/issues/6168))
 - `[Dropdown]` Fix on keydown events not working when dropdown is nested in label. ([NG#1262](https://github.com/infor-design/enterprise-ng/issues/1262))
-- `[Modal]` Fix on too wide minimum width when close button is enabled. ([NG#1240](https://github.com/infor-design/enterprise-ng/issues/1240))
+- `[Listview]` Adjusted spaces between the search icon and filter wrapper. ([#6007](https://github.com/infor-design/enterprise/issues/6007))
 - `[Listview]` Change the font size of heading, subheading, and micro in Listview Component. ([#4996](https://github.com/infor-design/enterprise/issues/4996))
+- `[Modal]` Fix on too wide minimum width when close button is enabled. ([NG#1240](https://github.com/infor-design/enterprise-ng/issues/1240))
+- `[Validation]` Update example page to include validation event for email field. ([#6296](https://github.com/infor-design/enterprise/issues/6296))
 
 ## v4.63.0 Features
 
@@ -47,6 +51,7 @@
 - `[Lookup]` Remove unnecessary filter from example page. ([#5677](https://github.com/infor-design/enterprise/issues/5677))
 - `[Modal]` Updated close method that will close even if there are subcomponents opened. ([#6048](https://github.com/infor-design/enterprise/issues/6048))
 - `[Modal]` Fix a demo app issue where the proper settings were not added to the required key in the validation object. ([#5571](https://github.com/infor-design/enterprise/issues/5571))
+- `[Tabs/Module]` Override fill style of search icon created by 'soho-personalization'. Fix alignment of close icon in specific circumstance. ([#6207](https://github.com/infor-design/enterprise/issues/6207))
 - `[Searchfield]` Fix on searchfield categories where popup wrapper gets duplicated whenever update is called. ([NG#1186](https://github.com/infor-design/enterprise-ng/issues/1186))
 - `[Searchfield/Header]` Enhanced the font colors, background colors for the searchfield inside of the header & subheader. ([#6047](https://github.com/infor-design/enterprise/issues/6047))
 - `[Tabs]` Fix a bug where tabs indicator is not properly aligned in RTL. ([#6068](https://github.com/infor-design/enterprise/issues/6068))
