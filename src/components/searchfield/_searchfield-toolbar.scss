@@ -134,10 +134,6 @@ $toolbarsearchfield-category-empty-width: 51px;
     top: 11px;
   }
 
-  .icon.close {
-    top: 10px;
-  }
-
   .btn {
     background-color: rgba(0, 0, 0, 0);
     border-radius: 2px 0 0 2px;
@@ -244,8 +240,6 @@ $toolbarsearchfield-category-empty-width: 51px;
     .icon {
       color: $searchfield-text-color;
       height: 18px;
-      top: 0;
-      transform: translateY(50%);
     }
 
     &:not(.non-collapsible) {
@@ -384,11 +378,6 @@ $toolbarsearchfield-category-empty-width: 51px;
       }
     }
 
-    .btn {
-      // border: 1px solid transparent;
-      height: 34px;
-    }
-
     &.has-go-button {
       .searchfield {
         border-bottom-right-radius: 0;
@@ -405,6 +394,7 @@ $toolbarsearchfield-category-empty-width: 51px;
       .go-button {
         border-bottom-left-radius: 0;
         border-top-left-radius: 0;
+        height: 34px;
         position: relative;
         right: 0;
       }
@@ -1034,6 +1024,10 @@ html[class*='theme-new-'] .header > .toolbar > .buttonset > .toolbar-searchfield
   button.close:not(.is-empty) svg.close {
     top: 1px !important;
   }
+}
+
+html[class*='theme-new-'] .toolbar-searchfield-wrapper.has-categories.has-go-button .go-button {
+  height: 38px;
 }
 
 html[dir='rtl'] {
