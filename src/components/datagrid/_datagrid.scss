@@ -1869,7 +1869,7 @@ $datagrid-small-row-height: 25px;
     }
 
     .datagrid-cell-wrapper {
-      min-height: $datagrid-extra-small-row-height + 4;
+      min-height: $datagrid-extra-small-row-height + 6;
       padding: 2px 5px 0 !important;
 
       .dropdown-trigger {
@@ -1920,7 +1920,7 @@ $datagrid-small-row-height: 25px;
         }
 
         .icon.icon-search-list {
-          left: -6px;
+          left: -8px;
           top: 3px;
         }
 
@@ -1940,7 +1940,8 @@ $datagrid-small-row-height: 25px;
 
         input.lookup {
           height: 30px;
-          margin-left: 0;
+          padding-bottom: 2px;
+          margin-left: -1px;
           padding-right: 20px;
           padding-top: 0;
 

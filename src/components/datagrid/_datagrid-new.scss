@@ -351,7 +351,7 @@
     input {
       height: 22px !important;
       margin-left: 0;
-      margin-top: 1px;
+      margin-top: 0;
 
       &.lookup {
         margin-left: -1px;
@@ -360,7 +360,7 @@
 
     input.lookup {
       + .trigger {
-        margin-left: -16px;
+        margin-left: -15px;
         margin-top: 2px;
       }
     }
@@ -450,7 +450,7 @@
     &.is-editing {
       input.lookup {
         + .trigger {
-          margin-left: -22px;
+          margin-left: -23px;
           margin-top: 1px;
         }
       }
@@ -586,6 +586,12 @@
 
 // Adjustments for uplift mode
 .datagrid.extra-small-rowheight {
+  tbody tr td.datagrid-trigger-cell.has-editor {
+    .icon.icon-search-list {
+      top: -1px;
+    }
+  }
+
   tbody tr td.is-editing input {
     height: 24px;
 
@@ -607,7 +613,7 @@
   }
 
   .datagrid-cell-wrapper {
-    min-height: 29px;
+    min-height: 30px;
   }
 
   tbody tr td.is-editing .datepicker {
