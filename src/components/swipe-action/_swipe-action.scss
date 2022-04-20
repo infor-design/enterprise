@@ -55,6 +55,11 @@
   display: none;
 }
 
+// Hide scroll bar in Firefox
+.swipe-container {
+  scrollbar-width: none;
+}
+
 // Snaps into view
 .swipe-element {
   align-items: center;
