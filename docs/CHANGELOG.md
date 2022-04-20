@@ -35,6 +35,10 @@
 - `[Spinbox]` Created a puppeteer script for Spinbox Field sizes on mobile. ([#5843](https://github.com/infor-design/enterprise/issues/5843))
 - `[ToolbarFlex]` Allow toolbar flex navigation buttons to have notification badge. ([NG#1235](https://github.com/infor-design/enterprise-ng/issues/1235))
 
+## v4.62.1 Features
+
+- `[Calendar]` Allow product devs to add custom css class to event labels in Calendar Component. ([#6304](https://github.com/infor-design/enterprise/issues/6304))
+
 ## v4.62.0 Fixes
 
 - `[ApplicationMenu]` Remove a Safari-specific style rule the misaligns the button svg arrow. ([#5722](https://github.com/infor-design/enterprise/issues/5722))
