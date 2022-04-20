@@ -502,4 +502,8 @@ describe('Calendar display range tests', () => {
   it('Should have rendered correct number of events on the calendar', async () => {
     expect(await element.all(by.css('.calendar-event')).count()).toEqual(8);
   });
+
+  it('Should allow adding custom css class in event label', async () => {
+    expect(await element(by.css('[data-key="20210806"] a')).getAttribute('class')).toContain('night-shift');
+  });
 });
