@@ -438,8 +438,7 @@
   .field-short.is-fieldoptions,
   .form-layout-compact .field.is-fieldoptions {
     .field-options ~ .close ~ .btn-actions,
-    input[type='text'][readonly]:not(.fileupload) ~ .btn-actions,
-    .colorpicker-container ~ .btn-actions {
+    input[type='text'][readonly]:not(.fileupload) ~ .btn-actions{
       top: 1px;
     }
   }
