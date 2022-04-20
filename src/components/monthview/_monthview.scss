@@ -134,6 +134,14 @@
       vertical-align: top;
       width: 50%;
 
+      &.is-month {
+        padding: 0 1px 0 2px;
+      }
+      
+      &.is-year {
+        padding-left: 4px;
+      }
+
       &.is-month::after {
         border-left: 1px solid $popover-separator-color;
         content: ' ';
@@ -158,21 +166,15 @@
 
       .picklist-item {
         a {
-          border: 1px solid transparent;
-          border-radius: 14px;
           box-shadow: none;
           color: $datepicker-day-color;
           font-size: $ids-size-font-base;
-          padding: 1px 8px;
+          // padding: 1px 8px;
           text-decoration: none;
           user-select: none;
-
-          &:focus {
-            border-color: $datepicker-focus-border-color;
-            box-shadow: $focus-box-shadow;
-            outline: none;
-            -moz-outline-style: none;
-          }
+          border-radius: 0;
+          display: block;
+          padding: 9px;
         }
 
         .icon {
@@ -189,13 +191,17 @@
           }
         }
 
-        &.is-selected a {
+        &.is-selected {
           background-color: $datepicker-selected-bg-color;
-          color: $ids-color-palette-white;
-          font-weight: $ids-number-font-weight-bold;
+          width: 100%;
 
-          .icon {
+          a {
             color: $ids-color-palette-white;
+            font-weight: $ids-number-font-weight-bold;
+  
+            .icon {
+              color: $ids-color-palette-white;
+            }
           }
         }
 
@@ -712,12 +718,6 @@
 
         .picklist-item {
           width: 100%;
-
-          a {
-            border-radius: 0;
-            display: block;
-            padding: 9px;
-          }
 
           &.up,
           &.down {
