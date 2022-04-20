@@ -6,6 +6,12 @@
   .toolbar-section {
     .searchfield-wrapper {
       bottom: 0;
+
+      &.toolbar-searchfield-wrapper.has-close-icon-button:not(.has-categories) {
+        .btn-icon.close {
+          top: 7px;
+        }
+      }
     }
   }
 }
