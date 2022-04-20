@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.62.1 Features
+
+- `[Calendar]` Allow product devs to add custom css class to event labels in Calendar Component. ([#6304](https://github.com/infor-design/enterprise/issues/6304))
+
 ## v4.62.0 Features
 
 - `[Datagrid]` Added tooltip for fallback image. ([#6178](https://github.com/infor-design/enterprise/issues/6178))
