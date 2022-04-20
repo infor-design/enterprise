@@ -73,6 +73,14 @@
   }
 }
 
+.theme-new-dark {
+  .modal {
+    .slider-wrapper {
+      background-color: $ids-color-palette-slate-50;
+    }
+  }
+}
+
 html[dir='rtl'] {
   .modal {
     .tab-container {
