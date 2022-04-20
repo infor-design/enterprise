@@ -384,7 +384,7 @@ $subheader-height: 60px;
         color: $header-text-color;
       }
 
-      &:hover:not([disabled]),
+      &:hover:not([disabled]):not(.searchfield-category-button),
       &:active:not([disabled]),
       &[aria-expanded='true'] {
         color: $header-button-hover-color;
