@@ -556,6 +556,14 @@
             top: calc(50% - 17px);
           }
         }
+
+        .lookup-wrapper {
+          padding-top: 5px;
+
+          .lookup + .trigger {
+            margin-top: 4px;
+          }
+        }
       }
     }
 
@@ -569,6 +577,34 @@
 
               ~ .icon {
                 top: calc(50% - 17px);
+              }
+            }
+
+            .lookup-wrapper {
+              padding-top: 1px;
+
+              .lookup {
+                ~ .trigger {
+                  top: -2px;
+
+                  .icon {
+                    top: calc(50% - 10px);
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    &.small-rowheight {
+      tbody tr {
+        td {
+          &.is-editing {
+            .lookup {
+              + .trigger {
+                top: 1px;
               }
             }
           }

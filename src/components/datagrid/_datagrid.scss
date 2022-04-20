@@ -4363,7 +4363,12 @@ td .btn-actions {
     &.medium-rowheight {
       td.is-editing {
         .lookup-wrapper {
-          margin-top: 4px;
+          margin-top: 0;
+          padding-top: 5px;
+
+          .lookup + .trigger {
+            top: 2px;
+          }
 
           .lookup ~ .trigger .icon {
             top: calc(50% - 9px);
@@ -4391,7 +4396,11 @@ td .btn-actions {
       td.is-editing {
         .lookup-wrapper {
           .lookup ~ .trigger .icon {
-            top: calc(50% - 5px);
+            top: calc(50% - 10px);
+          }
+
+          .lookup + .trigger {
+            margin-top: -1px;
           }
         }
 
@@ -4419,6 +4428,22 @@ td .btn-actions {
             margin-top: 0;
           }
         }
+
+        .lookup {
+          padding-top: 5px;
+        }
+      }
+    }
+  }
+
+  .datagrid td.is-editing {
+    .lookup-wrapper {
+      padding-top: 6px;
+    }
+
+    .lookup {
+      + .trigger {
+        margin-top: 2px;
       }
     }
   }
