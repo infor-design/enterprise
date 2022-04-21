@@ -652,12 +652,14 @@ $hierarchy-line-color: $ids-color-palette-slate-40;
 $searchfield-bg-color: $ids-color-palette-slate-70;
 $searchfield-border-color: $ids-color-palette-slate-100;
 $searchfield-icon-color: $button-color-tertiary-initial-font;
-$searchfield-text-color: $button-color-tertiary-initial-font;
-$searchfield-placeholder-text-color: $ids-color-palette-slate-40;
+$searchfield-text-color: $ids-color-palette-white;
+$searchfield-placeholder-text-color: $ids-color-palette-slate-30;
 $searchfield-lighter-bg-color: $ids-color-palette-slate-80;
 $searchfield-lighter-text-color: $ids-color-palette-slate-40;
 $searchfield-lighter-placeholder-text-color: $ids-color-brand-secondary-alt;
 $searchfield-active-icon-color: $ids-color-brand-primary-alt;
+
+$searchfield-toolbar-bg-color: $ids-color-palette-slate-100;
 
 $searchfield-alt-bg-color: $ids-color-palette-slate-70;
 $searchfield-alt-border-color: $ids-color-palette-slate-80;
@@ -726,6 +728,8 @@ $header-tab-alt-separator: $ids-color-palette-white;
 $header-tab-alt-normal-color: $ids-color-palette-slate-30;
 $header-tab-alt-hover-color: $inverse-color;
 $header-tab-alt-selected-color: $inverse-color;
+
+$header-flex-toolbar-close-icon-color-hover: $ids-color-palette-white;
 
 // Header Breadcrumb
 $header-breadcrumb-color: $ids-color-palette-slate-10;
