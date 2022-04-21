@@ -152,6 +152,14 @@
       &.btn-primary:focus {
         box-shadow: 0 0 0 0 $body-color-primary-background, 0 0 0 1px $button-color-primary-initial-background, $focus-box-shadow;
       }
+
+      &.is-cancel-month-pane {
+        display: none;
+      }
+
+      &.is-select-month-pane {
+        width: 100%;
+      }
     }
   }
 

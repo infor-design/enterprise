@@ -165,16 +165,35 @@
       }
 
       .picklist-item {
+        width: 100%;
+
         a {
           box-shadow: none;
           color: $datepicker-day-color;
           font-size: $ids-size-font-base;
-          // padding: 1px 8px;
           text-decoration: none;
           user-select: none;
           border-radius: 0;
           display: block;
-          padding: 9px;
+          padding: 6px;
+
+          &:focus {
+            border-color: $datepicker-focus-border-color;
+            box-shadow: $focus-box-shadow;
+            outline: none;
+            -moz-outline-style: none;
+          }
+        }
+
+        &.is-selected a {
+          color: $ids-color-palette-white;
+          font-weight: $ids-number-font-weight-bold;
+          background-color: $datepicker-selected-bg-color;
+          width: 100%;
+          
+          .icon {
+            color: $ids-color-palette-white;
+          }
         }
 
         .icon {
@@ -188,20 +207,6 @@
 
           &:active {
             color: $trigger-active-color;
-          }
-        }
-
-        &.is-selected {
-          background-color: $datepicker-selected-bg-color;
-          width: 100%;
-
-          a {
-            color: $ids-color-palette-white;
-            font-weight: $ids-number-font-weight-bold;
-  
-            .icon {
-              color: $ids-color-palette-white;
-            }
           }
         }
 
@@ -904,6 +909,16 @@
     display: inline-block;
     height: 12px;
     width: 12px;
+  }
+}
+
+.ios,
+.android {
+  .monthview-monthyear-pane {
+    .picklist-section.is-year {
+      width: calc(100% - 175px);
+      margin-left: 8px;
+    }
   }
 }
 

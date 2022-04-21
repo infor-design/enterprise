@@ -1059,7 +1059,7 @@ MonthView.prototype = {
     if (!this.settings.showMonthYearPicker) {
       return;
     }
-    console.log('appendMonthYearPicker');
+
     let monthList = '<ul class="picklist is-month">';
     const isRippleClass = this.settings.inPage ? ' class="is-ripple"' : '';
 
@@ -1704,7 +1704,7 @@ MonthView.prototype = {
       const yearContainerJQ = $(yearContainer);
 
       yearContainerJQ.find('.picklist-item').not('.up, .down').remove();
-      console.log('appendYear', yearList, yearsLen, year);
+
       if (upDown === 'up') {
         for (let i = yearsLen; i > 0; i--) {
           const nextYear = parseInt(year, 10) - i;
@@ -1712,7 +1712,6 @@ MonthView.prototype = {
           const a = $(`<a href="#" tabindex="-1" data-year="${nextYear}"${isRippleClass}>${nextYear}</a>`);
           const li = $('<li class="picklist-item"></li>');
           li.append(a);
-          console.log('add year', li);
           yearContainerJQ.find('.picklist-item.down').before(li);
           utils.addAttributes(a, this, s.attributes, `btn-picklist-${nextYear}`);
         }
@@ -1724,8 +1723,6 @@ MonthView.prototype = {
           const a = $(`<a href="#" tabindex="-1" data-year="${nextYear}"${isRippleClass}>${nextYear}</a>`);
           const li = $('<li class="picklist-item"></li>');
           li.append(a);
-
-          console.log('add year', li);
           yearContainerJQ.find('.picklist-item.down').before(li);
           utils.addAttributes(a, this, s.attributes, `btn-picklist-${nextYear}`);
         }
@@ -1881,7 +1878,7 @@ MonthView.prototype = {
       if (!s.hideDays) {
         this.element.find('.btn-icon, td.is-selected').attr('disabled', 'true');
         this.element.find('td.is-selected').removeAttr('tabindex');
-        console.log('EXPAND');
+
         if (s.inPage) {
           this.element.find('.btn-icon.prev, .btn-icon.next').hide();
           const el = this.element.find('.hyperlink.today, .hyperlink.apply');
@@ -1946,7 +1943,6 @@ MonthView.prototype = {
       a.setAttribute('tabindex', '-1');
       li.parentNode.querySelector('.is-selected')?.classList.remove('is-selected');
       DOM.addClass(adjacentLi, 'is-selected');
-      console.log('moveToItem', li, nextPrev);
       adjacentA.setAttribute('tabindex', '0');
       adjacentA.focus();
     };
