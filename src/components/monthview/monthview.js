@@ -1075,27 +1075,14 @@ MonthView.prototype = {
       monthList += `<li class="picklist-item${(idx === month ? ' is-selected ' : '')}"><a href="#" tabindex="${idx === month ? '0' : '-1'}" data-month="${idx}"${isRippleClass}>${monthMap}</a></li>`;
     }
 
-    monthList += `<li class="picklist-item down"><a tabindex="0"${isRippleClass}><span class="audible">${Locale.translate('NextMonth')}</span><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-caret-down"></use></svg></a></li>`;
-
-    // if (this.settings.inPage) {
-    //   monthList += `<li class="picklist-item up"><a href="#" tabindex="0"${isRippleClass}><span class="audible">${Locale.translate('PreviousMonth')}</span><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-caret-up"></use></svg></a></li>`;
-
-    //   const maxMonthsInList = 6; // number of months: (12 / 2 = 6)
-    //   const monthAddition = month < maxMonthsInList ? 0 : maxMonthsInList;
-    //   for (let i = 0; i < maxMonthsInList; i++) {
-    //     const idx = i + monthAddition;
-    //     const monthMap = wideMonths[idx];
-    //     monthList += `<li class="picklist-item${(idx === month ? ' is-selected ' : '')}"><a href="#" tabindex="${idx === month ? '0' : '-1'}" data-month="${idx}"${isRippleClass}>${monthMap}</a></li>`;
-    //   }
-
-    //   monthList += `<li class="picklist-item down"><a tabindex="0"${isRippleClass}><span class="audible">${Locale.translate('NextMonth')}</span><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-caret-down"></use></svg></a></li>`;
-    // } else {
-    //   wideMonths.map(function (monthMap, i) { // eslint-disable-line
-    //     monthList += `<li class="picklist-item${(i === month ? ' is-selected ' : '')}"><a href="#" tabindex="${i === month ? '0' : '-1'}" data-month="${i}"${isRippleClass}>${monthMap}</a></li>`;
-    //   });
-    // }
-
-    monthList += '</ul>';
+    monthList += `<li class="picklist-item down">
+        <a tabindex="0"${isRippleClass}>
+          <span class="audible">${Locale.translate('NextMonth')}</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-caret-down"></use>
+          </svg>
+        </a>
+      </li></ul>`;
 
     this.monthYearPane.find('.picklist-section.is-month').empty().append(monthList);
     const years = [];
@@ -1114,8 +1101,14 @@ MonthView.prototype = {
     years.map(function (yearMap) {
       yearList += `<li class="picklist-item${(year === yearMap ? ' is-selected ' : '')}"><a href="#" tabindex="${year === yearMap ? '0' : '-1'}" data-year="${yearMap}"${isRippleClass}>${yearMap}</a></li>`;
     });
-    yearList += `<li class="picklist-item down"><a tabindex="0"${isRippleClass}><span class="audible">${Locale.translate('NextYear')}</span><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-caret-down"></use></svg></a></li>`;
-    yearList += '</ul>';
+    yearList += `<li class="picklist-item down">
+        <a tabindex="0"${isRippleClass}>
+          <span class="audible">${Locale.translate('NextYear')}</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-caret-down"></use>
+          </svg>
+        </a>
+      </li></ul>`;
 
     this.monthYearPane.find('.picklist-section.is-year').empty().append(yearList);
     if (this.yearFirst) {
@@ -1671,25 +1664,34 @@ MonthView.prototype = {
       const wideMonths = this.currentCalendar.months.wide;
       const monthList = monthContainer.children;
       const monthLen = monthList.length - 2;
-      const month = monthList[(upDown === 'up' ? 1 : monthLen)].querySelector('a').getAttribute('data-month');
-      DOM.remove(monthList[(upDown === 'up' ? monthLen : 1)]);
+      const month = parseInt(monthList[(upDown === 'up' ? 1 : monthLen)].querySelector('a').getAttribute('data-month'), 10);
       const monthContainerJQ = $(monthContainer);
 
-      monthContainerJQ.find('.picklist-item').not('.up, .down').remove();
-      const maxMonthsInList = 6; // number of months: (12 / 2 = 6)
-      const monthAddition = month >= maxMonthsInList ? 0 : maxMonthsInList;
-      for (let i = 0; i < maxMonthsInList; i++) {
-        const idx = i + monthAddition;
-        const monthMap = wideMonths[idx];
-        const a = $(`<a href="#" tabindex="-1" data-month="${idx}"${isRippleClass}>${monthMap}</a>`);
-        const li = $('<li class="picklist-item"></li>');
+      const selected = monthContainerJQ.find('li.is-selected');
+      const index = selected.index();
+
+      selected.removeClass('is-selected');
+
+      const top = monthList[1];
+      const bottom = monthList[monthLen];
+      const li = $('<li class="picklist-item"></li>');
+
+      if (upDown === 'up') {
+        const idx = month === 0 ? 11 : month - 1;
+        const a = `<a href="#" tabindex="-1" data-month="${idx}"${isRippleClass}>${wideMonths[idx]}</a>`;
         li.append(a);
-        monthContainerJQ.find('.picklist-item.down').before(li);
-        utils.addAttributes(a, this, s.attributes, `btn-picklist-${idx}`);
+        bottom.remove();
+        li.insertBefore(top);
+      } else {
+        const idx = month === 11 ? 0 : month + 1;
+        const a = `<a href="#" tabindex="-1" data-month="${idx}"${isRippleClass}>${wideMonths[idx]}</a>`;
+        li.append(a);
+        top.remove();
+        li.insertAfter(bottom);
       }
 
       if (!s.inPage) {
-        monthContainerJQ.find('.picklist-item').eq(5)
+        $(monthContainerJQ.find('li.picklist-item').get(index))
           .addClass('is-selected')
           .attr('tabindex', '0');
       }
