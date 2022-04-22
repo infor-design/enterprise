@@ -738,7 +738,7 @@ ListView.prototype = {
     });
 
     // Filter the results and highlight things
-    let results = this.listfilter.filter(this.settings.dataset, this.searchTerm);
+    let results = this.listfilter.filter(this.settings.dataset, this.searchTerm, true);
     if (!results.length) {
       results = [];
     }
