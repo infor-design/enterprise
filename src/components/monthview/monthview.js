@@ -1701,37 +1701,36 @@ MonthView.prototype = {
       const yearContainer = this.monthYearPane[0].querySelector('.picklist.is-year');
       const yearList = yearContainer.children;
       const yearsLen = yearList.length - 2;
-      const year = yearList[(upDown === 'up' ? 1 : yearsLen)].querySelector('a').getAttribute('data-year');
-      DOM.remove(yearList[(upDown === 'up' ? yearsLen : 1)]);
+      const year = parseInt(yearList[(upDown === 'up' ? 1 : yearsLen)].querySelector('a').getAttribute('data-year'), 10);
       const yearContainerJQ = $(yearContainer);
 
-      yearContainerJQ.find('.picklist-item').not('.up, .down').remove();
+      const selected = yearContainerJQ.find('li.is-selected');
+      const index = selected.index();
+
+      selected.removeClass('is-selected');
+
+      const top = yearList[1];
+      const bottom = yearList[yearsLen];
+      const li = $('<li class="picklist-item"></li>');
 
       if (upDown === 'up') {
-        for (let i = yearsLen; i > 0; i--) {
-          const nextYear = parseInt(year, 10) - i;
-
-          const a = $(`<a href="#" tabindex="-1" data-year="${nextYear}"${isRippleClass}>${nextYear}</a>`);
-          const li = $('<li class="picklist-item"></li>');
-          li.append(a);
-          yearContainerJQ.find('.picklist-item.down').before(li);
-          utils.addAttributes(a, this, s.attributes, `btn-picklist-${nextYear}`);
-        }
-      }
-
-      if (upDown === 'down') {
-        for (let i = 1; i < (yearsLen + 1); i++) {
-          const nextYear = parseInt(year, 10) + i;
-          const a = $(`<a href="#" tabindex="-1" data-year="${nextYear}"${isRippleClass}>${nextYear}</a>`);
-          const li = $('<li class="picklist-item"></li>');
-          li.append(a);
-          yearContainerJQ.find('.picklist-item.down').before(li);
-          utils.addAttributes(a, this, s.attributes, `btn-picklist-${nextYear}`);
-        }
+        const nextYear = year - 1;
+        const a = $(`<a href="#" tabindex="-1" data-year="${nextYear}"${isRippleClass}>${nextYear}</a>`);
+        utils.addAttributes(a, this, s.attributes, `btn-picklist-${nextYear}`);
+        li.append(a);
+        bottom.remove();
+        li.insertBefore(top);
+      } else {
+        const nextYear = year + 1;
+        const a = $(`<a href="#" tabindex="-1" data-year="${nextYear}"${isRippleClass}>${nextYear}</a>`);
+        utils.addAttributes(a, this, s.attributes, `btn-picklist-${nextYear}`);
+        li.append(a);
+        top.remove();
+        li.insertAfter(bottom);
       }
 
       if (!s.inPage) {
-        yearContainerJQ.find('.picklist-item').eq(5)
+        $(yearContainerJQ.find('li.picklist-item').get(index))
           .addClass('is-selected')
           .attr('tabindex', '0');
       }
