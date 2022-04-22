@@ -249,7 +249,7 @@
 
     .searchfield-wrapper.has-focus:not(.toolbar-searchfield-wrapper) > .icon:not(.close):not(.icon-error),
     .searchfield-wrapper > .icon:not(.close):not(.icon-error) {
-      top: 9px;
+      top: 14px;
     }
 
     .textarea ~ .btn-actions:not(.is-checkbox) {
@@ -438,8 +438,7 @@
   .field-short.is-fieldoptions,
   .form-layout-compact .field.is-fieldoptions {
     .field-options ~ .close ~ .btn-actions,
-    input[type='text'][readonly]:not(.fileupload) ~ .btn-actions,
-    .colorpicker-container ~ .btn-actions {
+    input[type='text'][readonly]:not(.fileupload) ~ .btn-actions {
       top: 1px;
     }
   }
