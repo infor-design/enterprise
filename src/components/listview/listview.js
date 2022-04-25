@@ -404,7 +404,7 @@ ListView.prototype = {
         self.element.addClass('is-multiselect');
 
         // Create a Toolbar for the "Selected Items" area
-        const selectedToolbar = self.element.prevAll('.toolbar');
+        const selectedToolbar = self.element.prevAll('.toolbar, .flex-toolbar');
         if (selectedToolbar.length && selectedToolbar.data('toolbar')) {
           selectedToolbar.data('toolbar').toggleMoreMenu();
         }
@@ -1101,7 +1101,7 @@ ListView.prototype = {
       parent = this.element.parent();
     }
 
-    const toolbar = parent.find('.listview-toolbar, .contextual-toolbar');
+    const toolbar = parent.find('.listview-toolbar, .contextual-toolbar, .flex-toolbar');
     const toolbarControl = toolbar.data('toolbar');
 
     if (self.selectedItems.length > 0) {
@@ -1122,7 +1122,7 @@ ListView.prototype = {
 
       let title = toolbar.find('.title, .selection-count');
       if (!title || !title.length) {
-        title = $('<div class="title selection-count"></div>');
+        title = $(toolbar.hasClass('flex-toolbar') ? '<div class="toolbar-section title selection-count"></div>' : '<div class="title selection-count"></div>');
         toolbar.prepend(title);
       }
       title.text(`${self.selectedItems.length} ${Locale ? Locale.translate('Selected') : 'Selected'}`);
