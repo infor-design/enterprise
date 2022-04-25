@@ -1189,7 +1189,8 @@ $datagrid-small-row-height: 25px;
           }
 
           .lookup-wrapper {
-            padding-left: 15px;
+            padding-left: 0;
+            padding-top: 6px;
           }
 
           input {
@@ -1203,11 +1204,11 @@ $datagrid-small-row-height: 25px;
 
             &.lookup {
               height: inherit;
-              padding: 2px 0 0;
+              padding: 2px 16px 0 0;
               width: 100%;
 
               + .trigger {
-                margin-left: -26px;
+                margin-left: -13px;
                 margin-top: 0;
 
                 > .icon {
@@ -1360,7 +1361,8 @@ $datagrid-small-row-height: 25px;
         top: 5px;
 
         &.icon-search-list {
-          top: 4px;
+          left: 0;
+          top: 0;
         }
 
         &.icon-calendar {
@@ -1655,7 +1657,6 @@ $datagrid-small-row-height: 25px;
           }
 
           .lookup-wrapper {
-            padding-left: 10px;
             padding-top: 0;
           }
 
@@ -1829,12 +1830,12 @@ $datagrid-small-row-height: 25px;
 
       &.is-editing {
         input.lookup {
-          margin-left: -4px;
           padding-right: 20px;
+          padding-top: 8px;
 
           + .trigger {
-            margin-left: -22px;
-            margin-top: 3px;
+            margin-left: -17px;
+            margin-top: 2px;
 
             > .icon {
               top: -1px;
@@ -1868,7 +1869,7 @@ $datagrid-small-row-height: 25px;
     }
 
     .datagrid-cell-wrapper {
-      min-height: $datagrid-extra-small-row-height + 4;
+      min-height: $datagrid-extra-small-row-height + 6;
       padding: 2px 5px 0 !important;
 
       .dropdown-trigger {
@@ -1919,7 +1920,7 @@ $datagrid-small-row-height: 25px;
         }
 
         .icon.icon-search-list {
-          left: -6px;
+          left: -8px;
           top: 3px;
         }
 
@@ -1938,13 +1939,15 @@ $datagrid-small-row-height: 25px;
         }
 
         input.lookup {
-          height: 23px;
-          margin-left: -6px;
-          padding-top: 4px;
+          height: 30px;
+          padding-bottom: 2px;
+          margin-left: -1px;
+          padding-right: 20px;
+          padding-top: 0;
 
           + .trigger {
-            margin-left: -18px;
-            margin-top: 1px;
+            margin-left: -20px;
+            margin-top: 2px;
 
             > .icon {
               top: -1px;
@@ -2813,7 +2816,7 @@ $datagrid-small-row-height: 25px;
 
       .lookup-wrapper {
         margin-bottom: 0;
-        padding-left: 18px;
+        padding-left: 0;
         padding-top: 8px;
         vertical-align: top;
         width: 100%;
@@ -2862,11 +2865,12 @@ $datagrid-small-row-height: 25px;
 
         &.lookup {
           margin-left: -1px;
-          padding-right: 33px;
+          padding-bottom: 8px;
+          padding-right: 20px;
 
           + .trigger {
-            margin-left: -29px;
-            margin-top: 5px;
+            margin-left: -13px;
+            margin-top: 2px;
 
             > .icon {
               top: 0;
@@ -4359,7 +4363,12 @@ td .btn-actions {
     &.medium-rowheight {
       td.is-editing {
         .lookup-wrapper {
-          margin-top: 4px;
+          margin-top: 0;
+          padding-top: 5px;
+
+          .lookup + .trigger {
+            top: 2px;
+          }
 
           .lookup ~ .trigger .icon {
             top: calc(50% - 9px);
@@ -4387,7 +4396,11 @@ td .btn-actions {
       td.is-editing {
         .lookup-wrapper {
           .lookup ~ .trigger .icon {
-            top: calc(50% - 5px);
+            top: calc(50% - 10px);
+          }
+
+          .lookup + .trigger {
+            margin-top: -1px;
           }
         }
 
@@ -4415,6 +4428,22 @@ td .btn-actions {
             margin-top: 0;
           }
         }
+
+        .lookup {
+          padding-top: 5px;
+        }
+      }
+    }
+  }
+
+  .datagrid td.is-editing {
+    .lookup-wrapper {
+      padding-top: 6px;
+    }
+
+    .lookup {
+      + .trigger {
+        margin-top: 2px;
       }
     }
   }
