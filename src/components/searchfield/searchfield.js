@@ -853,11 +853,6 @@ SearchField.prototype = {
     // Setup a listener for the Clearable behavior, if applicable
     if (self.settings.clearable) {
       self.element.on(`cleared.${this.id}`, () => {
-        // Add the input value back if settings have a value
-        if (self.settings.value && self.settings.value.length > 0) {
-          self.element.val(self.settings.value);
-        }
-
         if (self.autocomplete) {
           self.autocomplete.closeList();
         }
