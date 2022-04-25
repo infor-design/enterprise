@@ -795,6 +795,7 @@ html.is-firefox {
         background-color: $subheader-searchfield-context-bg;
         border-bottom-color: rgba($searchfield-header-border-color, 0.7);
         color: $header-flex-toolbar-input-searchfield-color;
+        height: 38px;
 
         &::-webkit-input-placeholder {
           color: $searchfield-header-placeholder-text-color;
@@ -812,6 +813,12 @@ html.is-firefox {
       &.is-open {
         .icon {
           color: $searchfield-header-icon-color;
+        }
+
+        &.is-hovered {
+          .icon {
+            color: $searchfield-header-hover-icon-color;
+          }
         }
       }
     }
