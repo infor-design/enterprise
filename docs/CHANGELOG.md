@@ -17,6 +17,7 @@
 - `[Listview]` Changed the font size of heading, subheading, and micro in Listview Component. ([#4996](https://github.com/infor-design/enterprise/issues/4996))
 - `[Modal]` Fixed on too wide minimum width when close button is enabled. ([NG#1240](https://github.com/infor-design/enterprise-ng/issues/1240))
 - `[Slider]` Fixed background color of slider in a modal in new dark theme. ([6211](https://github.com/infor-design/enterprise-ng/issues/6211))
+- `[Swaplist]` Fixed a bug in swaplist where the filter is not behaving correctly on certain key search. ([#6222](https://github.com/infor-design/enterprise/issues/6222))
 - `[SwipeAction]` Fixed scrollbar being visible in firefox. ([#6312](https://github.com/infor-design/enterprise/issues/6312))
 - `[Validation]` Updated example page to include validation event for email field. ([#6296](https://github.com/infor-design/enterprise/issues/6296))
 
