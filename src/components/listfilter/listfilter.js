@@ -107,7 +107,7 @@ ListFilter.prototype = {
    * Run the filter on the list for the given search term.
    * @param {array} list The array to search.
    * @param {string} term The term to look for.
-   * @param {boolean} isStrict The list items are strictly filtered by text and value.
+   * @param {boolean} isStrict The list items are strictly filtered by its primary values.
    * @returns {boolean|array|jquery[]} false if filtering failed,
    *  or an array/jQuery of items that matched the filter.
    */
@@ -143,12 +143,14 @@ ListFilter.prototype = {
       }
     }
 
+    const excludeValues = ['node', '_isFilteredOut'];
+
     // Gets the properties of an object and splices them into text
     function getObjectPropsAsText(thisItem) {
       let text = '';
       const props = Object.keys(thisItem);
       props.forEach((prop) => {
-        if (isStrict && (prop !== 'value' && prop !== 'text')) {
+        if (isStrict && excludeValues.indexOf(prop) > 0) {
           return;
         }
 
