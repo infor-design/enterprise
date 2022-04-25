@@ -86,6 +86,10 @@ Notification.prototype = {
 
     parentEl.parentNode.insertBefore(this.notificationEl, parentEl.nextSibling);
 
+    if ($(this.notificationEl).closest('.contextual-action-panel').length > 0) {
+      $(this.notificationEl).css({'max-width': `${$(parentEl).width() + 50}px`});
+    }
+
     $(this.notificationEl).animateOpen();
 
     utils.addAttributes($(this.notificationEl), this, this.settings.attributes);
