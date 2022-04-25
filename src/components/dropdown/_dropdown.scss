@@ -1184,13 +1184,6 @@ div.dropdown-xs,
     }
   }
 
-  div.dropdown,
-  div.multiselect {
-    > .listoption-icon {
-      top: 11px;
-    }
-  }
-
   .field-short,
   .form-layout-compact .field {
     div.dropdown,
@@ -1230,10 +1223,6 @@ div.dropdown-xs,
   &.android {
     div.dropdown,
     div.multiselect {
-      > .listoption-icon {
-        top: 12px;
-      }
-
       + .icon {
         top: 4px;
       }

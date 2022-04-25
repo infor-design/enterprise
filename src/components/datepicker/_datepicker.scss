@@ -253,6 +253,7 @@ html.is-safari {
   .datepicker {
     + .trigger {
       position: relative;
+      margin-top: 2px;
     }
   }
 }
