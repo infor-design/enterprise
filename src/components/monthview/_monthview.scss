@@ -134,14 +134,6 @@
       vertical-align: top;
       width: 50%;
 
-      &.is-month {
-        padding: 0 1px 0 2px;
-      }
-      
-      &.is-year {
-        padding-left: 4px;
-      }
-
       &.is-month::after {
         border-left: 1px solid $popover-separator-color;
         content: ' ';
@@ -158,10 +150,10 @@
       flex-direction: column;
       height: inherit;
       justify-content: space-around;
-      padding: 5px 0 0;
+      padding: 5px 0;
 
       &.is-year {
-        padding: 2px 0 0;
+        padding-left: 3px;
       }
 
       .picklist-item {
@@ -173,9 +165,10 @@
           font-size: $ids-size-font-base;
           text-decoration: none;
           user-select: none;
+          border: 1px solid transparent;
           border-radius: 0;
           display: block;
-          padding: 6px;
+          padding: 5px;
 
           &:focus {
             border-color: $datepicker-focus-border-color;
