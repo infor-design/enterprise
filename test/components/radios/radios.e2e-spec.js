@@ -64,15 +64,17 @@ describe('Radios validation tests', () => {
         .presenceOf(element(by.id(radioId))), config.waitsFor);
   });
 
-  it('Validates and clears validation', async () => {
+  it('Validates on tab', async () => {
     await element.all(by.css('.radio')).first().sendKeys(protractor.Key.TAB);
     await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.css('.message-text')).count()).toEqual(1);
+  });
 
-    await element.all(by.css('.radio-label')).get(1).click();
+  it('Validates on submit', async () => {
+    await element.all(by.css('#submit')).click();
     await browser.driver.sleep(config.sleep);
 
-    expect(await element.all(by.css('.message-text')).count()).toEqual(0);
+    expect(await element.all(by.css('.message-text')).count()).toEqual(1);
   });
 });

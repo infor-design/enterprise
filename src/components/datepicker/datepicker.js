@@ -1390,6 +1390,7 @@ DatePicker.prototype = {
 
     if (this.currentDate === '' || this.currentDate === undefined) {
       this.element.val('');
+      this.clearRangeDates();
       return;
     }
 
