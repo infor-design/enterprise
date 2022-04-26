@@ -12689,7 +12689,22 @@ Datagrid.prototype = {
   * @returns {object} The plugin api for chaining.
   */
   destroy() {
-    // Remove grid tooltip
+    // Destroy all inner apis found
+    let toolbarElems = this.element.prev('.toolbar, .contextual-toolbar');
+    toolbarElems = toolbarElems.add(toolbarElems.find('*'));
+    let pagerElems = this.element.next('.pager-toolbar');
+    pagerElems = pagerElems.add(pagerElems.find('*'));
+    this.element.add(toolbarElems).add(pagerElems).find('*').each((i, el) => {
+      Object.values($(el).data()).forEach((api) => {
+        if (typeof api?.destroy === 'function') api.destroy();
+      });
+    });
+
+    // Destroy canvas
+    this.canvas?.parentNode?.removeChild?.(this.canvas);
+    this.canvas = null;
+
+    // Remove grid tooltip.
     this.removeTooltip();
 
     $('html').off(`themechanged.${COMPONENT_NAME}`);

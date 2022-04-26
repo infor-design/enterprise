@@ -146,7 +146,7 @@ describe('Textarea size tests', () => {
 
     const mdEl = await element(by.id('def-textarea-example'));
 
-    expect(await mdEl.getCssValue('width')).toBe('362px');
+    expect(await mdEl.getCssValue('width')).toBe('300px');
 
     const lgEl = await element(by.id('lg-textarea-example'));
 
