@@ -500,6 +500,12 @@ $subheader-height: 60px;
                 top: 0;
                 transform: translateY(0);
               }
+
+              &:hover {
+                .icon.close {
+                  color: $searchfield-header-hover-icon-color;
+                }
+              }
             }
           }
         }
