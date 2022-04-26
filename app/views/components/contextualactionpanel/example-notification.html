@@ -8,6 +8,26 @@
       <div class="toolbar">
         <div class="title">Company Information</div>
         <div class="buttonset">
+          <button id="open-notification" class="btn" type="button">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-filter"></use>
+            </svg>
+            <span>Open Notification</span>
+          </button>
+          <div class="separator"></div>
+          <button id="close-notification" class="btn" type="button">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-filter"></use>
+            </svg>
+            <span>Close Notification</span>
+          </button>
+          <div class="separator"></div>
+          <button id="close-all" class="btn" type="button">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-filter"></use>
+            </svg>
+            <span>Close All Notifications</span>
+          </button>
           <button class="btn" type="button">
             <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
               <use href="#icon-save"></use>
@@ -103,15 +123,35 @@
 </div>
 
 <script>
-  $('#mock-header').notification({
-    type: 'info',
-    message: 'DTO rejected by your manager for Sept 30, 2018. Please login to your Human Resources (HR) portal for an explanation on why. If you believe there was a mistake or wish to appeal the rejection, you can now also do that in the new HR portal. ',
-    parent: '#mock-header',
-    link: '#',
-    linkText: 'Click to view',
-    attributes: [
-      { name: 'id', value: 'notification-id-2'},
-      { name: 'data-automation-id', value: 'notification-automation-id-2' }
-    ]
+  let counter = 0;
+
+  $('#open-notification').on('click', () => {
+    $('#mock-header').notification({
+      id: `test${counter++}`,
+      type: 'info',
+      message: `${counter}) DTO rejected by your manager for Sept 30, 2018. Please login to your Human Resources (HR) portal for an explanation on why. If you believe there was a mistake or wish to appeal the rejection, you can now also do that in the new HR portal.`,
+      parent: '#mock-header',
+      link: '#',
+      linkText: 'Click to view',
+      attributes: [
+        { name: 'id', value: 'notification-id-2'},
+        { name: 'data-automation-id', value: 'notification-automation-id-2' }
+      ]
+    }).data('notification').registerNotification();
+  })
+
+  $('#close-notification').on('click', function() {
+    const data = $('#mock-header').data('notification');
+    if (data) {
+      data.close(`test${--counter}`);
+    }
+  });
+
+  $('#close-all').on('click', function() {
+    const data = $('#mock-header').data('notification');
+    if (data) {
+      data.closeAll();
+      counter = 0;
+    }
   });
 </script>
