@@ -1532,11 +1532,12 @@ describe('Datepicker Year Picker Tests', () => {
     const datepickerEl = await element(by.id('year-only'));
     await datepickerEl.sendKeys('2024');
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
-    await browser.driver.sleep(config.sleep);
 
-    await element(by.css('.picklist-item.down a')).click();
-    await element(by.css('.picklist-item.down a')).click();
-    await element(by.css('.picklist-item.down a')).click();
+    const yearPane = await element(by.css('.is-year'));
+
+    await yearPane.element(by.css('.picklist-item.down a')).click();
+    await yearPane.element(by.css('.picklist-item.down a')).click();
+    await yearPane.element(by.css('.picklist-item.down a')).click();
     await element(by.cssContainingText('.picklist-item', '2028')).click();
 
     expect(await element(by.id('year-only')).getAttribute('value')).toEqual('2028');
