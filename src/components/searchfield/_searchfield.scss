@@ -214,12 +214,6 @@
         color: $input-color-hover-border;
       }
     }
-
-    &.has-categories {
-      .searchfield {
-        border-left-color: transparent;
-      }
-    }
   }
 
   &.has-focus {
@@ -250,7 +244,6 @@
 
     &.has-categories {
       .searchfield {
-        border-left-color: transparent;
         box-shadow: none;
       }
 

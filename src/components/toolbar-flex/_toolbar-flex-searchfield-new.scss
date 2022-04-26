@@ -8,6 +8,10 @@
       bottom: 0;
 
       &.toolbar-searchfield-wrapper.has-close-icon-button:not(.has-categories) {
+        > svg.icon.close {
+          top: 50%;
+        }
+
         .btn-icon.close {
           top: 7px;
         }

@@ -26,6 +26,23 @@ $responsive-searchfield-filled-out-width: 34px;
   }
 }
 
+.flex-toolbar {
+  .toolbar-searchfield-wrapper {
+    &.non-collapsible.has-close-icon-button {
+      .btn-icon.close {
+        .icon.close {
+          top: 0;
+        }
+      }
+    }
+
+    > svg.icon {
+      top: 10px;
+      width: 18px;
+    }
+  }
+}
+
 // RTL Styles
 html[dir='rtl'] {
   .toolbar-section {

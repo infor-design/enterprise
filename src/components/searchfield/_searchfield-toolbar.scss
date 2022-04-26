@@ -242,7 +242,7 @@ $toolbarsearchfield-category-empty-width: 51px;
 
     &:not(.non-collapsible) {
       .searchfield {
-        height: 34px; // Unable to use token here. need to use the soho height
+        height: 38px; // Unable to use token here. need to use the soho height
       }
     }
 
@@ -272,7 +272,7 @@ $toolbarsearchfield-category-empty-width: 51px;
   &.active {
     // During the animation "out", the text goes transparent
     .searchfield {
-      background-color: rgba($searchfield-bg-color, 1);
+      background-color: $searchfield-toolbar-bg-color;
       border-bottom-color: rgba($searchfield-border-color, 1);
     }
 
@@ -299,6 +299,10 @@ $toolbarsearchfield-category-empty-width: 51px;
   &.has-focus {
     .searchfield {
       border-color: transparent;
+
+      &:focus {
+        border-color: rgba($input-color-focus-border, 1);
+      }
     }
 
     &.active {
@@ -332,7 +336,7 @@ $toolbarsearchfield-category-empty-width: 51px;
       &.close {
         color: $searchfield-text-color;
         height: 18px;
-        top: 8px;
+        top: 10px;
       }
     }
 
@@ -714,6 +718,7 @@ html.is-firefox {
     // reset all the styling for the searchfield to correctly appear open.
     .searchfield {
       background-color: $searchfield-toolbar-bg-color;
+      border: 1px solid $searchfield-toolbar-border-color;
       border-radius: 2px;
       color: $searchfield-text-color;
       font-size: $ids-size-font-base;
