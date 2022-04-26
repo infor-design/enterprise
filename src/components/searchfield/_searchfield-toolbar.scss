@@ -793,15 +793,15 @@ html.is-firefox {
         height: 38px;
 
         &::-webkit-input-placeholder {
-          color: $searchfield-header-placeholder-text-color;
+          color: $searchfield-placeholder-text-color;
         }
 
         &::-moz-placeholder {
-          color: $searchfield-header-placeholder-text-color;
+          color: $searchfield-placeholder-text-color;
         }
 
         &:-ms-input-placeholder {
-          color: $searchfield-header-placeholder-text-color;
+          color: $searchfield-placeholder-text-color;
         }
       }
 
