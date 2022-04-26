@@ -63,7 +63,8 @@ Textarea.prototype = {
 
     this.element.addClass(this.element.is('.textarea-xs') ? 'input-xs' : //eslint-disable-line
       this.element.is('.textarea-sm') ? 'input-sm' : //eslint-disable-line
-        this.element.is('.textarea-lg') ? 'input-lg' : ''); //eslint-disable-line
+        this.element.is('.textarea-def') ? 'input-md' : //eslint-disable-line
+          this.element.is('.textarea-lg') ? 'input-lg' : ''); //eslint-disable-line
 
     if (this.settings.characterCounter && this.getMaxLength()) {
       this.counter = $('<span class="textarea-wordcount">Chars Left..</span>').insertAfter(this.element);
