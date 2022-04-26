@@ -13,7 +13,8 @@
         }
 
         .btn-icon.close {
-          top: 7px;
+          top: 50%;
+          transform: translateY(-50%);
         }
       }
     }

@@ -206,6 +206,7 @@ $toolbarsearchfield-category-empty-width: 51px;
       color: $searchfield-text-color;
       font-size: $ids-size-font-base;
       font-weight: $ids-number-font-weight-base;
+      height: 38px;
       padding-right: 34px;
       text-transform: none;
 
@@ -723,6 +724,7 @@ html.is-firefox {
       color: $searchfield-text-color;
       font-size: $ids-size-font-base;
       font-weight: $ids-number-font-weight-base;
+      height: 38px;
       text-transform: none;
 
       &::-webkit-input-placeholder {

@@ -19,9 +19,11 @@ $responsive-searchfield-filled-out-width: 34px;
 
     .collapse-button {
       display: none;
+      height: 38px;
+      margin: 0;
       min-width: 0;
       padding: 0;
-      width: $responsive-searchfield-filled-out-width;
+      width: $responsive-searchfield-filled-out-width + 4;
     }
   }
 }

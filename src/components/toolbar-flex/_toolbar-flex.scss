@@ -94,7 +94,8 @@
 
         &:not(.has-categories) {
           .btn-icon.close {
-            top: 5px;
+            top: 50%;
+            transform: translateY(-50%);
           }
         }
       }
