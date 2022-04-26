@@ -4332,6 +4332,16 @@ td .btn-actions {
     padding: 1px 0 2px 5px !important;
   }
 
+  .extra-small-rowheight {
+    .datagrid-trigger-cell.text-ellipsis.has-editor span.trigger {
+      padding-top: 2px;
+    }
+  }
+
+  .datagrid.extra-small-rowheight tbody tr td.is-editing .lookup-wrapper {
+    padding-top: 1px;
+  }
+
   .small-rowheight,
   .extra-small-rowheight {
     .datagrid tbody tr.arrange-dragging td {
