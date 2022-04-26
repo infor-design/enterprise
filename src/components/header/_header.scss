@@ -217,6 +217,7 @@ $subheader-height: 60px;
           .icon.close {
             color: $searchfield-header-icon-color !important;
             opacity: unset;
+            top: 0;
           }
         }
       }

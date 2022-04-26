@@ -331,6 +331,8 @@ $toolbarsearchfield-category-empty-width: 51px;
     .icon {
       &.close {
         color: $searchfield-text-color;
+        height: 18px;
+        top: 8px;
       }
     }
 
