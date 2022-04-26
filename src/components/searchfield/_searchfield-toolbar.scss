@@ -299,10 +299,6 @@ $toolbarsearchfield-category-empty-width: 51px;
   &.has-focus {
     .searchfield {
       border-color: transparent;
-
-      &:focus {
-        border-color: rgba($input-color-focus-border, 1);
-      }
     }
 
     &.active {
@@ -716,7 +712,6 @@ html.is-firefox {
     // reset all the styling for the searchfield to correctly appear open.
     .searchfield {
       background-color: $searchfield-toolbar-bg-color;
-      border: 1px solid $searchfield-toolbar-border-color;
       border-radius: 2px;
       color: $searchfield-text-color;
       font-size: $ids-size-font-base;

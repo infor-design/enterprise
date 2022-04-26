@@ -676,7 +676,7 @@ $searchfield-card-border-color: $ids-color-palette-slate-90;
 $searchfield-card-icon-color: $ids-color-palette-slate-60;
 $searchfield-card-text-color: $font-color;
 
-$searchfield-header-bg-color: $ids-color-palette-slate-80;
+$searchfield-header-bg-color: $ids-color-palette-slate-100;
 $searchfield-header-border-color: $ids-color-palette-slate-70;
 $searchfield-header-text-color: $ids-color-palette-white;
 $searchfield-header-placeholder-text-color: rgba(255, 255, 255, 0.5);
@@ -730,6 +730,7 @@ $header-tab-alt-hover-color: $inverse-color;
 $header-tab-alt-selected-color: $inverse-color;
 
 $header-flex-toolbar-close-icon-color-hover: $ids-color-palette-white;
+$searchfield-header-hover-icon-color: $ids-color-palette-white;
 
 // Header Breadcrumb
 $header-breadcrumb-color: $ids-color-palette-slate-10;
