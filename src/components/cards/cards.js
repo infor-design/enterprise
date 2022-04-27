@@ -428,8 +428,11 @@ Cards.prototype = {
   teardown() {
     this.element.off(`click.${COMPONENT_NAME}`);
     this.expandableCardHeader?.off('click.cards');
+    this.expandableCardHeader = null;
     $('body').off('resize.card');
     this.selectedRows = [];
+    this.cardContentPane.off();
+    this.cardContentPane = null;
     return this;
   },
 

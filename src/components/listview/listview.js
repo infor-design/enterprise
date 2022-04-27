@@ -1115,7 +1115,8 @@ ListView.prototype = {
         toolbar.trigger('recalculate-buttons').removeClass('is-hidden');
       });
       if (toolbar[0]) {
-        toolbar[0].style.display = 'block';
+        const isContextualToolbar = toolbar[0].classList.contains('contextual-toolbar');
+        toolbar[0].style.display = isContextualToolbar ? 'block' : '';
       }
       // toolbar.animateOpen({distance: 52});
       toolbar.animateOpen({ distance: 40 });

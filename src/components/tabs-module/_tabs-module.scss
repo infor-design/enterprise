@@ -842,8 +842,20 @@ html[dir='rtl'] {
 .tab-container > .toolbar > .buttonset {
   > .searchfield-wrapper.toolbar-searchfield-wrapper > .btn-icon.close {
     height: 24px; // matches min-height declaration of button.close in input.scss
-    top: 50%;
+    top: 50% !important;
     transform: translateY(-50%);
-    width: 18px;
+    width: 24px;
+  }
+}
+
+html[class*='theme-new-'] .tab-container > .toolbar > .buttonset {
+  > .searchfield-wrapper.toolbar-searchfield-wrapper > .btn-icon.close {
+    height: 28px;
+    margin-top: -1px;
+    width: 28px;
+
+    .icon.close {
+      margin-top: 1px;
+    }
   }
 }
