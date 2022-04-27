@@ -13,6 +13,7 @@
 - `[Datepicker]` Fixed a bug on datepicker not clearing in angular version. ([NG#1256](https://github.com/infor-design/enterprise-ng/issues/1256))
 - `[Dropdown]` Fixed on keydown events not working when dropdown is nested in label. ([NG#1262](https://github.com/infor-design/enterprise-ng/issues/1262))
 - `[Field-Filter]` Fix alignment of filter icons and text field. ([#5866](https://github.com/infor-design/enterprise/issues/5866))
+- `[Field-Options]` Fix fieldoptions label overflow. ([#6255](https://github.com/infor-design/enterprise/issues/6255))
 - `[Field-Options]` Fixed alignment of field options in the Color Picker when in compact mode in Safari and alignment of search icon in Clearable Searchfield. ([#6256](https://github.com/infor-design/enterprise/issues/6256))
 - `[General]` Fixed memory leaks in listview, toolbar, datagrid, cards and header. ([NG#1275](https://github.com/infor-design/enterprise-ng/issues/1275))
 - `[Listview]` Added flex toolbar for multiselect listview. ([NG#1249](https://github.com/infor-design/enterprise-ng/issues/1249))
