@@ -45,7 +45,7 @@
 .field-options {
   max-width: ($field-md - 40px);
   text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: normal;
   width: calc(100% - 40px);
 
   &.input-xs {
