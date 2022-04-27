@@ -6,7 +6,9 @@
 
 - `[Badges]` Fixed a bug where in badges is not properly aligned in Contrast Mode. ([#6273](https://github.com/infor-design/enterprise/issues/6273))
 - `[Calendar]` Allowed product devs to add custom css class to event labels in Calendar Component. ([#6304](https://github.com/infor-design/enterprise/issues/6304))
+- `[Card]` Fixed a regression bug where the flex toolbar's position was not properly aligned when selecting listview items. ([#6346](https://github.com/infor-design/enterprise/issues/6346)]
 - `[ContextualActionPanel]` Added close CAP function to a demo example. ([#6274](https://github.com/infor-design/enterprise/issues/6274))
+- `[Datagrid]` Fixed misaligned lookup icon button upon click/editing. ([#6233](https://github.com/infor-design/enterprise/issues/6233))
 - `[Datagrid]` Fixed a bug where tooltip is not displayed even when settings is turned on in disabled rows. ([#6128](https://github.com/infor-design/enterprise/issues/6128))
 - `[Datagrid]` Fixed misaligned lookup icon button upon click/editing. ([#6233](https://github.com/infor-design/enterprise/issues/6233))
 - `[Datepicker]` Fixed a bug on setValue() when pass an empty string for clearing field. ([#6168](https://github.com/infor-design/enterprise/issues/6168))
