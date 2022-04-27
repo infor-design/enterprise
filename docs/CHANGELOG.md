@@ -11,6 +11,7 @@
 - `[Datepicker]` Fixed a bug on setValue() when pass an empty string for clearing field. ([#6168](https://github.com/infor-design/enterprise/issues/6168))
 - `[Datepicker]` Fixed a bug on datepicker not clearing in angular version. ([NG#1256](https://github.com/infor-design/enterprise-ng/issues/1256))
 - `[Dropdown]` Fixed on keydown events not working when dropdown is nested in label. ([NG#1262](https://github.com/infor-design/enterprise-ng/issues/1262))
+- `[Field-Options]` Fixed a bug where in the text and highlight box are not fit accordingly. ([#6322](https://github.com/infor-design/enterprise/issues/6322))
 - `[Field-Options]` Fixed alignment of field options in the Color Picker when in compact mode in Safari and alignment of search icon in Clearable Searchfield. ([#6256](https://github.com/infor-design/enterprise/issues/6256))
 - `[Listview]` Added flex toolbar for multiselect listview. ([NG#1249](https://github.com/infor-design/enterprise-ng/issues/1249))
 - `[Listview]` Adjusted spaces between the search icon and filter wrapper. ([#6007](https://github.com/infor-design/enterprise/issues/6007))
