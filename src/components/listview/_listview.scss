@@ -637,6 +637,10 @@
       height: 38px;
     }
 
+    .btn-icon {
+      top: 9px;
+    }
+
     &.has-listview-filters {
       height: 38px;
       z-index: 1;
@@ -652,6 +656,12 @@
       svg.icon {
         top: 12px;
         left: 16px !important;
+      }
+
+      .btn-icon.close {
+        svg.close {
+          position: static;
+        }
       }
     }
 
