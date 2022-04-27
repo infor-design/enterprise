@@ -47,8 +47,8 @@ const COMPONENT_NAME_DEFAULTS = {
   legend: [],
   hideDays: false, // TODO
   showMonthYearPicker: true,
-  yearsAhead: 5,
-  yearsBack: 4,
+  yearsAhead: 3,
+  yearsBack: 2,
   range: {
     useRange: false, // true - if datepicker using range dates
     start: '', // Start date '03/05/2018'
@@ -129,8 +129,8 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {boolean} [settings.range.includeDisabled=false] Include disable dates in range of dates.
  * @param {boolean} [settings.hideDays=false] If true the days portion of the calendar will be hidden. Usefull for Month/Year only formats.
  * @param {boolean} [settings.showMonthYearPicker=true] If false the year and month switcher will be disabled.
- * @param {number} [settings.yearsAhead=5] The number of years ahead to show in the month/year picker should total 9 with yearsBack.
- * @param {number} [settings.yearsBack=4] The number of years back to show in the month/year picker should total 9 with yearsAhead.
+ * @param {number} [settings.yearsAhead=3] The number of years ahead to show in the month/year picker should total 9 with yearsBack.
+ * @param {number} [settings.yearsBack=2] The number of years back to show in the month/year picker should total 9 with yearsAhead.
  * @param {array} [settings.legend]  Legend Build up
  * for example `[{name: 'Public Holiday', color: '#76B051', dates: []},
  * {name: 'Weekends', color: '#EFA836', dayOfWeek: []}]`
@@ -1065,25 +1065,24 @@ MonthView.prototype = {
 
     const wideMonths = this.currentCalendar.months.wide;
 
-    if (this.settings.inPage) {
-      monthList += `<li class="picklist-item up"><a href="#" tabindex="0"${isRippleClass}><span class="audible">${Locale.translate('PreviousMonth')}</span><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-caret-up"></use></svg></a></li>`;
+    monthList += `<li class="picklist-item up"><a href="#" tabindex="0"${isRippleClass}><span class="audible">${Locale.translate('PreviousMonth')}</span><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-caret-up"></use></svg></a></li>`;
 
-      const maxMonthsInList = 6; // number of months: (12 / 2 = 6)
-      const monthAddition = month < maxMonthsInList ? 0 : maxMonthsInList;
-      for (let i = 0; i < maxMonthsInList; i++) {
-        const idx = i + monthAddition;
-        const monthMap = wideMonths[idx];
-        monthList += `<li class="picklist-item${(idx === month ? ' is-selected ' : '')}"><a href="#" tabindex="${idx === month ? '0' : '-1'}" data-month="${idx}"${isRippleClass}>${monthMap}</a></li>`;
-      }
-
-      monthList += `<li class="picklist-item down"><a tabindex="0"${isRippleClass}><span class="audible">${Locale.translate('NextMonth')}</span><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-caret-down"></use></svg></a></li>`;
-    } else {
-      wideMonths.map(function (monthMap, i) { // eslint-disable-line
-        monthList += `<li class="picklist-item${(i === month ? ' is-selected ' : '')}"><a href="#" tabindex="${i === month ? '0' : '-1'}" data-month="${i}"${isRippleClass}>${monthMap}</a></li>`;
-      });
+    const maxMonthsInList = 6; // number of months: (12 / 2 = 6)
+    const monthAddition = month < maxMonthsInList ? 0 : maxMonthsInList;
+    for (let i = 0; i < maxMonthsInList; i++) {
+      const idx = i + monthAddition;
+      const monthMap = wideMonths[idx];
+      monthList += `<li class="picklist-item${(idx === month ? ' is-selected ' : '')}"><a href="#" tabindex="${idx === month ? '0' : '-1'}" data-month="${idx}"${isRippleClass}>${monthMap}</a></li>`;
     }
 
-    monthList += '</ul>';
+    monthList += `<li class="picklist-item down">
+        <a tabindex="0"${isRippleClass}>
+          <span class="audible">${Locale.translate('NextMonth')}</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-caret-down"></use>
+          </svg>
+        </a>
+      </li></ul>`;
 
     this.monthYearPane.find('.picklist-section.is-month').empty().append(monthList);
     const years = [];
@@ -1102,8 +1101,14 @@ MonthView.prototype = {
     years.map(function (yearMap) {
       yearList += `<li class="picklist-item${(year === yearMap ? ' is-selected ' : '')}"><a href="#" tabindex="${year === yearMap ? '0' : '-1'}" data-year="${yearMap}"${isRippleClass}>${yearMap}</a></li>`;
     });
-    yearList += `<li class="picklist-item down"><a tabindex="0"${isRippleClass}><span class="audible">${Locale.translate('NextYear')}</span><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-caret-down"></use></svg></a></li>`;
-    yearList += '</ul>';
+    yearList += `<li class="picklist-item down">
+        <a tabindex="0"${isRippleClass}>
+          <span class="audible">${Locale.translate('NextYear')}</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-caret-down"></use>
+          </svg>
+        </a>
+      </li></ul>`;
 
     this.monthYearPane.find('.picklist-section.is-year').empty().append(yearList);
     if (this.yearFirst) {
@@ -1659,26 +1664,34 @@ MonthView.prototype = {
       const wideMonths = this.currentCalendar.months.wide;
       const monthList = monthContainer.children;
       const monthLen = monthList.length - 2;
-      const month = monthList[(upDown === 'up' ? 1 : monthLen)].querySelector('a').getAttribute('data-month');
-      DOM.remove(monthList[(upDown === 'up' ? monthLen : 1)]);
+      const month = parseInt(monthList[(upDown === 'up' ? 1 : monthLen)].querySelector('a').getAttribute('data-month'), 10);
       const monthContainerJQ = $(monthContainer);
 
-      monthContainerJQ.find('.picklist-item').not('.up, .down').remove();
+      const selected = monthContainerJQ.find('li.is-selected');
+      const index = selected.index();
 
-      const maxMonthsInList = 6; // number of months: (12 / 2 = 6)
-      const monthAddition = month >= maxMonthsInList ? 0 : maxMonthsInList;
-      for (let i = 0; i < maxMonthsInList; i++) {
-        const idx = i + monthAddition;
-        const monthMap = wideMonths[idx];
-        const a = $(`<a href="#" tabindex="-1" data-month="${idx}"${isRippleClass}>${monthMap}</a>`);
-        const li = $('<li class="picklist-item"></li>');
+      selected.removeClass('is-selected');
+
+      const top = monthList[1];
+      const bottom = monthList[monthLen];
+      const li = $('<li class="picklist-item"></li>');
+
+      if (upDown === 'up') {
+        const idx = month === 0 ? 11 : month - 1;
+        const a = `<a href="#" tabindex="-1" data-month="${idx}"${isRippleClass}>${wideMonths[idx]}</a>`;
         li.append(a);
-        monthContainerJQ.find('.picklist-item.down').before(li);
-        utils.addAttributes(a, this, s.attributes, `btn-picklist-${idx}`);
+        bottom.remove();
+        li.insertBefore(top);
+      } else {
+        const idx = month === 11 ? 0 : month + 1;
+        const a = `<a href="#" tabindex="-1" data-month="${idx}"${isRippleClass}>${wideMonths[idx]}</a>`;
+        li.append(a);
+        top.remove();
+        li.insertAfter(bottom);
       }
 
       if (!s.inPage) {
-        monthContainerJQ.find('.picklist-item').eq(5)
+        $(monthContainerJQ.find('li.picklist-item').get(index))
           .addClass('is-selected')
           .attr('tabindex', '0');
       }
@@ -1688,39 +1701,36 @@ MonthView.prototype = {
       const yearContainer = this.monthYearPane[0].querySelector('.picklist.is-year');
       const yearList = yearContainer.children;
       const yearsLen = yearList.length - 2;
-      const year = yearList[(upDown === 'up' ? 1 : yearsLen)].querySelector('a').getAttribute('data-year');
-      DOM.remove(yearList[(upDown === 'up' ? yearsLen : 1)]);
+      const year = parseInt(yearList[(upDown === 'up' ? 1 : yearsLen)].querySelector('a').getAttribute('data-year'), 10);
       const yearContainerJQ = $(yearContainer);
 
-      yearContainerJQ.find('.picklist-item').not('.up, .down').remove();
+      const selected = yearContainerJQ.find('li.is-selected');
+      const index = selected.index();
+
+      selected.removeClass('is-selected');
+
+      const top = yearList[1];
+      const bottom = yearList[yearsLen];
+      const li = $('<li class="picklist-item"></li>');
 
       if (upDown === 'up') {
-        for (let i = yearsLen; i > 0; i--) {
-          const nextYear = parseInt(year, 10) - i;
-
-          const a = $(`<a href="#" tabindex="-1" data-year="${nextYear}"${isRippleClass}>${nextYear}</a>`);
-          const li = $('<li class="picklist-item"></li>');
-          li.append(a);
-
-          yearContainerJQ.find('.picklist-item.down').before(li);
-          utils.addAttributes(a, this, s.attributes, `btn-picklist-${nextYear}`);
-        }
-      }
-
-      if (upDown === 'down') {
-        for (let i = 1; i < (yearsLen + 1); i++) {
-          const nextYear = parseInt(year, 10) + i;
-          const a = $(`<a href="#" tabindex="-1" data-year="${nextYear}"${isRippleClass}>${nextYear}</a>`);
-          const li = $('<li class="picklist-item"></li>');
-          li.append(a);
-
-          yearContainerJQ.find('.picklist-item.down').before(li);
-          utils.addAttributes(a, this, s.attributes, `btn-picklist-${nextYear}`);
-        }
+        const nextYear = year - 1;
+        const a = $(`<a href="#" tabindex="-1" data-year="${nextYear}"${isRippleClass}>${nextYear}</a>`);
+        utils.addAttributes(a, this, s.attributes, `btn-picklist-${nextYear}`);
+        li.append(a);
+        bottom.remove();
+        li.insertBefore(top);
+      } else {
+        const nextYear = year + 1;
+        const a = $(`<a href="#" tabindex="-1" data-year="${nextYear}"${isRippleClass}>${nextYear}</a>`);
+        utils.addAttributes(a, this, s.attributes, `btn-picklist-${nextYear}`);
+        li.append(a);
+        top.remove();
+        li.insertAfter(bottom);
       }
 
       if (!s.inPage) {
-        yearContainerJQ.find('.picklist-item').eq(5)
+        $(yearContainerJQ.find('li.picklist-item').get(index))
           .addClass('is-selected')
           .attr('tabindex', '0');
       }

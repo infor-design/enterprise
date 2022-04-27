@@ -113,7 +113,7 @@ describe('Datepicker example-index tests', () => {
     expect(await element(by.id('custom-id-btn-picklist-year-up')).getAttribute('id')).toEqual('custom-id-btn-picklist-year-up');
     expect(await element(by.id('custom-id-btn-picklist-year-down')).getAttribute('id')).toEqual('custom-id-btn-picklist-year-down');
     expect(await element(by.id('custom-id-btn-picklist-3')).getAttribute('id')).toEqual('custom-id-btn-picklist-3');
-    expect(await element(by.id('custom-id-btn-picklist-2018')).getAttribute('id')).toEqual('custom-id-btn-picklist-2018');
+    expect(await element(by.id('custom-id-btn-picklist-2020')).getAttribute('id')).toEqual('custom-id-btn-picklist-2020');
   });
 
   if (!utils.isBS()) {
@@ -901,7 +901,7 @@ describe('Datepicker Month Year Changer Tests', () => {
     await element(by.id('btn-monthyear-pane')).click();
     await browser.driver.sleep(config.sleep);
 
-    await element(by.cssContainingText('.picklist-item', 'April')).click();
+    await element(by.cssContainingText('.picklist-item', 'November')).click();
     await element(by.css('.is-select-month-pane')).click();
     await browser.driver.sleep(config.sleep);
 
@@ -917,7 +917,7 @@ describe('Datepicker Month Year Changer Tests', () => {
     await buttonEl.click();
     await browser.driver.sleep(config.sleep);
 
-    expect(await element(by.id('date-field-normal')).getAttribute('value')).toEqual('4/1/2018');
+    expect(await element(by.id('date-field-normal')).getAttribute('value')).toEqual('11/1/2018');
   });
 
   it('Should be able to change year', async () => {
@@ -1500,11 +1500,11 @@ describe('Datepicker Month Year Picker Tests', () => {
     await element(by.css('.picklist-item.down a')).click();
     await element(by.css('.picklist-item.down a')).click();
     await element(by.css('.picklist-item.down a')).click();
-    await element(by.cssContainingText('.picklist-item', '2051')).click();
+    await element(by.cssContainingText('.picklist-item', '2019')).click();
 
     await element(by.css('.is-select-month')).click();
 
-    expect(await element(by.id('month-year')).getAttribute('value')).toEqual('04/2051');
+    expect(await element(by.id('month-year')).getAttribute('value')).toEqual('07/2019');
   });
 
   if (utils.isChrome() && utils.isCI()) {
@@ -1533,12 +1533,14 @@ describe('Datepicker Year Picker Tests', () => {
     await datepickerEl.sendKeys('2024');
     await datepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
 
-    await element(by.css('.picklist-item.down a')).click();
-    await element(by.css('.picklist-item.down a')).click();
-    await element(by.css('.picklist-item.down a')).click();
-    await element(by.cssContainingText('.picklist-item', '2057')).click();
+    const yearPane = await element(by.css('.is-year'));
 
-    expect(await element(by.id('year-only')).getAttribute('value')).toEqual('2057');
+    await yearPane.element(by.css('.picklist-item.down a')).click();
+    await yearPane.element(by.css('.picklist-item.down a')).click();
+    await yearPane.element(by.css('.picklist-item.down a')).click();
+    await element(by.cssContainingText('.picklist-item', '2028')).click();
+
+    expect(await element(by.id('year-only')).getAttribute('value')).toEqual('2028');
   });
 
   if (utils.isChrome() && utils.isCI()) {

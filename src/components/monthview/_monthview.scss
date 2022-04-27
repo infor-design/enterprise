@@ -150,28 +150,42 @@
       flex-direction: column;
       height: inherit;
       justify-content: space-around;
-      padding: 5px 0 0;
+      padding: 5px 0;
 
       &.is-year {
-        padding: 2px 0 0;
+        padding-left: 3px;
       }
 
       .picklist-item {
+        width: 100%;
+
         a {
-          border: 1px solid transparent;
-          border-radius: 14px;
           box-shadow: none;
           color: $datepicker-day-color;
           font-size: $ids-size-font-base;
-          padding: 1px 8px;
           text-decoration: none;
           user-select: none;
+          border: 1px solid transparent;
+          border-radius: 0;
+          display: block;
+          padding: 5px;
 
           &:focus {
             border-color: $datepicker-focus-border-color;
             box-shadow: $focus-box-shadow;
             outline: none;
             -moz-outline-style: none;
+          }
+        }
+
+        &.is-selected a {
+          color: $ids-color-palette-white;
+          font-weight: $ids-number-font-weight-bold;
+          background-color: $datepicker-selected-bg-color;
+          width: 100%;
+
+          .icon {
+            color: $ids-color-palette-white;
           }
         }
 
@@ -186,16 +200,6 @@
 
           &:active {
             color: $trigger-active-color;
-          }
-        }
-
-        &.is-selected a {
-          background-color: $datepicker-selected-bg-color;
-          color: $ids-color-palette-white;
-          font-weight: $ids-number-font-weight-bold;
-
-          .icon {
-            color: $ids-color-palette-white;
           }
         }
 
@@ -713,12 +717,6 @@
         .picklist-item {
           width: 100%;
 
-          a {
-            border-radius: 0;
-            display: block;
-            padding: 9px;
-          }
-
           &.up,
           &.down {
             a {
@@ -904,6 +902,16 @@
     display: inline-block;
     height: 12px;
     width: 12px;
+  }
+}
+
+.ios,
+.android {
+  .monthview-monthyear-pane {
+    .picklist-section.is-year {
+      width: calc(100% - 175px);
+      margin-left: 8px;
+    }
   }
 }
 
