@@ -111,8 +111,8 @@ stringUtils.padDate = function padDate(year, month, day) {
  * @returns {number} calculated width
  */
 stringUtils.textWidth = function textWidth(text, padding, font) {
-  this.canvasTW = this.canvasTW || (this.canvasTW = document.createElement('canvas'));
-  const context = this.canvasTW.getContext('2d');
+  const canvasTW = document.createElement('canvas');
+  const context = canvasTW.getContext('2d');
   context.font = font || '14px arial';
 
   const metrics = context.measureText(text);

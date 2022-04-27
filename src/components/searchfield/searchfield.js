@@ -805,12 +805,12 @@ SearchField.prototype = {
         self.collapse();
       });
 
-      $('body').on('breakpoint-change', () => {
+      $('body').on(`breakpoint-change.${this.id}`, () => {
         self.adjustOnBreakpoint();
       });
       self.adjustOnBreakpoint();
     } else {
-      $('body').on('breakpoint-change', () => {
+      $('body').on(`breakpoint-change.${this.id}`, () => {
         self.simpleAdjustOnBreakpoint();
       });
       self.simpleAdjustOnBreakpoint();
@@ -853,11 +853,6 @@ SearchField.prototype = {
     // Setup a listener for the Clearable behavior, if applicable
     if (self.settings.clearable) {
       self.element.on(`cleared.${this.id}`, () => {
-        // Add the input value back if settings have a value
-        if (self.settings.value && self.settings.value.length > 0) {
-          self.element.val(self.settings.value);
-        }
-
         if (self.autocomplete) {
           self.autocomplete.closeList();
         }
@@ -2113,7 +2108,8 @@ SearchField.prototype = {
 
     // Used to determine if the "Tab" key was involved in switching focus to the searchfield.
     this.removeDocumentDeactivationEvents();
-    $('body').off('breakpoint-change');
+    $('body').off(`resize.${this.id}`);
+    $('body').off(`breakpoint-change.${this.id}`);
 
     if (this.autocomplete) {
       this.autocomplete.destroy();

@@ -1113,3 +1113,10 @@ html[dir='rtl'] {
     margin-top: -22px;
   }
 }
+
+//when on smaller form factors make 300px fields go down to small-medium size
+@include respond-to(phone) {
+  .input-md {
+    width: $field-mm;
+  }
+}

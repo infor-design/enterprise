@@ -52,7 +52,7 @@ Validator.prototype = {
    * @returns {void}
    */
   init() {
-    this.fields = 'input, textarea, select, div[data-validate], div[data-validation]';
+    this.fields = 'input[data-validate], input[data-validation], textarea[data-validate], textarea[data-validation], select[data-validate], select[data-validation], div[data-validate], div[data-validation]';
     this.isPlaceholderSupport = !!('placeholder' in document.createElement('input'));// placeholder native support is-exists
 
     // If we initialize with a form find all inputs
@@ -1168,8 +1168,16 @@ Validator.prototype = {
       this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
     }
     this.init();
-  }
+  },
 
+  /**
+   * Destroy method
+   * @param {object} [settings] incoming settings
+   */
+  destroy() {
+    // Events removed in the component
+    this.inputs = null;
+  }
 };
 
 export { Validator, COMPONENT_NAME };
