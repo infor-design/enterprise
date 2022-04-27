@@ -94,6 +94,7 @@ $dd-width: 55px;
 
     .dropdown-md {
       width: el-width($field-md);
+      border-radius: 0 2px 2px 0;
     }
 
     .dropdown-lg {
