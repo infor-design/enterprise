@@ -7,7 +7,7 @@
 - `[Badges]` Fixed a bug where in badges is not properly aligned in Contrast Mode. ([#6273](https://github.com/infor-design/enterprise/issues/6273))
 - `[Calendar]` Allowed product devs to add custom css class to event labels in Calendar Component. ([#6304](https://github.com/infor-design/enterprise/issues/6304))
 - `[Card]` Fixed a regression bug where the flex toolbar's position was not properly aligned when selecting listview items. ([#6346](https://github.com/infor-design/enterprise/issues/6346)]
-- `[ContextualActionPanel]` Move notification to appropriate location and trigger redraw of styles. ([#6264](https://github.com/infor-design/enterprise/issues/6264))
+- `[ContextualActionPanel]` Moved notification to appropriate location and trigger redraw of styles. ([#6264](https://github.com/infor-design/enterprise/issues/6264))
 - `[ContextualActionPanel]` Added close CAP function to a demo example. ([#6274](https://github.com/infor-design/enterprise/issues/6274))
 - `[Datagrid]` Fixed misaligned lookup icon button upon click/editing. ([#6233](https://github.com/infor-design/enterprise/issues/6233))
 - `[Datagrid]` Fixed a bug where tooltip is not displayed even when settings is turned on in disabled rows. ([#6128](https://github.com/infor-design/enterprise/issues/6128))
@@ -15,7 +15,8 @@
 - `[Datepicker]` Fixed a bug on setValue() when pass an empty string for clearing field. ([#6168](https://github.com/infor-design/enterprise/issues/6168))
 - `[Datepicker]` Fixed a bug on datepicker not clearing in angular version. ([NG#1256](https://github.com/infor-design/enterprise-ng/issues/1256))
 - `[Dropdown]` Fixed on keydown events not working when dropdown is nested in label. ([NG#1262](https://github.com/infor-design/enterprise-ng/issues/1262))
-- `[Field-Filter]` Fix alignment of filter icons and text field. ([#5866](https://github.com/infor-design/enterprise/issues/5866))
+- `[Field-Filter]` Fixed alignment of filter icons and text field. ([#5866](https://github.com/infor-design/enterprise/issues/5866))
+- `[Field-Options]` Fixed field options label overflow. ([#6255](https://github.com/infor-design/enterprise/issues/6255))
 - `[Field-Options]` Fixed a bug where in the text and highlight box are not fit accordingly. ([#6322](https://github.com/infor-design/enterprise/issues/6322))
 - `[Field-Options]` Fixed alignment of field options in the Color Picker when in compact mode in Safari and alignment of search icon in Clearable Searchfield. ([#6256](https://github.com/infor-design/enterprise/issues/6256))
 - `[General]` Fixed memory leaks in listview, toolbar, datagrid, cards and header. ([NG#1275](https://github.com/infor-design/enterprise-ng/issues/1275))
@@ -28,6 +29,7 @@
 - `[Swaplist]` Fixed a bug in swaplist where the filter is not behaving correctly on certain key search. ([#6222](https://github.com/infor-design/enterprise/issues/6222))
 - `[SwipeAction]` Fixed scrollbar being visible in firefox. ([#6312](https://github.com/infor-design/enterprise/issues/6312))
 - `[Tabs]` Fixed Z-index conflict between modal overlay and draggable module tabs. ([#6297](https://github.com/infor-design/enterprise/issues/6297))
+- `[Tabs]` Fixed a bug where the tab activated events are fired on closing a tab. ([#1452](https://github.com/infor-design/enterprise/issues/1452))
 - `[TextArea]` Fixed medium size text area when in responsive view. ([#6334](https://github.com/infor-design/enterprise/issues/6334))
 - `[Validation]` Updated example page to include validation event for email field. ([#6296](https://github.com/infor-design/enterprise/issues/6296))
 
