@@ -33,6 +33,7 @@
 ## v4.63.0 Features
 
 - `[File Upload]` Added close button on file error message ([#6229](https://github.com/infor-design/enterprise/issues/6229))
+- `[Datagrid]` Added close button on file error message ([#6178](https://github.com/infor-design/enterprise/issues/6178))
 
 ## v4.62.0
 
