@@ -11,14 +11,12 @@
   </div>
   <div class="twelve columns">
     <span class="label">Toggle Notification Badge</span>
-    <button class="btn-secondary" type="button" id="toggle-on">Toggle On</button>
+    <button class="btn-secondary" type="button" id="toggle-on" disabled>Toggle On</button>
     <button class="btn-secondary" type="button" id="toggle-off">Toggle Off</button>
   </div>
 </div>
 
 <script>
-  // data-options="{notificationBadge: 'true', notificationBadgeOptions: {position: 'lower-left', color: 'complete'}}"
-  
   $('#primary-action-one').button({
     notificationBadge: true,
     notificationBadgeOptions: {
@@ -38,6 +36,8 @@
       }
     }
 
+    $('#toggle-on').prop('disabled', true);
+    $('#toggle-off').prop('disabled', false);
     badgeButton.updated(settings);
   })
 
@@ -46,6 +46,8 @@
       notificationBadge: false,
     }
 
+    $('#toggle-on').prop('disabled', false);
+    $('#toggle-off').prop('disabled', true);
     badgeButton.updated(settings);
   })
 </script>
