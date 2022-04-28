@@ -5,6 +5,7 @@
 ## v4.63.0 Fixes
 
 - `[Badges]` Fixed a bug where in badges is not properly aligned in Contrast Mode. ([#6273](https://github.com/infor-design/enterprise/issues/6273))
+- `[Button]` Fixed a bug where notification badges are not destroyed when updating the button settings. ([NG#1241](https://github.com/infor-design/enterprise-ng/issues/1241))
 - `[Calendar]` Allowed product devs to add custom css class to event labels in Calendar Component. ([#6304](https://github.com/infor-design/enterprise/issues/6304))
 - `[Card]` Fixed a regression bug where the flex toolbar's position was not properly aligned when selecting listview items. ([#6346](https://github.com/infor-design/enterprise/issues/6346)]
 - `[ContextualActionPanel]` Moved notification to appropriate location and trigger redraw of styles. ([#6264](https://github.com/infor-design/enterprise/issues/6264))
