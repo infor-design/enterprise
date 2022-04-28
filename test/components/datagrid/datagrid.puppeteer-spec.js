@@ -148,3 +148,16 @@ describe('Datagrid test count in select all tests', () => {
     expect(pageSizeselector).toBe('visible');
   });
 });
+
+describe('Datagrid add support for fallback image tootip text test', () => {
+  const url = 'http://localhost:4000/components/datagrid/test-images-error.html';
+  beforeAll(async () => {
+    await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+  });
+
+  it('should show a tooltip after hovering the image', async () => {
+    await page.hover('svg.icon.has-tooltip');
+    const tooltip = await page.waitForSelector('.has-open-tooltip');
+    expect(tooltip).toBeTruthy();
+  });
+});
