@@ -796,7 +796,7 @@ Tabs.prototype = {
         }
 
         // let right click pass through
-        if (e.which !== 3) {
+        if (e.which !== 3 && !$(e.target).hasClass('close')) {
           return self.handleTabClick(e, $(this));
         }
         return false;
