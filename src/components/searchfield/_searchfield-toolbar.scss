@@ -643,15 +643,15 @@ $toolbarsearchfield-category-empty-width: 51px;
           color: $header-flex-toolbar-input-searchfield-color;
 
           &::-webkit-input-placeholder {
-            color: $searchfield-header-placeholder-text-color;
+            color: $searchfield-placeholder-text-color;
           }
 
           &::-moz-placeholder {
-            color: $searchfield-header-placeholder-text-color;
+            color: $searchfield-placeholder-text-color;
           }
 
           &:-ms-input-placeholder {
-            color: $searchfield-header-placeholder-text-color;
+            color: $searchfield-placeholder-text-color;
           }
         }
       }
