@@ -20,6 +20,7 @@
 - `[Field-Options]` Fixed field options label overflow. ([#6255](https://github.com/infor-design/enterprise/issues/6255))
 - `[Field-Options]` Fixed a bug where in the text and highlight box are not fit accordingly. ([#6322](https://github.com/infor-design/enterprise/issues/6322))
 - `[Field-Options]` Fixed alignment of field options in the Color Picker when in compact mode in Safari and alignment of search icon in Clearable Searchfield. ([#6256](https://github.com/infor-design/enterprise/issues/6256))
+- `[Form-Compact]` Fixed alignment of Field 16 and Field 18 in Safari. ([#6345](https://github.com/infor-design/enterprise/issues/6345))
 - `[General]` Fixed memory leaks in listview, toolbar, datagrid, cards and header. ([NG#1275](https://github.com/infor-design/enterprise-ng/issues/1275))
 - `[Listview]` Added flex toolbar for multiselect listview. ([NG#1249](https://github.com/infor-design/enterprise-ng/issues/1249))
 - `[Listview]` Adjusted spaces between the search icon and filter wrapper. ([#6007](https://github.com/infor-design/enterprise/issues/6007))
