@@ -124,7 +124,10 @@ NotificationBadge.prototype = {
    */
   destroy() {
     this.teardown();
-    $.removeData(this.element[0], COMPONENT_NAME);
+    if (this.element) {
+      this.element.find('.notification-badge-container').remove();
+      $.removeData(this.element[0], COMPONENT_NAME);
+    }
   }
 };
 

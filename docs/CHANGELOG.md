@@ -5,6 +5,7 @@
 ## v4.63.0 Fixes
 
 - `[Badges]` Fixed a bug where in badges is not properly aligned in Contrast Mode. ([#6273](https://github.com/infor-design/enterprise/issues/6273))
+- `[Button]` Fixed a bug where notification badges are not destroyed when updating the button settings. ([NG#1241](https://github.com/infor-design/enterprise-ng/issues/1241))
 - `[Calendar]` Allowed product devs to add custom css class to event labels in Calendar Component. ([#6304](https://github.com/infor-design/enterprise/issues/6304))
 - `[Card]` Fixed a regression bug where the flex toolbar's position was not properly aligned when selecting listview items. ([#6346](https://github.com/infor-design/enterprise/issues/6346)]
 - `[Charts]` Fixed the misalignment of the legend and legend color with the highlight of the selected legend. ([#6301](https://github.com/infor-design/enterprise/issues/6301))
@@ -37,6 +38,8 @@
 
 ## v4.63.0 Features
 
+- `[Datagrid]` Added close button on file error message ([#6178](https://github.com/infor-design/enterprise/issues/6178))
+- `[Datagrid]` Added puppeteer script for fallback image tooltip text. ([#6278](https://github.com/infor-design/enterprise/issues/6278))
 - `[File Upload]` Added close button on file error message ([#6229](https://github.com/infor-design/enterprise/issues/6229))
 
 ## v4.62.0

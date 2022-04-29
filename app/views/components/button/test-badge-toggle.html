@@ -1,0 +1,53 @@
+<div class="row is-personalizable">
+  <div class="twelve columns">
+    <span class="label">Button with Notification Badge</span>
+    <button class="btn-icon" type="button" id="primary-action-one">
+      <span>Date</span>
+      <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+        <use href="#icon-calendar"></use>
+      </svg>
+    </button>
+    <br><br>
+  </div>
+  <div class="twelve columns">
+    <span class="label">Toggle Notification Badge</span>
+    <button class="btn-secondary" type="button" id="toggle-on" disabled>Toggle On</button>
+    <button class="btn-secondary" type="button" id="toggle-off">Toggle Off</button>
+  </div>
+</div>
+
+<script>
+  $('#primary-action-one').button({
+    notificationBadge: true,
+    notificationBadgeOptions: {
+      position: 'lower-left',
+      color: 'complete'
+    }
+  });
+
+  const badgeButton = $('#primary-action-one').data('button');
+
+  $('#toggle-on').on('click', (e) => {
+    const settings = {
+      notificationBadge: true,
+      notificationBadgeOptions: {
+        position: 'lower-left',
+        color: 'complete'
+      }
+    }
+
+    $('#toggle-on').prop('disabled', true);
+    $('#toggle-off').prop('disabled', false);
+    badgeButton.updated(settings);
+  })
+
+  $('#toggle-off').on('click', (e) => {
+    const settings = {
+      notificationBadge: false,
+    }
+
+    $('#toggle-on').prop('disabled', false);
+    $('#toggle-off').prop('disabled', true);
+    badgeButton.updated(settings);
+  })
+</script>
