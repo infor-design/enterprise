@@ -111,10 +111,12 @@ npm dist-tags add ids-enterprise@4.61.0 latest
 
 1. Triggered by Jenkins and runs as a k8s job.
 
-### Publishing docs locally
+### Publishing docs local
+
+It's possible to publish docs locally but this as done as part of the `npm release:final` command. So should only be needed for debugging or special situations like the release didn't fully work. To do this:
 
 1. Clone the repo and checkout appropriate branch.
-2. Create an .env file with the following content:
+1. Create an .env file with the following content:
 
 ```shell
 # For release-it git hub
@@ -126,8 +128,8 @@ JENKINS_JOB_TOKEN=
 JENKINS_API_TOKEN=
 ```
 
-3. `export $(grep -v '^#' .env | xargs)`
-4. Use node version 14.17.5.
-5. `npm install && npm run build`
-6. `node ./scripts/deploy-documentation.js --site staging`
-7. `node ./scripts/deploy-documentation.js --site prod`
+1. `export $(grep -v '^#' .env | xargs)`
+1. Use node version 14.17.5.
+1. `npm install && npm run build`
+1. `node ./scripts/deploy-documentation.js --site staging`
+1. `node ./scripts/deploy-documentation.js --site prod`
