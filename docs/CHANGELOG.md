@@ -17,6 +17,7 @@
 - `[Datepicker]` Fixed a bug on setValue() when pass an empty string for clearing field. ([#6168](https://github.com/infor-design/enterprise/issues/6168))
 - `[Datepicker]` Fixed a bug on datepicker not clearing in angular version. ([NG#1256](https://github.com/infor-design/enterprise-ng/issues/1256))
 - `[Dropdown]` Fixed on keydown events not working when dropdown is nested in label. ([NG#1262](https://github.com/infor-design/enterprise-ng/issues/1262))
+- `[Editor]` Fixed editor where toolbar is being focused on after pressing bold/italic keys instead of the text itself. ([#5262](https://github.com/infor-design/enterprise-ng/issues/5262))
 - `[Field-Filter]` Fixed alignment of filter icons and text field. ([#5866](https://github.com/infor-design/enterprise/issues/5866))
 - `[Field-Options]` Fixed field options label overflow. ([#6255](https://github.com/infor-design/enterprise/issues/6255))
 - `[Field-Options]` Fixed a bug where in the text and highlight box are not fit accordingly. ([#6322](https://github.com/infor-design/enterprise/issues/6322))
