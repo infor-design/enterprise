@@ -294,8 +294,8 @@ $subheader-height: 60px;
 
   .buttonset .toolbar-searchfield-wrapper:not(.is-open) {
     svg.icon:not(.close) {
-      color: $header-tab-normal-color;
-      opacity: 0.7;
+      color: $searchfield-header-icon-color;
+      opacity: 1;
     }
   }
 }

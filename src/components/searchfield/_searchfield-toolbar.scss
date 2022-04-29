@@ -199,6 +199,7 @@ $toolbarsearchfield-category-empty-width: 51px;
     .btn {
       background-color: rgba($searchfield-bg-color, 1);
       border-bottom-color: rgba($searchfield-border-color, 1);
+      height: 38px;
     }
 
     // Searchfield changes text style to match other input fields
@@ -395,7 +396,7 @@ $toolbarsearchfield-category-empty-width: 51px;
       .go-button {
         border-bottom-left-radius: 0;
         border-top-left-radius: 0;
-        height: 34px;
+        height: 38px;
         position: relative;
         right: 0;
       }
@@ -517,6 +518,7 @@ $toolbarsearchfield-category-empty-width: 51px;
         background-color: $searchfield-header-bg-color;
         border-bottom-color: rgba($searchfield-header-border-color, 0.7);
         color: $header-flex-toolbar-input-searchfield-color;
+        height: 38px;
       }
     }
 
@@ -588,6 +590,8 @@ $toolbarsearchfield-category-empty-width: 51px;
       &.btn {
         background-color: $searchfield-header-bg-color;
         border-bottom-color: rgba($searchfield-header-border-color, 0.7);
+        height: 38px;
+        opacity: 1;
       }
     }
 
@@ -615,6 +619,7 @@ $toolbarsearchfield-category-empty-width: 51px;
       .btn {
         background-color: $searchfield-header-bg-color;
         border-bottom-color: rgba($searchfield-header-border-color, 0.7);
+        opacity: 1;
       }
     }
 
@@ -939,8 +944,6 @@ html[dir='rtl'] {
     }
 
     &.has-go-button {
-      width: auto !important;
-
       > .icon {
         &.close {
           color: $searchfield-header-icon-color;
@@ -1013,6 +1016,7 @@ html[dir='rtl'] {
 .header > .toolbar > .buttonset > .toolbar-searchfield-wrapper.non-collapsible.has-go-button.has-categories {
   button.close:not(.is-empty) {
     height: auto;
+    right: 10%;
     top: 50%;
     transform: translateY(-50%);
 
