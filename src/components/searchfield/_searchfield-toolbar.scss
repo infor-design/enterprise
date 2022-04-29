@@ -47,7 +47,7 @@ $toolbarsearchfield-category-empty-width: 51px;
 
   &:not(.is-open):not(.non-collapsible) {
     .searchfield {
-      height: 100%;
+      height: 38px;
     }
   }
 
@@ -58,7 +58,7 @@ $toolbarsearchfield-category-empty-width: 51px;
   &:not(.is-open) {
     .searchfield {
       padding-bottom: 7px;
-      padding-top: 11px;
+      padding-top: 8px;
     }
 
     .icon:not(.close) {
