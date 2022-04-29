@@ -17,6 +17,12 @@
   }
 }
 
+.modal-engaged {
+  .draggable {
+    z-index: 500;
+  }
+}
+
 // Resize Styling
 .resize-handle {
   @include no-select;
