@@ -46,6 +46,8 @@
 - `[File Upload]` Added close button on file error message. ([#6229](https://github.com/infor-design/enterprise/issues/6229))
 - `[Searchfield]` Implemented a new design for searchfield. ([#5865](https://github.com/infor-design/enterprise/issues/5865))
 
+(40 Issues Solved This Release, Backlog Enterprise 191, Backlog Ng 42, 1101 Functional Tests, 1576 e2e Tests, 295 Puppeteer Tests)
+
 ## v4.62.0
 
 ## v4.62.0 Features
