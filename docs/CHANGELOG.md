@@ -27,6 +27,7 @@
 - `[Slider]` Fixed background color of slider in a modal in new dark theme. ([6211](https://github.com/infor-design/enterprise-ng/issues/6211))
 - `[Swaplist]` Fixed a bug in swaplist where the filter is not behaving correctly on certain key search. ([#6222](https://github.com/infor-design/enterprise/issues/6222))
 - `[SwipeAction]` Fixed scrollbar being visible in firefox. ([#6312](https://github.com/infor-design/enterprise/issues/6312))
+- `[Tabs/Module]` Fixed a bug where a scroll bar appear in search field when in responsive view. ([#6320](https://github.com/infor-design/enterprise/issues/6320))
 - `[TextArea]` Fixed medium size text area when in responsive view. ([#6334](https://github.com/infor-design/enterprise/issues/6334))
 - `[Validation]` Updated example page to include validation event for email field. ([#6296](https://github.com/infor-design/enterprise/issues/6296))
 
