@@ -3,7 +3,13 @@
 .lookup-modal {
   .toolbar-searchfield-wrapper {
     &.non-collapsible .searchfield {
-      height: 34px;
+      height: 38px;
+    }
+
+    &.non-collapsible .btn-icon {
+      .icon.close {
+        top: 0;
+      }
     }
 
     &.has-close-icon-button {

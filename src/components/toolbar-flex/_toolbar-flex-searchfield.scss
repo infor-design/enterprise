@@ -19,9 +19,28 @@ $responsive-searchfield-filled-out-width: 34px;
 
     .collapse-button {
       display: none;
+      height: 38px;
+      margin: 0;
       min-width: 0;
       padding: 0;
-      width: $responsive-searchfield-filled-out-width;
+      width: $responsive-searchfield-filled-out-width + 4;
+    }
+  }
+}
+
+.flex-toolbar {
+  .toolbar-searchfield-wrapper {
+    &.non-collapsible.has-close-icon-button {
+      .btn-icon.close {
+        .icon.close {
+          top: 0;
+        }
+      }
+    }
+
+    > svg.icon {
+      top: 10px;
+      width: 18px;
     }
   }
 }

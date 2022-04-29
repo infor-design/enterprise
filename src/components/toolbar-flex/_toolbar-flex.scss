@@ -91,6 +91,13 @@
             right: 7px;
           }
         }
+
+        &:not(.has-categories) {
+          .btn-icon.close {
+            top: 50%;
+            transform: translateY(-50%);
+          }
+        }
       }
     }
   }

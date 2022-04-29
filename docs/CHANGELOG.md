@@ -28,12 +28,14 @@
 - `[Listview]` Adjusted spaces between the search icon and filter wrapper. ([#6007](https://github.com/infor-design/enterprise/issues/6007))
 - `[Listview]` Changed the font size of heading, subheading, and micro in Listview Component. ([#4996](https://github.com/infor-design/enterprise/issues/4996))
 - `[Modal]` Fixed on too wide minimum width when close button is enabled. ([NG#1240](https://github.com/infor-design/enterprise-ng/issues/1240))
-- `[Searchfield]` Fix on searchfield clear button not working in Safari. ([6185](https://github.com/infor-design/enterprise-ng/issues/6185))
+- `[Searchfield]` Fixed on searchfield clear button not working in Safari. ([6185](https://github.com/infor-design/enterprise-ng/issues/6185))
+- `[Searchfield]` Fixed UI issues on the new searchfield design. ([#6331](https://github.com/infor-design/enterprise/issues/6331))
 - `[Slider]` Fixed background color of slider in a modal in new dark theme. ([6211](https://github.com/infor-design/enterprise-ng/issues/6211))
 - `[Swaplist]` Fixed a bug in swaplist where the filter is not behaving correctly on certain key search. ([#6222](https://github.com/infor-design/enterprise/issues/6222))
 - `[SwipeAction]` Fixed scrollbar being visible in firefox. ([#6312](https://github.com/infor-design/enterprise/issues/6312))
 - `[Tabs]` Fixed Z-index conflict between modal overlay and draggable module tabs. ([#6297](https://github.com/infor-design/enterprise/issues/6297))
 - `[Tabs]` Fixed a bug where the tab activated events are fired on closing a tab. ([#1452](https://github.com/infor-design/enterprise/issues/1452))
+- `[Tabs Module` Fixed the new UI searchfield design in Tabs Module component. ([#6348](https://github.com/infor-design/enterprise/issues/6348))
 - `[TextArea]` Fixed medium size text area when in responsive view. ([#6334](https://github.com/infor-design/enterprise/issues/6334))
 - `[Validation]` Updated example page to include validation event for email field. ([#6296](https://github.com/infor-design/enterprise/issues/6296))
 
@@ -41,7 +43,8 @@
 
 - `[Datagrid]` Added close button on file error message ([#6178](https://github.com/infor-design/enterprise/issues/6178))
 - `[Datagrid]` Added puppeteer script for fallback image tooltip text. ([#6278](https://github.com/infor-design/enterprise/issues/6278))
-- `[File Upload]` Added close button on file error message ([#6229](https://github.com/infor-design/enterprise/issues/6229))
+- `[File Upload]` Added close button on file error message. ([#6229](https://github.com/infor-design/enterprise/issues/6229))
+- `[Searchfield]` Implemented a new design for searchfield. ([#5865](https://github.com/infor-design/enterprise/issues/5865))
 
 ## v4.62.0
 

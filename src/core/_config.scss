@@ -535,6 +535,9 @@ $slider-hover-shadow: 0 2px 5px 0 rgba($ids-color-palette-black, 0.2);
 $lookup-disabled-color: $input-disabled-color;
 $lookup-readonly-icon-color: $ids-color-palette-graphite-40;
 
+// Lookup Modal
+$lookup-modal-searchfield-input-hover-border-color: $ids-color-palette-slate-100;
+
 //Modal
 $modal-bg-color: $ids-color-palette-white;
 $modal-border-color: $ids-color-palette-graphite-30;
@@ -802,7 +805,7 @@ $searchfield-bg-color: $ids-color-palette-graphite-20;
 $searchfield-border-color: $ids-color-palette-graphite-30;
 $searchfield-icon-color: $button-color-tertiary-initial-font;
 $searchfield-text-color: $ids-color-palette-slate-100;
-$searchfield-placeholder-text-color: $ids-color-palette-graphite-40;
+$searchfield-placeholder-text-color: $ids-color-palette-slate-60;
 $searchfield-lighter-bg-color: $ids-color-palette-graphite-10;
 $searchfield-lighter-text-color: $ids-color-brand-secondary-alt;
 $searchfield-lighter-placeholder-text-color: $ids-color-brand-secondary-alt;
@@ -828,13 +831,17 @@ $searchfield-header-bg-color: $ids-color-palette-white;
 $searchfield-header-border-color: $ids-color-palette-slate-90;
 $searchfield-header-text-color: $ids-color-palette-white;
 $searchfield-header-placeholder-text-color: rgba(255, 255, 255, 0.5);
-$searchfield-header-icon-color: $ids-color-palette-slate-100;
+$searchfield-header-icon-color: $ids-color-palette-slate-60;
+$searchfield-header-hover-icon-color: $ids-color-palette-slate-100;
 
 $searchfield-moduletabs-bg-color: $ids-color-palette-slate-90;
 $searchfield-moduletabs-border-color: $ids-color-palette-slate-100;
 $searchfield-moduletabs-disabled-bg-color: $ids-color-palette-slate-70;
 $searchfield-moduletabs-disabled-border-color: $ids-color-palette-slate-80;
 $searchfield-readonly-icon-color: $ids-color-palette-graphite-40;
+
+$searchfield-toolbar-bg-color: $ids-color-palette-white;
+$searchfield-toolbar-border-color: $ids-color-palette-slate-40;
 
 //Image Border Color
 $image-border-color: $ids-color-palette-graphite-20;

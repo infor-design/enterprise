@@ -180,7 +180,7 @@ a.is-personalizable svg.ripple-effect {
 .header.is-personalizable button:not(:disabled),
 .header.is-personalizable button:not(:disabled) .icon,
 .header.is-personalizable button:not(:disabled) .app-header.icon > span {
-  color: ${colors.contrast} !important;
+  color: ${colors.contrast};
   opacity: .8;
 }
 
@@ -193,7 +193,7 @@ a.is-personalizable svg.ripple-effect {
 .header.is-personalizable button:not(:disabled):hover .icon,
 .header.is-personalizable button:not(:disabled):hover .app-header.icon > span,
 .header.is-personalizable .toolbar [class^='btn']:hover:not([disabled]) {
-  color: ${colors.contrast} !important;
+  color: ${colors.contrast};
   opacity: 1;
 }
 
