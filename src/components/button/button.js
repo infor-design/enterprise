@@ -121,7 +121,6 @@ Button.prototype = {
     }
 
     this.getSettingsFromElement();
-    this.createNotificationBadge();
     this.render();
   },
 
@@ -130,11 +129,10 @@ Button.prototype = {
     * @returns {void}
     */
   createNotificationBadge() {
-    if (!this.settings.notificationBadge) {
+    if (!this.settings.notificationBadge || this.element.find('.notification-badge-container').length > 0) {
       return;
     }
 
-    // const badgeEl = this.element.append(`<div id="notification-badge"></div>`);
     this.element.notificationbadge({
       position: this.settings.notificationBadgeOptions.position,
       color: this.settings.notificationBadgeOptions.color
@@ -245,6 +243,7 @@ Button.prototype = {
    */
   render() {
     this.renderAttributes();
+    this.createNotificationBadge();
 
     const elemClasses = this.element[0].classList;
     // Style = "primary/secondary/tertiary" hierarchy/context
@@ -684,6 +683,11 @@ Button.prototype = {
     const hidefocusApi = this.element.data('hidefocus');
     if (hidefocusApi) {
       hidefocusApi.destroy();
+    }
+
+    const badgeApi = this.element.data('notificationbadge');
+    if (badgeApi) {
+      badgeApi.destroy();
     }
 
     return this;

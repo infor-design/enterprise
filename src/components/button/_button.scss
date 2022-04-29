@@ -47,7 +47,7 @@ button {
     position: static;
     width: 18px;
 
-    + .notification-badge-container {
+    + span.notification-badge-container {
       padding-left: 5px;
     }
 
@@ -55,7 +55,7 @@ button {
       padding-left: 5px;
     }
 
-    + * + span {
+    + * + span:not(.notification-badge-container) {
       padding-left: 0;
     }
 
