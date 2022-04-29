@@ -778,7 +778,6 @@ Editor.prototype = {
    * @param  {object} btn the button types to trigger
    */
   triggerClick(e, btn) {
-    console.log('hotdog', btn);
     $(`button[data-action="${btn}"]`, this.toolbar).trigger('click.editor');
   },
 
