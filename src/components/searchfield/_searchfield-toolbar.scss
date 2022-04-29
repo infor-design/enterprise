@@ -381,7 +381,9 @@ $toolbarsearchfield-category-empty-width: 51px;
 
     &.has-go-button {
       .searchfield {
+        border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
+        border-top-left-radius: 0;
         border-top-right-radius: 0;
         width: calc(100% - 85px);
       }
@@ -618,6 +620,7 @@ $toolbarsearchfield-category-empty-width: 51px;
       .btn {
         background-color: $searchfield-header-bg-color;
         border-bottom-color: rgba($searchfield-header-border-color, 0.7);
+        border-top-color: rgba($searchfield-header-border-color, 0.7);
         opacity: 1;
       }
     }
