@@ -61,8 +61,8 @@ const COMPONENT_NAME = 'datepicker';
  * @param {boolean} [settings.showMonthYearPicker=true] If false the year and month switcher will be disabled.
  * @param {boolean} [settings.hideDays=false] If true the days portion of the calendar will be hidden.
  *  Usefull for Month/Year only formats.
- * @param {number} [settings.yearsAhead=5] The number of years ahead to show in the month/year picker should total 9 with yearsBack.
- * @param {number} [settings.yearsBack=4] The number of years back to show in the month/year picker should total 9 with yearsAhead.
+ * @param {number} [settings.yearsAhead=3] The number of years ahead to show in the month/year picker should total 9 with yearsBack.
+ * @param {number} [settings.yearsBack=2] The number of years back to show in the month/year picker should total 9 with yearsAhead.
  * @param {array} [settings.legend]  Legend Build up
  * for example `[{name: 'Public Holiday', color: '#76B051', dates: []},
  * {name: 'Weekends', color: '#EFA836', dayOfWeek: []}]`
@@ -121,8 +121,8 @@ const DATEPICKER_DEFAULTS = {
   showMonthYearPicker: true,
   hideDays: false,
   hitbox: false,
-  yearsAhead: 5,
-  yearsBack: 4,
+  yearsAhead: 3,
+  yearsBack: 2,
   legend: [],
   range: {
     useRange: false, // true - if datepicker using range dates
@@ -1387,6 +1387,12 @@ DatePicker.prototype = {
   setValue(date, trigger, isTime) {
     const s = this.settings;
     this.currentDate = date;
+
+    if (this.currentDate === '' || this.currentDate === undefined) {
+      this.element.val('');
+      this.clearRangeDates();
+      return;
+    }
 
     if (date instanceof Array) {
       this.currentDateIslamic = date;

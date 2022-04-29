@@ -963,6 +963,10 @@ ToolbarFlexItem.prototype = {
     if (popupmenu && popupmenu.destroy) {
       popupmenu.destroy();
     }
+    const searchfield = $(this.element).data('searchfield');
+    if (searchfield && searchfield.destroy) {
+      searchfield.destroy();
+    }
     this.teardown();
   }
 };

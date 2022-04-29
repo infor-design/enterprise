@@ -50,4 +50,54 @@ describe('File Upload Advanced Puppeteer Tests', () => {
         .then(progress => expect(progress).toBeDefined());
     });
   });
+
+  describe('File example failed status', () => {
+    const testFile = 'testfile.pdf';
+    const url = `${baseUrl}/example-failed.html`;
+    const filePath = path.resolve(__dirname, testFile);
+
+    beforeEach(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
+    });
+
+    it('should upload a file and show progress bar', async () => {
+      const [fileChooser] = await Promise.all([
+        page.waitForFileChooser(),
+        page.click('.hyperlink')
+      ]);
+
+      await fileChooser.accept([filePath]);
+
+      // Progress bar
+      await page.waitForSelector('.progress-row', { visible: true })
+        .then(element => element.$('.progress'))
+        .then(progress => expect(progress).toBeDefined());
+    });
+
+    it('should set failed status ', async () => {
+      // click on Select File
+      // file upload should pop up
+      const [fileChooser] = await Promise.all([
+        page.waitForFileChooser(),
+        page.click('.hyperlink')
+      ]);
+
+      await fileChooser.accept([filePath]);
+
+      await page.click('#set-failed');
+
+      // File failed error message
+      await page.waitForSelector('.msg', { visible: true })
+        .then(async (element) => {
+          const errorMessage = await element.$eval('.msg > p', e => e.textContent);
+          expect(errorMessage).toContain('File failed error message');
+        });
+      // Toast
+      await page.waitForSelector('.toast-message', { visible: true })
+        .then(async (element) => {
+          const errorMessage = await element.evaluate(e => e.textContent);
+          expect(errorMessage).toContain('File failed error message');
+        });
+    });
+  });
 });

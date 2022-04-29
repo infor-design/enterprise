@@ -15,10 +15,6 @@
     }
   }
 
-  &.non-collapsible > .icon:not(.close):not(.icon-error) {
-    top: 12px;
-  }
-
   .go-button {
     height: 100%;
   }
@@ -49,29 +45,12 @@
         height: 38px;
       }
     }
-
-    > .icon:not(.close) {
-      top: 10px;
-    }
-  }
-
-  &:not(.is-open) {
-    .icon:not(.close) {
-      top: 8px;
-    }
   }
 
   .btn-icon.close {
     align-items: center;
     justify-content: center;
     overflow: visible;
-    top: 50%;
-    transform: translateY(-50%);
-
-    & > svg.close.icon {
-      position: relative;
-      top: -50%;
-    }
   }
 }
 
@@ -80,8 +59,6 @@
     &.non-collapsible {
       svg.icon:not(.close) {
         left: 8px;
-        transform: translateY(50%);
-        top: 0;
       }
 
       .collapse-button .icon:not(.close) {

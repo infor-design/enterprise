@@ -637,6 +637,10 @@
       height: 38px;
     }
 
+    .btn-icon {
+      top: 9px;
+    }
+
     &.has-listview-filters {
       height: 38px;
       z-index: 1;
@@ -647,6 +651,17 @@
 
       .btn-icon {
         top: 7px;
+      }
+
+      svg.icon {
+        top: 12px;
+        left: 16px !important;
+      }
+
+      .btn-icon.close {
+        svg.close {
+          position: static;
+        }
       }
     }
 
@@ -729,8 +744,12 @@
     top: 1px;
   }
 
+  .listview-filters:first-child {
+    margin-left: 5px;
+  }
+
   .listview-filters:last-child {
-    margin-right: 2px;
+    margin-right: 5px;
   }
 }
 

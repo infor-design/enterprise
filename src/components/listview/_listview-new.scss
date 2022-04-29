@@ -21,7 +21,10 @@
   .searchfield-wrapper {
     .icon:not(.close):not(.icon-error) {
       left: 18px;
-      top: 14px;
+    }
+
+    .btn-icon {
+      top: 7px;
     }
 
     &.has-listview-filters {
@@ -45,6 +48,24 @@
 .listview-filter-wrapper {
   border-top: 1px solid $listview-border-color;
   top: unset;
+}
+
+.listview {
+  .listview-heading {
+    font-size: 1.6rem;
+    color: $listview-color;
+    font-weight: 600;
+  }
+
+  .listview-subheading {
+    font-size: 1.6rem;
+    color: $listview-secondary-color;
+  }
+
+  .listview-micro {
+    font-size: 1.4rem;
+    color: $listview-tertiary-color;
+  }
 }
 
 html.is-safari {

@@ -131,7 +131,6 @@ FieldFilter.prototype = {
       const labelText = this.ffdropdown.prev('label').prev('label').text();
       this.field.addClass('fieldfilter-wrapper');
       this.field.find('div.dropdown span.audible').text(labelText);
-      this.field.find('div.dropdown span').addClass('audible');
 
       // Dropdown api
       this.ddApi = this.ffdropdown.data('dropdown');

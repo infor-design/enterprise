@@ -68,7 +68,7 @@
     "e2e:puppeteer": "npx --no-install jest --config=test/jest.config.js --runInBand --detectOpenHandles --forceExit",
     "e2e:update-imagesnapshots": "npx --no-install jest --config=test/jest.config.js --updateSnapshot --runInBand --detectOpenHandles --forceExit",
     "webdriver:clean": "npx webdriver-manager clean",
-    "webdriver:update": "npx webdriver-manager update --standalone false --quiet --gecko=false",
+    "webdriver:update": "npx webdriver-manager update --versions.chrome=100.0.4896.60 --standalone false --quiet --gecko=false",
     "zip-dist": "npx grunt zip-dist",
     "documentation": "node ./scripts/deploy-documentation.js",
     "release:dev": "node scripts/publish-nightly-manual",
