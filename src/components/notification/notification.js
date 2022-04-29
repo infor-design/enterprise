@@ -84,7 +84,12 @@ Notification.prototype = {
 
     const parentEl = document.querySelector(this.settings.parent);
 
-    parentEl.parentNode.insertBefore(this.notificationEl, parentEl.nextSibling);
+    if ($(this.settings.parent).closest('.contextual-action-panel').length > 0) {
+      $(this.notificationEl).css({ 'max-width': `${$(parentEl).width()}px` });
+      $(parentEl).closest('.modal-body-wrapper').prepend(this.notificationEl);
+    } else {
+      parentEl.parentNode.insertBefore(this.notificationEl, parentEl.nextSibling);
+    }
 
     $(this.notificationEl).animateOpen();
 
