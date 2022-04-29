@@ -106,3 +106,28 @@ git push origin main
 ```sh
 npm dist-tags add ids-enterprise@4.61.0 latest
 ```
+
+## Publishing docs
+
+1. Triggered by Jenkins and runs as a k8s job.
+
+### Publishing docs locally
+
+1. Clone the repo and checkout appropriate branch.
+2. Create an .env file with the following content:
+
+```shell
+# For release-it git hub
+GITHUB_ACCESS_TOKEN=
+# For uploading docs
+DOCS_API_KEY=
+# For Jenkins Deploys
+JENKINS_JOB_TOKEN=
+JENKINS_API_TOKEN=
+```
+
+3. `export $(grep -v '^#' .env | xargs)`
+4. Use node version 14.17.5.
+5. `npm install && npm run build`
+6. `node ./scripts/deploy-documentation.js --site staging`
+7. `node ./scripts/deploy-documentation.js --site prod`

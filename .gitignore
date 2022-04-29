@@ -42,6 +42,7 @@ phantomjsdriver.log
 report.xml
 views/docs/changelog-contents.html
 xunit.xml
+.env
 
 # OS generated files #
 ######################
