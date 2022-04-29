@@ -113,18 +113,20 @@ npm dist-tags add ids-enterprise@4.61.0 latest
 
 ### Publishing docs locally
 
+It's possible to publish docs locally but this as done as part of the `npm release:final` command. So should only be needed for debugging or special situations like the release didn't fully work. To do this:
+
 1. Clone the repo and checkout appropriate branch.
 2. Create an .env file with the following content:
 
-```shell
-# For release-it git hub
-GITHUB_ACCESS_TOKEN=
-# For uploading docs
-DOCS_API_KEY=
-# For Jenkins Deploys
-JENKINS_JOB_TOKEN=
-JENKINS_API_TOKEN=
-```
+    ```shell
+    # For release-it git hub
+    GITHUB_ACCESS_TOKEN=
+    # For uploading docs
+    DOCS_API_KEY=
+    # For Jenkins Deploys
+    JENKINS_JOB_TOKEN=
+    JENKINS_API_TOKEN=
+    ```
 
 3. `export $(grep -v '^#' .env | xargs)`
 4. Use node version 14.17.5.
