@@ -320,6 +320,10 @@ $toolbarsearchfield-category-empty-width: 51px;
             &:focus {
               border-color: $header-searchfield-input-border-color;
             }
+
+            @media only screen and (max-width: $breakpoint-phone-to-tablet) {
+              width: 100% !important;
+            }
           }
         }
       }
@@ -985,7 +989,8 @@ html[dir='rtl'] {
         }
 
         .go-button {
-          right: 17px;
+          position: absolute;
+          right: 0;
         }
       }
     }
@@ -1029,7 +1034,18 @@ html[dir='rtl'] {
   }
 
   @media (max-width: $breakpoint-phone-to-tablet) {
-    right: 29px;
+    right: auto;
+    width: 100% !important;
+
+    button.close:not(.is-empty) {
+      right: 6%;
+    }
+  }
+
+  @media (max-width: $breakpoint-big-phone) {
+    button.close:not(.is-empty) {
+      right: 12%;
+    }
   }
 }
 
