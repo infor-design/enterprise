@@ -30,6 +30,7 @@
 - `[Modal]` Fixed on too wide minimum width when close button is enabled. ([NG#1240](https://github.com/infor-design/enterprise-ng/issues/1240))
 - `[Searchfield]` Fixed on searchfield clear button not working in Safari. ([6185](https://github.com/infor-design/enterprise-ng/issues/6185))
 - `[Searchfield]` Fixed UI issues on the new searchfield design. ([#6331](https://github.com/infor-design/enterprise/issues/6331))
+- `[Sink Page]` Fixed misaligned search icon toolbar in sink page. ([#6369](https://github.com/infor-design/enterprise/issues/6369))
 - `[Slider]` Fixed background color of slider in a modal in new dark theme. ([6211](https://github.com/infor-design/enterprise-ng/issues/6211))
 - `[Swaplist]` Fixed a bug in swaplist where the filter is not behaving correctly on certain key search. ([#6222](https://github.com/infor-design/enterprise/issues/6222))
 - `[SwipeAction]` Fixed scrollbar being visible in firefox. ([#6312](https://github.com/infor-design/enterprise/issues/6312))
