@@ -91,6 +91,21 @@
     }
   }
 
+  .toolbar-searchfield-wrapper {
+    .btn-icon.close {
+      .icon.close {
+        top: 0;
+      }
+    }
+
+    &.has-focus.active.has-categories {
+      .searchfield.no-animation {
+        border-bottom-color: transparent;
+        border-top-color: transparent;
+      }
+    }
+  }
+
   .separator {
     display: none !important;
   }
@@ -133,11 +148,11 @@
       text-overflow: ellipsis;
       white-space: nowrap;
 
-      @media (max-width: $breakpoint-slim - 25) {
+      @media (max-width: ($breakpoint-slim - 25)) {
         width: 95px !important;
       }
 
-      @media (min-width: $breakpoint-phone + 60) {
+      @media (min-width: ($breakpoint-phone + 60)) {
         padding: 10px;
       }
 
@@ -310,7 +325,6 @@
       background-color: transparent;
       color: $module-tabs-inactive-text-color;
       height: 32px;
-      margin-top: 1px;
 
       &:not(.btn-menu) {
         border-color: transparent;
@@ -326,14 +340,6 @@
 
       span {
         color: inherit;
-      }
-
-      &:hover {
-        color: $module-tabs-hover-text-color;
-
-        .icon {
-          color: $module-tabs-hover-text-color;
-        }
       }
 
       &:focus,
@@ -371,14 +377,14 @@
   .toolbar-searchfield-wrapper {
     color: $module-tabs-active-text-color;
     text-align: right;
-    width: calc(100% - 1px) !important;
+    width: calc(100% - 5px) !important;
 
     @media (min-width: $breakpoint-tablet-reduced) {
       width: 274px !important;
     }
 
     .icon:not(.error) {
-      color: $module-tabs-inactive-text-color;
+      color: $searchfield-icon-color;
     }
 
     .searchfield {
@@ -386,26 +392,11 @@
       border-bottom-color: rgba($searchfield-moduletabs-border-color, 0);
       border-top-color: rgba($searchfield-moduletabs-bg-color, 0);
       color: $module-tabs-inactive-text-color;
-
-      &::-webkit-input-placeholder { // Chrome/Opera/Safari */
-        color: $module-tabs-inactive-text-color;
-      }
-
-      &::-moz-placeholder { // Firefox 19+ */
-        color: $module-tabs-inactive-text-color;
-      }
-
-      &:-ms-input-placeholder { // IE 10+ */
-        color: $module-tabs-inactive-text-color;
-      }
-
-      &:-moz-placeholder { // Firefox 18- */
-        color: $module-tabs-inactive-text-color;
-      }
+      height: 34px;
     }
 
     [class^='btn'] {
-      background-color: transparent;
+      background-color: $searchfield-toolbar-bg-color;
 
       &.active,
       &.has-focus {
@@ -415,12 +406,10 @@
 
     &.non-collapsible {
       .searchfield {
-        background-color: rgba($searchfield-moduletabs-bg-color, 0.4);
-        border-bottom-color: rgba($searchfield-moduletabs-border-color, 0.4);
-        border-top-color: rgba($searchfield-moduletabs-bg-color, 0.4);
-        color: $module-tabs-inactive-text-color;
+        background-color: $searchfield-toolbar-bg-color;
+        color: $searchfield-text-color;
 
-        @media (max-width: $breakpoint-phone-to-tablet - 1) {
+        @media (max-width: ($breakpoint-phone-to-tablet - 1)) {
           padding-right: 20px;
         }
       }
@@ -428,24 +417,8 @@
 
     &.active {
       .searchfield {
-        background-color: rgba($searchfield-moduletabs-bg-color, 0.4);
+        background-color: $searchfield-toolbar-bg-color;
         border-bottom-color: rgba($searchfield-moduletabs-border-color, 0.4);
-
-        &::-webkit-input-placeholder { // Chrome/Opera/Safari */
-          color: transparent;
-        }
-
-        &::-moz-placeholder { // Firefox 19+ */
-          color: transparent;
-        }
-
-        &:-ms-input-placeholder { // IE 10+ */
-          color: transparent;
-        }
-
-        &:-moz-placeholder { // Firefox 18- */
-          color: transparent;
-        }
       }
 
       .btn {
@@ -455,15 +428,15 @@
 
     &.has-focus {
       .searchfield {
-        color: $module-tabs-active-text-color;
+        color: $searchfield-text-color;
 
-        @media (max-width: $breakpoint-phone-to-tablet - 1) {
+        @media (max-width: ($breakpoint-phone-to-tablet - 1)) {
           padding-right: 34px;
         }
       }
 
       .icon:not(.error) {
-        color: $module-tabs-active-text-color;
+        color: $searchfield-text-color;
       }
     }
 
@@ -805,6 +778,13 @@ html[dir='rtl'] {
         padding-bottom: 8px;
         padding-top: 8px;
       }
+    }
+  }
+
+  .tab-container.module-tabs {
+    .toolbar-searchfield-wrapper,
+    .toolbar-searchfield-wrapper .searchfield {
+      height: 34px;
     }
   }
 }
