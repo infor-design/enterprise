@@ -8,6 +8,7 @@
 - `[Badges]` Fixed a bug where in badges is not properly aligned in Contrast Mode. ([#6273](https://github.com/infor-design/enterprise/issues/6273))
 - `[Button]` Fixed a bug where notification badges are not destroyed when updating the button settings. ([NG#1241](https://github.com/infor-design/enterprise-ng/issues/1241))
 - `[Calendar]` Allowed product devs to add custom css class to event labels in Calendar Component. ([#6304](https://github.com/infor-design/enterprise/issues/6304))
+- `[Calendar]` Fixed the thickness of right and bottom border. ([#6246](https://github.com/infor-design/enterprise/issues/6246))
 - `[Card]` Fixed a regression bug where the flex toolbar's position was not properly aligned when selecting listview items. ([#6346](https://github.com/infor-design/enterprise/issues/6346)]
 - `[Charts]` Fixed the misalignment of the legend and legend color with the highlight of the selected legend. ([#6301](https://github.com/infor-design/enterprise/issues/6301))
 - `[ContextualActionPanel]` Moved notification to appropriate location and trigger redraw of styles. ([#6264](https://github.com/infor-design/enterprise/issues/6264))
@@ -31,6 +32,8 @@
 - `[Modal]` Fixed on too wide minimum width when close button is enabled. ([NG#1240](https://github.com/infor-design/enterprise-ng/issues/1240))
 - `[Searchfield]` Fixed on searchfield clear button not working in Safari. ([6185](https://github.com/infor-design/enterprise-ng/issues/6185))
 - `[Searchfield]` Fixed UI issues on the new searchfield design. ([#6331](https://github.com/infor-design/enterprise/issues/6331))
+- `[Sink Page]` Fixed misaligned search icon toolbar in sink page. ([#6369](https://github.com/infor-design/enterprise/issues/6369))
+- `[Sink Page]` Fixed close icon position in Datagrid section Personalized Column. ([#6375](https://github.com/infor-design/enterprise/issues/6375))
 - `[Slider]` Fixed background color of slider in a modal in new dark theme. ([6211](https://github.com/infor-design/enterprise-ng/issues/6211))
 - `[Swaplist]` Fixed a bug in swaplist where the filter is not behaving correctly on certain key search. ([#6222](https://github.com/infor-design/enterprise/issues/6222))
 - `[SwipeAction]` Fixed scrollbar being visible in firefox. ([#6312](https://github.com/infor-design/enterprise/issues/6312))
@@ -293,6 +296,7 @@
 - `[Searchfield]` Fixed a bug where the close button icon is overlapping with the search icon in RTL. ([#5807](https://github.com/infor-design/enterprise/issues/5807))
 - `[Spinbox]` Fixed a bug where the spinbox controls still show the ripple effect even it's disabled. ([#5719](https://github.com/infor-design/enterprise/issues/5719))
 - `[Tabs]` Added the ability to set the position of counts via settings (top & bottom), removed the counts in spillover, and positioned the counts depending on the current locale. ([#5258](https://github.com/infor-design/enterprise/issues/5258))
+- `[Tabs Module]` Fixed the searcfield menu inside of tabs module in responsive layout. ([#6320](https://github.com/infor-design/enterprise/issues/6320))
 - `[Toolbar]` Fixed an issue where things in the page get scrambled if you have a button with undefined ids. ([#1194](https://github.com/infor-design/enterprise-ng/issues/1194))
 
 ## v4.59.0 Features
