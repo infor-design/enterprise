@@ -1,7 +1,9 @@
 describe('Blockgrid Puppeteer Test', () => {
   const baseUrl = 'http://localhost:4000/components/blockgrid';
 
-  const checkExists = selector => page.$$(selector).then(elementArr => expect(elementArr.length).toBeGreaterThan(0));
+  const checkExists = (selector, num = 1) => page.$$(selector).then((elementArr) => {
+    expect(elementArr.length).toBeGreaterThanOrEqual(num);
+  });
 
   describe('Index tests', () => {
     const url = `${baseUrl}/example-index`;
@@ -85,10 +87,37 @@ describe('Blockgrid Puppeteer Test', () => {
       await checkExists('.is-selectable');
     });
 
-    it('should highlight blocks after click', async () => {
+    // WIP
+    // it('should highlight blocks after click', async () => {
+    //   const blockArr = await page.$$('.block.is-selectable');
+    //   await blockArr[1].click();
+    //   await blockArr[2].click();
+
+    //   await checkExists('.is-activated');
+    // });
+
+    it('should select multiple blocks', async () => {
       const blockArr = await page.$$('.block.is-selectable');
       await blockArr[1].click();
       await blockArr[2].click();
+      await blockArr[3].click();
+
+      await checkExists('.is-selected', 3);
+    });
+
+    it('should be able to select at 320px', async () => {
+      const windowSize = await page.viewport();
+      await page.setViewport({ width: 320, height: 480 });
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+
+      const blockArr = await page.$$('.block.is-selectable');
+
+      await blockArr[1].click();
+      await blockArr[2].click();
+
+      await checkExists('.is-selected', 2);
+
+      await page.setViewport(windowSize);
     });
   });
 });
