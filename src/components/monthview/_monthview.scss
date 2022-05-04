@@ -586,6 +586,12 @@
       overflow-x: hidden;
       overflow-y: auto;
 
+      tr {
+        td{
+          border-bottom: 0;
+        }
+      }
+
       td {
         border: 1px solid  $calendar-line-color;
         border-radius: 0;
@@ -595,6 +601,10 @@
 
         &:first-child {
           border-left: 0;
+        }
+
+        &:last-child {
+          border-right: 0;
         }
 
         .day-container {
@@ -660,7 +670,6 @@
           }
 
           &:focus {
-            border-color: transparent;
             box-shadow: 0 0 2px 2px $focus-box-shadow-color, inset 0 5px 0 0 $calendar-selected-border-color;
           }
         }
