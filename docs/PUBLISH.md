@@ -106,3 +106,32 @@ git push origin main
 ```sh
 npm dist-tags add ids-enterprise@4.61.0 latest
 ```
+
+## Publishing docs
+
+1. Triggered by Jenkins and runs as a k8s job.
+
+### Publishing docs local
+
+It's possible to publish docs locally but this as done as part of the `npm release:final` command. So should only be needed for debugging or special situations like the release didn't fully work. To do this:
+
+It's possible to publish docs locally but this as done as part of the `npm release:final` command. So should only be needed for debugging or special situations like the release didn't fully work. To do this:
+
+1. Clone the repo and checkout appropriate branch.
+1. Create an .env file with the following content:
+
+    ```shell
+    # For release-it git hub
+    GITHUB_ACCESS_TOKEN=
+    # For uploading docs
+    DOCS_API_KEY=
+    # For Jenkins Deploys
+    JENKINS_JOB_TOKEN=
+    JENKINS_API_TOKEN=
+    ```
+
+1. `export $(grep -v '^#' .env | xargs)`
+1. Use node version 14.17.5.
+1. `npm install && npm run build`
+1. `node ./scripts/deploy-documentation.js --site staging`
+1. `node ./scripts/deploy-documentation.js --site prod`

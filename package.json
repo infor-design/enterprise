@@ -1,7 +1,7 @@
 {
   "name": "ids-enterprise",
   "slug": "ids-enterprise",
-  "version": "4.63.0-dev",
+  "version": "4.64.0-dev",
   "description": "Infor Design System (IDS) Enterprise Components for the web",
   "repository": {
     "type": "git",
@@ -132,6 +132,7 @@
     "grunt-exec": "^3.0.0",
     "handlebars": "^4.7.7",
     "handlebars-registrar": "^1.5.2",
+    "highlight.js": "^11.5.1",
     "html-loader": "^1.1.0",
     "ids-css": "^1.5.0",
     "jasmine-core": "^3.9.0",
@@ -162,7 +163,6 @@
     "protractor-flake": "^4.0.0",
     "protractor-image-comparison": "^3.9.0",
     "puppeteer": "^10.2.0",
-    "pygmentize-bundled": "^2.3.0",
     "r2": "^2.0.1",
     "release-it": "^13.6.1",
     "rimraf": "^3.0.2",

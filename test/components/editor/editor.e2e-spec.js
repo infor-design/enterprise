@@ -271,12 +271,6 @@ describe('Editor dirty tracking tests', () => {
       .visibilityOf(await element(by.css('.editor-container .icon-dirty'))), config.waitsFor);
 
     expect(await element(by.css('.editor-container .icon-dirty')).isDisplayed()).toBe(true);
-
-    if (utils.isChrome() && utils.isCI()) {
-      const containerEl = await element(by.className('container'));
-
-      expect(await browser.imageComparison.checkElement(containerEl, 'editor-dirty-tracker')).toEqual(0);
-    }
   });
 
   it('Should reset dirty tracker', async () => {

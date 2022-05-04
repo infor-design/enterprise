@@ -87,6 +87,7 @@ html.is-firefox {
 
     &.context {
       > .searchfield {
+        color: $searchfield-header-icon-color;
         height: 38px;
       }
     }

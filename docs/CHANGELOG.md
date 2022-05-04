@@ -5,8 +5,10 @@
 ## v4.63.0 Fixes
 
 - `[Badges]` Fixed a bug where in badges is not properly aligned in Contrast Mode. ([#6273](https://github.com/infor-design/enterprise/issues/6273))
+- `[Button]` Fixed a bug where notification badges are not destroyed when updating the button settings. ([NG#1241](https://github.com/infor-design/enterprise-ng/issues/1241))
 - `[Calendar]` Allowed product devs to add custom css class to event labels in Calendar Component. ([#6304](https://github.com/infor-design/enterprise/issues/6304))
 - `[Card]` Fixed a regression bug where the flex toolbar's position was not properly aligned when selecting listview items. ([#6346](https://github.com/infor-design/enterprise/issues/6346)]
+- `[Charts]` Fixed the misalignment of the legend and legend color with the highlight of the selected legend. ([#6301](https://github.com/infor-design/enterprise/issues/6301))
 - `[ContextualActionPanel]` Moved notification to appropriate location and trigger redraw of styles. ([#6264](https://github.com/infor-design/enterprise/issues/6264))
 - `[ContextualActionPanel]` Added close CAP function to a demo example. ([#6274](https://github.com/infor-design/enterprise/issues/6274))
 - `[Datagrid]` Fixed misaligned lookup icon button upon click/editing. ([#6233](https://github.com/infor-design/enterprise/issues/6233))
@@ -15,26 +17,36 @@
 - `[Datepicker]` Fixed a bug on setValue() when pass an empty string for clearing field. ([#6168](https://github.com/infor-design/enterprise/issues/6168))
 - `[Datepicker]` Fixed a bug on datepicker not clearing in angular version. ([NG#1256](https://github.com/infor-design/enterprise-ng/issues/1256))
 - `[Dropdown]` Fixed on keydown events not working when dropdown is nested in label. ([NG#1262](https://github.com/infor-design/enterprise-ng/issues/1262))
+- `[Editor]` Fixed editor where toolbar is being focused on after pressing bold/italic keys instead of the text itself. ([#5262](https://github.com/infor-design/enterprise-ng/issues/5262))
 - `[Field-Filter]` Fixed alignment of filter icons and text field. ([#5866](https://github.com/infor-design/enterprise/issues/5866))
 - `[Field-Options]` Fixed field options label overflow. ([#6255](https://github.com/infor-design/enterprise/issues/6255))
 - `[Field-Options]` Fixed a bug where in the text and highlight box are not fit accordingly. ([#6322](https://github.com/infor-design/enterprise/issues/6322))
 - `[Field-Options]` Fixed alignment of field options in the Color Picker when in compact mode in Safari and alignment of search icon in Clearable Searchfield. ([#6256](https://github.com/infor-design/enterprise/issues/6256))
+- `[Form-Compact]` Fixed alignment of Field 16 and Field 18 in Safari. ([#6345](https://github.com/infor-design/enterprise/issues/6345))
 - `[General]` Fixed memory leaks in listview, toolbar, datagrid, cards and header. ([NG#1275](https://github.com/infor-design/enterprise-ng/issues/1275))
 - `[Listview]` Added flex toolbar for multiselect listview. ([NG#1249](https://github.com/infor-design/enterprise-ng/issues/1249))
 - `[Listview]` Adjusted spaces between the search icon and filter wrapper. ([#6007](https://github.com/infor-design/enterprise/issues/6007))
 - `[Listview]` Changed the font size of heading, subheading, and micro in Listview Component. ([#4996](https://github.com/infor-design/enterprise/issues/4996))
 - `[Modal]` Fixed on too wide minimum width when close button is enabled. ([NG#1240](https://github.com/infor-design/enterprise-ng/issues/1240))
-- `[Searchfield]` Fix on searchfield clear button not working in Safari. ([6185](https://github.com/infor-design/enterprise-ng/issues/6185))
+- `[Searchfield]` Fixed on searchfield clear button not working in Safari. ([6185](https://github.com/infor-design/enterprise-ng/issues/6185))
+- `[Searchfield]` Fixed UI issues on the new searchfield design. ([#6331](https://github.com/infor-design/enterprise/issues/6331))
 - `[Slider]` Fixed background color of slider in a modal in new dark theme. ([6211](https://github.com/infor-design/enterprise-ng/issues/6211))
 - `[Swaplist]` Fixed a bug in swaplist where the filter is not behaving correctly on certain key search. ([#6222](https://github.com/infor-design/enterprise/issues/6222))
 - `[SwipeAction]` Fixed scrollbar being visible in firefox. ([#6312](https://github.com/infor-design/enterprise/issues/6312))
+- `[Tabs]` Fixed Z-index conflict between modal overlay and draggable module tabs. ([#6297](https://github.com/infor-design/enterprise/issues/6297))
 - `[Tabs]` Fixed a bug where the tab activated events are fired on closing a tab. ([#1452](https://github.com/infor-design/enterprise/issues/1452))
+- `[Tabs Module` Fixed the new UI searchfield design in Tabs Module component. ([#6348](https://github.com/infor-design/enterprise/issues/6348))
 - `[TextArea]` Fixed medium size text area when in responsive view. ([#6334](https://github.com/infor-design/enterprise/issues/6334))
 - `[Validation]` Updated example page to include validation event for email field. ([#6296](https://github.com/infor-design/enterprise/issues/6296))
 
 ## v4.63.0 Features
 
-- `[File Upload]` Added close button on file error message ([#6229](https://github.com/infor-design/enterprise/issues/6229))
+- `[Datagrid]` Added close button on file error message ([#6178](https://github.com/infor-design/enterprise/issues/6178))
+- `[Datagrid]` Added puppeteer script for fallback image tooltip text. ([#6278](https://github.com/infor-design/enterprise/issues/6278))
+- `[File Upload]` Added close button on file error message. ([#6229](https://github.com/infor-design/enterprise/issues/6229))
+- `[Searchfield]` Implemented a new design for searchfield. ([#5865](https://github.com/infor-design/enterprise/issues/5865))
+
+(40 Issues Solved This Release, Backlog Enterprise 191, Backlog Ng 42, 1101 Functional Tests, 1576 e2e Tests, 295 Puppeteer Tests)
 
 ## v4.62.0
 

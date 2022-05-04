@@ -1161,6 +1161,7 @@ Editor.prototype = {
     const self = this;
 
     function editorButtonActionHandler(e, item) {
+      console.log('bindCall');
       const btn = item instanceof ToolbarFlexItem ? $(item.element) : $(e.target);
 
       // Don't do anything if it's the More Button
@@ -1173,10 +1174,8 @@ Editor.prototype = {
 
       e.preventDefault();
       currentElem.focus();
-
-      if (self.selection === undefined) {
-        self.checkSelection();
-      }
+      
+      self.checkSelection();
 
       if (!self.sourceViewActive()) {
         btn.toggleClass('is-active');
@@ -1184,9 +1183,6 @@ Editor.prototype = {
 
       if (action) {
         self.execAction(action, e);
-        if (btn && !self.isBtnOverflowedItem(btn)) {
-          btn.focus();
-        }
       }
 
       if (env.browser.name === 'ie' || env.browser.isEdge()) {

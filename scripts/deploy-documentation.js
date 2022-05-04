@@ -32,6 +32,7 @@ const marked = require('marked');
 const path = require('path');
 const slash = require('slash');
 const yaml = require('js-yaml');
+const hljs = require('highlight.js');
 
 const argv = require('yargs')
   .usage('Usage $node ./scripts/deploy-documentation.js [-s] [-d] [-T]')
@@ -60,9 +61,8 @@ const swlog = require('./helpers/stopwatch-log');
 marked.setOptions({
   gfm: true,
   highlight: (code, lang, callback) => {
-    return require('pygmentize-bundled')({ lang: lang, format: 'html' }, code, (err, result) => {
-      callback(err, result.toString());
-    });
+    const language = hljs.getLanguage(lang) ? lang : 'html';
+    callback(null, hljs.highlight(code, { language }).value);
   }
 });
 
