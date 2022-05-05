@@ -3865,9 +3865,11 @@ Tabs.prototype = {
         }
       }
 
-      if (isNotHeaderTabs && !isVerticalTabs) {
+      if (isNotHeaderTabs && !isVerticalTabs && !self.isModuleTabs()) {
         targetRectObj.height += 23;
       }
+
+      targetRectObj.height -= 1;
 
       return targetRectObj;
     }
