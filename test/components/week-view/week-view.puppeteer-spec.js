@@ -37,7 +37,7 @@ describe('Week View Puppeteer Tests', () => {
     });
 
     it('Should be able to reset the date today', async () => {
-      const validateYear = ' ' + new Date().getFullYear();
+      const validateYear = ` ${new Date().getFullYear()}`;
 
       await page.click('.trigger');
       await page.waitForSelector('.monthview-container', { visible: true })
@@ -46,7 +46,7 @@ describe('Week View Puppeteer Tests', () => {
       await page.click('.btn-monthyear-pane');
       await page.click('.picklist.is-year > li:nth-child(6)');
       await page.waitForSelector('.is-select-month-pane', { visible: true })
-      .then(element => expect(element).toBeTruthy());
+        .then(element => expect(element).toBeTruthy());
 
       await page.click('.is-select-month-pane');
       await page.click('.is-select');
