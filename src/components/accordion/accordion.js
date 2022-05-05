@@ -900,7 +900,11 @@ Accordion.prototype = {
         self.element.trigger('afterexpand', [a]);
       }
 
-      handleAfterExpand();
+      if (pane.hasClass('no-transition') || this.element.hasClass('no-transition')) {
+        handleAfterExpand();
+      } else {
+        pane.one('animateopencomplete', handleAfterExpand).animateOpen();
+      }
     }
 
     // Load from an external source, if applicable
@@ -1004,7 +1008,11 @@ Accordion.prototype = {
       dfd.resolve();
     }
 
-    handleAfterCollapse();
+    if (pane.hasClass('no-transition') || this.element.hasClass('no-transition')) {
+      handleAfterCollapse();
+    } else {
+      pane.one('animateclosedcomplete', handleAfterCollapse).animateClosed();
+    }
     return dfd;
   },
 
