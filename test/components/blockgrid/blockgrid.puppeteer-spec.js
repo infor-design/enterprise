@@ -1,8 +1,20 @@
 describe('Blockgrid Puppeteer Test', () => {
   const baseUrl = 'http://localhost:4000/components/blockgrid';
 
-  const checkExists = (selector, num = 1) => page.$$(selector).then((elementArr) => {
-    expect(elementArr.length).toBeGreaterThanOrEqual(num);
+  const checkExists = (selector, num = 1, isEqual = false) => page.$$(selector).then((elementArr) => {
+    if (isEqual) {
+      expect(elementArr.length).toEqual(num);
+    } else {
+      expect(elementArr.length).toBeGreaterThanOrEqual(num);
+    }
+  });
+
+  const hasClass = (element, className, toContain = true) => element.evaluate(el => el.className).then((cn) => {
+    if (toContain) {
+      expect(cn).toContain(className);
+    } else {
+      expect(cn).not.toContain(className);
+    }
   });
 
   describe('Index tests', () => {
@@ -45,7 +57,7 @@ describe('Blockgrid Puppeteer Test', () => {
       await blockEl.click();
       await page.click("label[for='checkbox0']");
 
-      await blockEl.evaluate(el => el.className).then(className => expect(className).toContain('is-selected'));
+      await hasClass(blockEl, 'is-selected');
     });
 
     it('should be able to set id/automation id example one', async () => {
@@ -118,6 +130,37 @@ describe('Blockgrid Puppeteer Test', () => {
       await checkExists('.is-selected', 2);
 
       await page.setViewport(windowSize);
+    });
+  });
+
+  describe('Singleselect tests', () => {
+    const url = `${baseUrl}/example-singleselect`;
+
+    beforeEach(async () => {
+      await page.goto(url, { waitUntil: ['networkidle2', 'load'] });
+    });
+
+    it('should have a blockgrid', async () => {
+      await checkExists('.blockgrid');
+    });
+
+    it('should have a block', async () => {
+      await checkExists('.block');
+    });
+
+    it('should blocks be selectable', async () => {
+      await checkExists('.is-selectable');
+    });
+
+    it('should select only 1 blocks', async () => {
+      const blockArr = await page.$$('.block.is-selectable');
+      await blockArr[1].click();
+      await blockArr[2].click();
+      await blockArr[3].click().then(async () => {
+        await hasClass(blockArr[3], 'is-selected');
+        await hasClass(blockArr[1], 'is-selected', false);
+        await hasClass(blockArr[2], 'is-selected', false);
+      });
     });
   });
 });
