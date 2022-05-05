@@ -163,4 +163,46 @@ describe('Blockgrid Puppeteer Test', () => {
       });
     });
   });
+
+  describe('Text tests', () => {
+    const url = `${baseUrl}/example-text`;
+
+    beforeEach(async () => {
+      await page.goto(url, { waitUntil: ['networkidle2', 'load'] });
+    });
+
+    it('should have a blockgrid in the page', async () => {
+      await checkExists('.row.blockgrid.l-center');
+    });
+
+    it('should have a block in the page', async () => {
+      await checkExists('.block');
+    });
+
+    it('should have a text in the page', async () => {
+      await checkExists('p');
+    });
+  });
+
+  describe('Paging tests', () => {
+    const url = `${baseUrl}/example-paging`;
+
+    beforeEach(async () => {
+      await page.goto(url, { waitUntil: ['networkidle2', 'load'] });
+    });
+
+    it('should select block, navigate to 2nd page, navigate back, block should still be selected', async () => {
+      const blockArr = await page.$$('.block.is-selectable');
+      await blockArr[2].click();
+
+      await page.click('.pager-toolbar li:nth-child(2)');
+      await page.click('.pager-toolbar li:nth-child(1)');
+
+      await hasClass(blockArr[2], 'is-selected');
+    });
+
+    // it('should navigate to 2nd page, navigate back via keyboard', async () => {
+    //   const blockArr = await page.$$('.block.is-selectable');
+    // });
+  });
 });
