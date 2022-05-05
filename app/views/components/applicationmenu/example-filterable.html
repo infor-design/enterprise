@@ -27,6 +27,7 @@
   {{> includes/footer}}
 
   <script>
+    $('#application-menu .accordion.panel').addClass('no-transition');
     $('#application-menu').on('filtered.test', function(e, results) {
       var msg = (function() {
         var str = '';
