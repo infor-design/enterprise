@@ -22,6 +22,7 @@
 - `[Datagrid]` Fixed misaligned lookup icon button upon click/editing. ([#6233](https://github.com/infor-design/enterprise/issues/6233))
 - `[Datagrid]` Fixed a bug where tooltip is not displayed even when settings is turned on in disabled rows. ([#6128](https://github.com/infor-design/enterprise/issues/6128))
 - `[Datagrid]` Fixed misaligned lookup icon button upon click/editing. ([#6233](https://github.com/infor-design/enterprise/issues/6233))
+- `[Datagrid]` Added trimSpaces option for leading spaces upon blur. ([#6244](https://github.com/infor-design/enterprise/issues/6244))
 - `[Datepicker]` Fixed a bug on setValue() when pass an empty string for clearing field. ([#6168](https://github.com/infor-design/enterprise/issues/6168))
 - `[Datepicker]` Fixed a bug on datepicker not clearing in angular version. ([NG#1256](https://github.com/infor-design/enterprise-ng/issues/1256))
 - `[Dropdown]` Fixed on keydown events not working when dropdown is nested in label. ([NG#1262](https://github.com/infor-design/enterprise-ng/issues/1262))
