@@ -679,6 +679,37 @@ WeekView.prototype = {
   },
 
   /**
+   * Select todays date visually.
+   * @private
+   */
+  setToday() {
+    let date = new Date();
+
+    if (this.isIslamic && typeof date !== 'string') {
+      this.currentDateIslamic = Locale.gregorianToUmalqura(date);
+      date = stringUtils.padDate(
+        this.currentDateIslamic[0],
+        this.currentDateIslamic[1],
+        this.currentDateIslamic[2]
+      );
+    }
+
+    if (!this.isIslamic && typeof date !== 'string') {
+      date = stringUtils.padDate(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate()
+      );
+    }
+
+    const year = parseInt(date.substr(0, 4), 10);
+    const month = parseInt(date.substr(4, 2), 10) - 1;
+
+    this.calendarToolbarAPI.setInternalDate(this.isIslamic ?
+      [year, month, 1] : new Date(year, month, 1));
+  },
+
+  /**
    * Sets up event handlers for this component and its sub-elements.
    * @returns {object} The Calendar prototype, useful for chaining.
    * @private
@@ -704,6 +735,10 @@ WeekView.prototype = {
         this.settings.endDate.setHours(23, 59, 59, 59);
       }
       this.showWeek(this.settings.startDate, this.settings.endDate);
+
+      if (args.isToday) {
+        this.setToday();
+      }
     });
 
     this.element.off(`change-next.${COMPONENT_NAME}`).on(`change-next.${COMPONENT_NAME}`, () => {
