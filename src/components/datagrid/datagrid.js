@@ -10870,13 +10870,12 @@ Datagrid.prototype = {
 
     // Adjust leading/trailing spaces as `&nbsp;`
     const adj = (thisVal, regx) => {
-      const r = (typeof thisVal === 'string' ? thisVal.match(regx) : ['']) || [''];
+      let r = (typeof thisVal === 'string' ? thisVal.match(regx) : ['']) || [''];
 
       if (!this.settings.toolbar.trimSpaces) {
-        return r[0].replace(/\s/g, '&nbsp;');
-      } else {
-        return r; 
-      }
+        r = r[0].replace(/\s/g, '&nbsp;');
+      } 
+      return r; 
     };
 
     // update cell value
