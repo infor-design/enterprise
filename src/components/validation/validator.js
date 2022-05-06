@@ -1068,6 +1068,13 @@ Validator.prototype = {
       if (tooltipAPI) {
         tooltipAPI.destroy();
       }
+
+      const validationTooltip = $('#validation-tooltip');
+      const validationToolTipAPI = validationTooltip.data('tooltip');
+      if (validationToolTipAPI) {
+        validationToolTipAPI.destroy();
+      }
+
       if (this.inputs) {
         this.inputs.filter('input, textarea').off('focus.validate');
       }
