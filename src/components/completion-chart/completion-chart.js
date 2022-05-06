@@ -363,13 +363,22 @@ CompletionChart.prototype = {
 
     if (isTarget || isAchievment) {
       const totalText = getTotalText();
+      let title;
 
       html.body.addClass(`chart-completion-target${isAchievment ? ' chart-targeted-achievement' : ''}`);
 
+      if (dataset.completed.color && dataset.completed.color === 'error' && dataset.completed.iconTipText) {
+        title = dataset.completed.iconTipText;
+      } else {
+        title = 'Critical';
+      }
+
       html.label = `<span class="label">
-        <span class="name">${fixUndefined(dataset.name.text)} ${dataset.completed.color && dataset.completed.color === 'error' ? $.createIcon({ icon: 'error', classes: 'icon-error' }) : ''}</span>
+        <span class="name">${fixUndefined(dataset.name.text)} ${dataset.completed.color && dataset.completed.color === 'error' ? `<svg class="icon-error icon" focusable="true" role="presentation" title="${title}"><use href="#icon-error"></use></svg>` : ''}</span>
         <span class="l-pull-right total value">${totalText}</span>
       </span>`;
+
+      $('svg[title]').tooltip();
     } else {
       html.body.addClass('chart-completion');
       const name = fixUndefined(dataset.name.text);
