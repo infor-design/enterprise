@@ -367,8 +367,8 @@ CompletionChart.prototype = {
 
       html.body.addClass(`chart-completion-target${isAchievment ? ' chart-targeted-achievement' : ''}`);
 
-      if (dataset.completed.color && dataset.completed.color === 'error' && dataset.completed.iconTipText) {
-        title = dataset.completed.iconTipText;
+      if (dataset.completed.color && dataset.completed.color === 'error' && dataset.completed.iconTooltip) {
+        title = dataset.completed.iconTooltip;
       } else {
         title = 'Critical';
       }
