@@ -10872,7 +10872,7 @@ Datagrid.prototype = {
     const adj = (thisVal, regx) => {
       let r = (typeof thisVal === 'string' ? thisVal.match(regx) : ['']) || [''];
 
-      if (!this.settings.toolbar.trimSpaces) {
+      if (!this.settings.trimSpaces) {
         r = r[0].replace(/\s/g, '&nbsp;');
       } 
       return r; 

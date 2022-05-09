@@ -110,10 +110,11 @@
       showNewRowIndicator: false,
       clickToSelect: false,
       selectable: 'multiple',
-      toolbar: {title: 'Data Grid Header Title', results: true, personalize: true, actions: true, rowHeight: true, keywordFilter: true,  collapsibleFilter: true, trimSpaces: true},
+      toolbar: {title: 'Data Grid Header Title', results: true, personalize: true, actions: true, rowHeight: true, keywordFilter: true,  collapsibleFilter: true},
       paging: true,
       pagesize: 5,
-      pagesizes: [2, 5, 6]
+      pagesizes: [2, 5, 6],
+      trimSpaces: true,
     }).on('cellchange', function (e, args) {
       console.log('cellchange', args);
     }).on('rowadd', function (e, args) {
