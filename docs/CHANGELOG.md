@@ -5,6 +5,7 @@
 ## v4.64.0 Fixes
 
 - `[Icons]` Fixed the inconsistency between solid and outlined icons. ([#6165](https://github.com/infor-design/enterprise/issues/6165))
+- `[Datepicker]` Fixed a bug where selecting a date that's consecutive to the previous range won't select that date. ([#6272](https://github.com/infor-design/enterprise/issues/6272))
 - `[WeekView]` Fixed a bug where 'today' date is not being rendered properly. ([#6260](https://github.com/infor-design/enterprise/issues/6260))
 
 ## v4.63.0
@@ -23,6 +24,7 @@
 - `[Datagrid]` Fixed misaligned lookup icon button upon click/editing. ([#6233](https://github.com/infor-design/enterprise/issues/6233))
 - `[Datagrid]` Fixed a bug where tooltip is not displayed even when settings is turned on in disabled rows. ([#6128](https://github.com/infor-design/enterprise/issues/6128))
 - `[Datagrid]` Fixed misaligned lookup icon button upon click/editing. ([#6233](https://github.com/infor-design/enterprise/issues/6233))
+- `[Datagrid]` Added trimSpaces option for leading spaces upon blur. ([#6244](https://github.com/infor-design/enterprise/issues/6244))
 - `[Datepicker]` Fixed a bug on setValue() when pass an empty string for clearing field. ([#6168](https://github.com/infor-design/enterprise/issues/6168))
 - `[Datepicker]` Fixed a bug on datepicker not clearing in angular version. ([NG#1256](https://github.com/infor-design/enterprise-ng/issues/1256))
 - `[Dropdown]` Fixed on keydown events not working when dropdown is nested in label. ([NG#1262](https://github.com/infor-design/enterprise-ng/issues/1262))
@@ -47,6 +49,7 @@
 - `[Tabs]` Fixed Z-index conflict between modal overlay and draggable module tabs. ([#6297](https://github.com/infor-design/enterprise/issues/6297))
 - `[Tabs]` Fixed a bug where the tab activated events are fired on closing a tab. ([#1452](https://github.com/infor-design/enterprise/issues/1452))
 - `[Tabs Module` Fixed the new UI searchfield design in Tabs Module component. ([#6348](https://github.com/infor-design/enterprise/issues/6348))
+- `[Targeted-Achievement]` Added tooltip on icon in targeted-achievement chart ([#6308](https://github.com/infor-design/enterprise/issues/6308))
 - `[TextArea]` Fixed medium size text area when in responsive view. ([#6334](https://github.com/infor-design/enterprise/issues/6334))
 - `[Validation]` Updated example page to include validation event for email field. ([#6296](https://github.com/infor-design/enterprise/issues/6296))
 
