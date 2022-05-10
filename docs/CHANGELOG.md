@@ -1,9 +1,17 @@
 # What's New with Enterprise
 
+## v4.64.0
+
+## v4.64.0 Fixes
+
+- `[Datepicker]` Fixed a bug where selecting a date that's consecutive to the previous range won't select that date. ([#6272](https://github.com/infor-design/enterprise/issues/6272))
+- `[WeekView]` Fixed a bug where 'today' date is not being rendered properly. ([#6260](https://github.com/infor-design/enterprise/issues/6260))
+
 ## v4.63.0
 
 ## v4.63.0 Fixes
 
+- `[Accordion]` Added expand animation back. ([#6268](https://github.com/infor-design/enterprise/issues/6268))
 - `[Badges]` Fixed a bug where in badges is not properly aligned in Contrast Mode. ([#6273](https://github.com/infor-design/enterprise/issues/6273))
 - `[Button]` Fixed a bug where notification badges are not destroyed when updating the button settings. ([NG#1241](https://github.com/infor-design/enterprise-ng/issues/1241))
 - `[Calendar]` Allowed product devs to add custom css class to event labels in Calendar Component. ([#6304](https://github.com/infor-design/enterprise/issues/6304))
