@@ -606,7 +606,7 @@ Bar.prototype = {
         }
 
         if (total > 0) {
-          content = `<span class="chart-tooltip-total"><b>${total}</b> ${Locale.translate('Total')}</span>${content}`;
+          content = `<span class="chart-tooltip-total"><b>${Math.round(total)}</b> ${Locale.translate('Total')}</span>${content}`;
         }
 
         if (tooltipData && typeof tooltipData === 'function' && !tooltipDataCache[i]) {
