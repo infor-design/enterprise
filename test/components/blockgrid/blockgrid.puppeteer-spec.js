@@ -158,8 +158,8 @@ describe('Blockgrid Puppeteer Test', () => {
       await blockArr[2].click();
       await blockArr[3].click().then(async () => {
         await hasClass(blockArr[3], 'is-selected');
-        await hasClass(blockArr[1], 'is-selected', false);
         await hasClass(blockArr[2], 'is-selected', false);
+        await hasClass(blockArr[1], 'is-selected', false);
       });
     });
   });
@@ -201,8 +201,23 @@ describe('Blockgrid Puppeteer Test', () => {
       await hasClass(blockArr[2], 'is-selected');
     });
 
-    // it('should navigate to 2nd page, navigate back via keyboard', async () => {
-    //   const blockArr = await page.$$('.block.is-selectable');
-    // });
+    it('should navigate to 2nd page, navigate back via keyboard', async () => {
+      const blockArr = await page.$$('.block.is-selectable');
+
+      await blockArr[1].press('Tab');
+      await page.keyboard.press('Space');
+      await hasClass(blockArr[2], 'is-selected');
+
+      await page.keyboard.press('Tab');
+      await page.keyboard.press('ArrowRight');
+      await page.keyboard.press('Enter');
+      await page.keyboard.press('Tab');
+      await page.keyboard.press('Tab');
+      await page.keyboard.press('Tab');
+      await page.keyboard.press('Enter');
+
+      await checkExists('.block.is-selected', 1, true);
+      await hasClass(blockArr[2], 'is-selected');
+    });
   });
 });
