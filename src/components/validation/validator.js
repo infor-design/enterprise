@@ -786,7 +786,8 @@ Validator.prototype = {
       return;
     }
 
-    const icon = this.showIcon(field, type);
+    let target = !field.is('button') ? this.showIcon(field, type) : field;
+    let tooltipAPI = target.data('tooltip');
     let representationField = field;
 
     // Add error classes to pseudo-markup for certain controls
@@ -796,8 +797,6 @@ Validator.prototype = {
       input.addClass(type === 'icon' ? 'custom-icon' : type);
     }
     field.closest('.field, .field-short').find('.formatter-toolbar').addClass(type === 'icon' ? 'custom-icon' : type);
-
-    let tooltipAPI = icon.data('tooltip');
 
     // Error tooltips should be positioned on the 'x' so that they sit directly
     // underneath the fields that they are indicating.
@@ -827,7 +826,7 @@ Validator.prototype = {
 
     // Build Tooltip
     if (!tooltipAPI) {
-      icon.tooltip({
+      target.tooltip({
         content: message,
         placement: 'bottom',
         placementOpts: {
@@ -837,7 +836,7 @@ Validator.prototype = {
         isError: true,
         tooltipElement: '#validation-tooltip'
       });
-      tooltipAPI = icon.data('tooltip');
+      tooltipAPI = target.data('tooltip');
     } else {
       tooltipAPI.content = message;
     }
