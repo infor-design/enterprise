@@ -244,7 +244,8 @@
     float: left;
     margin-right: 10px;
     outline: none;
-    padding: 7px;
+    padding: 3px 7px;
+    margin-top: 8px;
 
     &[tabindex='-1'] {
       cursor: inherit;
