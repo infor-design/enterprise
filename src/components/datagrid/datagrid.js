@@ -10948,7 +10948,6 @@ Datagrid.prototype = {
     }
 
     if (isCellChange) {
-    // if (coercedVal !== oldVal && !fromApiCall) {
       const args = {
         row: this.settings.source !== null ? dataRowIndex : row,
         relativeRow: row,
@@ -10961,6 +10960,8 @@ Datagrid.prototype = {
       };
       args.rowData = isTreeGrid && this.settings.treeDepth[row] ?
         this.settings.treeDepth[row].node : rowData;
+
+      this.setActiveCell(row, cell);
 
       /**
        * Fires when a cell value is changed via the editor.
