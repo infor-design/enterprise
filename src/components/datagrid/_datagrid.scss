@@ -1502,8 +1502,10 @@ $datagrid-small-row-height: 25px;
           }
 
           &.btn-icon {
-            height: 20px;
+            height: 21px;
             min-width: 20px;
+            line-height: 19px;
+            min-height: 21px;
           }
 
           &.btn-primary {
@@ -1513,10 +1515,6 @@ $datagrid-small-row-height: 25px;
           .icon {
             margin-top: -3px;
           }
-        }
-
-        a.row-btn {
-          top: -4px;
         }
 
         .btn-secondary.row-btn {
