@@ -15,6 +15,12 @@
   }
 }
 
+.modal .modal-header {
+  svg.icon {
+    top: 6px;
+  }
+}
+
 .modal-content {
   > .btn-close {
     right: 11px;
@@ -68,7 +74,7 @@
 
   line-height: 3rem;
 
-  @media screen and (min-width: $breakpoint-big-phone + 1) {
+  @media screen and (min-width: ($breakpoint-big-phone + 1)) {
     @include font-size(26);
   }
 }
