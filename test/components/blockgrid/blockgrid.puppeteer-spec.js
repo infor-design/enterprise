@@ -1,3 +1,4 @@
+/* eslint-disable compat/compat */
 describe('Blockgrid Puppeteer Test', () => {
   const baseUrl = 'http://localhost:4000/components/blockgrid';
 
@@ -87,6 +88,35 @@ describe('Blockgrid Puppeteer Test', () => {
       await page.goto(url, { waitUntil: ['networkidle2', 'load'] });
     });
 
+    it('should select multiple blocks', async () => {
+      const blockArr = await page.$$('.block.is-selectable');
+
+      await Promise.all([
+        await blockArr[1].click(),
+        await blockArr[2].click(),
+        await blockArr[3].click()
+      ]);
+
+      await checkExists('.block.is-selected', 3, true);
+    });
+
+    it('should be able to select at 320px', async () => {
+      const windowSize = await page.viewport();
+      await page.setViewport({ width: 320, height: windowSize.height });
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+
+      const blockArr = await page.$$('.block.is-selectable');
+
+      await Promise.all([
+        await blockArr[1].click(),
+        await blockArr[2].click()
+      ]);
+
+      await checkExists('.block.is-selected', 2, true);
+
+      await page.setViewport(windowSize);
+    });
+
     it('should have a blockgrid', async () => {
       await checkExists('.blockgrid');
     });
@@ -99,37 +129,14 @@ describe('Blockgrid Puppeteer Test', () => {
       await checkExists('.is-selectable');
     });
 
-    // WIP
-    // it('should highlight blocks after click', async () => {
-    //   const blockArr = await page.$$('.block.is-selectable');
-    //   await blockArr[1].click();
-    //   await blockArr[2].click();
-
-    //   await checkExists('.is-activated');
-    // });
-
-    it('should select multiple blocks', async () => {
+    it('should highlight blocks after click', async () => {
       const blockArr = await page.$$('.block.is-selectable');
-      await blockArr[1].click();
-      await blockArr[2].click();
-      await blockArr[3].click();
-
-      await checkExists('.is-selected', 3);
-    });
-
-    it('should be able to select at 320px', async () => {
-      const windowSize = await page.viewport();
-      await page.setViewport({ width: 320, height: 480 });
-      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-
-      const blockArr = await page.$$('.block.is-selectable');
-
-      await blockArr[1].click();
-      await blockArr[2].click();
-
-      await checkExists('.is-selected', 2);
-
-      await page.setViewport(windowSize);
+      await blockArr[1].click().then(async () => {
+        await hasClass(blockArr[1], 'is-selected');
+      });
+      await blockArr[2].click().then(async () => {
+        await hasClass(blockArr[2], 'is-selected');
+      });
     });
   });
 
@@ -140,6 +147,20 @@ describe('Blockgrid Puppeteer Test', () => {
       await page.goto(url, { waitUntil: ['networkidle2', 'load'] });
     });
 
+    it('should select only 1 block', async () => {
+      const blockArr = await page.$$('.block.is-selectable');
+
+      await Promise.all([
+        await blockArr[1].click(),
+        await blockArr[2].click(),
+        await blockArr[3].click()
+      ]).then(async () => {
+        await hasClass(blockArr[3], 'is-selected');
+        await hasClass(blockArr[2], 'is-selected', false);
+        await hasClass(blockArr[1], 'is-selected', false);
+      });
+    });
+
     it('should have a blockgrid', async () => {
       await checkExists('.blockgrid');
     });
@@ -150,17 +171,6 @@ describe('Blockgrid Puppeteer Test', () => {
 
     it('should blocks be selectable', async () => {
       await checkExists('.is-selectable');
-    });
-
-    it('should select only 1 blocks', async () => {
-      const blockArr = await page.$$('.block.is-selectable');
-      await blockArr[1].click();
-      await blockArr[2].click();
-      await blockArr[3].click().then(async () => {
-        await hasClass(blockArr[3], 'is-selected');
-        await hasClass(blockArr[2], 'is-selected', false);
-        await hasClass(blockArr[1], 'is-selected', false);
-      });
     });
   });
 
