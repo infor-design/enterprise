@@ -15,7 +15,7 @@
   }
 }
 
-.modal:not(.about):not(.message) .modal-header {
+.modal:not(.about):not(.message):not(.contextual-action-panel) .modal-header {
   svg.icon {
     top: 6px;
   }

@@ -79,7 +79,7 @@
     opacity: 1;
   }
 
-  &:not(.about):not(.message) .modal-header {
+  &:not(.about):not(.message):not(.contextual-action-panel) .modal-header {
     svg.icon {
       margin-right: 10px;
       top: 3px;
