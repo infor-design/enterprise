@@ -29,6 +29,7 @@
 
   &.non-collapsible.is-open {
     > .icon:not(.close):not(.icon-error) {
+      height: 18px;
       left: 8px;
     }
   }

@@ -45,6 +45,14 @@ $responsive-searchfield-filled-out-width: 34px;
   }
 }
 
+.flex-toolbar {
+  .toolbar-searchfield-wrapper.has-collapse-button.is-open:not(.non-collapsible) {
+    .icon:not(.close):not(.icon-error) {
+      top: 0;
+    }
+  }
+}
+
 // RTL Styles
 html[dir='rtl'] {
   .toolbar-section {
