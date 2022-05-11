@@ -400,11 +400,6 @@ Modal.prototype = {
 
     this.registerModal();
 
-    console.log({
-      this: this,
-      element: this.element
-    });
-
     if (this.settings.icon) {
       const hasIconClass = this.settings.iconClass ? ` icon-${this.settings.iconClass}` : '';
       const svgIcon = $(`<svg class="icon${hasIconClass}"
