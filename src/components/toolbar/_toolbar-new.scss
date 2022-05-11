@@ -12,6 +12,14 @@
     @include font-size(18);
   }
 
+  &.do-resize {
+    .toolbar-searchfield-wrapper {
+      > svg.icon.close {
+        top: 50%;
+      }
+    }
+  }
+
   .datagrid-result-count,
   .datagrid-group-count {
     @include font-size(18);

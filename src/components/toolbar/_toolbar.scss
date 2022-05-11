@@ -14,6 +14,18 @@ $toolbar-buttonset-height: 40px;
   }
 }
 
+.toolbar.do-resize {
+  .toolbar-searchfield-wrapper {
+    margin-top: 1px;
+
+    .searchfield-category-button {
+      .icon {
+        transform: translateY(0);
+      }
+    }
+  }
+}
+
 // See also Colors.scss
 .toolbar,
 .formatter-toolbar {
@@ -364,7 +376,7 @@ $toolbar-buttonset-height: 40px;
   }
 }
 
-@media (max-width: $breakpoint-phone-to-tablet - 1) {
+@media (max-width: ($breakpoint-phone-to-tablet - 1)) {
   .toolbar {
     // Show text with icon buttons by using this class.
     // Text will still become invisible on small breakpoint (but still visible to screen readers).
