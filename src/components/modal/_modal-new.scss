@@ -15,7 +15,7 @@
   }
 }
 
-.modal .modal-header {
+.modal:not(.about):not(.message) .modal-header {
   svg.icon {
     top: 6px;
   }

@@ -79,7 +79,7 @@
     opacity: 1;
   }
 
-  .modal-header {
+  &:not(.about):not(.message) .modal-header {
     svg.icon {
       margin-right: 10px;
       top: 3px;
