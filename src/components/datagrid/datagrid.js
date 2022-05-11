@@ -10961,7 +10961,9 @@ Datagrid.prototype = {
       args.rowData = isTreeGrid && this.settings.treeDepth[row] ?
         this.settings.treeDepth[row].node : rowData;
 
-      this.setActiveCell(row, cell);
+      if (!this.isCellDirty(row, cell)) {
+        this.setActiveCell(row, cell);
+      }
 
       /**
        * Fires when a cell value is changed via the editor.
