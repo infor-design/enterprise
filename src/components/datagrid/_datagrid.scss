@@ -3245,11 +3245,14 @@ $datagrid-small-row-height: 25px;
     z-index: 2;
 
     &.text-ellipsis {
+      &:not(.is-filterable) .datagrid-column-wrapper {
+        height: 32px;
+      }
+
       .datagrid-column-wrapper {
         display: flex;
         float: none;
         padding: 0 0 0 16px;
-        height: 32px;
 
         .datagrid-header-text {
           display: inline-block;
