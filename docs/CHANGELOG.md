@@ -10,6 +10,7 @@
 - `[Icons]` Fixed the inconsistency between solid and outlined icons. ([#6165](https://github.com/infor-design/enterprise/issues/6165))
 - `[Icons]` Changed the error color to change in themes in some areas. ([#6273](https://github.com/infor-design/enterprise/issues/6273))
 - `[Listview]` Fixed a bug where the search icon is misaligned in Firefox and Safari. ([#6390](https://github.com/infor-design/enterprise/issues/6390))
+- `[Locale]` Fixed incorrect date format for Latvian language. ([#6123](https://github.com/infor-design/enterprise/issues/6123))
 - `[WeekView]` Fixed a bug where 'today' date is not being rendered properly. ([#6260](https://github.com/infor-design/enterprise/issues/6260))
 
 ## v4.63.0
