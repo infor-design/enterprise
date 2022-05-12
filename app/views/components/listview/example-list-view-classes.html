@@ -1,0 +1,53 @@
+
+<div class="row">
+  <div class="twelve columns">
+      <h2 class="fieldset-title">ListView - Text Classes</h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="one-third column">
+
+    <div class="card" >
+      <div class="card-header">
+        <h2 class="card-title">Classes</h2>
+        <button class="btn-actions" type="button">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-more"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Option 1</a></li>
+          <li><a href="#">Option 2</a></li>
+          <li><a href="#">Option 3</a></li>
+        </ul>
+      </div>
+
+      <div class="card-content">
+        <div class="listview" id="task-listview" data-options="{'selectOnFocus': false, 'hoverable': false, 'selectable': false, 'source': '{{basepath}}api/inventory-tasks', 'template': 'task-tmpl'}"></div>
+      </div>
+    </div>
+
+    {{={{{ }}}=}}
+    <script id="task-tmpl" type="text/html">
+      <ul>
+        {{#dataset}}
+          <li>
+            <p class="listview-heading-lg">listview-heading-lg</p>
+            <p class="listview-heading">listview-heading</p>
+            <p class="listview-subheading">
+              listview-subheading
+            </p>
+            <p class="listview-micro">listview-micro</p>
+            <span class="listview-data-label">listview-data-label</span><br>
+            <span class="listview-data">listview-data</span>
+            <span class="listview-text">listview-text</span><br>
+            <a class="hyperlink" href="# disabled tabindex="-1" target="_blank">hyperlink</a><br>
+          </li>
+        {{/dataset}}
+      </ul>
+    </script>
+
+  </div>
+</div>

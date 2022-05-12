@@ -232,9 +232,9 @@ $input-placeholder-color: $ids-color-palette-slate-60;
 $input-readonly-color: $input-color-readonly-font;
 
 //States
-$error-color: $ids-color-status-danger;
-$error-text-color: $ids-color-status-danger;
-$error-border-color: $ids-color-status-danger;
+$error-color: #da1217;
+$error-text-color: #da1217;
+$error-border-color: #da1217;
 $error-color-transparent: rgba($ids-color-status-danger, 0.3);
 $error-focus-box-shadow: 0 0 4px 2px $error-color-transparent;
 $alert-color: $ids-color-status-warning;

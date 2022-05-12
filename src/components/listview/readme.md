@@ -11,6 +11,8 @@ demo:
   pages:
   - name: Alternate Row Colors
     slug: example-alternate-row-color
+  - name: List View Classes
+    slug: example-list-view-classes
   - name: Multiple Selection
     slug: example-multiselect
   - name: Paging Server Side
@@ -75,6 +77,24 @@ Creating a Multiselect Listview also uses the listview component. API guidelines
   </div>
 </div>
 ```
+
+### Listview - Classes
+
+The list view comes with a few built in classes you can use for the text styling. The following classes are available:
+
+- `listview-heading-lg` - shows larger heading text to form part of a text hierarchy
+- `listview-heading` - shows a normal larger heading text to form part of a text hierarchy
+- `listview-subheading` - shows a second level heading text to form part of a text hierarchy
+- `listview-micro` - shows text for a small detail to form the bottom of the text hierarchy
+- `listview-data-label` - shows label text for a `field`
+- `listview-data` - shows data text for a `field`
+- `hyperlink` - shows the text as a hyperlink
+
+See example <a href="https://design.infor.com/code/ids-enterprise/latest/demo/components/listview/example-list-view-classes" target="_blank">To see it in action</a>
+
+To add some color you can colorize the borders of the cells and some text. The following classes are available to place on text elements or on the card `li` itself to form the border color: `error`, `alert`, `success`, `info`
+
+See example <a href="https://design.infor.com/code/ids-enterprise/latest/demo/components/listview/example-singleselect.html" target="_blank">To see it in action</a>
 
 ## Keyboard Shortcuts
 
