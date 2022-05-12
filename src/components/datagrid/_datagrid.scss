@@ -631,6 +631,12 @@ $datagrid-small-row-height: 25px;
     }
   }
 
+  &:not(.small-rowheight) .datagrid-header th.text-ellipsis {
+    &:not(.is-filterable) .datagrid-column-wrapper {
+      height: 32px;
+    }
+  }
+
   //Short and Medium Row height
   &.small-rowheight,
   &.extra-small-rowheight {
@@ -3245,10 +3251,6 @@ $datagrid-small-row-height: 25px;
     z-index: 2;
 
     &.text-ellipsis {
-      &:not(.is-filterable) .datagrid-column-wrapper {
-        height: 32px;
-      }
-
       .datagrid-column-wrapper {
         display: flex;
         float: none;
