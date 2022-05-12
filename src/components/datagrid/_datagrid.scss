@@ -3249,6 +3249,7 @@ $datagrid-small-row-height: 25px;
         display: flex;
         float: none;
         padding: 0 0 0 16px;
+        height: 32px;
 
         .datagrid-header-text {
           display: inline-block;
@@ -3408,7 +3409,7 @@ $datagrid-small-row-height: 25px;
   // Column Resize
   .datagrid-column-wrapper {
     display: table;
-    height: 32px;
+    height: 35px;
     padding: 0 16px;
     position: relative;
     vertical-align: top;
@@ -3429,7 +3430,6 @@ $datagrid-small-row-height: 25px;
   // Datagrid filterrow
   .is-filterable {
     .datagrid-column-wrapper {
-      height: 35px;
       &.l-right-text {
         + .datagrid-filter-wrapper {
           clear: both;
