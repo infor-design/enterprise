@@ -17,6 +17,10 @@ $toolbarsearchfield-category-empty-width: 51px;
   white-space: nowrap;
   width: $toolbarsearchfield-empty-width;
 
+  @media only screen and (max-width: $breakpoint-phone-to-tablet) {
+    overflow: auto;
+  }
+
   > * {
     vertical-align: middle;
   }
@@ -323,7 +327,7 @@ $toolbarsearchfield-category-empty-width: 51px;
             }
 
             @media only screen and (max-width: $breakpoint-phone-to-tablet) {
-              width: 100% !important;
+              width: auto;
             }
           }
         }
@@ -986,12 +990,6 @@ html[dir='rtl'] {
 
         .searchfield {
           padding-right: 40px;
-          width: auto !important;
-        }
-
-        .go-button {
-          position: absolute;
-          right: 0;
         }
       }
     }
@@ -1039,13 +1037,7 @@ html[dir='rtl'] {
     width: 100% !important;
 
     button.close:not(.is-empty) {
-      right: 6%;
-    }
-  }
-
-  @media (max-width: $breakpoint-big-phone) {
-    button.close:not(.is-empty) {
-      right: 12%;
+      right: 32px;
     }
   }
 }
