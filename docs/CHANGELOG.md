@@ -7,9 +7,9 @@
 - `[Datagrid]` Fixed row height of extra-small rows on editable datagrid with icon columns. ([#6284](https://github.com/infor-design/enterprise/issues/6284))
 - `[Datagrid]` Added trimSpaces option for leading spaces upon blur. ([#6244](https://github.com/infor-design/enterprise/issues/6244))
 - `[Datepicker]` Fixed a bug where selecting a date that's consecutive to the previous range won't select that date. ([#6272](https://github.com/infor-design/enterprise/issues/6272))
-- `[Listview]` Fixed a bug where the search icon is misaligned in Firefox and Safari. ([#6390](https://github.com/infor-design/enterprise/issues/6390))
 - `[Icons]` Fixed the inconsistency between solid and outlined icons. ([#6165](https://github.com/infor-design/enterprise/issues/6165))
 - `[Icons]` Changed the error color to change in themes in some areas. ([#6273](https://github.com/infor-design/enterprise/issues/6273))
+- `[Listview]` Fixed a bug where the search icon is misaligned in Firefox and Safari. ([#6390](https://github.com/infor-design/enterprise/issues/6390))
 - `[WeekView]` Fixed a bug where 'today' date is not being rendered properly. ([#6260](https://github.com/infor-design/enterprise/issues/6260))
 
 ## v4.63.0
