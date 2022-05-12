@@ -3429,6 +3429,7 @@ $datagrid-small-row-height: 25px;
   // Datagrid filterrow
   .is-filterable {
     .datagrid-column-wrapper {
+      height: 35px;
       &.l-right-text {
         + .datagrid-filter-wrapper {
           clear: both;
