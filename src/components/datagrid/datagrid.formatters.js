@@ -572,7 +572,7 @@ const formatters = {
   Alert(row, cell, value, col) {
     const ranges = formatters.ClassRange(row, cell, value, col);
     const icon = $.createIcon({
-      icon: `${ranges.classes}-alert`,
+      icon: `${ranges.classes}`,
       classes: [
         'icon',
         'datagrid-alert-icon',
