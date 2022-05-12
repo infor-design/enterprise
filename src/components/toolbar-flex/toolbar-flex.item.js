@@ -968,6 +968,7 @@ ToolbarFlexItem.prototype = {
       searchfield.destroy();
     }
     this.teardown();
+    this.element = undefined;
   }
 };
 
