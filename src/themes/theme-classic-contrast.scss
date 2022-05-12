@@ -180,8 +180,9 @@ $input-placeholder-color: $input-color-initial-placeholder;
 $input-readonly-color: $input-color-readonly-font;
 
 //States
-$error-color: $ids-color-status-danger;
-$error-icon-fill: $ids-color-status-danger;
+$error-color: #b94e4a;
+$error-icon-fill: #b94e4a;
+$error-border-color: #b94e4a;
 $alert-color: $ids-color-palette-amber-100;
 $success-color: $ids-color-status-success;
 $info-color: $ids-color-brand-primary-base;
