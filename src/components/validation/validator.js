@@ -424,7 +424,7 @@ Validator.prototype = {
    * @returns {void}
    */
   setIconOnParent(field, type) {
-    const errorIcon = $.createIcon({ classes: [`icon-${type}`], icon: `${type}-alert` });
+    const errorIcon = $.createIcon({ classes: [`icon-${type}`], icon: `${type}` });
     const parent = field.closest('.tab-panel, .expandable-pane');
     const flexRow = field.closest('.row.flex-align-bottom');
     let iconTarget = parent.attr('id');
@@ -911,9 +911,9 @@ Validator.prototype = {
     const messageId = `${(field.attr('id') || 'id')}-${rule.type}`;
 
     if (rule.type === 'error') {
-      icon = `${validationType.type}-alert`;
+      icon = `${validationType.type}`;
     } else {
-      icon = theme.currentTheme.id && theme.new ? `${validationType.type}-alert` : `${validationType.type}`;
+      icon = theme.currentTheme.id && theme.new ? `${validationType.type}` : `${validationType.type}`;
     }
 
     if (rule.type === 'icon') {

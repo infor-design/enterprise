@@ -185,8 +185,9 @@ $input-placeholder-color: $ids-color-palette-slate-30;
 $input-readonly-color: $input-color-readonly-font;
 
 // States
-$error-color: $ids-color-palette-ruby-50;
-$error-border-color: $ids-color-palette-ruby-50;
+$error-color: #df3539;
+$error-icon-fill: #df3539;
+$error-border-color: #df3539;
 $error-text-color: $ids-color-palette-white;
 $error-focus-box-shadow: 0 0 4px 2px rgba(222, 129, 129, 0.3);
 $error-icon-fill: $ids-color-status-danger;
