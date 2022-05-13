@@ -64,7 +64,7 @@
   z-index: 1001;
   width: 100%;
 
-  @media screen and (min-width: $breakpoint-big-phone + 1) {
+  @media screen and (min-width: ($breakpoint-big-phone + 1)) {
     max-width: 90%;
     width: auto;
   }
@@ -77,6 +77,14 @@
     @include css3(transform, scale(1, 1));
 
     opacity: 1;
+  }
+
+  &:not(.about):not(.message):not(.contextual-action-panel) .modal-header {
+    svg.icon {
+      margin-right: 10px;
+      top: 3px;
+      vertical-align: top;
+    }
   }
 
   &:not(.hide-underneath) {
@@ -238,7 +246,7 @@
   }
 
   .accordion {
-    @media (min-width: $breakpoint-phone + 1px) {
+    @media (min-width: ($breakpoint-phone + 1px)) {
       max-width: 100%;
       width: 300px;
     }
@@ -349,7 +357,7 @@ body.modal-engaged {
   margin: 16px;
   position: relative;
 
-  @media screen and (min-width: $breakpoint-big-phone + 1) {
+  @media screen and (min-width: ($breakpoint-big-phone + 1)) {
     margin: 10px;
   }
 
