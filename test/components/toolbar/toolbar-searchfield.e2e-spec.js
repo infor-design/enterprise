@@ -27,7 +27,7 @@ describe('Toolbar Searchfield (no-reinvoke)', () => {
   });
 });
 
-fdescribe('Searchfield with Toolbar alignment tests', () => {
+describe('Searchfield with Toolbar alignment tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/toolbarsearchfield/example-flex-toolbar-align-with-searchfield?theme=classic');
     await browser.driver
