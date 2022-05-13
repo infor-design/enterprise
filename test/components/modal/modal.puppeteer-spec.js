@@ -191,7 +191,7 @@ describe('Modal Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it.only('should have an icon check in title', async () => {
+    it('should have an icon check in title', async () => {
       await page.click('#add-context');
       await page.waitForSelector('.modal-engaged', { visible: true });
 
