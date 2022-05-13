@@ -956,7 +956,6 @@ Header.prototype = {
     }
 
     $.removeData(this.element[0], COMPONENT_NAME);
-    this.element = undefined;
   }
 };
 
