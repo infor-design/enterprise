@@ -130,7 +130,6 @@ $.fn.hideFocus = function () {
       instance = $.data(this, 'hidefocus', new HideFocus(this));
       instance.destroy = function destroy() {
         this.teardown();
-        this.element = undefined;
         $.removeData(this, 'hidefocus');
       };
     }
