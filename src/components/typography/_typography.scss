@@ -204,12 +204,12 @@ small,
   @include rem(margin-bottom, 1rem);
   @include rem(line-height, 2rem);
 
-  color: $ids-color-status-danger;
+  color: $error-color;
   font-weight: $ids-number-font-weight-bold;
   padding-left: 15px;
 
   &::before {
-    background-color: $ids-color-status-danger;
+    background-color: $error-color;
     border-radius: 50%;
     content: '';
     height: 8px;
@@ -223,7 +223,7 @@ small,
 .error-text {
   @include font-size(11);
 
-  color: $ids-color-status-danger;
+  color: $error-color;
   font-weight: $ids-number-font-weight-bold;
 }
 

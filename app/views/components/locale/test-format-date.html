@@ -20,6 +20,10 @@
       <label for="date-field4" class="label">pt-BR</label>
       <input id="date-field4" />
     </div>
+    <div class="field">
+      <label for="date-field5" class="label">pt-BR</label>
+      <input id="date-field5" />
+    </div>
   </div>
 </div>
 
@@ -63,6 +67,14 @@
       const val = Soho.Locale.formatDate(new Date(2019, 11, 5));
       $('#date-field4').val(val);
       $('#date-field4').prev('label').text(Soho.Locale.currentLocale.dataName + ' (' + Soho.Locale.currentLocale.data.calendars[0].dateFormat.short + ')');
+    });
+
+    var locale = 'lv-LV';
+    Soho.Locale.set(locale).done(function(a) {
+      console.log(Soho.Locale.currentLocale, Soho.Locale.currentLanguage);
+      const val = Soho.Locale.formatDate(new Date(2019, 11, 5));
+      $('#date-field5').val(val);
+      $('#date-field5').prev('label').text(Soho.Locale.currentLocale.dataName + ' (' + Soho.Locale.currentLocale.data.calendars[0].dateFormat.short + ')');
     });
   });
 </script>
