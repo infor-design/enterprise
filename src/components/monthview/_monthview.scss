@@ -407,6 +407,10 @@
         }
       }
 
+      &.end-date .day-text::before {
+        width: 0;
+      }
+
       &:hover {
         .day-text {
           background-color: $datepicker-selected-bg-color;
