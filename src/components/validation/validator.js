@@ -669,7 +669,7 @@ Validator.prototype = {
     const validationType = Validation.ValidationTypes[rule.type] ||
       Validation.ValidationTypes.error;
 
-    if (!isHelpMessage) {
+    if (!isHelpMessage && inline) {
       loc.addClass(rule.type === 'icon' ? 'custom-icon' : rule.type);
     }
 
@@ -720,13 +720,15 @@ Validator.prototype = {
       });
     }
 
-    if (!inline) {
+    if (!inline && rule.type !== 'error') {
       this.showTooltipMessage(field, appendedMsg, validationType.type, showTooltip);
       return;
     }
 
     field.data('isValid', false);
-    this.showInlineMessage(field, rule, isHelpMessage);
+    if (inline) {
+      this.showInlineMessage(field, rule, isHelpMessage);
+    }
   },
 
   /**
