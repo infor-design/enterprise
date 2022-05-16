@@ -745,6 +745,10 @@ PopupMenu.prototype = {
           if (submenu instanceof HTMLElement) {
             submenu.classList.add('popupmenu');
           }
+
+          if ($(li.parentElement).children('.separator').length > 0) {
+            $(li).addClass('has-selectable-submenu');
+          }
         }
 
         // Adds the SVG arrow, etc to submenu items.
