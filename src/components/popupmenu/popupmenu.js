@@ -721,7 +721,9 @@ PopupMenu.prototype = {
 
         // Add user-defined attributes to the anchor
         if (self.settings.attributes) {
-          utils.addAttributes($a, self, self.settings.attributes, `option-${getTreeIndex(li)}`);
+          const isFlexToolbar = this.element.parents('.flex-toolbar');
+          const asMenuItem = isFlexToolbar ? `option-${getTreeIndex(li)}-menu-item` : `option-${getTreeIndex(li)}`;
+          utils.addAttributes($a, self, self.settings.attributes, asMenuItem);
         }
 
         // disabled menu items, by prop and by className
