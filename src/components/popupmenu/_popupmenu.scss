@@ -384,7 +384,8 @@
 
     &.is-selectable,
     &.is-indented,
-    &.is-toggleable {
+    &.is-toggleable,
+    &.submenu {
       > a {
         padding-left: 35px;
       }
