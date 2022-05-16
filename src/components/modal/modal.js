@@ -56,6 +56,8 @@ const MODAL_FULLSIZE_SETTINGS = [false, 'responsive', 'always'];
 * @param {boolean} [settings.suppressEnterKey=false] if true, causes the modal to not exit when the enter key is pressed.
 * @param {string} [settings.attributes] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
 * @param {function} [settings.onFocusChange] an optional callback that runs whenever the Modal API attempts to change the focused element inside of its boundaries
+* @param {string} [settings.icon] Ability to add icon in the title.
+* @param {sring} [settings.iconClass] Ability to add class in the icon setting.
 */
 const MODAL_DEFAULTS = {
   trigger: 'click',
@@ -81,7 +83,9 @@ const MODAL_DEFAULTS = {
   noRefocus: false,
   triggerButton: null,
   hideUnderneath: false,
-  suppressEnterKey: false
+  suppressEnterKey: false,
+  icon: null,
+  iconClass: null,
 };
 
 // Resets some string-based Modal settings to their defaults
@@ -395,6 +399,19 @@ Modal.prototype = {
     }
 
     this.registerModal();
+
+    if (this.settings.icon) {
+      const hasIconClass = this.settings.iconClass ? ` icon-${this.settings.iconClass}` : '';
+      const svgIcon = $(`<svg class="icon${hasIconClass}"
+        focusable="false" aria-hidden="true" role="presentation">
+        <use href="#icon-${this.settings.icon}"></use>
+      </svg>`);
+      const hasIcon = this.element.find('.modal-title svg.icon').length > 0;
+
+      if (!hasIcon) {
+        this.element.find('.modal-title').prepend(svgIcon);
+      }
+    }
 
     utils.fixSVGIcons(this.element);
   },
