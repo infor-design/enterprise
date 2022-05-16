@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="toolbar no-actions-button" role="toolbar">
+      <div class="title">
+        Compressors
+        <span class="datagrid-result-count">(N Results)</span>
+      </div>
+    </div>
+
+    <div id="datagrid">
+    </div>
+
+  </div>
+</div>
+
+<script id="datagrid-script">
+  $('body').one('initialized', function () {
+
+    var grid,
+      columns = [];
+
+    // Define Columns for the Grid.
+    columns.push({ id: 'productId', hideable: false, name: 'Id', field: 'productId', reorderable: true, formatter: Formatters.Text, width: '10%' });
+    columns.push({ id: 'productName', name: 'Product Name', field: 'productName', reorderable: true, formatter: Formatters.Ellipsis, width: '25%' });
+    columns.push({ id: 'activity', name: 'Activity', field: 'activity', formatter: Formatters.Ellipsis, width: '10%', reorderable: true });
+    columns.push({ id: 'price', align: 'right', name: 'Actual Price', field: 'price', reorderable: true, formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$' }});
+    columns.push({ id: 'percent', align: 'right', name: 'Actual %', field: 'percent', reorderable: true, formatter: Formatters.Decimal, numberFormat: { minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'percent' }});
+    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', reorderable: true, formatter: Formatters.Date, dateFormat: 'M/d/yyyy' });
+    columns.push({ id: 'phone', name: 'Phone', field: 'phone', reorderable: true, formatter: Formatters.Text });
+
+    var url = '{{basepath}}api/datagrid-sample-data';
+
+    $.getJSON(url, function(res) {
+      // Init and get the api for the grid
+      grid = $('#datagrid').datagrid({
+        columns: columns,
+        dataset: res,
+        isList: true,
+        toolbar: { results: true }
+      });
+    });
+ });
+</script>
