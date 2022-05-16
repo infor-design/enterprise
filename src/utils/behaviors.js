@@ -111,7 +111,7 @@ HideFocus.prototype = {
     ];
     $(this.element).off(elemEvents.join(' '));
 
-    this.element.classList.remove('hide-focus');
+    this.element?.classList.remove('hide-focus');
 
     return this;
   }
@@ -130,7 +130,6 @@ $.fn.hideFocus = function () {
       instance = $.data(this, 'hidefocus', new HideFocus(this));
       instance.destroy = function destroy() {
         this.teardown();
-        this.element = undefined;
         $.removeData(this, 'hidefocus');
       };
     }

@@ -842,15 +842,15 @@ Tooltip.prototype = {
         self.hide();
       });
 
-      self.element.closest('.modal-body-wrapper').on('scroll.tooltip', () => {
+      self.element?.closest('.modal-body-wrapper').on('scroll.tooltip', () => {
         self.hide();
       });
 
-      self.element.closest('.scrollable').on('scroll.tooltip', () => {
+      self.element?.closest('.scrollable').on('scroll.tooltip', () => {
         self.hide();
       });
 
-      self.element.closest('.datagrid-wrapper').on('scroll.tooltip', () => {
+      self.element?.closest('.datagrid-wrapper').on('scroll.tooltip', () => {
         self.hide();
       });
 
@@ -868,7 +868,7 @@ Tooltip.prototype = {
        * @property {object} event - The jquery event object
        * @property {object} tooltip - instance
        */
-      self.element.trigger('aftershow', [self.tooltip]);
+      self.element?.trigger('aftershow', [self.tooltip]);
     }, self.settings.delay);
   },
 
@@ -1164,8 +1164,6 @@ Tooltip.prototype = {
   destroy() {
     this.teardown();
     $.removeData(this.element[0], this.componentName);
-    this.element = undefined;
-    this.description = undefined;
     delete this._componentName;
   }
 };
