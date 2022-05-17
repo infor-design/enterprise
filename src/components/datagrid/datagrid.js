@@ -243,6 +243,7 @@ const DATAGRID_DEFAULTS = {
   searchExpandableRow: true,
   allowChildExpandOnMatchOnly: false,
   allowChildExpandOnMatch: false,
+  activeCheckboxSelection: false,
   attributes: null,
   allowPasteFromExcel: false,
   fallbackImage: 'insert-image',
@@ -11406,7 +11407,9 @@ Datagrid.prototype = {
       }
 
       headers.removeClass('is-active');
-      headers.eq(cell).addClass('is-active');
+      if (this.settings.activeCheckboxSelection) {
+        headers.eq(cell).addClass('is-active');
+      }
     }
     this.activeCell.isFocused = true;
 
