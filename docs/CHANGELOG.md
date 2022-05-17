@@ -9,6 +9,7 @@
 - `[Datagrid]` Added trimSpaces option for leading spaces upon blur. ([#6244](https://github.com/infor-design/enterprise/issues/6244))
 - `[Datagrid]` Fixed header alignment when formatter is ellipsis. ([#6251](https://github.com/infor-design/enterprise/issues/6251))
 - `[Datepicker]` Fixed a bug where selecting a date that's consecutive to the previous range won't select that date. ([#6272](https://github.com/infor-design/enterprise/issues/6272))
+- `[Flex Toolbar]` Fixed the data automation id to be more reliable for popupmenu and overflowed buttons. ([#6175](https://github.com/infor-design/enterprise/issues/6175))
 - `[Icons]` Fixed the inconsistency between solid and outlined icons. ([#6165](https://github.com/infor-design/enterprise/issues/6165))
 - `[Icons]` Changed the error color to change in themes in some areas. ([#6273](https://github.com/infor-design/enterprise/issues/6273))
 - `[Line Chart]` Fixed a bug where the alignment of focus is overlapping another component. ([#6384](https://github.com/infor-design/enterprise/issues/6384))

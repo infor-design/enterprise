@@ -151,7 +151,7 @@ describe('ActionSheet API', () => {
     // The setting of popupmenu attributes is delegated to the Popupmenu component.
     // However, they are all still prefixed with `my-actions` per the Action Sheet settings.
     expect(actionSheetMenuEl.id).toBe('my-actions-menu');
-    expect(firstMenuItem.id).toBe('my-actions-option-0');
+    expect(firstMenuItem.id).toBe('my-actions-option-0-menu-item');
   });
 
   it('can be configured to always open a Popupmenu', () => {
