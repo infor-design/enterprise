@@ -26,7 +26,7 @@ describe('Contextual Action Panel Puppeteer Tests', () => {
     });
   });
 
-  describe('CAP Tabs Vertical tests', () => {
+  describe('CAP css settings', () => {
     const url = `${baseUrl}/test-css-settings.html`;
 
     beforeAll(async () => {

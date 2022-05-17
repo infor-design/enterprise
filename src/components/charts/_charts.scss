@@ -242,9 +242,9 @@
     border: 1px solid transparent;
     cursor: pointer;
     float: left;
-    margin-right: 10px;
+    margin: 7px 10px 7px 0;
     outline: none;
-    padding: 7px;
+    padding: 0 7px;
 
     &[tabindex='-1'] {
       cursor: inherit;

@@ -183,4 +183,20 @@ describe('Modal Puppeteer Tests', () => {
       expect(tabIndex).not.toEqual(-1);
     });
   });
+
+  describe('Modal with icon in title', () => {
+    const url = `${baseUrl}/example-title-with-icon`;
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('should have an icon check in title', async () => {
+      await page.click('#add-context');
+      await page.waitForSelector('.modal-engaged', { visible: true });
+
+      await page.waitForSelector('.icon.icon-info', { visible: true })
+        .then(el => expect(el).toBeTruthy());
+    });
+  });
 });
