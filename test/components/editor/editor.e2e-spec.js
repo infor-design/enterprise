@@ -146,7 +146,7 @@ describe('Editor example-index tests', () => {
 
   it('Should be able to set id/automation id example', async () => {
     expect(await element(by.id('example1-editor-fontpicker-option-0-menu-item')).getAttribute('id')).toEqual('example1-editor-fontpicker-option-0-menu-item');
-    expect(await element(by.id('example1-editor-fontpicker-option-0')).getAttribute('data-automation-id')).toEqual('automation-id-example1-editor-fontpicker-option-0-menu-item');
+    expect(await element(by.id('example1-editor-fontpicker-option-0-menu-item')).getAttribute('data-automation-id')).toEqual('automation-id-example1-editor-fontpicker-option-0-menu-item');
 
     expect(await element(by.id('example1-editor-toolbar-button-1')).getAttribute('id')).toEqual('example1-editor-toolbar-button-1');
     expect(await element(by.id('example1-editor-toolbar-button-1')).getAttribute('data-automation-id')).toEqual('automation-id-example1-editor-toolbar-button-1');
