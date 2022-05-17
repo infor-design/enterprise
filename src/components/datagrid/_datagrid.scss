@@ -5625,6 +5625,14 @@ html[dir='rtl'] {
     .listview.alternate-bg {
       background-color: $listview-bg-color;
     }
+
+    .listview-search {
+      .icon.close {
+        height: 18px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
   }
 
   // Modal Lists
@@ -5639,6 +5647,7 @@ html[dir='rtl'] {
     width: -webkit-fill-available;
     width: stretch;
   }
+  
 }
 
 // Popup Adjustments
