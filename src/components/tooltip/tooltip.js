@@ -1164,8 +1164,6 @@ Tooltip.prototype = {
   destroy() {
     this.teardown();
     $.removeData(this.element[0], this.componentName);
-    this.element = undefined;
-    this.description = undefined;
     delete this._componentName;
   }
 };
