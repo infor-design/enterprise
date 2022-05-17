@@ -14,6 +14,7 @@
 - `[Line Chart]` Fixed a bug where the alignment of focus is overlapping another component. ([#6384](https://github.com/infor-design/enterprise/issues/6384))
 - `[Listview]` Fixed a bug where the search icon is misaligned in Firefox and Safari. ([#6390](https://github.com/infor-design/enterprise/issues/6390))
 - `[Locale]` Fixed incorrect date format for Latvian language. ([#6123](https://github.com/infor-design/enterprise/issues/6123))
+- `[Lookup]` Fixed bug where lookup still appeared when modal closes. ([#6218](https://github.com/infor-design/enterprise/issues/6218))
 - `[WeekView]` Fixed a bug where 'today' date is not being rendered properly. ([#6260](https://github.com/infor-design/enterprise/issues/6260))
 
 ## v4.64.0 features
