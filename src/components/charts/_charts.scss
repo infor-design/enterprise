@@ -208,6 +208,12 @@
   text-align: center;
 }
 
+.chart-tooltip-value {
+  color: $tooltip-color;
+  display: block;
+  text-align: center;
+}
+
 // Legend Styling
 .chart-legend {
   margin-left: 50px;
