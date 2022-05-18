@@ -126,6 +126,7 @@ describe('Datagrid Settings', () => { //eslint-disable-line
       searchExpandableRow: true,
       allowChildExpandOnMatchOnly: false,
       allowChildExpandOnMatch: false,
+      activeCheckboxSelection: false,
       allowPasteFromExcel: false,
       fallbackImage: 'insert-image',
       fallbackSize: { height: 40, width: 40 },
