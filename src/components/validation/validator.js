@@ -548,7 +548,7 @@ Validator.prototype = {
            (rule.message !== Locale.translate('Required'))) {
           return;
         }
-        self.addMessage(field, rule, isInline, showResultTooltip);
+        self.addMessage(field, rule, isInline, showResultTooltip, false, !result);
         results.push(rule.type);
 
         if (validationType.errorsForm) {
@@ -652,8 +652,9 @@ Validator.prototype = {
    * @param {boolean} showTooltip whether or not the legacy validation Tooltip will contain the
    * message instead of placing it underneath
    * @param {boolean} isHelpMessage whether or not this validation message type is "alert"
+   * @param {boolean} isValidatedError comes from the manageResult() and validated as a true error
    */
-  addMessage(field, rule, inline, showTooltip, isHelpMessage) {
+  addMessage(field, rule, inline, showTooltip, isHelpMessage, isValidatedError) {
     if (rule.message === '') {
       return;
     }
@@ -720,7 +721,7 @@ Validator.prototype = {
       });
     }
 
-    if (!inline && rule.type !== 'error') {
+    if (!inline && isValidatedError) {
       this.showTooltipMessage(field, appendedMsg, validationType.type, showTooltip);
       return;
     }
