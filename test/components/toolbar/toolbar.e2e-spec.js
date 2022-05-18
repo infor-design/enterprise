@@ -16,20 +16,4 @@ describe('Toolbar (overflow)', () => {
   it('should not have any errors', async () => {
     await utils.checkForErrors();
   });
-
-  it('will not force buttons to remain in overflow', async () => {
-    // Store the original window size
-    const windowSize = await browser.driver.manage().window().getSize();
-
-    // Shrink the window to be absurdly small, and allow time for the calculation to occur
-    await browser.driver.manage().window().setSize(320, 480);
-    await browser.driver.sleep(config.sleepLonger);
-
-    // Put the window size back, allowing time for recalculation
-    await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
-    await browser.driver.sleep(config.sleepLonger);
-
-    // Check the Home button, and make sure it's not overflowed
-    expect(await element(by.id('home-button')).getAttribute('class')).not.toContain('is-overflowed');
-  });
 });
