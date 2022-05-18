@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.61.2
+
+## v4.61.2 Fixes
+
+- `[Toolbar Flex]` Fixed a bug where the `addMenuElementLinks` function execute incorrectly when menu item has multi-level submenus. ([#6120](https://github.com/infor-design/enterprise/issues/6120))
+
 ## v4.61.1
 
 ## v4.61.1 Fixes
