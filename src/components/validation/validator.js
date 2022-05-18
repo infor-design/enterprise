@@ -548,7 +548,7 @@ Validator.prototype = {
            (rule.message !== Locale.translate('Required'))) {
           return;
         }
-        self.addMessage(field, rule, isInline, showResultTooltip, false, !result);
+        self.addMessage(field, rule, isInline, showResultTooltip, undefined, !result);
         results.push(rule.type);
 
         if (validationType.errorsForm) {
