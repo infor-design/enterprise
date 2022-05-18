@@ -749,7 +749,6 @@ PopupMenu.prototype = {
           if ($(li.parentElement).children('.separator').length > 0) {
             $(li).addClass('has-selectable-submenu');
             $(li).find('.popupmenu').children().addClass('is-selectable');
-
           }
         }
 
