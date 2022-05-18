@@ -789,7 +789,7 @@ Validator.prototype = {
       return;
     }
 
-    let target = !field.is('button') ? this.showIcon(field, type) : field;
+    const target = !field.is('button') ? this.showIcon(field, type) : field;
     let tooltipAPI = target.data('tooltip');
     let representationField = field;
 
