@@ -4,11 +4,13 @@
 
 ## v4.64.0 Fixes
 
+- `[ContextMenu]` Fixed a bug in context menu where it is not indented properly. ([#6223](https://github.com/infor-design/enterprise/issues/6223))
 - `[Datagrid]` Set changed cell to active when update is finished. ([#6317](https://github.com/infor-design/enterprise/issues/6317))
 - `[Datagrid]` Fixed row height of extra-small rows on editable datagrid with icon columns. ([#6284](https://github.com/infor-design/enterprise/issues/6284))
 - `[Datagrid]` Added trimSpaces option for leading spaces upon blur. ([#6244](https://github.com/infor-design/enterprise/issues/6244))
 - `[Datagrid]` Fixed header alignment when formatter is ellipsis. ([#6251](https://github.com/infor-design/enterprise/issues/6251))
 - `[Datepicker]` Fixed a bug where selecting a date that's consecutive to the previous range won't select that date. ([#6272](https://github.com/infor-design/enterprise/issues/6272))
+- `[Bar Stacked]` Fixed a bug where chart tooltip total shows 99.999 instead of 100 on 100% Stacked Bar Chart. ([#6236](https://github.com/infor-design/enterprise/issues/6326))
 - `[Flex Toolbar]` Fixed the data automation id to be more reliable for popupmenu and overflowed buttons. ([#6175](https://github.com/infor-design/enterprise/issues/6175))
 - `[Icons]` Fixed the inconsistency between solid and outlined icons. ([#6165](https://github.com/infor-design/enterprise/issues/6165))
 - `[Icons]` Changed the error color to change in themes in some areas. ([#6273](https://github.com/infor-design/enterprise/issues/6273))
@@ -16,6 +18,7 @@
 - `[Listview]` Fixed a bug where the search icon is misaligned in Firefox and Safari. ([#6390](https://github.com/infor-design/enterprise/issues/6390))
 - `[Locale]` Fixed incorrect date format for Latvian language. ([#6123](https://github.com/infor-design/enterprise/issues/6123))
 - `[Targeted-Achievement]` Fixed a bug where the icon is cut off in Firefox. ([#6400](https://github.com/infor-design/enterprise/issues/6400))
+- `[Toolbar Flex]` Fixed a bug where the `addMenuElementLinks` function execute incorrectly when menu item has multi-level submenus. ([#6120](https://github.com/infor-design/enterprise/issues/6120))
 - `[Tree]` The expanded event did not fire when source is being used. ([#1294](https://github.com/infor-design/enterprise-ng/issues/1294))
 - `[WeekView]` Fixed a bug where 'today' date is not being rendered properly. ([#6260](https://github.com/infor-design/enterprise/issues/6260))
 
@@ -76,6 +79,16 @@
 
 (40 Issues Solved This Release, Backlog Enterprise 191, Backlog Ng 42, 1101 Functional Tests, 1576 e2e Tests, 295 Puppeteer Tests)
 
+## v4.61.2
+
+## v4.61.2 Fixes
+
+- `[Toolbar Flex]` Fixed a bug where the `addMenuElementLinks` function execute incorrectly when menu item has multi-level submenus. ([#6120](https://github.com/infor-design/enterprise/issues/6120))
+
+## v4.62.1 Features
+
+- `[Calendar]` Allow product devs to add custom css class to event labels in Calendar Component. ([#6304](https://github.com/infor-design/enterprise/issues/6304))
+
 ## v4.62.0
 
 ## v4.62.0 Features
@@ -88,10 +101,6 @@
 - `[Listview]` Added filters in Listview Component. ([#6007](https://github.com/infor-design/enterprise/issues/6007))
 - `[Spinbox]` Created a puppeteer script for Spinbox Field sizes on mobile. ([#5843](https://github.com/infor-design/enterprise/issues/5843))
 - `[ToolbarFlex]` Allow toolbar flex navigation buttons to have notification badge. ([NG#1235](https://github.com/infor-design/enterprise-ng/issues/1235))
-
-## v4.62.1 Features
-
-- `[Calendar]` Allow product devs to add custom css class to event labels in Calendar Component. ([#6304](https://github.com/infor-design/enterprise/issues/6304))
 
 ## v4.62.0 Fixes
 
