@@ -18,14 +18,7 @@
 </div>
 
 <script>
-const modals = {
-    'show-modal': {
-      'id': 'my-id',
-      'content': $('#example-modal')
-    }
-  };
-  
-  let timer, data = [], columns = [];
+  let timer, lookup, modal, closeFlag = false, data = [], columns = [];
 
   columns.push({ id: 'productId', name: 'Product Id', field: 'productId'});
   columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink});
@@ -42,40 +35,42 @@ const modals = {
   data.push({ id: 5, productId: 2642205, productName: 'Air Compressors', activity:  'Inspect and Repair', quantity: 41, price: 120.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
   data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
 
-  function onBeforeShow(api, response) {
+  const onBeforeShow = (api, response) => {
     if (timer) {
       clearTimeout(timer);
     }
     timer = setTimeout(function() {
-      response();
+      response(); 
     }, 2000);
-  }
+  };
 
-  setModal = function (opt) {
-    opt = $.extend({
+  
+  $('#show-modal').on('click', function () {
+    lookup = $('#example-lookup').lookup({
+        beforeShow: onBeforeShow,
+        options: {
+          columns: columns,
+          dataset: data,
+          selectable: 'single',
+          rowNavigation: true
+        }
+    }).data('lookup');
+
+    modal = $('body').modal({
+      content: $('#example-modal'),
       buttons: [{
         text: 'Close',
         click: function(e, modal) {
           modal.close();
         }
       }]
-    }, opt);
+    }).data('modal');
 
-    $('body').modal(opt);
-  };
-
-  $('#example-lookup').lookup({
-    beforeShow: onBeforeShow,
-    options: {
-      columns: columns,
-      dataset: data,
-      selectable: 'single',
-      rowNavigation: true
-    }
-  });
-
-  $('#show-modal').on('click', function () {
-    setModal(modals[this.id]);
+    modal.element.on('close', () => {
+      if (timer) {
+        clearTimeout(timer);
+      }
+    });
   });
 
 </script>
