@@ -703,12 +703,6 @@ $toolbarsearchfield-category-empty-width: 51px;
 // Help out firefox a bit
 html.is-firefox {
   .toolbar-searchfield-wrapper {
-    &:not(.is-open):not(.non-collapsible) {
-      .icon:not(.close) {
-        top: 8px;
-      }
-    }
-
     &.is-open,
     &.non-collapsible {
       .searchfield {
