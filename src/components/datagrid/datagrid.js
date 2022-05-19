@@ -11406,8 +11406,8 @@ Datagrid.prototype = {
         cell -= prevSpans;
       }
 
-      headers.removeClass('is-active');
       if (this.settings.activeCheckboxSelection) {
+        headers.removeClass('is-active');
         headers.eq(cell).addClass('is-active');
       }
     }
