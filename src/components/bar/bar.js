@@ -584,8 +584,13 @@ Bar.prototype = {
               total = 0;
               hexColor = charts.chartColor(j, 'bar', series[j]);
               for (let k = 0, kl = dataset.length; k < kl; k++) {
-                total += dataset[k][i].x;
-                totals[k] = dataset[k][i].x;
+                if (s.isNormalized) {
+                  total += dataset[k][i].value;
+                  totals[k] = dataset[k][i].value;
+                } else {
+                  total += dataset[k][i].x;
+                  totals[k] = dataset[k][i].x;
+                }
               }
               content += `<div class="swatch-row">
                   <div class="swatch-color">${setPattern(series[j].pattern, hexColor)}</div>
@@ -606,7 +611,7 @@ Bar.prototype = {
         }
 
         if (total > 0) {
-          content = `<span class="chart-tooltip-total"><b>${total}</b> ${Locale.translate('Total')}</span>${content}`;
+          content = `<span class="chart-tooltip-value"><b>${d.value} Value</b></span><span class="chart-tooltip-total"><b>${Math.round(total)}</b> ${Locale.translate('Total')}</span>${content}`;
         }
 
         if (tooltipData && typeof tooltipData === 'function' && !tooltipDataCache[i]) {
