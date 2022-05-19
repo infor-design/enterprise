@@ -20,6 +20,7 @@ $.fn.toolbarflexitem = function (settings) {
           oldDestroy.call(this);
         }
         $.removeData(this, COMPONENT_NAME);
+        this.element = undefined;
       };
     }
   });
