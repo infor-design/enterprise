@@ -358,7 +358,7 @@ describe('Flex Toolbar (with extra attributes)', () => {
 
     expect(menuButtonItem.element.getAttribute('data-automation-id')).toEqual('my-toolbar-menubutton-1-trigger');
     expect(menuEl.getAttribute('data-automation-id')).toEqual('my-toolbar-menubutton-1-menu');
-    expect(menuFirstItemEl.getAttribute('data-automation-id')).toEqual('my-toolbar-menubutton-1-option-0');
+    expect(menuFirstItemEl.getAttribute('data-automation-id')).toEqual('my-toolbar-menubutton-1-option-0-menu-item');
 
     // "More Actions" button should render with a copy of the MenuButton's items,
     // but they will have unique `data-automation-id` attributes specific for the overflowed MenuButton items
@@ -369,7 +369,7 @@ describe('Flex Toolbar (with extra attributes)', () => {
 
     expect(actionButtonItem.element.getAttribute('data-automation-id')).toEqual('my-toolbar-actionbutton-5-trigger');
     expect(actionMenuEl.getAttribute('data-automation-id')).toEqual('my-toolbar-actionbutton-5-menu');
-    expect(actionMenuFirstItemEl.getAttribute('data-automation-id')).toEqual('my-toolbar-actionbutton-5-option-0');
-    expect(actionMenuButtonFirstItemEl.getAttribute('data-automation-id')).toEqual('my-toolbar-actionbutton-5-option-1-0');
+    expect(actionMenuFirstItemEl.getAttribute('data-automation-id')).toEqual('my-toolbar-actionbutton-5-option-0-menu-item');
+    expect(actionMenuButtonFirstItemEl.getAttribute('data-automation-id')).toEqual('my-toolbar-actionbutton-5-option-1-0-menu-item');
   });
 });
