@@ -815,7 +815,7 @@ ToolbarFlexItem.prototype = {
     }
 
     function addMenuElementLinks(menu, data) {
-      const elems = menu.querySelectorAll('li:not(.heading)');
+      const elems = menu.querySelectorAll(':scope > li:not(.heading)');
       data.forEach((item, i) => {
         item.elementLink = elems[i];
         if (item.submenu) {
