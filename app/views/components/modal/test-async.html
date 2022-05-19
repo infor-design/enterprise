@@ -36,25 +36,25 @@
   data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
 
   const onBeforeShow = (api, response) => {
-    if (timer) {
-      clearTimeout(timer);
-    }
     timer = setTimeout(function() {
       response(); 
     }, 2000);
   };
 
-  
+  lookup = $('#example-lookup').lookup({
+      beforeShow: onBeforeShow,
+      options: {
+        columns: columns,
+        dataset: data,
+        selectable: 'single',
+        rowNavigation: true
+      }
+  }).data('lookup');
+
   $('#show-modal').on('click', function () {
-    lookup = $('#example-lookup').lookup({
-        beforeShow: onBeforeShow,
-        options: {
-          columns: columns,
-          dataset: data,
-          selectable: 'single',
-          rowNavigation: true
-        }
-    }).data('lookup');
+    if (timer) {
+        clearTimeout(timer);
+    }
 
     modal = $('body').modal({
       content: $('#example-modal'),
@@ -67,10 +67,9 @@
     }).data('modal');
 
     modal.element.on('close', () => {
-      if (timer) {
-        clearTimeout(timer);
+      if (lookup) {
+        delete lookup.isOpen;
       }
-    });
+    })
   });
-
 </script>
