@@ -880,6 +880,7 @@ Tree.prototype = {
           DOM.addClass(node[0], 'is-loading');
           self.loading = true;
           self.settings.source(args, response);
+          self.element.triggerHandler('expanded', { node, data: node.data('jsonData') });
 
           return;
         }
