@@ -510,6 +510,14 @@ Datagrid.prototype = {
     self.hasVerticalScrollbar = hasVerticalScrollbar !== false;
   },
 
+  editCell(row, cell, event) {
+    const self = this;
+    setTimeout(() => {
+      self.setActiveCell(row, cell);
+      self.makeCellEditable(row, cell, event);
+    }, 100);
+  },
+
   /**
   * Add a row of data to the grid and dataset.
   * @param {object} data An data row object
