@@ -84,7 +84,7 @@
         grid = $('#datagrid').datagrid({
           columns: columns,
           dataset: data,
-          editable: false,
+          editable: true,
           clickToSelect: false,
           selectable: 'multiple',
           toolbar: {keywordFilter: true, results: true}
@@ -96,7 +96,11 @@
 
   //Add Code for Add and icon-delete
   $('#edit-btn').on('click', function () {
-    gridApi.settings.editable = !gridApi.settings.editable;
+    const settings = {
+      editable: gridApi.settings.editable ? false : true
+    };
+
+    gridApi = gridApi.updated(settings);
   });
 
 </script>

@@ -1085,6 +1085,7 @@
 ### v4.35.3 Fixes
 
 - `[Datagrid]` Made a fix that when calling applyFilter the lookup checkbox did not update. ([#4693](https://github.com/infor-design/enterprise/issues/4693))
+- `[Datagrid]` Fixed a bug where the datepicker icon is not visible when the datagrid starts as non editable and toggled to editable and is visible when the datagrid starts as editable and toggled to non editable. ([#6289](https://github.com/infor-design/enterprise/issues/6289))
 - `[Dropdown]` Fixed a bug where the tooltips are invoked for each dropdown item. This was slow with a lot of items. ([#4672](https://github.com/infor-design/enterprise/issues/4672))
 - `[Dropdown]` Fixed a bug where mouseup was used rather than click to open the list and this was inconsistent. ([#4638](https://github.com/infor-design/enterprise/issues/4638))
 - `[Lookup]` Added a clear callback function like the click callback that fires when clicking the clear X if enabled. ([#4693](https://github.com/infor-design/enterprise/issues/4693))
