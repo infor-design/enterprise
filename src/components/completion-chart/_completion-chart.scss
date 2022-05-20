@@ -418,7 +418,9 @@
   }
 
   .label {
-    line-height: 1.6rem;
+    .name {
+      line-height: 1.6rem;
+    }
   }
 
   &.is-mac {
