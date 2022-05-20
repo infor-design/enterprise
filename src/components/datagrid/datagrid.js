@@ -510,6 +510,12 @@ Datagrid.prototype = {
     self.hasVerticalScrollbar = hasVerticalScrollbar !== false;
   },
 
+  /**
+   * Make a cell editable.
+   * @param {number} row The row index
+   * @param {number} cell The cell index
+   * @param {object} event The event information.
+   */
   editCell(row, cell, event) {
     const self = this;
     setTimeout(() => {
