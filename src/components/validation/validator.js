@@ -659,6 +659,10 @@ Validator.prototype = {
       return;
     }
 
+    if (!isValidatedError) {
+      this.validate(field, showTooltip, 0);
+    }
+
     if (field.is('.dropdown, .multiselect') && $('#dropdown-list').is(':visible')) {
       return;
     }

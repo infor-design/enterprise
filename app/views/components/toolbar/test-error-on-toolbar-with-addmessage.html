@@ -100,7 +100,7 @@
 
   $('#show-error').on('click', function() {
     if (!isErrorVisible) {
-      $('#specialActionsBtn').addMessage({
+      $('#email-address').addMessage({
         message : 'I have an error :(',
         type: 'error',
         inline: false,
@@ -111,7 +111,7 @@
       return;
     }
 
-    $('#specialActionsBtn').removeMessage({
+    $('#email-address').removeMessage({
       type: 'error',
       inline: true
     });
