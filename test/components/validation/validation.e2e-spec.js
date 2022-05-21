@@ -105,10 +105,16 @@ describe('Validation multiple error tests', () => {
 
   it('Should be able to call removeError after addError', async () => {
     await browser.executeScript('$("select.dropdown").removeError().addError({ message: "Dropdown error.", inline: false })');
-    expect(await element(by.css('.icon-error')).isPresent()).toBe(false);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.icon-error'))), config.waitsFor);
+
+    expect(await element(by.css('.icon-error'))).toBeTruthy();
 
     await browser.executeScript('$("select.dropdown").removeError()');
-    expect(await element(by.css('.icon-error')).isPresent()).toBe(false);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.stalenessOf(await element(by.css('.icon-error'))), config.waitsFor);
+
+    expect(await element(by.css('.icon-error'))).toBeTruthy();
   });
 });
 
