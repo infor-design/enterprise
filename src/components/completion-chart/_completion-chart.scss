@@ -417,15 +417,13 @@
     margin-top: -26px;
   }
 
-  .label {
-    .name {
-      line-height: 1.6rem;
-    }
-  }
-
   &.is-mac {
     .chart-percent-text {
       margin-top: -23px;
     }
   }
+}
+
+.is-firefox .completion-chart .name {
+  line-height: 1.6rem;
 }
