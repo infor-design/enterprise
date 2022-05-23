@@ -49,6 +49,7 @@ const COMPONENT_NAME = 'bar';
  *  button: {text: 'xxx', click: <function>}  }`
  * Set this to null for no message or will default to 'No Data Found with an icon.'
  * @param {object} [settings.localeInfo] If passed in you can override the default formatting https://github.com/d3/d3-format/blob/master/README.md#formatDefaultLocale
+ * @param {array} [settings.axisLabels] Ability to add label to any of the four sides.
  */
 const BAR_DEFAULTS = {
   dataset: [],
@@ -191,6 +192,27 @@ Bar.prototype = {
     if (dataset.length === 0) {
       self.element.emptymessage(s.emptyMessage);
       return this;
+    }
+
+    // Config for axis labels
+    let idx;
+    let axisArr;
+    const axisLabels = {};
+    const isAxisLabels = { atLeastOne: false };
+    const axisArray = ['left', 'top', 'right', 'bottom'];
+
+    if (s.axisLabels) {
+      $.extend(true, axisLabels, s.axisLabels);
+    }
+
+    if (!$.isEmptyObject(axisLabels)) {
+      for (idx = 0, axisArr = axisArray.length; idx < axisArr; idx++) {
+        const thisAxis = axisLabels[axisArray[idx]];
+        if (thisAxis && typeof thisAxis === 'string' && $.trim(thisAxis) !== '') {
+          isAxisLabels[axisArray[idx]] = true;
+          isAxisLabels.atLeastOne = true;
+        }
+      }
     }
 
     // Get the Legend Series
@@ -700,6 +722,41 @@ Bar.prototype = {
     if (self.isRTL && (charts.isIE || charts.isIEEdge)) {
       self.svg.selectAll('text').attr('transform', 'scale(-1, 1)');
       self.svg.selectAll('.y.axis text').style('text-anchor', 'start');
+    }
+
+    if (isAxisLabels.atLeastOne) {
+      const axisLabelGroup = self.svg.append('g').attr('class', 'axis-labels');
+      const widthAxisLabel = w - 45;
+
+      const place = {
+        top: `translate(${widthAxisLabel / 2 - 51},${-5})`,
+        right: `translate(${widthAxisLabel + 28},${height / 2})rotate(90)`,
+        bottom: `translate(${widthAxisLabel / 2},${height + 40})`,
+        left: `translate(${-80},${height / 2})rotate(-90)`,
+      };
+
+      const placeStyle = {
+        top: `rotate(0deg) scale(-1) translate(-${widthAxisLabel / 2}px, ${-10}px)`,
+        right: `rotate(90deg) scaleX(-1) translate(-${(height / 2) + 5}px, -${widthAxisLabel + (self.isRTL ? 55 : 28)}px)`,
+        bottom: `rotate(0deg) scaleX(-1) translate(-${widthAxisLabel / 2}px, ${height + 47}px)`,
+        left: `rotate(90deg) scaleX(-1) translate(-${(height / 2 - 5)}px, ${self.isRTL ? 35 : 55}px)`
+      };
+
+      const addAxis = (pos) => {
+        if (isAxisLabels[pos]) {
+          axisLabelGroup.append('text')
+            .attr('class', `axis-label-${pos}`)
+            .attr('text-anchor', 'middle')
+            .attr('transform', self.isRTL ? '' : place[pos])
+            .style('font-size', '1.2em')
+            .style('transform', self.isRTL ? placeStyle[pos] : '')
+            .text(axisLabels[pos]);
+        }
+      };
+
+      for (idx = 0, axisArr = axisArray.length; idx < axisArr; idx++) {
+        addAxis(axisArray[idx]);
+      }
     }
 
     if (isViewSmall && s.useLogScale) {
