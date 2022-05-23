@@ -512,6 +512,20 @@ Datagrid.prototype = {
   },
 
   /**
+   * Make a cell editable.
+   * @param {number} row The row index
+   * @param {number} cell The cell index
+   * @param {object} event The event information.
+   */
+  editCell(row, cell, event) {
+    const self = this;
+    setTimeout(() => {
+      self.setActiveCell(row, cell);
+      self.makeCellEditable(row, cell, event);
+    }, 100);
+  },
+
+  /**
   * Add a row of data to the grid and dataset.
   * @param {object} data An data row object
   * @param {string} location Where to add the row. This can be 'bottom' or 'top', default is top.
