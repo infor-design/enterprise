@@ -131,6 +131,7 @@ $.fn.hideFocus = function () {
       instance.destroy = function destroy() {
         this.teardown();
         $.removeData(this, 'hidefocus');
+        this.element = undefined;
       };
     }
   });

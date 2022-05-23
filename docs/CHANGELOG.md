@@ -5,6 +5,7 @@
 ## v4.64.0 Fixes
 
 - `[ContextMenu]` Fixed a bug in context menu where it is not indented properly. ([#6223](https://github.com/infor-design/enterprise/issues/6223))
+- `[Datagrid]` Added setting for color change in active checkbox selection. ([#6303](https://github.com/infor-design/enterprise/issues/6303))
 - `[Datagrid]` Set changed cell to active when update is finished. ([#6317](https://github.com/infor-design/enterprise/issues/6317))
 - `[Datagrid]` Fixed row height of extra-small rows on editable datagrid with icon columns. ([#6284](https://github.com/infor-design/enterprise/issues/6284))
 - `[Datagrid]` Added trimSpaces option for leading spaces upon blur. ([#6244](https://github.com/infor-design/enterprise/issues/6244))
@@ -17,8 +18,11 @@
 - `[Line Chart]` Fixed a bug where the alignment of focus is overlapping another component. ([#6384](https://github.com/infor-design/enterprise/issues/6384))
 - `[Listview]` Fixed a bug where the search icon is misaligned in Firefox and Safari. ([#6390](https://github.com/infor-design/enterprise/issues/6390))
 - `[Locale]` Fixed incorrect date format for Latvian language. ([#6123](https://github.com/infor-design/enterprise/issues/6123))
+- `[Lookup]` Fixed bug where lookup still appeared when modal closes. ([#6218](https://github.com/infor-design/enterprise/issues/6218))
 - `[Targeted-Achievement]` Fixed a bug where the icon is cut off in Firefox. ([#6400](https://github.com/infor-design/enterprise/issues/6400))
+- `[Toolbar]` Fixed a bug where the search icon is misaligned in Firefox. ([#6405](https://github.com/infor-design/enterprise/issues/6405))
 - `[Toolbar Flex]` Fixed a bug where the `addMenuElementLinks` function execute incorrectly when menu item has multi-level submenus. ([#6120](https://github.com/infor-design/enterprise/issues/6120))
+- `[Tree]` The expanded event did not fire when source is being used. ([#1294](https://github.com/infor-design/enterprise-ng/issues/1294))
 - `[WeekView]` Fixed a bug where 'today' date is not being rendered properly. ([#6260](https://github.com/infor-design/enterprise/issues/6260))
 
 ## v4.64.0 features
@@ -65,6 +69,8 @@
 - `[Tabs]` Fixed Z-index conflict between modal overlay and draggable module tabs. ([#6297](https://github.com/infor-design/enterprise/issues/6297))
 - `[Tabs]` Fixed a bug where the tab activated events are fired on closing a tab. ([#1452](https://github.com/infor-design/enterprise/issues/1452))
 - `[Tabs Module` Fixed the new UI searchfield design in Tabs Module component. ([#6348](https://github.com/infor-design/enterprise/issues/6348))
+- `[Tabs Module` Ensure searchfield X clear button is visible at smaller breakpoints. ([#5173](https://github.com/infor-design/enterprise/issues/5173))
+- `[Tabs Module` Ensure searchfield X clear button is visible at smaller breakpoints. ([#5178](https://github.com/infor-design/enterprise/issues/5178))
 - `[Targeted-Achievement]` Added tooltip on icon in targeted-achievement chart ([#6308](https://github.com/infor-design/enterprise/issues/6308))
 - `[TextArea]` Fixed medium size text area when in responsive view. ([#6334](https://github.com/infor-design/enterprise/issues/6334))
 - `[Validation]` Updated example page to include validation event for email field. ([#6296](https://github.com/infor-design/enterprise/issues/6296))

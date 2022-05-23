@@ -373,11 +373,13 @@ Lookup.prototype = {
 
     if (this.settings.beforeShow) {
       const response = function (grid) {
+        const isVisible = self.element && self.element.is(':visible');
+
         if (grid) {
           self.createGrid(grid);
         }
 
-        if (typeof grid === 'boolean' && grid === false) {
+        if (!isVisible || (typeof grid === 'boolean' && grid === false)) {
           self.isOpen = false;
           return false;
         }

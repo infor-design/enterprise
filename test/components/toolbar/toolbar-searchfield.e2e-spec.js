@@ -42,17 +42,11 @@ describe('Searchfield with Toolbar alignment tests', () => {
   if (utils.isChrome() && utils.isCI()) {
     it('Should not visual regress on example-flex-toolbar-align-with-searchfield', async () => {
       const searchfieldInputEl = await element(by.id(searchfieldInput));
-      const searchfieldToolbarContainer = await element(by.id('maincontent'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(searchfieldInputEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.imageComparison.checkElement(searchfieldInputEl, 'toolbar-searchfield-init')).toBeLessThan(0.2);
-
-      await searchfieldInputEl.click();
-      await browser.driver.sleep(config.sleep);
-
-      expect(await browser.imageComparison.checkElement(searchfieldToolbarContainer, 'toolbar-searchfield-alignment')).toBeLessThan(0.2);
     });
   }
 });
