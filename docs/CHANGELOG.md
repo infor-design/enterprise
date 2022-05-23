@@ -27,6 +27,7 @@
 - `[Tree]` The expanded event did not fire when source is being used. ([#1294](https://github.com/infor-design/enterprise-ng/issues/1294))
 - `[Typography]` Fixed a bug where the text are overlapping in Firefox. ([#6450](https://github.com/infor-design/enterprise/issues/6450))
 - `[WeekView]` Fixed a bug where 'today' date is not being rendered properly. ([#6260](https://github.com/infor-design/enterprise/issues/6260))
+- `[Validator]` Fixed a bug where toolbar error message still appears after error is removed. ([#6253](https://github.com/infor-design/enterprise/issues/6253))
 
 ## v4.64.0 features
 
