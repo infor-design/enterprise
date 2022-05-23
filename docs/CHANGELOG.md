@@ -32,6 +32,10 @@
 
 - `[Modal]` Added an ability to add icon in title section of the modal. ([#5905](https://github.com/infor-design/enterprise/issues/5905))
 
+## v4.63.1 Fixes
+
+- `[Personalization]` Fixed bug where the dark mode header color was not correct in the tokens and caused the personalization dropdown to be incorrect. ([#6446](https://github.com/infor-design/enterprise/issues/6446)
+
 ## v4.63.0
 
 ## v4.63.0 Fixes
@@ -86,6 +90,10 @@
 - `[Searchfield]` Implemented a new design for searchfield. ([#5865](https://github.com/infor-design/enterprise/issues/5865))
 
 (40 Issues Solved This Release, Backlog Enterprise 191, Backlog Ng 42, 1101 Functional Tests, 1576 e2e Tests, 295 Puppeteer Tests)
+
+## v4.62.2 Fixes
+
+- `[Personalization]` Fixed bug where the dark mode header color was not correct in the tokens and caused the personalization dropdown to be incorrect. ([#6446](https://github.com/infor-design/enterprise/issues/6446))
 
 ## v4.61.2
 
