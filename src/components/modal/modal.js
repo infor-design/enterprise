@@ -944,7 +944,7 @@ Modal.prototype = {
     }
 
     // check if page has an application menu in resizable mode
-    const resizeContainer = $('.resize-app-menu-container:first-child');
+    const resizeContainer = $('.resize-app-menu-container');
 
     if (resizeContainer.length > 0) {
       resizeContainer.append(this.root);

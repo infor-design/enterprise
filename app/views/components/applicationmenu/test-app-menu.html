@@ -1,0 +1,254 @@
+{{> includes/head}}
+
+<body class="no-scroll">
+ <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
+  {{> includes/svg-inline-refs}}
+
+  <div class="my-app-wrapper">
+    {{> ../../src/components/icons/svg}}
+
+    <nav id="application-menu" class="application-menu" data-options='{"resizable": true}'>
+
+      <div class="accordion panel inverse">
+        <div class="accordion-header">
+          <a href="#"><span>Header 1</span></a>
+        </div>
+
+        <div class="accordion-header">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-home"></use>
+          </svg>
+          <a href="#"><span>Header 2</span></a>
+        </div>
+
+        <!-- Level 1 -->
+        <div class="accordion-header">
+          <a href="#"><span>Header 3</span></a>
+        </div>
+        <div class="accordion-pane">
+
+          <!-- Level 2 -->
+          <div class="accordion-header">
+            <a href="#"><span>Level 2</span></a>
+          </div>
+          <div class="accordion-pane">
+
+            <!-- Level 3 -->
+            <div class="accordion-header">
+              <a href="#"><span>Level 3</span></a>
+            </div>
+            <div class="accordion-pane">
+
+              <!-- Level 4 -->
+              <div class="accordion-header">
+                <a href="#"><span>Level 4</span></a>
+              </div>
+              <div class="accordion-pane">
+
+                <!-- Level 5 -->
+                <div class="accordion-header">
+                  <a href="#"><span>Level 5</span></a>
+                </div>
+                <div class="accordion-pane">
+
+                  <!-- Level 6 -->
+                  <div class="accordion-header">
+                    <a href="#"><span>Level 6</span></a>
+                  </div>
+                  <div class="accordion-pane">
+                    <div class="accordion-content">
+                      <h3>You've reached the bottom</h3>
+                      <p>Nice work</p>
+                    </div>
+                  </div>
+
+                  <div class="accordion-header">
+                    <a href="#"><span>Level 6 Header Only</span></a>
+                  </div>
+
+                </div>
+
+                <!-- Level 5 -->
+                <div class="accordion-header">
+                  <a href="#"><span>Level 5 Content</span></a>
+                </div>
+                <div class="accordion-pane">
+                  <div class="accordion-content">
+                    <h3>Level 5 Content Pane</h3>
+                    <p>Nothing to see here</p>
+                  </div>
+                </div>
+
+                <div class="accordion-header">
+                  <a href="#"><span>Level 5 Header Only</span></a>
+                </div>
+
+              </div>
+
+              <!-- Level 4 -->
+              <div class="accordion-header">
+                <a href="#"><span>Level 4 Content</span></a>
+              </div>
+              <div class="accordion-pane">
+                <div class="accordion-content">
+                  <h3>Level 4 Content Pane</h3>
+                  <p>Nothing to see here</p>
+                </div>
+              </div>
+
+              <div class="accordion-header">
+                <a href="#"><span>Level 4 Header Only</span></a>
+              </div>
+
+            </div>
+
+            <!-- Level 3 -->
+            <div class="accordion-header">
+              <a href="#"><span>Level 3 Content</span></a>
+            </div>
+            <div class="accordion-pane">
+              <div class="accordion-content">
+                <h3>Level 3 Content Pane</h3>
+                <p>Nothing to see here</p>
+              </div>
+            </div>
+
+            <div class="accordion-header">
+              <a href="#"><span>Level 3 Header Only</span></a>
+            </div>
+
+          </div>
+
+          <!-- Level 2 -->
+          <div class="accordion-header">
+            <a href="#"><span>Level 2 Content</span></a>
+          </div>
+          <div class="accordion-pane">
+            <div class="accordion-content">
+              <h3>Level 2 Content Pane</h3>
+              <p>Nothing to see here</p>
+            </div>
+          </div>
+
+          <div class="accordion-header">
+            <a href="#"><span>Level 2 Header Only</span></a>
+          </div>
+
+        </div>
+
+
+      </div>
+
+      <div class="branding">
+        <svg class="icon" viewBox="0 0 34 34" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-logo"></use>
+        </svg>
+      </div>
+
+    </nav>
+
+    <div class="page-container no-scroll">
+        <div class="my-header-wrapper">
+          <header class="header is-personalizable" id="maincontent">
+
+            <div class="toolbar">
+              <div class="title">
+                {{> includes/header-appmenu-trigger}}
+                {{> includes/page-title}}
+              </div>
+
+              <div class="buttonset">
+              </div>
+
+              {{> includes/header-actionbutton}}
+            </div>
+
+          </header>
+
+        </div>
+        <div class="my-content-wrapper">
+          <div class="content-container-header" role="main">
+            <div class="row">
+              <div class="twelve columns">
+
+                <h2>Notes About How This Test Works</h2>
+                <p>
+                  This is to test if components with popups will show over the modal.
+                </p>
+                <button class="btn-secondary" type="button" id="show-modal">Show Modal</button><br/><br/>
+              </div>
+            </div>
+
+          </div>
+        </div>
+    </div>
+
+    <!-- Modal Example -->
+		<div id="modal-example" class="hidden">
+      <div class="field">
+        <label for="test-timepicker" class="label">Timepicker</label>
+        <input id="test-timepicker" class="timepicker" type="text" data-init="false"/>
+      </div>
+      <div class="field">
+        <label for="test-datepicker" class="label">Date Field</label>
+        <input id="test-datepicker" data-automation-id="custom-automation-id" class="datepicker" name="date-field" type="text" data-init="false"/>
+      </div>
+    </div>
+	</div>
+  </div>
+
+  {{> includes/footer}}
+
+</body>
+<script>
+  const modals = {
+      'show-modal': {
+        'title': 'Test Popup',
+        'id': 'my-id',
+        'content': $('#modal-example')
+      }
+    },
+  
+    setModal = function (opt) {
+      opt = $.extend({
+        buttons: [{
+          text: 'Cancel',
+        //  id: 'modal-button-1',
+          click: function(e, modal) {
+            modal.close();
+          }
+        }, {
+          text: 'Save',
+        //  id: 'modal-button-2',
+          click: function(e, modal) {
+            modal.close();
+          },
+          validate: false,
+          isDefault: true
+        }]
+      }, opt);
+  
+      $('body').modal(opt);
+    };
+
+    $('#show-modal').on('click', function () {
+      $(this).focus();
+      setModal(modals[this.id]);
+    });
+  
+    $('body').one('initialized', function () {
+      $('#test-timepicker').timepicker({
+        attributes: [
+          { name: 'id', value: 'test-timepicker' },
+          { name: 'data-automation-id', value: 'timepicker-automation-id-1' }
+        ]
+      });
+      
+      $('#test-datepicker').datepicker({
+        attributes: [
+          { name: 'id', value: 'custom-id' },
+          { name: 'data-automation-id', value: 'custom-automation-id' }
+      ]});
+  });
+</script>
+</html>
