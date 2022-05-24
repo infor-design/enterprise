@@ -2,6 +2,10 @@
 
 ## v4.63.1 Fixes
 
+- `[Personalization]` Re-Fixed a bug where the dark mode header color was not correct in the tokens and caused the personalization dropdown to be incorrect, classic theme was missed. ([#6446](https://github.com/infor-design/enterprise/issues/6446)
+
+## v4.63.1 Fixes
+
 - `[Locale]` Fixed incorrect data in ms-my, nn-No and nb-NO. ([#6472](https://github.com/infor-design/enterprise/issues/6472))
 - `[Personalization]` Fixed bug where the dark mode header color was not correct in the tokens and caused the personalization dropdown to be incorrect. ([#6446](https://github.com/infor-design/enterprise/issues/6446)
 
