@@ -243,6 +243,7 @@ const DATAGRID_DEFAULTS = {
   searchExpandableRow: true,
   allowChildExpandOnMatchOnly: false,
   allowChildExpandOnMatch: false,
+  activeCheckboxSelection: false,
   attributes: null,
   allowPasteFromExcel: false,
   fallbackImage: 'insert-image',
@@ -508,6 +509,20 @@ Datagrid.prototype = {
                                   self.element[0].scrollHeight > self.element[0].clientHeight;
 
     self.hasVerticalScrollbar = hasVerticalScrollbar !== false;
+  },
+
+  /**
+   * Make a cell editable.
+   * @param {number} row The row index
+   * @param {number} cell The cell index
+   * @param {object} event The event information.
+   */
+  editCell(row, cell, event) {
+    const self = this;
+    setTimeout(() => {
+      self.setActiveCell(row, cell);
+      self.makeCellEditable(row, cell, event);
+    }, 100);
   },
 
   /**
@@ -11405,8 +11420,10 @@ Datagrid.prototype = {
         cell -= prevSpans;
       }
 
-      headers.removeClass('is-active');
-      headers.eq(cell).addClass('is-active');
+      if (this.settings.activeCheckboxSelection) {
+        headers.removeClass('is-active');
+        headers.eq(cell).addClass('is-active');
+      }
     }
     this.activeCell.isFocused = true;
 

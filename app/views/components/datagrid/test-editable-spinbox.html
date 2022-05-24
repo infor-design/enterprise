@@ -1,10 +1,7 @@
-
 <div class="row">
   <div class="twelve columns">
-
     <div id="datagrid">
     </div>
-
   </div>
 </div>
 
@@ -18,6 +15,10 @@
           data = [],
           columns = [];
 
+        var isDisabled = function(row, cell, value, item) {
+          return (row % 2 === 0);
+        }
+
         // Some Sample Data
         data.push({ id: 1, productId: 2142201, productName: 'Compressor', activity:  '<svg/onload=alert(1)>', quantity: 1, price: 210, status: 'OK', orderDate:  '', portable: false, action: 'ac', description: 'Compressor comes with various air compressor accessories, to help you with a variety of projects. All fittings are with 1/4 NPT connectors. The kit has an air blow gun that can be used for cleaning'});
         data.push({ id: 2, productId: 2241202, productName: 'Different Compressor', activity:  'Inspect and Repair', quantity: 2, price: 210, status: '', orderDate: new Date(2016, 2, 15, 0, 30, 36), portable: false, action: 'oh', description: 'The kit has an air blow gun that can be used for cleaning'});
@@ -30,8 +31,8 @@
         //Define Columns for the Grid.
         columns.push({ id: 'productId', name: 'Product Id', field: 'productId'});
         columns.push({ id: 'productName', name: 'Product Name', field: 'productName', editor: Editors.Input});
-        columns.push({ id: 'spinBox1', name: 'Spinbox Max (50)', field: 'quantity', formatter: Formatters.Spinbox, editor: Editors.Spinbox, editorOptions: {min: 0, max: 50}, width: 150});
-        columns.push({ id: 'spinBox2', name: 'Spinbox (step-3)', field: 'price', formatter: Formatters.Spinbox, editor: Editors.Spinbox, editorOptions: {step: 3}, width: 150});
+        columns.push({ id: 'spinBox1', name: 'Spinbox Max (50)', field: 'quantity', formatter: Formatters.Spinbox, editor: Editors.Spinbox, isEditable: isDisabled, editorOptions: {min: 0, max: 50}, width: 150});
+        columns.push({ id: 'spinBox2', name: 'Spinbox (step-3)', field: 'price', formatter: Formatters.Spinbox, editor: Editors.Spinbox, isEditable: isDisabled, editorOptions: {step: 3}, width: 150});
         columns.push({ id: 'buffer', name: '', field: ''});
 
         //Init and get the api for the grid
