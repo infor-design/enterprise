@@ -588,7 +588,7 @@
     &.monthview {
       border: 1px solid  $calendar-line-color;
       overflow-x: hidden;
-      overflow-y: hidden;
+      overflow-y: auto;
       margin-bottom: 20px;
 
       tr {
@@ -1073,6 +1073,16 @@ html[dir='rtl'] {
       &:nth-child(1) {
         border-left: 1px solid $popover-separator-color;
         border-right: 1px solid transparent;
+      }
+    }
+  }
+}
+
+.ie11, .ie {
+  .monthview {
+    &.is-fullsize {
+      &.monthview {
+        overflow-y: hidden;
       }
     }
   }
