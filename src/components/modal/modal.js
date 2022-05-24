@@ -872,7 +872,6 @@ Modal.prototype = {
   open(ajaxReturn) {
     let messageArea = null;
     let elemCanOpen = true;
-
     // close any active tooltips
     $('#validation-errors, #tooltip, #validation-tooltip').addClass('is-hidden');
 
@@ -942,6 +941,13 @@ Modal.prototype = {
       if (this.settings.beforeShow) {
         return;
       }
+    }
+
+    // check if page has an application menu in resizable mode
+    const resizeContainer = $('.resize-app-menu-container:first-child');
+
+    if (resizeContainer.length > 0) {
+      resizeContainer.append(this.root);
     }
 
     // Tell the modal manager that this instance is active
