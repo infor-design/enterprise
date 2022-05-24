@@ -1,10 +1,11 @@
 # What's New with Enterprise
 
-## v4.62.2 Features
+## v4.62.2 Fixes
 
 - `[Personalization]` Fixed bug where the dark mode header color was not correct in the tokens and caused the personalization dropdown to be incorrect. ([#6446](https://github.com/infor-design/enterprise/issues/6446))
+- `[Locale]` Fixed incorrect data in ms-my, nn-No and nb-NO. ([#6472](https://github.com/infor-design/enterprise/issues/6472))
 
-## v4.62.1 Features
+## v4.62.1 Fixes
 
 - `[Calendar]` Allow product devs to add custom css class to event labels in Calendar Component. ([#6304](https://github.com/infor-design/enterprise/issues/6304))
 
