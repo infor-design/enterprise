@@ -12,10 +12,10 @@ _NPM_LATEST=${NPM_LATEST:-}
 _RELEASEIT_FLAGS=${RELEASEIT_FLAGS:-}
 _RELEASE_INCREMENT=${RELEASE_INCREMENT:-}
 
-rm -fr /root/enterprise
+rm -rf /root/enterprise/{..?*,.[!.]*,*} 2>/dev/null
 git clone https://$_GITHUB_ACCESS_TOKEN@github.com/infor-design/enterprise.git /root/enterprise
 cd /root/enterprise
-git remote set-url origin git@github.com:infor-design/enterprise.git
+git remote set-url origin https://${_GITHUB_ACCESS_TOKEN}@github.com/infor-design/enterprise.git
 
 git checkout $_BRANCH
 
