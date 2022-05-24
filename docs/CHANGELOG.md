@@ -12,6 +12,7 @@
 - `[Datagrid]` Fixed header alignment when formatter is ellipsis. ([#6251](https://github.com/infor-design/enterprise/issues/6251))
 - `[Datagrid]` Fixed a bug where the datepicker icon is not visible when the datagrid starts as non editable and toggled to editable and is visible when the datagrid starts as editable and toggled to non editable. ([#6289](https://github.com/infor-design/enterprise/issues/6289))
 - `[Datepicker]` Fixed a bug where selecting a date that's consecutive to the previous range won't select that date. ([#6272](https://github.com/infor-design/enterprise/issues/6272))
+- `[Datepicker]` Fixed a bug where datepicker is not setting time and date consistently in Arabic locale. ([#6270](https://github.com/infor-design/enterprise/issues/6270))
 - `[Bar Stacked]` Fixed a bug where chart tooltip total shows 99.999 instead of 100 on 100% Stacked Bar Chart. ([#6236](https://github.com/infor-design/enterprise/issues/6326))
 - `[Flex Toolbar]` Fixed the data automation id to be more reliable for popupmenu and overflowed buttons. ([#6175](https://github.com/infor-design/enterprise/issues/6175))
 - `[Icons]` Fixed the inconsistency between solid and outlined icons. ([#6165](https://github.com/infor-design/enterprise/issues/6165))
