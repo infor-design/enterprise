@@ -298,11 +298,11 @@ Bar.prototype = {
 
     self.svg = d3.select(this.element[0])
       .append('svg')
-      .attr('width', w)
-      .attr('height', h)
+      .attr('width', w + (isAxisLabels.atLeastOne ? 20 : 0))
+      .attr('height', h + (isAxisLabels.atLeastOne ? 5 : 0))
       .append('g')
       .attr('class', 'group')
-      .attr('transform', `translate(${textWidth},${margins.top})`);
+      .attr('transform', `translate(${textWidth},${margins.top - (isAxisLabels.atLeastOne ? 3 : 0)})`);
 
     const xMin = d3.min(dataset, g => (d3.min(g, d => (s.isStacked ? (d.x + d.x0) : d.x))));
     let xMax = d3.max(dataset, g => (d3.max(g, d => (s.isStacked ? (d.x + d.x0) : d.x))));
@@ -716,7 +716,7 @@ Bar.prototype = {
       });
 
     // Adjust the labels
-    self.svg.selectAll('.axis.y text').attr('x', () => (self.isRTL ? 15 : -15));
+    self.svg.selectAll('.axis.y text').attr('x', () => (self.isRTL ? (isAxisLabels.atLeastOne ? 5 : 15) : (isAxisLabels.atLeastOne ? -5 : -15)));
     self.svg.selectAll('.axis.x text').attr('class', d => (d < 0 ? 'negative-value' : 'positive-value'));
 
     if (self.isRTL && (charts.isIE || charts.isIEEdge)) {
@@ -726,20 +726,21 @@ Bar.prototype = {
 
     if (isAxisLabels.atLeastOne) {
       const axisLabelGroup = self.svg.append('g').attr('class', 'axis-labels');
-      const widthAxisLabel = w - 45;
+      const widthAxisLabel = w - 95;
+      const heightAxisLabel = height - 60;
 
       const place = {
-        top: `translate(${widthAxisLabel / 2 - 51},${-5})`,
-        right: `translate(${widthAxisLabel + 28},${height / 2})rotate(90)`,
-        bottom: `translate(${widthAxisLabel / 2},${height + 40})`,
-        left: `translate(${-80},${height / 2})rotate(-90)`,
+        top: `translate(${widthAxisLabel / 2},${-4})`,
+        right: `translate(${widthAxisLabel + 53},${height / 2})rotate(90)`,
+        bottom: `translate(${widthAxisLabel / 2},${heightAxisLabel + 89})`,
+        left: `translate(${-35},${height / 2})rotate(-90)`,
       };
 
       const placeStyle = {
-        top: `rotate(0deg) scale(-1) translate(-${widthAxisLabel / 2}px, ${-10}px)`,
-        right: `rotate(90deg) scaleX(-1) translate(-${(height / 2) + 5}px, -${widthAxisLabel + (self.isRTL ? 55 : 28)}px)`,
-        bottom: `rotate(0deg) scaleX(-1) translate(-${widthAxisLabel / 2}px, ${height + 47}px)`,
-        left: `rotate(90deg) scaleX(-1) translate(-${(height / 2 - 5)}px, ${self.isRTL ? 35 : 55}px)`
+        top: `rotate(0deg) scaleX(-1) translate(-${widthAxisLabel / 2}px, ${-4}px)`,
+        right: `rotate(90deg) scaleX(-1) translate(-${(height / 2) + 5}px, -${widthAxisLabel + (this.isRTL ? 45 : 28)}px)`,
+        bottom: `rotate(0deg) scaleX(-1) translate(-${widthAxisLabel / 2}px, ${heightAxisLabel + 89}px)`,
+        left: `rotate(90deg) scaleX(-1) translate(-${(height / 2 - 5)}px, ${this.isRTL ? 45 : 55}px)`
       };
 
       const addAxis = (pos) => {
