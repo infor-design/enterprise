@@ -1,0 +1,100 @@
+{{> includes/head}}
+
+<body class="no-scroll">
+ <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
+  {{> includes/svg-inline-refs}}
+
+  <div class="my-app-wrapper">
+    {{> ../../src/components/icons/svg}}
+
+    <nav id="application-menu" class="application-menu" data-options='{"resizable": true}'>
+
+      <div class="accordion panel inverse">
+        <div class="accordion-header">
+          <a href="#"><span>Header 1</span></a>
+        </div>
+
+        <div class="accordion-header">
+          <a href="#"><span>Header 2</span></a>
+        </div>
+      </div>
+
+      <div class="branding">
+        <svg class="icon" viewBox="0 0 34 34" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-logo"></use>
+        </svg>
+      </div>
+
+    </nav>
+
+    <div class="page-container no-scroll">
+        <div class="my-header-wrapper">
+          <header class="header is-personalizable" id="maincontent">
+
+            <div class="toolbar">
+              <div class="title">
+                {{> includes/header-appmenu-trigger}}
+                {{> includes/page-title}}
+              </div>
+
+              <div class="buttonset">
+              </div>
+
+              {{> includes/header-actionbutton}}
+            </div>
+
+          </header>
+
+        </div>
+        <div class="my-content-wrapper">
+          <div class="content-container-header" role="main">
+            <div class="row">
+              <div class="twelve columns">
+                <p>
+                  This is to test if components with popups will show over the modal.
+                </p>
+                <button class="btn-secondary" type="button" id="show-modal">Show Modal</button><br/><br/>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <!-- Modal Example -->
+		<div id="modal-example" class="hidden">
+      <div class="field">
+        <label for="test-timepicker" class="label">Timepicker</label>
+        <input id="test-timepicker" class="timepicker" type="text" data-init="false"/>
+      </div>
+      <div class="field">
+        <label for="test-datepicker" class="label">Date Field</label>
+        <input id="test-datepicker" data-automation-id="custom-automation-id" class="datepicker" name="date-field" type="text" data-init="false"/>
+      </div>
+    </div>
+	</div>
+
+  {{> includes/footer}}
+
+</body>
+
+<script>
+  $('body').one('initialized', function () {
+      $('#test-timepicker').timepicker();
+      
+      $('#test-datepicker').datepicker();
+
+      $('#show-modal').on('click', function () {
+        $(this).focus();
+        $('body').modal({
+          title: 'Test Popup',
+          content: $('#modal-example'),
+          buttons: [{
+            text: 'Close',
+            click: function(e, modal) {
+              modal.close();
+            }
+          }]
+        });
+      });
+  });
+</script>
