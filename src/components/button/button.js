@@ -650,18 +650,6 @@ Button.prototype = {
     this.pressed = !this.pressed;
   },
 
-  changeStyle() {
-    this.element.removeClass('hide-focus');
-    if (this.element.hasClass('btn-primary')) {
-      this.element.removeClass('btn-primary');
-      this.element.addClass('btn-secondary');
-    } else {
-      this.element.removeClass('btn-secondary');
-      this.element.addClass('btn-primary');
-    }
-    this.element.addClass('hide-focus');
-  },
-
   /**
    * Check if given element is disabled or not.
    * https://stackoverflow.com/a/41736179

@@ -4,7 +4,7 @@
       <span>Primary Button</span>
     </button>
 
-    <button class="btn-primary" type="button" id="style-changer">
+    <button class="btn-secondary" type="button" id="style-changer">
       <span>Change Button Style</span>
     </button>
   </div>
@@ -15,7 +15,8 @@
     $('#style-changer').on('click', () => {
       const btn = $('#primary-change').data('button');
 
-      btn.changeStyle();
+      $('#primary-change').addClass('btn-secondary');
+      $('#primary-change').removeClass('btn-primary');
     })
   });
 </script>
