@@ -721,7 +721,7 @@ Bar.prototype = {
 
     if (self.isRTL && (charts.isIE || charts.isIEEdge)) {
       self.svg.selectAll('text').attr('transform', 'scale(-1, 1)');
-      self.svg.selectAll('.y.axis text').style('text-anchor', 'start');
+      self.svg.selectAll('.y.axis text').style('text-anchor', 'last');
     }
 
     if (isAxisLabels.atLeastOne) {
