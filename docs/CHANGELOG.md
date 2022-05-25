@@ -35,6 +35,7 @@
 
 ## v4.64.0 features
 
+- `[Bar]` Added the ability to set axis labels on different positions (top, right, bottom, left). ([#5382](https://github.com/infor-design/enterprise/issues/5382))
 - `[Datagrid]` Added a new method for cell editing for new row added. ([#6338](https://github.com/infor-design/enterprise/issues/6338))
 - `[Modal]` Added an ability to add icon in title section of the modal. ([#5905](https://github.com/infor-design/enterprise/issues/5905))
 
