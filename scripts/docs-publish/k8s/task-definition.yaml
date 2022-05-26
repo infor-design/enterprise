@@ -5,13 +5,7 @@ metadata:
 spec:
   arguments:
     parameters:
-    - name: github_access_token
-      value: ""
-    - name: docs_api_key
-      value: ""
     - name: branch
-      value: ""
-    - name: npm_token
       value: ""
     - name: npm_command
       value: ""
@@ -41,14 +35,8 @@ spec:
         template: build
         arguments:
           parameters:
-          - name: github_access_token
-            value: "{{workflow.parameters.github_access_token}}"
-          - name: docs_api_key
-            value: "{{workflow.parameters.docs_api_key}}"
           - name: branch
             value: "{{workflow.parameters.branch}}"
-          - name: npm_token
-            value: "{{workflow.parameters.npm_token}}"
           - name: npm_command
             value: "{{workflow.parameters.npm_command}}"
           - name: npm_latest
@@ -60,10 +48,7 @@ spec:
   - name: build
     inputs:
       parameters:
-        - name: github_access_token
-        - name: docs_api_key
         - name: branch
-        - name: npm_token
         - name: npm_command
         - name: npm_latest
         - name: releaseit_flags
@@ -99,13 +84,23 @@ spec:
                   mountPath: "/root/.ssh"
                 env:
                 - name: GITHUB_ACCESS_TOKEN
-                  value: "{{inputs.parameters.github_access_token}}"
+                  valueFrom:
+                    secretKeyRef:
+                      name: github-access-token
+                      key: token
+                - name: NPM_TOKEN
+                  valueFrom:
+                    secretKeyRef:
+                      name: npm-token
+                      key: token
                 - name: DOCS_API_KEY
-                  value: "{{inputs.parameters.docs_api_key}}"
+                  valueFrom:
+                    secretKeyRef:
+                      name: docs-api-key
+                      key: token
+
                 - name: BRANCH
                   value: "{{inputs.parameters.branch}}"
-                - name: NPM_TOKEN
-                  value: "{{inputs.parameters.npm_token}}"
                 - name: NPM_COMMAND
                   value: "{{inputs.parameters.npm_command}}"
                 - name: NPM_LATEST

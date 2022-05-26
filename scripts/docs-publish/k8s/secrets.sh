@@ -1,0 +1,12 @@
+#!/bin/bash
+
+_GITHUB_ACCESS_TOKEN=${GITHUB_ACCESS_TOKEN:-}
+_NPM_TOKEN=${NPM_TOKEN:-}
+_DOCS_API_KEY=${DOCS_API_KEY:-}
+
+echo "GITHUB_ACCESS_TOKEN"
+echo -n _GITHUB_ACCESS_TOKEN | base64
+echo "NPM_TOKEN"
+echo -n _NPM_TOKEN | base64
+echo "DOCS_API_KEY"
+echo -n _DOCS_API_KEY | base64
