@@ -548,7 +548,7 @@ Validator.prototype = {
            (rule.message !== Locale.translate('Required'))) {
           return;
         }
-        self.addMessage(field, rule, isInline, showResultTooltip);
+        self.addMessage(field, rule, isInline, showResultTooltip, undefined, !result);
         results.push(rule.type);
 
         if (validationType.errorsForm) {
@@ -652,10 +652,15 @@ Validator.prototype = {
    * @param {boolean} showTooltip whether or not the legacy validation Tooltip will contain the
    * message instead of placing it underneath
    * @param {boolean} isHelpMessage whether or not this validation message type is "alert"
+   * @param {boolean} isValidatedError comes from the manageResult() and validated as a true error
    */
-  addMessage(field, rule, inline, showTooltip, isHelpMessage) {
+  addMessage(field, rule, inline, showTooltip, isHelpMessage, isValidatedError) {
     if (rule.message === '') {
       return;
+    }
+
+    if (!isValidatedError) {
+      this.validate(field, showTooltip, 0);
     }
 
     if (field.is('.dropdown, .multiselect') && $('#dropdown-list').is(':visible')) {
@@ -669,7 +674,7 @@ Validator.prototype = {
     const validationType = Validation.ValidationTypes[rule.type] ||
       Validation.ValidationTypes.error;
 
-    if (!isHelpMessage) {
+    if (!isHelpMessage && inline) {
       loc.addClass(rule.type === 'icon' ? 'custom-icon' : rule.type);
     }
 
@@ -720,13 +725,15 @@ Validator.prototype = {
       });
     }
 
-    if (!inline) {
+    if (!inline && isValidatedError) {
       this.showTooltipMessage(field, appendedMsg, validationType.type, showTooltip);
       return;
     }
 
     field.data('isValid', false);
-    this.showInlineMessage(field, rule, isHelpMessage);
+    if (inline) {
+      this.showInlineMessage(field, rule, isHelpMessage);
+    }
   },
 
   /**
@@ -786,7 +793,8 @@ Validator.prototype = {
       return;
     }
 
-    const icon = this.showIcon(field, type);
+    const target = !field.is('button') ? this.showIcon(field, type) : field;
+    let tooltipAPI = target.data('tooltip');
     let representationField = field;
 
     // Add error classes to pseudo-markup for certain controls
@@ -796,8 +804,6 @@ Validator.prototype = {
       input.addClass(type === 'icon' ? 'custom-icon' : type);
     }
     field.closest('.field, .field-short').find('.formatter-toolbar').addClass(type === 'icon' ? 'custom-icon' : type);
-
-    let tooltipAPI = icon.data('tooltip');
 
     // Error tooltips should be positioned on the 'x' so that they sit directly
     // underneath the fields that they are indicating.
@@ -827,7 +833,7 @@ Validator.prototype = {
 
     // Build Tooltip
     if (!tooltipAPI) {
-      icon.tooltip({
+      target.tooltip({
         content: message,
         placement: 'bottom',
         placementOpts: {
@@ -837,7 +843,7 @@ Validator.prototype = {
         isError: true,
         tooltipElement: '#validation-tooltip'
       });
-      tooltipAPI = icon.data('tooltip');
+      tooltipAPI = target.data('tooltip');
     } else {
       tooltipAPI.content = message;
     }
@@ -1068,6 +1074,13 @@ Validator.prototype = {
       if (tooltipAPI) {
         tooltipAPI.destroy();
       }
+
+      const validationTooltip = $('#validation-tooltip');
+      const validationToolTipAPI = validationTooltip.data('tooltip');
+      if (validationToolTipAPI) {
+        validationToolTipAPI.destroy();
+      }
+
       if (this.inputs) {
         this.inputs.filter('input, textarea').off('focus.validate');
       }

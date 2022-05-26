@@ -116,8 +116,9 @@
 
       gridApi = $('#datagrid').data('datagrid');
 
-      $('#add-row-button').on('click', function () {
+      $('#add-row-button').on('click', function (e) {
         gridApi.addRow({ productName: '', productId: '0' }, 0);
+        gridApi.editCell(0, 1, e);
       });
 
       $('#save-new-button').on('click', function () {

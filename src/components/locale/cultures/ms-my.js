@@ -50,6 +50,16 @@ Soho.Locale.addCulture('ms-MY', {
   currencyFormat: '¤###',
   // numbers/symbols-numberSystem-latn
   numbers: {
+    percentSign: '%',
+    percentFormat: '###%',
+    percentSuffix: '%',
+    percentPrefix: '',
+    minusSign: '-',
+    decimal: '.',
+    group: ',',
+    groupSizes: [3, 3]
+  },
+  messages: {
     AboutText: { id: 'AboutText', value: 'Hak Cipta &copy; {0} Infor. Hak cipta terpelihara. Perkataan dan tanda reka bentuk yang ditetapkan di sini ialah tanda dagangan dan/atau tanda dagangan berdaftar Infor dan/atau ahli gabungan dan anak syarikatnya. Hak cipta terpelihara. Hak cipta terpelihara. Semua tanda dagangan lain yang disenaraikan di sini ialah hak milik pemiliknya masing-masing' },
     Actions: { id: 'Actions', value: 'Tindakan', comment: 'Tooltip text for the action button with additional in context actions' },
     Add: { id: 'Add', value: 'Tambah', comment: 'Add' },

@@ -1077,3 +1077,14 @@ html[dir='rtl'] {
     }
   }
 }
+
+.ie11,
+.ie {
+  .monthview {
+    &.is-fullsize {
+      &.monthview {
+        overflow-y: hidden;
+      }
+    }
+  }
+}

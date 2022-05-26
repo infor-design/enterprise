@@ -739,8 +739,8 @@ DatePicker.prototype = {
       this.timepickerContainer.find('.dropdown').dropdown();
 
       this.timepickerContainer.on('change.datepicker', () => {
-        this.currentDate = this.setTime(this.currentDate);
-        this.setValue(this.currentDate, true, true);
+        const date = this.setTime(self.isIslamic ? self.currentDateIslamic : self.currentDate);
+        this.setValue(date, true, true);
       });
 
       // Wait for timepicker to initialize

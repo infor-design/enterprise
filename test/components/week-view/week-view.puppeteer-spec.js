@@ -55,22 +55,6 @@ describe('Week View Puppeteer Tests', () => {
       await page.click('.today');
       expect(await page.$eval('.hidden.year', el => el.innerHTML)).toBe(validateYear);
     });
-
-    it('should not visual regress', async () => {
-      await page.setViewport({ width: 1200, height: 800 });
-
-      expect(await page.waitForSelector('.week-view')).toBeTruthy();
-
-      // Need a bit of delay to show the modal perfectly
-      await page.waitForTimeout(200);
-
-      // Screenshot of the page
-      const image = await page.screenshot();
-
-      // Set a custom name of the snapshot
-      const config = getConfig('week-view-index');
-      expect(image).toMatchImageSnapshot(config);
-    });
   });
 
   describe('WeekView Events Tests', () => {
@@ -234,6 +218,30 @@ describe('Week View Puppeteer Tests', () => {
 
       // Set a custom name of the snapshot
       const config = getConfig('week-view-two-day');
+      expect(image).toMatchImageSnapshot(config);
+    });
+  });
+
+  describe('WeekView Specific Month Tests', () => {
+    const url = `${baseUrl}/test-specific-week?theme=classic&layout=nofrills`;
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('should not visual regress', async () => {
+      await page.setViewport({ width: 1200, height: 800 });
+
+      expect(await page.waitForSelector('.week-view')).toBeTruthy();
+
+      // Need a bit of delay to show the modal perfectly
+      await page.waitForTimeout(200);
+
+      // Screenshot of the page
+      const image = await page.screenshot();
+
+      // Set a custom name of the snapshot
+      const config = getConfig('week-specific-week');
       expect(image).toMatchImageSnapshot(config);
     });
   });
