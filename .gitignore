@@ -17,7 +17,7 @@ temp/
 templates/**/doc.html
 test-reports/
 views/docs
-scripts/docs-publish/build
+scripts/deploy/build
 
 # Packages #
 ############

@@ -7,7 +7,7 @@ ifneq (,$(wildcard ./.env))
 	export
 endif
 
-.PHONY: build-image, build, shell
+.PHONY: build-image, release, shell
 
 build-image :
 	docker build -t $(ORGANIZATION)/$(CONTAINER):$(VERSION) .
