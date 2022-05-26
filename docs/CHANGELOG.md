@@ -11,7 +11,9 @@
 - `[Datagrid]` Added trimSpaces option for leading spaces upon blur. ([#6244](https://github.com/infor-design/enterprise/issues/6244))
 - `[Datagrid]` Fixed header alignment when formatter is ellipsis. ([#6251](https://github.com/infor-design/enterprise/issues/6251))
 - `[Datagrid]` Fixed a bug where the datepicker icon is not visible when the datagrid starts as non editable and toggled to editable and is visible when the datagrid starts as editable and toggled to non editable. ([#6289](https://github.com/infor-design/enterprise/issues/6289))
+- `[Datagrid]` Changed the minDate and maxDate on a demo page to be more current. ([#6416](https://github.com/infor-design/enterprise/issues/6416))
 - `[Datepicker]` Fixed a bug where selecting a date that's consecutive to the previous range won't select that date. ([#6272](https://github.com/infor-design/enterprise/issues/6272))
+- `[Datepicker]` Fixed a bug where datepicker is not setting time and date consistently in Arabic locale. ([#6270](https://github.com/infor-design/enterprise/issues/6270))
 - `[Bar Stacked]` Fixed a bug where chart tooltip total shows 99.999 instead of 100 on 100% Stacked Bar Chart. ([#6236](https://github.com/infor-design/enterprise/issues/6326))
 - `[Flex Toolbar]` Fixed the data automation id to be more reliable for popupmenu and overflowed buttons. ([#6175](https://github.com/infor-design/enterprise/issues/6175))
 - `[Icons]` Fixed the inconsistency between solid and outlined icons. ([#6165](https://github.com/infor-design/enterprise/issues/6165))
@@ -21,6 +23,7 @@
 - `[Locale]` Fixed incorrect date format for Latvian language. ([#6123](https://github.com/infor-design/enterprise/issues/6123))
 - `[Locale]` Fixed incorrect data in ms-my, nn-No and nb-NO. ([#6472](https://github.com/infor-design/enterprise/issues/6472))
 - `[Lookup]` Fixed bug where lookup still appeared when modal closes. ([#6218](https://github.com/infor-design/enterprise/issues/6218))
+- `[Modal]` Fixed bug where popup goes behind modal when in application menu in resizable mode. ([NG#1272](https://github.com/infor-design/enterprise-ng/issues/1272))
 - `[Personalization]` Fixed bug where the dark mode header color was not correct in the tokens and caused the personalization dropdown to be incorrect. ([#6446](https://github.com/infor-design/enterprise/issues/6446))
 - `[Targeted-Achievement]` Fixed a bug where the icon is cut off in Firefox. ([#6400](https://github.com/infor-design/enterprise/issues/6400))
 - `[Toolbar]` Fixed a bug where the search icon is misaligned in Firefox. ([#6405](https://github.com/infor-design/enterprise/issues/6405))
@@ -28,12 +31,18 @@
 - `[Tree]` The expanded event did not fire when source is being used. ([#1294](https://github.com/infor-design/enterprise-ng/issues/1294))
 - `[Typography]` Fixed a bug where the text are overlapping in Firefox. ([#6450](https://github.com/infor-design/enterprise/issues/6450))
 - `[WeekView]` Fixed a bug where 'today' date is not being rendered properly. ([#6260](https://github.com/infor-design/enterprise/issues/6260))
+- `[WeekView]` Fixed a bug where month-year label is not changing upon clicking the arrow button. ([#6415](https://github.com/infor-design/enterprise/issues/6415))
 - `[Validator]` Fixed a bug where toolbar error message still appears after error is removed. ([#6253](https://github.com/infor-design/enterprise/issues/6253))
 
-## v4.64.0 features
+## v4.64.0 Features
 
+- `[Bar]` Added the ability to set axis labels on different positions (top, right, bottom, left). ([#5382](https://github.com/infor-design/enterprise/issues/5382))
 - `[Datagrid]` Added a new method for cell editing for new row added. ([#6338](https://github.com/infor-design/enterprise/issues/6338))
 - `[Modal]` Added an ability to add icon in title section of the modal. ([#5905](https://github.com/infor-design/enterprise/issues/5905))
+
+## v4.63.2 Fixes
+
+- `[Personalization]` Re-Fixed bug where the dark mode header color was not correct in the tokens and caused the personalization dropdown to be incorrect, classic theme was missed. ([#6446](https://github.com/infor-design/enterprise/issues/6446)
 
 ## v4.63.1 Fixes
 
@@ -93,6 +102,10 @@
 - `[Searchfield]` Implemented a new design for searchfield. ([#5865](https://github.com/infor-design/enterprise/issues/5865))
 
 (40 Issues Solved This Release, Backlog Enterprise 191, Backlog Ng 42, 1101 Functional Tests, 1576 e2e Tests, 295 Puppeteer Tests)
+
+## v4.63.3 Fixes
+
+- `[Personalization]` Re-Fixed bug where the dark mode header color was not correct in the tokens and caused the personalization dropdown to be incorrect, classic theme was missed. ([#6446](https://github.com/infor-design/enterprise/issues/6446)
 
 ## v4.62.2 Fixes
 

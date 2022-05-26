@@ -1,10 +1,10 @@
 const { checkDataAutomationID, checkTooltipValue, checkClassNameValue, getConfig } = require('../../helpers/e2e-utils.js');
 
-describe('Bar Chart Puppeteer Tests', () => {
-  const baseUrl = 'http://localhost:4000/components';
+describe('Bar Chart', () => {
+  const baseUrl = 'http://localhost:4000/components/bar';
 
   describe('Bar Chart Disable Selection State Tests', () => {
-    const url = `${baseUrl}/bar/example-disable-selection-state.html`;
+    const url = `${baseUrl}/example-disable-selection-state.html`;
 
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
@@ -87,7 +87,7 @@ describe('Bar Chart Puppeteer Tests', () => {
   });
 
   describe('Bar Chart example-index tests', () => {
-    const url = `${baseUrl}/bar/example-index?theme=classic&layout=nofrills`;
+    const url = `${baseUrl}/example-index?theme=classic&layout=nofrills`;
 
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
@@ -138,6 +138,40 @@ describe('Bar Chart Puppeteer Tests', () => {
       const config = getConfig('bar-index');
 
       // Compare the images
+      expect(image).toMatchImageSnapshot(config);
+    });
+  });
+
+  describe('Bar Chart with axis labels tests', () => {
+    const url = `${baseUrl}/example-axis-labels`;
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('should not have visual regressions in axis labels', async () => {
+      expect(await page.waitForSelector('.bar-chart', { visible: true })).toBeTruthy();
+
+      const image = await page.screenshot();
+      const config = getConfig('bar-chart-with-axis-labels');
+
+      expect(image).toMatchImageSnapshot(config);
+    });
+  });
+
+  describe('Bar Chart RTL tests', () => {
+    const url = `${baseUrl}/example-axis-labels?locale=ar-EG`;
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('should not have visual regressions in axis labels RTL', async () => {
+      expect(await page.waitForSelector('.bar-chart', { visible: true })).toBeTruthy();
+
+      const image = await page.screenshot();
+      const config = getConfig('bar-chart-with-axis-labels-rtl');
+
       expect(image).toMatchImageSnapshot(config);
     });
   });

@@ -658,6 +658,7 @@ WeekView.prototype = {
    */
   addToolbar() {
     // Invoke the toolbar
+    const view = !this.isDayView ? 'week' : 'day';
     this.header = $('<div class="week-view-header"><div class="calendar-toolbar"></div></div>').appendTo(this.element);
     this.calendarToolbarEl = this.header.find('.calendar-toolbar');
     this.calendarToolbarAPI = new CalendarToolbar(this.calendarToolbarEl[0], {
@@ -672,10 +673,10 @@ WeekView.prototype = {
       showViewChanger: this.settings.showViewChanger,
       hitbox: this.settings.hitbox,
       onChangeView: this.settings.onChangeView,
-      viewChangerValue: !this.isDayView ? 'week' : 'day',
+      viewChangerValue: view,
       attributes: this.settings.attributes
     });
-    this.monthField = this.header.find('#monthview-datepicker-field');
+    this.monthField = this.header.find(this.settings.attributes ? `#${this.settings.attributes[0].value}-${view}-view-datepicker` : '#monthview-datepicker-field');
   },
 
   /**
