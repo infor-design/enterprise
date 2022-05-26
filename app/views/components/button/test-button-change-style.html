@@ -14,15 +14,9 @@
   $('body').on('initialized', () => {
     $('#btn-style-changer').on('click', () => {
       const btn = $('#btn-primary-target');
-
-      if (btn.hasClass('btn-primary')) {
-        btn.addClass('btn-secondary');
-        btn.removeClass('btn-primary'); 
-      } else {
-        btn.addClass('btn-primary');
-        btn.removeClass('btn-secondary'); 
-      }
-      
+      btn.hasClass('btn-primary') ? 
+        btn.addClass('btn-secondary').removeClass('btn-primary') : 
+        btn.addClass('btn-primary').removeClass('btn-secondary');
     })
   });
 </script>
