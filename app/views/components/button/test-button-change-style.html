@@ -1,10 +1,10 @@
 <div class="row is-personalizable">
   <div class="four columns">
-    <button class="btn-primary" type="button" id="primary-change">
+    <button class="btn-primary" type="button" id="btn-primary-target">
       <span>Primary Button</span>
     </button>
 
-    <button class="btn-secondary" type="button" id="style-changer">
+    <button class="btn-secondary" type="button" id="btn-style-changer">
       <span>Change Button Style</span>
     </button>
   </div>
@@ -12,11 +12,17 @@
 
 <script>
   $('body').on('initialized', () => {
-    $('#style-changer').on('click', () => {
-      const btn = $('#primary-change').data('button');
+    $('#btn-style-changer').on('click', () => {
+      const btn = $('#btn-primary-target');
 
-      $('#primary-change').addClass('btn-secondary');
-      $('#primary-change').removeClass('btn-primary');
+      if (btn.hasClass('btn-primary')) {
+        btn.addClass('btn-secondary');
+        btn.removeClass('btn-primary'); 
+      } else {
+        btn.addClass('btn-primary');
+        btn.removeClass('btn-secondary'); 
+      }
+      
     })
   });
 </script>
