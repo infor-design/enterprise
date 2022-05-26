@@ -1,9 +1,16 @@
 # What's New with Enterprise
 
-## v4.64.0
+### v4.64.0 Important Notes
+
+- `[General]` Fixed the map file is no longer included with the minified version of sohoxi.min.js. ([#6489](https://github.com/infor-design/enterprise/issues/6489))
 
 ## v4.64.0 Fixes
 
+- `[Bar Stacked]` Fixed a bug where chart tooltip total shows 99.999 instead of 100 on 100% Stacked Bar Chart. ([#6236](https://github.com/infor-design/enterprise/issues/6326))
+
+## v4.64.0 Fixes
+
+- `[Bar Stacked]` Fixed a bug where chart tooltip total shows 99.999 instead of 100 on 100% Stacked Bar Chart. ([#6236](https://github.com/infor-design/enterprise/issues/6326))
 - `[ContextMenu]` Fixed a bug in context menu where it is not indented properly. ([#6223](https://github.com/infor-design/enterprise/issues/6223))
 - `[Datagrid]` Added setting for color change in active checkbox selection. ([#6303](https://github.com/infor-design/enterprise/issues/6303))
 - `[Datagrid]` Set changed cell to active when update is finished. ([#6317](https://github.com/infor-design/enterprise/issues/6317))
@@ -14,7 +21,6 @@
 - `[Datagrid]` Changed the minDate and maxDate on a demo page to be more current. ([#6416](https://github.com/infor-design/enterprise/issues/6416))
 - `[Datepicker]` Fixed a bug where selecting a date that's consecutive to the previous range won't select that date. ([#6272](https://github.com/infor-design/enterprise/issues/6272))
 - `[Datepicker]` Fixed a bug where datepicker is not setting time and date consistently in Arabic locale. ([#6270](https://github.com/infor-design/enterprise/issues/6270))
-- `[Bar Stacked]` Fixed a bug where chart tooltip total shows 99.999 instead of 100 on 100% Stacked Bar Chart. ([#6236](https://github.com/infor-design/enterprise/issues/6326))
 - `[Flex Toolbar]` Fixed the data automation id to be more reliable for popupmenu and overflowed buttons. ([#6175](https://github.com/infor-design/enterprise/issues/6175))
 - `[Icons]` Fixed the inconsistency between solid and outlined icons. ([#6165](https://github.com/infor-design/enterprise/issues/6165))
 - `[Icons]` Changed the error color to change in themes in some areas. ([#6273](https://github.com/infor-design/enterprise/issues/6273))
