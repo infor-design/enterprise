@@ -1,12 +1,16 @@
 # What's New with Enterprise
 
+## v4.64.0
+
 ### v4.64.0 Important Notes
 
 - `[General]` Fixed the map file is no longer included with the minified version of sohoxi.min.js. ([#6489](https://github.com/infor-design/enterprise/issues/6489))
 
-## v4.64.0 Fixes
+## v4.64.0 Features
 
-- `[Bar Stacked]` Fixed a bug where chart tooltip total shows 99.999 instead of 100 on 100% Stacked Bar Chart. ([#6236](https://github.com/infor-design/enterprise/issues/6326))
+- `[Bar]` Added the ability to set axis labels on different positions (top, right, bottom, left). ([#5382](https://github.com/infor-design/enterprise/issues/5382))
+- `[Datagrid]` Added a new method for cell editing for new row added. ([#6338](https://github.com/infor-design/enterprise/issues/6338))
+- `[Modal]` Added an ability to add icon in title section of the modal. ([#5905](https://github.com/infor-design/enterprise/issues/5905))
 
 ## v4.64.0 Fixes
 
@@ -39,12 +43,6 @@
 - `[WeekView]` Fixed a bug where 'today' date is not being rendered properly. ([#6260](https://github.com/infor-design/enterprise/issues/6260))
 - `[WeekView]` Fixed a bug where month-year label is not changing upon clicking the arrow button. ([#6415](https://github.com/infor-design/enterprise/issues/6415))
 - `[Validator]` Fixed a bug where toolbar error message still appears after error is removed. ([#6253](https://github.com/infor-design/enterprise/issues/6253))
-
-## v4.64.0 Features
-
-- `[Bar]` Added the ability to set axis labels on different positions (top, right, bottom, left). ([#5382](https://github.com/infor-design/enterprise/issues/5382))
-- `[Datagrid]` Added a new method for cell editing for new row added. ([#6338](https://github.com/infor-design/enterprise/issues/6338))
-- `[Modal]` Added an ability to add icon in title section of the modal. ([#5905](https://github.com/infor-design/enterprise/issues/5905))
 
 ## v4.63.2 Fixes
 
