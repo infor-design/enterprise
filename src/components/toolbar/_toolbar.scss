@@ -137,6 +137,10 @@ $toolbar-buttonset-height: 40px;
   &.do-resize {
     .buttonset {
       width: auto;
+
+      @media only screen and (max-width: $breakpoint-phone-to-tablet) {
+        width: auto !important;
+      }
     }
 
     .title {

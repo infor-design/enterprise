@@ -243,6 +243,7 @@ const DATAGRID_DEFAULTS = {
   searchExpandableRow: true,
   allowChildExpandOnMatchOnly: false,
   allowChildExpandOnMatch: false,
+  activeCheckboxSelection: false,
   attributes: null,
   allowPasteFromExcel: false,
   fallbackImage: 'insert-image',
@@ -508,6 +509,20 @@ Datagrid.prototype = {
                                   self.element[0].scrollHeight > self.element[0].clientHeight;
 
     self.hasVerticalScrollbar = hasVerticalScrollbar !== false;
+  },
+
+  /**
+   * Make a cell editable.
+   * @param {number} row The row index
+   * @param {number} cell The cell index
+   * @param {object} event The event information.
+   */
+  editCell(row, cell, event) {
+    const self = this;
+    setTimeout(() => {
+      self.setActiveCell(row, cell);
+      self.makeCellEditable(row, cell, event);
+    }, 100);
   },
 
   /**
@@ -10870,8 +10885,12 @@ Datagrid.prototype = {
 
     // Adjust leading/trailing spaces as `&nbsp;`
     const adj = (thisVal, regx) => {
-      const r = (typeof thisVal === 'string' ? thisVal.match(regx) : ['']) || [''];
-      return r[0].replace(/\s/g, '&nbsp;');
+      let r = (typeof thisVal === 'string' ? thisVal.match(regx) : ['']) || [''];
+
+      if (!this.settings.trimSpaces) {
+        r = r[0].replace(/\s/g, '&nbsp;');
+      } 
+      return r; 
     };
 
     // update cell value
@@ -10944,7 +10963,6 @@ Datagrid.prototype = {
     }
 
     if (isCellChange) {
-    // if (coercedVal !== oldVal && !fromApiCall) {
       const args = {
         row: this.settings.source !== null ? dataRowIndex : row,
         relativeRow: row,
@@ -10957,6 +10975,10 @@ Datagrid.prototype = {
       };
       args.rowData = isTreeGrid && this.settings.treeDepth[row] ?
         this.settings.treeDepth[row].node : rowData;
+
+      if (!this.isCellDirty(row, cell)) {
+        this.setActiveCell(row, cell);
+      }
 
       /**
        * Fires when a cell value is changed via the editor.
@@ -11398,8 +11420,10 @@ Datagrid.prototype = {
         cell -= prevSpans;
       }
 
-      headers.removeClass('is-active');
-      headers.eq(cell).addClass('is-active');
+      if (this.settings.activeCheckboxSelection) {
+        headers.removeClass('is-active');
+        headers.eq(cell).addClass('is-active');
+      }
     }
     this.activeCell.isFocused = true;
 

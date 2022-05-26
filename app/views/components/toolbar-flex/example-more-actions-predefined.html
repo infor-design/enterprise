@@ -2,7 +2,7 @@
   <div class="twelve columns">
 
     <!-- BEGIN Toolbar with All Buttons (Buttonset Favoring) -->
-    <div class="flex-toolbar" id="flex-toolbar">
+    <div class="flex-toolbar" id="flex-toolbar" data-options="{ 'attributes': [ { 'name': 'data-automation-id', 'value': 'my-toolbar' } ] }">
       <div class="toolbar-section title">
         <h2>Incredibly Long Toolbar (Favor's Buttonset)</h2>
       </div>
@@ -12,7 +12,7 @@
           <span>Text Button</span>
         </button>
 
-        <button class="btn-menu" id="menu-button">
+        <button class="btn-menu" id="menu-button" data-options="{ 'attributes': [ { 'name': 'data-automation-id', 'value': 'menu-button' } ] }">
           <span>Menu Button</span>
         </button>
         <ul class="popupmenu" id="menu-button-popupmenu">
@@ -44,7 +44,7 @@
       </div>
 
       <div class="toolbar-section more">
-        <button class="btn-actions">
+        <button class="btn-actions" data-options="{ 'attributes': [ { 'name': 'data-automation-id', 'value': 'more-action-btn' } ] }">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use href="#icon-more"></use>
           </svg>

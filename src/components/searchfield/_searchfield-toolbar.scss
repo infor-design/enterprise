@@ -17,6 +17,10 @@ $toolbarsearchfield-category-empty-width: 51px;
   white-space: nowrap;
   width: $toolbarsearchfield-empty-width;
 
+  @media only screen and (max-width: $breakpoint-phone-to-tablet) {
+    overflow: auto;
+  }
+
   > * {
     vertical-align: middle;
   }
@@ -320,6 +324,10 @@ $toolbarsearchfield-category-empty-width: 51px;
 
             &:focus {
               border-color: $header-searchfield-input-border-color;
+            }
+
+            @media only screen and (max-width: $breakpoint-phone-to-tablet) {
+              width: auto;
             }
           }
         }
@@ -703,12 +711,6 @@ $toolbarsearchfield-category-empty-width: 51px;
 // Help out firefox a bit
 html.is-firefox {
   .toolbar-searchfield-wrapper {
-    &:not(.is-open):not(.non-collapsible) {
-      .icon:not(.close) {
-        top: 8px;
-      }
-    }
-
     &.is-open,
     &.non-collapsible {
       .searchfield {
@@ -982,11 +984,6 @@ html[dir='rtl'] {
 
         .searchfield {
           padding-right: 40px;
-          width: auto !important;
-        }
-
-        .go-button {
-          right: 17px;
         }
       }
     }
@@ -1030,7 +1027,12 @@ html[dir='rtl'] {
   }
 
   @media (max-width: $breakpoint-phone-to-tablet) {
-    right: 29px;
+    right: auto;
+    width: 100% !important;
+
+    button.close:not(.is-empty) {
+      right: 32px;
+    }
   }
 }
 

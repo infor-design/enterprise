@@ -4,8 +4,48 @@
 
 ## v4.64.0 Fixes
 
+- `[ContextMenu]` Fixed a bug in context menu where it is not indented properly. ([#6223](https://github.com/infor-design/enterprise/issues/6223))
+- `[Datagrid]` Added setting for color change in active checkbox selection. ([#6303](https://github.com/infor-design/enterprise/issues/6303))
+- `[Datagrid]` Set changed cell to active when update is finished. ([#6317](https://github.com/infor-design/enterprise/issues/6317))
+- `[Datagrid]` Fixed row height of extra-small rows on editable datagrid with icon columns. ([#6284](https://github.com/infor-design/enterprise/issues/6284))
+- `[Datagrid]` Added trimSpaces option for leading spaces upon blur. ([#6244](https://github.com/infor-design/enterprise/issues/6244))
+- `[Datagrid]` Fixed header alignment when formatter is ellipsis. ([#6251](https://github.com/infor-design/enterprise/issues/6251))
+- `[Datagrid]` Fixed a bug where the datepicker icon is not visible when the datagrid starts as non editable and toggled to editable and is visible when the datagrid starts as editable and toggled to non editable. ([#6289](https://github.com/infor-design/enterprise/issues/6289))
+- `[Datagrid]` Changed the minDate and maxDate on a demo page to be more current. ([#6416](https://github.com/infor-design/enterprise/issues/6416))
 - `[Datepicker]` Fixed a bug where selecting a date that's consecutive to the previous range won't select that date. ([#6272](https://github.com/infor-design/enterprise/issues/6272))
+- `[Datepicker]` Fixed a bug where datepicker is not setting time and date consistently in Arabic locale. ([#6270](https://github.com/infor-design/enterprise/issues/6270))
+- `[Bar Stacked]` Fixed a bug where chart tooltip total shows 99.999 instead of 100 on 100% Stacked Bar Chart. ([#6236](https://github.com/infor-design/enterprise/issues/6326))
+- `[Flex Toolbar]` Fixed the data automation id to be more reliable for popupmenu and overflowed buttons. ([#6175](https://github.com/infor-design/enterprise/issues/6175))
+- `[Icons]` Fixed the inconsistency between solid and outlined icons. ([#6165](https://github.com/infor-design/enterprise/issues/6165))
+- `[Icons]` Changed the error color to change in themes in some areas. ([#6273](https://github.com/infor-design/enterprise/issues/6273))
+- `[Line Chart]` Fixed a bug where the alignment of focus is overlapping another component. ([#6384](https://github.com/infor-design/enterprise/issues/6384))
+- `[Listview]` Fixed a bug where the search icon is misaligned in Firefox and Safari. ([#6390](https://github.com/infor-design/enterprise/issues/6390))
+- `[Locale]` Fixed incorrect date format for Latvian language. ([#6123](https://github.com/infor-design/enterprise/issues/6123))
+- `[Locale]` Fixed incorrect data in ms-my, nn-No and nb-NO. ([#6472](https://github.com/infor-design/enterprise/issues/6472))
+- `[Lookup]` Fixed bug where lookup still appeared when modal closes. ([#6218](https://github.com/infor-design/enterprise/issues/6218))
+- `[Modal]` Fixed bug where popup goes behind modal when in application menu in resizable mode. ([NG#1272](https://github.com/infor-design/enterprise-ng/issues/1272))
+- `[Personalization]` Fixed bug where the dark mode header color was not correct in the tokens and caused the personalization dropdown to be incorrect. ([#6446](https://github.com/infor-design/enterprise/issues/6446))
+- `[Targeted-Achievement]` Fixed a bug where the icon is cut off in Firefox. ([#6400](https://github.com/infor-design/enterprise/issues/6400))
+- `[Toolbar]` Fixed a bug where the search icon is misaligned in Firefox. ([#6405](https://github.com/infor-design/enterprise/issues/6405))
+- `[Toolbar Flex]` Fixed a bug where the `addMenuElementLinks` function execute incorrectly when menu item has multi-level submenus. ([#6120](https://github.com/infor-design/enterprise/issues/6120))
+- `[Tree]` The expanded event did not fire when source is being used. ([#1294](https://github.com/infor-design/enterprise-ng/issues/1294))
+- `[Typography]` Fixed a bug where the text are overlapping in Firefox. ([#6450](https://github.com/infor-design/enterprise/issues/6450))
 - `[WeekView]` Fixed a bug where 'today' date is not being rendered properly. ([#6260](https://github.com/infor-design/enterprise/issues/6260))
+- `[WeekView]` Fixed a bug where month-year label is not changing upon clicking the arrow button. ([#6415](https://github.com/infor-design/enterprise/issues/6415))
+- `[Validator]` Fixed a bug where toolbar error message still appears after error is removed. ([#6253](https://github.com/infor-design/enterprise/issues/6253))
+
+## v4.64.0 features
+
+- `[Datagrid]` Added a new method for cell editing for new row added. ([#6338](https://github.com/infor-design/enterprise/issues/6338))
+- `[Modal]` Added an ability to add icon in title section of the modal. ([#5905](https://github.com/infor-design/enterprise/issues/5905))
+
+## v4.63.2 Fixes
+
+- `[Personalization]` Re-Fixed bug where the dark mode header color was not correct in the tokens and caused the personalization dropdown to be incorrect, classic theme was missed. ([#6446](https://github.com/infor-design/enterprise/issues/6446)
+
+## v4.63.1 Fixes
+
+- `[Personalization]` Fixed bug where the dark mode header color was not correct in the tokens and caused the personalization dropdown to be incorrect. ([#6446](https://github.com/infor-design/enterprise/issues/6446)
 
 ## v4.63.0
 
@@ -47,6 +87,9 @@
 - `[Tabs]` Fixed Z-index conflict between modal overlay and draggable module tabs. ([#6297](https://github.com/infor-design/enterprise/issues/6297))
 - `[Tabs]` Fixed a bug where the tab activated events are fired on closing a tab. ([#1452](https://github.com/infor-design/enterprise/issues/1452))
 - `[Tabs Module` Fixed the new UI searchfield design in Tabs Module component. ([#6348](https://github.com/infor-design/enterprise/issues/6348))
+- `[Tabs Module` Ensure searchfield X clear button is visible at smaller breakpoints. ([#5173](https://github.com/infor-design/enterprise/issues/5173))
+- `[Tabs Module` Ensure searchfield X clear button is visible at smaller breakpoints. ([#5178](https://github.com/infor-design/enterprise/issues/5178))
+- `[Targeted-Achievement]` Added tooltip on icon in targeted-achievement chart ([#6308](https://github.com/infor-design/enterprise/issues/6308))
 - `[TextArea]` Fixed medium size text area when in responsive view. ([#6334](https://github.com/infor-design/enterprise/issues/6334))
 - `[Validation]` Updated example page to include validation event for email field. ([#6296](https://github.com/infor-design/enterprise/issues/6296))
 
@@ -58,6 +101,19 @@
 - `[Searchfield]` Implemented a new design for searchfield. ([#5865](https://github.com/infor-design/enterprise/issues/5865))
 
 (40 Issues Solved This Release, Backlog Enterprise 191, Backlog Ng 42, 1101 Functional Tests, 1576 e2e Tests, 295 Puppeteer Tests)
+
+## v4.63.3 Fixes
+
+- `[Personalization]` Re-Fixed bug where the dark mode header color was not correct in the tokens and caused the personalization dropdown to be incorrect, classic theme was missed. ([#6446](https://github.com/infor-design/enterprise/issues/6446)
+
+## v4.62.2 Fixes
+
+- `[Personalization]` Fixed bug where the dark mode header color was not correct in the tokens and caused the personalization dropdown to be incorrect. ([#6446](https://github.com/infor-design/enterprise/issues/6446))
+- `[Locale]` Fixed incorrect data in ms-my, nn-No and nb-NO. ([#6472](https://github.com/infor-design/enterprise/issues/6472))
+
+## v4.62.1 Fixes
+
+- `[Calendar]` Allow product devs to add custom css class to event labels in Calendar Component. ([#6304](https://github.com/infor-design/enterprise/issues/6304))
 
 ## v4.62.0
 
@@ -71,10 +127,6 @@
 - `[Listview]` Added filters in Listview Component. ([#6007](https://github.com/infor-design/enterprise/issues/6007))
 - `[Spinbox]` Created a puppeteer script for Spinbox Field sizes on mobile. ([#5843](https://github.com/infor-design/enterprise/issues/5843))
 - `[ToolbarFlex]` Allow toolbar flex navigation buttons to have notification badge. ([NG#1235](https://github.com/infor-design/enterprise-ng/issues/1235))
-
-## v4.62.1 Features
-
-- `[Calendar]` Allow product devs to add custom css class to event labels in Calendar Component. ([#6304](https://github.com/infor-design/enterprise/issues/6304))
 
 ## v4.62.0 Fixes
 

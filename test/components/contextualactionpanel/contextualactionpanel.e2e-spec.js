@@ -117,7 +117,7 @@ describe('Contextual Action Panel example-workspace tests', () => {
 
   it('Should open popup on click', async () => {
     await element(by.id('show-cap')).click();
-    await browser.driver.sleep(config.sleep);
+    await browser.driver.sleep(config.sleepLonger);
 
     expect(await element(by.id('cap')).isDisplayed()).toBe(true);
   });

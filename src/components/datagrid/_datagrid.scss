@@ -631,6 +631,16 @@ $datagrid-small-row-height: 25px;
     }
   }
 
+  &:not(.small-rowheight) .datagrid-header th.text-ellipsis {
+    &:not(.is-filterable) .datagrid-column-wrapper {
+      height: 32px;
+
+      .sort-indicator {
+        margin-top: 2px;
+      }
+    }
+  }
+
   //Short and Medium Row height
   &.small-rowheight,
   &.extra-small-rowheight {
@@ -1502,8 +1512,10 @@ $datagrid-small-row-height: 25px;
           }
 
           &.btn-icon {
-            height: 20px;
+            height: 21px;
             min-width: 20px;
+            line-height: 19px;
+            min-height: 21px;
           }
 
           &.btn-primary {
@@ -1513,10 +1525,6 @@ $datagrid-small-row-height: 25px;
           .icon {
             margin-top: -3px;
           }
-        }
-
-        a.row-btn {
-          top: -4px;
         }
 
         .btn-secondary.row-btn {
@@ -5616,6 +5624,14 @@ html[dir='rtl'] {
 
     .listview.alternate-bg {
       background-color: $listview-bg-color;
+    }
+
+    .listview-search {
+      .icon.close {
+        height: 18px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
     }
   }
 
