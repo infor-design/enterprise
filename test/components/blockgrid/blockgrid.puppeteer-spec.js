@@ -91,12 +91,11 @@ describe('Blockgrid Puppeteer Test', () => {
     it('should select multiple blocks', async () => {
       const blockArr = await page.$$('.block.is-selectable');
 
-      await Promise.all([
-        await blockArr[1].click(),
-        await blockArr[2].click(),
-        await blockArr[3].click()
-      ]);
+      await blockArr[1].click();
+      await blockArr[2].click();
+      await blockArr[3].click();
 
+      await page.waitForFunction('document.querySelectorAll(".block.is-selected").length === 3');
       await checkExists('.block.is-selected', 3, true);
     });
 
@@ -107,11 +106,10 @@ describe('Blockgrid Puppeteer Test', () => {
 
       const blockArr = await page.$$('.block.is-selectable');
 
-      await Promise.all([
-        await blockArr[1].click(),
-        await blockArr[2].click()
-      ]);
+      await blockArr[1].click();
+      await blockArr[2].click();
 
+      await page.waitForFunction('document.querySelectorAll(".block.is-selected").length === 2');
       await checkExists('.block.is-selected', 2, true);
 
       await page.setViewport(windowSize);
@@ -131,12 +129,13 @@ describe('Blockgrid Puppeteer Test', () => {
 
     it('should highlight blocks after click', async () => {
       const blockArr = await page.$$('.block.is-selectable');
-      await blockArr[1].click().then(async () => {
-        await hasClass(blockArr[1], 'is-selected');
-      });
-      await blockArr[2].click().then(async () => {
-        await hasClass(blockArr[2], 'is-selected');
-      });
+      await blockArr[1].click();
+      await page.waitForFunction('document.querySelectorAll(".block.is-selected").length === 1');
+      await hasClass(blockArr[1], 'is-selected');
+
+      await blockArr[2].click();
+      await page.waitForFunction('document.querySelectorAll(".block.is-selected").length === 2');
+      await hasClass(blockArr[2], 'is-selected');
     });
   });
 
@@ -150,15 +149,15 @@ describe('Blockgrid Puppeteer Test', () => {
     it('should select only 1 block', async () => {
       const blockArr = await page.$$('.block.is-selectable');
 
-      await Promise.all([
-        await blockArr[1].click(),
-        await blockArr[2].click(),
-        await blockArr[3].click()
-      ]).then(async () => {
-        await hasClass(blockArr[3], 'is-selected');
-        await hasClass(blockArr[2], 'is-selected', false);
-        await hasClass(blockArr[1], 'is-selected', false);
-      });
+      await blockArr[1].click();
+      await blockArr[2].click();
+      await blockArr[3].click();
+
+      await page.waitForFunction('document.querySelectorAll(".block.is-selected").length === 1');
+
+      await hasClass(blockArr[3], 'is-selected');
+      await hasClass(blockArr[2], 'is-selected', false);
+      await hasClass(blockArr[1], 'is-selected', false);
     });
 
     it('should have a blockgrid', async () => {
