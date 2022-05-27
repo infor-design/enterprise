@@ -4,8 +4,8 @@
 
 ```bash
 # generate base64 strings
-. secrets.sh
+. ./k8s/secrets.sh
 
-# paste them into secrets.yaml and apply it
-kubectl apply -f secrets.yaml --namespace=argo
+# paste them into secrets files and apply it
+kubectl apply -f k8s/secrets --namespace=argo
 ```
