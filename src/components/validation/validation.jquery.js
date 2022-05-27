@@ -140,7 +140,8 @@ $.fn.addMessage = function (settings) {
       rule,
       settings.inline,
       settings.showTooltip,
-      settings.isAlert
+      settings.isAlert,
+      settings.isValidatedError
     );
 
     instance.setIconOnParent(field, settings.type);

@@ -100,8 +100,15 @@
 
   $('#show-error').on('click', function() {
     if (!isErrorVisible) {
+      $('#show-error').addMessage({
+        message : 'I have an error!',
+        type: 'error',
+        inline: false,
+        showTooltip: true,
+        isValidatedError: true
+      });
+      
       $('#email-address').addMessage({
-        message : 'I have an error :(',
         type: 'error',
         inline: false,
         showTooltip: true
@@ -110,6 +117,11 @@
       isErrorVisible = true;
       return;
     }
+
+    $('#show-error').removeMessage({
+      type: 'error',
+      inline: false
+    });
 
     $('#email-address').removeMessage({
       type: 'error',
