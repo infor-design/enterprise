@@ -1,3 +1,6 @@
+
+const { getConfig } = require('../../helpers/e2e-utils.js');
+
 /* eslint-disable compat/compat */
 describe('Blockgrid Puppeteer Test', () => {
   const baseUrl = 'http://localhost:4000/components/blockgrid';
@@ -78,6 +81,44 @@ describe('Blockgrid Puppeteer Test', () => {
       await checkAttr('#example1-blockgrid-checkbox-label3', 'example1-blockgrid-checkbox-label3', 'automation-id-example1-blockgrid-checkbox-label3');
       await checkAttr('#checkbox4', 'checkbox4', 'automation-id-example1-blockgrid-checkbox4');
       await checkAttr('#example1-blockgrid-checkbox-label4', 'example1-blockgrid-checkbox-label4', 'automation-id-example1-blockgrid-checkbox-label4');
+    });
+  });
+
+  describe('Mixed selection responsive tests', () => {
+    const url = `${baseUrl}/example-mixed-selection?theme=classic&layout=nofrills`;
+
+    beforeEach(async () => {
+      await page.goto(url, { waitUntil: ['networkidle2', 'load'] });
+    });
+
+    it('should not visual regress', async () => {
+      const img = await page.screenshot();
+      const sConfig = getConfig('blockgrid');
+      expect(img).toMatchImageSnapshot(sConfig);
+    });
+
+    it('should not visual regress at 500px', async () => {
+      const windowSize = await page.viewport();
+      await page.setViewport({ width: 500, height: windowSize.height });
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+
+      const img = await page.screenshot();
+      const sConfig = getConfig('blockgrid-500px');
+      expect(img).toMatchImageSnapshot(sConfig);
+
+      await page.setViewport(windowSize);
+    });
+
+    it('should not visual regress at 320px', async () => {
+      const windowSize = await page.viewport();
+      await page.setViewport({ width: 320, height: windowSize.height });
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+
+      const img = await page.screenshot();
+      const sConfig = getConfig('blockgrid-320px');
+      expect(img).toMatchImageSnapshot(sConfig);
+
+      await page.setViewport(windowSize);
     });
   });
 
