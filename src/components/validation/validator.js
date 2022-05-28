@@ -674,7 +674,7 @@ Validator.prototype = {
     const validationType = Validation.ValidationTypes[rule.type] ||
       Validation.ValidationTypes.error;
 
-    if (!isHelpMessage && inline) {
+    if (!isHelpMessage) {
       loc.addClass(rule.type === 'icon' ? 'custom-icon' : rule.type);
     }
 

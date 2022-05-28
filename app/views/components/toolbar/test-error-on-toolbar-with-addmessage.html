@@ -82,9 +82,8 @@
     <div class="compound-field">
       <div class="field">
        <label class="required" for="email-address">Email Address <span class="audible">Required</span></label>
-       <input type="text" id="email-address" data-validate="required email" name="email-address"/>
+       <input type="text" id="email-address" name="email-address"/>
       </div>
-      <br>
       <div class="field">
         <button id="show-error" class="btn-secondary no-ripple hide-focus" type="button">Show Error</button>
       </div>
@@ -100,30 +99,19 @@
 
   $('#show-error').on('click', function() {
     if (!isErrorVisible) {
-      $('#show-error').addMessage({
+      $('#specialActionsBtn').addMessage({
         message : 'I have an error!',
         type: 'error',
         inline: false,
         showTooltip: true,
         isValidatedError: true
       });
-      
-      $('#email-address').addMessage({
-        type: 'error',
-        inline: false,
-        showTooltip: true
-      });
       $(this).text('Hide Error');
       isErrorVisible = true;
       return;
     }
 
-    $('#show-error').removeMessage({
-      type: 'error',
-      inline: false
-    });
-
-    $('#email-address').removeMessage({
+    $('#specialActionsBtn').removeMessage({
       type: 'error',
       inline: true
     });
