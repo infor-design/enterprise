@@ -12,6 +12,7 @@ $.fn.tabs = function (settings) {
       instance.updated(settings);
     } else {
       instance = $.data(this, COMPONENT_NAME, new Tabs(this, settings));
+      this.element = undefined;
     }
   });
 };

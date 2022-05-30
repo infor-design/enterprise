@@ -771,6 +771,7 @@ Tabs.prototype = {
       if (li.hasClass('dismissible')) {
         e.preventDefault();
         e.stopPropagation();
+        // debugger;
         self.closeDismissibleTab(li.children('a').attr('href'));
       }
     }
@@ -2751,16 +2752,18 @@ Tabs.prototype = {
     // See: _isLastDropdownTabItem()_
     const parentMenu = targetLi.closest('.dropdown-tab');
     const trigger = parentMenu.data('trigger');
-
+    // debugger;
     // Kill associated events
     targetLi.find('.icon').off().removeData().remove();
     targetLi.off();
     targetAnchor.off();
 
     // Remove Markup
-    targetLi.removeData().remove();
+    targetLi.removeData().empty();
+    targetLi.remove();
     if (hasTargetPanel) {
-      targetPanel.removeData().remove();
+      targetPanel.removeData().empty();
+      targetPanel.removeData();
     }
 
     const menuItem = targetAnchor.data('moremenu-link');
