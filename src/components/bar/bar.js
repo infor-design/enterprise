@@ -49,6 +49,7 @@ const COMPONENT_NAME = 'bar';
  *  button: {text: 'xxx', click: <function>}  }`
  * Set this to null for no message or will default to 'No Data Found with an icon.'
  * @param {object} [settings.localeInfo] If passed in you can override the default formatting https://github.com/d3/d3-format/blob/master/README.md#formatDefaultLocale
+ * @param {array} [settings.axisLabels] Ability to add label to any of the four sides.
  */
 const BAR_DEFAULTS = {
   dataset: [],
@@ -193,6 +194,27 @@ Bar.prototype = {
       return this;
     }
 
+    // Config for axis labels
+    let idx;
+    let axisArr;
+    const axisLabels = {};
+    const isAxisLabels = { atLeastOne: false };
+    const axisArray = ['left', 'top', 'right', 'bottom'];
+
+    if (s.axisLabels) {
+      $.extend(true, axisLabels, s.axisLabels);
+    }
+
+    if (!$.isEmptyObject(axisLabels)) {
+      for (idx = 0, axisArr = axisArray.length; idx < axisArr; idx++) {
+        const thisAxis = axisLabels[axisArray[idx]];
+        if (thisAxis && typeof thisAxis === 'string' && $.trim(thisAxis) !== '') {
+          isAxisLabels[axisArray[idx]] = true;
+          isAxisLabels.atLeastOne = true;
+        }
+      }
+    }
+
     // Get the Legend Series
     const series = dataset.map(d => ({ name: d.name, color: d.color, pattern: d.pattern, attributes: d.attributes }));
 
@@ -276,11 +298,11 @@ Bar.prototype = {
 
     self.svg = d3.select(this.element[0])
       .append('svg')
-      .attr('width', w)
-      .attr('height', h)
+      .attr('width', w + (isAxisLabels.atLeastOne ? 20 : 0))
+      .attr('height', h + (isAxisLabels.atLeastOne ? 5 : 0))
       .append('g')
       .attr('class', 'group')
-      .attr('transform', `translate(${textWidth},${margins.top})`);
+      .attr('transform', `translate(${textWidth},${margins.top - (isAxisLabels.atLeastOne ? 3 : 0)})`);
 
     const xMin = d3.min(dataset, g => (d3.min(g, d => (s.isStacked ? (d.x + d.x0) : d.x))));
     let xMax = d3.max(dataset, g => (d3.max(g, d => (s.isStacked ? (d.x + d.x0) : d.x))));
@@ -694,12 +716,48 @@ Bar.prototype = {
       });
 
     // Adjust the labels
-    self.svg.selectAll('.axis.y text').attr('x', () => (self.isRTL ? 15 : -15));
+    self.svg.selectAll('.axis.y text').attr('x', () => (self.isRTL ? (isAxisLabels.atLeastOne ? 5 : 15) : (isAxisLabels.atLeastOne ? -5 : -15)));
     self.svg.selectAll('.axis.x text').attr('class', d => (d < 0 ? 'negative-value' : 'positive-value'));
 
     if (self.isRTL && (charts.isIE || charts.isIEEdge)) {
       self.svg.selectAll('text').attr('transform', 'scale(-1, 1)');
-      self.svg.selectAll('.y.axis text').style('text-anchor', 'start');
+      self.svg.selectAll('.y.axis text').style('text-anchor', 'last');
+    }
+
+    if (isAxisLabels.atLeastOne) {
+      const axisLabelGroup = self.svg.append('g').attr('class', 'axis-labels');
+      const widthAxisLabel = w - 95;
+      const heightAxisLabel = height - 60;
+
+      const place = {
+        top: `translate(${widthAxisLabel / 2},${-4})`,
+        right: `translate(${widthAxisLabel + 53},${height / 2})rotate(90)`,
+        bottom: `translate(${widthAxisLabel / 2},${heightAxisLabel + 89})`,
+        left: `translate(${-35},${height / 2})rotate(-90)`,
+      };
+
+      const placeStyle = {
+        top: `rotate(0deg) scaleX(-1) translate(-${widthAxisLabel / 2}px, ${-4}px)`,
+        right: `rotate(90deg) scaleX(-1) translate(-${(height / 2) + 5}px, -${widthAxisLabel + (this.isRTL ? 45 : 28)}px)`,
+        bottom: `rotate(0deg) scaleX(-1) translate(-${widthAxisLabel / 2}px, ${heightAxisLabel + 89}px)`,
+        left: `rotate(90deg) scaleX(-1) translate(-${(height / 2 - 5)}px, ${this.isRTL ? 45 : 55}px)`
+      };
+
+      const addAxis = (pos) => {
+        if (isAxisLabels[pos]) {
+          axisLabelGroup.append('text')
+            .attr('class', `axis-label-${pos}`)
+            .attr('text-anchor', 'middle')
+            .attr('transform', self.isRTL ? '' : place[pos])
+            .style('font-size', '1.2em')
+            .style('transform', self.isRTL ? placeStyle[pos] : '')
+            .text(axisLabels[pos]);
+        }
+      };
+
+      for (idx = 0, axisArr = axisArray.length; idx < axisArr; idx++) {
+        addAxis(axisArray[idx]);
+      }
     }
 
     if (isViewSmall && s.useLogScale) {
