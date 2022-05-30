@@ -655,6 +655,7 @@ Validator.prototype = {
    * @param {boolean} isValidatedError comes from the manageResult() and validated as a true error
    */
   addMessage(field, rule, inline, showTooltip, isHelpMessage, isValidatedError) {
+    console.log('hotdog');
     if (rule.message === '') {
       return;
     }
@@ -1075,11 +1076,7 @@ Validator.prototype = {
         tooltipAPI.destroy();
       }
 
-      const validationTooltip = $('#validation-tooltip');
-      const validationToolTipAPI = validationTooltip.data('tooltip');
-      if (validationToolTipAPI) {
-        validationToolTipAPI.destroy();
-      }
+      this.hideTooltipMessage();
 
       if (this.inputs) {
         this.inputs.filter('input, textarea').off('focus.validate');
@@ -1090,6 +1087,20 @@ Validator.prototype = {
       field.next(`.icon-${rule.type}`).off('click.validate').remove();
       field.parent('.field, .field-short').find(`.icon-${rule.type}`).remove();
       field.next('.inforCheckboxLabel').next(`.icon-${rule.type}`).remove();
+    }
+  },
+
+  /**
+   * Hide tooltip message on a field
+   * @private
+   * @param {jQuery[]} field the field being modified
+   */
+  hideTooltipMessage(field) {
+    const validationToolTipAPI = field.data('tooltip');
+    if (validationToolTipAPI) {
+      validationToolTipAPI.destroy();
+      field.off('focus.validate');
+      field.off('blur.validate');
     }
   },
 
