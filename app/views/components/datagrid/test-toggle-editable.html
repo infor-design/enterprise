@@ -82,8 +82,8 @@
 
         //Init and get the api for the grid
         grid = $('#datagrid').datagrid({
+          allowSelectAcrossPages: true,
           columns: columns,
-          dataset: data,
           editable: false,
           paging: true,
           pagesize: 10,
@@ -118,7 +118,7 @@
     // Workaround as rerender does not work as expected if it's still initial
     let pi = gridApi.pagerAPI.state;
     pi.type = 'rerender';
-    gridApi.renderPager(pi, false);
+    gridApi.renderPager(pi, true);
 
     // Workaround as updated should really render the header
     gridApi.rerender();
