@@ -1,4 +1,4 @@
-describe('datefield clear test', () => {
+describe('Datepicker clear test', () => {
   const url = 'http://localhost:4000/components/datepicker/test-input-datefield-clear.html';
   beforeAll(async () => {
     await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
