@@ -655,7 +655,6 @@ Validator.prototype = {
    * @param {boolean} isValidatedError comes from the manageResult() and validated as a true error
    */
   addMessage(field, rule, inline, showTooltip, isHelpMessage, isValidatedError) {
-    console.log('hotdog');
     if (rule.message === '') {
       return;
     }
@@ -1076,7 +1075,9 @@ Validator.prototype = {
         tooltipAPI.destroy();
       }
 
-      this.hideTooltipMessage();
+      if (field !== undefined) {
+        this.hideTooltipMessage(field);
+      }
 
       if (this.inputs) {
         this.inputs.filter('input, textarea').off('focus.validate');
