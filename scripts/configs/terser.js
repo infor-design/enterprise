@@ -26,8 +26,6 @@ module.exports = {
   // See [Terser docs](https://github.com/terser/terser) for info:
   // NOTE: Some Sourcemap-related settings are automatically handled in `../minify.js`
   terser: {
-    sourceMap: {
-      url: OUTPUT_URL
-    }
+    sourceMap: false
   }
 };
