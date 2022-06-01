@@ -10,6 +10,7 @@
 
 - `[Bar]` Added the ability to set axis labels on different positions (top, right, bottom, left). ([#5382](https://github.com/infor-design/enterprise/issues/5382))
 - `[Blockgrid]` Converted protractor tests to puppeteer. ([#6327](https://github.com/infor-design/enterprise/issues/6327))
+- `[Colors]` Converted protractor tests to puppeteer. ([#6513](https://github.com/infor-design/enterprise/issues/6513))
 - `[Datagrid]` Added a new method for cell editing for new row added. ([#6338](https://github.com/infor-design/enterprise/issues/6338))
 - `[Modal]` Added an ability to add icon in title section of the modal. ([#5905](https://github.com/infor-design/enterprise/issues/5905))
 
@@ -103,7 +104,7 @@
 
 ## v4.63.0 Features
 
-- `[Datagrid]` Added close button on file error message ([#6178](https://github.com/infor-design/enterprise/issues/6178))
+- `[Datagrid]` Added 6ton on file error message ([#6178](https://github.com/infor-design/enterprise/issues/6178))
 - `[Datagrid]` Added puppeteer script for fallback image tooltip text. ([#6278](https://github.com/infor-design/enterprise/issues/6278))
 - `[File Upload]` Added close button on file error message. ([#6229](https://github.com/infor-design/enterprise/issues/6229))
 - `[Searchfield]` Implemented a new design for searchfield. ([#5865](https://github.com/infor-design/enterprise/issues/5865))
