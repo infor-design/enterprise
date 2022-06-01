@@ -2758,9 +2758,11 @@ Tabs.prototype = {
     targetAnchor.off();
 
     // Remove Markup
-    targetLi.removeData().remove();
+    targetLi.removeData().empty();
+    targetLi.remove();
     if (hasTargetPanel) {
-      targetPanel.removeData().remove();
+      targetPanel.removeData().empty();
+      targetPanel.removeData();
     }
 
     const menuItem = targetAnchor.data('moremenu-link');
