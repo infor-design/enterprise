@@ -1,3 +1,6 @@
+
+const { getConfig } = require('../../helpers/e2e-utils.js');
+
 describe('Accordion Puppeteer Test', () => {
   const baseUrl = 'http://localhost:4000/components/accordion';
 
@@ -27,9 +30,7 @@ describe('Accordion Puppeteer Test', () => {
     });
 
     it('should have panels', async () => {
-      await page.waitForSelector('.accordion.panel', { visible: true });
-      await page.waitForTimeout(200);
-
+      await page.waitForFunction('document.querySelectorAll(".accordion.panel").length > 0');
       expect((await page.$$('.accordion.panel')).length).toEqual(4);
     });
   });
@@ -96,6 +97,13 @@ describe('Accordion Puppeteer Test', () => {
       expect((await page.$$('.accordion-header.is-disabled')).length).toBe(4);
       expect((await page.$$('.accordion.is-disabled')).length).toBe(1);
     });
+
+    it('should not visual regress', async () => {
+      await page.waitForFunction('document.querySelectorAll("div[role=main]").length > 0');
+      const img = await page.screenshot();
+      const sConfig = getConfig('accordion-disabled');
+      expect(img).toMatchImageSnapshot(sConfig);
+    });
   });
 
   describe('Index', () => {
@@ -116,7 +124,7 @@ describe('Accordion Puppeteer Test', () => {
     });
 
     it('should have keyboard be working on focus', async () => {
-      const accordionEl = (await page.$$('.accordion-header'))[0];
+      const accordionEl = await page.$('.accordion-header:nth-child(1)');
 
       await page.mouse.move(1000, 40);
       await accordionEl.click();
@@ -141,6 +149,14 @@ describe('Accordion Puppeteer Test', () => {
       await page.keyboard.press('Enter');
 
       expect(await page.$('.is-expanded')).toBeTruthy();
+    });
+
+    it('should not visual regress', async () => {
+      await page.click('button:nth-child(2)');
+      await page.waitForTimeout(1000);
+      const img = await page.screenshot();
+      const sConfig = getConfig('accordion');
+      expect(img).toMatchImageSnapshot(sConfig);
     });
   });
 
