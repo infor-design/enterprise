@@ -104,7 +104,7 @@
 
 ## v4.63.0 Features
 
-- `[Datagrid]` Added 6ton on file error message ([#6178](https://github.com/infor-design/enterprise/issues/6178))
+- `[Datagrid]` Added close button on file error message ([#6178](https://github.com/infor-design/enterprise/issues/6178))
 - `[Datagrid]` Added puppeteer script for fallback image tooltip text. ([#6278](https://github.com/infor-design/enterprise/issues/6278))
 - `[File Upload]` Added close button on file error message. ([#6229](https://github.com/infor-design/enterprise/issues/6229))
 - `[Searchfield]` Implemented a new design for searchfield. ([#5865](https://github.com/infor-design/enterprise/issues/5865))
