@@ -1,0 +1,125 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: k8s-orchestrate-
+spec:
+  arguments:
+    parameters:
+    - name: branch
+      value: ""
+    - name: npm_command
+      value: ""
+    - name: npm_latest
+      value: ""
+    - name: releaseit_flags
+      value: ""
+    - name: release_increment
+      value: ""
+
+  entrypoint: k8s-orchestrate
+
+  podGC:
+    # Pod GC strategy must be one of the following:
+    # * OnPodCompletion - delete pods immediately when pod is completed (including errors/failures)
+    # * OnPodSuccess - delete pods immediately when pod is successful
+    # * OnWorkflowCompletion - delete pods when workflow is completed
+    # * OnWorkflowSuccess - delete pods when workflow is successful
+    strategy: OnWorkflowSuccess
+
+  templates:
+  - name: k8s-orchestrate
+    steps:
+
+    # Build and publish design system assets.
+    - - name: build
+        template: build
+        arguments:
+          parameters:
+          - name: branch
+            value: "{{workflow.parameters.branch}}"
+          - name: npm_command
+            value: "{{workflow.parameters.npm_command}}"
+          - name: npm_latest
+            value: "{{workflow.parameters.npm_latest}}"
+          - name: releaseit_flags
+            value: "{{workflow.parameters.releaseit_flags}}"
+          - name: release_increment
+            value: "{{workflow.parameters.release_increment}}"
+  - name: build
+    inputs:
+      parameters:
+        - name: branch
+        - name: npm_command
+        - name: npm_latest
+        - name: releaseit_flags
+        - name: release_increment
+
+    resource:
+      action: create
+      successCondition: status.succeeded > 0
+      failureCondition: status.failed > 1
+      manifest: |
+        apiVersion: batch/v1
+        kind: Job
+        metadata:
+          generateName: build-
+        spec:
+          ttlSecondsAfterFinished: 100
+          template:
+            metadata:
+              name: build
+            spec:
+              volumes:
+              - name: github-ssh-key
+                secret:
+                  secretName: github
+                  defaultMode: 0600
+              containers:
+              - name: enterprise-release
+                image: agolub/enterprise-release:0.0.1
+                imagePullPolicy: Always
+                volumeMounts:
+                - name: github-ssh-key
+                  readOnly: true
+                  mountPath: "/root/.ssh"
+                env:
+                - name: GITHUB_ACCESS_TOKEN
+                  valueFrom:
+                    secretKeyRef:
+                      name: github-access-token
+                      key: token
+                - name: NPM_TOKEN
+                  valueFrom:
+                    secretKeyRef:
+                      name: npm-token
+                      key: token
+                - name: DOCS_API_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: docs-api-key
+                      key: token
+
+                - name: BRANCH
+                  value: "{{inputs.parameters.branch}}"
+                - name: NPM_COMMAND
+                  value: "{{inputs.parameters.npm_command}}"
+                - name: NPM_LATEST
+                  value: "{{inputs.parameters.npm_latest}}"
+                - name: RELEASEIT_FLAGS
+                  value: "{{inputs.parameters.releaseit_flags}}"
+                - name: RELEASE_INCREMENT
+                  value: "{{inputs.parameters.release_increment}}"
+                command: ["/bin/bash"]
+                args: [
+                  "-c",
+                  ". ./run.sh"
+                ]
+              restartPolicy: Never
+    outputs:
+      parameters:
+      - name: job-name
+        valueFrom:
+          jsonPath: '{.metadata.name}'
+      - name: job-uid
+        valueFrom:
+          jsonPath: '{.metadata.uid}'
