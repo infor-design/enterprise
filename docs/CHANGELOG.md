@@ -11,6 +11,7 @@
 - `[Bar]` Added the ability to set axis labels on different positions (top, right, bottom, left). ([#5382](https://github.com/infor-design/enterprise/issues/5382))
 - `[Blockgrid]` Converted protractor tests to puppeteer. ([#6327](https://github.com/infor-design/enterprise/issues/6327))
 - `[Breadcrumb]` Converted protractor tests to puppeteer. ([#6505](https://github.com/infor-design/enterprise/issues/6505))
+- `[Button]` Added puppeteer script for button badge toggle test. ([#6449](https://github.com/infor-design/enterprise/issues/6449))
 - `[Datagrid]` Added a new method for cell editing for new row added. ([#6338](https://github.com/infor-design/enterprise/issues/6338))
 - `[Datepicker]` Added puppeteer script for datepicker clear (empty string) test . ([#6421](https://github.com/infor-design/enterprise/issues/6421))
 - `[Modal]` Added an ability to add icon in title section of the modal. ([#5905](https://github.com/infor-design/enterprise/issues/5905))
