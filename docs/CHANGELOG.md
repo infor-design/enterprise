@@ -10,8 +10,10 @@
 
 - `[Bar]` Added the ability to set axis labels on different positions (top, right, bottom, left). ([#5382](https://github.com/infor-design/enterprise/issues/5382))
 - `[Blockgrid]` Converted protractor tests to puppeteer. ([#6327](https://github.com/infor-design/enterprise/issues/6327))
+- `[Breadcrumb]` Converted protractor tests to puppeteer. ([#6505](https://github.com/infor-design/enterprise/issues/6505))
 - `[Colors]` Converted protractor tests to puppeteer. ([#6513](https://github.com/infor-design/enterprise/issues/6513))
 - `[Datagrid]` Added a new method for cell editing for new row added. ([#6338](https://github.com/infor-design/enterprise/issues/6338))
+- `[Datepicker]` Added puppeteer script for datepicker clear (empty string) test . ([#6421](https://github.com/infor-design/enterprise/issues/6421))
 - `[Modal]` Added an ability to add icon in title section of the modal. ([#5905](https://github.com/infor-design/enterprise/issues/5905))
 
 ## v4.64.0 Fixes
@@ -38,6 +40,7 @@
 - `[Lookup]` Fixed bug where lookup still appeared when modal closes. ([#6218](https://github.com/infor-design/enterprise/issues/6218))
 - `[Modal]` Fixed bug where popup goes behind modal when in application menu in resizable mode. ([NG#1272](https://github.com/infor-design/enterprise-ng/issues/1272))
 - `[Personalization]` Fixed bug where the dark mode header color was not correct in the tokens and caused the personalization dropdown to be incorrect. ([#6446](https://github.com/infor-design/enterprise/issues/6446))
+- `[Tabs]` Fixed memory leak in tabs component. ([NG#1286](https://github.com/infor-design/enterprise-ng/issues/1286))
 - `[Tabs]` Fixed a bug where tab focus indicator is not aligned properly in RTL composite forms. ([#6464](https://github.com/infor-design/enterprise/issues/6464))
 - `[Targeted-Achievement]` Fixed a bug where the icon is cut off in Firefox. ([#6400](https://github.com/infor-design/enterprise/issues/6400))
 - `[Toolbar]` Fixed a bug where the search icon is misaligned in Firefox. ([#6405](https://github.com/infor-design/enterprise/issues/6405))
