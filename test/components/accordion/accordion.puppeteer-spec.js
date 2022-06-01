@@ -100,6 +100,7 @@ describe('Accordion Puppeteer Test', () => {
 
     it('should not visual regress', async () => {
       await page.waitForFunction('document.querySelectorAll("div[role=main]").length > 0');
+      await page.waitForTimeout(1000);
       const img = await page.screenshot();
       const sConfig = getConfig('accordion-disabled');
       expect(img).toMatchImageSnapshot(sConfig);
