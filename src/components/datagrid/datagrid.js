@@ -10277,6 +10277,7 @@ Datagrid.prototype = {
       if (this.toolbar && this.toolbar.parent().find('.table-errors').length === 1) {
         this.toolbar.parent().find('.table-errors').remove();
       }
+      this.removeToolbar();
     } else {
       // process via type
       for (const props in $.fn.validation.ValidationTypes) {  // eslint-disable-line
@@ -10284,6 +10285,19 @@ Datagrid.prototype = {
         const errors = $.grep(this.nonVisibleCellErrors, error => error.type === validationType);
         this.showNonVisibleCellErrorType(errors, validationType);
       }
+    }
+  },
+
+  /**
+   * Removes the toolbar if there are no buttonset, title or errors appended
+   * @private
+   * @returns {void}
+   */
+  removeToolbar() {
+    if (this.toolbar.find('.buttonset').children().length < 1 && this.toolbar.find('.title').text().trim().length < 1) {
+      this.toolbar.destroy();
+      this.toolbar.remove();
+      delete this.toolbar;
     }
   },
 

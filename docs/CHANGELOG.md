@@ -21,6 +21,7 @@
 - `[Bar Stacked]` Fixed a bug where chart tooltip total shows 99.999 instead of 100 on 100% Stacked Bar Chart. ([#6236](https://github.com/infor-design/enterprise/issues/6326))
 - `[ContextMenu]` Fixed a bug in context menu where it is not indented properly. ([#6223](https://github.com/infor-design/enterprise/issues/6223))
 - `[Button]` Fixed a bug where changing from primary to secondary disrupts the css styling. ([#6223](https://github.com/infor-design/enterprise-ng/issues/1282))
+- `[Datagrid]` Fixed a bug where toolbar is still visible even no buttons, title and errors appended. ([#6290](https://github.com/infor-design/enterprise/issues/6290))
 - `[Datagrid]` Added setting for color change in active checkbox selection. ([#6303](https://github.com/infor-design/enterprise/issues/6303))
 - `[Datagrid]` Set changed cell to active when update is finished. ([#6317](https://github.com/infor-design/enterprise/issues/6317))
 - `[Datagrid]` Fixed row height of extra-small rows on editable datagrid with icon columns. ([#6284](https://github.com/infor-design/enterprise/issues/6284))
