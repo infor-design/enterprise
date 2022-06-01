@@ -50,14 +50,6 @@
 - `[WeekView]` Fixed a bug where month-year label is not changing upon clicking the arrow button. ([#6415](https://github.com/infor-design/enterprise/issues/6415))
 - `[Validator]` Fixed a bug where toolbar error message still appears after error is removed. ([#6253](https://github.com/infor-design/enterprise/issues/6253))
 
-## v4.64.0 Features
-
-- `[Bar]` Added the ability to set axis labels on different positions (top, right, bottom, left). ([#5382](https://github.com/infor-design/enterprise/issues/5382))
-- `[Blockgrid]` Converted protractor tests to puppeteer. ([#6327](https://github.com/infor-design/enterprise/issues/6327))
-- `[Button]` Added puppeteer script for button badge toggle test. ([#6449](https://github.com/infor-design/enterprise/issues/6449))
-- `[Datagrid]` Added a new method for cell editing for new row added. ([#6338](https://github.com/infor-design/enterprise/issues/6338))
-- `[Modal]` Added an ability to add icon in title section of the modal. ([#5905](https://github.com/infor-design/enterprise/issues/5905))
-
 ## v4.63.2 Fixes
 
 - `[Personalization]` Re-Fixed bug where the dark mode header color was not correct in the tokens and caused the personalization dropdown to be incorrect, classic theme was missed. ([#6446](https://github.com/infor-design/enterprise/issues/6446)
