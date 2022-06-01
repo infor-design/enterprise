@@ -34,7 +34,7 @@ describe('Button Puppeteer Tests', () => {
     });
   });
 
-  describe('Button notifBadge test', () => {
+  describe('Button notification badge toggle test', () => {
     const url = `${baseUrl}/test-badge-toggle.html`;
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
@@ -42,14 +42,14 @@ describe('Button Puppeteer Tests', () => {
 
     it('should toggle on/off the notification badge in button', async () => {
       const notifbadgeContainer = () => page.$eval('#primary-action-one > span.notification-badge-container', element => element.innerHTML);
-      const elem = () => page.evaluate(() => !!document.querySelector('#primary-action-one > span.notification-badge-container'));
+      const elem = () => page.evaluate(() => document.querySelector('#primary-action-one > span.notification-badge-container'));
 
       // toggle off the notification badge
       await page.click('#toggle-off');
-      expect(await elem()).toBe(false);
+      expect(await elem()).toBeFalsy();
       // toggle on the notification badge
       await page.click('#toggle-on');
-      expect(await elem()).toBe(true);
+      expect(await elem()).toBeTruthy();
       expect(await notifbadgeContainer()).toContain('notification-dot-lower-left');
     });
   });
