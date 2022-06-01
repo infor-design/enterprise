@@ -1028,7 +1028,11 @@ html[dir='rtl'] {
 
   @media (max-width: $breakpoint-phone-to-tablet - 1) {
     right: auto;
-    width: 100%;
+    width: 100% !important;
+
+    .searchfield {
+      width: auto;
+    }
 
     button.close:not(.is-empty) {
       right: 32px;
