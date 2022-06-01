@@ -8,6 +8,7 @@
 
 ## v4.64.0 Features
 
+- `[Actionsheet]` Removed protractor tests. ([#5832](https://github.com/infor-design/enterprise/issues/5832))
 - `[Bar]` Added the ability to set axis labels on different positions (top, right, bottom, left). ([#5382](https://github.com/infor-design/enterprise/issues/5382))
 - `[Blockgrid]` Converted protractor tests to puppeteer. ([#6327](https://github.com/infor-design/enterprise/issues/6327))
 - `[Datagrid]` Added a new method for cell editing for new row added. ([#6338](https://github.com/infor-design/enterprise/issues/6338))
