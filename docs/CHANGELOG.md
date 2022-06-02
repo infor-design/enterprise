@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.65.0
+
+### v4.65.0 Features
+
+- `[Bar]` Enhanced the VPAT accessibility in bar chart. ([#6074](https://github.com/infor-design/enterprise/issues/6074))
+
 ## v4.64.0
 
 ### v4.64.0 Important Notes

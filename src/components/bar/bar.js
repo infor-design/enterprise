@@ -300,6 +300,7 @@ Bar.prototype = {
       .append('svg')
       .attr('width', w + (isAxisLabels.atLeastOne ? 20 : 0))
       .attr('height', h + (isAxisLabels.atLeastOne ? 5 : 0))
+      .attr('title', `${s.type}`)
       .append('g')
       .attr('class', 'group')
       .attr('transform', `translate(${textWidth},${margins.top - (isAxisLabels.atLeastOne ? 3 : 0)})`);
@@ -425,6 +426,8 @@ Bar.prototype = {
       .enter()
       .append('g')
       .attr('class', 'series-group')
+      .attr('role', 'list')
+      .attr('aria-label', `${s.dataset[0].name ? s.dataset[0].name : 'Name Label'}`)
       .attr('data-group-id', (d, i) => i);
 
     s.isGrouped = (self.svg.selectAll('.series-group').nodes().length > 1 && !s.isStacked) || (s.isGrouped && dataset.length === 1);
@@ -454,6 +457,8 @@ Bar.prototype = {
           });
         });
       })
+      .attr('role', 'listitem')
+      .attr('aria-label', (d, i) => `${s.dataset[0].data[i].name}`)
       .attr('class', (d, i) => `bar series-${i}`)
       .style('fill', (d, i) => (s.isStacked ? // eslint-disable-line
         (series.length === 1 ? (charts.chartColor(i, 'bar-single', d)) :  // eslint-disable-line
