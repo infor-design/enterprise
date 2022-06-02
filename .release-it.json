@@ -1,4 +1,7 @@
 {
+    "non-interactive": false,
+    "dry-run": true,
+    "verbose": 0,
     "pkgFiles": [
         "package.json"
     ],
@@ -10,7 +13,7 @@
     "git": {
         "commitMessage": "Release v${version}",
         "tagAnnotation": "Release v${version}",
-        "requireCleanWorkingDir": "false"
+        "requireCleanWorkingDir": false
     },
     "npm": {
         "tag": "latest"
@@ -19,6 +22,9 @@
         "release": true,
         "releaseName": "v${version}",
         "tokenRef": "GITHUB_ACCESS_TOKEN",
-        "assets": "dist.zip"
+        "assets": "dist.zip",
+        "commit": true,
+        "push": true,
+        "tag": true
     }
 }
