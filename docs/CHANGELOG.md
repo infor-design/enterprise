@@ -8,12 +8,15 @@
 
 ## v4.64.0 Features
 
+- `[Autocomplete]` Removed protractor tests. ([#6248](https://github.com/infor-design/enterprise/issues/6248))
 - `[Bar]` Added the ability to set axis labels on different positions (top, right, bottom, left). ([#5382](https://github.com/infor-design/enterprise/issues/5382))
 - `[Blockgrid]` Converted protractor tests to puppeteer. ([#6327](https://github.com/infor-design/enterprise/issues/6327))
 - `[Breadcrumb]` Converted protractor tests to puppeteer. ([#6505](https://github.com/infor-design/enterprise/issues/6505))
 - `[Colors]` Converted protractor tests to puppeteer. ([#6513](https://github.com/infor-design/enterprise/issues/6513))
+- `[Counts]` Converted protractor tests to puppeteer. ([#6517](https://github.com/infor-design/enterprise/issues/6517))
 - `[Datagrid]` Added a new method for cell editing for new row added. ([#6338](https://github.com/infor-design/enterprise/issues/6338))
 - `[Datepicker]` Added puppeteer script for datepicker clear (empty string) test . ([#6421](https://github.com/infor-design/enterprise/issues/6421))
+- `[Error Page]` Converted protractor tests to puppeteer. ([#6518](https://github.com/infor-design/enterprise/issues/6518))
 - `[Modal]` Added an ability to add icon in title section of the modal. ([#5905](https://github.com/infor-design/enterprise/issues/5905))
 
 ## v4.64.0 Fixes
@@ -21,6 +24,7 @@
 - `[Bar Stacked]` Fixed a bug where chart tooltip total shows 99.999 instead of 100 on 100% Stacked Bar Chart. ([#6236](https://github.com/infor-design/enterprise/issues/6326))
 - `[ContextMenu]` Fixed a bug in context menu where it is not indented properly. ([#6223](https://github.com/infor-design/enterprise/issues/6223))
 - `[Button]` Fixed a bug where changing from primary to secondary disrupts the css styling. ([#6223](https://github.com/infor-design/enterprise-ng/issues/1282))
+- `[Datagrid]` Fixed a bug where toolbar is still visible even no buttons, title and errors appended. ([#6290](https://github.com/infor-design/enterprise/issues/6290))
 - `[Datagrid]` Added setting for color change in active checkbox selection. ([#6303](https://github.com/infor-design/enterprise/issues/6303))
 - `[Datagrid]` Set changed cell to active when update is finished. ([#6317](https://github.com/infor-design/enterprise/issues/6317))
 - `[Datagrid]` Fixed row height of extra-small rows on editable datagrid with icon columns. ([#6284](https://github.com/infor-design/enterprise/issues/6284))
