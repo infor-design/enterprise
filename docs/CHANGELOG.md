@@ -4,7 +4,7 @@
 
 ### v4.64.0 Important Notes
 
-- `[General]` Fixed the map file is no longer included with the minified version of sohoxi.min.js. ([#6489](https://github.com/infor-design/enterprise/issues/6489))
+- `[General]` Fixed the map file is no longer included with the minified version of `sohoxi.min.js`. ([#6489](https://github.com/infor-design/enterprise/issues/6489))
 
 ## v4.64.0 Features
 
@@ -40,7 +40,7 @@
 - `[Line Chart]` Fixed a bug where the alignment of focus is overlapping another component. ([#6384](https://github.com/infor-design/enterprise/issues/6384))
 - `[Listview]` Fixed a bug where the search icon is misaligned in Firefox and Safari. ([#6390](https://github.com/infor-design/enterprise/issues/6390))
 - `[Locale]` Fixed incorrect date format for Latvian language. ([#6123](https://github.com/infor-design/enterprise/issues/6123))
-- `[Locale]` Fixed incorrect data in ms-my, nn-No and nb-NO. ([#6472](https://github.com/infor-design/enterprise/issues/6472))
+- `[Locale]` Fixed incorrect data in `ms-my`, `nn-No` and `nb-NO`. ([#6472](https://github.com/infor-design/enterprise/issues/6472))
 - `[Lookup]` Fixed bug where lookup still appeared when modal closes. ([#6218](https://github.com/infor-design/enterprise/issues/6218))
 - `[Modal]` Fixed bug where popup goes behind modal when in application menu in resizable mode. ([NG#1272](https://github.com/infor-design/enterprise-ng/issues/1272))
 - `[Personalization]` Fixed bug where the dark mode header color was not correct in the tokens and caused the personalization dropdown to be incorrect. ([#6446](https://github.com/infor-design/enterprise/issues/6446))
@@ -54,6 +54,8 @@
 - `[WeekView]` Fixed a bug where 'today' date is not being rendered properly. ([#6260](https://github.com/infor-design/enterprise/issues/6260))
 - `[WeekView]` Fixed a bug where month-year label is not changing upon clicking the arrow button. ([#6415](https://github.com/infor-design/enterprise/issues/6415))
 - `[Validator]` Fixed a bug where toolbar error message still appears after error is removed. ([#6253](https://github.com/infor-design/enterprise/issues/6253))
+
+(61 Issues Solved This Release, Backlog Enterprise 219, Backlog Ng 41, 1100 Functional Tests, 1468 e2e Tests, 436 Puppeteer Tests)
 
 ## v4.63.2 Fixes
 
@@ -125,7 +127,7 @@
 ## v4.62.2 Fixes
 
 - `[Personalization]` Fixed bug where the dark mode header color was not correct in the tokens and caused the personalization dropdown to be incorrect. ([#6446](https://github.com/infor-design/enterprise/issues/6446))
-- `[Locale]` Fixed incorrect data in ms-my, nn-No and nb-NO. ([#6472](https://github.com/infor-design/enterprise/issues/6472))
+- `[Locale]` Fixed incorrect data in `ms-my`, `nn-No` and `nb-NO`. ([#6472](https://github.com/infor-design/enterprise/issues/6472))
 
 ## v4.62.1 Fixes
 
