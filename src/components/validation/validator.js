@@ -548,7 +548,7 @@ Validator.prototype = {
            (rule.message !== Locale.translate('Required'))) {
           return;
         }
-        self.addMessage(field, rule, isInline, showResultTooltip, undefined, !result);
+        self.addMessage(field, rule, isInline, showResultTooltip);
         results.push(rule.type);
 
         if (validationType.errorsForm) {
@@ -652,15 +652,10 @@ Validator.prototype = {
    * @param {boolean} showTooltip whether or not the legacy validation Tooltip will contain the
    * message instead of placing it underneath
    * @param {boolean} isHelpMessage whether or not this validation message type is "alert"
-   * @param {boolean} isValidatedError comes from the manageResult() and validated as a true error
    */
-  addMessage(field, rule, inline, showTooltip, isHelpMessage, isValidatedError) {
+  addMessage(field, rule, inline, showTooltip, isHelpMessage) {
     if (rule.message === '') {
       return;
-    }
-
-    if (!isValidatedError) {
-      this.validate(field, showTooltip, 0);
     }
 
     if (field.is('.dropdown, .multiselect') && $('#dropdown-list').is(':visible')) {
@@ -725,7 +720,7 @@ Validator.prototype = {
       });
     }
 
-    if (!inline && isValidatedError) {
+    if (!inline) {
       this.showTooltipMessage(field, appendedMsg, validationType.type, showTooltip);
       return;
     }

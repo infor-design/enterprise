@@ -101,8 +101,9 @@
   $('#show-error').on('click', function() {
     if (!isErrorVisible) {
       $('#email-address').addMessage({
+        message: 'Required',
         type: 'error',
-        inline: false,
+        inline: true,
         showTooltip: true
       });
       $(this).text('Hide Error');
