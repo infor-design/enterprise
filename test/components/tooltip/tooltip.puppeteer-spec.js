@@ -60,7 +60,7 @@ describe('Tooltip Puppeteer Tests', () => {
         $('#standalone-delete-icon').tooltip({
           keepOpen: true
         });
-      })
+      });
 
       const button = await page.$('#standalone-delete-icon');
       button.hover();
