@@ -20,8 +20,4 @@ if [[ "$RELEASE_TAG" == "latest" ]]; then
     echo ""
     node ./scripts/deploy-documentation.js --site staging
     node ./scripts/deploy-documentation.js --site prod
-
-    echo "Publishing $RELEASE_VERSION files to AWS CDN"
-    echo ""
-    aws s3 cp dist s3://infor-devops-core-soho-us-east-1/sohoxi/$RELEASE_VERSION --recursive --profile sohoxi --acl public-read
 fi
