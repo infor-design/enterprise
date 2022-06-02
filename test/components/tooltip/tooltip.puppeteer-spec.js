@@ -25,7 +25,7 @@ describe('Tooltip Puppeteer Tests', () => {
 
       const image = await page.screenshot();
       const config = getConfig('tooltip-index');
-      await page.reload({ waitUntil: ["networkidle0", "domcontentloaded"] });
+      await page.reload({ waitUntil: ['domcontentloaded', 'networkidle0'] });
       expect(image).toMatchImageSnapshot(config);
     });
 
@@ -70,7 +70,7 @@ describe('Tooltip Puppeteer Tests', () => {
 
       const image = await page.screenshot();
       const config = getConfig('tooltip-on-icons');
-      await page.reload({ waitUntil: ["networkidle0", "domcontentloaded"] });
+      await page.reload({ waitUntil: ['domcontentloaded', 'networkidle0'] });
       expect(image).toMatchImageSnapshot(config);
     });
 
@@ -109,7 +109,7 @@ describe('Tooltip Puppeteer Tests', () => {
 
       const image = await page.screenshot();
       const config = getConfig('tooltip-with-icon');
-      await page.reload({ waitUntil: ["networkidle0", "domcontentloaded"] });
+      await page.reload({ waitUntil: ['domcontentloaded', 'networkidle0'] });
       expect(image).toMatchImageSnapshot(config);
     });
 
