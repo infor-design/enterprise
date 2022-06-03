@@ -3,12 +3,14 @@
     <h2>Legend</h2>
     <div id="inpage-legend" class="monthview" data-init="false">
     </div>
+    <button class="btn-primary" type="button" id="update-legend">Update Legend</button>
   </div>
 </div>
 
 <script>
   $('body').on('initialized', function () {
-    var monthviewEl, monthviewAPI;
+    let monthviewEl, monthviewAPI, count = 0;
+
     // Legend
     monthviewEl = $('#inpage-legend').monthview({
       inPage: true,
@@ -25,19 +27,32 @@
       ]
     }).on('beforemonthrendered', (e) => {
       console.log('beforemonthrendered', e);
-      loadLegend();
+      const febLegend = [
+        { name: 'Other', color: 'ruby03', dates: ['2/8/2017', '2/9/2017', '2/23/2017'] }
+      ]
+      loadLegend(febLegend);
     }).on('aftermonthrendered', (e) => {
       console.log('aftermonthrendered', e);
     });
 
     monthviewAPI = monthviewEl.data('monthview');
 
-    function loadLegend() {
-      var febLegend = [
-        { name: 'Other', color: 'ruby03', dates: ['2/8/2017', '2/9/2017', '2/23/2017'] }
-      ]
-      monthviewAPI.loadLegend(febLegend);
+    $('#update-legend').on('click', () => {
+      count++;
+
+      loadLegend([
+        { name: `Public Holiday ${count}`, color: 'emerald06', dates: ['1/1/2017', '1/2/2017', '1/12/2017'] },
+        { name: `Weekends ${count}`, color: 'amber06', dayOfWeek: [0, 6] },
+        { name: `Other ${count}`, color: 'ruby03', dates: ['1/8/2017', '1/9/2017', '1/23/2017'] },
+        { name: `Half Days ${count}`, color: 'amethyst06', dates: ['1/21/2017', '1/22/2017'] },
+        { name: `Full Days ${count}`, color: 'azure03', dates: ['1/24/2017', '1/25/2017'] }
+      ]);
+    });
+
+    function loadLegend(legendList) {
+      monthviewAPI.loadLegend(legendList);
     }
+
   });
   
 </script>

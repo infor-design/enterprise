@@ -495,6 +495,7 @@ MonthView.prototype = {
 
   /**
    * Loads legend list to the monthview settings.
+   * @param {any[]} legendList Array of new legends
    * @returns {void}
    */
   loadLegend(legendList) {
@@ -505,6 +506,52 @@ MonthView.prototype = {
     this.settings.legend = legendList;
     this.legend.empty();
     this.addLegend();
+
+    // set legend color in dates
+    const self = this;
+    const month = this.currentMonth;
+    const year = this.currentYear;
+
+    legendList.forEach((legend) => {
+      if (legend.dates) {
+        legend.dates.forEach((date) => {
+          const ldate = new Date(date);
+          const lmonth = ldate.getMonth();
+          const lday = ldate.getDate();
+          const lyear = ldate.getFullYear();
+
+          if (month === lmonth && year === lyear) {
+            const td = self.days.find(`td[data-key=${stringUtils.padDate(lyear, lmonth, lday)}]`);
+            self.setLegendColor(td, lyear, lmonth, lday);
+          }
+        });
+      }
+
+      if (legend.dayOfWeek) {
+        const enddate = new Date(year, month + 1, 0);
+        const lastdate = enddate.getDate();
+        const lastday = enddate.getDay();
+
+        legend.dayOfWeek.forEach((day) => {
+          let end = lastdate - (lastday + 1);
+          let td;
+
+          if (lastday === day) {
+            td = self.days.find(`td[data-key=${stringUtils.padDate(year, month, lastdate)}]`);
+            self.setLegendColor(td, year, month, lastdate);
+          } else if (lastday > day) {
+            td = self.days.find(`td[data-key=${stringUtils.padDate(year, month, lastdate - (lastday - day))}]`);
+            self.setLegendColor(td, year, month, lastdate - (lastday - day));
+          }
+
+          while (end > 0) {
+            td = self.days.find(`td[data-key=${stringUtils.padDate(year, month, end - (lastday + 1))}]`);
+            self.setLegendColor(td, year, month, end - (lastday + 1));
+            end -= 7;
+          }
+        });
+      }
+    });
   },
 
   /**
