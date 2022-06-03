@@ -18,6 +18,12 @@ $toolbar-buttonset-height: 40px;
   .toolbar-searchfield-wrapper {
     margin-top: 1px;
 
+    &.has-close-icon-button {
+      @media(max-width: $breakpoint-phone-to-tablet) {
+        overflow: hidden;
+      }
+    }
+
     .searchfield-category-button {
       .icon {
         transform: translateY(0);

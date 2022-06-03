@@ -37,11 +37,11 @@
             vertical-align: middle;
             white-space: nowrap;
 
-            @media (min-width: $breakpoint-big-phone + 1) {
+            @media (min-width: ($breakpoint-big-phone + 1)) {
               width: 150px;
             }
 
-            @media (min-width: $breakpoint-phablet + 1) {
+            @media (min-width: ($breakpoint-phablet + 1)) {
               width: 250px;
             }
 
@@ -52,14 +52,37 @@
         }
 
         &.buttonset {
-          @media (max-width: $breakpoint-slim - 25) {
+          @media (max-width: ($breakpoint-slim - 25)) {
             width: 100%;
           }
         }
 
         .separator {
-          @media (max-width: $breakpoint-big-phone - 20) {
+          @media (max-width: ($breakpoint-big-phone - 20)) {
             margin: 3px 0 0;
+          }
+        }
+      }
+    }
+
+    .toolbar {
+      &.searchfield-active {
+        .title + .buttonset {
+          .toolbar-searchfield-wrapper.has-close-icon-button {
+            @media(max-width: ($breakpoint-big-phone + 39)) {
+              width: calc(100% - 45px) !important;
+            }
+          }
+        }
+      }
+      .title {
+        @media(max-width: ($breakpoint-phone-to-tablet - 1)) {
+          width: auto !important;
+        }
+
+        + .buttonset {
+          @media(max-width: ($breakpoint-phone-to-tablet - 1)) {
+            width: calc(100% - 15px) !important;
           }
         }
       }
@@ -137,7 +160,7 @@
   .close-button {
     display: inline-block;
 
-    @media (max-width: $breakpoint-big-phone - 20) {
+    @media (max-width: ($breakpoint-big-phone - 20)) {
       min-width: 50px;
     }
 
@@ -147,7 +170,7 @@
     }
 
     span {
-      @media (max-width: $breakpoint-big-phone - 20) {
+      @media (max-width: ($breakpoint-big-phone - 20)) {
         display: none;
       }
     }
