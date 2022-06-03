@@ -1,6 +1,6 @@
-<div id="list-detail-container" class="list-detail two-column page-container fixed" data-options='{ "listElement": "#task-listview", "detailElement": "#maincontent", "backElement": "#header-hamburger" }'>
+<div id="list-detail-container" class="list-detail two-column page-container scrollable fixed" data-options='{ "listElement": "#task-listview", "detailElement": "#maincontent", "backElement": "#header-hamburger" }'>
 
-  <div class="sidebar" role="complementary">
+  <div class="sidebar no-scroll" role="complementary">
     <header class="header is-personalizable">
       <div class="toolbar">
         <div class="title">
@@ -9,7 +9,7 @@
       </div>
     </header>
 
-    <div class="listview scrollable" id="task-listview" data-options="{'source': '{{basepath}}api/inventory-tasks', 'template': 'task-tmpl', 'pagesize': 6, 'paging': true}"></div>
+    <div class="paginated listview scrollable" id="task-listview" data-options="{'source': '{{basepath}}api/inventory-tasks', 'template': 'task-tmpl', 'pagesize': 6, 'paging': true}"></div>
   </div>
 
   <div id="maincontent" class="main" role="main">
@@ -21,7 +21,7 @@
           <button id="header-hamburger" class="btn-icon list-detail-back-button go-back" type="button">
             <span class="audible">Show navigation</span>
             <span class="icon app-header">
-              <span class="one"></span>
+            <span class="one"></span>
               <span class="two"></span>
               <span class="three"></span>
             </span>
@@ -34,7 +34,7 @@
       </div>
     </header>
 
-    <div class="page-container scrollable">
+    <div class="page-container">
       <div id="regular-toolbar-example" class="toolbar" role="toolbar">
         <div class="title">
           Toolbar Title

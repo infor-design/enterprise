@@ -1,5 +1,15 @@
 # What's New with Enterprise
 
+## v4.65.0
+
+### v4.65.0 Important Notes
+
+## v4.65.0 Features
+
+## v4.65.0 Fixes
+
+- `[Page-Patterns]` Fixed a bug where the header disappears when the the last item in the list is clicked and the browser is smaller in Chrome and Edge. ([#6328](https://github.com/infor-design/enterprise/issues/6328))
+
 ## v4.64.0
 
 ### v4.64.0 Important Notes
