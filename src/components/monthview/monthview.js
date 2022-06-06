@@ -533,7 +533,6 @@ MonthView.prototype = {
         const lastday = enddate.getDay();
 
         legend.dayOfWeek.forEach((day) => {
-          let end = lastdate - (lastday + 1);
           let td;
 
           if (lastday === day) {
@@ -544,10 +543,9 @@ MonthView.prototype = {
             self.setLegendColor(td, year, month, lastdate - (lastday - day));
           }
 
-          while (end > 0) {
-            td = self.days.find(`td[data-key=${stringUtils.padDate(year, month, end - (lastday + 1))}]`);
-            self.setLegendColor(td, year, month, end - (lastday + 1));
-            end -= 7;
+          for (let next = lastdate - (lastday + 1); next - (6 - day) > 0; next -= 7) {
+            td = self.days.find(`td[data-key=${stringUtils.padDate(year, month, next - (6 - day))}]`);
+            self.setLegendColor(td, year, month, next - (6 - day));
           }
         });
       }
