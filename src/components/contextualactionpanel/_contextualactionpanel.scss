@@ -82,7 +82,7 @@
 
         + .buttonset {
           @media(max-width: ($breakpoint-phone-to-tablet - 1)) {
-            width: calc(100% - 15px) !important;
+            width: calc(100% - 5px) !important;
           }
         }
       }

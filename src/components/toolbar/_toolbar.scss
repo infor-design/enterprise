@@ -18,6 +18,10 @@ $toolbar-buttonset-height: 40px;
   .toolbar-searchfield-wrapper {
     margin-top: 1px;
 
+    @media(max-width: $breakpoint-phone-to-tablet) {
+      overflow: hidden;
+    }
+
     &.has-close-icon-button {
       @media(max-width: $breakpoint-phone-to-tablet) {
         overflow: hidden;
