@@ -458,8 +458,9 @@ Bar.prototype = {
         });
       })
       .attr('role', 'listitem')
-      .attr('aria-label', (d, i) => `${s.dataset[0].data[i].name}`)
+      .attr('aria-label', 'item value')
       .attr('class', (d, i) => `bar series-${i}`)
+      .attr('aria-hidden', true)
       .style('fill', (d, i) => (s.isStacked ? // eslint-disable-line
         (series.length === 1 ? (charts.chartColor(i, 'bar-single', d)) :  // eslint-disable-line
           (charts.chartColor(d.index, 'bar', series[d.index]))) : // eslint-disable-line
@@ -721,8 +722,12 @@ Bar.prototype = {
       });
 
     // Adjust the labels
-    self.svg.selectAll('.axis.y text').attr('x', () => (self.isRTL ? (isAxisLabels.atLeastOne ? 5 : 15) : (isAxisLabels.atLeastOne ? -5 : -15)));
-    self.svg.selectAll('.axis.x text').attr('class', d => (d < 0 ? 'negative-value' : 'positive-value'));
+    self.svg.selectAll('.axis.y text')
+      .attr('aria-hidden', true)
+      .attr('x', () => (self.isRTL ? (isAxisLabels.atLeastOne ? 5 : 15) : (isAxisLabels.atLeastOne ? -5 : -15)));
+    self.svg.selectAll('.axis.x text')
+      .attr('aria-hidden', true)
+      .attr('class', d => (d < 0 ? 'negative-value' : 'positive-value'));
 
     if (self.isRTL && (charts.isIE || charts.isIEEdge)) {
       self.svg.selectAll('text').attr('transform', 'scale(-1, 1)');
