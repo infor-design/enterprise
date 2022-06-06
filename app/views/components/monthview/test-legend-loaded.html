@@ -28,7 +28,7 @@
       const febLegend = [
         { name: 'Other', color: 'ruby03', dates: ['2/8/2017', '2/9/2017', '2/23/2017'] }
       ]
-      loadLegend(febLegend);
+      setTimeout(() => loadLegend(febLegend), 500);
     })
 
     monthviewAPI = monthviewEl.data('monthview');
@@ -50,5 +50,5 @@
     }
 
   });
-  
+
 </script>
