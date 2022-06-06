@@ -512,6 +512,8 @@ MonthView.prototype = {
     const month = this.currentMonth;
     const year = this.currentYear;
 
+    this.days.find('td').removeClass('is-colored');
+
     legendList.forEach((legend) => {
       if (legend.dates) {
         legend.dates.forEach((date) => {

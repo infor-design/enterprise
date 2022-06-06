@@ -47,6 +47,7 @@
 - `[Modal]` Fixed bug where popup goes behind modal when in application menu in resizable mode. ([NG#1272](https://github.com/infor-design/enterprise-ng/issues/1272))
 - `[Modal]` Fixed bug where popup goes behind modal when in application menu in resizable mode. ([NG#1272](https://github.com/infor-design/enterprise-ng/issues/1272))
 - `[Monthview]` Fixed bug where monthview duplicates on updating legends. ([NG#1305](https://github.com/infor-design/enterprise-ng/issues/1305))
+- `[Personalization]` Fixed bug where the dark mode header color was not correct in the tokens and caused the personalization dropdown to be incorrect. ([#6446](https://github.com/infor-design/enterprise/issues/6446))
 - `[Tabs]` Fixed memory leak in tabs component. ([NG#1286](https://github.com/infor-design/enterprise-ng/issues/1286))
 - `[Tabs]` Fixed a bug where tab focus indicator is not aligned properly in RTL composite forms. ([#6464](https://github.com/infor-design/enterprise/issues/6464))
 - `[Targeted-Achievement]` Fixed a bug where the icon is cut off in Firefox. ([#6400](https://github.com/infor-design/enterprise/issues/6400))
