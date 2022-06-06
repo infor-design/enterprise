@@ -18,22 +18,18 @@
       month: 0,
       year: 2017,
       showLegend: true,
-      legend: [
-        { name: 'Public Holiday', color: 'emerald06', dates: ['1/1/2017', '1/2/2017', '1/12/2017'] },
-        { name: 'Weekends', color: 'amber06', dayOfWeek: [0, 6] },
-        { name: 'Other', color: 'ruby03', dates: ['1/8/2017', '1/9/2017', '1/23/2017'] },
-        { name: 'Half Days', color: 'amethyst06', dates: ['1/21/2017', '1/22/2017'] },
-        { name: 'Full Days', color: 'azure03', dates: ['1/24/2017', '1/25/2017'] }
-      ]
+      legend: []
     }).on('beforemonthrendered', (e) => {
       console.log('beforemonthrendered', e);
+    }).on('aftermonthrendered', (e) => {
+      console.log('aftermonthrendered', e);
+    }).on('monthrendered', (e) => {
+      console.log('monthrendered', e);
       const febLegend = [
         { name: 'Other', color: 'ruby03', dates: ['2/8/2017', '2/9/2017', '2/23/2017'] }
       ]
       loadLegend(febLegend);
-    }).on('aftermonthrendered', (e) => {
-      console.log('aftermonthrendered', e);
-    });
+    })
 
     monthviewAPI = monthviewEl.data('monthview');
 
