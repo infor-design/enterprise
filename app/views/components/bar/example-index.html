@@ -40,10 +40,12 @@ $('body').on('initialized', function () {
            { name: 'data-automation-id', value: 'automation-id-bar-c' }
          ]
       }],
-      name: ''  //Can be optionally passed in makes less sense with one: Group 1
+      name: 'Categories'  //Can be optionally passed in makes less sense with one: Group 1
     }];
 
   $('#bar-example').chart({type: 'bar', dataset: dataset, animate: false});
+
+  $('.widget').addClass('auto-height');
 
 });
 </script>

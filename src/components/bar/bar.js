@@ -300,7 +300,7 @@ Bar.prototype = {
       .append('svg')
       .attr('width', w + (isAxisLabels.atLeastOne ? 20 : 0))
       .attr('height', h + (isAxisLabels.atLeastOne ? 5 : 0))
-      .attr('title', `${s.type}`)
+      .attr('title', 'chart')
       .append('g')
       .attr('class', 'group')
       .attr('transform', `translate(${textWidth},${margins.top - (isAxisLabels.atLeastOne ? 3 : 0)})`);
@@ -427,6 +427,7 @@ Bar.prototype = {
       .append('g')
       .attr('class', 'series-group')
       .attr('role', 'list')
+      .attr('title', `${s.type}`)
       .attr('aria-label', `${s.dataset[0].name ? s.dataset[0].name : 'Name Label'}`)
       .attr('data-group-id', (d, i) => i);
 
