@@ -25,7 +25,7 @@
       ]
     }).on('beforemonthrendered', (e) => {
       console.log('beforemonthrendered', e);
-      loadLegend();
+      setTimeout(() => loadLegend(), 500);
     }).on('aftermonthrendered', (e) => {
       console.log('aftermonthrendered', e);
     });
@@ -39,5 +39,5 @@
       monthviewAPI.loadLegend(febLegend);
     }
   });
-  
+
 </script>
