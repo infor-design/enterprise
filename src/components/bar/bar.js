@@ -300,7 +300,6 @@ Bar.prototype = {
       .append('svg')
       .attr('width', w + (isAxisLabels.atLeastOne ? 20 : 0))
       .attr('height', h + (isAxisLabels.atLeastOne ? 5 : 0))
-      .attr('title', 'chart')
       .append('g')
       .attr('class', 'group')
       .attr('transform', `translate(${textWidth},${margins.top - (isAxisLabels.atLeastOne ? 3 : 0)})`);
