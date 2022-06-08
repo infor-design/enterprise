@@ -105,6 +105,14 @@ body.no-scroll {
     }
   }
 
+  &.list-detail {
+    > .sidebar {
+      &.scrollable {
+        overflow-y: hidden;
+      }  
+    }
+  }
+
   > .sidebar {
     background-color: $body-color-primary-background;
     border-right: 1px solid $panel-border-color;
