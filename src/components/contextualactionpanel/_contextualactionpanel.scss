@@ -78,7 +78,7 @@
     .toolbar {
       &.searchfield-active {
         .title + .buttonset {
-          .toolbar-searchfield-wrapper.has-close-icon-button {
+          .toolbar-searchfield-wrapper {
             @media (max-width: ($breakpoint-big-phone + 39)) {
               width: calc(100% - 45px) !important;
             }
