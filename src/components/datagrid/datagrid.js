@@ -12395,10 +12395,10 @@ Datagrid.prototype = {
 
       tooltip = { content: '', wrapper: elem.querySelector('.datagrid-cell-wrapper') };
       let columnSettings;
-
       const elemIndex = $(elem).index();
+
       if (isHeaderColumn) {
-        const columnId = columnHeader.attr('data-column-id');
+        const columnId = $(elem).attr('data-column-id');
         columnSettings = this.settings.columns[this.columnIdxById(columnId)];
       } else {
         const columnHeader = $(elem).closest('table').find('thead > tr > th').eq(elemIndex);
