@@ -97,6 +97,12 @@
           }
         }
       }
+
+      &:not(.searchfield-active) .toolbar-searchfield-wrapper {
+        .searchfield {
+          padding-right: 0;
+        }
+      }
     }
   }
 
