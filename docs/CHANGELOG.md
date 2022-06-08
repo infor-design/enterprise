@@ -6,6 +6,8 @@
 
 ## v4.65.0 Features
 
+- `[Datagrid]` Added tooltipOption settings for columns. ([#6361](https://github.com/infor-design/enterprise/issues/6361))
+
 ## v4.65.0 Fixes
 
 - `[Accordion]` Fixed the bottom border of the completely disabled accordion in dark mode. ([#6406](https://github.com/infor-design/enterprise/issues/6406))
