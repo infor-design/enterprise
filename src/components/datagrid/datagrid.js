@@ -12394,6 +12394,17 @@ Datagrid.prototype = {
       let title;
 
       tooltip = { content: '', wrapper: elem.querySelector('.datagrid-cell-wrapper') };
+      let columnSettings;
+      const elemIndex = $(elem).index();
+
+      if (isHeaderColumn) {
+        const columnId = $(elem).attr('data-column-id');
+        columnSettings = this.settings.columns[this.columnIdxById(columnId)];
+      } else {
+        const columnHeader = $(elem).closest('table').find('thead > tr > th').eq(elemIndex);
+        const columnId = columnHeader.attr('data-column-id');
+        columnSettings = this.settings.columns[this.columnIdxById(columnId)];
+      }
 
       if (isTh || isHeaderColumn || isHeaderFilter) {
         tooltip.wrapper = elem;
@@ -12534,6 +12545,20 @@ Datagrid.prototype = {
           tooltip.forced = true;
         }
       }
+
+      if (columnSettings.tooltipOptions) {
+        if (columnSettings.tooltipOptions.placement) {
+          tooltip.placement = columnSettings.tooltipOptions.placement;
+        }
+
+        if (columnSettings.tooltipOptions.x) {
+          tooltip.x = columnSettings.tooltipOptions.x;
+        }
+
+        if (columnSettings.tooltipOptions.y) {
+          tooltip.y = columnSettings.tooltipOptions.y;
+        }
+      }
     }
 
     elem = elem instanceof jQuery ? elem : $(elem);
@@ -12571,8 +12596,8 @@ Datagrid.prototype = {
 
         const distance = typeof options.distance === 'number' ? options.distance : 0;
         const placeOptions = {
-          x: 0,
-          y: distance,
+          x: options.x || 0,
+          y: options.y || distance,
           container: this.element.closest('.page-container.scrollable') || $('body'),
           containerOffsetX: options.wrapper.offsetLeft,
           containerOffsetY: options.wrapper.offsetTop,
