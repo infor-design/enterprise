@@ -7,10 +7,14 @@
 ## v4.65.0 Features
 
 - `[Bar]` Enhanced the VPAT accessibility in bar chart. ([#6074](https://github.com/infor-design/enterprise/issues/6074))
+- `[Datagrid]` Added tooltipOption settings for columns. ([#6361](https://github.com/infor-design/enterprise/issues/6361))
 
 ## v4.65.0 Fixes
 
 - `[Accordion]` Fixed the bottom border of the completely disabled accordion in dark mode. ([#6406](https://github.com/infor-design/enterprise/issues/6406))
+- `[ContextualActionPanel]` Fixed a bug where the toolbar searchfield with close icon looks off on mobile viewport. ([#6448](https://github.com/infor-design/enterprise/issues/6448))
+- `[Page-Patterns]` Fixed a bug where the header disappears when the the last item in the list is clicked and the browser is smaller in Chrome and Edge. ([#6328](https://github.com/infor-design/enterprise/issues/6328))
+- `[Locale]` Added montnly translations. ([#6556](https://github.com/infor-design/enterprise/issues/6556))
 
 ## v4.64.0
 
@@ -57,6 +61,8 @@
 - `[Locale]` Fixed incorrect data in `ms-my`, `nn-No` and `nb-NO`. ([#6472](https://github.com/infor-design/enterprise/issues/6472))
 - `[Lookup]` Fixed bug where lookup still appeared when modal closes. ([#6218](https://github.com/infor-design/enterprise/issues/6218))
 - `[Modal]` Fixed bug where popup goes behind modal when in application menu in resizable mode. ([NG#1272](https://github.com/infor-design/enterprise-ng/issues/1272))
+- `[Modal]` Fixed bug where popup goes behind modal when in application menu in resizable mode. ([NG#1272](https://github.com/infor-design/enterprise-ng/issues/1272))
+- `[Monthview]` Fixed bug where monthview duplicates on updating legends. ([NG#1305](https://github.com/infor-design/enterprise-ng/issues/1305))
 - `[Personalization]` Fixed bug where the dark mode header color was not correct in the tokens and caused the personalization dropdown to be incorrect. ([#6446](https://github.com/infor-design/enterprise/issues/6446))
 - `[Tabs]` Fixed memory leak in tabs component. ([NG#1286](https://github.com/infor-design/enterprise-ng/issues/1286))
 - `[Tabs]` Fixed a bug where tab focus indicator is not aligned properly in RTL composite forms. ([#6464](https://github.com/infor-design/enterprise/issues/6464))

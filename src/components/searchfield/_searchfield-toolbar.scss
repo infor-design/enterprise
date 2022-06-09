@@ -420,7 +420,8 @@ $toolbarsearchfield-category-empty-width: 51px;
   }
 
   &:not(.active) {
-    .btn-icon.close {
+    .btn-icon.close,
+    .icon.close {
       display: none;
     }
   }
