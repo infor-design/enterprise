@@ -1470,7 +1470,7 @@ DatePicker.prototype = {
         s.range.first.date = d;
         s.range.second.date = d;
 
-        if (s.range.end) {
+        if (s.range.end && date) {
           if (typeof s.range.end === 'string') {
             s.range.second.date = Locale.parseDate(s.range.end, {
               pattern: this.pattern,
