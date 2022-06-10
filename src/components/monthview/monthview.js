@@ -504,7 +504,6 @@ MonthView.prototype = {
     }
 
     this.settings.legend = legendList;
-    this.legend.empty();
     this.addLegend();
 
     // set legend color in dates
@@ -1493,7 +1492,7 @@ MonthView.prototype = {
   /* eslint-disable consistent-return */
   getLegendColor(year, month, date) {
     const s = this.settings;
-    if (!s.showLegend) {
+    if (!s.showLegend || !s.legend) {
       return;
     }
 
@@ -2484,16 +2483,16 @@ MonthView.prototype = {
    */
   addLegend() {
     const s = this.settings;
-    if (!s.showLegend) {
+    if (!s.showLegend || !s.legend) {
       return;
     }
 
     // Remove Legend
     if (this.legend && this.legend.length) {
-      this.legend.remove();
+      this.legend.empty();
+    } else {
+      this.legend = $('<div class="monthview-legend"></div>');
     }
-
-    this.legend = $('<div class="monthview-legend"></div>');
 
     for (let i = 0; i < s.legend.length; i++) {
       const series = s.legend[i];
