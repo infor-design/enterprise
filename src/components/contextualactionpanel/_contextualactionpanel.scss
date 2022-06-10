@@ -37,11 +37,11 @@
             vertical-align: middle;
             white-space: nowrap;
 
-            @media (min-width: $breakpoint-big-phone + 1) {
+            @media (min-width: ($breakpoint-big-phone + 1)) {
               width: 150px;
             }
 
-            @media (min-width: $breakpoint-phablet + 1) {
+            @media (min-width: ($breakpoint-phablet + 1)) {
               width: 250px;
             }
 
@@ -52,15 +52,55 @@
         }
 
         &.buttonset {
-          @media (max-width: $breakpoint-slim - 25) {
+          @media (max-width: ($breakpoint-slim - 25)) {
             width: 100%;
           }
         }
 
         .separator {
-          @media (max-width: $breakpoint-big-phone - 20) {
+          @media (max-width: ($breakpoint-big-phone - 20)) {
             margin: 3px 0 0;
           }
+        }
+      }
+
+      &.has-close-button {
+        .toolbar-section.search {
+          .toolbar-searchfield-wrapper {
+            @media (max-width: ($breakpoint-phone-to-tablet - 1)) {
+              overflow: hidden;
+            }
+          }
+        }
+      }
+    }
+
+    .toolbar {
+      &.searchfield-active {
+        .title + .buttonset {
+          .toolbar-searchfield-wrapper {
+            @media (max-width: ($breakpoint-big-phone + 39)) {
+              width: calc(100% - 45px) !important;
+            }
+          }
+        }
+      }
+
+      .title {
+        @media (max-width: ($breakpoint-phone-to-tablet - 1)) {
+          width: auto !important;
+        }
+
+        + .buttonset {
+          @media (max-width: ($breakpoint-phone-to-tablet - 1)) {
+            width: calc(100% - 5px) !important;
+          }
+        }
+      }
+
+      &:not(.searchfield-active) .toolbar-searchfield-wrapper {
+        .searchfield {
+          padding-right: 0;
         }
       }
     }
@@ -80,7 +120,7 @@
       font-size: $ids-size-font-lg;
       height: inherit;
       margin-left: 15px;
-      margin-top: 1px;
+      top: 0;
     }
 
     .separator {
@@ -137,7 +177,7 @@
   .close-button {
     display: inline-block;
 
-    @media (max-width: $breakpoint-big-phone - 20) {
+    @media (max-width: ($breakpoint-big-phone - 20)) {
       min-width: 50px;
     }
 
@@ -147,7 +187,7 @@
     }
 
     span {
-      @media (max-width: $breakpoint-big-phone - 20) {
+      @media (max-width: ($breakpoint-big-phone - 20)) {
         display: none;
       }
     }

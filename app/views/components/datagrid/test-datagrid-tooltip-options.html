@@ -1,0 +1,39 @@
+{{={{{ }}}=}}
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+
+    Locale.set('en-US').done(function () {
+        var grid,
+          columns = [],
+          data = [];
+
+        // Define Some Sample Data
+        data.push({ id: 1, reviewType: 2241202, columnSelected: 'Different Compressor 1', quantity: 2});
+        data.push({ id: 2, reviewType: 2241204, columnSelected: 'Different Compressor 2', quantity: 12});
+        data.push({ id: 3, reviewType: 2241206, columnSelected: 'Different Compressor 3', quantity: 24});
+
+        columns.push({ id: 'reviewType', name: 'Review Type', field: 'reviewType', tooltip: 'This is a Review Type', headerTooltip: 'This is the review header', tooltipOptions: { placement: 'bottom'}});
+        columns.push({ id: 'columnSelected', name: 'Column Selected', field: 'columnSelected', tooltip: 'This is a Column Selected', headerTooltip: 'This is the column header', tooltipOptions: { placement: 'left'}});
+        columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', tooltip: 'This is a quantity', headerTooltip: 'This is the quantity header', tooltipOptions: { placement: 'right', x: -40, y: 10 }});
+
+        //Init the grid
+        $('#datagrid').datagrid({
+          columns: columns,
+          dataset: data,
+          selectable: 'single',
+          enableTooltips: true,
+          toolbar: {title: 'Data Grid Header Title', personalize: true, results: true, actions: true, rowHeight: true, selectCount: true}
+        });
+    });
+  });
+
+</script>
