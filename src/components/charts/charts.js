@@ -330,8 +330,7 @@ charts.addLegend = function (series, chartType, settings, container) {
   let width = 0;
   let currentWidth;
   let totalWidth = 0;
-
-  let maxLength = series.length;
+  let maxLength;
 
   let currentTotalWidthPercent;
   for (i = 0; i < series.length; i++) {
@@ -348,10 +347,9 @@ charts.addLegend = function (series, chartType, settings, container) {
   width += 55;
   const widthPercent = width / $(container).width() * 100;
   const exceedsMaxWidth = widthPercent > 45;
+  const isBottom = series[0].placement && series[0].placement === 'bottom';
 
-  const isBottom = exceedsMaxWidth || (series[0].placement && series[0].placement === 'bottom');
-
-  if (!exceedsMaxWidth) {
+  if (!(isBottom && exceedsMaxWidth)) {
     maxLength = series.length;
   }
 

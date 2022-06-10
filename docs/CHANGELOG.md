@@ -12,6 +12,7 @@
 
 - `[Accordion]` Fixed the bottom border of the completely disabled accordion in dark mode. ([#6406](https://github.com/infor-design/enterprise/issues/6406))
 - `[ContextualActionPanel]` Fixed a bug where the toolbar searchfield with close icon looks off on mobile viewport. ([#6448](https://github.com/infor-design/enterprise/issues/6448))
+- `[Chart]` Removed automatic legend bottom placement when reaching a minimum width. ([#6474](https://github.com/infor-design/enterprise/issues/6474))
 - `[Listview]` Fixed disabled font color not showing in listview. ([#6391](https://github.com/infor-design/enterprise/issues/6391))
 - `[Page-Patterns]` Fixed a bug where the header disappears when the the last item in the list is clicked and the browser is smaller in Chrome and Edge. ([#6328](https://github.com/infor-design/enterprise/issues/6328))
 - `[Locale]` Added montnly translations. ([#6556](https://github.com/infor-design/enterprise/issues/6556))
