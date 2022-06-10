@@ -729,7 +729,7 @@ Bar.prototype = {
           xScale(d.x0) + 1 : xScale(0) + 1;
       })
       .attr('y', d => (s.isStacked ? yScale(d.y) :
-        ((((totalGroupArea - totalHeight) / 2) + 15 + ((d.gindex * maxBarHeight) + (d.gindex * barSpace))) + (d.index * gap)))) // eslint-disable-line
+        ((((totalGroupArea - totalHeight) / 2) + ((d.gindex * maxBarHeight) + (d.gindex * barSpace))) + (d.index * gap)))) // eslint-disable-line
       .lower();
 
     // Make sure the default to get prevent not bubble up.
