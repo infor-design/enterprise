@@ -295,7 +295,7 @@ Toolbar.prototype = {
 
     // Setup the tabindexes of all items in the toolbar and set the starting active button.
     function setActiveToolbarItem() {
-      self.items.attr('tabindex', '-1');
+      self.items.attr('tabindex', '0');
 
       // Make the home button tabbable
       const homeButton = self.buttonset.children('button');

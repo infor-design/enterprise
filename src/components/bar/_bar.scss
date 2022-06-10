@@ -21,6 +21,12 @@
   &.bar-chart-grouped .chart-legend {
     margin-top: 5px;
   }
+
+  &.bar-chart {
+    svg .series-group g text.audible {
+      opacity: 0;
+    }
+  }
 }
 
 // RTL Styles

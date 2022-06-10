@@ -427,6 +427,7 @@ Bar.prototype = {
       .attr('class', 'series-group')
       .attr('role', 'list')
       .attr('title', `${s.type}`)
+      .attr('tabindex', '0')
       .attr('aria-label', `${s.dataset[0].name ? s.dataset[0].name : 'Name Label'}`)
       .attr('data-group-id', (d, i) => i);
 
@@ -448,6 +449,8 @@ Bar.prototype = {
         return d;
       })
       .enter()
+      .append('g')
+      .attr('role', 'listitem')
       .append('rect')
       .call((d) => {
         d._groups.forEach((bars) => {
@@ -457,7 +460,6 @@ Bar.prototype = {
           });
         });
       })
-      .attr('role', 'listitem')
       .attr('aria-label', 'item value')
       .attr('class', (d, i) => `bar series-${i}`)
       .attr('aria-hidden', true)
@@ -713,6 +715,22 @@ Bar.prototype = {
         // Run double click action
         self.doDoubleClickAction(d, i, selector);
       });
+
+    // Add text svg for VPAT accessibility
+    self.svg.selectAll('.series-group g')
+      .append('text')
+      .attr('class', 'audible')
+      .text((d, i) => `${s.dataset[0].data[i].name} ${s.dataset[0].data[i].value}`)
+      .attr('x', (d) => {
+        if (s.useLogScale) {
+          return 0;
+        }
+        return (s.isStacked && !s.isSingle) ?
+          xScale(d.x0) + 1 : xScale(0) + 1;
+      })
+      .attr('y', d => (s.isStacked ? yScale(d.y) :
+        ((((totalGroupArea - totalHeight) / 2) + 15 + ((d.gindex * maxBarHeight) + (d.gindex * barSpace))) + (d.index * gap)))) // eslint-disable-line
+      .lower();
 
     // Make sure the default to get prevent not bubble up.
     self.element
