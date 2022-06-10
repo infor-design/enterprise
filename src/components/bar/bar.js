@@ -720,7 +720,7 @@ Bar.prototype = {
     self.svg.selectAll('.series-group g')
       .append('text')
       .attr('class', 'audible')
-      .text((d, i) => `${s.dataset[0].data[i].name} ${s.dataset[0].data[i].value}`)
+      .text((d, i) => `${s.dataset[0].data[i]?.name} ${s.dataset[0].data[i]?.value}`)
       .attr('x', (d) => {
         if (s.useLogScale) {
           return 0;
