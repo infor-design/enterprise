@@ -205,7 +205,7 @@ ModalManager.prototype = {
       opacity = this.currentlyActive.settings.overlayOpacity;
     }
 
-    this.overlayElem.style.opacity = opacity ? `${opacity}` : '';
+    this.overlayElem.style.background = `rgba(0, 0, 0, ${opacity ? `${opacity}` : ''})`;
   },
 
   /**
