@@ -7899,6 +7899,7 @@ Datagrid.prototype = {
       this.settings.dataset.map((row) => { delete row._selected; }); //eslint-disable-line
       return;
     }
+    console.trace('unselect')
     this.dontSyncUi = true;
     // Unselect each row backwards so the indexes are correct
     for (let i = this._selectedRows.length - 1; i >= 0; i--) {
@@ -12825,9 +12826,10 @@ Datagrid.prototype = {
   /**
   * Update the datagrid and optionally apply new settings.
   * @param  {object} settings the settings to update to.
+  * @param  {object} pagingInfo information about the pager state
   * @returns {object} The plugin api for chaining.
   */
-  updated(settings) {
+  updated(settings, pagingInfo) {
     this.settings = utils.mergeSettings(this.element, settings, this.settings);
 
     if (this.pagerAPI && typeof this.pagerAPI.destroy === 'function') {
@@ -12848,7 +12850,8 @@ Datagrid.prototype = {
       this.settings.columns = settings.columns;
     }
 
-    this.render();
+    this.render(null, pagingInfo);
+    this.renderHeader();
     this.handlePaging();
 
     return this;
