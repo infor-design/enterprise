@@ -7899,7 +7899,7 @@ Datagrid.prototype = {
       this.settings.dataset.map((row) => { delete row._selected; }); //eslint-disable-line
       return;
     }
-    console.trace('unselect')
+
     this.dontSyncUi = true;
     // Unselect each row backwards so the indexes are correct
     for (let i = this._selectedRows.length - 1; i >= 0; i--) {
