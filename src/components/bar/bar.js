@@ -437,7 +437,7 @@ Bar.prototype = {
     const delay = 200;
     let prevent = false;
     let timer = 0;
-    groups.selectAll('rect')
+    let sGroup = groups.selectAll('rect')
       .data((d, i) => {
         d.forEach((rectData) => {
           rectData.index = i;
@@ -448,10 +448,15 @@ Bar.prototype = {
         });
         return d;
       })
-      .enter()
-      .append('g')
-      .attr('role', 'listitem')
-      .append('rect')
+      .enter();
+
+    if (!this.settings.isGrouped) {
+      sGroup = sGroup
+        .append('g')
+        .attr('role', 'listitem');
+    }
+
+    sGroup.append('rect')
       .call((d) => {
         d._groups.forEach((bars) => {
           bars.forEach((bar) => {
@@ -716,21 +721,23 @@ Bar.prototype = {
         self.doDoubleClickAction(d, i, selector);
       });
 
-    // Add text svg for VPAT accessibility
-    self.svg.selectAll('.series-group g')
-      .append('text')
-      .attr('class', 'audible')
-      .text((d, i) => `${s.dataset[0].data[i]?.name} ${s.dataset[0].data[i]?.value}`)
-      .attr('x', (d) => {
-        if (s.useLogScale) {
-          return 0;
-        }
-        return (s.isStacked && !s.isSingle) ?
-          xScale(d.x0) + 1 : xScale(0) + 1;
-      })
-      .attr('y', d => (s.isStacked ? yScale(d.y) :
-        ((((totalGroupArea - totalHeight) / 2) + ((d.gindex * maxBarHeight) + (d.gindex * barSpace))) + (d.index * gap)))) // eslint-disable-line
-      .lower();
+    if (!this.settings.isGrouped) {
+      // Add text svg for VPAT accessibility
+      self.svg.selectAll('.series-group g')
+        .append('text')
+        .attr('class', 'audible')
+        .text((d, i) => `${s.dataset[0].data[i]?.name} ${s.dataset[0].data[i]?.value}`)
+        .attr('x', (d) => {
+          if (s.useLogScale) {
+            return 0;
+          }
+          return (s.isStacked && !s.isSingle) ?
+            xScale(d.x0) + 1 : xScale(0) + 1;
+        })
+        .attr('y', d => (s.isStacked ? yScale(d.y) :
+          ((((totalGroupArea - totalHeight) / 2) + ((d.gindex * maxBarHeight) + (d.gindex * barSpace))) + (d.index * gap)))) // eslint-disable-line
+        .lower();
+    }
 
     // Make sure the default to get prevent not bubble up.
     self.element
