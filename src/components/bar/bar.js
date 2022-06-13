@@ -302,6 +302,7 @@ Bar.prototype = {
       .attr('height', h + (isAxisLabels.atLeastOne ? 5 : 0))
       .append('g')
       .attr('class', 'group')
+      .attr('aria-label', `${s.dataset[0].name ? s.dataset[0].name : 'Name Group'}`)
       .attr('transform', `translate(${textWidth},${margins.top - (isAxisLabels.atLeastOne ? 3 : 0)})`);
 
     const xMin = d3.min(dataset, g => (d3.min(g, d => (s.isStacked ? (d.x + d.x0) : d.x))));
