@@ -6,6 +6,7 @@
 
 ## v4.65.0 Features
 
+- `[Bar Chart]` Added puppeteer script for axis labels test. ([#6551](https://github.com/infor-design/enterprise/issues/6551))
 - `[Datagrid]` Added tooltipOption settings for columns. ([#6361](https://github.com/infor-design/enterprise/issues/6361))
 
 ## v4.65.0 Fixes
