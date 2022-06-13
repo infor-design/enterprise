@@ -427,7 +427,7 @@ Bar.prototype = {
       .attr('class', 'series-group')
       .attr('role', 'list')
       .attr('title', `${s.type}`)
-      .attr('tabindex', '0')
+      .attr('tabindex', 0)
       .attr('aria-label', `${s.dataset[0].name ? s.dataset[0].name : 'Name Label'}`)
       .attr('data-group-id', (d, i) => i);
 

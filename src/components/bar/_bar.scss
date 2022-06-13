@@ -23,6 +23,10 @@
   }
 
   &.bar-chart {
+    .series-group {
+      outline: none; // removing the focus style when clicking specific bar
+    }
+
     svg .series-group g text.audible {
       opacity: 0;
     }
