@@ -383,7 +383,8 @@
     @include unselectable;
   }
 
-  .is-disabled {
+  .is-disabled,
+  .is-disabled p {
     @include unselectable;
 
     color: $listview-disabled-color;
