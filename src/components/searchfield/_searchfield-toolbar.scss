@@ -1033,6 +1033,10 @@ html[dir='rtl'] {
     top: 50%;
     transform: translateY(-50%);
 
+    @media (min-width: $breakpoint-tablet-reduced) {
+      right: 15%;
+    }
+
     svg.close {
       display: block;
       top: 0 !important;
@@ -1049,6 +1053,16 @@ html[dir='rtl'] {
 
     button.close:not(.is-empty) {
       right: 32px;
+    }
+  }
+
+  @media (min-width: $breakpoint-tablet-reduced) {
+    &.has-go-button.has-text {
+      width: auto !important;
+
+      .searchfield {
+        width: auto !important;
+      }
     }
   }
 }
