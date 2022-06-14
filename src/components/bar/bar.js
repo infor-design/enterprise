@@ -306,7 +306,7 @@ Bar.prototype = {
       .attr('transform', `translate(${textWidth},${margins.top - (isAxisLabels.atLeastOne ? 3 : 0)})`);
 
     // Adding title for accessibility
-    if (self.settings.isSingle) {
+    if (self.settings.type === 'bar') {
       self.svg.append('title');
       self.svg.append('title').text('Bar Chart');
     }
