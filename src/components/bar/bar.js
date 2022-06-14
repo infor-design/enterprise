@@ -306,7 +306,7 @@ Bar.prototype = {
       .attr('transform', `translate(${textWidth},${margins.top - (isAxisLabels.atLeastOne ? 3 : 0)})`);
 
     // Adding title for accessibility
-    if (!self.settings.isGrouped) {
+    if (self.settings.isSingle) {
       self.svg.append('title');
       self.svg.append('title').text('Bar Chart');
     }
@@ -457,7 +457,7 @@ Bar.prototype = {
       })
       .enter();
 
-    if (!this.settings.isGrouped) {
+    if (this.settings.isSingle) {
       sGroup = sGroup
         .append('g')
         .attr('role', 'listitem');
@@ -728,7 +728,7 @@ Bar.prototype = {
         self.doDoubleClickAction(d, i, selector);
       });
 
-    if (!this.settings.isGrouped) {
+    if (self.settings.isSingle) {
       // Add text svg for VPAT accessibility
       self.svg.selectAll('.series-group g')
         .append('text')
