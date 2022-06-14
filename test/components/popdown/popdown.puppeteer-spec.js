@@ -1,6 +1,6 @@
 const { checkDataAutomationID, checkIfElementHasFocused, checkIfElementExist } = require('../../helpers/e2e-utils.js');
 
-describe('Popdown Puppeteer Tests', () => {
+describe.skip('Popdown Puppeteer Tests', () => {
   describe('Index Tests', () => {
     const url = 'http://localhost:4000/components/popdown/example-index?layout=nofrills';
     beforeEach(async () => {
