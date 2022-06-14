@@ -149,7 +149,7 @@
 
 (40 Issues Solved This Release, Backlog Enterprise 191, Backlog Ng 42, 1101 Functional Tests, 1576 e2e Tests, 295 Puppeteer Tests)
 
-## v4.63.3 Fixes
+## v4.62.3 Fixes
 
 - `[Personalization]` Re-Fixed bug where the dark mode header color was not correct in the tokens and caused the personalization dropdown to be incorrect, classic theme was missed. ([#6446](https://github.com/infor-design/enterprise/issues/6446)
 
