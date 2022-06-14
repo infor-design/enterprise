@@ -19,6 +19,7 @@
 - `[Page-Patterns]` Fixed a bug where the header disappears when the the last item in the list is clicked and the browser is smaller in Chrome and Edge. ([#6328](https://github.com/infor-design/enterprise/issues/6328))
 - `[Locale]` Added monthly translations. ([#6556](https://github.com/infor-design/enterprise/issues/6556))
 - `[Modal]` Fixed an issue on some monitors where the overlay is too dim. ([#6566](https://github.com/infor-design/enterprise/issues/6566))
+- `[Validation]` Fixed a bug where the tooltip would show on the header when the message has actually been removed. ([#6547](https://github.com/infor-design/enterprise/issues/6547)
 
 ## v4.64.0
 
@@ -80,6 +81,10 @@
 - `[Validator]` Fixed a bug where toolbar error message still appears after error is removed. ([#6253](https://github.com/infor-design/enterprise/issues/6253))
 
 (61 Issues Solved This Release, Backlog Enterprise 219, Backlog Ng 41, 1100 Functional Tests, 1468 e2e Tests, 436 Puppeteer Tests)
+
+## v4.63.3 Fixes
+
+- `[Validation]` Fixed a bug where the tooltip would show on the header when the message has actually been removed. ([#6547](https://github.com/infor-design/enterprise/issues/6547)
 
 ## v4.63.2 Fixes
 
