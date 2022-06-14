@@ -81,26 +81,35 @@ $.fn.revealText = function (settings) {
   }
   const input = this;
   // Set the initial state
-  input.addClass(settings?.initialState === 'show' ? 'input-show-text' : 'input-hide-text');
-
   // Add a text span and click events
-  const textSpan = $(`<span class="input-hideshow-text">${Soho.Locale.translate(settings?.initialState === 'show' ? 'Hide' : 'Show')}</span>`); // eslint-disable-line
+  const textSpan = $(`<span class="input-hideshow-text"></span>`); // eslint-disable-line
   input.after(textSpan);
+
+  const showText = () => {
+    input.attr('type', 'text');
+    textSpan.text(Soho.Locale.translate('Hide')); // eslint-disable-line
+  }
+
+  const hideText = () => {
+    input.attr('type', 'password');
+    textSpan.text(Soho.Locale.translate('Show')); // eslint-disable-line
+  }
+  
+  if (settings?.initialState === 'show') {
+    showText();
+  } else {
+    hideText();
+  }
 
   // Handle Events
   const toggleText = () => {
-    const textHidden = input.hasClass('input-hide-text');
-    if (textHidden) {
-      input.removeClass('input-hide-text').addClass('input-show-text');
-      input.attr('type', 'text');
-      textSpan.text(Soho.Locale.translate('Hide')); // eslint-disable-line
+    if (input.attr('type') === 'text') {
+      hideText();
       return;
     }
 
-    input.removeClass('input-show-text').addClass('input-hide-text');
-    input.attr('type', 'text');
-    textSpan.text(Soho.Locale.translate('Show')); // eslint-disable-line
-  };
+    showText();
+  }
 
   textSpan.on('click', () => {
     toggleText();
