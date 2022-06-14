@@ -305,6 +305,12 @@ Bar.prototype = {
       .attr('aria-label', `${s.dataset[0].name ? s.dataset[0].name : 'Name Group'}`)
       .attr('transform', `translate(${textWidth},${margins.top - (isAxisLabels.atLeastOne ? 3 : 0)})`);
 
+    // Adding title for accessibility
+    if (!self.settings.isGrouped) {
+      self.svg.append('title');
+      self.svg.append('title').text('Bar Chart');
+    }
+
     const xMin = d3.min(dataset, g => (d3.min(g, d => (s.isStacked ? (d.x + d.x0) : d.x))));
     let xMax = d3.max(dataset, g => (d3.max(g, d => (s.isStacked ? (d.x + d.x0) : d.x))));
 
