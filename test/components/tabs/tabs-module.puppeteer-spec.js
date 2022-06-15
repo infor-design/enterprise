@@ -22,7 +22,7 @@ describe('Tabs module Puppeteer tests', () => {
   });
 
   describe('Tabs Module Searchfield close icon tests', () => {
-    const url = `${baseUrl}/components/tabs-module/example-category-searchfield.html`;
+    const url = `${baseUrl}/example-category-searchfield.html`;
 
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
