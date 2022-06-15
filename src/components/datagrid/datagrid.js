@@ -659,8 +659,8 @@ Datagrid.prototype = {
       pagingInfo.pagesize = this.settings.pagesize;
     }
     if (savePage) {
-      pagingInfo.activePage = this.settings.pagesize * this.pagerAPI.activePage >
-        this.settings.dataset.length ? 1 : this.pagerAPI.activePage;
+      const pages = Math.ceil(this.settings.dataset.length / this.settings.pagesize);
+      pagingInfo.activePage = this.pagerAPI.activePage > pages ? pages : this.pagerAPI.activePage;
     }
     this.renderPager(pagingInfo, true);
   },
