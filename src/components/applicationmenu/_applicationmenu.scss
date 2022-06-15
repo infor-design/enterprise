@@ -72,6 +72,10 @@ body.is-open-touch {
 
       right: 0;
     }
+
+    .page-container:last-child {
+      height: calc(100% - 60px);
+    }
   }
 }
 
