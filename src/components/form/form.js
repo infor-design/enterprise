@@ -82,7 +82,7 @@ $.fn.revealText = function (settings) {
   const input = this;
   // Set the initial state
   input.addClass(settings?.initialState === 'show' ? 'input-show-text' : 'input-hide-text');
-  
+
   // Add a text span and click events
   const textSpan = $(`<span class="input-hideshow-text">${Soho.Locale.translate(settings?.initialState === 'show' ? 'Hide' : 'Show')}</span>`); // eslint-disable-line
   input.after(textSpan);
