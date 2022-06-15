@@ -845,11 +845,13 @@ charts.setSelectedElement = function (o) {
         }
       }
     } else if (isTypeColumn || isBar) {
+      const barSelected = o.type === 'bar' ? `g[role=listitem]:nth-child(${o.i + 1}) .bar` : `.bar:nth-child(${o.i + 1})`;
+
       // Stacked Only
       svg.selectAll(`${isTypeColumn ? '.axis.x' : '.axis.y'} .tick:nth-child(${o.i + 2})`)
         .style('font-weight', 'bolder');
 
-      svg.selectAll(`.bar:nth-child(${o.i + 1})`)
+      svg.selectAll(`${barSelected}`)
         .classed('is-selected', true).style('opacity', 1);
 
       svg.selectAll('.bar.is-selected').each(function (d, i) {

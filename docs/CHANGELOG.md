@@ -6,18 +6,23 @@
 
 ## v4.65.0 Features
 
-- `[Bar Chart]` Added puppeteer script for axis labels test. ([#6551](https://github.com/infor-design/enterprise/issues/6551))
+- `[Bar]` Enhanced the VPAT accessibility in bar chart. ([#6074](https://github.com/infor-design/enterprise/issues/6074))
+- `[Bar]` Added puppeteer script for axis labels test. ([#6551](https://github.com/infor-design/enterprise/issues/6551))
 - `[Datagrid]` Added tooltipOption settings for columns. ([#6361](https://github.com/infor-design/enterprise/issues/6361))
 
 ## v4.65.0 Fixes
 
 - `[Accordion]` Fixed the bottom border of the completely disabled accordion in dark mode. ([#6406](https://github.com/infor-design/enterprise/issues/6406))
 - `[ContextualActionPanel]` Fixed a bug where the toolbar searchfield with close icon looks off on mobile viewport. ([#6448](https://github.com/infor-design/enterprise/issues/6448))
+- `[Datagrid]` Header is rerendered when calling updated method, also added paging info settings. ([#6476](https://github.com/infor-design/enterprise/issues/6476))
 - `[Chart]` Removed automatic legend bottom placement when reaching a minimum width. ([#6474](https://github.com/infor-design/enterprise/issues/6474))
+- `[Datagrid]` Fixed a bug where page changed to one on removing a row in datagrid. ([#6475](https://github.com/infor-design/enterprise/issues/6475))
 - `[Datepicker]` Fixed a bug where the datepicker is displaying NaN when using french format. ([NG#1273](https://github.com/infor-design/enterprise-ng/issues/1273))
 - `[Listview]` Fixed disabled font color not showing in listview. ([#6391](https://github.com/infor-design/enterprise/issues/6391))
 - `[Page-Patterns]` Fixed a bug where the header disappears when the the last item in the list is clicked and the browser is smaller in Chrome and Edge. ([#6328](https://github.com/infor-design/enterprise/issues/6328))
-- `[Locale]` Added montnly translations. ([#6556](https://github.com/infor-design/enterprise/issues/6556))
+- `[Locale]` Added monthly translations. ([#6556](https://github.com/infor-design/enterprise/issues/6556))
+- `[Modal]` Fixed an issue on some monitors where the overlay is too dim. ([#6566](https://github.com/infor-design/enterprise/issues/6566))
+- `[Validation]` Fixed a bug where the tooltip would show on the header when the message has actually been removed. ([#6547](https://github.com/infor-design/enterprise/issues/6547)
 
 ## v4.64.0
 
@@ -79,6 +84,10 @@
 - `[Validator]` Fixed a bug where toolbar error message still appears after error is removed. ([#6253](https://github.com/infor-design/enterprise/issues/6253))
 
 (61 Issues Solved This Release, Backlog Enterprise 219, Backlog Ng 41, 1100 Functional Tests, 1468 e2e Tests, 436 Puppeteer Tests)
+
+## v4.63.3 Fixes
+
+- `[Validation]` Fixed a bug where the tooltip would show on the header when the message has actually been removed. ([#6547](https://github.com/infor-design/enterprise/issues/6547)
 
 ## v4.63.2 Fixes
 
@@ -143,7 +152,7 @@
 
 (40 Issues Solved This Release, Backlog Enterprise 191, Backlog Ng 42, 1101 Functional Tests, 1576 e2e Tests, 295 Puppeteer Tests)
 
-## v4.63.3 Fixes
+## v4.62.3 Fixes
 
 - `[Personalization]` Re-Fixed bug where the dark mode header color was not correct in the tokens and caused the personalization dropdown to be incorrect, classic theme was missed. ([#6446](https://github.com/infor-design/enterprise/issues/6446)
 

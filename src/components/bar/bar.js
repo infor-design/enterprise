@@ -302,7 +302,14 @@ Bar.prototype = {
       .attr('height', h + (isAxisLabels.atLeastOne ? 5 : 0))
       .append('g')
       .attr('class', 'group')
+      .attr('aria-label', `${s.dataset[0].name ? s.dataset[0].name : 'Name Group'}`)
       .attr('transform', `translate(${textWidth},${margins.top - (isAxisLabels.atLeastOne ? 3 : 0)})`);
+
+    // Adding title for accessibility
+    if (self.settings.type === 'bar') {
+      self.svg.append('title');
+      self.svg.append('title').text('Bar Chart');
+    }
 
     const xMin = d3.min(dataset, g => (d3.min(g, d => (s.isStacked ? (d.x + d.x0) : d.x))));
     let xMax = d3.max(dataset, g => (d3.max(g, d => (s.isStacked ? (d.x + d.x0) : d.x))));
@@ -425,6 +432,10 @@ Bar.prototype = {
       .enter()
       .append('g')
       .attr('class', 'series-group')
+      .attr('role', 'list')
+      .attr('title', `${s.type}`)
+      .attr('tabindex', 0)
+      .attr('aria-label', `${s.dataset[0].name ? s.dataset[0].name : 'Name Label'}`)
       .attr('data-group-id', (d, i) => i);
 
     s.isGrouped = (self.svg.selectAll('.series-group').nodes().length > 1 && !s.isStacked) || (s.isGrouped && dataset.length === 1);
@@ -433,7 +444,7 @@ Bar.prototype = {
     const delay = 200;
     let prevent = false;
     let timer = 0;
-    groups.selectAll('rect')
+    let sGroup = groups.selectAll('rect')
       .data((d, i) => {
         d.forEach((rectData) => {
           rectData.index = i;
@@ -444,8 +455,15 @@ Bar.prototype = {
         });
         return d;
       })
-      .enter()
-      .append('rect')
+      .enter();
+
+    if (this.settings.isSingle) {
+      sGroup = sGroup
+        .append('g')
+        .attr('role', 'listitem');
+    }
+
+    sGroup.append('rect')
       .call((d) => {
         d._groups.forEach((bars) => {
           bars.forEach((bar) => {
@@ -454,7 +472,9 @@ Bar.prototype = {
           });
         });
       })
+      .attr('aria-label', 'item value')
       .attr('class', (d, i) => `bar series-${i}`)
+      .attr('aria-hidden', true)
       .style('fill', (d, i) => (s.isStacked ? // eslint-disable-line
         (series.length === 1 ? (charts.chartColor(i, 'bar-single', d)) :  // eslint-disable-line
           (charts.chartColor(d.index, 'bar', series[d.index]))) : // eslint-disable-line
@@ -708,6 +728,24 @@ Bar.prototype = {
         self.doDoubleClickAction(d, i, selector);
       });
 
+    if (self.settings.isSingle) {
+      // Add text svg for VPAT accessibility
+      self.svg.selectAll('.series-group g')
+        .append('text')
+        .attr('class', 'audible')
+        .text((d, i) => `${s.dataset[0].data[i]?.name} ${s.dataset[0].data[i]?.value}`)
+        .attr('x', (d) => {
+          if (s.useLogScale) {
+            return 0;
+          }
+          return (s.isStacked && !s.isSingle) ?
+            xScale(d.x0) + 1 : xScale(0) + 1;
+        })
+        .attr('y', d => (s.isStacked ? yScale(d.y) :
+          ((((totalGroupArea - totalHeight) / 2) + ((d.gindex * maxBarHeight) + (d.gindex * barSpace))) + (d.index * gap)))) // eslint-disable-line
+        .lower();
+    }
+
     // Make sure the default to get prevent not bubble up.
     self.element
       .off(`dblclick.${self.namespace}`)
@@ -716,8 +754,12 @@ Bar.prototype = {
       });
 
     // Adjust the labels
-    self.svg.selectAll('.axis.y text').attr('x', () => (self.isRTL ? (isAxisLabels.atLeastOne ? 5 : 15) : (isAxisLabels.atLeastOne ? -5 : -15)));
-    self.svg.selectAll('.axis.x text').attr('class', d => (d < 0 ? 'negative-value' : 'positive-value'));
+    self.svg.selectAll('.axis.y text')
+      .attr('aria-hidden', true)
+      .attr('x', () => (self.isRTL ? (isAxisLabels.atLeastOne ? 5 : 15) : (isAxisLabels.atLeastOne ? -5 : -15)));
+    self.svg.selectAll('.axis.x text')
+      .attr('aria-hidden', true)
+      .attr('class', d => (d < 0 ? 'negative-value' : 'positive-value'));
 
     if (self.isRTL && (charts.isIE || charts.isIEEdge)) {
       self.svg.selectAll('text').attr('transform', 'scale(-1, 1)');
