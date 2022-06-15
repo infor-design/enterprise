@@ -163,16 +163,18 @@ describe('Datagrid Puppeteer Tests', () => {
     });
   });
 
-  describe.only('Datagrid', () => {
+  describe('Datagrid', () => {
     const url = `${baseUrl}/test-update-column.html`;
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
     it('should refresh column', async () => {
-      await page.waitForSelector('.btn hide-focus');
-      await page.click('btn hide-focus');
-      await page.waitForSelector('.btn hide-focus .is-selected');
+      await page.waitForSelector('#load-activity');
+      const firstValue = await page.evaluate(() => document.getElementsByClassName('datagrid-cell-wrapper')[6].innerText)
+      await page.click('#load-activity');
+      const secondValue = await page.evaluate(() => document.getElementsByClassName('datagrid-cell-wrapper')[6].innerText)
+      expect(firstValue).not.toEqual(secondValue);
     });
   });
 });
