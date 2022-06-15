@@ -66,7 +66,7 @@ describe('DatePicker Aria', () => {
     }, 100);
   });
 
-  it(`should trigger monthrendered event`, (done) => {
+  it('should trigger monthrendered event', (done) => {
     const field = document.querySelector('#date-field-normal');
     field.value = '11/06/2018';
 
