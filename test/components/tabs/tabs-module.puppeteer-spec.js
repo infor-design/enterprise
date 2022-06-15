@@ -58,7 +58,7 @@ describe('Tabs module Puppeteer tests', () => {
     });
   });
 
-  describe.only('Tabs module new searchfield design tests', () => {
+  describe('Tabs module new searchfield design tests', () => {
     const url = `${baseUrl}/example-category-searchfield-go-button-home.html?theme=new&mode=light`;
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
