@@ -18,6 +18,7 @@
 - `[Chart]` Removed automatic legend bottom placement when reaching a minimum width. ([#6474](https://github.com/infor-design/enterprise/issues/6474))
 - `[Datagrid]` Fixed a bug where page changed to one on removing a row in datagrid. ([#6475](https://github.com/infor-design/enterprise/issues/6475))
 - `[Datepicker]` Fixed a bug where the datepicker is displaying NaN when using french format. ([NG#1273](https://github.com/infor-design/enterprise-ng/issues/1273))
+- `[Input]` Fixed a bug where the password does not show or hide in Firefox. ([#6481](https://github.com/infor-design/enterprise/issues/6481))
 - `[Listview]` Fixed disabled font color not showing in listview. ([#6391](https://github.com/infor-design/enterprise/issues/6391))
 - `[Page-Patterns]` Fixed a bug where the header disappears when the the last item in the list is clicked and the browser is smaller in Chrome and Edge. ([#6328](https://github.com/infor-design/enterprise/issues/6328))
 - `[Locale]` Added monthly translations. ([#6556](https://github.com/infor-design/enterprise/issues/6556))
