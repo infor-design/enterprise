@@ -87,6 +87,10 @@ $.fn.revealText = function (settings) {
   const textSpan = $(`<span class="input-hideshow-text">${Soho.Locale.translate(settings?.initialState === 'show' ? 'Hide' : 'Show')}</span>`); // eslint-disable-line
   input.after(textSpan);
 
+  if (input.hasClass('input-hide-text')) {
+    input.attr('type', 'password');
+  }
+
   // Handle Events
   const toggleText = () => {
     const textHidden = input.hasClass('input-hide-text');
@@ -98,7 +102,7 @@ $.fn.revealText = function (settings) {
     }
 
     input.removeClass('input-show-text').addClass('input-hide-text');
-    input.attr('type', 'text');
+    input.attr('type', 'password');
     textSpan.text(Soho.Locale.translate('Show')); // eslint-disable-line
   };
 
