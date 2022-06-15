@@ -20,6 +20,12 @@
     }
   }
 
+  &.has-more-button {
+    .buttonset {
+      height: 41px;
+    }
+  }
+
   .datagrid-result-count,
   .datagrid-group-count {
     @include font-size(18);
