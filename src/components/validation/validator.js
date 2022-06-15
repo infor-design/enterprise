@@ -1095,9 +1095,9 @@ Validator.prototype = {
     const validationToolTipAPI = field.data('tooltip');
     if (validationToolTipAPI) {
       validationToolTipAPI.destroy();
-      field.off('focus.validate');
-      field.off('blur.validate');
     }
+    field.off('focus.validate');
+    field.off('blur.validate');
   },
 
   /**
