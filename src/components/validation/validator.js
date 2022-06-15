@@ -726,7 +726,9 @@ Validator.prototype = {
     }
 
     field.data('isValid', false);
-    this.showInlineMessage(field, rule, isHelpMessage);
+    if (inline) {
+      this.showInlineMessage(field, rule, isHelpMessage);
+    }
   },
 
   /**
@@ -787,6 +789,7 @@ Validator.prototype = {
     }
 
     const icon = this.showIcon(field, type);
+
     let representationField = field;
 
     // Add error classes to pseudo-markup for certain controls
@@ -796,9 +799,7 @@ Validator.prototype = {
       input.addClass(type === 'icon' ? 'custom-icon' : type);
     }
     field.closest('.field, .field-short').find('.formatter-toolbar').addClass(type === 'icon' ? 'custom-icon' : type);
-
     let tooltipAPI = icon.data('tooltip');
-
     // Error tooltips should be positioned on the 'x' so that they sit directly
     // underneath the fields that they are indicating.
     function tooltipPositionCallback(placementObj) {
@@ -1068,6 +1069,11 @@ Validator.prototype = {
       if (tooltipAPI) {
         tooltipAPI.destroy();
       }
+
+      if (field !== undefined) {
+        this.hideTooltipMessage(field);
+      }
+
       if (this.inputs) {
         this.inputs.filter('input, textarea').off('focus.validate');
       }
@@ -1078,6 +1084,20 @@ Validator.prototype = {
       field.parent('.field, .field-short').find(`.icon-${rule.type}`).remove();
       field.next('.inforCheckboxLabel').next(`.icon-${rule.type}`).remove();
     }
+  },
+
+  /**
+   * Hide tooltip message on a field
+   * @private
+   * @param {jQuery[]} field the field being modified
+   */
+  hideTooltipMessage(field) {
+    const validationToolTipAPI = field.data('tooltip');
+    if (validationToolTipAPI) {
+      validationToolTipAPI.destroy();
+    }
+    field.off('focus.validate');
+    field.off('blur.validate');
   },
 
   /**

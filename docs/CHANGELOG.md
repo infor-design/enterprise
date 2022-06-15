@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.63.3 Fixes
+
+- `[Validation]` Fixed a bug where the tooltip would show on the header when the message has actually been removed. ([#6547](https://github.com/infor-design/enterprise/issues/6547)
+
 ## v4.63.2 Fixes
 
 - `[Personalization]` Re-Fixed a bug where the dark mode header color was not correct in the tokens and caused the personalization dropdown to be incorrect, classic theme was missed. ([#6446](https://github.com/infor-design/enterprise/issues/6446)
