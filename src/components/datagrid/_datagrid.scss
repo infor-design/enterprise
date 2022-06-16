@@ -5649,6 +5649,16 @@ html[dir='rtl'] {
   }
 }
 
+.is-firefox {
+  .modal {
+    .paginated table {
+      width: 471px;
+      width: -webkit-fill-available;
+      width: stretch;
+    }
+  }
+}
+
 // Popup Adjustments
 .editor-popup {
   border-radius: 2px;
