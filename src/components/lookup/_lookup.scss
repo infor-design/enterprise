@@ -141,6 +141,7 @@
   .has-close-icon-button {
     .lookup {
       padding-right: 50px;
+      width: 100%;
     }
   }
 }
@@ -185,6 +186,7 @@
 
     .buttonset {
       width: 100%;
+      height: 41px;
     }
 
     &.do-resize .buttonset {
