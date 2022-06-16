@@ -350,6 +350,18 @@ $toolbarsearchfield-category-empty-width: 51px;
       }
     }
 
+    .btn-icon {
+      .icon {
+        &.close {
+          top: 0;
+        }
+      }
+    }
+
+    button.close {
+      top: 7px;
+    }
+
     &.has-custom-collapse-size {
       width: 0;
     }
