@@ -9588,6 +9588,7 @@ Datagrid.prototype = {
         const btnExpand = target?.find('.datagrid-expand-btn');
         if (btnExpand) {
           btnExpand.trigger('click.datagrid');
+          e.preventDefault(); // This will prevent scrolling down when the list is overflowing.
         }
 
         if (!self.editor) {
