@@ -6839,6 +6839,13 @@ Datagrid.prototype = {
       let dataRowIdx = null;
       const target = $(e.target);
       const td = target.closest('td');
+      const th = td.closest('table').find('thead > tr > th').eq(td.index());
+      const columnId = th.attr('data-column-id');
+      const columnSettings = self.settings.columns[self.columnIdxById(columnId)];
+
+      if (e.type === 'select' && !columnSettings.inlineEditor) {
+        return;
+      }
 
       if ($(e.currentTarget).closest('.datagrid-expandable-row').length === 1 &&
         $(e.currentTarget).attr('role') !== 'gridcell') {
