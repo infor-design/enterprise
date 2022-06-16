@@ -527,63 +527,18 @@ Datagrid.prototype = {
 
   /**
   * Add a row of data to the grid and dataset.
-  * @param {object} data An data row object
+  * @param {object} data A data row object
   * @param {string} location Where to add the row. This can be 'bottom' or 'top', default is top.
   */
   addRow(data, location) {
     const self = this;
-    let isTop = false;
-    let row = 0;
     const cell = 0;
     let args;
     let rowNode;
 
-    // Get first or last index of matching key/value
-    function getIndexByKey(array, key, value, isReverse) {
-      for (let i = 0, l = array.length; i < l; i++) {
-        const idx = isReverse ? ((l - 1) - i) : i;
-        if (array[idx][key] === value) {
-          return idx;
-        }
-      }
-      return -1;
-    }
-
-    if (!location || location === 'top') {
-      location = 'top';
-      isTop = true;
-    }
-
-    // Add row status
-    const newRowStatus = { icon: 'new', text: Locale.translate('NewRow'), tooltip: Locale.translate('NewRow') };
-
-    data = data || {};
-    data.rowStatus = data.rowStatus || newRowStatus;
-
     this.saveDirtyRows();
 
-    let dataset = this.settings.dataset;
-
-    if (this.settings.groupable) {
-      dataset = this.originalDataset || dataset;
-      let targetIndex = -1;
-      if (typeof location === 'string') {
-        const field = this.settings.groupable.fields[0];
-        const idx = getIndexByKey(dataset, field, data[field], !isTop);
-        targetIndex = idx > -1 ? (!isTop ? (idx + 1) : idx) : 0;
-        dataset.splice(targetIndex, 0, data);
-        row = targetIndex;
-      } else {
-        dataset.splice(location, 0, data);
-        row = location;
-      }
-    } else if (typeof location === 'string') {
-      dataset[isTop ? 'unshift' : 'push'](data);
-      row = isTop ? row : dataset.length - 1;
-    } else {
-      dataset.splice(location, 0, data);
-      row = location;
-    }
+    let row = this.addToDataset([data], location)[0];
 
     this.restoreDirtyRows();
     this.setRowGrouping();
@@ -633,6 +588,143 @@ Datagrid.prototype = {
       */
       self.element.triggerHandler('addrow', args);
     }, 100);
+  },
+
+  addRows(dataArr, location) {
+    const self = this;
+    const cell = 0;
+    let args;
+
+    this.saveDirtyRows();
+
+    const rows = this.addToDataset(dataArr, location);
+
+    if (rows === -1) return;
+
+    this.restoreDirtyRows();
+    this.setRowGrouping();
+
+    if (!this.settings.groupable) {
+      this.pagerRefresh(location);
+    }
+
+    // Update selected
+    this._selectedRows.forEach((selected) => {
+      rows.forEach((row) => {
+        if (typeof selected.pagingIdx !== 'undefined' && selected.pagingIdx >= row) {
+          selected.idx++;
+          selected.pagingIdx++;
+        }
+      });
+    });
+
+    // Add to ui
+    this.clearCache();
+    this.renderRows();
+
+    const rowNodes = [];
+    if (this.settings.groupable) {
+      rows.forEach((row, index) => {
+        const rowNode = this.dataRowNode(row);
+        rowNodes.push(rowNode);
+        rows[index] = this.visualRowIndex(rowNode);
+      });
+    }
+
+    // Sync with others
+    this.syncSelectedUI();
+
+    // Set active and fire handler
+    setTimeout(() => {
+      self.setActiveCell(rows[0], cell);
+      if (!this.settings.groupable) {
+        rows.forEach((row) => {
+          rowNodes.push(this.visualRowNode(row));
+        });
+      }
+      args = { rows, cell, target: rowNodes, value: dataArr, oldValue: {} };
+
+      /**
+       * Fires after a row is added via the api.
+      * @event addrow
+      * @memberof Datagrid
+      * @property {object} event The jquery event object
+      * @property {number} args.row The row index
+      * @property {number} args.cell The cell index
+      * @property {HTMLElement} args.target The html element.
+      * @property {object} args.value - An object all the row data.
+      * @property {object} args.oldValue - Always an empty object added for consistent api.
+      */
+      self.element.triggerHandler('addrow', args);
+    }, 100);
+  },
+
+  /**
+   * Add data in dataset
+   * @private
+   * @param {array} dataArr Data to be added
+   * @param {object} location Where to add the row. This can be 'bottom' or 'top' or index, default is top.
+   * @returns {array} Row numbers
+   */
+  addToDataset(dataArr, location) {
+    if (dataArr && dataArr.length === 0) return -1;
+
+    const settings = this.settings;
+    const rows = [];
+    const newRowStatus = { icon: 'new', text: Locale.translate('NewRow'), tooltip: Locale.translate('NewRow') };
+
+    let isTop = false;
+    let dataset = this.settings.dataset;
+
+    // Get first or last index of matching key/value
+    function getIndexByKey(array, key, value, isReverse) {
+      for (let i = 0, l = array.length; i < l; i++) {
+        const idx = isReverse ? ((l - 1) - i) : i;
+        if (array[idx][key] === value) {
+          return idx;
+        }
+      }
+      return -1;
+    }
+
+    function add(data, index) {
+      data.rowStatus = data.rowStatus || newRowStatus;
+      dataset.splice(index, 0, data);
+      rows.push(index);
+    }
+
+    if (!location || location === 'top') {
+      location = 'top';
+      isTop = true;
+    }
+
+    if (settings.groupable) {
+      dataset = this.originalDataset || dataset;
+      let targetIndex = -1;
+
+      if (typeof location === 'string') {
+        const field = this.settings.groupable.fields[0];
+
+        dataArr.forEach((data) => {
+          const idx = getIndexByKey(dataset, field, data[field], !isTop);
+          targetIndex = idx > -1 ? (!isTop ? (idx + 1) : idx) : 0;
+          add(data, targetIndex);
+        });
+      } else {
+        dataArr.forEach((data, index) => {
+          add(data, location + index);
+        });
+      }
+    } else if (typeof location === 'string') {
+      dataArr.forEach((data, index) => {
+        add(data, isTop ? index : dataset.length);
+      });
+    } else {
+      dataArr.forEach((data, index) => {
+        add(data, location + index);
+      });
+    }
+    return rows;
   },
 
   /**
