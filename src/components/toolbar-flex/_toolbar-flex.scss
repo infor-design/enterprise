@@ -82,6 +82,7 @@
       bottom: 1px;
       display: flex;
       position: relative;
+      overflow: hidden;
 
       &.toolbar-searchfield-wrapper.has-close-icon-button {
         .btn-icon.close {

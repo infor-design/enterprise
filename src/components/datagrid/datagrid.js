@@ -9585,6 +9585,12 @@ Datagrid.prototype = {
       // For Editable mode - press Enter or Space to edit or toggle a cell,
       // or click to activate using a mouse.
       if (self.settings.editable && key === 32) {
+        const btnExpand = target?.find('.datagrid-expand-btn');
+        if (btnExpand) {
+          btnExpand.trigger('click.datagrid');
+          e.preventDefault(); // This will prevent scrolling down when the list is overflowing.
+        }
+
         if (!self.editor) {
           self.makeCellEditable(self.activeCell.rowIndex, cell, e);
         }
