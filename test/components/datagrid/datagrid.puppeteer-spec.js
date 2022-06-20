@@ -171,9 +171,9 @@ describe('Datagrid Puppeteer Tests', () => {
 
     it('should refresh column', async () => {
       await page.waitForSelector('#load-activity');
-      const firstValue = await page.evaluate(() => document.getElementsByClassName('datagrid-cell-wrapper')[6].innerText)
+      const firstValue = await page.evaluate(() => document.getElementsByClassName('datagrid-cell-wrapper')[6].innerText);
       await page.click('#load-activity');
-      const secondValue = await page.evaluate(() => document.getElementsByClassName('datagrid-cell-wrapper')[6].innerText)
+      const secondValue = await page.evaluate(() => document.getElementsByClassName('datagrid-cell-wrapper')[6].innerText);
       expect(firstValue).not.toEqual(secondValue);
     });
   });
