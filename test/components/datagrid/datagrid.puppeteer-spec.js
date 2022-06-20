@@ -161,3 +161,26 @@ describe('Datagrid add support for fallback image tootip text test', () => {
     expect(tooltip).toBeTruthy();
   });
 });
+
+describe('Datagrid test to have a method to make cell editable', () => {
+  const url = 'http://localhost:4000/components/datagrid/test-addrow-selected.html';
+  beforeAll(async () => {
+    await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+  });
+
+  it('should have method for cell editing for new row added', async () => {
+    await page.waitForSelector('#add-row-button');
+    await page.click('#add-row-button');
+
+    const focusedEl = await page.evaluateHandle(() => document.activeElement);
+    await focusedEl.type('ttest', { delay: 1000 });
+    await page.waitForTimeout(200);
+    await page.keyboard.press('Tab');
+    await page.waitForTimeout(200);
+
+    const input = await page.$('.datagrid-row:nth-child(1) > .has-editor:nth-child(2) > .datagrid-cell-wrapper');
+    await page.waitForTimeout(200);
+    const value = await page.evaluate(el => el.textContent, input);
+    expect(value).toContain('test');
+  });
+});
