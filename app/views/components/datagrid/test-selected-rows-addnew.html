@@ -12,8 +12,17 @@
         <button type="button" id="selected-rows-btn" class="btn">
           <span>Show Selected Rows</span>
         </button>
-        <button type="button" id="add-row-btn" class="btn">
-          <span>Add Row</span>
+        <button type="button" id="add-row-top-btn" class="btn">
+          <span>Add Row (Top)</span>
+        </button>
+        <button type="button" id="add-row-bottom-btn" class="btn">
+          <span>Add Row (Bottom)</span>
+        </button>
+        <button type="button" id="add-5-top-btn" class="btn">
+          <span>Add Five (Top)</span>
+        </button>
+        <button type="button" id="add-5-bottom-btn" class="btn">
+          <span>Add Five (Bottom)</span>
         </button>
       </div>
 
@@ -110,10 +119,36 @@
 
   var newId = 8;
 
+  const dataArr = () => {
+    const arr = [];
+    for(let i = 0; i < 5; i++) {
+      arr.push({ id: newId++, productId: 2642206, productName: 'New Product' });
+    }
+    return arr;
+  }
+
   // Add new row
-  $('#add-row-btn').on('click', function () {
+  $('#add-row-top-btn').on('click', function () {
     if (gridApi) {
       gridApi.addRow({ id: newId++, productId: 2642206, productName: 'New Product' });
+    }
+  });
+
+  $('#add-row-bottom-btn').on('click', function () {
+    if (gridApi) {
+      gridApi.addRow({ id: newId++, productId: 2642206, productName: 'New Product' }, 'bottom');
+    }
+  });
+
+  $('#add-5-top-btn').on('click', function () {
+    if (gridApi) {
+      gridApi.addRows(dataArr());
+    }
+  });
+
+  $('#add-5-bottom-btn').on('click', function () {
+    if (gridApi) {
+      gridApi.addRows(dataArr(), 'bottom');
     }
   });
 
