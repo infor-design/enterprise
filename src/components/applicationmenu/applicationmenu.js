@@ -254,9 +254,9 @@ ApplicationMenu.prototype = {
    */
   handleInput() {
     if (!this.element.find('.searchfield').val() && !this.element.find('.searchfield').val()?.length) {
-      this.accordionAPI.unfilter(null, true);
+      this.accordionAPI?.unfilter(null, true);
     } else {
-      this.accordionAPI.unfilter(null);
+      this.accordionAPI?.unfilter(null);
     }
 
     return true;
