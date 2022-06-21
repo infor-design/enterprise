@@ -81,6 +81,16 @@ git config --global credential.helper wincred
 1. Watch Ms Teams for a posted release and notify QA for beta and minor
 1. Update the [Stackblitz](https://stackblitz.com/edit/ids-enterprise-4610) under my account but can be under any
 
+## Release via Jenkins
+
+1. **BRANCH** Set the branch to release from.
+1. **NPM_COMMAND** If this is filled, it will override the **RELEASEIT_FLAGS** field, and will run any command specified.
+1. **NPM_LATEST** Specify which version should appear as latest in npm.
+1. **RELEASEIT_FLAGS** Set release-it flags here.
+1. **RELEASE_INCREMENT** Set release increment, major, minor, patch. Leaving it blank will deploy a beta release.
+
+For **RELEASEIT_FLAGS** `--dry-run=false` is set by default, remove it to do a release release.
+
 For a final release, finish with:
 
 1. Manually merge the version branch into `main`. Do **NOT** use a pull request. (You will need github push permissions for this). For merging you could use the commands:
