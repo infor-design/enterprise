@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.64.1 Fixes
+
+- `[ToolbarFlex]` Fixed a bug where the teardown might error on situations. ([#1327](https://github.com/infor-design/enterprise/issues/1327))
+
 ## v4.64.0
 
 ### v4.64.0 Important Notes
@@ -49,7 +53,6 @@
 - `[Tabs]` Fixed a bug where tab focus indicator is not aligned properly in RTL composite forms. ([#6464](https://github.com/infor-design/enterprise/issues/6464))
 - `[Targeted-Achievement]` Fixed a bug where the icon is cut off in Firefox. ([#6400](https://github.com/infor-design/enterprise/issues/6400))
 - `[Toolbar]` Fixed a bug where the search icon is misaligned in Firefox. ([#6405](https://github.com/infor-design/enterprise/issues/6405))
-- `[ToolbarFlex]` Fixed a bug where the teardown might error on situations. ([#1327](https://github.com/infor-design/enterprise/issues/1327))
 - `[Toolbar Flex]` Fixed a bug where the `addMenuElementLinks` function execute incorrectly when menu item has multi-level submenus. ([#6120](https://github.com/infor-design/enterprise/issues/6120))
 - `[Tree]` The expanded event did not fire when source is being used. ([#1294](https://github.com/infor-design/enterprise-ng/issues/1294))
 - `[Typography]` Fixed a bug where the text are overlapping in Firefox. ([#6450](https://github.com/infor-design/enterprise/issues/6450))
