@@ -83,9 +83,9 @@ git config --global credential.helper wincred
 
 ## Release via Jenkins
 
-1. **BRANCH** Set the branch to release from.
+1. **BRANCH** Set the branch to release from (for example 4.64.x)
 1. **NPM_COMMAND** If this is filled, it will override the **RELEASEIT_FLAGS** field, and will run any command specified.
-1. **NPM_LATEST** Specify which version should appear as latest in npm.
+1. **NPM_LATEST** Specify which version should appear as latest in npm. If left blank the version being created will become the latest.
 1. **RELEASEIT_FLAGS** Set release-it flags here.
 1. **RELEASE_INCREMENT** Set release increment, major, minor, patch. Leaving it blank will deploy a beta release.
 
