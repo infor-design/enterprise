@@ -1,0 +1,26 @@
+
+<div class="row">
+  <div class="four columns">
+    <div class="field">
+      <label for="range-french" class="label">Range French - Initial value by Element value</label>
+      <input id="range-french" name="range-french" class="datepicker input-md" type="text" value="28/01/2017 - 30/01/2017"/>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function () {
+    $('body').on('initialized', function () {
+    Soho.Locale.set('fr-FR');
+
+    $('#range-french').datepicker({
+      dateFormat: 'dd/MM/yyyy',
+      range: {
+        start: new Date(2021, 0, 24),
+        end: new Date(2021, 0, 25),
+        useRange: true
+      }
+    });
+    });
+  });
+</script>

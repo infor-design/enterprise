@@ -1,6 +1,6 @@
 
 <div class="row">
-  <div class="two-thirds column" style="min-width: 300px !important; max-width: 400px !important;">
+  <div class="two-thirds column" style="min-width: 200px !important; max-width: 300px !important;">
       <div class="widget auto-height">
         <div class="widget-header">
           <h2 class="widget-title">Pie Chart</h2>
@@ -10,13 +10,15 @@
           </div>
         </div>
       </div>
+      <button class="btn-primary" type="button" id="toggle-legend">Toggle Legend</button>
   </div>
 </div>
 
 <script>
 $('body').on('initialized', function () {
+  let isBottom = false;
 
-  var pieData = [{
+  const pieData = [{
   centerLabel: '<tspan x="0" dy="-0.4em">Total Hours</tspan> <tspan x="0" dy="1.4em">265</tspan>',
   data: [{
       name: 'Reg',
@@ -49,12 +51,15 @@ $('body').on('initialized', function () {
     }]
   }];
 
-  $('#pie-chart-example').chart({
+  const pieApi = $('#pie-chart-example').chart({
     type: 'donut',
     dataset: pieData,
     showLegend: true,
-    legendPlacement: 'bottom'
-  });
+  }).data('pie')
 
+  $('#toggle-legend').on('click', () => {
+    pieApi.updated({ legendPlacement: isBottom ? 'right' : 'bottom' });
+    isBottom = !isBottom;
+  });
 });
 </script>

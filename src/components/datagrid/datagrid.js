@@ -527,63 +527,18 @@ Datagrid.prototype = {
 
   /**
   * Add a row of data to the grid and dataset.
-  * @param {object} data An data row object
+  * @param {object} data A data row object
   * @param {string} location Where to add the row. This can be 'bottom' or 'top', default is top.
   */
   addRow(data, location) {
     const self = this;
-    let isTop = false;
-    let row = 0;
     const cell = 0;
     let args;
     let rowNode;
 
-    // Get first or last index of matching key/value
-    function getIndexByKey(array, key, value, isReverse) {
-      for (let i = 0, l = array.length; i < l; i++) {
-        const idx = isReverse ? ((l - 1) - i) : i;
-        if (array[idx][key] === value) {
-          return idx;
-        }
-      }
-      return -1;
-    }
-
-    if (!location || location === 'top') {
-      location = 'top';
-      isTop = true;
-    }
-
-    // Add row status
-    const newRowStatus = { icon: 'new', text: Locale.translate('NewRow'), tooltip: Locale.translate('NewRow') };
-
-    data = data || {};
-    data.rowStatus = data.rowStatus || newRowStatus;
-
     this.saveDirtyRows();
 
-    let dataset = this.settings.dataset;
-
-    if (this.settings.groupable) {
-      dataset = this.originalDataset || dataset;
-      let targetIndex = -1;
-      if (typeof location === 'string') {
-        const field = this.settings.groupable.fields[0];
-        const idx = getIndexByKey(dataset, field, data[field], !isTop);
-        targetIndex = idx > -1 ? (!isTop ? (idx + 1) : idx) : 0;
-        dataset.splice(targetIndex, 0, data);
-        row = targetIndex;
-      } else {
-        dataset.splice(location, 0, data);
-        row = location;
-      }
-    } else if (typeof location === 'string') {
-      dataset[isTop ? 'unshift' : 'push'](data);
-      row = isTop ? row : dataset.length - 1;
-    } else {
-      dataset.splice(location, 0, data);
-      row = location;
-    }
+    let row = this.addToDataset([data], location)[0];
 
     this.restoreDirtyRows();
     this.setRowGrouping();
@@ -636,6 +591,148 @@ Datagrid.prototype = {
   },
 
   /**
+   * Add multiple rows of data to the grid and dataset.
+   * @param {object[]} dataArr Array of data objects
+   * @param {string} location Where to add the row. This can be 'bottom' or 'top', default is top.
+   */
+  addRows(dataArr, location) {
+    const self = this;
+    const cell = 0;
+    let args;
+
+    this.saveDirtyRows();
+
+    const rows = this.addToDataset(dataArr, location);
+
+    if (rows === -1) return;
+
+    this.restoreDirtyRows();
+    this.setRowGrouping();
+
+    if (!this.settings.groupable) {
+      this.pagerRefresh(location);
+    }
+
+    // Update selected
+    this._selectedRows.forEach((selected) => {
+      rows.forEach((row) => {
+        if (typeof selected.pagingIdx !== 'undefined' && selected.pagingIdx >= row) {
+          selected.idx++;
+          selected.pagingIdx++;
+        }
+      });
+    });
+
+    // Add to ui
+    this.clearCache();
+    this.renderRows();
+
+    const rowNodes = [];
+    if (this.settings.groupable) {
+      rows.forEach((row, index) => {
+        const rowNode = this.dataRowNode(row);
+        rowNodes.push(rowNode);
+        rows[index] = this.visualRowIndex(rowNode);
+      });
+    }
+
+    // Sync with others
+    this.syncSelectedUI();
+
+    // Set active and fire handler
+    setTimeout(() => {
+      self.setActiveCell(rows[0], cell);
+      if (!this.settings.groupable) {
+        rows.forEach((row) => {
+          rowNodes.push(this.visualRowNode(row));
+        });
+      }
+      args = { rows, cell, target: rowNodes, value: dataArr, oldValue: {} };
+
+      /**
+       * Fires after a row is added via the api.
+      * @event addrow
+      * @memberof Datagrid
+      * @property {object} event The jquery event object
+      * @property {number} args.row The row index
+      * @property {number} args.cell The cell index
+      * @property {HTMLElement} args.target The html element.
+      * @property {object} args.value - An object all the row data.
+      * @property {object} args.oldValue - Always an empty object added for consistent api.
+      */
+      self.element.triggerHandler('addrow', args);
+    }, 100);
+  },
+
+  /**
+   * Add data in dataset
+   * @private
+   * @param {array} dataArr Data to be added
+   * @param {object} location Where to add the row. This can be 'bottom' or 'top' or index, default is top.
+   * @returns {array} Row numbers
+   */
+  addToDataset(dataArr, location) {
+    if (dataArr && dataArr.length === 0) return -1;
+
+    const settings = this.settings;
+    const rows = [];
+    const newRowStatus = { icon: 'new', text: Locale.translate('NewRow'), tooltip: Locale.translate('NewRow') };
+
+    let isTop = false;
+    let dataset = this.settings.dataset;
+
+    // Get first or last index of matching key/value
+    function getIndexByKey(array, key, value, isReverse) {
+      for (let i = 0, l = array.length; i < l; i++) {
+        const idx = isReverse ? ((l - 1) - i) : i;
+        if (array[idx][key] === value) {
+          return idx;
+        }
+      }
+      return -1;
+    }
+
+    function add(data, index) {
+      data.rowStatus = data.rowStatus || newRowStatus;
+      dataset.splice(index, 0, data);
+      rows.push(index);
+    }
+
+    if (!location || location === 'top') {
+      location = 'top';
+      isTop = true;
+    }
+
+    if (settings.groupable) {
+      dataset = this.originalDataset || dataset;
+      let targetIndex = -1;
+
+      if (typeof location === 'string') {
+        const field = this.settings.groupable.fields[0];
+
+        dataArr.forEach((data) => {
+          const idx = getIndexByKey(dataset, field, data[field], !isTop);
+          targetIndex = idx > -1 ? (!isTop ? (idx + 1) : idx) : 0;
+          add(data, targetIndex);
+        });
+      } else {
+        dataArr.forEach((data, index) => {
+          add(data, location + index);
+        });
+      }
+    } else if (typeof location === 'string') {
+      dataArr.forEach((data, index) => {
+        add(data, isTop ? index : dataset.length);
+      });
+    } else {
+      dataArr.forEach((data, index) => {
+        add(data, location + index);
+      });
+    }
+    return rows;
+  },
+
+  /**
   * Refresh the pager based on the current page and dataset.
   * @private
   * @param {object} location Can be set to 'top' or left off for bottom pager.
@@ -659,8 +756,8 @@ Datagrid.prototype = {
       pagingInfo.pagesize = this.settings.pagesize;
     }
     if (savePage) {
-      pagingInfo.activePage = this.settings.pagesize * this.pagerAPI.activePage >
-        this.settings.dataset.length ? 1 : this.pagerAPI.activePage;
+      const pages = Math.ceil(this.settings.dataset.length / this.settings.pagesize);
+      pagingInfo.activePage = this.pagerAPI.activePage > pages ? pages : this.pagerAPI.activePage;
     }
     this.renderPager(pagingInfo, true);
   },
@@ -6834,11 +6931,18 @@ Datagrid.prototype = {
       });
     }
 
-    this.element.off('click.datagrid').on('click.datagrid', 'tbody td', function (e) {
+    this.element.off('click.datagrid, select.datagrid').on('click.datagrid, select.datagrid', 'tbody td', function (e) {
       let rowNode = null;
       let dataRowIdx = null;
       const target = $(e.target);
       const td = target.closest('td');
+      const th = td.closest('table').find('thead > tr > th').eq(td.index());
+      const columnId = th.attr('data-column-id');
+      const columnSettings = self.settings.columns[self.columnIdxById(columnId)];
+
+      if (e.type === 'select' && !columnSettings.inlineEditor) {
+        return;
+      }
 
       if ($(e.currentTarget).closest('.datagrid-expandable-row').length === 1 &&
         $(e.currentTarget).attr('role') !== 'gridcell') {
@@ -7899,6 +8003,7 @@ Datagrid.prototype = {
       this.settings.dataset.map((row) => { delete row._selected; }); //eslint-disable-line
       return;
     }
+
     this.dontSyncUi = true;
     // Unselect each row backwards so the indexes are correct
     for (let i = this._selectedRows.length - 1; i >= 0; i--) {
@@ -9584,6 +9689,12 @@ Datagrid.prototype = {
       // For Editable mode - press Enter or Space to edit or toggle a cell,
       // or click to activate using a mouse.
       if (self.settings.editable && key === 32) {
+        const btnExpand = target?.find('.datagrid-expand-btn');
+        if (btnExpand) {
+          btnExpand.trigger('click.datagrid');
+          e.preventDefault(); // This will prevent scrolling down when the list is overflowing.
+        }
+
         if (!self.editor) {
           self.makeCellEditable(self.activeCell.rowIndex, cell, e);
         }
@@ -9937,7 +10048,9 @@ Datagrid.prototype = {
       this.addToDirtyArray(idx, cell, data);
     }
 
-    this.editor.focus();
+    if (typeof this.editor.focus === 'function') {
+      this.editor.focus();
+    }    
 
     // Make sure the first keydown gets captured and trigger the dropdown
     if (this.editor?.input.is('.dropdown') && event.keyCode && ![9, 13, 32, 37, 38, 39, 40].includes(event.keyCode)) {
@@ -12394,6 +12507,17 @@ Datagrid.prototype = {
       let title;
 
       tooltip = { content: '', wrapper: elem.querySelector('.datagrid-cell-wrapper') };
+      let columnSettings;
+      const elemIndex = $(elem).index();
+
+      if (isHeaderColumn) {
+        const columnId = $(elem).attr('data-column-id');
+        columnSettings = this.settings.columns[this.columnIdxById(columnId)];
+      } else {
+        const columnHeader = $(elem).closest('table').find('thead > tr > th').eq(elemIndex);
+        const columnId = columnHeader.attr('data-column-id');
+        columnSettings = this.settings.columns[this.columnIdxById(columnId)];
+      }
 
       if (isTh || isHeaderColumn || isHeaderFilter) {
         tooltip.wrapper = elem;
@@ -12534,6 +12658,20 @@ Datagrid.prototype = {
           tooltip.forced = true;
         }
       }
+
+      if (columnSettings.tooltipOptions) {
+        if (columnSettings.tooltipOptions.placement) {
+          tooltip.placement = columnSettings.tooltipOptions.placement;
+        }
+
+        if (columnSettings.tooltipOptions.x) {
+          tooltip.x = columnSettings.tooltipOptions.x;
+        }
+
+        if (columnSettings.tooltipOptions.y) {
+          tooltip.y = columnSettings.tooltipOptions.y;
+        }
+      }
     }
 
     elem = elem instanceof jQuery ? elem : $(elem);
@@ -12571,8 +12709,8 @@ Datagrid.prototype = {
 
         const distance = typeof options.distance === 'number' ? options.distance : 0;
         const placeOptions = {
-          x: 0,
-          y: distance,
+          x: options.x || 0,
+          y: options.y || distance,
           container: this.element.closest('.page-container.scrollable') || $('body'),
           containerOffsetX: options.wrapper.offsetLeft,
           containerOffsetY: options.wrapper.offsetTop,
@@ -12800,9 +12938,10 @@ Datagrid.prototype = {
   /**
   * Update the datagrid and optionally apply new settings.
   * @param  {object} settings the settings to update to.
+  * @param  {object} pagingInfo information about the pager state
   * @returns {object} The plugin api for chaining.
   */
-  updated(settings) {
+  updated(settings, pagingInfo) {
     this.settings = utils.mergeSettings(this.element, settings, this.settings);
 
     if (this.pagerAPI && typeof this.pagerAPI.destroy === 'function') {
@@ -12823,7 +12962,8 @@ Datagrid.prototype = {
       this.settings.columns = settings.columns;
     }
 
-    this.render();
+    this.render(null, pagingInfo);
+    this.renderHeader();
     this.handlePaging();
 
     return this;

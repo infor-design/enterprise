@@ -652,7 +652,6 @@ DatePicker.prototype = {
     * @property {object} event - The jquery event object
     */
     this.element.addClass('is-active is-open').trigger('listopened');
-    this.element.trigger('beforemonthrendered');
     this.timepickerContainer = $('<div class="datepicker-time-container"></div>');
     const clearButton = `<button type="button" class="is-cancel btn-tertiary">
       ${Locale.translate(this.settings.isMonthPicker ? 'Cancel' : 'Clear', { locale: this.locale.name, language: this.language })}
@@ -843,6 +842,10 @@ DatePicker.prototype = {
 
     this.calendar.on('beforemonthrendered', () => {
       this.element.trigger('beforemonthrendered');
+    });
+
+    this.calendar.on('monthrendered', (e, args) => {
+      this.element.trigger('monthrendered', args);
     });
 
     if (s.showTime) {
@@ -1470,7 +1473,7 @@ DatePicker.prototype = {
         s.range.first.date = d;
         s.range.second.date = d;
 
-        if (s.range.end) {
+        if (s.range.end && date) {
           if (typeof s.range.end === 'string') {
             s.range.second.date = Locale.parseDate(s.range.end, {
               pattern: this.pattern,
