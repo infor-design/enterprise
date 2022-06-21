@@ -590,6 +590,11 @@ Datagrid.prototype = {
     }, 100);
   },
 
+  /**
+   * Add multiple rows of data to the grid and dataset.
+   * @param {object[]} dataArr Array of data objects
+   * @param {string} location Where to add the row. This can be 'bottom' or 'top', default is top.
+   */
   addRows(dataArr, location) {
     const self = this;
     const cell = 0;
