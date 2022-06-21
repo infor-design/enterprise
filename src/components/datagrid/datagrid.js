@@ -6926,11 +6926,18 @@ Datagrid.prototype = {
       });
     }
 
-    this.element.off('click.datagrid').on('click.datagrid', 'tbody td', function (e) {
+    this.element.off('click.datagrid, select.datagrid').on('click.datagrid, select.datagrid', 'tbody td', function (e) {
       let rowNode = null;
       let dataRowIdx = null;
       const target = $(e.target);
       const td = target.closest('td');
+      const th = td.closest('table').find('thead > tr > th').eq(td.index());
+      const columnId = th.attr('data-column-id');
+      const columnSettings = self.settings.columns[self.columnIdxById(columnId)];
+
+      if (e.type === 'select' && !columnSettings.inlineEditor) {
+        return;
+      }
 
       if ($(e.currentTarget).closest('.datagrid-expandable-row').length === 1 &&
         $(e.currentTarget).attr('role') !== 'gridcell') {
@@ -9677,6 +9684,12 @@ Datagrid.prototype = {
       // For Editable mode - press Enter or Space to edit or toggle a cell,
       // or click to activate using a mouse.
       if (self.settings.editable && key === 32) {
+        const btnExpand = target?.find('.datagrid-expand-btn');
+        if (btnExpand) {
+          btnExpand.trigger('click.datagrid');
+          e.preventDefault(); // This will prevent scrolling down when the list is overflowing.
+        }
+
         if (!self.editor) {
           self.makeCellEditable(self.activeCell.rowIndex, cell, e);
         }
@@ -10030,7 +10043,9 @@ Datagrid.prototype = {
       this.addToDirtyArray(idx, cell, data);
     }
 
-    this.editor.focus();
+    if (typeof this.editor.focus === 'function') {
+      this.editor.focus();
+    }    
 
     // Make sure the first keydown gets captured and trigger the dropdown
     if (this.editor?.input.is('.dropdown') && event.keyCode && ![9, 13, 32, 37, 38, 39, 40].includes(event.keyCode)) {

@@ -1,0 +1,107 @@
+
+<div class="row top-padding">
+  <div class="row">
+    <div class="twelve columns">
+      <div class="title">
+        Data Grid: Case 1
+      </div>
+
+    <div id="datagrid"></div>
+  </div>
+  <div class="row top-padding">
+    <div class="twelve columns">
+      <div class="title">
+        Data Grid: Case 2
+      </div>
+
+    <div id="datagrid2"></div>
+  </div>
+</div>
+  
+</div>
+
+<script>
+  var gridApi = null;
+
+  $('body').one('initialized', function () {
+    var data = [
+        { amount: 1 },
+        { amount: 2 },
+      ],
+      data2 = [
+      { no: 1, amount: 1 },
+      { no: 2, amount: 2 },
+      ];
+
+    //Init and get the api for the grid
+    var grid = $('#datagrid').datagrid({
+      alternateRowShading: false,
+      cellNavigation: false,
+      columnReorder: false,
+      columns: [
+        {
+          editor: Soho.Editors.Input,
+          field: 'amount',
+          filterType: 'integer',
+          formatter: Soho.Formatters.Input,
+          id: 'amount',
+          inlineEditor: true,
+          name: 'Amount',
+          sortable: true,
+        },
+      ],
+      dataset: data,
+      editable: true,
+      emptyMessage: null,
+      enableTooltips: false,
+      filterable: true,
+      isList: true,
+      rowHeight: 'medium',
+      saveUserSettings: { columns: false },
+      selectable: 'mixed',
+      stickyHeader: true,
+      toolbar: false,
+    }).on('cellchange', function (e, args) {
+      console.log('cellchange', args);
+    });
+
+    var grid2 = $('#datagrid2').datagrid({
+      alternateRowShading: false,
+      cellNavigation: false,
+      columnReorder: false,
+      columns: [
+        {
+          id: 'positionNo',
+          name: 'Position',
+          field: 'no',
+          sortable: true,
+          filterType: 'text',
+        },
+        {
+          editor: Soho.Editors.Input,
+          field: 'amount',
+          filterType: 'integer',
+          formatter: Soho.Formatters.Input,
+          id: 'amount',
+          inlineEditor: true,
+          name: 'Amount',
+          sortable: true,
+        },
+      ],
+      dataset: data2,
+      editable: true,
+      emptyMessage: null,
+      enableTooltips: false,
+      filterable: true,
+      isList: true,
+      rowHeight: 'medium',
+      saveUserSettings: { columns: false },
+      selectable: 'mixed',
+      stickyHeader: true,
+      toolbar: false,
+    }).on('cellchange', function (e, args) {
+      console.log('cellchange', args);
+    });
+  });
+
+</script>
