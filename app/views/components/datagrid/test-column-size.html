@@ -5,6 +5,11 @@
         <button class="btn-secondary" type="button" id="show-model">
           Show Model
         </button>
+        <br/><br/>
+        <div class="field" style="width: 150px">
+          <label for="width">Width</label>
+          <input type="number" id="width" name="width" placeholder="Enter width"/>
+        </div>
 
         <div id="modal-content" style="display: none;" >
           <div id="datagrid"></div>
@@ -38,7 +43,7 @@
       filterType: 'text',
       postRender: true,
       align: 'left',
-      width: 10,
+      width: 100,
       filterConditions: ['contains', 'equals'],
       textOverflow: 'ellipsis',
       headerTooltip: 'Type'
@@ -49,7 +54,7 @@
       name: 'Description',
       sortable: false,
       field: 'stageDescription',
-      width: 0,
+      width: 100,
       hidden: true
     },
     {
@@ -59,7 +64,7 @@
       field: 'overDueDays',
       postRender: true,
       align: 'left',
-      width: 10,
+      width: 100,
       textOverflow: 'ellipsis',
       headerTooltip: 'Review Time (days)'
     },
@@ -69,7 +74,7 @@
       name: 'Default Approver',
       sortable: false,
       field: 'defaultUser',
-      width: 10,
+      width: 100,
       textOverflow: 'ellipsis',
       headerTooltip: 'Default Approver'
     },
@@ -80,7 +85,7 @@
       sortable: false,
       field: 'escalationApprover',
       postRender: true,
-      width: 10,
+      width: 100,
       textOverflow: 'ellipsis',
       headerTooltip: 'Escalation Approver'
     },
@@ -91,17 +96,17 @@
       sortable: false,
       field: 'escalateAfterDays',
       postRender: true,
-      width: 10,
+      width: 100,
       textOverflow: 'ellipsis',
       headerTooltip: 'Escalation Time (days)'
     },
     {
       id: 'stageAction',
       align: 'left',
-      name: 'S',
+      name: 'Stage Action',
       sortable: false,
       field: 'stageActions',
-      width: 10,
+      width: 100,
       textOverflow: 'ellipsis',
       headerTooltip: 'Stage Actions'
     }
@@ -119,14 +124,32 @@
       stageActions: 'No Stage',
       actionFromAnyAll: 'Any one Reviewer',
       allowPrimaryLevelAction: 'Do Not Allow'
+    },
+    {
+      stageName: 'Default Certification stage 2',
+      stageType: 'Certification 2',
+      stageDescription: 'stageDescription',
+      overDueDays: 4,
+      defaultUser: 'gromico.ferrao2@infor.com',
+      escalationApprover: 'gromico.ferrao2@infor.com',
+      escalateAfterDays: 5,
+      stageActions: 'No Stage 2',
+      actionFromAnyAll: 'Any one Reviewer 2',
+      allowPrimaryLevelAction: 'Do Not Allow 2'
     }
   ];
 
-  let grid, gridApi;
+  let gridApi;
 
   $('#show-model').on('click', () => {
-    if (!grid) {
-      grid = $('#datagrid').datagrid({
+    const width = parseInt($('#width').val());
+
+    if (width > 0) {
+      columns.forEach((column) => column.width = width);
+    }
+
+    if (!gridApi) {
+      gridApi = $('#datagrid').datagrid({
         columns: columns,
         dataset: data,
         clickToSelect: false,
@@ -143,11 +166,11 @@
         rowHeight: 'medium',
         hidePagerOnOnePage: true,
         resizeMode: 'flex'
-      });
-
-      gridApi = $('#datagrid').data('datagrid');
+      }).data('datagrid');
     }
 
+    gridApi.updated({ columns: columns });
+    
     let modalApi;
 
     const modal = $('body').modal({

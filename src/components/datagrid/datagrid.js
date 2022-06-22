@@ -3788,7 +3788,6 @@ Datagrid.prototype = {
       if (col.colspan) {
         self.hasColSpans = true;
       }
-      console.log('col', col.name, colWidth)
     }
 
     // Prevent flashing message area on filter / reload
@@ -4795,7 +4794,6 @@ Datagrid.prototype = {
           }${col.tooltip && typeof col.tooltip === 'string' ? ` title="${col.tooltip.replace('{{value}}', cellValue)}"` : ''
           }${self.settings.columnGroups ? `headers = "${self.uniqueId(`-header-${j}`)} ${self.getColumnGroup(j)}"` : ''
           }${rowspan || ''}>${rowStatus.svg}<div class="datagrid-cell-wrapper"${self.columnWidth(col, j)}>`;
-
       if (col.contentVisible) {
         const canShow = col.contentVisible(dataRowIdx + 1, j, cellValue, col, rowData);
         if (!canShow) {
