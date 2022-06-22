@@ -525,6 +525,25 @@ Datagrid.prototype = {
     }, 100);
   },
 
+
+  /**
+  * Render row in the datagrid
+  * @param {object} data The data to be appended in the table
+  */
+  renderRow(data) {
+    const self = this;
+
+    if (this.emptyMessageContainer) {
+      this.emptyMessageContainer.hide();
+    }
+
+    const recordCount = self.settings.dataset.length - 1;
+    const dataIndex = recordCount;
+
+    const rowHtml = self.rowHtml(data, recordCount, dataIndex);
+    DOM.append(self.tableBody, rowHtml.center, '*');
+  },
+
   /**
   * Add a row of data to the grid and dataset.
   * @param {object} data A data row object
@@ -557,7 +576,7 @@ Datagrid.prototype = {
 
     // Add to ui
     this.clearCache();
-    this.renderRows();
+    this.renderRow(data);
 
     if (this.settings.groupable) {
       rowNode = this.dataRowNode(row);
