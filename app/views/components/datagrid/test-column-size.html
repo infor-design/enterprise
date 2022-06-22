@@ -1,0 +1,170 @@
+<form>
+  <div class="row top-padding">
+    <div class="row">
+      <div class="six columns">
+        <button class="btn-secondary" type="button" id="show-model">
+          Show Model
+        </button>
+
+        <div id="modal-content" style="display: none;" >
+          <div id="datagrid"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<script>
+ $('body').one('initialized', () => {
+  const columns = [
+    {
+      id: 'stageName',
+      name: 'Stage Name',
+      sortable: false,
+      field: 'stageName',
+      filterType: 'text',
+      postRender: true,
+      align: 'left',
+      width: 100,
+      filterConditions: ['contains', 'equals'],
+      textOverflow: 'ellipsis',
+      headerTooltip: 'Stage Name'
+    },
+    {
+      id: 'stage_type',
+      name: 'Type',
+      sortable: false,
+      field: 'stageType',
+      filterType: 'text',
+      postRender: true,
+      align: 'left',
+      width: 10,
+      filterConditions: ['contains', 'equals'],
+      textOverflow: 'ellipsis',
+      headerTooltip: 'Type'
+    },
+    {
+      id: 'descriptions',
+      align: 'left',
+      name: 'Description',
+      sortable: false,
+      field: 'stageDescription',
+      width: 0,
+      hidden: true
+    },
+    {
+      id: 'reviewTime',
+      name: 'Review Time (days)',
+      sortable: false,
+      field: 'overDueDays',
+      postRender: true,
+      align: 'left',
+      width: 10,
+      textOverflow: 'ellipsis',
+      headerTooltip: 'Review Time (days)'
+    },
+    {
+      id: 'defaultApprover',
+      align: 'left',
+      name: 'Default Approver',
+      sortable: false,
+      field: 'defaultUser',
+      width: 10,
+      textOverflow: 'ellipsis',
+      headerTooltip: 'Default Approver'
+    },
+    {
+      id: 'escalation_approver',
+      align: 'left',
+      name: 'Escalation Approver',
+      sortable: false,
+      field: 'escalationApprover',
+      postRender: true,
+      width: 10,
+      textOverflow: 'ellipsis',
+      headerTooltip: 'Escalation Approver'
+    },
+    {
+      id: 'escalationTime',
+      align: 'left',
+      name: 'Escalation Time (days)',
+      sortable: false,
+      field: 'escalateAfterDays',
+      postRender: true,
+      width: 10,
+      textOverflow: 'ellipsis',
+      headerTooltip: 'Escalation Time (days)'
+    },
+    {
+      id: 'stageAction',
+      align: 'left',
+      name: 'S',
+      sortable: false,
+      field: 'stageActions',
+      width: 10,
+      textOverflow: 'ellipsis',
+      headerTooltip: 'Stage Actions'
+    }
+  ];
+
+  const data = [
+    {
+      stageName: 'Default Certification stage',
+      stageType: 'Certification',
+      stageDescription: 'stageDescription',
+      overDueDays: 4,
+      defaultUser: 'gromico.ferrao@infor.com',
+      escalationApprover: 'gromico.ferrao@infor.com',
+      escalateAfterDays: 5,
+      stageActions: 'No Stage',
+      actionFromAnyAll: 'Any one Reviewer',
+      allowPrimaryLevelAction: 'Do Not Allow'
+    }
+  ];
+
+  let grid, gridApi;
+
+  $('#show-model').on('click', () => {
+    if (!grid) {
+      grid = $('#datagrid').datagrid({
+        columns: columns,
+        dataset: data,
+        clickToSelect: false,
+        selectable: 'multiple',
+        paging: true,
+        pagesize: 10,
+        pagesizes: [10, 25, 50, 100],
+        indeterminate: false,
+        disableClientSort: false,
+        disableClientFilter: false,
+        filterable: false,
+        emptyMessage: null,
+        isList: false,
+        rowHeight: 'medium',
+        hidePagerOnOnePage: true,
+        resizeMode: 'flex'
+      });
+
+      gridApi = $('#datagrid').data('datagrid');
+    }
+
+    let modalApi;
+
+    const modal = $('body').modal({
+      content: $('#modal-content'),
+      title: 'Model Example',
+      buttons: [
+        {
+          text: 'Close',
+          click: () => {
+            if (!modalApi) {
+              modalApi = modal.data('modal');
+            }
+            modalApi.close();
+          }
+        }
+      ]
+    });
+  })
+ });
+</script>
