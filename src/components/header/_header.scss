@@ -306,6 +306,35 @@ $subheader-height: 60px;
   }
 }
 
+.header,
+.masthead {
+  &.is-personalizable {
+    .toolbar-searchfield-wrapper:not(.is-open) {
+      .icon:not(.close) {
+        color: $header-toolbar-searchfield-icon-color;
+        opacity: 0.8;
+      }
+
+      &.is-hovered {
+        .icon:not(.close) {
+          opacity: 1;
+        }
+      }
+    }
+
+    .flex-toolbar {
+      .title button {
+        vertical-align: middle;
+      }
+
+      .has-collapse-button .collapse-button {
+        border-color: rgba($searchfield-header-border-color, 0.7);
+        right: 1px;
+      }
+    }
+  }
+}
+
 // Application Subheaders
 .subheader {
   @include transition(background-color 500ms cubic-bezier(0.17, 0.04, 0.03, 0.94));

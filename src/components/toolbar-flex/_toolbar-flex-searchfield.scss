@@ -48,6 +48,7 @@ $responsive-searchfield-filled-out-width: 34px;
 .flex-toolbar {
   .toolbar-searchfield-wrapper.has-collapse-button.is-open:not(.non-collapsible) {
     .icon:not(.close):not(.icon-error) {
+      color: $searchfield-header-icon-color;
       top: 0;
     }
   }
