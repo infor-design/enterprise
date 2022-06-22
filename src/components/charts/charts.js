@@ -831,7 +831,7 @@ charts.setSelectedElement = function (o) {
           if (bar.classed('is-selected')) {
             const data = dataset ? dataset[i] : d;
             data.selected = true;
-            selectedBars.push({ elem: bar.node(), data });
+            selectedBars.push({ elem: bar.nodes(), data, index: i });
           }
         });
         if (isGrouped) {
@@ -862,7 +862,7 @@ charts.setSelectedElement = function (o) {
             dataset[i][o.i] : dataset[i].data[o.i];
         }
         data.selected = true;
-        selectedBars.push({ elem: bar.node(), data });
+        selectedBars.push({ elem: bar.nodes(), data, index: o.i });
       });
       triggerData = selectedBars;
     } else if (isTypePie) { // Pie
