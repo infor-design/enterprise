@@ -1043,7 +1043,7 @@ html[dir='rtl'] {
     }
   }
 
-  @media (max-width: $breakpoint-phone-to-tablet - 1) {
+  @media (max-width: ($breakpoint-phone-to-tablet - 1)) {
     right: auto;
     width: 100% !important;
 

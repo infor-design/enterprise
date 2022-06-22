@@ -10050,7 +10050,7 @@ Datagrid.prototype = {
 
     if (typeof this.editor.focus === 'function') {
       this.editor.focus();
-    }    
+    }
 
     // Make sure the first keydown gets captured and trigger the dropdown
     if (this.editor?.input.is('.dropdown') && event.keyCode && ![9, 13, 32, 37, 38, 39, 40].includes(event.keyCode)) {
@@ -11016,8 +11016,8 @@ Datagrid.prototype = {
 
       if (!this.settings.trimSpaces) {
         r = r[0].replace(/\s/g, '&nbsp;');
-      } 
-      return r; 
+      }
+      return r;
     };
 
     // update cell value
