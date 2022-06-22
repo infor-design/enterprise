@@ -9,6 +9,7 @@
 - `[Bar]` Enhanced the VPAT accessibility in bar chart. ([#6074](https://github.com/infor-design/enterprise/issues/6074))
 - `[Bar]` Added puppeteer script for axis labels test. ([#6551](https://github.com/infor-design/enterprise/issues/6551))
 - `[Datagrid]` Added tooltipOption settings for columns. ([#6361](https://github.com/infor-design/enterprise/issues/6361))
+- `[Datagrid]` Added add multiple rows option. ([#6404](https://github.com/infor-design/enterprise/issues/6404))
 - `[Datagrid]` Added puppeteer script for refresh column. ([#6212](https://github.com/infor-design/enterprise/issues/6212))
 - `[Datagrid]` Added puppeteer script for cell editing test. ([#6552](https://github.com/infor-design/enterprise/issues/6552))
 - `[Tabs]` Added puppeteer script for new searchfield design ([#6282](https://github.com/infor-design/enterprise/issues/6282))
@@ -27,10 +28,11 @@
 - `[Datepicker]` Added listener for calendar monthrendered event and pass along. ([NG#1324](https://github.com/infor-design/enterprise-ng/issues/1324))
 - `[Input]` Fixed a bug where the password does not show or hide in Firefox. ([#6481](https://github.com/infor-design/enterprise/issues/6481))
 - `[Listview]` Fixed disabled font color not showing in listview. ([#6391](https://github.com/infor-design/enterprise/issues/6391))
-- `[Locale]` Added montnly translations. ([#6556](https://github.com/infor-design/enterprise/issues/6556))
+- `[Locale]` Added monthly translations. ([#6556](https://github.com/infor-design/enterprise/issues/6556))
 - `[Lookup]` Fixed a bug where search-list icon, launch icon, and ellipses is misaligned and the table and title overlaps in responsive view. ([#6487](https://github.com/infor-design/enterprise/issues/6487))
 - `[Modal]` Fixed an issue on some monitors where the overlay is too dim. ([#6566](https://github.com/infor-design/enterprise/issues/6566))
 - `[Page-Patterns]` Fixed a bug where the header disappears when the the last item in the list is clicked and the browser is smaller in Chrome and Edge. ([#6328](https://github.com/infor-design/enterprise/issues/6328))
+- `[ToolbarFlex]` Fixed a bug where the teardown might error on situations. ([#1327](https://github.com/infor-design/enterprise/issues/1327))
 - `[Validation]` Fixed a bug where the tooltip would show on the header when the message has actually been removed. ([#6547](https://github.com/infor-design/enterprise/issues/6547)
 
 ## v4.64.0
