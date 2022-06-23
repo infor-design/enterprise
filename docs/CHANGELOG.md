@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.64.2 Fixes
+
+- `[Datepicker]` Added listener for calendar monthrendered event and pass along. ([NG#1324](https://github.com/infor-design/enterprise-ng/issues/1324))
+- `[Modal]` Fixed bug where popup goes behind modal when in application menu in resizable mode. ([NG#1272](https://github.com/infor-design/enterprise-ng/issues/1272))
+- `[Monthview]` Fixed bug where monthview duplicates on updating legends. ([NG#1305](https://github.com/infor-design/enterprise-ng/issues/1305))
+
 ## v4.64.1 Fixes
 
 - `[ToolbarFlex]` Fixed a bug where the teardown might error on situations. ([#1327](https://github.com/infor-design/enterprise/issues/1327))
