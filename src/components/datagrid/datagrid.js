@@ -1388,6 +1388,8 @@ Datagrid.prototype = {
       headerRows.right += '<tr role="row">';
     }
 
+    const addTextWidth = !(this.settings.frozenColumns.left.length > 0 || this.settings.frozenColumns.right.length > 0);
+
     for (let j = 0; j < this.settings.columns.length; j++) {
       const column = self.settings.columns[j];
       const container = self.getContainer(column.id);
@@ -1449,7 +1451,7 @@ Datagrid.prototype = {
       // If header text is center aligned, for proper styling,
       // place the sortIndicator as a child of datagrid-header-text.
       headerRows[container] += `<div class="${isSelection ? 'datagrid-checkbox-wrapper ' : 'datagrid-column-wrapper'}${headerAlignmentClass}">
-      <span class="datagrid-header-text${column.required ? ' required' : ''}"${this.columnWidth(column, j)}>${self.headerText(this.settings.columns[j])}${headerAlignmentClass === ' l-center-text' ? sortIndicator : ''}</span>`;
+      <span class="datagrid-header-text${column.required ? ' required' : ''}"${addTextWidth ? this.columnWidth(column, j) : ''}>${self.headerText(this.settings.columns[j])}${headerAlignmentClass === ' l-center-text' ? sortIndicator : ''}</span>`;
 
       if (isSelection) {
         if (self.settings.showSelectAllCheckBox) {
@@ -4573,6 +4575,7 @@ Datagrid.prototype = {
 
     containerHtml.left = containerHtml.center;
     containerHtml.right = containerHtml.center;
+    const hasFrozenCol = !(this.settings.frozenColumns.left.length > 0 || this.settings.frozenColumns.right.length > 0);
 
     for (j = 0; j < self.settings.columns.length; j++) {
       const col = self.settings.columns[j];
@@ -4591,6 +4594,8 @@ Datagrid.prototype = {
         formatLocale
       );
 
+      let addTextWidth = hasFrozenCol;
+
       if (formatted.indexOf('<span class="is-readonly">') === 0) {
         col.readonly = true;
       }
@@ -4598,6 +4603,7 @@ Datagrid.prototype = {
       if (formatted.indexOf('datagrid-checkbox') > -1 ||
         formatted.indexOf('btn-actions') > -1) {
         cssClass += ' l-center-text';
+        addTextWidth = false;
       }
 
       if (formatted.indexOf('trigger') > -1) {
@@ -4611,6 +4617,10 @@ Datagrid.prototype = {
           .indexOf(editorName) >= 0) {
           cssClass += ' datagrid-trigger-cell datagrid-no-default-formatter';
         }
+      }
+
+      if (formatted.indexOf('datagrid-multiline-text') > -1 || formatted.indexOf('row-btn') > -1) {
+        addTextWidth = false;
       }
 
       if (formatter.name && formatter.name === 'Fileupload') {
@@ -4793,7 +4803,7 @@ Datagrid.prototype = {
           }${colspan ? ` colspan="${colspan}"` : ''
           }${col.tooltip && typeof col.tooltip === 'string' ? ` title="${col.tooltip.replace('{{value}}', cellValue)}"` : ''
           }${self.settings.columnGroups ? `headers = "${self.uniqueId(`-header-${j}`)} ${self.getColumnGroup(j)}"` : ''
-          }${rowspan || ''}>${rowStatus.svg}<div class="datagrid-cell-wrapper"${self.columnWidth(col, j)}>`;
+          }${rowspan || ''}>${rowStatus.svg}<div class="datagrid-cell-wrapper"${addTextWidth ? `${self.columnWidth(col, j)}` : ''}>`;
       if (col.contentVisible) {
         const canShow = col.contentVisible(dataRowIdx + 1, j, cellValue, col, rowData);
         if (!canShow) {

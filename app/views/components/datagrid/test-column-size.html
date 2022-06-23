@@ -30,7 +30,6 @@
       filterType: 'text',
       postRender: true,
       align: 'left',
-      width: 100,
       filterConditions: ['contains', 'equals'],
       textOverflow: 'ellipsis',
       headerTooltip: 'Stage Name'
@@ -43,7 +42,6 @@
       filterType: 'text',
       postRender: true,
       align: 'left',
-      width: 100,
       filterConditions: ['contains', 'equals'],
       textOverflow: 'ellipsis',
       headerTooltip: 'Type'
@@ -54,7 +52,6 @@
       name: 'Description',
       sortable: false,
       field: 'stageDescription',
-      width: 100,
       hidden: true
     },
     {
@@ -64,7 +61,6 @@
       field: 'overDueDays',
       postRender: true,
       align: 'left',
-      width: 100,
       textOverflow: 'ellipsis',
       headerTooltip: 'Review Time (days)'
     },
@@ -74,7 +70,6 @@
       name: 'Default Approver',
       sortable: false,
       field: 'defaultUser',
-      width: 100,
       textOverflow: 'ellipsis',
       headerTooltip: 'Default Approver'
     },
@@ -85,7 +80,6 @@
       sortable: false,
       field: 'escalationApprover',
       postRender: true,
-      width: 100,
       textOverflow: 'ellipsis',
       headerTooltip: 'Escalation Approver'
     },
@@ -96,7 +90,6 @@
       sortable: false,
       field: 'escalateAfterDays',
       postRender: true,
-      width: 100,
       textOverflow: 'ellipsis',
       headerTooltip: 'Escalation Time (days)'
     },
@@ -106,7 +99,6 @@
       name: 'Stage Action',
       sortable: false,
       field: 'stageActions',
-      width: 100,
       textOverflow: 'ellipsis',
       headerTooltip: 'Stage Actions'
     }
@@ -146,6 +138,8 @@
 
     if (width > 0) {
       columns.forEach((column) => column.width = width);
+    } else {
+      columns.forEach((column) => delete column.width);
     }
 
     if (!gridApi) {
