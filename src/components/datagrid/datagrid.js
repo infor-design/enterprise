@@ -1388,7 +1388,7 @@ Datagrid.prototype = {
       headerRows.right += '<tr role="row">';
     }
 
-    const hasFrozenCol = !(this.settings.frozenColumns.left.length > 0 || this.settings.frozenColumns.right.length > 0);
+    const noFrozenCol = !(this.settings.frozenColumns.left.length > 0 || this.settings.frozenColumns.right.length > 0);
 
     for (let j = 0; j < this.settings.columns.length; j++) {
       const column = self.settings.columns[j];
@@ -1427,7 +1427,7 @@ Datagrid.prototype = {
       cssClass = cssClass !== '' ? ` class="${cssClass.substr(1)}"` : '';
       let ids = utils.stringAttributes(this, this.settings.attributes, `col-${column.id?.toLowerCase()}`);
 
-      let addTextWidth = hasFrozenCol;
+      let addTextWidth = noFrozenCol && !isSortable;
 
       if (!ids) {
         ids = `id="${id}"`;
@@ -4582,7 +4582,7 @@ Datagrid.prototype = {
 
     containerHtml.left = containerHtml.center;
     containerHtml.right = containerHtml.center;
-    const hasFrozenCol = !(this.settings.frozenColumns.left.length > 0 || this.settings.frozenColumns.right.length > 0);
+    const noFrozenCol = !(this.settings.frozenColumns.left.length > 0 || this.settings.frozenColumns.right.length > 0);
 
     for (j = 0; j < self.settings.columns.length; j++) {
       const col = self.settings.columns[j];
@@ -4601,7 +4601,7 @@ Datagrid.prototype = {
         formatLocale
       );
 
-      let addTextWidth = hasFrozenCol;
+      let addTextWidth = noFrozenCol && col.sortable === false;
 
       if (formatted.indexOf('<span class="is-readonly">') === 0) {
         col.readonly = true;
@@ -4610,7 +4610,6 @@ Datagrid.prototype = {
       if (formatted.indexOf('datagrid-checkbox') > -1 ||
         formatted.indexOf('btn-actions') > -1) {
         cssClass += ' l-center-text';
-        addTextWidth = false;
       }
 
       if (formatted.indexOf('trigger') > -1) {
@@ -4625,15 +4624,6 @@ Datagrid.prototype = {
           cssClass += ' datagrid-trigger-cell datagrid-no-default-formatter';
         }
       }
-
-      const excludeFormatted = ['datagrid-multiline-text', 'row-btn', 'svg', 'badge'];
-
-      excludeFormatted.every((format) => {
-        if (formatted.indexOf(format) > -1) {
-          addTextWidth = false;
-        }
-        return addTextWidth;
-      });
 
       if (formatter.name && formatter.name === 'Fileupload') {
         cssClass += ' is-fileupload';
@@ -4810,6 +4800,16 @@ Datagrid.prototype = {
       }
       if (col.formatter?.toString().indexOf('function SelectionCheckbox(') === 0) {
         ariaChecked = ` aria-checked="${this.isRowSelected(rowData)}"`;
+      }
+
+      if (/<\/?[a-z][\s\S]*>/i.test(formatted)) {
+        const excludeFormatted = ['datagrid-multiline-text', 'datagrid-checkbox-wrapper', 'row-btn', 'svg', 'badge', 'tag'];
+        excludeFormatted.every((format) => {
+          if (formatted.indexOf(format) > -1) {
+            addTextWidth = false;
+          }
+          return addTextWidth;
+        });
       }
 
       //  elephant
