@@ -1433,7 +1433,7 @@ Datagrid.prototype = {
         ids = `id="${id}"`;
       }
 
-      if (headerAlignmentClass === ' l-right-text') {
+      if (headerAlignmentClass === ' l-right-text' || headerAlignmentClass === ' l-center-text') {
         addTextWidth = false;
       }
 
@@ -1454,7 +1454,6 @@ Datagrid.prototype = {
           `<span class="sort-desc">${$.createIcon({ icon: 'dropdown' })}</div>`;
       }
 
-      // elephant
       // If header text is center aligned, for proper styling,
       // place the sortIndicator as a child of datagrid-header-text.
       headerRows[container] += `<div class="${isSelection ? 'datagrid-checkbox-wrapper ' : 'datagrid-column-wrapper'}${headerAlignmentClass}">
@@ -4641,7 +4640,7 @@ Datagrid.prototype = {
       if (col.align) {
         cssClass += ` l-${col.align}-text`;
 
-        if (col.align === 'right') {
+        if (col.align === 'right' || col.align === 'center') {
           addTextWidth = false;
         }
       }
@@ -4812,7 +4811,6 @@ Datagrid.prototype = {
         });
       }
 
-      //  elephant
       containerHtml[container] += `<td role="gridcell" ${ariaReadonly} aria-colindex="${j + 1}"` +
           ` ${ariaDescribedby
           }${ariaChecked
