@@ -1388,7 +1388,7 @@ Datagrid.prototype = {
       headerRows.right += '<tr role="row">';
     }
 
-    const addTextWidth = !(this.settings.frozenColumns.left.length > 0 || this.settings.frozenColumns.right.length > 0);
+    const hasFrozenCol = !(this.settings.frozenColumns.left.length > 0 || this.settings.frozenColumns.right.length > 0);
 
     for (let j = 0; j < this.settings.columns.length; j++) {
       const column = self.settings.columns[j];
@@ -1427,8 +1427,14 @@ Datagrid.prototype = {
       cssClass = cssClass !== '' ? ` class="${cssClass.substr(1)}"` : '';
       let ids = utils.stringAttributes(this, this.settings.attributes, `col-${column.id?.toLowerCase()}`);
 
+      let addTextWidth = hasFrozenCol;
+
       if (!ids) {
         ids = `id="${id}"`;
+      }
+
+      if (headerAlignmentClass === ' l-right-text') {
+        addTextWidth = false;
       }
 
       headerRows[container] += `<th scope="col" role="columnheader" ${ids} 
@@ -1448,6 +1454,7 @@ Datagrid.prototype = {
           `<span class="sort-desc">${$.createIcon({ icon: 'dropdown' })}</div>`;
       }
 
+      // elephant
       // If header text is center aligned, for proper styling,
       // place the sortIndicator as a child of datagrid-header-text.
       headerRows[container] += `<div class="${isSelection ? 'datagrid-checkbox-wrapper ' : 'datagrid-column-wrapper'}${headerAlignmentClass}">
@@ -4619,9 +4626,14 @@ Datagrid.prototype = {
         }
       }
 
-      if (formatted.indexOf('datagrid-multiline-text') > -1 || formatted.indexOf('row-btn') > -1) {
-        addTextWidth = false;
-      }
+      const excludeFormatted = ['datagrid-multiline-text', 'row-btn', 'svg', 'badge'];
+
+      excludeFormatted.every((format) => {
+        if (formatted.indexOf(format) > -1) {
+          addTextWidth = false;
+        }
+        return addTextWidth;
+      });
 
       if (formatter.name && formatter.name === 'Fileupload') {
         cssClass += ' is-fileupload';
@@ -4629,6 +4641,7 @@ Datagrid.prototype = {
 
       if (col.editor && this.settings.editable) {
         cssClass += ' has-editor';
+        addTextWidth = false;
       }
 
       if (col.expanded) {
@@ -4637,6 +4650,10 @@ Datagrid.prototype = {
 
       if (col.align) {
         cssClass += ` l-${col.align}-text`;
+
+        if (col.align === 'right') {
+          addTextWidth = false;
+        }
       }
 
       if (col.textOverflow === 'ellipsis') {
@@ -4795,6 +4812,7 @@ Datagrid.prototype = {
         ariaChecked = ` aria-checked="${this.isRowSelected(rowData)}"`;
       }
 
+      //  elephant
       containerHtml[container] += `<td role="gridcell" ${ariaReadonly} aria-colindex="${j + 1}"` +
           ` ${ariaDescribedby
           }${ariaChecked
