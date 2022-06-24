@@ -541,7 +541,23 @@ Datagrid.prototype = {
     const dataIndex = recordCount;
 
     const rowHtml = self.rowHtml(data, recordCount, dataIndex);
-    DOM.append(self.tableBody, rowHtml.center, '*');
+    if (this.settings.groupable) {
+      const groups = $('.datagrid-rowgroup-header').find('span:not([class])');
+      for (let i = 0; i < groups.length; i++) {
+        const group = $(groups[i]);
+        if (data.type === group.text().trim()) {
+          DOM.after(group.parents('tr'), rowHtml.center, '*');
+          break;
+        }
+      }
+    } else {
+      DOM.prepend(self.tableBody, rowHtml.center, '*');
+      if (self.tableBody.children().length > this.pagerAPI.settings.pagesize) {
+        self.tableBody.children().last().remove();
+      }
+    }
+
+    self.afterRender();
   },
 
   /**
