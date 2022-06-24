@@ -572,7 +572,6 @@ Datagrid.prototype = {
   * @param {string} location Where to add the row. This can be 'bottom' or 'top', default is top.
   */
   addRow(data, location) {
-    console.log(data);
     const self = this;
     const cell = 0;
     let args;
