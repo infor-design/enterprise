@@ -529,7 +529,7 @@ Datagrid.prototype = {
   * Render row in the datagrid
   * @param {object} data The data to be appended in the table
   */
-  renderRow(data) {
+  renderRow(data, location) {
     const self = this;
 
     if (this.emptyMessageContainer) {
@@ -550,9 +550,12 @@ Datagrid.prototype = {
         }
       }
     } else {
-      DOM.prepend(self.tableBody, rowHtml.center, '*');
-      if (self.tableBody.children().length > this.pagerAPI.settings.pagesize) {
-        self.tableBody.children().last().remove();
+      location === 'bottom' ? DOM.append(self.tableBody, rowHtml.center, '*') : DOM.prepend(self.tableBody, rowHtml.center, '*');
+      // DOM.prepend(self.tableBody, rowHtml.center, '*');
+      if (self.settings.paging) {
+        if (self.tableBody.children().length > self.pagerAPI.settings.pagesize) {
+          self.tableBody.children().last().remove();
+        }
       }
     }
 
@@ -565,6 +568,7 @@ Datagrid.prototype = {
   * @param {string} location Where to add the row. This can be 'bottom' or 'top', default is top.
   */
   addRow(data, location) {
+    console.log(data);
     const self = this;
     const cell = 0;
     let args;
@@ -591,7 +595,7 @@ Datagrid.prototype = {
 
     // Add to ui
     this.clearCache();
-    this.renderRow(data);
+    this.renderRow(data, location);
 
     if (this.settings.groupable) {
       rowNode = this.dataRowNode(row);
