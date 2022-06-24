@@ -525,7 +525,6 @@ Datagrid.prototype = {
     }, 100);
   },
 
-
   /**
   * Render row in the datagrid
   * @param {object} data The data to be appended in the table
