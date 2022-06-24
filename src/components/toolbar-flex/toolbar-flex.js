@@ -641,9 +641,9 @@ ToolbarFlex.prototype = {
    */
   teardown() {
     if (!this.settings.allowTabs) {
-      this.element.removeEventListener('keydown', this.keydownListener);
-      this.element.removeEventListener('keyup', this.keyupListener);
-      this.element.removeEventListener('click', this.clickListener);
+      this.element?.removeEventListener('keydown', this.keydownListener);
+      this.element?.removeEventListener('keyup', this.keyupListener);
+      this.element?.removeEventListener('click', this.clickListener);
     }
 
     $(this.element).off(`selected.${COMPONENT_NAME}`);

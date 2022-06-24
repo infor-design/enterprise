@@ -548,7 +548,7 @@ Validator.prototype = {
            (rule.message !== Locale.translate('Required'))) {
           return;
         }
-        self.addMessage(field, rule, isInline, showResultTooltip, undefined, !result);
+        self.addMessage(field, rule, isInline, showResultTooltip);
         results.push(rule.type);
 
         if (validationType.errorsForm) {
@@ -652,15 +652,10 @@ Validator.prototype = {
    * @param {boolean} showTooltip whether or not the legacy validation Tooltip will contain the
    * message instead of placing it underneath
    * @param {boolean} isHelpMessage whether or not this validation message type is "alert"
-   * @param {boolean} isValidatedError comes from the manageResult() and validated as a true error
    */
-  addMessage(field, rule, inline, showTooltip, isHelpMessage, isValidatedError) {
+  addMessage(field, rule, inline, showTooltip, isHelpMessage) {
     if (rule.message === '') {
       return;
-    }
-
-    if (!isValidatedError) {
-      this.validate(field, showTooltip, 0);
     }
 
     if (field.is('.dropdown, .multiselect') && $('#dropdown-list').is(':visible')) {
@@ -674,7 +669,7 @@ Validator.prototype = {
     const validationType = Validation.ValidationTypes[rule.type] ||
       Validation.ValidationTypes.error;
 
-    if (!isHelpMessage && inline) {
+    if (!isHelpMessage) {
       loc.addClass(rule.type === 'icon' ? 'custom-icon' : rule.type);
     }
 
@@ -725,7 +720,7 @@ Validator.prototype = {
       });
     }
 
-    if (!inline && isValidatedError) {
+    if (!inline) {
       this.showTooltipMessage(field, appendedMsg, validationType.type, showTooltip);
       return;
     }
@@ -1075,10 +1070,8 @@ Validator.prototype = {
         tooltipAPI.destroy();
       }
 
-      const validationTooltip = $('#validation-tooltip');
-      const validationToolTipAPI = validationTooltip.data('tooltip');
-      if (validationToolTipAPI) {
-        validationToolTipAPI.destroy();
+      if (field !== undefined) {
+        this.hideTooltipMessage(field);
       }
 
       if (this.inputs) {
@@ -1091,6 +1084,20 @@ Validator.prototype = {
       field.parent('.field, .field-short').find(`.icon-${rule.type}`).remove();
       field.next('.inforCheckboxLabel').next(`.icon-${rule.type}`).remove();
     }
+  },
+
+  /**
+   * Hide tooltip message on a field
+   * @private
+   * @param {jQuery[]} field the field being modified
+   */
+  hideTooltipMessage(field) {
+    const validationToolTipAPI = field.data('tooltip');
+    if (validationToolTipAPI) {
+      validationToolTipAPI.destroy();
+    }
+    field.off('focus.validate');
+    field.off('blur.validate');
   },
 
   /**

@@ -4,7 +4,7 @@
         <div class="widget-header">
           <h2 class="widget-title">Vertical Bar Chart Title</h2>
         </div>
-        <div class="widget-content">
+        <div class="widget-content" style="height: auto;">
           <div id="bar-example" class="chart-container">
           </div>
         </div>
@@ -40,10 +40,9 @@ $('body').on('initialized', function () {
            { name: 'data-automation-id', value: 'automation-id-bar-c' }
          ]
       }],
-      name: ''  //Can be optionally passed in makes less sense with one: Group 1
+      name: 'Categories'  //Can be optionally passed in makes less sense with one: Group 1
     }];
 
   $('#bar-example').chart({type: 'bar', dataset: dataset, animate: false});
-
 });
 </script>

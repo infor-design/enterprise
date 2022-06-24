@@ -330,8 +330,7 @@ charts.addLegend = function (series, chartType, settings, container) {
   let width = 0;
   let currentWidth;
   let totalWidth = 0;
-
-  let maxLength = series.length;
+  let maxLength;
 
   let currentTotalWidthPercent;
   for (i = 0; i < series.length; i++) {
@@ -348,10 +347,9 @@ charts.addLegend = function (series, chartType, settings, container) {
   width += 55;
   const widthPercent = width / $(container).width() * 100;
   const exceedsMaxWidth = widthPercent > 45;
+  const isBottom = series[0].placement && series[0].placement === 'bottom';
 
-  const isBottom = exceedsMaxWidth || (series[0].placement && series[0].placement === 'bottom');
-
-  if (!exceedsMaxWidth) {
+  if (!(isBottom && exceedsMaxWidth)) {
     maxLength = series.length;
   }
 
@@ -833,7 +831,7 @@ charts.setSelectedElement = function (o) {
           if (bar.classed('is-selected')) {
             const data = dataset ? dataset[i] : d;
             data.selected = true;
-            selectedBars.push({ elem: bar.node(), data });
+            selectedBars.push({ elem: bar.nodes(), data, index: i });
           }
         });
         if (isGrouped) {
@@ -847,11 +845,13 @@ charts.setSelectedElement = function (o) {
         }
       }
     } else if (isTypeColumn || isBar) {
+      const barSelected = o.type === 'bar' ? `g[role=listitem]:nth-child(${o.i + 1}) .bar` : `.bar:nth-child(${o.i + 1})`;
+
       // Stacked Only
       svg.selectAll(`${isTypeColumn ? '.axis.x' : '.axis.y'} .tick:nth-child(${o.i + 2})`)
         .style('font-weight', 'bolder');
 
-      svg.selectAll(`.bar:nth-child(${o.i + 1})`)
+      svg.selectAll(`${barSelected}`)
         .classed('is-selected', true).style('opacity', 1);
 
       svg.selectAll('.bar.is-selected').each(function (d, i) {
@@ -862,7 +862,7 @@ charts.setSelectedElement = function (o) {
             dataset[i][o.i] : dataset[i].data[o.i];
         }
         data.selected = true;
-        selectedBars.push({ elem: bar.node(), data });
+        selectedBars.push({ elem: bar.nodes(), data, index: o.i });
       });
       triggerData = selectedBars;
     } else if (isTypePie) { // Pie
