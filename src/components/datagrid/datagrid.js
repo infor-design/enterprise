@@ -550,8 +550,12 @@ Datagrid.prototype = {
         }
       }
     } else {
-      location === 'bottom' ? DOM.append(self.tableBody, rowHtml.center, '*') : DOM.prepend(self.tableBody, rowHtml.center, '*');
-      // DOM.prepend(self.tableBody, rowHtml.center, '*');
+      if (location === 'bottom') {
+        DOM.append(self.tableBody, rowHtml.center, '*');
+      } else {
+        DOM.prepend(self.tableBody, rowHtml.center, '*');
+      }
+
       if (self.settings.paging) {
         if (self.tableBody.children().length > self.pagerAPI.settings.pagesize) {
           self.tableBody.children().last().remove();
