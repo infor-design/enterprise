@@ -3971,6 +3971,7 @@ Datagrid.prototype = {
 
       self.runningCount++;
       const rowHtml = self.rowHtml(s.dataset[i], currentCount, i);
+
       if (self.hasLeftPane && rowHtml.left) {
         tableHtmlLeft += rowHtml.left;
       }
@@ -4801,15 +4802,20 @@ Datagrid.prototype = {
         ariaChecked = ` aria-checked="${this.isRowSelected(rowData)}"`;
       }
 
-      if (/<\/?[a-z][\s\S]*>/i.test(formatted)) {
-        const excludeFormatted = ['datagrid-multiline-text', 'datagrid-checkbox-wrapper', 'row-btn', 'svg', 'badge', 'tag'];
-        excludeFormatted.every((format) => {
-          if (formatted.indexOf(format) > -1) {
-            addTextWidth = false;
-          }
-          return addTextWidth;
-        });
+      const fElement = $(`<div>${formatted}</div>`);
+      if (fElement.has('svg').length > 0) {
+        addTextWidth = false;
       }
+
+      const checkClass = ['datagrid-multiline-text', 'datagrid-checkbox-wrapper', 'row-btn', 'badge', 'tag'];
+      checkClass.every((c) => {
+        if (fElement.hasClass(c)) {
+          addTextWidth = false;
+        }
+        return addTextWidth;
+      });
+
+      fElement.remove();
 
       containerHtml[container] += `<td role="gridcell" ${ariaReadonly} aria-colindex="${j + 1}"` +
           ` ${ariaDescribedby
