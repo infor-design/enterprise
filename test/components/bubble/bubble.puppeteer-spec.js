@@ -34,6 +34,12 @@ describe('Bubble Puppeteer Tests', () => {
         promises.push(checkAttr(`#bubble-s2-${month}-dot`, `bubble-s2-${month}-dot`, `automation-id-bubble-s2-${month}-dot`));
       });
 
+      await checkAttr('#bubble-series1-line', 'bubble-series1-line', 'automation-id-bubble-series1-line');
+      await checkAttr('#bubble-series2-line', 'bubble-series2-line', 'automation-id-bubble-series2-line');
+
+      await checkAttr('#bubble-series1-legend-0', 'bubble-series1-legend-0', 'automation-id-bubble-series1-legend-0');
+      await checkAttr('#bubble-series2-legend-1', 'bubble-series2-legend-1', 'automation-id-bubble-series2-legend-1');
+
       await Promise.all(promises);
     });
   });
