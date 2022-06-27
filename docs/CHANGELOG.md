@@ -17,16 +17,18 @@
 ## v4.65.0 Fixes
 
 - `[Accordion]` Fixed the bottom border of the completely disabled accordion in dark mode. ([#6406](https://github.com/infor-design/enterprise/issues/6406))
+- `[AppMenu]` Fixed a bug where events are added to the wrong elements for filtering. Also fixed an issue where if no accordion is added the app menu will error. ([#6592](https://github.com/infor-design/enterprise/issues/6592))
 - `[Chart]` Removed automatic legend bottom placement when reaching a minimum width. ([#6474](https://github.com/infor-design/enterprise/issues/6474))
 - `[Chart]` Fixed the result logged in console to be same as the Soho Interfaces. ([NG#1296](https://github.com/infor-design/enterprise-ng/issues/1296))
 - `[ContextualActionPanel]` Fixed a bug where the toolbar searchfield with close icon looks off on mobile viewport. ([#6448](https://github.com/infor-design/enterprise/issues/6448))
 - `[Datagrid]` Fixed a bug in datagrid where focus is not behaving properly when inlineEditor is set to true. ([NG#1300](https://github.com/infor-design/enterprise-ng/issues/1300))
-- `[Datagrid]` Fixed a bug where treegrid doesn't expand a row via keyboard when editable is set to true. ([#6434](https://github.com/infor-design/enterprise/issues/6434))
+- `[Datagrid]` Fixed a bug where `treegrid` doesn't expand a row via keyboard when editable is set to true. ([#6434](https://github.com/infor-design/enterprise/issues/6434))
 - `[Datagrid]` Fixed a bug where the search icon and x icon are misaligned across datagrid and removed extra margin space in modal in Firefox. ([#6418](https://github.com/infor-design/enterprise/issues/6418))
 - `[Datagrid]` Fixed a bug where page changed to one on removing a row in datagrid. ([#6475](https://github.com/infor-design/enterprise/issues/6475))
 - `[Datagrid]` Header is rerendered when calling updated method, also added paging info settings. ([#6476](https://github.com/infor-design/enterprise/issues/6476))
+- `[Datagrid]` Fixed a bug where using shift-click to multiselect on datagrid with treeGrid setting = true selects from the first row until bottom row. ([NG#1274](https://github.com/infor-design/enterprise-ng/issues/1274))
 - `[Datepicker]` Fixed a bug where the datepicker is displaying NaN when using french format. ([NG#1273](https://github.com/infor-design/enterprise-ng/issues/1273))
-- `[Datepicker]` Added listener for calendar monthrendered event and pass along. ([NG#1324](https://github.com/infor-design/enterprise-ng/issues/1324))
+- `[Datepicker]` Added listener for calendar `monthrendered` event and pass along. ([NG#1324](https://github.com/infor-design/enterprise-ng/issues/1324))
 - `[Input]` Fixed a bug where the password does not show or hide in Firefox. ([#6481](https://github.com/infor-design/enterprise/issues/6481))
 - `[Listview]` Fixed disabled font color not showing in listview. ([#6391](https://github.com/infor-design/enterprise/issues/6391))
 - `[Locale]` Added monthly translations. ([#6556](https://github.com/infor-design/enterprise/issues/6556))
@@ -35,6 +37,12 @@
 - `[Page-Patterns]` Fixed a bug where the header disappears when the the last item in the list is clicked and the browser is smaller in Chrome and Edge. ([#6328](https://github.com/infor-design/enterprise/issues/6328))
 - `[ToolbarFlex]` Fixed a bug where the teardown might error on situations. ([#1327](https://github.com/infor-design/enterprise/issues/1327))
 - `[Validation]` Fixed a bug where the tooltip would show on the header when the message has actually been removed. ([#6547](https://github.com/infor-design/enterprise/issues/6547)
+
+## v4.64.2 Fixes
+
+- `[Datepicker]` Added listener for calendar monthrendered event and pass along. ([NG#1324](https://github.com/infor-design/enterprise-ng/issues/1324))
+- `[Modal]` Fixed bug where popup goes behind modal when in application menu in resizable mode. ([NG#1272](https://github.com/infor-design/enterprise-ng/issues/1272))
+- `[Monthview]` Fixed bug where monthview duplicates on updating legends. ([NG#1305](https://github.com/infor-design/enterprise-ng/issues/1305))
 
 ## v4.64.0
 
