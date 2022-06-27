@@ -8329,6 +8329,7 @@ Datagrid.prototype = {
           self.selectNode(rowNode, idx, rowData);
         }
         self.setNodeStatus(rowNode);
+        self.lastSelectedRow = idx;
       } else {
         rowData = s.dataset[dataRowIndex];
         if (s.groupable) {
