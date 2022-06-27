@@ -531,16 +531,16 @@ Datagrid.prototype = {
   */
   renderRow(data, location) {
     const self = this;
-
-    if (this.emptyMessageContainer) {
-      this.emptyMessageContainer.hide();
+    
+    if (self.emptyMessageContainer) {
+      self.emptyMessageContainer.hide();
     }
 
     const recordCount = self.settings.dataset.length - 1;
     const dataIndex = recordCount;
 
     const rowHtml = self.rowHtml(data, recordCount, dataIndex);
-    if (this.settings.groupable) {
+    if (self.settings.groupable) {
       const groups = $('.datagrid-rowgroup-header').find('span:not([class])');
       for (let i = 0; i < groups.length; i++) {
         const group = $(groups[i]);
@@ -549,17 +549,24 @@ Datagrid.prototype = {
           break;
         }
       }
-    } else {
-      if (location === 'bottom') {
-        DOM.append(self.tableBody, rowHtml.center, '*');
-      } else {
-        DOM.prepend(self.tableBody, rowHtml.center, '*');
-      }
+    }
 
-      if (self.settings.paging) {
-        if (self.tableBody.children().length > self.pagerAPI.settings.pagesize) {
-          self.tableBody.children().last().remove();
-        }
+    if (self.settings.paging && !self.settings.groupable) {
+      const operationType = location === 'bottom' ? 'last' : 'first';
+      const newPage = (self.settings.dataset.length - (self.pagerAPI.pageCount() * self.pagerAPI.settings.pagesize)) === 1 ? 1 : 0; 
+      const newActivePage = (location === 'bottom' ? self.pagerAPI.pageCount() : 1) + newPage;
+
+      if (location !== 'bottom' && self.pagerAPI.activePage === 1) {
+        DOM.prepend(self.tableBody, rowHtml.center, '*');
+      } else {
+        self.pagerAPI.setActivePage(newActivePage, false, operationType);
+        self.pagerAPI.triggerPagingEvents(self.pagerAPI.currentPage);
+      }
+    }
+
+    if (self.settings.paging) {
+      if (self.tableBody.children().length > self.pagerAPI.settings.pagesize) {
+        self.tableBody.children().last().remove();
       }
     }
 
@@ -586,7 +593,7 @@ Datagrid.prototype = {
 
     if (!this.settings.groupable) {
       this.pagerRefresh(location);
-    }
+    } 
 
     // Update selected
     this._selectedRows.forEach((selected) => {
