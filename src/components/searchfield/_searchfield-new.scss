@@ -95,7 +95,7 @@ html.is-firefox {
   .toolbar-searchfield-wrapper {
     &:not(.is-open):not(.non-collapsible) {
       .searchfield {
-        height: 34px;
+        height: 38px;
         padding-bottom: 5px;
         padding-top: 7px;
       }
@@ -104,10 +104,6 @@ html.is-firefox {
     > .icon {
       &.close {
         top: 18px;
-
-        @media only screen and (max-width: $breakpoint-phone-to-tablet) {
-          margin-right: 5px;
-        }
       }
     }
 
