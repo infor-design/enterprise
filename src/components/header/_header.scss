@@ -286,6 +286,22 @@ $subheader-height: 60px;
         }
       }
     }
+
+    .toolbar-searchfield-wrapper {
+      &.is-open {
+        .searchfield {
+          border-bottom: 0;
+          border-right: 0;
+          border-top: 0;
+        }
+
+        .collapse-button {
+          border-bottom: 0;
+          border-right: 0;
+          border-top: 0;
+        }
+      }
+    }
   }
 
   &.has-alternate-breadcrumb {
