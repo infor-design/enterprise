@@ -4,6 +4,8 @@ const { getConfig } = require('../../helpers/e2e-utils.js');
 describe('Bubble Puppeteer Tests', () => {
   const baseUrl = 'http://localhost:4000/components/bubble';
 
+  const months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+
   describe('Index', () => {
     const url = `${baseUrl}/example-index?theme=classic&layout=nofrills`;
 
@@ -25,7 +27,6 @@ describe('Bubble Puppeteer Tests', () => {
           expect(id[1]).toEqual(val2);
         });
 
-      const months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
       const promises = [];
 
       months.forEach((month) => {
@@ -50,11 +51,47 @@ describe('Bubble Puppeteer Tests', () => {
     });
 
     it('should not select line group on click', async () => {
-      // no clicky on dots
+      const elHandleArray = await page.$$('.line-group');
+      const lineA = '#bubble-example > svg > g > g:nth-child(3)';
+      const lineB = '#bubble-example > svg > g > g:nth-child(4)';
+
+      const promises = [];
+
+      const clickEl = (month, el, index) => el.click().then(() => page.click(`#bubble-s${index + 1}-${month}-dot`)).then(async () => {
+        const aClass = await page.$eval(lineA, element => element.getAttribute('class'));
+        const bClass = await page.$eval(lineB, element => element.getAttribute('class'));
+        expect(aClass).not.toContain('is-selected');
+        expect(bClass).not.toContain('is-selected');
+      });
+
+      elHandleArray.forEach((el, index) => {
+        months.forEach((month) => {
+          promises.push(clickEl(month, el, index));
+        });
+      });
+
+      await Promise.all(promises);
     });
 
     it('should not select line group on click in legends', async () => {
-      // no clicky on labels
+      const elHandleArray = await page.$$('.line-group');
+      const lineA = '#bubble-example > svg > g > g:nth-child(3)';
+      const lineB = '#bubble-example > svg > g > g:nth-child(4)';
+
+      const promises = [];
+
+      const clickEl = (el, index) => el.click().then(() => page.click(`#bubble-series${index + 1}-legend-${index}`)).then(async () => {
+        const aClass = await page.$eval(lineA, element => element.getAttribute('class'));
+        const bClass = await page.$eval(lineB, element => element.getAttribute('class'));
+        expect(aClass).not.toContain('is-selected');
+        expect(bClass).not.toContain('is-selected');
+      });
+
+      elHandleArray.forEach((el, index) => {
+        promises.push(clickEl(el, index));
+      });
+
+      await Promise.all(promises);
     });
   });
 });
