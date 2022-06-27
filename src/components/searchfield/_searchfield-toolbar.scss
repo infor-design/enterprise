@@ -426,7 +426,7 @@ $toolbarsearchfield-category-empty-width: 51px;
 
     &.searchfield-wrapper.show-category {
       .searchfield {
-        border-left-color: $header-searchfield-input-border-color;
+        border-left-color: $header-searchfield-input-border-color !important;
       }
     }
   }
@@ -633,7 +633,7 @@ $toolbarsearchfield-category-empty-width: 51px;
       }
 
       .icon {
-        color: rgba($searchfield-header-icon-color, 0.7);
+        color: $searchfield-header-icon-color;
       }
     }
 
