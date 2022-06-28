@@ -528,10 +528,11 @@ Datagrid.prototype = {
   /**
   * Render row in the datagrid
   * @param {object} data The data to be appended in the table
+  * @param {number} location The row location
   */
   renderRow(data, location) {
     const self = this;
-    
+
     if (self.emptyMessageContainer) {
       self.emptyMessageContainer.hide();
     }
@@ -553,7 +554,8 @@ Datagrid.prototype = {
 
     if (self.settings.paging && !self.settings.groupable) {
       const operationType = location === 'bottom' ? 'last' : 'first';
-      const newPage = (self.settings.dataset.length - (self.pagerAPI.pageCount() * self.pagerAPI.settings.pagesize)) === 1 ? 1 : 0; 
+      // eslint-disable-next-line max-len
+      const newPage = (self.settings.dataset.length - (self.pagerAPI.pageCount() * self.pagerAPI.settings.pagesize)) === 1 ? 1 : 0;
       const newActivePage = (location === 'bottom' ? self.pagerAPI.pageCount() : 1) + newPage;
 
       if (location !== 'bottom' && self.pagerAPI.activePage === 1) {
@@ -593,7 +595,7 @@ Datagrid.prototype = {
 
     if (!this.settings.groupable) {
       this.pagerRefresh(location);
-    } 
+    }
 
     // Update selected
     this._selectedRows.forEach((selected) => {
@@ -10099,7 +10101,7 @@ Datagrid.prototype = {
 
     if (typeof this.editor.focus === 'function') {
       this.editor.focus();
-    }    
+    }
 
     // Make sure the first keydown gets captured and trigger the dropdown
     if (this.editor?.input.is('.dropdown') && event.keyCode && ![9, 13, 32, 37, 38, 39, 40].includes(event.keyCode)) {
@@ -11065,8 +11067,8 @@ Datagrid.prototype = {
 
       if (!this.settings.trimSpaces) {
         r = r[0].replace(/\s/g, '&nbsp;');
-      } 
-      return r; 
+      }
+      return r;
     };
 
     // update cell value
