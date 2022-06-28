@@ -1,19 +1,184 @@
 const { getConfig } = require('../../helpers/e2e-utils.js');
 
-describe('Cards actionable button tests', () => {
-  const url = 'http://localhost:4000/components/cards/example-actionable';
-  beforeAll(async () => {
-    await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-    await page.setViewport({ width: 1920, height: 1080 });
+describe('Cards Puppeteer Tests', () => {
+  const baseUrl = 'http://localhost:4000/components/cards';
+
+  describe('Cards Index Page Tests', () => {
+    const url = `${baseUrl}/example-index`;
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('should show the title', async () => {
+      await expect(page.title()).resolves.toMatch('IDS Enterprise');
+    });
+
+    it('should show the card', async () => {
+      await page.waitForSelector('.card', { visible: true })
+        .then(element => expect(element).toBeTruthy());
+    });
   });
-  
-  it('should run visual test', async () => {
-    await page.waitForSelector('.btn');
-    await page.click('#actionable-btn-1'); 
-    await page.keyboard.press('Tab');
-    await page.hover('#actionable-btn-2');
-    const image = await page.screenshot(); 
-    const config = getConfig('cards-actionbutton'); 
-    expect(image).toMatchImageSnapshot(config); 
+
+  describe('Cards Action Menu Button Page Tests', () => {
+    const url = `${baseUrl}/example-action-menu-button`;
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('should show the widget', async () => {
+      await page.waitForSelector('.widget', { visible: true })
+        .then(element => expect(element).toBeTruthy());
+    });
   });
+
+  describe('Cards Auto Size Page Tests', () => {
+    const url = `${baseUrl}/example-auto-size`;
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('should show the card', async () => {
+      await page.waitForSelector('.card.auto-height', { visible: true })
+        .then(element => expect(element).toBeTruthy());
+    });
+  });
+
+  describe('Cards Expandable Page Tests', () => {
+    const url = `${baseUrl}/example-expandable`;
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('should show the card', async () => {
+      await page.waitForSelector('.card.expandable-area', { visible: true })
+        .then(element => expect(element).toBeTruthy());
+    });
+
+    it('should should expand', async () => {
+      await page.waitForSelector('.card.expandable-area', { visible: true })
+        .then(element => expect(element).toBeTruthy());
+
+      const button = await page.$('.btn-expander');
+      await button.click();
+
+      await page.waitForSelector('.card.expandable-area.is-expanded', { visible: true })
+        .then(element => expect(element).toBeTruthy());
+    });
+  });
+
+  describe('Cards Four By Four Page Tests', () => {
+    const url = `${baseUrl}/example-four-by-four`;
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('should show the card', async () => {
+      await page.waitForSelector('.card', { visible: true })
+        .then(element => expect(element).toBeTruthy());
+    });
+  });
+
+  describe('Cards Group Action Page Tests', () => {
+    const url = `${baseUrl}/example-group-action`;
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('should show the card', async () => {
+      await page.waitForSelector('.card', { visible: true })
+        .then(element => expect(element).toBeTruthy());
+    });
+
+    it('should show the group action class', async () => {
+      await page.waitForSelector('.card-group-action', { visible: true })
+        .then(element => expect(element).toBeTruthy());
+    });
+  });
+
+  describe('Cards Menu Button Page Tests', () => {
+    const url = `${baseUrl}/example-menubutton`;
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('should show the card', async () => {
+      await page.waitForSelector('.card', { visible: true })
+        .then(element => expect(element).toBeTruthy());
+    });
+
+    it('should show the menu button', async () => {
+      await page.waitForSelector('#category-button', { visible: true })
+        .then(element => expect(element).toBeTruthy());
+
+      const button = await page.$('#category-button');
+      await button.click();
+
+      await page.waitForSelector('#sales', { visible: true })
+        .then(element => expect(element).toBeTruthy());
+    });
+  });
+
+  describe('Cards Variations and Hitboxes Page Tests', () => {
+    const url = `${baseUrl}/example-variations-hitboxes`;
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('should show the card', async () => {
+      await page.waitForSelector('.card', { visible: true })
+        .then(element => expect(element).toBeTruthy());
+    });
+
+    it('should show the card with status item', async () => {
+      await page.waitForSelector('.card-content-status.success', { visible: true })
+        .then(element => expect(element).toBeTruthy());
+    });
+
+    it('should show the card with status account', async () => {
+      await page.waitForSelector('.header-status.available', { visible: true })
+        .then(element => expect(element).toBeTruthy());
+    });
+
+    it('should show the card with hyperlink', async () => {
+      await page.waitForSelector('.hyperlink', { visible: true })
+        .then(element => expect(element).toBeTruthy());
+    });
+
+    it('should show the card with photo', async () => {
+      await page.waitForSelector('.card-image', { visible: true })
+        .then(element => expect(element).toBeTruthy());
+    });
+
+    it('should show the card with content action', async () => {
+      await page.waitForSelector('.card-content-action', { visible: true })
+        .then(element => expect(element).toBeTruthy());
+    });
+  });
+
+  // describe('Cards actionable button tests', () => {
+  //   const url = `${baseUrl}/example-actionable`;
+
+  //   beforeAll(async () => {
+  //     await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+  //     await page.setViewport({ width: 1920, height: 1080 });
+  //   });
+    
+  //   it('should run visual test', async () => {
+  //     await page.waitForSelector('.btn');
+  //     await page.click('#actionable-btn-1'); 
+  //     await page.keyboard.press('Tab');
+  //     await page.hover('#actionable-btn-2');
+  //     const image = await page.screenshot(); 
+  //     const config = getConfig('cards-actionbutton'); 
+  //     expect(image).toMatchImageSnapshot(config); 
+  //   });
+  // });
 });
