@@ -307,8 +307,8 @@ describe('Message overlay opacity tests', () => {
     const divOverlay = await page.evaluate(() => !!document.querySelector('.overlay'));
     expect(divOverlay).toBe(true);
     await page.waitForTimeout(100);
-    const everlayEl = await page.evaluate(() => document.querySelector('.overlay').style.opacity);
-    expect(everlayEl).toBe('0.1');
+    const everlayEl = await page.evaluate(() => document.querySelector('.overlay').style.background);
+    expect(everlayEl).toContain('rgba(0, 0, 0, 0.1)');
     await page.click('.btn-modal');
   });
 });

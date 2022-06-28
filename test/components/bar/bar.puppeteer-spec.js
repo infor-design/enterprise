@@ -149,6 +149,14 @@ describe('Bar Chart', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
+    it('should have axis labels', async () => {
+      const axisLabels = () => page.$eval('.axis-labels', element => element.innerHTML);
+      expect(await axisLabels()).toContain('axis-label-left');
+      expect(await axisLabels()).toContain('axis-label-top');
+      expect(await axisLabels()).toContain('axis-label-right');
+      expect(await axisLabels()).toContain('axis-label-bottom');
+    });
+
     it('should not have visual regressions in axis labels', async () => {
       expect(await page.waitForSelector('.bar-chart', { visible: true })).toBeTruthy();
 
@@ -164,6 +172,14 @@ describe('Bar Chart', () => {
 
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('should have axis labels', async () => {
+      const axisLabels = () => page.$eval('.axis-labels', element => element.innerHTML);
+      expect(await axisLabels()).toContain('axis-label-left');
+      expect(await axisLabels()).toContain('axis-label-top');
+      expect(await axisLabels()).toContain('axis-label-right');
+      expect(await axisLabels()).toContain('axis-label-bottom');
     });
 
     it('should not have visual regressions in axis labels RTL', async () => {
