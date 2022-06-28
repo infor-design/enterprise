@@ -13,7 +13,6 @@
 - `[Datagrid]` Added add multiple rows option. ([#6404](https://github.com/infor-design/enterprise/issues/6404))
 - `[Datagrid]` Added puppeteer script for refresh column. ([#6212](https://github.com/infor-design/enterprise/issues/6212))
 - `[Datagrid]` Added puppeteer script for cell editing test. ([#6552](https://github.com/infor-design/enterprise/issues/6552))
-- `[Datagrid]` Fixed a bug where column widths were not changing in settings. ([#5227](https://github.com/infor-design/enterprise/issues/5227))
 - `[Tabs]` Added puppeteer script for new searchfield design ([#6282](https://github.com/infor-design/enterprise/issues/6282))
 
 ## v4.65.0 Fixes

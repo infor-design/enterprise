@@ -1388,8 +1388,6 @@ Datagrid.prototype = {
       headerRows.right += '<tr role="row">';
     }
 
-    const noFrozenCol = !(this.settings.frozenColumns.left.length > 0 || this.settings.frozenColumns.right.length > 0);
-
     for (let j = 0; j < this.settings.columns.length; j++) {
       const column = self.settings.columns[j];
       const container = self.getContainer(column.id);
@@ -1426,8 +1424,6 @@ Datagrid.prototype = {
       // Apply css classes
       cssClass = cssClass !== '' ? ` class="${cssClass.substr(1)}"` : '';
       let ids = utils.stringAttributes(this, this.settings.attributes, `col-${column.id?.toLowerCase()}`);
-
-      let addTextWidth = noFrozenCol && !isSortable;
 
       if (!ids) {
         ids = `id="${id}"`;
@@ -4570,7 +4566,6 @@ Datagrid.prototype = {
 
     containerHtml.left = containerHtml.center;
     containerHtml.right = containerHtml.center;
-    const noFrozenCol = !(this.settings.frozenColumns.left.length > 0 || this.settings.frozenColumns.right.length > 0);
 
     for (j = 0; j < self.settings.columns.length; j++) {
       const col = self.settings.columns[j];
@@ -4588,8 +4583,6 @@ Datagrid.prototype = {
         self,
         formatLocale
       );
-
-      let addTextWidth = noFrozenCol && col.sortable === false;
 
       if (formatted.indexOf('<span class="is-readonly">') === 0) {
         col.readonly = true;
@@ -4619,7 +4612,6 @@ Datagrid.prototype = {
 
       if (col.editor && this.settings.editable) {
         cssClass += ' has-editor';
-        addTextWidth = false;
       }
 
       if (col.expanded) {
@@ -4628,10 +4620,6 @@ Datagrid.prototype = {
 
       if (col.align) {
         cssClass += ` l-${col.align}-text`;
-
-        if (col.align === 'right' || col.align === 'center') {
-          addTextWidth = false;
-        }
       }
 
       if (col.textOverflow === 'ellipsis') {
@@ -4789,21 +4777,6 @@ Datagrid.prototype = {
       if (col.formatter?.toString().indexOf('function SelectionCheckbox(') === 0) {
         ariaChecked = ` aria-checked="${this.isRowSelected(rowData)}"`;
       }
-
-      const fElement = $(`<div>${formatted}</div>`);
-      if (fElement.has('svg').length > 0) {
-        addTextWidth = false;
-      }
-
-      const checkClass = ['datagrid-multiline-text', 'datagrid-checkbox-wrapper', 'row-btn', 'badge', 'tag'];
-      checkClass.every((c) => {
-        if (fElement.hasClass(c)) {
-          addTextWidth = false;
-        }
-        return addTextWidth;
-      });
-
-      fElement.remove();
 
       containerHtml[container] += `<td role="gridcell" ${ariaReadonly} aria-colindex="${j + 1}"` +
           ` ${ariaDescribedby
