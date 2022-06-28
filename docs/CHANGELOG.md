@@ -8,6 +8,7 @@
 
 - `[Bar]` Enhanced the VPAT accessibility in bar chart. ([#6074](https://github.com/infor-design/enterprise/issues/6074))
 - `[Bar]` Added puppeteer script for axis labels test. ([#6551](https://github.com/infor-design/enterprise/issues/6551))
+- `[Bubble]` Converted protractor tests to puppeteer. ([#6527](https://github.com/infor-design/enterprise/issues/6527))
 - `[Datagrid]` Added tooltipOption settings for columns. ([#6361](https://github.com/infor-design/enterprise/issues/6361))
 - `[Datagrid]` Added add multiple rows option. ([#6404](https://github.com/infor-design/enterprise/issues/6404))
 - `[Datagrid]` Added puppeteer script for refresh column. ([#6212](https://github.com/infor-design/enterprise/issues/6212))
@@ -27,6 +28,7 @@
 - `[Datagrid]` Fixed a bug where page changed to one on removing a row in datagrid. ([#6475](https://github.com/infor-design/enterprise/issues/6475))
 - `[Datagrid]` Header is rerendered when calling updated method, also added paging info settings. ([#6476](https://github.com/infor-design/enterprise/issues/6476))
 - `[Datagrid]` Fixed a bug where column widths were not changing in settings. ([#5227](https://github.com/infor-design/enterprise/issues/5227))
+- `[Datagrid]` Fixed a bug where using shift-click to multiselect on datagrid with treeGrid setting = true selects from the first row until bottom row. ([NG#1274](https://github.com/infor-design/enterprise-ng/issues/1274))
 - `[Datepicker]` Fixed a bug where the datepicker is displaying NaN when using french format. ([NG#1273](https://github.com/infor-design/enterprise-ng/issues/1273))
 - `[Datepicker]` Added listener for calendar `monthrendered` event and pass along. ([NG#1324](https://github.com/infor-design/enterprise-ng/issues/1324))
 - `[Input]` Fixed a bug where the password does not show or hide in Firefox. ([#6481](https://github.com/infor-design/enterprise/issues/6481))
