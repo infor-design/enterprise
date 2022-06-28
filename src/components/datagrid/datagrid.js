@@ -1433,19 +1433,7 @@ Datagrid.prototype = {
         ids = `id="${id}"`;
       }
 
-      if (headerAlignmentClass === ' l-right-text' || headerAlignmentClass === ' l-center-text') {
-        addTextWidth = false;
-      }
-
-      headerRows[container] += `<th scope="col" role="columnheader" ${ids} 
-        ${isSelection ? ' aria-checked= "false"' : ''} 
-        data-column-id="${column.id}"${column.field ? ` data-field="${column.field}"` : ''}
-        ${column.headerTooltip ? ` title="${column.headerTooltip}"` : ''}
-        ${column.reorderable === false ? ' data-reorder="false"' : ''}
-        ${colGroups ? ` headers="${self.getColumnGroup(j)}"` : ''} 
-        data-exportable="${isExportable ? 'yes' : 'no'}"
-        ${cssClass}
-      >`;
+      headerRows[container] += `<th scope="col" role="columnheader" ${ids} ${isSelection ? ' aria-checked= "false"' : ''} data-column-id="${column.id}"${column.field ? ` data-field="${column.field}"` : ''}${column.headerTooltip ? ` title="${column.headerTooltip}"` : ''}${column.reorderable === false ? ' data-reorder="false"' : ''}${colGroups ? ` headers="${self.getColumnGroup(j)}"` : ''} data-exportable="${isExportable ? 'yes' : 'no'}"${cssClass}>`;
 
       let sortIndicator = '';
       if (isSortable) {
@@ -1457,7 +1445,7 @@ Datagrid.prototype = {
       // If header text is center aligned, for proper styling,
       // place the sortIndicator as a child of datagrid-header-text.
       headerRows[container] += `<div class="${isSelection ? 'datagrid-checkbox-wrapper ' : 'datagrid-column-wrapper'}${headerAlignmentClass}">
-      <span class="datagrid-header-text${column.required ? ' required' : ''}"${addTextWidth ? this.columnWidth(column, j) : ''}>${self.headerText(this.settings.columns[j])}${headerAlignmentClass === ' l-center-text' ? sortIndicator : ''}</span>`;
+      <span class="datagrid-header-text${column.required ? ' required' : ''}">${self.headerText(this.settings.columns[j])}${headerAlignmentClass === ' l-center-text' ? sortIndicator : ''}</span>`;
 
       if (isSelection) {
         if (self.settings.showSelectAllCheckBox) {
@@ -4825,7 +4813,8 @@ Datagrid.prototype = {
           }${colspan ? ` colspan="${colspan}"` : ''
           }${col.tooltip && typeof col.tooltip === 'string' ? ` title="${col.tooltip.replace('{{value}}', cellValue)}"` : ''
           }${self.settings.columnGroups ? `headers = "${self.uniqueId(`-header-${j}`)} ${self.getColumnGroup(j)}"` : ''
-          }${rowspan || ''}>${rowStatus.svg}<div class="datagrid-cell-wrapper"${addTextWidth ? `${self.columnWidth(col, j)}` : ''}>`;
+          }${rowspan || ''}>${rowStatus.svg}<div class="datagrid-cell-wrapper">`;
+
       if (col.contentVisible) {
         const canShow = col.contentVisible(dataRowIdx + 1, j, cellValue, col, rowData);
         if (!canShow) {
