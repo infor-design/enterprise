@@ -9675,7 +9675,7 @@ Datagrid.prototype = {
         // Toggle datagrid-expand with Space press
         const btn = target.find('.datagrid-expand-btn, .datagrid-drilldown');
         if (btn && btn.length) {
-          btn.trigger('click.datagrid');
+          btn.trigger('click');
           e.preventDefault();
           return;
         }
@@ -9692,7 +9692,7 @@ Datagrid.prototype = {
       if (self.settings.editable && key === 32) {
         const btnExpand = target?.find('.datagrid-expand-btn');
         if (btnExpand) {
-          btnExpand.trigger('click.datagrid');
+          btnExpand.trigger('click');
           e.preventDefault(); // This will prevent scrolling down when the list is overflowing.
         }
 
@@ -10051,7 +10051,7 @@ Datagrid.prototype = {
 
     if (typeof this.editor.focus === 'function') {
       this.editor.focus();
-    }    
+    }
 
     // Make sure the first keydown gets captured and trigger the dropdown
     if (this.editor?.input.is('.dropdown') && event.keyCode && ![9, 13, 32, 37, 38, 39, 40].includes(event.keyCode)) {
@@ -11017,8 +11017,8 @@ Datagrid.prototype = {
 
       if (!this.settings.trimSpaces) {
         r = r[0].replace(/\s/g, '&nbsp;');
-      } 
-      return r; 
+      }
+      return r;
     };
 
     // update cell value

@@ -14,6 +14,7 @@
 - `[Datagrid]` Added add multiple rows option. ([#6404](https://github.com/infor-design/enterprise/issues/6404))
 - `[Datagrid]` Added puppeteer script for refresh column. ([#6212](https://github.com/infor-design/enterprise/issues/6212))
 - `[Datagrid]` Added puppeteer script for cell editing test. ([#6552](https://github.com/infor-design/enterprise/issues/6552))
+- `[Modal]` Added icon puppeteer test for modal component. ([#6549](https://github.com/infor-design/enterprise/issues/6549))
 - `[Tabs]` Added puppeteer script for new searchfield design ([#6282](https://github.com/infor-design/enterprise/issues/6282))
 
 ## v4.65.0 Fixes
@@ -33,6 +34,7 @@
 - `[Datepicker]` Added listener for calendar `monthrendered` event and pass along. ([NG#1324](https://github.com/infor-design/enterprise-ng/issues/1324))
 - `[Input]` Fixed a bug where the password does not show or hide in Firefox. ([#6481](https://github.com/infor-design/enterprise/issues/6481))
 - `[Listview]` Fixed disabled font color not showing in listview. ([#6391](https://github.com/infor-design/enterprise/issues/6391))
+- `[Listview]` Changed toolbar-flex to contextual-toolbar for multiselect listview. ([#6591](https://github.com/infor-design/enterprise/issues/6591))
 - `[Locale]` Added monthly translations. ([#6556](https://github.com/infor-design/enterprise/issues/6556))
 - `[Lookup]` Fixed a bug where search-list icon, launch icon, and ellipses is misaligned and the table and title overlaps in responsive view. ([#6487](https://github.com/infor-design/enterprise/issues/6487))
 - `[Modal]` Fixed an issue on some monitors where the overlay is too dim. ([#6566](https://github.com/infor-design/enterprise/issues/6566))

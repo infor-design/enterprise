@@ -163,7 +163,7 @@ describe('Datagrid Puppeteer Tests', () => {
     });
   });
 
-  describe('Datagrid', () => {
+  describe('Datagrid update column', () => {
     const url = `${baseUrl}/test-update-column.html`;
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
@@ -177,27 +177,45 @@ describe('Datagrid Puppeteer Tests', () => {
       expect(firstValue).not.toEqual(secondValue);
     });
   });
-});
 
-describe('Datagrid test to have a method to make cell editable', () => {
-  const url = 'http://localhost:4000/components/datagrid/test-addrow-selected.html';
-  beforeAll(async () => {
-    await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+  describe('Datagrid test to have a method to make cell editable', () => {
+    const url = `${baseUrl}/test-addrow-selected.html`;
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('should have method for cell editing for new row added', async () => {
+      await page.waitForSelector('#add-row-button');
+      await page.click('#add-row-button');
+
+      const focusedEl = await page.evaluateHandle(() => document.activeElement);
+      await focusedEl.type('ttest', { delay: 1000 });
+      await page.waitForTimeout(200);
+      await page.keyboard.press('Tab');
+      await page.waitForTimeout(200);
+
+      const input = await page.$('.datagrid-row:nth-child(1) > .has-editor:nth-child(2) > .datagrid-cell-wrapper');
+      await page.waitForTimeout(200);
+      const value = await page.evaluate(el => el.textContent, input);
+      expect(value).toContain('test');
+    });
   });
 
-  it('should have method for cell editing for new row added', async () => {
-    await page.waitForSelector('#add-row-button');
-    await page.click('#add-row-button');
+  describe('Test with tree checkbox', () => {
+    const url = `${baseUrl}/test-tree-with-checkbox.html`;
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
 
-    const focusedEl = await page.evaluateHandle(() => document.activeElement);
-    await focusedEl.type('ttest', { delay: 1000 });
-    await page.waitForTimeout(200);
-    await page.keyboard.press('Tab');
-    await page.waitForTimeout(200);
+    it('should expand the treegrid via keyboard whenn editable is set to true', async () => {
+      // Tab three times to focus on the expand button
+      for (let i = 0; i < 3; i++) {
+        page.keyboard.press('Tab');
+      }
+      await page.keyboard.press('Space');
 
-    const input = await page.$('.datagrid-row:nth-child(1) > .has-editor:nth-child(2) > .datagrid-cell-wrapper');
-    await page.waitForTimeout(200);
-    const value = await page.evaluate(el => el.textContent, input);
-    expect(value).toContain('test');
+      await page.evaluate(() => document.querySelector('.datagrid-expand-btn').getAttribute('class'))
+        .then(el => expect(el).toContain('is-expanded'));
+    });
   });
 });
