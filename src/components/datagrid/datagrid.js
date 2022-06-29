@@ -6747,6 +6747,15 @@ Datagrid.prototype = {
   handleEvents() {
     const self = this;
 
+    $('body').on('open.modal', (modal) => {
+      const modalEl = $(modal.target);
+      if (modalEl.find(this.table).length > 0) {
+        if (this.table.width() > modalEl.width() || this.widthSpecified) {
+          this.table.width(466);
+        }
+      }
+    });
+
     // Set Focus on rows
     self.element
       .on('focus.datagrid', 'tbody > tr', function () {
