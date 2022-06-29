@@ -184,13 +184,6 @@ describe('Cards Puppeteer Tests', () => {
       await page.waitForSelector('.card-content-action', { visible: true })
         .then(element => expect(element).toBeTruthy());
     });
-
-    it('should not visual regress', async () => {
-      const image = await page.screenshot(); 
-      const config = getConfig('cards-variation-hitboxes'); 
-
-      expect(image).toMatchImageSnapshot(config); 
-    });
   });
 
   describe('Cards Single Select Page Tests', () => {
