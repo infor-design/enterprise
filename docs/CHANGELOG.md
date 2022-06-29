@@ -33,6 +33,7 @@
 - `[Datepicker]` Added listener for calendar `monthrendered` event and pass along. ([NG#1324](https://github.com/infor-design/enterprise-ng/issues/1324))
 - `[Input]` Fixed a bug where the password does not show or hide in Firefox. ([#6481](https://github.com/infor-design/enterprise/issues/6481))
 - `[Listview]` Fixed disabled font color not showing in listview. ([#6391](https://github.com/infor-design/enterprise/issues/6391))
+- `[Listview]` Changed toolbar-flex to contextual-toolbar for multiselect listview. ([#6591](https://github.com/infor-design/enterprise/issues/6591))
 - `[Locale]` Added monthly translations. ([#6556](https://github.com/infor-design/enterprise/issues/6556))
 - `[Lookup]` Fixed a bug where search-list icon, launch icon, and ellipses is misaligned and the table and title overlaps in responsive view. ([#6487](https://github.com/infor-design/enterprise/issues/6487))
 - `[Modal]` Fixed an issue on some monitors where the overlay is too dim. ([#6566](https://github.com/infor-design/enterprise/issues/6566))
