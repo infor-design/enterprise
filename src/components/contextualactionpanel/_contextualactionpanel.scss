@@ -123,9 +123,13 @@
       top: 0;
     }
 
+    .is-open + .separator {
+      margin: 5px 9px 0 19px;
+    }
+
     .separator {
       background-color: $contextual-panel-separator-bg-color;
-      margin: 5px 1px 0;
+      margin: 5px 9px 0 0;
       pointer-events: none; //fixes wierd IE10 over effect
       top: 5px;
     }
