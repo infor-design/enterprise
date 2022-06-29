@@ -258,7 +258,7 @@ describe('Cards Puppeteer Tests', () => {
       const button2 = await page.$('.card:nth-child(2)');
       await button2.click();
 
-      const window = await page.$('.top-padding');
+      const window = await page.$('#cardlist');
 
       const image = await window.screenshot(); 
       const config = getConfig('cards-multi-select'); 
