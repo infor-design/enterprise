@@ -9725,7 +9725,7 @@ Datagrid.prototype = {
         // Toggle datagrid-expand with Space press
         const btn = target.find('.datagrid-expand-btn, .datagrid-drilldown');
         if (btn && btn.length) {
-          btn.trigger('click.datagrid');
+          btn.trigger('click');
           e.preventDefault();
           return;
         }
@@ -9742,7 +9742,7 @@ Datagrid.prototype = {
       if (self.settings.editable && key === 32) {
         const btnExpand = target?.find('.datagrid-expand-btn');
         if (btnExpand) {
-          btnExpand.trigger('click.datagrid');
+          btnExpand.trigger('click');
           e.preventDefault(); // This will prevent scrolling down when the list is overflowing.
         }
 
