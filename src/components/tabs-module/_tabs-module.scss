@@ -324,7 +324,7 @@
     .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary) {
       background-color: transparent;
       color: $module-tabs-inactive-text-color;
-      height: 32px;
+      height: 34px;
 
       &:not(.btn-menu) {
         border-color: transparent;
@@ -669,6 +669,22 @@
         .icon:not(.error) {
           color: $module-tabs-disabled-text-color;
         }
+      }
+    }
+  }
+
+  .toolbar-searchfield-wrapper.has-categories {
+    .searchfield {
+      border-bottom: 0;
+      border-bottom-left-radius: 0;
+      border-left: 1px solid $searchfield-toolbar-border-color;
+      border-right: 0;
+      border-top: 0;
+      border-top-left-radius: 0;
+
+      + .close {
+        top: 0;
+        transform: translateY(50%);
       }
     }
   }

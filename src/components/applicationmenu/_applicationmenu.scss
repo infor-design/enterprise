@@ -538,6 +538,13 @@ body.is-open-touch {
   }
 }
 
+// Mobile viewport 767px below
+@include respond-to(phone) {
+  .application-menu {
+    z-index: 7001;
+  }
+}
+
 // Container Class for wrapping internal content in NG
 .application-menu-wrapper {
   display: inherit;
