@@ -28,6 +28,7 @@
 - `[Datagrid]` Fixed a bug where the search icon and x icon are misaligned across datagrid and removed extra margin space in modal in Firefox. ([#6418](https://github.com/infor-design/enterprise/issues/6418))
 - `[Datagrid]` Fixed a bug where page changed to one on removing a row in datagrid. ([#6475](https://github.com/infor-design/enterprise/issues/6475))
 - `[Datagrid]` Header is rerendered when calling updated method, also added paging info settings. ([#6476](https://github.com/infor-design/enterprise/issues/6476))
+- `[Datagrid]` Fixed a bug where it renders all rows in the datagrid when adding one row. ([#6491](https://github.com/infor-design/enterprise/issues/6491))
 - `[Datagrid]` Fixed a bug where using shift-click to multiselect on datagrid with treeGrid setting = true selects from the first row until bottom row. ([NG#1274](https://github.com/infor-design/enterprise-ng/issues/1274))
 - `[Datepicker]` Fixed a bug where the datepicker is displaying NaN when using french format. ([NG#1273](https://github.com/infor-design/enterprise-ng/issues/1273))
 - `[Datepicker]` Added listener for calendar `monthrendered` event and pass along. ([NG#1324](https://github.com/infor-design/enterprise-ng/issues/1324))
