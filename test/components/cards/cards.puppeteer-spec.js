@@ -209,14 +209,13 @@ describe('Cards Puppeteer Tests', () => {
     });
 
     it('should not visual regress', async () => {
-      // eslint-disable-next-line
       await page.waitForSelector('.card', { visible: true })
         .then(element => expect(element).toBeTruthy());
 
       const button = await page.$('.card:nth-child(1)');
       await button.click();
 
-      const image = await page.screenshot(); 
+      const image = await button.screenshot(); 
       const config = getConfig('cards-single-select'); 
 
       expect(image).toMatchImageSnapshot(config); 
