@@ -39,6 +39,7 @@
 - `[Modal]` Fixed an issue on some monitors where the overlay is too dim. ([#6566](https://github.com/infor-design/enterprise/issues/6566))
 - `[Page-Patterns]` Fixed a bug where the header disappears when the the last item in the list is clicked and the browser is smaller in Chrome and Edge. ([#6328](https://github.com/infor-design/enterprise/issues/6328))
 - `[ToolbarFlex]` Fixed a bug where the teardown might error on situations. ([#1327](https://github.com/infor-design/enterprise/issues/1327))
+- `[Tabs]` Fixed a bug where tabs focus indicator is not fixed on Classic Theme. ([#6464](https://github.com/infor-design/enterprise/issues/6464))
 - `[Validation]` Fixed a bug where the tooltip would show on the header when the message has actually been removed. ([#6547](https://github.com/infor-design/enterprise/issues/6547)
 
 ## v4.64.2 Fixes
