@@ -71,16 +71,14 @@ describe('Blockgrid Puppeteer Test', () => {
           expect(attr[1]).toEqual(val2);
         });
 
-      await checkAttr('#checkbox0', 'checkbox0', 'automation-id-example1-blockgrid-checkbox0');
-      await checkAttr('#example1-blockgrid-checkbox-label0', 'example1-blockgrid-checkbox-label0', 'automation-id-example1-blockgrid-checkbox-label0');
-      await checkAttr('#checkbox1', 'checkbox1', 'automation-id-example1-blockgrid-checkbox1');
-      await checkAttr('#example1-blockgrid-checkbox-label1', 'example1-blockgrid-checkbox-label1', 'automation-id-example1-blockgrid-checkbox-label1');
-      await checkAttr('#checkbox2', 'checkbox2', 'automation-id-example1-blockgrid-checkbox2');
-      await checkAttr('#example1-blockgrid-checkbox-label2', 'example1-blockgrid-checkbox-label2', 'automation-id-example1-blockgrid-checkbox-label2');
-      await checkAttr('#checkbox3', 'checkbox3', 'automation-id-example1-blockgrid-checkbox3');
-      await checkAttr('#example1-blockgrid-checkbox-label3', 'example1-blockgrid-checkbox-label3', 'automation-id-example1-blockgrid-checkbox-label3');
-      await checkAttr('#checkbox4', 'checkbox4', 'automation-id-example1-blockgrid-checkbox4');
-      await checkAttr('#example1-blockgrid-checkbox-label4', 'example1-blockgrid-checkbox-label4', 'automation-id-example1-blockgrid-checkbox-label4');
+      const promises = [];
+
+      for (let i = 0; i < 5; i++) {
+        promises.push(checkAttr(`#checkbox${i}`, `checkbox${i}`, `automation-id-example1-blockgrid-checkbox${i}`));
+        promises.push(checkAttr(`#example1-blockgrid-checkbox-label${i}`, `example1-blockgrid-checkbox-label${i}`, `automation-id-example1-blockgrid-checkbox-label${i}`));
+      }
+
+      await Promise.all(promises);
     });
   });
 
