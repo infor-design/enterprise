@@ -209,6 +209,7 @@ describe('Cards Puppeteer Tests', () => {
     });
 
     it('should not visual regress', async () => {
+      // eslint-disable-next-line
       await page.waitForSelector('.card', { visible: true })
         .then(element => expect(element).toBeTruthy());
 
@@ -249,6 +250,7 @@ describe('Cards Puppeteer Tests', () => {
     });
 
     it('should not visual regress', async () => {
+      // eslint-disable-next-line
       await page.waitForSelector('.card', { visible: true })
         .then(element => expect(element).toBeTruthy());
 
