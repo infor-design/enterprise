@@ -526,6 +526,64 @@ Datagrid.prototype = {
   },
 
   /**
+  * Render row in the datagrid
+  * @param {object} data The data to be appended in the table
+  * @param {number} location The row location
+  */
+  renderRow(data, location) {
+    const self = this;
+
+    if (self.emptyMessageContainer) {
+      self.emptyMessageContainer.hide();
+    }
+
+    const recordCount = self.settings.dataset.length - 1;
+    const dataIndex = recordCount;
+
+    const rowHtml = self.rowHtml(data, recordCount, dataIndex);
+    if (self.settings.groupable) {
+      const groups = $('.datagrid-rowgroup-header').find('span:not([class])');
+      for (let i = 0; i < groups.length; i++) {
+        const group = $(groups[i]);
+        if (data.type === group.text().trim()) {
+          DOM.after(group.parents('tr'), rowHtml.center, '*');
+          break;
+        }
+      }
+    }
+
+    if (self.settings.paging && !self.settings.groupable) {
+      const operationType = location === 'bottom' ? 'last' : 'first';
+      // eslint-disable-next-line max-len
+      const newPage = (self.settings.dataset.length - (self.pagerAPI.pageCount() * self.pagerAPI.settings.pagesize)) === 1 ? 1 : 0;
+      const newActivePage = (location === 'bottom' ? self.pagerAPI.pageCount() : 1) + newPage;
+
+      if (location !== 'bottom' && self.pagerAPI.activePage === 1) {
+        DOM.prepend(self.tableBody, rowHtml.center, '*');
+      } else {
+        self.pagerAPI.setActivePage(newActivePage, false, operationType);
+        self.pagerAPI.triggerPagingEvents(self.pagerAPI.currentPage);
+      }
+    } 
+
+    if (!self.settings.paging && !self.settings.groupable) {
+      if (location !== 'bottom') {
+        DOM.prepend(self.tableBody, rowHtml.center, '*');
+      } else {
+        DOM.append(self.tableBody, rowHtml.center, '*');
+      }
+    }
+
+    if (self.settings.paging) {
+      if (self.tableBody.children().length > self.pagerAPI.settings.pagesize) {
+        self.tableBody.children().last().remove();
+      }
+    }
+
+    self.afterRender();
+  },
+
+  /**
   * Add a row of data to the grid and dataset.
   * @param {object} data A data row object
   * @param {string} location Where to add the row. This can be 'bottom' or 'top', default is top.
@@ -557,7 +615,7 @@ Datagrid.prototype = {
 
     // Add to ui
     this.clearCache();
-    this.renderRows();
+    this.renderRow(data, location);
 
     if (this.settings.groupable) {
       rowNode = this.dataRowNode(row);
