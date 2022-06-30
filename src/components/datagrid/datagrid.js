@@ -564,6 +564,12 @@ Datagrid.prototype = {
         self.pagerAPI.setActivePage(newActivePage, false, operationType);
         self.pagerAPI.triggerPagingEvents(self.pagerAPI.currentPage);
       }
+    } else {
+      if (location !== 'bottom') {
+        DOM.prepend(self.tableBody, rowHtml.center, '*');
+      } else {
+        DOM.append(self.tableBody, rowHtml.center, '*');
+      }
     }
 
     if (self.settings.paging) {
