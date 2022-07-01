@@ -3809,6 +3809,7 @@ Tabs.prototype = {
     const parentContainer = this.element;
     const scrollingTablist = this.tablistContainer;
     const hasCompositeForm = parentContainer.parents('.composite-form').length;
+    const hasHeader = parentContainer.parents('.header.has-tabs').length;
     const accountForPadding = scrollingTablist && this.focusState.parent().is(scrollingTablist);
     const widthPercentage = target[0].getBoundingClientRect().width / target[0].offsetWidth * 100;
 
@@ -3844,7 +3845,7 @@ Tabs.prototype = {
         }
 
         // Composite Form has additional padding on the right
-        if (hasCompositeForm) {
+        if (isRTL && hasCompositeForm && !hasHeader) {
           targetRectObj.right -= 42;
 
           if (isRTL) {
