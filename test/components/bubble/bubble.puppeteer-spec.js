@@ -68,7 +68,7 @@ describe('Bubble Puppeteer Tests', () => {
         const bClass = await page.$eval(lineB, element => element.getAttribute('class'));
         expect(aClass).not.toContain('is-selected');
         expect(bClass).not.toContain('is-selected');
-      });
+      }).then(() => page.click(`#bubble-s${index + 1}-${month}-dot`));
 
       elHandleArray.forEach((el, index) => {
         months.forEach((month) => {
@@ -91,7 +91,7 @@ describe('Bubble Puppeteer Tests', () => {
         const bClass = await page.$eval(lineB, element => element.getAttribute('class'));
         expect(aClass).not.toContain('is-selected');
         expect(bClass).not.toContain('is-selected');
-      });
+      }).then(() => page.click(`#bubble-series${index + 1}-legend-${index}`));
 
       elHandleArray.forEach((el, index) => {
         promises.push(clickEl(el, index));

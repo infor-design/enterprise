@@ -1,5 +1,4 @@
-const { checkClassNameValue } = require('../../helpers/e2e-utils.js');
-
+/* eslint-disable compat/compat */
 describe('Column Chart Puppeteer Tests', () => {
   describe('Column Disable Selection  State tests', () => {
     const url = 'http://localhost:4000/components/column/example-disable-selection-state.html';
@@ -17,25 +16,21 @@ describe('Column Chart Puppeteer Tests', () => {
 
     it('should not highlight when selected', async () => {
       const elHandleArray = await page.$$('rect.bar');
-      const isFailed = [];
-      let index = 0;
-      // eslint-disable-next-line no-restricted-syntax
-      for await (const eL of elHandleArray) {
-        await eL.hover();
-        await page.click(`rect.bar.series-${index}`);
-        await page.waitForTimeout(200);
-        isFailed.push(await checkClassNameValue('rect.bar.series-0', 'bar series-0'));
-        isFailed.push(await checkClassNameValue('rect.bar.series-1', 'bar series-1'));
-        isFailed.push(await checkClassNameValue('rect.bar.series-2', 'bar series-2'));
-        isFailed.push(await checkClassNameValue('rect.bar.series-3', 'bar series-3'));
-        isFailed.push(await checkClassNameValue('rect.bar.series-4', 'bar series-4'));
-        isFailed.push(await checkClassNameValue('rect.bar.series-5', 'bar series-5'));
-        isFailed.push(await checkClassNameValue('rect.bar.series-6', 'bar series-6'));
-        await page.click(`rect.bar.series-${index}`);
-        await page.waitForTimeout(200);
-        index += 1;
-      }
-      expect(isFailed).not.toContain(true);
+
+      const promises = [];
+
+      const hoverEl = (el, group, index) => el.hover().then(() => page.click(`rect.bar.series-${index}`)).then(async () => {
+        const classNames = await page.$eval(`rect.bar.series-${group}`, element => element.getAttribute('class'));
+        expect(classNames).toEqual(`bar series-${group}`);
+      }).then(() => page.click(`rect.bar.series-${index}`));
+
+      elHandleArray.forEach((el, index) => {
+        for (let group = 0; group < 7; group++) {
+          promises.push(hoverEl(el, group, index));
+        }
+      });
+
+      await Promise.all(promises);
     });
   });
 });

@@ -1,4 +1,4 @@
-const { checkClassNameValue } = require('../../helpers/e2e-utils.js');
+/* eslint-disable compat/compat */
 
 describe('Column Stacked Chart Puppeteer Tests', () => {
   describe('Column Stacked Disable Selection  State tests', () => {
@@ -20,52 +20,44 @@ describe('Column Stacked Chart Puppeteer Tests', () => {
     });
 
     it('should not highlight when selected', async () => {
-      const isFailed = [];
       const stackGroup = await page.$$('g [data-group-id="0"] > rect.bar');
-      let index = 0;
-      // eslint-disable-next-line no-restricted-syntax
-      for await (const eL of stackGroup) {
-        if (index === 12) { break; }
-        await eL.hover();
-        await page.click(`g [data-group-id="0"] > rect.series-${index}`);
-        await page.waitForTimeout(200);
-        isFailed.push(await checkClassNameValue(`g [data-group-id="0"] > rect.bar.series-${index}`, `series-${index} bar`));
-        isFailed.push(await checkClassNameValue(`g [data-group-id="1"] > rect.bar.series-${index}`, `series-${index} bar`));
-        isFailed.push(await checkClassNameValue(`g [data-group-id="2"] > rect.bar.series-${index}`, `series-${index} bar`));
-        await page.click(`g [data-group-id="0"] > rect.series-${index}`);
-        await page.waitForTimeout(200);
-        index += 1;
-      }
-      expect(isFailed).not.toContain(true);
-    }, 10000);
+
+      const promises = [];
+
+      const hoverEl = (el, index) => el.hover().then(() => page.click(`g [data-group-id="0"] > rect.series-${index}`))
+        .then(async () => {
+          const group0 = await page.$eval(`g [data-group-id="0"] > rect.bar.series-${index}`, element => element.getAttribute('class'));
+          const group1 = await page.$eval(`g [data-group-id="1"] > rect.bar.series-${index}`, element => element.getAttribute('class'));
+          const group2 = await page.$eval(`g [data-group-id="2"] > rect.bar.series-${index}`, element => element.getAttribute('class'));
+          expect(group0).toEqual(`series-${index} bar`);
+          expect(group1).toEqual(`series-${index} bar`);
+          expect(group2).toEqual(`series-${index} bar`);
+        }).then(() => page.click(`g [data-group-id="0"] > rect.series-${index}`));
+
+      stackGroup.forEach((el, index) => {
+        promises.push(hoverEl(el, index));
+      });
+
+      await Promise.all(promises);
+    });
 
     it('should not select bar group on click in legends', async () => {
       const elHandleArray = await page.$$('.chart-legend-item');
-      const isFailed = [];
-      let index = 0;
-      // eslint-disable-next-line no-restricted-syntax
-      for await (const eL of elHandleArray) {
-        await eL.hover();
-        await page.click(`[index-id="chart-legend-${index}"]`);
-        await page.waitForTimeout(200);
-        isFailed.push(await checkClassNameValue(`g [data-group-id="${index}"] > rect.bar.series-0`, 'series-0 bar'));
-        isFailed.push(await checkClassNameValue(`g [data-group-id="${index}"] > rect.bar.series-1`, 'series-1 bar'));
-        isFailed.push(await checkClassNameValue(`g [data-group-id="${index}"] > rect.bar.series-2`, 'series-2 bar'));
-        isFailed.push(await checkClassNameValue(`g [data-group-id="${index}"] > rect.bar.series-3`, 'series-3 bar'));
-        isFailed.push(await checkClassNameValue(`g [data-group-id="${index}"] > rect.bar.series-4`, 'series-4 bar'));
-        isFailed.push(await checkClassNameValue(`g [data-group-id="${index}"] > rect.bar.series-5`, 'series-5 bar'));
-        isFailed.push(await checkClassNameValue(`g [data-group-id="${index}"] > rect.bar.series-6`, 'series-6 bar'));
-        isFailed.push(await checkClassNameValue(`g [data-group-id="${index}"] > rect.bar.series-7`, 'series-7 bar'));
-        isFailed.push(await checkClassNameValue(`g [data-group-id="${index}"] > rect.bar.series-8`, 'series-8 bar'));
-        isFailed.push(await checkClassNameValue(`g [data-group-id="${index}"] > rect.bar.series-9`, 'series-9 bar'));
-        isFailed.push(await checkClassNameValue(`g [data-group-id="${index}"] > rect.bar.series-10`, 'series-10 bar'));
-        isFailed.push(await checkClassNameValue(`g [data-group-id="${index}"] > rect.bar.series-11`, 'series-11 bar'));
 
-        await page.click(`[index-id="chart-legend-${index}"]`);
-        await page.waitForTimeout(200);
-        index += 1;
-      }
-      expect(isFailed).not.toContain(true);
+      const promises = [];
+
+      const hoverEl = (el, group, index) => el.hover().then(() => page.click(`[index-id="chart-legend-${index}"]`)).then(async () => {
+        const classNames = await page.$eval(`g [data-group-id="${index}"] > rect.bar.series-${group}`, element => element.getAttribute('class'));
+        expect(classNames).toEqual(`series-${group} bar`);
+      }).then(() => page.click(`[index-id="chart-legend-${index}"]`));
+
+      elHandleArray.forEach((el, index) => {
+        for (let group = 0; group < 12; group++) {
+          promises.push(hoverEl(el, group, index));
+        }
+      });
+
+      await Promise.all(promises);
     });
   });
 });
