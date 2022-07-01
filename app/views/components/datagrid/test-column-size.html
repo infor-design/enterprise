@@ -1,0 +1,187 @@
+<form>
+  <div class="row top-padding">
+    <div class="row">
+      <div class="six columns">
+        <button class="btn-secondary" type="button" id="show-model">
+          Show Model
+        </button>
+        <br/><br/>
+        <div class="field" style="width: 150px">
+          <label for="width">Width</label>
+          <input type="number" id="width" name="width" placeholder="Enter width"/>
+        </div>
+
+        <div id="modal-content" style="display: none;" >
+          <div id="datagrid"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<script>
+ $('body').one('initialized', () => {
+  const columns = [
+    {
+      id: 'stageName',
+      name: 'Stage Name',
+      sortable: false,
+      field: 'stageName',
+      filterType: 'text',
+      postRender: true,
+      align: 'left',
+      filterConditions: ['contains', 'equals'],
+      textOverflow: 'ellipsis',
+      headerTooltip: 'Stage Name'
+    },
+    {
+      id: 'stage_type',
+      name: 'Type',
+      sortable: false,
+      field: 'stageType',
+      filterType: 'text',
+      postRender: true,
+      align: 'left',
+      filterConditions: ['contains', 'equals'],
+      textOverflow: 'ellipsis',
+      headerTooltip: 'Type'
+    },
+    {
+      id: 'descriptions',
+      align: 'left',
+      name: 'Description',
+      sortable: false,
+      field: 'stageDescription',
+      hidden: true
+    },
+    {
+      id: 'reviewTime',
+      name: 'Review Time (days)',
+      sortable: false,
+      field: 'overDueDays',
+      postRender: true,
+      align: 'left',
+      textOverflow: 'ellipsis',
+      headerTooltip: 'Review Time (days)'
+    },
+    {
+      id: 'defaultApprover',
+      align: 'left',
+      name: 'Default Approver',
+      sortable: false,
+      field: 'defaultUser',
+      textOverflow: 'ellipsis',
+      headerTooltip: 'Default Approver'
+    },
+    {
+      id: 'escalation_approver',
+      align: 'left',
+      name: 'Escalation Approver',
+      sortable: false,
+      field: 'escalationApprover',
+      postRender: true,
+      textOverflow: 'ellipsis',
+      headerTooltip: 'Escalation Approver'
+    },
+    {
+      id: 'escalationTime',
+      align: 'left',
+      name: 'Escalation Time (days)',
+      sortable: false,
+      field: 'escalateAfterDays',
+      postRender: true,
+      textOverflow: 'ellipsis',
+      headerTooltip: 'Escalation Time (days)'
+    },
+    {
+      id: 'stageAction',
+      align: 'left',
+      name: 'Stage Action',
+      sortable: false,
+      field: 'stageActions',
+      textOverflow: 'ellipsis',
+      headerTooltip: 'Stage Actions'
+    }
+  ];
+
+  const data = [
+    {
+      stageName: 'Default Certification stage',
+      stageType: 'Certification',
+      stageDescription: 'stageDescription',
+      overDueDays: 4,
+      defaultUser: 'gromico.ferrao@infor.com',
+      escalationApprover: 'gromico.ferrao@infor.com',
+      escalateAfterDays: 5,
+      stageActions: 'No Stage',
+      actionFromAnyAll: 'Any one Reviewer',
+      allowPrimaryLevelAction: 'Do Not Allow'
+    },
+    {
+      stageName: 'Default Certification stage 2',
+      stageType: 'Certification 2',
+      stageDescription: 'stageDescription',
+      overDueDays: 4,
+      defaultUser: 'gromico.ferrao2@infor.com',
+      escalationApprover: 'gromico.ferrao2@infor.com',
+      escalateAfterDays: 5,
+      stageActions: 'No Stage 2',
+      actionFromAnyAll: 'Any one Reviewer 2',
+      allowPrimaryLevelAction: 'Do Not Allow 2'
+    }
+  ];
+
+  let gridApi;
+
+  $('#show-model').on('click', () => {
+    const width = parseInt($('#width').val());
+
+    if (width > 0) {
+      columns.forEach((column) => column.width = width);
+    } else {
+      columns.forEach((column) => delete column.width);
+    }
+
+    if (!gridApi) {
+      gridApi = $('#datagrid').datagrid({
+        columns: columns,
+        dataset: data,
+        clickToSelect: false,
+        selectable: 'multiple',
+        paging: true,
+        pagesize: 10,
+        pagesizes: [10, 25, 50, 100],
+        indeterminate: false,
+        disableClientSort: false,
+        disableClientFilter: false,
+        filterable: false,
+        emptyMessage: null,
+        isList: false,
+        rowHeight: 'medium',
+        hidePagerOnOnePage: true,
+        resizeMode: 'flex'
+      }).data('datagrid');
+    }
+
+    gridApi.updated({ columns: columns });
+    
+    let modalApi;
+
+    const modal = $('body').modal({
+      content: $('#modal-content'),
+      title: 'Model Example',
+      buttons: [
+        {
+          text: 'Close',
+          click: () => {
+            if (!modalApi) {
+              modalApi = modal.data('modal');
+            }
+            modalApi.close();
+          }
+        }
+      ]
+    });
+  })
+ });
+</script>

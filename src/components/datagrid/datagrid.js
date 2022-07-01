@@ -6804,6 +6804,15 @@ Datagrid.prototype = {
   handleEvents() {
     const self = this;
 
+    $('body').on('open.modal.datagrid', (modal) => {
+      const modalEl = $(modal.target);
+      if (modalEl.find(this.table).length > 0) {
+        if (this.table.width() > modalEl.width() || this.widthSpecified) {
+          this.table.width(466);
+        }
+      }
+    });
+
     // Set Focus on rows
     self.element
       .on('focus.datagrid', 'tbody > tr', function () {
@@ -12989,6 +12998,7 @@ Datagrid.prototype = {
     this.element.off();
     $(document).off('touchstart.datagrid touchend.datagrid touchcancel.datagrid click.datagrid touchmove.datagrid');
     $('body').off('resize.vtable resize.datagrid resize.frozencolumns');
+    $('body').off('open.modal.datagrid');
     $(window).off('orientationchange.datagrid');
     $(window).off('resize.datagrid');
     return this;
