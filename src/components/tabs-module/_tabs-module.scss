@@ -675,6 +675,10 @@
   }
 
   .toolbar-searchfield-wrapper.has-categories {
+    .searchfield-category-button {
+      padding-right: 5px;
+    }
+
     .searchfield {
       border-bottom: 0;
       border-bottom-left-radius: 0;

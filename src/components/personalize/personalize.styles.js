@@ -361,7 +361,7 @@ html[dir='rtl'] .scrollable-flex-header.is-personalizable .breadcrumb.truncated:
 
 .module-tabs.is-personalizable .toolbar-searchfield-wrapper > .searchfield {
   color: ${colors.contrast};
-
+}
 
 .module-tabs.is-personalizable .toolbar-searchfield-wrapper > svg {
   fill: ${colors.contrast} !important;
