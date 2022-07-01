@@ -153,6 +153,24 @@ DOM.getDimensions = function getDimensions(el) {
 };
 
 /**
+ * Prepend content to a DOM element (like jQuery.Prepend)
+ * @param {HTMLElement|SVGElement|jQuery[]} el The element to prepend to
+ * @param {string|jQuery} contents The html string or jQuery object.
+ * @param {string} stripTags A list of tags to strip to prevent xss, or * for sanitizing and allowing all tags.
+ */
+DOM.prepend = function prepend(el, contents, stripTags) {
+  let domEl = el;
+
+  if (el instanceof $ && el.length) {
+    domEl = domEl[0];
+  }
+
+  if (domEl instanceof HTMLElement || domEl instanceof SVGElement) {
+    domEl.insertAdjacentHTML('afterbegin', this.xssClean(contents, stripTags));
+  }
+};
+
+/**
  * Append content to a DOM element (like jQuery.append)
  * @param {HTMLElement|SVGElement|jQuery[]} el The element to append to
  * @param {string|jQuery} contents The html string or jQuery object.
@@ -167,6 +185,18 @@ DOM.append = function append(el, contents, stripTags) {
 
   if (domEl instanceof HTMLElement || domEl instanceof SVGElement) {
     domEl.insertAdjacentHTML('beforeend', this.xssClean(contents, stripTags));
+  }
+};
+
+DOM.after = function after(el, contents, stripTags) {
+  let domEl = el;
+
+  if (el instanceof $ && el.length) {
+    domEl = domEl[0];
+  }
+
+  if (domEl instanceof HTMLElement || domEl instanceof SVGElement) {
+    domEl.insertAdjacentHTML('afterend', this.xssClean(contents, stripTags));
   }
 };
 
