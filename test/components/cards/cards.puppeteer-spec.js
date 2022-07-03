@@ -1,9 +1,9 @@
 const { getConfig } = require('../../helpers/e2e-utils.js');
 
-describe('Cards Puppeteer Tests', () => {
+describe('Cards', () => {
   const baseUrl = 'http://localhost:4000/components/cards';
 
-  describe('Cards Index Page Tests', () => {
+  describe('Index', () => {
     const url = `${baseUrl}/example-index`;
 
     beforeAll(async () => {
@@ -20,7 +20,7 @@ describe('Cards Puppeteer Tests', () => {
     });
   });
 
-  describe('Cards Action Menu Button Page Tests', () => {
+  describe('Action Menu Button', () => {
     const url = `${baseUrl}/example-action-menu-button`;
 
     beforeAll(async () => {
@@ -33,7 +33,7 @@ describe('Cards Puppeteer Tests', () => {
     });
   });
 
-  describe('Cards Auto Size Page Tests', () => {
+  describe('Auto Size', () => {
     const url = `${baseUrl}/example-auto-size`;
 
     beforeAll(async () => {
@@ -46,7 +46,7 @@ describe('Cards Puppeteer Tests', () => {
     });
   });
 
-  describe('Cards Expandable Page Tests', () => {
+  describe('Expandable', () => {
     const url = `${baseUrl}/example-expandable`;
 
     beforeAll(async () => {
@@ -70,7 +70,7 @@ describe('Cards Puppeteer Tests', () => {
     });
   });
 
-  describe('Cards Four By Four Page Tests', () => {
+  describe('Four By Four', () => {
     const url = `${baseUrl}/example-four-by-four`;
 
     beforeAll(async () => {
@@ -83,7 +83,7 @@ describe('Cards Puppeteer Tests', () => {
     });
   });
 
-  describe('Cards Group Action Page Tests', () => {
+  describe('Group Action', () => {
     const url = `${baseUrl}/example-group-action`;
 
     beforeAll(async () => {
@@ -111,7 +111,7 @@ describe('Cards Puppeteer Tests', () => {
     });
   });
 
-  describe('Cards Menu Button Page Tests', () => {
+  describe('Menu Button', () => {
     const url = `${baseUrl}/example-menubutton`;
 
     beforeAll(async () => {
@@ -148,7 +148,7 @@ describe('Cards Puppeteer Tests', () => {
     });
   });
 
-  describe('Cards Variations and Hitboxes Page Tests', () => {
+  describe('Variations and Hitboxes', () => {
     const url = `${baseUrl}/example-variations-hitboxes`;
 
     beforeAll(async () => {
@@ -186,7 +186,7 @@ describe('Cards Puppeteer Tests', () => {
     });
   });
 
-  describe('Cards Single Select Page Tests', () => {
+  describe('Single Select', () => {
     const url = `${baseUrl}/example-single-select`;
 
     beforeAll(async () => {
@@ -222,7 +222,7 @@ describe('Cards Puppeteer Tests', () => {
     });
   });
 
-  describe('Cards Multi Select Page Tests', () => {
+  describe('Multi Select', () => {
     const url = `${baseUrl}/example-multi-select`;
 
     beforeAll(async () => {
@@ -260,31 +260,31 @@ describe('Cards Puppeteer Tests', () => {
 
       const window = await page.$('#cardlist');
       const image = await window.screenshot(); 
-      const config = getConfig('cards-multi-select'); 
+      const config = getConfig('cards-multi-select');
 
-      expect(image).toMatchImageSnapshot(config); 
+      expect(image).toMatchImageSnapshot(config);
     });
   });
 
-  describe('Cards actionable button tests', () => {
+  describe('Actionable', () => {
     const url = `${baseUrl}/example-actionable`;
 
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
       await page.setViewport({ width: 1920, height: 1080 });
     });
-    
+
     it('should not visual regress', async () => {
       await page.waitForSelector('.btn');
-      await page.click('#actionable-btn-1'); 
+      await page.click('#actionable-btn-1');
 
       await page.keyboard.press('Tab');
       await page.hover('#actionable-btn-2');
 
       const image = await page.screenshot(); 
-      const config = getConfig('cards-actionbutton'); 
+      const config = getConfig('cards-actionbutton');
 
-      expect(image).toMatchImageSnapshot(config); 
+      expect(image).toMatchImageSnapshot(config);
     });
   });
 });
