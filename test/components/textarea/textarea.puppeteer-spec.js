@@ -92,8 +92,30 @@ describe('Textarea', () => {
         .then(val => expect(val).toEqual('¤¶§Çüéâôûÿ£¥'));
     });
 
-    it.only('should display textarea label correctly', async () => {
+    it('should display textarea label correctly', async () => {
       expect(await page.waitForSelector('.field label', { visible: true })).toBeTruthy();
+    });
+
+    it('should enable scrollbar when multiple lines of text are in the field box', async () => {
+      await page.click('#description-max');
+      await page.keyboard.press('Enter');
+      await page.keyboard.press('Enter');
+      await page.keyboard.press('Enter');
+      await page.keyboard.press('Enter');
+
+      const scrollHeight = await page.evaluate(() => document.getElementById('description-max').scrollHeight);
+      const offsetHeight = await page.evaluate(() => document.getElementById('description-max').offsetHeight);
+
+      expect(scrollHeight).toBeGreaterThan(offsetHeight);
+    });
+
+    it('should display dirty tracker if textarea is updated and unfocused', async () => {
+      await page.waitForSelector('#description-dirty', { visible: true });
+
+      await page.type('#description-dirty', '1');
+      await page.click('#description-max');
+
+      expect(await page.waitForSelector('.icon-dirty', { visible: true })).toBeTruthy();
     });
   });
 });
