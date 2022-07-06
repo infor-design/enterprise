@@ -16,8 +16,8 @@
 - `[Modal]` Added icon puppeteer test for modal component. ([#6549](https://github.com/infor-design/enterprise/issues/6549))
 - `[Tabs]` Added puppeteer script for new searchfield design ([#6282](https://github.com/infor-design/enterprise/issues/6282))
 - `[Tag]` Converted protractor tests to puppeteer. ([#6617](https://github.com/infor-design/enterprise/issues/6617))
-- `[Textarea]` Converted protractor tests to puppeteer. ([#6629](https://github.com/infor-design/enterprise/issues/6629))
 - `[Targeted Achievement]` Converted protractor tests to puppeteer. ([#6627](https://github.com/infor-design/enterprise/issues/6627))
+- `[Textarea]` Converted protractor tests to puppeteer. ([#6629](https://github.com/infor-design/enterprise/issues/6629))
 
 ## v4.65.0 Fixes
 
