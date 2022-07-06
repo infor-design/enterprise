@@ -163,6 +163,10 @@ $toolbar-buttonset-height: 40px;
     &.has-more-button {
       .buttonset {
         width: calc(100% - 38px);
+
+        @media (max-width: ($breakpoint-phone-to-tablet - 1)) {
+          width: calc(100% - 38px) !important;
+        }
       }
 
       .title {

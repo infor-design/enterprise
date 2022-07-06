@@ -2,13 +2,12 @@
 
 ## v4.65.0
 
-### v4.65.0 Important Notes
-
 ## v4.65.0 Features
 
 - `[Bar]` Enhanced the VPAT accessibility in bar chart. ([#6074](https://github.com/infor-design/enterprise/issues/6074))
 - `[Bar]` Added puppeteer script for axis labels test. ([#6551](https://github.com/infor-design/enterprise/issues/6551))
 - `[Bubble]` Converted protractor tests to puppeteer. ([#6527](https://github.com/infor-design/enterprise/issues/6527))
+- `[Bullet]` Converted protractor tests to puppeteer. ([#6622](https://github.com/infor-design/enterprise/issues/6622))
 - `[Cards]` Added puppeteer script for cards test. ([#6525](https://github.com/infor-design/enterprise/issues/6525))
 - `[Datagrid]` Added tooltipOption settings for columns. ([#6361](https://github.com/infor-design/enterprise/issues/6361))
 - `[Datagrid]` Added add multiple rows option. ([#6404](https://github.com/infor-design/enterprise/issues/6404))
@@ -18,6 +17,7 @@
 - `[Tabs]` Added puppeteer script for new searchfield design ([#6282](https://github.com/infor-design/enterprise/issues/6282))
 - `[Tag]` Converted protractor tests to puppeteer. ([#6617](https://github.com/infor-design/enterprise/issues/6617))
 - `[Textarea]` Converted protractor tests to puppeteer. ([#6629](https://github.com/infor-design/enterprise/issues/6629))
+- `[Targeted Achievement]` Converted protractor tests to puppeteer. ([#6627](https://github.com/infor-design/enterprise/issues/6627))
 
 ## v4.65.0 Fixes
 
@@ -43,9 +43,12 @@
 - `[Lookup]` Fixed a bug where search-list icon, launch icon, and ellipses is misaligned and the table and title overlaps in responsive view. ([#6487](https://github.com/infor-design/enterprise/issues/6487))
 - `[Modal]` Fixed an issue on some monitors where the overlay is too dim. ([#6566](https://github.com/infor-design/enterprise/issues/6566))
 - `[Page-Patterns]` Fixed a bug where the header disappears when the the last item in the list is clicked and the browser is smaller in Chrome and Edge. ([#6328](https://github.com/infor-design/enterprise/issues/6328))
+- `[Tabs Module]` Fixed multiple UI issues in tabs module with searchfield. ([#6526](https://github.com/infor-design/enterprise/issues/6526))
 - `[ToolbarFlex]` Fixed a bug where the teardown might error on situations. ([#1327](https://github.com/infor-design/enterprise/issues/1327))
 - `[Tabs]` Fixed a bug where tabs focus indicator is not fixed on Classic Theme. ([#6464](https://github.com/infor-design/enterprise/issues/6464))
 - `[Validation]` Fixed a bug where the tooltip would show on the header when the message has actually been removed. ([#6547](https://github.com/infor-design/enterprise/issues/6547)
+
+(45 Issues Solved This Release, Backlog Enterprise 233, Backlog Ng 42, 1102 Functional Tests, 1420 e2e Tests, 486 Puppeteer Tests)
 
 ## v4.64.2 Fixes
 
