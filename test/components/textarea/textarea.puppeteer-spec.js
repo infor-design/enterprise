@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 const { getConfig } = require('../../helpers/e2e-utils.js');
 
 describe('Textarea', () => {
@@ -98,10 +99,10 @@ describe('Textarea', () => {
 
     it('should enable scrollbar when multiple lines of text are in the field box', async () => {
       await page.click('#description-max');
-      await page.keyboard.press('Enter');
-      await page.keyboard.press('Enter');
-      await page.keyboard.press('Enter');
-      await page.keyboard.press('Enter');
+
+      for (let i = 0; i < 5; i++) {
+        page.keyboard.press('Enter');
+      }
 
       const scrollHeight = await page.evaluate(() => document.getElementById('description-max').scrollHeight);
       const offsetHeight = await page.evaluate(() => document.getElementById('description-max').offsetHeight);
@@ -116,6 +117,110 @@ describe('Textarea', () => {
       await page.click('#description-max');
 
       expect(await page.waitForSelector('.icon-dirty', { visible: true })).toBeTruthy();
+    });
+  });
+
+  describe('Sizes', () => {
+    const url = `${baseUrl}/example-sizes`;
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+      await page.setViewport({ width: 1200, height: 800 });
+    });
+
+    it('should support check sizes', async () => {
+      await page.evaluate(() => document.getElementById('sm-textarea-example').offsetWidth)
+        .then(width => expect(width).toBe(150));
+
+      await page.evaluate(() => document.getElementById('def-textarea-example').offsetWidth)
+        .then(width => expect(width).toBe(300));
+
+      await page.evaluate(() => document.getElementById('lg-textarea-example').offsetWidth)
+        .then(width => expect(width).toBe(400));
+
+      await page.evaluate(() => document.getElementById('responsive').offsetWidth)
+        .then(width => expect(width).toBeGreaterThan(950));
+    });
+  });
+
+  describe('Auto grow', () => {
+    const url = `${baseUrl}/example-autogrow`;
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('should support auto grow', async () => {
+      expect(await page.waitForSelector('#autogrow', { visible: true })).toBeTruthy();
+
+      for (let i = 0; i < 7; i++) {
+        await page.type('#autogrow', 'Test');
+        await page.keyboard.press('Enter');
+      }
+
+      const height = await page.evaluate(() => document.getElementById('autogrow').offsetHeight);
+      expect(height).toBeGreaterThan(175);
+      expect(height).toBeLessThan(185);
+    });
+  });
+
+  describe('Modal', () => {
+    const url = `${baseUrl}/test-modal`;
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('should not close a modal when hitting enter', async () => {
+      await page.click('#button-1');
+      await page.waitForSelector('.modal-engaged', { visible: true });
+
+      for (let i = 0; i < 2; i++) {
+        await page.type('#context-desc', 'Test');
+        await page.keyboard.press('Enter');
+      }
+
+      const text = await page.evaluate(() => document.getElementById('context-desc').value);
+
+      expect(text.replace(/(\r\n\t|\n|\r\t)/gm, '')).toBe('TestTest');
+      expect(await page.waitForSelector('#modal-1', { visible: true })).toBeTruthy();
+    });
+  });
+
+  describe('Translation', () => {
+    const url = `${baseUrl}/example-index?locale=af-ZA`;
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('should translate the count text', async () => {
+      await page.evaluate(() => document.querySelector('.textarea-wordcount').textContent)
+        .then(text => expect(text).toEqual('Oorblywende karakters 82'));
+
+      await page.waitForSelector('#description-max', { visible: true });
+      await page.type('#description-max', 'Test');
+
+      await page.evaluate(() => document.querySelector('.textarea-wordcount').textContent)
+        .then(text => expect(text).toEqual('Oorblywende karakters 78'));
+    });
+  });
+
+  describe('Rows', () => {
+    const url = `${baseUrl}/test-rows?theme=classic&layout=nofrills`;
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+      await page.setViewport({ width: 760, height: 600 });
+    });
+
+    it('should not visually regress', async () => {
+      await page.waitForSelector('.container', { visible: true });
+
+      const container = await page.$('.container');
+      const image = await container.screenshot();
+      const config = getConfig('textarea-rows');
+      expect(image).toMatchImageSnapshot(config);
     });
   });
 });
