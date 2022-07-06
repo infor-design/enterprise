@@ -338,7 +338,7 @@ html[dir='rtl'] .scrollable-flex-header.is-personalizable .breadcrumb.truncated:
 }
 
 .module-tabs.is-personalizable [class^="btn"] {
-  background-color: transparent !important;
+  background-color: transparent;
   color: ${colors.contrast} !important;
 }
 
@@ -360,7 +360,7 @@ html[dir='rtl'] .scrollable-flex-header.is-personalizable .breadcrumb.truncated:
 }
 
 .module-tabs.is-personalizable .toolbar-searchfield-wrapper > .searchfield {
-  color: ${colors.contrast} !important;
+  color: ${colors.contrast};
 }
 
 .module-tabs.is-personalizable .toolbar-searchfield-wrapper > svg {
