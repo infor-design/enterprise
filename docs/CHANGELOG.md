@@ -2,8 +2,6 @@
 
 ## v4.65.0
 
-### v4.65.0 Important Notes
-
 ## v4.65.0 Features
 
 - `[Bar]` Enhanced the VPAT accessibility in bar chart. ([#6074](https://github.com/infor-design/enterprise/issues/6074))
@@ -48,6 +46,8 @@
 - `[ToolbarFlex]` Fixed a bug where the teardown might error on situations. ([#1327](https://github.com/infor-design/enterprise/issues/1327))
 - `[Tabs]` Fixed a bug where tabs focus indicator is not fixed on Classic Theme. ([#6464](https://github.com/infor-design/enterprise/issues/6464))
 - `[Validation]` Fixed a bug where the tooltip would show on the header when the message has actually been removed. ([#6547](https://github.com/infor-design/enterprise/issues/6547)
+
+(45 Issues Solved This Release, Backlog Enterprise 233, Backlog Ng 42, 1102 Functional Tests, 1420 e2e Tests, 486 Puppeteer Tests)
 
 ## v4.64.2 Fixes
 
