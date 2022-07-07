@@ -56,7 +56,6 @@ describe('Datagrid ARIA', () => { //eslint-disable-line
     expect(document.querySelectorAll('.datagrid-wrapper tbody tr')[0].querySelector('td').getAttribute('aria-readonly')).toEqual('true');
     expect(document.querySelectorAll('.datagrid-wrapper tbody tr')[0].querySelector('td').getAttribute('aria-colindex')).toEqual('1');
     expect(document.querySelectorAll('.datagrid-wrapper tbody tr')[0].querySelectorAll('td')[1].getAttribute('aria-colindex')).toEqual('2');
-    expect(document.querySelectorAll('.datagrid-wrapper tbody tr')[0].querySelector('td').getAttribute('aria-describedby')).toBeTruthy();
   });
 
   it('Should set ARIA attributes for selection', () => {
