@@ -4815,8 +4815,6 @@ Datagrid.prototype = {
         cssClass = cssClass.replace(/^\s+|\s+$/g, '').replace(/\s+/g, ' ');
       }
 
-      const idProp = this.settings.attributes?.filter(a => a.name === 'id');
-      const ariaDescribedby = `aria-describedby="${idProp?.length === 1 ? `${idProp[0].value}-col-${col.id?.toLowerCase()}` : self.uniqueId(`-header-${j}`)}"`;
       let ariaChecked = '';
 
       // Set aria-checkbox attribute
@@ -4836,8 +4834,7 @@ Datagrid.prototype = {
       }
 
       containerHtml[container] += `<td role="gridcell" ${ariaReadonly} aria-colindex="${j + 1}"` +
-          ` ${ariaDescribedby
-          }${ariaChecked
+          ` ${ariaChecked
           }${isSelected ? ' aria-selected="true"' : ''
           }${cssClass ? ` class="${cssClass}"` : ''
           }${colspan ? ` colspan="${colspan}"` : ''
