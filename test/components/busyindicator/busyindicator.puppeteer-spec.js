@@ -1,5 +1,3 @@
-const { getConfig } = require('../../helpers/e2e-utils');
-
 describe('Busy Indicator Tests', () => {
   const baseUrl = 'http://localhost:4000/components/busyindicator';
 
