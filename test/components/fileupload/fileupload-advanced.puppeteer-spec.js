@@ -5,6 +5,15 @@ describe('File Upload Advanced Puppeteer Tests', () => {
   const baseUrl = 'http://localhost:4000/components/fileupload-advanced';
   const fileName = 'test.txt';
 
+  const uploadFiles = async (filePathArr) => {
+    const [fileChooser] = await Promise.all([
+      page.waitForFileChooser(),
+      page.click('.hyperlink')
+    ]);
+
+    return fileChooser.accept(filePathArr);
+  };
+
   describe('File Progress', () => {
     const url = `${baseUrl}/example-index.html`;
     const filePath = path.resolve(__dirname, fileName);
@@ -14,14 +23,7 @@ describe('File Upload Advanced Puppeteer Tests', () => {
     });
 
     it('should upload a file and show description', async () => {
-      // click on Select File
-      // file upload should pop up
-      const [fileChooser] = await Promise.all([
-        page.waitForFileChooser(),
-        page.click('.hyperlink')
-      ]);
-
-      await fileChooser.accept([filePath]);
+      await uploadFiles([filePath]);
 
       // Description bar
       await page.waitForSelector('.file-row', { visible: true })
@@ -37,12 +39,7 @@ describe('File Upload Advanced Puppeteer Tests', () => {
     });
 
     it('should upload a file and show progress bar', async () => {
-      const [fileChooser] = await Promise.all([
-        page.waitForFileChooser(),
-        page.click('.hyperlink')
-      ]);
-
-      await fileChooser.accept([filePath]);
+      await uploadFiles([filePath]);
 
       // Progress bar
       await page.waitForSelector('.progress-row', { visible: true })
@@ -61,12 +58,7 @@ describe('File Upload Advanced Puppeteer Tests', () => {
     });
 
     it('should upload a file and show progress bar', async () => {
-      const [fileChooser] = await Promise.all([
-        page.waitForFileChooser(),
-        page.click('.hyperlink')
-      ]);
-
-      await fileChooser.accept([filePath]);
+      await uploadFiles([filePath]);
 
       // Progress bar
       await page.waitForSelector('.progress-row', { visible: true })
@@ -75,14 +67,7 @@ describe('File Upload Advanced Puppeteer Tests', () => {
     });
 
     it('should set failed status ', async () => {
-      // click on Select File
-      // file upload should pop up
-      const [fileChooser] = await Promise.all([
-        page.waitForFileChooser(),
-        page.click('.hyperlink')
-      ]);
-
-      await fileChooser.accept([filePath]);
+      await uploadFiles([filePath]);
 
       await page.click('#set-failed');
 
@@ -97,6 +82,62 @@ describe('File Upload Advanced Puppeteer Tests', () => {
         .then(async (element) => {
           const errorMessage = await element.evaluate(e => e.textContent);
           expect(errorMessage).toContain('File failed error message');
+        });
+    });
+  });
+
+  describe('File max limit tests', () => {
+    const url = `${baseUrl}/test-max-files.html`;
+    const filePath = path.resolve(__dirname, fileName);
+
+    beforeEach(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
+    });
+
+    it('should upload 2 files', async () => {
+      await uploadFiles([filePath]);
+
+      await page.waitForSelector('.file-row', { visible: true })
+        .then(async (element) => {
+          const description = await element.$eval('.description', e => e.textContent);
+          const progress = await element.$eval('.l-pull-right .size', e => e.textContent.split(' '));
+
+          expect(description).toEqual(fileName);
+          expect(Number.parseFloat(progress[0])).toBeTruthy();
+          expect(progress[1]).toEqual('KB');
+          expect(progress[3]).toContain('%');
+        });
+    });
+
+    it('should show error when uploading 3 files', async () => {
+      await uploadFiles([filePath, filePath, filePath]);
+
+      await page.waitForSelector('.file-row', { visible: true })
+        .then(async (element) => {
+          const fileIcon = await element.$eval('.status-icon', e => e.getAttribute('class'));
+          const errorMessage = await element.$eval('.msg', e => e.textContent);
+
+          expect(fileIcon).toContain('file-error');
+          expect(errorMessage).toEqual('Error: Cannot upload more than the maximum number of files (2).');
+        });
+    });
+
+    it('should be able to upload a file after 2 files are complete', async () => {
+      await uploadFiles([filePath, filePath]);
+
+      await page.waitForFunction('document.querySelectorAll(".container.completed").length === 2');
+
+      await uploadFiles([filePath]);
+
+      await page.waitForSelector('.file-row', { visible: true })
+        .then(async (element) => {
+          const description = await element.$eval('.description', e => e.textContent);
+          const progress = await element.$eval('.l-pull-right .size', e => e.textContent.split(' '));
+
+          expect(description).toEqual(fileName);
+          expect(Number.parseFloat(progress[0])).toBeTruthy();
+          expect(progress[1]).toEqual('KB');
+          expect(progress[3]).toContain('%');
         });
     });
   });
