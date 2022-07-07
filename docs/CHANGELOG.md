@@ -9,6 +9,8 @@
 
 ## v4.66.0 Fixes
 
+- `[Datagrid]` Fixed redundant aria-describedby attributes at cells. ([#6530](https://github.com/infor-design/enterprise/issues/6530))
+
 ## v4.65.0
 
 ## v4.65.0 Features
