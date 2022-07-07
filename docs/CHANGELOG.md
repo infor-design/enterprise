@@ -1,5 +1,13 @@
 # What's New with Enterprise
 
+## v4.66.0
+
+## v4.66.0 Features
+
+- `[Textarea]` Converted protractor tests to puppeteer. ([#6629](https://github.com/infor-design/enterprise/issues/6629))
+
+## v4.66.0 Fixes
+
 ## v4.65.0
 
 ## v4.65.0 Features
@@ -17,7 +25,6 @@
 - `[Tabs]` Added puppeteer script for new searchfield design ([#6282](https://github.com/infor-design/enterprise/issues/6282))
 - `[Tag]` Converted protractor tests to puppeteer. ([#6617](https://github.com/infor-design/enterprise/issues/6617))
 - `[Targeted Achievement]` Converted protractor tests to puppeteer. ([#6627](https://github.com/infor-design/enterprise/issues/6627))
-- `[Textarea]` Converted protractor tests to puppeteer. ([#6629](https://github.com/infor-design/enterprise/issues/6629))
 
 ## v4.65.0 Fixes
 
