@@ -273,7 +273,7 @@ FileUploadAdvanced.prototype = {
     const totalInProgress = $('.progress', this.element).length;
 
     // Max files can be upload
-    const filesLen = this.totalCompleted + files.length + totalInProgress;
+    const filesLen = files.length + totalInProgress;
     if (filesLen > s.maxFiles) {
       this.showError(s.errorMaxFiles);
       return;
