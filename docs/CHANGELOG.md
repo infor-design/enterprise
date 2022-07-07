@@ -1,5 +1,13 @@
 # What's New with Enterprise
 
+## v4.66.0
+
+## v4.66.0 Features
+
+- `[Textarea]` Converted protractor tests to puppeteer. ([#6629](https://github.com/infor-design/enterprise/issues/6629))
+
+## v4.66.0 Fixes
+
 ## v4.65.0
 
 ## v4.65.0 Features
