@@ -8,13 +8,13 @@ describe('Busy Indicator Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('Should display busy indicator', async () => {
+    it('should display busy indicator', async () => {
       await page.click('#submit');
 
       expect(await page.waitForSelector('.busy-indicator-container', { visible: true })).toBeTruthy();
     });
 
-    it('Should be able to set ids/automation ids', async () => {
+    it('should be able to set ids/automation ids', async () => {
       await page.click('#submit');
 
       expect(await page.$eval('#busyindicator-id-1-overlay', el => el.getAttribute('id'))).toEqual('busyindicator-id-1-overlay');
@@ -38,14 +38,14 @@ describe('Busy Indicator Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('Should display busy indicator inside input', async () => {
+    it('should display busy indicator inside input', async () => {
       await page.click('#trigger-busy-input');
 
       const fieldEl = await page.$('.field');
       expect(await fieldEl.waitForSelector('.busy-indicator-container', { visible: true })).toBeTruthy();
     });
 
-    it('Should display busy indicator inside dropdown', async () => {
+    it('should display busy indicator inside dropdown', async () => {
       await page.click('#trigger-busy-dropdown');
 
       const fieldEl = await page.$('.field');
@@ -60,7 +60,7 @@ describe('Busy Indicator Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('Should display busy indicator while waiting for Ajax response', async () => {
+    it('should display busy indicator while waiting for Ajax response', async () => {
       await page.type('#autocomplete-busy', 'Numpad1');
 
       const fieldEl = await page.$('.field');
@@ -75,7 +75,7 @@ describe('Busy Indicator Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('Should block entire UI', async () => {
+    it('should block entire UI', async () => {
       await page.click('#submit');
 
       await page.mouse.click(170, 235);
@@ -92,7 +92,7 @@ describe('Busy Indicator Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('Should block specific area', async () => {
+    it('should block specific area', async () => {
       await page.click('#busy-start-trigger');
 
       const specificEl = await page.$('#standalone-busy');
@@ -107,7 +107,7 @@ describe('Busy Indicator Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('Should display normal font', async () => {
+    it('should display normal font', async () => {
       await page.click('#busy-start-trigger');
 
       expect(await page.$eval('.busy-indicator-container > span', el => getComputedStyle(el))).not.toEqual(0);
@@ -121,7 +121,7 @@ describe('Busy Indicator Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('Should be displayed after a short delay', async () => {
+    it('should be displayed after a short delay', async () => {
       await page.click('#submit');
 
       expect(await page.waitForSelector('.busy-indicator-container', { visible: true })).toBeTruthy();
@@ -135,7 +135,7 @@ describe('Busy Indicator Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('Should be displayed inside tab', async () => {
+    it('should be displayed inside tab', async () => {
       await page.click('#busy-start-trigger');
 
       const tabEl = await page.$('#tabs-normal-contracts');
@@ -150,7 +150,7 @@ describe('Busy Indicator Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('Should display nested busy indicators', async () => {
+    it('should display nested busy indicators', async () => {
       await page.click('#nested-busy-start-trigger');
       await page.click('#submit');
 
@@ -169,7 +169,7 @@ describe('Busy Indicator Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('Should update busy indicator text', async () => {
+    it('should update busy indicator text', async () => {
       await page.click('#submit');
 
       await page.waitForSelector('.busy-indicator-container', { visible: true })
