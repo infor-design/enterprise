@@ -5,6 +5,7 @@
 ## v4.66.0 Features
 
 - `[Textarea]` Converted protractor tests to puppeteer. ([#6629](https://github.com/infor-design/enterprise/issues/6629))
+- `[Busyindicator]` Converted protractor tests to puppeteer. ([#6623](https://github.com/infor-design/enterprise/issues/6623))
 
 ## v4.66.0 Fixes
 
@@ -16,7 +17,6 @@
 - `[Bar]` Added puppeteer script for axis labels test. ([#6551](https://github.com/infor-design/enterprise/issues/6551))
 - `[Bubble]` Converted protractor tests to puppeteer. ([#6527](https://github.com/infor-design/enterprise/issues/6527))
 - `[Bullet]` Converted protractor tests to puppeteer. ([#6622](https://github.com/infor-design/enterprise/issues/6622))
-- `[Busyindicator]` Converted protractor tests to puppeteer. ([#6623](https://github.com/infor-design/enterprise/issues/6623))
 - `[Cards]` Added puppeteer script for cards test. ([#6525](https://github.com/infor-design/enterprise/issues/6525))
 - `[Datagrid]` Added tooltipOption settings for columns. ([#6361](https://github.com/infor-design/enterprise/issues/6361))
 - `[Datagrid]` Added add multiple rows option. ([#6404](https://github.com/infor-design/enterprise/issues/6404))
