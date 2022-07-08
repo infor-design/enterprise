@@ -2043,9 +2043,11 @@ Dropdown.prototype = {
     if (this.list.hasClass('datagrid-filter-dropdown')) {
       const gridContainerPos = document.querySelector('.datagrid-container').getBoundingClientRect().right;
       const gridFilterDropdownPos = document.querySelector('.datagrid-filter-dropdown').getBoundingClientRect().right;
+      const pageContainerPos = document.querySelector('.page-container').getBoundingClientRect().right;
+      const adjustedPosition = pageContainerPos - gridContainerPos;
 
       if (gridContainerPos < gridFilterDropdownPos) {
-        this.list[0].style.right = '0';
+        this.list[0].style.right = `${adjustedPosition}px`;
         this.list[0].style.left = '';
       }
     }
