@@ -95,18 +95,10 @@ describe('File Upload Advanced Puppeteer Tests', () => {
     });
 
     it('should upload 2 files', async () => {
-      await uploadFiles([filePath]);
+      await uploadFiles([filePath, filePath]);
 
-      await page.waitForSelector('.file-row', { visible: true })
-        .then(async (element) => {
-          const description = await element.$eval('.description', e => e.textContent);
-          const progress = await element.$eval('.l-pull-right .size', e => e.textContent.split(' '));
-
-          expect(description).toEqual(fileName);
-          expect(Number.parseFloat(progress[0])).toBeTruthy();
-          expect(progress[1]).toEqual('KB');
-          expect(progress[3]).toContain('%');
-        });
+      await page.waitForFunction('document.querySelectorAll(".container.completed").length === 2');
+      expect((await page.$$('.container.completed .file-row')).length).toEqual(2);
     });
 
     it('should show error when uploading 3 files', async () => {
@@ -131,18 +123,13 @@ describe('File Upload Advanced Puppeteer Tests', () => {
 
       await page.waitForFunction('document.querySelectorAll(".container.completed").length === 1');
 
+      expect((await page.$$('.container.completed .file-row')).length).toEqual(1);
+
       await uploadFiles([filePath]);
 
-      await page.waitForSelector('.file-row', { visible: true })
-        .then(async (element) => {
-          const description = await element.$eval('.description', e => e.textContent);
-          const progress = await element.$eval('.l-pull-right .size', e => e.textContent.split(' '));
+      await page.waitForFunction('document.querySelectorAll(".container.completed").length === 2');
 
-          expect(description).toEqual(fileName);
-          expect(Number.parseFloat(progress[0])).toBeTruthy();
-          expect(progress[1]).toEqual('KB');
-          expect(progress[3]).toContain('%');
-        });
+      expect((await page.$$('.container.completed .file-row')).length).toEqual(2);
     });
   });
 });
