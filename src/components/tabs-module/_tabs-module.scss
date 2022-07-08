@@ -317,8 +317,9 @@
       }
     }
 
-    .more {
-      height: 34px;
+    .more,
+    .more .btn-actions {
+      height: 32px;
     }
 
     [class^='btn'],

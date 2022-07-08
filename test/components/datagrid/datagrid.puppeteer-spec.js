@@ -1,3 +1,4 @@
+/* eslint-disable compat/compat */
 const { getConfig, getComputedStyle } = require('../../helpers/e2e-utils.js');
 
 describe('Datagrid Puppeteer Tests', () => {
@@ -216,6 +217,21 @@ describe('Datagrid Puppeteer Tests', () => {
 
       await page.evaluate(() => document.querySelector('.datagrid-expand-btn').getAttribute('class'))
         .then(el => expect(el).toContain('is-expanded'));
+    });
+  });
+
+  describe('Landmark', () => {
+    const url = `${baseUrl}/test-landmark`;
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('should not have aria-describedby attribute at cells', async () => {
+      await page.evaluate(async () => {
+        const cells = await document.querySelectorAll('.datagrid body tr td');
+        cells.forEach(cell => expect(cell.getAttribute('aria-describedby')).toBe(null));
+      });
     });
   });
 });
