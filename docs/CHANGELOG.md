@@ -10,6 +10,7 @@
 ## v4.66.0 Fixes
 
 - `[Datagrid]` Fixed redundant aria-describedby attributes at cells. ([#6530](https://github.com/infor-design/enterprise/issues/6530))
+- `[Datagrid]` Fixed overflowing of the multiselect dropdown in the page and push container that is near to the edge of the screen. ([#6580](https://github.com/infor-design/enterprise/issues/6580))
 
 ## v4.65.0
 
