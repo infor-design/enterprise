@@ -122,10 +122,14 @@ describe('File Upload Advanced Puppeteer Tests', () => {
         });
     });
 
-    it('should be able to upload a file after 2 files are complete', async () => {
+    it('should be able to upload a file after 2 files are complete and 1 is removed', async () => {
       await uploadFiles([filePath, filePath]);
 
       await page.waitForFunction('document.querySelectorAll(".container.completed").length === 2');
+
+      await page.click('button.btn-icon.action.hide-focus');
+
+      await page.waitForFunction('document.querySelectorAll(".container.completed").length === 1');
 
       await uploadFiles([filePath]);
 

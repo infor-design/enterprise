@@ -273,7 +273,7 @@ FileUploadAdvanced.prototype = {
     const totalInProgress = $('.progress', this.element).length;
 
     // Max files can be upload
-    const filesLen = files.length + totalInProgress;
+    const filesLen = this.totalCompleted + files.length + totalInProgress;
     if (filesLen > s.maxFiles) {
       this.showError(s.errorMaxFiles);
       return;
@@ -460,6 +460,10 @@ FileUploadAdvanced.prototype = {
          * @property {object} file uploaded
          */
         self.element.triggerHandler('beforefileremove', [file]);
+
+        if (container.hasClass('completed')) {
+          self.totalCompleted--;
+        }
 
         container.remove();
 
