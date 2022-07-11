@@ -2802,6 +2802,7 @@ $datagrid-small-row-height: 25px;
     //Cell Editting
     &.is-editing {
       background-color: $datagrid-cell-editing-bg-color;
+      border: 1px solid $ids-color-brand-primary-base;
       position: relative;
 
       &.has-singlecolumn {
@@ -2810,7 +2811,6 @@ $datagrid-small-row-height: 25px;
       }
 
       .datagrid-cell-wrapper {
-        border: 1px solid $ids-color-brand-primary-base;
         left: 0;
         position: absolute;
         text-overflow: clip;
