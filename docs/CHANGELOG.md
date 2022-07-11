@@ -11,6 +11,7 @@
 
 - `[Fileupload Advanced]` Fix on max fileupload limit. ([#6625](https://github.com/infor-design/enterprise/issues/6625))
 - `[Datagrid]` Fixed redundant aria-describedby attributes at cells. ([#6530](https://github.com/infor-design/enterprise/issues/6530))
+- `[Tabs]` Fix on close button not showing in Firefox. ([#6610](https://github.com/infor-design/enterprise/issues/6610))
 
 ## v4.65.0
 
