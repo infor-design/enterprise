@@ -306,7 +306,7 @@ Soho.Locale.addCulture('en-US', {
     Launch: { id: 'Launch', value: 'Launch', comment: 'Launch' },
     Left: { id: 'Left', value: 'Left', comment: 'Left tooltip' },
     Legend: { id: 'Legend', value: 'Legend', comment: 'As in a chart legend' },
-    LessOrEquals: { id: 'LessOrEquals', value: 'Less Than Or Before', comment: 'Less Than Or Equals in icons for filtering' },
+    LessOrEquals: { id: 'LessOrEquals', value: 'Less Than Or Equals', comment: 'Less Than Or Equals in icons for filtering' },
     LessThan: { id: 'LessThan', value: 'Less Than', comment: 'Less Than in icons for filtering' },
     Light: { id: 'Light', value: 'Light', comment: 'The name of one of the application theme variants.' },
     Link: { id: 'Link', value: 'Link', comment: 'Link - as in hyperlink - icon tooltop' },
