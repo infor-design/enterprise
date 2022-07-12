@@ -9,8 +9,9 @@
 
 ## v4.66.0 Fixes
 
-- `[Fileupload Advanced]` Fix on max fileupload limit. ([#6625](https://github.com/infor-design/enterprise/issues/6625))
 - `[Datagrid]` Fixed redundant aria-describedby attributes at cells. ([#6530](https://github.com/infor-design/enterprise/issues/6530))
+- `[Fileupload Advanced]` Fixed on max fileupload limit. ([#6625](https://github.com/infor-design/enterprise/issues/6625))
+- `[Tabs Module]` Fixed category border when focusing the searchfield. ([#6618](https://github.com/infor-design/enterprise/issues/6618)) 
 
 ## v4.65.0
 
