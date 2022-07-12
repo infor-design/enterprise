@@ -11,6 +11,7 @@
 
 - `[Fileupload Advanced]` Fix on max fileupload limit. ([#6625](https://github.com/infor-design/enterprise/issues/6625))
 - `[Datagrid]` Fixed redundant aria-describedby attributes at cells. ([#6530](https://github.com/infor-design/enterprise/issues/6530))
+- `[Notification]` Updated css of notification to fix alignment in rtl mode. ([#6555](https://github.com/infor-design/enterprise/issues/6555))
 
 ## v4.65.0
 

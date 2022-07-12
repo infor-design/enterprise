@@ -82,3 +82,19 @@
     );
   }
 }
+
+html[dir='rtl'] { 
+  .notification {
+    .notification-icon {
+      margin-left: 10px;
+    }
+
+    .notification-close {
+      margin-right: auto;
+    }
+
+    button.notification-close {
+      margin-left: 0;
+    }
+  }
+}
