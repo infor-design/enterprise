@@ -2825,14 +2825,15 @@ $datagrid-small-row-height: 25px;
     //Cell Editting
     &.is-editing {
       background-color: $datagrid-cell-editing-bg-color;
-      border: 1px solid $ids-color-brand-primary-base;
+      outline: 1px solid $ids-color-brand-primary-base;
+      outline-offset: -1px;
       position: relative;
-
+      
       &.has-singlecolumn {
         display: block;
         min-height: $datagrid-row-height + 7;
       }
-
+      
       .datagrid-cell-wrapper {
         left: 0;
         position: absolute;
