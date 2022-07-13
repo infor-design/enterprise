@@ -90,7 +90,7 @@ const COMPONENT_NAME = 'datepicker';
  * @param {string} [settings.attributes] Add extra attributes like id's to the element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
  * @param {string} [settings.autocompleteAttribute="off"] Allows prevention of built-in browser typeahead by changing/removing an `autocomplete` attribute to the field.
  * @param {boolean} [settings.tabbable=true] If true, causes the Datepicker's trigger icon to be focusable with the keyboard.
- * @param {boolean} [settings.updateWithKeyboard=true] If true, enables increment/decrement of day by using +/- in the keyboard.
+ * @param {boolean} [settings.updateWithKeyboard=false] If true, enables increment/decrement of day by using +/- in the keyboard.
 */
 const LEGEND_DEFAULTS = [
   { name: 'Public Holiday', color: 'azure06', dates: [] },
