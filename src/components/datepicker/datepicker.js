@@ -1963,6 +1963,8 @@ DatePicker.prototype = {
 
     const currentDate = this.isIslamic ? this.currentDateIslamic : this.currentDate;
 
+    let triggerChange = false;
+
     if (this.isOpen()) {
       if (s.range.useRange) {
         if (!s.range.first || (s.range.first && !s.range.first.date)) {
@@ -1980,6 +1982,7 @@ DatePicker.prototype = {
         } else if (s.range.first && s.range.first.date &&
           (!s.range.second || (s.range.second && !s.range.second.date))) {
           this.setRangeToElem(currentDate, false);
+          triggerChange = true;
         } else if (s.range.first && s.range.first.date &&
           s.range.second && s.range.second.date) {
           this.resetRange({ isData: true });
@@ -1996,6 +1999,10 @@ DatePicker.prototype = {
         const islamicDateText = Locale.formatDate(currentDate, options);
         this.element.val(islamicDateText);
       }
+      triggerChange = true;
+    }
+
+    if (triggerChange) {
       /**
       * Fires after the value in the input is changed by user interaction.
       *

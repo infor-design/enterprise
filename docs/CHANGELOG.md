@@ -9,10 +9,11 @@
 
 ## v4.66.0 Fixes
 
-- `[Fileupload Advanced]` Fix on max fileupload limit. ([#6625](https://github.com/infor-design/enterprise/issues/6625))
 - `[Datagrid]` Fixed redundant aria-describedby attributes at cells. ([#6530](https://github.com/infor-design/enterprise/issues/6530))
-- `[Tabs]` Fix on close button not showing in Firefox. ([#6610](https://github.com/infor-design/enterprise/issues/6610))
 - `[Datagrid]` Fixed the overflowing of the multiselect dropdown on the page and pushes the container near the screen's edge. ([#6580](https://github.com/infor-design/enterprise/issues/6580))
+- `[Datepicker]` Trigger change event when set Today is activated twice in range datepicker. ([NG#1334](https://github.com/infor-design/enterprise-ng/issues/1334))
+- `[Fileupload Advanced]` Fix on max fileupload limit. ([#6625](https://github.com/infor-design/enterprise/issues/6625))
+- `[Tabs]` Fix on close button not showing in Firefox. ([#6610](https://github.com/infor-design/enterprise/issues/6610))
 
 ## v4.65.0
 
