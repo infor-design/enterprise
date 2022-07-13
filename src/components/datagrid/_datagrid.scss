@@ -2802,15 +2802,15 @@ $datagrid-small-row-height: 25px;
     //Cell Editing
     &.is-editing {
       background-color: $datagrid-cell-editing-bg-color;
+      position: relative;
       outline: 1px solid $ids-color-brand-primary-base;
       outline-offset: -1px;
-      position: relative;
 
       &.has-singlecolumn {
         display: block;
         min-height: $datagrid-row-height + 7;
       }
-      
+
       .datagrid-cell-wrapper {
         left: 0;
         position: absolute;
