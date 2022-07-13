@@ -12713,7 +12713,7 @@ Datagrid.prototype = {
           rowData = this.settings.treeDepth[rowIdx].node;
         } else {
           rowIdx = this.dataRowIndex(rowElem);
-          rowData = this.settings.dataset[rowIdx];
+          rowData = this.rowData(rowIdx);
         }
 
         const value = this.fieldValue(rowData, col.field);
