@@ -2799,13 +2799,13 @@ $datagrid-small-row-height: 25px;
       }
     }
 
-    //Cell Editting
+    //Cell Editing
     &.is-editing {
       background-color: $datagrid-cell-editing-bg-color;
       outline: 1px solid $ids-color-brand-primary-base;
       outline-offset: -1px;
       position: relative;
-      
+
       &.has-singlecolumn {
         display: block;
         min-height: $datagrid-row-height + 7;
