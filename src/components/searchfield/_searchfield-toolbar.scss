@@ -198,12 +198,37 @@ $toolbarsearchfield-category-empty-width: 51px;
     }
   }
 
+  &.has-categories.alternate {
+    .searchfield-category-button {
+      border: none;
+    }
+  }
+
   &.is-open {
     .searchfield,
     .btn {
       background-color: rgba($searchfield-bg-color, 1);
       border-bottom-color: rgba($searchfield-border-color, 1);
       height: 38px;
+    }
+
+    &.has-categories.alternate {
+      .searchfield-category-button {
+        border: 1px solid $header-searchfield-input-border-color;
+        padding: 0 8px;
+        left: 2px;
+      }
+
+      .searchfield {
+        border: 1px solid $header-searchfield-input-border-color;
+      }
+
+      &.is-hovered {
+        .searchfield-category-button,
+        .searchfield {
+          border: 1px solid $header-searchfield-input-border-hover-color;
+        }
+      }
     }
 
     // Searchfield changes text style to match other input fields
@@ -286,18 +311,8 @@ $toolbarsearchfield-category-empty-width: 51px;
     // Ignored due to out-of-order properties that need to be in this order for proper cascade.
     .btn,
     .collapse-button {
-      background-color: rgba($searchfield-bg-color, 1);
       border-color: rgba($searchfield-bg-color, 1);
       border-bottom-color: rgba($searchfield-border-color, 1);
-    }
-
-    &.alternate {
-      .searchfield,
-      .btn {
-        background-color: rgba($searchfield-alt-bg-color, 1);
-        border-color: rgba($searchfield-alt-bg-color, 1);
-        border-bottom-color: rgba($searchfield-alt-border-color, 1);
-      }
     }
     /* stylelint-enable */
   }
@@ -319,13 +334,6 @@ $toolbarsearchfield-category-empty-width: 51px;
       &.toolbar-searchfield-wrapper {
         &.has-categories {
           .searchfield {
-            border-bottom-color: rgba($searchfield-border-color, 1);
-            box-shadow: $focus-box-shadow-input;
-
-            &:focus {
-              border-color: $header-searchfield-input-border-color;
-            }
-
             @media only screen and (max-width: $breakpoint-phone-to-tablet) {
               width: auto;
             }

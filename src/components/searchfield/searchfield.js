@@ -1412,6 +1412,7 @@ SearchField.prototype = {
    */
   setOpenWidth() {
     let subtractWidth = 0;
+    const wrapper = this.wrapper;
 
     if (this.wrapper[0]) {
       this.wrapper[0].style.width = this.openWidth;
@@ -1441,7 +1442,10 @@ SearchField.prototype = {
     }
 
     if (subtractWidth > 0) {
-      this.input.style.width = `calc(100% - ${subtractWidth}px)`;
+      // Add two more pixels so that the searchfield will not cut off the border when it has text.
+      const isAlternate = wrapper.hasClass('alternate') && wrapper.hasClass('has-text') ? 2 : 0;
+
+      this.input.style.width = `calc(100% - ${subtractWidth + isAlternate}px)`;
     }
 
     delete this.openWidth;
