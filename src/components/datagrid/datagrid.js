@@ -8967,7 +8967,7 @@ Datagrid.prototype = {
       return;
     }
 
-    let rowData = s.dataset[idx];
+    let rowData = s.treeGrid ? s.treeDepth[idx].node : s.dataset[idx];
     const getSelUniqueRowID = node => (node ? node.uniqueRowID : null);
 
     // Unselect it
