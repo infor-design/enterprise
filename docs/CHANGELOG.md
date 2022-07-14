@@ -15,6 +15,7 @@
 - `[Datagrid]` Fixed the overflowing of the multiselect dropdown on the page and pushes the container near the screen's edge. ([#6580](https://github.com/infor-design/enterprise/issues/6580))
 - `[Fileupload Advanced]` Fixed on max fileupload limit. ([#6625](https://github.com/infor-design/enterprise/issues/6625))
 - `[Tabs]` Fixed on close button not showing in Firefox. ([#6610](https://github.com/infor-design/enterprise/issues/6610))
+- `[Datagrid]` Fixed incorrect rowData for grouping tooltip callback. ([NG#1298](https://github.com/infor-design/enterprise-ng/issues/1298))
 
 ## v4.65.0
 
