@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="twelve columns">
+
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+
+    Locale.set('en-US').done(function () {
+        var grid,
+          columns = [],
+          data = [];
+
+        // Define Some Sample Data
+        data.push({ id: 1, warehouse: 'ABC', itemDescription: 'A bundle of wands'});
+        data.push({ id: 2, warehouse: 'ABC', itemDescription: 'A bundle of rods'});
+        data.push({ id: 2, warehouse: 'XYZ', itemDescription: 'Some other items'});
+
+        //Define Columns for the Grid.
+        var callback = function(rowIdx, cell, value, col, rowData, grid) {
+          console.log('row:', rowIdx);
+          console.log('rowData:', rowData);
+
+          return `${rowData.itemDescription}`
+        }
+
+        columns.push({ width: 30, id: 'warehouse', field: 'warehouse', name: 'Warehouse', resizable: false, sortable: false});
+        columns.push({ width: 75, id: 'itemDescription', field: 'itemDescription', name: 'Item Description', resizable: true, sortable: true, contentTooltip: true, tooltip: callback});
+
+        //Init the grid
+        $('#datagrid').datagrid({
+          columns: columns,
+          dataset: data,
+          selectable: 'single',
+          groupable: { fields: ['warehouse'], aggregator: '' },
+          enableTooltips: true
+        });
+    });
+  });
+
+</script>
