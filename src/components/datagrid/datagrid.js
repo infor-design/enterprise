@@ -7159,6 +7159,9 @@ Datagrid.prototype = {
               '[type=checkbox],' +
               '[type=radio]', td).length)) {
             self.quickEditMode = true;
+            if ($(td).height() - $('.datagrid-cell-wrapper', td).height() > 45) {
+              $('.datagrid-cell-wrapper', td).css('top', '35%');
+            }
           }
         }, 0);
       }
@@ -10270,6 +10273,7 @@ Datagrid.prototype = {
     // Format Cell again
     const isInline = cellNode.hasClass('is-editing-inline');
     cellNode.removeClass('is-editing is-editing-inline has-singlecolumn');
+    $('.datagrid-cell-wrapper', cellNode).css('top', '');
 
     // Editor.destroy
     this.editor.destroy();
