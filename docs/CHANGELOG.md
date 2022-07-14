@@ -15,6 +15,7 @@
 - `[Datepicker]` Trigger change event when set Today is activated twice in range datepicker. ([NG#1334](https://github.com/infor-design/enterprise-ng/issues/1334))
 - `[Fileupload Advanced]` Fixed on max fileupload limit. ([#6625](https://github.com/infor-design/enterprise/issues/6625))
 - `[Tabs]` Fixed on close button not showing in Firefox. ([#6610](https://github.com/infor-design/enterprise/issues/6610))
+- `[Datagrid]` Fixed incorrect rowData for grouping tooltip callback. ([NG#1298](https://github.com/infor-design/enterprise-ng/issues/1298))
 
 ## v4.65.0
 
