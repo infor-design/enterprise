@@ -913,6 +913,11 @@ html.is-firefox {
         .icon-alert {
           top: 12px;
         }
+
+        &.dismissible .icon.close {
+          padding-right: 0;
+          right: 0;
+        }
       }
     }
   }
