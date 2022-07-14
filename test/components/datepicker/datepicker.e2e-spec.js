@@ -2169,7 +2169,7 @@ describe('Datepicker translation tests', () => {
 
 describe('Datepicker Increment/Decrement tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/datepicker/test-increment-decrement-day?theme=classic&layout=nofrills');
+    await utils.setPage('/components/datepicker/test-datepicker-today-increment-key?theme=classic&layout=nofrills');
   });
 
   it('Should not have errors', async () => {
