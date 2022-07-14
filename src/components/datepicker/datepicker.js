@@ -149,7 +149,8 @@ const DATEPICKER_DEFAULTS = {
   autocompleteAttribute: 'off',
   useMask: true,
   tabbable: true,
-  incrementWithKeyboard: false
+  incrementWithKeyboard: false,
+  todayWithKeyboard: false
 };
 
 function DatePicker(element, settings) {
@@ -426,7 +427,7 @@ DatePicker.prototype = {
       }
 
       // 't' selects today
-      if (key === 84) {
+      if (key === 84 && this.settings.todayWithKeyboard) {
         handled = true;
         this.setToday();
       }

@@ -15,6 +15,7 @@
   $('body').on('initialized', function() {
     $('#date-field-normal')
       .datepicker({
+        todayWithKeyboard: true,
         incrementWithKeyboard: true,
         attributes: [
           { name: 'id', value: 'custom-id' },
