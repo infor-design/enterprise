@@ -2277,9 +2277,9 @@ Datagrid.prototype = {
     if (/\b(date|time)\b/g.test(col.filterType)) {
       btnMarkup += `${
         render('less-than', 'EarlyThan')
-      }${render('less-equals', 'EarlyOrUntil')
+      }${render('less-equals', 'EarlyOrEquals')
       }${render('greater-than', 'LaterThan')
-      }${render('greater-equals', 'LaterOrOn')}`;
+      }${render('greater-equals', 'LaterOrEquals')}`;
       btnMarkup = btnMarkup.replace('{{icon}}', 'less-than');
     }
 
