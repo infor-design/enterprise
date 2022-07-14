@@ -319,8 +319,7 @@ $toolbarsearchfield-category-empty-width: 51px;
       &.toolbar-searchfield-wrapper {
         &.has-categories {
           .searchfield {
-            border-bottom-color: rgba($searchfield-border-color, 1);
-            box-shadow: $focus-box-shadow-input;
+            border-left: 1px solid;
 
             &:focus {
               border-color: $header-searchfield-input-border-color;
@@ -427,6 +426,9 @@ $toolbarsearchfield-category-empty-width: 51px;
     &.searchfield-wrapper.show-category {
       .searchfield {
         border-left-color: $header-searchfield-input-border-color !important;
+        border-bottom: 0;
+        border-top: 0;
+        border-right: 0;
       }
     }
   }
@@ -610,6 +612,15 @@ $toolbarsearchfield-category-empty-width: 51px;
     }
 
     .searchfield-category-button {
+      border-bottom-left-radius: 2px;
+      border-top-left-radius: 2px;
+      border-top: 0;
+      border-bottom: 0;
+
+      .category {
+        color: $header-flex-toolbar-input-searchfield-color;
+      }
+
       &.btn {
         background-color: $searchfield-header-bg-color;
         border-bottom-color: rgba($searchfield-header-border-color, 0.7);
