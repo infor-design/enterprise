@@ -1,6 +1,8 @@
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
 import { notificationManager } from './notification.manager';
+import { Environment as env } from '../../utils/environment';
+import { xssUtils } from '../../utils/xss';
 
 // Settings and Options
 const COMPONENT_NAME = 'notification';
@@ -30,7 +32,9 @@ const NOTIFICATION_DEFAULTS = {
 function Notification(element, settings) {
   this.settings = utils.mergeSettings(element, settings, NOTIFICATION_DEFAULTS);
   this.element = $(element);
-  this.init();
+  $('body').on('initialized', () => {
+    this.init();
+  });
 }
 
 // Plugin Methods
@@ -58,19 +62,13 @@ Notification.prototype = {
     // IE 10/11 does not support multiple paramets for classList.add()
     this.notificationEl.classList.add('notification');
     this.notificationEl.classList.add(this.settings.type);
-
     const htmlIcon = `
       <svg class="icon notification-icon icon-${this.settings.type}" focusable="false" aria-hidden="true" role="presentation">
         <use href="#icon-${this.settings.type}"></use>
       </svg>`;
 
-    let htmlText = `<p class="notification-text">${this.settings.message}`;
-
-    if (this.settings.linkText) {
-      htmlText += `<a class="notification-link" href="${this.settings.link}">${this.settings.linkText}</a>`;
-    }
-
-    htmlText += '</p>';
+    const linkText = this.settings.linkText ? `<a class="notification-link" href="${this.settings.link}">${this.settings.linkText}</a>` : '';
+    const htmlText = `<p class="notification-text">${env.rtl ? `${linkText}${this.settings.message}` : `${this.settings.message}${linkText}`}</p>`;
 
     const htmlButton = `
       <button type="text" class="notification-close">
@@ -81,7 +79,6 @@ Notification.prototype = {
       </button>`;
 
     this.notificationEl.innerHTML = htmlIcon.concat(htmlText, htmlButton);
-
     const parentEl = document.querySelector(this.settings.parent);
 
     if ($(this.settings.parent).closest('.contextual-action-panel').length > 0) {
