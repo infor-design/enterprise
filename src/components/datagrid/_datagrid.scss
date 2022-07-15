@@ -3314,6 +3314,13 @@ $datagrid-small-row-height: 25px;
       }
     }
 
+    .icon.datagrid-header-icon {
+      color: $datagrid-header-color;
+      margin-left: 3px;
+      top: -2px;
+      transform: translateY(50%);
+    }
+
     // Checkboxes
     .datagrid-checkbox {
       &::before {

@@ -1477,6 +1477,8 @@ Datagrid.prototype = {
       cssClass += column.hidden ? ' is-hidden' : '';
       cssClass += column.filterType ? ' is-filterable' : '';
       cssClass += column.textOverflow === 'ellipsis' ? ' text-ellipsis' : '';
+      cssClass += column?.hasHeaderIcon ? ' has-header-icon' : '';
+      cssClass += column?.customHeaderClass ? ` ${column.customHeaderClass}` : '';
       cssClass += headerAlignmentClass !== '' ? headerAlignmentClass : '';
 
       // Apply css classes
@@ -1498,8 +1500,14 @@ Datagrid.prototype = {
 
       // If header text is center aligned, for proper styling,
       // place the sortIndicator as a child of datagrid-header-text.
+      const svgHeaderIcon = `
+        <svg class="icon datagrid-header-icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-info"></use>
+        </svg>
+      `;
       headerRows[container] += `<div class="${isSelection ? 'datagrid-checkbox-wrapper ' : 'datagrid-column-wrapper'}${headerAlignmentClass}">
-      <span class="datagrid-header-text${column.required ? ' required' : ''}">${self.headerText(this.settings.columns[j])}${headerAlignmentClass === ' l-center-text' ? sortIndicator : ''}</span>`;
+      <span class="datagrid-header-text${column.required ? ' required' : ''}">${self.headerText(this.settings.columns[j])}${headerAlignmentClass === ' l-center-text' ? sortIndicator : ''}</span>
+      ${this.settings.columns[j]?.hasHeaderIcon ? svgHeaderIcon : ''}`;
 
       if (isSelection) {
         if (self.settings.showSelectAllCheckBox) {
@@ -5529,10 +5537,11 @@ Datagrid.prototype = {
       tooltipTimer = setTimeout(() => {
         const isHeaderColumn = DOM.hasClass(elem, 'datagrid-column-wrapper');
         const isHeaderFilter = DOM.hasClass(elem.parentNode, 'datagrid-filter-wrapper');
+        const isHeaderIcon = DOM.hasClass(elem, 'datagrid-header-icon');
         const isPopup = isHeaderFilter ?
           elem.parentNode.querySelectorAll('.popupmenu.is-open').length > 0 : false;
         const tooltip = $(elem).data('gridtooltip') || self.cacheTooltip(elem);
-        const containerEl = isHeaderColumn ? elem.parentNode : elem;
+        const containerEl = isHeaderColumn ? elem.parentNode : isHeaderIcon ? elem.parentNode : elem;
         const width = self.getOuterWidth(containerEl);
         if (tooltip && (tooltip.forced || (tooltip.textwidth > (width - 35))) && !isPopup) {
           self.showTooltip(tooltip);
@@ -5597,6 +5606,18 @@ Datagrid.prototype = {
         .off('longpress.tableerrortooltip', '.icon')
         .on('longpress.tableerrortooltip', '.icon', function () {
           handleShow(this, 0);
+        });
+    }
+
+    if (this.element.find('.datagrid-header-icon')) {
+      this.element.find('.datagrid-header-icon')
+        .off('mouseenter.headericon',)
+        .on('mouseenter.headericon', function () {
+          handleShow(this);
+        })
+        .off('mouseleave.headericon')
+        .on('mouseleave.headericon', function () {
+          handleShow(this);
         });
     }
   },
@@ -12564,6 +12585,7 @@ Datagrid.prototype = {
       const aTitle = elem.querySelector('a[title]');
       const isRowstatus = DOM.hasClass(elem, 'rowstatus-cell');
       const isSvg = elem.tagName.toLowerCase() === 'svg';
+      const isHeaderIcon = elem.classList.contains('datagrid-header-icon');
       const isTh = elem.tagName.toLowerCase() === 'th';
       const isHeaderColumn = DOM.hasClass(elem, 'datagrid-column-wrapper');
       const isHeaderFilter = DOM.hasClass(elem.parentNode, 'datagrid-filter-wrapper');
@@ -12591,7 +12613,7 @@ Datagrid.prototype = {
       }
 
       // Cache rowStatus cell
-      if (isRowstatus || isSvg) {
+      if (isRowstatus || (isSvg && !isHeaderIcon)) {
         const rowNode = this.closest(elem, el => DOM.hasClass(el, 'datagrid-row'));
         const classList = rowNode ? rowNode.classList : [];
         tooltip.isError = classList.contains('rowstatus-row-error');
@@ -12638,6 +12660,10 @@ Datagrid.prototype = {
             const targetEl = elem.parentNode.querySelector('.is-checked');
             tooltip.content = targetEl ? xssUtils.stripHTML(targetEl.textContent) : '';
           }
+        } else if (isHeaderIcon) {
+          const parentColId = $(elem).parents('th').attr('data-column-id');
+          const iconTooltipContent = this.settings.columns[this.columnIdxById(parentColId)].headerIconTooltip;
+          tooltip.content = iconTooltipContent;
         } else {
           // Default use wrapper content
           if (tooltip.wrapper.querySelector('.datagrid-expand-btn')) {
@@ -12654,7 +12680,7 @@ Datagrid.prototype = {
       }
 
       // Clean up text in selects
-      const select = tooltip.wrapper.querySelector('select');
+      const select = tooltip.wrapper?.querySelector('select');
       if (select && select.selectedIndex &&
         select.options[select.selectedIndex] &&
         select.options[select.selectedIndex].innerHTML) {
@@ -12698,7 +12724,7 @@ Datagrid.prototype = {
         }
 
         tooltip.content = contentTooltip ? tooltip.content : `<p>${tooltip.content}</p>`;
-        if (title || isHeaderFilter) {
+        if (title || isHeaderFilter || isHeaderIcon) {
           tooltip.forced = true;
         }
       }
@@ -12777,9 +12803,9 @@ Datagrid.prototype = {
           x: options.x || 0,
           y: options.y || distance,
           container: this.element.closest('.page-container.scrollable') || $('body'),
-          containerOffsetX: options.wrapper.offsetLeft,
-          containerOffsetY: options.wrapper.offsetTop,
-          parent: $(options.wrapper),
+          containerOffsetX: options.wrapper?.offsetLeft,
+          containerOffsetY: options.wrapper?.offsetTop,
+          parent: $(options?.wrapper),
           placement: options.placement || 'top',
           strategies: ['flip', 'nudge']
         };
