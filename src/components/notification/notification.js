@@ -30,9 +30,7 @@ const NOTIFICATION_DEFAULTS = {
 function Notification(element, settings) {
   this.settings = utils.mergeSettings(element, settings, NOTIFICATION_DEFAULTS);
   this.element = $(element);
-  $('body').on('initialized', () => {
-    this.init();
-  });
+  this.init();
 }
 
 // Plugin Methods
