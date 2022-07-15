@@ -2,8 +2,6 @@ import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
 import { notificationManager } from './notification.manager';
 import { Environment as env } from '../../utils/environment';
-import { xssUtils } from '../../utils/xss';
-
 // Settings and Options
 const COMPONENT_NAME = 'notification';
 
@@ -68,7 +66,7 @@ Notification.prototype = {
       </svg>`;
 
     const linkText = this.settings.linkText ? `<a class="notification-link" href="${this.settings.link}">${this.settings.linkText}</a>` : '';
-    const htmlText = `<p class="notification-text">${env.rtl ? `${linkText}${this.settings.message}` : `${this.settings.message}${linkText}`}</p>`;
+    const htmlText = `<p class="notification-text">${env.rtl ? `${linkText}.${this.settings.message}` : `${this.settings.message}${linkText}`}</p>`;
 
     const htmlButton = `
       <button type="text" class="notification-close">
