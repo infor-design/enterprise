@@ -64,7 +64,7 @@ Notification.prototype = {
       </svg>`;
 
     const linkText = this.settings.linkText ? `<a class="notification-link" href="${this.settings.link}">${this.settings.linkText}</a>` : '';
-    const htmlText = `<p class="notification-text">${env.rtl ? `${linkText}.${this.settings.message}` : `${this.settings.message}${linkText}`}</p>`;
+    const htmlText = `<p class="notification-text">${env.rtl ? `${linkText}${this.settings.message}&lrm;` : `${this.settings.message}${linkText}`}</p>`;
 
     const htmlButton = `
       <button type="text" class="notification-close">
