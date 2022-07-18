@@ -90,6 +90,7 @@ const COMPONENT_NAME = 'datepicker';
  * @param {string} [settings.attributes] Add extra attributes like id's to the element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
  * @param {string} [settings.autocompleteAttribute="off"] Allows prevention of built-in browser typeahead by changing/removing an `autocomplete` attribute to the field.
  * @param {boolean} [settings.tabbable=true] If true, causes the Datepicker's trigger icon to be focusable with the keyboard.
+ * @param {boolean} [settings.incrementWithKeyboard=false] If true, enables increment/decrement of day by using +/- in the keyboard.
 */
 const LEGEND_DEFAULTS = [
   { name: 'Public Holiday', color: 'azure06', dates: [] },
@@ -147,7 +148,9 @@ const DATEPICKER_DEFAULTS = {
   attributes: null,
   autocompleteAttribute: 'off',
   useMask: true,
-  tabbable: true
+  tabbable: true,
+  incrementWithKeyboard: false,
+  todayWithKeyboard: false
 };
 
 function DatePicker(element, settings) {
@@ -424,12 +427,12 @@ DatePicker.prototype = {
       }
 
       // 't' selects today
-      if (key === 84) {
+      if (key === 84 && this.settings.todayWithKeyboard) {
         handled = true;
         this.setToday();
       }
 
-      if (!hasMinusPattern) {
+      if (!hasMinusPattern && this.settings.incrementWithKeyboard) {
         // get input value
         const inputVal = $(e.currentTarget).val();
 
