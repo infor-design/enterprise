@@ -12612,10 +12612,10 @@ Datagrid.prototype = {
         columnSettings = this.settings.columns[this.columnIdxById(columnId)];
       }
 
-      if (isTh || isHeaderColumn || isHeaderFilter) {
+      if (isTh || isHeaderColumn || isHeaderFilter || isHeaderIcon) {
         tooltip.wrapper = elem;
-        tooltip.distance = isHeaderFilter ? 15 : null;
-        tooltip.placement = isHeaderColumn ? 'top' : 'bottom';
+        tooltip.distance = (isHeaderFilter || isHeaderIcon) ? 15 : null;
+        tooltip.placement = (isHeaderColumn || isHeaderIcon) ? 'top' : 'bottom';
       }
 
       // Cache rowStatus cell
