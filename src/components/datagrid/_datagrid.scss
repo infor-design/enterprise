@@ -3323,6 +3323,7 @@ $datagrid-small-row-height: 25px;
     .icon.datagrid-header-icon {
       color: $datagrid-header-color;
       margin-left: 3px;
+      min-width: 18px;
       top: -2px;
       transform: translateY(50%);
     }
