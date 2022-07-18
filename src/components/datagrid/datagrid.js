@@ -6564,6 +6564,12 @@ Datagrid.prototype = {
           (this.settings.resizeMode === 'flex' && usingShiftKey))) {
           self.setColumnWidth(nextColumnId, nextWidthToSet);
         }
+
+        if (self.currentHeader.hasClass('is-ellipsis-active')) {
+          self.currentHeader.find('.datagrid-header-icon').css('display', 'none');
+        } else {
+          self.currentHeader.find('.datagrid-header-icon').css('display', 'block');
+        }
       });
   },
 
