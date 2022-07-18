@@ -464,13 +464,12 @@
     margin: 7px 0 0 !important;
   }
 
-  &.small-rowheight th.text-ellipsis .datagrid-header-text,
-  &.extra-small-rowheight th.text-ellipsis .datagrid-header-text {
+  &.small-rowheight th.text-ellipsis .datagrid-header-text {
     margin: 3px 0 0 !important;
   }
 
   &.medium-rowheight th.text-ellipsis .datagrid-header-text {
-    margin: 5px 0 0 !important;
+    margin: 7px 0 0 !important;
   }
 
   &:not(.extra-small-rowheight) .datagrid-header {

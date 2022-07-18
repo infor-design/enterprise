@@ -5611,7 +5611,7 @@ Datagrid.prototype = {
 
     if (this.element.find('.datagrid-header-icon')) {
       this.element.find('.datagrid-header-icon')
-        .off('mouseenter.headericon',)
+        .off('mouseenter.headericon')
         .on('mouseenter.headericon', function () {
           handleShow(this);
         })
@@ -12809,8 +12809,8 @@ Datagrid.prototype = {
           x: options.x || 0,
           y: options.y || distance,
           container: this.element.closest('.page-container.scrollable') || $('body'),
-          containerOffsetX: options.wrapper?.offsetLeft,
-          containerOffsetY: options.wrapper?.offsetTop,
+          containerOffsetX: options.wrapper.offsetLeft,
+          containerOffsetY: options.wrapper.offsetTop,
           parent: $(options?.wrapper),
           placement: options.placement || 'top',
           strategies: ['flip', 'nudge']

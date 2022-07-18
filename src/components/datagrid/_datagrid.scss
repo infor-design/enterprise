@@ -634,16 +634,11 @@ $datagrid-small-row-height: 25px;
   &:not(.small-rowheight) .datagrid-header th.text-ellipsis {
     &:not(.is-filterable) .datagrid-column-wrapper {
       height: 32px;
-
-      .sort-indicator {
-        margin-top: 2px;
-      }
     }
   }
 
   //Short and Medium Row height
-  &.small-rowheight,
-  &.extra-small-rowheight {
+  &.small-rowheight {
     .datagrid-cell-wrapper {
       min-height: $datagrid-small-row-height + 7;
     }
@@ -683,10 +678,6 @@ $datagrid-small-row-height: 25px;
       &.text-ellipsis {
         .datagrid-column-wrapper {
           padding: 0 8px;
-        }
-
-        .datagrid-header-text {
-          margin: 5px 0 0 !important;
         }
       }
     }
@@ -962,6 +953,15 @@ $datagrid-small-row-height: 25px;
         }
       }
     }
+
+    .datagrid-header {
+      .datagrid-column-wrapper {
+        .datagrid-header-icon {
+          top: 4px;
+          transform: translateY(0);
+        }
+      }
+    }
   }
 
   &.medium-rowheight {
@@ -988,7 +988,7 @@ $datagrid-small-row-height: 25px;
 
       &.text-ellipsis {
         .datagrid-header-text {
-          margin: 8px 0 0 !important;
+          margin: 10px 0 0 !important;
         }
       }
     }
@@ -1854,6 +1854,12 @@ $datagrid-small-row-height: 25px;
 
       &.reorder-group-child-col .datagrid-reorder-icon {
         padding-left: 39px;
+      }
+    }
+
+    .datagrid-header th.text-ellipsis {
+      .datagrid-column-wrapper .datagrid-header-text {
+        margin: 7px 0 0 -1px;
       }
     }
   }
