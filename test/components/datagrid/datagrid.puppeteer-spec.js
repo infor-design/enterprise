@@ -254,7 +254,7 @@ describe('Datagrid', () => {
         .then(el => expect(el).toBeTruthy());
     });
 
-    it('should add custom class in the column header', async () => {
+    it('should have a custom class in the column header', async () => {
       await page.evaluate(() => document.getElementById('example-header-icon-with-tooltip-datagrid-1-header-2').getAttribute('class'))
         .then(el => expect(el).toContain('lm-custom-class-header'));
     });
