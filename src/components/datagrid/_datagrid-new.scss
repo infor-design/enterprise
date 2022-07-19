@@ -738,6 +738,12 @@
         }
       }
     }
+
+    .datagrid-header th.text-ellipsis .datagrid-column-wrapper {
+      .datagrid-header-text {
+        margin: 4px 0 0 !important;
+      }
+    }
   }
 
   &.small-rowheight {

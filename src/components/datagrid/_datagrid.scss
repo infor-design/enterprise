@@ -631,14 +631,15 @@ $datagrid-small-row-height: 25px;
     }
   }
 
-  &:not(.small-rowheight) .datagrid-header th.text-ellipsis {
+  &:not(.small-rowheight):not(.extra-small-rowheight) .datagrid-header th.text-ellipsis {
     &:not(.is-filterable) .datagrid-column-wrapper {
       height: 32px;
     }
   }
 
   //Short and Medium Row height
-  &.small-rowheight {
+  &.small-rowheight,
+  &.extra-small-rowheight {
     .datagrid-cell-wrapper {
       min-height: $datagrid-small-row-height + 7;
     }
@@ -916,6 +917,19 @@ $datagrid-small-row-height: 25px;
       .timepicker + .icon {
         margin-left: 2px !important;
         top: -4px !important;
+      }
+    }
+
+    .datagrid-header th.text-ellipsis {
+      .datagrid-column-wrapper {
+        .datagrid-header-text {
+          margin: 7px 0 0 -1px;
+        }
+
+        .datagrid-header-icon {
+          top: 4px;
+          transform: translateY(0);
+        }
       }
     }
   }
