@@ -199,4 +199,51 @@ describe('Monthview API', () => {
     });
     expect(document.getElementsByClassName('monthview-table')[0].children[0].children[0].children[0].innerHTML).toEqual('Mon');
   });
+
+  describe("loadLegend", () => {
+    it("Should do nothing if legendList is empty.", () => {
+      monthviewAPI.loadLegend();
+      monthviewAPI.loadLegend([]);
+    });
+
+    it("Should be to able populate alternate days.", () => {
+      monthviewAPI.destroy();
+      monthviewAPI = new MonthView(monthviewEl, {
+        month: 6,
+        year: 2022,
+        activeDate: new Date(2022, 6, 10),
+        firstDayOfWeek: 1,
+      });
+
+      const legendList = [
+        {
+          name: "Schedule",
+          color: "azure04",
+          dates: ["2022-06-30T00:00", "2022-07-15T00:00", "2022-08-01T00:00"],
+        },
+      ];
+      spyOn(monthviewAPI, "setLegendColor");
+      monthviewAPI.loadLegend(legendList);
+
+      expect(monthviewAPI.setLegendColor).toHaveBeenCalledTimes(3);
+      expect(monthviewAPI.setLegendColor).toHaveBeenCalledWith(
+        jasmine.any(Object),
+        2022,
+        5,
+        30
+      );
+      expect(monthviewAPI.setLegendColor).toHaveBeenCalledWith(
+        jasmine.any(Object),
+        2022,
+        6,
+        15
+      );
+      expect(monthviewAPI.setLegendColor).toHaveBeenCalledWith(
+        jasmine.any(Object),
+        2022,
+        7,
+        1
+      );
+    });
+  });  
 });
