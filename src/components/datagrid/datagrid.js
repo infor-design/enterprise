@@ -12806,7 +12806,7 @@ Datagrid.prototype = {
           options.extraClassList.map(className => this.tooltip.classList.add(className));
         }
 
-        const hasHeaderIcon = options.wrapper.classList.contains('datagrid-header-icon');
+        const hasHeaderIcon = options.wrapper.classList?.contains('datagrid-header-icon');
         tooltipContentEl.classList[hasHeaderIcon ? 'add' : 'remove']('header-icon');
 
         const distance = typeof options.distance === 'number' ? options.distance : 0;
