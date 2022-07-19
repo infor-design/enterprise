@@ -345,6 +345,10 @@
   padding: 7px 10px 5px;
   word-break: normal;
 
+  &.header-icon {
+    padding: 10px;
+  }
+
   // Error Tooltip Styling
   li {
     list-style: none outside none;
@@ -356,6 +360,7 @@
 
     &.align-text-left,
     &.align-text-left + p {
+      line-height: normal;
       text-align: left;
     }
   }

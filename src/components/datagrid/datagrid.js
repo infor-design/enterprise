@@ -1477,8 +1477,8 @@ Datagrid.prototype = {
       cssClass += column.hidden ? ' is-hidden' : '';
       cssClass += column.filterType ? ' is-filterable' : '';
       cssClass += column.textOverflow === 'ellipsis' ? ' text-ellipsis' : '';
-      cssClass += column?.hasHeaderIcon ? ' has-header-icon' : '';
-      cssClass += column?.customHeaderClass ? ` ${column.customHeaderClass}` : '';
+      cssClass += column?.headerIcon ? ' header-icon' : '';
+      cssClass += column?.headerCssClass ? ` ${column.headerCssClass}` : '';
       cssClass += headerAlignmentClass !== '' ? headerAlignmentClass : '';
 
       // Apply css classes
@@ -1502,12 +1502,12 @@ Datagrid.prototype = {
       // place the sortIndicator as a child of datagrid-header-text.
       const svgHeaderIcon = `
         <svg class="icon datagrid-header-icon" focusable="false" aria-hidden="true" role="presentation">
-          <use href="#icon-info"></use>
+          <use href="#icon-${column.headerIcon}"></use>
         </svg>
       `;
       headerRows[container] += `<div class="${isSelection ? 'datagrid-checkbox-wrapper ' : 'datagrid-column-wrapper'}${headerAlignmentClass}">
       <span class="datagrid-header-text${column.required ? ' required' : ''}">${self.headerText(this.settings.columns[j])}${headerAlignmentClass === ' l-center-text' ? sortIndicator : ''}</span>
-      ${this.settings.columns[j]?.hasHeaderIcon ? svgHeaderIcon : ''}`;
+      ${this.settings.columns[j]?.headerIcon ? svgHeaderIcon : ''}`;
 
       if (isSelection) {
         if (self.settings.showSelectAllCheckBox) {
@@ -12805,6 +12805,9 @@ Datagrid.prototype = {
         if (options.extraClassList) {
           options.extraClassList.map(className => this.tooltip.classList.add(className));
         }
+
+        const hasHeaderIcon = options.wrapper.classList.contains('datagrid-header-icon');
+        tooltipContentEl.classList[hasHeaderIcon ? 'add' : 'remove']('header-icon');
 
         const distance = typeof options.distance === 'number' ? options.distance : 0;
         const placeOptions = {
