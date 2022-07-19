@@ -353,6 +353,11 @@
   p {
     margin-left: 0;
     text-align: center;
+
+    &.align-text-left,
+    &.align-text-left + p {
+      text-align: left;
+    }
   }
 
   .error-message .message-text {

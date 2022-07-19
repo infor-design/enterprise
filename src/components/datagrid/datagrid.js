@@ -12662,8 +12662,11 @@ Datagrid.prototype = {
           }
         } else if (isHeaderIcon) {
           const parentColId = $(elem).parents('th').attr('data-column-id');
+          const headerText = elem.previousElementSibling.textContent;
           const iconTooltipContent = this.settings.columns[this.columnIdxById(parentColId)].headerIconTooltip;
-          tooltip.content = iconTooltipContent;
+
+          tooltip.content = xssUtils.stripHTML(iconTooltipContent);
+          tooltip.headerText = xssUtils.stripHTML(headerText);
         } else {
           // Default use wrapper content
           if (tooltip.wrapper.querySelector('.datagrid-expand-btn')) {
@@ -12724,6 +12727,11 @@ Datagrid.prototype = {
         }
 
         tooltip.content = contentTooltip ? tooltip.content : `<p>${tooltip.content}</p>`;
+
+        if (isHeaderIcon) {
+          const headerText = elem.previousElementSibling.textContent;
+          tooltip.content = `<p class="align-text-left text-strong">${headerText}</p>${tooltip.content}`;
+        }
         if (title || isHeaderFilter || isHeaderIcon) {
           tooltip.forced = true;
         }
