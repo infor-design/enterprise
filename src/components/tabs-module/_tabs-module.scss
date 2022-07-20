@@ -59,7 +59,7 @@
   }
 
   .tab-list-container {
-    position: relative;
+    position: absolute;
     width: calc(100% - 1px);
   }
 
@@ -85,6 +85,7 @@
 
       + .toolbar {
         border-left: 1px solid $module-tabs-x-border-color;
+        float: right;
         text-align: right;
         width: calc(30% - 1px); // 1px border
       }
@@ -316,15 +317,16 @@
       }
     }
 
-    .more {
-      height: 34px;
+    .more,
+    .more .btn-actions {
+      height: 32px;
     }
 
     [class^='btn'],
     .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary) {
       background-color: transparent;
       color: $module-tabs-inactive-text-color;
-      height: 32px;
+      height: 34px;
 
       &:not(.btn-menu) {
         border-color: transparent;
@@ -418,7 +420,6 @@
     &.active {
       .searchfield {
         background-color: $searchfield-toolbar-bg-color;
-        border-bottom-color: rgba($searchfield-moduletabs-border-color, 0.4);
       }
 
       .btn {
@@ -673,6 +674,26 @@
     }
   }
 
+  .toolbar-searchfield-wrapper.has-categories {
+    .searchfield-category-button {
+      padding-right: 5px;
+    }
+
+    .searchfield {
+      border-bottom: 0;
+      border-bottom-left-radius: 0;
+      border-left: 1px solid $searchfield-toolbar-border-color;
+      border-right: 0;
+      border-top: 0;
+      border-top-left-radius: 0;
+
+      + .close {
+        top: 0;
+        transform: translateY(50%);
+      }
+    }
+  }
+
   // Overrides soho-personalization <style> injection
   // https://github.com/infor-design/enterprise/issues/6207
   &.is-personalizable {
@@ -825,17 +846,5 @@ html[dir='rtl'] {
     top: 50% !important;
     transform: translateY(-50%);
     width: 24px;
-  }
-}
-
-html[class*='theme-new-'] .tab-container > .toolbar > .buttonset {
-  > .searchfield-wrapper.toolbar-searchfield-wrapper > .btn-icon.close {
-    height: 28px;
-    margin-top: -1px;
-    width: 28px;
-
-    .icon.close {
-      margin-top: 1px;
-    }
   }
 }

@@ -319,8 +319,7 @@ $toolbarsearchfield-category-empty-width: 51px;
       &.toolbar-searchfield-wrapper {
         &.has-categories {
           .searchfield {
-            border-bottom-color: rgba($searchfield-border-color, 1);
-            box-shadow: $focus-box-shadow-input;
+            border-left: 1px solid;
 
             &:focus {
               border-color: $header-searchfield-input-border-color;
@@ -340,7 +339,7 @@ $toolbarsearchfield-category-empty-width: 51px;
   }
 
   &.has-text {
-    width: $toolbarsearchfield-filled-out-width;
+    width: $toolbarsearchfield-filled-out-width - 10;
 
     .icon {
       &.close {
@@ -348,6 +347,18 @@ $toolbarsearchfield-category-empty-width: 51px;
         height: 18px;
         top: 10px;
       }
+    }
+
+    .btn-icon {
+      .icon {
+        &.close {
+          top: 0;
+        }
+      }
+    }
+
+    button.close {
+      top: 7px;
     }
 
     &.has-custom-collapse-size {
@@ -414,7 +425,10 @@ $toolbarsearchfield-category-empty-width: 51px;
 
     &.searchfield-wrapper.show-category {
       .searchfield {
-        border-left-color: $header-searchfield-input-border-color;
+        border-left-color: $header-searchfield-input-border-color !important;
+        border-bottom: 0;
+        border-top: 0;
+        border-right: 0;
       }
     }
   }
@@ -598,6 +612,15 @@ $toolbarsearchfield-category-empty-width: 51px;
     }
 
     .searchfield-category-button {
+      border-bottom-left-radius: 2px;
+      border-top-left-radius: 2px;
+      border-top: 0;
+      border-bottom: 0;
+
+      .category {
+        color: $header-flex-toolbar-input-searchfield-color;
+      }
+
       &.btn {
         background-color: $searchfield-header-bg-color;
         border-bottom-color: rgba($searchfield-header-border-color, 0.7);
@@ -621,7 +644,7 @@ $toolbarsearchfield-category-empty-width: 51px;
       }
 
       .icon {
-        color: rgba($searchfield-header-icon-color, 0.7);
+        color: $searchfield-header-icon-color;
       }
     }
 
@@ -1021,13 +1044,17 @@ html[dir='rtl'] {
     top: 50%;
     transform: translateY(-50%);
 
+    @media (min-width: $breakpoint-tablet-reduced) {
+      right: 15%;
+    }
+
     svg.close {
       display: block;
       top: 0 !important;
     }
   }
 
-  @media (max-width: $breakpoint-phone-to-tablet - 1) {
+  @media (max-width: ($breakpoint-phone-to-tablet - 1)) {
     right: auto;
     width: 100% !important;
 
@@ -1037,6 +1064,16 @@ html[dir='rtl'] {
 
     button.close:not(.is-empty) {
       right: 32px;
+    }
+  }
+
+  @media (min-width: $breakpoint-tablet-reduced) {
+    &.has-go-button.has-text {
+      width: auto !important;
+
+      .searchfield {
+        width: auto !important;
+      }
     }
   }
 }

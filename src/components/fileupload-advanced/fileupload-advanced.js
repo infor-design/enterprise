@@ -461,6 +461,10 @@ FileUploadAdvanced.prototype = {
          */
         self.element.triggerHandler('beforefileremove', [file]);
 
+        if (container.hasClass('completed')) {
+          self.totalCompleted--;
+        }
+
         container.remove();
 
         // TODO: server call for removing data

@@ -65,4 +65,19 @@ describe('DatePicker Aria', () => {
       done();
     }, 100);
   });
+
+  it('should trigger monthrendered event', (done) => {
+    const field = document.querySelector('#date-field-normal');
+    field.value = '11/06/2018';
+
+    const spyEvent = spyOnEvent('#date-field-normal', 'monthrendered');
+    datepickerAPI.openCalendar();
+    setTimeout(() => {
+      const nextMonth = document.querySelector('#monthview-popup .calendar-toolbar button.next');
+      nextMonth.click();
+
+      expect(spyEvent).toHaveBeenTriggered();
+      done();
+    }, 100);
+  });
 });

@@ -240,7 +240,7 @@ describe('Modal overlay opacity tests', () => {
     await browser.driver.sleep(config.sleep);
     const overlayEl = await element(by.css('.overlay'));
 
-    expect(await overlayEl.getCssValue('opacity')).toBe('0.3');
+    expect(await overlayEl.getCssValue('background')).toContain('rgba(0, 0, 0, 0.3)');
   });
 });
 

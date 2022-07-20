@@ -72,6 +72,10 @@ body.is-open-touch {
 
       right: 0;
     }
+
+    .page-container:last-child {
+      height: calc(100% - 60px);
+    }
   }
 }
 
@@ -531,6 +535,13 @@ body.is-open-touch {
     .searchfield-wrapper + .accordion {
       min-height: auto;
     }
+  }
+}
+
+// Mobile viewport 767px below
+@include respond-to(phone) {
+  .application-menu {
+    z-index: 7001;
   }
 }
 

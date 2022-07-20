@@ -1,156 +1,103 @@
-const { checkClassNameValue } = require('../../helpers/e2e-utils.js');
+/* eslint-disable compat/compat */
+const { getConfig } = require('../../helpers/e2e-utils.js');
 
 describe('Bubble Puppeteer Tests', () => {
-  describe('Bubble Disable Selection  State Tests', () => {
-    const url = 'http://localhost:4000/components/bubble/example-disable-selection-state.html';
+  const baseUrl = 'http://localhost:4000/components/bubble';
+
+  const months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+
+  describe('Index', () => {
+    const url = `${baseUrl}/example-index?theme=classic&layout=nofrills`;
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('should not visual regress', async () => {
+      await page.waitForFunction('document.querySelectorAll("div[role=main]").length > 0');
+      const img = await page.screenshot();
+      const sConfig = getConfig('bubble');
+      expect(img).toMatchImageSnapshot(sConfig);
+    });
+
+    it('should be able to set id/automation id', async () => {
+      const checkAttr = (select, val1, val2) => page.$eval(select, element => [element.id, element.getAttribute('data-automation-id')])
+        .then((id) => {
+          expect(id[0]).toEqual(val1);
+          expect(id[1]).toEqual(val2);
+        });
+
+      const promises = [];
+
+      months.forEach((month) => {
+        promises.push(checkAttr(`#bubble-s1-${month}-dot`, `bubble-s1-${month}-dot`, `automation-id-bubble-s1-${month}-dot`));
+        promises.push(checkAttr(`#bubble-s2-${month}-dot`, `bubble-s2-${month}-dot`, `automation-id-bubble-s2-${month}-dot`));
+      });
+
+      await checkAttr('#bubble-series1-line', 'bubble-series1-line', 'automation-id-bubble-series1-line');
+      await checkAttr('#bubble-series2-line', 'bubble-series2-line', 'automation-id-bubble-series2-line');
+
+      await checkAttr('#bubble-series1-legend-0', 'bubble-series1-legend-0', 'automation-id-bubble-series1-legend-0');
+      await checkAttr('#bubble-series2-legend-1', 'bubble-series2-legend-1', 'automation-id-bubble-series2-legend-1');
+
+      await Promise.all(promises);
+    });
+  });
+
+  describe('Disable Selection  State Tests', () => {
+    const url = `${baseUrl}/example-disable-selection-state.html`;
 
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
     it('should not able to tab through the legends', async () => {
-      // eslint-disable-next-line
       const legendTabIndex = await page.$$eval('.chart-legend-item', e => e.map(el => el.tabIndex));
       expect(legendTabIndex).toEqual([-1, -1]); // These are the values of tabindex of all the legends.
     });
 
     it('should not select line group on click', async () => {
       const elHandleArray = await page.$$('.line-group');
-      const isFailed = [];
-      let index = 0;
       const lineA = '#bubble-example > svg > g > g:nth-child(3)';
       const lineB = '#bubble-example > svg > g > g:nth-child(4)';
-      // eslint-disable-next-line no-restricted-syntax
-      for await (const eL of elHandleArray) {
-        let series = '';
-        await eL.click();
-        switch (index) {
-          case 0: // Series 1
-            series = '1';
-            break;
-          case 1: // Series 2
-            series = '2';
-            break;
-          default:
-            console.warn('line-group element not found');
-        }
-        await page.click(`#bubble-s${series}-jan-dot`);
-        await page.waitForTimeout(100);
-        isFailed.push(await checkClassNameValue(lineA, 'line-group'));
-        isFailed.push(await checkClassNameValue(lineB, 'line-group'));
-        await page.click(`#bubble-s${series}-jan-dot`);
-        await page.waitForTimeout(100);
 
-        await page.click(`#bubble-s${series}-feb-dot`);
-        await page.waitForTimeout(100);
-        isFailed.push(await checkClassNameValue(lineA, 'line-group'));
-        isFailed.push(await checkClassNameValue(lineB, 'line-group'));
-        await page.click(`#bubble-s${series}-feb-dot`);
-        await page.waitForTimeout(100);
+      const promises = [];
 
-        await page.click(`#bubble-s${series}-mar-dot`);
-        await page.waitForTimeout(100);
-        isFailed.push(await checkClassNameValue(lineA, 'line-group'));
-        isFailed.push(await checkClassNameValue(lineB, 'line-group'));
-        await page.click(`#bubble-s${series}-mar-dot`);
-        await page.waitForTimeout(100);
+      const clickEl = (month, el, index) => el.click().then(() => page.click(`#bubble-s${index + 1}-${month}-dot`)).then(async () => {
+        const aClass = await page.$eval(lineA, element => element.getAttribute('class'));
+        const bClass = await page.$eval(lineB, element => element.getAttribute('class'));
+        expect(aClass).not.toContain('is-selected');
+        expect(bClass).not.toContain('is-selected');
+      }).then(() => page.click(`#bubble-s${index + 1}-${month}-dot`));
 
-        await page.click(`#bubble-s${series}-apr-dot`);
-        await page.waitForTimeout(100);
-        isFailed.push(await checkClassNameValue(lineA, 'line-group'));
-        isFailed.push(await checkClassNameValue(lineB, 'line-group'));
-        await page.click(`#bubble-s${series}-apr-dot`);
-        await page.waitForTimeout(100);
+      elHandleArray.forEach((el, index) => {
+        months.forEach((month) => {
+          promises.push(clickEl(month, el, index));
+        });
+      });
 
-        await page.click(`#bubble-s${series}-may-dot`);
-        await page.waitForTimeout(100);
-        isFailed.push(await checkClassNameValue(lineA, 'line-group'));
-        isFailed.push(await checkClassNameValue(lineB, 'line-group'));
-        await page.click(`#bubble-s${series}-may-dot`);
-        await page.waitForTimeout(100);
-
-        await page.click(`#bubble-s${series}-jun-dot`);
-        await page.waitForTimeout(100);
-        isFailed.push(await checkClassNameValue(lineA, 'line-group'));
-        isFailed.push(await checkClassNameValue(lineB, 'line-group'));
-        await page.click(`#bubble-s${series}-jun-dot`);
-        await page.waitForTimeout(100);
-
-        await page.click(`#bubble-s${series}-jul-dot`);
-        await page.waitForTimeout(100);
-        isFailed.push(await checkClassNameValue(lineA, 'line-group'));
-        isFailed.push(await checkClassNameValue(lineB, 'line-group'));
-        await page.click(`#bubble-s${series}-jul-dot`);
-        await page.waitForTimeout(100);
-
-        await page.click(`#bubble-s${series}-aug-dot`);
-        await page.waitForTimeout(100);
-        isFailed.push(await checkClassNameValue(lineA, 'line-group'));
-        isFailed.push(await checkClassNameValue(lineB, 'line-group'));
-        await page.click(`#bubble-s${series}-aug-dot`);
-        await page.waitForTimeout(100);
-
-        await page.click(`#bubble-s${series}-sep-dot`);
-        await page.waitForTimeout(100);
-        isFailed.push(await checkClassNameValue(lineA, 'line-group'));
-        isFailed.push(await checkClassNameValue(lineB, 'line-group'));
-        await page.click(`#bubble-s${series}-sep-dot`);
-        await page.waitForTimeout(100);
-
-        await page.click(`#bubble-s${series}-oct-dot`);
-        await page.waitForTimeout(100);
-        isFailed.push(await checkClassNameValue(lineA, 'line-group'));
-        isFailed.push(await checkClassNameValue(lineB, 'line-group'));
-        await page.click(`#bubble-s${series}-oct-dot`);
-        await page.waitForTimeout(100);
-
-        await page.click(`#bubble-s${series}-nov-dot`);
-        await page.waitForTimeout(100);
-        isFailed.push(await checkClassNameValue(lineA, 'line-group'));
-        isFailed.push(await checkClassNameValue(lineB, 'line-group'));
-        await page.click(`#bubble-s${series}-nov-dot`);
-        await page.waitForTimeout(100);
-
-        await page.click(`#bubble-s${series}-dec-dot`);
-        await page.waitForTimeout(100);
-        isFailed.push(await checkClassNameValue(lineA, 'line-group'));
-        isFailed.push(await checkClassNameValue(lineB, 'line-group'));
-        await page.click(`#bubble-s${series}-dec-dot`);
-        await page.waitForTimeout(100);
-        index += 1;
-      }
-      expect(isFailed).not.toContain(true);
-    }, 10000);
+      await Promise.all(promises);
+    });
 
     it('should not select line group on click in legends', async () => {
       const elHandleArray = await page.$$('.line-group');
-      const isFailed = [];
-      let index = 0;
       const lineA = '#bubble-example > svg > g > g:nth-child(3)';
       const lineB = '#bubble-example > svg > g > g:nth-child(4)';
-      // eslint-disable-next-line no-restricted-syntax
-      for await (const eL of elHandleArray) {
-        let series = '';
-        await eL.click();
-        switch (index) {
-          case 0: // Series 1
-            series = '1';
-            break;
-          case 1: // Series 2
-            series = '2';
-            break;
-          default:
-            console.warn('line-group element not found');
-        }
-        await page.click(`#bubble-series${series}-legend-${index}`);
-        await page.waitForTimeout(200);
-        isFailed.push(await checkClassNameValue(lineA, 'line-group'));
-        isFailed.push(await checkClassNameValue(lineB, 'line-group'));
-        await page.click(`#bubble-series${series}-legend-${index}`);
-        await page.waitForTimeout(200);
-        index += 1;
-      }
-      expect(isFailed).not.toContain(true);
+
+      const promises = [];
+
+      const clickEl = (el, index) => el.click().then(() => page.click(`#bubble-series${index + 1}-legend-${index}`)).then(async () => {
+        const aClass = await page.$eval(lineA, element => element.getAttribute('class'));
+        const bClass = await page.$eval(lineB, element => element.getAttribute('class'));
+        expect(aClass).not.toContain('is-selected');
+        expect(bClass).not.toContain('is-selected');
+      }).then(() => page.click(`#bubble-series${index + 1}-legend-${index}`));
+
+      elHandleArray.forEach((el, index) => {
+        promises.push(clickEl(el, index));
+      });
+
+      await Promise.all(promises);
     });
   });
 });

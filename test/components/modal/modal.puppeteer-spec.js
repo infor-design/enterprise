@@ -199,10 +199,8 @@ describe('Modal Puppeteer Tests', () => {
         .then(el => expect(el).toBeTruthy());
 
       // check if icon exist in title of modal
-    const modalTitle = await page.$eval('#my-id-title', element => element.innerHTML);
-    expect(modalTitle).toContain('icon-info');
+      const modalTitle = await page.$eval('#my-id-title', element => element.innerHTML);
+      expect(modalTitle).toContain('icon-info');
     });
-
-    
   });
 });

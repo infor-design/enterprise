@@ -1,7 +1,8 @@
-const { checkClassNameValue } = require('../../helpers/e2e-utils.js');
-
+/* eslint-disable compat/compat */
 describe('Area Puppeteer Tests', () => {
   const baseUrl = 'http://localhost:4000/components/area';
+  const months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun'];
+  const comps = ['a', 'b', 'c'];
 
   describe('Index Tests', () => {
     const url = `${baseUrl}/example-index`;
@@ -11,71 +12,20 @@ describe('Area Puppeteer Tests', () => {
     });
 
     it('should be able to set id/automation id', async () => {
-      // Dot A's (January - June)
-      const janDotA = await page.waitForSelector('#area-a-jan-dot', { visible: true });
-      const febDotA = await page.waitForSelector('#area-a-feb-dot', { visible: true });
-      const marDotA = await page.waitForSelector('#area-a-mar-dot', { visible: true });
-      const aprDotA = await page.waitForSelector('#area-a-apr-dot', { visible: true });
-      const mayDotA = await page.waitForSelector('#area-a-may-dot', { visible: true });
-      const junDotA = await page.waitForSelector('#area-a-jun-dot', { visible: true });
+      const promises = [];
 
-      // Dot B's
-      const janDotB = await page.waitForSelector('#area-b-jan-dot', { visible: true });
-      const febDotB = await page.waitForSelector('#area-b-feb-dot', { visible: true });
-      const marDotB = await page.waitForSelector('#area-b-mar-dot', { visible: true });
-      const aprDotB = await page.waitForSelector('#area-b-apr-dot', { visible: true });
-      const mayDotB = await page.waitForSelector('#area-b-may-dot', { visible: true });
-      const junDotB = await page.waitForSelector('#area-b-jun-dot', { visible: true });
+      const checkAttr = (comp, month) => page.waitForSelector(`#area-${comp}-${month}-dot`, { visible: true })
+        .then(elHandle => elHandle.evaluate(el => [el.getAttribute('id'), el.getAttribute('data-automation-id')]))
+        .then((idArr) => {
+          expect(idArr[0]).toEqual(`area-${comp}-${month}-dot`);
+          expect(idArr[1]).toEqual(`automation-id-area-${comp}-${month}-dot`);
+        });
 
-      // Dot C's
-      const janDotC = await page.waitForSelector('#area-c-jan-dot', { visible: true });
-      const febDotC = await page.waitForSelector('#area-c-feb-dot', { visible: true });
-      const marDotC = await page.waitForSelector('#area-c-mar-dot', { visible: true });
-      const aprDotC = await page.waitForSelector('#area-c-apr-dot', { visible: true });
-      const mayDotC = await page.waitForSelector('#area-c-may-dot', { visible: true });
-      const junDotC = await page.waitForSelector('#area-c-jun-dot', { visible: true });
+      months.forEach((month) => {
+        comps.forEach(comp => promises.push(checkAttr(comp, month)));
+      });
 
-      // A
-      expect(await janDotA.evaluate(el => el.getAttribute('id'))).toContain('area-a-jan-dot');
-      expect(await janDotA.evaluate(el => el.getAttribute('data-automation-id'))).toContain('automation-id-area-a-jan-dot');
-      expect(await febDotA.evaluate(el => el.getAttribute('id'))).toContain('area-a-feb-dot');
-      expect(await febDotA.evaluate(el => el.getAttribute('data-automation-id'))).toContain('automation-id-area-a-feb-dot');
-      expect(await marDotA.evaluate(el => el.getAttribute('id'))).toContain('area-a-mar-dot');
-      expect(await marDotA.evaluate(el => el.getAttribute('data-automation-id'))).toContain('automation-id-area-a-mar-dot');
-      expect(await aprDotA.evaluate(el => el.getAttribute('id'))).toContain('area-a-apr-dot');
-      expect(await aprDotA.evaluate(el => el.getAttribute('data-automation-id'))).toContain('automation-id-area-a-apr-dot');
-      expect(await mayDotA.evaluate(el => el.getAttribute('id'))).toContain('area-a-may-dot');
-      expect(await mayDotA.evaluate(el => el.getAttribute('data-automation-id'))).toContain('automation-id-area-a-may-dot');
-      expect(await junDotA.evaluate(el => el.getAttribute('id'))).toContain('area-a-jun-dot');
-      expect(await junDotA.evaluate(el => el.getAttribute('data-automation-id'))).toContain('automation-id-area-a-jun-dot');
-
-      // B
-      expect(await janDotB.evaluate(el => el.getAttribute('id'))).toContain('area-b-jan-dot');
-      expect(await janDotB.evaluate(el => el.getAttribute('data-automation-id'))).toContain('automation-id-area-b-jan-dot');
-      expect(await febDotB.evaluate(el => el.getAttribute('id'))).toContain('area-b-feb-dot');
-      expect(await febDotB.evaluate(el => el.getAttribute('data-automation-id'))).toContain('automation-id-area-b-feb-dot');
-      expect(await marDotB.evaluate(el => el.getAttribute('id'))).toContain('area-b-mar-dot');
-      expect(await marDotB.evaluate(el => el.getAttribute('data-automation-id'))).toContain('automation-id-area-b-mar-dot');
-      expect(await aprDotB.evaluate(el => el.getAttribute('id'))).toContain('area-b-apr-dot');
-      expect(await aprDotB.evaluate(el => el.getAttribute('data-automation-id'))).toContain('automation-id-area-b-apr-dot');
-      expect(await mayDotB.evaluate(el => el.getAttribute('id'))).toContain('area-b-may-dot');
-      expect(await mayDotB.evaluate(el => el.getAttribute('data-automation-id'))).toContain('automation-id-area-b-may-dot');
-      expect(await junDotB.evaluate(el => el.getAttribute('id'))).toContain('area-b-jun-dot');
-      expect(await junDotB.evaluate(el => el.getAttribute('data-automation-id'))).toContain('automation-id-area-b-jun-dot');
-
-      // C
-      expect(await janDotC.evaluate(el => el.getAttribute('id'))).toContain('area-c-jan-dot');
-      expect(await janDotC.evaluate(el => el.getAttribute('data-automation-id'))).toContain('automation-id-area-c-jan-dot');
-      expect(await febDotC.evaluate(el => el.getAttribute('id'))).toContain('area-c-feb-dot');
-      expect(await febDotC.evaluate(el => el.getAttribute('data-automation-id'))).toContain('automation-id-area-c-feb-dot');
-      expect(await marDotC.evaluate(el => el.getAttribute('id'))).toContain('area-c-mar-dot');
-      expect(await marDotC.evaluate(el => el.getAttribute('data-automation-id'))).toContain('automation-id-area-c-mar-dot');
-      expect(await aprDotC.evaluate(el => el.getAttribute('id'))).toContain('area-c-apr-dot');
-      expect(await aprDotC.evaluate(el => el.getAttribute('data-automation-id'))).toContain('automation-id-area-c-apr-dot');
-      expect(await mayDotC.evaluate(el => el.getAttribute('id'))).toContain('area-c-may-dot');
-      expect(await mayDotC.evaluate(el => el.getAttribute('data-automation-id'))).toContain('automation-id-area-c-may-dot');
-      expect(await junDotC.evaluate(el => el.getAttribute('id'))).toContain('area-c-jun-dot');
-      expect(await junDotC.evaluate(el => el.getAttribute('data-automation-id'))).toContain('automation-id-area-c-jun-dot');
+      await Promise.all(promises);
     });
   });
 
@@ -110,114 +60,52 @@ describe('Area Puppeteer Tests', () => {
 
     it('should not select line group on click', async () => {
       const elHandleArray = await page.$$('.line-group');
-      const isFailed = [];
-      let index = 0;
       const lineA = '#area-example > svg > g > g:nth-child(3)';
       const lineB = '#area-example > svg > g > g:nth-child(4)';
       const lineC = '#area-example > svg > g > g:nth-child(5)';
-      // eslint-disable-next-line no-restricted-syntax
-      for await (const eL of elHandleArray) {
-        let comp = '';
-        await eL.click();
-        switch (index) {
-          case 0: // Line A
-            comp = 'a';
-            break;
-          case 1: // Line B
-            comp = 'b';
-            break;
-          case 2: // Line C
-            comp = 'c';
-            break;
-          default:
-            console.warn('line-group element not found');
-        }
-        await page.click(`#area-${comp}-jan-dot`);
-        await page.waitForTimeout(200);
-        isFailed.push(await checkClassNameValue(lineA, 'line-group'));
-        isFailed.push(await checkClassNameValue(lineB, 'line-group'));
-        isFailed.push(await checkClassNameValue(lineC, 'line-group'));
-        await page.click(`#area-${comp}-jan-dot`);
-        await page.waitForTimeout(200);
 
-        await page.click(`#area-${comp}-feb-dot`);
-        await page.waitForTimeout(200);
-        isFailed.push(await checkClassNameValue(lineA, 'line-group'));
-        isFailed.push(await checkClassNameValue(lineB, 'line-group'));
-        isFailed.push(await checkClassNameValue(lineC, 'line-group'));
-        await page.click(`#area-${comp}-feb-dot`);
-        await page.waitForTimeout(200);
+      const promises = [];
 
-        await page.click(`#area-${comp}-mar-dot`);
-        await page.waitForTimeout(200);
-        isFailed.push(await checkClassNameValue(lineA, 'line-group'));
-        isFailed.push(await checkClassNameValue(lineB, 'line-group'));
-        isFailed.push(await checkClassNameValue(lineC, 'line-group'));
-        await page.click(`#area-${comp}-mar-dot`);
-        await page.waitForTimeout(200);
+      const clickEl = (el, month, comp) => el.click().then(() => page.click(`#area-${comp}-${month}-dot`)).then(async () => {
+        const aClass = await page.$eval(lineA, element => element.getAttribute('class'));
+        const bClass = await page.$eval(lineB, element => element.getAttribute('class'));
+        const cClass = await page.$eval(lineC, element => element.getAttribute('class'));
+        expect(aClass).not.toContain('is-selected');
+        expect(bClass).not.toContain('is-selected');
+        expect(cClass).not.toContain('is-selected');
+      }).then(() => page.click(`#area-${comp}-${month}-dot`));
 
-        await page.click(`#area-${comp}-apr-dot`);
-        await page.waitForTimeout(200);
-        isFailed.push(await checkClassNameValue(lineA, 'line-group'));
-        isFailed.push(await checkClassNameValue(lineB, 'line-group'));
-        isFailed.push(await checkClassNameValue(lineC, 'line-group'));
-        await page.click(`#area-${comp}-apr-dot`);
-        await page.waitForTimeout(200);
+      elHandleArray.forEach((el) => {
+        months.forEach((month) => {
+          comps.forEach(comp => promises.push(clickEl(el, month, comp)));
+        });
+      });
 
-        await page.click(`#area-${comp}-may-dot`);
-        await page.waitForTimeout(200);
-        isFailed.push(await checkClassNameValue(lineA, 'line-group'));
-        isFailed.push(await checkClassNameValue(lineB, 'line-group'));
-        isFailed.push(await checkClassNameValue(lineC, 'line-group'));
-        await page.click(`#area-${comp}-may-dot`);
-        await page.waitForTimeout(200);
-
-        await page.click(`#area-${comp}-jun-dot`);
-        await page.waitForTimeout(200);
-        isFailed.push(await checkClassNameValue(lineA, 'line-group'));
-        isFailed.push(await checkClassNameValue(lineB, 'line-group'));
-        isFailed.push(await checkClassNameValue(lineC, 'line-group'));
-        await page.click(`#area-${comp}-jun-dot`);
-        await page.waitForTimeout(200);
-        index += 1;
-      }
-      expect(isFailed).not.toContain(true);
-    }, 10000);
+      await Promise.all(promises);
+    });
 
     it('should not select line group on click in legends', async () => {
       const elHandleArray = await page.$$('.line-group');
-      const isFailed = [];
-      let index = 0;
       const lineA = '#area-example > svg > g > g:nth-child(3)';
       const lineB = '#area-example > svg > g > g:nth-child(4)';
       const lineC = '#area-example > svg > g > g:nth-child(5)';
-      // eslint-disable-next-line no-restricted-syntax
-      for await (const eL of elHandleArray) {
-        let comp = '';
-        await eL.click();
-        switch (index) {
-          case 0: // Line A
-            comp = 'a';
-            break;
-          case 1: // Line B
-            comp = 'b';
-            break;
-          case 2: // Line C
-            comp = 'c';
-            break;
-          default:
-            console.warn('line-group element not found');
-        }
-        await page.click(`#area-comp-${comp}-legend-${index}`);
-        await page.waitForTimeout(200);
-        isFailed.push(await checkClassNameValue(lineA, 'line-group'));
-        isFailed.push(await checkClassNameValue(lineB, 'line-group'));
-        isFailed.push(await checkClassNameValue(lineC, 'line-group'));
-        await page.click(`#area-comp-${comp}-legend-${index}`);
-        await page.waitForTimeout(200);
-        index += 1;
-      }
-      expect(isFailed).not.toContain(true);
+
+      const promises = [];
+
+      const clickEl = (el, comp, index) => el.click().then(() => page.click(`#area-comp-${comp}-legend-${index}`)).then(async () => {
+        const aClass = await page.$eval(lineA, element => element.getAttribute('class'));
+        const bClass = await page.$eval(lineB, element => element.getAttribute('class'));
+        const cClass = await page.$eval(lineC, element => element.getAttribute('class'));
+        expect(aClass).not.toContain('is-selected');
+        expect(bClass).not.toContain('is-selected');
+        expect(cClass).not.toContain('is-selected');
+      }).then(() => page.click(`#area-comp-${comp}-legend-${index}`));
+
+      elHandleArray.forEach((el) => {
+        comps.forEach((comp, index) => promises.push(clickEl(el, comp, index)));
+      });
+
+      await Promise.all(promises);
     });
   });
 });

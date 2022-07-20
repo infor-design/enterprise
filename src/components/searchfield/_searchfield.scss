@@ -524,18 +524,6 @@ html[dir='rtl'] {
 @include respond-to(phablet) {
   .toolbar .searchfield {
     text-overflow: clip;
-
-    &::-webkit-input-placeholder {
-      color: transparent;
-    }
-
-    &::-moz-placeholder {
-      color: transparent;
-    }
-
-    &:-ms-input-placeholder {
-      color: transparent;
-    }
   }
 }
 

@@ -146,7 +146,7 @@ ApplicationMenu.prototype = {
         clearable: true,
         filterMode: this.settings.filterMode,
         source(term, done, args) {
-          done(term, self.accordion.data('accordion').toData(true, true), args);
+          done(term, self.accordion?.data('accordion')?.toData(true, true), args);
         },
         searchableTextCallback(item) {
           return item.text || item.contentText || '';
@@ -157,7 +157,7 @@ ApplicationMenu.prototype = {
         },
         clearResultsCallback() {
           if (self.searchfieldAPI && !self.searchfieldAPI.isFocused) {
-            self.accordionAPI.unfilter();
+            self.accordionAPI?.unfilter();
           }
         },
         displayResultsCallback(results, done, term) {
@@ -166,7 +166,7 @@ ApplicationMenu.prototype = {
       });
 
       this.searchfield.on(`cleared.${COMPONENT_NAME}`, () => {
-        self.accordionAPI.unfilter(null, true);
+        self.accordionAPI?.unfilter(null, true);
       });
     }
 
@@ -239,11 +239,11 @@ ApplicationMenu.prototype = {
       this.triggers.off('click.applicationmenu').on('click.applicationmenu', triggerClickHandler);
     }
 
-    $(document).on('keydown.applicationmenu', (e) => {
+    this.element.find('.searchfield').on('keydown.applicationmenu', (e) => {
       self.handleKeyDown(e);
     });
 
-    $(document).on('input.applicationmenu', () => {
+    this.element.find('.searchfield').on('input.applicationmenu', () => {
       self.handleInput();
     });
   },
@@ -254,9 +254,9 @@ ApplicationMenu.prototype = {
    */
   handleInput() {
     if (!this.element.find('.searchfield').val() && !this.element.find('.searchfield').val()?.length) {
-      this.accordionAPI.unfilter(null, true);
+      this.accordionAPI?.unfilter(null, true);
     } else {
-      this.accordionAPI.unfilter(null);
+      this.accordionAPI?.unfilter(null);
     }
 
     return true;
@@ -748,13 +748,13 @@ ApplicationMenu.prototype = {
    */
   filterResultsCallback(results, done) {
     if (!results) {
-      this.accordionAPI.unfilter();
+      this.accordionAPI?.unfilter();
       done();
       return;
     }
 
     const targets = $(results.map(item => item.element));
-    this.accordionAPI.filter(targets, true);
+    this.accordionAPI?.filter(targets, true);
 
     this.element.triggerHandler('filtered', [results]);
     done();
@@ -773,9 +773,9 @@ ApplicationMenu.prototype = {
 
     if (!val || val === '') {
       const filteredParentHeaders = this.accordion.find('.has-filtered-children');
-      this.accordionAPI.headers.removeClass('filtered has-filtered-children');
-      this.accordionAPI.collapse(filteredParentHeaders);
-      this.accordionAPI.updated();
+      this.accordionAPI?.headers.removeClass('filtered has-filtered-children');
+      this.accordionAPI?.collapse(filteredParentHeaders);
+      this.accordionAPI?.updated();
       this.element.triggerHandler('filtered', [[]]);
     }
   },
@@ -854,11 +854,11 @@ ApplicationMenu.prototype = {
 
     this.element.find('.application-menu-toolbar').off(`click.${COMPONENT_NAME}`);
 
-    if (this.accordionAPI && typeof this.accordionAPI.destroy === 'function') {
+    if (this.accordionAPI && typeof this.accordionAPI?.destroy === 'function') {
       if (this.isFiltered) {
-        this.accordionAPI.collapse();
+        this.accordionAPI?.collapse();
       }
-      this.accordionAPI.destroy();
+      this.accordionAPI?.destroy();
     }
 
     if (this.switcherPanel) {

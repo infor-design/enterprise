@@ -181,7 +181,6 @@ a.is-personalizable svg.ripple-effect {
 .header.is-personalizable button:not(:disabled) .icon,
 .header.is-personalizable button:not(:disabled) .app-header.icon > span {
   color: ${colors.contrast};
-  opacity: .8;
 }
 
 .header.is-personalizable .header.is-personalizable button:not(:disabled) .app-header.icon > span {
@@ -339,7 +338,7 @@ html[dir='rtl'] .scrollable-flex-header.is-personalizable .breadcrumb.truncated:
 }
 
 .module-tabs.is-personalizable [class^="btn"] {
-  background-color: transparent !important;
+  background-color: transparent;
   color: ${colors.contrast} !important;
 }
 
@@ -361,7 +360,7 @@ html[dir='rtl'] .scrollable-flex-header.is-personalizable .breadcrumb.truncated:
 }
 
 .module-tabs.is-personalizable .toolbar-searchfield-wrapper > .searchfield {
-  color: ${colors.contrast} !important;
+  color: ${colors.contrast};
 }
 
 .module-tabs.is-personalizable .toolbar-searchfield-wrapper > svg {

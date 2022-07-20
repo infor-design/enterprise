@@ -163,7 +163,7 @@ $popupmenu-heading-color: $ids-color-palette-slate-40;
 $popupmenu-bg-color: $ids-color-palette-slate-70;
 $popupmenu-border-color: $ids-color-palette-slate-50;
 $popupmenu-box-shadow: 0 2px 5px $drop-shadow-depth;
-$popupmenu-checked-color: $ids-color-brand-primary-base;
+$popupmenu-checked-color: $ids-color-palette-white;
 $popupmenu-hover-color: $ids-color-palette-slate-50;
 $popupmenu-checked-color-inverse: $ids-color-brand-primary-base;
 
@@ -732,7 +732,7 @@ $header-breadcrumb-border-color: $ids-color-palette-slate-50;
 // Module Tabs
 $module-tabs-bg-color: $header-bg-color;
 $module-tabs-x-border-color: $ids-color-palette-slate-80;
-$module-tabs-y-border-color: $header-border-color;
+$module-tabs-y-border-color: $ids-color-palette-slate-100;
 $module-tabs-inactive-bg-color: $header-border-color;
 $module-tabs-active-bg-color: $ids-color-palette-slate-60;
 $module-tabs-hover-bg-color: $ids-color-palette-slate-60;

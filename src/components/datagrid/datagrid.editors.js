@@ -123,12 +123,14 @@ const editors = {
       return this.input.val();
     };
 
-    this.focus = function () {
-      this.input.focus();
-      if (api.settings.selectOnEdit) {
-        this.input.select();
-      }
-    };
+    if (!column.inlineEditor) {
+      this.focus = function () {
+        this.input.focus();
+        if (api.settings.selectOnEdit) {
+          this.input.select();
+        }
+      };
+    }
 
     this.destroy = function () {
       if (column.inlineEditor) {
