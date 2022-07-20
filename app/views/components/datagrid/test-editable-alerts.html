@@ -33,7 +33,7 @@
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly});
       columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, href: 'http://www.google.com' });
       columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity'});
-      columns.push({ id: 'alert', name: 'Alert w Text', field: 'quantity', formatter: Formatters.Alert, editor: Editors.Input, ranges: [{'min': 0, 'max': 8, 'classes': 'info', 'text': ' Alert Text'}, {'min': 9, 'max': 1000, 'classes': 'error', 'text': ' Alert Text'}]});
+      columns.push({ id: 'alert', name: 'Alert w Text', field: 'quantity', formatter: Formatters.Alert, editor: Editors.Input, ranges: [{'min': 0, 'max': 8, 'classes': 'info', 'text': 'Alert Text'}, {'min': 9, 'max': 1000, 'classes': 'error', 'text': 'Alert Text'}]});
       columns.push({ id: 'price', name: 'Alert Choose Header', field: 'price', formatter: Formatters.Alert, editor: Editors.Input, ranges: [{'min': 0, 'max': 150, 'classes': 'success', text: ' '}, {'min': 151, 'max': 9999, 'classes': 'error', text: ' '}]});
       columns.push({ id: 'price2', name: 'Alert', field: 'price', align: 'center', formatter: Formatters.Alert, editor: Editors.Input, ranges: [{'min': 0, 'max': 150, 'classes': 'success', text: ' '}, {'min': 151, 'max': 9999, 'classes': 'alert', text: ' '}]});
       columns.push({ id: 'quantity', name: 'Badge', field: 'quantity', align: 'center', formatter: Formatters.Badge, editor: Editors.Input, sortable: false, ranges: [{'min': 0, 'max': 2, 'classes': 'error'}, {'value': 41, 'classes': 'good'}]});
