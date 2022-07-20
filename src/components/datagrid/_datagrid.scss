@@ -2003,7 +2003,7 @@ $datagrid-small-row-height: 25px;
 
     .datagrid-trigger-cell.has-editor:not(.is-readonly):hover,
     .datagrid-trigger-cell.has-editor:not(.is-readonly):focus {
-      .icon {
+      .icon:not(.datagrid-alert-icon) {
         &.icon-error {
           margin-left: -45px !important;
         }
@@ -2246,6 +2246,7 @@ $datagrid-small-row-height: 25px;
       line-height: 25px;
       margin-right: -8px;
       padding-left: 8px;
+      position: relative;
       text-align: left;
       width: inherit;
     }
@@ -4055,13 +4056,17 @@ td .btn-actions {
     }
   }
 
-  .icon {
+  .icon:not(.datagrid-alert-icon) {
     @include trigger-icon-background($datagrid-cell-bg-color);
 
     color: $trigger-icon-fill-color;
     left: 3px;
     top: 4px;
     visibility: hidden;
+
+    &.datagrid-alert-icon {
+      visibility: visible;
+    }
 
     &.icon-search-list {
       left: -1px;
@@ -4144,7 +4149,9 @@ td .btn-actions {
       .icon-error,
       .icon-info,
       .icon-alert {
-        margin-left: -48px !important;
+        &:not(.datagrid-alert-icon) {
+          margin-left: -48px !important;
+        }
       }
     }
   }

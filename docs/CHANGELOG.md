@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.62.4 Fixes
+
+- `[Datagrid]` Fixed the datagrid alert icon was not visible and the trigger cell moves when hovering over when editor has trigger icon. ([#6663](https://github.com/infor-design/enterprise/issues/6663))
+
 ## v4.62.3 Fixes
 
 - `[Personalization]` Re-Fixed bug where the dark mode header color was not correct in the tokens and caused the personalization dropdown to be incorrect, classic theme was missed. ([#6446](https://github.com/infor-design/enterprise/issues/6446))
