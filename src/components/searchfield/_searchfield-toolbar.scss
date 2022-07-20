@@ -202,6 +202,17 @@ $toolbarsearchfield-category-empty-width: 51px;
     .searchfield-category-button {
       border: none;
     }
+
+    &.active {
+      .searchfield,
+      .searchfield-category-button {
+        border: 1px solid $header-searchfield-input-border-color;
+      }
+
+      .searchfield-category-button {
+        border-right: 0;
+      }
+    }
   }
 
   &.is-open {
@@ -281,7 +292,6 @@ $toolbarsearchfield-category-empty-width: 51px;
       .searchfield,
       .btn {
         background-color: rgba($searchfield-alt-bg-color, 1);
-        border-bottom-color: rgba($searchfield-alt-border-color, 1);
       }
 
       .searchfield {
@@ -295,6 +305,12 @@ $toolbarsearchfield-category-empty-width: 51px;
 
         &:-ms-input-placeholder {
           color: $searchfield-lighter-placeholder-text-color;
+        }
+      }
+
+      &.active.has-focus.is-hovered {
+        .searchfield:focus {
+          border: 1px solid $header-searchfield-input-border-hover-color;
         }
       }
     }
@@ -332,7 +348,7 @@ $toolbarsearchfield-category-empty-width: 51px;
       }
 
       &.toolbar-searchfield-wrapper {
-        &.has-categories {
+        &.has-categories:not(.alternate) {
           .searchfield {
             border-left: 1px solid;
 
