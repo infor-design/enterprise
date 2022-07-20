@@ -4073,7 +4073,7 @@ td .btn-actions {
     }
   }
 
-  .icon {
+  .icon:not(.datagrid-alert-icon) {
     @include trigger-icon-background($datagrid-cell-bg-color);
 
     color: $trigger-icon-fill-color;
