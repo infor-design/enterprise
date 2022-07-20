@@ -10,6 +10,7 @@
 
 ## v4.66.0 Fixes
 
+- `[Datagrid]` Fixed the datagrid alert icon was not visible and the trigger cell moves when hovering over when editor has trigger icon. ([#6663](https://github.com/infor-design/enterprise/issues/6663))
 - `[Datagrid]` Fixed redundant aria-describedby attributes at cells. ([#6530](https://github.com/infor-design/enterprise/issues/6530))
 - `[Datagrid]` Updated filter phrases for datepicker. ([#6587](https://github.com/infor-design/enterprise/issues/6587))
 - `[Datagrid]` Fixed the overflowing of the multiselect dropdown on the page and pushes the container near the screen's edge. ([#6580](https://github.com/infor-design/enterprise/issues/6580))

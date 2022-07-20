@@ -1366,7 +1366,7 @@ $datagrid-small-row-height: 25px;
     }
 
     .datagrid-trigger-cell {
-      .icon {
+      .icon:not(.datagrid-alert-icon) {
         left: 3px;
         top: 5px;
 
@@ -1541,7 +1541,7 @@ $datagrid-small-row-height: 25px;
             }
           }
 
-          .icon {
+          .icon:not(.datagrid-alert-icon) {
             height: 16px;
             top: 4px;
 
@@ -2014,7 +2014,7 @@ $datagrid-small-row-height: 25px;
 
     .datagrid-trigger-cell.has-editor:not(.is-readonly):hover,
     .datagrid-trigger-cell.has-editor:not(.is-readonly):focus {
-      .icon {
+      .icon:not(.datagrid-alert-icon) {
         &.icon-error {
           margin-left: -45px !important;
         }
@@ -2262,6 +2262,7 @@ $datagrid-small-row-height: 25px;
       line-height: 25px;
       margin-right: -8px;
       padding-left: 8px;
+      position: relative;
       text-align: left;
       width: inherit;
     }
@@ -4080,6 +4081,10 @@ td .btn-actions {
     top: 4px;
     visibility: hidden;
 
+    &.datagrid-alert-icon {
+      visibility: visible;
+    }
+
     &.icon-search-list {
       left: -1px;
       top: 4px;
@@ -4161,7 +4166,9 @@ td .btn-actions {
       .icon-error,
       .icon-info,
       .icon-alert {
+        &:not(.datagrid-alert-icon) {
         margin-left: -48px !important;
+        }
       }
     }
   }
