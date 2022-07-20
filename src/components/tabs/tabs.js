@@ -2763,6 +2763,7 @@ Tabs.prototype = {
     if (hasTargetPanel) {
       targetPanel.removeData().empty();
       targetPanel.removeData();
+      targetPanel.remove();
     }
 
     const menuItem = targetAnchor.data('moremenu-link');
