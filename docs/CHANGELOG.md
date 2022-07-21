@@ -10,7 +10,9 @@
 
 ## v4.66.0 Fixes
 
+- `[Datagrid]` Fixed the datagrid alert icon was not visible and the trigger cell moves when hovering over when editor has trigger icon. ([#6663](https://github.com/infor-design/enterprise/issues/6663))
 - `[Datagrid]` Fixed redundant aria-describedby attributes at cells. ([#6530](https://github.com/infor-design/enterprise/issues/6530))
+- `[Datagrid]` Fixed on edit outline in textarea not filling the entire cell. ([#6588](https://github.com/infor-design/enterprise/issues/6588))
 - `[Datagrid]` Updated filter phrases for datepicker. ([#6587](https://github.com/infor-design/enterprise/issues/6587))
 - `[Datagrid]` Fixed the overflowing of the multiselect dropdown on the page and pushes the container near the screen's edge. ([#6580](https://github.com/infor-design/enterprise/issues/6580))
 - `[Datagrid]` Fixed unselectRow on treegrid sending rowData incorrectly. ([#6548](https://github.com/infor-design/enterprise/issues/6548))
@@ -23,14 +25,11 @@
 - `[Datagrid]` Fixed the overflowing of the multiselect dropdown on the page and pushes the container near the screen's edge. ([#6580](https://github.com/infor-design/enterprise/issues/6580))
 - `[Datepicker]` Trigger change event when set Today is activated twice in range datepicker. ([NG#1334](https://github.com/infor-design/enterprise-ng/issues/1334))
 - `[Fileupload Advanced]` Fixed on max fileupload limit. ([#6625](https://github.com/infor-design/enterprise/issues/6625))
+- `[Notification]` Updated css of notification to fix alignment in rtl mode. ([#6555](https://github.com/infor-design/enterprise/issues/6555))
 - `[Tabs]` Fixed on close button not showing in Firefox. ([#6610](https://github.com/infor-design/enterprise/issues/6610))
-- `[Datagrid]` Fixed the overflowing of the multiselect dropdown on the page and pushes the container near the screen's edge. ([#6580](https://github.com/infor-design/enterprise/issues/6580))
-- `[Datagrid]` Fixed redundant aria-describedby attributes at cells. ([#6530](https://github.com/infor-design/enterprise/issues/6530))
-- `[Datagrid]` Fixed unselectRow on treegrid sending rowData incorrectly. ([#6548](https://github.com/infor-design/enterprise/issues/6548))
-- `[Datagrid]` Fixed incorrect rowData for grouping tooltip callback. ([NG#1298](https://github.com/infor-design/enterprise-ng/issues/1298))
-- `[Fileupload Advanced]` Fixed on max fileupload limit. ([#6625](https://github.com/infor-design/enterprise/issues/6625))
-- `[Tabs]` Fixed on close button not showing in Firefox. ([#6610](https://github.com/infor-design/enterprise/issues/6610))
+- `[Tabs]` Remove target panel element on remove event. ([#6621](https://github.com/infor-design/enterprise/issues/6621))
 - `[Tabs Module]` Fixed category border when focusing the searchfield. ([#6618](https://github.com/infor-design/enterprise/issues/6618))
+- `[Montview]` Fixed missing legend data on visible previous / next month with using loadLegend API. ([#6665](https://github.com/infor-design/enterprise/issues/6665))
 
 ## v4.65.0
 
