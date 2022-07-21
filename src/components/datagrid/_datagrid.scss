@@ -1356,7 +1356,7 @@ $datagrid-small-row-height: 25px;
     }
 
     .datagrid-trigger-cell {
-      .icon {
+      .icon:not(.datagrid-alert-icon) {
         left: 3px;
         top: 5px;
 
@@ -1533,7 +1533,12 @@ $datagrid-small-row-height: 25px;
             }
           }
 
-          .icon {
+          .icon.datagrid-alert-icon {
+            height: 15px;
+            width: 16px;
+          }
+
+          .icon:not(.datagrid-alert-icon) {
             height: 16px;
             top: 4px;
 
@@ -1560,7 +1565,7 @@ $datagrid-small-row-height: 25px;
               left: -3px;
             }
 
-            &.icon-error {
+            &.icon-error:not(.datagrid-alert-icon) {
               margin-left: -26px;
             }
           }
@@ -2006,10 +2011,27 @@ $datagrid-small-row-height: 25px;
 
     .datagrid-trigger-cell.has-editor:not(.is-readonly):hover,
     .datagrid-trigger-cell.has-editor:not(.is-readonly):focus {
-      .icon {
+      .icon:not(.datagrid-alert-icon) {
         &.icon-error {
           margin-left: -45px !important;
         }
+      }
+    }
+  }
+
+  &.small-rowheight,
+  &.extra-small-rowheight {
+    > tbody > tr {
+      .datagrid-alert-icon {
+        height: 15px;
+        width: 16px;
+      }
+    }
+
+    td.is-dirty-cell:not(.rowstatus-cell) {
+      &:before {
+        left: 0;
+        top: -2px;
       }
     }
   }
@@ -2254,6 +2276,7 @@ $datagrid-small-row-height: 25px;
       line-height: 25px;
       margin-right: -8px;
       padding-left: 8px;
+      position: relative;
       text-align: left;
       width: inherit;
     }
@@ -4064,13 +4087,17 @@ td .btn-actions {
     }
   }
 
-  .icon {
+  .icon:not(.datagrid-alert-icon) {
     @include trigger-icon-background($datagrid-cell-bg-color);
 
     color: $trigger-icon-fill-color;
     left: 3px;
     top: 4px;
     visibility: hidden;
+
+    &.datagrid-alert-icon {
+      visibility: visible;
+    }
 
     &.icon-search-list {
       left: -1px;
@@ -4099,7 +4126,7 @@ td .btn-actions {
     }
   }
 
-  .icon-calendar {
+  .icon.icon-calendar {
     height: 16px;
     left: 5px;
     top: -2px;
@@ -4153,7 +4180,9 @@ td .btn-actions {
       .icon-error,
       .icon-info,
       .icon-alert {
-        margin-left: -48px !important;
+        &:not(.datagrid-alert-icon) {
+          margin-left: -48px !important;
+        }
       }
     }
   }
