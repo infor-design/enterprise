@@ -24,6 +24,7 @@
 - `[Tabs]` Remove target panel element on remove event. ([#6621](https://github.com/infor-design/enterprise/issues/6621))
 - `[Tabs Module]` Fixed category border when focusing the searchfield. ([#6618](https://github.com/infor-design/enterprise/issues/6618))
 - `[Montview]` Fixed missing legend data on visible previous / next month with using loadLegend API. ([#6665](https://github.com/infor-design/enterprise/issues/6665))
+- `[Datepicker]` Fixed missing monthrendered event on initial calendar open. ([NG#1345](https://github.com/infor-design/enterprise-ng/issues/1345))
 
 ## v4.65.0
 
