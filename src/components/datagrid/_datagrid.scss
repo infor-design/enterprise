@@ -2026,7 +2026,7 @@ $datagrid-small-row-height: 25px;
     }
 
     td.is-dirty-cell:not(.rowstatus-cell) {
-      &:before {
+      &::before {
         left: 0;
         top: -2px;
       }
