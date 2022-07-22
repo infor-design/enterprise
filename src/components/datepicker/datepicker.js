@@ -849,6 +849,13 @@ DatePicker.prototype = {
       this.element.trigger('monthrendered', args);
     });
 
+    this.element.trigger('monthrendered', {
+      year: this.calendarAPI.currentYear,
+      month: this.calendarAPI.currentMonth,
+      elem: this.calendar,
+      api: this.calendarAPI
+    });
+
     if (s.showTime) {
       this.calendar.addClass('is-timepicker');
     }

@@ -1,5 +1,10 @@
 # What's New with Enterprise
 
+## v4.64.3 Fixes
+
+- `[Datepicker]` Fixed missing monthrendered event on initial calendar open. ([NG#1345](https://github.com/infor-design/enterprise-ng/issues/1345))
+- `[Monthview]` Fixed missing legend data on visible previous / next month with using loadLegend API. ([#6665](https://github.com/infor-design/enterprise/issues/6665))
+
 ## v4.64.2 Fixes
 
 - `[Datepicker]` Added listener for calendar monthrendered event and pass along. ([NG#1324](https://github.com/infor-design/enterprise-ng/issues/1324))
