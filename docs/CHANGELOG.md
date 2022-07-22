@@ -6,6 +6,7 @@
 
 - `[Busyindicator]` Converted protractor tests to puppeteer. ([#6623](https://github.com/infor-design/enterprise/issues/6623))
 - `[Datepicker]` Added setting for adjusting day using +/- in datepicker. ([#6632](https://github.com/infor-design/enterprise/issues/6632))
+- `[Icons]` Added new icons for `interaction` and `interaction-reply`. ([#6666](https://github.com/infor-design/enterprise/issues/6629))
 - `[Textarea]` Converted protractor tests to puppeteer. ([#6629](https://github.com/infor-design/enterprise/issues/6629))
 
 ## v4.66.0 Fixes
