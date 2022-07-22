@@ -557,7 +557,7 @@ describe('Tabs nested tests', () => {
     browser.executeScript(removeScript);
 
     // Check that Tab #4 no longer exists
-    expect(await element(by.id('tab4')).isDisplayed()).toBe(false);
+    expect(await element(by.id('tab4')).isPresent()).toBe(false);
   });
 });
 
