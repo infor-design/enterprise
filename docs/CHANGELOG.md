@@ -12,6 +12,7 @@
 
 ## v4.66.0 Fixes
 
+- `[Datagrid]` Fixed trigger icon background color on hover when row is activated. ([#6679](https://github.com/infor-design/enterprise/issues/6679))
 - `[Datagrid]` Fixed the datagrid alert icon was not visible and the trigger cell moves when hovering over when editor has trigger icon. ([#6663](https://github.com/infor-design/enterprise/issues/6663))
 - `[Datagrid]` Fixed redundant aria-describedby attributes at cells. ([#6530](https://github.com/infor-design/enterprise/issues/6530))
 - `[Datagrid]` Fixed on edit outline in textarea not filling the entire cell. ([#6588](https://github.com/infor-design/enterprise/issues/6588))
