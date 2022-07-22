@@ -235,7 +235,7 @@ describe('Datagrid Puppeteer Tests', () => {
     });
   });
 
-  fdescribe('Datagrid test for Add multiple row function', () => {
+  describe('Datagrid test for Add multiple row function', () => {
     const url = `${baseUrl}/test-selected-rows-addnew.html`;
 
     beforeAll(async () => {
@@ -246,12 +246,12 @@ describe('Datagrid Puppeteer Tests', () => {
       await page.click('#add-row-top-btn');
       const ariaRowTop = await page.$eval('tr.datagrid-row.rowstatus-row-new.is-tooltips-enabled', element => element.getAttribute('aria-rowindex'));
       expect(ariaRowTop).toMatch('8');
-
-      //await page.click('.btn-actions');
       await page.click('.toolbar.has-more-button .btn-actions:not(.page-changer)');
-      await page.waitForSelector('#popupmenu.is-open');
-      await page.click('#popupmenu-2 > li:nth-child(4) > a');
-
+      await page.waitForSelector('#popupmenu-2.is-open', { visible: true });
+      await page.hover('#popupmenu-2 > li:nth-child(3) > a');
+      await page.click('#popupmenu-2 > li:nth-child(3) > a');
+      const ariaRowT4 = await page.$eval('tr.datagrid-row.rowstatus-row-new.is-tooltips-enabled', element => element.getAttribute('aria-rowindex'));
+      expect(ariaRowT4).toMatch('9');
     });
   });
 });
