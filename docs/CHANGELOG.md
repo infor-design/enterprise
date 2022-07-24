@@ -7,6 +7,7 @@
 - `[Busyindicator]` Converted protractor tests to puppeteer. ([#6623](https://github.com/infor-design/enterprise/issues/6623))
 - `[Datepicker]` Added setting for adjusting day using +/- in datepicker. ([#6632](https://github.com/infor-design/enterprise/issues/6632))
 - `[Icons]` Added new icons for `interaction` and `interaction-reply`. ([#6666](https://github.com/infor-design/enterprise/issues/6629))
+- `[Targeted-Achievement]` Added puppeteer test for show tooltip on targeted achievement. ([#6550](https://github.com/infor-design/enterprise/issues/6550))
 - `[Textarea]` Converted protractor tests to puppeteer. ([#6629](https://github.com/infor-design/enterprise/issues/6629))
 
 ## v4.66.0 Fixes
@@ -18,7 +19,7 @@
 - `[Datagrid]` Fixed the overflowing of the multiselect dropdown on the page and pushes the container near the screen's edge. ([#6580](https://github.com/infor-design/enterprise/issues/6580))
 - `[Datagrid]` Fixed unselectRow on treegrid sending rowData incorrectly. ([#6548](https://github.com/infor-design/enterprise/issues/6548))
 - `[Datagrid]` Fixed incorrect rowData for grouping tooltip callback. ([NG#1298](https://github.com/infor-design/enterprise-ng/issues/1298))
-- `[Datepicker]` Trigger change event when set Today is activated twice in range datepicker. ([NG#1334](https://github.com/infor-design/enterprise-ng/issues/1334))
+- `[Editor]` Fixed a bug where paste function is not working on editor when copied from Windows Adobe Reader. ([#6521](https://github.com/infor-design/enterprise/issues/6521))
 - `[Fileupload Advanced]` Fixed on max fileupload limit. ([#6625](https://github.com/infor-design/enterprise/issues/6625))
 - `[Notification]` Updated css of notification to fix alignment in rtl mode. ([#6555](https://github.com/infor-design/enterprise/issues/6555))
 - `[Tabs]` Fixed on close button not showing in Firefox. ([#6610](https://github.com/infor-design/enterprise/issues/6610))
