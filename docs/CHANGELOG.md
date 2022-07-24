@@ -5,6 +5,7 @@
 ## v4.66.0 Features
 
 - `[Busyindicator]` Converted protractor tests to puppeteer. ([#6623](https://github.com/infor-design/enterprise/issues/6623))
+- `[Datagrid]` Added puppeteer script for render only one row. ([#6645](https://github.com/infor-design/enterprise/issues/6645))
 - `[Datepicker]` Added setting for adjusting day using +/- in datepicker. ([#6632](https://github.com/infor-design/enterprise/issues/6632))
 - `[Icons]` Added new icons for `interaction` and `interaction-reply`. ([#6666](https://github.com/infor-design/enterprise/issues/6629))
 - `[Targeted-Achievement]` Added puppeteer test for show tooltip on targeted achievement. ([#6550](https://github.com/infor-design/enterprise/issues/6550))
