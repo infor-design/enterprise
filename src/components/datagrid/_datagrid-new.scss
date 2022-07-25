@@ -173,7 +173,7 @@
     .datagrid-trigger-cell {
       .icon.icon-calendar {
         left: -2px !important;
-        top: 0 !important;
+        top: -1px !important;
       }
     }
 
@@ -722,7 +722,7 @@
     tbody tr {
       td.is-editing {
         .datepicker + .btn-icon.trigger {
-          margin-top: 3px;
+          margin-top: 1px;
         }
       }
     }
