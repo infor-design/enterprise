@@ -1284,10 +1284,14 @@ Editor.prototype = {
             self.createLink($(`[name="em-url-${self.id}"]`, this));
           }
         } else {
-          if (self.settings.attributes.length > 1) { // eslint-disable-line
-            self.insertImage($(`[data-automation-id="${self.settings.attributes[self.settings.attributes.length - 1].value}-editor-modal-input0"`).val());
+          if (self.settings.attributes) {
+            if (self.settings.attributes.length > 1) { // eslint-disable-line
+              self.insertImage($(`[data-automation-id="${self.settings.attributes[self.settings.attributes.length - 1].value}-editor-modal-input0"`).val());
+            } else {
+              self.insertImage($(`#${self.settings.attributes[0].value}-editor-modal-input0`).val());
+            }
           } else {
-            self.insertImage($(`#${self.settings.attributes[0].value}-editor-modal-input0`).val());
+            self.insertImage($('input[id*="image-editor"]').val());
           }
         }
       });
