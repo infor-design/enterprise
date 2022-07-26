@@ -50,7 +50,7 @@ const MAX_TOOLBARSEARCHFIELD_EXPAND_SIZE = 450;
  * @class SearchField
  * @param {jQuery[]|HTMLElement} element the base searchfield element
  * @param {object} [settings] incoming settings
- * @param {array} [settings.button=null]  A button to add besides the default buttons.
+ * @param {object} [settings.button]  A button to add besides the default buttons.
  * @param {function} [settings.resultsCallback] Callback function for getting typahead results on search.
  * @param {function} [settings.allResultsCallback] Callback function for getting "all results".
  * @param {boolean} [settings.showAllResults = true] If true the show all results link is showin in the list.
