@@ -238,9 +238,6 @@ describe('Datagrid', () => {
   describe('Header icon with tooltip', () => {
     const url = `${baseUrl}/example-header-icon-with-tooltip`;
 
-  describe('Can add multiple rows', () => {
-    const url = `${baseUrl}/test-selected-rows-addnew.html`;
-
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
@@ -260,6 +257,15 @@ describe('Datagrid', () => {
     it('should have a custom class in the column header', async () => {
       await page.evaluate(() => document.getElementById('example-header-icon-with-tooltip-datagrid-1-header-2').getAttribute('class'))
         .then(el => expect(el).toContain('lm-custom-class-header'));
+    });
+  });
+
+  describe('Can add multiple rows', () => {
+    const url = `${baseUrl}/test-selected-rows-addnew.html`;
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
 
     it('should add new row on button click', async () => {
       await page.click('#add-row-top-btn');
