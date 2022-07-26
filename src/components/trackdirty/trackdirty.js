@@ -244,11 +244,7 @@ Trackdirty.prototype = {
           // so get the elements with the value
           const textArea = field.find('textarea');
           original = textArea.data('original');
-          if (field.find('.editor-source').is(':visible')) {
-            current = textArea.val();
-          } else {
-            current = this.isIe || this.isIeEdge ? input[0].innerHTML : textArea.text();
-          }
+          current = field.find('.editor-source').is(':visible') ? textArea.val() : textArea.text();
           current = this.trimEditorText(current);
         }
 
