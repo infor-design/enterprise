@@ -250,7 +250,9 @@ describe('Datagrid Puppeteer Tests', () => {
       const value = await page.$eval('#datagrid > div > table.datagrid > tbody > tr > td:nth-child(5) > div', element => element.innerHTML);
       expect(value).toEqual('0');
 
-      await page.$eval('#datagrid > div > table.datagrid > tbody > tr > td:nth-child(5) > div', (el, val) => el.innerHTML = val, '4');
+      await page.$eval('#datagrid > div > table.datagrid > tbody > tr > td:nth-child(5) > div', (el) => { 
+        el.innerHTML = '4'; 
+      });
 
       await page.waitForTimeout(200);
       await page.click('#add-btn');
