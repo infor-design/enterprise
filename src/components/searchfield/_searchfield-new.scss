@@ -156,6 +156,34 @@ html[dir='rtl'] {
           top: 0;
         }
       }
+
+      &.has-custom-button {
+        .custom-button {
+          right: 180px;
+          top: 3px;
+        }
+      }
+
+      .searchfield {
+        padding-left: 60px;
+      }
+    }
+    
+    &.has-close-icon-button.has-custom-button {
+      .btn-icon.close {
+        right: calc(300px - 35%);
+      }
+
+      .searchfield {
+        padding-left: 34px;
+        padding-right: 34px;
+      }
+    }
+
+    &.has-custom-button {
+      .custom-button {
+        right: 206px;
+      }
     }
 
     .searchfield-category-button {
