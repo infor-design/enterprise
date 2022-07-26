@@ -235,7 +235,7 @@ describe('Datagrid Puppeteer Tests', () => {
     });
   });
 
-  describe('Datagrid test for Add multiple row function', () => {
+  describe('Can add multiple rows', () => {
     const url = `${baseUrl}/test-selected-rows-addnew.html`;
 
     beforeAll(async () => {
