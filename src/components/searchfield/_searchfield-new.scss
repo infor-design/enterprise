@@ -28,6 +28,27 @@
       height: 38px;
     }
   }
+
+  &.has-custom-button {
+    .custom-button {
+      position: absolute;
+      left: 263px;
+    }
+
+    &.has-go-button .custom-button {
+      left: 205px;
+    }
+
+    &.has-text.has-close-icon-button {
+      .custom-button {
+        left: 235px;
+      }
+
+      &.has-go-button .custom-button {
+        left: 180px;
+      }
+    }
+  }
 }
 
 .toolbar-searchfield-wrapper {
