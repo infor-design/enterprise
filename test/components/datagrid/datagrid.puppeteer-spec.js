@@ -254,4 +254,31 @@ describe('Datagrid Puppeteer Tests', () => {
       expect(ariaRowT4).toMatch('9');
     });
   });
+
+  describe('Datagrid test to render only one row', () => {
+    const url = `${baseUrl}/test-hide-pager-if-one-page.html`;
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('should re-renders all the row element when you add a new row', async () => {
+      await page.waitForSelector('#add-btn');
+      await page.click('#add-btn');
+
+      await page.waitForSelector('#datagrid > div > table.datagrid > tbody > tr > td:nth-child(5) > div');
+
+      const value = await page.$eval('#datagrid > div > table.datagrid > tbody > tr > td:nth-child(5) > div', element => element.innerHTML);
+      expect(value).toEqual('0');
+
+      await page.$eval('#datagrid > div > table.datagrid > tbody > tr > td:nth-child(5) > div', (el) => { 
+        el.innerHTML = '4'; 
+      });
+
+      await page.waitForTimeout(200);
+      await page.click('#add-btn');
+      const newValue = await page.$eval('#datagrid > div.datagrid-wrapper.center.scrollable-x.scrollable-y > table > tbody > tr:nth-child(2) > td:nth-child(5) > div', element => element.innerHTML);
+
+      expect(newValue).toEqual('4');
+    });
+  });
 });
