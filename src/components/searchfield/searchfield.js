@@ -460,7 +460,7 @@ SearchField.prototype = {
       this.wrapper.addClass('has-custom-button');
       this.customButton = $('<button class="btn-icon custom-button"></button>');
       this.customButton.append($.createIconElement(this.settings.button.icon));
-      this.element.xButton.before(this.customButton);
+      this.wrapper.append(this.customButton);
     }
 
     // Stagger a calculation for setting the size of the Searchfield element, if applicable

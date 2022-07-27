@@ -159,30 +159,36 @@ html[dir='rtl'] {
 
       &.has-custom-button {
         .custom-button {
-          right: 180px;
-          top: 3px;
+          right: calc(300px - 45%)
         }
-      }
 
-      .searchfield {
-        padding-left: 60px;
-      }
-    }
-    
-    &.has-close-icon-button.has-custom-button {
-      .btn-icon.close {
-        right: calc(300px - 35%);
-      }
-
-      .searchfield {
-        padding-left: 34px;
-        padding-right: 34px;
+        .searchfield {
+          padding-left: 60px;
+        }
       }
     }
 
     &.has-custom-button {
       .custom-button {
-        right: 206px;
+        top: 3px;
+        right: calc(300px - 15%);
+      }
+
+      &.has-close-icon-button {
+        .searchfield {
+          padding-left: 34px;
+          padding-right: 34px;
+        }
+      }
+
+      &.has-go-button {
+        .custom-button {
+          right: calc(300px - 38%);
+        }
+
+        .btn-icon.close {
+          right: calc(300px - 33%);
+        }
       }
     }
 
