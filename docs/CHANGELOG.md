@@ -1,13 +1,13 @@
 # What's New with Enterprise
 
-## v4.66.0
+## v4.65.3
 
-## v4.66.0 Features
+## v4.65.3 Features
 
 - `[Busyindicator]` Converted protractor tests to puppeteer. ([#6623](https://github.com/infor-design/enterprise/issues/6623))
 - `[Textarea]` Converted protractor tests to puppeteer. ([#6629](https://github.com/infor-design/enterprise/issues/6629))
 
-## v4.66.0 Fixes
+## v4.65.3 Fixes
 
 - `[Datagrid]` Fixed redundant aria-describedby attributes at cells. ([#6530](https://github.com/infor-design/enterprise/issues/6530))
 - `[Datagrid]` Fixed on edit outline in textarea not filling the entire cell. ([#6588](https://github.com/infor-design/enterprise/issues/6588))
