@@ -1,0 +1,102 @@
+
+<div class="row bottom-padding">
+  <div class="twelve columns">
+    <div class="toolbar">
+      <div class="title">
+        Compressors
+        <span class="datagrid-group-count">N</span>
+      </div>
+      <div class="buttonset">
+      </div>
+      <div class="more">
+        <button class="btn-actions" type="button">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-more"></use>
+          </svg>
+          <span class="audible">More Actions</span>
+        </button>
+        <ul class="popupmenu">
+          <li id="toggle-group"><a href="#" data-translate="text">Toggle Group</a></li>
+          <li id="toggle-data"><a href="#" data-translate="text">Toggle Data</a></li>
+          <li class="separator single-selectable-section"></li>
+          <li class="heading">Row Height</li>
+          <li class="is-selectable"><a data-option="row-extra-small" href="#" data-translate="text">ExtraSmall</a></li>
+          <li class="is-selectable"><a data-option="row-small" href="#" data-translate="text">Small</a></li>
+          <li class="is-selectable"><a data-option="row-medium" href="#" data-translate="text">Medium</a></li>
+          <li class="is-selectable is-checked"><a data-option="row-large" href="#" data-translate="text">Large</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+
+<script>
+  $('body').one('initialized', function () {
+
+      let groupable,
+        data = [];
+
+      const data1 = [
+        {
+          warehouse: 'ABC',
+          itemDescription: 'A bundle of wands',
+        },
+        {
+          warehouse: 'ABC',
+          itemDescription: 'A bundle of rods',
+        },
+        {
+          warehouse: 'XYZ',
+          itemDescription: 'Some other item',
+        },
+      ],
+      group =  {
+        fields: ['warehouse'],
+        aggregator: '',
+      },
+      columns =  [
+        {
+          width: 30,
+          id: 'warehouse',
+          field: 'warehouse',
+          name: 'Warehouse',
+          resizable: false,
+          sortable: false,
+        },
+        {
+          width: 75,
+          id: 'itemDescription',
+          field: 'itemDescription',
+          name: 'Item description',
+          resizable: true,
+          sortable: true,
+          contentTooltip: true,
+        },
+      ]
+    
+      data = data1;
+      groupable = true;
+
+      const datagridApi = $('#datagrid').datagrid({
+        columns: columns,
+        dataset: data,
+        groupable: group,
+        toolbar: {title: 'Warehouse', results: true, personalize: true, actions: true, rowHeight: true, keywordFilter: false}
+      }).data('datagrid');
+
+      $('#toggle-group').on('click', () => {
+        const newG = groupable ? null : group;
+        datagridApi.updated({ groupable: newG });
+        groupable = !groupable;
+      });
+
+      $('#toggle-data').on('click', () => {
+        data = data.length === 0 ? data1 : [];
+        datagridApi.updateDataset(data);
+      });
+ });
+
+</script>

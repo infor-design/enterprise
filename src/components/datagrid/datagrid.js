@@ -1055,7 +1055,6 @@ Datagrid.prototype = {
   */
   loadData(dataset, pagerInfo) {
     this.settings.dataset = dataset;
-
     if (!pagerInfo) {
       pagerInfo = {};
     }
@@ -3729,7 +3728,7 @@ Datagrid.prototype = {
 
     if (!this.originalDataset) {
       this.originalDataset = this.settings.dataset.slice();
-    } else {
+    } else if (!this.settings.dataset || this.settings.dataset.length > 0) {
       this.settings.dataset = this.originalDataset;
     }
 
@@ -3816,7 +3815,6 @@ Datagrid.prototype = {
         activePage = pagerState.activePage;
       }
     }
-
     self.bodyColGroupHtmlLeft = '<colgroup>';
     self.bodyColGroupHtml = '<colgroup>';
     self.bodyColGroupHtmlRight = '<colgroup>';
@@ -3881,8 +3879,12 @@ Datagrid.prototype = {
     if (this.restoreSortOrder) {
       this.sortDataset();
     }
-
     let rowStatusTooltip = false;
+
+    if (self.originalDataset && (!s.groupable && s.dataset.length > 0)) {
+      s.dataset = self.originalDataset;
+    }
+
     for (let i = 0; i < s.dataset.length; i++) {
       // For better performance dont render out of page
       if (s.paging && !s.source) {
@@ -3941,6 +3943,7 @@ Datagrid.prototype = {
         if (!this.settings.groupable.suppressGroupRow) {
           // Show the grouping row
           const groupHtml = self.rowHtml(s.dataset[i], this.recordCount, i, true);
+
           if (this.hasLeftPane && groupHtml.left) {
             tableHtmlLeft += groupHtml.left;
           }
@@ -13040,7 +13043,6 @@ Datagrid.prototype = {
     this.render(null, pagingInfo);
     this.renderHeader();
     this.handlePaging();
-
     return this;
   }
 };
