@@ -5689,6 +5689,10 @@ Datagrid.prototype = {
       this.updateCellNode(idx, j, this.fieldValue(rowData, col.field), true);
     }
 
+    if (s.dataset[idx] !== undefined) {
+      this.settings.dataset[idx] = utils.extend(true, this.settings.dataset[idx], data); 
+    }
+
     if (this.settings.rowReorder && this.tableBody.data('arrange')) {
       this.tableBody.data('arrange').updated();
     }
