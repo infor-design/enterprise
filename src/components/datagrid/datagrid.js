@@ -11083,6 +11083,7 @@ Datagrid.prototype = {
         });
       } else {
         rowData[col.field] = coercedVal;
+        this.settings.dataset[dataRowIndex] = rowData;
       }
     }
 
