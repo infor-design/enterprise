@@ -1046,7 +1046,7 @@ SearchField.prototype = {
    * @private
    * @returns {void}
    */
-  handleSafeBlur(e) {
+  handleSafeBlur() {
     const self = this;
     function safeBlurHandler() {
       // Do a check for searchfield-specific elements
