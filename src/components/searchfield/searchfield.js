@@ -2166,7 +2166,7 @@ SearchField.prototype = {
   makeClearable() {
     this.element.clearable({ tabbable: this.settings.tabbable });
     this.wrapper.addClass('has-close-icon-button');
-    this.xButton = this.wrapper.children('button.close');
+    this.xButton = this.wrapper.children('.icon.close').length > 1 ? this.wrapper.children('.icon.close') : this.wrapper.children('button.close');
   
     // Ignoring the close button from tabbing
     if (!this.settings.tabbable) {
