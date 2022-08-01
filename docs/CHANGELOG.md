@@ -5,6 +5,8 @@
 ## v4.66.0 Features
 
 - `[Busyindicator]` Converted protractor tests to puppeteer. ([#6623](https://github.com/infor-design/enterprise/issues/6623))
+- `[Datagrid]` Added puppeteer script for render only one row. ([#6645](https://github.com/infor-design/enterprise/issues/6645))
+- `[Datagrid]` Added test scripts for add row. ([#6644](https://github.com/infor-design/enterprise/issues/6644))
 - `[Datepicker]` Added setting for adjusting day using +/- in datepicker. ([#6632](https://github.com/infor-design/enterprise/issues/6632))
 - `[Icons]` Added new icons for `interaction` and `interaction-reply`. ([#6666](https://github.com/infor-design/enterprise/issues/6629))
 - `[Targeted-Achievement]` Added puppeteer test for show tooltip on targeted achievement. ([#6550](https://github.com/infor-design/enterprise/issues/6550))
@@ -12,6 +14,7 @@
 
 ## v4.66.0 Fixes
 
+- `[Datagrid]` Fixed trigger icon background color on hover when row is activated. ([#6679](https://github.com/infor-design/enterprise/issues/6679))
 - `[Datagrid]` Fixed the datagrid alert icon was not visible and the trigger cell moves when hovering over when editor has trigger icon. ([#6663](https://github.com/infor-design/enterprise/issues/6663))
 - `[Datagrid]` Fixed redundant aria-describedby attributes at cells. ([#6530](https://github.com/infor-design/enterprise/issues/6530))
 - `[Datagrid]` Fixed on edit outline in textarea not filling the entire cell. ([#6588](https://github.com/infor-design/enterprise/issues/6588))
@@ -19,15 +22,18 @@
 - `[Datagrid]` Fixed the overflowing of the multiselect dropdown on the page and pushes the container near the screen's edge. ([#6580](https://github.com/infor-design/enterprise/issues/6580))
 - `[Datagrid]` Fixed unselectRow on treegrid sending rowData incorrectly. ([#6548](https://github.com/infor-design/enterprise/issues/6548))
 - `[Datagrid]` Fixed incorrect rowData for grouping tooltip callback. ([NG#1298](https://github.com/infor-design/enterprise-ng/issues/1298))
+- `[Datepicker]` Fixed missing monthrendered event on initial calendar open. ([NG#1345](https://github.com/infor-design/enterprise-ng/issues/1345))
 - `[Editor]` Fixed a bug where paste function is not working on editor when copied from Windows Adobe Reader. ([#6521](https://github.com/infor-design/enterprise/issues/6521))
+- `[Editor]` Fixed a bug where editor has dark screen after inserting an image. ([NG#1323](https://github.com/infor-design/enterprise-ng/issues/1323))
+- `[Editor]` Fixed a bug where reset dirty is not working on special characters in Edge browser. ([#6584](https://github.com/infor-design/enterprise/issues/6584))
 - `[Fileupload Advanced]` Fixed on max fileupload limit. ([#6625](https://github.com/infor-design/enterprise/issues/6625))
+- `[Montview]` Fixed missing legend data on visible previous / next month with using loadLegend API. ([#6665](https://github.com/infor-design/enterprise/issues/6665))
 - `[Notification]` Updated css of notification to fix alignment in rtl mode. ([#6555](https://github.com/infor-design/enterprise/issues/6555))
 - `[Tabs]` Fixed on close button not showing in Firefox. ([#6610](https://github.com/infor-design/enterprise/issues/6610))
 - `[Tabs]` Remove target panel element on remove event. ([#6621](https://github.com/infor-design/enterprise/issues/6621))
 - `[Tabs Module]` Fixed category border when focusing the searchfield. ([#6618](https://github.com/infor-design/enterprise/issues/6618))
 - `[Toolbar Searchfield]` Fixed searchfield toolbar in alternate style. ([#6615](https://github.com/infor-design/enterprise/issues/6615))
-- `[Montview]` Fixed missing legend data on visible previous / next month with using loadLegend API. ([#6665](https://github.com/infor-design/enterprise/issues/6665))
-- `[Datepicker]` Fixed missing monthrendered event on initial calendar open. ([NG#1345](https://github.com/infor-design/enterprise-ng/issues/1345))
+- `[Tooltip]` Fixed tooltip event handlers created on show not cleaning up properly on hide. ([#6613](https://github.com/infor-design/enterprise/issues/6613))
 
 ## v4.65.0
 
