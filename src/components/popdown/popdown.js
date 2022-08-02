@@ -141,13 +141,11 @@ Popdown.prototype = {
       })
       .on('updated.popdown', () => {
         self.updated();
+      }).on('clickoutside.popdown', (e) => {
+        if (!self.settings.keepOpen) {
+          self.handleFocusOut(e);
+        }
       });
-
-    $(document).on('click', (e) => {
-      if (!self.element.is($(e.target)) && !self.settings.keepOpen) {
-        self.handleFocusOut(e);
-      }
-    });
 
     // First and last tab
     this.setFirstLastTab();
@@ -409,9 +407,7 @@ Popdown.prototype = {
    */
   handleFocusOut(e) {
     const self = this;
-    console.log('focus')
     if (self.focusableElems.includes(e.target) || self.hasFocus(e.target)) {
-      console.log(3)
       self.keyTarget = e.target;
       return;
     }
@@ -419,7 +415,6 @@ Popdown.prototype = {
     // near the front or back are focused. `keyTarget` detects what was previously clicked
     // and is used as an additional element check in these cases.
     if (e.target.tagName === 'BODY' && self.keyTarget) {
-      console.log(4)
       delete self.keyTarget;
       return;
     }
@@ -464,7 +459,7 @@ Popdown.prototype = {
         // Only allow $(document).click() to close the Popdown if `keepOpen` isn't set.
         // Also run this on `focusout` events that occur outside the Popdown, for keyboard access.
         $(document).on('click.popdown', () => {
-          $('#popdown-example-trigger').trigger('clickoutside.popdown');
+          self.element.trigger('clickoutside.popdown');
         });
 
         // Setup a global keydown event that can handle the closing of modals in the proper order.
