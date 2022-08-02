@@ -1,5 +1,8 @@
 # What's New with Enterprise
 
+## v4.64.4 Fixes
+- `[SearchField]` Added part of the fix from #6418 to fix an extra scrollbar on collapsed search fields. ([#6418](https://github.com/infor-design/enterprise/issues/6418))`
+
 ## v4.64.3 Fixes
 
 - `[Datepicker]` Fixed missing monthrendered event on initial calendar open. ([NG#1345](https://github.com/infor-design/enterprise-ng/issues/1345))
