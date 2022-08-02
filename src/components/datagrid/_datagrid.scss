@@ -631,13 +631,9 @@ $datagrid-small-row-height: 25px;
     }
   }
 
-  &:not(.small-rowheight) .datagrid-header th.text-ellipsis {
+  &:not(.small-rowheight):not(.extra-small-rowheight) .datagrid-header th.text-ellipsis {
     &:not(.is-filterable) .datagrid-column-wrapper {
       height: 32px;
-
-      .sort-indicator {
-        margin-top: 2px;
-      }
     }
   }
 
@@ -683,10 +679,6 @@ $datagrid-small-row-height: 25px;
       &.text-ellipsis {
         .datagrid-column-wrapper {
           padding: 0 8px;
-        }
-
-        .datagrid-header-text {
-          margin: 5px 0 0 !important;
         }
       }
     }
@@ -927,6 +919,19 @@ $datagrid-small-row-height: 25px;
         top: -4px !important;
       }
     }
+
+    .datagrid-header th.text-ellipsis {
+      .datagrid-column-wrapper {
+        .datagrid-header-text {
+          margin: 7px 0 0 -1px;
+        }
+
+        .datagrid-header-icon {
+          top: 4px;
+          transform: translateY(0);
+        }
+      }
+    }
   }
 
   &.small-rowheight {
@@ -962,6 +967,15 @@ $datagrid-small-row-height: 25px;
         }
       }
     }
+
+    .datagrid-header {
+      .datagrid-column-wrapper {
+        .datagrid-header-icon {
+          top: 4px;
+          transform: translateY(0);
+        }
+      }
+    }
   }
 
   &.medium-rowheight {
@@ -988,7 +1002,7 @@ $datagrid-small-row-height: 25px;
 
       &.text-ellipsis {
         .datagrid-header-text {
-          margin: 8px 0 0 !important;
+          margin: 10px 0 0 !important;
         }
       }
     }
@@ -1859,6 +1873,12 @@ $datagrid-small-row-height: 25px;
 
       &.reorder-group-child-col .datagrid-reorder-icon {
         padding-left: 39px;
+      }
+    }
+
+    .datagrid-header th.text-ellipsis {
+      .datagrid-column-wrapper .datagrid-header-text {
+        margin: 7px 0 0 -1px;
       }
     }
   }
@@ -3340,6 +3360,14 @@ $datagrid-small-row-height: 25px;
 
         color: $datagrid-required-icon-color;
       }
+    }
+
+    .icon.datagrid-header-icon {
+      color: $datagrid-header-color;
+      margin-left: 3px;
+      min-width: 18px;
+      top: -2px;
+      transform: translateY(50%);
     }
 
     // Checkboxes
