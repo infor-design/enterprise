@@ -25,6 +25,7 @@ release :
 		--env RELEASEIT_FLAGS=${RELEASEIT_FLAGS} \
 		--env RELEASE_INCREMENT=${RELEASE_INCREMENT} \
 		-v ${PWD}/build:/root/enterprise \
+		-v ${PWD}/.gitconfig:/root/.gitconfig \
 		-v ${PWD}/run.sh:/usr/src/run.sh \
 		$(ORGANIZATION)/$(CONTAINER):$(VERSION)
 
@@ -41,5 +42,7 @@ shell :
 		--env NPM_LATEST=${NPM_LATEST} \
 		--env RELEASEIT_FLAGS=${RELEASEIT_FLAGS} \
 		--env RELEASE_INCREMENT=${RELEASE_INCREMENT} \
+		-v ${PWD}/build:/root/enterprise \
+		-v ${PWD}/.gitconfig:/root/.gitconfig \
 		-v ${PWD}/run.sh:/usr/src/run.sh \
 		$(ORGANIZATION)/$(CONTAINER):$(VERSION)
