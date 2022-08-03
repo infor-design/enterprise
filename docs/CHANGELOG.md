@@ -40,6 +40,8 @@
 - `[Toolbar Searchfield]` Fixed searchfield toolbar in alternate style. ([#6615](https://github.com/infor-design/enterprise/issues/6615))
 - `[Tooltip]` Fixed tooltip event handlers created on show not cleaning up properly on hide. ([#6613](https://github.com/infor-design/enterprise/issues/6613))
 
+(39 Issues Solved This Release, Backlog Enterprise 1105, Backlog Ng 42, 1102 Functional Tests, 1380 e2e Tests, 462 Puppeteer Tests)
+
 ## v4.65.0
 
 ## v4.65.0 Features
