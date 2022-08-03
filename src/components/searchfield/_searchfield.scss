@@ -99,6 +99,10 @@
       text-overflow: ellipsis;
       white-space: nowrap;
     }
+
+    &.has-custom-button .searchfield {
+      padding-right: 60px;
+    }
   }
 
   // This variation is used on white-backgrounds (usually in list-detail, listviews, or builder pattern)

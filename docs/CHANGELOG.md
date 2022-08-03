@@ -9,6 +9,7 @@
 - `[Datagrid]` Added test scripts for add row. ([#6644](https://github.com/infor-design/enterprise/issues/6644))
 - `[Datepicker]` Added setting for adjusting day using +/- in datepicker. ([#6632](https://github.com/infor-design/enterprise/issues/6632))
 - `[Icons]` Added new icons for `interaction` and `interaction-reply`. ([#6666](https://github.com/infor-design/enterprise/issues/6629))
+- `[Searchfield]` Added option to add custom icon button. ([#6453](https://github.com/infor-design/enterprise/issues/6453))
 - `[Targeted-Achievement]` Added puppeteer test for show tooltip on targeted achievement. ([#6550](https://github.com/infor-design/enterprise/issues/6550))
 - `[Textarea]` Converted protractor tests to puppeteer. ([#6629](https://github.com/infor-design/enterprise/issues/6629))
 

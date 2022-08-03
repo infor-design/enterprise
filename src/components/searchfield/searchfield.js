@@ -50,6 +50,7 @@ const MAX_TOOLBARSEARCHFIELD_EXPAND_SIZE = 450;
  * @class SearchField
  * @param {jQuery[]|HTMLElement} element the base searchfield element
  * @param {object} [settings] incoming settings
+ * @param {object} [settings.button]  A button to add besides the default buttons.
  * @param {function} [settings.resultsCallback] Callback function for getting typahead results on search.
  * @param {function} [settings.allResultsCallback] Callback function for getting "all results".
  * @param {boolean} [settings.showAllResults = true] If true the show all results link is showin in the list.
@@ -455,6 +456,13 @@ SearchField.prototype = {
       this.makeClearable();
     }
 
+    if (this.settings.button) {
+      this.wrapper.addClass('has-custom-button');
+      this.customButton = $('<button class="btn-icon custom-button"></button>');
+      this.customButton.append($.createIconElement(this.settings.button.icon));
+      this.wrapper.append(this.customButton);
+    }
+
     // Stagger a calculation for setting the size of the Searchfield element, if applicable
     const self = this;
     const resizeTimer = new RenderLoopItem({
@@ -724,6 +732,14 @@ SearchField.prototype = {
   },
 
   /**
+   * Detects the existence of a custom button added to the main searchfield API
+   * @returns {boolean} whether or not a "Go" button is present
+   */
+  hasCustomButton() {
+    return this.settings.button && this.customButton && this.customButton.length;
+  },
+
+  /**
    * Sets up the event-listening structure for this component instance.
    * @private
    * @returns {this} component instance
@@ -791,6 +807,12 @@ SearchField.prototype = {
       self.goButton
         .on(`click.${this.id}`, e => self.handleGoButtonClick(e))
         .on(`click.${this.id}`, e => self.handleGoButtonFocus(e))
+        .on(`blur.${this.id}`, () => self.handleSafeBlur());
+    }
+
+    if (self.hasCustomButton()) {
+      this.customButton
+        .on(`click.${this.id}`, e => self.settings.button.click(e, self.element.val()))
         .on(`blur.${this.id}`, () => self.handleSafeBlur());
     }
 
@@ -2112,6 +2134,11 @@ SearchField.prototype = {
       delete this.goButton;
     }
 
+    if (this.customButton && this.customButton.length) {
+      this.customButton.off(`click.${this.id} blur.${this.id}`).remove();
+      delete this.customButton;
+    }
+
     if (this.categoryButton && this.categoryButton.length) {
       const api = this.categoryButton.data('popupmenu');
       if (api) {
@@ -2176,6 +2203,8 @@ SearchField.prototype = {
     if (!this.settings.tabbable) {
       this.xButton[0].setAttribute('tabindex', '-1');
     }
+
+    this.element.on('cleared', () => this.checkContents());
 
     // Add test automation ids
     utils.addAttributes(this.xButton, this, this.settings.attributes, 'btn-close', true);
