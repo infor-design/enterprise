@@ -141,8 +141,7 @@ Popdown.prototype = {
       })
       .on('updated.popdown', () => {
         self.updated();
-      })
-      .on('clickoutside.popdown', (e) => {
+      }).on('clickoutside.popdown', (e) => {
         if (!self.settings.keepOpen) {
           self.handleFocusOut(e);
         }
@@ -460,7 +459,7 @@ Popdown.prototype = {
         // Only allow $(document).click() to close the Popdown if `keepOpen` isn't set.
         // Also run this on `focusout` events that occur outside the Popdown, for keyboard access.
         $(document).on('click.popdown', () => {
-          $('#popdown-example-trigger').trigger('clickoutside.popdown');
+          self.element.trigger('clickoutside.popdown');
         });
 
         // Setup a global keydown event that can handle the closing of modals in the proper order.

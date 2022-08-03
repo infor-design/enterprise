@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 export TERM=xterm
 export NODE_OPTIONS=--max_old_space_size=4096
 
@@ -13,6 +15,10 @@ _RELEASEIT_FLAGS=${RELEASEIT_FLAGS:-}
 _RELEASE_INCREMENT=${RELEASE_INCREMENT:-}
 
 rm -rf /root/enterprise/{..?*,.[!.]*,*} 2>/dev/null
+
+#echo "[url \"git@github.com:\"]\n\tinsteadOf = https://github.com/" >> /root/.gitconfig
+#git config --global url."https://${_GITHUB_ACCESS_TOKEN}:@github.com/".insteadOf "https://github.com/"
+
 git clone https://$_GITHUB_ACCESS_TOKEN@github.com/infor-design/enterprise.git /root/enterprise
 cd /root/enterprise
 git remote set-url origin https://${_GITHUB_ACCESS_TOKEN}@github.com/infor-design/enterprise.git
@@ -31,7 +37,7 @@ else
   "${npmcmd[@]}"
 fi
 
-if [[ "$_RELEASEIT_FLAGS" != *"--dry-run"* ]];
+if [[ "$_RELEASEIT_FLAGS" == *"--dry-run=false"* ]];
 then
   if [ -n "$_NPM_LATEST" ];
   then

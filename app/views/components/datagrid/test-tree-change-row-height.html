@@ -1,0 +1,142 @@
+<div class="full-height full-width">
+    <div id="datagrid" >
+    </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+    var grid;
+
+    //Define Columns for the Grid.
+    var columns = [
+      {
+        id: 'Name',
+        name: 'Name',
+        field: 'displayName',
+        expanded: 'expanded',
+        formatter: Formatters.Tree,
+        filterType: 'text',
+        width: 500,
+        hideable: false,
+        sortable: false,
+      },
+      {
+        id: 'view',
+        name: 'view',
+        field: 'view',
+        formatter: Formatters.Checkbox,
+        editor: Editors.Checkbox,
+        isEditable: () => {
+          return true;
+        },
+        sortable: false,
+      },
+      {
+        id: 'create',
+        name: 'create',
+        field: 'create',
+        formatter: Formatters.Checkbox,
+        editor: Editors.Checkbox,
+        isEditable: () => {
+          return true;
+        },
+        sortable: false,
+      },
+    ];
+
+    var data = [
+      {
+        name: 'All',
+        displayName: 'All',
+        view: false,
+        create: false,
+        id: 1,
+        expanded: true,
+        depth: 1,
+        children: [
+          {
+            name: 'Connect',
+            displayName: 'Connect',
+            view: false,
+            create: false,
+            id: 2,
+            expanded: true,
+            depth: 2,
+            children: [
+              {
+                name: 'Data Flow',
+                displayName: 'Data Flow',
+                view: false,
+                create: false,
+                id: 3,
+                depth: 3,
+              },
+              {
+                name: 'Connect Points',
+                displayName: 'Connect Points',
+                view: false,
+                create: false,
+                id: 4,
+                depth: 3,
+              },
+            ],
+          },
+          {
+            name: 'Process',
+            displayName: 'Process',
+            view: false,
+            create: false,
+            id: 5,
+            expanded: true,
+            depth: 2,
+            children: [
+              {
+                name: 'Work Flows',
+                displayName: 'Work Flows',
+                view: false,
+                create: false,
+                id: 6,
+                depth: 3,
+              },
+              {
+                name: 'Monitors',
+                displayName: 'Monitors',
+                view: false,
+                create: false,
+                id: 7,
+                depth: 3,
+              },
+            ],
+          },
+        ],
+      },
+    ];
+
+    $('#datagrid').datagrid({
+      columns: columns,
+      dataset: data,
+      treeGrid: true,
+      editable: true,
+      toolbar: {title: 'Tree Grid', results: true, personalize: true, actions: true, rowHeight: true}
+      }).on('cellchange', function (e, args) {
+        var componentItem = $('#datagrid').data('datagrid');
+        console.log(data);
+        data.forEach((parent) => {
+          console.log(parent.id);
+          componentItem.updateRow(parent.id - 1, parent);
+          if (parent.children) {
+            parent.children.forEach((child) => {
+              componentItem.updateRow(child.id - 1, child);
+              if (child.children) {
+                child.children.forEach((grandChild) => {
+                  componentItem.updateRow(grandChild.id - 1, grandChild);
+                });
+              }
+            });
+          }
+        });
+      }).on('rowactivated', function (e, args) {
+        console.log(args);
+      });
+  });
+</script>
