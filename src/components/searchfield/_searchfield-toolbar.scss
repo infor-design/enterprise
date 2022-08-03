@@ -155,7 +155,6 @@ $toolbarsearchfield-category-empty-width: 51px;
         color: $button-color-secondary-initial-font;
 
         &::after {
-          border-right: 1px solid $header-searchfield-input-border-color;
           border-radius: 0;
           bottom: 0;
           content: '';
@@ -198,12 +197,76 @@ $toolbarsearchfield-category-empty-width: 51px;
     }
   }
 
+  &.has-categories.alternate {
+    .searchfield-category-button {
+      border: none;
+      height: 38px;
+    }
+
+    &.active.is-hovered {
+      .searchfield-category-button {
+        border: 1px solid $header-searchfield-input-border-hover-color;
+        border-right: none;
+      }
+
+      .searchfield {
+        border: 1px solid $header-searchfield-input-border-hover-color;
+      }
+    }
+
+    &.has-focus {
+      .btn:focus,
+      .btn:active {
+        .icon {
+          color: $searchfield-text-color;
+        }
+      }
+    }
+
+    &.active {
+      .searchfield,
+      .searchfield-category-button {
+        border: 1px solid $header-searchfield-input-border-color;
+        background: $searchfield-alt-bg-color;
+
+        &.is-open {
+          .icon {
+            color: $searchfield-text-color;
+          }
+        }
+      }
+
+      .searchfield-category-button {
+        border-right: 0;
+      }
+    }
+  }
+
   &.is-open {
     .searchfield,
     .btn {
       background-color: rgba($searchfield-bg-color, 1);
       border-bottom-color: rgba($searchfield-border-color, 1);
       height: 38px;
+    }
+
+    &.has-categories.alternate {
+      .searchfield-category-button {
+        border: 1px solid $header-searchfield-input-border-color;
+        padding: 0 8px;
+        left: 2px;
+      }
+
+      .searchfield {
+        border: 1px solid $header-searchfield-input-border-color;
+      }
+
+      &.is-hovered {
+        .searchfield-category-button,
+        .searchfield {
+          border: 1px solid $header-searchfield-input-border-hover-color;
+        }
+      }
     }
 
     // Searchfield changes text style to match other input fields
@@ -256,7 +319,6 @@ $toolbarsearchfield-category-empty-width: 51px;
       .searchfield,
       .btn {
         background-color: rgba($searchfield-alt-bg-color, 1);
-        border-bottom-color: rgba($searchfield-alt-border-color, 1);
       }
 
       .searchfield {
@@ -270,6 +332,12 @@ $toolbarsearchfield-category-empty-width: 51px;
 
         &:-ms-input-placeholder {
           color: $searchfield-lighter-placeholder-text-color;
+        }
+      }
+
+      &.active.has-focus.is-hovered {
+        .searchfield:focus {
+          border: 1px solid $header-searchfield-input-border-hover-color;
         }
       }
     }
@@ -286,18 +354,8 @@ $toolbarsearchfield-category-empty-width: 51px;
     // Ignored due to out-of-order properties that need to be in this order for proper cascade.
     .btn,
     .collapse-button {
-      background-color: rgba($searchfield-bg-color, 1);
       border-color: rgba($searchfield-bg-color, 1);
       border-bottom-color: rgba($searchfield-border-color, 1);
-    }
-
-    &.alternate {
-      .searchfield,
-      .btn {
-        background-color: rgba($searchfield-alt-bg-color, 1);
-        border-color: rgba($searchfield-alt-bg-color, 1);
-        border-bottom-color: rgba($searchfield-alt-border-color, 1);
-      }
     }
     /* stylelint-enable */
   }
@@ -317,7 +375,7 @@ $toolbarsearchfield-category-empty-width: 51px;
       }
 
       &.toolbar-searchfield-wrapper {
-        &.has-categories {
+        &.has-categories:not(.alternate) {
           .searchfield {
             border-left: 1px solid;
 
