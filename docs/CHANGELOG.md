@@ -22,6 +22,7 @@
 - `[Datagrid]` Fixed the overflowing of the multiselect dropdown on the page and pushes the container near the screen's edge. ([#6580](https://github.com/infor-design/enterprise/issues/6580))
 - `[Datagrid]` Fixed unselectRow on treegrid sending rowData incorrectly. ([#6548](https://github.com/infor-design/enterprise/issues/6548))
 - `[Datagrid]` Fixed incorrect rowData for grouping tooltip callback. ([NG#1298](https://github.com/infor-design/enterprise-ng/issues/1298))
+- `[Datagrid]` Fixed a bug in treegrid where data are duplicated when row height is changed. ([#4979](https://github.com/infor-design/enterprise/issues/4979))
 - `[Datagrid]` Fix bug on where changing groupable and dataset does not update datagrid. ([NG#1332](https://github.com/infor-design/enterprise-ng/issues/1332))
 - `[Datepicker]` Fixed missing monthrendered event on initial calendar open. ([NG#1345](https://github.com/infor-design/enterprise-ng/issues/1345))
 - `[Editor]` Fixed a bug where paste function is not working on editor when copied from Windows Adobe Reader. ([#6521](https://github.com/infor-design/enterprise/issues/6521))
