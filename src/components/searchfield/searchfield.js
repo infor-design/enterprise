@@ -235,8 +235,6 @@ SearchField.prototype = {
       this.id = utils.uniqueId(this.element, COMPONENT_NAME);
     }
 
-    const html = $('html');
-    this.isSafari = html.is('.is-safari');
     this.label = this.element.prev('label, .label');
     this.inlineLabel = this.element.closest('label');
     this.isInlineLabel = this.element.parent().is('.inline');
@@ -904,7 +902,7 @@ SearchField.prototype = {
     });
 
     // Safari Mac document.activeElement cannot be used on buttons because it is not focusable on the Mac OS Safari.
-    if (this.isSafari) {
+    if (env.browser.isSafari()) {
       this.xButton.on('mouseover.clearable', () => {
         this.closeButtonHover = true;
       });
@@ -974,7 +972,7 @@ SearchField.prototype = {
     }
 
     // Safari Mac document.activeElement cannot be used on buttons because it is not focusable on the Mac OS Safari.
-    if (this.isSafari && this.closeButtonHover && !$(active).is('button.close')) {
+    if (env.browser.isSafari() && this.closeButtonHover && !$(active).is('button.close')) {
       return true;
     }
 
@@ -2147,7 +2145,7 @@ SearchField.prototype = {
       this.xButton.off(`blur.${this.id}`);
 
       // Safari Mac document.activeElement cannot be used on buttons because it is not focusable on the Mac OS Safari.
-      if (this.isSafari) {
+      if (env.browser.isSafari()) {
         this.xButton.off('mouseover.clearable');
         this.xButton.off('mouseleave.clearable');
       }
