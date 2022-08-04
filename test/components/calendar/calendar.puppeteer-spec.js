@@ -68,6 +68,16 @@ describe('Calendar', () => {
       expect(await page.$eval('#calendar-id-month-view-today', el => el.getAttribute('id'))).toBe('calendar-id-month-view-today');
       expect(await page.$eval('#calendar-id-month-view-today', el => el.getAttribute('data-automation-id'))).toBe('calendar-automation-id-month-view-today');
     });
+
+    it('should not visual regress', async () => {
+      await page.waitForSelector('.monthview-table td', { visible: true })
+        .then(element => expect(element).toBeTruthy());
+
+      const image = await page.screenshot();
+      const config = getConfig('calendar-index');
+      await page.reload({ waitUntil: ['domcontentloaded', 'networkidle0'] });
+      expect(image).toMatchImageSnapshot(config);
+    });
   });
 
   describe('Specific Month', () => {
@@ -211,6 +221,15 @@ describe('Calendar', () => {
 
       expect(await page.evaluate(() => document.querySelectorAll('.toast-message')[0].innerText)).toBe('Event "Out of Office" Clicked');
     });
+
+    it('should not visual regress', async () => {
+      expect(await page.$$eval('.monthview-table td', el => el.length)).toEqual(42);
+
+      const image = await page.screenshot();
+      const config = getConfig('calendar-only');
+      await page.reload({ waitUntil: ['domcontentloaded', 'networkidle0'] });
+      expect(image).toMatchImageSnapshot(config);
+    });
   });
 
   describe('Specific Locale', () => {
@@ -234,6 +253,15 @@ describe('Calendar', () => {
 
     it('should render without error', async () => {
       expect(await page.$$eval('.monthview-table td', el => el.length)).toEqual(42);
+    });
+
+    it('should not visual regress', async () => {
+      expect(await page.$$eval('.monthview-table td', el => el.length)).toEqual(42);
+
+      const image = await page.screenshot();
+      const config = getConfig('calendar-monthview-legend');
+      await page.reload({ waitUntil: ['domcontentloaded', 'networkidle0'] });
+      expect(image).toMatchImageSnapshot(config);
     });
   });
 
@@ -262,6 +290,15 @@ describe('Calendar', () => {
 
       expect(await page.$eval('.calendar-monthview #monthview-datepicker-field', el => el.innerHTML.trim())).toBe('صفر 1440');
       expect(await page.$$eval('.monthview-table .calendar-event', el => el.length)).toEqual(21);
+    });
+
+    it('should not visual regress', async () => {
+      expect(await page.$$eval('.monthview-table td', el => el.length)).toEqual(42);
+
+      const image = await page.screenshot();
+      const config = getConfig('calendar-rtl');
+      await page.reload({ waitUntil: ['domcontentloaded', 'networkidle0'] });
+      expect(image).toMatchImageSnapshot(config);
     });
   });
 
