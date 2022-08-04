@@ -23,13 +23,13 @@ describe('Calendar', () => {
       const nextButton = await page.$('.calendar-monthview button.next');
       const testDate = new Date();
 
-      expect(await page.$eval('.calendar-monthview #calendar-id-month-view-datepicker', el => el.innerHTML)).toBe(testDate.toLocaleString('default', { month: 'long', year: 'numeric'}));
+      expect(await page.$eval('.calendar-monthview #calendar-id-month-view-datepicker', el => el.innerHTML)).toBe(testDate.toLocaleString('default', { month: 'long', year: 'numeric' }));
 
       await nextButton.click();
       await testDate.setDate(1);
       await testDate.setMonth(testDate.getMonth() + 1);
 
-      expect(await page.$eval('.calendar-monthview #calendar-id-month-view-datepicker', el => el.innerHTML)).toBe(testDate.toLocaleString('default', { month: 'long', year: 'numeric'}));
+      expect(await page.$eval('.calendar-monthview #calendar-id-month-view-datepicker', el => el.innerHTML)).toBe(testDate.toLocaleString('default', { month: 'long', year: 'numeric' }));
     });
 
     it('should be able to change month to prev', async () => {
@@ -37,7 +37,7 @@ describe('Calendar', () => {
       const testDate = new Date();
 
       await prevButton.click();
-      expect(await page.$eval('.calendar-monthview #calendar-id-month-view-datepicker', el => el.innerHTML)).toBe(testDate.toLocaleString('default', { month: 'long', year: 'numeric'}));
+      expect(await page.$eval('.calendar-monthview #calendar-id-month-view-datepicker', el => el.innerHTML)).toBe(testDate.toLocaleString('default', { month: 'long', year: 'numeric' }));
     });
 
     it('should be able to set id/automation id', async () => {
@@ -99,7 +99,7 @@ describe('Calendar', () => {
       await testDate.setMonth(9);
       await testDate.setFullYear(2018);
 
-      expect(await page.$eval('.calendar-monthview #monthview-datepicker-field', el => el.innerHTML)).toBe(testDate.toLocaleString('default', { month: 'long', year: 'numeric'}));
+      expect(await page.$eval('.calendar-monthview #monthview-datepicker-field', el => el.innerHTML)).toBe(testDate.toLocaleString('default', { month: 'long', year: 'numeric' }));
     });
 
     it('should be able to cancel month selector', async () => {
