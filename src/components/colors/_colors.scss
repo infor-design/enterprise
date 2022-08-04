@@ -92,6 +92,26 @@
   }
 }
 
+.palette-border {
+  border: none;
+  border-width: 5px;
+  border-style: dashed;
+  height: 55px;
+  width: auto;
+  margin: 10px;
+  margin-bottom: 40px;
+  font-size: 1.6rem;
+}
+
+.palette-svg {
+  font-size: 1.6rem;
+}
+
+.demo-center {
+  display: block;
+  margin: auto;
+}
+
 .theme-new-light,
 .theme-new-dark,
 .theme-new-contrast {
