@@ -30,7 +30,7 @@
 - `[Editor]` Fixed a bug where editor has dark screen after inserting an image. ([NG#1323](https://github.com/infor-design/enterprise-ng/issues/1323))
 - `[Editor]` Fixed a bug where reset dirty is not working on special characters in Edge browser. ([#6584](https://github.com/infor-design/enterprise/issues/6584))
 - `[Fileupload Advanced]` Fixed on max fileupload limit. ([#6625](https://github.com/infor-design/enterprise/issues/6625))
-- `[Montview]` Fixed missing legend data on visible previous / next month with using loadLegend API. ([#6665](https://github.com/infor-design/enterprise/issues/6665))
+- `[Monthview]` Fixed missing legend data on visible previous / next month with using loadLegend API. ([#6665](https://github.com/infor-design/enterprise/issues/6665))
 - `[Notification]` Updated css of notification to fix alignment in rtl mode. ([#6555](https://github.com/infor-design/enterprise/issues/6555))
 - `[Searchfield]` Fixed a bug on Mac OS Safari where x button can't clear the contents of the searchfield. ([#6631](https://github.com/infor-design/enterprise/issues/6631))
 - `[Popdown]` Fixed popdown not closing when clicking outside in NG. ([NG#1304](https://github.com/infor-design/enterprise-ng/issues/1304))
