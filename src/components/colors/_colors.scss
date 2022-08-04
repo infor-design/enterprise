@@ -106,24 +106,67 @@
 }
 
 // Status Colors
+//   Status Background Colors
 .status-01 {
-  background-color: $status-01-bg-color;
+  background-color: $status-01-color;
 }
 
 .status-02 {
-  background-color: $status-02-bg-color;
+  background-color: $status-02-color;
 }
 
 .status-03 {
-  background-color: $status-03-bg-color;
+  background-color: $status-03-color;
 }
 
 .status-04 {
-  background-color: $status-04-bg-color;
+  background-color: $status-04-color;
 }
 
 .status-05 {
-  background-color: $status-05-bg-color;
+  background-color: $status-05-color;
+}
+
+//   Status Border Colors
+.status-01-border {
+  border-color: $status-01-color;
+}
+
+.status-02-border {
+  border-color: $status-02-color;
+}
+
+.status-03-border {
+  border-color: $status-03-color;
+}
+
+.status-04-border {
+  border-color: $status-04-color;
+}
+
+.status-05-border {
+  border-color: $status-05-color;
+}
+
+//   Status Colors
+.status-01-color {
+  color: $status-01-color;
+}
+
+.status-02-color {
+  color: $status-02-color;
+}
+
+.status-03-color {
+  color: $status-03-color;
+}
+
+.status-04-color {
+  color: $status-04-color;
+}
+
+.status-05-color {
+  color: $status-05-color;
 }
 
 // RTL Styles
