@@ -62,15 +62,21 @@ $font-color-muted: $ids-color-palette-slate-40;
 $font-color-alert: $ids-color-status-danger;
 
 // The hyperlink Style
-$hyperlink-color: $ids-color-palette-azure-40;
+$hyperlink-color: $ids-color-palette-slate-50;
 $hyperlink-focus-border-color: $ids-color-brand-primary-base;
 $hyperlink-visited-color: $ids-color-palette-amethyst-30;
 $hyperlink-disabled-color: $disabled-color;
-$hyperlink-hover-color: $ids-color-brand-primary-base;
+$hyperlink-hover-color: $ids-color-palette-slate-40;
 
 // Rules
 $hr-top-color: $ids-color-palette-slate-90;
 $hr-bottom-color: transparent;
+
+// Buttons
+$button-color-primary-initial-background: $ids-color-palette-slate-60;
+$button-color-primary-disabled-background: $ids-color-palette-slate-80;
+$button-color-primary-disabled-border: $ids-color-palette-slate-80;
+$button-color-primary-hover-background: $ids-color-palette-slate-90;
 
 // Circle Pager
 $circlepager-border-color: $ids-color-palette-slate-40;
