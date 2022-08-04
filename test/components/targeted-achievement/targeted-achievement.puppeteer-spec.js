@@ -11,6 +11,18 @@ describe('Targeted Achievement', () => {
       await page.setViewport({ width: 1200, height: 800 });
     });
 
+    it('should show the title', async () => {
+      await expect(page.title()).resolves.toMatch('IDS Enterprise');
+    });
+    
+    it('should show the tooltip', async () => {
+      const icon = await page.$('.icon-error');
+      icon.hover();
+      
+      await page.waitForSelector('.tooltip', { visible: true })
+        .then(element => expect(element).toBeTruthy());
+    });
+
     it('should be able to set id/automation id example one', async () => {
       await page.evaluate(() => document.getElementById('targeted-achievement-example1-name').getAttribute('id'))
         .then(idValue => expect(idValue).toEqual('targeted-achievement-example1-name'));

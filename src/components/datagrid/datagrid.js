@@ -564,7 +564,7 @@ Datagrid.prototype = {
         self.pagerAPI.setActivePage(newActivePage, false, operationType);
         self.pagerAPI.triggerPagingEvents(self.pagerAPI.currentPage);
       }
-    } 
+    }
 
     if (!self.settings.paging && !self.settings.groupable) {
       if (location !== 'bottom') {
@@ -1055,7 +1055,6 @@ Datagrid.prototype = {
   */
   loadData(dataset, pagerInfo) {
     this.settings.dataset = dataset;
-
     if (!pagerInfo) {
       pagerInfo = {};
     }
@@ -1477,6 +1476,8 @@ Datagrid.prototype = {
       cssClass += column.hidden ? ' is-hidden' : '';
       cssClass += column.filterType ? ' is-filterable' : '';
       cssClass += column.textOverflow === 'ellipsis' ? ' text-ellipsis' : '';
+      cssClass += column?.headerIcon ? ' header-icon' : '';
+      cssClass += column?.headerCssClass ? ` ${column.headerCssClass}` : '';
       cssClass += headerAlignmentClass !== '' ? headerAlignmentClass : '';
 
       // Apply css classes
@@ -1498,8 +1499,14 @@ Datagrid.prototype = {
 
       // If header text is center aligned, for proper styling,
       // place the sortIndicator as a child of datagrid-header-text.
+      const svgHeaderIcon = `
+        <svg class="icon datagrid-header-icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-${column.headerIcon}"></use>
+        </svg>
+      `;
       headerRows[container] += `<div class="${isSelection ? 'datagrid-checkbox-wrapper ' : 'datagrid-column-wrapper'}${headerAlignmentClass}">
-      <span class="datagrid-header-text${column.required ? ' required' : ''}">${self.headerText(this.settings.columns[j])}${headerAlignmentClass === ' l-center-text' ? sortIndicator : ''}</span>`;
+      <span class="datagrid-header-text${column.required ? ' required' : ''}">${self.headerText(this.settings.columns[j])}${headerAlignmentClass === ' l-center-text' ? sortIndicator : ''}</span>
+      ${this.settings.columns[j]?.headerIcon ? svgHeaderIcon : ''}`;
 
       if (isSelection) {
         if (self.settings.showSelectAllCheckBox) {
@@ -2274,7 +2281,16 @@ Datagrid.prototype = {
       btnMarkup += render('in-range', 'InRange');
     }
 
-    if (/\b(integer|decimal|date|time|percent)\b/g.test(col.filterType)) {
+    if (/\b(date|time)\b/g.test(col.filterType)) {
+      btnMarkup += `${
+        render('less-than', 'EarlyThan')
+      }${render('less-equals', 'EarlyOrEquals')
+      }${render('greater-than', 'LaterThan')
+      }${render('greater-equals', 'LaterOrEquals')}`;
+      btnMarkup = btnMarkup.replace('{{icon}}', 'less-than');
+    }
+
+    if (/\b(integer|decimal|percent)\b/g.test(col.filterType)) {
       btnMarkup += `${
         render('less-than', 'LessThan')
       }${render('less-equals', 'LessOrEquals')
@@ -3720,7 +3736,7 @@ Datagrid.prototype = {
 
     if (!this.originalDataset) {
       this.originalDataset = this.settings.dataset.slice();
-    } else {
+    } else if (!this.settings.dataset || this.settings.dataset.length > 0) {
       this.settings.dataset = this.originalDataset;
     }
 
@@ -3807,7 +3823,6 @@ Datagrid.prototype = {
         activePage = pagerState.activePage;
       }
     }
-
     self.bodyColGroupHtmlLeft = '<colgroup>';
     self.bodyColGroupHtml = '<colgroup>';
     self.bodyColGroupHtmlRight = '<colgroup>';
@@ -3872,8 +3887,12 @@ Datagrid.prototype = {
     if (this.restoreSortOrder) {
       this.sortDataset();
     }
-
     let rowStatusTooltip = false;
+
+    if (self.originalDataset && (!s.groupable && s.dataset.length > 0)) {
+      s.dataset = self.originalDataset;
+    }
+
     for (let i = 0; i < s.dataset.length; i++) {
       // For better performance dont render out of page
       if (s.paging && !s.source) {
@@ -3932,6 +3951,7 @@ Datagrid.prototype = {
         if (!this.settings.groupable.suppressGroupRow) {
           // Show the grouping row
           const groupHtml = self.rowHtml(s.dataset[i], this.recordCount, i, true);
+
           if (this.hasLeftPane && groupHtml.left) {
             tableHtmlLeft += groupHtml.left;
           }
@@ -5529,10 +5549,11 @@ Datagrid.prototype = {
       tooltipTimer = setTimeout(() => {
         const isHeaderColumn = DOM.hasClass(elem, 'datagrid-column-wrapper');
         const isHeaderFilter = DOM.hasClass(elem.parentNode, 'datagrid-filter-wrapper');
+        const isHeaderIcon = DOM.hasClass(elem, 'datagrid-header-icon');
         const isPopup = isHeaderFilter ?
           elem.parentNode.querySelectorAll('.popupmenu.is-open').length > 0 : false;
         const tooltip = $(elem).data('gridtooltip') || self.cacheTooltip(elem);
-        const containerEl = isHeaderColumn ? elem.parentNode : elem;
+        const containerEl = isHeaderColumn ? elem.parentNode : isHeaderIcon ? elem.parentNode : elem;
         const width = self.getOuterWidth(containerEl);
         if (tooltip && (tooltip.forced || (tooltip.textwidth > (width - 35))) && !isPopup) {
           self.showTooltip(tooltip);
@@ -5597,6 +5618,18 @@ Datagrid.prototype = {
         .off('longpress.tableerrortooltip', '.icon')
         .on('longpress.tableerrortooltip', '.icon', function () {
           handleShow(this, 0);
+        });
+    }
+
+    if (this.element.find('.datagrid-header-icon')) {
+      this.element.find('.datagrid-header-icon')
+        .off('mouseenter.headericon')
+        .on('mouseenter.headericon', function () {
+          handleShow(this);
+        })
+        .off('mouseleave.headericon')
+        .on('mouseleave.headericon', function () {
+          handleShow(this);
         });
     }
   },
@@ -5680,7 +5713,9 @@ Datagrid.prototype = {
       this.updateCellNode(idx, j, this.fieldValue(rowData, col.field), true);
     }
 
-    this.settings.dataset[idx] = utils.extend(true, this.settings.dataset[idx], data);
+    if (!s.treeGrid && s.dataset[idx] !== undefined) {
+      this.settings.dataset[idx] = utils.extend(true, this.settings.dataset[idx], data); 
+    }
 
     if (this.settings.rowReorder && this.tableBody.data('arrange')) {
       this.tableBody.data('arrange').updated();
@@ -8967,7 +9002,7 @@ Datagrid.prototype = {
       return;
     }
 
-    let rowData = s.dataset[idx];
+    let rowData = s.treeGrid ? s.treeDepth[idx].node : s.dataset[idx];
     const getSelUniqueRowID = node => (node ? node.uniqueRowID : null);
 
     // Unselect it
@@ -12564,6 +12599,7 @@ Datagrid.prototype = {
       const aTitle = elem.querySelector('a[title]');
       const isRowstatus = DOM.hasClass(elem, 'rowstatus-cell');
       const isSvg = elem.tagName.toLowerCase() === 'svg';
+      const isHeaderIcon = elem.classList.contains('datagrid-header-icon');
       const isTh = elem.tagName.toLowerCase() === 'th';
       const isHeaderColumn = DOM.hasClass(elem, 'datagrid-column-wrapper');
       const isHeaderFilter = DOM.hasClass(elem.parentNode, 'datagrid-filter-wrapper');
@@ -12584,14 +12620,14 @@ Datagrid.prototype = {
         columnSettings = this.settings.columns[this.columnIdxById(columnId)];
       }
 
-      if (isTh || isHeaderColumn || isHeaderFilter) {
+      if (isTh || isHeaderColumn || isHeaderFilter || isHeaderIcon) {
         tooltip.wrapper = elem;
-        tooltip.distance = isHeaderFilter ? 15 : null;
-        tooltip.placement = isHeaderColumn ? 'top' : 'bottom';
+        tooltip.distance = (isHeaderFilter || isHeaderIcon) ? 15 : null;
+        tooltip.placement = (isHeaderColumn || isHeaderIcon) ? 'top' : 'bottom';
       }
 
       // Cache rowStatus cell
-      if (isRowstatus || isSvg) {
+      if (isRowstatus || (isSvg && !isHeaderIcon)) {
         const rowNode = this.closest(elem, el => DOM.hasClass(el, 'datagrid-row'));
         const classList = rowNode ? rowNode.classList : [];
         tooltip.isError = classList.contains('rowstatus-row-error');
@@ -12638,6 +12674,13 @@ Datagrid.prototype = {
             const targetEl = elem.parentNode.querySelector('.is-checked');
             tooltip.content = targetEl ? xssUtils.stripHTML(targetEl.textContent) : '';
           }
+        } else if (isHeaderIcon) {
+          const parentColId = $(elem).parents('th').attr('data-column-id');
+          const headerText = elem.previousElementSibling.textContent;
+          const iconTooltipContent = this.settings.columns[this.columnIdxById(parentColId)].headerIconTooltip;
+
+          tooltip.content = xssUtils.stripHTML(iconTooltipContent);
+          tooltip.headerText = xssUtils.stripHTML(headerText);
         } else {
           // Default use wrapper content
           if (tooltip.wrapper.querySelector('.datagrid-expand-btn')) {
@@ -12654,7 +12697,7 @@ Datagrid.prototype = {
       }
 
       // Clean up text in selects
-      const select = tooltip.wrapper.querySelector('select');
+      const select = tooltip.wrapper?.querySelector('select');
       if (select && select.selectedIndex &&
         select.options[select.selectedIndex] &&
         select.options[select.selectedIndex].innerHTML) {
@@ -12698,7 +12741,12 @@ Datagrid.prototype = {
         }
 
         tooltip.content = contentTooltip ? tooltip.content : `<p>${tooltip.content}</p>`;
-        if (title || isHeaderFilter) {
+
+        if (isHeaderIcon) {
+          const headerText = elem.previousElementSibling.textContent;
+          tooltip.content = `<p class="align-text-left text-strong">${headerText}</p>${tooltip.content}`;
+        }
+        if (title || isHeaderFilter || isHeaderIcon) {
           tooltip.forced = true;
         }
       }
@@ -12713,7 +12761,7 @@ Datagrid.prototype = {
           rowData = this.settings.treeDepth[rowIdx].node;
         } else {
           rowIdx = this.dataRowIndex(rowElem);
-          rowData = this.settings.dataset[rowIdx];
+          rowData = this.rowData(rowIdx);
         }
 
         const value = this.fieldValue(rowData, col.field);
@@ -12772,6 +12820,9 @@ Datagrid.prototype = {
           options.extraClassList.map(className => this.tooltip.classList.add(className));
         }
 
+        const hasHeaderIcon = options.wrapper.classList?.contains('datagrid-header-icon');
+        tooltipContentEl.classList[hasHeaderIcon ? 'add' : 'remove']('header-icon');
+
         const distance = typeof options.distance === 'number' ? options.distance : 0;
         const placeOptions = {
           x: options.x || 0,
@@ -12779,7 +12830,7 @@ Datagrid.prototype = {
           container: this.element.closest('.page-container.scrollable') || $('body'),
           containerOffsetX: options.wrapper.offsetLeft,
           containerOffsetY: options.wrapper.offsetTop,
-          parent: $(options.wrapper),
+          parent: $(options?.wrapper),
           placement: options.placement || 'top',
           strategies: ['flip', 'nudge']
         };
@@ -13031,7 +13082,6 @@ Datagrid.prototype = {
     this.render(null, pagingInfo);
     this.renderHeader();
     this.handlePaging();
-
     return this;
   }
 };
