@@ -1,5 +1,13 @@
 # What's New with Enterprise
 
+## v4.67.0
+
+## v4.67.0 Features
+
+## v4.67.0 Fixes
+
+- `[Button]` Added dark theme button colors. ([#6512](https://github.com/infor-design/enterprise/issues/6512))
+
 ## v4.66.0
 
 ## v4.66.0 Features
