@@ -77,6 +77,11 @@ $button-color-primary-initial-background: $ids-color-palette-slate-60;
 $button-color-primary-disabled-background: $ids-color-palette-slate-80;
 $button-color-primary-disabled-border: $ids-color-palette-slate-80;
 $button-color-primary-hover-background: $ids-color-palette-slate-80;
+$button-color-primary-active-background: $ids-color-palette-slate-60;
+
+// Button Ripple
+$secondary-btn-ripple-color: $ids-color-palette-slate-60;
+$tertiary-btn-ripple-color: $ids-color-palette-slate-40;
 
 // Circle Pager
 $circlepager-border-color: $ids-color-palette-slate-40;
