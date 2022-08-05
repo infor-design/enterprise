@@ -911,17 +911,17 @@ html[lang^='fr-'] {
 }
 
 .btn-link {
-  color: $hyperlink-color;
+  color: $btn-hyperlink-color;
 
   .icon {
-    color: $hyperlink-color;
+    color: $btn-hyperlink-color;
   }
 
   &:hover {
-    color: $hyperlink-hover-color;
+    color: $btn-hyperlink-hover-color;
 
     .icon {
-      color: $hyperlink-hover-color;
+      color: $btn-hyperlink-hover-color;
     }
   }
 }
