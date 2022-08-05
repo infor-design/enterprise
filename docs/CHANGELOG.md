@@ -1,5 +1,12 @@
 # What's New with Enterprise
 
+## v4.67.0
+
+## v4.67.0 Features
+
+## v4.67.0 Fixes
+- `[Color Palette]` Added status color CSS classes for color and border-color properties. ([#6711](https://github.com/infor-design/enterprise/issues/6711))
+
 ## v4.66.0
 
 ## v4.66.0 Features
@@ -12,7 +19,7 @@
 - `[Searchfield]` Added option to add custom icon button. ([#6453](https://github.com/infor-design/enterprise/issues/6453))
 - `[Targeted-Achievement]` Added puppeteer test for show tooltip on targeted achievement. ([#6550](https://github.com/infor-design/enterprise/issues/6550))
 - `[Textarea]` Converted protractor tests to puppeteer. ([#6629](https://github.com/infor-design/enterprise/issues/6629))
-- `[Color Palette]` Added status color CSS classes for color and border-color properties. ([#6711](https://github.com/infor-design/enterprise/issues/6711))
+
 ## v4.66.0 Fixes
 
 - `[Datagrid]` Fixed trigger icon background color on hover when row is activated. ([#6679](https://github.com/infor-design/enterprise/issues/6679))

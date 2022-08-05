@@ -577,9 +577,7 @@
       <svg class="icon status-01-color demo-center" focusable="false" aria-hidden="true" role="presentation">
         <use href="#icon-error-alert"></use>
       </svg>
-      <span class="light-color">
-        <span class="palette-hex"></span>
-      </span>
+      <p class="palette-hex-svg"></p>
     </div>
   </div>
   <div class="palette-column">
@@ -588,9 +586,7 @@
       <svg class="icon status-02-color demo-center" focusable="false" aria-hidden="true" role="presentation">
         <use href="#icon-error-alert"></use>
       </svg>
-      <span class="light-color">
-        <span class="palette-hex"></span>
-      </span>
+      <p class="palette-hex-svg"></p>
     </div>
   </div>
   <div class="palette-column">
@@ -599,9 +595,7 @@
       <svg class="icon status-03-color demo-center" focusable="false" aria-hidden="true" role="presentation">
         <use href="#icon-error-alert"></use>
       </svg>
-      <span class="light-color">
-        <span class="palette-hex"></span>
-      </span>
+      <p class="palette-hex-svg"></p>
     </div>
   </div>
   <div class="palette-column">
@@ -610,9 +604,7 @@
       <svg class="icon status-04-color demo-center" focusable="false" aria-hidden="true" role="presentation">
         <use href="#icon-error-alert"></use>
       </svg>
-      <span class="light-color">
-        <span class="palette-hex"></span>
-      </span>
+      <p class="palette-hex-svg"></p>
     </div>
   </div>
   <div class="palette-column">
@@ -621,12 +613,11 @@
       <svg class="icon status-05-color demo-center" focusable="false" aria-hidden="true" role="presentation">
         <use href="#icon-error-alert"></use>
       </svg>
-      <span class="light-color">
-        <span class="palette-hex"></span>
-      </span>
+      <p class="palette-hex-svg"></p>
     </div>
   </div>
 </div>
+
 
 <script>
   var setColorText = function(paletteType, property) {
@@ -667,7 +658,7 @@
       }
     })
     Array.prototype.forEach.call(paletteSVGColor, function(color) {
-      const paletteHex = color.querySelector('.palette-hex');
+      const paletteHex = color.querySelector('.palette-hex-svg');
       const cColor = window.getComputedStyle(color.querySelector('.icon'), null).getPropertyValue('color');
       const rgbValues = cColor.match(/\d+/g);
       if (paletteHex !== null) {
