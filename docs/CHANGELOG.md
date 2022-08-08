@@ -7,6 +7,7 @@
 ## v4.67.0 Fixes
 
 - `[Button]` Added dark theme button colors. ([#6512](https://github.com/infor-design/enterprise/issues/6512))
+- `[Calendar]` Fixed a bug in calendar where bottom border is not properly rendering. ([#6668](https://github.com/infor-design/enterprise/issues/6668))
 
 ## v4.66.0
 
