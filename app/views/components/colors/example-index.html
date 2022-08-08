@@ -515,9 +515,125 @@
   </div>
 </div>
 
+<div class="row full-width">
+  <div class="twelve columns">
+    <h1>Status Color Borders</h1>
+  </div>
+</div>
+
+<div class="palette-grid">
+  <div class="palette-column">
+    <span class="palette-label">Status 01</span>
+    <div class="palette-border status-01-border">
+      <span class="light-color">
+        <span class="palette-hex"></span>
+      </span>
+    </div>
+  </div>
+  <div class="palette-column">
+    <span class="palette-label">Status 02</span>
+    <div class="palette-border status-02-border">
+      <span class="light-color">
+        <span class="palette-hex"></span>
+      </span>
+    </div>
+  </div>
+  <div class="palette-column">
+    <span class="palette-label">Status 03</span>
+    <div class="palette-border status-03-border">
+      <span class="light-color">
+        <span class="palette-hex"></span>
+      </span>
+    </div>
+  </div>
+  <div class="palette-column">
+    <span class="palette-label">Status 04</span>
+    <div class="palette-border status-04-border">
+      <span class="light-color">
+        <span class="palette-hex"></span>
+      </span>
+    </div>
+  </div>
+  <div class="palette-column">
+    <span class="palette-label">Status 05</span>
+    <div class="palette-border status-05-border">
+      <span class="light-color">
+        <span class="palette-hex"></span>
+      </span>
+    </div>
+  </div>
+</div>
+
+<div class="row full-width">
+  <div class="twelve columns">
+    <h1>Status Colors ('color' Property)</h1>
+  </div>
+</div>
+
+<div class="palette-grid">
+  <div class="palette-column">
+    <span class="palette-label">Status 01</span>
+    <div class="palette-svg demo-svg" title="error-alert">
+      <svg class="icon status-01-color demo-center" focusable="false" aria-hidden="true" role="presentation">
+        <use href="#icon-error-alert"></use>
+      </svg>
+      <p class="palette-hex-svg"></p>
+    </div>
+  </div>
+  <div class="palette-column">
+    <span class="palette-label">Status 02</span>
+    <div class="palette-svg demo-svg" title="error-alert">
+      <svg class="icon status-02-color demo-center" focusable="false" aria-hidden="true" role="presentation">
+        <use href="#icon-error-alert"></use>
+      </svg>
+      <p class="palette-hex-svg"></p>
+    </div>
+  </div>
+  <div class="palette-column">
+    <span class="palette-label">Status 03</span>
+    <div class="palette-svg demo-svg" title="error-alert">
+      <svg class="icon status-03-color demo-center" focusable="false" aria-hidden="true" role="presentation">
+        <use href="#icon-error-alert"></use>
+      </svg>
+      <p class="palette-hex-svg"></p>
+    </div>
+  </div>
+  <div class="palette-column">
+    <span class="palette-label">Status 04</span>
+    <div class="palette-svg demo-svg" title="error-alert">
+      <svg class="icon status-04-color demo-center" focusable="false" aria-hidden="true" role="presentation">
+        <use href="#icon-error-alert"></use>
+      </svg>
+      <p class="palette-hex-svg"></p>
+    </div>
+  </div>
+  <div class="palette-column">
+    <span class="palette-label">Status 05</span>
+    <div class="palette-svg demo-svg" title="error-alert">
+      <svg class="icon status-05-color demo-center" focusable="false" aria-hidden="true" role="presentation">
+        <use href="#icon-error-alert"></use>
+      </svg>
+      <p class="palette-hex-svg"></p>
+    </div>
+  </div>
+</div>
+
+
 <script>
+  var setColorText = function(paletteType, property) {
+    Array.prototype.forEach.call(paletteType, function(color) {
+      const paletteHex = color.querySelector('.palette-hex');
+      const bgColor = window.getComputedStyle(color, null).getPropertyValue(property);
+      const rgbValues = bgColor.match(/\d+/g);
+      if (paletteHex !== null) {
+        paletteHex.innerHTML = rgbToHex(rgbValues[0], rgbValues[1], rgbValues[2]);
+      }
+    })
+  };
   var setColors = function () {
     const paletteColor = document.querySelectorAll('.palette-color');
+    const paletteBorder = document.querySelectorAll('.palette-border');
+    const paletteSVGColor = document.querySelectorAll('.palette-svg');
     function valueToHex(v) {
       const hex = v.toString(16);
       return hex.length === 1 ?  0 + hex : hex;
@@ -529,6 +645,22 @@
       const paletteHex = color.querySelector('.palette-hex');
       const bgColor = window.getComputedStyle(color, null).getPropertyValue('background-color');
       const rgbValues = bgColor.match(/\d+/g);
+      if (paletteHex !== null) {
+        paletteHex.innerHTML = rgbToHex(rgbValues[0], rgbValues[1], rgbValues[2]);
+      }
+    })
+    Array.prototype.forEach.call(paletteBorder, function(color) {
+      const paletteHex = color.querySelector('.palette-hex');
+      const borderColor = window.getComputedStyle(color, null).getPropertyValue('border-color');
+      const rgbValues = borderColor.match(/\d+/g);
+      if (paletteHex !== null) {
+        paletteHex.innerHTML = rgbToHex(rgbValues[0], rgbValues[1], rgbValues[2]);
+      }
+    })
+    Array.prototype.forEach.call(paletteSVGColor, function(color) {
+      const paletteHex = color.querySelector('.palette-hex-svg');
+      const cColor = window.getComputedStyle(color.querySelector('.icon'), null).getPropertyValue('color');
+      const rgbValues = cColor.match(/\d+/g);
       if (paletteHex !== null) {
         paletteHex.innerHTML = rgbToHex(rgbValues[0], rgbValues[1], rgbValues[2]);
       }

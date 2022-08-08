@@ -8,12 +8,14 @@
 
 - `[Button]` Added dark theme button colors. ([#6512](https://github.com/infor-design/enterprise/issues/6512))
 - `[Calendar]` Fixed a bug in calendar where bottom border is not properly rendering. ([#6668](https://github.com/infor-design/enterprise/issues/6668))
+- `[Color Palette]` Added status color CSS classes for color and border-color properties. ([#6711](https://github.com/infor-design/enterprise/issues/6711))
 
 ## v4.66.0
 
 ## v4.66.0 Features
 
 - `[Busyindicator]` Converted protractor tests to puppeteer. ([#6623](https://github.com/infor-design/enterprise/issues/6623))
+- `[Calendar]` Converted protractor tests to puppeteer. ([#6524](https://github.com/infor-design/enterprise/issues/6524))
 - `[Datagrid]` Added puppeteer script for render only one row. ([#6645](https://github.com/infor-design/enterprise/issues/6645))
 - `[Datagrid]` Added test scripts for add row. ([#6644](https://github.com/infor-design/enterprise/issues/6644))
 - `[Datepicker]` Added setting for adjusting day using +/- in datepicker. ([#6632](https://github.com/infor-design/enterprise/issues/6632))
@@ -39,7 +41,7 @@
 - `[Editor]` Fixed a bug where editor has dark screen after inserting an image. ([NG#1323](https://github.com/infor-design/enterprise-ng/issues/1323))
 - `[Editor]` Fixed a bug where reset dirty is not working on special characters in Edge browser. ([#6584](https://github.com/infor-design/enterprise/issues/6584))
 - `[Fileupload Advanced]` Fixed on max fileupload limit. ([#6625](https://github.com/infor-design/enterprise/issues/6625))
-- `[Montview]` Fixed missing legend data on visible previous / next month with using loadLegend API. ([#6665](https://github.com/infor-design/enterprise/issues/6665))
+- `[Monthview]` Fixed missing legend data on visible previous / next month with using loadLegend API. ([#6665](https://github.com/infor-design/enterprise/issues/6665))
 - `[Notification]` Updated css of notification to fix alignment in rtl mode. ([#6555](https://github.com/infor-design/enterprise/issues/6555))
 - `[Searchfield]` Fixed a bug on Mac OS Safari where x button can't clear the contents of the searchfield. ([#6631](https://github.com/infor-design/enterprise/issues/6631))
 - `[Popdown]` Fixed popdown not closing when clicking outside in NG. ([NG#1304](https://github.com/infor-design/enterprise-ng/issues/1304))
