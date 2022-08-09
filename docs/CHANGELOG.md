@@ -8,6 +8,7 @@
 
 - `[Button]` Added dark theme button colors. ([#6512](https://github.com/infor-design/enterprise/issues/6512))
 - `[Color Palette]` Added status color CSS classes for color and border-color properties. ([#6711](https://github.com/infor-design/enterprise/issues/6711))
+- `[Searchfield]` Adjusted border in searchfield so that height is even. ([#6686](https://github.com/infor-design/enterprise/issues/6686))
 
 ## v4.66.0
 
