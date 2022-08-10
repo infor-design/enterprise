@@ -1500,7 +1500,7 @@ Datagrid.prototype = {
       // If header text is center aligned, for proper styling,
       // place the sortIndicator as a child of datagrid-header-text.
       const svgHeaderIcon = `
-        <svg class="icon datagrid-header-icon" focusable="false" aria-hidden="true" role="presentation">
+        <svg class="icon datagrid-header-icon" focusable="false" aria-hidden="true" role="presentation" title="${column?.headerIconTooltip}">
           <use href="#icon-${column.headerIcon}"></use>
         </svg>
       `;
@@ -5510,19 +5510,23 @@ Datagrid.prototype = {
 
     const self = this;
     const defaultDelay = 400;
+    const hasHeaderIcon = self.element.find('.datagrid-header-icon').length > 0;
     let tooltipTimer;
 
     // Set selector
     const selector = {
       th: '.datagrid-header th',
       td: '.datagrid-wrapper tbody tr.datagrid-row td[role="gridcell"]:not(.rowstatus-cell)',
-      rowstatus: '.datagrid-wrapper tbody tr.datagrid-row td[role="gridcell"] .icon-rowstatus'
+      rowstatus: '.datagrid-wrapper tbody tr.datagrid-row td[role="gridcell"] .icon-rowstatus',
+      headerIcon: '.datagrid-header th .datagrid-header-icon'
     };
 
     if (this.settings.filterable) {
       selector.headerColumn = `${selector.th} .datagrid-column-wrapper`;
       selector.headerFilter = `${selector.th} .datagrid-filter-wrapper .btn-menu`;
       selector.header = `${selector.headerColumn}, ${selector.headerFilter}`;
+    } else if (hasHeaderIcon) {
+      selector.header = selector.headerIcon;
     } else {
       selector.header = selector.th;
     }
@@ -5621,7 +5625,7 @@ Datagrid.prototype = {
         });
     }
 
-    if (this.element.find('.datagrid-header-icon')) {
+    if (this.element.find('.datagrid-header-icon').length > 0) {
       this.element.find('.datagrid-header-icon')
         .off('mouseenter.headericon')
         .on('mouseenter.headericon', function () {
@@ -5629,7 +5633,7 @@ Datagrid.prototype = {
         })
         .off('mouseleave.headericon')
         .on('mouseleave.headericon', function () {
-          handleShow(this);
+          handleHide(this);
         });
     }
   },
