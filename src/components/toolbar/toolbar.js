@@ -962,7 +962,7 @@ Toolbar.prototype = {
       if (hasButtonsetSizeGetter) {
         return parseInt(buttonsetSize, 10);
       }
-      if (self.settings.favorButtonset === true) {
+      if (self.settings.favorButtonset === true && !self.buttonsetItems.find('.searchfield-wrapper.has-go-button')) {
         return buttonsetDims.width;
       }
       return toolbarDims.width - (toolbarPadding +
