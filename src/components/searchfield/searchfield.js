@@ -50,6 +50,7 @@ const MAX_TOOLBARSEARCHFIELD_EXPAND_SIZE = 450;
  * @class SearchField
  * @param {jQuery[]|HTMLElement} element the base searchfield element
  * @param {object} [settings] incoming settings
+ * @param {object} [settings.button]  A button to add besides the default buttons.
  * @param {function} [settings.resultsCallback] Callback function for getting typahead results on search.
  * @param {function} [settings.allResultsCallback] Callback function for getting "all results".
  * @param {boolean} [settings.showAllResults = true] If true the show all results link is showin in the list.
@@ -455,6 +456,13 @@ SearchField.prototype = {
       this.makeClearable();
     }
 
+    if (this.settings.button) {
+      this.wrapper.addClass('has-custom-button');
+      this.customButton = $('<button class="btn-icon custom-button"></button>');
+      this.customButton.append($.createIconElement(this.settings.button.icon));
+      this.wrapper.append(this.customButton);
+    }
+
     // Stagger a calculation for setting the size of the Searchfield element, if applicable
     const self = this;
     const resizeTimer = new RenderLoopItem({
@@ -724,6 +732,14 @@ SearchField.prototype = {
   },
 
   /**
+   * Detects the existence of a custom button added to the main searchfield API
+   * @returns {boolean} whether or not a "Go" button is present
+   */
+  hasCustomButton() {
+    return this.settings.button && this.customButton && this.customButton.length;
+  },
+
+  /**
    * Sets up the event-listening structure for this component instance.
    * @private
    * @returns {this} component instance
@@ -791,6 +807,12 @@ SearchField.prototype = {
       self.goButton
         .on(`click.${this.id}`, e => self.handleGoButtonClick(e))
         .on(`click.${this.id}`, e => self.handleGoButtonFocus(e))
+        .on(`blur.${this.id}`, () => self.handleSafeBlur());
+    }
+
+    if (self.hasCustomButton()) {
+      this.customButton
+        .on(`click.${this.id}`, e => self.settings.button.click(e, self.element.val()))
         .on(`blur.${this.id}`, () => self.handleSafeBlur());
     }
 
@@ -901,6 +923,17 @@ SearchField.prototype = {
       list.off(`focus.${this.id}`);
     });
 
+    // Safari Mac document.activeElement cannot be used on buttons because it is not focusable on the Mac OS Safari.
+    if (env.browser.isSafari()) {
+      this.xButton.on('mouseover.clearable', () => {
+        this.closeButtonHover = true;
+      });
+    
+      this.xButton.on('mouseleave.clearable', () => {
+        this.closeButtonHover = false;
+      });
+    }
+
     return this;
   },
 
@@ -957,6 +990,11 @@ SearchField.prototype = {
     const wrapperElem = this.wrapper[0];
 
     if (this.settings.tabbable && wrapperElem.contains(active) && $(active).is('button.close')) {
+      return true;
+    }
+
+    // Safari Mac document.activeElement cannot be used on buttons because it is not focusable on the Mac OS Safari.
+    if (env.browser.isSafari() && this.closeButtonHover && !$(active).is('button.close')) {
       return true;
     }
 
@@ -1412,6 +1450,7 @@ SearchField.prototype = {
    */
   setOpenWidth() {
     let subtractWidth = 0;
+    const wrapper = this.wrapper;
 
     if (this.wrapper[0]) {
       this.wrapper[0].style.width = this.openWidth;
@@ -1441,7 +1480,10 @@ SearchField.prototype = {
     }
 
     if (subtractWidth > 0) {
-      this.input.style.width = `calc(100% - ${subtractWidth}px)`;
+      // Add two more pixels so that the searchfield will not cut off the border.
+      const isAlternate = wrapper.hasClass('alternate') ? 2 : 0;
+
+      this.input.style.width = `calc(100% - ${subtractWidth + isAlternate}px)`;
     }
 
     delete this.openWidth;
@@ -1530,7 +1572,9 @@ SearchField.prototype = {
 
     // NOTE: final width can only be 100% if no value is subtracted for other elements
     if (subtractWidth > 0) {
-      targetWidthProp = `calc(${baseWidth} - ${subtractWidth}px)`;
+      // If it's an alternate searchfield, change the base width to 100%
+      const isAlternate = this.element[0].parentElement.classList.contains('alternate');
+      targetWidthProp = `calc(${isAlternate ? '100%' : baseWidth} - ${subtractWidth}px)`;
     }
     if (targetWidthProp) {
       this.element[0].style.width = targetWidthProp;
@@ -2090,6 +2134,11 @@ SearchField.prototype = {
       delete this.goButton;
     }
 
+    if (this.customButton && this.customButton.length) {
+      this.customButton.off(`click.${this.id} blur.${this.id}`).remove();
+      delete this.customButton;
+    }
+
     if (this.categoryButton && this.categoryButton.length) {
       const api = this.categoryButton.data('popupmenu');
       if (api) {
@@ -2127,6 +2176,13 @@ SearchField.prototype = {
 
     if (this.xButton && this.xButton.length) {
       this.xButton.off(`blur.${this.id}`);
+
+      // Safari Mac document.activeElement cannot be used on buttons because it is not focusable on the Mac OS Safari.
+      if (env.browser.isSafari()) {
+        this.xButton.off('mouseover.clearable');
+        this.xButton.off('mouseleave.clearable');
+      }
+
       this.xButton.remove();
     }
 
@@ -2141,12 +2197,14 @@ SearchField.prototype = {
   makeClearable() {
     this.element.clearable({ tabbable: this.settings.tabbable });
     this.wrapper.addClass('has-close-icon-button');
-    this.xButton = this.wrapper.children('.icon.close');
-
+    this.xButton = this.wrapper.children('.icon.close').length > 0 ? this.wrapper.children('.icon.close') : this.wrapper.children('button.close');
+  
     // Ignoring the close button from tabbing
     if (!this.settings.tabbable) {
       this.xButton[0].setAttribute('tabindex', '-1');
     }
+
+    this.element.on('cleared', () => this.checkContents());
 
     // Add test automation ids
     utils.addAttributes(this.xButton, this, this.settings.attributes, 'btn-close', true);

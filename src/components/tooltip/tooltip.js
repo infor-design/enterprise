@@ -1089,6 +1089,7 @@ Tooltip.prototype = {
    * @returns {void}
    */
   detachOpenEvents() {
+    const self = this;
     this.tooltip.off(`click.${COMPONENT_NAME}`);
 
     $(document).off([

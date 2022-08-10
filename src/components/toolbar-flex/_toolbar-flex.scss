@@ -45,6 +45,27 @@
             transform: translateY(-50%);
           }
         }
+
+        &.has-text.active.has-close-icon-button .custom-button {
+          left: calc(100% - 105px);
+
+          @media (min-width: $breakpoint-phone-to-tablet) {
+            left: 163px;
+          }
+        }
+
+        .custom-button {
+          left: calc(100% - 72px);
+
+          @media (min-width: $breakpoint-phone-to-tablet) {
+            left: 180px;
+          }
+
+          .icon {
+            left: 0;
+            top: -8px;
+          }
+        }
       }
     }
   }

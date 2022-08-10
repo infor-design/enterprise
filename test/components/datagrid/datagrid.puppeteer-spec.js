@@ -1,10 +1,10 @@
 /* eslint-disable compat/compat */
 const { getConfig, getComputedStyle } = require('../../helpers/e2e-utils.js');
 
-describe('Datagrid Puppeteer Tests', () => {
+describe('Datagrid', () => {
   const baseUrl = 'http://localhost:4000/components/datagrid';
 
-  describe('Datagrid Filter Format Test', () => {
+  describe('Filter Format', () => {
     const url = `${baseUrl}/example-filter.html`;
 
     beforeAll(async () => {
@@ -40,7 +40,7 @@ describe('Datagrid Puppeteer Tests', () => {
     });
   });
 
-  describe('Datagrid Filter Custom Filter Conditions', () => {
+  describe('Filter Custom Filter Conditions', () => {
     const url = `${baseUrl}/example-custom-filter-conditions-and-defaults.html`;
 
     beforeAll(async () => {
@@ -55,7 +55,7 @@ describe('Datagrid Puppeteer Tests', () => {
     });
   });
 
-  describe('Datagrid test-tree-rowstatus tests', () => {
+  describe('Tree row status', () => {
     const url = `${baseUrl}/test-tree-rowstatus.html`;
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
@@ -85,7 +85,7 @@ describe('Datagrid Puppeteer Tests', () => {
     });
   });
 
-  describe('Datagrid example-key-row-select tests', () => {
+  describe('Key row select', () => {
     const url = `${baseUrl}/example-key-row-select.html`;
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
@@ -102,7 +102,7 @@ describe('Datagrid Puppeteer Tests', () => {
     });
   });
 
-  describe('Datagrid test to keep the column strech in responsive view', () => {
+  describe('Index', () => {
     const url = `${baseUrl}/example-index.html`;
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
@@ -117,7 +117,7 @@ describe('Datagrid Puppeteer Tests', () => {
     });
   });
 
-  describe('Datagrid test count in select all tests', () => {
+  describe('Count in select all current page setting', () => {
     const url = `${baseUrl}/test-count-in-select-all-current-page-setting.html`;
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
@@ -151,7 +151,7 @@ describe('Datagrid Puppeteer Tests', () => {
     });
   });
 
-  describe('Datagrid add support for fallback image tootip text test', () => {
+  describe('Images error', () => {
     const url = `${baseUrl}/test-images-error.html`;
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
@@ -164,7 +164,7 @@ describe('Datagrid Puppeteer Tests', () => {
     });
   });
 
-  describe('Datagrid update column', () => {
+  describe('Update column', () => {
     const url = `${baseUrl}/test-update-column.html`;
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
@@ -179,7 +179,7 @@ describe('Datagrid Puppeteer Tests', () => {
     });
   });
 
-  describe('Datagrid test to have a method to make cell editable', () => {
+  describe('Add row selected', () => {
     const url = `${baseUrl}/test-addrow-selected.html`;
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
@@ -232,6 +232,78 @@ describe('Datagrid Puppeteer Tests', () => {
         const cells = await document.querySelectorAll('.datagrid body tr td');
         cells.forEach(cell => expect(cell.getAttribute('aria-describedby')).toBe(null));
       });
+    });
+  });
+
+  describe('Header icon with tooltip', () => {
+    const url = `${baseUrl}/example-header-icon-with-tooltip`;
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('should show the info icon in header column', async () => {
+      expect(await page.waitForSelector('.datagrid', { visible: true })).toBeTruthy();
+      expect(await page.waitForSelector('.icon.datagrid-header-icon', { visible: true })).toBeTruthy();
+    });
+
+    it('should show the tooltip content on mouse hover', async () => {
+      const headerIcon = await page.$('.datagrid-header-icon');
+      headerIcon.hover();
+      await page.waitForSelector('.grid-tooltip:not(.is-hidden)', { visible: true })
+        .then(el => expect(el).toBeTruthy());
+    });
+
+    it('should have a custom class in the column header', async () => {
+      await page.evaluate(() => document.getElementById('example-header-icon-with-tooltip-datagrid-1-header-2').getAttribute('class'))
+        .then(el => expect(el).toContain('lm-custom-class-header'));
+    });
+  });
+
+  describe('Can add multiple rows', () => {
+    const url = `${baseUrl}/test-selected-rows-addnew.html`;
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('should add new row on button click', async () => {
+      await page.click('#add-row-top-btn');
+      const ariaRowTop = await page.$eval('tr.datagrid-row.rowstatus-row-new.is-tooltips-enabled', element => element.getAttribute('aria-rowindex'));
+      expect(ariaRowTop).toMatch('8');
+      await page.click('.toolbar.has-more-button .btn-actions:not(.page-changer)');
+      await page.waitForSelector('#popupmenu-2.is-open', { visible: true });
+      await page.hover('#popupmenu-2 > li:nth-child(3) > a');
+      await page.click('#popupmenu-2 > li:nth-child(3) > a');
+      const ariaRowT4 = await page.$eval('tr.datagrid-row.rowstatus-row-new.is-tooltips-enabled', element => element.getAttribute('aria-rowindex'));
+      expect(ariaRowT4).toMatch('9');
+    });
+  });
+
+  describe('Datagrid test to render only one row', () => {
+    const url = `${baseUrl}/test-hide-pager-if-one-page.html`;
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('should re-renders all the row element when you add a new row', async () => {
+      await page.waitForSelector('#add-btn');
+      await page.click('#add-btn');
+
+      await page.waitForSelector('#datagrid > div > table.datagrid > tbody > tr > td:nth-child(5) > div');
+
+      const value = await page.$eval('#datagrid > div > table.datagrid > tbody > tr > td:nth-child(5) > div', element => element.innerHTML);
+      expect(value).toEqual('0');
+
+      await page.$eval('#datagrid > div > table.datagrid > tbody > tr > td:nth-child(5) > div', (el) => { 
+        el.innerHTML = '4'; 
+      });
+
+      await page.waitForTimeout(200);
+      await page.click('#add-btn');
+      const newValue = await page.$eval('#datagrid > div.datagrid-wrapper.center.scrollable-x.scrollable-y > table > tbody > tr:nth-child(2) > td:nth-child(5) > div', element => element.innerHTML);
+
+      expect(newValue).toEqual('4');
     });
   });
 });

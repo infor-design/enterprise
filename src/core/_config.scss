@@ -76,6 +76,8 @@ $hyperlink-focus-border-color: $link-color-initial-font;
 $hyperlink-visited-color: $link-color-visited-font;
 $hyperlink-disabled-color: $link-color-disabled-font;
 $hyperlink-hover-color: $link-color-hover-font;
+$btn-hyperlink-color: $hyperlink-color;
+$btn-hyperlink-hover-color: $hyperlink-hover-color;
 
 // Rules
 $hr-top-color: $ids-color-brand-secondary-base;
@@ -165,11 +167,11 @@ $badge-disabled-text-color: $ids-color-palette-slate-50;
 $badge-disabled-bg-color: $ids-color-palette-graphite-20;
 
 // Status Colors
-$status-01-bg-color: $ids-color-palette-ruby-60;
-$status-02-bg-color: $ids-color-palette-amber-80;
-$status-03-bg-color: $ids-color-palette-amber-80;
-$status-04-bg-color: $ids-color-palette-emerald-80;
-$status-05-bg-color: $ids-color-palette-azure-70;
+$status-01-color: $ids-color-palette-ruby-60;
+$status-02-color: $ids-color-palette-amber-80;
+$status-03-color: $ids-color-palette-amber-80;
+$status-04-color: $ids-color-palette-emerald-80;
+$status-05-color: $ids-color-palette-azure-70;
 
 // Cards
 $card-content-button-color: $ids-color-palette-azure-60;
@@ -221,6 +223,7 @@ $secondary-border-btn-border-color: $ids-color-brand-secondary-alt;
 $secondary-border-btn-hover-color: $ids-color-font-base;
 $secondary-border-btn-hover-border-color: $ids-color-palette-graphite-100;
 $secondary-border-btn-ripple-color: $ids-color-palette-azure-30;
+$secondary-btn-ripple-color: $ids-color-palette-slate-20;
 
 // Menu Button
 $menubutton-height: $button-size-height;
@@ -875,6 +878,7 @@ $subheader-input-color-focus-border: $input-color-focus-border;
 $subheader-input-text-color-focus: $input-color-focus-border;
 $subheader-searchfield-category-button-font-color: $ids-color-palette-slate-80;
 $header-searchfield-input-border-color: $ids-color-palette-slate-40;
+$header-searchfield-input-border-hover-color: $ids-color-palette-slate-100;
 $header-searchfield-btn-font-color: $ids-color-palette-slate-80;
 $header-toolbar-searchfield-icon-color: $ids-color-palette-white;
 

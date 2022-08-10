@@ -631,13 +631,9 @@ $datagrid-small-row-height: 25px;
     }
   }
 
-  &:not(.small-rowheight) .datagrid-header th.text-ellipsis {
+  &:not(.small-rowheight):not(.extra-small-rowheight) .datagrid-header th.text-ellipsis {
     &:not(.is-filterable) .datagrid-column-wrapper {
       height: 32px;
-
-      .sort-indicator {
-        margin-top: 2px;
-      }
     }
   }
 
@@ -683,10 +679,6 @@ $datagrid-small-row-height: 25px;
       &.text-ellipsis {
         .datagrid-column-wrapper {
           padding: 0 8px;
-        }
-
-        .datagrid-header-text {
-          margin: 5px 0 0 !important;
         }
       }
     }
@@ -927,6 +919,19 @@ $datagrid-small-row-height: 25px;
         top: -4px !important;
       }
     }
+
+    .datagrid-header th.text-ellipsis {
+      .datagrid-column-wrapper {
+        .datagrid-header-text {
+          margin: 7px 0 0 -1px;
+        }
+
+        .datagrid-header-icon {
+          top: 4px;
+          transform: translateY(0);
+        }
+      }
+    }
   }
 
   &.small-rowheight {
@@ -962,6 +967,15 @@ $datagrid-small-row-height: 25px;
         }
       }
     }
+
+    .datagrid-header {
+      .datagrid-column-wrapper {
+        .datagrid-header-icon {
+          top: 4px;
+          transform: translateY(0);
+        }
+      }
+    }
   }
 
   &.medium-rowheight {
@@ -988,7 +1002,7 @@ $datagrid-small-row-height: 25px;
 
       &.text-ellipsis {
         .datagrid-header-text {
-          margin: 8px 0 0 !important;
+          margin: 10px 0 0 !important;
         }
       }
     }
@@ -1366,7 +1380,7 @@ $datagrid-small-row-height: 25px;
     }
 
     .datagrid-trigger-cell {
-      .icon {
+      .icon:not(.datagrid-alert-icon) {
         left: 3px;
         top: 5px;
 
@@ -1541,7 +1555,12 @@ $datagrid-small-row-height: 25px;
             }
           }
 
-          .icon {
+          .icon.datagrid-alert-icon {
+            height: 15px;
+            width: 16px;
+          }
+
+          .icon:not(.datagrid-alert-icon) {
             height: 16px;
             top: 4px;
 
@@ -1568,7 +1587,7 @@ $datagrid-small-row-height: 25px;
               left: -3px;
             }
 
-            &.icon-error {
+            &.icon-error:not(.datagrid-alert-icon) {
               margin-left: -26px;
             }
           }
@@ -1856,6 +1875,12 @@ $datagrid-small-row-height: 25px;
         padding-left: 39px;
       }
     }
+
+    .datagrid-header th.text-ellipsis {
+      .datagrid-column-wrapper .datagrid-header-text {
+        margin: 7px 0 0 -1px;
+      }
+    }
   }
 
   &.extra-small-rowheight {
@@ -2014,10 +2039,27 @@ $datagrid-small-row-height: 25px;
 
     .datagrid-trigger-cell.has-editor:not(.is-readonly):hover,
     .datagrid-trigger-cell.has-editor:not(.is-readonly):focus {
-      .icon {
+      .icon:not(.datagrid-alert-icon) {
         &.icon-error {
           margin-left: -45px !important;
         }
+      }
+    }
+  }
+
+  &.small-rowheight,
+  &.extra-small-rowheight {
+    > tbody > tr {
+      .datagrid-alert-icon {
+        height: 15px;
+        width: 16px;
+      }
+    }
+
+    td.is-dirty-cell:not(.rowstatus-cell) {
+      &::before {
+        left: 0;
+        top: -2px;
       }
     }
   }
@@ -2150,6 +2192,10 @@ $datagrid-small-row-height: 25px;
     &.is-rowactivated td:not(.is-editing) .datagrid-cell-wrapper {
       background-color: $datagrid-row-selected-color;
 
+      .icon {
+        @include trigger-icon-background($datagrid-row-selected-color);
+      }
+
       .btn.row-btn {
         background-color: $button-color-primary-initial-background;
         border: 1px solid  $button-color-primary-initial-background;
@@ -2262,6 +2308,7 @@ $datagrid-small-row-height: 25px;
       line-height: 25px;
       margin-right: -8px;
       padding-left: 8px;
+      position: relative;
       text-align: left;
       width: inherit;
     }
@@ -2799,10 +2846,12 @@ $datagrid-small-row-height: 25px;
       }
     }
 
-    //Cell Editting
+    //Cell Editing
     &.is-editing {
       background-color: $datagrid-cell-editing-bg-color;
       position: relative;
+      outline: 1px solid $ids-color-brand-primary-base;
+      outline-offset: -1px;
 
       &.has-singlecolumn {
         display: block;
@@ -2810,7 +2859,6 @@ $datagrid-small-row-height: 25px;
       }
 
       .datagrid-cell-wrapper {
-        border: 1px solid $ids-color-brand-primary-base;
         left: 0;
         position: absolute;
         text-overflow: clip;
@@ -3312,6 +3360,14 @@ $datagrid-small-row-height: 25px;
 
         color: $datagrid-required-icon-color;
       }
+    }
+
+    .icon.datagrid-header-icon {
+      color: $datagrid-header-color;
+      margin-left: 3px;
+      min-width: 18px;
+      top: -2px;
+      transform: translateY(50%);
     }
 
     // Checkboxes
@@ -4072,13 +4128,17 @@ td .btn-actions {
     }
   }
 
-  .icon {
+  .icon:not(.datagrid-alert-icon) {
     @include trigger-icon-background($datagrid-cell-bg-color);
 
     color: $trigger-icon-fill-color;
     left: 3px;
     top: 4px;
     visibility: hidden;
+
+    &.datagrid-alert-icon {
+      visibility: visible;
+    }
 
     &.icon-search-list {
       left: -1px;
@@ -4107,7 +4167,7 @@ td .btn-actions {
     }
   }
 
-  .icon-calendar {
+  .icon.icon-calendar {
     height: 16px;
     left: 5px;
     top: -2px;
@@ -4161,7 +4221,9 @@ td .btn-actions {
       .icon-error,
       .icon-info,
       .icon-alert {
-        margin-left: -48px !important;
+        &:not(.datagrid-alert-icon) {
+          margin-left: -48px !important;
+        }
       }
     }
   }

@@ -1283,12 +1283,14 @@ Editor.prototype = {
           } else {
             self.createLink($(`[name="em-url-${self.id}"]`, this));
           }
-        } else {
+        } else if (self.settings.attributes) {
           if (self.settings.attributes.length > 1) { // eslint-disable-line
             self.insertImage($(`[data-automation-id="${self.settings.attributes[self.settings.attributes.length - 1].value}-editor-modal-input0"`).val());
           } else {
             self.insertImage($(`#${self.settings.attributes[0].value}-editor-modal-input0`).val());
           }
+        } else {
+          self.insertImage($('input[id*="image-editor"]').val());
         }
       });
 
@@ -1807,6 +1809,9 @@ Editor.prototype = {
           pastedData = e.originalEvent.clipboardData.getData('text/plain');
         }
         if ((typeof types === 'object' && types[0] && types[0] === 'text/plain') && !types[1]) {
+          pastedData = e.originalEvent.clipboardData.getData('text/plain');
+        }
+        if (types instanceof Array && types.indexOf('text/plain') > -1 && types.indexOf('text/html') < 0) { // For PDF Windows Reader, no text/html in types found.
           pastedData = e.originalEvent.clipboardData.getData('text/plain');
         }
       } else {
