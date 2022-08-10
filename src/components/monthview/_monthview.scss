@@ -11,6 +11,7 @@
   transition: all 0.01s ease-out; // force a repaint
   vertical-align: middle;
   width: 100%;
+  height: fit-content;
 
   // Hide Days Option
   &.is-monthyear {
