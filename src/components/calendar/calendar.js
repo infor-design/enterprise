@@ -1162,6 +1162,7 @@ Calendar.prototype = {
         if (self.weekView) {
           self.weekView.settings.eventTypes = eventTypes;
         }
+        self.addEventLegend();
         self.renderEventTypes();
       }
       if (events && events.length > 0) {
