@@ -4,14 +4,15 @@
  */
 
 // Libs
-const fs = require('fs');
-const glob = require('glob');
-const path = require('path');
-const del = require('del');
-const slash = require('slash');
-const logger = require('../logger');
+import * as fs from 'fs';
+import glob from 'glob';
+import * as path from 'path';
+import * as del from 'del';
+import slash from 'slash';
 
-const IdsMetadata = require('../helpers/ids-metadata');
+import logger from '../logger.js'
+
+import IdsMetadata from '../helpers/ids-metadata.js';
 
 const ROOT_DIR = slash(process.cwd());
 const NL = process.platform === 'win32' ? '\r\n' : '\n';
@@ -158,7 +159,7 @@ function createHtmlFiles(iconSets) {
  * Build
  * @param {boolean} verbose - Log messages
  */
-function createSvgHtml(verbose) {
+export default function createSvgHtml(verbose) {
   IS_VERBOSE = verbose;
   const iconSets = getIconSetPaths();
 
@@ -166,5 +167,3 @@ function createSvgHtml(verbose) {
     createHtmlFiles(iconSets);
   });
 }
-
-module.exports = createSvgHtml;

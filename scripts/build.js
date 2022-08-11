@@ -27,56 +27,62 @@
  * - Mid-Level Components (includes Charts)
  * - Complex Components
  */
-const commandLineArgs = require('yargs')
-  .option('verbose', {
-    alias: 'v',
-    describe: 'Include extraneous logging information',
-    default: false
-  })
-  .option('dry-run', {
-    alias: 'd',
-    describe: 'Run the script, skipping creation of files',
-    default: false
-  })
-  .option('test-mode', {
-    alias: 'T',
-    describe: 'Run the script with preset components',
-    default: false
-  })
-  .option('disable-css', {
-    alias: 'c',
-    describe: 'Disables the build process for CSS'
-  })
-  .option('disable-js', {
-    alias: 'j',
-    describe: 'Disables the build process for JS'
-  })
-  .option('disable-copy', {
-    alias: 'p',
-    describe: 'Disables the copying of all pre-built assets to the `/dist` folder'
-  })
-  .option('types', {
-    alias: 't',
-    describe: 'Provides a mechanism for building one or more Rollup bundle types when building IDS Javascript',
-    default: false,
-  })
-  .argv;
+import _yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
+const yargs = _yargs(hideBin(process.argv));
 
-const chalk = require('chalk');
-const del = require('del');
-const fs = require('fs');
-const glob = require('glob');
-const path = require('path');
+(async () => {
+  const argv = await yargs
+      .option('verbose', {
+        alias: 'v',
+        describe: 'Include extraneous logging information',
+        default: false
+      })
+      .option('dry-run', {
+        alias: 'd',
+        describe: 'Run the script, skipping creation of files',
+        default: false
+      })
+      .option('test-mode', {
+        alias: 'T',
+        describe: 'Run the script with preset components',
+        default: false
+      })
+      .option('disable-css', {
+        alias: 'c',
+        describe: 'Disables the build process for CSS'
+      })
+      .option('disable-js', {
+        alias: 'j',
+        describe: 'Disables the build process for JS'
+      })
+      .option('disable-copy', {
+        alias: 'p',
+        describe: 'Disables the copying of all pre-built assets to the `/dist` folder'
+      })
+      .option('types', {
+        alias: 't',
+        describe: 'Provides a mechanism for building one or more Rollup bundle types when building IDS Javascript',
+        default: false,
+      })
+      .argv;
+});
 
-const logger = require('./logger');
-const createDirs = require('./build/create-dirs');
-const getFileContents = require('./build/get-file-contents');
-const runBuildProcess = require('./build/run-build-process');
-const writeFile = require('./build/write-file');
-const createSvgHtml = require('./build/create-svg-html');
-const createColorJson = require('./build/create-color-json');
+import chalk from 'chalk';
+import * as del from 'del';
+import * as fs from 'fs';
+import glob from 'glob';
+import * as path from 'path';
+import logger from './../scripts/logger.js';
+import createDirs from './build/create-dirs.js';
+import getFileContents from './build/get-file-contents.js';
+import runBuildProcess from './build/run-build-process.js';
+import writeFile from './build/write-file.js';
+import createSvgHtml from './build/create-svg-html.js';
 
-const IdsMetadata = require('./helpers/ids-metadata');
+import createColorJson from './build/create-color-json.js';
+
+import IdsMetadata from './helpers/ids-metadata.js';
 
 const IDS_THEMES = new IdsMetadata().getThemes();
 
@@ -445,7 +451,7 @@ function cleanAll(buildTempDir) {
   return del(filesToDel)
     .catch(err => logger('error', `Error: ${err}`))
     .then(() => {
-      if (commandLineArgs.verbose) {
+      if (yargs.verbose) {
         logger('success', `Cleaned directory "${TEMP_DIR}"`);
       }
       if (!buildTempDir) {
@@ -824,21 +830,21 @@ function renderSourceCodeList() {
 
   function logEmpty() {
     targetFile += NL;
-    if (commandLineArgs.verbose) {
+    if (yargs.verbose) {
       process.stdout.write(NL);
     }
   }
 
   function logHeaderToBoth(str) {
     targetFile += `${str}${NL}`;
-    if (commandLineArgs.verbose) {
+    if (yargs.verbose) {
       logger(`${chalk.cyan(str)}`);
     }
   }
 
   function logItemToBoth(item) {
     targetFile += `- ${item}${NL}`;
-    if (commandLineArgs.verbose) {
+    if (yargs.verbose) {
       logger('bullet', `${item}`);
     }
   }
@@ -919,11 +925,11 @@ function runBuildProcesses(requested) {
   let rollupArgs = '-c';
 
   // Add Rollup Args, if applicable
-  if (commandLineArgs.verbose) {
+  if (yargs.verbose) {
     rollupArgs += ' --verbose';
   }
-  if (commandLineArgs.types) {
-    rollupArgs += ` --types=${commandLineArgs.types}`;
+  if (yargs.types) {
+    rollupArgs += ` --types=${yargs.types}`;
   }
 
   // if Requested
@@ -938,7 +944,7 @@ function runBuildProcesses(requested) {
   logger(`${NL}Running build processes${hasCustom}...${NL}`);
 
   // Copy vendor libs/dependencies
-  if (commandLineArgs.disableCopy) {
+  if (yargs.disableCopy) {
     logger('alert', 'Ignoring build process for copied dependencies');
   } else {
     buildPromises.push(runBuildProcess('npx grunt copy:main'));
@@ -949,21 +955,21 @@ function runBuildProcesses(requested) {
   }
 
   // Build JS
-  if (commandLineArgs.disableJs) {
+  if (yargs.disableJs) {
     logger('alert', 'Ignoring build process for JS');
   } else if (!isCustom || (jsMatches.length || jQueryMatches.length)) {
     buildPromises.push(runBuildProcess(`npx rollup ${rollupArgs}`));
   }
 
   // Build CSS
-  if (commandLineArgs.disableCss) {
+  if (yargs.disableCss) {
     logger('alert', 'Ignoring build process for CSS');
   } else if (!isCustom || sassMatches.length) {
     buildPromises.push(runBuildProcess(`node ${path.join('.', 'scripts', 'build-sass.js')} --type=${targetSassConfig}`));
   }
 
-  buildPromises.push(createSvgHtml(commandLineArgs.verbose));
-  buildPromises.push(createColorJson(commandLineArgs.verbose));
+  buildPromises.push(createSvgHtml(yargs.verbose));
+  buildPromises.push(createColorJson(yargs.verbose));
 
   return Promise.all(buildPromises);
 }
@@ -998,8 +1004,8 @@ logger(`${NL}${chalk.red.bold('=========   IDS Enterprise Builder   =========')}
 let requestedComponents = [];
 let normalBuild = false;
 
-if (!commandLineArgs.components) {
-  if (commandLineArgs.testMode) {
+if (!yargs.components) {
+  if (yargs.testMode) {
     // "Test mode" uses presets for included components
     requestedComponents = TEST_ARGS;
   } else {
@@ -1007,7 +1013,7 @@ if (!commandLineArgs.components) {
     logger('alert', 'No component arguments were provided.  A full component bundle will be created.');
   }
 } else {
-  requestedComponents = commandLineArgs.components.split(',');
+  requestedComponents = yargs.components.split(',');
 }
 
 // Add all existing CSS theme paths dynamically.
@@ -1016,7 +1022,7 @@ addDynamicCssThemePaths(`${SRC_DIR}/themes`, true);
 cleanAll(true).then(() => {
   if (!normalBuild) {
     // Display a list of requested components to the console
-    let loggedComponentList = `${(commandLineArgs.verbose ? `${NL}` : '')}${chalk.bold('Searching files in `src/` for the following terms:')}${NL}`;
+    let loggedComponentList = `${(yargs.verbose ? `${NL}` : '')}${chalk.bold('Searching files in `src/` for the following terms:')}${NL}`;
     requestedComponents.forEach((comp) => {
       componentList += `${comp}${NL}`;
       loggedComponentList += `- ${comp}${NL}`;
@@ -1068,7 +1074,7 @@ cleanAll(true).then(() => {
     });
 
     // Only log the results if we're not in verbose mode.
-    if (!commandLineArgs.verbose) {
+    if (!yargs.verbose) {
       logger(`${chalk.cyan('JS Source Code:')} ${jsMatches.length} files`);
       logger(`${chalk.cyan('jQuery Source Code:')} ${jQueryMatches.length} files`);
       logger(`${chalk.cyan('Sass Source Code:')} ${sassMatches.length} files`);
@@ -1081,7 +1087,7 @@ cleanAll(true).then(() => {
   }
 
   renderTargetFiles(normalBuild).then(() => {
-    if (commandLineArgs.dryRun) {
+    if (yargs.dryRun) {
       process.stdout.write(`${NL}`);
       logger('success', `Completed dry run!  Generated files are available in the "${chalk.yellow('temp/')}" folder.`);
       process.exit(0);

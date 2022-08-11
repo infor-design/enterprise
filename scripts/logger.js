@@ -2,7 +2,7 @@
 // Wraps `console.log` so we don't have errors
 // all over the place.
 // ===============================================
-const chalk = require('chalk'); //eslint-disable-line
+import chalk from 'chalk';
 
 const logTypes = [
   'normal', 'timestamp', 'success', 'info', 'error', 'alert', 'skip', 'callout'
@@ -33,7 +33,7 @@ function pad(n) {
 }
 
 // Simple wrapper for `console.log`
-function logger(type, msg) {
+export default function logger(type, msg) {
   let consoleType = type;
   let consoleMsg = msg;
 
@@ -90,5 +90,3 @@ function logger(type, msg) {
     console.log(prefix + consoleMsg);
   }
 }
-
-module.exports = logger;

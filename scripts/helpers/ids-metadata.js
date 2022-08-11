@@ -1,12 +1,12 @@
 /** Class representing the ids-identity library metadata */
 
-const fs = require('fs');
-const slash = require('slash');
+import * as fs from 'fs';
+import slash from 'slash';
 
 const rootDir = slash(process.cwd());
 const themeData = `${rootDir}/node_modules/ids-identity/dist/metadata.json`;
 
-module.exports = class IdsMetadata {
+export default class IdsMetadata {
   /**
    * Create the metadata
    */

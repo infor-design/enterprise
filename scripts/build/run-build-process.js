@@ -1,21 +1,24 @@
-const path = require('path');
-const { spawn } = require('child_process');
-const commandLineArgs = require('yargs').argv;
+import * as path from 'path';
+import { spawn } from 'child_process';
+import _yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
+const yargs = _yargs(hideBin(process.argv));
 
-const logger = require('../logger');
+// Internal
+import logger from '../logger.js'
 
 /**
  * Runs a single build process
  * @param {string} cmd the entire terminal command, with arguments
  * @returns {Promise} resolves the process's log
  */
-module.exports = function runBuildProcess(cmd) {
+export default function runBuildProcess(cmd) {
   if (!cmd) {
     throw new Error(`"${cmd}" must be a valid terminal command`);
   }
 
   return new Promise((resolve, reject) => {
-    if (commandLineArgs.verbose) {
+    if (yargs.verbose) {
       logger('info', `Running "${cmd}"...`);
     }
 
@@ -42,7 +45,7 @@ module.exports = function runBuildProcess(cmd) {
       if (code !== 0) {
         reject(new Error(`"${cmd}" process exited with error code (${code})\nArgs:`));
       }
-      if (commandLineArgs.verbose) {
+      if (yargs.verbose) {
         logger('success', `Build process "${cmd}" finished sucessfully`);
       }
       resolve();

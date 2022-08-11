@@ -1,10 +1,12 @@
 // Libs
-const chalk = require('chalk');
-const fs = require('fs');
-const commandLineArgs = require('yargs').argv;
+import chalk from 'chalk';
+import * as fs from 'fs';
+import _yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
+const yargs = _yargs(hideBin(process.argv));
 
 // Internal
-const logger = require('../logger');
+import logger from '../logger.js'
 
 /**
  * @private
@@ -13,7 +15,7 @@ const logger = require('../logger');
  * @returns {void}
  */
 function logFileResults(targetFilePath, targetFile) {
-  if (!commandLineArgs.verbose) {
+  if (!yargs.verbose) {
     return;
   }
   const kbLength = (Buffer.byteLength(targetFile, 'utf8') / 1024).toFixed(2);
@@ -26,7 +28,7 @@ function logFileResults(targetFilePath, targetFile) {
  * @param {string} targetFile the contents of the file to be written
  * @returns {Promise} results of `fs.writeFile()`
  */
-function writeFile(targetFilePath, targetFile) {
+export default function writeFile(targetFilePath, targetFile) {
   return new Promise((resolve, reject) => {
     fs.writeFile(targetFilePath, targetFile, (err) => {
       if (err) {
@@ -39,4 +41,3 @@ function writeFile(targetFilePath, targetFile) {
   });
 }
 
-module.exports = writeFile;

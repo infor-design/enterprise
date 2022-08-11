@@ -4,16 +4,16 @@
  */
 
 // Libs
-const del = require('del');
-const fs = require('fs');
-const glob = require('glob');
-const path = require('path');
-const slash = require('slash');
+import * as del from 'del';
+import * as fs from 'fs';
+import glob from 'glob';
+import * as path from 'path';
+import slash from 'slash';
 
 // Local Libs
-const logger = require('../logger');
+import logger from '../logger.js'
 
-const IdsMetadata = require('../helpers/ids-metadata');
+import IdsMetadata from '../helpers/ids-metadata.js';
 
 const IDS_THEMES = new IdsMetadata().getThemes();
 
@@ -150,9 +150,7 @@ function createColorJsonFiles() {
  * @param  {string} verbose Will generate more error messages.
  * @returns {Promise} A promise
  */
-function createColorJson(verbose) {
+export default function createColorJson(verbose) {
   IS_VERBOSE = verbose;
   return cleanFiles().then(createColorJsonFiles);
 }
-
-module.exports = createColorJson;
