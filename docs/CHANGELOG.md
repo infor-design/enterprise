@@ -1,8 +1,17 @@
 # What's New with Enterprise
 
+## v4.65.4
+
+## v4.65.4 Fixes
+
+- `[Datagrid]` Fixed unselectRow on treegrid sending rowData incorrectly. ([#6548](https://github.com/infor-design/enterprise/issues/6548))
+- `[Datagrid]` Fixed trigger icon background color on hover when row is activated. ([#6679](https://github.com/infor-design/enterprise/issues/6679))
+- `[Datagrid]` Updated datagrid header CSS height. ([#6697](https://github.com/infor-design/enterprise/issues/6697))
+- `[SearchField]` Added part of the fix from #6418 to fix an extra scrollbar on collapsed search fields. ([#6418](https://github.com/infor-design/enterprise/issues/6418))`
+
 ## v4.65.3
 
-## v4.65.3 Features
+## v4.65.3 Fixes
 
 - `[Busyindicator]` Converted protractor tests to puppeteer. ([#6623](https://github.com/infor-design/enterprise/issues/6623))
 - `[Textarea]` Converted protractor tests to puppeteer. ([#6629](https://github.com/infor-design/enterprise/issues/6629))

@@ -564,7 +564,7 @@ Datagrid.prototype = {
         self.pagerAPI.setActivePage(newActivePage, false, operationType);
         self.pagerAPI.triggerPagingEvents(self.pagerAPI.currentPage);
       }
-    } 
+    }
 
     if (!self.settings.paging && !self.settings.groupable) {
       if (location !== 'bottom') {
@@ -8970,7 +8970,7 @@ Datagrid.prototype = {
       return;
     }
 
-    let rowData = s.dataset[idx];
+    let rowData = s.treeGrid ? s.treeDepth[idx].node : s.dataset[idx];
     const getSelUniqueRowID = node => (node ? node.uniqueRowID : null);
 
     // Unselect it
