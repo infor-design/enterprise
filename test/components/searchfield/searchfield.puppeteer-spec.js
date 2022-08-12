@@ -1,6 +1,6 @@
 const { checkInnerHTMLValue } = require('../../helpers/e2e-utils.js');
 
-describe('Searchfield', () => {
+describe('Searchfield Puppeteer Tests', () => {
   const baseUrl = 'http://localhost:4000/components/searchfield';
 
   describe('custom icon button', () => {
