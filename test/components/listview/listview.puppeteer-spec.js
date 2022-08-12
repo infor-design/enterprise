@@ -1,6 +1,6 @@
 const { checkInnerHTMLValue } = require('../../helpers/e2e-utils.js');
 
-describe('Searchfield Puppeteer Tests', () => {
+describe('Listview Puppeteer Tests', () => {
   const baseUrl = 'http://localhost:4000/components/listview';
 
   describe('should have filter and sort control', () => {

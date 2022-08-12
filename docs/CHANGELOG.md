@@ -4,6 +4,8 @@
 
 ## v4.67.0 Features
 
+- `[Searchfield]` Added puppeteer script for filter and sort icon. ([#6007](https://github.com/infor-design/enterprise/issues/6007))
+
 ## v4.67.0 Fixes
 
 - `[Button]` Added dark theme button colors. ([#6512](https://github.com/infor-design/enterprise/issues/6512))
