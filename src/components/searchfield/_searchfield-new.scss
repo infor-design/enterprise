@@ -64,8 +64,6 @@
     .searchfield {
       padding-bottom: 6px;
       padding-top: 6px;
-      border-bottom: 0;
-      border-top: 0;
 
       @media only screen and (max-width: $breakpoint-phone-to-tablet) {
         height: 38px;
@@ -134,7 +132,7 @@ html.is-firefox {
     &.is-open,
     &.non-collapsible {
       .searchfield {
-        height: 38px;
+        height: 39px;
         padding-bottom: 6px;
         padding-top: 6px;
       }
