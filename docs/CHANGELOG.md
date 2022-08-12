@@ -4,6 +4,8 @@
 
 ## v4.67.0 Features
 
+- `[Calendar]` Add a setting for calendar to show and hide the legend. ([#6533](https://github.com/infor-design/enterprise/issues/6533))
+
 ## v4.67.0 Fixes
 
 - `[Button]` Added dark theme button colors. ([#6512](https://github.com/infor-design/enterprise/issues/6512))
