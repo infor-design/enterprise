@@ -7,7 +7,7 @@
 import * as fs from 'fs';
 import glob from 'glob';
 import * as path from 'path';
-import * as del from 'del';
+import { deleteAsync } from 'del';
 import slash from 'slash';
 
 import logger from '../logger.js'
@@ -60,7 +60,7 @@ async function cleanFiles(iconSets) {
   const filesToDel = iconSets.map(n => n.dest);
 
   try {
-    await del(filesToDel);
+    await deleteAsync(filesToDel);
   } catch (err) {
     logger('error', err);
   }

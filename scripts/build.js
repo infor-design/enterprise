@@ -31,48 +31,47 @@ import _yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 const yargs = _yargs(hideBin(process.argv));
 
-(async () => {
-  const argv = await yargs
-      .option('verbose', {
-        alias: 'v',
-        describe: 'Include extraneous logging information',
-        default: false
-      })
-      .option('dry-run', {
-        alias: 'd',
-        describe: 'Run the script, skipping creation of files',
-        default: false
-      })
-      .option('test-mode', {
-        alias: 'T',
-        describe: 'Run the script with preset components',
-        default: false
-      })
-      .option('disable-css', {
-        alias: 'c',
-        describe: 'Disables the build process for CSS'
-      })
-      .option('disable-js', {
-        alias: 'j',
-        describe: 'Disables the build process for JS'
-      })
-      .option('disable-copy', {
-        alias: 'p',
-        describe: 'Disables the copying of all pre-built assets to the `/dist` folder'
-      })
-      .option('types', {
-        alias: 't',
-        describe: 'Provides a mechanism for building one or more Rollup bundle types when building IDS Javascript',
-        default: false,
-      })
-      .argv;
-});
+const argv = await yargs
+  .option('verbose', {
+    alias: 'v',
+    describe: 'Include extraneous logging information',
+    default: false
+  })
+  .option('dry-run', {
+    alias: 'd',
+    describe: 'Run the script, skipping creation of files',
+    default: false
+  })
+  .option('test-mode', {
+    alias: 'T',
+    describe: 'Run the script with preset components',
+    default: false
+  })
+  .option('disable-css', {
+    alias: 'c',
+    describe: 'Disables the build process for CSS'
+  })
+  .option('disable-js', {
+    alias: 'j',
+    describe: 'Disables the build process for JS'
+  })
+  .option('disable-copy', {
+    alias: 'p',
+    describe: 'Disables the copying of all pre-built assets to the `/dist` folder'
+  })
+  .option('types', {
+    alias: 't',
+    describe: 'Provides a mechanism for building one or more Rollup bundle types when building IDS Javascript',
+    default: false,
+  })
+  .argv;
 
+import path from 'path';
+import { fileURLToPath } from 'url';
 import chalk from 'chalk';
-import * as del from 'del';
+import {deleteAsync} from 'del';
 import * as fs from 'fs';
 import glob from 'glob';
-import * as path from 'path';
 import logger from './../scripts/logger.js';
 import createDirs from './build/create-dirs.js';
 import getFileContents from './build/get-file-contents.js';
@@ -86,6 +85,11 @@ import IdsMetadata from './helpers/ids-metadata.js';
 
 const IDS_THEMES = new IdsMetadata().getThemes();
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+console.log('__dirname', __dirname);
+
 const SRC_DIR = path.join(__dirname, '..', 'src');
 const TEMP_DIR = path.join(__dirname, '..', 'temp');
 const TEST_DIR = path.join(__dirname, '..', 'test');
@@ -94,7 +98,7 @@ const RELATIVE_SRC_DIR = path.join('..', 'src');
 // CR-LF on Windows, LF on Linux/Mac
 const NL = process.platform === 'win32' ? '\r\n' : '\n';
 
-const bannerText = require('./generate-bundle-banner');
+import bannerText from './../scripts/generate-bundle-banner.js';
 
 const filePaths = {
   src: {
@@ -448,10 +452,10 @@ function cleanAll(buildTempDir) {
     `${TEMP_DIR}/*.scss`
   ];
 
-  return del(filesToDel)
+  return deleteAsync(filesToDel)
     .catch(err => logger('error', `Error: ${err}`))
     .then(() => {
-      if (yargs.verbose) {
+      if (argv.verbose) {
         logger('success', `Cleaned directory "${TEMP_DIR}"`);
       }
       if (!buildTempDir) {
@@ -830,21 +834,21 @@ function renderSourceCodeList() {
 
   function logEmpty() {
     targetFile += NL;
-    if (yargs.verbose) {
+    if (argv.verbose) {
       process.stdout.write(NL);
     }
   }
 
   function logHeaderToBoth(str) {
     targetFile += `${str}${NL}`;
-    if (yargs.verbose) {
+    if (argv.verbose) {
       logger(`${chalk.cyan(str)}`);
     }
   }
 
   function logItemToBoth(item) {
     targetFile += `- ${item}${NL}`;
-    if (yargs.verbose) {
+    if (argv.verbose) {
       logger('bullet', `${item}`);
     }
   }
@@ -925,11 +929,11 @@ function runBuildProcesses(requested) {
   let rollupArgs = '-c';
 
   // Add Rollup Args, if applicable
-  if (yargs.verbose) {
+  if (argv.verbose) {
     rollupArgs += ' --verbose';
   }
-  if (yargs.types) {
-    rollupArgs += ` --types=${yargs.types}`;
+  if (argv.types) {
+    rollupArgs += ` --types=${argv.types}`;
   }
 
   // if Requested
@@ -944,7 +948,7 @@ function runBuildProcesses(requested) {
   logger(`${NL}Running build processes${hasCustom}...${NL}`);
 
   // Copy vendor libs/dependencies
-  if (yargs.disableCopy) {
+  if (argv.disableCopy) {
     logger('alert', 'Ignoring build process for copied dependencies');
   } else {
     buildPromises.push(runBuildProcess('npx grunt copy:main'));
@@ -955,21 +959,21 @@ function runBuildProcesses(requested) {
   }
 
   // Build JS
-  if (yargs.disableJs) {
+  if (argv.disableJs) {
     logger('alert', 'Ignoring build process for JS');
   } else if (!isCustom || (jsMatches.length || jQueryMatches.length)) {
     buildPromises.push(runBuildProcess(`npx rollup ${rollupArgs}`));
   }
 
   // Build CSS
-  if (yargs.disableCss) {
+  if (argv.disableCss) {
     logger('alert', 'Ignoring build process for CSS');
   } else if (!isCustom || sassMatches.length) {
     buildPromises.push(runBuildProcess(`node ${path.join('.', 'scripts', 'build-sass.js')} --type=${targetSassConfig}`));
   }
 
-  buildPromises.push(createSvgHtml(yargs.verbose));
-  buildPromises.push(createColorJson(yargs.verbose));
+  buildPromises.push(createSvgHtml(argv.verbose));
+  buildPromises.push(createColorJson(argv.verbose));
 
   return Promise.all(buildPromises);
 }
@@ -1004,8 +1008,8 @@ logger(`${NL}${chalk.red.bold('=========   IDS Enterprise Builder   =========')}
 let requestedComponents = [];
 let normalBuild = false;
 
-if (!yargs.components) {
-  if (yargs.testMode) {
+if (!argv.components) {
+  if (argv.testMode) {
     // "Test mode" uses presets for included components
     requestedComponents = TEST_ARGS;
   } else {
@@ -1013,7 +1017,7 @@ if (!yargs.components) {
     logger('alert', 'No component arguments were provided.  A full component bundle will be created.');
   }
 } else {
-  requestedComponents = yargs.components.split(',');
+  requestedComponents = argv.components.split(',');
 }
 
 // Add all existing CSS theme paths dynamically.
@@ -1022,7 +1026,7 @@ addDynamicCssThemePaths(`${SRC_DIR}/themes`, true);
 cleanAll(true).then(() => {
   if (!normalBuild) {
     // Display a list of requested components to the console
-    let loggedComponentList = `${(yargs.verbose ? `${NL}` : '')}${chalk.bold('Searching files in `src/` for the following terms:')}${NL}`;
+    let loggedComponentList = `${(argv.verbose ? `${NL}` : '')}${chalk.bold('Searching files in `src/` for the following terms:')}${NL}`;
     requestedComponents.forEach((comp) => {
       componentList += `${comp}${NL}`;
       loggedComponentList += `- ${comp}${NL}`;
@@ -1074,7 +1078,7 @@ cleanAll(true).then(() => {
     });
 
     // Only log the results if we're not in verbose mode.
-    if (!yargs.verbose) {
+    if (!argv.verbose) {
       logger(`${chalk.cyan('JS Source Code:')} ${jsMatches.length} files`);
       logger(`${chalk.cyan('jQuery Source Code:')} ${jQueryMatches.length} files`);
       logger(`${chalk.cyan('Sass Source Code:')} ${sassMatches.length} files`);
@@ -1087,7 +1091,7 @@ cleanAll(true).then(() => {
   }
 
   renderTargetFiles(normalBuild).then(() => {
-    if (yargs.dryRun) {
+    if (argv.dryRun) {
       process.stdout.write(`${NL}`);
       logger('success', `Completed dry run!  Generated files are available in the "${chalk.yellow('temp/')}" folder.`);
       process.exit(0);

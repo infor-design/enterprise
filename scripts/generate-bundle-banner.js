@@ -1,17 +1,21 @@
 #!/usr/bin/env node
 /* eslint-disable import/no-extraneous-dependencies, import/no-unresolved */
-const fs = require('fs');
-const path = require('path');
-const moment = require('moment');
-const childProcess = require('child_process');
-const pjson = require('../package.json');
-const args = require('yargs').argv;
+import * as fs from 'fs';
+import path from 'path';
+import moment from 'moment';
+import child_process from 'child_process';
+import pjson from '../package.json' assert { type: 'json' };
+import _yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
+const yargs = _yargs(hideBin(process.argv));
+
+const exec = child_process;
 
 // CR-LF on Windows, LF on Linux/Mac
 const NL = process.platform === 'win32' ? '\r\n' : '\n';
 
 const projectName = 'IDS Enterprise Components';
-const commitHash = childProcess.execSync('git rev-parse HEAD') || '';
+const commitHash = exec.execSync('git rev-parse HEAD') || '';
 
 function prependLines(str, prepender) {
   prepender = prepender || '';
@@ -28,7 +32,7 @@ function prependLines(str, prepender) {
  * @param {boolean} useComments if true, prepends comment syntax around the banner lines
  * @returns {string} containing the bundle banner
  */
-function render(useComments) {
+export default function render(useComments = true) {
   const startComment = useComments ? '/*! ' : '';
   const comment = useComments ? ' *  ' : '';
   const endComment = useComments ? ' */ ' : '';
@@ -39,9 +43,9 @@ function render(useComments) {
   let componentsList = '';
 
   // Grabs a list of included components (optional)
-  if (args.components) {
+  if (yargs.components) {
     isCustom = ' (custom)';
-    componentsArgs = args.components.split(',');
+    componentsArgs = yargs.components.split(',');
 
     componentsList += 'Custom bundle containing the following components:';
     componentsArgs.forEach((comp) => {
@@ -66,6 +70,3 @@ function render(useComments) {
     license}${NL}${
     endComment}`;
 }
-
-// default export is just the string (backwards compat)
-module.exports = render(true);

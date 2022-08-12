@@ -4,7 +4,7 @@
  */
 
 // Libs
-import * as del from 'del';
+import { deleteAsync } from 'del';
 import * as fs from 'fs';
 import glob from 'glob';
 import * as path from 'path';
@@ -35,7 +35,7 @@ async function cleanFiles() {
 
   const files = glob.sync(`${PATHS.dest}/*.json`);
   try {
-    await del(files);
+    await deleteAsync(files);
   } catch (err) {
     logger('error', err);
   }
