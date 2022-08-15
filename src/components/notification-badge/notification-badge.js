@@ -54,7 +54,7 @@ NotificationBadge.prototype = {
    * @private
    */
   build() {
-    if (this.element.hasClass('btn-tertiary')) {
+    if (this.element.hasClass('btn-tertiary') || this.element.hasClass('btn-icon')) {
       const svgEl = this.element.find('svg');
 
       this.notificationBadgeContainerEl = $('<span class="notification-badge-container"></span>');
