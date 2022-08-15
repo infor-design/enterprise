@@ -481,13 +481,16 @@ SearchField.prototype = {
     // does not overflow the buttons/icons contained
     // in it
     $('body').on(`resize.${this.id}`, () => {
-      // searchfield wrapper only changes width if it's in a splitter container
-      if (self.wrapper.parents('.splitter-container').length > 0) {
-        if (self.wrapper.width() >= self.wrapper.parent().width() || wrapperWidth >= self.wrapper.parent().width()) {
-          self.wrapper.width(`${self.wrapper.parent().width() - (self.wrapper.parent().width() * 0.1)}px`);
-        } else {
-          self.wrapper.css('width', '');
+      if (self.wrapper.parents('.splitter-container').length > 0 && (self.wrapper.width() >= self.wrapper.parent().width() || wrapperWidth >= self.wrapper.parent().width())) {
+        self.wrapper.width(`${self.wrapper.parent().width() - (self.wrapper.parent().width() * 0.1)}px`);
+      } else if (breakpoints.isBelow('phablet')) {
+        self.wrapper.css('width', 'calc(100% - 40px)');
+      } else {
+        let addWidth = self.hasGoButton ? self.goButton.outerWidth(true) : 0;
+        if (self.wrapper.parent().hasClass('buttonset')) {
+          addWidth += this.wrapper.siblings().outerWidth(true);
         }
+        self.wrapper.css('width', `calc(225px + ${addWidth}px)`);
       }
       self.calculateSearchfieldWidth();
     });
@@ -1568,6 +1571,9 @@ SearchField.prototype = {
     }
     if (this.hasGoButton()) {
       subtractWidth += this.goButton.outerWidth(true);
+    }
+    if (this.wrapper.parent().hasClass('buttonset')) {
+      subtractWidth += this.wrapper.siblings().outerWidth(true);
     }
 
     // NOTE: final width can only be 100% if no value is subtracted for other elements
