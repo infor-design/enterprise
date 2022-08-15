@@ -3,7 +3,7 @@ import chalk from 'chalk';
 import * as fs from 'fs';
 import _yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
-const yargs = _yargs(hideBin(process.argv));
+const argv = _yargs(hideBin(process.argv)).argv;
 
 // Internal
 import logger from '../logger.js'
@@ -15,7 +15,7 @@ import logger from '../logger.js'
  * @returns {void}
  */
 function logFileResults(targetFilePath, targetFile) {
-  if (!yargs.verbose) {
+  if (!argv.verbose) {
     return;
   }
   const kbLength = (Buffer.byteLength(targetFile, 'utf8') / 1024).toFixed(2);

@@ -1,8 +1,12 @@
 import * as path from 'path';
+import { fileURLToPath } from 'url';
 import { spawn } from 'child_process';
 import _yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
-const yargs = _yargs(hideBin(process.argv));
+const argv = _yargs(hideBin(process.argv)).argv;
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Internal
 import logger from '../logger.js'
@@ -18,7 +22,7 @@ export default function runBuildProcess(cmd) {
   }
 
   return new Promise((resolve, reject) => {
-    if (yargs.verbose) {
+    if (argv.verbose) {
       logger('info', `Running "${cmd}"...`);
     }
 
@@ -45,7 +49,7 @@ export default function runBuildProcess(cmd) {
       if (code !== 0) {
         reject(new Error(`"${cmd}" process exited with error code (${code})\nArgs:`));
       }
-      if (yargs.verbose) {
+      if (argv.verbose) {
         logger('success', `Build process "${cmd}" finished sucessfully`);
       }
       resolve();

@@ -66,7 +66,7 @@ const argv = await yargs
   })
   .argv;
 
-import path from 'path';
+import * as path from 'path';
 import { fileURLToPath } from 'url';
 import chalk from 'chalk';
 import {deleteAsync} from 'del';
@@ -87,8 +87,6 @@ const IDS_THEMES = new IdsMetadata().getThemes();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-console.log('__dirname', __dirname);
 
 const SRC_DIR = path.join(__dirname, '..', 'src');
 const TEMP_DIR = path.join(__dirname, '..', 'temp');

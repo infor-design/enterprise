@@ -162,7 +162,7 @@
     "protractor": "^7.0.0",
     "protractor-flake": "^4.0.0",
     "protractor-image-comparison": "^3.9.0",
-    "puppeteer": "^16.1.0",
+    "puppeteer": "^15.5.0",
     "r2": "^2.0.1",
     "release-it": "^15.2.0",
     "rimraf": "^3.0.2",

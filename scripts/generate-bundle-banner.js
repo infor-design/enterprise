@@ -2,14 +2,18 @@
 /* eslint-disable import/no-extraneous-dependencies, import/no-unresolved */
 import * as fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import moment from 'moment';
 import child_process from 'child_process';
 import pjson from '../package.json' assert { type: 'json' };
 import _yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
-const yargs = _yargs(hideBin(process.argv));
+const argv = _yargs(hideBin(process.argv)).argv;
 
 const exec = child_process;
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // CR-LF on Windows, LF on Linux/Mac
 const NL = process.platform === 'win32' ? '\r\n' : '\n';
@@ -32,7 +36,7 @@ function prependLines(str, prepender) {
  * @param {boolean} useComments if true, prepends comment syntax around the banner lines
  * @returns {string} containing the bundle banner
  */
-export default function render(useComments = true) {
+function render(useComments) {
   const startComment = useComments ? '/*! ' : '';
   const comment = useComments ? ' *  ' : '';
   const endComment = useComments ? ' */ ' : '';
@@ -43,9 +47,9 @@ export default function render(useComments = true) {
   let componentsList = '';
 
   // Grabs a list of included components (optional)
-  if (yargs.components) {
+  if (argv.components) {
     isCustom = ' (custom)';
-    componentsArgs = yargs.components.split(',');
+    componentsArgs = argv.components.split(',');
 
     componentsList += 'Custom bundle containing the following components:';
     componentsArgs.forEach((comp) => {
@@ -70,3 +74,5 @@ export default function render(useComments = true) {
     license}${NL}${
     endComment}`;
 }
+
+export default render(true);

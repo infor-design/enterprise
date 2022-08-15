@@ -2,7 +2,7 @@
 import * as fs from 'fs';
 import _yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
-const yargs = _yargs(hideBin(process.argv));
+const argv = _yargs(hideBin(process.argv)).argv;
 
 // Internal
 import logger from '../logger.js'
@@ -14,14 +14,14 @@ import logger from '../logger.js'
 export default function createDirs(dirs) {
   dirs.forEach((dir) => {
     if (fs.existsSync(dir)) {
-      if (yargs.verbose) {
+      if (argv.verbose) {
         logger('info', `Directory "${dir}" already exists`);
       }
       return;
     }
 
     fs.mkdirSync(dir);
-    if (yargs.verbose) {
+    if (argv.verbose) {
       logger('info', `Created directory "${dir}"`);
     }
   });
