@@ -54,7 +54,6 @@ NotificationBadge.prototype = {
    * @private
    */
   build() {
-    console.log('hotdog', this.element);
     if (this.element.hasClass('btn-tertiary')) {
       const svgEl = this.element.find('svg');
 
