@@ -269,8 +269,11 @@ describe('Datagrid', () => {
       await page.waitForSelector('#example-header-icon-with-tooltip-datagrid-1-header-2 .datagrid-header-icon');
       await page.hover('#example-header-icon-with-tooltip-datagrid-1-header-2 .datagrid-header-icon');
 
-      // using svg class
-      await page.hover('#example-header-icon-with-tooltip-datagrid-1-header-2 .datagrid-header-icon');
+      // hover using coords
+      const element = await page.$('#example-header-icon-with-tooltip-datagrid-1-header-2 .datagrid-header-icon');
+      const eb = await element.boundingBox();
+      await page.mouse.move(eb.x, eb.y - 2);
+      console.log(eb);
 
       // get the tooltip content and verify if product name exist
       await page.waitForSelector('.tooltip-content.header-icon', { visible: true })
