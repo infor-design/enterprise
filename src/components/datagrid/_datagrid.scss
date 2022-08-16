@@ -2864,10 +2864,6 @@ $datagrid-small-row-height: 25px;
         text-overflow: clip;
         top: 0;
         width: 100%;
-
-        .colorpicker-container {
-          padding: 4px 20px 0;
-        }
       }
 
       .lookup-wrapper {
@@ -3072,7 +3068,7 @@ $datagrid-small-row-height: 25px;
       }
 
       .colorpicker-container .icon {
-        margin-left: 8px;
+        left: 3px;
         top: 10px;
       }
 
@@ -4179,6 +4175,10 @@ td .btn-actions {
     left: 5px;
     top: -0.5px;
     width: 16px;
+  }
+
+  .colorpicker-container span.trigger {
+    width: 30px;
   }
 
   span.trigger {
