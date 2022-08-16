@@ -1152,6 +1152,10 @@ $datagrid-small-row-height: 25px;
         }
 
         .datagrid-cell-wrapper {
+          .colorpicker-container {
+            height: 20.5px;
+          }
+          
           .dropdown-trigger {
             margin-left: -1px;
             margin-top: -1px;
@@ -1197,10 +1201,6 @@ $datagrid-small-row-height: 25px;
           &.has-singlecolumn {
             min-height: $datagrid-medium-row-height + 8;
           }
-
-          // .colorpicker-container {
-          //   padding: 4px 15px 0;
-          // }
 
           .datepicker {
             margin-top: 3px;
@@ -1357,7 +1357,7 @@ $datagrid-small-row-height: 25px;
         }
 
         .colorpicker {
-          padding: 9px 10px 0;
+          padding: 3px 10px 0;
         }
 
         .trigger .icon {
@@ -2529,6 +2529,10 @@ $datagrid-small-row-height: 25px;
   }
 
   &.extra-small-rowheight {
+    .colorpicker-container {
+      height: 18px;
+    }
+
     td.is-editing {
       .timepicker {
         padding: unset !important;

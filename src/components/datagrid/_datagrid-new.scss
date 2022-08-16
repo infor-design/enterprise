@@ -484,6 +484,10 @@
 .datagrid.small-rowheight tbody tr td {
   &.datagrid-trigger-cell {
     .trigger {
+      &.colorpicker-container {
+        height: 22px;
+      }
+      
       top: 4px;
     }
 
