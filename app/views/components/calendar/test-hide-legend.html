@@ -17,6 +17,8 @@
 <script id="test-script">
   var events = [];
   $('body').one('initialized', function () {
+    $('#show-action').css('display', 'inline-block');
+    $('#show-action').parent().css('width', '84px');
     // Get the Event Type and Events to show in the calendar
     var eventTypes = [];
 
@@ -35,11 +37,17 @@
           mobileTemplate: 'tmpl-mbl-readonly',
           modalTemplate: 'tmpl-modal',
           menuId: 'calendar-actions-menu',
-          showEventLegend: false,
+          showEventLegend: true,
           attributes: [{ name: 'id', value: 'calendar-id' }, { name: 'data-automation-id', value: 'calendar-automation-id' } ],
         });
       });
     });
+  });
+
+  $('#show-action').on('click', () => {
+    var calendarAPI = $('.calendar').data('calendar');
+    calendarAPI.settings.showEventLegend = !calendarAPI.settings.showEventLegend;
+    calendarAPI.renderEventLegend();
   });
 
   $('#actions').on('selected', function(e, args) {

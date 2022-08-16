@@ -157,7 +157,7 @@ Calendar.prototype = {
       .renderMonthView()
       .renderWeekView()
       .handleEvents()
-      .addEventLegend();
+      .renderEventLegend();
 
     return this;
   },
@@ -195,9 +195,11 @@ Calendar.prototype = {
    * @private
    * @returns {void}
    */
-  addEventLegend() {
+  renderEventLegend() {
     const s = this.settings;
-    if (!s.showEventLegend) {
+
+    $('.calendar-event-legend').remove();
+    if (!s.showEventLegend) { 
       return;
     }
 
@@ -1162,7 +1164,7 @@ Calendar.prototype = {
         if (self.weekView) {
           self.weekView.settings.eventTypes = eventTypes;
         }
-        self.addEventLegend();
+        self.renderEventLegend();
         self.renderEventTypes();
       }
       if (events && events.length > 0) {
