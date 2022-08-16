@@ -269,6 +269,9 @@ describe('Datagrid', () => {
       await page.waitForSelector('#example-header-icon-with-tooltip-datagrid-1-header-2 .datagrid-header-icon');
       await page.hover('#example-header-icon-with-tooltip-datagrid-1-header-2 .datagrid-header-icon');
 
+      // using svg
+      await page.hover('#example-header-icon-with-tooltip-datagrid-1-header-2 > div.datagrid-column-wrapper > svg');
+
       // get the tooltip content and verify if product name exist
       await page.waitForSelector('.tooltip-content.header-icon', { visible: true })
         .then(el => expect(el).toBeTruthy());
