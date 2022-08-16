@@ -891,28 +891,28 @@ html[dir='rtl'] {
     .notification-badge-container {
       .notification-dot {
         display: block !important;
-  
+
         &.notification-dot-upper-right {
           right: -16px;
           top: 4px;
           transform: scale(1) translate(50%, -50%);
           transform-origin: 100% 0%;
         }
-  
+
         &.notification-dot-upper-left {
           top: 4px;
           left: 7px;
           transform: scale(1) translate(-50%, -50%);
           transform-origin: 0% 0%;
         }
-  
+
         &.notification-dot-lower-right {
           top: 11px;
           left: 15px;
           transform: scale(1) translate(50%, 50%);
           transform-origin: 0% 100%;
         }
-  
+
         &.notification-dot-lower-left {
           top: 11px;
           left: 7px;
@@ -922,37 +922,37 @@ html[dir='rtl'] {
       }
     }
   }
-  
+
   .btn-primary,
   .btn-secondary,
   .btn-tertiary {
     .notification-badge-container {
       display: unset;
-  
+
       .notification-dot {
         display: block !important;
-  
+
         &.notification-dot-upper-right {
           right: 6px;
           top: 3px;
           transform: scale(1) translate(50%, -50%);
           transform-origin: 100% 0%;
         }
-  
+
         &.notification-dot-upper-left {
           top: 3px;
           left: -12px;
           transform: scale(1) translate(-50%, -50%);
           transform-origin: 0% 0%;
         }
-  
+
         &.notification-dot-lower-right {
           top: 10px;
           left: -4px;
           transform: scale(1) translate(50%, 50%);
           transform-origin: 0% 100%;
         }
-  
+
         &.notification-dot-lower-left {
           top: 10px;
           left: -12px;
