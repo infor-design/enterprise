@@ -1198,9 +1198,9 @@ $datagrid-small-row-height: 25px;
             min-height: $datagrid-medium-row-height + 8;
           }
 
-          .colorpicker-container {
-            padding: 4px 15px 0;
-          }
+          // .colorpicker-container {
+          //   padding: 4px 15px 0;
+          // }
 
           .datepicker {
             margin-top: 3px;
@@ -1800,7 +1800,9 @@ $datagrid-small-row-height: 25px;
         }
 
         .colorpicker {
-          margin-top: 3px;
+          &:not(.is-open) {
+            top: -4px;
+          }
           padding: 2px 8px;
         }
 

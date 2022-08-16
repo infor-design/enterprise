@@ -349,7 +349,9 @@
 
   tbody tr td.is-editing {
     input {
-      height: 22px !important;
+      :not(.colorpicker) {
+        height: 22px !important;
+      }
       margin-left: 0;
       margin-top: 0;
 
