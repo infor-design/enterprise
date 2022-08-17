@@ -2384,10 +2384,6 @@ $datagrid-small-row-height: 25px;
       }
     }
 
-    .is-editing.is-fileupload .datagrid-cell-wrapper {
-      padding: 4px 16px 0 !important;
-    }
-
     .datagrid-cell-wrapper {
       border: 1px solid transparent;
       display: block;
@@ -4158,6 +4154,11 @@ td .btn-actions {
 
     &.icon-clock {
       top: -2px;
+    }
+
+    &.icon-fileupload {
+      left: 5px;
+      top: -0.5px;
     }
   }
 
