@@ -483,12 +483,12 @@
 
 .datagrid.small-rowheight tbody tr td {
   &.datagrid-trigger-cell {
-    .trigger {
-      &.colorpicker-container {
-        height: 22px;
-      }
-      
+    .trigger:not(.colorpicker-container) {
       top: 4px;
+    }
+
+    .trigger.colorpicker-container {
+      height: 22px;
     }
 
     span.trigger.is-clearable {
