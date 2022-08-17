@@ -3,7 +3,7 @@
 // ================================================= /
 import resolve from '@rollup/plugin-node-resolve';
 import json from '@rollup/plugin-json';
-import babel from '@rollup/plugin-babel';
+import { babel } from '@rollup/plugin-babel';
 
 import license from 'rollup-plugin-license';
 import _yargs from 'yargs';
@@ -13,7 +13,6 @@ const argv = _yargs(hideBin(process.argv)).argv;
 import bundlerBanner from './scripts/generate-bundle-banner.js';
 import getTargetBundleTypes from './scripts/rollup-plugins/bundle-types.js';
 import deprecationNotice from './scripts/rollup-plugins/deprecation-notice.js';
-
 
 // Globals are reused in both configs
 const globals = {

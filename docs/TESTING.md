@@ -422,7 +422,7 @@ We used this set of instructions we needed to make the travis VM originally.
     ```
 
 1. Checkout the branch you pushed to Github earlier.
-1. Run the install commands: `npm install -g grunt-cli && npm install`
+1. Run the install commands: `npm install`
 1. Set these [environment variables](https://docs.travis-ci.com/user/environment-variables/#default-environment-variables).
 1. You may need to update the version of Chrome on the container:
 
@@ -436,7 +436,7 @@ We used this set of instructions we needed to make the travis VM originally.
 1. Build the IDS Components:
 
     ```sh
-    npx grunt
+    npm run build
     ```
 
 1. Run the `npm run quickstart` command in your current docker session to run the demoapp.

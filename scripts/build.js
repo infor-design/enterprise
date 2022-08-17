@@ -150,7 +150,7 @@ const filePaths = {
 };
 
 // File Paths that are stripped/ignored.
-// Generally these are copied with another task, such as `npx grunt copy:main`.
+// Generally these are copied with another task, such as `npm run build:copy`.
 const ignoredFilePaths = [
   path.join('components', 'locale', 'cultures'),
   path.join('components', 'locale', 'info')
@@ -949,11 +949,7 @@ function runBuildProcesses(requested) {
   if (argv.disableCopy) {
     logger('alert', 'Ignoring build process for copied dependencies');
   } else {
-    buildPromises.push(runBuildProcess('npx grunt copy:main'));
-  }
-
-  if (buckets['test-func'].length || buckets['test-e2e'].length) {
-    buildPromises.push(runBuildProcess('npx grunt copy:custom-test'));
+    buildPromises.push(runBuildProcess('npm run build:copy'));
   }
 
   // Build JS

@@ -2,4 +2,4 @@
 
 set -e
 
-cd /controls && npm install && grunt && node server
+cd /controls && npm install && npm run build && node server

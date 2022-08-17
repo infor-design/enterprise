@@ -97,7 +97,6 @@ inquirer.prompt(questionsArr).then((answers) => {
   const cmdArr = [
     'git status -sb',
     'npm run build',
-    'npm run zip-dist',
     'npm publish --tag=dev',
     'echo Reset the package.json version',
     'git checkout package.json'
