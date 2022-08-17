@@ -96,7 +96,7 @@ const RELATIVE_SRC_DIR = path.join('..', 'src');
 // CR-LF on Windows, LF on Linux/Mac
 const NL = process.platform === 'win32' ? '\r\n' : '\n';
 
-import bannerText from './../scripts/generate-bundle-banner.js';
+import bannerText from './generate-bundle-banner.js';
 
 const filePaths = {
   src: {
