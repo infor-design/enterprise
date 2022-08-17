@@ -714,7 +714,7 @@
   top: 8px;
 }
 
-.datagrid.medium-rowheight td.is-editing input.timepicker {
+.datagrid.medium-rowheight td.is-editing:not(.datagrid-trigger-cell) input.timepicker {
   margin-top: 3px !important;
 
   ~ .icon {
@@ -779,6 +779,10 @@
     td.is-editing {
       .timepicker {
         margin-top: 4px;
+      }
+
+      &.datagrid-trigger-cell .timepicker {
+        margin-top: -6px;
       }
     }
   }

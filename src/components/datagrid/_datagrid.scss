@@ -1204,6 +1204,12 @@ $datagrid-small-row-height: 25px;
             min-height: $datagrid-medium-row-height + 8;
           }
 
+          &.datagrid-trigger-cell {
+            input.timepicker.is-active.is-open {
+              margin-top: -6px;
+            }
+          }
+
           .datepicker {
             margin-top: 3px;
             padding: 0 5px 0 15px;
@@ -1249,6 +1255,7 @@ $datagrid-small-row-height: 25px;
 
             &.timepicker {
               width: calc(100% - 10px);
+              margin-left: -1px;
 
               ~ .icon {
                 left: auto;
@@ -4154,6 +4161,7 @@ td .btn-actions {
 
     &.icon-clock {
       top: -2px;
+      left: 1px;
     }
 
     &.icon-fileupload {
