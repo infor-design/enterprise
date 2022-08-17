@@ -4,6 +4,7 @@
 
 ## v4.67.0 Features
 
+- `[Searchfield]` Added puppeteer script for filter and sort icon. ([#6007](https://github.com/infor-design/enterprise/issues/6007))
 - `[Searchfield]` Added puppeteer script for custom icon. ([#6723](https://github.com/infor-design/enterprise/issues/6723))
 
 ## v4.67.0 Fixes
