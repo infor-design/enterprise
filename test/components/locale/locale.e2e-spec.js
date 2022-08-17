@@ -1,10 +1,7 @@
-const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
 const config = require('../../helpers/e2e-config.js');
 
 const utils = requireHelper('e2e-utils');
 requireHelper('rejection');
-
-jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Locale Format Date Tests', () => {
   beforeEach(async () => {

@@ -1,10 +1,7 @@
 /* eslint-disable no-unused-vars */
-const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
 const config = requireHelper('e2e-config');
 const utils = requireHelper('e2e-utils');
 requireHelper('rejection');
-
-jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Datepicker example-index tests', () => {
   beforeEach(async () => {
@@ -84,7 +81,7 @@ describe('Datepicker example-index tests', () => {
     await element(by.css('.btn-icon.prev')).click();
 
     expect(await element.all(by.css('#monthview-popup td.is-selected')).count()).toEqual(1);
-  });  
+  });
 
   it('Should be able to set id/automation id', async () => {
     const datepickerEl = await element(by.id('date-field-normal'));

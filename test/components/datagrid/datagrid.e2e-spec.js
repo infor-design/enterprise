@@ -1,13 +1,11 @@
 /* eslint-disable compat/compat */
+// eslint-disable-next-line import/no-extraneous-dependencies
 const { browser, element } = require('protractor');
 
-const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
 const utils = requireHelper('e2e-utils');
 const config = requireHelper('e2e-config');
 const until = protractor.ExpectedConditions;
 requireHelper('rejection');
-
-jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 /**
  * general CSS selectors used throughout these tests
