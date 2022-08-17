@@ -5,12 +5,15 @@ import resolve from '@rollup/plugin-node-resolve';
 import json from '@rollup/plugin-json';
 import babel from '@rollup/plugin-babel';
 
-const license = require('rollup-plugin-license');
-const commandLineArgs = require('yargs').argv;
+import license from 'rollup-plugin-license';
+import _yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
+const argv = _yargs(hideBin(process.argv)).argv;
 
-const bundleBanner = require('./scripts/generate-bundle-banner');
-const getTargetBundleTypes = require('./scripts/rollup-plugins/bundle-types');
-const deprecationNotice = require('./scripts/rollup-plugins/deprecation-notice');
+import bundlerBanner from './scripts/generate-bundle-banner.js';
+import getTargetBundleTypes from './scripts/rollup-plugins/bundle-types.js';
+import deprecationNotice from './scripts/rollup-plugins/deprecation-notice.js';
+
 
 // Globals are reused in both configs
 const globals = {
@@ -52,7 +55,7 @@ const standardConfig = {
     resolve(),
     json(),
     deprecationNotice({
-      process: commandLineArgs.verbose
+      process: argv.verbose
     }),
     babel({
       exclude: 'node_modules/**',
@@ -84,7 +87,7 @@ const esmConfig = {
     resolve(),
     json(),
     deprecationNotice({
-      process: commandLineArgs.verbose
+      process: argv.verbose
     }),
     babel({
       exclude: 'node_modules/**',
@@ -100,7 +103,7 @@ const esmConfig = {
 // Use auto-generated build entry points for Rollup.
 // NOTE: The IDS Custom build system must have generated files into the `/temp` folder
 // before this can run.
-if (commandLineArgs.components) {
+if (argv.components) {
   standardConfig.input = 'temp/index.js';
   esmConfig.input = 'temp/index.js';
 }
@@ -108,9 +111,7 @@ if (commandLineArgs.components) {
 // If the `types` flag is passed, separate its arguments and figure out what should be bundled.
 // Otherwise, only build the standard bundle.  Some of these are aliases.  See the switch() statement
 // for which bundles add up to which types.
-const exports = getTargetBundleTypes({
+getTargetBundleTypes({
   standard: standardConfig,
   esm: esmConfig
 });
-
-module.exports = exports;

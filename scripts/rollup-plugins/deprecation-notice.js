@@ -1,9 +1,9 @@
 // Simple plugin for rollup that detects the existence of JSDoc @deprecated comments
 // and pumps them into the console during the build process.
-const chalk = require('chalk');
-const documentation = require('documentation');
-const path = require('path');
-const logger = require('../logger');
+import chalk from 'chalk';
+import documentation from 'documentation';
+import * as path from 'path';
+import logger from '../logger.js';
 
 const projectRoot = process.cwd();
 
@@ -69,7 +69,7 @@ const transform = function (code, filePath) {
 };
 
 // The actual Rollup.js plugin wrapper
-const plugin = function (opts = {}) {
+export default function (opts = {}) {
   const pluginContents = {
     name: 'deprecation-notice'
   };
@@ -83,5 +83,3 @@ const plugin = function (opts = {}) {
   pluginContents.transform = transform;
   return pluginContents;
 };
-
-module.exports = plugin;

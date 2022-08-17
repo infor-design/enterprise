@@ -1,10 +1,10 @@
-module.exports = function (grunt) {
+import copy from './scripts/configs/copy.js';
+import cssmin from './scripts/configs/cssmin.js';
+import compress from './scripts/configs/compress.js';
+
+export default function (grunt) {
   grunt.file.defaultEncoding = 'utf-8';
   grunt.file.preserveBOM = true;
-
-  const copy = require('./scripts/configs/copy.js');
-  const cssmin = require('./scripts/configs/cssmin.js');
-  const compress = require('./scripts/configs/compress.js');
 
   const config = {
     pkg: grunt.file.readJSON('package.json'),
@@ -61,7 +61,7 @@ module.exports = function (grunt) {
   ));
 
   // load all grunt tasks from 'node_modules' matching the `grunt-*` pattern
-  require('load-grunt-tasks')(grunt);
+  // require('load-grunt-tasks')(grunt);
 
   // Default Task:
   // - Cleans up
@@ -115,5 +115,3 @@ module.exports = function (grunt) {
     'compress'
   ]);
 };
-/* eslint-enable global-require, no-param-reassign,
-  no-useless-concat, import/no-extraneous-dependencies */

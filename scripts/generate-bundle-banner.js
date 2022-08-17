@@ -1,11 +1,8 @@
-#!/usr/bin/env node
-/* eslint-disable import/no-extraneous-dependencies, import/no-unresolved */
 import * as fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import moment from 'moment';
 import child_process from 'child_process';
-import pjson from '../package.json' assert { type: 'json' };
 import _yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 const argv = _yargs(hideBin(process.argv)).argv;
@@ -14,6 +11,9 @@ const exec = child_process;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// Using the environment variables
+const version = process.env.npm_package_version;
 
 // CR-LF on Windows, LF on Linux/Mac
 const NL = process.platform === 'win32' ? '\r\n' : '\n';
@@ -59,7 +59,7 @@ function render(useComments) {
   }
 
   // Project Name and Version Headline
-  const headline = `${projectName} - v${pjson.version}${isCustom}`;
+  const headline = `${projectName} - v${version}${isCustom}`;
 
   // Prepend comments to each line of the license
   let license = fs.readFileSync(path.join(__dirname, '..', 'LICENSE'), 'utf8');

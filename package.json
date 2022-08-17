@@ -24,6 +24,7 @@
   "files": [
     "dist"
   ],
+  "type": "module",
   "scripts": {
     "start": "npm run clean && npm run build && npm run quickstart",
     "quickstart": "npx grunt demo && node app/server.js",
@@ -87,7 +88,6 @@
     "jquery": "^3.6.0",
     "promise-polyfill": "^8.2.3"
   },
-  "type": "module",
   "devDependencies": {
     "@babel/core": "^7.18.10",
     "@babel/plugin-external-helpers": "^7.18.6",
