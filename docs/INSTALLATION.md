@@ -21,22 +21,6 @@ You can also use `ids-enterprise@dev` for a nightly (and potentially unstable) d
 
 After installation, the pre-built files are accessible in `./node_modules/ids-enterprise/dist`. When you use npm the needed dependencies are included automatically.
 
-### CDN
-
-We now offer the IDS library via CDN. For example, the paths for the 4.38.0 releases would be:
-
-```html
-https://cdn.hookandloop.infor.com/sohoxi/4.38.0/js/sohoxi.js
-https://cdn.hookandloop.infor.com/sohoxi/4.38.0/js/sohoxi.min.js
-https://cdn.hookandloop.infor.com/sohoxi/4.38.0/css/theme-new-dark.css
-https://cdn.hookandloop.infor.com/sohoxi/4.38.0/css/theme-new-dark.min.css
-https://cdn.hookandloop.infor.com/sohoxi/4.38.0/css/theme-new-dark.css
-https://cdn.hookandloop.infor.com/sohoxi/4.38.0/css/theme-new-dark.min.css
-https://cdn.hookandloop.infor.com/sohoxi/4.38.0/css/theme-new-light.css
-https://cdn.hookandloop.infor.com/sohoxi/4.38.0/css/theme-new-light.min.css
-https://cdn.hookandloop.infor.com/sohoxi/4.38.0/svg/theme-new-svg.html
-```
-
 ## Adding the library to a project
 
 Include the IDS dependencies and the library itself in your page's `<head>` tag:
