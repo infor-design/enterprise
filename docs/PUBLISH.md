@@ -145,3 +145,13 @@ It's possible to publish docs locally but this as done as part of the `npm relea
 1. `npm install && npm run build`
 1. `node ./scripts/deploy-documentation.js --site staging`
 1. `node ./scripts/deploy-documentation.js --site prod`
+
+### Optional Dependencies
+
+Some of the Dependencies are optional and only used for tests or for developers. If you want a streamlined node_modules with only things needed to build and deploy the server to the static sites you can use:
+
+```shell
+npm ci --no-optional
+```
+
+This will reduce the node_modules size by about 3/4.
