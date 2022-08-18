@@ -111,7 +111,6 @@ jobs:
             ${repo_owner}/${repo_name}
         env:
           AWF_AUTH_TOKEN: ${{ secrets.AWF_AUTH_TOKEN }}
-          TLS_SECRET: ${{ secrets.TLS_SECRET }}
         shell: bash
 
       - name: Dump GitHub context
