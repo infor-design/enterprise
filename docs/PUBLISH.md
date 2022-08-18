@@ -48,16 +48,6 @@ git config --global credential.helper wincred
 
 - Check that you have both `JENKINS_JOB_TOKEN` and `JENKINS_API_TOKEN` exported
 
-## Make sure you have set up tools for AWS CDN Publish (only for "final" releases)
-
-- Install AWS for testing and configuring <http://docs.aws.amazon.com/cli/latest/userguide/installing.html>
-- Once installed, configure AWS CLI
-    1. Run `aws configure --profile sohoxi`
-    2. Fill in the `key` and `secret`
-    3. Leave "region" and "output" blank or `[none]`
-
-> See the [AWS instructions](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html) for troubleshooting
-
 ## For documentation (only for "final" releases)
 
 - Make sure you setup your `DOCS_API_KEY` key
