@@ -2501,7 +2501,7 @@ $datagrid-small-row-height: 25px;
         }
       }
 
-      .datepicker {
+      &:not(.datagrid-trigger-cell) .datepicker {
         margin-top: unset !important;
         padding: unset !important;
 

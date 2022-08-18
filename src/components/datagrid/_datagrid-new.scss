@@ -372,7 +372,7 @@
     }
 
     .datepicker {
-      margin-top: 4px !important;
+      // margin-top: 4px !important;
       padding-left: 0;
       padding-top: 0;
     }
@@ -380,6 +380,12 @@
     .datepicker ~ .icon {
       margin-left: 11px;
       top: calc(50% - 19px) !important;
+    }
+
+    &:not(.datagrid-trigger-cell) {
+      input.datepicker {
+        margin-top: 4px !important;
+      }
     }
   }
 
@@ -583,6 +589,10 @@
               ~ .icon {
                 top: calc(50% - 17px);
               }
+            }
+
+            &.datagrid-trigger-cell input.datepicker {
+              margin-top: -4px;
             }
 
             .lookup-wrapper {
