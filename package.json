@@ -82,7 +82,7 @@
     "node-version-check": "npx check-node-version --node 16",
     "node-updates-check": "npx ncu"
   },
-  "chrome-version": "102",
+  "chrome-version": "104",
   "dependencies": {
     "d3": "^7.6.1",
     "ids-identity": "4.11.12",
