@@ -1,11 +1,11 @@
-# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-
-name: Build Check
+name: Deploy environment
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - "*"
+      - "*/*"
+      - "**"
   pull_request:
     branches: [ main ]
 
@@ -14,7 +14,6 @@ permissions:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -22,55 +21,105 @@ jobs:
         node-version: [14.x]
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
 
-    - name: Cache multiple paths
-      uses: actions/cache@v2
-      with:
-        path: node_modules
-        key: enterprise-1021
+      - name: Cache multiple paths
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: enterprise-1021
 
-    - name: Setup timezone
-      uses: zcong1993/setup-timezone@master
-      with:
-        timezone: America/New_York
+      - uses: szenius/set-timezone@v1.0
+        with:
+          timezoneLinux: "America/New_York"
+          timezoneMacos: "America/New_York"
+          timezoneWindows: "America/New_York"
 
-    - name: Install Dependencies
-      run: npm i
+      - name: Check Memory Limit
+        run: node -e 'console.log(v8.getHeapStatistics().heap_size_limit/(1024*1024))'
 
-    - name: Build
-      run: npm run build
+      - name: Set Swap Space
+        uses: pierotofy/set-swap-space@master
+        with:
+          swap-size-gb: 10
 
-    - name: Run e2e tests
-      run:  (npm run quickstart &) && sleep 5; npm run e2e:ci:debug;
+      - name: Setup timezone
+        uses: zcong1993/setup-timezone@master
+        with:
+          timezone: America/New_York
 
-    - name: Run Lint Checks
-      run: npm run lint:ci
+      - name: Extract branch name
+        shell: bash
+        run: |
+          echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch_name
 
-    - name: Run functional tests
-      run: npm run functional:ci
+      - name: Extract repo name
+        shell: bash
+        run: |
+          echo "##[set-output name=repo_name;]$(echo ${GITHUB_REPOSITORY#*/})"
 
-    - name: Run puppeteer tests
-      run:  npm run e2e:puppeteer;
+        id: extract_repo_name
 
-    - name: Deploy Main
-      env:
-        JENKINS_JOB_TOKEN: ${{ secrets.JENKINS_JOB_TOKEN }}
-        JENKINS_API_TOKEN: ${{ secrets.JENKINS_API_TOKEN }}
-      if: github.event_name == 'push'
-      run: sh ./scripts/jenkins-deploy.sh -b main
+      - name: Extract repo owner
+        shell: bash
+        run: |
+          echo "##[set-output name=repo_owner;]$(echo ${GITHUB_REPOSITORY%/*})"
 
-    - name: Dump GitHub context
-      env:
-        GITHUB_CONTEXT: ${{ toJson(github) }}
-      run: echo "$GITHUB_CONTEXT"
+        id: extract_repo_owner
 
-    - name: Dump job context
-      env:
-        JOB_CONTEXT: ${{ toJson(job) }}
-      run: echo "$JOB_CONTEXT"
+      - name: Install Dependencies
+        run: npm i
+
+      - name: Build
+        run: npm run build
+
+      - name: Run e2e tests
+        run:  (npm run quickstart &) && sleep 5; npm run e2e:ci:debug;
+
+      - name: Run Lint Checks
+        run: npm run lint:ci
+
+      - name: Run functional tests
+        run: npm run functional:ci
+
+      - name: Run puppeteer tests
+        run:  npm run e2e:puppeteer;
+
+      - name: Run env deployment
+        if: github.event_name == 'push'
+        run: |
+          branch_name=${{ steps.extract_branch_name.outputs.branch }}
+          repo_name=${{ steps.extract_repo_name.outputs.repo_name }}
+          repo_owner=${{ steps.extract_repo_owner.outputs.repo_owner }}
+
+          echo "Deploying ${repo_owner//./_}/${repo_name//./_} ${branch_name//./_}"
+
+          chmod +x ./scripts/deploy-environment/run-workflow.sh
+          ./scripts/deploy-environment/run-workflow.sh \
+            https://argocd.workers.design.infor.com/api \
+            k8s-orchestrate-fnjww \
+            https://handler.demo.design.infor.com/api \
+            hookandloop\
+            ${repo_name} \
+            ${branch_name} \
+            ${repo_owner}/${repo_name}
+        env:
+          AWF_AUTH_TOKEN: ${{ secrets.AWF_AUTH_TOKEN }}
+          TLS_SECRET: ${{ secrets.TLS_SECRET }}
+        shell: bash
+
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+
+      - name: Dump job context
+        env:
+          JOB_CONTEXT: ${{ toJson(job) }}
+        run: echo "$JOB_CONTEXT"

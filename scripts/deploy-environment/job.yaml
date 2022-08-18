@@ -1,0 +1,80 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: build-
+spec:
+  ttlSecondsAfterFinished: 300
+  backoffLimit: 0
+  template:
+    metadata:
+      name: sohoxi-env-deploy
+    spec:
+      shareProcessNamespace: true
+      restartPolicy: Never
+      nodeSelector: 
+        eks.amazonaws.com/nodegroup: heavy
+      containers:
+        - name: docker-cmds
+          image: hookandloop/ent-env-deploy:0.0.1
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: 500m
+              memory: 3Gi
+          env:
+            - name: DOCKER_HOST
+              value: tcp://localhost:2375
+            - name: IMAGE_LIBRARY_USER
+              valueFrom:
+                secretKeyRef:
+                  name: image-library-creds
+                  key: user
+            - name: IMAGE_LIBRARY_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: image-library-creds
+                  key: pass
+            - name: GITHUB_ACCESS_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: github-access-token
+                  key: token
+            - name: HANDLER_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: handler-api-key
+                  key: token
+            - name: TLS_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: tls-secret-key
+                  key: token
+            - name: HANDLER_API_URL
+              value: "{{inputs.parameters.handler_api_url}}"
+            - name: ORG_NAME
+              value: "{{inputs.parameters.org_name}}"
+            - name: BASE_CONTAINER_NAME
+              value: "{{inputs.parameters.base_container_name}}"
+            - name: BUILD_FROM
+              value: "{{inputs.parameters.build_from}}"
+            - name: REPO_OWNER_NAME
+              value: "{{inputs.parameters.repo_owner_name}}"
+          #command: ['docker', 'run', '-p', '8080:8080', 'httpd:latest']
+          command: ["/bin/bash"]
+          args: ["-c", ". ./run.sh"]
+        - name: dind-daemon
+          image: "docker:dind"
+          imagePullPolicy: Always
+          command: ["dockerd", "--host", "tcp://127.0.0.1:2375"]
+          resources:
+            requests:
+              cpu: 500m
+              memory: 2Gi
+          securityContext:
+              privileged: true
+          volumeMounts:
+            - name: docker-storage
+              mountPath: /var/lib/docker
+      volumes:
+        - name: docker-storage
+          emptyDir: {}
