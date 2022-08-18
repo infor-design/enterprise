@@ -161,7 +161,7 @@ describe('Listview example-multiselect tests', () => {
     });
   }
 
-  it('Should select two items on click', async () => {
+  xit('Should select two items on click', async () => {
     const listviewItemElOne = await element(by.css('li[aria-posinset="1"]'));
     const listviewItemElThree = await element(by.css('li[aria-posinset="3"]'));
     await listviewItemElOne.click();
@@ -238,7 +238,7 @@ describe('Listview example-mixed selection tests', () => {
     expect(await element(by.css('li[aria-selected="false"]'))).toBeTruthy();
   });
 
-  it('Should select two items on click on mixed selection', async () => {
+  xit('Should select two items on click on mixed selection', async () => {
     const listviewItemElOne = await element(by.css('li[aria-posinset="1"] .listview-selection-checkbox'));
     const listviewItemElThree = await element(by.css('li[aria-posinset="3"] .listview-selection-checkbox'));
     await listviewItemElOne.click();

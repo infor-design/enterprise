@@ -2,6 +2,10 @@
 
 ## v4.67.0
 
+## v4.67.0 Important Notes
+
+- `[CDN]` The former CDN `cdn.hookandloop.infor.com` can no longer be maintained by IT and needs to be discontinued. It will exist for approximately one year more (TBD), so please remove direct use from any production code. ([#6754](https://github.com/infor-design/enterprise/issues/6754))
+
 ## v4.67.0 Markup Changes
 
 - `[AppMenu]` As a design change the infor logo is no longer to be shown on the appmenu and has been removed. This reduces visual clutter, and is more inline with Koch global brand to leave it out. ([#6726](https://github.com/infor-design/enterprise/issues/6726))
