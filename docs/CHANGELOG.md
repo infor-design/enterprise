@@ -2,6 +2,10 @@
 
 ## v4.67.0
 
+## v4.67.0 Markup Changes
+
+- `[AppMenu]` As a design change the infor logo is no longer to be shown on the appmenu and has been removed. This reduces visual clutter, and is more inline with Koch global brand to leave it out. ([#6726](https://github.com/infor-design/enterprise/issues/6726))
+
 ## v4.67.0 Features
 
 - `[Searchfield]` Added puppeteer script for filter and sort icon. ([#6007](https://github.com/infor-design/enterprise/issues/6007))
