@@ -692,6 +692,10 @@ $datagrid-small-row-height: 25px;
           }
         }
       }
+
+      &.datagrid-trigger-cell .colorpicker-container span.trigger {
+        left: calc(100% - 10px);
+      }
     }
 
     .datagrid-column-wrapper {
@@ -901,6 +905,14 @@ $datagrid-small-row-height: 25px;
           }
         }
       }
+
+      &.datagrid-trigger-cell {
+        .colorpicker-container {
+          .trigger {
+            top: 4px;
+          }
+        }
+      }
     }
 
     tbody tr td.datagrid-trigger-cell .icon.icon-clock {
@@ -1074,6 +1086,10 @@ $datagrid-small-row-height: 25px;
           margin-left: -1px;
           margin-top: 9px;
         }
+      }
+
+      &.datagrid-trigger-cell .colorpicker-container span.trigger {
+        left: calc(100% - 5px);
       }
     }
   }
@@ -4203,6 +4219,7 @@ td .btn-actions {
 
   .colorpicker-container span.trigger {
     width: 30px;
+    left: 100%;
   }
 
   span.trigger {
