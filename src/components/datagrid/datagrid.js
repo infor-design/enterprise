@@ -537,10 +537,11 @@ Datagrid.prototype = {
       self.emptyMessageContainer.hide();
     }
 
-    const recordCount = self.settings.dataset.length - 1;
-    const dataIndex = recordCount;
+    const operationType = location === 'bottom' ? 'last' : 'first';
+    const position = operationType === 'last' ? self.settings.dataset.length - 1 : 0;
+    const dataIndex = position;
 
-    const rowHtml = self.rowHtml(data, recordCount, dataIndex);
+    const rowHtml = self.rowHtml(data, position, dataIndex);
     if (self.settings.groupable) {
       const groups = $('.datagrid-rowgroup-header').find('span:not([class])');
       for (let i = 0; i < groups.length; i++) {
@@ -553,7 +554,6 @@ Datagrid.prototype = {
     }
 
     if (self.settings.paging && !self.settings.groupable) {
-      const operationType = location === 'bottom' ? 'last' : 'first';
       // eslint-disable-next-line max-len
       const newPage = (self.settings.dataset.length - (self.pagerAPI.pageCount() * self.pagerAPI.settings.pagesize)) === 1 ? 1 : 0;
       const newActivePage = (location === 'bottom' ? self.pagerAPI.pageCount() : 1) + newPage;
