@@ -24,6 +24,9 @@ const COMPONENT_NAME_DEFAULTS = {
   showTimeLine: true,
   startHour: 7,
   endHour: 19,
+  disable: {
+    dayOfWeek: [],
+  },
   showToday: true,
   showViewChanger: true,
   hitbox: false,
@@ -592,11 +595,94 @@ WeekView.prototype = {
     // Add the time line and update the text on the month
     this.addTimeLine();
     this.showToolbarMonth(startDate, endDate);
+    this.renderDisable();
+    this.renderLegend();
     this.renderAllEvents();
 
     // Update currently set start and end date
     this.settings.startDate = Locale.isIslamic(this.locale.name) ? gregStartDate : startDate;
     this.settings.endDate = Locale.isIslamic(this.locale.name) ? gregEndDate : endDate;
+  },
+
+  renderDisable() {
+    if (!this.settings.disable.dayOfWeek.length > 0) {
+      return;
+    }
+
+    const dayOfWeek = this.settings.disable.dayOfWeek;
+    for (let j = 0; j < dayOfWeek.length; j++) {
+      const day = this.dayMap[dayOfWeek[j]];
+      const container = day.elem;
+      const dayHourContainers = this.element[0].querySelectorAll(`td:nth-child(${container.cellIndex + 1})`);
+      for (let i = 0; i < dayHourContainers.length; i++) {
+        const tdEl = dayHourContainers[i];
+        const hourWrapper = $(tdEl.querySelector('.week-view-cell-wrapper'));
+        hourWrapper.addClass('is-disabled');
+      }
+
+      const allDayContainer = container.querySelector('.week-view-all-day-wrapper');
+      if (allDayContainer) {
+        allDayContainer.classList.add('is-disabled');
+      }
+    }
+  },
+
+  renderLegend() {
+    if (!this.settings.showLegend) {
+      return;
+    }
+
+    const legends = this.settings.legend;
+    for (let i = 0; i < legends.length; i++) {
+      const dates = legends[i].dates;
+      for (let j = 0; j < dates.length; j++) {
+        const startDate = new Date(dates[j]);
+        let startKey = stringUtils.padDate(
+          startDate.getFullYear(),
+          startDate.getMonth(),
+          startDate.getDate(),
+        );
+    
+        if (Locale.isIslamic(this.locale.name)) {
+          const startDateIslamic = Locale.gregorianToUmalqura(startDate);
+          startKey = stringUtils.padDate(
+            startDateIslamic[0],
+            startDateIslamic[1],
+            startDateIslamic[2]
+          );
+        }
+    
+        const endDate = new Date(dates[j]);
+        let endKey = stringUtils.padDate(
+          endDate.getFullYear(),
+          endDate.getMonth(),
+          endDate.getDate()
+        );
+    
+        if (Locale.isIslamic(this.locale.name)) {
+          const endDateIslamic = Locale.gregorianToUmalqura(endDate);
+          endKey = stringUtils.padDate(
+            endDateIslamic[0],
+            endDateIslamic[1],
+            endDateIslamic[2]
+          );
+        }
+
+        const days = this.dayMap.filter(day => day.key >= startKey && day.key <= endKey);
+        if (days.length === 1) {
+          console.log(legends[i]);
+          console.log(days);
+
+          const container = days[0].elem;
+
+          const dayHourContainers = this.element[0].querySelectorAll(`td:nth-child(${container.cellIndex + 1})`);
+          for (let k = 0; k < dayHourContainers.length; k++) {
+            const tdEl = dayHourContainers[i];
+            const hourWrapper = $(tdEl.querySelector('.week-view-cell-wrapper'));
+          }
+        }
+      }
+    }
   },
 
   /**
