@@ -18,6 +18,7 @@
 
 ## v4.67.0 Fixes
 
+- `[Badge/Tag/Icon]` Fixed info color in dark mode. ([#6763](https://github.com/infor-design/enterprise/issues/6763))
 - `[Button]` Added notification badges for buttons with labels. ([NG#1347](https://github.com/infor-design/enterprise-ng/issues/1347))
 - `[Button]` Added dark theme button colors. ([#6512](https://github.com/infor-design/enterprise/issues/6512))
 - `[Calendar]` Fixed a bug in calendar where bottom border is not properly rendering. ([#6668](https://github.com/infor-design/enterprise/issues/6668))
