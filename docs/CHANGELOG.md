@@ -1,5 +1,10 @@
 # What's New with Enterprise
 
+## v4.64.5 Fixes
+
+- `[Datagrid]` Fixed unselectRow on treegrid sending rowData incorrectly. ([#6548](https://github.com/infor-design/enterprise/issues/6548))
+- `[Datagrid]` Updated datagrid header CSS height. ([#6697](https://github.com/infor-design/enterprise/issues/6697))
+
 ## v4.64.4 Fixes
 
 - `[SearchField]` Added part of the fix from #6418 to fix an extra scrollbar on collapsed search fields. ([#6418](https://github.com/infor-design/enterprise/issues/6418))`

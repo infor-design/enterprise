@@ -8797,7 +8797,7 @@ Datagrid.prototype = {
       return;
     }
 
-    let rowData = s.dataset[idx];
+    let rowData = s.treeGrid ? s.treeDepth[idx].node : s.dataset[idx];
     const getSelUniqueRowID = node => (node ? node.uniqueRowID : null);
 
     // Unselect it
@@ -10903,8 +10903,8 @@ Datagrid.prototype = {
 
       if (!this.settings.trimSpaces) {
         r = r[0].replace(/\s/g, '&nbsp;');
-      } 
-      return r; 
+      }
+      return r;
     };
 
     // update cell value
