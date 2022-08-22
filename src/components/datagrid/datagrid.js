@@ -9794,7 +9794,7 @@ Datagrid.prototype = {
       // or click to activate using a mouse.
       if (self.settings.editable && key === 32) {
         const btnExpand = target?.find('.datagrid-expand-btn');
-        if (btnExpand) {
+        if (btnExpand.length > 0) {
           btnExpand.trigger('click');
           e.preventDefault(); // This will prevent scrolling down when the list is overflowing.
         }
