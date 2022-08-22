@@ -52,6 +52,13 @@ $focus-box-shadow-input: 0 0 8px $focus-box-shadow-color;
 // Base Colors
 $inverse-color: $ids-color-palette-white;
 
+// Status Colors
+$status-01-color: $ids-color-palette-ruby-60;
+$status-02-color: $ids-color-palette-amber-80;
+$status-03-color: $ids-color-palette-amber-80;
+$status-04-color: $ids-color-palette-emerald-80;
+$status-05-color: $ids-color-palette-azure-70;
+
 // Text Color
 // These are Deprecated. Use "Default, Descriptive, Link, Muted, Alert" ect going forward
 $font-color-extrahighcontrast: $ids-color-font-base;
@@ -166,13 +173,6 @@ $badge-info-hover-icon-color: $ids-color-palette-azure-20;
 $badge-disabled-text-color: $ids-color-palette-slate-50;
 $badge-disabled-bg-color: $ids-color-palette-graphite-20;
 
-// Status Colors
-$status-01-color: $ids-color-palette-ruby-60;
-$status-02-color: $ids-color-palette-amber-80;
-$status-03-color: $ids-color-palette-amber-80;
-$status-04-color: $ids-color-palette-emerald-80;
-$status-05-color: $ids-color-palette-azure-70;
-
 // Cards
 $card-content-button-color: $ids-color-palette-azure-60;
 $card-content-status-success-color: $ids-color-palette-emerald-60;
@@ -242,7 +242,7 @@ $error-color-transparent: rgba($ids-color-status-danger, 0.3);
 $error-focus-box-shadow: 0 0 4px 2px $error-color-transparent;
 $alert-color: $ids-color-status-warning;
 $success-color: $ids-color-status-success;
-$info-color: $ids-color-brand-primary-base;
+$info-color: $status-05-color;
 $error-bg-color: rgba($ids-color-status-danger, 0.1);
 $error-icon-fill: $ids-color-status-danger;
 $dirty-icon-fill: $ids-color-status-caution;

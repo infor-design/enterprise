@@ -11,7 +11,7 @@
     var columns = [];
 
     //Define Columns for the Grid.
-    columns.push({ id: 'taskName', name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Formatters.Tree});
+    columns.push({ id: 'taskName', name: 'Task', field: 'taskName', expanded: 'expanded', tooltip: 'This is a Task', formatter: Formatters.Tree});
     columns.push({ id: 'id', name: 'Id', field: 'id'});
     columns.push({ id: 'desc', name: 'Description', field: 'desc'});
     columns.push({ id: 'time', name: 'Time', field: 'time'});
@@ -26,6 +26,7 @@
         columns: columns,
         dataset: data,
         treeGrid: true,
+        enableTooltips: true,
         toolbar: {title: 'Tasks (Hierarchical)', results: true, personalize: true},
         columnGroups: [{colspan: 2, id: 'group1', name: 'Column Group One'}, {colspan: 3, id: 'group2', name: 'Column Group Two'}], //Numeric Column Span Groups
       });
