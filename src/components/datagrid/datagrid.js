@@ -5718,7 +5718,7 @@ Datagrid.prototype = {
     }
 
     if (!s.treeGrid && s.dataset[idx] !== undefined) {
-      this.settings.dataset[idx] = utils.extend(true, this.settings.dataset[idx], data); 
+      this.settings.dataset[idx] = utils.extend(true, this.settings.dataset[idx], data);
     }
 
     if (this.settings.rowReorder && this.tableBody.data('arrange')) {
@@ -12776,7 +12776,7 @@ Datagrid.prototype = {
         }
       }
 
-      if (columnSettings.tooltipOptions) {
+      if (columnSettings?.tooltipOptions) {
         if (columnSettings.tooltipOptions.placement) {
           tooltip.placement = columnSettings.tooltipOptions.placement;
         }
