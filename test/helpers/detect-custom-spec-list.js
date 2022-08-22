@@ -8,6 +8,14 @@ const fs = require('fs');
 const path = require('path');
 const logger = require('../../scripts/logger');
 
+import * as fs from 'fs';
+import * as path from 'path';
+import logger from '../../scripts/logger.js';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const types = ['functional', 'e2e'];
 const EMPTY = [];
 
@@ -75,7 +83,7 @@ function getCustomSpecs(type, group) {
   return specs.split('\n').filter(el => el !== null && el !== '');
 }
 
-module.exports = function (testType, envSpecs, group) {
+export default function (testType, envSpecs, group) {
   if (envSpecs) {
     return envSpecs.split(',');
   }
