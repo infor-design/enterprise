@@ -80,10 +80,15 @@ const standardConfig = {
 // ================================================= /
 const esmConfig = {
   input: 'src/index.js',
+  external: [
+    'promise-polyfill'
+  ],
   output: {
     file: 'dist/js/sohoxi.esm.js',
     format: 'es',
-    globals,
+    globals: {
+      'promise-polyfill': 'Promise$1'
+    }
   },
   name: 'Soho',
   onwarn,
