@@ -10,7 +10,7 @@ import _yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 const argv = _yargs(hideBin(process.argv)).argv;
 
-import bundlerBanner from './scripts/generate-bundle-banner.js';
+import render from './scripts/generate-bundle-banner.js';
 import getTargetBundleTypes from './scripts/rollup-plugins/bundle-types.js';
 import deprecationNotice from './scripts/rollup-plugins/deprecation-notice.js';
 
@@ -62,7 +62,7 @@ const standardConfig = {
     }),
     license({
       sourcemap: true,
-      banner: bundleBanner
+      banner: render
     })
   ],
 };
@@ -94,7 +94,7 @@ const esmConfig = {
     }),
     license({
       sourcemap: true,
-      banner: bundleBanner
+      banner: render
     })
   ],
 };
