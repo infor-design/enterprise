@@ -3,11 +3,6 @@
  * Detects established custom build test manifests, and provides the list of
  * required tests to another script.
  */
-
-const fs = require('fs');
-const path = require('path');
-const logger = require('../../scripts/logger');
-
 import * as fs from 'fs';
 import * as path from 'path';
 import logger from '../../scripts/logger.js';
