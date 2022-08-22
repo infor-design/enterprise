@@ -6,11 +6,11 @@
 // Sample Json call that returns States
 // Example Call: http://localhost:4000/api/states?term=al
 
-const path = require('path');
-const getJSONFile = require('../get-json-file');
-const utils = require('../utils');
-const express = require('express');
-const generalRoute = require('./general');
+import * as path from 'path';
+import getJSONFile from '../get-json-file.js';
+import utils from '../utils.js';
+import express from 'express';
+import generalRoute from './general.js';
 
 const router = express.Router();
 
@@ -98,4 +98,4 @@ router.get('/:fileName', (req, res, next) => {
   next(`Invalid/Missing data file "${filename}".`);
 });
 
-module.exports = router;
+export default router;

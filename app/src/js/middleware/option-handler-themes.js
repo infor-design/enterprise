@@ -1,12 +1,12 @@
-const fs = require('fs');
-const path = require('path');
-const URL = require('url');
-const logger = require('../logger');
+import * as fs from 'fs';
+import * as path from 'path';
+import URL from 'url';
+import logger from '../logger.js';
 
 // Option Handling - Custom Middleware
 // Writes a set of default options the 'req' object.  These options are always eventually passed to the HTML template.
 // In some cases, these options can be modified based on query parameters.  Check the default route for these options.
-module.exports = function (app) {
+export default function (app) {
   return function optionHandler(req, res, next) {
     /**
      * Set the theme, theme variant, icons, and colorScheme

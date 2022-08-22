@@ -1,7 +1,11 @@
-const fs = require('fs');
-const path = require('path');
-const commandLineArgs = require('yargs').argv;
-const logger = require('./logger');
+import * as fs from 'fs';
+import * as path from 'path';
+import _yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
+
+import logger from './logger.js';
+
+const argv = _yargs(hideBin(process.argv)).argv;
 
 const utils = {};
 
@@ -154,13 +158,13 @@ utils.getClosestLayoutFile = function (directory, viewsRoot) {
         return DEFAULT_LAYOUT;
       }
 
-      if (commandLineArgs.verbose) {
+      if (argv.verbose) {
         logger('info', `Using local template "${filePath}" to render this page..."`);
       }
       break;
     }
 
-    if (commandLineArgs.verbose) {
+    if (argv.verbose) {
       logger('alert', `No layout found at "${filePath}"...`);
     }
 
@@ -220,4 +224,4 @@ utils.canChangeLayout = function (req, res) {
   return !res.opts.forceLayout && !(req.query.layout && req.query.layout.length > 0);
 };
 
-module.exports = utils;
+export default utils;

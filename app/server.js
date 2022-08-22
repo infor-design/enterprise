@@ -14,8 +14,9 @@
  * to run this script with NPM.
  */
 
-const chalk = require('chalk');
-const app = require('./app');
+import chalk from 'chalk';
+import app from './app.js';
+
 
 // With the express server and routes defined, we can start to listen for requests.
 const port = process.env.PORT || 4000;
