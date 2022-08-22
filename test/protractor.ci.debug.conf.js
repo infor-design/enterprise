@@ -4,7 +4,7 @@ import specs from './helpers/detect-custom-spec-list.js';
 
 const basePath = __dirname;
 
-export default {
+exports.config = {
   params: {
     theme: 'new'
   },
