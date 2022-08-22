@@ -4585,7 +4585,8 @@ Datagrid.prototype = {
       return containerHtml;
     }
 
-    const ariaRowindex = ((actualIndex + 1) +
+    const idx = self.settings.treeGrid ? dataRowIdx : actualIndex;
+    const ariaRowindex = ((idx + 1) +
       (self.settings.source && !self.settings.indeterminate ?
         ((activePage - 1) * self.settings.pagesize) : 0));
 
