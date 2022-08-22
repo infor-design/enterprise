@@ -110,7 +110,9 @@ if (argv.components) {
 // If the `types` flag is passed, separate its arguments and figure out what should be bundled.
 // Otherwise, only build the standard bundle.  Some of these are aliases.  See the switch() statement
 // for which bundles add up to which types.
-getTargetBundleTypes({
+const exports = getTargetBundleTypes({
   standard: standardConfig,
   esm: esmConfig
 });
+
+export default exports;
