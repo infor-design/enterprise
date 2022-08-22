@@ -1,7 +1,8 @@
 /* eslint-disable */
+import { SpecReporter } from 'jasmine-spec-reporter';
+import specs from './helpers/detect-custom-spec-list.js';
+
 const basePath = __dirname;
-const { SpecReporter } = require('jasmine-spec-reporter');
-const specs = require('./helpers/detect-custom-spec-list')('e2e', process.env.PROTRACTOR_SPECS);
 
 exports.config = {
   params: {
@@ -9,7 +10,7 @@ exports.config = {
   },
   allScriptsTimeout: 120000,
   logLevel: 'INFO',
-  specs: specs,
+  specs: specs('e2e', process.env.PROTRACTOR_SPECS),
   SELENIUM_PROMISE_MANAGER: false,
   capabilities: {
     browserName: 'chrome',
