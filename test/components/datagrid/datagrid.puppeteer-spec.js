@@ -258,6 +258,27 @@ describe('Datagrid', () => {
       await page.evaluate(() => document.getElementById('example-header-icon-with-tooltip-datagrid-1-header-2').getAttribute('class'))
         .then(el => expect(el).toContain('lm-custom-class-header'));
     });
+
+    it('should show the tooltip content upon changing row height', async () => {
+      await page.setViewport({ width: 1920, height: 1080 });
+
+      await page.click('#maincontent > div.row > div > div.toolbar.has-more-button.do-resize.has-title > div.more > button');
+      await page.click('#popupmenu-2 > li:nth-child(4)');
+
+      // wait for element before trying to hover
+      await page.waitForSelector('#example-header-icon-with-tooltip-datagrid-1-header-2 .datagrid-header-icon');
+      await page.hover('#example-header-icon-with-tooltip-datagrid-1-header-2 .datagrid-header-icon');
+
+      await page.click('#example-header-icon-with-tooltip-datagrid-1-header-2 .datagrid-header-text')
+        .then(() => page.hover('#example-header-icon-with-tooltip-datagrid-1-header-2 > div.datagrid-column-wrapper > svg'));
+
+      // get the tooltip content and verify if product name exist
+      await page.waitForSelector('.tooltip-content.header-icon', { visible: true })
+        .then(el => expect(el).toBeTruthy());
+      const tooltip = await page.$('.tooltip-content.header-icon');
+      const tooltipContent = await page.evaluate(el => el.textContent, tooltip);
+      expect(tooltipContent).toContain('Product Name');
+    });
   });
 
   describe('Can add multiple rows', () => {

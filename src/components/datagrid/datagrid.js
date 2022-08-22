@@ -5718,7 +5718,7 @@ Datagrid.prototype = {
     }
 
     if (!s.treeGrid && s.dataset[idx] !== undefined) {
-      this.settings.dataset[idx] = utils.extend(true, this.settings.dataset[idx], data); 
+      this.settings.dataset[idx] = utils.extend(true, this.settings.dataset[idx], data);
     }
 
     if (this.settings.rowReorder && this.tableBody.data('arrange')) {
@@ -9794,7 +9794,7 @@ Datagrid.prototype = {
       // or click to activate using a mouse.
       if (self.settings.editable && key === 32) {
         const btnExpand = target?.find('.datagrid-expand-btn');
-        if (btnExpand) {
+        if (btnExpand.length > 0) {
           btnExpand.trigger('click');
           e.preventDefault(); // This will prevent scrolling down when the list is overflowing.
         }
@@ -12776,7 +12776,7 @@ Datagrid.prototype = {
         }
       }
 
-      if (columnSettings.tooltipOptions) {
+      if (columnSettings?.tooltipOptions) {
         if (columnSettings.tooltipOptions.placement) {
           tooltip.placement = columnSettings.tooltipOptions.placement;
         }
