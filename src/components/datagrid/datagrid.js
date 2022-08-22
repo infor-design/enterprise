@@ -539,7 +539,7 @@ Datagrid.prototype = {
 
     const operationType = location === 'bottom' ? 'last' : 'first';
     const position = operationType === 'last' ? self.settings.dataset.length - 1 : 0;
-    const dataIndex = position;
+    const dataIndex = self.settings.dataset.length - 1;
 
     const rowHtml = self.rowHtml(data, position, dataIndex);
     if (self.settings.groupable) {
@@ -4585,7 +4585,7 @@ Datagrid.prototype = {
       return containerHtml;
     }
 
-    const ariaRowindex = ((dataRowIdx + 1) +
+    const ariaRowindex = ((actualIndex + 1) +
       (self.settings.source && !self.settings.indeterminate ?
         ((activePage - 1) * self.settings.pagesize) : 0));
 
