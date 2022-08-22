@@ -41,13 +41,18 @@ function onwarn(warning, next) {
 // ================================================= /
 const standardConfig = {
   input: 'src/index.js',
+  external: [
+    'promise-polyfill'
+  ],
   output: {
     file: 'dist/js/sohoxi.js',
     format: 'iife',
     sourcemap: true,
     sourcemapFile: 'dist/js/sohoxi.js.map',
     name: 'Soho',
-    globals
+    globals: {
+      'promise-polyfill': 'Promise$1'
+    }
   },
   onwarn,
   plugins: [
