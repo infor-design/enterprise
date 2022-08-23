@@ -60,6 +60,7 @@ const COMPONENT_NAME_DEFAULTS = {
     isEnable: false,
     restrictMonths: false
   },
+  showEventLegend: true,
   dayLegend: null,
   displayRange: {
     start: '',
@@ -123,6 +124,7 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {boolean} [settings.disable.retrictMonths=false] Restrict month selections on datepicker.
  * It requires minDate and maxDate for the feature to activate.
  * For example if you have more non specific dates to disable then enable ect.
+ * @param {boolean} [settings.showEventLegend=true] Restrict month selections on datepicker.
  * @param {array} [settings.dayLegend] Allows you to set legend for days. This is passed to the legend option in Monthview but only the colors and dates part are used since the calendar already has a legend.
  * @param {string} [settings.attributes] Add extra attributes like id's to the element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
 */
@@ -155,7 +157,7 @@ Calendar.prototype = {
       .renderMonthView()
       .renderWeekView()
       .handleEvents()
-      .addEventLegend();
+      .renderEventLegend();
 
     return this;
   },
@@ -193,8 +195,13 @@ Calendar.prototype = {
    * @private
    * @returns {void}
    */
-  addEventLegend() {
+  renderEventLegend() {
     const s = this.settings;
+
+    $('.calendar-event-legend').remove();
+    if (!s.showEventLegend) { 
+      return;
+    }
 
     this.eventLegend = $('<div class="calendar-event-legend"></div>');
     this.monthviewTable = $('.monthview-table');
@@ -1157,6 +1164,7 @@ Calendar.prototype = {
         if (self.weekView) {
           self.weekView.settings.eventTypes = eventTypes;
         }
+        self.renderEventLegend();
         self.renderEventTypes();
       }
       if (events && events.length > 0) {
