@@ -25,6 +25,7 @@
 - `[Calendar]` Fixed a bug in calendar where bottom border is not properly rendering. ([#6668](https://github.com/infor-design/enterprise/issues/6668))
 - `[Color Palette]` Added status color CSS classes for color and border-color properties. ([#6711](https://github.com/infor-design/enterprise/issues/6711))
 - `[Datagrid]` Updated datagrid header CSS height. ([#6697](https://github.com/infor-design/enterprise/issues/6697))
+- `[Datagrid]` Fix on datagrid column width. ([#6725](https://github.com/infor-design/enterprise/issues/6725))
 - `[Datagrid]` Fixed an error editing in datagrids with grouped headers. ([#6759](https://github.com/infor-design/enterprise/issues/6759))
 - `[Datagrid]` Updated space key checks for expand button. ([#6756](https://github.com/infor-design/enterprise/issues/6756))
 - `[Datagrid]` Fixed an error when hovering cells with tooltips setup and using grouped headers. ([#6753](https://github.com/infor-design/enterprise/issues/6753))
