@@ -793,7 +793,7 @@ describe('Dropdown "No Search" stay-open behavior', () => {
 });
 
 describe('Dropdown blank option tests', () => {
-  it('Highlights the blank option when the list is opened', async () => {
+  xit('Highlights the blank option when the list is opened', async () => {
     await utils.setPage('/components/dropdown/test-blank-initially.html?layout=nofrills');
     await utils.checkForErrors();
 
