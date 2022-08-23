@@ -4258,13 +4258,18 @@ td .btn-actions {
       .icon {
         visibility: visible;
       }
-
+      
       .icon-error,
       .icon-info,
       .icon-alert {
         &:not(.datagrid-alert-icon) {
           margin-left: -48px !important;
         }
+      }
+
+      &.is-fileupload .datagrid-cell-wrapper .icon.icon-error:not(.datagrid-alert-icon) {
+        left: 98%;
+        margin-top: 3px;
       }
     }
   }

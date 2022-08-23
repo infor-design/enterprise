@@ -210,6 +210,16 @@
               left: -1px;
               top: -2px;
             }
+
+            &.has-editor:not(.is-readonly).is-fileupload {
+              &:hover, 
+              &:focus {
+                .datagrid-cell-wrapper .icon.icon-error:not(.datagrid-alert-icon) {
+                  left: 99%;
+                  margin-top: 1px;
+                }
+              }
+            } 
           }
 
           &.is-editing {
@@ -760,6 +770,11 @@
         margin: 4px 0 0 !important;
       }
     }
+
+    .datagrid-trigger-cell.has-editor:not(.is-readonly).is-fileupload .datagrid-cell-wrapper .icon.icon-error:not(.datagrid-alert-icon) {
+      left: 99%;
+      margin-top: 1px;
+    }
   }
 
   &.small-rowheight {
@@ -794,6 +809,11 @@
       &.datagrid-trigger-cell .timepicker {
         margin-top: -6px;
       }
+    }
+
+    .datagrid-trigger-cell.has-editor:not(.is-readonly).is-fileupload .datagrid-cell-wrapper .icon.icon-error:not(.datagrid-alert-icon) {
+      left: 97%;
+      margin-top: 1px;
     }
   }
 }
