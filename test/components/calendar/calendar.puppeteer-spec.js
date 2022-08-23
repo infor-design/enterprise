@@ -347,6 +347,79 @@ describe('Calendar', () => {
     });
   });
 
+  describe('Calendar Monthview to Week View and Day View Shading', () => {
+    const url = `${baseUrl}/test-legend-day-week-shading`;
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('should override event colors correctly', async () => {
+      expect(await page.$eval('.calendar-event.azure', el => el.getAttribute('class'))).toBe('calendar-event azure event-day-start-end has-tooltip');
+      expect(await page.$eval('.calendar-event.azure.has-tooltip', el => getComputedStyle(el).getPropertyValue('background-color'))).toBe('rgb(190, 220, 250)');
+      expect(await page.$eval('.calendar-event.azure.has-tooltip', el => getComputedStyle(el).getPropertyValue('border-left-color'))).toBe('rgb(0, 102, 212)');
+
+      expect(await page.$eval('.calendar-event.amethyst', el => el.getAttribute('class'))).toBe('calendar-event amethyst event-day-start-end has-tooltip');
+      expect(await page.$eval('.calendar-event.amethyst.has-tooltip', el => getComputedStyle(el).getPropertyValue('background-color'))).toBe('rgb(194, 161, 241)');
+      expect(await page.$eval('.calendar-event.amethyst.has-tooltip', el => getComputedStyle(el).getPropertyValue('border-left-color'))).toBe('rgb(108, 35, 201)');
+    });
+  
+    it('should disable weekends', async () => {
+      expect(await page.$$eval('.monthview-table td.is-disabled', el => el.length)).toEqual(12);
+    });
+  
+    it('should render day legend', async () => {
+      expect(await page.$$eval('.monthview-table td.is-colored', el => el.length)).toEqual(4);
+      expect(await page.$$eval('.monthview-legend', el => el.length)).toEqual(1);
+
+      expect(await page.evaluate(() => document.querySelectorAll('.monthview-legend-text')[0].innerText)).toBe('Public Holiday');
+      expect(await page.evaluate(() => document.querySelectorAll('.monthview-legend-text')[1].innerText)).toBe('Other');
+    });
+
+    it('should transition to monthview to weekview and day view with shadings', async () => {
+      let viewButton = await page.$('div.dropdown');
+      await viewButton.click();
+
+      const weekView = await page.$('#list-option-1');
+      await weekView.click();
+
+      expect(await page.$$eval('.week-view-table-header > tr > th', el => el.length)).toEqual(8);
+
+      // weekview legends
+      expect(await page.$eval('.week-view-table-header > tr > th:nth-child(5) > .week-view-all-day-wrapper', el => el.getAttribute('class'))).toBe('week-view-all-day-wrapper is-colored');
+      expect(await page.$eval('.week-view-table-header > tr > th:nth-child(5) > .week-view-all-day-wrapper', el => getComputedStyle(el).getPropertyValue('background-color'))).toBe('rgba(221, 203, 247, 0.3)');
+      expect(await page.$eval('.week-view-table-header > tr > th:nth-child(6) > .week-view-all-day-wrapper', el => el.getAttribute('class'))).toBe('week-view-all-day-wrapper is-colored');
+      expect(await page.$eval('.week-view-table-header > tr > th:nth-child(6) > .week-view-all-day-wrapper', el => getComputedStyle(el).getPropertyValue('background-color'))).toBe('rgba(221, 203, 247, 0.3)');
+
+      // weekview disables
+      expect(await page.$eval('.week-view-table-header > tr > th:nth-child(2) > .week-view-all-day-wrapper', el => el.getAttribute('class'))).toBe('week-view-all-day-wrapper is-disabled');
+      expect(await page.$eval('.week-view-table-header > tr > th:nth-child(8) > .week-view-all-day-wrapper', el => el.getAttribute('class'))).toBe('week-view-all-day-wrapper is-disabled');
+
+      viewButton = await page.$('.calendar-weekview > .week-view-header > .calendar-toolbar > .toolbar-section > .dropdown-wrapper > .dropdown');
+      await viewButton.click();
+
+      const dayView = await page.$('#list-option-2');
+      await dayView.click();
+
+      const nextButton = await page.$('.calendar-weekview > .week-view-header > .calendar-toolbar > .toolbar-section > .next');
+      await nextButton.click();
+
+      expect(await page.evaluate(() => document.querySelector('.week-view-header-day-of-week.is-emphasis').innerText)).toBe('22');
+
+      // dayview legend
+      expect(await page.$eval('.week-view-table-header > tr > th:nth-child(2) > .week-view-all-day-wrapper', el => el.getAttribute('class'))).toBe('week-view-all-day-wrapper is-colored');
+      expect(await page.$eval('.week-view-table-header > tr > th:nth-child(2) > .week-view-all-day-wrapper', el => getComputedStyle(el).getPropertyValue('background-color'))).toBe('rgba(221, 203, 247, 0.3)');
+
+      await nextButton.click();
+      await nextButton.click();
+      await nextButton.click();
+
+      // dayview disables
+      expect(await page.evaluate(() => document.querySelector('.week-view-header-day-of-week.is-emphasis').innerText)).toBe('25');
+      expect(await page.$eval('.week-view-table-header > tr > th:nth-child(2) > .week-view-all-day-wrapper', el => el.getAttribute('class'))).toBe('week-view-all-day-wrapper is-disabled');
+    });
+  });
+
   describe('Calendar display range tests', () => {
     const url = `${baseUrl}/test-range-in-month`;
 
