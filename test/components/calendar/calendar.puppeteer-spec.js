@@ -414,7 +414,7 @@ describe('Calendar', () => {
       await nextButton.click();
       await nextButton.click();
 
-      // dayview disables
+      // dayview disable
       expect(await page.evaluate(() => document.querySelector('.week-view-header-day-of-week.is-emphasis').innerText)).toBe('25');
       expect(await page.$eval('.week-view-table-header > tr > th:nth-child(2) > .week-view-all-day-wrapper', el => el.getAttribute('class'))).toBe('week-view-all-day-wrapper is-disabled');
     });
