@@ -211,13 +211,15 @@
               top: -2px;
             }
 
-            &.has-editor:not(.is-readonly).is-fileupload {
-              &:hover, 
-              &:focus {
-                .datagrid-cell-wrapper .icon.icon-error:not(.datagrid-alert-icon) {
-                  left: 99%;
-                  margin-top: 1px;
-                }
+            &.has-editor:not(.is-readonly) {
+              &.is-fileupload .datagrid-cell-wrapper .icon.icon-error:not(.datagrid-alert-icon) {
+                left: 99%;
+                margin-top: 1px;
+              }
+
+              .datagrid-cell-wrapper .colorpicker-container + .icon.icon-error:not(.datagrid-alert-icon) {
+                left: 100%;
+                margin-top: 2px;
               }
             } 
           }
@@ -299,7 +301,7 @@
         min-height: 32px;
       }
 
-      .dropdown-trigger {
+      .dropdown-trigger:not(.colorpicker-container) {
         + .icon {
           top: 3px !important;
           left: 4px !important;
@@ -693,7 +695,7 @@
     top: -4px !important;
   }
 
-  tbody tr td.datagrid-trigger-cell .dropdown-trigger + .icon {
+  tbody tr td.datagrid-trigger-cell .dropdown-trigger :not(.colorpicker-container) + .icon {
     top: 1px !important;
     left: -5px !important;
   }
@@ -771,9 +773,16 @@
       }
     }
 
-    .datagrid-trigger-cell.has-editor:not(.is-readonly).is-fileupload .datagrid-cell-wrapper .icon.icon-error:not(.datagrid-alert-icon) {
-      left: 99%;
-      margin-top: 1px;
+    .datagrid-trigger-cell.has-editor:not(.is-readonly) {
+      &.is-fileupload .datagrid-cell-wrapper .icon.icon-error:not(.datagrid-alert-icon) {
+        left: 99%;
+        margin-top: 1px;
+      }
+
+      .datagrid-cell-wrapper .colorpicker-container + .icon.icon-error:not(.datagrid-alert-icon) {
+        left: 101%;
+        margin-top: 1px;
+      }
     }
   }
 
@@ -811,9 +820,20 @@
       }
     }
 
-    .datagrid-trigger-cell.has-editor:not(.is-readonly).is-fileupload .datagrid-cell-wrapper .icon.icon-error:not(.datagrid-alert-icon) {
-      left: 97%;
-      margin-top: 1px;
+    .datagrid-trigger-cell.has-editor:not(.is-readonly) {
+      &.is-fileupload .datagrid-cell-wrapper .icon.icon-error:not(.datagrid-alert-icon) {
+        left: 97%;
+        margin-top: 1px;
+      }
+
+      .datagrid-cell-wrapper .colorpicker-container + .icon.icon-error:not(.datagrid-alert-icon) {
+        left: 100%;
+        top: 9px;
+      }
+
+      .datagrid-cell-wrapper .trigger.dropdown-trigger:not(.colorpicker-container) + .icon + .icon.icon-error:not(.datagrid-alert-icon) {
+        left: 100%
+      }
     }
   }
 }

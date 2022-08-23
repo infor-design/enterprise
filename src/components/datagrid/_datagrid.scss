@@ -1973,7 +1973,7 @@ $datagrid-small-row-height: 25px;
       }
 
       &.datagrid-trigger-cell {
-        .dropdown-trigger + .icon {
+        .dropdown-trigger:not(.colorpicker-container) + .icon {
           left: -6px !important;
           top: 2px !important;
         }
