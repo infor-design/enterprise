@@ -1,5 +1,5 @@
-const AxeBuilder = require('axe-webdriverjs');
-const rules = require('./default-axe-options.js');
+import AxeBuilder from 'axe-webdriverjs';
+import rules from './default-axe-options.js';
 
 const AxePageObject = async function (theme) {
   let res;
@@ -12,4 +12,4 @@ const AxePageObject = async function (theme) {
   return res;
 };
 
-module.exports = AxePageObject;
+export default AxePageObject;

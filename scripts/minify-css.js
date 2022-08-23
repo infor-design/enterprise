@@ -8,14 +8,17 @@
 // -------------------------------------
 // Requirements
 // -------------------------------------
-const cssmin = require('cssmin');
-const commandLineArgs = require('yargs').argv;
+import cssmin from 'cssmin';
+import _yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
 
-const logger = require('./logger');
-const getFileContents = require('./build/get-file-contents');
-const writeFile = require('./build/write-file');
+import logger from './logger.js';
+import getFileContents from './build/get-file-contents.js';
+import writeFile from './build/write-file.js';
 
-const config = require('./configs/cssmin').cssmin;
+import config from './configs/cssmin';
+
+const argv = _yargs(hideBin(process.argv)).argv;
 
 // -------------------------------------
 // Functions
@@ -30,7 +33,7 @@ function minify(srcFilePath, targetFilePath) {
       return;
     }
     // Only log if not in --verbose mode (file logger has more detailed results)
-    if (!commandLineArgs.verbose) {
+    if (!argv.verbose) {
       logger('success', `Successfully minified "${targetFilePath}"`);
     }
   });
@@ -38,7 +41,7 @@ function minify(srcFilePath, targetFilePath) {
 
 function minifyCSS() {
   return new Promise((resolve, reject) => {
-    if (!config.dist || !config.dist.files) {
+    if (!config.cssmin.dist || !config.cssmin.dist.files) {
       throw new Error('Need to have target CSS files passed in for minifier');
     }
 
@@ -46,7 +49,7 @@ function minifyCSS() {
     const processes = [];
 
     files.forEach((targetFileName) => {
-      const srcFileName = config.dist.files[targetFileName][0];
+      const srcFileName = config.cssmin.dist.files[targetFileName][0];
       processes.push(minify(srcFileName, targetFileName));
     });
 
@@ -61,4 +64,4 @@ function minifyCSS() {
 // -------------------------------------
 // Main
 // -------------------------------------
-module.exports = minifyCSS();
+export default minifyCSS;

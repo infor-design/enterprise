@@ -2,6 +2,10 @@ import * as fs from 'fs';
 import * as path from 'path';
 import URL from 'url';
 import logger from '../logger.js';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Option Handling - Custom Middleware
 // Writes a set of default options the 'req' object.  These options are always eventually passed to the HTML template.

@@ -7,17 +7,20 @@
 // -------------------------------------
 // Requirements
 // -------------------------------------
-const chalk = require('chalk');
-const glob = require('glob');
-const path = require('path');
-const extend = require('extend');
-const Terser = require('terser');
-const commandLineArgs = require('yargs').argv;
+import chalk from 'chalk';
+import glob from 'glob';
+import * as path from 'path';
+import extend from 'extend';
+import Terser from 'terser';
+import _yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
 
-const logger = require('./logger');
-const config = require('./configs/terser');
-const getFileContents = require('./build/get-file-contents');
-const writeFile = require('./build/write-file');
+import logger from './logger.js';
+import config from './configs/terser.js';
+import getFileContents from './build/get-file-contents.js';
+import writeFile from './build/write-file.js';
+
+const argv = _yargs(hideBin(process.argv)).argv;
 
 const paths = {
   ids: {
@@ -41,7 +44,7 @@ let compressedFileCount = 0;
 function openUncompressedFile(name, filePath) {
   const uncompressedFile = getFileContents(filePath);
 
-  if (commandLineArgs.verbose) {
+  if (argv.verbose) {
     if (!uncompressedFile) {
       logger('alert', `WARNING: No ${name} was available at "${filePath}"`);
     } else {
@@ -78,7 +81,7 @@ function minify() {
       reject(new Error(`Error running Terser: ${result.error}`));
       return;
     }
-    if (commandLineArgs.verbose) {
+    if (argv.verbose) {
       logger('success', `Compressed library file "${chalk.yellow('sohoxi.js')}" with sourcemap successfully.`);
     }
     compressedFileCount++;
@@ -107,7 +110,7 @@ function minifyCulture(inputFileName) {
       reject(new Error(`Error running Terser: ${result.error}`));
       return;
     }
-    if (commandLineArgs.verbose) {
+    if (argv.verbose) {
       logger('success', `Compressed culture file "${chalk.yellow(inputFileName)}" successfully.`);
     }
     compressedFileCount++;
@@ -160,4 +163,4 @@ function minifyJS() {
   });
 }
 
-module.exports = minifyJS();
+export default minifyJS;
