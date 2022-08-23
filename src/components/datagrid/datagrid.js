@@ -7039,11 +7039,11 @@ Datagrid.prototype = {
       let dataRowIdx = null;
       const target = $(e.target);
       const td = target.closest('td');
-      const th = td.closest('table').find('thead > tr > th').eq(td.index());
+      const th = td.closest('table').find('thead > tr > th:not([colspan])').eq(td.index());
       const columnId = th.attr('data-column-id');
       const columnSettings = self.settings.columns[self.columnIdxById(columnId)];
 
-      if (e.type === 'select' && !columnSettings.inlineEditor) {
+      if (e.type === 'select' && !columnSettings?.inlineEditor) {
         return;
       }
 
