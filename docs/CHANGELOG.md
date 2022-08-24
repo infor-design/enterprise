@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.65.5
+
+## v4.65.5 Fixes
+
+- `[Datagrid]` Fix on datagrid column width. ([#6725](https://github.com/infor-design/enterprise/issues/6725))
+
 ## v4.65.4
 
 ## v4.65.4 Fixes
