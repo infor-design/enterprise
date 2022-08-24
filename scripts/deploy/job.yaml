@@ -1,0 +1,60 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: enterprise-release
+spec:
+  ttlSecondsAfterFinished: 300
+  backoffLimit: 0
+  template:
+    spec:
+      restartPolicy: Never
+      nodeSelector: 
+        eks.amazonaws.com/nodegroup: heavy
+      volumes:
+        - name: gitconfig
+          secret:
+            secretName: gitconfig
+            defaultMode: 0600
+      containers:
+        - name: enterprise-release
+          image: hookandloop/enterprise-release:0.0.1
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: gitconfig
+              readOnly: true
+              mountPath: "/usr/src/secrets"
+          resources:
+            requests:
+              cpu: 500m
+              memory: 3Gi
+          env:
+            - name: GITHUB_ACCESS_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: github-access-token
+                  key: token
+            - name: NPM_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: npm-token
+                  key: token
+            - name: BRANCH
+              value: 4.65.x
+            - name: NPM_COMMAND
+              value: ""
+            - name: NPM_LATEST
+              value: 4.66.0
+            - name: RELEASEIT_FLAGS
+              value: --dry-run=false --git.commit --git.push --github.release --npm.publish --npm.tag=""
+            - name: RELEASE_INCREMENT
+              value: patch
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - /bin/sh
+                  - -c
+                  - cp /usr/src/secrets/gitconfig /root/.gitconfig
+          command: ["/bin/bash"]
+          args: ["-c", ". ./run.sh"]
+      restartPolicy: Never

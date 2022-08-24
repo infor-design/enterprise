@@ -1,4 +1,4 @@
-ORGANIZATION = agolub
+ORGANIZATION = hookandloop
 CONTAINER = enterprise-release
 VERSION = 0.0.1
 
