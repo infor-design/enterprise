@@ -222,14 +222,21 @@
                   left: 100%;
                   margin-top: 2px;
                 }
-                
-                .trigger + .icon-search-list + .icon.icon-error:not(.datagrid-alert-icon) {
-                  left: 100%
-                }
 
-                .trigger + .icon-calendar + .icon.icon-error:not(.datagrid-alert-icon) {
-                  left: 103%;
-                  margin-top: 1px;
+                .trigger {
+                  + .icon-search-list + .icon.icon-error:not(.datagrid-alert-icon) {
+                    left: 100%
+                  }
+                  
+                  + .icon-calendar + .icon.icon-error:not(.datagrid-alert-icon) {
+                    left: 101%;
+                    margin-top: 1px;
+                  }
+
+                  +.icon-clock + .icon.icon-error:not(.datagrid-alert-icon) {
+                    margin-top: 1px;
+                    left: 98%;
+                  }
                 }
               }
             } 
@@ -795,14 +802,21 @@
           left: 101%;
           margin-top: 1px;
         }
-        
-        .trigger + .icon-search-list + .icon.icon-error:not(.datagrid-alert-icon) {
-          left: 96%
-        }
 
-        .trigger + .icon-calendar + .icon.icon-error:not(.datagrid-alert-icon) {
-          left: 99%;
-          margin-top: 1px;
+        .trigger {
+          + .icon-search-list + .icon.icon-error:not(.datagrid-alert-icon) {
+            left: 96%
+          }
+
+          + .icon-calendar + .icon.icon-error:not(.datagrid-alert-icon) {
+            left: 99%;
+            margin-top: 1px;
+          }
+
+          + .icon-clock + .icon.icon-error:not(.datagrid-alert-icon) {
+            left: 97%;
+            margin-top: 0;
+          }
         }
       }
     }
@@ -865,8 +879,8 @@
           }
 
           + .icon-clock + .icon.icon-error:not(.datagrid-alert-icon) {
-            margin-top: 1px;
-            left: 98%;
+            margin-top: 0;
+            left: 97%;
           }
         }
       }
