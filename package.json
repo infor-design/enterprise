@@ -117,7 +117,7 @@
     "handlebars-registrar": "^1.5.2",
     "load-grunt-tasks": "^5.1.0",
     "mmm": "^0.2.2",
-    "node-sass": "^5.0.0",
+    "node-sass": "^7.0.0",
     "node-sass-once-importer": "^5.3.2",
     "rimraf": "^3.0.2",
     "rollup": "^2.67.2",
