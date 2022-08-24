@@ -1,13 +1,11 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 const { element, browser } = require('protractor');
 const popupmenuPageObject = require('./helpers/popupmenu-page-objects.js');
 
-const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
 const config = requireHelper('e2e-config');
 const utils = requireHelper('e2e-utils');
 requireHelper('rejection');
 const axePageObjects = requireHelper('axe-page-objects');
-
-jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Contextmenu index tests', () => {
   beforeEach(async () => {

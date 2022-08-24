@@ -1,10 +1,7 @@
-const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
 const config = requireHelper('e2e-config');
 const utils = requireHelper('e2e-utils');
 
 requireHelper('rejection');
-
-jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Column Stacked Chart tests', () => {
   beforeEach(async () => {

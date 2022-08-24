@@ -1,9 +1,6 @@
-const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
 const config = requireHelper('e2e-config');
 const utils = requireHelper('e2e-utils');
 requireHelper('rejection');
-
-jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 function checkLeftAndTop(elem, pos) {
   const elemStyle = elem.getAttribute('style');
