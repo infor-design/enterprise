@@ -2744,14 +2744,17 @@ Editor.prototype = {
         }
 
         // Using timeout, firefox not executes with current call stack
-        setTimeout(() => {
-          for (let i = 0, l = els.length; i < l; i++) {
-            if (els[i].hasAttribute('size')) {
-              els[i].style.backgroundColor = value;
-              els[i].removeAttribute('size');
+        if (target.is('a')) {
+          setTimeout(() => {
+            for (let i = 0, l = els.length; i < l; i++) {
+              if (els[i].hasAttribute('size')) {
+                console.log('bind', value);
+                els[i].style.backgroundColor = value;
+                els[i].removeAttribute('size');
+              }
             }
-          }
-        }, 0);
+          }, 0);
+        }
       }
     });
 
