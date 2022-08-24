@@ -6843,7 +6843,7 @@ Datagrid.prototype = {
     $('body').on('open.modal.datagrid', (modal) => {
       const modalEl = $(modal.target);
       if (modalEl.find(this.table).length > 0) {
-        if (this.table.width() > modalEl.width() || this.widthSpecified) {
+        if (this.table.width() > modalEl.width() && this.widthSpecified) {
           this.table.width(466);
         }
       }
