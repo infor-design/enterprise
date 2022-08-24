@@ -221,6 +221,10 @@
                 left: 100%;
                 margin-top: 2px;
               }
+
+              .datagrid-cell-wrapper .trigger + .icon-search-list + .icon.icon-error:not(.datagrid-alert-icon) {
+                left: 100%
+              }
             } 
           }
 
@@ -782,6 +786,10 @@
       .datagrid-cell-wrapper .colorpicker-container + .icon.icon-error:not(.datagrid-alert-icon) {
         left: 101%;
         margin-top: 1px;
+      }
+
+      .datagrid-cell-wrapper .trigger + .icon-search-list + .icon.icon-error:not(.datagrid-alert-icon) {
+        left: 96%
       }
     }
   }
