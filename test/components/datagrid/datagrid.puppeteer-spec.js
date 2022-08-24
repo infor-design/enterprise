@@ -291,13 +291,13 @@ describe('Datagrid', () => {
     it('should add new row on button click', async () => {
       await page.click('#add-row-top-btn');
       const ariaRowTop = await page.$eval('tr.datagrid-row.rowstatus-row-new.is-tooltips-enabled', element => element.getAttribute('aria-rowindex'));
-      expect(ariaRowTop).toMatch('8');
+      expect(ariaRowTop).toMatch('1');
       await page.click('.toolbar.has-more-button .btn-actions:not(.page-changer)');
       await page.waitForSelector('#popupmenu-2.is-open', { visible: true });
       await page.hover('#popupmenu-2 > li:nth-child(3) > a');
       await page.click('#popupmenu-2 > li:nth-child(3) > a');
       const ariaRowT4 = await page.$eval('tr.datagrid-row.rowstatus-row-new.is-tooltips-enabled', element => element.getAttribute('aria-rowindex'));
-      expect(ariaRowT4).toMatch('9');
+      expect(ariaRowT4).toMatch('4');
     });
   });
 
