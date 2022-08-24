@@ -585,10 +585,6 @@ Datagrid.prototype = {
   },
 
   refreshIndexes() {
-    if (this.settings.treeGrid) {
-      return;
-    }
-
     this.element.find('tr').removeAttr('aria-rowindex');
     this.element.find('tr').removeAttr('data-index');
 
