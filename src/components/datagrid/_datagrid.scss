@@ -2699,8 +2699,25 @@ $datagrid-small-row-height: 25px;
           visibility: visible;
         }
 
-        .trigger + .icon-search-list + .icon-error {
-          left: 94%;
+        .trigger {
+          + .icon-search-list + .icon-error {
+            left: 94%;
+          }
+          
+          + .icon-calendar + .icon-error {
+            left: 98%;
+            margin-top: 2px;
+          }
+
+          + .icon-calendar + .icon-error {
+            left: 98%;
+            margin-top: 2px;
+          }
+
+          + .icon-clock + .icon-error {
+            margin-top: 2px;
+            left: 95%;
+          }
         }
       }
 

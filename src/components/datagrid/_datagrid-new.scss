@@ -217,13 +217,20 @@
                 margin-top: 1px;
               }
 
-              .datagrid-cell-wrapper .colorpicker-container + .icon.icon-error:not(.datagrid-alert-icon) {
-                left: 100%;
-                margin-top: 2px;
-              }
+              .datagrid-cell-wrapper {
+                .colorpicker-container + .icon.icon-error:not(.datagrid-alert-icon) {
+                  left: 100%;
+                  margin-top: 2px;
+                }
+                
+                .trigger + .icon-search-list + .icon.icon-error:not(.datagrid-alert-icon) {
+                  left: 100%
+                }
 
-              .datagrid-cell-wrapper .trigger + .icon-search-list + .icon.icon-error:not(.datagrid-alert-icon) {
-                left: 100%
+                .trigger + .icon-calendar + .icon.icon-error:not(.datagrid-alert-icon) {
+                  left: 103%;
+                  margin-top: 1px;
+                }
               }
             } 
           }
@@ -783,13 +790,20 @@
         margin-top: 1px;
       }
 
-      .datagrid-cell-wrapper .colorpicker-container + .icon.icon-error:not(.datagrid-alert-icon) {
-        left: 101%;
-        margin-top: 1px;
-      }
+      .datagrid-cell-wrapper {
+        .colorpicker-container + .icon.icon-error:not(.datagrid-alert-icon) {
+          left: 101%;
+          margin-top: 1px;
+        }
+        
+        .trigger + .icon-search-list + .icon.icon-error:not(.datagrid-alert-icon) {
+          left: 96%
+        }
 
-      .datagrid-cell-wrapper .trigger + .icon-search-list + .icon.icon-error:not(.datagrid-alert-icon) {
-        left: 96%
+        .trigger + .icon-calendar + .icon.icon-error:not(.datagrid-alert-icon) {
+          left: 99%;
+          margin-top: 1px;
+        }
       }
     }
   }
@@ -834,13 +848,27 @@
         margin-top: 1px;
       }
 
-      .datagrid-cell-wrapper .colorpicker-container + .icon.icon-error:not(.datagrid-alert-icon) {
-        left: 100%;
-        top: 9px;
-      }
+      .datagrid-cell-wrapper {
+        .colorpicker-container + .icon.icon-error:not(.datagrid-alert-icon) {
+          left: 100%;
+          top: 9px;
+        }
 
-      .datagrid-cell-wrapper .trigger.dropdown-trigger:not(.colorpicker-container) + .icon + .icon.icon-error:not(.datagrid-alert-icon) {
-        left: 100%
+        .trigger {
+          &.dropdown-trigger:not(.colorpicker-container) + .icon + .icon.icon-error:not(.datagrid-alert-icon) {
+            left: 100%
+          }
+          
+          + .icon-calendar + .icon.icon-error:not(.datagrid-alert-icon) {
+            margin-top: -2px;
+            left: 98%;
+          }
+
+          + .icon-clock + .icon.icon-error:not(.datagrid-alert-icon) {
+            margin-top: 1px;
+            left: 98%;
+          }
+        }
       }
     }
   }
