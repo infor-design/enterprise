@@ -1,5 +1,6 @@
-import AxeBuilder from 'axe-webdriverjs';
-import rules from './default-axe-options.js';
+// eslint-disable-next-line import/no-extraneous-dependencies
+const AxeBuilder = require('axe-webdriverjs');
+const rules = require('./default-axe-options.js');
 
 const AxePageObject = async function (theme) {
   let res;

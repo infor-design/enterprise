@@ -1,12 +1,9 @@
-const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
 const utils = requireHelper('e2e-utils');
 const config = requireHelper('e2e-config');
 const until = protractor.ExpectedConditions;
 requireHelper('rejection');
 
 const axePageObjects = requireHelper('axe-page-objects');
-
-jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Button example-index tests', () => {
   beforeEach(async () => {

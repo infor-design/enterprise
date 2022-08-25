@@ -40,7 +40,7 @@ function render(useComments) {
   const startComment = useComments ? '/*! ' : '';
   const comment = useComments ? ' *  ' : '';
   const endComment = useComments ? ' */ ' : '';
-  const date = `Date: ${moment().toISOString()}`;
+  const date = `Date: ${new Date().toISOString()}`;
   const revision = `Revision: ${commitHash}`.trim();
   let isCustom = '';
   let componentsArgs;

@@ -316,8 +316,8 @@ describe('Datagrid', () => {
       const value = await page.$eval('#datagrid > div > table.datagrid > tbody > tr > td:nth-child(5) > div', element => element.innerHTML);
       expect(value).toEqual('0');
 
-      await page.$eval('#datagrid > div > table.datagrid > tbody > tr > td:nth-child(5) > div', (el) => { 
-        el.innerHTML = '4'; 
+      await page.$eval('#datagrid > div > table.datagrid > tbody > tr > td:nth-child(5) > div', (el) => {
+        el.innerHTML = '4';
       });
 
       await page.waitForTimeout(200);
@@ -325,6 +325,51 @@ describe('Datagrid', () => {
       const newValue = await page.$eval('#datagrid > div.datagrid-wrapper.center.scrollable-x.scrollable-y > table > tbody > tr:nth-child(2) > td:nth-child(5) > div', element => element.innerHTML);
 
       expect(newValue).toEqual('4');
+    });
+  });
+
+  describe('Column width', () => {
+    const url = `${baseUrl}/test-column-size`;
+    let windowSize;
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+      windowSize = await page.viewport();
+    });
+
+    afterAll(async () => {
+      await page.setViewport(windowSize);
+    });
+
+    it('should not have inline width when no column width is specified', async () => {
+      await page.setViewport({ width: 600, height: 600 });
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+
+      await page.click('#show-model');
+
+      await page.waitForSelector('#modal-content', { visible: true })
+        .then(elHandle => elHandle.$('table.datagrid'))
+        .then(async (elHandle) => {
+          await page.waitForTimeout(400);
+          return elHandle.evaluate(e => e.getAttribute('style'));
+        })
+        .then(style => expect(style).toBeFalsy());
+    });
+
+    it('should have inline width when column width is specified and screen is small', async () => {
+      await page.setViewport({ width: 600, height: 600 });
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+
+      await page.$eval('#width', (el) => { el.value = '35'; });
+      await page.click('#show-model');
+
+      await page.waitForSelector('#modal-content', { visible: true })
+        .then(elHandle => elHandle.$('table.datagrid'))
+        .then(async (elHandle) => {
+          await page.waitForTimeout(400);
+          return elHandle.evaluate(e => e.getAttribute('style'));
+        })
+        .then(style => expect(style).toContain('width'));
     });
   });
 });
