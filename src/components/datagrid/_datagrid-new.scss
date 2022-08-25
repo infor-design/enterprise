@@ -225,9 +225,9 @@
 
                 .trigger {
                   + .icon-search-list + .icon.icon-error:not(.datagrid-alert-icon) {
-                    left: 100%
+                    left: 100%;
                   }
-                  
+
                   + .icon-calendar + .icon.icon-error:not(.datagrid-alert-icon) {
                     left: 101%;
                     margin-top: 1px;
@@ -239,7 +239,7 @@
                   }
                 }
               }
-            } 
+            }
           }
 
           &.is-editing {
@@ -379,11 +379,12 @@
 
   tbody tr td.is-editing {
     input {
+      margin-top: 0;
+      margin-left: 0;
+
       :not(.colorpicker) {
         height: 22px !important;
       }
-      margin-left: 0;
-      margin-top: 0;
 
       &.lookup {
         margin-left: -1px;
@@ -805,7 +806,7 @@
 
         .trigger {
           + .icon-search-list + .icon.icon-error:not(.datagrid-alert-icon) {
-            left: 96%
+            left: 96%;
           }
 
           + .icon-calendar + .icon.icon-error:not(.datagrid-alert-icon) {
@@ -870,9 +871,9 @@
 
         .trigger {
           &.dropdown-trigger:not(.colorpicker-container) + .icon + .icon.icon-error:not(.datagrid-alert-icon) {
-            left: 100%
+            left: 100%;
           }
-          
+
           + .icon-calendar + .icon.icon-error:not(.datagrid-alert-icon) {
             margin-top: -2px;
             left: 98%;
