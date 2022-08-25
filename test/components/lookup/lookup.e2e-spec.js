@@ -1,11 +1,9 @@
-const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
 const utils = requireHelper('e2e-utils');
+// eslint-disable-next-line import/no-extraneous-dependencies
 const { element } = require('protractor');
 const config = require('../../helpers/e2e-config.js');
 
 requireHelper('rejection');
-
-jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Lookup example tests', () => {
   beforeEach(async () => {
