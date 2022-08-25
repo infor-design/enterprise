@@ -584,6 +584,10 @@ Datagrid.prototype = {
     self.afterRender();
   },
 
+  /**
+   * Refresh the indexes of the rows in datagrid.
+   * @private
+   */
   refreshIndexes() {
     this.element.find('tr').removeAttr('aria-rowindex');
     this.element.find('tr').removeAttr('data-index');
