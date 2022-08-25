@@ -537,10 +537,11 @@ Datagrid.prototype = {
       self.emptyMessageContainer.hide();
     }
 
-    const recordCount = self.settings.dataset.length - 1;
-    const dataIndex = recordCount;
+    const operationType = location === 'bottom' ? 'last' : 'first';
+    const position = operationType === 'last' ? self.settings.dataset.length - 1 : 0;
+    const dataIndex = self.settings.dataset.length - 1;
 
-    const rowHtml = self.rowHtml(data, recordCount, dataIndex);
+    const rowHtml = self.rowHtml(data, position, dataIndex);
     if (self.settings.groupable) {
       const groups = $('.datagrid-rowgroup-header').find('span:not([class])');
       for (let i = 0; i < groups.length; i++) {
@@ -553,7 +554,6 @@ Datagrid.prototype = {
     }
 
     if (self.settings.paging && !self.settings.groupable) {
-      const operationType = location === 'bottom' ? 'last' : 'first';
       // eslint-disable-next-line max-len
       const newPage = (self.settings.dataset.length - (self.pagerAPI.pageCount() * self.pagerAPI.settings.pagesize)) === 1 ? 1 : 0;
       const newActivePage = (location === 'bottom' ? self.pagerAPI.pageCount() : 1) + newPage;
@@ -580,7 +580,23 @@ Datagrid.prototype = {
       }
     }
 
+    self.refreshIndexes();
     self.afterRender();
+  },
+
+  /**
+   * Refresh the indexes of the rows in datagrid.
+   * @private
+   */
+  refreshIndexes() {
+    this.element.find('tr').removeAttr('aria-rowindex');
+    this.element.find('tr').removeAttr('data-index');
+
+    this.element.find('tbody > tr').each((idx, obj) => {
+      const el = $(obj);
+      el.attr('aria-rowindex', idx + 1);
+      el.attr('data-index', idx);
+    });
   },
 
   /**
@@ -4585,7 +4601,8 @@ Datagrid.prototype = {
       return containerHtml;
     }
 
-    const ariaRowindex = ((dataRowIdx + 1) +
+    const idx = self.settings.treeGrid ? dataRowIdx : actualIndex;
+    const ariaRowindex = ((idx + 1) +
       (self.settings.source && !self.settings.indeterminate ?
         ((activePage - 1) * self.settings.pagesize) : 0));
 
