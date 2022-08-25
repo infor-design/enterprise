@@ -1,8 +1,5 @@
-const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
 const utils = requireHelper('e2e-utils');
 const config = requireHelper('e2e-config');
-
-jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Message visual regression tests', () => {
   if (utils.isChrome() && utils.isCI()) {

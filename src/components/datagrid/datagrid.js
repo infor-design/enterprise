@@ -5718,7 +5718,7 @@ Datagrid.prototype = {
     }
 
     if (!s.treeGrid && s.dataset[idx] !== undefined) {
-      this.settings.dataset[idx] = utils.extend(true, this.settings.dataset[idx], data); 
+      this.settings.dataset[idx] = utils.extend(true, this.settings.dataset[idx], data);
     }
 
     if (this.settings.rowReorder && this.tableBody.data('arrange')) {
@@ -6843,7 +6843,7 @@ Datagrid.prototype = {
     $('body').on('open.modal.datagrid', (modal) => {
       const modalEl = $(modal.target);
       if (modalEl.find(this.table).length > 0) {
-        if (this.table.width() > modalEl.width() || this.widthSpecified) {
+        if (this.table.width() > modalEl.width() && this.widthSpecified) {
           this.table.width(466);
         }
       }
@@ -7039,11 +7039,11 @@ Datagrid.prototype = {
       let dataRowIdx = null;
       const target = $(e.target);
       const td = target.closest('td');
-      const th = td.closest('table').find('thead > tr > th').eq(td.index());
+      const th = td.closest('table').find('thead > tr > th:not([colspan])').eq(td.index());
       const columnId = th.attr('data-column-id');
       const columnSettings = self.settings.columns[self.columnIdxById(columnId)];
 
-      if (e.type === 'select' && !columnSettings.inlineEditor) {
+      if (e.type === 'select' && !columnSettings?.inlineEditor) {
         return;
       }
 
@@ -9794,7 +9794,7 @@ Datagrid.prototype = {
       // or click to activate using a mouse.
       if (self.settings.editable && key === 32) {
         const btnExpand = target?.find('.datagrid-expand-btn');
-        if (btnExpand) {
+        if (btnExpand.length > 0) {
           btnExpand.trigger('click');
           e.preventDefault(); // This will prevent scrolling down when the list is overflowing.
         }
@@ -12776,7 +12776,7 @@ Datagrid.prototype = {
         }
       }
 
-      if (columnSettings.tooltipOptions) {
+      if (columnSettings?.tooltipOptions) {
         if (columnSettings.tooltipOptions.placement) {
           tooltip.placement = columnSettings.tooltipOptions.placement;
         }

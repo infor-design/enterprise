@@ -1,9 +1,6 @@
-const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
 const config = requireHelper('e2e-config');
 const utils = requireHelper('e2e-utils');
 requireHelper('rejection');
-
-jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Validation example-index tests', () => {
   beforeEach(async () => {
@@ -661,7 +658,7 @@ describe('Validation message types', () => {
     error: { field: '#da1217', icon: '#606066' },
     alert: { field: '#f98300', icon: '#606066' },
     success: { field: '#2ac371', icon: '#606066' },
-    info: { field: '#0072ed', icon: '#606066' },
+    info: { field: '#0066d4', icon: '#606066' },
     customIcon: { field: '#000000', icon: '#606066' },
     isHelpMessage: { field: '#000000', icon: '#606066' }
   };

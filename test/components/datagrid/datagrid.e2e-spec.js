@@ -1,13 +1,11 @@
 /* eslint-disable compat/compat */
+// eslint-disable-next-line import/no-extraneous-dependencies
 const { browser, element } = require('protractor');
 
-const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
 const utils = requireHelper('e2e-utils');
 const config = requireHelper('e2e-config');
 const until = protractor.ExpectedConditions;
 requireHelper('rejection');
-
-jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 /**
  * general CSS selectors used throughout these tests
@@ -4848,7 +4846,7 @@ describe('Datagrid with select rows across pages tests', () => {
     expect(await element.all(by.css(allRows)).count()).toEqual(1);
   });
 
-  it('Should sync if select/deselect while filtering', async () => {
+  xit('Should sync if select/deselect while filtering', async () => {
     const textSel = '.toolbar > div.title.selection-count.has-tooltip';
     const filterId = 'test-paging-multiselect-select-across-page-datagrid-1-header-filter-2';
     const allRows = '#datagrid .datagrid-wrapper tbody .datagrid-row';

@@ -1,8 +1,5 @@
-const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
 const utils = requireHelper('e2e-utils');
 const config = requireHelper('e2e-config');
-
-jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Cards example-expandable-cards tests', () => {
   beforeEach(async () => {

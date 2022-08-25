@@ -631,7 +631,7 @@ $datagrid-small-row-height: 25px;
     }
   }
 
-  &:not(.small-rowheight):not(.extra-small-rowheight) .datagrid-header th.text-ellipsis {
+  &.large-rowheight .datagrid-header th.text-ellipsis {
     &:not(.is-filterable) .datagrid-column-wrapper {
       height: 32px;
     }

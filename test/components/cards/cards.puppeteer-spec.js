@@ -104,10 +104,10 @@ describe('Cards', () => {
       await page.waitForSelector('.card-group-action', { visible: true })
         .then(element => expect(element).toBeTruthy());
 
-      const image = await page.screenshot(); 
-      const config = getConfig('cards-group-action'); 
+      const image = await page.screenshot();
+      const config = getConfig('cards-group-action');
 
-      expect(image).toMatchImageSnapshot(config); 
+      expect(image).toMatchImageSnapshot(config);
     });
   });
 
@@ -141,10 +141,10 @@ describe('Cards', () => {
       const button = await page.$('#category-button');
       await button.click();
 
-      const image = await page.screenshot(); 
-      const config = getConfig('cards-menu-button'); 
+      const image = await page.screenshot();
+      const config = getConfig('cards-menu-button');
 
-      expect(image).toMatchImageSnapshot(config); 
+      expect(image).toMatchImageSnapshot(config);
     });
   });
 
@@ -215,10 +215,10 @@ describe('Cards', () => {
       const button = await page.$('.card:nth-child(1)');
       await button.click();
 
-      const image = await button.screenshot(); 
-      const config = getConfig('cards-single-select'); 
+      const image = await button.screenshot();
+      const config = getConfig('cards-single-select');
 
-      expect(image).toMatchImageSnapshot(config); 
+      expect(image).toMatchImageSnapshot(config);
     });
   });
 
@@ -248,7 +248,7 @@ describe('Cards', () => {
       expect(await page.$eval('.card:nth-child(2)', el => el.getAttribute('class'))).toBe('card auto-height is-selectable is-selected');
     });
 
-    it('should not visual regress', async () => {
+    it.skip('should not visual regress', async () => {
       await page.waitForSelector('.card', { visible: true })
         .then(element => expect(element).toBeTruthy());
 
@@ -259,7 +259,7 @@ describe('Cards', () => {
       await button2.click();
 
       const window = await page.$('#cardlist');
-      const image = await window.screenshot(); 
+      const image = await window.screenshot();
       const config = getConfig('cards-multi-select');
 
       expect(image).toMatchImageSnapshot(config);
@@ -281,7 +281,7 @@ describe('Cards', () => {
       await page.keyboard.press('Tab');
       await page.hover('#actionable-btn-2');
 
-      const image = await page.screenshot(); 
+      const image = await page.screenshot();
       const config = getConfig('cards-actionbutton');
 
       expect(image).toMatchImageSnapshot(config);

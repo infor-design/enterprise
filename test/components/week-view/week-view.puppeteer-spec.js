@@ -36,7 +36,7 @@ describe('Week View Puppeteer Tests', () => {
       expect(await page.$eval('#custom-id-week-view-today', el => el.getAttribute('data-automation-id'))).toBe('custom-automation-id-week-view-today');
     });
 
-    it('Should be able to reset the date today', async () => {
+    it.skip('Should be able to reset the date today', async () => {
       const validateYear = ` ${new Date().getFullYear()}`;
 
       await page.click('.trigger');
