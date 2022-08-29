@@ -18,7 +18,7 @@ spec:
       - name: repo_owner_name
         value: ""
 
-  entrypoint: env-deploy-wf
+  entrypoint: ent-env-deploy-wf
 
   podGC:
     # Pod GC strategy must be one of the following:
@@ -29,7 +29,7 @@ spec:
     strategy: OnWorkflowSuccess
 
   templates:
-    - name: env-deploy-wf
+    - name: ent-env-deploy-wf
       steps:
         - - name: build
             template: build
@@ -72,7 +72,7 @@ spec:
             backoffLimit: 0
             template:
               metadata:
-                name: sohoxi-env-deploy
+                name: ent-env-deploy
               spec:
                 shareProcessNamespace: true
                 restartPolicy: Never

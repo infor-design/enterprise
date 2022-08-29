@@ -1,13 +1,11 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  generateName: build-
+  name: ent-env-deploy
 spec:
   ttlSecondsAfterFinished: 300
   backoffLimit: 0
   template:
-    metadata:
-      name: sohoxi-env-deploy
     spec:
       shareProcessNamespace: true
       restartPolicy: Never
@@ -50,16 +48,15 @@ spec:
                   name: tls-secret-key
                   key: token
             - name: HANDLER_API_URL
-              value: "{{inputs.parameters.handler_api_url}}"
+              value: ""
             - name: ORG_NAME
-              value: "{{inputs.parameters.org_name}}"
+              value: ""
             - name: BASE_CONTAINER_NAME
-              value: "{{inputs.parameters.base_container_name}}"
+              value: ""
             - name: BUILD_FROM
-              value: "{{inputs.parameters.build_from}}"
+              value: ""
             - name: REPO_OWNER_NAME
-              value: "{{inputs.parameters.repo_owner_name}}"
-          #command: ['docker', 'run', '-p', '8080:8080', 'httpd:latest']
+              value: ""
           command: ["/bin/bash"]
           args: ["-c", ". ./run.sh"]
         - name: dind-daemon

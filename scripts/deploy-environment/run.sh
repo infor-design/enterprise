@@ -44,6 +44,8 @@ reload(){
   echo $reload_resp | jq .
 }
 
+rm -rf /root/enterprise/{..?*,.[!.]*,*} 2>/dev/null
+
 git clone https://$_GITHUB_ACCESS_TOKEN@github.com/$_REPO_OWNER_NAME.git /root/enterprise
 cd /root/enterprise
 git remote set-url origin https://$_GITHUB_ACCESS_TOKEN@github.com/$_REPO_OWNER_NAME.git
@@ -51,7 +53,7 @@ git fetch --all
 git checkout $_BUILD_FROM > /dev/null
 
 if [ $? = 1 ] ; then
-    echo "Git checkout failed. Please make sure the branch your are checking out exists."
+    echo "Git checkout failed. Please make sure the branch you are checking out exists."
     pkill dockerd
     exit 1
 fi
@@ -77,7 +79,8 @@ then
 	BUILD_NAME=latest-$_BASE_CONTAINER_NAME
 fi
 
-npm install && npm run build && npx grunt demo
+npm install
+npm run build
 
 cat >Dockerfile <<EOL
 FROM hookandloop/sohoxi-demo:1.0.1
