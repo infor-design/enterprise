@@ -18,7 +18,6 @@ spec:
       - name: repo_owner_name
         value: ""
 
-
   entrypoint: ent-env-deploy-wf
 
   podGC:
