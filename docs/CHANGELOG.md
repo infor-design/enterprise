@@ -25,6 +25,7 @@
 - `[Calendar]` Fixed a bug in calendar where bottom border is not properly rendering. ([#6668](https://github.com/infor-design/enterprise/issues/6668))
 - `[Color Palette]` Added status color CSS classes for color and border-color properties. ([#6711](https://github.com/infor-design/enterprise/issues/6711))
 - `[Datagrid]` Fixed a bug in datagrid inside a modal where the column is rendering wider than normal. ([#6782](https://github.com/infor-design/enterprise/issues/6782))
+- `[Datagrid]` Fixed a bug in datagrid where when changing rowHeight as a setting and rerendering it doesnt apply. ([#6783](https://github.com/infor-design/enterprise/issues/6783))
 - `[Datagrid]` Fixed a bug in datagrid where isEditable is not returning row correctly. ([#6746](https://github.com/infor-design/enterprise/issues/6746))
 - `[Datagrid]` Updated datagrid header CSS height. ([#6697](https://github.com/infor-design/enterprise/issues/6697))
 - `[Datagrid]` Fix on datagrid column width. ([#6725](https://github.com/infor-design/enterprise/issues/6725))

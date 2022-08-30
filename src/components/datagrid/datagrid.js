@@ -4135,6 +4135,8 @@ Datagrid.prototype = {
     if (self.hasRightPane) {
       DOM.html(self.tableBodyRight, tableHtmlRight, '*');
     }
+
+    self.setRowHeightClass();
     self.setVirtualHeight();
     self.setScrollClass();
     self.setupTooltips(rowStatusTooltip);
@@ -7778,20 +7780,7 @@ Datagrid.prototype = {
       this.settings.rowHeight = height;
     }
 
-    let rowHeightClass = this.settings.rowHeight;
-    if (rowHeightClass === 'short') {
-      rowHeightClass = 'small';
-    }
-    if (rowHeightClass === 'large') {
-      rowHeightClass = 'normal';
-    }
-
-    this.element
-      .add(this.table)
-      .add(this.tableLeft)
-      .add(this.tableRight)
-      .removeClass('extra-small-rowheight small-rowheight short-rowheight medium-rowheight normal-rowheight large-rowheight')
-      .addClass(`${rowHeightClass}-rowheight`);
+    this.setRowHeightClass();
 
     if (this.virtualRange && this.virtualRange.rowHeight) {
       this.virtualRange.rowHeight = (height === 'normal' || height === 'large') ? 40 : (height === 'medium' ? 30 : 25);
@@ -7810,6 +7799,28 @@ Datagrid.prototype = {
     }
 
     return this.settings.rowHeight;
+  },
+
+  /**
+  * Set just the class on the body
+  */
+  setRowHeightClass() {
+    let rowHeightClass = this.settings.rowHeight;
+    if (rowHeightClass === 'short') {
+      rowHeightClass = 'small';
+    }
+    if (rowHeightClass === 'large') {
+      rowHeightClass = 'normal';
+    }
+
+    this.element
+      .add(this.table)
+      .add(this.tableLeft)
+      .add(this.tableRight)
+      .removeClass('extra-small-rowheight small-rowheight short-rowheight medium-rowheight normal-rowheight large-rowheight')
+      .addClass(`${rowHeightClass}-rowheight`);
+
+    this.refreshSelectedRowHeight();
   },
 
   /**
