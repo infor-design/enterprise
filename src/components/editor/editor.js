@@ -2706,6 +2706,10 @@ Editor.prototype = {
         target = $(item.element);
       }
 
+      if (!target.is('a')) {
+        return;
+      }
+
       // Use the value to set the color
       let value = (`${target.data('value')}`).toLowerCase();
       value = value !== '#' ? value : '';
@@ -2744,17 +2748,15 @@ Editor.prototype = {
         }
 
         // Using timeout, firefox not executes with current call stack
-        if (target.is('a')) {
-          setTimeout(() => {
-            for (let i = 0, l = els.length; i < l; i++) {
-              if (els[i].hasAttribute('size')) {
-                console.log('bind', value);
-                els[i].style.backgroundColor = value;
-                els[i].removeAttribute('size');
-              }
+        setTimeout(() => {
+          for (let i = 0, l = els.length; i < l; i++) {
+            if (els[i].hasAttribute('size')) {
+              console.log('bind', value);
+              els[i].style.backgroundColor = value;
+              els[i].removeAttribute('size');
             }
-          }, 0);
-        }
+          }
+        }, 0);
       }
     });
 
