@@ -5270,13 +5270,18 @@ Datagrid.prototype = {
    */
   columnWidth(col, index) {
     if (!this.elemWidth) {
-      this.elemWidth = this.element.outerWidth();
+      if (this.element.parents('.modal').length > 0) {
+        this.elemWidth = this.element.parents('.modal').hasClass('is-visible') === false ? undefined : this.element.outerWidth();
+      } else {
+        this.elemWidth = this.element.outerWidth();
+      }
 
       if (this.elemWidth === 0) { // handle on invisible tab container
         this.elemWidth = this.element.closest('.tab-container').outerWidth();
       }
 
       this.widthSpecified = false;
+      this.widthPixel = false;
     }
     return this.calculateColumnWidth(col, index);
   },
@@ -5294,17 +5299,6 @@ Datagrid.prototype = {
     const visibleColumns = this.visibleColumns(true);
     const lastColumn = (index === this.visibleColumns().length - 1);
     const container = this.getContainer(col.id);
-
-    if (!this.elemWidth) {
-      this.elemWidth = this.element.outerWidth();
-
-      if (this.elemWidth === 0) { // handle on invisible tab container
-        this.elemWidth = this.element.closest('.tab-container').outerWidth();
-      }
-
-      this.widthSpecified = false;
-      this.widthPixel = false;
-    }
 
     // A column element with a value other than 'auto' for the 'width' property
     // sets the width for that column.

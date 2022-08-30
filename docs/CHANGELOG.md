@@ -1,10 +1,16 @@
 # What's New with Enterprise
 
+## v4.65.6
+
+## v4.65.6 Fixes
+
+- `[Datagrid]` Fixed a bug in datagrid inside a modal where the column is rendering wider than normal. ([#6782](https://github.com/infor-design/enterprise/issues/6782))
+
 ## v4.65.5
 
 ## v4.65.5 Fixes
 
-- `[Datagrid]` Fix on datagrid column width. ([#6725](https://github.com/infor-design/enterprise/issues/6725))
+- `[Datagrid]` Fix on datagrid column width. ([#6725](https://github.com/infor-design/enterprise/issues/6783))
 
 ## v4.65.4
 
