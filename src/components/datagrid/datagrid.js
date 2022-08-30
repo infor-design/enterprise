@@ -8714,7 +8714,7 @@ Datagrid.prototype = {
 
     if (this.filterRowRendered) {
       rows = [];
-      for (let i = 0, l = currentRows.length; i < l; i++) {
+      for (let i = 0, l = currentRows?.length; i < l; i++) {
         if (!currentRows[i]._isFilteredOut) {
           rows.push(i);
         }
@@ -8724,17 +8724,17 @@ Datagrid.prototype = {
     this.syncHeaderCheckbox(rows);
 
     // Open or Close the Contextual Toolbar.
-    if (this.contextualToolbar.length !== 1 || this.dontSyncUi) {
+    if (this.contextualToolbar?.length !== 1 || this.dontSyncUi) {
       return;
     }
 
-    if (this._selectedRows.length === 0) {
+    if (this._selectedRows?.length === 0) {
       this.contextualToolbar.one('animateclosedcomplete.datagrid', () => {
         this.contextualToolbar.css('display', 'none');
       }).animateClosed();
     }
 
-    if (this._selectedRows.length > 0 && (this.contextualToolbar.height() === 0 || !this.contextualToolbar.is(':visible') || !this.contextualToolbar.hasClass('is-hidden'))) {
+    if (this._selectedRows?.length > 0 && (this.contextualToolbar?.height() === 0 || !this.contextualToolbar?.is(':visible') || !this.contextualToolbar?.hasClass('is-hidden'))) {
       this.contextualToolbar.find('.selection-count').text(`${this._selectedRows.length} ${Locale.translate('Selected')}`);
       this.contextualToolbar.removeClass('is-hidden').css('display', 'block').one('animateopencomplete.datagrid', function () {
         $(this).removeClass('is-hidden').triggerHandler('recalculate-buttons');
