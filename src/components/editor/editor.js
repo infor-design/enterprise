@@ -2751,7 +2751,6 @@ Editor.prototype = {
         setTimeout(() => {
           for (let i = 0, l = els.length; i < l; i++) {
             if (els[i].hasAttribute('size')) {
-              console.log('bind', value);
               els[i].style.backgroundColor = value;
               els[i].removeAttribute('size');
             }
