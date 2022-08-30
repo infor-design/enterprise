@@ -4136,7 +4136,6 @@ Datagrid.prototype = {
       DOM.html(self.tableBodyRight, tableHtmlRight, '*');
     }
 
-    self.setRowHeightClass();
     self.setVirtualHeight();
     self.setScrollClass();
     self.setupTooltips(rowStatusTooltip);
@@ -13105,6 +13104,7 @@ Datagrid.prototype = {
       this.settings.columns = settings.columns;
     }
 
+    this.setRowHeightClass();
     this.render(null, pagingInfo);
     this.renderHeader();
     this.handlePaging();
