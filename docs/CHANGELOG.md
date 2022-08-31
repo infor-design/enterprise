@@ -28,11 +28,12 @@
 - `[Datagrid]` Fixed a bug in datagrid where when changing rowHeight as a setting and rerendering it doesnt apply. ([#6783](https://github.com/infor-design/enterprise/issues/6783))
 - `[Datagrid]` Fixed a bug in datagrid where isEditable is not returning row correctly. ([#6746](https://github.com/infor-design/enterprise/issues/6746))
 - `[Datagrid]` Updated datagrid header CSS height. ([#6697](https://github.com/infor-design/enterprise/issues/6697))
-- `[Datagrid]` Fix on datagrid column width. ([#6725](https://github.com/infor-design/enterprise/issues/6725))
+- `[Datagrid]` Fixed on datagrid column width. ([#6725](https://github.com/infor-design/enterprise/issues/6725))
 - `[Datagrid]` Fixed an error editing in datagrids with grouped headers. ([#6759](https://github.com/infor-design/enterprise/issues/6759))
 - `[Datagrid]` Updated space key checks for expand button. ([#6756](https://github.com/infor-design/enterprise/issues/6756))
 - `[Datagrid]` Fixed an error when hovering cells with tooltips setup and using grouped headers. ([#6753](https://github.com/infor-design/enterprise/issues/6753))
-- `[Listview]` Fix a bug where listview is not rendering properly when dataset has zero integer value. ([#6640](https://github.com/infor-design/enterprise/issues/6640))
+- `[Editor]` Fixed bug in editor where background color is not rendering properly. ([#6685](https://github.com/infor-design/enterprise/issues/6685))
+- `[Listview]` Fixed a bug where listview is not rendering properly when dataset has zero integer value. ([#6640](https://github.com/infor-design/enterprise/issues/6640))
 - `[WeekView]` Added Day View and Week View Shading. ([#6568](https://github.com/infor-design/enterprise/issues/6568))
 
 ## v4.66.0
