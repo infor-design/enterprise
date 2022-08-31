@@ -71,31 +71,37 @@ jobs:
         run: |
           branch_name=${{ steps.extract_branch_name.outputs.branch }}
           FLAG=false
+
           if [[ "$branch_name" =~ ^dev-(.*)$ ]]
           then
             echo "deploying dev branch..."
             FLAG=true
           fi
+
           if [[ "$branch_name" =~ ^qa-(.*)$ ]]
           then
             echo "deploying qa branch..."
             FLAG=true
           fi
+
           if [[ "$branch_name" =~ ^staging-(.*)$ ]]
           then
             echo "deploying staging branch..."
             FLAG=true
           fi
+
           if [[ "$branch_name" = "main" ]]
           then
             echo "deploying main..."
             FLAG=true
           fi
+
           if [[ "$branch_name" =~ ^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$ ]]
           then
             echo "deploying a semantic version branch..."
             FLAG=true
           fi
+
           echo "::set-output name=FLAG::$FLAG"
       - name: Run env deployment
         if: steps.deploy_flag.outputs.FLAG == 'true'
