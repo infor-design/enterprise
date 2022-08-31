@@ -7725,21 +7725,6 @@ Datagrid.prototype = {
       this.settings.rowHeight = height;
     }
 
-    let rowHeightClass = this.settings.rowHeight;
-    if (rowHeightClass === 'short') {
-      rowHeightClass = 'small';
-    }
-    if (rowHeightClass === 'large') {
-      rowHeightClass = 'normal';
-    }
-
-    this.element
-      .add(this.table)
-      .add(this.tableLeft)
-      .add(this.tableRight)
-      .removeClass('extra-small-rowheight small-rowheight short-rowheight medium-rowheight normal-rowheight large-rowheight')
-      .addClass(`${rowHeightClass}-rowheight`);
-
     if (this.virtualRange && this.virtualRange.rowHeight) {
       this.virtualRange.rowHeight = (height === 'normal' || height === 'large') ? 40 : (height === 'medium' ? 30 : 25);
 
@@ -7757,6 +7742,28 @@ Datagrid.prototype = {
     }
 
     return this.settings.rowHeight;
+  },
+
+ /**
+  * Set just the class on the body
+  */
+  setRowHeightClass() {
+    let rowHeightClass = this.settings.rowHeight;
+    if (rowHeightClass === 'short') {
+      rowHeightClass = 'small';
+    }
+    if (rowHeightClass === 'large') {
+      rowHeightClass = 'normal';
+    }
+
+    this.element
+      .add(this.table)
+      .add(this.tableLeft)
+      .add(this.tableRight)
+      .removeClass('extra-small-rowheight small-rowheight short-rowheight medium-rowheight normal-rowheight large-rowheight')
+      .addClass(`${rowHeightClass}-rowheight`);
+
+    this.refreshSelectedRowHeight();
   },
 
   /**
@@ -8650,7 +8657,7 @@ Datagrid.prototype = {
 
     if (this.filterRowRendered) {
       rows = [];
-      for (let i = 0, l = currentRows.length; i < l; i++) {
+      for (let i = 0, l = currentRows?.length; i < l; i++) {
         if (!currentRows[i]._isFilteredOut) {
           rows.push(i);
         }
@@ -8660,17 +8667,17 @@ Datagrid.prototype = {
     this.syncHeaderCheckbox(rows);
 
     // Open or Close the Contextual Toolbar.
-    if (this.contextualToolbar.length !== 1 || this.dontSyncUi) {
+    if (this.contextualToolbar?.length !== 1 || this.dontSyncUi) {
       return;
     }
 
-    if (this._selectedRows.length === 0) {
+    if (this._selectedRows?.length === 0) {
       this.contextualToolbar.one('animateclosedcomplete.datagrid', () => {
         this.contextualToolbar.css('display', 'none');
       }).animateClosed();
     }
 
-    if (this._selectedRows.length > 0 && (this.contextualToolbar.height() === 0 || !this.contextualToolbar.is(':visible') || !this.contextualToolbar.hasClass('is-hidden'))) {
+    if (this._selectedRows?.length > 0 && (this.contextualToolbar?.height() === 0 || !this.contextualToolbar?.is(':visible') || !this.contextualToolbar?.hasClass('is-hidden'))) {
       this.contextualToolbar.find('.selection-count').text(`${this._selectedRows.length} ${Locale.translate('Selected')}`);
       this.contextualToolbar.removeClass('is-hidden').css('display', 'block').one('animateopencomplete.datagrid', function () {
         $(this).removeClass('is-hidden').triggerHandler('recalculate-buttons');
@@ -13025,6 +13032,7 @@ Datagrid.prototype = {
       this.settings.columns = settings.columns;
     }
 
+    this.setRowHeightClass();
     this.render(null, pagingInfo);
     this.renderHeader();
     this.handlePaging();

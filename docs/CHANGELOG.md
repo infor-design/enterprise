@@ -5,6 +5,7 @@
 ## v4.65.6 Fixes
 
 - `[Datagrid]` Fixed a bug in datagrid inside a modal where the column is rendering wider than normal. ([#6782](https://github.com/infor-design/enterprise/issues/6782))
+- `[Datagrid]` Fixed a bug in datagrid where when changing rowHeight as a setting and rerendering it doesnt apply. ([#6783](https://github.com/infor-design/enterprise/issues/6783))
 
 ## v4.65.5
 
