@@ -1,4 +1,4 @@
-name: Deploy environment
+name: Environment deploy
 
 on:
   push:
@@ -6,8 +6,6 @@ on:
       - "*"
       - "*/*"
       - "**"
-  pull_request:
-    branches: [ main ]
 
 permissions:
   contents: read
@@ -73,27 +71,8 @@ jobs:
 
         id: extract_repo_owner
 
-      - name: Install Dependencies
-        run: npm i
-
-      - name: Build
-        run: npm run build
-
-      - name: Run e2e tests
-        run:  (npm run quickstart &) && sleep 5; npm run e2e:ci:debug;
-
-      - name: Run Lint Checks
-        run: npm run lint:ci
-
-      - name: Run functional tests
-        run: npm run functional:ci
-
-      - name: Run puppeteer tests
-        run:  npm run e2e:puppeteer;
-
-      - name: Set env deployment flag
+      - name: Deploy flag
         id: deploy_flag
-        if: github.event_name == 'push'
         run: |
           branch_name=${{ steps.extract_branch_name.outputs.branch }}
           FLAG=false
@@ -107,6 +86,12 @@ jobs:
           if [[ "$branch_name" =~ ^qa-(.*)$ ]]
           then
             echo "deploying qa branch..."
+            FLAG=true
+          fi
+
+          if [[ "$branch_name" =~ ^staging-(.*)$ ]]
+          then
+            echo "deploying staging branch..."
             FLAG=true
           fi
 
@@ -130,13 +115,12 @@ jobs:
           branch_name=${{ steps.extract_branch_name.outputs.branch }}
           repo_name=${{ steps.extract_repo_name.outputs.repo_name }}
           repo_owner=${{ steps.extract_repo_owner.outputs.repo_owner }}
-
+          awf_name=${{ secrets.AWF_NAME }}
           echo "Deploying ${repo_owner//./_}/${repo_name//./_} ${branch_name//./_}"
-
           chmod +x ./scripts/deploy-environment/run-workflow.sh
           ./scripts/deploy-environment/run-workflow.sh \
             https://argocd.workers.design.infor.com/api \
-            k8s-orchestrate-fnjww \
+            ${awf_name} \
             https://handler.demo.design.infor.com/api \
             hookandloop\
             ${repo_name} \
