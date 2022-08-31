@@ -1,14 +1,15 @@
-name: Environment deploy
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Build check
 
 on:
-  push:
-    branches:
-      - "*"
-      - "*/*"
-      - "**"
+  pull_request:
+    branches: [ main ]
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
 
     strategy:
@@ -16,152 +17,48 @@ jobs:
         node-version: [14.x]
 
     steps:
-      - uses: actions/checkout@v2
+    - uses: actions/checkout@v2
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
 
-      - name: Cache multiple paths
-        uses: actions/cache@v2
-        with:
-          path: node_modules
-          key: enterprise-1021
+    - name: Cache multiple paths
+      uses: actions/cache@v2
+      with:
+        path: node_modules
+        key: enterprise-1021
 
-      - uses: szenius/set-timezone@v1.0
-        with:
-          timezoneLinux: "America/New_York"
-          timezoneMacos: "America/New_York"
-          timezoneWindows: "America/New_York"
+    - name: Setup timezone
+      uses: zcong1993/setup-timezone@master
+      with:
+        timezone: America/New_York
 
-      - name: Check Memory Limit
-        run: node -e 'console.log(v8.getHeapStatistics().heap_size_limit/(1024*1024))'
+    - name: Install Dependencies
+      run: npm i
 
-      - name: Set Swap Space
-        uses: pierotofy/set-swap-space@master
-        with:
-          swap-size-gb: 10
+    - name: Build
+      run: npm run build
 
-      - name: Setup timezone
-        uses: zcong1993/setup-timezone@master
-        with:
-          timezone: America/New_York
+    - name: Run e2e tests
+      run:  (npm run quickstart &) && sleep 5; npm run e2e:ci:debug;
 
-      - name: Extract branch name
-        shell: bash
-        run: |
-          echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-        id: extract_branch_name
+    - name: Run Lint Checks
+      run: npm run lint:ci
 
-      - name: Extract repo name
-        shell: bash
-        run: |
-          echo "##[set-output name=repo_name;]$(echo ${GITHUB_REPOSITORY#*/})"
-        id: extract_repo_name
+    - name: Run functional tests
+      run: npm run functional:ci
 
-      - name: Extract repo owner
-        shell: bash
-        run: |
-          echo "##[set-output name=repo_owner;]$(echo ${GITHUB_REPOSITORY%/*})"
-        id: extract_repo_owner
+    - name: Run puppeteer tests
+      run:  npm run e2e:puppeteer;
 
-      - name: Deploy flag
-        id: deploy_flag
-        run: |
-          branch_name=${{ steps.extract_branch_name.outputs.branch }}
-          FLAG=false
+    - name: Dump GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: echo "$GITHUB_CONTEXT"
 
-          if [[ "$branch_name" =~ ^dev-(.*)$ ]]
-          then
-            echo "deploying dev branch..."
-            FLAG=true
-          fi
-
-          if [[ "$branch_name" =~ ^qa-(.*)$ ]]
-          then
-            echo "deploying qa branch..."
-            FLAG=true
-          fi
-
-          if [[ "$branch_name" =~ ^staging-(.*)$ ]]
-          then
-            echo "deploying staging branch..."
-            FLAG=true
-          fi
-
-          if [[ "$branch_name" = "main" ]]
-          then
-            echo "deploying main..."
-            FLAG=true
-          fi
-
-          if [[ "$branch_name" =~ ^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$ ]]
-          then
-            echo "deploying a semantic version branch..."
-            FLAG=true
-          fi
-
-          echo "::set-output name=FLAG::$FLAG"
-      - name: Run env deployment
-        if: steps.deploy_flag.outputs.FLAG == 'true'
-        run: |
-          branch_name=${{ steps.extract_branch_name.outputs.branch }}
-          FLAG=false
-
-          if [[ "$branch_name" =~ ^dev-(.*)$ ]]
-          then
-            echo "deploying dev branch..."
-            FLAG=true
-          fi
-
-          if [[ "$branch_name" =~ ^qa-(.*)$ ]]
-          then
-            echo "deploying qa branch..."
-            FLAG=true
-          fi
-
-          if [[ "$branch_name" = "main" ]]
-          then
-            echo "deploying main..."
-            FLAG=true
-          fi
-
-          if [[ "$branch_name" =~ ^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$ ]]
-          then
-            echo "deploying a semantic version branch..."
-            FLAG=true
-          fi
-
-          echo "::set-output name=FLAG::$FLAG"
-
-      - name: Run env deployment
-        if: steps.deploy_flag.outputs.FLAG == 'true'
-        run: |
-          branch_name=${{ steps.extract_branch_name.outputs.branch }}
-          repo_name=${{ steps.extract_repo_name.outputs.repo_name }}
-          repo_owner=${{ steps.extract_repo_owner.outputs.repo_owner }}
-          awf_name=${{ secrets.AWF_NAME }}
-          echo "Deploying ${repo_owner//./_}/${repo_name//./_} ${branch_name//./_}"
-          chmod +x ./scripts/deploy-environment/run-workflow.sh
-          ./scripts/deploy-environment/run-workflow.sh \
-            https://argocd.workers.design.infor.com/api \
-            ${awf_name} \
-            https://handler.demo.design.infor.com/api \
-            hookandloop\
-            ${repo_name} \
-            ${branch_name} \
-            ${repo_owner}/${repo_name}
-        env:
-          AWF_AUTH_TOKEN: ${{ secrets.AWF_AUTH_TOKEN }}
-        shell: bash
-
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
-
-      - name: Dump job context
-        env:
-          JOB_CONTEXT: ${{ toJson(job) }}
-        run: echo "$JOB_CONTEXT"
+    - name: Dump job context
+      env:
+        JOB_CONTEXT: ${{ toJson(job) }}
+      run: echo "$JOB_CONTEXT"
