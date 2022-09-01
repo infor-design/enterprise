@@ -37,6 +37,8 @@
 - `[Listview]` Fixed a bug where listview is not rendering properly when dataset has zero integer value. ([#6640](https://github.com/infor-design/enterprise/issues/6640))
 - `[WeekView]` Added Day View and Week View Shading. ([#6568](https://github.com/infor-design/enterprise/issues/6568))
 
+(30 Issues Solved This Release, Backlog Enterprise 252, Backlog Ng 49, 1104 Functional Tests, 1342 e2e Tests, 506 Puppeteer Tests)
+
 ## v4.66.0
 
 ## v4.66.0 Features
@@ -78,7 +80,7 @@
 - `[Toolbar Searchfield]` Fixed searchfield toolbar in alternate style. ([#6615](https://github.com/infor-design/enterprise/issues/6615))
 - `[Tooltip]` Fixed tooltip event handlers created on show not cleaning up properly on hide. ([#6613](https://github.com/infor-design/enterprise/issues/6613))
 
-(39 Issues Solved This Release, Backlog Enterprise 1105, Backlog Ng 42, 1102 Functional Tests, 1380 e2e Tests, 462 Puppeteer Tests)
+(39 Issues Solved This Release, Backlog Enterprise 230, Backlog Ng 42, 1102 Functional Tests, 1380 e2e Tests, 462 Puppeteer Tests)
 
 ## v4.65.0
 
