@@ -4,6 +4,8 @@
 
 ## v4.67.0 Features
 
+- `[Icons]` Added new icons for `interaction` and `interaction-reply`. ([#6721](https://github.com/infor-design/enterprise/issues/6721))
+
 ## v4.67.0 Fixes
 
 - `[Button]` Added dark theme button colors. ([#6512](https://github.com/infor-design/enterprise/issues/6512))
