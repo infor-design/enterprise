@@ -1,11 +1,8 @@
-const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
 const utils = requireHelper('e2e-utils');
 const config = requireHelper('e2e-config');
 requireHelper('rejection');
 
 const axePageObjects = requireHelper('axe-page-objects');
-
-jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 const clickOnDropdown = async () => {
   const dropdownEl = element(by.css('div.dropdown'));
@@ -793,7 +790,7 @@ describe('Dropdown "No Search" stay-open behavior', () => {
 });
 
 describe('Dropdown blank option tests', () => {
-  it('Highlights the blank option when the list is opened', async () => {
+  xit('Highlights the blank option when the list is opened', async () => {
     await utils.setPage('/components/dropdown/test-blank-initially.html?layout=nofrills');
     await utils.checkForErrors();
 

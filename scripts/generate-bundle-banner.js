@@ -2,7 +2,6 @@
 /* eslint-disable import/no-extraneous-dependencies, import/no-unresolved */
 const fs = require('fs');
 const path = require('path');
-const moment = require('moment');
 const childProcess = require('child_process');
 const pjson = require('../package.json');
 const args = require('yargs').argv;
@@ -32,7 +31,7 @@ function render(useComments) {
   const startComment = useComments ? '/*! ' : '';
   const comment = useComments ? ' *  ' : '';
   const endComment = useComments ? ' */ ' : '';
-  const date = `Date: ${moment().toISOString()}`;
+  const date = `Date: ${new Date().toISOString()}`;
   const revision = `Revision: ${commitHash}`.trim();
   let isCustom = '';
   let componentsArgs;

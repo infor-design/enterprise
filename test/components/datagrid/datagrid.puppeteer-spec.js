@@ -258,6 +258,27 @@ describe('Datagrid', () => {
       await page.evaluate(() => document.getElementById('example-header-icon-with-tooltip-datagrid-1-header-2').getAttribute('class'))
         .then(el => expect(el).toContain('lm-custom-class-header'));
     });
+
+    it('should show the tooltip content upon changing row height', async () => {
+      await page.setViewport({ width: 1920, height: 1080 });
+
+      await page.click('#maincontent > div.row > div > div.toolbar.has-more-button.do-resize.has-title > div.more > button');
+      await page.click('#popupmenu-2 > li:nth-child(4)');
+
+      // wait for element before trying to hover
+      await page.waitForSelector('#example-header-icon-with-tooltip-datagrid-1-header-2 .datagrid-header-icon');
+      await page.hover('#example-header-icon-with-tooltip-datagrid-1-header-2 .datagrid-header-icon');
+
+      await page.click('#example-header-icon-with-tooltip-datagrid-1-header-2 .datagrid-header-text')
+        .then(() => page.hover('#example-header-icon-with-tooltip-datagrid-1-header-2 > div.datagrid-column-wrapper > svg'));
+
+      // get the tooltip content and verify if product name exist
+      await page.waitForSelector('.tooltip-content.header-icon', { visible: true })
+        .then(el => expect(el).toBeTruthy());
+      const tooltip = await page.$('.tooltip-content.header-icon');
+      const tooltipContent = await page.evaluate(el => el.textContent, tooltip);
+      expect(tooltipContent).toContain('Product Name');
+    });
   });
 
   describe('Can add multiple rows', () => {
@@ -270,13 +291,13 @@ describe('Datagrid', () => {
     it('should add new row on button click', async () => {
       await page.click('#add-row-top-btn');
       const ariaRowTop = await page.$eval('tr.datagrid-row.rowstatus-row-new.is-tooltips-enabled', element => element.getAttribute('aria-rowindex'));
-      expect(ariaRowTop).toMatch('8');
+      expect(ariaRowTop).toMatch('1');
       await page.click('.toolbar.has-more-button .btn-actions:not(.page-changer)');
       await page.waitForSelector('#popupmenu-2.is-open', { visible: true });
       await page.hover('#popupmenu-2 > li:nth-child(3) > a');
       await page.click('#popupmenu-2 > li:nth-child(3) > a');
       const ariaRowT4 = await page.$eval('tr.datagrid-row.rowstatus-row-new.is-tooltips-enabled', element => element.getAttribute('aria-rowindex'));
-      expect(ariaRowT4).toMatch('9');
+      expect(ariaRowT4).toMatch('4');
     });
   });
 
@@ -295,8 +316,8 @@ describe('Datagrid', () => {
       const value = await page.$eval('#datagrid > div > table.datagrid > tbody > tr > td:nth-child(5) > div', element => element.innerHTML);
       expect(value).toEqual('0');
 
-      await page.$eval('#datagrid > div > table.datagrid > tbody > tr > td:nth-child(5) > div', (el) => { 
-        el.innerHTML = '4'; 
+      await page.$eval('#datagrid > div > table.datagrid > tbody > tr > td:nth-child(5) > div', (el) => {
+        el.innerHTML = '4';
       });
 
       await page.waitForTimeout(200);
@@ -304,6 +325,51 @@ describe('Datagrid', () => {
       const newValue = await page.$eval('#datagrid > div.datagrid-wrapper.center.scrollable-x.scrollable-y > table > tbody > tr:nth-child(2) > td:nth-child(5) > div', element => element.innerHTML);
 
       expect(newValue).toEqual('4');
+    });
+  });
+
+  describe('Column width', () => {
+    const url = `${baseUrl}/test-column-size`;
+    let windowSize;
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+      windowSize = await page.viewport();
+    });
+
+    afterAll(async () => {
+      await page.setViewport(windowSize);
+    });
+
+    it('should not have inline width when no column width is specified', async () => {
+      await page.setViewport({ width: 600, height: 600 });
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+
+      await page.click('#show-model');
+
+      await page.waitForSelector('#modal-content', { visible: true })
+        .then(elHandle => elHandle.$('table.datagrid'))
+        .then(async (elHandle) => {
+          await page.waitForTimeout(400);
+          return elHandle.evaluate(e => e.getAttribute('style'));
+        })
+        .then(style => expect(style).toBeFalsy());
+    });
+
+    it('should have inline width when column width is specified and screen is small', async () => {
+      await page.setViewport({ width: 600, height: 600 });
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+
+      await page.$eval('#width', (el) => { el.value = '35'; });
+      await page.click('#show-model');
+
+      await page.waitForSelector('#modal-content', { visible: true })
+        .then(elHandle => elHandle.$('table.datagrid'))
+        .then(async (elHandle) => {
+          await page.waitForTimeout(400);
+          return elHandle.evaluate(e => e.getAttribute('style'));
+        })
+        .then(style => expect(style).toContain('width'));
     });
   });
 });

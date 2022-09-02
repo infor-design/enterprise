@@ -1,10 +1,7 @@
-const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
 const utils = requireHelper('e2e-utils');
 const config = require('../../helpers/e2e-config.js');
 
 requireHelper('rejection');
-
-jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Popover Index Tests', () => {
   beforeEach(async () => {

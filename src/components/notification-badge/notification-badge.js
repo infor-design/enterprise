@@ -54,15 +54,22 @@ NotificationBadge.prototype = {
    * @private
    */
   build() {
-    this.notificationBadgeContainerEl = this.element.append('<span class="notification-badge-container"></span>');
+    if (this.element.hasClass('btn-tertiary') || (this.element.hasClass('btn-icon') && !this.element.hasClass('application-menu-trigger'))) {
+      const svgEl = this.element.find('svg');
+
+      this.notificationBadgeContainerEl = $('<span class="notification-badge-container"></span>');
+      this.notificationBadgeContainerEl.insertAfter(svgEl);
+    } else {
+      this.notificationBadgeContainerEl = this.element.append('<span class="notification-badge-container"></span>');
+    }
 
     const htmlNotificationBadge = `
       <span class="notification-dot notification-dot-${this.settings.position} notification-dot-${this.settings.color}"></span>`;
 
-    this.notificationBadgeContainerEl.find('.notification-badge-container').append(htmlNotificationBadge);
+    this.element.find('.notification-badge-container').append(htmlNotificationBadge);
 
-    utils.addAttributes(this.notificationBadgeContainerEl.find('.notification-badge-container'), this, this.settings.attributes, 'container');
-    utils.addAttributes(this.notificationBadgeContainerEl.find('.notification-badge-container .notification-dot'), this, this.settings.attributes, 'dot');
+    utils.addAttributes(this.element.find('.notification-badge-container'), this, this.settings.attributes, 'container');
+    utils.addAttributes(this.element.find('.notification-badge-container .notification-dot'), this, this.settings.attributes, 'dot');
 
     return this;
   },

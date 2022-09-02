@@ -1,8 +1,5 @@
-const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
 const utils = requireHelper('e2e-utils');
 requireHelper('rejection');
-
-jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Pie Chart tests', () => {
   beforeEach(async () => {

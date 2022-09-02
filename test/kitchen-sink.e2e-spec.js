@@ -1,10 +1,7 @@
-const { browserStackErrorReporter } = require('./helpers/browserstack-error-reporter.js');
 const utils = require('./helpers/e2e-utils.js');
 const config = require('./helpers/e2e-config.js');
 
 require('./helpers/rejection.js');
-
-jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Kitchen-sink tests', () => {
   beforeEach(async () => {

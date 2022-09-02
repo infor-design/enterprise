@@ -1316,7 +1316,7 @@ Accordion.prototype = {
     const self = this;
 
     // Reset all the things
-    this.headers.removeClass('filtered has-filtered-children hide-focus');
+    this.headers?.removeClass('filtered has-filtered-children hide-focus');
     this.panes.removeClass('all-children-filtered no-transition');
     this.contentAreas.removeClass('filtered');
     this.currentlyFiltered = $();
@@ -1389,7 +1389,7 @@ Accordion.prototype = {
     const allTempHeaders = [];
 
     // Reset all the things
-    this.headers.removeClass('filtered has-filtered-children hide-focus');
+    this.headers?.removeClass('filtered has-filtered-children hide-focus');
     this.panes.removeClass('all-children-filtered no-transition');
     this.contentAreas.removeClass('filtered');
 
