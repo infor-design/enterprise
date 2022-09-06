@@ -537,10 +537,11 @@ Datagrid.prototype = {
       self.emptyMessageContainer.hide();
     }
 
-    const recordCount = self.settings.dataset.length - 1;
-    const dataIndex = recordCount;
+    const operationType = location === 'bottom' ? 'last' : 'first';
+    const position = operationType === 'last' ? self.settings.dataset.length - 1 : 0;
+    const dataIndex = self.settings.dataset.length - 1;
 
-    const rowHtml = self.rowHtml(data, recordCount, dataIndex);
+    const rowHtml = self.rowHtml(data, position, dataIndex);
     if (self.settings.groupable) {
       const groups = $('.datagrid-rowgroup-header').find('span:not([class])');
       for (let i = 0; i < groups.length; i++) {
@@ -553,7 +554,6 @@ Datagrid.prototype = {
     }
 
     if (self.settings.paging && !self.settings.groupable) {
-      const operationType = location === 'bottom' ? 'last' : 'first';
       // eslint-disable-next-line max-len
       const newPage = (self.settings.dataset.length - (self.pagerAPI.pageCount() * self.pagerAPI.settings.pagesize)) === 1 ? 1 : 0;
       const newActivePage = (location === 'bottom' ? self.pagerAPI.pageCount() : 1) + newPage;
@@ -580,7 +580,23 @@ Datagrid.prototype = {
       }
     }
 
+    self.refreshIndexes();
     self.afterRender();
+  },
+
+  /**
+   * Refresh the indexes of the rows in datagrid.
+   * @private
+   */
+  refreshIndexes() {
+    this.element.find('tr').removeAttr('aria-rowindex');
+    this.element.find('tr').removeAttr('data-index');
+
+    this.element.find('tbody > tr').each((idx, obj) => {
+      const el = $(obj);
+      el.attr('aria-rowindex', idx + 1);
+      el.attr('data-index', idx);
+    });
   },
 
   /**
@@ -4119,6 +4135,7 @@ Datagrid.prototype = {
     if (self.hasRightPane) {
       DOM.html(self.tableBodyRight, tableHtmlRight, '*');
     }
+
     self.setVirtualHeight();
     self.setScrollClass();
     self.setupTooltips(rowStatusTooltip);
@@ -4585,7 +4602,8 @@ Datagrid.prototype = {
       return containerHtml;
     }
 
-    const ariaRowindex = ((dataRowIdx + 1) +
+    const idx = self.settings.treeGrid ? dataRowIdx : actualIndex;
+    const ariaRowindex = ((idx + 1) +
       (self.settings.source && !self.settings.indeterminate ?
         ((activePage - 1) * self.settings.pagesize) : 0));
 
@@ -5287,13 +5305,18 @@ Datagrid.prototype = {
    */
   columnWidth(col, index) {
     if (!this.elemWidth) {
-      this.elemWidth = this.element.outerWidth();
+      if (this.element.parents('.modal').length > 0) {
+        this.elemWidth = this.element.parents('.modal').hasClass('is-visible') === false ? undefined : this.element.outerWidth();
+      } else {
+        this.elemWidth = this.element.outerWidth();
+      }
 
       if (this.elemWidth === 0) { // handle on invisible tab container
         this.elemWidth = this.element.closest('.tab-container').outerWidth();
       }
 
       this.widthSpecified = false;
+      this.widthPixel = false;
     }
     return this.calculateColumnWidth(col, index);
   },
@@ -5311,17 +5334,6 @@ Datagrid.prototype = {
     const visibleColumns = this.visibleColumns(true);
     const lastColumn = (index === this.visibleColumns().length - 1);
     const container = this.getContainer(col.id);
-
-    if (!this.elemWidth) {
-      this.elemWidth = this.element.outerWidth();
-
-      if (this.elemWidth === 0) { // handle on invisible tab container
-        this.elemWidth = this.element.closest('.tab-container').outerWidth();
-      }
-
-      this.widthSpecified = false;
-      this.widthPixel = false;
-    }
 
     // A column element with a value other than 'auto' for the 'width' property
     // sets the width for that column.
@@ -7767,20 +7779,7 @@ Datagrid.prototype = {
       this.settings.rowHeight = height;
     }
 
-    let rowHeightClass = this.settings.rowHeight;
-    if (rowHeightClass === 'short') {
-      rowHeightClass = 'small';
-    }
-    if (rowHeightClass === 'large') {
-      rowHeightClass = 'normal';
-    }
-
-    this.element
-      .add(this.table)
-      .add(this.tableLeft)
-      .add(this.tableRight)
-      .removeClass('extra-small-rowheight small-rowheight short-rowheight medium-rowheight normal-rowheight large-rowheight')
-      .addClass(`${rowHeightClass}-rowheight`);
+    this.setRowHeightClass();
 
     if (this.virtualRange && this.virtualRange.rowHeight) {
       this.virtualRange.rowHeight = (height === 'normal' || height === 'large') ? 40 : (height === 'medium' ? 30 : 25);
@@ -7799,6 +7798,28 @@ Datagrid.prototype = {
     }
 
     return this.settings.rowHeight;
+  },
+
+  /**
+  * Set just the class on the body
+  */
+  setRowHeightClass() {
+    let rowHeightClass = this.settings.rowHeight;
+    if (rowHeightClass === 'short') {
+      rowHeightClass = 'small';
+    }
+    if (rowHeightClass === 'large') {
+      rowHeightClass = 'normal';
+    }
+
+    this.element
+      .add(this.table)
+      .add(this.tableLeft)
+      .add(this.tableRight)
+      .removeClass('extra-small-rowheight small-rowheight short-rowheight medium-rowheight normal-rowheight large-rowheight')
+      .addClass(`${rowHeightClass}-rowheight`);
+
+    this.refreshSelectedRowHeight();
   },
 
   /**
@@ -8692,7 +8713,7 @@ Datagrid.prototype = {
 
     if (this.filterRowRendered) {
       rows = [];
-      for (let i = 0, l = currentRows.length; i < l; i++) {
+      for (let i = 0, l = currentRows?.length; i < l; i++) {
         if (!currentRows[i]._isFilteredOut) {
           rows.push(i);
         }
@@ -8702,17 +8723,17 @@ Datagrid.prototype = {
     this.syncHeaderCheckbox(rows);
 
     // Open or Close the Contextual Toolbar.
-    if (this.contextualToolbar.length !== 1 || this.dontSyncUi) {
+    if (this.contextualToolbar?.length !== 1 || this.dontSyncUi) {
       return;
     }
 
-    if (this._selectedRows.length === 0) {
+    if (this._selectedRows?.length === 0) {
       this.contextualToolbar.one('animateclosedcomplete.datagrid', () => {
         this.contextualToolbar.css('display', 'none');
       }).animateClosed();
     }
 
-    if (this._selectedRows.length > 0 && (this.contextualToolbar.height() === 0 || !this.contextualToolbar.is(':visible') || !this.contextualToolbar.hasClass('is-hidden'))) {
+    if (this._selectedRows?.length > 0 && (this.contextualToolbar?.height() === 0 || !this.contextualToolbar?.is(':visible') || !this.contextualToolbar?.hasClass('is-hidden'))) {
       this.contextualToolbar.find('.selection-count').text(`${this._selectedRows.length} ${Locale.translate('Selected')}`);
       this.contextualToolbar.removeClass('is-hidden').css('display', 'block').one('animateopencomplete.datagrid', function () {
         $(this).removeClass('is-hidden').triggerHandler('recalculate-buttons');
@@ -13083,6 +13104,7 @@ Datagrid.prototype = {
       this.settings.columns = settings.columns;
     }
 
+    this.setRowHeightClass();
     this.render(null, pagingInfo);
     this.renderHeader();
     this.handlePaging();
