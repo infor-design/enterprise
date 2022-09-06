@@ -1,6 +1,5 @@
 import { utils } from '../../utils/utils';
 import { log } from '../../utils/debug';
-import { warnAboutDeprecation } from '../../utils/deprecated';
 import { Locale } from '../locale/locale';
 import { ToolbarFlexItem, TOOLBAR_ELEMENTS } from './toolbar-flex.item';
 
@@ -62,7 +61,6 @@ ToolbarFlex.prototype = {
         itemComponentSettings = this.settings.moreMenuSettings || itemComponentSettings;
 
         if (this.settings.beforeMoreMenuOpen) {
-          warnAboutDeprecation('settings.moreMenuSettings.beforeOpen', 'settings.beforeMoreMenuOpen', 'Flex Toolbar');
           itemComponentSettings.beforeOpen = this.settings.beforeMoreMenuOpen;
         }
       }
