@@ -1,6 +1,5 @@
 import { utils } from '../../utils/utils';
 import { log } from '../../utils/debug';
-import { warnAboutDeprecation } from '../../utils/deprecated';
 import { Locale } from '../locale/locale';
 import { ToolbarFlexItem, TOOLBAR_ELEMENTS } from './toolbar-flex.item';
 
