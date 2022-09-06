@@ -38,6 +38,7 @@
 - `[Editor]` Fixed bug in editor where background color is not rendering properly. ([#6685](https://github.com/infor-design/enterprise/issues/6685))
 - `[Listview]` Fixed a bug where listview is not rendering properly when dataset has zero integer value. ([#6640](https://github.com/infor-design/enterprise/issues/6640))
 - `[Toolbar-Flex]` Removed deprecated message by using `beforeMoreMenuOpen` setting. ([#NG1352](https://github.com/infor-design/enterprise-ng/issues/1352))
+- `[Trackdirty]` Added optional chaining for safety check of trackdirty element. ([#6696](https://github.com/infor-design/enterprise/issues/6696))
 - `[WeekView]` Added Day View and Week View Shading. ([#6568](https://github.com/infor-design/enterprise/issues/6568))
 
 (30 Issues Solved This Release, Backlog Enterprise 252, Backlog Ng 49, 1104 Functional Tests, 1342 e2e Tests, 506 Puppeteer Tests)
