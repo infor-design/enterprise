@@ -62,7 +62,6 @@ ToolbarFlex.prototype = {
         itemComponentSettings = this.settings.moreMenuSettings || itemComponentSettings;
 
         if (this.settings.beforeMoreMenuOpen) {
-          warnAboutDeprecation('settings.moreMenuSettings.beforeOpen', 'settings.beforeMoreMenuOpen', 'Flex Toolbar');
           itemComponentSettings.beforeOpen = this.settings.beforeMoreMenuOpen;
         }
       }
