@@ -14,6 +14,7 @@
 
 - `[Calendar]` Add a setting for calendar to show and hide the legend. ([#6533](https://github.com/infor-design/enterprise/issues/6533))
 - `[Datagrid]` Added puppeteer script for header icon with tooltip. ([#6738](https://github.com/infor-design/enterprise/issues/6738))
+- `[Icons]` Added new icons for `interaction` and `interaction-reply`. ([#6721](https://github.com/infor-design/enterprise/issues/6721))
 - `[Monthview]` Added puppeteer script for monthview legend visibility when month changes ([#6382](https://github.com/infor-design/enterprise/issues/6382))
 - `[Searchfield]` Added puppeteer script for filter and sort icon. ([#6007](https://github.com/infor-design/enterprise/issues/6007))
 - `[Searchfield]` Added puppeteer script for custom icon. ([#6723](https://github.com/infor-design/enterprise/issues/6723))
@@ -49,6 +50,7 @@
 - `[Datagrid]` Added puppeteer script for render only one row. ([#6645](https://github.com/infor-design/enterprise/issues/6645))
 - `[Datagrid]` Added test scripts for add row. ([#6644](https://github.com/infor-design/enterprise/issues/6644))
 - `[Datepicker]` Added setting for adjusting day using +/- in datepicker. ([#6632](https://github.com/infor-design/enterprise/issues/6632))
+- `[Targeted-Achievement]` Add puppeteer test for show tooltip on targeted achievement. ([#6550](https://github.com/infor-design/enterprise/issues/6550))
 - `[Icons]` Added new icons for `interaction` and `interaction-reply`. ([#6666](https://github.com/infor-design/enterprise/issues/6629))
 - `[Searchfield]` Added option to add custom icon button. ([#6453](https://github.com/infor-design/enterprise/issues/6453))
 - `[Targeted-Achievement]` Added puppeteer test for show tooltip on targeted achievement. ([#6550](https://github.com/infor-design/enterprise/issues/6550))
