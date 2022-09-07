@@ -3120,6 +3120,10 @@ $datagrid-small-row-height: 25px;
           margin-right: -3px;
           margin-left: 10px;
         }
+
+        &.icon-clock {
+          left: 2px;
+        }
       }
 
       .colorpicker-container .icon {

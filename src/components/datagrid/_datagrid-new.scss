@@ -163,6 +163,13 @@
         margin-top: 9px;
       }
     }
+
+    &.datagrid-trigger-cell {
+      input.timepicker + .btn-icon.trigger {
+        margin-left: 0;
+        margin-top: 9.5px;
+      }
+    }
   }
 
   &.extra-small-rowheight {
@@ -403,7 +410,6 @@
     }
 
     .datepicker {
-      // margin-top: 4px !important;
       padding-left: 0;
       padding-top: 0;
     }

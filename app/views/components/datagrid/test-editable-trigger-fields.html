@@ -24,11 +24,11 @@
              {id: 'opt5', value: 'val5', label: 'inch squared'},
              {id: 'opt6', value: 'val6', label: 'inch cubed'},
            ];
-    
+
      //Define a custom Validator that just fails
      $.fn.validation.rules.customRule = {
         	check: function (value, field, grid) {
-            return false;
+            return value.toString().length > 0;
         	},
         	message: 'Incorrect Input'
         };
@@ -57,7 +57,6 @@
       columns: columns,
       dataset: data,
       editable: true,
-      filterable: true,
       selectable: 'multiple',
       toolbar: {title: 'Compressors', results: true, actions: true, rowHeight: true}
     });
