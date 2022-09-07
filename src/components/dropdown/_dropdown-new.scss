@@ -379,7 +379,12 @@ html.is-firefox:not([dir='rtl']) {
 
   .dropdown-list {
     > .trigger .icon {
-      top: 8px;
+      top: 9px;
+    }
+
+    &.datagrid-dropdown-list.is-editing .trigger .icon {
+      top: 8.5px;
+      margin-left: -0.5px;
     }
 
     > .listoption-icon {
