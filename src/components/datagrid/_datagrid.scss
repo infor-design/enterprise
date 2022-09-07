@@ -1405,6 +1405,10 @@ $datagrid-small-row-height: 25px;
     }
 
     .datagrid-trigger-cell {
+      &.is-editing .trigger + .icon-close + .icon:not(.datagrid-alert-icon).icon-fileupload {
+        left: 5px;
+      }
+
       .icon:not(.datagrid-alert-icon) {
         left: 3px;
         top: 5px;
