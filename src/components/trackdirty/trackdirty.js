@@ -206,7 +206,7 @@ Trackdirty.prototype = {
 
         // Add class and icon
         d.icon = el.prev();
-        if (!d.icon.is('.icon-dirty')) {
+        if (!d?.icon?.is('.icon-dirty')) {
           if (input.is('.colorpicker') && !Locale.isRTL()) {
             d.rect = this.getAbsolutePosition(input);
             d.style = `left:${d.rect.left}px; top:${d.rect.top}px;`;
