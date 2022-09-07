@@ -385,6 +385,12 @@
   }
 
   tbody tr td.is-editing {
+    &.datagrid-trigger-cell {
+      input.lookup {
+        margin-top: 0;
+      }
+    }
+
     input {
       margin-top: 0;
       margin-left: 0;
