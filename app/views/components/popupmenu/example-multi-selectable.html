@@ -1,7 +1,7 @@
 <div class="row">
   <div class="twelve columns">
     <div class="field">
-      <button id="single-select-popupmenu-trigger" class="btn-menu hide-focus">
+      <button id="popupmenu-trigger" class="btn-menu hide-focus">
         <span>Selectable Menu</span>
         <svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-dropdown">
           <use href="#icon-dropdown"></use>
@@ -16,7 +16,7 @@
         <li><a href="#">Menu Option #6</a></li>
       </ul>
     </div>
-    <button class="btn-primary" type="button" id="btn-selected">Get Selected</button>
+    <button class="btn-secondary" type="button" id="btn-selected">Get Selected</button>
   </div>
 </div>
 
@@ -24,7 +24,8 @@
   $('body').on('initialized', () => {
     $('#btn-selected').on('click', () => {
       var popupmenu = $('#single-select-popupmenu-trigger').data('popupmenu');
-      console.log(`Popupmenu Selected: ${popupmenu.getSelected().length}`);
+      console.log(`Popupmenu Selected Objects: ${popupmenu.getSelected()}`);
+      console.log(`Popupmenu # of Selected: ${popupmenu.getSelected().length}`);
     });
   });
 </script>
