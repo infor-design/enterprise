@@ -17,15 +17,18 @@
       </ul>
     </div>
     <button class="btn-secondary" type="button" id="btn-selected">Get Selected</button>
+    <br><br>
+    <p id="popup-display">Popupmenu # of Selected: 0</p>
   </div>
 </div>
 
 <script>
   $('body').on('initialized', () => {
     $('#btn-selected').on('click', () => {
-      var popupmenu = $('#single-select-popupmenu-trigger').data('popupmenu');
+      var popupmenu = $('#popupmenu-trigger').data('popupmenu');
       console.log(`Popupmenu Selected Objects: ${popupmenu.getSelected()}`);
       console.log(`Popupmenu # of Selected: ${popupmenu.getSelected().length}`);
+      $('#popup-display').text(`Popupmenu # of Selected: ${popupmenu.getSelected().length}`);
     });
   });
 </script>
