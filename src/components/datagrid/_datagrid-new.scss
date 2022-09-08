@@ -233,6 +233,11 @@
                   margin-top: 2px;
                 }
 
+                .datepicker + .trigger {
+                  margin-left: 11px;
+                  margin-top: -0.2px;
+                }
+
                 .trigger {
                   + .icon-search-list + .icon.icon-error:not(.datagrid-alert-icon) {
                     left: 100%;
