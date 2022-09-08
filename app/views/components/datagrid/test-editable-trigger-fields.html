@@ -17,6 +17,7 @@
       data = [],
       columns = [],
       dropdowndOptions = [
+             {id: 'opt0', value: '', label: ''},
              {id: 'opt1', value: 'val1', label: 'gallon, Imperial'},
              {id: 'opt2', value: 'val2', label: 'International Units'},
              {id: 'opt3', value: 'val3', label: 'gallon, U.S. Liquid'},
@@ -58,6 +59,7 @@
       dataset: data,
       editable: true,
       selectable: 'multiple',
+      rowHeight: 'small',
       toolbar: {title: 'Compressors', results: true, actions: true, rowHeight: true}
     });
   });

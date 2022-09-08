@@ -1671,6 +1671,13 @@ $datagrid-small-row-height: 25px;
             }
           }
 
+          &.datagrid-trigger-cell {
+            .colorpicker-container .icon {
+              top: 4px;
+              left: 5px;
+            }
+          }
+
           .colorpicker-container {
             padding: 1px 2px 0;
 
