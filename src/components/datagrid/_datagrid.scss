@@ -1224,11 +1224,18 @@ $datagrid-small-row-height: 25px;
             input.timepicker.is-active.is-open {
               margin-top: -6px;
             }
+
+            input.datepicker {
+              margin-top: -6px;
+            }
+          }
+
+          &:not(.datagrid-trigger-cell) .datepicker {
+            padding: 0 5px 0 15px;
           }
 
           .datepicker {
             margin-top: 3px;
-            padding: 0 5px 0 15px;
 
             ~ .icon {
               margin-left: -5px;

@@ -167,7 +167,10 @@
     &.datagrid-trigger-cell {
       input.timepicker + .btn-icon.trigger {
         margin-left: 0;
-        margin-top: 9.5px;
+      }
+
+      .datepicker + .btn-icon.trigger {
+        margin-top: 9px;
       }
     }
   }
@@ -342,15 +345,29 @@
     }
 
     td.is-editing {
-      .datepicker {
+      &:not(.datagrid-trigger-cell) .datepicker {
         + .trigger {
           margin-top: 7px;
-          margin-left: -2px;
         }
 
         + .trigger.btn-icon {
           margin-top: 3px;
+        }
+      }
+
+      &.datagrid-trigger-cell input.timepicker + .btn-icon.trigger  {
+        right: 5px;
+        top: 2.5px;
+      }
+
+      .datepicker {
+        + .trigger {
+          margin-left: -2px;
+        }
+
+        + .trigger.btn-icon {
           margin-left: 14px;
+          margin-top: 0.5px;
         }
       }
 
@@ -634,8 +651,18 @@
               }
             }
 
-            &.datagrid-trigger-cell input.datepicker {
-              margin-top: -4px;
+            &.datagrid-trigger-cell {
+              input.datepicker {
+                margin-top: -6px;
+              }
+
+              .datepicker + .trigger.btn-icon {
+                margin-top: 1px;
+              }
+
+              input.timepicker + .btn-icon.trigger  {
+                top: 4px;
+              }
             }
 
             .lookup-wrapper {
