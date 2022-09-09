@@ -1,19 +1,19 @@
 ORGANIZATION = hookandloop
-CONTAINER = enterprise-release
-VERSION = 0.0.1
+WORKER_CONTAINER_NAME = enterprise-release
+WORKER_CONTAINER_VERSION = 0.0.1
 
 ifneq (,$(wildcard ./.env))
 	include .env
 	export
 endif
 
-.PHONY: build-image, release, shell
+.PHONY: build-worker-image, run-worker, shell-worker
 
-build-image :
-	docker build -t $(ORGANIZATION)/$(CONTAINER):$(VERSION) .
+build-worker-image :
+	docker build -t $(ORGANIZATION)/$(WORKER_CONTAINER_NAME):$(WORKER_CONTAINER_VERSION) .
 
-release :
-	docker run --rm --name $(CONTAINER) \
+run-worker :
+	docker run --rm --name $(WORKER_CONTAINER_NAME) \
 		--env AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
 		--env AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
 		--env GITHUB_ACCESS_TOKEN=${GITHUB_ACCESS_TOKEN} \
@@ -27,10 +27,10 @@ release :
 		-v ${PWD}/build:/root/enterprise \
 		-v ${PWD}/.gitconfig:/root/.gitconfig \
 		-v ${PWD}/run.sh:/usr/src/run.sh \
-		$(ORGANIZATION)/$(CONTAINER):$(VERSION)
+		$(ORGANIZATION)/$(WORKER_CONTAINER_NAME):$(WORKER_CONTAINER_VERSION)
 
-shell :
-	docker run -it --rm --name $(CONTAINER) \
+shell-worker :
+	docker run -it --rm --name $(WORKER_CONTAINER_NAME) \
 		--entrypoint /bin/sh \
 		--env AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
 		--env AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
@@ -45,4 +45,4 @@ shell :
 		-v ${PWD}/build:/root/enterprise \
 		-v ${PWD}/.gitconfig:/root/.gitconfig \
 		-v ${PWD}/run.sh:/usr/src/run.sh \
-		$(ORGANIZATION)/$(CONTAINER):$(VERSION)
+		$(ORGANIZATION)/$(WORKER_CONTAINER_NAME):$(WORKER_CONTAINER_VERSION)

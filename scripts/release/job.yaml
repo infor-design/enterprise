@@ -39,15 +39,15 @@ spec:
                   name: npm-token
                   key: token
             - name: BRANCH
-              value: 4.65.x
+              value:
             - name: NPM_COMMAND
-              value: ""
+              value:
             - name: NPM_LATEST
-              value: 4.66.0
+              value:
             - name: RELEASEIT_FLAGS
-              value: --dry-run=false --git.commit --git.push --github.release --npm.publish --npm.tag=""
+              value:
             - name: RELEASE_INCREMENT
-              value: patch
+              value:
           lifecycle:
             postStart:
               exec:

@@ -9,7 +9,7 @@ ifneq (,$(wildcard ./.env))
 	export
 endif
 
-.PHONY: run-workflow, build-image, run-local, shell
+.PHONY: build-worker-image, run-workflow, run-worker, shell-worker, start-demo
 
 build-worker-image :
 	docker build -t $(ORGANIZATION)/$(WORKER_CONTAINER_NAME):$(WORKER_CONTAINER_VERSION) .
