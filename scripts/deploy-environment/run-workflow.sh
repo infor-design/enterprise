@@ -23,7 +23,7 @@ run_resp=$(
       "resourceKind": "WorkflowTemplate",
       "resourceName": "'$AWF_TEMPLATE_ID'",
       "submitOptions": {
-        "entryPoint": "env-deploy-wf",
+        "entryPoint": "ent-env-deploy-wf",
         "generateName": "enterprise-demo-deploy",
         "labels": "submit-from-rest=true",
         "parameters": [

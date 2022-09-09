@@ -81,7 +81,7 @@ spec:
                   eks.amazonaws.com/nodegroup: heavy
                 containers:
                   - name: docker-cmds
-                    image: hookandloop/ent-env-deploy:0.0.1
+                    image: hookandloop/ent-env-worker:0.0.1
                     imagePullPolicy: Always
                     resources:
                       requests:

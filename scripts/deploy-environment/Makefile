@@ -1,6 +1,6 @@
 ORGANIZATION=hookandloop
-DEPLOY_CONTAINER_NAME=ent-env-deploy
-DEPLOY_CONTAINER_VERSION=0.0.1
+WORKER_CONTAINER_NAME=ent-env-worker
+WORKER_CONTAINER_VERSION=0.0.1
 DEMO_CONTAINER_NAME=sohoxi-demo
 DEMO_CONTAINER_VERSION=1.0.1
 
@@ -9,12 +9,12 @@ ifneq (,$(wildcard ./.env))
 	export
 endif
 
-.PHONY: run-awf, build-image, deploy, shell
+.PHONY: run-workflow, build-image, run-local, shell
 
-build-image :
-	docker build -t $(ORGANIZATION)/$(DEPLOY_CONTAINER_NAME):$(DEPLOY_CONTAINER_VERSION) .
+build-worker-image :
+	docker build -t $(ORGANIZATION)/$(WORKER_CONTAINER_NAME):$(WORKER_CONTAINER_VERSION) .
 
-run-awf :
+run-workflow :
 	. ./run-workflow.sh \
 		${AWF_URL} \
 		${AWF_TEMPLATE_ID} \
@@ -24,16 +24,8 @@ run-awf :
 		${BUILD_FROM} \
 		${REPO_OWNER_NAME}
 
-run-demo :
-	docker run --rm --name $(DEMO_CONTAINER_NAME) \
-		-v ${PWD}/build:/controls \
-		-v ${PWD}/build/dist:/www/data/artifacts \
-		-v ${PWD}/build/docs:/www/data/docs \
-		-p 8080:80/tcp \
-	 	$(ORGANIZATION)/$(DEMO_CONTAINER_NAME):$(DEMO_CONTAINER_VERSION)
-
-deploy :
-	docker run --rm --name $(DEPLOY_CONTAINER_NAME) \
+run-worker :
+	docker run --rm --name $(WORKER_CONTAINER_NAME) \
 		--env IMAGE_LIBRARY_USER=${IMAGE_LIBRARY_USER} \
 		--env IMAGE_LIBRARY_PASS=${IMAGE_LIBRARY_PASS} \
 		--env GITHUB_ACCESS_TOKEN=${GITHUB_ACCESS_TOKEN} \
@@ -47,10 +39,10 @@ deploy :
 		-v /var/run/docker.sock:/var/run/docker.sock \
 		-v ${PWD}/build:/root/enterprise \
 		-v ${PWD}/run.sh:/usr/src/run.sh \
-		$(ORGANIZATION)/$(DEPLOY_CONTAINER_NAME):$(DEPLOY_CONTAINER_VERSION)
+		$(ORGANIZATION)/$(WORKER_CONTAINER_NAME):$(WORKER_CONTAINER_VERSION)
 
-shell :
-	docker run -it --rm --name $(DEPLOY_CONTAINER_NAME) \
+shell-worker :
+	docker run -it --rm --name $(WORKER_CONTAINER_NAME) \
 			--entrypoint /bin/bash \
 			--env IMAGE_LIBRARY_USER=${IMAGE_LIBRARY_USER} \
 			--env IMAGE_LIBRARY_PASS=${IMAGE_LIBRARY_PASS} \
@@ -65,4 +57,12 @@ shell :
 			-v /var/run/docker.sock:/var/run/docker.sock \
 			-v ${PWD}/build:/root/enterprise \
 			-v ${PWD}/run.sh:/usr/src/run.sh \
-			$(ORGANIZATION)/$(DEPLOY_CONTAINER_NAME):$(DEPLOY_CONTAINER_VERSION)
+			$(ORGANIZATION)/$(WORKER_CONTAINER_NAME):$(WORKER_CONTAINER_VERSION)
+
+start-demo :
+	docker run --rm --name $(DEMO_CONTAINER_NAME) \
+		-v ${PWD}/build:/controls \
+		-v ${PWD}/build/dist:/www/data/artifacts \
+		-v ${PWD}/build/docs:/www/data/docs \
+		-p 8080:80/tcp \
+	 	$(ORGANIZATION)/$(DEMO_CONTAINER_NAME):$(DEMO_CONTAINER_VERSION)
