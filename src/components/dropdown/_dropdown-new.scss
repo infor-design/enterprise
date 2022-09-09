@@ -401,6 +401,13 @@ html.is-firefox:not([dir='rtl']) {
       }
     }
 
+    &.extra-small-rowheight {
+      &.datagrid-dropdown-list .trigger .icon {
+        top: 9px;
+        margin-left: 0;
+      }
+    }
+
     > .listoption-icon {
       top: 9px;
     }
