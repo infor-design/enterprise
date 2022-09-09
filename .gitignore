@@ -18,6 +18,7 @@ templates/**/doc.html
 test-reports/
 views/docs
 scripts/deploy/build
+scripts/deploy-environment/build
 
 # Packages #
 ############
