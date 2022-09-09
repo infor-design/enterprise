@@ -2237,6 +2237,10 @@ PopupMenu.prototype = {
    * @returns {jQuery[]} elements inside the top-level menu that are selected.
    */
   getSelected() {
+    if (this.element.is('.popupmenu') && this.element.is('.is-selectable, .is-multiselectable')) {
+      return this.element.children('.is-checked').children('a');
+    }
+
     if (!this.menu.is('.is-selectable, .is-multiselectable')) {
       return $();
     }

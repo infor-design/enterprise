@@ -2706,6 +2706,10 @@ Editor.prototype = {
         target = $(item.element);
       }
 
+      if (!target.is('a')) {
+        return;
+      }
+
       // Use the value to set the color
       let value = (`${target.data('value')}`).toLowerCase();
       value = value !== '#' ? value : '';
