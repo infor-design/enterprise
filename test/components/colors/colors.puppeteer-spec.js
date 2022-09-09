@@ -54,51 +54,32 @@ describe('Colors Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    let hasFailed = false;
-    const checkElementsClassname = async (selector, element, type) => {
-      const elHandleArray = await page.$$(selector);
-      let index = 1;
-      // eslint-disable-next-line no-restricted-syntax
-      for await (const eL of elHandleArray) {
-        await eL.click();
-        await page.waitForSelector('.palette-label', { visible: true });
-        const elemHandle = await page.$(`${selector}:nth-child(${index})  ${element}`);
-        const elemClass = await page.evaluate(elem => elem.getAttribute('class'), elemHandle);
-        try {
-          switch (index) {
-            case 1:
-              expect(elemClass).toContain(`status-0${index}-${type}`);
-              break;
-            case 2:
-              expect(elemClass).toContain(`status-0${index}-${type}`);
-              break;
-            case 3:
-              expect(elemClass).toContain(`status-0${index}-${type}`);
-              break;
-            case 4:
-              expect(elemClass).toContain(`status-0${index}-${type}`);
-              break;
-            case 5:
-              expect(elemClass).toContain(`status-0${index}-${type}`);
-              break;
-            default:
-              hasFailed = true;
-          }
-        } catch (error) {
-          hasFailed = true;
-        }
-        index += 1;
-      }
-      return hasFailed;
-    };
     it('should have classes for status color borders', async () => {
-      await checkElementsClassname('#maincontent > div:nth-child(5) > .palette-column', '> div', 'border');
-      expect(await checkElementsClassname()).not.toBeTruthy();
+      const color1 = await page.$eval('#maincontent > div:nth-child(5) > .palette-column:nth-child(1) > div', el => el.getAttribute('class'));
+      const color2 = await page.$eval('#maincontent > div:nth-child(5) > .palette-column:nth-child(2) > div', el => el.getAttribute('class'));
+      const color3 = await page.$eval('#maincontent > div:nth-child(5) > .palette-column:nth-child(3) > div', el => el.getAttribute('class'));
+      const color4 = await page.$eval('#maincontent > div:nth-child(5) > .palette-column:nth-child(4) > div', el => el.getAttribute('class'));
+      const color5 = await page.$eval('#maincontent > div:nth-child(5) > .palette-column:nth-child(5) > div', el => el.getAttribute('class'));
+
+      expect(color1).toContain('status-01-border');
+      expect(color2).toContain('status-02-border');
+      expect(color3).toContain('status-03-border');
+      expect(color4).toContain('status-04-border');
+      expect(color5).toContain('status-05-border');
     });
 
     it('should have classes for status colors for svg', async () => {
-      await checkElementsClassname('#maincontent > div:nth-child(7) > .palette-column', '> div > svg', 'color');
-      expect(await checkElementsClassname()).not.toBeTruthy();
+      const svgcolor1 = await page.$eval('#maincontent > div:nth-child(7) > .palette-column:nth-child(1) > div > svg', el => el.getAttribute('class'));
+      const svgcolor2 = await page.$eval('#maincontent > div:nth-child(7) > .palette-column:nth-child(2) > div > svg', el => el.getAttribute('class'));
+      const svgcolor3 = await page.$eval('#maincontent > div:nth-child(7) > .palette-column:nth-child(3) > div > svg', el => el.getAttribute('class'));
+      const svgcolor4 = await page.$eval('#maincontent > div:nth-child(7) > .palette-column:nth-child(4) > div > svg', el => el.getAttribute('class'));
+      const svgcolor5 = await page.$eval('#maincontent > div:nth-child(7) > .palette-column:nth-child(5) > div > svg', el => el.getAttribute('class'));
+
+      expect(svgcolor1).toContain('status-01-color');
+      expect(svgcolor2).toContain('status-02-color');
+      expect(svgcolor3).toContain('status-03-color');
+      expect(svgcolor4).toContain('status-04-color');
+      expect(svgcolor5).toContain('status-05-color');
     });
   });
 });
