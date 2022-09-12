@@ -13,6 +13,7 @@
 ## v4.67.0 Features
 
 - `[Calendar]` Add a setting for calendar to show and hide the legend. ([#6533](https://github.com/infor-design/enterprise/issues/6533))
+- `[Colors]` Added puppeteer script for color classes targeting color & border color. ([#6801](https://github.com/infor-design/enterprise/issues/6801))
 - `[Datagrid]` Added puppeteer script for header icon with tooltip. ([#6738](https://github.com/infor-design/enterprise/issues/6738))
 - `[Icons]` Added new icons for `interaction` and `interaction-reply`. ([#6721](https://github.com/infor-design/enterprise/issues/6721))
 - `[Monthview]` Added puppeteer script for monthview legend visibility when month changes ([#6382](https://github.com/infor-design/enterprise/issues/6382))
