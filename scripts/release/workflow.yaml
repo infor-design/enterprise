@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
-  generateName: k8s-orchestrate-
+  generateName: enterprise-release-wf-
 spec:
   arguments:
     parameters:
@@ -16,7 +16,7 @@ spec:
       - name: release_increment
         value: ""
 
-  entrypoint: k8s-orchestrate
+  entrypoint: start
 
   podGC:
     # Pod GC strategy must be one of the following:
@@ -27,10 +27,10 @@ spec:
     strategy: OnWorkflowSuccess
 
   templates:
-    - name: k8s-orchestrate
+    - name: start
       steps:
-        - - name: build
-            template: build
+        - - name: release
+            template: release
             arguments:
               parameters:
                 - name: branch
@@ -43,7 +43,7 @@ spec:
                   value: "{{workflow.parameters.releaseit_flags}}"
                 - name: release_increment
                   value: "{{workflow.parameters.release_increment}}"
-    - name: build
+    - name: release
       inputs:
         parameters:
           - name: branch
@@ -60,13 +60,15 @@ spec:
           apiVersion: batch/v1
           kind: Job
           metadata:
-            generateName: build-
+            name: enterprise-release
           spec:
-            ttlSecondsAfterFinished: 100
+            ttlSecondsAfterFinished: 300
+            backoffLimit: 0
             template:
-              metadata:
-                name: build
               spec:
+                restartPolicy: Never
+                nodeSelector: 
+                  eks.amazonaws.com/nodegroup: heavy
                 volumes:
                   - name: gitconfig
                     secret:
@@ -74,12 +76,16 @@ spec:
                       defaultMode: 0600
                 containers:
                   - name: enterprise-release
-                    image: agolub/enterprise-release:0.0.1
+                    image: hookandloop/enterprise-release:0.0.1
                     imagePullPolicy: Always
                     volumeMounts:
                       - name: gitconfig
                         readOnly: true
                         mountPath: "/usr/src/secrets"
+                    resources:
+                      requests:
+                        cpu: 500m
+                        memory: 3Gi
                     env:
                       - name: GITHUB_ACCESS_TOKEN
                         valueFrom:
@@ -91,12 +97,6 @@ spec:
                           secretKeyRef:
                             name: npm-token
                             key: token
-                      - name: DOCS_API_KEY
-                        valueFrom:
-                          secretKeyRef:
-                            name: docs-api-key
-                            key: token
-
                       - name: BRANCH
                         value: "{{inputs.parameters.branch}}"
                       - name: NPM_COMMAND

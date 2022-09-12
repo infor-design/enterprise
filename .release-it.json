@@ -1,12 +1,11 @@
 {
   "non-interactive": false,
   "dry-run": true,
-  "verbose": 2,
+  "verbose": 0,
   "pkgFiles": ["package.json"],
   "hooks": {
     "before:init": "",
-    "after:bump": "npm run build:release",
-    "after:release": "./scripts/after-release.sh ${npm.tag} ${version}"
+    "after:bump": "npm run build:release"
   },
   "git": {
     "commitMessage": "Release v${version}",
@@ -22,7 +21,7 @@
     "tokenRef": "GITHUB_ACCESS_TOKEN",
     "assets": "dist.zip"
   },
-    "npm": {
+  "npm": {
     "tag": "latest",
     "publish": false
   }

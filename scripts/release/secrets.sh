@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 while read -r line; do declare -x "$line"; done < <(egrep -v "(^#|^\s|^$)" .env)
 
 echo "GITHUB_ACCESS_TOKEN ${GITHUB_ACCESS_TOKEN}"
