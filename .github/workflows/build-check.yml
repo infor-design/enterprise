@@ -5,7 +5,10 @@ name: Build check
 
 on:
   pull_request:
-    branches: [ main ]
+    branches:
+      - "*"
+      - "*/*"
+      - "**"
 
 jobs:
   build:

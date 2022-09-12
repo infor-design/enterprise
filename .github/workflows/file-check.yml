@@ -2,7 +2,10 @@ name: File check
 
 on:
   pull_request:
-    branches: [ main ]
+    branches:
+      - "*"
+      - "*/*"
+      - "**"
 
 jobs:
   build:
