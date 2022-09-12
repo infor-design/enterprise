@@ -33,6 +33,7 @@ const path = require('path');
 const slash = require('slash');
 const yaml = require('js-yaml');
 const hljs = require('highlight.js');
+const FormData = require('form-data');
 
 const argv = require('yargs')
   .usage('Usage $node ./scripts/deploy-documentation.js [-s] [-d] [-T]')
@@ -75,15 +76,15 @@ const staticWebsitePath = 'app/docs';
 
 const paths = {
   components: `${rootPath}/src/components`,
-  docs:       `${rootPath}/docs`,
+  docs: `${rootPath}/docs`,
   templates: {
-    root:  `${rootPath}/docs/templates`,
-    hbs:   `${rootPath}/docs/templates/hbs`,
+    root: `${rootPath}/docs/templates`,
+    hbs: `${rootPath}/docs/templates/hbs`,
     docjs: `${rootPath}/docs/templates/documentationjs`
   },
   idsWebsite: {
-    root:     `${rootPath}/${idsWebsitePath}`,
-    dist:     `${rootPath}/${idsWebsitePath}/dist`,
+    root: `${rootPath}/${idsWebsitePath}`,
+    dist: `${rootPath}/${idsWebsitePath}/dist`,
     distDocs: `${rootPath}/${idsWebsitePath}/dist/docs`
   },
   static: {
@@ -222,11 +223,12 @@ function compileComponents() {
           return;
         }
 
-        allDocsObjMap[compName] = Object.assign({}, jsonTemplate, {
+        allDocsObjMap[compName] = {
+          ...jsonTemplate,
           title: compName,
           description: '',
           isComponent: true
-        });
+        };
 
         // note: comp path includes an ending "/"
         compPromises.push(documentJsToHtml(compName));
@@ -267,9 +269,7 @@ function compileSupportingDocs() {
 
         const fileName = path.basename(filePath, '.md').toLowerCase();
 
-        allDocsObjMap[fileName] = Object.assign({}, jsonTemplate, {
-          title: fileName,
-        });
+        allDocsObjMap[fileName] = { ...jsonTemplate, title: fileName };
 
         promises.push(markdownToHtml(filePath, fileName));
       });
@@ -450,7 +450,6 @@ function deriveComponentName(dirPath) {
  * Deploy the zipped bundle using a POST request
  */
 function postZippedBundle() {
-  const FormData = require('form-data');
   const publishStart = swlog.logTaskStart(`attempt publish to server "${deployTo}"`);
 
   const form = new FormData();
@@ -481,11 +480,7 @@ function postZippedBundle() {
  */
 function readSitemapYaml() {
   let sitemap = {};
-  try {
-    sitemap = yaml.safeLoad(fs.readFileSync(`${paths.docs}/sitemap.yml`, 'utf8'));
-  } catch (e) {
-    throw e;
-  }
+  sitemap = yaml.safeLoad(fs.readFileSync(`${paths.docs}/sitemap.yml`, 'utf8'));
   return sitemap;
 }
 

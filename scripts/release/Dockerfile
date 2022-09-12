@@ -1,15 +1,15 @@
-FROM node:14.19
+FROM node:14-buster
 
 WORKDIR /usr/src
 
 RUN apt-get update \
     && apt-get install -y \
-        software-properties-common \
-        build-essential
+    software-properties-common \
+    build-essential
 
 RUN apt-get -y update \
     && apt-get -y install \
-        git
+    git
 
 RUN npm install release-it -g
 
