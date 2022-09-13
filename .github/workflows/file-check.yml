@@ -1,3 +1,5 @@
+# Checks for existance of package.json and package-lock.json files in the PR.
+
 name: File check
 
 on:
