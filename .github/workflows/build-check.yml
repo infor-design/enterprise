@@ -1,11 +1,9 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: Build Check
+name: Build check
 
 on:
-  push:
-    branches: [ main ]
   pull_request:
     branches: [ main ]
 
@@ -54,13 +52,6 @@ jobs:
 
     - name: Run puppeteer tests
       run:  npm run e2e:puppeteer;
-
-    - name: Deploy Main
-      env:
-        JENKINS_JOB_TOKEN: ${{ secrets.JENKINS_JOB_TOKEN }}
-        JENKINS_API_TOKEN: ${{ secrets.JENKINS_API_TOKEN }}
-      if: github.event_name == 'push'
-      run: sh ./scripts/jenkins-deploy.sh -b main
 
     - name: Dump GitHub context
       env:

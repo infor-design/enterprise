@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.68.0
+
+## v4.68.0 Features
+
+## v4.68.0 Fixes
+
 ## v4.67.0
 
 ## v4.67.0 Important Notes
@@ -14,23 +20,35 @@
 
 - `[Calendar]` Add a setting for calendar to show and hide the legend. ([#6533](https://github.com/infor-design/enterprise/issues/6533))
 - `[Datagrid]` Added puppeteer script for header icon with tooltip. ([#6738](https://github.com/infor-design/enterprise/issues/6738))
+- `[Icons]` Added new icons for `interaction` and `interaction-reply`. ([#6721](https://github.com/infor-design/enterprise/issues/6721))
+- `[Monthview]` Added puppeteer script for monthview legend visibility when month changes ([#6382](https://github.com/infor-design/enterprise/issues/6382))
 - `[Searchfield]` Added puppeteer script for filter and sort icon. ([#6007](https://github.com/infor-design/enterprise/issues/6007))
 - `[Searchfield]` Added puppeteer script for custom icon. ([#6723](https://github.com/infor-design/enterprise/issues/6723))
 
 ## v4.67.0 Fixes
 
+- `[Accordion]` Added a safety check in accordion. ([#6789](https://github.com/infor-design/enterprise/issues/6789))
 - `[Badge/Tag/Icon]` Fixed info color in dark mode. ([#6763](https://github.com/infor-design/enterprise/issues/6763))
 - `[Button]` Added notification badges for buttons with labels. ([NG#1347](https://github.com/infor-design/enterprise-ng/issues/1347))
 - `[Button]` Added dark theme button colors. ([#6512](https://github.com/infor-design/enterprise/issues/6512))
 - `[Calendar]` Fixed a bug in calendar where bottom border is not properly rendering. ([#6668](https://github.com/infor-design/enterprise/issues/6668))
 - `[Color Palette]` Added status color CSS classes for color and border-color properties. ([#6711](https://github.com/infor-design/enterprise/issues/6711))
+- `[Datagrid]` Fixed a bug in datagrid inside a modal where the column is rendering wider than normal. ([#6782](https://github.com/infor-design/enterprise/issues/6782))
+- `[Datagrid]` Fixed a bug in datagrid where when changing rowHeight as a setting and rerendering it doesnt apply. ([#6783](https://github.com/infor-design/enterprise/issues/6783))
+- `[Datagrid]` Fixed a bug in datagrid where isEditable is not returning row correctly. ([#6746](https://github.com/infor-design/enterprise/issues/6746))
 - `[Datagrid]` Updated datagrid header CSS height. ([#6697](https://github.com/infor-design/enterprise/issues/6697))
-- `[Datagrid]` Fix on datagrid column width. ([#6725](https://github.com/infor-design/enterprise/issues/6725))
+- `[Datagrid]` Fixed on datagrid column width. ([#6725](https://github.com/infor-design/enterprise/issues/6725))
 - `[Datagrid]` Fixed an error editing in datagrids with grouped headers. ([#6759](https://github.com/infor-design/enterprise/issues/6759))
 - `[Datagrid]` Updated space key checks for expand button. ([#6756](https://github.com/infor-design/enterprise/issues/6756))
 - `[Datagrid]` Fixed an error when hovering cells with tooltips setup and using grouped headers. ([#6753](https://github.com/infor-design/enterprise/issues/6753))
-- `[Listview]` Fix a bug where listview is not rendering properly when dataset has zero integer value. ([#6640](https://github.com/infor-design/enterprise/issues/6640))
+- `[Editor]` Fixed bug in editor where background color is not rendering properly. ([#6685](https://github.com/infor-design/enterprise/issues/6685))
+- `[Listview]` Fixed a bug where listview is not rendering properly when dataset has zero integer value. ([#6640](https://github.com/infor-design/enterprise/issues/6640))
+- `[Popupmenu]` Fixed a bug in popupmenu where getSelected() is not working on multiselectable. ([NG#1349](https://github.com/infor-design/enterprise/issues-ng/1349))
+- `[Toolbar-Flex]` Removed deprecated message by using `beforeMoreMenuOpen` setting. ([#NG1352](https://github.com/infor-design/enterprise-ng/issues/1352))
+- `[Trackdirty]` Added optional chaining for safety check of trackdirty element. ([#6696](https://github.com/infor-design/enterprise/issues/6696))
 - `[WeekView]` Added Day View and Week View Shading. ([#6568](https://github.com/infor-design/enterprise/issues/6568))
+
+(30 Issues Solved This Release, Backlog Enterprise 252, Backlog Ng 49, 1104 Functional Tests, 1342 e2e Tests, 506 Puppeteer Tests)
 
 ## v4.66.0
 
@@ -41,6 +59,7 @@
 - `[Datagrid]` Added puppeteer script for render only one row. ([#6645](https://github.com/infor-design/enterprise/issues/6645))
 - `[Datagrid]` Added test scripts for add row. ([#6644](https://github.com/infor-design/enterprise/issues/6644))
 - `[Datepicker]` Added setting for adjusting day using +/- in datepicker. ([#6632](https://github.com/infor-design/enterprise/issues/6632))
+- `[Targeted-Achievement]` Add puppeteer test for show tooltip on targeted achievement. ([#6550](https://github.com/infor-design/enterprise/issues/6550))
 - `[Icons]` Added new icons for `interaction` and `interaction-reply`. ([#6666](https://github.com/infor-design/enterprise/issues/6629))
 - `[Searchfield]` Added option to add custom icon button. ([#6453](https://github.com/infor-design/enterprise/issues/6453))
 - `[Targeted-Achievement]` Added puppeteer test for show tooltip on targeted achievement. ([#6550](https://github.com/infor-design/enterprise/issues/6550))
@@ -73,7 +92,7 @@
 - `[Toolbar Searchfield]` Fixed searchfield toolbar in alternate style. ([#6615](https://github.com/infor-design/enterprise/issues/6615))
 - `[Tooltip]` Fixed tooltip event handlers created on show not cleaning up properly on hide. ([#6613](https://github.com/infor-design/enterprise/issues/6613))
 
-(39 Issues Solved This Release, Backlog Enterprise 1105, Backlog Ng 42, 1102 Functional Tests, 1380 e2e Tests, 462 Puppeteer Tests)
+(39 Issues Solved This Release, Backlog Enterprise 230, Backlog Ng 42, 1102 Functional Tests, 1380 e2e Tests, 462 Puppeteer Tests)
 
 ## v4.65.0
 
