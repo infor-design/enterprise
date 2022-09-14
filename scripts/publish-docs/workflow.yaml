@@ -1,0 +1,93 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: enterprise-publish-docs-wf-
+spec:
+  arguments:
+    parameters:
+      - name: site
+        value: ""
+      - name: branch
+        value: ""
+
+  entrypoint: start
+
+  podGC:
+    # Pod GC strategy must be one of the following:
+    # * OnPodCompletion - delete pods immediately when pod is completed (including errors/failures)
+    # * OnPodSuccess - delete pods immediately when pod is successful
+    # * OnWorkflowCompletion - delete pods when workflow is completed
+    # * OnWorkflowSuccess - delete pods when workflow is successful
+    strategy: OnWorkflowSuccess
+
+  templates:
+    - name: start
+      steps:
+        - - name: release
+            template: release
+            arguments:
+              parameters:
+                - name: site
+                  value: "{{workflow.parameters.site}}"
+                - name: branch
+                  value: "{{workflow.parameters.branch}}"
+    - name: release
+      inputs:
+        parameters:
+          - name: site
+          - name: branch
+
+      resource:
+        action: create
+        successCondition: status.succeeded > 0
+        failureCondition: status.failed > 0
+        manifest: |
+          apiVersion: batch/v1
+          kind: Job
+          metadata:
+            name: enterprise-publish-docs
+          spec:
+            ttlSecondsAfterFinished: 300
+            backoffLimit: 0
+            template:
+              spec:
+                restartPolicy: Never
+                nodeSelector: 
+                  eks.amazonaws.com/nodegroup: heavy
+                containers:
+                  - name: enterprise-publish-docs
+                    image: hookandloop/enterprise-publish-docs:0.0.1
+                    imagePullPolicy: Always
+                    resources:
+                      requests:
+                        cpu: 500m
+                        memory: 3Gi
+                    env:
+                      - name: GITHUB_ACCESS_TOKEN
+                        valueFrom:
+                          secretKeyRef:
+                            name: github-access-token
+                            key: token
+                      - name: DOCS_API_KEY
+                        valueFrom:
+                          secretKeyRef:
+                            name: docs-api-key
+                            key: token
+                      - name: SITE
+                        value: "{{inputs.parameters.site}}"
+                      - name: BRANCH
+                        value: "{{inputs.parameters.branch}}"
+                    command: ["/bin/bash"]
+                    args: [
+                      "-c",
+                      ". ./run.sh"
+                    ]
+                restartPolicy: Never
+      outputs:
+        parameters:
+        - name: job-name
+          valueFrom:
+            jsonPath: '{.metadata.name}'
+        - name: job-uid
+          valueFrom:
+            jsonPath: '{.metadata.uid}'
