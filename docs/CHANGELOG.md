@@ -4,6 +4,8 @@
 
 ## v4.68.0 Features
 
+- `[Colors]` Added puppeteer script for color classes targeting color & border color. ([#6801](https://github.com/infor-design/enterprise/issues/6801))
+
 ## v4.68.0 Fixes
 
 ## v4.67.0
