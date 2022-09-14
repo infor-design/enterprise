@@ -11,8 +11,7 @@ RUN apt-get update \
   gnupg \
   lsb-release \
   git \
-  jq \
-  && apt-get clean
+  jq
 
 RUN mkdir -p /etc/apt/keyrings
 RUN  curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
