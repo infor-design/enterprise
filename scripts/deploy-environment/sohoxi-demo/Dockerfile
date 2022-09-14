@@ -1,8 +1,6 @@
-FROM node:14
+FROM node:14-buster
 
 WORKDIR /usr/src
-
-ENV DEBIAN_FRONTEND=noninteractive
 
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 RUN apt-get update \
