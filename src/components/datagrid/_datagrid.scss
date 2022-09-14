@@ -1993,7 +1993,6 @@ $datagrid-small-row-height: 25px;
       &.datagrid-trigger-cell {
         .dropdown-trigger:not(.colorpicker-container) + .icon {
           left: -6px !important;
-          //top: 2px !important;
         }
 
         &.has-editor .icon.icon-search-list {
