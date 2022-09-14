@@ -53,6 +53,13 @@ div.multiselect {
 }
 
 .dropdown-list {
+  &.small-rowheight {
+    &.datagrid-dropdown-list .trigger .icon {
+      top: 8.5px;
+      margin-left: -0.5px;
+    }
+  }
+
   &.has-icons {
     .dropdown-search {
       padding-left: 35px;
@@ -380,6 +387,25 @@ html.is-firefox:not([dir='rtl']) {
   .dropdown-list {
     > .trigger .icon {
       top: 8px;
+    }
+
+    &.datagrid-dropdown-list.is-editing .trigger .icon {
+      top: 8.5px;
+      margin-left: -0.5px;
+    }
+
+    &.small-rowheight {
+      &.datagrid-dropdown-list .trigger .icon {
+        top: 7.5px;
+        margin-left: 0.5px;
+      }
+    }
+
+    &.extra-small-rowheight {
+      &.datagrid-dropdown-list .trigger .icon {
+        top: 7px;
+        margin-left: 0;
+      }
     }
 
     > .listoption-icon {

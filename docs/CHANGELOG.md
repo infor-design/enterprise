@@ -8,6 +8,8 @@
 
 ## v4.68.0 Fixes
 
+- `[Datagrid]` Fixed alignment issues in trigger fields. ([#6678](https://github.com/infor-design/enterprise/issues/6678))
+
 ## v4.67.0
 
 ## v4.67.0 Important Notes
