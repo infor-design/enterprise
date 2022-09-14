@@ -92,6 +92,11 @@ spec:
                           secretKeyRef:
                             name: github-access-token
                             key: token
+                      - name: DOCS_API_KEY
+                        valueFrom:
+                          secretKeyRef:
+                            name: docs-api-key
+                            key: token
                       - name: NPM_TOKEN
                         valueFrom:
                           secretKeyRef:
