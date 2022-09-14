@@ -6,6 +6,8 @@
 
 ## v4.68.0 Fixes
 
+- `[Datagrid]` Fixed alignment issues in trigger fields. ([#6678](https://github.com/infor-design/enterprise/issues/6678))
+
 ## v4.67.0
 
 ## v4.67.0 Important Notes
@@ -41,7 +43,6 @@
 - `[Datagrid]` Fixed an error editing in datagrids with grouped headers. ([#6759](https://github.com/infor-design/enterprise/issues/6759))
 - `[Datagrid]` Updated space key checks for expand button. ([#6756](https://github.com/infor-design/enterprise/issues/6756))
 - `[Datagrid]` Fixed an error when hovering cells with tooltips setup and using grouped headers. ([#6753](https://github.com/infor-design/enterprise/issues/6753))
-- `[Datagrid]` Fixed alignment issues in trigger fields. ([#6678](https://github.com/infor-design/enterprise/issues/6678))
 - `[Editor]` Fixed bug in editor where background color is not rendering properly. ([#6685](https://github.com/infor-design/enterprise/issues/6685))
 - `[Listview]` Fixed a bug where listview is not rendering properly when dataset has zero integer value. ([#6640](https://github.com/infor-design/enterprise/issues/6640))
 - `[Popupmenu]` Fixed a bug in popupmenu where getSelected() is not working on multiselectable. ([NG#1349](https://github.com/infor-design/enterprise/issues-ng/1349))
