@@ -1130,6 +1130,7 @@ html[dir='rtl'] {
 
     .searchfield {
       width: auto;
+      border-left: 1px solid $searchfield-toolbar-border-color;
     }
 
     button.close:not(.is-empty) {
