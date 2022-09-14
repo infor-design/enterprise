@@ -22,6 +22,7 @@ run-workflow :
 		${ORG_NAME} \
 		${BASE_CONTAINER_NAME} \
 		${BUILD_FROM} \
+		${BUILD_AS_LATEST} \
 		${REPO_OWNER_NAME}
 
 run-worker :

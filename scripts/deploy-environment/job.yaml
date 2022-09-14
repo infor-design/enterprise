@@ -55,6 +55,8 @@ spec:
               value: ""
             - name: BUILD_FROM
               value: ""
+            - name: BUILD_AS_LATEST
+              value: ""
             - name: REPO_OWNER_NAME
               value: ""
           command: ["/bin/bash"]
