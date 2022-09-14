@@ -1993,7 +1993,7 @@ $datagrid-small-row-height: 25px;
       &.datagrid-trigger-cell {
         .dropdown-trigger:not(.colorpicker-container) + .icon {
           left: -6px !important;
-          top: 2px !important;
+          //top: 2px !important;
         }
 
         &.has-editor .icon.icon-search-list {
@@ -4738,6 +4738,10 @@ td .btn-actions {
     .trigger .icon {
       left: -1px;
       margin-top: 4px;
+    }
+
+    &.dropdown-list .trigger .icon {
+      margin-top: 3.5px;
     }
   }
 
