@@ -9,6 +9,7 @@
 ## v4.68.0 Fixes
 
 - `[Datagrid]` Fixed alignment issues in trigger fields. ([#6678](https://github.com/infor-design/enterprise/issues/6678))
+- `[Searchfield]` Visual fixes on go button in searchfield toolbar. ([#6686](https://github.com/infor-design/enterprise/issues/6686))
 
 ## v4.67.0
 
