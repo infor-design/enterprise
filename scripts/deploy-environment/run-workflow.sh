@@ -6,7 +6,8 @@ HANDLER_API_URL=$3
 ORG_NAME=$4
 BASE_CONTAINER_NAME=$5
 BUILD_FROM=$6
-REPO_OWNER_NAME=$7
+BUILD_AS_LATEST=$7
+REPO_OWNER_NAME=$8
 
 check_status(){
   WORKFLOW_NAME=$1
@@ -31,6 +32,7 @@ run_resp=$(
           "org_name='$ORG_NAME'",
           "base_container_name='$BASE_CONTAINER_NAME'",
           "build_from='$BUILD_FROM'",
+          "build_as_latest='$BUILD_AS_LATEST'",
           "repo_owner_name='$REPO_OWNER_NAME'"
         ]
       }

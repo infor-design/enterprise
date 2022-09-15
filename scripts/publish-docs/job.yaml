@@ -1,0 +1,38 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: enterprise-publish-docs
+spec:
+  ttlSecondsAfterFinished: 300
+  backoffLimit: 0
+  template:
+    spec:
+      restartPolicy: Never
+      nodeSelector: 
+        eks.amazonaws.com/nodegroup: heavy
+      containers:
+        - name: enterprise-publish-docs
+          image: hookandloop/enterprise-publish-docs:0.0.1
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: 500m
+              memory: 3Gi
+          env:
+            - name: GITHUB_ACCESS_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: github-access-token
+                  key: token
+            - name: DOCS_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: docs-api-key
+                  key: token
+            - name: SITE
+              value:
+            - name: BRANCH
+              value:
+          command: ["/bin/bash"]
+          args: ["-c", ". ./run.sh"]
+      restartPolicy: Never

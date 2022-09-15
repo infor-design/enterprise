@@ -12,6 +12,7 @@ _TLS_SECRET=${TLS_SECRET:-}
 _ORG_NAME=${ORG_NAME:-}
 _BASE_CONTAINER_NAME=${BASE_CONTAINER_NAME:-}
 _BUILD_FROM=${BUILD_FROM:-}
+_BUILD_AS_LATEST=${BUILD_AS_LATEST:-}
 
 BRANCH_REGEX="(remotes\/origin\/[0-9.@]+[0-9.@]+x)"
 BRANCH_PREFIX="remotes/origin/"
@@ -61,20 +62,12 @@ fi
 BRANCHES=$(git branch -a | sort -V)
 BRANCHES_LIST=($BRANCHES)
 
-VERSION_STRING=$(echo "${_BUILD_FROM//./}") # Removes . to not break subdomain
-BUILD_NAME=$VERSION_STRING-$_BASE_CONTAINER_NAME
 VERSION=$(node -p "require('./package.json').version")
+VERSION_STRING=$(echo "${VERSION//./}")
 COMMIT=$(git rev-parse --short HEAD)
+BUILD_NAME=$VERSION_STRING-$_BASE_CONTAINER_NAME
 
-for BRANCH in "${BRANCHES_LIST[@]}" ; do
-  if [[ $BRANCH =~ $BRANCH_REGEX ]];
-  then
-      clean=${BRANCH#"$BRANCH_PREFIX"}
-      LATEST=$(echo "$clean" | xargs)
-  fi
-done
-
-if [ "$_BUILD_FROM" = "$LATEST" ]
+if [ "$_BUILD_AS_LATEST" = true ]
 then
 	BUILD_NAME=latest-$_BASE_CONTAINER_NAME
 fi

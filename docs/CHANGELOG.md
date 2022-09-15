@@ -4,7 +4,11 @@
 
 ## v4.68.0 Features
 
+- `[Colors]` Added puppeteer script for color classes targeting color & border color. ([#6801](https://github.com/infor-design/enterprise/issues/6801))
+
 ## v4.68.0 Fixes
+
+- `[Datagrid]` Fixed alignment issues in trigger fields. ([#6678](https://github.com/infor-design/enterprise/issues/6678))
 
 ## v4.67.0
 

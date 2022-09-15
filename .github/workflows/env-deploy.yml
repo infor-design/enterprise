@@ -1,3 +1,7 @@
+# Checks if a branch is a candidate for environment deployment, 
+# start an Argo Workflow and waits for it to finish. 
+# The run-workflow.sh script will exit with a 0 or 1.
+
 name: Environment deploy
 
 on:
@@ -8,7 +12,7 @@ on:
       - "**"
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     strategy:
