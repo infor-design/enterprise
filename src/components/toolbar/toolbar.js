@@ -963,7 +963,15 @@ Toolbar.prototype = {
         return parseInt(buttonsetSize, 10);
       }
       if (self.settings.favorButtonset === true) {
-        return buttonsetDims.width;
+        let buttonsetWidth = buttonsetDims.width;
+        const searchfield = self.buttonsetItems.filter('.searchfield').data('searchfield');
+
+        if (searchfield && searchfield.settings.showGoButton === true) {
+          buttonsetWidth = buttonsetWidth + searchfield.goButton.width() > buttonsetWidth ?
+            buttonsetWidth + searchfield.goButton.width() : buttonsetWidth;
+        }
+
+        return buttonsetWidth;
       }
       return toolbarDims.width - (toolbarPadding +
         (hasTitleSizeGetter ? parseInt(titleSize, 10) : titleDims.scrollWidth) +
