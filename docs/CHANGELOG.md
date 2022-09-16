@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.65.7
+
+## v4.65.7 Fixes
+
+- `[Datagrid]` Updated space key checks for expand button. ([#6756](https://github.com/infor-design/enterprise/issues/6756))
+
 ## v4.65.6
 
 ## v4.65.6 Fixes
