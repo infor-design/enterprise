@@ -15,6 +15,8 @@ spec:
         value: ""
       - name: build_from
         value: ""
+      - name: subdomain_name
+        value: ""
       - name: build_as_latest
         value: ""
       - name: repo_owner_name
@@ -48,6 +50,8 @@ spec:
                   value: "{{workflow.parameters.base_container_name}}"
                 - name: build_from
                   value: "{{workflow.parameters.build_from}}"
+                - name: subdomain_name
+                  value: "{{workflow.parameters.subdomain_name}}"
                 - name: build_as_latest
                   value: "{{workflow.parameters.build_as_latest}}"
                 - name: repo_owner_name
@@ -61,6 +65,7 @@ spec:
           - name: org_name
           - name: base_container_name
           - name: build_from
+          - name: subdomain_name
           - name: build_as_latest
           - name: repo_owner_name
 
@@ -128,6 +133,8 @@ spec:
                         value: "{{inputs.parameters.base_container_name}}"
                       - name: BUILD_FROM
                         value: "{{inputs.parameters.build_from}}"
+                      - name: SUBDOMAIN_NAME
+                        value: "{{inputs.parameters.subdomain_name}}"
                       - name: BUILD_AS_LATEST
                         value: "{{inputs.parameters.build_as_latest}}"
                       - name: REPO_OWNER_NAME
