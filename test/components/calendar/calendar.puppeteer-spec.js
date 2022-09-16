@@ -493,7 +493,7 @@ describe('Calendar', () => {
     });
   });
 
-  describe('show/hide legend', () => {
+  describe('Calendar show/hide event legend tests', () => {
     const url = `${baseUrl}/test-hide-legend.html`;
 
     beforeAll(async () => {
