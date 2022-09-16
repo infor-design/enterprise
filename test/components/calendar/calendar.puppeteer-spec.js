@@ -503,7 +503,7 @@ describe('Calendar', () => {
 
     it('should hide legend', async () => {
       await page.click('#show-action');
-      const elem = await page.evaluate(() => !!document.querySelector('.classIAmTryingToFind'));
+      const elem = await page.evaluate(() => !!document.querySelector('.calendar-event-legend'));
       expect(elem).toBe(false);
     });
 
