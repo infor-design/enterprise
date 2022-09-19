@@ -53,6 +53,8 @@ spec:
               value:
             - name: RELEASE_INCREMENT
               value:
+            - name: REPO_OWNER_NAME
+              value:
           lifecycle:
             postStart:
               exec:
