@@ -5968,6 +5968,9 @@ html[class*='theme-classic-'] .datagrid {
         }
       }
 
+      .datagrid-cell-wrapper .colorpicker-container + .icon:not(.datagrid-alert-icon).icon-error {
+        left: 100%;
+      }
     }
   }
 
@@ -5982,6 +5985,21 @@ html[class*='theme-classic-'] .datagrid {
 
         .datagrid-cell-wrapper .icon:not(.datagrid-alert-icon).icon-error {
           top: 5px;
+        }
+      }
+
+      .datagrid-cell-wrapper {
+        .colorpicker-container {
+          height: 22px;
+
+          + .icon:not(.datagrid-alert-icon).icon-error {
+            left: 102%;
+            top: 7px;
+          }
+
+          input.colorpicker.is-open {
+            padding-top: 6px;
+          }
         }
       }
     }
@@ -6005,6 +6023,18 @@ html[class*='theme-classic-'] .datagrid {
 
         .datagrid-cell-wrapper .icon:not(.datagrid-alert-icon).icon-error {
           top: 7px;
+        }
+      }
+
+      .datagrid-cell-wrapper {
+        .colorpicker-container {
+          + .icon:not(.datagrid-alert-icon).icon-error {
+            left: 100%;
+          }
+
+          span.trigger .icon {
+            top: 0;
+          }
         }
       }
     }
