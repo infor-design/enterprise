@@ -1,12 +1,13 @@
 #!/usr/bin/env node
+/* eslint-disable no-underscore-dangle */
 /*
  * Detects established custom build test manifests, and provides the list of
  * required tests to another script.
  */
 import * as fs from 'fs';
 import * as path from 'path';
-import logger from '../../scripts/logger.js';
 import { fileURLToPath } from 'url';
+import logger from '../../scripts/logger.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

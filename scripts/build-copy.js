@@ -50,6 +50,8 @@ copyFile('node_modules/jquery/dist/jquery.min.js', `${jsDir}/jquery-3.6.0.min.js
 copyFile('node_modules/jquery/dist/jquery.min.map', `${jsDir}/jquery-3.6.0.min.map`, callback);
 copyFile('node_modules/d3/dist/d3.js', `${jsDir}/d3.v5.js`, callback);
 copyFile('node_modules/d3/dist/d3.min.js', `${jsDir}/d3.v5.min.js`, callback);
+copyFile('node_modules/promise-polyfill/dist/polyfill.js', `${jsDir}/polyfill.js`, callback);
+copyFile('node_modules/promise-polyfill/dist/polyfill.min.js', `${jsDir}/polyfill.min.js`, callback);
 
 copyFiles('src', '.scss', 'dist/sass/');
 copyFiles('src/components/locale/cultures', '.js', 'dist/js/cultures/');

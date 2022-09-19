@@ -23,6 +23,12 @@ import infoHandler from './src/js/middleware/info-handler.js';
 import utils from './src/js/utils.js';
 import getJSONFile from './src/js/get-json-file.js';
 
+import customRoutes from './src/js/routes/custom-routes.js';
+import generalRoute from './src/js/routes/general.js';
+import sendGeneratedDocPage from './src/js/routes/docs.js';
+import data from './src/js/routes/data.js';
+import errorHandler from './src/js/middleware/error-handler.js';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -112,12 +118,6 @@ app.use(cspHandler(app));
 app.use(infoHandler(app));
 
 app.use(router);
-
-import customRoutes from './src/js/routes/custom-routes.js';
-import generalRoute from './src/js/routes/general.js';
-import sendGeneratedDocPage from './src/js/routes/docs.js';
-import data from './src/js/routes/data.js';
-import errorHandler from './src/js/middleware/error-handler.js';
 
 // ======================================
 //  Main Routing and Param Handling

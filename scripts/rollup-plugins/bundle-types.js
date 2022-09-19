@@ -2,9 +2,10 @@
  * This script runs during Rollup's execution and determines which types of
  * Javascript bundles should be built based on incoming settings.
  */
-import logger from '../logger.js';
 import _yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
+import logger from '../logger.js';
+
 const argv = _yargs(hideBin(process.argv)).argv;
 
 // The possible types of ES Bundles

@@ -1,25 +1,27 @@
+/* eslint-disable import/no-extraneous-dependencies */
 // ================================================= /
 // IDS Enterprise - Rollup Configuration
 // ================================================= /
 import resolve from '@rollup/plugin-node-resolve';
 import json from '@rollup/plugin-json';
 import { babel } from '@rollup/plugin-babel';
-
 import license from 'rollup-plugin-license';
 import _yargs from 'yargs';
+// eslint-disable-next-line import/newline-after-import
 import { hideBin } from 'yargs/helpers';
-const argv = _yargs(hideBin(process.argv)).argv;
-
-import render from './scripts/generate-bundle-banner.js';
-import getTargetBundleTypes from './scripts/rollup-plugins/bundle-types.js';
 import deprecationNotice from './scripts/rollup-plugins/deprecation-notice.js';
+import getTargetBundleTypes from './scripts/rollup-plugins/bundle-types.js';
+import render from './scripts/generate-bundle-banner.js';
+
+const argv = _yargs(hideBin(process.argv)).argv;
 
 // Globals are reused in both configs
 const globals = {
   jquery: '$',
   d3: 'd3',
   alert: 'alert',
-  console: 'console'
+  console: 'console',
+  'promise-polyfill': 'Promise$1'
 };
 
 // Hook into `onwarn` to supress certain warning messages.
@@ -50,9 +52,7 @@ const standardConfig = {
     sourcemap: true,
     sourcemapFile: 'dist/js/sohoxi.js.map',
     name: 'Soho',
-    globals: {
-      'promise-polyfill': 'Promise$1'
-    }
+    globals
   },
   onwarn,
   plugins: [
@@ -86,9 +86,7 @@ const esmConfig = {
   output: {
     file: 'dist/js/sohoxi.esm.js',
     format: 'es',
-    globals: {
-      'promise-polyfill': 'Promise$1'
-    }
+    globals
   },
   name: 'Soho',
   onwarn,
