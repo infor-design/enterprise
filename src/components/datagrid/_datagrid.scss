@@ -5952,6 +5952,19 @@ html[class*='theme-classic-'] .datagrid {
         }
       }
     }
+
+    .datagrid-cell-wrapper {
+      .trigger.dropdown-trigger {
+        + .icon {
+          top: -2px;
+          left: -1.5px;
+
+          +  .icon:not(.datagrid-alert-icon).icon-error {
+            left: 99%;
+          }
+        }
+      }
+    }
   }
 
   &.medium-rowheight {
@@ -5968,8 +5981,15 @@ html[class*='theme-classic-'] .datagrid {
         }
       }
 
-      .datagrid-cell-wrapper .colorpicker-container + .icon:not(.datagrid-alert-icon).icon-error {
-        left: 100%;
+      .datagrid-cell-wrapper {
+        .colorpicker-container + .icon:not(.datagrid-alert-icon).icon-error {
+          left: 100%;
+        }
+
+        .trigger.dropdown-trigger + .icon {
+          left: 3.5px;
+          top: -1.5px;
+        }
       }
     }
   }
@@ -6001,6 +6021,17 @@ html[class*='theme-classic-'] .datagrid {
             padding-top: 6px;
           }
         }
+
+        .trigger.dropdown-trigger {
+          + .icon {
+            left: -5px;
+            top: -1px;
+
+            +  .icon:not(.datagrid-alert-icon).icon-error {
+              left: 102%;
+            }
+          }
+        }
       }
     }
   }
@@ -6029,11 +6060,26 @@ html[class*='theme-classic-'] .datagrid {
       .datagrid-cell-wrapper {
         .colorpicker-container {
           + .icon:not(.datagrid-alert-icon).icon-error {
-            left: 100%;
+            left: 99%;
           }
 
-          span.trigger .icon {
-            top: 0;
+          span.trigger {
+            left: calc(100% - 15px);
+
+            .icon {
+              top: 0;
+            }
+          }
+        }
+
+        .trigger.dropdown-trigger {
+          + .icon {
+            top: -0.5px;
+            margin-left: 0.5px;
+
+            +  .icon:not(.datagrid-alert-icon).icon-error {
+              left: 99%;
+            }
           }
         }
       }
