@@ -10,6 +10,7 @@
 
 - `[Datagrid]` Fixed alignment issues in trigger fields. ([#6678](https://github.com/infor-design/enterprise/issues/6678))
 - `[Datagrid]` Allow beforeCommitCellEdit event to be sent for Editors.Fileupload. ([#6821](https://github.com/infor-design/enterprise/issues/6821))
+- `[Editor]` Fixed a bug in editor where blockquote is not continued in the next line. ([#6794](https://github.com/infor-design/enterprise/issues/6794))
 
 ## v4.67.0
 
