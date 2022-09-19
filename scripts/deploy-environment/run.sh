@@ -1,7 +1,7 @@
 #!/bin/bash
 
-_IMAGE_LIBRARY_USER=${IMAGE_LIBRARY_USER:-}
-_IMAGE_LIBRARY_PASS=${IMAGE_LIBRARY_PASS:-}
+_CR_USER=${IMAGE_LIBRARY_USER:-}
+_CR_PASS=${IMAGE_LIBRARY_PASS:-}
 _GITHUB_ACCESS_TOKEN=${GITHUB_ACCESS_TOKEN:-}
 _HANDLER_API_KEY=${HANDLER_API_KEY:-}
 _REPO_OWNER_NAME=${REPO_OWNER_NAME:-}
@@ -12,10 +12,13 @@ _TLS_SECRET=${TLS_SECRET:-}
 _ORG_NAME=${ORG_NAME:-}
 _BASE_CONTAINER_NAME=${BASE_CONTAINER_NAME:-}
 _BUILD_FROM=${BUILD_FROM:-}
+_SUBDOMAIN_NAME=${SUBDOMAIN_NAME:-}
+_BUILD_AS_LATEST=${BUILD_AS_LATEST:-}
 
 BRANCH_REGEX="(remotes\/origin\/[0-9.@]+[0-9.@]+x)"
 BRANCH_PREFIX="remotes/origin/"
 LATEST=""
+BUILD_NAME=""
 
 deploy(){
   BUILD_NAME=$1
@@ -61,20 +64,18 @@ fi
 BRANCHES=$(git branch -a | sort -V)
 BRANCHES_LIST=($BRANCHES)
 
-VERSION_STRING=$(echo "${_BUILD_FROM//./}") # Removes . to not break subdomain
-BUILD_NAME=$VERSION_STRING-$_BASE_CONTAINER_NAME
 VERSION=$(node -p "require('./package.json').version")
+VERSION_STRING=$(echo "${VERSION//./}")
 COMMIT=$(git rev-parse --short HEAD)
 
-for BRANCH in "${BRANCHES_LIST[@]}" ; do
-  if [[ $BRANCH =~ $BRANCH_REGEX ]];
-  then
-      clean=${BRANCH#"$BRANCH_PREFIX"}
-      LATEST=$(echo "$clean" | xargs)
-  fi
-done
+if [ -z $_SUBDOMAIN_NAME ]
+then
+  BUILD_NAME=$VERSION_STRING-$_BASE_CONTAINER_NAME
+else
+  BUILD_NAME=$_SUBDOMAIN_NAME-$_BASE_CONTAINER_NAME
+fi
 
-if [ "$_BUILD_FROM" = "$LATEST" ]
+if [ "$_BUILD_AS_LATEST" = true ]
 then
 	BUILD_NAME=latest-$_BASE_CONTAINER_NAME
 fi
@@ -94,7 +95,7 @@ EOL
 
 docker build -f ./Dockerfile -t $_ORG_NAME/$_BASE_CONTAINER_NAME:$VERSION .
 docker history --human --format "{{.CreatedBy}}: {{.Size}}" $_ORG_NAME/$_BASE_CONTAINER_NAME:$VERSION
-docker login -u "$_IMAGE_LIBRARY_USER" -p "$_IMAGE_LIBRARY_PASS"
+docker login -u "$_CR_USER" -p "$_CR_PASS"
 docker push $_ORG_NAME/$_BASE_CONTAINER_NAME:$VERSION
 
 check_deployment_resp=$(curl --location --request POST "$_HANDLER_API_URL/status/$_HANDLER_API_KEY" \

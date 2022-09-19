@@ -10108,12 +10108,8 @@ Datagrid.prototype = {
 
       cellParent.addClass('is-editing');
 
-      if (!col.doNotEmptyCellWhenEditing) {
-        if (this.isFileUpload) {
-          this.isFileUpload = false;
-        } else {
-          cellNode.empty();
-        }
+      if (!col.doNotEmptyCellWhenEditing && !cellParent.hasClass('is-fileupload')) {
+        cellNode.empty();
       }
     } else {
       cellParent.addClass('is-editing-inline');
@@ -10247,10 +10243,8 @@ Datagrid.prototype = {
       }
       Promise.resolve(newValue).then((v) => {
         this.commitCellEditUtil(input, v, isEditor, isFileupload, isUseActiveRow, isCallback);
-        this.isFileUpload = true;
       });
     } else {
-      // Editor.getValue
       if (typeof this.editor.val === 'function') {
         newValue = this.editor.val();
       }
@@ -10305,7 +10299,7 @@ Datagrid.prototype = {
     const rowData = this.settings.treeGrid ? this.settings.treeDepth[dataRowIndex].node :
       this.getActiveDataset()[dataRowIndex];
     let oldValue = this.fieldValue(rowData, col.field);
-    if (col.beforeCommitCellEdit && !isCallback) {
+    if (col.beforeCommitCellEdit && (isFileupload || !isCallback)) {
       const vetoCommit = col.beforeCommitCellEdit({
         cell,
         row: dataRowIndex,

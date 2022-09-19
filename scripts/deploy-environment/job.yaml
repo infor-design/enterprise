@@ -55,6 +55,10 @@ spec:
               value: ""
             - name: BUILD_FROM
               value: ""
+            - name: BUILD_AS_LATEST
+              value: ""
+            - name: SUBDOMAIN_NAME
+              value: ""
             - name: REPO_OWNER_NAME
               value: ""
           command: ["/bin/bash"]
