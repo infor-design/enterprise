@@ -8318,7 +8318,7 @@ Datagrid.prototype = {
     if (!rowNode.hasClass('is-selected') || isServerSideMultiSelect) {
       let rowData;
 
-      if (s.treeGrid) {
+      if (s.treeGrid && s.treeDepth.length > 0) {
         const level = parseInt(rowNode.attr('aria-level'), 10);
         rowData = s.treeDepth[self.pagerAPI && s.source ? rowNode.index() : idx].node;
         if (rowNode.is('.datagrid-tree-parent') && s.selectable === 'multiple') {
