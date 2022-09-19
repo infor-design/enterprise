@@ -4,6 +4,7 @@
 
 ## v4.68.0 Features
 
+- `[Calendar]` Added puppeteer script for show/hide legend. ([#6810](https://github.com/infor-design/enterprise/issues/6810))
 - `[Colors]` Added puppeteer script for color classes targeting color & border color. ([#6801](https://github.com/infor-design/enterprise/issues/6801))
 
 ## v4.68.0 Fixes

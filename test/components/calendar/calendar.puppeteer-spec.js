@@ -492,4 +492,25 @@ describe('Calendar', () => {
       })).toBe('');
     });
   });
+
+  describe('Calendar show/hide event legend tests', () => {
+    const url = `${baseUrl}/test-hide-legend.html`;
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+      await page.setViewport({ width: 967, height: 783 });
+    });
+
+    it('should hide legend', async () => {
+      await page.click('#show-action');
+      const elem = await page.evaluate(() => !!document.querySelector('.calendar-event-legend'));
+      expect(elem).toBe(false);
+    });
+
+    it('should show legend', async () => {
+      await page.click('#show-action');
+      const elem = await page.$eval('.calendar-event-legend', el => el !== null);
+      expect(elem).toBe(true);
+    });
+  });
 });
