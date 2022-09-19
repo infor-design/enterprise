@@ -6104,13 +6104,24 @@ html[class*='theme-classic-'] .datagrid {
           }
         }
 
-        .trigger.dropdown-trigger {
-          + .icon {
-            left: -5px;
-            top: -1px;
+        .trigger {
+          &.dropdown-trigger {
+            + .icon {
+              left: -5px;
+              top: -1px;
 
-            +  .icon:not(.datagrid-alert-icon).icon-error {
-              left: 102%;
+              +  .icon:not(.datagrid-alert-icon).icon-error {
+                left: 102%;
+              }
+            }
+          }
+
+          + .icon.icon-search-list {
+            margin-top: -1px;
+
+            + .icon:not(.datagrid-alert-icon).icon-error {
+              left: 97%;
+              top: 7px;
             }
           }
         }
