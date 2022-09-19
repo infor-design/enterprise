@@ -17,7 +17,6 @@
 import chalk from 'chalk';
 import app from './app.js';
 
-
 // With the express server and routes defined, we can start to listen for requests.
 const port = process.env.PORT || 4000;
 app.listen(port);
