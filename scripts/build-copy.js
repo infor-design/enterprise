@@ -7,33 +7,33 @@ const sassDir = 'dist/sass';
 const rootDir = 'dist';
 
 // Recursively get files a directory
-const getAllFiles = dir =>
-  readdirSync(dir).reduce((files, file) => {
-    const name = join(dir, file);
-    const isDirectory = statSync(name).isDirectory();
-    return isDirectory ? [...files, ...getAllFiles(name)] : [...files, name];
-  }, []);
+const getAllFiles = dir => readdirSync(dir).reduce((files, file) => {
+  const name = join(dir, file);
+  const isDirectory = statSync(name).isDirectory();
+  return isDirectory ? [...files, ...getAllFiles(name)] : [...files, name];
+}, []);
 
 // Copy From/To Recursively
 const copyFiles = (sourceDir, ext, destDir) => {
   const files = getAllFiles(sourceDir).filter(fn => fn.endsWith(ext));
-  files.forEach(file => {
+  files.forEach((file) => {
     const dest = `${destDir}${file}`;
     if (!existsSync(dirname(dest))) {
       mkdirSync(dirname(dest), { recursive: true });
     }
+    // eslint-disable-next-line no-use-before-define
     copyFile(file, `${destDir}${file}`, callback);
   });
 };
 
 // Make directory if it doesn't exist
-if (!existsSync(rootDir)){
+if (!existsSync(rootDir)) {
   mkdirSync(rootDir);
 }
-if (!existsSync(jsDir)){
+if (!existsSync(jsDir)) {
   mkdirSync(jsDir);
 }
-if (!existsSync(sassDir)){
+if (!existsSync(sassDir)) {
   mkdirSync(sassDir);
 }
 

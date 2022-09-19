@@ -1,6 +1,6 @@
 import extend from 'extend';
 import utils from './utils.js';
-import customIconRoute from './routes/custom-icons.js';
+import customIconsRoute from './routes/custom-icons.js';
 
 // Object with settings that gets stringify
 const SohoConfig = {};
