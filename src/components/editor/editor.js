@@ -335,7 +335,7 @@ Editor.prototype = {
     const currentElement = this.getCurrentElement();
     currentElement.on('keyup.editor', (e) => {
       let node = this.getSelectionStart();
-      let tagName;
+      const tagName = node.tagName.toLowerCase();
 
       if (node && node.getAttribute('data-editor') && node.children.length === 0) {
         document.execCommand('formatBlock', false, 'p');
@@ -343,7 +343,10 @@ Editor.prototype = {
 
       if (e.which === 13) {
         node = this.getSelectionStart();
-        tagName = node.tagName.toLowerCase();
+
+        if (tagName === 'blockquote') {
+          return;
+        }
 
         if (tagName !== 'li' && !this.isListItemChild(node)) {
           if (!e.shiftKey) {
