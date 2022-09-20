@@ -1,5 +1,3 @@
-// import Promise from 'promise-polyfill';
-
 import { Environment as env } from '../../utils/environment';
 import * as debug from '../../utils/debug';
 import { warnAboutDeprecation } from '../../utils/deprecated';

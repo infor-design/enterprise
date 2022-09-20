@@ -42,9 +42,6 @@ function onwarn(warning, next) {
 // ================================================= /
 const standardConfig = {
   input: 'src/index.js',
-  external: [
-    'promise-polyfill'
-  ],
   output: {
     file: 'dist/js/sohoxi.js',
     format: 'iife',
@@ -79,9 +76,6 @@ const standardConfig = {
 // ================================================= /
 const esmConfig = {
   input: 'src/index.js',
-  external: [
-    'promise-polyfill'
-  ],
   output: {
     file: 'dist/js/sohoxi.esm.js',
     format: 'es',
