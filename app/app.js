@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import csp from 'express-csp';
 import express from 'express';
-import csrf from 'csurf';
+
 import session from 'express-session';
 import mmm from 'mmm';
 import * as path from 'path';
@@ -74,11 +74,6 @@ app.use(session({
     secure: false
   }
 }));
-app.use(csrf());
-app.use((req, res, next) => {
-  res.locals._csrf = req.csrfToken();
-  next();
-});
 
 // Create the express router with the same settings as the app.
 const router = express.Router({
