@@ -21,7 +21,6 @@ const globals = {
   d3: 'd3',
   alert: 'alert',
   console: 'console',
-  'promise-polyfill': 'Promise$1'
 };
 
 // Hook into `onwarn` to supress certain warning messages.

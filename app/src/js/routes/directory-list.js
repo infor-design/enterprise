@@ -107,4 +107,4 @@ export default function directoryList(directory, viewsRoot, req, res, next) {
 
     res.render(path.join(viewsRoot, 'listing.html'), res.opts);
   });
-};
+}

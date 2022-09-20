@@ -124,4 +124,4 @@ export default function customRouteOptions(req, res) {
   }
 
   return extend({}, res.opts, customOpts.getOptions());
-};
+}

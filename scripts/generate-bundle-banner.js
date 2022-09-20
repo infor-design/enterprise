@@ -1,10 +1,12 @@
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable camelcase */
 import * as fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import moment from 'moment';
 import child_process from 'child_process';
 import _yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
+
 const argv = _yargs(hideBin(process.argv)).argv;
 
 const exec = child_process;

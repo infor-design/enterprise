@@ -19,7 +19,6 @@
   {{^noD3}}
   <script src="{{basepath}}js/d3.v5.js"></script>
   {{/noD3}}
-  <script src="{{basepath}}js/promise-polyfill.js"></script>
 
   {{#SohoConfig}}
   <script>
@@ -41,12 +40,10 @@
     {{/esModule}}
     {{^esModule}}
       <script src="{{basepath}}js/sohoxi.{{importStyle}}.js"></script>
-      <!-- <script src="{{basepath}}js/sohoxi-migrate-4.4.0.js"></script> -->
     {{/esModule}}
   {{/importStyle}}
   {{^importStyle}}
     <script src="{{basepath}}js/sohoxi.js"></script>
-    <!-- <script src="{{basepath}}js/sohoxi-migrate-4.4.0.js"></script> -->
   {{/importStyle}}
 
   <!-- Supplying the culture in the head is supported
