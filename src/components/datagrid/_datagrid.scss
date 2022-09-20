@@ -5954,13 +5954,24 @@ html[class*='theme-classic-'] .datagrid {
     }
 
     .datagrid-cell-wrapper {
-      .trigger.dropdown-trigger {
-        + .icon {
-          top: -2px;
-          left: -1.5px;
+      .trigger {
+        &.dropdown-trigger:not(.colorpicker-container) {
+          + .icon {
+            top: -2px;
+            left: -1.5px;
+
+            +  .icon:not(.datagrid-alert-icon).icon-error {
+              left: 99%;
+            }
+          }
+        }
+
+        + .icon.icon-calendar {
+          top: -2.5px;
 
           +  .icon:not(.datagrid-alert-icon).icon-error {
-            left: 99%;
+            left: 95%;
+            top: 14px;
           }
         }
       }
@@ -5986,9 +5997,28 @@ html[class*='theme-classic-'] .datagrid {
           left: 100%;
         }
 
-        .trigger.dropdown-trigger + .icon {
-          left: 3.5px;
-          top: -1.5px;
+        .trigger {
+          &.dropdown-trigger:not(.colorpicker-container) + .icon {
+            left: 3.5px;
+            top: -1.5px;
+          }
+
+          + .icon.icon-calendar {
+            left: 6px;
+            top: -3.5px;
+
+            + .icon:not(.datagrid-alert-icon).icon-error {
+              top: 8px;
+            }
+          }
+        }
+
+        input.datepicker {
+          margin-top: -1px;
+
+          + .trigger.btn-icon {
+            margin-top: 3px;
+          }
         }
       }
     }
@@ -6042,6 +6072,11 @@ html[class*='theme-classic-'] .datagrid {
               top: 7px;
             }
           }
+
+          + .icon.icon-calendar + .icon:not(.datagrid-alert-icon).icon-error {
+            left: 98%;
+            top: 5px;
+          }
         }
       }
     }
@@ -6083,13 +6118,25 @@ html[class*='theme-classic-'] .datagrid {
           }
         }
 
-        .trigger.dropdown-trigger {
-          + .icon {
-            top: -0.5px;
-            margin-left: 0.5px;
+        .trigger {
+          &.dropdown-trigger:not(.colorpicker-container) {
+            + .icon {
+              top: -0.5px;
+              margin-left: 0.5px;
 
-            +  .icon:not(.datagrid-alert-icon).icon-error {
-              left: 99%;
+              +  .icon:not(.datagrid-alert-icon).icon-error {
+                left: 99%;
+              }
+            }
+          }
+
+          + .icon.icon-calendar {
+            left: -2px;
+            top: -0.5px;
+
+            + .icon:not(.datagrid-alert-icon).icon-error {
+              left: 96%;
+              top: 5px;
             }
           }
         }
