@@ -4,6 +4,7 @@
 
 ## v4.68.0 Features
 
+- `[Calendar]` Added puppeteer script for show/hide legend. ([#6810](https://github.com/infor-design/enterprise/issues/6810))
 - `[Colors]` Added puppeteer script for color classes targeting color & border color. ([#6801](https://github.com/infor-design/enterprise/issues/6801))
 
 ## v4.68.0 Fixes
@@ -16,6 +17,8 @@
 ## v4.67.0 Important Notes
 
 - `[CDN]` The former CDN `cdn.hookandloop.infor.com` can no longer be maintained by IT and needs to be discontinued. It will exist for approximately one year more (TBD), so please remove direct use from any production code. ([#6754](https://github.com/infor-design/enterprise/issues/6754))
+- `[Datepicker]` The functionality to enter today with a `t` is now under a setting `todayWithKeyboard-false`, it is false because you cant type days like Septemeber in a full picker. ([#6653](https://github.com/infor-design/enterprise/issues/6653))
+- `[Datepicker]` The functionality to increase the day with a `+/-` it defaults to false because it conflicts with many other internal shortcut keys. ([#6632](https://github.com/infor-design/enterprise/issues/6632))
 
 ## v4.67.0 Markup Changes
 
