@@ -6056,6 +6056,15 @@ html[class*='theme-classic-'] .datagrid {
             top: 14px;
           }
         }
+
+        + .icon.icon-clock {
+          left: -1px;
+
+          +  .icon:not(.datagrid-alert-icon).icon-error {
+            left: 92%;
+            top: 14px;
+          }
+        }
       }
     }
   }
@@ -6093,6 +6102,10 @@ html[class*='theme-classic-'] .datagrid {
               top: 8px;
             }
           }
+
+          + .icon.icon-clock + .icon:not(.datagrid-alert-icon).icon-error {
+            top: 10px;
+          }
         }
 
         input.datepicker {
@@ -6102,12 +6115,20 @@ html[class*='theme-classic-'] .datagrid {
             margin-top: 3px;
           }
         }
+
+        input.timepicker {
+          margin-top: 0;
+
+          + .trigger.btn-icon {
+            margin-left: -4px;
+          }
+        }
       }
     }
   }
 
   &.small-rowheight {
-    .datagrid-trigger-cell.has-editor:not(.is-readonly) {
+    td.datagrid-trigger-cell.has-editor:not(.is-readonly) {
       &.is-fileupload {
         &:focus, &:hover {
           .datagrid-cell-wrapper .icon:not(.datagrid-alert-icon).icon-error {
@@ -6158,6 +6179,15 @@ html[class*='theme-classic-'] .datagrid {
           + .icon.icon-calendar + .icon:not(.datagrid-alert-icon).icon-error {
             left: 98%;
             top: 5px;
+          }
+
+          + .icon.icon-clock {
+            left: -5px;
+
+            + .icon:not(.datagrid-alert-icon).icon-error {
+              left: 96%;
+              top: 7px;
+            }
           }
         }
       }
@@ -6219,6 +6249,15 @@ html[class*='theme-classic-'] .datagrid {
             + .icon:not(.datagrid-alert-icon).icon-error {
               left: 96%;
               top: 5px;
+            }
+          }
+
+          + .icon.icon-clock {
+            left: -5px;
+
+            + .icon:not(.datagrid-alert-icon).icon-error {
+              left: 95%;
+              top: 6px;
             }
           }
         }
