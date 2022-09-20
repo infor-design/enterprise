@@ -2678,6 +2678,27 @@ $datagrid-small-row-height: 25px;
           top: 15px;
           visibility: visible;
         }
+
+        .trigger {
+          + .icon-search-list + .icon-error {
+            left: 94%;
+          }
+
+          + .icon-calendar + .icon-error {
+            left: 98%;
+            margin-top: 2px;
+          }
+
+          + .icon-calendar + .icon-error {
+            left: 98%;
+            margin-top: 2px;
+          }
+
+          + .icon-clock + .icon-error {
+            margin-top: 1px;
+            left: 95%;
+          }
+        }
       }
 
       &:focus .datagrid-cell-wrapper {
@@ -5980,8 +6001,12 @@ html[class*='theme-classic-'] .datagrid {
 
           +  .icon:not(.datagrid-alert-icon).icon-error {
             left: 92%;
-            top: 14px;
+            top: 15px;
           }
+        }
+
+        + .icon.icon-search-list + .icon:not(.datagrid-alert-icon).icon-error {
+          left: 92%;
         }
       }
     }
@@ -6023,6 +6048,11 @@ html[class*='theme-classic-'] .datagrid {
 
           + .icon.icon-clock + .icon:not(.datagrid-alert-icon).icon-error {
             top: 10px;
+          }
+
+          + .icon.icon-search-list + .icon:not(.datagrid-alert-icon).icon-error {
+            top: 12px;
+            left: 93%;
           }
         }
 
@@ -6089,7 +6119,7 @@ html[class*='theme-classic-'] .datagrid {
             margin-top: -1px;
 
             + .icon:not(.datagrid-alert-icon).icon-error {
-              left: 97%;
+              left: 96%;
               top: 7px;
             }
           }
@@ -6104,7 +6134,7 @@ html[class*='theme-classic-'] .datagrid {
 
             + .icon:not(.datagrid-alert-icon).icon-error {
               left: 96%;
-              top: 7px;
+              top: 8px;
             }
           }
         }
@@ -6177,6 +6207,11 @@ html[class*='theme-classic-'] .datagrid {
               left: 95%;
               top: 6px;
             }
+          }
+
+          + .icon.icon-search-list + .icon:not(.datagrid-alert-icon).icon-error {
+            top: 6px;
+            left: 94%;
           }
         }
       }

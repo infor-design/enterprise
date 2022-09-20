@@ -797,6 +797,40 @@
       .timepicker {
         margin-top: 4px;
       }
+
+      &.datagrid-trigger-cell .timepicker {
+        margin-top: -6px;
+      }
+    }
+
+    .datagrid-trigger-cell.has-editor:not(.is-readonly) {
+      &.is-fileupload .datagrid-cell-wrapper .icon.icon-error:not(.datagrid-alert-icon) {
+        left: 97%;
+        margin-top: 1px;
+      }
+
+      .datagrid-cell-wrapper {
+        .colorpicker-container + .icon.icon-error:not(.datagrid-alert-icon) {
+          left: 100%;
+          top: 9px;
+        }
+
+        .trigger {
+          &.dropdown-trigger:not(.colorpicker-container) + .icon + .icon.icon-error:not(.datagrid-alert-icon) {
+            left: 100%;
+          }
+
+          + .icon-calendar + .icon.icon-error:not(.datagrid-alert-icon) {
+            margin-top: -2px;
+            left: 98%;
+          }
+
+          + .icon-clock + .icon.icon-error:not(.datagrid-alert-icon) {
+            margin-top: -2px;
+            left: 97%;
+          }
+        }
+      }
     }
   }
 }
