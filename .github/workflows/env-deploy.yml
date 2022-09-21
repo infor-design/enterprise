@@ -11,6 +11,9 @@ on:
       - "*/*"
       - "**"
 
+permissions:
+  contents: read # to fetch code (actions/checkout)
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
