@@ -227,10 +227,14 @@ describe('Datagrid', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should not have aria-describedby attribute at cells', async () => {
+    it('should override the aria-describedby value', async () => {
       await page.evaluate(async () => {
-        const cells = await document.querySelectorAll('.datagrid body tr td');
-        cells.forEach(cell => expect(cell.getAttribute('aria-describedby')).toBe(null));
+        const cells = document.querySelectorAll('tbody[role="rowgroup"] td[role="gridcell"]:nth-child(2)');
+        let ariaDesc;
+
+        cells.forEach((cell, idx) => ariaDesc = cell.getAttribute('aria-describedby'));
+        return ariaDesc;
+        expect(ariaDesc).toEqual(`id-row-${idx + 1}-cell-1`);
       });
     });
   });
