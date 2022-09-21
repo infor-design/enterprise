@@ -687,18 +687,6 @@ $toolbarsearchfield-category-empty-width: 51px;
       }
     }
 
-    &.has-go-button {
-      .searchfield-category-button.btn {
-        height: 36px;
-        top: 1px;
-      }
-
-      &.active .searchfield-category-button.btn {
-        height: 38px;
-        top: 0;
-      }
-    }
-
     &:hover {
       input:not([disabled]):not(:focus) {
         + svg {
@@ -1142,14 +1130,6 @@ html[dir='rtl'] {
       height: 37px;
       top: 0;
     }
-
-    &.active {
-      .go-button,
-      .searchfield-category-button.btn {
-        height: 38px;
-        top: 1;
-      }
-    }
   }
 
   @media (min-width: $breakpoint-tablet-reduced) {
@@ -1177,14 +1157,10 @@ html[class*='theme-new-'] .header > .toolbar > .buttonset > .toolbar-searchfield
 }
 
 html[class*='theme-new-'] .toolbar-searchfield-wrapper.has-categories.has-go-button {
-  .go-button {
+  .go-button,
+  .searchfield-category-button.btn {
     height: 36px;
     top: 1px;
-  }
-
-  &.active .go-button {
-    height: 38px;
-    top: 0;
   }
 }
 
