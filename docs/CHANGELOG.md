@@ -9,6 +9,7 @@
 
 ## v4.68.0 Fixes
 
+- `[Datagrid]` Fixed a bug in datagrid where dropdown filter doesn't render correctly. ([#6834](https://github.com/infor-design/enterprise/issues/6834))
 - `[Datagrid]` Fixed alignment issues in trigger fields. ([#6678](https://github.com/infor-design/enterprise/issues/6678))
 - `[Datagrid]` Allow beforeCommitCellEdit event to be sent for Editors.Fileupload. ([#6821](https://github.com/infor-design/enterprise/issues/6821))
 - `[Datagrid]` Classic theme trigger field adjustments in datagrid. ([#6678](https://github.com/infor-design/enterprise/issues/6678))
