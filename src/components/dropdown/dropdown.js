@@ -2054,7 +2054,7 @@ Dropdown.prototype = {
       }
 
       // Check Right
-      if (elementDropdown.right + 20 > (window.innerWidth || document.documentElement.clientWidth)) {;
+      if (elementDropdown.right + 20 > (window.innerWidth || document.documentElement.clientWidth)) {
         shouldAdjust = true;
       }
 
