@@ -6139,7 +6139,8 @@ html[class*='theme-classic-'] .datagrid {
   &.small-rowheight {
     td.datagrid-trigger-cell.has-editor:not(.is-readonly) {
       &.is-fileupload {
-        &:focus, &:hover {
+        &:focus,
+        &:hover {
           .datagrid-cell-wrapper .icon:not(.datagrid-alert-icon).icon-error {
             top: 3px;
           }
@@ -6206,7 +6207,8 @@ html[class*='theme-classic-'] .datagrid {
   &.extra-small-rowheight {
     .datagrid-trigger-cell.has-editor:not(.is-readonly) {
       &.is-fileupload {
-        &:focus, &:hover {
+        &:focus,
+        &:hover {
           .datagrid-cell-wrapper .icon:not(.datagrid-alert-icon) {
             &.icon-error {
               top: 2px;
