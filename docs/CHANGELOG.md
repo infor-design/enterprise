@@ -9,6 +9,7 @@
 
 ## v4.68.0 Fixes
 
+- `[Bar Chart]` Fixed a bug in bar charts grouped, where arias are identical to each series. ([#6748](https://github.com/infor-design/enterprise/issues/6748))
 - `[Datagrid]` Fixed alignment issues in trigger fields. ([#6678](https://github.com/infor-design/enterprise/issues/6678))
 - `[Datagrid]` Allow beforeCommitCellEdit event to be sent for Editors.Fileupload. ([#6821](https://github.com/infor-design/enterprise/issues/6821))
 
