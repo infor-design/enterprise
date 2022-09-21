@@ -437,10 +437,10 @@ Bar.prototype = {
       .attr('tabindex', 0)
       .attr('data-group-id', (d, i) => i);
 
-    $(groups._parents).children('.series-group').each((idx, obj) => {
+    $(groups._parents).children('.series-group').each((position, obj) => {
       const item = $(obj);
-      item.attr('aria-label', `${s.dataset[idx].name ? s.dataset[idx].name : 'Name Label'}`);
-    })
+      item.attr('aria-label', `${s.dataset[position].name ? s.dataset[position].name : 'Name Label'}`);
+    });
 
     s.isGrouped = (self.svg.selectAll('.series-group').nodes().length > 1 && !s.isStacked) || (s.isGrouped && dataset.length === 1);
     s.isSingle = (self.svg.selectAll('.series-group').nodes().length === 1 && s.isStacked);
