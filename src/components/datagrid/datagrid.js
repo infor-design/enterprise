@@ -4853,7 +4853,14 @@ Datagrid.prototype = {
         cssClass = cssClass.replace(/^\s+|\s+$/g, '').replace(/\s+/g, ' ');
       }
 
+      const idProp = this.settings.attributes?.filter(a => a.name === 'id');
+      let ariaDescribedby = `aria-describedby="${idProp?.length === 1 ? `${idProp[0].value}-col-${col.id?.toLowerCase()}` : self.uniqueId(`-header-${j}`)}"`;
       let ariaChecked = '';
+
+      // Overriding the aria-describedby value if there's a setting in the column.
+      if (col?.ariaDescribedBy) {
+        ariaDescribedby = `aria-describedBy=${col.ariaDescribedBy(rowData.id, j)}`;
+      }
 
       // Set aria-checkbox attribute
       if (col.formatter?.toString().indexOf('function Checkbox') === 0) {
@@ -4872,13 +4879,14 @@ Datagrid.prototype = {
       }
 
       containerHtml[container] += `<td role="gridcell" ${ariaReadonly} aria-colindex="${j + 1}"` +
-          ` ${ariaChecked
-          }${isSelected ? ' aria-selected="true"' : ''
-          }${cssClass ? ` class="${cssClass}"` : ''
-          }${colspan ? ` colspan="${colspan}"` : ''
-          }${col.tooltip && typeof col.tooltip === 'string' ? ` title="${col.tooltip.replace('{{value}}', cellValue)}"` : ''
-          }${self.settings.columnGroups ? `headers = "${self.uniqueId(`-header-${j}`)} ${self.getColumnGroup(j)}"` : ''
-          }${rowspan || ''}>${rowStatus.svg}<div class="datagrid-cell-wrapper">`;
+        ` ${ariaDescribedby
+        }${ariaChecked
+        }${isSelected ? ' aria-selected="true"' : ''
+        }${cssClass ? ` class="${cssClass}"` : ''
+        }${colspan ? ` colspan="${colspan}"` : ''
+        }${col.tooltip && typeof col.tooltip === 'string' ? ` title="${col.tooltip.replace('{{value}}', cellValue)}"` : ''
+        }${self.settings.columnGroups ? `headers = "${self.uniqueId(`-header-${j}`)} ${self.getColumnGroup(j)}"` : ''
+        }${rowspan || ''}>${rowStatus.svg}<div class="datagrid-cell-wrapper">`;
 
       if (col.contentVisible) {
         const canShow = col.contentVisible(dataRowIdx + 1, j, cellValue, col, rowData);
