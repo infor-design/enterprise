@@ -275,7 +275,6 @@ $toolbarsearchfield-category-empty-width: 51px;
       font-size: $ids-size-font-base;
       font-weight: $ids-number-font-weight-base;
       height: 38px;
-      padding-right: 34px;
       text-transform: none;
 
       &::-webkit-input-placeholder {
@@ -484,8 +483,6 @@ $toolbarsearchfield-category-empty-width: 51px;
     &.searchfield-wrapper.show-category {
       .searchfield {
         border-left-color: $header-searchfield-input-border-color !important;
-        border-bottom: 0;
-        border-top: 0;
         border-right: 0;
       }
     }
