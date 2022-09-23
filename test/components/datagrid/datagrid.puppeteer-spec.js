@@ -228,14 +228,12 @@ describe('Datagrid', () => {
     });
 
     it('should override the aria-describedby value', async () => {
-      await page.evaluate(async () => {
-        const cells = document.querySelectorAll('tbody[role="rowgroup"] td[role="gridcell"]:nth-child(2)');
-        let ariaDesc;
+      const ariaDesc = await page.$$eval('tbody[role="rowgroup"] td[role="gridcell"]:nth-child(2)',
+        e => e.map(el => el.getAttribute('aria-describedby')));
 
-        cells.forEach((cell, idx) => ariaDesc = cell.getAttribute('aria-describedby'));
-        return ariaDesc;
-        expect(ariaDesc).toEqual(`id-row-${idx + 1}-cell-1`);
-      });
+      for (let i = 0; i < ariaDesc.length; i++) {
+        expect(ariaDesc).toContain(`id-row-${i + 1}-cell-1`);
+      }
     });
   });
 
