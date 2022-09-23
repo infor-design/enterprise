@@ -306,9 +306,7 @@ $subheader-height: 60px;
     .toolbar-searchfield-wrapper {
       &.is-open {
         .searchfield {
-          border-bottom: 0;
-          border-right: 0;
-          border-top: 0;
+          border-color: $header-searchfield-input-border-color;
         }
 
         .collapse-button {

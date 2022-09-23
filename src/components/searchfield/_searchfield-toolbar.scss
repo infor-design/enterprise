@@ -362,10 +362,6 @@ $toolbarsearchfield-category-empty-width: 51px;
   &.has-focus {
     .searchfield {
       border-color: transparent;
-
-      &:focus {
-        border-color: rgba($input-color-focus-border, 1);
-      }
     }
 
     &.active {
@@ -376,8 +372,6 @@ $toolbarsearchfield-category-empty-width: 51px;
       &.toolbar-searchfield-wrapper {
         &.has-categories:not(.alternate) {
           .searchfield {
-            border-left: 1px solid;
-
             &:focus {
               border-color: $header-searchfield-input-border-color;
             }
