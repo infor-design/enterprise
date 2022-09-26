@@ -439,7 +439,7 @@ Bar.prototype = {
 
     $(groups._parents).children('.series-group').each((position, obj) => {
       const item = $(obj);
-      item.attr('aria-label', `${s.dataset[position].name ? s.dataset[position].name : 'Name Label'}`);
+      item.attr('aria-describedby', `${s.dataset[position].name ? s.dataset[position].name : 'Name Label'}`);
     });
 
     s.isGrouped = (self.svg.selectAll('.series-group').nodes().length > 1 && !s.isStacked) || (s.isGrouped && dataset.length === 1);
