@@ -9,6 +9,7 @@
 
 ## v4.68.0 Fixes
 
+- `[Datagrid]` Fixed a bug in datagrid where expandable row animation is not rendering properly. ([#6813](https://github.com/infor-design/enterprise/issues/6813))
 - `[Datagrid]` Fixed a bug in datagrid where dropdown filter does not render correctly. ([#6834](https://github.com/infor-design/enterprise/issues/6834))
 - `[Datagrid]` Fixed alignment issues in trigger fields. ([#6678](https://github.com/infor-design/enterprise/issues/6678))
 - `[Datagrid]` Allowed beforeCommitCellEdit event to be sent for Editors.Fileupload. ([#6821](https://github.com/infor-design/enterprise/issues/6821))]
