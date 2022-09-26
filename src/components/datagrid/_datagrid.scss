@@ -2239,6 +2239,11 @@ $datagrid-small-row-height: 25px;
     &.is-rowactivated td:not(.is-editing) .datagrid-cell-wrapper {
       background-color: $datagrid-row-selected-color;
 
+      button.datagrid-expand-btn .icon {
+        background-color: transparent;
+        box-shadow: none;
+      }
+
       .icon {
         @include trigger-icon-background($datagrid-row-selected-color);
       }
