@@ -6,6 +6,33 @@
   </div>
 </div>
 
+<style id="special-test-rules">
+  .tooltip-extra-class {
+    background-color: #488421; /* Emerald09 */
+    border: 1px solid #488421;
+  }
+
+  .tooltip-extra-class.top .arrow::after {
+    border-top-color: #488421; /* Emerald09 */
+  }
+
+  .tooltip-extra-class.bottom .arrow::after {
+    border-bottom-color: #488421; /* Emerald09 */
+  }
+
+  .tooltip-extra-class.right .arrow::after {
+    border-right-color: #488421; /* Emerald09 */
+  }
+
+  .tooltip-extra-class.left .arrow::after {
+    border-left-color: #488421; /* Emerald09 */
+  }
+
+  .TEST-big p {
+    font-size: 21px;
+  }
+</style>
+
 <script>
   $('body').one('initialized', function () {
       var grid,
@@ -26,7 +53,7 @@
       //Define Columns for the Grid.
       columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', minWidth: 75, textOverflow: 'ellipsis' });
-      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', textOverflow: 'ellipsis', headerTooltip: headerIconTooltipContent, headerIcon: 'info', headerCssClass: 'lm-custom-class-header' , headerIconTooltip: headerIconTooltipContent, formatter: Formatters.Hyperlink });
+      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', textOverflow: 'ellipsis', headerTooltip: headerIconTooltipContent, headerIcon: 'info', headerCssClass: 'lm-custom-class-header' , headerIconTooltip: headerIconTooltipContent, headerTooltipCssClass: 'tooltip-extra-class', formatter: Formatters.Hyperlink });
       columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', textOverflow: 'ellipsis'});
       columns.push({ id: 'quantity', align: 'right', name: 'Quantity', minWidth: 75, field: 'quantity', textOverflow: 'ellipsis'});
       columns.push({ id: 'status', name: 'Status', field: 'price', textOverflow: 'ellipsis', formatter: Formatters.Alert, ranges: [{'min': 0, 'max': 150, 'classes': 'success', text: 'Confirmed'}, {'min': 151, 'max': 9999, 'classes': 'error', text: 'Error'}]});
