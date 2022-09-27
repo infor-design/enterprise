@@ -1504,7 +1504,7 @@ Datagrid.prototype = {
         ids = `id="${id}"`;
       }
 
-      headerRows[container] += `<th scope="col" role="columnheader" ${ids} ${isSelection ? ' aria-checked= "false"' : ''} data-column-id="${column.id}"${column.field ? ` data-field="${column.field}"` : ''}${column.headerTooltip ? ` title="${column.headerTooltip}"` : ''}${column.reorderable === false ? ' data-reorder="false"' : ''}${colGroups ? ` headers="${self.getColumnGroup(j)}"` : ''} data-exportable="${isExportable ? 'yes' : 'no'}"${cssClass}>`;
+      headerRows[container] += `<th scope="col" role="columnheader" ${ids} ${isSelection ? ' aria-checked= "false"' : ''} data-column-id="${column.id}"${column.field ? ` data-field="${column.field}"` : ''}${column.headerTooltip ? ` title="${column.headerTooltip}"` : ''}${column.headerTooltipCssClass ? ` tooltipClass="${column.headerTooltipCssClass}"` : ''}${column.reorderable === false ? ' data-reorder="false"' : ''}${colGroups ? ` headers="${self.getColumnGroup(j)}"` : ''} data-exportable="${isExportable ? 'yes' : 'no'}"${cssClass}>`;
 
       let sortIndicator = '';
       if (isSortable) {
@@ -12635,6 +12635,7 @@ Datagrid.prototype = {
       let title;
 
       tooltip = { content: '', wrapper: elem.querySelector('.datagrid-cell-wrapper') };
+      tooltip.extraClassList = [];
       let columnSettings;
       const elemIndex = $(elem).index();
 
@@ -12721,6 +12722,11 @@ Datagrid.prototype = {
           }
           tooltip.content = xssUtils.stripHTML(tooltip.content).trim();
         }
+      }
+
+      const tooltipExtraClass = elem.getAttribute('tooltipClass');
+      if (tooltipExtraClass) {
+        tooltip.extraClassList.push(tooltipExtraClass);
       }
 
       // Clean up text in selects
@@ -12843,7 +12849,7 @@ Datagrid.prototype = {
         if (options.isError) {
           this.tooltip.classList.add('is-error');
         }
-        if (options.extraClassList) {
+        if (options.extraClassList && options.extraClassList.length > 0) {
           options.extraClassList.map(className => this.tooltip.classList.add(className));
         }
 

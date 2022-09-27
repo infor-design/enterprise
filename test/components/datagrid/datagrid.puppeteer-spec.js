@@ -1,4 +1,5 @@
 /* eslint-disable compat/compat */
+const path = require('path');
 const { getConfig, getComputedStyle } = require('../../helpers/e2e-utils.js');
 
 describe('Datagrid', () => {
@@ -372,6 +373,33 @@ describe('Datagrid', () => {
           return elHandle.evaluate(e => e.getAttribute('style'));
         })
         .then(style => expect(style).toContain('width'));
+    });
+  });
+
+  describe('Allow beforeCommitCellEdit event test', () => {
+    const url = `${baseUrl}/test-editable-fileupload-before-commitcelledit`;
+    const fileName = 'test.txt';
+    const filePath = path.resolve(__dirname, fileName);
+    const uploadFiles = async (filePathArr) => {
+      const [fileChooser] = await Promise.all([
+        page.waitForFileChooser(),
+        page.click('#datagrid  table > tbody > tr:nth-child(1) > td.datagrid-trigger-cell.is-fileupload.has-editor > div > svg')
+      ]);
+      return fileChooser.accept(filePathArr);
+    };
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('should upload a file and show a fake path', async () => {
+      await uploadFiles([filePath]);
+      await page.waitForSelector('.icon-close', { visible: true });
+      await page.waitForSelector('table > tbody > tr:nth-child(1) > td.datagrid-trigger-cell.is-fileupload.has-editor > div', { visible: true })
+        .then(async (element) => {
+          const fakePath = await element.$eval('#datagrid > div.datagrid-wrapper.center.scrollable-x.scrollable-y > table > tbody > tr:nth-child(1) > td.datagrid-trigger-cell.is-fileupload.has-editor > div > span', e => e.textContent);
+          expect(fakePath).toEqual(`C:\\fakepath\\${fileName}`);
+        });
     });
   });
 });
