@@ -5,6 +5,9 @@
 
 <script>
   $('body').one('initialized', function () {
+    var ariaDescribedBy = function (row, cell) {
+      return `test-landmark-datagrid-${row}-header-${cell}`;
+    }
     var settings = {
       "actionableMode": true,
       "cellNavigation": true,
@@ -35,7 +38,8 @@
             "align": "left",
             "hideable": true,
             "textOverflow": "ellipsis",
-            "formatter": Formatters.Readonly
+            "formatter": Formatters.Readonly,
+            "ariaDescribedBy": ariaDescribedBy
           },
         {
           "id": "Manufacturer0",
@@ -45,7 +49,8 @@
           "name": "Manufacturer (Ed, Ell)",
           "filterType": "lookup",
           "textOverflow": "ellipsis",
-          "editor": Editors.Lookup
+          "editor": Editors.Lookup,
+          "ariaDescribedBy": ariaDescribedBy
         },
         {
           "id": "Manufacturer1",
