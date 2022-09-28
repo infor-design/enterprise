@@ -29,6 +29,7 @@ $toolbarsearchfield-category-empty-width: 51px;
     @include antialiased();
 
     background-color: transparent;
+    // ELEPHANT
     border: 1px solid transparent;
     box-shadow: none;
     color: $searchfield-text-color;
@@ -1113,7 +1114,7 @@ html[dir='rtl'] {
 
     .searchfield {
       width: auto;
-      border-left: 1px solid $searchfield-toolbar-border-color;
+      border: 1px solid $searchfield-toolbar-border-color;
     }
 
     button.close:not(.is-empty) {
@@ -1122,8 +1123,8 @@ html[dir='rtl'] {
 
     .go-button,
     .searchfield-category-button.btn {
-      height: 37px;
-      top: 0;
+      height: 36.75px;
+      top: 0.5px;
     }
   }
 
