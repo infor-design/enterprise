@@ -253,6 +253,12 @@ Trackdirty.prototype = {
           current = current.replaceAll('&nbsp;', ' ');
         }
 
+        if (typeof original === 'string' && original?.indexOf('&nbsp;') > -1) {
+          original = original.replaceAll('&nbsp;', ' ');
+        }
+
+        original = this.trimEditorText(original);
+
         if (current === original || (input.attr('multiple') && utils.equals(current, original))) {
           input.removeClass('dirty');
           $('.icon-dirty, .msg-dirty', field).add(d.icon).add(d.msg).remove();
