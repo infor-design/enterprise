@@ -228,11 +228,13 @@ describe('Datagrid', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should not have aria-describedby attribute at cells', async () => {
-      await page.evaluate(async () => {
-        const cells = await document.querySelectorAll('.datagrid body tr td');
-        cells.forEach(cell => expect(cell.getAttribute('aria-describedby')).toBe(null));
-      });
+    it('should override the aria-describedby value', async () => {
+      const ariaDesc = await page.$$eval('tbody[role="rowgroup"] td[role="gridcell"]:nth-child(2)',
+        e => e.map(el => el.getAttribute('aria-describedby')));
+
+      for (let i = 0; i < ariaDesc.length; i++) {
+        expect(ariaDesc).toContain(`test-landmark-datagrid-${i + 1}-header-1`);
+      }
     });
   });
 

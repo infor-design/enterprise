@@ -2239,6 +2239,11 @@ $datagrid-small-row-height: 25px;
     &.is-rowactivated td:not(.is-editing) .datagrid-cell-wrapper {
       background-color: $datagrid-row-selected-color;
 
+      button.datagrid-expand-btn .icon {
+        background-color: transparent;
+        box-shadow: none;
+      }
+
       .icon {
         @include trigger-icon-background($datagrid-row-selected-color);
       }
@@ -4333,7 +4338,7 @@ td .btn-actions {
 }
 
 // Change BG color of hovered Datagrid row cell icons
-.is-hover-row {
+.is-hover-row:not(.hide-selected-color) {
   .datagrid-trigger-cell {
     .icon {
       @include trigger-icon-background($datagrid-row-hover-color);
