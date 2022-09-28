@@ -20,6 +20,7 @@
 - `[Datagrid]` Added null guard in tree list when list is not yet loaded. ([#6816](https://github.com/infor-design/enterprise/issues/6816))
 - `[Editor]` Fixed a bug in editor where blockquote is not continued in the next line. ([#6794](https://github.com/infor-design/enterprise/issues/6794))
 - `[Modal]` Fixed a bug where suppress key setting is not working. ([#6793](https://github.com/infor-design/enterprise/issues/6793))
+- `[Textarea]` Fixed a bug in textarea where validation breaks after enabling/disabling. ([#6773](https://github.com/infor-design/enterprise/issues/6773))
 - `[Typography]` Updated text link color in dark theme. ([#6807](https://github.com/infor-design/enterprise/issues/6807))
 
 ## v4.67.0
