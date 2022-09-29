@@ -437,11 +437,6 @@ Bar.prototype = {
       .attr('tabindex', 0)
       .attr('data-group-id', (d, i) => i);
 
-    $(groups._parents).children('.series-group').each((position, obj) => {
-      const item = $(obj);
-      item.attr('aria-describedby', `${s.dataset[position].name ? s.dataset[position].name : 'Name Label'}`);
-    });
-
     s.isGrouped = (self.svg.selectAll('.series-group').nodes().length > 1 && !s.isStacked) || (s.isGrouped && dataset.length === 1);
     s.isSingle = (self.svg.selectAll('.series-group').nodes().length === 1 && s.isStacked);
 
@@ -476,7 +471,6 @@ Bar.prototype = {
           });
         });
       })
-      .attr('aria-label', 'item value')
       .attr('class', (d, i) => `bar series-${i}`)
       .attr('aria-hidden', true)
       .style('fill', (d, i) => (s.isStacked ? // eslint-disable-line
@@ -731,6 +725,16 @@ Bar.prototype = {
         // Run double click action
         self.doDoubleClickAction(d, i, selector);
       });
+
+    $(sGroup._parents).each((parentPos, parentEl) => {
+      const parentItem = $(parentEl);
+      const $parentPos = parentPos;
+      parentItem.attr('aria-label', `${s.dataset[parentPos].name ? s.dataset[parentPos].name : 'Name Label'}`);
+      parentItem.children('.bar').each((childPos, childEl) => {
+        const mainLabel = s.dataset[$parentPos].name;
+        $(childEl).attr('aria-label', `${s.dataset[$parentPos].data[childPos].value ? `${mainLabel} ${s.dataset[$parentPos].data[childPos].value}` : 'Name Label'}`);
+      });
+    });
 
     if (self.settings.isSingle) {
       // Add text svg for VPAT accessibility
