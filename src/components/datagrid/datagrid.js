@@ -148,6 +148,7 @@ const COMPONENT_NAME = 'datagrid';
  * and do not add any children nodes
  * or if one or more child node got match then add parent node and only matching children nodes
  * @param {string} [settings.attributes] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
+ * @param {boolean} [settings.dblClickApply=false] If true, needs to double click to trigger select row in datagrid.
  * @param {boolean} [settings.allowPasteFromExcel=false] If true will allow data copy/paste from excel
  * @param {string} [settings.fallbackImage='insert-image'] Will set a fall back image if the image formatter cannot load an image.
 */
@@ -244,6 +245,7 @@ const DATAGRID_DEFAULTS = {
   allowChildExpandOnMatchOnly: false,
   allowChildExpandOnMatch: false,
   activeCheckboxSelection: false,
+  dblClickApply: false,
   attributes: null,
   allowPasteFromExcel: false,
   fallbackImage: 'insert-image',
@@ -7054,7 +7056,8 @@ Datagrid.prototype = {
       });
     }
 
-    this.element.off('click.datagrid, select.datagrid').on('click.datagrid, select.datagrid', 'tbody td', function (e) {
+    const selectEvents = self.settings.dblClickApply ? 'dblclick.datagrid, select.datagrid' :'dblclick.datagrid, select.datagrid';
+    this.element.off(selectEvents).on(selectEvents, 'tbody td', function (e) {
       let rowNode = null;
       let dataRowIdx = null;
       const target = $(e.target);
@@ -7093,7 +7096,7 @@ Datagrid.prototype = {
       * @property {object} args.item The current sort column.
       * @property {object} args.originalEvent The original event object.
       */
-      self.triggerRowEvent('click', e, true);
+      // self.triggerRowEvent('click', e, true);
       self.setActiveCell(td);
 
       // Dont Expand rows or make cell editable when clicking expand button

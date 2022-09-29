@@ -653,6 +653,10 @@ Lookup.prototype = {
       lookupGrid = this.applyMinWidth(lookupGrid);
     }
 
+    if (self.settings.dblClickApply) {
+      self.settings.options.dblClickApply = self.settings.dblClickApply;
+    }
+
     if (self.settings.options) {
       if (self.settings.options.selectable === 'single' && self.settings.autoApply) {
         self.settings.options.cellNavigation = false;
