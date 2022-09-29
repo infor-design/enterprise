@@ -167,14 +167,14 @@
     columns.push({ id: 'action', name: 'Action Item', field: 'action', filterType: 'text'});
 
     //Define Columns2 for the Grid.
-    columns2.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
-    columns2.push({ id: 'productId', name: 'Product Id', field: 'productId', filterType: 'text', formatter: Formatters.Readonly});
-    columns2.push({ id: 'productName', name: 'Product Name', field: 'productName', filterType: 'text', formatter: Formatters.Hyperlink});
-    columns2.push({ id: 'quantity', name: 'Quantity', field: 'quantity', filterType: 'integer'});
+    columns2.push({ id: 'selectionCheckbox', width: 50, sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
+    columns2.push({ id: 'productId', name: 'Product Id', width: 50, field: 'productId', filterType: 'text', formatter: Formatters.Readonly});
+    columns2.push({ id: 'productName', name: 'Product Name', width: 50, field: 'productName', filterType: 'text', formatter: Formatters.Hyperlink});
+    columns2.push({ id: 'quantity', name: 'Quantity', width: 50, field: 'quantity', filterType: 'integer'});
     // columns2.push({ id: 'price', name: 'Price', field: 'price', filterType: 'text', formatter: Formatters.Decimal});
     // columns2.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', filterType: 'text', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
     // columns2.push({ id: 'status', name: 'Status', field: 'status', filterType: 'text', formatter: Formatters.Text});
-    columns2.push({ id: 'multiDropDown', name: 'Multiple Selection', field: 'multiDropDown', sortable: false, align: 'center', textOverflow: 'ellipsis', filterType: 'multiselect', formatter: Formatters.Dropdown, editor: Editors.Dropdown, editorOptions: { showSelectAll: true },
+    columns2.push({ id: 'multiDropDown', name: 'Multiple Selection', width: 50, field: 'multiDropDown', sortable: false, align: 'center', textOverflow: 'ellipsis', filterType: 'multiselect', formatter: Formatters.Dropdown, editor: Editors.Dropdown, editorOptions: { showSelectAll: true },
       filterRowEditorOptions: [{ label: 'Not Entered', value: 'Not Entered' }, { label: 'Yes', value: 'Y' }, { label: 'No', value: 'N' } ],
       options: [{ label: '', value: '' }, { label: 'Yes', value: 'Y' }, { label: 'No', value: 'N' } ]});
     // columns2.push({ id: 'action', name: 'Action Item', field: 'action', filterType: 'text'});
