@@ -601,8 +601,10 @@ $toolbarsearchfield-category-empty-width: 51px;
 
       &.has-categories,
       &.has-go-button {
-        height: 40px;
-        margin-top: -1px;
+        .searchfield {
+          height: 40px;
+          margin-top: -1px;
+        }
       }
     }
 
