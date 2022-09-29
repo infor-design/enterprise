@@ -7096,7 +7096,7 @@ Datagrid.prototype = {
       * @property {object} args.item The current sort column.
       * @property {object} args.originalEvent The original event object.
       */
-      // self.triggerRowEvent('click', e, true);
+      self.triggerRowEvent('click', e, true);
       self.setActiveCell(td);
 
       // Dont Expand rows or make cell editable when clicking expand button
