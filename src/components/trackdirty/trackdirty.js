@@ -79,7 +79,8 @@ Trackdirty.prototype = {
       .replace(' has-tooltip', '')
       .replace(/<br(\s+)?\/?>/g, '<br>\n')
       .replace(/<\/p>(\s+)/g, '</p>\n\n')
-      .replace(/<\/blockquote>(\s+)?/g, '</blockquote>\n\n');
+      .replace(/<\/blockquote>(\s+)?/g, '</blockquote>\n\n')
+      .replaceAll('&nbsp;', ' ');
   },
 
   /**
@@ -243,14 +244,9 @@ Trackdirty.prototype = {
           // editors values are further down it's tree in a textarea,
           // so get the elements with the value
           const textArea = field.find('textarea');
-          original = textArea.data('original');
+          original = this.trimEditorText(textArea.data('original'));
           current = field.find('.editor-source').is(':visible') ? textArea.val() : textArea.text();
           current = this.trimEditorText(current);
-        }
-
-        // Edge Issue in #6032
-        if (typeof current === 'string' && current?.indexOf('&nbsp;') > -1) {
-          current = current.replaceAll('&nbsp;', ' ');
         }
 
         if (current === original || (input.attr('multiple') && utils.equals(current, original))) {
