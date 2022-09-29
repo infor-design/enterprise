@@ -7056,7 +7056,7 @@ Datagrid.prototype = {
       });
     }
 
-    const selectEvents = self.settings.dblClickApply ? 'dblclick.datagrid, select.datagrid' :'dblclick.datagrid, select.datagrid';
+    const selectEvents = self.settings.dblClickApply ? 'dblclick.datagrid, select.datagrid' : 'click.datagrid, select.datagrid';
     this.element.off(selectEvents).on(selectEvents, 'tbody td', function (e) {
       let rowNode = null;
       let dataRowIdx = null;
