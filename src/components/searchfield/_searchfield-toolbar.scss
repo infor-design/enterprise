@@ -598,14 +598,6 @@ $toolbarsearchfield-category-empty-width: 51px;
         color: $header-flex-toolbar-input-searchfield-color;
         height: 38px;
       }
-
-      &.has-categories,
-      &.has-go-button {
-        .searchfield {
-          height: 40px;
-          margin-top: -1px;
-        }
-      }
     }
 
     .go-button {
@@ -909,14 +901,6 @@ html.is-firefox {
         }
       }
 
-      &.has-categories,
-      &.has-go-button {
-        .searchfield {
-          height: 40px;
-          margin-top: -1px;
-        }
-      }
-
       &.is-open {
         .icon {
           color: $searchfield-header-icon-color;
@@ -1163,8 +1147,15 @@ html[class*='theme-new-'] .header > .toolbar > .buttonset > .toolbar-searchfield
   }
 }
 
-html[class*='theme-new-'] .toolbar-searchfield-wrapper.has-categories.has-go-button .go-button {
-  height: 38px;
+html[class*='theme-new-'] .toolbar-searchfield-wrapper.has-categories.has-go-button {
+  .go-button {
+    height: 38px;
+  }
+
+  .searchfield {
+    height: 40px;
+    margin-top: -1px;
+  }
 }
 
 html[dir='rtl'] {
