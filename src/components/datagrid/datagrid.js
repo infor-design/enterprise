@@ -7084,19 +7084,21 @@ Datagrid.prototype = {
         e.preventDefault(); // stop nested clicks from propagating
         e.stopPropagation();
       }
-
-      /**
-      * Fires after a row is clicked.
-      * @event click
-      * @memberof Datagrid
-      * @property {object} event The jquery event object
-      * @property {object} args Additional arguments
-      * @property {number} args.row The current row height
-      * @property {number} args.cell The columns object
-      * @property {object} args.item The current sort column.
-      * @property {object} args.originalEvent The original event object.
-      */
-      self.triggerRowEvent('click', e, true);
+      
+      if (!self.settings.dblClickApply) {
+        /**
+        * Fires after a row is clicked.
+        * @event click
+        * @memberof Datagrid
+        * @property {object} event The jquery event object
+        * @property {object} args Additional arguments
+        * @property {number} args.row The current row height
+        * @property {number} args.cell The columns object
+        * @property {object} args.item The current sort column.
+        * @property {object} args.originalEvent The original event object.
+        */
+        self.triggerRowEvent('click', e, true);
+      }
       self.setActiveCell(td);
 
       // Dont Expand rows or make cell editable when clicking expand button
