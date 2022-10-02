@@ -997,6 +997,11 @@ Toolbar.prototype = {
       buttonsetElem.style.width = addPx(targetButtonsetWidth + 2);
       titleElem.style.width = addPx(targetTitleWidth - 2);
 
+      if (this.element.is(':not(:hidden)')) {
+        this.adjustMenuItemVisibility();
+        this.toggleMoreMenu(buttonsetElem.offsetWidth < buttonsetElem.scrollWidth);
+      }
+
       // Recheck if title is overflowed to ellipsis
       if (titleElem.textContent &&
         targetTitleWidth < stringUtils.textWidth(titleElem.textContent.trim())) {
@@ -1402,19 +1407,19 @@ Toolbar.prototype = {
 
   /**
    * Determines whether or not the "more actions" button should be displayed.
+   * @param {boolean} buttonsetOverflow Determine if buttonset is overflowing.
    * @private
    * @returns {undefined} whether or not the "more actions" button should be displayed.
    */
-  toggleMoreMenu() {
+  toggleMoreMenu(buttonsetOverflow = false) {
     if (this.moreButtonIsDisabled()) {
       return;
     }
-
     const overflowItems = this.moreMenu.children('li:not(.separator)');
     const hiddenOverflowItems = overflowItems.not('.hidden');
 
     let method = 'removeClass';
-    if (hiddenOverflowItems.length > 0) {
+    if (hiddenOverflowItems.length > 0 || buttonsetOverflow) {
       method = 'addClass';
     }
 
