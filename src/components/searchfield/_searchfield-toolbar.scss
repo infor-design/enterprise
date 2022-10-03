@@ -1113,9 +1113,6 @@ html[dir='rtl'] {
 
     .searchfield {
       width: auto;
-      border: 1px solid $searchfield-toolbar-border-color;
-      height: 40px;
-      margin-top: -1px;
     }
 
     button.close:not(.is-empty) {
@@ -1153,8 +1150,8 @@ html[class*='theme-new-'] .toolbar-searchfield-wrapper.has-categories.has-go-but
   }
 
   .searchfield {
-    height: 40px;
-    margin-top: -1px;
+    border: none;
+    border-left: 1px solid $searchfield-toolbar-border-color;
   }
 }
 
