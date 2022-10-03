@@ -9024,12 +9024,10 @@ Datagrid.prototype = {
       if (!this.settings.disableRowDeselection) {
         this.unselectRow(rowIndex);
       }
+    } else if (!this.settings.dblClickApply) {
+      this.selectRow(rowIndex);
     } else {
-      if (this.settings.selectable === 'multiple') {
-        this.selectRow(rowIndex);
-      } else {
-        this.selectRow(rowIndex, false, true);
-      }
+      this.selectRow(rowIndex, false, true);
     }
 
     if (this.settings.dblClickApply && forceSelect) {
