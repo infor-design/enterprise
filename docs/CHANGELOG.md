@@ -22,6 +22,7 @@
 - `[Editor]` Fixed a bug in editor where blockquote is not continued in the next line. ([#6794](https://github.com/infor-design/enterprise/issues/6794))
 - `[Editor]` Fixed a bug in editor where breaking space doesn't render dirty indicator properly. ([NG#1363](https://github.com/infor-design/enterprise-ng/issues/1363))
 - `[Modal]` Fixed a bug where suppress key setting is not working. ([#6793](https://github.com/infor-design/enterprise/issues/6793))
+- `[Searchfield]` Visual fixes on go button in searchfield toolbar. ([#6686](https://github.com/infor-design/enterprise/issues/6686))
 - `[Textarea]` Fixed a bug in textarea where validation breaks after enabling/disabling. ([#6773](https://github.com/infor-design/enterprise/issues/6773))
 - `[Typography]` Updated text link color in dark theme. ([#6807](https://github.com/infor-design/enterprise/issues/6807))
 
