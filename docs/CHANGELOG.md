@@ -42,6 +42,11 @@
 - `[Trackdirty]` Added optional chaining for safety check of trackdirty element. ([#6696](https://github.com/infor-design/enterprise/issues/6696))
 - `[WeekView]` Added Day View and Week View Shading. ([#6568](https://github.com/infor-design/enterprise/issues/6568))
 
+## v4.67.1 Fixes
+
+`[Datagrid]` Fixed a bug in datagrid where dropdown filter does not render correctly. ([#6834](https://github.com/infor-design/enterprise/issues/6834))
+- `[Datagrid]` Added a setting `ariaDescribedBy` in the column to override `aria-describedby` value of the cells. ([#6530](https://github.com/infor-design/enterprise/issues/6530))
+
 (39 Issues Solved This Release, Backlog Enterprise 250, Backlog Ng 49, 1104 Functional Tests, 1342 e2e Tests, 512 Puppeteer Tests)
 
 ## v4.66.0
