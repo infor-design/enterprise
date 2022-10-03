@@ -7143,7 +7143,7 @@ Datagrid.prototype = {
         self.selectRowsBetweenIndexes([self.lastSelectedRow, target.closest('tr').attr('aria-rowindex') - 1]);
         e.preventDefault();
       } else if (canSelect && self.settings.dblClickApply) {
-        const forceSelect = e.type === 'dblclick' ? true : false;
+        const forceSelect = e.type === 'dblclick';
         self.toggleRowSelection(target.closest('tr'), forceSelect);
         if (e.type !== 'dblclick') {
           self.element.triggerHandler('ischanged');
