@@ -726,8 +726,13 @@ Lookup.prototype = {
     }
 
     if (this.settings.options) {
-      const gridEvent = this.settings.dblClickApply ? 'dblclick.lookup' : 'selected.lookup';
-      lookupGrid.on(gridEvent, (e, selectedRows, op, rowData) => {
+      if (this.settings.dblClickApply && this.settings.options.selectable === 'single') {
+        lookupGrid.on('ischanged.lookup', () => {
+          this.isChanged = true;
+        });
+      }
+
+      lookupGrid.on('selected.lookup', (e, selectedRows, op, rowData) => {
         if (self.settings.options.source && self.settings.options.selectable === 'multiple') {
           self.element.trigger('selected', [selectedRows, op, rowData, self]);
           return;
