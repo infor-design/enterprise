@@ -51,6 +51,7 @@ describe('Datagrid Settings', () => { //eslint-disable-line
         expandRowAcrossAllCells: true
       },
       dataset: data,
+      dblClickApply: false,
       columnReorder: false,
       saveColumns: false,
       saveUserSettings: {},
