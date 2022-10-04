@@ -5567,6 +5567,7 @@ Datagrid.prototype = {
       selector.str = `${selector.header}, ${selector.td}, ${selector.icons}`;
     }
 
+    self.currentTooltipContainer = null;
     // Handle tooltip to show
     const handleShow = (elem, delay) => {
       delay = typeof delay === 'undefined' ? defaultDelay : delay;
@@ -5579,6 +5580,7 @@ Datagrid.prototype = {
         const tooltip = $(elem).data('gridtooltip') || self.cacheTooltip(elem);
         const containerEl = isHeaderColumn ? elem.parentNode : isHeaderIcon ? elem.parentNode : elem;
         const width = self.getOuterWidth(containerEl);
+        self.currentTooltipContainer = containerEl;
         if (tooltip && (tooltip.forced || (tooltip.textwidth > (width - 35))) && !isPopup) {
           self.showTooltip(tooltip);
         }
@@ -5590,6 +5592,13 @@ Datagrid.prototype = {
       delay = typeof delay === 'undefined' ? defaultDelay : delay;
       clearTimeout(tooltipTimer);
       setTimeout(() => {
+        const isHeaderColumn = DOM.hasClass(elem, 'datagrid-column-wrapper');
+        const isHeaderIcon = DOM.hasClass(elem, 'datagrid-header-icon');
+        const containerEl = isHeaderColumn ? elem.parentNode : isHeaderIcon ? elem.parentNode : elem;
+        if (self.currentTooltipContainer !== null && $(self.currentTooltipContainer).is(containerEl)) {
+          return;
+        }
+
         self.hideTooltip();
         // Clear cache for header filter, so it can use always current selected
         if (DOM.hasClass(elem.parentNode, 'datagrid-filter-wrapper')) {
