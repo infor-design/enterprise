@@ -7084,7 +7084,7 @@ Datagrid.prototype = {
         e.preventDefault(); // stop nested clicks from propagating
         e.stopPropagation();
       }
-      
+
       if (!self.settings.dblClickApply) {
         /**
         * Fires after a row is clicked.
@@ -7791,7 +7791,7 @@ Datagrid.prototype = {
 
   /**
    * Get or Set the Row Height.
-   * @param  {string} height The row height to use, can be 'extra small', 'small, 'normal' or 'large'
+   * @param {string} height The row height to use, can be 'extra small', 'small, 'normal' or 'large'
    * @Returns {string} The current row height
    */
   rowHeight(height) {
@@ -8995,7 +8995,8 @@ Datagrid.prototype = {
 
   /**
   * Toggle the current selection state from on to off.
-  * @param  {number} idx The row to select/unselect
+  * @param  {number} idx The row to select/unselect.
+  * @param {boolean} forceSelect forcing the cell to do a double click.
   * @returns {void}
   */
   toggleRowSelection(idx, forceSelect) {
