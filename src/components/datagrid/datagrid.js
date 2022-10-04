@@ -5592,13 +5592,6 @@ Datagrid.prototype = {
       delay = typeof delay === 'undefined' ? defaultDelay : delay;
       clearTimeout(tooltipTimer);
       setTimeout(() => {
-        const isHeaderColumn = DOM.hasClass(elem, 'datagrid-column-wrapper');
-        const isHeaderIcon = DOM.hasClass(elem, 'datagrid-header-icon');
-        const containerEl = isHeaderColumn ? elem.parentNode : isHeaderIcon ? elem.parentNode : elem;
-        if (self.currentTooltipContainer !== null && $(self.currentTooltipContainer).is(containerEl)) {
-          return;
-        }
-
         self.hideTooltip();
         // Clear cache for header filter, so it can use always current selected
         if (DOM.hasClass(elem.parentNode, 'datagrid-filter-wrapper')) {
