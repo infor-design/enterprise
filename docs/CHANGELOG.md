@@ -27,6 +27,8 @@
 - `[Textarea]` Fixed a bug in textarea where validation breaks after enabling/disabling. ([#6773](https://github.com/infor-design/enterprise/issues/6773))
 - `[Typography]` Updated text link color in dark theme. ([#6807](https://github.com/infor-design/enterprise/issues/6807))
 
+(23 Issues Solved This Release, Backlog Enterprise 268, Backlog Ng 52, 1104 Functional Tests, 1342 e2e Tests, 517 Puppeteer Tests)
+
 ## v4.67.0
 
 ## v4.67.0 Important Notes
@@ -71,7 +73,7 @@
 - `[Trackdirty]` Added optional chaining for safety check of trackdirty element. ([#6696](https://github.com/infor-design/enterprise/issues/6696))
 - `[WeekView]` Added Day View and Week View Shading. ([#6568](https://github.com/infor-design/enterprise/issues/6568))
 
-(23 Issues Solved This Release, Backlog Enterprise 268, Backlog Ng 52, 1104 Functional Tests, 1342 e2e Tests, 517 Puppeteer Tests)
+(30 Issues Solved This Release, Backlog Enterprise 252, Backlog Ng 49, 1104 Functional Tests, 1342 e2e Tests, 506 Puppeteer Tests)
 
 ## v4.66.0
 
