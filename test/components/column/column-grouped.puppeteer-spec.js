@@ -35,4 +35,49 @@ describe('Column Grouped Puppeteer Tests', () => {
       expect(legendTabIndex).toEqual([-1, -1, -1, -1, -1, -1]); // These are the values of tabindex of all the legends.
     });
   });
+
+  describe('Ability to make a combined column chart and line chart tests', () => {
+    const url = 'http://localhost:4000/components/column-grouped/example-column-grouped-with-line-combined';
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('should run visual test', async () => {
+      await page.waitForSelector('.dot');
+      await page.waitForSelector('.automation-column-line-dot-2');
+      await page.waitForSelector('.automation-column-line');
+      const image = await page.screenshot(); 
+      const config = getConfig('line-chart'); 
+      expect(image).toMatchImageSnapshot(config); 
+    });
+
+    it('should show tooltip when hovered', async () => {
+      await page.waitForSelector('.dot');
+      await page.hover('.dot');
+    });
+  });
+  
+  describe('Ability to make a combined column chart and line chart tests', () => {
+    const url = 'http://localhost:4000/components/column-grouped/example-column-grouped-with-line-combined';
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('should run visual test', async () => {
+      await page.waitForSelector('.dot');
+      await page.waitForSelector('.automation-column-line-dot-2');
+      await page.waitForSelector('.automation-column-line');
+      const image = await page.screenshot(); 
+      const config = getConfig('line-chart'); 
+      expect(image).toMatchImageSnapshot(config); 
+    });
+
+    it('should show tooltip when hovered', async () => {
+      await page.waitForSelector('.dot');
+      await page.hover('.dot');
+    });
+  });
+
 });
