@@ -1,4 +1,4 @@
-const {getConfig} = require('../../helpers/e2e-utils.js');
+const { getConfig } = require('../../helpers/e2e-utils.js');
 
 describe('Column Grouped Puppeteer Tests', () => {
   describe('Column Grouped selection disable tests', () => {
