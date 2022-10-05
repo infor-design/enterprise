@@ -1,4 +1,4 @@
-const getConfig = require('../../helpers/e2e-utils.js');
+const {getConfig} = require('../../helpers/e2e-utils.js');
 
 describe('Column Grouped Puppeteer Tests', () => {
   describe('Column Grouped selection disable tests', () => {
@@ -46,7 +46,8 @@ describe('Column Grouped Puppeteer Tests', () => {
     });
 
     it('should run visual test', async () => {
-      await page.waitForSelector('.dot');
+      await page.waitForSelector('#column-line-id-dot-6');
+      await page.waitForTimeout(350);
       const image = await page.screenshot(); 
       const config = getConfig('line-chart'); 
       expect(image).toMatchImageSnapshot(config); 
