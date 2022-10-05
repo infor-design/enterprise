@@ -48,16 +48,6 @@ git config --global credential.helper wincred
 
 - Check that you have both `JENKINS_JOB_TOKEN` and `JENKINS_API_TOKEN` exported
 
-## Make sure you have set up tools for AWS CDN Publish (only for "final" releases)
-
-- Install AWS for testing and configuring <http://docs.aws.amazon.com/cli/latest/userguide/installing.html>
-- Once installed, configure AWS CLI
-    1. Run `aws configure --profile sohoxi`
-    2. Fill in the `key` and `secret`
-    3. Leave "region" and "output" blank or `[none]`
-
-> See the [AWS instructions](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html) for troubleshooting
-
 ## For documentation (only for "final" releases)
 
 - Make sure you setup your `DOCS_API_KEY` key
@@ -145,3 +135,13 @@ It's possible to publish docs locally but this as done as part of the `npm relea
 1. `npm install && npm run build`
 1. `node ./scripts/deploy-documentation.js --site staging`
 1. `node ./scripts/deploy-documentation.js --site prod`
+
+### Optional Dependencies
+
+Some of the Dependencies are optional and only used for tests or for developers. If you want a streamlined node_modules with only things needed to build and deploy the server to the static sites you can use:
+
+```shell
+npm ci --no-optional
+```
+
+This will reduce the node_modules size by about 3/4.

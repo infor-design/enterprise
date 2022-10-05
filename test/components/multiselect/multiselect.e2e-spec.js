@@ -1,11 +1,8 @@
-const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
 const utils = requireHelper('e2e-utils');
 const config = requireHelper('e2e-config');
 requireHelper('rejection');
 
 const axePageObjects = requireHelper('axe-page-objects');
-
-jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 const clickOnMultiselect = async () => {
   const multiselectEl = await element.all(by.css('div.dropdown')).first();

@@ -1,9 +1,6 @@
-const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
 const utils = requireHelper('e2e-utils');
 const config = requireHelper('e2e-config');
 requireHelper('rejection');
-
-jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 const clickTabTest = async (index) => {
   const tabElTrigger = await element.all(by.className('tab')).get(index);
@@ -557,7 +554,7 @@ describe('Tabs nested tests', () => {
     browser.executeScript(removeScript);
 
     // Check that Tab #4 no longer exists
-    expect(await element(by.id('tab4')).isDisplayed()).toBe(false);
+    expect(await element(by.id('tab4')).isPresent()).toBe(false);
   });
 });
 

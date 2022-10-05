@@ -1,0 +1,34 @@
+<div class="row">
+  <div class="twelve columns">
+    <div class="field">
+      <button id="popupmenu-trigger" class="btn-menu hide-focus">
+        <span>Selectable Menu</span>
+        <svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-dropdown">
+          <use href="#icon-dropdown"></use>
+        </svg>
+      </button>
+      <ul class="popupmenu is-multiselectable">
+        <li><a href="#">Menu Option #1</a></li>
+        <li><a href="#">Menu Option #2</a></li>
+        <li><a href="#">Menu Option #3</a></li>
+        <li class="is-checked"><a href="#">Sub Option #4</a></li>
+        <li><a href="#">Menu Option #5</a></li>
+        <li><a href="#">Menu Option #6</a></li>
+      </ul>
+    </div>
+    <button class="btn-secondary" type="button" id="btn-selected">Get Selected</button>
+    <br><br>
+    <p id="popup-display">Popupmenu # of Selected: 0</p>
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', () => {
+    $('#btn-selected').on('click', () => {
+      var popupmenu = $('#popupmenu-trigger').data('popupmenu');
+      console.log(`Popupmenu Selected Objects: ${popupmenu.getSelected()}`);
+      console.log(`Popupmenu # of Selected: ${popupmenu.getSelected().length}`);
+      $('#popup-display').text(`Popupmenu # of Selected: ${popupmenu.getSelected().length}`);
+    });
+  });
+</script>

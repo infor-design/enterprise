@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 const AxeBuilder = require('axe-webdriverjs');
 const rules = require('./default-axe-options.js');
 

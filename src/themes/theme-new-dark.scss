@@ -57,7 +57,7 @@ $signin-title-color: $ids-color-palette-slate-10;
 // New Text Colors
 $font-color-default: $ids-color-palette-white;
 $font-color-descriptive: $ids-color-palette-slate-30;
-$font-color-hyperlink: $ids-color-brand-primary-base;
+$font-color-hyperlink: $ids-color-palette-azure-60;
 $font-color-muted: $ids-color-palette-slate-40;
 $font-color-alert: $ids-color-status-danger;
 
@@ -71,6 +71,19 @@ $hyperlink-hover-color: $ids-color-brand-primary-base;
 // Rules
 $hr-top-color: $ids-color-palette-slate-90;
 $hr-bottom-color: transparent;
+
+// Buttons
+$button-color-primary-initial-background: $ids-color-palette-slate-60;
+$button-color-primary-disabled-background: $ids-color-palette-slate-80;
+$button-color-primary-disabled-border: $ids-color-palette-slate-80;
+$button-color-primary-hover-background: $ids-color-palette-slate-80;
+$button-color-primary-active-background: $ids-color-palette-slate-60;
+$btn-hyperlink-color: $ids-color-palette-slate-50;
+$btn-hyperlink-hover-color: $ids-color-palette-slate-40;
+
+// Button Ripple
+$secondary-btn-ripple-color: $ids-color-palette-slate-60;
+$tertiary-btn-ripple-color: $ids-color-palette-slate-40;
 
 // Circle Pager
 $circlepager-border-color: $ids-color-palette-slate-40;
@@ -130,7 +143,7 @@ $badge-good-hover-icon-color: $ids-color-palette-slate-60;
 $badge-info-color: $ids-color-palette-white;
 $badge-info-icon-color: $ids-color-palette-slate-30;
 $badge-info-hover-icon-color: $ids-color-palette-white;
-$badge-info-bg-color: $ids-color-brand-primary-base;
+$badge-info-bg-color: $ids-color-palette-azure-60;
 $badge-neutral-icon-color: $ids-color-palette-slate-30;
 $badge-neutral-hover-icon-color: $ids-color-palette-white;
 $badge-error-bg-color: $ids-color-palette-ruby-60;

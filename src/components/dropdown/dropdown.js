@@ -2038,6 +2038,36 @@ Dropdown.prototype = {
 
     this.position();
 
+    // It adjust the position of datagrid filter dropdown
+    // if the element goes out of the datagrid's container
+    if (this.list.hasClass('datagrid-filter-dropdown')) {
+      const gridContainerPos = document.querySelector('.datagrid-container').getBoundingClientRect();
+      const gridFilterDropdownPos = document.querySelector('.datagrid-filter-dropdown').getBoundingClientRect();
+      const pageContainerPos = document.querySelector('[role="main"]').getBoundingClientRect().right;
+      const adjustedPosition = pageContainerPos - gridContainerPos.right;
+      const elementDropdown = document.querySelector('.datagrid-filter-dropdown').getBoundingClientRect();
+      let shouldAdjust = false;
+
+      // Check Left in RTL
+      if (Locale.isRTL() && elementDropdown.left + 20 < 0) {
+        shouldAdjust = true;
+      }
+
+      // Check Right
+      if (elementDropdown.right + 20 > (window.innerWidth || document.documentElement.clientWidth)) {
+        shouldAdjust = true;
+      }
+
+      if (gridContainerPos.right < gridFilterDropdownPos.right && shouldAdjust) {
+        this.list[0].style.right = `${adjustedPosition}px`;
+        this.list[0].style.left = '';
+      }
+
+      if (Locale.isRTL() && gridFilterDropdownPos.left < 0) {
+        this.list[0].style.left = `${gridContainerPos.left}px`;
+      }
+    }
+
     if (this.settings.virtualScroll) {
       let selectedIndex = -1;
       let selectedElem = null;

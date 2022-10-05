@@ -335,7 +335,7 @@ Editor.prototype = {
     const currentElement = this.getCurrentElement();
     currentElement.on('keyup.editor', (e) => {
       let node = this.getSelectionStart();
-      let tagName;
+      const tagName = node.tagName.toLowerCase();
 
       if (node && node.getAttribute('data-editor') && node.children.length === 0) {
         document.execCommand('formatBlock', false, 'p');
@@ -343,7 +343,10 @@ Editor.prototype = {
 
       if (e.which === 13) {
         node = this.getSelectionStart();
-        tagName = node.tagName.toLowerCase();
+
+        if (tagName === 'blockquote') {
+          return;
+        }
 
         if (tagName !== 'li' && !this.isListItemChild(node)) {
           if (!e.shiftKey) {
@@ -1283,12 +1286,14 @@ Editor.prototype = {
           } else {
             self.createLink($(`[name="em-url-${self.id}"]`, this));
           }
-        } else {
+        } else if (self.settings.attributes) {
           if (self.settings.attributes.length > 1) { // eslint-disable-line
             self.insertImage($(`[data-automation-id="${self.settings.attributes[self.settings.attributes.length - 1].value}-editor-modal-input0"`).val());
           } else {
             self.insertImage($(`#${self.settings.attributes[0].value}-editor-modal-input0`).val());
           }
+        } else {
+          self.insertImage($('input[id*="image-editor"]').val());
         }
       });
 
@@ -1807,6 +1812,9 @@ Editor.prototype = {
           pastedData = e.originalEvent.clipboardData.getData('text/plain');
         }
         if ((typeof types === 'object' && types[0] && types[0] === 'text/plain') && !types[1]) {
+          pastedData = e.originalEvent.clipboardData.getData('text/plain');
+        }
+        if (types instanceof Array && types.indexOf('text/plain') > -1 && types.indexOf('text/html') < 0) { // For PDF Windows Reader, no text/html in types found.
           pastedData = e.originalEvent.clipboardData.getData('text/plain');
         }
       } else {
@@ -2699,6 +2707,10 @@ Editor.prototype = {
       let target = item;
       if (target !== undefined && !(target instanceof $) && target.element) {
         target = $(item.element);
+      }
+
+      if (!target.is('a')) {
+        return;
       }
 
       // Use the value to set the color

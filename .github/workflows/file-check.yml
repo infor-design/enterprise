@@ -1,0 +1,64 @@
+# Checks for existance of package.json and package-lock.json files in the PR.
+
+name: File check
+
+on:
+  pull_request:
+    branches:
+      - "*"
+      - "*/*"
+      - "**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Test changed-files
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v29.0.2
+
+      - name: Get specific changed files
+        id: changed-files-specific
+        uses: tj-actions/changed-files@v29.0.2
+        with:
+          files: |
+            package.json
+            package-lock.json
+
+      - name: Run step if any of the listed files above change
+        if: steps.changed-files-specific.outputs.any_changed == 'true'
+        run: |
+          contains() {
+            local list="$1"
+            local item="$2"
+            if [[ $list =~ (^|[[:space:]])"$item"($|[[:space:]]) ]] ; then
+              result=0
+            else
+              result=1
+            fi
+            return $result
+          }
+
+          all_changed_and_modified_files="${{steps.changed-files.outputs.all_changed_and_modified_files}}"
+          total=$(echo $all_changed_and_modified_files | wc -w)
+
+          if [ "$total" -eq 1 ] || [ "$total" -gt 2 ]; then
+            echo "changes to package.json and package-lock.json should be commited together as a single commit"
+            exit 1
+          fi
+
+          if [ "$total" -eq 2 ]; then
+            if (`contains "$all_changed_and_modified_files" "package.json"` && `contains "$all_changed_and_modified_files" "package-lock.json"`)
+            then
+              exit 0
+            else
+              echo "changes to package.json or package-lock.json should be commited together as a single commit"
+              exit 1
+            fi
+          fi
+        shell: bash

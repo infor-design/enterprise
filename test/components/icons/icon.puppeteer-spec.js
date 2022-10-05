@@ -29,5 +29,27 @@ describe('Icons Puppeteer Tests', () => {
       const config = getConfig('icon-mobile');
       expect(image).toMatchImageSnapshot(config);
     });
+
+    it('should have new ids identity for interaction icon', async () => {
+      // https://github.com/infor-design/enterprise/issues/6666
+      const launchIcon = await page.$eval('div.demo-svg[title=interaction]', element => element.innerHTML);
+      expect(launchIcon).toContain('<use href="#icon-interaction"></use>');
+
+      const icon = await page.$('div.demo-svg[title=interaction]');
+      const image = await icon.screenshot();
+      const config = getConfig('icon-interaction');
+      expect(image).toMatchImageSnapshot(config);
+    });
+
+    it('should have new ids identity for interaction-reply icon', async () => {
+      // https://github.com/infor-design/enterprise/issues/6666
+      const launchIcon = await page.$eval('div.demo-svg[title=interaction-reply]', element => element.innerHTML);
+      expect(launchIcon).toContain('<use href="#icon-interaction-reply"></use>');
+
+      const icon = await page.$('div.demo-svg[title=interaction-reply]');
+      const image = await icon.screenshot();
+      const config = getConfig('icon-interaction-reply');
+      expect(image).toMatchImageSnapshot(config);
+    });
   });
 });

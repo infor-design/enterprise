@@ -72,12 +72,6 @@ This example shows a nav element for the menu that flies out. This should be top
       </div>
 
     </div>
-
-    <div class="branding">
-      <svg class="icon" viewBox="0 0 34 34" focusable="false" aria-hidden="true" role="presentation">
-        <use href="#icon-logo"></use>
-      </svg>
-    </div>
   </nav>
 ```
 
@@ -104,6 +98,17 @@ In another place (usually the header toolbar) you should have a button with the 
   <div class="buttonset">
   </div
 </div>
+```
+
+It is also possible to include a logo for customer branding in the app menu this can be included at the bottom.
+
+```html
+  <div class="branding">
+    <svg class="icon" viewBox="0 0 34 34" focusable="false" aria-hidden="true" role="presentation">
+      <use href="#customer-logo"></use>
+    </svg>
+  </div>
+</nav>
 ```
 
 You can do resizing via activating the `resizable` settings. It will wrapped the application menu to a parent `resize-app-menu-container` class, and the page container/s including the tab panel container to a `resize-page-container` class to have a proper structure for flex. You can also use to save the last position of the application menu using `savePosition` settings.
@@ -188,13 +193,13 @@ You can do resizing via activating the `resizable` settings. It will wrapped the
         </div>
       </div>
     </div>
-  
+
     <div class="application-menu-content">
       <div class="searchfield-wrapper">
         <label class="audible" for="application-menu-searchfield">Search</label>
         <input id="application-menu-searchfield" class="searchfield" data-options='{ "clearable": true }' placeholder="Look up menu items"/>
       </div>
-  
+
       <div class="accordion panel inverse" data-options="{'allowOnePane': false, 'expanderDisplay': 'plusminus'}" >
         <div class="accordion-header">
           <a href="#"><span>Home</span></a>
@@ -293,7 +298,7 @@ You can do resizing via activating the `resizable` settings. It will wrapped the
         </div>
       </div>
     </div>
-  
+
     <div class="application-menu-footer">
       <div class="application-menu-toolbar">
         <div class="flex-toolbar">
@@ -326,9 +331,9 @@ You can do resizing via activating the `resizable` settings. It will wrapped the
         </div>
       </div>
     </div>
-  
+
   </nav>
-  
+
 ```
 
 ## Behavior Guidelines

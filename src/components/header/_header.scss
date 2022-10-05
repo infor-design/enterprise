@@ -135,8 +135,6 @@ $subheader-height: 60px;
     &.searchfield-active {
       .toolbar-searchfield-wrapper.active {
         .searchfield {
-          border: 0;
-
           @media (max-width: ($breakpoint-phone-to-tablet - 1)) {
             color: $header-flex-toolbar-input-searchfield-color;
           }
@@ -308,9 +306,7 @@ $subheader-height: 60px;
     .toolbar-searchfield-wrapper {
       &.is-open {
         .searchfield {
-          border-bottom: 0;
-          border-right: 0;
-          border-top: 0;
+          border-color: $header-searchfield-input-border-color;
         }
 
         .collapse-button {

@@ -1,10 +1,7 @@
 /* eslint-disable no-unused-vars */
-const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
 const config = requireHelper('e2e-config');
 const utils = requireHelper('e2e-utils');
 requireHelper('rejection');
-
-jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Datepicker example-index tests', () => {
   beforeEach(async () => {
@@ -84,20 +81,6 @@ describe('Datepicker example-index tests', () => {
     await element(by.css('.btn-icon.prev')).click();
 
     expect(await element.all(by.css('#monthview-popup td.is-selected')).count()).toEqual(1);
-  });
-
-  it('Should advance on +/-', async () => {
-    await element(by.id('date-field-normal')).sendKeys('7/4/2020');
-
-    expect(await element(by.id('date-field-normal')).getAttribute('value')).toEqual('7/4/2020');
-
-    await element(by.id('date-field-normal')).sendKeys(protractor.Key.ADD);
-
-    expect(await element(by.id('date-field-normal')).getAttribute('value')).toEqual('7/5/2020');
-
-    await element(by.id('date-field-normal')).sendKeys(protractor.Key.SUBTRACT);
-
-    expect(await element(by.id('date-field-normal')).getAttribute('value')).toEqual('7/4/2020');
   });
 
   it('Should be able to set id/automation id', async () => {
@@ -2180,3 +2163,28 @@ describe('Datepicker translation tests', () => {
     expect(await element(by.css('.monthview-table thead')).getText()).toBe('一 二 三 四 五 六 日');
   });
 });
+
+describe('Datepicker Increment/Decrement tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/datepicker/test-datepicker-today-increment-key?theme=classic&layout=nofrills');
+  });
+
+  it('Should not have errors', async () => {
+    await utils.checkForErrors();
+  });
+
+  it('Should advance on +/-', async () => {
+    await element(by.id('date-field-normal')).sendKeys('7/4/2020');
+
+    expect(await element(by.id('date-field-normal')).getAttribute('value')).toEqual('7/4/2020');
+
+    await element(by.id('date-field-normal')).sendKeys(protractor.Key.ADD);
+
+    expect(await element(by.id('date-field-normal')).getAttribute('value')).toEqual('7/5/2020');
+
+    await element(by.id('date-field-normal')).sendKeys(protractor.Key.SUBTRACT);
+
+    expect(await element(by.id('date-field-normal')).getAttribute('value')).toEqual('7/4/2020');
+  });
+});
+

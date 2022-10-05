@@ -63,6 +63,11 @@ $week-view-cell-height: 25px;
       height: 44px;
       position: relative;
 
+      &.is-disabled {
+        background-color: $calendar-disabled-bg-color;
+        opacity: 0.5;
+      }
+
       .calendar-event {
         height: 20px;
         top: 1px;
@@ -172,6 +177,11 @@ $week-view-cell-height: 25px;
     min-width: 50px;
     padding: 0;
     position: relative;
+
+    &.is-disabled {
+      background-color: $calendar-disabled-bg-color;
+      opacity: 0.5;
+    }
   }
 
   // Moving time marker

@@ -521,8 +521,8 @@ MonthView.prototype = {
           const lday = ldate.getDate();
           const lyear = ldate.getFullYear();
 
-          if (month === lmonth && year === lyear) {
-            const td = self.days.find(`td[data-key=${stringUtils.padDate(lyear, lmonth, lday)}]`);
+          const td = self.days.find(`td[data-key=${stringUtils.padDate(lyear, lmonth, lday)}]`);
+          if (td.length) {
             self.setLegendColor(td, lyear, lmonth, lday);
           }
         });

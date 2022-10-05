@@ -90,6 +90,8 @@ const COMPONENT_NAME = 'datepicker';
  * @param {string} [settings.attributes] Add extra attributes like id's to the element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
  * @param {string} [settings.autocompleteAttribute="off"] Allows prevention of built-in browser typeahead by changing/removing an `autocomplete` attribute to the field.
  * @param {boolean} [settings.tabbable=true] If true, causes the Datepicker's trigger icon to be focusable with the keyboard.
+ * @param {boolean} [settings.incrementWithKeyboard=false] If true, enables the ability to increment/decrement the day by using +/- in the keyboard.
+ * @param {boolean} [settings.todayWithKeyboard=false] If true, enables the ability to set the field to todays date with a `t` key press.
 */
 const LEGEND_DEFAULTS = [
   { name: 'Public Holiday', color: 'azure06', dates: [] },
@@ -147,7 +149,9 @@ const DATEPICKER_DEFAULTS = {
   attributes: null,
   autocompleteAttribute: 'off',
   useMask: true,
-  tabbable: true
+  tabbable: true,
+  incrementWithKeyboard: false,
+  todayWithKeyboard: false
 };
 
 function DatePicker(element, settings) {
@@ -424,12 +428,12 @@ DatePicker.prototype = {
       }
 
       // 't' selects today
-      if (key === 84) {
+      if (key === 84 && this.settings.todayWithKeyboard) {
         handled = true;
         this.setToday();
       }
 
-      if (!hasMinusPattern) {
+      if (!hasMinusPattern && this.settings.incrementWithKeyboard) {
         // get input value
         const inputVal = $(e.currentTarget).val();
 
@@ -846,6 +850,13 @@ DatePicker.prototype = {
 
     this.calendar.on('monthrendered', (e, args) => {
       this.element.trigger('monthrendered', args);
+    });
+
+    this.element.trigger('monthrendered', {
+      year: this.calendarAPI.currentYear,
+      month: this.calendarAPI.currentMonth,
+      elem: this.calendar,
+      api: this.calendarAPI
     });
 
     if (s.showTime) {
@@ -1963,6 +1974,8 @@ DatePicker.prototype = {
 
     const currentDate = this.isIslamic ? this.currentDateIslamic : this.currentDate;
 
+    let triggerChange = false;
+
     if (this.isOpen()) {
       if (s.range.useRange) {
         if (!s.range.first || (s.range.first && !s.range.first.date)) {
@@ -1980,6 +1993,7 @@ DatePicker.prototype = {
         } else if (s.range.first && s.range.first.date &&
           (!s.range.second || (s.range.second && !s.range.second.date))) {
           this.setRangeToElem(currentDate, false);
+          triggerChange = true;
         } else if (s.range.first && s.range.first.date &&
           s.range.second && s.range.second.date) {
           this.resetRange({ isData: true });
@@ -1996,6 +2010,10 @@ DatePicker.prototype = {
         const islamicDateText = Locale.formatDate(currentDate, options);
         this.element.val(islamicDateText);
       }
+      triggerChange = true;
+    }
+
+    if (triggerChange) {
       /**
       * Fires after the value in the input is changed by user interaction.
       *

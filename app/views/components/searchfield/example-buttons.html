@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="one-half column">
+    <div class="flex-toolbar">
+      <div class="toolbar-section title">Toolbar</div>
+      <div class="toolbar-section search">
+        <label for="searchfield" class="audible">Search</label>
+        <input id="searchfield" data-init="false" class="searchfield" placeholder="Type a search term"/>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script id="test-script">
+  $('#searchfield').searchfield({
+    clearable: true,
+    source: '{{basepath}}api/states?term=',
+    button: {
+      icon: 'barcode',
+      click: function (e, value) {
+        $('body').toast({
+          title: 'Barcode Button Clicked!',
+          message: 'The searchfield\'s current value is <b>"'+ value +'"</b>.'
+        });
+      }
+    },
+  }).on('cleared', (e) => {
+    $('body').toast({
+      title: 'Clear Button Clicked!',
+      message: 'The searchfield\'s current value is <b>"'+ e.currentTarget.value +'"</b>.'
+    });
+  });
+</script>

@@ -148,6 +148,7 @@ const COMPONENT_NAME = 'datagrid';
  * and do not add any children nodes
  * or if one or more child node got match then add parent node and only matching children nodes
  * @param {string} [settings.attributes] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
+ * @param {boolean} [settings.dblClickApply=false] If true, needs to double click to trigger select row in datagrid.
  * @param {boolean} [settings.allowPasteFromExcel=false] If true will allow data copy/paste from excel
  * @param {string} [settings.fallbackImage='insert-image'] Will set a fall back image if the image formatter cannot load an image.
 */
@@ -244,6 +245,7 @@ const DATAGRID_DEFAULTS = {
   allowChildExpandOnMatchOnly: false,
   allowChildExpandOnMatch: false,
   activeCheckboxSelection: false,
+  dblClickApply: false,
   attributes: null,
   allowPasteFromExcel: false,
   fallbackImage: 'insert-image',
@@ -537,10 +539,11 @@ Datagrid.prototype = {
       self.emptyMessageContainer.hide();
     }
 
-    const recordCount = self.settings.dataset.length - 1;
-    const dataIndex = recordCount;
+    const operationType = location === 'bottom' ? 'last' : 'first';
+    const position = operationType === 'last' ? self.settings.dataset.length - 1 : 0;
+    const dataIndex = self.settings.dataset.length - 1;
 
-    const rowHtml = self.rowHtml(data, recordCount, dataIndex);
+    const rowHtml = self.rowHtml(data, position, dataIndex);
     if (self.settings.groupable) {
       const groups = $('.datagrid-rowgroup-header').find('span:not([class])');
       for (let i = 0; i < groups.length; i++) {
@@ -553,7 +556,6 @@ Datagrid.prototype = {
     }
 
     if (self.settings.paging && !self.settings.groupable) {
-      const operationType = location === 'bottom' ? 'last' : 'first';
       // eslint-disable-next-line max-len
       const newPage = (self.settings.dataset.length - (self.pagerAPI.pageCount() * self.pagerAPI.settings.pagesize)) === 1 ? 1 : 0;
       const newActivePage = (location === 'bottom' ? self.pagerAPI.pageCount() : 1) + newPage;
@@ -564,7 +566,7 @@ Datagrid.prototype = {
         self.pagerAPI.setActivePage(newActivePage, false, operationType);
         self.pagerAPI.triggerPagingEvents(self.pagerAPI.currentPage);
       }
-    } 
+    }
 
     if (!self.settings.paging && !self.settings.groupable) {
       if (location !== 'bottom') {
@@ -580,7 +582,23 @@ Datagrid.prototype = {
       }
     }
 
+    self.refreshIndexes();
     self.afterRender();
+  },
+
+  /**
+   * Refresh the indexes of the rows in datagrid.
+   * @private
+   */
+  refreshIndexes() {
+    this.element.find('tr').removeAttr('aria-rowindex');
+    this.element.find('tr').removeAttr('data-index');
+
+    this.element.find('tbody > tr').each((idx, obj) => {
+      const el = $(obj);
+      el.attr('aria-rowindex', idx + 1);
+      el.attr('data-index', idx);
+    });
   },
 
   /**
@@ -1055,7 +1073,6 @@ Datagrid.prototype = {
   */
   loadData(dataset, pagerInfo) {
     this.settings.dataset = dataset;
-
     if (!pagerInfo) {
       pagerInfo = {};
     }
@@ -1477,6 +1494,8 @@ Datagrid.prototype = {
       cssClass += column.hidden ? ' is-hidden' : '';
       cssClass += column.filterType ? ' is-filterable' : '';
       cssClass += column.textOverflow === 'ellipsis' ? ' text-ellipsis' : '';
+      cssClass += column?.headerIcon ? ' header-icon' : '';
+      cssClass += column?.headerCssClass ? ` ${column.headerCssClass}` : '';
       cssClass += headerAlignmentClass !== '' ? headerAlignmentClass : '';
 
       // Apply css classes
@@ -1487,7 +1506,7 @@ Datagrid.prototype = {
         ids = `id="${id}"`;
       }
 
-      headerRows[container] += `<th scope="col" role="columnheader" ${ids} ${isSelection ? ' aria-checked= "false"' : ''} data-column-id="${column.id}"${column.field ? ` data-field="${column.field}"` : ''}${column.headerTooltip ? ` title="${column.headerTooltip}"` : ''}${column.reorderable === false ? ' data-reorder="false"' : ''}${colGroups ? ` headers="${self.getColumnGroup(j)}"` : ''} data-exportable="${isExportable ? 'yes' : 'no'}"${cssClass}>`;
+      headerRows[container] += `<th scope="col" role="columnheader" ${ids} ${isSelection ? ' aria-checked= "false"' : ''} data-column-id="${column.id}"${column.field ? ` data-field="${column.field}"` : ''}${column.headerTooltip ? ` title="${column.headerTooltip}"` : ''}${column.headerTooltipCssClass ? ` tooltipClass="${column.headerTooltipCssClass}"` : ''}${column.reorderable === false ? ' data-reorder="false"' : ''}${colGroups ? ` headers="${self.getColumnGroup(j)}"` : ''} data-exportable="${isExportable ? 'yes' : 'no'}"${cssClass}>`;
 
       let sortIndicator = '';
       if (isSortable) {
@@ -1498,8 +1517,14 @@ Datagrid.prototype = {
 
       // If header text is center aligned, for proper styling,
       // place the sortIndicator as a child of datagrid-header-text.
+      const svgHeaderIcon = `
+        <svg class="icon datagrid-header-icon" focusable="false" aria-hidden="true" role="presentation" title="${column?.headerIconTooltip}">
+          <use href="#icon-${column.headerIcon}"></use>
+        </svg>
+      `;
       headerRows[container] += `<div class="${isSelection ? 'datagrid-checkbox-wrapper ' : 'datagrid-column-wrapper'}${headerAlignmentClass}">
-      <span class="datagrid-header-text${column.required ? ' required' : ''}">${self.headerText(this.settings.columns[j])}${headerAlignmentClass === ' l-center-text' ? sortIndicator : ''}</span>`;
+      <span class="datagrid-header-text${column.required ? ' required' : ''}">${self.headerText(this.settings.columns[j])}${headerAlignmentClass === ' l-center-text' ? sortIndicator : ''}</span>
+      ${this.settings.columns[j]?.headerIcon ? svgHeaderIcon : ''}`;
 
       if (isSelection) {
         if (self.settings.showSelectAllCheckBox) {
@@ -2274,7 +2299,16 @@ Datagrid.prototype = {
       btnMarkup += render('in-range', 'InRange');
     }
 
-    if (/\b(integer|decimal|date|time|percent)\b/g.test(col.filterType)) {
+    if (/\b(date|time)\b/g.test(col.filterType)) {
+      btnMarkup += `${
+        render('less-than', 'EarlyThan')
+      }${render('less-equals', 'EarlyOrEquals')
+      }${render('greater-than', 'LaterThan')
+      }${render('greater-equals', 'LaterOrEquals')}`;
+      btnMarkup = btnMarkup.replace('{{icon}}', 'less-than');
+    }
+
+    if (/\b(integer|decimal|percent)\b/g.test(col.filterType)) {
       btnMarkup += `${
         render('less-than', 'LessThan')
       }${render('less-equals', 'LessOrEquals')
@@ -3720,7 +3754,7 @@ Datagrid.prototype = {
 
     if (!this.originalDataset) {
       this.originalDataset = this.settings.dataset.slice();
-    } else {
+    } else if (!this.settings.dataset || this.settings.dataset.length > 0) {
       this.settings.dataset = this.originalDataset;
     }
 
@@ -3807,7 +3841,6 @@ Datagrid.prototype = {
         activePage = pagerState.activePage;
       }
     }
-
     self.bodyColGroupHtmlLeft = '<colgroup>';
     self.bodyColGroupHtml = '<colgroup>';
     self.bodyColGroupHtmlRight = '<colgroup>';
@@ -3872,8 +3905,12 @@ Datagrid.prototype = {
     if (this.restoreSortOrder) {
       this.sortDataset();
     }
-
     let rowStatusTooltip = false;
+
+    if (self.originalDataset && (!s.groupable && s.dataset.length > 0)) {
+      s.dataset = self.originalDataset;
+    }
+
     for (let i = 0; i < s.dataset.length; i++) {
       // For better performance dont render out of page
       if (s.paging && !s.source) {
@@ -3932,6 +3969,7 @@ Datagrid.prototype = {
         if (!this.settings.groupable.suppressGroupRow) {
           // Show the grouping row
           const groupHtml = self.rowHtml(s.dataset[i], this.recordCount, i, true);
+
           if (this.hasLeftPane && groupHtml.left) {
             tableHtmlLeft += groupHtml.left;
           }
@@ -4099,6 +4137,7 @@ Datagrid.prototype = {
     if (self.hasRightPane) {
       DOM.html(self.tableBodyRight, tableHtmlRight, '*');
     }
+
     self.setVirtualHeight();
     self.setScrollClass();
     self.setupTooltips(rowStatusTooltip);
@@ -4565,7 +4604,8 @@ Datagrid.prototype = {
       return containerHtml;
     }
 
-    const ariaRowindex = ((dataRowIdx + 1) +
+    const idx = self.settings.treeGrid ? dataRowIdx : actualIndex;
+    const ariaRowindex = ((idx + 1) +
       (self.settings.source && !self.settings.indeterminate ?
         ((activePage - 1) * self.settings.pagesize) : 0));
 
@@ -4816,8 +4856,13 @@ Datagrid.prototype = {
       }
 
       const idProp = this.settings.attributes?.filter(a => a.name === 'id');
-      const ariaDescribedby = `aria-describedby="${idProp?.length === 1 ? `${idProp[0].value}-col-${col.id?.toLowerCase()}` : self.uniqueId(`-header-${j}`)}"`;
+      let ariaDescribedby = `aria-describedby="${idProp?.length === 1 ? `${idProp[0].value}-col-${col.id?.toLowerCase()}` : self.uniqueId(`-header-${j}`)}"`;
       let ariaChecked = '';
+
+      // Overriding the aria-describedby value if there's a setting in the column.
+      if (col?.ariaDescribedBy) {
+        ariaDescribedby = `aria-describedBy=${col.ariaDescribedBy(rowData.id, j)}`;
+      }
 
       // Set aria-checkbox attribute
       if (col.formatter?.toString().indexOf('function Checkbox') === 0) {
@@ -4836,14 +4881,14 @@ Datagrid.prototype = {
       }
 
       containerHtml[container] += `<td role="gridcell" ${ariaReadonly} aria-colindex="${j + 1}"` +
-          ` ${ariaDescribedby
-          }${ariaChecked
-          }${isSelected ? ' aria-selected="true"' : ''
-          }${cssClass ? ` class="${cssClass}"` : ''
-          }${colspan ? ` colspan="${colspan}"` : ''
-          }${col.tooltip && typeof col.tooltip === 'string' ? ` title="${col.tooltip.replace('{{value}}', cellValue)}"` : ''
-          }${self.settings.columnGroups ? `headers = "${self.uniqueId(`-header-${j}`)} ${self.getColumnGroup(j)}"` : ''
-          }${rowspan || ''}>${rowStatus.svg}<div class="datagrid-cell-wrapper">`;
+        ` ${ariaDescribedby
+        }${ariaChecked
+        }${isSelected ? ' aria-selected="true"' : ''
+        }${cssClass ? ` class="${cssClass}"` : ''
+        }${colspan ? ` colspan="${colspan}"` : ''
+        }${col.tooltip && typeof col.tooltip === 'string' ? ` title="${col.tooltip.replace('{{value}}', cellValue)}"` : ''
+        }${self.settings.columnGroups ? `headers = "${self.uniqueId(`-header-${j}`)} ${self.getColumnGroup(j)}"` : ''
+        }${rowspan || ''}>${rowStatus.svg}<div class="datagrid-cell-wrapper">`;
 
       if (col.contentVisible) {
         const canShow = col.contentVisible(dataRowIdx + 1, j, cellValue, col, rowData);
@@ -5270,13 +5315,18 @@ Datagrid.prototype = {
    */
   columnWidth(col, index) {
     if (!this.elemWidth) {
-      this.elemWidth = this.element.outerWidth();
+      if (this.element.parents('.modal').length > 0) {
+        this.elemWidth = this.element.parents('.modal').hasClass('is-visible') === false ? undefined : this.element.outerWidth();
+      } else {
+        this.elemWidth = this.element.outerWidth();
+      }
 
       if (this.elemWidth === 0) { // handle on invisible tab container
         this.elemWidth = this.element.closest('.tab-container').outerWidth();
       }
 
       this.widthSpecified = false;
+      this.widthPixel = false;
     }
     return this.calculateColumnWidth(col, index);
   },
@@ -5294,17 +5344,6 @@ Datagrid.prototype = {
     const visibleColumns = this.visibleColumns(true);
     const lastColumn = (index === this.visibleColumns().length - 1);
     const container = this.getContainer(col.id);
-
-    if (!this.elemWidth) {
-      this.elemWidth = this.element.outerWidth();
-
-      if (this.elemWidth === 0) { // handle on invisible tab container
-        this.elemWidth = this.element.closest('.tab-container').outerWidth();
-      }
-
-      this.widthSpecified = false;
-      this.widthPixel = false;
-    }
 
     // A column element with a value other than 'auto' for the 'width' property
     // sets the width for that column.
@@ -5493,19 +5532,23 @@ Datagrid.prototype = {
 
     const self = this;
     const defaultDelay = 400;
+    const hasHeaderIcon = self.element.find('.datagrid-header-icon').length > 0;
     let tooltipTimer;
 
     // Set selector
     const selector = {
       th: '.datagrid-header th',
       td: '.datagrid-wrapper tbody tr.datagrid-row td[role="gridcell"]:not(.rowstatus-cell)',
-      rowstatus: '.datagrid-wrapper tbody tr.datagrid-row td[role="gridcell"] .icon-rowstatus'
+      rowstatus: '.datagrid-wrapper tbody tr.datagrid-row td[role="gridcell"] .icon-rowstatus',
+      headerIcon: '.datagrid-header th .datagrid-header-icon'
     };
 
     if (this.settings.filterable) {
       selector.headerColumn = `${selector.th} .datagrid-column-wrapper`;
       selector.headerFilter = `${selector.th} .datagrid-filter-wrapper .btn-menu`;
       selector.header = `${selector.headerColumn}, ${selector.headerFilter}`;
+    } else if (hasHeaderIcon) {
+      selector.header = selector.headerIcon;
     } else {
       selector.header = selector.th;
     }
@@ -5532,10 +5575,11 @@ Datagrid.prototype = {
       tooltipTimer = setTimeout(() => {
         const isHeaderColumn = DOM.hasClass(elem, 'datagrid-column-wrapper');
         const isHeaderFilter = DOM.hasClass(elem.parentNode, 'datagrid-filter-wrapper');
+        const isHeaderIcon = DOM.hasClass(elem, 'datagrid-header-icon');
         const isPopup = isHeaderFilter ?
           elem.parentNode.querySelectorAll('.popupmenu.is-open').length > 0 : false;
         const tooltip = $(elem).data('gridtooltip') || self.cacheTooltip(elem);
-        const containerEl = isHeaderColumn ? elem.parentNode : elem;
+        const containerEl = isHeaderColumn ? elem.parentNode : isHeaderIcon ? elem.parentNode : elem;
         const width = self.getOuterWidth(containerEl);
         if (tooltip && (tooltip.forced || (tooltip.textwidth > (width - 35))) && !isPopup) {
           self.showTooltip(tooltip);
@@ -5600,6 +5644,18 @@ Datagrid.prototype = {
         .off('longpress.tableerrortooltip', '.icon')
         .on('longpress.tableerrortooltip', '.icon', function () {
           handleShow(this, 0);
+        });
+    }
+
+    if (this.element.find('.datagrid-header-icon').length > 0) {
+      this.element.find('.datagrid-header-icon')
+        .off('mouseenter.headericon')
+        .on('mouseenter.headericon', function () {
+          handleShow(this);
+        })
+        .off('mouseleave.headericon')
+        .on('mouseleave.headericon', function () {
+          handleHide(this);
         });
     }
   },
@@ -5683,7 +5739,9 @@ Datagrid.prototype = {
       this.updateCellNode(idx, j, this.fieldValue(rowData, col.field), true);
     }
 
-    this.settings.dataset[idx] = utils.extend(true, this.settings.dataset[idx], data);
+    if (!s.treeGrid && s.dataset[idx] !== undefined) {
+      this.settings.dataset[idx] = utils.extend(true, this.settings.dataset[idx], data);
+    }
 
     if (this.settings.rowReorder && this.tableBody.data('arrange')) {
       this.tableBody.data('arrange').updated();
@@ -6807,7 +6865,7 @@ Datagrid.prototype = {
     $('body').on('open.modal.datagrid', (modal) => {
       const modalEl = $(modal.target);
       if (modalEl.find(this.table).length > 0) {
-        if (this.table.width() > modalEl.width() || this.widthSpecified) {
+        if (this.table.width() > modalEl.width() && this.widthSpecified) {
           this.table.width(466);
         }
       }
@@ -6998,16 +7056,17 @@ Datagrid.prototype = {
       });
     }
 
-    this.element.off('click.datagrid, select.datagrid').on('click.datagrid, select.datagrid', 'tbody td', function (e) {
+    const selectEvents = self.settings.dblClickApply ? 'dblclick.datagrid, click.datagrid, select.datagrid' : 'click.datagrid, select.datagrid';
+    this.element.off(selectEvents).on(selectEvents, 'tbody td', function (e) {
       let rowNode = null;
       let dataRowIdx = null;
       const target = $(e.target);
       const td = target.closest('td');
-      const th = td.closest('table').find('thead > tr > th').eq(td.index());
+      const th = td.closest('table').find('thead > tr > th:not([colspan])').eq(td.index());
       const columnId = th.attr('data-column-id');
       const columnSettings = self.settings.columns[self.columnIdxById(columnId)];
 
-      if (e.type === 'select' && !columnSettings.inlineEditor) {
+      if (e.type === 'select' && !columnSettings?.inlineEditor) {
         return;
       }
 
@@ -7026,18 +7085,23 @@ Datagrid.prototype = {
         e.stopPropagation();
       }
 
-      /**
-      * Fires after a row is clicked.
-      * @event click
-      * @memberof Datagrid
-      * @property {object} event The jquery event object
-      * @property {object} args Additional arguments
-      * @property {number} args.row The current row height
-      * @property {number} args.cell The columns object
-      * @property {object} args.item The current sort column.
-      * @property {object} args.originalEvent The original event object.
-      */
-      self.triggerRowEvent('click', e, true);
+      if (!self.settings.dblClickApply) {
+        /**
+        * Fires after a row is clicked.
+        * @event click
+        * @memberof Datagrid
+        * @property {object} event The jquery event object
+        * @property {object} args Additional arguments
+        * @property {number} args.row The current row height
+        * @property {number} args.cell The columns object
+        * @property {object} args.item The current sort column.
+        * @property {object} args.originalEvent The original event object.
+        */
+        self.triggerRowEvent('click', e, true);
+      } else {
+        self.triggerRowEvent(e.type, e, true);
+      }
+
       self.setActiveCell(td);
 
       // Dont Expand rows or make cell editable when clicking expand button
@@ -7078,6 +7142,12 @@ Datagrid.prototype = {
       if (canSelect && (self.settings.selectable === 'multiple' || self.settings.selectable === 'mixed') && e.shiftKey) {
         self.selectRowsBetweenIndexes([self.lastSelectedRow, target.closest('tr').attr('aria-rowindex') - 1]);
         e.preventDefault();
+      } else if (canSelect && self.settings.dblClickApply) {
+        const forceSelect = e.type === 'dblclick';
+        self.toggleRowSelection(target.closest('tr'), forceSelect);
+        if (e.type !== 'dblclick') {
+          self.element.triggerHandler('ischanged');
+        }
       } else if (canSelect) {
         self.toggleRowSelection(target.closest('tr'));
       }
@@ -7187,20 +7257,22 @@ Datagrid.prototype = {
       });
     }
 
-    /**
-    * Fires after a row is double clicked.
-    * @event dblclick
-    * @memberof Datagrid
-    * @property {object} event The jquery event object
-    * @property {object} args Additional arguments
-    * @property {number} args.row The current row height
-    * @property {number} args.cell The columns object
-    * @property {object} args.item The current sort column.
-    * @property {object} args.originalEvent The original event object.
-    */
-    this.element.off('dblclick.datagrid').on('dblclick.datagrid', 'tbody tr', (e) => {
-      self.triggerRowEvent('dblclick', e, true);
-    });
+    if (!this.settings.dblClickApply) {
+      /**
+      * Fires after a row is double clicked.
+      * @event dblclick
+      * @memberof Datagrid
+      * @property {object} event The jquery event object
+      * @property {object} args Additional arguments
+      * @property {number} args.row The current row height
+      * @property {number} args.cell The columns object
+      * @property {object} args.item The current sort column.
+      * @property {object} args.originalEvent The original event object.
+      */
+      this.element.off('dblclick.datagrid').on('dblclick.datagrid', 'tbody tr', (e) => {
+        self.triggerRowEvent('dblclick', e, true);
+      });
+    }
 
     /**
     * Fires after a row has a right click action.
@@ -7719,7 +7791,7 @@ Datagrid.prototype = {
 
   /**
    * Get or Set the Row Height.
-   * @param  {string} height The row height to use, can be 'extra small', 'small, 'normal' or 'large'
+   * @param {string} height The row height to use, can be 'extra small', 'small, 'normal' or 'large'
    * @Returns {string} The current row height
    */
   rowHeight(height) {
@@ -7731,20 +7803,7 @@ Datagrid.prototype = {
       this.settings.rowHeight = height;
     }
 
-    let rowHeightClass = this.settings.rowHeight;
-    if (rowHeightClass === 'short') {
-      rowHeightClass = 'small';
-    }
-    if (rowHeightClass === 'large') {
-      rowHeightClass = 'normal';
-    }
-
-    this.element
-      .add(this.table)
-      .add(this.tableLeft)
-      .add(this.tableRight)
-      .removeClass('extra-small-rowheight small-rowheight short-rowheight medium-rowheight normal-rowheight large-rowheight')
-      .addClass(`${rowHeightClass}-rowheight`);
+    this.setRowHeightClass();
 
     if (this.virtualRange && this.virtualRange.rowHeight) {
       this.virtualRange.rowHeight = (height === 'normal' || height === 'large') ? 40 : (height === 'medium' ? 30 : 25);
@@ -7763,6 +7822,28 @@ Datagrid.prototype = {
     }
 
     return this.settings.rowHeight;
+  },
+
+  /**
+  * Set just the class on the body
+  */
+  setRowHeightClass() {
+    let rowHeightClass = this.settings.rowHeight;
+    if (rowHeightClass === 'short') {
+      rowHeightClass = 'small';
+    }
+    if (rowHeightClass === 'large') {
+      rowHeightClass = 'normal';
+    }
+
+    this.element
+      .add(this.table)
+      .add(this.tableLeft)
+      .add(this.tableRight)
+      .removeClass('extra-small-rowheight small-rowheight short-rowheight medium-rowheight normal-rowheight large-rowheight')
+      .addClass(`${rowHeightClass}-rowheight`);
+
+    this.refreshSelectedRowHeight();
   },
 
   /**
@@ -8261,7 +8342,7 @@ Datagrid.prototype = {
     if (!rowNode.hasClass('is-selected') || isServerSideMultiSelect) {
       let rowData;
 
-      if (s.treeGrid) {
+      if (s.treeGrid && (s.treeDepth && s.treeDepth.length > 0)) {
         const level = parseInt(rowNode.attr('aria-level'), 10);
         rowData = s.treeDepth[self.pagerAPI && s.source ? rowNode.index() : idx].node;
         if (rowNode.is('.datagrid-tree-parent') && s.selectable === 'multiple') {
@@ -8656,7 +8737,7 @@ Datagrid.prototype = {
 
     if (this.filterRowRendered) {
       rows = [];
-      for (let i = 0, l = currentRows.length; i < l; i++) {
+      for (let i = 0, l = currentRows?.length; i < l; i++) {
         if (!currentRows[i]._isFilteredOut) {
           rows.push(i);
         }
@@ -8666,17 +8747,17 @@ Datagrid.prototype = {
     this.syncHeaderCheckbox(rows);
 
     // Open or Close the Contextual Toolbar.
-    if (this.contextualToolbar.length !== 1 || this.dontSyncUi) {
+    if (this.contextualToolbar?.length !== 1 || this.dontSyncUi) {
       return;
     }
 
-    if (this._selectedRows.length === 0) {
+    if (this._selectedRows?.length === 0) {
       this.contextualToolbar.one('animateclosedcomplete.datagrid', () => {
         this.contextualToolbar.css('display', 'none');
       }).animateClosed();
     }
 
-    if (this._selectedRows.length > 0 && (this.contextualToolbar.height() === 0 || !this.contextualToolbar.is(':visible') || !this.contextualToolbar.hasClass('is-hidden'))) {
+    if (this._selectedRows?.length > 0 && (this.contextualToolbar?.height() === 0 || !this.contextualToolbar?.is(':visible') || !this.contextualToolbar?.hasClass('is-hidden'))) {
       this.contextualToolbar.find('.selection-count').text(`${this._selectedRows.length} ${Locale.translate('Selected')}`);
       this.contextualToolbar.removeClass('is-hidden').css('display', 'block').one('animateopencomplete.datagrid', function () {
         $(this).removeClass('is-hidden').triggerHandler('recalculate-buttons');
@@ -8914,10 +8995,11 @@ Datagrid.prototype = {
 
   /**
   * Toggle the current selection state from on to off.
-  * @param  {number} idx The row to select/unselect
+  * @param  {number} idx The row to select/unselect.
+  * @param {boolean} forceSelect forcing the cell to do a double click.
   * @returns {void}
   */
-  toggleRowSelection(idx) {
+  toggleRowSelection(idx, forceSelect) {
     const row = (typeof idx === 'number' ? this.tableBody.find(`tr[aria-rowindex="${idx + 1}"]`) : idx);
     let rowIndex = typeof idx === 'number' ? idx : this.actualRowIndex(row);
 
@@ -8933,7 +9015,7 @@ Datagrid.prototype = {
       return;
     }
 
-    if (this.settings.selectable === 'single' && row.hasClass('is-selected') && !this.settings.disableRowDeselection) {
+    if (!this.settings.dblClickApply && this.settings.selectable === 'single' && row.hasClass('is-selected') && !this.settings.disableRowDeselection) {
       this.unselectRow(rowIndex);
       this.displayCounts();
       return this._selectedRows; // eslint-disable-line
@@ -8943,7 +9025,13 @@ Datagrid.prototype = {
       if (!this.settings.disableRowDeselection) {
         this.unselectRow(rowIndex);
       }
+    } else if (!this.settings.dblClickApply) {
+      this.selectRow(rowIndex);
     } else {
+      this.selectRow(rowIndex, false, true);
+    }
+
+    if (this.settings.dblClickApply && forceSelect) {
       this.selectRow(rowIndex);
     }
 
@@ -8970,7 +9058,7 @@ Datagrid.prototype = {
       return;
     }
 
-    let rowData = s.dataset[idx];
+    let rowData = s.treeGrid ? s.treeDepth[idx].node : s.dataset[idx];
     const getSelUniqueRowID = node => (node ? node.uniqueRowID : null);
 
     // Unselect it
@@ -9758,7 +9846,7 @@ Datagrid.prototype = {
       // or click to activate using a mouse.
       if (self.settings.editable && key === 32) {
         const btnExpand = target?.find('.datagrid-expand-btn');
-        if (btnExpand) {
+        if (btnExpand.length > 0) {
           btnExpand.trigger('click');
           e.preventDefault(); // This will prevent scrolling down when the list is overflowing.
         }
@@ -10051,12 +10139,8 @@ Datagrid.prototype = {
 
       cellParent.addClass('is-editing');
 
-      if (!col.doNotEmptyCellWhenEditing) {
-        if (this.isFileUpload) {
-          this.isFileUpload = false;
-        } else {
-          cellNode.empty();
-        }
+      if (!col.doNotEmptyCellWhenEditing && !cellParent.hasClass('is-fileupload')) {
+        cellNode.empty();
       }
     } else {
       cellParent.addClass('is-editing-inline');
@@ -10190,10 +10274,8 @@ Datagrid.prototype = {
       }
       Promise.resolve(newValue).then((v) => {
         this.commitCellEditUtil(input, v, isEditor, isFileupload, isUseActiveRow, isCallback);
-        this.isFileUpload = true;
       });
     } else {
-      // Editor.getValue
       if (typeof this.editor.val === 'function') {
         newValue = this.editor.val();
       }
@@ -10248,7 +10330,7 @@ Datagrid.prototype = {
     const rowData = this.settings.treeGrid ? this.settings.treeDepth[dataRowIndex].node :
       this.getActiveDataset()[dataRowIndex];
     let oldValue = this.fieldValue(rowData, col.field);
-    if (col.beforeCommitCellEdit && !isCallback) {
+    if (col.beforeCommitCellEdit && (isFileupload || !isCallback)) {
       const vetoCommit = col.beforeCommitCellEdit({
         cell,
         row: dataRowIndex,
@@ -12567,6 +12649,7 @@ Datagrid.prototype = {
       const aTitle = elem.querySelector('a[title]');
       const isRowstatus = DOM.hasClass(elem, 'rowstatus-cell');
       const isSvg = elem.tagName.toLowerCase() === 'svg';
+      const isHeaderIcon = elem.classList.contains('datagrid-header-icon');
       const isTh = elem.tagName.toLowerCase() === 'th';
       const isHeaderColumn = DOM.hasClass(elem, 'datagrid-column-wrapper');
       const isHeaderFilter = DOM.hasClass(elem.parentNode, 'datagrid-filter-wrapper');
@@ -12575,6 +12658,7 @@ Datagrid.prototype = {
       let title;
 
       tooltip = { content: '', wrapper: elem.querySelector('.datagrid-cell-wrapper') };
+      tooltip.extraClassList = [];
       let columnSettings;
       const elemIndex = $(elem).index();
 
@@ -12587,14 +12671,14 @@ Datagrid.prototype = {
         columnSettings = this.settings.columns[this.columnIdxById(columnId)];
       }
 
-      if (isTh || isHeaderColumn || isHeaderFilter) {
+      if (isTh || isHeaderColumn || isHeaderFilter || isHeaderIcon) {
         tooltip.wrapper = elem;
-        tooltip.distance = isHeaderFilter ? 15 : null;
-        tooltip.placement = isHeaderColumn ? 'top' : 'bottom';
+        tooltip.distance = (isHeaderFilter || isHeaderIcon) ? 15 : null;
+        tooltip.placement = (isHeaderColumn || isHeaderIcon) ? 'top' : 'bottom';
       }
 
       // Cache rowStatus cell
-      if (isRowstatus || isSvg) {
+      if (isRowstatus || (isSvg && !isHeaderIcon)) {
         const rowNode = this.closest(elem, el => DOM.hasClass(el, 'datagrid-row'));
         const classList = rowNode ? rowNode.classList : [];
         tooltip.isError = classList.contains('rowstatus-row-error');
@@ -12641,6 +12725,13 @@ Datagrid.prototype = {
             const targetEl = elem.parentNode.querySelector('.is-checked');
             tooltip.content = targetEl ? xssUtils.stripHTML(targetEl.textContent) : '';
           }
+        } else if (isHeaderIcon) {
+          const parentColId = $(elem).parents('th').attr('data-column-id');
+          const headerText = elem.previousElementSibling.textContent;
+          const iconTooltipContent = this.settings.columns[this.columnIdxById(parentColId)].headerIconTooltip;
+
+          tooltip.content = xssUtils.stripHTML(iconTooltipContent);
+          tooltip.headerText = xssUtils.stripHTML(headerText);
         } else {
           // Default use wrapper content
           if (tooltip.wrapper.querySelector('.datagrid-expand-btn')) {
@@ -12656,8 +12747,13 @@ Datagrid.prototype = {
         }
       }
 
+      const tooltipExtraClass = elem.getAttribute('tooltipClass');
+      if (tooltipExtraClass) {
+        tooltip.extraClassList.push(tooltipExtraClass);
+      }
+
       // Clean up text in selects
-      const select = tooltip.wrapper.querySelector('select');
+      const select = tooltip.wrapper?.querySelector('select');
       if (select && select.selectedIndex &&
         select.options[select.selectedIndex] &&
         select.options[select.selectedIndex].innerHTML) {
@@ -12701,7 +12797,12 @@ Datagrid.prototype = {
         }
 
         tooltip.content = contentTooltip ? tooltip.content : `<p>${tooltip.content}</p>`;
-        if (title || isHeaderFilter) {
+
+        if (isHeaderIcon) {
+          const headerText = elem.previousElementSibling.textContent;
+          tooltip.content = `<p class="align-text-left text-strong">${headerText}</p>${tooltip.content}`;
+        }
+        if (title || isHeaderFilter || isHeaderIcon) {
           tooltip.forced = true;
         }
       }
@@ -12716,7 +12817,7 @@ Datagrid.prototype = {
           rowData = this.settings.treeDepth[rowIdx].node;
         } else {
           rowIdx = this.dataRowIndex(rowElem);
-          rowData = this.settings.dataset[rowIdx];
+          rowData = this.rowData(rowIdx);
         }
 
         const value = this.fieldValue(rowData, col.field);
@@ -12727,7 +12828,7 @@ Datagrid.prototype = {
         }
       }
 
-      if (columnSettings.tooltipOptions) {
+      if (columnSettings?.tooltipOptions) {
         if (columnSettings.tooltipOptions.placement) {
           tooltip.placement = columnSettings.tooltipOptions.placement;
         }
@@ -12771,9 +12872,12 @@ Datagrid.prototype = {
         if (options.isError) {
           this.tooltip.classList.add('is-error');
         }
-        if (options.extraClassList) {
+        if (options.extraClassList && options.extraClassList.length > 0) {
           options.extraClassList.map(className => this.tooltip.classList.add(className));
         }
+
+        const hasHeaderIcon = options.wrapper.classList?.contains('datagrid-header-icon');
+        tooltipContentEl.classList[hasHeaderIcon ? 'add' : 'remove']('header-icon');
 
         const distance = typeof options.distance === 'number' ? options.distance : 0;
         const placeOptions = {
@@ -12782,7 +12886,7 @@ Datagrid.prototype = {
           container: this.element.closest('.page-container.scrollable') || $('body'),
           containerOffsetX: options.wrapper.offsetLeft,
           containerOffsetY: options.wrapper.offsetTop,
-          parent: $(options.wrapper),
+          parent: $(options?.wrapper),
           placement: options.placement || 'top',
           strategies: ['flip', 'nudge']
         };
@@ -13031,10 +13135,10 @@ Datagrid.prototype = {
       this.settings.columns = settings.columns;
     }
 
+    this.setRowHeightClass();
     this.render(null, pagingInfo);
     this.renderHeader();
     this.handlePaging();
-
     return this;
   }
 };

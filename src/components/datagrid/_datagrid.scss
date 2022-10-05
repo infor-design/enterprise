@@ -631,13 +631,9 @@ $datagrid-small-row-height: 25px;
     }
   }
 
-  &:not(.small-rowheight) .datagrid-header th.text-ellipsis {
+  &.large-rowheight .datagrid-header th.text-ellipsis {
     &:not(.is-filterable) .datagrid-column-wrapper {
       height: 32px;
-
-      .sort-indicator {
-        margin-top: 2px;
-      }
     }
   }
 
@@ -684,10 +680,6 @@ $datagrid-small-row-height: 25px;
         .datagrid-column-wrapper {
           padding: 0 8px;
         }
-
-        .datagrid-header-text {
-          margin: 5px 0 0 !important;
-        }
       }
     }
 
@@ -699,6 +691,10 @@ $datagrid-small-row-height: 25px;
             top: -1px;
           }
         }
+      }
+
+      &.datagrid-trigger-cell .colorpicker-container span.trigger {
+        left: calc(100% - 10px);
       }
     }
 
@@ -894,7 +890,7 @@ $datagrid-small-row-height: 25px;
           margin-top: 1px;
 
           > .icon {
-            height: 14px;
+            height: 15px;
             top: -1px;
           }
         }
@@ -906,6 +902,14 @@ $datagrid-small-row-height: 25px;
           > .icon {
             position: relative;
             top: -1px;
+          }
+        }
+      }
+
+      &.datagrid-trigger-cell {
+        .colorpicker-container {
+          .trigger {
+            top: 4px;
           }
         }
       }
@@ -925,6 +929,19 @@ $datagrid-small-row-height: 25px;
       .timepicker + .icon {
         margin-left: 2px !important;
         top: -4px !important;
+      }
+    }
+
+    .datagrid-header th.text-ellipsis {
+      .datagrid-column-wrapper {
+        .datagrid-header-text {
+          margin: 7px 0 0 -1px;
+        }
+
+        .datagrid-header-icon {
+          top: 4px;
+          transform: translateY(0);
+        }
       }
     }
   }
@@ -962,6 +979,15 @@ $datagrid-small-row-height: 25px;
         }
       }
     }
+
+    .datagrid-header {
+      .datagrid-column-wrapper {
+        .datagrid-header-icon {
+          top: 4px;
+          transform: translateY(0);
+        }
+      }
+    }
   }
 
   &.medium-rowheight {
@@ -988,7 +1014,7 @@ $datagrid-small-row-height: 25px;
 
       &.text-ellipsis {
         .datagrid-header-text {
-          margin: 8px 0 0 !important;
+          margin: 10px 0 0 !important;
         }
       }
     }
@@ -1060,6 +1086,10 @@ $datagrid-small-row-height: 25px;
           margin-left: -1px;
           margin-top: 9px;
         }
+      }
+
+      &.datagrid-trigger-cell .colorpicker-container span.trigger {
+        left: calc(100% - 5px);
       }
     }
   }
@@ -1138,6 +1168,12 @@ $datagrid-small-row-height: 25px;
         }
 
         .datagrid-cell-wrapper {
+          .colorpicker-container {
+            height: 20.5px;
+            margin-top: -1px;
+            margin-left: -1px;
+          }
+
           .dropdown-trigger {
             margin-left: -1px;
             margin-top: -1px;
@@ -1184,13 +1220,22 @@ $datagrid-small-row-height: 25px;
             min-height: $datagrid-medium-row-height + 8;
           }
 
-          .colorpicker-container {
-            padding: 4px 15px 0;
+          &.datagrid-trigger-cell {
+            input.timepicker.is-active.is-open {
+              margin-top: -6px;
+            }
+
+            input.datepicker {
+              margin-top: -6px;
+            }
+          }
+
+          &:not(.datagrid-trigger-cell) .datepicker {
+            padding: 0 5px 0 15px;
           }
 
           .datepicker {
             margin-top: 3px;
-            padding: 0 5px 0 15px;
 
             ~ .icon {
               margin-left: -5px;
@@ -1233,6 +1278,7 @@ $datagrid-small-row-height: 25px;
 
             &.timepicker {
               width: calc(100% - 10px);
+              margin-left: -1px;
 
               ~ .icon {
                 left: auto;
@@ -1343,7 +1389,7 @@ $datagrid-small-row-height: 25px;
         }
 
         .colorpicker {
-          padding: 9px 10px 0;
+          padding: 3px 10px 0;
         }
 
         .trigger .icon {
@@ -1366,7 +1412,11 @@ $datagrid-small-row-height: 25px;
     }
 
     .datagrid-trigger-cell {
-      .icon {
+      &.is-editing .trigger + .icon-close + .icon:not(.datagrid-alert-icon).icon-fileupload {
+        left: 5px;
+      }
+
+      .icon:not(.datagrid-alert-icon) {
         left: 3px;
         top: 5px;
 
@@ -1541,7 +1591,12 @@ $datagrid-small-row-height: 25px;
             }
           }
 
-          .icon {
+          .icon.datagrid-alert-icon {
+            height: 15px;
+            width: 16px;
+          }
+
+          .icon:not(.datagrid-alert-icon) {
             height: 16px;
             top: 4px;
 
@@ -1568,7 +1623,7 @@ $datagrid-small-row-height: 25px;
               left: -3px;
             }
 
-            &.icon-error {
+            &.icon-error:not(.datagrid-alert-icon) {
               margin-left: -26px;
             }
           }
@@ -1616,8 +1671,20 @@ $datagrid-small-row-height: 25px;
             }
           }
 
+          &.datagrid-trigger-cell {
+            .colorpicker-container .icon {
+              top: 4px;
+              left: 5px;
+            }
+          }
+
           .colorpicker-container {
-            padding: 3px 10px 0;
+            padding: 1px 2px 0;
+
+            input.colorpicker {
+              margin-left: -3px;
+              margin-top: -2px;
+            }
           }
 
           .datepicker {
@@ -1780,8 +1847,8 @@ $datagrid-small-row-height: 25px;
           width: 20px;
         }
 
-        .colorpicker {
-          margin-top: 3px;
+        .colorpicker:not(.is-open) {
+          top: -4px;
           padding: 2px 8px;
         }
 
@@ -1856,6 +1923,12 @@ $datagrid-small-row-height: 25px;
         padding-left: 39px;
       }
     }
+
+    .datagrid-header th.text-ellipsis {
+      .datagrid-column-wrapper .datagrid-header-text {
+        margin: 7px 0 0 -1px;
+      }
+    }
   }
 
   &.extra-small-rowheight {
@@ -1918,9 +1991,8 @@ $datagrid-small-row-height: 25px;
       }
 
       &.datagrid-trigger-cell {
-        .dropdown-trigger + .icon {
+        .dropdown-trigger:not(.colorpicker-container) + .icon {
           left: -6px !important;
-          top: 2px !important;
         }
 
         &.has-editor .icon.icon-search-list {
@@ -2014,10 +2086,27 @@ $datagrid-small-row-height: 25px;
 
     .datagrid-trigger-cell.has-editor:not(.is-readonly):hover,
     .datagrid-trigger-cell.has-editor:not(.is-readonly):focus {
-      .icon {
+      .icon:not(.datagrid-alert-icon) {
         &.icon-error {
           margin-left: -45px !important;
         }
+      }
+    }
+  }
+
+  &.small-rowheight,
+  &.extra-small-rowheight {
+    > tbody > tr {
+      .datagrid-alert-icon {
+        height: 15px;
+        width: 16px;
+      }
+    }
+
+    td.is-dirty-cell:not(.rowstatus-cell) {
+      &::before {
+        left: 0;
+        top: -2px;
       }
     }
   }
@@ -2150,6 +2239,15 @@ $datagrid-small-row-height: 25px;
     &.is-rowactivated td:not(.is-editing) .datagrid-cell-wrapper {
       background-color: $datagrid-row-selected-color;
 
+      button.datagrid-expand-btn .icon {
+        background-color: transparent;
+        box-shadow: none;
+      }
+
+      .icon {
+        @include trigger-icon-background($datagrid-row-selected-color);
+      }
+
       .btn.row-btn {
         background-color: $button-color-primary-initial-background;
         border: 1px solid  $button-color-primary-initial-background;
@@ -2262,6 +2360,7 @@ $datagrid-small-row-height: 25px;
       line-height: 25px;
       margin-right: -8px;
       padding-left: 8px;
+      position: relative;
       text-align: left;
       width: inherit;
     }
@@ -2328,10 +2427,6 @@ $datagrid-small-row-height: 25px;
       .icon {
         margin: 7px 0 0;
       }
-    }
-
-    .is-editing.is-fileupload .datagrid-cell-wrapper {
-      padding: 4px 16px 0 !important;
     }
 
     .datagrid-cell-wrapper {
@@ -2444,7 +2539,7 @@ $datagrid-small-row-height: 25px;
         }
       }
 
-      .datepicker {
+      &:not(.datagrid-trigger-cell) .datepicker {
         margin-top: unset !important;
         padding: unset !important;
 
@@ -2480,6 +2575,14 @@ $datagrid-small-row-height: 25px;
   }
 
   &.extra-small-rowheight {
+    .colorpicker-container {
+      height: 18px;
+
+      input.colorpicker {
+        font-size: $input-size-compact-font-size;
+      }
+    }
+
     td.is-editing {
       .timepicker {
         padding: unset !important;
@@ -2616,6 +2719,27 @@ $datagrid-small-row-height: 25px;
           position: absolute;
           top: 15px;
           visibility: visible;
+        }
+
+        .trigger {
+          + .icon-search-list + .icon-error {
+            left: 94%;
+          }
+
+          + .icon-calendar + .icon-error {
+            left: 98%;
+            margin-top: 2px;
+          }
+
+          + .icon-calendar + .icon-error {
+            left: 98%;
+            margin-top: 2px;
+          }
+
+          + .icon-clock + .icon-error {
+            margin-top: 1px;
+            left: 95%;
+          }
         }
       }
 
@@ -2799,10 +2923,12 @@ $datagrid-small-row-height: 25px;
       }
     }
 
-    //Cell Editting
+    //Cell Editing
     &.is-editing {
       background-color: $datagrid-cell-editing-bg-color;
       position: relative;
+      outline: 1px solid $ids-color-brand-primary-base;
+      outline-offset: -1px;
 
       &.has-singlecolumn {
         display: block;
@@ -2810,16 +2936,11 @@ $datagrid-small-row-height: 25px;
       }
 
       .datagrid-cell-wrapper {
-        border: 1px solid $ids-color-brand-primary-base;
         left: 0;
         position: absolute;
         text-overflow: clip;
         top: 0;
         width: 100%;
-
-        .colorpicker-container {
-          padding: 4px 20px 0;
-        }
       }
 
       .lookup-wrapper {
@@ -3021,10 +3142,14 @@ $datagrid-small-row-height: 25px;
           margin-right: -3px;
           margin-left: 10px;
         }
+
+        &.icon-clock {
+          left: 2px;
+        }
       }
 
       .colorpicker-container .icon {
-        margin-left: 8px;
+        left: 3px;
         top: 10px;
       }
 
@@ -3312,6 +3437,14 @@ $datagrid-small-row-height: 25px;
 
         color: $datagrid-required-icon-color;
       }
+    }
+
+    .icon.datagrid-header-icon {
+      color: $datagrid-header-color;
+      margin-left: 3px;
+      min-width: 18px;
+      top: -2px;
+      transform: translateY(50%);
     }
 
     // Checkboxes
@@ -4072,7 +4205,7 @@ td .btn-actions {
     }
   }
 
-  .icon {
+  .icon:not(.datagrid-alert-icon) {
     @include trigger-icon-background($datagrid-cell-bg-color);
 
     color: $trigger-icon-fill-color;
@@ -4080,13 +4213,23 @@ td .btn-actions {
     top: 4px;
     visibility: hidden;
 
+    &.datagrid-alert-icon {
+      visibility: visible;
+    }
+
     &.icon-search-list {
       left: -1px;
-      top: 4px;
+      top: -1px;
     }
 
     &.icon-clock {
       top: -2px;
+      left: 1px;
+    }
+
+    &.icon-fileupload {
+      left: 5px;
+      top: -0.5px;
     }
   }
 
@@ -4107,7 +4250,7 @@ td .btn-actions {
     }
   }
 
-  .icon-calendar {
+  .icon.icon-calendar {
     height: 16px;
     left: 5px;
     top: -2px;
@@ -4119,6 +4262,11 @@ td .btn-actions {
     left: 5px;
     top: -0.5px;
     width: 16px;
+  }
+
+  .colorpicker-container span.trigger {
+    width: 30px;
+    left: 100%;
   }
 
   span.trigger {
@@ -4161,7 +4309,14 @@ td .btn-actions {
       .icon-error,
       .icon-info,
       .icon-alert {
-        margin-left: -48px !important;
+        &:not(.datagrid-alert-icon) {
+          margin-left: -48px !important;
+        }
+      }
+
+      &.is-fileupload .datagrid-cell-wrapper .icon.icon-error:not(.datagrid-alert-icon) {
+        left: 98%;
+        margin-top: 3px;
       }
     }
   }
@@ -4183,7 +4338,7 @@ td .btn-actions {
 }
 
 // Change BG color of hovered Datagrid row cell icons
-.is-hover-row {
+.is-hover-row:not(.hide-selected-color) {
   .datagrid-trigger-cell {
     .icon {
       @include trigger-icon-background($datagrid-row-hover-color);
@@ -4587,6 +4742,10 @@ td .btn-actions {
     .trigger .icon {
       left: -1px;
       margin-top: 4px;
+    }
+
+    &.dropdown-list .trigger .icon {
+      margin-top: 3.5px;
     }
   }
 
@@ -5464,10 +5623,6 @@ html[dir='rtl'] {
       line-height: 24px;
     }
   }
-
-  .datagrid-filter-wrapper .dropdown {
-    padding-top: 4px !important;
-  }
 }
 
 //Contextual toolbar
@@ -5856,6 +6011,272 @@ html[dir='rtl'] {
 
         &:last-child {
           border-right: 1px solid $ids-color-brand-primary-base;
+        }
+      }
+    }
+  }
+}
+
+html[class*='theme-classic-'] .datagrid {
+  .datagrid-trigger-cell.has-editor:not(.is-readonly) {
+    &.is-fileupload .datagrid-cell-wrapper {
+      .icon:not(.datagrid-alert-icon) {
+        &.icon-error {
+          left: 96%;
+          top: 12px;
+        }
+
+        &.icon-fileupload {
+          top: -2.5px;
+        }
+
+        &.icon-close {
+          top: 1.5px;
+        }
+      }
+    }
+
+    .datagrid-cell-wrapper {
+      .trigger {
+        &.dropdown-trigger:not(.colorpicker-container) {
+          + .icon {
+            top: -2px;
+            left: -1.5px;
+
+            +  .icon:not(.datagrid-alert-icon).icon-error {
+              left: 99%;
+            }
+          }
+        }
+
+        + .icon.icon-calendar {
+          top: -2.5px;
+
+          +  .icon:not(.datagrid-alert-icon).icon-error {
+            left: 95%;
+            top: 14px;
+          }
+        }
+
+        + .icon.icon-clock {
+          left: -1px;
+
+          +  .icon:not(.datagrid-alert-icon).icon-error {
+            left: 92%;
+            top: 15px;
+          }
+        }
+
+        + .icon.icon-search-list + .icon:not(.datagrid-alert-icon).icon-error {
+          left: 92%;
+        }
+      }
+    }
+  }
+
+  &.medium-rowheight {
+    .datagrid-trigger-cell.has-editor:not(.is-readonly) {
+      &.is-fileupload .datagrid-cell-wrapper .icon:not(.datagrid-alert-icon) {
+        &.icon-error {
+          top: 7px;
+          left: 95%;
+        }
+
+        &.icon-close {
+          top: -2px;
+          left: 3px;
+        }
+      }
+
+      .datagrid-cell-wrapper {
+        .colorpicker-container + .icon:not(.datagrid-alert-icon).icon-error {
+          left: 100%;
+        }
+
+        .trigger {
+          &.dropdown-trigger:not(.colorpicker-container) + .icon {
+            left: 3.5px;
+            top: -1.5px;
+          }
+
+          + .icon.icon-calendar {
+            left: 6px;
+            top: -3.5px;
+
+            + .icon:not(.datagrid-alert-icon).icon-error {
+              top: 8px;
+            }
+          }
+
+          + .icon.icon-clock + .icon:not(.datagrid-alert-icon).icon-error {
+            top: 10px;
+          }
+
+          + .icon.icon-search-list + .icon:not(.datagrid-alert-icon).icon-error {
+            top: 12px;
+            left: 93%;
+          }
+        }
+
+        input.datepicker {
+          margin-top: -1px;
+
+          + .trigger.btn-icon {
+            margin-top: 3px;
+          }
+        }
+
+        input.timepicker {
+          margin-top: 0;
+
+          + .trigger.btn-icon {
+            margin-left: -4px;
+          }
+        }
+      }
+    }
+  }
+
+  &.small-rowheight {
+    td.datagrid-trigger-cell.has-editor:not(.is-readonly) {
+      &.is-fileupload {
+        &:focus,
+        &:hover {
+          .datagrid-cell-wrapper .icon:not(.datagrid-alert-icon).icon-error {
+            top: 3px;
+          }
+        }
+
+        .datagrid-cell-wrapper .icon:not(.datagrid-alert-icon).icon-error {
+          top: 5px;
+        }
+      }
+
+      .datagrid-cell-wrapper {
+        .colorpicker-container {
+          height: 22px;
+
+          + .icon:not(.datagrid-alert-icon).icon-error {
+            left: 102%;
+            top: 7px;
+          }
+
+          input.colorpicker.is-open {
+            padding-top: 6px;
+          }
+        }
+
+        .trigger {
+          &.dropdown-trigger {
+            + .icon {
+              left: -5px;
+              top: -1px;
+
+              +  .icon:not(.datagrid-alert-icon).icon-error {
+                left: 102%;
+              }
+            }
+          }
+
+          + .icon.icon-search-list {
+            margin-top: -1px;
+
+            + .icon:not(.datagrid-alert-icon).icon-error {
+              left: 96%;
+              top: 7px;
+            }
+          }
+
+          + .icon.icon-calendar + .icon:not(.datagrid-alert-icon).icon-error {
+            left: 98%;
+            top: 5px;
+          }
+
+          + .icon.icon-clock {
+            left: -5px;
+
+            + .icon:not(.datagrid-alert-icon).icon-error {
+              left: 96%;
+              top: 8px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &.extra-small-rowheight {
+    .datagrid-trigger-cell.has-editor:not(.is-readonly) {
+      &.is-fileupload {
+        &:focus,
+        &:hover {
+          .datagrid-cell-wrapper .icon:not(.datagrid-alert-icon) {
+            &.icon-error {
+              top: 2px;
+              left: 95%;
+            }
+
+            &.icon-fileupload {
+              left: -4px;
+            }
+          }
+        }
+
+        .datagrid-cell-wrapper .icon:not(.datagrid-alert-icon).icon-error {
+          top: 7px;
+        }
+      }
+
+      .datagrid-cell-wrapper {
+        .colorpicker-container {
+          + .icon:not(.datagrid-alert-icon).icon-error {
+            left: 99%;
+          }
+
+          span.trigger {
+            left: calc(100% - 15px);
+
+            .icon {
+              top: 0;
+            }
+          }
+        }
+
+        .trigger {
+          &.dropdown-trigger:not(.colorpicker-container) {
+            + .icon {
+              top: -0.5px;
+              margin-left: 0.5px;
+
+              +  .icon:not(.datagrid-alert-icon).icon-error {
+                left: 99%;
+              }
+            }
+          }
+
+          + .icon.icon-calendar {
+            left: -2px;
+            top: -0.5px;
+
+            + .icon:not(.datagrid-alert-icon).icon-error {
+              left: 96%;
+              top: 5px;
+            }
+          }
+
+          + .icon.icon-clock {
+            left: -5px;
+
+            + .icon:not(.datagrid-alert-icon).icon-error {
+              left: 95%;
+              top: 6px;
+            }
+          }
+
+          + .icon.icon-search-list + .icon:not(.datagrid-alert-icon).icon-error {
+            top: 6px;
+            left: 94%;
+          }
         }
       }
     }

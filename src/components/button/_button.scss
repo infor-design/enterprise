@@ -14,11 +14,87 @@ button {
   }
 }
 
+.btn-icon {
+  .notification-badge-container {
+    .notification-dot {
+      display: block !important;
+
+      &.notification-dot-upper-right {
+        right: 7px;
+        top: 4px;
+        transform: scale(1) translate(50%, -50%);
+        transform-origin: 100% 0%;
+      }
+
+      &.notification-dot-upper-left {
+        top: 4px;
+        left: -16px;
+        transform: scale(1) translate(-50%, -50%);
+        transform-origin: 0% 0%;
+      }
+
+      &.notification-dot-lower-right {
+        top: 11px;
+        left: -8px;
+        transform: scale(1) translate(50%, 50%);
+        transform-origin: 0% 100%;
+      }
+
+      &.notification-dot-lower-left {
+        top: 11px;
+        left: -16px;
+        transform: scale(1) translate(-50%, 50%);
+        transform-origin: 0% 100%;
+      }
+    }
+  }
+}
+
+.btn-primary,
+.btn-secondary,
+.btn-tertiary {
+  .notification-badge-container {
+    display: unset;
+
+    .notification-dot {
+      display: block !important;
+
+      &.notification-dot-upper-right {
+        right: 10px;
+        top: 3px;
+        transform: scale(1) translate(50%, -50%);
+        transform-origin: 100% 0%;
+      }
+
+      &.notification-dot-upper-left {
+        top: 3px;
+        left: -16px;
+        transform: scale(1) translate(-50%, -50%);
+        transform-origin: 0% 0%;
+      }
+
+      &.notification-dot-lower-right {
+        top: 10px;
+        left: -8px;
+        transform: scale(1) translate(50%, 50%);
+        transform-origin: 0% 100%;
+      }
+
+      &.notification-dot-lower-left {
+        top: 10px;
+        left: -16px;
+        transform: scale(1) translate(-50%, 50%);
+        transform-origin: 0% 100%;
+      }
+    }
+  }
+}
+
 // How all button types will deal with iconography
 [class^='btn'],
 .btn-primary,
 .btn-secondary,
-.btn-teritary {
+.btn-tertiary {
   //Fixes an issue about the circle effect coming out of the button.
   @include css3-extended(backface-visibility, hidden, (-webkit-, -moz-));
   @include css3-extended(transform, translate3d(0, 0, 0), (-webkit-, -moz-));
@@ -175,40 +251,6 @@ button {
           transform: scale(1) translate(-50%, 50%);
           transform-origin: 0% 100%;
         }
-      }
-    }
-  }
-
-  .notification-badge-container {
-    .notification-dot {
-      display: block !important;
-
-      &.notification-dot-upper-right {
-        right: 7px;
-        top: 4px;
-        transform: scale(1) translate(50%, -50%);
-        transform-origin: 100% 0%;
-      }
-
-      &.notification-dot-upper-left {
-        top: 4px;
-        left: -16px;
-        transform: scale(1) translate(-50%, -50%);
-        transform-origin: 0% 0%;
-      }
-
-      &.notification-dot-lower-right {
-        top: 11px;
-        left: -8px;
-        transform: scale(1) translate(50%, 50%);
-        transform-origin: 0% 100%;
-      }
-
-      &.notification-dot-lower-left {
-        top: 11px;
-        left: -16px;
-        transform: scale(1) translate(-50%, 50%);
-        transform-origin: 0% 100%;
       }
     }
   }
@@ -459,7 +501,7 @@ a.btn-close {
   }
 
   .ripple-effect {
-    background: $ids-color-palette-slate-20;
+    background: $secondary-btn-ripple-color;
   }
 
   // Menu Button Form
@@ -844,6 +886,82 @@ html[dir='rtl'] {
       }
     }
   }
+
+  .btn-icon {
+    .notification-badge-container {
+      .notification-dot {
+        display: block !important;
+
+        &.notification-dot-upper-right {
+          right: -16px;
+          top: 4px;
+          transform: scale(1) translate(50%, -50%);
+          transform-origin: 100% 0%;
+        }
+
+        &.notification-dot-upper-left {
+          top: 4px;
+          left: 7px;
+          transform: scale(1) translate(-50%, -50%);
+          transform-origin: 0% 0%;
+        }
+
+        &.notification-dot-lower-right {
+          top: 11px;
+          left: 15px;
+          transform: scale(1) translate(50%, 50%);
+          transform-origin: 0% 100%;
+        }
+
+        &.notification-dot-lower-left {
+          top: 11px;
+          left: 7px;
+          transform: scale(1) translate(-50%, 50%);
+          transform-origin: 0% 100%;
+        }
+      }
+    }
+  }
+
+  .btn-primary,
+  .btn-secondary,
+  .btn-tertiary {
+    .notification-badge-container {
+      display: unset;
+
+      .notification-dot {
+        display: block !important;
+
+        &.notification-dot-upper-right {
+          right: 6px;
+          top: 3px;
+          transform: scale(1) translate(50%, -50%);
+          transform-origin: 100% 0%;
+        }
+
+        &.notification-dot-upper-left {
+          top: 3px;
+          left: -12px;
+          transform: scale(1) translate(-50%, -50%);
+          transform-origin: 0% 0%;
+        }
+
+        &.notification-dot-lower-right {
+          top: 10px;
+          left: -4px;
+          transform: scale(1) translate(50%, 50%);
+          transform-origin: 0% 100%;
+        }
+
+        &.notification-dot-lower-left {
+          top: 10px;
+          left: -12px;
+          transform: scale(1) translate(-50%, 50%);
+          transform-origin: 0% 100%;
+        }
+      }
+    }
+  }
 }
 
 //Do not allow upper case in french
@@ -911,17 +1029,17 @@ html[lang^='fr-'] {
 }
 
 .btn-link {
-  color: $hyperlink-color;
+  color: $btn-hyperlink-color;
 
   .icon {
-    color: $hyperlink-color;
+    color: $btn-hyperlink-color;
   }
 
   &:hover {
-    color: $hyperlink-hover-color;
+    color: $btn-hyperlink-hover-color;
 
     .icon {
-      color: $hyperlink-hover-color;
+      color: $btn-hyperlink-hover-color;
     }
   }
 }

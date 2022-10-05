@@ -1,9 +1,11 @@
+/* eslint-disable compat/compat */
+const path = require('path');
 const { getConfig, getComputedStyle } = require('../../helpers/e2e-utils.js');
 
-describe('Datagrid Puppeteer Tests', () => {
+describe('Datagrid', () => {
   const baseUrl = 'http://localhost:4000/components/datagrid';
 
-  describe('Datagrid Filter Format Test', () => {
+  describe('Filter Format', () => {
     const url = `${baseUrl}/example-filter.html`;
 
     beforeAll(async () => {
@@ -39,7 +41,7 @@ describe('Datagrid Puppeteer Tests', () => {
     });
   });
 
-  describe('Datagrid Filter Custom Filter Conditions', () => {
+  describe('Filter Custom Filter Conditions', () => {
     const url = `${baseUrl}/example-custom-filter-conditions-and-defaults.html`;
 
     beforeAll(async () => {
@@ -54,7 +56,7 @@ describe('Datagrid Puppeteer Tests', () => {
     });
   });
 
-  describe('Datagrid test-tree-rowstatus tests', () => {
+  describe('Tree row status', () => {
     const url = `${baseUrl}/test-tree-rowstatus.html`;
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
@@ -84,7 +86,7 @@ describe('Datagrid Puppeteer Tests', () => {
     });
   });
 
-  describe('Datagrid example-key-row-select tests', () => {
+  describe('Key row select', () => {
     const url = `${baseUrl}/example-key-row-select.html`;
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
@@ -101,7 +103,7 @@ describe('Datagrid Puppeteer Tests', () => {
     });
   });
 
-  describe('Datagrid test to keep the column strech in responsive view', () => {
+  describe('Index', () => {
     const url = `${baseUrl}/example-index.html`;
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
@@ -116,7 +118,7 @@ describe('Datagrid Puppeteer Tests', () => {
     });
   });
 
-  describe('Datagrid test count in select all tests', () => {
+  describe('Count in select all current page setting', () => {
     const url = `${baseUrl}/test-count-in-select-all-current-page-setting.html`;
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
@@ -150,7 +152,7 @@ describe('Datagrid Puppeteer Tests', () => {
     });
   });
 
-  describe('Datagrid add support for fallback image tootip text test', () => {
+  describe('Images error', () => {
     const url = `${baseUrl}/test-images-error.html`;
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
@@ -163,7 +165,7 @@ describe('Datagrid Puppeteer Tests', () => {
     });
   });
 
-  describe('Datagrid update column', () => {
+  describe('Update column', () => {
     const url = `${baseUrl}/test-update-column.html`;
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
@@ -178,7 +180,7 @@ describe('Datagrid Puppeteer Tests', () => {
     });
   });
 
-  describe('Datagrid test to have a method to make cell editable', () => {
+  describe('Add row selected', () => {
     const url = `${baseUrl}/test-addrow-selected.html`;
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
@@ -216,6 +218,188 @@ describe('Datagrid Puppeteer Tests', () => {
 
       await page.evaluate(() => document.querySelector('.datagrid-expand-btn').getAttribute('class'))
         .then(el => expect(el).toContain('is-expanded'));
+    });
+  });
+
+  describe('Landmark', () => {
+    const url = `${baseUrl}/test-landmark`;
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('should override the aria-describedby value', async () => {
+      const ariaDesc = await page.$$eval('tbody[role="rowgroup"] td[role="gridcell"]:nth-child(2)',
+        e => e.map(el => el.getAttribute('aria-describedby')));
+
+      for (let i = 0; i < ariaDesc.length; i++) {
+        expect(ariaDesc).toContain(`test-landmark-datagrid-${i + 1}-header-1`);
+      }
+    });
+  });
+
+  describe('Header icon with tooltip', () => {
+    const url = `${baseUrl}/example-header-icon-with-tooltip`;
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('should show the info icon in header column', async () => {
+      expect(await page.waitForSelector('.datagrid', { visible: true })).toBeTruthy();
+      expect(await page.waitForSelector('.icon.datagrid-header-icon', { visible: true })).toBeTruthy();
+    });
+
+    it('should show the tooltip content on mouse hover', async () => {
+      const headerIcon = await page.$('.datagrid-header-icon');
+      headerIcon.hover();
+      await page.waitForSelector('.grid-tooltip:not(.is-hidden)', { visible: true })
+        .then(el => expect(el).toBeTruthy());
+    });
+
+    it('should have a custom class in the column header', async () => {
+      await page.evaluate(() => document.getElementById('example-header-icon-with-tooltip-datagrid-1-header-2').getAttribute('class'))
+        .then(el => expect(el).toContain('lm-custom-class-header'));
+    });
+
+    it('should show the tooltip content upon changing row height', async () => {
+      await page.setViewport({ width: 1920, height: 1080 });
+
+      await page.click('#maincontent > div.row > div > div.toolbar.has-more-button.do-resize.has-title > div.more > button');
+      await page.click('#popupmenu-2 > li:nth-child(4)');
+
+      // wait for element before trying to hover
+      await page.waitForSelector('#example-header-icon-with-tooltip-datagrid-1-header-2 .datagrid-header-icon');
+      await page.hover('#example-header-icon-with-tooltip-datagrid-1-header-2 .datagrid-header-icon');
+
+      await page.click('#example-header-icon-with-tooltip-datagrid-1-header-2 .datagrid-header-text')
+        .then(() => page.hover('#example-header-icon-with-tooltip-datagrid-1-header-2 > div.datagrid-column-wrapper > svg'));
+
+      // get the tooltip content and verify if product name exist
+      await page.waitForSelector('.tooltip-content.header-icon', { visible: true })
+        .then(el => expect(el).toBeTruthy());
+      const tooltip = await page.$('.tooltip-content.header-icon');
+      const tooltipContent = await page.evaluate(el => el.textContent, tooltip);
+      expect(tooltipContent).toContain('Product Name');
+    });
+  });
+
+  describe('Can add multiple rows', () => {
+    const url = `${baseUrl}/test-selected-rows-addnew.html`;
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('should add new row on button click', async () => {
+      await page.click('#add-row-top-btn');
+      const ariaRowTop = await page.$eval('tr.datagrid-row.rowstatus-row-new.is-tooltips-enabled', element => element.getAttribute('aria-rowindex'));
+      expect(ariaRowTop).toMatch('1');
+      await page.click('.toolbar.has-more-button .btn-actions:not(.page-changer)');
+      await page.waitForSelector('#popupmenu-2.is-open', { visible: true });
+      await page.hover('#popupmenu-2 > li:nth-child(3) > a');
+      await page.click('#popupmenu-2 > li:nth-child(3) > a');
+      const ariaRowT4 = await page.$eval('tr.datagrid-row.rowstatus-row-new.is-tooltips-enabled', element => element.getAttribute('aria-rowindex'));
+      expect(ariaRowT4).toMatch('4');
+    });
+  });
+
+  describe('Datagrid test to render only one row', () => {
+    const url = `${baseUrl}/test-hide-pager-if-one-page.html`;
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('should re-renders all the row element when you add a new row', async () => {
+      await page.waitForSelector('#add-btn');
+      await page.click('#add-btn');
+
+      await page.waitForSelector('#datagrid > div > table.datagrid > tbody > tr > td:nth-child(5) > div');
+
+      const value = await page.$eval('#datagrid > div > table.datagrid > tbody > tr > td:nth-child(5) > div', element => element.innerHTML);
+      expect(value).toEqual('0');
+
+      await page.$eval('#datagrid > div > table.datagrid > tbody > tr > td:nth-child(5) > div', (el) => {
+        el.innerHTML = '4';
+      });
+
+      await page.waitForTimeout(200);
+      await page.click('#add-btn');
+      const newValue = await page.$eval('#datagrid > div.datagrid-wrapper.center.scrollable-x.scrollable-y > table > tbody > tr:nth-child(2) > td:nth-child(5) > div', element => element.innerHTML);
+
+      expect(newValue).toEqual('4');
+    });
+  });
+
+  describe('Column width', () => {
+    const url = `${baseUrl}/test-column-size`;
+    let windowSize;
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+      windowSize = await page.viewport();
+    });
+
+    afterAll(async () => {
+      await page.setViewport(windowSize);
+    });
+
+    it('should not have inline width when no column width is specified', async () => {
+      await page.setViewport({ width: 600, height: 600 });
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+
+      await page.click('#show-model');
+
+      await page.waitForSelector('#modal-content', { visible: true })
+        .then(elHandle => elHandle.$('table.datagrid'))
+        .then(async (elHandle) => {
+          await page.waitForTimeout(400);
+          return elHandle.evaluate(e => e.getAttribute('style'));
+        })
+        .then(style => expect(style).toBeFalsy());
+    });
+
+    it('should have inline width when column width is specified and screen is small', async () => {
+      await page.setViewport({ width: 600, height: 600 });
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+
+      await page.$eval('#width', (el) => { el.value = '35'; });
+      await page.click('#show-model');
+
+      await page.waitForSelector('#modal-content', { visible: true })
+        .then(elHandle => elHandle.$('table.datagrid'))
+        .then(async (elHandle) => {
+          await page.waitForTimeout(400);
+          return elHandle.evaluate(e => e.getAttribute('style'));
+        })
+        .then(style => expect(style).toContain('width'));
+    });
+  });
+
+  describe('Allow beforeCommitCellEdit event test', () => {
+    const url = `${baseUrl}/test-editable-fileupload-before-commitcelledit`;
+    const fileName = 'test.txt';
+    const filePath = path.resolve(__dirname, fileName);
+    const uploadFiles = async (filePathArr) => {
+      const [fileChooser] = await Promise.all([
+        page.waitForFileChooser(),
+        page.click('#datagrid  table > tbody > tr:nth-child(1) > td.datagrid-trigger-cell.is-fileupload.has-editor > div > svg')
+      ]);
+      return fileChooser.accept(filePathArr);
+    };
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('should upload a file and show a fake path', async () => {
+      await uploadFiles([filePath]);
+      await page.waitForSelector('.icon-close', { visible: true });
+      await page.waitForSelector('table > tbody > tr:nth-child(1) > td.datagrid-trigger-cell.is-fileupload.has-editor > div', { visible: true })
+        .then(async (element) => {
+          const fakePath = await element.$eval('#datagrid > div.datagrid-wrapper.center.scrollable-x.scrollable-y > table > tbody > tr:nth-child(1) > td.datagrid-trigger-cell.is-fileupload.has-editor > div > span', e => e.textContent);
+          expect(fakePath).toEqual(`C:\\fakepath\\${fileName}`);
+        });
     });
   });
 });

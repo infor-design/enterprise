@@ -16,8 +16,9 @@ Tmpl.compile = function compile(template, self, parent, invert) {
   let i;
 
   function get(ctx, path) {
+    const originalPath = path;
     path = path.pop ? path : path.split('.');
-    ctx = ctx[path.shift()] || '';
+    ctx = ctx[path.shift()] || ctx[originalPath];
     return (0 in path) ? get(ctx, path) : ctx;
   }
 

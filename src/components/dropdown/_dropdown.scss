@@ -1074,12 +1074,6 @@ div.dropdown-xs,
   div.multiselect {
     padding: $dropdown-size-regular-padding;
 
-    &:not(.has-tags) {
-      > span {
-        padding-top: 1px;
-      }
-    }
-
     &.has-tags {
       padding: 0;
     }
