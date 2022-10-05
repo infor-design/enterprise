@@ -38,7 +38,7 @@ describe('Column Grouped Puppeteer Tests', () => {
     });
   });
 
-  Sdescribe('Ability to make a combined column chart and line chart tests', () => {
+  describe('Ability to make a combined column chart and line chart tests', () => {
     const url = 'http://localhost:4000/components/column-grouped/example-column-grouped-with-line-combined';
 
     beforeAll(async () => {
@@ -46,7 +46,7 @@ describe('Column Grouped Puppeteer Tests', () => {
     });
 
     it('should run visual test', async () => {
-      await page.waitForSelector('.dot');S
+      await page.waitForSelector('.dot');
       const image = await page.screenshot(); 
       const config = getConfig('line-chart'); 
       expect(image).toMatchImageSnapshot(config); 
