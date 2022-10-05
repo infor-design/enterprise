@@ -636,6 +636,11 @@
 
     .searchfield {
       height: 38px;
+
+      &::placeholder {
+        color: $listview-search-placeholder-color;
+        opacity: 1;
+      }
     }
 
     .btn-icon {
@@ -668,7 +673,13 @@
 
     &.has-focus {
       input {
-        border: 1px solid $ids-color-brand-primary-base;
+        border: none;
+      }
+    }
+
+    &.is-hovered {
+      input {
+        border: 1px solid $listview-search-border-color;
       }
     }
   }
