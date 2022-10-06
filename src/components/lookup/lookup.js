@@ -1086,7 +1086,7 @@ Lookup.prototype = {
    */
   enable() {
     this.element.prop('disabled', false).prop('readonly', false).removeClass('is-not-editable');
-    this.element.parent().removeClass('is-disabled');
+    this.element.closest('.field').removeClass('is-disabled');
     this.icon.prop('disabled', false);
   },
 
