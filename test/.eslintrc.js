@@ -62,6 +62,7 @@ module.exports = {
     // set "no-underscore-dangle" to only a warning (also shouldn't fail builds)
     'no-underscore-dangle': ['warn', { allow: ['_client'] }],
 
+    // Disable to allow use of Promise
     'compat/compat': ['off']
   }
 };
