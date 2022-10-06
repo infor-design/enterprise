@@ -7,6 +7,7 @@
 - `[Calendar]` Added puppeteer script for show/hide legend. ([#6810](https://github.com/infor-design/enterprise/issues/6810))
 - `[Colors]` Added puppeteer script for color classes targeting color & border color. ([#6801](https://github.com/infor-design/enterprise/issues/6801))
 - `[Datagrid]` Added additional setting in datagrid header for tooltip extra class. ([#6802](https://github.com/infor-design/enterprise/issues/6802))
+- `[Datagrid]` Added dblClickApply setting in lookup for selection of item. ([#6546](https://github.com/infor-design/enterprise/issues/6546))
 
 ## v4.68.0 Fixes
 
