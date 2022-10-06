@@ -1,4 +1,3 @@
-/* eslint-disable compat/compat */
 const { getConfig } = require('../../helpers/e2e-utils');
 const config = require('../../helpers/e2e-config');
 
@@ -149,8 +148,8 @@ describe('Button Puppeteer Tests', () => {
     it('should not visually regress', async () => {
       await page.waitForSelector('#menu-button-alone', { visible: true });
 
-      const menuButton = await page.$('#menu-button-alone');
-      const image = await menuButton.screenshot();
+      const maincontent = await page.$('#maincontent');
+      const image = await maincontent.screenshot();
 
       const btnIcon = getConfig('button-icon');
       expect(image).toMatchImageSnapshot(btnIcon);
