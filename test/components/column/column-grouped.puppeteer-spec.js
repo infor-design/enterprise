@@ -1,3 +1,5 @@
+const { getConfig } = require('../../helpers/e2e-utils.js');
+
 describe('Column Grouped Puppeteer Tests', () => {
   describe('Column Grouped selection disable tests', () => {
     const url = 'http://localhost:4000/components/column-grouped/example-disable-selection-state';
@@ -33,6 +35,29 @@ describe('Column Grouped Puppeteer Tests', () => {
       const legendTabIndex = await page.evaluate(() => Array.from(document.querySelectorAll('.chart-legend-item')).map(el => el.tabIndex));
 
       expect(legendTabIndex).toEqual([-1, -1, -1, -1, -1, -1]); // These are the values of tabindex of all the legends.
+    });
+  });
+
+  describe('Ability to make a combined column chart and line chart tests', () => {
+    const url = 'http://localhost:4000/components/column-grouped/example-column-grouped-with-line-combined';
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('should run visual test', async () => {
+      await page.waitForSelector('#column-line-id-dot-6');
+      await page.waitForTimeout(350);
+      const image = await page.screenshot(); 
+      const config = getConfig('line-chart'); 
+      expect(image).toMatchImageSnapshot(config); 
+    });
+
+    it('should show tooltip when hovered', async () => {
+      await page.waitForSelector('.dot');
+      await page.hover('.dot');
+      const value = await page.waitForSelector('#svg-tooltip');
+      expect(value).toBeTruthy();
     });
   });
 });
