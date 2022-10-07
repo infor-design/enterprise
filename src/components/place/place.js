@@ -293,7 +293,6 @@ Place.prototype = {
     }
 
     const parentRect = DOM.getDimensions(placementObj.parent[0]);
-    const elRect = DOM.getDimensions(this.element[0]);
     // NOTE: Usage of $(window) instead of $('body') is deliberate here - http://stackoverflow.com/a/17776759/4024149.
     // Firefox $('body').scrollTop() will always return zero.
     const scrollX = containerIsBody ? $(window).scrollLeft() : container.scrollLeft();
@@ -310,6 +309,7 @@ Place.prototype = {
       const p = incomingPlacementObj.placement;
       const aX = incomingPlacementObj.parentXAlignment;
       const aY = incomingPlacementObj.parentYAlignment;
+      const elRect = DOM.getDimensions(self.element[0]);
       let cX;
       let cY;
 
@@ -389,6 +389,112 @@ Place.prototype = {
     // Simple placement logic
     placementObj = doPlacementAgainstParent(placementObj);
 
+    // Initial Placement
+    this.reposition(placementObj);
+
+    // Check if there added overflow
+    placementObj = this.checkOverflow(placementObj);
+    while (placementObj.hasOverflow) {
+      this.reposition(placementObj);
+      placementObj = this.checkOverflow(placementObj);
+    }
+
+    // Trigger an event to notify placement has ended
+    placementObj.element = this.element;
+    this.element.trigger('afterplace', [placementObj]);
+
+    return placementObj;
+  },
+
+  reposition(placementObj) {
+    const self = this;
+    const container = this.getContainer(placementObj);
+    const containerIsBody = container.length && container[0] === document.body;
+    const parentRect = DOM.getDimensions(placementObj.parent[0]);
+    const scrollX = containerIsBody ? $(window).scrollLeft() : container.scrollLeft();
+    const scrollY = containerIsBody ? $(window).scrollTop() : container.scrollTop();
+
+    function getCoordsFromPlacement(incomingPlacementObj) {
+      const p = incomingPlacementObj.placement;
+      const aX = incomingPlacementObj.parentXAlignment;
+      const aY = incomingPlacementObj.parentYAlignment;
+      const elRect = DOM.getDimensions(self.element[0]);
+      let cX;
+      let cY;
+
+      // Set initial placements
+      switch (p) {
+        case 'top':
+          cY = parentRect.top - elRect.height - incomingPlacementObj.y +
+            (containerIsBody ? scrollY : 0);
+          break;
+        case 'left':
+          cX = parentRect.left - elRect.width - incomingPlacementObj.x +
+            (containerIsBody ? scrollX : 0);
+          break;
+        case 'right':
+          cX = parentRect.right + incomingPlacementObj.x + (containerIsBody ? scrollX : 0);
+          break;
+        default: // Bottom
+          cY = parentRect.bottom + incomingPlacementObj.y + (containerIsBody ? scrollY : 0);
+          break;
+      }
+
+      // Set X alignments on bottom/top placements
+      if (p === 'top' || p === 'bottom') {
+        const cW = Math.round(containerIsBody ? document.body.offsetWidth : null);
+        switch (aX) {
+          case 'left':
+            if (containerIsBody && (cW < Math.round(elRect.left) + Math.round(elRect.width))) {
+              cX = parentRect.left + incomingPlacementObj.x + scrollX;
+            } else {
+              cX = parentRect.left - incomingPlacementObj.x + (containerIsBody ? scrollX : 0);
+            }
+            break;
+          case 'right':
+            if (containerIsBody && (Math.round(elRect.right) - Math.round(elRect.width)) < 0) {
+              cX = parentRect.left - incomingPlacementObj.x + scrollX;
+            } else {
+              cX = (parentRect.right - elRect.width) +
+                incomingPlacementObj.x + (containerIsBody ? scrollX : 0);
+            }
+            break;
+          default: // center
+            cX = (parentRect.left + ((parentRect.width - elRect.width) / 2)) +
+              incomingPlacementObj.x + (containerIsBody ? scrollX : 0);
+            break;
+        }
+      }
+
+      // Set Y alignments on left/right placements
+      if (p === 'right' || p === 'left') {
+        switch (aY) {
+          case 'top':
+            cY = parentRect.top - incomingPlacementObj.y + (containerIsBody ? scrollY : 0);
+            break;
+          case 'bottom':
+            cY = (parentRect.bottom - elRect.height) +
+              incomingPlacementObj.y + (containerIsBody ? scrollY : 0);
+            break;
+          default: // center
+            cY = (parentRect.top + ((parentRect.height - elRect.height) / 2)) +
+              incomingPlacementObj.y + (containerIsBody ? scrollY : 0);
+            break;
+        }
+      }
+
+      return [cX, cY];
+    }
+
+    function doPlacementAgainstParent(incomingPlacementObj) {
+      const coords = getCoordsFromPlacement(incomingPlacementObj);
+      incomingPlacementObj.setCoordinate('x', coords[0]);
+      incomingPlacementObj.setCoordinate('y', coords[1]);
+      self.render(incomingPlacementObj);
+      incomingPlacementObj = self.handlePlacementCallback(incomingPlacementObj);
+      return incomingPlacementObj;
+    }
+
     // Adjusts the placement coordinates based on a defined strategy
     // Will only adjust the current strategy if bleeding outside the
     // viewport/container are detected.
@@ -422,10 +528,6 @@ Place.prototype = {
         self.render(placementObj);
       }
     });
-
-    // Trigger an event to notify placement has ended
-    placementObj.element = this.element;
-    this.element.trigger('afterplace', [placementObj]);
 
     return placementObj;
   },
@@ -550,6 +652,17 @@ Place.prototype = {
     return $(document.body);
   },
 
+  checkOverflow(placementObj) {
+    const parentRect = DOM.getDimensions(placementObj.parent[0]);
+    const elRect = DOM.getDimensions(this.element[0]);
+    placementObj.hasOverflow = false;
+
+    if (placementObj.placement === 'top') {
+      placementObj.hasOverflow = parentRect.top - elRect.height < 0 || parentRect.top - elRect.height !== elRect.top;
+    }
+    return placementObj;
+  },
+
   /**
    * Re-adjust a previously-placed element to account for bleeding off the edges.
    * Element must fit within the boundaries of the page or it's current scrollable pane.
@@ -625,7 +738,7 @@ Place.prototype = {
     const offBottomEdge = rect.bottom > getBoundary('bottom');
 
     // Return if no bleeding is detected (no need to fix anything!)
-    if (!offRightEdge && !offLeftEdge && !offTopEdge && !offBottomEdge) {
+    if (!placementObj.hasOverflow && !offRightEdge && !offLeftEdge && !offTopEdge && !offBottomEdge) {
       placementObj.bleeds = undefined;
       return placementObj;
     }
@@ -676,7 +789,7 @@ Place.prototype = {
 
   flip(placementObj) {
     // Don't attempt to flip if there was no bleeding on the edge we're attempting to leave from.
-    if (!placementObj.bleeds[placementObj.placement]) {
+    if (!placementObj.hasOverflow && !placementObj.bleeds[placementObj.placement]) {
       return placementObj;
     }
 
