@@ -82,7 +82,7 @@ Providing the data this will add an ID added to each name with `-name`, info-val
 
 ## Responsive Guidelines
 
-- Will size to the parent's withd
+- Will size to the parent's with
 
 ## Upgrading from 3.X
 

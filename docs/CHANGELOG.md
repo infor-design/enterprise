@@ -1,5 +1,13 @@
 # What's New with Enterprise
 
+## v4.69.0
+
+## v4.69.0 Important Features
+
+- `[Icons]` All icons have padding on top and bottom effectively making them 4px smaller by design. This change may require some UI corrections to css. ([#6868](https://github.com/infor-design/enterprise/issues/6868))
+- `[Icons]` Over 60 new icons and 126 new industry focused icons. ([#6868](https://github.com/infor-design/enterprise/issues/6868))
+- `[Icons]` The icon `save-closed` is now `save-closed-old` in the deprecated, we suggest not using this old icon. ([#6868](https://github.com/infor-design/enterprise/issues/6868))
+- `[Icons]` Some filled alert icons like `sucess-alert` and `alert-alert` are now `sucess-filled` and `alert-filled` we suggest no longer using filled alert icons. ([#6868](https://github.com/infor-design/enterprise/issues/6868))
 ## v4.68.0
 
 ## v4.68.0 Features
