@@ -20,6 +20,7 @@
 - `[Datagrid]` Allowed beforeCommitCellEdit event to be sent for Editors.Fileupload. ([#6821](https://github.com/infor-design/enterprise/issues/6821))]
 - `[Datagrid]` Classic theme trigger field adjustments in datagrid. ([#6678](https://github.com/infor-design/enterprise/issues/6678))
 - `[Datagrid]` Added null guard in tree list when list is not yet loaded. ([#6816](https://github.com/infor-design/enterprise/issues/6816))
+- `[Datagrid]` Fix on dirty indicator not updating on drag columns. ([#6867](https://github.com/infor-design/enterprise/issues/6867))
 - `[Editor]` Fixed a bug in editor where blockquote is not continued in the next line. ([#6794](https://github.com/infor-design/enterprise/issues/6794))
 - `[Editor]` Fixed a bug in editor where breaking space doesn't render dirty indicator properly. ([NG#1363](https://github.com/infor-design/enterprise-ng/issues/1363))
 - `[Modal]` Fixed a bug where suppress key setting is not working. ([#6793](https://github.com/infor-design/enterprise/issues/6793))
