@@ -942,6 +942,34 @@ Toolbar.prototype = {
     let d;
     this.cutoffTitle = false;
 
+    // Determine the target sizes for buttonset
+    function getTargetButtonsetWidth() {
+      let buttonsetWidth;
+
+      if (hasButtonsetSizeGetter) {
+        buttonsetWidth = parseInt(buttonsetSize, 10);
+      } else if (self.settings.favorButtonset === true) {
+        buttonsetWidth = buttonsetDims.width;
+      } else {
+        buttonsetWidth = toolbarDims.width;
+      }
+
+      if (toolbarDims.width - buttonsetWidth < titleDims.width) {
+        buttonsetWidth -= (toolbarPadding +
+          (hasTitleSizeGetter ? parseInt(titleSize, 10) : titleDims.scrollWidth) +
+          moreDims.width);
+      }
+
+      const searchfield = self.buttonsetItems.filter('.searchfield').data('searchfield');
+
+      if (searchfield && searchfield.settings.showGoButton === true) {
+        buttonsetWidth = buttonsetWidth + searchfield.goButton.width() > buttonsetWidth ?
+          buttonsetWidth + searchfield.goButton.width() : buttonsetWidth;
+      }
+
+      return buttonsetWidth;
+    }
+
     // Determine the target sizes for title, based on external setters,
     //  or building an estimated size.
     function getTargetTitleWidth() {
@@ -949,26 +977,12 @@ Toolbar.prototype = {
         return parseInt(titleSize, 10);
       }
       if (self.settings.favorButtonset === true) {
-        return toolbarDims.width - (toolbarPadding +
-          (hasButtonsetSizeGetter ? parseInt(buttonsetSize, 10) : buttonsetDims.width) +
-          moreDims.width);
+        return toolbarDims.width - (toolbarPadding + getTargetButtonsetWidth() + moreDims.width - 2);
       }
       return titleDims.scrollWidth;
     }
-    let targetTitleWidth = getTargetTitleWidth();
 
-    // Determine the target sizes for buttonset
-    function getTargetButtonsetWidth() {
-      if (hasButtonsetSizeGetter) {
-        return parseInt(buttonsetSize, 10);
-      }
-      if (self.settings.favorButtonset === true) {
-        return buttonsetDims.width;
-      }
-      return toolbarDims.width - (toolbarPadding +
-        (hasTitleSizeGetter ? parseInt(titleSize, 10) : titleDims.scrollWidth) +
-        moreDims.width);
-    }
+    let targetTitleWidth = getTargetTitleWidth();
     let targetButtonsetWidth = getTargetButtonsetWidth();
 
     if (this.settings.favorButtonset) {
@@ -982,6 +996,11 @@ Toolbar.prototype = {
 
       buttonsetElem.style.width = addPx(targetButtonsetWidth + 2);
       titleElem.style.width = addPx(targetTitleWidth - 2);
+
+      if (this.element.is(':not(:hidden)')) {
+        this.adjustMenuItemVisibility();
+        this.toggleMoreMenu(buttonsetElem.offsetWidth < buttonsetElem.scrollWidth);
+      }
 
       // Recheck if title is overflowed to ellipsis
       if (titleElem.textContent &&
@@ -1388,19 +1407,19 @@ Toolbar.prototype = {
 
   /**
    * Determines whether or not the "more actions" button should be displayed.
+   * @param {boolean} buttonsetOverflow Determine if buttonset is overflowing.
    * @private
    * @returns {undefined} whether or not the "more actions" button should be displayed.
    */
-  toggleMoreMenu() {
+  toggleMoreMenu(buttonsetOverflow = false) {
     if (this.moreButtonIsDisabled()) {
       return;
     }
-
     const overflowItems = this.moreMenu.children('li:not(.separator)');
     const hiddenOverflowItems = overflowItems.not('.hidden');
 
     let method = 'removeClass';
-    if (hiddenOverflowItems.length > 0) {
+    if (hiddenOverflowItems.length > 0 || buttonsetOverflow) {
       method = 'addClass';
     }
 
