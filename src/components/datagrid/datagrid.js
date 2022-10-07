@@ -3162,7 +3162,6 @@ Datagrid.prototype = {
             $('.is-draggable-target', clone).remove();
 
             self.setDraggableColumnTargets();
-
             extraTopPos = self.getExtraTop();
             headerPos = header.position();
             offPos = { top: (pos.top - headerPos.top), left: (pos.left - headerPos.left) };
@@ -3253,6 +3252,22 @@ Datagrid.prototype = {
                 self.updateGroupHeadersAfterColumnReorder(indexFrom, indexTo);
                 self.arrayIndexMove(self.settings.columns, indexFrom, indexTo);
                 self.updateColumns(self.settings.columns);
+
+                if (self.settings.showDirty) {
+                  self.dirtyArray.forEach((dirtyRow, indexDirty) => {
+                    if (dirtyRow[indexFrom] && dirtyRow[indexFrom].isDirty) {
+                      const clearFrom = !(dirtyRow[indexTo] && dirtyRow[indexTo].isDirty);
+                      const dirtyCell = { ...self.dirtyArray[indexDirty][indexFrom] };
+                      dirtyCell.cell = indexTo;
+                      dirtyCell.column = self.settings.columns[indexTo];
+                      self.setDirtyCell(indexDirty, indexTo, dirtyCell);
+
+                      if (clearFrom) {
+                        self.clearDirtyCell(indexDirty, indexFrom);
+                      }
+                    }
+                  });
+                }
               }
             }
           });
