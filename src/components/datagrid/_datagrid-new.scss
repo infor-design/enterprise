@@ -272,6 +272,10 @@
             .row-btn {
               top: -1px;
 
+              &.btn-icon {
+                height: 22px;
+              }
+
               .icon {
                 margin-top: 0;
               }
