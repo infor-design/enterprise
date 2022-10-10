@@ -1,5 +1,13 @@
 # What's New with Enterprise
 
+## v4.69.0
+
+## v4.69.0 Features
+
+## v4.69.0 Fixes
+
+- `[Datagrid]` Fixed a bug in datagrid where row shading is not rendered properly. ([#6850](https://github.com/infor-design/enterprise/issues/6850))
+
 ## v4.68.0
 
 ## v4.68.0 Features
