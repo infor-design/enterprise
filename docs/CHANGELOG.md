@@ -1,5 +1,13 @@
 # What's New with Enterprise
 
+## v4.69.0
+
+## v4.69.0 Features
+
+## v4.69.0 Fixes
+
+- `[Datagrid]` Fixed a bug in datagrid where icon is not rendering properly in small and extra small row height. ([#6866](https://github.com/infor-design/enterprise/issues/6866))
+
 ## v4.68.0
 
 ## v4.68.0 Features
