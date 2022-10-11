@@ -4,6 +4,8 @@
 
 ## v4.69.0 Features
 
+- `[Lookup]` Added puppeteer script for lookup double click apply enhancement. ([#6886](https://github.com/infor-design/enterprise/issues/6886))
+
 ## v4.69.0 Fixes
 
 - `[Datagrid]` Fixed a bug in datagrid where icon is not rendering properly in small and extra small row height. ([#6866](https://github.com/infor-design/enterprise/issues/6866))
@@ -18,7 +20,6 @@
 - `[Column]` Added puppeteer script for combined column chart. ([#6381](https://github.com/infor-design/enterprise/issues/6381))
 - `[Datagrid]` Added additional setting in datagrid header for tooltip extra class. ([#6802](https://github.com/infor-design/enterprise/issues/6802))
 - `[Datagrid]` Added dblClickApply setting in lookup for selection of item. ([#6546](https://github.com/infor-design/enterprise/issues/6546))
-- `[Lookup]` Added puppeteer script for lookup double click apply enhancement. ([#6886](https://github.com/infor-design/enterprise/issues/6886))
 
 ## v4.68.0 Fixes
 
