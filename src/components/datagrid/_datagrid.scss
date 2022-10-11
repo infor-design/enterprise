@@ -2293,7 +2293,7 @@ $datagrid-small-row-height: 25px;
         background-color: $datagrid-alternate-bg-color;
 
         &.is-editing {
-          background-color: $datagrid-cell-bg-color;
+          background-color: $datagrid-cell-editing-bg-color;
         }
       }
 
@@ -2302,7 +2302,7 @@ $datagrid-small-row-height: 25px;
           background-color: $datagrid-alternate-bg-color;
 
           &.is-editing {
-            background-color: $datagrid-cell-bg-color;
+            background-color: $datagrid-cell-editing-bg-color;
           }
         }
       }
