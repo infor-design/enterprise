@@ -281,7 +281,7 @@ Splitter.prototype = {
         return false;
       }
       if (s.resize === 'immediate') {
-        self.splitTo(args[direction], parentHeight);
+        self.splitTo(args[direction], parent.height());
       }
       return true;
     });
