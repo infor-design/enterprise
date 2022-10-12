@@ -6,6 +6,7 @@
 
 ## v4.69.0 Fixes
 
+- `[Datagrid]` Fixed a bug in datagrid where row shading is not rendered properly. ([#6850](https://github.com/infor-design/enterprise/issues/6850))
 - `[Datagrid]` Fixed a bug in datagrid where icon is not rendering properly in small and extra small row height. ([#6866](https://github.com/infor-design/enterprise/issues/6866))
 - `[Splitter]` Fix on splitter not working when parent height changes dynamically. ([#6819](https://github.com/infor-design/enterprise/issues/6819))
 
