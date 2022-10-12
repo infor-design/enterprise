@@ -402,4 +402,23 @@ describe('Datagrid', () => {
         });
     });
   });
+
+  describe('Edit cells', () => {
+    const url = `${baseUrl}/example-editable`;
+
+    it('should update number to correct value in different locale', async () => {
+      const localeUrl = `${url}?locale=de-DE`;
+      await page.goto(localeUrl, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+
+      const priceCell = await page.$('#datagrid table > tbody > tr:nth-child(1) > td:nth-child(7)');
+      await priceCell.click();
+      await priceCell.type('1,5');
+      await page.keyboard.press('Enter');
+      await priceCell.evaluate(el => el.textContent).then(text => expect(text).toEqual('1,500'));
+
+      await priceCell.click();
+      await page.keyboard.press('Enter');
+      await priceCell.evaluate(el => el.textContent).then(text => expect(text).toEqual('1,500'));
+    });
+  });
 });
