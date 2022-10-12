@@ -7,6 +7,7 @@
 ## v4.69.0 Fixes
 
 - `[Datagrid]` Fixed a bug in datagrid where icon is not rendering properly in small and extra small row height. ([#6866](https://github.com/infor-design/enterprise/issues/6866))
+- `[Modal]` Fixed a bug where suppress key setting is not working. ([#6793](https://github.com/infor-design/enterprise/issues/6793))
 
 ## v4.68.0
 
@@ -33,7 +34,6 @@
 - `[Datagrid]` Fix on dirty indicator not updating on drag columns. ([#6867](https://github.com/infor-design/enterprise/issues/6867))
 - `[Editor]` Fixed a bug in editor where blockquote is not continued in the next line. ([#6794](https://github.com/infor-design/enterprise/issues/6794))
 - `[Editor]` Fixed a bug in editor where breaking space doesn't render dirty indicator properly. ([NG#1363](https://github.com/infor-design/enterprise-ng/issues/1363))
-- `[Modal]` Fixed a bug where suppress key setting is not working. ([#6793](https://github.com/infor-design/enterprise/issues/6793))
 - `[Searchfield]` Visual fixes on go button in searchfield toolbar. ([#6686](https://github.com/infor-design/enterprise/issues/6686))
 - `[Searchfield]` Added null check in xButton. ([#6858](https://github.com/infor-design/enterprise/issues/6858))
 - `[Textarea]` Fixed a bug in textarea where validation breaks after enabling/disabling. ([#6773](https://github.com/infor-design/enterprise/issues/6773))
