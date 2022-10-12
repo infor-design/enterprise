@@ -7055,6 +7055,7 @@ Datagrid.prototype = {
 
         // Prevent parent grid from sorting when nested
         e.stopPropagation();
+        self.editor = null;
         self.setSortColumn($(this).attr('data-column-id'));
         return false;
       });
