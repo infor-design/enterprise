@@ -308,6 +308,29 @@
     }
   }
 
+  &.small-rowheight,
+  &.extra-small-rowheight {
+    tbody {
+      tr {
+        td {
+          .datagrid-cell-wrapper {
+            .row-btn {
+              top: -1px;
+
+              &.btn-icon {
+                height: 22px;
+              }
+
+              .icon {
+                margin-top: 0;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
   &.extra-small-rowheight {
     .datagrid-cell-wrapper {
       .icon-clock.icon {
