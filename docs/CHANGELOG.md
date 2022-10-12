@@ -7,6 +7,7 @@
 ## v4.69.0 Fixes
 
 - `[Datagrid]` Fixed a bug in datagrid where icon is not rendering properly in small and extra small row height. ([#6866](https://github.com/infor-design/enterprise/issues/6866))
+- `[Datagrid]` Additional checks when updating cell so that numbers aren't converted twice. ([NG#1370](https://github.com/infor-design/enterprise-ng/issues/1370))
 
 ## v4.68.0
 
