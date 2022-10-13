@@ -625,7 +625,7 @@ Place.prototype = {
     const offBottomEdge = rect.bottom > getBoundary('bottom');
 
     // Return if no bleeding is detected (no need to fix anything!)
-    if (!placementObj.hasOverflow && !offRightEdge && !offLeftEdge && !offTopEdge && !offBottomEdge) {
+    if (!offRightEdge && !offLeftEdge && !offTopEdge && !offBottomEdge) {
       placementObj.bleeds = undefined;
       return placementObj;
     }
@@ -676,7 +676,7 @@ Place.prototype = {
 
   flip(placementObj) {
     // Don't attempt to flip if there was no bleeding on the edge we're attempting to leave from.
-    if (!placementObj.hasOverflow && !placementObj.bleeds[placementObj.placement]) {
+    if (!placementObj.bleeds[placementObj.placement]) {
       return placementObj;
     }
 
