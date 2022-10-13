@@ -5590,6 +5590,7 @@ Datagrid.prototype = {
       delay = typeof delay === 'undefined' ? defaultDelay : delay;
       clearTimeout(tooltipTimer);
       setTimeout(() => {
+        // Prevents the tooltip to show on and off
         if ($('.grid-tooltip:hover').length > 0) {
           return;
         }
@@ -5602,6 +5603,7 @@ Datagrid.prototype = {
       }, delay);
     };
 
+    // Prevents the tooltip to show on and off
     $(document)
       .off('mousemove.gridtooltip')
       .on('mousemove.gridtooltip', () => {
