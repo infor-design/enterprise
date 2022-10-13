@@ -3145,6 +3145,10 @@ Datagrid.prototype = {
       handle.on('mousedown.datagrid', (e) => {
         e.preventDefault();
 
+        if (self.editor && self.editor.input) {
+          self.commitCellEdit();
+        }
+
         header.drag({
           clone: true, cloneAppendTo: headers.first().parent().parent(), clonePosIsFixed: true
         })
