@@ -389,7 +389,9 @@ Place.prototype = {
     // Simple placement logic
     placementObj = doPlacementAgainstParent(placementObj);
 
-    // Initial Placement
+    // Adjusts the placement coordinates based on a defined strategy
+    // Will only adjust the current strategy if bleeding outside the
+    // viewport/container are detected.
     placementObj.strategies.forEach((strat) => {
       placementObj = self.checkBleeds(placementObj);
 
@@ -546,17 +548,6 @@ Place.prototype = {
     }
 
     return $(document.body);
-  },
-
-  checkOverflow(placementObj) {
-    const parentRect = DOM.getDimensions(placementObj.parent[0]);
-    const elRect = DOM.getDimensions(this.element[0]);
-    placementObj.hasOverflow = false;
-
-    if (placementObj.placement === 'top') {
-      placementObj.hasOverflow = parentRect.top - elRect.height < 0 || parentRect.top - elRect.height >= elRect.top;
-    }
-    return placementObj;
   },
 
   /**

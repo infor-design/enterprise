@@ -5567,7 +5567,6 @@ Datagrid.prototype = {
       selector.str = `${selector.header}, ${selector.td}, ${selector.icons}`;
     }
 
-    self.currentTooltipContainer = null;
     // Handle tooltip to show
     const handleShow = (elem, delay) => {
       delay = typeof delay === 'undefined' ? defaultDelay : delay;
@@ -5580,7 +5579,6 @@ Datagrid.prototype = {
         const tooltip = $(elem).data('gridtooltip') || self.cacheTooltip(elem);
         const containerEl = isHeaderColumn ? elem.parentNode : isHeaderIcon ? elem.parentNode : elem;
         const width = self.getOuterWidth(containerEl);
-        self.currentTooltipContainer = containerEl;
         if (tooltip && (tooltip.forced || (tooltip.textwidth > (width - 35))) && !isPopup) {
           self.showTooltip(tooltip);
         }
