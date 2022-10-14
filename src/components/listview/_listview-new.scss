@@ -28,6 +28,10 @@
 
     .btn-icon {
       top: 7px;
+
+      &.close {
+        right: 11px;
+      }
     }
 
     &.has-listview-filters {
