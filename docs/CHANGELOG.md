@@ -9,7 +9,6 @@
 - `[Datagrid]` Fixed a bug in datagrid where row shading is not rendered properly. ([#6850](https://github.com/infor-design/enterprise/issues/6850))
 - `[Datagrid]` Fixed a bug in datagrid where icon is not rendering properly in small and extra small row height. ([#6866](https://github.com/infor-design/enterprise/issues/6866))
 - `[Datagrid]` Additional checks when updating cell so that numbers aren't converted twice. ([NG#1370](https://github.com/infor-design/enterprise-ng/issues/1370))
-- `[Splitter]` Fix on splitter not working when parent height changes dynamically. ([#6819](https://github.com/infor-design/enterprise/issues/6819))
 - `[Modal]` Fixed a bug where suppress key setting is not working. ([#6793](https://github.com/infor-design/enterprise/issues/6793))
 - `[Splitter]` Fixed on splitter not working when parent height changes dynamically. ([#6819](https://github.com/infor-design/enterprise/issues/6819))
 
