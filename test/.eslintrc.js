@@ -60,6 +60,9 @@ module.exports = {
     'jasmine/new-line-before-expect': ['off'],
 
     // set "no-underscore-dangle" to only a warning (also shouldn't fail builds)
-    'no-underscore-dangle': ['warn', { allow: ['_client'] }]
+    'no-underscore-dangle': ['warn', { allow: ['_client'] }],
+
+    // Disable to allow use of Promise
+    'compat/compat': ['off']
   }
 };

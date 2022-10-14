@@ -3162,7 +3162,6 @@ Datagrid.prototype = {
             $('.is-draggable-target', clone).remove();
 
             self.setDraggableColumnTargets();
-
             extraTopPos = self.getExtraTop();
             headerPos = header.position();
             offPos = { top: (pos.top - headerPos.top), left: (pos.left - headerPos.left) };
@@ -3249,6 +3248,57 @@ Datagrid.prototype = {
 
                 indexFrom = tempArray[self.draggableStatus.startIndex] || 0;
                 indexTo = tempArray[self.draggableStatus.endIndex] || 0;
+
+                if (self.settings.showDirty && self.dirtyArray) {
+                  const updateCells = (row, dirtyCells, clearCells) => {
+                    dirtyCells.forEach((d) => {
+                      const dirtyCell = { ...self.dirtyArray[row][d[0]] };
+                      dirtyCell.cell = d[1];
+                      dirtyCell.column = self.settings.columns[d[1]];
+                      self.setDirtyCell(row, d[1], dirtyCell);
+                    });
+
+                    clearCells.forEach((d) => {
+                      self.clearDirtyCell(row, d);
+                    });
+                  };
+
+                  if (indexFrom > indexTo) {
+                    self.dirtyArray.forEach((dirtyRow, row) => {
+                      const clearCells = [];
+                      const dirtyCells = [];
+                      for (let c = indexTo; c <= indexFrom; c++) {
+                        if (dirtyRow[c] && dirtyRow[c].isDirty) {
+                          if (c === indexFrom) {
+                            dirtyCells.push([indexFrom, indexTo]);
+                          } else {
+                            dirtyCells.push([c, c + 1]);
+                          }
+                        } else {
+                          clearCells.push(c + 1);
+                        }
+                      }
+                      updateCells(row, dirtyCells, clearCells);
+                    });
+                  } else if (indexFrom < indexTo) {
+                    self.dirtyArray.forEach((dirtyRow, row) => {
+                      const clearCells = [];
+                      const dirtyCells = [];
+                      for (let c = indexTo; c >= indexFrom; c--) {
+                        if (dirtyRow[c] && dirtyRow[c].isDirty) {
+                          if (c === indexFrom) {
+                            dirtyCells.push([indexFrom, indexTo]);
+                          } else {
+                            dirtyCells.push([c, c - 1]);
+                          }
+                        } else {
+                          clearCells.push(c - 1);
+                        }
+                      }
+                      updateCells(row, dirtyCells, clearCells);
+                    });
+                  }
+                }
 
                 self.updateGroupHeadersAfterColumnReorder(indexFrom, indexTo);
                 self.arrayIndexMove(self.settings.columns, indexFrom, indexTo);
