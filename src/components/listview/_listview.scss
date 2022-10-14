@@ -673,11 +673,11 @@
 
     &.has-focus {
       input {
-        border: none;
+        border: 1px solid $listview-full-width-bg-color;
       }
     }
 
-    &.is-hovered {
+    &.is-hovered:not(.has-focus) {
       input {
         border: 1px solid $listview-search-border-color;
       }
@@ -702,7 +702,7 @@
     border: 1px solid transparent;
     border-bottom-color: $listview-border-color;
     line-height: 16px;
-    padding: 9px 10px 9px 40px;
+    padding: 9px 10px 9px 45px;
     width: 100%;
 
     &[disabled] {

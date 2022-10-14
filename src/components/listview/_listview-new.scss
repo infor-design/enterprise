@@ -19,8 +19,11 @@
   }
 
   .searchfield-wrapper {
-    .icon:not(.close):not(.icon-error) {
-      left: 18px;
+
+    &.non-collapsible.is-open {
+      .icon:not(.close):not(.icon-error) {
+        left: 16px;
+      }
     }
 
     .btn-icon {
