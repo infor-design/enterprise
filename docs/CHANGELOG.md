@@ -8,6 +8,20 @@
 - `[Icons]` Over 60 new icons and 126 new industry focused icons. ([#6868](https://github.com/infor-design/enterprise/issues/6868))
 - `[Icons]` The icon `save-closed` is now `save-closed-old` in the deprecated, we suggest not using this old icon. ([#6868](https://github.com/infor-design/enterprise/issues/6868))
 - `[Icons]` Some filled alert icons like `sucess-alert` and `alert-alert` are now `sucess-filled` and `alert-filled` we suggest no longer using filled alert icons. ([#6868](https://github.com/infor-design/enterprise/issues/6868))
+## v4.69.0 Features
+
+- `[Lookup]` Added puppeteer script for lookup double click apply enhancement. ([#6886](https://github.com/infor-design/enterprise/issues/6886))
+
+## v4.69.0 Fixes
+
+- `[Datagrid]` Fixed a bug in datagrid where row shading is not rendered properly. ([#6850](https://github.com/infor-design/enterprise/issues/6850))
+- `[Datagrid]` Fixed a bug in datagrid where icon is not rendering properly in small and extra small row height. ([#6866](https://github.com/infor-design/enterprise/issues/6866))
+- `[Datagrid]` Fixed a bug in datagrid where sorting is not rendering properly when there is a previously focused cell. ([#6851](https://github.com/infor-design/enterprise/issues/6851))
+- `[Datagrid]` Additional checks when updating cell so that numbers aren't converted twice. ([NG#1370](https://github.com/infor-design/enterprise-ng/issues/1370))
+- `[Modal]` Fixed a bug where suppress key setting is not working. ([#6793](https://github.com/infor-design/enterprise/issues/6793))
+- `[Splitter]` Fixed on splitter not working when parent height changes dynamically. ([#6819](https://github.com/infor-design/enterprise/issues/6819))
+- `[Toolbar Flex]` Added additional checks for destroying toolbar. ([#6844](https://github.com/infor-design/enterprise/issues/6844))
+
 ## v4.68.0
 
 ## v4.68.0 Features
@@ -33,8 +47,8 @@
 - `[Datagrid]` Fix on dirty indicator not updating on drag columns. ([#6867](https://github.com/infor-design/enterprise/issues/6867))
 - `[Editor]` Fixed a bug in editor where blockquote is not continued in the next line. ([#6794](https://github.com/infor-design/enterprise/issues/6794))
 - `[Editor]` Fixed a bug in editor where breaking space doesn't render dirty indicator properly. ([NG#1363](https://github.com/infor-design/enterprise-ng/issues/1363))
-- `[Modal]` Fixed a bug where suppress key setting is not working. ([#6793](https://github.com/infor-design/enterprise/issues/6793))
 - `[Searchfield]` Visual fixes on go button in searchfield toolbar. ([#6686](https://github.com/infor-design/enterprise/issues/6686))
+- `[Searchfield]` Added null check in xButton. ([#6858](https://github.com/infor-design/enterprise/issues/6858))
 - `[Textarea]` Fixed a bug in textarea where validation breaks after enabling/disabling. ([#6773](https://github.com/infor-design/enterprise/issues/6773))
 - `[Typography]` Updated text link color in dark theme. ([#6807](https://github.com/infor-design/enterprise/issues/6807))
 

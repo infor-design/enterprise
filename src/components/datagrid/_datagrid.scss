@@ -2343,6 +2343,20 @@ $datagrid-small-row-height: 25px;
     &.alt-shading {
       td {
         background-color: $datagrid-alternate-bg-color;
+
+        &.is-editing {
+          background-color: $datagrid-cell-editing-bg-color;
+        }
+      }
+
+      &.is-hover-row {
+        td {
+          background-color: $datagrid-alternate-bg-color;
+
+          &.is-editing {
+            background-color: $datagrid-cell-editing-bg-color;
+          }
+        }
       }
     }
 

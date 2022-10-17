@@ -924,11 +924,11 @@ SearchField.prototype = {
     });
 
     // Safari Mac document.activeElement cannot be used on buttons because it is not focusable on the Mac OS Safari.
-    if (env.browser.isSafari()) {
+    if (env.browser.isSafari() && this.xButton) {
       this.xButton.on('mouseover.clearable', () => {
         this.closeButtonHover = true;
       });
-    
+
       this.xButton.on('mouseleave.clearable', () => {
         this.closeButtonHover = false;
       });
@@ -2198,7 +2198,7 @@ SearchField.prototype = {
     this.element.clearable({ tabbable: this.settings.tabbable });
     this.wrapper.addClass('has-close-icon-button');
     this.xButton = this.wrapper.children('.icon.close').length > 0 ? this.wrapper.children('.icon.close') : this.wrapper.children('button.close');
-  
+
     // Ignoring the close button from tabbing
     if (!this.settings.tabbable) {
       this.xButton[0].setAttribute('tabindex', '-1');
