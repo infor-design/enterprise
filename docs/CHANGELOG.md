@@ -4,6 +4,8 @@
 
 ## v4.69.0 Features
 
+- `[Lookup]` Added puppeteer script for lookup double click apply enhancement. ([#6886](https://github.com/infor-design/enterprise/issues/6886))
+
 ## v4.69.0 Fixes
 
 - `[Datagrid]` Fixed a bug in datagrid where row shading is not rendered properly. ([#6850](https://github.com/infor-design/enterprise/issues/6850))
