@@ -3145,6 +3145,10 @@ Datagrid.prototype = {
       handle.on('mousedown.datagrid', (e) => {
         e.preventDefault();
 
+        if (self.editor && self.editor.input) {
+          self.commitCellEdit();
+        }
+
         header.drag({
           clone: true, cloneAppendTo: headers.first().parent().parent(), clonePosIsFixed: true
         })
@@ -7055,6 +7059,7 @@ Datagrid.prototype = {
 
         // Prevent parent grid from sorting when nested
         e.stopPropagation();
+        self.editor = null;
         self.setSortColumn($(this).attr('data-column-id'));
         return false;
       });
