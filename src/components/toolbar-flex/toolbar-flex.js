@@ -653,6 +653,7 @@ ToolbarFlex.prototype = {
 
     delete this.items;
     delete this.sections;
+    delete this.trueFocusedItem;
   },
 
   /**
