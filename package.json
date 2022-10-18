@@ -71,7 +71,8 @@
     "e2e:puppeteer": "npx --no-install jest --config=test/jest.config.js --runInBand --detectOpenHandles --forceExit",
     "e2e:update-imagesnapshots": "npx --no-install jest --config=test/jest.config.js --updateSnapshot --runInBand --detectOpenHandles --forceExit",
     "webdriver:clean": "npx webdriver-manager clean",
-    "webdriver:update": "npx webdriver-manager update --versions.chrome=102.0.5005.115 --standalone false --quiet --gecko=false",
+    "webdriver:update": "npx webdriver-manager update --versions.chrome=105.0.5195.125 --standalone false --quiet --gecko=false",
+    "zip-dist": "npx grunt zip-dist",
     "documentation": "node ./scripts/deploy-documentation.js",
     "release:dev": "node scripts/publish-nightly-manual",
     "release:alpha": "release-it --preRelease=alpha --npm.tag=alpha --no-github.release",
@@ -82,7 +83,7 @@
     "node-version-check": "npx check-node-version --node 16",
     "node-updates-check": "npx ncu"
   },
-  "chrome-version": "104",
+  "chrome-version": "105.0.5195.125",
   "dependencies": {
     "d3": "^7.6.1",
     "ids-identity": "4.11.12",

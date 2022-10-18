@@ -1026,24 +1026,26 @@ Modal.prototype = {
     renderLoop.register(displayTimer);
 
     // Handle Default button.
-    $(this.element).on(`keypress.${this.namespace}`, (e) => {
-      const target = $(e.target);
+    $(this.element)
+      .off(`keypress.${this.namespace}`)
+      .on(`keypress.${this.namespace}`, (e) => {
+        const target = $(e.target);
 
-      if (target.is('.editor, .searchfield, textarea, :button') || target.closest('.tab-list').length || $('#dropdown-list').length) {
-        return;
-      }
+        if (target.is('.editor, .searchfield, textarea, :button') || target.closest('.tab-list').length || $('#dropdown-list').length) {
+          return;
+        }
 
-      if (e.which === 13 && this.isOnTop &&
+        if (e.which === 13 && this.isOnTop &&
           !target.closest('form').find(':submit').length &&
           this.element.find('.btn-modal-primary:enabled').length) {
-        e.stopPropagation();
-        e.preventDefault();
+          e.stopPropagation();
+          e.preventDefault();
 
-        if (!self.settings.suppressEnterKey && (!target.hasClass('fileupload') || target.hasClass('colorpicker'))) {
-          this.element.find('.btn-modal-primary:enabled').trigger('click');
+          if (!self.settings.suppressEnterKey && (!target.hasClass('fileupload') || target.hasClass('colorpicker'))) {
+            this.element.find('.btn-modal-primary:enabled').trigger('click');
+          }
         }
-      }
-    });
+      });
 
     // Override this page's skip-link default functionality to instead focus the top
     // of this element if it's clicked.

@@ -725,13 +725,15 @@ ToolbarFlexItem.prototype = {
       const originalButton = $(itemElement).data('originalButton');
       const originalButtonAPI = $(originalButton).data('toolbarflexitem');
 
-      originalButtonAPI.actionButtonLink = null;
-      $(itemElement).removeData('original-button');
+      if (originalButtonAPI) {
+        originalButtonAPI.actionButtonLink = null;
+        $(itemElement).removeData('original-button');
 
-      if (originalButtonAPI.type === 'menubutton') {
-        const submenuItems = itemElement.querySelector('.popupmenu').children;
-        for (let j = 0; j < submenuItems.length; j++) {
-          doUnlinkSubmenuItem(submenuItems[j]);
+        if (originalButtonAPI.type === 'menubutton') {
+          const submenuItems = itemElement.querySelector('.popupmenu').children;
+          for (let j = 0; j < submenuItems.length; j++) {
+            doUnlinkSubmenuItem(submenuItems[j]);
+          }
         }
       }
     }

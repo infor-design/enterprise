@@ -1,4 +1,5 @@
 /* eslint-disable compat/compat */
+const path = require('path');
 const { getConfig, getComputedStyle } = require('../../helpers/e2e-utils.js');
 
 describe('Datagrid', () => {
@@ -227,11 +228,13 @@ describe('Datagrid', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should not have aria-describedby attribute at cells', async () => {
-      await page.evaluate(async () => {
-        const cells = await document.querySelectorAll('.datagrid body tr td');
-        cells.forEach(cell => expect(cell.getAttribute('aria-describedby')).toBe(null));
-      });
+    it('should override the aria-describedby value', async () => {
+      const ariaDesc = await page.$$eval('tbody[role="rowgroup"] td[role="gridcell"]:nth-child(2)',
+        e => e.map(el => el.getAttribute('aria-describedby')));
+
+      for (let i = 0; i < ariaDesc.length; i++) {
+        expect(ariaDesc).toContain(`test-landmark-datagrid-${i + 1}-header-1`);
+      }
     });
   });
 
@@ -370,6 +373,52 @@ describe('Datagrid', () => {
           return elHandle.evaluate(e => e.getAttribute('style'));
         })
         .then(style => expect(style).toContain('width'));
+    });
+  });
+
+  describe('Allow beforeCommitCellEdit event test', () => {
+    const url = `${baseUrl}/test-editable-fileupload-before-commitcelledit`;
+    const fileName = 'test.txt';
+    const filePath = path.resolve(__dirname, fileName);
+    const uploadFiles = async (filePathArr) => {
+      const [fileChooser] = await Promise.all([
+        page.waitForFileChooser(),
+        page.click('#datagrid  table > tbody > tr:nth-child(1) > td.datagrid-trigger-cell.is-fileupload.has-editor > div > svg')
+      ]);
+      return fileChooser.accept(filePathArr);
+    };
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('should upload a file and show a fake path', async () => {
+      await uploadFiles([filePath]);
+      await page.waitForSelector('.icon-close', { visible: true });
+      await page.waitForSelector('table > tbody > tr:nth-child(1) > td.datagrid-trigger-cell.is-fileupload.has-editor > div', { visible: true })
+        .then(async (element) => {
+          const fakePath = await element.$eval('#datagrid > div.datagrid-wrapper.center.scrollable-x.scrollable-y > table > tbody > tr:nth-child(1) > td.datagrid-trigger-cell.is-fileupload.has-editor > div > span', e => e.textContent);
+          expect(fakePath).toEqual(`C:\\fakepath\\${fileName}`);
+        });
+    });
+  });
+
+  describe('Edit cells', () => {
+    const url = `${baseUrl}/example-editable`;
+
+    it('should update number to correct value in different locale', async () => {
+      const localeUrl = `${url}?locale=de-DE`;
+      await page.goto(localeUrl, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+
+      const priceCell = await page.$('#datagrid table > tbody > tr:nth-child(1) > td:nth-child(7)');
+      await priceCell.click();
+      await priceCell.type('1,5');
+      await page.keyboard.press('Enter');
+      await priceCell.evaluate(el => el.textContent).then(text => expect(text).toEqual('1,500'));
+
+      await priceCell.click();
+      await page.keyboard.press('Enter');
+      await priceCell.evaluate(el => el.textContent).then(text => expect(text).toEqual('1,500'));
     });
   });
 });

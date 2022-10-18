@@ -74,6 +74,7 @@ function addSuffixToAttributes(parentAttrs = [], childAttrs = [], suffix) {
  * @param {int} [settings.minWidth=400] Applys a minimum width to the lookup
  * @param {boolean} [settings.clearable=false] Add an ability to clear the lookup field. If "true", it will affix an "x" button to the right section of the field.
  * @param {boolean} [settings.tabbable=true] If true, causes the Lookup's trigger icon to be focusable with the keyboard.
+ * @param {boolean} [settings.dblClickApply=false] If true, needs to double click to select the lookup item.
  * @param {boolean} [settings.allowDuplicates=false] If true, will show all duplicate selected values in input element.
  */
 const LOOKUP_DEFAULTS = {
@@ -95,6 +96,7 @@ const LOOKUP_DEFAULTS = {
   clearable: false,
   attributes: null,
   tabbable: true,
+  dblClickApply: false,
   allowDuplicates: false,
 };
 
@@ -651,6 +653,10 @@ Lookup.prototype = {
       lookupGrid = this.applyMinWidth(lookupGrid);
     }
 
+    if (self.settings.dblClickApply) {
+      self.settings.options.dblClickApply = self.settings.dblClickApply;
+    }
+
     if (self.settings.options) {
       if (self.settings.options.selectable === 'single' && self.settings.autoApply) {
         self.settings.options.cellNavigation = false;
@@ -720,6 +726,12 @@ Lookup.prototype = {
     }
 
     if (this.settings.options) {
+      if (this.settings.dblClickApply && this.settings.options.selectable === 'single') {
+        lookupGrid.on('ischanged.lookup', () => {
+          this.isChanged = true;
+        });
+      }
+
       lookupGrid.on('selected.lookup', (e, selectedRows, op, rowData) => {
         if (self.settings.options.source && self.settings.options.selectable === 'multiple') {
           self.element.trigger('selected', [selectedRows, op, rowData, self]);
@@ -1074,7 +1086,7 @@ Lookup.prototype = {
    */
   enable() {
     this.element.prop('disabled', false).prop('readonly', false).removeClass('is-not-editable');
-    this.element.parent().removeClass('is-disabled');
+    this.element.closest('.field').removeClass('is-disabled');
     this.icon.prop('disabled', false);
   },
 
