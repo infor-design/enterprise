@@ -17,6 +17,7 @@
       data = [],
       columns = [],
       dropdowndOptions = [
+             {id: 'opt0', value: '', label: ''},
              {id: 'opt1', value: 'val1', label: 'gallon, Imperial'},
              {id: 'opt2', value: 'val2', label: 'International Units'},
              {id: 'opt3', value: 'val3', label: 'gallon, U.S. Liquid'},
@@ -24,6 +25,14 @@
              {id: 'opt5', value: 'val5', label: 'inch squared'},
              {id: 'opt6', value: 'val6', label: 'inch cubed'},
            ];
+
+     //Define a custom Validator that just fails
+     $.fn.validation.rules.customRule = {
+        	check: function (value, field, grid) {
+            return value.toString().length > 0;
+        	},
+        	message: 'Incorrect Input'
+        };
 
     // Some Sample Data
     data.push({ id: 1, productId: 2142201, productName: 'Compressor', activity:  '<svg/onload=alert(1)>', quantity: 1, price: 210.99, time: '1:30:45 AM', status: 'OK', state:'California', orderDate:  new Date(2016, 2, 15, 12, 30, 36), portable: false, action: 'val6', description: 'Compressor comes with various air compressor accessories, to help you with a variety of projects. All fittings are with 1/4 NPT connectors. The kit has an air blow gun that can be used for cleaning'});
@@ -36,12 +45,12 @@
 
     // Define Columns for the Grid.
     columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox});
-    columns.push({ id: 'time', name: 'Time', field: 'time', formatter: Formatters.Time, editor: Editors.Time });
-    columns.push({ id: 'date', name: 'Date', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date, dateFormat: 'M/d/yyyy' });
-    columns.push({ id: 'productId', name: 'Lookup', field: 'productId', formatter: Formatters.Lookup, minWidth: 100, editor: Editors.Lookup, maxLength: 7 });
-    columns.push({ id: 'dropdown', name: 'Dropdown', field: 'action', formatter: Formatters.Dropdown, editor: Editors.Dropdown, validate: 'required', options: dropdowndOptions });
-    columns.push({ id: 'colorpicker', name: 'Colorpicker', field: 'color', formatter: Formatters.Colorpicker, editor: Editors.Colorpicker});
-    columns.push({ id: 'fileupload', name: 'Fileupload', field: 'attachment', formatter: Formatters.Fileupload, editorOptions: {allowedTypes: 'jpg|png'}, editor: Editors.Fileupload });
+    columns.push({ id: 'time', name: 'Time', field: 'time', formatter: Formatters.Time, editor: Editors.Time, validate: 'required customRule' });
+    columns.push({ id: 'date', name: 'Date', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date, dateFormat: 'M/d/yyyy', validate: 'required customRule' });
+    columns.push({ id: 'productId', name: 'Lookup', field: 'productId', formatter: Formatters.Lookup, minWidth: 100, editor: Editors.Lookup, maxLength: 7, validate: 'required customRule' });
+    columns.push({ id: 'dropdown', name: 'Dropdown', field: 'action', formatter: Formatters.Dropdown, editor: Editors.Dropdown, validate: 'required', options: dropdowndOptions, validate: 'required customRule' });
+    columns.push({ id: 'colorpicker', name: 'Colorpicker', field: 'color', formatter: Formatters.Colorpicker, editor: Editors.Colorpicker, validate: 'required customRule'});
+    columns.push({ id: 'fileupload', name: 'Fileupload', field: 'attachment', formatter: Formatters.Fileupload, editorOptions: {allowedTypes: 'jpg|png'}, editor: Editors.Fileupload, validate: 'required customRule' });
     columns.push({ id: 'buffer', name: '', field: ''});
 
     // Init and get the api for the grid
@@ -49,7 +58,6 @@
       columns: columns,
       dataset: data,
       editable: true,
-      filterable: true,
       selectable: 'multiple',
       toolbar: {title: 'Compressors', results: true, actions: true, rowHeight: true}
     });
