@@ -45,6 +45,7 @@
 - `[Searchfield]` Added null check in xButton. ([#6858](https://github.com/infor-design/enterprise/issues/6858))
 - `[Textarea]` Fixed a bug in textarea where validation breaks after enabling/disabling. ([#6773](https://github.com/infor-design/enterprise/issues/6773))
 - `[Typography]` Updated text link color in dark theme. ([#6807](https://github.com/infor-design/enterprise/issues/6807))
+- `[Lookup]` Fixed where field stays disabled when enable API is called ([#6145](https://github.com/infor-design/enterprise/issues/6145))
 
 ## v4.67.0
 
