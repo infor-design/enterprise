@@ -1,4 +1,5 @@
 /* eslint-disable compat/compat */
+const exp = require('constants');
 const path = require('path');
 const { getConfig, getComputedStyle } = require('../../helpers/e2e-utils.js');
 
@@ -422,11 +423,19 @@ describe('Datagrid', () => {
     });
   });
 
-  describe('Extra class for tooltip tests', () => {
+  fdescribe('Extra class for tooltip tests', () => {
     const url = `${baseUrl}/example-header-icon-with-tooltip`;
 
     it('should show tooltip when hovered', async () => {
-      
+      //const localeUrl = `${url}`;
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+
+      await page.waitForSelector('#example-header-icon-with-tooltip-datagrid-0tooltip');
+      await page.hover('div[class="datagrid-column-wrapper"]');
+      const header = page.waitForSelector('.is-hidden');
+      //await waitForTimeout(300);
+
+      expect(header).toBeFalsy();
 
     });
   });
