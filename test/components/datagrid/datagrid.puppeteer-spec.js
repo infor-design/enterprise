@@ -421,4 +421,13 @@ describe('Datagrid', () => {
       await priceCell.evaluate(el => el.textContent).then(text => expect(text).toEqual('1,500'));
     });
   });
+
+  describe('Extra class for tooltip tests', () => {
+    const url = `${baseUrl}/example-header-icon-with-tooltip`;
+
+    it('should show tooltip when hovered', async () => {
+      
+
+    });
+  });
 });
