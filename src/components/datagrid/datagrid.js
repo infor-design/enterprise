@@ -3145,6 +3145,10 @@ Datagrid.prototype = {
       handle.on('mousedown.datagrid', (e) => {
         e.preventDefault();
 
+        if (self.editor && self.editor.input) {
+          self.commitCellEdit();
+        }
+
         header.drag({
           clone: true, cloneAppendTo: headers.first().parent().parent(), clonePosIsFixed: true
         })
@@ -7055,6 +7059,7 @@ Datagrid.prototype = {
 
         // Prevent parent grid from sorting when nested
         e.stopPropagation();
+        self.editor = null;
         self.setSortColumn($(this).attr('data-column-id'));
         return false;
       });
@@ -11065,7 +11070,7 @@ Datagrid.prototype = {
       } else {
         newVal = Locale.formatDate(value, { pattern: col.sourceFormat });
       }
-    } else if (typeof oldVal === 'number' && value && !nonNumberCharacters.test(value)) {
+    } else if (typeof oldVal === 'number' && value && (typeof value !== 'number' && !nonNumberCharacters.test(value))) {
       newVal = Locale.parseNumber(value); // remove thousands sep , keep a number a number
     }
 
@@ -11142,7 +11147,7 @@ Datagrid.prototype = {
     let oldVal = this.fieldValue(rowData, col.field);
 
     // Coerce/Serialize value if from cell edit
-    if (!fromApiCall) {
+    if (!fromApiCall && oldVal !== value) {
       coercedVal = this.coerceValue(value, oldVal, col, row, cell);
 
       // coerced value may be coerced to empty string, null, or 0
