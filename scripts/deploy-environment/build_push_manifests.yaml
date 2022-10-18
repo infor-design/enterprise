@@ -1,0 +1,52 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ent-env-build-push-manifests
+spec:
+  ttlSecondsAfterFinished: 300
+  backoffLimit: 0
+  template:
+    spec:
+      restartPolicy: Never
+      volumes:
+        - name: gitconfig
+          secret:
+            secretName: gitconfig
+            defaultMode: 0600
+      containers:
+        - name: worker
+          image: hookandloop/ent-env-worker:0.0.1
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: gitconfig
+              readOnly: true
+              mountPath: "/usr/src/secrets"
+          resources:
+            requests:
+              cpu: 500m
+              memory: 3Gi
+          env:
+            - name: GITHUB_ACCESS_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: github-access-token
+                  key: token
+            - name: SUBDOMAIN_NAME
+              value: ""
+            - name: BUILD_AS_LATEST
+              value: ""
+            - name: VERSION
+              value: ""
+            - name: IMAGE_VERSION
+              value: ""
+            - name: MANIFESTS_REPO
+              value: ""
+          command: ["/bin/bash"]
+          args: ["-c", ". ./build_push_manifests.sh"]
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - /bin/sh
+                  - -c
+                  - cp /usr/src/secrets/gitconfig /root/.gitconfig
