@@ -1,33 +1,5 @@
 # What's New with Enterprise
 
-## v4.68.0
-
-## v4.68.0 Features
-
-- `[Calendar]` Added puppeteer script for show/hide legend. ([#6810](https://github.com/infor-design/enterprise/issues/6810))
-- `[Colors]` Added puppeteer script for color classes targeting color & border color. ([#6801](https://github.com/infor-design/enterprise/issues/6801))
-- `[Datagrid]` Added additional setting in datagrid header for tooltip extra class. ([#6802](https://github.com/infor-design/enterprise/issues/6802))
-- `[Datagrid]` Added dblClickApply setting in lookup for selection of item. ([#6546](https://github.com/infor-design/enterprise/issues/6546))
-
-## v4.68.0 Fixes
-
-- `[Bar Chart]` Fixed a bug in bar charts grouped, where arias are identical to each series. ([#6748](https://github.com/infor-design/enterprise/issues/6748))
-- `[Datagrid]` Fixed a bug in datagrid where expandable row animation is not rendering properly. ([#6813](https://github.com/infor-design/enterprise/issues/6813))
-- `[Datagrid]` Fixed a bug in datagrid where dropdown filter does not render correctly. ([#6834](https://github.com/infor-design/enterprise/issues/6834))
-- `[Datagrid]` Fixed alignment issues in trigger fields. ([#6678](https://github.com/infor-design/enterprise/issues/6678))
-- `[Datagrid]` Added a null guard in tree list when list is not yet loaded. ([#6816](https://github.com/infor-design/enterprise/issues/6816))
-- `[Datagrid]` Added a setting `ariaDescribedBy` in the column to override `aria-describedby` value of the cells. ([#6530](https://github.com/infor-design/enterprise/issues/6530))
-- `[Datagrid]` Allowed beforeCommitCellEdit event to be sent for Editors.Fileupload. ([#6821](https://github.com/infor-design/enterprise/issues/6821))]
-- `[Datagrid]` Classic theme trigger field adjustments in datagrid. ([#6678](https://github.com/infor-design/enterprise/issues/6678))
-- `[Datagrid]` Added null guard in tree list when list is not yet loaded. ([#6816](https://github.com/infor-design/enterprise/issues/6816))
-- `[Datagrid]` Fix on dirty indicator not updating on drag columns. ([#6867](https://github.com/infor-design/enterprise/issues/6867))
-- `[Editor]` Fixed a bug in editor where blockquote is not continued in the next line. ([#6794](https://github.com/infor-design/enterprise/issues/6794))
-- `[Editor]` Fixed a bug in editor where breaking space doesn't render dirty indicator properly. ([NG#1363](https://github.com/infor-design/enterprise-ng/issues/1363))
-- `[Modal]` Fixed a bug where suppress key setting is not working. ([#6793](https://github.com/infor-design/enterprise/issues/6793))
-- `[Searchfield]` Visual fixes on go button in searchfield toolbar. ([#6686](https://github.com/infor-design/enterprise/issues/6686))
-- `[Textarea]` Fixed a bug in textarea where validation breaks after enabling/disabling. ([#6773](https://github.com/infor-design/enterprise/issues/6773))
-- `[Typography]` Updated text link color in dark theme. ([#6807](https://github.com/infor-design/enterprise/issues/6807))
-
 ## v4.67.0
 
 ## v4.67.0 Important Notes
