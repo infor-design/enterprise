@@ -10,7 +10,7 @@ import * as path from 'path';
 import { deleteAsync } from 'del';
 import slash from 'slash';
 
-import logger from '../logger.js'
+import logger from '../logger.js';
 
 import IdsMetadata from '../helpers/ids-metadata.js';
 
