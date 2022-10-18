@@ -52,6 +52,9 @@
 - `[Datagrid]` Fixed a bug in datagrid where icon is not rendering properly in small and extra small row height. ([#6866](https://github.com/infor-design/enterprise/issues/6866))
 - `[Datagrid]` Fixed a bug in datagrid where sorting is not rendering properly when there is a previously focused cell. ([#6851](https://github.com/infor-design/enterprise/issues/6851))
 - `[Datagrid]` Fixed a bug in datagrid where row shading is not rendered properly. ([#6850](https://github.com/infor-design/enterprise/issues/6850))
+- `[Datagrid]` Classic theme trigger field adjustments in datagrid. ([#6678](https://github.com/infor-design/enterprise/issues/6678))
+- `[Datagrid]` Fixed colorpicker parts were misaligned. ([#6799](https://github.com/infor-design/enterprise/issues/6799))
+- `[Searchfield]` Visual fixes on go button in searchfield toolbar. ([#6686](https://github.com/infor-design/enterprise/issues/6686))
 
 (39 Issues Solved This Release, Backlog Enterprise 250, Backlog Ng 49, 1104 Functional Tests, 1342 e2e Tests, 512 Puppeteer Tests)
 
