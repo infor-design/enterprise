@@ -120,13 +120,14 @@ jobs:
           chmod +x ./scripts/deploy-environment/run-workflow.sh
           ./scripts/deploy-environment/run-workflow.sh \
             -u https://argocd.workers.design.infor.com/api \
-            -h https://handler.demo.design.infor.com/api \
             -o hookandloop \
             -c enterprise \
             -f ${branch_name} \
             -n "" \
             -l false \
-            -r ${repo_owner}/${repo_name}
+            -v ${branch_name//./} \
+            -a ${repo_owner}/${repo_name} \
+            -m infor-design/apps
         env:
           AWF_AUTH_TOKEN: ${{ secrets.AWF_AUTH_TOKEN }}
           AWF_NAME: ${{ secrets.AWF_NAME }}

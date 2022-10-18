@@ -17,29 +17,29 @@ build-worker-image :
 run-workflow :
 	. ./run-workflow.sh \
 		-u ${AWF_URL} \
-		-h ${HANDLER_API_URL} \
 		-o ${ORG_NAME} \
 		-c ${BASE_CONTAINER_NAME} \
 		-f ${BUILD_FROM} \
 		-n ${SUBDOMAIN_NAME} \
 		-l ${BUILD_AS_LATEST} \
-		-r ${REPO_OWNER_NAME}
+		-v ${VERSION} \
+		-a ${APP_REPO} \
+		-m ${MANIFESTS_REPO}
 
 run-worker :
 	docker run --rm --name $(WORKER_CONTAINER_NAME) \
 		--env IMAGE_LIBRARY_USER=${IMAGE_LIBRARY_USER} \
 		--env IMAGE_LIBRARY_PASS=${IMAGE_LIBRARY_PASS} \
 		--env GITHUB_ACCESS_TOKEN=${GITHUB_ACCESS_TOKEN} \
-		--env HANDLER_API_KEY=${HANDLER_API_KEY} \
-		--env TLS_SECRET=${TLS_SECRET} \
 		--env AWF_URL=${AWF_URL} \
-		--env HANDLER_API_URL=${HANDLER_API_URL} \
 		--env ORG_NAME=${ORG_NAME} \
 		--env BASE_CONTAINER_NAME=${BASE_CONTAINER_NAME} \
 		--env BUILD_FROM=${BUILD_FROM} \
 		--env SUBDOMAIN_NAME=${SUBDOMAIN_NAME} \
 		--env BUILD_AS_LATEST=${BUILD_AS_LATEST} \
-		--env REPO_OWNER_NAME=${REPO_OWNER_NAME} \
+		--env VERSION=${VERSION} \
+		--env APP_REPO=${APP_REPO} \
+		--env MANIFESTS_REPO=${MANIFESTS_REPO} \
 		-v /var/run/docker.sock:/var/run/docker.sock \
 		-v ${PWD}/build:/root/enterprise \
 		-v ${PWD}/run.sh:/usr/src/run.sh \
@@ -51,16 +51,15 @@ shell-worker :
 			--env IMAGE_LIBRARY_USER=${IMAGE_LIBRARY_USER} \
 			--env IMAGE_LIBRARY_PASS=${IMAGE_LIBRARY_PASS} \
 			--env GITHUB_ACCESS_TOKEN=${GITHUB_ACCESS_TOKEN} \
-			--env HANDLER_API_KEY=${HANDLER_API_KEY} \
-			--env TLS_SECRET=${TLS_SECRET} \
 			--env AWF_URL=${AWF_URL} \
-			--env HANDLER_API_URL=${HANDLER_API_URL} \
 			--env ORG_NAME=${ORG_NAME} \
 			--env BASE_CONTAINER_NAME=${BASE_CONTAINER_NAME} \
 			--env BUILD_FROM=${BUILD_FROM} \
 			--env SUBDOMAIN_NAME=${SUBDOMAIN_NAME} \
 			--env BUILD_AS_LATEST=${BUILD_AS_LATEST} \
-			--env REPO_OWNER_NAME=${REPO_OWNER_NAME} \
+			--env VERSION=${VERSION} \
+			--env APP_REPO=${APP_REPO} \
+			--env MANIFESTS_REPO=${MANIFESTS_REPO} \
 			-v /var/run/docker.sock:/var/run/docker.sock \
 			-v ${PWD}/build:/root/enterprise \
 			-v ${PWD}/run.sh:/usr/src/run.sh \

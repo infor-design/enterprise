@@ -1,10 +1,8 @@
 #!/bin/bash
 
-while getopts ":u:h:o:c:f:n:l:r:" opt; do
+while getopts ":u:o:c:f:n:l:v:a:m:" opt; do
   case $opt in
     u) AWF_URL="$OPTARG"
-    ;;
-    h) HANDLER_API_URL="$OPTARG"
     ;;
     o) ORG_NAME="$OPTARG"
     ;;
@@ -16,7 +14,11 @@ while getopts ":u:h:o:c:f:n:l:r:" opt; do
     ;;
     l) BUILD_AS_LATEST="$OPTARG"
     ;;
-    r) REPO_OWNER_NAME="$OPTARG"
+    v) VERSION="$OPTARG"
+    ;;
+    a) APP_REPO="$OPTARG"
+    ;;
+    m) MANIFESTS_REPO="$OPTARG"
     ;;
     \?) echo "Invalid option -$OPTARG" >&2
     exit 1
@@ -49,13 +51,14 @@ run_resp=$(
         "generateName": "enterprise-demo-deploy",
         "labels": "submit-from-rest=true",
         "parameters": [
-          "handler_api_url='$HANDLER_API_URL'",
           "org_name='$ORG_NAME'",
           "base_container_name='$BASE_CONTAINER_NAME'",
           "build_from='$BUILD_FROM'",
           "subdomain_name='$SUBDOMAIN_NAME'",
           "build_as_latest='$BUILD_AS_LATEST'",
-          "repo_owner_name='$REPO_OWNER_NAME'"
+          "version='$VERSION'",
+          "app_repo='$APP_REPO'",
+          "manifests_repo='$MANIFESTS_REPO'"
         ]
       }
     }'
