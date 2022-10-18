@@ -1,6 +1,6 @@
 #!/bin/bash
 
-while getopts ":u:o:c:f:n:l:v:a:m:" opt; do
+while getopts ":u:o:c:f:n:l:v:a:m:s:" opt; do
   case $opt in
     u) AWF_URL="$OPTARG"
     ;;
@@ -19,6 +19,8 @@ while getopts ":u:o:c:f:n:l:v:a:m:" opt; do
     a) APP_REPO="$OPTARG"
     ;;
     m) MANIFESTS_REPO="$OPTARG"
+    ;;
+    s) SITE="$OPTARG"
     ;;
     \?) echo "Invalid option -$OPTARG" >&2
     exit 1
@@ -58,7 +60,8 @@ run_resp=$(
           "build_as_latest='$BUILD_AS_LATEST'",
           "version='$VERSION'",
           "app_repo='$APP_REPO'",
-          "manifests_repo='$MANIFESTS_REPO'"
+          "manifests_repo='$MANIFESTS_REPO'",
+          "site='$SITE'"
         ]
       }
     }'

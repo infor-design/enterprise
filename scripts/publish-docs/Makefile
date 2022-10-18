@@ -14,10 +14,11 @@ build-worker-image :
 
 run-worker :
 	docker run --rm --name $(WORKER_CONTAINER_NAME) \
-		--env GITHUB_ACCESS_TOKEN=${GITHUB_ACCESS_TOKEN} \
-		--env SITE=${SITE} \
-		--env BRANCH=${BRANCH} \
 		--env DOCS_API_KEY=${DOCS_API_KEY} \
+		--env GITHUB_ACCESS_TOKEN=${GITHUB_ACCESS_TOKEN} \
+		--env BUILD_FROM=${BUILD_FROM} \
+		--env SITE=${SITE} \
+		--env APP_REPO=${APP_REPO} \
 		-v ${PWD}/build:/root/enterprise \
 		-v ${PWD}/run.sh:/usr/src/run.sh \
 		$(ORGANIZATION)/$(WORKER_CONTAINER_NAME):$(WORKER_CONTAINER_VERSION)
@@ -25,10 +26,11 @@ run-worker :
 shell-worker :
 	docker run -it --rm --name $(WORKER_CONTAINER_NAME) \
 		--entrypoint /bin/sh \
-		--env GITHUB_ACCESS_TOKEN=${GITHUB_ACCESS_TOKEN} \
-		--env SITE=${SITE} \
-		--env BRANCH=${BRANCH} \
 		--env DOCS_API_KEY=${DOCS_API_KEY} \
+		--env GITHUB_ACCESS_TOKEN=${GITHUB_ACCESS_TOKEN} \
+		--env BUILD_FROM=${BUILD_FROM} \
+		--env SITE=${SITE} \
+		--env APP_REPO=${APP_REPO} \
 		-v ${PWD}/build:/root/enterprise \
 		-v ${PWD}/run.sh:/usr/src/run.sh \
 		$(ORGANIZATION)/$(WORKER_CONTAINER_NAME):$(WORKER_CONTAINER_VERSION)
