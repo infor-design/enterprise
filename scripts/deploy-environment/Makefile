@@ -24,7 +24,8 @@ run-workflow :
 		-l ${BUILD_AS_LATEST} \
 		-v ${VERSION} \
 		-a ${APP_REPO} \
-		-m ${MANIFESTS_REPO}
+		-m ${MANIFESTS_REPO} \
+		-s ${SITE}
 
 run-worker :
 	docker run --rm --name $(WORKER_CONTAINER_NAME) \
@@ -40,6 +41,7 @@ run-worker :
 		--env VERSION=${VERSION} \
 		--env APP_REPO=${APP_REPO} \
 		--env MANIFESTS_REPO=${MANIFESTS_REPO} \
+		--env SITE=${SITE} \
 		-v /var/run/docker.sock:/var/run/docker.sock \
 		-v ${PWD}/build:/root/enterprise \
 		-v ${PWD}/run.sh:/usr/src/run.sh \
@@ -60,6 +62,7 @@ shell-worker :
 			--env VERSION=${VERSION} \
 			--env APP_REPO=${APP_REPO} \
 			--env MANIFESTS_REPO=${MANIFESTS_REPO} \
+			--env SITE=${SITE} \
 			-v /var/run/docker.sock:/var/run/docker.sock \
 			-v ${PWD}/build:/root/enterprise \
 			-v ${PWD}/run.sh:/usr/src/run.sh \

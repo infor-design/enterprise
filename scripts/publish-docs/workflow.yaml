@@ -7,7 +7,9 @@ spec:
     parameters:
       - name: site
         value: ""
-      - name: branch
+      - name: build_from
+        value: ""
+      - name: app_repo
         value: ""
 
   entrypoint: start
@@ -31,11 +33,14 @@ spec:
                   value: "{{workflow.parameters.site}}"
                 - name: branch
                   value: "{{workflow.parameters.branch}}"
+                - name: app_repo
+                  value: "{{workflow.parameters.app_repo}}"
     - name: release
       inputs:
         parameters:
           - name: site
           - name: branch
+          - name: app_repo
 
       resource:
         action: create
@@ -75,8 +80,10 @@ spec:
                             key: token
                       - name: SITE
                         value: "{{inputs.parameters.site}}"
-                      - name: BRANCH
-                        value: "{{inputs.parameters.branch}}"
+                      - name: BUILD_FROM
+                        value: "{{inputs.parameters.build_from}}"
+                      - name: APP_REPO
+                        value: "{{inputs.parameters.app_repo}}"
                     command: ["/bin/bash"]
                     args: [
                       "-c",

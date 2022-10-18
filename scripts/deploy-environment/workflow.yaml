@@ -21,6 +21,8 @@ spec:
         value: ""
       - name: manifests_repo
         value: ""
+      - name: site
+        value: ""
 
   entrypoint: ent-env-deploy-wf
 
@@ -62,6 +64,17 @@ spec:
                   value: "{{workflow.parameters.build_from}}"
                 - name: manifests_repo
                   value: "{{workflow.parameters.manifests_repo}}"
+
+        - - name: publish-docs
+            template: publish-docs
+            arguments:
+              parameters:
+                - name: build_from
+                  value: "{{workflow.parameters.build_from}}"
+                - name: app_repo
+                  value: "{{workflow.parameters.app_repo}}"
+                - name: site
+                  value: "{{workflow.parameters.site}}"
 
     - name: build
       inputs:
@@ -220,3 +233,57 @@ spec:
                             - /bin/sh
                             - -c
                             - cp /usr/src/secrets/gitconfig /root/.gitconfig
+
+
+    - name: publish-docs
+      inputs:
+        parameters:
+          - name: build_from
+          - name: app_repo
+          - name: site
+
+      resource:
+        action: create
+        successCondition: status.succeeded > 0
+        failureCondition: status.failed > 0
+        manifest: |
+          apiVersion: batch/v1
+          kind: Job
+          metadata:
+            name: ent-env-publish-docs
+          spec:
+            ttlSecondsAfterFinished: 300
+            backoffLimit: 0
+            template:
+              spec:
+                restartPolicy: Never
+                nodeSelector: 
+                  eks.amazonaws.com/nodegroup: heavy
+                containers:
+                  - name: enterprise-publish-docs
+                    image: hookandloop/enterprise-publish-docs:0.0.1
+                    imagePullPolicy: Always
+                    resources:
+                      requests:
+                        cpu: 500m
+                        memory: 3Gi
+                    env:
+                      - name: GITHUB_ACCESS_TOKEN
+                        valueFrom:
+                          secretKeyRef:
+                            name: github-access-token
+                            key: token
+                      - name: DOCS_API_KEY
+                        valueFrom:
+                          secretKeyRef:
+                            name: docs-api-key
+                            key: token
+                      - name: SITE
+                        value: "{{inputs.parameters.site}}"
+                      - name: BUILD_FROM
+                        value: "{{inputs.parameters.build_from}}"
+                      - name: APP_REPO
+                        value: "{{inputs.parameters.app_repo}}"
+                    command: ["/bin/bash"]
+                    args: ["-c", ". ./run.sh"]
+                restartPolicy: Never
