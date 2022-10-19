@@ -49,6 +49,7 @@
     "eslint:log": "npm run build:icons && npm run build:colors && npx eslint -o eslint.log src test app",
     "functional:ci": "npx karma start test/karma.conf.js --single-run",
     "functional:local": "npx karma start test/karma.conf.js",
+    "install-demo": "mv package.json package.json-temp && cp app/package.json package.json && npm i && rm package.json && mv package.json-temp package.json && git checkout package-lock.json",
     "lint:ci": "npm run eslint:error-only && npm run mdlint && npm run stylelint",
     "mdlint": "npm run mdlint:docs && npm run mdlint:src",
     "mdlint:docs": "npx markdownlint docs/ && npx markdownlint README.md",
