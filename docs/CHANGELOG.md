@@ -8,6 +8,7 @@
 
 ## v4.69.0 Fixes
 
+- `[Datagrid]` Fixed a bug in datagrid where tooltip flashes continuously on hover. ([#5907](https://github.com/infor-design/enterprise/issues/5907))
 - `[Datagrid]` Fixed a bug in datagrid where row shading is not rendered properly. ([#6850](https://github.com/infor-design/enterprise/issues/6850))
 - `[Datagrid]` Fixed a bug in datagrid where icon is not rendering properly in small and extra small row height. ([#6866](https://github.com/infor-design/enterprise/issues/6866))
 - `[Datagrid]` Fixed a bug in datagrid where sorting is not rendering properly when there is a previously focused cell. ([#6851](https://github.com/infor-design/enterprise/issues/6851))
