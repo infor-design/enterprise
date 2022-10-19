@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: enterprise-%VERSION%-deployment
+  labels:
+    app: enterprise-%VERSION%
+spec:
+  selector:
+    matchLabels:
+      app: enterprise-%VERSION%
+  template:
+    metadata:
+      labels:
+        app: enterprise-%VERSION%
+    spec:
+      containers:
+        - name: enterprise-demo
+          image: hookandloop/enterprise:%IMAGE_VERSION%
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi

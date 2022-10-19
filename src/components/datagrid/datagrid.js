@@ -148,6 +148,7 @@ const COMPONENT_NAME = 'datagrid';
  * and do not add any children nodes
  * or if one or more child node got match then add parent node and only matching children nodes
  * @param {string} [settings.attributes] Add extra attributes like id's to the toast element. For example `attributes: { name: 'id', value: 'my-unique-id' }`
+ * @param {boolean} [settings.dblClickApply=false] If true, needs to double click to trigger select row in datagrid.
  * @param {boolean} [settings.allowPasteFromExcel=false] If true will allow data copy/paste from excel
  * @param {string} [settings.fallbackImage='insert-image'] Will set a fall back image if the image formatter cannot load an image.
 */
@@ -244,6 +245,7 @@ const DATAGRID_DEFAULTS = {
   allowChildExpandOnMatchOnly: false,
   allowChildExpandOnMatch: false,
   activeCheckboxSelection: false,
+  dblClickApply: false,
   attributes: null,
   allowPasteFromExcel: false,
   fallbackImage: 'insert-image',
@@ -3143,6 +3145,10 @@ Datagrid.prototype = {
       handle.on('mousedown.datagrid', (e) => {
         e.preventDefault();
 
+        if (self.editor && self.editor.input) {
+          self.commitCellEdit();
+        }
+
         header.drag({
           clone: true, cloneAppendTo: headers.first().parent().parent(), clonePosIsFixed: true
         })
@@ -3160,7 +3166,6 @@ Datagrid.prototype = {
             $('.is-draggable-target', clone).remove();
 
             self.setDraggableColumnTargets();
-
             extraTopPos = self.getExtraTop();
             headerPos = header.position();
             offPos = { top: (pos.top - headerPos.top), left: (pos.left - headerPos.left) };
@@ -3247,6 +3252,57 @@ Datagrid.prototype = {
 
                 indexFrom = tempArray[self.draggableStatus.startIndex] || 0;
                 indexTo = tempArray[self.draggableStatus.endIndex] || 0;
+
+                if (self.settings.showDirty && self.dirtyArray) {
+                  const updateCells = (row, dirtyCells, clearCells) => {
+                    dirtyCells.forEach((d) => {
+                      const dirtyCell = { ...self.dirtyArray[row][d[0]] };
+                      dirtyCell.cell = d[1];
+                      dirtyCell.column = self.settings.columns[d[1]];
+                      self.setDirtyCell(row, d[1], dirtyCell);
+                    });
+
+                    clearCells.forEach((d) => {
+                      self.clearDirtyCell(row, d);
+                    });
+                  };
+
+                  if (indexFrom > indexTo) {
+                    self.dirtyArray.forEach((dirtyRow, row) => {
+                      const clearCells = [];
+                      const dirtyCells = [];
+                      for (let c = indexTo; c <= indexFrom; c++) {
+                        if (dirtyRow[c] && dirtyRow[c].isDirty) {
+                          if (c === indexFrom) {
+                            dirtyCells.push([indexFrom, indexTo]);
+                          } else {
+                            dirtyCells.push([c, c + 1]);
+                          }
+                        } else {
+                          clearCells.push(c + 1);
+                        }
+                      }
+                      updateCells(row, dirtyCells, clearCells);
+                    });
+                  } else if (indexFrom < indexTo) {
+                    self.dirtyArray.forEach((dirtyRow, row) => {
+                      const clearCells = [];
+                      const dirtyCells = [];
+                      for (let c = indexTo; c >= indexFrom; c--) {
+                        if (dirtyRow[c] && dirtyRow[c].isDirty) {
+                          if (c === indexFrom) {
+                            dirtyCells.push([indexFrom, indexTo]);
+                          } else {
+                            dirtyCells.push([c, c - 1]);
+                          }
+                        } else {
+                          clearCells.push(c - 1);
+                        }
+                      }
+                      updateCells(row, dirtyCells, clearCells);
+                    });
+                  }
+                }
 
                 self.updateGroupHeadersAfterColumnReorder(indexFrom, indexTo);
                 self.arrayIndexMove(self.settings.columns, indexFrom, indexTo);
@@ -7019,6 +7075,7 @@ Datagrid.prototype = {
 
         // Prevent parent grid from sorting when nested
         e.stopPropagation();
+        self.editor = null;
         self.setSortColumn($(this).attr('data-column-id'));
         return false;
       });
@@ -7070,7 +7127,8 @@ Datagrid.prototype = {
       });
     }
 
-    this.element.off('click.datagrid, select.datagrid').on('click.datagrid, select.datagrid', 'tbody td', function (e) {
+    const selectEvents = self.settings.dblClickApply ? 'dblclick.datagrid, click.datagrid, select.datagrid' : 'click.datagrid, select.datagrid';
+    this.element.off(selectEvents).on(selectEvents, 'tbody td', function (e) {
       let rowNode = null;
       let dataRowIdx = null;
       const target = $(e.target);
@@ -7098,18 +7156,23 @@ Datagrid.prototype = {
         e.stopPropagation();
       }
 
-      /**
-      * Fires after a row is clicked.
-      * @event click
-      * @memberof Datagrid
-      * @property {object} event The jquery event object
-      * @property {object} args Additional arguments
-      * @property {number} args.row The current row height
-      * @property {number} args.cell The columns object
-      * @property {object} args.item The current sort column.
-      * @property {object} args.originalEvent The original event object.
-      */
-      self.triggerRowEvent('click', e, true);
+      if (!self.settings.dblClickApply) {
+        /**
+        * Fires after a row is clicked.
+        * @event click
+        * @memberof Datagrid
+        * @property {object} event The jquery event object
+        * @property {object} args Additional arguments
+        * @property {number} args.row The current row height
+        * @property {number} args.cell The columns object
+        * @property {object} args.item The current sort column.
+        * @property {object} args.originalEvent The original event object.
+        */
+        self.triggerRowEvent('click', e, true);
+      } else {
+        self.triggerRowEvent(e.type, e, true);
+      }
+
       self.setActiveCell(td);
 
       // Dont Expand rows or make cell editable when clicking expand button
@@ -7150,6 +7213,12 @@ Datagrid.prototype = {
       if (canSelect && (self.settings.selectable === 'multiple' || self.settings.selectable === 'mixed') && e.shiftKey) {
         self.selectRowsBetweenIndexes([self.lastSelectedRow, target.closest('tr').attr('aria-rowindex') - 1]);
         e.preventDefault();
+      } else if (canSelect && self.settings.dblClickApply) {
+        const forceSelect = e.type === 'dblclick';
+        self.toggleRowSelection(target.closest('tr'), forceSelect);
+        if (e.type !== 'dblclick') {
+          self.element.triggerHandler('ischanged');
+        }
       } else if (canSelect) {
         self.toggleRowSelection(target.closest('tr'));
       }
@@ -7259,20 +7328,22 @@ Datagrid.prototype = {
       });
     }
 
-    /**
-    * Fires after a row is double clicked.
-    * @event dblclick
-    * @memberof Datagrid
-    * @property {object} event The jquery event object
-    * @property {object} args Additional arguments
-    * @property {number} args.row The current row height
-    * @property {number} args.cell The columns object
-    * @property {object} args.item The current sort column.
-    * @property {object} args.originalEvent The original event object.
-    */
-    this.element.off('dblclick.datagrid').on('dblclick.datagrid', 'tbody tr', (e) => {
-      self.triggerRowEvent('dblclick', e, true);
-    });
+    if (!this.settings.dblClickApply) {
+      /**
+      * Fires after a row is double clicked.
+      * @event dblclick
+      * @memberof Datagrid
+      * @property {object} event The jquery event object
+      * @property {object} args Additional arguments
+      * @property {number} args.row The current row height
+      * @property {number} args.cell The columns object
+      * @property {object} args.item The current sort column.
+      * @property {object} args.originalEvent The original event object.
+      */
+      this.element.off('dblclick.datagrid').on('dblclick.datagrid', 'tbody tr', (e) => {
+        self.triggerRowEvent('dblclick', e, true);
+      });
+    }
 
     /**
     * Fires after a row has a right click action.
@@ -7791,7 +7862,7 @@ Datagrid.prototype = {
 
   /**
    * Get or Set the Row Height.
-   * @param  {string} height The row height to use, can be 'extra small', 'small, 'normal' or 'large'
+   * @param {string} height The row height to use, can be 'extra small', 'small, 'normal' or 'large'
    * @Returns {string} The current row height
    */
   rowHeight(height) {
@@ -8995,10 +9066,11 @@ Datagrid.prototype = {
 
   /**
   * Toggle the current selection state from on to off.
-  * @param  {number} idx The row to select/unselect
+  * @param  {number} idx The row to select/unselect.
+  * @param {boolean} forceSelect forcing the cell to do a double click.
   * @returns {void}
   */
-  toggleRowSelection(idx) {
+  toggleRowSelection(idx, forceSelect) {
     const row = (typeof idx === 'number' ? this.tableBody.find(`tr[aria-rowindex="${idx + 1}"]`) : idx);
     let rowIndex = typeof idx === 'number' ? idx : this.actualRowIndex(row);
 
@@ -9014,7 +9086,7 @@ Datagrid.prototype = {
       return;
     }
 
-    if (this.settings.selectable === 'single' && row.hasClass('is-selected') && !this.settings.disableRowDeselection) {
+    if (!this.settings.dblClickApply && this.settings.selectable === 'single' && row.hasClass('is-selected') && !this.settings.disableRowDeselection) {
       this.unselectRow(rowIndex);
       this.displayCounts();
       return this._selectedRows; // eslint-disable-line
@@ -9024,7 +9096,13 @@ Datagrid.prototype = {
       if (!this.settings.disableRowDeselection) {
         this.unselectRow(rowIndex);
       }
+    } else if (!this.settings.dblClickApply) {
+      this.selectRow(rowIndex);
     } else {
+      this.selectRow(rowIndex, false, true);
+    }
+
+    if (this.settings.dblClickApply && forceSelect) {
       this.selectRow(rowIndex);
     }
 
@@ -11008,7 +11086,7 @@ Datagrid.prototype = {
       } else {
         newVal = Locale.formatDate(value, { pattern: col.sourceFormat });
       }
-    } else if (typeof oldVal === 'number' && value && !nonNumberCharacters.test(value)) {
+    } else if (typeof oldVal === 'number' && value && (typeof value !== 'number' && !nonNumberCharacters.test(value))) {
       newVal = Locale.parseNumber(value); // remove thousands sep , keep a number a number
     }
 
@@ -11085,7 +11163,7 @@ Datagrid.prototype = {
     let oldVal = this.fieldValue(rowData, col.field);
 
     // Coerce/Serialize value if from cell edit
-    if (!fromApiCall) {
+    if (!fromApiCall && oldVal !== value) {
       coercedVal = this.coerceValue(value, oldVal, col, row, cell);
 
       // coerced value may be coerced to empty string, null, or 0
