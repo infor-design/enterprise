@@ -122,7 +122,6 @@
     "express-session": "^1.17.2",
     "extend": "^3.0.2",
     "front-matter": "^4.0.2",
-    "fsevents": "*",
     "grunt": "^1.4.1",
     "grunt-bump": "^0.8.0",
     "grunt-cli": "^1.4.3",
@@ -175,6 +174,9 @@
     "webdriver-manager": "^12.1.8",
     "webpack": "^4.43.0",
     "yargs": "^16.2.0"
+  },
+  "optionalDependencies": {
+    "fsevents": "*"
   },
   "chrome-version": "105.0.5195.125",
   "jspm": {
