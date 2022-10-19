@@ -429,7 +429,7 @@ describe('Datagrid', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it.only('should show tooltip when hovered', async () => {
+    it('should show tooltip when hovered', async () => {
       const th = 'example-header-icon-with-tooltip-datagrid-1-header-2';
       await page.hover(`#${th}`);
 
@@ -439,7 +439,7 @@ describe('Datagrid', () => {
         .then(classNameString => expect(classNameString).not.toContain('is-hidden'));
     });
 
-    it.only('should show tooltip when hovered', async () => {
+    it('should show tooltip when hovered', async () => {
       await page.hover('.icon.datagrid-header-icon');
 
       await page.waitForSelector('#example-header-icon-with-tooltip-datagrid-0tooltip', { visible: true })
