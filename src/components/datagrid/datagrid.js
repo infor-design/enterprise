@@ -5603,15 +5603,6 @@ Datagrid.prototype = {
       }, delay);
     };
 
-    // Prevents the tooltip to show on and off
-    $(document)
-      .off('mousemove.gridtooltip')
-      .on('mousemove.gridtooltip', () => {
-      if (!$('.grid-tooltip').hasClass('is-hidden') && !$('.grid-tooltip:hover').length > 0) {
-        handleHide(this);
-      }
-    });
-
     // Bind events
     this.element
       .off('mouseenter.gridtooltip focus.gridtooltip', selector.str)
@@ -5641,6 +5632,17 @@ Datagrid.prototype = {
           e.preventDefault();
         }
         return !handle;
+      })
+      .off('mousemove.gridtooltip')
+      .on('mousemove.gridtooltip', (e) => {
+        // Prevents the tooltip to show on and off
+        if ($(e.target).parents('.datagrid').length > 0) {
+          return;
+        }
+
+        if (!$('.grid-tooltip').hasClass('is-hidden') && !$('.grid-tooltip:hover').length > 0) {
+          handleHide(this);
+        }
       });
 
     if (this.toolbar && this.toolbar.parent().find('.table-errors').length > 0) {
