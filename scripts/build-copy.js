@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { copyFile, existsSync, mkdirSync, readdirSync, statSync } from 'fs';
 import { join, dirname, basename } from 'path';
 
@@ -18,7 +19,7 @@ const copyFiles = (sourceDir, ext, destDir, flatten) => {
   const files = getAllFiles(sourceDir).filter(fn => fn.endsWith(ext));
   files.forEach((file) => {
     const dest = flatten ? `${destDir}${basename(file)}` : `${destDir}${file}`;
-    if (flatten) console.log(`${destDir}${basename(file)}`, `${destDir}${file}`)
+    if (flatten) console.log(`${destDir}${basename(file)}`, `${destDir}${file}`);
     if (!existsSync(dirname(dest))) {
       mkdirSync(dirname(dest), { recursive: true });
     }

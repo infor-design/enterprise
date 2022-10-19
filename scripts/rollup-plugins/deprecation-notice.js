@@ -82,4 +82,4 @@ export default function (opts = {}) {
 
   pluginContents.transform = transform;
   return pluginContents;
-};
+}
