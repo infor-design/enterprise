@@ -4,6 +4,7 @@
 
 ## v4.69.0 Features
 
+- `[Datagrid]` Added puppeteer script for extra class for tooltip. ([#6900](https://github.com/infor-design/enterprise/issues/6900))
 - `[Lookup]` Added puppeteer script for lookup double click apply enhancement. ([#6886](https://github.com/infor-design/enterprise/issues/6886))
 
 ## v4.69.0 Fixes
@@ -45,6 +46,7 @@
 - `[Searchfield]` Added null check in xButton. ([#6858](https://github.com/infor-design/enterprise/issues/6858))
 - `[Textarea]` Fixed a bug in textarea where validation breaks after enabling/disabling. ([#6773](https://github.com/infor-design/enterprise/issues/6773))
 - `[Typography]` Updated text link color in dark theme. ([#6807](https://github.com/infor-design/enterprise/issues/6807))
+- `[Lookup]` Fixed where field stays disabled when enable API is called ([#6145](https://github.com/infor-design/enterprise/issues/6145))
 
 ## v4.67.0
 

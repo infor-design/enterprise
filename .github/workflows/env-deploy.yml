@@ -116,17 +116,31 @@ jobs:
           branch_name=${{ steps.extract_branch_name.outputs.branch }}
           repo_name=${{ steps.extract_repo_name.outputs.repo_name }}
           repo_owner=${{ steps.extract_repo_owner.outputs.repo_owner }}
+          site="prod"
+
+          case $branch_name in
+            *"dev"*)
+              site="dev"
+              ;;
+
+            *"staging"*)
+              site="staging"
+              ;;
+          esac
+
           echo "Deploying ${repo_owner//./_}/${repo_name//./_} ${branch_name//./_}"
           chmod +x ./scripts/deploy-environment/run-workflow.sh
           ./scripts/deploy-environment/run-workflow.sh \
             -u https://argocd.workers.design.infor.com/api \
-            -h https://handler.demo.design.infor.com/api \
             -o hookandloop \
             -c enterprise \
             -f ${branch_name} \
             -n "" \
             -l false \
-            -r ${repo_owner}/${repo_name}
+            -v ${branch_name//./} \
+            -a ${repo_owner}/${repo_name} \
+            -m infor-design/apps \
+            -s ${site}
         env:
           AWF_AUTH_TOKEN: ${{ secrets.AWF_AUTH_TOKEN }}
           AWF_NAME: ${{ secrets.AWF_NAME }}

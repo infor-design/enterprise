@@ -1,5 +1,4 @@
 /* eslint-disable compat/compat */
-const exp = require('constants');
 const path = require('path');
 const { getConfig, getComputedStyle } = require('../../helpers/e2e-utils.js');
 
@@ -423,20 +422,30 @@ describe('Datagrid', () => {
     });
   });
 
-  fdescribe('Extra class for tooltip tests', () => {
+  describe('Extra class for tooltip tests', () => {
     const url = `${baseUrl}/example-header-icon-with-tooltip`;
 
-    it('should show tooltip when hovered', async () => {
-      //const localeUrl = `${url}`;
+    beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
 
-      await page.waitForSelector('#example-header-icon-with-tooltip-datagrid-0tooltip');
-      await page.hover('div[class="datagrid-column-wrapper"]');
-      const header = page.waitForSelector('.is-hidden');
-      //await waitForTimeout(300);
+    it.only('should show tooltip when hovered', async () => {
+      const th = 'example-header-icon-with-tooltip-datagrid-1-header-2';
+      await page.hover(`#${th}`);
 
-      expect(header).toBeFalsy();
+      await page.waitForSelector('#example-header-icon-with-tooltip-datagrid-0tooltip', { visible: true })
+        .then(element => element.getProperty('className'))
+        .then(className => className.jsonValue())
+        .then(classNameString => expect(classNameString).not.toContain('is-hidden'));
+    });
 
+    it.only('should show tooltip when hovered', async () => {
+      await page.hover('.icon.datagrid-header-icon');
+
+      await page.waitForSelector('#example-header-icon-with-tooltip-datagrid-0tooltip', { visible: true })
+        .then(element => element.getProperty('className'))
+        .then(className => className.jsonValue())
+        .then(classNameString => expect(classNameString).toContain('tooltip-extra-class'));
     });
   });
 });
