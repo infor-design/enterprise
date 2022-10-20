@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: enterprise-%VERSION%-ingress
+spec:
+  tls:
+    - secretName: demo-design-infor
+      hosts:
+        - demo.design.infor.com
+  rules:
+    - host: %VERSION%-enterprise.demo.design.infor.com
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: enterprise-%VERSION%-service
+              port:
+                number: 80
+  ingressClassName: nginx

@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: ent-env-deploy
+  name: ent-env-build-push-image
 spec:
   ttlSecondsAfterFinished: 300
   backoffLimit: 0
@@ -37,32 +37,16 @@ spec:
                 secretKeyRef:
                   name: github-access-token
                   key: token
-            - name: HANDLER_API_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: handler-api-key
-                  key: token
-            - name: TLS_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: tls-secret-key
-                  key: token
-            - name: HANDLER_API_URL
-              value: ""
             - name: ORG_NAME
               value: ""
             - name: BASE_CONTAINER_NAME
               value: ""
             - name: BUILD_FROM
               value: ""
-            - name: BUILD_AS_LATEST
-              value: ""
-            - name: SUBDOMAIN_NAME
-              value: ""
-            - name: REPO_OWNER_NAME
+            - name: APP_REPO
               value: ""
           command: ["/bin/bash"]
-          args: ["-c", ". ./run.sh"]
+          args: ["-c", ". ./build_push_image.sh"]
         - name: dind-daemon
           image: "docker:dind"
           imagePullPolicy: Always

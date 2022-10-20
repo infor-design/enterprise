@@ -32,7 +32,10 @@ RUN echo "[url \"git@github.com:\"]\n\tinsteadOf = https://github.com/" >> /root
 RUN echo "StrictHostKeyChecking no " > /root/.ssh/config
 RUN git config --global url."https://{token}:@github.com/".insteadOf "https://github.com/"
 
-COPY ./run.sh run.sh
-RUN chmod +x run.sh
+COPY ./manifests manifests
 
-ENTRYPOINT ["/bin/bash", "run.sh"]
+COPY ./build_push_image.sh build_push_image.sh
+RUN chmod +x build_push_image.sh
+
+COPY ./build_push_manifests.sh build_push_manifests.sh
+RUN chmod +x build_push_manifests.sh
