@@ -2040,7 +2040,7 @@ Dropdown.prototype = {
 
     // It adjust the position of datagrid filter dropdown
     // if the element goes out of the datagrid's container
-    if (this.list.hasClass('datagrid-filter-dropdown')) {
+    if (this.list.hasClass('datagrid-filter-dropdown') && document.querySelector('.datagrid-container') !== null) {
       const gridContainerPos = document.querySelector('.datagrid-container').getBoundingClientRect();
       const gridFilterDropdownPos = document.querySelector('.datagrid-filter-dropdown').getBoundingClientRect();
       const pageContainerPos = document.querySelector('[role="main"]').getBoundingClientRect().right;
