@@ -66,7 +66,13 @@ $toolbarsearchfield-category-empty-width: 51px;
     }
 
     .icon:not(.close) {
-      top: 0;
+      top: 3px;
+    }
+  }
+
+  &.is-open {
+    .icon:not(.close) {
+      top: 2px;
     }
   }
 
@@ -399,7 +405,7 @@ $toolbarsearchfield-category-empty-width: 51px;
     .icon {
       &.close {
         color: $searchfield-text-color;
-        height: 18px;
+        height: 16px;
         top: 10px;
       }
     }
