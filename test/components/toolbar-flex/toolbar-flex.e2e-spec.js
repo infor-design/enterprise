@@ -39,7 +39,14 @@ describe('Flex toobar ajax tests', () => {
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.imageComparison.checkElement(flexToolbarEl, 'flextool-index-open-more-menu-submenu')).toEqual(0);
+    });
 
+    it('Should not visually regress - windowed', async () => {
+      const flexToolbarEl = await element(by.className('no-frills'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(flexToolbarEl), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
+      
       // shrink the page to check ajax menu button in the overflow
       const windowSize = await browser.driver.manage().window().getSize();
       browser.driver.manage().window().setSize(450, 1000);
