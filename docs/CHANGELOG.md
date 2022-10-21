@@ -10,6 +10,32 @@
 - `[Datagrid]` Fixed a bug in datagrid where icon is not rendering properly in small and extra small row height. ([#6866](https://github.com/infor-design/enterprise/issues/6866))
 - `[Datagrid]` Fixed a bug in datagrid where sorting is not rendering properly when there is a previously focused cell. ([#6851](https://github.com/infor-design/enterprise/issues/6851))
 - `[Datagrid]` Fixed a bug in datagrid where row shading is not rendered properly. ([#6850](https://github.com/infor-design/enterprise/issues/6850))
+- `[Datagrid]` Additional checks when updating cell so that numbers aren't converted twice. ([NG#1370](https://github.com/infor-design/enterprise-ng/issues/1370))
+- `[Modal]` Fixed a bug where suppress key setting is not working. ([#6793](https://github.com/infor-design/enterprise/issues/6793))
+- `[Searchfield]` Additional visual fixes in classic on go button in searchfield toolbar. ([#6686](https://github.com/infor-design/enterprise/issues/6686))
+- `[Splitter]` Fixed on splitter not working when parent height changes dynamically. ([#6819](https://github.com/infor-design/enterprise/issues/6819))
+- `[Toolbar Flex]` Added additional checks for destroying toolbar. ([#6844](https://github.com/infor-design/enterprise/issues/6844))
+
+## v4.68.0
+
+## v4.68.0 Features
+
+- `[Button]` Added Protractor to Puppeteer conversion scripts. ([#6626](https://github.com/infor-design/enterprise/issues/6626))
+- `[Calendar]` Added puppeteer script for show/hide legend. ([#6810](https://github.com/infor-design/enterprise/issues/6810))
+- `[Colors]` Added puppeteer script for color classes targeting color & border color. ([#6801](https://github.com/infor-design/enterprise/issues/6801))
+- `[Column]` Added puppeteer script for combined column chart. ([#6381](https://github.com/infor-design/enterprise/issues/6381))
+- `[Datagrid]` Added additional setting in datagrid header for tooltip extra class. ([#6802](https://github.com/infor-design/enterprise/issues/6802))
+- `[Datagrid]` Added dblClickApply setting in lookup for selection of item. ([#6546](https://github.com/infor-design/enterprise/issues/6546))
+
+## v4.68.0 Fixes
+
+- `[Bar Chart]` Fixed a bug in bar charts grouped, where arias are identical to each series. ([#6748](https://github.com/infor-design/enterprise/issues/6748))
+- `[Datagrid]` Fixed a bug in datagrid where expandable row animation is not rendering properly. ([#6813](https://github.com/infor-design/enterprise/issues/6813))
+- `[Datagrid]` Fixed a bug in datagrid where dropdown filter does not render correctly. ([#6834](https://github.com/infor-design/enterprise/issues/6834))
+- `[Datagrid]` Fixed alignment issues in trigger fields. ([#6678](https://github.com/infor-design/enterprise/issues/6678))
+- `[Datagrid]` Added a null guard in tree list when list is not yet loaded. ([#6816](https://github.com/infor-design/enterprise/issues/6816))
+- `[Datagrid]` Added a setting `ariaDescribedBy` in the column to override `aria-describedby` value of the cells. ([#6530](https://github.com/infor-design/enterprise/issues/6530))
+- `[Datagrid]` Allowed beforeCommitCellEdit event to be sent for Editors.Fileupload. ([#6821](https://github.com/infor-design/enterprise/issues/6821))]
 - `[Datagrid]` Classic theme trigger field adjustments in datagrid. ([#6678](https://github.com/infor-design/enterprise/issues/6678))
 - `[Datagrid]` Fixed colorpicker parts were misaligned. ([#6799](https://github.com/infor-design/enterprise/issues/6799))
 - `[Datagrid]` Fixed the dirty indicator were not updating on drag columns. ([#6867](https://github.com/infor-design/enterprise/issues/6867))
