@@ -200,12 +200,6 @@
       @media only screen and (max-width: $breakpoint-phone-to-tablet) {
         width: 100% !important;
       }
-
-      .searchfield-wrapper {
-        .icon:not(.close) {
-          left: 9px;
-        }
-      }
     }
 
     &.has-more-button .buttonset {
