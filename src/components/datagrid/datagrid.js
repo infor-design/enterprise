@@ -7112,7 +7112,7 @@ Datagrid.prototype = {
     }
 
     const selectEvents = self.settings.dblClickApply ? 'dblclick.datagrid, click.datagrid, select.datagrid' : 'click.datagrid, select.datagrid';
-    this.element.off(selectEvents).on(selectEvents, 'tbody td', function (e) {
+    this.element.off(selectEvents).on(selectEvents, 'tbody td', function (e) {        
       let rowNode = null;
       let dataRowIdx = null;
       const target = $(e.target);
@@ -7249,6 +7249,16 @@ Datagrid.prototype = {
         if (target.is('[disabled]') && col.formatter === Formatters.Hyperlink) {
           e.stopImmediatePropagation();
           e.preventDefault();
+        }
+      }
+
+      if (columnSettings.inlineEditor) {
+        if (e.type === 'click' && e.target.nodeName.toLowerCase() === 'input') {
+          const el = e.target;
+          el.focus();
+          el.select();
+          e.preventDefault();
+          e.stopPropagation();
         }
       }
 
