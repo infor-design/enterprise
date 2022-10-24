@@ -30,6 +30,13 @@
   }
 }
 
+// Fix cross pixel effect
+.btn-actions {
+  > .icon {
+    height: 19px;
+  }
+}
+
 // Resize the "x" in the close button back to Soho-style sizes
 .btn-close {
   > .icon {
