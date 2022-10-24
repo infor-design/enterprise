@@ -2346,6 +2346,7 @@ $datagrid-small-row-height: 25px;
 
         &.is-editing {
           background-color: $datagrid-cell-editing-bg-color;
+
           div.datagrid-cell-wrapper {
             svg.icon {
               @include trigger-icon-background($datagrid-cell-editing-bg-color);
@@ -2366,6 +2367,7 @@ $datagrid-small-row-height: 25px;
 
           &.is-editing {
             background-color: $datagrid-cell-editing-bg-color;
+
             div.datagrid-cell-wrapper {
               svg.icon {
                 @include trigger-icon-background($datagrid-cell-editing-bg-color);
@@ -2376,7 +2378,6 @@ $datagrid-small-row-height: 25px;
           div.datagrid-cell-wrapper {
             svg.icon {
               @include trigger-icon-background($datagrid-row-hover-color);
-              visibility: unset;
             }
           }
         }
