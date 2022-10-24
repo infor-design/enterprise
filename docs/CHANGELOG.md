@@ -8,6 +8,7 @@
 
 ## v4.69.0 Fixes
 
+- `[Datagrid]` Fixed a bug in datagrid where is empty and is not empty is not working properly. ([#5273](https://github.com/infor-design/enterprise/issues/5273))
 - `[Datagrid]` Fixed a bug in datagrid where multiselect filter is not rendering properly. ([#6846](https://github.com/infor-design/enterprise/issues/6846))
 - `[Datagrid]` Fixed a bug in datagrid where row shading is not rendered properly. ([#6850](https://github.com/infor-design/enterprise/issues/6850))
 - `[Datagrid]` Fixed a bug in datagrid where icon is not rendering properly in small and extra small row height. ([#6866](https://github.com/infor-design/enterprise/issues/6866))
