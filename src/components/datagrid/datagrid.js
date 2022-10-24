@@ -3254,55 +3254,52 @@ Datagrid.prototype = {
                 indexTo = tempArray[self.draggableStatus.endIndex] || 0;
 
                 if (self.settings.showDirty && self.dirtyArray) {
-                  const updateCells = (row, dirtyFlags, start, end) => {
-                    const clearCells = [];
-                    for (let c = start; c <= end; c++) {
-                      if (dirtyFlags[c] && typeof dirtyFlags[c] === 'object') {
-                        self.setDirtyCell(row, c, dirtyFlags[c]);
-                      } else if (dirtyFlags[c] === false) {
-                        clearCells.push(c);
-                      }
-                    }
-                    clearCells.forEach(c => self.clearDirtyCell(row, c));
-                  };
+                  const updateCells = (row, dirtyCells, clearCells) => {
+                    dirtyCells.forEach((d) => {
+                      const dirtyCell = { ...self.dirtyArray[row][d[0]] };
+                      dirtyCell.cell = d[1];
+                      dirtyCell.column = self.settings.columns[d[1]];
+                      self.setDirtyCell(row, d[1], dirtyCell);
+                    });
 
-                  const setDirty = (row, dirtyRow, dirtyFlags, from, to) => {
-                    if (self.dirtyArray[row][to] && self.dirtyArray[row][to].isDirty) {
-                      dirtyFlags[to] = true;
-                    } else {
-                      dirtyFlags[to] = { ...dirtyRow[from] };
-                      dirtyFlags[to].cell = to;
-                      dirtyFlags[to].column = self.settings.columns[to];
-                    }
+                    clearCells.forEach((d) => {
+                      self.clearDirtyCell(row, d);
+                    });
                   };
 
                   if (indexFrom > indexTo) {
                     self.dirtyArray.forEach((dirtyRow, row) => {
-                      const dirtyFlags = Array(indexFrom + 1).fill(false);
+                      const clearCells = [];
+                      const dirtyCells = [];
                       for (let c = indexTo; c <= indexFrom; c++) {
                         if (dirtyRow[c] && dirtyRow[c].isDirty) {
                           if (c === indexFrom) {
-                            setDirty(row, dirtyRow, dirtyFlags, indexFrom, indexTo);
+                            dirtyCells.push([indexFrom, indexTo]);
                           } else {
-                            setDirty(row, dirtyRow, dirtyFlags, c, c + 1);
+                            dirtyCells.push([c, c + 1]);
                           }
+                        } else {
+                          clearCells.push(c + 1);
                         }
                       }
-                      updateCells(row, dirtyFlags, indexTo, indexFrom);
+                      updateCells(row, dirtyCells, clearCells);
                     });
                   } else if (indexFrom < indexTo) {
                     self.dirtyArray.forEach((dirtyRow, row) => {
-                      const dirtyFlags = Array(indexTo + 2).fill(false);
+                      const clearCells = [];
+                      const dirtyCells = [];
                       for (let c = indexTo; c >= indexFrom; c--) {
                         if (dirtyRow[c] && dirtyRow[c].isDirty) {
                           if (c === indexFrom) {
-                            setDirty(row, dirtyRow, dirtyFlags, indexFrom, indexTo);
+                            dirtyCells.push([indexFrom, indexTo]);
                           } else {
-                            setDirty(row, dirtyRow, dirtyFlags, c, c - 1);
+                            dirtyCells.push([c, c - 1]);
                           }
+                        } else {
+                          clearCells.push(c - 1);
                         }
                       }
-                      updateCells(row, dirtyFlags, indexFrom, indexTo);
+                      updateCells(row, dirtyCells, clearCells);
                     });
                   }
                 }
