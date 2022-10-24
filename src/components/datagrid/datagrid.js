@@ -4904,6 +4904,10 @@ Datagrid.prototype = {
         cssClass += ' is-dirty-cell';
       }
 
+      if (self.uniqueId().indexOf('inline') > 0) {
+        cssClass += ' has-inline-editor';
+      }
+
       // Trim extra spaces
       if (cssClass !== '') {
         cssClass = cssClass.replace(/^\s+|\s+$/g, '').replace(/\s+/g, ' ');
@@ -7112,7 +7116,7 @@ Datagrid.prototype = {
     }
 
     const selectEvents = self.settings.dblClickApply ? 'dblclick.datagrid, click.datagrid, select.datagrid' : 'click.datagrid, select.datagrid';
-    this.element.off(selectEvents).on(selectEvents, 'tbody td', function (e) {        
+    this.element.off(selectEvents).on(selectEvents, 'tbody td', function (e) {
       let rowNode = null;
       let dataRowIdx = null;
       const target = $(e.target);
