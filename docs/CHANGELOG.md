@@ -4,15 +4,19 @@
 
 ## v4.69.0 Features
 
+- `[Datagrid]` Added puppeteer script for extra class for tooltip. ([#6900](https://github.com/infor-design/enterprise/issues/6900))
 - `[Lookup]` Added puppeteer script for lookup double click apply enhancement. ([#6886](https://github.com/infor-design/enterprise/issues/6886))
 
 ## v4.69.0 Fixes
 
+- `[Datagrid]` Fixed a bug in datagrid where inline editor input text is not being selected upon clicking. ([NG#1365](https://github.com/infor-design/enterprise-ng/issues/1365))
+- `[Datagrid]` Fixed a bug in datagrid where multiselect filter is not rendering properly. ([#6846](https://github.com/infor-design/enterprise/issues/6846))
 - `[Datagrid]` Fixed a bug in datagrid where row shading is not rendered properly. ([#6850](https://github.com/infor-design/enterprise/issues/6850))
 - `[Datagrid]` Fixed a bug in datagrid where icon is not rendering properly in small and extra small row height. ([#6866](https://github.com/infor-design/enterprise/issues/6866))
 - `[Datagrid]` Fixed a bug in datagrid where sorting is not rendering properly when there is a previously focused cell. ([#6851](https://github.com/infor-design/enterprise/issues/6851))
 - `[Datagrid]` Additional checks when updating cell so that numbers aren't converted twice. ([NG#1370](https://github.com/infor-design/enterprise-ng/issues/1370))
 - `[Modal]` Fixed a bug where suppress key setting is not working. ([#6793](https://github.com/infor-design/enterprise/issues/6793))
+- `[Searchfield]` Additional visual fixes in classic on go button in searchfield toolbar. ([#6686](https://github.com/infor-design/enterprise/issues/6686))
 - `[Splitter]` Fixed on splitter not working when parent height changes dynamically. ([#6819](https://github.com/infor-design/enterprise/issues/6819))
 - `[Toolbar Flex]` Added additional checks for destroying toolbar. ([#6844](https://github.com/infor-design/enterprise/issues/6844))
 

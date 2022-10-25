@@ -30,9 +30,11 @@ spec:
                   name: docs-api-key
                   key: token
             - name: SITE
-              value:
-            - name: BRANCH
-              value:
+              value: ""
+            - name: BUILD_FROM
+              value: ""
+            - name: APP_REPO
+              value: ""
           command: ["/bin/bash"]
           args: ["-c", ". ./run.sh"]
       restartPolicy: Never
