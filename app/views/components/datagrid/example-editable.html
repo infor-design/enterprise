@@ -30,6 +30,9 @@
           </svg>
           <span class="audible">Add</span>
         </button>
+        <button class="btn" type="button" id="clearDirtyRows-btn">
+          <span class="audible">Clear Dirty Row</span>
+        </button>
       </div>
 
       <div class="more">
@@ -173,6 +176,10 @@
   $('#remove-btn').on('click', function () {
     gridApi.removeSelected();
   });
+
+  $('#clearDirtyRows-btn').on('click', function() {
+    gridApi.clearDirty();
+  })
 
   //A few other ways
   $('#validate').on('selected', function (e, args) {
