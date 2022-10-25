@@ -4904,6 +4904,10 @@ Datagrid.prototype = {
         cssClass += ' is-dirty-cell';
       }
 
+      if (self.uniqueId().indexOf('inline') > 0) {
+        cssClass += ' has-inline-editor';
+      }
+
       // Trim extra spaces
       if (cssClass !== '') {
         cssClass = cssClass.replace(/^\s+|\s+$/g, '').replace(/\s+/g, ' ');
@@ -7265,6 +7269,16 @@ Datagrid.prototype = {
         if (target.is('[disabled]') && col.formatter === Formatters.Hyperlink) {
           e.stopImmediatePropagation();
           e.preventDefault();
+        }
+      }
+
+      if (columnSettings.inlineEditor) {
+        if (e.type === 'click' && e.target.nodeName.toLowerCase() === 'input') {
+          const el = e.target;
+          el.focus();
+          el.select();
+          e.preventDefault();
+          e.stopPropagation();
         }
       }
 
