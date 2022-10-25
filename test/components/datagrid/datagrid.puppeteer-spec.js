@@ -56,6 +56,32 @@ describe('Datagrid', () => {
     });
   });
 
+  describe('Inline Editor', () => {
+    const url = `${baseUrl}/test-editable-with-inline-editor.html`;
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('Should have inline editors', async () => {
+      await page.waitForSelector('.has-inline-editor', { visible: true })
+        .then(element => expect(element).toBeTruthy());
+    });
+
+    it('Should be able to clean editors on click and backspace', async () => {
+      await page.waitForSelector('.has-inline-editor', { visible: true })
+        .then(element => expect(element).toBeTruthy());
+
+      await page.waitForSelector('#datagrid-inline-input-1-2', { visible: true })
+        .then(element => expect(element).toBeTruthy());
+
+      await page.click('#datagrid-inline-input-1-2');
+
+      await page.keyboard.press('Backspace');
+      expect(await page.$eval('#datagrid-inline-input-1-2', el => el.value)).toBe('');
+    });
+  });
+
   describe('Tree row status', () => {
     const url = `${baseUrl}/test-tree-rowstatus.html`;
     beforeAll(async () => {
