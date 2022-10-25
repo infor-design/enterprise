@@ -40,10 +40,12 @@
     {{/esModule}}
     {{^esModule}}
       <script src="{{basepath}}js/sohoxi.{{importStyle}}.js"></script>
+      <script src="{{basepath}}js/sohoxi-migrate-4.0.0.js"></script>
     {{/esModule}}
   {{/importStyle}}
   {{^importStyle}}
     <script src="{{basepath}}js/sohoxi.js"></script>
+    <script src="{{basepath}}js/sohoxi-migrate-4.0.0.js"></script>
   {{/importStyle}}
 
   <!-- Supplying the culture in the head is supported
@@ -62,12 +64,12 @@
     colors = '{{colors}}'.split(',');
 
     colors = {header: colors[0],
-             subheader: colors[1],
-             text: colors[2],
-             verticalBorder: colors[3],
-             horizontalBorder: colors[4],
-             inactive: colors[5],
-             hover: colors[6]};
+            subheader: colors[1],
+            text: colors[2],
+            verticalBorder: colors[3],
+            horizontalBorder: colors[4],
+            inactive: colors[5],
+            hover: colors[6]};
 
     {{/colors}}
 
