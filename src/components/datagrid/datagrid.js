@@ -2735,6 +2735,10 @@ Datagrid.prototype = {
             if (conditions[i].filterType === 'checkbox' || conditions[i].value.toString().trim() !== '') {
               isEmpty = false;
             }
+
+            if (conditions[i].filterType === 'text' && conditions[i].operator === 'is-empty') {
+              isEmpty = false;
+            }
           }
           return isEmpty;
         };
