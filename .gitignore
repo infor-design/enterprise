@@ -45,6 +45,7 @@ report.xml
 views/docs/changelog-contents.html
 xunit.xml
 .env
+.gitconfig
 
 # OS generated files #
 ######################

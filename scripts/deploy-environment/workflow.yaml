@@ -5,10 +5,6 @@ metadata:
 spec:
   arguments:
     parameters:
-      - name: handler_api_url
-        value: ""
-      - name: tsl_secret
-        value: ""
       - name: org_name
         value: ""
       - name: base_container_name
@@ -19,9 +15,14 @@ spec:
         value: ""
       - name: build_as_latest
         value: ""
-      - name: repo_owner_name
+      - name: version
         value: ""
-
+      - name: app_repo
+        value: ""
+      - name: manifests_repo
+        value: ""
+      - name: site
+        value: ""
 
   entrypoint: ent-env-deploy-wf
 
@@ -40,34 +41,48 @@ spec:
             template: build
             arguments:
               parameters:
-                - name: handler_api_url
-                  value: "{{workflow.parameters.handler_api_url}}"
-                - name: tsl_secret
-                  value: "{{workflow.parameters.tsl_secret}}"
                 - name: org_name
                   value: "{{workflow.parameters.org_name}}"
                 - name: base_container_name
                   value: "{{workflow.parameters.base_container_name}}"
                 - name: build_from
                   value: "{{workflow.parameters.build_from}}"
+                - name: app_repo
+                  value: "{{workflow.parameters.app_repo}}"
+
+        - - name: push
+            template: push
+            arguments:
+              parameters:
                 - name: subdomain_name
                   value: "{{workflow.parameters.subdomain_name}}"
                 - name: build_as_latest
                   value: "{{workflow.parameters.build_as_latest}}"
-                - name: repo_owner_name
-                  value: "{{workflow.parameters.repo_owner_name}}"
+                - name: version
+                  value: "{{workflow.parameters.version}}"
+                - name: image_version
+                  value: "{{workflow.parameters.build_from}}"
+                - name: manifests_repo
+                  value: "{{workflow.parameters.manifests_repo}}"
+
+        - - name: publish-docs
+            template: publish-docs
+            arguments:
+              parameters:
+                - name: build_from
+                  value: "{{workflow.parameters.build_from}}"
+                - name: app_repo
+                  value: "{{workflow.parameters.app_repo}}"
+                - name: site
+                  value: "{{workflow.parameters.site}}"
 
     - name: build
       inputs:
         parameters:
-          - name: handler_api_url
-          - name: tsl_secret
           - name: org_name
           - name: base_container_name
           - name: build_from
-          - name: subdomain_name
-          - name: build_as_latest
-          - name: repo_owner_name
+          - name: app_repo
 
       resource:
         action: create
@@ -115,33 +130,17 @@ spec:
                           secretKeyRef:
                             name: github-access-token
                             key: token
-                      - name: HANDLER_API_KEY
-                        valueFrom:
-                          secretKeyRef:
-                            name: handler-api-key
-                            key: token
-                      - name: TLS_SECRET
-                        valueFrom:
-                          secretKeyRef:
-                            name: tls-secret-key
-                            key: token
-                      - name: HANDLER_API_URL
-                        value: "{{inputs.parameters.handler_api_url}}"
                       - name: ORG_NAME
                         value: "{{inputs.parameters.org_name}}"
                       - name: BASE_CONTAINER_NAME
                         value: "{{inputs.parameters.base_container_name}}"
                       - name: BUILD_FROM
                         value: "{{inputs.parameters.build_from}}"
-                      - name: SUBDOMAIN_NAME
-                        value: "{{inputs.parameters.subdomain_name}}"
-                      - name: BUILD_AS_LATEST
-                        value: "{{inputs.parameters.build_as_latest}}"
-                      - name: REPO_OWNER_NAME
-                        value: "{{inputs.parameters.repo_owner_name}}"
+                      - name: APP_REPO
+                        value: "{{inputs.parameters.app_repo}}"
                     #command: ['docker', 'run', '-p', '8080:8080', 'httpd:latest']
                     command: ["/bin/bash"]
-                    args: ["-c", ". ./run.sh"]
+                    args: ["-c", ". ./build_push_image.sh"]
                   - name: dind-daemon
                     image: "docker:dind"
                     imagePullPolicy: Always
@@ -167,3 +166,124 @@ spec:
           - name: job-uid
             valueFrom:
               jsonPath: "{.metadata.uid}"
+
+    - name: push
+      inputs:
+        parameters:
+          - name: subdomain_name
+          - name: build_as_latest
+          - name: version
+          - name: image_version
+          - name: manifests_repo
+
+      resource:
+        action: create
+        successCondition: status.succeeded > 0
+        failureCondition: status.failed > 0
+        manifest: |
+          apiVersion: batch/v1
+          kind: Job
+          metadata:
+            name: ent-env-build-push-manifests
+          spec:
+            ttlSecondsAfterFinished: 300
+            backoffLimit: 0
+            template:
+              spec:
+                restartPolicy: Never
+                volumes:
+                  - name: gitconfig
+                    secret:
+                      secretName: gitconfig
+                      defaultMode: 0600
+                containers:
+                  - name: worker
+                    image: hookandloop/ent-env-worker:0.0.1
+                    imagePullPolicy: Always
+                    volumeMounts:
+                      - name: gitconfig
+                        readOnly: true
+                        mountPath: "/usr/src/secrets"
+                    resources:
+                      requests:
+                        cpu: 500m
+                        memory: 3Gi
+                    env:
+                      - name: GITHUB_ACCESS_TOKEN
+                        valueFrom:
+                          secretKeyRef:
+                            name: github-access-token
+                            key: token
+                      - name: SUBDOMAIN_NAME
+                        value: "{{inputs.parameters.subdomain_name}}"
+                      - name: BUILD_AS_LATEST
+                        value: "{{inputs.parameters.build_as_latest}}"
+                      - name: VERSION
+                        value: "{{inputs.parameters.version}}"
+                      - name: IMAGE_VERSION
+                        value: "{{inputs.parameters.image_version}}"
+                      - name: MANIFESTS_REPO
+                        value: "{{inputs.parameters.manifests_repo}}"
+                    command: ["/bin/bash"]
+                    args: ["-c", ". ./build_push_manifests.sh"]
+                    lifecycle:
+                      postStart:
+                        exec:
+                          command:
+                            - /bin/sh
+                            - -c
+                            - cp /usr/src/secrets/gitconfig /root/.gitconfig
+
+
+    - name: publish-docs
+      inputs:
+        parameters:
+          - name: build_from
+          - name: app_repo
+          - name: site
+
+      resource:
+        action: create
+        successCondition: status.succeeded > 0
+        failureCondition: status.failed > 0
+        manifest: |
+          apiVersion: batch/v1
+          kind: Job
+          metadata:
+            name: ent-env-publish-docs
+          spec:
+            ttlSecondsAfterFinished: 300
+            backoffLimit: 0
+            template:
+              spec:
+                restartPolicy: Never
+                nodeSelector: 
+                  eks.amazonaws.com/nodegroup: heavy
+                containers:
+                  - name: enterprise-publish-docs
+                    image: hookandloop/enterprise-publish-docs:0.0.1
+                    imagePullPolicy: Always
+                    resources:
+                      requests:
+                        cpu: 500m
+                        memory: 3Gi
+                    env:
+                      - name: GITHUB_ACCESS_TOKEN
+                        valueFrom:
+                          secretKeyRef:
+                            name: github-access-token
+                            key: token
+                      - name: DOCS_API_KEY
+                        valueFrom:
+                          secretKeyRef:
+                            name: docs-api-key
+                            key: token
+                      - name: SITE
+                        value: "{{inputs.parameters.site}}"
+                      - name: BUILD_FROM
+                        value: "{{inputs.parameters.build_from}}"
+                      - name: APP_REPO
+                        value: "{{inputs.parameters.app_repo}}"
+                    command: ["/bin/bash"]
+                    args: ["-c", ". ./run.sh"]
+                restartPolicy: Never
