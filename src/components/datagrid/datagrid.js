@@ -3280,7 +3280,7 @@ Datagrid.prototype = {
                     self.dirtyArray.forEach((dirtyRow, row) => {
                       const dirtyFlags = Array(indexFrom + 1).fill(false);
                       for (let c = indexTo; c <= indexFrom; c++) {
-                        if (dirtyRow[c] && dirtyRow[c].isDirty) {
+                        if (dirtyRow && dirtyRow[c] && dirtyRow[c].isDirty) {
                           if (c === indexFrom) {
                             setDirty(row, dirtyRow, dirtyFlags, indexFrom, indexTo);
                           } else {
@@ -3294,7 +3294,7 @@ Datagrid.prototype = {
                     self.dirtyArray.forEach((dirtyRow, row) => {
                       const dirtyFlags = Array(indexTo + 2).fill(false);
                       for (let c = indexTo; c >= indexFrom; c--) {
-                        if (dirtyRow[c] && dirtyRow[c].isDirty) {
+                        if (dirtyRow && dirtyRow[c] && dirtyRow[c].isDirty) {
                           if (c === indexFrom) {
                             setDirty(row, dirtyRow, dirtyFlags, indexFrom, indexTo);
                           } else {
