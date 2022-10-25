@@ -4,6 +4,7 @@
 
 ## v4.69.0 Features
 
+- `[Datagrid]` Added puppeteer script for extra class for tooltip. ([#6900](https://github.com/infor-design/enterprise/issues/6900))
 - `[Lookup]` Added puppeteer script for lookup double click apply enhancement. ([#6886](https://github.com/infor-design/enterprise/issues/6886))
 
 ## v4.69.0 Fixes

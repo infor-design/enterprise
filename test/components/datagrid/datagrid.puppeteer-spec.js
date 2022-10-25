@@ -421,4 +421,31 @@ describe('Datagrid', () => {
       await priceCell.evaluate(el => el.textContent).then(text => expect(text).toEqual('1,500'));
     });
   });
+
+  describe('Extra class for tooltip tests', () => {
+    const url = `${baseUrl}/example-header-icon-with-tooltip`;
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('should show tooltip when hovered', async () => {
+      const th = 'example-header-icon-with-tooltip-datagrid-1-header-2';
+      await page.hover(`#${th}`);
+
+      await page.waitForSelector('#example-header-icon-with-tooltip-datagrid-0tooltip', { visible: true })
+        .then(element => element.getProperty('className'))
+        .then(className => className.jsonValue())
+        .then(classNameString => expect(classNameString).not.toContain('is-hidden'));
+    });
+
+    it('should show tooltip when hovered', async () => {
+      await page.hover('.icon.datagrid-header-icon');
+
+      await page.waitForSelector('#example-header-icon-with-tooltip-datagrid-0tooltip', { visible: true })
+        .then(element => element.getProperty('className'))
+        .then(className => className.jsonValue())
+        .then(classNameString => expect(classNameString).toContain('tooltip-extra-class'));
+    });
+  });
 });
