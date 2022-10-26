@@ -20,7 +20,6 @@ const documentation = require('documentation');
 const glob = require('glob');
 const { exec } = require('child_process');
 
-
 // -------------------------------------
 //   Constants
 // -------------------------------------
