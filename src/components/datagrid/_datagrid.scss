@@ -2718,6 +2718,14 @@ $datagrid-small-row-height: 25px;
     &.error {
       background-color: $alert-bg-error;
 
+      &.has-inline-editor {
+        .datagrid-cell-wrapper {
+          .icon-error {
+            left: unset;
+          }
+        }
+      }
+
       .datagrid-cell-wrapper {
         position: relative;
 
