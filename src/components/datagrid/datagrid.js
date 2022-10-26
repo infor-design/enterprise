@@ -2735,6 +2735,10 @@ Datagrid.prototype = {
             if (conditions[i].filterType === 'checkbox' || conditions[i].value.toString().trim() !== '') {
               isEmpty = false;
             }
+
+            if (conditions[i].filterType === 'text' && conditions[i].operator === 'is-empty') {
+              isEmpty = false;
+            }
           }
           return isEmpty;
         };
@@ -3254,52 +3258,55 @@ Datagrid.prototype = {
                 indexTo = tempArray[self.draggableStatus.endIndex] || 0;
 
                 if (self.settings.showDirty && self.dirtyArray) {
-                  const updateCells = (row, dirtyCells, clearCells) => {
-                    dirtyCells.forEach((d) => {
-                      const dirtyCell = { ...self.dirtyArray[row][d[0]] };
-                      dirtyCell.cell = d[1];
-                      dirtyCell.column = self.settings.columns[d[1]];
-                      self.setDirtyCell(row, d[1], dirtyCell);
-                    });
+                  const updateCells = (row, dirtyFlags, start, end) => {
+                    const clearCells = [];
+                    for (let c = start; c <= end; c++) {
+                      if (dirtyFlags[c] && typeof dirtyFlags[c] === 'object') {
+                        self.setDirtyCell(row, c, dirtyFlags[c]);
+                      } else if (dirtyFlags[c] === false) {
+                        clearCells.push(c);
+                      }
+                    }
+                    clearCells.forEach(c => self.clearDirtyCell(row, c));
+                  };
 
-                    clearCells.forEach((d) => {
-                      self.clearDirtyCell(row, d);
-                    });
+                  const setDirty = (row, dirtyRow, dirtyFlags, from, to) => {
+                    if (self.dirtyArray[row][to] && self.dirtyArray[row][to].isDirty) {
+                      dirtyFlags[to] = true;
+                    } else {
+                      dirtyFlags[to] = { ...dirtyRow[from] };
+                      dirtyFlags[to].cell = to;
+                      dirtyFlags[to].column = self.settings.columns[to];
+                    }
                   };
 
                   if (indexFrom > indexTo) {
                     self.dirtyArray.forEach((dirtyRow, row) => {
-                      const clearCells = [];
-                      const dirtyCells = [];
+                      const dirtyFlags = Array(indexFrom + 1).fill(false);
                       for (let c = indexTo; c <= indexFrom; c++) {
-                        if (dirtyRow[c] && dirtyRow[c].isDirty) {
+                        if (dirtyRow && dirtyRow[c] && dirtyRow[c].isDirty) {
                           if (c === indexFrom) {
-                            dirtyCells.push([indexFrom, indexTo]);
+                            setDirty(row, dirtyRow, dirtyFlags, indexFrom, indexTo);
                           } else {
-                            dirtyCells.push([c, c + 1]);
+                            setDirty(row, dirtyRow, dirtyFlags, c, c + 1);
                           }
-                        } else {
-                          clearCells.push(c + 1);
                         }
                       }
-                      updateCells(row, dirtyCells, clearCells);
+                      updateCells(row, dirtyFlags, indexTo, indexFrom);
                     });
                   } else if (indexFrom < indexTo) {
                     self.dirtyArray.forEach((dirtyRow, row) => {
-                      const clearCells = [];
-                      const dirtyCells = [];
+                      const dirtyFlags = Array(indexTo + 2).fill(false);
                       for (let c = indexTo; c >= indexFrom; c--) {
-                        if (dirtyRow[c] && dirtyRow[c].isDirty) {
+                        if (dirtyRow && dirtyRow[c] && dirtyRow[c].isDirty) {
                           if (c === indexFrom) {
-                            dirtyCells.push([indexFrom, indexTo]);
+                            setDirty(row, dirtyRow, dirtyFlags, indexFrom, indexTo);
                           } else {
-                            dirtyCells.push([c, c - 1]);
+                            setDirty(row, dirtyRow, dirtyFlags, c, c - 1);
                           }
-                        } else {
-                          clearCells.push(c - 1);
                         }
                       }
-                      updateCells(row, dirtyCells, clearCells);
+                      updateCells(row, dirtyFlags, indexFrom, indexTo);
                     });
                   }
                 }
@@ -4902,6 +4909,10 @@ Datagrid.prototype = {
 
       if (self.isCellDirty(self.settings.groupable ? actualIndex : dataRowIdx, j)) {
         cssClass += ' is-dirty-cell';
+      }
+
+      if (self.uniqueId().indexOf('inline') > 0) {
+        cssClass += ' has-inline-editor';
       }
 
       // Trim extra spaces
@@ -7249,6 +7260,16 @@ Datagrid.prototype = {
         if (target.is('[disabled]') && col.formatter === Formatters.Hyperlink) {
           e.stopImmediatePropagation();
           e.preventDefault();
+        }
+      }
+
+      if (columnSettings.inlineEditor) {
+        if (e.type === 'click' && e.target.nodeName.toLowerCase() === 'input') {
+          const el = e.target;
+          el.focus();
+          el.select();
+          e.preventDefault();
+          e.stopPropagation();
         }
       }
 
