@@ -155,6 +155,14 @@
           color: $contextual-panel-icon-color;
         }
       }
+
+      .toolbar-searchfield-wrapper + .separator {
+        margin-left: 12px;
+      }
+
+      .toolbar-searchfield-wrapper.is-open + .separator {
+        margin-left: 20px;
+      }
     }
   }
 
