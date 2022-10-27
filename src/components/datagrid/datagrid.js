@@ -5657,6 +5657,11 @@ Datagrid.prototype = {
       delay = typeof delay === 'undefined' ? defaultDelay : delay;
       clearTimeout(tooltipTimer);
       setTimeout(() => {
+        // Prevents the tooltip to show on and off
+        if ($('.grid-tooltip:hover').length > 0) {
+          return;
+        }
+
         self.hideTooltip();
         // Clear cache for header filter, so it can use always current selected
         if (DOM.hasClass(elem.parentNode, 'datagrid-filter-wrapper')) {
@@ -5694,6 +5699,17 @@ Datagrid.prototype = {
           e.preventDefault();
         }
         return !handle;
+      })
+      .off('mousemove.gridtooltip')
+      .on('mousemove.gridtooltip', (e) => {
+        // Prevents the tooltip to show on and off
+        if ($(e.target).parents('.datagrid').length > 0) {
+          return;
+        }
+
+        if (!$('.grid-tooltip').hasClass('is-hidden') && !$('.grid-tooltip:hover').length > 0) {
+          handleHide(this);
+        }
       });
 
     if (this.toolbar && this.toolbar.parent().find('.table-errors').length > 0) {
