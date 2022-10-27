@@ -16,6 +16,7 @@
 
 ## v4.69.0 Fixes
 
+- `[Datagrid]` Fixed a bug in datagrid where tooltip flashes continuously on hover. ([#5907](https://github.com/infor-design/enterprise/issues/5907))
 - `[Datagrid]` Fixed a bug in datagrid where is empty and is not empty is not working properly. ([#5273](https://github.com/infor-design/enterprise/issues/5273))
 - `[Datagrid]` Fixed a bug in datagrid where inline editor input text is not being selected upon clicking. ([NG#1365](https://github.com/infor-design/enterprise-ng/issues/1365))
 - `[Datagrid]` Fixed a bug in datagrid where multiselect filter is not rendering properly. ([#6846](https://github.com/infor-design/enterprise/issues/6846))
@@ -43,6 +44,7 @@
 ## v4.68.0 Fixes
 
 - `[Bar Chart]` Fixed a bug in bar charts grouped, where arias are identical to each series. ([#6748](https://github.com/infor-design/enterprise/issues/6748))
+- `[Datagrid]` Fixed a bug in datagrid where tooltip flashes continuously on hover. ([#5907](https://github.com/infor-design/enterprise/issues/5907))
 - `[Datagrid]` Fixed a bug in datagrid where expandable row animation is not rendering properly. ([#6813](https://github.com/infor-design/enterprise/issues/6813))
 - `[Datagrid]` Fixed a bug in datagrid where dropdown filter does not render correctly. ([#6834](https://github.com/infor-design/enterprise/issues/6834))
 - `[Datagrid]` Fixed alignment issues in trigger fields. ([#6678](https://github.com/infor-design/enterprise/issues/6678))
