@@ -9,6 +9,7 @@
 
 ## v4.69.0 Fixes
 
+- `[Datagrid]` Added Example Page for Add Row Frozen Columns. ([#6918](https://github.com/infor-design/enterprise/issues/6918))
 - `[Datagrid]` Fixed a bug in datagrid where is empty and is not empty is not working properly. ([#5273](https://github.com/infor-design/enterprise/issues/5273))
 - `[Datagrid]` Fixed a bug in datagrid where inline editor input text is not being selected upon clicking. ([NG#1365](https://github.com/infor-design/enterprise-ng/issues/1365))
 - `[Datagrid]` Fixed a bug in datagrid where multiselect filter is not rendering properly. ([#6846](https://github.com/infor-design/enterprise/issues/6846))
