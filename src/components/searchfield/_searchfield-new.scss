@@ -114,6 +114,10 @@ html.is-firefox {
     }
   }
 
+  .header.has-searchfield-xl .searchfield-wrapper input {
+    height: 48px;
+  }
+
   .toolbar-searchfield-wrapper {
     &:not(.is-open):not(.non-collapsible) {
       .searchfield {

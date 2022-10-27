@@ -506,7 +506,7 @@ body.no-scroll {
 
   // Searchfield primary action (Large)
   &.has-searchfield-xl {
-    height: 200px;
+    height: 177px;
 
     .searchfield-wrapper {
       input {
@@ -514,8 +514,8 @@ body.no-scroll {
 
         border: 1px solid transparent;
         box-shadow: $focus-box-shadow-transparent;
-        height: 60px;
-        padding: 18px 40px;
+        height: 48px;
+        padding: 18px 17px 18px 51px;
 
         &::-webkit-input-placeholder {
           @include font-size(16);
@@ -540,7 +540,7 @@ body.no-scroll {
 
       .icon {
         height: 18px;
-        left: 10px !important;
+        left: 16px !important;
         top: 21px;
         width: 20px;
       }

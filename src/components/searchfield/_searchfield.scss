@@ -134,7 +134,7 @@
     }
 
     > .icon {
-      color: $searchfield-context-icon-color;
+      color: $searchfield-icon-color;
       top: 9px;
 
       &:not(.close) {
@@ -566,11 +566,19 @@ html[dir='rtl'] {
 /**
  * align large searchfield search icon
  */
-.header > .full-searchfield-container .searchfield-wrapper {
-  & > svg.icon:nth-child(1) {
-    height: 100%;
-    top: 50%;
-    transform: translateY(-50%);
+.header {
+  > .full-searchfield-container .searchfield-wrapper {
+    & > svg.icon:nth-child(1) {
+      height: 100%;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+
+  &.has-searchfield-xl .searchfield-wrapper {
+    & > svg.icon:nth-child(1) {
+      top: 63%;
+    }
   }
 }
 
