@@ -12586,6 +12586,7 @@ Datagrid.prototype = {
         b = b.toString().toLowerCase();
       }
 
+      // Negate the comparison when comparing integer vs string value
       if ((!isNaN(a) && isNaN(b)) || (isNaN(a) && !isNaN(b))) {
         return ascending * (!(a > b) - !(b > a));
       }
