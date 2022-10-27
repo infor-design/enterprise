@@ -67,3 +67,15 @@ button.close {
     width: 16px;
   }
 }
+
+.alert-message,
+.success-message,
+.info-message,
+.custom-icon-message {
+  .icon {
+    height: 18px;
+    left: -1px;
+    top: -2px;
+    width: 18px;
+  }
+}
