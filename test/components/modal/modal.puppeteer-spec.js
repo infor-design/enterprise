@@ -145,7 +145,7 @@ describe('Modal Puppeteer Tests', () => {
       await page.waitForSelector('.modal-wrapper');
     });
 
-    it('Should enable submit after add text to all fields', async () => {
+    it.skip('Should enable submit after add text to all fields', async () => {
       await page.click('.dropdown-wrapper');
       await page.keyboard.press('ArrowDown');
       await page.keyboard.press('ArrowDown');

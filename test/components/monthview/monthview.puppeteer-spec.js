@@ -7,12 +7,11 @@ describe('Modal Puppeteer Tests', () => {
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
-  
+
     it('should update legend when visible month changes', async () => {
       await page.click('#update-legend');
       await page.hover('.monthview-legend');
       const legend = await page.waitForSelector('.is-wrapped', { visible: true });
-      console.log(legend);
       expect(legend).toBeTruthy();
     });
   });

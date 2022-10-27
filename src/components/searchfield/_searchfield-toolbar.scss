@@ -66,7 +66,7 @@ $toolbarsearchfield-category-empty-width: 51px;
     }
 
     .icon:not(.close) {
-      top: 3px;
+      top: 1px;
     }
   }
 
@@ -90,9 +90,14 @@ $toolbarsearchfield-category-empty-width: 51px;
       }
     }
 
-    .icon:not(.close) {
+    .icon.icon-dropdown {
       height: 18px;
       width: 18px;
+    }
+
+    .icon:not(.close) {
+      height: 20px;
+      width: 20px;
 
       @media only screen and (max-width: $breakpoint-phone-to-tablet) {
         top: 12px;

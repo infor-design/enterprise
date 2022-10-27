@@ -152,7 +152,6 @@ describe.skip('Homepage Puppeteer Tests', () => {
 
       for (let i = 0; i < elPositions.length; i++) {
         const positionList = elPositions[i].split(',');
-        // console.log(i + ' ~~~ ' + positionList);
         checkPos(pos[i], positionList);
       }
     });
