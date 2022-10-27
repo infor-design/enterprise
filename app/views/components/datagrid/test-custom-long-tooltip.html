@@ -1,0 +1,49 @@
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+    //Locale.set('en-US').done(function () {
+    var columns = [],
+      data = [];
+
+    // Some Sample Data
+    data.push({ id: 1, productId: 2142201, productName: 'Compressor', activity: 'Assemble Paint', quantity: 1, price: 210.99, status: 'Error', orderDate: new Date(2014, 12, 8), action: 'Action' });
+    data.push({ id: 2, productId: 2241202, productName: 'Different Compressor', activity: 'Inspect and Repair', quantity: 2, price: 210.99, status: 'OK', orderDate: new Date(2015, 7, 3), action: 'On Hold', ordered: true });
+    data.push({ id: 4, productId: 2445204, productName: 'Another Compressor', activity: 'Assemble Paint', quantity: 9, price: 210.99, status: 'OK', orderDate: new Date(2015, 3, 3), action: 'Action', ordered: true });
+    data.push({ id: 5, productId: 2542205, productName: 'I Love Compressors', activity: 'Inspect and Repair', quantity: 4, price: 18.00, status: 'OK', orderDate: new Date(2015, 5, 5), action: 'On Hold', ordered: false });
+    data.push({ id: 5, productId: 2642205, productName: 'Air Compressors', activity: 'Inspect and Repair', quantity: 18, price: 9, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold', comment: 'B2C ubiquitous communities maximize B2C synergies extend dynamic revolutionize, world-class robust peer-to-peer. Action-items semantic technologies clicks-and-mortar iterate min' });
+    data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity: 'inspect and Repair', quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold', ordered: 0 });
+    data.push({ id: 7, productId: 2642206, productName: 'Some Compressor', activity: 'inspect and Repair', quantity: 41, price: '100.99', status: 'Error', orderDate: new Date(2014, 6, 9, 12, 12, 12), action: 'On Hold', ordered: 0 });
+
+    //Define Columns for the Grid.
+    columns.push({ id: 'productId', hidden: true, name: 'Product Id', field: 'productId', formatter: Formatters.Readonly });
+    columns.push({ id: 'productDesc', name: 'Product Desc', sortable: false, field: 'productName', width: 240, formatter: Formatters.Hyperlink });
+    columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 160, tooltip: 'Testing' });
+    columns.push({ id: 'status', name: 'Exception', field: 'status',
+      contentTooltip: true,
+      formatter: Formatters.Editor,
+      tooltip: function(row, cell, value) {
+        var tooltip = `
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vitae neque arcu. Pellentesque mollis tincidunt tellus ac suscipit. Vestibulum eget dui eu turpis maximus elementum. Vivamus rhoncus nisl vel fringilla vulputate. Vestibulum et ipsum condimentum, sollicitudin felis id, bibendum justo. Ut rutrum, urna ut venenatis commodo, justo nisi eleifend lorem, vitae aliquet lectus mi vel sapien. Praesent vulputate, elit at consequat tristique, magna arcu fermentum elit, ut ultrices sem lectus sagittis ipsum. Mauris vel malesuada velit, ut tempus justo. Nulla facilisi. Aliquam rhoncus, magna ac laoreet gravida, risus nibh ultrices nulla, eget tristique tellus sapien convallis mi. Nunc ac turpis iaculis, iaculis nulla ut, pharetra nisi. Maecenas cursus placerat odio ut condimentum. Suspendisse potenti. Pellentesque non velit non erat pulvinar pretium eget at libero. Etiam id elit et tortor consequat aliquam pellentesque at massa. Morbi malesuada libero sed diam consectetur, ut placerat diam mattis.
+          Vivamus faucibus sem a enim convallis, non aliquet lacus suscipit. Ut lacus est, blandit vel est non, laoreet gravida dolor. Integer finibus blandit purus vel cursus. Integer vestibulum vel ipsum ac facilisis. Nullam ac metus id ligula ornare volutpat. Morbi dolor elit, tincidunt a mattis ut, semper vel arcu. Phasellus tempus, nisl non hendrerit convallis, enim erat accumsan nulla, sit amet porttitor ante diam a dui. Proin bibendum, lorem in rutrum lacinia, ante lacus congue dui, quis pellentesque orci erat ac sapien. Ut nec nisi non odio pharetra feugiat. Phasellus gravida mattis orci eget molestie. Etiam eleifend, lorem ac bibendum tempor, sapien neque consequat nisl, ut efficitur velit justo ac justo. Sed non orci ut nisi fermentum faucibus vel eu ante. Nulla id mauris nec orci dictum rhoncus id nec velit. Pellentesque id tortor vitae tortor placerat sollicitudin. Sed nec ante nec ipsum consequat feugiat.
+        `;
+
+        return 'Row: ' + row + ' Cell: ' + cell + ' Value: ' + tooltip;
+      },
+      width: 100 }
+    );
+
+    //Init and get the api for the grid
+    $('#datagrid').datagrid({
+      columns: columns,
+      dataset: data,
+      enableTooltips: true
+    });
+  });
+
+</script>
