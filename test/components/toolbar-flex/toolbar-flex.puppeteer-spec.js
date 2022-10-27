@@ -33,28 +33,6 @@ describe('Flex Toolbar', () => {
       const config = getConfig('flextool-index-open-menu-button-submenu');
 
       expect(image).toMatchImageSnapshot(config);
-
-      const subMenu = await page.$('#menu-button-popupmenu li.submenu');
-      subMenu.hover();
-
-      await page.waitForSelector('#flex-toolbar-menu-button-submenu', { visible: true })
-        .then(element => expect(element).toBeTruthy());
-
-      const image2 = await page.screenshot();
-      const config2 = getConfig('flextool-index-open-menu-button-with-submenu');
-
-      expect(image2).toMatchImageSnapshot(config2);
-
-      const buttonActions = await page.$('button.btn-actions');
-      buttonActions.click();
-
-      await page.waitForSelector('#popupmenu-2', { visible: true })
-        .then(element => expect(element).toBeTruthy());
-
-      const image3 = await page.screenshot();
-      const config3 = getConfig('flextool-index-open-more-menu');
-
-      expect(image3).toMatchImageSnapshot(config3);
     });
 
     it('should not visual regress - windowed', async () => {
