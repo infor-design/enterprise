@@ -12570,6 +12570,10 @@ Datagrid.prototype = {
         b = b.toString().toLowerCase();
       }
 
+      if ((!isNaN(a) && isNaN(b)) || (isNaN(a) && !isNaN(b))) {
+        return ascending * (!(a > b) - !(b > a));
+      }
+
       return ascending * ((a > b) - (b > a));
     };
   },
