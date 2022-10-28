@@ -515,7 +515,7 @@ describe('Datagrid', () => {
       await page.click('th:nth-child(2) span.sort-asc');
       expect(await page.$eval('tr.datagrid-row:nth-child(1) td:nth-child(2) a', el => el.innerHTML)).toBe('1');
 
-      await page.click('th:nth-child(2) span.sort-asc');
+      await page.click('th:nth-child(2) span.sort-desc');
       expect(await page.$eval('tr.datagrid-row:nth-child(1) td:nth-child(2) a', el => el.innerHTML)).toBe('10CD');
     });
   });
