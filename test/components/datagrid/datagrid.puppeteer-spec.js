@@ -501,4 +501,22 @@ describe('Datagrid', () => {
         .then(classNameString => expect(classNameString).toContain('tooltip-extra-class'));
     });
   });
+
+  describe('Mixed Sort Case', () => {
+    const url = `${baseUrl}/test-combo-sort.html`;
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('should be able to use filter properly', async () => {
+      expect(await page.$eval('tr.datagrid-row:nth-child(1) td:nth-child(2) a', el => el.innerHTML)).toBe('01AM');
+
+      await page.click('th:nth-child(2) span.sort-asc');
+      expect(await page.$eval('tr.datagrid-row:nth-child(1) td:nth-child(2) a', el => el.innerHTML)).toBe('1');
+
+      await page.click('th:nth-child(2) span.sort-desc');
+      expect(await page.$eval('tr.datagrid-row:nth-child(1) td:nth-child(2) a', el => el.innerHTML)).toBe('10CD');
+    });
+  });
 });

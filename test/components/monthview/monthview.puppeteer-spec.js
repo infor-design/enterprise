@@ -12,7 +12,7 @@ describe('Modal Puppeteer Tests', () => {
       await page.click('#update-legend');
       await page.hover('.monthview-legend');
       const legend = await page.waitForSelector('.is-wrapped', { visible: true });
-      console.log(legend);
+
       expect(legend).toBeTruthy();
     });
   });
