@@ -47,7 +47,7 @@
     top: 10px;
 
     &:not(.close):not(.icon-error) {
-      left: 9px;
+      left: 8px;
       pointer-events: none;
     }
 
@@ -577,7 +577,7 @@ html[dir='rtl'] {
 
   &.has-searchfield-xl .searchfield-wrapper {
     & > svg.icon:nth-child(1) {
-      top: 63%;
+      top: 52%
     }
   }
 }

@@ -318,6 +318,12 @@
     + .error-message {
       margin-top: 7px;
     }
+
+    > .icon {
+      &:not(.close):not(.icon-error) {
+        left: 9px;
+      }
+    }
   }
 
   .editor {
