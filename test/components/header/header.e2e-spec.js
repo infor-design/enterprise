@@ -3,7 +3,7 @@ const config = requireHelper('e2e-config');
 
 requireHelper('rejection');
 
-describe('Header Index Tests', () => {
+fdescribe('Header Index Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/header/example-index?theme=classic&layout=nofrills');
   });

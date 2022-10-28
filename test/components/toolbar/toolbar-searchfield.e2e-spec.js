@@ -24,7 +24,7 @@ describe('Toolbar Searchfield (no-reinvoke)', () => {
   });
 });
 
-describe('Searchfield with Toolbar alignment tests', () => {
+fdescribe('Searchfield with Toolbar alignment tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/toolbarsearchfield/example-flex-toolbar-align-with-searchfield?theme=classic');
     await browser.driver
@@ -65,7 +65,7 @@ describe('Toolbar Input tests', () => {
   });
 });
 
-describe('Toolbar Searchfield example-flex-toolbar-align-with-searchfield tests', () => {
+fdescribe('Toolbar Searchfield example-flex-toolbar-align-with-searchfield tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/toolbarsearchfield/example-flex-toolbar-align-with-searchfield?layout=nofrills');
   });
