@@ -140,7 +140,7 @@ describe('Datagrid Colspan Tests', () => {
   }
 });
 
-fdescribe('Datagrid Compact Row Tests', () => {
+describe('Datagrid Compact Row Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-compact-mode?theme=classic&layout=nofrills');
 
@@ -609,7 +609,7 @@ describe('Datagrid filter RTL tests', () => {
   }
 });
 
-fdescribe('Datagrid filter alternate row tests', () => {
+describe('Datagrid filter alternate row tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-filter-alternate-row-shading?theme=classic&layout=nofrills');
 
@@ -1878,7 +1878,7 @@ describe('Datagrid Date default values', () => {
   });
 });
 
-fdescribe('Datagrid Alert and Badges Tests', () => {
+describe('Datagrid Alert and Badges Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-alerts?theme=classic&layout=nofrills');
 
@@ -1908,7 +1908,7 @@ fdescribe('Datagrid Alert and Badges Tests', () => {
   }
 });
 
-fdescribe('Datagrid Alert and Badges Frozen Column Tests', () => {
+describe('Datagrid Alert and Badges Frozen Column Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-frozen-columns-with-alert?theme=classic&layout=nofrills');
 
@@ -3720,7 +3720,7 @@ describe('Datagrid paging clientside single select tests', () => {
   });
 });
 
-fdescribe('Datagrid paging indeterminate multiple select tests', () => {
+describe('Datagrid paging indeterminate multiple select tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-select-indeterminate-multiple');
 
@@ -3753,7 +3753,7 @@ fdescribe('Datagrid paging indeterminate multiple select tests', () => {
   });
 });
 
-fdescribe('Datagrid paging indeterminate single select tests', () => {
+describe('Datagrid paging indeterminate single select tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-select-indeterminate-single?theme=classic&layout=nofrills');
 
@@ -3866,7 +3866,7 @@ describe('Datagrid paging serverside multi select tests 2nd page', () => {
   });
 });
 
-fdescribe('Datagrid Paging with Summary Row test', () => {
+describe('Datagrid Paging with Summary Row test', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/test-paging-with-summary-row?theme=classic&layout=nofrills');
 

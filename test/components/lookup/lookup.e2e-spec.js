@@ -5,7 +5,7 @@ const config = require('../../helpers/e2e-config.js');
 
 requireHelper('rejection');
 
-fdescribe('Lookup example tests', () => {
+describe('Lookup example tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/lookup/example-index?theme=classic&layout=nofrills');
   });
@@ -483,7 +483,7 @@ describe('Lookup single select serverside tests', () => {
   }
 });
 
-fdescribe('Lookup minWidth tests', () => {
+describe('Lookup minWidth tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/lookup/example-minwidth');
   });

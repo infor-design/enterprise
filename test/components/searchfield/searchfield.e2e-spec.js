@@ -160,7 +160,7 @@ describe('Searchfield clearable tests', () => {
 });
 
 if (utils.isChrome() && utils.isCI()) {
-  fdescribe('Searchfield `collapseSize` tests', () => {
+  describe('Searchfield `collapseSize` tests', () => {
     beforeEach(async () => {
       await utils.setPage('/components/searchfield/test-configure-close-size?theme=classic&layout=nofrills');
       await browser.driver
