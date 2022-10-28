@@ -2340,29 +2340,65 @@ $datagrid-small-row-height: 25px;
       background-color: $button-color-tertiary-initial-font;
     }
 
+    td {
+      &.is-editing {
+        background-color: $datagrid-cell-editing-bg-color;
+
+        div.datagrid-cell-wrapper {
+          svg.icon {
+            @include trigger-icon-background($datagrid-cell-editing-bg-color);
+          }
+
+          button.btn-icon {
+            svg.icon {
+              @include trigger-icon-background($datagrid-cell-editing-bg-color);
+            }
+          }
+        }
+      }
+    }
+
     &.alt-shading {
       td {
         background-color: $datagrid-alternate-bg-color;
 
         &.is-editing {
           background-color: $datagrid-cell-editing-bg-color;
+
+          div.datagrid-cell-wrapper {
+            svg.icon {
+              @include trigger-icon-background($datagrid-cell-editing-bg-color);
+            }
+          }
+        }
+
+        div.datagrid-cell-wrapper {
+          svg.icon {
+            @include trigger-icon-background($datagrid-alternate-bg-color);
+          }
         }
       }
 
       &.is-hover-row {
         td {
-          background-color: $datagrid-alternate-bg-color;
+          background-color: $datagrid-row-hover-color;
 
           &.is-editing {
             background-color: $datagrid-cell-editing-bg-color;
+
+            div.datagrid-cell-wrapper {
+              svg.icon {
+                @include trigger-icon-background($datagrid-cell-editing-bg-color);
+              }
+            }
+          }
+
+          div.datagrid-cell-wrapper {
+            svg.icon {
+              @include trigger-icon-background($datagrid-row-hover-color);
+            }
           }
         }
-      }
-    }
-
-    &:hover.alt-shading {
-      td {
-        background-color: $datagrid-alternate-row-hover-color;
       }
     }
 

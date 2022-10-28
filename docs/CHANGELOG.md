@@ -10,6 +10,7 @@
 ## v4.69.0 Fixes
 
 - `[Datagrid]` Fixed a bug in datagrid where sorting is not working properly. ([#6787](https://github.com/infor-design/enterprise/issues/6787))
+- `[Datagrid]` Added an Example Page for Add Row Frozen Columns. ([#6918](https://github.com/infor-design/enterprise/issues/6918))
 - `[Datagrid]` Fixed a bug in datagrid where tooltip flashes continuously on hover. ([#5907](https://github.com/infor-design/enterprise/issues/5907))
 - `[Datagrid]` Fixed a bug in datagrid where is empty and is not empty is not working properly. ([#5273](https://github.com/infor-design/enterprise/issues/5273))
 - `[Datagrid]` Fixed a bug in datagrid where inline editor input text is not being selected upon clicking. ([NG#1365](https://github.com/infor-design/enterprise-ng/issues/1365))
