@@ -45,6 +45,8 @@ spec:
                   value: "{{workflow.parameters.org_name}}"
                 - name: base_container_name
                   value: "{{workflow.parameters.base_container_name}}"
+                - name: image_version
+                  value: "{{workflow.parameters.image_version}}"
                 - name: build_as_latest
                   value: "{{workflow.parameters.build_as_latest}}"
                 - name: build_from
@@ -78,6 +80,7 @@ spec:
       inputs:
         parameters:
           - name: org_name
+          - name: image_version
           - name: base_container_name
           - name: build_as_latest
           - name: build_from
@@ -131,6 +134,8 @@ spec:
                             key: token
                       - name: ORG_NAME
                         value: "{{inputs.parameters.org_name}}"
+                      - name: IMAGE_VERSION
+                        value: "{{inputs.parameters.image_version}}"
                       - name: BASE_CONTAINER_NAME
                         value: "{{inputs.parameters.base_container_name}}"
                       - name: BUILD_AS_LATEST
