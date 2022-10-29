@@ -39,6 +39,8 @@ spec:
                   key: token
             - name: ORG_NAME
               value: ""
+            - name: IMAGE_VERSION
+              value: ""
             - name: BASE_CONTAINER_NAME
               value: ""
             - name: BUILD_AS_LATEST
