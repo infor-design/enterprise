@@ -31,11 +31,7 @@ spec:
                 secretKeyRef:
                   name: github-access-token
                   key: token
-            - name: SUBDOMAIN_NAME
-              value: ""
-            - name: BUILD_AS_LATEST
-              value: ""
-            - name: VERSION
+            - name: SERVICE_NAME
               value: ""
             - name: IMAGE_VERSION
               value: ""

@@ -1,7 +1,5 @@
 #!/bin/bash
 
-BUILD_NAME=""
-
 check_required_vars()
 {
     var_names=("$@")
@@ -19,7 +17,8 @@ check_required_vars \
   APP_REPO \
   ORG_NAME \
   BASE_CONTAINER_NAME \
-  BUILD_FROM
+  BUILD_FROM \
+  IMAGE_VERSION
 
 rm -rf /usr/src/enterprise/{..?*,.[!.]*,*} 2>/dev/null
 
@@ -35,26 +34,17 @@ if [ $? = 1 ] ; then
     exit 1
 fi
 
-BRANCHES=$(git branch -a | sort -V)
-BRANCHES_LIST=($BRANCHES)
-
-VERSION=$(node -p "require('./package.json').version")
-VERSION_STRING=$(echo "${VERSION//./}")
 COMMIT=$(git rev-parse --short HEAD)
+DEMO_PACKAGE_JSON_FILE=/app/package.json
 
-if [ -z $SUBDOMAIN_NAME ]
-then
-  BUILD_NAME=$VERSION_STRING-$BASE_CONTAINER_NAME
+if test -f "$DEMO_PACKAGE_JSON_FILE"; then
+    cp -fr $DEMO_PACKAGE_JSON_FILE ./package.json && rm package-lock.json
+    npm install
+    git checkout package.json package-lock.json
 else
-  BUILD_NAME=$SUBDOMAIN_NAME-$BASE_CONTAINER_NAME
+  npm install
 fi
 
-if [ "$BUILD_AS_LATEST" = true ]
-then
-	BUILD_NAME=latest-$BASE_CONTAINER_NAME
-fi
-
-npm install
 npm run build
 npx grunt demo
 
@@ -68,10 +58,18 @@ ADD ./docs /www/data/docs
 RUN chown -R www-data.www-data /www/data
 EOL
 
-docker build -f ./Dockerfile -t $ORG_NAME/$BASE_CONTAINER_NAME:$VERSION .
-docker history --human --format "{{.CreatedBy}}: {{.Size}}" $ORG_NAME/$BASE_CONTAINER_NAME:$VERSION
 docker login -u "$IMAGE_LIBRARY_USER" -p "$IMAGE_LIBRARY_PASS"
-docker push $ORG_NAME/$BASE_CONTAINER_NAME:$VERSION
+
+docker build -f ./Dockerfile -t $ORG_NAME/$BASE_CONTAINER_NAME:$IMAGE_VERSION .
+docker history --human --format "{{.CreatedBy}}: {{.Size}}" $ORG_NAME/$BASE_CONTAINER_NAME:$IMAGE_VERSION
+docker push $ORG_NAME/$BASE_CONTAINER_NAME:$IMAGE_VERSION
+
+if [ "$BUILD_AS_LATEST" = true ]
+then
+  docker build -f ./Dockerfile -t $ORG_NAME/$BASE_CONTAINER_NAME:latest .
+  docker history --human --format "{{.CreatedBy}}: {{.Size}}" $ORG_NAME/$BASE_CONTAINER_NAME:latest
+  docker push $ORG_NAME/$BASE_CONTAINER_NAME:latest
+fi
 
 # We have to kill dockerd process in the sidecar container
 # for the entire job to exit with exit code 0.

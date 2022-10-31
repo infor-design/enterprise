@@ -11,11 +11,11 @@ spec:
         value: ""
       - name: build_from
         value: ""
-      - name: subdomain_name
-        value: ""
       - name: build_as_latest
         value: ""
-      - name: version
+      - name: service_name
+        value: ""
+      - name: image_version
         value: ""
       - name: app_repo
         value: ""
@@ -45,6 +45,10 @@ spec:
                   value: "{{workflow.parameters.org_name}}"
                 - name: base_container_name
                   value: "{{workflow.parameters.base_container_name}}"
+                - name: image_version
+                  value: "{{workflow.parameters.image_version}}"
+                - name: build_as_latest
+                  value: "{{workflow.parameters.build_as_latest}}"
                 - name: build_from
                   value: "{{workflow.parameters.build_from}}"
                 - name: app_repo
@@ -54,14 +58,10 @@ spec:
             template: push
             arguments:
               parameters:
-                - name: subdomain_name
-                  value: "{{workflow.parameters.subdomain_name}}"
-                - name: build_as_latest
-                  value: "{{workflow.parameters.build_as_latest}}"
-                - name: version
-                  value: "{{workflow.parameters.version}}"
+                - name: service_name
+                  value: "{{workflow.parameters.service_name}}"
                 - name: image_version
-                  value: "{{workflow.parameters.build_from}}"
+                  value: "{{workflow.parameters.image_version}}"
                 - name: manifests_repo
                   value: "{{workflow.parameters.manifests_repo}}"
 
@@ -80,7 +80,9 @@ spec:
       inputs:
         parameters:
           - name: org_name
+          - name: image_version
           - name: base_container_name
+          - name: build_as_latest
           - name: build_from
           - name: app_repo
 
@@ -132,13 +134,16 @@ spec:
                             key: token
                       - name: ORG_NAME
                         value: "{{inputs.parameters.org_name}}"
+                      - name: IMAGE_VERSION
+                        value: "{{inputs.parameters.image_version}}"
                       - name: BASE_CONTAINER_NAME
                         value: "{{inputs.parameters.base_container_name}}"
+                      - name: BUILD_AS_LATEST
+                        value: "{{inputs.parameters.build_as_latest}}"
                       - name: BUILD_FROM
                         value: "{{inputs.parameters.build_from}}"
                       - name: APP_REPO
                         value: "{{inputs.parameters.app_repo}}"
-                    #command: ['docker', 'run', '-p', '8080:8080', 'httpd:latest']
                     command: ["/bin/bash"]
                     args: ["-c", ". ./build_push_image.sh"]
                   - name: dind-daemon
@@ -170,9 +175,7 @@ spec:
     - name: push
       inputs:
         parameters:
-          - name: subdomain_name
-          - name: build_as_latest
-          - name: version
+          - name: service_name
           - name: image_version
           - name: manifests_repo
 
@@ -214,12 +217,8 @@ spec:
                           secretKeyRef:
                             name: github-access-token
                             key: token
-                      - name: SUBDOMAIN_NAME
-                        value: "{{inputs.parameters.subdomain_name}}"
-                      - name: BUILD_AS_LATEST
-                        value: "{{inputs.parameters.build_as_latest}}"
-                      - name: VERSION
-                        value: "{{inputs.parameters.version}}"
+                      - name: SERVICE_NAME
+                        value: "{{inputs.parameters.service_name}}"
                       - name: IMAGE_VERSION
                         value: "{{inputs.parameters.image_version}}"
                       - name: MANIFESTS_REPO
