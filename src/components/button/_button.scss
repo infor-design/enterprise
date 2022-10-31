@@ -127,11 +127,11 @@ button {
     width: 18px;
 
     + span.notification-badge-container {
-      padding-left: 5px;
+      padding-left: 3px;
     }
 
     + span:not(.audible):not(:empty) {
-      padding-left: 5px;
+      padding-left: 3px;
     }
 
     + * + span:not(.notification-badge-container) {
@@ -615,7 +615,7 @@ a.btn-close {
 }
 
 .btn {
-  padding: 0 15px;
+  padding: 0 10px;
 }
 
 .btn-tertiary,

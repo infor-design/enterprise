@@ -293,7 +293,6 @@ Place.prototype = {
     }
 
     const parentRect = DOM.getDimensions(placementObj.parent[0]);
-    const elRect = DOM.getDimensions(this.element[0]);
     // NOTE: Usage of $(window) instead of $('body') is deliberate here - http://stackoverflow.com/a/17776759/4024149.
     // Firefox $('body').scrollTop() will always return zero.
     const scrollX = containerIsBody ? $(window).scrollLeft() : container.scrollLeft();
@@ -310,6 +309,7 @@ Place.prototype = {
       const p = incomingPlacementObj.placement;
       const aX = incomingPlacementObj.parentXAlignment;
       const aY = incomingPlacementObj.parentYAlignment;
+      const elRect = DOM.getDimensions(self.element[0]);
       let cX;
       let cY;
 

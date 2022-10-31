@@ -2,18 +2,34 @@
 
 ## v4.69.0
 
+## v4.69.0 Important Features
+
+- `[Icons]` All icons have padding on top and bottom effectively making them 4px smaller by design. This change may require some UI corrections to css. ([#6868](https://github.com/infor-design/enterprise/issues/6868))
+- `[Icons]` Over 60 new icons and 126 new industry focused icons. ([#6868](https://github.com/infor-design/enterprise/issues/6868))
+- `[Icons]` The icon `save-closed` is now `save-closed-old` in the deprecated, we suggest not using this old icon. ([#6868](https://github.com/infor-design/enterprise/issues/6868))
+- `[Icons]` Alert icons come either filled or not filled (outlined) filled alert icons like  `icon-alert-alert` are now `icon-success-alert` and `alert-filled` we suggest no longer using filled alert icons, use only the outlined ones. ([#6868](https://github.com/infor-design/enterprise/issues/6868))
+
 ## v4.69.0 Features
 
+- `[Datagrid]` Added puppeteer script for extra class for tooltip. ([#6900](https://github.com/infor-design/enterprise/issues/6900))
 - `[Lookup]` Added puppeteer script for lookup double click apply enhancement. ([#6886](https://github.com/infor-design/enterprise/issues/6886))
 
 ## v4.69.0 Fixes
 
+- `[Datagrid]` Fixed a bug in datagrid where sorting is not working properly. ([#6787](https://github.com/infor-design/enterprise/issues/6787))
+- `[Datagrid]` Added an Example Page for Add Row Frozen Columns. ([#6918](https://github.com/infor-design/enterprise/issues/6918))
+- `[Datagrid]` Fixed a bug in datagrid where tooltip flashes continuously on hover. ([#5907](https://github.com/infor-design/enterprise/issues/5907))
+- `[Datagrid]` Fixed a bug in datagrid where is empty and is not empty is not working properly. ([#5273](https://github.com/infor-design/enterprise/issues/5273))
+- `[Datagrid]` Fixed a bug in datagrid where inline editor input text is not being selected upon clicking. ([NG#1365](https://github.com/infor-design/enterprise-ng/issues/1365))
 - `[Datagrid]` Fixed a bug in datagrid where multiselect filter is not rendering properly. ([#6846](https://github.com/infor-design/enterprise/issues/6846))
 - `[Datagrid]` Fixed a bug in datagrid where row shading is not rendered properly. ([#6850](https://github.com/infor-design/enterprise/issues/6850))
 - `[Datagrid]` Fixed a bug in datagrid where icon is not rendering properly in small and extra small row height. ([#6866](https://github.com/infor-design/enterprise/issues/6866))
 - `[Datagrid]` Fixed a bug in datagrid where sorting is not rendering properly when there is a previously focused cell. ([#6851](https://github.com/infor-design/enterprise/issues/6851))
 - `[Datagrid]` Additional checks when updating cell so that numbers aren't converted twice. ([NG#1370](https://github.com/infor-design/enterprise-ng/issues/1370))
+- `[Datagrid]` Additional fixes on dirty indicator not updating on drag columns. ([#6867](https://github.com/infor-design/enterprise/issues/6867))
+- `[General]` Instead of optional dependencies use a custom command. ([#6876](https://github.com/infor-design/enterprise/issues/6876))
 - `[Modal]` Fixed a bug where suppress key setting is not working. ([#6793](https://github.com/infor-design/enterprise/issues/6793))
+- `[Searchfield]` Additional visual fixes in classic on go button in searchfield toolbar. ([#6686](https://github.com/infor-design/enterprise/issues/6686))
 - `[Splitter]` Fixed on splitter not working when parent height changes dynamically. ([#6819](https://github.com/infor-design/enterprise/issues/6819))
 - `[Toolbar Flex]` Added additional checks for destroying toolbar. ([#6844](https://github.com/infor-design/enterprise/issues/6844))
 
@@ -26,11 +42,12 @@
 - `[Colors]` Added puppeteer script for color classes targeting color & border color. ([#6801](https://github.com/infor-design/enterprise/issues/6801))
 - `[Column]` Added puppeteer script for combined column chart. ([#6381](https://github.com/infor-design/enterprise/issues/6381))
 - `[Datagrid]` Added additional setting in datagrid header for tooltip extra class. ([#6802](https://github.com/infor-design/enterprise/issues/6802))
-- `[Datagrid]` Added dblClickApply setting in lookup for selection of item. ([#6546](https://github.com/infor-design/enterprise/issues/6546))
+- `[Datagrid]` Added `dblClickApply` setting in lookup for selection of item. ([#6546](https://github.com/infor-design/enterprise/issues/6546))
 
 ## v4.68.0 Fixes
 
 - `[Bar Chart]` Fixed a bug in bar charts grouped, where arias are identical to each series. ([#6748](https://github.com/infor-design/enterprise/issues/6748))
+- `[Datagrid]` Fixed a bug in datagrid where tooltip flashes continuously on hover. ([#5907](https://github.com/infor-design/enterprise/issues/5907))
 - `[Datagrid]` Fixed a bug in datagrid where expandable row animation is not rendering properly. ([#6813](https://github.com/infor-design/enterprise/issues/6813))
 - `[Datagrid]` Fixed a bug in datagrid where dropdown filter does not render correctly. ([#6834](https://github.com/infor-design/enterprise/issues/6834))
 - `[Datagrid]` Fixed alignment issues in trigger fields. ([#6678](https://github.com/infor-design/enterprise/issues/6678))
@@ -40,7 +57,7 @@
 - `[Datagrid]` Classic theme trigger field adjustments in datagrid. ([#6678](https://github.com/infor-design/enterprise/issues/6678))
 - `[Datagrid]` Added null guard in tree list when list is not yet loaded. ([#6816](https://github.com/infor-design/enterprise/issues/6816))
 - `[Datagrid]` Fix on dirty indicator not updating on drag columns. ([#6867](https://github.com/infor-design/enterprise/issues/6867))
-- `[Editor]` Fixed a bug in editor where blockquote is not continued in the next line. ([#6794](https://github.com/infor-design/enterprise/issues/6794))
+- `[Editor]` Fixed a bug in editor where block quote is not continued in the next line. ([#6794](https://github.com/infor-design/enterprise/issues/6794))
 - `[Editor]` Fixed a bug in editor where breaking space doesn't render dirty indicator properly. ([NG#1363](https://github.com/infor-design/enterprise-ng/issues/1363))
 - `[Searchfield]` Visual fixes on go button in searchfield toolbar. ([#6686](https://github.com/infor-design/enterprise/issues/6686))
 - `[Searchfield]` Added null check in xButton. ([#6858](https://github.com/infor-design/enterprise/issues/6858))
@@ -53,7 +70,7 @@
 ## v4.67.0 Important Notes
 
 - `[CDN]` The former CDN `cdn.hookandloop.infor.com` can no longer be maintained by IT and needs to be discontinued. It will exist for approximately one year more (TBD), so please remove direct use from any production code. ([#6754](https://github.com/infor-design/enterprise/issues/6754))
-- `[Datepicker]` The functionality to enter today with a `t` is now under a setting `todayWithKeyboard-false`, it is false because you cant type days like Septemeber in a full picker. ([#6653](https://github.com/infor-design/enterprise/issues/6653))
+- `[Datepicker]` The functionality to enter today with a `t` is now under a setting `todayWithKeyboard-false`, it is false because you cant type days like September in a full picker. ([#6653](https://github.com/infor-design/enterprise/issues/6653))
 - `[Datepicker]` The functionality to increase the day with a `+/-` it defaults to false because it conflicts with many other internal shortcut keys. ([#6632](https://github.com/infor-design/enterprise/issues/6632))
 
 ## v4.67.0 Markup Changes
@@ -78,11 +95,11 @@
 - `[Calendar]` Fixed a bug in calendar where bottom border is not properly rendering. ([#6668](https://github.com/infor-design/enterprise/issues/6668))
 - `[Color Palette]` Added status color CSS classes for color and border-color properties. ([#6711](https://github.com/infor-design/enterprise/issues/6711))
 - `[Datagrid]` Fixed a bug in datagrid inside a modal where the column is rendering wider than normal. ([#6782](https://github.com/infor-design/enterprise/issues/6782))
-- `[Datagrid]` Fixed a bug in datagrid where when changing rowHeight as a setting and rerendering it doesnt apply. ([#6783](https://github.com/infor-design/enterprise/issues/6783))
+- `[Datagrid]` Fixed a bug in datagrid where when changing rowHeight as a setting and re-rendering it doesn't apply. ([#6783](https://github.com/infor-design/enterprise/issues/6783))
 - `[Datagrid]` Fixed a bug in datagrid where isEditable is not returning row correctly. ([#6746](https://github.com/infor-design/enterprise/issues/6746))
 - `[Datagrid]` Updated datagrid header CSS height. ([#6697](https://github.com/infor-design/enterprise/issues/6697))
 - `[Datagrid]` Fixed on datagrid column width. ([#6725](https://github.com/infor-design/enterprise/issues/6725))
-- `[Datagrid]` Fixed an error editing in datagrids with grouped headers. ([#6759](https://github.com/infor-design/enterprise/issues/6759))
+- `[Datagrid]` Fixed an error editing in datagrid with grouped headers. ([#6759](https://github.com/infor-design/enterprise/issues/6759))
 - `[Datagrid]` Updated space key checks for expand button. ([#6756](https://github.com/infor-design/enterprise/issues/6756))
 - `[Datagrid]` Fixed an error when hovering cells with tooltips setup and using grouped headers. ([#6753](https://github.com/infor-design/enterprise/issues/6753))
 - `[Editor]` Fixed bug in editor where background color is not rendering properly. ([#6685](https://github.com/infor-design/enterprise/issues/6685))
@@ -574,7 +591,7 @@
 - `[Searchfield]` Fixed a bug where the close button icon is overlapping with the search icon in RTL. ([#5807](https://github.com/infor-design/enterprise/issues/5807))
 - `[Spinbox]` Fixed a bug where the spinbox controls still show the ripple effect even it's disabled. ([#5719](https://github.com/infor-design/enterprise/issues/5719))
 - `[Tabs]` Added the ability to set the position of counts via settings (top & bottom), removed the counts in spillover, and positioned the counts depending on the current locale. ([#5258](https://github.com/infor-design/enterprise/issues/5258))
-- `[Tabs Module]` Fixed the searchsfield menu inside of tabs module in responsive layout. ([#6320](https://github.com/infor-design/enterprise/issues/6320))
+- `[Tabs Module]` Fixed the searchfield menu inside of tabs module in responsive layout. ([#6320](https://github.com/infor-design/enterprise/issues/6320))
 - `[Toolbar]` Fixed an issue where things in the page get scrambled if you have a button with undefined ids. ([#1194](https://github.com/infor-design/enterprise-ng/issues/1194))
 
 ## v4.59.0 Features

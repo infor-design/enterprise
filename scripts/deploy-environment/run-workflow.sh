@@ -1,6 +1,6 @@
 #!/bin/bash
 
-while getopts ":u:o:c:f:n:l:v:a:m:s:" opt; do
+while getopts ":u:o:c:f:l:n:i:a:m:s:" opt; do
   case $opt in
     u) AWF_URL="$OPTARG"
     ;;
@@ -10,11 +10,11 @@ while getopts ":u:o:c:f:n:l:v:a:m:s:" opt; do
     ;;
     f) BUILD_FROM="$OPTARG"
     ;;
-    n) SUBDOMAIN_NAME="$OPTARG"
-    ;;
     l) BUILD_AS_LATEST="$OPTARG"
     ;;
-    v) VERSION="$OPTARG"
+    n) SERVICE_NAME="$OPTARG"
+    ;;
+    i) IMAGE_VERSION="$OPTARG"
     ;;
     a) APP_REPO="$OPTARG"
     ;;
@@ -56,9 +56,9 @@ run_resp=$(
           "org_name='$ORG_NAME'",
           "base_container_name='$BASE_CONTAINER_NAME'",
           "build_from='$BUILD_FROM'",
-          "subdomain_name='$SUBDOMAIN_NAME'",
           "build_as_latest='$BUILD_AS_LATEST'",
-          "version='$VERSION'",
+          "service_name='$SERVICE_NAME'",
+          "image_version='$IMAGE_VERSION'",
           "app_repo='$APP_REPO'",
           "manifests_repo='$MANIFESTS_REPO'",
           "site='$SITE'"
@@ -66,6 +66,8 @@ run_resp=$(
       }
     }'
 )
+
+echo $run_resp
 
 _AWF_NAME=$(echo $(jq .metadata.name <<< ${run_resp}) | tr -d '"')
 sleep 5

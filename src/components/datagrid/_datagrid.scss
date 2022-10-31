@@ -2340,29 +2340,65 @@ $datagrid-small-row-height: 25px;
       background-color: $button-color-tertiary-initial-font;
     }
 
+    td {
+      &.is-editing {
+        background-color: $datagrid-cell-editing-bg-color;
+
+        div.datagrid-cell-wrapper {
+          svg.icon {
+            @include trigger-icon-background($datagrid-cell-editing-bg-color);
+          }
+
+          button.btn-icon {
+            svg.icon {
+              @include trigger-icon-background($datagrid-cell-editing-bg-color);
+            }
+          }
+        }
+      }
+    }
+
     &.alt-shading {
       td {
         background-color: $datagrid-alternate-bg-color;
 
         &.is-editing {
           background-color: $datagrid-cell-editing-bg-color;
+
+          div.datagrid-cell-wrapper {
+            svg.icon {
+              @include trigger-icon-background($datagrid-cell-editing-bg-color);
+            }
+          }
+        }
+
+        div.datagrid-cell-wrapper {
+          svg.icon {
+            @include trigger-icon-background($datagrid-alternate-bg-color);
+          }
         }
       }
 
       &.is-hover-row {
         td {
-          background-color: $datagrid-alternate-bg-color;
+          background-color: $datagrid-row-hover-color;
 
           &.is-editing {
             background-color: $datagrid-cell-editing-bg-color;
+
+            div.datagrid-cell-wrapper {
+              svg.icon {
+                @include trigger-icon-background($datagrid-cell-editing-bg-color);
+              }
+            }
+          }
+
+          div.datagrid-cell-wrapper {
+            svg.icon {
+              @include trigger-icon-background($datagrid-row-hover-color);
+            }
           }
         }
-      }
-    }
-
-    &:hover.alt-shading {
-      td {
-        background-color: $datagrid-alternate-row-hover-color;
       }
     }
 
@@ -2717,6 +2753,14 @@ $datagrid-small-row-height: 25px;
     // Validation Cell Styles
     &.error {
       background-color: $alert-bg-error;
+
+      &.has-inline-editor {
+        .datagrid-cell-wrapper {
+          .icon-error {
+            left: unset;
+          }
+        }
+      }
 
       .datagrid-cell-wrapper {
         position: relative;
@@ -3750,11 +3794,11 @@ $datagrid-small-row-height: 25px;
 
         .icon {
           color: $datagrid-filter-icon-color;
-          height: 14px;
+          height: 16px;
           position: absolute;
           right: 2px;
           top: 2px;
-          width: 14px;
+          width: 16px;
         }
       }
 
@@ -3856,16 +3900,17 @@ $datagrid-small-row-height: 25px;
 
       .icon-dropdown {
         color: $datagrid-filter-icon-color !important;
-        height: 14px;
+        height: 18px;
         left: -7px;
-        margin-top: -3px;
+        margin-top: -5px;
         position: relative;
         top: 2px;
         vertical-align: top;
-        width: 14px;
+        width: 18px;
 
         + .icon-dropdown {
-          left: -5px;
+          left: -8px;
+          width: 16px;
         }
       }
 

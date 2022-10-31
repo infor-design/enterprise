@@ -15,17 +15,11 @@ check_required_vars()
 check_required_vars \
   GITHUB_ACCESS_TOKEN \
   MANIFESTS_REPO \
-  VERSION \
-  IMAGE_VERSION
+  SERVICE_NAME
 
-if [ ! -z $SUBDOMAIN_NAME ]
+if [ -z $IMAGE_VERSION ]
 then
-  VERSION=$SUBDOMAIN_NAME
-fi
-
-if [ "$BUILD_AS_LATEST" = true ]
-then
-	VERSION=latest
+    IMAGE_VERSION=$(node -p "require('./package.json').version")
 fi
 
 rm -rf $WORKDIR/apps/{..?*,.[!.]*,*} 2>/dev/null
@@ -40,15 +34,15 @@ if [ $? = 1 ] ; then
     exit 1
 fi
 
-rm -rf $WORKDIR/$VERSION 2>/dev/null
-mkdir -p $WORKDIR/$VERSION && cp -R $WORKDIR/manifests/* $WORKDIR/$VERSION/
-sed -i -e "s/%VERSION%/$VERSION/g" $WORKDIR/$VERSION/ingress.yaml
-sed -i -e "s/%VERSION%/$VERSION/g" $WORKDIR/$VERSION/service.yaml
-sed -i -e "s/%VERSION%/$VERSION/g" $WORKDIR/$VERSION/deployment.yaml
-sed -i -e "s/%IMAGE_VERSION%/$IMAGE_VERSION/g" $WORKDIR/$VERSION/deployment.yaml
+rm -rf $WORKDIR/$SERVICE_NAME 2>/dev/null
+mkdir -p $WORKDIR/$SERVICE_NAME && cp -R $WORKDIR/manifests/* $WORKDIR/$SERVICE_NAME/
+sed -i -e "s/%SERVICE_NAME%/$SERVICE_NAME/g" $WORKDIR/$SERVICE_NAME/ingress.yaml
+sed -i -e "s/%SERVICE_NAME%/$SERVICE_NAME/g" $WORKDIR/$SERVICE_NAME/service.yaml
+sed -i -e "s/%SERVICE_NAME%/$SERVICE_NAME/g" $WORKDIR/$SERVICE_NAME/deployment.yaml
+sed -i -e "s/%IMAGE_VERSION%/$IMAGE_VERSION/g" $WORKDIR/$SERVICE_NAME/deployment.yaml
 
-mkdir -p $WORKDIR/apps/enterprise/enterprise-$VERSION/
-mv -f $WORKDIR/$VERSION/* $WORKDIR/apps/enterprise/enterprise-$VERSION/
+mkdir -p $WORKDIR/apps/enterprise/enterprise-$SERVICE_NAME/
+mv -f $WORKDIR/$SERVICE_NAME/* $WORKDIR/apps/enterprise/enterprise-$SERVICE_NAME/
 
 cd $WORKDIR/apps/
 CHANGES=$(git status --porcelain)
