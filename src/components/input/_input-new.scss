@@ -36,8 +36,10 @@ span.required::after {
 
 .error-message {
   .icon {
-    height: 15px;
-    width: 15px;
+    height: 18px;
+    margin-top: -1px;
+    margin-inline-end: 1px;
+    width: 18px;
   }
 
   .message-text {
@@ -59,8 +61,20 @@ button.close {
   width: 14px;
 
   .icon {
-    height: 18px;
+    height: 16px;
     right: initial;
+    top: -2px;
+    width: 16px;
+  }
+}
+
+.alert-message,
+.success-message,
+.info-message,
+.custom-icon-message {
+  .icon {
+    height: 18px;
+    left: -1px;
     top: -2px;
     width: 18px;
   }

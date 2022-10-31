@@ -3794,11 +3794,11 @@ $datagrid-small-row-height: 25px;
 
         .icon {
           color: $datagrid-filter-icon-color;
-          height: 14px;
+          height: 16px;
           position: absolute;
           right: 2px;
           top: 2px;
-          width: 14px;
+          width: 16px;
         }
       }
 
@@ -3900,16 +3900,17 @@ $datagrid-small-row-height: 25px;
 
       .icon-dropdown {
         color: $datagrid-filter-icon-color !important;
-        height: 14px;
+        height: 18px;
         left: -7px;
-        margin-top: -3px;
+        margin-top: -5px;
         position: relative;
         top: 2px;
         vertical-align: top;
-        width: 14px;
+        width: 18px;
 
         + .icon-dropdown {
-          left: -5px;
+          left: -8px;
+          width: 16px;
         }
       }
 

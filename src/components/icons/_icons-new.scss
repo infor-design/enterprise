@@ -40,12 +40,8 @@
   }
 }
 
-.ie,
-.ie11 {
-  .icon.plus-minus {
-    &::before,
-    &::after {
-      height: 2px;
-    }
-  }
+.field .icon-error {
+  height: 18px;
+  width: 18px;
+  top: -6px !important;
 }
