@@ -45,6 +45,7 @@ run-worker :
 		-v /var/run/docker.sock:/var/run/docker.sock \
 		-v ${PWD}/build:/root/enterprise \
 		-v ${PWD}/manifests:/usr/src/manifests \
+		-v ${PWD}/scripts:/usr/src/scripts \
 		-v ${PWD}/build_push_image.sh:/usr/src/build_push_image.sh \
 		-v ${PWD}/build_push_manifests.sh:/usr/src/build_push_manifests.sh \
 		-v ${PWD}/.gitconfig:/root/.gitconfig \
@@ -69,6 +70,7 @@ shell-worker :
 			-v /var/run/docker.sock:/var/run/docker.sock \
 			-v ${PWD}/build:/root/enterprise \
 			-v ${PWD}/manifests:/usr/src/manifests \
+			-v ${PWD}/scripts:/usr/src/scripts \
 			-v ${PWD}/build_push_image.sh:/usr/src/build_push_image.sh \
 			-v ${PWD}/build_push_manifests.sh:/usr/src/build_push_manifests.sh \
 			-v ${PWD}/.gitconfig:/root/.gitconfig \
