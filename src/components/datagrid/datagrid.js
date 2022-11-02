@@ -4725,8 +4725,8 @@ Datagrid.prototype = {
     containerHtml.left = containerHtml.center;
     containerHtml.right = containerHtml.center;
 
-    for (j = 0; j < self.settings.columns.length; j++) {
-      const col = self.settings.columns[j];
+    for (j = 0; j < visibleColumnsCenter; j++) {
+      const col = self.columnSettings(j);
       const container = this.getContainer(col.id);
       let cssClass = '';
       const defaultFormatter = col.summaryRowFormatter || col.formatter || self.defaultFormatter;
@@ -4736,7 +4736,7 @@ Datagrid.prototype = {
         dataRowIdx,
         j,
         self.fieldValue(rowData, self.settings.columns[j].field),
-        self.settings.columns[j],
+        self.columnSettings(j),
         rowData,
         self,
         formatLocale
@@ -5811,7 +5811,7 @@ Datagrid.prototype = {
     }
 
     for (let j = 0; j < this.settings.columns.length; j++) {
-      const col = this.settings.columns[j];
+      const col = this.columnSettings(j);
 
       if (col.hidden) {
         continue;
@@ -11073,7 +11073,17 @@ Datagrid.prototype = {
    * @returns {array} The settings array
    */
   columnSettings(idx) {
-    const foundColumn = this.settings.columns[idx];
+    let tempColumn = this.settings.columns;
+
+    if (this.settings.frozenColumns.left.length > 0) {
+      tempColumn = this.settings.columns.filter(item => !this.settings.frozenColumns.left.includes(item.id));
+    }
+
+    if (this.settings.frozenColumns.right.length > 0) {
+      tempColumn = this.settings.columns.filter(item => !this.settings.frozenColumns.right.includes(item.id));
+    }
+
+    const foundColumn = tempColumn[idx];
     return foundColumn || {};
   },
 
@@ -11163,7 +11173,7 @@ Datagrid.prototype = {
     let coercedVal;
     let rowNodes = this.settings.groupable ? this.rowNodesByDataIndex(row) : this.rowNodes(row);
     let cellNode = rowNodes.find('td').eq(cell);
-    const col = this.settings.columns[cell] || {};
+    const col = this.columnSettings(cell);
     let formatted = '';
     const formatter = (col.formatter ? col.formatter : this.defaultFormatter);
     const isEditor = $('.editor', cellNode).length > 0;
