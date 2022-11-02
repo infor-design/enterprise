@@ -29,7 +29,7 @@
 
   &.non-collapsible.is-open {
     > .icon:not(.close):not(.icon-error) {
-      height: 18px;
+      height: 20px;
       left: 8px;
     }
   }
@@ -42,9 +42,10 @@
   > .icon {
     background-color: rgba($ids-color-palette-white, 0); // IE 10
     color: $trigger-icon-fill-color;
-    height: 14px;
+    height: 18px;
     position: absolute;
     top: 10px;
+    width: 18px;
 
     &:not(.close):not(.icon-error) {
       left: 8px;
@@ -140,6 +141,9 @@
       &:not(.close) {
         left: 6px;
         right: auto;
+        height: 24px !important;
+        width: 24px !important;
+        margin-top: 1px;
       }
 
       &.close {

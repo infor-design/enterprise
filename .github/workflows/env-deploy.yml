@@ -116,6 +116,7 @@ jobs:
           branch_name=${{ steps.extract_branch_name.outputs.branch }}
           repo_name=${{ steps.extract_repo_name.outputs.repo_name }}
           repo_owner=${{ steps.extract_repo_owner.outputs.repo_owner }}
+          build_as_latest=false
           site="prod"
 
           case $branch_name in
@@ -126,18 +127,24 @@ jobs:
             *"staging"*)
               site="staging"
               ;;
+
+            *"main"*)
+              build_as_latest=true
+              ;;
           esac
 
           echo "Deploying ${repo_owner//./_}/${repo_name//./_} ${branch_name//./_}"
           chmod +x ./scripts/deploy-environment/run-workflow.sh
+          image_version=$(node -p "require('./package.json').version")
+
           ./scripts/deploy-environment/run-workflow.sh \
             -u https://argocd.workers.design.infor.com/api \
             -o hookandloop \
             -c enterprise \
             -f ${branch_name} \
-            -n "" \
-            -l false \
-            -v ${branch_name//./} \
+            -l ${build_as_latest} \
+            -n ${branch_name//./} \
+            -i ${image_version} \
             -a ${repo_owner}/${repo_name} \
             -m infor-design/apps \
             -s ${site}
