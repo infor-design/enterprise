@@ -4725,7 +4725,8 @@ Datagrid.prototype = {
     containerHtml.left = containerHtml.center;
     containerHtml.right = containerHtml.center;
 
-    for (j = 0; j < visibleColumnsCenter; j++) {
+    const columnCount = self.settings.frozenColumns.left.length > 0 || self.settings.frozenColumns.right.length > 0 ? visibleColumnsCenter : self.settings.columns.length;
+    for (j = 0; j < columnCount; j++) {
       const col = self.columnSettings(j);
       const container = this.getContainer(col.id);
       let cssClass = '';
