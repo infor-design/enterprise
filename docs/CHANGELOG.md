@@ -2,7 +2,7 @@
 
 ## v.4.67.3 Fixes
 
-- ``
+- `[Datagrid]` Fixed a bug in datagrid where row shading is not rendered properly. ([#6850](https://github.com/infor-design/enterprise/issues/6850))
 
 ## v.4.67.2 Fixes
 
