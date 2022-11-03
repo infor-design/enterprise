@@ -618,6 +618,7 @@ Datagrid.prototype = {
       }
     }
 
+    self.refreshIndexes();
     self.afterRender();
   },
 
@@ -629,11 +630,27 @@ Datagrid.prototype = {
     this.element.find('tr').removeAttr('aria-rowindex');
     this.element.find('tr').removeAttr('data-index');
 
-    this.element.find('tbody > tr').each((idx, obj) => {
+    if (self.hasLeftPane) {
+      this.element.find('.datagrid-wrapper.left tbody > tr').each((idx, obj) => {
+        const el = $(obj);
+        el.attr('aria-rowindex', idx + 1);
+        el.attr('data-index', idx);
+      });
+    }
+
+    this.element.find('.datagrid-wrapper.center tbody > tr').each((idx, obj) => {
       const el = $(obj);
       el.attr('aria-rowindex', idx + 1);
       el.attr('data-index', idx);
     });
+
+    if (self.hasRightPane) {
+      this.element.find('.datagrid-wrapper.right tbody > tr').each((idx, obj) => {
+        const el = $(obj);
+        el.attr('aria-rowindex', idx + 1);
+        el.attr('data-index', idx);
+      });
+    }
   },
 
   /**
