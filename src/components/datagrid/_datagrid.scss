@@ -1596,7 +1596,7 @@ $datagrid-small-row-height: 25px;
             width: 16px;
           }
 
-          .icon:not(.datagrid-alert-icon):not(.icon-rowstatus) {
+          .icon:not(.datagrid-alert-icon) {
             height: 16px;
             top: 4px;
 
@@ -1819,8 +1819,6 @@ $datagrid-small-row-height: 25px;
           }
 
           .icon-rowstatus {
-            background-color: transparent;
-            box-shadow: unset;
             left: -1px;
             top: 0;
           }
