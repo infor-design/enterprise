@@ -4758,7 +4758,7 @@ Datagrid.prototype = {
     containerHtml.right = containerHtml.center;
 
     for (j = 0; j < self.settings.columns.length; j++) {
-      const col = self.columnSettings(j);
+      const col = self.settings.columns[j];
       const container = this.getContainer(col.id);
       let cssClass = '';
       const defaultFormatter = col.summaryRowFormatter || col.formatter || self.defaultFormatter;
@@ -4768,7 +4768,7 @@ Datagrid.prototype = {
         dataRowIdx,
         j,
         self.fieldValue(rowData, self.settings.columns[j].field),
-        self.columnSettings(j),
+        self.settings.columns[j],
         rowData,
         self,
         formatLocale
@@ -5823,7 +5823,7 @@ Datagrid.prototype = {
     }
 
     for (let j = 0; j < this.settings.columns.length; j++) {
-      const col = this.columnSettings(j);
+      const col = this.settings.columns[j];
 
       if (col.hidden) {
         continue;
@@ -11060,9 +11060,7 @@ Datagrid.prototype = {
    * @returns {array} The settings array
    */
   columnSettings(idx) {
-    let tempColumn = this.settings.columns;
-
-    const foundColumn = tempColumn[idx];
+    let foundColumn = this.settings.columns[idx];
     return foundColumn || {};
   },
 
