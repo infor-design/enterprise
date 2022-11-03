@@ -40,6 +40,7 @@ sed -i -e "s/%SERVICE_NAME%/$SERVICE_NAME/g" $WORKDIR/$SERVICE_NAME/ingress.yaml
 sed -i -e "s/%SERVICE_NAME%/$SERVICE_NAME/g" $WORKDIR/$SERVICE_NAME/service.yaml
 sed -i -e "s/%SERVICE_NAME%/$SERVICE_NAME/g" $WORKDIR/$SERVICE_NAME/deployment.yaml
 sed -i -e "s/%IMAGE_VERSION%/$IMAGE_VERSION/g" $WORKDIR/$SERVICE_NAME/deployment.yaml
+python3.10 $WORKDIR/scripts/annotations.py -p $WORKDIR/$SERVICE_NAME/deployment.yaml
 
 mkdir -p $WORKDIR/apps/enterprise/enterprise-$SERVICE_NAME/
 mv -f $WORKDIR/$SERVICE_NAME/* $WORKDIR/apps/enterprise/enterprise-$SERVICE_NAME/
