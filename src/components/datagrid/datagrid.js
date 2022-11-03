@@ -11072,7 +11072,7 @@ Datagrid.prototype = {
    * @returns {array} The settings array
    */
   columnSettings(idx) {
-    let foundColumn = this.settings.columns[idx];
+    const foundColumn = this.settings.columns[idx];
     return foundColumn || {};
   },
 
@@ -11162,7 +11162,7 @@ Datagrid.prototype = {
     let coercedVal;
     let rowNodes = this.settings.groupable ? this.rowNodesByDataIndex(row) : this.rowNodes(row);
     let cellNode = rowNodes.find('td').eq(cell);
-    const col = this.columnSettings(cell);
+    const col = this.settings.columns[cell] || {};
     let formatted = '';
     const formatter = (col.formatter ? col.formatter : this.defaultFormatter);
     const isEditor = $('.editor', cellNode).length > 0;
