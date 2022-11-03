@@ -112,6 +112,33 @@ describe('Datagrid', () => {
     });
   });
 
+  describe('Tree Filter Empty', () => {
+    const url = `${baseUrl}/test-tree-filter.html`;
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('should be able to use filter empty without text in input box', async () => {
+      expect(await page.$$eval('tr.datagrid-row', el => el.length)).toEqual(22);
+
+      const filterBtn = await page.$('#test-tree-filter-datagrid-1-header-3 .btn-filter');
+      await filterBtn.click();
+
+      await page.waitForSelector('.popupmenu.is-open', { visible: true })
+        .then(element => expect(element).toBeTruthy());
+
+      await page.waitForSelector('.popupmenu.is-open li.is-empty', { visible: true })
+        .then(element => expect(element).toBeTruthy());
+
+      const isEmptyBtn = await page.$('.popupmenu.is-open li.is-empty');
+      await isEmptyBtn.click();
+
+      expect(await page.$$eval('tr.datagrid-row.is-hidden', el => el.length)).toEqual(7);
+      expect(await page.$$eval('tr.datagrid-row:not(.is-hidden)', el => el.length)).toEqual(1);
+    });
+  });
+
   describe('Key row select', () => {
     const url = `${baseUrl}/example-key-row-select.html`;
     beforeAll(async () => {
@@ -472,6 +499,24 @@ describe('Datagrid', () => {
         .then(element => element.getProperty('className'))
         .then(className => className.jsonValue())
         .then(classNameString => expect(classNameString).toContain('tooltip-extra-class'));
+    });
+  });
+
+  describe('Mixed Sort Case', () => {
+    const url = `${baseUrl}/test-combo-sort.html`;
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('should be able to use filter properly', async () => {
+      expect(await page.$eval('tr.datagrid-row:nth-child(1) td:nth-child(2) a', el => el.innerHTML)).toBe('01AM');
+
+      await page.click('th:nth-child(2) span.sort-asc');
+      expect(await page.$eval('tr.datagrid-row:nth-child(1) td:nth-child(2) a', el => el.innerHTML)).toBe('1');
+
+      await page.click('th:nth-child(2) span.sort-desc');
+      expect(await page.$eval('tr.datagrid-row:nth-child(1) td:nth-child(2) a', el => el.innerHTML)).toBe('10CD');
     });
   });
 });

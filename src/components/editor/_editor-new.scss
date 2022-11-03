@@ -19,9 +19,9 @@
     }
 
     &.btn-editor .icon:not(.icon-dropdown) {
-      height: 13px;
-      margin: -4px 2px 0;
-      width: 13px;
+      height: 18px;
+      margin: -4px 1px 0;
+      width: 18px;
     }
 
     &.btn-editor[data-element='h3'],
@@ -42,34 +42,34 @@
     }
 
     &.btn-editor[data-element='b'] .icon {
-      height: 14px;
-      margin: -4px 0 0 1px;
-      width: 14px;
+      height: 18px;
+      margin: -4px 0 0 2px;
+      width: 18px;
     }
 
     &.btn-editor[data-element='i'] .icon {
-      height: 14px;
+      height: 18px;
       margin: -4px 0 0 1px;
-      width: 14px;
+      width: 18px;
     }
 
     &.btn-editor[data-element='u'] .icon {
-      height: 14px;
+      height: 18px;
       margin: -2px 0 0 1px;
-      width: 14px;
+      width: 18px;
     }
 
     &.btn-editor[data-element='strike'] .icon {
-      height: 14px;
+      height: 18px;
       margin: -4px 0 0 1px;
-      width: 14px;
+      width: 18px;
     }
 
     &.btn-editor[data-element='foreColor'] {
       .icon {
-        height: 14px;
+        height: 18px;
         margin: -2px 0 0 1px;
-        width: 14px;
+        width: 18px;
       }
 
       .trigger .icon {
@@ -81,18 +81,18 @@
       margin-right: 10px;
 
       .icon {
-        height: 15px;
+        height: 18px;
         left: 0 !important;
-        margin: -2px 0 0;
-        width: 14px;
+        margin: -3px -1px 1px;
+        width: 18px;
       }
     }
 
     &.btn-editor[data-element='a'] {
       .icon {
-        height: 16px;
+        height: 18px;
         margin: -4px 1px 0;
-        width: 16px;
+        width: 18px;
       }
     }
 

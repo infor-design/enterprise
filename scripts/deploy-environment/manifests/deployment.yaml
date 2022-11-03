@@ -1,17 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: enterprise-%VERSION%-deployment
+  name: enterprise-%SERVICE_NAME%-deployment
   labels:
-    app: enterprise-%VERSION%
+    app: enterprise-%SERVICE_NAME%
 spec:
   selector:
     matchLabels:
-      app: enterprise-%VERSION%
+      app: enterprise-%SERVICE_NAME%
   template:
     metadata:
       labels:
-        app: enterprise-%VERSION%
+        app: enterprise-%SERVICE_NAME%
     spec:
       containers:
         - name: enterprise-demo

@@ -2735,6 +2735,10 @@ Datagrid.prototype = {
             if (conditions[i].filterType === 'checkbox' || conditions[i].value.toString().trim() !== '') {
               isEmpty = false;
             }
+
+            if (conditions[i].filterType === 'text' && conditions[i].operator === 'is-empty') {
+              isEmpty = false;
+            }
           }
           return isEmpty;
         };
@@ -3254,52 +3258,55 @@ Datagrid.prototype = {
                 indexTo = tempArray[self.draggableStatus.endIndex] || 0;
 
                 if (self.settings.showDirty && self.dirtyArray) {
-                  const updateCells = (row, dirtyCells, clearCells) => {
-                    dirtyCells.forEach((d) => {
-                      const dirtyCell = { ...self.dirtyArray[row][d[0]] };
-                      dirtyCell.cell = d[1];
-                      dirtyCell.column = self.settings.columns[d[1]];
-                      self.setDirtyCell(row, d[1], dirtyCell);
-                    });
+                  const updateCells = (row, dirtyFlags, start, end) => {
+                    const clearCells = [];
+                    for (let c = start; c <= end; c++) {
+                      if (dirtyFlags[c] && typeof dirtyFlags[c] === 'object') {
+                        self.setDirtyCell(row, c, dirtyFlags[c]);
+                      } else if (dirtyFlags[c] === false) {
+                        clearCells.push(c);
+                      }
+                    }
+                    clearCells.forEach(c => self.clearDirtyCell(row, c));
+                  };
 
-                    clearCells.forEach((d) => {
-                      self.clearDirtyCell(row, d);
-                    });
+                  const setDirty = (row, dirtyRow, dirtyFlags, from, to) => {
+                    if (self.dirtyArray[row][to] && self.dirtyArray[row][to].isDirty) {
+                      dirtyFlags[to] = true;
+                    } else {
+                      dirtyFlags[to] = { ...dirtyRow[from] };
+                      dirtyFlags[to].cell = to;
+                      dirtyFlags[to].column = self.settings.columns[to];
+                    }
                   };
 
                   if (indexFrom > indexTo) {
                     self.dirtyArray.forEach((dirtyRow, row) => {
-                      const clearCells = [];
-                      const dirtyCells = [];
+                      const dirtyFlags = Array(indexFrom + 1).fill(false);
                       for (let c = indexTo; c <= indexFrom; c++) {
-                        if (dirtyRow[c] && dirtyRow[c].isDirty) {
+                        if (dirtyRow && dirtyRow[c] && dirtyRow[c].isDirty) {
                           if (c === indexFrom) {
-                            dirtyCells.push([indexFrom, indexTo]);
+                            setDirty(row, dirtyRow, dirtyFlags, indexFrom, indexTo);
                           } else {
-                            dirtyCells.push([c, c + 1]);
+                            setDirty(row, dirtyRow, dirtyFlags, c, c + 1);
                           }
-                        } else {
-                          clearCells.push(c + 1);
                         }
                       }
-                      updateCells(row, dirtyCells, clearCells);
+                      updateCells(row, dirtyFlags, indexTo, indexFrom);
                     });
                   } else if (indexFrom < indexTo) {
                     self.dirtyArray.forEach((dirtyRow, row) => {
-                      const clearCells = [];
-                      const dirtyCells = [];
+                      const dirtyFlags = Array(indexTo + 2).fill(false);
                       for (let c = indexTo; c >= indexFrom; c--) {
-                        if (dirtyRow[c] && dirtyRow[c].isDirty) {
+                        if (dirtyRow && dirtyRow[c] && dirtyRow[c].isDirty) {
                           if (c === indexFrom) {
-                            dirtyCells.push([indexFrom, indexTo]);
+                            setDirty(row, dirtyRow, dirtyFlags, indexFrom, indexTo);
                           } else {
-                            dirtyCells.push([c, c - 1]);
+                            setDirty(row, dirtyRow, dirtyFlags, c, c - 1);
                           }
-                        } else {
-                          clearCells.push(c - 1);
                         }
                       }
-                      updateCells(row, dirtyCells, clearCells);
+                      updateCells(row, dirtyFlags, indexFrom, indexTo);
                     });
                   }
                 }
@@ -5650,6 +5657,11 @@ Datagrid.prototype = {
       delay = typeof delay === 'undefined' ? defaultDelay : delay;
       clearTimeout(tooltipTimer);
       setTimeout(() => {
+        // Prevents the tooltip to show on and off
+        if ($('.grid-tooltip:hover').length > 0) {
+          return;
+        }
+
         self.hideTooltip();
         // Clear cache for header filter, so it can use always current selected
         if (DOM.hasClass(elem.parentNode, 'datagrid-filter-wrapper')) {
@@ -5687,6 +5699,17 @@ Datagrid.prototype = {
           e.preventDefault();
         }
         return !handle;
+      })
+      .off('mousemove.gridtooltip')
+      .on('mousemove.gridtooltip', (e) => {
+        // Prevents the tooltip to show on and off
+        if ($(e.target).parents('.datagrid').length > 0) {
+          return;
+        }
+
+        if (!$('.grid-tooltip').hasClass('is-hidden') && !$('.grid-tooltip:hover').length > 0) {
+          handleHide(this);
+        }
       });
 
     if (this.toolbar && this.toolbar.parent().find('.table-errors').length > 0) {
@@ -12562,6 +12585,11 @@ Datagrid.prototype = {
       if (typeof a !== typeof b) {
         a = a.toString().toLowerCase();
         b = b.toString().toLowerCase();
+      }
+
+      // Negate the comparison when comparing integer vs string value
+      if ((!isNaN(a) && isNaN(b)) || (isNaN(a) && !isNaN(b))) {
+        return ascending * (!(a > b) - !(b > a));
       }
 
       return ascending * ((a > b) - (b > a));
