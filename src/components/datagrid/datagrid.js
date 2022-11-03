@@ -433,6 +433,7 @@ Datagrid.prototype = {
     const self = this;
     this.hasLeftPane = this.settings.frozenColumns.left.length > 0;
     this.hasRightPane = this.settings.frozenColumns.right.length > 0;
+    this.hasFrozenColumns = this.settings.frozenColumns.left.length > 0 || this.settings.frozenColumns.right.length > 0;
 
     if (this.hasLeftPane) {
       self.bodyWrapperLeft = $('<div class="datagrid-wrapper left"></div>');
@@ -4714,8 +4715,7 @@ Datagrid.prototype = {
     containerHtml.left = containerHtml.center;
     containerHtml.right = containerHtml.center;
 
-    const columnCount = self.settings.frozenColumns.left.length > 0 || self.settings.frozenColumns.right.length > 0 ? visibleColumnsCenter : self.settings.columns.length;
-    for (j = 0; j < columnCount; j++) {
+    for (j = 0; j < self.settings.columns.length; j++) {
       const col = self.columnSettings(j);
       const container = this.getContainer(col.id);
       let cssClass = '';
@@ -11036,14 +11036,6 @@ Datagrid.prototype = {
    */
   columnSettings(idx) {
     let tempColumn = this.settings.columns;
-
-    if (this.settings.frozenColumns.left.length > 0) {
-      tempColumn = this.settings.columns.filter(item => !this.settings.frozenColumns.left.includes(item.id));
-    }
-
-    if (this.settings.frozenColumns.right.length > 0) {
-      tempColumn = this.settings.columns.filter(item => !this.settings.frozenColumns.right.includes(item.id));
-    }
 
     const foundColumn = tempColumn[idx];
     return foundColumn || {};
