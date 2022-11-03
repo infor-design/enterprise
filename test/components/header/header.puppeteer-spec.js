@@ -3,7 +3,7 @@ const { getConfig } = require('../../helpers/e2e-utils.js');
 describe('Header', () => {
   const baseUrl = 'http://localhost:4000/components/header';
 
-  describe('Index', () => {
+  describe('Header Index Tests', () => {
     const url = `${baseUrl}/example-index?theme=classic&layout=nofrills`;
 
     beforeAll(async () => {
@@ -25,7 +25,7 @@ describe('Header', () => {
     });
   });
 
-  describe('Toolbar Categories ', () => {
+  describe('Header Toolbar Categories Tests', () => {
     const url = `${baseUrl}/example-toolbar-flex-with-categories.html?theme=classic&mode=light&layout=nofrills`;
 
     beforeAll(async () => {
