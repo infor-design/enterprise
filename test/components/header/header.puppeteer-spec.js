@@ -25,7 +25,7 @@ describe('Header', () => {
     });
   });
 
-  describe('Toolbar Categories', () => {
+  describe('Toolbar Categories ', () => {
     const url = `${baseUrl}/example-toolbar-flex-with-categories.html?theme=classic&mode=light&layout=nofrills`;
 
     beforeAll(async () => {
