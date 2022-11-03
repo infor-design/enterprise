@@ -13,6 +13,7 @@
 
 - `[Datagrid]` Added puppeteer script for extra class for tooltip. ([#6900](https://github.com/infor-design/enterprise/issues/6900))
 - `[Lookup]` Added puppeteer script for lookup double click apply enhancement. ([#6886](https://github.com/infor-design/enterprise/issues/6886))
+- `[Icons]` Added [enhanced and new empty states icons](https://main-enterprise.demo.design.infor.com/components/icons/example-empty-widgets.html) with a lot more color. These should replace existing ones but it is opt-in. ([#6868](https://github.com/infor-design/enterprise/issues/6868))
 
 ## v4.69.0 Fixes
 
