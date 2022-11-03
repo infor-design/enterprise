@@ -628,7 +628,7 @@ Datagrid.prototype = {
     this.element.find('tr').removeAttr('aria-rowindex');
     this.element.find('tr').removeAttr('data-index');
 
-    if (self.hasLeftPane) {
+    if (this.hasLeftPane) {
       this.element.find('.datagrid-wrapper.left tbody > tr').each((idx, obj) => {
         const el = $(obj);
         el.attr('aria-rowindex', idx + 1);
@@ -642,7 +642,7 @@ Datagrid.prototype = {
       el.attr('data-index', idx);
     });
 
-    if (self.hasRightPane) {
+    if (this.hasRightPane) {
       this.element.find('.datagrid-wrapper.right tbody > tr').each((idx, obj) => {
         const el = $(obj);
         el.attr('aria-rowindex', idx + 1);
