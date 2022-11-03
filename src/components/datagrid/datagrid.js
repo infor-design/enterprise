@@ -433,7 +433,6 @@ Datagrid.prototype = {
     const self = this;
     this.hasLeftPane = this.settings.frozenColumns.left.length > 0;
     this.hasRightPane = this.settings.frozenColumns.right.length > 0;
-    this.hasFrozenColumns = this.settings.frozenColumns.left.length > 0 || this.settings.frozenColumns.right.length > 0;
 
     if (this.hasLeftPane) {
       self.bodyWrapperLeft = $('<div class="datagrid-wrapper left"></div>');
@@ -535,6 +534,9 @@ Datagrid.prototype = {
   */
   renderRow(data, location) {
     const self = this;
+    let tableHtml = '';
+    let tableHtmlLeft = '';
+    let tableHtmlRight = '';
 
     if (self.emptyMessageContainer) {
       self.emptyMessageContainer.hide();
@@ -545,6 +547,18 @@ Datagrid.prototype = {
     const dataIndex = self.settings.dataset.length - 1;
 
     const rowHtml = self.rowHtml(data, position, dataIndex);
+    if (self.hasLeftPane && rowHtml.left) {
+      tableHtmlLeft += rowHtml.left;
+    }
+
+    if (rowHtml.center) {
+      tableHtml += rowHtml.center;
+    }
+    
+    if (self.hasRightPane && rowHtml.right) {
+      tableHtmlRight += rowHtml.right;
+    }
+
     if (self.settings.groupable) {
       const groups = $('.datagrid-rowgroup-header').find('span:not([class])');
       for (let i = 0; i < groups.length; i++) {
@@ -562,7 +576,15 @@ Datagrid.prototype = {
       const newActivePage = (location === 'bottom' ? self.pagerAPI.pageCount() : 1) + newPage;
 
       if (location !== 'bottom' && self.pagerAPI.activePage === 1) {
-        DOM.prepend(self.tableBody, rowHtml.center, '*');
+        if (self.hasLeftPane) {
+          DOM.prepend(self.tableBodyLeft, tableHtmlLeft, '*');
+        }
+
+        DOM.prepend(self.tableBody, tableHtml, '*');
+
+        if (self.hasRightPane) {
+          DOM.prepend(self.tableBodyRight, tableHtmlRight, '*');
+        }
       } else {
         self.pagerAPI.setActivePage(newActivePage, false, operationType);
         self.pagerAPI.triggerPagingEvents(self.pagerAPI.currentPage);
@@ -571,9 +593,25 @@ Datagrid.prototype = {
 
     if (!self.settings.paging && !self.settings.groupable) {
       if (location !== 'bottom') {
-        DOM.prepend(self.tableBody, rowHtml.center, '*');
+        if (self.hasLeftPane) {
+          DOM.prepend(self.tableBodyLeft, tableHtmlLeft, '*');
+        }
+
+        DOM.prepend(self.tableBody, tableHtml, '*');
+
+        if (self.hasRightPane) {
+          DOM.prepend(self.tableBodyRight, tableHtmlRight, '*');
+        }
       } else {
-        DOM.append(self.tableBody, rowHtml.center, '*');
+        if (self.hasLeftPane) {
+          DOM.append(self.tableBodyLeft, tableHtmlLeft, '*');
+        }
+
+        DOM.append(self.tableBody, tableHtml, '*');
+
+        if (self.hasRightPane) {
+          DOM.append(self.tableBodyRight, tableHtmlRight, '*');
+        }
       }
     }
 
@@ -583,7 +621,6 @@ Datagrid.prototype = {
       }
     }
 
-    self.refreshIndexes();
     self.afterRender();
   },
 
