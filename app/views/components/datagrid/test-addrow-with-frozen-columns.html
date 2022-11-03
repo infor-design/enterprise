@@ -97,7 +97,7 @@
         pagesize: 10,
         selectable: 'mixed',
         rowHeight: 'short',
-        frozenColumns: { left: ['selectionCheckbox', 'productName'] },
+        frozenColumns: { left: ['selectionCheckbox', 'productName'], right: ['orderDate'] },
       }).on('cellchange', function (e, args) {
         console.log(e, args);
       }).on('rowadd', function (e, args) {
@@ -114,7 +114,8 @@
       gridApi = $('#datagrid').data('datagrid');
 
       $('#add-row-button').on('click', function (e) {
-        gridApi.addRow({ productName: '', productId: '0', isNewRow: true }, 0);
+        gridApi.addRow({ productName: 'Product X', productId: '0', isNewRow: true }, 0);
+        // gridApi.addRows([{ productName: 'Product X', productId: '0', isNewRow: true }], 0);
       });
 
       $('#save-new-button').on('click', function () {
