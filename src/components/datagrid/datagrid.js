@@ -534,9 +534,34 @@ Datagrid.prototype = {
   */
   renderRow(data, location) {
     const self = this;
-    let tableHtml = '';
+    const isTop = location !== 'bottom';
+    let tableHtmlCenter = '';
     let tableHtmlLeft = '';
     let tableHtmlRight = '';
+
+    function attachTable() {
+      if (isTop) {
+        if (self.hasLeftPane) {
+          DOM.prepend(self.tableBodyLeft, tableHtmlLeft, '*');
+        }
+    
+        DOM.prepend(self.tableBody, tableHtmlCenter, '*');
+    
+        if (self.hasRightPane) {
+          DOM.prepend(self.tableBodyRight, tableHtmlRight, '*');
+        }
+      } else {
+        if (self.hasLeftPane) {
+          DOM.append(self.tableBodyLeft, tableHtmlLeft, '*');
+        }
+  
+        DOM.append(self.tableBody, tableHtmlCenter, '*');
+  
+        if (self.hasRightPane) {
+          DOM.append(self.tableBodyRight, tableHtmlRight, '*');
+        }
+      }
+    }
 
     if (self.emptyMessageContainer) {
       self.emptyMessageContainer.hide();
@@ -552,7 +577,7 @@ Datagrid.prototype = {
     }
 
     if (rowHtml.center) {
-      tableHtml += rowHtml.center;
+      tableHtmlCenter += rowHtml.center;
     }
     
     if (self.hasRightPane && rowHtml.right) {
@@ -576,15 +601,7 @@ Datagrid.prototype = {
       const newActivePage = (location === 'bottom' ? self.pagerAPI.pageCount() : 1) + newPage;
 
       if (location !== 'bottom' && self.pagerAPI.activePage === 1) {
-        if (self.hasLeftPane) {
-          DOM.prepend(self.tableBodyLeft, tableHtmlLeft, '*');
-        }
-
-        DOM.prepend(self.tableBody, tableHtml, '*');
-
-        if (self.hasRightPane) {
-          DOM.prepend(self.tableBodyRight, tableHtmlRight, '*');
-        }
+        attachTable();
       } else {
         self.pagerAPI.setActivePage(newActivePage, false, operationType);
         self.pagerAPI.triggerPagingEvents(self.pagerAPI.currentPage);
@@ -592,27 +609,7 @@ Datagrid.prototype = {
     }
 
     if (!self.settings.paging && !self.settings.groupable) {
-      if (location !== 'bottom') {
-        if (self.hasLeftPane) {
-          DOM.prepend(self.tableBodyLeft, tableHtmlLeft, '*');
-        }
-
-        DOM.prepend(self.tableBody, tableHtml, '*');
-
-        if (self.hasRightPane) {
-          DOM.prepend(self.tableBodyRight, tableHtmlRight, '*');
-        }
-      } else {
-        if (self.hasLeftPane) {
-          DOM.append(self.tableBodyLeft, tableHtmlLeft, '*');
-        }
-
-        DOM.append(self.tableBody, tableHtml, '*');
-
-        if (self.hasRightPane) {
-          DOM.append(self.tableBodyRight, tableHtmlRight, '*');
-        }
-      }
+      attachTable();
     }
 
     if (self.settings.paging) {
