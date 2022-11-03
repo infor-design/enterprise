@@ -97,7 +97,7 @@
         pagesize: 10,
         selectable: 'mixed',
         rowHeight: 'short',
-        frozenColumns: { left: ['selectionCheckbox', 'productName'] },
+        frozenColumns: { left: ['selectionCheckbox', 'productName'], right: ['orderDate'] },
       }).on('cellchange', function (e, args) {
         console.log(e, args);
       }).on('rowadd', function (e, args) {
