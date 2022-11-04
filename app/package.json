@@ -1,6 +1,6 @@
 {
   "name": "ids-enterprise",
-  "version": "4.68.0-dev",
+  "version": "4.69.0-dev",
   "description": "Infor Design System (IDS) Enterprise Components for the web",
   "keywords": [
     "infor design system",
@@ -73,7 +73,7 @@
     "watch:js": "nodemon --watch \"src/\" -e js --ignore dist/ --ignore app/ -x \"npm run build:js\" --on-change-only",
     "watch:scss": "nodemon --watch \"src/\" -e scss --ignore dist/ --ignore app/ -x \"npm run build:css\" --on-change-only",
     "webdriver:clean": "npx webdriver-manager clean",
-    "webdriver:update": "npx webdriver-manager update --versions.chrome=105.0.5195.125 --standalone false --quiet --gecko=false",
+    "webdriver:update": "npx webdriver-manager update --versions.chrome=107.0.5304.87 --standalone false --quiet --gecko=false",
     "zip-dist": "npx grunt zip-dist"
   },
   "browserslist": [
@@ -125,7 +125,7 @@
     "webpack": "^4.43.0",
     "yargs": "^16.2.0"
   },
-  "chrome-version": "105.0.5195.125",
+  "chrome-version": "107.0.5304.87",
   "jspm": {
     "main": "dist/js/sohoxi.js"
   },
