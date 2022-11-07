@@ -14,14 +14,12 @@ describe('Checkbox Puppeteer Tests', () => {
     });
 
     it('should not visual regress', async () => {
-
       expect(await page.waitForSelector('div[role=main]')).toBeTruthy();
 
       const image = await page.screenshot();
       const config = getConfig('checkboxes');
       expect(image).toMatchImageSnapshot(config);
     });
-
   });
 
   describe('New Theme Tests', () => {
@@ -35,7 +33,6 @@ describe('Checkbox Puppeteer Tests', () => {
     });
 
     it('should not visual regress', async () => {
-
       expect(await page.waitForSelector('div[role=main]')).toBeTruthy();
 
       const image = await page.screenshot();
@@ -55,7 +52,6 @@ describe('Checkbox Puppeteer Tests', () => {
     });
 
     it('should not visual regress', async () => {
-
       expect(await page.waitForSelector('div[role=main]')).toBeTruthy();
 
       const image = await page.screenshot();
@@ -75,7 +71,6 @@ describe('Checkbox Puppeteer Tests', () => {
     });
 
     it('should not visual regress', async () => {
-
       expect(await page.waitForSelector('div[role=main]')).toBeTruthy();
 
       const image = await page.screenshot();
