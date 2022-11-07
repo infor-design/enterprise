@@ -6,7 +6,7 @@
 
 ## v4.70.0 Fixes
 
-- `[Editor]` Fix a bug in editor where insert image is not working properly when adding attributes. ([#6864](https://github.com/infor-design/enterprise/issues/6864))
+- `[Editor]` Fixed a bug in editor where insert image is not working properly when adding attributes. ([#6864](https://github.com/infor-design/enterprise/issues/6864))
 
 ## v4.69.0
 
