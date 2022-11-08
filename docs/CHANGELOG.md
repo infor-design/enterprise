@@ -76,6 +76,8 @@
 - `[Typography]` Updated text link color in dark theme. ([#6807](https://github.com/infor-design/enterprise/issues/6807))
 - `[Lookup]` Fixed where field stays disabled when enable API is called ([#6145](https://github.com/infor-design/enterprise/issues/6145))
 
+(28 Issues Solved This Release, Backlog Enterprise 274, Backlog Ng 51, 1105 Functional Tests, 1303 e2e Tests, 561 Puppeteer Tests)
+
 ## v4.67.0
 
 ## v4.67.0 Important Notes
