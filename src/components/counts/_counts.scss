@@ -1,6 +1,13 @@
 // Instance Count
 //================================================== //
 
+.card-content {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  flex-flow: wrap;
+}
+
 .instance-count {
   display: inline-block;
   margin: 20px 10px;
@@ -50,11 +57,15 @@
     @include antialiased();
 
     color: $font-color;
-    display: block;
     font-size: $ids-size-font-base;
     line-height: 20px;
     text-align: center;
     width: auto;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
   }
 }
 
