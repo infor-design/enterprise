@@ -81,7 +81,7 @@ describe('Calendar', () => {
       await page.waitForSelector('.monthview-table td', { visible: true })
         .then(element => expect(element).toBeTruthy());
 
-      await page.waitForTimeout(500);
+      expect(await page.$$eval('.calendar-event-content', el => el.length)).toEqual(17);
 
       const image = await page.screenshot();
       const config = getConfig('calendar-specific-month');
