@@ -31,7 +31,7 @@
     "build:icons": "node ./scripts/build-icons.js",
     "build:colors": "node ./scripts/build-colors.js",
     "build:copy": "node ./scripts/build-copy.js",
-    "build:release": "npm run clean && npm run build -- --types=iife,es && npm run minify && npm run zip-dist && npm run build:verify",
+    "build:release": "npm run clean && npm run build -- --types=iife,es && npm run minify && npm run zip && npm run build:verify",
     "build:verify": "node ./scripts/verify.js",
     "build:js": "node ./scripts/build --disable-css",
     "clean": "npm run clean:dist && npm run clean:docs && npm run clean:app",
@@ -77,7 +77,8 @@
     "watch:js": "nodemon --watch \"src/\" -e js --ignore dist/ --ignore app/ -x \"npm run build:js\" --on-change-only",
     "watch:scss": "nodemon --watch \"src/\" -e scss --ignore dist/ --ignore app/ -x \"npm run build:css\" --on-change-only",
     "webdriver:clean": "npx webdriver-manager clean",
-    "webdriver:update": "npx webdriver-manager update --versions.chrome=107.0.5304.87 --standalone false --quiet --gecko=false"
+    "webdriver:update": "npx webdriver-manager update --versions.chrome=107.0.5304.87 --standalone false --quiet --gecko=false",
+    "zip": "npm-build-zip"
   },
   "browserslist": [
     "last 2 versions",
@@ -149,6 +150,7 @@
     "node-sass": "^7.0.3",
     "node-sass-once-importer": "^5.3.2",
     "nodemon": "^2.0.15",
+    "npm-build-zip": "^1.0.3",
     "npm-check-updates": "^11.8.5",
     "protractor": "^7.0.0",
     "protractor-flake": "^4.0.0",
