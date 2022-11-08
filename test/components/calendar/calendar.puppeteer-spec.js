@@ -68,16 +68,6 @@ describe('Calendar', () => {
       expect(await page.$eval('#calendar-id-month-view-today', el => el.getAttribute('id'))).toBe('calendar-id-month-view-today');
       expect(await page.$eval('#calendar-id-month-view-today', el => el.getAttribute('data-automation-id'))).toBe('calendar-automation-id-month-view-today');
     });
-
-    it('should not visual regress', async () => {
-      await page.waitForSelector('.monthview-table td', { visible: true })
-        .then(element => expect(element).toBeTruthy());
-
-      const image = await page.screenshot();
-      const config = getConfig('calendar-index');
-      await page.reload({ waitUntil: ['domcontentloaded', 'networkidle0'] });
-      expect(image).toMatchImageSnapshot(config);
-    });
   });
 
   describe('Specific Month', () => {
@@ -198,6 +188,16 @@ describe('Calendar', () => {
 
       expect(await page.$eval('#monthview-popup .month', el => el.innerHTML)).toBe('January');
       expect(await page.$eval('#monthview-popup .year', el => el.innerHTML.trim())).toBe('2019');
+    });
+
+    it('should not visual regress', async () => {
+      await page.waitForSelector('.monthview-table td', { visible: true })
+        .then(element => expect(element).toBeTruthy());
+
+      const image = await page.screenshot();
+      const config = getConfig('calendar-specific-month');
+      await page.reload({ waitUntil: ['domcontentloaded', 'networkidle0'] });
+      expect(image).toMatchImageSnapshot(config);
     });
   });
 
