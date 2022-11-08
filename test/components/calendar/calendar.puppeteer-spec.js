@@ -194,6 +194,8 @@ describe('Calendar', () => {
       await page.waitForSelector('.monthview-table td', { visible: true })
         .then(element => expect(element).toBeTruthy());
 
+      expect(await page.$$eval('.calendar-event-content', el => el.length)).toEqual(17);
+
       const image = await page.screenshot();
       const config = getConfig('calendar-specific-month');
       await page.reload({ waitUntil: ['domcontentloaded', 'networkidle0'] });
