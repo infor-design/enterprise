@@ -77,8 +77,7 @@
     "watch:js": "nodemon --watch \"src/\" -e js --ignore dist/ --ignore app/ -x \"npm run build:js\" --on-change-only",
     "watch:scss": "nodemon --watch \"src/\" -e scss --ignore dist/ --ignore app/ -x \"npm run build:css\" --on-change-only",
     "webdriver:clean": "npx webdriver-manager clean",
-    "webdriver:update": "npx webdriver-manager update --versions.chrome=107.0.5304.87 --standalone false --quiet --gecko=false",
-    "zip-dist": "npx grunt zip-dist"
+    "webdriver:update": "npx webdriver-manager update --versions.chrome=107.0.5304.87 --standalone false --quiet --gecko=false"
   },
   "browserslist": [
     "last 2 versions",
@@ -125,13 +124,6 @@
     "express-session": "^1.17.2",
     "extend": "^3.0.2",
     "front-matter": "^4.0.2",
-    "grunt": "^1.4.1",
-    "grunt-bump": "^0.8.0",
-    "grunt-cli": "^1.4.3",
-    "grunt-contrib-compress": "^1.6.0",
-    "grunt-contrib-copy": "^1.0.0",
-    "grunt-contrib-cssmin": "^3.0.0",
-    "grunt-exec": "^3.0.0",
     "handlebars": "^4.7.7",
     "handlebars-registrar": "^1.5.2",
     "highlight.js": "^11.5.1",
@@ -151,7 +143,6 @@
     "karma-mocha-reporter": "^2.2.5",
     "karma-sourcemap-loader": "^0.3.8",
     "karma-webpack": "4.0.2",
-    "load-grunt-tasks": "^5.1.0",
     "markdownlint-cli": "^0.28.1",
     "marked": "^1.1.0",
     "mmm": "^0.2.2",
