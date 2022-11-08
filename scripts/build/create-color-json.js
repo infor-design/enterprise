@@ -11,7 +11,7 @@ import * as path from 'path';
 import slash from 'slash';
 
 // Local Libs
-import logger from '../logger.js'
+import logger from '../logger.js';
 
 import IdsMetadata from '../helpers/ids-metadata.js';
 

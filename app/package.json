@@ -20,6 +20,7 @@
   "files": [
     "dist"
   ],
+  "type": "module",
   "scripts": {
     "quickstart": "npm run build:demoapp && node app/server.js",
     "quickstart:livereload": "npm run build:demoapp && node app/server.js --livereload",
