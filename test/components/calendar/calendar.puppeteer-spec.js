@@ -77,6 +77,18 @@ describe('Calendar', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
+    it('should not visual regress', async () => {
+      await page.waitForSelector('.monthview-table td', { visible: true })
+        .then(element => expect(element).toBeTruthy());
+
+      await page.waitForTimeout(500);
+
+      const image = await page.screenshot();
+      const config = getConfig('calendar-specific-month');
+      await page.reload({ waitUntil: ['domcontentloaded', 'networkidle0'] });
+      expect(image).toMatchImageSnapshot(config);
+    });
+
     it('should render without error', async () => {
       await page.waitForSelector('.monthview-table td', { visible: true })
         .then(element => expect(element).toBeTruthy());
@@ -188,18 +200,6 @@ describe('Calendar', () => {
 
       expect(await page.$eval('#monthview-popup .month', el => el.innerHTML)).toBe('January');
       expect(await page.$eval('#monthview-popup .year', el => el.innerHTML.trim())).toBe('2019');
-    });
-
-    it('should not visual regress', async () => {
-      await page.waitForSelector('.monthview-table td', { visible: true })
-        .then(element => expect(element).toBeTruthy());
-
-      await page.waitForTimeout(500);
-
-      const image = await page.screenshot();
-      const config = getConfig('calendar-specific-month');
-      await page.reload({ waitUntil: ['domcontentloaded', 'networkidle0'] });
-      expect(image).toMatchImageSnapshot(config);
     });
   });
 
