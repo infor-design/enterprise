@@ -1028,6 +1028,21 @@
   .datagrid-header .datagrid-filter-wrapper .lookup-wrapper .searchfield-wrapper.has-close-icon-button .icon {
     top: 1px;
   }
+
+  .datagrid-container {
+    &.small-rowheight,
+    &.extra-small-rowheight {
+      .datagrid-header .datagrid-filter-wrapper {
+        .datepicker,
+        .timepicker {
+          + .trigger {
+            top: -9px;
+            margin-left: -22px;
+          }
+        }
+      }
+    }
+  }
 }
 
 html[dir='rtl'] {
