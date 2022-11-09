@@ -544,9 +544,9 @@ Datagrid.prototype = {
         if (self.hasLeftPane) {
           DOM.prepend(self.tableBodyLeft, tableHtmlLeft, '*');
         }
-    
+
         DOM.prepend(self.tableBody, tableHtmlCenter, '*');
-    
+
         if (self.hasRightPane) {
           DOM.prepend(self.tableBodyRight, tableHtmlRight, '*');
         }
@@ -554,9 +554,9 @@ Datagrid.prototype = {
         if (self.hasLeftPane) {
           DOM.append(self.tableBodyLeft, tableHtmlLeft, '*');
         }
-  
+
         DOM.append(self.tableBody, tableHtmlCenter, '*');
-  
+
         if (self.hasRightPane) {
           DOM.append(self.tableBodyRight, tableHtmlRight, '*');
         }
@@ -579,7 +579,7 @@ Datagrid.prototype = {
     if (rowHtml.center) {
       tableHtmlCenter += rowHtml.center;
     }
-    
+
     if (self.hasRightPane && rowHtml.right) {
       tableHtmlRight += rowHtml.right;
     }
@@ -2163,6 +2163,9 @@ Datagrid.prototype = {
       const timepickerEl = elem.find('.timepicker');
       if (timepickerEl.length && typeof $().timepicker === 'function') {
         timepickerEl.timepicker(col.editorOptions || { timeFormat: col.timeFormat });
+        timepickerEl.on('change', () => {
+          self.applyFilter(null, 'enter');
+        });
       }
 
       // Attach Mask
