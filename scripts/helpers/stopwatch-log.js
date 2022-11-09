@@ -1,14 +1,13 @@
-'use strict';
-
-const chalk = require('chalk');
-const logSymbols = require('log-symbols');
+/* eslint-disable no-console */
+/* eslint-disable class-methods-use-this */
+import chalk from 'chalk';
+import logSymbols from 'log-symbols';
 
 /**
  * @class stopwatchLog
  * Allows you to log the starting and stopping of tasks with elapsed time
  */
 class StopwatchLog {
-
   /**
    * Create a stopwatchLog instance
    */
@@ -50,7 +49,7 @@ class StopwatchLog {
    * @param {string} [desc] - a brief description or more details
    */
   error(desc = '') {
-    console.error(`\n`, logSymbols.error, chalk['red'](desc), `\n`);
+    console.error('\n', logSymbols.error, chalk.red(desc), '\n');
   }
 
   /**
@@ -58,7 +57,7 @@ class StopwatchLog {
    * @param {string} [desc] - a brief description or more details
    */
   success(desc = '') {
-    console.log(logSymbols.success, chalk['green'](desc));
+    console.log(logSymbols.success, chalk.green(desc));
   }
 
   /**
@@ -67,8 +66,8 @@ class StopwatchLog {
    * @return {string} - "0.00s"
    */
   timeElapsed(startTime) {
-    const elapsed = ((Date.now() - startTime)/1000).toFixed(2);
-    return elapsed + 's';
+    const elapsed = ((Date.now() - startTime) / 1000).toFixed(2);
+    return `${elapsed}s`;
   }
 }
 

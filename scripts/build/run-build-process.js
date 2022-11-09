@@ -1,15 +1,17 @@
+/* eslint-disable no-underscore-dangle */
 import * as path from 'path';
 import { fileURLToPath } from 'url';
 import { spawn } from 'child_process';
 import _yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
+
+// Internal
+import logger from '../logger.js';
+
 const argv = _yargs(hideBin(process.argv)).argv;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-// Internal
-import logger from '../logger.js'
 
 /**
  * Runs a single build process
@@ -55,4 +57,4 @@ export default function runBuildProcess(cmd) {
       resolve();
     });
   });
-};
+}

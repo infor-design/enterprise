@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+/* eslint-disable no-console */
 
 /**
  * @fileoverview Append the date to the library package.json version
@@ -8,18 +8,19 @@
 // -------------------------------------
 //   Node Modules/Options
 // -------------------------------------
-const fs = require('fs');
-const slash = require('slash');
-const inquirer = require('inquirer');
-
+import * as fs from 'fs';
+import slash from 'slash';
+import inquirer from 'inquirer';
+import childProcess from 'child_process';
+import pkgJson from '../package.json';
 
 // -------------------------------------
 //   Constants
 // -------------------------------------
 const rootPath = slash(process.cwd());
 const pkgJsonPath = `${rootPath}/package.json`;
-const pkgJson = require(pkgJsonPath);
 const versionTag = 'dev';
+const exec = childProcess;
 
 // -------------------------------------
 //   Functions
@@ -29,14 +30,14 @@ const versionTag = 'dev';
  * Format the date as YYYYMMDD
  * @param {date} date
  */
-function formatDate (date) {
-  var d = new Date(date),
-    month = '' + (d.getMonth() + 1),
-    day = '' + d.getDate(),
-    year = d.getFullYear();
+function formatDate(date) {
+  const d = new Date(date);
+  let month = `${d.getMonth() + 1}`;
+  let day = `${d.getDate()}`;
+  const year = d.getFullYear();
 
-  if (month.length < 2) month = '0' + month;
-  if (day.length < 2) day = '0' + day;
+  if (month.length < 2) month = `0 ${month}`;
+  if (day.length < 2) day = `0 ${day}`;
 
   return [year, month, day].join('');
 }
@@ -46,8 +47,7 @@ function formatDate (date) {
  * @param {string} cmd - The command
  */
 function executeUpdate(cmd) {
-  const exec = require('child_process').exec
-  const updateProcess = exec(cmd, (err, stdout, stderr) => {
+  exec(cmd, (err, stdout, stderr) => {
     if (err) {
       console.error(`exec error: ${err}`);
       return;

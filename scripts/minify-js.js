@@ -55,7 +55,7 @@ function openUncompressedFile(name, filePath) {
   return uncompressedFile;
 }
 
-//==============================
+// =============================
 // Each of the following functions returns a promise.
 // When the promise resolves successfully, the resulting object looks like:
 // @param {string} result.code the minified code from Terser.
@@ -64,7 +64,7 @@ function openUncompressedFile(name, filePath) {
 // @param {string} [result.inputSourceMapFileName] if applicable, the filename for the uncompressed sourcemap.
 // @param {string} result.outputFile the target filename for the compressed code.
 // @param {stirng} [result.outputSourceMapFile] if applicable, the target filename for the compressed sourcemap.
-//==============================
+// =============================
 
 /**
  * Minifies the main IDS JS library.

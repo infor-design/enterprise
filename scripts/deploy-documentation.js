@@ -19,23 +19,30 @@
 // -------------------------------------
 //   Node Modules/Options
 // -------------------------------------
-const archiver = require('archiver');
-const chalk = require('chalk');
-const del = require('del');
-const documentation = require('documentation');
-const frontMatter = require('front-matter');
-const fs = require('fs');
-const glob = require('glob');
-const handlebars = require('handlebars');
-const hbsRegistrar = require('handlebars-registrar');
-const marked = require('marked');
-const path = require('path');
-const slash = require('slash');
-const yaml = require('js-yaml');
-const hljs = require('highlight.js');
-const FormData = require('form-data');
+import archiver from 'archiver';
+import chalk from 'chalk';
+import { deleteAsync } from 'del';
+import documentation from 'documentation';
+import frontMatter from 'front-matter';
+import * as fs from 'fs';
+import glob from 'glob';
+import handlebars from 'handlebars';
+import hbsRegistrar from 'handlebars-registrar';
+import marked from 'marked';
+import * as path from 'path';
+import slash from 'slash';
+import yaml from 'js-yaml';
+import hljs from 'highlight.js';
+import FormData from 'form-data';
+import _yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
 
-const argv = require('yargs')
+// Local
+import swlog from './helpers/stopwatch-log.js';
+
+const yargs = _yargs(hideBin(process.argv));
+
+const argv = await yargs
   .usage('Usage $node ./scripts/deploy-documentation.js [-s] [-d] [-T]')
   .option('site', {
     alias: 's',
@@ -55,8 +62,6 @@ const argv = require('yargs')
   .help('h')
   .alias('h', 'help')
   .argv;
-
-const swlog = require('./helpers/stopwatch-log');
 
 // Set Marked options
 marked.setOptions({
@@ -341,7 +346,7 @@ async function cleanAll() {
   }
 
   try {
-    await del(filesToDel);
+    await deleteAsync(filesToDel);
     await createDirs([
       paths.idsWebsite.root,
       paths.idsWebsite.dist,
