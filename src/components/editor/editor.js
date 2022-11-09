@@ -1802,6 +1802,15 @@ Editor.prototype = {
         }
       }
 
+      function getSanitizedPlainText(toOutput) {
+        return toOutput.replace(/\&/g, '&amp;')
+        .replace(/\</g, '&lt;')
+        .replace(/\>/g, '&gt;')
+        .replace(/\"/g, '&quot;')
+        .replace(/\'/g, '&#x27;')
+        .replace(/\//g, '&#x2F;');
+      }
+
       if (clipboardData && clipboardData.types) {
         types = clipboardData.types;
         if ((types instanceof DOMStringList && types.contains('text/html')) ||
@@ -1812,10 +1821,10 @@ Editor.prototype = {
           pastedData = e.originalEvent.clipboardData.getData('text/plain');
         }
         if ((typeof types === 'object' && types[0] && types[0] === 'text/plain') && !types[1]) {
-          pastedData = xssUtils.unescapeHTML(e.originalEvent.clipboardData.getData('text/plain'));
+          pastedData = getSanitizedPlainText(e.originalEvent.clipboardData.getData('text/plain'));
         }
         if (types instanceof Array && types.indexOf('text/plain') > -1 && types.indexOf('text/html') < 0) { // For PDF Windows Reader, no text/html in types found.
-          pastedData = xssUtils.unescapeHTML(e.originalEvent.clipboardData.getData('text/plain'));
+          pastedData = getSanitizedPlainText(e.originalEvent.clipboardData.getData('text/plain'));
         }
       } else {
         paste = window.clipboardData ? window.clipboardData.getData('Text') : '';
