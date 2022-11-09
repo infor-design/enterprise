@@ -68,16 +68,6 @@ describe('Calendar', () => {
       expect(await page.$eval('#calendar-id-month-view-today', el => el.getAttribute('id'))).toBe('calendar-id-month-view-today');
       expect(await page.$eval('#calendar-id-month-view-today', el => el.getAttribute('data-automation-id'))).toBe('calendar-automation-id-month-view-today');
     });
-
-    it('should not visual regress', async () => {
-      await page.waitForSelector('.monthview-table td', { visible: true })
-        .then(element => expect(element).toBeTruthy());
-
-      const image = await page.screenshot();
-      const config = getConfig('calendar-index');
-      await page.reload({ waitUntil: ['domcontentloaded', 'networkidle0'] });
-      expect(image).toMatchImageSnapshot(config);
-    });
   });
 
   describe('Specific Month', () => {
@@ -85,6 +75,18 @@ describe('Calendar', () => {
 
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    });
+
+    it('should not visual regress', async () => {
+      await page.waitForSelector('.monthview-table td', { visible: true })
+        .then(element => expect(element).toBeTruthy());
+
+      expect(await page.$$eval('.calendar-event-content', el => el.length)).toEqual(17);
+
+      const image = await page.screenshot();
+      const config = getConfig('calendar-specific-month');
+      await page.reload({ waitUntil: ['domcontentloaded', 'networkidle0'] });
+      expect(image).toMatchImageSnapshot(config);
     });
 
     it('should render without error', async () => {
@@ -124,7 +126,7 @@ describe('Calendar', () => {
       await page.waitForSelector('#calendar-popup', { visible: true })
         .then(element => expect(element).toBeTruthy());
     });
-  
+
     it('should render icons on events', async () => {
       await page.waitForSelector('.calendar-event.azure.event-day-start .icon', { visible: true })
         .then(element => expect(element).toBeTruthy());
@@ -160,7 +162,7 @@ describe('Calendar', () => {
 
       const closeButton = await page.$('.calendar-popup .btn-close');
       await closeButton.click();
-      
+
       expect(await page.$$eval('.calendar-event', el => el.length)).toEqual(17);
     });
 
@@ -178,7 +180,7 @@ describe('Calendar', () => {
 
       const submitButton = await page.$('#submit');
       await submitButton.click();
-      
+
       expect(await page.$$eval('.calendar-event', el => el.length)).toEqual(17);
     });
 
@@ -470,13 +472,13 @@ describe('Calendar', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
       await page.setViewport({ width: 1920, height: 1080 });
     });
-  
+
     it('should see the custom colors in events and legends', async () => {
       await page.waitForSelector('input.lightsalmon', { visible: true });
       expect(await page.$eval('a[data-id="80"', el => getComputedStyle(el).getPropertyValue('background-color'))).toBe('rgb(255, 160, 122)');
       expect(await page.$eval('a[data-id="80"', el => getComputedStyle(el).getPropertyValue('border-left-color'))).toBe('rgb(255, 69, 0)');
     });
-    
+
     it('should not display the event accordingly when legend is unchecked', async () => {
       await page.waitForSelector('input.checkbox.powderblue', { visible: true });
       await page.click('label.checkbox-label[for=dto]');
