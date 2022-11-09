@@ -8,6 +8,7 @@
 
 - `[Editor]` Fixed a bug in editor where insert image is not working properly when adding attributes. ([#6864](https://github.com/infor-design/enterprise/issues/6864))
 - `[Tabs]` Adjusted header and tab colors in themes. ([#6673](https://github.com/infor-design/enterprise/issues/6673))
+- `[Timepicker]` Filter method in datagrid is called on timepicker's change event. ([#6896](https://github.com/infor-design/enterprise/issues/6896))
 
 ## v4.69.0
 
