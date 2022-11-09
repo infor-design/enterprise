@@ -36,14 +36,14 @@ describe('Lookup Puppeteer Tests', () => {
       expect(inputValue).toContain('2142201');
     });
 
-    it('should not change value when cancel button is clicked', async () => {
+    it.skip('should not change value when cancel button is clicked', async () => {
       await page.click('.trigger');
 
       await page.waitForSelector('.modal-content', { visible: true })
         .then(element => expect(element).toBeTruthy());
 
       expect(await page.$$eval('tr.datagrid-row', el => el.length)).toEqual(6);
-  
+
       await page.click('[aria-rowindex="5"]');
       await page.click('[data-automation-id="my-lookup-modal-cancel"]');
 
