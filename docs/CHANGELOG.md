@@ -7,6 +7,7 @@
 ## v4.70.0 Fixes
 
 - `[Editor]` Fixed a bug in editor where insert image is not working properly when adding attributes. ([#6864](https://github.com/infor-design/enterprise/issues/6864))
+- `[Tabs]` Adjusted header and tab colors in themes. ([#6673](https://github.com/infor-design/enterprise/issues/6673))
 
 ## v4.69.0
 
@@ -42,7 +43,6 @@
 - `[Modal]` Fixed a bug where suppress key setting is not working. ([#6793](https://github.com/infor-design/enterprise/issues/6793))
 - `[Searchfield]` Additional visual fixes in classic on go button in searchfield toolbar. ([#6686](https://github.com/infor-design/enterprise/issues/6686))
 - `[Splitter]` Fixed on splitter not working when parent height changes dynamically. ([#6819](https://github.com/infor-design/enterprise/issues/6819))
-- `[Tabs]` Adjusted header and tab colors in themes. ([#6673](https://github.com/infor-design/enterprise/issues/6673))
 - `[Toolbar Flex]` Added additional checks for destroying toolbar. ([#6844](https://github.com/infor-design/enterprise/issues/6844))
 
 ## v4.68.0
