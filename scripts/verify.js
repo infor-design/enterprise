@@ -9,14 +9,22 @@
 // -------------------------------------
 // Requirements
 // -------------------------------------
-const chalk = require('chalk');
-const fs = require('fs');
-const glob = require('glob');
-const path = require('path');
-const slash = require('slash');
+import chalk from 'chalk';
+import * as fs from 'fs';
+import glob from 'glob';
+import * as path from 'path';
+import slash from 'slash';
+import { hideBin } from 'yargs/helpers';
+import _yargs from 'yargs';
 
-// Argv
-const commandLineArgs = require('yargs')
+// Locals
+import createDirs from './build/create-dirs.js';
+import logger from './logger.js';
+import writeFile from './build/write-file.js';
+
+const yargs = _yargs(hideBin(process.argv));
+
+const argv = await yargs
   .usage('Usage: $node ./scripts/verify.js [-v] [-r]')
   .option('verbose', {
     alias: 'v',
@@ -31,11 +39,6 @@ const commandLineArgs = require('yargs')
   .help('h')
   .alias('h', 'help')
   .argv;
-
-// Locals
-const createDirs = require('./build/create-dirs');
-const logger = require('./logger');
-const writeFile = require('./build/write-file');
 
 // Lists
 const rootPath = slash(process.cwd());
@@ -66,7 +69,7 @@ function isDirectory(filePath) {
 // Main
 // -------------------------------------
 
-if (commandLineArgs.rebuild) {
+if (argv.rebuild) {
   logger('info', `Creating a new ${chalk.yellow('expected-files.json')} list...`);
 } else {
   logger('info', 'Verifying the last build...');
@@ -79,7 +82,7 @@ let expectedFiles;
 try {
   expectedFiles = JSON.parse(fs.readFileSync(expectedFilesListPath, 'utf8'));
 } catch (err) {
-  if (!commandLineArgs.rebuild) {
+  if (!argv.rebuild) {
     logger('error', `No files list available at "${chalk.yellow(expectedFilesListPath)}".`);
     logger('padded', 'Please re-run this script with the "--rebuild" flag to generate agaist the current distributable.');
     process.exit(1);
@@ -110,14 +113,14 @@ glob(`${paths.dist}/**/*`, globOptions, (err, files) => {
 
   // Log Files
   logger('padded', `${chalk.cyan(`files: ${chalk.bold(foundFiles.length)}`)}`);
-  if (commandLineArgs.verbose) {
+  if (argv.verbose) {
     foundFiles.forEach((file) => {
       logger('padded', `${file}`);
     });
   }
 
   // Save a new list, if applicable
-  if (commandLineArgs.rebuild) {
+  if (argv.rebuild) {
     // Write all files to a... file...
     const filesListTxt = JSON.stringify(foundFiles, null, '\t');
 

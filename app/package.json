@@ -31,7 +31,7 @@
     "build:icons": "node ./scripts/build-icons.js",
     "build:js": "node ./scripts/build --disable-css",
     "build:copy": "node ./scripts/build-copy.js",
-    "build:release": "npm run clean && npm run build -- --types=iife,es && npm run minify && npm run zip-dist && npm run build:verify",
+    "build:release": "npm run clean && npm run build -- --types=iife,es && npm run minify && npm run zip && npm run build:verify",
     "build:verify": "node ./scripts/verify.js",
     "clean": "npm run clean:dist && npm run clean:docs && npm run clean:app",
     "clean:app": "rimraf app/dist",
@@ -75,7 +75,8 @@
     "watch:js": "nodemon --watch \"src/\" -e js --ignore dist/ --ignore app/ -x \"npm run build:js\" --on-change-only",
     "watch:scss": "nodemon --watch \"src/\" -e scss --ignore dist/ --ignore app/ -x \"npm run build:css\" --on-change-only",
     "webdriver:clean": "npx webdriver-manager clean",
-    "webdriver:update": "npx webdriver-manager update --versions.chrome=107.0.5304.87 --standalone false --quiet --gecko=false"
+    "webdriver:update": "npx webdriver-manager update --versions.chrome=107.0.5304.87 --standalone false --quiet --gecko=false",
+    "zip": "npm-build-zip"
   },
   "browserslist": [
     "last 2 versions",
@@ -106,8 +107,9 @@
     "ids-identity": "4.11.11",
     "jquery": "^3.6.0",
     "mmm": "^0.2.2",
-    "node-sass": "^5.0.0",
+    "node-sass": "^7.0.3",
     "node-sass-once-importer": "^5.3.2",
+    "npm-build-zip": "^1.0.3",
     "promise-polyfill": "^8.2.3",
     "rimraf": "^3.0.2",
     "rollup": "^2.67.2",
