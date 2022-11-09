@@ -1,5 +1,13 @@
 # What's New with Enterprise
 
+## v4.70.0
+
+## v4.70.0 Features
+
+## v4.70.0 Fixes
+
+- `[Editor]` Fixed a bug in editor where insert image is not working properly when adding attributes. ([#6864](https://github.com/infor-design/enterprise/issues/6864))
+
 ## v4.69.0
 
 ## v4.69.0 Important Features
@@ -13,6 +21,7 @@
 
 - `[Datagrid]` Added puppeteer script for extra class for tooltip. ([#6900](https://github.com/infor-design/enterprise/issues/6900))
 - `[Header]` Converted Header scripts to puppeteer. ([#6919](https://github.com/infor-design/enterprise/issues/6919))
+- `[Icons]` Added [enhanced and new empty states icons](https://main-enterprise.demo.design.infor.com/components/icons/example-empty-widgets.html) with a lot more color. These should replace existing ones but it is opt-in. ([#6868](https://github.com/infor-design/enterprise/issues/6868))
 - `[Lookup]` Added puppeteer script for lookup double click apply enhancement. ([#6886](https://github.com/infor-design/enterprise/issues/6886))
 - `[Stepchart]` Converted Stepchart scripts to puppeteer. ([#6940](https://github.com/infor-design/enterprise/issues/6940))
 
@@ -66,6 +75,8 @@
 - `[Textarea]` Fixed a bug in textarea where validation breaks after enabling/disabling. ([#6773](https://github.com/infor-design/enterprise/issues/6773))
 - `[Typography]` Updated text link color in dark theme. ([#6807](https://github.com/infor-design/enterprise/issues/6807))
 - `[Lookup]` Fixed where field stays disabled when enable API is called ([#6145](https://github.com/infor-design/enterprise/issues/6145))
+
+(28 Issues Solved This Release, Backlog Enterprise 274, Backlog Ng 51, 1105 Functional Tests, 1303 e2e Tests, 561 Puppeteer Tests)
 
 ## v4.67.0
 
