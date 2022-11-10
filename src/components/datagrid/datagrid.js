@@ -534,6 +534,34 @@ Datagrid.prototype = {
   */
   renderRow(data, location) {
     const self = this;
+    const isTop = location !== 'bottom';
+    let tableHtmlCenter = '';
+    let tableHtmlLeft = '';
+    let tableHtmlRight = '';
+
+    function attachTable() {
+      if (isTop) {
+        if (self.hasLeftPane) {
+          DOM.prepend(self.tableBodyLeft, tableHtmlLeft, '*');
+        }
+
+        DOM.prepend(self.tableBody, tableHtmlCenter, '*');
+
+        if (self.hasRightPane) {
+          DOM.prepend(self.tableBodyRight, tableHtmlRight, '*');
+        }
+      } else {
+        if (self.hasLeftPane) {
+          DOM.append(self.tableBodyLeft, tableHtmlLeft, '*');
+        }
+
+        DOM.append(self.tableBody, tableHtmlCenter, '*');
+
+        if (self.hasRightPane) {
+          DOM.append(self.tableBodyRight, tableHtmlRight, '*');
+        }
+      }
+    }
 
     if (self.emptyMessageContainer) {
       self.emptyMessageContainer.hide();
@@ -544,6 +572,18 @@ Datagrid.prototype = {
     const dataIndex = self.settings.dataset.length - 1;
 
     const rowHtml = self.rowHtml(data, position, dataIndex);
+    if (self.hasLeftPane && rowHtml.left) {
+      tableHtmlLeft += rowHtml.left;
+    }
+
+    if (rowHtml.center) {
+      tableHtmlCenter += rowHtml.center;
+    }
+
+    if (self.hasRightPane && rowHtml.right) {
+      tableHtmlRight += rowHtml.right;
+    }
+
     if (self.settings.groupable) {
       const groups = $('.datagrid-rowgroup-header').find('span:not([class])');
       for (let i = 0; i < groups.length; i++) {
@@ -561,7 +601,7 @@ Datagrid.prototype = {
       const newActivePage = (location === 'bottom' ? self.pagerAPI.pageCount() : 1) + newPage;
 
       if (location !== 'bottom' && self.pagerAPI.activePage === 1) {
-        DOM.prepend(self.tableBody, rowHtml.center, '*');
+        attachTable();
       } else {
         self.pagerAPI.setActivePage(newActivePage, false, operationType);
         self.pagerAPI.triggerPagingEvents(self.pagerAPI.currentPage);
@@ -569,11 +609,7 @@ Datagrid.prototype = {
     }
 
     if (!self.settings.paging && !self.settings.groupable) {
-      if (location !== 'bottom') {
-        DOM.prepend(self.tableBody, rowHtml.center, '*');
-      } else {
-        DOM.append(self.tableBody, rowHtml.center, '*');
-      }
+      attachTable();
     }
 
     if (self.settings.paging) {
@@ -594,11 +630,27 @@ Datagrid.prototype = {
     this.element.find('tr').removeAttr('aria-rowindex');
     this.element.find('tr').removeAttr('data-index');
 
-    this.element.find('tbody > tr').each((idx, obj) => {
+    if (this.hasLeftPane) {
+      this.element.find('.datagrid-wrapper.left tbody > tr').each((idx, obj) => {
+        const el = $(obj);
+        el.attr('aria-rowindex', idx + 1);
+        el.attr('data-index', idx);
+      });
+    }
+
+    this.element.find('.datagrid-wrapper.center tbody > tr').each((idx, obj) => {
       const el = $(obj);
       el.attr('aria-rowindex', idx + 1);
       el.attr('data-index', idx);
     });
+
+    if (this.hasRightPane) {
+      this.element.find('.datagrid-wrapper.right tbody > tr').each((idx, obj) => {
+        const el = $(obj);
+        el.attr('aria-rowindex', idx + 1);
+        el.attr('data-index', idx);
+      });
+    }
   },
 
   /**
@@ -2111,6 +2163,9 @@ Datagrid.prototype = {
       const timepickerEl = elem.find('.timepicker');
       if (timepickerEl.length && typeof $().timepicker === 'function') {
         timepickerEl.timepicker(col.editorOptions || { timeFormat: col.timeFormat });
+        timepickerEl.on('change', () => {
+          self.applyFilter(null, 'enter');
+        });
       }
 
       // Attach Mask
