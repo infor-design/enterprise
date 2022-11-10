@@ -141,7 +141,7 @@ a.is-personalizable svg.ripple-effect {
 }
 
 .module-tabs.is-personalizable .tab.is-selected {
-  background-color: ${colors.lighter} !important;
+  background-color: ${colors.base} !important;
 }
 
 .tab-container.vertical.is-personalizable > .tab-list-container > .tab-list > .tab.is-selected {
@@ -623,8 +623,11 @@ html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.i
   background-color: ${colors.darkest} !important;
 }
 
-.is-personalizable .personalize-header,
 .is-personalizable.tab-container {
+  background-color: ${colors.dark} !important;
+}
+
+.is-personalizable .personalize-header {
   background-color: ${colors.base} !important;
 }
 
