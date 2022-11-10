@@ -10945,8 +10945,8 @@ Datagrid.prototype = {
     elem.each((idx, el) => {
       const cells = [].slice.call(el.querySelectorAll('.is-dirty-cell'));
         cells.forEach((cell) => {
-        cell.classList.remove('is-dirty-cell');
-      });
+          cell.classList.remove('is-dirty-cell');
+        });
     });
   },
 
