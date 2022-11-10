@@ -89,6 +89,10 @@ $indicator-current-size: ($indicator-size * 1.6);
         width: ($indicator-size / 2);
       }
     }
+
+    .step:last-child .lines .separator {
+      display: none;
+    }
   }
 
   .details,
@@ -225,6 +229,15 @@ $indicator-current-size: ($indicator-size * 1.6);
 
   // Makes the size of the process indicator smaller
   &.compact {
+    &.has-labels {
+      .indicator.icon .icon {
+        height: 16px;
+        left: 0;
+        top: 0;
+        width: 16px;
+      }
+    }
+
     .label {
       margin: -30px 0 33px -13px;
       overflow: hidden;
