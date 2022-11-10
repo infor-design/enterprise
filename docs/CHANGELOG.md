@@ -1,13 +1,5 @@
 # What's New with Enterprise
 
-## v4.70.0
-
-## v4.70.0 Features
-
-## v4.70.0 Fixes
-
-- `[Editor]` Fixed a bug in editor where insert image is not working properly when adding attributes. ([#6864](https://github.com/infor-design/enterprise/issues/6864))
-
 ## v4.69.0
 
 ## v4.69.0 Important Features
@@ -38,11 +30,14 @@
 - `[Datagrid]` Fixed a bug in datagrid where sorting is not rendering properly when there is a previously focused cell. ([#6851](https://github.com/infor-design/enterprise/issues/6851))
 - `[Datagrid]` Additional checks when updating cell so that numbers aren't converted twice. ([NG#1370](https://github.com/infor-design/enterprise-ng/issues/1370))
 - `[Datagrid]` Additional fixes on dirty indicator not updating on drag columns. ([#6867](https://github.com/infor-design/enterprise/issues/6867))
+- `[Editor]` Fixed a bug in editor where insert image is not working properly when adding attributes. ([#6864](https://github.com/infor-design/enterprise/issues/6864))
 - `[General]` Instead of optional dependencies use a custom command. ([#6876](https://github.com/infor-design/enterprise/issues/6876))
 - `[Modal]` Fixed a bug where suppress key setting is not working. ([#6793](https://github.com/infor-design/enterprise/issues/6793))
 - `[Searchfield]` Additional visual fixes in classic on go button in searchfield toolbar. ([#6686](https://github.com/infor-design/enterprise/issues/6686))
 - `[Splitter]` Fixed on splitter not working when parent height changes dynamically. ([#6819](https://github.com/infor-design/enterprise/issues/6819))
 - `[Toolbar Flex]` Added additional checks for destroying toolbar. ([#6844](https://github.com/infor-design/enterprise/issues/6844))
+
+(28 Issues Solved This Release, Backlog Enterprise 278, Backlog Ng 52, 1104 Functional Tests, 1303 e2e Tests, 561 Puppeteer Tests)
 
 ## v4.68.0
 
