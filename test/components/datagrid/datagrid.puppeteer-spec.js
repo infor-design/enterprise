@@ -25,7 +25,7 @@ describe('Datagrid', () => {
       expect(await page.evaluate(el => el.value, dateFilter)).toEqual(`${testDate.getMonth() + 1}/${testDate.getDate()}/${testDate.getFullYear()}`);
     });
 
-    it('Date filter should follow specified date format (YYYYMMDD)', async () => {
+    it.skip('Date filter should follow specified date format (YYYYMMDD)', async () => {
       const dateFilter = await page.$('#custom-id-filter-orderotherdate');
       expect(await page.evaluate(el => el.value, dateFilter)).toEqual('');
 

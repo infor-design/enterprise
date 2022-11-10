@@ -3817,6 +3817,11 @@ $datagrid-small-row-height: 25px;
       }
     }
 
+    .datepicker + .trigger .icon {
+      height: 14px;
+      width: 15px;
+    }
+
     .lookup-wrapper {
       background-color: transparent;
       display: inline;
@@ -6041,8 +6046,28 @@ html[dir='rtl'] {
     bottom: 25px;
   }
 
-  .datagrid-header .datagrid-filter-wrapper .lookup-wrapper .searchfield-wrapper.has-close-icon-button .icon {
-    top: -2px;
+  .datagrid-header .datagrid-filter-wrapper {
+    .lookup-wrapper .searchfield-wrapper.has-close-icon-button .icon {
+      top: -2px;
+    }
+
+    .datepicker,
+    .timepicker {
+      + .trigger {
+        top: -9px;
+        margin-left: -16px;
+      }
+    }
+
+    .timepicker + .trigger .icon {
+      height: 15px;
+      width: 15px;
+    }
+
+    .datepicker + .trigger .icon {
+      height: 14px;
+      width: 13px;
+    }
   }
 }
 
