@@ -8,6 +8,7 @@
 
 ## v4.70.0 Fixes
 
+- `[Counts]` Fixed a bug in counts where two rows of labels cause misalignment. ([#6845](https://github.com/infor-design/enterprise/issues/6845))
 - `[Editor]` Fixed a bug in editor where insert image is not working properly when adding attributes. ([#6864](https://github.com/infor-design/enterprise/issues/6864))
 - `[Process Indicator]` Fix on extra line after final step. ([#6744](https://github.com/infor-design/enterprise/issues/6744))
 - `[Searchfield]` Changed toolbar in example page to flex toolbar. ([#6737](https://github.com/infor-design/enterprise/issues/6737))
