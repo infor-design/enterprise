@@ -9,6 +9,7 @@
 ## v4.70.0 Fixes
 
 - `[Editor]` Fixed a bug in editor where insert image is not working properly when adding attributes. ([#6864](https://github.com/infor-design/enterprise/issues/6864))
+- `[Popupmenu]` Fixed a bug in popupmenu where submenu and submenu items are not indented properly. ([#6860](https://github.com/infor-design/enterprise/issues/6860))
 - `[Process Indicator]` Fix on extra line after final step. ([#6744](https://github.com/infor-design/enterprise/issues/6744))
 - `[Searchfield]` Changed toolbar in example page to flex toolbar. ([#6737](https://github.com/infor-design/enterprise/issues/6737))
 - `[Timepicker]` Filter method in datagrid is called on timepicker's change event. ([#6896](https://github.com/infor-design/enterprise/issues/6896))
