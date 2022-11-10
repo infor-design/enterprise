@@ -10938,7 +10938,7 @@ Datagrid.prototype = {
    * @returns {void}
    */
   clearDirtyClass(elem) {
-    if (!elem instanceof jQuery && !elem.length > 0) {
+    if (elem instanceof jQuery && elem.length < 0) {
       return;
     }
 
