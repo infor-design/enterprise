@@ -6,6 +6,8 @@
 
 ## v4.70.0 Features
 
+- `[Checkbox]` Converted Checkbox scripts to puppeteer. ([#6936](https://github.com/infor-design/enterprise/issues/6936))
+
 ## v4.70.0 Fixes
 
 - `[Editor]` Fixed a bug in editor where insert image is not working properly when adding attributes. ([#6864](https://github.com/infor-design/enterprise/issues/6864))
