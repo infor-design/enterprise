@@ -728,6 +728,10 @@ Tabs.prototype = {
       this.moreActionsBtn = moreActionsButton;
     }
 
+    this.addTabButton.tooltip({
+      content: Locale.translate('AddNewTab')
+    });
+
     return this;
   },
 
@@ -4180,6 +4184,7 @@ Tabs.prototype = {
     $('.tab-panel input').off('error.tabs valid.tabs');
 
     if (this.addTabButton) {
+      this.addTabButton.data('tooltip').destroy();
       this.addTabButton.remove();
       this.addTabButton = undefined;
     }

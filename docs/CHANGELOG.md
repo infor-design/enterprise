@@ -11,6 +11,7 @@
 - `[Editor]` Fixed a bug in editor where insert image is not working properly when adding attributes. ([#6864](https://github.com/infor-design/enterprise/issues/6864))
 - `[Process Indicator]` Fix on extra line after final step. ([#6744](https://github.com/infor-design/enterprise/issues/6744))
 - `[Searchfield]` Changed toolbar in example page to flex toolbar. ([#6737](https://github.com/infor-design/enterprise/issues/6737))
+- `[Tab]` Added tooltip on add new tab button. ([#6902](https://github.com/infor-design/enterprise/issues/6902))
 - `[Timepicker]` Filter method in datagrid is called on timepicker's change event. ([#6896](https://github.com/infor-design/enterprise/issues/6896))
 
 ## v4.69.0
