@@ -6,6 +6,8 @@
 
 ## v4.70.0 Features
 
+- `[Checkbox]` Converted Checkbox scripts to puppeteer. ([#6936](https://github.com/infor-design/enterprise/issues/6936))
+
 ## v4.70.0 Fixes
 
 - `[Counts]` Fixed a bug in counts where two rows of labels cause misalignment. ([#6845](https://github.com/infor-design/enterprise/issues/6845))
