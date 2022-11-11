@@ -349,6 +349,13 @@ Environment.browser.isIE10 = function () {
   return Environment.browser.name === 'ie' && Environment.browser.version === '10';
 };
 
+/**
+ * @returns {boolean} whether or not the current browser is Firefox
+ */
+Environment.browser.isFirefox = function () {
+  return Environment.browser.name === 'firefox';
+};
+
 Environment.browser.isIPad = function () {
   return !!(navigator.userAgent.match(/(iPad)/) ||
     (navigator.platform === 'MacIntel' && typeof navigator.standalone !== 'undefined'));
