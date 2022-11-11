@@ -30,6 +30,7 @@ const tabContainerTypes = ['horizontal', 'vertical', 'module-tabs', 'header-tabs
  * of the tab list that can be used to add an empty tab and panel
  * @param {function} [settings.addTabButtonCallback=null] if defined as a function, will
  * be used in-place of the default Tab Adding method
+ * @param {boolean} [settings.addTabButtonTooltip=true] If set to true, adds tooltip on add tab button
  * @param {boolean} [settings.appMenuTrigger=false] If set to true, will force an App Menu
  * trigger to be present on Non-Vertical Tabs implementatations.
  * @param {string} [settings.appMenuTriggerText] If defined, replaces the default "Menu" text used
@@ -69,6 +70,7 @@ const tabContainerTypes = ['horizontal', 'vertical', 'module-tabs', 'header-tabs
 const TABS_DEFAULTS = {
   addTabButton: false,
   addTabButtonCallback: null,
+  addTabButtonTooltip: true,
   appMenuTrigger: false,
   appMenuTriggerText: undefined,
   appMenuTriggerTextAudible: false,
@@ -728,9 +730,11 @@ Tabs.prototype = {
       this.moreActionsBtn = moreActionsButton;
     }
 
-    this.addTabButton.tooltip({
-      content: Locale.translate('AddNewTab')
-    });
+    if (this.settings.addTabButtonTooltip) {
+      this.addTabButton.tooltip({
+        content: Locale.translate('AddNewTab')
+      });
+    }
 
     return this;
   },
@@ -4184,7 +4188,9 @@ Tabs.prototype = {
     $('.tab-panel input').off('error.tabs valid.tabs');
 
     if (this.addTabButton) {
-      this.addTabButton.data('tooltip').destroy();
+      if (this.settings.addTabButtonTooltip) {
+        this.addTabButton.data('tooltip').destroy();
+      }
       this.addTabButton.remove();
       this.addTabButton = undefined;
     }
