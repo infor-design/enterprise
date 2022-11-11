@@ -10803,7 +10803,7 @@ Datagrid.prototype = {
    * @returns {void}
    */
   clearRowError(row) {
-    const classList = 'error alert rowstatus-row-error rowstatus-row-alert rowstatus-row-info rowstatus-row-in-progress rowstatus-row-success';
+    const classList = 'error alert rowstatus-row-new rowstatus-row-error rowstatus-row-alert rowstatus-row-info rowstatus-row-in-progress rowstatus-row-success';
     const rowNode = this.dataRowNode(row);
 
     rowNode.removeClass(classList);
@@ -10847,6 +10847,7 @@ Datagrid.prototype = {
     node.removeAttribute(`data-${type}message`);
 
     const icon = node.querySelector(`.icon-${type}`);
+    node?.classList.remove('rowstatus-cell');
     if (icon) {
       icon.parentNode.removeChild(icon);
       this.hideTooltip();
@@ -10884,13 +10885,16 @@ Datagrid.prototype = {
    * @returns {void}
    */
   clearDirtyClass(elem) {
-    elem = elem instanceof jQuery ? elem[0] : elem;
-    if (elem) {
-      const cells = [].slice.call(elem.querySelectorAll('.is-dirty-cell'));
+    if (elem instanceof jQuery && elem.length < 0) {
+      return;
+    }
+
+    elem.each((idx, el) => {
+      const cells = [].slice.call(el.querySelectorAll('.is-dirty-cell'));
       cells.forEach((cell) => {
         cell.classList.remove('is-dirty-cell');
       });
-    }
+    });
   },
 
   /**
