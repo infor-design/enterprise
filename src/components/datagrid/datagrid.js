@@ -10857,7 +10857,7 @@ Datagrid.prototype = {
    * @returns {void}
    */
   clearRowError(row) {
-    const classList = 'error alert rowstatus-row-error rowstatus-row-alert rowstatus-row-info rowstatus-row-in-progress rowstatus-row-success';
+    const classList = 'error alert rowstatus-row-new rowstatus-row-error rowstatus-row-alert rowstatus-row-info rowstatus-row-in-progress rowstatus-row-success';
     const rowNode = this.dataRowNode(row);
 
     rowNode.removeClass(classList);
@@ -10901,6 +10901,7 @@ Datagrid.prototype = {
     node.removeAttribute(`data-${type}message`);
 
     const icon = node.querySelector(`.icon-${type}`);
+    node?.classList.remove('rowstatus-cell');
     if (icon) {
       icon.parentNode.removeChild(icon);
       this.hideTooltip();
