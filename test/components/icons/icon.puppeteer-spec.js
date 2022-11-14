@@ -57,7 +57,7 @@ describe('Icons Tests', () => {
   describe('New Empty State Icons', () => {
     const url = `${baseUrl}/example-empty-widgets.html`;
 
-    beforeEach(async () => {
+    beforeAll(async () => {
       await page.goto(url, { waitUntl: ['domcontentloaded', 'networkidle0'] });
     });
 
