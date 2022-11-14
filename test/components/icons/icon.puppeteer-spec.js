@@ -3,7 +3,7 @@ const { getConfig } = require('../../helpers/e2e-utils.js');
 describe('Icons Tests', () => {
   const baseUrl = 'http://localhost:4000/components/icons';
   describe('Index', () => {
-    const url = `${baseUrl}/example-index.html'`;
+    const url = `${baseUrl}/example-index.html`;
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
       await page.setViewport({ width: 1920, height: 1080 });
