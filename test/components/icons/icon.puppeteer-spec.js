@@ -61,7 +61,7 @@ describe('Icons Tests', () => {
       await page.goto(url, { waitUntl: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should not visual regress the new icon empty states', async () => {
+    it('should not visual regress the new empty state icons', async () => {
       const newEmptyStateIcons = await page.$('#maincontent > div:nth-child(4) .demo');
       await page.waitForTimeout(200);
       const img = await newEmptyStateIcons.screenshot();
