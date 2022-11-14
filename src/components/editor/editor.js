@@ -1164,7 +1164,6 @@ Editor.prototype = {
     const self = this;
 
     function editorButtonActionHandler(e, item) {
-      console.log('bindCall');
       const btn = item instanceof ToolbarFlexItem ? $(item.element) : $(e.target);
 
       // Don't do anything if it's the More Button
@@ -1177,7 +1176,7 @@ Editor.prototype = {
 
       e.preventDefault();
       currentElem.focus();
-      
+
       self.checkSelection();
 
       if (!self.sourceViewActive()) {
