@@ -15,6 +15,7 @@
 - `[Datagrid]` Adjusted date and timepicker icons in datagrid filter. ([#6917](https://github.com/infor-design/enterprise/issues/6917))
 - `[Datepicker]` Added Firefox increment/decrement keys. ([#6877](https://github.com/infor-design/enterprise/issues/6877))
 - `[Editor]` Fixed a bug in editor where insert image is not working properly when adding attributes. ([#6864](https://github.com/infor-design/enterprise/issues/6864))
+- `[Editor]` Fixed a bug in editor where paste and plain text is not cleaning the text/html properly. ([#6892](https://github.com/infor-design/enterprise/issues/6892))
 - `[Popupmenu]` Fixed a bug in popupmenu where submenu and submenu items are not indented properly. ([#6860](https://github.com/infor-design/enterprise/issues/6860))
 - `[Process Indicator]` Fix on extra line after final step. ([#6744](https://github.com/infor-design/enterprise/issues/6744))
 - `[Searchfield]` Changed toolbar in example page to flex toolbar. ([#6737](https://github.com/infor-design/enterprise/issues/6737))

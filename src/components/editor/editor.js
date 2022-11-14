@@ -1812,10 +1812,10 @@ Editor.prototype = {
           pastedData = e.originalEvent.clipboardData.getData('text/plain');
         }
         if ((typeof types === 'object' && types[0] && types[0] === 'text/plain') && !types[1]) {
-          pastedData = e.originalEvent.clipboardData.getData('text/plain');
+          pastedData = xssUtils.escapeHTML(e.originalEvent.clipboardData.getData('text/plain'));
         }
         if (types instanceof Array && types.indexOf('text/plain') > -1 && types.indexOf('text/html') < 0) { // For PDF Windows Reader, no text/html in types found.
-          pastedData = e.originalEvent.clipboardData.getData('text/plain');
+          pastedData = xssUtils.escapeHTML(e.originalEvent.clipboardData.getData('text/plain'));
         }
       } else {
         paste = window.clipboardData ? window.clipboardData.getData('Text') : '';
