@@ -59,6 +59,7 @@ describe('Icons Tests', () => {
 
     beforeAll(async () => {
       await page.goto(url, { waitUntl: ['domcontentloaded', 'networkidle0'] });
+      await page.setViewport({ width: 1920, height: 1080 });
     });
 
     it('should not visual regress the new empty state icons', async () => {
