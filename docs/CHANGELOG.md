@@ -5,6 +5,7 @@
 ## v4.68.1 Fixes
 
 - `[Datagrid]` Fixed a bug in datagrid where clear dirty cell does not work properly in frozen columns. ([#6952](https://github.com/infor-design/enterprise/issues/6952))
+- `[Datagrid]` Fixed a bug in datagrid where add row is not working properly when using frozen columns. ([#6918](https://github.com/infor-design/enterprise/issues/6918))
 
 ## v4.68.0
 
