@@ -102,7 +102,6 @@ Toolbar.prototype = {
    */
   build() {
     const self = this;
-
     this.element.attr('role', 'toolbar');
     if (this.settings.resizeContainers && this.element.is(':not(:hidden)')) {
       this.element[0].classList.add('do-resize');
@@ -1502,7 +1501,7 @@ Toolbar.prototype = {
     if (settings) {
       this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
     }
-
+    console.log('update toolbar', settings)
     this
       .teardown()
       .init();
