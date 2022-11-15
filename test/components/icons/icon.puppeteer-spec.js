@@ -54,7 +54,7 @@ describe('Icons Tests', () => {
     });
   });
 
-  describe('New Empty State Icons', () => {
+  describe.only('New Empty State Icons', () => {
     const url = `${baseUrl}/example-empty-widgets.html`;
 
     beforeAll(async () => {
