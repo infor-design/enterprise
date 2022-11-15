@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.68.1
+
+## v4.68.1 Fixes
+
+- `[Datagrid]` Fixed a bug in datagrid where clear dirty cell does not work properly in frozen columns. ([#6952](https://github.com/infor-design/enterprise/issues/6952))
+
 ## v4.68.0
 
 ## v4.68.0 Features
