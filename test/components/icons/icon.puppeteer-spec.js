@@ -63,6 +63,7 @@ describe('Icons Tests', () => {
     });
 
     it('should not visual regress the new empty state icons', async () => {
+      await page.waitForSelector('#maincontent > div:nth-child(4) > div > div:nth-child(13) > svg.is-slate', { visible: true });
       const newEmptyStateIcons = await page.$('#maincontent > div:nth-child(4) .demo');
       await page.waitForTimeout(200);
       const img = await newEmptyStateIcons.screenshot();
