@@ -54,7 +54,7 @@ describe('Icons Tests', () => {
     });
   });
 
-  describe('New Empty State Icons', () => {
+  describe.only('New Empty State Icons', () => {
     const url = `${baseUrl}/example-empty-widgets.html`;
 
     beforeAll(async () => {
@@ -62,7 +62,7 @@ describe('Icons Tests', () => {
       await page.setViewport({ width: 1920, height: 1080 });
     });
 
-    it.only('should not visual regress the new empty state icons', async () => {
+    it('should not visual regress the new empty state icons', async () => {
       await page.waitForSelector('#maincontent > div:nth-child(4) > div > div:nth-child(13) > svg.is-slate', { visible: true });
       const newEmptyStateIcons = await page.$('#maincontent > div:nth-child(4) .demo');
       await page.waitForTimeout(200);
