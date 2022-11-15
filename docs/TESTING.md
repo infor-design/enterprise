@@ -361,7 +361,7 @@ In order to do this we clean the folders, update chrome and do a fresh `npm i`.
   rm -rf node_modules
   wget https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${CHROME_VERSION}_amd64.deb
   sudo dpkg -i google-chrome*.deb
-  rm google-chrome-stable_{CHROME_VERSION}_amd64.deb
+  rm google-chrome-stable_${CHROME_VERSION}_amd64.deb
   npm i
   ```
 
