@@ -26,4 +26,16 @@ describe('Circlepager Puppeteer Tests', () => {
       expect(await page.$eval('#circlepager-id-1', el => el.getAttribute('data-automation-id'))).toBe('automation-id-circlepager-1');
     });
   });
+
+  describe('Pager example-circlepager Tests', () => {
+    const url = 'http://localhost:4000/components/pager/example-circlepager';
+    beforeEach(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
+    });
+
+    it('should show the circle pager', async () => {
+      const firstItem = await page.$eval('.example1 .slide-content:nth-child(1)', el => getComputedStyle(el).getPropertyValue('padding-top'));
+      expect(firstItem).toBe('230px');
+    });
+  });
 });
