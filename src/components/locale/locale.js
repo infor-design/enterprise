@@ -256,7 +256,7 @@ const Locale = {  // eslint-disable-line
 
     this.cultures[locale] = data;
     this.cultures[locale].name = locale;
-    if (!this.languages[lang] && data.messages) {
+    if (data.messages) {
       this.languages[lang] = {
         name: lang,
         direction: data.direction || (langData ? langData.direction : ''),
@@ -269,7 +269,7 @@ const Locale = {  // eslint-disable-line
         nativeName: data.nativeName || (langData ? langData.nativeName : ''),
         messages: data.messages || (langData ? langData.messages : {})
       };
-    } else if (!this.languages[lang] && !data.messages) {
+    } else if (!data.messages) {
       const parentLocale = this.parentLocale(locale);
       if (parentLocale.default && parentLocale.default !== locale &&
         !this.cultures[parentLocale.default]) {
