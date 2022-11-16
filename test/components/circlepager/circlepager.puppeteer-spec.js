@@ -22,13 +22,8 @@ describe('Circlepager Puppeteer Tests', () => {
     });
 
     it('should be able to set id/automation', async () => {
-      const checkAttr = (selector, id, dataAutoID) => page.$eval(selector, element => [element.id, element.getAttribute('data-automation-id')])
-        .then((idArr) => {
-          expect(idArr[0]).toEqual(id);
-          expect(idArr[1]).toEqual(dataAutoID);
-        });
-
-      await checkAttr('#circlepager-id-1', 'circlepager-id-1', 'automation-id-circlepager-1');
+      expect(await page.$eval('#circlepager-id-1', el => el.id)).toBe('circlepager-id-1');
+      expect(await page.$eval('#circlepager-id-1', el => el.getAttribute('data-automation-id'))).toBe('automation-id-circlepager-1');
     });
   });
 });
