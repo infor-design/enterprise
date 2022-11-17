@@ -7,6 +7,7 @@
 ## v4.70.0 Features
 
 - `[Checkbox]` Converted Checkbox scripts to puppeteer. ([#6936](https://github.com/infor-design/enterprise/issues/6936))
+- `[Circlepager]` Converted Circlepager scripts to puppeteer. ([#6971](https://github.com/infor-design/enterprise/issues/6971))
 
 ## v4.70.0 Fixes
 
