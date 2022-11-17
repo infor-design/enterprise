@@ -105,7 +105,7 @@
     "extend": "^3.0.2",
     "handlebars-registrar": "^1.5.2",
     "ids-identity": "4.11.11",
-    "jquery": "^3.6.0",
+    "jquery": "^3.6.1",
     "mmm": "^0.2.2",
     "node-sass": "^7.0.3",
     "node-sass-once-importer": "^5.3.2",

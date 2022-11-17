@@ -47,13 +47,11 @@ const callback = (err) => {
 };
 
 // Do Copy
-copyFile('node_modules/jquery/dist/jquery.js', `${jsDir}/jquery-3.6.0.js`, callback);
-copyFile('node_modules/jquery/dist/jquery.min.js', `${jsDir}/jquery-3.6.0.min.js`, callback);
-copyFile('node_modules/jquery/dist/jquery.min.map', `${jsDir}/jquery-3.6.0.min.map`, callback);
+copyFile('node_modules/jquery/dist/jquery.js', `${jsDir}/jquery-3.6.1.js`, callback);
+copyFile('node_modules/jquery/dist/jquery.min.js', `${jsDir}/jquery-3.6.1.min.js`, callback);
+copyFile('node_modules/jquery/dist/jquery.min.map', `${jsDir}/jquery-3.6.1.min.map`, callback);
 copyFile('node_modules/d3/dist/d3.js', `${jsDir}/d3.v5.js`, callback);
 copyFile('node_modules/d3/dist/d3.min.js', `${jsDir}/d3.v5.min.js`, callback);
-copyFile('lib/sohoxi-migrate-4.4.0.js', `${jsDir}/sohoxi-migrate-4.4.0.js`, callback);
-
 copyFiles('src', '.scss', 'dist/sass/');
 copyFiles('src/components/locale/cultures', '.js', 'dist/js/cultures/', true);
 copyFiles('src/components/emptymessage', '*svg-empty.html', 'dist/svg/');
