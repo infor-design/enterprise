@@ -13291,6 +13291,16 @@ Datagrid.prototype = {
       this.settings.columns = settings.columns;
     }
 
+    if (settings && settings.toolbar && this.toolbar) {
+      const toolbar = this.element.prev('.toolbar');
+      const toolbarApi = this.toolbar.data('toolbar') ? this.toolbar.data('toolbar') : this.toolbar.data('toolbarFlex');
+      if (toolbarApi) {
+        toolbarApi.destroy();
+      }
+      toolbar.remove();
+      this.appendToolbar();
+    }
+
     this.setRowHeightClass();
     this.render(null, pagingInfo);
     this.renderHeader();
