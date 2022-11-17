@@ -502,6 +502,7 @@ const Locale = {  // eslint-disable-line
 
       if (this.languages[selectedLang]) {
         this.currentLanguage = this.languages[selectedLang];
+        this.currentLanguage.name = lang;
         this.updateLanguageTag(name);
       }
 
