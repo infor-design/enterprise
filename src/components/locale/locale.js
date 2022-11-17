@@ -491,6 +491,7 @@ const Locale = {  // eslint-disable-line
   setCurrentLocale(name, data) {
     const lang = this.remapLanguage(name.substr(0, 2));
     this.currentLocale.name = name;
+    const selectedLang = this.languages[lang] && (this.languages[lang].nativeName !== this.languages[name].nativeName) ? name : lang;
 
     if (data) {
       this.currentLocale.data = data;
@@ -498,16 +499,16 @@ const Locale = {  // eslint-disable-line
       this.currentLanguage = {};
       this.currentLanguage.name = lang;
 
-      if (this.languages[lang]) {
-        this.currentLanguage = this.languages[lang];
+      if (this.languages[selectedLang]) {
+        this.currentLanguage = this.languages[selectedLang];
         this.updateLanguageTag(name);
       }
 
       if (this.translatedLocales.indexOf(name) > -1) {
-        this.languages[lang].direction = data.direction;
-        this.languages[lang].messages = data.messages;
-        this.languages[lang].name = lang;
-        this.languages[lang].nativeName = data.nativeName;
+        this.languages[selectedLang].direction = data.direction;
+        this.languages[selectedLang].messages = data.messages;
+        this.languages[selectedLang].name = lang;
+        this.languages[selectedLang].nativeName = data.nativeName;
 
         this.languages[name] = {
           direction: data.direction,
