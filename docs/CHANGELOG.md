@@ -13,6 +13,7 @@
 - `[Counts]` Fixed a bug in counts where two rows of labels cause misalignment. ([#6845](https://github.com/infor-design/enterprise/issues/6845))
 - `[Datagrid]` Fixed a bug in datagrid where clear dirty cell does not work properly in frozen columns. ([#6952](https://github.com/infor-design/enterprise/issues/6952))
 - `[Datagrid]` Adjusted date and timepicker icons in datagrid filter. ([#6917](https://github.com/infor-design/enterprise/issues/6917))
+- `[Datagrid]` Fixed a bug where frozen column headers are not rendered on update. ([NG#1399](https://github.com/infor-design/enterprise-ng/issues/1399))
 - `[Datepicker]` Added Firefox increment/decrement keys. ([#6877](https://github.com/infor-design/enterprise/issues/6877))
 - `[Editor]` Fixed a bug in editor where insert image is not working properly when adding attributes. ([#6864](https://github.com/infor-design/enterprise/issues/6864))
 - `[Editor]` Fixed a bug in editor where paste and plain text is not cleaning the text/html properly. ([#6892](https://github.com/infor-design/enterprise/issues/6892))

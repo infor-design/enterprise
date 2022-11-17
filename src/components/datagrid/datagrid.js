@@ -4232,7 +4232,7 @@ Datagrid.prototype = {
 
       if (self.hasLeftPane) {
         self.bodyColGroupLeft = $(self.bodyColGroupHtmlLeft);
-        (self.headerRowLeft || self.tableBodyLeft).before(self.bodyColGroupLeft);
+        (self.tableBodyLeft || self.headerRowLeft).before(self.bodyColGroupLeft);
       }
 
       self.bodyColGroup = $(self.bodyColGroupHtml);
@@ -4240,7 +4240,7 @@ Datagrid.prototype = {
 
       if (self.hasRightPane) {
         self.bodyColGroupRight = $(self.bodyColGroupHtmlRight);
-        (self.headerRowRight || self.tableBodyRight).before(self.bodyColGroupRight);
+        (self.tableBodyRight || self.headerRowRight).before(self.bodyColGroupRight);
       }
     }
 
