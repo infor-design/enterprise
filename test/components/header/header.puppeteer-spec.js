@@ -12,7 +12,7 @@ describe('Header', () => {
 
     it('should display header text', async () => {
       const headerTitle = await page.evaluate(() => document.querySelector('.title h1').textContent);
-      
+
       expect(headerTitle).toEqual('Page Title');
     });
 
