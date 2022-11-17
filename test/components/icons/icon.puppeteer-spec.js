@@ -1,8 +1,9 @@
 const { getConfig } = require('../../helpers/e2e-utils.js');
 
-describe('Icons Puppeteer Tests', () => {
+describe('Icons Tests', () => {
+  const baseUrl = 'http://localhost:4000/components/icons';
   describe('Index', () => {
-    const url = 'http://localhost:4000/components/icons/example-index.html';
+    const url = `${baseUrl}/example-index.html`;
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
       await page.setViewport({ width: 1920, height: 1080 });
@@ -50,6 +51,24 @@ describe('Icons Puppeteer Tests', () => {
       const image = await icon.screenshot();
       const config = getConfig('icon-interaction-reply');
       expect(image).toMatchImageSnapshot(config);
+    });
+  });
+
+  describe.skip('New Empty State Icons', () => {
+    const url = `${baseUrl}/example-empty-widgets.html`;
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntl: ['domcontentloaded', 'networkidle0'] });
+      await page.setViewport({ width: 1920, height: 1080 });
+    });
+
+    it('should not visual regress the new empty state icons', async () => {
+      await page.waitForSelector('#maincontent > div:nth-child(4) > div > div:nth-child(13) > svg.is-slate', { visible: true });
+      const newEmptyStateIcons = await page.$('#maincontent > div:nth-child(4) .demo');
+      await page.waitForTimeout(200);
+      const img = await newEmptyStateIcons.screenshot();
+      const config = getConfig('new-empty-state-icons');
+      expect(img).toMatchImageSnapshot(config);
     });
   });
 });

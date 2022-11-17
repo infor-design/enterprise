@@ -1819,6 +1819,8 @@ $datagrid-small-row-height: 25px;
           }
 
           .icon-rowstatus {
+            background-color: transparent;
+            box-shadow: unset;
             left: -1px;
             top: 0;
           }
@@ -3815,6 +3817,11 @@ $datagrid-small-row-height: 25px;
           opacity: 0.6;
         }
       }
+    }
+
+    .datepicker + .trigger .icon {
+      height: 14px;
+      width: 15px;
     }
 
     .lookup-wrapper {
@@ -6041,8 +6048,28 @@ html[dir='rtl'] {
     bottom: 25px;
   }
 
-  .datagrid-header .datagrid-filter-wrapper .lookup-wrapper .searchfield-wrapper.has-close-icon-button .icon {
-    top: -2px;
+  .datagrid-header .datagrid-filter-wrapper {
+    .lookup-wrapper .searchfield-wrapper.has-close-icon-button .icon {
+      top: -2px;
+    }
+
+    .datepicker,
+    .timepicker {
+      + .trigger {
+        top: -9px;
+        margin-left: -16px;
+      }
+    }
+
+    .timepicker + .trigger .icon {
+      height: 15px;
+      width: 15px;
+    }
+
+    .datepicker + .trigger .icon {
+      height: 14px;
+      width: 13px;
+    }
   }
 }
 

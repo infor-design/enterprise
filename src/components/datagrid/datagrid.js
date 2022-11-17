@@ -544,9 +544,9 @@ Datagrid.prototype = {
         if (self.hasLeftPane) {
           DOM.prepend(self.tableBodyLeft, tableHtmlLeft, '*');
         }
-    
+
         DOM.prepend(self.tableBody, tableHtmlCenter, '*');
-    
+
         if (self.hasRightPane) {
           DOM.prepend(self.tableBodyRight, tableHtmlRight, '*');
         }
@@ -554,9 +554,9 @@ Datagrid.prototype = {
         if (self.hasLeftPane) {
           DOM.append(self.tableBodyLeft, tableHtmlLeft, '*');
         }
-  
+
         DOM.append(self.tableBody, tableHtmlCenter, '*');
-  
+
         if (self.hasRightPane) {
           DOM.append(self.tableBodyRight, tableHtmlRight, '*');
         }
@@ -579,7 +579,7 @@ Datagrid.prototype = {
     if (rowHtml.center) {
       tableHtmlCenter += rowHtml.center;
     }
-    
+
     if (self.hasRightPane && rowHtml.right) {
       tableHtmlRight += rowHtml.right;
     }
@@ -2163,6 +2163,9 @@ Datagrid.prototype = {
       const timepickerEl = elem.find('.timepicker');
       if (timepickerEl.length && typeof $().timepicker === 'function') {
         timepickerEl.timepicker(col.editorOptions || { timeFormat: col.timeFormat });
+        timepickerEl.on('change', () => {
+          self.applyFilter(null, 'enter');
+        });
       }
 
       // Attach Mask
@@ -10855,7 +10858,7 @@ Datagrid.prototype = {
    * @returns {void}
    */
   clearRowError(row) {
-    const classList = 'error alert rowstatus-row-error rowstatus-row-alert rowstatus-row-info rowstatus-row-in-progress rowstatus-row-success';
+    const classList = 'error alert rowstatus-row-new rowstatus-row-error rowstatus-row-alert rowstatus-row-info rowstatus-row-in-progress rowstatus-row-success';
     const rowNode = this.dataRowNode(row);
 
     rowNode.removeClass(classList);
@@ -10899,6 +10902,7 @@ Datagrid.prototype = {
     node.removeAttribute(`data-${type}message`);
 
     const icon = node.querySelector(`.icon-${type}`);
+    node?.classList.remove('rowstatus-cell');
     if (icon) {
       icon.parentNode.removeChild(icon);
       this.hideTooltip();
@@ -10936,13 +10940,16 @@ Datagrid.prototype = {
    * @returns {void}
    */
   clearDirtyClass(elem) {
-    elem = elem instanceof jQuery ? elem[0] : elem;
-    if (elem) {
-      const cells = [].slice.call(elem.querySelectorAll('.is-dirty-cell'));
+    if (elem instanceof jQuery && elem.length < 0) {
+      return;
+    }
+
+    elem.each((idx, el) => {
+      const cells = [].slice.call(el.querySelectorAll('.is-dirty-cell'));
       cells.forEach((cell) => {
         cell.classList.remove('is-dirty-cell');
       });
-    }
+    });
   },
 
   /**
@@ -13283,6 +13290,16 @@ Datagrid.prototype = {
 
     if (settings && settings.columns) {
       this.settings.columns = settings.columns;
+    }
+
+    if (settings && settings.toolbar && this.toolbar) {
+      const toolbar = this.element.prev('.toolbar');
+      const toolbarApi = this.toolbar.data('toolbar') ? this.toolbar.data('toolbar') : this.toolbar.data('toolbarFlex');
+      if (toolbarApi) {
+        toolbarApi.destroy();
+      }
+      toolbar.remove();
+      this.appendToolbar();
     }
 
     this.setRowHeightClass();

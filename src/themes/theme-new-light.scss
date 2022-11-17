@@ -29,6 +29,10 @@ $application-menu-border-color: $ids-color-palette-slate-90;
 
 $button-color-tertiary-initial-font: $ids-color-palette-slate-60;
 
+// Icons
+$icon-color: $icon-color-fill;
+$icon-empty-bg-color: $ids-color-palette-slate-60;
+
 // Accordion
 $accordion-inverse-bg-color: $ids-color-palette-slate-90;
 $accordion-inverse-pane-bg-color: $ids-color-palette-slate-90;
@@ -88,6 +92,9 @@ $modal-btn-border-color: $ids-color-palette-slate-30;
 $modal-btn-disabled-color: $ids-color-palette-slate-60;
 $modal-color: $ids-color-palette-slate-60;
 $modal-secondary-color: $ids-color-palette-slate-60;
+
+// Module
+$module-tabs-active-bg-color: $ids-color-brand-primary-base;
 
 // DataGrid
 $datagrid-header-bg-color: $ids-color-palette-slate-80;

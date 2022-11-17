@@ -1,0 +1,54 @@
+<div class="row">
+  <div class="twelve columns">
+    <div class="field">
+      <label for="option-updater">Grid Options Updater</label>
+      <textarea id="option-updater" class="textarea input-full" name="option-updater" style="height: 500px"></textarea>
+      <button class="btn-primary" type="button" id="update">Update</button>
+    </div>
+    <div id="datagrid" data-automation-id="datagrid-automation-id" class="datagrid">
+    </div>
+  </div>
+</div>
+
+<script id="datagrid-script">
+  $('body').one('initialized', function () {
+      let options = {
+          toolbar: {
+            title: 'Test Toolbar Title'
+          },
+          saveColumns: false,
+          attributes: [{ name: 'id', value: 'custom-id' }, { name: 'data-automation-id', value: 'custom-automation-id' } ],
+          columns: [
+            {
+              id: 'name',
+              name: 'Name',
+              field: 'name',
+              width: 150,
+              sortable: true,
+              hideable: false,
+            }
+          ],
+          dataset: [{ name: 'Foo' }]
+        };
+
+        const datagridApi = $('#datagrid').datagrid(options).data('datagrid');
+        const textarea = $('#option-updater');
+
+        textarea.val(JSON.stringify(options, undefined, 4));
+
+        $('#update').on('click', (e) => {
+          options = JSON.parse(textarea.val());
+          datagridApi.updated(options);
+        });
+
+        textarea.on('keydown', (e) => {
+          if (e.key === 'Tab') {
+            e.preventDefault();
+            const start = e.target.selectionStart;
+            const end = e.target.selectionEnd;
+            e.target.value = e.target.value.substring(0, start) + '\t' + e.target.value.substring(end);
+            e.target.selectionStart = e.target.selectionEnd = start + 1;
+          }
+        });
+ });
+</script>

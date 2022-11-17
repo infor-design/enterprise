@@ -748,7 +748,7 @@ PopupMenu.prototype = {
             submenu.classList.add('popupmenu');
           }
 
-          if ($(li.parentElement).children('.separator').length > 0) {
+          if (self.element.parent('.datagrid-cell-wrapper').length > 0 && $(li).children('div.wrapper').length > 0) {
             $(li).addClass('has-selectable-submenu');
             $(li).find('.popupmenu').children().addClass('is-selectable');
           }

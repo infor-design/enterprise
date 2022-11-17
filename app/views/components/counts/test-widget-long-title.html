@@ -1,0 +1,74 @@
+<div class="row">
+  <div class="full-width column">
+    <p>Six Widget Counts</p>
+  </div>
+  <div class="one-fourth column">
+    <div class="card auto-height">
+      <div class="card-header">
+        <h2 class="widget-title">Alert Board</h2>
+        <button class="btn-actions" type="button">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-more"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu actions top">
+          <li><a href="#">Action One</a></li>
+          <li><a href="#">Action Two</a></li>
+        </ul>
+      </div>
+      <div class="card-content l-center">
+
+        <div class="instance-count">
+          <span class="count ruby06">5352</span>
+          <span class="title">This is a Test of Long Text in Widge</span>
+        </div>
+
+        <div class="instance-count">
+          <span class="count amber06">10021</span>
+          <span class="title">Medium</span>
+        </div>
+
+        <div class="instance-count">
+          <span class="count amber03">4k</span>
+          <span class="title">Low</span>
+        </div>
+
+        <div class="instance-count">
+          <span class="count azure06">103910</span>
+          <span class="title">Info</span>
+        </div>
+
+        <div class="instance-count">
+          <span class="count turquoise05">5352</span>
+          <span class="title">Unknown</span>
+        </div>
+
+        <div class="instance-count">
+            <span class="count slate06">5352</span>
+            <span class="title">Standard</span>
+          </div>
+
+        <div class="count-info">
+          <p>Violation Count for: <span>User</span></p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div><!-- .row -->
+
+
+<script>
+$('body').on('initialized', function () {
+  var TOOLTIP_OPTIONS = {
+    trigger: 'hover',
+    content: 'GRC Violation Count: User',
+    placement: 'bottom'
+  }
+
+  $('.card-header .widget-title ~ svg.icon').tooltip(TOOLTIP_OPTIONS);
+});
+
+</script>
