@@ -17,11 +17,11 @@
     $.getJSON(url, function(res) {
 
     //Define Columns for the Grid.
-    columns.push({ id: 'companyName', name: 'Company Name', field: 'companyName', formatter: Formatters.Expander});
-    columns.push({ id: 'phone', name: 'Telephone Number', field: 'phone', formatter: Formatters.Hyperlink});
+    columns.push({ id: 'companyName', name: 'Company Name', field: 'companyName', formatter: Soho.Formatters.Expander});
+    columns.push({ id: 'phone', name: 'Telephone Number', field: 'phone', formatter: Soho.Formatters.Hyperlink});
     columns.push({ id: 'location', name: 'Location', field: 'location'});
     columns.push({ id: 'contact', name: 'Contact', field: 'contact'});
-    columns.push({ id: 'newOrder', name: '', field: '', align: 'center', sortable: false, formatter: Formatters.Button, text: 'New Order'});
+    columns.push({ id: 'newOrder', name: '', field: '', align: 'center', sortable: false, formatter: Soho.Formatters.Button, text: 'New Order'});
 
     {{={{{ }}}=}}
     var rowTemplate = '<div class="datagrid-cell-layout"><div class="img-placeholder"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-camera"></use></svg></div></div>'+

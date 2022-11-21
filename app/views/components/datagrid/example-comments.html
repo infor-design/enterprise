@@ -24,10 +24,10 @@
       data.push({ id: 7, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: '100.99', status: 'OK', orderDate: new Date(2014, 6, 9, 12, 12, 12), action: 'On Hold', ordered: 0});
 
       //Define Columns for the Grid.
-      columns.push({ id: 'drilldown', resizable: false, sortable: false, name: 'Drill In', field: '', formatter: Formatters.Drilldown, cssClass: 'l-center-text'});
-      columns.push({ id: 'productId', resizable: false, hidden: true, name: 'Product Id', field: 'productId', formatter: Formatters.Readonly, width: 160 });
-      columns.push({ id: 'productDesc', resizable: false, name: 'Product Desc', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, width: 200});
-      columns.push({ id: 'comment', resizable: false, name: 'Comment', field: 'comment', formatter: Formatters.Textarea, width: '60%'});
+      columns.push({ id: 'drilldown', resizable: false, sortable: false, name: 'Drill In', field: '', formatter: Soho.Formatters.Drilldown, cssClass: 'l-center-text'});
+      columns.push({ id: 'productId', resizable: false, hidden: true, name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Readonly, width: 160 });
+      columns.push({ id: 'productDesc', resizable: false, name: 'Product Desc', sortable: false, field: 'productName', formatter: Soho.Formatters.Hyperlink, width: 200});
+      columns.push({ id: 'comment', resizable: false, name: 'Comment', field: 'comment', formatter: Soho.Formatters.Textarea, width: '60%'});
 
       //Init and get the api for the grid
       $('#datagrid').datagrid({

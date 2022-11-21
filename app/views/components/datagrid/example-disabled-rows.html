@@ -107,7 +107,7 @@
       id: 'selectionCheckbox',
       sortable: false,
       resizable: false,
-      formatter: Formatters.SelectionCheckbox,
+      formatter: Soho.Formatters.SelectionCheckbox,
       align: 'center'
     });
     columns.push({
@@ -120,7 +120,7 @@
       name: 'Product Name',
       sortable: false,
       field: 'productName',
-      formatter: Formatters.Hyperlink,
+      formatter: Soho.Formatters.Hyperlink,
       editor: Editors.Input
     });
     columns.push({
@@ -143,7 +143,7 @@
       name: 'Portable',
       field: 'portable',
       align: 'center',
-      formatter: Formatters.Checkbox,
+      formatter: Soho.Formatters.Checkbox,
       editor: Editors.Checkbox
     });
     columns.push({
@@ -151,7 +151,7 @@
       name: 'Price',
       field: 'price',
       align: 'right',
-      formatter: Formatters.Decimal,
+      formatter: Soho.Formatters.Decimal,
       numberFormat: {
         minimumFractionDigits: 3,
         maximumFractionDigits: 3
@@ -162,14 +162,14 @@
       id: 'orderDate',
       name: 'Order Date',
       field: 'orderDate',
-      formatter: Formatters.Date,
+      formatter: Soho.Formatters.Date,
       editor: Editors.Date
     });
     columns.push({
       id: 'action',
       name: 'Action',
       field: 'action',
-      formatter: Formatters.Dropdown,
+      formatter: Soho.Formatters.Dropdown,
       editor: Editors.Dropdown,
       options: [{
         id: '',

@@ -48,7 +48,7 @@
 
       // Define Columns for the Grid.
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', hideable: false, colspan: customGetColSpan });
-      columns.push({ id: 'productDesc', name: 'Product Desc',  hideable: false, hidden: true, sortable: false, field: 'productName', formatter: Formatters.Hyperlink});
+      columns.push({ id: 'productDesc', name: 'Product Desc',  hideable: false, hidden: true, sortable: false, field: 'productName', formatter: Soho.Formatters.Hyperlink});
       columns.push({ id: 'activity', name: 'Activity',  hideable: false, field: 'activity'});
       columns.push({ id: 'status', name: 'Exception', field: 'status', formatter: myCustom, tooltip: 'Error Info'});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
