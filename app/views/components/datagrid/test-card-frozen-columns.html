@@ -24,13 +24,13 @@
 
       // Define Columns for the Grid.
       columns.push({ id: 'productName', hideable: false, name: 'Summary', field: 'productName', reorderable: true, formatter: customFormatter, width: 200});
-      columns.push({ id: 'productId', hideable: false, name: 'Id', field: 'productId', reorderable: true, formatter: Formatters.Text});
+      columns.push({ id: 'productId', hideable: false, name: 'Id', field: 'productId', reorderable: true, formatter: Soho.Formatters.Text});
       columns.push({ id: 'sku', name: 'Sku', field: 'sku'});
-      columns.push({ id: 'price', align: 'right', name: 'Actual Price', field: 'price', reorderable: true, formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
-      columns.push({ id: 'percent', align: 'right', name: 'Actual %', field: 'percent', reorderable: true, formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'percent'}});
-      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', reorderable: true, formatter: Formatters.Date});
-      columns.push({ id: 'phone', name: 'Phone', field: 'phone', reorderable: true, formatter: Formatters.Text});
-      columns.push({ id: 'inStock', name: 'In Stock', field: 'inStock', formatter: Formatters.Checkbox});
+      columns.push({ id: 'price', align: 'right', name: 'Actual Price', field: 'price', reorderable: true, formatter: Soho.Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
+      columns.push({ id: 'percent', align: 'right', name: 'Actual %', field: 'percent', reorderable: true, formatter: Soho.Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'percent'}});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', reorderable: true, formatter: Soho.Formatters.Date});
+      columns.push({ id: 'phone', name: 'Phone', field: 'phone', reorderable: true, formatter: Soho.Formatters.Text});
+      columns.push({ id: 'inStock', name: 'In Stock', field: 'inStock', formatter: Soho.Formatters.Checkbox});
 
       // Init and get the api for the grid
       $('#datagrid').datagrid({

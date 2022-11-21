@@ -13,13 +13,13 @@
         data = [];
 
       // Define Columns for the Grid.
-      columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, width: 50, formatter: Formatters.SelectionCheckbox, align: 'center' }),
-      columns.push({ id: 'productId', sortable: false, name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Readonly});
-      columns.push({ id: 'productName', sortable: false, name: 'Product Name', sortable: false, field: 'productName', width: 150, formatter: Formatters.Hyperlink});
+      columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, width: 50, formatter: Soho.Formatters.SelectionCheckbox, align: 'center' }),
+      columns.push({ id: 'productId', sortable: false, name: 'Product Id', field: 'productId', width: 140, formatter: Soho.Formatters.Readonly});
+      columns.push({ id: 'productName', sortable: false, name: 'Product Name', sortable: false, field: 'productName', width: 150, formatter: Soho.Formatters.Hyperlink});
       columns.push({ id: 'activity', sortable: false, hidden: true, name: 'Activity', field: 'activity', width: 125});
       columns.push({ id: 'quantity', sortable: false, name: 'Quantity', field: 'quantity', width: 125});
-      columns.push({ id: 'price', sortable: false, name: 'Price', field: 'price', width: 125, formatter: Formatters.Decimal});
-      columns.push({ id: 'orderDate', sortable: false, name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+      columns.push({ id: 'price', sortable: false, name: 'Price', field: 'price', width: 125, formatter: Soho.Formatters.Decimal});
+      columns.push({ id: 'orderDate', sortable: false, name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy'});
 
       $('#datagrid').datagrid({
         columns: columns,

@@ -24,13 +24,13 @@
       data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold', checked: false});
 
       // Define Columns for the Grid.
-      columns.push({ id: 'selectionCheckbox', hidden: true, sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
-      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly});
-      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, href: '/home/detail/{{value}}'});
+      columns.push({ id: 'selectionCheckbox', hidden: true, sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center'});
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Readonly});
+      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Soho.Formatters.Hyperlink, href: '/home/detail/{{value}}'});
       columns.push({ id: 'quantity', name: 'Accuml. Quantity', field: 'quantity'});
-      columns.push({ id: 'price', name: 'Status', field: 'price', formatter: Formatters.Alert, ranges: [{'min': 0, 'max': 150, 'classes': 'success', text: 'Confirmed'}, {'min': 151, 'max': 9999, 'classes': 'error', text: 'Error'}]});
-      columns.push({ id: 'quantity', name: 'Badge', field: 'quantity', align: 'center', formatter: Formatters.Badge, sortable: false, ranges: [{'min': 0, 'max': 2, 'classes': 'error'}, {'value': 3, 'classes': 'alert'}, {'value': 41, 'classes': 'good'}]});
-      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+      columns.push({ id: 'price', name: 'Status', field: 'price', formatter: Soho.Formatters.Alert, ranges: [{'min': 0, 'max': 150, 'classes': 'success', text: 'Confirmed'}, {'min': 151, 'max': 9999, 'classes': 'error', text: 'Error'}]});
+      columns.push({ id: 'quantity', name: 'Badge', field: 'quantity', align: 'center', formatter: Soho.Formatters.Badge, sortable: false, ranges: [{'min': 0, 'max': 2, 'classes': 'error'}, {'value': 3, 'classes': 'alert'}, {'value': 41, 'classes': 'good'}]});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy'});
 
       // Init and get the api for the grid
       var dg = $('#datagrid').datagrid({
