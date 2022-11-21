@@ -32,8 +32,8 @@
       data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: '123.99', status: 'OK', orderDate: null, action: 'On Hold'});
 
       //Define Columns for the Grid.
-      columns.push({id: 'productId', width: 300, name: 'Product Id', field: 'productId', formatter: Formatters.Text});
-      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink});
+      columns.push({id: 'productId', width: 300, name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Text});
+      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Soho.Formatters.Hyperlink});
 
       //Init and get the api for the grid
       var options = { columns: columns, dataset: data, isList: false };

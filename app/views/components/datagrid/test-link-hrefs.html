@@ -42,12 +42,12 @@
       };
 
       //Define Columns for the Grid.
-      columns.push({ id: 'productId', hidden: true, name: 'Product Id', field: 'productId', formatter: Formatters.Readonly });
-      columns.push({ id: 'productDesc', name: 'Product Desc', field: 'productName', formatter: Formatters.Hyperlink, href: dynamicHref });
-      columns.push({ id: 'activity', name: 'Activity', field: 'activity', formatter: Formatters.Hyperlink, href: '/{{value}}'});
+      columns.push({ id: 'productId', hidden: true, name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Readonly });
+      columns.push({ id: 'productDesc', name: 'Product Desc', field: 'productName', formatter: Soho.Formatters.Hyperlink, href: dynamicHref });
+      columns.push({ id: 'activity', name: 'Activity', field: 'activity', formatter: Soho.Formatters.Hyperlink, href: '/{{value}}'});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
-      columns.push({ id: 'price1', name: 'Price', field: 'price', formatter: Formatters.Decimal});
-      columns.push({ id: 'price2', name: 'Price', field: 'price', formatter: Formatters.Integer});
+      columns.push({ id: 'price1', name: 'Price', field: 'price', formatter: Soho.Formatters.Decimal});
+      columns.push({ id: 'price2', name: 'Price', field: 'price', formatter: Soho.Formatters.Integer});
 
       //Init the grid
       $('#readonly-datagrid').datagrid({

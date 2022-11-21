@@ -136,14 +136,14 @@
       id: 'selectionCheckbox',
       sortable: false,
       resizable: false,
-      formatter: Formatters.SelectionCheckbox,
+      formatter: Soho.Formatters.SelectionCheckbox,
       align: 'center'
     });
     columns.push({
       id: 'productId',
       name: 'Product Id',
       field: 'productId',
-      formatter: Formatters.Readonly
+      formatter: Soho.Formatters.Readonly
     });
     columns.push({
       id: 'productName',
@@ -151,7 +151,7 @@
       sortable: false,
       field: 'productName',
       filterType: 'text',
-      formatter: Formatters.Text
+      formatter: Soho.Formatters.Text
     });
     columns.push({
       id: 'activity',
@@ -170,20 +170,20 @@
       id: 'price',
       name: 'Price',
       field: 'price',
-      formatter: Formatters.Decimal
+      formatter: Soho.Formatters.Decimal
     });
     columns.push({
       id: 'orderDate',
       name: 'Order Date',
       field: 'orderDate',
-      formatter: Formatters.Date,
+      formatter: Soho.Formatters.Date,
       dateFormat: 'M/d/yyyy'
     });
     columns.push({
       id: 'status',
       name: 'Status',
       field: 'status',
-      formatter: Formatters.Text
+      formatter: Soho.Formatters.Text
     });
     columns.push({ id: 'action', name: 'Action Item', field: 'action' });
 

@@ -35,9 +35,9 @@
       data.push({ id: 7, productId: 2642206, productName: 'More Rocks', activity:  'Construction', quantity: 41, price: '100.99', status: 'OK', orderDate: new Date(2014, 6, 9, 12, 12, 12), action: 'On Hold', ordered: 0, image: imgExample});
 
       //Define Columns for the Grid.
-      columns.push({ id: 'img', name: 'Image', field: 'image', formatter: Formatters.Image, width: 80, align: 'center'});
-      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly });
-      columns.push({ id: 'productDesc', name: 'Product Desc', sortable: false, field: 'productName',  formatter: Formatters.Hyperlink});
+      columns.push({ id: 'img', name: 'Image', field: 'image', formatter: Soho.Formatters.Image, width: 80, align: 'center'});
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Readonly });
+      columns.push({ id: 'productDesc', name: 'Product Desc', sortable: false, field: 'productName',  formatter: Soho.Formatters.Hyperlink});
       columns.push({ id: 'activity', name: 'Activity', field: 'activity'});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
 

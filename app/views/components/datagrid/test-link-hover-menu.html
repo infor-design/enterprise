@@ -27,12 +27,12 @@
 
       //Define Columns for the Grid.
 
-      columns.push({ id: 'productId', hidden: true, name: 'Product Id', field: 'productId', formatter: Formatters.Readonly });
-      columns.push({ id: 'productDesc', name: 'Product Desc', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, click: function (e, args) { console.log('link was clicked', args); } });
+      columns.push({ id: 'productId', hidden: true, name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Readonly });
+      columns.push({ id: 'productDesc', name: 'Product Desc', sortable: false, field: 'productName', formatter: Soho.Formatters.Hyperlink, click: function (e, args) { console.log('link was clicked', args); } });
       columns.push({ id: 'activity', name: 'Activity', field: 'activity'});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity' });
-      columns.push({ id: 'price1', name: 'Price', field: 'price', formatter: Formatters.Decimal });
-      columns.push({ id: 'price2', name: 'Price', field: 'price', formatter: Formatters.Integer });
+      columns.push({ id: 'price1', name: 'Price', field: 'price', formatter: Soho.Formatters.Decimal });
+      columns.push({ id: 'price2', name: 'Price', field: 'price', formatter: Soho.Formatters.Integer });
 
     //Init and get the api for the grid
       var grid,

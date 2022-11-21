@@ -55,9 +55,9 @@
     var columnsHeader = [], columnsDetail = [];
 
     // Header Grid Columns
-    columnsHeader.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
+    columnsHeader.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center'});
     columnsHeader.push({ id: 'id', name: 'Number', field: 'id', width: 80});
-    columnsHeader.push({ id: 'type', name: 'Type', field: 'type', formatter: Formatters.Hyperlink});
+    columnsHeader.push({ id: 'type', name: 'Type', field: 'type', formatter: Soho.Formatters.Hyperlink});
     columnsHeader.push({ id: 'description', name: 'Description', field: 'description'});
     columnsHeader.push({ id: 'manufacturer', name: 'Manufacturer', field: 'manufacturer'});
     columnsHeader.push({ id: 'serial', name: 'Serial', field: 'serial'});
@@ -65,7 +65,7 @@
 
     // Detail Grid Columns
     columnsDetail.push({ id: 'action', name: 'Asset History', field: 'action'});
-    columnsDetail.push({ id: 'ticket', name: 'Ticket', field: 'ticket', formatter: Formatters.Hyperlink});
+    columnsDetail.push({ id: 'ticket', name: 'Ticket', field: 'ticket', formatter: Soho.Formatters.Hyperlink});
     columnsDetail.push({ id: 'date', name: 'Date', field: 'date'});
     columnsDetail.push({ id: 'description', name: 'Description', field: 'description'});
     columnsDetail.push({ id: 'technician', name: 'Technician', field: 'technician'});
