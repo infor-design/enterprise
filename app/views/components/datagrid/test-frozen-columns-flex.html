@@ -1587,13 +1587,13 @@
       ];
 
         // Define Columns for the Grid.
-        columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Text});
-        columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, href: 'http://www.google.com', target: '_blank'});
+        columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Text});
+        columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Soho.Formatters.Hyperlink, href: 'http://www.google.com', target: '_blank'});
         columns.push({ id: 'activity', name: 'Activity', field: 'activity'});
         columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
-        columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
-        columns.push({ id: 'price', align: 'right', name: 'Actual Price', field: 'price', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
-        columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Formatters.Text});
+        columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy'});
+        columns.push({ id: 'price', align: 'right', name: 'Actual Price', field: 'price', formatter: Soho.Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
+        columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Soho.Formatters.Text});
         columns.push({ id: 'pumpLife', name: 'Pump Life', field: 'pumpLife'});
         columns.push({ id: 'ratedTemp', name: 'Temp. Rating', field: 'ratedTemp'});
         columns.push({ id: 'productSku', name: 'Sku', field: 'productSku'});
@@ -1601,7 +1601,7 @@
         columns.push({ id: 'rpm', name: 'Motor Rpm', field: 'rpm'});
         columns.push({ id: 'maxPressure', name: 'Max Pressure', field: 'maxPressure'});
         columns.push({ id: 'weight', name: 'Weight', field: 'weight'});
-        columns.push({ id: 'actionButton', name: 'Button', field: '', text: 'Buy Now', align: 'center', sortable: false, formatter: Formatters.Button, click: function (e, args) {console.log('Button was clicked', args);}, width: 160, exportable: false});
+        columns.push({ id: 'actionButton', name: 'Button', field: '', text: 'Buy Now', align: 'center', sortable: false, formatter: Soho.Formatters.Button, click: function (e, args) {console.log('Button was clicked', args);}, width: 160, exportable: false});
 
         // Init and get the api for the grid
         $('#datagrid').datagrid({

@@ -21,10 +21,10 @@
       data.push({ value: 12345.6789 });
 
       columns.push({ id: 'id1', name: 'Value', field: 'value'});
-      columns.push({ id: 'id2', name: 'Default', field: 'value', formatter: Formatters.Decimal });
-      columns.push({ id: 'id3', name: 'min:0, max:3', field: 'value', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 3} });
-      columns.push({ id: 'id4', name: 'min:3, max:3', field: 'value', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3} });
-      columns.push({ id: 'id5', name: 'min:3, max:3 & Round', field: 'value', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3, round: true} });
+      columns.push({ id: 'id2', name: 'Default', field: 'value', formatter: Soho.Formatters.Decimal });
+      columns.push({ id: 'id3', name: 'min:0, max:3', field: 'value', formatter: Soho.Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 3} });
+      columns.push({ id: 'id4', name: 'min:3, max:3', field: 'value', formatter: Soho.Formatters.Decimal, numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3} });
+      columns.push({ id: 'id5', name: 'min:3, max:3 & Round', field: 'value', formatter: Soho.Formatters.Decimal, numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3, round: true} });
 
       $('#datagrid').datagrid({
         dataset: data,

@@ -73,14 +73,14 @@
       data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: '123.99', currencyPrice: '123.99', status: 'OK', orderDate: null, action: 'On Hold'});
 
       // Define Columns for the Grid.
-      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly});
-      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink});
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Readonly});
+      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Soho.Formatters.Hyperlink});
       columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity'});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
       columns.push({ id: 'currencyPrice', name: 'Currency Price', field: 'currencyPrice'});
-      columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal});
-      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
-      columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Formatters.Text});
+      columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Soho.Formatters.Decimal});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy'});
+      columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Soho.Formatters.Text});
       columns.push({ id: 'action', name: 'Action Item', field: 'action'});
 
       // Init and get the api for the grid
