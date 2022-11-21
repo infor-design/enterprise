@@ -22,15 +22,15 @@
       data.push({ id: 7, productId: 2142201, sku: 'SKU #9000001-237', productName: 'Compressor', activity: 'Assemble Paint', quantity: 1, price: 210.99, status: 'OK', orderDate: new Date(2014, 12, 8), action: 'Action' });
 
       //Define Columns for the Grid.
-      columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
+      columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center'});
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', minWidth: 75, textOverflow: 'ellipsis' });
-      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', textOverflow: 'ellipsis', formatter: Formatters.Hyperlink });
+      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', textOverflow: 'ellipsis', formatter: Soho.Formatters.Hyperlink });
       columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', textOverflow: 'ellipsis'});
       columns.push({ id: 'quantity', align: 'right', name: 'Quantity', minWidth: 75, field: 'quantity', textOverflow: 'ellipsis'});
-      columns.push({ id: 'status', name: 'Status', field: 'price', textOverflow: 'ellipsis', formatter: Formatters.Alert, ranges: [{'min': 0, 'max': 150, 'classes': 'success', text: 'Confirmed'}, {'min': 151, 'max': 9999, 'classes': 'error', text: 'Error'}]});
-      columns.push({ id: 'price', name: 'Price', align: 'center', field: 'price', textOverflow: 'ellipsis', formatter: Formatters.Decimal});
-      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', textOverflow: 'ellipsis', formatter: Formatters.Date, dateFormat: 'M/d/yyyy', textOverflow: 'ellipsis', align: 'right', sortable: true});
-      columns.push({ id: 'activity', name: 'Activity', field: 'activity', textOverflow: 'ellipsis', formatter: Formatters.Input});
+      columns.push({ id: 'status', name: 'Status', field: 'price', textOverflow: 'ellipsis', formatter: Soho.Formatters.Alert, ranges: [{'min': 0, 'max': 150, 'classes': 'success', text: 'Confirmed'}, {'min': 151, 'max': 9999, 'classes': 'error', text: 'Error'}]});
+      columns.push({ id: 'price', name: 'Price', align: 'center', field: 'price', textOverflow: 'ellipsis', formatter: Soho.Formatters.Decimal});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', textOverflow: 'ellipsis', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy', textOverflow: 'ellipsis', align: 'right', sortable: true});
+      columns.push({ id: 'activity', name: 'Activity', field: 'activity', textOverflow: 'ellipsis', formatter: Soho.Formatters.Input});
 
       //Init the grid
       var grid = $('#datagrid').datagrid({
