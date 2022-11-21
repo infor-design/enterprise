@@ -40,8 +40,8 @@
     fieldsData.push({ id: 5, month: 'MARK'});
     fieldsData.push({ id: 6, month: 'JAN'});
 
-    fieldsColumns.push({ id: 'rowReorder', name: 'Map', field: 'id', align: 'center', sortable: false, formatter: Formatters.RowReorder, width: 85});
-    fieldsColumns.push({ id: 'month', name: 'Product Name', field: 'month', formatter: Formatters.Text});
+    fieldsColumns.push({ id: 'rowReorder', name: 'Map', field: 'id', align: 'center', sortable: false, formatter: Soho.Formatters.RowReorder, width: 85});
+    fieldsColumns.push({ id: 'month', name: 'Product Name', field: 'month', formatter: Soho.Formatters.Text});
 
     fields.datagrid({
       columns: fieldsColumns,
@@ -58,11 +58,11 @@
     sourceData.push({ id: 3, jan: 10, feb: 20, mar: 30, apr: 40});
     sourceData.push({ id: 4, jan: 10, feb: 20, mar: 30, apr: 40});
 
-    sourceColumns.push({ id: 'row', month: 'Id', field: 'id', formatter: Formatters.Text});
-    sourceColumns.push({ id: 'jan', name: 'Jan', field: 'jan', formatter: Formatters.Text});
-    sourceColumns.push({ id: 'feb', name: 'Feb', field: 'feb', formatter: Formatters.Text});
-    sourceColumns.push({ id: 'mar', name: 'Mar', field: 'mar', formatter: Formatters.Text});
-    sourceColumns.push({ id: 'apr', name: 'Apr', field: 'apr', formatter: Formatters.Text});
+    sourceColumns.push({ id: 'row', month: 'Id', field: 'id', formatter: Soho.Formatters.Text});
+    sourceColumns.push({ id: 'jan', name: 'Jan', field: 'jan', formatter: Soho.Formatters.Text});
+    sourceColumns.push({ id: 'feb', name: 'Feb', field: 'feb', formatter: Soho.Formatters.Text});
+    sourceColumns.push({ id: 'mar', name: 'Mar', field: 'mar', formatter: Soho.Formatters.Text});
+    sourceColumns.push({ id: 'apr', name: 'Apr', field: 'apr', formatter: Soho.Formatters.Text});
 
     source.datagrid({
       columns: sourceColumns,

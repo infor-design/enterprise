@@ -14,15 +14,15 @@ let datagridObj;
 
 // Define Columns for the Grid.
 const columns = [];
-columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center' });
-columns.push({ id: 'productId', name: 'Id', field: 'productId', reorderable: true, formatter: Formatters.Text, width: 100, filterType: 'Text' });
-columns.push({ id: 'productName', name: 'Product Name', field: 'productName', reorderable: true, formatter: Formatters.Hyperlink, width: 300, filterType: 'Text' });
+columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center' });
+columns.push({ id: 'productId', name: 'Id', field: 'productId', reorderable: true, formatter: Soho.Formatters.Text, width: 100, filterType: 'Text' });
+columns.push({ id: 'productName', name: 'Product Name', field: 'productName', reorderable: true, formatter: Soho.Formatters.Hyperlink, width: 300, filterType: 'Text' });
 columns.push({ id: 'activity', name: 'Activity', field: 'activity', reorderable: true, filterType: 'Text' });
 columns.push({ id: 'hidden', hidden: true, name: 'Hidden', field: 'hidden', filterType: 'Text' });
-columns.push({ id: 'price', align: 'right', name: 'Actual Price', field: 'price', reorderable: true, formatter: Formatters.Decimal, numberFormat: { minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$' } });
-columns.push({ id: 'percent', align: 'right', name: 'Actual %', field: 'percent', reorderable: true, formatter: Formatters.Decimal, numberFormat: { minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'percent' } });
-columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', reorderable: true, formatter: Formatters.Date, dateFormat: 'M/d/yyyy' });
-columns.push({ id: 'phone', name: 'Phone', field: 'phone', reorderable: true, filterType: 'Text', formatter: Formatters.Text });
+columns.push({ id: 'price', align: 'right', name: 'Actual Price', field: 'price', reorderable: true, formatter: Soho.Formatters.Decimal, numberFormat: { minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$' } });
+columns.push({ id: 'percent', align: 'right', name: 'Actual %', field: 'percent', reorderable: true, formatter: Soho.Formatters.Decimal, numberFormat: { minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'percent' } });
+columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', reorderable: true, formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy' });
+columns.push({ id: 'phone', name: 'Phone', field: 'phone', reorderable: true, filterType: 'Text', formatter: Soho.Formatters.Text });
 
 describe('Datagrid Columns API', () => { //eslint-disable-line
   const Locale = window.Soho.Locale;
@@ -52,8 +52,8 @@ describe('Datagrid Columns API', () => { //eslint-disable-line
 
   it('Should be able to call updateColumns', () => {
     const newColumns = [];
-    newColumns.push({ id: 'productId', name: 'Id', field: 'productId', reorderable: true, formatter: Formatters.Text, width: 100, filterType: 'Text' });
-    newColumns.push({ id: 'productName', name: 'Product Name', field: 'productName', reorderable: true, formatter: Formatters.Hyperlink, width: 300, filterType: 'Text' });
+    newColumns.push({ id: 'productId', name: 'Id', field: 'productId', reorderable: true, formatter: Soho.Formatters.Text, width: 100, filterType: 'Text' });
+    newColumns.push({ id: 'productName', name: 'Product Name', field: 'productName', reorderable: true, formatter: Soho.Formatters.Hyperlink, width: 300, filterType: 'Text' });
     newColumns.push({ id: 'activity', name: 'Activity', field: 'activity', reorderable: true, filterType: 'Text' });
 
     expect(datagridObj.visibleColumns().length).toEqual(8);
@@ -74,7 +74,7 @@ describe('Datagrid Columns API', () => { //eslint-disable-line
     newColumns.push({
       id: 'actionLink',
       name: 'As Link',
-      formatter: Formatters.Hyperlink,
+      formatter: Soho.Formatters.Hyperlink,
       icon: 'reset',
       click: (e, args) => {
         expect(args[0].cell).toEqual(1);
@@ -86,7 +86,7 @@ describe('Datagrid Columns API', () => { //eslint-disable-line
     newColumns.push({
       id: 'action',
       name: 'Active',
-      formatter: Formatters.Button,
+      formatter: Soho.Formatters.Button,
       icon: 'reset',
       click: (e, args) => {
         expect(args[0].cell).toEqual(2);

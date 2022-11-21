@@ -37,11 +37,11 @@
 
     //Define Columns for the Grid.
     columns.push({ id: 'productId', name: 'Product Id', field: 'productId'});
-    columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink});
+    columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Soho.Formatters.Hyperlink});
     columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity'});
     columns.push({ id: 'quantity', filterType: 'text', name: 'Quantity', field: 'quantity'});
-    columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal});
-	  columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, filterType: 'date'});
+    columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Soho.Formatters.Decimal});
+	  columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, filterType: 'date'});
 
     //Init and get the api for the grid
     grid = $('#product-lookup').lookup({

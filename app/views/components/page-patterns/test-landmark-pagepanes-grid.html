@@ -104,12 +104,12 @@
     });
 
 
-    columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, filterType: 'integer', formatter: Formatters.Readonly});
-    columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', filterType: 'text', formatter: Formatters.Hyperlink});
+    columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, filterType: 'integer', formatter: Soho.Formatters.Readonly});
+    columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', filterType: 'text', formatter: Soho.Formatters.Hyperlink});
     columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity'});
     columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', filterType: 'integer'});
-    columns.push({ id: 'price', name: 'Price', field: 'price', filterType: 'decimal', formatter: Formatters.Decimal});
-    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', filterType: 'date', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+    columns.push({ id: 'price', name: 'Price', field: 'price', filterType: 'decimal', formatter: Soho.Formatters.Decimal});
+    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', filterType: 'date', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy'});
     return columns;
   }
 

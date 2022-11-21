@@ -26,9 +26,9 @@ const originalData = [
 ];
 
 const columns = [];
-columns.push({ id: 'rowReorder', sortable: false, resizable: false, formatter: Formatters.RowReorder, align: 'center' });
-columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center' });
-columns.push({ id: 'position', name: 'Position', field: 'position', sortable: false, formatter: Formatters.Readonly });
+columns.push({ id: 'rowReorder', sortable: false, resizable: false, formatter: Soho.Formatters.RowReorder, align: 'center' });
+columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center' });
+columns.push({ id: 'position', name: 'Position', field: 'position', sortable: false, formatter: Soho.Formatters.Readonly });
 columns.push({ id: 'code', name: 'Locale Code', field: 'code', sortable: false });
 
 describe('Datagrid Row Reorder API', () => {

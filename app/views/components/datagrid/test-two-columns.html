@@ -14,8 +14,8 @@
       data = res.data;
 
       // Define Columns for the Grid.
-      columns.push({id: 'productId', name: 'Product Id', field: 'productId', reorderable: false, formatter: Formatters.Text, width: '50%'});
-      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', reorderable: false, formatter: Formatters.Hyperlink, width: '50%'});
+      columns.push({id: 'productId', name: 'Product Id', field: 'productId', reorderable: false, formatter: Soho.Formatters.Text, width: '50%'});
+      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', reorderable: false, formatter: Soho.Formatters.Hyperlink, width: '50%'});
 
       // Init and get the api for the grid
       $('#datagrid').datagrid({

@@ -335,10 +335,10 @@
 
   //Define Columns for the Grid.
   columns.push({ id: 'productId', name: 'Product Id', field: 'productId'});
-  columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink});
+  columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Soho.Formatters.Hyperlink});
   columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity'});
   columns.push({ id: 'quantity', filterType: 'text', name: 'Quantity', field: 'quantity'});
-  columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal});
+  columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Soho.Formatters.Decimal});
 
   //Init and get the api for the grid
   grid = $('#example-lookup').lookup({

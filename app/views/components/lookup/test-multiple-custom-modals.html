@@ -88,11 +88,11 @@
 
          //Define Columns for the Grid.
          columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140});
-         columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 250, formatter: Formatters.Hyperlink});
+         columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 250, formatter: Soho.Formatters.Hyperlink});
          columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125});
          columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 125});
-         columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Formatters.Decimal});
-         columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+         columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Soho.Formatters.Decimal});
+         columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy'});
 
          //Init and get the api for the grid
          $('#product-lookup, #product-lookup2').lookup({
@@ -118,8 +118,8 @@
          data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: '123.99', percent: .10, status: 'OK', orderDate: null, action: 'On Hold'});
 
          // Define Columns for the Grid.
-         columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
-         columns.push({ id: 'productId', name: 'Id', field: 'productId', formatter: Formatters.Text, sortable: false, filterType: 'text' });
+         columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center'});
+         columns.push({ id: 'productId', name: 'Id', field: 'productId', formatter: Soho.Formatters.Text, sortable: false, filterType: 'text' });
 
          // Init and get the api for the grid
          $('#datagrid').datagrid({

@@ -72,7 +72,7 @@ $('body').on('initialized', function () {
   columns = [];
 
   //Define Columns for the Grid.
-  columns.push({ id: 'drilldown', name: '', field: '', resizable: false, formatter: Formatters.Drilldown, click: function(e, args) {
+  columns.push({ id: 'drilldown', name: '', field: '', resizable: false, formatter: Soho.Formatters.Drilldown, click: function(e, args) {
     console.log(args);
   }, align: 'center', sortable: false});
   columns.push({ id: 'entity', name: 'Entity', field: 'name', width: '85%'});

@@ -18,11 +18,11 @@
   var columns = [];
 
   // Columns for the Lookup Datagrid
-  columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
-  columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly});
-  columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink});
+  columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center'});
+  columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Readonly});
+  columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Soho.Formatters.Hyperlink});
   columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
-  columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal});
+  columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Soho.Formatters.Decimal});
 
   // Initialize the Lookup
   $('#product-lookup').lookup({

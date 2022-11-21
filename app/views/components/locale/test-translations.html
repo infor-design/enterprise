@@ -165,13 +165,13 @@ $('body').one('initialized', function () {
   var columns = [], data = [];
 
   // Define Columns for the Grid.
-  columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center' }),
+  columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center' }),
   columns.push({ id: 'id', name: Locale.translate('Id'), field: 'id', filterType: 'text', width: 100});
   columns.push({ id: 'value', name: Locale.translate('String'), field: 'value', filterType: 'text', width: 400, textOverflow: 'ellipsis'});
-  columns.push({ id: 'price', align: 'right', name: 'Currency', field: 'price', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: Soho.Locale.currentLocale.data.currencySign}});
-  columns.push({ id: 'percent', align: 'right', name: 'Percent', field: 'percent', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'percent'}});
-  columns.push({ id: 'decimal', align: 'right', name: 'Decimal', field: 'decimal', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 2, maximumFractionDigits: 2 }});
-  columns.push({ id: 'date', name: 'Date', field: 'date', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+  columns.push({ id: 'price', align: 'right', name: 'Currency', field: 'price', formatter: Soho.Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: Soho.Locale.currentLocale.data.currencySign}});
+  columns.push({ id: 'percent', align: 'right', name: 'Percent', field: 'percent', formatter: Soho.Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'percent'}});
+  columns.push({ id: 'decimal', align: 'right', name: 'Decimal', field: 'decimal', formatter: Soho.Formatters.Decimal, numberFormat: {minimumFractionDigits: 2, maximumFractionDigits: 2 }});
+  columns.push({ id: 'date', name: 'Date', field: 'date', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy'});
 
   const localeData = Object.values(Locale.currentLanguage.messages);
   for (let i = 0; i < localeData.length; i++) {

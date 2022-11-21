@@ -111,8 +111,8 @@
     data.push({ id: 5, columnA: 'Item E', columnB: '$123,456.78'});
 
     //Define Columns for the Grid.
-    columns.push({ id: 'columnA', name: 'Column A', field: 'columnA', formatter: Formatters.Readonly});
-    columns.push({ id: 'columnB', name: 'Column B', field: 'columnB', formatter: Formatters.Number});
+    columns.push({ id: 'columnA', name: 'Column A', field: 'columnA', formatter: Soho.Formatters.Readonly});
+    columns.push({ id: 'columnB', name: 'Column B', field: 'columnB', formatter: Soho.Formatters.Number});
 
     //Init and get the api for the grid
     grid = $('#datagrid').datagrid({

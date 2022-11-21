@@ -15,14 +15,14 @@ let datagridObj;
 
 // Define Columns for the Grid.
 const columns = [];
-columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Expander, filterType: 'text' });
-columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, filterType: 'Text', editor: Editors.Input }); //eslint-disable-line
+columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Expander, filterType: 'text' });
+columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Soho.Formatters.Hyperlink, filterType: 'Text', editor: Editors.Input }); //eslint-disable-line
 columns.push({ id: 'activity', name: 'Activity', field: 'activity', readonly: true, filterType: 'Text' });
 columns.push({ id: 'hidden', hidden: true, name: 'Hidden', field: 'hidden', filterType: 'Text' });
-columns.push({ id: 'price', align: 'right', name: 'Actual Price', readonly: true, field: 'price', formatter: Formatters.Decimal, numberFormat: { minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$' } });
-columns.push({ id: 'percent', align: 'right', name: 'Actual %', field: 'percent', reorderable: true, formatter: Formatters.Decimal, numberFormat: { minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'percent' } });
-columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', reorderable: true, formatter: Formatters.Date, dateFormat: 'M/d/yyyy' });
-columns.push({ id: 'phone', name: 'Phone', field: 'phone', isEditable: () => {return true}, filterType: 'Text', formatter: Formatters.Text, validate: 'required', required: true, editor: Editors.Input }); //eslint-disable-line
+columns.push({ id: 'price', align: 'right', name: 'Actual Price', readonly: true, field: 'price', formatter: Soho.Formatters.Decimal, numberFormat: { minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$' } });
+columns.push({ id: 'percent', align: 'right', name: 'Actual %', field: 'percent', reorderable: true, formatter: Soho.Formatters.Decimal, numberFormat: { minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'percent' } });
+columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', reorderable: true, formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy' });
+columns.push({ id: 'phone', name: 'Phone', field: 'phone', isEditable: () => {return true}, filterType: 'Text', formatter: Soho.Formatters.Text, validate: 'required', required: true, editor: Editors.Input }); //eslint-disable-line
 
 const rowTemplate = `<div class="datagrid-cell-layout"><div class="img-placeholder"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-camera"></use></svg></div></div>
   <div class="datagrid-cell-layout"><p class="datagrid-row-heading">Expandable Content Area</p>
@@ -627,10 +627,10 @@ describe('Datagrid API', () => { //eslint-disable-line
 
   it('Should be able to accept nested datarow objects', () => {
     const newColumns = [];
-    newColumns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly });
-    newColumns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productInfo.productName.value', formatter: Formatters.Text, editor: Editors.Input });
-    newColumns.push({ id: 'productType', name: 'Product Type', sortable: false, field: 'productInfo.productProperties.productType.value', formatter: Formatters.Text, editor: Editors.Input });
-    newColumns.push({ id: 'productUnit', name: 'Product Unit', sortable: false, field: 'productInfo.productProperties.productMeasure.productUnit.value', formatter: Formatters.Text, editor: Editors.Input });
+    newColumns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Readonly });
+    newColumns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productInfo.productName.value', formatter: Soho.Formatters.Text, editor: Editors.Input });
+    newColumns.push({ id: 'productType', name: 'Product Type', sortable: false, field: 'productInfo.productProperties.productType.value', formatter: Soho.Formatters.Text, editor: Editors.Input });
+    newColumns.push({ id: 'productUnit', name: 'Product Unit', sortable: false, field: 'productInfo.productProperties.productMeasure.productUnit.value', formatter: Soho.Formatters.Text, editor: Editors.Input });
 
     datagridObj.updateColumns(newColumns);
 

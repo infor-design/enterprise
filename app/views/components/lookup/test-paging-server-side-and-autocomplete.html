@@ -14,11 +14,11 @@
 
       //Define Columns for the Grid.
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, filterType: 'integer'});
-      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 250, formatter: Formatters.Hyperlink, filterType: 'text'});
+      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 250, formatter: Soho.Formatters.Hyperlink, filterType: 'text'});
       columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125, filterType: 'text'});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 125, filterType: 'decimal'});
-      columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Formatters.Decimal, filterType: 'decimal'});
-      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy', filterType: 'date'});
+      columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Soho.Formatters.Decimal, filterType: 'decimal'});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy', filterType: 'date'});
 
       //Init
       $input.lookup({
