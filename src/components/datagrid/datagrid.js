@@ -10856,6 +10856,7 @@ Datagrid.prototype = {
     node.removeAttribute(`data-${type}message`);
 
     const icon = node.querySelector(`.icon-${type}`);
+    node?.classList.remove('rowstatus-cell');
     if (icon) {
       icon.parentNode.removeChild(icon);
       this.hideTooltip();
