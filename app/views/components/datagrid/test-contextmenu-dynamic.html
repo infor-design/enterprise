@@ -46,23 +46,23 @@
     var cellTemplate = '<p class="datagrid-row-heading">{{productId}}</p>' +
       '<p class="datagrid-row-subheading">{{productName}}</p>';
 
-    columns.push({ id: 'drilldown', name: 'Drill In', field: '', width: 80, formatter: Formatters.Drilldown, cssClass: 'l-center-text', click: function (e, args) {console.log('clicked', args);}});
-    //columns.push({ id: 'productName', name: 'Product Name', field: 'productName', width: 125, formatter: Formatters.Template, template: cellTemplate});
-    columns.push({ id: 'productId', hidden: true, name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Readonly });
-    columns.push({ id: 'productDesc', name: 'Product Desc', sortable: false, field: 'productName', width: 125, formatter: Formatters.Hyperlink, click: function (e, args) {console.log('link was clicked', args);}});
+    columns.push({ id: 'drilldown', name: 'Drill In', field: '', width: 80, formatter: Soho.Formatters.Drilldown, cssClass: 'l-center-text', click: function (e, args) {console.log('clicked', args);}});
+    //columns.push({ id: 'productName', name: 'Product Name', field: 'productName', width: 125, formatter: Soho.Formatters.Template, template: cellTemplate});
+    columns.push({ id: 'productId', hidden: true, name: 'Product Id', field: 'productId', width: 140, formatter: Soho.Formatters.Readonly });
+    columns.push({ id: 'productDesc', name: 'Product Desc', sortable: false, field: 'productName', width: 125, formatter: Soho.Formatters.Hyperlink, click: function (e, args) {console.log('link was clicked', args);}});
     columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 160});
     columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 200});
-    columns.push({ id: 'price1', name: 'Price', field: 'price', width: 100, formatter: Formatters.Decimal});
-    columns.push({ id: 'price2', name: 'Price', field: 'price', width: 100, formatter: Formatters.Integer});
-    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, width: 100, dateFormat: 'yy/MM/dd'});
+    columns.push({ id: 'price1', name: 'Price', field: 'price', width: 100, formatter: Soho.Formatters.Decimal});
+    columns.push({ id: 'price2', name: 'Price', field: 'price', width: 100, formatter: Soho.Formatters.Integer});
+    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, width: 100, dateFormat: 'yy/MM/dd'});
 
     //{date: 'datetime'
-    columns.push({ id: 'status', name: 'Status', field: 'status', width: 200, formatter: Formatters.Text});
-    columns.push({ id: 'alert', name: 'Alert', field: 'quantity', width: 200, formatter: Formatters.Alert, ranges: [{'min': 0, 'max': 8, 'classes': 'info', 'text': 'value'}, {'min': 9, 'max': 1000, 'classes': 'error', 'text': 'value'}]});
-    columns.push({ id: 'ordered', name: 'Ordered', field: 'ordered', width: 200, formatter: Formatters.Checkbox});
-    columns.push({ id: '', name: 'Actions', field: '', width: 200, formatter: Formatters.Actions, menuId: 'grid-actions-menu'});
-    columns.push({ id: 'nested', name: 'Nested Prop', field: 'setting.optionOne', width: 200, formatter: Formatters.Text});
-    columns.push({ id: 'comment', name: 'Comment', field: 'comment', formatter: Formatters.TextArea, width: 200});
+    columns.push({ id: 'status', name: 'Status', field: 'status', width: 200, formatter: Soho.Formatters.Text});
+    columns.push({ id: 'alert', name: 'Alert', field: 'quantity', width: 200, formatter: Soho.Formatters.Alert, ranges: [{'min': 0, 'max': 8, 'classes': 'info', 'text': 'value'}, {'min': 9, 'max': 1000, 'classes': 'error', 'text': 'value'}]});
+    columns.push({ id: 'ordered', name: 'Ordered', field: 'ordered', width: 200, formatter: Soho.Formatters.Checkbox});
+    columns.push({ id: '', name: 'Actions', field: '', width: 200, formatter: Soho.Formatters.Actions, menuId: 'grid-actions-menu'});
+    columns.push({ id: 'nested', name: 'Nested Prop', field: 'setting.optionOne', width: 200, formatter: Soho.Formatters.Text});
+    columns.push({ id: 'comment', name: 'Comment', field: 'comment', formatter: Soho.Formatters.TextArea, width: 200});
 
     //Init and get the api for the grid
     $('#readonly-datagrid').datagrid({

@@ -21,12 +21,12 @@
     data.push({ id: 7, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', portable: true, quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 2});
 
     // Define Columns for the Grid
-    columns.push({ id: 'drilldown', name: '', field: '', formatter: Formatters.Drilldown, align: 'center', resizable: false, sortable: false});
-    columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, minWidth: 100, maxWidth: 250});
+    columns.push({ id: 'drilldown', name: '', field: '', formatter: Soho.Formatters.Drilldown, align: 'center', resizable: false, sortable: false});
+    columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Soho.Formatters.Hyperlink, minWidth: 100, maxWidth: 250});
     columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
-    columns.push({ id: 'description', name: 'Description', field: 'description', formatter: Formatters.Textarea, minWidth: 100, maxWidth: 250 });
-    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date });
-    columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal});
+    columns.push({ id: 'description', name: 'Description', field: 'description', formatter: Soho.Formatters.Textarea, minWidth: 100, maxWidth: 250 });
+    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date });
+    columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Soho.Formatters.Decimal});
 
     // Init and get the api for the grid
     grid = $('#datagrid').datagrid({

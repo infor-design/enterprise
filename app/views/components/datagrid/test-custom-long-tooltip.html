@@ -21,12 +21,12 @@
     data.push({ id: 7, productId: 2642206, productName: 'Some Compressor', activity: 'inspect and Repair', quantity: 41, price: '100.99', status: 'Error', orderDate: new Date(2014, 6, 9, 12, 12, 12), action: 'On Hold', ordered: 0 });
 
     //Define Columns for the Grid.
-    columns.push({ id: 'productId', hidden: true, name: 'Product Id', field: 'productId', formatter: Formatters.Readonly });
-    columns.push({ id: 'productDesc', name: 'Product Desc', sortable: false, field: 'productName', width: 240, formatter: Formatters.Hyperlink });
+    columns.push({ id: 'productId', hidden: true, name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Readonly });
+    columns.push({ id: 'productDesc', name: 'Product Desc', sortable: false, field: 'productName', width: 240, formatter: Soho.Formatters.Hyperlink });
     columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 160, tooltip: 'Testing' });
     columns.push({ id: 'status', name: 'Exception', field: 'status',
       contentTooltip: true,
-      formatter: Formatters.Editor,
+      formatter: Soho.Formatters.Editor,
       tooltip: function(row, cell, value) {
         var tooltip = `
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vitae neque arcu. Pellentesque mollis tincidunt tellus ac suscipit. Vestibulum eget dui eu turpis maximus elementum. Vivamus rhoncus nisl vel fringilla vulputate. Vestibulum et ipsum condimentum, sollicitudin felis id, bibendum justo. Ut rutrum, urna ut venenatis commodo, justo nisi eleifend lorem, vitae aliquet lectus mi vel sapien. Praesent vulputate, elit at consequat tristique, magna arcu fermentum elit, ut ultrices sem lectus sagittis ipsum. Mauris vel malesuada velit, ut tempus justo. Nulla facilisi. Aliquam rhoncus, magna ac laoreet gravida, risus nibh ultrices nulla, eget tristique tellus sapien convallis mi. Nunc ac turpis iaculis, iaculis nulla ut, pharetra nisi. Maecenas cursus placerat odio ut condimentum. Suspendisse potenti. Pellentesque non velit non erat pulvinar pretium eget at libero. Etiam id elit et tortor consequat aliquam pellentesque at massa. Morbi malesuada libero sed diam consectetur, ut placerat diam mattis.

@@ -33,8 +33,8 @@
       data.push({ id: 7, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: '100.99', status: 'OK', orderDate: new Date(2014, 6, 9, 12, 12, 12), action: 'On Hold', ordered: 0});
 
       //Define Columns for the Grid.
-      columns.push({ id: 'productId', hidden: true, name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Readonly });
-      columns.push({ id: 'productDesc', name: 'Product Desc', field: 'productName', width: 125, formatter: Formatters.Hyperlink,
+      columns.push({ id: 'productId', hidden: true, name: 'Product Id', field: 'productId', width: 140, formatter: Soho.Formatters.Readonly });
+      columns.push({ id: 'productDesc', name: 'Product Desc', field: 'productName', width: 125, formatter: Soho.Formatters.Hyperlink,
         href: function(row, cell, item, col) {
           //These links will be just text if null is returned
           if (item.id === 1 || item.id === 2) {
@@ -47,8 +47,8 @@
         }});
       columns.push({ id: 'activity', name: 'Activity', field: 'activity'});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
-      columns.push({ id: 'price1', name: 'Price', field: 'price', formatter: Formatters.Decimal});
-      columns.push({ id: 'price2', name: 'Price', field: 'price', formatter: Formatters.Integer});
+      columns.push({ id: 'price1', name: 'Price', field: 'price', formatter: Soho.Formatters.Decimal});
+      columns.push({ id: 'price2', name: 'Price', field: 'price', formatter: Soho.Formatters.Integer});
 
       //Init the grid
       $('#readonly-datagrid').datagrid({

@@ -21,8 +21,8 @@
     data.push({ id: 7, productId: 2642206, productName: 'Some Compressor', activity: 'inspect and Repair', quantity: 41, price: '100.99', status: 'Error', orderDate: new Date(2014, 6, 9, 12, 12, 12), action: 'On Hold', ordered: 0 });
 
     //Define Columns for the Grid.
-    columns.push({ id: 'productId', hidden: true, name: 'Product Id', field: 'productId', formatter: Formatters.Readonly });
-    columns.push({ id: 'productDesc', name: 'Product Desc', sortable: false, field: 'productName', width: 240, formatter: Formatters.Hyperlink });
+    columns.push({ id: 'productId', hidden: true, name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Readonly });
+    columns.push({ id: 'productDesc', name: 'Product Desc', sortable: false, field: 'productName', width: 240, formatter: Soho.Formatters.Hyperlink });
     columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 160, tooltip: 'Testing' });
     columns.push({ id: 'status', name: 'Exception', field: 'status',
       tooltip: function(row, cell, value) {

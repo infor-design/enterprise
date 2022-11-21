@@ -26,12 +26,12 @@
       
       //Define Columns for the Grid.
 
-      columns.push({ id: 'drilldown', name: '', field: '', formatter: Formatters.Drilldown, align: 'center', resizable: false, sortable: false});
-      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, filterType: 'text'});
+      columns.push({ id: 'drilldown', name: '', field: '', formatter: Soho.Formatters.Drilldown, align: 'center', resizable: false, sortable: false});
+      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Soho.Formatters.Hyperlink, filterType: 'text'});
       columns.push({ id: 'activity', name: 'Activity', field: 'activity', filterType: 'text'});
-      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'MM/dd/yyyy', filterType: 'date', editorOptions: {showMonthYearPicker: true}});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'MM/dd/yyyy', filterType: 'date', editorOptions: {showMonthYearPicker: true}});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', filterType: 'text'});
-      columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal, filterType: 'decimal'});
+      columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Soho.Formatters.Decimal, filterType: 'decimal'});
 
       //Init and get the api for the grid
       grid = $('#datagrid').datagrid({

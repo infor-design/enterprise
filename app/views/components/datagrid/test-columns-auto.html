@@ -23,11 +23,11 @@
 
       //Define Columns for the Grid.
 
-      columns.push({ id: 'drilldown', name: '', field: '', formatter: Formatters.Drilldown, align: 'center', resizable: false, sortable: false});
-      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink});
+      columns.push({ id: 'drilldown', name: '', field: '', formatter: Soho.Formatters.Drilldown, align: 'center', resizable: false, sortable: false});
+      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Soho.Formatters.Hyperlink});
       columns.push({ id: 'activity', name: 'Activity', field: 'activity'});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
-      columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal});
+      columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Soho.Formatters.Decimal});
 
       //Init and get the api for the grid
       grid = $('#datagrid').datagrid({
