@@ -91,10 +91,10 @@
       modalSettings: { trigger: 'immediate' }
     }).off('open.test').on('open.test', function () {
       $('#notes').text(
-        'Locale: ' + Locale.currentLocale.name + '\r\n' +
-        'Lang: ' + Locale.currentLanguage.name +'\r\n' +
-        'Number: ' + Locale.formatDate(new Date(2019, 10, 10)) +'\r\n' +
-        'Date: ' + Locale.formatNumber(1000) +'\r\n'
+        'Locale: ' + Soho.Locale.currentLocale.name + '\r\n' +
+        'Lang: ' + Soho.Locale.currentLanguage.name +'\r\n' +
+        'Number: ' + Soho.Locale.formatDate(new Date(2019, 10, 10)) +'\r\n' +
+        'Date: ' + Soho.Locale.formatNumber(1000) +'\r\n'
       );
     });
   };

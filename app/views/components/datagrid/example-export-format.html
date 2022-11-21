@@ -108,8 +108,8 @@
         gridApi.exportToExcel('myExport', null, null, true);
       });
 
-      Locale.supportedLocales.forEach(locale => {
-        if (locale === Locale.currentLocale.name) {
+      Soho.Locale.supportedLocales.forEach(locale => {
+        if (locale === Soho.Locale.currentLocale.name) {
             $('#locale').append(`<option value=${locale} selected>${locale}</option>`);
         } else {
             $('#locale').append(`<option value=${locale}>${locale}</option>`);

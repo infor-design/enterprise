@@ -71,8 +71,8 @@
         id: (parseInt(events.length === 0 ? 0 : events[events.length - 1].id) + 1).toString(),
         subject: 'New Random Event',
         comments: 'New Random Event Details',
-        starts: Locale.formatDate(startDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
-        ends: Locale.formatDate(endDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
+        starts: Soho.Locale.formatDate(startDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
+        ends: Soho.Locale.formatDate(endDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
         type: 'team',
         isAllDay: isAllDay
       };
@@ -85,8 +85,8 @@
         title: 'Request Time Off',
         subject: 'New Random Event',
         comments: 'New Random Event Details',
-        starts: Locale.formatDate(startDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
-        ends: Locale.formatDate(endDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
+        starts: Soho.Locale.formatDate(startDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
+        ends: Soho.Locale.formatDate(endDate, { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' }),
         type: 'dto',
         isAllDay: isAllDay
       };

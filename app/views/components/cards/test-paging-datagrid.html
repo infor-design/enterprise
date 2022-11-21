@@ -29,7 +29,7 @@
 
 <script>
   $('body').one('initialized', function () {
-    Locale.set('en-US').done(function () {
+    Soho.Locale.set('en-US').done(function () {
       var grid,
         columns = [],
         data = [];
@@ -68,7 +68,7 @@
 
       //Define Columns for the Grid.
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId',formatter: Soho.Formatters.Readonly});
-      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', ormatter: Formatters.Hyperlink});
+      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Soho.Formatters.Hyperlink});
       columns.push({ id: 'activity', name: 'Activity', field: 'activity'});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
       columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Soho.Formatters.Decimal});

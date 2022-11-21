@@ -55,7 +55,7 @@
       columns.push({ id: 'phone', name: 'Phone', field: 'phone'});
       columns.push({ id: 'location', name: 'Location', field: 'location'});
       columns.push({ id: 'contact', name: 'Contact Name', field: 'contact'});
-      columns.push({ id: 'customerSince', name: 'Customer Since', field: 'customerSince', sortFunction: function (value) { return Locale.parseDate(value).getTime(); } });
+      columns.push({ id: 'customerSince', name: 'Customer Since', field: 'customerSince', sortFunction: function (value) { return Soho.Locale.parseDate(value).getTime(); } });
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Lookup, minWidth: 100, editor: Soho.Editors.Lookup, textOverflow: 'ellipsis', editorOptions: lookupOptions });
 
       var url = '{{basepath}}api/companies';
