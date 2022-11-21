@@ -17,24 +17,24 @@ let datagridObj;
 
 // Define Columns for the Grid.
 const columns = [];
-columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center' });
-columns.push({ id: 'productId', name: 'Id', field: 'productId', reorderable: true, formatter: Soho.Formatters.Text, width: 100, filterType: 'Text' });
+columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center' });
+columns.push({ id: 'productId', name: 'Id', field: 'productId', reorderable: true, formatter: Formatters.Text, width: 100, filterType: 'Text' });
 columns.push({
-  id: 'productName', name: 'Product Name', field: 'productName', reorderable: true, formatter: Soho.Formatters.Hyperlink, width: 300, filterType: 'Text', editor: Editors.Input
+  id: 'productName', name: 'Product Name', field: 'productName', reorderable: true, formatter: Formatters.Hyperlink, width: 300, filterType: 'Text', editor: Editors.Input
 });
 columns.push({ id: 'activity', name: 'Activity', field: 'activity', reorderable: true, filterType: 'Text' });
 columns.push({ id: 'hidden', hidden: true, name: 'Hidden', field: 'hidden', filterType: 'Text' });
-columns.push({ id: 'price', align: 'right', name: 'Actual Price', field: 'price', reorderable: true, formatter: Soho.Formatters.Decimal, numberFormat: { minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$' } });
-columns.push({ id: 'percent', align: 'right', name: 'Actual %', field: 'percent', reorderable: true, formatter: Soho.Formatters.Decimal, numberFormat: { minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'percent' } });
-columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', reorderable: true, formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy' });
-columns.push({ id: 'phone', name: 'Phone', field: 'phone', reorderable: true, filterType: 'Text', formatter: Soho.Formatters.Text });
-columns.push({ id: 'inStock', name: 'In Stock', field: 'inStock', reorderable: false, filterType: 'Checkbox', formatter: Soho.Formatters.Checkbox });
+columns.push({ id: 'price', align: 'right', name: 'Actual Price', field: 'price', reorderable: true, formatter: Formatters.Decimal, numberFormat: { minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$' } });
+columns.push({ id: 'percent', align: 'right', name: 'Actual %', field: 'percent', reorderable: true, formatter: Formatters.Decimal, numberFormat: { minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'percent' } });
+columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', reorderable: true, formatter: Formatters.Date, dateFormat: 'M/d/yyyy' });
+columns.push({ id: 'phone', name: 'Phone', field: 'phone', reorderable: true, filterType: 'Text', formatter: Formatters.Text });
+columns.push({ id: 'inStock', name: 'In Stock', field: 'inStock', reorderable: false, filterType: 'Checkbox', formatter: Formatters.Checkbox });
 
 // Define Grouping Columns for the Grid.
 const groupingColumns = [];
 groupingColumns.push({ id: 'id', name: 'Customer Id', field: 'id', filterType: 'text' });
 groupingColumns.push({ id: 'type', name: 'Type', field: 'type', filterType: 'text' });
-groupingColumns.push({ id: 'location', name: 'Location', field: 'location', formatter: Soho.Formatters.Hyperlink, filterType: 'text' });
+groupingColumns.push({ id: 'location', name: 'Location', field: 'location', formatter: Formatters.Hyperlink, filterType: 'text' });
 groupingColumns.push({ id: 'firstname', name: 'First Name', field: 'firstname', filterType: 'text' });
 groupingColumns.push({ id: 'lastname', name: 'Last Name', field: 'lastname', filterType: 'text' });
 groupingColumns.push({ id: 'phone', name: 'Phone', field: 'phone', filterType: 'text' });

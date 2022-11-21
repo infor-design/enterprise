@@ -15,10 +15,10 @@ let datagridObj;
 
 // Define Columns for the Grid.
 const columns = [];
-columns.push({ id: 'taskName', name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Soho.Formatters.Tree, filterType: 'text' });
+columns.push({ id: 'taskName', name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Formatters.Tree, filterType: 'text' });
 columns.push({ id: 'id', name: 'Id', field: 'id' });
 columns.push({ id: 'desc', name: 'Description', field: 'desc', editor: Editors.Input });
-columns.push({ id: 'comments', name: 'Comments', field: 'comments', formatter: Soho.Formatters.Hyperlink });
+columns.push({ id: 'comments', name: 'Comments', field: 'comments', formatter: Formatters.Hyperlink });
 columns.push({ id: 'time', name: 'Time', field: 'time' });
 
 describe('Datagrid Tree', () => { //eslint-disable-line
@@ -50,7 +50,7 @@ describe('Datagrid Tree', () => { //eslint-disable-line
     datagridObj.destroy();
     const spyEvent = spyOnEvent($(datagridEl), 'rendered');
     const duplicateColumns = [...columns];
-    duplicateColumns.unshift({ id: 'selectionCheckbox', sortable: false, resizable: false, width: 50, formatter: Soho.Formatters.SelectionCheckbox, align: 'center' });
+    duplicateColumns.unshift({ id: 'selectionCheckbox', sortable: false, resizable: false, width: 50, formatter: Formatters.SelectionCheckbox, align: 'center' });
     datagridObj = new Datagrid(datagridEl, {
       columns: duplicateColumns,
       dataset: data,
