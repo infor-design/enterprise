@@ -69,11 +69,11 @@
 
       // Define Columns for the Grid.
       columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Soho.Formatters.Readonly, filterType: 'text'});
-      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Lookup, editor: Editors.Lookup, validate: 'required', editorOptions: lookupOptions, width: 170, filterType: 'lookup' });
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Lookup, editor: Soho.Editors.Lookup, validate: 'required', editorOptions: lookupOptions, width: 170, filterType: 'lookup' });
       columns.push({ id: 'productName', name: 'Product Name', field: 'productName',  formatter: Soho.Formatters.Hyperlink, filterType: 'text', click: function(e, args){ console.log(e, args);} , mask: '*****************'});
       columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'MM/dd/yyyy', filterType: 'date', editorOptions: {showMonthYearPicker: true}});
       columns.push({ id: 'inStock', name: 'In Stock', field: 'inStock', formatter: Soho.Formatters.Checkbox, align: 'center', filterType: 'checkbox'});
-      columns.push({ id: 'status', name: 'Status', align: 'center', field: 'status', formatter: Soho.Formatters.Dropdown, editor: Editors.Dropdown, filterType: 'multiselect', editorOptions: {clearable: true}, options: statuses, filterRowEditorOptions: statuses, ranges: [{'value':'Confirmed', 'classes': 'success', text: 'Confirmed'}, {'value':'Error', 'classes': 'error', text: 'Error'}]});
+      columns.push({ id: 'status', name: 'Status', align: 'center', field: 'status', formatter: Soho.Formatters.Dropdown, editor: Soho.Editors.Dropdown, filterType: 'multiselect', editorOptions: {clearable: true}, options: statuses, filterRowEditorOptions: statuses, ranges: [{'value':'Confirmed', 'classes': 'success', text: 'Confirmed'}, {'value':'Error', 'classes': 'error', text: 'Error'}]});
 
       // Init and get the api for the grid
       $('#datagrid').datagrid({

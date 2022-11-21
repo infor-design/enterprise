@@ -50,11 +50,11 @@
       };
 
       //Define Columns for the Grid.
-      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', filterType: 'integer', editor: Editors.Input});
-      columns.push({ id: 'productDesc', name: 'Product Desc', sortable: false, field: 'productName', filterType: 'text', editor: Editors.Input});
-      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', maskOptions: maskFormatter, filterType: 'decimal', editor: Editors.Input,
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', filterType: 'integer', editor: Soho.Editors.Input});
+      columns.push({ id: 'productDesc', name: 'Product Desc', sortable: false, field: 'productName', filterType: 'text', editor: Soho.Editors.Input});
+      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', maskOptions: maskFormatter, filterType: 'decimal', editor: Soho.Editors.Input,
         filterMaskOptions: {process: 'number', patternOptions: {allowDecimal: true, allowNegative: true, allowLeadingZeros: true, allowThousandsSeparator: false, integerLimit: 4, decimalLimit: 3}}});
-      columns.push({ id: 'activity', name: 'Activity', field: 'activity', filterType: 'text', editor: Editors.Input});
+      columns.push({ id: 'activity', name: 'Activity', field: 'activity', filterType: 'text', editor: Soho.Editors.Input});
 
       //Init and get the api for the grid
       $('#readonly-datagrid').datagrid({

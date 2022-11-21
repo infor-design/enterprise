@@ -74,10 +74,10 @@
 
       // Define Columns for the Grid.
       columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center'});
-      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Soho.Formatters.Ellipsis, editor: Editors.Input, isEditable: customIsEditable  });
-      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Lookup, editor: Editors.Lookup, editorOptions: lookupOptions, isEditable: customIsEditable  });
-      columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, align: 'right', formatter: Soho.Formatters.Decimal, numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input, isEditable: customIsEditable });
-      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, editor: Editors.Date, isEditable: customIsEditable });
+      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Soho.Formatters.Ellipsis, editor: Soho.Editors.Input, isEditable: customIsEditable  });
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Lookup, editor: Soho.Editors.Lookup, editorOptions: lookupOptions, isEditable: customIsEditable  });
+      columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, align: 'right', formatter: Soho.Formatters.Decimal, numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Soho.Editors.Input, isEditable: customIsEditable });
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, editor: Soho.Editors.Date, isEditable: customIsEditable });
 
       // Init and get the api for the grid
       grid = $('#datagrid').datagrid({

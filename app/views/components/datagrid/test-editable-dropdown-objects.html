@@ -42,8 +42,8 @@
     columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center'});
     columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Soho.Formatters.Hyperlink});
     columns.push({ id: 'price', name: 'Price', field: 'price', align: 'right'});
-    columns.push({ id: 'unit', name: 'Units', field: 'unit', formatter: Soho.Formatters.Dropdown, editor: Editors.Dropdown, options: unitList});
-    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, editor: Editors.Date});
+    columns.push({ id: 'unit', name: 'Units', field: 'unit', formatter: Soho.Formatters.Dropdown, editor: Soho.Editors.Dropdown, options: unitList});
+    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, editor: Soho.Editors.Date});
 
     //Init and get the api for the grid
     grid = $('#datagrid').datagrid({

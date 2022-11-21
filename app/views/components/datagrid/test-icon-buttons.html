@@ -34,7 +34,7 @@
 
       // Define Columns for the Grid.
       columns.push({ id: 'productDesc', name: 'Product Desc', field: 'productName', formatter: Soho.Formatters.Hyperlink});
-      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', formatter: Soho.Formatters.Text, editor: Editors.Input});
+      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', formatter: Soho.Formatters.Text, editor: Soho.Editors.Input});
       columns.push({ id: 'quantity2', name: 'Quantity2', hidden: true, field: 'quantity2'});
       columns.push({ id: 'actionLink', name: 'As Link', sortable: false, align: 'center', width: 80, formatter: Soho.Formatters.Hyperlink, icon: 'document', tooltip: 'Reset', click: function (e, args) {console.log(args[0].cell, args[0].row, args[0].item.id);}});
       columns.push({ id: 'action', name: 'Active', sortable: false, align: 'center', width: 80, formatter: Soho.Formatters.Button, icon: 'send-submit', tooltip: 'Reset', click: function (e, args) {console.log(args[0].cell, args[0].row, args[0].item.id);},

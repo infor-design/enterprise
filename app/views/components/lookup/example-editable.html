@@ -23,7 +23,7 @@
   //Define Columns for the Grid.
   columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, width: 50, formatter: Soho.Formatters.SelectionCheckbox, align: 'center'});
   columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, formatter: Soho.Formatters.Readonly});
-  columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 250, formatter: Soho.Formatters.Hyperlink, editor: Editors.Input});
+  columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 250, formatter: Soho.Formatters.Hyperlink, editor: Soho.Editors.Input});
   columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125});
   columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 125});
   columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Soho.Formatters.Decimal});

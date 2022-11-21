@@ -38,7 +38,7 @@
       columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'MM/dd/yyyy', filterType: 'date', filterDisabled: true});
       columns.push({ id: 'inStock', name: 'In Stock', field: 'inStock', formatter: Soho.Formatters.Checkbox, align: 'center', filterType: 'checkbox', filterDisabled: true});
       columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Soho.Formatters.Alert, filterType: 'select', filterDisabled: true, options: statuses, ranges: [{'value':'Confirmed', 'classes': 'success', text: 'Confirmed'}, {'value':'Error', 'classes': 'error', text: 'Error'}]});
-      columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Soho.Formatters.Decimal, filterType: 'decimal', filterDisabled: true, numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input, mask: '####.000'});
+      columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Soho.Formatters.Decimal, filterType: 'decimal', filterDisabled: true, numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Soho.Editors.Input, mask: '####.000'});
 
       //Supported Filter Types: text, integer, date, select, decimal, checkbox, contents (FUTURE: lookup, percent)
 

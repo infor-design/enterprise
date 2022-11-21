@@ -27,7 +27,7 @@
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', reorderable: false, hideable: false, formatter: Soho.Formatters.Readonly});
       columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', filterType: 'text', formatter: Soho.Formatters.Text});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', filterType: 'text', reorderable: false, hideable: false});
-      columns.push({ id: 'price', name: 'Price', field: 'price', align: 'right', formatter: Soho.Formatters.Decimal, numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input});
+      columns.push({ id: 'price', name: 'Price', field: 'price', align: 'right', formatter: Soho.Formatters.Decimal, numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Soho.Editors.Input});
       columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy'});
       columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Soho.Formatters.Text});
       columns.push({ id: 'action', name: 'Action Item', field: 'action', reorderable: false, hideable: false});

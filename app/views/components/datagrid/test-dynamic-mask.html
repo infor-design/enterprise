@@ -48,10 +48,10 @@
       };
 
       //Define Columns for the Grid.
-      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', editor: Editors.Input});
-      columns.push({ id: 'productDesc', name: 'Product Desc', sortable: false, field: 'productName', editor: Editors.Input});
-      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', maskOptions: maskFormatter, editor: Editors.Input, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 2}});
-      columns.push({ id: 'activity', name: 'Activity', field: 'activity', editor: Editors.Input});
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', editor: Soho.Editors.Input});
+      columns.push({ id: 'productDesc', name: 'Product Desc', sortable: false, field: 'productName', editor: Soho.Editors.Input});
+      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', maskOptions: maskFormatter, editor: Soho.Editors.Input, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 2}});
+      columns.push({ id: 'activity', name: 'Activity', field: 'activity', editor: Soho.Editors.Input});
 
       //Init and get the api for the grid
       $('#readonly-datagrid').datagrid({

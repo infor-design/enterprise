@@ -121,21 +121,21 @@
       sortable: false,
       field: 'productName',
       formatter: Soho.Formatters.Hyperlink,
-      editor: Editors.Input
+      editor: Soho.Editors.Input
     });
     columns.push({
       id: 'activity',
       name: 'Activity',
       field: 'activity',
       required: true,
-      editor: Editors.Input
+      editor: Soho.Editors.Input
     }); //maxLength: 2
     columns.push({
       id: 'quantity',
       name: 'Quantity',
       field: 'quantity',
       align: 'right',
-      editor: Editors.Input,
+      editor: Soho.Editors.Input,
       mask: '###'
     });
     columns.push({
@@ -144,7 +144,7 @@
       field: 'portable',
       align: 'center',
       formatter: Soho.Formatters.Checkbox,
-      editor: Editors.Checkbox
+      editor: Soho.Editors.Checkbox
     });
     columns.push({
       id: 'price',
@@ -156,21 +156,21 @@
         minimumFractionDigits: 3,
         maximumFractionDigits: 3
       },
-      editor: Editors.Input
+      editor: Soho.Editors.Input
     });
     columns.push({
       id: 'orderDate',
       name: 'Order Date',
       field: 'orderDate',
       formatter: Soho.Formatters.Date,
-      editor: Editors.Date
+      editor: Soho.Editors.Date
     });
     columns.push({
       id: 'action',
       name: 'Action',
       field: 'action',
       formatter: Soho.Formatters.Dropdown,
-      editor: Editors.Dropdown,
+      editor: Soho.Editors.Dropdown,
       options: [{
         id: '',
         label: '',

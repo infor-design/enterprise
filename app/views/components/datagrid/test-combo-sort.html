@@ -67,8 +67,8 @@
         //Define Columns for the Grid.
         columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center'});
         columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Soho.Formatters.Hyperlink});
-        columns.push({ id: 'activity', name: 'Activity', field: 'activity', editor: Editors.Input });
-        columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', align: 'right', editor: Editors.Input, mask: '###'});
+        columns.push({ id: 'activity', name: 'Activity', field: 'activity', editor: Soho.Editors.Input });
+        columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', align: 'right', editor: Soho.Editors.Input, mask: '###'});
 
         //Init and get the api for the grid
         grid = $('#datagrid').datagrid({

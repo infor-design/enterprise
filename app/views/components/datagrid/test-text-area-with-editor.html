@@ -18,7 +18,7 @@
       //Adding a width to the first column, I lose my scrollbar
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Readonly, width: 115 });
       columns.push({ id: 'productName', name: 'Product Name', field: 'productName',  formatter: Soho.Formatters.Hyperlink, width: 200});
-      columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 200, editor: Editors.Input });
+      columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 200, editor: Soho.Editors.Input });
       columns.push({ id: 'activity1', name: 'Activity', field: 'activity1', width: '60%', formatter: Soho.Formatters.Textarea });
 
       //Init and get the api for the grid

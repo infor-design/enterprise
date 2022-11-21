@@ -22,7 +22,7 @@
       columns.push({ id: 'taskName', hideable: false, name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Soho.Formatters.Tree});
       columns.push({ id: 'id', name: 'Id', field: 'id'});
       columns.push({ id: 'page', name: 'Page', field: 'page'});
-      columns.push({ id: 'desc', name: 'Description', field: 'desc', editor: Editors.Input, isEditable: cellIsEditable});
+      columns.push({ id: 'desc', name: 'Description', field: 'desc', editor: Soho.Editors.Input, isEditable: cellIsEditable});
       columns.push({ id: 'comments', name: 'Comments', field: 'comments',  formatter: Soho.Formatters.Hyperlink});
       columns.push({ id: 'time', name: 'Time', field: 'time'});
 

@@ -39,8 +39,8 @@
       // Define Columns for the Grid.
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Readonly, filterType: 'text'});
       columns.push({ id: 'productName', name: 'Product Name', field: 'productName',  formatter: Soho.Formatters.Hyperlink, filterType: 'text', click: function(e, args){ console.log(e, args);}});
-      columns.push({ id: 'price',  name: 'Price', field: 'price', formatter: Soho.Formatters.Decimal, filterType: 'decimal', numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input, mask: '###,####.000'});
-      columns.push({ id: 'activity', name: 'Activity', field: 'activity', formatter: Soho.Formatters.Dropdown, editor: Editors.Dropdown, filterType: 'multiselect', options: activities, editorOptions: {showSelectAll: true, source: testSource1}});
+      columns.push({ id: 'price',  name: 'Price', field: 'price', formatter: Soho.Formatters.Decimal, filterType: 'decimal', numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Soho.Editors.Input, mask: '###,####.000'});
+      columns.push({ id: 'activity', name: 'Activity', field: 'activity', formatter: Soho.Formatters.Dropdown, editor: Soho.Editors.Dropdown, filterType: 'multiselect', options: activities, editorOptions: {showSelectAll: true, source: testSource1}});
 
       // Init and get the api for the grid
       var api = $('#datagrid').datagrid({
