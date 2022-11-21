@@ -10,10 +10,10 @@
         columns = [];
 
       //Define Columns for the Grid.
-      columns.push({ id: 'taskName', hideable: false, name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Formatters.Tree, width: 300 });
+      columns.push({ id: 'taskName', hideable: false, name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Soho.Formatters.Tree, width: 300 });
       columns.push({ id: 'id', name: 'Id', field: 'id' });
       columns.push({ id: 'desc', name: 'Description', field: 'desc' });
-      columns.push({ id: 'comments', name: 'Comments', field: 'comments',  formatter: Formatters.Hyperlink, sortable: false });
+      columns.push({ id: 'comments', name: 'Comments', field: 'comments',  formatter: Soho.Formatters.Hyperlink, sortable: false });
       columns.push({ id: 'escalated', name: 'Escalated', field: 'escalated', sortable: false });
       columns.push({ id: 'depth', name: 'Depth', field: 'depth', sortable: false });
       columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', sortable: false });

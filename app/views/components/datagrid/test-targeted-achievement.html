@@ -17,10 +17,10 @@
       //Define Columns for the Grid.
       columns.push({ id: 'manufacturerName', name: 'Manufacturer Name', field: 'manufacturerName', filterType: 'text'});
       columns.push({ id: 'inventoryValue', name: 'Inventory', field: 'inventoryValue', width: 100});
-      columns.push({ id: 'customerSatisfaction', name: 'With Primary Color', field: 'customerSatisfaction', formatter: Formatters.TargetedAchievement, showPercentText: true , width: 200, numberFormat: { minimumFractionDigits: 3, maximumFractionDigits: 3} });
-      columns.push({ id: 'customerSatisfaction2', name: 'With Alert Colors', field: 'customerSatisfaction', formatter: Formatters.TargetedAchievement, showPercentText: true, ranges: [{'min': 0, 'max': 20, 'classes': 'error-color'}, {'min': 21, 'max': 40, 'classes': 'alert-yellow'}, {'min': 41, 'max': 80, 'classes': 'good'}] , width: 200});
-      columns.push({ id: 'customerSatisfaction3', name: 'To a Target', field: 'customerSatisfaction', formatter: Formatters.TargetedAchievement, target: 80, width: 200});
-      columns.push({ id: 'customerSatisfaction3', name: 'Custom Text', field: 'customerSatisfaction', formatter: Formatters.TargetedAchievement, text: 'Custom Text <% percent %>', tooltip: 'Custom Tooltip', width: 200});
+      columns.push({ id: 'customerSatisfaction', name: 'With Primary Color', field: 'customerSatisfaction', formatter: Soho.Formatters.TargetedAchievement, showPercentText: true , width: 200, numberFormat: { minimumFractionDigits: 3, maximumFractionDigits: 3} });
+      columns.push({ id: 'customerSatisfaction2', name: 'With Alert Colors', field: 'customerSatisfaction', formatter: Soho.Formatters.TargetedAchievement, showPercentText: true, ranges: [{'min': 0, 'max': 20, 'classes': 'error-color'}, {'min': 21, 'max': 40, 'classes': 'alert-yellow'}, {'min': 41, 'max': 80, 'classes': 'good'}] , width: 200});
+      columns.push({ id: 'customerSatisfaction3', name: 'To a Target', field: 'customerSatisfaction', formatter: Soho.Formatters.TargetedAchievement, target: 80, width: 200});
+      columns.push({ id: 'customerSatisfaction3', name: 'Custom Text', field: 'customerSatisfaction', formatter: Soho.Formatters.TargetedAchievement, text: 'Custom Text <% percent %>', tooltip: 'Custom Tooltip', width: 200});
       columns.push({ id: 'gap', name: ''});
 
       //Get some data via ajax

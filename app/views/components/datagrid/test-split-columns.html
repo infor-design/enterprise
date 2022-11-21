@@ -30,15 +30,15 @@
       data.push({ id: 6, productId: 2642208, productName: 'Some Compressor', priceAll: '101, 102, 103',  price1: 101, price2: 201, price3: 301, salesPrice: 308, tax: 407, fees: 508});
 
       //Define Columns for the Grid.
-      columns.push({ id: 'productId', name: 'Id', field: 'productId', formatter: Formatters.Text,});
-      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink});
-      columns.push({ id: 'priceAll', name: 'Price (s)', field: 'priceAll', formatter: Formatters.String});
-      columns.push({ id: 'price1', name: 'Price 1', field: 'price1', formatter: Formatters.Decimal, hidden:true, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
-      columns.push({ id: 'price2', name: 'Price 2', field: 'price2', formatter: Formatters.Decimal, hidden:true, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
-      columns.push({ id: 'price3', name: 'Price 3', field: 'price3', formatter: Formatters.Decimal, hidden:true, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
-      columns.push({ id: 'salesPrice', name: 'Sales Price', field: 'salesPrice', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
-      columns.push({ id: 'tax', name: 'Tax', field: 'tax', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
-      columns.push({ id: 'fees', name: 'Fees', field: 'fees', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
+      columns.push({ id: 'productId', name: 'Id', field: 'productId', formatter: Soho.Formatters.Text,});
+      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Soho.Formatters.Hyperlink});
+      columns.push({ id: 'priceAll', name: 'Price (s)', field: 'priceAll', formatter: Soho.Formatters.String});
+      columns.push({ id: 'price1', name: 'Price 1', field: 'price1', formatter: Soho.Formatters.Decimal, hidden:true, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
+      columns.push({ id: 'price2', name: 'Price 2', field: 'price2', formatter: Soho.Formatters.Decimal, hidden:true, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
+      columns.push({ id: 'price3', name: 'Price 3', field: 'price3', formatter: Soho.Formatters.Decimal, hidden:true, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
+      columns.push({ id: 'salesPrice', name: 'Sales Price', field: 'salesPrice', formatter: Soho.Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
+      columns.push({ id: 'tax', name: 'Tax', field: 'tax', formatter: Soho.Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
+      columns.push({ id: 'fees', name: 'Fees', field: 'fees', formatter: Soho.Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
       columns.push({ id: 'space', sortable: false, name: '', field: ''});
 
       // Init the grid with options

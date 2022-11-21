@@ -11,14 +11,14 @@
     var columns = [];
 
     //Define Columns for the Grid.
-    columns.push({ id: 'taskName', name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Formatters.Tree, width: 250});
-    columns.push({ id: 'drilldown', name: 'Drilldown', field: '', width: 50, formatter: Formatters.Drilldown, click: function(e, args) {
+    columns.push({ id: 'taskName', name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Soho.Formatters.Tree, width: 250});
+    columns.push({ id: 'drilldown', name: 'Drilldown', field: '', width: 50, formatter: Soho.Formatters.Drilldown, click: function(e, args) {
       console.log(args);
     }, align: 'center'});
-    columns.push({ id: 'id', name: 'Id', field: 'id', width: 25,  formatter: Formatters.Hyperlink});
+    columns.push({ id: 'id', name: 'Id', field: 'id', width: 25,  formatter: Soho.Formatters.Hyperlink});
     columns.push({ id: 'desc', name: 'Description', field: 'desc', width: 200});
     columns.push({ id: 'time', name: 'Time', field: 'time', width: 60});
-    columns.push({ id: 'action', name: 'Action Item', field: 'portable', text: 'New Order', formatter: Formatters.Button, focusable: true, click: function () {console.log('Nice Clicking'); } });
+    columns.push({ id: 'action', name: 'Action Item', field: 'portable', text: 'New Order', formatter: Soho.Formatters.Button, focusable: true, click: function () {console.log('Nice Clicking'); } });
 
     //Get some data via ajax
     var url = '{{basepath}}api/tree-tasks';
