@@ -26,9 +26,9 @@
     data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: '123.99', percent: .10, status: 'OK', orderDate: null, action: 'On Hold', summary: 'Brings out the best in people'});
 
     //Define Columns for the Grid.
-    columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
-    columns.push({ id: 'productId', name: 'Id', field: 'productId', formatter: Formatters.Text, filterType: 'text'});
-    columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', formatter: Formatters.Text, filterType: 'text', align: 'left' });
+    columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center'});
+    columns.push({ id: 'productId', name: 'Id', field: 'productId', formatter: Soho.Formatters.Text, filterType: 'text'});
+    columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', formatter: Soho.Formatters.Text, filterType: 'text', align: 'left' });
 
     //Init and get the api for the grid
     grid = $('#datagrid').datagrid({

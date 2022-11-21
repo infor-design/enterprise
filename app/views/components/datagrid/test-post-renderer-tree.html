@@ -17,7 +17,7 @@
         name: 'Task',
         field: 'taskName',
         expanded: 'expanded',
-        formatter: Formatters.Tree,
+        formatter: Soho.Formatters.Tree,
         filterType: 'text'
       });
       columns.push({
@@ -33,7 +33,7 @@
         name: 'Portable',
         field: 'portable',
         align: 'center',
-        formatter: Formatters.Checkbox,
+        formatter: Soho.Formatters.Checkbox,
         filterType: 'checkbox'
       });
       columns.push({
@@ -46,7 +46,7 @@
         id: 'orderDate',
         name: 'Order Date',
         field: 'orderDate',
-        formatter: Formatters.Date,
+        formatter: Soho.Formatters.Date,
         dateFormat: 'MM/dd/yyyy',
         filterType: 'date'
       });

@@ -11,9 +11,9 @@
     var columns = [];
 
     // Define Columns for the Grid.
-    columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
-    columns.push({ id: 'id', name: 'Row Id', field: 'id', formatter: Formatters.Readonly });
-    columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink });
+    columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center'});
+    columns.push({ id: 'id', name: 'Row Id', field: 'id', formatter: Soho.Formatters.Readonly });
+    columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Soho.Formatters.Hyperlink });
     columns.push({ id: 'activity', name: 'Activity', field: 'activity' });
 
     var url = '{{basepath}}api/compressors?pageNum=1&pageSize=100';

@@ -16,8 +16,8 @@
       $.getJSON(url, function(res) {
 
         //Define Columns for the Grid.
-        columns.push({ id: 'productId',name: 'Product Id', field: 'productId',  formatter: Formatters.Readonly });
-        columns.push({ id: 'productDesc', name: 'Product Desc', sortable: false, field: 'productName', formatter: Formatters.Hyperlink});
+        columns.push({ id: 'productId',name: 'Product Id', field: 'productId',  formatter: Soho.Formatters.Readonly });
+        columns.push({ id: 'productDesc', name: 'Product Desc', sortable: false, field: 'productName', formatter: Soho.Formatters.Hyperlink});
         columns.push({ id: 'activity', name: 'Activity', field: 'activity'});
         columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
         columns.push({ id: 'custom', name: 'Custom', field: 'quantity', component: new Object()});    //normally component will be a angular / external component object
