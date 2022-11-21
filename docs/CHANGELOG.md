@@ -12,6 +12,7 @@
 ## v4.70.0 Fixes
 
 - `[Counts]` Fixed a bug in counts where two rows of labels cause misalignment. ([#6845](https://github.com/infor-design/enterprise/issues/6845))
+- `[Datagrid]` Fixed a bug in datagrid where expandable row input cannot edit the value. ([#6781](https://github.com/infor-design/enterprise/issues/6781))
 - `[Datagrid]` Fixed a bug in datagrid where clear dirty cell does not work properly in frozen columns. ([#6952](https://github.com/infor-design/enterprise/issues/6952))
 - `[Datagrid]` Adjusted date and timepicker icons in datagrid filter. ([#6917](https://github.com/infor-design/enterprise/issues/6917))
 - `[Datagrid]` Fixed a bug where frozen column headers are not rendered on update. ([NG#1399](https://github.com/infor-design/enterprise-ng/issues/1399))
