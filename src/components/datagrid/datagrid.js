@@ -10044,7 +10044,7 @@ Datagrid.prototype = {
       // Any printable character - well make it editable
       if ([9, 13, 32, 35, 36, 37, 38, 39, 40, 113].indexOf(key) === -1 &&
         !e.altKey && !e.shiftKey && !e.ctrlKey && !e.metaKey && self.settings.editable) {
-        if (!self.editor && !e.currentTarget.parentElement.classList.contains('datagrid-expandable-row')) {
+        if (!self.editor && !e.currentTarget?.parentElement?.classList.contains('datagrid-expandable-row')) {
           self.makeCellEditable(self.activeCell.rowIndex, cell, e);
         }
       }
