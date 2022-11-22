@@ -71,4 +71,4 @@ class StopwatchLog {
   }
 }
 
-module.exports = new StopwatchLog();
+export default new StopwatchLog();

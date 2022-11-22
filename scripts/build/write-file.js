@@ -3,10 +3,11 @@ import chalk from 'chalk';
 import * as fs from 'fs';
 import _yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
-const argv = _yargs(hideBin(process.argv)).argv;
 
 // Internal
-import logger from '../logger.js'
+import logger from '../logger.js';
+
+const argv = _yargs(hideBin(process.argv)).argv;
 
 /**
  * @private
