@@ -379,7 +379,7 @@ MaskInput.prototype = {
       if (this.element.value !== finalValue) {
         this.element.value = finalValue;
       }
-    } else if (this.element.value.length === 0) {
+    } else {
       this.element.value = finalValue;
     }
     utils.safeSetSelection(this.element, processed.caretPos);
