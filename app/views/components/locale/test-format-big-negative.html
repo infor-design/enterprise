@@ -25,7 +25,7 @@
     $('#format').on('click', function(e) {
       var value = document.getElementById('test-input').value;
 
-      document.getElementById('test-format-value').value = Locale.formatNumber(value, {
+      document.getElementById('test-format-value').value = Soho.Locale.formatNumber(value, {
         style: "decimal",
         round: true,
         minimumFractionDigits: 2,

@@ -25,10 +25,10 @@
           output.append('<div class="row"><div class="twelve columns">' + value + '</div></div>');
         };
 
-        append('1234567890 = ' + Locale.toLocaleString(number, 'ar-SA'));
-        append('2019 = ' + Locale.toLocaleString(2019, 'ar-SA'));
-        append('1234567890 = ' + Locale.toLocaleString(number, 'zh-Hans-CN-u-nu-hanidec'));
-        append('2019 = ' + Locale.toLocaleString(2019, 'zh-Hans-CN-u-nu-hanidec'));
+        append('1234567890 = ' + Soho.Locale.toLocaleString(number, 'ar-SA'));
+        append('2019 = ' + Soho.Locale.toLocaleString(2019, 'ar-SA'));
+        append('1234567890 = ' + Soho.Locale.toLocaleString(number, 'zh-Hans-CN-u-nu-hanidec'));
+        append('2019 = ' + Soho.Locale.toLocaleString(2019, 'zh-Hans-CN-u-nu-hanidec'));
 
         append(Locale.convertNumberToEnglish('١٢٣٤٥٦٧٨٩٠') + ' = ' + '١٢٣٤٥٦٧٨٩٠');
         append(Locale.convertNumberToEnglish('١٢٣') + '= ١٢٣');

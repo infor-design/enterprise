@@ -24,8 +24,8 @@
     };
 
     Formatters.PriceText = function (row, cell, value, col, item, api) {
-      Locale.currentLocale.data.currencySign = '£';
-      var formatted = Locale.formatNumber(value, (col.numberFormat ? col.numberFormat : {style: 'currency'}));
+      Soho.Locale.currentLocale.data.currencySign = '£';
+      var formatted = Soho.Locale.formatNumber(value, (col.numberFormat ? col.numberFormat : {style: 'currency'}));
 
       // Set the href here based on data?
       return '<p><b> Trade: ' + formatted + '</b><br><a href="#" class="hyperlink micro-text">Price Details</a></p>';

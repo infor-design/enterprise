@@ -15,7 +15,7 @@
 
     // Change locale to ar-EG which has the default calendar as gregorian
     // But use the optional umalqura calendar in that locale instead
-    Locale.set('ar-EG').done(function () {
+    Soho.Locale.set('ar-EG').done(function () {
       $('#islamic-date').datepicker({calendarName: 'islamic-umalqura'}).on('change', function () {
         $('body').toast({
           'title': 'Change Event Fired',
