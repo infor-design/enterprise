@@ -77,7 +77,7 @@
       columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Ellipsis, editor: Editors.Input, isEditable: customIsEditable  });
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Lookup, editor: Editors.Lookup, editorOptions: lookupOptions, isEditable: customIsEditable  });
       columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, align: 'right', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input, isEditable: customIsEditable });
-      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date5, isEditable: customIsEditable });
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date, isEditable: customIsEditable });
 
       // Init and get the api for the grid
       grid = $('#datagrid').datagrid({
@@ -97,7 +97,7 @@
         pagesize: 10,
         selectable: 'mixed',
         rowHeight: 'short',
-        // frozenColumns: { left: ['selectionCheckbox', 'productName'] },
+        frozenColumns: { left: ['selectionCheckbox', 'productName'] },
       }).on('cellchange', function (e, args) {
         console.log(e, args);
       }).on('rowadd', function (e, args) {
@@ -114,7 +114,8 @@
       gridApi = $('#datagrid').data('datagrid');
 
       $('#add-row-button').on('click', function (e) {
-        gridApi.addRow({ productName: '', productId: '0', isNewRow: true }, 0);
+        gridApi.addRow({ productName: 'Product X', productId: '0', isNewRow: true }, 0);
+        // gridApi.addRows([{ productName: 'Product X', productId: '0', isNewRow: true }], 0);
       });
 
       $('#save-new-button').on('click', function () {
@@ -123,7 +124,7 @@
         console.log('Number of selected rows = ' + gridApi.selectedRows().length);
 
         gridApi.clearRowError(0);
-        gridApi.rowStatus(0, '', 'Row Saved');
+        // gridApi.rowStatus(0, '', 'Row Saved');
         gridApi.clearDirtyRow(0);
         gridApi.addRow({ productName: '', productId: '0' }, 0);
         console.log('Number of selected rows = ' + gridApi.selectedRows().length);

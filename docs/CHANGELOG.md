@@ -1,5 +1,35 @@
 # What's New with Enterprise
 
+## v4.70.0
+
+## v4.70.0 Important Features
+
+## v4.70.0 Features
+
+- `[Checkbox]` Converted Checkbox scripts to puppeteer. ([#6936](https://github.com/infor-design/enterprise/issues/6936))
+- `[Circlepager]` Converted Circlepager scripts to puppeteer. ([#6971](https://github.com/infor-design/enterprise/issues/6971))
+
+## v4.70.0 Fixes
+
+- `[Counts]` Fixed a bug in counts where two rows of labels cause misalignment. ([#6845](https://github.com/infor-design/enterprise/issues/6845))
+- `[Datagrid]` Fixed a bug in datagrid where expandable row input cannot edit the value. ([#6781](https://github.com/infor-design/enterprise/issues/6781))
+- `[Datagrid]` Fixed a bug in datagrid where clear dirty cell does not work properly in frozen columns. ([#6952](https://github.com/infor-design/enterprise/issues/6952))
+- `[Datagrid]` Adjusted date and timepicker icons in datagrid filter. ([#6917](https://github.com/infor-design/enterprise/issues/6917))
+- `[Datagrid]` Fixed a bug where frozen column headers are not rendered on update. ([NG#1399](https://github.com/infor-design/enterprise-ng/issues/1399))
+- `[Datagrid]` Added toolbar update on datagrid update. ([NG#1357](https://github.com/infor-design/enterprise-ng/issues/1357))
+- `[Datepicker]` Added Firefox increment/decrement keys. ([#6877](https://github.com/infor-design/enterprise/issues/6877))
+- `[Dropdown]` Fixed a bug in dropdown where there is a null in a list when changing language to chinese. ([#6916](https://github.com/infor-design/enterprise/issues/6916))
+- `[Editor]` Fixed a bug in editor where insert image is not working properly when adding attributes. ([#6864](https://github.com/infor-design/enterprise/issues/6864))
+- `[Editor]` Fixed a bug in editor where paste and plain text is not cleaning the text/html properly. ([#6892](https://github.com/infor-design/enterprise/issues/6892))
+- `[Locale]` Fixed a bug in locale where same language translation does not render properly. ([#6847](https://github.com/infor-design/enterprise/issues/6847))
+- `[Icons]` Fixed incorrect colors of new empty state icons. ([#6965](https://github.com/infor-design/enterprise/issues/6965))
+- `[Popupmenu]` Fixed a bug in popupmenu where submenu and submenu items are not indented properly. ([#6860](https://github.com/infor-design/enterprise/issues/6860))
+- `[Process Indicator]` Fix on extra line after final step. ([#6744](https://github.com/infor-design/enterprise/issues/6744))
+- `[Searchfield]` Changed toolbar in example page to flex toolbar. ([#6737](https://github.com/infor-design/enterprise/issues/6737))
+- `[Tabs]` Added tooltip on add new tab button. ([#6902](https://github.com/infor-design/enterprise/issues/6902))
+- `[Tabs]` Adjusted header and tab colors in themes. ([#6673](https://github.com/infor-design/enterprise/issues/6673))
+- `[Timepicker]` Filter method in datagrid is called on timepicker's change event. ([#6896](https://github.com/infor-design/enterprise/issues/6896))
+
 ## v4.69.0
 
 ## v4.69.0 Important Features
@@ -12,12 +42,15 @@
 ## v4.69.0 Features
 
 - `[Datagrid]` Added puppeteer script for extra class for tooltip. ([#6900](https://github.com/infor-design/enterprise/issues/6900))
+- `[Header]` Converted Header scripts to puppeteer. ([#6919](https://github.com/infor-design/enterprise/issues/6919))
+- `[Icons]` Added [enhanced and new empty states icons](https://main-enterprise.demo.design.infor.com/components/icons/example-empty-widgets.html) with a lot more color. These should replace existing ones but it is opt-in. ([#6868](https://github.com/infor-design/enterprise/issues/6868))
 - `[Lookup]` Added puppeteer script for lookup double click apply enhancement. ([#6886](https://github.com/infor-design/enterprise/issues/6886))
+- `[Stepchart]` Converted Stepchart scripts to puppeteer. ([#6940](https://github.com/infor-design/enterprise/issues/6940))
 
 ## v4.69.0 Fixes
 
 - `[Datagrid]` Fixed a bug in datagrid where sorting is not working properly. ([#6787](https://github.com/infor-design/enterprise/issues/6787))
-- `[Datagrid]` Added an Example Page for Add Row Frozen Columns. ([#6918](https://github.com/infor-design/enterprise/issues/6918))
+- `[Datagrid]` Fixed a bug in datagrid where add row is not working properly when using frozen columns. ([#6918](https://github.com/infor-design/enterprise/issues/6918))
 - `[Datagrid]` Fixed a bug in datagrid where tooltip flashes continuously on hover. ([#5907](https://github.com/infor-design/enterprise/issues/5907))
 - `[Datagrid]` Fixed a bug in datagrid where is empty and is not empty is not working properly. ([#5273](https://github.com/infor-design/enterprise/issues/5273))
 - `[Datagrid]` Fixed a bug in datagrid where inline editor input text is not being selected upon clicking. ([NG#1365](https://github.com/infor-design/enterprise-ng/issues/1365))
@@ -64,6 +97,8 @@
 - `[Textarea]` Fixed a bug in textarea where validation breaks after enabling/disabling. ([#6773](https://github.com/infor-design/enterprise/issues/6773))
 - `[Typography]` Updated text link color in dark theme. ([#6807](https://github.com/infor-design/enterprise/issues/6807))
 - `[Lookup]` Fixed where field stays disabled when enable API is called ([#6145](https://github.com/infor-design/enterprise/issues/6145))
+
+(28 Issues Solved This Release, Backlog Enterprise 274, Backlog Ng 51, 1105 Functional Tests, 1303 e2e Tests, 561 Puppeteer Tests)
 
 ## v4.67.0
 

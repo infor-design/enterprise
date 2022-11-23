@@ -534,6 +534,34 @@ Datagrid.prototype = {
   */
   renderRow(data, location) {
     const self = this;
+    const isTop = location !== 'bottom';
+    let tableHtmlCenter = '';
+    let tableHtmlLeft = '';
+    let tableHtmlRight = '';
+
+    function attachTable() {
+      if (isTop) {
+        if (self.hasLeftPane) {
+          DOM.prepend(self.tableBodyLeft, tableHtmlLeft, '*');
+        }
+
+        DOM.prepend(self.tableBody, tableHtmlCenter, '*');
+
+        if (self.hasRightPane) {
+          DOM.prepend(self.tableBodyRight, tableHtmlRight, '*');
+        }
+      } else {
+        if (self.hasLeftPane) {
+          DOM.append(self.tableBodyLeft, tableHtmlLeft, '*');
+        }
+
+        DOM.append(self.tableBody, tableHtmlCenter, '*');
+
+        if (self.hasRightPane) {
+          DOM.append(self.tableBodyRight, tableHtmlRight, '*');
+        }
+      }
+    }
 
     if (self.emptyMessageContainer) {
       self.emptyMessageContainer.hide();
@@ -544,6 +572,18 @@ Datagrid.prototype = {
     const dataIndex = self.settings.dataset.length - 1;
 
     const rowHtml = self.rowHtml(data, position, dataIndex);
+    if (self.hasLeftPane && rowHtml.left) {
+      tableHtmlLeft += rowHtml.left;
+    }
+
+    if (rowHtml.center) {
+      tableHtmlCenter += rowHtml.center;
+    }
+
+    if (self.hasRightPane && rowHtml.right) {
+      tableHtmlRight += rowHtml.right;
+    }
+
     if (self.settings.groupable) {
       const groups = $('.datagrid-rowgroup-header').find('span:not([class])');
       for (let i = 0; i < groups.length; i++) {
@@ -561,7 +601,7 @@ Datagrid.prototype = {
       const newActivePage = (location === 'bottom' ? self.pagerAPI.pageCount() : 1) + newPage;
 
       if (location !== 'bottom' && self.pagerAPI.activePage === 1) {
-        DOM.prepend(self.tableBody, rowHtml.center, '*');
+        attachTable();
       } else {
         self.pagerAPI.setActivePage(newActivePage, false, operationType);
         self.pagerAPI.triggerPagingEvents(self.pagerAPI.currentPage);
@@ -569,11 +609,7 @@ Datagrid.prototype = {
     }
 
     if (!self.settings.paging && !self.settings.groupable) {
-      if (location !== 'bottom') {
-        DOM.prepend(self.tableBody, rowHtml.center, '*');
-      } else {
-        DOM.append(self.tableBody, rowHtml.center, '*');
-      }
+      attachTable();
     }
 
     if (self.settings.paging) {
@@ -594,11 +630,27 @@ Datagrid.prototype = {
     this.element.find('tr').removeAttr('aria-rowindex');
     this.element.find('tr').removeAttr('data-index');
 
-    this.element.find('tbody > tr').each((idx, obj) => {
+    if (this.hasLeftPane) {
+      this.element.find('.datagrid-wrapper.left tbody > tr').each((idx, obj) => {
+        const el = $(obj);
+        el.attr('aria-rowindex', idx + 1);
+        el.attr('data-index', idx);
+      });
+    }
+
+    this.element.find('.datagrid-wrapper.center tbody > tr').each((idx, obj) => {
       const el = $(obj);
       el.attr('aria-rowindex', idx + 1);
       el.attr('data-index', idx);
     });
+
+    if (this.hasRightPane) {
+      this.element.find('.datagrid-wrapper.right tbody > tr').each((idx, obj) => {
+        const el = $(obj);
+        el.attr('aria-rowindex', idx + 1);
+        el.attr('data-index', idx);
+      });
+    }
   },
 
   /**
@@ -2111,6 +2163,9 @@ Datagrid.prototype = {
       const timepickerEl = elem.find('.timepicker');
       if (timepickerEl.length && typeof $().timepicker === 'function') {
         timepickerEl.timepicker(col.editorOptions || { timeFormat: col.timeFormat });
+        timepickerEl.on('change', () => {
+          self.applyFilter(null, 'enter');
+        });
       }
 
       // Attach Mask
@@ -4177,7 +4232,7 @@ Datagrid.prototype = {
 
       if (self.hasLeftPane) {
         self.bodyColGroupLeft = $(self.bodyColGroupHtmlLeft);
-        (self.headerRowLeft || self.tableBodyLeft).before(self.bodyColGroupLeft);
+        (self.tableBodyLeft || self.headerRowLeft).before(self.bodyColGroupLeft);
       }
 
       self.bodyColGroup = $(self.bodyColGroupHtml);
@@ -4185,7 +4240,7 @@ Datagrid.prototype = {
 
       if (self.hasRightPane) {
         self.bodyColGroupRight = $(self.bodyColGroupHtmlRight);
-        (self.headerRowRight || self.tableBodyRight).before(self.bodyColGroupRight);
+        (self.tableBodyRight || self.headerRowRight).before(self.bodyColGroupRight);
       }
     }
 
@@ -9989,7 +10044,7 @@ Datagrid.prototype = {
       // Any printable character - well make it editable
       if ([9, 13, 32, 35, 36, 37, 38, 39, 40, 113].indexOf(key) === -1 &&
         !e.altKey && !e.shiftKey && !e.ctrlKey && !e.metaKey && self.settings.editable) {
-        if (!self.editor) {
+        if (!self.editor && !e.currentTarget?.parentElement?.classList.contains('datagrid-expandable-row')) {
           self.makeCellEditable(self.activeCell.rowIndex, cell, e);
         }
       }
@@ -10802,7 +10857,7 @@ Datagrid.prototype = {
    * @returns {void}
    */
   clearRowError(row) {
-    const classList = 'error alert rowstatus-row-error rowstatus-row-alert rowstatus-row-info rowstatus-row-in-progress rowstatus-row-success';
+    const classList = 'error alert rowstatus-row-new rowstatus-row-error rowstatus-row-alert rowstatus-row-info rowstatus-row-in-progress rowstatus-row-success';
     const rowNode = this.dataRowNode(row);
 
     rowNode.removeClass(classList);
@@ -10846,6 +10901,7 @@ Datagrid.prototype = {
     node.removeAttribute(`data-${type}message`);
 
     const icon = node.querySelector(`.icon-${type}`);
+    node?.classList.remove('rowstatus-cell');
     if (icon) {
       icon.parentNode.removeChild(icon);
       this.hideTooltip();
@@ -10883,13 +10939,16 @@ Datagrid.prototype = {
    * @returns {void}
    */
   clearDirtyClass(elem) {
-    elem = elem instanceof jQuery ? elem[0] : elem;
-    if (elem) {
-      const cells = [].slice.call(elem.querySelectorAll('.is-dirty-cell'));
+    if (elem instanceof jQuery && elem.length < 0) {
+      return;
+    }
+
+    elem.each((idx, el) => {
+      const cells = [].slice.call(el.querySelectorAll('.is-dirty-cell'));
       cells.forEach((cell) => {
         cell.classList.remove('is-dirty-cell');
       });
-    }
+    });
   },
 
   /**
@@ -13230,6 +13289,16 @@ Datagrid.prototype = {
 
     if (settings && settings.columns) {
       this.settings.columns = settings.columns;
+    }
+
+    if (settings && settings.toolbar && this.toolbar) {
+      const toolbar = this.element.prev('.toolbar');
+      const toolbarApi = this.toolbar.data('toolbar') ? this.toolbar.data('toolbar') : this.toolbar.data('toolbarFlex');
+      if (toolbarApi) {
+        toolbarApi.destroy();
+      }
+      toolbar.remove();
+      this.appendToolbar();
     }
 
     this.setRowHeightClass();

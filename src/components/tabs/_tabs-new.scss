@@ -151,4 +151,16 @@ html[dir='rtl'] {
   }
 }
 
+html[dir='rtl'] .tab-container.horizontal .tab:not(.last-child).is-error a[role='tab'],
+html[dir='rtl'] .tab-container.header-tabs .tab:not(.last-child).is-error a[role='tab'] {
+  padding: 12px 13px 6px 21px;
+}
+
+html[dir='rtl'] .tab-container.horizontal .tab .icon-error,
+html[dir='rtl'] .tab-container.header-tabs .tab .icon-error {
+  left: 0;
+  right: auto;
+  top: 13px;
+}
+
 @import '../tabs-module/tabs-module-new';

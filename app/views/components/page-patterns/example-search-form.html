@@ -28,21 +28,21 @@
 
       <!-- Top Full Width Toolbar -->
       <div class="full-width row">
-        <div class="toolbar no-actions-button" role="toolbar">
-            <div class="title">Available Jobs</div>
-            <div class="buttonset">
-              <div class="searchfield-wrapper toolbar-searchfield-wrapper">
+          <div class="flex-toolbar">
+            <div class="toolbar-section title"><h2>Available Jobs</h2></div>
+            <div class="toolbar-section search">
+              <div class="searchfield-wrapper">
                 <label class="audible" for="job-search">Search Jobs</label>
                 <input class="searchfield alternate" id="job-search" name="job-search" data-options="{collapsible: false}" />
               </div>
-
+            </div>
+            <div class="toolbar-section buttonset">
               <button class="btn btn-toggle" id="expandable-trigger" type="button">
                 <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
                   <use href="#icon-filter"></use>
                 </svg>
                 <span>Filter</span>
               </button>
-
             </div>
           </div>
       </div>

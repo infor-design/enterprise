@@ -1164,7 +1164,6 @@ Editor.prototype = {
     const self = this;
 
     function editorButtonActionHandler(e, item) {
-      console.log('bindCall');
       const btn = item instanceof ToolbarFlexItem ? $(item.element) : $(e.target);
 
       // Don't do anything if it's the More Button
@@ -1177,7 +1176,7 @@ Editor.prototype = {
 
       e.preventDefault();
       currentElem.focus();
-      
+
       self.checkSelection();
 
       if (!self.sourceViewActive()) {
@@ -1290,7 +1289,7 @@ Editor.prototype = {
           if (self.settings.attributes.length > 1) { // eslint-disable-line
             self.insertImage($(`[data-automation-id="${self.settings.attributes[self.settings.attributes.length - 1].value}-editor-modal-input0"`).val());
           } else {
-            self.insertImage($(`#${self.settings.attributes[0].value}-editor-modal-input0`).val());
+            self.insertImage($(`input[name=image-${self.id}]`).val());
           }
         } else {
           self.insertImage($('input[id*="image-editor"]').val());
@@ -1812,10 +1811,10 @@ Editor.prototype = {
           pastedData = e.originalEvent.clipboardData.getData('text/plain');
         }
         if ((typeof types === 'object' && types[0] && types[0] === 'text/plain') && !types[1]) {
-          pastedData = e.originalEvent.clipboardData.getData('text/plain');
+          pastedData = xssUtils.escapeHTML(e.originalEvent.clipboardData.getData('text/plain'));
         }
         if (types instanceof Array && types.indexOf('text/plain') > -1 && types.indexOf('text/html') < 0) { // For PDF Windows Reader, no text/html in types found.
-          pastedData = e.originalEvent.clipboardData.getData('text/plain');
+          pastedData = xssUtils.escapeHTML(e.originalEvent.clipboardData.getData('text/plain'));
         }
       } else {
         paste = window.clipboardData ? window.clipboardData.getData('Text') : '';

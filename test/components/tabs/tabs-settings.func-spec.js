@@ -27,6 +27,7 @@ describe('Tabs Settings', () => {
     const settings = {
       addTabButton: false,
       addTabButtonCallback: null,
+      addTabButtonTooltip: false,
       appMenuTrigger: false,
       appMenuTriggerTextAudible: false,
       ajaxOptions: null,
@@ -52,6 +53,7 @@ describe('Tabs Settings', () => {
     const settings = {
       addTabButton: true,
       addTabButtonCallback: null,
+      addTabButtonTooltip: false,
       appMenuTrigger: false,
       appMenuTriggerTextAudible: false,
       ajaxOptions: null,

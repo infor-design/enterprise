@@ -5,6 +5,7 @@ import { stringUtils } from '../../utils/string';
 import { xssUtils } from '../../utils/xss';
 import { Locale } from '../locale/locale';
 import { MonthView } from '../monthview/monthview';
+import { Environment as env } from '../../utils/environment';
 
 // jQuery Components
 import '../expandablearea/expandablearea.jquery';
@@ -438,13 +439,13 @@ DatePicker.prototype = {
         const inputVal = $(e.currentTarget).val();
 
         // '-' decrements day
-        if (key === 189 || key === 109) {
+        if (key === 189 || key === 109 || (env.browser.isFirefox() && key === 173)) {
           handled = true;
           this.adjustDay(false, inputVal);
         }
 
         // '+' increments day
-        if (key === 187 || key === 107) {
+        if (key === 187 || key === 107 || (env.browser.isFirefox() && key === 61)) {
           handled = true;
           this.adjustDay(true, inputVal);
         }
