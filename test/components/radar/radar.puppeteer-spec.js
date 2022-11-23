@@ -41,7 +41,6 @@ describe('Radar', () => {
       await page.evaluate(() => document.getElementById('radar-iphone-screen-circle').getAttribute('data-automation-id'))
         .then(dataAutomationId => expect(dataAutomationId).toEqual('automation-id-radar-iphone-screen-circle'));
 
-////
 await page.evaluate(() => document.getElementById('radar-iphone-price-circle').getAttribute('id'))
 .then(id => expect(id).toEqual('radar-iphone-price-circle'));
 await page.evaluate(() => document.getElementById('radar-iphone-price-circle').getAttribute('data-automation-id'))
@@ -67,7 +66,17 @@ await page.evaluate(() => document.getElementById('radar-samsung-design-circle')
 await page.evaluate(() => document.getElementById('radar-samsung-design-circle').getAttribute('data-automation-id'))
 .then(dataAutomationId => expect(dataAutomationId).toEqual('automation-id-radar-samsung-design-circle'));
 
+await page.evaluate(() => document.getElementById('radar-samsung-connectivity-circle').getAttribute('id'))
+.then(id => expect(id).toEqual('radar-samsung-connectivity-circle'));
+await page.evaluate(() => document.getElementById('radar-samsung-connectivity-circle').getAttribute('data-automation-id'))
+.then(dataAutomationId => expect(dataAutomationId).toEqual('automation-id-radar-samsung-connectivity-circle'));
 
+await page.evaluate(() => document.getElementById('radar-samsung-screen-circle').getAttribute('id'))
+.then(id => expect(id).toEqual('radar-samsung-screen-circle'));
+await page.evaluate(() => document.getElementById('radar-samsung-screen-circle').getAttribute('data-automation-id'))
+.then(dataAutomationId => expect(dataAutomationId).toEqual('automation-id-radar-samsung-screen-circle'));
+
+/////
 
 
     });

@@ -13,12 +13,6 @@ describe('Radar example-index tests', () => {
 
   it('Should be able to set id/automation id', async () => {
     await browser.driver.sleep(config.sleep);
-
-    expect(await element(by.id('radar-samsung-connectivity-circle')).getAttribute('id')).toEqual('radar-samsung-connectivity-circle');
-    expect(await element(by.id('radar-samsung-connectivity-circle')).getAttribute('data-automation-id')).toEqual('automation-id-radar-samsung-connectivity-circle');
-    
-    expect(await element(by.id('radar-samsung-screen-circle')).getAttribute('id')).toEqual('radar-samsung-screen-circle');
-    expect(await element(by.id('radar-nokia-screen-circle')).getAttribute('data-automation-id')).toEqual('automation-id-radar-nokia-screen-circle');
    
     expect(await element(by.id('radar-nokia-price-circle')).getAttribute('id')).toEqual('radar-nokia-price-circle');
     expect(await element(by.id('radar-nokia-price-circle')).getAttribute('data-automation-id')).toEqual('automation-id-radar-nokia-price-circle');
