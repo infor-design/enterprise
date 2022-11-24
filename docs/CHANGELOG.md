@@ -19,6 +19,7 @@
 - `[Datagrid]` Fixed a bug where frozen column headers are not rendered on update. ([NG#1399](https://github.com/infor-design/enterprise-ng/issues/1399))
 - `[Datagrid]` Added toolbar update on datagrid update. ([NG#1357](https://github.com/infor-design/enterprise-ng/issues/1357))
 - `[Datepicker]` Added Firefox increment/decrement keys. ([#6877](https://github.com/infor-design/enterprise/issues/6877))
+- `[Dropdown]` Fixed a bug in dropdown where there is a null in a list when changing language to chinese. ([#6916](https://github.com/infor-design/enterprise/issues/6916))
 - `[Editor]` Fixed a bug in editor where insert image is not working properly when adding attributes. ([#6864](https://github.com/infor-design/enterprise/issues/6864))
 - `[Editor]` Fixed a bug in editor where paste and plain text is not cleaning the text/html properly. ([#6892](https://github.com/infor-design/enterprise/issues/6892))
 - `[Locale]` Fixed a bug in locale where same language translation does not render properly. ([#6847](https://github.com/infor-design/enterprise/issues/6847))
