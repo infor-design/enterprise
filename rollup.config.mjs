@@ -7,7 +7,6 @@ import json from '@rollup/plugin-json';
 import { babel } from '@rollup/plugin-babel';
 import license from 'rollup-plugin-license';
 import _yargs from 'yargs';
-// eslint-disable-next-line import/newline-after-import
 import { hideBin } from 'yargs/helpers';
 import deprecationNotice from './scripts/rollup-plugins/deprecation-notice.js';
 import getTargetBundleTypes from './scripts/rollup-plugins/bundle-types.js';

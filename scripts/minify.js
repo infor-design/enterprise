@@ -18,17 +18,17 @@ const argv = _yargs(hideBin(process.argv)).argv;
 // Main
 // -------------------------------------
 
-const cssArgs = ['./scripts/minify-css'];
+// const cssArgs = ['./scripts/minify-css'];
 const jsArgs = ['./scripts/minify-js'];
 
 if (argv.verbose) {
   const vb = '--verbose';
-  cssArgs.push(vb);
+  // cssArgs.push(vb);
   jsArgs.push(vb);
 }
 
 const minifyPromises = [
-  runBuildProcess(`node ${cssArgs.join(' ')}`),
+  // runBuildProcess(`node ${cssArgs.join(' ')}`),
   runBuildProcess(`node ${jsArgs.join(' ')}`)
 ];
 

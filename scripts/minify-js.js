@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* eslint-disable no-underscore-dangle */
 
 /**
  * IDS Enterprise Minify Process (Terser Wrapper)
@@ -11,14 +12,18 @@ import chalk from 'chalk';
 import glob from 'glob';
 import * as path from 'path';
 import extend from 'extend';
-import Terser from 'terser';
+import { minify } from 'terser';
 import _yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
+import { fileURLToPath } from 'url';
 
 import logger from './logger.js';
 import config from './configs/terser.js';
 import getFileContents from './build/get-file-contents.js';
 import writeFile from './build/write-file.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const argv = _yargs(hideBin(process.argv)).argv;
 
@@ -71,12 +76,12 @@ function openUncompressedFile(name, filePath) {
  * Wraps the execution of Terser CLI and returns the result when resolved.
  * @returns {Promise} resovled once the CLI process completes.
  */
-function minify() {
+function minifyIdsJs() {
   return new Promise((resolve, reject) => {
     const code = openUncompressedFile('Uncompressed "sohoxi.js" library', paths.ids.input.js);
     config.terser.sourceMap.content = openUncompressedFile('Uncompressed "sohoxi.js" sourceMap', paths.ids.input.sourceMap);
 
-    const result = Terser.minify(code, config.terser);
+    const result = minify(code, config.terser);
     if (result.error) {
       reject(new Error(`Error running Terser: ${result.error}`));
       return;
@@ -105,7 +110,7 @@ function minifyCulture(inputFileName) {
     const culture = inputFileName.substring(inputFileName.lastIndexOf(path.sep) + 1, inputFileName.lastIndexOf('.'));
     const code = openUncompressedFile(`Uncompressed culture "${culture}"`, path.resolve(paths.cultures, inputFileName));
 
-    const result = Terser.minify(code);
+    const result = minify(code);
     if (result.error) {
       reject(new Error(`Error running Terser: ${result.error}`));
       return;
@@ -132,12 +137,12 @@ function minifyJS() {
 
     // First result is the main `sohoxi.js` minification.
     // All subsequent results are culture files.
-    const minifyResults = [minify()];
+    const minifyResults = [minifyIdsJs()];
     cultureFiles.forEach((culture) => {
       minifyResults.push(minifyCulture(culture));
     });
 
-    Promise.all(minifyResults).then((results, i) => {
+    Promise.all(minifyResults).then((results) => {
       const fileWrites = [];
       results.forEach((result) => {
         fileWrites.push(writeFile(result.outputFile, result.code));
@@ -151,7 +156,7 @@ function minifyJS() {
 
       // After all file writing is complete, successfully exit.
       Promise.all(fileWrites).then((values) => {
-        logger('beer', `Terser successfully compressed ${chalk.green.bold('(' + compressedFileCount + ')')} JS files!`);
+        logger('beer', `Terser successfully compressed ${chalk.green.bold(`(${compressedFileCount})`)} JS files!`);
         resolve(values);
         process.exit(0);
       });
