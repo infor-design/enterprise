@@ -29,7 +29,8 @@
 
   &.non-collapsible.is-open {
     > .icon:not(.close):not(.icon-error) {
-      height: 20px;
+      height: 18px;
+      width: 18px;
       left: 8px;
     }
   }
@@ -580,8 +581,12 @@ html[dir='rtl'] {
   }
 
   &.has-searchfield-xl .searchfield-wrapper {
+    input {
+      padding-left: 54px;
+    }
+
     & > svg.icon:nth-child(1) {
-      top: 52%
+      top: 47%
     }
   }
 }

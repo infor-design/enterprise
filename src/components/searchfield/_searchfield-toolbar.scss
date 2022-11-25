@@ -335,8 +335,11 @@ $toolbarsearchfield-category-empty-width: 51px;
       height: 18px;
     }
 
-    &.is-hovered .icon {
-      color: $searchfield-icon-hover-color;
+    &.non-collapsible.is-hovered,
+    &.is-hovered {
+      .icon {
+        color: $searchfield-icon-hover-color;
+      }
     }
 
     &:not(.non-collapsible) {

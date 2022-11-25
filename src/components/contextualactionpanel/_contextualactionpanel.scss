@@ -159,6 +159,7 @@
       .toolbar-searchfield-wrapper {
         + .separator {
           margin-left: 12px;
+          margin-right: 12px;
         }
 
         &.is-open + .separator {
