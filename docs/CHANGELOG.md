@@ -2,7 +2,9 @@
 
 ## v4.70.0
 
-## v4.70.0 Important Features
+## v4.70.0 Important Notes
+
+- `[General]` Some elements are no longer hooked under `window` for example `Locale` `Formatters` and `Editors`. To resolve it using Locale.set as an example use the `Soho` namespace i.e. `Soho.Locale.set()`. ([#6634](https://github.com/infor-design/enterprise/issues/6634))
 
 ## v4.70.0 Features
 
