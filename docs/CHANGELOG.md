@@ -11,6 +11,7 @@
 
 ## v4.70.0 Fixes
 
+- `[Accordion]` Fixed a bug where expanded card closes in NG when opening accordion. ([#6820](https://github.com/infor-design/enterprise/issues/6820))
 - `[Counts]` Fixed a bug in counts where two rows of labels cause misalignment. ([#6845](https://github.com/infor-design/enterprise/issues/6845))
 - `[Datagrid]` Fixed a bug in datagrid where expandable row input cannot edit the value. ([#6781](https://github.com/infor-design/enterprise/issues/6781))
 - `[Datagrid]` Fixed a bug in datagrid where clear dirty cell does not work properly in frozen columns. ([#6952](https://github.com/infor-design/enterprise/issues/6952))
