@@ -13,13 +13,19 @@
 
 ## v4.70.0 Fixes
 
+- `[Accordion]` Fixed a bug where expanded card closes in NG when opening accordion. ([#6820](https://github.com/infor-design/enterprise/issues/6820))
 - `[Counts]` Fixed a bug in counts where two rows of labels cause misalignment. ([#6845](https://github.com/infor-design/enterprise/issues/6845))
+- `[Datagrid]` Fixed a bug in datagrid where expandable row input cannot edit the value. ([#6781](https://github.com/infor-design/enterprise/issues/6781))
 - `[Datagrid]` Fixed a bug in datagrid where clear dirty cell does not work properly in frozen columns. ([#6952](https://github.com/infor-design/enterprise/issues/6952))
 - `[Datagrid]` Adjusted date and timepicker icons in datagrid filter. ([#6917](https://github.com/infor-design/enterprise/issues/6917))
+- `[Datagrid]` Fixed a bug where frozen column headers are not rendered on update. ([NG#1399](https://github.com/infor-design/enterprise-ng/issues/1399))
 - `[Datagrid]` Added toolbar update on datagrid update. ([NG#1357](https://github.com/infor-design/enterprise-ng/issues/1357))
 - `[Datepicker]` Added Firefox increment/decrement keys. ([#6877](https://github.com/infor-design/enterprise/issues/6877))
+- `[Datepicker]` Fixed a bug in mask value in datepicker when update is called. ([NG#1380](https://github.com/infor-design/enterprise-ng/issues/1380))
+- `[Dropdown]` Fixed a bug in dropdown where there is a null in a list when changing language to chinese. ([#6916](https://github.com/infor-design/enterprise/issues/6916))
 - `[Editor]` Fixed a bug in editor where insert image is not working properly when adding attributes. ([#6864](https://github.com/infor-design/enterprise/issues/6864))
 - `[Editor]` Fixed a bug in editor where paste and plain text is not cleaning the text/html properly. ([#6892](https://github.com/infor-design/enterprise/issues/6892))
+- `[Locale]` Fixed a bug in locale where same language translation does not render properly. ([#6847](https://github.com/infor-design/enterprise/issues/6847))
 - `[Icons]` Fixed incorrect colors of new empty state icons. ([#6965](https://github.com/infor-design/enterprise/issues/6965))
 - `[Popupmenu]` Fixed a bug in popupmenu where submenu and submenu items are not indented properly. ([#6860](https://github.com/infor-design/enterprise/issues/6860))
 - `[Process Indicator]` Fix on extra line after final step. ([#6744](https://github.com/infor-design/enterprise/issues/6744))

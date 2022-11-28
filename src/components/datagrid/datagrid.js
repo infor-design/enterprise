@@ -4232,7 +4232,7 @@ Datagrid.prototype = {
 
       if (self.hasLeftPane) {
         self.bodyColGroupLeft = $(self.bodyColGroupHtmlLeft);
-        (self.headerRowLeft || self.tableBodyLeft).before(self.bodyColGroupLeft);
+        (self.tableBodyLeft || self.headerRowLeft).before(self.bodyColGroupLeft);
       }
 
       self.bodyColGroup = $(self.bodyColGroupHtml);
@@ -4240,7 +4240,7 @@ Datagrid.prototype = {
 
       if (self.hasRightPane) {
         self.bodyColGroupRight = $(self.bodyColGroupHtmlRight);
-        (self.headerRowRight || self.tableBodyRight).before(self.bodyColGroupRight);
+        (self.tableBodyRight || self.headerRowRight).before(self.bodyColGroupRight);
       }
     }
 
@@ -10045,7 +10045,7 @@ Datagrid.prototype = {
       // Any printable character - well make it editable
       if ([9, 13, 32, 35, 36, 37, 38, 39, 40, 113].indexOf(key) === -1 &&
         !e.altKey && !e.shiftKey && !e.ctrlKey && !e.metaKey && self.settings.editable) {
-        if (!self.editor) {
+        if (!self.editor && !e.currentTarget?.parentElement?.classList.contains('datagrid-expandable-row')) {
           self.makeCellEditable(self.activeCell.rowIndex, cell, e);
         }
       }
