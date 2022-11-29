@@ -1,0 +1,55 @@
+
+<div class="row">
+  <div class="four columns">
+
+    <div class="field">
+      <label for="date-field-1" class="label">Date Field 1</label>
+      <input id="date-field-1" class="datepicker" name="date-field-1" style="width: 200px"/>
+    </div>
+
+    <div class="field">
+      <label for="date-field-2" class="label">Date Field 2</label>
+      <input id="date-field-2" class="datepicker" name="date-field-2" style="width: 200px"/>
+    </div>
+    <button class="btn-primary" type="button" id="toggle">Update Disable</button>
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function() {
+    const format1 = 'MMM EEE d, yyyy';
+    const format2 = 'EEE MMM d, yyyy';
+
+    const date1 = Locale.formatDate(new Date(2022, 8, 22), { pattern: format1 });
+    const date2 = Locale.formatDate(new Date(2022, 8, 22), { pattern: format2 });
+
+    const disableOptions = [
+      {
+        dates: '',
+        minDate: '09/20/2022',
+        maxDate: '09/24/2022',
+        dayOfWeek: []
+      },
+      {
+        dates: '',
+        minDate: new Date(2022, 8, 15),
+        maxDate: new Date(2022, 8, 30),
+        dayOfWeek: [],
+      }
+    ];
+
+    let disable = 0;
+
+    $('#date-field-1').val(date1);
+    const dateApi1 = $('#date-field-1').datepicker({ disable: disableOptions[disable], dateFormat: format1 }).data('datepicker');
+
+    $('#date-field-2').val(date2);
+    const dateApi2 = $('#date-field-2').datepicker({ disable: disableOptions[disable], dateFormat: format2 }).data('datepicker');
+
+    $('#toggle').on('click', () => {
+      disable = disable === 0 ? 1 : 0;
+      dateApi1.updated({ disable: disableOptions[disable], dateFormat: format1 });
+      dateApi2.updated({ disable: disableOptions[disable], dateFormat: format2 });
+    });
+  });
+</script>

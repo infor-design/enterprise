@@ -106,6 +106,16 @@
   }
 }
 
+html.is-firefox {
+  .instance-count {
+    .title {
+      -moz-orient: vertical;
+      width: 120px;
+      height: 40px;
+    }
+  }
+}
+
 // RTL Styles
 html[dir='rtl'] {
   .instance-count {
