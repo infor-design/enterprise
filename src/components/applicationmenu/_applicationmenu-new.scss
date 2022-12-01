@@ -9,8 +9,8 @@
   .searchfield-wrapper {
     background-color: $new-acc-expanded-bg-color;
     border-radius: $new-acc-border-radius;
-    margin: 0 17px;
-    width: calc(100% - calc(#{$ids-number-spacing-base} * 4.1));
+    margin: 0 $ids-number-spacing-base;
+    width: calc(100% - calc(#{$ids-number-spacing-base} * 2));
 
     > svg.icon:not(.close) {
       top: 13px;
@@ -456,7 +456,6 @@ html.is-firefox {
   .application-menu {
     .searchfield-wrapper {
       height: auto;
-      width: calc(100% - calc(#{$ids-number-spacing-base} * 3.8));
 
       > .icon {
         top: 14px;

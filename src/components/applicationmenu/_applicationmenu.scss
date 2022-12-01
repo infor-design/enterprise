@@ -197,7 +197,7 @@ body.is-open-touch {
     .icon {
       @include transition(fill 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
 
-      color: $application-menu-searchfield-icon-color;
+      color: lighten($application-menu-trigger-icon-fill-color, 20%);
 
       &:not(.close) {
         left: 18px;
@@ -270,7 +270,7 @@ body.is-open-touch {
     }
 
     .searchfield {
-      padding-left: 53px;
+      padding-left: 39px;
       padding-right: 34px;
     }
 
@@ -286,6 +286,7 @@ body.is-open-touch {
       background-color 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94)
     );
 
+    background-color: transparent;
     border-color: transparent;
   }
 

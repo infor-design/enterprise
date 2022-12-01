@@ -20,6 +20,10 @@
 
   .searchfield-wrapper {
 
+    &.has-focus:not(.toolbar-searchfield-wrapper) {
+      box-shadow: none;
+    }
+
     &.non-collapsible.is-open {
       .icon:not(.close):not(.icon-error) {
         left: 16px;
