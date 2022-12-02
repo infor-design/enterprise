@@ -11,8 +11,8 @@
  * - `eslint-plugin-jasmine`,
  * - `eslint-plugin-jasmine-jquery`
  */
-module.exports = {
-  extends: [
+{
+  "extends": [
     // Only import some AirBNB rules
     // https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb-base/rules
     'airbnb-base'
@@ -152,4 +152,4 @@ module.exports = {
     // Allow js in imports
     'import/extensions': ['off']
   }
-};
+}

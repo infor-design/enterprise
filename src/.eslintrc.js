@@ -2,26 +2,29 @@
  * Source Code Lint Rules
  * NOTE: Remember that this cascades on top of the rules from the project root folder.
  */
-module.exports = {
-  parser: 'babel-eslint',
-
-  plugins: [
+{
+  'parser': '@babel/eslint-parser',
+  'parserOptions': {
+    'ecmaVersion': 8,
+    'requireConfigFile': false
+  }
+  'plugins': [
     'compat',
     'babel'
   ],
 
-  env: {
-    browser: true,
-    jquery: true
+  'env': {
+    'browser': true,
+    'jquery': true
   },
 
-  globals: {
-    d3: true,
-    document: true,
-    window: true
+  'globals': {
+    'd3': true,
+    'document': true,
+    'window': true
   },
 
-  rules: {
+  'rules': {
     // Browser compatibility
     'compat/compat': 'warn',
 

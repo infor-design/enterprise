@@ -2,14 +2,14 @@
  * Demoapp's Lint Rules
  * NOTE: Remember that this cascades on top of the rules from the project root folder.
  */
-module.exports = {
-  env: {
-    node: true
+{
+  'env': {
+    'node': true
   },
-  globals: {
-    Soho: true
+  'globals': {
+    'Soho': true
   },
-  rules: {
+  'rules': {
     // Forbid the use of extraneous packages
     // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-extraneous-dependencies.md
     // paths are treated both as absolute paths, and relative to process.cwd()
@@ -19,8 +19,8 @@ module.exports = {
     // disallow parameter object manipulation except for specific exclusions
     // rule: https://eslint.org/docs/rules/no-param-reassign.html
     'no-param-reassign': ['off', {
-      props: true,
-      ignorePropertyModificationsFor: [
+      'props': true,
+      'ignorePropertyModificationsFor': [
         'acc', // for reduce accumulators
         'e', // for e.returnvalue
         'ctx', // for Koa routing

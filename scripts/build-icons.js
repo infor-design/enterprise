@@ -8,7 +8,9 @@
 // -------------------------------------
 // Requirements
 // -------------------------------------
-const createSvgHtml = require('./build/create-svg-html');
+// const createSvgHtml = require('./build/create-svg-html');
+
+import createSvgHtml from './build/create-svg-html.js';
 
 // -------------------------------------
 // Main
