@@ -36,6 +36,10 @@
           }
         }
       }
+
+      .toolbar-searchfield-wrapper.has-text:not(.active) {
+        width: 34px;
+      }
     }
 
     // new design for M3 scenario
