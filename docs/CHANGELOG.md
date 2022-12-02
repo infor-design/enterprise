@@ -24,14 +24,16 @@
 - `[Dropdown]` Fixed a bug in dropdown where there is a null in a list when changing language to chinese. ([#6916](https://github.com/infor-design/enterprise/issues/6916))
 - `[Editor]` Fixed a bug in editor where insert image is not working properly when adding attributes. ([#6864](https://github.com/infor-design/enterprise/issues/6864))
 - `[Editor]` Fixed a bug in editor where paste and plain text is not cleaning the text/html properly. ([#6892](https://github.com/infor-design/enterprise/issues/6892))
-- `[Locale]` Fixed a bug in locale where same language translation does not render properly. ([#6847](https://github.com/infor-design/enterprise/issues/6847))
 - `[Icons]` Fixed incorrect colors of new empty state icons. ([#6965](https://github.com/infor-design/enterprise/issues/6965))
+- `[Locale]` Fixed a bug in locale where same language translation does not render properly. ([#6847](https://github.com/infor-design/enterprise/issues/6847))
 - `[Popupmenu]` Fixed a bug in popupmenu where submenu and submenu items are not indented properly. ([#6860](https://github.com/infor-design/enterprise/issues/6860))
 - `[Process Indicator]` Fix on extra line after final step. ([#6744](https://github.com/infor-design/enterprise/issues/6744))
 - `[Searchfield]` Changed toolbar in example page to flex toolbar. ([#6737](https://github.com/infor-design/enterprise/issues/6737))
 - `[Tabs]` Added tooltip on add new tab button. ([#6902](https://github.com/infor-design/enterprise/issues/6902))
 - `[Tabs]` Adjusted header and tab colors in themes. ([#6673](https://github.com/infor-design/enterprise/issues/6673))
 - `[Timepicker]` Filter method in datagrid is called on timepicker's change event. ([#6896](https://github.com/infor-design/enterprise/issues/6896))
+
+(25 Issues Solved This Release, Backlog Enterprise 278, Backlog Ng 50, 1104 Functional Tests, 1291 e2e Tests, 573 Puppeteer Tests)
 
 ## v4.69.0
 
