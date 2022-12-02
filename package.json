@@ -82,9 +82,10 @@
     "not ie 11"
   ],
   "dependencies": {
-    "d3": "^7.6.1",
+    "d3": "^5.16.0",
     "ids-identity": "4.14.2",
-    "jquery": "^3.6.1"
+    "jquery": "^3.6.0",
+    "promise-polyfill": "^8.2.3"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.19.1",
