@@ -12,6 +12,7 @@ const validTagNames = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'p
  * @param {string} [className=''] a string containing a valid CSS class selector to append to the tag.
  * @param {CSSStyleDeclaration} [styleProps] valid CSS props to add to the fontpicker style.
  */
+// eslint-disable-next-line default-param-last
 function FontPickerStyle(id, displayName, tagName = 'p', className = '', styleProps) {
   // 'id' is required.
   if (!id || typeof id !== 'string' || !displayName.length) {

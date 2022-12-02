@@ -177,8 +177,10 @@ describe('Modal Puppeteer Tests', () => {
       await page.click('#add-context');
       await page.waitForSelector('.modal-engaged', { visible: true });
 
-      const tabIndex = await page.$eval('#add-context-modal-btn-close',
-        element => element.getAttribute('tabindex'));
+      const tabIndex = await page.$eval(
+        '#add-context-modal-btn-close',
+        element => element.getAttribute('tabindex')
+      );
 
       expect(tabIndex).not.toEqual(-1);
     });

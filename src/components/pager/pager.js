@@ -891,6 +891,7 @@ Pager.prototype = {
       }
     }
 
+    // eslint-disable-next-line default-param-last
     function renderButton(visibleContent = '', audibleContent = '', tooltipContent, targetPageNum, classAttr = '', selected = false, disabled = false, hidden = false) {
       let isAriaDisabled = '';
       let isControlDisabled = '';

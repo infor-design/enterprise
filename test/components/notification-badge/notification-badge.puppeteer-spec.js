@@ -1,3 +1,6 @@
+
+import { AxePuppeteer } from '@axe-core/puppeteer';
+
 const { getComputedStyle, checkDataAutomationID, checkInnerHTMLValue } = require('../../helpers/e2e-utils.js');
 
 describe('Notification-Badge Puppeteer Tests', () => {
@@ -14,7 +17,8 @@ describe('Notification-Badge Puppeteer Tests', () => {
     it('should check the test page with Axe', async () => {
       await page.setBypassCSP(true);
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-      await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport'] });
+      const results = await new AxePuppeteer(page).disableRules(['meta-viewport']).analyze();
+      expect(results.violations.length).toBe(0);
     });
 
     it('should pass accessibility checks', async () => {
@@ -136,7 +140,8 @@ describe('Notification-Badge Puppeteer Tests', () => {
     it('should check the test page with Axe', async () => {
       await page.setBypassCSP(true);
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-      await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport'] });
+      const results = await new AxePuppeteer(page).disableRules(['meta-viewport']).analyze();
+      expect(results.violations.length).toBe(0);
     });
 
     it('should pass accessibility checks', async () => {

@@ -89,4 +89,4 @@ export default function (testType, envSpecs, group) {
   }
 
   return getCustomSpecs(testType, group);
-};
+}

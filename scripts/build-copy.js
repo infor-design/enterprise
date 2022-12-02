@@ -19,7 +19,6 @@ const copyFiles = (sourceDir, ext, destDir, flatten) => {
   const files = getAllFiles(sourceDir).filter(fn => fn.endsWith(ext));
   files.forEach((file) => {
     const dest = flatten ? `${destDir}${basename(file)}` : `${destDir}${file}`;
-    if (flatten) console.log(`${destDir}${basename(file)}`, `${destDir}${file}`);
     if (!existsSync(dirname(dest))) {
       mkdirSync(dirname(dest), { recursive: true });
     }
@@ -56,8 +55,3 @@ copyFiles('src', '.scss', 'dist/sass/');
 copyFiles('src/components/locale/cultures', '.js', 'dist/js/cultures/', true);
 copyFiles('src/components/emptymessage', '*svg-empty.html', 'dist/svg/');
 copyFiles('src/components/icons', '*svg.html', 'dist/svg/');
-
-// { expand: true, flatten: true, src: ['src/components/locale/cultures/*.*'], dest: 'dist/js/cultures/', filter: 'isFile' },
-// { expand: true, flatten: true, src: ['src/components/emptymessage/*svg-empty.html'], dest: 'dist/svg/', filter: 'isFile' },
-// { expand: true, flatten: true, src: ['src/components/charts/svg-patterns.html'], dest: 'dist/svg/', filter: 'isFile' },
-// { expand: true, flatten: true, src: ['src/components/icons/*svg.html'], dest: 'dist/svg/', filter: 'isFile' },

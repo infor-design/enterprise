@@ -154,15 +154,6 @@ describe('Button Puppeteer Tests', () => {
       const btnIcon = getConfig('button-icon');
       expect(image).toMatchImageSnapshot(btnIcon);
     });
-
-    // Disabled because it fails
-    xit('should be accessible with no WCAG 2AA violations', async () => {
-      await page.waitForSelector('#menu-button-alone', { visible: true });
-      await page.click('#menu-button-alone');
-
-      // disabled viewport check because user-scalable is set to 0 in environment.js
-      await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport'] });
-    });
   });
 
   describe('Button toggle test', () => {

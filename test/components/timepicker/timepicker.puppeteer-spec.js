@@ -1,3 +1,5 @@
+import { AxePuppeteer } from '@axe-core/puppeteer';
+
 describe('Timepicker Puppeteer Tests', () => {
   describe('Index Tests', () => {
     const url = 'http://localhost:4000/components/timepicker/example-index';
@@ -13,13 +15,14 @@ describe('Timepicker Puppeteer Tests', () => {
     it('should pass Axe accessibility tests', async () => {
       await page.setBypassCSP(true);
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-      await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport'] });
+      const results = await new AxePuppeteer(page).disableRules(['meta-viewport']).analyze();
+      expect(results.violations.length).toBe(0);
     });
 
     it('should not have errors', async () => {
-      await page.on('error', function (err) {
+      await page.on('error', (err) => {
         const theTempValue = err.toString();
-        console.log(`Error: ${theTempValue}`);
+        console.warn(`Error: ${theTempValue}`);
       });
     });
 
@@ -41,9 +44,9 @@ describe('Timepicker Puppeteer Tests', () => {
     });
 
     it('should not have errors', async () => {
-      await page.on('error', function (err) {
+      await page.on('error', (err) => {
         const theTempValue = err.toString();
-        console.log(`Error: ${theTempValue}`);
+        console.warn(`Error: ${theTempValue}`);
       });
     });
 
@@ -57,7 +60,7 @@ describe('Timepicker Puppeteer Tests', () => {
 
       // VERIFY IF 7 PM ONWARDS IS NOT AVAILABLE
       await expect(page).not.toMatchElement('#list-option-6');
-      
+
       await page.click('.set-time');
       expect(await page.evaluate(el => el.value, timepickerEl)).toEqual('1:00 PM');
     });
@@ -71,9 +74,9 @@ describe('Timepicker Puppeteer Tests', () => {
     });
 
     it('should not have errors', async () => {
-      await page.on('error', function (err) {
+      await page.on('error', (err) => {
         const theTempValue = err.toString();
-        console.log(`Error: ${theTempValue}`);
+        console.warn(`Error: ${theTempValue}`);
       });
     });
 
@@ -85,6 +88,7 @@ describe('Timepicker Puppeteer Tests', () => {
       await page.click('.set-time');
 
       expect(await page.evaluate(el => el.value, timepickerEl)).toEqual('1:00 上午');
+      // eslint-disable-next-line jasmine/prefer-jasmine-matcher
       expect(errorMessage === null).toBeTruthy(); // Error message should not be shown/presented.
     });
   });

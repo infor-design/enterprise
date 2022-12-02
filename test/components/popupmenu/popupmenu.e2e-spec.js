@@ -1,11 +1,9 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 const { element, browser } = require('protractor');
-const popupmenuPageObject = require('./helpers/popupmenu-page-objects.js');
 
 const config = requireHelper('e2e-config');
 const utils = requireHelper('e2e-utils');
 requireHelper('rejection');
-const axePageObjects = requireHelper('axe-page-objects');
 
 describe('Contextmenu index tests', () => {
   beforeEach(async () => {
@@ -103,22 +101,6 @@ describe('Popupmenu example-selectable tests', () => {
   });
 
   if (!utils.isIE() && !utils.isSafari()) {
-    it('Should be accessible on open with no WCAG2AA violations on keypress(Spacebar)', async () => {
-      await popupmenuPageObject.openSingleSelect();
-      const res = await axePageObjects(browser.params.theme);
-
-      expect(res.violations.length).toEqual(0);
-    });
-
-    it('Should be accessible on close with no WCAG2AA violations on keypress(Escape)', async () => {
-      const buttonTriggerEl = await popupmenuPageObject.openSingleSelect();
-      await buttonTriggerEl.sendKeys(protractor.Key.ESCAPE);
-
-      const res = await axePageObjects(browser.params.theme);
-
-      expect(res.violations.length).toEqual(0);
-    });
-
     it('Should open on keypress(Enter), and close on keypress(Escape)', async () => {
       const buttonTriggerEl = await element(by.id('single-select-popupmenu-trigger'));
       await buttonTriggerEl.sendKeys(protractor.Key.SPACE);

@@ -16,4 +16,4 @@ export default function () {
     logger('info', `Delaying the response time of this request by ${res.opts.delay}ms...`);
     setTimeout(delayedResponse, res.opts.delay);
   };
-};
+}

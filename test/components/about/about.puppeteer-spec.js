@@ -1,3 +1,5 @@
+import { AxePuppeteer } from '@axe-core/puppeteer';
+
 describe('About Puppeteer Tests', () => {
   describe('Index Tests', () => {
     const url = 'http://localhost:4000/components/about/example-index';
@@ -13,7 +15,9 @@ describe('About Puppeteer Tests', () => {
     it('should pass Axe accessibility tests', async () => {
       await page.setBypassCSP(true);
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-      await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport'] });
+
+      const results = await new AxePuppeteer(page).disableRules(['meta-viewport']).analyze();
+      expect(results.violations.length).toBe(0);
     });
 
     it('should show the about dialog', async () => {

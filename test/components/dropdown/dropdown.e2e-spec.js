@@ -2,8 +2,6 @@ const utils = requireHelper('e2e-utils');
 const config = requireHelper('e2e-config');
 requireHelper('rejection');
 
-const axePageObjects = requireHelper('axe-page-objects');
-
 const clickOnDropdown = async () => {
   const dropdownEl = element(by.css('div.dropdown'));
   await browser.driver.wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
@@ -73,23 +71,6 @@ describe('Dropdown example-index tests', () => {
     expect(posVT.y > posDropdownElList.y &&
       posVT.y < (posDropdownElList.y + dropdownElListSize.height)).toBeTruthy();
   });
-
-  if (!utils.isIE()) {
-    it('Should be accessible on click, and open with no WCAG 2AA violations', async () => { //eslint-disable-line
-      await clickOnDropdown();
-      const res = await axePageObjects(browser.params.theme);
-
-      // Not sure why CI has one error we cannot inspect.
-      if (utils.isCI()) {
-        expect(res.violations.length).toBeLessThan(2);
-      } else {
-        expect(res.violations.length).toEqual(0);
-      }
-      if (res.violations.length > 0) {
-        console.warn(res.violations);
-      }
-    });
-  }
 
   if (!utils.isSafari()) {
     it('Should arrow down to New York, and focus', async () => {

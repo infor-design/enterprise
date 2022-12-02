@@ -1,3 +1,5 @@
+import { AxePuppeteer } from '@axe-core/puppeteer';
+
 const { dragAndDrop } = require('../../helpers/e2e-utils.js');
 
 describe('Toast Puppeteer Tests', () => {
@@ -18,10 +20,12 @@ describe('Toast Puppeteer Tests', () => {
       Rule: "color-contrast" (Elements must have sufficient color contrast)
       Rule: "meta-viewport" (Zooming and scaling should not be disabled)
       */
-      await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport'] });
+      const results = await new AxePuppeteer(page).disableRules(['meta-viewport']).analyze();
+      expect(results.violations.length).toBe(0);
       await page.click('#show-toast-message');
       await page.waitForSelector('#toast-container', { visible: true });
-      await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport', 'color-contrast'] });
+      const results2 = await new AxePuppeteer(page).disableRules(['meta-viewport', 'color-contrast']).analyze();
+      expect(results2.violations.length).toBe(0);
     });
 
     it('should pass accessibility checks', async () => {

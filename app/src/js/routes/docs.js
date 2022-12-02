@@ -19,4 +19,4 @@ export default function sendGeneratedDocPage(options, req, res, next) {
   }
 
   res.send(output);
-};
+}

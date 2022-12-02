@@ -1,0 +1,8 @@
+/**
+ * In this webroot folder, enable `Soho` as a global.
+ */
+{
+  "globals": {
+    "Soho": true
+  }
+}

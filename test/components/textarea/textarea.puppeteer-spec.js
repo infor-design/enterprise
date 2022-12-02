@@ -1,3 +1,5 @@
+import { AxePuppeteer } from '@axe-core/puppeteer';
+
 /* eslint-disable no-await-in-loop */
 const { getConfig } = require('../../helpers/e2e-utils.js');
 
@@ -48,7 +50,8 @@ describe('Textarea', () => {
     });
 
     it('should be accessible with no WCAG 2AA violations', async () => {
-      await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport'] });
+      const results = await new AxePuppeteer(page).disableRules(['meta-viewport']).analyze();
+      expect(results.violations.length).toBe(0);
     });
 
     it('should allow maximum of 90 characters', async () => {

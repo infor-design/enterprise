@@ -1,7 +1,6 @@
 const utils = requireHelper('e2e-utils');
 const config = requireHelper('e2e-config');
 requireHelper('rejection');
-const axePageObjects = requireHelper('axe-page-objects');
 
 describe('Listview example-singleselect tests', () => {
   beforeEach(async () => {
@@ -25,15 +24,6 @@ describe('Listview example-singleselect tests', () => {
   it('Should not have errors', async () => {
     await utils.checkForErrors();
   });
-
-  if (!utils.isIE()) {
-    it('Should be accessible on init with no WCAG 2AA violations on example-singleselect', async () => {
-      const res = await axePageObjects(browser.params.theme);
-
-      expect(res.violations.length).toEqual(0);
-      utils.reportAxeViolations(res);
-    });
-  }
 
   it('Should select one item on click', async () => {
     const listviewItemEl = await element(by.css('li[aria-posinset="1"]'));
@@ -103,15 +93,6 @@ describe('Listview example-multiselect tests', () => {
       await browser.driver.sleep(config.sleep);
 
       expect(await browser.imageComparison.checkElement(listviewSection, 'listview-multiselect-open')).toEqual(0);
-    });
-  }
-
-  if (!utils.isIE()) {
-    it('Should be accessible on init with no WCAG 2AA violations on example-multiselect page', async () => {
-      const res = await axePageObjects(browser.params.theme);
-
-      expect(res.violations.length).toEqual(0);
-      utils.reportAxeViolations(res);
     });
   }
 
@@ -204,15 +185,6 @@ describe('Listview example-mixed selection tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(listviewEl), config.waitsFor);
   });
 
-  if (!utils.isIE()) {
-    it('Should be accessible on init with no WCAG 2AA violations on example-mixed selection page', async () => {
-      const res = await axePageObjects(browser.params.theme);
-
-      expect(res.violations.length).toEqual(0);
-      utils.reportAxeViolations(res);
-    });
-  }
-
   it('Should select item on click on checkbox', async () => {
     const listviewItemInputEl = await element(by.css('li[aria-posinset="1"] .listview-selection-checkbox'));
     await listviewItemInputEl.click();
@@ -266,15 +238,6 @@ describe('Listview example-search tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(listviewEl), config.waitsFor);
   });
 
-  if (!utils.isIE()) {
-    it('Should be accessible on init with no WCAG 2AA violations on example-search page', async () => {
-      const res = await axePageObjects(browser.params.theme);
-
-      expect(res.violations.length).toEqual(0);
-      utils.reportAxeViolations(res);
-    });
-  }
-
   it('Should not render items that don\'t match the search term', async () => {
     const searchListviewEl = await element(by.id('gridfilter'));
     await browser.driver
@@ -309,15 +272,6 @@ describe('Listview example-paging tests', () => {
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.listview ul li:last-child'))), config.waitsFor);
   });
-
-  if (!utils.isIE()) {
-    it('Should be accessible on init with no WCAG 2AA violations on example-paging page', async () => {
-      const res = await axePageObjects(browser.params.theme);
-
-      expect(res.violations.length).toEqual(0);
-      utils.reportAxeViolations(res);
-    });
-  }
 
   it('Should render initial page', async () => {
     expect(await element.all(by.css('.listview ul li')).count()).toEqual(10);
@@ -378,15 +332,6 @@ describe('Listview example-paging-clientside tests', () => {
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(listviewPagerEl), config.waitsFor);
   });
-
-  if (!utils.isIE()) {
-    it('Should be accessible on init with no WCAG 2AA violations on example-paging-clientside page', async () => {
-      const res = await axePageObjects(browser.params.theme);
-
-      expect(res.violations.length).toEqual(0);
-      utils.reportAxeViolations(res);
-    });
-  }
 
   it('Should click page "2" in pager-clientside bar, and display new listings', async () => {
     const listviewPagerEl = await element.all(by.css('.pager-toolbar li')).get(2);
@@ -464,15 +409,6 @@ describe('Listview remove-clear tests', () => {
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(listviewMultiSelectEl), config.waitsFor);
   });
-
-  if (!utils.isIE()) {
-    it('Should be accessible on init with no WCAG 2AA violations on remove-clear page', async () => {
-      const res = await axePageObjects(browser.params.theme);
-
-      expect(res.violations.length).toEqual(0);
-      utils.reportAxeViolations(res);
-    });
-  }
 
   it('Should remove selected items, and update status pane', async () => {
     const listviewItemElOne = await element(by.css('li[aria-posinset="1"]'));

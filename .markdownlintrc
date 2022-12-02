@@ -1,6 +1,7 @@
 {
   "comment": "Rules for the style guide at http://www.cirosantilli.com/markdown-style-guide/",
   "default": true,
+  "MD051": false,
   "MD003": {
     "style": "atx"
   },

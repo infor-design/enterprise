@@ -1,3 +1,5 @@
+import { AxePuppeteer } from '@axe-core/puppeteer';
+
 const { getConfig } = require('../../helpers/e2e-utils.js');
 
 describe('Breadcrumb puppeteer tests', () => {
@@ -59,7 +61,8 @@ describe('Breadcrumb puppeteer tests', () => {
 
     it('should be accessible with no WCAG 2AA violations', async () => {
       // disabled viewport check because user-scalable is set to 0 in environment.js
-      await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport'] });
+      const results = await new AxePuppeteer(page).disableRules(['meta-viewport']).analyze();
+      expect(results.violations.length).toBe(0);
     });
 
     it('should not visual regress', async () => {

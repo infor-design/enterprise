@@ -1,3 +1,5 @@
+import { AxePuppeteer } from '@axe-core/puppeteer';
+
 describe('Index Tests', () => {
   const url = 'http://localhost:4000/components/message/example-index.html';
   beforeEach(async () => {
@@ -11,7 +13,8 @@ describe('Index Tests', () => {
   it('should check the test page with Axe', async () => {
     await page.setBypassCSP(true);
     await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-    await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport'] });
+    const results = await new AxePuppeteer(page).disableRules(['meta-viewport']).analyze();
+    expect(results.violations.length).toBe(0);
   });
 
   it('should have Accessibility', async () => {
@@ -194,7 +197,8 @@ describe('Message xss tests', () => {
   it('should check the test page with Axe', async () => {
     await page.setBypassCSP(true);
     await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-    await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport'] });
+    const results = await new AxePuppeteer(page).disableRules(['meta-viewport']).analyze();
+    expect(results.violations.length).toBe(0);
   });
 
   it('should have Accessibility', async () => {
@@ -243,7 +247,8 @@ describe('Message overlay opacity tests', () => {
   it('should check the test page with Axe', async () => {
     await page.setBypassCSP(true);
     await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-    await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport'] });
+    const results = await new AxePuppeteer(page).disableRules(['meta-viewport']).analyze();
+    expect(results.violations.length).toBe(0);
   });
 
   it('should have Accessibility', async () => {
@@ -326,7 +331,8 @@ describe('Message close button Tests', () => {
   it('should check the test page with Axe', async () => {
     await page.setBypassCSP(true);
     await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-    await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport'] });
+    const results = await new AxePuppeteer(page).disableRules(['meta-viewport']).analyze();
+    expect(results.violations.length).toBe(0);
   });
 
   it('should have Accessibility', async () => {
@@ -366,7 +372,8 @@ describe('Message long title Tests', () => {
   it('should check the test page with Axe', async () => {
     await page.setBypassCSP(true);
     await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-    await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport'] });
+    const results = await new AxePuppeteer(page).disableRules(['meta-viewport']).analyze();
+    expect(results.violations.length).toBe(0);
   });
 
   it('should have Accessibility', async () => {

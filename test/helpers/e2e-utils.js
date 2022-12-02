@@ -267,6 +267,7 @@ module.exports = {
       const element = await page.$(originSelector);
       // eslint-disable-next-line camelcase
       const bounding_box = await element.boundingBox();
+      // eslint-disable-next-line camelcase
       await page.mouse.move(bounding_box.x + bounding_box.width / 2, bounding_box.y + bounding_box.height / 2);
       await page.mouse.down();
       await page.mouse.move(parseFloat(x), parseFloat(y));

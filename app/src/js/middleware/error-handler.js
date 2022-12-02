@@ -48,4 +48,4 @@ export default function () {
     // If all else fails, respond with plain text.
     res.type('txt').send(err.message);
   };
-};
+}

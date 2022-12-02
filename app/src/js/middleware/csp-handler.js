@@ -111,4 +111,4 @@ export default function () {
 
     next();
   };
-};
+}

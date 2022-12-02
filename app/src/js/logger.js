@@ -3,6 +3,7 @@
 import _yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import logger from '../../../scripts/logger.js';
+
 const argv = _yargs(hideBin(process.argv)).argv;
 
 function appLogger(type, msg) {

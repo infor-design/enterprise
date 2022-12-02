@@ -10,4 +10,4 @@ export default function (app) {
     delete req.headers.server;
     next();
   };
-};
+}

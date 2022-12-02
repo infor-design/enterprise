@@ -650,11 +650,11 @@ Editor.prototype = {
   setRowsHeight() {
     const isNew = theme.currentTheme.id && (theme.currentTheme.id.indexOf('uplift') > -1 || theme.currentTheme.id.indexOf('new') > -1);
     if (this.settings?.rows?.editor) {
-      this.element.height(this.settings?.rows?.editor * (isNew ? 26 : 22.2));
+      this.element.height(Number(this.settings?.rows?.editor) * (isNew ? 26 : 22.2));
     }
 
     if (this.settings?.rows?.source) {
-      this.element.parent().find('.editor-source').height((this.settings?.rows?.source * (isNew ? 26 : 26)) + 15);
+      this.element.parent().find('.editor-source').height((Number(this.settings?.rows?.source) * (isNew ? 26 : 26)) + 15);
     }
   },
 

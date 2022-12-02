@@ -1,7 +1,6 @@
 const utils = requireHelper('e2e-utils');
 const config = requireHelper('e2e-config');
 requireHelper('rejection');
-const axePageObjects = requireHelper('axe-page-objects');
 
 describe('Masthead tests', () => {
   beforeEach(async () => {
@@ -11,15 +10,6 @@ describe('Masthead tests', () => {
   it('Should not have errors', async () => {
     await utils.checkForErrors();
   });
-
-  if (!utils.isIE()) {
-    it('Should be accessible with no WCAG 2AA violations', async () => {
-      await browser.driver.sleep(config.sleep);
-      const res = await axePageObjects(browser.params.theme);
-
-      expect(res.violations.length).toEqual(0);
-    });
-  }
 
   if (utils.isChrome() && utils.isCI()) {
     xit('Should not visual regress on soho theme', async () => {

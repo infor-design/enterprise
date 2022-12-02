@@ -546,6 +546,7 @@ CirclePager.prototype = {
     }
     const e = evt && evt.touches ? evt.touches[0] : (evt || {});
     const r = el.getBoundingClientRect();
+    // eslint-disable-next-line prefer-exponentiation-operator
     const d = Math.sqrt(Math.pow(r.width, 2) + Math.pow(r.height, 2)) * 2;
     const x = e.clientX ? (e.clientX - r.left) : (el.offsetWidth / 2);
     const y = e.clientY ? (e.clientY - r.top) : (el.offsetHeight / 2);

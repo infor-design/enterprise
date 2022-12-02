@@ -6,4 +6,4 @@ export default function (app) {
     res.opts.basepath = `//${req.headers.host.replace('/', '')}${app.get('basepath')}`;
     next();
   };
-};
+}

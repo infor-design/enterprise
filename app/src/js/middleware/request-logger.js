@@ -10,4 +10,4 @@ export default function () {
     logger('timestamp', `${type}: ${url}`);
     next();
   };
-};
+}

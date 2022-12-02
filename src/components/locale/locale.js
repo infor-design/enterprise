@@ -491,7 +491,7 @@ const Locale = {  // eslint-disable-line
   setCurrentLocale(name, data) {
     const lang = this.remapLanguage(name.substr(0, 2));
     this.currentLocale.name = name;
-    const selectedLang = (this.languages[lang] !== undefined && this.languages[name] !== undefined) && 
+    const selectedLang = (this.languages[lang] !== undefined && this.languages[name] !== undefined) &&
       (this.languages[lang].nativeName !== this.languages[name].nativeName) ? name : lang;
 
     if (data) {
@@ -801,6 +801,7 @@ const Locale = {  // eslint-disable-line
     const currentLocale = Locale.currentLocale.name || 'en-US';
 
     if (env.browser.name === 'ie' && env.browser.version === '11') {
+      // eslint-disable-next-line prefer-regex-literals
       return (date).toTimeString().match(new RegExp('[A-Z](?!.*[\(])', 'g')).join('');
     }
 
@@ -830,6 +831,7 @@ const Locale = {  // eslint-disable-line
   */
   dateToTimeZone(date, timeZone, timeZoneName) {
     if (env.browser.name === 'ie' && env.browser.version === '11') {
+      // eslint-disable-next-line prefer-regex-literals
       return `${(date).toLocaleString(Locale.currentLocale.name)} ${(date).toTimeString().match(new RegExp('[A-Z](?!.*[\(])', 'g')).join('')}`;
     }
 
@@ -1664,6 +1666,7 @@ const Locale = {  // eslint-disable-line
     const percentSign = options && options.percentSign ? options.percentSign : numSettings ? numSettings.percentSign : '%';
     const currencySign = options && options.currencySign ? options.currencySign : localeData.currencySign || '$';
 
+    // eslint-disable-next-line prefer-regex-literals
     const exp = (group === ' ' || group === '') ? new RegExp(/\s/g) : new RegExp(`\\${group}`, 'g');
     numString = numString.replace(exp, '');
     numString = numString.replace(decimal, '.');

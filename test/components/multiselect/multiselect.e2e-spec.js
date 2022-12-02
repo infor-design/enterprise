@@ -2,8 +2,6 @@ const utils = requireHelper('e2e-utils');
 const config = requireHelper('e2e-config');
 requireHelper('rejection');
 
-const axePageObjects = requireHelper('axe-page-objects');
-
 const clickOnMultiselect = async () => {
   const multiselectEl = await element.all(by.css('div.dropdown')).first();
   await browser.driver
@@ -54,23 +52,6 @@ describe('Multiselect example-states tests', () => {
       await browser.driver.sleep(config.sleep);
 
       expect(await element(by.css('.message-text')).getText()).toEqual('Required');
-    });
-  }
-
-  if (!utils.isIE()) {
-    it('Should be accessible on init with no WCAG 2AA violations', async () => {
-      await clickOnMultiselect();
-      const res = await axePageObjects(browser.params.theme);
-
-      // Not sure why CI has one error we cannot inspect.
-      if (utils.isCI()) {
-        expect(res.violations.length).toBeLessThan(2);
-      } else {
-        expect(res.violations.length).toEqual(0);
-      }
-      if (res.violations.length > 0) {
-        console.warn(res.violations);
-      }
     });
   }
 });

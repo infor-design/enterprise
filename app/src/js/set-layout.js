@@ -42,4 +42,4 @@ export default function setLayout(req, res, layoutPath) {
   if (res.opts.layout !== targetLayoutPath) {
     res.opts.layout = targetLayoutPath;
   }
-};
+}

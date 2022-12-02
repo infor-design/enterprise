@@ -10,4 +10,4 @@ export default function setImportStyle(req, res, style) {
   if (style !== 'default') {
     res.opts.importStyle = style;
   }
-};
+}

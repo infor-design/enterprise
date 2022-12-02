@@ -295,6 +295,7 @@ excel.copyToDataSet = function (pastedData, rowCount, colIndex, dataSet, self) {
             // Just overwrite the data in the cell
             rowData[col.field] = values[j];
           }
+        // eslint-disable-next-line no-dupe-else-if
         } else if (col.editor.name === 'input') {
           // Validates if input is date. If true, will overwrite the data in cell otherwise nothing will happen.
           if (!isNaN(Date.parse(values[j]))) {
@@ -343,6 +344,7 @@ excel.copyToDataSet = function (pastedData, rowCount, colIndex, dataSet, self) {
  * @param {object} self The grid api if customDS is not used
  * @returns {void}
  */
+// eslint-disable-next-line default-param-last
 excel.exportToExcel = function (fileName, worksheetName, customDs, format = false, self) {
   const template = '' +
     '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">' +
@@ -395,6 +397,7 @@ excel.exportToExcel = function (fileName, worksheetName, customDs, format = fals
  * @param {string} self The grid api to use (if customDs is not used)
  * @returns {void}
  */
+// eslint-disable-next-line default-param-last
 excel.exportToCsv = function (fileName, customDs, sep = 'sep=,', format = false, self) {
   const isObject = v => (v && typeof v === 'object' && v.constructor === Object);
   const isFalse = v => /^(false|0+|null)$/gi.test(v);

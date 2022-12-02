@@ -50,7 +50,7 @@ export default function (app, defaults) {
     // Uses Flex Toolbars in headers
     if ((argv.flextoolbar && argv.flextoolbar.length > 0) ||
       (argv.toolbarflex && argv.toolbarflex.length > 0)) {
-        argv.useFlexToolbar = true;
+      argv.useFlexToolbar = true;
       logger('info', 'Using Flex Toolbars inside of page headers');
     }
 
@@ -81,4 +81,4 @@ export default function (app, defaults) {
 
     next();
   };
-};
+}

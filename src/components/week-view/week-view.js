@@ -619,7 +619,7 @@ WeekView.prototype = {
       const month = dString.substring(4, 6);
       const day = dString.substring(6, 8);
       const startDate = new Date(year, month - 1, day);
-      
+
       if (dayOfWeek.includes(startDate.getDay())) {
         const container = dayMap.elem;
         this.renderDisableToContainer(container);
@@ -662,7 +662,7 @@ WeekView.prototype = {
           startDate.getMonth(),
           startDate.getDate(),
         );
-    
+
         if (Locale.isIslamic(this.locale.name)) {
           const startDateIslamic = Locale.gregorianToUmalqura(startDate);
           startKey = stringUtils.padDate(
@@ -671,14 +671,14 @@ WeekView.prototype = {
             startDateIslamic[2]
           );
         }
-    
+
         const endDate = new Date(dates[j]);
         let endKey = stringUtils.padDate(
           endDate.getFullYear(),
           endDate.getMonth(),
           endDate.getDate()
         );
-    
+
         if (Locale.isIslamic(this.locale.name)) {
           const endDateIslamic = Locale.gregorianToUmalqura(endDate);
           endKey = stringUtils.padDate(

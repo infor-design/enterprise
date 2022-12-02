@@ -282,8 +282,10 @@ describe('Datagrid', () => {
     });
 
     it('should override the aria-describedby value', async () => {
-      const ariaDesc = await page.$$eval('tbody[role="rowgroup"] td[role="gridcell"]:nth-child(2)',
-        e => e.map(el => el.getAttribute('aria-describedby')));
+      const ariaDesc = await page.$$eval(
+        'tbody[role="rowgroup"] td[role="gridcell"]:nth-child(2)',
+        e => e.map(el => el.getAttribute('aria-describedby'))
+      );
 
       for (let i = 0; i < ariaDesc.length; i++) {
         expect(ariaDesc).toContain(`test-landmark-datagrid-${i + 1}-header-1`);
