@@ -16,7 +16,31 @@ import logger from './logger.js';
 import getFileContents from './build/get-file-contents.js';
 import writeFile from './build/write-file.js';
 
-import config from './configs/cssmin';
+const config = {
+  // Minify css
+  cssmin: {
+    options: {
+      roundingPrecision: -1
+    },
+    dist: {
+      files: {
+        'dist/css/theme-classic-contrast.min.css': ['dist/css/theme-classic-contrast.css'],
+        'dist/css/theme-classic-dark.min.css': ['dist/css/theme-classic-dark.css'],
+        'dist/css/theme-classic-light.min.css': ['dist/css/theme-classic-light.css'],
+        'dist/css/theme-new-light.min.css': ['dist/css/theme-new-light.css'],
+        'dist/css/theme-new-dark.min.css': ['dist/css/theme-new-dark.css'],
+        'dist/css/theme-new-contrast.min.css': ['dist/css/theme-new-contrast.css'],
+        'dist/css/theme-soho-contrast.min.css': ['dist/css/theme-soho-contrast.css'],
+        'dist/css/theme-soho-dark.min.css': ['dist/css/theme-soho-dark.css'],
+        'dist/css/theme-soho-light.min.css': ['dist/css/theme-soho-light.css'],
+        'dist/css/theme-uplift-light.min.css': ['dist/css/theme-uplift-light.css'],
+        'dist/css/theme-uplift-dark.min.css': ['dist/css/theme-uplift-dark.css'],
+        'dist/css/theme-uplift-contrast.min.css': ['dist/css/theme-uplift-contrast.css'],
+      }
+    },
+  }
+
+};
 
 const argv = _yargs(hideBin(process.argv)).argv;
 
@@ -45,7 +69,7 @@ function minifyCSS() {
       throw new Error('Need to have target CSS files passed in for minifier');
     }
 
-    const files = Object.keys(config.dist.files);
+    const files = Object.keys(config.cssmin.dist.files);
     const processes = [];
 
     files.forEach((targetFileName) => {
@@ -53,6 +77,7 @@ function minifyCSS() {
       processes.push(minify(srcFileName, targetFileName));
     });
 
+    // eslint-disable-next-line no-promise-executor-return
     return Promise.all(processes).then(() => {
       resolve();
     }).catch((e) => {
@@ -64,4 +89,4 @@ function minifyCSS() {
 // -------------------------------------
 // Main
 // -------------------------------------
-export default minifyCSS;
+minifyCSS();

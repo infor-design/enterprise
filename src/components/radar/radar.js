@@ -378,8 +378,8 @@ Radar.prototype = {
       .style('fill', (d, i) => colors(i))
       .style('fill-opacity', s.opacityArea)
       .style('cursor', !self.settings.selectable ? 'inherit' : 'pointer')
-      .on(`contextmenu.${self.namespace}`, function (d) {
-        charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], d);
+      .on(`contextmenu.${self.namespace}`, function (event, d) {
+        charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], d, event);
       })
       // Click and double click events
       // Use very slight delay to fire off the normal click action
@@ -504,8 +504,8 @@ Radar.prototype = {
         clearTimeout(tooltipInterval);
         charts.hideTooltip();
       })
-      .on(`contextmenu.${self.namespace}`, function (d) {
-        charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], d);
+      .on(`contextmenu.${self.namespace}`, function (event, d) {
+        charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], d, event);
       });
 
     // Add tooltip object

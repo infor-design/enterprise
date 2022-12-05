@@ -304,7 +304,7 @@ Sparkline.prototype = {
         d3.select(this).attr('r', (self.settings.isMinMax && max === d ||
             self.settings.isMinMax && min === d) ? (dotsize + 1) : dotsize);
       })
-      .on(`contextmenu.${self.namespace}`, function (d) {
+      .on(`contextmenu.${self.namespace}`, function (event, d) {
         const data = { value: d, name: (chartData[0].name || '') };
         if (self.settings.isMinMax && max === d) {
           data.highest = true;
@@ -315,7 +315,7 @@ Sparkline.prototype = {
         if (self.settings.isPeakDot && max === d) {
           data.peak = true;
         }
-        charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], data);
+        charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], data, event);
       });
 
     /**

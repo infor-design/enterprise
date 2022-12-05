@@ -9,7 +9,7 @@ const files = [
   'dist/css/theme-classic-light.css',
   'dist/js/jquery-3.6.1.js',
   'node_modules/jasmine-jquery/lib/jasmine-jquery.js',
-  'dist/js/d3.v5.js',
+  'dist/js/d3.v7.js',
   'dist/js/sohoxi.js',
   'dist/js/cultures/en-US.js',
   'dist/js/cultures/da-DK.js',

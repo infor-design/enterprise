@@ -77,11 +77,14 @@ function openUncompressedFile(name, filePath) {
  * @returns {Promise} resovled once the CLI process completes.
  */
 function minifyIdsJs() {
-  return new Promise((resolve, reject) => {
+  // eslint-disable-next-line no-async-promise-executor
+  return new Promise(async (resolve, reject) => {
     const code = openUncompressedFile('Uncompressed "sohoxi.js" library', paths.ids.input.js);
-    config.terser.sourceMap.content = openUncompressedFile('Uncompressed "sohoxi.js" sourceMap', paths.ids.input.sourceMap);
+    // config.terser.sourceMap.content = openUncompressedFile('Uncompressed "sohoxi.js" sourceMap', paths.ids.input.sourceMap);
 
-    const result = minify(code, config.terser);
+    // const result = minify(code, config.terser);
+    const result = await minify(code, config.terser);
+
     if (result.error) {
       reject(new Error(`Error running Terser: ${result.error}`));
       return;
@@ -90,11 +93,13 @@ function minifyIdsJs() {
       logger('success', `Compressed library file "${chalk.yellow('sohoxi.js')}" with sourcemap successfully.`);
     }
     compressedFileCount++;
+
     resolve(extend({}, result, {
       inputFile: paths.ids.input.js,
       inputSourceMapFileName: paths.ids.input.sourceMap,
       outputFile: paths.ids.output.js,
-      outputSourceMapFile: paths.ids.output.sourceMap
+      outputSourceMapFile: paths.ids.output.sourceMap,
+      code: result.code
     }));
   });
 }
@@ -106,11 +111,12 @@ function minifyIdsJs() {
  * @returns {Promise} resolves when the Terser process completes or throws an error.
  */
 function minifyCulture(inputFileName) {
-  return new Promise((resolve, reject) => {
+  // eslint-disable-next-line no-async-promise-executor
+  return new Promise(async (resolve, reject) => {
     const culture = inputFileName.substring(inputFileName.lastIndexOf(path.sep) + 1, inputFileName.lastIndexOf('.'));
     const code = openUncompressedFile(`Uncompressed culture "${culture}"`, path.resolve(paths.cultures, inputFileName));
 
-    const result = minify(code);
+    const result = await minify(code);
     if (result.error) {
       reject(new Error(`Error running Terser: ${result.error}`));
       return;
@@ -121,7 +127,8 @@ function minifyCulture(inputFileName) {
     compressedFileCount++;
     resolve(extend({}, result, {
       inputFile: inputFileName,
-      outputFile: path.resolve(paths.cultures, `${culture}.min.js`)
+      outputFile: path.resolve(paths.cultures, `${culture}.min.js`),
+      code: result.code
     }));
   });
 }
@@ -168,4 +175,5 @@ function minifyJS() {
   });
 }
 
-export default minifyJS;
+minifyJS();
+/// export default minifyJS;

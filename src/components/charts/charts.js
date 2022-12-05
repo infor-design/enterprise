@@ -1068,16 +1068,17 @@ charts.applyAltLabels = function (svg, dataArray, elem, selector, isNoEclipse) {
  * @param  {object} container  The svg container.
  * @param  {object} elem The element that was right clicked.
  * @param  {object} d The data object
+ * @param  {object} event The event object
  */
-charts.triggerContextMenu = function (container, elem, d) {
-  d3.event.preventDefault();
-  d3.event.stopPropagation();
-  d3.event.stopImmediatePropagation();
+charts.triggerContextMenu = function (container, elem, d, event) {
+  event.preventDefault();
+  event.stopPropagation();
+  event.stopImmediatePropagation();
 
   const e = $.Event('contextmenu');
   e.target = elem;
-  e.pageX = d3.event.pageX;
-  e.pageY = d3.event.pageY;
+  e.pageX = event.pageX;
+  e.pageY = event.pageY;
   $(container).trigger(e, [elem, d]);
 };
 

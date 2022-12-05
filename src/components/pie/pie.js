@@ -489,39 +489,39 @@ Pie.prototype = {
           });
         });
       })
-      .on(`contextmenu.${self.namespace}`, function (d) {
-        charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], d);
+      .on(`contextmenu.${self.namespace}`, function (event, d) {
+        charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], d, event);
       })
 
       // Click and double click events
       // Use very slight delay to fire off the normal click action
       // It alow to cancel when the double click event happens
-      .on(`click.${self.namespace}`, function (d, i) {
+      .on(`click.${self.namespace}`, function (event, d) {
         const selector = this;
 
         if (self.settings.selectable) {
           timer = setTimeout(function () {
             if (!prevent) {
               // Run click action
-              self.doClickAction(d, i, selector, tooltipInterval);
+              self.doClickAction(d, d.index, selector, tooltipInterval);
             }
             prevent = false;
           }, delay);
         }
       })
-      .on(`dblclick.${self.namespace}`, function (d, i) {
+      .on(`dblclick.${self.namespace}`, function (event, d) {
         const selector = this;
         clearTimeout(timer);
         prevent = true;
         // Run double click action
-        self.doDoubleClickAction(d, i, selector, tooltipInterval);
+        self.doDoubleClickAction(d, d.index, selector, tooltipInterval);
       })
-      .on(`mouseenter.${self.namespace}`, function (d, i) {
+      .on(`mouseenter.${self.namespace}`, function (event, d) {
         if (!self.settings.showTooltips) {
           return;
         }
         // See where to position
-        const dot = self.svg.selectAll('circle').nodes()[i];
+        const dot = self.svg.selectAll('circle').nodes()[d.index];
         const offset = getOffset(dot);
 
         // See where we want the arrow

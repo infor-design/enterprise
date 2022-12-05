@@ -291,8 +291,8 @@ Bullet.prototype = {
           clearInterval(tooltipInterval);
           charts.hideTooltip();
         })
-        .on(`contextmenu.${self.namespace}`, function (d) {
-          charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], d);
+        .on(`contextmenu.${self.namespace}`, function (event, d) {
+          charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], d, event);
         })
         .merge(range)
         .transition()

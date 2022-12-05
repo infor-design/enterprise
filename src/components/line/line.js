@@ -323,7 +323,7 @@ Line.prototype = {
 
     const yScale = y.domain([0, d3.max(s.isBubble ||
       s.isScatterPlot ? maxes.y : maxes)]).nice();
-    const zScale = z.domain([0, d3.max(s.isBubble ? maxes.z : maxes)]).nice();
+    const zScale = z.domain([0, d3.max(s.isBubble ? maxes.z : s.isScatterPlot ? maxes.y : maxes)]).nice();
     let numTicks = entries;
     if (s.xAxis && s.xAxis.ticks) {
       numTicks = s.xAxis.ticks === 'auto' ? Math.max(width / 85, 2) : s.xAxis.ticks;
@@ -533,8 +533,8 @@ Line.prototype = {
           const args = [{ elem: [this.parentNode], data: d }];
           self.element.triggerHandler('dblclick', [args]);
         })
-        .on(`contextmenu.${self.namespace}`, function () {
-          charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], d);
+        .on(`contextmenu.${self.namespace}`, function (event) {
+          charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], d, event);
         });
 
       // Add animation
@@ -695,8 +695,8 @@ Line.prototype = {
               const args = [{ elem: [this.parentNode], data: dh }];
               self.element.triggerHandler('dblclick', [args]);
             })
-            .on(`contextmenu.${self.namespace}`, function (di) {
-              charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], di);
+            .on(`contextmenu.${self.namespace}`, function (event, di) {
+              charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], di, event);
             });
         }
 
@@ -756,8 +756,8 @@ Line.prototype = {
               const args = [{ elem: [this.parentNode], data: dh }];
               self.element.triggerHandler('dblclick', [args]);
             })
-            .on(`contextmenu.${self.namespace}`, function (di) {
-              charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], di);
+            .on(`contextmenu.${self.namespace}`, function (event, di) {
+              charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], di, event);
             });
         }
         if (s.isBubble) {

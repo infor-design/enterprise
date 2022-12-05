@@ -1199,8 +1199,8 @@ Column.prototype = {
       })
 
       // Contextmenu
-      .on(`contextmenu.${self.namespace}`, function (d) {
-        charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], d);
+      .on(`contextmenu.${self.namespace}`, function (event, d) {
+        charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], d, event);
       })
       // Click and double click events
       // Use very slight delay to fire off the normal click action
