@@ -485,7 +485,7 @@ describe('DatePicker API', () => {
     datepickerAPI.destroy();
     datepickerAPI = new DatePicker(datepickerEl, { useMask: false });
     datepickerAPI.setToday();
-    
+
     expect($(datepickerEl).data('mask')).toBeFalsy();
   });
 });

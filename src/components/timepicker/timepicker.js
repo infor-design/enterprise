@@ -1089,7 +1089,7 @@ TimePicker.prototype = {
           if (hourCounter > maxHourRange) {
             break;
           }
-          
+
           selected = '';
           if (parseInt(hourValue, 10) === hourCounter) {
             selected = ' selected';

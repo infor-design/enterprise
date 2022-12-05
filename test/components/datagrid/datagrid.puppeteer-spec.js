@@ -494,7 +494,7 @@ describe('Datagrid', () => {
         .then(classNameString => expect(classNameString).not.toContain('is-hidden'));
     });
 
-    it('should show tooltip when hovered', async () => {
+    it('should show tooltip when hovered (headers)', async () => {
       await page.hover('.icon.datagrid-header-icon');
 
       await page.waitForSelector('#example-header-icon-with-tooltip-datagrid-0tooltip', { visible: true })

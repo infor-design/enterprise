@@ -1756,6 +1756,7 @@ SearchField.prototype = {
    */
   expand(noFocus) {
     const self = this;
+    // eslint-disable-next-line compat/compat
     const expandPromise = new Promise((resolve) => {
       if (self.isExpanded || self.isExpanding || self.isCollapsing) {
         resolve();
@@ -1854,6 +1855,7 @@ SearchField.prototype = {
    */
   collapse() {
     const self = this;
+    // eslint-disable-next-line compat/compat
     const collapsePromise = new Promise((resolve) => {
       if (!self.isExpanded && self.isExpanding && !self.isCollapsing) {
         resolve();

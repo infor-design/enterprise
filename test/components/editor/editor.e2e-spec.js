@@ -110,6 +110,7 @@ describe('Editor example-index tests', () => {
       .wait(protractor.ExpectedConditions.invisibilityOf(await element(by.css('.editor-modal-image'))), config.waitsFor);
 
     // Scan the editor content for image tags and make sure none exist
+    // eslint-disable-next-line jasmine/expect-matcher
     expect(await element(by.css('.editor img[src*="/images/placeholder-80x80.png"]')).isPresent());
   });
 

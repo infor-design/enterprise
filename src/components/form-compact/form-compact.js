@@ -70,6 +70,7 @@ FormCompact.prototype = {
 
     // Listen to attribute changes (disabled/readonly) on cells
     const attributeNames = ['disabled', 'readonly'];
+    // eslint-disable-next-line compat/compat
     this.inputsObserver = new MutationObserver((mutationsList) => {
       if (!mutationsList.length) {
         return;

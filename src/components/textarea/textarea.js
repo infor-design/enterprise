@@ -54,6 +54,7 @@ Textarea.prototype = {
       this.element.closest('.field').addClass('is-disabled');
     }
 
+    // eslint-disable-next-line compat/compat
     this.isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
     this.isSafari = (
       navigator.userAgent.indexOf('Safari') !== -1 &&

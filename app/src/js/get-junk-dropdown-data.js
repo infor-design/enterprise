@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 // Small tool that retrieves JSON data from a file and turns it into objects for use in the demo app.
 // NOTE: Synchronous for now.
 import * as path from 'path';

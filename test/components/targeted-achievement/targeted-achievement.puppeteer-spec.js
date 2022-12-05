@@ -14,11 +14,11 @@ describe('Targeted Achievement', () => {
     it('should show the title', async () => {
       await expect(page.title()).resolves.toMatch('IDS Enterprise');
     });
-    
+
     it('should show the tooltip', async () => {
       const icon = await page.$('.icon-error');
       icon.hover();
-      
+
       await page.waitForSelector('.tooltip', { visible: true })
         .then(element => expect(element).toBeTruthy());
     });

@@ -47,21 +47,21 @@ describe('Notification test-custom-tooltip-close-btn tests', () => {
   beforeAll(async () => {
     await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
   });
-  
+
   it('Should Create and close notifications using the buttons shown', async () => {
-    await page.hover('#open'); 
+    await page.hover('#open');
     await page.click('#open');
     const notif1 = await page.waitForSelector('#notification-id-1', { visible: true });
     expect(notif1).toBeTruthy();
 
-    await page.hover('#close'); 
+    await page.hover('#close');
     await page.click('#close');
     const isClosed = await page.waitForSelector('#notification-id-1', { hidden: true });
     expect(isClosed).toBeFalsy();
 
-    await page.hover('#open'); 
+    await page.hover('#open');
     await page.click('#open');
-    await page.hover('#close-all'); 
+    await page.hover('#close-all');
     await page.click('#close-all');
     const closeAll = await page.waitForSelector('#notification-id-1', { hidden: true });
     expect(closeAll).toBeFalsy();
