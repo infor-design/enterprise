@@ -739,8 +739,12 @@ $toolbarsearchfield-category-empty-width: 51px;
       .collapse-button,
       .btn {
         background-color: $searchfield-header-bg-color;
-        border-bottom-color: rgba($searchfield-header-border-color, 0.7);
+        border-color: rgba($searchfield-header-border-color, 0.7);
         height: 38px;
+      }
+
+      .searchfield:focus {
+        border-color: rgba($input-color-focus-border, 1);
       }
 
       .collapse-button,
