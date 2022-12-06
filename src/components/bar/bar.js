@@ -498,7 +498,8 @@ Bar.prototype = {
         ((((totalGroupArea - totalHeight) / 2) + ((d.gindex * maxBarHeight) + (d.gindex * barSpace))) + (d.index * gap)))) // eslint-disable-line
       .attr('height', () => (s.isStacked ? (yScale.bandwidth()) : maxBarHeight))
       .attr('width', 0) // Animated in later
-      .on(`mouseenter.${self.namespace}`, function (d, i) {
+      .on(`mouseenter.${self.namespace}`, function (event, d) {
+        const i = sGroup.select('rect').nodes().indexOf(this);
         let j;
         let l;
         let hexColor;
@@ -620,16 +621,17 @@ Bar.prototype = {
           content = '<div class="chart-swatch">';
 
           if (s.isStacked) {
+            const ii = Array.from(this.parentElement.children).indexOf(this);
             for (j = 0, l = dataset.length; j < l; j++) {
               total = 0;
               hexColor = charts.chartColor(j, 'bar', series[j]);
               for (let k = 0, kl = dataset.length; k < kl; k++) {
                 if (s.isNormalized) {
-                  total += dataset[k][i].value;
-                  totals[k] = dataset[k][i].value;
+                  total += dataset[k][ii].value;
+                  totals[k] = dataset[k][ii].value;
                 } else {
-                  total += dataset[k][i].x;
-                  totals[k] = dataset[k][i].x;
+                  total += dataset[k][ii].x;
+                  totals[k] = dataset[k][ii].x;
                 }
               }
               content += `<div class="swatch-row">
@@ -651,7 +653,7 @@ Bar.prototype = {
         }
 
         if (total > 0) {
-          content = `<span class="chart-tooltip-value"><b>${d.value}</b> Value</span><span class="chart-tooltip-total"><b>${Math.round(total)}</b> ${Locale.translate('Total')}</span>${content}`;
+          content = `<span class="chart-tooltip-value"><b>${s.isStacked ? totals[d.index] : d.value}</b> Value</span><span class="chart-tooltip-total"><b>${Math.round(total)}</b> ${Locale.translate('Total')}</span>${content}`;
         }
 
         if (tooltipData && typeof tooltipData === 'function' && !tooltipDataCache[i]) {
@@ -706,24 +708,28 @@ Bar.prototype = {
       // Click and double click events
       // Use very slight delay to fire off the normal click action
       // It alow to cancel when the double click event happens
-      .on(`click.${self.namespace}`, function (d, i) {
+      .on(`click.${self.namespace}`, function (event, d,) {
+        const i = sGroup.select('rect').nodes().indexOf(this);
         const selector = this;
         timer = setTimeout(function () {
           if (!prevent) {
             // Run click action
             if (self.settings.selectable) {
-              self.doClickAction(d, i, selector);
+              const ii = Array.from(selector.parentElement.children).indexOf(selector);
+              self.doClickAction(d, s.isStacked ? ii : i, selector);
             }
           }
           prevent = false;
         }, delay);
       })
-      .on(`dblclick.${self.namespace}`, function (d, i) {
+      .on(`dblclick.${self.namespace}`, function (event, d) {
         const selector = this;
         clearTimeout(timer);
         prevent = true;
         // Run double click action
-        self.doDoubleClickAction(d, i, selector);
+        const i = sGroup.select('rect').nodes().indexOf(this);
+        const ii = Array.from(this.parentElement.children).indexOf(this);
+        self.doDoubleClickAction(d, s.isStacked ? ii : i, selector);
       });
 
     $(sGroup._parents).each((parentPos, parentEl) => {
