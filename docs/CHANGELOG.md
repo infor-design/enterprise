@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.70.1 Fixes
+
+- `[Datagrid]` Fixed a bug in datagrid where dropdown filter does not render correctly. ([#7006](https://github.com/infor-design/enterprise/issues/7006))
+
 ## v4.70.0
 
 ## v4.70.0 Important Features
