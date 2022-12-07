@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## 4.67.5 Fixes
+
+- `[Datagrid]` Fixed a bug in datagrid where dropdown filter does not render correctly. ([#7006](https://github.com/infor-design/enterprise/issues/7006))
+
 ## 4.67.4 Fixes
 
 - `[Datagrid]` Fixed a bug in datagrid where clear dirty cell does not work properly in frozen columns. ([#6952](https://github.com/infor-design/enterprise/issues/6952))
