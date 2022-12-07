@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## 4.67.5 Fixes
+
+- `[Datagrid]` Fixed a bug in datagrid where dropdown filter does not render correctly. ([#7006](https://github.com/infor-design/enterprise/issues/7006))
+
 ## 4.67.4 Fixes
 
 - `[Datagrid]` Fixed a bug in datagrid where clear dirty cell does not work properly in frozen columns. ([#6952](https://github.com/infor-design/enterprise/issues/6952))
@@ -50,7 +54,6 @@
 - `[Button]` Added dark theme button colors. ([#6512](https://github.com/infor-design/enterprise/issues/6512))
 - `[Calendar]` Fixed a bug in calendar where bottom border is not properly rendering. ([#6668](https://github.com/infor-design/enterprise/issues/6668))
 - `[Color Palette]` Added status color CSS classes for color and border-color properties. ([#6711](https://github.com/infor-design/enterprise/issues/6711))
-- `[Datagrid]` Fixed a bug in datagrid where dropdown filter does not render correctly. ([#7006](https://github.com/infor-design/enterprise/issues/7006))
 - `[Datagrid]` Fixed a bug in datagrid inside a modal where the column is rendering wider than normal. ([#6782](https://github.com/infor-design/enterprise/issues/6782))
 - `[Datagrid]` Fixed a bug in datagrid where when changing rowHeight as a setting and rerendering it doesnt apply. ([#6783](https://github.com/infor-design/enterprise/issues/6783))
 - `[Datagrid]` Fixed a bug in datagrid where isEditable is not returning row correctly. ([#6746](https://github.com/infor-design/enterprise/issues/6746))
