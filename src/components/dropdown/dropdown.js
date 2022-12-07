@@ -1792,8 +1792,8 @@ Dropdown.prototype = {
         return;
       }
 
-      if (this.list.find('ul li.hidden').length === 0) {
-        this.list.find(' > svg.listoption-icon:not(.swatch)').changeIcon('icon-empty-circle');
+      if (this.list?.find('ul li.hidden').length === 0) {
+        this.list?.find(' > svg.listoption-icon:not(.swatch)').changeIcon('icon-empty-circle');
       }
 
       filter();
@@ -2041,7 +2041,7 @@ Dropdown.prototype = {
     // It adjust the position of datagrid filter dropdown
     // if the element goes out of the datagrid's container
     if (this.list.hasClass('datagrid-filter-dropdown') && document.querySelector('.datagrid-container') !== null) {
-      const gridContainerPos = document.querySelector('.datagrid-container').getBoundingClientRect();
+      const gridContainerPos = this.dropdownParent.closest('.datagrid-container').getBoundingClientRect();
       const gridFilterDropdownPos = document.querySelector('.datagrid-filter-dropdown').getBoundingClientRect();
       const pageContainerPos = document.querySelector('[role="main"]').getBoundingClientRect().right;
       const adjustedPosition = pageContainerPos - gridContainerPos.right;
@@ -3786,6 +3786,7 @@ Dropdown.prototype = {
         if (isTag) {
           return;
         }
+        self.dropdownParent = e.currentTarget;
         self.toggle();
       }).on('mouseup.dropdown touchend.dropdown', (e) => {
         if (e.button === 2) {

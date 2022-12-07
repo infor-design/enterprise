@@ -1,5 +1,15 @@
 # What's New with Enterprise
 
+## v4.71.0
+
+## v4.71.0 Important Features
+
+## v4.71.0 Features
+
+## v4.71.0 Fixes
+
+- `[Datagrid]` Fixed a bug in datagrid where dropdown filter does not render correctly. ([#7006](https://github.com/infor-design/enterprise/issues/7006))
+
 ## v4.70.0
 
 ## v4.70.0 Important Features
@@ -8,9 +18,11 @@
 
 - `[Checkbox]` Converted Checkbox scripts to puppeteer. ([#6936](https://github.com/infor-design/enterprise/issues/6936))
 - `[Circlepager]` Converted Circlepager scripts to puppeteer. ([#6971](https://github.com/infor-design/enterprise/issues/6971))
+- `[Icons]` Bumped `ids-identity` to get a new empty state icon `empty-no-search-result` and a new system icon `advance-settings`.([#6999](https://github.com/infor-design/enterprise/issues/6999))
 
 ## v4.70.0 Fixes
 
+- `[Accordion]` Fixed a bug where expanded card closes in NG when opening accordion. ([#6820](https://github.com/infor-design/enterprise/issues/6820))
 - `[Counts]` Fixed a bug in counts where two rows of labels cause misalignment. ([#6845](https://github.com/infor-design/enterprise/issues/6845))
 - `[Datagrid]` Fixed a bug in datagrid where expandable row input cannot edit the value. ([#6781](https://github.com/infor-design/enterprise/issues/6781))
 - `[Datagrid]` Fixed a bug in datagrid where clear dirty cell does not work properly in frozen columns. ([#6952](https://github.com/infor-design/enterprise/issues/6952))
@@ -18,6 +30,8 @@
 - `[Datagrid]` Fixed a bug where frozen column headers are not rendered on update. ([NG#1399](https://github.com/infor-design/enterprise-ng/issues/1399))
 - `[Datagrid]` Added toolbar update on datagrid update. ([NG#1357](https://github.com/infor-design/enterprise-ng/issues/1357))
 - `[Datepicker]` Added Firefox increment/decrement keys. ([#6877](https://github.com/infor-design/enterprise/issues/6877))
+- `[Datepicker]` Fixed a bug in mask value in datepicker when update is called. ([NG#1380](https://github.com/infor-design/enterprise-ng/issues/1380))
+- `[Dropdown]` Fixed a bug in dropdown where there is a null in a list when changing language to chinese. ([#6916](https://github.com/infor-design/enterprise/issues/6916))
 - `[Editor]` Fixed a bug in editor where insert image is not working properly when adding attributes. ([#6864](https://github.com/infor-design/enterprise/issues/6864))
 - `[Editor]` Fixed a bug in editor where paste and plain text is not cleaning the text/html properly. ([#6892](https://github.com/infor-design/enterprise/issues/6892))
 - `[Locale]` Fixed a bug in locale where same language translation does not render properly. ([#6847](https://github.com/infor-design/enterprise/issues/6847))
