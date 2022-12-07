@@ -505,6 +505,7 @@ $subheader-height: 60px;
     [class^='btn'] {
       background-color: transparent;
       border: 1px solid transparent;
+      border-radius: 8px;
       color: $header-button-color;
 
       &:hover {
@@ -539,6 +540,7 @@ $subheader-height: 60px;
 
       &:focus {
         color: $header-button-focus-color;
+        border-color: $header-button-focus-color;
 
         .icon {
           color: $header-button-focus-color;
@@ -548,6 +550,7 @@ $subheader-height: 60px;
       &:focus:not(.hide-focus) {
         box-shadow: 0 0 0 2px transparent, 0 0 0 1px $header-button-focus-color, $header-focus-box-shadow !important;
         color: $header-button-focus-color;
+        border: 0;
 
         .icon {
           color: $header-button-focus-color;
@@ -684,6 +687,15 @@ $subheader-height: 60px;
     .icon.app-header {
       > span {
         background-color: $header-button-color;
+      }
+    }
+
+    &:focus,
+    &:hover {
+      .icon.app-header {
+        > span {
+          background-color: $header-button-hover-color;
+        }
       }
     }
   }
