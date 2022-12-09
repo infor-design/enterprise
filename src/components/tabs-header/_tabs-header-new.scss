@@ -277,7 +277,7 @@ html[dir='rtl'] {
         linear-gradient(
           to left,
           rgba($header-tab-bg-color-new, 1),
-          rgba($header-bg-color-new, 0)
+          rgba($header-tab-bg-color-new, 0)
         );
       left: auto;
       right: 20px;
@@ -287,8 +287,8 @@ html[dir='rtl'] {
       background-image:
         linear-gradient(
           to left,
-          rgba($header-bg-color-new, 0),
-          rgba($header-bg-color-new, 1)
+          rgba($header-tab-bg-color-new, 0),
+          rgba($header-tab-bg-color-new, 1)
         );
       left: 51px;
       right: auto;
