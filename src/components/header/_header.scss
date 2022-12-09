@@ -437,7 +437,7 @@ $subheader-height: 60px;
   .go-button {
     background-color: $header-primary-btn-background-color;
     border-color: $header-primary-btn-background-color;
-    color: $header-text-color;
+    color: $searchfield-go-text-color;
 
     &:hover,
     &:active,
@@ -496,9 +496,15 @@ $subheader-height: 60px;
 .subheader {
   .toolbar,
   .flex-toolbar {
-    .buttonset > .separator {
-      background-color: $header-button-color;
-      padding: 0;
+    .buttonset {
+      > .separator {
+        background-color: $header-button-color;
+        padding: 0;
+      }
+
+      [class^='btn'] {
+        margin-right: 3px;
+      }
     }
 
     // Buttons in the header will all appear as Tertiary/Destructive-style
@@ -540,7 +546,6 @@ $subheader-height: 60px;
 
       &:focus {
         color: $header-button-focus-color;
-        border-color: $header-button-focus-color;
 
         .icon {
           color: $header-button-focus-color;
@@ -550,7 +555,6 @@ $subheader-height: 60px;
       &:focus:not(.hide-focus) {
         box-shadow: 0 0 0 2px transparent, 0 0 0 1px $header-button-focus-color, $header-focus-box-shadow !important;
         color: $header-button-focus-color;
-        border: 0;
 
         .icon {
           color: $header-button-focus-color;

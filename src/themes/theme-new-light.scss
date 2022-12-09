@@ -16,7 +16,7 @@
 
 // New Theme Light Overrides
 $header-bg-color: $ids-color-palette-white;
-$subhead-bg-color: $ids-color-brand-primary-alt;
+$subhead-bg-color: $ids-color-palette-white;
 $disabled-color: $ids-color-palette-slate-30;
 $label-disabled-color: $input-color-disabled-border;
 $input-disabled-color: $input-color-disabled-font;
@@ -327,7 +327,6 @@ $tab-border-color: $ids-color-palette-slate-30;
 $tab-alt-border-color: $ids-color-palette-slate-30;
 
 // Header
-$subhead-bg-color: $ids-color-palette-azure-80;
 $subheader-input-color-focus-border: $ids-color-palette-slate-40;
 
 // Header Tabs
