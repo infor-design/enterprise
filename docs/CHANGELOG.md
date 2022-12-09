@@ -6,6 +6,8 @@
 
 ## v4.71.0 Features
 
+- `[Searchfield]` Added enhancement changes in searchfield. ([#6707](https://github.com/infor-design/enterprise/issues/6707))
+
 ## v4.71.0 Fixes
 
 - `[Datagrid]` Fixed a bug in datagrid where dropdown filter does not render correctly. ([#7006](https://github.com/infor-design/enterprise/issues/7006))
