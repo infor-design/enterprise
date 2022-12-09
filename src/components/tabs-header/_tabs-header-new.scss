@@ -1,6 +1,260 @@
 // Styles for Header Tabs Uplift
 //================================================== //
 
+.tab-container.header-tabs {
+  background-color: $header-tab-bg-color-new;
+  border-bottom: 1px solid $header-tabcontainer-border-color;
+  &::before {
+    background-image:
+      linear-gradient(
+        to right,
+        rgba($header-bg-color, 1),
+        rgba($header-bg-color, 0)
+      );
+    left: 20px;
+  }
+
+  &::after {
+    background-image:
+      linear-gradient(
+        to right,
+        rgba($header-bg-color, 0),
+        rgba($header-bg-color, 1)
+      );
+  }
+
+  .tab-list-info {
+    display: none;
+  }
+
+  > .tab-list-container {
+    margin-top: -1px;
+    border-bottom: 0;
+
+    .tab {
+      color: $header-tab-normal-color-new;
+      font-weight: $ids-number-font-weight-bold;
+      overflow: hidden;
+
+      &::before {
+        background-color: rgba($header-tab-normal-color-new, 0);
+        bottom: 0;
+      }
+
+      &:first-child {
+        padding-left: 0;
+      }
+
+      &:hover:not(.is-disabled) {
+        color: $header-tab-hover-color-new;
+        border-bottom: 4px solid $header-tab-selected-color-new;
+        &::before {
+          background-color: rgba($header-tab-hover-color-new, 1);
+        }
+
+        .icon:not(.is-error):not(.icon-error) {
+          color: $header-tab-hover-color-new;
+        }
+      }
+
+      &.is-selected:not(.is-disabled) {
+        color: $header-tab-selected-color-new;
+        border-bottom: 4px solid $header-tab-selected-color-new;
+
+        &::before {
+          background-color: rgba($header-tab-hover-color-new, 1);
+        }
+
+        &:hover {
+          color: $header-tab-selected-color-new;
+
+          &::before {
+            background-color: rgba($header-tab-hover-color-new, 1);
+          }
+        }
+      }
+
+      &.dismissible {
+        .icon {
+          color: $ids-color-palette-white;
+          opacity: 0.6;
+        }
+
+        &:hover,
+        &.is-selected {
+          .icon:not(.is-error):not(.icon-error) {
+            color: $ids-color-palette-white;
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+
+  .animated-bar {
+    background-color: $header-tab-selected-color-new;
+    margin-top: 8px;
+  }
+
+  .tab-focus-indicator.is-visible {
+    border-color: $header-tab-selected-color-new;
+  }
+
+  .tab-more,
+  .add-tab-button {
+    color: $header-tab-normal-color-new;
+
+    span {
+      color: inherit;
+    }
+
+    .icon {
+      color: $header-tab-normal-color-new;
+    }
+
+    &:hover {
+      color: $header-tab-hover-color-new;
+
+      .icon:not(.is-error):not(.icon-error) {
+        color: $header-tab-hover-color-new;
+      }
+    }
+
+    &.is-open,
+    &.is-selected {
+      color: $header-tab-selected-color-new;
+
+      .icon:not(.is-error):not(.icon-error) {
+        color: $header-tab-selected-color-new;
+      }
+    }
+  }
+
+  .tab-more {
+    padding: 12px 4px 11px 14px;
+
+    &::before {
+      background-color: $header-tab-separator;
+      content: '';
+      display: inline-block;
+      height: 30px;
+      left: 7px;
+      position: absolute;
+      top: 4px;
+      width: 1px;
+    }
+  }
+
+  .add-tab-button {
+    padding: 8px 4px 5px;
+  }
+
+  // Alternate Header-Tab Backgrounds (Page Context)
+  //=================================================
+
+  &.alternate {
+    background-color: unset;
+    border-bottom: unset;
+
+    &::before {
+      background-image:
+        linear-gradient(
+          to right,
+          rgba($header-tab-alt-bg-color-new, 1),
+          rgba($header-tab-alt-bg-color-new, 0)
+        );
+    }
+
+    &::after {
+      background-image:
+        linear-gradient(
+          to right,
+          rgba($header-tab-alt-bg-color-new, 0),
+          rgba($header-tab-alt-bg-color-new, 1)
+        );
+    }
+
+    > .tab-list-container {
+      margin-top: unset;
+      .tab {
+        color: $header-tab-alt-normal-color-new;
+
+        a {
+          height: 37px;
+          padding: 12px 11px 5px;
+        }
+
+        &::before {
+          background-color: rgba($header-tab-alt-normal-color-new, 0);
+          bottom: 1px;
+        }
+
+        &:hover:not(.is-disabled) {
+          color: $header-tab-alt-hover-color-new;
+          border-bottom: 4px solid $header-tab-hover-color;
+
+          &::before {
+            background-color: rgba($header-tab-alt-hover-color-new, 1);
+          }
+        }
+
+        &.is-selected:not(.is-disabled) {
+          color: $header-tab-alt-selected-color-new;
+          border-bottom: 4px solid $header-tab-hover-color;
+
+          &::before {
+            background-color: rgba($header-tab-alt-selected-color-new, 1);
+          }
+
+          .icon:not(.is-error):not(.icon-error) {
+            color: $header-tab-alt-selected-color-new;
+          }
+        }
+      }
+    }
+
+    .animated-bar {
+      background-color: rgba($header-tab-alt-selected-color-new, 1);
+      margin-top: 0;
+      top: 36px;
+    }
+
+    .tab-focus-indicator.is-visible {
+      border-color: $header-tab-alt-selected-color-new;
+      box-shadow: $header-focus-box-shadow;
+    }
+
+    .tab-more {
+      color: $header-tab-alt-normal-color-new;
+
+      &::before {
+        background-color: $header-tab-alt-separator;
+      }
+
+      .icon {
+        color: $header-tab-alt-normal-color-new;
+      }
+
+      &:hover {
+        color: $header-tab-alt-hover-color-new;
+
+        .icon:not(.is-error):not(.icon-error) {
+          color: $header-tab-alt-hover-color-new;
+        }
+      }
+
+      &.is-selected,
+      &.is-open {
+        color: $header-tab-alt-selected-color-new;
+
+        .icon:not(.is-error):not(.icon-error) {
+          color: $header-tab-alt-selected-color-new;
+        }
+      }
+    }
+  }
+}
+
 .tab-container {
   &.header-tabs {
     .add-tab-button {
@@ -9,6 +263,55 @@
 
     .tab-more {
       padding: 9px 4px 11px 14px;
+    }
+  }
+}
+
+// RTL Styles for Header Tabs
+html[dir='rtl'] {
+  .tab-container.header-tabs {
+    padding: 0 20px 0 0;
+
+    &::before {
+      background-image:
+        linear-gradient(
+          to left,
+          rgba($header-tab-bg-color-new, 1),
+          rgba($header-bg-color-new, 0)
+        );
+      left: auto;
+      right: 20px;
+    }
+
+    &::after {
+      background-image:
+        linear-gradient(
+          to left,
+          rgba($header-bg-color-new, 0),
+          rgba($header-bg-color-new, 1)
+        );
+      left: 51px;
+      right: auto;
+    }
+
+    &.alternate {
+      &::before {
+        background-image:
+          linear-gradient(
+            to left,
+            rgba($header-tab-alt-bg-color-new, 1),
+            rgba($header-tab-alt-bg-color-new, 0)
+          );
+      }
+
+      &::after {
+        background-image:
+          linear-gradient(
+            to left,
+            rgba($header-tab-alt-bg-color-new, 0),
+            rgba($header-tab-alt-bg-color-new, 1)
+          );
+      }
     }
   }
 }
