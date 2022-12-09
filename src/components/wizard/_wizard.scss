@@ -169,7 +169,6 @@ $wizard-current-state-size: ($wizard-tick-size * 1.3);
     }
 
     &:hover:not(.current):not(.is-disabled):not([disabled]) .label::after {
-      border-bottom: 1px solid;
       bottom: 1px;
       content: '';
       left: 0;
@@ -206,7 +205,7 @@ $wizard-current-state-size: ($wizard-tick-size * 1.3);
       background-color: $header-bg-color;
 
       &::after {
-        border-color: $wizard-header-secondary-color;
+        background-color: $wizard-header-tick-color;
       }
 
       .label {
@@ -216,6 +215,10 @@ $wizard-current-state-size: ($wizard-tick-size * 1.3);
       &.current,
       &.complete {
         background-color: $wizard-header-color;
+
+        &::after {
+          background-color: $wizard-header-color;
+        }
 
         .label {
           color: $wizard-header-color;
