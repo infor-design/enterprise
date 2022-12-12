@@ -6,7 +6,7 @@
 
 ## v4.71.0 Features
 
-- `[Button]` Change style and features of existing buttons and added destructive buttons. ([#6977](https://github.com/infor-design/enterprise/issues/6977))
+- `[Button]` Changed style and features of existing buttons and added destructive buttons. ([#6977](https://github.com/infor-design/enterprise/issues/6977))
 
 ## v4.71.0 Fixes
 
