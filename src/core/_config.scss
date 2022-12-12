@@ -622,7 +622,8 @@ $contextual-panel-searchfield-border-color: $ids-color-palette-graphite-30;
 
 // BreadCrumb
 $breadcrumb-color: $ids-color-palette-graphite-60;
-$breadcrumb-hover-color: $ids-color-palette-graphite-100;
+$breadcrumb-hover-color: $ids-color-palette-azure-60;
+$breadcrumb-border-color: $ids-color-palette-azure-70;
 $breadcrumb-disabled-color: $input-color-disabled-border;
 $breadcrumb-container-height: 28px;
 $breadcrumb-separator-margin-top: 7px;
@@ -890,7 +891,8 @@ $header-toolbar-button-hover-color: $ids-color-palette-azure-10;
 $header-tabcontainer-border-color: $ids-color-palette-graphite-30;
 $header-tab-separator: rgba(255, 255, 255, 0.4);
 $header-tab-normal-color: $ids-color-palette-slate-100;
-$header-tab-hover-color: $ids-color-palette-azure-60;
+$header-tab-text-color: $ids-color-palette-azure-70;
+$header-tab-hover-color: $ids-color-palette-azure-10;
 $header-tab-selected-color: $ids-color-palette-graphite-10;
 $header-tab-alt-bg-color: $ids-color-palette-white;
 $header-tab-alt-separator: $header-tabcontainer-border-color;

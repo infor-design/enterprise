@@ -309,10 +309,6 @@
 
   // Only hyperlinks (and not text blocks) get underline state
   .hyperlink {
-    &:hover:not([disabled]):not(.is-disabled) {
-      border-bottom: 1px solid $breadcrumb-hover-color;
-    }
-
     &:focus {
       &:hover {
         border-bottom: 1px solid $breadcrumb-hover-color;
@@ -412,23 +408,24 @@
 
     .hyperlink,
     .breadcrumb-text {
-      border: 0;
+      border: 1px solid transparent;
       color: $header-breadcrumb-color;
 
       &:active:not([disabled]),
       &:hover:not([disabled]),
       &:focus:not([disabled]) {
-        color: $header-breadcrumb-color;
+        color: $breadcrumb-hover-color;
+      }
+
+      &:focus:not([disabled]) {
+        border-radius: 8px;
+        border: 1px solid $breadcrumb-border-color;
       }
 
       &:focus:not([disabled]):not(.hide-focus) {
         border-color: transparent;
         box-shadow: none;
-        outline: 1px solid $header-breadcrumb-color;
-      }
-
-      &:hover:not([disabled]) {
-        border-bottom: 1px solid $header-breadcrumb-color;
+        outline: 1px solid $breadcrumb-border-color;
       }
     }
 

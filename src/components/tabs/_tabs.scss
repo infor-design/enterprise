@@ -151,8 +151,6 @@
 
   &.is-visible {
     @include tab-outline-focus;
-
-    box-shadow: $focus-box-shadow;
   }
 }
 
@@ -286,7 +284,7 @@
         }
 
         &.is-selected {
-          border-bottom: 4px solid $header-tab-hover-color;
+          border-bottom: 4px solid $header-tab-text-color;
         }
       }
     }

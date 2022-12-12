@@ -110,9 +110,12 @@
     }
 
     .searchfield-wrapper.context.has-focus {
-      .searchfield,
       .btn {
-        border-color: $subheader-input-color-focus-border;
+        box-shadow: -1px 0 0 1px $input-color-focus-border;
+      }
+
+      .searchfield:focus {
+        box-shadow: 0 0 0 1px $input-color-focus-border;
       }
     }
 
