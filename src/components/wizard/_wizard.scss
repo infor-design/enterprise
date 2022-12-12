@@ -208,6 +208,11 @@ $wizard-current-state-size: ($wizard-tick-size * 1.3);
         background-color: $wizard-header-tick-color;
       }
 
+      &:focus .label {
+        border: 1px solid $wizard-header-color;
+        border-radius: 8px;
+      }
+
       .label {
         color: $wizard-header-text-color;
       }
