@@ -208,18 +208,18 @@ a.is-personalizable svg.ripple-effect {
 }
 
 .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab.is-selected:not(.is-disabled) {
-  color: ${colors.contrast} !important;
+  color: ${colors.darker} !important;
 }
 
 .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab,
 .is-personalizable.tab-container.header-tabs > .tab-list-container .tab  {
-  color: ${colors.contrast} !important;
+  color: ${colors.darker} !important;
   opacity: .8;
 }
 
 .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab:hover:not(.is-disabled),
 .is-personalizable.tab-container.header-tabs > .tab-list-container .tab:hover:not(.is-disabled)  {
-  color: ${colors.contrast} !important;
+  color: ${colors.darkest} !important;
   opacity: 1;
 }
 
