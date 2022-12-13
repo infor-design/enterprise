@@ -1526,6 +1526,8 @@ PopupMenu.prototype = {
       opts.strategies.push('nudge');
     }
 
+    opts.y += 5;
+
     //= ======================================================
     // BEGIN Temporary stuff until we sort out passing these settings
     // from the controls that utilize them
@@ -1625,6 +1627,7 @@ PopupMenu.prototype = {
       wrapper[0].style.height = '';
       this.menu[0].style.height = (placementObj.height) + (/(px|%)/i.test(`${placementObj.height}`) ? '' : 'px');
     }
+
     if (placementObj.width) {
       wrapper[0].style.width = '';
       this.menu[0].style.width = (placementObj.width) + (/(px|%)/i.test(`${placementObj.width}`) ? '' : 'px');
