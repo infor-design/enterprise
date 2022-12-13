@@ -153,6 +153,20 @@ a.is-personalizable svg.ripple-effect {
   box-shadow: 0 0 4px 3px rgba(${baseColorObj.r}, ${baseColorObj.g}, ${baseColorObj.b}, 0.3);
 }
 
+.tab-container.header-tabs > .tab-list-container .tab a {
+  color: ${colors.contrast};
+}
+
+.tab-container.header-tabs .tab-focus-indicator.is-visible,
+.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected {
+  border-color: ${colors.contrast};
+}
+
+.tab-container.header-tabs > .tab-list-container .tab:hover:not(.is-disabled) {
+  color: ${colors.contrast};
+  background-color: ${colors.darker};
+}
+
 .accordion.panel .accordion-header.is-selected {
   color: ${colors.contrast} !important;
 }

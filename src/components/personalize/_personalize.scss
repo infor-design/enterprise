@@ -44,12 +44,12 @@
 }
 
 .is-personalizable .personalize-text {
-  color: $ids-color-palette-white !important;
+  color: $ids-color-palette-slate-100 !important;
 }
 
 .is-personalizable .personalize-actionable,
 .is-personalizable .personalize-actionable svg {
-  color: rgba(255, 255, 255, 0.8);
+  color: $ids-color-palette-azure-60;
 }
 
 .is-personalizable .personalize-actionable:hover:not([disabled]),
