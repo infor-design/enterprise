@@ -193,6 +193,7 @@ a.is-personalizable svg.ripple-effect {
 .header.is-personalizable button:not(:disabled):hover .app-header.icon > span,
 .header.is-personalizable .toolbar [class^='btn']:hover:not([disabled]) {
   color: ${colors.contrast};
+  background-color: ${colors.darker};
   opacity: 1;
 }
 
@@ -228,6 +229,17 @@ html[class*="theme-new-"] .is-personalizable.tab-container.header-tabs > .tab-li
   opacity: 1;
 }
 
+.header.is-personalizable .page-title {
+  color: ${colors.contrast};
+}
+
+.header.is-personalizable .flex-toolbar [class^='btn'][disabled],
+.header.is-personalizable .flex-toolbar [class^='btn'][disabled] .icon,
+.header.is-personalizable  .flex-toolbar [class^='btn']:focus:not(.hide-focus) .icon,
+.header.is-personalizable .btn span {
+  color: ${colors.contrast} !important;
+}
+
 .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab:hover:not(.is-disabled)::before {
   background-color: ${colors.contrast};
 }
@@ -238,6 +250,23 @@ html[class*="theme-new-"] .is-personalizable.tab-container.header-tabs > .tab-li
 
 .header.is-personalizable.has-tabs .tab-list-container .tab.is-selected:not(.is-disabled):hover::before {
   background-color: ${colors.contrast} !important;
+}
+
+.header.is-personalizable .toolbar-searchfield-wrapper:not(.non-collapsible):not(.is-open) .icon:not(.close),
+.header.is-personalizable .toolbar [class^='btn']:focus .icon {
+  color: ${colors.contrast};
+}
+
+.header .toolbar [class^='btn']:hover {
+  background-color: ${colors.base};
+}
+
+.header.is-personalizable button:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):focus:not(.hide-focus) {
+  box-shadow: 0 0 0 2px transparent, 0 0 0 1px ${colors.contrast}, 0 0 4px 3px ${colors.dark} !important;
+}
+
+.header.is-personalizable .btn-actions:not(.btn-primary):not(.btn-secondary).is-open .icon {
+  color: ${colors.contrast}
 }
 
 .subheader.is-personalizable .go-button.is-personalizable {
