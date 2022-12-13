@@ -100,16 +100,27 @@
   }
 
   > a {
-    color: inherit;
+    color: $tab-text-color;
     cursor: inherit;
     display: inline-block;
     text-decoration: none;
+
+    &:hover {
+      color: inherit;
+    }
 
     * {
       pointer-events: none;
     }
 
     span {
+      color: inherit;
+    }
+  }
+
+  &.is-selected,
+  :hover {
+    > a {
       color: inherit;
     }
   }
