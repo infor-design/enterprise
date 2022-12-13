@@ -211,15 +211,31 @@ a.is-personalizable svg.ripple-effect {
   color: ${colors.darker} !important;
 }
 
+html.theme-new-dark .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab.is-selected:not(.is-disabled) {
+  color: ${colors.contrast} !important;
+}
+
 .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab,
 .is-personalizable.tab-container.header-tabs > .tab-list-container .tab  {
   color: ${colors.darker} !important;
   opacity: .8;
 }
 
+html.theme-new-dark .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab,
+.is-personalizable.tab-container.header-tabs > .tab-list-container .tab  {
+  color: ${colors.contrast} !important;
+  opacity: .8;
+}
+
 .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab:hover:not(.is-disabled),
 .is-personalizable.tab-container.header-tabs > .tab-list-container .tab:hover:not(.is-disabled)  {
-  color: ${colors.darkest} !important;
+  color: ${colors.darker} !important;
+  opacity: 1;
+}
+
+html.theme-new-dark .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab:hover:not(.is-disabled),
+.is-personalizable.tab-container.header-tabs > .tab-list-container .tab:hover:not(.is-disabled)  {
+  color: ${colors.contrast} !important;
   opacity: 1;
 }
 

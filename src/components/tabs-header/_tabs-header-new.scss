@@ -47,7 +47,7 @@
 
       &:hover:not(.is-disabled) {
         color: $header-tab-hover-color-new;
-        border-bottom: 4px solid transparent;
+        border-bottom: 4px solid $header-tab-indicator-hover-color-new;
         background-color: $header-tab-background-hover-color-new;
       }
 
