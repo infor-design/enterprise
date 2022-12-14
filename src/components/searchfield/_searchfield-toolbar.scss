@@ -735,7 +735,9 @@ $toolbarsearchfield-category-empty-width: 51px;
     }
 
     &.active {
-      border: 1px solid $input-color-focus-border;
+      box-shadow:
+          0 0 0 1px $input-color-border-space,
+          0 0 0 2px $input-color-focus-border;
       border-radius: 2px;
 
       .searchfield,
