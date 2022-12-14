@@ -164,6 +164,7 @@ a.is-personalizable svg.ripple-effect {
 
 .tab-container.header-tabs > .tab-list-container .tab:hover:not(.is-disabled) {
   color: ${colors.contrast};
+
   background-color: ${colors.darker};
 }
 
@@ -279,8 +280,33 @@ html[class*="theme-new-"] .is-personalizable.tab-container.header-tabs > .tab-li
   box-shadow: 0 0 0 2px transparent, 0 0 0 1px ${colors.contrast}, 0 0 4px 3px ${colors.dark} !important;
 }
 
-.header.is-personalizable .btn-actions:not(.btn-primary):not(.btn-secondary).is-open .icon {
-  color: ${colors.contrast}
+.header.is-personalizable .btn-actions:not(.btn-primary):not(.btn-secondary).is-open .icon,
+.header.is-personalizable .wizard-header .tick,
+.header.is-personalizable .wizard-header .tick .label,
+.header.is-personalizable .wizard-header a.tick:hover:not(.current):not(.is-disabled):not([disabled]) .label {
+  color: ${colors.contrast};
+}
+
+.header.is-personalizable .wizard-header .tick:focus .label,
+.header.is-personalizable .wizard-header .tick.current::before {
+  border-color: ${colors.light};
+}
+
+.header.is-personalizable .wizard-header .bar,
+.header.is-personalizable .wizard-header .tick.current::after,
+.header .wizard-header .tick::after,
+.header.is-personalizable .wizard-header .tick.complete {
+  background-color: ${colors.darkest};
+}
+
+.header.is-personalizable .wizard-header .tick.complete::after,
+.header.is-personalizable .wizard-header .completed-range,
+.header.is-personalizable .wizard-header .tick.current {
+  background-color: ${colors.contrast};
+}
+
+.header.is-personalizable .wizard-header .tick.complete .label {
+  color: ${colors.contrast};
 }
 
 .subheader.is-personalizable .go-button.is-personalizable {
