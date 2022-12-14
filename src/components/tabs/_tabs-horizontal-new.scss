@@ -92,6 +92,11 @@ $horizontal-tabs-height: 40px;
     }
   }
 
+  .tab-focus-indicator.is-visible {
+    border-color: transparent;
+    box-shadow: unset;
+  }
+
   .tab-more,
   .add-tab-button {
     background-color: transparent;

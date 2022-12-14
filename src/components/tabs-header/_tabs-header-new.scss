@@ -8,8 +8,8 @@
     background-image:
       linear-gradient(
         to right,
-        rgba($header-bg-color, 1),
-        rgba($header-bg-color, 0)
+        rgba($header-tab-gradient-initial-color-new, 1),
+        rgba($header-tab-gradient-initial-color-new, 0)
       );
     left: 20px;
   }
@@ -18,8 +18,8 @@
     background-image:
       linear-gradient(
         to right,
-        rgba($header-bg-color, 0),
-        rgba($header-bg-color, 1)
+        rgba($header-tab-gradient-initial-color-new, 0),
+        rgba($header-tab-gradient-initial-color-new, 1)
       );
   }
 
@@ -91,7 +91,8 @@
   }
 
   .tab-focus-indicator.is-visible {
-    border-color: $header-tab-selected-color-new;
+    border-color: transparent;
+    box-shadow: unset;
   }
 
   .tab-more,
@@ -181,8 +182,8 @@ html[dir='rtl'] {
       background-image:
         linear-gradient(
           to left,
-          rgba($header-tab-background-initial-color-new, 1),
-          rgba($header-tab-background-initial-color-new, 0)
+          rgba($header-tab-gradient-initial-color-new, 1),
+          rgba($header-tab-gradient-initial-color-new, 0)
         );
       left: auto;
       right: 20px;
@@ -192,8 +193,8 @@ html[dir='rtl'] {
       background-image:
         linear-gradient(
           to left,
-          rgba($header-tab-background-initial-color-new, 0),
-          rgba($header-tab-background-initial-color-new, 1)
+          rgba($header-tab-gradient-initial-color-new, 0),
+          rgba($header-tab-gradient-initial-color-new, 1)
         );
       left: 51px;
       right: auto;
