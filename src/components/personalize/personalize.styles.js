@@ -387,6 +387,17 @@ html[dir='rtl'] .scrollable-flex-header.is-personalizable .breadcrumb.truncated:
 .is-personalizable.tab-container.header-tabs:not(.alternate)::before {
   background-image: linear-gradient(to right, ${colors.contrast} , ${colorUtils.hexToRgba(colors.contrast, 0)}) !important;
 }
+
+.theme-new-dark .is-personalizable .tab-container.header-tabs:not(.alternate)::before,
+.theme-new-dark .is-personalizable.tab-container.header-tabs:not(.alternate)::before {
+  background-image: linear-gradient(to right, ${colors.base} , ${colorUtils.hexToRgba(colors.base, 0)}) !important;
+}
+
+html[dir='rtl'].theme-new-dark .is-personalizable .tab-container.header-tabs:not(.alternate)::before,
+html[dir='rtl'].theme-new-dark .is-personalizable.tab-container.header-tabs:not(.alternate)::before {
+  background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base});
+}
+
 html[dir='rtl'] .is-personalizable .tab-container.header-tabs:not(.alternate)::before,
 html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::before {
   background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.contrast, 0)}, ${colors.contrast});
@@ -396,9 +407,20 @@ html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::be
 .is-personalizable.tab-container.header-tabs:not(.alternate)::after {
   background-image: linear-gradient(to right, ${colorUtils.hexToRgba(colors.contrast, 0)}, ${colors.contrast}) !important;
 }
+
+.theme-new-dark .is-personalizable .tab-container.header-tabs:not(.alternate)::after,
+.theme-new-dark .is-personalizable.tab-container.header-tabs:not(.alternate)::after {
+  background-image: linear-gradient(to right, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base}) !important;
+}
+
 html[dir='rtl'] .is-personalizable .tab-container.header-tabs:not(.alternate)::after,
 html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::after {
   background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.contrast, 0)}, ${colors.contrast}) !important;
+}
+
+html[dir='rtl'].theme-new-dark .is-personalizable .tab-container.header-tabs:not(.alternate)::after,
+html[dir='rtl'].theme-new-dark .is-personalizable.tab-container.header-tabs:not(.alternate)::after {
+  background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base}) !important;
 }
 
 .hero-widget.is-personalizable {
