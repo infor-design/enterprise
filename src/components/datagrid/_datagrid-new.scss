@@ -134,12 +134,13 @@
         }
 
         input {
+          color: $datagrid-light-header-font-color;
+
           &:hover {
             &:not(:disabled):not(:focus) {
               border-color: $datagrid-light-header-icon-hover-color !important;
             }
           }
-          color: $datagrid-light-header-font-color;
         }
 
         .trigger {
@@ -159,6 +160,7 @@
             color: $datagrid-light-header-font-color !important;
           }
         }
+
         .icon-dropdown {
           color: $datagrid-light-header-filter-sorted-icon-color !important;
         }
@@ -177,7 +179,7 @@
     .icon {
       color: $datagrid-light-header-icon-color;
     }
-  } 
+  }
 }
 
 // Adjust header text
