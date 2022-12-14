@@ -78,9 +78,7 @@
 
       &.is-sorted-asc,
       &.is-sorted-desc {
-        &:hover {
-          background-color: $datagrid-light-header-bg-sorted-hover-color;
-        }
+        background-color: $datagrid-light-header-bg-sorted-hover-color;
       }
 
       &.is-sorted-asc .sort-asc .icon,
