@@ -111,12 +111,12 @@ $datagrid-nested-header-border-color: $ids-color-palette-slate-30;
 $datagrid-header-border-color: $ids-color-palette-slate-30;
 $datagrid-header-checkbox-border-color: $ids-color-palette-slate-30;
 
-$datagrid-cell-readonly-bg-color: $ids-color-palette-slate-10;
+$datagrid-cell-readonly-bg-color: rgba(239, 239, 240, 0.5);
 $datagrid-cell-border-color: $ids-color-palette-slate-30;
 $datagrid-group-row-border-color: $ids-color-palette-slate-30;
 $datagrid-row-hover-color: $ids-color-palette-azure-10;
 $datagrid-row-icon-color: $ids-color-palette-slate-60;
-$datagrid-row-selected-color: $datagrid-row-hover-color;
+$datagrid-row-selected-color: #d8e7f7;
 $datagrid-row-selected-color-dark: $datagrid-row-selected-color;
 
 $datagrid-alternate-bg-color: $ids-color-palette-slate-10;
@@ -130,8 +130,8 @@ $datagrid-rowgroup-header: $ids-color-palette-slate-10;
 $datagrid-rowgroup-color: $ids-color-palette-slate-60;
 
 $datagrid-light-header-bg-color: $ids-color-palette-white;
-$datagrid-light-header-bg-hover-color: $ids-color-palette-azure-10;
-$datagrid-light-header-bg-sorted-hover-color: $ids-color-palette-azure-20;
+$datagrid-light-header-bg-hover-color: #ecf2f8;
+$datagrid-light-header-bg-sorted-hover-color: $ids-color-palette-azure-10;
 $datagrid-light-header-font-color: $ids-color-palette-slate-100;
 $datagrid-light-header-border-color: $ids-color-palette-slate-30;
 $datagrid-light-header-filter-sort-icon-color: $ids-color-palette-slate-40;
