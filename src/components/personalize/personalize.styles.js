@@ -315,6 +315,16 @@ html[class*="theme-new-"] .is-personalizable.tab-container.header-tabs > .tab-li
   color: ${colors.contrast};
 }
 
+.subheader .full-searchfield-container .searchfield-wrapper.context.has-focus .btn {
+  box-shadow: -1px 0 0 1px ${colors.base}, -1px 0 0 2px ${colors.contrast};
+}
+
+.subheader .full-searchfield-container .searchfield-wrapper.context.has-focus .searchfield,
+.subheader .full-searchfield-container .searchfield-wrapper.context.has-focus .searchfield:focus,
+.header .toolbar-searchfield-wrapper.active  {
+  box-shadow: 0 0 0 1px ${colors.base}, 0 0 0 2px ${colors.contrast};
+}
+
 .is-personalizable .breadcrumb .hyperlink,
 .breadcrumb.is-personalizable .hyperlink {
   color: ${colors.theme.text};
