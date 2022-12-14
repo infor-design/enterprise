@@ -6,6 +6,8 @@
 
 ## v4.71.0 Features
 
+- `[Datagrid]` Added ability to set the color of the header in datagrid (`dark` or `light`). ([#7008](https://github.com/infor-design/enterprise/issues/7008))
+
 ## v4.71.0 Fixes
 
 - `[Datagrid]` Fixed a bug in datagrid where dropdown filter does not render correctly. ([#7006](https://github.com/infor-design/enterprise/issues/7006))
