@@ -66,6 +66,7 @@ button.is-personalizable.is-pressed .icon {
 
 .is-personalizable .btn-secondary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
   background-color: ${colors.lightest} !important;
+  color: ${colors.contrast} !important;
 }
 
 .is-personalizable .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
