@@ -102,10 +102,12 @@
   }
 }
 
-.btn-tertiary {
+.btn-tertiary,
+.btn-icon,
+.btn-menu {
   border-radius: 8px;
 
-  &:hover {
+  &:hover:not(:disabled) {
     background-color: $button-color-tertiary-hover-background-new;
     color: $button-color-tertiary-hover-font-new;
 
@@ -132,21 +134,21 @@
   }
 }
 
-.btn-tertiary[disabled] {
-  background-color: $button-color-tertiary-disabled-background-new;
+.btn-link {
+  border-radius: 8px;
 
-  &.destructive {
-    color: $button-color-tertiary-destructive-disabled-font-new;
-    background-color: $button-color-tertiary-destructive-disabled-background-new;
+  &:hover {
+    background-color: $button-color-tertiary-hover-background-new;
+    color: $button-color-tertiary-hover-font-new;
 
     svg.icon {
-      color: $button-color-tertiary-destructive-disabled-font-new;
+      color: $button-color-tertiary-hover-font-new;
     }
   }
 }
 
-.btn-link {
-  border-radius: 8px;
+.btn-link[disabled] {
+  background-color: $button-color-tertiary-disabled-background-new;
 }
 
 // Reset standard button alignments.
