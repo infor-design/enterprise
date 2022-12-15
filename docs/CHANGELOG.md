@@ -6,7 +6,9 @@
 
 ## v4.71.0 Features
 
+- `[Radar]` Converted Radar scripts to puppeteer. ([#6989](https://github.com/infor-design/enterprise/issues/6989))
 - `[Searchfield]` Added enhancement changes in searchfield. ([#6707](https://github.com/infor-design/enterprise/issues/6707))
+- `[Tabs]` Added puppeteer scripts for tooltip title. ([#7003](https://github.com/infor-design/enterprise/issues/7003))
 
 ## v4.71.0 Fixes
 
