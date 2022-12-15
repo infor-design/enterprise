@@ -743,8 +743,9 @@ $datagrid-empty-bg-color: #f4f4f4; //$datagrid-cell-bg-color
 $datagrid-badges-azure-font-color: $ids-color-palette-white;
 
 $datagrid-light-header-bg-color: $ids-color-palette-white;
-$datagrid-light-header-bg-hover-color: $ids-color-palette-azure-10;
-$datagrid-light-header-bg-sorted-hover-color: $ids-color-palette-azure-20;
+$datagrid-light-header-bg-hover-color: #ecf2f8;
+$datagrid-light-header-bg-sorted-hover-color: $ids-color-palette-azure-10;
+
 $datagrid-light-header-font-color: $ids-color-palette-slate-100;
 $datagrid-light-header-border-color: $ids-color-palette-slate-30;
 $datagrid-light-header-filter-sort-icon-color: $ids-color-palette-slate-40;
