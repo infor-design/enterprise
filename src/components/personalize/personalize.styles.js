@@ -58,7 +58,6 @@ button.is-personalizable.is-pressed .icon {
   border-color: ${colors.darker} !important;
 }
 
-.is-personalizable button:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):focus:not(.hide-focus),
 button.is-personalizable button:focus:not(.hide-focus),
 .is-personalizable a.btn:focus:not(.hide-focus),
 a.btn.is-personalizable:focus:not(.hide-focus),
@@ -233,7 +232,6 @@ html[class*="theme-new-"] .is-personalizable.tab-container.header-tabs > .tab-li
   color: ${colors.contrast};
 }
 
-.header.is-personalizable .flex-toolbar [class^='btn'][disabled],
 .header.is-personalizable .flex-toolbar [class^='btn'][disabled] .icon,
 .header.is-personalizable  .flex-toolbar [class^='btn']:focus:not(.hide-focus) .icon,
 .header.is-personalizable .btn span {
@@ -298,10 +296,6 @@ html[class*="theme-new-"] .is-personalizable.tab-container.header-tabs > .tab-li
   background-color: ${colors.dark};
   border-color: ${colors.dark};
   color: ${colors.contrast};
-}
-
-.subheader .full-searchfield-container .searchfield-wrapper.context.has-focus .btn {
-  box-shadow: -1px 0 0 1px ${colors.base}, -1px 0 0 2px ${colors.contrast};
 }
 
 .is-personalizable .breadcrumb .hyperlink,
