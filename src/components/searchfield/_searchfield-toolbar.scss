@@ -735,16 +735,11 @@ $toolbarsearchfield-category-empty-width: 51px;
     }
 
     &.active {
-      box-shadow:
-          0 0 0 1px $input-color-border-space,
-          0 0 0 2px $input-color-focus-border;
-      border-radius: 2px;
-
       .searchfield,
       .collapse-button,
       .btn {
         background-color: $searchfield-header-bg-color;
-        border-color: rgba($searchfield-header-border-color, 0.7);
+        border-bottom-color: rgba($searchfield-header-border-color, 0.7);
         height: 38px;
       }
 
@@ -752,6 +747,10 @@ $toolbarsearchfield-category-empty-width: 51px;
       .btn {
         border-bottom-left-radius: 0;
         border-top-left-radius: 0;
+      }
+
+      .searchfield:focus {
+        border-color: rgba($input-color-focus-border, 1);
       }
 
       &.is-open {

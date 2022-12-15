@@ -646,7 +646,7 @@ Popdown.prototype = {
 
       // Adjust the Y position based on the deltas
       this.popdown[0].style.top = `${po.top + (YoffsetFromTrigger * -1)}px`;
-      this.arrow[0].style.top = `${parseInt(this.arrow[0].style.top, 10) - (YoffsetFromTrigger * -1) + 100}px`;
+      this.arrow[0].style.top = `${parseInt(this.arrow[0].style.top, 10) - (YoffsetFromTrigger * -1)}px`;
 
       // Get the values again
       po = this.popdown.offset();
