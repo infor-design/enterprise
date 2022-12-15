@@ -63,9 +63,8 @@ $horizontal-tabs-height: 40px;
     .tab {
       color: $tab-text-color;
 
-      &:not(.is-selected) a {
+      a {
         padding: 11px 11px 8px;
-        color: $tab-horizontal-text-color;
       }
 
       &:hover {
@@ -93,7 +92,7 @@ $horizontal-tabs-height: 40px;
   .tab-more,
   .add-tab-button {
     background-color: transparent;
-    color: $tab-horizontal-text-color;
+    color: $tab-text-color;
     font-size: $ids-size-font-base;
     line-height: 12px;
 

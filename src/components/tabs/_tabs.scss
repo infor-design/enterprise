@@ -100,27 +100,16 @@
   }
 
   > a {
-    color: $tab-text-color;
+    color: inherit;
     cursor: inherit;
     display: inline-block;
     text-decoration: none;
-
-    &:hover {
-      color: inherit;
-    }
 
     * {
       pointer-events: none;
     }
 
     span {
-      color: inherit;
-    }
-  }
-
-  &.is-selected,
-  :hover {
-    > a {
       color: inherit;
     }
   }
@@ -162,6 +151,8 @@
 
   &.is-visible {
     @include tab-outline-focus;
+
+    box-shadow: $focus-box-shadow;
   }
 }
 
@@ -295,7 +286,7 @@
         }
 
         &.is-selected {
-          border-bottom: 4px solid $header-tab-text-color;
+          border-bottom: 4px solid $header-tab-hover-color;
         }
       }
     }

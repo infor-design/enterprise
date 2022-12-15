@@ -72,7 +72,7 @@ a.btn-tertiary.is-personalizable:focus:not(.hide-focus),
 a.btn-close.is-personalizable:focus:not(.hide-focus) {
   box-shadow: 0 0 0 2px transparent,
     0 0 0 1px ${colors.base},
-    0 0 4px 2px rgba(${baseColorObj.r}, ${baseColorObj.g}, ${baseColorObj.b}, 0.3);
+    0 0 4px 2px rgba(${baseColorObj.r}, ${baseColorObj.g}, ${baseColorObj.b}, 0.3) !important;
 }
 
 .is-personalizable .btn-primary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):focus:not(.hide-focus),
@@ -261,8 +261,8 @@ html[class*="theme-new-"] .is-personalizable.tab-container.header-tabs > .tab-li
   background-color: ${colors.base};
 }
 
-.header.is-personalizable button:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):focus:not(.hide-focus) {
-  box-shadow: 0 0 0 2px transparent, 0 0 0 1px ${colors.contrast}, 0 0 4px 3px ${colors.dark} !important;
+.header .toolbar-searchfield-wrapper.active .searchfield:focus {
+  border-color: ${colors.contrast};
 }
 
 .header.is-personalizable .btn-actions:not(.btn-primary):not(.btn-secondary).is-open .icon,
@@ -302,12 +302,6 @@ html[class*="theme-new-"] .is-personalizable.tab-container.header-tabs > .tab-li
 
 .subheader .full-searchfield-container .searchfield-wrapper.context.has-focus .btn {
   box-shadow: -1px 0 0 1px ${colors.base}, -1px 0 0 2px ${colors.contrast};
-}
-
-.subheader .full-searchfield-container .searchfield-wrapper.context.has-focus .searchfield,
-.subheader .full-searchfield-container .searchfield-wrapper.context.has-focus .searchfield:focus,
-.header .toolbar-searchfield-wrapper.active  {
-  box-shadow: 0 0 0 1px ${colors.base}, 0 0 0 2px ${colors.contrast};
 }
 
 .is-personalizable .breadcrumb .hyperlink,

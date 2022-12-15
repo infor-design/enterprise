@@ -43,7 +43,6 @@
       }
 
       a {
-        color: $header-tab-text-color;
         overflow: hidden;
         padding: 14px 11px 9px;
         text-overflow: ellipsis;
@@ -56,7 +55,6 @@
 
       &:hover:not(.is-disabled) {
         color: $header-tab-hover-color;
-        background-color: $header-tab-hover-color;
 
         &::before {
           background-color: rgba($header-tab-hover-color, 1);
@@ -106,8 +104,7 @@
   }
 
   .tab-focus-indicator.is-visible {
-    border: 1px solid $header-tab-text-color;
-    border-radius: 8px;
+    border-color: $header-tab-hover-color;
   }
 
   .tab-more,
