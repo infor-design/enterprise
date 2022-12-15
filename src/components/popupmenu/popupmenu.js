@@ -1526,6 +1526,8 @@ PopupMenu.prototype = {
       opts.strategies.push('nudge');
     }
 
+    opts.y += 5;
+
     //= ======================================================
     // BEGIN Temporary stuff until we sort out passing these settings
     // from the controls that utilize them
@@ -1586,10 +1588,6 @@ PopupMenu.prototype = {
     }());
 
     if (target.parents('.masthead').length > 0) {
-      shiftDown();
-    }
-
-    if (target.parents('.header').length > 0) {
       shiftDown();
     }
 
