@@ -1,5 +1,13 @@
 # What's New with Enterprise
 
+## v4.71.0
+
+## v4.71.0 Important Features
+
+## v4.71.0 Features
+
+- `[Tabs]` Add puppeteer scripts for tooltip title. ([#7003](https://github.com/infor-design/enterprise/issues/7003))
+
 ## v4.70.0
 
 ## v4.70.0 Important Features
@@ -9,7 +17,6 @@
 - `[Checkbox]` Converted Checkbox scripts to puppeteer. ([#6936](https://github.com/infor-design/enterprise/issues/6936))
 - `[Circlepager]` Converted Circlepager scripts to puppeteer. ([#6971](https://github.com/infor-design/enterprise/issues/6971))
 - `[Icons]` Bumped `ids-identity` to get a new empty state icon `empty-no-search-result` and a new system icon `advance-settings`.([#6999](https://github.com/infor-design/enterprise/issues/6999))
-- `[Tabs]` Add puppeteer scripts for tooltip title. ([#7003](https://github.com/infor-design/enterprise/issues/7003))
 
 ## v4.70.0 Fixes
 
