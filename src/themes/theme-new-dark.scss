@@ -19,6 +19,11 @@ $body-color-primary-background: $ids-color-palette-slate-100;
 
 // Form Background Color
 $header-bg-color: $ids-color-brand-primary-base;
+$header-text-color: $ids-color-palette-white;
+$header-button-hover-color: rgba($ids-color-palette-white, 1);
+$header-button-focus-color: rgba($ids-color-palette-white, 1);
+$header-button-color: rgba($ids-color-palette-white, 0.7);
+$header-toolbar-button-hover-color: transparent;
 $subhead-bg-color: $ids-color-brand-primary-alt;
 
 $dropdown-search-bg-color: $ids-color-palette-slate-80;
