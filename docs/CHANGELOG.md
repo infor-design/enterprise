@@ -2,11 +2,14 @@
 
 ## v4.71.0
 
-## v4.71.0 Important Features
+## v4.71.0 Important Changes
+
+- `[Button]` Changed style and features of existing buttons and added destructive buttons. ([#6977](https://github.com/infor-design/enterprise/issues/6977))
 
 ## v4.71.0 Features
 
-- `[Button]` Changed style and features of existing buttons and added destructive buttons. ([#6977](https://github.com/infor-design/enterprise/issues/6977))
+- `[Radar]` Converted Radar scripts to puppeteer. ([#6989](https://github.com/infor-design/enterprise/issues/6989))
+- `[Tabs]` Added puppeteer scripts for tooltip title. ([#7003](https://github.com/infor-design/enterprise/issues/7003))
 
 ## v4.71.0 Fixes
 
