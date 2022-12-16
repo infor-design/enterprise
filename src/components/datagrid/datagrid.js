@@ -1660,8 +1660,8 @@ Datagrid.prototype = {
 
     // Set the color background header (light and dark)
     (self?.settings?.headerBackgroundColor === 'light') ? //eslint-disable-line
-      (self?.headerRowLeft?.find('th').addClass('light'), self?.headerRow?.find('th').addClass('light'), self?.headerRowRight?.find('th').addClass('light')) :
-      (self?.headerRow?.find('th').addClass('dark'), self?.headerRowRight?.find('th').addClass('dark'), self?.headerRowLeft?.find('th').addClass('dark'));
+      (self?.headerRowLeft?.addClass('light'), self?.headerRow?.addClass('light'), self?.headerRowRight?.addClass('light')) :
+      (self?.headerRow?.addClass('dark'), self?.headerRowRight?.addClass('dark'), self?.headerRowLeft?.addClass('dark'));
   },
 
   /**
