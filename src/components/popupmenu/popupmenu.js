@@ -1526,8 +1526,6 @@ PopupMenu.prototype = {
       opts.strategies.push('nudge');
     }
 
-    opts.y += 5;
-
     //= ======================================================
     // BEGIN Temporary stuff until we sort out passing these settings
     // from the controls that utilize them
@@ -1538,6 +1536,10 @@ PopupMenu.prototype = {
     const insideToolbarTitle = target.parents('.title').length > 0;
     const isNotFullToolbar = insideToolbar && toolbarParent.children('.buttonset, .title').length > 1;
     const isPagerMenu = target.parents('.pager-pagesize').length > 0;
+
+    if (toolbarParent.parents('.header').length > 0) {
+      opts.y += 5;
+    }
 
     function alignLeft() {
       opts.parentXAlignment = (isRTL ? 'right' : 'left');

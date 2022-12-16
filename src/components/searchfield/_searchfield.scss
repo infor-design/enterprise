@@ -221,9 +221,7 @@
   }
 
   &.has-focus {
-    &:not(.toolbar-searchfield-wrapper) {
-      box-shadow: 0 0 4px 1px rgba(54, 138, 192, 0.3);
-    }
+    box-shadow: 0 0 4px 1px rgba(54, 138, 192, 0.3);
 
     .btn {
       border-color: $input-color-focus-border;
