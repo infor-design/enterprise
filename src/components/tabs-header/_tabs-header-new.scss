@@ -4,6 +4,7 @@
 .tab-container.header-tabs {
   background-color: $header-tab-background-initial-color-new;
   border-bottom: 1px solid $header-tabcontainer-border-color;
+
   &::before {
     background-image:
       linear-gradient(
@@ -51,6 +52,10 @@
         background-color: $header-tab-background-hover-color-new;
       }
 
+      &.is-focused {
+        color: $header-tab-selected-color-new;
+      }
+
       &.is-selected:not(.is-disabled) {
         color: $header-tab-selected-color-new;
         border-bottom: 4px solid $header-tab-selected-color-new;
@@ -93,6 +98,11 @@
   .tab-focus-indicator.is-visible {
     border-color: transparent;
     box-shadow: unset;
+
+    &:not(.is-selected) {
+      border-color: $header-tab-focus-border-color;
+      border-radius: 7px;
+    }
   }
 
   .tab-more,
