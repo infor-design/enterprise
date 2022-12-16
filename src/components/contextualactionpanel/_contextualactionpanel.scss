@@ -129,7 +129,7 @@
 
     .separator {
       background-color: $contextual-panel-separator-bg-color;
-      margin: 5px 7px 0 7px;
+      margin: 5px 7px 0;
       pointer-events: none; //fixes wierd IE10 over effect
       top: 5px;
     }

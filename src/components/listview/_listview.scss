@@ -678,7 +678,7 @@
     }
 
     &.is-hovered:not(.has-focus) {
-      input:not([disabled=true]) {
+      input:not([disabled='true']) {
         border: 1px solid $listview-search-border-color;
       }
     }
