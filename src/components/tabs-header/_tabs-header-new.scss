@@ -158,14 +158,84 @@
   //=================================================
 
   &.alternate {
+    background-color: $header-tab-alt-bg-color;
+
+    &::before {
+      background-image:
+        linear-gradient(
+          to right,
+          rgba($header-tab-gradient-initial-color-new, 1),
+          rgba($header-tab-gradient-initial-color-new, 0)
+        );
+      left: 20px;
+    }
+
+    &::after {
+      background-image:
+        linear-gradient(
+          to right,
+          rgba($header-tab-gradient-initial-color-new, 0),
+          rgba($header-tab-gradient-initial-color-new, 1)
+        );
+    }
+
     > .tab-list-container {
       margin-top: -1px;
 
       .tab {
+        color: $header-tab-normal-color-new;
+
+        &.is-focused {
+          color: $header-tab-hover-color-new;
+        }
+
+        &:hover {
+          &:not(.is-disabled) {
+            color: $header-tab-hover-color-new;
+          }
+        }
+
+        &.is-selected {
+          &:not(.is-disabled) {
+            color: $header-tab-selected-color-new;
+          }
+        }
+
         a {
           height: 37px;
           padding: 12px 11px 5px;
         }
+      }
+    }
+
+    .tab-focus-indicator {
+      &.is-visible {
+        border-color: transparent;
+        box-shadow: unset;
+
+        &:not(.is-selected) {
+          border-color: $header-tab-focus-border-color;
+          border-radius: 7px;
+        }
+      }
+    }
+
+    .tab-more,
+    .tab-more.is-open {
+      &:hover {
+        .icon:not(.is-error):not(.icon-error) {
+          color: $header-tab-hover-color-new;
+        }
+      }
+
+      .icon {
+        color: $header-tab-normal-color-new;
+      }
+    }
+
+    .tab-more.is-open {
+      .icon:not(.is-error):not(.icon-error) {
+        color: $header-tab-hover-color-new;
       }
     }
   }
