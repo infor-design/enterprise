@@ -547,6 +547,8 @@ $chart-legend-border-color: $ids-color-palette-slate-70;
 $datagrid-border-color: $ids-color-palette-slate-50;
 $datagrid-header-color: $ids-color-palette-slate-100;
 $datagrid-header-bg-color: $ids-color-palette-slate-20;
+$datagrid-light-header-bg-color: $ids-color-palette-slate-20;
+
 $datagrid-nested-header-bg-color: $ids-color-palette-slate-40;
 $datagrid-nested-header-border-color: $ids-color-palette-slate-60;
 $datagrid-header-border-color: $ids-color-palette-slate-80;
@@ -560,7 +562,7 @@ $datagrid-required-icon-color: $ids-color-palette-slate-100;
 $datagrid-cell-color: $ids-color-palette-white;
 $datagrid-cell-bg-color: $body-color-primary-background;
 $datagrid-cell-editing-bg-color: $panel-bg-color;
-$datagrid-cell-readonly-bg-color: $ids-color-palette-slate-70;
+$datagrid-cell-readonly-bg-color: rgba(62, 62, 66, 0.5);
 $datagrid-cell-readonly-color: $ids-color-palette-white;
 $datagrid-cell-border-color: $ids-color-palette-slate-60;
 $datagrid-group-row-border-color: $ids-color-palette-slate-50;
