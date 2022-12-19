@@ -99,6 +99,10 @@
     border-color: transparent;
     box-shadow: unset;
 
+    &.is-selected {
+      border-color: $header-tab-focus-border-color;
+    }
+
     &:not(.is-selected) {
       border-color: $header-tab-focus-border-color;
       border-radius: 7px;

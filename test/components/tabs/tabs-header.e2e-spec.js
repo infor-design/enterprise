@@ -139,7 +139,7 @@ describe('Tabs header keyboard example-index tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(element(by.className('is-focused')), config.waitsFor));
       await browser.driver.actions().sendKeys(protractor.Key.ENTER).perform();
       await browser.driver
-        .wait(protractor.ExpectedConditions.visibilityOf(element(by.css('#header-tabs-11.is-visible'))), config.waitsFor);
+        .wait(protractor.ExpectedConditions.visibilityOf(element(by.css('#header-tabs-17.is-visible'))), config.waitsFor);
 
       expect(await element(by.id('header-tabs-11')).getAttribute('class')).toContain('can-show');
       expect(await element.all(by.className('tab')).get(10).getAttribute('class')).toContain('is-selected');
@@ -155,7 +155,7 @@ describe('Tabs header keyboard example-index tests', () => {
         .wait(protractor.ExpectedConditions.presenceOf(element(by.className('is-focused')), config.waitsFor));
       await browser.driver.actions().sendKeys(protractor.Key.ENTER).perform();
       await browser.driver
-        .wait(protractor.ExpectedConditions.visibilityOf(element(by.css('#header-tabs-11.is-visible'))), config.waitsFor);
+        .wait(protractor.ExpectedConditions.visibilityOf(element(by.css('#header-tabs-17.is-visible'))), config.waitsFor);
 
       expect(await element(by.id('header-tabs-11')).getAttribute('class')).toContain('can-show');
       expect(await element.all(by.className('tab')).get(10).getAttribute('class')).toContain('is-selected');
