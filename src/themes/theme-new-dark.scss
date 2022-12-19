@@ -73,13 +73,39 @@ $hr-top-color: $ids-color-palette-slate-90;
 $hr-bottom-color: transparent;
 
 // Buttons
-$button-color-primary-initial-background: $ids-color-palette-slate-60;
 $button-color-primary-disabled-background: $ids-color-palette-slate-80;
 $button-color-primary-disabled-border: $ids-color-palette-slate-80;
-$button-color-primary-hover-background: $ids-color-palette-slate-80;
 $button-color-primary-active-background: $ids-color-palette-slate-60;
 $btn-hyperlink-color: $ids-color-palette-slate-50;
 $btn-hyperlink-hover-color: $ids-color-palette-slate-40;
+
+$button-color-primary-initial-font: $ids-color-palette-slate-90;
+$button-color-primary-initial-background: $ids-color-palette-azure-40;
+$button-color-primary-hover-background: $ids-color-palette-azure-30;
+$button-color-primary-disabled-background-new: $ids-color-palette-slate-80;
+$button-color-primary-disabled-font-new: $ids-color-palette-slate-40;
+
+$button-color-secondary-initial-font-new: $ids-color-palette-azure-40;
+$button-color-secondary-initial-border-new: $ids-color-palette-azure-40;
+$button-color-secondary-hover-border-new: $ids-color-palette-azure-40;
+$button-color-secondary-hover-background-new: $ids-color-palette-slate-90;
+$button-color-secondary-disabled-background-new: $ids-color-palette-slate-80;
+$button-color-secondary-disabled-border-new: $ids-color-palette-slate-30;
+$button-color-secondary-disabled-font-new: $ids-color-palette-slate-30;
+
+$button-color-tertiary-disabled-background-new: $ids-color-palette-slate-80;
+$button-color-tertiary-hover-background-new: $ids-color-palette-slate-90;
+$button-color-tertiary-hover-font-new: $ids-color-palette-azure-40;
+
+$button-color-primary-destructive-initial-background-new: $ids-color-palette-ruby-40;
+$button-color-primary-destructive-hover-background-new: $ids-color-palette-ruby-30;
+
+$button-color-tertiary-destructive-initial-background-new: $ids-color-palette-ruby-40;
+$button-color-tertiary-destructive-hover-font-new: $ids-color-palette-ruby-80;
+$button-color-tertiary-destructive-hover-background-new: $ids-color-palette-ruby-30;
+
+$button-color-tertiary-destructive-disabled-font-new: $ids-color-palette-ruby-20;
+$button-color-tertiary-destructive-disabled-background-new: $ids-color-palette-slate-80;
 
 // Button Ripple
 $secondary-btn-ripple-color: $ids-color-palette-slate-60;

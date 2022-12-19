@@ -1,6 +1,157 @@
 // Uplift Button
 //================================================== //
 
+.btn-primary {
+  border-radius: 8px;
+  background-color: $button-color-primary-initial-background;
+  border: 2px solid $button-color-primary-initial-background;
+  color: $button-color-primary-initial-font;
+
+  &:hover {
+    background-color: $button-color-primary-hover-background;
+    border: 2px solid $button-color-primary-hover-background;
+
+    &.btn {
+      color: $button-color-primary-initial-font;
+    }
+  }
+
+  &:active {
+    background-color: $button-color-primary-active-background;
+    border: 2px solid $button-color-primary-active-background;
+    box-shadow: none;
+  }
+
+  &:focus {
+    border: 2px solid transparent;
+
+    &:not(.hide-focus) {
+      box-shadow: 0 0 0 2px $body-color-primary-background, 0 0 0 3px $button-color-primary-initial-background, $focus-box-shadow;
+    }
+
+    &:active {
+      background-color: $button-color-primary-active-background;
+      box-shadow: none;
+    }
+  }
+
+  &.destructive {
+    background-color: $button-color-primary-destructive-initial-background-new;
+    border: 2px solid $button-color-primary-destructive-initial-background-new;
+
+    &:hover {
+      background-color: $button-color-primary-destructive-hover-background-new;
+      border: 2px solid $button-color-primary-destructive-hover-background-new;
+    }
+  }
+}
+
+.btn-primary[disabled] {
+  background-color: $button-color-primary-disabled-background-new;
+  border: 2px solid $button-color-primary-disabled-background-new;
+  color: $button-color-primary-disabled-font-new;
+
+  &:hover {
+    background-color: $button-color-primary-disabled-background-new;
+    border: 2px solid $button-color-primary-disabled-background-new;
+    color: $button-color-primary-disabled-font-new;
+  }
+}
+
+.btn-secondary {
+  background-color: transparent;
+  border-radius: 8px;
+  color: $button-color-secondary-initial-font-new;
+  border: 2px solid $button-color-secondary-initial-border-new;
+
+  svg.icon {
+    color: $button-color-secondary-initial-font-new;
+  }
+
+  &:hover {
+    background-color: $button-color-secondary-hover-background-new;
+    border: 2px solid $button-color-secondary-hover-border-new;
+    color: $button-color-secondary-initial-font-new;
+  }
+
+  &:active {
+    background-color: $button-color-secondary-hover-background-new;
+    border: 2px solid $button-color-secondary-hover-border-new;
+    color: $button-color-secondary-initial-font-new;
+  }
+
+  &:focus {
+    border: 2px solid $button-color-secondary-hover-border-new;
+
+    &:active {
+      background-color: $button-color-secondary-hover-background-new;
+      border: 2px solid $button-color-secondary-hover-border-new;
+      color: $button-color-secondary-initial-font-new;
+    }
+  }
+}
+
+.btn-secondary[disabled] {
+  background-color: $button-color-secondary-disabled-background-new;
+  color: $button-color-secondary-disabled-font-new;
+  border: 2px solid $button-color-secondary-disabled-border-new;
+
+  &:hover {
+    background-color: $button-color-secondary-disabled-background-new;
+    color: $button-color-secondary-disabled-font-new;
+    border: 2px solid $button-color-secondary-disabled-border-new;
+  }
+}
+
+.btn-tertiary,
+.btn-icon,
+.btn-menu {
+  border-radius: 8px;
+
+  &:hover:not(:disabled) {
+    background-color: $button-color-tertiary-hover-background-new;
+    color: $button-color-tertiary-hover-font-new;
+
+    svg.icon {
+      color: $button-color-tertiary-hover-font-new;
+    }
+  }
+
+  &.destructive {
+    color: $button-color-tertiary-destructive-initial-background-new;
+
+    svg.icon {
+      color: $button-color-tertiary-destructive-initial-background-new;
+    }
+
+    &:hover {
+      color: $button-color-tertiary-destructive-hover-font-new;
+      background-color: $button-color-tertiary-destructive-hover-background-new;
+
+      svg.icon {
+        color: $button-color-tertiary-destructive-hover-font-new;
+      }
+    }
+  }
+}
+
+.btn-link {
+  border-radius: 8px;
+
+  &:hover {
+    background-color: $button-color-tertiary-hover-background-new;
+    color: $button-color-tertiary-hover-font-new;
+
+    svg.icon {
+      color: $button-color-tertiary-hover-font-new;
+    }
+  }
+}
+
+.btn-link[disabled] {
+  background-color: $button-color-tertiary-disabled-background-new;
+}
+
 // Reset standard button alignments.
 [class^='btn'],
 .btn-primary,
