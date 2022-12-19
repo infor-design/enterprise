@@ -2246,10 +2246,6 @@ $datagrid-small-row-height: 25px;
         box-shadow: none;
       }
 
-      .icon {
-        @include trigger-icon-background($datagrid-row-selected-color);
-      }
-
       .btn.row-btn {
         background-color: $button-color-primary-initial-background;
         border: 1px solid  $button-color-primary-initial-background;
