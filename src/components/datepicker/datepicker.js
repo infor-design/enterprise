@@ -1088,7 +1088,7 @@ DatePicker.prototype = {
       }
     });
 
-    this.popup.off('click.datepicker-today').on('click.datepicker-today', '.hyperlink.today', (e) => {
+    this.popup.off('click.datepicker-today').on('click.datepicker-today', '.hyperlink.today:not(.is-disabled)', (e) => {
       e.preventDefault();
       if (s.range.useRange) {
         self.setToday(true);

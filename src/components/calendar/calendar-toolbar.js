@@ -97,8 +97,8 @@ CalendarToolbar.prototype = {
       }
     }
 
-    todayLink.class += ` hyperlink${isRippleClass}`;
-    const todayStr = s.showToday || s.inPage ? `<a class="${todayLink.class}}" href="#">${todayLink.text}</a>` : '';
+    todayLink.class += ` hyperlink${isRippleClass}${s.disableToday ? ' is-disabled' : ''}`;
+    const todayStr = s.showToday || s.inPage ? `<a class="${todayLink.class}" href="#">${todayLink.text}</a>` : '';
 
     const hitboxAttr = s.hitbox ? 'data-options="{hitbox: true}"' : '';
 
