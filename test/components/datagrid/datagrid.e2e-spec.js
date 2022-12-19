@@ -76,7 +76,7 @@ describe('Datagrid Column Sizing Setting Tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    xit('Should not visual regress', async () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
@@ -573,7 +573,7 @@ describe('Datagrid filter tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    xit('Should not visual regress', async () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
@@ -598,7 +598,7 @@ describe('Datagrid filter RTL tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    xit('Should not visual regress', async () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
       await element(by.css('#custom-id-col-id .btn-filter')).click();
@@ -654,7 +654,7 @@ describe('Datagrid filter medium row tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    xit('Should not visual regress', async () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
@@ -4679,7 +4679,7 @@ describe('Datagrid horizontal scrolling tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    xit('Should not visual regress', async () => {
       const windowSize = await browser.driver.manage().window().getSize();
       await browser.driver.manage().window().setSize(1000, 1500);
       const containerEl = await element(by.className('container'));

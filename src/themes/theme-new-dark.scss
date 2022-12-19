@@ -73,13 +73,39 @@ $hr-top-color: $ids-color-palette-slate-90;
 $hr-bottom-color: transparent;
 
 // Buttons
-$button-color-primary-initial-background: $ids-color-palette-slate-60;
 $button-color-primary-disabled-background: $ids-color-palette-slate-80;
 $button-color-primary-disabled-border: $ids-color-palette-slate-80;
-$button-color-primary-hover-background: $ids-color-palette-slate-80;
 $button-color-primary-active-background: $ids-color-palette-slate-60;
 $btn-hyperlink-color: $ids-color-palette-slate-50;
 $btn-hyperlink-hover-color: $ids-color-palette-slate-40;
+
+$button-color-primary-initial-font: $ids-color-palette-slate-90;
+$button-color-primary-initial-background: $ids-color-palette-azure-40;
+$button-color-primary-hover-background: $ids-color-palette-azure-30;
+$button-color-primary-disabled-background-new: $ids-color-palette-slate-80;
+$button-color-primary-disabled-font-new: $ids-color-palette-slate-40;
+
+$button-color-secondary-initial-font-new: $ids-color-palette-azure-40;
+$button-color-secondary-initial-border-new: $ids-color-palette-azure-40;
+$button-color-secondary-hover-border-new: $ids-color-palette-azure-40;
+$button-color-secondary-hover-background-new: $ids-color-palette-slate-90;
+$button-color-secondary-disabled-background-new: $ids-color-palette-slate-80;
+$button-color-secondary-disabled-border-new: $ids-color-palette-slate-30;
+$button-color-secondary-disabled-font-new: $ids-color-palette-slate-30;
+
+$button-color-tertiary-disabled-background-new: $ids-color-palette-slate-80;
+$button-color-tertiary-hover-background-new: $ids-color-palette-slate-90;
+$button-color-tertiary-hover-font-new: $ids-color-palette-azure-40;
+
+$button-color-primary-destructive-initial-background-new: $ids-color-palette-ruby-40;
+$button-color-primary-destructive-hover-background-new: $ids-color-palette-ruby-30;
+
+$button-color-tertiary-destructive-initial-background-new: $ids-color-palette-ruby-40;
+$button-color-tertiary-destructive-hover-font-new: $ids-color-palette-ruby-80;
+$button-color-tertiary-destructive-hover-background-new: $ids-color-palette-ruby-30;
+
+$button-color-tertiary-destructive-disabled-font-new: $ids-color-palette-ruby-20;
+$button-color-tertiary-destructive-disabled-background-new: $ids-color-palette-slate-80;
 
 // Button Ripple
 $secondary-btn-ripple-color: $ids-color-palette-slate-60;
@@ -546,6 +572,8 @@ $chart-legend-border-color: $ids-color-palette-slate-70;
 $datagrid-border-color: $ids-color-palette-slate-50;
 $datagrid-header-color: $ids-color-palette-slate-100;
 $datagrid-header-bg-color: $ids-color-palette-slate-20;
+$datagrid-light-header-bg-color: $ids-color-palette-slate-20;
+
 $datagrid-nested-header-bg-color: $ids-color-palette-slate-40;
 $datagrid-nested-header-border-color: $ids-color-palette-slate-60;
 $datagrid-header-border-color: $ids-color-palette-slate-80;
@@ -559,7 +587,7 @@ $datagrid-required-icon-color: $ids-color-palette-slate-100;
 $datagrid-cell-color: $ids-color-palette-white;
 $datagrid-cell-bg-color: $body-color-primary-background;
 $datagrid-cell-editing-bg-color: $panel-bg-color;
-$datagrid-cell-readonly-bg-color: $ids-color-palette-slate-70;
+$datagrid-cell-readonly-bg-color: rgba(62, 62, 66, 0.5);
 $datagrid-cell-readonly-color: $ids-color-palette-white;
 $datagrid-cell-border-color: $ids-color-palette-slate-60;
 $datagrid-group-row-border-color: $ids-color-palette-slate-50;
