@@ -1,0 +1,241 @@
+// Regular, in-page Horizontal Tabs
+//================================================== //
+
+$horizontal-tabs-height: 40px;
+
+.has-more-button.tab-container.horizontal {
+  &::after {
+    background-image:
+      linear-gradient(
+        to right,
+        rgba($body-color-primary-background, 0),
+        rgba($body-color-primary-background, 1)
+      );
+    height: ($horizontal-tabs-height - 1px);
+  }
+}
+
+.tab-container.horizontal {
+  border-bottom: 1px solid $tab-border-color;
+
+  &::before {
+    background-image:
+      linear-gradient(
+        to right,
+        rgba($body-color-primary-background, 1),
+        rgba($body-color-primary-background, 0)
+      );
+    height: ($horizontal-tabs-height - 1px);
+  }
+
+  &.alternate {
+    background-color: $tab-alt-bg-color;
+    border-bottom-color: $tab-alt-border-color;
+
+    &::before {
+      background-image:
+        linear-gradient(
+          to right,
+          rgba($tab-alt-bg-color, 1),
+          rgba($tab-alt-bg-color, 0)
+        );
+    }
+
+    &::after {
+      background-image:
+        linear-gradient(
+          to right,
+          rgba($tab-alt-bg-color, 0),
+          rgba($tab-alt-bg-color, 1)
+        );
+    }
+  }
+
+  .tab-list-info {
+    display: none;
+  }
+
+  > .tab-list-container {
+    .icon:not(.icon-error) {
+      color: $tab-text-color;
+    }
+
+    .tab {
+      color: $tab-text-color;
+
+      a {
+        padding: 11px 11px 8px;
+      }
+
+      &:hover {
+        color: $header-tab-hover-color-new;
+        border-bottom: 4px solid transparent;
+        background-color: $header-tab-background-hover-color-new;
+
+        .icon:not(.is-error):not(.icon-error) {
+          color: $tab-hover-color;
+        }
+
+        &.is-disabled {
+          color: $disabled-color;
+        }
+      }
+
+      &.is-selected {
+        color: $header-tab-selected-color-new;
+        border-bottom: 4px solid $header-tab-selected-color-new;
+
+        .icon:not(.is-error):not(.icon-error) {
+          color: $tab-selected-color;
+        }
+      }
+    }
+  }
+
+  .tab-focus-indicator.is-visible {
+    border-color: transparent;
+    box-shadow: unset;
+  }
+
+  .tab-more,
+  .add-tab-button {
+    background-color: transparent;
+    color: $tab-text-color;
+    font-size: $ids-size-font-base;
+    line-height: 12px;
+
+    .icon {
+      color: $tab-text-color;
+    }
+
+    &:hover {
+      color: $tab-hover-color;
+
+      .icon:not(.is-error):not(.icon-error) {
+        color: $tab-hover-color;
+      }
+    }
+
+    &.is-open,
+    &.is-selected {
+      color: $tab-selected-color;
+
+      span {
+        text-decoration: none;
+      }
+
+      .icon:not(.is-error):not(.icon-error) {
+        color: $tab-selected-color;
+      }
+    }
+  }
+
+  .tab-more {
+    padding: 12px 4px 11px 14px;
+
+    &::before {
+      background-color: rgba($tab-border-color, 0.8);
+      content: '';
+      display: inline-block;
+      height: 30px;
+      left: 7px;
+      position: absolute;
+      top: 4px;
+      width: 1px;
+    }
+  }
+
+  .animated-bar {
+    top: 36px;
+  }
+
+  // Displays the Big Numbers over top of each title
+  &.has-counts {
+    .tab {
+      a {
+        padding: 9px 11px 6px;
+      }
+
+      &.dismissible {
+        .icon {
+          position: static;
+        }
+      }
+    }
+
+    .animated-bar {
+      top: 61px;
+    }
+
+    .tab-more {
+      padding: 24px 0 24px 14px;
+
+      &::before {
+        height: 50px;
+      }
+    }
+
+    .separator {
+      height: 50px;
+    }
+  }
+
+  + .tab-panel-container {
+    margin-bottom: 20px;
+  }
+}
+
+.tab-panel-container {
+  .info-message {
+    .icon-info.icon {
+      color: $info-color !important;
+    }
+
+    .message-text {
+      color: $info-color !important;
+    }
+  }
+}
+
+// RTL Styles
+html[dir='rtl'] {
+  .tab-container.horizontal {
+    &::before {
+      background-image:
+        linear-gradient(
+          to left,
+          rgba($body-color-primary-background, 1),
+          rgba($body-color-primary-background, 0)
+        );
+    }
+
+    &::after {
+      background-image:
+        linear-gradient(
+          to left,
+          rgba($body-color-primary-background, 0),
+          rgba($body-color-primary-background, 1)
+        );
+    }
+
+    &.alternate {
+      &::before {
+        background-image:
+          linear-gradient(
+            to left,
+            rgba($tab-alt-bg-color, 1),
+            rgba($tab-alt-bg-color, 0)
+          );
+      }
+
+      &::after {
+        background-image:
+          linear-gradient(
+            to left,
+            rgba($tab-alt-bg-color, 0),
+            rgba($tab-alt-bg-color, 1)
+          );
+      }
+    }
+  }
+}
