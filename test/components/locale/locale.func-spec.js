@@ -2212,7 +2212,7 @@ describe('Locale API', () => {
 
     Locale.set('sv-SE');
 
-    expect(Locale.translate('NewWindow')).toEqual('Nästa fönster');
+    expect(Locale.translate('NewWindow')).toEqual('Nytt fönster');
 
     Locale.set('fr-FR');
 

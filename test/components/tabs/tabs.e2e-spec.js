@@ -406,7 +406,7 @@ describe('Tabs click example-dropdown-tabs tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress on example-dropdown-tabs?theme=classic', async () => {
+    xit('Should not visual regress on example-dropdown-tabs?theme=classic', async () => {
       const tabsEl = await element(by.id('tabs-dropdown'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);

@@ -273,6 +273,9 @@ $listview-search-disabled-opacity: 0.5;
 $listview-search-disabled-border-color: $ids-color-palette-slate-50;
 $listview-search-disabled-icon-color: $ids-color-palette-slate-50;
 
+$listview-search-placeholder-color: $ids-color-palette-slate-30;
+$listview-search-border-color: $ids-color-palette-slate-30;
+
 // Listbuilder
 $listbuilder-bg-color: $panel-bg-color;
 $listbuilder-bg-color-hover: $ids-color-palette-slate-60;
@@ -700,6 +703,8 @@ $searchfield-lighter-bg-color: $ids-color-palette-slate-80;
 $searchfield-lighter-text-color: $ids-color-palette-slate-40;
 $searchfield-lighter-placeholder-text-color: $ids-color-brand-secondary-alt;
 $searchfield-active-icon-color: $ids-color-brand-primary-alt;
+$searchfield-icon-hover-color: $ids-color-palette-slate-20;
+$searchfield-header-color: white;
 
 $searchfield-toolbar-bg-color: $ids-color-palette-slate-100;
 
@@ -765,14 +770,22 @@ $header-tab-separator: rgba(255, 255, 255, 0.4);
 $header-tab-normal-color: $ids-color-palette-slate-30;
 $header-tab-hover-color: $inverse-color;
 $header-tab-selected-color: $inverse-color;
-$header-tab-alt-bg-color: $ids-color-palette-slate-100;
+$header-tab-alt-bg-color: transparent;
 $header-tab-alt-separator: $ids-color-palette-white;
 $header-tab-alt-normal-color: $ids-color-palette-slate-30;
 $header-tab-alt-hover-color: $inverse-color;
 $header-tab-alt-selected-color: $inverse-color;
 
+$header-tab-background-initial-color-new: transparent;
+$header-tab-normal-color-new: $ids-color-palette-slate-30;
+$header-tab-hover-color-new: $ids-color-palette-white;
+$header-tab-selected-color-new: $inverse-color;
+$header-tab-gradient-initial-color-new: $ids-color-palette-slate-60;
+
 $header-flex-toolbar-close-icon-color-hover: $ids-color-palette-white;
 $searchfield-header-hover-icon-color: $ids-color-palette-white;
+$header-tab-background-hover-color-new: transparent;
+$header-tab-indicator-hover-color-new: $ids-color-palette-white;
 
 // Header Breadcrumb
 $header-breadcrumb-color: $ids-color-palette-slate-10;
