@@ -99,7 +99,7 @@ button {
   @include css3-extended(backface-visibility, hidden, (-webkit-, -moz-));
   @include css3-extended(transform, translate3d(0, 0, 0), (-webkit-, -moz-));
   @include css3-extended(color, transparent, (-webkit-tap-highlight-));
-  @include transition(color 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94), background-color 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94), border 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94), box-shadow 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
+  @include transition(color 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
   @include antialiased();
 
   color: inherit;

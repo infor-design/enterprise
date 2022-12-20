@@ -84,7 +84,6 @@ button.is-personalizable.is-pressed .icon {
   border-color: ${colors.darker} !important;
 }
 
-.is-personalizable button:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):focus:not(.hide-focus),
 button.is-personalizable button:focus:not(.hide-focus),
 .is-personalizable a.btn:focus:not(.hide-focus),
 a.btn.is-personalizable:focus:not(.hide-focus),
@@ -98,7 +97,7 @@ a.btn-tertiary.is-personalizable:focus:not(.hide-focus),
 a.btn-close.is-personalizable:focus:not(.hide-focus) {
   box-shadow: 0 0 0 2px transparent,
     0 0 0 1px ${colors.base},
-    0 0 4px 2px rgba(${baseColorObj.r}, ${baseColorObj.g}, ${baseColorObj.b}, 0.3);
+    0 0 4px 2px rgba(${baseColorObj.r}, ${baseColorObj.g}, ${baseColorObj.b}, 0.3) !important;
 }
 
 .is-personalizable .btn-primary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):focus:not(.hide-focus),
@@ -156,6 +155,18 @@ a.is-personalizable svg.ripple-effect {
 .tab-container.module-tabs.is-personalizable {
   border-top: 1px solid ${colors.darkest} !important;
   border-bottom: 1px solid ${colors.darkest} !important;
+}
+
+.tab-container.header-tabs > .tab-list-container .tab a {
+  color: ${colors.contrast};
+}
+.tab-container.header-tabs .tab-focus-indicator.is-visible,
+.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected {
+  border-color: ${colors.contrast};
+}
+.tab-container.header-tabs > .tab-list-container .tab:hover:not(.is-disabled) {
+  color: ${colors.contrast};
+  background-color: ${colors.darker};
 }
 
 .module-tabs.is-personalizable .tab:not(:first-child) {
@@ -219,6 +230,7 @@ a.is-personalizable svg.ripple-effect {
 .header.is-personalizable button:not(:disabled):hover .app-header.icon > span,
 .header.is-personalizable .toolbar [class^='btn']:hover:not([disabled]) {
   color: ${colors.contrast};
+  background-color: ${colors.darker};
   opacity: 1;
 }
 
@@ -270,6 +282,16 @@ html[class*="theme-new-"] .is-personalizable.tab-container.header-tabs > .tab-li
   opacity: 1;
 }
 
+.header.is-personalizable .page-title {
+  color: ${colors.contrast};
+}
+
+.header.is-personalizable .flex-toolbar [class^='btn'][disabled] .icon,
+.header.is-personalizable  .flex-toolbar [class^='btn']:focus:not(.hide-focus) .icon,
+.header.is-personalizable .btn span {
+  color: ${colors.contrast} !important;
+}
+
 .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab:hover:not(.is-disabled)::before {
   background-color: ${colors.contrast};
 }
@@ -280,6 +302,48 @@ html[class*="theme-new-"] .is-personalizable.tab-container.header-tabs > .tab-li
 
 .header.is-personalizable.has-tabs .tab-list-container .tab.is-selected:not(.is-disabled):hover::before {
   background-color: ${colors.contrast} !important;
+}
+
+.header.is-personalizable .toolbar-searchfield-wrapper:not(.non-collapsible):not(.is-open) .icon:not(.close),
+.header.is-personalizable .toolbar [class^='btn']:focus .icon {
+  color: ${colors.contrast};
+}
+
+.header .toolbar [class^='btn']:hover {
+  background-color: ${colors.base};
+}
+
+.header .toolbar-searchfield-wrapper.active .searchfield:focus {
+  border-color: ${colors.contrast};
+}
+
+.header.is-personalizable .btn-actions:not(.btn-primary):not(.btn-secondary).is-open .icon,
+.header.is-personalizable .wizard-header .tick,
+.header.is-personalizable .wizard-header .tick .label,
+.header.is-personalizable .wizard-header a.tick:hover:not(.current):not(.is-disabled):not([disabled]) .label {
+  color: ${colors.contrast};
+}
+
+.header.is-personalizable .wizard-header .tick:focus .label,
+.header.is-personalizable .wizard-header .tick.current::before {
+  border-color: ${colors.light};
+}
+
+.header.is-personalizable .wizard-header .bar,
+.header.is-personalizable .wizard-header .tick.current::after,
+.header .wizard-header .tick::after,
+.header.is-personalizable .wizard-header .tick.complete {
+  background-color: ${colors.darkest};
+}
+
+.header.is-personalizable .wizard-header .tick.complete::after,
+.header.is-personalizable .wizard-header .completed-range,
+.header.is-personalizable .wizard-header .tick.current {
+  background-color: ${colors.contrast};
+}
+
+.header.is-personalizable .wizard-header .tick.complete .label {
+  color: ${colors.contrast};
 }
 
 .subheader.is-personalizable .go-button.is-personalizable {
@@ -849,13 +913,18 @@ html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.i
     0 0 2px 1px ${colors.subtext};
 }
 
-.header.is-personalizable .toolbar [class^='btn']:focus:not(.hide-focus),
-.header.is-personalizable .flex-toolbar [class^='btn']:focus:not(.hide-focus),
 .subheader.is-personalizable .toolbar [class^='btn']:focus:not(.hide-focus),
 .subheader.is-personalizable .flex-toolbar [class^='btn']:focus:not(.hide-focus) {
   box-shadow: 0 0 0 2px transparent,
     0 0 0 1px ${colors.subtext},
     0 0 2px 1px ${colors.subtext};
+}
+
+.header.is-personalizable .toolbar [class^='btn']:focus:not(.hide-focus),
+.header.is-personalizable .flex-toolbar [class^='btn']:focus:not(.hide-focus) {
+  box-shadow: 0 0 0 2px transparent,
+  0 0 0 1px ${colors.subtext},
+  0 0 2px 1px ${colors.subtext} !important;
 }
 
 /*

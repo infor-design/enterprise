@@ -17,17 +17,19 @@
 @import '../core/config';
 
 // Form Background Color
-$header-bg-color: $ids-color-brand-primary-base;
-$subhead-bg-color: $ids-color-brand-primary-alt;
+$header-bg-color: $ids-color-palette-white;
+$subhead-bg-color: $ids-color-palette-white;
 $header-border-color: $ids-color-palette-slate-100;
-$header-button-color: rgba($ids-color-palette-white, 1);
-$header-button-focus-color: $ids-color-palette-white;
-$header-button-hover-color: rgba($ids-color-palette-white, 0.85);
-$header-button-disabled-color: rgba($ids-color-palette-white, 0.3);
+$header-button-color: $ids-color-palette-slate-100;
+$header-button-focus-color: $ids-color-palette-slate-70;
+$header-button-hover-color: rgba($ids-color-palette-slate-70, 0.85);
+$header-button-disabled-color: rgba($ids-color-palette-slate-50, 0.3);
 $header-primary-btn-background-color: $ids-color-brand-primary-base;
 $header-primary-btn-background-hover-color: $ids-color-palette-azure-50;
 $header-disabled-color: $ids-color-palette-slate-50;
 $header-focus-box-shadow: 0 0 4px 3px rgba(255, 255, 255, 0.3);
+
+$body-color-primary-background: $ids-color-palette-white;
 
 $dropdown-search-bg-color: $ids-color-palette-white;
 $panel-bg-color: $ids-color-palette-white;
@@ -734,7 +736,6 @@ $about-text-border-color: $ids-color-palette-slate-60;
 $about-text-hover-border-color: $ids-color-palette-black;
 
 // Header
-$header-bg-color: $ids-color-palette-azure-80;
 $subheader-searchfield-context-bg: $ids-color-palette-white;
 $subheader-input-color-focus-border: $ids-color-palette-slate-100;
 $subheader-input-text-color-focus: $ids-color-palette-slate-80;
@@ -760,7 +761,7 @@ $header-tab-gradient-initial-color-new: $header-tab-background-initial-color-new
 $header-tab-hover-color-new: $header-tab-focus-border-color;
 
 // Header Breadcrumb
-$header-breadcrumb-color: $ids-color-palette-white;
+$header-breadcrumb-color: $ids-color-palette-slate-100;
 $header-breadcrumb-alt-bg-color: $ids-color-palette-white;
 $header-breadcrumb-alt-color: $font-color-highcontrast;
 $header-breadcrumb-border-color: $ids-color-palette-slate-60;

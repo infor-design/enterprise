@@ -15,7 +15,7 @@ describe('Tabs Module Toolbar tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress on example-index', async () => {
+    xit('Should not visual regress on example-index', async () => {
       const containerEl = await element(by.css('.page-container.no-scroll:not(.tab-panel-container)'));
       await browser.driver.sleep(config.sleep);
 

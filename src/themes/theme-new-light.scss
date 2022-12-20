@@ -15,8 +15,8 @@
 @import '../core/config';
 
 // New Theme Light Overrides
-$header-bg-color: $ids-color-brand-primary-base;
-$subhead-bg-color: $ids-color-brand-primary-alt;
+$header-bg-color: $ids-color-palette-white;
+$subhead-bg-color: $ids-color-palette-white;
 $disabled-color: $ids-color-palette-slate-30;
 $label-disabled-color: $input-color-disabled-border;
 $input-disabled-color: $input-color-disabled-font;
@@ -60,7 +60,7 @@ $about-text-hover-border-color: $ids-color-palette-slate-70;
 
 // BreadCrumb
 $breadcrumb-color: $ids-color-palette-slate-60;
-$breadcrumb-hover-color: $ids-color-palette-slate-90;
+$breadcrumb-hover-color: $ids-color-palette-azure-60;
 $breadcrumb-disabled-color: $input-color-disabled-border;
 
 // Builder Pattern
@@ -335,13 +335,12 @@ $image-border-color: $ids-color-palette-slate-20;
 $image-background-color: $ids-color-palette-slate-20;
 
 // Tabs
-$tab-text-color: $ids-color-palette-slate-70;
+$tab-text-color: $ids-color-palette-white;
 $tab-border-color: $ids-color-palette-slate-30;
 $tab-alt-border-color: $ids-color-palette-slate-30;
 $header-tab-gradient-initial-color-new: $ids-color-palette-white;
 
 // Header
-$subhead-bg-color: $ids-color-palette-azure-80;
 $subheader-input-color-focus-border: $ids-color-palette-slate-40;
 
 // Header Tabs

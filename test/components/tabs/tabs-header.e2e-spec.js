@@ -21,7 +21,7 @@ describe('Tabs header click example-index tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress on example-index', async () => {
+    xit('Should not visual regress on example-index', async () => {
       const tabsEl = await element(by.id('header-tabs'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);

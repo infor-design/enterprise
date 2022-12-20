@@ -29,6 +29,7 @@
       .current,
       &.current {
         font-size: 14px;
+        color: $header-breadcrumb-current-color;
       }
     }
   }

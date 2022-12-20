@@ -61,7 +61,7 @@ $horizontal-tabs-height: 40px;
     }
 
     .tab {
-      color: $tab-text-color;
+      color: $tab-text-color-horizontal;
 
       a {
         padding: 11px 11px 8px;
@@ -97,7 +97,7 @@ $horizontal-tabs-height: 40px;
     line-height: 12px;
 
     .icon {
-      color: $tab-text-color;
+      color: $tab-text-color-horizontal;
     }
 
     &:hover {

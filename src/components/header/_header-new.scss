@@ -115,11 +115,15 @@
     }
 
     .searchfield-wrapper.has-categories.show-category .searchfield {
+      border-color: $searchfield-context-border-color;
       border-left-color: $subheader-input-color-focus-border;
+
+      &:hover {
+        border-color: $input-color-hover-border;
+      }
     }
 
     .searchfield-wrapper.context.has-focus {
-      .searchfield,
       .btn {
         border-color: $subheader-input-color-focus-border;
       }

@@ -118,10 +118,6 @@
 
     > .searchfield {
       background-color: $searchfield-context-bg;
-      border-bottom: 1px solid $searchfield-context-border-color;
-      border-left: 0;
-      border-right: 0;
-      border-top: 0;
       height: 38px;
       padding-left: 32px;
       width: 100%;
@@ -161,8 +157,7 @@
 
     .btn {
       background-color: $searchfield-context-bg;
-      border: 0;
-      border-bottom: 1px solid $searchfield-context-border-color;
+      border: 1px solid $searchfield-context-border-color;
       height: 38px;
 
       + .searchfield {
@@ -227,9 +222,7 @@
   }
 
   &.has-focus {
-    &:not(.toolbar-searchfield-wrapper) {
-      box-shadow: 0 0 4px 1px rgba(54, 138, 192, 0.3);
-    }
+    box-shadow: 0 0 4px 1px rgba(54, 138, 192, 0.3);
 
     .btn {
       border-color: $input-color-focus-border;
