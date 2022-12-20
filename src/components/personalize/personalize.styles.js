@@ -157,6 +157,18 @@ a.is-personalizable svg.ripple-effect {
   border-bottom: 1px solid ${colors.darkest} !important;
 }
 
+.tab-container.header-tabs > .tab-list-container .tab a {
+  color: ${colors.contrast};
+}
+.tab-container.header-tabs .tab-focus-indicator.is-visible,
+.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected {
+  border-color: ${colors.contrast};
+}
+.tab-container.header-tabs > .tab-list-container .tab:hover:not(.is-disabled) {
+  color: ${colors.contrast};
+  background-color: ${colors.darker};
+}
+
 .module-tabs.is-personalizable .tab:not(:first-child) {
   border-left: 1px solid ${colors.darkest} !important;
 }
