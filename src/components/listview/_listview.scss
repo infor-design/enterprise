@@ -636,6 +636,11 @@
 
     .searchfield {
       height: 38px;
+
+      &::placeholder {
+        color: $listview-search-placeholder-color;
+        opacity: 1;
+      }
     }
 
     .btn-icon {
@@ -668,7 +673,13 @@
 
     &.has-focus {
       input {
-        border: 1px solid $ids-color-brand-primary-base;
+        border: 1px solid $listview-full-width-bg-color;
+      }
+    }
+
+    &.is-hovered:not(.has-focus) {
+      input:not([disabled='true']) {
+        border: 1px solid $listview-search-border-color;
       }
     }
   }
@@ -691,7 +702,7 @@
     border: 1px solid transparent;
     border-bottom-color: $listview-border-color;
     line-height: 16px;
-    padding: 9px 10px 9px 40px;
+    padding: 9px 10px 9px 45px;
     width: 100%;
 
     &[disabled] {

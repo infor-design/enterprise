@@ -327,6 +327,8 @@ $listview-search-disabled-opacity: 0.5;
 $listview-search-disabled-bg-color: $input-color-readonly-background;
 $listview-search-disabled-border-color: $input-color-readonly-background;
 $listview-search-disabled-icon-color: $input-color-readonly-font;
+$listview-search-placeholder-color: $ids-color-palette-slate-60;
+$listview-search-border-color: $ids-color-palette-slate-80;
 
 // Listbuilder
 $listbuilder-bg-color: $panel-bg-color;
@@ -635,9 +637,10 @@ $application-menu-width: 300px;
 $application-menu-border-color: $ids-color-palette-slate-50;
 $application-menu-searchfield-icon-color: $ids-color-palette-slate-50;
 $application-menu-searchfield-placeholder-color: $ids-color-palette-slate-50;
-$application-menu-searchfield-text-color: $ids-color-palette-slate-30;
+$application-menu-searchfield-text-color: $ids-color-palette-white;
 $application-menu-trigger-icon-fill-color: $trigger-icon-fill-color;
 
+$application-menu-searchfield-icon-color: $ids-color-palette-slate-60;
 $application-menu-searchfield-icon-active-color: $ids-color-palette-white;
 $application-menu-searchfield-text-active-color: $ids-color-palette-white;
 
@@ -846,7 +849,8 @@ $hierarchy-line-color: $ids-color-palette-graphite-30;
 //Searchfield Colors
 $searchfield-bg-color: $ids-color-palette-graphite-20;
 $searchfield-border-color: $ids-color-palette-graphite-30;
-$searchfield-icon-color: $button-color-tertiary-initial-font;
+$searchfield-icon-color: $ids-color-palette-slate-60;
+$searchfield-icon-hover-color: $ids-color-palette-slate-100;
 $searchfield-text-color: $ids-color-palette-slate-100;
 $searchfield-placeholder-text-color: $ids-color-palette-slate-60;
 $searchfield-lighter-bg-color: $ids-color-palette-graphite-10;
@@ -870,6 +874,7 @@ $searchfield-card-border-color: $ids-color-palette-graphite-20;
 $searchfield-card-icon-color: $ids-color-brand-secondary-base;
 $searchfield-card-text-color: $font-color;
 
+$searchfield-header-color:$ids-color-palette-slate-100;
 $searchfield-header-bg-color: $ids-color-palette-white;
 $searchfield-header-border-color: $ids-color-palette-slate-90;
 $searchfield-header-text-color: $ids-color-palette-white;
@@ -885,6 +890,7 @@ $searchfield-readonly-icon-color: $ids-color-palette-graphite-40;
 
 $searchfield-toolbar-bg-color: $ids-color-palette-white;
 $searchfield-toolbar-border-color: $ids-color-palette-slate-40;
+$searchfield-toolbar-focus-color: $ids-color-palette-azure-60;
 
 //Image Border Color
 $image-border-color: $ids-color-palette-graphite-20;
@@ -910,7 +916,7 @@ $about-text-border-color: $ids-color-palette-graphite-30;
 $about-text-hover-border-color: $ids-color-palette-graphite-70;
 
 // Header
-$header-flex-toolbar-input-searchfield-color: $ids-color-palette-slate-100;
+$header-flex-toolbar-input-searchfield-color: $ids-color-palette-slate-80;
 $header-flex-toolbar-close-icon-color: $ids-color-palette-slate-60;
 $header-flex-toolbar-close-icon-color-hover: $ids-color-palette-slate-80;
 $subheader-searchfield-context-bg: $ids-color-palette-white;

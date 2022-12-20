@@ -252,7 +252,7 @@ Soho.Locale.addCulture('sv-SE', {
     NewEventDetails: { id: 'NewEventDetails', value: 'Nya händelsedetaljer', comment: 'Placholder text for adding a new calendar event.' },
     NewDocument: { id: 'NewDocument', value: 'Nytt dokument', comment: 'New Document tooltip' },
     NewItem: { id: 'NewItem', value: 'Nytt objekt', comment: 'New item in listbuilder' },
-    NewWindow: { id: 'NewWindow', value: 'Nästa fönster', comment: 'Contents open in a new browser window.' },
+    NewWindow: { id: 'NewWindow', value: 'Nytt fönster', comment: 'Contents open in a new browser window.' },
     Next: { id: 'Next', value: 'Nästa', comment: 'Next in icons tooltip' },
     NextPage: { id: 'NextPage', value: 'Nästa sida', comment: 'Next on Pager' },
     NextMonth: { id: 'NextMonth', value: 'Nästa månad', comment: 'the label for the button that moves calendar to next/prev' },

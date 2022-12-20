@@ -273,6 +273,9 @@ $listview-search-disabled-opacity: 0.5;
 $listview-search-disabled-border-color: $ids-color-palette-slate-50;
 $listview-search-disabled-icon-color: $ids-color-palette-slate-50;
 
+$listview-search-placeholder-color: $ids-color-palette-slate-30;
+$listview-search-border-color: $ids-color-palette-slate-30;
+
 // Listbuilder
 $listbuilder-bg-color: $panel-bg-color;
 $listbuilder-bg-color-hover: $ids-color-palette-slate-60;
@@ -700,6 +703,8 @@ $searchfield-lighter-bg-color: $ids-color-palette-slate-80;
 $searchfield-lighter-text-color: $ids-color-palette-slate-40;
 $searchfield-lighter-placeholder-text-color: $ids-color-brand-secondary-alt;
 $searchfield-active-icon-color: $ids-color-brand-primary-alt;
+$searchfield-icon-hover-color: $ids-color-palette-slate-20;
+$searchfield-header-color: white;
 
 $searchfield-toolbar-bg-color: $ids-color-palette-slate-100;
 

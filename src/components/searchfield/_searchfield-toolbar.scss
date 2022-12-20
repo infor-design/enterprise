@@ -197,6 +197,10 @@ $toolbarsearchfield-category-empty-width: 51px;
       border-bottom-color: rgba($searchfield-border-color, 0);
     }
 
+    .icon {
+      color: $searchfield-icon-hover-color;
+    }
+
     .btn,
     .collapse-button {
       border-color: transparent;
@@ -327,8 +331,15 @@ $toolbarsearchfield-category-empty-width: 51px;
     }
 
     .icon {
-      color: $searchfield-text-color;
+      color: $searchfield-icon-color;
       height: 18px;
+    }
+
+    &.non-collapsible.is-hovered,
+    &.is-hovered {
+      .icon {
+        color: $searchfield-icon-hover-color;
+      }
     }
 
     &:not(.non-collapsible) {
@@ -387,7 +398,7 @@ $toolbarsearchfield-category-empty-width: 51px;
       border-color: transparent;
 
       &:focus {
-        border-color: rgba($input-color-focus-border, 1);
+        border-color: $searchfield-toolbar-focus-color;
       }
     }
 
@@ -871,10 +882,9 @@ html.is-firefox {
       }
     }
 
-    &.is-open,
-    &.is-hovered {
+    &.is-open {
       .icon {
-        color: $searchfield-text-color;
+        color: $searchfield-icon-color;
       }
     }
   }

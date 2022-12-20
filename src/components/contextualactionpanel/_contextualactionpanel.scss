@@ -124,12 +124,12 @@
     }
 
     .is-open + .separator {
-      margin: 5px 9px 0 19px;
+      margin: 5px 7px 0 19px;
     }
 
     .separator {
       background-color: $contextual-panel-separator-bg-color;
-      margin: 5px 9px 0 0;
+      margin: 5px 7px 0;
       pointer-events: none; //fixes wierd IE10 over effect
       top: 5px;
     }
@@ -153,6 +153,17 @@
 
         .icon {
           color: $contextual-panel-icon-color;
+        }
+      }
+
+      .toolbar-searchfield-wrapper {
+        + .separator {
+          margin-left: 12px;
+          margin-right: 12px;
+        }
+
+        &.is-open + .separator {
+          margin-left: 20px;
         }
       }
     }
