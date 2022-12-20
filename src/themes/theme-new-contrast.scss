@@ -741,7 +741,7 @@ $subheader-searchfield-category-button-font-color: $ids-color-palette-slate-100;
 
 // Header Tabs
 $header-tabcontainer-border-color: $ids-color-brand-secondary-alt;
-$header-tab-separator: rgba(255, 255, 255, 0.4);
+$header-tab-separator: $ids-color-brand-secondary-alt;
 $header-tab-normal-color: $ids-color-palette-slate-10;
 $header-tab-hover-color: $inverse-color;
 $header-tab-selected-color: $inverse-color;

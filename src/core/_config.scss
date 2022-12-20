@@ -924,7 +924,7 @@ $header-toolbar-searchfield-icon-color: $ids-color-palette-white;
 
 // Header Tabs
 $header-tabcontainer-border-color: $ids-color-palette-graphite-30;
-$header-tab-separator: rgba(255, 255, 255, 0.4);
+$header-tab-separator: $ids-color-palette-graphite-30;
 $header-tab-normal-color: rgba(255, 255, 255, 0.7);
 $header-tab-hover-color: $button-color-primary-initial-font;
 $header-tab-selected-color: $ids-color-palette-graphite-10;
