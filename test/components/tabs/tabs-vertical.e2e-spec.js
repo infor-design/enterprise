@@ -58,7 +58,7 @@ describe('Tabs vertical click example-responsive tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress on example-responsive at 500px', async () => {
+    xit('Should not visual regress on example-responsive at 500px', async () => {
       const windowSize = await browser.driver.manage().window().getSize();
       await browser.driver.manage().window().setSize(500, 600);
       await browser.driver.sleep(config.sleep);
