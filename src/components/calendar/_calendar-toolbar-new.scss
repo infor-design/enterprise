@@ -19,7 +19,7 @@
 
   .today {
     &.is-disabled {
-      color: $datepicker-disabled-bg-color;
+      color: rgba($datepicker-disabled-color, 0.5);
       cursor: default;
     }
   }
