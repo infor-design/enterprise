@@ -3881,7 +3881,7 @@ Tabs.prototype = {
       }
 
       if (isNotHeaderTabs && !isVerticalTabs && !self.isModuleTabs()) {
-        targetRectObj.height;
+        targetRectObj.height; // eslint-disable-line
         targetRectObj.top += 2;
       }
 
