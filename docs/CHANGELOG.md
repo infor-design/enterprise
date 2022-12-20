@@ -19,6 +19,7 @@
 ## v4.71.0 Fixes
 
 - `[Datagrid]` Fixed a bug in datagrid where dropdown filter does not render correctly. ([#7006](https://github.com/infor-design/enterprise/issues/7006))
+- `[Datepicker]` Fixed a bug in datagrid where disabled dates were not showing in Safari. ([#6920](https://github.com/infor-design/enterprise/issues/6920))
 - `[Datagrid]` Fixed a bug in datagrid in datagrid where the icon cause clipping issues. ([#7000](https://github.com/infor-design/enterprise/issues/7000))
 - `[Tabs Header]` Changed the default background for tabs header in default and alternate. ([#6979](https://github.com/infor-design/enterprise/issues/6979))
 
