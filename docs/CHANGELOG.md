@@ -2,7 +2,9 @@
 
 ## v4.71.0
 
-## v4.71.0 Important Features
+## v4.71.0 Important Changes
+
+- `[Button]` Changed style and features of existing buttons and added destructive buttons. ([#6977](https://github.com/infor-design/enterprise/issues/6977))
 
 ## v4.71.0 Features
 
@@ -14,6 +16,7 @@
 
 - `[Datagrid]` Fixed a bug in datagrid where dropdown filter does not render correctly. ([#7006](https://github.com/infor-design/enterprise/issues/7006))
 - `[Datepicker]` Fixed a bug in datagrid where disabled dates were not showing in Safari. ([#6920](https://github.com/infor-design/enterprise/issues/6920))
+- `[Datagrid]` Fixed a bug in datagrid in datagrid where the icon cause clipping issues. ([#7000](https://github.com/infor-design/enterprise/issues/7000))
 
 ## v4.70.0
 
