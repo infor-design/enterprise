@@ -863,7 +863,6 @@ html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.i
     0 0 2px 1px ${colors.subtext};
 }
 
-.header.is-personalizable .toolbar [class^='btn']:focus:not(.hide-focus),
 .subheader.is-personalizable .toolbar [class^='btn']:focus:not(.hide-focus),
 .subheader.is-personalizable .flex-toolbar [class^='btn']:focus:not(.hide-focus) {
   box-shadow: 0 0 0 2px transparent,
@@ -871,6 +870,7 @@ html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.i
     0 0 2px 1px ${colors.subtext};
 }
 
+.header.is-personalizable .toolbar [class^='btn']:focus:not(.hide-focus),
 .header.is-personalizable .flex-toolbar [class^='btn']:focus:not(.hide-focus) {
   box-shadow: 0 0 0 2px transparent,
   0 0 0 1px ${colors.subtext},
