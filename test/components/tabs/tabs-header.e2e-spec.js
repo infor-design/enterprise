@@ -129,7 +129,7 @@ describe('Tabs header keyboard example-index tests', () => {
       expect(await element.all(by.className('tab')).get(2).getAttribute('class')).toContain('is-selected');
     });
 
-    it('Should navigate to menu on arrow up, and select header item #11', async () => {
+    it('Should navigate to menu on arrow up, and select header item #17', async () => {
       await clickTabTest('0');
       await browser.driver.actions().sendKeys(protractor.Key.ARROW_UP).perform();
       await browser.driver
@@ -141,11 +141,11 @@ describe('Tabs header keyboard example-index tests', () => {
       await browser.driver
         .wait(protractor.ExpectedConditions.visibilityOf(element(by.css('#header-tabs-17.is-visible'))), config.waitsFor);
 
-      expect(await element(by.id('header-tabs-11')).getAttribute('class')).toContain('can-show');
-      expect(await element.all(by.className('tab')).get(10).getAttribute('class')).toContain('is-selected');
+      expect(await element(by.id('header-tabs-17')).getAttribute('class')).toContain('can-show');
+      expect(await element.all(by.className('tab')).get(16).getAttribute('class')).toContain('is-selected');
     });
 
-    it('Should navigate to menu on arrow left, and select header item #11', async () => {
+    it('Should navigate to menu on arrow left, and select header item #17', async () => {
       await clickTabTest('0');
       await browser.driver.actions().sendKeys(protractor.Key.ARROW_LEFT).perform();
       await browser.driver
@@ -157,8 +157,8 @@ describe('Tabs header keyboard example-index tests', () => {
       await browser.driver
         .wait(protractor.ExpectedConditions.visibilityOf(element(by.css('#header-tabs-17.is-visible'))), config.waitsFor);
 
-      expect(await element(by.id('header-tabs-11')).getAttribute('class')).toContain('can-show');
-      expect(await element.all(by.className('tab')).get(10).getAttribute('class')).toContain('is-selected');
+      expect(await element(by.id('header-tabs-17')).getAttribute('class')).toContain('can-show');
+      expect(await element.all(by.className('tab')).get(16).getAttribute('class')).toContain('is-selected');
     });
   }
 });
