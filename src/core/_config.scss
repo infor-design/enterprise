@@ -233,34 +233,9 @@ $input-color: $input-color-initial-font;
 $input-disabled-color: $input-color-disabled-font;
 $input-placeholder-color: $ids-color-palette-slate-60;
 $input-readonly-color: $input-color-readonly-font;
+$input-color-border-space: $header-bg-color;
 
 // Buttons
-$button-color-primary-disabled-background-new: $ids-color-palette-slate-30;
-$button-color-primary-hover-background-new: $ids-color-palette-azure-10;
-$button-color-primary-disabled-font-new: $ids-color-palette-slate-80;
-
-$button-color-secondary-initial-font-new: $ids-color-palette-azure-60;
-$button-color-secondary-initial-border-new: $ids-color-palette-azure-60;
-$button-color-secondary-hover-border-new: $ids-color-palette-azure-60;
-$button-color-secondary-disabled-background-new: transparent;
-$button-color-secondary-disabled-border-new: $ids-color-palette-slate-30;
-$button-color-secondary-disabled-font-new: $ids-color-palette-slate-30;
-$button-color-secondary-hover-background-new: $ids-color-palette-azure-10;
-$button-color-secondary-hover-border-new: $ids-color-palette-azure-60;
-
-$button-color-tertiary-disabled-background-new: transparent;
-$button-color-tertiary-hover-background-new: $ids-color-palette-azure-10;
-$button-color-tertiary-hover-font-new: $ids-color-palette-azure-60;
-
-$button-color-primary-destructive-initial-background-new: $ids-color-palette-ruby-60;
-$button-color-primary-destructive-hover-background-new: $ids-color-palette-ruby-70;
-
-$button-color-tertiary-destructive-initial-background-new: $ids-color-palette-ruby-60;
-$button-color-tertiary-destructive-hover-font-new: $ids-color-palette-ruby-80;
-$button-color-tertiary-destructive-hover-background-new: $ids-color-palette-ruby-10;
-
-$button-color-tertiary-destructive-disabled-font-new: $ids-color-palette-ruby-30;
-$button-color-tertiary-destructive-disabled-background-new: transparent;
 $input-color-border-space: $header-bg-color;
 
 // Buttons
@@ -700,7 +675,6 @@ $tab-selected-color: $ids-color-brand-primary-base;
 $tab-border-color: $ids-color-palette-graphite-30;
 $tab-hover-color: $font-color-extrahighcontrast;
 $tab-text-color-horizontal: $ids-color-palette-slate-70;
-
 $tab-horizontal-text-color: $ids-color-palette-graphite-60;
 
 $tab-alt-bg-color: $ids-color-palette-white;
@@ -924,6 +898,9 @@ $searchfield-readonly-icon-color: $ids-color-palette-graphite-40;
 
 $searchfield-toolbar-bg-color: $ids-color-palette-white;
 $searchfield-toolbar-border-color: $ids-color-palette-slate-40;
+$searchfield-toolbar-focus-color: $ids-color-palette-azure-60;
+
+$searchfield-go-text-color: $ids-color-palette-white;
 
 //Image Border Color
 $image-border-color: $ids-color-palette-graphite-20;
@@ -964,9 +941,10 @@ $header-toolbar-button-hover-color: $ids-color-palette-azure-10;
 
 // Header Tabs
 $header-tabcontainer-border-color: $ids-color-palette-graphite-30;
-$header-tab-separator: rgba(255, 255, 255, 0.4);
-$header-tab-normal-color: rgba(255, 255, 255, 0.7);
-$header-tab-hover-color: $button-color-primary-initial-font;
+$header-tab-separator: $ids-color-palette-graphite-30;
+$header-tab-normal-color: $ids-color-palette-slate-100;
+$header-tab-text-color: $ids-color-palette-azure-70;
+$header-tab-hover-color: $ids-color-palette-azure-10;
 $header-tab-selected-color: $ids-color-palette-graphite-10;
 $header-tab-focus-border-color: $button-color-primary-initial-font;
 
