@@ -5,7 +5,8 @@
 .flex-toolbar {
   .toolbar-section {
     .searchfield-wrapper {
-      bottom: 0;
+      bottom: -1px;
+      margin-right: 0;
 
       &.toolbar-searchfield-wrapper.has-close-icon-button:not(.has-categories) {
         > svg.icon.close {

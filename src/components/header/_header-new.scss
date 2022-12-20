@@ -36,6 +36,10 @@
           }
         }
       }
+
+      .toolbar-searchfield-wrapper.has-text:not(.active) {
+        width: 34px;
+      }
     }
 
     // new design for M3 scenario
@@ -70,6 +74,11 @@
 
             svg.icon {
               color: $subheader-searchfield-category-button-font-color;
+
+              &.icon-dropdown {
+                margin-left: 1px;
+                margin-right: 2px;
+              }
             }
           }
         }
@@ -122,6 +131,7 @@
 
     .searchfield-wrapper.context > .searchfield {
       background-color: $subheader-searchfield-context-bg;
+      color: $searchfield-header-color;
     }
 
     .searchfield-wrapper .btn {

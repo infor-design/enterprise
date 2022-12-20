@@ -246,16 +246,32 @@ a.is-personalizable svg.ripple-effect {
 }
 
 .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab.is-selected:not(.is-disabled) {
+  color: ${colors.darker} !important;
+}
+
+html.theme-new-dark .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab.is-selected:not(.is-disabled) {
   color: ${colors.contrast} !important;
 }
 
 .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab,
+.is-personalizable.tab-container.header-tabs > .tab-list-container .tab  {
+  color: ${colors.darker} !important;
+  opacity: .8;
+}
+
+html.theme-new-dark .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab,
 .is-personalizable.tab-container.header-tabs > .tab-list-container .tab  {
   color: ${colors.contrast} !important;
   opacity: .8;
 }
 
 .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab:hover:not(.is-disabled),
+.is-personalizable.tab-container.header-tabs > .tab-list-container .tab:hover:not(.is-disabled)  {
+  color: ${colors.darker} !important;
+  opacity: 1;
+}
+
+html.theme-new-dark .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab:hover:not(.is-disabled),
 .is-personalizable.tab-container.header-tabs > .tab-list-container .tab:hover:not(.is-disabled)  {
   color: ${colors.contrast} !important;
   opacity: 1;
@@ -459,19 +475,41 @@ html[dir='rtl'] .scrollable-flex-header.is-personalizable .breadcrumb.truncated:
 
 .is-personalizable .tab-container.header-tabs:not(.alternate)::before,
 .is-personalizable.tab-container.header-tabs:not(.alternate)::before {
+  background-image: linear-gradient(to right, ${colors.contrast} , ${colorUtils.hexToRgba(colors.contrast, 0)}) !important;
+}
+
+.theme-new-dark .is-personalizable .tab-container.header-tabs:not(.alternate)::before,
+.theme-new-dark .is-personalizable.tab-container.header-tabs:not(.alternate)::before {
   background-image: linear-gradient(to right, ${colors.base} , ${colorUtils.hexToRgba(colors.base, 0)}) !important;
 }
+
+html[dir='rtl'].theme-new-dark .is-personalizable .tab-container.header-tabs:not(.alternate)::before,
+html[dir='rtl'].theme-new-dark .is-personalizable.tab-container.header-tabs:not(.alternate)::before {
+  background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base});
+}
+
 html[dir='rtl'] .is-personalizable .tab-container.header-tabs:not(.alternate)::before,
 html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::before {
-  background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base});
+  background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.contrast, 0)}, ${colors.contrast});
 }
 
 .is-personalizable .tab-container.header-tabs:not(.alternate)::after,
 .is-personalizable.tab-container.header-tabs:not(.alternate)::after {
+  background-image: linear-gradient(to right, ${colorUtils.hexToRgba(colors.contrast, 0)}, ${colors.contrast}) !important;
+}
+
+.theme-new-dark .is-personalizable .tab-container.header-tabs:not(.alternate)::after,
+.theme-new-dark .is-personalizable.tab-container.header-tabs:not(.alternate)::after {
   background-image: linear-gradient(to right, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base}) !important;
 }
+
 html[dir='rtl'] .is-personalizable .tab-container.header-tabs:not(.alternate)::after,
 html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::after {
+  background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.contrast, 0)}, ${colors.contrast}) !important;
+}
+
+html[dir='rtl'].theme-new-dark .is-personalizable .tab-container.header-tabs:not(.alternate)::after,
+html[dir='rtl'].theme-new-dark .is-personalizable.tab-container.header-tabs:not(.alternate)::after {
   background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base}) !important;
 }
 

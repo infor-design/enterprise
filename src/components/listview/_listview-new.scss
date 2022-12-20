@@ -19,12 +19,22 @@
   }
 
   .searchfield-wrapper {
-    .icon:not(.close):not(.icon-error) {
-      left: 18px;
+    &.has-focus:not(.toolbar-searchfield-wrapper) {
+      box-shadow: none;
+    }
+
+    &.non-collapsible.is-open {
+      .icon:not(.close):not(.icon-error) {
+        left: 16px;
+      }
     }
 
     .btn-icon {
       top: 7px;
+
+      &.close {
+        right: 11px;
+      }
     }
 
     &.has-listview-filters {

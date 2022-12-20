@@ -338,6 +338,7 @@ $image-background-color: $ids-color-palette-slate-20;
 $tab-text-color: $ids-color-palette-white;
 $tab-border-color: $ids-color-palette-slate-30;
 $tab-alt-border-color: $ids-color-palette-slate-30;
+$header-tab-gradient-initial-color-new: $ids-color-palette-white;
 
 // Header
 $subheader-input-color-focus-border: $ids-color-palette-slate-40;
@@ -346,6 +347,10 @@ $subheader-input-color-focus-border: $ids-color-palette-slate-40;
 $header-tabcontainer-border-color: $ids-color-palette-slate-30;
 $header-tab-selected-color: $ids-color-palette-slate-10;
 $header-tab-alt-normal-color: $ids-color-palette-slate-60;
+$header-tab-focus-border-color: $ids-color-palette-azure-60;
+
+$header-tab-normal-color-new: $ids-color-palette-graphite-60;
+$header-tab-alt-selected-color: $ids-color-palette-azure-60;
 
 // Header Breadcrumb
 $header-breadcrumb-border-color: $ids-color-palette-slate-30;
@@ -436,7 +441,7 @@ $swipeaction-right-hover-bg-color: $ids-color-palette-azure-80;
 $swipeaction-right-hover-color: $ids-color-palette-white;
 
 // New Theme only Variables
-$new-acc-border-radius: 6px;
+$new-acc-border-radius: 2px;
 $new-acc-header-text-color: $ids-color-palette-slate-20;
 $new-acc-header-selected-text-color: $ids-color-palette-white;
 
@@ -444,7 +449,7 @@ $new-acc-subheader-text-color: $ids-color-palette-slate-20;
 
 $new-acc-expanded-bg-color: $ids-color-palette-black;
 
-$new-appmenu-searchfield-placeholder-color: $ids-color-palette-slate-60;
+$new-appmenu-searchfield-placeholder-color: $ids-color-palette-white;
 
 $new-appmenu-main-bg-color: $ids-color-palette-slate-100;
 $new-appmenu-header-bg-color: $ids-color-palette-slate-100;
