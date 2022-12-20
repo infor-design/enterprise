@@ -13299,7 +13299,7 @@ Datagrid.prototype = {
     }
 
     if (settings && settings.toolbar && this.toolbar) {
-      const toolbar = this.element.prev('.toolbar');
+      var toolbar = this.element.parent().find('.toolbar:not(.contextual-toolbar), .flex-toolbar:not(.contextual-toolbar)').length === 1 ? this.element.prev('.flex-toolbar') : this.element.prev('.toolbar');
       const toolbarApi = this.toolbar.data('toolbar') ? this.toolbar.data('toolbar') : this.toolbar.data('toolbarFlex');
       if (toolbarApi) {
         toolbarApi.destroy();
