@@ -49,7 +49,7 @@
 
 .is-personalizable .personalize-actionable,
 .is-personalizable .personalize-actionable svg {
-  color: $ids-color-palette-azure-60;
+  color: $font-color;
 }
 
 .is-personalizable .personalize-actionable:hover:not([disabled]),
@@ -87,13 +87,13 @@
 
 .is-personalizable .personalize-chart-targeted .chart-percent-text,
 .is-personalizable .personalize-chart-targeted .label {
-  color: $ids-color-palette-white !important;
+  color: $font-color !important;
 }
 
 .is-personalizable .info-message,
 .is-personalizable .info-message .icon,
 .is-personalizable .info-message p {
-  color: $ids-color-palette-white !important;
+  color: $font-color !important;
 }
 
 .is-personalizable .personalize-actionable-disabled,
