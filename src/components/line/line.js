@@ -547,7 +547,7 @@ Line.prototype = {
         .ease(d3.easeCubic)
         .attr('stroke-dashoffset', 0);
 
-      const handleMouseEnter = function (elem, mouseEnterData) {
+      const handleMouseEnter = function (elem, event, mouseEnterData) {
         const rect = elem.getBoundingClientRect();
         let content = `<p><b>${mouseEnterData.name} </b> ${format(mouseEnterData.value)}</p>`;
 
@@ -659,9 +659,9 @@ Line.prototype = {
             .style('cursor', !self.settings.selectable ? 'inherit' : 'pointer')
             .style('fill', function () { return charts.chartColor(lineIdx, 'line', d); })
             .style('opacity', (s.isBubble || s.isScatterPlot ? '.7' : '1'))
-            .on(`mouseenter.${self.namespace}`, function (mouseEnterData) {
+            .on(`mouseenter.${self.namespace}`, function (event, mouseEnterData) {
               mouseEnterData.lineIdx = lineIdx;
-              handleMouseEnter(this, mouseEnterData);
+              handleMouseEnter(this, event, mouseEnterData);
             })
             .on(`mouseleave.${self.namespace}`, function () {
               clearInterval(tooltipInterval);
@@ -674,7 +674,7 @@ Line.prototype = {
             // Click and double click events
             // Use very slight delay to fire off the normal click action
             // It alow to cancel when the double click event happens
-            .on(`click.${self.namespace}`, function (dh) {
+            .on(`click.${self.namespace}`, function (event, dh) {
               const selector = this;
 
               if (self.settings.selectable) {
@@ -687,7 +687,7 @@ Line.prototype = {
                 }, clickStatus.dot.delay);
               }
             })
-            .on(`dblclick.${self.namespace}`, function (dh) {
+            .on(`dblclick.${self.namespace}`, function (event, dh) {
               // const selector = this;
               clearTimeout(clickStatus.dot.timer);
               clickStatus.dot.prevent = true;
@@ -735,7 +735,7 @@ Line.prototype = {
             // Click and double click events
             // Use very slight delay to fire off the normal click action
             // It alow to cancel when the double click event happens
-            .on(`click.${self.namespace}`, function (dh) {
+            .on(`click.${self.namespace}`, function (event, dh) {
               const selector = this;
 
               if (self.settings.selectable) {
@@ -748,7 +748,7 @@ Line.prototype = {
                 }, clickStatus.symbol.delay);
               }
             })
-            .on(`dblclick.${self.namespace}`, function (dh) {
+            .on(`dblclick.${self.namespace}`, function (event, dh) {
               // const selector = this;
               clearTimeout(clickStatus.symbol.timer);
               clickStatus.symbol.prevent = true;
