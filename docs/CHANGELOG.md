@@ -5,9 +5,10 @@
 ## v4.71.0 Important Changes
 
 - `[Button]` Changed style and features of existing buttons and added destructive buttons. ([#6977](https://github.com/infor-design/enterprise/issues/6977))
+- `[Datagrid]` Added ability to set the color of the header in datagrid (`dark` or `light`). ([#7008](https://github.com/infor-design/enterprise/issues/7008))
+- `[Datagrid]` Updated dirty cell check in datagrid. ([#6893](https://github.com/infor-design/enterprise/issues/6893))
 - `[Searchfield]` Added enhancement changes in searchfield. ([#6707](https://github.com/infor-design/enterprise/issues/6707))
 - `[Tabs]` Added puppeteer scripts for tooltip title. ([#7003](https://github.com/infor-design/enterprise/issues/7003))
-- `[Datagrid]` Added ability to set the color of the header in datagrid (`dark` or `light`). ([#7008](https://github.com/infor-design/enterprise/issues/7008))
 - `[Tabs Header]` Changed the default background for tabs header in default and alternate. ([#6979](https://github.com/infor-design/enterprise/issues/6979))
 
 ## v4.71.0 Features
