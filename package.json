@@ -55,8 +55,6 @@
     "mdlint:docs": "npx markdownlint docs/ && npx markdownlint README.md",
     "mdlint:src": "npx markdownlint src --config=src/.markdownlintrc",
     "minify": "node ./scripts/minify.js",
-    "node-updates-check": "npx ncu",
-    "node-version-check": "npx check-node-version --node 18",
     "quickstart": "npm run build:demoapp && node app/server.js",
     "quickstart:livereload": "npm run build:demoapp && node app/server.js --livereload",
     "release:alpha": "release-it --preRelease=alpha --npm.tag=alpha --no-github.release",
