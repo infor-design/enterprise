@@ -58,25 +58,33 @@
       columns = [],
       data = [];
 
-    var customFormatter = function (row, cell, value, col) {
-      return '<div class="custom-card">'+
-          '<h3>' + value.title + '</h3>'+
-          '<dl>'+
-            '<div><dt>Location</dt><dd>' + value.location + '</dd></div>'+
-            '<div><dt>Phone</dt><dd>' + value.phone + '</dd></div>'+
-            '<div><dt>Quantity</dt><dd>' + value.quantity + '</dd></div>'+
-            '<div><dt>Price</dt><dd>' + value.price + '</dd></div>'+
-          '</dl>'+
-          '<div class="toolbar card-toolbar has-more-button">'+
-            '<div class="buttonset">'+
-              '<button class="btn"><span>Order</span></button>'+
-              '<button class="btn"><span>Save</span></button>'+
-              '<button class="btn"><span>Delete</span></button>'+
-              '<button class="btn"><span>Update</span></button>'+
-            '</div>'+
-          '</div>'+
-        '</div>';
-    };
+      var customFormatter = function (row, cell, value, col) {
+      return `<div class="custom-card">
+          <h3>${value.title}</h3>
+          <dl>
+            <div><dt>Location</dt><dd>${value.location}</dd></div>
+            <div><dt>Phone</dt><dd>${value.phone}</dd></div>
+            <div><dt>Quantity</dt><dd>${value.quantity}</dd></div>
+            <div>
+                <dt>
+                    <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                      <use href="#icon-alert"></use>
+                    </svg>
+                    Price
+                </dt>
+                <dd>${value.price}</dd>
+            </div>
+          </dl>
+          <div class="toolbar card-toolbar has-more-button">
+            <div class="buttonset">
+              <button class="btn"><span>Order</span></button>
+              <button class="btn"><span>Save</span></button>
+              <button class="btn"><span>Delete</span></button>
+              <button class="btn"><span>Update</span></button>
+            </div>
+          </div>
+        </div>`;
+      };
 
     // Some Sample Data
     data.push({

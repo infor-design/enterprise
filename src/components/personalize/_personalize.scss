@@ -40,16 +40,16 @@
 
 .is-personalizable .personalize-subheader,
 .is-personalizable.tab-container.module-tabs {
-  background-color: $subhead-bg-color;
+  background-color: $ids-color-palette-azure-80;
 }
 
 .is-personalizable .personalize-text {
-  color: $ids-color-palette-white !important;
+  color: $ids-color-palette-slate-100 !important;
 }
 
 .is-personalizable .personalize-actionable,
 .is-personalizable .personalize-actionable svg {
-  color: rgba(255, 255, 255, 0.8);
+  color: $font-color;
 }
 
 .is-personalizable .personalize-actionable:hover:not([disabled]),
@@ -87,13 +87,13 @@
 
 .is-personalizable .personalize-chart-targeted .chart-percent-text,
 .is-personalizable .personalize-chart-targeted .label {
-  color: $ids-color-palette-white !important;
+  color: $font-color !important;
 }
 
 .is-personalizable .info-message,
 .is-personalizable .info-message .icon,
 .is-personalizable .info-message p {
-  color: $ids-color-palette-white !important;
+  color: $font-color !important;
 }
 
 .is-personalizable .personalize-actionable-disabled,

@@ -282,6 +282,7 @@
 	"/dist/sass/src/components/tabs-module/_tabs-module.scss",
 	"/dist/sass/src/components/tabs-multi/_multi-tabs.scss",
 	"/dist/sass/src/components/tabs-vertical/_tabs-vertical.scss",
+	"/dist/sass/src/components/tabs/_tabs-horizontal-new.scss",
 	"/dist/sass/src/components/tabs/_tabs-horizontal.scss",
 	"/dist/sass/src/components/tabs/_tabs-new.scss",
 	"/dist/sass/src/components/tabs/_tabs.scss",

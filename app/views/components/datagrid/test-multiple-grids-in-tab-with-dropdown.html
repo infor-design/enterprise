@@ -1,0 +1,220 @@
+<div class="row full-width">
+    <div id="tabs-normal" class="tab-container">
+      <ul class="tab-list">
+        <li class="tab is-selected"><a href="#tabs-normal-single">Single</a></li>
+        <li class="tab"><a href="#tabs-normal-top-bottom">Top Bottom</a></li>
+      </ul>
+
+      <div id="tabs-normal-single" class="tab-panel">
+        <div class="row full-width">
+
+          <div class="toolbar" role="toolbar">
+            <div class="title">
+              Compressors
+              <span class="datagrid-result-count">(10 Results)</span>
+            </div>
+            <div class="buttonset">
+            </div>
+
+            <div class="more">
+              <button type="button" class="btn-actions">
+                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                  <use href="#icon-more"></use>
+                </svg>
+                <span class="audible">More Actions</span>
+              </button>
+              <ul class="popupmenu">
+                <li><a data-option="personalize-columns" href="#">Personalize Columns</a></li>
+                <li><a data-option="reset-layout" href="#">Reset to Default</a></li>
+                <li class="separator single-selectable-section"></li>
+                <li class="heading">Row Height</li>
+                <li class="is-selectable"><a data-option="row-extra-small" href="#" data-translate="text">ExtraSmall</a></li>
+                <li class="is-selectable"><a data-option="row-small" href="#" data-translate="text">Small</a></li>
+                <li class="is-selectable"><a data-option="row-medium" href="#" data-translate="text">Medium</a></li>
+                <li class="is-selectable is-checked"><a data-option="row-large" href="#" data-translate="text">Large</a></li>
+              </ul>
+            </div>
+          </div>
+          <div id="datagrid3">
+          </div>
+        </div>
+      </div>
+
+      <div id="tabs-normal-top-bottom" class="tab-panel">
+        <div class="row full-width">
+
+          <div class="toolbar" role="toolbar">
+            <div class="title">
+              Compressors
+              <span class="datagrid-result-count">(10 Results)</span>
+            </div>
+            <div class="buttonset">
+            </div>
+
+            <div class="more">
+              <button type="button" class="btn-actions">
+                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                  <use href="#icon-more"></use>
+                </svg>
+                <span class="audible">More Actions</span>
+              </button>
+              <ul class="popupmenu">
+                <li><a data-option="personalize-columns" href="#">Personalize Columns</a></li>
+                <li><a data-option="reset-layout" href="#">Reset to Default</a></li>
+                <li class="separator single-selectable-section"></li>
+                <li class="heading">Row Height</li>
+                <li class="is-selectable"><a data-option="row-extra-small" href="#" data-translate="text">ExtraSmall</a></li>
+                <li class="is-selectable"><a data-option="row-small" href="#" data-translate="text">Small</a></li>
+                <li class="is-selectable"><a data-option="row-medium" href="#" data-translate="text">Medium</a></li>
+                <li class="is-selectable is-checked"><a data-option="row-large" href="#" data-translate="text">Large</a></li>
+              </ul>
+            </div>
+          </div>
+          <div id="datagrid">
+          </div>
+        </div>
+
+        <br>
+        <br>
+
+        <div class="row full-width">
+
+          <div class="toolbar" role="toolbar">
+            <div class="title">
+              Compressors
+              <span class="datagrid-result-count">(10 Results)</span>
+            </div>
+            <div class="buttonset">
+              <button type="button" id="grid2-filter-button" class="btn">
+                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                  <use href="#icon-filter"></use>
+                </svg>
+                <span>Filter</span>
+              </button>
+            </div>
+
+            <div class="more">
+              <button type="button" class="btn-actions">
+                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                  <use href="#icon-more"></use>
+                </svg>
+                <span class="audible">More Actions</span>
+              </button>
+              <ul class="popupmenu">
+                <li><a data-option="personalize-columns" href="#">Personalize Columns</a></li>
+                <li><a data-option="reset-layout" href="#">Reset to Default</a></li>
+                <li class="separator single-selectable-section"></li>
+                <li class="heading">Row Height</li>
+                <li class="is-selectable"><a data-option="row-extra-small" href="#" data-translate="text">ExtraSmall</a></li>
+                <li class="is-selectable"><a data-option="row-small" href="#" data-translate="text">Small</a></li>
+                <li class="is-selectable"><a data-option="row-medium" href="#" data-translate="text">Medium</a></li>
+                <li class="is-selectable is-checked"><a data-option="row-large" href="#" data-translate="text">Large</a></li>
+              </ul>
+            </div>
+          </div>
+          <div id="datagrid2">
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<script>
+  var grid1Api = null;
+  var grid2Api = null;
+  var grid3Api = null;
+
+  $('body').one('initialized', function () {
+
+    //Locale.set('en-US').done(function () {
+    var grid,
+      grid2,
+      grid3,
+      columns = [],
+      columns2 = [],
+      columns3 = [],
+      data = [];
+
+    // Some Sample Data
+    data.push({ id: 1, productId: 2142201, productName: 'Compressor', activity:  'Assemble Paint', quantity: 1, price: '500', status: 'OK', orderDate: new Date(2014, 12, 8), multiDropDown: 'R', action: 'Action'});
+    data.push({ id: 2, productId: 2241202, productName: 'Different Compressor', activity:  'Inspect and Repair', quantity: '2', price: 210.99, status: '', orderDate: new Date(2015, 7, 3), multiDropDown: 'R', action: 'On Hold'});
+    data.push({ id: 3, productId: 2342203, productName: 'Compressor', activity:  'Inspect and Repair', quantity: 1, price: '120.99', status: null, orderDate: new Date(2014, 6, 3), multiDropDown: 'R', action: 'Action'});
+    data.push({ id: 4, productId: 2445204, productName: 'Another Compressor', activity:  'Assemble Paint', quantity: 3, price: '2345', status: 'OK', orderDate: new Date(2015, 3, 3), multiDropDown: 'R', action: 'Action'});
+    data.push({ id: 5, productId: 2542205, productName: 'I Love Compressors', activity:  'Inspect and Repair', quantity: 4, price: '210.99', status: 'OK', orderDate: new Date(2015, 5, 5), multiDropDown: 'R', action: 'On Hold'});
+    data.push({ id: 5, productId: 2642205, productName: 'Air Compressors', activity:  'Inspect and Repair', quantity: 41, price: '120.99', status: 'OK', orderDate: new Date(2014, 6, 9), multiDropDown: 'R', action: 'On Hold'});
+    data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: '123.99', status: 'OK', orderDate: null, multiDropDown: 'R', action: 'On Hold'});
+
+    // Define Columns for the Grid - Top grid in Top Bottom tab
+    columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
+    columns.push({ id: 'productId', name: 'Product Id', field: 'productId', filterType: 'text', formatter: Formatters.Readonly});
+    columns.push({ id: 'productName', name: 'Product Name', field: 'productName', filterType: 'text', formatter: Formatters.Hyperlink});
+    columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', filterType: 'text'});
+    columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', filterType: 'integer'});
+    columns.push({ id: 'price', name: 'Price', field: 'price', filterType: 'text', formatter: Formatters.Decimal});
+    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', filterType: 'text', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+    columns.push({ id: 'status', name: 'Status', field: 'status', filterType: 'text', formatter: Formatters.Text});
+    columns.push({ id: 'action', name: 'Action Item', field: 'action', filterType: 'text'});
+
+    // Define Columns2 for the Grid - Bottom grid in Top Bottom tab
+    columns2.push({ id: 'selectionCheckbox', width: 50, sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
+    columns2.push({ id: 'productId', name: 'Product Id', width: 50, field: 'productId', filterType: 'text', formatter: Formatters.Readonly});
+    columns2.push({ id: 'productName', name: 'Product Name', width: 50, field: 'productName', filterType: 'text', formatter: Formatters.Hyperlink});
+    columns2.push({ id: 'quantity', name: 'Quantity', width: 50, field: 'quantity', filterType: 'integer'});
+    columns2.push({ id: 'price', name: 'Price', field: 'price', filterType: 'text', formatter: Formatters.Decimal});
+    columns2.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', filterType: 'text', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+    columns2.push({ id: 'status', name: 'Status', field: 'status', filterType: 'text', formatter: Formatters.Text});
+    columns2.push({ id: 'multiDropDown', name: 'Multiple Selection', width: 50, field: 'multiDropDown', sortable: false, align: 'center', textOverflow: 'ellipsis', filterType: 'multiselect', formatter: Formatters.Dropdown, editor: Editors.Dropdown, editorOptions: { showSelectAll: true },
+      filterRowEditorOptions: [{ label: 'Not Entered', value: 'Not Entered' }, { label: 'Active', value: 'A' }, { label: 'Ready For Completion', value: 'R' }, { label: 'Draft', value: 'D' }, { label: 'No longer meets eligibility requirements', value: 'X' } ],
+      options: [{ label: 'Not Entered', value: 'Not Entered' }, { label: 'Active', value: 'A' }, { label: 'Ready For Completion', value: 'R' }, { label: 'Draft', value: 'D' }, { label: 'No longer meets eligibility requirements', value: 'X' } ]});
+
+    // Define Columns for the Grid - only grid in Single Tab
+    columns3.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
+    columns3.push({ id: 'productId', name: 'Product Id', field: 'productId', filterType: 'text', formatter: Formatters.Readonly});
+    columns3.push({ id: 'productName', name: 'Product Name', field: 'productName', filterType: 'text', formatter: Formatters.Hyperlink});
+    columns3.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', filterType: 'text'});
+    columns3.push({ id: 'quantity', name: 'Quantity', field: 'quantity', filterType: 'integer'});
+    columns3.push({ id: 'price', name: 'Price', field: 'price', filterType: 'text', formatter: Formatters.Decimal});
+    columns3.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', filterType: 'text', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+    columns3.push({ id: 'status', name: 'Status', field: 'status', filterType: 'text', formatter: Formatters.Text});
+    columns3.push({ id: 'action', name: 'Action Item', field: 'action', filterType: 'text'});
+    columns3.push({ id: 'multiDropDown', name: 'Multiple Selection', width: 50, field: 'multiDropDown', sortable: false, align: 'center', textOverflow: 'ellipsis', filterType: 'multiselect', formatter: Formatters.Dropdown, editor: Editors.Dropdown, editorOptions: { showSelectAll: true },
+      filterRowEditorOptions: [{ label: 'Not Entered', value: 'Not Entered' }, { label: 'Active', value: 'A' }, { label: 'Ready For Completion', value: 'R' }, { label: 'Draft', value: 'D' }, { label: 'No longer meets eligibility requirements', value: 'X' } ],
+      options: [{ label: 'Not Entered', value: 'Not Entered' }, { label: 'Active', value: 'A' }, { label: 'Ready For Completion', value: 'R' }, { label: 'Draft', value: 'D' }, { label: 'No longer meets eligibility requirements', value: 'X' } ]});
+
+    //Init and get the api for the grid
+    $('#datagrid').datagrid({
+      columns: columns,
+      filterable: true,
+      dataset: data.slice(0, 2),
+      rowHeight: 'extra-small',
+      toolbar: {personalize: true, results: true},
+    });
+
+    grid3 = $('#datagrid3').datagrid({
+      columns: columns3,
+      filterable: true,
+      dataset: data,
+      rowHeight: 'extra-small',
+      toolbar: {personalize: true, results: true},
+    });
+
+    grid2 = $('#datagrid2').datagrid({
+      columns: columns2,
+      filterable: false,
+      dataset: data,
+      rowHeight: 'extra-small',
+      toolbar: {personalize: true, results: true},
+    });
+
+    grid1Api = $('#datagrid').data('datagrid');
+    grid2Api = $('#datagrid2').data('datagrid');
+    grid3Api = $('#datagrid3').data('datagrid');
+
+    $('#grid2-filter-button').on('click', function (e) {
+      if (grid2Api.filterable) {
+        grid2Api.clearFilter();
+      }
+      grid2Api.toggleFilterRow();
+    });
+  });
+</script>

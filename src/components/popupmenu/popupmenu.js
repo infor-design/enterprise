@@ -1537,6 +1537,10 @@ PopupMenu.prototype = {
     const isNotFullToolbar = insideToolbar && toolbarParent.children('.buttonset, .title').length > 1;
     const isPagerMenu = target.parents('.pager-pagesize').length > 0;
 
+    if (toolbarParent.parents('.header').length > 0) {
+      opts.y += 5;
+    }
+
     function alignLeft() {
       opts.parentXAlignment = (isRTL ? 'right' : 'left');
     }
@@ -1625,6 +1629,7 @@ PopupMenu.prototype = {
       wrapper[0].style.height = '';
       this.menu[0].style.height = (placementObj.height) + (/(px|%)/i.test(`${placementObj.height}`) ? '' : 'px');
     }
+
     if (placementObj.width) {
       wrapper[0].style.width = '';
       this.menu[0].style.width = (placementObj.width) + (/(px|%)/i.test(`${placementObj.width}`) ? '' : 'px');

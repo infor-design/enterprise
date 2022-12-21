@@ -64,7 +64,7 @@ describe('Personalization classes tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    xit('Should not visual regress', async () => {
       const containerEl = await element(by.className('container'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
@@ -85,7 +85,7 @@ describe('Personalization classes short tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    xit('Should not visual regress', async () => {
       const containerEl = await element(by.className('container'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
@@ -107,7 +107,7 @@ describe('Personalization example-tabs tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    xit('Should not visual regress', async () => {
       const containerEl = await element(by.className('container'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
@@ -128,7 +128,7 @@ describe('Personalization form tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    xit('Should not visual regress', async () => {
       const containerEl = await element(by.className('container'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
@@ -150,7 +150,7 @@ describe('Personalization form short tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    xit('Should not visual regress', async () => {
       const containerEl = await element(by.className('container'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
@@ -171,7 +171,7 @@ describe('Personalization form2 tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    xit('Should not visual regress', async () => {
       const containerEl = await element(by.className('container'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
@@ -192,7 +192,7 @@ describe('Personalization form 2 tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    xit('Should not visual regress', async () => {
       const containerEl = await element(by.className('container'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
@@ -213,7 +213,7 @@ describe('Personalization form 2 short tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    xit('Should not visual regress', async () => {
       const containerEl = await element(by.className('container'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);

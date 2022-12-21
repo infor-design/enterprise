@@ -15,8 +15,8 @@
 @import '../core/config';
 
 // New Theme Light Overrides
-$header-bg-color: $ids-color-brand-primary-base;
-$subhead-bg-color: $ids-color-brand-primary-alt;
+$header-bg-color: $ids-color-palette-white;
+$subhead-bg-color: $ids-color-palette-white;
 $disabled-color: $ids-color-palette-slate-30;
 $label-disabled-color: $input-color-disabled-border;
 $input-disabled-color: $input-color-disabled-font;
@@ -60,7 +60,7 @@ $about-text-hover-border-color: $ids-color-palette-slate-70;
 
 // BreadCrumb
 $breadcrumb-color: $ids-color-palette-slate-60;
-$breadcrumb-hover-color: $ids-color-palette-slate-90;
+$breadcrumb-hover-color: $ids-color-palette-azure-60;
 $breadcrumb-disabled-color: $input-color-disabled-border;
 
 // Builder Pattern
@@ -111,11 +111,13 @@ $datagrid-nested-header-border-color: $ids-color-palette-slate-30;
 $datagrid-header-border-color: $ids-color-palette-slate-30;
 $datagrid-header-checkbox-border-color: $ids-color-palette-slate-30;
 
-$datagrid-cell-readonly-bg-color: $ids-color-palette-slate-10;
+$datagrid-cell-readonly-bg-color: rgba(239, 239, 240, 0.5);
 $datagrid-cell-border-color: $ids-color-palette-slate-30;
 $datagrid-group-row-border-color: $ids-color-palette-slate-30;
-$datagrid-row-hover-color: $ids-color-palette-slate-20;
+$datagrid-row-hover-color: $ids-color-palette-azure-10;
 $datagrid-row-icon-color: $ids-color-palette-slate-60;
+$datagrid-row-selected-color: #d8e7f7;
+$datagrid-row-selected-color-dark: $datagrid-row-selected-color;
 
 $datagrid-alternate-bg-color: $ids-color-palette-slate-10;
 $datagrid-alternate-row-hover-color: $ids-color-palette-slate-20;
@@ -126,6 +128,17 @@ $datagrid-list-sort-icon-hover-color: $ids-color-palette-slate-50;
 
 $datagrid-rowgroup-header: $ids-color-palette-slate-10;
 $datagrid-rowgroup-color: $ids-color-palette-slate-60;
+
+$datagrid-light-header-bg-color: $ids-color-palette-white;
+$datagrid-light-header-bg-hover-color: #ecf2f8;
+$datagrid-light-header-bg-sorted-hover-color: $ids-color-palette-azure-10;
+$datagrid-light-header-font-color: $ids-color-palette-slate-100;
+$datagrid-light-header-border-color: $ids-color-palette-slate-30;
+$datagrid-light-header-filter-sort-icon-color: $ids-color-palette-slate-40;
+$datagrid-light-header-filter-sorted-icon-color: $ids-color-palette-slate-80;
+$datagrid-light-header-icon-color: $ids-color-palette-slate-80;
+$datagrid-light-header-icon-hover-color: $ids-color-palette-slate-100;
+$datagrid-light-header-input-border-hover-color: $ids-color-palette-slate-100;
 
 // Panels
 $panel-border-color: $ids-color-palette-slate-30;
@@ -322,18 +335,22 @@ $image-border-color: $ids-color-palette-slate-20;
 $image-background-color: $ids-color-palette-slate-20;
 
 // Tabs
-$tab-text-color: $ids-color-palette-slate-70;
+$tab-text-color: $ids-color-palette-white;
 $tab-border-color: $ids-color-palette-slate-30;
 $tab-alt-border-color: $ids-color-palette-slate-30;
+$header-tab-gradient-initial-color-new: $ids-color-palette-white;
 
 // Header
-$subhead-bg-color: $ids-color-palette-azure-80;
 $subheader-input-color-focus-border: $ids-color-palette-slate-40;
 
 // Header Tabs
 $header-tabcontainer-border-color: $ids-color-palette-slate-30;
 $header-tab-selected-color: $ids-color-palette-slate-10;
 $header-tab-alt-normal-color: $ids-color-palette-slate-60;
+$header-tab-focus-border-color: $ids-color-palette-azure-60;
+
+$header-tab-normal-color-new: $ids-color-palette-graphite-60;
+$header-tab-alt-selected-color: $ids-color-palette-azure-60;
 
 // Header Breadcrumb
 $header-breadcrumb-border-color: $ids-color-palette-slate-30;
@@ -424,7 +441,7 @@ $swipeaction-right-hover-bg-color: $ids-color-palette-azure-80;
 $swipeaction-right-hover-color: $ids-color-palette-white;
 
 // New Theme only Variables
-$new-acc-border-radius: 6px;
+$new-acc-border-radius: 2px;
 $new-acc-header-text-color: $ids-color-palette-slate-20;
 $new-acc-header-selected-text-color: $ids-color-palette-white;
 
@@ -432,7 +449,7 @@ $new-acc-subheader-text-color: $ids-color-palette-slate-20;
 
 $new-acc-expanded-bg-color: $ids-color-palette-black;
 
-$new-appmenu-searchfield-placeholder-color: $ids-color-palette-slate-60;
+$new-appmenu-searchfield-placeholder-color: $ids-color-palette-white;
 
 $new-appmenu-main-bg-color: $ids-color-palette-slate-100;
 $new-appmenu-header-bg-color: $ids-color-palette-slate-100;

@@ -81,6 +81,10 @@
       &.active {
         &.toolbar-searchfield-wrapper {
           box-shadow: none;
+
+          &:focus-within {
+            box-shadow: $focus-box-shadow;
+          }
         }
       }
     }
@@ -96,7 +100,7 @@
     }
 
     &.non-collapsible.is-hovered {
-      .searchfield {
+      &:not(.has-focus) .searchfield {
         border: 1px solid $lookup-modal-searchfield-input-hover-border-color;
       }
     }
@@ -112,6 +116,7 @@
     .btn-icon {
       top: 50%;
       transform: translateY(-50%);
+      right: 4px;
     }
   }
 }

@@ -954,7 +954,7 @@ Toolbar.prototype = {
         buttonsetWidth = toolbarDims.width;
       }
 
-      if (toolbarDims.width - buttonsetWidth < titleDims.width) {
+      if (!hasButtonsetSizeGetter && toolbarDims.width - buttonsetWidth < titleDims.width) {
         buttonsetWidth -= (toolbarPadding +
           (hasTitleSizeGetter ? parseInt(titleSize, 10) : titleDims.scrollWidth) +
           moreDims.width);
