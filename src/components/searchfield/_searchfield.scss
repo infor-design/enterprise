@@ -29,7 +29,8 @@
 
   &.non-collapsible.is-open {
     > .icon:not(.close):not(.icon-error) {
-      height: 20px;
+      height: 18px;
+      width: 18px;
       left: 8px;
     }
   }
@@ -117,10 +118,6 @@
 
     > .searchfield {
       background-color: $searchfield-context-bg;
-      border-bottom: 1px solid $searchfield-context-border-color;
-      border-left: 0;
-      border-right: 0;
-      border-top: 0;
       height: 38px;
       padding-left: 32px;
       width: 100%;
@@ -135,7 +132,7 @@
     }
 
     > .icon {
-      color: $searchfield-context-icon-color;
+      color: $searchfield-icon-color;
       top: 9px;
 
       &:not(.close) {
@@ -160,8 +157,7 @@
 
     .btn {
       background-color: $searchfield-context-bg;
-      border: 0;
-      border-bottom: 1px solid $searchfield-context-border-color;
+      border: 1px solid $searchfield-context-border-color;
       height: 38px;
 
       + .searchfield {
@@ -226,9 +222,7 @@
   }
 
   &.has-focus {
-    &:not(.toolbar-searchfield-wrapper) {
-      box-shadow: 0 0 4px 1px rgba(54, 138, 192, 0.3);
-    }
+    box-shadow: 0 0 4px 1px rgba(54, 138, 192, 0.3);
 
     .btn {
       border-color: $input-color-focus-border;
@@ -570,11 +564,23 @@ html[dir='rtl'] {
 /**
  * align large searchfield search icon
  */
-.header > .full-searchfield-container .searchfield-wrapper {
-  & > svg.icon:nth-child(1) {
-    height: 100%;
-    top: 50%;
-    transform: translateY(-50%);
+.header {
+  > .full-searchfield-container .searchfield-wrapper {
+    & > svg.icon:nth-child(1) {
+      height: 100%;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+
+  &.has-searchfield-xl .searchfield-wrapper {
+    input {
+      padding-left: 54px;
+    }
+
+    & > svg.icon:nth-child(1) {
+      top: 47%;
+    }
   }
 }
 

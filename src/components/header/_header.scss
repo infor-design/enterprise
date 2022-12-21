@@ -184,6 +184,10 @@ $subheader-height: 60px;
       .btn-menu {
         text-transform: none;
       }
+
+      .btn-icon {
+        border-radius: 8px;
+      }
     }
 
     &.has-title-button + .breadcrumb {
@@ -433,7 +437,7 @@ $subheader-height: 60px;
   .go-button {
     background-color: $header-primary-btn-background-color;
     border-color: $header-primary-btn-background-color;
-    color: $header-text-color;
+    color: $searchfield-go-text-color;
 
     &:hover,
     &:active,
@@ -492,16 +496,27 @@ $subheader-height: 60px;
 .subheader {
   .toolbar,
   .flex-toolbar {
-    .buttonset > .separator {
-      background-color: $header-button-color;
-      padding: 0;
+    .buttonset {
+      > .separator {
+        background-color: $header-button-color;
+        padding: 0;
+      }
+
+      [class^='btn'] {
+        margin-right: 3px;
+      }
     }
 
     // Buttons in the header will all appear as Tertiary/Destructive-style
     [class^='btn'] {
       background-color: transparent;
       border: 1px solid transparent;
+      border-radius: 8px;
       color: $header-button-color;
+
+      &:hover {
+        background-color: $header-toolbar-button-hover-color;
+      }
 
       .icon {
         color: $header-button-color;
@@ -549,10 +564,6 @@ $subheader-height: 60px;
       &.is-selected {
         &:focus:not(.hide-focus) {
           color: $header-button-focus-color;
-
-          .icon {
-            color: $header-button-focus-color;
-          }
         }
       }
 
@@ -676,6 +687,15 @@ $subheader-height: 60px;
     .icon.app-header {
       > span {
         background-color: $header-button-color;
+      }
+    }
+
+    &:focus,
+    &:hover {
+      .icon.app-header {
+        > span {
+          background-color: $header-button-hover-color;
+        }
       }
     }
   }

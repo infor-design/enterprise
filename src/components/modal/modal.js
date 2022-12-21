@@ -1125,8 +1125,10 @@ Modal.prototype = {
         }
       }
 
-      // Otherwise, just focus
-      focusElem.focus();
+      if (!(focusElem.is('input') && focusElem.closest('.modal-header').length > 0)) {
+        // Otherwise, just focus
+        focusElem.focus();
+      }
 
       // Trigger an optional callback that can further modify changes on focus
       if (typeof self.settings.onFocusChange === 'function') {

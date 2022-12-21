@@ -61,14 +61,16 @@ $horizontal-tabs-height: 40px;
     }
 
     .tab {
-      color: $tab-text-color-horizontal;
+      color: $tab-text-color;
 
       a {
         padding: 11px 11px 8px;
       }
 
       &:hover {
-        color: $tab-hover-color;
+        color: $header-tab-hover-color-new;
+        border-bottom: 4px solid transparent;
+        background-color: $header-tab-background-hover-color-new;
 
         .icon:not(.is-error):not(.icon-error) {
           color: $tab-hover-color;
@@ -80,13 +82,19 @@ $horizontal-tabs-height: 40px;
       }
 
       &.is-selected {
-        color: $tab-selected-color;
+        color: $header-tab-selected-color-new;
+        border-bottom: 4px solid $header-tab-selected-color-new;
 
         .icon:not(.is-error):not(.icon-error) {
           color: $tab-selected-color;
         }
       }
     }
+  }
+
+  .tab-focus-indicator.is-visible {
+    border-color: transparent;
+    box-shadow: unset;
   }
 
   .tab-more,
@@ -97,7 +105,7 @@ $horizontal-tabs-height: 40px;
     line-height: 12px;
 
     .icon {
-      color: $tab-text-color-horizontal;
+      color: $tab-text-color;
     }
 
     &:hover {

@@ -2215,7 +2215,7 @@ $datagrid-small-row-height: 25px;
     }
 
     // Hover States
-    &.is-hover-row:not(.error):not(.is-rowdisabled):not(.datagrid-virtual-row-bottom):not(.is-selected):not(.is-rowactivated):not(.datagrid-expandable-row) td:not(.is-editing):not(.is-readonly):not(.error) {
+    &.is-hover-row:not(.error):not(.is-rowdisabled):not(.datagrid-virtual-row-bottom):not(.is-selected):not(.is-rowactivated):not(.datagrid-expandable-row) td:not(.is-editing):not(.error) {
       background-color: $datagrid-row-hover-color;
 
       .is-readonly {
@@ -2244,10 +2244,6 @@ $datagrid-small-row-height: 25px;
       button.datagrid-expand-btn .icon {
         background-color: transparent;
         box-shadow: none;
-      }
-
-      .icon {
-        @include trigger-icon-background($datagrid-row-selected-color);
       }
 
       .btn.row-btn {
@@ -3867,7 +3863,7 @@ $datagrid-small-row-height: 25px;
       .trigger {
         height: 20px;
         margin-left: -13px;
-        margin-top: 2px;
+        margin-top: 3px;
         min-height: 20px;
         min-width: 20px;
         width: 20px;

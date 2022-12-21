@@ -322,6 +322,7 @@ MonthView.prototype = {
 
     // Add Legend
     this.addLegend();
+    const today = new Date();
 
     // Invoke the toolbar
     this.calendarToolbarEl = this.header.find('.calendar-toolbar');
@@ -332,6 +333,7 @@ MonthView.prototype = {
       year: this.currentYear,
       month: this.currentMonth,
       showToday: this.settings.showToday,
+      disableToday: this.isDateDisabled(today.getFullYear(), today.getMonth(), today.getDate()),
       showNextPrevious: this.settings.showNextPrevious,
       isMonthPicker: this.settings.headerStyle === 'full',
       isAlternate: this.settings.headerStyle !== 'full',
@@ -1323,8 +1325,8 @@ MonthView.prototype = {
       });
       return deferred.promise();
     }
-    const min = (new Date(s.disable.minDate)).setHours(0, 0, 0, 0);
-    const max = (new Date(s.disable.maxDate)).setHours(0, 0, 0, 0);
+    const min = (new Date(s.disable.minDate.replace(/-/g, '/'))).setHours(0, 0, 0, 0);
+    const max = (new Date(s.disable.maxDate.replace(/-/g, '/'))).setHours(0, 0, 0, 0);
     let d2 = this.isIslamic ?
       Locale.umalquraToGregorian(year, month, date) : new Date(year, month, date);
 

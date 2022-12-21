@@ -19,6 +19,10 @@
     height: 100%;
   }
 
+  &.context .searchfield-category-button {
+    border-right: 0;
+  }
+
   .searchfield-category-button {
     height: 38px;
   }
@@ -111,6 +115,16 @@ html.is-firefox {
         color: $searchfield-header-icon-color;
         height: 38px;
       }
+    }
+  }
+
+  .header.has-searchfield-xl .searchfield-wrapper {
+    input {
+      height: 48px;
+    }
+
+    > svg.icon:nth-child(1) {
+      top: 53%;
     }
   }
 

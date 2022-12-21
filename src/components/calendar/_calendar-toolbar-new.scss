@@ -16,4 +16,11 @@
   .dropdown-wrapper {
     top: 12px;
   }
+
+  .today {
+    &.is-disabled {
+      color: rgba($datepicker-disabled-color, 0.5);
+      cursor: default;
+    }
+  }
 }
