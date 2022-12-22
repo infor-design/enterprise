@@ -157,9 +157,6 @@ a.is-personalizable svg.ripple-effect {
   border-bottom: 1px solid ${colors.darkest} !important;
 }
 
-.tab-container.header-tabs > .tab-list-container .tab a {
-  color: ${colors.contrast};
-}
 .tab-container.header-tabs .tab-focus-indicator.is-visible,
 .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected {
   border-color: ${colors.contrast};
@@ -267,7 +264,7 @@ html.theme-new-dark .header.is-personalizable.has-tabs .tab-container.header-tab
 
 .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab:hover:not(.is-disabled),
 .is-personalizable.tab-container.header-tabs > .tab-list-container .tab:hover:not(.is-disabled)  {
-  color: ${colors.darker} !important;
+  color: ${colors.contrast} !important;
   opacity: 1;
 }
 
