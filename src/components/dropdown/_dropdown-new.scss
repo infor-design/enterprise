@@ -17,6 +17,11 @@ div.multiselect {
 
     &.swatch {
       left: 13px;
+
+      &.primary-bg-color {
+        border: 1px solid $ids-color-palette-slate-30;
+        background-color: $ids-color-palette-white;
+      }
     }
 
     + span {
@@ -79,6 +84,11 @@ div.multiselect {
 
     &.swatch {
       left: 12px;
+
+      &.primary-bg-color {
+        border: 1px solid $ids-color-palette-slate-30;
+        background-color: $ids-color-palette-white;
+      }
     }
   }
 
@@ -86,6 +96,11 @@ div.multiselect {
     span {
       &.swatch {
         margin-left: -18px;
+
+        &.primary-bg-color {
+          border: 1px solid $ids-color-palette-slate-30;
+          background-color: $ids-color-palette-white;
+        }
       }
     }
   }
