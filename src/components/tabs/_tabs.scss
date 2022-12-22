@@ -503,6 +503,10 @@
 
       &.is-selected {
         border-bottom: 4px solid $tab-selected-color;
+
+        a {
+          color: $tab-selected-color;
+        }
       }
 
       &:not(.separator):hover {
