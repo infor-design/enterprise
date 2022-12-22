@@ -1029,7 +1029,7 @@ html[lang^='fr-'] {
 }
 
 .btn-link {
-  color: $btn-hyperlink-color;
+  color: $btn-hyperlink-color !important;
 
   .icon {
     color: $btn-hyperlink-color;

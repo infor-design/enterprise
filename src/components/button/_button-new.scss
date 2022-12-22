@@ -124,12 +124,20 @@
       color: $button-color-tertiary-destructive-initial-background-new;
     }
 
-    &:hover {
+    &:hover:not(:disabled) {
       color: $button-color-tertiary-destructive-hover-font-new;
       background-color: $button-color-tertiary-destructive-hover-background-new;
 
       svg.icon {
         color: $button-color-tertiary-destructive-hover-font-new;
+      }
+    }
+
+    &:disabled {
+      color: $button-color-tertiary-destructive-disabled-font-new;
+
+      svg.icon {
+        color: $button-color-tertiary-destructive-disabled-font-new;
       }
     }
   }
