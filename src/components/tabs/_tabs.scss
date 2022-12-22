@@ -590,7 +590,7 @@
       a {
         @include antialiased();
 
-        color: inherit;
+        color: $tab-text-color-horizontal;
         font-size: $ids-size-font-base;
         font-weight: $ids-number-font-weight-base;
         text-decoration: none;
