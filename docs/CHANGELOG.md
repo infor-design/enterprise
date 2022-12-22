@@ -6,7 +6,6 @@
 
 - `[Button]` Changed style and features of existing buttons and added destructive buttons. ([#6977](https://github.com/infor-design/enterprise/issues/6977))
 - `[Datagrid]` Added ability to set the color of the header in datagrid (`dark` or `light`). ([#7008](https://github.com/infor-design/enterprise/issues/7008))
-- `[Datagrid]` Updated dirty cell check in datagrid. ([#6893](https://github.com/infor-design/enterprise/issues/6893))
 - `[Searchfield]` Added enhancement changes in searchfield. ([#6707](https://github.com/infor-design/enterprise/issues/6707))
 - `[Tabs]` Added puppeteer scripts for tooltip title. ([#7003](https://github.com/infor-design/enterprise/issues/7003))
 - `[Tabs Header]` Changed the default background for tabs header in default and alternate. ([#6979](https://github.com/infor-design/enterprise/issues/6979))
@@ -20,6 +19,7 @@
 - `[Datagrid]` Fixed a bug in datagrid where dropdown filter does not render correctly. ([#7006](https://github.com/infor-design/enterprise/issues/7006))
 - `[Datagrid]` Fixed a bug in datagrid where flex toolbar is not properly destroyed. ([NG#1423](https://github.com/infor-design/enterprise-ng/issues/1423))
 - `[Datagrid]` Fixed a bug in datagrid in datagrid where the icon cause clipping issues. ([#7000](https://github.com/infor-design/enterprise/issues/7000))
+- `[Datagrid]` Updated dirty cell check in datagrid. ([#6893](https://github.com/infor-design/enterprise/issues/6893))
 - `[Datepicker]` Fixed a bug in datagrid where disabled dates were not showing in Safari. ([#6920](https://github.com/infor-design/enterprise/issues/6920))
 
 ## v4.70.0
