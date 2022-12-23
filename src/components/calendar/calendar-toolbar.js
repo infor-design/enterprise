@@ -431,7 +431,6 @@ CalendarToolbar.prototype = {
     }
   },
 
-
   /**
    * Handle resize of calendar.
    * @private
@@ -445,7 +444,6 @@ CalendarToolbar.prototype = {
 
     return this;
   },
-
 
   /**
    * Resync the UI and Settings.
