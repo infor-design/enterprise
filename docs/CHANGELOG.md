@@ -13,6 +13,7 @@
 ## v4.71.0 Features
 
 - `[Radar]` Converted Radar scripts to puppeteer. ([#6989](https://github.com/infor-design/enterprise/issues/6989))
+- `[Icons]` Added three new icons: `icon-paint-brush, icon-psych-precaution, icon-observation-precaution `. ([#7040](https://github.com/infor-design/enterprise/issues/7040))
 
 ## v4.71.0 Fixes
 
@@ -20,6 +21,7 @@
 - `[Datagrid]` Fixed a bug in datagrid where flex toolbar is not properly destroyed. ([NG#1423](https://github.com/infor-design/enterprise-ng/issues/1423))
 - `[Datagrid]` Fixed a bug in datagrid in datagrid where the icon cause clipping issues. ([#7000](https://github.com/infor-design/enterprise/issues/7000))
 - `[Datepicker]` Fixed a bug in datagrid where disabled dates were not showing in Safari. ([#6920](https://github.com/infor-design/enterprise/issues/6920))
+- `[User Status Icons]` Now have a more visible fill and a stroke behind them. ([#7040](https://github.com/infor-design/enterprise/issues/7040))
 
 ## v4.70.0
 
