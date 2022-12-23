@@ -63,7 +63,6 @@ function CalendarToolbar(element, settings) {
 // CalendarToolbar Methods
 CalendarToolbar.prototype = {
 
-
   init() {
     this
       .setLocale()
@@ -437,11 +436,8 @@ CalendarToolbar.prototype = {
    * @returns {void}
    */
   handleResize() {
-
     this.resize();
-
     $(window).on('resize', this.resize);
-
     return this;
   },
 
@@ -464,7 +460,7 @@ CalendarToolbar.prototype = {
    * @returns {void}
    */
   teardown() {
-    $(window).off('resize',this.resize);
+    $(window).off('resize', this.resize);
     this.element.off();
     this.monthPicker.off();
     this.todayLink.off();
