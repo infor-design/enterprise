@@ -152,7 +152,7 @@ describe('Tabs click example-counts new tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress on example-counts in new', async () => {
+    xit('Should not visual regress on example-counts in new', async () => {
       const tabsEl = await element(by.id('tabs-counts'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
@@ -591,7 +591,7 @@ describe('Tabs attributes tests', () => {
 });
 
 if (utils.isChrome() && utils.isCI()) {
-  describe('Tabs counts position visual regression tests', () => {
+  xdescribe('Tabs counts position visual regression tests', () => {
     it('Should show the counts on top of the labels', async () => {
       await utils.setPage('/components/tabs/example-counts?locale=de-DE');
       const maincontent = await element(by.id('maincontent'));
