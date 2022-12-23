@@ -22,13 +22,13 @@
 import archiver from 'archiver';
 import chalk from 'chalk';
 import { deleteAsync } from 'del';
-import documentation from 'documentation';
+import { build, formats } from 'documentation';
 import frontMatter from 'front-matter';
 import * as fs from 'fs';
 import glob from 'glob';
 import handlebars from 'handlebars';
 import hbsRegistrar from 'handlebars-registrar';
-import marked from 'marked';
+import { marked, setOptions } from 'marked';
 import * as path from 'path';
 import slash from 'slash';
 import yaml from 'js-yaml';
@@ -39,6 +39,7 @@ import { hideBin } from 'yargs/helpers';
 
 // Local
 import swlog from './helpers/stopwatch-log.js';
+import getJSONFile from '../app/src/js/get-json-file.js';
 
 const yargs = _yargs(hideBin(process.argv));
 
@@ -64,7 +65,7 @@ const argv = await yargs
   .argv;
 
 // Set Marked options
-marked.setOptions({
+setOptions({
   gfm: true,
   highlight: (code, lang, callback) => {
     const language = hljs.getLanguage(lang) ? lang : 'html';
@@ -113,7 +114,8 @@ const serverURIs = {
   prod: 'https://design.infor.com/api/docs/',
   dev: 'https://dev.design.infor.com/api/docs/'
 };
-const packageJson = require(`${rootPath}/package.json`);
+
+const packageJson = getJSONFile('../../../package.json');
 const testComponents = [
   'button',
   'datagrid'
@@ -426,10 +428,9 @@ function documentJsToHtml(componentName) {
   const compFilePath = `${paths.components}/${componentName}/${componentName}.js`;
   const themeName = 'theme-ids-website';
 
-  return documentation
-    .build([compFilePath], { extension: 'js', shallow: true })
+  return build([compFilePath], { extension: 'js', shallow: true })
     .then(comments => {
-      return documentation.formats.html(comments, { theme: `${paths.templates.docjs}/${themeName}` });
+      return formats.html(comments, { theme: `${paths.templates.docjs}/${themeName}` });
     })
     .then(res => {
       res.map(async file => {
