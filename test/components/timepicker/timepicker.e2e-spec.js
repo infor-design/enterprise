@@ -16,7 +16,7 @@ describe('Timepicker example-index tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress on example-index', async () => {
+    xit('Should not visual regress on example-index', async () => {
       const timepickerSection = await element(by.id('maincontent'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(timepickerSection), config.waitsFor);

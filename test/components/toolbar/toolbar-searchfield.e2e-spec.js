@@ -37,7 +37,7 @@ describe('Searchfield with Toolbar alignment tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress on example-flex-toolbar-align-with-searchfield', async () => {
+    xit('Should not visual regress on example-flex-toolbar-align-with-searchfield', async () => {
       const searchfieldInputEl = await element(by.id(searchfieldInput));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(searchfieldInputEl), config.waitsFor);

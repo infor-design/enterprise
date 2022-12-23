@@ -3884,6 +3884,7 @@ $datagrid-small-row-height: 25px;
     }
 
     .btn-filter {
+      border-radius: 4px;
       height: 24px;
       left: 12px;
       min-height: 0;
@@ -3899,6 +3900,10 @@ $datagrid-small-row-height: 25px;
         .icon {
           color: $datagrid-filter-disabled-color;
         }
+      }
+
+      &:hover {
+        background-color: transparent !important;
       }
 
       .icon-dropdown {
