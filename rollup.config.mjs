@@ -8,7 +8,6 @@ import { babel } from '@rollup/plugin-babel';
 import license from 'rollup-plugin-license';
 import _yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
-import deprecationNotice from './scripts/rollup-plugins/deprecation-notice.js';
 import getTargetBundleTypes from './scripts/rollup-plugins/bundle-types.js';
 import render from './scripts/generate-bundle-banner.js';
 
@@ -53,9 +52,6 @@ const standardConfig = {
   plugins: [
     resolve(),
     json(),
-    deprecationNotice({
-      process: argv.verbose
-    }),
     babel({
       exclude: 'node_modules/**',
       babelHelpers: 'bundled'
@@ -85,9 +81,6 @@ const esmConfig = {
   plugins: [
     resolve(),
     json(),
-    deprecationNotice({
-      process: argv.verbose
-    }),
     babel({
       exclude: 'node_modules/**',
       babelHelpers: 'bundled'

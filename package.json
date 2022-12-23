@@ -81,13 +81,13 @@
   ],
   "dependencies": {
     "d3": "^7.8.0",
-    "ids-identity": "4.14.2",
+    "ids-identity": "4.14.3",
     "jquery": "^3.6.3",
     "promise-polyfill": "^8.2.3"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.19.1",
-    "@babel/core": "^7.20.5",
+    "@babel/core": "^7.20.7",
     "@babel/plugin-external-helpers": "^7.18.6",
     "@babel/preset-env": "^7.20.2",
     "@rollup/plugin-babel": "^6.0.3",
@@ -135,7 +135,7 @@
     "karma-sourcemap-loader": "^0.3.8",
     "karma-webpack": "5.0.0",
     "markdownlint-cli": "^0.32.2",
-    "marked": "^4.2.4",
+    "marked": "^4.2.5",
     "mmm": "^0.2.2",
     "node-sass": "^8.0.0",
     "node-sass-once-importer": "^5.3.2",
@@ -145,7 +145,7 @@
     "r2": "^2.0.1",
     "release-it": "^15.5.1",
     "rimraf": "^3.0.2",
-    "rollup": "^3.7.5",
+    "rollup": "^3.8.1",
     "rollup-plugin-analyzer": "^4.0.0",
     "rollup-plugin-license": "^3.0.1",
     "slash": "^5.0.0",

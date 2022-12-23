@@ -242,7 +242,7 @@ Bullet.prototype = {
           // Run double click action
           self.element.trigger('dblclick', [bar, chartData.data[bar.attr('data-idx')]]);
         })
-        .on(`mouseenter.${self.namespace}`, function (d, mouseEnterIdx) {
+        .on(`mouseenter.${self.namespace}`, function (event, d, mouseEnterIdx) {
           const bar = d3.select(this);
           const data = chartData.data[bar.attr('data-idx')];
           const rect = this.getBoundingClientRect();
