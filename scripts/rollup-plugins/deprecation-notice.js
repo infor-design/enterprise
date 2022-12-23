@@ -1,7 +1,7 @@
 // Simple plugin for rollup that detects the existence of JSDoc @deprecated comments
 // and pumps them into the console during the build process.
 import chalk from 'chalk';
-import documentation from 'documentation';
+import { build } from 'documentation';
 import * as path from 'path';
 import logger from '../logger.js';
 
@@ -41,8 +41,7 @@ const transform = function (code, filePath) {
     return ret;
   }
 
-  documentation
-    .build([filePath], { extension: 'js', shallow: true })
+  build([filePath], { extension: 'js', shallow: true })
     .then((docs) => {
       if (!docs || !docs.length) {
         return;
