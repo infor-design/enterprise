@@ -827,7 +827,7 @@ Column.prototype = {
                 .style('fill', classicDark ? '#BDBDBD' : newDark ? '#B7B7BA' : theme.new && theme.currentTheme.modeId !== 'dark' ? '#47474c' : '#313236')
                 .style('stroke-width', 2)
                 .style('cursor', 'default')
-                .on(`mouseenter.${self.namespace}`, function (lineTooltipData) {
+                .on(`mouseenter.${self.namespace}`, function (event, lineTooltipData) {
                   lineTooltip(this, lineTooltipData.line);
                 })
                 .on(`mouseleave.${self.namespace}`, function () {
@@ -946,7 +946,7 @@ Column.prototype = {
       });
 
     (isPositiveNegative ? pnBars : bars)
-      .on(`mouseenter.${self.namespace}`, function (d, i) {
+      .on(`mouseenter.${self.namespace}`, function (event, d, i) {
         let x;
         let y;  //eslint-disable-line
         let j;
@@ -959,7 +959,7 @@ Column.prototype = {
         const shape = $(this);
         let content = '';
         let tooltipTargetEl = null;
-        const ePageY = d3.event.pageY;
+        const ePageY = event.pageY;
 
         const setPattern = function (pattern, hexColor) { //eslint-disable-line
           return !pattern || !hexColor ? '' :
@@ -1205,24 +1205,26 @@ Column.prototype = {
       // Click and double click events
       // Use very slight delay to fire off the normal click action
       // It alow to cancel when the double click event happens
-      .on(`click.${self.namespace}`, function (d, i, clickedLegend) {
+      .on(`click.${self.namespace}`, function (event, d, i, clickedLegend) {
         const selector = this;
 
         if (self.settings.selectable) {
           timer = setTimeout(function () {
             if (!prevent) {
               // Run click action
-              self.doClickAction(d, i, selector, clickedLegend);
+              i = Number(selector.getAttribute('class').replace('bar series-', ''));
+              self.doClickAction(event, d, i, selector, clickedLegend);
             }
             prevent = false;
           }, delay);
         }
       })
-      .on(`dblclick.${self.namespace}`, function (d, i) {
+      .on(`dblclick.${self.namespace}`, function (event, d, i) {
         const selector = this;
         clearTimeout(timer);
         prevent = true;
         // Run double click action
+        i = Number(selector.getAttribute('class').replace('bar series-', ''));
         self.doDoubleClickAction(d, i, selector);
       });
 
@@ -1535,7 +1537,7 @@ Column.prototype = {
         }
       } else {
         this.initialSelectCall = true;
-        selector.on(`click.${self.namespace}`).call(selector.node(), selector.datum(), barIndex);
+        selector.on(`click.${self.namespace}`).call(event, selector.node(), selector.datum(), barIndex);
       }
     }
     this.initialSelectCall = false;
@@ -1618,13 +1620,14 @@ Column.prototype = {
   /**
    * Action to happen on click.
    * @private
+   * @param {object} event - The event object
    * @param {object} d - The data object
    * @param {number} i - The index
    * @param {object} selector - The selector element
    * @param {boolean} clickedLegend - Is clicked by legend
    * @returns {void}
    */
-  doClickAction(d, i, selector, clickedLegend) {
+  doClickAction(event, d, i, selector, clickedLegend) {
     const self = this;
     const isTargetBar = selector && d3.select(selector).classed('target-bar');
     let isSelected = selector && d3.select(selector).classed('is-selected');
