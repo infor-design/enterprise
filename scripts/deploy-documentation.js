@@ -430,7 +430,7 @@ function documentJsToHtml(componentName) {
 
   return build([compFilePath], { extension: 'js', shallow: true })
     .then(comments => {
-      return formats.html(comments, { theme: `${paths.templates.docjs}/${themeName}` });
+      return formats.html(comments, { theme: `${paths.templates.docjs}/${themeName}/index.js` });
     })
     .then(res => {
       res.map(async file => {
