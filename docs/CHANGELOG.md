@@ -21,6 +21,7 @@
 - `[Datagrid]` Fixed a bug in datagrid in datagrid where the icon cause clipping issues. ([#7000](https://github.com/infor-design/enterprise/issues/7000))
 - `[Datagrid]` Updated dirty cell check in datagrid. ([#6893](https://github.com/infor-design/enterprise/issues/6893))
 - `[Datepicker]` Fixed a bug in datagrid where disabled dates were not showing in Safari. ([#6920](https://github.com/infor-design/enterprise/issues/6920))
+- `[Lookup]` Adjusted width in lookup. ([#6924](https://github.com/infor-design/enterprise/issues/6924))
 
 ## v4.70.0
 
