@@ -20,10 +20,10 @@ function personalizeStyles(colors) {
   border-color: ${colors.base} !important;
 }
 
-.is-personalizable .btn-secondary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane),
+.is-personalizable .btn-secondary:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane),
 .is-personalizable .btn-secondary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane) svg.icon  {
   border-color: ${colors.base} !important;
-  color: ${colors.base} !important;
+  color: ${colors.darkest} !important;
 }
 
 .is-personalizable .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled,
@@ -64,7 +64,7 @@ button.is-personalizable.is-pressed .icon {
   border-color: ${colors.darker} !important;
 }
 
-.is-personalizable .btn-secondary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
+.is-personalizable .btn-secondary:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
   background-color: ${colors.lightest} !important;
   color: ${colors.contrast} !important;
 }
@@ -225,10 +225,10 @@ a.is-personalizable svg.ripple-effect {
   opacity: .8;
 }
 
-.header.is-personalizable button:not(:disabled):hover,
+.header.is-personalizable button:not(.go-button):not(:disabled):hover,
 .header.is-personalizable button:not(:disabled):hover .icon,
 .header.is-personalizable button:not(:disabled):hover .app-header.icon > span,
-.header.is-personalizable .toolbar [class^='btn']:hover:not([disabled]) {
+.header.is-personalizable .toolbar [class^='btn']:hover:not(.go-button):not([disabled]) {
   color: ${colors.contrast};
   background-color: ${colors.darker};
   opacity: 1;
@@ -309,7 +309,7 @@ html[class*="theme-new-"] .is-personalizable.tab-container.header-tabs > .tab-li
   color: ${colors.contrast};
 }
 
-.header .toolbar [class^='btn']:hover {
+.header .toolbar [class^='btn']:hover:not(.go-button) {
   background-color: ${colors.base};
 }
 
