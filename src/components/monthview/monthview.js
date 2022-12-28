@@ -2807,6 +2807,7 @@ MonthView.prototype = {
    * @returns {object} The prototype.
    */
   destroy() {
+    this.calendarToolbarAPI?.destroy();
     this.teardown();
     if (this.element) {
       this.element.empty();

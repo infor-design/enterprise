@@ -67,6 +67,7 @@ function addSuffixToAttributes(parentAttrs = [], childAttrs = [], suffix) {
  * @param {object} [settings.options] Options to pass to the datagrid
  * @param {function} [settings.beforeShow] Call back that executes async before the lookup is opened.
  * @param {string} [settings.modalContent] Custom modal markup can be sent in here
+ * @param {object} [settings.modalSettings] Additional settings for modal.
  * @param {boolean} [settings.editable=true] Can the user type text in the field
  * @param {boolean} [settings.autoApply=true] If set to false the dialog wont apply the value on clicking a value.
  * @param {function} [settings.validator] A function that fires to let you validate form items on open and select
@@ -540,14 +541,20 @@ Lookup.prototype = {
     const hasKeywordSearch = this.settings.options && this.settings.options.toolbar &&
       this.settings.options.toolbar.keywordFilter;
 
-    $('body').modal({
+    let modalSettings = {
       triggerButton: this.element,
       title: labelText,
       content,
       buttons,
       cssClass: `lookup-modal${!hasKeywordSearch ? ' lookup-no-search' : ''}`,
       attributes: addSuffixToAttributes(this.settings.attributes, [], 'modal')
-    }).off('open.lookup').on('open.lookup', () => {
+    };
+
+    if (self.settings.modalSettings) {
+      modalSettings = { ...modalSettings, ...self.settings.modalSettings };
+    }
+
+    $('body').modal(modalSettings).off('open.lookup').on('open.lookup', () => {
       self.createGrid();
     })
       .off('close.lookup')

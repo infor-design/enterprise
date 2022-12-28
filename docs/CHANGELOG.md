@@ -5,22 +5,28 @@
 ## v4.71.0 Important Changes
 
 - `[Button]` Changed style and features of existing buttons and added destructive buttons. ([#6977](https://github.com/infor-design/enterprise/issues/6977))
+- `[Datagrid]` Added ability to set the color of the header in datagrid (`dark` or `light`). ([#7008](https://github.com/infor-design/enterprise/issues/7008))
 - `[Searchfield]` Added enhancement changes in searchfield. ([#6707](https://github.com/infor-design/enterprise/issues/6707))
 - `[Tabs]` Added puppeteer scripts for tooltip title. ([#7003](https://github.com/infor-design/enterprise/issues/7003))
-- `[Datagrid]` Added ability to set the color of the header in datagrid (`dark` or `light`). ([#7008](https://github.com/infor-design/enterprise/issues/7008))
 - `[Tabs Header]` Changed the default background for tabs header in default and alternate. ([#6979](https://github.com/infor-design/enterprise/issues/6979))
 
 ## v4.71.0 Features
 
+- `[Lookup]` Added modal settings to lookup. ([#4319](https://github.com/infor-design/enterprise/issues/4319))
 - `[Radar]` Converted Radar scripts to puppeteer. ([#6989](https://github.com/infor-design/enterprise/issues/6989))
-
+- `[Icons]` Added three new icons: `icon-paint-brush, icon-psych-precaution, icon-observation-precaution`. ([#7040](https://github.com/infor-design/enterprise/issues/7040))
 
 ## v4.71.0 Fixes
 
 - `[Datagrid]` Fixed a bug in datagrid where dropdown filter does not render correctly. ([#7006](https://github.com/infor-design/enterprise/issues/7006))
 - `[Datagrid]` Fixed a bug in datagrid where flex toolbar is not properly destroyed. ([NG#1423](https://github.com/infor-design/enterprise-ng/issues/1423))
 - `[Datagrid]` Fixed a bug in datagrid in datagrid where the icon cause clipping issues. ([#7000](https://github.com/infor-design/enterprise/issues/7000))
+- `[Datagrid]` Fixed a bug in datagrid where date cell is still in edit state after editing when using Safari. ([#6963](https://github.com/infor-design/enterprise/issues/6963))
+- `[Datagrid]` Updated dirty cell check in datagrid. ([#6893](https://github.com/infor-design/enterprise/issues/6893))
 - `[Datepicker]` Fixed a bug in datagrid where disabled dates were not showing in Safari. ([#6920](https://github.com/infor-design/enterprise/issues/6920))
+- `[Datepicker]` Fixed a bug where range display is malformed in RTL. ([#6933](https://github.com/infor-design/enterprise/issues/6933))
+- `[Lookup]` Adjusted width in lookup. ([#6924](https://github.com/infor-design/enterprise/issues/6924))
+- `[User Status Icons]` Now have a more visible fill and a stroke behind them. ([#7040](https://github.com/infor-design/enterprise/issues/7040))
 
 ## v4.70.0
 
@@ -32,7 +38,7 @@
 ## v4.70.0 Features
 
 - `[Checkbox]` Converted Checkbox scripts to puppeteer. ([#6936](https://github.com/infor-design/enterprise/issues/6936))
-- `[Circlepager]` Converted Circlepager scripts to puppeteer. ([#6971](https://github.com/infor-design/enterprise/issues/6971))
+- `[Circlepager]` Converted `Circlepager` scripts to puppeteer. ([#6971](https://github.com/infor-design/enterprise/issues/6971))
 - `[Icons]` Bumped `ids-identity` to get a new empty state icon `empty-no-search-result` and a new system icon `advance-settings`.([#6999](https://github.com/infor-design/enterprise/issues/6999))
 
 ## v4.70.0 Fixes
@@ -46,7 +52,7 @@
 - `[Datagrid]` Added toolbar update on datagrid update. ([NG#1357](https://github.com/infor-design/enterprise-ng/issues/1357))
 - `[Datepicker]` Added Firefox increment/decrement keys. ([#6877](https://github.com/infor-design/enterprise/issues/6877))
 - `[Datepicker]` Fixed a bug in mask value in datepicker when update is called. ([NG#1380](https://github.com/infor-design/enterprise-ng/issues/1380))
-- `[Dropdown]` Fixed a bug in dropdown where there is a null in a list when changing language to chinese. ([#6916](https://github.com/infor-design/enterprise/issues/6916))
+- `[Dropdown]` Fixed a bug in dropdown where there is a null in a list when changing language to Chinese. ([#6916](https://github.com/infor-design/enterprise/issues/6916))
 - `[Editor]` Fixed a bug in editor where insert image is not working properly when adding attributes. ([#6864](https://github.com/infor-design/enterprise/issues/6864))
 - `[Editor]` Fixed a bug in editor where paste and plain text is not cleaning the text/html properly. ([#6892](https://github.com/infor-design/enterprise/issues/6892))
 - `[Locale]` Fixed a bug in locale where same language translation does not render properly. ([#6847](https://github.com/infor-design/enterprise/issues/6847))

@@ -946,7 +946,8 @@ Column.prototype = {
       });
 
     (isPositiveNegative ? pnBars : bars)
-      .on(`mouseenter.${self.namespace}`, function (event, d, i) {
+      .on(`mouseenter.${self.namespace}`, function (event, d) {
+        const i = $(this).index();
         let x;
         let y;  //eslint-disable-line
         let j;
@@ -1212,7 +1213,7 @@ Column.prototype = {
           timer = setTimeout(function () {
             if (!prevent) {
               // Run click action
-              i = Number(selector.getAttribute('class').replace('bar series-', ''));
+              i = $(selector).index();
               self.doClickAction(event, d, i, selector, clickedLegend);
             }
             prevent = false;
@@ -1224,7 +1225,7 @@ Column.prototype = {
         clearTimeout(timer);
         prevent = true;
         // Run double click action
-        i = Number(selector.getAttribute('class').replace('bar series-', ''));
+        i = $(selector).index();
         self.doDoubleClickAction(d, i, selector);
       });
 
@@ -1417,7 +1418,7 @@ Column.prototype = {
             $(legends.selectAll('.chart-legend-item')[0][barIndex]).trigger('click.chart');
           }
         } else {
-          selector.on(`click.${self.namespace}`).call(selector.node(), selector.datum(), barIndex);
+          d3.select(selector.node()).dispatch('click');
         }
       }
     };
@@ -1537,7 +1538,7 @@ Column.prototype = {
         }
       } else {
         this.initialSelectCall = true;
-        selector.on(`click.${self.namespace}`).call(event, selector.node(), selector.datum(), barIndex);
+        d3.select(selector.node()).dispatch('click');
       }
     }
     this.initialSelectCall = false;

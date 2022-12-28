@@ -64,9 +64,9 @@
   span:not(.audible) {
     font-size: $ids-size-font-sm;
     position: absolute;
-    right: -2px;
+    right: 0;
     text-align: right;
-    top: 34px;
+    top: 30px;
 
     &.completed-label,
     &.completed-label span {

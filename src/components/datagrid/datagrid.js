@@ -7595,7 +7595,7 @@ Datagrid.prototype = {
           const focusElem = $('*:focus');
 
           if (!$('.lookup-modal.is-visible, #timepicker-popup, #monthview-popup, #colorpicker-menu').length &&
-              self.editor && !self.isSafari) {
+              self.editor) {
             if (focusElem.is('.spinbox, .trigger, .code-block-actions') || !$(target).is(':visible')) {
               return;
             }
@@ -11504,16 +11504,21 @@ Datagrid.prototype = {
     }
 
     const d = this.dirtyArray[row][cell];
-    if ((d.originalVal === d.value) ||
+
+    const isDirty = !(
+      (d.originalVal === d.value) ||
       (d.originalVal === d.coercedVal) ||
       (d.originalVal === d.escapedCoercedVal) ||
-      (d.originalVal === d.cellNodeText)) {
-      this.dirtyArray[row][cell].isDirty = false;
-      this.setDirtyIndicator(row, cell, false);
-    } else {
+      (d.originalVal === d.cellNodeText)
+    );
+
+    if (isDirty || d.originalVal.length !== d.value.length) {
       this.dirtyArray[row][cell].isDirty = true;
       cellNode[0].classList.add('is-dirty-cell');
       this.setDirtyIndicator(row, cell, true);
+    } else {
+      this.dirtyArray[row][cell].isDirty = false;
+      this.setDirtyIndicator(row, cell, false);
     }
 
     if (typeof d.originalVal === 'string' || d.originalVal instanceof String) {
