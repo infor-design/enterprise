@@ -77,7 +77,9 @@ module.exports = {
     return (newStr && newStr.length === 4) ? `#${(`0${parseInt(newStr[1], 10).toString(16)}`).slice(-2)}${(`0${parseInt(newStr[2], 10).toString(16)}`).slice(-2)}${(`0${parseInt(newStr[3], 10).toString(16)}`).slice(-2)}` : '';
   },
   waitsFor: async (condition, el) => {
+    // eslint-disable-next-line no-undef
     if (condition && el && protractor && browser && browser.driver) {
+      // eslint-disable-next-line no-undef
       const expected = protractor.ExpectedConditions;
       await browser.driver.wait(expected[condition](el), config.waitsFor);
     }

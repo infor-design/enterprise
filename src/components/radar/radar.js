@@ -37,7 +37,7 @@ const RADAR_DEFAULTS = {
   axisFormatter: '.0%',
   showLegend: true,
   legendPlacement: 'right',
-  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' }
+  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data-new' }
 };
 
 /**
@@ -83,7 +83,7 @@ const RADAR_DEFAULTS = {
  * @param {object} [settings.emptyMessage] An empty message will be displayed when there is no chart data.
  * This accepts an object of the form emptyMessage:
  * `{title: 'No Data Available',
- *  info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data',
+ *  info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data-new',
  *  button: {text: 'xxx', click: <function>}
  *  }`
  *  Set this to null for no message or will default to 'No Data Found with an icon.'
@@ -384,25 +384,25 @@ Radar.prototype = {
       // Click and double click events
       // Use very slight delay to fire off the normal click action
       // It alow to cancel when the double click event happens
-      .on(`click.${self.namespace}`, function (d, i) {
+      .on(`click.${self.namespace}`, function (event, d) {
         const selector = this;
 
         if (self.settings.selectable) {
           timer = setTimeout(function () {
             if (!prevent) {
               // Run click action
-              self.doClickAction(d, i, selector, tooltipInterval, svg);
+              self.doClickAction(d, $(selector).index(), selector, tooltipInterval, svg);
             }
             prevent = false;
           }, delay);
         }
       })
-      .on(`dblclick.${self.namespace}`, function (d, i) {
+      .on(`dblclick.${self.namespace}`, function (event, d) {
         const selector = this;
         clearTimeout(timer);
         prevent = true;
         // Run double click action
-        self.doDoubleClickAction(d, i, selector);
+        self.doDoubleClickAction(d, $(selector).index(), selector);
       });
 
     // Create the outlines
@@ -468,7 +468,7 @@ Radar.prototype = {
       .attr('cy', (d, i) => rScale(d.value) * Math.sin(angleSlice * i - Math.PI / 2))
       .style('fill', 'none')
       .style('pointer-events', 'all')
-      .on(`mouseenter.${self.namespace}`, function (d) {
+      .on(`mouseenter.${self.namespace}`, function (event, d) {
         if (!s.showTooltips) {
           return;
         }
@@ -599,7 +599,6 @@ Radar.prototype = {
    */
   setSelected(o, isToggle) {
     let selector;
-    let arcIndex;
     let selected = 0;
     const self = this;
 
@@ -617,13 +616,12 @@ Radar.prototype = {
             (o.elem && $(this).is(o.elem))) {
           selected++;
           selector = d3.select(this);
-          arcIndex = i;
         }
       }
     });
 
     if (selected > 0 && (isToggle || !selector.classed('is-selected'))) {
-      selector.on(`click.${self.namespace}`).call(selector.node(), selector.datum(), arcIndex);
+      d3.select(selector.node()).dispatch('click');
     }
   },
 

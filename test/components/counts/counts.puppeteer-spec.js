@@ -13,7 +13,7 @@ describe('Counts Puppeteer Tests', () => {
     it('should show the title', async () => {
       await expect(page.title()).resolves.toMatch('IDS Enterprise');
     });
-  
+
     it('should have the size of 48px in xl-text font size', async () => {
       const fontSize = await page.$eval('span[class="xl-text"]', el => getComputedStyle(el).getPropertyValue('font-size'));
       expect(fontSize).toMatch('48px');
@@ -29,7 +29,7 @@ describe('Counts Puppeteer Tests', () => {
       expect(image).toMatchImageSnapshot(config);
     });
   });
-  
+
   describe('Counts example-widget-count tests', () => {
     const url = `${baseUrl}/example-widget-count?&locale=he-IL`;
 
@@ -40,7 +40,7 @@ describe('Counts Puppeteer Tests', () => {
     it('should show the title', async () => {
       await expect(page.title()).resolves.toMatch('IDS Enterprise');
     });
-  
+
     it('should have the title in center and below the counts', async () => {
       const textAlign = await page.$eval('span[class="title"]', el => getComputedStyle(el).getPropertyValue('text-align'));
       expect(textAlign).toMatch('center');
@@ -67,7 +67,7 @@ describe('Counts Puppeteer Tests', () => {
     it('should show the title', async () => {
       await expect(page.title()).resolves.toMatch('IDS Enterprise');
     });
-  
+
     it('should have the size of 48px in xl-text font size', async () => {
       const fontSize = await page.$eval('span[class="xl-text"]', el => getComputedStyle(el).getPropertyValue('font-size'));
       expect(fontSize).toMatch('48px');
@@ -94,7 +94,7 @@ describe('Counts Puppeteer Tests', () => {
     it('should show the title', async () => {
       await expect(page.title()).resolves.toMatch('IDS Enterprise');
     });
-  
+
     it('should have the size of 40px in xl-text font size', async () => {
       const fontSize = await page.$eval('span[class="xl-text"]', el => getComputedStyle(el).getPropertyValue('font-size'));
       expect(fontSize).toMatch('40px');

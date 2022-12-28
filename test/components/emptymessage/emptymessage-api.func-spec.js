@@ -33,7 +33,7 @@ let emptymessageObj;
 
 const settings = {
   title: 'No Data Available',
-  icon: 'icon-empty-no-data',
+  icon: 'icon-empty-no-data-new',
   info: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do siusmod temp.',
   button: {
     id: 'test',
@@ -83,7 +83,7 @@ describe('EmptyMessage API', () => { //eslint-disable-line
     emptymessageObj.destroy();
     emptymessageObj = new EmptyMessage(emptymessageEl, {
       title: 'No Data Available',
-      icon: 'icon-empty-no-data',
+      icon: 'icon-empty-no-data-new',
       info: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do siusmod temp.',
       button: {
         id: 'test',

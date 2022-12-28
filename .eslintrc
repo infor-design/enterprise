@@ -16,6 +16,8 @@
     "es6": true
   },
 
+  "ignorePatterns": ["*e2e-spec.js"],
+
   // Need `ecmaVersion: 9` for:
   // - [Object spread syntax](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax#Spread_in_object_literals)
   "parser": "@babel/eslint-parser",

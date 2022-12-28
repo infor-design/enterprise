@@ -41,11 +41,11 @@ const COMPONENT_NAME = 'bar';
  * @param {object} [settings.emptyMessage={
  *  title: (Locale ? Locale.translate('NoData') : 'No Data Available'),
  *   info: '',
- *  icon: 'icon-empty-no-data' }]
+ *  icon: 'icon-empty-no-data-new' }]
  * An empty message will be displayed when there is no chart data. This accepts an object of the form emptyMessage:
  * `{title: 'No Data Available',
  *  info: 'Make a selection on the list above to see results'
- *  icon: 'icon-empty-no-data',
+ *  icon: 'icon-empty-no-data-new',
  *  button: {text: 'xxx', click: <function>}  }`
  * Set this to null for no message or will default to 'No Data Found with an icon.'
  * @param {object} [settings.localeInfo] If passed in you can override the default formatting https://github.com/d3/d3-format/blob/master/README.md#formatDefaultLocale
@@ -69,7 +69,7 @@ const BAR_DEFAULTS = {
   labelFactor: 1.27,
   wrapWidth: 60,
   fitHeight: true,
-  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' }
+  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data-new' }
 };
 
 function Bar(element, settings) {

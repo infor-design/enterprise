@@ -253,7 +253,7 @@ Sparkline.prototype = {
           });
         });
       })
-      .on(`mouseenter.${self.namespace}`, function (d) {
+      .on(`mouseenter.${self.namespace}`, function (event, d) {
         const rect = this.getBoundingClientRect();
         let content = `<p>${chartData[0].name ? `${chartData[0].name}<br> ${
           (self.settings.isMinMax && max === d) ? `${Locale.translate('Highest')}: ` :
@@ -298,7 +298,7 @@ Sparkline.prototype = {
         d3.select(this).attr('r', (self.settings.isMinMax && max === d ||
             self.settings.isMinMax && min === d) ? (dotsize + 2) : (dotsize + 1));
       })
-      .on(`mouseleave.${self.namespace}`, function (d) {
+      .on(`mouseleave.${self.namespace}`, function (event, d) {
         clearInterval(tooltipIntervalDots);
         charts.hideTooltip();
         d3.select(this).attr('r', (self.settings.isMinMax && max === d ||

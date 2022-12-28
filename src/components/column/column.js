@@ -39,12 +39,12 @@ const COMPONENT_NAME = 'column';
 * @param {function} [settings.xAxis.formatText] A function that passes the text element and a counter.
 * You can return a formatted svg markup element to replace the current element.
 * For example you could use tspans to wrap the strings or color them.
-* @param {object} [settings.emptyMessage = { title: 'No Data', info: , icon: 'icon-empty-no-data' }]
+* @param {object} [settings.emptyMessage = { title: 'No Data', info: , icon: 'icon-empty-no-data-new' }]
 * An empty message will be displayed when there is no chart data. This accepts an object of the form
 * `emptyMessage: {
 *   title: 'No Data Available',
 *   info: 'Make a selection on the list above to see results',
-*   icon: 'icon-empty-no-data',
+*   icon: 'icon-empty-no-data-new',
 *   button: {text: 'xxx', click: <function>
 *   }`
 * Set this to null for no message or will default to 'No Data Found with an icon.'
@@ -63,7 +63,7 @@ const COLUMN_DEFAULTS = {
   hideDots: false,
   ticks: 9,
   fitHeight: true,
-  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' }
+  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data-new' }
 };
 
 function Column(element, settings) {

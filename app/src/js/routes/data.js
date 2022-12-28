@@ -10,7 +10,10 @@ import * as path from 'path';
 import getJSONFile from '../get-json-file.js';
 import utils from '../utils.js';
 import express from 'express';
+import { fileURLToPath } from 'url';
 import generalRoute from './general.js';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const router = express.Router();
 

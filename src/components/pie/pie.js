@@ -48,7 +48,7 @@ const COMPONENT_NAME = 'pie';
  * @param {object} [settings.emptyMessage] An empty message will be displayed when there is no chart data.
  * This accepts an object of the form emptyMessage:
  * `{title: 'No Data Available',
- *  info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data',
+ *  info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data-new',
  *  button: {text: 'xxx', click: <function>}
  *  }`
  *  Set this to null for no message or will default to 'No Data Found with an icon.'
@@ -79,7 +79,7 @@ const PIE_DEFAULTS = {
   },
   showCenterTooltip: false,
   fitHeight: true,
-  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' }
+  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data-new' }
 };
 
 function Pie(element, settings) {

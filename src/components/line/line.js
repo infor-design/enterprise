@@ -54,7 +54,7 @@ const COMPONENT_NAME = 'line';
  * @param {object} [settings.emptyMessage] An empty message will be displayed when there is no chart data.
  * This accepts an object of the form emptyMessage:
  * `{title: 'No Data Available',
- *  info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data',
+ *  info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data-new',
  *  button: {text: 'xxx', click: <function>}
  *  }`
  *  Set this to null for no message or will default to 'No Data Found with an icon.'
@@ -71,7 +71,7 @@ const LINE_DEFAULTS = {
   animate: true,
   redrawOnResize: true,
   fitHeight: true,
-  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' }
+  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data-new' }
 };
 
 function Line(element, settings) {
@@ -720,9 +720,9 @@ Line.prototype = {
             .attr('d', d3.symbol().size(dots.strokeWidth).type(function () { return d3.symbols[lineIdx]; }))
             .style('opacity', 0)
             .style('fill', function () { return charts.chartColor(lineIdx, 'line', d); })
-            .on(`mouseenter.${self.namespace}`, function (mouseEnterData) {
+            .on(`mouseenter.${self.namespace}`, function (event, mouseEnterData) {
               mouseEnterData.lineIdx = lineIdx;
-              handleMouseEnter(this, mouseEnterData);
+              handleMouseEnter(this, event, mouseEnterData);
             })
             .on(`mouseleave.${self.namespace}`, function () {
               clearInterval(tooltipInterval);
