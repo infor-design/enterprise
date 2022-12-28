@@ -477,7 +477,7 @@ html[dir='rtl'] .scrollable-flex-header.is-personalizable .breadcrumb.truncated:
 
 .is-personalizable .tab-container.header-tabs:not(.alternate)::before,
 .is-personalizable.tab-container.header-tabs:not(.alternate)::before {
-  background-image: linear-gradient(to right, ${colors.contrast} , ${colorUtils.hexToRgba(colors.contrast, 0)}) !important;
+  background-image: linear-gradient(to right, ${colors.base} , ${colorUtils.hexToRgba(colors.base, 0)}) !important;
 }
 
 .theme-new-dark .is-personalizable .tab-container.header-tabs:not(.alternate)::before,
