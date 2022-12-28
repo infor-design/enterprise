@@ -7594,7 +7594,7 @@ Datagrid.prototype = {
           const focusElem = $('*:focus');
 
           if (!$('.lookup-modal.is-visible, #timepicker-popup, #monthview-popup, #colorpicker-menu').length &&
-              self.editor && !self.isSafari) {
+              self.editor) {
             if (focusElem.is('.spinbox, .trigger, .code-block-actions') || !$(target).is(':visible')) {
               return;
             }
