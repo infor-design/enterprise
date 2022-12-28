@@ -503,10 +503,6 @@
 
       &.is-selected {
         border-bottom: 4px solid $tab-selected-color;
-
-        a {
-          color: $tab-selected-color;
-        }
       }
 
       &:not(.separator):hover {
@@ -594,7 +590,7 @@
       a {
         @include antialiased();
 
-        color: $tab-text-color-horizontal;
+        color: inherit;
         font-size: $ids-size-font-base;
         font-weight: $ids-number-font-weight-base;
         text-decoration: none;

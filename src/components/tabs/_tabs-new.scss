@@ -73,7 +73,6 @@
       // Adds "semi-bold" style to selected/active tabs
       &.is-selected {
         a {
-          color: $tab-selected-color;
           font-weight: 700;
           letter-spacing: -0.2px;
         }
