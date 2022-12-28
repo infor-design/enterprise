@@ -84,6 +84,8 @@ $images-size: (
   display: inline-block;
 
   .icon {
+    background-color: $body-color-primary-background;
+    border-radius: 50%;
     margin-left: -17px;
     margin-top: 35px;
     position: absolute;
