@@ -12,6 +12,7 @@
 
 ## v4.71.0 Features
 
+- `[Lookup]` Added modal settings to lookup. ([#4319](https://github.com/infor-design/enterprise/issues/4319))
 - `[Radar]` Converted Radar scripts to puppeteer. ([#6989](https://github.com/infor-design/enterprise/issues/6989))
 
 ## v4.71.0 Fixes
