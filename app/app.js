@@ -17,7 +17,7 @@ import basePathHandler from './src/js/middleware/basepath-handler.js';
 import globalDataHandler from './src/js/middleware/global-data-handler.js';
 import responseThrottler from './src/js/middleware/response-throttler.js';
 import removeHeaders from './src/js/middleware/remove-headers.js';
-import cspHandler from './src/js/middleware/csp-handler.js';
+// import cspHandler from './src/js/middleware/csp-handler.js';
 import infoHandler from './src/js/middleware/info-handler.js';
 
 import utils from './src/js/utils.js';
@@ -109,7 +109,8 @@ app.use(basePathHandler(app));
 app.use(globalDataHandler(app));
 app.use(responseThrottler(app));
 app.use(removeHeaders(app));
-app.use(cspHandler(app));
+// TODO
+// app.use(cspHandler(app));
 app.use(infoHandler(app));
 
 app.use(router);

@@ -1,4 +1,4 @@
-const { getConfig } = require('../../helpers/e2e-utils.js');
+const { getConfig } = require('../../helpers/e2e-utils.cjs');
 
 describe('Spinbox Puppeteer Tests', () => {
   describe('Example-sizes', () => {

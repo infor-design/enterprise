@@ -1,5 +1,5 @@
 
-module.exports = (req, res) => {
+export default function fruitData(req, res) {
   let resData;
   const fruits = {
     main: '' +
@@ -60,4 +60,4 @@ module.exports = (req, res) => {
 
   res.setHeader('Content-Type', 'application/json');
   res.end(JSON.stringify(resData));
-};
+}

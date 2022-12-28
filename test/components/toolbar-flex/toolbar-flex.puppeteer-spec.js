@@ -1,4 +1,4 @@
-const { getConfig } = require('../../helpers/e2e-utils.js');
+const { getConfig } = require('../../helpers/e2e-utils.cjs');
 
 describe('Flex Toolbar', () => {
   const baseUrl = 'http://localhost:4000/components/toolbar-flex';

@@ -1,4 +1,4 @@
-const utils = require('../../helpers/e2e-utils.js');
+const utils = require('../../helpers/e2e-utils.cjs');
 
 describe('Tabs Puppeteer tests', () => {
   const baseUrl = 'http://localhost:4000/components/tabs';

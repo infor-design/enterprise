@@ -1,7 +1,7 @@
 
 import { AxePuppeteer } from '@axe-core/puppeteer';
 
-const { getComputedStyle, checkDataAutomationID, checkInnerHTMLValue } = require('../../helpers/e2e-utils.js');
+const { getComputedStyle, checkDataAutomationID, checkInnerHTMLValue } = require('../../helpers/e2e-utils.cjs');
 
 describe('Notification-Badge Puppeteer Tests', () => {
   describe('Badge Placement Tests', () => {

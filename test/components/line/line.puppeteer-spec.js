@@ -1,4 +1,4 @@
-const { checkClassNameValue } = require('../../helpers/e2e-utils.js');
+const { checkClassNameValue } = require('../../helpers/e2e-utils.cjs');
 
 describe('Line Puppeteer Tests', () => {
   describe('Line Disable Selection  State Tests', () => {

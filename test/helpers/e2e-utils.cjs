@@ -1,89 +1,4 @@
-const chalk = require('chalk');
-const logger = require('../../scripts/logger');
-const config = require('./e2e-config.js');
-
 module.exports = {
-  isIE: () => browser.browserName === 'ie',
-  isFF: () => browser.browserName === 'firefox',
-  isSafari: () => browser.browserName === 'safari',
-  isChrome: () => browser.browserName === 'chrome',
-  isMac: async () => {
-    const capabilities = await browser.getCapabilities();
-    return capabilities.platform === 'MAC';
-  },
-  isBS: () => process.env.isBrowserStack,
-  isCI: () => process.env.CI,
-  setPage: async (url) => {
-    const pageurl = `${browser.baseUrl + url}`;
-    await browser.waitForAngularEnabled(false);
-    await browser.driver.get(pageurl);
-  },
-  checkForErrors: async () => {
-    try {
-      await browser.manage().logs().get('browser').then((browserLog) => {
-        let errors = 0;
-        for (let i = 0; i < browserLog.length; i++) {
-          logger('error', browserLog[i].message);
-          errors++;
-        }
-        expect(errors).toEqual(0);
-      });
-    } catch (e) {
-      // Do nothing
-    }
-  },
-  getSelectedText: async () => {
-    await browser.executeScript(() => {
-      let text = '';
-      if (window.getSelection) {
-        text = window.getSelection().toString();
-      } else if (document.selection && document.selection.type !== 'Control') {
-        text = document.selection.createRange().text;
-      }
-      return text;
-    });
-  },
-  reportAxeViolations: (res) => {
-    let msg = '';
-    if (!res || !res.violations || !res.violations.length) {
-      return;
-    }
-
-    msg += 'Axe Violations:\n\n';
-    res.violations.forEach((violation) => {
-      msg += `${chalk.bold(violation.help)}\n`;
-
-      const violationNodes = violation.nodes || [];
-      let failureSummary;
-      let targetList = '';
-      violationNodes.forEach((node) => {
-        if (!failureSummary) {
-          failureSummary = node.failureSummary;
-        }
-        node.target.forEach((target) => {
-          targetList += `  \`${target}\`\n`;
-        });
-      });
-
-      msg += `${chalk.yellow('Targets:')}\n`;
-      msg += `${targetList}\n`;
-      msg += `${chalk.yellow('Suggested Fix:')} ${failureSummary}\n`;
-    });
-
-    logger('error', msg);
-  },
-  rgb2hex: (str) => {
-    const newStr = str.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
-    return (newStr && newStr.length === 4) ? `#${(`0${parseInt(newStr[1], 10).toString(16)}`).slice(-2)}${(`0${parseInt(newStr[2], 10).toString(16)}`).slice(-2)}${(`0${parseInt(newStr[3], 10).toString(16)}`).slice(-2)}` : '';
-  },
-  waitsFor: async (condition, el) => {
-    // eslint-disable-next-line no-undef
-    if (condition && el && protractor && browser && browser.driver) {
-      // eslint-disable-next-line no-undef
-      const expected = protractor.ExpectedConditions;
-      await browser.driver.wait(expected[condition](el), config.waitsFor);
-    }
-  },
   /**
    * Configuration for jest image snapshot
    * See https://github.com/americanexpress/jest-image-snapshot#%EF%B8%8F-api for the API needed.
@@ -212,7 +127,7 @@ module.exports = {
      * param {string} selector - The selector for the element.
      * returns {boolean} isFailed - return true if the comparison is failed, return false otherwise
      */
-  checkIfElementHasFocused: async (selector) => {
+  checkIfElementHasFocus: async (selector) => {
     let isFailed = false;
     try {
       const elem = await page.$eval(selector, el => el === document.activeElement);

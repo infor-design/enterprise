@@ -1,4 +1,4 @@
-const { checkInnerHTMLValue } = require('../../helpers/e2e-utils.js');
+const { checkInnerHTMLValue } = require('../../helpers/e2e-utils.cjs');
 
 describe('Listview Puppeteer Tests', () => {
   const baseUrl = 'http://localhost:4000/components/listview';

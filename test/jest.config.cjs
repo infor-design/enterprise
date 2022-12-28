@@ -1,6 +1,6 @@
 // For a detailed explanation regarding each configuration property, visit:
 // https://jestjs.io/docs/en/configuration.html
-process.env.JEST_PUPPETEER_CONFIG = require.resolve('../test/jest-puppeteer.config.js');
+process.env.JEST_PUPPETEER_CONFIG = require.resolve('../test/jest-puppeteer.config.cjs');
 
 module.exports = {
   // Automatically clear mock calls and instances between every test
@@ -22,12 +22,13 @@ module.exports = {
   // A list of paths to modules that run some code to configure
   // or set up the testing framework before each test
   setupFilesAfterEnv: [
-    '../test/jest-setup.js',
-    '@wordpress/jest-puppeteer-axe'
+    '../test/jest-setup.cjs'
   ],
 
   // The glob patterns Jest uses to detect test files
   testMatch: [
+    'behaviors/**/*.func-spec.js',
+    'components/**/*.func-spec.js',
     '**/test/components/**/*puppeteer*.js'
   ]
 };

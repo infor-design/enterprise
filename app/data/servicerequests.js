@@ -1,4 +1,4 @@
-module.exports = (req, res) => {
+export default function data(req, res) {
   const cartItems = [
     {
       id: 1, type: 'Data Refresh', favorite: true, datetime: new Date(2014, 12, 8), requestor: 'Grant Lindsey', deployment: 'AutoSuite-PRD', scheduled: null, status: 'Success'
@@ -19,4 +19,4 @@ module.exports = (req, res) => {
 
   res.setHeader('Content-Type', 'application/json');
   res.end(JSON.stringify(cartItems));
-};
+}

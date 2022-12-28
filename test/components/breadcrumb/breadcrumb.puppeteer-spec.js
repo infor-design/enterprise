@@ -1,6 +1,6 @@
 import { AxePuppeteer } from '@axe-core/puppeteer';
 
-const { getConfig } = require('../../helpers/e2e-utils.js');
+const { getConfig } = require('../../helpers/e2e-utils.cjs');
 
 describe('Breadcrumb puppeteer tests', () => {
   const baseUrl = 'http://localhost:4000/components/breadcrumb';

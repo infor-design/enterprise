@@ -1,4 +1,4 @@
-const { checkDataAutomationID, checkTooltipValue, checkClassNameValue, getConfig } = require('../../helpers/e2e-utils.js');
+const { checkDataAutomationID, checkTooltipValue, checkClassNameValue, getConfig } = require('../../helpers/e2e-utils.cjs');
 
 describe('Bar Chart', () => {
   const baseUrl = 'http://localhost:4000/components/bar';

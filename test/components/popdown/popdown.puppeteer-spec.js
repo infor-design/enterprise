@@ -1,4 +1,4 @@
-const { checkDataAutomationID, checkIfElementHasFocused, checkIfElementExist } = require('../../helpers/e2e-utils.js');
+const { checkDataAutomationID, checkIfElementHasFocused, checkIfElementExist } = require('../../helpers/e2e-utils.cjs');
 /**
  * #TODO: Refactor all the tests
  */

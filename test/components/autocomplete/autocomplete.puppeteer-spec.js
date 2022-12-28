@@ -1,5 +1,5 @@
-const config = require('../../helpers/e2e-config');
-const { getConfig } = require('../../helpers/e2e-utils.js');
+const config = require('../../helpers/e2e-config.cjs');
+const { getConfig } = require('../../helpers/e2e-utils.cjs');
 
 describe('Autocomplete Puppeteer Test', () => {
   const baseUrl = 'http://localhost:4000/components/autocomplete';
@@ -11,7 +11,7 @@ describe('Autocomplete Puppeteer Test', () => {
   });
 
   describe('Example Index', () => {
-    const url = `${baseUrl}/example-index?theme=classic`;
+    const url = `${baseUrl}/example-index`;
 
     beforeEach(async () => {
       await page.goto(url, { waitUntil: ['networkidle2', 'load'] });

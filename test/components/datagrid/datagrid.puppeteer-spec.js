@@ -1,6 +1,6 @@
 /* eslint-disable compat/compat */
 const path = require('path');
-const { getConfig, getComputedStyle } = require('../../helpers/e2e-utils.js');
+const { getConfig, getComputedStyle } = require('../../helpers/e2e-utils.cjs');
 
 describe('Datagrid', () => {
   const baseUrl = 'http://localhost:4000/components/datagrid';

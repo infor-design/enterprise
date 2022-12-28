@@ -1,5 +1,5 @@
 
-const { getConfig } = require('../../helpers/e2e-utils.js');
+const { getConfig } = require('../../helpers/e2e-utils.cjs');
 
 /* eslint-disable compat/compat */
 describe('Blockgrid Puppeteer Test', () => {

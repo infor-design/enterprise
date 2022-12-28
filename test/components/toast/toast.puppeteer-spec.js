@@ -1,6 +1,6 @@
 import { AxePuppeteer } from '@axe-core/puppeteer';
 
-const { dragAndDrop } = require('../../helpers/e2e-utils.js');
+const { dragAndDrop } = require('../../helpers/e2e-utils.cjs');
 
 describe('Toast Puppeteer Tests', () => {
   describe('Toast Index Tests', () => {

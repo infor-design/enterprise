@@ -1,6 +1,6 @@
 /* eslint-disable compat/compat */
-const { dragAndDrop } = require('../../helpers/e2e-utils');
-const { getConfig } = require('../../helpers/e2e-utils.js');
+const { dragAndDrop } = require('../../helpers/e2e-utils.cjs');
+const { getConfig } = require('../../helpers/e2e-utils.cjs');
 
 describe('Application Menu Puppeteer Test', () => {
   const baseUrl = 'http://localhost:4000/components/applicationmenu';

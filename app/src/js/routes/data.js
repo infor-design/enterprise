@@ -37,14 +37,14 @@ function getDataFilePath(filename) {
 }
 
 // Calls out to an external piece of middleware that will pass JS data.
-function handleJSFile(jsFilename, req, res, next) {
+async function handleJSFile(jsFilename, req, res, next) {
   res.set({
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
   });
 
-  const middleware = require(jsFilename);
-  return middleware(req, res, next);
+  const middleware = await import(jsFilename);
+  return middleware.default(req, res, next);
 }
 
 // ========================================

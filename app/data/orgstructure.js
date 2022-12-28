@@ -1,7 +1,12 @@
-const path = require('path');
-const getJSONFile = require('../src/js/get-json-file');
+/* eslint-disable no-underscore-dangle */
+import { fileURLToPath } from 'url';
+import * as path from 'path';
+import getJSONFile from '../src/js/get-json-file.js';
 
-module.exports = (req, res) => {
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+export default function orgStructure(req, res) {
   const orgData = getJSONFile(path.resolve(__dirname, 'orgstructure-original.json'));
 
   function setBasePath(imgPath) {
@@ -28,4 +33,4 @@ module.exports = (req, res) => {
 
   res.setHeader('Content-Type', 'application/json');
   res.end(JSON.stringify(orgData));
-};
+}

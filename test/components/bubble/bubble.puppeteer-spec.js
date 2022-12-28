@@ -1,5 +1,5 @@
 /* eslint-disable compat/compat */
-const { getConfig } = require('../../helpers/e2e-utils.js');
+const { getConfig } = require('../../helpers/e2e-utils.cjs');
 
 describe('Bubble Puppeteer Tests', () => {
   const baseUrl = 'http://localhost:4000/components/bubble';
