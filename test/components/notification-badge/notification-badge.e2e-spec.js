@@ -11,7 +11,7 @@ describe('Notification Badge example-badge-placement tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('should not visual regress', async () => {
+    it.skip('should not visual regress', async () => {
       const containerEl = await element(by.className('container'));
 
       await browser.driver.sleep(config.sleep);
