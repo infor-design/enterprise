@@ -73,7 +73,7 @@
     "watch:scss": "nodemon --watch \"src/\" -e scss --ignore dist/ --ignore app/ -x \"npm run build:css\" --on-change-only",
     "webdriver:clean": "npx webdriver-manager clean",
     "webdriver:update": "npx webdriver-manager update --versions.chrome=107.0.5304.87 --standalone false --quiet --gecko=false",
-    "zip": "npm-build-zip"
+    "zip": "zip-build dist ../enterprise -t dist.zip"
   },
   "browserslist": [
     "last 2 versions",
@@ -136,7 +136,6 @@
     "node-sass": "^8.0.0",
     "node-sass-once-importer": "^5.3.2",
     "nodemon": "^2.0.20",
-    "npm-build-zip": "^1.0.3",
     "puppeteer": "^18.2.1",
     "r2": "^2.0.1",
     "release-it": "^15.6.0",
@@ -153,7 +152,8 @@
     "vinyl-fs": "^3.0.3",
     "webdriver-manager": "^12.1.8",
     "webpack": "^5.75.0",
-    "yargs": "^17.6.2"
+    "yargs": "^17.6.2",
+    "zip-build": "^1.8.0"
   },
   "optionalDependencies": {
     "fsevents": "*"
