@@ -486,7 +486,7 @@ function postZippedBundle() {
  */
 function readSitemapYaml() {
   let sitemap = {};
-  sitemap = yaml.safeLoad(fs.readFileSync(`${paths.docs}/sitemap.yml`, 'utf8'));
+  sitemap = yaml.load(fs.readFileSync(`${paths.docs}/sitemap.yml`, 'utf8'));
   return sitemap;
 }
 
