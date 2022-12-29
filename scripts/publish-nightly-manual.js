@@ -13,7 +13,9 @@ import * as fs from 'fs';
 import slash from 'slash';
 import inquirer from 'inquirer';
 import childProcess from 'child_process';
-import pkgJson from '../package.json';
+
+const loadJSON = (path) => JSON.parse(fs.readFileSync(new URL(path, import.meta.url)));
+const pkgJson = loadJSON('../package.json');
 
 // -------------------------------------
 //   Constants

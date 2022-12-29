@@ -2,4 +2,3 @@
   "presets": ["@babel/preset-env"],
   "plugins": ["transform-optional-chaining", "transform-default-named-imports"]
 }
-s
