@@ -1,5 +1,5 @@
-const { getConfig } = require('../../helpers/e2e-utils');
-const config = require('../../helpers/e2e-config');
+const { getConfig } = require('../../helpers/e2e-utils.cjs');
+const config = require('../../helpers/e2e-config.cjs');
 
 describe('Button Puppeteer Tests', () => {
   const baseUrl = 'http://localhost:4000/components/button';

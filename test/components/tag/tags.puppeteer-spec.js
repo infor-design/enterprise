@@ -1,4 +1,4 @@
-const { getConfig } = require('../../helpers/e2e-utils');
+const { getConfig } = require('../../helpers/e2e-utils.cjs');
 
 describe('Tag', () => {
   const baseUrl = 'http://localhost:4000/components/tag';
