@@ -256,6 +256,7 @@ html.theme-new-dark .header.is-personalizable.has-tabs .tab-container.header-tab
 }
 
 .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab,
+header.is-personalizable .tab-container.header-tabs .tab-more svg.icon,
 .is-personalizable.tab-container.header-tabs > .tab-list-container .tab  {
   color: ${colors.contrast} !important;
   opacity: .8;
