@@ -310,6 +310,20 @@ Textarea.prototype = {
     const self = this;
 
     this.element
+      .on('paste.textarea', (e) => {
+        const value = e.originalEvent.clipboardData.getData('text/plain');
+        const isExtraLinebreaks = self.isChrome || self.isSafari;
+        const whiteSpaceLength = (isExtraLinebreaks ? self.countLinebreaks(value) : 0);
+        const length = value.length + (isExtraLinebreaks ? self.countLinebreaks(value) : 0);
+        const max = self.getMaxLength();
+
+        if (length > max) {
+          const newValue = value.substring(0, max - whiteSpaceLength);
+          self.element.val(newValue);
+          self.updateCounter();
+          e.preventDefault();
+        }
+      })
       .on('keyup.textarea', (e) => {
         const value = self.element.val();
         const isExtraLinebreaks = self.isChrome || self.isSafari;
