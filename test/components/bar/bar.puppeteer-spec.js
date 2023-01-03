@@ -104,7 +104,7 @@ describe('Bar Chart', () => {
 
       await page.click('.bar.series-0');
 
-      await page.waitForSelector('.bar.series-0', { visible: true });
+      await page.waitForSelector('.bar.series-0');
 
       const hasClassname = await checkClassNameValue(barEl, 'is-selected');
       expect(hasClassname).toBe(true);

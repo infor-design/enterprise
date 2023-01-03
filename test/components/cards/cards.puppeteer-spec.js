@@ -248,22 +248,22 @@ describe('Cards', () => {
       expect(await page.$eval('.card:nth-child(2)', el => el.getAttribute('class'))).toBe('card auto-height is-selectable is-selected');
     });
 
-    it.skip('should not visual regress', async () => {
-      await page.waitForSelector('.card', { visible: true })
-        .then(element => expect(element).toBeTruthy());
+    // it.skip('should not visual regress', async () => {
+    //   await page.waitForSelector('.card', { visible: true })
+    //     .then(element => expect(element).toBeTruthy());
 
-      const button1 = await page.$('.card:nth-child(1)');
-      await button1.click();
+    //   const button1 = await page.$('.card:nth-child(1)');
+    //   await button1.click();
 
-      const button2 = await page.$('.card:nth-child(2)');
-      await button2.click();
+    //   const button2 = await page.$('.card:nth-child(2)');
+    //   await button2.click();
 
-      const window = await page.$('#cardlist');
-      const image = await window.screenshot();
-      const config = getConfig('cards-multi-select');
+    //   const window = await page.$('#cardlist');
+    //   const image = await window.screenshot();
+    //   const config = getConfig('cards-multi-select');
 
-      expect(image).toMatchImageSnapshot(config);
-    });
+    //   expect(image).toMatchImageSnapshot(config);
+    // });
   });
 
   describe('Actionable', () => {

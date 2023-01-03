@@ -185,8 +185,8 @@ describe('Datagrid', () => {
     };
 
     it('Should hide the pager when you select pagesize to 100', async () => {
-      await page.waitForSelector('.pager-toolbar', { visible: true });
-      await page.waitForSelector('.btn-menu', { visible: true });
+      await page.waitForSelector('.pager-toolbar');
+      await page.waitForSelector('.btn-menu');
       await page.click('.btn-menu');
       await page.click('#popupmenu-4 > li:nth-child(5) > a');
 

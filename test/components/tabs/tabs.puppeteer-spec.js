@@ -1,13 +1,6 @@
 describe('Tabs Puppeteer tests', () => {
   const baseUrl = 'http://localhost:4000/components/tabs';
 
-  describe('Tabs modal test-modal-error tests', () => {
-    const url = `${baseUrl}/test-modal-error.html`;
-    beforeAll(async () => {
-      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-    });
-  });
-
   describe('Tabs title in new tab tests', () => {
     const url = `${baseUrl}/example-add-tab-button.html`;
     beforeAll(async () => {

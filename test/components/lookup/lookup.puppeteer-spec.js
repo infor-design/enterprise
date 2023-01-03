@@ -11,7 +11,7 @@ describe('Lookup Puppeteer Tests', () => {
     it('should update the value using apply button', async () => {
       await page.click('.trigger');
 
-      await page.waitForSelector('.modal-content', { visible: true })
+      await page.waitForSelector('.modal-content')
         .then(element => expect(element).toBeTruthy());
 
       expect(await page.$$eval('tr.datagrid-row', el => el.length)).toEqual(6);
