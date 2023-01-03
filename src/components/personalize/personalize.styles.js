@@ -225,10 +225,10 @@ a.is-personalizable svg.ripple-effect {
   opacity: .8;
 }
 
-.header.is-personalizable button:not(.go-button):not(:disabled):hover,
-.header.is-personalizable button:not(:disabled):hover .icon,
+.header.is-personalizable button:not(.go-button):not(.searchfield-category-button):not(:disabled):hover,
+.header.is-personalizable button:not(.searchfield-category-button):not(:disabled):hover .icon,
 .header.is-personalizable button:not(:disabled):hover .app-header.icon > span,
-.header.is-personalizable .toolbar [class^='btn']:hover:not(.go-button):not([disabled]) {
+.header.is-personalizable .toolbar [class^='btn']:hover:not(.go-button):not(.searchfield-category-button):not([disabled]) {
   color: ${colors.contrast};
   background-color: ${colors.darker};
   opacity: 1;
@@ -309,7 +309,7 @@ html[class*="theme-new-"] .is-personalizable.tab-container.header-tabs > .tab-li
   color: ${colors.contrast};
 }
 
-.header .toolbar [class^='btn']:hover:not(.go-button) {
+.header .toolbar [class^='btn']:hover:not(.go-button):not(.searchfield-category-button) {
   background-color: ${colors.base};
 }
 

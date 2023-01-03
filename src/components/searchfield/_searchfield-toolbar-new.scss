@@ -1,0 +1,56 @@
+// Toolbar Searchfields New
+//================================================== */
+
+.header {
+  .toolbar-searchfield-wrapper {
+    .searchfield-category-button {
+      border-bottom-color: unset;
+      border-top-color: unset;
+      border-top: 1px solid $searchfield-header-border-color-new;
+      border-bottom: 1px solid $searchfield-header-border-color-new;
+      border-left: 1px solid $searchfield-header-border-color-new;
+      border-bottom-left-radius: 8px;
+      border-top-left-radius: 8px;
+      border-bottom-right-radius: unset;
+      border-top-right-radius: unset;
+    }
+
+    &.is-open {
+      .searchfield,
+      .btn {
+        border-bottom-color: $searchfield-header-border-color-new;
+        border-top-color: $searchfield-header-border-color-new;
+        background-color: $searchfield-header-bg-color;
+        opacity: 1;
+      }
+    }
+
+    &.active {
+      .collapse-button,
+      .btn {
+        border-top: 1px solid $searchfield-header-border-color-new;
+        border-bottom: 1px solid $searchfield-header-border-color-new;
+        border-left: 1px solid $searchfield-header-border-color-new;
+        border-bottom-left-radius: 8px;
+        border-top-left-radius: 8px;
+      }
+
+      .searchfield-category-button {
+        border-color: $header-searchfield-input-border-color;
+        border-right: 1px solid transparent;
+      }
+    }
+  }
+}
+
+@media (min-width: $breakpoint-phone-to-tablet) {
+  .header,
+  .masthead,
+  .module-tabs {
+    .toolbar-searchfield-wrapper.non-collapsible {
+      .searchfield {
+        border: 1px solid $searchfield-header-border-color-new;
+      }
+    }
+  }
+}
