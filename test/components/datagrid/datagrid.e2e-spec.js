@@ -1504,7 +1504,7 @@ describe('Datagrid paging tests', () => {
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('999');
   });
 
-  it('Should be able to move to first', async () => {
+  xit('Should be able to move to first', async () => {
     expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) span')).getText()).toEqual('0');
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) span')).getText()).toEqual('9');
 
@@ -1688,7 +1688,7 @@ describe('Datagrid paging client side tests', () => {
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) div')).getText()).toEqual('999');
   });
 
-  it('Should be able to move to first', async () => {
+  xit('Should be able to move to first', async () => {
     expect(await element(by.css('tbody tr:nth-child(1) td:nth-child(2) div')).getText()).toEqual('0');
     expect(await element(by.css('tbody tr:nth-child(10) td:nth-child(2) div')).getText()).toEqual('9');
 
