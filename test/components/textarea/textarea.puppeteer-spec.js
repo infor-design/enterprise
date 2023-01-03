@@ -1,4 +1,4 @@
-import { AxePuppeteer } from '@axe-core/puppeteer';
+const { AxePuppeteer } = require('@axe-core/puppeteer');
 
 /* eslint-disable no-await-in-loop */
 const { getConfig } = require('../../helpers/e2e-utils.cjs');

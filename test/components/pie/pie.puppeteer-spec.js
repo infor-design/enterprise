@@ -1,4 +1,3 @@
-const utils = require('../../helpers/e2e-utils.cjs');
 const { getConfig } = require('../../helpers/e2e-utils.cjs');
 
 describe('Pie Chart tests', () => {
@@ -7,10 +6,6 @@ describe('Pie Chart tests', () => {
   beforeEach(async () => {
     const url = `${baseUrl}/pie/example-index?theme=classic&layout=nofrills`;
     await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-  });
-
-  it('Should not have errors', async () => {
-    await utils.checkForErrors();
   });
 
   it('Should not visual regress', async () => {

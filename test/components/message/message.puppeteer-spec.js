@@ -1,4 +1,4 @@
-import { AxePuppeteer } from '@axe-core/puppeteer';
+const { AxePuppeteer } = require('@axe-core/puppeteer');
 
 describe('Index Tests', () => {
   const url = 'http://localhost:4000/components/message/example-index.html';

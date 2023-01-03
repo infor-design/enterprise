@@ -1,4 +1,4 @@
-import { AxePuppeteer } from '@axe-core/puppeteer';
+const { AxePuppeteer } = require('@axe-core/puppeteer');
 
 const { getConfig } = require('../../helpers/e2e-utils.cjs');
 

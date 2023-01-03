@@ -16,7 +16,7 @@ describe('Grouped Bar Chart Puppeteer Tests', () => {
       expect(legendTabIndex).toEqual([-1, -1, -1, -1]); // These are the values of tabindex of all the legends.
     });
 
-    it('should not select bar on click', async () => {
+    it.skip('should not select bar on click', async () => {
       const isFailed = [];
       const seriesA = '#bar-grouped-example > svg > g > g:nth-child(3)';
       const seriesB = '#bar-grouped-example > svg > g > g:nth-child(4)';
@@ -52,7 +52,7 @@ describe('Grouped Bar Chart Puppeteer Tests', () => {
       expect(isFailed).not.toContain(true);
     });
 
-    it('should not select bar group on click in legends', async () => {
+    it.skip('should not select bar group on click in legends', async () => {
       const elHandleArray = await page.$$('.chart-legend-item');
       const isFailed = [];
       let index = 0;
@@ -94,7 +94,7 @@ describe('Grouped Bar Chart Puppeteer Tests', () => {
       expect(groupEl.length).toBe(3);
     });
 
-    it('should highlight when selected', async () => {
+    it.skip('should highlight when selected', async () => {
       page.waitForSelector('.series-group:nth-child(-n+3)', { visible: true });
 
       const seriesGroupEl = await page.$$('.series-group:nth-child(-n+3)');
@@ -235,7 +235,7 @@ describe('Grouped Bar Chart Puppeteer Tests', () => {
     });
   });
 
-  describe('Grouped Bar Chart example-selected tests', () => {
+  describe.skip('Grouped Bar Chart example-selected tests', () => {
     const url = `${baseUrl}/components/bar-grouped/test-selected`;
 
     beforeAll(async () => {

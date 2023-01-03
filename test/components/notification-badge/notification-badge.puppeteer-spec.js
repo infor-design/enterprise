@@ -1,5 +1,5 @@
 
-import { AxePuppeteer } from '@axe-core/puppeteer';
+const { AxePuppeteer } = require('@axe-core/puppeteer');
 
 const { getComputedStyle, checkDataAutomationID, checkInnerHTMLValue } = require('../../helpers/e2e-utils.cjs');
 

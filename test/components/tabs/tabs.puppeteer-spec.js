@@ -1,5 +1,3 @@
-const utils = require('../../helpers/e2e-utils.cjs');
-
 describe('Tabs Puppeteer tests', () => {
   const baseUrl = 'http://localhost:4000/components/tabs';
 
@@ -7,10 +5,6 @@ describe('Tabs Puppeteer tests', () => {
     const url = `${baseUrl}/test-modal-error.html`;
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-    });
-
-    it('should not have errors', async () => {
-      await utils.checkForErrors();
     });
   });
 

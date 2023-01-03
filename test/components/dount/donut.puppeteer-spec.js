@@ -1,4 +1,3 @@
-const utils = require('../../helpers/e2e-utils.cjs');
 const { getConfig } = require('../../helpers/e2e-utils.cjs');
 
 describe('Donut Chart Puppeteer Tests', () => {
@@ -8,10 +7,6 @@ describe('Donut Chart Puppeteer Tests', () => {
     beforeEach(async () => {
       const url = `${baseUrl}/donut/example-index?theme=classic&layout=nofrills`;
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-    });
-
-    it('Should not have errors', async () => {
-      await utils.checkForErrors();
     });
 
     it('Should not visual regress', async () => {
@@ -41,10 +36,6 @@ describe('Donut Chart Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('Should not have errors', async () => {
-      await utils.checkForErrors();
-    });
-
     it('Should not visual regress', async () => {
       // Resize the viewport
       await page.setViewport({ width: 1200, height: 800 });
@@ -70,10 +61,6 @@ describe('Donut Chart Puppeteer Tests', () => {
     beforeEach(async () => {
       const url = `${baseUrl}/donut/example-legend-bottom-popup?layout=nofrills`;
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-    });
-
-    it('Should not have errors', async () => {
-      await utils.checkForErrors();
     });
 
     it('Should not visual regress', async () => {

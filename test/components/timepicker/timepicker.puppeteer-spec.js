@@ -1,4 +1,4 @@
-import { AxePuppeteer } from '@axe-core/puppeteer';
+const { AxePuppeteer } = require('@axe-core/puppeteer');
 
 describe('Timepicker Puppeteer Tests', () => {
   describe('Index Tests', () => {

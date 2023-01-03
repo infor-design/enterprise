@@ -1,4 +1,4 @@
-import { AxePuppeteer } from '@axe-core/puppeteer';
+const { AxePuppeteer } = require('@axe-core/puppeteer');
 
 describe('About Puppeteer Tests', () => {
   describe('Index Tests', () => {
@@ -28,7 +28,7 @@ describe('About Puppeteer Tests', () => {
 
     it('should display the version', async () => {
       await page.click('#about-trigger');
-      const element = await page.waitForSelector('.modal-body .version', { visible: true });
+      const element = await page.waitForSelector('#about-modal .modal-body .version');
       expect(await element.evaluate(el => el.textContent)).toContain('IDS Version: 4.');
     });
 
