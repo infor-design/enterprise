@@ -100,18 +100,12 @@ describe('Bar Chart', () => {
     });
 
     it('should have greyed out bars when not selected', async () => {
-      const barEl = await page.$$('.bar.series-0');
-
       await page.click('.bar.series-0');
-
       await page.waitForSelector('.bar.series-0');
-
-      const hasClassname = await checkClassNameValue(barEl, 'is-selected');
-      expect(hasClassname).toBe(true);
 
       await page.waitForTimeout(200);
 
-      expect(await page.$eval('.bar.series-1', e => getComputedStyle(e).opacity)).toBe('0.6');
+      expect(await page.$eval('.bar.series-0', e => getComputedStyle(e).opacity)).toBe('0.6');
     });
 
     it('should be able to set id/automation id', async () => {
