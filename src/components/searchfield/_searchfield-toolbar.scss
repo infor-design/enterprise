@@ -699,8 +699,10 @@ $toolbarsearchfield-category-empty-width: 51px;
     }
 
     .searchfield-category-button {
-      border-bottom-left-radius: 2px;
-      border-top-left-radius: 2px;
+      border-bottom-left-radius: 8px;
+      border-top-left-radius: 8px;
+      border-bottom-right-radius: unset;
+      border-top-right-radius: unset;
       border-top: 0;
       border-bottom: 0;
 

@@ -502,7 +502,7 @@ $subheader-height: 60px;
         padding: 0;
       }
 
-      [class^='btn'] {
+      [class^='btn']:not(.searchfield-category-button) {
         margin-right: 3px;
       }
     }
