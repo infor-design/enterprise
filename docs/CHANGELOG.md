@@ -14,6 +14,8 @@
 
 - `[Lookup]` Added modal settings to lookup. ([#4319](https://github.com/infor-design/enterprise/issues/4319))
 - `[Radar]` Converted Radar scripts to puppeteer. ([#6989](https://github.com/infor-design/enterprise/issues/6989))
+- `[Colors]` Correct Status Colors.([#6993](https://github.com/infor-design/enterprise/issues/6993))
+- `[Colors]` Re-add yellow alerts.([#6922](https://github.com/infor-design/enterprise/issues/6922))
 - `[Icons]` Added three new icons: `icon-paint-brush, icon-psych-precaution, icon-observation-precaution`. ([#7040](https://github.com/infor-design/enterprise/issues/7040))
 
 ## v4.71.0 Fixes
