@@ -14,7 +14,7 @@ import slash from 'slash';
 import inquirer from 'inquirer';
 import childProcess from 'child_process';
 
-const loadJSON = (path) => JSON.parse(fs.readFileSync(new URL(path, import.meta.url)));
+const loadJSON = path => JSON.parse(fs.readFileSync(new URL(path, import.meta.url)));
 const pkgJson = loadJSON('../package.json');
 
 // -------------------------------------
@@ -69,15 +69,21 @@ function getBaseVersion(str) {
   return str.substr(0, str.indexOf(versionTag) + versionTag.length);
 }
 
+function checkVersion() {
+  if (pkgJson.version.indexOf('-dev') === -1) {
+    console.log('Error! Cannot append date to non-dev version. Are you on the main branch?');
+    return false;
+  }
+
+  return true;
+}
+
 // -------------------------------------
 //   Main
 // -------------------------------------
 console.log('Manually publish a nightly build...');
 
-if (pkgJson.version.indexOf('-dev') === -1) {
-  console.log('Error! Cannot append date to non-dev version. Are you on the main branch?');
-  return false;
-}
+checkVersion();
 
 const questionsArr = [{
   type: 'list',
