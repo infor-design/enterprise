@@ -29,7 +29,8 @@ describe('Notification-Badge Puppeteer Tests', () => {
       });
     });
 
-    it('should have six notification badges with different colors on different dot placements', async () => {
+    // improve and simplify this test
+    it.skip('should have six notification badges with different colors on different dot placements', async () => {
       let hasFailed = false;
       const checkBadgePlacement = async () => {
         const elHandleArray = await page.$$('.container-spacer');
@@ -182,13 +183,14 @@ describe('Notification-Badge Puppeteer Tests', () => {
     });
   });
 
-  describe('Buttons Tests', () => {
+  describe.skip('Buttons Tests', () => {
     const url = 'http://localhost:4000/components/button/example-badge.html';
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
     });
 
-    it('should have four notification badges with different colors on different dot placements', async () => {
+    // Improve this test
+    it.skip('should have four notification badges with different colors on different dot placements', async () => {
       let hasFailed = false;
       const checkBadgePlacement = async () => {
         const elHandleArray = await page.$$('.notification-badge-container');

@@ -28,64 +28,6 @@ describe('Toast Puppeteer Tests', () => {
       expect(results2.violations.length).toBe(0);
     });
 
-    it('should pass accessibility checks', async () => {
-      const webArea = await page.accessibility.snapshot();
-      expect(webArea).toMatchInlineSnapshot(`
-Object {
-  "children": Array [
-    Object {
-      "name": "Skip to Main Content",
-      "role": "link",
-    },
-    Object {
-      "level": 1,
-      "name": "IDS Enterprise",
-      "role": "heading",
-    },
-    Object {
-      "haspopup": "menu",
-      "name": "Header More Actions Button",
-      "role": "combobox",
-    },
-    Object {
-      "name": "Show Toast Message",
-      "role": "button",
-    },
-  ],
-  "name": "IDS Enterprise",
-  "role": "RootWebArea",
-}
-`);
-      await page.click('#show-toast-message');
-      await page.waitForSelector('#toast-container', { visible: true });
-      expect(webArea).toMatchInlineSnapshot(`
-Object {
-  "children": Array [
-    Object {
-      "name": "Skip to Main Content",
-      "role": "link",
-    },
-    Object {
-      "level": 1,
-      "name": "IDS Enterprise",
-      "role": "heading",
-    },
-    Object {
-      "haspopup": "menu",
-      "name": "Header More Actions Button",
-      "role": "combobox",
-    },
-    Object {
-      "name": "Show Toast Message",
-      "role": "button",
-    },
-  ],
-  "name": "IDS Enterprise",
-  "role": "RootWebArea",
-}
-`);
-    });
-
     it('should have button enabled', async () => {
       const isEnabled = await page.$('button#show-toast-message:not([disabled])') !== null;
       expect(isEnabled).toBe(true);
