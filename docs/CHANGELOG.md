@@ -14,6 +14,8 @@
 
 - `[Lookup]` Added modal settings to lookup. ([#4319](https://github.com/infor-design/enterprise/issues/4319))
 - `[Radar]` Converted Radar scripts to puppeteer. ([#6989](https://github.com/infor-design/enterprise/issues/6989))
+- `[Colors]` Correct Status Colors.([#6993](https://github.com/infor-design/enterprise/issues/6993))
+- `[Colors]` Re-add yellow alerts.([#6922](https://github.com/infor-design/enterprise/issues/6922))
 - `[Icons]` Added three new icons: `icon-paint-brush, icon-psych-precaution, icon-observation-precaution`. ([#7040](https://github.com/infor-design/enterprise/issues/7040))
 
 ## v4.71.0 Fixes
@@ -27,6 +29,7 @@
 - `[Datepicker]` Fixed a bug where range display is malformed in RTL. ([#6933](https://github.com/infor-design/enterprise/issues/6933))
 - `[Lookup]` Adjusted width in lookup. ([#6924](https://github.com/infor-design/enterprise/issues/6924))
 - `[Tabs]` Fixed a bug in tabs header and swatch personalize colors. ([#7046](https://github.com/infor-design/enterprise/issues/7046))
+- `[Textarea]` Added paste event listener for textarea. ([NG#6924](https://github.com/infor-design/enterprise-ng/issues/1401))
 - `[User Status Icons]` Now have a more visible fill and a stroke behind them. ([#7040](https://github.com/infor-design/enterprise/issues/7040))
 
 ## v4.70.0
