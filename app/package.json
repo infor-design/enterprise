@@ -129,6 +129,7 @@
     "slash": "^5.0.0",
     "stylelint-scss": "^4.3.0",
     "terser": "^5.16.1",
+    "webdriver-manager": "^12.1.8",
     "webpack": "^5.75.0",
     "yargs": "^17.6.2",
     "zip-build": "^1.8.0"
