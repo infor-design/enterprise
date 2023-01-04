@@ -100,19 +100,19 @@ $horizontal-tabs-height: 40px;
   .tab-more,
   .add-tab-button {
     background-color: transparent;
-    color: $tab-text-color;
+    color: $header-tab-normal-color-new;
     font-size: $ids-size-font-base;
     line-height: 12px;
 
     .icon {
-      color: $tab-text-color;
+      color: $header-tab-normal-color-new;
     }
 
     &:hover {
-      color: $tab-hover-color;
+      color: $header-tab-hover-color-new;
 
       .icon:not(.is-error):not(.icon-error) {
-        color: $tab-hover-color;
+        color: $header-tab-hover-color-new;
       }
     }
 
