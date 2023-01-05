@@ -1217,8 +1217,10 @@ Modal.prototype = {
         table[0].style.maxHeight = '';
         table[0].style.maxWidth = '';
       } else {
-        table[0].style.maxHeight = `${calcHeight}px`;
-        table[0].style.maxWidth = `${calcWidth}px`;
+        if (table[0] !== undefined) {
+          table[0].style.maxHeight = `${calcHeight}px`;
+          table[0].style.maxWidth = `${calcWidth}px`;
+        }
       }
     }
 
