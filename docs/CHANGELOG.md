@@ -12,6 +12,7 @@
 
 ## v4.71.0 Features
 
+- `[About]` Browser version for crhome no longer contains minor version. ([#7067](https://github.com/infor-design/enterprise/issues/7067))
 - `[Lookup]` Added modal settings to lookup. ([#4319](https://github.com/infor-design/enterprise/issues/4319))
 - `[Radar]` Converted Radar scripts to puppeteer. ([#6989](https://github.com/infor-design/enterprise/issues/6989))
 - `[Colors]` Correct Status Colors.([#6993](https://github.com/infor-design/enterprise/issues/6993))
