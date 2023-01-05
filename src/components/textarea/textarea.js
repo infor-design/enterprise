@@ -316,13 +316,7 @@ Textarea.prototype = {
         const val = this.element.val();
         const copyVal = e.originalEvent.clipboardData.getData('text/plain');
 
-        let pasteVal;
-
-        if (start === end) {
-          pasteVal = val.slice(0, start) + copyVal + val.slice(start);
-        } else {
-          pasteVal = val.slice(0, start) + copyVal + val.slice(end, val.length - 1);
-        }
+        const pasteVal = val.slice(0, start) + copyVal + val.slice(end, val.length - 1);
 
         const isExtraLinebreaks = self.isChrome || self.isSafari;
         const whiteSpaceLength = (isExtraLinebreaks ? self.countLinebreaks(pasteVal) : 0);
