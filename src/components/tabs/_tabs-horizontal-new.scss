@@ -67,9 +67,13 @@ $horizontal-tabs-height: 40px;
         padding: 11px 11px 8px;
       }
 
-      &:hover {
-        color: $header-tab-hover-color-new;
+      &.is-disabled:hover {
         border-bottom: 4px solid transparent;
+      }
+
+      &:not(.is-disabled):hover {
+        color: $header-tab-hover-color-new;
+        border-bottom: 4px solid $header-tab-hover-color-new;
         background-color: $header-tab-background-hover-color-new;
 
         .icon:not(.is-error):not(.icon-error) {
