@@ -222,9 +222,17 @@ a.is-personalizable svg.ripple-effect {
   color: ${colors.contrast};
 }
 
-.header.is-personalizable .header.is-personalizable button:not(:disabled) .app-header.icon > span {
+.header.is-personalizable button:not(:disabled) .app-header.icon > span {
   background-color: ${colors.contrast} !important;
   opacity: .8;
+}
+
+.header.is-personalizable .tab-container.header-tabs > .tab-list-container .tab:not(.is-disabled):hover {
+  border-bottom: 4px solid ${colors.contrast};
+}
+
+.header.is-personalizable .tab-container.horizontal > .tab-list-container .tab:not(.is-disabled):hover {
+  border-bottom: 4px solid ${colors.base};
 }
 
 .header.is-personalizable button:not(:disabled):hover,
@@ -256,6 +264,7 @@ html.theme-new-dark .header.is-personalizable.has-tabs .tab-container.header-tab
 }
 
 .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab,
+header.is-personalizable .tab-container.header-tabs .tab-more svg.icon,
 .is-personalizable.tab-container.header-tabs > .tab-list-container .tab  {
   color: ${colors.contrast} !important;
   opacity: .8;

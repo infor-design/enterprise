@@ -161,4 +161,4 @@ describe('Radar', () => {
       expect(img).toMatchImageSnapshot(config);
     });
   });
-}); 
+});

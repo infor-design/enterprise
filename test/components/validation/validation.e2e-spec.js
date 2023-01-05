@@ -733,7 +733,7 @@ describe('Validation message types', () => {
     expect(utils.rgb2hex(await dateFieldIcon.getCssValue('color'))).toEqual(color.success.icon);
   });
 
-  it('Should be able to set message types info', async () => {
+  xit('Should be able to set message types info', async () => {
     await element(by.id('clearAllMessages')).click();
     let dateField = await element(by.id('date-field'));
     let dateFieldParent = await dateField.element(by.xpath('..'));

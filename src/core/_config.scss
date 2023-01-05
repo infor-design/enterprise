@@ -53,11 +53,11 @@ $focus-box-shadow-input: 0 0 8px $focus-box-shadow-color;
 $inverse-color: $ids-color-palette-white;
 
 // Status Colors
-$status-01-color: $ids-color-palette-ruby-60;
-$status-02-color: $ids-color-palette-amber-80;
-$status-03-color: $ids-color-palette-amber-80;
-$status-04-color: $ids-color-palette-emerald-80;
-$status-05-color: $ids-color-palette-azure-70;
+$status-01-color: $ids-color-status-status-01;
+$status-02-color: $ids-color-status-status-02;
+$status-03-color: $ids-color-status-status-03;
+$status-04-color: $ids-color-status-status-04;
+$status-05-color: $ids-color-status-status-05;
 
 // Text Color
 // These are Deprecated. Use "Default, Descriptive, Link, Muted, Alert" ect going forward
@@ -954,10 +954,13 @@ $header-tab-alt-hover-color: $font-color-highcontrast;
 $header-tab-alt-selected-color: $ids-color-brand-primary-base;
 $header-tab-alt-separator: $header-tabcontainer-border-color;
 
+$header-tab-separator-new: $ids-color-palette-white;
+$header-tab-disabled-color-new: $ids-color-palette-slate-30;
+
 $header-tab-background-initial-color-new: $ids-color-palette-white;
 $header-tab-gradient-initial-color-new: $ids-color-palette-slate-10;
 $header-tab-background-hover-color-new: $ids-color-palette-azure-10;
-$header-tab-indicator-hover-color-new: transparent;
+$header-tab-indicator-hover-color-new: $ids-color-brand-primary-base;
 
 $header-tabcontainer-border-color-new: $ids-color-palette-graphite-30;
 $header-tab-normal-color-new: $ids-color-palette-graphite-60;

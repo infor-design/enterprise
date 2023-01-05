@@ -85,6 +85,7 @@ describe('Datepicker example-index tests', () => {
 
   it('Should be able to set id/automation id', async () => {
     const datepickerEl = await element(by.id('date-field-normal'));
+    const currentDate = new Date();
     await element(by.css('#date-field-normal + .trigger')).click();
     await browser.driver.sleep(config.sleep);
 
@@ -96,7 +97,7 @@ describe('Datepicker example-index tests', () => {
     expect(await element(by.id('custom-id-btn-picklist-year-up')).getAttribute('id')).toEqual('custom-id-btn-picklist-year-up');
     expect(await element(by.id('custom-id-btn-picklist-year-down')).getAttribute('id')).toEqual('custom-id-btn-picklist-year-down');
     expect(await element(by.id('custom-id-btn-picklist-3')).getAttribute('id')).toEqual('custom-id-btn-picklist-3');
-    expect(await element(by.id('custom-id-btn-picklist-2020')).getAttribute('id')).toEqual('custom-id-btn-picklist-2020');
+    expect(await element(by.id(`custom-id-btn-picklist-${currentDate.getFullYear()}`)).getAttribute('id')).toEqual(`custom-id-btn-picklist-${currentDate.getFullYear()}`);
   });
 
   if (!utils.isBS()) {
