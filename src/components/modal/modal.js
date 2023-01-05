@@ -1213,11 +1213,15 @@ Modal.prototype = {
         (container.next().is('.pager-toolbar') ? 35 : 0) +
         (hasPager.length ? -15 : 0);
 
-      if (currentlyNeedsFullsize) {
-        table[0].style.maxHeight = '';
-        table[0].style.maxWidth = '';
-      } else {
-        if (table[0] !== undefined) {
+      // It will ensure that the style properties are only set
+      // if calcHeight and calcWidth are defined and have a value.
+      // This can prevent errors that might occur
+      // if one or both of these variables are undefined or have an unexpected value.
+      if (table[0] !== undefined) {
+        if (currentlyNeedsFullsize) {
+          table[0].style.maxHeight = '';
+          table[0].style.maxWidth = '';
+        } else if (typeof calcHeight !== 'undefined' && typeof calcWidth !== 'undefined') {
           table[0].style.maxHeight = `${calcHeight}px`;
           table[0].style.maxWidth = `${calcWidth}px`;
         }
