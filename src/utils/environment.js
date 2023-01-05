@@ -187,6 +187,9 @@ const Environment = {
       if (nUAgent.indexOf('Edg') > -1) {
         browserVersionName = 'Microsoft Edge';
       }
+      if (Number(appVersion.substring(0, 3)) >= 108) {
+        appVersion = appVersion.substring(0, 3);
+      }
     } else if ((verOffset = nUAgent.indexOf('Safari')) !== -1) { //eslint-disable-line
       browser = 'Safari';
       appVersion = nUAgent.substring(verOffset + 7);
