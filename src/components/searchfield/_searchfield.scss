@@ -222,8 +222,6 @@
   }
 
   &.has-focus {
-    box-shadow: 0 0 4px 1px rgba(54, 138, 192, 0.3);
-
     .btn {
       border-color: $input-color-focus-border;
 
@@ -337,7 +335,6 @@
     button.close:not(.is-empty) {
       align-items: center;
       display: flex;
-      height: 100%;
       justify-content: center;
       position: absolute;
       top: 0;

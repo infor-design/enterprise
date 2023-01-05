@@ -225,6 +225,11 @@ a.is-personalizable svg.ripple-effect {
   opacity: .8;
 }
 
+.header.is-personalizable .searchfield-wrapper.has-categories button.btn-icon:not(:disabled):hover,
+.header.is-personalizable .searchfield-wrapper.has-categories button:not(.searchfield-category-button):not(:disabled):hover .icon {
+  background-color: ${colors.contrast} !important;
+}
+
 .header.is-personalizable button:not(.go-button):not(.searchfield-category-button):not(:disabled):hover,
 .header.is-personalizable button:not(.searchfield-category-button):not(:disabled):hover .icon,
 .header.is-personalizable button:not(:disabled):hover .app-header.icon > span,
