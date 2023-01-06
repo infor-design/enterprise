@@ -36,5 +36,5 @@ module.exports = {
     '\\.[jt]sx?$': 'babel-jest',
   },
 
-  transformIgnorePatterns: ['node_modules/(?!(sucrase)/)']
+  transformIgnorePatterns: ['node_modules/(?!(sucrase)/)'],
 };
