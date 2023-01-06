@@ -28,6 +28,7 @@ function personalizeStyles(colors) {
 
 .is-personalizable .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled,
 .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane).is-personalizable:disabled {
+  color: ${colors.contrast} !important;
   background-color: ${colors.baseDisabled} !important;
   border-color: ${colors.baseDisabled} !important;
 }

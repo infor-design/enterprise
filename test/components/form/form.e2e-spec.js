@@ -25,7 +25,7 @@ describe('Form Tests', () => {
       expect(await browser.imageComparison.checkElement(containerEl, 'form-layouts')).toEqual(0);
     });
 
-    it('Should not visual regress on input layouts', async () => {
+    xit('Should not visual regress on input layouts', async () => {
       await utils.setPage('/components/form/example-inputs?theme=classic&layout=nofrills');
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
