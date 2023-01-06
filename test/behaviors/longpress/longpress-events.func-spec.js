@@ -1,3 +1,6 @@
+/**
+ * @jest-environment jsdom
+ */
 import { longPress } from '../../../src/behaviors/longpress/longpress';
 import { cleanup } from '../../helpers/func-utils';
 

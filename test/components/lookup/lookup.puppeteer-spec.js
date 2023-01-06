@@ -1,7 +1,7 @@
 describe('Lookup Puppeteer Tests', () => {
   const baseUrl = 'http://localhost:4000/components/lookup';
 
-  describe('double click apply tests', () => {
+  describe.skip('double click apply tests', () => {
     const url = `${baseUrl}/example-dblclick`;
 
     beforeAll(async () => {

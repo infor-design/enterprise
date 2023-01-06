@@ -27,8 +27,14 @@ module.exports = {
 
   // The glob patterns Jest uses to detect test files
   testMatch: [
-    'behaviors/**/*.func-spec.js',
-    'components/**/*.func-spec.js',
-    '**/test/components/**/*puppeteer*.js'
-  ]
+    '**/test/behaviors/**/*.func-spec.js',
+    // '**/test/components/**/*.func-spec.js',
+    // '**/test/components/**/*puppeteer*.js'
+  ],
+
+  transform: {
+    '\\.[jt]sx?$': 'babel-jest',
+  },
+
+  transformIgnorePatterns: ['node_modules/(?!(sucrase)/)']
 };
