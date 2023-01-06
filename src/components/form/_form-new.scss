@@ -25,3 +25,9 @@
 .input-hideshow-text {
   transform: translate(calc(-100% + -8px), 8px);
 }
+
+.form-responsive {
+  .icon-dirty.dirty-checkbox.is-checked {
+    top: 0;
+  }
+}
