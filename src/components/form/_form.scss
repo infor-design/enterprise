@@ -10,6 +10,16 @@
       width: 100%;
     }
 
+    .field-checkbox {
+      margin-top: 30px;
+
+      .icon-dirty.dirty-checkbox.is-checked {
+        @media (max-width: $breakpoint-phone-to-tablet) {
+          top: -1px;
+        }
+      }
+    }
+
     .colorpicker-container {
       position: relative;
       width: 100%;
@@ -35,7 +45,8 @@
 
     .field .checkbox-label,
     .field .checkbox > label {
-      margin-top: 30px;
+      margin-top: 0;
+      white-space: unset;
     }
 
     .checkbox-group-label + .compound-field {
