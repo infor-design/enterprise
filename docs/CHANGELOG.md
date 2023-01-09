@@ -22,6 +22,7 @@
 ## v4.71.0 Fixes
 
 - `[Checkbox]` Fixed a bug where checkbox labels not wrapping when using `form-responsive` class. ([#6826](https://github.com/infor-design/enterprise/issues/6826))
+- `[Datagrid]` Fixed a bug where datepicker icon background color is incorrect upon hovering. ([#7053](https://github.com/infor-design/enterprise/issues/7053))
 - `[Datagrid]` Fixed a bug in datagrid where dropdown filter does not render correctly. ([#7006](https://github.com/infor-design/enterprise/issues/7006))
 - `[Datagrid]` Fixed a bug in datagrid where flex toolbar is not properly destroyed. ([NG#1423](https://github.com/infor-design/enterprise-ng/issues/1423))
 - `[Datagrid]` Fixed a bug in datagrid in datagrid where the icon cause clipping issues. ([#7000](https://github.com/infor-design/enterprise/issues/7000))
@@ -29,8 +30,10 @@
 - `[Datagrid]` Updated dirty cell check in datagrid. ([#6893](https://github.com/infor-design/enterprise/issues/6893))
 - `[Datepicker]` Fixed a bug in datagrid where disabled dates were not showing in Safari. ([#6920](https://github.com/infor-design/enterprise/issues/6920))
 - `[Datepicker]` Fixed a bug where range display is malformed in RTL. ([#6933](https://github.com/infor-design/enterprise/issues/6933))
+- `[Header]` Adjusted classic header colors. ([#7069](https://github.com/infor-design/enterprise/issues/7069))
 - `[Lookup]` Adjusted width in lookup. ([#6924](https://github.com/infor-design/enterprise/issues/6924))
 - `[Lookup]` Fixed a bug where custom modal script gets error after closing the modal in the second time. ([#7057](https://github.com/infor-design/enterprise/issues/7057))
+- `[Tabs]` Fixed a bug in tabs header and swatch personalize colors. ([#7046](https://github.com/infor-design/enterprise/issues/7046))
 - `[Textarea]` Added paste event listener for textarea. ([NG#6924](https://github.com/infor-design/enterprise-ng/issues/1401))
 - `[User Status Icons]` Now have a more visible fill and a stroke behind them. ([#7040](https://github.com/infor-design/enterprise/issues/7040))
 

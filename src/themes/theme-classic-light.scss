@@ -14,5 +14,21 @@
 // Local vars
 @import '../core/config';
 
+$header-bg-color: $ids-color-palette-azure-70;
+$header-text-color: $ids-color-palette-white;
+$header-button-color: $ids-color-palette-white;
+$header-button-focus-color: $ids-color-palette-white;
+$header-button-hover-color: $ids-color-palette-white;
+
+$header-toolbar-searchfield-icon-color: $ids-color-palette-white;
+$header-toolbar-button-hover-color: transparent;
+
+$header-tab-normal-color: rgba($ids-color-palette-white, 0.7);
+$header-tab-hover-color: $ids-color-palette-white;
+
+//================================================== //
 // Core Components
+
+/* stylelint-disable-next-line no-invalid-position-at-import-rule */
 @import '../core/controls';
+

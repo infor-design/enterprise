@@ -158,13 +158,11 @@ a.is-personalizable svg.ripple-effect {
   border-bottom: 1px solid ${colors.darkest} !important;
 }
 
-.tab-container.header-tabs > .tab-list-container .tab a {
-  color: ${colors.contrast};
-}
 .tab-container.header-tabs .tab-focus-indicator.is-visible,
 .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected {
-  border-color: ${colors.contrast};
+  border-color: ${colors.contrast} !important;
 }
+
 .tab-container.header-tabs > .tab-list-container .tab:hover:not(.is-disabled) {
   color: ${colors.contrast};
   background-color: ${colors.darker};
@@ -203,6 +201,10 @@ a.is-personalizable svg.ripple-effect {
   background-color: ${colors.base};
 }
 
+.header.is-personalizable.has-tabs .tab-container.header-tabs {
+  background-color: ${colors.base};
+}
+
 .header.is-personalizable .title {
   color: ${colors.contrast};
 }
@@ -221,9 +223,17 @@ a.is-personalizable svg.ripple-effect {
   color: ${colors.contrast};
 }
 
-.header.is-personalizable .header.is-personalizable button:not(:disabled) .app-header.icon > span {
+.header.is-personalizable button:not(:disabled) .app-header.icon > span {
   background-color: ${colors.contrast} !important;
   opacity: .8;
+}
+
+.header.is-personalizable .tab-container.header-tabs > .tab-list-container .tab:not(.is-disabled):hover {
+  border-bottom: 4px solid ${colors.contrast};
+}
+
+.header.is-personalizable .tab-container.horizontal > .tab-list-container .tab:not(.is-disabled):hover {
+  border-bottom: 4px solid ${colors.base};
 }
 
 .header.is-personalizable button:not(:disabled):hover,
@@ -247,16 +257,21 @@ a.is-personalizable svg.ripple-effect {
 }
 
 .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab.is-selected:not(.is-disabled) {
-  color: ${colors.darker} !important;
+  color: ${colors.contrast} !important;
 }
 
 html.theme-new-dark .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab.is-selected:not(.is-disabled) {
   color: ${colors.contrast} !important;
 }
 
+.header.is-personalizable.has-tabs .tab-more::before {
+  background-color: ${colors.contrast};
+}
+
 .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab,
+header.is-personalizable .tab-container.header-tabs .tab-more svg.icon,
 .is-personalizable.tab-container.header-tabs > .tab-list-container .tab  {
-  color: ${colors.darker} !important;
+  color: ${colors.contrast} !important;
   opacity: .8;
 }
 
@@ -268,7 +283,7 @@ html.theme-new-dark .header.is-personalizable.has-tabs .tab-container.header-tab
 
 .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab:hover:not(.is-disabled),
 .is-personalizable.tab-container.header-tabs > .tab-list-container .tab:hover:not(.is-disabled)  {
-  color: ${colors.darker} !important;
+  color: ${colors.contrast} !important;
   opacity: 1;
 }
 
@@ -476,7 +491,7 @@ html[dir='rtl'] .scrollable-flex-header.is-personalizable .breadcrumb.truncated:
 
 .is-personalizable .tab-container.header-tabs:not(.alternate)::before,
 .is-personalizable.tab-container.header-tabs:not(.alternate)::before {
-  background-image: linear-gradient(to right, ${colors.contrast} , ${colorUtils.hexToRgba(colors.contrast, 0)}) !important;
+  background-image: linear-gradient(to right, ${colors.base} , ${colorUtils.hexToRgba(colors.base, 0)}) !important;
 }
 
 .theme-new-dark .is-personalizable .tab-container.header-tabs:not(.alternate)::before,
@@ -491,12 +506,12 @@ html[dir='rtl'].theme-new-dark .is-personalizable.tab-container.header-tabs:not(
 
 html[dir='rtl'] .is-personalizable .tab-container.header-tabs:not(.alternate)::before,
 html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::before {
-  background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.contrast, 0)}, ${colors.contrast});
+  background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base});
 }
 
 .is-personalizable .tab-container.header-tabs:not(.alternate)::after,
 .is-personalizable.tab-container.header-tabs:not(.alternate)::after {
-  background-image: linear-gradient(to right, ${colorUtils.hexToRgba(colors.contrast, 0)}, ${colors.contrast}) !important;
+  background-image: linear-gradient(to right, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base}) !important;
 }
 
 .theme-new-dark .is-personalizable .tab-container.header-tabs:not(.alternate)::after,
