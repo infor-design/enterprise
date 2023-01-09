@@ -22,6 +22,7 @@
 ## v4.71.0 Fixes
 
 - `[Checkbox]` Fixed a bug where checkbox labels not wrapping when using `form-responsive` class. ([#6826](https://github.com/infor-design/enterprise/issues/6826))
+- `[Datagrid]` Fixed a bug in datagrid where icon is not aligned in custom card. ([#7000](https://github.com/infor-design/enterprise/issues/7000))
 - `[Datagrid]` Fixed a bug where datepicker icon background color is incorrect upon hovering. ([#7053](https://github.com/infor-design/enterprise/issues/7053))
 - `[Datagrid]` Fixed a bug in datagrid where dropdown filter does not render correctly. ([#7006](https://github.com/infor-design/enterprise/issues/7006))
 - `[Datagrid]` Fixed a bug in datagrid where flex toolbar is not properly destroyed. ([NG#1423](https://github.com/infor-design/enterprise-ng/issues/1423))
