@@ -22,6 +22,7 @@
 ## v4.71.0 Fixes
 
 - `[Checkbox]` Fixed a bug where checkbox labels not wrapping when using `form-responsive` class. ([#6826](https://github.com/infor-design/enterprise/issues/6826))
+- `[Datagrid]` Fixed a bug in datagrid where icon is not aligned in custom card. ([#7000](https://github.com/infor-design/enterprise/issues/7000))
 - `[Datagrid]` Fixed a bug where datepicker icon background color is incorrect upon hovering. ([#7053](https://github.com/infor-design/enterprise/issues/7053))
 - `[Datagrid]` Fixed a bug in datagrid where dropdown filter does not render correctly. ([#7006](https://github.com/infor-design/enterprise/issues/7006))
 - `[Datagrid]` Fixed a bug in datagrid where flex toolbar is not properly destroyed. ([NG#1423](https://github.com/infor-design/enterprise-ng/issues/1423))
@@ -33,6 +34,7 @@
 - `[Header]` Adjusted classic header colors. ([#7069](https://github.com/infor-design/enterprise/issues/7069))
 - `[Lookup]` Adjusted width in lookup. ([#6924](https://github.com/infor-design/enterprise/issues/6924))
 - `[Lookup]` Fixed a bug where custom modal script gets error after closing the modal in the second time. ([#7057](https://github.com/infor-design/enterprise/issues/7057))
+- `[Tabs Module]` Fixed a bug in go button where it was affected by the latest changes for button. ([#7037](https://github.com/infor-design/enterprise/issues/7037))
 - `[Tabs]` Fixed a bug in tabs header and swatch personalize colors. ([#7046](https://github.com/infor-design/enterprise/issues/7046))
 - `[Textarea]` Added paste event listener for textarea. ([NG#6924](https://github.com/infor-design/enterprise-ng/issues/1401))
 - `[User Status Icons]` Now have a more visible fill and a stroke behind them. ([#7040](https://github.com/infor-design/enterprise/issues/7040))
