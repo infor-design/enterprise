@@ -49,6 +49,9 @@
     line-height: 16px;
   }
 
+  .custom-card .price dd {
+    margin-top: 5px;
+  }
 </style>
 
 <script>
@@ -65,7 +68,7 @@
             <div><dt>Location</dt><dd>${value.location}</dd></div>
             <div><dt>Phone</dt><dd>${value.phone}</dd></div>
             <div><dt>Quantity</dt><dd>${value.quantity}</dd></div>
-            <div>
+            <div class="price">
                 <dt>
                     <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
                       <use href="#icon-alert"></use>
