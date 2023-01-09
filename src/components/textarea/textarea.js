@@ -311,6 +311,26 @@ Textarea.prototype = {
     const self = this;
 
     this.element
+      .on('paste.textarea', (e) => {
+        const start = this.element[0].selectionStart;
+        const end = this.element[0].selectionEnd;
+        const val = this.element.val();
+        const copyVal = e.originalEvent.clipboardData.getData('text/plain');
+
+        const max = self.getMaxLength();
+        const pasteVal = (val.slice(0, start) + copyVal + val.slice(end, val.length - 1)).substring(0, max);
+
+        const isExtraLinebreaks = self.isChrome || self.isSafari;
+        const whiteSpaceLength = (isExtraLinebreaks ? self.countLinebreaks(pasteVal) : 0);
+        const length = pasteVal.length + (isExtraLinebreaks ? self.countLinebreaks(pasteVal) : 0);
+
+        if (length > max) {
+          const newValue = pasteVal.substring(0, max - whiteSpaceLength);
+          self.element.val(newValue);
+          self.updateCounter();
+          e.preventDefault();
+        }
+      })
       .on('keyup.textarea', (e) => {
         const value = self.element.val();
         const isExtraLinebreaks = self.isChrome || self.isSafari;
