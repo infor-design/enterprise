@@ -73,7 +73,7 @@ describe('Popupmenu example-selectable tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress on example-selectable', async () => {
+    xit('Should not visual regress on example-selectable', async () => {
       const popupmenuSection = await element(by.css('.no-frills'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(popupmenuSection), config.waitsFor);

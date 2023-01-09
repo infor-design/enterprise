@@ -178,14 +178,15 @@ $button-color-secondary-initial-font-new: $ids-color-palette-azure-80;
 $button-color-secondary-initial-border-new: $ids-color-palette-azure-80;
 $button-color-secondary-hover-border-new: $ids-color-palette-azure-90;
 $button-color-secondary-hover-background-new: $ids-color-palette-azure-10;
-$button-color-secondary-disabled-background-new: $ids-color-palette-slate-20;
-$button-color-secondary-disabled-border-new: $ids-color-palette-slate-80;
-$button-color-secondary-disabled-font-new: $ids-color-palette-slate-80;
+$button-color-secondary-disabled-background-new: $ids-color-palette-slate-10;
+$button-color-secondary-disabled-border-new: $ids-color-palette-slate-50;
+$button-color-secondary-disabled-font-new: $ids-color-palette-slate-50;
 
 $button-color-tertiary-hover-background-new: $ids-color-palette-azure-20;
 $button-color-tertiary-hover-font-new: $ids-color-palette-azure-80;
 
 // Tertiary Buttons
+$button-color-tertiary-initial-font: $ids-color-palette-slate-80;
 $tertiary-btn-ripple-color: $ids-color-brand-primary-alt;
 
 // Secondary with Border
@@ -756,9 +757,11 @@ $header-tab-alt-hover-color: $inverse-color;
 $header-tab-alt-selected-color: $inverse-color;
 $header-tab-focus-border-color: $ids-color-palette-azure-90;
 
-$header-tab-background-initial-color-new: $ids-color-palette-slate-10;
+$header-tab-separator-new: $ids-color-palette-slate-100;
+$header-tab-background-initial-color-new: $ids-color-palette-white;
 $header-tab-gradient-initial-color-new: $header-tab-background-initial-color-new;
 $header-tab-hover-color-new: $header-tab-focus-border-color;
+$header-tab-disabled-color-new: $ids-color-palette-slate-30;
 
 // Header Breadcrumb
 $header-breadcrumb-color: $ids-color-palette-slate-100;

@@ -76,7 +76,7 @@ $hr-bottom-color: transparent;
 $button-color-primary-disabled-background: $ids-color-palette-slate-80;
 $button-color-primary-disabled-border: $ids-color-palette-slate-80;
 $button-color-primary-active-background: $ids-color-palette-slate-60;
-$btn-hyperlink-color: $ids-color-palette-slate-50;
+$btn-hyperlink-color: $ids-color-palette-azure-40;
 $btn-hyperlink-hover-color: $ids-color-palette-slate-40;
 
 $button-color-primary-initial-font: $ids-color-palette-slate-90;
@@ -90,12 +90,12 @@ $button-color-secondary-initial-border-new: $ids-color-palette-azure-40;
 $button-color-secondary-hover-border-new: $ids-color-palette-azure-40;
 $button-color-secondary-hover-background-new: $ids-color-palette-slate-90;
 $button-color-secondary-disabled-background-new: $ids-color-palette-slate-80;
-$button-color-secondary-disabled-border-new: $ids-color-palette-slate-30;
-$button-color-secondary-disabled-font-new: $ids-color-palette-slate-30;
+$button-color-secondary-disabled-border-new: $ids-color-palette-slate-50;
+$button-color-secondary-disabled-font-new: $ids-color-palette-slate-50;
 
 $button-color-tertiary-disabled-background-new: $ids-color-palette-slate-80;
 $button-color-tertiary-hover-background-new: $ids-color-palette-slate-90;
-$button-color-tertiary-hover-font-new: $ids-color-palette-azure-40;
+$button-color-tertiary-hover-font-new: $ids-color-palette-azure-30;
 
 $button-color-primary-destructive-initial-background-new: $ids-color-palette-ruby-40;
 $button-color-primary-destructive-hover-background-new: $ids-color-palette-ruby-30;
@@ -104,7 +104,7 @@ $button-color-tertiary-destructive-initial-background-new: $ids-color-palette-ru
 $button-color-tertiary-destructive-hover-font-new: $ids-color-palette-ruby-80;
 $button-color-tertiary-destructive-hover-background-new: $ids-color-palette-ruby-30;
 
-$button-color-tertiary-destructive-disabled-font-new: $ids-color-palette-ruby-20;
+$button-color-tertiary-destructive-disabled-font-new: $ids-color-palette-ruby-30;
 $button-color-tertiary-destructive-disabled-background-new: $ids-color-palette-slate-80;
 
 // Button Ripple
@@ -800,6 +800,8 @@ $header-flex-toolbar-close-icon-color-hover: $ids-color-palette-white;
 $searchfield-header-hover-icon-color: $ids-color-palette-white;
 $header-tab-background-hover-color-new: transparent;
 $header-tab-indicator-hover-color-new: $ids-color-palette-white;
+
+$tab-text-color-horizontal: $ids-color-palette-white;
 
 // Header Breadcrumb
 $header-breadcrumb-current-color: $ids-color-palette-white;

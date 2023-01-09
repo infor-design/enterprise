@@ -179,7 +179,7 @@ Personalize.prototype = {
       amber: ['#db7726', '#bb5500'], // amber 09
       amethyst: ['#9279a6', '#7834dd'], // amethyst 06
       azure: ['#2578a9', '#0563c2', '#368AC0', '#368ac0'], // azure 07/08
-      emerald: ['#56932e', '#1f9254'], // emerald 08
+      emerald: ['#56932e', '#1f9254', '#2AC371'], // emerald 08
       graphite: ['#5c5c5c', '#808080'], // graphite 06
       ruby: ['#941e1e', '#7b0f11'], // ruby 09
       slate: ['#50535a', '#98949e'], // slate 06
@@ -247,7 +247,7 @@ Personalize.prototype = {
     const alternateDisabledColors = {
       amber: ['#db7726', '#bb5500'], // amber 09
       amethyst: ['#9279a6', '#7834dd'], // amethyst 06
-      emerald: ['#56932e', '#1f9254'], // emerald 08
+      emerald: ['#56932e', '#1f9254', '#2AC371'], // emerald 08
       slate: ['#50535a', '#98949e'], // slate 06
     };
     let useAlternates = false;

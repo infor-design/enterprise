@@ -45,6 +45,12 @@
       }
     }
 
+    .datepicker + .trigger {
+      &:hover {
+        background-color: transparent;
+      }
+    }
+
     .lookup-wrapper {
       .trigger {
         .icon {
@@ -899,6 +905,14 @@
 
   tbody tr td .datagrid-checkbox-wrapper {
     margin-top: -13px;
+  }
+}
+
+.datagrid-cell-wrapper {
+  .custom-card {
+    svg.icon {
+      top: 5px;
+    }
   }
 }
 
