@@ -955,10 +955,13 @@ $header-tab-alt-hover-color: $font-color-highcontrast;
 $header-tab-alt-selected-color: $ids-color-brand-primary-base;
 $header-tab-alt-separator: $header-tabcontainer-border-color;
 
+$header-tab-separator-new: $ids-color-palette-white;
+$header-tab-disabled-color-new: $ids-color-palette-slate-30;
+
 $header-tab-background-initial-color-new: $ids-color-palette-white;
 $header-tab-gradient-initial-color-new: $ids-color-palette-slate-10;
 $header-tab-background-hover-color-new: $ids-color-palette-azure-10;
-$header-tab-indicator-hover-color-new: transparent;
+$header-tab-indicator-hover-color-new: $ids-color-brand-primary-base;
 
 $header-tabcontainer-border-color-new: $ids-color-palette-graphite-30;
 $header-tab-normal-color-new: $ids-color-palette-graphite-60;
