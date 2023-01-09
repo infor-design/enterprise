@@ -28,6 +28,7 @@ function personalizeStyles(colors) {
 
 .is-personalizable .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled,
 .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane).is-personalizable:disabled {
+  color: ${colors.contrast} !important;
   background-color: ${colors.baseDisabled} !important;
   border-color: ${colors.baseDisabled} !important;
 }
@@ -480,7 +481,7 @@ html[dir='rtl'] .scrollable-flex-header.is-personalizable .breadcrumb.truncated:
 
 .is-personalizable .tab-container.header-tabs:not(.alternate)::before,
 .is-personalizable.tab-container.header-tabs:not(.alternate)::before {
-  background-image: linear-gradient(to right, ${colors.contrast} , ${colorUtils.hexToRgba(colors.contrast, 0)}) !important;
+  background-image: linear-gradient(to right, ${colors.base} , ${colorUtils.hexToRgba(colors.base, 0)}) !important;
 }
 
 .theme-new-dark .is-personalizable .tab-container.header-tabs:not(.alternate)::before,
@@ -495,12 +496,12 @@ html[dir='rtl'].theme-new-dark .is-personalizable.tab-container.header-tabs:not(
 
 html[dir='rtl'] .is-personalizable .tab-container.header-tabs:not(.alternate)::before,
 html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::before {
-  background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.contrast, 0)}, ${colors.contrast});
+  background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base});
 }
 
 .is-personalizable .tab-container.header-tabs:not(.alternate)::after,
 .is-personalizable.tab-container.header-tabs:not(.alternate)::after {
-  background-image: linear-gradient(to right, ${colorUtils.hexToRgba(colors.contrast, 0)}, ${colors.contrast}) !important;
+  background-image: linear-gradient(to right, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base}) !important;
 }
 
 .theme-new-dark .is-personalizable .tab-container.header-tabs:not(.alternate)::after,
