@@ -45,6 +45,12 @@
       }
     }
 
+    .datepicker + .trigger {
+      &:hover {
+        background-color: transparent;
+      }
+    }
+
     .lookup-wrapper {
       .trigger {
         .icon {
