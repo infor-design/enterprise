@@ -1,6 +1,3 @@
-
-const { getConfig } = require('../../helpers/e2e-utils.cjs');
-
 /* eslint-disable compat/compat */
 describe('Blockgrid Puppeteer Tests', () => {
   const baseUrl = 'http://localhost:4000/components/blockgrid';

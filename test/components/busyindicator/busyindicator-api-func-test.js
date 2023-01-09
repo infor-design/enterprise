@@ -1,10 +1,39 @@
+/**
+ * @jest-environment jsdom
+ */
 import { BusyIndicator } from '../../../src/components/busyindicator/busyindicator';
 import { cleanup } from '../../helpers/func-utils';
 
-const busyindicatorHTML = require('../../../app/views/components/busyindicator/example-index.html');
+const busyindicatorHTML = `<div class="row">
+  <div class="one-half column">
+    <div class="busy" id="busy-form" data-options="{ 'displayDelay': 100, 'timeToComplete': 100000, 'attributes' : [{ name: 'id', value: 'busyindicator-id-1' }, { name: 'data-automation-id', value: 'busyindicator-automation-id-1' }] }">
+      <div class="field">
+        <label for="busy-field-name">Name</label>
+        <input type="text" id="busy-field-name" name="busy-field-name" value="" />
+      </div>
+      <div class="field">
+        <label for="busy-field-address">Address</label>
+        <input type="text" id="busy-field-address" name="busy-field-address" value="" />
+      </div>
+      <div class="field">
+        <label for="busy-field-cats">Number of Cats</label>
+        <input type="text" id="busy-field-cats" name="busy-field-cats" value="" />
+      </div>
+      <div class="field">
+        <button type="text" id="submit" class="btn-primary">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>`;
 
 let busyindicatorEl;
 let busyindicatorObj;
+
+Object.defineProperty(window, 'getComputedStyle', {
+  value: () => ({
+    getPropertyValue: () => ''
+  })
+});
 
 describe('Busy Indicator API', () => {
   beforeEach(() => {
@@ -17,9 +46,7 @@ describe('Busy Indicator API', () => {
   });
 
   afterEach(() => {
-    if (busyindicatorObj) {
-      busyindicatorObj.destroy();
-    }
+    busyindicatorObj?.destroy();
     cleanup();
   });
 

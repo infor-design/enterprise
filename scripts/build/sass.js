@@ -97,4 +97,4 @@ export default function buildSass(config) {
   });
 
   return renderPromises;
-};
+}

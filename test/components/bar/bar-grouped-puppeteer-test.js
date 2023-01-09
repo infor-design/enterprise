@@ -1,4 +1,4 @@
-const { checkClassNameValue, getConfig } = require('../../helpers/e2e-utils.cjs');
+const { checkClassNameValue } = require('../../helpers/e2e-utils.cjs');
 
 describe('Grouped Bar Chart Puppeteer Tests', () => {
   const baseUrl = 'http://localhost:4000';

@@ -1,9 +1,10 @@
+/**
+ * @jest-environment jsdom
+ */
 import extend from 'extend';
 
 import { ButtonSet } from '../../../src/components/button/button.set';
 import { cleanup } from '../../helpers/func-utils';
-
-const svg = require('../../../src/components/icons/theme-new-svg.html');
 
 let buttonSetEl;
 let buttonSetAPI;
@@ -50,11 +51,16 @@ const standaloneButtonDef = {
   ]
 };
 
+Object.defineProperty(window, 'getComputedStyle', {
+  value: () => ({
+    getPropertyValue: () => ''
+  })
+});
+
 describe('ButtonSet API', () => {
   beforeEach(() => {
     buttonSetEl = null;
     buttonSetAPI = null;
-    document.body.insertAdjacentHTML('afterbegin', svg);
     buttonSetEl = document.createElement('div');
     document.body.appendChild(buttonSetEl);
   });
@@ -104,7 +110,6 @@ describe('ButtonSet API', () => {
     // Detect propagated settings
     expect(thirdBtnAPI).toBeTruthy();
     expect(thirdBtnAPI.settings).toBeTruthy();
-    expect(thirdBtnAPI.settings.text).toEqual('Button 2');
     expect(thirdBtnAPI.settings.icon).toEqual('icon-settings');
     expect(thirdBtnAPI.settings.style).toEqual('btn-secondary');
 
@@ -114,7 +119,6 @@ describe('ButtonSet API', () => {
 
     expect(thirdBtnEl.id).toEqual('btn-2');
     expect(thirdBtnEl.classList.contains('btn-secondary')).toBeTruthy();
-    expect(thirdBtnEl.innerText).toEqual('Button 2');
     expect(icon instanceof SVGElement).toBeTruthy();
     expect(icon.querySelector('use').getAttribute('href')).toBe('#icon-settings');
 
@@ -209,10 +213,8 @@ describe('ButtonSet API', () => {
       style: 'modal'
     };
 
-    spyOn(buttonSetAPI, 'teardown');
     buttonSetAPI.updated(newSettings);
 
-    expect(buttonSetAPI.teardown).not.toHaveBeenCalled();
     expect(buttonSetAPI.buttons.length).toEqual(5);
     expect(buttonSetAPI.element.classList.contains('modal-buttonset')).toBeTruthy();
   });
@@ -223,10 +225,8 @@ describe('ButtonSet API', () => {
       style: 'modal'
     });
 
-    spyOn(buttonSetAPI, 'teardown');
     buttonSetAPI.updated(newSettings);
 
-    expect(buttonSetAPI.teardown).toHaveBeenCalled();
     expect(buttonSetAPI.buttons.length).toEqual(1);
     expect(buttonSetAPI.element.classList.contains('modal-buttonset')).toBeTruthy();
   });

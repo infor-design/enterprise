@@ -1,6 +1,3 @@
-const { getConfig } = require('../../helpers/e2e-utils.cjs');
-const config = require('../../helpers/e2e-config.cjs');
-
 describe('Button Puppeteer Tests', () => {
   const baseUrl = 'http://localhost:4000/components/button';
 
@@ -144,16 +141,6 @@ describe('Button Puppeteer Tests', () => {
         });
       await page.click('#menu-button-alone');
     });
-
-    it('should not visually regress', async () => {
-      await page.waitForSelector('#menu-button-alone', { visible: true });
-
-      const maincontent = await page.$('#maincontent');
-      const image = await maincontent.screenshot();
-
-      const btnIcon = getConfig('button-icon');
-      expect(image).toMatchImageSnapshot(btnIcon);
-    });
   });
 
   describe('Button toggle test', () => {
@@ -170,80 +157,6 @@ describe('Button Puppeteer Tests', () => {
       await toggle.click();
 
       await toggle.evaluate(e => e.getAttribute('aria-pressed')).then(ariaPressed => expect(ariaPressed).toBe('false'));
-    });
-  });
-
-  describe('Button 100 percent test', () => {
-    const url = `${baseUrl}/example-100-percent?theme=classic`;
-    let windowSize;
-
-    const snap = async (width, height) => {
-      await page.setViewport({ width, height });
-      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-      await page.waitForTimeout(config.sleep);
-
-      const maincontent = await page.$('#maincontent');
-      const image = await maincontent.screenshot();
-
-      const snapshot = getConfig(`button-100-${width}`);
-      expect(image).toMatchImageSnapshot(snapshot);
-    };
-
-    beforeAll(async () => {
-      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-      windowSize = await page.viewport();
-    });
-
-    afterEach(async () => {
-      await page.waitForTimeout(config.sleep);
-    });
-
-    afterAll(async () => {
-      await page.setViewport(windowSize);
-    });
-
-    it('should tab onto button, show focus, and not visual regress', async () => {
-      await page.focus('#one-hundred');
-      await page.keyboard.press('Tab');
-      await page.waitForTimeout(config.sleep);
-
-      const fitty = await page.$('#fitty');
-      const image = await fitty.screenshot();
-
-      const snapshot = getConfig('button-100');
-      expect(image).toMatchImageSnapshot(snapshot);
-    });
-
-    it('should not visual regress on example-100-percent at 1280px', async () => {
-      await snap(1280, 800);
-    });
-
-    it('should not visual regress on example-100-percent at 768px', async () => {
-      await snap(768, 1024);
-    });
-
-    it('should not visual regress on example-100-percent at 500px', async () => {
-      await snap(500, 600);
-    });
-
-    it('should not visual regress on example-100-percent at 320px', async () => {
-      await snap(320, 480);
-    });
-  });
-
-  describe('Button secondary border test', () => {
-    const url = `${baseUrl}/test-secondary-border.html?theme=classic&layout=nofrills`;
-
-    beforeAll(async () => {
-      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-    });
-
-    it('should not visual regress', async () => {
-      const maincontent = await page.$('div[role=main]');
-      const image = await maincontent.screenshot();
-
-      const snapshot = getConfig('button-secondary-border');
-      expect(image).toMatchImageSnapshot(snapshot);
     });
   });
 

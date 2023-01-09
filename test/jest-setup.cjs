@@ -18,4 +18,3 @@ global.Soho = {
 };
 
 global.d3 = d3Obj;
-

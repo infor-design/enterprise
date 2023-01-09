@@ -3,7 +3,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import handlebars from 'handlebars';
-import hbsRegistrar from 'handlebars-registrar';
+import hbsRegistrar from 'handlebars-wax';
 
 hbsRegistrar('toUpperCase', str => str.toUowerCase());
 

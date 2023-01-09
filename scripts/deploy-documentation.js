@@ -27,7 +27,7 @@ import frontMatter from 'front-matter';
 import * as fs from 'fs';
 import glob from 'glob';
 import handlebars from 'handlebars';
-import hbsRegistrar from 'handlebars-registrar';
+import hbsRegistrar from 'handlebars-wax';
 import { marked, setOptions } from 'marked';
 import * as path from 'path';
 import slash from 'slash';

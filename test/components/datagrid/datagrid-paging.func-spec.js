@@ -381,7 +381,6 @@ describe('Datagrid Paging API', () => {
           expect(dataSourceSpy).toHaveBeenCalled(); //eslint-disable-line
           expect(dataSourceSpy.calls.mostRecent().args[0].type).toBeDefined();
           expect(dataSourceSpy.calls.mostRecent().args[0].type).toEqual('last');
-          // expect(dataSourceSpy).toHaveBeenCalledWith(jasmine.objectContaining({ type: 'last' }));
           done();
         }, 500);
       }, 1);
