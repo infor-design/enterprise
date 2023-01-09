@@ -31,3 +31,16 @@
     top: 0;
   }
 }
+
+// Firefox fixes
+.is-firefox {
+  .form-responsive {
+    .icon-dirty.dirty-checkbox.is-checked {
+      top: 0 !important;
+
+      @media (max-width: $breakpoint-phone-to-tablet) {
+        top: -1px !important;
+      }
+    }
+  }
+}
