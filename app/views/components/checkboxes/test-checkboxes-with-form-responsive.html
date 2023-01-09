@@ -1,0 +1,53 @@
+
+<div class="row form-responsive">
+  <div class="six columns">
+      <form id="test-form">
+        <div class="field">
+          <input type="checkbox" class="checkbox" name="checkbox1"  id="checkbox1"/>
+          <label for="checkbox1" class="checkbox-label">This is a checkbox with a very long label that might require multiple lines</label>
+        </div>
+
+        <div class="field">
+          <input type="checkbox" class="checkbox" id="checkbox2" checked="true"/>
+          <label for="checkbox2" class="checkbox-label" >This is another checkbox with a very long label that might require multiple lines. It is important to ensure that the label text is properly wrapped to maintain readability.</label>
+        </div>
+
+        <div class="field">
+          <input type="checkbox" data-trackdirty="true" class="checkbox" id="checkbox3" />
+          <label for="checkbox3" class="checkbox-label" checked>Dirty tracking</label>
+        </div>
+
+        <div class="field">
+          <input type="checkbox" class="checkbox" id="checkbox4" disabled="true"/>
+          <label for="checkbox4" class="checkbox-label" >Disabled and unchecked</label>
+        </div>
+
+        <div class="field">
+          <input type="checkbox" class="checkbox" id="checkbox5" disabled="true" checked="true"/>
+          <label for="checkbox5" class="checkbox-label">Disabled and checked</label>
+        </div>
+
+        <div class="field">
+          <input type="checkbox" aria-checked="mixed" class="checkbox partial" checked="true" id="checkbox8"/>
+          <label for="checkbox8" class="checkbox-label"><span class="audible">Partial (not accessible)</span>Partial</label>
+        </div>
+
+        <div class="field">
+          <input type="checkbox" class="checkbox error"  id="checkbox9"/>
+          <label for="checkbox9" class="checkbox-label">Error</label>
+        </div>
+
+
+      <div class="field">
+        <input type="checkbox" class="checkbox" name="checkbox10" id="checkbox10" data-validate="required"/>
+        <label for="checkbox10" class="checkbox-label">Required<span class="required" aria-hidden="true"></span></label>
+      </div>
+
+      <div class="field">
+        <input type="checkbox" class="checkbox" name="checkbox11" id="checkbox11" data-validate="required"/>
+        <label for="checkbox11" class="checkbox-label required">Required (No indicator)</label>
+      </div>
+    </form>
+
+  </div>
+</div>

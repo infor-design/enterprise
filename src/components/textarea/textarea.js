@@ -311,14 +311,17 @@ Textarea.prototype = {
 
     this.element
       .on('paste.textarea', (e) => {
-        const pos = this.element[0].selectionStart;
+        const start = this.element[0].selectionStart;
+        const end = this.element[0].selectionEnd;
         const val = this.element.val();
         const copyVal = e.originalEvent.clipboardData.getData('text/plain');
-        const pasteVal = val.slice(0, pos) + copyVal + val.slice(pos);
+
+        const max = self.getMaxLength();
+        const pasteVal = (val.slice(0, start) + copyVal + val.slice(end, val.length - 1)).substring(0, max);
+
         const isExtraLinebreaks = self.isChrome || self.isSafari;
         const whiteSpaceLength = (isExtraLinebreaks ? self.countLinebreaks(pasteVal) : 0);
         const length = pasteVal.length + (isExtraLinebreaks ? self.countLinebreaks(pasteVal) : 0);
-        const max = self.getMaxLength();
 
         if (length > max) {
           const newValue = pasteVal.substring(0, max - whiteSpaceLength);
