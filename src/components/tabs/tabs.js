@@ -3828,7 +3828,7 @@ Tabs.prototype = {
       let tablistScrollLeft;
 
       // Adjust from the top
-      targetRectObj.top -= parentRect.top - 4;
+      targetRectObj.top -= parentRect.top - 2;
       if (isVerticalTabs) {
         targetRectObj.top += parentElement[0].scrollTop;
       }
@@ -3885,7 +3885,7 @@ Tabs.prototype = {
         targetRectObj.top += 2;
       }
 
-      targetRectObj.height -= 9;
+      targetRectObj.height -= 7;
 
       return targetRectObj;
     }
