@@ -49,7 +49,7 @@ describe('Monthview API', () => {
   });
 
   it('Should be defined', () => {
-    expect(monthviewAPI).toEqual(jasmine.any(Object));
+    expect(monthviewAPI).toBeTruthy();
   });
 
   it('Should render a monthview', () => {

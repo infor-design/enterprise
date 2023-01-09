@@ -40,7 +40,7 @@ describe('ListBuilder API', () => {
   });
 
   it('Should be defined as an object', () => {
-    expect(listbuilderObj).toEqual(jasmine.any(Object));
+    expect(listbuilderObj).toBeTruthy();
   });
 
   it('Should destroy listbuilder', () => {
@@ -145,7 +145,7 @@ describe('ListBuilder API', () => {
     const spyEvent = spyOnEvent(listbuilderObj.element, 'afteradd');
     listbuilderObj.addItem();
 
-    expect(spyEvent).toHaveBeenTriggered();
+    expect(spyEvent).toHaveBeenCalled();
     expect(document.body.querySelectorAll('.listbuilder li[role="option"]').length).toEqual(13);
   });
 
@@ -156,7 +156,7 @@ describe('ListBuilder API', () => {
     document.body.querySelector('.listbuilder li[role="option"]:nth-child(2)').click();
     listbuilderObj.moveItemUp();
 
-    expect(spyEvent).toHaveBeenTriggered();
+    expect(spyEvent).toHaveBeenCalled();
     expect(document.body.querySelector('.listbuilder li[role="option"]:nth-child(2) .item-content').innerText.trim()).toEqual('Argentina');
   });
 
@@ -167,7 +167,7 @@ describe('ListBuilder API', () => {
     document.body.querySelector('.listbuilder li[role="option"]:nth-child(2)').click();
     listbuilderObj.moveItemDown();
 
-    expect(spyEvent).toHaveBeenTriggered();
+    expect(spyEvent).toHaveBeenCalled();
     expect(document.body.querySelector('.listbuilder li[role="option"]:nth-child(2) .item-content').innerText.trim()).toEqual('Colombia');
   });
 
@@ -178,7 +178,7 @@ describe('ListBuilder API', () => {
     document.body.querySelector('.listbuilder li[role="option"]:nth-child(2)').click();
     listbuilderObj.deleteItem();
 
-    expect(spyEvent).toHaveBeenTriggered();
+    expect(spyEvent).toHaveBeenCalled();
     expect(document.body.querySelectorAll('.listbuilder li[role="option"]').length).toEqual(11);
   });
 });

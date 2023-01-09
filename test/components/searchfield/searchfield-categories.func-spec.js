@@ -49,8 +49,8 @@ describe('Searchfield API (full categories)', () => {
   });
 
   it('can be invoked', () => {
-    expect(searchfieldSingleAPI).toEqual(jasmine.any(Object));
-    expect(searchfieldMultiAPI).toEqual(jasmine.any(Object));
+    expect(searchfieldSingleAPI).toBeTruthy();
+    expect(searchfieldMultiAPI).toBeTruthy();
   });
 
   it('properly announces that it has categories', () => {

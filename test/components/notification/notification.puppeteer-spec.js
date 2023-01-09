@@ -1,4 +1,4 @@
-describe('Notification example-index puppeteer test', () => {
+describe('Notification example-index Puppeteer Tests', () => {
   const url = 'http://localhost:4000/components/notification/example-index.html';
   beforeAll(async () => {
     await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });

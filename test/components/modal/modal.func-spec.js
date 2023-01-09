@@ -90,7 +90,7 @@ describe('Modal API', () => {
       content: $(modalPanelEl)
     });
 
-    expect(modalAPI).toEqual(jasmine.any(Object));
+    expect(modalAPI).toBeTruthy();
   });
 
   it('can have a buttonset attached', () => {

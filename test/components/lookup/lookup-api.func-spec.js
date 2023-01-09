@@ -77,7 +77,7 @@ describe('Lookup API', () => {
   });
 
   it('Should be defined', () => {
-    expect(lookupObj).toEqual(jasmine.any(Object));
+    expect(lookupObj).toBeTruthy();
   });
 
   it('Should be visible', () => {

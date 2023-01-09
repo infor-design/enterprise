@@ -84,7 +84,7 @@ describe('Personalize API', () => {
     const spyEvent = spyOnEvent('html', 'colorschanged');
     personalization.setColors('personalization');
 
-    expect(spyEvent).toHaveBeenTriggered();
+    expect(spyEvent).toHaveBeenCalled();
   });
 
   it('Should fire colorschanged on setColorsToDefault', () => {
@@ -92,6 +92,6 @@ describe('Personalize API', () => {
     const spyEvent = spyOnEvent('html', 'colorschanged');
     personalization.setColorsToDefault();
 
-    expect(spyEvent).toHaveBeenTriggered();
+    expect(spyEvent).toHaveBeenCalled();
   });
 });

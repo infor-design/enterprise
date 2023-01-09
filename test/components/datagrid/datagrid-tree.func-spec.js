@@ -43,7 +43,7 @@ describe('Datagrid Tree', () => { //eslint-disable-line
   });
 
   it('Should be defined as an object', () => {
-    expect(datagridObj).toEqual(jasmine.any(Object));
+    expect(datagridObj).toBeTruthy();
   });
 
   it('Should show Row Activated', (done) => {
@@ -59,7 +59,7 @@ describe('Datagrid Tree', () => { //eslint-disable-line
       toolbar: { title: 'Tasks (Hierarchical)', results: true, personalize: true }
     });
 
-    expect(spyEvent).toHaveBeenTriggered();
+    expect(spyEvent).toHaveBeenCalled();
     expect(document.body.querySelectorAll('tbody tr.datagrid-tree-parent').length).toEqual(7);
     expect(document.body.querySelectorAll('tbody tr.datagrid-tree-child').length).toEqual(13);
 
@@ -74,7 +74,7 @@ describe('Datagrid Tree', () => { //eslint-disable-line
 
     document.body.querySelector('tbody tr[aria-rowindex="6"] td[aria-colindex="2"]').click();
 
-    expect(spyEventRowActivated).toHaveBeenTriggered();
+    expect(spyEventRowActivated).toHaveBeenCalled();
     $(datagridEl).off('rowactivated');
   });
 

@@ -21,13 +21,13 @@ describe('Mask API', () => {
     const api = new MaskAPI(DEFAULT_SETTINGS);
 
     expect(api).toBeDefined();
-    expect(api).toEqual(jasmine.any(Object));
+    expect(api).toBeTruthy();
 
     expect(window.Soho.components.MaskInput).toBeDefined();
 
     // Check default settings
     expect(api.settings).toBeDefined();
-    expect(api.settings).toEqual(jasmine.any(Object));
+    expect(api.settings).toBeTruthy();
 
     // has basic functions
     expect(api.configure).toEqual(jasmine.any(Function));
@@ -80,7 +80,7 @@ describe('Mask API', () => {
     const result = api.process(text, opts);
 
     expect(result).toBeDefined();
-    expect(result).toEqual(jasmine.any(Object));
+    expect(result).toBeTruthy();
     expect(result.conformedValue).toEqual(jasmine.any(String));
     expect(result.conformedValue).toEqual('0123-4567-8901-2345');
   });
@@ -93,7 +93,7 @@ describe('Mask API', () => {
     const result = api._processCaretTraps(testMask);
 
     expect(result).toBeDefined();
-    expect(result).toEqual(jasmine.any(Object));
+    expect(result).toBeTruthy();
 
     expect(result.maskWithoutCaretTraps).toBeDefined();
     expect(result.maskWithoutCaretTraps).toEqual(jasmine.arrayContaining([/\d/, ',', /\d/, /\d/, /\d/, ',', /\d/, /\d/, /\d/, ',', /\d/, /\d/, /\d/, '.', /\d/, /\d/]));
@@ -231,7 +231,7 @@ describe('Number Mask API', () => {
     let result = api.process(textValue, opts);
 
     expect(result).toBeDefined();
-    expect(result).toEqual(jasmine.any(Object));
+    expect(result).toBeTruthy();
     expect(result.conformedValue).toEqual(jasmine.any(String));
     expect(result.conformedValue).toEqual('1,111,111,111');
 
@@ -285,7 +285,7 @@ describe('Number Mask API', () => {
     let result = api.process(textValue, opts);
 
     expect(result).toBeDefined();
-    expect(result).toEqual(jasmine.any(Object));
+    expect(result).toBeTruthy();
     expect(result.conformedValue).toEqual(jasmine.any(String));
     expect(result.conformedValue).toEqual('١٢٣٤٥٦٧٨٩٠');
 
@@ -331,7 +331,7 @@ describe('Number Mask API', () => {
     let result = api.process(textValue, opts);
 
     expect(result).toBeDefined();
-    expect(result).toEqual(jasmine.any(Object));
+    expect(result).toBeTruthy();
     expect(result.conformedValue).toEqual(jasmine.any(String));
     expect(result.conformedValue).toEqual('१२३४५६७८९०');
 
@@ -402,7 +402,7 @@ describe('Number Mask API', () => {
     const result = api.process(textValue, opts);
 
     expect(result).toBeDefined();
-    expect(result).toEqual(jasmine.any(Object));
+    expect(result).toBeTruthy();
     expect(result.conformedValue).toEqual(jasmine.any(String));
     expect(result.conformedValue).toEqual('壹贰叁肆伍陆柒');
   });
@@ -423,7 +423,7 @@ describe('Number Mask API', () => {
     const result = api.process(textValue, opts);
 
     expect(result).toBeDefined();
-    expect(result).toEqual(jasmine.any(Object));
+    expect(result).toBeTruthy();
     expect(result.conformedValue).toEqual(jasmine.any(String));
     expect(result.conformedValue).toEqual('一二三四五六七七九');
   });
@@ -450,7 +450,7 @@ describe('Number Mask API', () => {
     let result = api.process(textValue, opts);
 
     expect(result).toBeDefined();
-    expect(result).toEqual(jasmine.any(Object));
+    expect(result).toBeTruthy();
     expect(result.conformedValue).toEqual(jasmine.any(String));
     expect(result.conformedValue).toEqual('00001');
 

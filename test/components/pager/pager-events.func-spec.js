@@ -33,7 +33,7 @@ describe('Pager Event Test', () => {
     document.body.querySelector('.pager-container .pager-first .btn-icon').click();
 
     expect(spyFunc).toHaveBeenCalled();
-    expect(spyEvent).toHaveBeenTriggered();
+    expect(spyEvent).toHaveBeenCalled();
     done();
   });
 
@@ -49,7 +49,7 @@ describe('Pager Event Test', () => {
     document.body.querySelector('.pager-container .pager-prev .btn-icon').click();
 
     expect(spyFunc).toHaveBeenCalled();
-    expect(spyEvent).toHaveBeenTriggered();
+    expect(spyEvent).toHaveBeenCalled();
     done();
   });
 
@@ -65,7 +65,7 @@ describe('Pager Event Test', () => {
     document.body.querySelector('.pager-container .pager-next .btn-icon').click();
 
     expect(spyFunc).toHaveBeenCalled();
-    expect(spyEvent).toHaveBeenTriggered();
+    expect(spyEvent).toHaveBeenCalled();
     done();
   });
 
@@ -81,7 +81,7 @@ describe('Pager Event Test', () => {
     document.body.querySelector('.pager-container .pager-last .btn-icon').click();
 
     expect(spyFunc).toHaveBeenCalled();
-    expect(spyEvent).toHaveBeenTriggered();
+    expect(spyEvent).toHaveBeenCalled();
     done();
   });
 });

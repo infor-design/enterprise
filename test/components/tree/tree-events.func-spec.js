@@ -63,7 +63,7 @@ describe('Tree Methods', () => {
     treeObj.unSelectedNode($('#node2'));
 
     setTimeout(() => {
-      expect(spyEvent).toHaveBeenTriggered();
+      expect(spyEvent).toHaveBeenCalled();
       done();
     }, 300);
   });
@@ -73,7 +73,7 @@ describe('Tree Methods', () => {
     treeObj.selectNodeById('node1');
 
     setTimeout(() => {
-      expect(spyEvent).toHaveBeenTriggered();
+      expect(spyEvent).toHaveBeenCalled();
       done();
     }, 300);
   });

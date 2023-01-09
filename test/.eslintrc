@@ -30,7 +30,6 @@
     "jest": true,
     "document": true,
     "requireHelper": true,
-    "spyOnEvent": true,
     "window": true,
     "CustomEvent": true,
     "HTMLElement": true,

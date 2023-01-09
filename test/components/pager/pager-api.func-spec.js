@@ -31,7 +31,7 @@ describe('Pager API (Standalone)', () => {
   it('Should be defined on jQuery object', () => {
     pagerObj = new Pager(pagerEl, { type: 'standalone' });
 
-    expect(pagerObj).toEqual(jasmine.any(Object));
+    expect(pagerObj).toBeTruthy();
   });
 
   it('Should render', () => {

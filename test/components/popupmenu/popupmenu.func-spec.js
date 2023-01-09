@@ -38,7 +38,7 @@ describe('Popupmenu Menu Button API', () => {
   });
 
   it('Should be defined on jQuery object', () => {
-    expect(popupmenuObj).toEqual(jasmine.any(Object));
+    expect(popupmenuObj).toBeTruthy();
   });
 
   it('Should call markupItems, and markup list items', () => {
@@ -103,7 +103,7 @@ describe('Popupmenu Single Select API', () => {
     const selectItem = document.querySelector('.popupmenu li');
     const select = popupmenuObj.select($(selectItem));
 
-    expect(select[0]).toEqual(jasmine.any(Object));
+    expect(select[0]).toBeTruthy();
     expect(select[1]).toEqual('selected');
   });
 
@@ -159,7 +159,7 @@ describe('Popupmenu Single Select API', () => {
   it('Should teardown', () => {
     const toreDownObj = popupmenuObj.teardown();
 
-    expect(toreDownObj).toEqual(jasmine.any(Object));
+    expect(toreDownObj).toBeTruthy();
   });
 });
 

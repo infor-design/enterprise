@@ -23,7 +23,7 @@ describe('Textarea API', () => {
   });
 
   it('Should be defined', () => {
-    expect(textareaObj).toEqual(jasmine.any(Object));
+    expect(textareaObj).toBeTruthy();
   });
 
   it('Should destroy textarea', () => {

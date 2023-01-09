@@ -166,7 +166,7 @@ describe('Flex Toolbar', () => { //eslint-disable-line
     expect(data.items[4].disabled).toBeFalsy();
     expect(data.items[4].readOnly).toBeDefined();
     expect(data.items[4].readOnly).toBeFalsy();
-    expect(data.items[4].componentAPI).toEqual(jasmine.any(Object)); // Soho Searchfield component
+    expect(data.items[4].componentAPI).toBeTruthy(); // Soho Searchfield component
 
     expect(data.items[1].type).toEqual('menubutton');
     expect(data.items[1].submenu).toBeDefined();

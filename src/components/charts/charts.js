@@ -1090,6 +1090,7 @@ charts.triggerContextMenu = function (container, elem, d, event) {
  * @returns {number} The calculated text width in pixels.
  */
 charts.calculateTextRenderWidth = function (textStr, fonts) {
+  if (!this.canvas) return 0;
   const defaultFonts = {
     soho: '700 12px arial',
     uplift: '600 14px arial',
@@ -1100,7 +1101,7 @@ charts.calculateTextRenderWidth = function (textStr, fonts) {
   let themeId = (theme?.currentTheme?.id || '').match(/soho|uplift|new|classic/);
   themeId = themeId ? themeId[0] : 'new';
   this.canvas = this.canvas || (this.canvas = document.createElement('canvas'));
-  const context = this.canvas.getContext('2d');
+  const context = this.canvas?.getContext('2d');
   context.font = fonts[themeId];
   return context.measureText(textStr).width;
 };

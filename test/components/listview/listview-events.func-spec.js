@@ -42,7 +42,7 @@ describe('Listview Events', () => {
     const liEl = listviewEl.querySelectorAll('li')[2];
     liEl.click();
 
-    expect(spyEvent).toHaveBeenTriggered();
+    expect(spyEvent).toHaveBeenCalled();
     $(listviewEl).off('selected');
     listviewAPI.deselect($(liEl));
   });
@@ -65,7 +65,7 @@ describe('Listview Events', () => {
     const liEl2 = listviewEl.querySelectorAll('li')[3];
     liEl2.click();
 
-    expect(spyEvent).toHaveBeenTriggered();
+    expect(spyEvent).toHaveBeenCalled();
     $(listviewEl).off('selected');
 
     listviewAPI.deselect($(liEl));
@@ -78,7 +78,7 @@ describe('Listview Events', () => {
     const spyEvent = spyOnEvent($(listviewEl), 'rendered');
     listviewAPI.updated();
 
-    expect(spyEvent).toHaveBeenTriggered();
+    expect(spyEvent).toHaveBeenCalled();
   });
 
   it('Should be fire rendered on updated with new settings', () => {
@@ -87,6 +87,6 @@ describe('Listview Events', () => {
     const spyEvent = spyOnEvent($(listviewEl), 'rendered');
     listviewAPI.updated({ dataset: data });
 
-    expect(spyEvent).toHaveBeenTriggered();
+    expect(spyEvent).toHaveBeenCalled();
   });
 });

@@ -34,7 +34,7 @@ describe('FieldFilter API', () => {
   });
 
   it('Should be defined on jQuery object', () => {
-    expect(fieldfilterObj).toEqual(jasmine.any(Object));
+    expect(fieldfilterObj).toBeTruthy();
   });
 
   it('Should open fieldfilter', () => {

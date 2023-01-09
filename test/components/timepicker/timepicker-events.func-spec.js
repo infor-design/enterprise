@@ -29,6 +29,6 @@ describe('TimePicker Events', () => {
     timepickerObj.setTimeOnField();
     timepickerObj.closeTimePopup();
 
-    expect(spyEvent).toHaveBeenTriggered();
+    expect(spyEvent).toHaveBeenCalled();
   });
 });

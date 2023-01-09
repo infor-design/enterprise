@@ -38,7 +38,7 @@ describe('Validation API', () => {
   });
 
   it('can be invoked', () => {
-    expect(validatorAPI).toEqual(jasmine.any(Object));
+    expect(validatorAPI).toBeTruthy();
   });
 
   it('can read validation types', () => {
@@ -135,11 +135,11 @@ describe('Validation API', () => {
 
     validatorAPI.addMessage($(emailEl), { id: 'error', message: 'This is the message', type: 'error' }, true, false);
 
-    expect(spyEvent).toHaveBeenTriggered();
+    expect(spyEvent).toHaveBeenCalled();
 
     validatorAPI.removeMessage($(emailID), { id: 'error', type: 'error' });
 
-    expect(spyEvent2).toHaveBeenTriggered();
+    expect(spyEvent2).toHaveBeenCalled();
   });
 
   it('be able to call resetForm', (done) => {

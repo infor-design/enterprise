@@ -38,7 +38,7 @@ describe('Mask Input Field Api', () => {
     expect(window.Soho.components.MaskInput).toBeDefined();
 
     // Check default settings
-    expect(api.settings).toEqual(jasmine.any(Object));
+    expect(api.settings).toBeTruthy();
     expect(api.settings.maskAPI).toBeDefined();
   });
 
@@ -55,7 +55,7 @@ describe('Mask Input Field Api', () => {
     const inputComponent = new window.Soho.components.MaskInput(input);
 
     expect(inputComponent.settings).toBeDefined();
-    expect(inputComponent.settings).toEqual(jasmine.any(Object));
+    expect(inputComponent.settings).toBeTruthy();
     expect(inputComponent.settings.process).toBeDefined();
   });
 

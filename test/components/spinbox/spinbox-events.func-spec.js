@@ -29,6 +29,6 @@ describe('Spinbox Events', () => {
     const spyEvent = spyOnEvent('#regular-spinbox', 'change');
     spinboxApi.updateVal(10);
 
-    expect(spyEvent).toHaveBeenTriggered();
+    expect(spyEvent).toHaveBeenCalled();
   });
 });

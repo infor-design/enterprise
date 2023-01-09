@@ -50,7 +50,7 @@ describe('WeekView API', () => {
   });
 
   it('Should be defined', () => {
-    expect(weekViewAPI).toEqual(jasmine.any(Object));
+    expect(weekViewAPI).toBeTruthy();
   });
 
   it('Should render the weekview', () => {

@@ -37,7 +37,7 @@ describe('Treemap API', () => {
   });
 
   it('Can be invoked', () => {
-    expect(treemapAPI).toEqual(jasmine.any(Object));
+    expect(treemapAPI).toBeTruthy();
   });
 
   it('Can correctly calculate the treemap', () => {
@@ -62,7 +62,7 @@ describe('Treemap API', () => {
       dataset: data
     });
 
-    expect(spyEvent).toHaveBeenTriggered();
+    expect(spyEvent).toHaveBeenCalled();
   });
 
   it('Can be updated', () => {

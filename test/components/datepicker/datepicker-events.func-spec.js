@@ -42,8 +42,8 @@ describe('DatePicker Aria', () => {
       const firstDay = document.querySelector('#monthview-popup tbody td:not(.alternate)');
       firstDay.click();
 
-      expect(spyEvent).toHaveBeenTriggered();
-      expect(spyEventInput).toHaveBeenTriggered();
+      expect(spyEvent).toHaveBeenCalled();
+      expect(spyEventInput).toHaveBeenCalled();
       done();
     }, 100);
   });
@@ -56,12 +56,12 @@ describe('DatePicker Aria', () => {
     const spyEventClosed = spyOnEvent('#date-field-normal', 'listclosed');
     datepickerAPI.openCalendar();
     setTimeout(() => {
-      expect(spyEvent).toHaveBeenTriggered();
+      expect(spyEvent).toHaveBeenCalled();
 
       const firstDay = document.querySelector('#monthview-popup tbody td:not(.alternate)');
       firstDay.click();
 
-      expect(spyEventClosed).toHaveBeenTriggered();
+      expect(spyEventClosed).toHaveBeenCalled();
       done();
     }, 100);
   });
@@ -73,7 +73,7 @@ describe('DatePicker Aria', () => {
     const spyEvent = spyOnEvent('#date-field-normal', 'monthrendered');
     datepickerAPI.openCalendar();
     setTimeout(() => {
-      expect(spyEvent).toHaveBeenTriggered();
+      expect(spyEvent).toHaveBeenCalled();
       done();
     }, 100);
   });
@@ -89,7 +89,7 @@ describe('DatePicker Aria', () => {
       const nextMonth = document.querySelector('#monthview-popup .calendar-toolbar button.next');
       nextMonth.click();
 
-      expect(spyEvent).toHaveBeenTriggered();
+      expect(spyEvent).toHaveBeenCalled();
       done();
     }, 100);
   });

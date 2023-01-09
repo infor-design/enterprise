@@ -38,7 +38,7 @@ describe('Toast API', () => {
   });
 
   it('Should be defined', () => {
-    expect(toastObj).toEqual(jasmine.any(Object));
+    expect(toastObj).toBeTruthy();
   });
 
   it('Should visible toast', () => {

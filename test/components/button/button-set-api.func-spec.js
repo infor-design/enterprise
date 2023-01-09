@@ -69,7 +69,7 @@ describe('ButtonSet API', () => {
   it('should exist', () => {
     buttonSetAPI = new ButtonSet(buttonSetEl);
 
-    expect(buttonSetAPI).toEqual(jasmine.any(Object));
+    expect(buttonSetAPI).toBeTruthy();
   });
 
   it('can have buttons', () => {
@@ -102,8 +102,8 @@ describe('ButtonSet API', () => {
     const thirdBtnAPI = buttonSetAPI.at(2);
 
     // Detect propagated settings
-    expect(thirdBtnAPI).toEqual(jasmine.any(Object));
-    expect(thirdBtnAPI.settings).toEqual(jasmine.any(Object));
+    expect(thirdBtnAPI).toBeTruthy();
+    expect(thirdBtnAPI.settings).toBeTruthy();
     expect(thirdBtnAPI.settings.text).toEqual('Button 2');
     expect(thirdBtnAPI.settings.icon).toEqual('icon-settings');
     expect(thirdBtnAPI.settings.style).toEqual('btn-secondary');

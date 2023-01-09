@@ -24,7 +24,7 @@ describe('Tree API', () => {
   });
 
   it('Should be defined on jQuery object', () => {
-    expect(treeObj).toEqual(jasmine.any(Object));
+    expect(treeObj).toBeTruthy();
   });
 
   it('Should update with new settings', () => {

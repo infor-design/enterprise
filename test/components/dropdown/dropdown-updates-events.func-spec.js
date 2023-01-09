@@ -163,7 +163,7 @@ describe('Dropdown updates, events', () => {
     const spyEvent = spyOnEvent('.dropdown', 'has-updated');
     dropdownObj.updated(settings);
 
-    expect(spyEvent).toHaveBeenTriggered();
+    expect(spyEvent).toHaveBeenCalled();
   });
 
   it('should display the text of the first selected option when the list opens', (done) => {
@@ -180,7 +180,7 @@ describe('Dropdown updates, events', () => {
     dropdownObj.open();
     document.body.querySelectorAll('.dropdown-option')[1].click();
 
-    expect(spyEvent).toHaveBeenTriggered();
+    expect(spyEvent).toHaveBeenCalled();
     done();
   });
 
@@ -196,7 +196,7 @@ describe('Dropdown updates, events', () => {
     dropdownObj.open();
     document.body.querySelectorAll('.dropdown-option')[1].click();
 
-    expect(spyEvent).not.toHaveBeenTriggered();
+    expect(spyEvent).not.toHaveBeenCalled();
     done();
   });
 
@@ -212,11 +212,11 @@ describe('Dropdown updates, events', () => {
     dropdownObj.open();
     document.body.querySelectorAll('.dropdown-option')[0].click();
 
-    expect(spyEvent).toHaveBeenTriggered();
+    expect(spyEvent).toHaveBeenCalled();
 
     document.body.querySelectorAll('.dropdown-option')[1].click();
 
-    expect(spyEvent).toHaveBeenTriggered();
+    expect(spyEvent).toHaveBeenCalled();
 
     // Set back the output
     options[0].innerText = 'Alabama';

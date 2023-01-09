@@ -40,7 +40,7 @@ describe('SwapList API', () => {
   });
 
   it('Should be defined as an object', () => {
-    expect(swaplistObj).toEqual(jasmine.any(Object));
+    expect(swaplistObj).toBeTruthy();
   });
 
   xit('Should be able to trigger beforeswap for searched items', (done) => {
@@ -65,7 +65,7 @@ describe('SwapList API', () => {
     btnMove.click();
 
     setTimeout(() => {
-      expect(spyEvent).toHaveBeenTriggered();
+      expect(spyEvent).toHaveBeenCalled();
       done();
     }, 100);
   });

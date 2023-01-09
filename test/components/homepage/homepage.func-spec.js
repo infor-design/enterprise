@@ -46,7 +46,7 @@ describe('Homepage API', () => {
     homepageAPI = new Homepage(homepageEl, {});
 
     setTimeout(() => {
-      expect(spyEvent).toHaveBeenTriggered();
+      expect(spyEvent).toHaveBeenCalled();
       expect(metadata).toBeDefined();
       expect(metadata.cols).toBeDefined();
       expect(metadata.containerHeight).toBeDefined();

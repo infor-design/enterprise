@@ -22,7 +22,7 @@ describe('Progress API', () => {
   });
 
   it('Should render progress', () => {
-    expect(progressObj).toEqual(jasmine.any(Object));
+    expect(progressObj).toBeTruthy();
     expect(progressEl.style.width).toEqual('50%');
   });
 

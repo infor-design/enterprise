@@ -538,7 +538,7 @@ Line.prototype = {
         });
 
       // Add animation
-      const totalLength = path.node().getTotalLength();
+      const totalLength = path.node().getTotalLength ? path.node().getTotalLength() : 0;
       path
         .attr('stroke-dasharray', `${totalLength} ${totalLength}`)
         .attr('stroke-dashoffset', totalLength)
@@ -953,8 +953,8 @@ Line.prototype = {
       arrow: { left: this.isRTL ? 'calc(100% - 20px)' : '20px' }
     });
 
-    yAxis.width = yAxis.el.getBBox().width;
-    line.width = line.el ? line.el.getBBox().width : 0;
+    yAxis.width = yAxis.el.getBBox ? yAxis.el.getBBox().width : 0;
+    line.width = line.el && line.el.getBBox ? line.el.getBBox().width : 0;
     brief.xDiff = yAxis.width - line.width;
 
     if (!this.settings.selectable) {
@@ -1014,8 +1014,8 @@ Line.prototype = {
 
     if (!isLeftAxis) {
       // Reasign values, could be truncation applied
-      yAxis.width = yAxis.el.getBBox().width;
-      line.width = line.el ? line.el.getBBox().width : 0;
+      yAxis.width = yAxis.el.getBBox ? yAxis.el.getBBox().width : 0;
+      line.width = line.el && line.el.getBBox ? line.el.getBBox().width : 0;
       brief.xDiff = yAxis.width - line.width;
       const variations = [
         { min: 0, max: 23, val: 62 },

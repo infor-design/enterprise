@@ -48,7 +48,7 @@ describe('DatePicker API', () => {
   });
 
   it('Should be defined on jQuery object', () => {
-    expect(datepickerAPI).toEqual(jasmine.any(Object));
+    expect(datepickerAPI).toBeTruthy();
   });
 
   it('Should open datepicker', (done) => {

@@ -23,7 +23,7 @@ describe('Trackdirty API', () => {
   });
 
   it('Should be defined on jQuery object', () => {
-    expect(dirtyObj).toEqual(jasmine.any(Object));
+    expect(dirtyObj).toBeTruthy();
   });
 
   it('Should track dirty', () => {
@@ -47,7 +47,7 @@ describe('Trackdirty API', () => {
     inputEl.value = 'New Value';
     $(inputEl).trigger('change');
 
-    expect(spyEvent).toHaveBeenTriggered();
+    expect(spyEvent).toHaveBeenCalled();
   });
 
   it('Should fire pristine event', () => {
@@ -58,7 +58,7 @@ describe('Trackdirty API', () => {
     inputEl.value = '';
     $(inputEl).trigger('change');
 
-    expect(spyEvent).toHaveBeenTriggered();
+    expect(spyEvent).toHaveBeenCalled();
   });
 
   it('Should fire afterresetdirty event on resetdirty', () => {
@@ -67,6 +67,6 @@ describe('Trackdirty API', () => {
     inputEl.value = 'New Value';
     $(inputEl).trigger('resetdirty');
 
-    expect(spyEvent).toHaveBeenTriggered();
+    expect(spyEvent).toHaveBeenCalled();
   });
 });

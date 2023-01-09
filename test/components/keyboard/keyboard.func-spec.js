@@ -28,7 +28,7 @@ describe('Keyboard Manager Tests', () => {
     keyPress('Ctrl');
     $('body').off('keys');
 
-    expect(spyEvent).toHaveBeenTriggered();
+    expect(spyEvent).toHaveBeenCalled();
   });
 
   it('Can query pressedKeys', () => {

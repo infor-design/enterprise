@@ -27,7 +27,7 @@ describe('Spinbox API', () => {
   });
 
   it('Can be invoked', () => {
-    expect(spinboxAPI).toEqual(jasmine.any(Object));
+    expect(spinboxAPI).toBeTruthy();
   });
 
   it('Should disable spinbox', () => {

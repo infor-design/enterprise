@@ -105,7 +105,7 @@ describe('Bullet Chart API', () => {
     });
     triggerContextmenu(document.body.querySelector('.range'));
 
-    expect(spyEvent).toHaveBeenTriggered();
+    expect(spyEvent).toHaveBeenCalled();
   });
 
   it('Should format values with d3 formatter string by Dataset', (done) => {

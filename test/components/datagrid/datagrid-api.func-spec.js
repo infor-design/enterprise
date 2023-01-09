@@ -52,7 +52,7 @@ describe('Datagrid API', () => { //eslint-disable-line
   });
 
   it('Should be defined as an object', () => {
-    expect(datagridObj).toEqual(jasmine.any(Object));
+    expect(datagridObj).toBeTruthy();
   });
 
   it('Should render datagrid', (done) => {
@@ -62,8 +62,8 @@ describe('Datagrid API', () => { //eslint-disable-line
     datagridObj = new Datagrid(datagridEl, { dataset: data, columns });
 
     setTimeout(() => {
-      expect(spyEvent).toHaveBeenTriggered();
-      expect(spyEventAfter).toHaveBeenTriggered();
+      expect(spyEvent).toHaveBeenCalled();
+      expect(spyEventAfter).toHaveBeenCalled();
       expect(document.body.querySelectorAll('tr').length).toEqual(8);
       done();
     });
@@ -340,7 +340,7 @@ describe('Datagrid API', () => { //eslint-disable-line
     datagridObj.validateCell(1, 7);
 
     setTimeout(() => {
-      expect(spyEvent).toHaveBeenTriggered();
+      expect(spyEvent).toHaveBeenCalled();
       expect(document.querySelectorAll('td.error').length).toEqual(2);
 
       datagridObj.clearCellError(0, 7, 'error');
@@ -525,12 +525,12 @@ describe('Datagrid API', () => { //eslint-disable-line
 
     setTimeout(() => {
       expect(document.querySelector('.datagrid-expandable-row').classList.contains('is-expanded')).toBeTruthy();
-      expect(spyEvent).toHaveBeenTriggered();
+      expect(spyEvent).toHaveBeenCalled();
 
       setTimeout(() => {
         document.querySelector('.datagrid-expand-btn:nth-child(1)').click();
 
-        expect(spyEventCollapse).toHaveBeenTriggered();
+        expect(spyEventCollapse).toHaveBeenCalled();
         done();
       }, 300);
     }, 300);
@@ -552,12 +552,12 @@ describe('Datagrid API', () => { //eslint-disable-line
 
     setTimeout(() => {
       expect(document.querySelector('.datagrid-expandable-row').classList.contains('is-expanded')).toBeTruthy();
-      expect(spyEvent).toHaveBeenTriggered();
+      expect(spyEvent).toHaveBeenCalled();
 
       setTimeout(() => {
         datagridObj.toggleRowDetail(0);
 
-        expect(spyEventCollapse).toHaveBeenTriggered();
+        expect(spyEventCollapse).toHaveBeenCalled();
         done();
       }, 300);
     }, 300);

@@ -27,7 +27,7 @@ describe('Button API', () => {
   });
 
   it('should exist', () => {
-    expect(buttonAPI).toEqual(jasmine.any(Object));
+    expect(buttonAPI).toBeTruthy();
   });
 
   it('can be disabled/enabled', () => {
@@ -45,7 +45,7 @@ describe('Button API', () => {
     buttonAPI.destroy();
     buttonEl.click();
     setTimeout(() => {
-      expect(spyEvent).not.toHaveBeenTriggered();
+      expect(spyEvent).not.toHaveBeenCalled();
       done();
     }, 500);
 

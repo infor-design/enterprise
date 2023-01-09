@@ -94,7 +94,7 @@ describe('Datagrid Selection API', () => {
 
     document.body.querySelectorAll('tr')[2].querySelector('td').click();
 
-    expect(spyEvent).toHaveBeenTriggered();
+    expect(spyEvent).toHaveBeenCalled();
     $(datagridEl).off('selected');
     datagridObj.unSelectAllRows();
   });
@@ -112,7 +112,7 @@ describe('Datagrid Selection API', () => {
 
     datagridObj.selectRow(1);
 
-    expect(spyEvent).toHaveBeenTriggered();
+    expect(spyEvent).toHaveBeenCalled();
 
     spyEvent.reset();
     datagridObj.selectRow(1, true, true);
@@ -142,7 +142,7 @@ describe('Datagrid Selection API', () => {
     document.body.querySelectorAll('tr')[2].querySelector('td').click();
     document.body.querySelectorAll('tr')[3].querySelector('td').click();
 
-    expect(spyEvent).toHaveBeenTriggered();
+    expect(spyEvent).toHaveBeenCalled();
     $(datagridEl).off('selected');
     datagridObj.unSelectAllRows();
   });
@@ -480,6 +480,6 @@ describe('Datagrid Selection API', () => {
     datagridObj.loadData(data);
     datagridObj.unSelectAllRows();
 
-    expect(spyEvent).not.toHaveBeenTriggered();
+    expect(spyEvent).not.toHaveBeenCalled();
   });
 });

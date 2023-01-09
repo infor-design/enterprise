@@ -121,7 +121,7 @@ describe('Datagrid Filter API', () => {
 
     datagridObj.applyFilter(filter);
 
-    expect(spyEvent).toHaveBeenTriggered();
+    expect(spyEvent).toHaveBeenCalled();
   });
 
   it('Should be able to clearFilter with the API', () => {

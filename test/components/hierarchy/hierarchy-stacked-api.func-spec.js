@@ -45,7 +45,7 @@ describe('Hierarchy Stacked API', () => {
   });
 
   it('Can be invoked', () => {
-    expect(hierarchyAPI).toEqual(jasmine.any(Object));
+    expect(hierarchyAPI).toBeTruthy();
   });
 
   it('Can select a leaf', () => {
@@ -79,7 +79,7 @@ describe('Hierarchy Stacked API', () => {
     collapseButtons[1].click();
     collapseFunction.and.callThrough();
 
-    expect(spyEvent).toHaveBeenTriggered();
+    expect(spyEvent).toHaveBeenCalled();
 
     // Should not trigger collapsed function when using stacked layout
     expect(collapseFunction.calls.count()).toEqual(0);

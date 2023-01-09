@@ -72,7 +72,7 @@ describe('Datagrid Row Reorder API', () => {
     expect(document.querySelector('tr:nth-child(1) td:nth-child(3)').innerText.trim()).toEqual('2');
     expect(document.querySelector('tr:nth-child(2) td:nth-child(3)').innerText.trim()).toEqual('1');
 
-    expect(spyEvent).toHaveBeenTriggered();
+    expect(spyEvent).toHaveBeenCalled();
     $(datagridEl).off('rowreorder');
 
     datagridObj.reorderRow(1, 0);

@@ -45,7 +45,7 @@ describe('Monthview API', () => {
     const spyEvent = spyOnEvent($(monthviewEl), 'monthrendered');
     monthviewAPI.showMonth(7, 2018);
 
-    expect(spyEvent).toHaveBeenTriggered();
+    expect(spyEvent).toHaveBeenCalled();
     done();
   });
 
@@ -61,7 +61,7 @@ describe('Monthview API', () => {
     const spyEvent = spyOnEvent($(monthviewEl), 'selected');
     monthviewEl.querySelector('tr:nth-child(2) td:nth-child(1)').click();
 
-    expect(spyEvent).toHaveBeenTriggered();
+    expect(spyEvent).toHaveBeenCalled();
     done();
   });
 });

@@ -59,7 +59,7 @@ describe('EmptyMessage API', () => { //eslint-disable-line
   });
 
   it('Should render emptymessage', () => {
-    expect(emptymessageObj).toEqual(jasmine.any(Object));
+    expect(emptymessageObj).toBeTruthy();
 
     expect(emptymessageEl.classList.contains('empty-message')).toBeTruthy();
     expect(document.body.querySelector('.empty-icon')).toBeTruthy();
@@ -99,6 +99,6 @@ describe('EmptyMessage API', () => { //eslint-disable-line
     const spyEvent = spyOnEvent($(buttonSelector), 'click');
     document.body.querySelector(buttonSelector).click();
 
-    expect(spyEvent).toHaveBeenTriggered();
+    expect(spyEvent).toHaveBeenCalled();
   });
 });

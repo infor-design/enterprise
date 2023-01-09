@@ -27,14 +27,14 @@ describe('Popupmenu Events', () => {
     const spyEvent = spyOnEvent('#single-select-popupmenu-trigger', 'beforeopen');
     popupmenuObj.open();
 
-    expect(spyEvent).toHaveBeenTriggered();
+    expect(spyEvent).toHaveBeenCalled();
   });
 
   it('Should trigger "open" event', (done) => {
     const spyEvent = spyOnEvent('#single-select-popupmenu-trigger', 'open');
     popupmenuObj.open();
     setTimeout(() => {
-      expect(spyEvent).toHaveBeenTriggered();
+      expect(spyEvent).toHaveBeenCalled();
       done();
     }, 500);
   });
@@ -43,7 +43,7 @@ describe('Popupmenu Events', () => {
     const spyEvent = spyOnEvent('#single-select-popupmenu-trigger', 'afteropen');
     popupmenuObj.open();
     setTimeout(() => {
-      expect(spyEvent).toHaveBeenTriggered();
+      expect(spyEvent).toHaveBeenCalled();
       done();
     }, 500);
   });
@@ -53,7 +53,7 @@ describe('Popupmenu Events', () => {
     popupmenuObj.open();
     popupmenuObj.close();
     setTimeout(() => {
-      expect(spyEvent).toHaveBeenTriggered();
+      expect(spyEvent).toHaveBeenCalled();
       done();
     }, 600);
   });
@@ -62,6 +62,6 @@ describe('Popupmenu Events', () => {
     const spyEvent = spyOnEvent('.field', 'destroy');
     popupmenuObj.destroy();
 
-    expect(spyEvent).not.toHaveBeenTriggered();
+    expect(spyEvent).not.toHaveBeenCalled();
   });
 });

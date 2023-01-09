@@ -111,7 +111,7 @@ describe('Datagrid Paging API', () => {
         buttonElNext.click();
 
         setTimeout(() => {
-          expect(buttonClickSpyNext).toHaveBeenTriggered();
+          expect(buttonClickSpyNext).toHaveBeenCalled();
 
           cell1 = document.querySelector('tr:nth-child(1) td:nth-child(2)');
           cell2 = document.querySelector('tr:nth-child(1) td:nth-child(3)');
@@ -124,7 +124,7 @@ describe('Datagrid Paging API', () => {
           buttonElPrev.click();
 
           setTimeout(() => {
-            expect(buttonClickSpyPrev).toHaveBeenTriggered();
+            expect(buttonClickSpyPrev).toHaveBeenCalled();
 
             cell1 = document.querySelector('tr:nth-child(1) td:nth-child(2)');
             cell2 = document.querySelector('tr:nth-child(1) td:nth-child(3)');
@@ -324,7 +324,7 @@ describe('Datagrid Paging API', () => {
         buttonElNext.click();
 
         setTimeout(() => {
-          expect(buttonClickSpyNext).toHaveBeenTriggered();
+          expect(buttonClickSpyNext).toHaveBeenCalled();
 
           expect(dataSourceSpy).toHaveBeenCalled(); //eslint-disable-line
           expect(dataSourceSpy.calls.mostRecent().args[0].type).toBeDefined();
@@ -335,7 +335,7 @@ describe('Datagrid Paging API', () => {
           buttonElFirst.click();
 
           setTimeout(() => {
-            expect(buttonClickSpyFirst).toHaveBeenTriggered();
+            expect(buttonClickSpyFirst).toHaveBeenCalled();
 
             expect(dataSourceSpy).toHaveBeenCalled(); //eslint-disable-line
             expect(dataSourceSpy.calls.mostRecent().args[0].type).toBeDefined();
@@ -375,7 +375,7 @@ describe('Datagrid Paging API', () => {
 
         // wait for any timeouts to complete
         setTimeout(() => {
-          expect(buttonClickSpy).toHaveBeenTriggered();
+          expect(buttonClickSpy).toHaveBeenCalled();
 
           // ensure it's been called with a request.type of 'first'
           expect(dataSourceSpy).toHaveBeenCalled(); //eslint-disable-line
@@ -415,7 +415,7 @@ describe('Datagrid Paging API', () => {
 
         // wait for any timeouts to complete
         setTimeout(() => {
-          expect(buttonClickSpy).toHaveBeenTriggered();
+          expect(buttonClickSpy).toHaveBeenCalled();
 
           // ensure it's been called with a request.type of 'first'
           expect(dataSourceSpy).toHaveBeenCalled(); //eslint-disable-line
@@ -439,7 +439,7 @@ describe('Datagrid Paging API', () => {
         buttonElNext.click();
 
         setTimeout(() => {
-          expect(buttonClickSpyNext).toHaveBeenTriggered();
+          expect(buttonClickSpyNext).toHaveBeenCalled();
 
           expect(dataSourceSpy).toHaveBeenCalled(); //eslint-disable-line
           expect(dataSourceSpy.calls.mostRecent().args[0].type).toBeDefined();
@@ -450,7 +450,7 @@ describe('Datagrid Paging API', () => {
           buttonElPrev.click();
 
           setTimeout(() => {
-            expect(buttonClickSpyPrev).toHaveBeenTriggered();
+            expect(buttonClickSpyPrev).toHaveBeenCalled();
 
             // ensure it's been called with a request.type of 'first'
             expect(dataSourceSpy).toHaveBeenCalled(); //eslint-disable-line
@@ -483,14 +483,14 @@ describe('Datagrid Paging API', () => {
         setTimeout(() => {
           row = document.body.querySelector('tbody tr[aria-rowindex="2"]');
 
-          expect(rowactivatedSpy).toHaveBeenTriggered();
+          expect(rowactivatedSpy).toHaveBeenCalled();
           expect(row.classList.contains('is-rowactivated')).toBeTruthy();
 
           const buttonEl = document.body.querySelector('li.pager-next .btn-icon');
           const buttonClickSpy = spyOnEvent(buttonEl, 'click.button');
           buttonEl.click();
 
-          expect(buttonClickSpy).toHaveBeenTriggered();
+          expect(buttonClickSpy).toHaveBeenCalled();
           expect(dataSourceSpy).toHaveBeenCalled();
           expect(dataSourceSpy.calls.mostRecent().args[0].type).toBeDefined();
           expect(dataSourceSpy.calls.mostRecent().args[0].type).toEqual('next');

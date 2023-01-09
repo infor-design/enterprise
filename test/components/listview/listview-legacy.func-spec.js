@@ -27,7 +27,7 @@ describe('Listview API (Legacy DOM List)', () => {
   });
 
   it('Can be invoked', () => {
-    expect(listviewAPI).toEqual(jasmine.any(Object));
+    expect(listviewAPI).toBeTruthy();
   });
 
   it('Properly converts a DOM-based list to an Array', () => {

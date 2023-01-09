@@ -30,7 +30,7 @@ describe('Targeted Achievement API', () => {
   });
 
   it('Should be defined on jQuery object', () => {
-    expect(targetedObj).toEqual(jasmine.any(Object));
+    expect(targetedObj).toBeTruthy();
   });
 
   it('Should be able to destroy', () => {

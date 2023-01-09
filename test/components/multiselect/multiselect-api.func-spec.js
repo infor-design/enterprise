@@ -25,7 +25,7 @@ describe('MultiSelect API', () => {
   });
 
   it('Should be defined on jQuery object', () => {
-    expect(multiSelectObj).toEqual(jasmine.any(Object));
+    expect(multiSelectObj).toBeTruthy();
   });
 
   it('Should be build multiSelect correctly', () => {

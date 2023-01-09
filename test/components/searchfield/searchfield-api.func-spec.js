@@ -33,7 +33,7 @@ describe('Searchfield API', () => {
   });
 
   it('can be invoked', () => {
-    expect(searchfieldAPI).toEqual(jasmine.any(Object));
+    expect(searchfieldAPI).toBeTruthy();
   });
 
   it('renders attributes', () => {
@@ -61,7 +61,7 @@ describe('Searchfield API', () => {
     searchfieldAPI.makeClearable();
     searchfieldAPI.clear();
 
-    expect(spyEvent).toHaveBeenTriggered();
+    expect(spyEvent).toHaveBeenCalled();
     expect(searchfieldInputEl.getAttribute('value')).toEqual(null);
   });
 
@@ -74,8 +74,8 @@ describe('Searchfield API', () => {
     const spyEvent2 = spyOnEvent(searchfieldInputEl, 'cleared');
     $(closeButtonEl).click();
 
-    expect(spyEvent).toHaveBeenTriggered();
-    expect(spyEvent2).toHaveBeenTriggered();
+    expect(spyEvent).toHaveBeenCalled();
+    expect(spyEvent2).toHaveBeenCalled();
     expect(searchfieldInputEl.getAttribute('value')).toEqual(null);
   });
 

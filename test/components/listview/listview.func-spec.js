@@ -37,7 +37,7 @@ describe('Listview API', () => {
   });
 
   it('Can be invoked', () => {
-    expect(listviewAPI).toEqual(jasmine.any(Object));
+    expect(listviewAPI).toBeTruthy();
   });
 
   it('Can be disabled and re-enabled', () => {

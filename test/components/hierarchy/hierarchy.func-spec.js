@@ -39,7 +39,7 @@ describe('Hierarchy API', () => {
   });
 
   it('Can be invoked', () => {
-    expect(hierarchyAPI).toEqual(jasmine.any(Object));
+    expect(hierarchyAPI).toBeTruthy();
   });
 
   it('Can be empty', () => {

@@ -27,7 +27,7 @@ describe('Editor API', () => {
   it('Should be defined on jQuery object', () => {
     editorObj = new Editor(editorEl);
 
-    expect(editorObj).toEqual(jasmine.any(Object));
+    expect(editorObj).toBeTruthy();
   });
 
   it('Should support pasting plain text', () => {

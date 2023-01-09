@@ -34,7 +34,7 @@ describe('Tooltip API', () => {
       content: 'This IS the Tooltip!'
     });
 
-    expect(tooltipAPI).toEqual(jasmine.any(Object));
+    expect(tooltipAPI).toBeTruthy();
   });
 
   it('will not display if the trigger element is hidden', () => {

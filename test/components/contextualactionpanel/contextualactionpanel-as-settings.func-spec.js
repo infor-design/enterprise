@@ -90,7 +90,7 @@ describe('Contextual Action Panel - Defined Through Settings', () => {
   it('can be invoked', () => {
     capAPI = new ContextualActionPanel(document.body, capSettings);
 
-    expect(capAPI).toEqual(jasmine.any(Object));
+    expect(capAPI).toBeTruthy();
   });
 
   it('can provide a reference to its corresponding modal API', () => {

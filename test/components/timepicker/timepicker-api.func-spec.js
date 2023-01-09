@@ -36,7 +36,7 @@ describe('TimePicker API', () => {
   });
 
   it('Should be defined on jQuery object', () => {
-    expect(timepickerObj).toEqual(jasmine.any(Object));
+    expect(timepickerObj).toBeTruthy();
   });
 
   xit('Should render based on locale setting', (done) => {

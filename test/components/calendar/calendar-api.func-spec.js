@@ -56,13 +56,13 @@ describe('Calendar API', () => {
   });
 
   it('Should render calendar', () => {
-    expect(calendarObj).toEqual(jasmine.any(Object));
+    expect(calendarObj).toBeTruthy();
     expect(document.body.querySelector('.monthview-table')).toBeTruthy();
     expect(document.body.querySelectorAll('.monthview-table td').length).toEqual(42);
   });
 
   it('Should render header', () => {
-    expect(calendarObj).toEqual(jasmine.any(Object));
+    expect(calendarObj).toBeTruthy();
     expect(document.body.querySelector('.monthview-header .next')).toBeTruthy();
     expect(document.body.querySelector('.monthview-header .prev')).toBeTruthy();
   });

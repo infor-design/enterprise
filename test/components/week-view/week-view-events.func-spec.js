@@ -48,7 +48,7 @@ describe('WeekView Events', () => { //eslint-disable-line
     const spyEvent = spyOnEvent($(weekViewEl), 'weekrendered');
     weekViewAPI.showWeek(new Date(2019, 11, 1), new Date(2019, 11, 7));
 
-    expect(spyEvent).toHaveBeenTriggered();
+    expect(spyEvent).toHaveBeenCalled();
     done();
   });
 
@@ -89,7 +89,7 @@ describe('WeekView Events', () => { //eslint-disable-line
     const spyEvent = spyOnEvent($(weekViewEl), 'eventclick');
     weekViewEl.querySelector('a.calendar-event').click();
 
-    expect(spyEvent).toHaveBeenTriggered();
+    expect(spyEvent).toHaveBeenCalled();
     done();
   });
 
@@ -107,7 +107,7 @@ describe('WeekView Events', () => { //eslint-disable-line
     const spyEvent = spyOnEvent($(weekViewEl), 'eventdblclick');
     $('a.calendar-event').dblclick();
 
-    expect(spyEvent).toHaveBeenTriggered();
+    expect(spyEvent).toHaveBeenCalled();
     done();
   });
 });

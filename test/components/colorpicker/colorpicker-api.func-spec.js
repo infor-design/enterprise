@@ -24,7 +24,7 @@ describe('ColorPicker API', () => {
   });
 
   it('Should be defined on jQuery object', () => {
-    expect(colorpickerObj).toEqual(jasmine.any(Object));
+    expect(colorpickerObj).toBeTruthy();
   });
 
   it('Should open colorpicker', (done) => {

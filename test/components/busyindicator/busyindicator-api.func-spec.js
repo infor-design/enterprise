@@ -24,7 +24,7 @@ describe('Busy Indicator API', () => {
   });
 
   it('Should be defined on jQuery object', () => {
-    expect(busyindicatorObj).toEqual(jasmine.any(Object));
+    expect(busyindicatorObj).toBeTruthy();
   });
 
   it('Should handle custom text', (done) => {

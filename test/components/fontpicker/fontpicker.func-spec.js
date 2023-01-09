@@ -30,7 +30,7 @@ describe('Fontpicker API', () => {
   it('can be invoked', () => {
     fontpickerAPI = new FontPicker(fontpickerEl);
 
-    expect(fontpickerAPI).toEqual(jasmine.any(Object));
+    expect(fontpickerAPI).toBeTruthy();
   });
 
   it('should be completely rendered after the page is loaded', () => {
@@ -88,7 +88,7 @@ describe('Fontpicker API', () => {
     // Select via API
     fontpickerAPI.select('header1');
 
-    expect(fontpickerSpyEvent).toHaveBeenTriggered();
+    expect(fontpickerSpyEvent).toHaveBeenCalled();
     expect(fontpickerAPI.selected.tagName).toEqual('h3');
   });
 
@@ -102,7 +102,7 @@ describe('Fontpicker API', () => {
     // Select via API
     fontpickerAPI.select(targetStyle);
 
-    expect(fontpickerSpyEvent).toHaveBeenTriggered();
+    expect(fontpickerSpyEvent).toHaveBeenCalled();
     expect(fontpickerAPI.selected.tagName).toEqual('h3');
   });
 
@@ -115,7 +115,7 @@ describe('Fontpicker API', () => {
     const firstEntry = document.body.querySelector('ul.popupmenu.fontpicker-menu li:nth-child(2) a');
     firstEntry.click();
 
-    expect(fontpickerSpyEvent).toHaveBeenTriggered();
+    expect(fontpickerSpyEvent).toHaveBeenCalled();
     expect(fontpickerAPI.selected.tagName).toEqual('h3');
   });
 
@@ -126,7 +126,7 @@ describe('Fontpicker API', () => {
     // Select via API
     fontpickerAPI.select('header1', true);
 
-    expect(fontpickerSpyEvent).not.toHaveBeenTriggered();
+    expect(fontpickerSpyEvent).not.toHaveBeenCalled();
     expect(fontpickerAPI.selected.tagName).toEqual('h3');
   });
 

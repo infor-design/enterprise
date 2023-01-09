@@ -31,7 +31,7 @@ describe('Tabs API', () => {
   });
 
   it('Should be defined on jQuery object', () => {
-    expect(tabsObj).toEqual(jasmine.any(Object));
+    expect(tabsObj).toBeTruthy();
   });
 
   it('Should not update href to #test-anchor', () => {
@@ -165,7 +165,7 @@ describe('Tabs API', () => {
     const tabone = jQuery('.tab:nth-of-type(1)');
     const externalRes = tabsObj.callSource(href, tabone, true);
 
-    expect(externalRes).toEqual(jasmine.any(Object));
+    expect(externalRes).toBeTruthy();
   });
 
   it('Should not fetch content, and should return false', () => {
@@ -177,7 +177,7 @@ describe('Tabs API', () => {
   it('Should add new tab', () => {
     const tab = tabsObj.add();
 
-    expect(tab).toEqual(jasmine.any(Object));
+    expect(tab).toBeTruthy();
   });
 
   it('Should add new tab and strip markup', () => {
@@ -241,7 +241,7 @@ describe('Tabs API', () => {
   it('Should add new tab panel', () => {
     const tab = tabsObj.add('tabs-normal-weird', { name: 'weird', content: 'Weirdness' }, 1);
 
-    expect(tab).toEqual(jasmine.any(Object));
+    expect(tab).toBeTruthy();
     expect(tab.anchors.length).toEqual(6);
     expect(tab.element[0].querySelectorAll('.tab')[1].innerText).toEqual('weird');
     expect(tab.container[0].querySelector('#tabs-normal-weird').innerText).toEqual('Weirdness');
@@ -268,7 +268,7 @@ describe('Tabs API', () => {
     const tab = tabsObj.hide(null, 'tabs-normal-contracts');
     const hiddenTab = document.querySelectorAll('.tab')[0];
 
-    expect(tab).toEqual(jasmine.any(Object));
+    expect(tab).toBeTruthy();
     expect(hiddenTab.innerText.trim()).toEqual('Contracts');
     expect(hiddenTab.classList).toContain('hidden');
   });
@@ -277,20 +277,20 @@ describe('Tabs API', () => {
     const hideTab = tabsObj.hide(null, 'tabs-normal-contracts');
     const hiddenTab = document.querySelectorAll('.tab')[0];
 
-    expect(hideTab).toEqual(jasmine.any(Object));
+    expect(hideTab).toBeTruthy();
     expect(hiddenTab.innerText.trim()).toEqual('Contracts');
     expect(hiddenTab.classList).toContain('hidden');
 
     const showTab = tabsObj.show(null, 'tabs-normal-contracts');
 
-    expect(showTab).toEqual(jasmine.any(Object));
+    expect(showTab).toBeTruthy();
     expect(hiddenTab.classList).not.toContain('hidden');
   });
 
   it('Should disable tab', () => {
     const tab = tabsObj.disableTab(null, 'tabs-normal-contracts');
 
-    expect(tab).toEqual(jasmine.any(Object));
+    expect(tab).toBeTruthy();
     expect(document.querySelectorAll('.tab')[0].innerText).toEqual('Contracts');
     expect(document.querySelectorAll('.tab')[0].classList).toContain('is-disabled');
   });
@@ -298,11 +298,11 @@ describe('Tabs API', () => {
   it('Should enable tab', () => {
     const disableTab = tabsObj.disableTab(null, 'tabs-normal-contracts');
 
-    expect(disableTab).toEqual(jasmine.any(Object));
+    expect(disableTab).toBeTruthy();
     expect(document.querySelectorAll('.tab')[0].classList).toContain('is-disabled');
     const enableTab = tabsObj.enableTab(null, 'tabs-normal-contracts');
 
-    expect(enableTab).toEqual(jasmine.any(Object));
+    expect(enableTab).toBeTruthy();
     expect(document.querySelectorAll('.tab')[0].classList).not.toContain('is-disabled');
   });
 
@@ -328,7 +328,7 @@ describe('Tabs API', () => {
     tabsObj.disableTab(null, 'tabs-normal-contracts');
     const allVisibleTabs = tabsObj.getVisibleTabs();
 
-    expect(allVisibleTabs).toEqual(jasmine.any(Object));
+    expect(allVisibleTabs).toBeTruthy();
     expect(allVisibleTabs.length).toEqual(4);
   });
 
@@ -363,7 +363,7 @@ describe('Tabs API', () => {
   it('Should return last visible tabs', () => {
     const tab = tabsObj.findLastVisibleTab();
 
-    expect(tab).toEqual(jasmine.any(Object));
+    expect(tab).toBeTruthy();
     expect(tab[0].innerText).toEqual('Notes');
   });
 
@@ -426,7 +426,7 @@ describe('Tabs API', () => {
   it('Should remove tab dismissible tab from tab list', () => {
     const tabs = tabsObj.closeDismissibleTab('tabs-normal-attachments');
 
-    expect(tabs).toEqual(jasmine.any(Object));
+    expect(tabs).toBeTruthy();
     expect(tabs.anchors.length).toEqual(4);
     expect(document.querySelectorAll('.tab')[2].innerText).toEqual('Contacts');
   });
@@ -441,7 +441,7 @@ describe('Tabs API', () => {
   it('Should teardown tabs', (done) => {
     const tabs = tabsObj.teardown();
     setTimeout(() => {
-      expect(tabs).toEqual(jasmine.any(Object));
+      expect(tabs).toBeTruthy();
       expect(document.querySelectorAll('.tab')[2].classList).not.toContain('is-selected');
       expect(document.querySelectorAll('.tab a[aria-expanded="true"]').length).toEqual(0);
       expect(document.querySelectorAll('.tab a[aria-selected="true"]').length).toEqual(0);

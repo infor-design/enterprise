@@ -27,9 +27,10 @@ module.exports = {
 
   // The glob patterns Jest uses to detect test files
   testMatch: [
-    '**/test/behaviors/**/*.func-spec.js',
-    // '**/test/components/**/*.func-spec.js',
-    // '**/test/components/**/*puppeteer*.js'
+    '**/test/behaviors/**/*func-test.js',
+    '**/test/components/**/*func-test.js',
+    '**/test/components/**/*puppeteer-test*.js',
+    '**/test/components/**/*puppeteer-visual-test*.js'
   ],
 
   transform: {
@@ -37,4 +38,8 @@ module.exports = {
   },
 
   transformIgnorePatterns: ['node_modules/(?!(sucrase)/)'],
+
+  moduleNameMapper: {
+    '([a-zA-Z_ ]+\\.html)\\?raw$': '<rootDir>/test/mock-html.cjs'
+  }
 };
