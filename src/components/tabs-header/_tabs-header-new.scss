@@ -29,13 +29,18 @@
   }
 
   > .tab-list-container {
-    margin-top: -1px;
+    margin-top: 6px;
     border-bottom: 0;
 
     .tab {
       color: $header-tab-normal-color-new;
       font-weight: $ids-number-font-weight-bold;
       overflow: hidden;
+      height: 34px;
+
+      a {
+        margin-top: -7px;
+      }
 
       &::before {
         background-color: rgba($header-tab-normal-color-new, 0);
@@ -143,7 +148,7 @@
     padding: 12px 4px 11px 14px;
 
     &::before {
-      background-color: $header-tab-separator;
+      background-color: $header-tab-separator-new;
       content: '';
       display: inline-block;
       height: 30px;

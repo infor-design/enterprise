@@ -3821,6 +3821,7 @@ Tabs.prototype = {
     const hasHeader = parentContainer.parents('.header.has-tabs').length;
     const accountForPadding = scrollingTablist && this.focusState.parent().is(scrollingTablist);
     const widthPercentage = target[0].getBoundingClientRect().width / target[0].offsetWidth * 100;
+    const isClassic = $('html[class*="classic-"]').length > 0;
 
     function adjustForParentContainer(targetRectObj, parentElement, tablistContainer, transformPercentage) {
       const parentRect = parentElement[0].getBoundingClientRect();
@@ -3885,7 +3886,10 @@ Tabs.prototype = {
         targetRectObj.top += 2;
       }
 
-      targetRectObj.height -= 7;
+      targetRectObj.height -= 4;
+      if (!isClassic) {
+        targetRectObj.top -= 12;
+      }
 
       return targetRectObj;
     }

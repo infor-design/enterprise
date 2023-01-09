@@ -61,15 +61,19 @@ $horizontal-tabs-height: 40px;
     }
 
     .tab {
-      color: $tab-text-color;
+      color: $tab-text-color-horizontal;
 
       a {
         padding: 11px 11px 8px;
       }
 
-      &:hover {
-        color: $header-tab-hover-color-new;
+      &.is-disabled:hover {
         border-bottom: 4px solid transparent;
+      }
+
+      &:not(.is-disabled):hover {
+        color: $header-tab-hover-color-new;
+        border-bottom: 4px solid $header-tab-hover-color-new;
         background-color: $header-tab-background-hover-color-new;
 
         .icon:not(.is-error):not(.icon-error) {
@@ -100,19 +104,19 @@ $horizontal-tabs-height: 40px;
   .tab-more,
   .add-tab-button {
     background-color: transparent;
-    color: $tab-text-color;
+    color: $header-tab-normal-color-new;
     font-size: $ids-size-font-base;
     line-height: 12px;
 
     .icon {
-      color: $tab-text-color;
+      color: $header-tab-normal-color-new;
     }
 
     &:hover {
-      color: $tab-hover-color;
+      color: $header-tab-hover-color-new;
 
       .icon:not(.is-error):not(.icon-error) {
-        color: $tab-hover-color;
+        color: $header-tab-hover-color-new;
       }
     }
 
