@@ -3,17 +3,17 @@ import { Tmpl } from '../../../src/components/tmpl/tmpl';
 import { stringUtils } from '../../../src/utils/string';
 
 describe('Tmpl API', () => {
-  it('Should exist', () => {
+  it('should exist', () => {
     expect(Tmpl.compile).toExist();
   });
 
-  it('Should parse if', () => {
+  it('should parse if', () => {
     const output = Tmpl.compile('{{#boolValue}}<p>hello<p>{{/boolValue}}', { boolValue: true });
 
     expect(output).toEqual('<p>hello<p>');
   });
 
-  it('Should parse datasets', () => {
+  it('should parse datasets', () => {
     const testTempl = `
       <ul>
         {{#dataset}}
@@ -53,7 +53,7 @@ describe('Tmpl API', () => {
       </ul>`));
   });
 
-  it('Should parse autocomplete templates', () => {
+  it('should parse autocomplete templates', () => {
     const testTempl = `
       <li id="{{listItemId}}" data-index="{{index}}" {{#hasValue}}data-value="{{value}}"{{/hasValue}} role="listitem">
        <a href="#" tabindex="-1">
@@ -76,7 +76,7 @@ describe('Tmpl API', () => {
       <a href="#" tabindex="-1"><span><i>A</i>labama</span></a></li>`));
   });
 
-  it('Should parse templates with html', () => {
+  it('should parse templates with html', () => {
     const testTempl = `
       <li id="{{listItemId}}" {{#hasValue}} data-value="{{value}}" {{/hasValue}} role="listitem">
              <a href="#" tabindex="-1">
@@ -103,7 +103,7 @@ describe('Tmpl API', () => {
         </span></a></li>`));
   });
 
-  it('Should parse expandable row templates', () => {
+  it('should parse expandable row templates', () => {
     const testTempl = `
       <div class="datagrid-cell-layout"><div class="img-placeholder"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-camera"></use></svg></div></div>
       <div class="datagrid-cell-layout"><p class="datagrid-row-heading">Expandable Content Area</p>

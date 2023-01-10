@@ -46,7 +46,7 @@ describe('Sparkline Chart API', () => {
     cleanup();
   });
 
-  it('Should fire contextmenu event with sparkline', () => {
+  it('should fire contextmenu event with sparkline', () => {
     const callback = jest.fn();
     $(sparklineEl).on('contextmenu', callback);
     $(sparklineEl).on('contextmenu', (e, el, d) => {
@@ -57,7 +57,7 @@ describe('Sparkline Chart API', () => {
     expect(callback).toHaveBeenCalled();
   });
 
-  it('Should fire contextmenu event with sparkline-dots-n-peak', () => {
+  it('should fire contextmenu event with sparkline-dots-n-peak', () => {
     sparklineObj.destroy();
     sparklineObj = new Sparkline(sparklineEl, { type: 'sparkline-dots-n-peak', dataset: sparkData1 });
     const callback = jest.fn();
@@ -70,7 +70,7 @@ describe('Sparkline Chart API', () => {
     expect(callback).toHaveBeenCalled();
   });
 
-  it('Should fire contextmenu event with sparkline-peak', () => {
+  it('should fire contextmenu event with sparkline-peak', () => {
     sparklineObj.destroy();
     sparklineObj = new Sparkline(sparklineEl, { type: 'sparkline-peak', dataset: sparkData2 });
     const callback = jest.fn();
@@ -83,7 +83,7 @@ describe('Sparkline Chart API', () => {
     expect(callback).toHaveBeenCalled();
   });
 
-  it('Should fire contextmenu event with sparkline-medianrange-n-peak', () => {
+  it('should fire contextmenu event with sparkline-medianrange-n-peak', () => {
     sparklineObj.destroy();
     sparklineObj = new Sparkline(sparklineEl, { type: 'sparkline-medianrange-n-peak', dataset: sparkData3 });
     const callback = jest.fn();
@@ -96,7 +96,7 @@ describe('Sparkline Chart API', () => {
     expect(callback).toHaveBeenCalled();
   });
 
-  it('Should fire contextmenu event with sparkline-minmax', () => {
+  it('should fire contextmenu event with sparkline-minmax', () => {
     sparklineObj.destroy();
     sparklineObj = new Sparkline(sparklineEl, { type: 'sparkline-minmax', dataset: sparkData4 });
     const callback = jest.fn();

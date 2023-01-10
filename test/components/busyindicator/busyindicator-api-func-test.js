@@ -50,11 +50,11 @@ describe('Busy Indicator API', () => {
     cleanup();
   });
 
-  it('Should be defined on jQuery object', () => {
+  it('should be defined on jQuery object', () => {
     expect(busyindicatorObj).toBeTruthy();
   });
 
-  it('Should handle custom text', (done) => {
+  it('should handle custom text', (done) => {
     busyindicatorObj.destroy();
     busyindicatorObj = new BusyIndicator(busyindicatorEl, { text: 'Hang Tough, Skippy...' });
     busyindicatorObj.activate();
@@ -65,7 +65,7 @@ describe('Busy Indicator API', () => {
     }, 500);
   });
 
-  it('Should return correct value for isActive', (done) => {
+  it('should return correct value for isActive', (done) => {
     busyindicatorObj.activate();
 
     setTimeout(() => {
@@ -74,7 +74,7 @@ describe('Busy Indicator API', () => {
     }, 500);
   });
 
-  it('Should display busy indicator when triggering "start.busyindicator"', (done) => {
+  it('should display busy indicator when triggering "start.busyindicator"', (done) => {
     busyindicatorObj.activate();
 
     setTimeout(() => {
@@ -83,7 +83,7 @@ describe('Busy Indicator API', () => {
     }, 500);
   });
 
-  it('Should hide busy indicator when triggering complete/close', (done) => {
+  it('should hide busy indicator when triggering complete/close', (done) => {
     busyindicatorObj.activate();
 
     setTimeout(() => {
@@ -96,7 +96,7 @@ describe('Busy Indicator API', () => {
     }, 500);
   });
 
-  it('Should update text of busy indicator', (done) => {
+  it('should update text of busy indicator', (done) => {
     busyindicatorObj.activate();
 
     setTimeout(() => {
@@ -112,7 +112,7 @@ describe('Busy Indicator API', () => {
     }, 500);
   });
 
-  it('Should destroy busy indicator', (done) => {
+  it('should destroy busy indicator', (done) => {
     busyindicatorObj.activate();
 
     setTimeout(() => {

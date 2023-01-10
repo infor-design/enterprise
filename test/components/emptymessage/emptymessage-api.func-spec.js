@@ -58,7 +58,7 @@ describe('EmptyMessage API', () => { //eslint-disable-line
     cleanup();
   });
 
-  it('Should render emptymessage', () => {
+  it('should render emptymessage', () => {
     expect(emptymessageObj).toBeTruthy();
 
     expect(emptymessageEl.classList.contains('empty-message')).toBeTruthy();
@@ -68,7 +68,7 @@ describe('EmptyMessage API', () => { //eslint-disable-line
     expect(document.body.querySelector('.empty-actions')).toBeTruthy();
   });
 
-  it('Should be able to destroy', () => {
+  it('should be able to destroy', () => {
     emptymessageObj.destroy();
 
     expect(emptymessageEl.classList.contains('empty-message')).toEqual(false);
@@ -79,7 +79,7 @@ describe('EmptyMessage API', () => { //eslint-disable-line
     expect($(emptymessageEl).data('.emptymessage')).toBeFalsy();
   });
 
-  it('Should fire the click event from settings', (done) => {
+  it('should fire the click event from settings', (done) => {
     emptymessageObj.destroy();
     emptymessageObj = new EmptyMessage(emptymessageEl, {
       title: 'No Data Available',

@@ -10,12 +10,12 @@ describe('Tabs Module Toolbar tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    xit('Should not visual regress on example-index', async () => {
+    xit('should not visually regress on example-index', async () => {
       const containerEl = await element(by.css('.page-container.no-scroll:not(.tab-panel-container)'));
       await browser.driver.sleep(config.sleep);
 
@@ -32,12 +32,12 @@ describe('Tabs Module Appmenu Tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress and still be accessible', async () => {
+    it('should not visually regress and still be accessible', async () => {
       const appMenuTrigger = await element(by.css('.tab.application-menu-trigger'));
       await browser.driver.sleep(config.sleep);
 

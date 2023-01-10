@@ -13,11 +13,11 @@ describe('Homepage example five column tests', () => {
     await utils.setPage('/components/homepage/example-five-column.html');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should position widgets properly at 1920px x 1080px', async () => {
+  it('should position widgets properly at 1920px x 1080px', async () => {
     const pos = [
       { left: '0px', top: '0px' },
       { left: '380px', top: '0px' },
@@ -48,7 +48,7 @@ describe('Homepage example five column tests', () => {
     await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
   });
 
-  it('Should position widgets properly at 1680px x 1050px', async () => {
+  it('should position widgets properly at 1680px x 1050px', async () => {
     const pos = [
       { left: '0px', top: '0px' },
       { left: '380px', top: '0px' },
@@ -79,7 +79,7 @@ describe('Homepage example five column tests', () => {
     await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
   });
 
-  it('Should position widgets properly at 1200px x 1600px', async () => {
+  it('should position widgets properly at 1200px x 1600px', async () => {
     const pos = [
       { left: '0px', top: '0px' },
       { left: '380px', top: '0px' },
@@ -110,7 +110,7 @@ describe('Homepage example five column tests', () => {
     await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
   });
 
-  it('Should position widgets properly at 768px x 1024px', async () => {
+  it('should position widgets properly at 768px x 1024px', async () => {
     const pos = [
       { left: '0px', top: '0px' },
       { left: '380px', top: '0px' },
@@ -141,7 +141,7 @@ describe('Homepage example five column tests', () => {
     await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
   });
 
-  it('Should position widgets properly at 320px x 480px', async () => {
+  it('should position widgets properly at 320px x 480px', async () => {
     const pos = [
       { left: '0px', top: '0px' },
       { left: '0px', top: '390px' },

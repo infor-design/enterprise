@@ -23,7 +23,7 @@ describe('TimePicker ARIA', () => {
     cleanup();
   });
 
-  it('Should set ARIA labels', () => {
+  it('should set ARIA labels', () => {
     expect(document.querySelector('.timepicker[aria-expanded="false"]'))
       .withContext('Timepicker Input `aria-expanded="false"`').toBeTruthy();
 
@@ -34,7 +34,7 @@ describe('TimePicker ARIA', () => {
       .withContext('Timepicker trigger icon `aria-hidden`').toBeTruthy();
   });
 
-  it('Should update ARIA labels with popup open', () => {
+  it('should update ARIA labels with popup open', () => {
     timepickerObj.openTimePopup();
 
     expect(document.querySelector('.timepicker[aria-expanded="true"]'))

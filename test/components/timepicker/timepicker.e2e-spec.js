@@ -11,12 +11,12 @@ describe('Timepicker example-index tests', () => {
     await utils.setPage('/components/timepicker/example-index?theme=classic');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    xit('Should not visual regress on example-index', async () => {
+    xit('should not visually regress on example-index', async () => {
       const timepickerSection = await element(by.id('maincontent'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(timepickerSection), config.waitsFor);
@@ -27,20 +27,20 @@ describe('Timepicker example-index tests', () => {
     });
   }
 
-  it('Should open popup on icon click', async () => {
+  it('should open popup on icon click', async () => {
     await element(by.css('.timepicker + .trigger')).click();
 
     expect(await element.all(by.className('is-open')).first().isDisplayed()).toBe(true);
   });
 
-  it('Should open popup on keypress(arrow-down)', async () => {
+  it('should open popup on keypress(arrow-down)', async () => {
     const timepickerEl = await element(by.id('timepicker-id-1'));
     await timepickerEl.sendKeys(protractor.Key.ARROW_DOWN);
 
     expect(await timepickerEl.getAttribute('class')).toContain('is-open');
   });
 
-  it('Should set time from popup to field', async () => {
+  it('should set time from popup to field', async () => {
     const timepickerEl = await element(by.id('timepicker-id-1'));
     await element(by.css('.timepicker + .trigger')).click();
     await element(by.css('.set-time')).sendKeys(protractor.Key.SPACE);
@@ -48,7 +48,7 @@ describe('Timepicker example-index tests', () => {
     expect(await timepickerEl.getAttribute('value')).toEqual('1:00 AM');
   });
 
-  it('Should be able to set id/automation id', async () => {
+  it('should be able to set id/automation id', async () => {
     await browser.driver.sleep(config.sleep);
 
     expect(await element(by.id('timepicker-id-1')).getAttribute('id')).toEqual('timepicker-id-1');
@@ -58,7 +58,7 @@ describe('Timepicker example-index tests', () => {
     expect(await element(by.id('timepicker-id-1-trigger')).getAttribute('data-automation-id')).toEqual('timepicker-automation-id-1-trigger');
   });
 
-  it('Should be able to set id/automation id on hours, minutes, seconds, and button', async () => {
+  it('should be able to set id/automation id on hours, minutes, seconds, and button', async () => {
     await element(by.css('.timepicker + .trigger')).click();
 
     expect(await element(by.id('timepicker-id-1-hours')).getAttribute('id')).toEqual('timepicker-id-1-hours');
@@ -73,7 +73,7 @@ describe('Timepicker example-index tests', () => {
 
   // Test has strange behavior on CI, so isolating this to local
   if (!utils.isCI()) {
-    it('Should pick time from picker and set to field', async () => {
+    it('should pick time from picker and set to field', async () => {
       const timepickerEl = await element(by.id('timepicker-id-1'));
       await element(by.css('.timepicker + .trigger')).click();
       let dropdownEl = await element(by.css(ddSelector('hours')));
@@ -105,7 +105,7 @@ describe('Timepicker example-index tests', () => {
     });
   }
 
-  it('Should not pick date from picker', async () => {
+  it('should not pick date from picker', async () => {
     const timepickerEl = await element(by.id('timepicker-id-1'));
     await timepickerEl.sendKeys('2:20 AM');
     await element(by.css('.timepicker + .trigger')).click();
@@ -120,14 +120,14 @@ describe('Timepicker 24 Hour tests', () => {
     await utils.setPage('/components/timepicker/test-24-hour');
   });
 
-  it('Should open popup on icon click for 24 Hour', async () => {
+  it('should open popup on icon click for 24 Hour', async () => {
     await element(by.css('.timepicker + .trigger')).click();
 
     expect(await element.all(by.className('is-open')).first().isDisplayed()).toBe(true);
   });
 
   if (!utils.isBS() && !utils.isCI()) {
-    it('Should pick time from picker and set to field for 24 Hour', async () => {
+    it('should pick time from picker and set to field for 24 Hour', async () => {
       const timepickerEl = await element(by.id('timepicker-24hrs'));
       await timepickerEl.sendKeys('19:15');
       await element(by.css('.timepicker + .trigger')).click();
@@ -156,13 +156,13 @@ describe('Timepicker with seconds example tests', () => {
     await utils.setPage('/components/timepicker/test-seconds-picker');
   });
 
-  it('Should open popup on icon click with seconds', async () => {
+  it('should open popup on icon click with seconds', async () => {
     await element(by.css('.timepicker + .trigger')).click();
 
     expect(await element.all(by.className('is-open')).first().isDisplayed()).toBe(true);
   });
 
-  it('Should set time from popup to field with seconds', async () => {
+  it('should set time from popup to field with seconds', async () => {
     const timepickerEl = await element(by.id('time-field'));
     await element(by.css('.timepicker + .trigger')).click();
     await element(by.css('.set-time')).sendKeys(protractor.Key.SPACE);
@@ -172,7 +172,7 @@ describe('Timepicker with seconds example tests', () => {
 
   if (!utils.isBS()) {
     // Please try to make a test for this when converting to puppeteer
-    xit('Should pick time from picker and set to field with seconds', async () => {
+    xit('should pick time from picker and set to field with seconds', async () => {
       const timepickerEl = await element(by.id('time-field'));
       await element(by.css('.timepicker + .trigger')).click();
       let dropdownEl = await element(by.css(ddSelector('hours')));
@@ -218,7 +218,7 @@ describe('Timepicker with seconds example tests', () => {
     });
   }
 
-  it('Should not pick date from picker with seconds', async () => {
+  it('should not pick date from picker with seconds', async () => {
     const timepickerEl = await element(by.id('time-field'));
     await timepickerEl.sendKeys('02:20:35 PM');
     await element(by.css('.timepicker + .trigger')).click();
@@ -233,7 +233,7 @@ describe('Timepicker Intervals tests', () => {
     await utils.setPage('/components/timepicker/test-intervals');
   });
 
-  it('Should pick time from picker with 10 minute intervals', async () => {
+  it('should pick time from picker with 10 minute intervals', async () => {
     const timepickerEl = await element(by.id('time-intervals'));
     await element(by.css('.timepicker + .trigger')).click();
     let dropdownEl = await element(by.css(ddSelector('hours')));
@@ -265,7 +265,7 @@ describe('Timepicker Intervals tests', () => {
     expect(await timepickerEl.getAttribute('value')).toEqual('2:10 PM');
   });
 
-  it('Should rounds minutes to the nearest interval', async () => {
+  it('should rounds minutes to the nearest interval', async () => {
     const timepickerEl = await element(by.id('time-intervals'));
     await timepickerEl.sendKeys('2:24 AM');
     await timepickerEl.sendKeys(protractor.Key.TAB);
@@ -279,19 +279,19 @@ describe('Timepicker states tests', () => {
     await utils.setPage('/components/timepicker/test-states');
   });
 
-  it('Should check to make readonly', async () => {
+  it('should check to make readonly', async () => {
     await element(by.id('btn-readonly')).click();
 
     expect(await element(by.css('.timepicker[readonly]')).isDisplayed()).toBe(true);
   });
 
-  it('Should check to make disable', async () => {
+  it('should check to make disable', async () => {
     await element(by.id('btn-disable')).click();
 
     expect(await element(by.css('.timepicker')).isEnabled()).toBeFalsy();
   });
 
-  it('Should check to make enable', async () => {
+  it('should check to make enable', async () => {
     await element(by.id('btn-readonly')).click();
 
     expect(await element(by.css('.timepicker[readonly]')).isDisplayed()).toBe(true);
@@ -314,7 +314,7 @@ describe('Timepicker Custom Validation Tests', () => {
     await utils.setPage('/components/timepicker/example-validation');
   });
 
-  it('Should be able to do default invalid time validation', async () => {
+  it('should be able to do default invalid time validation', async () => {
     const datepickerEl = await element(by.id('timepicker-1'));
     await datepickerEl.clear();
     await datepickerEl.sendKeys('1:');
@@ -325,7 +325,7 @@ describe('Timepicker Custom Validation Tests', () => {
     expect(await element.all(by.css('.message-text')).last(1).isPresent()).toBe(true);
   });
 
-  it('Should be able to do custom validation', async () => {
+  it('should be able to do custom validation', async () => {
     expect(await element(by.css('.message-text')).isPresent()).toBe(false);
 
     const datepicker2El = await element(by.id('timepicker-2'));
@@ -337,7 +337,7 @@ describe('Timepicker Custom Validation Tests', () => {
     expect(await element.all(by.css('.message-text')).last(1).isPresent()).toBe(true);
   });
 
-  it('Should be able to do required and time validation', async () => {
+  it('should be able to do required and time validation', async () => {
     const datepickerEl = await element(by.id('timepicker-3'));
     await datepickerEl.clear();
     await datepickerEl.sendKeys(protractor.Key.TAB);
@@ -361,11 +361,11 @@ describe('Timepicker specific locale/language tests', () => {
     await utils.setPage('/components/timepicker/test-specific-locale');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should set time and lanuage independently', async () => {
+  it('should set time and lanuage independently', async () => {
     let timepickerEl = await element(by.id('timepicker-1'));
     await element(by.css('#timepicker-1 + .trigger')).click();
 

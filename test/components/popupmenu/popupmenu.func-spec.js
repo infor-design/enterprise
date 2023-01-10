@@ -37,21 +37,21 @@ describe('Popupmenu Menu Button API', () => {
     cleanup();
   });
 
-  it('Should be defined on jQuery object', () => {
+  it('should be defined on jQuery object', () => {
     expect(popupmenuObj).toBeTruthy();
   });
 
-  it('Should call markupItems, and markup list items', () => {
+  it('should call markupItems, and markup list items', () => {
     expect(popupmenuObj.markupItems(popupmenuButtonEl)).toBeUndefined();
     expect(document.querySelector('li')).toBeTruthy();
   });
 
-  it('Should return X, and Y from mouse event', () => {
+  it('should return X, and Y from mouse event', () => {
     expect(popupmenuObj.getPositionFromEvent(ePage)).toEqual({ x: 136, y: 182 });
     expect(popupmenuObj.getPositionFromEvent(eClient)).toEqual({ x: 222, y: 333 });
   });
 
-  it('Should position correctly', () => {
+  it('should position correctly', () => {
     // Indirectly tests Place component
     popupmenuObj.position(ePage);
 
@@ -61,24 +61,24 @@ describe('Popupmenu Menu Button API', () => {
     expect(parentElem.className).toContain('placeable bottom');
   });
 
-  it('Should open', () => {
+  it('should open', () => {
     popupmenuObj.open();
 
     expect(popupmenuButtonEl.classList[1]).toContain('is-open');
   });
 
-  it('Should close', () => {
+  it('should close', () => {
     popupmenuObj.open();
     popupmenuObj.close();
 
     expect(popupmenuButtonEl.classList[1]).not.toContain('is-open');
   });
 
-  it('Should have RTL set correctly', () => {
+  it('should have RTL set correctly', () => {
     expect(popupmenuObj.isRTL()).toBeFalsy();
   });
 
-  it('Should set padding correctly', () => {
+  it('should set padding correctly', () => {
     expect(document.body.querySelector('.popupmenu a').style.paddingLeft).toEqual('');
   });
 });
@@ -98,7 +98,7 @@ describe('Popupmenu Single Select API', () => {
     cleanup();
   });
 
-  it('Should select', () => {
+  it('should select', () => {
     // Expects jQuery element
     const selectItem = document.querySelector('.popupmenu li');
     const select = popupmenuObj.select($(selectItem));
@@ -107,7 +107,7 @@ describe('Popupmenu Single Select API', () => {
     expect(select[1]).toEqual('selected');
   });
 
-  it('Should highlight', () => {
+  it('should highlight', () => {
     // Expects jQuery anchor
     const anchorItem = document.querySelector('.popupmenu li a');
     popupmenuObj.highlight($(anchorItem));
@@ -115,7 +115,7 @@ describe('Popupmenu Single Select API', () => {
     expect(anchorItem.parentNode.classList.toString()).toContain('is-focused');
   });
 
-  it('Should return if item is in single selectable section', () => {
+  it('should return if item is in single selectable section', () => {
     // Expects jQuery anchor
     const anchorItem = document.querySelector('.popupmenu li a');
     const isSingleSelectable = popupmenuObj.isInSingleSelectSection($(anchorItem));
@@ -123,7 +123,7 @@ describe('Popupmenu Single Select API', () => {
     expect(isSingleSelectable).toBeFalsy();
   });
 
-  it('Should return if item is in multi selectable section', () => {
+  it('should return if item is in multi selectable section', () => {
     // Expects jQuery anchor
     const anchorItem = document.querySelector('.popupmenu li a');
     const isMultiSelectable = popupmenuObj.isInMultiselectSection($(anchorItem));
@@ -131,32 +131,32 @@ describe('Popupmenu Single Select API', () => {
     expect(isMultiSelectable).toBeFalsy();
   });
 
-  it('Should get selected', () => {
+  it('should get selected', () => {
     // Expects jQuery element
     const selected = popupmenuObj.getSelected();
 
     expect(selected[0].innerText).toEqual('Sub Option #4');
   });
 
-  it('Should detach itself', () => {
+  it('should detach itself', () => {
     popupmenuObj.detach();
   });
 
-  it('Should destroy itself', () => {
+  it('should destroy itself', () => {
     popupmenuObj.open();
     popupmenuObj.destroy();
 
     expect(popupmenuButtonEl.classList[1]).not.toContain('is-focused');
   });
 
-  it('Should update settings', () => {
+  it('should update settings', () => {
     const settings = { autoFocus: true };
     popupmenuObj.updated(settings);
 
     expect(popupmenuObj.settings.autoFocus).toBeTruthy();
   });
 
-  it('Should teardown', () => {
+  it('should teardown', () => {
     const toreDownObj = popupmenuObj.teardown();
 
     expect(toreDownObj).toBeTruthy();
@@ -178,7 +178,7 @@ describe('Popupmenu renderItem() API', () => {
     cleanup();
   });
 
-  it('Should build HTML for a single Popupmenu item from a settings object', () => {
+  it('should build HTML for a single Popupmenu item from a settings object', () => {
     // Single Menu Option
     const data = {
       text: 'Pre-defined Menu Item #1'
@@ -188,7 +188,7 @@ describe('Popupmenu renderItem() API', () => {
     expect(markup).toBe('<li class="popupmenu-item"><a href="#"><span>Pre-defined Menu Item #1</span></a></li>');
   });
 
-  it('Should build HTML for two Popupmenu items from a settings array', () => {
+  it('should build HTML for two Popupmenu items from a settings array', () => {
     // Two menu options (should be wrapped in a `<ul class="popupmenu"></ul>`)
     const data = [{
       text: 'Pre-defined Menu Item #1',
@@ -202,7 +202,7 @@ describe('Popupmenu renderItem() API', () => {
     expect(markup).toBe('<ul class="popupmenu"><li class="popupmenu-item is-selectable"><a href="#"><span>Pre-defined Menu Item #1</span></a></li><li class="popupmenu-item is-selectable"><a href="#"><span>Pre-defined Menu Item #2</span></a></li></ul>');
   });
 
-  it('Should build HTML for two Popupmenu items from a settings array, without a wrapping `<ul>` tag', () => {
+  it('should build HTML for two Popupmenu items from a settings array, without a wrapping `<ul>` tag', () => {
     // Two menu options (should NOT be wrapped in a `<ul class="popupmenu"></ul>`)
     const data = {
       noMenuWrap: true,
@@ -219,7 +219,7 @@ describe('Popupmenu renderItem() API', () => {
     expect(markup).toBe('<li class="popupmenu-item is-selectable"><a href="#"><span>Pre-defined Menu Item #1</span></a></li><li class="popupmenu-item is-selectable"><a href="#"><span>Pre-defined Menu Item #2</span></a></li>');
   });
 
-  it('Should build HTML for two Popupmenu items with a customized wrapping `<ul>` tag', () => {
+  it('should build HTML for two Popupmenu items with a customized wrapping `<ul>` tag', () => {
     // Two menu options (should NOT be wrapped in a `<ul class="popupmenu"></ul>`)
     const data = {
       menuId: 'my-popupmenu',
@@ -236,7 +236,7 @@ describe('Popupmenu renderItem() API', () => {
     expect(markup).toBe('<ul id="my-popupmenu" class="popupmenu"><li class="popupmenu-item is-selectable"><a href="#"><span>Pre-defined Menu Item #1</span></a></li><li class="popupmenu-item is-selectable"><a href="#"><span>Pre-defined Menu Item #2</span></a></li></ul>');
   });
 
-  it('Should build HTML for a single Popupmenu Item with an icon', () => {
+  it('should build HTML for a single Popupmenu Item with an icon', () => {
     const data = {
       text: 'trash',
       icon: 'delete'
@@ -246,7 +246,7 @@ describe('Popupmenu renderItem() API', () => {
     expect(markup).toBe('<li class="popupmenu-item"><a href="#"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-delete"></use></svg><span>trash</span></a></li>');
   });
 
-  it('Should build HTML for a single Popupmenu Item with an ID', () => {
+  it('should build HTML for a single Popupmenu Item with an ID', () => {
     const data = {
       text: 'New Popup Item',
       id: 'my-new-popup-item'
@@ -256,7 +256,7 @@ describe('Popupmenu renderItem() API', () => {
     expect(markup).toBe('<li class="popupmenu-item"><a id="my-new-popup-item" href="#"><span>New Popup Item</span></a></li>');
   });
 
-  it('Should build HTML for a single Popupmenu Item that\'s disabled', () => {
+  it('should build HTML for a single Popupmenu Item that\'s disabled', () => {
     const data = {
       text: 'This is disabled',
       disabled: true
@@ -266,7 +266,7 @@ describe('Popupmenu renderItem() API', () => {
     expect(markup).toBe('<li class="popupmenu-item is-disabled"><a href="#"><span>This is disabled</span></a></li>');
   });
 
-  it('Should build HTML for a single Popupmenu item with a submenu from a settings object', () => {
+  it('should build HTML for a single Popupmenu item with a submenu from a settings object', () => {
     // Single Menu Option
     const data = {
       text: 'Parent Menu Item',
@@ -290,7 +290,7 @@ describe('Popupmenu renderItem() API', () => {
     expect(markup).toBe('<li class="popupmenu-item submenu"><a href="#"><span>Parent Menu Item</span><svg class="arrow icon-dropdown icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-dropdown"></use></svg></a><ul class="popupmenu"><li class="popupmenu-item is-selectable"><a href="#"><span>Child Menu Item #1</span></a></li><li class="popupmenu-item is-selectable"><a href="#"><span>Child Menu Item #2</span></a></li><li class="popupmenu-item is-selectable"><a href="#"><span>Child Menu Item #3</span></a></li></ul></li>');
   });
 
-  it('Should build HTML for a single Popupmenu item with a multi-selectable submenu from a settings object', () => {
+  it('should build HTML for a single Popupmenu item with a multi-selectable submenu from a settings object', () => {
     // Single Menu Option
     const data = {
       text: 'Parent Menu Item',
@@ -314,7 +314,7 @@ describe('Popupmenu renderItem() API', () => {
     expect(markup).toBe('<li class="popupmenu-item submenu"><a href="#"><span>Parent Menu Item</span><svg class="arrow icon-dropdown icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-dropdown"></use></svg></a><ul class="popupmenu"><li class="popupmenu-item is-multiselectable"><a href="#"><span>Child Menu Item #1</span></a></li><li class="popupmenu-item is-multiselectable"><a href="#"><span>Child Menu Item #2</span></a></li><li class="popupmenu-item is-multiselectable"><a href="#"><span>Child Menu Item #3</span></a></li></ul></li>');
   });
 
-  it('Should build HTML for a single Popupmenu item with a submenu that contains both selection types independently', () => {
+  it('should build HTML for a single Popupmenu item with a submenu that contains both selection types independently', () => {
     const data = {
       text: 'Settings',
       icon: 'settings',
@@ -423,7 +423,7 @@ describe('Popupmenu toData() API', () => {
       cleanup();
     });
 
-    it('Should convert the main Popupmenu example into an object representation', () => {
+    it('should convert the main Popupmenu example into an object representation', () => {
       const data = popupmenuObj.toData();
 
       expect(data).toBeDefined();
@@ -460,7 +460,7 @@ describe('Popupmenu toData() API', () => {
       cleanup();
     });
 
-    it('Should gracefully handle empty menus', () => {
+    it('should gracefully handle empty menus', () => {
       const data = popupmenuObj.toData();
 
       expect(data).toBeDefined();
@@ -484,7 +484,7 @@ describe('Popupmenu toData() API', () => {
       cleanup();
     });
 
-    it('Should convert a more complicated Popupmenu example into an object representation', () => {
+    it('should convert a more complicated Popupmenu example into an object representation', () => {
       const data = popupmenuObj.toData();
 
       expect(data).toBeDefined();

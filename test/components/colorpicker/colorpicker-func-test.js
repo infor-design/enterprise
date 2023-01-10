@@ -48,15 +48,15 @@ describe('ColorPicker Methods', () => {
     cleanup();
   });
 
-  it('Should get the hex value based on a label', () => {
+  it('should get the hex value based on a label', () => {
     expect(colorpickerObj.getHexFromLabel('Turquoise10')).toEqual('#0E5B52');
   });
 
-  it('Should get the label value based on a hex', () => {
+  it('should get the label value based on a hex', () => {
     expect(colorpickerObj.getLabelFromHex('#0E5B52')).toEqual('Turquoise10');
   });
 
-  it('Should set custom width', () => {
+  it('should set custom width', () => {
     colorpickerEl.style.width = '400px';
     colorpickerObj.setCustomWidth();
 
@@ -64,20 +64,20 @@ describe('ColorPicker Methods', () => {
     expect(colorpickerEl.parentNode.style.width).toEqual('400px');
   });
 
-  it('Should get the current hex value', () => {
+  it('should get the current hex value', () => {
     colorpickerObj.setColor('#1a1a1a');
 
     expect(colorpickerObj.getHexValue()).toEqual('#1A1A1A');
   });
 
-  it('Should get the current label value', () => {
+  it('should get the current label value', () => {
     colorpickerObj.settings.showLabel = true;
     colorpickerObj.setColor('#1a1a1a');
 
     expect(colorpickerObj.getLabelValue()).toEqual('Slate10');
   });
 
-  it('Should set the color/label on the field', () => {
+  it('should set the color/label on the field', () => {
     colorpickerObj.setColor('#0E5B52');
 
     expect(colorpickerEl.value).toEqual('#0E5B52');
@@ -88,7 +88,7 @@ describe('ColorPicker Methods', () => {
     expect(colorpickerEl.value).toEqual('Turquoise10');
   });
 
-  it('Should set the value on the field', () => {
+  it('should set the value on the field', () => {
     const parent = colorpickerEl.parentNode;
     colorpickerObj.setValueOnField({ isEmpty: true });
 
@@ -112,17 +112,17 @@ describe('ColorPicker Methods', () => {
     expect(colorpickerEl.value).toEqual('Turquoise10');
   });
 
-  it('Should translate color label', () => {
+  it('should translate color label', () => {
     expect(colorpickerObj.translateColorLabel()).toEqual('');
     expect(colorpickerObj.translateColorLabel('Invalid label')).toEqual('Invalid label');
     expect(colorpickerObj.translateColorLabel('Turquoise10')).toEqual('Turquoise10');
   });
 
-  it('Should gets the decimal as a rgb value', () => {
+  it('should gets the decimal as a rgb value', () => {
     expect(colorpickerObj.decimal2rgb(5397262)).toEqual('rgb(14, 91, 82)');
   });
 
-  it('Should gets the rgb to hex value', () => {
+  it('should gets the rgb to hex value', () => {
     expect(colorpickerObj.rgb2hex('rgb(14, 91, 82)').toUpperCase()).toEqual('#0E5B52');
   });
 });

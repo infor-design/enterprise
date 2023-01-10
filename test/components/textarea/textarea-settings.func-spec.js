@@ -22,7 +22,7 @@ describe('Textarea API', () => {
     cleanup();
   });
 
-  it('Should set settings', () => {
+  it('should set settings', () => {
     const settings = {
       autoGrow: false,
       autoGrowMaxHeight: null,
@@ -37,7 +37,7 @@ describe('Textarea API', () => {
     expect(textareaObj.settings).toEqual(settings);
   });
 
-  it('Should update set settings via parameter', () => {
+  it('should update set settings via parameter', () => {
     const settings = {
       autoGrow: false,
       autoGrowMaxHeight: null,

@@ -226,12 +226,12 @@ describe('Bubble Chart API', () => {
     cleanup();
   });
 
-  it('Should show on page', () => {
+  it('should show on page', () => {
     expect(document.body.querySelectorAll('.dot').length).toEqual(24);
     expect(document.body.querySelectorAll('.line-group').length).toEqual(2);
   });
 
-  it('Should be able to get the get and set the selected bubble', () => {
+  it('should be able to get the get and set the selected bubble', () => {
     // Use group "name" to select
     let options = {
       groupName: 'name',
@@ -292,7 +292,7 @@ describe('Bubble Chart API', () => {
     expect(bubbleObj.getSelected()[0].data.name).toEqual('January');
   });
 
-  it('Should fire contextmenu event', () => {
+  it('should fire contextmenu event', () => {
     const callback = jest.fn();
     $(bubbleEl).on('contextmenu', callback);
     $(bubbleEl).on('contextmenu', (e, el, d) => {
@@ -303,7 +303,7 @@ describe('Bubble Chart API', () => {
     expect(callback).toHaveBeenCalled();
   });
 
-  it('Should hide xAxis line', () => {
+  it('should hide xAxis line', () => {
     bubbleObj.destroy();
     bubbleObj = new Line(bubbleEl, {
       dataset,
@@ -318,7 +318,7 @@ describe('Bubble Chart API', () => {
     expect(document.body.querySelector('.x.axis .tick line').style.opacity).toEqual('0');
   });
 
-  it('Should hide yAxis line', () => {
+  it('should hide yAxis line', () => {
     bubbleObj.destroy();
     bubbleObj = new Line(bubbleEl, {
       dataset,

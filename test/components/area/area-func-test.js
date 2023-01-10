@@ -117,12 +117,12 @@ describe('Area Chart API', () => {
     cleanup();
   });
 
-  it('Should show on page', () => {
+  it('should show on page', () => {
     expect(document.body.querySelectorAll('.dot').length).toEqual(9);
     expect(document.body.querySelectorAll('.line-group').length).toEqual(3);
   });
 
-  it('Should be able to format axis', () => {
+  it('should be able to format axis', () => {
     areaObj?.destroy();
     areaObj = new Line(areaEl, { type: 'area', isArea: true, dataset: datasetFormat, animate: false, formatterString: '$,.2f' });
 
@@ -136,7 +136,7 @@ describe('Area Chart API', () => {
     expect(document.body.querySelectorAll('.y.axis .tick text')[7].innerHTML).toEqual('35');
   });
 
-  it('Should be able to get the get and set the selected line', () => {
+  it('should be able to get the get and set the selected line', () => {
     // Use group "name" to select
     let options = {
       groupName: 'name',
@@ -193,7 +193,7 @@ describe('Area Chart API', () => {
     expect(areaObj.getSelected()[0].data.name).toEqual('Jan');
   });
 
-  it('Should fire contextmenu event', () => {
+  it('should fire contextmenu event', () => {
     const callback = jest.fn();
 
     $(areaEl).on('contextmenu', callback);

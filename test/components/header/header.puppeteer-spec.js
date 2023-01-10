@@ -16,7 +16,7 @@ describe('Header', () => {
       expect(headerTitle).toEqual('Page Title');
     });
 
-    it('should not visual regress', async () => {
+    it('should not visually regress', async () => {
       expect(await page.waitForSelector('.container', { visible: true })).toBeTruthy();
       const header = await page.$('.header');
       const img = await header.screenshot();
@@ -32,7 +32,7 @@ describe('Header', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should not visual regress', async () => {
+    it('should not visually regress', async () => {
       await page.waitForSelector('.search-categories');
       await page.waitForSelector('.searchfield');
       await page.type('.searchfield', 'ea');

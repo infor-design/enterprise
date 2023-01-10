@@ -7,11 +7,11 @@ describe('Calendar Toolbar index tests', () => {
     await utils.setPage('/components/calendar/example-calendar-toolbar?layout=nofrills');
   });
 
-  it('Should render without error', async () => {
+  it('should render without error', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should be able to set id/automation id', async () => {
+  it('should be able to set id/automation id', async () => {
     expect(await element(by.id('calendar-toolbar-id-month-view-btn-prev')).getAttribute('id')).toEqual('calendar-toolbar-id-month-view-btn-prev');
     expect(await element(by.id('calendar-toolbar-id-month-view-btn-prev')).getAttribute('data-automation-id')).toEqual('calendar-toolbar-automation-id-month-view-btn-prev');
     expect(await element(by.id('calendar-toolbar-id-month-view-btn-next')).getAttribute('id')).toEqual('calendar-toolbar-id-month-view-btn-next');
@@ -33,7 +33,7 @@ describe('Calendar Toolbar Datepicker tests', () => {
     await utils.setPage('/components/calendar/test-calendar-toolbar-datepicker?layout=nofrills');
   });
 
-  it('Should render without error', async () => {
+  it('should render without error', async () => {
     await utils.checkForErrors();
   });
 });
@@ -43,12 +43,12 @@ describe('Calendar Toolbar visual tests', () => {
     await utils.setPage('/components/calendar/test-calendar-toolbar-visuals?theme=classic&layout=nofrills');
   });
 
-  it('Should render without error', async () => {
+  it('should render without error', async () => {
     await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    it('should not visually regress', async () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleepLonger);
 

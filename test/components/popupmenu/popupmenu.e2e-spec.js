@@ -10,11 +10,11 @@ describe('Contextmenu index tests', () => {
     await utils.setPage('/components/contextmenu/example-index');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should open on click and close on click out', async () => { //eslint-disable-line
+  it('should open on click and close on click out', async () => { //eslint-disable-line
     let input = await element(by.id('input-menu2'));
     await browser.actions().mouseMove(input).perform();
     await browser.actions().click(protractor.Button.RIGHT).perform();
@@ -34,7 +34,7 @@ describe('Contextmenu index tests', () => {
     expect(await element(by.id('action-popupmenu')).getAttribute('class')).not.toContain('is-open');
   });
 
-  it('Should add correct aria', async () => {
+  it('should add correct aria', async () => {
     // as per https://www.w3.org/TR/wai-aria-practices/examples/menu-button/menu-button-links.html
     const input = await element(by.id('input-menu2'));
     await browser.actions().mouseMove(input).perform();
@@ -49,7 +49,7 @@ describe('Contextmenu index tests', () => {
     expect(await element.all(by.css('#action-popupmenu li a')).first().getAttribute('role')).toEqual('menuitem');
   });
 
-  it('Should be able to set id/automation id', async () => {
+  it('should be able to set id/automation id', async () => {
     await browser.driver.sleep(config.sleep);
 
     expect(await element(by.id('input-menu')).getAttribute('data-automation-id')).toEqual('action-popupmenu-trigger');
@@ -66,12 +66,12 @@ describe('Popupmenu example-selectable tests', () => {
     await utils.setPage('/components/popupmenu/example-selectable?ltheme=classic&layout=nofrills');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    xit('Should not visual regress on example-selectable', async () => {
+    xit('should not visually regress on example-selectable', async () => {
       const popupmenuSection = await element(by.css('.no-frills'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(popupmenuSection), config.waitsFor);
@@ -83,7 +83,7 @@ describe('Popupmenu example-selectable tests', () => {
     });
   }
 
-  it('Should open on click, and close on click', async () => {
+  it('should open on click, and close on click', async () => {
     const buttonTriggerEl = await element(by.id('single-select-popupmenu-trigger'));
     await buttonTriggerEl.click();
 
@@ -93,7 +93,7 @@ describe('Popupmenu example-selectable tests', () => {
     expect(await buttonTriggerEl.getAttribute('class')).not.toContain('is-open');
   });
 
-  it('Should open on click', async () => {
+  it('should open on click', async () => {
     const buttonTriggerEl = await element(by.id('single-select-popupmenu-trigger'));
     await buttonTriggerEl.click();
 
@@ -101,7 +101,7 @@ describe('Popupmenu example-selectable tests', () => {
   });
 
   if (!utils.isIE() && !utils.isSafari()) {
-    it('Should open on keypress(Enter), and close on keypress(Escape)', async () => {
+    it('should open on keypress(Enter), and close on keypress(Escape)', async () => {
       const buttonTriggerEl = await element(by.id('single-select-popupmenu-trigger'));
       await buttonTriggerEl.sendKeys(protractor.Key.SPACE);
 
@@ -111,14 +111,14 @@ describe('Popupmenu example-selectable tests', () => {
       expect(await buttonTriggerEl.getAttribute('class')).not.toContain('is-open');
     });
 
-    it('Should open on keypress(Space)', async () => {
+    it('should open on keypress(Space)', async () => {
       const buttonTriggerEl = await element(by.id('single-select-popupmenu-trigger'));
       await buttonTriggerEl.sendKeys(protractor.Key.SPACE);
 
       expect(await buttonTriggerEl.getAttribute('class')).toContain('is-open');
     });
 
-    it('Should open with enter, and arrow down to the last menu item, and focus', async () => {
+    it('should open with enter, and arrow down to the last menu item, and focus', async () => {
       const bodyEl = await element(by.css('body'));
       const buttonTriggerEl = await element(by.id('single-select-popupmenu-trigger'));
       await buttonTriggerEl.sendKeys(protractor.Key.ENTER);
@@ -131,7 +131,7 @@ describe('Popupmenu example-selectable tests', () => {
       expect(await element.all(by.css('.popupmenu.is-open li')).last().getAttribute('class')).toContain('is-focused');
     });
 
-    it('Should select last item on spacebar, arrowing down', async () => {
+    it('should select last item on spacebar, arrowing down', async () => {
       const bodyEl = await element(by.css('body'));
       await element(by.id('single-select-popupmenu-trigger')).click();
       await bodyEl.sendKeys(protractor.Key.ARROW_DOWN);
@@ -155,11 +155,11 @@ describe('Popupmenu missing submenu tests', () => {
     await utils.setPage('/components/popupmenu/test-malformed-popupmenu?layout=nofrills');
   });
 
-  it('Should have no errors on page load', async () => {
+  it('should have no errors on page load', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should have no errors when hovering an item with a submenu', async () => {
+  it('should have no errors when hovering an item with a submenu', async () => {
     await element(by.id('open-me')).click();
 
     const popupmenuElem = await element(by.css('ul.popupmenu.is-open'));
@@ -180,7 +180,7 @@ describe('Popupmenu example-selectable-multiple tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress on example-selectable-multiple', async () => {
+    it('should not visually regress on example-selectable-multiple', async () => {
       const popupmenuSection = await element(by.css('.no-frills'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(popupmenuSection), config.waitsFor);
@@ -193,7 +193,7 @@ describe('Popupmenu example-selectable-multiple tests', () => {
   }
 
   if (!utils.isIE() && !utils.isSafari()) {
-    it('Should select first, and last item on spacebar, arrowing down', async () => {
+    it('should select first, and last item on spacebar, arrowing down', async () => {
       const bodyEl = await element(by.css('body'));
       const buttonTriggerEl = await element(by.id('multi-select-popupmenu-trigger'));
       await buttonTriggerEl.sendKeys(protractor.Key.ENTER);
@@ -211,7 +211,7 @@ describe('Popupmenu example-selectable-multiple tests', () => {
       expect(await firstItem.getAttribute('class')).toContain('is-checked');
     });
 
-    it('Should select first, and last item on spacebar, unselect last item, arrowing down', async () => {
+    it('should select first, and last item on spacebar, unselect last item, arrowing down', async () => {
       const bodyEl = await element(by.css('body'));
       const buttonTriggerEl = await element(by.id('multi-select-popupmenu-trigger'));
       await buttonTriggerEl.sendKeys(protractor.Key.ENTER);
@@ -267,7 +267,7 @@ describe('Contextmenu created dynamically tests', () => {
     await utils.setPage('/components/datagrid/test-contextmenu-dynamic');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
@@ -296,11 +296,11 @@ describe('Contextmenu immediate tests', () => {
     await utils.setPage('/components/tree/example-context-menu');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should more than once on right click', async () => {
+  it('should more than once on right click', async () => {
     let input = await element.all(by.css('.tree a')).first();
     await browser.actions().mouseMove(input).perform();
     await browser.actions().click(protractor.Button.RIGHT).perform();
@@ -330,12 +330,12 @@ describe('Contextmenu Placement Tests', () => {
     await utils.setPage('/components/contextmenu/example-page-rightclick');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
   if (!utils.isBS() && !utils.isCI()) {
-    it('Should correctly resize to fit within the viewport boundaries', async () => { //eslint-disable-line
+    it('should correctly resize to fit within the viewport boundaries', async () => { //eslint-disable-line
       const windowSize = await browser.driver.manage().window().getSize();
       await browser.driver.manage().window().setSize(640, 296);
 

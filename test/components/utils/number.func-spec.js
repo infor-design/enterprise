@@ -1,7 +1,7 @@
 import { numberUtils } from '../../../src/utils/number';
 
 describe('Number Utils', () => {
-  it('Should Replace toFixed', () => {
+  it('should Replace toFixed', () => {
     for (let i = 0; i < 10000; i++) {
       const number = `${i}.${i}`;
       for (let j = 0; j < 6; j++) {
@@ -29,7 +29,7 @@ describe('Number Utils', () => {
     expect(numberUtils.toFixed('123456789123456789.99', 0)).toEqual('123456789123456790');
   });
 
-  it('Should Truncate Decimals', () => {
+  it('should Truncate Decimals', () => {
     expect(numberUtils.truncate(123456789012.12346)).toEqual('123456789012.12');
     expect(numberUtils.truncate('123456789012.12346')).toEqual('123456789012.12');
     expect(numberUtils.truncate(123456789012.12346, 1)).toEqual('123456789012.1');
@@ -43,7 +43,7 @@ describe('Number Utils', () => {
     expect(numberUtils.truncate(123456789012.12346, 9)).toEqual('123456789012.12346');
   });
 
-  it('Should Truncate Big Numbers', () => {
+  it('should Truncate Big Numbers', () => {
     expect(numberUtils.truncate('123456789012.123456', 6)).toEqual('123456789012.123456');
     expect(numberUtils.truncate('123456789012.123456', 7)).toEqual('123456789012.123456');
     expect(numberUtils.truncate('123456789012.123456')).toEqual('123456789012.12');
@@ -51,7 +51,7 @@ describe('Number Utils', () => {
     expect(numberUtils.truncate('1234567890123.123456')).toEqual('1234567890123.12');
   });
 
-  it('Should Round Decimals', () => {
+  it('should Round Decimals', () => {
     expect(numberUtils.round(800.9905673502324, 0)).toEqual('801');
     expect(numberUtils.round('1234567890123456789.0', 0)).toEqual('1234567890123456789');
     expect(numberUtils.round(123456789012.12346)).toEqual('123456789012.12');
@@ -72,7 +72,7 @@ describe('Number Utils', () => {
     expect(numberUtils.round(123, 0)).toEqual('123');
   });
 
-  it('Should Count Decimals', () => {
+  it('should Count Decimals', () => {
     expect(numberUtils.decimalPlaces(123.00)).toEqual(0);
     expect(numberUtils.decimalPlaces(123.1)).toEqual(1);
     expect(numberUtils.decimalPlaces(123.10)).toEqual(1);

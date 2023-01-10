@@ -7,11 +7,11 @@ describe('Personalization tests', () => {
     await utils.setPage('/components/personalize/test-state');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should maintain chosen theme after reinitialization', async () => {
+  it('should maintain chosen theme after reinitialization', async () => {
     const pageChangerButtonEl = await element.all(by.css('.page-changer'));
     const themeChoices = await element.all(by.css('.popupmenu li.is-selectable a[data-theme-name]'));
     const reinitButton = await element(by.id('reinitialize'));
@@ -34,7 +34,7 @@ describe('Personalization tests', () => {
     expect(await element.all(by.css('html')).get(0).getAttribute('class')).toContain(chosenTheme[0]);
   });
 
-  it('Should maintain chosen colors after reinitialization', async () => {
+  it('should maintain chosen colors after reinitialization', async () => {
     const reinitButton = await element(by.id('reinitialize'));
 
     await element(by.css('.page-changer')).click();
@@ -59,12 +59,12 @@ describe('Personalization classes tests', () => {
     await utils.setPage('/components/personalize/example-classes.html?theme=classic&layout=nofrills');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    xit('Should not visual regress', async () => {
+    xit('should not visually regress', async () => {
       const containerEl = await element(by.className('container'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
@@ -80,12 +80,12 @@ describe('Personalization classes short tests', () => {
     await utils.setPage('/components/personalize/test-classes-short.html?theme=classic&layout=nofrills');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    xit('Should not visual regress', async () => {
+    xit('should not visually regress', async () => {
       const containerEl = await element(by.className('container'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
@@ -102,12 +102,12 @@ describe('Personalization example-tabs tests', () => {
     await browser.driver.sleep(config.sleepShort);
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    xit('Should not visual regress', async () => {
+    xit('should not visually regress', async () => {
       const containerEl = await element(by.className('container'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
@@ -123,12 +123,12 @@ describe('Personalization form tests', () => {
     await utils.setPage('/components/personalize/example-form.html?theme=classic&layout=nofrills');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    xit('Should not visual regress', async () => {
+    xit('should not visually regress', async () => {
       const containerEl = await element(by.className('container'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
@@ -145,12 +145,12 @@ describe('Personalization form short tests', () => {
     await utils.setPage('/components/personalize/test-form-short.html?theme=classic&layout=nofrills');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    xit('Should not visual regress', async () => {
+    xit('should not visually regress', async () => {
       const containerEl = await element(by.className('container'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
@@ -166,12 +166,12 @@ describe('Personalization form2 tests', () => {
     await utils.setPage('/components/personalize/example-form2.html?theme=classic&layout=nofrills');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    xit('Should not visual regress', async () => {
+    xit('should not visually regress', async () => {
       const containerEl = await element(by.className('container'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
@@ -187,12 +187,12 @@ describe('Personalization form 2 tests', () => {
     await utils.setPage('/components/personalize/example-form2.html?theme=classic&layout=nofrills');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    xit('Should not visual regress', async () => {
+    xit('should not visually regress', async () => {
       const containerEl = await element(by.className('container'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
@@ -208,12 +208,12 @@ describe('Personalization form 2 short tests', () => {
     await utils.setPage('/components/personalize/test-form2-short.html?theme=classic&layout=nofrills');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    xit('Should not visual regress', async () => {
+    xit('should not visually regress', async () => {
       const containerEl = await element(by.className('container'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);

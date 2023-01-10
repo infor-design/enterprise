@@ -6,11 +6,11 @@ describe('Swaplist example-index tests', () => {
     await utils.setPage('/components/swaplist/example-index?layout=nofrills');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should be able to set id/automation id example two', async () => {
+  it('should be able to set id/automation id example two', async () => {
     expect(await element(by.id('example2-swaplist-btn-available')).getAttribute('id')).toEqual('example2-swaplist-btn-available');
     expect(await element(by.id('example2-swaplist-btn-available')).getAttribute('data-automation-id')).toEqual('automation-id-example2-swaplist-btn-available');
     expect(await element(by.id('example2-swaplist-btn-selected-left')).getAttribute('id')).toEqual('example2-swaplist-btn-selected-left');

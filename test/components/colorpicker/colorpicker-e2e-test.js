@@ -7,12 +7,12 @@ describe('Colorpicker example-index tests', () => {
     await utils.setPage('/components/colorpicker/example-index?theme=classic');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress on example-index', async () => {
+    it('should not visually regress on example-index', async () => {
       await browser.driver.sleep(config.sleep);
       const colorpickerSection = await element(by.id('maincontent'));
       await browser.driver
@@ -27,13 +27,13 @@ describe('Colorpicker example-index tests', () => {
     });
   }
 
-  it('Should open popup on icon click', async () => {
+  it('should open popup on icon click', async () => {
     await element(by.css('#background-color + .trigger .icon')).click();
 
     expect(await element(by.css('#background-color.is-open')).isDisplayed()).toBe(true);
   });
 
-  it('Should be able to set id/automation id', async () => {
+  it('should be able to set id/automation id', async () => {
     await element(by.css('#background-color + .trigger .icon')).click();
 
     expect(await element(by.id('background-color')).getAttribute('id')).toEqual('background-color');
@@ -43,7 +43,7 @@ describe('Colorpicker example-index tests', () => {
     expect(await element(by.id('background-color-clear')).getAttribute('id')).toEqual('background-color-clear');
   });
 
-  it('Should open popup on keyboard down', async () => {
+  it('should open popup on keyboard down', async () => {
     const colorInputEl = await element(by.css('#background-color'));
     await colorInputEl.click();
     await colorInputEl.sendKeys(protractor.Key.ARROW_DOWN);
@@ -51,14 +51,14 @@ describe('Colorpicker example-index tests', () => {
     expect(await element(by.css('#background-color.is-open')).isDisplayed()).toBe(true);
   });
 
-  it('Should pick color from picker', async () => {
+  it('should pick color from picker', async () => {
     await element(by.css('#background-color + .trigger .icon')).click();
     await element(by.css('#colorpicker-menu li:first-child a:first-child')).click();
 
     expect(await element(by.id('background-color')).getAttribute('value')).toEqual('#1A1A1A');
   });
 
-  it('Should pick color from picker on keyboard enter', async () => {
+  it('should pick color from picker on keyboard enter', async () => {
     const colorInputEl = await element(by.id('background-color'));
     await colorInputEl.click();
     await colorInputEl.sendKeys(protractor.Key.ARROW_DOWN);
@@ -75,7 +75,7 @@ describe('Colorpicker example-index tests', () => {
     expect(await element(by.id('background-color')).getAttribute('value')).toEqual('#1A1A1A');
   });
 
-  it('Should set color from manual entry of #898989', async () => {
+  it('should set color from manual entry of #898989', async () => {
     const colorInputEl = await element(by.id('background-color'));
     await colorInputEl.click();
     await colorInputEl.clear();
@@ -86,7 +86,7 @@ describe('Colorpicker example-index tests', () => {
     expect(await element.all(by.className('swatch')).first().getAttribute('style')).toBe('background-color: rgb(137, 137, 137);');
   });
 
-  it('Should pick clear color from picker', async () => {
+  it('should pick clear color from picker', async () => {
     await element(by.css('#background-color + .trigger .icon')).click();
     await element(by.css('#colorpicker-menu li:last-child a:first-child')).click();
 
@@ -94,13 +94,13 @@ describe('Colorpicker example-index tests', () => {
     expect(await element(by.css('.swatch.is-invalid')).isDisplayed()).toBe(true);
   });
 
-  it('Should open popup on keypress(arrow-down)', async () => {
+  it('should open popup on keypress(arrow-down)', async () => {
     await element(by.id('background-color')).sendKeys(protractor.Key.ARROW_DOWN);
 
     expect(await element(by.css('#background-color.is-open')).isDisplayed()).toBe(true);
   });
 
-  it('Should pick color from picker with keypress', async () => {
+  it('should pick color from picker with keypress', async () => {
     await element(by.id('background-color')).sendKeys(protractor.Key.ARROW_DOWN);
 
     expect(await element(by.css('#background-color.is-open')).isDisplayed()).toBe(true);
@@ -110,7 +110,7 @@ describe('Colorpicker example-index tests', () => {
     expect(await element(by.id('background-color')).getAttribute('value')).toEqual('#1A1A1A');
   });
 
-  it('Should pick clear color from picker with keypress', async () => {
+  it('should pick clear color from picker with keypress', async () => {
     await element(by.id('background-color')).sendKeys(protractor.Key.ARROW_DOWN);
 
     expect(await element(by.css('#background-color.is-open')).isDisplayed()).toBe(true);
@@ -122,7 +122,7 @@ describe('Colorpicker example-index tests', () => {
     expect(await element(by.css('.swatch.is-invalid')).isDisplayed()).toBe(true);
   });
 
-  it('Should set clear swatch', async () => {
+  it('should set clear swatch', async () => {
     await element(by.id('background-color')).sendKeys(protractor.Key.BACK_SPACE);
     await element(by.css('body')).click();
 
@@ -136,14 +136,14 @@ describe('Colorpicker show label tests', () => {
     await utils.setPage('/components/colorpicker/example-show-label');
   });
 
-  it('Should pick color from picker and set label', async () => {
+  it('should pick color from picker and set label', async () => {
     await element(by.css('#show-label + .trigger .icon')).click();
     await element(by.css('#colorpicker-menu li:first-child a:first-child')).click();
 
     expect(await element(by.id('show-label')).getAttribute('value')).toEqual('Slate10');
   });
 
-  it('Should pick clear color from picker and set label', async () => {
+  it('should pick clear color from picker and set label', async () => {
     await element(by.css('#show-label + .trigger .icon')).click();
     await element(by.css('#colorpicker-menu li:last-child a:first-child')).click();
 
@@ -156,7 +156,7 @@ describe('Colorpicker custom label tests', () => {
     await utils.setPage('/components/colorpicker/example-custom-labels');
   });
 
-  it('Should pick color from picker as custom color and label', async () => {
+  it('should pick color from picker as custom color and label', async () => {
     await element(by.css('#custom-color + .trigger .icon')).click();
     await element(by.css('#colorpicker-menu li:first-child a:first-child')).click();
 
@@ -174,14 +174,14 @@ describe('Colorpicker case types tests', () => {
     await utils.setPage('/components/colorpicker/test-case-types');
   });
 
-  it('Should pick color from picker and use upper case', async () => {
+  it('should pick color from picker and use upper case', async () => {
     await element(by.css('#colorpicker-uc + .trigger .icon')).click();
     await element(by.css('#colorpicker-menu li:first-child a:first-child')).click();
 
     expect(await element(by.id('colorpicker-uc')).getAttribute('value')).toEqual('#1A1A1A');
   });
 
-  it('Should pick color from picker and use lower case', async () => {
+  it('should pick color from picker and use lower case', async () => {
     await element(by.css('#colorpicker-lc + .trigger .icon')).click();
     await element(by.css('#colorpicker-menu li:first-child a:first-child')).click();
 
@@ -194,13 +194,13 @@ describe('Colorpicker clearable tests', () => {
     await utils.setPage('/components/colorpicker/test-clearable');
   });
 
-  it('Should show clearable option', async () => {
+  it('should show clearable option', async () => {
     await element.all(by.css('#cp-clearable-true + .trigger .icon')).first().click();
 
     expect(await element(by.css('#colorpicker-menu li:last-child .swatch')).getAttribute('class')).toContain('is-empty');
   });
 
-  it('Should not show clearable option', async () => {
+  it('should not show clearable option', async () => {
     await element(by.css('#cp-clearable-false + .trigger .icon')).click();
 
     expect(await element(by.css('#colorpicker-menu li:last-child .swatch')).getAttribute('class')).not.toContain('is-empty');
@@ -212,7 +212,7 @@ describe('Colorpicker states tests', () => {
     await utils.setPage('/components/colorpicker/test-states');
   });
 
-  it('Should check for state Non-Editable', async () => {
+  it('should check for state Non-Editable', async () => {
     await element(by.css('#non-editable + .trigger .icon')).click();
     await element(by.css('#colorpicker-menu li:first-child a:first-child')).click();
 
@@ -224,14 +224,14 @@ describe('Colorpicker states tests', () => {
     expect(await element(by.id('non-editable')).getAttribute('value')).toEqual('#1A1A1A');
   });
 
-  it('Should check for state Disabled', async () => {
+  it('should check for state Disabled', async () => {
     await element(by.css('#foreground-color + .trigger .icon')).click();
 
     expect(await element(by.css('#foreground-color.is-open')).isPresent()).toBe(false);
     expect(await element(by.css('#foreground-color')).isEnabled()).toBeFalsy();
   });
 
-  it('Should check for state Readonly', async () => {
+  it('should check for state Readonly', async () => {
     await element(by.css('#readonly-color + .trigger .icon')).click();
 
     expect(await element(by.css('#readonly-color.is-open')).isPresent()).toBe(false);
@@ -239,7 +239,7 @@ describe('Colorpicker states tests', () => {
   });
 
   if (!utils.isCI() && !utils.isBS()) {
-    it('Should check for Dirty Tracking', async () => {
+    it('should check for Dirty Tracking', async () => {
       await element(by.css('#dirty-color + .trigger .icon')).click();
       await element.all(by.css('#colorpicker-menu li:first-child a:first-child')).first().click();
       await browser.driver
@@ -256,7 +256,7 @@ describe('Colorpicker states tests', () => {
     });
   }
 
-  it('Should check for Validation required rule', async () => {
+  it('should check for Validation required rule', async () => {
     const colorpickerEl = await element(by.id('required-color'));
     await colorpickerEl.clear();
 
@@ -270,7 +270,7 @@ describe('Colorpicker states tests', () => {
     expect(await colorpickerEl.getAttribute('class')).toContain('error');
   });
 
-  it('Should check for api option Just Color', async () => {
+  it('should check for api option Just Color', async () => {
     expect(await element(by.id('color-only')).getCssValue('width')).toBe('12px');
   });
 });
@@ -280,7 +280,7 @@ describe('Colorpicker modal tests', () => {
     await utils.setPage('/components/colorpicker/test-modal');
   });
 
-  xit('Should open colorpicker modal', async () => {
+  xit('should open colorpicker modal', async () => {
     const modalBtnEl = await element(by.id('add-comment'));
     await modalBtnEl.click();
     await browser.driver
@@ -289,7 +289,7 @@ describe('Colorpicker modal tests', () => {
     expect(await element(by.className('modal-engaged')).isPresent()).toBe(true);
   });
 
-  it('Should select color, and close colorpicker modal on "cancel" button click', async () => {
+  it('should select color, and close colorpicker modal on "cancel" button click', async () => {
     const modalBtnEl = await element(by.id('add-comment'));
     await modalBtnEl.click();
     await browser.driver
@@ -307,7 +307,7 @@ describe('Colorpicker modal tests', () => {
     expect(await element(by.className('modal-engaged')).isPresent()).toBe(false);
   });
 
-  it('Should select color, and close colorpicker modal on "save" button click', async () => {
+  it('should select color, and close colorpicker modal on "save" button click', async () => {
     const modalBtnEl = await element(by.id('add-comment'));
     await modalBtnEl.click();
     await browser.driver
@@ -325,7 +325,7 @@ describe('Colorpicker modal tests', () => {
     expect(await element(by.className('modal-engaged')).isPresent()).toBe(false);
   });
 
-  it('Should select from both colorpickers, and close colorpicker modal on "save" button click', async () => {
+  it('should select from both colorpickers, and close colorpicker modal on "save" button click', async () => {
     const modalBtnEl = await element(by.id('add-comment'));
     await modalBtnEl.click();
     await browser.driver
@@ -347,7 +347,7 @@ describe('Colorpicker modal tests', () => {
     expect(await element(by.className('modal-engaged')).isPresent()).toBe(false);
   });
 
-  it('Should close colorpicker modal on keypress escape', async () => {
+  it('should close colorpicker modal on keypress escape', async () => {
     const modalBtnEl = await element(by.id('add-comment'));
     await modalBtnEl.click();
     await browser.driver
@@ -362,7 +362,7 @@ describe('Colorpicker modal tests', () => {
     expect(await element(by.className('modal-engaged')).isPresent()).toBe(false);
   });
 
-  it('Should tab to, and open second colorpicker, tab out, and press enter on cancel to close', async () => {
+  it('should tab to, and open second colorpicker, tab out, and press enter on cancel to close', async () => {
     const modalBtnEl = await element(by.id('add-comment'));
     await modalBtnEl.click();
     await browser.driver
@@ -386,7 +386,7 @@ describe('Colorpicker modal tests', () => {
     expect(await element(by.className('modal-engaged')).isPresent()).toBe(false);
   });
 
-  it('Should tab to, and enter hex, and press enter, display value, and close modal', async () => {
+  it('should tab to, and enter hex, and press enter, display value, and close modal', async () => {
     const modalBtnEl = await element(by.id('add-comment'));
     await modalBtnEl.click();
     await browser.driver
@@ -409,12 +409,12 @@ describe('Colorpicker sizes tests', () => {
     await utils.setPage('/components/colorpicker/example-sizes?theme=classic&layout=nofrills');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    it('should not visually regress', async () => {
       const containerEl = await element(by.css('div[role=main]'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
@@ -430,11 +430,11 @@ describe('Colorpicker RTL left and right keys test', () => {
     await utils.setPage('/components/colorpicker/example-index?locale=ar-EG&layout=nofrills');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should pick correct color from picker on keyboard enter', async () => {
+  it('should pick correct color from picker on keyboard enter', async () => {
     const colorInputEl = await element(by.id('background-color'));
     await colorInputEl.click();
     await colorInputEl.sendKeys(protractor.Key.ARROW_DOWN);

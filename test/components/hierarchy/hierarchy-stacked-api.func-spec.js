@@ -71,7 +71,7 @@ describe('Hierarchy Stacked API', () => {
     expect(document.body.querySelector('legend li').innerText.trim()).toEqual('Full Time');
   });
 
-  it('Should not trigger collapsed function when using stacked layout', () => {
+  it('should not trigger collapsed function when using stacked layout', () => {
     const collapseButtons = document.body.querySelectorAll('.btn-collapse');
     const callback = jest.fn();
     $(collapseButtons[1]).on('click', callback);

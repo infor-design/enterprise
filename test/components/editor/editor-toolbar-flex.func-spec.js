@@ -28,7 +28,7 @@ describe('Editor API (using Flex Toolbar)', () => {
     cleanup();
   });
 
-  it('Should support using a Flex Toolbar', () => {
+  it('should support using a Flex Toolbar', () => {
     const toolbarFlexAPI = editorAPI.toolbarAPI;
 
     expect(toolbarFlexAPI).toBeDefined();

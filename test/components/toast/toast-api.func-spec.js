@@ -37,31 +37,31 @@ describe('Toast API', () => {
     cleanup();
   });
 
-  it('Should be defined', () => {
+  it('should be defined', () => {
     expect(toastObj).toBeTruthy();
   });
 
-  it('Should visible toast', () => {
+  it('should visible toast', () => {
     expect(document.body.querySelector('.toast')).toBeTruthy();
   });
 
-  it('Should have title', () => {
+  it('should have title', () => {
     toastMessageTitleEl = document.body.querySelector('.toast-title');
 
     expect(toastMessageTitleEl.innerText).toEqual('Toast Title');
   });
 
-  it('Should have message', () => {
+  it('should have message', () => {
     toastMessageContentEl = document.body.querySelector('.toast-message');
 
     expect(toastMessageContentEl.innerText).toEqual('Toast Message');
   });
 
-  it('Should have progress bar', () => {
+  it('should have progress bar', () => {
     expect(document.body.querySelector('.toast-progress')).toBeTruthy();
   });
 
-  it('Should have settings updated', () => {
+  it('should have settings updated', () => {
     const settings = {
       title: 'Toast Title 2',
       message: 'Toast Message 2',
@@ -73,13 +73,13 @@ describe('Toast API', () => {
     expect(toastObj.settings.title).toEqual('Toast Title 2');
   });
 
-  it('Should destroy toast', () => {
+  it('should destroy toast', () => {
     toastObj.destroy();
 
     expect(document.body.querySelector('.toast')).toBeFalsy();
   });
 
-  it('Should save settings for draggable', () => {
+  it('should save settings for draggable', () => {
     const left = 'left: 100px';
     const settings = {
       title: 'Application Offline',
@@ -108,7 +108,7 @@ describe('Toast API', () => {
     expect(container.getAttribute('style')).toContain(left);
   });
 
-  it('Should support setting attributes', () => {
+  it('should support setting attributes', () => {
     let settings = {
       title: 'Toast Title 2',
       message: 'Toast Message 2',
@@ -138,7 +138,7 @@ describe('Toast API', () => {
     expect(closeButton.getAttribute('data-automation-id')).toEqual('my-unique-id-btn-close');
   });
 
-  it('Should support setting attributes as a function', () => {
+  it('should support setting attributes as a function', () => {
     const settings = {
       title: 'Toast Title 2',
       message: 'Toast Message 2',
@@ -156,7 +156,7 @@ describe('Toast API', () => {
     expect(closeButton.getAttribute('id')).toEqual('toast-id-2-btn-close');
   });
 
-  it('Should support setting attributes as an array', () => {
+  it('should support setting attributes as an array', () => {
     const settings = {
       title: 'Toast Title 2',
       message: 'Toast Message 2',

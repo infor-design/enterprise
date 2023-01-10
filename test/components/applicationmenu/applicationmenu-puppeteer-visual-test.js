@@ -11,7 +11,7 @@ describe('Application Menu Puppeteer Visual Tests', () => {
       await page.goto(url, { waitUnitl: ['domcontentloaded', 'networkidle2'] });
     });
 
-    it('should not visual regress', async () => {
+    it('should not visually regress', async () => {
       await page.setViewport({ width: 1200, height: 800 });
       const button = await page.waitForSelector('.application-menu-trigger', { visible: true });
       await button.click();

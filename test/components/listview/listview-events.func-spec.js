@@ -28,7 +28,7 @@ describe('Listview Events', () => {
     cleanup();
   });
 
-  it('Should be able to single select', (done) => {
+  it('should be able to single select', (done) => {
     listviewAPI.destroy();
     listviewAPI = new ListView(listviewEl, { dataset: data, template: 'period-end-tmpl', selectable: 'single' });
 
@@ -49,7 +49,7 @@ describe('Listview Events', () => {
     listviewAPI.deselect($(liEl));
   });
 
-  it('Should be able to multi select', (done) => {
+  it('should be able to multi select', (done) => {
     listviewAPI.destroy();
     listviewAPI = new ListView(listviewEl, { dataset: data, template: 'period-end-tmpl', selectable: 'multiple' });
     const callback = jest.fn();
@@ -75,7 +75,7 @@ describe('Listview Events', () => {
     listviewAPI.deselect($(liEl2));
   });
 
-  it('Should be fire rendered on updated with no params', () => {
+  it('should be fire rendered on updated with no params', () => {
     listviewAPI = new ListView(listviewEl, { dataset: data, template: 'period-end-tmpl', selectable: 'multiple' });
     const callback = jest.fn();
     $(listviewEl).on('rendered', callback);
@@ -85,7 +85,7 @@ describe('Listview Events', () => {
     expect(callback).toHaveBeenCalled();
   });
 
-  it('Should be fire rendered on updated with new settings', () => {
+  it('should be fire rendered on updated with new settings', () => {
     listviewAPI = new ListView(listviewEl, { dataset: data, template: 'period-end-tmpl', selectable: 'multiple' });
     const callback = jest.fn();
     $(listviewEl).on('rendered', callback);

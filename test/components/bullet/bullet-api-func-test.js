@@ -88,7 +88,7 @@ describe('Bullet Chart API', () => {
     cleanup();
   });
 
-  it('Should show on page', () => {
+  it('should show on page', () => {
     expect(document.body.querySelectorAll('.tick').length).toEqual(7);
     expect(document.body.querySelectorAll('.tick')[0].textContent).toEqual('0');
     expect(document.body.querySelectorAll('.tick')[6].textContent).toEqual('600');
@@ -107,7 +107,7 @@ describe('Bullet Chart API', () => {
     }, 300);
   });
 
-  it('Should fire contextmenu event', () => {
+  it('should fire contextmenu event', () => {
     const callback = jest.fn();
     $(bulletEl).on('contextmenu', callback);
     $(bulletEl).on('contextmenu', (e, el, d) => {

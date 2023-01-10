@@ -22,7 +22,7 @@ describe('Error Page Puppeteer Tests', () => {
       expect(await page.$eval('#error-page-btn-id-1', el => el.getAttribute('data-automation-id'))).toEqual('automation-id-errorpage-btn-1');
     });
 
-    it('should not visual regress', async () => {
+    it('should not visually regress', async () => {
       await page.setViewport({ width: 1200, height: 800 });
 
       expect(await page.waitForSelector('.error-page-content')).toBeTruthy();

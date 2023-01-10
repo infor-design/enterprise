@@ -63,13 +63,13 @@ describe('Radar API', () => {
     cleanup();
   });
 
-  it('Should show on page', () => {
+  it('should show on page', () => {
     expect(document.body.querySelectorAll('.chart-radar-circle').length).toEqual(21);
     expect(document.body.querySelectorAll('.chart-radar-area').length).toEqual(3);
     expect(document.body.querySelectorAll('.chart-legend-item-text')[0].innerText).toEqual('iPhone X');
   });
 
-  it('Should support updating', () => {
+  it('should support updating', () => {
     const dataset2 = [{
       data: [
         { name: 'Battery Life', value: 0.22 },
@@ -97,7 +97,7 @@ describe('Radar API', () => {
     expect(document.body.querySelectorAll('.chart-legend-item-text')[0].innerText).toEqual('Thing X');
   });
 
-  it('Should be able to get the get and set the selected line', (done) => {
+  it('should be able to get the get and set the selected line', (done) => {
     // Use group "name" to select
     let options = {
       fieldName: 'id',
@@ -128,7 +128,7 @@ describe('Radar API', () => {
     }, 201);
   });
 
-  it('Should fire contextmenu event', () => {
+  it('should fire contextmenu event', () => {
     const callback = jest.fn();
     $(radarEl).on('contextmenu', callback);
     $(radarEl).on('contextmenu', (e, el, d) => {

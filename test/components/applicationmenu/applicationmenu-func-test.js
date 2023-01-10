@@ -111,13 +111,13 @@ describe('Application Menu API', () => {
     cleanup();
   });
 
-  it('Should show on page', () => {
+  it('should show on page', () => {
     document.body.querySelector('#header-hamburger').click();
 
     expect(document.body.querySelector('#application-menu')).toBeTruthy();
   });
 
-  it('Should not error on updated', () => {
+  it('should not error on updated', () => {
     $(applicationmenuEl).empty();
     applicationmenuObj.updated();
 

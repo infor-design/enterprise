@@ -23,7 +23,7 @@ describe('Tabs Settings', () => {
     cleanup();
   });
 
-  it('Should set settings', () => {
+  it('should set settings', () => {
     const settings = {
       addTabButton: false,
       addTabButtonCallback: null,
@@ -49,7 +49,7 @@ describe('Tabs Settings', () => {
     expect(tabsObj.settings).toEqual(settings);
   });
 
-  it('Should update set settings via parameter', () => {
+  it('should update set settings via parameter', () => {
     const settings = {
       addTabButton: true,
       addTabButtonCallback: null,

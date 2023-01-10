@@ -27,7 +27,7 @@ describe('Spinbox settings', () => {
     cleanup();
   });
 
-  it('Should set settings', () => {
+  it('should set settings', () => {
     spinboxEl.removeAttribute('data-options');
     spinboxApi.destroy();
     const settings = {
@@ -45,7 +45,7 @@ describe('Spinbox settings', () => {
     expect(spinboxApi.settings).toEqual(settings);
   });
 
-  it('Should update set settings via data', () => {
+  it('should update set settings via data', () => {
     const settings = {
       autocorrectOnBlur: true,
       min: 10,
@@ -62,7 +62,7 @@ describe('Spinbox settings', () => {
     expect(spinboxApi.settings).toEqual(settings);
   });
 
-  it('Should update set settings via parameter', () => {
+  it('should update set settings via parameter', () => {
     const settings = {
       autocorrectOnBlur: true,
       min: 10,
@@ -78,7 +78,7 @@ describe('Spinbox settings', () => {
     expect(spinboxApi.settings).toEqual(settings);
   });
 
-  it('Should update settings via data-options', () => {
+  it('should update settings via data-options', () => {
     const settings = {
       autocorrectOnBlur: true,
       min: 0,

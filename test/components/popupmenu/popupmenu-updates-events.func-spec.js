@@ -23,7 +23,7 @@ describe('Popupmenu Events', () => {
     cleanup();
   });
 
-  it('Should trigger "beforeopen" event', () => {
+  it('should trigger "beforeopen" event', () => {
     const callback = jest.fn();
     $('#single-select-popupmenu-trigger').on('beforeopen', callback);
     popupmenuObj.open();
@@ -31,7 +31,7 @@ describe('Popupmenu Events', () => {
     expect(callback).toHaveBeenCalled();
   });
 
-  it('Should trigger "open" event', (done) => {
+  it('should trigger "open" event', (done) => {
     const callback = jest.fn();
     $('#single-select-popupmenu-trigger').on('open', callback);
     popupmenuObj.open();
@@ -41,7 +41,7 @@ describe('Popupmenu Events', () => {
     }, 500);
   });
 
-  it('Should trigger "afteropen" event', (done) => {
+  it('should trigger "afteropen" event', (done) => {
     const callback = jest.fn();
     $('#single-select-popupmenu-trigger').on('afteropen', callback);
     popupmenuObj.open();
@@ -51,7 +51,7 @@ describe('Popupmenu Events', () => {
     }, 500);
   });
 
-  it('Should trigger "close" event', (done) => {
+  it('should trigger "close" event', (done) => {
     const callback = jest.fn();
     $('#single-select-popupmenu-trigger').on('close', callback);
     popupmenuObj.open();
@@ -62,7 +62,7 @@ describe('Popupmenu Events', () => {
     }, 600);
   });
 
-  it('Should not bubble "destroy" event', () => {
+  it('should not bubble "destroy" event', () => {
     const callback = jest.fn();
     $('.field').on('destroy', callback);
     popupmenuObj.destroy();

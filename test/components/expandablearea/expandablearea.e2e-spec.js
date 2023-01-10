@@ -9,11 +9,11 @@ describe('Expandable Area Index Tests', () => {
     await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.className('expandable-expander'))), config.waitsFor);
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should be able to toggle', async () => {
+  it('should be able to toggle', async () => {
     const pane = await element(by.id('expandablearea-id-1-content'));
     const trigger = await element.all(by.className('expandable-expander')).first();
 
@@ -27,7 +27,7 @@ describe('Expandable Area Index Tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    it('should not visually regress', async () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
@@ -35,7 +35,7 @@ describe('Expandable Area Index Tests', () => {
     });
   }
 
-  it('Should be able to set ids/automations ids', async () => {
+  it('should be able to set ids/automations ids', async () => {
     await browser.driver.sleep(config.sleep);
 
     expect(await element(by.id('expandablearea-id-1')).getAttribute('id')).toEqual('expandablearea-id-1');
@@ -90,11 +90,11 @@ describe('Expandable Custom Toggle Button Tests', () => {
     await browser.driver.wait(protractor.ExpectedConditions.invisibilityOf(element(by.className('expandable-pane'))), config.waitsFor);
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should be able to toggle', async () => {
+  it('should be able to toggle', async () => {
     const pane = await element(by.id('expandable-area-0-content'));
     const trigger = await element(by.id('trigger-btn'));
 
@@ -108,7 +108,7 @@ describe('Expandable Custom Toggle Button Tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    it('should not visually regress', async () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 

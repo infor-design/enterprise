@@ -11,7 +11,7 @@ describe('Mask API', () => {
     pipe: undefined
   };
 
-  it('Should be an object', () => {
+  it('should be an object', () => {
     expect(window.Soho).toBeDefined();
     expect(window.Soho.masks).toBeDefined();
     expect(window.Soho.components.MaskInput).toBeDefined();
@@ -34,7 +34,7 @@ describe('Mask API', () => {
     expect(api.process).toEqual(jasmine.any(Function));
   });
 
-  it('Should convert a legacy Soho pattern mask to an array', () => {
+  it('should convert a legacy Soho pattern mask to an array', () => {
     const api = new MaskAPI(DEFAULT_SETTINGS);
     const maskDefinitions = masks.LEGACY_DEFS;
 
@@ -85,7 +85,7 @@ describe('Mask API', () => {
     expect(result.conformedValue).toEqual('0123-4567-8901-2345');
   });
 
-  it('Should properly identify caret traps in a pattern array', () => {
+  it('should properly identify caret traps in a pattern array', () => {
     const api = new MaskAPI(DEFAULT_SETTINGS);
     const caretTrap = masks.CARET_TRAP;
     const testMask = [/\d/, ',', /\d/, /\d/, /\d/, ',', /\d/, /\d/, /\d/, ',', /\d/, /\d/, /\d/, caretTrap, '.', caretTrap, /\d/, /\d/];
@@ -102,7 +102,7 @@ describe('Mask API', () => {
     expect(result.indexes).toEqual(jasmine.arrayContaining([13, 14]));
   });
 
-  it('Should retains text caret locations in simple mask results', () => {
+  it('should retains text caret locations in simple mask results', () => {
     const settings = DEFAULT_SETTINGS;
     settings.pattern = [/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
 
@@ -137,7 +137,7 @@ describe('Mask API', () => {
     expect(caretPos).toEqual(1);
   });
 
-  it('Should properly adjust text caret placement when adding character literals', () => {
+  it('should properly adjust text caret placement when adding character literals', () => {
     const settings = DEFAULT_SETTINGS;
     settings.pattern = [/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
     const api = new MaskAPI(settings);
@@ -172,7 +172,7 @@ describe('Mask API', () => {
   });
 
   /*
-   *it('Should be able to translate a string into a mask from an alternate locale', () => {
+   *it('should be able to translate a string into a mask from an alternate locale', () => {
    *  TODO: SOHO-6294
    *  1. Grab French currency locale?
    *  2. run _conformToMask_ directly with mask, etc
@@ -187,7 +187,7 @@ describe('Number Mask API', () => {
     pipe: undefined
   };
 
-  it('Should convert legacy settings to current settings', () => {
+  it('should convert legacy settings to current settings', () => {
     const api = new MaskAPI(DEFAULT_SETTINGS);
     const opts = {
       selection: {
@@ -426,7 +426,7 @@ describe('Number Mask API', () => {
     expect(result.conformedValue).toEqual('一二三四五六七七九');
   });
 
-  it('Should process number masks with leading zeros', () => {
+  it('should process number masks with leading zeros', () => {
     const api = new MaskAPI(DEFAULT_SETTINGS);
 
     // Handle big numbers with thousands separators
@@ -486,7 +486,7 @@ describe('Date Mask API', () => {
     pipe: undefined
   };
 
-  it('Should process short dates', () => {
+  it('should process short dates', () => {
     const api = new MaskAPI(DEFAULT_SETTINGS);
 
     const textValue = '1111111111';
@@ -507,7 +507,7 @@ describe('Date Mask API', () => {
     expect(result.conformedValue).toEqual('11/11/1111');
   });
 
-  it('Should process short dates with no separators or other literals present', () => {
+  it('should process short dates with no separators or other literals present', () => {
     const api = new MaskAPI(DEFAULT_SETTINGS);
 
     const textValue = '12122012';

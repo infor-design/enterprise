@@ -80,19 +80,19 @@ describe('Button Puppeteer Visual Tests', () => {
       expect(image).toMatchImageSnapshot(snapshot);
     });
 
-    it('should not visual regress on example-100-percent at 1280px', async () => {
+    it('should not visually regress on example-100-percent at 1280px', async () => {
       await snap(1280, 800);
     });
 
-    it('should not visual regress on example-100-percent at 768px', async () => {
+    it('should not visually regress on example-100-percent at 768px', async () => {
       await snap(768, 1024);
     });
 
-    it('should not visual regress on example-100-percent at 500px', async () => {
+    it('should not visually regress on example-100-percent at 500px', async () => {
       await snap(500, 600);
     });
 
-    it('should not visual regress on example-100-percent at 320px', async () => {
+    it('should not visually regress on example-100-percent at 320px', async () => {
       await snap(320, 480);
     });
   });

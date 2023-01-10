@@ -135,7 +135,7 @@ We use jest image snapshots to provide the visual regression testing. We still n
 Here's the example code:
 
 ```javascript
-it('should not visual regress', async () => {
+it('should not visually regress', async () => {
   await page.setViewport({ width: 1200, height: 800 });
   await page.click('#add-context');
   await page.waitForSelector('.overlay', { visible: true });

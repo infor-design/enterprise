@@ -14,17 +14,17 @@ describe('Dropdown example-index tests', () => {
     await utils.setPage('/components/dropdown/example-index?theme=classic');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should open dropdown list on click', async () => {
+  it('should open dropdown list on click', async () => {
     await clickOnDropdown();
 
     expect(await element(by.className('is-open')).isDisplayed()).toBe(true);
   });
 
-  it('Should be able to select next element', async () => {
+  it('should be able to select next element', async () => {
     const dropdownEl = await element(by.css('#custom-dropdown-id-1 + .dropdown-wrapper div.dropdown'));
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
 
@@ -39,7 +39,7 @@ describe('Dropdown example-index tests', () => {
     expect(await element(by.id('custom-dropdown-id-1')).getAttribute('value')).toEqual('NM');
   });
 
-  it('Should select the active element on tab', async () => {
+  it('should select the active element on tab', async () => {
     const dropdownEl = await element(by.css('#custom-dropdown-id-1 + .dropdown-wrapper div.dropdown'));
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
 
@@ -56,7 +56,7 @@ describe('Dropdown example-index tests', () => {
     expect(await element(by.id('custom-dropdown-id-1')).getAttribute('value')).toEqual('OH');
   });
 
-  it('Should scroll down to end of list, and Vermont Should be visible', async () => {
+  it('should scroll down to end of list, and Vermont Should be visible', async () => {
     await clickOnDropdown();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.dropdown.is-open'))), config.waitsFor);
@@ -73,7 +73,7 @@ describe('Dropdown example-index tests', () => {
   });
 
   if (!utils.isSafari()) {
-    it('Should arrow down to New York, and focus', async () => {
+    it('should arrow down to New York, and focus', async () => {
       const dropdownEl = await element(by.css('div.dropdown'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
@@ -94,7 +94,7 @@ describe('Dropdown example-index tests', () => {
   }
 
   if (!utils.isSafari()) {
-    it('Should not work when disabled', async () => {
+    it('should not work when disabled', async () => {
       const dropdownEl = await element(by.css('div.dropdown'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
@@ -113,7 +113,7 @@ describe('Dropdown example-index tests', () => {
   }
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    it('should not visually regress', async () => {
       const dropdownEl = element(by.css('div.dropdown'));
       const dropdownElList = element(by.id('custom-dropdown-id-1-dropdown-list'));
       await browser.driver
@@ -130,7 +130,7 @@ describe('Dropdown example-index tests', () => {
     });
   }
 
-  it('Should search for Colorado', async () => {
+  it('should search for Colorado', async () => {
     const dropdownEl = await element(by.css('div.dropdown'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
@@ -149,7 +149,7 @@ describe('Dropdown example-index tests', () => {
   });
 
   if (!utils.isSafari()) {
-    it('Should keep the filter term in tact when pausing between keyboard presses', async () => {
+    it('should keep the filter term in tact when pausing between keyboard presses', async () => {
       const dropdownEl = await element(by.css('div.dropdown'));
       await browser.driver.sleep(config.sleep);
       await browser.driver
@@ -173,7 +173,7 @@ describe('Dropdown example-index tests', () => {
       expect(await element(by.id('custom-dropdown-id-1-search')).getAttribute('value')).toEqual('New Jersey');
     });
 
-    it('Should close an open list and tab to the next element without re-opening', async () => {
+    it('should close an open list and tab to the next element without re-opening', async () => {
       const dropdownEl = await element(by.css('div.dropdown'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
@@ -190,7 +190,7 @@ describe('Dropdown example-index tests', () => {
       expect(await element(by.css('div.dropdown'))).not.toContain('is-open');
     });
 
-    it('Should be able to set id/automation id', async () => {
+    it('should be able to set id/automation id', async () => {
       await clickOnDropdown();
       await browser.driver.sleep(config.sleepShort);
 
@@ -218,7 +218,7 @@ describe('Dropdown example-index tests', () => {
     });
   }
 
-  it('Should be able to reopen when closed by a menu button', async () => {
+  it('should be able to reopen when closed by a menu button', async () => {
     let dropdownEl = await element(by.css('div.dropdown'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
@@ -251,7 +251,7 @@ describe('Dropdown example-ajax tests', () => {
   });
 
   if (!utils.isSafari()) {
-    it('Should make ajax request, and arrow down to New York, and focus', async () => {
+    it('should make ajax request, and arrow down to New York, and focus', async () => {
       const dropdownEl = await element(by.css('div.dropdown'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
@@ -274,7 +274,7 @@ describe('Dropdown example-no-search-lsf tests', () => {
     await utils.setPage('/components/dropdown/example-no-search-lsf');
   });
 
-  it('Should select a Dropdown item when keying on a closed Dropdown component', async () => {
+  it('should select a Dropdown item when keying on a closed Dropdown component', async () => {
     const dropdownPseudoEl = await element.all(by.css('div.dropdown')).first();
     await browser.driver.sleep(config.sleep);
 
@@ -284,7 +284,7 @@ describe('Dropdown example-no-search-lsf tests', () => {
     expect(await element.all(by.css('div.dropdown')).first().getText()).toEqual('R - Rocket Raccoon');
   });
 
-  it('Should cycle through dropdown options that begin with the same character', async () => {
+  it('should cycle through dropdown options that begin with the same character', async () => {
     const dropdownPseudoEl = await element.all(by.css('div.dropdown')).first();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dropdownPseudoEl), config.waitsFor);
@@ -320,7 +320,7 @@ describe('Dropdown example-no-search-filtering tests', () => {
     await utils.setPage('/components/dropdown/example-no-search-filtering');
   });
 
-  it('Should properly filter when multiple characters are typed ahead', async () => {
+  it('should properly filter when multiple characters are typed ahead', async () => {
     const dropdownPseudoEl = await element.all(by.css('div.dropdown')).first();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dropdownPseudoEl), config.waitsFor);
@@ -357,7 +357,7 @@ describe('Dropdown example-no-search-filtering tests', () => {
   });
 
   if (!utils.isBS() && !utils.isCI()) {
-    it('Should clear a previous dropdown selection when pressing DELETE', async () => {
+    it('should clear a previous dropdown selection when pressing DELETE', async () => {
       // On Macs, use "backspace" delete, instead of control keys' delete
       const keyPressed = utils.isMac() || utils.isBS() || utils.isCI() ? 'BACK_SPACE' : 'DELETE';
       const dropdownPseudoEl = await element.all(by.css('div.dropdown')).first();
@@ -387,7 +387,7 @@ describe('Dropdown example-no-search tests', () => {
     await utils.setPage('/components/dropdown/example-no-search');
   });
 
-  it('Should not change selection if a key is pressed that does not match a dropdown item', async () => {
+  it('should not change selection if a key is pressed that does not match a dropdown item', async () => {
     const dropdownPseudoEl = await element.all(by.css('div.dropdown')).first();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dropdownPseudoEl), config.waitsFor);
@@ -434,7 +434,7 @@ describe('Dropdown typeahead-reloading tests', () => {
   }
 
   if (!utils.isSafari()) {
-    it('Should open with down arrow, make ajax request, filter to "new", make ajax request, down arrow to New Jersey, and focus', async () => {
+    it('should open with down arrow, make ajax request, filter to "new", make ajax request, down arrow to New Jersey, and focus', async () => {
       // Open the list
       const dropdownEl = await element(by.css('div.dropdown'));
       await browser.driver
@@ -458,7 +458,7 @@ describe('Dropdown typeahead-reloading tests', () => {
       expect(['', 'New Jersey']).toContain(await element.all(by.css('.dropdown span')).first().getText());
     });
 
-    it('Should open by keying "new", make ajax request, down arrow to New Jersey, and focus', async () => {
+    it('should open by keying "new", make ajax request, down arrow to New Jersey, and focus', async () => {
       const dropdownEl = await element(by.css('div.dropdown'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
@@ -505,7 +505,7 @@ describe('Dropdown placeholder with initially selected tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
   });
 
-  it('Should not show a placeholder', async () => {
+  it('should not show a placeholder', async () => {
     const selector = 'div.dropdown [data-placeholder-text]';
     const placeholderEl = await element(by.css(selector));
 
@@ -520,7 +520,7 @@ describe('Dropdown readonly tests', () => {
     await utils.setPage('/components/dropdown/example-readonly');
   });
 
-  it('Should honor the tabindex', async () => {
+  it('should honor the tabindex', async () => {
     await element(by.css('#random-input-1')).sendKeys(protractor.Key.TAB);
 
     expect(await browser.driver.switchTo().activeElement().getText()).toEqual('Item 1');
@@ -538,11 +538,11 @@ describe('Dropdown xss tests', () => {
     await utils.setPage('/components/dropdown/test-xss');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should not inject scripts', async () => {
+  it('should not inject scripts', async () => {
     const dropdownEl = await element(by.css('#states + .dropdown-wrapper div.dropdown'));
     await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
 
@@ -559,7 +559,7 @@ describe('Dropdown xss tests', () => {
     await utils.checkForErrors();
   });
 
-  it('Should not inject scripts on reset list', async () => {
+  it('should not inject scripts on reset list', async () => {
     const dropdownEl = await element(by.css('#states + .dropdown-wrapper div.dropdown'));
     await dropdownEl.sendKeys('x');
 
@@ -581,7 +581,7 @@ describe('Dropdown xss tests', () => {
     await utils.checkForErrors();
   });
 
-  it('Should not get confused filtering with encoding', async () => { //eslint-disable-line
+  it('should not get confused filtering with encoding', async () => { //eslint-disable-line
     const dropdownEl = await element(by.css('#states + .dropdown-wrapper div.dropdown'));
     await dropdownEl.sendKeys('l');
 
@@ -593,7 +593,7 @@ describe('Dropdown xss tests', () => {
     await utils.checkForErrors();
   });
 
-  it('Should filter on &', async () => { //eslint-disable-line
+  it('should filter on &', async () => { //eslint-disable-line
     const dropdownEl = await element(by.css('#states2 + .dropdown-wrapper div.dropdown'));
     await dropdownEl.sendKeys('&');
 
@@ -607,18 +607,18 @@ describe('Dropdown xss tests', () => {
 });
 
 describe('Dropdown badge tests', () => {
-  it('Should not error on left to right', async () => {
+  it('should not error on left to right', async () => {
     await utils.setPage('/components/dropdown/test-badges.html?layout=nofrills');
     await utils.checkForErrors();
   });
 
-  it('Should not error on right to left', async () => {
+  it('should not error on right to left', async () => {
     await utils.setPage('/components/dropdown/test-badges.html?layout=nofrills&&locale=he-IL');
     await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should look good on left to right', async () => {
+    it('should look good on left to right', async () => {
       await utils.setPage('/components/dropdown/test-badges.html?layout=nofrills');
       const dropdownEl = element(by.css('div.dropdown'));
       const dropdownElList = element(by.id('dropdown-list'));
@@ -635,7 +635,7 @@ describe('Dropdown badge tests', () => {
       expect(await browser.imageComparison.checkElement(dropdownElList, 'dropdown-badges-open')).toEqual(0);
     });
 
-    it('Should look good on right to left', async () => {
+    it('should look good on right to left', async () => {
       await utils.setPage('/components/dropdown/test-badges.html?layout=nofrills&&locale=he-IL');
       const dropdownEl = element(by.css('div.dropdown'));
       const dropdownElList = element(by.id('dropdown-list'));
@@ -659,12 +659,12 @@ describe('Dropdown selectValue() tests', () => {
     await utils.setPage('/components/dropdown/example-setvalue?theme=classic&layout=nofrills');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should change its display value when its internal value changes (should not visually regress)', async () => {
+    it('should change its display value when its internal value changes (should not visually regress)', async () => {
       const dropdownEl = element(by.css('div.dropdown'));
       const updateBtnEl = element(by.css('#update-btn'));
 
@@ -685,11 +685,11 @@ describe('Dropdown with icons tests', () => {
     await utils.setPage('/components/dropdown/example-icons');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should not change the last option icon when filtering', async () => {
+  it('should not change the last option icon when filtering', async () => {
     const dropdownEl = await element(by.css('select#example-icon + .dropdown-wrapper .dropdown'));
 
     await browser.driver
@@ -712,7 +712,7 @@ describe('Dropdown "No Search" stay-open behavior', () => {
     await utils.setPage('/components/dropdown/example-no-search-stay-open?layout=nofrills');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
@@ -801,12 +801,12 @@ describe('Dropdown typeahead tests with automation id', () => {
     await utils.setPage('/components/dropdown/test-typeahead-automation-id');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
   if (!utils.isSafari()) {
-    it('Should be able to set the prefix id with typeahead settings', async () => {
+    it('should be able to set the prefix id with typeahead settings', async () => {
       const dropdownEl = await element(by.css('div.dropdown'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);

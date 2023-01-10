@@ -8,12 +8,12 @@ describe('Hyperlink index tests', () => {
     await browser.driver.sleep(config.sleep);
   });
 
-  it('Should render without any error', async () => {
+  it('should render without any error', async () => {
     await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    it('should not visually regress', async () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 

@@ -22,18 +22,18 @@ describe('Trackdirty API', () => {
     cleanup();
   });
 
-  it('Should be defined on jQuery object', () => {
+  it('should be defined on jQuery object', () => {
     expect(dirtyObj).toBeTruthy();
   });
 
-  it('Should track dirty', () => {
+  it('should track dirty', () => {
     inputEl.value = 'New Value';
     $(inputEl).trigger('change');
 
     expect(document.querySelectorAll('.icon-dirty').length).toEqual(1);
   });
 
-  it('Should destroy track dirty', () => {
+  it('should destroy track dirty', () => {
     dirtyObj.destroy();
     inputEl.value = 'New Value';
     $(inputEl).trigger('change');
@@ -41,7 +41,7 @@ describe('Trackdirty API', () => {
     expect(document.querySelectorAll('.icon-dirty').length).toEqual(0);
   });
 
-  it('Should fire dirty event', () => {
+  it('should fire dirty event', () => {
     const callback = jest.fn();
     $(inputEl).on('dirty', callback);
 
@@ -51,7 +51,7 @@ describe('Trackdirty API', () => {
     expect(callback).toHaveBeenCalled();
   });
 
-  it('Should fire pristine event', () => {
+  it('should fire pristine event', () => {
     const callback = jest.fn();
     $(inputEl).on('pristine', callback);
 
@@ -63,7 +63,7 @@ describe('Trackdirty API', () => {
     expect(callback).toHaveBeenCalled();
   });
 
-  it('Should fire afterresetdirty event on resetdirty', () => {
+  it('should fire afterresetdirty event on resetdirty', () => {
     const callback = jest.fn();
     $(inputEl).on('afterresetdirty', callback);
 

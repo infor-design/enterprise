@@ -15,17 +15,17 @@ describe('FieldFilter example-index tests', () => {
     await browser.driver.sleep(config.sleep);
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should open fieldfilter list on click', async () => {
+  it('should open fieldfilter list on click', async () => {
     await clickOnFieldFilter('#example-textfield');
 
     expect(await element(by.css('#example-textfield')).element(by.xpath('..')).element(by.className('is-open')).isDisplayed()).toBe(true);
   });
 
-  it('Should not contain search element', async () => {
+  it('should not contain search element', async () => {
     await clickOnFieldFilter('#example-textfield');
     const ddList = await element(by.css('#dropdown-list'));
     await browser.driver
@@ -35,7 +35,7 @@ describe('FieldFilter example-index tests', () => {
     expect(await element(by.css('#example-textfield')).element(by.xpath('..')).element(by.css('#dropdown-search')).isPresent()).toBe(false);
   });
 
-  it('Should be able to set id/automation id', async () => {
+  it('should be able to set id/automation id', async () => {
     await browser.driver.sleep(config.sleep);
 
     expect(await element.all(by.id('custom-field-filter-id-1')).first().getAttribute('id')).toEqual('custom-field-filter-id-1');
@@ -56,13 +56,13 @@ describe('FieldFilter filter type tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.output'))), config.waitsFor);
   });
 
-  it('Should open fieldfilter on click', async () => {
+  it('should open fieldfilter on click', async () => {
     await clickOnFieldFilter('#filterable');
 
     expect(await element(by.css('#filterable')).element(by.xpath('..')).element(by.className('is-open')).isDisplayed()).toBe(true);
   });
 
-  it('Should be able to get current filter type', async () => {
+  it('should be able to get current filter type', async () => {
     expect(await element(by.className('output')).getText()).toEqual('Equals');
     const ddStr = 'div.dropdown';
     const triggerEl = element(by.css('#filterable')).element(by.xpath('..')).element(by.css(ddStr));
@@ -81,7 +81,7 @@ describe('FieldFilter filter type tests', () => {
     expect(await element(by.className('output')).getText()).toEqual('Does Not Equal');
   });
 
-  it('Should be able to set filter type programmatically by string value', async () => {
+  it('should be able to set filter type programmatically by string value', async () => {
     expect(await element(by.className('output')).getText()).toEqual('Equals');
     await element(by.id('btn-set-by-value')).click();
     const popupmenu = await element(by.id('popupmenu-by-value'));
@@ -96,7 +96,7 @@ describe('FieldFilter filter type tests', () => {
     expect(await element(by.className('output')).getText()).toEqual('Does Not Equal');
   });
 
-  it('Should be able to set filter type programmatically by index', async () => {
+  it('should be able to set filter type programmatically by index', async () => {
     expect(await element(by.className('output')).getText()).toEqual('Equals');
     await element(by.id('btn-set-by-index')).click();
     const popupmenu = await element(by.id('popupmenu-by-index'));

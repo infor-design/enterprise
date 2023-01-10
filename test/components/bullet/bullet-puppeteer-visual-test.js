@@ -12,7 +12,7 @@ describe('Bullet Puppeteer Visual Tests', () => {
       await page.waitForFunction('document.querySelectorAll(".bullet .range").length > 0');
     });
 
-    it('should not visual regress', async () => {
+    it('should not visually regress', async () => {
       const img = await page.screenshot();
       const sConfig = getConfig('bullet');
       expect(img).toMatchImageSnapshot(sConfig);
@@ -26,7 +26,7 @@ describe('Bullet Puppeteer Visual Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should not visual regress', async () => {
+    it('should not visually regress', async () => {
       const img = await page.screenshot();
       const sConfig = getConfig('bullet-data-group');
       expect(img).toMatchImageSnapshot(sConfig);
@@ -40,7 +40,7 @@ describe('Bullet Puppeteer Visual Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should not visual regress', async () => {
+    it('should not visually regress', async () => {
       const img = await page.screenshot();
       const sConfig = getConfig('bullet-negative-positive');
       expect(img).toMatchImageSnapshot(sConfig);
@@ -54,7 +54,7 @@ describe('Bullet Puppeteer Visual Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should not visual regress', async () => {
+    it('should not visually regress', async () => {
       const img = await page.screenshot();
       const sConfig = getConfig('bullet-negative');
       expect(img).toMatchImageSnapshot(sConfig);

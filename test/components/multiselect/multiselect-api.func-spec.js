@@ -24,19 +24,19 @@ describe('MultiSelect API', () => {
     cleanup();
   });
 
-  it('Should be defined on jQuery object', () => {
+  it('should be defined on jQuery object', () => {
     expect(multiSelectObj).toBeTruthy();
   });
 
-  it('Should be build multiSelect correctly', () => {
+  it('should be build multiSelect correctly', () => {
     expect(multiSelectObj.element[0].multiple).toBeTruthy();
   });
 
-  it('Should disable multiselect', () => {
+  it('should disable multiselect', () => {
     multiSelectObj.disable();
   });
 
-  it('Should enable multiselect', () => {
+  it('should enable multiselect', () => {
     multiSelectObj.enable();
   });
 });

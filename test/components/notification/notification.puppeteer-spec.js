@@ -4,7 +4,7 @@ describe('Notification example-index Puppeteer Tests', () => {
     await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
   });
 
-  it('Should be able to set ids/automation ids', async () => {
+  it('should be able to set ids/automation ids', async () => {
     await page.waitForTimeout(200);
 
     const notif4 = await page.$eval('#notification-id-4', element => element.getAttribute('id'));
@@ -35,7 +35,7 @@ describe('Notification example-widget tests', () => {
     await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
   });
 
-  it('Should show the tooltip when notification is hovered', async () => {
+  it('should show the tooltip when notification is hovered', async () => {
     await page.hover('.notification.alert p.notification-text');
     const tooltip1 = await page.waitForSelector('.has-open-tooltip', { visible: true });
     expect(tooltip1).toBeTruthy();
@@ -48,7 +48,7 @@ describe('Notification test-custom-tooltip-close-btn tests', () => {
     await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
   });
 
-  it('Should Create and close notifications using the buttons shown', async () => {
+  it('should Create and close notifications using the buttons shown', async () => {
     await page.hover('#open');
     await page.click('#open');
     const notif1 = await page.waitForSelector('#notification-id-1', { visible: true });

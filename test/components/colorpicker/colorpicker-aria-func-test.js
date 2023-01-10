@@ -40,7 +40,7 @@ describe('ColorPicker ARIA', () => {
     cleanup();
   });
 
-  it('Should set ARIA labels', () => {
+  it('should set ARIA labels', () => {
     const parent = colorpickerEl.parentNode;
 
     expect(parent.querySelector('.colorpicker[aria-autocomplete="list"]')).toBeTruthy();

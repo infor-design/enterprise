@@ -47,11 +47,11 @@ describe('ColorPicker API', () => {
     cleanup();
   });
 
-  it('Should be defined on jQuery object', () => {
+  it('should be defined on jQuery object', () => {
     expect(colorpickerObj).toBeTruthy();
   });
 
-  it('Should open colorpicker', (done) => {
+  it('should open colorpicker', (done) => {
     colorpickerObj.toggleList();
 
     setTimeout(() => {
@@ -61,20 +61,20 @@ describe('ColorPicker API', () => {
     }, 300);
   });
 
-  it('Should destroy colorpicker', () => {
+  it('should destroy colorpicker', () => {
     colorpickerObj?.destroy();
 
     expect(colorpickerEl.parentNode.classList.contains('colorpicker-container')).toBeFalsy();
   });
 
-  it('Should disable colorpicker', () => {
+  it('should disable colorpicker', () => {
     colorpickerObj.disable();
 
     expect(colorpickerEl.parentNode.classList.contains('is-disabled')).toBeTruthy();
     expect(colorpickerObj.isDisabled()).toBeTruthy();
   });
 
-  it('Should enable colorpicker', () => {
+  it('should enable colorpicker', () => {
     colorpickerObj.disable();
 
     expect(colorpickerEl.parentNode.classList.contains('is-disabled')).toBeTruthy();
@@ -86,7 +86,7 @@ describe('ColorPicker API', () => {
     expect(colorpickerObj.isDisabled()).toBeFalsy();
   });
 
-  it('Should render colorpicker readonly', () => {
+  it('should render colorpicker readonly', () => {
     colorpickerObj.readonly();
 
     expect(document.body.querySelector('.colorpicker[readonly]')).toBeTruthy();

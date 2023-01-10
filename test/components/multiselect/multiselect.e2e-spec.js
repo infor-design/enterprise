@@ -14,11 +14,11 @@ describe('Multiselect example-states tests', () => {
     await utils.setPage('/components/multiselect/example-states');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should open multiselect list on click', async () => {
+  it('should open multiselect list on click', async () => {
     await clickOnMultiselect();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(element(by.className('is-open'))), config.waitsFor);
@@ -26,7 +26,7 @@ describe('Multiselect example-states tests', () => {
     expect(await element(by.className('is-open')).isDisplayed()).toBe(true);
   });
 
-  it('Should scroll down to end of list, and Vermont should be visible', async () => {
+  it('should scroll down to end of list, and Vermont should be visible', async () => {
     await clickOnMultiselect();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(element(by.className('is-open'))), config.waitsFor);
@@ -43,7 +43,7 @@ describe('Multiselect example-states tests', () => {
   });
 
   if (!utils.isSafari()) {
-    it('Should show validation message error "Required" on tab out', async () => {
+    it('should show validation message error "Required" on tab out', async () => {
       const multiselectEl = await element.all(by.css('div.dropdown')).get(2);
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(multiselectEl), config.waitsFor);
@@ -136,7 +136,7 @@ describe('Multiselect example-index tests', () => {
   }
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    it('should not visually regress', async () => {
       const multiselectEl = await element.all(by.css('div.dropdown')).first();
       const multiselectElList = await element(by.id('dropdown-list'));
       await browser.driver
@@ -173,7 +173,7 @@ describe('Multiselect example-index tests', () => {
     expect(await element(by.className('is-focused')).getText()).toEqual('Colorado');
   });
 
-  it('Should do nothing on disabled', async () => {
+  it('should do nothing on disabled', async () => {
     const multiselectEl = await element.all(by.css('div.dropdown')).get(1);
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(multiselectEl), config.waitsFor);
@@ -191,7 +191,7 @@ describe('Multiselect example-clear-all tests', () => {
   });
 
   if (!utils.isSafari()) {
-    xit('Should clear all', async () => {
+    xit('should clear all', async () => {
       const buttonEl = await element(by.id('btn-clear'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(buttonEl), config.waitsFor);
@@ -240,7 +240,7 @@ describe('Multiselect typeahead-reloading tests', () => {
 
   if (!utils.isSafari()) {
     // Edited for #920
-    it('Should make ajax calls properly on typeahead for multiple items', async () => {
+    it('should make ajax calls properly on typeahead for multiple items', async () => {
       await browser.driver.sleep(config.sleep);
 
       // Open the list
@@ -308,11 +308,11 @@ describe('Multiselect header strings tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(multiselectEl), config.waitsFor);
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should have custom header strings', async () => {
+  it('should have custom header strings', async () => {
     const selector = '#dropdown-list .group-label';
     await clickOnMultiselect();
     await browser.driver

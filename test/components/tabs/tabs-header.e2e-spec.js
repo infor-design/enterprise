@@ -21,7 +21,7 @@ describe('Tabs header click example-index tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    xit('Should not visual regress on example-index', async () => {
+    xit('should not visually regress on example-index', async () => {
       const tabsEl = await element(by.id('header-tabs'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
@@ -31,11 +31,11 @@ describe('Tabs header click example-index tests', () => {
     });
   }
 
-  it('Should open 5th tab, on click', async () => {
+  it('should open 5th tab, on click', async () => {
     await clickTabTest('4');
   });
 
-  it('Should open 3rd, then 2nd tab, on click screen width of 500px', async () => {
+  it('should open 3rd, then 2nd tab, on click screen width of 500px', async () => {
     const windowSize = await browser.driver.manage().window().getSize();
     await browser.driver.manage().window().setSize(500, 600);
     await browser.driver.sleep(config.sleep);
@@ -46,7 +46,7 @@ describe('Tabs header click example-index tests', () => {
     await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
   });
 
-  it('Should open 2nd tab, open menu tab-popupmenu, and list correct tab on screen width of 500px', async () => {
+  it('should open 2nd tab, open menu tab-popupmenu, and list correct tab on screen width of 500px', async () => {
     const windowSize = await browser.driver.manage().window().getSize();
     await browser.driver.manage().window().setSize(500, 600);
     await browser.driver.sleep(config.sleep);
@@ -61,7 +61,7 @@ describe('Tabs header click example-index tests', () => {
     await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
   });
 
-  it('Should open 2nd tab, and select 1st tab on tab-popupmenu on screen width of 500px', async () => {
+  it('should open 2nd tab, and select 1st tab on tab-popupmenu on screen width of 500px', async () => {
     const windowSize = await browser.driver.manage().window().getSize();
     await browser.driver.manage().window().setSize(500, 600);
     await browser.driver.sleep(config.sleep);
@@ -81,7 +81,7 @@ describe('Tabs header click example-index tests', () => {
     await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
   });
 
-  it('Should open 5th, 3rd, then 2nd tab, on click', async () => {
+  it('should open 5th, 3rd, then 2nd tab, on click', async () => {
     await clickTabTest('4');
     await clickTabTest('2');
     await clickTabTest('1');
@@ -97,7 +97,7 @@ describe('Tabs header keyboard example-index tests', () => {
   });
 
   if (utils.isChrome()) {
-    it('Should open 3rd tab, on arrow right', async () => {
+    it('should open 3rd tab, on arrow right', async () => {
       await clickTabTest('0');
       await browser.driver.actions().sendKeys(protractor.Key.ARROW_RIGHT).perform();
       await browser.driver
@@ -113,7 +113,7 @@ describe('Tabs header keyboard example-index tests', () => {
       expect(await element.all(by.className('tab')).get(2).getAttribute('class')).toContain('is-selected');
     });
 
-    it('Should open 3rd tab, on arrow down', async () => {
+    it('should open 3rd tab, on arrow down', async () => {
       await clickTabTest('0');
       await browser.driver.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
       await browser.driver
@@ -129,7 +129,7 @@ describe('Tabs header keyboard example-index tests', () => {
       expect(await element.all(by.className('tab')).get(2).getAttribute('class')).toContain('is-selected');
     });
 
-    it('Should navigate to menu on arrow up, and select header item #17', async () => {
+    it('should navigate to menu on arrow up, and select header item #17', async () => {
       await clickTabTest('0');
       await browser.driver.actions().sendKeys(protractor.Key.ARROW_UP).perform();
       await browser.driver
@@ -145,7 +145,7 @@ describe('Tabs header keyboard example-index tests', () => {
       expect(await element.all(by.className('tab')).get(16).getAttribute('class')).toContain('is-selected');
     });
 
-    it('Should navigate to menu on arrow left, and select header item #17', async () => {
+    it('should navigate to menu on arrow left, and select header item #17', async () => {
       await clickTabTest('0');
       await browser.driver.actions().sendKeys(protractor.Key.ARROW_LEFT).perform();
       await browser.driver
@@ -171,7 +171,7 @@ describe('Tabs header click example-add-tab button tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
   });
 
-  it('Should add two tabs, on click, then click', async () => {
+  it('should add two tabs, on click, then click', async () => {
     const addTabEl = await element(by.className('add-tab-button'));
     await addTabEl.click();
     await browser.driver
@@ -188,7 +188,7 @@ describe('Tabs header click example-add-tab button tests', () => {
     expect(await element.all(by.css('.tab-list > .tab')).get(4).getAttribute('class')).toContain('dismissible');
   });
 
-  it('Should add two tabs, on click, then click, submenu should appear with correct selection at 500px', async () => {
+  it('should add two tabs, on click, then click, submenu should appear with correct selection at 500px', async () => {
     const windowSize = await browser.driver.manage().window().getSize();
     await browser.driver.manage().window().setSize(500, 600);
     await browser.driver.sleep(config.sleep);
@@ -219,7 +219,7 @@ describe('Tabs header click test-contains-vertical-tabs tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
   });
 
-  it('Should open vertical tabs in a header tab', async () => {
+  it('should open vertical tabs in a header tab', async () => {
     await element(by.css('a[href="#header-tabs-1"]')).click();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(element(by.css('#header-tabs-1.is-visible'))), config.waitsFor);

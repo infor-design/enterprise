@@ -54,7 +54,7 @@ describe('Treemap API', () => {
     expect(document.body.querySelector('.chart-treemap-title').innerText).toEqual('Storage Utilization (78 GB)');
   });
 
-  it('Should trigger rendered', () => {
+  it('should trigger rendered', () => {
     treemapAPI.destroy();
     const callback = jest.fn();
     $(treemapId).on('rendered', callback);

@@ -39,7 +39,7 @@ describe('SwapList API', () => {
     cleanup();
   });
 
-  it('Should be defined as an object', () => {
+  it('should be defined as an object', () => {
     expect(swaplistObj).toBeTruthy();
   });
 });

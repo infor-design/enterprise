@@ -19,7 +19,7 @@ describe('Week View Puppeteer Tests', () => {
         .then(element => expect(element).toBeTruthy());
     });
 
-    it('Should be able to set id/automation id', async () => {
+    it('should be able to set id/automation id', async () => {
       expect(await page.$eval('#custom-id-week-view-btn-prev', el => el.getAttribute('id'))).toBe('custom-id-week-view-btn-prev');
       expect(await page.$eval('#custom-id-week-view-btn-prev', el => el.getAttribute('data-automation-id'))).toBe('custom-automation-id-week-view-btn-prev');
 
@@ -73,7 +73,7 @@ describe('Week View Puppeteer Tests', () => {
         .then(element => expect(element).toBeTruthy());
     });
 
-    it('should not visual regress', async () => {
+    it('should not visually regress', async () => {
       await page.setViewport({ width: 1200, height: 800 });
 
       expect(await page.waitForSelector('.week-view')).toBeTruthy();
@@ -106,7 +106,7 @@ describe('Week View Puppeteer Tests', () => {
         .then(element => expect(element).toBeTruthy());
     });
 
-    it('should not visual regress', async () => {
+    it('should not visually regress', async () => {
       await page.setViewport({ width: 1200, height: 800 });
 
       expect(await page.waitForSelector('.week-view')).toBeTruthy();
@@ -139,7 +139,7 @@ describe('Week View Puppeteer Tests', () => {
         .then(element => expect(element).toBeTruthy());
     });
 
-    it('should not visual regress', async () => {
+    it('should not visually regress', async () => {
       await page.setViewport({ width: 1200, height: 800 });
 
       expect(await page.waitForSelector('.week-view')).toBeTruthy();
@@ -172,7 +172,7 @@ describe('Week View Puppeteer Tests', () => {
         .then(element => expect(element).toBeTruthy());
     });
 
-    it('should not visual regress', async () => {
+    it('should not visually regress', async () => {
       await page.setViewport({ width: 1200, height: 800 });
 
       expect(await page.waitForSelector('.week-view')).toBeTruthy();
@@ -205,7 +205,7 @@ describe('Week View Puppeteer Tests', () => {
         .then(element => expect(element).toBeTruthy());
     });
 
-    it('should not visual regress', async () => {
+    it('should not visually regress', async () => {
       await page.setViewport({ width: 1200, height: 800 });
 
       expect(await page.waitForSelector('.week-view')).toBeTruthy();
@@ -229,7 +229,7 @@ describe('Week View Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should not visual regress', async () => {
+    it('should not visually regress', async () => {
       await page.setViewport({ width: 1200, height: 800 });
 
       expect(await page.waitForSelector('.week-view')).toBeTruthy();

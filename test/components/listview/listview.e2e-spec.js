@@ -11,7 +11,7 @@ describe('Listview example-singleselect tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress on example-singleselect', async () => {
+    it('should not visually regress on example-singleselect', async () => {
       const listviewSection = await element(by.id('maincontent'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(listviewSection), config.waitsFor);
@@ -21,11 +21,11 @@ describe('Listview example-singleselect tests', () => {
     });
   }
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should select one item on click', async () => {
+  it('should select one item on click', async () => {
     const listviewItemEl = await element(by.css('li[aria-posinset="1"]'));
     await listviewItemEl.click();
     await browser.driver
@@ -38,7 +38,7 @@ describe('Listview example-singleselect tests', () => {
     expect(await element(by.className('selection-count')).getText()).toContain('1 Selected');
   });
 
-  it('Should deselect one item on click', async () => {
+  it('should deselect one item on click', async () => {
     const listviewItemEl = await element(by.css('li[aria-posinset="1"]'));
     await listviewItemEl.click();
     await browser.driver
@@ -56,7 +56,7 @@ describe('Listview example-singleselect tests', () => {
     expect(await element(by.css('li[aria-posinset="1"]')).getAttribute('class')).not.toContain('is-selected');
   });
 
-  it('Should tab into, and select, arrow key down over disabled item, and select item on space key', async () => {
+  it('should tab into, and select, arrow key down over disabled item, and select item on space key', async () => {
     const listviewEl = await element(by.id('period-end'));
     const listviewItemElOne = await element(by.css('li[aria-posinset="1"]'));
     const listviewItemElTwo = await element(by.css('li[aria-posinset="2"]'));
@@ -86,7 +86,7 @@ describe('Listview example-multiselect tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress on example-multiselect', async () => {
+    it('should not visually regress on example-multiselect', async () => {
       const listviewSection = await element(by.id('maincontent'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(listviewSection), config.waitsFor);
@@ -96,7 +96,7 @@ describe('Listview example-multiselect tests', () => {
     });
   }
 
-  it('Should select item on click', async () => {
+  it('should select item on click', async () => {
     const listviewItemEl = await element(by.css('li[aria-posinset="1"]'));
     await listviewItemEl.click();
     await browser.driver
@@ -109,7 +109,7 @@ describe('Listview example-multiselect tests', () => {
     expect(await element(by.className('selection-count')).getText()).toContain('1 Selected');
   });
 
-  it('Should deselect item on click', async () => {
+  it('should deselect item on click', async () => {
     const listviewItemEl = await element(by.css('li[aria-posinset="1"]'));
     await listviewItemEl.click();
     await browser.driver.sleep(config.sleep);
@@ -128,7 +128,7 @@ describe('Listview example-multiselect tests', () => {
   });
 
   if (utils.isChrome() && browser.params.theme === 'light') {
-    it('Should mouseover 1st, and change background-color', async () => {
+    it('should mouseover 1st, and change background-color', async () => {
       const listviewItemElOne = await element(by.css('li[aria-posinset="1"]'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(listviewItemElOne), config.waitsFor);
@@ -139,7 +139,7 @@ describe('Listview example-multiselect tests', () => {
     });
   }
 
-  xit('Should select two items on click', async () => {
+  xit('should select two items on click', async () => {
     const listviewItemElOne = await element(by.css('li[aria-posinset="1"]'));
     const listviewItemElThree = await element(by.css('li[aria-posinset="3"]'));
     await listviewItemElOne.click();
@@ -156,7 +156,7 @@ describe('Listview example-multiselect tests', () => {
     expect(await element(by.className('selection-count')).getText()).toContain('2 Selected');
   });
 
-  it('Should tab into, arrow key down over disabled item, and select each item on space key', async () => {
+  it('should tab into, arrow key down over disabled item, and select each item on space key', async () => {
     const listviewEl = await element(by.id('multiselect-listview'));
     await listviewEl.sendKeys(protractor.Key.TAB);
     const listviewItemElOne = await element(by.css('li[aria-posinset="1"]'));
@@ -185,14 +185,14 @@ describe('Listview example-mixed selection tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(listviewEl), config.waitsFor);
   });
 
-  it('Should select item on click on checkbox', async () => {
+  it('should select item on click on checkbox', async () => {
     const listviewItemInputEl = await element(by.css('li[aria-posinset="1"] .listview-selection-checkbox'));
     await listviewItemInputEl.click();
 
     expect(await element(by.className('is-selected')).isPresent()).toBeTruthy();
   });
 
-  it('Should deselect item on click on checkbox', async () => {
+  it('should deselect item on click on checkbox', async () => {
     const listviewItemInputEl = await element(by.css('li[aria-posinset="1"] .listview-selection-checkbox'));
     await listviewItemInputEl.click();
     await browser.driver
@@ -207,7 +207,7 @@ describe('Listview example-mixed selection tests', () => {
     expect(await element(by.css('li[aria-selected="false"]'))).toBeTruthy();
   });
 
-  xit('Should select two items on click on mixed selection', async () => {
+  xit('should select two items on click on mixed selection', async () => {
     const listviewItemElOne = await element(by.css('li[aria-posinset="1"] .listview-selection-checkbox'));
     const listviewItemElThree = await element(by.css('li[aria-posinset="3"] .listview-selection-checkbox'));
     await listviewItemElOne.click();
@@ -221,7 +221,7 @@ describe('Listview example-mixed selection tests', () => {
     expect(await element(by.css('li[aria-posinset="3"].is-selected')).isPresent()).toBeTruthy();
   });
 
-  it('Should activate element on click outside of checkbox', async () => {
+  it('should activate element on click outside of checkbox', async () => {
     await element(by.css('li[aria-posinset="1"]')).click();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-posinset="1"].is-activated'))), config.waitsFor);
@@ -238,7 +238,7 @@ describe('Listview example-search tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(listviewEl), config.waitsFor);
   });
 
-  it('Should not render items that don\'t match the search term', async () => {
+  it('should not render items that don\'t match the search term', async () => {
     const searchListviewEl = await element(by.id('gridfilter'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(searchListviewEl), config.waitsFor);
@@ -252,7 +252,7 @@ describe('Listview example-search tests', () => {
     expect(await element.all(by.css('#search-listview li')).count()).toEqual(1);
   });
 
-  it('Should highlight the matching parts of search results', async () => {
+  it('should highlight the matching parts of search results', async () => {
     const searchListviewEl = await element(by.id('gridfilter'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(searchListviewEl), config.waitsFor);
@@ -273,13 +273,13 @@ describe('Listview example-paging tests', () => {
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.listview ul li:last-child'))), config.waitsFor);
   });
 
-  it('Should render initial page', async () => {
+  it('should render initial page', async () => {
     expect(await element.all(by.css('.listview ul li')).count()).toEqual(10);
     expect(await element(by.css('.listview ul li:first-child')).getAttribute('aria-setsize')).toEqual('24');
     expect(await element(by.css('.listview ul li:last-child')).getAttribute('aria-posinset')).toEqual('10');
   });
 
-  it('Should click page "2" in pager bar, and display new listings', async () => {
+  it('should click page "2" in pager bar, and display new listings', async () => {
     const listviewPagerEl = await element.all(by.css('.pager-toolbar li.pager-no')).get(1);
     await listviewPagerEl.click();
     await browser.driver
@@ -288,7 +288,7 @@ describe('Listview example-paging tests', () => {
     expect(await element(by.css('li[aria-posinset="12"] .listview-heading')).getText()).toContain('Maplewood St. Resurfacing');
   });
 
-  it('Should click page next icon in pager bar, and display correct listings', async () => {
+  it('should click page next icon in pager bar, and display correct listings', async () => {
     const listviewPagerNextEl = await element(by.css('.pager-next'));
     await listviewPagerNextEl.click();
     await browser.driver
@@ -297,7 +297,7 @@ describe('Listview example-paging tests', () => {
     expect(await element(by.css('li[aria-posinset="12"] .listview-heading')).getText()).toContain('Maplewood St. Resurfacing');
   });
 
-  it('Should click page next two times, then prev once, and display correct listings', async () => {
+  it('should click page next two times, then prev once, and display correct listings', async () => {
     const listviewPagerPrevEl = await element(by.css('.pager-prev'));
     const listviewPagerNextEl = await element(by.css('.pager-next'));
     await listviewPagerNextEl.click();
@@ -318,7 +318,7 @@ describe('Listview example-index tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(listviewEl), config.waitsFor);
   });
 
-  it('Should do nothing on a disabled item', async () => {
+  it('should do nothing on a disabled item', async () => {
     await element(by.css('li.is-disabled')).click();
 
     expect(await element(by.css('li.is-disabled')).getAttribute('disabled').isPresent()).toBeTruthy();
@@ -333,7 +333,7 @@ describe('Listview example-paging-clientside tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(listviewPagerEl), config.waitsFor);
   });
 
-  it('Should click page "2" in pager-clientside bar, and display new listings', async () => {
+  it('should click page "2" in pager-clientside bar, and display new listings', async () => {
     const listviewPagerEl = await element.all(by.css('.pager-toolbar li')).get(2);
     await listviewPagerEl.click();
     await browser.driver
@@ -342,7 +342,7 @@ describe('Listview example-paging-clientside tests', () => {
     expect(await element(by.css('li[aria-posinset="12"] .listview-heading')).getText()).toContain('Maplewood St. Resurfacing');
   });
 
-  it('Should click page next icon in pager-clientside bar, and display correct listings', async () => {
+  it('should click page next icon in pager-clientside bar, and display correct listings', async () => {
     await element(by.css('.pager-next')).click();
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(element(by.css('li[aria-posinset="12"] .listview-heading'))), config.waitsFor);
@@ -350,7 +350,7 @@ describe('Listview example-paging-clientside tests', () => {
     expect(await element(by.css('li[aria-posinset="12"] .listview-heading')).getText()).toContain('Maplewood St. Resurfacing');
   });
 
-  it('Should click page next two times, then prev once, and display correct listing, clientside', async () => {
+  it('should click page next two times, then prev once, and display correct listing, clientside', async () => {
     const listviewPagerPrevEl = await element(by.css('.pager-prev'));
     const listviewPagerNextEl = await element(by.css('.pager-next'));
     await listviewPagerNextEl.click();
@@ -410,7 +410,7 @@ describe('Listview remove-clear tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(listviewMultiSelectEl), config.waitsFor);
   });
 
-  it('Should remove selected items, and update status pane', async () => {
+  it('should remove selected items, and update status pane', async () => {
     const listviewItemElOne = await element(by.css('li[aria-posinset="1"]'));
     const listviewItemElThree = await element(by.css('li[aria-posinset="3"]'));
     const listviewItemElFour = await element(by.css('li[aria-posinset="4"]'));
@@ -475,7 +475,7 @@ describe('Listview flex card empty tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress on empty message in the card', async () => {
+    it('should not visually regress on empty message in the card', async () => {
       const container = await element(by.css('.container'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(container), config.waitsFor);
@@ -493,7 +493,7 @@ describe('Listview allow delselect tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('ul li'))), config.waitsFor);
   });
 
-  it('Should disallow deselect on click', async () => {
+  it('should disallow deselect on click', async () => {
     const listviewItemEl = await element(by.css('li[aria-posinset="1"]'));
     await listviewItemEl.click();
     await browser.driver

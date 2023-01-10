@@ -26,13 +26,13 @@ describe('Spinbox ARIA', () => {
     cleanup();
   });
 
-  it('Should set ARIA labels', () => {
+  it('should set ARIA labels', () => {
     expect(document.body.querySelector('.spinbox[aria-valuemin]').getAttribute('aria-valuemin')).toEqual('0');
     expect(document.body.querySelector('.spinbox[aria-valuemax]').getAttribute('aria-valuemax')).toEqual('10');
     expect(document.body.querySelector('.spinbox[aria-valuenow]').getAttribute('aria-valuenow')).toEqual('0');
   });
 
-  it('Should update ARIA labels with value change', () => {
+  it('should update ARIA labels with value change', () => {
     spinboxAPI.updateVal(5);
 
     expect(document.body.querySelector('.spinbox[aria-valuenow]').getAttribute('aria-valuenow')).toEqual('5');

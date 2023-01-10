@@ -8,12 +8,12 @@ describe('MonthView index tests', () => {
     await utils.setPage('/components/monthview/example-index?layout=nofrills');
   });
 
-  it('Should render without error', async () => {
+  it('should render without error', async () => {
     expect(await element.all(by.css('.monthview-table td')).count()).toEqual(42);
     await utils.checkForErrors();
   });
 
-  it('Should be able to change month to next', async () => {
+  it('should be able to change month to next', async () => {
     const nextButton = await element(by.css('button.next'));
 
     expect(await nextButton.getText()).toEqual('Next Month');
@@ -28,7 +28,7 @@ describe('MonthView index tests', () => {
     expect(await element(by.id('monthview-id-month-view-datepicker')).getText()).toEqual(testDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
   });
 
-  it('Should be able to change month to previous', async () => {
+  it('should be able to change month to previous', async () => {
     const prevButton = await element(by.css('button.prev'));
     const testDate = new Date();
 
@@ -42,7 +42,7 @@ describe('MonthView index tests', () => {
     expect(await prevButton.getText()).toEqual('Previous Month');
   });
 
-  it('Should be able to set id/automation id', async () => {
+  it('should be able to set id/automation id', async () => {
     expect(await element(by.id('monthview-id-month-view-btn-prev')).getAttribute('id')).toEqual('monthview-id-month-view-btn-prev');
     expect(await element(by.id('monthview-id-month-view-btn-prev')).getAttribute('data-automation-id')).toEqual('monthview-automation-id-month-view-btn-prev');
     expect(await element(by.id('monthview-id-month-view-btn-next')).getAttribute('id')).toEqual('monthview-id-month-view-btn-next');
@@ -64,7 +64,7 @@ describe('Monthview keyboard tests', () => {
     await utils.setPage('/components/monthview/example-index');
   });
 
-  it('Should be able to use arrow down key', async () => {
+  it('should be able to use arrow down key', async () => {
     const testDate = new Date();
     testDate.setHours(0);
     testDate.setMinutes(0);
@@ -83,7 +83,7 @@ describe('Monthview keyboard tests', () => {
     expect(await element(by.css('.monthview-table .is-selected .day-text')).getText()).toEqual(testDate.getDate().toString());
   });
 
-  it('Should be able to use arrow up key', async () => {
+  it('should be able to use arrow up key', async () => {
     const testDate = new Date();
     testDate.setHours(0);
     testDate.setMinutes(0);
@@ -102,7 +102,7 @@ describe('Monthview keyboard tests', () => {
     expect(await element(by.css('.monthview-table .is-selected .day-text')).getText()).toEqual(testDate.getDate().toString());
   });
 
-  it('Should be able to use arrow left key', async () => {
+  it('should be able to use arrow left key', async () => {
     const testDate = new Date();
     testDate.setHours(0);
     testDate.setMinutes(0);
@@ -121,7 +121,7 @@ describe('Monthview keyboard tests', () => {
     expect(await element(by.css('.monthview-table .is-selected .day-text')).getText()).toEqual(testDate.getDate().toString());
   });
 
-  it('Should be able to use arrow right key', async () => {
+  it('should be able to use arrow right key', async () => {
     const testDate = new Date();
     testDate.setHours(0);
     testDate.setMinutes(0);
@@ -140,7 +140,7 @@ describe('Monthview keyboard tests', () => {
     expect(await element(by.css('.monthview-table .is-selected .day-text')).getText()).toEqual(testDate.getDate().toString());
   });
 
-  it('Should be able to use page up key', async () => {
+  it('should be able to use page up key', async () => {
     const testDate = new Date();
     testDate.setHours(0);
     testDate.setMinutes(0);
@@ -159,7 +159,7 @@ describe('Monthview keyboard tests', () => {
     expect(await element(by.css('.monthview-table .is-selected .day-text')).getText()).toEqual(testDate.getDate().toString());
   });
 
-  it('Should be able to use page down key', async () => {
+  it('should be able to use page down key', async () => {
     const testDate = new Date();
     testDate.setHours(0);
     testDate.setMinutes(0);
@@ -178,7 +178,7 @@ describe('Monthview keyboard tests', () => {
     expect(await element(by.css('.monthview-table .is-selected .day-text')).getText()).toEqual(testDate.getDate().toString());
   });
 
-  it('Should be able to use home key', async () => {
+  it('should be able to use home key', async () => {
     const testDate = new Date();
     testDate.setHours(0);
     testDate.setMinutes(0);
@@ -191,7 +191,7 @@ describe('Monthview keyboard tests', () => {
     expect(await element(by.css('.monthview-table .is-selected .day-text')).getText()).toEqual(testDate.getDate().toString());
   });
 
-  it('Should be able to use end key', async () => {
+  it('should be able to use end key', async () => {
     const today = new Date();
     today.setHours(0);
     today.setMinutes(0);
@@ -210,12 +210,12 @@ describe('MonthView disable day tests', () => {
     await utils.setPage('/components/monthview/test-disable-weekends.html?layout=nofrills');
   });
 
-  it('Should render without error', async () => {
+  it('should render without error', async () => {
     expect(await element.all(by.css('.monthview-table td')).count()).toEqual(42);
     await utils.checkForErrors();
   });
 
-  it('Should disable weekends', async () => {
+  it('should disable weekends', async () => {
     expect(await element.all(by.css('.monthview-table td')).count()).toEqual(42);
     expect(await element.all(by.css('.monthview-table td.is-disabled')).count()).toEqual(12);
   });
@@ -226,18 +226,18 @@ describe('MonthView disable month selection tests', () => {
     await utils.setPage('/components/monthview/test-restrict-month-selection.html');
   });
 
-  it('Should render without error', async () => {
+  it('should render without error', async () => {
     expect(await element.all(by.css('.monthview-table td')).count()).toEqual(42);
     await utils.checkForErrors();
   });
 
-  it('Should disable specified days', async () => {
+  it('should disable specified days', async () => {
     await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.css('.monthview-table td.is-disabled'))), config.waitsFor);
 
     expect(await element.all(by.css('.monthview-table td.is-disabled')).first().getText()).toEqual('1');
   });
 
-  it('Should disable next and previous buttons moving forward', async () => {
+  it('should disable next and previous buttons moving forward', async () => {
     const nextButton = await element(by.css('.btn-icon.next'));
     const prevButton = await element(by.css('.btn-icon.prev'));
 
@@ -255,7 +255,7 @@ describe('MonthView disable month selection tests', () => {
     expect(await prevButton.getAttribute('disabled')).toBeFalsy();
   });
 
-  it('Should disable next and previous buttons moving backward', async () => {
+  it('should disable next and previous buttons moving backward', async () => {
     const nextButton = await element(by.css('.btn-icon.next'));
     const prevButton = await element(by.css('.btn-icon.prev'));
 
@@ -277,12 +277,12 @@ describe('MonthView specific locale tests', () => {
         .visibilityOf(await element(by.css('.monthview-table tr th:nth-child(7)'))), config.waitsFor);
   });
 
-  it('Should render without error', async () => {
+  it('should render without error', async () => {
     expect(await element.all(by.css('.monthview-table td')).count()).toEqual(42);
     await utils.checkForErrors();
   });
 
-  it('Should render a specific locale', async () => {
+  it('should render a specific locale', async () => {
     expect(await element(by.id('monthview-datepicker-field')).getText()).toEqual('maj 2019');
     expect(await element(by.css('.hyperlink.today')).getText()).toEqual('I dag');
     expect(await element(by.css('.monthview-table tr th:nth-child(1)')).getText()).toEqual('man');
@@ -296,12 +296,12 @@ describe('MonthView specific language tests', () => {
     await browser.driver.sleep(config.sleep);
   });
 
-  it('Should render without error', async () => {
+  it('should render without error', async () => {
     expect(await element.all(by.css('.monthview-table td')).count()).toEqual(42);
     await utils.checkForErrors();
   });
 
-  it('Should render a specific locale and language', async () => {
+  it('should render a specific locale and language', async () => {
     await browser.driver.sleep(config.sleepLonger);
 
     expect(await element(by.id('monthview-datepicker-field')).getText()).toEqual('Juli 2020');
@@ -319,12 +319,12 @@ describe('MonthView RTL tests', () => {
         .visibilityOf(await element(by.css('.monthview-table tr th:nth-child(7)'))), config.waitsFor);
   });
 
-  it('Should render without error', async () => {
+  it('should render without error', async () => {
     expect(await element.all(by.css('.monthview-table td')).count()).toEqual(42);
     await utils.checkForErrors();
   });
 
-  it('Should be able to go to next and prev month', async () => {
+  it('should be able to go to next and prev month', async () => {
     await element(by.css('.monthview-header .prev')).click();
 
     expect(await element(by.id('monthview-datepicker-field')).getText()).toEqual('ذو الحجة 1439');

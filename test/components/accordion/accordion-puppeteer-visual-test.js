@@ -11,7 +11,7 @@ describe('Accordion Puppeteer Visual Tests', () => {
       await page.goto(url, { waitUntil: ['networkidle2', 'load'] });
     });
 
-    it('should not visual regress', async () => {
+    it('should not visually regress', async () => {
       await page.waitForFunction('document.querySelectorAll("div[role=main]").length > 0');
       await page.waitForTimeout(1000);
       const img = await page.screenshot();
@@ -27,7 +27,7 @@ describe('Accordion Puppeteer Visual Tests', () => {
       await page.goto(url, { waitUntil: ['networkidle2', 'load'] });
     });
 
-    it('should not visual regress', async () => {
+    it('should not visually regress', async () => {
       await page.click('button:nth-child(2)');
       await page.waitForTimeout(1000);
       const img = await page.screenshot();

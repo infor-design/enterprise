@@ -155,7 +155,7 @@ describe.skip('Popdown Puppeteer Tests', () => {
       await expect(page.title()).resolves.toMatch('IDS Enterprise');
     });
 
-    it('Should remain open when an inner Lookup component is opened', async () => {
+    it('should remain open when an inner Lookup component is opened', async () => {
       const isFailed = [];
       // Open the Popdown
       await page.click('#popdown-trigger');

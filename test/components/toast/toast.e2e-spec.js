@@ -8,17 +8,17 @@ describe('Toast example-index tests', () => {
     await utils.setPage('/components/toast/example-index');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should button enabled', async () => {
+  it('should button enabled', async () => {
     const buttonEl = await element(by.id('show-toast-message'));
 
     expect(await buttonEl.isEnabled()).toBe(true);
   });
 
-  it('Should display', async () => {
+  it('should display', async () => {
     const buttonEl = await element(by.id('show-toast-message'));
     await buttonEl.click();
 
@@ -27,7 +27,7 @@ describe('Toast example-index tests', () => {
     expect(await element(by.id('toast-container'))).toBeTruthy();
   });
 
-  it('Should close after clicking close button', async () => {
+  it('should close after clicking close button', async () => {
     const buttonEl = await element(by.id('show-toast-message'));
     await buttonEl.click();
     await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.css('.toast'))), config.waitsFor);
@@ -41,7 +41,7 @@ describe('Toast example-index tests', () => {
     expect(await element.all(by.css('.toast')).count()).toEqual(0);
   });
 
-  it('Should close after pressing the Escape key', async () => {
+  it('should close after pressing the Escape key', async () => {
     const buttonEl = await element(by.id('show-toast-message'));
     await buttonEl.click();
     await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.css('.toast'))), config.waitsFor);
@@ -61,13 +61,13 @@ describe('Toast example-positions tests', () => {
     await utils.setPage('/components/toast/test-positions');
   });
 
-  it('Should top left button enabled', async () => {
+  it('should top left button enabled', async () => {
     const buttonEl = await element(by.id('show-toast-top-left'));
 
     expect(await buttonEl.isEnabled()).toBe(true);
   });
 
-  it('Should be on top left position', async () => {
+  it('should be on top left position', async () => {
     const buttonEl = await element(by.id('show-toast-top-left'));
     await buttonEl.click();
 
@@ -76,13 +76,13 @@ describe('Toast example-positions tests', () => {
     expect(await element(by.className('toast-top-left'))).toBeTruthy();
   });
 
-  it('Should top right button enabled', async () => {
+  it('should top right button enabled', async () => {
     const buttonEl = await element(by.id('show-toast-top-right'));
 
     expect(await buttonEl.isEnabled()).toBe(true);
   });
 
-  it('Should be on top right position', async () => {
+  it('should be on top right position', async () => {
     const buttonEl = await element(by.id('show-toast-top-right'));
     await buttonEl.click();
 
@@ -91,13 +91,13 @@ describe('Toast example-positions tests', () => {
     expect(await element(by.className('toast-top-right'))).toBeTruthy();
   });
 
-  it('Should bottom left button enabled', async () => {
+  it('should bottom left button enabled', async () => {
     const buttonEl = await element(by.id('show-toast-bottom-left'));
 
     expect(await buttonEl.isEnabled()).toBe(true);
   });
 
-  it('Should be on bottom left position', async () => {
+  it('should be on bottom left position', async () => {
     const buttonEl = await element(by.id('show-toast-bottom-left'));
     await buttonEl.click();
 
@@ -106,13 +106,13 @@ describe('Toast example-positions tests', () => {
     expect(await element(by.className('toast-bottom-left'))).toBeTruthy();
   });
 
-  it('Should bottom right button enabled', async () => {
+  it('should bottom right button enabled', async () => {
     const buttonEl = await element(by.id('show-toast-bottom-right'));
 
     expect(await buttonEl.isEnabled()).toBe(true);
   });
 
-  it('Should be on bottom right position', async () => {
+  it('should be on bottom right position', async () => {
     const buttonEl = await element(by.id('show-toast-bottom-right'));
     await buttonEl.click();
 
@@ -121,13 +121,13 @@ describe('Toast example-positions tests', () => {
     expect(await element(by.className('toast-bottom-right'))).toBeTruthy();
   });
 
-  it('Should big text button enabled', async () => {
+  it('should big text button enabled', async () => {
     const buttonEl = await element(by.id('show-toast-big-text'));
 
     expect(await buttonEl.isEnabled()).toBe(true);
   });
 
-  it('Should toast destroy button enabled', async () => {
+  it('should toast destroy button enabled', async () => {
     const buttonEl = await element(by.id('toast-destroy'));
 
     expect(await buttonEl.isEnabled()).toBe(true);

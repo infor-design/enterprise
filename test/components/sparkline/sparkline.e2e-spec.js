@@ -6,11 +6,11 @@ describe('Sparkline example-index tests', () => {
     await utils.setPage('/components/sparkline/example-index?layout=nofrills');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should be able to set id/automation id example one', async () => {
+  it('should be able to set id/automation id example one', async () => {
     expect(await element(by.id('sparkline1-connected-line')).getAttribute('id')).toEqual('sparkline1-connected-line');
     expect(await element(by.id('sparkline1-connected-line')).getAttribute('data-automation-id')).toEqual('automation-id-sparkline1-connected-line');
 
@@ -36,7 +36,7 @@ describe('Sparkline example-index tests', () => {
     expect(await element(by.id('sparkline1-point-9')).getAttribute('data-automation-id')).toEqual('automation-id-sparkline1-point-9');
   });
 
-  it('Should be able to set id/automation id example two', async () => {
+  it('should be able to set id/automation id example two', async () => {
     expect(await element(by.id('sparkline2-inventory-connected-line')).getAttribute('id')).toEqual('sparkline2-inventory-connected-line');
     expect(await element(by.id('sparkline2-inventory-connected-line')).getAttribute('data-automation-id')).toEqual('automation-id-sparkline2-inventory-connected-line');
 
@@ -65,7 +65,7 @@ describe('Sparkline example-index tests', () => {
     expect(await element(by.id('sparkline2-inventory-point-9')).getAttribute('data-automation-id')).toEqual('automation-id-sparkline2-inventory-point-9');
   });
 
-  it('Should be able to set id/automation id example three', async () => {
+  it('should be able to set id/automation id example three', async () => {
     expect(await element(by.id('sparkline3-medianrange')).getAttribute('id')).toEqual('sparkline3-medianrange');
     expect(await element(by.id('sparkline3-medianrange')).getAttribute('data-automation-id')).toEqual('automation-id-sparkline3-medianrange');
 
@@ -94,7 +94,7 @@ describe('Sparkline example-index tests', () => {
     expect(await element(by.id('sparkline3-point-9')).getAttribute('data-automation-id')).toEqual('automation-id-sparkline3-point-9');
   });
 
-  it('Should be able to set id/automation id example four', async () => {
+  it('should be able to set id/automation id example four', async () => {
     expect(await element(by.id('sparkline4-connected-line')).getAttribute('id')).toEqual('sparkline4-connected-line');
     expect(await element(by.id('sparkline4-connected-line')).getAttribute('data-automation-id')).toEqual('automation-id-sparkline4-connected-line');
 
@@ -120,7 +120,7 @@ describe('Sparkline example-index tests', () => {
     expect(await element(by.id('sparkline4-point-9')).getAttribute('data-automation-id')).toEqual('automation-id-sparkline4-point-9');
   });
 
-  it('Should be able to set id/automation id example five', async () => {
+  it('should be able to set id/automation id example five', async () => {
     expect(await element(by.id('sparkline5-connected-line')).getAttribute('id')).toEqual('sparkline5-connected-line');
     expect(await element(by.id('sparkline5-connected-line')).getAttribute('data-automation-id')).toEqual('automation-id-sparkline5-connected-line');
 

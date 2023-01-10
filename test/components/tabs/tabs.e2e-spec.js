@@ -20,12 +20,12 @@ describe('Tabs click example-index tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress on example-index', async () => {
+    it('should not visually regress on example-index', async () => {
       const tabsEl = await element(by.id('tabs-normal'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
@@ -35,11 +35,11 @@ describe('Tabs click example-index tests', () => {
     });
   }
 
-  it('Should open 5th tab, on click', async () => {
+  it('should open 5th tab, on click', async () => {
     await clickTabTest('4');
   });
 
-  it('Should open 5th tab, 3rd, then 2nd tab, on click screen width of 500px', async () => {
+  it('should open 5th tab, 3rd, then 2nd tab, on click screen width of 500px', async () => {
     const windowSize = await browser.driver.manage().window().getSize();
     await browser.driver.manage().window().setSize(500, 600);
     await browser.driver.sleep(config.sleep);
@@ -51,7 +51,7 @@ describe('Tabs click example-index tests', () => {
     await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
   });
 
-  it('Should open 5th tab, open menu tab-popupmenu, and list correct tab on screen width of 500px', async () => {
+  it('should open 5th tab, open menu tab-popupmenu, and list correct tab on screen width of 500px', async () => {
     const windowSize = await browser.driver.manage().window().getSize();
     await browser.driver.manage().window().setSize(500, 600);
     await browser.driver.sleep(config.sleep);
@@ -66,7 +66,7 @@ describe('Tabs click example-index tests', () => {
     await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
   });
 
-  it('Should open 5th tab, and select 1st tab on tab-popupmenu on screen width of 500px', async () => {
+  it('should open 5th tab, and select 1st tab on tab-popupmenu on screen width of 500px', async () => {
     const windowSize = await browser.driver.manage().window().getSize();
     await browser.driver.manage().window().setSize(500, 600);
     await browser.driver.sleep(config.sleep);
@@ -86,7 +86,7 @@ describe('Tabs click example-index tests', () => {
     await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
   });
 
-  it('Should open 5th, 3rd, then 2nd tab, on click', async () => {
+  it('should open 5th, 3rd, then 2nd tab, on click', async () => {
     await clickTabTest('4');
     await clickTabTest('2');
     await clickTabTest('1');
@@ -101,12 +101,12 @@ describe('Tabs click example-counts tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress on example-counts', async () => {
+    it('should not visually regress on example-counts', async () => {
       const tabsEl = await element(by.id('tabs-counts'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
@@ -116,17 +116,17 @@ describe('Tabs click example-counts tests', () => {
     });
   }
 
-  it('Should open 5th tab, on click on count', async () => {
+  it('should open 5th tab, on click on count', async () => {
     await clickTabTest('4');
   });
 
-  it('Should open 5th, 3rd, then 2nd tab, on click on count', async () => {
+  it('should open 5th, 3rd, then 2nd tab, on click on count', async () => {
     await clickTabTest('4');
     await clickTabTest('2');
     await clickTabTest('1');
   });
 
-  it('Should open 4th tab, 3rd, then 2nd tab, on click screen width of 500px on count', async () => {
+  it('should open 4th tab, 3rd, then 2nd tab, on click screen width of 500px on count', async () => {
     const windowSize = await browser.driver.manage().window().getSize();
     await browser.driver.manage().window().setSize(500, 600);
     await browser.driver.sleep(config.sleep);
@@ -147,12 +147,12 @@ describe('Tabs click example-counts new tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    xit('Should not visual regress on example-counts in new', async () => {
+    xit('should not visually regress on example-counts in new', async () => {
       const tabsEl = await element(by.id('tabs-counts'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
@@ -174,12 +174,12 @@ describe('Tabs keyboard example-index tests', () => {
     await selectedTab.click();
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
   if (utils.isChrome()) {
-    it('Should open 5th tab, on arrow right', async () => {
+    it('should open 5th tab, on arrow right', async () => {
       await browser.driver.actions().sendKeys(protractor.Key.ARROW_RIGHT).perform();
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(await element(by.className('is-focused')), config.waitsFor));
@@ -194,7 +194,7 @@ describe('Tabs keyboard example-index tests', () => {
       expect(await element.all(by.className('tab')).get(4).getAttribute('class')).toContain('is-selected');
     });
 
-    it('Should open 5th tab, on arrow down', async () => {
+    it('should open 5th tab, on arrow down', async () => {
       await browser.driver.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(element(by.className('is-focused')), config.waitsFor));
@@ -209,7 +209,7 @@ describe('Tabs keyboard example-index tests', () => {
       expect(await element.all(by.className('tab')).get(4).getAttribute('class')).toContain('is-selected');
     });
 
-    it('Should open 1st tab, on arrow up', async () => {
+    it('should open 1st tab, on arrow up', async () => {
       await browser.driver.actions().sendKeys(protractor.Key.ARROW_UP).perform();
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(element(by.className('is-focused')), config.waitsFor));
@@ -224,7 +224,7 @@ describe('Tabs keyboard example-index tests', () => {
       expect(await element.all(by.className('tab')).get(0).getAttribute('class')).toContain('is-selected');
     });
 
-    it('Should open 1st tab, on arrow left', async () => {
+    it('should open 1st tab, on arrow left', async () => {
       await browser.driver.actions().sendKeys(protractor.Key.ARROW_LEFT).perform();
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(element(by.className('is-focused')), config.waitsFor));
@@ -239,7 +239,7 @@ describe('Tabs keyboard example-index tests', () => {
       expect(await element.all(by.className('tab')).get(0).getAttribute('class')).toContain('is-selected');
     });
 
-    it('Should arrow to 1st tab, open menu tab-popupmenu, and list correct tab on screen width of 500px', async () => {
+    it('should arrow to 1st tab, open menu tab-popupmenu, and list correct tab on screen width of 500px', async () => {
       const windowSize = await browser.driver.manage().window().getSize();
       await browser.driver.manage().window().setSize(500, 600);
       await browser.driver.sleep(config.sleep);
@@ -273,12 +273,12 @@ describe('Tabs click example-add-tab button tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
   // See issue #4093
-  it('Should insert tabs at the end of the tab list when applicable', async () => {
+  it('should insert tabs at the end of the tab list when applicable', async () => {
     const inputNameEl = await element(by.css('#tab-name'));
     const inputContentEl = await element(by.css('#tab-content'));
     const inputTabIndexEl = await element(by.css('#tab-index'));
@@ -297,7 +297,7 @@ describe('Tabs click example-add-tab button tests', () => {
     expect(await element.all(by.className('tab')).get(3).getText()).toEqual('Riya');
   });
 
-  it('Should remove add on destroy', async () => {
+  it('should remove add on destroy', async () => {
     expect(await element.all(by.css('.add-tab-button')).count()).toEqual(1);
     await element(by.id('reinvoke')).click();
 
@@ -305,7 +305,7 @@ describe('Tabs click example-add-tab button tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    xit('Should not visual regress on example-add-tab-button', async () => {
+    xit('should not visually regress on example-add-tab-button', async () => {
       const tabsEl = await element(by.id('add-capable-tabs'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
@@ -315,7 +315,7 @@ describe('Tabs click example-add-tab button tests', () => {
     });
   }
 
-  it('Should add two tabs, on click, then click', async () => {
+  it('should add two tabs, on click, then click', async () => {
     await clickTabTest('1');
     const addTabEl = await element(by.className('add-tab-button'));
     await addTabEl.click();
@@ -333,7 +333,7 @@ describe('Tabs click example-add-tab button tests', () => {
     expect(await element.all(by.className('tab')).get(4).getAttribute('class')).toContain('dismissible');
   });
 
-  it('Should add two tabs, on click, then click, submenu should appear with correct selection at 500px', async () => {
+  it('should add two tabs, on click, then click, submenu should appear with correct selection at 500px', async () => {
     const windowSize = await browser.driver.manage().window().getSize();
     await browser.driver.manage().window().setSize(500, 600);
     await browser.driver.sleep(config.sleep);
@@ -363,7 +363,7 @@ describe('Tabs click example-add-tab button tests', () => {
     await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
   });
 
-  it('Should add two tabs, on click, submenu should select correct tab at 500px', async () => {
+  it('should add two tabs, on click, submenu should select correct tab at 500px', async () => {
     const windowSize = await browser.driver.manage().window().getSize();
     await browser.driver.manage().window().setSize(500, 600);
     await browser.driver.sleep(config.sleep);
@@ -401,12 +401,12 @@ describe('Tabs click example-dropdown-tabs tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(tabsContainerEl), config.waitsFor);
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    xit('Should not visual regress on example-dropdown-tabs?theme=classic', async () => {
+    xit('should not visually regress on example-dropdown-tabs?theme=classic', async () => {
       const tabsEl = await element(by.id('tabs-dropdown'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
@@ -416,13 +416,13 @@ describe('Tabs click example-dropdown-tabs tests', () => {
     });
   }
 
-  it('Should open dropdown tab', async () => {
+  it('should open dropdown tab', async () => {
     await element.all(by.className('tab')).get(1).click();
 
     expect(await element.all(by.className('tab')).get(1).getAttribute('class')).toContain('is-open');
   });
 
-  it('Should select dropdown tab on click', async () => {
+  it('should select dropdown tab on click', async () => {
     await element.all(by.className('tab')).get(1).click();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(element(by.css('.is-open'))), config.waitsFor);
@@ -444,11 +444,11 @@ describe('Tabs click example-url-hash-change tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(tabsContainerEl), config.waitsFor);
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should correctly updated url on tab click', async () => {
+  it('should correctly updated url on tab click', async () => {
     await element.all(by.className('tab')).get(1).click();
     await browser.driver
       .wait(protractor.ExpectedConditions.urlContains('tab-number-two'), config.waitsFor);
@@ -472,12 +472,12 @@ describe('Tabs ajax as source tests', () => {
   });
 
   if (!utils.isCI() && !utils.isBS()) {
-    it('Should not have errors', async () => {
+    it('should not have errors', async () => {
       await utils.checkForErrors();
     });
 
     // This test is being flaky on ci so ignoring there.
-    it('Should be able to activate tabs', async () => {
+    it('should be able to activate tabs', async () => {
       expect(await element(by.id('tab-one')).getAttribute('innerHTML')).not.toBe('');
 
       await element.all(by.className('tab')).get(2).click();
@@ -497,11 +497,11 @@ describe('Tabs focus after enable/disable programmatically', () => {
       .wait(protractor.ExpectedConditions.presenceOf(tabsContainerEl), config.waitsFor);
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should not change focus after enable/disable tab', async () => {
+  it('should not change focus after enable/disable tab', async () => {
     let formTab = await element(by.css('a[href="#programmatic-tabs-form-elements"]')).element(by.xpath('..'));
 
     expect(await formTab.getAttribute('class')).toContain('tab');
@@ -535,7 +535,7 @@ describe('Tabs nested tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(tabsContainerEl), config.waitsFor);
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
@@ -566,23 +566,23 @@ describe('Tabs attributes tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(tabsContainerEl), config.waitsFor);
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should init tabs with automation ids', async () => {
+  it('should init tabs with automation ids', async () => {
     expect(await element(by.id('tabs-a-contracts')).getAttribute('data-automation-id')).toEqual('tabs-test-contracts-a');
   });
 
-  it('Should init more button with automation ids', async () => {
+  it('should init more button with automation ids', async () => {
     expect(await element(by.css('#tabs-normal .tab-more')).getAttribute('data-automation-id')).toEqual('tabs-test-btn-more');
   });
 
-  it('Should init add button with automation ids', async () => {
+  it('should init add button with automation ids', async () => {
     expect(await element(by.css('#tabs-normal .add-tab-button')).getAttribute('data-automation-id')).toEqual('tabs-test-btn-add');
   });
 
-  it('Should add correct attributes when clicking the add button', async () => {
+  it('should add correct attributes when clicking the add button', async () => {
     await element(by.css('#tabs-normal .add-tab-button')).click();
     const newTab = await element(by.css('[href="#new-tab-0"]'));
 
@@ -592,7 +592,7 @@ describe('Tabs attributes tests', () => {
 
 if (utils.isChrome() && utils.isCI()) {
   xdescribe('Tabs counts position visual regression tests', () => {
-    it('Should show the counts on top of the labels', async () => {
+    it('should show the counts on top of the labels', async () => {
       await utils.setPage('/components/tabs/example-counts?locale=de-DE');
       const maincontent = await element(by.id('maincontent'));
       await browser.driver
@@ -610,7 +610,7 @@ if (utils.isChrome() && utils.isCI()) {
       expect(await browser.imageComparison.checkElement(maincontent, 'tabs-count-top')).toEqual(0);
     });
 
-    it('Should show the counts at the bottom of the labels', async () => {
+    it('should show the counts at the bottom of the labels', async () => {
       await utils.setPage('/components/tabs/example-counts?locale=pt-PT');
       const maincontent = await element(by.id('maincontent'));
       await browser.driver

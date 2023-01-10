@@ -6,11 +6,11 @@ describe('Pager Standalone Tests', () => {
     await utils.setPage('/components/pager/example-standalone');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should be able to set id/automation id', async () => {
+  it('should be able to set id/automation id', async () => {
     const btnEl = await element(by.css('[for="toggle-pagesize"]'));
     await btnEl.click();
 

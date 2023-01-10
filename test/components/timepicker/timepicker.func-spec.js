@@ -25,14 +25,14 @@ describe('TimePicker Methods', () => {
     cleanup();
   });
 
-  it('Should checks a time format value to see if it is a Military (24-hour) format', () => {
+  it('should checks a time format value to see if it is a Military (24-hour) format', () => {
     expect(timepickerObj.is24HourFormat()).toBe(false);
     expect(timepickerObj.is24HourFormat('h:mm a')).toBe(false);
     expect(timepickerObj.is24HourFormat('hh:mm:ss')).toBe(false);
     expect(timepickerObj.is24HourFormat('HH:mm')).toBe(true);
   });
 
-  it('Should get hour text', () => {
+  it('should get hour text', () => {
     expect(timepickerObj.hourText(12)).toEqual('12');
     expect(timepickerObj.hourText(5)).toEqual('5');
 
@@ -42,21 +42,21 @@ describe('TimePicker Methods', () => {
     expect(timepickerObj.hourText(5)).toEqual('05');
   });
 
-  it('Should checks time format to see if it includes seconds', () => {
+  it('should checks time format to see if it includes seconds', () => {
     expect(timepickerObj.hasSeconds()).toBe(false);
     expect(timepickerObj.hasSeconds('h:mm a')).toBe(false);
     expect(timepickerObj.hasSeconds('hh:mm:ss')).toBe(true);
     expect(timepickerObj.hasSeconds('HH:mm')).toBe(false);
   });
 
-  it('Should checks time format contains a space for presenting the day period', () => {
+  it('should checks time format contains a space for presenting the day period', () => {
     expect(timepickerObj.hasDayPeriods()).toBe(true);
     expect(timepickerObj.hasDayPeriods('h:mm a')).toBe(true);
     expect(timepickerObj.hasDayPeriods('hh:mm:ss')).toBe(false);
     expect(timepickerObj.hasDayPeriods('HH:mm')).toBe(false);
   });
 
-  it('Should rounds the minutes picker to its nearest interval value', () => {
+  it('should rounds the minutes picker to its nearest interval value', () => {
     timepickerEl.value = '12:32 PM';
     timepickerObj.roundMinutes();
 
@@ -68,7 +68,7 @@ describe('TimePicker Methods', () => {
     expect(timepickerEl.value).toEqual('12:35 PM');
   });
 
-  it('Should separate value to object as hours, minutes, seconds and day period', () => {
+  it('should separate value to object as hours, minutes, seconds and day period', () => {
     timepickerObj.dayPeriods = ['AM', 'PM'];// TODO: this should set by default
     let in1 = '2:15 AM';
     let in2 = '12:30 PM';
@@ -88,7 +88,7 @@ describe('TimePicker Methods', () => {
     expect(timepickerObj.getTimeFromField(in2)).toEqual(out2);
   });
 
-  it('Should check for remove punctuation from value', () => {
+  it('should check for remove punctuation from value', () => {
     let input = '1:00 AM';
     let output = '0100AM';
     timepickerEl.value = input;

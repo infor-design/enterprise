@@ -176,11 +176,11 @@ describe('Bar API', () => {
     cleanup();
   });
 
-  it('Should be defined on jQuery object', () => {
+  it('should be defined on jQuery object', () => {
     expect(barObj).toBeTruthy();
   });
 
-  it('Should be visible', () => {
+  it('should be visible', () => {
     expect(document.body.querySelector('.chart-container')).toBeTruthy();
   });
 
@@ -198,7 +198,7 @@ describe('Bar API', () => {
     }, 201);
   });
 
-  it('Should toggle selected bar', () => {
+  it('should toggle selected bar', () => {
     const options = {
       fieldName: 'name',
       fieldValue: 'Category C'
@@ -209,7 +209,7 @@ describe('Bar API', () => {
     expect(barObj.getSelected()).toBeTruthy();
   });
 
-  it('Should update settings of bar', () => {
+  it('should update settings of bar', () => {
     const newSettings = {
       dataset: [
         {
@@ -230,7 +230,7 @@ describe('Bar API', () => {
     expect(dataLength).toEqual(1);
   });
 
-  it('Should be able to hide legend', (done) => {
+  it('should be able to hide legend', (done) => {
     barObj?.destroy();
     const newSettings = Object.assign({ showLegend: true, dataset: twoSeriesData }, settings); // eslint-disable-line
     newSettings.dataset = twoSeriesData;
@@ -247,13 +247,13 @@ describe('Bar API', () => {
     });
   });
 
-  it('Should destroy bar', () => {
+  it('should destroy bar', () => {
     barObj?.destroy();
 
     expect(document.body.querySelector('.bar-chart')).toBeFalsy();
   });
 
-  it('Should fire contextmenu event with bar', () => {
+  it('should fire contextmenu event with bar', () => {
     const callback = jest.fn();
     $(barEl).on('contextmenu', callback);
     $(barEl).on('contextmenu', (e, el, d) => {
@@ -264,7 +264,7 @@ describe('Bar API', () => {
     expect(callback).toHaveBeenCalled();
   });
 
-  it('Should fire contextmenu event with bar grouped', () => {
+  it('should fire contextmenu event with bar grouped', () => {
     barObj.destroy();
     barObj = new Bar(barEl, groupedSettings);
     const callback = jest.fn();
@@ -277,7 +277,7 @@ describe('Bar API', () => {
     expect(callback).toHaveBeenCalled();
   });
 
-  it('Should fire contextmenu event with bar stacked', () => {
+  it('should fire contextmenu event with bar stacked', () => {
     barObj.destroy();
     barObj = new Bar(barEl, stackedSettings);
     const callback = jest.fn();

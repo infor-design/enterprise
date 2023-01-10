@@ -12,12 +12,12 @@ describe('Spinbox example-index tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(element(by.id('spinbox-id-1-spinbox'))), config.waitsFor);
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    it('should not visually regress', async () => {
       const spinboxElWrapper = element(by.className('spinbox-wrapper'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(spinboxElWrapper), config.waitsFor);
@@ -33,7 +33,7 @@ describe('Spinbox example-index tests', () => {
     });
   }
 
-  it('Should be able to set ids/automation ids', async () => {
+  it('should be able to set ids/automation ids', async () => {
     await browser.driver.sleep(config.sleep);
 
     expect(await element(by.id('spinbox-id-1-wrapper')).getAttribute('id')).toEqual('spinbox-id-1-wrapper');
@@ -49,7 +49,7 @@ describe('Spinbox example-index tests', () => {
     expect(await element(by.id('spinbox-id-1-btn-down')).getAttribute('data-automation-id')).toEqual('spinbox-automation-id-1-btn-down');
   });
 
-  it('Should be set with down arrow', async () => {
+  it('should be set with down arrow', async () => {
     await spinboxEl.sendKeys(protractor.Key.ARROW_DOWN);
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(spinboxEl), config.waitsFor);
@@ -57,7 +57,7 @@ describe('Spinbox example-index tests', () => {
     expect(await spinboxEl.getAttribute('value')).toEqual('0');
   });
 
-  it('Should be set with up arrow', async () => {
+  it('should be set with up arrow', async () => {
     await spinboxEl.sendKeys(protractor.Key.ARROW_UP);
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(element(by.css('.spinbox-wrapper.is-focused'))), config.waitsFor);
@@ -73,7 +73,7 @@ describe('Spinbox Range Tests tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(element(by.id('limited-spinbox-2'))), config.waitsFor);
   });
 
-  it('Should be able to type in range 100 to 200', async () => {
+  it('should be able to type in range 100 to 200', async () => {
     await element(by.id('limited-spinbox-2')).clear();
     await element(by.id('limited-spinbox-2')).sendKeys('111');
     await element(by.id('limited-spinbox-2')).sendKeys(protractor.Key.TAB);
@@ -82,7 +82,7 @@ describe('Spinbox Range Tests tests', () => {
     expect(await element(by.id('limited-spinbox-2')).getAttribute('value')).toEqual('111');
   });
 
-  it('Should be able to correct down', async () => {
+  it('should be able to correct down', async () => {
     await element(by.id('limited-spinbox-2')).clear();
     await element(by.id('limited-spinbox-2')).sendKeys('50');
     await element(by.id('limited-spinbox-2')).sendKeys(protractor.Key.TAB);
@@ -91,7 +91,7 @@ describe('Spinbox Range Tests tests', () => {
     expect(await element(by.id('limited-spinbox-2')).getAttribute('value')).toEqual('100');
   });
 
-  it('Should be able to correct up', async () => {
+  it('should be able to correct up', async () => {
     await element(by.id('limited-spinbox-2')).clear();
     await element(by.id('limited-spinbox-2')).sendKeys('250');
     await element(by.id('limited-spinbox-2')).sendKeys(protractor.Key.TAB);
@@ -100,7 +100,7 @@ describe('Spinbox Range Tests tests', () => {
     expect(await element(by.id('limited-spinbox-2')).getAttribute('value')).toEqual('200');
   });
 
-  it('Should be able to correct over', async () => {
+  it('should be able to correct over', async () => {
     await element(by.id('limited-spinbox-2')).clear();
     await element(by.id('limited-spinbox-2')).sendKeys('999');
     await element(by.id('limited-spinbox-2')).sendKeys(protractor.Key.TAB);
@@ -109,7 +109,7 @@ describe('Spinbox Range Tests tests', () => {
     expect(await element(by.id('limited-spinbox-2')).getAttribute('value')).toEqual('200');
   });
 
-  it('Should be able to correct text', async () => {
+  it('should be able to correct text', async () => {
     await element(by.id('limited-spinbox-2')).clear();
     await element(by.id('limited-spinbox-2')).sendKeys('AA999');
     await element(by.id('limited-spinbox-2')).sendKeys(protractor.Key.TAB);

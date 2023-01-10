@@ -49,18 +49,18 @@ describe('WeekView API', () => {
     cleanup();
   });
 
-  it('Should be defined', () => {
+  it('should be defined', () => {
     expect(weekViewAPI).toBeTruthy();
   });
 
-  it('Should render the weekview', () => {
+  it('should render the weekview', () => {
     expect(weekViewAPI.currentCalendar.name).toEqual('gregorian');
     expect(weekViewAPI.locale.name).toEqual('en-US');
     expect(document.body.querySelectorAll('.week-view tr').length).toEqual(21);
     expect(document.body.querySelectorAll('.week-view th').length).toEqual(8);
   });
 
-  it('Should render a selected day', () => {
+  it('should render a selected day', () => {
     document.querySelector('.hyperlink.today').click();
     const testDate = new Date();
     const testString = `${testDate.getDate().toString()}${testDate.toLocaleString('default', { weekday: 'short' })}`;
@@ -68,7 +68,7 @@ describe('WeekView API', () => {
     expect(document.body.querySelector('.week-view-container th .is-today').textContent).toEqual(testString);
   });
 
-  it('Should render week start and end day', () => {
+  it('should render week start and end day', () => {
     expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('December 2019');
     expect(document.body.querySelector('thead tr th:nth-child(1)').textContent.trim()).toEqual('HourAll Day');
     expect(document.body.querySelector('thead tr th:nth-child(2)').textContent.trim()).toEqual('1Sun');
@@ -93,7 +93,7 @@ describe('WeekView API', () => {
     expect(document.body.querySelector('thead tr th:nth-child(8)').textContent.trim()).toEqual('10السبت');
   });
 
-  it('Should move to next week and back', () => {
+  it('should move to next week and back', () => {
     document.body.querySelector('.btn-icon.next').click();
 
     expect(document.body.querySelector('thead tr th:nth-child(2)').textContent.trim()).toEqual('7Sat');
@@ -104,14 +104,14 @@ describe('WeekView API', () => {
     expect(document.body.querySelector('thead tr th:nth-child(8)').textContent.trim()).toEqual('7Sat');
   });
 
-  it('Should destroy monthview', () => {
+  it('should destroy monthview', () => {
     weekViewAPI.destroy();
 
     expect(document.body.querySelector('.week-view-header')).toBeFalsy();
     expect(document.body.querySelector('.week-view-container')).toBeFalsy();
   });
 
-  it('Should populate month name in different languages ', () => {
+  it('should populate month name in different languages ', () => {
     Locale.set('en-US');
     Soho.Locale.set('en-US'); //eslint-disable-line
     weekViewAPI.showWeek(new Date(2019, 11, 1), new Date(2019, 11, 7));
@@ -137,7 +137,7 @@ describe('WeekView API', () => {
     expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('Dezember 2019');
   });
 
-  it('Should populate month name spanning months', () => {
+  it('should populate month name spanning months', () => {
     Locale.set('en-US');
     Soho.Locale.set('en-US'); //eslint-disable-line
 
@@ -146,7 +146,7 @@ describe('WeekView API', () => {
     expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('Jan - February 2020');
   });
 
-  it('Should populate month name spanning years', () => {
+  it('should populate month name spanning years', () => {
     Locale.set('en-US');
     Soho.Locale.set('en-US'); //eslint-disable-line
 
@@ -155,7 +155,7 @@ describe('WeekView API', () => {
     expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('Dec 2019 - Jan 2020');
   });
 
-  it('Should move to next month and back to today', () => {
+  it('should move to next month and back to today', () => {
     document.body.querySelector('.btn-icon.next').click();
 
     weekViewAPI.showWeek(new Date(2019, 11, 1), new Date(2019, 11, 7));
@@ -168,7 +168,7 @@ describe('WeekView API', () => {
     expect(weekViewAPI.settings.startDate.getTime()).toEqual(testDate.getTime());
   });
 
-  it('Should be able to render a single day', () => {
+  it('should be able to render a single day', () => {
     weekViewAPI.showWeek(new Date(2019, 9, 21), new Date(2019, 9, 21));
 
     expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('October 2019');
@@ -177,7 +177,7 @@ describe('WeekView API', () => {
     expect(document.body.querySelectorAll('thead tr th').length).toEqual(2);
   });
 
-  it('Should be able to render two days', () => {
+  it('should be able to render two days', () => {
     weekViewAPI.showWeek(new Date(2019, 9, 21), new Date(2019, 9, 22));
 
     expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('October 2019');
@@ -186,7 +186,7 @@ describe('WeekView API', () => {
     expect(document.body.querySelectorAll('thead tr th').length).toEqual(3);
   });
 
-  it('Should be able to render two weeks', () => {
+  it('should be able to render two weeks', () => {
     weekViewAPI.showWeek(new Date(2019, 8, 16), new Date(2019, 8, 29));
 
     expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('September 2019');
@@ -196,7 +196,7 @@ describe('WeekView API', () => {
     expect(document.body.querySelectorAll('thead tr th').length).toEqual(15);
   });
 
-  it('Should render events', () => {
+  it('should render events', () => {
     weekViewAPI.destroy();
     weekViewAPI = new WeekView(weekViewEl, {
       eventTypes,
@@ -230,7 +230,7 @@ describe('WeekView API', () => {
     expect(document.body.querySelectorAll('.calendar-event').length).toEqual(5);
   });
 
-  it('Should render first day of the week', () => {
+  it('should render first day of the week', () => {
     weekViewAPI.destroy();
     weekViewAPI = new WeekView(weekViewEl, {
       firstDayOfWeek: 1
@@ -240,7 +240,7 @@ describe('WeekView API', () => {
     expect(document.body.querySelector('thead tr th:nth-child(8) span:nth-child(2)').textContent.trim()).toContain('Sun');
   });
 
-  it('Should be able to hide show all day area', () => {
+  it('should be able to hide show all day area', () => {
     weekViewAPI.destroy();
     weekViewAPI = new WeekView(weekViewEl, {
       showAllDay: false
@@ -249,7 +249,7 @@ describe('WeekView API', () => {
     expect(document.body.querySelectorAll('.week-view-all-day-wrapper').length).toEqual(0);
   });
 
-  it('Should be able to change start and end hour', () => {
+  it('should be able to change start and end hour', () => {
     weekViewAPI.destroy();
     weekViewAPI = new WeekView(weekViewEl, {
       startHour: 8,
@@ -260,7 +260,7 @@ describe('WeekView API', () => {
     expect(document.querySelector('.week-view-table tr:nth-child(19) td:nth-child(1)').textContent).toEqual('5:00 PM');
   });
 
-  it('Should be able to change hour format to de-DE', () => {
+  it('should be able to change hour format to de-DE', () => {
     Locale.set('de-DE');
     Soho.Locale.set('de-DE'); //eslint-disable-line
     weekViewAPI.destroy();
@@ -273,7 +273,7 @@ describe('WeekView API', () => {
     expect(document.querySelector('.week-view-table tr:nth-child(19) td:nth-child(1)').textContent).toEqual('17:00');
   });
 
-  it('Should be able to hide today', () => {
+  it('should be able to hide today', () => {
     weekViewAPI.destroy();
     weekViewAPI = new WeekView(weekViewEl, {
       showToday: false
@@ -282,7 +282,7 @@ describe('WeekView API', () => {
     expect(document.body.querySelectorAll('.hyperlink.today').length).toEqual(0);
   });
 
-  it('Should be able to hide view changer', () => {
+  it('should be able to hide view changer', () => {
     weekViewAPI.destroy();
     weekViewAPI = new WeekView(weekViewEl, {
       showViewChanger: false
@@ -291,7 +291,7 @@ describe('WeekView API', () => {
     expect(document.body.querySelectorAll('#calendar-view-changer').length).toEqual(0);
   });
 
-  it('Should be able to remove all events', () => {
+  it('should be able to remove all events', () => {
     weekViewAPI.destroy();
     weekViewAPI = new WeekView(weekViewEl, {
       eventTypes,
@@ -310,7 +310,7 @@ describe('WeekView API', () => {
     expect(document.body.querySelectorAll('.calendar-event').length).toEqual(0);
   });
 
-  it('Should be able to addEvents', () => {
+  it('should be able to addEvents', () => {
     weekViewAPI.addEvent({
       id: '1',
       subject: 'Test Event One',
@@ -324,7 +324,7 @@ describe('WeekView API', () => {
     expect(document.body.querySelectorAll('.calendar-event').length).toEqual(1);
   });
 
-  it('Should be able to clear all events', () => {
+  it('should be able to clear all events', () => {
     weekViewAPI.destroy();
     weekViewAPI = new WeekView(weekViewEl, {
       eventTypes,
@@ -343,7 +343,7 @@ describe('WeekView API', () => {
     expect(document.body.querySelectorAll('.calendar-event').length).toEqual(0);
   });
 
-  it('Should be able to update events', () => {
+  it('should be able to update events', () => {
     weekViewAPI.addEvent({
       id: '1',
       subject: 'Test Event One',
@@ -365,7 +365,7 @@ describe('WeekView API', () => {
     expect(document.body.querySelectorAll('.calendar-event').length).toEqual(1);
   });
 
-  it('Should be able to delete events', () => {
+  it('should be able to delete events', () => {
     weekViewAPI.addEvent({
       id: '1',
       subject: 'Test Event One',
@@ -381,7 +381,7 @@ describe('WeekView API', () => {
     expect(document.body.querySelectorAll('.calendar-event').length).toEqual(0);
   });
 
-  it('Should be able to update delete events', () => {
+  it('should be able to update delete events', () => {
     weekViewAPI.addEvent({
       id: '1',
       subject: 'Test Event One',
@@ -397,7 +397,7 @@ describe('WeekView API', () => {
     expect(document.body.querySelectorAll('.calendar-event').length).toEqual(0);
   });
 
-  it('Should be able to update events with updated', () => {
+  it('should be able to update events with updated', () => {
     weekViewAPI.updated({
       eventTypes,
       events,

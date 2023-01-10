@@ -9,18 +9,18 @@ describe('Listbuilder example-index Tests', () => {
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('li[data-value="opt-12"]'))), config.waitsFor);
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should let add item', async () => {
+  it('should let add item', async () => {
     expect(await element.all(by.css('li[role="option"]')).count()).toEqual(12);
     await element(await by.css('button[data-action="add"]')).click();
 
     expect(await element.all(by.css('li[role="option"]')).count()).toEqual(13);
   });
 
-  it('Should let move up item', async () => {
+  it('should let move up item', async () => {
     expect(await element(by.css('li[role="option"]:nth-child(2) .item-content')).getText()).toEqual('Belize');
     await element(await by.css('li[role="option"]:nth-child(2)')).click();
     await element(await by.css('button[data-action="goup"]')).click();
@@ -28,7 +28,7 @@ describe('Listbuilder example-index Tests', () => {
     expect(await element(by.css('li[role="option"]:nth-child(2) .item-content')).getText()).toEqual('Argentina');
   });
 
-  it('Should let move down item', async () => {
+  it('should let move down item', async () => {
     expect(await element(by.css('li[role="option"]:nth-child(2) .item-content')).getText()).toEqual('Belize');
     await element(await by.css('li[role="option"]:nth-child(2)')).click();
     await element(await by.css('button[data-action="godown"]')).click();
@@ -36,7 +36,7 @@ describe('Listbuilder example-index Tests', () => {
     expect(await element(by.css('li[role="option"]:nth-child(2) .item-content')).getText()).toEqual('Colombia');
   });
 
-  it('Should let edit item', async () => {
+  it('should let edit item', async () => {
     expect(await element(by.css('li[role="option"]:nth-child(2) .item-content')).getText()).toEqual('Belize');
     await element(await by.css('li[role="option"]:nth-child(2)')).click();
     await element(await by.css('button[data-action="edit"]')).click();
@@ -49,7 +49,7 @@ describe('Listbuilder example-index Tests', () => {
     expect(await element(by.css('li[role="option"]:nth-child(2) .item-content')).getText()).toEqual('test');
   });
 
-  it('Should let edit item and sanitize entered content', async () => {
+  it('should let edit item and sanitize entered content', async () => {
     expect(await element(by.css('li[role="option"]:nth-child(2) .item-content')).getText()).toEqual('Belize');
     await element(await by.css('li[role="option"]:nth-child(2)')).click();
     await element(await by.css('button[data-action="edit"]')).click();
@@ -62,7 +62,7 @@ describe('Listbuilder example-index Tests', () => {
     expect(await element(by.css('li[role="option"]:nth-child(2) .item-content')).getText()).toEqual('<script>alert("hi")</script>');
   });
 
-  it('Should let delete item', async () => {
+  it('should let delete item', async () => {
     expect(await element.all(by.css('li[role="option"]')).count()).toEqual(12);
     await element(await by.css('li[role="option"]:nth-child(2)')).click();
     await element(await by.css('button[data-action="delete"]')).click();
@@ -70,7 +70,7 @@ describe('Listbuilder example-index Tests', () => {
     expect(await element.all(by.css('li[role="option"]')).count()).toEqual(11);
   });
 
-  it('Should be able to set id/automation id example', async () => {
+  it('should be able to set id/automation id example', async () => {
     expect(await element(by.id('example1-listbuilder-btn-add')).getAttribute('id')).toEqual('example1-listbuilder-btn-add');
     expect(await element(by.id('example1-listbuilder-btn-add')).getAttribute('data-automation-id')).toEqual('automation-id-example1-listbuilder-btn-add');
 
@@ -123,11 +123,11 @@ describe('Listbuilder Update Dataset Tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.id('example-listbuilder'))), config.waitsFor);
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should update dataset', async () => {
+  it('should update dataset', async () => {
     expect(await element.all(by.css('li[role="option"]')).count()).toEqual(12);
     await element(await by.id('btn1')).click();
 

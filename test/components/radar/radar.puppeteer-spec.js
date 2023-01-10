@@ -152,7 +152,7 @@ describe('Radar', () => {
         .then(dataAutomationId => expect(dataAutomationId).toEqual('automation-id-radar-nokia-legend-2'));
     });
 
-    it('should not visual regress', async () => {
+    it('should not visually regress', async () => {
       await page.waitForSelector('.widget');
       const widgeContainer = await page.$('.widget');
       const img = await widgeContainer.screenshot();

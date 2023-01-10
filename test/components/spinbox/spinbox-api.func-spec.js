@@ -30,7 +30,7 @@ describe('Spinbox API', () => {
     expect(spinboxAPI).toBeTruthy();
   });
 
-  it('Should disable spinbox', () => {
+  it('should disable spinbox', () => {
     spinboxAPI.disable();
 
     expect(document.body.querySelector('.spinbox[disabled]')).toBeTruthy();
@@ -38,14 +38,14 @@ describe('Spinbox API', () => {
     expect(spinboxAPI.isDisabled()).toBeTruthy();
   });
 
-  it('Should enable spinbox', () => {
+  it('should enable spinbox', () => {
     spinboxAPI.enable();
 
     expect(document.body.querySelector('.field.is-disabled .spinbox')).toBeFalsy();
     expect(spinboxAPI.isDisabled()).toBeFalsy();
   });
 
-  it('Should handle readonly', () => {
+  it('should handle readonly', () => {
     spinboxAPI.readonly();
 
     expect(document.body.querySelector('.spinbox[readonly]')).toBeTruthy();
@@ -53,7 +53,7 @@ describe('Spinbox API', () => {
     expect(spinboxAPI.isDisabled()).toBeFalsy();
   });
 
-  it('Should handle toggling readonly', () => {
+  it('should handle toggling readonly', () => {
     spinboxAPI.readonly();
 
     expect(document.body.querySelector('.spinbox[readonly]')).toBeTruthy();
@@ -67,7 +67,7 @@ describe('Spinbox API', () => {
     expect(spinboxAPI.isDisabled()).toBeFalsy();
   });
 
-  it('Should handle toggling disabled', () => {
+  it('should handle toggling disabled', () => {
     spinboxAPI.disable();
 
     expect(document.body.querySelector('.spinbox[disabled]')).toBeTruthy();

@@ -39,17 +39,17 @@ describe('ListBuilder API', () => {
     cleanup();
   });
 
-  it('Should be defined as an object', () => {
+  it('should be defined as an object', () => {
     expect(listbuilderObj).toBeTruthy();
   });
 
-  it('Should destroy listbuilder', () => {
+  it('should destroy listbuilder', () => {
     listbuilderObj.destroy();
 
     expect(document.body.querySelector('.listbuilder .listview ul')).toBeFalsy();
   });
 
-  it('Should be enabled/disabled', () => {
+  it('should be enabled/disabled', () => {
     listbuilderObj.disable();
 
     expect(document.body.querySelector('#example-listbuilder.is-disabled')).toBeTruthy();
@@ -58,7 +58,7 @@ describe('ListBuilder API', () => {
     expect(document.body.querySelector('#example-listbuilder.is-disabled')).toBeFalsy();
   });
 
-  it('Should be updated with new settings', () => {
+  it('should be updated with new settings', () => {
     const btnAdd = document.body.querySelector('button[data-action="add"]');
     const btnEdit = document.body.querySelector('button[data-action="edit"]');
     btnAdd.setAttribute('data-action', 'test-add');
@@ -75,28 +75,28 @@ describe('ListBuilder API', () => {
     expect(listbuilderObj.settings.btnEdit).toEqual(newBtnEdit);
   });
 
-  it('Should extract node data', () => {
+  it('should extract node data', () => {
     const node = $(document.body.querySelector('.listbuilder li[role="option"]:nth-child(2)'));
     const data = { node, text: 'Belize', value: 'opt-2' };
 
     expect(listbuilderObj.extractNodeData(node)).toEqual(data);
   });
 
-  it('Should get data from dataset by node', () => {
+  it('should get data from dataset by node', () => {
     const node = $(document.body.querySelector('.listbuilder li[role="option"]:nth-child(2)'));
     const data = { index: 1, data: { node, id: 2, value: 'opt-2', text: 'Belize' } };
 
     expect(listbuilderObj.getDataByNode(node)).toEqual(data);
   });
 
-  it('Should move an array element position', () => {
+  it('should move an array element position', () => {
     const arr = ['one', 'two', 'three', 'four', 'five'];
     listbuilderObj.arrayIndexMove(arr, 1, 2);
 
     expect(arr).toEqual(['one', 'three', 'two', 'four', 'five']);
   });
 
-  it('Should update attributes', () => {
+  it('should update attributes', () => {
     const item = document.body.querySelector('.listbuilder li[role="option"]:nth-child(2)');
 
     expect(item.getAttribute('aria-posinset')).toEqual('2');
@@ -112,7 +112,7 @@ describe('ListBuilder API', () => {
     expect(item.getAttribute('aria-setsize')).toEqual('12');
   });
 
-  it('Should update dataset', () => {
+  it('should update dataset', () => {
     expect(listbuilderObj.settings.dataset).toEqual(ds);
     expect(listbuilderObj.settings.dataset.length).toEqual(12);
     expect(document.body.querySelectorAll('.listbuilder li[role="option"]').length).toEqual(12);
@@ -128,7 +128,7 @@ describe('ListBuilder API', () => {
     expect(document.body.querySelectorAll('.listbuilder li[role="option"]').length).toEqual(3);
   });
 
-  it('Should get an item from list', () => {
+  it('should get an item from list', () => {
     let item = $(document.body.querySelector('.listbuilder li[role="option"]:nth-child(3)'));
 
     expect(listbuilderObj.getListItem(2)).toEqual(item);
@@ -140,7 +140,7 @@ describe('ListBuilder API', () => {
     expect(listbuilderObj.getListItem('last')).toEqual(item);
   });
 
-  it('Should add item', () => {
+  it('should add item', () => {
     expect(document.body.querySelectorAll('.listbuilder li[role="option"]').length).toEqual(12);
     const callback = jest.fn();
     $(listbuilderObj.element).on('afteradd', callback);
@@ -151,7 +151,7 @@ describe('ListBuilder API', () => {
     expect(document.body.querySelectorAll('.listbuilder li[role="option"]').length).toEqual(13);
   });
 
-  it('Should move up item', () => {
+  it('should move up item', () => {
     const callback = jest.fn();
     $(listbuilderObj.element).on('aftergoup', callback);
 
@@ -163,7 +163,7 @@ describe('ListBuilder API', () => {
     expect(document.body.querySelector('.listbuilder li[role="option"]:nth-child(2) .item-content').innerText.trim()).toEqual('Argentina');
   });
 
-  it('Should move down item', () => {
+  it('should move down item', () => {
     const callback = jest.fn();
     $(listbuilderObj.element).on('aftergodown', callback);
 
@@ -175,7 +175,7 @@ describe('ListBuilder API', () => {
     expect(document.body.querySelector('.listbuilder li[role="option"]:nth-child(2) .item-content').innerText.trim()).toEqual('Colombia');
   });
 
-  it('Should delete item', () => {
+  it('should delete item', () => {
     const callback = jest.fn();
     $(listbuilderObj.element).on('afterdelete', callback);
 

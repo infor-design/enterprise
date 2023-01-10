@@ -24,7 +24,7 @@ describe.skip('Homepage Puppeteer Tests', () => {
         .then(element => expect(element).toBeTruthy());
     });
 
-    it.skip('should not visual regress', async () => {
+    it.skip('should not visually regress', async () => {
       await page.setViewport({ width: 1200, height: 800 });
 
       expect(await page.waitForSelector('.homepage')).toBeTruthy();
@@ -58,7 +58,7 @@ describe.skip('Homepage Puppeteer Tests', () => {
         .then(element => expect(element).toBeTruthy());
     });
 
-    it.skip('should not visual regress', async () => {
+    it.skip('should not visually regress', async () => {
       // Need a bit of delay to show the modal perfectly
       await page.waitForTimeout(200);
 
@@ -89,7 +89,7 @@ describe.skip('Homepage Puppeteer Tests', () => {
         .then(element => expect(element).toBeTruthy());
     });
 
-    it.skip('should not visual regress', async () => {
+    it.skip('should not visually regress', async () => {
       await page.setViewport({ width: 1200, height: 800 });
 
       expect(await page.waitForSelector('.homepage')).toBeTruthy();
@@ -292,7 +292,7 @@ describe.skip('Homepage Puppeteer Tests', () => {
       }
     });
 
-    it.skip('should not visual regress', async () => {
+    it.skip('should not visually regress', async () => {
       await page.setViewport({ width: 1200, height: 800 });
 
       expect(await page.waitForSelector('.homepage')).toBeTruthy();

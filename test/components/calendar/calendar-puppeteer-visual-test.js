@@ -10,7 +10,7 @@ describe('Calendar Puppeteer Visual Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should not visual regress', async () => {
+    it('should not visually regress', async () => {
       await page.waitForSelector('.monthview-table td', { visible: true })
         .then(element => expect(element).toBeTruthy());
 
@@ -30,7 +30,7 @@ describe('Calendar Puppeteer Visual Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should not visual regress', async () => {
+    it('should not visually regress', async () => {
       expect(await page.$$eval('.monthview-table td', el => el.length)).toEqual(42);
 
       const image = await page.screenshot();
@@ -47,7 +47,7 @@ describe('Calendar Puppeteer Visual Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should not visual regress', async () => {
+    it('should not visually regress', async () => {
       expect(await page.$$eval('.monthview-table td', el => el.length)).toEqual(42);
 
       const image = await page.screenshot();
@@ -64,7 +64,7 @@ describe('Calendar Puppeteer Visual Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should not visual regress', async () => {
+    it('should not visually regress', async () => {
       expect(await page.$$eval('.monthview-table td', el => el.length)).toEqual(42);
 
       const image = await page.screenshot();

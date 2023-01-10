@@ -16,12 +16,12 @@ describe('Searchfield example-index tests', () => {
         .presenceOf(element(by.id(searchfieldId))), config.waitsFor);
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress on example-index', async () => {
+    it('should not visually regress on example-index', async () => {
       const searchfieldInputEl = await element(by.id(searchfieldId));
       const searchfieldSection = await element(by.id('maincontent'));
       await browser.driver
@@ -39,7 +39,7 @@ describe('Searchfield example-index tests', () => {
     });
   }
 
-  it('Should filter on example-index', async () => {
+  it('should filter on example-index', async () => {
     const searchfieldInputEl = await element(by.id(searchfieldId));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(searchfieldInputEl), config.waitsFor);
@@ -50,7 +50,7 @@ describe('Searchfield example-index tests', () => {
     expect(await searchfieldInputEl.getAttribute('value')).toEqual('co');
   });
 
-  it('Should be able to type in as an input', async () => {
+  it('should be able to type in as an input', async () => {
     const searchfieldInputEl = await element(by.id(searchfieldId));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(searchfieldInputEl), config.waitsFor);
@@ -81,7 +81,7 @@ describe('Searchfield example-index tests', () => {
     expect(await element(by.linkText('No Results'))).toBeDefined();
   });
 
-  it('Should be able to set id/automation id', async () => {
+  it('should be able to set id/automation id', async () => {
     await browser.driver.sleep(config.sleep);
 
     expect(await element(by.id('searchfield')).getAttribute('id')).toEqual('searchfield');
@@ -144,7 +144,7 @@ describe('Searchfield clearable tests', () => {
         .presenceOf(element(by.id(searchfieldClearId))), config.waitsFor);
   });
 
-  it('Should clear the searchfield', async () => {
+  it('should clear the searchfield', async () => {
     const searchfieldInputEl = await element(by.id(searchfieldClearId));
     const closeBtn = await element.all(by.css('.close')).first();
     await browser.driver
@@ -168,7 +168,7 @@ if (utils.isChrome() && utils.isCI()) {
       await browser.driver.sleep(config.sleep);
     });
 
-    it('Should not visual regress on test-configure-close-size', async () => {
+    it('should not visually regress on test-configure-close-size', async () => {
       expect(await browser.imageComparison.checkElement(element(by.css('.toolbar-section.search')), 'searchfield-collapse-size')).toEqual(0);
     });
   });
@@ -218,7 +218,7 @@ if (utils.isChrome() && utils.isCI()) {
     });
 
     if (utils.isChrome() && utils.isCI()) {
-      it('should not visual regress', async () => {
+      it('should not visually regress', async () => {
         const searchfieldClearable = await element(by.id('searchfield'));
         await searchfieldClearable.sendKeys('co');
         await browser.driver.sleep(config.sleep);

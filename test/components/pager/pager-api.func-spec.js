@@ -28,13 +28,13 @@ describe('Pager API (Standalone)', () => {
     cleanup();
   });
 
-  it('Should be defined on jQuery object', () => {
+  it('should be defined on jQuery object', () => {
     pagerObj = new Pager(pagerEl, { type: 'standalone' });
 
     expect(pagerObj).toBeTruthy();
   });
 
-  it('Should render', () => {
+  it('should render', () => {
     pagerObj = new Pager(pagerEl, { type: 'standalone' });
 
     expect(document.body.querySelector('.pager-toolbar')).toBeTruthy();
@@ -44,20 +44,20 @@ describe('Pager API (Standalone)', () => {
     expect(document.body.querySelector('.pager-last')).toBeTruthy();
   });
 
-  it('Should destroy pager', () => {
+  it('should destroy pager', () => {
     pagerObj = new Pager(pagerEl, { type: 'standalone' });
     pagerObj.destroy();
 
     expect(document.body.querySelector('.pager-toolbar')).toBeFalsy();
   });
 
-  it('Should be show page size selector', () => {
+  it('should be show page size selector', () => {
     pagerObj = new Pager(pagerEl, { type: 'standalone', showPageSizeSelector: true });
 
     expect(document.body.querySelector('.pager-pagesize')).toBeTruthy();
   });
 
-  it('Should hide first button', () => {
+  it('should hide first button', () => {
     pagerObj = new Pager(pagerEl, { type: 'standalone', showFirstButton: false });
 
     expect(document.body.querySelector('.pager-first .btn-icon')).not.toExist();
@@ -68,7 +68,7 @@ describe('Pager API (Standalone)', () => {
     pagerObj.updated({ showFirstButton: true });
   });
 
-  it('Should disable first button', () => {
+  it('should disable first button', () => {
     pagerObj = new Pager(pagerEl, { type: 'standalone', enableFirstButton: false });
 
     expect(document.body.querySelector('.pager-first .btn-icon[disabled]')).toBeTruthy();
@@ -79,7 +79,7 @@ describe('Pager API (Standalone)', () => {
     pagerObj.updated({ enableFirstButton: true });
   });
 
-  it('Should hide previous button', () => {
+  it('should hide previous button', () => {
     pagerObj = new Pager(pagerEl, { type: 'standalone', showPreviousButton: false });
 
     expect(document.body.querySelector('.pager-first .btn-icon')).toBeVisible();
@@ -88,7 +88,7 @@ describe('Pager API (Standalone)', () => {
     expect(document.body.querySelector('.pager-last .btn-icon')).toBeVisible();
   });
 
-  it('Should disable previous button', () => {
+  it('should disable previous button', () => {
     pagerObj = new Pager(pagerEl, { type: 'standalone', enablePreviousButton: false });
 
     expect(document.body.querySelector('.pager-first .btn-icon[disabled]')).toBeFalsy();
@@ -97,7 +97,7 @@ describe('Pager API (Standalone)', () => {
     expect(document.body.querySelector('.pager-last .btn-icon[disabled]')).toBeFalsy();
   });
 
-  it('Should hide next button', () => {
+  it('should hide next button', () => {
     pagerObj = new Pager(pagerEl, { type: 'standalone', showNextButton: false });
 
     expect(document.body.querySelector('.pager-first .btn-icon')).toBeVisible();
@@ -106,7 +106,7 @@ describe('Pager API (Standalone)', () => {
     expect(document.body.querySelector('.pager-last .btn-icon')).toBeVisible();
   });
 
-  it('Should disable next button', () => {
+  it('should disable next button', () => {
     pagerObj = new Pager(pagerEl, { type: 'standalone', enableNextButton: false });
 
     expect(document.body.querySelector('.pager-first .btn-icon[disabled]')).toBeFalsy();
@@ -115,7 +115,7 @@ describe('Pager API (Standalone)', () => {
     expect(document.body.querySelector('.pager-last .btn-icon[disabled]')).toBeFalsy();
   });
 
-  it('Should hide last button', () => {
+  it('should hide last button', () => {
     pagerObj = new Pager(pagerEl, { type: 'standalone', showLastButton: false });
 
     expect(document.body.querySelector('.pager-first .btn-icon')).toBeVisible();
@@ -126,7 +126,7 @@ describe('Pager API (Standalone)', () => {
     pagerObj.updated({ showLastButton: true });
   });
 
-  it('Should disable last button', () => {
+  it('should disable last button', () => {
     pagerObj = new Pager(pagerEl, { type: 'standalone', enableLastButton: false });
 
     expect(document.body.querySelector('.pager-first .btn-icon[disabled]')).toBeFalsy();

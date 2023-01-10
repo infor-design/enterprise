@@ -7,12 +7,12 @@ describe('Hierarchy index tests', () => {
     await utils.setPage('/components/hierarchy/example-index?theme=classic&layout=nofrills');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    it('should not visually regress', async () => {
       const windowSize = await browser.driver.manage().window().getSize();
       await browser.driver.manage().window().setSize(1500, 900);
 

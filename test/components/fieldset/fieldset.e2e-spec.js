@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 describe('Fieldset Tests', () => {
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress on index', async () => {
+    it('should not visually regress on index', async () => {
       await utils.setPage('/components/fieldset/example-index.html?theme=classic&layout=nofrills');
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleepLonger);
@@ -15,7 +15,7 @@ describe('Fieldset Tests', () => {
       expect(await browser.imageComparison.checkElement(containerEl, 'fieldset-index')).toEqual(0);
     });
 
-    it('Should be able to set id/automation id', async () => {
+    it('should be able to set id/automation id', async () => {
       await utils.setPage('/components/fieldset/example-index.html?theme=classic&layout=nofrills');
       await browser.driver.sleep(config.sleep);
 
@@ -23,7 +23,7 @@ describe('Fieldset Tests', () => {
       expect(await element(by.id('fieldset')).getAttribute('data-automation-id')).toEqual('fieldset-automation-id');
     });
 
-    it('Should not visual regress on short layouts', async () => {
+    it('should not visually regress on short layouts', async () => {
       await utils.setPage('/components/fieldset/example-short.html?layout=nofrills');
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleepLonger);

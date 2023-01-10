@@ -8,11 +8,11 @@ describe('Scatterplot Chart tests', () => {
     await utils.setPage('/components/scatterplot/example-index?layout=nofrills');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should be able to set id/automation id', async () => {
+  it('should be able to set id/automation id', async () => {
     await browser.driver.sleep(config.sleep);
 
     expect(await element(by.id('scatterplot-s1-jan-symbol')).getAttribute('id')).toEqual('scatterplot-s1-jan-symbol');

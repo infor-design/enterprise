@@ -24,14 +24,14 @@ describe('Tree Methods', () => {
     cleanup();
   });
 
-  it('Should initially select node', () => {
+  it('should initially select node', () => {
     treeObj.settings.dataset[0].selected = true;
     treeObj.initSelected();
 
     expect(treeEl.querySelector('a[role="treeitem"].is-selected')).toBeTruthy();
   });
 
-  it('Should sets the correct icon to use on a particular SVG element', () => {
+  it('should sets the correct icon to use on a particular SVG element', () => {
     const svgFirst = treeEl.querySelector('a[role="treeitem"] .icon-tree');
 
     expect(svgFirst.querySelector('use').getAttribute('href')).toEqual('#icon-tree-node');
@@ -41,7 +41,7 @@ describe('Tree Methods', () => {
     expect(svgFirst.querySelector('use').getAttribute('href')).toEqual('#icon-tree-image');
   });
 
-  it('Should expand a collection of tree nodes', () => {
+  it('should expand a collection of tree nodes', () => {
     const secondDir = treeEl.querySelectorAll('li.folder')[2];
 
     expect(secondDir.querySelectorAll('ul[role=group].is-open').length).toEqual(0);
@@ -51,7 +51,7 @@ describe('Tree Methods', () => {
     expect(secondDir.querySelectorAll('ul[role=group].is-open').length).toEqual(1);
   });
 
-  it('Should expand all tree nodes', (done) => {
+  it('should expand all tree nodes', (done) => {
     expect(treeEl.querySelectorAll('li.folder ul[role=group]').length).toEqual(3);
     expect(treeEl.querySelectorAll('li.folder.is-open ul[role=group].is-open').length).toEqual(2);
     expect(treeEl.querySelectorAll('li.folder.is-open a[aria-expanded="true"').length).toEqual(2);
@@ -70,7 +70,7 @@ describe('Tree Methods', () => {
     }, 300);
   });
 
-  it('Should collapse a collection of tree nodes', () => {
+  it('should collapse a collection of tree nodes', () => {
     const firstDir = treeEl.querySelectorAll('li.folder')[1];
 
     expect(firstDir.querySelectorAll('ul[role=group].is-open').length).toEqual(1);
@@ -80,7 +80,7 @@ describe('Tree Methods', () => {
     expect(firstDir.querySelectorAll('ul[role=group].is-open').length).toEqual(0);
   });
 
-  it('Should collapse all tree nodes', (done) => {
+  it('should collapse all tree nodes', (done) => {
     expect(treeEl.querySelectorAll('li.folder ul[role=group]').length).toEqual(3);
     expect(treeEl.querySelectorAll('li.folder.is-open ul[role=group].is-open').length).toEqual(2);
     expect(treeEl.querySelectorAll('li.folder.is-open a[aria-expanded="true"').length).toEqual(2);
@@ -99,7 +99,7 @@ describe('Tree Methods', () => {
     }, 300);
   });
 
-  it('Should select a node specifically using its ID attribute', () => {
+  it('should select a node specifically using its ID attribute', () => {
     let link = treeEl.querySelector('a[role="treeitem"]');
     link.id = 'home';
 
@@ -111,7 +111,7 @@ describe('Tree Methods', () => {
     expect(link.classList.contains('is-selected')).toBeTruthy();
   });
 
-  it('Should select a tree node by jquery-selector', () => {
+  it('should select a tree node by jquery-selector', () => {
     let link = treeEl.querySelector('a[role="treeitem"]');
     const jquerySelector = 'a[role="treeitem"]:first';
 
@@ -123,7 +123,7 @@ describe('Tree Methods', () => {
     expect(link.classList.contains('is-selected')).toBeTruthy();
   });
 
-  it('Should select a tree node by jquery-object', () => {
+  it('should select a tree node by jquery-object', () => {
     let link = treeEl.querySelector('a[role="treeitem"]');
     const jqueryObject = $(link);
 
@@ -135,7 +135,7 @@ describe('Tree Methods', () => {
     expect(link.classList.contains('is-selected')).toBeTruthy();
   });
 
-  it('Should select a given node', () => {
+  it('should select a given node', () => {
     let link = treeEl.querySelector('a[role="treeitem"]');
 
     expect(link.classList.contains('is-selected')).toBeFalsy();
@@ -146,7 +146,7 @@ describe('Tree Methods', () => {
     expect(link.classList.contains('is-selected')).toBeTruthy();
   });
 
-  it('Should deselect a given node', () => {
+  it('should deselect a given node', () => {
     let link = treeEl.querySelector('a[role="treeitem"]');
     treeObj.selectNode($(link));
     link = treeEl.querySelector('a[role="treeitem"]');
@@ -159,7 +159,7 @@ describe('Tree Methods', () => {
     expect(link.classList.contains('is-selected')).toBeFalsy();
   });
 
-  it('Should select a given node when finished', () => {
+  it('should select a given node when finished', () => {
     let link = treeEl.querySelector('a[role="treeitem"]');
 
     expect(link.classList.contains('is-selected')).toBeFalsy();
@@ -170,7 +170,7 @@ describe('Tree Methods', () => {
     expect(link.classList.contains('is-selected')).toBeTruthy();
   });
 
-  it('Should set current node status for single selected', () => {
+  it('should set current node status for single selected', () => {
     const firstDir = treeEl.querySelector('li.folder');
     treeObj.selectNode($(firstDir.querySelector('a')));
     firstDir.classList.remove('is-selected');
@@ -182,7 +182,7 @@ describe('Tree Methods', () => {
     expect(firstDir.classList.contains('is-selected')).toBeTruthy();
   });
 
-  it('Should set current node status for multiple selected', () => {
+  it('should set current node status for multiple selected', () => {
     treeObj.settings.dataset[2].children[0].children[0].selected = true;
     treeObj.initSelected();
     treeObj.settings.selectable = 'multiple';
@@ -198,14 +198,14 @@ describe('Tree Methods', () => {
     expect(firstDir.classList.contains('is-partial')).toBeTruthy();
   });
 
-  it('Should get current node status for single selected', () => {
+  it('should get current node status for single selected', () => {
     const firstDir = treeEl.querySelector('li.folder');
     treeObj.selectNode($(firstDir.querySelector('a')));
 
     expect(treeObj.getSelectedStatus($(treeEl.querySelector('li.folder a')))).toEqual('mixed');
   });
 
-  it('Should get current node status for multiple selected', () => {
+  it('should get current node status for multiple selected', () => {
     treeObj.settings.dataset[2].children[0].children[0].selected = true;
     treeObj.initSelected();
     treeObj.settings.selectable = 'multiple';
@@ -215,7 +215,7 @@ describe('Tree Methods', () => {
     expect(treeObj.getSelectedStatus($(treeEl.querySelector('li.folder a')))).toEqual('mixed');
   });
 
-  it('Should toggle its opposite form open/close to given node', () => {
+  it('should toggle its opposite form open/close to given node', () => {
     const firstDir = treeEl.querySelector('li.folder');
 
     expect(firstDir.classList.contains('is-open')).toBeTruthy();
@@ -225,7 +225,7 @@ describe('Tree Methods', () => {
     expect(firstDir.classList.contains('is-open')).toBeFalsy();
   });
 
-  it('Should load given json data and update tree', () => {
+  it('should load given json data and update tree', () => {
     expect(treeEl.querySelectorAll('a[role="treeitem"]').length).toEqual(43);
 
     const dataset = [
@@ -237,7 +237,7 @@ describe('Tree Methods', () => {
     expect(treeEl.querySelectorAll('a[role="treeitem"]').length).toEqual(2);
   });
 
-  it('Should add given json data to dataset', () => {
+  it('should add given json data to dataset', () => {
     expect(treeObj.settings.dataset.length).toEqual(6);
     expect(treeObj.settings.dataset[0].text).toEqual('Home');
     expect(treeObj.settings.dataset[5].text).toEqual('Contact');
@@ -250,7 +250,7 @@ describe('Tree Methods', () => {
     expect(treeObj.settings.dataset[7].text).toEqual('Node Two');
   });
 
-  it('Should find the node by id in dataset', () => {
+  it('should find the node by id in dataset', () => {
     const data = { id: 'node1', text: 'Node One' };
     treeObj.addToDataset(data, 'bottom');
 
@@ -260,7 +260,7 @@ describe('Tree Methods', () => {
     expect(treeObj.findById('node1')).toEqual(data);
   });
 
-  it('Should find the node by id in dataset if selected', () => {
+  it('should find the node by id in dataset if selected', () => {
     const data = { id: 'node1', text: 'Node One' };
     treeObj.addToDataset(data, 'bottom');
 
@@ -273,7 +273,7 @@ describe('Tree Methods', () => {
     expect(treeObj.getNodeByIdIfSelected('node1')).toEqual(data);
   });
 
-  it('Should get selected nodes', () => {
+  it('should get selected nodes', () => {
     expect(treeObj.getSelectedNodes().length).toEqual(0);
 
     treeObj.selectNode($(treeEl.querySelector('a[role="treeitem"]')));
@@ -281,7 +281,7 @@ describe('Tree Methods', () => {
     expect(treeObj.getSelectedNodes().length).toEqual(1);
   });
 
-  it('Should get next from given node', () => {
+  it('should get next from given node', () => {
     const links = treeEl.querySelectorAll('a[role="treeitem"]');
     let next = treeObj.getNextNode($(links[0]));
     let text = next[0].querySelector('.tree-text').textContent;
@@ -298,7 +298,7 @@ describe('Tree Methods', () => {
     expect(next.length).toEqual(0);
   });
 
-  it('Should get previous from given node', () => {
+  it('should get previous from given node', () => {
     const links = treeEl.querySelectorAll('a[role="treeitem"]');
     let previous = treeObj.getPreviousNode($(links[1]));
     let text = previous[0].querySelector('.tree-text').textContent;
@@ -315,7 +315,7 @@ describe('Tree Methods', () => {
     expect(previous.length).toEqual(0);
   });
 
-  it('Should add a node and markup at root', () => {
+  it('should add a node and markup at root', () => {
     let links = treeEl.querySelectorAll('a[role="treeitem"]');
     let text = links[links.length - 1].querySelector('.tree-text').textContent;
 
@@ -329,7 +329,7 @@ describe('Tree Methods', () => {
     expect(links[links.length - 1].parentNode.parentNode).toEqual(treeObj.element[0]);
   });
 
-  it('Should add a node and markup to parent id', () => {
+  it('should add a node and markup to parent id', () => {
     let links = treeEl.querySelectorAll('a[role="treeitem"]');
     let text = links[links.length - 1].querySelector('.tree-text').textContent;
 
@@ -353,7 +353,7 @@ describe('Tree Methods', () => {
     expect(parent.parentNode).toEqual(treeObj.element[0]);
   });
 
-  it('Should add a node and markup to bottom wrong id', () => {
+  it('should add a node and markup to bottom wrong id', () => {
     let links = treeEl.querySelectorAll('a[role="treeitem"]');
     let text = links[links.length - 1].querySelector('.tree-text').textContent;
 
@@ -367,7 +367,7 @@ describe('Tree Methods', () => {
     expect(links[links.length - 1].parentNode.parentNode).toEqual(treeObj.element[0]);
   });
 
-  it('Should add a node and markup to parent jquery object', () => {
+  it('should add a node and markup to parent jquery object', () => {
     let links = treeEl.querySelectorAll('a[role="treeitem"]');
     let text = links[links.length - 1].querySelector('.tree-text').textContent;
 
@@ -393,7 +393,7 @@ describe('Tree Methods', () => {
     expect(parent.parentNode).toEqual(treeObj.element[0]);
   });
 
-  it('Should add a node and markup as child', () => {
+  it('should add a node and markup as child', () => {
     let links = treeEl.querySelectorAll('a[role="treeitem"]');
     let text = links[0].querySelector('.tree-text').textContent;
 
@@ -408,7 +408,7 @@ describe('Tree Methods', () => {
     expect(links[0].parentNode.parentNode).toEqual(treeObj.element[0]);
   });
 
-  it('Should add a node and markup as child nodes', () => {
+  it('should add a node and markup as child nodes', () => {
     let links = treeEl.querySelectorAll('a[role="treeitem"]');
     let text = links[0].querySelector('.tree-text').textContent;
 
@@ -423,21 +423,21 @@ describe('Tree Methods', () => {
     expect(links[0].parentNode.parentNode).toEqual(treeObj.element[0]);
   });
 
-  it('Should check for true value', () => {
+  it('should check for true value', () => {
     expect(treeObj.isTrue(false)).toEqual(false);
     expect(treeObj.isTrue('false')).toEqual(false);
     expect(treeObj.isTrue(true)).toEqual(true);
     expect(treeObj.isTrue('true')).toEqual(true);
   });
 
-  it('Should check for false value', () => {
+  it('should check for false value', () => {
     expect(treeObj.isFalse(false)).toEqual(true);
     expect(treeObj.isFalse('false')).toEqual(true);
     expect(treeObj.isFalse(true)).toEqual(false);
     expect(treeObj.isFalse('true')).toEqual(false);
   });
 
-  it('Should parse the boolean value', () => {
+  it('should parse the boolean value', () => {
     expect(treeObj.parseBool(false)).toEqual(false);
     expect(treeObj.parseBool('false')).toEqual(false);
     expect(treeObj.parseBool(0)).toEqual(false);
@@ -448,7 +448,7 @@ describe('Tree Methods', () => {
     expect(treeObj.parseBool('xxx')).toEqual(true);
   });
 
-  it('Should update given node text', () => {
+  it('should update given node text', () => {
     let link = treeEl.querySelector('a[role="treeitem"]');
     let text = link.querySelector('.tree-text').textContent;
 
@@ -461,7 +461,7 @@ describe('Tree Methods', () => {
     expect(text).toEqual('Changed Item');
   });
 
-  it('Should update given node disabled', () => {
+  it('should update given node disabled', () => {
     let link = treeEl.querySelector('a[role="treeitem"]');
 
     expect(link.classList.contains('is-disabled')).toBeFalsy();
@@ -472,7 +472,7 @@ describe('Tree Methods', () => {
     expect(link.classList.contains('is-disabled')).toBeTruthy();
   });
 
-  it('Should update given node enabled', () => {
+  it('should update given node enabled', () => {
     let link = treeEl.querySelector('a[role="treeitem"]');
 
     expect(link.classList.contains('is-disabled')).toBeFalsy();
@@ -488,7 +488,7 @@ describe('Tree Methods', () => {
     expect(link.classList.contains('is-disabled')).toBeFalsy();
   });
 
-  it('Should update given node icon', () => {
+  it('should update given node icon', () => {
     const link = treeEl.querySelector('a[role="treeitem"]');
     const use = link.querySelector('.icon-tree use');
 
@@ -499,7 +499,7 @@ describe('Tree Methods', () => {
     expect(use.getAttribute('href')).toEqual('#icon-tree-image');
   });
 
-  it('Should update given node badge', () => {
+  it('should update given node badge', () => {
     let link = treeEl.querySelector('a[role="treeitem"]');
     let badge = link.querySelector('.tree-badge');
 
@@ -514,7 +514,7 @@ describe('Tree Methods', () => {
     expect(badge.textContent).toEqual('5');
   });
 
-  it('Should update given node add children', () => {
+  it('should update given node add children', () => {
     let link = treeEl.querySelector('a[role="treeitem"]');
     let children = link.parentNode.querySelectorAll('a[role="treeitem"]');
 
@@ -528,7 +528,7 @@ describe('Tree Methods', () => {
     expect(children.length).toEqual(2);
   });
 
-  it('Should update given node remove children', () => {
+  it('should update given node remove children', () => {
     let firstDir = treeEl.querySelectorAll('li')[2];
     let children = firstDir.querySelectorAll('a[role="treeitem"]');
 
@@ -542,7 +542,7 @@ describe('Tree Methods', () => {
     expect(children.length).toEqual(1);
   });
 
-  it('Should remove children from given node', () => {
+  it('should remove children from given node', () => {
     let firstDir = treeEl.querySelectorAll('li')[2];
     let children = firstDir.querySelectorAll('a[role="treeitem"]');
 
@@ -556,7 +556,7 @@ describe('Tree Methods', () => {
     expect(children.length).toEqual(1);
   });
 
-  it('Should remove node from tree', () => {
+  it('should remove node from tree', () => {
     let link = treeEl.querySelector('a[role="treeitem"]');
     let text = link.querySelector('.tree-text').textContent;
 
@@ -569,7 +569,7 @@ describe('Tree Methods', () => {
     expect(text).toEqual('About Us');
   });
 
-  it('Should convert file node to folder type', () => {
+  it('should convert file node to folder type', () => {
     let link = treeEl.querySelector('a[role="treeitem"]');
     let icon = link.querySelector('.icon-tree use').getAttribute('href');
 
@@ -585,7 +585,7 @@ describe('Tree Methods', () => {
     expect(link.parentNode.querySelectorAll('ul').length).toEqual(1);
   });
 
-  it('Should convert folder node to file type', () => {
+  it('should convert folder node to file type', () => {
     let firstDir = treeEl.querySelectorAll('li')[2];
     let children = firstDir.querySelectorAll('a[role="treeitem"]');
     let link = firstDir.querySelector('a[role="treeitem"]');
@@ -605,7 +605,7 @@ describe('Tree Methods', () => {
     expect(children.length).toEqual(1);
   });
 
-  it('Should not detect any non-disabled tree nodes', () => {
+  it('should not detect any non-disabled tree nodes', () => {
     const count = treeEl.querySelectorAll('li a[role="treeitem"]').length;
     treeObj.disable();
     const countDisabled = treeEl.querySelectorAll('li a[role="treeitem"].is-disabled').length;
@@ -613,14 +613,14 @@ describe('Tree Methods', () => {
     expect(countDisabled).toEqual(count);
   });
 
-  it('Should not detect any disabled tree nodes', () => {
+  it('should not detect any disabled tree nodes', () => {
     treeObj.enable();
     const countDisabled = treeEl.querySelectorAll('li a[role="treeitem"].is-disabled').length;
 
     expect(countDisabled).toEqual(0);
   });
 
-  it('Should preserve and restore enablement states of all nodes', () => {
+  it('should preserve and restore enablement states of all nodes', () => {
     const nodeArray = [];
     treeEl.querySelectorAll('li a[role="treeitem"]').forEach((node) => {
       nodeArray.push({ nodeId: node.id, state: node.classList.contains('is-disabled') ? 'disabled' : 'enabled' });

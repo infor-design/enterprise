@@ -76,15 +76,15 @@ describe('Lookup API', () => {
     done();
   });
 
-  it('Should be defined', () => {
+  it('should be defined', () => {
     expect(lookupObj).toBeTruthy();
   });
 
-  it('Should be visible', () => {
+  it('should be visible', () => {
     expect(document.body.querySelector('.lookup')).toBeTruthy();
   });
 
-  it('Should have accessible text', () => {
+  it('should have accessible text', () => {
     // Label
     expect(lookupObj.label.length).toBeTruthy();
 
@@ -92,14 +92,14 @@ describe('Lookup API', () => {
     expect(lookupObj.icon[0].querySelector('.audible').textContent.length).toBeTruthy();
   });
 
-  it('Should be able to disable it', () => {
+  it('should be able to disable it', () => {
     lookupObj.disable();
 
     expect(lookupEl.disabled).toBeTruthy();
     expect(lookupObj.isDisabled()).toBeTruthy();
   });
 
-  it('Should be able to enable it', () => {
+  it('should be able to enable it', () => {
     lookupObj.enable();
 
     expect(lookupEl.readOnly).toBeFalsy();
@@ -108,14 +108,14 @@ describe('Lookup API', () => {
     expect(lookupObj.isDisabled()).toBeFalsy();
   });
 
-  it('Should be able to make it readonly', () => {
+  it('should be able to make it readonly', () => {
     lookupObj.readonly();
 
     expect(lookupEl.readOnly).toBeTruthy();
     expect(lookupObj.isReadonly()).toBeTruthy();
   });
 
-  it('Should hide icon if input is hidden', () => {
+  it('should hide icon if input is hidden', () => {
     lookupObj.destroy();
 
     lookupEl.classList.add('hidden');
@@ -124,7 +124,7 @@ describe('Lookup API', () => {
     expect($(lookupEl).siblings('button.trigger').css('visibility')).toEqual('hidden');
   });
 
-  it('Should be able to destroy it', (done) => {
+  it('should be able to destroy it', (done) => {
     lookupObj.destroy();
 
     setTimeout(() => {
@@ -133,7 +133,7 @@ describe('Lookup API', () => {
     }, 300);
   });
 
-  it('Should be able to open the dialog and select', (done) => {
+  it('should be able to open the dialog and select', (done) => {
     lookupObj.openDialog();
 
     setTimeout(() => {
@@ -147,7 +147,7 @@ describe('Lookup API', () => {
     }, 600);
   });
 
-  it('Should be able to update the dataset when closed', (done) => {
+  it('should be able to update the dataset when closed', (done) => {
     const newData = [];
     newData.push({
       id: 77,
@@ -185,7 +185,7 @@ describe('Lookup API', () => {
     }, 600);
   });
 
-  it('Should be able to update the dataset when open', (done) => {
+  it('should be able to update the dataset when open', (done) => {
     const newData = [];
     newData.push({
       id: 77,

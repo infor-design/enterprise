@@ -104,7 +104,7 @@ describe('Lookup example tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    it('should not visually regress', async () => {
       const buttonEl = await element.all(by.className('trigger')).first();
       await buttonEl.click();
 
@@ -151,7 +151,7 @@ describe('Lookup editable strict tests', () => {
     expect(await element(by.css('.is-not-editable')).getAttribute('readonly')).toBeTruthy();
   });
 
-  it('Should validate', async () => {
+  it('should validate', async () => {
     await element(by.css('#lookup')).sendKeys(protractor.Key.TAB);
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.error-message'))), config.waitsFor);
@@ -488,7 +488,7 @@ describe('Lookup minWidth tests', () => {
     await utils.setPage('/components/lookup/example-minwidth');
   });
 
-  it('Should open the lookup with min width', async () => {
+  it('should open the lookup with min width', async () => {
     const buttonEl = await element.all(by.className('trigger')).last();
     await buttonEl.click();
 
@@ -499,7 +499,7 @@ describe('Lookup minWidth tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    it('should not visually regress', async () => {
       const buttonEl = await element.all(by.className('trigger')).last();
       await buttonEl.click();
 

@@ -23,7 +23,7 @@ describe('TimePicker Events', () => {
     cleanup();
   });
 
-  it('Should trigger "change" event', () => {
+  it('should trigger "change" event', () => {
     const callback = jest.fn();
     $('#timepicker-id-1').on('change', callback);
 

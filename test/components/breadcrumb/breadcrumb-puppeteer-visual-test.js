@@ -12,7 +12,7 @@ describe('Breadcrumb Puppeteer Visual tests', () => {
       await page.goto(url, { waitUntil: ['networkidle2', 'load'] });
     });
 
-    it('should not visual regress', async () => {
+    it('should not visually regress', async () => {
       await waitForBreadcrumb();
       const img = await page.screenshot();
       const sConfig = getConfig('breadcrumb');
@@ -27,7 +27,7 @@ describe('Breadcrumb Puppeteer Visual tests', () => {
       await page.goto(url, { waitUntil: ['networkidle2', 'load'] });
     });
 
-    it('should not visual regress', async () => {
+    it('should not visually regress', async () => {
       await waitForBreadcrumb();
       const img = await page.screenshot();
       const sConfig = getConfig('breadcrumb-text');
@@ -42,7 +42,7 @@ describe('Breadcrumb Puppeteer Visual tests', () => {
       await page.goto(url, { waitUntil: ['networkidle2', 'load'] });
     });
 
-    it('should not visual regress', async () => {
+    it('should not visually regress', async () => {
       await waitForBreadcrumb();
       const img = await page.screenshot();
       const sConfig = getConfig('breadcrumb-alternate');
@@ -57,7 +57,7 @@ describe('Breadcrumb Puppeteer Visual tests', () => {
       await page.goto(url, { waitUntil: ['networkidle2', 'load'] });
     });
 
-    it('should not visual regress', async () => {
+    it('should not visually regress', async () => {
       await page.waitForFunction('document.querySelectorAll("div[class=row]").length > 0');
       const img = await page.screenshot();
       const sConfig = getConfig('breadcrumb-disabled');

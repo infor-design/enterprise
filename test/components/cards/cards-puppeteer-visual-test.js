@@ -10,7 +10,7 @@ describe('Cards Puppeteer Visual Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should not visual regress', async () => {
+    it('should not visually regress', async () => {
       await page.waitForSelector('.card-group-action', { visible: true })
         .then(element => expect(element).toBeTruthy());
 
@@ -28,7 +28,7 @@ describe('Cards Puppeteer Visual Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should not visual regress', async () => {
+    it('should not visually regress', async () => {
       await page.waitForSelector('#category-button', { visible: true })
         .then(element => expect(element).toBeTruthy());
 
@@ -49,7 +49,7 @@ describe('Cards Puppeteer Visual Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should not visual regress', async () => {
+    it('should not visually regress', async () => {
       await page.waitForSelector('.card', { visible: true })
         .then(element => expect(element).toBeTruthy());
 
@@ -70,7 +70,7 @@ describe('Cards Puppeteer Visual Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it.skip('should not visual regress', async () => {
+    it.skip('should not visually regress', async () => {
       await page.waitForSelector('.card', { visible: true })
         .then(element => expect(element).toBeTruthy());
 
@@ -96,7 +96,7 @@ describe('Cards Puppeteer Visual Tests', () => {
       await page.setViewport({ width: 1920, height: 1080 });
     });
 
-    it('should not visual regress', async () => {
+    it('should not visually regress', async () => {
       await page.waitForSelector('.btn');
       await page.click('#actionable-btn-1');
 

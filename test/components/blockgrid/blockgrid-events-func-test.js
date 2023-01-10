@@ -48,7 +48,7 @@ describe('Blockgrid Single Events', () => {
     cleanup();
   });
 
-  it('Should trigger "selected" event', () => {
+  it('should trigger "selected" event', () => {
     const callback = jest.fn();
 
     $('#blockgrid').on('selected', callback);
@@ -111,7 +111,7 @@ describe('Blockgrid Mixed Selection Events', () => {
     cleanup();
   });
 
-  it('Should trigger "activated" event', (done) => {
+  it('should trigger "activated" event', (done) => {
     const callback = jest.fn();
 
     $('#blockgrid').on('activated', callback);
@@ -124,7 +124,7 @@ describe('Blockgrid Mixed Selection Events', () => {
     }, 100);
   });
 
-  it('Should trigger "deactivated" event', (done) => {
+  it('should trigger "deactivated" event', (done) => {
     const callback = jest.fn();
 
     $('#blockgrid').on('deactivated', callback);

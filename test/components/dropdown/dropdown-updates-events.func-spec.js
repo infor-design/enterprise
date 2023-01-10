@@ -25,7 +25,7 @@ describe('Dropdown updates, events', () => {
     cleanup();
   });
 
-  it('Should set settings', () => {
+  it('should set settings', () => {
     const settings = {
       closeOnSelect: true,
       cssClass: null,
@@ -56,7 +56,7 @@ describe('Dropdown updates, events', () => {
     expect(dropdownObj.settings).toEqual(settings);
   });
 
-  it('Should update set settings via data', () => {
+  it('should update set settings via data', () => {
     const settings = {
       closeOnSelect: true,
       cssClass: null,
@@ -91,7 +91,7 @@ describe('Dropdown updates, events', () => {
     expect(dropdownObj.settings).toEqual(settings);
   });
 
-  it('Should update set settings via parameter', () => {
+  it('should update set settings via parameter', () => {
     const settings = {
       closeOnSelect: true,
       cssClass: null,
@@ -123,7 +123,7 @@ describe('Dropdown updates, events', () => {
     expect(dropdownObj.settings).toEqual(settings);
   });
 
-  it('Should convert legacy settings', () => {
+  it('should convert legacy settings', () => {
     const settings = {
       reloadSourceOnOpen: false // removed in v4.9.0 in favor of `reload`
     };
@@ -132,7 +132,7 @@ describe('Dropdown updates, events', () => {
     expect(dropdownObj.settings.reload).toEqual('none');
   });
 
-  it('Should trigger "has-updated" event', () => {
+  it('should trigger "has-updated" event', () => {
     const settings = {
       closeOnSelect: true,
       cssClass: null,

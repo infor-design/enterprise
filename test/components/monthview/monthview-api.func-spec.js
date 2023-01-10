@@ -48,23 +48,23 @@ describe('Monthview API', () => {
     jasmine.clock().uninstall();
   });
 
-  it('Should be defined', () => {
+  it('should be defined', () => {
     expect(monthviewAPI).toBeTruthy();
   });
 
-  it('Should render a monthview', () => {
+  it('should render a monthview', () => {
     expect(monthviewAPI.currentCalendar.name).toEqual('gregorian');
     expect(document.body.querySelectorAll('.monthview-table tr').length).toEqual(7);
     expect(document.body.querySelectorAll('.monthview-table td').length).toEqual(42);
   });
 
-  it('Should render a selected day', () => {
+  it('should render a selected day', () => {
     expect(monthviewAPI.currentCalendar.name).toEqual('gregorian');
     expect(document.body.querySelector('.monthview-table td.is-selected').textContent).toEqual('10');
     expect(document.body.querySelector('.monthview-table td.is-selected').getAttribute('aria-label')).toEqual('Monday, September 10, 2018');
   });
 
-  it('Should render month text and start day', () => {
+  it('should render month text and start day', () => {
     expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('September 2018');
     expect(document.body.querySelector('thead tr th:first-child').textContent.trim()).toEqual('Sun');
 
@@ -83,7 +83,7 @@ describe('Monthview API', () => {
     expect(document.body.querySelector('thead tr th:first-child').textContent.trim()).toEqual('الأحد');
   });
 
-  it('Should render based on locale setting', () => {
+  it('should render based on locale setting', () => {
     monthviewAPI.destroy();
     monthviewAPI = new MonthView(monthviewEl, {
       month: 4,
@@ -96,7 +96,7 @@ describe('Monthview API', () => {
     expect(document.body.querySelector('thead tr th:last-child').textContent.trim()).toEqual('søn');
   });
 
-  it('Should render disabled days', () => {
+  it('should render disabled days', () => {
     monthviewAPI.destroy();
     monthviewAPI = new MonthView(monthviewEl, {
       month: 8,
@@ -110,7 +110,7 @@ describe('Monthview API', () => {
     expect(document.body.querySelector('tbody tr:first-child td:last-child').classList).toContain('is-disabled');
   });
 
-  it('Should move to next month and back', () => {
+  it('should move to next month and back', () => {
     $('button.next').click();
 
     expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('October 2018');
@@ -121,13 +121,13 @@ describe('Monthview API', () => {
     expect(document.body.querySelector('thead tr th:first-child').textContent.trim()).toEqual('Sun');
   });
 
-  it('Should destroy monthview', () => {
+  it('should destroy monthview', () => {
     monthviewAPI.destroy();
 
     expect(document.body.querySelector('.monthview-table')).toBeFalsy();
   });
 
-  it('Should populate header ', () => {
+  it('should populate header ', () => {
     Locale.set('en-US');
     Soho.Locale.set('en-US'); //eslint-disable-line
     monthviewAPI.showMonth(7, 2018);
@@ -153,7 +153,7 @@ describe('Monthview API', () => {
     expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('August 2018');
   });
 
-  it('Should move to next month and back to today', () => {
+  it('should move to next month and back to today', () => {
     document.body.querySelector('button.next').click();
 
     expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('October 2018');
@@ -165,7 +165,7 @@ describe('Monthview API', () => {
     expect(document.getElementById('monthview-datepicker-field').textContent).toEqual(stringDate);
   });
 
-  it('Should be able to select a day by date', () => {
+  it('should be able to select a day by date', () => {
     monthviewAPI.selectDay(new Date(2018, 7, 15));
 
     expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('August 2018');
@@ -177,7 +177,7 @@ describe('Monthview API', () => {
     expect(document.body.querySelector('.monthview .is-selected .day-text').innerText).toEqual('22');
   });
 
-  it('Should be able to select a day by key', () => {
+  it('should be able to select a day by key', () => {
     monthviewAPI.selectDay('20180820');
 
     expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('August 2018');
@@ -189,7 +189,7 @@ describe('Monthview API', () => {
     expect(document.body.querySelector('.monthview .is-selected .day-text').innerText).toEqual('22');
   });
 
-  it('Should populate header starting from given day of the week', () => {
+  it('should populate header starting from given day of the week', () => {
     monthviewAPI.destroy();
     monthviewAPI = new MonthView(monthviewEl, {
       month: 8,
@@ -201,12 +201,12 @@ describe('Monthview API', () => {
   });
 
   describe('loadLegend', () => {
-    it('Should do nothing if legendList is empty.', () => {
+    it('should do nothing if legendList is empty.', () => {
       monthviewAPI.loadLegend();
       monthviewAPI.loadLegend([]);
     });
 
-    it('Should be to able populate alternate days.', () => {
+    it('should be to able populate alternate days.', () => {
       monthviewAPI.destroy();
       monthviewAPI = new MonthView(monthviewEl, {
         month: 6,

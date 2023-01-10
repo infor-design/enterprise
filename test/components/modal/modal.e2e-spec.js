@@ -14,7 +14,7 @@ describe('Modal example-validation tests', () => {
   });
 
   if (utils.isChrome()) {
-    it('Should focus on first focusable item in modal', async () => {
+    it('should focus on first focusable item in modal', async () => {
       const dropdownEl = await element.all(by.css('div.dropdown')).first();
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
@@ -23,7 +23,7 @@ describe('Modal example-validation tests', () => {
       expect(await dropdownEl.getAttribute('class')).toEqual(await browser.driver.switchTo().activeElement().getAttribute('class'));
     });
 
-    it('Should show validation errors in modal', async () => {
+    it('should show validation errors in modal', async () => {
       await element(by.id('context-name')).click();
       await browser.driver.sleep(config.sleep);
       await element(by.id('context-name')).sendKeys('to');
@@ -44,7 +44,7 @@ describe('Modal example-validation tests', () => {
       expect(await errors[2].getText()).toEqual('Required');
     });
 
-    it('Should enable submit', async () => {
+    it('should enable submit', async () => {
       const dropdownEl = await element(by.css('div.dropdown'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
@@ -75,7 +75,7 @@ describe('Modal example-validation-editor tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(element(by.css('.modal-wrapper'))), config.waitsFor);
   });
 
-  it('Should enable submit after add text to all fields', async () => {
+  it('should enable submit after add text to all fields', async () => {
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(element(by.css('#submit'))), config.waitsFor);
 
@@ -136,7 +136,7 @@ describe('Modal No Auto Focus', () => {
     await utils.setPage('/components/modal/test-no-autofocus.html');
   });
 
-  it('Should not focus any fields with autoFocus false', async () => {
+  it('should not focus any fields with autoFocus false', async () => {
     await element(by.id('show-modal')).click();
 
     await browser.driver
@@ -176,11 +176,11 @@ describe('Modal xss tests', () => {
     await utils.setPage('/components/modal/test-escaped-title');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should show encoded data in the title', async () => {
+  it('should show encoded data in the title', async () => {
     const buttonEl = await element(by.id('show-modal'));
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(buttonEl), config.waitsFor);
@@ -205,12 +205,12 @@ describe('Modal button tests', () => {
     await browser.driver.sleep(config.sleep);
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress on 4 buttons', async () => {
+    it('should not visually regress on 4 buttons', async () => {
       const bodyEl = await element(by.className('modal-engaged'));
 
       expect(await browser.imageComparison.checkElement(bodyEl, 'modal-buttons')).toEqual(0);
@@ -229,11 +229,11 @@ describe('Modal overlay opacity tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(element(by.className('overlay'))), config.waitsFor);
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should be able to set overlay opacity to 30%', async () => {
+  it('should be able to set overlay opacity to 30%', async () => {
     await browser.driver.sleep(config.sleep);
     const overlayEl = await element(by.css('.overlay'));
 
@@ -353,7 +353,7 @@ describe('Modal focusable elements tests', () => {
     await browser.driver.sleep(config.sleep);
   });
 
-  it('Should focus the first available field', async () => {
+  it('should focus the first available field', async () => {
     const focusedElem = await browser.driver.switchTo().activeElement();
 
     expect(focusedElem.getAttribute('class')).toContain('dropdown');

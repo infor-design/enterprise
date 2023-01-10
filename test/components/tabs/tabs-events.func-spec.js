@@ -23,7 +23,7 @@ describe('Tabs API', () => {
     cleanup();
   });
 
-  it('Should trigger "beforeactivated" event', () => {
+  it('should trigger "beforeactivated" event', () => {
     const callback = jest.fn();
     $('#tabs-normal').on('beforeactivated', callback);
 
@@ -34,7 +34,7 @@ describe('Tabs API', () => {
     expect(callback).toHaveBeenCalled();
   });
 
-  it('Should trigger "activated" event', () => {
+  it('should trigger "activated" event', () => {
     const callback = jest.fn();
     $('#tabs-normal').on('activated', callback);
 
@@ -43,7 +43,7 @@ describe('Tabs API', () => {
     expect(callback).toHaveBeenCalled();
   });
 
-  it('Should trigger "hash-change" event', () => {
+  it('should trigger "hash-change" event', () => {
     tabsObj.settings.changeTabOnHashChange = true;
     const callback = jest.fn();
     $('#tabs-normal').on('hash-change', callback);
@@ -53,7 +53,7 @@ describe('Tabs API', () => {
     expect(callback).toHaveBeenCalled();
   });
 
-  it('Should trigger "close" event', () => {
+  it('should trigger "close" event', () => {
     const callback = jest.fn();
     $('#tabs-normal').on('close', callback);
 
@@ -62,7 +62,7 @@ describe('Tabs API', () => {
     expect(callback).toHaveBeenCalled();
   });
 
-  it('Should trigger "afterclose" event', () => {
+  it('should trigger "afterclose" event', () => {
     const callback = jest.fn();
     $('#tabs-normal').on('afterclose', callback);
 

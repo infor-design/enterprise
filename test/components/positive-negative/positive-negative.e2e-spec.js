@@ -7,11 +7,11 @@ describe('Positive Negative Chart tests', () => {
     await utils.setPage('/components/positive-negative/example-index?theme=classic&layout=nofrills');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should be able to set id/automation id', async () => {
+  it('should be able to set id/automation id', async () => {
     await browser.driver.sleep(config.sleep);
 
     expect(await element(by.id('positive-negative-jan-target-bar')).getAttribute('id')).toEqual('positive-negative-jan-target-bar');
@@ -75,7 +75,7 @@ describe('Positive Negative Chart tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    it('should not visually regress', async () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleepLonger);
 

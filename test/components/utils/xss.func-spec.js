@@ -2,7 +2,7 @@
 import { xssUtils } from '../../../src/utils/xss';
 
 describe('Xss Utils', () => {
-  it('Should white list specific html tags', () => {
+  it('should white list specific html tags', () => {
     let result = xssUtils.stripTags('<p>Test</p> <br /><b>Test</b> <i>Test</i>', '<i><b>');
 
     expect(result).toEqual('Test <b>Test</b> <i>Test</i>');
@@ -55,7 +55,7 @@ describe('Xss Utils', () => {
     expect(xssUtils.stripTags(6)).toEqual(6);
   });
 
-  it('Should strip nested tags', () => {
+  it('should strip nested tags', () => {
     let result = xssUtils.stripTags('<script>alert("testing");</script>');
 
     expect(result).toEqual('alert("testing");');
@@ -68,7 +68,7 @@ describe('Xss Utils', () => {
     expect(result).toEqual('alert("testing");');
   });
 
-  it('Should remove all html tags', () => {
+  it('should remove all html tags', () => {
     let result = xssUtils.stripHTML('<p>Test</p> <br /><b>Test</b> <i>Test</i>');
 
     expect(result).toEqual('Test Test Test');
@@ -110,7 +110,7 @@ describe('Xss Utils', () => {
     expect(result).toEqual('Test alert() Test');
   });
 
-  it('Should santize html tags', () => {
+  it('should santize html tags', () => {
     let result = xssUtils.sanitizeHTML('<strong>hello world</strong>');
     expect(result).toEqual('<strong>hello world</strong>');
 
@@ -139,7 +139,7 @@ describe('Xss Utils', () => {
     expect(result).toEqual(`<test >`);
   });
 
-  it('Should santize console methods', () => {
+  it('should santize console methods', () => {
     expect(xssUtils.sanitizeHTML('console.log')).toEqual('');
     expect(xssUtils.sanitizeHTML('console.log(\'hello world\')')).toEqual('');
     expect(xssUtils.sanitizeHTML('console.log(\'hello world\');')).toEqual('');
@@ -155,7 +155,7 @@ describe('Xss Utils', () => {
     });
   });
 
-  it('Should santize title text', () => {
+  it('should santize title text', () => {
     /* eslint-disable */
     const str = [{
       in: `<span id="test123" title="&#x27; onx=y">a</span>`,
@@ -177,7 +177,7 @@ describe('Xss Utils', () => {
     }
   });
 
-  it('Should force alphanumber values', () => {
+  it('should force alphanumber values', () => {
     let result = xssUtils.ensureAlphaNumeric('<strong>hello world</strong>');
 
     expect(result).toEqual('helloworld');
@@ -196,7 +196,7 @@ describe('Xss Utils', () => {
     expect(xssUtils.ensureAlphaNumeric(6)).toEqual(6);
   });
 
-  it('Should ensure local urls', () => {
+  it('should ensure local urls', () => {
     expect(xssUtils.isUrlLocal('http://test.com')).toEqual(false);
 
     // "/" or "/foo" but not "//" or "/\"

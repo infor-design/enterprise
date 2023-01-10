@@ -23,11 +23,11 @@ describe('Tree API', () => {
     cleanup();
   });
 
-  it('Should be defined on jQuery object', () => {
+  it('should be defined on jQuery object', () => {
     expect(treeObj).toBeTruthy();
   });
 
-  it('Should update with new settings', () => {
+  it('should update with new settings', () => {
     expect(treeObj.settings.selectable).toEqual('single');
     expect(treeObj.settings.hideCheckboxes).toEqual(true);
     expect(treeEl.querySelector('a[role="treeitem"] .tree-checkbox')).toBeFalsy();
@@ -39,7 +39,7 @@ describe('Tree API', () => {
     expect(treeEl.querySelector('a[role="treeitem"] .tree-checkbox')).toBeTruthy();
   });
 
-  it('Should destroy tree', () => {
+  it('should destroy tree', () => {
     treeObj.destroy();
 
     expect(treeEl.querySelectorAll('a[role="treeitem"]').length).toEqual(0);

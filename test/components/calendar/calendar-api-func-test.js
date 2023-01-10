@@ -7,6 +7,13 @@ import { cleanup } from '../../helpers/func-utils';
 
 Soho.Locale = Locale;
 
+Object.defineProperty(window, 'getComputedStyle', {
+  value: () => ({
+    getPropertyValue: () => ''
+  })
+});
+
+
 require('../../../src/components/locale/cultures/ar-SA.js');
 require('../../../src/components/locale/cultures/ar-EG.js');
 require('../../../src/components/locale/cultures/en-US.js');
@@ -88,19 +95,19 @@ describe('Calendar API', () => {
     cleanup();
   });
 
-  it('Should render calendar', () => {
+  it('should render calendar', () => {
     expect(calendarObj).toBeTruthy();
     expect(document.body.querySelector('.monthview-table')).toBeTruthy();
     expect(document.body.querySelectorAll('.monthview-table td').length).toEqual(42);
   });
 
-  it('Should render header', () => {
+  it('should render header', () => {
     expect(calendarObj).toBeTruthy();
     expect(document.body.querySelector('.monthview-header .next')).toBeTruthy();
     expect(document.body.querySelector('.monthview-header .prev')).toBeTruthy();
   });
 
-  it('Should optionaly not render view changer', () => {
+  it('should optionaly not render view changer', () => {
     calendarObj.destroy();
     settings.showViewChanger = false;
     calendarObj = new Calendar(calendarEl, settings);
@@ -108,7 +115,7 @@ describe('Calendar API', () => {
     expect(document.body.querySelector('#calendar-view-changer')).toBeFalsy();
   });
 
-  it('Should be able to destroy', () => {
+  it('should be able to destroy', () => {
     calendarObj.destroy();
 
     expect($(calendarEl).data('calendar')).toBeFalsy();
@@ -170,7 +177,7 @@ describe('Calendar API', () => {
     expect(document.querySelector('.calendar-upcoming-date').innerText).toEqual(compareDate);
   });
 
-  it('Should handle adding events', () => {
+  it('should handle adding events', () => {
     const startsDate = new Date(baseTime);
     startsDate.setHours(0, 0, 0, 0);
     const endsDate = new Date(baseTime);
@@ -191,7 +198,7 @@ describe('Calendar API', () => {
     expect(document.querySelectorAll('.calendar-event').length).toEqual(28);
   });
 
-  it('Should handle adding events off the month', () => {
+  it('should handle adding events off the month', () => {
     expect(document.querySelectorAll('.calendar-event').length).toEqual(26);
 
     const newEvent = {
@@ -210,7 +217,7 @@ describe('Calendar API', () => {
     expect(document.querySelectorAll('.calendar-event').length).toEqual(27);
   });
 
-  it('Should handle adding events in iso format', () => {
+  it('should handle adding events in iso format', () => {
     const newEvent = {
       id: '6',
       subject: 'Discretionary Time Off',
@@ -228,7 +235,7 @@ describe('Calendar API', () => {
     expect(document.querySelectorAll('.calendar-event-title').length).toEqual(28);
   });
 
-  it('Should handle clearing events', () => {
+  it('should handle clearing events', () => {
     expect(document.querySelectorAll('.calendar-event-title').length).toEqual(26);
 
     calendarObj.clearEvents();
@@ -236,7 +243,7 @@ describe('Calendar API', () => {
     expect(document.querySelectorAll('.calendar-event-title').length).toEqual(0);
   });
 
-  it('Should handle deleting events', () => {
+  it('should handle deleting events', () => {
     expect(document.querySelectorAll('.calendar-event-title').length).toEqual(26);
 
     calendarObj.deleteEvent({ id: '13' });
@@ -248,7 +255,7 @@ describe('Calendar API', () => {
     expect(document.querySelectorAll('.calendar-event-title').length).toEqual(4);
   });
 
-  it('Should handle updating events', () => {
+  it('should handle updating events', () => {
     expect(document.querySelectorAll('.calendar-event-title').length).toEqual(26);
 
     calendarObj.updateEvent({ id: '13', subject: 'Updated Subject' });
@@ -258,7 +265,7 @@ describe('Calendar API', () => {
     expect(calendarObj.settings.events[12].id).toEqual('13');
   });
 
-  it('Should pass data in onRenderMonth', (done) => {
+  it('should pass data in onRenderMonth', (done) => {
     const renderCallback = (node, response, args) => {
       expect(node.is('div')).toEqual(true);
       expect(args.month).toEqual(10);
@@ -283,7 +290,7 @@ describe('Calendar API', () => {
     calendarObj = new Calendar(calendarEl, newSettings);
   });
 
-  it('Should update when calling updated and passing settings in ', () => {
+  it('should update when calling updated and passing settings in ', () => {
     const updatedSettings = {
       month: 5,
       year: 2019,
@@ -315,7 +322,7 @@ describe('Calendar API', () => {
     expect(Locale.currentLocale.name).toEqual('en-US');
   });
 
-  it('Should update when calling updated and setting setting ', () => {
+  it('should update when calling updated and setting setting ', () => {
     Locale.set('en-US');
     calendarObj.destroy();
     calendarObj = new Calendar(calendarEl, { month: 1, year: 2019 });

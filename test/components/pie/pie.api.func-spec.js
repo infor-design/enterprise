@@ -53,7 +53,7 @@ describe('Pie Chart API', () => {
     cleanup();
   });
 
-  it('Should fire contextmenu event', () => {
+  it('should fire contextmenu event', () => {
     const callback = jest.fn();
     $(pieEl).on('contextmenu', callback);
     $(pieEl).on('contextmenu', (e, el, d) => {

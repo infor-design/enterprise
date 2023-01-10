@@ -8,7 +8,7 @@ describe('Tabs Multi tests', () => {
     await utils.setPage('/components/tabs-multi/example-index');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 

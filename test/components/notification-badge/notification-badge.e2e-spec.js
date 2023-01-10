@@ -11,7 +11,7 @@ describe('Notification Badge example-badge-placement tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    xit('should not visual regress', async () => {
+    xit('should not visually regress', async () => {
       const containerEl = await element(by.className('container'));
 
       await browser.driver.sleep(config.sleep);
@@ -20,7 +20,7 @@ describe('Notification Badge example-badge-placement tests', () => {
     });
   }
 
-  it('Should be able to set id\'s/automation id\'s', async () => {
+  it('should be able to set id\'s/automation id\'s', async () => {
     await browser.driver.sleep(config.sleep);
 
     expect(await element(by.id('notification-badge-id-1-container')).getAttribute('id')).toEqual('notification-badge-id-1-container');

@@ -29,11 +29,11 @@ describe('Targeted Achievement API', () => {
     cleanup();
   });
 
-  it('Should be defined on jQuery object', () => {
+  it('should be defined on jQuery object', () => {
     expect(targetedObj).toBeTruthy();
   });
 
-  it('Should be able to destroy', () => {
+  it('should be able to destroy', () => {
     targetedObj.destroy();
 
     expect(document.querySelectorAll('.target').length).toEqual(0);
@@ -42,7 +42,7 @@ describe('Targeted Achievement API', () => {
     expect(document.querySelectorAll('.completed-label').length).toEqual(0);
   });
 
-  it('Should be able to render', () => {
+  it('should be able to render', () => {
     expect(document.querySelectorAll('.target').length).toEqual(1);
     expect(document.querySelectorAll('.total').length).toEqual(2);
     expect(document.querySelectorAll('.completed').length).toEqual(1);
@@ -52,7 +52,7 @@ describe('Targeted Achievement API', () => {
     expect(document.querySelector('.total').innerText).toEqual('20k To Target');
   });
 
-  it('Should be able to update', () => {
+  it('should be able to update', () => {
     const dataset1 = [{
       data: [{
         name: { text: 'Label B' },

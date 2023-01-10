@@ -8,7 +8,7 @@ describe('Pie Chart tests', () => {
     await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
   });
 
-  it('Should not visual regress', async () => {
+  it('should not visually regress', async () => {
     // Resize the viewport
     await page.setViewport({ width: 1200, height: 800 });
 

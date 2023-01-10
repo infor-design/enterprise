@@ -5,7 +5,7 @@ requireHelper('rejection');
 const inputId = 'percentage-field';
 
 describe('Mask Percent Format Tests', () => {
-  it('Should be type in en-US', async () => {
+  it('should be type in en-US', async () => {
     await utils.setPage('/components/mask/test-percent-locale');
     const inputEl = await element(by.id(inputId));
     await browser.driver
@@ -17,7 +17,7 @@ describe('Mask Percent Format Tests', () => {
     expect(await inputEl.getAttribute('value')).toEqual('100 %');
   });
 
-  it('Should be type in tr-TR', async () => {
+  it('should be type in tr-TR', async () => {
     await utils.setPage('/components/mask/test-percent-locale?locale=tr-TR');
     const inputEl = await element(by.id(inputId));
     await browser.driver
@@ -30,7 +30,7 @@ describe('Mask Percent Format Tests', () => {
     expect(await inputEl.getAttribute('value')).toEqual('%100');
   });
 
-  it('Should be type in ar-SA', async () => {
+  it('should be type in ar-SA', async () => {
     await utils.setPage('/components/mask/test-percent-locale?locale=ar-SA');
     const inputEl = await element(by.id(inputId));
     await browser.driver
@@ -43,7 +43,7 @@ describe('Mask Percent Format Tests', () => {
     expect(await inputEl.getAttribute('value')).toEqual('100 ٪');
   });
 
-  it('Should be able to type in fr-FR', async () => {
+  it('should be able to type in fr-FR', async () => {
     await utils.setPage('/components/mask/test-number-mask-gauntlet.html?locale=fr-FR');
     let inputEl = await element(by.id('number-dec-thousands'));
     await browser.driver

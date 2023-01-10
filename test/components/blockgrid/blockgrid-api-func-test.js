@@ -73,15 +73,15 @@ describe('Blockgrid API', () => {
     cleanup();
   });
 
-  it('Should be defined', () => {
+  it('should be defined', () => {
     expect(blockgridObj).toBeTruthy();
   });
 
-  it('Should visible blockgrid', () => {
+  it('should visible blockgrid', () => {
     expect(document.body.querySelector('.blockgrid')).toBeTruthy();
   });
 
-  it('Should select block', (done) => {
+  it('should select block', (done) => {
     const firstBlock = $('.block').first();
     blockgridObj.select(firstBlock);
 
@@ -92,17 +92,17 @@ describe('Blockgrid API', () => {
     }, 100);
   });
 
-  it('Should update settings', () => {
+  it('should update settings', () => {
     blockgridObj.updated({ selectable: false });
 
     expect(blockgridObj.settings.selectable).toEqual(false);
   });
 
-  it('Should have block', () => {
+  it('should have block', () => {
     expect(document.body.querySelector('.block')).toBeTruthy();
   });
 
-  it('Should destroy blockgrid', (done) => {
+  it('should destroy blockgrid', (done) => {
     blockgridObj.destroy();
     setTimeout(() => {
       expect($(blockgridEl).data('blockgrid')).toBeFalsy();

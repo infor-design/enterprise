@@ -24,13 +24,13 @@ describe('Mask Input Field Api', () => {
     Locale.set('en-US');
   });
 
-  it('Should pass a basic confidence test', () => {
+  it('should pass a basic confidence test', () => {
     expect(window.Soho).toBeDefined();
     expect(window.Soho.masks).toBeDefined();
     expect(window.Soho.components.MaskInput).toBeDefined();
   });
 
-  it('Should be invokable', () => {
+  it('should be invokable', () => {
     TEST_COMPONENT_API = new window.Soho.components.MaskInput(TEST_INPUT);
     const api = TEST_COMPONENT_API;
 
@@ -42,7 +42,7 @@ describe('Mask Input Field Api', () => {
     expect(api.settings.maskAPI).toBeDefined();
   });
 
-  it('Should handle translation of deprecated settings', () => {
+  it('should handle translation of deprecated settings', () => {
     // TODO: Check deprecated time settings
     const input = document.createElement('input');
     input.setAttribute('type', 'text');
@@ -59,7 +59,7 @@ describe('Mask Input Field Api', () => {
     expect(inputComponent.settings.process).toBeDefined();
   });
 
-  it('Should be able to safely get a string value from an input field', () => {
+  it('should be able to safely get a string value from an input field', () => {
     // Test `_getSafeRawValue()_`
     TEST_COMPONENT_API = new window.Soho.components.MaskInput(TEST_INPUT);
 
@@ -70,7 +70,7 @@ describe('Mask Input Field Api', () => {
     expect(TEST_COMPONENT_API._getSafeRawValue(undefined)).toEqual('');
   });
 
-  it('Should properly initialize with a value present', () => {
+  it('should properly initialize with a value present', () => {
     // From SOHO-6293
     // `input1/inputComponent1` are a basic pattern-masked input with a value
     const input1 = document.createElement('input');
@@ -145,7 +145,7 @@ describe('Mask Input Field Api', () => {
     expect(input3.value).toEqual('-5,555.33');
   });
 
-  it('Should be able to handle alternate characters for decimal, comma, and currency symbol)', () => {
+  it('should be able to handle alternate characters for decimal, comma, and currency symbol)', () => {
     Locale.set('fr-FR');
     // From SOHO-4744 - We simulates the french locale (fr-FR)
     const input = document.createElement('input');
@@ -178,7 +178,7 @@ describe('Mask Input Field Api', () => {
     expect(['5 333,66 €', '5 333,66 €']).toContain(input.value);
   });
 
-  it('Should display reversed prefix/suffix when in RTL mode', () => {
+  it('should display reversed prefix/suffix when in RTL mode', () => {
     Locale.set('ar-EG');
     // From  (SOHO-3259)
     // simulates locale 'ar-EG'

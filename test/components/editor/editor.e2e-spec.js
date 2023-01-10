@@ -7,11 +7,11 @@ describe('Editor example-index tests', () => {
     await utils.setPage('/components/editor/example-index?layout=nofrills');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should be able to edit in both modes', async () => {
+  it('should be able to edit in both modes', async () => {
     const elem = await element(by.css('.editor'));
 
     await elem.clear();
@@ -36,7 +36,7 @@ describe('Editor example-index tests', () => {
     expect(testText.replace(/(\r\n\t|\n|\r\t)/gm, '')).toEqual('TestTest');
   });
 
-  it('Should create p tags when cleared', async () => {
+  it('should create p tags when cleared', async () => {
     const elem = await element(by.css('.editor'));
 
     await elem.clear();
@@ -46,7 +46,7 @@ describe('Editor example-index tests', () => {
     expect(await element(by.css('.editor')).getAttribute('innerHTML')).toEqual('<p>Test</p>');
   });
 
-  it('Should create p tags when cleared in html view', async () => {
+  it('should create p tags when cleared in html view', async () => {
     const elem = await element(by.css('.editor'));
 
     await element(by.css('button[data-action=source]')).click();
@@ -61,7 +61,7 @@ describe('Editor example-index tests', () => {
     expect(await element(by.css('.editor')).getAttribute('innerHTML')).toEqual('<p>Test</p>');
   });
 
-  it('Should remove bold, italics on headers', async () => {
+  it('should remove bold, italics on headers', async () => {
     const elem = await element(by.css('.editor'));
     await elem.clear();
     await elem.sendKeys('test test');
@@ -75,7 +75,7 @@ describe('Editor example-index tests', () => {
     expect(await element(by.css('.editor')).getAttribute('innerHTML')).toContain('<h3>');
   });
 
-  it('Should not insert images if the modals are cancelled', async () => {
+  it('should not insert images if the modals are cancelled', async () => {
     const imageBtn = await element(by.css('.editor-toolbar .btn[data-action="image"]'));
 
     // Open the Image Modal
@@ -94,7 +94,7 @@ describe('Editor example-index tests', () => {
     expect(await element(by.css('.editor img')).isPresent()).toBeFalsy();
   });
 
-  it('Should insert placeholder image if the image button is clicked and modal confirmed', async () => {
+  it('should insert placeholder image if the image button is clicked and modal confirmed', async () => {
     const imageBtn = await element(by.css('.editor-toolbar .btn[data-action="image"]'));
 
     // Open the Image Modal
@@ -142,7 +142,7 @@ describe('Editor example-index tests', () => {
     expect(await element(by.css('.fontpicker')).getText()).toEqual('Header 1');
   });
 
-  it('Should be able to set id/automation id example', async () => {
+  it('should be able to set id/automation id example', async () => {
     expect(await element(by.id('example1-editor-fontpicker-option-0-menu-item')).getAttribute('id')).toEqual('example1-editor-fontpicker-option-0-menu-item');
     expect(await element(by.id('example1-editor-fontpicker-option-0-menu-item')).getAttribute('data-automation-id')).toEqual('automation-id-example1-editor-fontpicker-option-0-menu-item');
 
@@ -169,7 +169,7 @@ describe('Editor example-index tests', () => {
 
 describe('Editor visual regression tests', () => {
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visually regress on classic light', async () => {
+    it('should not visually regress on classic light', async () => {
       await utils.setPage('/components/editor/example-index?theme=classic&mode=light&layout=nofrills');
       await browser.driver.sleep(config.sleep);
       const elem = await element(by.css('.editor-container'));
@@ -177,7 +177,7 @@ describe('Editor visual regression tests', () => {
       expect(await browser.imageComparison.checkElement(elem, 'editor-subtle-light')).toEqual(0);
     });
 
-    it('Should not visually regress on classic dark', async () => {
+    it('should not visually regress on classic dark', async () => {
       await utils.setPage('/components/editor/example-index?theme=classic&mode=dark&layout=nofrills');
       await browser.driver.sleep(config.sleep);
       const elem = await element(by.css('.editor-container'));
@@ -185,7 +185,7 @@ describe('Editor visual regression tests', () => {
       expect(await browser.imageComparison.checkElement(elem, 'editor-subtle-dark')).toEqual(0);
     });
 
-    it('Should not visually regress on classic contrast', async () => {
+    it('should not visually regress on classic contrast', async () => {
       await utils.setPage('/components/editor/example-index?theme=classic&mode=contrast&layout=nofrills');
       await browser.driver.sleep(config.sleep);
       const elem = await element(by.css('.editor-container'));
@@ -193,7 +193,7 @@ describe('Editor visual regression tests', () => {
       expect(await browser.imageComparison.checkElement(elem, 'editor-subtle-contrast')).toEqual(0);
     });
 
-    it('Should not visually regress on new dark', async () => {
+    it('should not visually regress on new dark', async () => {
       await utils.setPage('/components/editor/example-index?theme=new&mode=dark&layout=nofrills');
       await browser.driver.sleep(config.sleep);
       const elem = await element(by.css('.editor-container'));
@@ -201,7 +201,7 @@ describe('Editor visual regression tests', () => {
       expect(await browser.imageComparison.checkElement(elem, 'editor-vibrant-dark')).toEqual(0);
     });
 
-    it('Should not visually regress on new contrast', async () => {
+    it('should not visually regress on new contrast', async () => {
       await utils.setPage('/components/editor/example-index?theme=new&mode=contrast&layout=nofrills');
       await browser.driver.sleep(config.sleep);
       const elem = await element(by.css('.editor-container'));
@@ -209,7 +209,7 @@ describe('Editor visual regression tests', () => {
       expect(await browser.imageComparison.checkElement(elem, 'editor-vibrant-contrast')).toEqual(0);
     });
 
-    it('Should not visually regress on classic rows setting', async () => {
+    it('should not visually regress on classic rows setting', async () => {
       await utils.setPage('/components/editor/test-rows?theme=classic&mode=contrast&layout=nofrills');
       await browser.driver.sleep(config.sleep);
       const elem = await element(by.css('.editor-container'));
@@ -217,7 +217,7 @@ describe('Editor visual regression tests', () => {
       expect(await browser.imageComparison.checkElement(elem, 'editor-subtle-rows')).toEqual(0);
     });
 
-    it('Should not visually regress on new rows setting', async () => {
+    it('should not visually regress on new rows setting', async () => {
       await utils.setPage('/components/editor/test-rows?theme=new&mode=contrast&layout=nofrills');
       await browser.driver.sleep(config.sleep);
       const elem = await element(by.css('.editor-container'));
@@ -232,11 +232,11 @@ describe('Editor preview mode tests', () => {
     await utils.setPage('/components/editor/example-preview?layout=nofrills');
   });
 
-  it('Should not have errors', async () => {  //eslint-disable-line
+  it('should not have errors', async () => {  //eslint-disable-line
     await utils.checkForErrors();
   });
 
-  it('Should render editor in preview mode', async () => {
+  it('should render editor in preview mode', async () => {
     const container = await element(by.css('.editor-container'));
     const elem = await element(by.css('.editor'));
 
@@ -257,11 +257,11 @@ describe('Editor dirty tracking tests', () => {
     await utils.setPage('/components/editor/example-dirty-tracking?layout=nofrills');
   });
 
-  it('Should not have errors', async () => {  //eslint-disable-line
+  it('should not have errors', async () => {  //eslint-disable-line
     await utils.checkForErrors();
   });
 
-  it('Should render dirty tracker', async () => {
+  it('should render dirty tracker', async () => {
     await element(by.css('button[data-action="bold"]')).click();
     await element(by.id('editor1')).sendKeys('Test');
 
@@ -271,7 +271,7 @@ describe('Editor dirty tracking tests', () => {
     expect(await element(by.css('.editor-container .icon-dirty')).isDisplayed()).toBe(true);
   });
 
-  it('Should reset dirty tracker', async () => {
+  it('should reset dirty tracker', async () => {
     await element(by.id('editor1')).sendKeys('T');
 
     await browser.driver.wait(protractor.ExpectedConditions
@@ -288,7 +288,7 @@ describe('Editor dirty tracking tests', () => {
     expect(await element(by.css('.editor-container .icon-dirty')).isPresent()).toBe(false);
   });
 
-  it('Should render dirty tracker in the source view', async () => {
+  it('should render dirty tracker in the source view', async () => {
     await element(by.css('button[data-action=source]')).click();
     await element(by.tagName('textarea')).sendKeys('<b>Test</b>');
 
@@ -304,11 +304,11 @@ describe('Editor reset dirty tracking tests', () => {
     await utils.setPage('/components/editor/test-dirty-tracking-reset.html?layout=nofrills');
   });
 
-  it('Should not have errors', async () => {  //eslint-disable-line
+  it('should not have errors', async () => {  //eslint-disable-line
     await utils.checkForErrors();
   });
 
-  it('Should reset dirty tracker on reset api', async () => {
+  it('should reset dirty tracker on reset api', async () => {
     await element(by.id('editor1')).sendKeys('Test');
     await browser.driver.wait(protractor.ExpectedConditions
       .visibilityOf(await element(by.css('.editor-container .icon-dirty'))), config.waitsFor);
@@ -321,7 +321,7 @@ describe('Editor reset dirty tracking tests', () => {
     expect(await element(by.css('.editor-container .icon-dirty')).isPresent()).toBe(false);
   });
 
-  it('Should reset dirty tracker on edit', async () => {
+  it('should reset dirty tracker on edit', async () => {
     await element(by.id('editor1')).sendKeys('T');
 
     await browser.driver.wait(protractor.ExpectedConditions
@@ -338,7 +338,7 @@ describe('Editor reset dirty tracking tests', () => {
     expect(await element(by.css('.editor-container .icon-dirty')).isPresent()).toBe(false);
   });
 
-  it('Should reset dirty tracker after switch', async () => {
+  it('should reset dirty tracker after switch', async () => {
     await element(by.id('editor1')).clear();
     await element(by.id('editor1')).sendKeys('Test');
     await browser.driver.wait(protractor.ExpectedConditions
@@ -384,11 +384,11 @@ describe('Editor empty tests', () => {
     await utils.setPage('/components/editor/test-empty?layout=nofrills');
   });
 
-  it('Should not have errors', async () => {  //eslint-disable-line
+  it('should not have errors', async () => {  //eslint-disable-line
     await utils.checkForErrors();
   });
 
-  it('Should create p tags when entered from empty', async () => {
+  it('should create p tags when entered from empty', async () => {
     const elem = await element(by.css('.editor'));
 
     await elem.sendKeys('This is a test');
@@ -403,12 +403,12 @@ describe('Editor placeholder tests', () => {
     await utils.setPage('/components/editor/test-placeholder?theme=classic&layout=nofrills');
   });
 
-  it('Should not have errors', async () => { //eslint-disable-line
+  it('should not have errors', async () => { //eslint-disable-line
     await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visually regress', async () => { //eslint-disable-line
+    it('should not visually regress', async () => { //eslint-disable-line
       const elem = await element(by.css('.editor'));
 
       expect(await browser.imageComparison.checkElement(elem, 'editor-placeholder')).toEqual(0);
@@ -421,7 +421,7 @@ describe('Editor modal tests', () => {
     await utils.setPage('/components/editor/test-modal?layout=nofrills');
   });
 
-  it('Should not change size on toggling source', async () => {
+  it('should not change size on toggling source', async () => {
     await element(by.id('show-modal')).click();
     await browser.driver.sleep(config.sleep);
     const previewSize = await element(by.css('.editor')).getSize();

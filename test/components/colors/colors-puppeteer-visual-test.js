@@ -10,7 +10,7 @@ describe('Colors Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should not visual regress', async () => {
+    it('should not visually regress', async () => {
       await page.setViewport({ width: 1200, height: 800 });
 
       expect(await page.waitForSelector('.palette-grid')).toBeTruthy();
@@ -28,7 +28,7 @@ describe('Colors Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should not visual regress', async () => {
+    it('should not visually regress', async () => {
       await page.setViewport({ width: 1200, height: 800 });
 
       expect(await page.waitForSelector('.palette-grid')).toBeTruthy();

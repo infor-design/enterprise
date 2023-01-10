@@ -7,12 +7,12 @@ describe('Slider example-index tests', () => { //eslint-disable-line
     await utils.setPage('/components/slider/example-index?theme=classic&layout=nofrills');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    it('should not visually regress', async () => {
       const containerEl = await element(by.css('div[role=main]'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
@@ -22,7 +22,7 @@ describe('Slider example-index tests', () => { //eslint-disable-line
     });
   }
 
-  it('Should be able to set ids/automation ids', async () => {
+  it('should be able to set ids/automation ids', async () => {
     await browser.driver.sleep(config.sleep);
 
     expect(await element(by.id('slider-id-1')).getAttribute('id')).toEqual('slider-id-1');
@@ -53,12 +53,12 @@ describe('Slider Vertical tests', () => { //eslint-disable-line
     await utils.setPage('/components/slider/example-vertical?theme=classic&layout=nofrills');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    it('should not visually regress', async () => {
       const containerEl = await element(by.css('div[role=main]'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
@@ -74,12 +74,12 @@ describe('Slider short tests', () => { //eslint-disable-line
     await utils.setPage('/components/slider/example-short?theme=classic&layout=nofrills');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    it('should not visually regress', async () => {
       const containerEl = await element(by.css('div[role=main]'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
@@ -95,7 +95,7 @@ describe('Slider tooltip position test', () => { //eslint-disable-line
     await utils.setPage('/components/slider/example-tooltip-position?theme=classic');
   });
 
-  it('Should show the tooltip on top', async () => {
+  it('should show the tooltip on top', async () => {
     const sliderEl = await element(by.className('slider-handle'));
     await sliderEl.click();
     await browser.driver
@@ -104,12 +104,12 @@ describe('Slider tooltip position test', () => { //eslint-disable-line
     expect(await element(by.css('.tooltip.top.is-open')).isDisplayed()).toBeTruthy();
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    it('should not visually regress', async () => {
       const sliderEl = await element(by.className('slider-handle'));
       await sliderEl.click();
 

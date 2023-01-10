@@ -5319,9 +5319,10 @@ Datagrid.prototype = {
    * @returns {number} the calculated text width in pixels.
    */
   calculateTextRenderWidth(maxText, isHeader) {
+    if (!this.canvas) return 0;
     // if given, use cached canvas for better performance, else, create new canvas
     this.canvas = this.canvas || (this.canvas = document.createElement('canvas'));
-    const context = this.canvas.getContext('2d');
+    const context = this.canvas?.getContext('2d');
     const isNewTheme = (theme.currentTheme.id.indexOf('uplift') > -1 || theme.currentTheme.id.indexOf('new') > -1);
 
     if (!this.fontCached || !this.fontHeaderCached) {
@@ -5351,6 +5352,7 @@ Datagrid.prototype = {
    * @private
    */
   setScrollClass() {
+    if (!this.bodyWrapperCenter[0] || !this.bodyWrapperCenter[0].offsetHeight) return;
     const height = parseInt(this.bodyWrapperCenter[0].offsetHeight, 10);
     const headerHeight = this.headerRow ? this.headerRow[0].offsetHeight : 0;
     const tableHeight = parseInt(this.tableBody[0].offsetHeight, 10);

@@ -7,11 +7,11 @@ describe('Validation example-index tests', () => {
     await utils.setPage('/components/validation/example-index');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should check a required rule', async () => {
+  it('should check a required rule', async () => {
     const emailEl = await element(by.id('email-address-ok'));
     await emailEl.clear();
 
@@ -25,7 +25,7 @@ describe('Validation example-index tests', () => {
     expect(await emailEl.getAttribute('class')).toContain('error');
   });
 
-  it('Should have correct aria', async () => {
+  it('should have correct aria', async () => {
     const emailEl = await element(by.id('email-address-ok'));
     await emailEl.clear();
 
@@ -54,7 +54,7 @@ describe('Validation short-field tests', () => {
     await utils.setPage('/components/validation/example-short-fields');
   });
 
-  it('Should validate all short fields', async () => {
+  it('should validate all short fields', async () => {
     const bodyEl = await element(by.css('body'));
     for (let i = 0; i < 35; i++) {
       await bodyEl.sendKeys(protractor.Key.TAB);  //eslint-disable-line
@@ -70,7 +70,7 @@ describe('Validation disabled form tests', () => {
     await utils.setPage('/components/validation/test-disable-validation');
   });
 
-  it('Should be able to disable validation', async () => {
+  it('should be able to disable validation', async () => {
     const submit = await element(by.id('submit'));
     await submit.click();
 
@@ -86,7 +86,7 @@ describe('Validation multiple error tests', () => {
     await utils.setPage('/components/validation/example-multiple-errors');
   });
 
-  it('Should be able to show multiple errors', async () => {
+  it('should be able to show multiple errors', async () => {
     await element(by.id('info-btn')).click();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.id('info-popup'))), config.waitsFor);
@@ -100,7 +100,7 @@ describe('Validation multiple error tests', () => {
     expect(list.count()).toBe(3);
   });
 
-  it('Should be able to call removeError after addError', async () => {
+  it('should be able to call removeError after addError', async () => {
     await browser.executeScript('$("select.dropdown").removeError().addError({ message: "Dropdown error.", inline: false })');
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.icon-error'))), config.waitsFor);
@@ -120,7 +120,7 @@ describe('Validation submit error tests', () => {
     await utils.setPage('/components/validation/example-validate-on-submit');
   });
 
-  it('Should be able to validate on submit', async () => {
+  it('should be able to validate on submit', async () => {
     const showlEl = await element(by.id('test1'));
     await showlEl.click();
 
@@ -135,7 +135,7 @@ describe('Validation form submit button', () => {
     await utils.setPage('/components/validation/example-validation-form');
   });
 
-  it('Should be able to enable submit', async () => {
+  it('should be able to enable submit', async () => {
     const cardEl = await element(by.id('credit-card'));
     await cardEl.sendKeys('1000');
     await cardEl.sendKeys(protractor.Key.TAB);
@@ -171,7 +171,7 @@ describe('Validation alert types', () => {
     await utils.setPage('/components/validation/test-alert-types');
   });
 
-  it('Should render different alert types', async () => {
+  it('should render different alert types', async () => {
     await browser.driver.sleep(config.sleep);
     const elem = await element(by.css('.error-message'));
     await browser.driver
@@ -190,7 +190,7 @@ describe('Validation alert on parent', () => {
     await utils.setPage('/components/validation/test-error-icon-on-parent');
   });
 
-  it('Should render icon on parent', async () => {
+  it('should render icon on parent', async () => {
     const expander = await element(by.css('.expandable-expander'));
     await expander.click();
     await browser.driver.sleep(config.sleep);
@@ -213,7 +213,7 @@ describe('Validation alert on tab', () => {
     await utils.setPage('/components/validation/test-error-on-tab');
   });
 
-  it('Should render icon on tab', async () => {
+  it('should render icon on tab', async () => {
     const tabElTrigger = await element.all(by.className('tab')).get(1);
     await tabElTrigger.click();
     await browser.driver
@@ -237,7 +237,7 @@ describe('Validation alert on tab with add message', () => {
     await utils.setPage('/components/validation/test-error-on-tab-with-addmessage');
   });
 
-  it('Should render icon on tab on add message', async () => {
+  it('should render icon on tab on add message', async () => {
     expect(await element(by.css('.tab .icon-error')).isPresent()).toBe(false);
     await element(by.id('show-error')).click();
 
@@ -253,7 +253,7 @@ describe('Validation on date year', () => {
     await utils.setPage('/components/validation/test-invalid-date-events');
   });
 
-  it('Should validate just year', async () => {
+  it('should validate just year', async () => {
     const dateEl = await element(by.id('date-field'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dateEl), config.waitsFor);
@@ -279,7 +279,7 @@ describe('Validation Legacy Tooltip', () => {
     await utils.setPage('/components/validation/test-legacy-tooltip');
   });
 
-  it('Should render legacy validation tooltip with 2 messages', async () => {
+  it('should render legacy validation tooltip with 2 messages', async () => {
     const dateEl = await element(by.id('email-address-ok'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dateEl), config.waitsFor);
@@ -294,7 +294,7 @@ describe('Validation Legacy Tooltip', () => {
     expect(await element(by.css('#validation-tooltip')).isDisplayed()).toBe(true);
   });
 
-  it('Should clear legacy validation tooltip', async () => {
+  it('should clear legacy validation tooltip', async () => {
     const cardEl = await element(by.id('credit-code2'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(cardEl), config.waitsFor);
@@ -321,7 +321,7 @@ describe('Validation on Accordion', () => {
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.alternate .accordion-header'))), config.waitsFor);
   });
 
-  it('Should validate on an accordion', async () => {
+  it('should validate on an accordion', async () => {
     const header = await element(by.css('.alternate .accordion-header'));
     await header.click();
     await browser.driver
@@ -345,7 +345,7 @@ describe('No Validation on Readonly', () => {
     await utils.setPage('/components/validation/test-readonly');
   });
 
-  it('Should not validate when readonly', async () => {
+  it('should not validate when readonly', async () => {
     const email = await element(by.id('ro-email-address-ok'));
 
     await email.click();
@@ -374,7 +374,7 @@ describe('Validation Async', () => {
     await utils.setPage('/components/validation/test-validation-form-async');
   });
 
-  it('Should validate async', async () => {
+  it('should validate async', async () => {
     const email = await element(by.id('credit-code'));
 
     await email.sendKeys(protractor.Key.TAB);
@@ -436,7 +436,7 @@ describe('Validation Manual', () => {
     await utils.setPage('/components/validation/test-validation-form-manual');
   });
 
-  it('Should be able to handle submit manually', async () => {
+  it('should be able to handle submit manually', async () => {
     const submit = await element(by.id('submit'));
     await submit.click();
 
@@ -466,7 +466,7 @@ describe('Validation Duplicate Events', () => {
     await utils.setPage('/components/validation/test-events');
   });
 
-  it('Should only trigger one of each event', async () => {
+  it('should only trigger one of each event', async () => {
     const emailEl = await element(by.id('email-address-ok'));
     await emailEl.sendKeys(protractor.Key.TAB);
     const dateEl = await element(by.id('date-field'));
@@ -496,7 +496,7 @@ describe('Validation input tests', () => {
     await browser.driver.sleep(config.sleepShort);
   });
 
-  it('Should not show duplicate messages', async () => {
+  it('should not show duplicate messages', async () => {
     const emailOkEl = await element(by.id('email-address-ok'));
     await emailOkEl.sendKeys('test@test.com');
     await emailOkEl.sendKeys(protractor.Key.TAB);
@@ -538,7 +538,7 @@ describe('Validation mask tests', () => {
     await utils.setPage('/components/mask/example-index');
   });
 
-  it('Should be able to validate 12 hour time', async () => {
+  it('should be able to validate 12 hour time', async () => {
     const timeField = await element(by.id('time-input'));
 
     await timeField.sendKeys(protractor.Key.TAB);
@@ -562,7 +562,7 @@ describe('Validation mask tests', () => {
     expect(await messageList.get(0).getText()).toBe('Invalid Time');
   });
 
-  it('Should be able to validate 24 hour time', async () => {
+  it('should be able to validate 24 hour time', async () => {
     const timeField = await element(by.id('time-input-24h'));
 
     await timeField.sendKeys(protractor.Key.TAB);
@@ -592,7 +592,7 @@ describe('Validation resetForm tests', () => {
     await utils.setPage('/components/validation/test-resetform');
   });
 
-  it('Should be able reset form', async () => {
+  it('should be able reset form', async () => {
     await element(by.id('email-address-ok')).clear();
     await element(by.id('email-address-ok')).sendKeys(protractor.Key.TAB);
     await browser.driver
@@ -622,7 +622,7 @@ describe('Validation narrow field', () => {
     await utils.setPage('/components/validation/test-legacy-tooltip-narrow-field');
   });
 
-  it('Should be able to set error icon opacity', async () => {
+  it('should be able to set error icon opacity', async () => {
     const submitBtn = await element(by.id('test1'));
     await submitBtn.click();
     let errorIcon = await element(by.css('#field-one ~ .icon-error'));
@@ -641,7 +641,7 @@ describe('Validation just error class tests', () => {
     await utils.setPage('/components/validation/test-just-error-class');
   });
 
-  it('Should be able to remove a manually added error class', async () => {
+  it('should be able to remove a manually added error class', async () => {
     const field = await element(by.id('test-input'));
 
     expect(await field.getAttribute('class')).toContain('error');
@@ -667,7 +667,7 @@ describe('Validation message types', () => {
     await utils.setPage('/components/validation/test-message-types');
   });
 
-  it('Should be able to set message types error', async () => {
+  it('should be able to set message types error', async () => {
     await element(by.id('clearAllMessages')).click();
     let dateField = await element(by.id('date-field'));
     let dateFieldParent = await dateField.element(by.xpath('..'));
@@ -689,7 +689,7 @@ describe('Validation message types', () => {
     expect(utils.rgb2hex(await dateFieldIcon.getCssValue('color'))).toEqual(color.error.icon);
   });
 
-  it('Should be able to set message types alert', async () => {
+  it('should be able to set message types alert', async () => {
     await element(by.id('clearAllMessages')).click();
     let dateField = await element(by.id('date-field'));
     let dateFieldParent = await dateField.element(by.xpath('..'));
@@ -711,7 +711,7 @@ describe('Validation message types', () => {
     expect(utils.rgb2hex(await dateFieldIcon.getCssValue('color'))).toEqual(color.alert.icon);
   });
 
-  it('Should be able to set message types success', async () => {
+  it('should be able to set message types success', async () => {
     await element(by.id('clearAllMessages')).click();
     let dateField = await element(by.id('date-field'));
     let dateFieldParent = await dateField.element(by.xpath('..'));
@@ -733,7 +733,7 @@ describe('Validation message types', () => {
     expect(utils.rgb2hex(await dateFieldIcon.getCssValue('color'))).toEqual(color.success.icon);
   });
 
-  xit('Should be able to set message types info', async () => {
+  xit('should be able to set message types info', async () => {
     await element(by.id('clearAllMessages')).click();
     let dateField = await element(by.id('date-field'));
     let dateFieldParent = await dateField.element(by.xpath('..'));
@@ -755,7 +755,7 @@ describe('Validation message types', () => {
     expect(utils.rgb2hex(await dateFieldIcon.getCssValue('color')).toLowerCase()).toEqual(color.info.icon.toLowerCase());
   });
 
-  it('Should be able to set message types custom icon', async () => {
+  it('should be able to set message types custom icon', async () => {
     await element(by.id('clearAllMessages')).click();
     let dateField = await element(by.id('date-field'));
     let dateFieldParent = await dateField.element(by.xpath('..'));
@@ -777,7 +777,7 @@ describe('Validation message types', () => {
     expect(utils.rgb2hex(await dateFieldIcon.getCssValue('color'))).toEqual(color.customIcon.icon);
   });
 
-  it('Should be able to do validation is-alert', async () => {
+  it('should be able to do validation is-alert', async () => {
     await element(by.id('clearAllMessages')).click();
     let dateField = await element(by.id('date-field'));
     let dateFieldParent = await dateField.element(by.xpath('..'));

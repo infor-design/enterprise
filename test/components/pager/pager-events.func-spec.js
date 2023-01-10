@@ -21,7 +21,7 @@ describe('Pager Event Test', () => {
     cleanup();
   });
 
-  it('Should trigger "firstpage" event when first page is clicked', (done) => {
+  it('should trigger "firstpage" event when first page is clicked', (done) => {
     pagerObj = new Pager(pagerEl, {
       type: 'standalone',
       onFirstPage: () => {
@@ -36,7 +36,7 @@ describe('Pager Event Test', () => {
     done();
   });
 
-  it('Should trigger "previouspage" event when prev page is clicked', (done) => {
+  it('should trigger "previouspage" event when prev page is clicked', (done) => {
     pagerObj = new Pager(pagerEl, {
       type: 'standalone',
       onPreviousPage: () => {
@@ -52,7 +52,7 @@ describe('Pager Event Test', () => {
     done();
   });
 
-  it('Should trigger "nextpage" event when next page is clicked', (done) => {
+  it('should trigger "nextpage" event when next page is clicked', (done) => {
     pagerObj = new Pager(pagerEl, {
       type: 'standalone',
       onNextPage: () => {
@@ -67,7 +67,7 @@ describe('Pager Event Test', () => {
     done();
   });
 
-  it('Should trigger "lastpage" event when last page is clicked', (done) => {
+  it('should trigger "lastpage" event when last page is clicked', (done) => {
     pagerObj = new Pager(pagerEl, {
       type: 'standalone',
       onLastPage: () => {

@@ -33,31 +33,31 @@ describe('FieldFilter API', () => {
     cleanup();
   });
 
-  it('Should be defined on jQuery object', () => {
+  it('should be defined on jQuery object', () => {
     expect(fieldfilterObj).toBeTruthy();
   });
 
-  it('Should open fieldfilter', () => {
+  it('should open fieldfilter', () => {
     fieldfilterObj.ddApi.open();
 
     expect(fieldfilterObj.ddApi.isOpen()).toBeTruthy();
     expect(fieldfilterEl.parentNode.querySelector('.dropdown.is-open')).toBeTruthy();
   });
 
-  it('Should destroy fieldfilter', () => {
+  it('should destroy fieldfilter', () => {
     fieldfilterObj.destroy();
 
     expect(fieldfilterEl.parentNode.querySelector('.dropdown')).toBeFalsy();
   });
 
-  it('Should disable fieldfilter', () => {
+  it('should disable fieldfilter', () => {
     fieldfilterObj.disable();
 
     expect(fieldfilterEl.parentNode.querySelector('.dropdown.is-disabled')).toBeTruthy();
     expect(fieldfilterObj.ddApi.isDisabled()).toBeTruthy();
   });
 
-  it('Should enable fieldfilter', () => {
+  it('should enable fieldfilter', () => {
     fieldfilterObj.disable();
 
     expect(fieldfilterEl.parentNode.querySelector('.dropdown.is-disabled')).toBeTruthy();
@@ -68,25 +68,25 @@ describe('FieldFilter API', () => {
     expect(fieldfilterObj.ddApi.isDisabled()).toBeFalsy();
   });
 
-  it('Should render fieldfilter readonly', () => {
+  it('should render fieldfilter readonly', () => {
     fieldfilterObj.readonly();
 
     expect(fieldfilterEl.parentNode.querySelector('.dropdown.is-readonly')).toBeTruthy();
     expect(fieldfilterObj.ddApi.isDisabled()).toBeFalsy();
   });
 
-  it('Should get current filter type', () => {
+  it('should get current filter type', () => {
     expect(fieldfilterObj.getFilterType().data.value).toEqual('equals');
   });
 
-  it('Should set filter type programmatically by string value', () => {
+  it('should set filter type programmatically by string value', () => {
     expect(fieldfilterObj.getFilterType().data.value).toEqual('equals');
     fieldfilterObj.setFilterType('in-range');
 
     expect(fieldfilterObj.getFilterType().data.value).toEqual('in-range');
   });
 
-  it('Should set filter type programmatically by index', () => {
+  it('should set filter type programmatically by index', () => {
     expect(fieldfilterObj.getFilterType().data.value).toEqual('equals');
     fieldfilterObj.setFilterType(1);
 

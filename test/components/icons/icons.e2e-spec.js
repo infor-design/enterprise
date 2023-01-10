@@ -8,12 +8,12 @@ describe('Icon Soho (Subtle) tests', () => {
     await browser.driver.sleep(config.sleep);
   });
 
-  it('Should render without any error', async () => {
+  it('should render without any error', async () => {
     await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    xit('Should not visual regress', async () => {
+    xit('should not visually regress', async () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
@@ -28,12 +28,12 @@ describe('Icon New Theme tests', () => {
     await browser.driver.sleep(config.sleep);
   });
 
-  it('Should render without error', async () => {
+  it('should render without error', async () => {
     await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    xit('Should not visual regress', async () => {
+    xit('should not visually regress', async () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 

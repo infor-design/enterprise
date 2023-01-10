@@ -7,7 +7,7 @@ describe('Header API', () => {
     headerAPI = new Header();
   });
 
-  it('Should support removing go-back class from button', () => {
+  it('should support removing go-back class from button', () => {
     headerAPI.removeBackButton();
 
     expect(document.body.querySelector('.go-back')).toBeFalsy();

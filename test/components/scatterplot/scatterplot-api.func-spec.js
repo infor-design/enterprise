@@ -188,15 +188,15 @@ describe('Scatter Plot API', () => {
     cleanup();
   });
 
-  it('Should be defined on jQuery object', () => {
+  it('should be defined on jQuery object', () => {
     expect(scatterplotObj).toBeTruthy();
   });
 
-  it('Should render plots', () => {
+  it('should render plots', () => {
     expect(document.body.querySelectorAll('.symbol').length).toEqual(26);
   });
 
-  it('Should destroy chart', () => {
+  it('should destroy chart', () => {
     scatterplotObj.destroy();
 
     const chartSymbols = document.body.querySelector('.symbol');
@@ -205,7 +205,7 @@ describe('Scatter Plot API', () => {
     expect(document.body.querySelectorAll('.symbol').length).toEqual(0);
   });
 
-  it('Should fire contextmenu event', () => {
+  it('should fire contextmenu event', () => {
     const callback = jest.fn();
     $(scatterplotEl).on('contextmenu', callback);
     $(scatterplotEl).on('contextmenu', (e, el, d) => {

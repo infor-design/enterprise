@@ -3,7 +3,7 @@ const config = requireHelper('e2e-config');
 
 describe('Message visual regression tests', () => {
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress on lists example?theme=classic&layout=nofrills', async () => {
+    it('should not visually regress on lists example?theme=classic&layout=nofrills', async () => {
       await utils.setPage('/components/message/test-lists.html');
       await browser.driver.sleep(config.sleep);
       const container = await element(by.id('maincontent'));
@@ -13,7 +13,7 @@ describe('Message visual regression tests', () => {
       expect(await browser.imageComparison.checkElement(container, 'message-open-list')).toEqual(0);
     });
 
-    it('Should not visual regress on error example', async () => {
+    it('should not visually regress on error example', async () => {
       await utils.setPage('/components/message/example-index.html?theme=classic');
       await browser.driver.sleep(config.sleep);
       const container = await element(by.id('maincontent'));

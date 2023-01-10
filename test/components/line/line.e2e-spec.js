@@ -7,12 +7,12 @@ describe('Line Chart tests', () => {
     await utils.setPage('/components/line/example-index?theme=classic&layout=nofrills');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    it('should not visually regress', async () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
@@ -24,7 +24,7 @@ describe('Line Chart tests', () => {
     });
   }
 
-  it('Should be able to set id/automation id', async () => {
+  it('should be able to set id/automation id', async () => {
     await browser.driver.sleep(config.sleep);
 
     expect(await element(by.id('line-a-jan-dot')).getAttribute('id')).toEqual('line-a-jan-dot');
@@ -83,7 +83,7 @@ describe('Line Chart tests', () => {
 });
 
 describe('Line Localization tests', () => {
-  it('Should Localize Numbers - en-US', async () => {
+  it('should Localize Numbers - en-US', async () => {
     await utils.setPage('/components/line/example-localize.html');
     await utils.checkForErrors();
     await browser.driver.sleep(config.sleep);
@@ -93,7 +93,7 @@ describe('Line Localization tests', () => {
     expect(await element.all(by.css('.y .tick text')).get(2).getText()).toEqual('10,000');
   });
 
-  it('Should Localize Numbers - de-DE', async () => {
+  it('should Localize Numbers - de-DE', async () => {
     await utils.setPage('/components/line/example-localize.html?locale=de-DE');
     await utils.checkForErrors();
     await browser.driver.sleep(config.sleep);
@@ -109,12 +109,12 @@ describe('Line Chart Zero Millions tests', () => {
     await utils.setPage('/components/line/example-zero-millions?theme=classic&layout=nofrills');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    it('should not visually regress', async () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
@@ -132,12 +132,12 @@ describe('Line Chart Two Line tests', () => {
     await utils.setPage('/components/line/example-two-lines.html?theme=classic&layout=nofrills');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    it('should not visually regress', async () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
@@ -155,12 +155,12 @@ describe('Line Chart Axis Label tests', () => {
     await utils.setPage('/components/line/example-axis-labels.html?theme=classic&layout=nofrills');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    it('should not visually regress', async () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
@@ -178,12 +178,12 @@ describe('Line Chart Axis Rotate tests', () => {
     await utils.setPage('/components/line/example-rotate.html?theme=classic&layout=nofrills');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    it('should not visually regress', async () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 

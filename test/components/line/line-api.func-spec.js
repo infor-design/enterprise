@@ -95,7 +95,7 @@ describe('Line Chart API', () => {
     cleanup();
   });
 
-  it('Should fire contextmenu event', () => {
+  it('should fire contextmenu event', () => {
     const callback = jest.fn();
     $(lineEl).on('contextmenu', callback);
 

@@ -32,12 +32,12 @@ describe('Searchfield with Toolbar alignment tests', () => {
         .presenceOf(element(by.id(searchfieldInput))), config.waitsFor);
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    xit('Should not visual regress on example-flex-toolbar-align-with-searchfield', async () => {
+    xit('should not visually regress on example-flex-toolbar-align-with-searchfield', async () => {
       const searchfieldInputEl = await element(by.id(searchfieldInput));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(searchfieldInputEl), config.waitsFor);
@@ -56,11 +56,11 @@ describe('Toolbar Input tests', () => {
         .presenceOf(element(by.id('toolbar-searchfield'))), config.waitsFor);
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should be visible have errors', async () => {
+  it('should be visible have errors', async () => {
     expect(await element(by.id('toolbar-searchfield')).isDisplayed()).toBeTruthy();
   });
 });

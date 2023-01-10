@@ -7,12 +7,12 @@ describe('Notification example-index test', () => {
     await utils.setPage('/components/notification/example-index?theme=classic&layout=nofrills');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    it('should not visually regress', async () => {
       const containerEl = await element(by.css('div[role=main]'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(containerEl), config.waitsFor);
@@ -22,7 +22,7 @@ describe('Notification example-index test', () => {
     });
   }
 
-  it('Should be able to set ids/automation ids', async () => {
+  it('should be able to set ids/automation ids', async () => {
     await browser.driver.sleep(config.sleep);
 
     expect(await element(by.id('notification-id-4')).getAttribute('id')).toEqual('notification-id-4');

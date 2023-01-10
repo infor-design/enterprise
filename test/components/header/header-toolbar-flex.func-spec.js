@@ -32,7 +32,7 @@ describe('Header API (using Flex Toolbar)', () => {
     cleanup();
   });
 
-  it('Should support using a Flex Toolbar', () => {
+  it('should support using a Flex Toolbar', () => {
     const toolbarFlexAPI = headerAPI.toolbarAPI;
 
     expect(toolbarFlexAPI).toBeDefined();

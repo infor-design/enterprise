@@ -28,7 +28,7 @@ describe('Tabs module Puppeteer tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('Should not visual regress', async () => {
+    it('should not visually regress', async () => {
       // Add an opening delay just in case
       await page.waitForTimeout(200);
 
@@ -64,7 +64,7 @@ describe('Tabs module Puppeteer tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it.skip('should not visual regress', async () => {
+    it.skip('should not visually regress', async () => {
       const search = await page.$('.buttonset');
       const img = await search.screenshot();
       const config = getConfig('new-searchfield-design');

@@ -19,7 +19,7 @@ describe('Flex Toolbar', () => {
         .then(element => expect(element).toBeTruthy());
     });
 
-    it.skip('should not visual regress', async () => {
+    it.skip('should not visually regress', async () => {
       await page.waitForSelector('.no-frills', { visible: true })
         .then(element => expect(element).toBeTruthy());
 
@@ -57,7 +57,7 @@ describe('Flex Toolbar', () => {
       expect(image3).toMatchImageSnapshot(config3);
     });
 
-    it.skip('should not visual regress - windowed', async () => {
+    it.skip('should not visually regress - windowed', async () => {
       await page.setViewport({ width: 450, height: 1000 });
       await page.waitForSelector('.no-frills', { visible: true })
         .then(element => expect(element).toBeTruthy());

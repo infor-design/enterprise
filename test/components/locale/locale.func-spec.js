@@ -65,25 +65,25 @@ describe('Locale API', () => {
     Locale.set('en-US');
   });
 
-  it('Should be possible to preset culturesPath', () => {
+  it('should be possible to preset culturesPath', () => {
     window.SohoConfig = { culturesPath: 'dist/js/cultures/' };
 
     expect(window.SohoConfig.culturesPath).toEqual('dist/js/cultures/');
     window.SohoConfig.culturesPath = null;
   });
 
-  it('Should be possible to require minified cultures', () => {
+  it('should be possible to require minified cultures', () => {
     window.SohoConfig = { minifyCultures: true };
 
     expect(window.SohoConfig.minifyCultures).toBeTruthy();
     window.SohoConfig.minifyCultures = null;
   });
 
-  it('Should be an object', () => {
+  it('should be an object', () => {
     expect(Locale).toBeDefined();
   });
 
-  it('Should be possible to set locale', () => {
+  it('should be possible to set locale', () => {
     Locale.set('en-US');
 
     expect(Locale.currentLocale.name).toEqual('en-US');
@@ -93,7 +93,7 @@ describe('Locale API', () => {
     expect(Locale.currentLocale.name).toEqual('de-DE');
   });
 
-  it('Should be possible to set locale and use the format', (done) => {
+  it('should be possible to set locale and use the format', (done) => {
     let locale = 'en-GB';
     Locale.set(locale).done((name) => {
       expect(name).toEqual('en-GB');
@@ -142,7 +142,7 @@ describe('Locale API', () => {
     });
   });
 
-  it('Should be impossible to set locale that is not in the default list', () => {
+  it('should be impossible to set locale that is not in the default list', () => {
     Locale.set('xx-XX');
 
     expect(Locale.currentLocale.name).toEqual('en-US');
@@ -152,14 +152,14 @@ describe('Locale API', () => {
     expect(Locale.currentLocale.name).toEqual('en-US');
   });
 
-  it('Should be possible to after set locale', () => {
+  it('should be possible to after set locale', () => {
     Locale.culturesPath = 'dist/js/cultures/';
 
     expect(Locale.culturesPath).toEqual('dist/js/cultures/');
     Locale.culturesPath = null;
   });
 
-  it('Should set the html lang and dir attribute', () => {
+  it('should set the html lang and dir attribute', () => {
     Locale.set('de-DE');
 
     expect(Locale.currentLocale.name).toEqual('de-DE');
@@ -178,7 +178,7 @@ describe('Locale API', () => {
     expect(html.getAttribute('dir')).toEqual('rtl');
   });
 
-  it('Should change font for some locales', () => {
+  it('should change font for some locales', () => {
     Locale.set('ar-EG');
     const body = window.getComputedStyle(document.body, null);
 
@@ -206,13 +206,13 @@ describe('Locale API', () => {
     expect(body.getPropertyValue('font-family')).toEqual('华文细黑, 宋体, 微软雅黑, "Microsoft YaHei New", helvetica, arial');
   });
 
-  it('Should map in-ID to id-ID', () => {
+  it('should map in-ID to id-ID', () => {
     Locale.set('in-ID');
 
     expect(Locale.currentLocale.name).toEqual('id-ID');
   });
 
-  it('Should map iw and iw-IL to he-IL', () => {
+  it('should map iw and iw-IL to he-IL', () => {
     Locale.set('iw-IL');
 
     expect(Locale.currentLocale.name).toEqual('he-IL');
@@ -222,14 +222,14 @@ describe('Locale API', () => {
     expect(Locale.currentLocale.name).toEqual('he-IL');
   });
 
-  it('Should format arabic month format', () => {
+  it('should format arabic month format', () => {
     Locale.set('ar-SA');
     // Note date is year, month, day
     expect(Locale.formatDate(new Date(2000, 12, 1), { pattern: Locale.calendar().dateFormat.month })).toEqual('01 محرم');
     expect(Locale.formatDate(new Date(2017, 10, 8), { pattern: Locale.calendar().dateFormat.month })).toEqual('08 ذو القعدة');
   });
 
-  it('Should format hebrew dates', () => {
+  it('should format hebrew dates', () => {
     Locale.set('he-IL');
 
     expect(Locale.formatDate(new Date(2019, 12, 1), { date: 'short' })).toEqual('01/01/2020');
@@ -237,7 +237,7 @@ describe('Locale API', () => {
     expect(Locale.formatDate(new Date(2019, 10, 8), { date: 'long' })).toEqual('8 בנובמבר 2019');
   });
 
-  it('Should format zh-Hans dates', () => {
+  it('should format zh-Hans dates', () => {
     Locale.set('zh-Hans');
 
     expect(Locale.formatDate(new Date(2019, 12, 1), { date: 'short' })).toEqual('2020/1/1');
@@ -246,13 +246,13 @@ describe('Locale API', () => {
     expect(Locale.formatDate(new Date(2019, 10, 8), { date: 'datetime' })).toEqual('2019/11/8 上午12:00');
   });
 
-  it('Should format year in es-ES', () => {
+  it('should format year in es-ES', () => {
     Locale.set('es-ES');
 
     expect(Locale.formatDate(new Date(2018, 10, 10), { date: 'year' })).toEqual('Noviembre de 2018');
   });
 
-  it('Should format datetime in es-419', () => {
+  it('should format datetime in es-419', () => {
     Locale.set('es-419');
 
     expect(Locale.formatDate(new Date(2018, 10, 10), { date: 'short' })).toEqual('10/11/2018');
@@ -274,14 +274,14 @@ describe('Locale API', () => {
     expect(Locale.formatDate('10/11/2018 14:15', Locale.calendar().dateFormat.datetime)).toEqual('10/11/2018 14:15');
   });
 
-  it('Should format year in da-DK', () => {
+  it('should format year in da-DK', () => {
     Locale.set('da-DK');
 
     expect(Locale.formatDate(new Date(2019, 3, 1), { date: 'year' })).toEqual('april 2019');
     Locale.set('en-US');
   });
 
-  it('Should parse year in different languages', () => {
+  it('should parse year in different languages', () => {
     Locale.set('es-ES');
 
     expect(Locale.parseDate('Noviembre de 2018', { date: 'year' }).getTime()).toEqual(new Date(2018, 10, 1, 0, 0, 0).getTime());
@@ -291,14 +291,14 @@ describe('Locale API', () => {
     expect(Locale.parseDate('November 2018', { date: 'year' }).getTime()).toEqual(new Date(2018, 10, 1, 0, 0, 0).getTime());
   });
 
-  it('Should parse date in Croatian (Croatia) hr-HR', () => {
+  it('should parse date in Croatian (Croatia) hr-HR', () => {
     Locale.set('hr-HR');
 
     expect(Locale.parseDate('01. 11. 2018. 05:25', { pattern: 'dd. MM. y. HH:mm' }).getTime()).toEqual(new Date(2018, 10, 1, 5, 25, 0).getTime());
     expect(Locale.parseDate('01. 11. 2018. 17:25', { pattern: 'dd. MM. y. HH:mm' }).getTime()).toEqual(new Date(2018, 10, 1, 17, 25, 0).getTime());
   });
 
-  it('Should parse date in ar-SA', () => {
+  it('should parse date in ar-SA', () => {
     Locale.set('ar-SA');
 
     const dateTest = Locale.parseDate('1441/09/05 9:30 ص', { locale: 'ar-SA', pattern: 'yyyy/MM/dd h:mm a' });
@@ -311,7 +311,7 @@ describe('Locale API', () => {
     expect(dateTest[5]).toEqual(0);
   });
 
-  it('Should parse date in es-419', () => {
+  it('should parse date in es-419', () => {
     Locale.set('es-419');
 
     const dateTest = Locale.parseDate('29/4/2020 08:40', { date: 'datetime' });
@@ -319,7 +319,7 @@ describe('Locale API', () => {
     expect(dateTest.getTime()).toEqual(new Date(2020, 3, 29, 8, 40, 0).getTime());
   });
 
-  it('Should parse am/pm in Korean', () => {
+  it('should parse am/pm in Korean', () => {
     Locale.set('ko-KO');
 
     expect(Locale.parseDate('2020-02-26 오전 12:00', { pattern: 'yyyy-MM-dd a h:mm' }).getTime())
@@ -329,7 +329,7 @@ describe('Locale API', () => {
       .toEqual(new Date(2020, 1, 26, 12, 0, 0).getTime());
   });
 
-  it('Should parse am/pm in zh-TW', () => {
+  it('should parse am/pm in zh-TW', () => {
     Locale.set('zh-TW');
 
     expect(Locale.parseDate('2020/2/26 上午12:00', { pattern: 'yyyy/M/d ah:mm' }).getTime())
@@ -342,7 +342,7 @@ describe('Locale API', () => {
       .toEqual(new Date(2020, 2, 4, 21, 0, 0).getTime());
   });
 
-  it('Should format en-US dates', () => {
+  it('should format en-US dates', () => {
     Locale.set('en-US');
     // Note date is year, month, day
     expect(Locale.formatDate(new Date(2000, 10, 8))).toEqual('11/8/2000');
@@ -362,14 +362,14 @@ describe('Locale API', () => {
     expect(Locale.formatDate()).toEqual(undefined);
   });
 
-  it('Should format timestamp in Arabic', () => {
+  it('should format timestamp in Arabic', () => {
     Locale.set('ar-SA');
     // Note date is year, month, day
     expect(Locale.formatDate(new Date(2000, 12, 1), { pattern: Locale.calendar().dateFormat.month })).toEqual('01 محرم');
     expect(Locale.formatDate(new Date(2017, 10, 8), { pattern: Locale.calendar().dateFormat.month })).toEqual('08 ذو القعدة');
   });
 
-  it('Should format timestamp in English', () => {
+  it('should format timestamp in English', () => {
     Locale.set('en-US');
 
     expect(Locale.formatDate(new Date(2015, 10, 5, 10, 20, 5), { date: 'timestamp' })).toEqual('10:20:05 AM');
@@ -385,7 +385,7 @@ describe('Locale API', () => {
     expect(Locale.formatDate(dt, { pattern: 'HHmmss' })).toEqual(h24 + m + s);
   });
 
-  it('Should format hours', () => {
+  it('should format hours', () => {
     Locale.set('en-US');
 
     expect(Locale.formatHour(0)).toEqual('12:00 AM');
@@ -413,7 +413,7 @@ describe('Locale API', () => {
     Locale.set('en-US');
   });
 
-  it('Should format hours in de-DE', () => {
+  it('should format hours in de-DE', () => {
     Locale.set('de-DE');
 
     expect(Locale.formatHour(0)).toEqual('00:00');
@@ -434,7 +434,7 @@ describe('Locale API', () => {
     Locale.set('en-US');
   });
 
-  it('Should format hours in da-DK', () => {
+  it('should format hours in da-DK', () => {
     Locale.set('da-DK');
 
     expect(Locale.formatHour(0)).toEqual('00.00');
@@ -457,7 +457,7 @@ describe('Locale API', () => {
     Locale.set('en-US');
   });
 
-  it('Should format hours in fi-FI', () => {
+  it('should format hours in fi-FI', () => {
     Locale.set('fi-FI');
 
     expect(Locale.formatHour(0)).toEqual('0.00');
@@ -480,7 +480,7 @@ describe('Locale API', () => {
     Locale.set('en-US');
   });
 
-  it('Should format hours in ko-KR', () => {
+  it('should format hours in ko-KR', () => {
     Locale.set('ko-KR');
 
     expect(Locale.formatHour(0)).toEqual('오전 12:00');
@@ -501,7 +501,7 @@ describe('Locale API', () => {
     Locale.set('en-US');
   });
 
-  it('Should format hours in zh-Hant', () => {
+  it('should format hours in zh-Hant', () => {
     Locale.set('zh-Hant');
 
     expect(Locale.formatHour(0)).toEqual('上午12:00');
@@ -522,7 +522,7 @@ describe('Locale API', () => {
     Locale.set('en-US');
   });
 
-  it('Should format hour range', () => {
+  it('should format hour range', () => {
     Locale.set('en-US');
 
     expect(Locale.formatHourRange(0, 5)).toEqual('12 - 5:00 AM');
@@ -550,7 +550,7 @@ describe('Locale API', () => {
     expect(Locale.formatHourRange(20, 24)).toEqual('20:00 - 00:00');
   });
 
-  it('Should format millis', () => {
+  it('should format millis', () => {
     Locale.set('en-US');
 
     expect(Locale.formatDate(new Date(2016, 2, 15, 12, 30, 36, 142), { pattern: 'd/M/yyyy h:mm:ss.SSS a ' })).toEqual('15/3/2016 12:30:36.142 PM');
@@ -558,7 +558,7 @@ describe('Locale API', () => {
   });
 
   // Format some random date type cases
-  it('Should format other dates', () => {
+  it('should format other dates', () => {
     Locale.set('de-DE');
 
     expect(Locale.formatDate(new Date(2000, 10, 8))).toEqual('08.11.2000');
@@ -574,7 +574,7 @@ describe('Locale API', () => {
   });
 
   // Format time in us and europe
-  it('Should format time', () => {
+  it('should format time', () => {
     Locale.set('en-US');
 
     expect(Locale.formatDate(new Date(2000, 10, 8, 13, 40), { date: 'datetime' })).toEqual('11/8/2000 1:40 PM');
@@ -609,7 +609,7 @@ describe('Locale API', () => {
     expect(Locale.formatDate(date, opts)).toEqual('01.02.2017 17:27');
   });
 
-  it('Should format milliseconds', () => {
+  it('should format milliseconds', () => {
     Locale.set('en-US');
 
     expect(Locale.formatDate(new Date('2015-01-01T06:00:00.123Z'), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' })).toEqual('2015-01-01T01:00:00.123');
@@ -620,7 +620,7 @@ describe('Locale API', () => {
     expect(Locale.formatDate(new Date('2015-01-06T06:00:00.001Z'), { pattern: 'yyyy-MM-ddTHH:mm:ss.SSS' })).toEqual('2015-01-06T01:00:00.001');
   });
 
-  it('Should format datetimeMillis and timestampMillis', () => {
+  it('should format datetimeMillis and timestampMillis', () => {
     Locale.set('en-US');
 
     expect(Locale.formatDate(new Date(2000, 10, 8, 13, 40, 30, 999), { date: 'datetimeMillis' })).toEqual('11/8/2000 1:40:30:999 PM');
@@ -628,7 +628,7 @@ describe('Locale API', () => {
   });
 
   // monthYear and yearMonth
-  it('Should format a year and month locale', () => {
+  it('should format a year and month locale', () => {
     Locale.set('en-US');
 
     expect(Locale.formatDate(new Date(2000, 10, 8, 13, 40), { date: 'month' })).toEqual('November 8');
@@ -646,7 +646,7 @@ describe('Locale API', () => {
   });
 
   // monthYear and yearMonth
-  it('Should be able to test RTL', () => {
+  it('should be able to test RTL', () => {
     Locale.set('en-US');
 
     expect(Locale.isRTL()).toEqual(false);
@@ -656,7 +656,7 @@ describe('Locale API', () => {
   });
 
   // Formating Hours
-  it('Should be able to format and parse hours', () => {
+  it('should be able to format and parse hours', () => {
     Locale.set('en-US');
     const dt = Locale.parseDate('000100', 'HHmmss', false);
 
@@ -669,14 +669,14 @@ describe('Locale API', () => {
     expect(Locale.parseDate('25/04/2017 12:00:00 AM', { pattern: 'd/MM/yyyy h:mm:ss a' }).getTime()).toEqual(new Date(2017, 3, 25, 0, 0, 0).getTime());
   });
 
-  it('Should be able to parse 2 and 3 digit years', () => {
+  it('should be able to parse 2 and 3 digit years', () => {
     Locale.set('en-US');
 
     expect(Locale.parseDate('10/10/10', 'M/d/yyyy').getTime()).toEqual(new Date(2010, 9, 10, 0, 0, 0).getTime());
     expect(Locale.parseDate('10/10/010', 'M/d/yyyy')).toEqual(undefined);
   });
 
-  it('Should parseDate in fi-FI', () => {
+  it('should parseDate in fi-FI', () => {
     Locale.set('fi-FI');
 
     expect(Locale.parseDate('18.10.2019 7.15', Locale.calendar().dateFormat.datetime).getTime()).toEqual(new Date(2019, 9, 18, 7, 15, 0).getTime());
@@ -685,7 +685,7 @@ describe('Locale API', () => {
     expect(Locale.parseDate('18.10.2019', Locale.calendar().dateFormat.short, true).getTime()).toEqual(new Date(2019, 9, 18, 0, 0, 0).getTime());
   });
 
-  it('Should parseDate in el-GR', () => {
+  it('should parseDate in el-GR', () => {
     Locale.set('el-GR');
 
     expect(Locale.parseDate('18/10/2019 7:15 π.μ.', Locale.calendar().dateFormat.datetime).getTime()).toEqual(new Date(2019, 9, 18, 7, 15, 0).getTime());
@@ -696,7 +696,7 @@ describe('Locale API', () => {
     expect(Locale.parseDate('18/10/2019 11:59 μ.μ.', Locale.calendar().dateFormat.datetime).getTime()).toEqual(new Date(2019, 9, 18, 23, 59, 0).getTime());
   });
 
-  it('Should parseDate with single digit formats', () => {
+  it('should parseDate with single digit formats', () => {
     expect(Locale.parseDate('18.10.2019 7.15', 'd.M.yyyy H.mm').getTime()).toEqual(new Date(2019, 9, 18, 7, 15, 0).getTime());
     expect(Locale.parseDate('18.10.2019 7.15', 'd.M.yyyy H.mm', true).getTime()).toEqual(new Date(2019, 9, 18, 7, 15, 0).getTime());
   });
@@ -778,7 +778,7 @@ describe('Locale API', () => {
     expect(Locale.parseNumber('12345678912340.11')).toEqual(12345678912340.11);
   });
 
-  it('Should be able to parse UTC toISOString', () => {
+  it('should be able to parse UTC toISOString', () => {
     Locale.set('en-US');
 
     expect(Locale.parseDate('2000-01-01T00:00:00.000Z', 'yyyy-MM-ddTHH:mm:ss.SSSZ').getTime()).toEqual(new Date(Date.UTC(2000, 0, 1, 0, 0, 0)).getTime());
@@ -790,7 +790,7 @@ describe('Locale API', () => {
   });
 
   // Test Long Formatting
-  it('Should format long', () => {
+  it('should format long', () => {
     Locale.set('en-US');
     // Date format is year, month, day, hours, mins , secs
     expect(Locale.formatDate(new Date(2015, 0, 8, 13, 40), { date: 'long' })).toEqual('January 8, 2015');
@@ -812,7 +812,7 @@ describe('Locale API', () => {
     expect(Locale.formatDate(new Date(2015, 0, 1, 13, 40), { date: 'long' })).toEqual('1 Tháng Giêng, 2015');
   });
 
-  it('Should format long with day of week', () => {
+  it('should format long with day of week', () => {
     Locale.set('en-US');
 
     expect(Locale.formatDate(new Date(2015, 0, 8, 13, 40), { date: 'full' })).toEqual('Thursday, January 8, 2015');
@@ -823,7 +823,7 @@ describe('Locale API', () => {
     expect(Locale.formatDate(new Date(2015, 0, 1, 13, 40), { date: 'full' })).toEqual('Donnerstag, 1. Januar 2015');
   });
 
-  it('Should format long days', () => {
+  it('should format long days', () => {
     Locale.set('en-US');
     // Date format is year, month, day, hours, mins , secs
     expect(Locale.formatDate(new Date(2015, 0, 8, 13, 40), { date: 'long' })).toEqual('January 8, 2015');
@@ -841,7 +841,7 @@ describe('Locale API', () => {
     expect(Locale.formatDate(new Date(2015, 0, 1, 13, 40), { date: 'long' })).toEqual('1 януари 2015 г.');
   });
 
-  it('Should be able to parse dates', () => {
+  it('should be able to parse dates', () => {
     Locale.set('en-US');
 
     expect(Locale.parseDate('11/8/2000').getTime()).toEqual(new Date(2000, 10, 8).getTime());
@@ -852,7 +852,7 @@ describe('Locale API', () => {
     expect(Locale.parseDate('08.11.2000').getTime()).toEqual(new Date(2000, 10, 8).getTime());
   });
 
-  it('Should parse dates with month zero', () => {
+  it('should parse dates with month zero', () => {
     Locale.set('en-US');
 
     expect(Locale.parseDate('2016-01-01', 'yyyy-MM-dd').getTime()).toEqual(new Date(2016, 0, 1).getTime());
@@ -860,7 +860,7 @@ describe('Locale API', () => {
     expect(Locale.parseDate('2016-01-31', 'yyyy-MM-dd').getTime()).toEqual(new Date(2016, 0, 31).getTime());
   });
 
-  it('Should be able to format with no separator', () => {
+  it('should be able to format with no separator', () => {
     Locale.set('en-US');
 
     expect(Locale.parseDate('20151028', 'yyyyMMdd').getTime()).toEqual(new Date(2015, 9, 28).getTime());
@@ -875,7 +875,7 @@ describe('Locale API', () => {
     expect(Locale.parseDate('222015', 'dMyyyy').getTime()).toEqual(new Date(2015, 1, 2).getTime());
   });
 
-  it('Should be able to parse date time', () => {
+  it('should be able to parse date time', () => {
     Locale.set('en-US');
 
     expect(Locale.parseDate('10/28/2015 8:12:10', 'M/d/yyyy h:mm:ss').getTime()).toEqual(new Date(2015, 9, 28, 8, 12, 10).getTime());
@@ -888,7 +888,7 @@ describe('Locale API', () => {
     expect(Locale.parseDate(undefined)).toEqual(undefined);
   });
 
-  it('Should parse incomplete dates', () => {
+  it('should parse incomplete dates', () => {
     Locale.set('en-US');
 
     expect(Locale.parseDate('10/28/2015 8:12:10', 'M/d/yyyy h:mm:ss').getTime()).toEqual(new Date(2015, 9, 28, 8, 12, 10).getTime());
@@ -899,14 +899,14 @@ describe('Locale API', () => {
     expect(Locale.parseDate('201511', 'yyyyMM').getTime()).toEqual(new Date(2015, 10, 1, 0, 0, 0).getTime());
   });
 
-  it('Should round minutes to 60 ', () => {
+  it('should round minutes to 60 ', () => {
     Locale.set('en-US');
 
     expect(Locale.parseDate('10/28/2015 8:65:10', 'M/d/yyyy h:mm:ss').getTime()).toEqual(new Date(2015, 9, 28, 8, 0, 10).getTime());
     expect(Locale.parseDate('10/28/2015 8:10:65', 'M/d/yyyy h:mm:ss').getTime()).toEqual(new Date(2015, 9, 28, 8, 10, 0).getTime());
   });
 
-  it('Should handle leap years', () => {
+  it('should handle leap years', () => {
     const isLeap = y => ((y % 4 === 0) && (y % 100 !== 0)) || (y % 400 === 0);
     const closestLeap = () => {
       let closestLeapYear = (new Date()).getFullYear();
@@ -926,7 +926,7 @@ describe('Locale API', () => {
     expect(Locale.parseDate('February 29', 'MMMM d').getTime()).toEqual(new Date(closestLeap(), 1, 29).getTime());
   });
 
-  it('Should cleanly handle non dates', () => {
+  it('should cleanly handle non dates', () => {
     Locale.set('en-US');
 
     expect(Locale.parseDate('111/81/20001')).toEqual(undefined);
@@ -935,7 +935,7 @@ describe('Locale API', () => {
     expect(Locale.parseDate('10/32/2015', 'MM/dd/yyyy')).toEqual(undefined);
   });
 
-  it('Should parse text months', () => {
+  it('should parse text months', () => {
     Locale.set('en-US');
 
     expect(Locale.parseDate('2015 December', 'yyyy MMMM').getTime()).toEqual(new Date(2015, 11, 1, 0, 0, 0).getTime());
@@ -946,7 +946,7 @@ describe('Locale API', () => {
     expect(Locale.parseDate('Dezember 2015', 'MMMM yyyy').getTime()).toEqual(new Date(2015, 11, 1, 0, 0, 0).getTime());
   });
 
-  it('Should parse Dates with dashes in them', () => {
+  it('should parse Dates with dashes in them', () => {
     Locale.set('en-US');
 
     // Test date only
@@ -956,7 +956,7 @@ describe('Locale API', () => {
     expect(Locale.parseDate('05-10-2015', 'dd-MM-yyyy').getTime()).toEqual(new Date(2015, 9, 5, 0, 0, 0).getTime());
   });
 
-  it('Should be able to return time format', () => {
+  it('should be able to return time format', () => {
     Locale.set('en-US');
 
     expect(Locale.formatDate(new Date(2015, 0, 8, 13, 40, 45), { date: 'timestamp' })).toEqual('1:40:45 PM');
@@ -966,7 +966,7 @@ describe('Locale API', () => {
     expect(Locale.formatDate(new Date(2015, 0, 8, 13, 40, 45), { date: 'timestamp' })).toEqual('13:40:45');
   });
 
-  it('Should treat no-NO and nb-NO as the same locale', () => {
+  it('should treat no-NO and nb-NO as the same locale', () => {
     Locale.set('no-NO');
 
     expect(Locale.translate('Loading')).toEqual('Laster');
@@ -977,7 +977,7 @@ describe('Locale API', () => {
     Locale.set('en-US');
   });
 
-  it('Should translate', () => {
+  it('should translate', () => {
     // Normal
     Locale.set('en-US');
 
@@ -1007,7 +1007,7 @@ describe('Locale API', () => {
     expect(Locale.translate('XYZ')).toEqual('[XYZ]');
   });
 
-  it('Should show undefined keys with [] around', () => {
+  it('should show undefined keys with [] around', () => {
     // Add due to SOHO-6782
     Locale.set('en-US');
 
@@ -1020,7 +1020,7 @@ describe('Locale API', () => {
     expect(Locale.translate('XYZ')).toEqual('[XYZ]');
   });
 
-  it('Should be possible to add translations', () => {
+  it('should be possible to add translations', () => {
     Locale.set('en-US');
     Locale.currentLanguage.messages.CustomValue = { id: 'CustomValue', value: 'Added Custom Value' };
 
@@ -1035,7 +1035,7 @@ describe('Locale API', () => {
     expect(Locale.translate('Required')).toEqual('Required');
   });
 
-  it('Should format decimals', () => {
+  it('should format decimals', () => {
     Locale.set('en-US');
 
     expect(Locale.formatNumber(145000)).toEqual('145,000.00');
@@ -1068,7 +1068,7 @@ describe('Locale API', () => {
     expect(Locale.formatNumber(12345.1)).toEqual('12 345,10');
   });
 
-  it('Should truncate and not round decimals', () => {
+  it('should truncate and not round decimals', () => {
     Locale.set('en-US');
 
     expect(Locale.formatNumber(123456.123456, { style: 'decimal', maximumFractionDigits: 5 })).toEqual('123,456.12345');
@@ -1084,7 +1084,7 @@ describe('Locale API', () => {
     expect(Locale.formatNumber(12345.6789, { style: 'decimal', minimumFractionDigits: 3, maximumFractionDigits: 3, round: true })).toEqual('12,345.679');
   });
 
-  it('Should format integers', () => {
+  it('should format integers', () => {
     Locale.set('en-US');
 
     expect(Locale.formatNumber(12345.123, { style: 'integer' })).toEqual('12,345');
@@ -1096,13 +1096,13 @@ describe('Locale API', () => {
     expect(Locale.formatNumber(12345.123, { style: 'integer' })).toEqual('12.345');
   });
 
-  it('Should be able to parse string numbers into number type', () => {
+  it('should be able to parse string numbers into number type', () => {
     Locale.set('en-US');
 
     expect(Locale.formatNumber('12345', { style: 'integer' })).toEqual('12,345');
   });
 
-  it('Should format currency', () => {
+  it('should format currency', () => {
     Locale.set('en-US');
 
     expect(Locale.formatNumber(12345.129, { style: 'currency' })).toEqual('$12,345.12');
@@ -1112,7 +1112,7 @@ describe('Locale API', () => {
     expect(Locale.formatNumber(12345.123, { style: 'currency' })).toEqual('12.345,12 €');
   });
 
-  it('Should allow currency override', () => {
+  it('should allow currency override', () => {
     Locale.set('es-ES');
 
     expect(Locale.formatNumber(12345.12, { style: 'currency', currencySign: '$' })).toEqual('12.345,12 $');
@@ -1127,7 +1127,7 @@ describe('Locale API', () => {
     })).toEqual('$ 12,345.12');
   });
 
-  it('Should format percent', () => {
+  it('should format percent', () => {
     Locale.set('en-US');
 
     expect(Locale.formatNumber(0.0500000, { style: 'percent' })).toEqual('5 %');
@@ -1159,7 +1159,7 @@ describe('Locale API', () => {
     expect(Locale.formatNumber(1, { style: 'percent' })).toEqual('100 %');
   });
 
-  it('Should parse numbers back', () => {
+  it('should parse numbers back', () => {
     Locale.set('en-US');
 
     expect(Locale.parseNumber('$12,345.13')).toEqual(12345.13);
@@ -1169,7 +1169,7 @@ describe('Locale API', () => {
     expect(Locale.parseNumber('12.345,12 €')).toEqual(12345.12);
   });
 
-  it('Should format numbers in current locale', () => {
+  it('should format numbers in current locale', () => {
     Locale.set('nl-NL');
 
     expect(Locale.parseNumber('100,00')).toEqual(100);
@@ -1179,7 +1179,7 @@ describe('Locale API', () => {
     expect(Locale.parseNumber('130300,00')).toEqual(130300.00);
   });
 
-  it('Should return NaN for bad numbers', () => {
+  it('should return NaN for bad numbers', () => {
     Locale.set('en-US');
 
     expect(NaN).toEqual(NaN);
@@ -1189,7 +1189,7 @@ describe('Locale API', () => {
     expect(Locale.parseNumber(undefined)).toEqual(NaN);
   });
 
-  it('Should parse with decimal and group properties', () => {
+  it('should parse with decimal and group properties', () => {
     // group = space; decimal = comma
     Locale.set('fr-FR');
 
@@ -1211,13 +1211,13 @@ describe('Locale API', () => {
     expect(Locale.parseNumber('1,234,567,890.1234')).toEqual(1234567890.1234);
   });
 
-  it('Should parse with multiple group separators', () => {
+  it('should parse with multiple group separators', () => {
     Locale.set('en-US');
 
     expect(Locale.parseNumber('1,234,567,890.12346')).toEqual(1234567890.12346);
   });
 
-  it('Should parse big numbers', () => {
+  it('should parse big numbers', () => {
     Locale.set('en-US');
 
     expect(Locale.parseNumber('123456,789,012,345,678.123456')).toEqual('123456789012345678.123456');
@@ -1228,7 +1228,7 @@ describe('Locale API', () => {
     expect(Locale.parseNumber('123.456.789.012.345.678,123456')).toEqual('123456789012345678.123456');
   });
 
-  it('Should format big numbers', () => {
+  it('should format big numbers', () => {
     Locale.set('en-US');
 
     expect(Locale.formatNumber('123456789012.123456', {
@@ -1255,7 +1255,7 @@ describe('Locale API', () => {
     })).toEqual('-922589489099.38');
   });
 
-  it('Should handle AM/PM', () => {
+  it('should handle AM/PM', () => {
     Locale.set('en-US');
 
     expect(Locale.formatDate(new Date(2016, 2, 15, 12, 30, 36), { pattern: 'd/M/yyyy h:mm:ss a' })).toEqual('15/3/2016 12:30:36 PM');
@@ -1264,7 +1264,7 @@ describe('Locale API', () => {
     expect(Locale.formatDate(new Date(2016, 2, 15, 0, 30, 36), { pattern: 'd/M/yyyy HH:mm:ss' })).toEqual('15/3/2016 00:30:36');
   });
 
-  it('Should handle minimumFractionDigits', () => {
+  it('should handle minimumFractionDigits', () => {
     Locale.set('en-US');
 
     expect(Locale.formatNumber('12345', { minimumFractionDigits: 0, maximumFractionDigits: 2 })).toEqual('12,345');
@@ -1288,7 +1288,7 @@ describe('Locale API', () => {
     expect(Locale.formatNumber('12345.1', { minimumFractionDigits: 5 })).toEqual('12,345.10000');
   });
 
-  it('Should format negative numbers', () => {
+  it('should format negative numbers', () => {
     Locale.set('en-US');
 
     expect(Locale.formatNumber(-1000000, { style: 'currency' })).toEqual('-$1,000,000.00');
@@ -1302,7 +1302,7 @@ describe('Locale API', () => {
     expect(Locale.formatNumber(-1000000, { style: 'currency' })).toEqual('-﷼ 1٬000٬000٫00');
   });
 
-  it('Should round when the round option is used', () => {
+  it('should round when the round option is used', () => {
     Locale.set('en-US');
 
     expect(Locale.formatNumber('3.01999', { maximumFractionDigits: 2, round: true })).toEqual('3.02');
@@ -1350,7 +1350,7 @@ describe('Locale API', () => {
     expect(Locale.truncateDecimals('6.10', 2, 2)).toEqual('6.10');
   });
 
-  it('Should properly convert character cases in some specific Locales', () => {
+  it('should properly convert character cases in some specific Locales', () => {
     // Related JIRA Ticket: SOHO-5408
     Locale.set('tr-TR');
 
@@ -1360,7 +1360,7 @@ describe('Locale API', () => {
     expect(Locale.capitalizeWords('kodları istanbul')).toEqual('Kodları İstanbul');
   });
 
-  it('Should properly convert from Gregorian to Islamic UmAlQura', () => {
+  it('should properly convert from Gregorian to Islamic UmAlQura', () => {
     Locale.set('ar-SA');
     let islamicDate = Locale.gregorianToUmalqura(new Date(new Date(2017, 4, 31)));
 
@@ -1371,20 +1371,20 @@ describe('Locale API', () => {
     expect(`${islamicDate[0].toString()} ${islamicDate[1].toString()} ${islamicDate[2].toString()}`).toEqual('1431 11 25');
   });
 
-  it('Should properly convert from Islamic UmAlQura to Gregorian', () => {
+  it('should properly convert from Islamic UmAlQura to Gregorian', () => {
     Locale.set('ar-SA');
     const time = Locale.umalquraToGregorian(1431, 11, 25).getTime();
 
     expect(time).toEqual(new Date(2010, 11, 1, 0, 0, 0).getTime());
   });
 
-  it('Should handle numbers passed to parseNumber', () => {
+  it('should handle numbers passed to parseNumber', () => {
     Locale.set('en-US');
 
     expect(Locale.parseNumber(4000)).toEqual(4000);
   });
 
-  it('Should have 12 months per locale', () => {
+  it('should have 12 months per locale', () => {
     for (let culture in Locale.cultures) { //eslint-disable-line
       Locale.set(culture);
 
@@ -1393,7 +1393,7 @@ describe('Locale API', () => {
     }
   });
 
-  it('Should default bad/missing locales', () => {
+  it('should default bad/missing locales', () => {
     for (let culture in Locale.cultures) {  //eslint-disable-line
       Locale.set('de-AU');
 
@@ -1413,19 +1413,19 @@ describe('Locale API', () => {
     }
   });
 
-  it('Should convert date from Gregorian (if needed) before formatting date (when fromGregorian is true)', () => {
+  it('should convert date from Gregorian (if needed) before formatting date (when fromGregorian is true)', () => {
     Locale.set('ar-SA');
 
     expect(Locale.formatDate(new Date(2018, 5, 20), { pattern: 'yyyy/MM/dd', fromGregorian: true })).toEqual('1439/10/06');
   });
 
-  it('Should convert date to Gregorian (if needed) before formatting date (when toGregorian is true)', () => {
+  it('should convert date to Gregorian (if needed) before formatting date (when toGregorian is true)', () => {
     Locale.set('ar-SA');
 
     expect(Locale.formatDate(Locale.parseDate('1439/10/06', Locale.calendar().dateFormat.short, false), { pattern: 'yyyyMMdd', toGregorian: true })).toEqual('20180620');
   });
 
-  it('Should parse dates with and without spaces, dash, comma format', () => {
+  it('should parse dates with and without spaces, dash, comma format', () => {
     Locale.set('en-US');
 
     // Date with spaces, dashes and comma
@@ -1437,7 +1437,7 @@ describe('Locale API', () => {
     expect(Locale.parseDate('20141211', 'yyyyMMdd').getTime()).toEqual(new Date(2014, 11, 11, 0, 0, 0).getTime());
   });
 
-  it('Should parse arabic dates in year pattern', () => {
+  it('should parse arabic dates in year pattern', () => {
     Locale.set('ar-SA');
 
     // Date with spaces, dashes and comma
@@ -1446,7 +1446,7 @@ describe('Locale API', () => {
     expect(Locale.parseDate('ذو الحجة 1439', 'MMMM yyyy')[2]).toEqual(1);
   });
 
-  it('Should parse or format a string of four, six, or eight zeroes', () => {
+  it('should parse or format a string of four, six, or eight zeroes', () => {
     Locale.set('en-US');
 
     expect(Locale.parseDate('0000')).toEqual(undefined);
@@ -1458,7 +1458,7 @@ describe('Locale API', () => {
     expect(Locale.formatDate('00000000')).toEqual('');
   });
 
-  it('Should format dates with short timezones', () => {
+  it('should format dates with short timezones', () => {
     Locale.set('en-US');
 
     expect(['3/22/2018 8:11 PM EST', '3/22/2018 8:11 PM EDT']).toContain(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { date: 'timezone' }));
@@ -1469,14 +1469,14 @@ describe('Locale API', () => {
     expect(['22-03-2018 20:11 GMT-5', '22-03-2018 20:11 GMT-4', '22-03-2018 20:11 EDT', '22-03-2018 20:11 GT-', '22-03-2018 20:11 EST']).toContain(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { pattern: 'dd-MM-yyyy HH:mm zz' }));
   });
 
-  it('Should format dates in Slovak', () => {
+  it('should format dates in Slovak', () => {
     Locale.set('sk-SK');
 
     expect(Locale.formatDate(new Date(2019, 7, 15), { pattern: Locale.currentLocale.data.calendars[0].dateFormat.full })).toEqual('štvrtok 15. august 2019');
     expect(Locale.formatDate(new Date(2019, 7, 15), { date: 'full' })).toEqual('štvrtok 15. august 2019');
   });
 
-  it('Should format dates with long timezones', () => {
+  it('should format dates with long timezones', () => {
     Locale.set('en-US');
 
     expect(['3/22/2018 8:11 PM Eastern Standard Time', '3/22/2018 8:11 PM Eastern Daylight Time']).toContain(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { date: 'timezoneLong' }));
@@ -1487,7 +1487,7 @@ describe('Locale API', () => {
     expect(Locale.formatDate(new Date(2018, 2, 22, 20, 11, 12), { pattern: 'dd-MM-yyyy HH:mm zzzz' })).toContain('Eastern-');
   });
 
-  it('Should parse dates with short timezones in current timezone', () => {
+  it('should parse dates with short timezones in current timezone', () => {
     Locale.set('en-US');
 
     expect(Locale.parseDate('3/22/2018 8:11 PM EST', { date: 'timezone' }).getTime()).toEqual(new Date(2018, 2, 22, 20, 11).getTime());
@@ -1498,7 +1498,7 @@ describe('Locale API', () => {
     expect(Locale.parseDate('22-03-2018 20:11 GMT-5', { pattern: 'dd-MM-yyyy HH:mm zz' }).getTime()).toEqual(new Date(2018, 2, 22, 20, 11).getTime());
   });
 
-  it('Should parse dates with long timezones in current timezone', () => {
+  it('should parse dates with long timezones in current timezone', () => {
     Locale.set('en-US');
 
     expect(Locale.parseDate('3/22/2018 8:11 PM Eastern Standard Time', { date: 'timezoneLong' }).getTime()).toEqual(new Date(2018, 2, 22, 20, 11).getTime());
@@ -1509,7 +1509,7 @@ describe('Locale API', () => {
     expect(Locale.parseDate('22-03-2000 20:11 Eastern-standaardtijd', { pattern: 'dd-MM-yyyy HH:mm zzzz' }).getTime()).toEqual(new Date(2000, 2, 22, 20, 11).getTime());
   });
 
-  it('Should be able to display dates into another timezone', () => {
+  it('should be able to display dates into another timezone', () => {
     Locale.set('en-US');
 
     expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'Australia/Brisbane')).toEqual('3/26/2018, 2:00:00 PM');
@@ -1522,7 +1522,7 @@ describe('Locale API', () => {
     expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'America/New_York')).toEqual('26-3-2018 00:00:00');
   });
 
-  it('Should be able to format timezones and timezones', () => {
+  it('should be able to format timezones and timezones', () => {
     Locale.set('en-US');
 
     expect(Locale.formatDate(new Date(2020, 6, 22, 20, 11, 12), { date: 'datetime' })).toEqual('7/22/2020 8:11 PM');
@@ -1559,7 +1559,7 @@ describe('Locale API', () => {
     expect(['2020/7/22 下午8:11', '2020/7/22 下午9:11 EST', '2020/7/22 下午9:11 EDT']).toContain(Locale.formatDate(new Date(2020, 6, 22, 21, 11, 12), { date: 'timezone' }));
   });
 
-  it('Should be able to display dates into another timezone including short timezone name', () => {
+  it('should be able to display dates into another timezone including short timezone name', () => {
     Locale.set('en-US');
 
     expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'Australia/Brisbane', 'short')).toEqual('3/26/2018, 2:00:00 PM GMT+10');
@@ -1572,7 +1572,7 @@ describe('Locale API', () => {
     expect(['26-3-2018 0:00:00 EDT', '26-3-2018 00:00:00 GMT-4']).toContain(Locale.dateToTimeZone(Locale.dateToTimeZone(new Date(2018, 2, 26), 'America/New_York', 'short')));
   });
 
-  it('Should be able to display dates into another timezone including long timezone name', () => {
+  it('should be able to display dates into another timezone including long timezone name', () => {
     Locale.set('en-US');
 
     expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'Australia/Brisbane', 'long')).toEqual('3/26/2018, 2:00:00 PM Australian Eastern Standard Time');
@@ -1585,7 +1585,7 @@ describe('Locale API', () => {
     expect(['26-3-2018 00:00:00 Eastern-zomertijd', '26-3-2018 0:00:00 Eastern-zomertijd']).toContain(Locale.dateToTimeZone(new Date(2018, 2, 26), 'America/New_York', 'long'));
   });
 
-  it('Should be possible to set the language to something other than the current locale', (done) => {
+  it('should be possible to set the language to something other than the current locale', (done) => {
     Locale.set('en-US');
 
     expect(Locale.translate('Actions')).toEqual('Actions');
@@ -1606,7 +1606,7 @@ describe('Locale API', () => {
     });
   });
 
-  it('Should be possible to set the language to nb', (done) => {
+  it('should be possible to set the language to nb', (done) => {
     Locale.set('en-US');
 
     expect(Locale.translate('Actions')).toEqual('Actions');
@@ -1621,7 +1621,7 @@ describe('Locale API', () => {
     });
   });
 
-  it('Should be possible to set the language to nn', (done) => {
+  it('should be possible to set the language to nn', (done) => {
     Locale.set('en-US');
 
     expect(Locale.translate('Actions')).toEqual('Actions');
@@ -1636,7 +1636,7 @@ describe('Locale API', () => {
     });
   });
 
-  it('Should be possible to extend the language strings for a locale', (done) => {
+  it('should be possible to extend the language strings for a locale', (done) => {
     Locale.set('it-lT').done(() => {
       const myStrings = {
         Thanks: { id: 'Thanks', value: 'Grazie', comment: '' },
@@ -1651,7 +1651,7 @@ describe('Locale API', () => {
     });
   });
 
-  it('Should be possible to extend the language strings for a language', (done) => {
+  it('should be possible to extend the language strings for a language', (done) => {
     Locale.set('fr-FR').done(() => {
       Locale.setLanguage('it').done(() => {
         const myStrings = {
@@ -1668,14 +1668,14 @@ describe('Locale API', () => {
     });
   });
 
-  it('Should still trigger done on a non existent locale', (done) => {
+  it('should still trigger done on a non existent locale', (done) => {
     Locale.set('xx-XX').done(() => {
       expect(Locale.currentLocale.name).toEqual('en-US');
       done();
     });
   });
 
-  it('Should be possible to add a locale not in the current set', (done) => {
+  it('should be possible to add a locale not in the current set', (done) => {
     Locale.set('en-US');
 
     expect(Locale.translate('Comments')).toEqual('Comments');
@@ -1692,7 +1692,7 @@ describe('Locale API', () => {
     });
   });
 
-  it('Should handle group size', () => {
+  it('should handle group size', () => {
     Locale.set('en-US'); // 3, 3
 
     expect(Locale.formatNumber(-2.53, { style: 'percent', minimumFractionDigits: 2 })).toEqual('-253.00 %');
@@ -1742,7 +1742,7 @@ describe('Locale API', () => {
     expect(Locale.formatNumber(100, { style: 'percent' })).toEqual('10,000 %');
   });
 
-  it('Should parse group size', () => {
+  it('should parse group size', () => {
     Locale.set('en-US'); // 3, 3
 
     expect(Locale.parseNumber('-253.00 %')).toEqual(-253);
@@ -1792,7 +1792,7 @@ describe('Locale API', () => {
     expect(Locale.parseNumber('10,000 %')).toEqual((10000));
   });
 
-  it('Should be able to not show the group size', () => { //eslint-disable-line
+  it('should be able to not show the group size', () => { //eslint-disable-line
     Locale.set('en-US'); // 3, 3
 
     expect(Locale.formatNumber(1234567.1234, { group: '' })).toEqual('1234567.123');
@@ -1809,7 +1809,7 @@ describe('Locale API', () => {
     expect(Locale.formatNumber(12345678.1234, { group: '' })).toEqual('12345678.123');
   });
 
-  it('Should be able to set the group size', () => {
+  it('should be able to set the group size', () => {
     Locale.set('en-US'); // 3, 3
 
     expect(Locale.formatNumber(1234567.1234, { groupSizes: [3, 0] })).toEqual('1234,567.123');
@@ -1826,7 +1826,7 @@ describe('Locale API', () => {
     expect(Locale.formatNumber(12345678.1234, { groupSizes: [3, 0] })).toEqual('12345,678.123');
   });
 
-  it('Should be able to set zero group size', () => {
+  it('should be able to set zero group size', () => {
     Locale.set('en-US'); // 3, 3
 
     expect(Locale.formatNumber(1234567.1234, { groupSizes: [0, 0] })).toEqual('1234567.123');
@@ -1843,35 +1843,35 @@ describe('Locale API', () => {
     expect(Locale.formatNumber(12345678.1234, { groupSizes: [0, 0] })).toEqual('12345678.123');
   });
 
-  it('Should convert arabic numbers', () => {
+  it('should convert arabic numbers', () => {
     expect(Locale.convertNumberToEnglish('١٢٣٤٥٦٧٨٩٠')).toEqual(1234567890);
     expect(Locale.convertNumberToEnglish('١٢٣')).toEqual(123);
     expect(Locale.convertNumberToEnglish('١٢٣.٤٥')).toEqual(123.45);
     expect(Locale.convertNumberToEnglish('١٬٢٣٤٬٥٦٧٬٨٩٠')).toEqual(1234567890);
   });
 
-  it('Should convert hebrew numbers', () => {
+  it('should convert hebrew numbers', () => {
     expect(Locale.convertNumberToEnglish('१२३४५६७८९०')).toEqual(1234567890);
     expect(Locale.convertNumberToEnglish('१२३')).toEqual(123);
     expect(Locale.convertNumberToEnglish('१२३.४५')).toEqual(123.45);
     expect(Locale.convertNumberToEnglish('१,२३४,५६७,८९०')).toEqual(1234567890);
   });
 
-  it('Should convert chinese financial traditional numbers', () => {
+  it('should convert chinese financial traditional numbers', () => {
     expect(Locale.convertNumberToEnglish('壹貳叄肆伍陸柒捌玖零')).toEqual(1234567890);
     expect(Locale.convertNumberToEnglish('貳零壹玖')).toEqual(2019);
     expect(Locale.convertNumberToEnglish('壹貳叄.肆伍')).toEqual(123.45);
     expect(Locale.convertNumberToEnglish('壹,貳叄肆,伍陸柒,捌玖零')).toEqual(1234567890);
   });
 
-  it('Should convert chinese financial simplified numbers', () => {
+  it('should convert chinese financial simplified numbers', () => {
     expect(Locale.convertNumberToEnglish('壹贰叁肆伍陆柒捌玖零')).toEqual(1234567890);
     expect(Locale.convertNumberToEnglish('贰零壹玖')).toEqual(2019);
     expect(Locale.convertNumberToEnglish('壹贰叁.肆伍')).toEqual(123.45);
     expect(Locale.convertNumberToEnglish('壹,贰叁肆,伍陆柒,捌玖零')).toEqual(1234567890);
   });
 
-  it('Should convert chinese normal numbers', () => {
+  it('should convert chinese normal numbers', () => {
     expect(Locale.convertNumberToEnglish('一二三四五六七八九零')).toEqual(1234567890);
     expect(Locale.convertNumberToEnglish('二零一九')).toEqual(2019);
     expect(Locale.convertNumberToEnglish('二〇一九')).toEqual(2019);
@@ -1879,7 +1879,7 @@ describe('Locale API', () => {
     expect(Locale.convertNumberToEnglish('一,二三四,五六七,八九零')).toEqual(1234567890);
   });
 
-  it('Should be able to format a number in a non current locale', (done) => {
+  it('should be able to format a number in a non current locale', (done) => {
     Locale.set('en-US');
     Locale.getLocale('nl-NL').done(() => {
       expect(Locale.currentLocale.name).toEqual('en-US');
@@ -1901,7 +1901,7 @@ describe('Locale API', () => {
     });
   });
 
-  it('Should be able to parse a number in a a non current locale', (done) => {
+  it('should be able to parse a number in a a non current locale', (done) => {
     Locale.set('en-US');
 
     Locale.getLocale('nl-NL').done(() => {
@@ -1920,7 +1920,7 @@ describe('Locale API', () => {
     });
   });
 
-  it('Should be able to format a date in a a non current locale', (done) => {
+  it('should be able to format a date in a a non current locale', (done) => {
     Locale.set('en-US');
 
     Locale.getLocale('nl-NL').done(() => {
@@ -1937,7 +1937,7 @@ describe('Locale API', () => {
     });
   });
 
-  it('Should be able to format a date in a a non current language', (done) => {
+  it('should be able to format a date in a a non current language', (done) => {
     Locale.set('en-US');
 
     expect(Locale.calendar().dateFormat.short).toEqual('M/d/yyyy');
@@ -1955,7 +1955,7 @@ describe('Locale API', () => {
     });
   });
 
-  it('Should be able to parse a date in a non current locale', (done) => {
+  it('should be able to parse a date in a non current locale', (done) => {
     Locale.set('en-US');
     Locale.getLocale('es-ES').done(() => {
       expect(Locale.currentLocale.name).toEqual('en-US');
@@ -1967,7 +1967,7 @@ describe('Locale API', () => {
     });
   });
 
-  it('Should load locale which has custom filename', (done) => {
+  it('should load locale which has custom filename', (done) => {
     const filename = 'sv-SE.f0r73571n6purp0537051mul473h45h';
     delete Locale.cultures['sv-SE'];
     expect(Locale.cultures['sv-SE']).toBeUndefined('Prerequisite for this unit test was not met');
@@ -1980,7 +1980,7 @@ describe('Locale API', () => {
     });
   });
 
-  it('Should translations as undefined if not found', () => {
+  it('should translations as undefined if not found', () => {
     Locale.set('en-US');
 
     expect(Locale.translate('XYZ', true)).toEqual(undefined);
@@ -1996,7 +1996,7 @@ describe('Locale API', () => {
     expect(Locale.translate('XYZ', { showBrackets: false })).toEqual('XYZ');
   });
 
-  it('Should be able get translations in a non current locale (de-DE)', (done) => {
+  it('should be able get translations in a non current locale (de-DE)', (done) => {
     Locale.set('en-US');
     Locale.getLocale('de-DE').done(() => {
       expect(Locale.currentLocale.name).toEqual('en-US');
@@ -2009,7 +2009,7 @@ describe('Locale API', () => {
     });
   });
 
-  it('Should be able get translations in a non current locale  (fi-FI)', (done) => {
+  it('should be able get translations in a non current locale  (fi-FI)', (done) => {
     Locale.set('fi-FI');
     Locale.setLanguage('sv');
     Locale.getLocale('de-DE');
@@ -2022,7 +2022,7 @@ describe('Locale API', () => {
     done();
   });
 
-  it('Should format times correctly', () => {
+  it('should format times correctly', () => {
     Locale.set('af-ZA');
 
     expect(Locale.calendar().timeFormat).toEqual('HH:mm');
@@ -2078,7 +2078,7 @@ describe('Locale API', () => {
     expect(Locale.calendar().dateFormat.datetime).toEqual('d. MM. yyyy HH:mm');
   });
 
-  it('Should Get the Parent Locale', () => {
+  it('should Get the Parent Locale', () => {
     Locale.set('es-MX');
 
     expect(Locale.currentLocale.name).toEqual('es-MX');
@@ -2104,7 +2104,7 @@ describe('Locale API', () => {
     expect(Locale.translate('Required')).toEqual('Obligatorisk');
   });
 
-  it('Should provide a different fr-CA and fr-FR', () => {
+  it('should provide a different fr-CA and fr-FR', () => {
     Locale.set('fr-FR');
 
     expect(Locale.currentLocale.name).toEqual('fr-FR');
@@ -2119,7 +2119,7 @@ describe('Locale API', () => {
     expect(Locale.translate('From')).toEqual('De');
   });
 
-  it('Should be able to set language to full code', () => {
+  it('should be able to set language to full code', () => {
     Locale.set('en-US');
     Locale.setLanguage('fr-CA');
 
@@ -2139,7 +2139,7 @@ describe('Locale API', () => {
     expect(Locale.translate('UserProfile')).toEqual('Benutzerprofil');
   });
 
-  it('Should be able to set language to full code from a similar language', () => {
+  it('should be able to set language to full code from a similar language', () => {
     Locale.set('fr-FR');
     Locale.setLanguage('fr-CA');
 
@@ -2152,7 +2152,7 @@ describe('Locale API', () => {
     expect(Locale.translate('UserProfile')).toEqual('Profil utilisateur');
   });
 
-  it('Should be able to switch language', () => {
+  it('should be able to switch language', () => {
     Locale.set('en-US');
     Locale.setLanguage('fr-CA');
 
@@ -2169,7 +2169,7 @@ describe('Locale API', () => {
     expect(Locale.translate('AddComments')).toEqual('Ajouter commentaires');
   });
 
-  it('Should be able to determine if we are using the islamic calendar', () => {
+  it('should be able to determine if we are using the islamic calendar', () => {
     Locale.set('en-US');
 
     expect(Locale.isIslamic()).toEqual(false);
@@ -2185,7 +2185,7 @@ describe('Locale API', () => {
     expect(Locale.isIslamic('xx-XX')).toEqual(false);
   });
 
-  it('Should correct placeholder missing translations', () => {
+  it('should correct placeholder missing translations', () => {
     Locale.set('th-TH');
 
     expect(Locale.translate('Locale')).toEqual('ตำแหน่งที่ตั้ง');

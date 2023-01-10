@@ -7,11 +7,11 @@ describe('Tree example-index tests', () => {
     await utils.setPage('/components/tree/example-index?theme=classic&layout=nofrills');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should select on click', async () => {
+  it('should select on click', async () => {
     const link = await element.all(by.css('a[role="treeitem"]')).first();
 
     expect(await link.getAttribute('class')).not.toContain('is-selected');
@@ -20,7 +20,7 @@ describe('Tree example-index tests', () => {
     expect(await link.getAttribute('class')).toContain('is-selected');
   });
 
-  it('Should deselect selected-node and select on click', async () => {
+  it('should deselect selected-node and select on click', async () => {
     expect(await element.all(by.css('a[role="treeitem"]')).get(0).getAttribute('class')).not.toContain('is-selected');
     await element.all(by.css('a[role="treeitem"]')).get(0).click();
 
@@ -30,7 +30,7 @@ describe('Tree example-index tests', () => {
     expect(await element.all(by.css('a[role="treeitem"]')).get(0).getAttribute('class')).not.toContain('is-selected');
   });
 
-  it('Should toggle open/close on click', async () => {
+  it('should toggle open/close on click', async () => {
     expect(await element.all(by.css('.tree li.folder')).get(0).getAttribute('class')).toContain('is-open');
     expect(await element.all(by.css('.tree li.folder a[role="treeitem"]')).get(0).element(by.css('.icon-tree use')).getAttribute('href')).toContain('#icon-open-folder');
     await element.all(by.css('.tree li.folder a[role="treeitem"]')).get(0).click();
@@ -45,7 +45,7 @@ describe('Tree example-index tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    it('should not visually regress', async () => {
       const link = await element.all(by.css('a[role="treeitem"]')).first();
       await link.click();
 
@@ -62,7 +62,7 @@ describe('Tree badges tests', () => {
     await utils.setPage('/components/tree/example-badges');
   });
 
-  it('Should show badges with tree nodes', async () => {
+  it('should show badges with tree nodes', async () => {
     expect(await element.all(by.css('.tree li a[role="treeitem"] .tree-badge')).count()).toBe(5);
     expect(await element.all(by.css('.tree li.folder a[role="treeitem"] .tree-badge')).count()).toBe(4);
     expect(await element.all(by.css('.tree li.folder a[role="treeitem"] .tree-badge.round')).count()).toBe(3);
@@ -77,7 +77,7 @@ describe('Tree custom folder icons tests', () => {
     await utils.setPage('/components/tree/example-custom-folders');
   });
 
-  it('Should show custom folder icon', async () => {
+  it('should show custom folder icon', async () => {
     expect(await element.all(by.css('.tree li.folder a[role="treeitem"]')).get(0).element(by.css('.icon-tree use')).getAttribute('href')).toContain('#icon-user-folder-open');
   });
 });
@@ -87,7 +87,7 @@ describe('Tree plus minus folder icons tests', () => {
     await utils.setPage('/components/tree/example-plus-minus-folders');
   });
 
-  it('Should show plus minus folder icon', async () => {
+  it('should show plus minus folder icon', async () => {
     expect(await element.all(by.css('.tree li.folder a[role="treeitem"]')).get(0).element(by.css('.icon-tree use')).getAttribute('href')).toContain('#icon-plusminus-folder-open');
     await element.all(by.css('.tree li.folder a[role="treeitem"]')).first().click();
 
@@ -100,7 +100,7 @@ describe('Tree Ajax data tests', () => {
     await utils.setPage('/components/tree/example-ajax');
   });
 
-  it('Should load Ajax data node on click', async () => {
+  it('should load Ajax data node on click', async () => {
     expect(await element.all(by.css('.tree li')).count()).toBe(3);
     await element.all(by.css('.tree li.folder a[role="treeitem"]')).first().click();
     await browser.driver.sleep(2500);
@@ -108,7 +108,7 @@ describe('Tree Ajax data tests', () => {
     expect(await element.all(by.css('.tree li')).count()).toBe(5);
   });
 
-  it('Should be able to set id/automation id example', async () => {
+  it('should be able to set id/automation id example', async () => {
     expect(await element(by.id('tree-ajax-exp1-node1-tree-link')).getAttribute('id')).toEqual('tree-ajax-exp1-node1-tree-link');
     expect(await element(by.id('tree-ajax-exp1-node1-tree-link')).getAttribute('data-automation-id')).toEqual('automation-id-tree-ajax-exp1-node1-tree-link');
     expect(await element(by.id('tree-ajax-exp1-node1-tree-icon')).getAttribute('id')).toEqual('tree-ajax-exp1-node1-tree-icon');
@@ -129,7 +129,7 @@ describe('Tree context menu tests', () => {
     await utils.setPage('/components/tree/example-context-menu');
   });
 
-  it('Should load context menu on right click', async () => {
+  it('should load context menu on right click', async () => {
     expect(await element.all(by.css('.popupmenu-wrapper #tree-popupmenu')).count()).toBe(0);
     await browser.actions().click(element.all(by.css('.tree a[role="treeitem"]')).first(), protractor.Button.RIGHT).perform();
 
@@ -142,7 +142,7 @@ describe('Tree select by id tests', () => {
     await utils.setPage('/components/tree/test-select-by-id');
   });
 
-  it('Should select node by id', async () => {
+  it('should select node by id', async () => {
     expect(await element.all(by.css('.tree li.is-selected')).count()).toBe(1);
     expect(await element(by.id('node6')).getAttribute('class')).toContain('is-selected');
   });
@@ -153,7 +153,7 @@ describe('Tree select-multiple tests', () => {
     await utils.setPage('/components/tree/example-select-multiple');
   });
 
-  it('Should select multiple nodes', async () => {
+  it('should select multiple nodes', async () => {
     expect(await element.all(by.css('.tree li a[role="treeitem"] .tree-checkbox')).count()).toBe(44);
     expect(await element.all(by.css('.tree li.is-partial a[role="treeitem"] .tree-checkbox')).count()).toBe(8);
     expect(await element.all(by.css('.tree li.is-selected a[role="treeitem"] .tree-checkbox')).count()).toBe(1);
@@ -170,7 +170,7 @@ describe('Tree select-multiple tests', () => {
     expect(await element.all(by.css('.tree li.is-selected a[role="treeitem"] .tree-checkbox')).count()).toBe(3);
   });
 
-  it('Should expand independently', async () => {
+  it('should expand independently', async () => {
     let visibleNodes = await element.all(by.css('.tree li')).filter(node => node.isDisplayed());
 
     expect(visibleNodes.length).toEqual(13);
@@ -183,7 +183,7 @@ describe('Tree select-multiple tests', () => {
     expect(visibleNodes.length).toEqual(9);
   });
 
-  it('Should select all children nodes', async () => {
+  it('should select all children nodes', async () => {
     expect(await element.all(by.css('.tree li.is-selected')).count()).toBe(1);
 
     await element.all(by.css('.tree li.folder')).get(2).all(by.css('a[role="treeitem"]')).get(0)
@@ -192,7 +192,7 @@ describe('Tree select-multiple tests', () => {
     expect(await element.all(by.css('.tree li.is-selected')).count()).toBe(33);
   });
 
-  it('Should set selected or partial on parent nodes', async () => {
+  it('should set selected or partial on parent nodes', async () => {
     expect(await element.all(by.css('.tree li.is-selected')).count()).toBe(1);
     await element.all(by.css('.tree li.folder')).get(2).all(by.css('a[role="treeitem"] .icon-tree')).get(0)
       .click();
@@ -219,7 +219,7 @@ describe('Tree select-multiple tests', () => {
     expect(await element.all(by.css('.tree li.is-selected')).count()).toBe(33);
   });
 
-  it('Should not select disabled node with parent nodes', async () => {
+  it('should not select disabled node with parent nodes', async () => {
     expect(await element.all(by.css('.tree li.is-selected')).count()).toBe(1);
     expect(await element.all(by.css('.tree li.folder')).get(0).getAttribute('class')).toContain('is-partial');
     expect(await element.all(by.css('.tree li.folder')).get(0).getAttribute('class')).not.toContain('is-selected');
@@ -237,7 +237,7 @@ describe('Tree select-multiple tests', () => {
     expect(await element.all(by.css('.tree li.folder')).get(0).all(by.css('a[role="treeitem"].is-disabled')).count()).toBe(1);
   });
 
-  it('Should be able to set id/automation id example', async () => {
+  it('should be able to set id/automation id example', async () => {
     expect(await element(by.id('about-us')).getAttribute('id')).toEqual('about-us');
     expect(await element(by.id('about-us')).getAttribute('data-automation-id')).toEqual('tree-multiselect-exp1-about-us-tree-link');
     expect(await element(by.css('#about-us .icon-tree')).getAttribute('data-automation-id')).toEqual('tree-multiselect-exp1-about-us-tree-icon');
@@ -260,7 +260,7 @@ describe('Tree disable all nodes test', () => {
     await utils.setPage('/components/tree/example-disable');
   });
 
-  it('Should not detect any non-disabled tree nodes', async () => {
+  it('should not detect any non-disabled tree nodes', async () => {
     const count = await element.all(by.css('.tree li a[role="treeitem"]')).count();
 
     await element(by.id('disable')).click();
@@ -274,7 +274,7 @@ describe('Tree enable all nodes test', () => {
     await utils.setPage('/components/tree/example-enable');
   });
 
-  it('Should not detect any disabled tree nodes', async () => {
+  it('should not detect any disabled tree nodes', async () => {
     await element(by.id('enable')).click();
 
     expect(await element.all(by.css('.tree li a[role="treeitem"].is-disabled')).count()).toBe(0);
@@ -286,7 +286,7 @@ describe('Tree preserve and restore all nodes test', () => {
     await utils.setPage('/components/tree/test-preserve-restore');
   });
 
-  it('Should preserve and restore enablement states of all nodes', async () => {
+  it('should preserve and restore enablement states of all nodes', async () => {
     const countDisabled = await element.all(by.css('.tree li a[role="treeitem"].is-disabled')).count();
     const countTotal = await element.all(by.css('.tree li a[role="treeitem"]')).count();
 
@@ -303,7 +303,7 @@ describe('Tree dropdown tests', () => {
     await utils.setPage('/components/tree/test-dropdown');
   });
 
-  it('Should display dropdown in tree node', async () => {
+  it('should display dropdown in tree node', async () => {
     expect(await element.all(by.css('.tree li select.dropdown')).count()).toBeGreaterThan(0);
   });
 });
@@ -313,7 +313,7 @@ describe('Tree insert new node above another node tests', () => {
     await utils.setPage('/components/tree/test-add-node-inbetween-node');
   });
 
-  it('Should insert new node before another node', async () => {
+  it('should insert new node before another node', async () => {
     expect(await element.all(by.css('.tree li.folder li.folder ul.folder')).get(0).all(by.css('a[role="treeitem"]')).count()).toBe(3);
     await element(by.id('node6')).click();
 
@@ -330,7 +330,7 @@ describe('Tree custom icon tests', () => {
     await utils.setPage('/components/tree/test-custom-icon');
   });
 
-  it('Should display custom icon for leaf node', async () => {
+  it('should display custom icon for leaf node', async () => {
     expect(await element.all(by.css('.tree li.folder li.folder ul.folder')).get(0).all(by.css('a[role="treeitem"] .icon-tree use')).get(2)
       .getAttribute('href')).toContain('#icon-star-filled');
 
@@ -344,7 +344,7 @@ describe('Tree checkbox tests', () => {
     await utils.setPage('/components/tree/test-checkbox-particular-node');
   });
 
-  it('Should display checkbox for particular node', async () => {
+  it('should display checkbox for particular node', async () => {
     expect(await element.all(by.css('.tree li.folder.is-open a[role="treeitem"]')).count()).toBe(10);
     expect(await element.all(by.css('.tree li.folder.is-open ul.folder.is-open a[role="treeitem"] .tree-checkbox')).count()).toBe(2);
   });
@@ -358,7 +358,7 @@ describe('Tree update and remove node tests', () => {
   sel.new2 = `${sel.nodes}#new2`;
   sel.lineMgr = `${sel.nodes}#line-mgr`;
 
-  it('Should update node', async () => {
+  it('should update node', async () => {
     expect(await element.all(by.css(sel.nodes)).count()).toBe(6);
     expect(await element.all(by.css(sel.lineMgr)).count()).toBe(0);
     await element(by.id('btn-update-node')).click();
@@ -367,7 +367,7 @@ describe('Tree update and remove node tests', () => {
     expect(await element.all(by.css(sel.lineMgr)).count()).toBe(1);
   });
 
-  it('Should remove node', async () => {
+  it('should remove node', async () => {
     expect(await element.all(by.css(sel.nodes)).count()).toBe(6);
     expect(await element.all(by.css(sel.new2)).count()).toBe(1);
     await element(by.id('btn-remove-node')).click();
@@ -382,11 +382,11 @@ describe('Tree expand target tests', () => {
     await utils.setPage('/components/tree/test-expand-target');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should toggle by clicked on icon only', async () => {
+  it('should toggle by clicked on icon only', async () => {
     const link = await element(by.id('node2'));
     const icon = await link.element(by.css('.icon-tree'));
     const text = await link.element(by.css('.tree-text'));
@@ -406,11 +406,11 @@ describe('Tree toggle icon and children count tests', () => {
     await utils.setPage('/components/tree/test-toggle-icon-and-count');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  xit('Should toggle by clicked on icon only and show children count', async () => {
+  xit('should toggle by clicked on icon only and show children count', async () => {
     const link = await element(by.id('node2'));
     const iconTreeUse = await link.element(by.css('.icon-tree use'));
     const iconExpandTarget = await link.element(by.css('.icon-expand-target'));
@@ -444,11 +444,11 @@ describe('Tree toggle icon and children count async tests', () => {
     await utils.setPage('/components/tree/test-toggle-icon-and-count-ajax');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should toggle by clicked on icon only and show children async count', async () => {
+  it('should toggle by clicked on icon only and show children async count', async () => {
     const link = await element(by.id('node2'));
     const iconExpandTarget = await link.element(by.css('.icon-expand-target'));
     const text = await link.element(by.css('.tree-text'));
@@ -487,11 +487,11 @@ describe('Tree toggle icon and children count markup tests', () => {
     await utils.setPage('/components/tree/test-toggle-icon-and-count-markup');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should toggle by clicked on icon only and show children markup count', async () => {
+  it('should toggle by clicked on icon only and show children markup count', async () => {
     const link = await element(by.id('public'));
     const iconExpandTarget = await link.element(by.css('.icon-expand-target'));
     const text = await link.element(by.css('.tree-text'));
@@ -521,11 +521,11 @@ describe('Tree toggle icon and children count edit auto tests', () => {
     await utils.setPage('/components/tree/test-toggle-icon-and-count-edit-auto');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should toggle by clicked on icon only and show children edit auto count', async () => {
+  it('should toggle by clicked on icon only and show children edit auto count', async () => {
     const link = await element(by.id('public'));
     const iconExpandTarget = await link.element(by.css('.icon-expand-target'));
     const text = await link.element(by.css('.tree-text'));
@@ -562,11 +562,11 @@ describe('Tree toggle icon and children count edit manually tests', () => {
     await utils.setPage('/components/tree/test-toggle-icon-and-count-edit-manually');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should toggle by clicked on icon only and show children edit manually count', async () => {
+  it('should toggle by clicked on icon only and show children edit manually count', async () => {
     const link = await element(by.id('public'));
     const iconExpandTarget = await link.element(by.css('.icon-expand-target'));
     const text = await link.element(by.css('.tree-text'));

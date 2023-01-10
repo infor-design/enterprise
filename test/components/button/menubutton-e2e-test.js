@@ -7,11 +7,11 @@ describe('Menu button example-index tests', () => {
     await utils.setPage('/components/button/example-menubutton?theme=classic&layout=nofrills');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should open on click', async () => {
+  it('should open on click', async () => {
     await element(by.id('test')).click();
     const popupmenuElem = await element(by.css('ul.popupmenu.is-open'));
     await browser.driver
@@ -21,7 +21,7 @@ describe('Menu button example-index tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    it('should not visually regress', async () => {
       await element(by.id('test')).click();
       const popupmenuElem = await element(by.css('ul.popupmenu.is-open'));
       await browser.driver
@@ -40,12 +40,12 @@ describe('Menu button disabled tests', () => {
     await utils.setPage('/components/button/test-menubutton-disabled');
   });
 
-  it('Should be disabled', async () => {
+  it('should be disabled', async () => {
     expect(await element(by.id('test')).getAttribute('class')).not.toContain('is-disabled');
     expect(await element(by.id('test')).getAttribute('disabled')).toBe('true');
   });
 
-  it('Should not open on click', async () => {
+  it('should not open on click', async () => {
     await element(by.id('test')).click();
 
     expect(await element(by.css('ul#popupmenu-1.popupmenu')).isDisplayed()).toBe(false);

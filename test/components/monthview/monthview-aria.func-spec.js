@@ -35,7 +35,7 @@ describe('MonthView Aria', () => {
     cleanup();
   });
 
-  it('Should update ARIA labels with calendar open', () => {
+  it('should update ARIA labels with calendar open', () => {
     expect(document.querySelector('.monthview-table').getAttribute('aria-label')).toEqual('Calendar');
     expect(document.querySelector('tbody td.is-selected').getAttribute('aria-label')).toEqual('Monday, September 10, 2018');
     expect(document.querySelector('tbody td span:not(.alternate) .day-text').getAttribute('aria-hidden')).toEqual('true');

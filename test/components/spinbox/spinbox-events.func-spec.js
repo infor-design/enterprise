@@ -25,7 +25,7 @@ describe('Spinbox Events', () => {
     cleanup();
   });
 
-  it('Should trigger "change" event', () => {
+  it('should trigger "change" event', () => {
     const callback = jest.fn();
     $('#regular-spinbox').on('change', callback);
     spinboxApi.updateVal(10);

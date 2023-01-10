@@ -58,7 +58,7 @@ describe('Tree Methods', () => {
     cleanup();
   });
 
-  it('Should trigger "unselected" event', (done) => {
+  it('should trigger "unselected" event', (done) => {
     const callback = jest.fn();
     $('#json-tree').on('unselected', callback);
 
@@ -70,7 +70,7 @@ describe('Tree Methods', () => {
     }, 300);
   });
 
-  it('Should trigger "selected" event', (done) => {
+  it('should trigger "selected" event', (done) => {
     const callback = jest.fn();
     $('#json-tree').on('selected', callback);
 

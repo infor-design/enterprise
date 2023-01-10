@@ -35,11 +35,11 @@ describe('TimePicker API', () => {
     cleanup();
   });
 
-  it('Should be defined on jQuery object', () => {
+  it('should be defined on jQuery object', () => {
     expect(timepickerObj).toBeTruthy();
   });
 
-  xit('Should render based on locale setting', (done) => {
+  xit('should render based on locale setting', (done) => {
     timepickerObj.destroy();
     timepickerObj = new TimePicker(timepickerEl, {
       locale: 'da-DK'
@@ -53,35 +53,35 @@ describe('TimePicker API', () => {
     }, 400);
   });
 
-  it('Should destroy timepicker', () => {
+  it('should destroy timepicker', () => {
     timepickerObj.destroy();
 
     expect(timepickerObj.isOpen()).toBeFalsy();
     expect(document.body.querySelector('.timepicker.is-open')).toBeFalsy();
   });
 
-  it('Should disable timepicker', () => {
+  it('should disable timepicker', () => {
     timepickerObj.disable();
 
     expect(document.body.querySelector('.field.is-disabled .timepicker')).toBeTruthy();
     expect(timepickerObj.isDisabled()).toBeTruthy();
   });
 
-  it('Should enable timepicker', () => {
+  it('should enable timepicker', () => {
     timepickerObj.enable();
 
     expect(document.body.querySelector('.field.is-disabled .timepicker')).toBeFalsy();
     expect(timepickerObj.isDisabled()).toBeFalsy();
   });
 
-  it('Should render timepicker readonly', () => {
+  it('should render timepicker readonly', () => {
     timepickerObj.readonly();
 
     expect(document.body.querySelector('.timepicker[readonly]')).toBeTruthy();
     expect(timepickerObj.isDisabled()).toBeFalsy();
   });
 
-  it('Should have accessible text', () => {
+  it('should have accessible text', () => {
     // Label
     expect(timepickerObj.label.length).toBeTruthy();
 

@@ -22,25 +22,25 @@ describe('Textarea API', () => {
     cleanup();
   });
 
-  it('Should be defined', () => {
+  it('should be defined', () => {
     expect(textareaObj).toBeTruthy();
   });
 
-  it('Should destroy textarea', () => {
+  it('should destroy textarea', () => {
     textareaObj.destroy();
 
     expect($(textareaEl).data('textarea')).toBeFalsy();
     expect(textareaEl.parentNode.children.length).toEqual(2);
   });
 
-  it('Should disable textarea', () => {
+  it('should disable textarea', () => {
     textareaObj.disable();
 
     expect(textareaEl.disabled).toBeTruthy();
     expect(textareaObj.isDisabled()).toBeTruthy();
   });
 
-  it('Should enable textarea', () => {
+  it('should enable textarea', () => {
     textareaObj.enable();
 
     expect(textareaEl.disabled).toBeFalsy();
@@ -48,7 +48,7 @@ describe('Textarea API', () => {
     expect(textareaObj.isDisabled()).toBeFalsy();
   });
 
-  it('Should render textarea readonly', () => {
+  it('should render textarea readonly', () => {
     textareaObj.readonly();
 
     expect(textareaEl.disabled).toBeFalsy();
@@ -56,7 +56,7 @@ describe('Textarea API', () => {
     expect(textareaObj.isDisabled()).toBeFalsy();
   });
 
-  it('Should update a print version', () => {
+  it('should update a print version', () => {
     textareaEl.value = 'This is a test \n This is a test \n This is a test \n This is a test \n This is a test';
     textareaObj.updateCounter();
 

@@ -21,18 +21,18 @@ describe('Progress API', () => {
     cleanup();
   });
 
-  it('Should render progress', () => {
+  it('should render progress', () => {
     expect(progressObj).toBeTruthy();
     expect(progressEl.style.width).toEqual('50%');
   });
 
-  it('Should be able to destroy', () => {
+  it('should be able to destroy', () => {
     progressObj.destroy();
 
     expect($(progressEl).data('.progress')).toBeFalsy();
   });
 
-  it('Should update when calling updated with string value', () => {
+  it('should update when calling updated with string value', () => {
     const updatedSettings = {
       value: 40
     };
@@ -41,7 +41,7 @@ describe('Progress API', () => {
     expect(progressEl.style.width).toEqual('40%');
   });
 
-  it('Should update when calling updated with number value', () => {
+  it('should update when calling updated with number value', () => {
     const updatedSettings = {
       value: '40'
     };
@@ -50,7 +50,7 @@ describe('Progress API', () => {
     expect(progressEl.style.width).toEqual('40%');
   });
 
-  it('Should init with 100%', () => {
+  it('should init with 100%', () => {
     progressObj.destroy();
     progressObj.updated({ value: '100' });
 
@@ -62,7 +62,7 @@ describe('Progress API', () => {
     expect(progressEl.style.width).toEqual('100%');
   });
 
-  it('Should init with 0', () => {
+  it('should init with 0', () => {
     progressObj.destroy();
     progressObj.updated({ value: '0' });
 

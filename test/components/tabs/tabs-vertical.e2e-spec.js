@@ -19,7 +19,7 @@ describe('Tabs vertical click example-index tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress on example-independent-scrolling', async () => {
+    it('should not visually regress on example-independent-scrolling', async () => {
       const tabsEl = await element(by.id('tabs-vertical'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
@@ -29,16 +29,16 @@ describe('Tabs vertical click example-index tests', () => {
     });
   }
 
-  it('Should open 3rd tab, on click', async () => {
+  it('should open 3rd tab, on click', async () => {
     await clickTabTest('2');
   });
 
-  it('Should open 3rd, then 2nd tab, on click', async () => {
+  it('should open 3rd, then 2nd tab, on click', async () => {
     await clickTabTest('2');
     await clickTabTest('1');
   });
 
-  it('Should be able to scroll in tab panel', async () => {
+  it('should be able to scroll in tab panel', async () => {
     await clickTabTest('2');
     await clickTabTest('0');
     await browser.executeScript('document.querySelector("#test-info p:last-child").scrollIntoView()');
@@ -58,7 +58,7 @@ describe('Tabs vertical click example-responsive tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    xit('Should not visual regress on example-responsive at 500px', async () => {
+    xit('should not visually regress on example-responsive at 500px', async () => {
       const windowSize = await browser.driver.manage().window().getSize();
       await browser.driver.manage().window().setSize(500, 600);
       await browser.driver.sleep(config.sleep);
@@ -73,7 +73,7 @@ describe('Tabs vertical click example-responsive tests', () => {
     });
   }
 
-  it('Should change to header tabs at 500px then back to vertical tabs at 1200px', async () => {
+  it('should change to header tabs at 500px then back to vertical tabs at 1200px', async () => {
     const windowSize = await browser.driver.manage().window().getSize();
     await browser.driver.manage().window().setSize(500, 600);
     await browser.driver.sleep(config.sleep);

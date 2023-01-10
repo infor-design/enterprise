@@ -27,7 +27,7 @@ describe('Flex Toolbar', () => { //eslint-disable-line
     cleanup();
   });
 
-  it('Should be invoked', () => {
+  it('should be invoked', () => {
     expect(toolbarAPI).toEqual(jasmine.any(ToolbarFlex));
   });
 
@@ -41,21 +41,21 @@ describe('Flex Toolbar', () => { //eslint-disable-line
     expect(toolbarEl.className.indexOf('is-disabled')).toEqual(-1);
   });
 
-  it('Should have 6 items', () => {
+  it('should have 6 items', () => {
     expect(toolbarAPI.items).toBeDefined();
     expect(toolbarAPI.items.length).toBe(6);
   });
 
-  it('Should have 4 sections', () => {
+  it('should have 4 sections', () => {
     expect(toolbarAPI.sections).toBeDefined();
     expect(toolbarAPI.sections.length).toBe(4);
   });
 
-  it('Should be completely rendered after the page is loaded', () => {
+  it('should be completely rendered after the page is loaded', () => {
     expect(toolbarEl.getAttribute('role')).toBe('toolbar');
   });
 
-  it('Should automatically set its focused item to the first toolbar item', () => {
+  it('should automatically set its focused item to the first toolbar item', () => {
     const focused = toolbarAPI.focusedItem;
     const items = toolbarAPI.items;
 

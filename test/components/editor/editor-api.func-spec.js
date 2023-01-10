@@ -24,13 +24,13 @@ describe('Editor API', () => {
     cleanup();
   });
 
-  it('Should be defined on jQuery object', () => {
+  it('should be defined on jQuery object', () => {
     editorObj = new Editor(editorEl);
 
     expect(editorObj).toBeTruthy();
   });
 
-  it('Should support pasting plain text', () => {
+  it('should support pasting plain text', () => {
     editorObj = new Editor(editorEl);
 
     const startHtml = '<meta charset="utf-8"><span> cutting-edge</span>';
@@ -39,7 +39,7 @@ describe('Editor API', () => {
     expect(editorObj.getCleanedHtml(startHtml)).toEqual(endHtml);
   });
 
-  it('Should strip ng attributes on paste', () => {
+  it('should strip ng attributes on paste', () => {
     editorObj = new Editor(editorEl);
 
     let startHtml = '<meta charset="utf-8" ng-test><span> cutting-edge</span>';
@@ -53,7 +53,7 @@ describe('Editor API', () => {
     expect(editorObj.getCleanedHtml(startHtml)).toEqual(endHtml);
   });
 
-  it('Should render preview mode', () => {
+  it('should render preview mode', () => {
     editorObj = new Editor(editorEl, { preview: true });
 
     expect(editorEl.parentNode.classList.contains('is-preview')).toBeTruthy();
@@ -66,7 +66,7 @@ describe('Editor API', () => {
     expect(editorEl.parentNode.querySelector('.editor-toolbar')).not.toBeVisible();
   });
 
-  it('Should switch to preview mode', () => {
+  it('should switch to preview mode', () => {
     editorObj = new Editor(editorEl);
     editorObj.preview();
 
@@ -80,7 +80,7 @@ describe('Editor API', () => {
     expect(editorEl.parentNode.querySelector('.editor-toolbar')).not.toBeVisible();
   });
 
-  it('Should switch to preview and editable modes', () => {
+  it('should switch to preview and editable modes', () => {
     editorObj = new Editor(editorEl);
     editorObj.preview();
 

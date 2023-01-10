@@ -18,7 +18,7 @@ describe('Autocomplete Puppeteer Visual Tests', () => {
       await clickOnAutocomplete().then(element => element.type(''));
     });
 
-    it('should not visual regress', async () => {
+    it('should not visually regress', async () => {
       await page.setViewport({ width: 1920, height: 1080 });
       const autocompleteEl = await clickOnAutocomplete();
       autocompleteEl.type('a');

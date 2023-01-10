@@ -9,7 +9,7 @@ describe('Locale Format Date Tests', () => {
     await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.id('date-field3'))), config.waitsFor);
   });
 
-  it('Should format dates when set to a specific locale', async () => {
+  it('should format dates when set to a specific locale', async () => {
     expect(await element(by.css('[for="date-field0"]')).getText()).toEqual('en-US (MMM d, yyyy)');
     expect(await element(by.id('date-field0')).getAttribute('value')).toEqual('Dec 5, 2019');
     expect(await element(by.css('[for="date-field1"]')).getText()).toEqual('en-GB (dd/MM/yyyy)');
@@ -24,7 +24,7 @@ describe('Locale Format Date Tests', () => {
 });
 
 describe('Locale Set Value Tests', () => {
-  it('Should format dates in en-US', async () => {
+  it('should format dates in en-US', async () => {
     await utils.setPage('/components/locale/test-set-value?layout=nofrills');
     await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.id('output-date-field-time'))), config.waitsFor);
 

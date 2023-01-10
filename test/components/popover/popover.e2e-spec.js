@@ -8,11 +8,11 @@ describe('Popover Index Tests', () => {
     await utils.setPage('/components/popover/example-index?theme=classic&layout=nofrills');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should display on click', async () => {
+  it('should display on click', async () => {
     await element(by.id('popover-trigger')).click();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.popover'))), config.waitsFor);
@@ -21,7 +21,7 @@ describe('Popover Index Tests', () => {
     expect(await element(by.css('.popover')).isDisplayed()).toBeTruthy();
   });
 
-  it('Should be able to set id/automation id', async () => {
+  it('should be able to set id/automation id', async () => {
     await element(by.id('popover-trigger')).click();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.popover'))), config.waitsFor);
@@ -54,7 +54,7 @@ describe('Popover Index Tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    it('should not visually regress', async () => {
       await element(by.id('popover-trigger')).click();
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.popover'))), config.waitsFor);

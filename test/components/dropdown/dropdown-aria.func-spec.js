@@ -24,7 +24,7 @@ describe('Dropdown ARIA', () => {
     cleanup();
   });
 
-  it('Should set ARIA labels', (done) => {
+  it('should set ARIA labels', (done) => {
     dropdownObj.open();
 
     expect(document.querySelector('div.dropdown[aria-haspopup="listbox"]')).toBeTruthy();

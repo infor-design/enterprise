@@ -8,11 +8,11 @@ describe('Popdown Index Tests', () => {
     await utils.setPage('/components/popdown/example-index?layout=nofrills');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should display on click', async () => {
+  it('should display on click', async () => {
     await element(by.id('popdown-example-trigger')).click();
     await browser.driver
       .wait(protractor.ExpectedConditions.visibilityOf(await element(by.css('.popdown'))), config.waitsFor);
@@ -21,7 +21,7 @@ describe('Popdown Index Tests', () => {
     expect(await element(by.css('.popdown')).isDisplayed()).toBeTruthy();
   });
 
-  it('Should have id/automation ids', async () => {
+  it('should have id/automation ids', async () => {
     await browser.driver.sleep(config.sleep);
 
     expect(await element(by.id('popdown')).getAttribute('id')).toEqual('popdown');
@@ -43,11 +43,11 @@ describe('Popdown (with Dropdown) Tests', () => {
     await utils.setPage('/components/popdown/test-contains-dropdown?layout=nofrills');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should keep the Popdown open while focused on an inline-Dropdown component\'s list', async () => {
+  it('should keep the Popdown open while focused on an inline-Dropdown component\'s list', async () => {
     // Open the Popdown
     await element(by.id('popdown-example-trigger')).click();
     await browser.driver
@@ -75,7 +75,7 @@ describe('Popdown first last tab Tests', () => {
     await utils.setPage('/components/popdown/test-first-last-tab?layout=nofrills');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 });
@@ -85,11 +85,11 @@ describe('Popdown/Lookup integration Tests', () => {
     await utils.setPage('/components/popdown/test-contains-lookup.html?layout=nofrills');
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should remain open when an inner Lookup component is opened', async () => {
+  it('should remain open when an inner Lookup component is opened', async () => {
     // Open the Popdown
     await element(by.id('popdown-trigger')).click();
     await browser.driver

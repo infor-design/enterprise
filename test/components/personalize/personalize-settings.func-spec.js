@@ -25,7 +25,7 @@ describe('Personalize settings', () => {
     cleanup();
   });
 
-  it('Should set colors', () => {
+  it('should set colors', () => {
     const colors = {
       header: '#F2F2F2',
       subheader: '#700000',

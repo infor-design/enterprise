@@ -9,7 +9,7 @@ describe('Circlepager Puppeteer Visual Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
     });
 
-    it('should not visual regress', async () => {
+    it('should not visually regress', async () => {
       expect(await page.waitForSelector('div[role=main]')).toBeTruthy();
 
       const image = await page.screenshot();

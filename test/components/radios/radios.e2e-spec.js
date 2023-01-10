@@ -12,12 +12,12 @@ describe('Radios example-index tests', () => {
         .presenceOf(element(by.id(radioId))), config.waitsFor);
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress on example-index', async () => {
+    it('should not visually regress on example-index', async () => {
       const windowSize = await browser.driver.manage().window().getSize();
       await browser.driver.manage().window().setSize(600, 600);
       const container = await element(by.css('.container'));
@@ -38,12 +38,12 @@ describe('Radios Horizontal tests', () => {
         .presenceOf(element(by.id(radioId))), config.waitsFor);
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress on example-index', async () => {
+    it('should not visually regress on example-index', async () => {
       const container = await element(by.css('.container'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(container), config.waitsFor);

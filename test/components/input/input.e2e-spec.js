@@ -12,11 +12,11 @@ describe('Input example-index tests', () => {
         .presenceOf(element(by.id(inputId))), config.waitsFor);
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should be able to type on in an input', async () => {
+  it('should be able to type on in an input', async () => {
     const inputEl = await element(by.id(inputId));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(inputEl), config.waitsFor);
@@ -28,7 +28,7 @@ describe('Input example-index tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    it('should not visually regress', async () => {
       const inputEl = await element(by.id(inputId));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(inputEl), config.waitsFor);
@@ -51,7 +51,7 @@ describe('Input Test Reset', () => {
         .presenceOf(element(by.id('department-code'))), config.waitsFor);
   });
 
-  xit('Should be able to reset the dirty indicator', async () => {
+  xit('should be able to reset the dirty indicator', async () => {
     // Change the input
     await element(by.id('department-code')).sendKeys('Test');
     await element(by.id('department-code')).sendKeys(protractor.Key.TAB);
@@ -94,7 +94,7 @@ describe('Input tooltip tests', () => {
   });
 
   // This test is more important as a windows test
-  it('Should be able to select text', async () => {
+  it('should be able to select text', async () => {
     const inputEl = await element(by.id('first-name'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(inputEl), config.waitsFor);
@@ -119,7 +119,7 @@ describe('Input Short Field Sizes tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    it('should not visually regress', async () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
@@ -134,12 +134,12 @@ describe('Input Short Field tests', () => {
     await browser.driver.sleep(config.sleep);
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    it('should not visually regress', async () => {
       const containerEl = await element(by.className('container'));
       await browser.driver.sleep(config.sleep);
 
@@ -154,11 +154,11 @@ describe('Input Password Field tests', () => {
     await browser.driver.sleep(config.sleep);
   });
 
-  it('Should not have errors', async () => {
+  it('should not have errors', async () => {
     await utils.checkForErrors();
   });
 
-  it('Should be able to toggle text visibility with the keyboard', async () => {
+  it('should be able to toggle text visibility with the keyboard', async () => {
     const inputEl = await element(by.id('password-reveal'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(inputEl), config.waitsFor);
@@ -182,7 +182,7 @@ describe('Input example-clearable tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('should not visual regress', async () => {
+    it('should not visually regress', async () => {
       const inputEl = await element(by.id('clearable'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(inputEl), config.waitsFor);

@@ -16,7 +16,7 @@ describe('Modal Puppeteer Tests', () => {
         .then(el => expect(el).not.toContain('modal-engaged'));
     });
 
-    it('should not visual regress', async () => {
+    it('should not visually regress', async () => {
       await page.setViewport({ width: 1200, height: 800 });
       await page.click('#add-context');
       await page.waitForSelector('.overlay', { visible: true });
@@ -55,7 +55,7 @@ describe('Modal Puppeteer Tests', () => {
       await page.waitForSelector('.overlay');
     });
 
-    it('Should open modal on click', async () => {
+    it('should open modal on click', async () => {
       expect(await page.waitForSelector('.modal.is-visible')).toBeTruthy();
     });
   });
@@ -69,7 +69,7 @@ describe('Modal Puppeteer Tests', () => {
       await page.waitForSelector('.overlay');
     });
 
-    it('Should open modal on click', async () => {
+    it('should open modal on click', async () => {
       expect(await page.waitForSelector('.modal, is-visible')).toBeTruthy();
       const subjectEl = await page.evaluateHandle(() => document.activeElement);
       await subjectEl.type('input#subject');
@@ -85,7 +85,7 @@ describe('Modal Puppeteer Tests', () => {
       });
     });
 
-    it('Should close the modal via the x close icon', async () => {
+    it('should close the modal via the x close icon', async () => {
       await page.click('#add-context');
 
       await page.waitForSelector('.modal-engaged', { visible: true })
@@ -99,7 +99,7 @@ describe('Modal Puppeteer Tests', () => {
         .then(isVisibleClass => expect(isVisibleClass).not.toContain('is-visible'));
     });
 
-    it('Should be able to set id/automation id', async () => {
+    it('should be able to set id/automation id', async () => {
       await page.click('#add-context');
 
       await page.waitForSelector('.modal-engaged', { visible: true });
@@ -129,7 +129,7 @@ describe('Modal Puppeteer Tests', () => {
       await page.click('.btn-secondary');
     });
 
-    it('Should focus on first focusable item in modal', async () => {
+    it('should focus on first focusable item in modal', async () => {
       const dropdown = await page.evaluateHandle(() => document.activeElement);
       await dropdown.type('div.dropdown');
     });
