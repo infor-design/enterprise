@@ -1,8 +1,15 @@
+/**
+ * @jest-environment jsdom
+ */
 import { Modal } from '../../../src/components/modal/modal';
 import { modalManager } from '../../../src/components/modal/modal.manager';
 import { cleanup } from '../../helpers/func-utils';
 
-const svg = require('../../../src/components/icons/theme-new-svg.html');
+Object.defineProperty(window, 'getComputedStyle', {
+  value: () => ({
+    getPropertyValue: () => ''
+  })
+});
 
 const triggerHTML = `<button class="btn-secondary" id="modal-trigger">
   <span>Activate Modal</span>
@@ -72,7 +79,6 @@ describe('Modal API', () => {
   beforeEach(() => {
     modalPanelEl = null;
     modalAPI = null;
-    document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', triggerHTML);
     document.body.insertAdjacentHTML('afterbegin', modalPanelHTML);
     modalPanelEl = document.querySelector('#modal-panel');
@@ -165,7 +171,6 @@ describe('Modal Manager API', () => {
     modalAPI = null;
     modalPanelEl2 = null;
     modalAPI2 = null;
-    document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', triggerHTML);
     document.body.insertAdjacentHTML('afterbegin', modalPanelHTML);
     modalPanelEl = document.querySelector('#modal-panel');
