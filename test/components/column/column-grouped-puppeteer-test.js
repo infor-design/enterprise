@@ -1,5 +1,3 @@
-const { getConfig } = require('../../helpers/e2e-utils.cjs');
-
 describe('Column Grouped Puppeteer Tests', () => {
   describe('Column Grouped selection disable tests', () => {
     const url = 'http://localhost:4000/components/column-grouped/example-disable-selection-state';
