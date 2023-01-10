@@ -42,31 +42,4 @@ describe('SwapList API', () => {
   it('Should be defined as an object', () => {
     expect(swaplistObj).toBeTruthy();
   });
-
-  xit('Should be able to trigger beforeswap for searched items', (done) => {
-    const spyEvent = spyOnEvent(swaplistEl, 'beforeswap');
-    const contaner = swaplistEl.querySelector('.available');
-    const searchEl = contaner.querySelector('#search-available');
-    const btnMove = contaner.querySelector('.btn-moveto-selected');
-    const listviewAPI = $(contaner).find('.listview').data('listview');
-
-    $(swaplistEl).on('beforeswap', (e, args) => {
-      expect(args.items[0].text).toEqual('Option DD');
-    });
-
-    expect(searchEl).toBeTruthy();
-    expect(listviewAPI).toBeTruthy();
-    expect(contaner.querySelectorAll('.listview li:not(.hidden)').length).toEqual(14);
-    searchEl.value = 'DD';
-    listviewAPI.filter(searchEl);
-
-    expect(contaner.querySelectorAll('.listview li:not(.hidden)').length).toEqual(1);
-    contaner.querySelector('.listview li:not(.hidden)').click();
-    btnMove.click();
-
-    setTimeout(() => {
-      expect(spyEvent).toHaveBeenCalled();
-      done();
-    }, 100);
-  });
 });

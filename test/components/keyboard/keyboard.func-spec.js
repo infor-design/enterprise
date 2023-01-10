@@ -20,15 +20,17 @@ describe('Keyboard Manager Tests', () => {
   });
 
   it('Can be trigger a keys event', (done) => {
-    const spyEvent = spyOnEvent('body', 'keys');
+    const callback = jest.fn();
+    $('body').on('keys', callback);
+
     $('body').on('keys', (e, a) => {
-      expect(a[0]).toBeTruthy('Ctrl');
+      expect(a[0]).toBeTruthy();
       done();
     });
     keyPress('Ctrl');
     $('body').off('keys');
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
   });
 
   it('Can query pressedKeys', () => {

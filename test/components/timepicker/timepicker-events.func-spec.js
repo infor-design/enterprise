@@ -24,11 +24,13 @@ describe('TimePicker Events', () => {
   });
 
   it('Should trigger "change" event', () => {
-    const spyEvent = spyOnEvent('#timepicker-id-1', 'change');
+    const callback = jest.fn();
+    $('#timepicker-id-1').on('change', callback);
+
     timepickerObj.openTimePopup();
     timepickerObj.setTimeOnField();
     timepickerObj.closeTimePopup();
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
   });
 });

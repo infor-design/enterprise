@@ -129,13 +129,13 @@ describe('Radar API', () => {
   });
 
   it('Should fire contextmenu event', () => {
-    const spyEvent = spyOnEvent(radarEl, 'contextmenu');
-    const result = { name: 'Battery Life', value: 0.22 };
+    const callback = jest.fn();
+    $(radarEl).on('contextmenu', callback);
     $(radarEl).on('contextmenu', (e, el, d) => {
       expect(d).toBeTruthy();
     });
     triggerContextmenu(document.body.querySelector('.radar-invisible-circle'));
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
   });
 });

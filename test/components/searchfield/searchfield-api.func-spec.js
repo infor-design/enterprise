@@ -57,11 +57,12 @@ describe('Searchfield API', () => {
 
   it('can clear the searchfield via clear API', () => {
     searchfieldInputEl.value = 'Alaska';
-    const spyEvent = spyOnEvent(searchfieldInputEl, 'cleared');
+    const callback = jest.fn();
+    $(searchfieldInputEl).on('cleared', callback);
     searchfieldAPI.makeClearable();
     searchfieldAPI.clear();
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
     expect(searchfieldInputEl.getAttribute('value')).toEqual(null);
   });
 
@@ -70,12 +71,14 @@ describe('Searchfield API', () => {
     searchfieldAPI.makeClearable();
 
     const closeButtonEl = document.body.querySelector('.searchfield-wrapper svg.close');
-    const spyEvent = spyOnEvent(closeButtonEl, 'click');
-    const spyEvent2 = spyOnEvent(searchfieldInputEl, 'cleared');
+    const callback = jest.fn();
+    $(closeButtonEl).on('click', callback);
+    const callback2 = jest.fn();
+    $(searchfieldInputEl).on('cleared', callback2);
     $(closeButtonEl).click();
 
-    expect(spyEvent).toHaveBeenCalled();
-    expect(spyEvent2).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
+    expect(callback2).toHaveBeenCalled();
     expect(searchfieldInputEl.getAttribute('value')).toEqual(null);
   });
 

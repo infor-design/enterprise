@@ -81,17 +81,19 @@ describe('Personalize API', () => {
 
   it('Should fire colorschanged on setColors', () => {
     personalization = new Personalize(document.documentElement, { theme: 'theme-new-light' });
-    const spyEvent = spyOnEvent('html', 'colorschanged');
+    const callback = jest.fn();
+    $('html').on('colorschanged', callback);
     personalization.setColors('personalization');
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
   });
 
   it('Should fire colorschanged on setColorsToDefault', () => {
     personalization = new Personalize(document.documentElement, { theme: 'theme-new-light' });
-    const spyEvent = spyOnEvent('html', 'colorschanged');
+    const callback = jest.fn();
+    $('html').on('colorschanged', callback);
     personalization.setColorsToDefault();
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
   });
 });

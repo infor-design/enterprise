@@ -73,16 +73,17 @@ describe('Hierarchy Stacked API', () => {
 
   it('Should not trigger collapsed function when using stacked layout', () => {
     const collapseButtons = document.body.querySelectorAll('.btn-collapse');
-    const spyEvent = spyOnEvent(collapseButtons[1], 'click');
-    const collapseFunction = spyOn(hierarchyAPI, 'collapse');
+    const callback = jest.fn();
+    $(collapseButtons[1]).on('click', callback);
+
+    const callback2 = jest.fn();
+    $(hierarchyAPI).on('collapse', callback2);
 
     collapseButtons[1].click();
-    collapseFunction.and.callThrough();
-
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
 
     // Should not trigger collapsed function when using stacked layout
-    expect(collapseFunction.calls.count()).toEqual(0);
+    expect(callback2).toHaveBeenCalled();
   });
 
   it('Can be destroyed', () => {

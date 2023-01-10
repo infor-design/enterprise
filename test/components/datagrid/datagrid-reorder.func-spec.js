@@ -60,7 +60,8 @@ describe('Datagrid Row Reorder API', () => {
   });
 
   it('Should be able to reorder a row', (done) => {
-    const spyEvent = spyOnEvent($(datagridEl), 'rowreorder');
+    const callback = jest.fn();
+    $(datagridEl).on('rowreorder', callback);
     $(datagridEl).on('rowreorder', (e, args) => {
       expect(args.startIndex).toEqual(0);
       expect(args.endIndex).toEqual(1);
@@ -72,7 +73,7 @@ describe('Datagrid Row Reorder API', () => {
     expect(document.querySelector('tr:nth-child(1) td:nth-child(3)').innerText.trim()).toEqual('2');
     expect(document.querySelector('tr:nth-child(2) td:nth-child(3)').innerText.trim()).toEqual('1');
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
     $(datagridEl).off('rowreorder');
 
     datagridObj.reorderRow(1, 0);

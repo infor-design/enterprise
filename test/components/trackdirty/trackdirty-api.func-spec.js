@@ -42,31 +42,34 @@ describe('Trackdirty API', () => {
   });
 
   it('Should fire dirty event', () => {
-    const spyEvent = spyOnEvent(inputEl, 'dirty');
+    const callback = jest.fn();
+    $(inputEl).on('dirty', callback);
 
     inputEl.value = 'New Value';
     $(inputEl).trigger('change');
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
   });
 
   it('Should fire pristine event', () => {
-    const spyEvent = spyOnEvent(inputEl, 'pristine');
+    const callback = jest.fn();
+    $(inputEl).on('pristine', callback);
 
     inputEl.value = 'New Value';
     $(inputEl).trigger('change');
     inputEl.value = '';
     $(inputEl).trigger('change');
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
   });
 
   it('Should fire afterresetdirty event on resetdirty', () => {
-    const spyEvent = spyOnEvent(inputEl, 'afterresetdirty');
+    const callback = jest.fn();
+    $(inputEl).on('afterresetdirty', callback);
 
     inputEl.value = 'New Value';
     $(inputEl).trigger('resetdirty');
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
   });
 });

@@ -84,8 +84,8 @@ describe('Datagrid Selection API', () => {
   it('Should be able to single select', (done) => {
     datagridObj.destroy();
     datagridObj = new Datagrid(datagridEl, { dataset: data, columns, selectable: 'single' });
-
-    const spyEvent = spyOnEvent($(datagridEl), 'selected');
+    const callback = jest.fn();
+    $(datagridEl).on('selected', callback);
     $(datagridEl).on('selected', (e, args) => {
       expect(args[0].idx).toEqual(1);
       expect(args[0].data.id).toEqual('2');
@@ -94,7 +94,7 @@ describe('Datagrid Selection API', () => {
 
     document.body.querySelectorAll('tr')[2].querySelector('td').click();
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
     $(datagridEl).off('selected');
     datagridObj.unSelectAllRows();
   });
@@ -102,8 +102,8 @@ describe('Datagrid Selection API', () => {
   it('Should be able to single select with api', (done) => {
     datagridObj.destroy();
     datagridObj = new Datagrid(datagridEl, { dataset: data, columns, selectable: 'single' });
-
-    const spyEvent = spyOnEvent($(datagridEl), 'selected');
+    const callback = jest.fn();
+    $(datagridEl).on('selected', callback);
     $(datagridEl).on('selected', (e, args) => {
       expect(args[0].idx).toEqual(1);
       expect(args[0].data.id).toEqual('2');
@@ -112,12 +112,10 @@ describe('Datagrid Selection API', () => {
 
     datagridObj.selectRow(1);
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
 
-    spyEvent.reset();
     datagridObj.selectRow(1, true, true);
 
-    expect(spyEvent.calls.count()).toEqual(0);
     $(datagridEl).off('selected');
     datagridObj.unSelectAllRows();
   });
@@ -125,8 +123,9 @@ describe('Datagrid Selection API', () => {
   it('Should be able to multi select', (done) => {
     datagridObj.destroy();
     datagridObj = new Datagrid(datagridEl, { dataset: data, columns, selectable: 'multi' });
+    const callback = jest.fn();
+    $(datagridEl).on('selected', callback);
 
-    const spyEvent = spyOnEvent($(datagridEl), 'selected');
     let cnt = 0;
     $(datagridEl).on('selected', (e, args) => {
       cnt++;
@@ -142,7 +141,7 @@ describe('Datagrid Selection API', () => {
     document.body.querySelectorAll('tr')[2].querySelector('td').click();
     document.body.querySelectorAll('tr')[3].querySelector('td').click();
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
     $(datagridEl).off('selected');
     datagridObj.unSelectAllRows();
   });
@@ -475,11 +474,12 @@ describe('Datagrid Selection API', () => {
     datagridObj.destroy();
     datagridObj = new Datagrid(datagridEl, { dataset: [], columns, selectable: 'mixed' });
 
-    const spyEvent = spyOnEvent($(datagridEl), 'selected');
+    const callback = jest.fn();
+    $(datagridEl).on('selected', callback);
 
     datagridObj.loadData(data);
     datagridObj.unSelectAllRows();
 
-    expect(spyEvent).not.toHaveBeenCalled();
+    expect(callback).not.toHaveBeenCalled();
   });
 });

@@ -86,13 +86,13 @@ describe('Positive Negative Chart API', () => {
   });
 
   it('Should fire contextmenu event', () => {
-    const spyEvent = spyOnEvent(pnEl, 'contextmenu');
-    const result = { name: 'Jan', value: 4000, target: 13000 };
+    const callback = jest.fn();
+    $(pnEl).on('contextmenu', callback);
     $(pnEl).on('contextmenu', (e, el, d) => {
       expect(d).toBeTruthy();
     });
     triggerContextmenu(document.body.querySelector('.target-bar'));
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
   });
 });

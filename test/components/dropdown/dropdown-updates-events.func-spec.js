@@ -160,10 +160,11 @@ describe('Dropdown updates, events', () => {
       virtualScroll: false
     };
 
-    const spyEvent = spyOnEvent('.dropdown', 'has-updated');
+    const callback = jest.fn();
+    $('.dropdown').on('has-updated', callback);
     dropdownObj.updated(settings);
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
   });
 
   it('should display the text of the first selected option when the list opens', (done) => {
@@ -176,11 +177,12 @@ describe('Dropdown updates, events', () => {
 
   it('should trigger change event on click', (done) => {
     DOM.remove(document.querySelector('.dropdown-list'));
-    const spyEvent = spyOnEvent('.dropdown', 'change');
+    const callback = jest.fn();
+    $('.dropdown').on('change', callback);
     dropdownObj.open();
     document.body.querySelectorAll('.dropdown-option')[1].click();
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
     done();
   });
 
@@ -190,13 +192,13 @@ describe('Dropdown updates, events', () => {
     document.body.querySelectorAll('.dropdown-option')[1].click();
 
     // Begin listening for change events
-    const spyEvent = spyOnEvent('.dropdown', 'change');
-
+    const callback = jest.fn();
+    $('.dropdown').on('change', callback);
     // Open the dropdown and click the second option another time.  It should not be re-selected.
     dropdownObj.open();
     document.body.querySelectorAll('.dropdown-option')[1].click();
 
-    expect(spyEvent).not.toHaveBeenCalled();
+    expect(callback).not.toHaveBeenCalled();
     done();
   });
 
@@ -207,16 +209,17 @@ describe('Dropdown updates, events', () => {
     options[1].innerText = 'Dup';
 
     // Try to select them and make sure you always get an event
-    const spyEvent = spyOnEvent('.dropdown', 'change');
+    const callback = jest.fn();
+    $('.dropdown').on('change', callback);
     dropdownObj.updated();
     dropdownObj.open();
     document.body.querySelectorAll('.dropdown-option')[0].click();
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalledTimes(1);
 
     document.body.querySelectorAll('.dropdown-option')[1].click();
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalledTimes(2);
 
     // Set back the output
     options[0].innerText = 'Alabama';

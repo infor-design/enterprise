@@ -59,21 +59,25 @@ describe('Tree Methods', () => {
   });
 
   it('Should trigger "unselected" event', (done) => {
-    const spyEvent = spyOnEvent('#json-tree', 'unselected');
+    const callback = jest.fn();
+    $('#json-tree').on('unselected', callback);
+
     treeObj.unSelectedNode($('#node2'));
 
     setTimeout(() => {
-      expect(spyEvent).toHaveBeenCalled();
+      expect(callback).toHaveBeenCalled();
       done();
     }, 300);
   });
 
   it('Should trigger "selected" event', (done) => {
-    const spyEvent = spyOnEvent('#json-tree', 'selected');
+    const callback = jest.fn();
+    $('#json-tree').on('selected', callback);
+
     treeObj.selectNodeById('node1');
 
     setTimeout(() => {
-      expect(spyEvent).toHaveBeenCalled();
+      expect(callback).toHaveBeenCalled();
       done();
     }, 300);
   });

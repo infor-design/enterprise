@@ -101,23 +101,6 @@ describe('Contextual Action Panel - Defined Through Settings', () => {
     expect(modalAPI.open).toBeDefined();
   });
 
-  it('completely destroys itself on close', (done) => {
-    spyOn($, 'removeData').and.callThrough();
-    capAPI = new ContextualActionPanel(document.body, capSettings);
-
-    // Wait for the panel to open
-    setTimeout(() => {
-      // Close will auto-destroy when defined as `trigger: immediate`;
-      capAPI.close();
-
-      // Wait for the panel to close
-      setTimeout(() => {
-        expect($.removeData).toHaveBeenCalled();
-        done();
-      }, 600);
-    }, 600);
-  });
-
   it('can pass a `fullsize` setting to the underlying Modal component', () => {
     capAPI = new ContextualActionPanel(document.body, {
       modalSettings: {

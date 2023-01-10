@@ -34,7 +34,8 @@ describe('Homepage API', () => {
     homepageEl.classList.add('homepage');
     document.body.appendChild(homepageEl);
 
-    const spyEvent = spyOnEvent(`#${targetId}`, 'resize');
+    const callback = jest.fn();
+    $(`#${targetId}`).on('resize', callback);
 
     // Sets up an actual event listener to get the contents of the metadata property
     let metadata;
@@ -46,7 +47,7 @@ describe('Homepage API', () => {
     homepageAPI = new Homepage(homepageEl, {});
 
     setTimeout(() => {
-      expect(spyEvent).toHaveBeenCalled();
+      expect(callback).toHaveBeenCalled();
       expect(metadata).toBeDefined();
       expect(metadata.cols).toBeDefined();
       expect(metadata.containerHeight).toBeDefined();

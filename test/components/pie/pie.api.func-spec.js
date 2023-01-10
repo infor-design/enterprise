@@ -54,13 +54,13 @@ describe('Pie Chart API', () => {
   });
 
   it('Should fire contextmenu event', () => {
-    const spyEvent = spyOnEvent(pieEl, 'contextmenu');
-    const result = { name: 'Item A', value: 10.1, id: 'ca', tooltip: 'Item A <b>{{percent}}</b>' };
+    const callback = jest.fn();
+    $(pieEl).on('contextmenu', callback);
     $(pieEl).on('contextmenu', (e, el, d) => {
       expect(d.data).toBeTruthy();
     });
     triggerContextmenu(document.body.querySelector('.slice'));
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
   });
 });

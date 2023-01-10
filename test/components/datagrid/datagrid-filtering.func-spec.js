@@ -107,7 +107,9 @@ describe('Datagrid Filter API', () => {
   });
 
   it('Should call filtered event on applyFilter', (done) => {
-    const spyEvent = spyOnEvent($('#datagrid'), 'filtered');
+    const callback = jest.fn();
+    $('#datagrid').on('filtered', callback);
+
     let filter = [];
     filter = [{ columnId: 'productId', operator: 'equals', value: '2642206' }];
 
@@ -120,8 +122,7 @@ describe('Datagrid Filter API', () => {
     });
 
     datagridObj.applyFilter(filter);
-
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
   });
 
   it('Should be able to clearFilter with the API', () => {

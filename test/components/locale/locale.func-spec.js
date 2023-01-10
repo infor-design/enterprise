@@ -1970,8 +1970,6 @@ describe('Locale API', () => {
   it('Should load locale which has custom filename', (done) => {
     const filename = 'sv-SE.f0r73571n6purp0537051mul473h45h';
     delete Locale.cultures['sv-SE'];
-    spyOn(Locale, 'getCulturesPath').and.returnValue(`${window.location.origin}/base/app/www/test/js/`); //eslint-disable-line
-
     expect(Locale.cultures['sv-SE']).toBeUndefined('Prerequisite for this unit test was not met');
 
     Locale.set('en-US');

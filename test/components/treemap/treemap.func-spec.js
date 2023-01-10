@@ -56,13 +56,14 @@ describe('Treemap API', () => {
 
   it('Should trigger rendered', () => {
     treemapAPI.destroy();
+    const callback = jest.fn();
+    $(treemapId).on('rendered', callback);
 
-    const spyEvent = spyOnEvent(treemapId, 'rendered');
     treemapAPI = new Treemap(treemapEl, {
       dataset: data
     });
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
   });
 
   it('Can be updated', () => {

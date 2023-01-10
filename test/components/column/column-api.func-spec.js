@@ -315,39 +315,39 @@ describe('Column Chart API', () => {
   });
 
   it('Should fire contextmenu event with column', () => {
-    const spyEvent = spyOnEvent(columnEl, 'contextmenu');
-    const result = { name: 'Automotive', shortName: 'Auto', abbrName: 'A', value: 7, tooltip: 'Custom Tooltip - {{value}}', selected: true };
+    const callback = jest.fn();
+    $(columnEl).on('contextmenu', callback);
     $(columnEl).on('contextmenu', (e, el, d) => {
       expect(d).toBeTruthy();
     });
     triggerContextmenu(document.body.querySelector('.bar'));
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
   });
 
   it('Should fire contextmenu event with column grouped', () => {
     columnObj.destroy();
     columnObj = new Column(columnEl, groupedSettings);
-    const spyEvent = spyOnEvent(columnEl, 'contextmenu');
-    const result = { name: 'Jan', value: 12 };
+    const callback = jest.fn();
+    $(columnEl).on('contextmenu', callback);
     $(columnEl).on('contextmenu', (e, el, d) => {
       expect(d).toBeTruthy();
     });
     triggerContextmenu(document.body.querySelector('.bar'));
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
   });
 
   it('Should fire contextmenu event with column stacked', () => {
     columnObj.destroy();
     columnObj = new Column(columnEl, stackedSettings);
-    const spyEvent = spyOnEvent(columnEl, 'contextmenu');
-    const result = { name: 'Jan', value: 12 };
+    const callback = jest.fn();
+    $(columnEl).on('contextmenu', callback);
     $(columnEl).on('contextmenu', (e, el, d) => {
       expect(d).toBeTruthy();
     });
     triggerContextmenu(document.body.querySelector('.bar'));
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
   });
 });

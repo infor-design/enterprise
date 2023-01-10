@@ -222,7 +222,6 @@ describe('Monthview API', () => {
           dates: ['2022-06-30T00:00', '2022-07-15T00:00', '2022-08-01T00:00'],
         },
       ];
-      spyOn(monthviewAPI, 'setLegendColor');
       monthviewAPI.loadLegend(legendList);
 
       expect(monthviewAPI.setLegendColor).toHaveBeenCalledTimes(3);

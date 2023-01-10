@@ -24,40 +24,50 @@ describe('Tabs API', () => {
   });
 
   it('Should trigger "beforeactivated" event', () => {
-    const spyEvent = spyOnEvent('#tabs-normal', 'beforeactivated');
+    const callback = jest.fn();
+    $('#tabs-normal').on('beforeactivated', callback);
+
     tabsObj.settings.beforeActivate = true;
     tabsObj.activate('#tabs-normal-opportunities');
     tabsObj.activate('#tabs-normal-attachments');
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
   });
 
   it('Should trigger "activated" event', () => {
-    const spyEvent = spyOnEvent('#tabs-normal', 'activated');
+    const callback = jest.fn();
+    $('#tabs-normal').on('activated', callback);
+
     tabsObj.activate('#tabs-normal-opportunities');
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
   });
 
   it('Should trigger "hash-change" event', () => {
     tabsObj.settings.changeTabOnHashChange = true;
-    const spyEvent = spyOnEvent('#tabs-normal', 'hash-change');
+    const callback = jest.fn();
+    $('#tabs-normal').on('hash-change', callback);
+
     tabsObj.select('#tabs-normal-opportunities');
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
   });
 
   it('Should trigger "close" event', () => {
-    const spyEvent = spyOnEvent('#tabs-normal', 'close');
+    const callback = jest.fn();
+    $('#tabs-normal').on('close', callback);
+
     tabsObj.remove('#tabs-normal-opportunities');
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
   });
 
   it('Should trigger "afterclose" event', () => {
-    const spyEvent = spyOnEvent('#tabs-normal', 'afterclose');
+    const callback = jest.fn();
+    $('#tabs-normal').on('afterclose', callback);
+
     tabsObj.remove('#tabs-normal-opportunities');
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
   });
 });

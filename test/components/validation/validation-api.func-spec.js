@@ -130,16 +130,19 @@ describe('Validation API', () => {
   });
 
   it('fire valid and error events (once)', () => {
-    const spyEvent = spyOnEvent(emailEl, 'error');
-    const spyEvent2 = spyOnEvent(emailEl, 'valid');
+    const callback = jest.fn();
+    $(emailEl).on('error', callback);
+
+    const callback2 = jest.fn();
+    $(emailEl).on('valid', callback2);
 
     validatorAPI.addMessage($(emailEl), { id: 'error', message: 'This is the message', type: 'error' }, true, false);
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
 
     validatorAPI.removeMessage($(emailID), { id: 'error', type: 'error' });
 
-    expect(spyEvent2).toHaveBeenCalled();
+    expect(callback2).toHaveBeenCalled();
   });
 
   it('be able to call resetForm', (done) => {

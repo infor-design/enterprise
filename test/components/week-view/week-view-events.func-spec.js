@@ -45,10 +45,12 @@ describe('WeekView Events', () => { //eslint-disable-line
   });
 
   it('triggers a `weekrendered` event when the week is changed', (done) => {
-    const spyEvent = spyOnEvent($(weekViewEl), 'weekrendered');
+    const callback = jest.fn();
+    $(weekViewEl).on('weekrendered', callback);
+
     weekViewAPI.showWeek(new Date(2019, 11, 1), new Date(2019, 11, 7));
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
     done();
   });
 
@@ -86,10 +88,12 @@ describe('WeekView Events', () => { //eslint-disable-line
       isAllDay: 'false'
     });
 
-    const spyEvent = spyOnEvent($(weekViewEl), 'eventclick');
+    const callback = jest.fn();
+    $(weekViewEl).on('eventclick', callback);
+
     weekViewEl.querySelector('a.calendar-event').click();
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
     done();
   });
 
@@ -104,10 +108,12 @@ describe('WeekView Events', () => { //eslint-disable-line
       isAllDay: 'false'
     });
 
-    const spyEvent = spyOnEvent($(weekViewEl), 'eventdblclick');
+    const callback = jest.fn();
+    $(weekViewEl).on('eventdblclick', callback);
+
     $('a.calendar-event').dblclick();
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
     done();
   });
 });

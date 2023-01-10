@@ -83,18 +83,19 @@ describe('Fontpicker API', () => {
 
   it('can select a font style programmatically with an ID', () => {
     fontpickerAPI = new FontPicker(fontpickerEl);
-    const fontpickerSpyEvent = spyOnEvent('button.fontpicker', 'font-selected');
-
+    const callback = jest.fn();
+    $('button.fontpicker').on('font-selected', callback);
     // Select via API
     fontpickerAPI.select('header1');
 
-    expect(fontpickerSpyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
     expect(fontpickerAPI.selected.tagName).toEqual('h3');
   });
 
   it('can select a font style programmatically with a reference to a valid FontPickerStyle object', () => {
     fontpickerAPI = new FontPicker(fontpickerEl);
-    const fontpickerSpyEvent = spyOnEvent('button.fontpicker', 'font-selected');
+    const callback = jest.fn();
+    $('button.fontpicker').on('font-selected', callback);
 
     // Get the target `header1` object
     const targetStyle = fontpickerAPI.settings.styles[1];
@@ -102,31 +103,33 @@ describe('Fontpicker API', () => {
     // Select via API
     fontpickerAPI.select(targetStyle);
 
-    expect(fontpickerSpyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
     expect(fontpickerAPI.selected.tagName).toEqual('h3');
   });
 
   it('should trigger a "font-selected" event when a font style is picked', () => {
     fontpickerAPI = new FontPicker(fontpickerEl);
-    const fontpickerSpyEvent = spyOnEvent('button.fontpicker', 'font-selected');
+    const callback = jest.fn();
+    $('button.fontpicker').on('font-selected', callback);
 
     // Select via menu with a couple of clicks
     fontpickerAPI.menuAPI.open();
     const firstEntry = document.body.querySelector('ul.popupmenu.fontpicker-menu li:nth-child(2) a');
     firstEntry.click();
 
-    expect(fontpickerSpyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
     expect(fontpickerAPI.selected.tagName).toEqual('h3');
   });
 
   it('should not trigger a "font-selected" event when the `select()` method is called with a `true` second argument', () => {
     fontpickerAPI = new FontPicker(fontpickerEl);
-    const fontpickerSpyEvent = spyOnEvent('button.fontpicker', 'font-selected');
+    const callback = jest.fn();
+    $('button.fontpicker').on('font-selected', callback);
 
     // Select via API
     fontpickerAPI.select('header1', true);
 
-    expect(fontpickerSpyEvent).not.toHaveBeenCalled();
+    expect(callback).not.toHaveBeenCalled();
     expect(fontpickerAPI.selected.tagName).toEqual('h3');
   });
 

@@ -26,9 +26,10 @@ describe('Spinbox Events', () => {
   });
 
   it('Should trigger "change" event', () => {
-    const spyEvent = spyOnEvent('#regular-spinbox', 'change');
+    const callback = jest.fn();
+    $('#regular-spinbox').on('change', callback);
     spinboxApi.updateVal(10);
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
   });
 });

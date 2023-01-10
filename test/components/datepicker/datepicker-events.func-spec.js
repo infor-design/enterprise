@@ -34,16 +34,18 @@ describe('DatePicker Aria', () => {
   it('Should trigger "change" and "input" event', (done) => {
     const field = document.querySelector('#date-field-normal');
     field.value = '11/06/2018';
+    const callback = jest.fn();
+    $('#date-field-normal').on('change', callback);
+    const callback2 = jest.fn();
+    $('#date-field-normal').on('input', callback2);
 
-    const spyEvent = spyOnEvent('#date-field-normal', 'change');
-    const spyEventInput = spyOnEvent('#date-field-normal', 'input');
     datepickerAPI.openCalendar();
     setTimeout(() => {
       const firstDay = document.querySelector('#monthview-popup tbody td:not(.alternate)');
       firstDay.click();
 
-      expect(spyEvent).toHaveBeenCalled();
-      expect(spyEventInput).toHaveBeenCalled();
+      expect(callback).toHaveBeenCalled();
+      expect(callback2).toHaveBeenCalled();
       done();
     }, 100);
   });
@@ -52,16 +54,19 @@ describe('DatePicker Aria', () => {
     const field = document.querySelector('#date-field-normal');
     field.value = '11/06/2018';
 
-    const spyEvent = spyOnEvent('#date-field-normal', 'listopened');
-    const spyEventClosed = spyOnEvent('#date-field-normal', 'listclosed');
+    const callback = jest.fn();
+    $('#date-field-normal').on('listopened', callback);
+    const callback2 = jest.fn();
+    $('#date-field-normal').on('listclosed', callback);
+
     datepickerAPI.openCalendar();
     setTimeout(() => {
-      expect(spyEvent).toHaveBeenCalled();
+      expect(callback).toHaveBeenCalled();
 
       const firstDay = document.querySelector('#monthview-popup tbody td:not(.alternate)');
       firstDay.click();
 
-      expect(spyEventClosed).toHaveBeenCalled();
+      expect(callback2).toHaveBeenCalled();
       done();
     }, 100);
   });
@@ -70,10 +75,12 @@ describe('DatePicker Aria', () => {
     const field = document.querySelector('#date-field-normal');
     field.value = '11/06/2018';
 
-    const spyEvent = spyOnEvent('#date-field-normal', 'monthrendered');
+    const callback = jest.fn();
+    $('#date-field-normal').on('monthrendered', callback);
+
     datepickerAPI.openCalendar();
     setTimeout(() => {
-      expect(spyEvent).toHaveBeenCalled();
+      expect(callback).toHaveBeenCalled();
       done();
     }, 100);
   });
@@ -81,15 +88,15 @@ describe('DatePicker Aria', () => {
   it('should trigger monthrendered event on month change.', (done) => {
     const field = document.querySelector('#date-field-normal');
     field.value = '11/06/2018';
+    const callback = jest.fn();
+    $('#date-field-normal').on('monthrendered', callback);
 
-    const spyEvent = spyOnEvent('#date-field-normal', 'monthrendered');
     datepickerAPI.openCalendar();
     setTimeout(() => {
-      spyEvent.reset();
       const nextMonth = document.querySelector('#monthview-popup .calendar-toolbar button.next');
       nextMonth.click();
 
-      expect(spyEvent).toHaveBeenCalled();
+      expect(callback).toHaveBeenCalled();
       done();
     }, 100);
   });

@@ -38,13 +38,13 @@ describe('Donut Chart API', () => {
   });
 
   it('Should fire contextmenu event', () => {
-    const spyEvent = spyOnEvent(donutEl, 'contextmenu');
-    const result = { name: 'Component A', value: 16 };
+    const callback = jest.fn();
+    $(donutEl).on('contextmenu', callback);
     $(donutEl).on('contextmenu', (e, el, d) => {
       expect(d.data).toBeTruthy();
     });
     triggerContextmenu(document.body.querySelector('.slice'));
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
   });
 });

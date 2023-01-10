@@ -48,7 +48,9 @@ describe('Datagrid Tree', () => { //eslint-disable-line
 
   it('Should show Row Activated', (done) => {
     datagridObj.destroy();
-    const spyEvent = spyOnEvent($(datagridEl), 'rendered');
+    const callback = jest.fn();
+    $(datagridEl).on('rendered', callback);
+
     const duplicateColumns = [...columns];
     duplicateColumns.unshift({ id: 'selectionCheckbox', sortable: false, resizable: false, width: 50, formatter: Formatters.SelectionCheckbox, align: 'center' });
     datagridObj = new Datagrid(datagridEl, {
@@ -59,11 +61,12 @@ describe('Datagrid Tree', () => { //eslint-disable-line
       toolbar: { title: 'Tasks (Hierarchical)', results: true, personalize: true }
     });
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
     expect(document.body.querySelectorAll('tbody tr.datagrid-tree-parent').length).toEqual(7);
     expect(document.body.querySelectorAll('tbody tr.datagrid-tree-child').length).toEqual(13);
+    const callback2 = jest.fn();
+    $(datagridEl).on('rowactivated', callback2);
 
-    const spyEventRowActivated = spyOnEvent($(datagridEl), 'rowactivated');
     $(datagridEl).on('rowactivated', (e, args) => {
       expect(args.row).toEqual(5);
       expect(args.item.idx).toEqual(6);
@@ -74,7 +77,7 @@ describe('Datagrid Tree', () => { //eslint-disable-line
 
     document.body.querySelector('tbody tr[aria-rowindex="6"] td[aria-colindex="2"]').click();
 
-    expect(spyEventRowActivated).toHaveBeenCalled();
+    expect(callback2).toHaveBeenCalled();
     $(datagridEl).off('rowactivated');
   });
 

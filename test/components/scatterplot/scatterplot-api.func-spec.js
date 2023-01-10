@@ -206,13 +206,13 @@ describe('Scatter Plot API', () => {
   });
 
   it('Should fire contextmenu event', () => {
-    const spyEvent = spyOnEvent(scatterplotEl, 'contextmenu');
-    const result = { x: 5, y: 3 };
+    const callback = jest.fn();
+    $(scatterplotEl).on('contextmenu', callback);
     $(scatterplotEl).on('contextmenu', (e, el, d) => {
       expect(d.value).toBeTruthy();
     });
     triggerContextmenu(document.body.querySelector('[data-group-id="0"] .symbol'));
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
   });
 });

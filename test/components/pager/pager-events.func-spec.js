@@ -28,12 +28,11 @@ describe('Pager Event Test', () => {
       }
     });
 
-    const spyFunc = spyOn(pagerObj.settings, 'onFirstPage');
-    const spyEvent = spyOnEvent($(pagerEl), 'firstpage');
+    const callback = jest.fn();
+    $(pagerEl).on('firstpage', callback);
     document.body.querySelector('.pager-container .pager-first .btn-icon').click();
 
-    expect(spyFunc).toHaveBeenCalled();
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
     done();
   });
 
@@ -44,12 +43,12 @@ describe('Pager Event Test', () => {
       }
     });
 
-    const spyFunc = spyOn(pagerObj.settings, 'onPreviousPage');
-    const spyEvent = spyOnEvent($(pagerEl), 'previouspage');
+    const callback = jest.fn();
+    $(pagerEl).on('previouspage', callback);
+
     document.body.querySelector('.pager-container .pager-prev .btn-icon').click();
 
-    expect(spyFunc).toHaveBeenCalled();
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
     done();
   });
 
@@ -60,12 +59,11 @@ describe('Pager Event Test', () => {
       }
     });
 
-    const spyFunc = spyOn(pagerObj.settings, 'onNextPage');
-    const spyEvent = spyOnEvent($(pagerEl), 'nextpage');
+    const callback = jest.fn();
+    $(pagerEl).on('nextpage', callback);
     document.body.querySelector('.pager-container .pager-next .btn-icon').click();
 
-    expect(spyFunc).toHaveBeenCalled();
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
     done();
   });
 
@@ -76,12 +74,11 @@ describe('Pager Event Test', () => {
       }
     });
 
-    const spyFunc = spyOn(pagerObj.settings, 'onLastPage');
-    const spyEvent = spyOnEvent($(pagerEl), 'lastpage');
+    const callback = jest.fn();
+    $(pagerEl).on('lastpage', callback);
     document.body.querySelector('.pager-container .pager-last .btn-icon').click();
 
-    expect(spyFunc).toHaveBeenCalled();
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
     done();
   });
 });

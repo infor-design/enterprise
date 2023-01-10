@@ -42,10 +42,11 @@ describe('Monthview API', () => {
   });
 
   it('triggers a `monthrendered` event when the month is rendered', (done) => {
-    const spyEvent = spyOnEvent($(monthviewEl), 'monthrendered');
+    const callback = jest.fn();
+    $(monthviewEl).on('monthrendered', callback);
     monthviewAPI.showMonth(7, 2018);
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
     done();
   });
 
@@ -57,11 +58,11 @@ describe('Monthview API', () => {
       activeDate: new Date(2018, 8, 10),
       selctable: true
     });
-
-    const spyEvent = spyOnEvent($(monthviewEl), 'selected');
+    const callback = jest.fn();
+    $(monthviewEl).on('selected', callback);
     monthviewEl.querySelector('tr:nth-child(2) td:nth-child(1)').click();
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
     done();
   });
 });

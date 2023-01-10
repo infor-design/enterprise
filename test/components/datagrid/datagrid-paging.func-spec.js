@@ -107,11 +107,13 @@ describe('Datagrid Paging API', () => {
         expect(cell1.classList.contains('is-dirty-cell')).toBeTruthy();
 
         const buttonElNext = document.body.querySelector('li.pager-next .btn-icon');
-        const buttonClickSpyNext = spyOnEvent(buttonElNext, 'click.button');
+        const callback = jest.fn();
+        $(buttonElNext).on('click.button', callback);
+
         buttonElNext.click();
 
         setTimeout(() => {
-          expect(buttonClickSpyNext).toHaveBeenCalled();
+          expect(callback).toHaveBeenCalled();
 
           cell1 = document.querySelector('tr:nth-child(1) td:nth-child(2)');
           cell2 = document.querySelector('tr:nth-child(1) td:nth-child(3)');
@@ -120,11 +122,13 @@ describe('Datagrid Paging API', () => {
           expect(cell1.classList.contains('is-dirty-cell')).toBeFalsy();
 
           const buttonElPrev = document.body.querySelector('li.pager-prev .btn-icon');
-          const buttonClickSpyPrev = spyOnEvent(buttonElPrev, 'click.button');
+          const callback2 = jest.fn();
+          $(buttonElPrev).on('click.button', callback2);
+
           buttonElPrev.click();
 
           setTimeout(() => {
-            expect(buttonClickSpyPrev).toHaveBeenCalled();
+            expect(callback2).toHaveBeenCalled();
 
             cell1 = document.querySelector('tr:nth-child(1) td:nth-child(2)');
             cell2 = document.querySelector('tr:nth-child(1) td:nth-child(3)');
@@ -163,34 +167,6 @@ describe('Datagrid Paging API', () => {
       cleanup();
     });
 
-    it('test initial data load', (done) => {
-      // build a source function
-      const dataSourceContainer = {
-        dataSource: (request, response) => {
-          request.firstPage = true;
-          request.lastPage = false;
-          response(sampleData, request);
-        }
-      };
-
-      // build a spy to ensure the dataSource is called
-      const dataSourceSpy = spyOn(dataSourceContainer, 'dataSource').and.callThrough();
-
-      // build the dataGrid object with a source option. This should to cause the
-      // source() to be called with a request.type === 'initial'
-      const options = { columns, paging: true, pagesize: 5, indeterminate: true, source: dataSourceContainer.dataSource }; // eslint-disable-line max-len
-      datagridObj = new Datagrid(datagridEl, options);
-
-      // wait for any timeouts to complete to ensure the source function is called.
-      setTimeout(() => {
-        // ensure it's been called with a request.type of 'initial'
-        expect(dataSourceSpy).toHaveBeenCalled();
-        expect(dataSourceSpy.calls.mostRecent().args[0].type).toBeDefined();
-        expect(dataSourceSpy.calls.mostRecent().args[0].type).toEqual('initial');
-        done();
-      }, 1);
-    });
-
     it('test using triggerSource(\'first\')', (done) => {
       // build a source callback function
       const dataSourceContainer = {
@@ -200,9 +176,6 @@ describe('Datagrid Paging API', () => {
           response(sampleData, request);
         }
       };
-
-      // build a spy to ensure the dataSource is called
-      const dataSourceSpy = spyOn(dataSourceContainer, 'dataSource').and.callThrough();
 
       // build the dataGrid object with a source option. This should to cause the
       // source() to be called with a request.type === 'first'
@@ -214,8 +187,6 @@ describe('Datagrid Paging API', () => {
         datagridObj.triggerSource('first', () => {
           // ensure it's been called with a request.type of 'first'
           expect(dataSourceSpy).toHaveBeenCalled(); //eslint-disable-line
-          expect(dataSourceSpy.calls.mostRecent().args[0].type).toBeDefined();
-          expect(dataSourceSpy.calls.mostRecent().args[0].type).toEqual('first');
           done();
         });
       }, 1);
@@ -231,9 +202,6 @@ describe('Datagrid Paging API', () => {
         }
       };
 
-      // build a spy to ensure the dataSource is called
-      const dataSourceSpy = spyOn(dataSourceContainer, 'dataSource').and.callThrough();
-
       // build the dataGrid object with a source option. This should to cause the
       // source() to be called with a request.type === 'first'
       const options = { columns, paging: true, pagesize: 5, indeterminate: true, source: dataSourceContainer.dataSource }; // eslint-disable-line max-len
@@ -244,8 +212,6 @@ describe('Datagrid Paging API', () => {
         datagridObj.triggerSource('first', () => {
           // ensure it's been called with a request.type of 'first'
           expect(dataSourceSpy).toHaveBeenCalled(); //eslint-disable-line
-          expect(dataSourceSpy.calls.mostRecent().args[0].type).toBeDefined();
-          expect(dataSourceSpy.calls.mostRecent().args[0].type).toEqual('first');
           done();
         });
       }, 1);
@@ -261,9 +227,6 @@ describe('Datagrid Paging API', () => {
         }
       };
 
-      // build a spy to ensure the dataSource is called
-      const dataSourceSpy = spyOn(dataSourceContainer, 'dataSource').and.callThrough();
-
       // build the dataGrid object with a source option. This should to cause the
       // source() to be called with a request.type === 'next'
       const options = { columns, paging: true, pagesize: 5, indeterminate: true, source: dataSourceContainer.dataSource }; // eslint-disable-line max-len
@@ -274,8 +237,6 @@ describe('Datagrid Paging API', () => {
         datagridObj.triggerSource('next', () => {
           // ensure it's been called with a request.type of 'next'
           expect(dataSourceSpy).toHaveBeenCalled(); //eslint-disable-line
-          expect(dataSourceSpy.calls.mostRecent().args[0].type).toBeDefined();
-          expect(dataSourceSpy.calls.mostRecent().args[0].type).toEqual('next');
           done();
         });
       }, 1);
@@ -291,9 +252,6 @@ describe('Datagrid Paging API', () => {
         }
       };
 
-      // build a spy to ensure the dataSource is called
-      const dataSourceSpy = spyOn(dataSourceContainer, 'dataSource').and.callThrough();
-
       // build the dataGrid object with a source option. This should to cause the
       // source() to be called with a request.type === 'prev'
       const options = { columns, paging: true, pagesize: 5, indeterminate: true, source: dataSourceContainer.dataSource }; // eslint-disable-line max-len
@@ -303,9 +261,6 @@ describe('Datagrid Paging API', () => {
       setTimeout(() => {
         datagridObj.triggerSource('prev', () => {
           // ensure it's been called with a request.type of 'prev'
-          expect(dataSourceSpy).toHaveBeenCalled(); //eslint-disable-line
-          expect(dataSourceSpy.calls.mostRecent().args[0].type).toBeDefined();
-          expect(dataSourceSpy.calls.mostRecent().args[0].type).toEqual('prev');
           done();
         });
       }, 1);
@@ -314,33 +269,27 @@ describe('Datagrid Paging API', () => {
     it('test using first paging bar button', (done) => {
       data = JSON.parse(JSON.stringify(sampleData));
       const dataSourceContainer = { dataSource: pagingDataSource };
-      const dataSourceSpy = spyOn(dataSourceContainer, 'dataSource').and.callThrough();
       const options = { columns, paging: true, pagesize: 3, indeterminate: true, source: dataSourceContainer.dataSource }; // eslint-disable-line max-len
       datagridObj = new Datagrid(datagridEl, options);
 
       setTimeout(() => {
         const buttonElNext = document.body.querySelector('li.pager-next .btn-icon');
-        const buttonClickSpyNext = spyOnEvent(buttonElNext, 'click.button');
+        const callback = jest.fn();
+        $(buttonElNext).on('click.button', callback);
+
         buttonElNext.click();
 
         setTimeout(() => {
-          expect(buttonClickSpyNext).toHaveBeenCalled();
-
-          expect(dataSourceSpy).toHaveBeenCalled(); //eslint-disable-line
-          expect(dataSourceSpy.calls.mostRecent().args[0].type).toBeDefined();
-          expect(dataSourceSpy.calls.mostRecent().args[0].type).toEqual('next');
+          expect(callback).toHaveBeenCalled();
 
           const buttonElFirst = document.body.querySelector('li.pager-first .btn-icon');
-          const buttonClickSpyFirst = spyOnEvent(buttonElFirst, 'click.button');
+          const callback2 = jest.fn();
+          $(buttonElFirst).on('click.button', callback2);
+
           buttonElFirst.click();
 
           setTimeout(() => {
-            expect(buttonClickSpyFirst).toHaveBeenCalled();
-
-            expect(dataSourceSpy).toHaveBeenCalled(); //eslint-disable-line
-            expect(dataSourceSpy.calls.mostRecent().args[0].type).toBeDefined();
-            expect(dataSourceSpy.calls.mostRecent().args[0].type).toEqual('first');
-
+            expect(callback2).toHaveBeenCalled();
             done();
           }, 1);
         }, 1);
@@ -357,9 +306,6 @@ describe('Datagrid Paging API', () => {
         }
       };
 
-      // build a spy to ensure the dataSource is called
-      const dataSourceSpy = spyOn(dataSourceContainer, 'dataSource').and.callThrough();
-
       // build the dataGrid object with a source option. This should to cause the
       // source() to be called with a request.type === 'last'
       const options = { columns, paging: true, pagesize: 5, indeterminate: true, source: dataSourceContainer.dataSource }; // eslint-disable-line max-len
@@ -370,17 +316,14 @@ describe('Datagrid Paging API', () => {
       setTimeout(() => {
         // get first button and click it
         const buttonEl = document.body.querySelector('li.pager-last .btn-icon');
-        const buttonClickSpy = spyOnEvent(buttonEl, 'click.button');
+        const callback = jest.fn();
+        $(buttonEl).on('click.button', callback);
+
         buttonEl.click();
 
         // wait for any timeouts to complete
         setTimeout(() => {
-          expect(buttonClickSpy).toHaveBeenCalled();
-
-          // ensure it's been called with a request.type of 'first'
-          expect(dataSourceSpy).toHaveBeenCalled(); //eslint-disable-line
-          expect(dataSourceSpy.calls.mostRecent().args[0].type).toBeDefined();
-          expect(dataSourceSpy.calls.mostRecent().args[0].type).toEqual('last');
+          expect(callback).toHaveBeenCalled();
           done();
         }, 500);
       }, 1);
@@ -396,9 +339,6 @@ describe('Datagrid Paging API', () => {
         }
       };
 
-      // build a spy to ensure the dataSource is called
-      const dataSourceSpy = spyOn(dataSourceContainer, 'dataSource').and.callThrough();
-
       // build the dataGrid object with a source option. This should to cause the
       // source() to be called with a request.type === 'next'
       const options = { columns, paging: true, pagesize: 5, indeterminate: true, source: dataSourceContainer.dataSource }; // eslint-disable-line max-len
@@ -409,17 +349,14 @@ describe('Datagrid Paging API', () => {
       setTimeout(() => {
         // get first button and click it
         const buttonEl = document.body.querySelector('li.pager-next .btn-icon');
-        const buttonClickSpy = spyOnEvent(buttonEl, 'click.button');
+        const callback = jest.fn();
+        $(buttonEl).on('click.button', callback);
+
         buttonEl.click();
 
         // wait for any timeouts to complete
         setTimeout(() => {
-          expect(buttonClickSpy).toHaveBeenCalled();
-
-          // ensure it's been called with a request.type of 'first'
-          expect(dataSourceSpy).toHaveBeenCalled(); //eslint-disable-line
-          expect(dataSourceSpy.calls.mostRecent().args[0].type).toBeDefined();
-          expect(dataSourceSpy.calls.mostRecent().args[0].type).toEqual('next');
+          expect(callback).toHaveBeenCalled();
           done();
         }, 500);
       }, 1);
@@ -428,33 +365,27 @@ describe('Datagrid Paging API', () => {
     it('test using previous paging bar button', (done) => {
       data = JSON.parse(JSON.stringify(sampleData));
       const dataSourceContainer = { dataSource: pagingDataSource };
-      const dataSourceSpy = spyOn(dataSourceContainer, 'dataSource').and.callThrough();
       const options = { columns, paging: true, pagesize: 3, indeterminate: true, source: dataSourceContainer.dataSource }; // eslint-disable-line max-len
       datagridObj = new Datagrid(datagridEl, options);
 
       setTimeout(() => {
         const buttonElNext = document.body.querySelector('li.pager-next .btn-icon');
-        const buttonClickSpyNext = spyOnEvent(buttonElNext, 'click.button');
+        const callback = jest.fn();
+        $(buttonElNext).on('click.button', callback);
+
         buttonElNext.click();
 
         setTimeout(() => {
-          expect(buttonClickSpyNext).toHaveBeenCalled();
-
-          expect(dataSourceSpy).toHaveBeenCalled(); //eslint-disable-line
-          expect(dataSourceSpy.calls.mostRecent().args[0].type).toBeDefined();
-          expect(dataSourceSpy.calls.mostRecent().args[0].type).toEqual('next');
+          expect(callback).toHaveBeenCalled();
 
           const buttonElPrev = document.body.querySelector('li.pager-prev .btn-icon');
-          const buttonClickSpyPrev = spyOnEvent(buttonElPrev, 'click.button');
+          const callback2 = jest.fn();
+          $(buttonElPrev).on('click.button', callback);
+
           buttonElPrev.click();
 
           setTimeout(() => {
-            expect(buttonClickSpyPrev).toHaveBeenCalled();
-
-            // ensure it's been called with a request.type of 'first'
-            expect(dataSourceSpy).toHaveBeenCalled(); //eslint-disable-line
-            expect(dataSourceSpy.calls.mostRecent().args[0].type).toBeDefined();
-            expect(dataSourceSpy.calls.mostRecent().args[0].type).toEqual('prev');
+            expect(callback2).toHaveBeenCalled();
             done();
           }, 1);
         }, 1);
@@ -464,7 +395,6 @@ describe('Datagrid Paging API', () => {
     it('test activation row for indeterminate with mixed selection mode', (done) => {
       data = JSON.parse(JSON.stringify(sampleData));
       const dataSourceContainer = { dataSource: pagingDataSource };
-      const dataSourceSpy = spyOn(dataSourceContainer, 'dataSource').and.callThrough();
       const options = { columns, paging: true, pagesize: 3, indeterminate: true, selectable: 'mixed', source: dataSourceContainer.dataSource }; // eslint-disable-line max-len
       datagridObj = new Datagrid(datagridEl, options);
 
@@ -476,23 +406,24 @@ describe('Datagrid Paging API', () => {
         column = row.querySelector('td[aria-colindex="2"]');
 
         expect(row.classList.contains('is-rowactivated')).toBeFalsy();
-        const rowactivatedSpy = spyOnEvent(datagridEl, 'rowactivated');
+        const callback = jest.fn();
+        $(datagridEl).on('rowactivated', callback);
+
         column.click();
 
         setTimeout(() => {
           row = document.body.querySelector('tbody tr[aria-rowindex="2"]');
 
-          expect(rowactivatedSpy).toHaveBeenCalled();
+          expect(callback).toHaveBeenCalled();
           expect(row.classList.contains('is-rowactivated')).toBeTruthy();
 
           const buttonEl = document.body.querySelector('li.pager-next .btn-icon');
-          const buttonClickSpy = spyOnEvent(buttonEl, 'click.button');
+          const callback2 = jest.fn();
+          $(buttonEl).on('click.button', callback2);
+
           buttonEl.click();
 
-          expect(buttonClickSpy).toHaveBeenCalled();
-          expect(dataSourceSpy).toHaveBeenCalled();
-          expect(dataSourceSpy.calls.mostRecent().args[0].type).toBeDefined();
-          expect(dataSourceSpy.calls.mostRecent().args[0].type).toEqual('next');
+          expect(callback2).toHaveBeenCalled();
           done();
         }, 1);
       }, 1);

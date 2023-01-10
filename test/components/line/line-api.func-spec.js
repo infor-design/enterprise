@@ -96,13 +96,14 @@ describe('Line Chart API', () => {
   });
 
   it('Should fire contextmenu event', () => {
-    const spyEvent = spyOnEvent(lineEl, 'contextmenu');
-    const result = { name: 'Jan', value: 1211, depth: 4 };
+    const callback = jest.fn();
+    $(lineEl).on('contextmenu', callback);
+
     $(lineEl).on('contextmenu', (e, el, d) => {
       expect(d).toBeTruthy();
     });
     triggerContextmenu(document.body.querySelector('[data-group-id="0"] .dot'));
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
   });
 });

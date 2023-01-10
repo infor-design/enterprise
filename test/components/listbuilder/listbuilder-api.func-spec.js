@@ -142,43 +142,48 @@ describe('ListBuilder API', () => {
 
   it('Should add item', () => {
     expect(document.body.querySelectorAll('.listbuilder li[role="option"]').length).toEqual(12);
-    const spyEvent = spyOnEvent(listbuilderObj.element, 'afteradd');
+    const callback = jest.fn();
+    $(listbuilderObj.element).on('afteradd', callback);
+
     listbuilderObj.addItem();
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
     expect(document.body.querySelectorAll('.listbuilder li[role="option"]').length).toEqual(13);
   });
 
   it('Should move up item', () => {
-    const spyEvent = spyOnEvent(listbuilderObj.element, 'aftergoup');
+    const callback = jest.fn();
+    $(listbuilderObj.element).on('aftergoup', callback);
 
     expect(document.body.querySelector('.listbuilder li[role="option"]:nth-child(2) .item-content').innerText.trim()).toEqual('Belize');
     document.body.querySelector('.listbuilder li[role="option"]:nth-child(2)').click();
     listbuilderObj.moveItemUp();
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
     expect(document.body.querySelector('.listbuilder li[role="option"]:nth-child(2) .item-content').innerText.trim()).toEqual('Argentina');
   });
 
   it('Should move down item', () => {
-    const spyEvent = spyOnEvent(listbuilderObj.element, 'aftergodown');
+    const callback = jest.fn();
+    $(listbuilderObj.element).on('aftergodown', callback);
 
     expect(document.body.querySelector('.listbuilder li[role="option"]:nth-child(2) .item-content').innerText.trim()).toEqual('Belize');
     document.body.querySelector('.listbuilder li[role="option"]:nth-child(2)').click();
     listbuilderObj.moveItemDown();
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
     expect(document.body.querySelector('.listbuilder li[role="option"]:nth-child(2) .item-content').innerText.trim()).toEqual('Colombia');
   });
 
   it('Should delete item', () => {
-    const spyEvent = spyOnEvent(listbuilderObj.element, 'afterdelete');
+    const callback = jest.fn();
+    $(listbuilderObj.element).on('afterdelete', callback);
 
     expect(document.body.querySelectorAll('.listbuilder li[role="option"]').length).toEqual(12);
     document.body.querySelector('.listbuilder li[role="option"]:nth-child(2)').click();
     listbuilderObj.deleteItem();
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
     expect(document.body.querySelectorAll('.listbuilder li[role="option"]').length).toEqual(11);
   });
 });

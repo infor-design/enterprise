@@ -57,13 +57,15 @@ describe('Datagrid API', () => { //eslint-disable-line
 
   it('Should render datagrid', (done) => {
     datagridObj.destroy();
-    const spyEvent = spyOnEvent($(datagridEl), 'rendered');
-    const spyEventAfter = spyOnEvent($(datagridEl), 'afterrender');
+    const callback = jest.fn();
+    $(datagridEl).on('rendered', callback);
+    const callback2 = jest.fn();
+    $(datagridEl).on('afterrender', callback);
     datagridObj = new Datagrid(datagridEl, { dataset: data, columns });
 
     setTimeout(() => {
-      expect(spyEvent).toHaveBeenCalled();
-      expect(spyEventAfter).toHaveBeenCalled();
+      expect(callback).toHaveBeenCalled();
+      expect(callback2).toHaveBeenCalled();
       expect(document.body.querySelectorAll('tr').length).toEqual(8);
       done();
     });
@@ -335,12 +337,13 @@ describe('Datagrid API', () => { //eslint-disable-line
       editable: true
     });
 
-    const spyEvent = spyOnEvent($('#datagrid'), 'cellerror');
+    const callback = jest.fn();
+    $('#datagrid').on('cellerror', callback);
     datagridObj.validateCell(0, 7);
     datagridObj.validateCell(1, 7);
 
     setTimeout(() => {
-      expect(spyEvent).toHaveBeenCalled();
+      expect(callback).toHaveBeenCalled();
       expect(document.querySelectorAll('td.error').length).toEqual(2);
 
       datagridObj.clearCellError(0, 7, 'error');
@@ -517,20 +520,23 @@ describe('Datagrid API', () => { //eslint-disable-line
       rowTemplate
     });
 
-    const spyEvent = spyOnEvent($(datagridEl), 'expandrow');
-    const spyEventCollapse = spyOnEvent($(datagridEl), 'collapserow');
+    const callback = jest.fn();
+    $('#datagrid').on('expandrow', callback);
+
+    const callback2 = jest.fn();
+    $('#datagrid').on('collapserow', callback);
 
     expect(document.querySelectorAll('.datagrid-expand-btn').length).toEqual(7);
     document.querySelector('.datagrid-expand-btn:nth-child(1)').click();
 
     setTimeout(() => {
       expect(document.querySelector('.datagrid-expandable-row').classList.contains('is-expanded')).toBeTruthy();
-      expect(spyEvent).toHaveBeenCalled();
+      expect(callback).toHaveBeenCalled();
 
       setTimeout(() => {
         document.querySelector('.datagrid-expand-btn:nth-child(1)').click();
 
-        expect(spyEventCollapse).toHaveBeenCalled();
+        expect(callback2).toHaveBeenCalled();
         done();
       }, 300);
     }, 300);
@@ -544,20 +550,23 @@ describe('Datagrid API', () => { //eslint-disable-line
       rowTemplate
     });
 
-    const spyEvent = spyOnEvent($(datagridEl), 'expandrow');
-    const spyEventCollapse = spyOnEvent($(datagridEl), 'collapserow');
+    const callback = jest.fn();
+    $(datagridEl).on('expandrow', callback);
+
+    const callback2 = jest.fn();
+    $(datagridEl).on('collapserow', callback);
 
     expect(document.querySelectorAll('.datagrid-expand-btn').length).toEqual(7);
     datagridObj.toggleRowDetail(0);
 
     setTimeout(() => {
       expect(document.querySelector('.datagrid-expandable-row').classList.contains('is-expanded')).toBeTruthy();
-      expect(spyEvent).toHaveBeenCalled();
+      expect(callback).toHaveBeenCalled();
 
       setTimeout(() => {
         datagridObj.toggleRowDetail(0);
 
-        expect(spyEventCollapse).toHaveBeenCalled();
+        expect(callback2).toHaveBeenCalled();
         done();
       }, 300);
     }, 300);

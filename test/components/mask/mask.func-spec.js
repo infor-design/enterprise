@@ -188,8 +188,6 @@ describe('Number Mask API', () => {
   };
 
   it('Should convert legacy settings to current settings', () => {
-    spyOn(console, 'warn');
-
     const api = new MaskAPI(DEFAULT_SETTINGS);
     const opts = {
       selection: {

@@ -96,9 +96,10 @@ describe('EmptyMessage API', () => { //eslint-disable-line
     });
 
     const buttonSelector = '.empty-message button';
-    const spyEvent = spyOnEvent($(buttonSelector), 'click');
+    const callback = jest.fn();
+    $(buttonSelector).on('change', callback);
     document.body.querySelector(buttonSelector).click();
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
   });
 });

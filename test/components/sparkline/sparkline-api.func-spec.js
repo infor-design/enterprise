@@ -47,65 +47,65 @@ describe('Sparkline Chart API', () => {
   });
 
   it('Should fire contextmenu event with sparkline', () => {
-    const spyEvent = spyOnEvent(sparklineEl, 'contextmenu');
-    const result = { value: 25, name: 'Inventory' };
+    const callback = jest.fn();
+    $(sparklineEl).on('contextmenu', callback);
     $(sparklineEl).on('contextmenu', (e, el, d) => {
       expect(d).toBeTruthy();
     });
     triggerContextmenu(document.body.querySelectorAll('.point')[0]);
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
   });
 
   it('Should fire contextmenu event with sparkline-dots-n-peak', () => {
     sparklineObj.destroy();
     sparklineObj = new Sparkline(sparklineEl, { type: 'sparkline-dots-n-peak', dataset: sparkData1 });
-    const spyEvent = spyOnEvent(sparklineEl, 'contextmenu');
-    const result = { value: 55, name: 'Inventory' };
+    const callback = jest.fn();
+    $(sparklineEl).on('contextmenu', callback);
     $(sparklineEl).on('contextmenu', (e, el, d) => {
       expect(d).toBeTruthy();
     });
     triggerContextmenu(document.body.querySelectorAll('.point')[2]);
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
   });
 
   it('Should fire contextmenu event with sparkline-peak', () => {
     sparklineObj.destroy();
     sparklineObj = new Sparkline(sparklineEl, { type: 'sparkline-peak', dataset: sparkData2 });
-    const spyEvent = spyOnEvent(sparklineEl, 'contextmenu');
-    const result = { value: 55, name: 'Inventory' };
+    const callback = jest.fn();
+    $(sparklineEl).on('contextmenu', callback);
     $(sparklineEl).on('contextmenu', (e, el, d) => {
       expect(d).toBeTruthy();
     });
     triggerContextmenu(document.body.querySelectorAll('.point')[2]);
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
   });
 
   it('Should fire contextmenu event with sparkline-medianrange-n-peak', () => {
     sparklineObj.destroy();
     sparklineObj = new Sparkline(sparklineEl, { type: 'sparkline-medianrange-n-peak', dataset: sparkData3 });
-    const spyEvent = spyOnEvent(sparklineEl, 'contextmenu');
-    const result = { value: 61, name: 'Inventory' };
+    const callback = jest.fn();
+    $(sparklineEl).on('contextmenu', callback);
     $(sparklineEl).on('contextmenu', (e, el, d) => {
       expect(d).toBeTruthy();
     });
     triggerContextmenu(document.body.querySelectorAll('.point')[2]);
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
   });
 
   it('Should fire contextmenu event with sparkline-minmax', () => {
     sparklineObj.destroy();
     sparklineObj = new Sparkline(sparklineEl, { type: 'sparkline-minmax', dataset: sparkData4 });
-    const spyEvent = spyOnEvent(sparklineEl, 'contextmenu');
-    const result = { value: 55, name: 'Inventory' };
+    const callback = jest.fn();
+    $(sparklineEl).on('contextmenu', callback);
     $(sparklineEl).on('contextmenu', (e, el, d) => {
       expect(d).toBeTruthy();
     });
     triggerContextmenu(document.body.querySelectorAll('.point')[2]);
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
   });
 });

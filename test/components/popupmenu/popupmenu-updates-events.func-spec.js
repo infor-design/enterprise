@@ -24,44 +24,49 @@ describe('Popupmenu Events', () => {
   });
 
   it('Should trigger "beforeopen" event', () => {
-    const spyEvent = spyOnEvent('#single-select-popupmenu-trigger', 'beforeopen');
+    const callback = jest.fn();
+    $('#single-select-popupmenu-trigger').on('beforeopen', callback);
     popupmenuObj.open();
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
   });
 
   it('Should trigger "open" event', (done) => {
-    const spyEvent = spyOnEvent('#single-select-popupmenu-trigger', 'open');
+    const callback = jest.fn();
+    $('#single-select-popupmenu-trigger').on('open', callback);
     popupmenuObj.open();
     setTimeout(() => {
-      expect(spyEvent).toHaveBeenCalled();
+      expect(callback).toHaveBeenCalled();
       done();
     }, 500);
   });
 
   it('Should trigger "afteropen" event', (done) => {
-    const spyEvent = spyOnEvent('#single-select-popupmenu-trigger', 'afteropen');
+    const callback = jest.fn();
+    $('#single-select-popupmenu-trigger').on('afteropen', callback);
     popupmenuObj.open();
     setTimeout(() => {
-      expect(spyEvent).toHaveBeenCalled();
+      expect(callback).toHaveBeenCalled();
       done();
     }, 500);
   });
 
   it('Should trigger "close" event', (done) => {
-    const spyEvent = spyOnEvent('#single-select-popupmenu-trigger', 'close');
+    const callback = jest.fn();
+    $('#single-select-popupmenu-trigger').on('close', callback);
     popupmenuObj.open();
     popupmenuObj.close();
     setTimeout(() => {
-      expect(spyEvent).toHaveBeenCalled();
+      expect(callback).toHaveBeenCalled();
       done();
     }, 600);
   });
 
   it('Should not bubble "destroy" event', () => {
-    const spyEvent = spyOnEvent('.field', 'destroy');
+    const callback = jest.fn();
+    $('.field').on('destroy', callback);
     popupmenuObj.destroy();
 
-    expect(spyEvent).not.toHaveBeenCalled();
+    expect(callback).not.toHaveBeenCalled();
   });
 });

@@ -53,6 +53,7 @@ To run the tests as a CI environment would (Git Hub Actions), use:
 ```sh
 npm run test
 ```
+
 ## Puppeteer Conversion Notes
 
 1. Click an element
@@ -178,6 +179,7 @@ npm run test
     expect(1 + 2).toBe(3);
   });
 ```
+
 - You can also debug a single test with a partial name of the test behind `--` for example `node --inspect-brk node_modules/.bin/jest --config=test/jest.config.cjs --runInBand -- component-func`
 - In chrome go to url `chrome://inspect/`
 - Click the "inspect" target and then click go in the debugger to get to your test debug point

@@ -32,7 +32,9 @@ describe('Listview Events', () => {
     listviewAPI.destroy();
     listviewAPI = new ListView(listviewEl, { dataset: data, template: 'period-end-tmpl', selectable: 'single' });
 
-    const spyEvent = spyOnEvent($(listviewEl), 'selected');
+    const callback = jest.fn();
+    $(listviewEl).on('selected', callback);
+
     $(listviewEl).on('selected', (e, args) => {
       expect(args.selectedData[0].id).toEqual(3);
       expect(args.selectedData[0].city).toEqual('Vancouver');
@@ -42,7 +44,7 @@ describe('Listview Events', () => {
     const liEl = listviewEl.querySelectorAll('li')[2];
     liEl.click();
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
     $(listviewEl).off('selected');
     listviewAPI.deselect($(liEl));
   });
@@ -50,8 +52,9 @@ describe('Listview Events', () => {
   it('Should be able to multi select', (done) => {
     listviewAPI.destroy();
     listviewAPI = new ListView(listviewEl, { dataset: data, template: 'period-end-tmpl', selectable: 'multiple' });
+    const callback = jest.fn();
+    $(listviewEl).on('selected', callback);
 
-    const spyEvent = spyOnEvent($(listviewEl), 'selected');
     const liEl = listviewEl.querySelectorAll('li')[2];
     liEl.click();
 
@@ -65,7 +68,7 @@ describe('Listview Events', () => {
     const liEl2 = listviewEl.querySelectorAll('li')[3];
     liEl2.click();
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
     $(listviewEl).off('selected');
 
     listviewAPI.deselect($(liEl));
@@ -74,19 +77,21 @@ describe('Listview Events', () => {
 
   it('Should be fire rendered on updated with no params', () => {
     listviewAPI = new ListView(listviewEl, { dataset: data, template: 'period-end-tmpl', selectable: 'multiple' });
+    const callback = jest.fn();
+    $(listviewEl).on('rendered', callback);
 
-    const spyEvent = spyOnEvent($(listviewEl), 'rendered');
     listviewAPI.updated();
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
   });
 
   it('Should be fire rendered on updated with new settings', () => {
     listviewAPI = new ListView(listviewEl, { dataset: data, template: 'period-end-tmpl', selectable: 'multiple' });
+    const callback = jest.fn();
+    $(listviewEl).on('rendered', callback);
 
-    const spyEvent = spyOnEvent($(listviewEl), 'rendered');
     listviewAPI.updated({ dataset: data });
 
-    expect(spyEvent).toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
   });
 });
