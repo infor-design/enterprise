@@ -220,7 +220,6 @@ describe('Modal Manager API', () => {
     }, 300);
   });
 
-  // made `xit` til we figure out how to get timeouts working.
   // may need to replace setTimeout with renderLoop or direct `requestAnimationFrame` access.
   it('correctly organizes a modal stack based on which modal was last opened', (done) => {
     modalAPI = new Modal($('body'), {

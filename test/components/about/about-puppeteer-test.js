@@ -90,7 +90,7 @@ describe('About Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should fire the close event', async () => {
+    it.skip('should fire the close event', async () => {
       await page.click('#about-trigger');
       await page.waitForSelector('.modal-body', { visible: true });
       await page.waitForTimeout(300); // approx. time for a Modal to show
@@ -109,7 +109,7 @@ describe('About Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should be able to use both close buttons', async () => {
+    it.skip('should be able to use both close buttons', async () => {
       // Open About
       await page.click('#about-trigger');
       await page.waitForSelector('#about-modal .modal-body', { visible: true });

@@ -280,15 +280,6 @@ describe('Colorpicker modal tests', () => {
     await utils.setPage('/components/colorpicker/test-modal');
   });
 
-  xit('should open colorpicker modal', async () => {
-    const modalBtnEl = await element(by.id('add-comment'));
-    await modalBtnEl.click();
-    await browser.driver
-      .wait(protractor.ExpectedConditions.visibilityOf(await element(by.className('modal-page-container'))), config.waitsFor);
-
-    expect(await element(by.className('modal-engaged')).isPresent()).toBe(true);
-  });
-
   it('should select color, and close colorpicker modal on "cancel" button click', async () => {
     const modalBtnEl = await element(by.id('add-comment'));
     await modalBtnEl.click();

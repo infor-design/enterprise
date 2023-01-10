@@ -319,31 +319,4 @@ describe('Breadcrumb API', () => {
     expect(currentA).toBeTruthy();
     expect(currentA).toEqual(li4);
   });
-
-  xit('should render a popupmenu with overflowed breadcrumb items', (done) => {
-    document.body.insertAdjacentHTML('afterbegin', breadcrumbTmpl);
-    breadcrumbEl = document.querySelector(`#${id}`);
-    breadcrumbAPI = new Breadcrumb(breadcrumbEl, {
-      breadcrumbs: TEST_BREADCRUMBS
-    });
-
-    // Reference internal elements setup for truncation
-    const overflowMenuEl = breadcrumbAPI.overflowMenu;
-    const overflowBtnEl = breadcrumbAPI.overflowBtn;
-
-    // Constrain the breadcrumb area to a fixed width
-    breadcrumbEl.style.width = '200px';
-
-    setTimeout(() => {
-      // Trigger the popupmenu's `beforeOpen` method, which populates the overflow menu
-      overflowBtnEl.click();
-
-      setTimeout(() => {
-        expect(breadcrumbEl.classList.contains('truncated')).toBeTruthy();
-        expect(breadcrumbAPI.overflowed.length).toBeGreaterThan(0);
-        expect(overflowMenuEl.childNodes.length).toBeGreaterThan(0);
-        done();
-      }, 300);
-    }, 300);
-  });
 });

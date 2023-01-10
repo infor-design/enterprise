@@ -1,12 +1,37 @@
+/**
+ * @jest-environment jsdom
+ */
 import { MonthView } from '../../../src/components/monthview/monthview';
 import { Locale } from '../../../src/components/locale/locale';
 import { cleanup } from '../../helpers/func-utils';
 
-require('../../../src/components/locale/cultures/ar-SA.js');
-require('../../../src/components/locale/cultures/ar-EG.js');
+Soho.Locale = Locale;
 
-const monthviewHTML = require('../../../app/views/components/monthview/example-index.html');
-const svg = require('../../../src/components/icons/theme-new-svg.html');
+require('../../../src/components/locale/cultures/ar-EG.js');
+require('../../../src/components/locale/cultures/ar-SA.js');
+require('../../../src/components/locale/cultures/da-DK.js');
+require('../../../src/components/locale/cultures/en-US.js');
+require('../../../src/components/datepicker/datepicker.jquery.js');
+
+const monthviewHTML = `<div class="row">
+  <div class="twelve columns">
+    <div class="monthview" data-init="false">
+    </div>
+  </div>
+</div>
+
+
+<script>
+  $('body').on('initialized', function() {
+    $('.monthview').monthview({
+      attributes: [
+        { name: 'id', value: 'monthview-id' },
+        { name: 'data-automation-id', value: 'monthview-automation-id' }
+      ]
+    });
+  });
+</script>
+`;
 
 let monthviewEl;
 let monthviewAPI;
@@ -15,12 +40,9 @@ describe('MonthView Aria', () => {
   beforeEach(() => {
     monthviewEl = null;
     monthviewAPI = null;
-    document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', monthviewHTML);
     monthviewEl = document.body.querySelector('.monthview');
 
-    Locale.addCulture('ar-SA', Soho.Locale.cultures['ar-SA'], Soho.Locale.languages['ar']); //eslint-disable-line
-    Locale.addCulture('en-US', Soho.Locale.cultures['en-US'], Soho.Locale.languages['en']); //eslint-disable-line
     Locale.set('en-US');
 
     monthviewAPI = new MonthView(monthviewEl, {
@@ -31,7 +53,7 @@ describe('MonthView Aria', () => {
   });
 
   afterEach(() => {
-    monthviewAPI.destroy();
+    monthviewAPI?.destroy();
     cleanup();
   });
 

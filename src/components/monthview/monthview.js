@@ -2791,9 +2791,9 @@ MonthView.prototype = {
    * @private
    */
   teardown() {
-    this.header.off();
-    this.days.off();
-    this.element.off();
+    this.header?.off();
+    this.days?.off();
+    this.element?.off();
     if (this.monthYearPane) {
       this.monthYearPane.off();
       this.monthYearPane = null;

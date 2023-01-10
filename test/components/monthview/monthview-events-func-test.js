@@ -1,12 +1,37 @@
+/**
+ * @jest-environment jsdom
+ */
 import { MonthView } from '../../../src/components/monthview/monthview';
 import { Locale } from '../../../src/components/locale/locale';
 import { cleanup } from '../../helpers/func-utils';
 
+Soho.Locale = Locale;
+
 require('../../../src/components/locale/cultures/ar-EG.js');
 require('../../../src/components/locale/cultures/ar-SA.js');
+require('../../../src/components/locale/cultures/da-DK.js');
+require('../../../src/components/locale/cultures/en-US.js');
+require('../../../src/components/datepicker/datepicker.jquery.js');
 
-const datepickerHTML = require('../../../app/views/components/monthview/example-index.html');
-const svg = require('../../../src/components/icons/theme-new-svg.html');
+const datepickerHTML = `<div class="row">
+  <div class="twelve columns">
+    <div class="monthview" data-init="false">
+    </div>
+  </div>
+</div>
+
+
+<script>
+  $('body').on('initialized', function() {
+    $('.monthview').monthview({
+      attributes: [
+        { name: 'id', value: 'monthview-id' },
+        { name: 'data-automation-id', value: 'monthview-automation-id' }
+      ]
+    });
+  });
+</script>
+`;
 
 let monthviewEl;
 let monthviewAPI;
@@ -15,19 +40,10 @@ describe('Monthview API', () => {
   beforeEach(() => {
     monthviewEl = null;
     monthviewAPI = null;
-    document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', datepickerHTML);
     monthviewEl = document.body.querySelector('.monthview');
 
-    Locale.addCulture('ar-SA', Soho.Locale.cultures['ar-SA'], Soho.Locale.languages['ar']); //eslint-disable-line
-    Locale.addCulture('ar-EG', Soho.Locale.cultures['ar-EG'], Soho.Locale.languages['ar']); //eslint-disable-line
-    Locale.addCulture('en-US', Soho.Locale.cultures['en-US'], Soho.Locale.languages['en']); //eslint-disable-line
-    Locale.addCulture('ja-JP', Soho.Locale.cultures['ja-JP'], Soho.Locale.languages['ja']); //eslint-disable-line
-    Locale.addCulture('sv-SE', Soho.Locale.cultures['sv-SE'], Soho.Locale.languages['sv']); //eslint-disable-line
-    Locale.addCulture('en-GB', Soho.Locale.cultures['en-GB'], Soho.Locale.languages['en']); //eslint-disable-line
-    Locale.addCulture('de-DE', Soho.Locale.cultures['de-DE'], Soho.Locale.languages['de']); //eslint-disable-line
     Locale.set('en-US');
-    Soho.Locale.set('en-US'); //eslint-disable-line
 
     monthviewAPI = new MonthView(monthviewEl, {
       month: 8,
@@ -37,7 +53,7 @@ describe('Monthview API', () => {
   });
 
   afterEach(() => {
-    monthviewAPI.destroy();
+    monthviewAPI?.destroy();
     cleanup();
   });
 
@@ -51,7 +67,7 @@ describe('Monthview API', () => {
   });
 
   it('triggers a `selected` event when the day is selected', (done) => {
-    monthviewAPI.destroy();
+    monthviewAPI?.destroy();
     monthviewAPI = new MonthView(monthviewEl, {
       month: 8,
       year: 2018,
