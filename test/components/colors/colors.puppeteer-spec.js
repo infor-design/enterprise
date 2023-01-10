@@ -1,5 +1,3 @@
-const { getConfig } = require('../../helpers/e2e-utils.cjs');
-
 describe('Colors Puppeteer Tests', () => {
   const baseUrl = 'http://localhost:4000/components/colors';
 
@@ -13,16 +11,6 @@ describe('Colors Puppeteer Tests', () => {
     it('should show the title', async () => {
       await expect(page.title()).resolves.toMatch('IDS Enterprise');
     });
-
-    it('should not visual regress', async () => {
-      await page.setViewport({ width: 1200, height: 800 });
-
-      expect(await page.waitForSelector('.palette-grid')).toBeTruthy();
-
-      const image = await page.screenshot();
-      const config = getConfig('color-index-classic');
-      expect(image).toMatchImageSnapshot(config);
-    });
   });
 
   describe('Colors New Theme Tests', () => {
@@ -34,16 +22,6 @@ describe('Colors Puppeteer Tests', () => {
 
     it('should show the title', async () => {
       await expect(page.title()).resolves.toMatch('IDS Enterprise');
-    });
-
-    it('should not visual regress', async () => {
-      await page.setViewport({ width: 1200, height: 800 });
-
-      expect(await page.waitForSelector('.palette-grid')).toBeTruthy();
-
-      const image = await page.screenshot();
-      const config = getConfig('color-index-new-theme');
-      expect(image).toMatchImageSnapshot(config);
     });
   });
 

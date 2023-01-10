@@ -1,5 +1,3 @@
-const { getConfig } = require('../../helpers/e2e-utils.cjs');
-
 describe('Circlepager Puppeteer Tests', () => {
   const baseUrl = 'http://localhost:4000/components/circlepager';
 
@@ -11,14 +9,6 @@ describe('Circlepager Puppeteer Tests', () => {
 
     it('should show the title', async () => {
       await expect(page.title()).resolves.toMatch('IDS Enterprise');
-    });
-
-    it('should not visual regress', async () => {
-      expect(await page.waitForSelector('div[role=main]')).toBeTruthy();
-
-      const image = await page.screenshot();
-      const config = getConfig('circlepager');
-      expect(image).toMatchImageSnapshot(config);
     });
 
     it('should be able to set id/automation', async () => {

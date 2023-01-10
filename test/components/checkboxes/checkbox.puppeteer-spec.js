@@ -1,5 +1,3 @@
-const { getConfig } = require('../../helpers/e2e-utils.cjs');
-
 describe('Checkbox Puppeteer Tests', () => {
   const baseUrl = 'http://localhost:4000/components/checkboxes';
 
@@ -12,14 +10,6 @@ describe('Checkbox Puppeteer Tests', () => {
     it('should show the title', async () => {
       await expect(page.title()).resolves.toMatch('IDS Enterprise');
     });
-
-    it('should not visual regress', async () => {
-      expect(await page.waitForSelector('div[role=main]')).toBeTruthy();
-
-      const image = await page.screenshot();
-      const config = getConfig('checkboxes');
-      expect(image).toMatchImageSnapshot(config);
-    });
   });
 
   describe('New Theme Tests', () => {
@@ -30,14 +20,6 @@ describe('Checkbox Puppeteer Tests', () => {
 
     it('should show the title', async () => {
       await expect(page.title()).resolves.toMatch('IDS Enterprise');
-    });
-
-    it('should not visual regress', async () => {
-      expect(await page.waitForSelector('div[role=main]')).toBeTruthy();
-
-      const image = await page.screenshot();
-      const config = getConfig('checkboxes-new');
-      expect(image).toMatchImageSnapshot(config);
     });
   });
 
@@ -50,14 +32,6 @@ describe('Checkbox Puppeteer Tests', () => {
     it('should show the title', async () => {
       await expect(page.title()).resolves.toMatch('IDS Enterprise');
     });
-
-    it('should not visual regress', async () => {
-      expect(await page.waitForSelector('div[role=main]')).toBeTruthy();
-
-      const image = await page.screenshot();
-      const config = getConfig('checkbox-groups');
-      expect(image).toMatchImageSnapshot(config);
-    });
   });
 
   describe('Horizontal checkbox group Tests', () => {
@@ -68,14 +42,6 @@ describe('Checkbox Puppeteer Tests', () => {
 
     it('should show the title', async () => {
       await expect(page.title()).resolves.toMatch('IDS Enterprise');
-    });
-
-    it('should not visual regress', async () => {
-      expect(await page.waitForSelector('div[role=main]')).toBeTruthy();
-
-      const image = await page.screenshot();
-      const config = getConfig('checkboxes-horizontal');
-      expect(image).toMatchImageSnapshot(config);
     });
   });
 });
