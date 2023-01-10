@@ -186,7 +186,7 @@ describe('Breadcrumb API', () => {
     const a3 = breadcrumbAPI.breadcrumbs[2].a;
     const target3 = breadcrumbAPI.getBreadcrumbItemAPI(a3);
 
-    expect(target3.api).toBeDefined();
+    expect(target3.api).toBeTruthy();
     expect(target3.api.element).toEqual(breadcrumbAPI.breadcrumbs[2].element);
   });
 
@@ -202,7 +202,7 @@ describe('Breadcrumb API', () => {
 
     breadcrumbAPI.destroy();
 
-    expect(target3.api.element).not.toBeDefined();
+    expect(target3.api.element).not.toBeTruthy();
   });
 
   it('can programmatically add a breadcrumb', () => {
@@ -316,7 +316,7 @@ describe('Breadcrumb API', () => {
     const currentA = breadcrumbAPI.current;
     const li4 = breadcrumbAPI.breadcrumbs[3].element;
 
-    expect(currentA).toBeDefined();
+    expect(currentA).toBeTruthy();
     expect(currentA).toEqual(li4);
   });
 

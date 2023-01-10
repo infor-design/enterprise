@@ -54,10 +54,10 @@ describe('ActionSheet API', () => {
     const { actionElems } = actionSheetAPI;
 
     // Action Sheet markup is rendered
-    expect(actionSheetEl).toBeDefined();
+    expect(actionSheetEl).toBeTruthy();
 
     // Actions are rendered properly as button elements
-    expect(actionElems).toBeDefined();
+    expect(actionElems).toBeTruthy();
     expect(actionElems.length).toBe(testActions.length);
   });
 
@@ -124,7 +124,7 @@ describe('ActionSheet API', () => {
 
     // Setup an event listener for the `selected` event
     $(actionSheetTriggerEl).on('cancelled', (e, actionSheetElem) => {
-      expect(actionSheetElem).toBeDefined();
+      expect(actionSheetElem).toBeTruthy();
       done();
     });
 

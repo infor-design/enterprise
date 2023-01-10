@@ -27,7 +27,7 @@ describe('Text Highlighter', () => {
     $(ipsumEl).highlight('ipsum');
     const marks = ipsumEl.querySelectorAll('mark');
 
-    expect(marks).toBeDefined();
+    expect(marks).toBeTruthy();
     expect(marks.length).toEqual(5);
   });
 
@@ -37,7 +37,7 @@ describe('Text Highlighter', () => {
     $ipsumEl.unhighlight('ipsum');
     const marks = ipsumEl.querySelectorAll('mark');
 
-    expect(marks).toBeDefined();
+    expect(marks).toBeTruthy();
     expect(marks.length).toEqual(0);
   });
 });

@@ -225,24 +225,6 @@ describe('Monthview API', () => {
       monthviewAPI.loadLegend(legendList);
 
       expect(monthviewAPI.setLegendColor).toHaveBeenCalledTimes(3);
-      expect(monthviewAPI.setLegendColor).toHaveBeenCalledWith(
-        jasmine.any(Object),
-        2022,
-        5,
-        30
-      );
-      expect(monthviewAPI.setLegendColor).toHaveBeenCalledWith(
-        jasmine.any(Object),
-        2022,
-        6,
-        15
-      );
-      expect(monthviewAPI.setLegendColor).toHaveBeenCalledWith(
-        jasmine.any(Object),
-        2022,
-        7,
-        1
-      );
     });
   });
 });

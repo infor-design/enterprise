@@ -12,7 +12,7 @@ describe('Theme API', () => {
   });
 
   it('should be an object', () => {
-    expect(theme).toBeDefined();
+    expect(theme).toBeTruthy();
   });
 
   it('should contain current theme', () => {

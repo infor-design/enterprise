@@ -216,7 +216,7 @@ describe('Button API', () => {
   it('displays a ripple effect when clicked', (done) => {
     buttonEl.click();
 
-    expect(buttonEl.querySelector('svg.ripple')).toBeDefined();
+    expect(buttonEl.querySelector('svg.ripple')).toBeTruthy();
 
     setTimeout(() => {
       expect(buttonEl.querySelector('svg.ripple')).toBe(null);
@@ -227,7 +227,7 @@ describe('Button API', () => {
   it('can programmatically display a ripple effect', (done) => {
     buttonAPI.createRipple();
 
-    expect(buttonEl.querySelector('svg.ripple')).toBeDefined();
+    expect(buttonEl.querySelector('svg.ripple')).toBeTruthy();
 
     setTimeout(() => {
       expect(buttonEl.querySelector('svg.ripple')).toBe(null);
@@ -276,7 +276,7 @@ describe('Button API (Icons)', () => {
     const icon = buttonAPI.icon;
     const use = icon.querySelector('use');
 
-    expect(icon).toBeDefined();
+    expect(icon).toBeTruthy();
     expect(use.getAttribute('href')).toEqual('#icon-settings');
   });
 });
@@ -392,13 +392,13 @@ describe('Button API `toData()` method', () => {
   it('can get a data representation of itself', () => {
     const data = buttonAPI.toData();
 
-    expect(data).toBeDefined();
+    expect(data).toBeTruthy();
   });
 
   it('can get a data representation of itself with an element reference', () => {
     const data = buttonAPI.toData(true);
 
-    expect(data).toBeDefined();
+    expect(data).toBeTruthy();
     expect(data.element instanceof HTMLElement).toBeTruthy();
   });
 });

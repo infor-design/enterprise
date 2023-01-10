@@ -119,11 +119,11 @@ describe('Autocomplete API', () => {
     const autocompleteListEl = document.querySelector('#autocomplete-list');
     const resultItems = autocompleteListEl.querySelectorAll('li');
 
-    expect(resultItems).toBeDefined();
+    expect(resultItems).toBeTruthy();
     expect(resultItems.length).toEqual(1);
     expect(resultItems[0].querySelector('span').innerText.trim()).toEqual('Quincy Adams');
 
     // Look for an extra element not provided by the standard template
-    expect(resultItems[0].querySelector('small')).toBeDefined();
+    expect(resultItems[0].querySelector('small')).toBeTruthy();
   });
 });

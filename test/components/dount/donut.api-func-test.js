@@ -1,8 +1,23 @@
+/**
+ * @jest-environment jsdom
+ */
 import { cleanup, triggerContextmenu } from '../../helpers/func-utils';
 import { Pie } from '../../../src/components/pie/pie';
 
-const donutHTML = require('../../../app/views/components/donut/example-index.html');
-const svg = require('../../../src/components/icons/theme-new-svg.html');
+const donutHTML = `
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Donut Chart Title</h2>
+        </div>
+        <div class="widget-content">
+          <div id="pie-donut-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>`;
 
 let donutEl;
 let donutObj;
@@ -25,7 +40,6 @@ describe('Donut Chart API', () => {
   beforeEach(() => {
     donutEl = null;
     donutObj = null;
-    document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', donutHTML);
     donutEl = document.body.querySelector('#pie-donut-example');
 

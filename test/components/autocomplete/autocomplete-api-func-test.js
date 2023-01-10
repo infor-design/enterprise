@@ -81,11 +81,11 @@ describe('Autocomplete API', () => {
     autocompleteAPI.openList('new', statesData);
     const autocompleteListEl = document.querySelector('#autocomplete-list');
 
-    expect(autocompleteListEl).toBeDefined();
+    expect(autocompleteListEl).toBeTruthy();
 
     const resultItems = autocompleteListEl.querySelectorAll('li');
 
-    expect(resultItems).toBeDefined();
+    expect(resultItems).toBeTruthy();
     expect(resultItems.length).toEqual(4);
   });
 
@@ -93,11 +93,11 @@ describe('Autocomplete API', () => {
     autocompleteAPI.openList('new', statesData);
     const autocompleteListEl = document.querySelector('#autocomplete-list');
 
-    expect(autocompleteListEl).toBeDefined();
+    expect(autocompleteListEl).toBeTruthy();
 
     let resultItems = autocompleteListEl.querySelectorAll('li');
 
-    expect(resultItems).toBeDefined();
+    expect(resultItems).toBeTruthy();
     expect(resultItems.length).toEqual(4);
     expect(resultItems[1].innerText.trim()).toEqual('New Jersey');
 
@@ -166,7 +166,7 @@ describe('Autocomplete API', () => {
     autocompleteAPI.openList('S', newData);
     const autocompleteListEl = document.querySelector('#autocomplete-list');
 
-    expect(autocompleteListEl).toBeDefined();
+    expect(autocompleteListEl).toBeTruthy();
 
     const resultItems = autocompleteListEl.querySelectorAll('li');
 
@@ -175,7 +175,7 @@ describe('Autocomplete API', () => {
     expect(resultItems[2].innerText.trim()).toEqual("Server Error '/' Application");
     expect(resultItems[3].innerText.trim()).toEqual("Server Error '/ReportManager' Application");
     expect(resultItems[4].innerText.trim()).toEqual('server error application');
-    expect(resultItems).toBeDefined();
+    expect(resultItems).toBeTruthy();
     expect(resultItems.length).toEqual(5);
   });
 
@@ -197,7 +197,7 @@ describe('Autocomplete API', () => {
     autocompleteAPI.openList('S', newData);
     const autocompleteListEl = document.querySelector('#autocomplete-list');
 
-    expect(autocompleteListEl).toBeDefined();
+    expect(autocompleteListEl).toBeTruthy();
 
     const resultItems = autocompleteListEl.querySelectorAll('li');
 
@@ -206,7 +206,7 @@ describe('Autocomplete API', () => {
     expect(resultItems[2].innerText.trim()).toEqual("Server Error '/' Application");
     expect(resultItems[3].innerText.trim()).toEqual("Server Error '/ReportManager' Application");
     expect(resultItems[4].innerText.trim()).toEqual('server error application');
-    expect(resultItems).toBeDefined();
+    expect(resultItems).toBeTruthy();
     expect(resultItems.length).toEqual(5);
   });
 });

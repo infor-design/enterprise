@@ -73,7 +73,7 @@ describe('Autocomplete API (select)', () => {
     const resultItems = autocompleteListEl.querySelectorAll('li');
     const selectedItem = autocompleteAPI.select($(resultItems[1]));
 
-    expect(selectedItem).toBeDefined();
+    expect(selectedItem).toBeTruthy();
     expect(selectedItem.index).toEqual(1);
     expect(selectedItem.label).toEqual('New Jersey');
     expect(selectedItem.value).toEqual('NJ'); // Should be retrieved from `data-value`
@@ -85,7 +85,7 @@ describe('Autocomplete API (select)', () => {
     const resultItems = autocompleteListEl.querySelectorAll('li');
     const selectedItem = autocompleteAPI.select($(resultItems[1]));
 
-    expect(selectedItem).toBeDefined();
+    expect(selectedItem).toBeTruthy();
     expect(selectedItem.index).toEqual(1);
     expect(selectedItem.value).toEqual('NJ');
     expect(selectedItem.addedValue).toEqual('sandwich');
@@ -103,7 +103,7 @@ describe('Autocomplete API (select)', () => {
     const resultItems = autocompleteListEl.querySelectorAll('li');
     const selectedItem = autocompleteAPI.select($(resultItems[1]));
 
-    expect(selectedItem).toBeDefined();
+    expect(selectedItem).toBeTruthy();
     expect(selectedItem.index).toEqual(1);
     expect(selectedItem.value).toEqual('NJ');
     expect(selectedItem.addedValue).toEqual('sandwich');

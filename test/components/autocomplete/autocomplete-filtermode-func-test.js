@@ -64,7 +64,7 @@ describe('Autocomplete API', () => {
     let autocompleteListEl = document.querySelector('#autocomplete-list');
     let resultItems = autocompleteListEl.querySelectorAll('li');
 
-    expect(resultItems).toBeDefined();
+    expect(resultItems).toBeTruthy();
     expect(resultItems.length).toEqual(0);
 
     // Update the component with a "contains" filterMode
@@ -76,7 +76,7 @@ describe('Autocomplete API', () => {
     resultItems = autocompleteListEl.querySelectorAll('li');
 
     // Results should be present
-    expect(resultItems).toBeDefined();
+    expect(resultItems).toBeTruthy();
     expect(resultItems.length).toEqual(10);
   });
 
@@ -89,7 +89,7 @@ describe('Autocomplete API', () => {
     const autocompleteListEl = document.querySelector('#autocomplete-list');
     const resultItems = autocompleteListEl.querySelectorAll('li');
 
-    expect(resultItems).toBeDefined();
+    expect(resultItems).toBeTruthy();
     expect(resultItems.length).toEqual(1);
   });
 
@@ -103,7 +103,7 @@ describe('Autocomplete API', () => {
     let autocompleteListEl = document.querySelector('#autocomplete-list');
     let resultItems = autocompleteListEl.querySelectorAll('li');
 
-    expect(resultItems).toBeDefined();
+    expect(resultItems).toBeTruthy();
     expect(resultItems.length).toEqual(6);
 
     // Search for "?" (two results)

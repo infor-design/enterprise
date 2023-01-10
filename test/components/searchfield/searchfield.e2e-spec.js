@@ -68,7 +68,7 @@ describe('Searchfield example-index tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(searchfieldInputEl), config.waitsFor);
 
     // Identify the added "All Results" link
-    expect(await element(by.linkText('All Results For "co"'))).toBeDefined();
+    expect(await element(by.linkText('All Results For "co"'))).toBeTruthy();
   });
 
   it('Adds a "no results" link if an empty list is present', async () => {
@@ -78,7 +78,7 @@ describe('Searchfield example-index tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(searchfieldInputEl), config.waitsFor);
 
     // Identify the added "No Results" link
-    expect(await element(by.linkText('No Results'))).toBeDefined();
+    expect(await element(by.linkText('No Results'))).toBeTruthy();
   });
 
   it('should be able to set id/automation id', async () => {

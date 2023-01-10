@@ -81,7 +81,7 @@ describe('ButtonSet API', () => {
   it('can have buttons', () => {
     buttonSetAPI = new ButtonSet(buttonSetEl, standardButtonsDef);
 
-    expect(Array.isArray(buttonSetAPI.buttons)).toBeDefined();
+    expect(Array.isArray(buttonSetAPI.buttons)).toBeTruthy();
     expect(buttonSetAPI.buttons.length).toEqual(5);
   });
 
@@ -147,7 +147,7 @@ describe('ButtonSet API', () => {
 
     const secondBtn = buttonSetAPI.at(1);
 
-    expect(secondBtn).toBeDefined();
+    expect(secondBtn).toBeTruthy();
     expect(secondBtn.element[0].id).toEqual('my-button-2');
     expect(secondBtn.element[0].classList.contains('btn-primary')).toBeTruthy();
   });

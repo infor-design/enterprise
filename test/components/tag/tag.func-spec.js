@@ -28,7 +28,7 @@ describe('Tag API (as span)', () => {
     tagEl.insertAdjacentHTML('afterbegin', '<span class="tag-content">This is a Tag!</span>');
     tagAPI = new Tag(tagEl);
 
-    expect(tagAPI.element.querySelector('.tag-content')).toBeDefined();
+    expect(tagAPI.element.querySelector('.tag-content')).toBeTruthy();
     expect(tagAPI.element.querySelector('.tag-content').innerText).toEqual('This is a Tag!');
   });
 
@@ -38,7 +38,7 @@ describe('Tag API (as span)', () => {
       dismissible: true
     });
 
-    expect(tagAPI.element.querySelector('.btn-dismissible')).toBeDefined();
+    expect(tagAPI.element.querySelector('.btn-dismissible')).toBeTruthy();
     expect(tagAPI.element.querySelector('.btn-dismissible').getAttribute('type')).toEqual('button');
   });
 
@@ -46,7 +46,7 @@ describe('Tag API (as span)', () => {
     tagEl.insertAdjacentHTML('afterbegin', '<a href="#" class="tag-content">This is a Tag!</a>');
     tagAPI = new Tag(tagEl);
 
-    expect(tagAPI.element.querySelector('a')).toBeDefined();
+    expect(tagAPI.element.querySelector('a')).toBeTruthy();
     expect(tagAPI.element.querySelector('a').getAttribute('href')).toEqual('#');
   });
 

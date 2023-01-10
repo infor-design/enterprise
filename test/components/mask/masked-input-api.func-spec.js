@@ -1,4 +1,10 @@
-/* eslint-disable no-underscore-dangle */
+/**
+ * @jest-environment jsdom
+ */
+import { Locale } from '../../../src/components/locale/locale';
+
+Soho.Locale = Locale;
+
 require('../../../src/components/locale/cultures/ar-EG.js');
 require('../../../src/components/locale/cultures/ar-SA.js');
 require('../../../src/components/locale/cultures/en-US.js');
@@ -7,7 +13,6 @@ require('../../../src/components/locale/cultures/fr-FR.js');
 describe('Mask Input Field Api', () => {
   let TEST_INPUT = null;
   let TEST_COMPONENT_API = null;
-  const Locale = window.Soho.Locale;
 
   beforeAll(() => {
     // Setup the input field used for this test suite
@@ -25,21 +30,21 @@ describe('Mask Input Field Api', () => {
   });
 
   it('should pass a basic confidence test', () => {
-    expect(window.Soho).toBeDefined();
-    expect(window.Soho.masks).toBeDefined();
-    expect(window.Soho.components.MaskInput).toBeDefined();
+    expect(window.Soho).toBeTruthy();
+    expect(window.Soho.masks).toBeTruthy();
+    expect(window.Soho.components.MaskInput).toBeTruthy();
   });
 
   it('should be invokable', () => {
     TEST_COMPONENT_API = new window.Soho.components.MaskInput(TEST_INPUT);
     const api = TEST_COMPONENT_API;
 
-    expect(api).toBeDefined();
-    expect(window.Soho.components.MaskInput).toBeDefined();
+    expect(api).toBeTruthy();
+    expect(window.Soho.components.MaskInput).toBeTruthy();
 
     // Check default settings
     expect(api.settings).toBeTruthy();
-    expect(api.settings.maskAPI).toBeDefined();
+    expect(api.settings.maskAPI).toBeTruthy();
   });
 
   it('should handle translation of deprecated settings', () => {
@@ -54,19 +59,24 @@ describe('Mask Input Field Api', () => {
 
     const inputComponent = new window.Soho.components.MaskInput(input);
 
-    expect(inputComponent.settings).toBeDefined();
     expect(inputComponent.settings).toBeTruthy();
-    expect(inputComponent.settings.process).toBeDefined();
+    expect(inputComponent.settings).toBeTruthy();
+    expect(inputComponent.settings.process).toBeTruthy();
   });
 
   it('should be able to safely get a string value from an input field', () => {
     // Test `_getSafeRawValue()_`
     TEST_COMPONENT_API = new window.Soho.components.MaskInput(TEST_INPUT);
 
+    // eslint-disable-next-line no-underscore-dangle
     expect(TEST_COMPONENT_API._getSafeRawValue('straight up text')).toEqual('straight up text');
+    // eslint-disable-next-line no-underscore-dangle
     expect(TEST_COMPONENT_API._getSafeRawValue(300)).toEqual('300');
+    // eslint-disable-next-line no-underscore-dangle
     expect(TEST_COMPONENT_API._getSafeRawValue(`${300}4545`)).toEqual('3004545');
+    // eslint-disable-next-line no-underscore-dangle
     expect(TEST_COMPONENT_API._getSafeRawValue(null)).toEqual('');
+    // eslint-disable-next-line no-underscore-dangle
     expect(TEST_COMPONENT_API._getSafeRawValue(undefined)).toEqual('');
   });
 
@@ -82,7 +92,7 @@ describe('Mask Input Field Api', () => {
       pattern: '(###) ###-####'
     });
 
-    expect(inputComponent1.settings.pattern).toBeDefined();
+    expect(inputComponent1.settings.pattern).toBeTruthy();
     expect(input1.value).toEqual('(123) 456-7890');
 
     // `input2/inputComponent2` is a number mask
@@ -105,14 +115,14 @@ describe('Mask Input Field Api', () => {
       }
     });
 
-    expect(inputComponent2.settings.patternOptions).toBeDefined();
-    expect(inputComponent2.settings.patternOptions.integerLimit).toBeDefined();
+    expect(inputComponent2.settings.patternOptions).toBeTruthy();
+    expect(inputComponent2.settings.patternOptions.integerLimit).toBeTruthy();
     expect(inputComponent2.settings.patternOptions.integerLimit).toEqual(7);
 
-    expect(inputComponent2.settings.patternOptions.decimalLimit).toBeDefined();
+    expect(inputComponent2.settings.patternOptions.decimalLimit).toBeTruthy();
     expect(inputComponent2.settings.patternOptions.decimalLimit).toEqual(0);
 
-    expect(inputComponent2.settings.patternOptions.allowThousands).toBeDefined();
+    expect(inputComponent2.settings.patternOptions.allowThousands).toBeTruthy();
     expect(inputComponent2.settings.patternOptions.allowThousands).toEqual(true);
 
     expect(input2.value).toEqual('1,234,567');
@@ -171,7 +181,7 @@ describe('Mask Input Field Api', () => {
       }
     });
 
-    expect(inputComponent.settings.patternOptions.symbols).toBeDefined();
+    expect(inputComponent.settings.patternOptions.symbols).toBeTruthy();
     expect(inputComponent.settings.patternOptions.symbols.decimal).toEqual(',');
     expect(inputComponent.settings.patternOptions.symbols.thousands).toEqual(' ');
     expect(inputComponent.settings.patternOptions.symbols.currency).toEqual('€');
@@ -202,7 +212,7 @@ describe('Mask Input Field Api', () => {
       }
     });
 
-    expect(inputComponent.settings.patternOptions.symbols).toBeDefined();
+    expect(inputComponent.settings.patternOptions.symbols).toBeTruthy();
     expect(inputComponent.settings.patternOptions.symbols.thousands).toEqual('٬');
     expect(inputComponent.settings.patternOptions.symbols.negative).toEqual('-');
     expect(input.value).toEqual('1٬234٬567-');

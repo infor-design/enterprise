@@ -376,13 +376,13 @@ describe('Popupmenu (settings)', () => {
     });
     const popupmenuWrapperEl = document.body.querySelector('body > .popupmenu-wrapper');
 
-    expect(popupmenuWrapperEl).toBeDefined();
+    expect(popupmenuWrapperEl).toBeTruthy();
 
     // Menu markup should move back to immediately after the button when destroyed.
     popupmenuObj.destroy();
     const popupmenuEl = document.body.querySelector('#input-menu + .popupmenu');
 
-    expect(popupmenuEl).toBeDefined();
+    expect(popupmenuEl).toBeTruthy();
   });
 
   it('should remove the menu `<ul>` from the DOM when destroyed with `removeOnDestroy` set', () => {
@@ -393,15 +393,15 @@ describe('Popupmenu (settings)', () => {
     let popupmenuEl = document.body.querySelector('#input-menu + .popupmenu-wrapper > .popupmenu');
 
     // When invoked, references should exist
-    expect(popupmenuEl).toBeDefined();
-    expect(popupmenuObj.menu).toBeDefined();
+    expect(popupmenuEl).toBeTruthy();
+    expect(popupmenuObj.menu).toBeTruthy();
 
     popupmenuObj.destroy();
     popupmenuEl = document.body.querySelector('#input-menu + .popupmenu');
 
     // When destroyed with the setting, references should be gone
     expect(popupmenuEl).toBe(null);
-    expect(popupmenuObj.menu).not.toBeDefined();
+    expect(popupmenuObj.menu).not.toBeTruthy();
   });
 });
 
@@ -426,9 +426,9 @@ describe('Popupmenu toData() API', () => {
     it('should convert the main Popupmenu example into an object representation', () => {
       const data = popupmenuObj.toData();
 
-      expect(data).toBeDefined();
-      expect(data.menuId).toBeDefined(); // auto-generated
-      expect(data.menu).toBeDefined();
+      expect(data).toBeTruthy();
+      expect(data.menuId).toBeTruthy(); // auto-generated
+      expect(data.menu).toBeTruthy();
       expect(data.menu.length).toBe(3);
       expect(data.menu[0].text).toBe('Menu Option #1');
       expect(data.menu[0].disabled).toBeFalsy();
@@ -463,8 +463,8 @@ describe('Popupmenu toData() API', () => {
     it('should gracefully handle empty menus', () => {
       const data = popupmenuObj.toData();
 
-      expect(data).toBeDefined();
-      expect(data.menuId).toBeDefined(); // auto-generated
+      expect(data).toBeTruthy();
+      expect(data.menuId).toBeTruthy(); // auto-generated
       expect(data.menu.length).toBe(0);
     });
   });
@@ -487,29 +487,29 @@ describe('Popupmenu toData() API', () => {
     it('should convert a more complicated Popupmenu example into an object representation', () => {
       const data = popupmenuObj.toData();
 
-      expect(data).toBeDefined();
+      expect(data).toBeTruthy();
       expect(data.menuId).toBe('action-popupmenu');
-      expect(data.menu).toBeDefined();
+      expect(data.menu).toBeTruthy();
       expect(data.menu.length).toBe(14);
 
       // Check existence of separator
-      expect(data.menu[4].separator).toBeDefined();
+      expect(data.menu[4].separator).toBeTruthy();
       expect(data.menu[4].text).toBeUndefined();
 
       // Check existence of separator with heading/selection area
-      expect(data.menu[9].separator).toBeDefined();
+      expect(data.menu[9].separator).toBeTruthy();
       expect(data.menu[9].heading).toBe('Additional Options');
       expect(data.menu[9].nextSectionSelect).toBe('single');
 
       // Check existence of submenu
-      expect(data.menu[3].submenu).toBeDefined();
+      expect(data.menu[3].submenu).toBeTruthy();
       expect(data.menu[3].submenu.length).toBe(4);
       expect(data.menu[3].submenu[0].text).toBe('Sub Menu 1');
       expect(data.menu[3].submenu[0].disabled).toBeFalsy();
       expect(data.menu[3].submenu[0].visible).toBeTruthy();
 
       // Check existence of icon
-      expect(data.menu[13]).toBeDefined();
+      expect(data.menu[13]).toBeTruthy();
       expect(data.menu[13].icon).toBe('settings');
     });
   });

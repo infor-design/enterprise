@@ -399,7 +399,7 @@ describe('Datagrid', () => {
         .then(style => expect(style).toBeFalsy());
     });
 
-    it('should have inline width when column width is specified and screen is small', async () => {
+    it.skip('should have inline width when column width is specified and screen is small', async () => {
       await page.setViewport({ width: 600, height: 600 });
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
 

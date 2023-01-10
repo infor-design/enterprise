@@ -8,7 +8,7 @@ describe('Personalize API', () => {
   });
 
   it('should define personalization', () => {
-    expect(personalization).toBeDefined();
+    expect(personalization).toBeTruthy();
   });
 
   it('should define currentTheme', () => {

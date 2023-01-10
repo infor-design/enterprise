@@ -226,7 +226,7 @@ describe('Pager API (Standalone)', () => {
     const button = pagerEl.querySelector('.pager-pagesize > button');
     const recordCountEl = button.querySelector('.record-count');
 
-    expect(recordCountEl).toBeDefined();
+    expect(recordCountEl).toBeTruthy();
     expect(recordCountEl.innerText).toBe('20');
   });
 });

@@ -99,7 +99,7 @@ describe('Modal API', () => {
       buttons: standardButtonsDef
     });
 
-    expect(modalAPI.buttonsetAPI).toBeDefined();
+    expect(modalAPI.buttonsetAPI).toBeTruthy();
     expect(Array.isArray(modalAPI.buttonsetAPI.buttons)).toBeTruthy();
     expect(modalAPI.buttonsetAPI.buttons.length).toEqual(5);
   });
@@ -136,7 +136,7 @@ describe('Modal API', () => {
     });
     const closeBtn = modalAPI.closeBtn;
 
-    expect(closeBtn).toBeDefined();
+    expect(closeBtn).toBeTruthy();
     expect(closeBtn instanceof HTMLElement).toBeTruthy();
     expect(closeBtn.classList.contains('btn-close')).toBeTruthy();
   });
@@ -187,7 +187,7 @@ describe('Modal Manager API', () => {
   });
 
   it('should exist as part of the global Soho object', () => {
-    expect(Soho.modalManager).toBeDefined();
+    expect(Soho.modalManager).toBeTruthy();
   });
 
   it('holds references to all Modals defined in the page', (done) => {
@@ -200,12 +200,12 @@ describe('Modal Manager API', () => {
 
     modalAPI.open();
     setTimeout(() => {
-      expect(modalManager.currentlyActive).toBeDefined();
+      expect(modalManager.currentlyActive).toBeTruthy();
       expect(modalManager.currentlyOpen.length).toEqual(1);
 
       modalAPI.close();
       setTimeout(() => {
-        expect(modalManager.currentlyActive).not.toBeDefined();
+        expect(modalManager.currentlyActive).not.toBeTruthy();
         expect(modalManager.currentlyOpen.length).toEqual(0);
 
         // Modals should still be registered even if they are closed and hidden
@@ -292,8 +292,8 @@ describe('Modal Manager API', () => {
 
         setTimeout(() => {
           expect(modalManager.currentlyOpen.length).toEqual(0);
-          expect(modalManager.currentlyActive).not.toBeDefined();
-          expect(modalManager.last).not.toBeDefined();
+          expect(modalManager.currentlyActive).not.toBeTruthy();
+          expect(modalManager.last).not.toBeTruthy();
           done();
         }, 500);
       }, 500);

@@ -113,7 +113,7 @@ describe('DatePicker Settings', () => {
     const iconEl = buttonEl.querySelector('.icon');
 
     expect(buttonEl.classList.contains('trigger')).toBeTruthy();
-    expect(iconEl).toBeDefined();
+    expect(iconEl).toBeTruthy();
     done();
   });
 

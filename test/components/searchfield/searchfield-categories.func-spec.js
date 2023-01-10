@@ -60,13 +60,13 @@ describe('Searchfield API (full categories)', () => {
   it('renders a categories button', () => {
     const button = searchfieldSingleAPI.categoryButton;
 
-    expect(button).toBeDefined();
+    expect(button).toBeTruthy();
   });
 
   it('can retrieve categories as data', () => {
     const categories = searchfieldSingleAPI.getCategoryData();
 
-    expect(categories).toBeDefined();
+    expect(categories).toBeTruthy();
     expect(categories.length).toBe(6);
     expect(categories[2].name).toBe('Clothing');
   });
@@ -74,7 +74,7 @@ describe('Searchfield API (full categories)', () => {
   it('can retrieve only selected categories as data', () => {
     const categories = searchfieldMultiAPI.getCategoryData(true);
 
-    expect(categories).toBeDefined();
+    expect(categories).toBeTruthy();
     expect(categories.length).toBe(3);
     expect(categories[2].name).toBe('Images');
   });
@@ -84,7 +84,7 @@ describe('Searchfield API (full categories)', () => {
     // properly figure out that only one is selected.
     const categories = searchfieldSingleAPI.getCategoryData(true);
 
-    expect(categories).toBeDefined();
+    expect(categories).toBeTruthy();
     expect(categories.length).toBe(1);
     expect(categories[0].name).toBe('Animals');
   });
@@ -92,7 +92,7 @@ describe('Searchfield API (full categories)', () => {
   it('can retrieve a jQuery-wrapped list of menu item element references for each category', () => {
     const elems = searchfieldSingleAPI.getCategories();
 
-    expect(elems).toBeDefined();
+    expect(elems).toBeTruthy();
     expect(elems.length).toBe(6);
     expect(elems.eq(2).text().trim()).toBe('Clothing');
   });
@@ -100,7 +100,7 @@ describe('Searchfield API (full categories)', () => {
   it('can retrieve a jQuery-wrapped list of menu item element references for each selected category', () => {
     const elems = searchfieldMultiAPI.getSelectedCategories();
 
-    expect(elems).toBeDefined();
+    expect(elems).toBeTruthy();
     expect(elems.length).toBe(3);
     expect(elems.eq(2).text().trim()).toBe('Images');
   });
@@ -108,7 +108,7 @@ describe('Searchfield API (full categories)', () => {
   it('will only return one selected category in a single-select categories list', () => {
     const elems = searchfieldSingleAPI.getSelectedCategories();
 
-    expect(elems).toBeDefined();
+    expect(elems).toBeTruthy();
     expect(elems.length).toBe(1);
     expect(elems.eq(0).text().trim()).toBe('Animals');
   });

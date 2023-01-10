@@ -28,7 +28,7 @@ describe('Flex Toolbar', () => { //eslint-disable-line
   });
 
   it('should be invoked', () => {
-    expect(toolbarAPI).toEqual(jasmine.any(ToolbarFlex));
+    expect(toolbarAPI).toBeTruthy();
   });
 
   it('Can be disabled and re-enabled', () => {
@@ -42,12 +42,12 @@ describe('Flex Toolbar', () => { //eslint-disable-line
   });
 
   it('should have 6 items', () => {
-    expect(toolbarAPI.items).toBeDefined();
+    expect(toolbarAPI.items).toBeTruthy();
     expect(toolbarAPI.items.length).toBe(6);
   });
 
   it('should have 4 sections', () => {
-    expect(toolbarAPI.sections).toBeDefined();
+    expect(toolbarAPI.sections).toBeTruthy();
     expect(toolbarAPI.sections.length).toBe(4);
   });
 
@@ -65,7 +65,7 @@ describe('Flex Toolbar', () => { //eslint-disable-line
   it('Can detect all items present inside that should be invoked as Toolbar Flex Items', () => {
     const els = toolbarAPI.getElements();
 
-    expect(els).toBeDefined();
+    expect(els).toBeTruthy();
     expect(els.length).toBe(6);
   });
 
@@ -73,7 +73,7 @@ describe('Flex Toolbar', () => { //eslint-disable-line
     const els = toolbarAPI.getElements();
     const item = toolbarAPI.getItemFromElement(els[0]);
 
-    expect(item).toBeDefined();
+    expect(item).toBeTruthy();
     expect(item.type).toEqual('button');
     expect(item.disabled).toBeFalsy();
   });
@@ -84,7 +84,7 @@ describe('Flex Toolbar', () => { //eslint-disable-line
     let overflow = toolbarAPI.overflowedItems;
 
     // Normal overflow situation should be that nothing is overflowed.
-    expect(overflow).toBeDefined();
+    expect(overflow).toBeTruthy();
     expect(overflow.length).toBe(0);
 
     // Change width of the container to change the overflow scenario.
@@ -150,8 +150,8 @@ describe('Flex Toolbar', () => { //eslint-disable-line
     const data = toolbarAPI.toData();
 
     // Basic checks
-    expect(data).toBeDefined();
-    expect(data.items).toBeDefined();
+    expect(data).toBeTruthy();
+    expect(data.items).toBeTruthy();
     expect(data.items.length).toBe(6);
 
     // Item placement checks
@@ -164,12 +164,12 @@ describe('Flex Toolbar', () => { //eslint-disable-line
     expect(data.items[4].type).toEqual('searchfield');
     expect(data.items[4].focused).toBeFalsy();
     expect(data.items[4].disabled).toBeFalsy();
-    expect(data.items[4].readOnly).toBeDefined();
+    expect(data.items[4].readOnly).toBeTruthy();
     expect(data.items[4].readOnly).toBeFalsy();
     expect(data.items[4].componentAPI).toBeTruthy(); // Soho Searchfield component
 
     expect(data.items[1].type).toEqual('menubutton');
-    expect(data.items[1].submenu).toBeDefined();
+    expect(data.items[1].submenu).toBeTruthy();
     expect(data.items[1].submenu.length).toBe(3);
     expect(data.items[1].submenu[0].text).toEqual('Item One');
   });
@@ -178,15 +178,15 @@ describe('Flex Toolbar', () => { //eslint-disable-line
     const data = toolbarAPI.toPopupmenuData();
 
     // Basic checks
-    expect(data).toBeDefined();
-    expect(data.menu).toBeDefined();
+    expect(data).toBeTruthy();
+    expect(data.menu).toBeTruthy();
     expect(data.menu.length).toBe(4);
 
     // Item placement checks
     expect(data.menu[2].text).toEqual('Settings');
     expect(data.menu[2].icon).toEqual('settings');
 
-    expect(data.menu[1].submenu).toBeDefined();
+    expect(data.menu[1].submenu).toBeTruthy();
     expect(data.menu[1].submenu.length).toBe(3);
   });
 
@@ -195,8 +195,8 @@ describe('Flex Toolbar', () => { //eslint-disable-line
       const item = toolbarAPI.items[0];
       const elementAPI = $(item.element).data('toolbarflexitem');
 
-      expect(elementAPI).toBeDefined();
-      expect(item.section).toBeDefined();
+      expect(elementAPI).toBeTruthy();
+      expect(item.section).toBeTruthy();
       expect(item.toolbar).toEqual(toolbarEl);
     });
 

@@ -77,7 +77,7 @@ describe('Multiselect API (ajax)', () => {
     const predefinedOpt = multiSelectEl.querySelector('option');
 
     // Detect the pre-defined selected option
-    expect(predefinedOpt).toBeDefined();
+    expect(predefinedOpt).toBeTruthy();
     expect(predefinedOpt.value).toEqual('FL');
     expect(multiSelectObj.dropdown.selectedValues.includes(predefinedOpt.value)).toBeTruthy();
 

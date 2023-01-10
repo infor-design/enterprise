@@ -68,7 +68,7 @@ describe('Application Menu Puppeteer Tests', () => {
 
       // hamburger icon should be visible
       let hamburger = await page.waitForSelector('button#header-hamburger', { visible: true });
-      expect(hamburger).toBeDefined();
+      expect(hamburger).toBeTruthy();
 
       // Menu size after being dragged
       const menuSize = await checkVisibility('nav#application-menu', true).then(element => element.boundingBox());
@@ -94,7 +94,7 @@ describe('Application Menu Puppeteer Tests', () => {
 
       // hamburger icon should be visible
       let hamburger = await page.waitForSelector('button#header-hamburger', { visible: true });
-      expect(hamburger).toBeDefined();
+      expect(hamburger).toBeTruthy();
 
       // Menu size after being dragged
       const menuSize = await checkVisibility('nav#application-menu', true).then(element => element.boundingBox());

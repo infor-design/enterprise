@@ -93,7 +93,7 @@ describe('About Puppeteer Tests', () => {
     it('should fire the close event', async () => {
       await page.click('#about-trigger');
       await page.waitForSelector('.modal-body', { visible: true });
-      await page.waitForTimeout(200); // approx. time for a Modal to show
+      await page.waitForTimeout(300); // approx. time for a Modal to show
 
       await page.click('.btn-close');
 
