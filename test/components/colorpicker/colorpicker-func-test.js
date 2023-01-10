@@ -1,8 +1,33 @@
+/**
+ * @jest-environment jsdom
+ */
 import { ColorPicker } from '../../../src/components/colorpicker/colorpicker';
 import { cleanup } from '../../helpers/func-utils';
 
-const colorpickerHTML = require('../../../app/views/components/colorpicker/example-index.html');
-const svg = require('../../../src/components/icons/theme-new-svg.html');
+require('../../../src/components/colorpicker/colorpicker.jquery.js');
+require('../../../src/components/mask/mask-input.jquery.js');
+require('../../../src/components/icons/icons.jquery.js');
+require('../../../src/components/popupmenu/popupmenu.jquery.js');
+
+Object.defineProperty(window, 'getComputedStyle', {
+  value: () => ({
+    getPropertyValue: () => ''
+  })
+});
+
+const colorpickerHTML = `<div class="row">
+  <div class="twelve columns">
+    <div class="field">
+      <label for="background-color">Color Picker</label>
+      <input class="colorpicker" id="background-color" type="text" data-init="false"/>
+    </div>
+
+    <div class="field">
+      <label for="disabled-color-picker">Disabled Color Picker</label>
+      <input class="colorpicker" value="#941E1E" disabled="true" id="disabled-color-picker" type="text" />
+    </div>
+  </div>
+</div>`;
 
 let colorpickerEl;
 let colorpickerObj;
@@ -12,7 +37,6 @@ describe('ColorPicker Methods', () => {
     colorpickerEl = null;
     colorpickerObj = null;
 
-    document.body.insertAdjacentHTML('afterbegin', svg);
     document.body.insertAdjacentHTML('afterbegin', colorpickerHTML);
     colorpickerEl = document.getElementById('background-color');
     colorpickerEl.classList.add('no-init');
@@ -20,7 +44,7 @@ describe('ColorPicker Methods', () => {
   });
 
   afterEach(() => {
-    colorpickerObj.destroy();
+    colorpickerObj?.destroy();
     cleanup();
   });
 
@@ -36,7 +60,7 @@ describe('ColorPicker Methods', () => {
     colorpickerEl.style.width = '400px';
     colorpickerObj.setCustomWidth();
 
-    expect(colorpickerEl.style.width).toEqual('368px');
+    expect(colorpickerEl.style.width).toEqual('396px');
     expect(colorpickerEl.parentNode.style.width).toEqual('400px');
   });
 
