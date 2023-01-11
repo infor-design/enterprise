@@ -1,5 +1,3 @@
-const { getConfig } = require('../../helpers/e2e-utils.cjs');
-
 describe('Tooltip Puppeteer Tests', () => {
   const baseUrl = 'http://localhost:4000/components/tooltip';
 
@@ -8,25 +6,6 @@ describe('Tooltip Puppeteer Tests', () => {
 
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-    });
-
-    it('should not visually regress', async () => {
-      await page.evaluate(() => {
-        $('#tooltip-btn').tooltip({
-          keepOpen: true
-        });
-      });
-
-      const button = await page.$('#tooltip-btn');
-      button.hover();
-
-      await page.waitForSelector('.tooltip.is-open', { visible: true })
-        .then(element => expect(element).toBeTruthy());
-
-      const image = await page.screenshot();
-      const config = getConfig('tooltip-index');
-      await page.reload({ waitUntil: ['domcontentloaded', 'networkidle0'] });
-      expect(image).toMatchImageSnapshot(config);
     });
 
     it('should show the title', async () => {
@@ -55,25 +34,6 @@ describe('Tooltip Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should not visually regress', async () => {
-      await page.evaluate(() => {
-        $('#standalone-delete-icon').tooltip({
-          keepOpen: true
-        });
-      });
-
-      const button = await page.$('#standalone-delete-icon');
-      button.hover();
-
-      await page.waitForSelector('.tooltip.is-open', { visible: true })
-        .then(element => expect(element).toBeTruthy());
-
-      const image = await page.screenshot();
-      const config = getConfig('tooltip-on-icons');
-      await page.reload({ waitUntil: ['domcontentloaded', 'networkidle0'] });
-      expect(image).toMatchImageSnapshot(config);
-    });
-
     it('should show the title', async () => {
       await expect(page.title()).resolves.toMatch('IDS Enterprise');
     });
@@ -92,25 +52,6 @@ describe('Tooltip Puppeteer Tests', () => {
 
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-    });
-
-    it('should not visually regress', async () => {
-      await page.evaluate(() => {
-        $('#tooltip-btn').tooltip({
-          keepOpen: true
-        });
-      });
-
-      const button = await page.$('#tooltip-btn');
-      button.hover();
-
-      await page.waitForSelector('.tooltip.is-open', { visible: true })
-        .then(element => expect(element).toBeTruthy());
-
-      const image = await page.screenshot();
-      const config = getConfig('tooltip-with-icon');
-      await page.reload({ waitUntil: ['domcontentloaded', 'networkidle0'] });
-      expect(image).toMatchImageSnapshot(config);
     });
 
     it('should show the title', async () => {

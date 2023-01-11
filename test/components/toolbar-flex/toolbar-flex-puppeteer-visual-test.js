@@ -1,6 +1,6 @@
 const { getConfig } = require('../../helpers/e2e-utils.cjs');
 
-describe('Flex Toolbar', () => {
+describe('Flex Toolbar Puppeteer Visual Tests', () => {
   const baseUrl = 'http://localhost:4000/components/toolbar-flex';
 
   describe('Index', () => {
@@ -8,15 +8,6 @@ describe('Flex Toolbar', () => {
 
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-    });
-
-    it('should show the title', async () => {
-      await expect(page.title()).resolves.toMatch('IDS Enterprise');
-    });
-
-    it('should render without error', async () => {
-      await page.waitForSelector('#flex-toolbar', { visible: true })
-        .then(element => expect(element).toBeTruthy());
     });
 
     it.skip('should not visually regress', async () => {

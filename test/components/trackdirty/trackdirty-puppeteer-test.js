@@ -1,8 +1,8 @@
-describe('Track Dirty Puppeteer Tests', () => {
+describe('Track Dirty Puppeteer Visual Tests', () => {
   const baseUrl = 'http://localhost:4000/components/input';
 
   describe('Track Dirty Tests', () => {
-    const url = `${baseUrl}/example-track-dirty?layout=nofrills`;
+    const url = `${baseUrl}/example-track-dirty`;
 
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });

@@ -1,6 +1,6 @@
 const { getConfig } = require('../../helpers/e2e-utils.cjs');
 
-describe('Tag', () => {
+describe('Tag Puppeteer Visual Tests', () => {
   const baseUrl = 'http://localhost:4000/components/tag';
   const tag = '.tag-list .tag:first-child';
 
@@ -32,19 +32,6 @@ describe('Tag', () => {
 
       const config = getConfig('tag-standard');
       expect(image).toMatchImageSnapshot(config);
-    });
-  });
-
-  describe('Linkable', () => {
-    const url = `${baseUrl}/example-linkable`;
-
-    beforeAll(async () => {
-      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-    });
-
-    it('should display caret right icon correctly', async () => {
-      expect(await page.waitForSelector('#linkable-tag', { visible: true })).toBeTruthy();
-      expect(await page.waitForSelector('.tag-list .is-linkable > a + .btn-linkable', { visible: true })).toBeTruthy();
     });
   });
 

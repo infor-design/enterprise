@@ -43,6 +43,8 @@
       "functions": "never"
     }],
 
+    "no-await-in-loop": "off",
+
     // Re-enable anonymous/unnamed functions
     // https://eslint.org/docs/rules/func-names
     "func-names": "off",

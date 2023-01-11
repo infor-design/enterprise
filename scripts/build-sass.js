@@ -8,10 +8,11 @@
 // -------------------------------------
 // Requirements
 // -------------------------------------
-import config from './configs/sass.js'
-import buildSass from './build/sass.js';
 import _yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
+import config from './configs/sass.js';
+import buildSass from './build/sass.js';
+
 const argv = _yargs(hideBin(process.argv)).argv;
 
 // -------------------------------------
