@@ -21,7 +21,6 @@
 // -------------------------------------
 import archiver from 'archiver';
 import chalk from 'chalk';
-import { deleteAsync } from 'del';
 import { build, formats } from 'documentation';
 import frontMatter from 'front-matter';
 import * as fs from 'fs';
@@ -348,7 +347,12 @@ async function cleanAll() {
   }
 
   try {
-    await deleteAsync(filesToDel);
+    // eslint-disable-next-line no-restricted-syntax
+    for (const file of filesToDel) {
+      fs.unlink(file, () => {
+        // Ignore
+      });
+    }
     await createDirs([
       paths.idsWebsite.root,
       paths.idsWebsite.dist,

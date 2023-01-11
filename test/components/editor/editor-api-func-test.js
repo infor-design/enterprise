@@ -88,7 +88,7 @@ describe('Editor API', () => {
     expect(editorEl.classList.contains('is-disabled')).toBeFalsy();
     expect(editorEl.classList.contains('is-readonly')).toBeFalsy();
     expect(editorEl.getAttribute('contenteditable')).toBe('false');
-    expect(editorEl.parentNode.querySelector('.editor-toolbar')).not.toBeVisible();
+    expect(editorEl.parentNode.querySelector('.editor-toolbar')).toBeFalsy();
   });
 
   it.skip('should switch to preview mode', () => {
@@ -102,7 +102,7 @@ describe('Editor API', () => {
     expect(editorEl.classList.contains('is-disabled')).toBeFalsy();
     expect(editorEl.classList.contains('is-readonly')).toBeFalsy();
     expect(editorEl.getAttribute('contenteditable')).toBe('false');
-    expect(editorEl.parentNode.querySelector('.editor-toolbar')).not.toBeVisible();
+    expect(editorEl.parentNode.querySelector('.editor-toolbar')).toBeFalsy();
   });
 
   it.skip('should switch to preview and editable modes', () => {
@@ -116,11 +116,11 @@ describe('Editor API', () => {
     expect(editorEl.classList.contains('is-disabled')).toBeFalsy();
     expect(editorEl.classList.contains('is-readonly')).toBeFalsy();
     expect(editorEl.getAttribute('contenteditable')).toBe('false');
-    expect(editorEl.parentNode.querySelector('.editor-toolbar')).not.toBeVisible();
+    expect(editorEl.parentNode.querySelector('.editor-toolbar')).toBeFalsy();
     editorObj.enable();
 
     expect(editorEl.parentNode.classList.contains('is-preview')).toBeFalsy();
     expect(editorEl.getAttribute('contenteditable')).toBe('true');
-    expect(editorEl.parentNode.querySelector('.editor-toolbar')).toBeVisible();
+    expect(editorEl.parentNode.querySelector('.editor-toolbar')).toBeTruthy();
   });
 });

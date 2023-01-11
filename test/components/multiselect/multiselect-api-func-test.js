@@ -1,19 +1,82 @@
+/**
+ * @jest-environment jsdom
+ */
 import { MultiSelect } from '../../../src/components/multiselect/multiselect';
 import { cleanup } from '../../helpers/func-utils';
 
-const multiSelectHTML = require('../../../app/views/components/multiselect/_samples-standard.html');
-const svg = require('../../../src/components/icons/theme-new-svg.html');
+const multiSelectHTML = `<div class="field">
+  <label for="multi-standard" class="label">States (Max 10)</label>
+  <select multiple id="multi-standard" name="multi-standard" data-maxselected="10" class="multiselect">
+    <option value="AL">Alabama</option>
+    <option value="AK" selected>Alaska</option>
+    <option value="AZ">Arizona</option>
+    <option value="AR">Arkansas</option>
+    <option value="CA">California</option>
+    <option value="CO">Colorado</option>
+    <option value="CT">Connecticut</option>
+    <option value="DE">Delaware</option>
+    <option value="DC">District Of Columbia</option>
+    <option value="FL">Florida</option>
+    <option value="GA">Georgia</option>
+    <option value="HI">Hawaii</option>
+    <option value="ID">Idaho</option>
+    <option value="IL">Illinois</option>
+    <option value="IN">Indiana</option>
+    <option value="IA">Iowa</option>
+    <option value="KS">Kansas</option>
+    <option value="KY">Kentucky</option>
+    <option value="LA">Louisiana</option>
+    <option value="ME">Maine</option>
+    <option value="MD">Maryland</option>
+    <option value="MA">Massachusetts</option>
+    <option value="MI">Michigan</option>
+    <option value="MN">Minnesota</option>
+    <option value="MS">Mississippi</option>
+    <option value="MO">Missouri</option>
+    <option value="MT">Montana</option>
+    <option value="NE">Nebraska</option>
+    <option value="NV">Nevada</option>
+    <option value="NH">New Hampshire</option>
+    <option value="NJ">New Jersey</option>
+    <option value="NM">New Mexico</option>
+    <option value="NY">New York</option>
+    <option value="NC">North Carolina</option>
+    <option value="ND">North Dakota</option>
+    <option value="OH">Ohio</option>
+    <option value="OK">Oklahoma</option>
+    <option value="OR">Oregon</option>
+    <option value="PA">Pennsylvania</option>
+    <option value="RI">Rhode Island</option>
+    <option value="SC">South Carolina</option>
+    <option value="SD">South Dakota</option>
+    <option value="TN">Tennessee</option>
+    <option value="TX">Texas</option>
+    <option value="UT">Utah</option>
+    <option value="VT">Vermont</option>
+    <option value="VA">Virginia</option>
+    <option value="WA">Washington</option>
+    <option value="WV">West Virginia</option>
+    <option value="WI">Wisconsin</option>
+    <option value="WY">Wyoming</option>
+  </select>
+</div>`;
+
 const statesMultiselectData = require('../../../app/data/states-multiselect.json');
 
 let multiSelectEl;
 let multiSelectObj;
+
+Object.defineProperty(window, 'getComputedStyle', {
+  value: () => ({
+    getPropertyValue: () => ''
+  })
+});
 
 describe('MultiSelect API', () => {
   beforeEach(() => {
     multiSelectEl = null;
     multiSelectObj = null;
     document.body.insertAdjacentHTML('afterbegin', multiSelectHTML);
-    document.body.insertAdjacentHTML('afterbegin', svg);
     multiSelectEl = document.body.querySelector('.multiselect');
     multiSelectEl.classList.add('no-init');
     multiSelectObj = new MultiSelect(multiSelectEl);
@@ -61,7 +124,6 @@ describe('Multiselect API (ajax)', () => {
     multiSelectEl = null;
     multiSelectObj = null;
     document.body.insertAdjacentHTML('afterbegin', multiSelectSingleItemHTML);
-    document.body.insertAdjacentHTML('afterbegin', svg);
     multiSelectEl = document.body.querySelector('.multiselect');
   });
 

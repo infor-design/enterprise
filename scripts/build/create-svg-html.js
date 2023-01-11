@@ -7,7 +7,6 @@
 import * as fs from 'fs';
 import glob from 'glob';
 import * as path from 'path';
-import { deleteAsync } from 'del';
 import slash from 'slash';
 
 import logger from '../logger.js';
@@ -60,7 +59,12 @@ async function cleanFiles(iconSets) {
   const filesToDel = iconSets.map(n => n.dest);
 
   try {
-    await deleteAsync(filesToDel);
+    // eslint-disable-next-line no-restricted-syntax
+    for (const file of filesToDel) {
+      fs.unlink(file, () => {
+        // Ignore
+      });
+    }
   } catch (err) {
     logger('error', err);
   }

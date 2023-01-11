@@ -72,7 +72,7 @@
     "not ie 11"
   ],
   "dependencies": {
-    "d3": "^7.8.0",
+    "d3": "^7.8.1",
     "ids-identity": "4.14.4",
     "jquery": "^3.6.3",
     "promise-polyfill": "^8.2.3"
@@ -95,7 +95,6 @@
     "chalk": "^5.2.0",
     "concat-stream": "^2.0.0",
     "cssmin": "^0.4.3",
-    "del": "^7.0.0",
     "documentation": "^14.0.1",
     "eslint": "8.31.0",
     "eslint-config-airbnb-base": "^15.0.0",

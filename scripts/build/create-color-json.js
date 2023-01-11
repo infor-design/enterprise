@@ -4,7 +4,6 @@
  */
 
 // Libs
-import { deleteAsync } from 'del';
 import * as fs from 'fs';
 import glob from 'glob';
 import * as path from 'path';
@@ -35,7 +34,12 @@ async function cleanFiles() {
 
   const files = glob.sync(`${PATHS.dest}/*.json`);
   try {
-    await deleteAsync(files);
+    // eslint-disable-next-line no-restricted-syntax
+    for (const file of files) {
+      fs.unlink(file, () => {
+        // Ignore
+      });
+    }
   } catch (err) {
     logger('error', err);
   }

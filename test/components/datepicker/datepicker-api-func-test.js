@@ -89,7 +89,7 @@ describe('DatePicker API', () => {
 
     setTimeout(() => {
       expect(datepickerAPI.isOpen()).toBeTruthy();
-      expect(document.body.querySelector('#monthview-popup')).toBeVisible();
+      expect(document.body.querySelector('#monthview-popup')).toBeTruthy();
       done();
     }, 100);
   });

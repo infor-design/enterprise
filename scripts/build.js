@@ -34,7 +34,6 @@ import { hideBin } from 'yargs/helpers';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
 import chalk from 'chalk';
-import { deleteAsync } from 'del';
 import * as fs from 'fs';
 import glob from 'glob';
 import logger from './logger.js';
@@ -452,17 +451,26 @@ function cleanAll(buildTempDir) {
     `${TEMP_DIR}/*.scss`
   ];
 
-  return deleteAsync(filesToDel)
-    .catch(err => logger('error', `Error: ${err}`))
-    .then(() => {
-      if (argv.verbose) {
-        logger('success', `Cleaned directory "${TEMP_DIR}"`);
-      }
-      if (!buildTempDir) {
-        return;
-      }
-      createDirs([TEMP_DIR]);
+  // eslint-disable-next-line no-restricted-syntax
+  for (const file of filesToDel) {
+    fs.unlink(file, () => {
+      // Ignore
     });
+  }
+
+  const promise = new Promise((resolve) => {
+    resolve();
+  });
+
+  return promise.then(() => {
+    if (argv.verbose) {
+      logger('success', `Cleaned directory "${TEMP_DIR}"`);
+    }
+    if (!buildTempDir) {
+      return;
+    }
+    createDirs([TEMP_DIR]);
+  });
 }
 
 /**
