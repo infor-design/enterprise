@@ -2,9 +2,15 @@
   <div class="twelve columns">
 
     <div class="field">
-      <label for="date-field" class="label">Date Field</label>
-      <label for="date-field" class="label">Disable dates: ['6/9/2015', '6/12/2015'] + (every saturday and sunday)</label>
-      <input id="date-field"  class="datepicker" name="date-field" type="text" value="" data-validate="date availableDate" data-options="{'disable':{'dates': ['6/9/2015', '6/12/2015'], 'dayOfWeek': '[0,6]'}}"/>
+      <label for="date-field-0" class="label">Date Field</label>
+      <label for="date-field-0" class="label">Disable dates: ['6/9/2015', '6/12/2015'] + (every saturday and sunday)</label>
+      <input id="date-field-0"  class="datepicker" name="date-field-0" type="text" value="" data-validate="date availableDate" data-options="{'disable':{'dates': ['6/9/2015', '6/12/2015'], 'dayOfWeek': '[0,6]'}}"/>
+    </div>
+
+    <div class="field">
+      <label for="date-field-1" class="label">Date Field</label>
+      <label for="date-field-1" class="label">Disable date by Date object: 12, 13, 14 are enabled</label>
+      <input id="date-field-1"  class="datepicker" name="date-field-1" type="text" data-init="false" data-validate="date availableDate"/>
     </div>
 
     <div class="field">
@@ -24,7 +30,16 @@
   $('body').on('initialized', function () {
 
     // Set value
-    $('#date-field').data('datepicker').setValue('05/12/2015');
+    $('#date-field-0').data('datepicker').setValue('05/12/2015');
+
+    const minDate = new Date('05/11/2015');
+    const maxDate = new Date('05/15/2015');
+    $('#date-field-1').datepicker({
+      disable: {
+        minDate,
+        maxDate
+      }
+    }).data('datepicker').setValue('05/12/2015');
 
     // Custom callback
     $('#date-field-3').datepicker({

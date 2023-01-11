@@ -1316,8 +1316,12 @@ MonthView.prototype = {
       });
       return deferred.promise();
     }
-    const min = (new Date(s.disable.minDate.replace(/-/g, '/'))).setHours(0, 0, 0, 0);
-    const max = (new Date(s.disable.maxDate.replace(/-/g, '/'))).setHours(0, 0, 0, 0);
+
+    const minDate = typeof s.disable.minDate === 'string' ? s.disable.minDate.replace(/-/g, '/') : s.disable.minDate;
+    const maxDate = typeof s.disable.maxDate === 'string' ? s.disable.maxDate.replace(/-/g, '/') : s.disable.maxDate;
+
+    const min = (new Date(minDate)).setHours(0, 0, 0, 0);
+    const max = (new Date(maxDate)).setHours(0, 0, 0, 0);
     let d2 = this.isIslamic ?
       Locale.umalquraToGregorian(year, month, date) : new Date(year, month, date);
 
