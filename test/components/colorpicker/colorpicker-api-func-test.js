@@ -8,6 +8,7 @@ require('../../../src/components/colorpicker/colorpicker.jquery.js');
 require('../../../src/components/mask/mask-input.jquery.js');
 require('../../../src/components/icons/icons.jquery.js');
 require('../../../src/components/popupmenu/popupmenu.jquery.js');
+require('../../../src/components/icons/icons.jquery.js');
 
 Object.defineProperty(window, 'getComputedStyle', {
   value: () => ({

@@ -68,6 +68,7 @@ xssUtils.sanitizeConsoleMethods = function (html) {
  * @returns {string} the modified value
  */
 xssUtils.sanitizeHTML = function (html) {
+  if (!html) return '';
   // Remove on xxx functions https://regex101.com/r/hsLeFl/1/
   let santizedHtml = html.replace(/\bon\w+=\S+?(?=(>|&|<| |"))/g, '');
   // Remove Script tags

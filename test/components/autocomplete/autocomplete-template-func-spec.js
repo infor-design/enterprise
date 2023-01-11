@@ -121,7 +121,7 @@ describe('Autocomplete API', () => {
 
     expect(resultItems).toBeTruthy();
     expect(resultItems.length).toEqual(1);
-    expect(resultItems[0].querySelector('span').innerText.trim()).toEqual('Quincy Adams');
+    expect(resultItems[0].querySelector('span').textContent.trim()).toEqual('Quincy Adams');
 
     // Look for an extra element not provided by the standard template
     expect(resultItems[0].querySelector('small')).toBeTruthy();

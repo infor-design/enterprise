@@ -98,7 +98,7 @@ describe('Listview with Searchfield', () => {
     cleanup();
   });
 
-  it.skip('Can filter items', () => {
+  it('Can filter items', () => {
     listviewSearchEl.value = 'TMZ';
     listviewAPI.filter(listviewSearchEl);
     const filteredEls = listviewEl.querySelectorAll('li:not(.hidden)');
@@ -109,6 +109,6 @@ describe('Listview with Searchfield', () => {
     const markEls = filteredEls[0].querySelectorAll('mark');
 
     expect(markEls.length).toBe(1);
-    expect(markEls[0].innerText).toBe('TMZ');
+    expect(markEls[0].textContent.trim()).toBe('TMZ');
   });
 });

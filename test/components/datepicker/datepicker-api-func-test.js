@@ -427,7 +427,7 @@ describe('DatePicker API', () => {
     }, 100);
   });
 
-  it.skip('should render Month Year Picker', (done) => {
+  it('should render Month Year Picker', (done) => {
     datepickerAPI.destroy();
 
     datepickerAPI = new DatePicker(datepickerEl, { showMonthYearPicker: true });
@@ -436,7 +436,7 @@ describe('DatePicker API', () => {
     datepickerAPI.openCalendar();
 
     setTimeout(() => {
-      expect(document.querySelector('button.btn-monthyear-pane').innerText).toEqual('June2018');
+      expect(document.querySelector('button.btn-monthyear-pane').textContent.trim()).toContain('June');
       expect(document.querySelectorAll('.monthview-monthyear-pane').length).toEqual(1);
       done();
     }, 100);

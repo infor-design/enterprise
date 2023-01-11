@@ -32,7 +32,7 @@ describe('Message XSS Prevention', () => {
     cleanup();
   });
 
-  it.skip('Can strip HTML tags out of user-set content', (done) => {
+  it('Can strip HTML tags out of user-set content', (done) => {
     // NOTE: See SOHO-7819
     const dangerousMessageTitle = 'Application Message <script>alert("GOTCHA!");</script>';
     const dangerousMessageContent = 'This is a potentially dangerous Message. <script>alert("GOTCHA!");</script>';
@@ -46,15 +46,15 @@ describe('Message XSS Prevention', () => {
     messageContentEl = messageEl.querySelector('.modal .modal-body'); // should only be one
 
     setTimeout(() => {
-      expect(messageTitleEl.innerText).toEqual('Application Message alert("GOTCHA!");');
-      expect(messageContentEl.innerText).toEqual('This is a potentially dangerous Message. alert("GOTCHA!");');
-      messageTitleEl.innerText = '';
-      messageContentEl.innerText = '';
+      expect(messageTitleEl.textContent.trim()).toEqual('Application Message alert("GOTCHA!");');
+      expect(messageContentEl.textContent.trim()).toEqual('This is a potentially dangerous Message. alert("GOTCHA!");');
+      messageTitleEl.textNode = '';
+      messageContentEl.textNode = '';
       done();
     }, 500);
   });
 
-  it.skip('Can disallow HTML tags based on component setting', (done) => {
+  it('Can disallow HTML tags based on component setting', (done) => {
     const messageTitleWithTags = '<a href="#" class="hyperlink hide-focus longpress-target"><b>You</b> </a>have <br>disallowed <br/>any <del>tags</del> <em>from</em> <i>appearing</i> <ins>in</ins> <mark>this</mark> <small>message</small>. <strong>All</strong> <sub>are</sub> <sup>stripped</sup>.';
     const messageContentWithTags = '<a href="#" class="hyperlink hide-focus longpress-target"><b>You</b> </a>have <br>disallowed <br/>any <del>tags</del> <em>from</em> <i>appearing</i> <ins>in</ins> <mark>this</mark> <small>message</small>. <strong>All</strong> <sub>are</sub> <sup>stripped</sup>.';
 
@@ -67,8 +67,8 @@ describe('Message XSS Prevention', () => {
     messageContentEl = messageEl.querySelector('.modal .modal-body'); // should only be one
 
     setTimeout(() => {
-      expect(messageTitleEl.innerText).toEqual('You have disallowed any tags from appearing in this message. All are stripped.');
-      expect(messageContentEl.innerText).toEqual('You have disallowed any tags from appearing in this message. All are stripped.');
+      expect(messageTitleEl.textContent.trim()).toEqual('You have disallowed any tags from appearing in this message. All are stripped.');
+      expect(messageContentEl.textContent.trim()).toEqual('You have disallowed any tags from appearing in this message. All are stripped.');
       done();
     }, 650);
   });

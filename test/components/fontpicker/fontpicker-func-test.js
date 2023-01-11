@@ -67,10 +67,10 @@ describe('Fontpicker API', () => {
     expect(updatedStyles).toBeTruthy();
     expect(Array.isArray(updatedStyles)).toBeTruthy();
     expect(updatedStyles.length).toEqual(1);
-    expect(fontpickerEl.querySelector('span:not(.audible)').innerText).toBe('Quote Block');
+    expect(fontpickerEl.querySelector('span:not(.audible)').textContent.trim()).toBe('Quote Block');
   });
 
-  it.skip('can update its settings by triggering an `updated()` event on its base element', () => {
+  it('can update its settings by triggering an `updated()` event on its base element', () => {
     fontpickerAPI = new FontPicker(fontpickerEl);
     $(fontpickerEl).trigger('updated', [{
       styles: [
@@ -83,7 +83,7 @@ describe('Fontpicker API', () => {
     expect(updatedStyles).toBeTruthy();
     expect(Array.isArray(updatedStyles)).toBeTruthy();
     expect(updatedStyles.length).toEqual(1);
-    expect(fontpickerEl.querySelector('span:not(.audible)').innerText).toBe('Quote Block');
+    expect(fontpickerEl.querySelector('span:not(.audible)').textContent.trim()).toBe('Quote Block');
   });
 
   it('can select a font style programmatically with an ID', () => {

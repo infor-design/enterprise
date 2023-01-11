@@ -133,7 +133,7 @@ describe('Datagrid Tree', () => {
 
     expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(0);
     expect(cell1.classList.contains('is-dirty-cell')).toBeFalsy();
-    expect(document.querySelector('tr:nth-child(5) td:nth-child(2)').innerText.substr(0, 10).trim()).toEqual('5');
+    expect(document.querySelector('tr:nth-child(5) td:nth-child(2)').textContent.trim().substr(0, 10).trim()).toEqual('5');
 
     cell1?.click();
     input = cell1.querySelector('input');
@@ -146,7 +146,7 @@ describe('Datagrid Tree', () => {
 
     datagridObj.setSortColumn('id', false);
 
-    expect(document.querySelector('tr:nth-child(5) td:nth-child(2)').innerText.substr(0, 10).trim()).toEqual('19');
+    expect(document.querySelector('tr:nth-child(5) td:nth-child(2)').textContent.trim().substr(0, 10).trim()).toEqual('19');
 
     cell1 = document.querySelector('tr:nth-child(18) td:nth-child(3)');
     cell2 = document.querySelector('tr:nth-child(18) td:nth-child(2)');
@@ -156,7 +156,7 @@ describe('Datagrid Tree', () => {
 
     datagridObj.setSortColumn('taskName', true);
 
-    expect(document.querySelector('tr:nth-child(5) td:nth-child(2)').innerText.substr(0, 10).trim()).toEqual('4');
+    expect(document.querySelector('tr:nth-child(5) td:nth-child(2)').textContent.trim().substr(0, 10).trim()).toEqual('4');
 
     cell1 = document.querySelector('tr:nth-child(22) td:nth-child(3)');
     cell2 = document.querySelector('tr:nth-child(22) td:nth-child(2)');
@@ -265,7 +265,7 @@ describe('Datagrid Tree', () => {
     expect(document.body.querySelectorAll('tbody tr:not(.is-hidden)').length).toEqual(19);
     setTimeout(() => {
       expect(document.body.querySelectorAll('tbody tr:not(.is-hidden)').length).toEqual(23);
-      expect(document.querySelector('tr:nth-child(5) td:nth-child(2)').innerText.substr(0, 10).trim()).toEqual('215');
+      expect(document.querySelector('tr:nth-child(5) td:nth-child(2)').textContent.trim().substr(0, 10).trim()).toEqual('215');
       done();
     }, 300);
   });
@@ -297,19 +297,19 @@ describe('Datagrid Tree', () => {
     });
 
     expect(document.body.querySelectorAll('tbody tr:not(.is-hidden)').length).toEqual(19);
-    expect(document.querySelector(rowSpanSelector).innerText.trim()).toEqual(originalText);
+    expect(document.querySelector(rowSpanSelector).textContent.trim().trim()).toEqual(originalText);
     document.querySelector('tr:nth-child(1) .datagrid-expand-btn').click();
 
     expect(document.body.querySelectorAll('tbody tr:not(.is-hidden)').length).toEqual(22);
     setTimeout(() => {
       expect(document.body.querySelectorAll('tbody tr:not(.is-hidden)').length).toEqual(22);
-      expect(document.querySelector(rowSpanSelector).innerText.trim()).toEqual(originalText);
+      expect(document.querySelector(rowSpanSelector).textContent.trim().trim()).toEqual(originalText);
       document.querySelector('tr:nth-child(1) .datagrid-expand-btn').click();
 
       expect(document.body.querySelectorAll('tbody tr:not(.is-hidden)').length).toEqual(22);
       setTimeout(() => {
         expect(document.body.querySelectorAll('tbody tr:not(.is-hidden)').length).toEqual(19);
-        expect(document.querySelector(rowSpanSelector).innerText.trim()).toEqual(modifyText);
+        expect(document.querySelector(rowSpanSelector).textContent.trim().trim()).toEqual(modifyText);
         done();
       }, 100);
     }, 1);

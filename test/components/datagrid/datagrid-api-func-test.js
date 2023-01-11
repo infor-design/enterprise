@@ -162,9 +162,9 @@ describe('Datagrid API', () => {
     datagridObj.triggerSource('refresh');
   });
 
-  it.skip('should be able to call updateRow', () => {
+  it('should be able to call updateRow', () => {
     let text = '';
-    text = document.body.querySelectorAll('tbody tr')[1].querySelector('td').innerText.trim();
+    text = document.body.querySelectorAll('tbody tr')[1].querySelector('td').textContent.trim();
 
     expect(text).toEqual('200');
     expect(datagridObj.settings.dataset[1].productId).toEqual('200');
@@ -172,7 +172,7 @@ describe('Datagrid API', () => {
     expect(datagridObj.settings.dataset[1].nonExistingColumn).toEqual(undefined);
 
     datagridObj.updateRow(1, { nonExistingColumn: 123, productId: 'test', productName: 'test' });
-    text = document.body.querySelectorAll('tbody tr')[1].querySelector('td').innerText.trim();
+    text = document.body.querySelectorAll('tbody tr')[1].querySelector('td').textContent.trim();
 
     expect(text).toEqual('test');
     expect(datagridObj.settings.dataset[1].productId).toEqual('test');
@@ -478,7 +478,7 @@ describe('Datagrid API', () => {
 
     document.querySelector('tr:nth-child(1) td:nth-child(2)').click();
 
-    expect(document.querySelector('tr:nth-child(2) td:nth-child(2)').innerText.substr(0, 4)).toEqual('Test');
+    expect(document.querySelector('tr:nth-child(2) td:nth-child(2)').textContent.substr(0, 4)).toEqual('Test');
   });
 
   it.skip('should be able to update a cells in a column with the api', () => {
@@ -495,19 +495,19 @@ describe('Datagrid API', () => {
     document.querySelector('tr:nth-child(1) td:nth-child(2)').click();
 
     // Checks to see if the activity was not changed
-    expect(document.querySelector('tr:nth-child(1) td:nth-child(3)').innerText).toEqual('Assemble Paint');
+    expect(document.querySelector('tr:nth-child(1) td:nth-child(3)').textContent.trim()).toEqual('Assemble Paint');
 
     // Checks to see if the product names was changed when the API was called
-    expect(document.querySelector('tr:nth-child(1) td:nth-child(2)').innerText).toEqual('Compressor 1');
-    expect(document.querySelector('tr:nth-child(2) td:nth-child(2)').innerText).toEqual('Different Compressor 2');
-    expect(document.querySelector('tr:nth-child(3) td:nth-child(2)').innerText).toEqual('Compressor 3');
-    expect(document.querySelector('tr:nth-child(7) td:nth-child(2)').innerText).toEqual('Some Compressor 7');
+    expect(document.querySelector('tr:nth-child(1) td:nth-child(2)').textContent.trim()).toEqual('Compressor 1');
+    expect(document.querySelector('tr:nth-child(2) td:nth-child(2)').textContent.trim()).toEqual('Different Compressor 2');
+    expect(document.querySelector('tr:nth-child(3) td:nth-child(2)').textContent.trim()).toEqual('Compressor 3');
+    expect(document.querySelector('tr:nth-child(7) td:nth-child(2)').textContent.trim()).toEqual('Some Compressor 7');
   });
 
   it.skip('should be able to set an active cell', () => {
     datagridObj.setActiveCell(1, 0);
 
-    expect(document.activeElement.innerText.trim()).toEqual('200');
+    expect(document.activeElement.textContent.trim()).toEqual('200');
   });
 
   it.skip('should be able to toggle an expandable row', (done) => {
@@ -571,15 +571,15 @@ describe('Datagrid API', () => {
   });
 
   it.skip('should be able to set the sort column', () => {
-    expect(document.querySelector('tr:nth-child(1) td:nth-child(2)').innerText.substr(0, 10)).toEqual('Compressor');
+    expect(document.querySelector('tr:nth-child(1) td:nth-child(2)').textContent.substr(0, 10)).toEqual('Compressor');
 
     datagridObj.setSortColumn('productName', false);
 
-    expect(document.querySelector('tr:nth-child(1) td:nth-child(2)').innerText.substr(0, 15)).toEqual('Some Compressor');
+    expect(document.querySelector('tr:nth-child(1) td:nth-child(2)').textContent.substr(0, 15)).toEqual('Some Compressor');
 
     datagridObj.setSortColumn('productName', true);
 
-    expect(document.querySelector('tr:nth-child(1) td:nth-child(2)').innerText.substr(0, 15)).toEqual('Air Compressors');
+    expect(document.querySelector('tr:nth-child(1) td:nth-child(2)').textContent.substr(0, 15)).toEqual('Air Compressors');
   });
 
   it.skip('should be able to track dirty cells with sort column', () => {
@@ -592,7 +592,7 @@ describe('Datagrid API', () => {
 
     expect(document.querySelectorAll('.is-dirty-cell').length).toEqual(0);
     expect(cell1.classList.contains('is-dirty-cell')).toBeFalsy();
-    expect(document.querySelector('tr:nth-child(1) td:nth-child(2)').innerText.substr(0, 10)).toEqual('Compressor');
+    expect(document.querySelector('tr:nth-child(1) td:nth-child(2)').textContent.substr(0, 10)).toEqual('Compressor');
 
     cell1?.click();
     input = cell1.querySelector('input');
@@ -605,7 +605,7 @@ describe('Datagrid API', () => {
 
     datagridObj.setSortColumn('productName', false);
 
-    expect(document.querySelector('tr:nth-child(1) td:nth-child(2)').innerText.substr(0, 15)).toEqual('Some Compressor');
+    expect(document.querySelector('tr:nth-child(1) td:nth-child(2)').textContent.substr(0, 15)).toEqual('Some Compressor');
 
     cell1 = document.querySelector('tr:nth-child(5) td:nth-child(2)');
     cell2 = document.querySelector('tr:nth-child(5) td:nth-child(3)');

@@ -1,6 +1,6 @@
 const { AxePuppeteer } = require('@axe-core/puppeteer');
 
-describe('Textarea', () => {
+describe('Textarea Puppeteer Tests', () => {
   const baseUrl = 'http://localhost:4000/components/textarea';
 
   // Clearing and/or selecting the input field

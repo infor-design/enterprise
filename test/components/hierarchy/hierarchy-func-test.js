@@ -50,13 +50,13 @@ describe('Hierarchy API', () => {
       dataset: []
     });
 
-    expect(document.body.querySelector('.icon-empty-state')).toExist();
+    expect(document.body.querySelector('.icon-empty-state')).toBeTruthy();
     expect(hierarchyEl.classList.contains('empty-message')).toBeTruthy();
   });
 
   it.skip('Can render a legend', () => {
     expect(document.body.querySelectorAll('legend li').length).toEqual(3);
-    expect(document.body.querySelector('legend li').innerText.trim()).toEqual('Full Time');
+    expect(document.body.querySelector('legend li').textContent.trim()).toEqual('Full Time');
   });
 
   it.skip('Can be destroyed', () => {

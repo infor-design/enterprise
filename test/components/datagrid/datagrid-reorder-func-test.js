@@ -95,16 +95,16 @@ describe('Datagrid Row Reorder API', () => {
 
     datagridObj.reorderRow(0, 1);
 
-    expect(document.querySelector('tr:nth-child(1) td:nth-child(3)').innerText.trim()).toEqual('2');
-    expect(document.querySelector('tr:nth-child(2) td:nth-child(3)').innerText.trim()).toEqual('1');
+    expect(document.querySelector('tr:nth-child(1) td:nth-child(3)').textContent.trim()).toEqual('2');
+    expect(document.querySelector('tr:nth-child(2) td:nth-child(3)').textContent.trim()).toEqual('1');
 
     expect(callback).toHaveBeenCalled();
     $(datagridEl).off('rowreorder');
 
     datagridObj.reorderRow(1, 0);
 
-    expect(document.querySelector('tr:nth-child(1) td:nth-child(3)').innerText.trim()).toEqual('1');
-    expect(document.querySelector('tr:nth-child(2) td:nth-child(3)').innerText.trim()).toEqual('2');
+    expect(document.querySelector('tr:nth-child(1) td:nth-child(3)').textContent.trim()).toEqual('1');
+    expect(document.querySelector('tr:nth-child(2) td:nth-child(3)').textContent.trim()).toEqual('2');
   });
 
   it('should be able to select all and remove all', (done) => {

@@ -81,7 +81,7 @@ Object.defineProperty(window, 'getComputedStyle', {
   })
 });
 
-describe('Tabs Settings', () => {
+describe('Tabs API', () => {
   beforeEach(() => {
     tabsEl = null;
     tabsObj = null;
@@ -96,55 +96,51 @@ describe('Tabs Settings', () => {
     cleanup();
   });
 
-  it('should set settings', () => {
-    const settings = {
-      addTabButton: false,
-      addTabButtonCallback: null,
-      addTabButtonTooltip: false,
-      appMenuTrigger: false,
-      appMenuTriggerTextAudible: false,
-      ajaxOptions: null,
-      containerElement: null,
-      changeTabOnHashChange: false,
-      hashChangeCallback: null,
-      lazyLoad: true,
-      moduleTabsTooltips: false,
-      multiTabsTooltips: false,
-      source: null,
-      sourceArguments: {},
-      tabCounts: false,
-      verticalResponsive: false,
-      attributes: null,
-      sortable: false
-    };
-    tabsObj.updated();
+  it('should trigger "beforeactivated" event', () => {
+    const callback = jest.fn();
+    $('#tabs-normal').on('beforeactivated', callback);
 
-    expect(tabsObj.settings).toEqual(settings);
+    tabsObj.settings.beforeActivate = true;
+    tabsObj.activate('#tabs-normal-opportunities');
+    tabsObj.activate('#tabs-normal-attachments');
+
+    expect(callback).toHaveBeenCalled();
   });
 
-  it('should update set settings via parameter', () => {
-    const settings = {
-      addTabButton: true,
-      addTabButtonCallback: null,
-      addTabButtonTooltip: false,
-      appMenuTrigger: false,
-      appMenuTriggerTextAudible: false,
-      ajaxOptions: null,
-      containerElement: null,
-      changeTabOnHashChange: true,
-      hashChangeCallback: null,
-      lazyLoad: true,
-      moduleTabsTooltips: false,
-      multiTabsTooltips: false,
-      source: null,
-      sourceArguments: {},
-      tabCounts: false,
-      verticalResponsive: false,
-      attributes: null,
-      sortable: false
-    };
-    tabsObj.updated(settings);
+  it('should trigger "activated" event', () => {
+    const callback = jest.fn();
+    $('#tabs-normal').on('activated', callback);
 
-    expect(tabsObj.settings).toEqual(settings);
+    tabsObj.activate('#tabs-normal-opportunities');
+
+    expect(callback).toHaveBeenCalled();
+  });
+
+  it('should trigger "hash-change" event', () => {
+    tabsObj.settings.changeTabOnHashChange = true;
+    const callback = jest.fn();
+    $('#tabs-normal').on('hash-change', callback);
+
+    tabsObj.select('#tabs-normal-opportunities');
+
+    expect(callback).toHaveBeenCalled();
+  });
+
+  it('should trigger "close" event', () => {
+    const callback = jest.fn();
+    $('#tabs-normal').on('close', callback);
+
+    tabsObj.remove('#tabs-normal-opportunities');
+
+    expect(callback).toHaveBeenCalled();
+  });
+
+  it('should trigger "afterclose" event', () => {
+    const callback = jest.fn();
+    $('#tabs-normal').on('afterclose', callback);
+
+    tabsObj.remove('#tabs-normal-opportunities');
+
+    expect(callback).toHaveBeenCalled();
   });
 });

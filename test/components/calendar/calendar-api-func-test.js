@@ -150,7 +150,7 @@ describe('Calendar API', () => {
     expect(document.body.querySelector('thead tr th:last-child').textContent.trim()).toEqual('søn');
   });
 
-  it.skip('Should render upcoming dates', () => {
+  it('Should render upcoming dates', () => {
     calendarObj?.destroy();
     const start = new Date();
     start.setDate(start.getDate() + 1);
@@ -173,7 +173,7 @@ describe('Calendar API', () => {
     calendarObj = new Calendar(calendarEl, newSettings);
     const compareDate = `${start.toLocaleDateString('en-US', { month: 'long' })} ${start.getDate()}-${end.getDate()}, ${start.toLocaleDateString('en-US', { year: 'numeric' })}`;
 
-    expect(document.querySelector('.calendar-upcoming-date').innerText).toEqual(compareDate);
+    expect(document.querySelector('.calendar-upcoming-date').textNode).toEqual(compareDate);
   });
 
   it('should handle adding events', () => {

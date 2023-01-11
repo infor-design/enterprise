@@ -99,13 +99,13 @@ describe('Autocomplete API', () => {
 
     expect(resultItems).toBeTruthy();
     expect(resultItems.length).toEqual(4);
-    expect(resultItems[1].innerText.trim()).toEqual('New Jersey');
+    expect(resultItems[1].textContent.trim()).toEqual('New Jersey');
 
     autocompleteAPI.openList('co', statesData);
     resultItems = autocompleteListEl.querySelectorAll('li');
 
     expect(resultItems.length).toEqual(3);
-    expect(resultItems[2].innerText.trim()).toEqual('District Of Columbia');
+    expect(resultItems[2].textContent.trim()).toEqual('District Of Columbia');
   });
 
   it('can programmatically highlight an available search result item', () => {
@@ -148,7 +148,7 @@ describe('Autocomplete API', () => {
     expect(wasCalled).toBeTruthy();
   });
 
-  it.skip('Can handle slashes in the source as a label', () => {
+  it('Can handle slashes in the source as a label', () => {
     autocompleteAPI?.destroy();
     const newData = [
       { label: 'Application Function Server' },
@@ -170,16 +170,16 @@ describe('Autocomplete API', () => {
 
     const resultItems = autocompleteListEl.querySelectorAll('li');
 
-    expect(resultItems[0].innerText.trim()).toEqual('Application Function Server');
-    expect(resultItems[1].innerText.trim()).toEqual('application server');
-    expect(resultItems[2].innerText.trim()).toEqual("Server Error '/' Application");
-    expect(resultItems[3].innerText.trim()).toEqual("Server Error '/ReportManager' Application");
-    expect(resultItems[4].innerText.trim()).toEqual('server error application');
+    expect(resultItems[0].textContent.trim()).toEqual('Application Function Server');
+    expect(resultItems[1].textContent.trim()).toEqual('application server');
+    expect(resultItems[2].textContent.trim()).toEqual("Server Error '/' Application");
+    expect(resultItems[3].textContent.trim()).toEqual("Server Error '/ReportManager' Application");
+    expect(resultItems[4].textContent.trim()).toEqual('server error application');
     expect(resultItems).toBeTruthy();
     expect(resultItems.length).toEqual(5);
   });
 
-  it.skip('Can handle slashes in the source as a string', () => {
+  it('Can handle slashes in the source as a string', () => {
     autocompleteAPI?.destroy();
     const newData = [
       'Application Function Server',
@@ -201,11 +201,11 @@ describe('Autocomplete API', () => {
 
     const resultItems = autocompleteListEl.querySelectorAll('li');
 
-    expect(resultItems[0].innerText.trim()).toEqual('Application Function Server');
-    expect(resultItems[1].innerText.trim()).toEqual('application server');
-    expect(resultItems[2].innerText.trim()).toEqual("Server Error '/' Application");
-    expect(resultItems[3].innerText.trim()).toEqual("Server Error '/ReportManager' Application");
-    expect(resultItems[4].innerText.trim()).toEqual('server error application');
+    expect(resultItems[0].textContent.trim()).toEqual('Application Function Server');
+    expect(resultItems[1].textContent.trim()).toEqual('application server');
+    expect(resultItems[2].textContent.trim()).toEqual("Server Error '/' Application");
+    expect(resultItems[3].textContent.trim()).toEqual("Server Error '/ReportManager' Application");
+    expect(resultItems[4].textContent.trim()).toEqual('server error application');
     expect(resultItems).toBeTruthy();
     expect(resultItems.length).toEqual(5);
   });
