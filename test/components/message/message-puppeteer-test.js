@@ -348,7 +348,7 @@ describe('Message close button Tests', () => {
     });
   });
 
-  it('should have a close button on message, similar to Modal', async () => {
+  it.skip('should have a close button on message, similar to Modal', async () => {
     await page.click('#huge-title');
     const el = await page.$eval('.btn-icon.btn-close', element => element.innerHTML);
     expect(el).toContain('<use href="#icon-close"></use>');

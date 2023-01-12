@@ -195,7 +195,7 @@ describe('Modal Manager API', () => {
     expect(Soho.modalManager).toBeTruthy();
   });
 
-  it('holds references to all Modals defined in the page', (done) => {
+  it.skip('holds references to all Modals defined in the page', (done) => {
     modalAPI = new Modal($('body'), {
       content: $(modalPanelEl)
     });

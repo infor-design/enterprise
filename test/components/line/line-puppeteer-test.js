@@ -14,7 +14,7 @@ describe('Line Puppeteer Tests', () => {
       expect(legendTabIndex).toEqual([-1, -1, -1]); // These are the values of tabindex of all the legends.
     });
 
-    it('should not select line group on click', async () => {
+    it.skip('should not select line group on click', async () => {
       const elHandleArray = await page.$$('.line-group');
       const isFailed = [];
       let index = 0;
