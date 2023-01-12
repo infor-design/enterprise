@@ -338,6 +338,7 @@ $toolbar-buttonset-height: 40px;
 
       &:hover {
         color: $contextual-toolbar-button-hover-color;
+        background-color: transparent;
 
         .icon {
           color: $contextual-toolbar-button-hover-color;
