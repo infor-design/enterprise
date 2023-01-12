@@ -19,73 +19,8 @@
       <button id="header-open" class="btn">
         <span>Open</span>
       </button>
-
-      <button id="header-delete" class="btn">
-        <span>Delete</span>
-      </button>
     </div>
 
-    <div class="more">
-      <button class="btn-actions" type="button" id="btn-1">
-        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-          <use href="#icon-more"></use>
-        </svg>
-        <span class="audible" data-translate="text">More</span>
-      </button>
-      <ul class="popupmenu has-icons">
-        <li class="submenu">
-          <a href="#" id="actions">Actions</a>
-          <ul class="popupmenu">
-            <li>
-              <a href="#" id="search"><svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-                <use href="#icon-search"></use>
-              </svg><span>Search</span></a>
-            </li>
-
-            <li>
-              <a href="#" id="print-to-pdf">
-                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-                  <use href="#icon-print"></use>
-                </svg><span>Print to PDF</span></a>
-            </li>
-
-            <li>
-              <a href="#" id="export-csv">
-                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-                  <use href="#icon-export"></use>
-                </svg><span>Export to CSV</span></a>
-            </li>
-
-            <li>
-              <a href="#" id="create-report">
-                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-                  <use href="#icon-inventory"></use>
-                </svg><span>Create Report</span></a>
-            </li>
-
-            <li>
-              <a href="#" id="personalize">
-                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-                  <use href="#icon-user"></use>
-                </svg><span>Personalize</span></a>
-            </li>
-
-            <li>
-              <a href="#" id="refesh">
-                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-                  <use href="#icon-refresh"></use>
-                </svg><span>Refresh</span></a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <a href="#" id="options">Options</a>
-        </li>
-        <li>
-          <a href="#" id="drill-around">Drill Around&trade;</a>
-        </li>
-      </ul>
-
-    </div>
+    {{> includes/header-actionbutton}}
   </div>
 </header>
