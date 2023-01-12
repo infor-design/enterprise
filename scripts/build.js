@@ -452,9 +452,7 @@ function cleanAll(buildTempDir) {
 
   // eslint-disable-next-line no-restricted-syntax
   for (const file of filesToDel) {
-    fs.unlinkSync(file, () => {
-      // Ignore
-    });
+    if (fs.existsSync(file)) fs.unlinkSync(file);
   }
 
   const promise = new Promise((resolve) => {
