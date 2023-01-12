@@ -323,17 +323,13 @@ MonthView.prototype = {
     // Add Legend
     this.addLegend();
     const today = new Date();
-
-    // Invoke the toolbar
-    this.calendarToolbarEl = this.header.find('.calendar-toolbar');
-    this.calendarToolbarAPI = new CalendarToolbar(this.calendarToolbarEl[0], {
+    const calendarToolbarSettings = {
       onOpenCalendar: () => this.currentDate,
       locale: this.settings.locale,
       language: this.settings.language,
       year: this.currentYear,
       month: this.currentMonth,
       showToday: this.settings.showToday,
-      disableToday: this.isDateDisabled(today.getFullYear(), today.getMonth(), today.getDate()),
       showNextPrevious: this.settings.showNextPrevious,
       isMonthPicker: this.settings.headerStyle === 'full',
       isAlternate: this.settings.headerStyle !== 'full',
@@ -344,7 +340,20 @@ MonthView.prototype = {
       inPage: this.settings.inPage,
       inPageTitleAsButton: this.settings.inPageTitleAsButton,
       hitbox: this.settings.hitbox
-    });
+    };
+
+    if (typeof this.settings.disable.callback === 'function') {
+      $.when(this.isDateDisabled(today.getFullYear(), today.getMonth(), today.getDate())).then((dateIsDisabled) => {
+        calendarToolbarSettings.disableToday = dateIsDisabled;
+      });
+    } else {
+      calendarToolbarSettings.disableToday =
+        this.isDateDisabled(today.getFullYear(), today.getMonth(), today.getDate());
+    }
+
+    // Invoke the toolbar
+    this.calendarToolbarEl = this.header.find('.calendar-toolbar');
+    this.calendarToolbarAPI = new CalendarToolbar(this.calendarToolbarEl[0], calendarToolbarSettings);
 
     this.handleEvents();
     utils.addAttributes(this.element, this, this.settings.attributes);
@@ -1316,8 +1325,12 @@ MonthView.prototype = {
       });
       return deferred.promise();
     }
-    const min = (new Date(s.disable.minDate.replace(/-/g, '/'))).setHours(0, 0, 0, 0);
-    const max = (new Date(s.disable.maxDate.replace(/-/g, '/'))).setHours(0, 0, 0, 0);
+
+    const minDate = typeof s.disable.minDate === 'string' ? s.disable.minDate.replace(/-/g, '/') : s.disable.minDate;
+    const maxDate = typeof s.disable.maxDate === 'string' ? s.disable.maxDate.replace(/-/g, '/') : s.disable.maxDate;
+
+    const min = (new Date(minDate)).setHours(0, 0, 0, 0);
+    const max = (new Date(maxDate)).setHours(0, 0, 0, 0);
     let d2 = this.isIslamic ?
       Locale.umalquraToGregorian(year, month, date) : new Date(year, month, date);
 
