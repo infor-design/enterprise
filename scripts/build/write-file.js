@@ -1,5 +1,4 @@
 // Libs
-import chalk from 'chalk';
 import * as fs from 'fs';
 import _yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
@@ -20,7 +19,7 @@ function logFileResults(targetFilePath, targetFile) {
     return;
   }
   const kbLength = (Buffer.byteLength(targetFile, 'utf8') / 1024).toFixed(2);
-  logger('success', `File "${chalk.yellow(targetFilePath)}\n" generated (${kbLength} KB)`);
+  logger('success', `File "${targetFilePath}\n" generated (${kbLength} KB)`);
 }
 
 /**

@@ -5,11 +5,6 @@
  * When a build is finished, this script double-checks the output in the `/dist`
  * folder to ensure that all expected files are present.
  */
-
-// -------------------------------------
-// Requirements
-// -------------------------------------
-import chalk from 'chalk';
 import * as fs from 'fs';
 import glob from 'glob';
 import * as path from 'path';
@@ -70,7 +65,7 @@ function isDirectory(filePath) {
 // -------------------------------------
 
 if (argv.rebuild) {
-  logger('info', `Creating a new ${chalk.yellow('expected-files.json')} list...`);
+  logger('info', `Creating a new ${'expected-files.json'} list...`);
 } else {
   logger('info', 'Verifying the last build...');
 }
@@ -83,7 +78,7 @@ try {
   expectedFiles = JSON.parse(fs.readFileSync(expectedFilesListPath, 'utf8'));
 } catch (err) {
   if (!argv.rebuild) {
-    logger('error', `No files list available at "${chalk.yellow(expectedFilesListPath)}".`);
+    logger('error', `No files list available at "${expectedFilesListPath}".`);
     logger('padded', 'Please re-run this script with the "--rebuild" flag to generate agaist the current distributable.');
     process.exit(1);
   }
@@ -109,10 +104,10 @@ glob(`${paths.dist}/**/*`, globOptions, (err, files) => {
   });
 
   // Log Folders
-  logger('padded', `${chalk.cyan(`folders: ${chalk.bold(foundFolders.length)}`)}`);
+  logger('padded', `${`folders: ${foundFolders.length}`}`);
 
   // Log Files
-  logger('padded', `${chalk.cyan(`files: ${chalk.bold(foundFiles.length)}`)}`);
+  logger('padded', `${`files: ${foundFiles.length}`}`);
   if (argv.verbose) {
     foundFiles.forEach((file) => {
       logger('padded', `${file}`);
@@ -133,7 +128,7 @@ glob(`${paths.dist}/**/*`, globOptions, (err, files) => {
 
     // Save new file
     writeFile(outputPath, filesListTxt).then(() => {
-      logger('beer', `New file list saved to "${chalk.yellow(outputPath)}"`);
+      logger('beer', `New file list saved to "${outputPath}"`);
       process.exit(0);
     });
     return;
@@ -144,13 +139,13 @@ glob(`${paths.dist}/**/*`, globOptions, (err, files) => {
 
   // If files are missing, print each of them and exit.
   if (missingFiles.length) {
-    logger('error', `${chalk.red.bold(`(${missingFiles.length})`)} expected files are missing from the last build:`);
+    logger('error', `${`(${missingFiles.length})`} expected files are missing from the last build:`);
     missingFiles.forEach((file) => {
-      logger('padded', `${chalk.red(file)}`);
+      logger('padded', `${file}`);
     });
     process.exit(1);
   }
 
-  logger('beer', `All ${chalk.green.bold(`(${expectedFiles.length})`)} expected files have been found!`);
+  logger('beer', `All ${`(${expectedFiles.length})`} expected files have been found!`);
   process.exit(0);
 });

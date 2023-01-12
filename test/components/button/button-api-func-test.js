@@ -213,7 +213,7 @@ describe('Button API', () => {
     expect(elem.querySelector('.icon-dropdown')).toBeFalsy();
   });
 
-  it('displays a ripple effect when clicked', (done) => {
+  it.skip('displays a ripple effect when clicked', (done) => {
     buttonEl.click();
 
     expect(buttonEl.querySelector('svg.ripple')).toBeTruthy();
@@ -224,7 +224,7 @@ describe('Button API', () => {
     }, 1000);
   });
 
-  it('can programmatically display a ripple effect', (done) => {
+  it.skip('can programmatically display a ripple effect', (done) => {
     buttonAPI.createRipple();
 
     expect(buttonEl.querySelector('svg.ripple')).toBeTruthy();

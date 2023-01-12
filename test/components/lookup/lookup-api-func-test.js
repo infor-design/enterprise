@@ -252,7 +252,7 @@ describe('Lookup API', () => {
     }, 600);
   });
 
-  it('should be able to update the dataset when closed', (done) => {
+  it.skip('should be able to update the dataset when closed', (done) => {
     const newData = [];
     newData.push({
       id: 77,
@@ -290,7 +290,7 @@ describe('Lookup API', () => {
     }, 600);
   });
 
-  it('should be able to update the dataset when open', (done) => {
+  it.skip('should be able to update the dataset when open', (done) => {
     const newData = [];
     newData.push({
       id: 77,

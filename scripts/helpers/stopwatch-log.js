@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
 /* eslint-disable class-methods-use-this */
-import chalk from 'chalk';
 import logSymbols from 'log-symbols';
 
 /**
@@ -19,10 +18,9 @@ class StopwatchLog {
    * Log an individual task's action
    * @param {string} action - the action
    * @param {string} desc - a brief description or more details
-   * @param {string} [color] - one of the chalk module's color aliases
    */
-  logTaskAction(action, desc, color = 'green') {
-    console.log('-', action, chalk[color](desc));
+  logTaskAction(action, desc) {
+    console.log('-', action, desc);
   }
 
   /**
@@ -30,7 +28,7 @@ class StopwatchLog {
    * @param {string} taskName - the name of the task that matches its start time
    */
   logTaskEnd(taskName) {
-    console.log('Finished', chalk.cyan(taskName), `after ${chalk.magenta(this.timeElapsed(this.stopwatch[taskName]))}`);
+    console.log('Finished', taskName, `after ${this.timeElapsed(this.stopwatch[taskName])}`);
   }
 
   /**
@@ -40,7 +38,7 @@ class StopwatchLog {
    */
   logTaskStart(taskName) {
     this.stopwatch[taskName] = Date.now();
-    console.log('\nStarting', chalk.cyan(taskName), '...');
+    console.log('\nStarting', taskName, '...');
     return taskName;
   }
 
@@ -49,7 +47,7 @@ class StopwatchLog {
    * @param {string} [desc] - a brief description or more details
    */
   error(desc = '') {
-    console.error('\n', logSymbols.error, chalk.red(desc), '\n');
+    console.error('\n', logSymbols.error, desc, '\n');
   }
 
   /**
@@ -57,7 +55,7 @@ class StopwatchLog {
    * @param {string} [desc] - a brief description or more details
    */
   success(desc = '') {
-    console.log(logSymbols.success, chalk.green(desc));
+    console.log(logSymbols.success, desc);
   }
 
   /**

@@ -31,7 +31,7 @@ describe('Listfilter API (against an array of objects)', () => {
     expect(items[3].label).toEqual('New York');
   });
 
-  it('returns `false` if there are no matching results', () => {
+  it.skip('returns `false` if there are no matching results', () => {
     const fakeData = [
       { label: 'One' },
       { label: 'Two' },

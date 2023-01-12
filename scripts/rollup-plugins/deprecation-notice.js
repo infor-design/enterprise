@@ -1,6 +1,5 @@
 // Simple plugin for rollup that detects the existence of JSDoc @deprecated comments
 // and pumps them into the console during the build process.
-import chalk from 'chalk';
 import { build } from 'documentation';
 import * as path from 'path';
 import logger from '../logger.js';
@@ -25,7 +24,7 @@ const parseChildren = function (obj) {
 
 // Logs the deprecation notice in the terminal
 const logDeprecation = function (componentName, methodName, deprecatedObj) {
-  const formattedName = chalk.white.bold(`${componentName}.${methodName}()`);
+  const formattedName = `${componentName}.${methodName}()`;
   const msgStr = `${parseChildren(deprecatedObj)}` || '';
 
   logger('alert', `${formattedName} is deprecated ${msgStr}`);

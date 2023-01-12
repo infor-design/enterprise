@@ -33,7 +33,6 @@ import { hideBin } from 'yargs/helpers';
 
 import * as path from 'path';
 import { fileURLToPath } from 'url';
-import chalk from 'chalk';
 import * as fs from 'fs';
 import glob from 'glob';
 import logger from './logger.js';
@@ -453,7 +452,7 @@ function cleanAll(buildTempDir) {
 
   // eslint-disable-next-line no-restricted-syntax
   for (const file of filesToDel) {
-    fs.unlink(file, () => {
+    fs.unlinkSync(file, () => {
       // Ignore
     });
   }
@@ -850,7 +849,7 @@ function renderSourceCodeList() {
   function logHeaderToBoth(str) {
     targetFile += `${str}${NL}`;
     if (argv.verbose) {
-      logger(`${chalk.cyan(str)}`);
+      logger(`${str}`);
     }
   }
 
@@ -988,7 +987,7 @@ function runBuildProcesses(requested) {
  */
 function buildSuccess() {
   return cleanAll().then(() => {
-    logger('success', `IDS Build was successfully created in "${chalk.yellow('dist/')}"`);
+    logger('success', `IDS Build was successfully created in "${'dist/'}"`);
     process.exit(0);
   });
 }
@@ -1007,7 +1006,7 @@ function buildFailure(reason) {
 // Main
 // -------------------------------------
 
-logger(`${NL}${chalk.red.bold('=========   IDS Enterprise Builder   =========')}${NL}`);
+logger(`${NL}${'=========   IDS Enterprise Builder   ========='}${NL}`);
 
 let requestedComponents = [];
 let normalBuild = false;
@@ -1030,7 +1029,7 @@ addDynamicCssThemePaths(`${SRC_DIR}/themes`, true);
 cleanAll(true).then(() => {
   if (!normalBuild) {
     // Display a list of requested components to the console
-    let loggedComponentList = `${(argv.verbose ? `${NL}` : '')}${chalk.bold('Searching files in `src/` for the following terms:')}${NL}`;
+    let loggedComponentList = `${(argv.verbose ? `${NL}` : '')}${'Searching files in `src/` for the following terms:'}${NL}`;
     requestedComponents.forEach((comp) => {
       componentList += `${comp}${NL}`;
       loggedComponentList += `- ${comp}${NL}`;
@@ -1083,9 +1082,9 @@ cleanAll(true).then(() => {
 
     // Only log the results if we're not in verbose mode.
     if (!argv.verbose) {
-      logger(`${chalk.cyan('JS Source Code:')} ${jsMatches.length} files`);
-      logger(`${chalk.cyan('jQuery Source Code:')} ${jQueryMatches.length} files`);
-      logger(`${chalk.cyan('Sass Source Code:')} ${sassMatches.length} files`);
+      logger(`${'JS Source Code:'} ${jsMatches.length} files`);
+      logger(`${'jQuery Source Code:'} ${jQueryMatches.length} files`);
+      logger(`${'Sass Source Code:'} ${sassMatches.length} files`);
     }
 
     // Create customized lists of JS components for this bundle
@@ -1097,7 +1096,7 @@ cleanAll(true).then(() => {
   renderTargetFiles(normalBuild).then(() => {
     if (argv.dryRun) {
       process.stdout.write(`${NL}`);
-      logger('success', `Completed dry run!  Generated files are available in the "${chalk.yellow('temp/')}" folder.`);
+      logger('success', `Completed dry run!  Generated files are available in the "${'temp/'}" folder.`);
       process.exit(0);
     }
 

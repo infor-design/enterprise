@@ -61,7 +61,7 @@ async function cleanFiles(iconSets) {
   try {
     // eslint-disable-next-line no-restricted-syntax
     for (const file of filesToDel) {
-      fs.unlink(file, () => {
+      fs.unlinkSync(file, () => {
         // Ignore
       });
     }

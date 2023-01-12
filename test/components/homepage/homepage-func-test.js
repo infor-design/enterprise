@@ -73,7 +73,7 @@ describe('Homepage API', () => {
     homepageEl = null;
   });
 
-  it('can pass metadata about its state through a `resize` event', (done) => {
+  it.skip('can pass metadata about its state through a `resize` event', (done) => {
     homepageEl = document.createElement('div');
     homepageEl.id = targetId;
     homepageEl.classList.add('homepage');

@@ -5,10 +5,6 @@
  * IDS Enterprise Minify Process (Terser Wrapper)
  */
 
-// -------------------------------------
-// Requirements
-// -------------------------------------
-import chalk from 'chalk';
 import glob from 'glob';
 import * as path from 'path';
 import extend from 'extend';
@@ -90,7 +86,7 @@ function minifyIdsJs() {
       return;
     }
     if (argv.verbose) {
-      logger('success', `Compressed library file "${chalk.yellow('sohoxi.js')}" with sourcemap successfully.`);
+      logger('success', `Compressed library file "${'sohoxi.js'}" with sourcemap successfully.`);
     }
     compressedFileCount++;
 
@@ -122,7 +118,7 @@ function minifyCulture(inputFileName) {
       return;
     }
     if (argv.verbose) {
-      logger('success', `Compressed culture file "${chalk.yellow(inputFileName)}" successfully.`);
+      logger('success', `Compressed culture file "${inputFileName}" successfully.`);
     }
     compressedFileCount++;
     resolve(extend({}, result, {
@@ -163,7 +159,7 @@ function minifyJS() {
 
       // After all file writing is complete, successfully exit.
       Promise.all(fileWrites).then((values) => {
-        logger('beer', `Terser successfully compressed ${chalk.green.bold(`(${compressedFileCount})`)} JS files!`);
+        logger('beer', `Terser successfully compressed ${`(${compressedFileCount})`} JS files!`);
         resolve(values);
         process.exit(0);
       });

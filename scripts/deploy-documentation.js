@@ -20,7 +20,6 @@
 //   Node Modules/Options
 // -------------------------------------
 import archiver from 'archiver';
-import chalk from 'chalk';
 import { build, formats } from 'documentation';
 import frontMatter from 'front-matter';
 import * as fs from 'fs';
@@ -147,7 +146,7 @@ hbsRegistrar(handlebars, {
 const opStart = swlog.logTaskStart(`deploying ${packageJson.version}`);
 
 if (argv.testMode) {
-  console.log(chalk.bgGreen.bold('\n!! TEST MODE !!'));
+  console.log('\n!! TEST MODE !!');
 }
 
 if (argv.site && Object.keys(serverURIs).includes(argv.site)) {
@@ -157,7 +156,7 @@ if (argv.site && Object.keys(serverURIs).includes(argv.site)) {
 // Failsafe to prevent accidentally uploading dev/beta/rc documentation to
 // production as those semver's will have a dash in them (-dev, -beta, -rc)
 if (packageJson.version.includes('-') && deployTo === 'prod') {
-  console.error(chalk.red('Error!'), 'You can NOT deploy documentation for a non-final version to "prod".');
+  console.error('Error', 'You can NOT deploy documentation for a non-final version to "prod".');
   process.exit(0);
 }
 
@@ -224,7 +223,7 @@ function compileComponents() {
         }
 
         if (!documentationExists(compName)) {
-          swlog.logTaskAction('Skipping', compName, 'yellow');
+          swlog.logTaskAction('Skipping', compName);
           componentStats.numSkipped++;
           return;
         }
@@ -349,7 +348,7 @@ async function cleanAll() {
   try {
     // eslint-disable-next-line no-restricted-syntax
     for (const file of filesToDel) {
-      fs.unlink(file, () => {
+      fs.unlinkSync(file, () => {
         // Ignore
       });
     }
@@ -362,7 +361,7 @@ async function cleanAll() {
     ]);
     swlog.logTaskEnd(cleanStart);
   } catch (err) {
-    console.error(chalk.red('Error!'), err);
+    console.error('Error', err);
   }
 }
 
@@ -470,12 +469,12 @@ function postZippedBundle() {
     swlog.logTaskEnd(publishStart);
     if (err) {
       console.error(err);
-      swlog.logTaskAction('Failed!', `Status ${err}`, 'red');
+      swlog.logTaskAction('Failed!', `Status ${err}`);
     } else {
       if (res.statusCode === 200) {
         swlog.logTaskAction('Success', `to "${serverURIs[deployTo]}"`);
       } else {
-        swlog.logTaskAction('Failed!', `Status ${res.statusCode}: ${res.statusMessage}`, 'red');
+        swlog.logTaskAction('Failed!', `Status ${res.statusCode}: ${res.statusMessage}`);
       }
       res.resume();
       numArchivesSent++;
@@ -510,14 +509,14 @@ function statsConclusion() {
   swlog.logTaskEnd(opStart);
   // did not use multiline string for formatting reasons
   let str = '';
-  str += `\nComponents ${chalk.green('converted')}:  ${componentStats.numConverted}/${componentStats.total}`;
-  str += `\nComponents ${chalk.green('documented')}: ${componentStats.numDocumented}/${componentStats.total}`;
-  str += `\nComponents ${chalk.yellow('skipped')}:    ${componentStats.numSkipped}/${componentStats.total}`;
-  str += `\nComponents ${chalk.green('written')}:    ${componentStats.numWritten}/${componentStats.total}`;
+  str += `\nComponents ${'converted'}:  ${componentStats.numConverted}/${componentStats.total}`;
+  str += `\nComponents ${'documented'}: ${componentStats.numDocumented}/${componentStats.total}`;
+  str += `\nComponents ${'skipped'}:    ${componentStats.numSkipped}/${componentStats.total}`;
+  str += `\nComponents ${'written'}:    ${componentStats.numWritten}/${componentStats.total}`;
   if (numArchivesSent === 0) {
-    str += `\n\nBundles ${chalk.red('deployed')}: ${numArchivesSent}/1`;
+    str += `\n\nBundles ${'deployed'}: ${numArchivesSent}/1`;
   } else {
-    str += `\n\nBundles ${chalk.green('deployed')}: ${numArchivesSent}/1`;
+    str += `\n\nBundles ${'deployed'}: ${numArchivesSent}/1`;
   }
   str += '\n';
   console.log(str);
@@ -549,7 +548,7 @@ function writeHtmlFile(hbsTemplate, componentName) {
       if (err) {
         reject(err);
       } else {
-        swlog.logTaskAction('Created', `${dest.replace(process.cwd(), '')}`);
+        swlog.logTaskAction('Created', `${dest.replace(process.cwd())}`);
         resolve();
       }
     });
@@ -571,7 +570,7 @@ function writeJsonFile(componentName) {
         reject(err);
       } else {
         componentStats.numWritten++;
-        swlog.logTaskAction('Created', dest.replace(process.cwd(), ''));
+        swlog.logTaskAction('Created', dest.replace(process.cwd()));
         resolve();
       }
     });
@@ -636,7 +635,7 @@ function zipAndDeploy() {
     swlog.logTaskEnd(zipStart);
 
     if (argv.dryRun) {
-      console.log(chalk.bgRed.bold('\n!! NO PUBLISH - DRY RUN !!\n'));
+      console.log('\n!! NO PUBLISH - DRY RUN !!\n');
       statsConclusion();
     } else {
       postZippedBundle();

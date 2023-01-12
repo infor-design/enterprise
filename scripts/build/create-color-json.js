@@ -36,7 +36,7 @@ async function cleanFiles() {
   try {
     // eslint-disable-next-line no-restricted-syntax
     for (const file of files) {
-      fs.unlink(file, () => {
+      fs.unlinkSync(file, () => {
         // Ignore
       });
     }
