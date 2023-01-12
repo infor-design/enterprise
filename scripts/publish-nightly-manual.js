@@ -12,7 +12,7 @@
 import * as fs from 'fs';
 import slash from 'slash';
 import inquirer from 'inquirer';
-import childProcess from 'child_process';
+import * as child from 'child_process';
 
 const loadJSON = path => JSON.parse(fs.readFileSync(new URL(path, import.meta.url)));
 const pkgJson = loadJSON('../package.json');
@@ -23,7 +23,6 @@ const pkgJson = loadJSON('../package.json');
 const rootPath = slash(process.cwd());
 const pkgJsonPath = `${rootPath}/package.json`;
 const versionTag = 'dev';
-const exec = childProcess;
 
 // -------------------------------------
 //   Functions
@@ -39,8 +38,8 @@ function formatDate(date) {
   let day = `${d.getDate()}`;
   const year = d.getFullYear();
 
-  if (month.length < 2) month = `0 ${month}`;
-  if (day.length < 2) day = `0 ${day}`;
+  if (month.length < 2) month = `0${month}`;
+  if (day.length < 2) day = `0${day}`;
 
   return [year, month, day].join('');
 }
@@ -50,7 +49,7 @@ function formatDate(date) {
  * @param {string} cmd - The command
  */
 function executeUpdate(cmd) {
-  exec(cmd, (err, stdout, stderr) => {
+  child.exec(cmd, (err, stdout, stderr) => {
     if (err) {
       console.error(`exec error: ${err}`);
       return;

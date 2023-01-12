@@ -1,5 +1,12 @@
 # What's New with Enterprise
 
+## v4.72.0
+
+## v4.72.0 Important Changes
+
+- `[General]` Project now uses node 18 (18.13.0) for development. All dependencies are updated. ([#6634](https://github.com/infor-design/enterprise/issues/6634))
+- `[General]` Updated to d3.v7 which impacts all charts. ([#6634](https://github.com/infor-design/enterprise/issues/6634))
+
 ## v4.71.0
 
 ## v4.71.0 Important Changes
@@ -12,7 +19,7 @@
 
 ## v4.71.0 Features
 
-- `[About]` Browser version for crhome no longer contains minor version. ([#7067](https://github.com/infor-design/enterprise/issues/7067))
+- `[About]` Browser version for chrome no longer contains minor version. ([#7067](https://github.com/infor-design/enterprise/issues/7067))
 - `[Lookup]` Added modal settings to lookup. ([#4319](https://github.com/infor-design/enterprise/issues/4319))
 - `[Radar]` Converted Radar scripts to puppeteer. ([#6989](https://github.com/infor-design/enterprise/issues/6989))
 - `[Colors]` Correct Status Colors.([#6993](https://github.com/infor-design/enterprise/issues/6993))
@@ -44,7 +51,6 @@
 ## v4.70.0 Important Notes
 
 - `[General]` Some elements are no longer hooked under `window` for example `Locale` `Formatters` and `Editors`. To resolve it using Locale.set as an example use the `Soho` namespace i.e. `Soho.Locale.set()`. ([#6634](https://github.com/infor-design/enterprise/issues/6634))
-- `[General]` Updated to d3.v7 ([#6634](https://github.com/infor-design/enterprise/issues/6634))
 
 ## v4.70.0 Features
 

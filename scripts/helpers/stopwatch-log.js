@@ -1,7 +1,5 @@
 /* eslint-disable no-console */
 /* eslint-disable class-methods-use-this */
-import logSymbols from 'log-symbols';
-
 /**
  * @class stopwatchLog
  * Allows you to log the starting and stopping of tasks with elapsed time
@@ -47,7 +45,7 @@ class StopwatchLog {
    * @param {string} [desc] - a brief description or more details
    */
   error(desc = '') {
-    console.error('\n', logSymbols.error, desc, '\n');
+    console.error('\n', desc, '\n');
   }
 
   /**
@@ -55,7 +53,7 @@ class StopwatchLog {
    * @param {string} [desc] - a brief description or more details
    */
   success(desc = '') {
-    console.log(logSymbols.success, desc);
+    console.log(desc);
   }
 
   /**

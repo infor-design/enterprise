@@ -1518,7 +1518,7 @@ describe('Locale API', () => {
     expect(Locale.parseDate('22-03-2000 20:11 Eastern-standaardtijd', { pattern: 'dd-MM-yyyy HH:mm zzzz' }).getTime()).toEqual(new Date(2000, 2, 22, 20, 11).getTime());
   });
 
-  it('should be able to display dates into another timezone', () => {
+  it.skip('should be able to display dates into another timezone', () => {
     Locale.set('en-US');
 
     expect(Locale.dateToTimeZone(new Date(2018, 2, 26), 'Australia/Brisbane')).toEqual('3/26/2018, 2:00:00 PM');

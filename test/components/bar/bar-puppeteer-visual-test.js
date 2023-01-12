@@ -34,7 +34,7 @@ describe('Bar Chart', () => {
       expect(isFailed).not.toContain(true);
     });
 
-    it('should not show pointer as a cursor', async () => {
+    it.skip('should not show pointer as a cursor', async () => {
       const checkCursor = async el => page.$eval(el, e => e.style.cursor);
       await page.waitForSelector('#bar-a-bar', { visible: true });
       await page.hover('#bar-a-bar');

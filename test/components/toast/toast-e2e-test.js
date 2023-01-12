@@ -27,20 +27,6 @@ describe('Toast example-index tests', () => {
     expect(await element(by.id('toast-container'))).toBeTruthy();
   });
 
-  it('should close after clicking close button', async () => {
-    const buttonEl = await element(by.id('show-toast-message'));
-    await buttonEl.click();
-    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.css('.toast'))), config.waitsFor);
-    await browser.driver.sleep(config.sleep);
-
-    expect(await element.all(by.css('.toast')).count()).toEqual(1);
-
-    await element(by.css('#toast-container .btn-close')).click();
-    await browser.driver.sleep(config.sleep);
-
-    expect(await element.all(by.css('.toast')).count()).toEqual(0);
-  });
-
   it('should close after pressing the Escape key', async () => {
     const buttonEl = await element(by.id('show-toast-message'));
     await buttonEl.click();

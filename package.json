@@ -1,6 +1,6 @@
 {
   "name": "ids-enterprise",
-  "version": "4.71.0-dev",
+  "version": "4.72.0-dev.20230111",
   "description": "Infor Design System (IDS) Enterprise Components for the web",
   "keywords": [
     "infor design system",
@@ -63,8 +63,6 @@
     "watch": "npm run watch:js & npm run watch:scss",
     "watch:js": "nodemon --watch \"src/\" -e js --ignore dist/ --ignore app/ -x \"npm run build:js\" --on-change-only",
     "watch:scss": "nodemon --watch \"src/\" -e scss --ignore dist/ --ignore app/ -x \"npm run build:css\" --on-change-only",
-    "webdriver:clean": "npx webdriver-manager clean",
-    "webdriver:update": "npx webdriver-manager update --versions.chrome=108.0.5359.124 --standalone false --quiet --gecko=false",
     "zip": "zip-build dist ../enterprise -t dist.zip"
   },
   "browserslist": [
@@ -121,7 +119,6 @@
     "jest-image-snapshot": "^6.1.0",
     "jest-puppeteer": "^6.2.0",
     "js-yaml": "^4.1.0",
-    "log-symbols": "^5.1.0",
     "markdownlint-cli": "^0.33.0",
     "marked": "^4.2.5",
     "mmm": "^0.2.2",
@@ -142,7 +139,6 @@
     "terser": "^5.16.1",
     "vinyl": "^3.0.0",
     "vinyl-fs": "^3.0.3",
-    "webdriver-manager": "^12.1.8",
     "yargs": "^17.6.2",
     "zip-build": "^1.8.0"
   },

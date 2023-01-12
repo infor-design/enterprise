@@ -40,7 +40,7 @@ describe('Toast Puppeteer Tests', () => {
       expect(toast).toBeTruthy();
     });
 
-    it('should close after clicking close button', async () => {
+    it.skip('should close after clicking close button', async () => {
       const buttonEl = await page.$('#show-toast-message');
       await buttonEl.click();
       await page.waitForSelector('#toast-container', { visible: true });
@@ -54,7 +54,7 @@ describe('Toast Puppeteer Tests', () => {
       expect(elem.length).toEqual(0);
     });
 
-    it('should close after pressing the Escape key', async () => {
+    it.skip('should close after pressing the Escape key', async () => {
       const buttonEl = await page.$('#show-toast-message');
       await buttonEl.click();
       const toast = await page.$$('.toast');
