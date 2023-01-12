@@ -323,17 +323,13 @@ MonthView.prototype = {
     // Add Legend
     this.addLegend();
     const today = new Date();
-
-    // Invoke the toolbar
-    this.calendarToolbarEl = this.header.find('.calendar-toolbar');
-    this.calendarToolbarAPI = new CalendarToolbar(this.calendarToolbarEl[0], {
+    const calendarToolbarSettings = {
       onOpenCalendar: () => this.currentDate,
       locale: this.settings.locale,
       language: this.settings.language,
       year: this.currentYear,
       month: this.currentMonth,
       showToday: this.settings.showToday,
-      disableToday: this.isDateDisabled(today.getFullYear(), today.getMonth(), today.getDate()),
       showNextPrevious: this.settings.showNextPrevious,
       isMonthPicker: this.settings.headerStyle === 'full',
       isAlternate: this.settings.headerStyle !== 'full',
@@ -344,7 +340,20 @@ MonthView.prototype = {
       inPage: this.settings.inPage,
       inPageTitleAsButton: this.settings.inPageTitleAsButton,
       hitbox: this.settings.hitbox
-    });
+    };
+
+    if (typeof this.settings.disable.callback === 'function') {
+      $.when(this.isDateDisabled(today.getFullYear(), today.getMonth(), today.getDate())).then((dateIsDisabled) => {
+        calendarToolbarSettings.disableToday = dateIsDisabled;
+      });
+    } else {
+      calendarToolbarSettings.disableToday =
+        this.isDateDisabled(today.getFullYear(), today.getMonth(), today.getDate());
+    }
+
+    // Invoke the toolbar
+    this.calendarToolbarEl = this.header.find('.calendar-toolbar');
+    this.calendarToolbarAPI = new CalendarToolbar(this.calendarToolbarEl[0], calendarToolbarSettings);
 
     this.handleEvents();
     utils.addAttributes(this.element, this, this.settings.attributes);
