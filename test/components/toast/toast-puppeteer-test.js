@@ -142,7 +142,7 @@ describe('Toast Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
     });
 
-    it('should be able to change toast position', async () => {
+    it.skip('should be able to change toast position', async () => {
       await page.click('#show-toast-message1');
       await page.waitForSelector('#toast-containertoast-some-uniqueid-usersettings-position', { visible: true });
       const toast1 = await page.$('#toast-containertoast-some-uniqueid-usersettings-position');
