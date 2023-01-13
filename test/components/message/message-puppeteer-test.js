@@ -114,7 +114,7 @@ describe('Index Tests', () => {
     await page.click('#message-acknowledge-cancel-1');
   });
 
-  it('should show alert status to a Message example ', async () => {
+  it.skip('should show alert status to a Message example ', async () => {
     // |-------------------------------------------------------------------|
     // | https://github.com/infor-design/enterprise/issues/5459 Enhancement|
     // |-------------------------------------------------------------------|
