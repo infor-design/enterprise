@@ -1572,7 +1572,12 @@ SearchField.prototype = {
     // NOTE: final width can only be 100% if no value is subtracted for other elements
     if (subtractWidth > 0) {
       // If it's an alternate searchfield, change the base width to 100%
-      const isAlternate = this.element[0].parentElement.classList?.contains('alternate');
+      let isAlternate;
+      if (this.element[0].parentElement == null) {
+        isAlternate = false;
+      } else {
+        isAlternate = this.element[0].parentElement.classList.contains('alternate');
+      }
       targetWidthProp = `calc(${isAlternate ? '100%' : baseWidth} - ${subtractWidth}px)`;
     }
     if (targetWidthProp) {
