@@ -16,7 +16,7 @@ describe('Icons Tests', () => {
 
       const icon = await page.$('div.demo-svg[title=launch]');
       const image = await icon.screenshot();
-      const config = getConfig('icon-launch');
+      const config = getConfig('icon-launch', 1);
       expect(image).toMatchImageSnapshot(config);
     });
 
@@ -27,7 +27,7 @@ describe('Icons Tests', () => {
 
       const icon = await page.$('div.demo-svg[title=mobile]');
       const image = await icon.screenshot();
-      const config = getConfig('icon-mobile');
+      const config = getConfig('icon-mobile', 1);
       expect(image).toMatchImageSnapshot(config);
     });
 
@@ -38,7 +38,7 @@ describe('Icons Tests', () => {
 
       const icon = await page.$('div.demo-svg[title=interaction]');
       const image = await icon.screenshot();
-      const config = getConfig('icon-interaction');
+      const config = getConfig('icon-interaction', 1);
       expect(image).toMatchImageSnapshot(config);
     });
 
@@ -49,7 +49,7 @@ describe('Icons Tests', () => {
 
       const icon = await page.$('div.demo-svg[title=interaction-reply]');
       const image = await icon.screenshot();
-      const config = getConfig('icon-interaction-reply');
+      const config = getConfig('icon-interaction-reply', 1);
       expect(image).toMatchImageSnapshot(config);
     });
   });

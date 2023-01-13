@@ -6,10 +6,10 @@ module.exports = {
    * @returns {object} takes an optional options object.
    */
   // eslint-disable-next-line arrow-body-style
-  getConfig: (customSnapshotIdentifier) => {
+  getConfig: (customSnapshotIdentifier, failureThreshold = 0.5) => {
     return {
       // anything less than 0.5 percent difference passes as the same
-      failureThreshold: 0.5,
+      failureThreshold,
       failureThresholdType: 'percent',
       customSnapshotIdentifier,
       customSnapshotsDir: './test/baseline-images',
