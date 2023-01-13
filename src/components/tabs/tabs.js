@@ -3888,7 +3888,7 @@ Tabs.prototype = {
 
       targetRectObj.height -= 4;
       if (!isClassic) {
-        targetRectObj.top -= 12;
+        targetRectObj.top -= 10;
       }
 
       return targetRectObj;
