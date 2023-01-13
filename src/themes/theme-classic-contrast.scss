@@ -210,7 +210,7 @@ $trigger-focus-color: $ids-color-brand-primary-base;
 $listview-bg-color: $inverse-color;
 $listview-bg-color-alternate: $ids-color-palette-graphite-20;
 $listview-hover-bg-color: $ids-color-palette-graphite-30;
-$listview-border-color: $ids-color-palette-graphite-60;
+$listview-border-color: $ids-color-palette-graphite-50;
 $listview-color: $ids-color-palette-black;
 $listview-secondary-color: $ids-color-palette-graphite-90;
 $listview-tertiary-color: $ids-color-palette-graphite-70;
@@ -219,6 +219,8 @@ $listview-selected-text-color: $font-color-extrahighcontrast;
 $listview-header-bg-color: $ids-color-brand-secondary-alt;
 $listview-header-color: $font-color-extrahighcontrast;
 $listview-subhead-color: $ids-color-palette-graphite-60;
+
+$listview-search-border-color: $ids-color-palette-black;
 
 $listview-toolbar-button-text-color: $button-color-tertiary-initial-font;
 $listview-toolbar-button-icon-color: $button-color-tertiary-initial-font;
