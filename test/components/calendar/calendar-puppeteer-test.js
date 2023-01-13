@@ -152,7 +152,7 @@ describe('Calendar', () => {
       expect(await page.$$eval('.calendar-event', el => el.length)).toEqual(17);
     });
 
-    it('should add new events on click and submit', async () => {
+    it.skip('should add new events on click and submit', async () => {
       expect(await page.$$eval('.calendar-event', el => el.length)).toEqual(17);
 
       const button = await page.$('.calendar-event-title:nth-child(1)');

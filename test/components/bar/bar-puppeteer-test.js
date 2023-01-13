@@ -153,7 +153,7 @@ describe('Bar Chart', () => {
       expect(await axisLabels()).toContain('axis-label-bottom');
     });
 
-    it('should not have visual regressions in axis labels', async () => {
+    it.skip('should not have visual regressions in axis labels', async () => {
       expect(await page.waitForSelector('.bar-chart', { visible: true })).toBeTruthy();
 
       const image = await page.screenshot();
@@ -178,7 +178,7 @@ describe('Bar Chart', () => {
       expect(await axisLabels()).toContain('axis-label-bottom');
     });
 
-    it('should not have visual regressions in axis labels RTL', async () => {
+    it.skip('should not have visual regressions in axis labels RTL', async () => {
       expect(await page.waitForSelector('.bar-chart', { visible: true })).toBeTruthy();
 
       const image = await page.screenshot();

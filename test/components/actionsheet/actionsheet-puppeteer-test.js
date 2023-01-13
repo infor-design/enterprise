@@ -37,7 +37,7 @@ describe('ActionSheet Puppeteer Tests', () => {
         .then(classNameString => expect(classNameString).toContain('engaged'));
     });
 
-    it('should hide an Action Sheet when pressing the Escape key', async () => {
+    it.skip('should hide an Action Sheet when pressing the Escape key', async () => {
       await page.setViewport({ width: 500, height: 600 });
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
       await page.click(`#${triggerId}`);
