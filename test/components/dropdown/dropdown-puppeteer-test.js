@@ -1,5 +1,6 @@
 describe('Dropdown Puppeteer Tests', () => {
   const baseUrl = 'http://localhost:4000/components/dropdown';
+
   describe('Disabling Function Keys Tests', () => {
     const url = `${baseUrl}/test-disabling-function-keys`;
 
