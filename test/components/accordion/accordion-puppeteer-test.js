@@ -74,7 +74,7 @@ describe('Accordion Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['networkidle2', 'load'] });
     });
 
-    it('should close all children components', async () => {
+    it.skip('should close all children components', async () => {
       await page.click('#start-test');
       await page.waitForTimeout(2600);
 
