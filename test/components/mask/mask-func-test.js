@@ -194,7 +194,7 @@ describe('Number Mask API', () => {
         start: 0
       },
       patternOptions: {
-        allowLeadingZeroes: true, // should be `allowLeadingZeros`
+        allowLeadingZeros: true, // should be `allowLeadingZeros`
         allowThousands: true,
         allowDecimal: true,
         allowNegative: true,

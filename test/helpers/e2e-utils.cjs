@@ -9,7 +9,7 @@ module.exports = {
   getConfig: (customSnapshotIdentifier) => {
     return {
       // anything less than 0.5 percent difference passes as the same
-      failureThreshold: 0.05,
+      failureThreshold: 0.5,
       failureThresholdType: 'percent',
       customSnapshotIdentifier,
       customSnapshotsDir: './test/baseline-images',
