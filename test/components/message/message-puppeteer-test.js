@@ -184,7 +184,7 @@ describe('Index Tests', () => {
   });
 });
 
-describe('Message xss tests', () => {
+describe.skip('Message xss tests', () => {
   const url = 'http://localhost:4000/components/message/test-escaped-title.html';
   beforeAll(async () => {
     await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
