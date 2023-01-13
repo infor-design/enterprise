@@ -8,6 +8,11 @@
     </div>
 
     <div class="field">
+      <label for="date-field-1" class="label">Disable date by Date object: 12, 13, 14 are enabled</label>
+      <input id="date-field-1"  class="datepicker" name="date-field-1" type="text" data-init="false" data-validate="date availableDate"/>
+    </div>
+
+    <div class="field">
       <label for="date-field-2" class="label">Disable years: [2018, 2019] (by passing years)</label>
       <input id="date-field-2" name="date-field-2" type="text" class="datepicker" data-options="{disable:{years: [2018, 2019]}}" data-validate="date availableDate" />
     </div>
@@ -25,6 +30,15 @@
 
     // Set value
     $('#date-field').data('datepicker').setValue('05/12/2015');
+
+    const minDate = new Date('05/11/2015');
+    const maxDate = new Date('05/15/2015');
+    $('#date-field-1').datepicker({
+      disable: {
+        minDate,
+        maxDate
+      }
+    }).data('datepicker').setValue('05/12/2015');
 
     // Custom callback
     $('#date-field-3').datepicker({
