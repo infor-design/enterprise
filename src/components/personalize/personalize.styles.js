@@ -269,12 +269,14 @@ html.theme-new-dark .header.is-personalizable.has-tabs .tab-container.header-tab
   color: ${colors.contrast} !important;
 }
 
-.header.is-personalizable.has-tabs .tab-more::before {
+.header.is-personalizable.has-tabs .tab-more::before,
+.tab-container.is-personalizable .tab-more::before {
   background-color: ${colors.contrast};
 }
 
 .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab,
-header.is-personalizable .tab-container.header-tabs .tab-more svg.icon,
+.header.is-personalizable .tab-container.header-tabs .tab-more svg.icon,
+.tab-container.is-personalizable .tab-more svg.icon,
 .is-personalizable.tab-container.header-tabs > .tab-list-container .tab  {
   color: ${colors.contrast} !important;
   opacity: .8;
@@ -773,7 +775,11 @@ html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.i
 }
 
 .is-personalizable.tab-container {
-  background-color: ${colors.dark} !important;
+  background-color: ${colors.base} !important;
+}
+
+.tab-container.is-personalizable .tab-list-container .tab-list .tab.is-disabled {
+  color: ${colors.lightest} !important
 }
 
 .is-personalizable .personalize-header {
