@@ -278,7 +278,7 @@
         margin-top: 2px !important;
       }
 
-      .tab {
+      .tab:not(.is-disabled) {
         top: -2px !important;
 
         &:hover {
