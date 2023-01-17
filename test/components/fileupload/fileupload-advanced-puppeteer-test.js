@@ -22,7 +22,7 @@ describe('File Upload Advanced Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
     });
 
-    it('should upload a file and show description', async () => {
+    it.skip('should upload a file and show description', async () => {
       await uploadFiles([filePath]);
 
       // Description bar

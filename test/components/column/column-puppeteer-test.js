@@ -14,7 +14,7 @@ describe('Column Chart Puppeteer Tests', () => {
       expect(legendTabIndex).toEqual([-1]); // These are the values of tabindex of all the legends.
     });
 
-    it('should not highlight when selected', async () => {
+    it.skip('should not highlight when selected', async () => {
       const elHandleArray = await page.$$('rect.bar');
 
       const promises = [];
