@@ -163,9 +163,11 @@ a.is-personalizable svg.ripple-effect {
   border-color: ${colors.contrast} !important;
 }
 
+.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:hover:not(.is-disabled),
 .tab-container.header-tabs > .tab-list-container .tab:hover:not(.is-disabled) {
   color: ${colors.contrast};
   background-color: ${colors.darker};
+  border-bottom: 4px solid ${colors.contrast};
 }
 
 .module-tabs.is-personalizable .tab:not(:first-child) {
