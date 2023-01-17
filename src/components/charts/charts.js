@@ -219,8 +219,19 @@ charts.chartColor = function chartColor(i, chartType, data) {
     if (specifiedColor === 'neutral') {
       return theme.themeColors().palette.graphite['30'].value;
     }
-    if (specifiedColor && specifiedColor.indexOf('#') === 0) {
-      return data.color;
+    if (specifiedColor === 'info') {
+      return theme.themeColors().palette.azure['70'].value;
+    }
+    if (specifiedColor) {
+      if (specifiedColor.indexOf('#') === 0) {
+        return data.color;
+      }
+
+      const num = specifiedColor.slice(-2);
+      if (/\d/.test(num)) {
+        const color = specifiedColor.slice(0, specifiedColor.length - 2);
+        return theme.themeColors().palette[color][parseInt(num, 10) * 10].value;
+      }
     }
   }
 
@@ -258,9 +269,10 @@ charts.chartColorName = function chartColor(i, chartType, data) {
     if (specifiedColor === 'neutral') {
       return 'graphite03';
     }
-    if (specifiedColor && specifiedColor.indexOf('#') === 0) {
-      return data.color;
+    if (specifiedColor === 'info') {
+      return 'azure07';
     }
+    return data.color;
   }
 
   // Some configuration by specific chart types

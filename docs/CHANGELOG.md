@@ -24,6 +24,7 @@
 - `[Radar]` Converted Radar scripts to puppeteer. ([#6989](https://github.com/infor-design/enterprise/issues/6989))
 - `[Colors]` Correct Status Colors.([#6993](https://github.com/infor-design/enterprise/issues/6993))
 - `[Colors]` Re-add yellow alerts.([#6922](https://github.com/infor-design/enterprise/issues/6922))
+- `[Chart]` Added 'info' and theme color options in settings.([#7084](https://github.com/infor-design/enterprise/issues/7084))
 - `[Icons]` Added three new icons: `icon-paint-brush, icon-psych-precaution, icon-observation-precaution`. ([#7040](https://github.com/infor-design/enterprise/issues/7040))
 
 ## v4.71.0 Fixes
@@ -43,6 +44,7 @@
 - `[Lookup]` Adjusted width in lookup. ([#6924](https://github.com/infor-design/enterprise/issues/6924))
 - `[Lookup]` Fixed a bug where custom modal script gets error after closing the modal in the second time. ([#7057](https://github.com/infor-design/enterprise/issues/7057))
 - `[Listview]` Fix on contextual button hover color. ([#7090](https://github.com/infor-design/enterprise/issues/7090))
+- `[Splitter]` Store location only when save setting is set to true. ([#7045](https://github.com/infor-design/enterprise/issues/7045))
 - `[Tabs Module]` Fixed a bug in go button where it was affected by the latest changes for button. ([#7037](https://github.com/infor-design/enterprise/issues/7037))
 - `[Tabs]` Fixed a bug in tabs header and swatch personalize colors. ([#7046](https://github.com/infor-design/enterprise/issues/7046))
 - `[Textarea]` Added paste event listener for textarea. ([NG#6924](https://github.com/infor-design/enterprise-ng/issues/1401))

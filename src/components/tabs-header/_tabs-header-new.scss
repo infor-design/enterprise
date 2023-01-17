@@ -250,6 +250,14 @@
   }
 }
 
+.tab-container.is-personalizable {
+  .tab-more {
+    svg {
+      top: 2px;
+    }
+  }
+}
+
 .tab-container {
   &.header-tabs {
     .add-tab-button {
