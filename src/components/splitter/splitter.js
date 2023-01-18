@@ -434,7 +434,7 @@ Splitter.prototype = {
     this.docBody.triggerHandler('resize', [self]);
 
     // Save to local storage
-    if (localStorage) {
+    if (this.settings.save && localStorage) {
       localStorage[this.settings.uniqueId] = split;
     }
 
