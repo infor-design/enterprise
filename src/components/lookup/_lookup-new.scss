@@ -30,6 +30,10 @@
   .trigger {
     margin-top: 7px;
 
+    &:focus {
+      border-color: $searchfield-toolbar-focus-color;
+    }
+
     .icon {
       right: 0;
       top: 0;
