@@ -158,13 +158,13 @@ a.is-personalizable svg.ripple-effect {
   border-bottom: 1px solid ${colors.darkest} !important;
 }
 
-.tab-container.header-tabs .tab-focus-indicator.is-visible,
+.tab-container.header-tabs:not(.alternate) .tab-focus-indicator.is-visible,
 .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected {
   border-color: ${colors.contrast} !important;
 }
 
 .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:hover:not(.is-disabled),
-.tab-container.header-tabs > .tab-list-container .tab:hover:not(.is-disabled) {
+.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:hover:not(.is-disabled) {
   color: ${colors.contrast};
   background-color: ${colors.darker};
   border-bottom: 4px solid ${colors.contrast};
@@ -230,7 +230,7 @@ a.is-personalizable svg.ripple-effect {
   opacity: .8;
 }
 
-.header.is-personalizable .tab-container.header-tabs > .tab-list-container .tab:not(.is-disabled):hover {
+.header.is-personalizable:not(.has-alternate-tabs) .tab-container.header-tabs > .tab-list-container .tab:not(.is-disabled):hover {
   border-bottom: 4px solid ${colors.contrast};
 }
 
@@ -499,42 +499,42 @@ html[dir='rtl'] .scrollable-flex-header.is-personalizable .breadcrumb.truncated:
 }
 
 .is-personalizable .tab-container.header-tabs:not(.alternate)::before,
-.is-personalizable.tab-container.header-tabs:not(.alternate)::before {
+.is-personalizable .tab-container.header-tabs:not(.alternate)::before {
   background-image: linear-gradient(to right, ${colors.base} , ${colorUtils.hexToRgba(colors.base, 0)}) !important;
 }
 
 .theme-new-dark .is-personalizable .tab-container.header-tabs:not(.alternate)::before,
-.theme-new-dark .is-personalizable.tab-container.header-tabs:not(.alternate)::before {
+.theme-new-dark .is-personalizable .tab-container.header-tabs:not(.alternate)::before {
   background-image: linear-gradient(to right, ${colors.base} , ${colorUtils.hexToRgba(colors.base, 0)}) !important;
 }
 
 html[dir='rtl'].theme-new-dark .is-personalizable .tab-container.header-tabs:not(.alternate)::before,
-html[dir='rtl'].theme-new-dark .is-personalizable.tab-container.header-tabs:not(.alternate)::before {
+html[dir='rtl'].theme-new-dark .is-personalizable .tab-container.header-tabs:not(.alternate)::before {
   background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base});
 }
 
 html[dir='rtl'] .is-personalizable .tab-container.header-tabs:not(.alternate)::before,
-html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::before {
+html[dir='rtl'] .is-personalizable .tab-container.header-tabs:not(.alternate)::before {
   background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base});
 }
 
 .is-personalizable .tab-container.header-tabs:not(.alternate)::after,
-.is-personalizable.tab-container.header-tabs:not(.alternate)::after {
+.is-personalizable .tab-container.header-tabs:not(.alternate)::after {
   background-image: linear-gradient(to right, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base}) !important;
 }
 
 .theme-new-dark .is-personalizable .tab-container.header-tabs:not(.alternate)::after,
-.theme-new-dark .is-personalizable.tab-container.header-tabs:not(.alternate)::after {
+.theme-new-dark .is-personalizable .tab-container.header-tabs:not(.alternate)::after {
   background-image: linear-gradient(to right, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base}) !important;
 }
 
 html[dir='rtl'] .is-personalizable .tab-container.header-tabs:not(.alternate)::after,
-html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::after {
+html[dir='rtl'] .is-personalizable .tab-container.header-tabs:not(.alternate)::after {
   background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.contrast, 0)}, ${colors.contrast}) !important;
 }
 
 html[dir='rtl'].theme-new-dark .is-personalizable .tab-container.header-tabs:not(.alternate)::after,
-html[dir='rtl'].theme-new-dark .is-personalizable.tab-container.header-tabs:not(.alternate)::after {
+html[dir='rtl'].theme-new-dark .is-personalizable .tab-container.header-tabs:not(.alternate)::after {
   background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base}) !important;
 }
 
