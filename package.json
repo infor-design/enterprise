@@ -70,7 +70,7 @@
     "not ie 11"
   ],
   "dependencies": {
-    "d3": "^7.8.1",
+    "d3": "^7.8.2",
     "ids-identity": "4.14.4",
     "jquery": "^3.6.3",
     "promise-polyfill": "^8.2.3"
@@ -128,7 +128,7 @@
     "puppeteer": "^18.2.1",
     "r2": "^2.0.1",
     "release-it": "^15.6.0",
-    "rimraf": "^4.1.0",
+    "rimraf": "^4.1.1",
     "rollup": "^3.10.0",
     "rollup-plugin-analyzer": "^4.0.0",
     "rollup-plugin-license": "^3.0.1",
