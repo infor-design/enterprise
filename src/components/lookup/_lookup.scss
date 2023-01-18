@@ -116,10 +116,6 @@
       top: 50%;
       transform: translateY(-50%);
       right: 4px;
-
-      &:focus {
-        border-color: $searchfield-toolbar-focus-color;
-      }
     }
   }
 }
