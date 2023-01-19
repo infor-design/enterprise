@@ -3823,6 +3823,7 @@ Tabs.prototype = {
     const widthPercentage = target[0].getBoundingClientRect().width / target[0].offsetWidth * 100;
     const isClassic = $('html[class*="classic-"]').length > 0;
     const isAlternate = parentContainer.hasClass('alternate');
+    const isTabContainerHeader = parentContainer.hasClass('header-tabs');
 
     function adjustForParentContainer(targetRectObj, parentElement, tablistContainer, transformPercentage) {
       const parentRect = parentElement[0].getBoundingClientRect();
@@ -3888,7 +3889,7 @@ Tabs.prototype = {
       }
 
       targetRectObj.height -= 4;
-      if (!isClassic && !isAlternate) {
+      if (!isClassic && !isAlternate && isTabContainerHeader) {
         targetRectObj.top -= 9;
       }
 

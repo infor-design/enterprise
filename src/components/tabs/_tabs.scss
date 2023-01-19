@@ -497,7 +497,7 @@
         }
       }
 
-      &:hover {
+      &:not(.is-selected):not(.is-disabled):hover {
         border-bottom: 4px solid $tab-hover-color;
       }
 
