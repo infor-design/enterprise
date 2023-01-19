@@ -3893,6 +3893,11 @@ Tabs.prototype = {
         targetRectObj.top -= 9;
       }
 
+      if (isClassic && isAlternate && isTabContainerHeader) {
+        targetRectObj.height -= 4;
+      }
+
+      console.log(targetRectObj.height);
       return targetRectObj;
     }
 
