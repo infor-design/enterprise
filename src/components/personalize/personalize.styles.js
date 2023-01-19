@@ -498,6 +498,12 @@ html[dir='rtl'] .scrollable-flex-header.is-personalizable .breadcrumb.truncated:
   fill: ${colors.contrast} !important;
 }
 
+.header.is-personalizable .toolbar [class^='btn'][disabled], 
+.header.is-personalizable .toolbar [class^='btn'][disabled] .icon,
+.header.is-personalizable .toolbar [class^='btn'][disabled] span {
+  color: rgba(255, 255, 255, 0.3) !important;
+}
+
 .is-personalizable .tab-container.header-tabs:not(.alternate)::before,
 .is-personalizable .tab-container.header-tabs:not(.alternate)::before {
   background-image: linear-gradient(to right, ${colors.base} , ${colorUtils.hexToRgba(colors.base, 0)}) !important;
