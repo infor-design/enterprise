@@ -146,7 +146,7 @@
     }
 
     .tab-more {
-      padding: 12px 4px 11px 14px;
+      padding: 9px 4px 11px 14px;
 
       &::before {
         background-color: $header-tab-separator-new;
@@ -161,7 +161,7 @@
     }
 
     .add-tab-button {
-      padding: 8px 4px 5px;
+      padding: 4px 4px 1px 6px;
     }
   }
 
@@ -257,18 +257,6 @@
   .tab-more {
     svg {
       top: 2px;
-    }
-  }
-}
-
-.tab-container {
-  &.header-tabs {
-    .add-tab-button {
-      padding: 4px 4px 1px 6px;
-    }
-
-    .tab-more {
-      padding: 9px 4px 11px 14px;
     }
   }
 }

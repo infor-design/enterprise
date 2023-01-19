@@ -159,12 +159,15 @@ a.is-personalizable svg.ripple-effect {
 }
 
 .tab-container.is-personalizable.header-tabs:not(.alternate) .tab-focus-indicator.is-visible,
-.tab-container.is-personalizable.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected {
+.tab-container.is-personalizable.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected,
+.header.is-personalizable .tab-container.header-tabs:not(.alternate) .tab-focus-indicator.is-visible,
+.header.is-personalizable .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected {
   border-color: ${colors.contrast} !important;
 }
 
 .tab-container.is-personalizable.header-tabs:not(.alternate) > .tab-list-container .tab:hover:not(.is-disabled),
-.tab-container.is-personalizable.header-tabs:not(.alternate) > .tab-list-container .tab:hover:not(.is-disabled) {
+.tab-container.is-personalizable.header-tabs:not(.alternate) > .tab-list-container .tab:hover:not(.is-disabled),
+.header.is-personalizable .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:hover:not(.is-disabled) {
   color: ${colors.contrast};
   background-color: ${colors.darker};
   border-bottom: 4px solid ${colors.contrast};
