@@ -3897,7 +3897,6 @@ Tabs.prototype = {
         targetRectObj.height -= 4;
       }
 
-      console.log(targetRectObj.height);
       return targetRectObj;
     }
 
