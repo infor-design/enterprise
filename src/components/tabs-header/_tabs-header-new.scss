@@ -193,6 +193,10 @@
     > .tab-list-container {
       margin-top: -1px;
 
+      .tab-focus-indicator.is-selected {
+        border: 1px solid $header-tab-selected-color-new;
+      }
+
       .tab {
         color: $header-tab-normal-color-new;
 
@@ -210,6 +214,7 @@
         &.is-selected {
           &:not(.is-disabled) {
             color: $header-tab-selected-color-new;
+            border-bottom: 4px solid $header-tab-selected-color-new;
           }
         }
 
