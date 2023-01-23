@@ -53,7 +53,7 @@ const dataset = [{
   }],
   name: 'Component B',
   legendShortName: 'Comp B',
-  legendAbbrName: 'A'
+  legendAbbrName: 'B'
 }, {
   data: [{
     name: 'Jan',
