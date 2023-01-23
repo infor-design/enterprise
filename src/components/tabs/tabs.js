@@ -3891,6 +3891,11 @@ Tabs.prototype = {
         targetRectObj.top -= 10;
       }
 
+      if (!self.element.hasClass('header-tabs')) {
+        targetRectObj.top += 9;
+        targetRectObj.height += 4;
+      }
+
       return targetRectObj;
     }
 
