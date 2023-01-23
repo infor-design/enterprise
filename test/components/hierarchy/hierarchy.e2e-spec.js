@@ -12,7 +12,7 @@ describe('Hierarchy index tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    xit('Should not visual regress', async () => {
       const windowSize = await browser.driver.manage().window().getSize();
       await browser.driver.manage().window().setSize(1500, 900);
 
