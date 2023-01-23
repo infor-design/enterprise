@@ -73,10 +73,10 @@
     "d3": "^7.8.2",
     "ids-identity": "4.14.4",
     "jquery": "^3.6.3",
-    "promise-polyfill": "^8.2.3"
+    "promise-polyfill": "^8.3.0"
   },
   "devDependencies": {
-    "@axe-core/puppeteer": "^4.5.2",
+    "@axe-core/puppeteer": "^4.6.0",
     "@babel/core": "^7.20.12",
     "@babel/eslint-parser": "^7.19.1",
     "@babel/plugin-external-helpers": "^7.18.6",
@@ -129,7 +129,7 @@
     "r2": "^2.0.1",
     "release-it": "^15.6.0",
     "rimraf": "^4.1.1",
-    "rollup": "^3.10.0",
+    "rollup": "^3.10.1",
     "rollup-plugin-analyzer": "^4.0.0",
     "rollup-plugin-license": "^3.0.1",
     "slash": "^5.0.0",
