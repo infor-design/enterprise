@@ -25,6 +25,18 @@ $horizontal-tabs-height: 40px;
   }
 }
 
+.tab-container.horizontal {
+  > .tab-list-container {
+    .tab {
+      &:hover {
+        color: $tab-hover-color;
+        border-bottom: 4px solid $tab-hover-color;
+        background-color: $header-tab-background-hover-color-new;
+      }
+    }
+  }
+}
+
 .tab-container.header-tabs.horizontal {
   border-bottom: 1px solid $tab-border-color;
 
