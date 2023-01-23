@@ -628,7 +628,7 @@ $toolbarsearchfield-category-empty-width: 51px;
     &.non-collapsible {
       .searchfield {
         background-color: $searchfield-header-bg-color;
-        border-bottom-color: rgba($searchfield-header-border-color, 0.7);
+        border-color: rgba($searchfield-header-border-color, 0.7);
         color: $header-flex-toolbar-input-searchfield-color;
         height: 38px;
       }

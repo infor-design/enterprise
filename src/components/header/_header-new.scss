@@ -39,6 +39,10 @@
 
       .toolbar-searchfield-wrapper.has-text:not(.active) {
         width: 34px;
+
+        &.non-collapsible {
+          width: 100%;
+        }
       }
     }
 
