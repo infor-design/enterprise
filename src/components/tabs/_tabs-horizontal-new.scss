@@ -3,7 +3,17 @@
 
 $horizontal-tabs-height: 40px;
 
-.has-more-button.tab-container.horizontal {
+.has-more-button.tab-container.header-tabs.horizontal {
+  &::before {
+    background-image:
+      linear-gradient(
+        to left,
+        rgba($body-color-primary-background, 0),
+        rgba($body-color-primary-background, 1)
+      );
+    height: ($horizontal-tabs-height - 1px);
+  }
+
   &::after {
     background-image:
       linear-gradient(
@@ -16,6 +26,18 @@ $horizontal-tabs-height: 40px;
 }
 
 .tab-container.horizontal {
+  > .tab-list-container {
+    .tab {
+      &:hover {
+        color: $tab-hover-color;
+        border-bottom: 4px solid $tab-hover-color;
+        background-color: $header-tab-background-hover-color-new;
+      }
+    }
+  }
+}
+
+.tab-container.header-tabs.horizontal {
   border-bottom: 1px solid $tab-border-color;
 
   &::before {
@@ -48,6 +70,14 @@ $horizontal-tabs-height: 40px;
           rgba($tab-alt-bg-color, 0),
           rgba($tab-alt-bg-color, 1)
         );
+    }
+
+    > .tab-list-container {
+      .tab {
+        &:not(.is-disabled):hover {
+          background-color: unset;
+        }
+      }
     }
   }
 

@@ -21,18 +21,6 @@
   }
 }
 
-.is-personalizable.has-more-button.tab-container.horizontal {
-  &::after {
-    background-image:
-      linear-gradient(
-        to left,
-        rgba($header-bg-color, 1),
-        rgba($header-bg-color, 0)
-      );
-    height: 39px;
-  }
-}
-
 html[class*='classic-'] .is-personalizable > .tab-list-container .tab.is-disabled a,
 html[class*='classic-'] .is-personalizable.tab-container > .tab-list-container .tab.is-disabled a {
   color: rgba(255, 255, 255, 0.5);
