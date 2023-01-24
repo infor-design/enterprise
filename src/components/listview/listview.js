@@ -220,7 +220,7 @@ ListView.prototype = {
 
     const cardWidgetContent = this.element.parent('.card-content, .widget-content');
     if (cardWidgetContent[0]) {
-      cardWidgetContent[0].style.overflow = 'hidden';
+      cardWidgetContent[0].style.overflow = 'visible';
       cardWidgetContent.css({
         display: 'flex',
         'justify-content': 'flex-end',

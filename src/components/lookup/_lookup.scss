@@ -194,6 +194,7 @@
 
     &.do-resize .buttonset {
       width: 100%;
+      overflow: visible;
 
       @media only screen and (max-width: $breakpoint-phone-to-tablet) {
         width: 100% !important;
