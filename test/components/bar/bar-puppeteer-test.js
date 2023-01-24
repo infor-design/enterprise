@@ -1,4 +1,4 @@
-const { checkDataAutomationID, checkTooltipValue, checkClassNameValue, getConfig } = require('../../helpers/e2e-utils.cjs');
+const { checkDataAutomationID, checkClassNameValue, getConfig } = require('../../helpers/e2e-utils.cjs');
 
 describe('Bar Chart', () => {
   const baseUrl = 'http://localhost:4000/components/bar';
@@ -15,23 +15,6 @@ describe('Bar Chart', () => {
       isFailed.push(await checkDataAutomationID('#bar-a-bar', 'automation-id-bar-a-bar'));
       isFailed.push(await checkDataAutomationID('#bar-b-bar', 'automation-id-bar-b-bar'));
       isFailed.push(await checkDataAutomationID('#bar-c-bar', 'automation-id-bar-c-bar'));
-      expect(isFailed).not.toContain(true);
-    });
-
-    // improve test
-    it.skip('should show the tooltip with data', async () => {
-      await page.setViewport({
-        width: 1200,
-        height: 800,
-        deviceScaleFactor: 1,
-      });
-      const tooltip = '#svg-tooltip';
-      const tooltipContent = '#svg-tooltip .tooltip-content';
-      const isFailed = [];
-      // Series 1
-      isFailed.push(await checkTooltipValue('#bar-a-bar', tooltip, tooltipContent, 'Tooltip by Data\nComponent A\nInformation'));
-      isFailed.push(await checkTooltipValue('#bar-b-bar', tooltip, tooltipContent, 'Category B 372'));
-      isFailed.push(await checkTooltipValue('#bar-c-bar', tooltip, tooltipContent, 'Category C 236.35'));
       expect(isFailed).not.toContain(true);
     });
 
