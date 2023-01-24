@@ -2,172 +2,9 @@
 //================================================== //
 
 .tab-container.header-tabs {
-  background-color: $header-tab-background-initial-color-new;
-  border-bottom: 1px solid $header-tabcontainer-border-color;
-
-  &::before {
-    background-image:
-      linear-gradient(
-        to right,
-        rgba($header-tab-gradient-initial-color-new, 1),
-        rgba($header-tab-gradient-initial-color-new, 0)
-      );
-    left: 20px;
-  }
-
-  &::after {
-    background-image:
-      linear-gradient(
-        to right,
-        rgba($header-tab-gradient-initial-color-new, 0),
-        rgba($header-tab-gradient-initial-color-new, 1)
-      );
-  }
-
-  .tab-list-info {
-    display: none;
-  }
-
-  > .tab-list-container {
-    margin-top: 6px;
-    border-bottom: 0;
-
-    .tab {
-      color: $header-tab-normal-color-new;
-      font-weight: $ids-number-font-weight-bold;
-      overflow: hidden;
-      height: 34px;
-
-      a {
-        margin-top: -7px;
-      }
-
-      &::before {
-        background-color: rgba($header-tab-normal-color-new, 0);
-        bottom: 0;
-      }
-
-      &:first-child {
-        padding-left: 0;
-      }
-
-      &:hover:not(.is-disabled) {
-        color: $header-tab-hover-color-new;
-        border-bottom: 4px solid $header-tab-indicator-hover-color-new;
-        background-color: $header-tab-background-hover-color-new;
-      }
-
-      &.is-focused {
-        color: $header-tab-selected-color-new;
-      }
-
-      &.is-selected:not(.is-disabled) {
-        color: $header-tab-selected-color-new;
-        border-bottom: 4px solid $header-tab-selected-color-new;
-
-        &::before {
-          background-color: rgba($header-tab-hover-color-new, 1);
-        }
-
-        &:hover {
-          color: $header-tab-selected-color-new;
-
-          &::before {
-            background-color: rgba($header-tab-hover-color-new, 1);
-          }
-        }
-      }
-
-      &.dismissible {
-        .icon {
-          color: $ids-color-palette-white;
-          opacity: 0.6;
-        }
-
-        &:hover,
-        &.is-selected {
-          .icon:not(.is-error):not(.icon-error) {
-            color: $ids-color-palette-white;
-            opacity: 1;
-          }
-        }
-      }
-    }
-  }
-
-  .animated-bar {
-    background-color: $header-tab-selected-color-new;
-    margin-top: 8px;
-  }
-
-  .tab-focus-indicator.is-visible {
-    border-color: transparent;
-    box-shadow: unset;
-
-    &.is-selected {
-      border-color: $header-tab-focus-border-color;
-    }
-
-    &:not(.is-selected) {
-      border-color: $header-tab-focus-border-color;
-      border-radius: 7px;
-    }
-  }
-
-  .tab-more,
-  .add-tab-button {
-    color: $header-tab-normal-color-new;
-
-    span {
-      color: inherit;
-    }
-
-    .icon {
-      color: $header-tab-normal-color-new;
-    }
-
-    &:hover {
-      color: $header-tab-hover-color-new;
-
-      .icon:not(.is-error):not(.icon-error) {
-        color: $header-tab-hover-color-new;
-      }
-    }
-
-    &.is-open,
-    &.is-selected {
-      color: $header-tab-selected-color-new;
-
-      .icon:not(.is-error):not(.icon-error) {
-        color: $header-tab-selected-color-new;
-      }
-    }
-  }
-
-  .tab-more {
-    padding: 12px 4px 11px 14px;
-
-    &::before {
-      background-color: $header-tab-separator-new;
-      content: '';
-      display: inline-block;
-      height: 30px;
-      left: 7px;
-      position: absolute;
-      top: 4px;
-      width: 1px;
-    }
-  }
-
-  .add-tab-button {
-    padding: 8px 4px 5px;
-  }
-
-  // Alternate Header-Tab Backgrounds (Page Context)
-  //=================================================
-
-  &.alternate {
-    background-color: $header-tab-alt-bg-color;
+  &:not(.alternate) {
+    background-color: $header-tab-background-initial-color-new;
+    border-bottom: 1px solid $header-tabcontainer-border-color;
 
     &::before {
       background-image:
@@ -188,8 +25,177 @@
         );
     }
 
+    .tab-list-info {
+      display: none;
+    }
+
+    > .tab-list-container {
+      margin-top: 7px;
+      border-bottom: 0;
+
+      .tab {
+        color: $header-tab-normal-color-new;
+        font-weight: $ids-number-font-weight-bold;
+        overflow: hidden;
+        height: 34px;
+
+        a {
+          margin-top: -5px;
+        }
+
+        &::before {
+          background-color: rgba($header-tab-normal-color-new, 0);
+          bottom: 0;
+        }
+
+        &:first-child {
+          padding-left: 0;
+        }
+
+        &:hover:not(.is-disabled) {
+          color: $header-tab-hover-color-new;
+          border-bottom: 4px solid $header-tab-indicator-hover-color-new;
+          background-color: $header-tab-background-hover-color-new;
+        }
+
+        &.is-focused {
+          color: $header-tab-selected-color-new;
+        }
+
+        &.is-selected:not(.is-disabled) {
+          color: $header-tab-selected-color-new;
+          border-bottom: 4px solid $header-tab-selected-color-new;
+
+          &::before {
+            background-color: rgba($header-tab-hover-color-new, 1);
+          }
+
+          &:hover {
+            color: $header-tab-selected-color-new;
+
+            &::before {
+              background-color: rgba($header-tab-hover-color-new, 1);
+            }
+          }
+        }
+
+        &.dismissible {
+          .icon {
+            color: $ids-color-palette-white;
+            opacity: 0.6;
+          }
+
+          &:hover,
+          &.is-selected {
+            .icon:not(.is-error):not(.icon-error) {
+              color: $ids-color-palette-white;
+              opacity: 1;
+            }
+          }
+        }
+      }
+    }
+
+    .animated-bar {
+      background-color: $header-tab-selected-color-new;
+      margin-top: 8px;
+    }
+
+    .tab-focus-indicator.is-visible {
+      border-color: transparent;
+      box-shadow: unset;
+
+      &.is-selected {
+        border-color: $header-tab-focus-border-color;
+      }
+
+      &:not(.is-selected) {
+        border-color: $header-tab-focus-border-color;
+        border-radius: 7px;
+      }
+    }
+
+    .tab-more,
+    .add-tab-button {
+      color: $header-tab-normal-color-new;
+
+      span {
+        color: inherit;
+      }
+
+      .icon {
+        color: $header-tab-normal-color-new;
+      }
+
+      &:hover {
+        color: $header-tab-hover-color-new;
+
+        .icon:not(.is-error):not(.icon-error) {
+          color: $header-tab-hover-color-new;
+        }
+      }
+
+      &.is-open,
+      &.is-selected {
+        color: $header-tab-selected-color-new;
+
+        .icon:not(.is-error):not(.icon-error) {
+          color: $header-tab-selected-color-new;
+        }
+      }
+    }
+
+    .tab-more {
+      padding: 9px 4px 11px 14px;
+
+      &::before {
+        background-color: $header-tab-separator-new;
+        content: '';
+        display: inline-block;
+        height: 30px;
+        left: 7px;
+        position: absolute;
+        top: 4px;
+        width: 1px;
+      }
+    }
+
+    .add-tab-button {
+      padding: 4px 4px 1px 6px;
+    }
+  }
+
+  // Alternate Header-Tab Backgrounds (Page Context)
+  //=================================================
+
+  &.alternate {
+    background-color: $header-tab-alt-bg-color;
+
+    &::before {
+      background-image:
+        linear-gradient(
+          to right,
+          rgba($header-tab-alt-bg-color, 1),
+          rgba($header-tab-alt-bg-color, 0)
+        );
+      left: 20px;
+    }
+
+    &::after {
+      background-image:
+        linear-gradient(
+          to right,
+          rgba($header-tab-alt-bg-color, 0),
+          rgba($header-tab-alt-bg-color, 1)
+        );
+    }
+
     > .tab-list-container {
       margin-top: -1px;
+
+      .tab-focus-indicator.is-selected {
+        border: 1px solid $header-tab-selected-color-new;
+      }
 
       .tab {
         color: $header-tab-normal-color-new;
@@ -201,12 +207,15 @@
         &:hover {
           &:not(.is-disabled) {
             color: $header-tab-hover-color-new;
+            border-bottom: 4px solid $header-tab-hover-color-new;
+            background-color: $header-tab-background-hover-color-new;
           }
         }
 
         &.is-selected {
           &:not(.is-disabled) {
             color: $header-tab-selected-color-new;
+            border-bottom: 4px solid $header-tab-selected-color-new;
           }
         }
 
@@ -254,18 +263,6 @@
   .tab-more {
     svg {
       top: 2px;
-    }
-  }
-}
-
-.tab-container {
-  &.header-tabs {
-    .add-tab-button {
-      padding: 4px 4px 1px 6px;
-    }
-
-    .tab-more {
-      padding: 9px 4px 11px 14px;
     }
   }
 }
