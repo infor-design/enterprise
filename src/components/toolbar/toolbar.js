@@ -977,7 +977,9 @@ Toolbar.prototype = {
         return parseInt(titleSize, 10);
       }
       if (self.settings.favorButtonset === true) {
-        return toolbarDims.width - (toolbarPadding + getTargetButtonsetWidth() + moreDims.width - 2);
+        let buttonset = getTargetButtonsetWidth();
+        buttonset = buttonset > 0 ? buttonset : buttonsetDims.width;
+        return toolbarDims.width - (toolbarPadding + buttonset + moreDims.width - 2);
       }
       return titleDims.scrollWidth;
     }
