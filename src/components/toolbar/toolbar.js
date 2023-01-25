@@ -978,7 +978,7 @@ Toolbar.prototype = {
       }
       if (self.settings.favorButtonset === true) {
         let buttonset = getTargetButtonsetWidth();
-        buttonset = buttonset > 0 ? buttonset : buttonsetDims.width;
+        buttonset = buttonset > 0 ? buttonset : toolbarPadding;
         return toolbarDims.width - (toolbarPadding + buttonset + moreDims.width - 2);
       }
       return titleDims.scrollWidth;
