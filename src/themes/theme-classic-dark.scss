@@ -35,7 +35,7 @@ $dropdown-search-bg-color: $ids-color-palette-slate-80;
 $panel-bg-color: $ids-color-palette-slate-70;
 $panel-border-color: $ids-color-palette-slate-50;
 $drop-shadow-depth: rgba(0, 0, 0, 0.4);
-$focus-box-shadow-color: rgba(141, 201, 230, 0.3);
+$focus-box-shadow-color: rgba($ids-color-palette-slate-10, 0.3);
 $focus-box-shadow: 0 0 4px 2px $focus-box-shadow-color;
 
 $focus-box-shadow-spinbox: 0 3px 3px 0 $focus-box-shadow-color,
@@ -88,6 +88,7 @@ $button-color-primary-disabled-background: $ids-color-palette-slate-70;
 $button-color-primary-disabled-border: $ids-color-palette-slate-70;
 $button-color-primary-hover-background: $ids-color-palette-slate-70;
 $button-color-primary-active-background: $ids-color-palette-slate-60;
+$button-color-tertiary-hover-font-new: $ids-color-palette-white;
 $btn-hyperlink-color: $ids-color-palette-slate-50;
 $btn-hyperlink-hover-color: $ids-color-palette-slate-40;
 
@@ -222,6 +223,7 @@ $trigger-focus-color: $ids-color-brand-primary-base;
 // List View
 $listview-bg-color: $ids-color-palette-slate-70;
 $listview-bg-color-alternate: $ids-color-palette-slate-80;
+$listview-search-border-color: $ids-color-palette-slate-10;
 $listview-hover-bg-color: $ids-color-palette-slate-60;
 $listview-border-color: $ids-color-palette-slate-50;
 $listview-color: $inverse-color;
@@ -290,6 +292,7 @@ $datepicker-readonly-icon-color: $ids-color-palette-slate-40;
 
 // Lookup
 $lookup-readonly-icon-color: $ids-color-palette-slate-40;
+$lookup-modal-searchfield-input-hover-border-color: $ids-color-palette-white;
 
 // Time Picker
 $timepicker-disabled-icon-color: $ids-color-palette-slate-50;
@@ -514,9 +517,10 @@ $rating-hover-color: $ids-color-brand-primary-base;
 
 // Tabs
 $tab-text-color: $ids-color-palette-slate-20;
-$tab-selected-color: $ids-color-brand-primary-base;
+$tab-selected-color: $ids-color-palette-azure-60;
 $tab-border-color: $ids-color-palette-slate-70;
 $tab-hover-color: $font-color-extrahighcontrast;
+$tab-text-color-horizontal: $ids-color-palette-slate-20;
 
 $tab-alt-bg-color: $ids-color-palette-slate-100;
 $tab-alt-border-color: $ids-color-palette-slate-80;
@@ -676,7 +680,9 @@ $searchfield-icon-hover-color: $ids-color-palette-slate-20;
 $searchfield-header-color: white;
 
 $searchfield-toolbar-bg-color: $ids-color-palette-slate-100;
+$searchfield-toolbar-border-color: $ids-color-palette-slate-90;
 $searchfield-header-hover-icon-color: $ids-color-palette-white;
+$searchfield-toolbar-focus-color: $ids-color-palette-slate-10;
 
 $searchfield-alt-bg-color: $ids-color-palette-slate-70;
 $searchfield-alt-border-color: $ids-color-palette-slate-80;
