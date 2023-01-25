@@ -278,7 +278,7 @@
         margin-top: 2px !important;
       }
 
-      .tab {
+      .tab:not(.is-disabled) {
         top: -2px !important;
 
         &:hover {
@@ -497,7 +497,7 @@
         }
       }
 
-      &:hover {
+      &:not(.is-selected):not(.is-disabled):hover {
         border-bottom: 4px solid $tab-hover-color;
       }
 
