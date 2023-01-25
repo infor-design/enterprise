@@ -192,6 +192,7 @@ Object {
 
   describe('Toast Example-draggable tests', () => {
     const url = 'http://localhost:4000/components/toast/example-draggable.html';
+
     beforeEach(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
     });
@@ -202,8 +203,8 @@ Object {
       const toast1 = await page.$('#toast-containertoast-some-uniqueid-usersettings-position');
       const ob = await toast1.boundingBox();
       const button1 = await page.$('#show-toast-message1');
-      await page.waitForTimeout(500);
-      await dragAndDrop(toast1, button1);
+
+      await dragAndDrop('#toast-containertoast-some-uniqueid-usersettings-position', '#show-toast-message1');
       const db = await toast1.boundingBox();
       const toastXLocation = db.x + db.width / 2;
       const toastYLocation = db.y + db.height / 2;
