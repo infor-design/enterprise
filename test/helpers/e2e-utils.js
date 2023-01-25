@@ -103,59 +103,39 @@ module.exports = {
   },
 
   /**
-     * Get the computed style of a particular element.
-     * param {string} selector - The selector for the element to get the property for.
-     * returns {string} style - The css property of the element.
-     */
-  getComputedStyle: async (selector, style) => {
-    const elem = await page.$eval(selector, e => JSON.parse(JSON.stringify(getComputedStyle(e))));
-    const { [style]: props } = elem;
-    return props;
-  },
-
-  /**
-     * Checks the computed style of a particular element with strict equality.
-     * param {string} selector - The selector for the element.
-     * param {string} style - The css property to look for.
-     * param {string} value - The value to compare. Expected Value.
-     * returns {boolean} isFailed - return true if the comparison is failed, return false otherwise.
-     */
+   * Checks the computed style of a particular element with strict equality.
+   * @param {string} selector - The selector for the element.
+   * @param {string} style - The css property to look for.
+   * @param {string} value - The value to compare. Expected Value.
+   * @returns {void}
+   */
   checkElementCssProperty: async (selector, style, value) => {
-    let isFailed = false;
-    try {
-      const elem = await page.$eval(selector, e => JSON.parse(JSON.stringify(getComputedStyle(e))));
-      const { [style]: props } = elem;
-      expect(props).toBe(value);
-    } catch (error) {
-      isFailed = true;
-    }
-    return isFailed;
+    const computedValue = await page.evaluate(
+      (sel, sty) => getComputedStyle(document.querySelector(sel)).getPropertyValue(sty),
+      selector, 
+      style
+    );
+
+    expect(computedValue).toBe(value);
   },
 
   /**
-     * Checks if data automation id matches the given value.
-     * param {string} selector - The selector for the element to get the property value for.
-     * param {string} value - The value to compare. Expected Value.
-     * returns {boolean} isFailed - return true if the comparison is failed, return false otherwise.
-     */
-  checkDataAutomationID: async (selector, value) => {
-    let isFailed = false;
-    try {
-      const elemHandle = await page.$(selector);
-      const elemID = await page.evaluate(elem => elem.getAttribute('data-automation-id'), elemHandle);
-      expect(elemID).toEqual(value);
-    } catch (error) {
-      isFailed = true;
-    }
-    return isFailed;
+   * Checks if data automation id matches the given value.
+   * @param {string} selector - The selector for the element to get the property value for.
+   * @param {string} value - The value to compare. Expected Value.
+   * @returns {void}
+   */
+  checkDataAutomationId: async (selector, value) => {
+    const elemHandle = await page.evaluateHandle(sel => document.querySelector(sel), selector);
+    const elemId = await page.evaluate(elem => elem.getAttribute('data-automation-id'), elemHandle);
+    expect(elemId).toEqual(value);
   },
 
   /**
-     * Checks if Inner HTML contains the given value.
-     * param {string} selector - The selector for the element.
-     * param {string} value - The value to compare. Expected Value.
-     * returns {boolean} isFailed - return true if the comparison is failed, return false otherwise.
-     */
+   * Checks if Inner HTML contains the given value.
+   * @param {string} selector - The selector for the element.
+   * @param {string} value - The value to compare. Expected Value.
+   */
   checkInnerHTMLValue: async (selector, value) => {
     let isFailed = false;
     try {
@@ -190,36 +170,21 @@ module.exports = {
   },
 
   /**
-     * Checks if the element exists on the page.
-     * param {string} selector - The selector for the element to get the property value for
-     * returns {boolean} isFailed - return true if the comparison is failed, return false otherwise
-     */
-  checkIfElementExist: async (selector) => {
-    let isFailed = false;
-    try {
-      const elem = await page.$eval(selector, el => el !== null);
-      expect(elem).toBe(true);
-    } catch (error) {
-      isFailed = true;
-    }
-    return isFailed;
-  },
+   * Checks if the element exists on the page.
+   * @param {string} selector - The selector for the element to get the property value for
+   * @returns {boolean} check if element exists on the page
+   */
+  checkIfElementExists: async (page, selector) => (await page.$(selector)) !== null,
 
   /**
-     * Checks if the element has focused.
-     * param {string} selector - The selector for the element.
-     * returns {boolean} isFailed - return true if the comparison is failed, return false otherwise
-     */
-  checkIfElementHasFocused: async (selector) => {
-    let isFailed = false;
-    try {
-      const elem = await page.$eval(selector, el => el === document.activeElement);
-      expect(elem).toBe(true);
-    } catch (error) {
-      isFailed = true;
-    }
-    return isFailed;
-  },
+   * Checks if the element has focused.
+   * @param {string} selector - The element selector.
+   * @returns {boolean} - return true if element is focused
+   */
+  checkIfElementHasFocused: async selector => page.evaluate(
+    sel => document.querySelector(sel) === document.activeElement,
+    selector
+  ),
 
   /**
      * Checks if the Class Name of an element contains the given value.
