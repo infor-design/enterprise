@@ -1,4 +1,4 @@
-const { checkDataAutomationID, checkTooltipValue, checkClassNameValue, getConfig } = require('../../helpers/e2e-utils.js');
+const { checkDataAutomationId, checkTooltipValue, checkClassNameValue, getConfig } = require('../../helpers/e2e-utils.js');
 
 describe('Bar Chart', () => {
   const baseUrl = 'http://localhost:4000/components/bar';
@@ -11,11 +11,9 @@ describe('Bar Chart', () => {
     });
 
     it('should be able to set id/automation id', async () => {
-      const isFailed = [];
-      isFailed.push(await checkDataAutomationID('#bar-a-bar', 'automation-id-bar-a-bar'));
-      isFailed.push(await checkDataAutomationID('#bar-b-bar', 'automation-id-bar-b-bar'));
-      isFailed.push(await checkDataAutomationID('#bar-c-bar', 'automation-id-bar-c-bar'));
-      expect(isFailed).not.toContain(true);
+      await checkDataAutomationId('#bar-a-bar', 'automation-id-bar-a-bar');
+      await checkDataAutomationId('#bar-b-bar', 'automation-id-bar-b-bar');
+      await checkDataAutomationId('#bar-c-bar', 'automation-id-bar-c-bar');
     });
 
     it('should show the tooltip with data', async () => {
