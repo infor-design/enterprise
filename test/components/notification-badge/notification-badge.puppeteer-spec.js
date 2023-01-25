@@ -1,4 +1,4 @@
-const { getComputedStyle, checkDataAutomationId } = require('../../helpers/e2e-utils.js');
+const { checkDataAutomationId } = require('../../helpers/e2e-utils.js');
 
 describe('Notification-Badge Puppeteer Tests', () => {
   const baseUrl = 'http://localhost:4000/components/notification-badge';

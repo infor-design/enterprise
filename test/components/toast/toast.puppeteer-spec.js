@@ -202,7 +202,6 @@ Object {
       await page.waitForSelector('#toast-containertoast-some-uniqueid-usersettings-position', { visible: true });
       const toast1 = await page.$('#toast-containertoast-some-uniqueid-usersettings-position');
       const ob = await toast1.boundingBox();
-      const button1 = await page.$('#show-toast-message1');
 
       await dragAndDrop('#toast-containertoast-some-uniqueid-usersettings-position', '#show-toast-message1');
       const db = await toast1.boundingBox();

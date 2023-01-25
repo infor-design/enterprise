@@ -205,6 +205,15 @@ module.exports = {
   },
 
   /**
+   * Changes from the previous dragAndDrop function.
+   * 1. Removed the function getType as it is only used once and its functionality can be replaced by typeof operator.
+   * 2. Instead of using multiple switch cases, you can use if-else statements to check the type of the destinationSelector and call the appropriate function.
+   * 3. Removed the default case as it is not doing anything.
+   * 4. Used async-await for boundingBox method to avoid callback hell.
+   * 5. Used Object.assign() method to combine object properties.
+   * 6. Removed unused variables.
+   */
+  /**
    * Drag and Drop element to a specific location.
    * @param {string|object} originSelector - The selector for the origin element.
    * @param {string|object} destinationSelector - The selector of the destination element.
@@ -217,17 +226,17 @@ module.exports = {
     await page.mouse.down();
 
     if (typeof destinationSelector === 'string') {
-        await page.waitForSelector(destinationSelector);
-        const destination = await page.$(destinationSelector);
-        const db = await destination.boundingBox();
-        await page.mouse.move(db.x + db.width / 2, db.y + db.height / 2);
+      await page.waitForSelector(destinationSelector);
+      const destination = await page.$(destinationSelector);
+      const db = await destination.boundingBox();
+      await page.mouse.move(db.x + db.width / 2, db.y + db.height / 2);
     } else if (Array.isArray(destinationSelector)) {
-        const { x, y } = destinationSelector[0];
-        await page.mouse.move(parseFloat(x), parseFloat(y));
+      const { x, y } = destinationSelector[0];
+      await page.mouse.move(parseFloat(x), parseFloat(y));
     } else {
-        const destination = destinationSelector;
-        const db = await destination.boundingBox();
-        await page.mouse.move(db.x + db.width / 2, db.y + db.height / 2);
+      const destination = destinationSelector;
+      const db = await destination.boundingBox();
+      await page.mouse.move(db.x + db.width / 2, db.y + db.height / 2);
     }
     await page.mouse.up();
   },
