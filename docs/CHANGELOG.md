@@ -36,6 +36,7 @@
 - `[Datagrid]` Fixed a bug in datagrid where flex toolbar is not properly destroyed. ([NG#1423](https://github.com/infor-design/enterprise-ng/issues/1423))
 - `[Datagrid]` Fixed a bug in datagrid in datagrid where the icon cause clipping issues. ([#7000](https://github.com/infor-design/enterprise/issues/7000))
 - `[Datagrid]` Fixed a bug in datagrid where date cell is still in edit state after editing when using Safari. ([#6963](https://github.com/infor-design/enterprise/issues/6963))
+- `[Datagrid]` Fixed a bug in datagrid where summary row become selected after selecting row one. ([#7128](https://github.com/infor-design/enterprise/issues/7128))
 - `[Datagrid]` Updated dirty cell check in datagrid. ([#6893](https://github.com/infor-design/enterprise/issues/6893))
 - `[Datepicker]` Fixed a bug in datagrid where disabled dates were not showing in Safari. ([#6920](https://github.com/infor-design/enterprise/issues/6920))
 - `[Datepicker]` Fixed a bug where range display is malformed in RTL. ([#6933](https://github.com/infor-design/enterprise/issues/6933))
