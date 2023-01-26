@@ -43,6 +43,7 @@
 - `[Searchfield]` Fix on non-collapsible positioning and borders. ([#7111](https://github.com/infor-design/enterprise/issues/7111))
 - `[Searchfield]` Adjust icon position and colors. ([#7106](https://github.com/infor-design/enterprise/issues/7106))
 - `[Splitter]` Store location only when save setting is set to true. ([#7045](https://github.com/infor-design/enterprise/issues/7045))
+- `[Tabs]` Fixed a bug where tab list is not viewable dark mode classic view. ([#7097](https://github.com/infor-design/enterprise/issues/7097))
 - `[Tabs Module]` Fixed a bug in go button where it was affected by the latest changes for button. ([#7037](https://github.com/infor-design/enterprise/issues/7037))
 - `[Tabs]` Fixed a bug in tabs header and swatch personalize colors. ([#7046](https://github.com/infor-design/enterprise/issues/7046))
 - `[Tabs Header]` Updated example page, recalibrated positionining and fixed theme discrepancies. ([#7085](https://github.com/infor-design/enterprise/issues/7085))
