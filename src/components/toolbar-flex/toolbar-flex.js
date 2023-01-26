@@ -200,7 +200,8 @@ ToolbarFlex.prototype = {
     const leftNavKeys = ['ArrowLeft', 'Left', 'ArrowUp', 'Up'];
     if (leftNavKeys.indexOf(key) > -1) {
       if (item.type === 'searchfield' && (key === 'ArrowLeft' || key === 'Left')) {
-        return;
+        const caret = item.element.selectionStart;
+        if (caret > 0) return;
       }
       this.navigate((isRTL ? 1 : -1), undefined, true);
       preventScrolling();
@@ -211,7 +212,9 @@ ToolbarFlex.prototype = {
     const rightNavKeys = ['ArrowRight', 'Right', 'ArrowDown', 'Down'];
     if (rightNavKeys.indexOf(key) > -1) {
       if (item.type === 'searchfield' && (key === 'ArrowRight' || key === 'Right')) {
-        return;
+        const caret = item.element.selectionEnd;
+        const end = item.element.value.length;
+        if (caret < end) return;
       }
       this.navigate((isRTL ? -1 : 1), undefined, true);
       preventScrolling();
