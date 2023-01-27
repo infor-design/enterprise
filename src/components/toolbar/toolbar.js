@@ -619,6 +619,10 @@ Toolbar.prototype = {
         self.handleKeys(e);
       }).on('click.toolbar', (e) => {
         self.handleClick(e);
+      }).on('collapsed.toolbar.searchfield', () => {
+        setTimeout(() => {
+          self.handleResize();
+        }, 150);
       });
 
     this.items.filter('.btn-menu, .btn-actions')
@@ -979,7 +983,7 @@ Toolbar.prototype = {
       if (self.settings.favorButtonset === true) {
         let buttonset = getTargetButtonsetWidth();
         buttonset = buttonset > 0 ? buttonset : $(buttonsetElem).width();
-        return toolbarDims.width - (toolbarPadding + buttonset + moreDims.width - 2);
+        return $(window).width() - (toolbarPadding + buttonset + moreDims.width - 10);
       }
       return titleDims.scrollWidth;
     }
