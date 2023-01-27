@@ -144,6 +144,7 @@
 
     &:disabled {
       color: $button-color-tertiary-destructive-disabled-font-new;
+      background-color: $button-color-tertiary-destructive-disabled-background-new;
 
       svg.icon {
         color: $button-color-tertiary-destructive-disabled-font-new;
