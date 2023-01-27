@@ -83,7 +83,7 @@
   ],
   "dependencies": {
     "d3": "^5.16.0",
-    "ids-identity": "4.14.4",
+    "ids-identity": "4.14.5",
     "jquery": "^3.6.0",
     "promise-polyfill": "^8.2.3"
   },
