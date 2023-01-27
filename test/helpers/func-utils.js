@@ -14,10 +14,9 @@ function cleanup() {
   }
 
   collection = document.querySelectorAll('script[nonce]');
-
-  for (let i = 0; i < collection.length; i++) {
-    collection[i].remove();
-  }
+  collection.forEach((element) => {
+    element.remove();
+  });
 
   // Remove Empty Space
   document.body.innerHTML = document.body.innerHTML.replace(/(<(pre|script|style|textarea|{{)[^]+?<\/\2)|(^|>)\s+|\s+(?=<|$)/g, '$1$3');
