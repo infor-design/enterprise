@@ -202,7 +202,7 @@ Personalize.prototype = {
       emerald: ['#1f9254', '#78d8a3', '#a1e4bf'],
       graphite: ['#535353', '#97979b', '#b7b7ba'],
       ruby: ['#8d0b0e', '#ee9496', '#f5c3c4'],
-      slate: ['#606066', '#97979b', 'b7b7ba'],
+      slate: ['#606066', '#97979b', '#b7b7ba'],
       turquoise: ['#297b7b', '#82d4d4', '#a8e1e1'] 
     }
     
