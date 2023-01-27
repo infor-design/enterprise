@@ -38,8 +38,13 @@
   &.destructive {
     background-color: $button-color-primary-destructive-initial-background-new;
     border: 2px solid $button-color-primary-destructive-initial-background-new;
+    color: $ids-color-palette-white;
 
-    &:hover {
+    &:focus:not(:disabled) {
+      border-color: $button-color-destructive-focus-border-new;
+    }
+
+    &:hover:not(:disabled) {
       background-color: $button-color-primary-destructive-hover-background-new;
       border: 2px solid $button-color-primary-destructive-hover-background-new;
     }
@@ -122,6 +127,10 @@
 
     svg.icon {
       color: $button-color-tertiary-destructive-initial-background-new;
+    }
+
+    &:focus:not(:disabled) {
+      border-color: $button-color-destructive-focus-border-new;
     }
 
     &:hover:not(:disabled) {
