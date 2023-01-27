@@ -295,3 +295,21 @@ html[dir='rtl'] {
     }
   }
 }
+
+html[class*='theme-classic-'] .flex-toolbar .toolbar-section .searchfield-wrapper.toolbar-searchfield-wrapper.has-close-icon-button {
+  .custom-button {
+    top: -1px;
+  }
+
+  &.has-close-icon-button .custom-button {
+    left: -38px;
+  }
+
+  &.has-text.active.has-close-icon-button .custom-button  {
+    left: -60px;
+  }
+
+  &:not(.has-categories) .btn-icon.close {
+    right: 40px;
+  }
+}

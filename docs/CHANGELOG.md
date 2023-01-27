@@ -37,6 +37,7 @@
 - `[Header]` Adjusted classic header colors. ([#7069](https://github.com/infor-design/enterprise/issues/7069))
 - `[Lookup]` Adjusted width in lookup. ([#6924](https://github.com/infor-design/enterprise/issues/6924))
 - `[Searchfield]` Searchfield enhancement bugfixes on colors. ([#7079](https://github.com/infor-design/enterprise/issues/7079))
+- `[Searchfield]` Searchfield icon placement fixes in classic. ([#7134](https://github.com/infor-design/enterprise/issues/7134))
 - `[Lookup]` Adjusted width in lookup. ([#6924](https://github.com/infor-design/enterprise/issues/6924))
 - `[Lookup]` Fixed a bug where custom modal script gets error after closing the modal in the second time. ([#7057](https://github.com/infor-design/enterprise/issues/7057))
 - `[Listview]` Fix on contextual button hover color. ([#7090](https://github.com/infor-design/enterprise/issues/7090))
