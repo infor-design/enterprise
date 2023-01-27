@@ -12,7 +12,7 @@
 
 ## v4.71.0 Features
 
-- `[About]` Browser version for crhome no longer contains minor version. ([#7067](https://github.com/infor-design/enterprise/issues/7067))
+- `[About]` Browser version for chrome no longer contains minor version. ([#7067](https://github.com/infor-design/enterprise/issues/7067))
 - `[Lookup]` Added modal settings to lookup. ([#4319](https://github.com/infor-design/enterprise/issues/4319))
 - `[Radar]` Converted Radar scripts to puppeteer. ([#6989](https://github.com/infor-design/enterprise/issues/6989))
 - `[Colors]` Correct Status Colors.([#6993](https://github.com/infor-design/enterprise/issues/6993))
@@ -22,6 +22,7 @@
 
 ## v4.71.0 Fixes
 
+- `[Button]` Fixed a bug where buttons are not readable in dark mode in the new design. ([#7082](https://github.com/infor-design/enterprise/issues/7082))
 - `[Checkbox]` Fixed a bug where checkbox labels not wrapping when using `form-responsive` class. ([#6826](https://github.com/infor-design/enterprise/issues/6826))
 - `[Datagrid]` Fixed a bug in datagrid where icon is not aligned in custom card. ([#7000](https://github.com/infor-design/enterprise/issues/7000))
 - `[Datagrid]` Fixed a bug where datepicker icon background color is incorrect upon hovering. ([#7053](https://github.com/infor-design/enterprise/issues/7053))
