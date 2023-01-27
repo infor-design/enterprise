@@ -193,7 +193,6 @@ Personalize.prototype = {
     });
     isDark = foundColor ? 'white' : null;
 
-
     // START OF DARK NEW THEME COLOR STYLES 
     const darkButtonNewColors = {
       amber: ['#bb5500', '#fbaf50', '#fcc888'],
@@ -204,9 +203,9 @@ Personalize.prototype = {
       ruby: ['#8d0b0e', '#ee9496', '#f5c3c4'],
       slate: ['#606066', '#97979b', '#b7b7ba'],
       turquoise: ['#297b7b', '#82d4d4', '#a8e1e1'] 
-    }
+    };
     
-    let currentColor = `${colors.header || defaultColors.header}`.toLowerCase();
+    const currentColor = `${colors.header || defaultColors.header}`.toLowerCase();
     Object.keys(darkButtonNewColors).forEach((color) => {
       if (darkButtonNewColors[color].indexOf(currentColor) > -1) {
         colors.darkNewButton = darkButtonNewColors[color][1];
