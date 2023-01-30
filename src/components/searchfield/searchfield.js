@@ -1515,9 +1515,6 @@ SearchField.prototype = {
 
       width = baseWidth;
 
-      if ($(this.toolbarParent).closest('.header').length) {
-        width = `calc(${baseWidth} - 40px)`;
-      }
       if ($(this.toolbarParent).closest('.tab-container.module-tabs').length) {
         width = `calc(${baseWidth} - 1px)`;
       }

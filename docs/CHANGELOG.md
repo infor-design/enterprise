@@ -19,6 +19,7 @@
 - `[Colors]` Re-add yellow alerts.([#6922](https://github.com/infor-design/enterprise/issues/6922))
 - `[Chart]` Added 'info' and theme color options in settings.([#7084](https://github.com/infor-design/enterprise/issues/7084))
 - `[Icons]` Added three new icons: `icon-paint-brush, icon-psych-precaution, icon-observation-precaution`. ([#7040](https://github.com/infor-design/enterprise/issues/7040))
+- `[Icons]` Added four new icons: `up-down-chevron, approve-all, import-spreadsheet, microphone`. ([#7142](https://github.com/infor-design/enterprise/issues/7142))
 
 ## v4.71.0 Fixes
 
@@ -41,6 +42,7 @@
 - `[Lookup]` Adjusted width in lookup. ([#6924](https://github.com/infor-design/enterprise/issues/6924))
 - `[Lookup]` Fixed a bug where custom modal script gets error after closing the modal in the second time. ([#7057](https://github.com/infor-design/enterprise/issues/7057))
 - `[Listview]` Fix on contextual button hover color. ([#7090](https://github.com/infor-design/enterprise/issues/7090))
+- `[Searchfield]` Searchfield enhancement bugfixes on colors. ([#7079](https://github.com/infor-design/enterprise/issues/7079))
 - `[Searchfield]` Fix on non-collapsible positioning and borders. ([#7111](https://github.com/infor-design/enterprise/issues/7111))
 - `[Searchfield]` Adjust icon position and colors. ([#7106](https://github.com/infor-design/enterprise/issues/7106))
 - `[Splitter]` Store location only when save setting is set to true. ([#7045](https://github.com/infor-design/enterprise/issues/7045))
@@ -49,6 +51,7 @@
 - `[Tabs]` Fixed a bug in tabs header and swatch personalize colors. ([#7046](https://github.com/infor-design/enterprise/issues/7046))
 - `[Tabs Header]` Updated example page, recalibrated positionining and fixed theme discrepancies. ([#7085](https://github.com/infor-design/enterprise/issues/7085))
 - `[Textarea]` Added paste event listener for textarea. ([NG#6924](https://github.com/infor-design/enterprise-ng/issues/1401))
+- `[Toolbar]` Adjustment in title width. ([#7113](https://github.com/infor-design/enterprise/issues/7113))
 - `[User Status Icons]` Now have a more visible fill and a stroke behind them. ([#7040](https://github.com/infor-design/enterprise/issues/7040))
 
 ## v4.70.0
