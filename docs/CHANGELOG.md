@@ -4,11 +4,11 @@
 
 ## v4.71.0 Important Changes
 
-- `[Button]` Changed style and features of existing buttons and added destructive buttons. ([#6977](https://github.com/infor-design/enterprise/issues/6977))
-- `[Datagrid]` Added ability to set the color of the header in datagrid (`dark` or `light`). ([#7008](https://github.com/infor-design/enterprise/issues/7008))
-- `[Searchfield]` Added enhancement changes in searchfield. ([#6707](https://github.com/infor-design/enterprise/issues/6707))
-- `[Tabs]` Added puppeteer scripts for tooltip title. ([#7003](https://github.com/infor-design/enterprise/issues/7003))
-- `[Tabs Header]` Changed the default background for tabs header in default and alternate. ([#6979](https://github.com/infor-design/enterprise/issues/6979))
+- `[Button]` The style of all buttons (primary/tertiary and secondary) have been updated and changed, in addition we added new destructive buttons. ([#6977](https://github.com/infor-design/enterprise/issues/6977))
+- `[Datagrid]` Added ability to change the color of the header in datagrid between (`dark` or `light`). ([#7008](https://github.com/infor-design/enterprise/issues/7008))
+- `[Searchfield]` Completed a design review of searchfield and enhanced it with updated design changes enhancement changes. ([#6707](https://github.com/infor-design/enterprise/issues/6707))
+- `[Header]` Changed the default color from azure to white. I.E. The default header color is now white but can still be set to any of the other 8 colors. So far the older look azure can be used. ([#6979](https://github.com/infor-design/enterprise/issues/6979))
+- `[Tabs Header]` Changed the default background color for tabs header to also use white with the same ability to use any of the other 8 personalization colors. ([#6979](https://github.com/infor-design/enterprise/issues/6979))
 
 ## v4.71.0 Features
 
@@ -47,6 +47,7 @@
 - `[Tabs]` Fixed a bug where tab list is not viewable dark mode classic view. ([#7097](https://github.com/infor-design/enterprise/issues/7097))
 - `[Tabs Module]` Fixed a bug in go button where it was affected by the latest changes for button. ([#7037](https://github.com/infor-design/enterprise/issues/7037))
 - `[Tabs]` Fixed a bug in tabs header and swatch personalize colors. ([#7046](https://github.com/infor-design/enterprise/issues/7046))
+- `[Tabs]` Added puppeteer scripts for tooltip title. ([#7003](https://github.com/infor-design/enterprise/issues/7003))
 - `[Tabs Header]` Updated example page, recalibrated positionining and fixed theme discrepancies. ([#7085](https://github.com/infor-design/enterprise/issues/7085))
 - `[Textarea]` Added paste event listener for textarea. ([NG#6924](https://github.com/infor-design/enterprise-ng/issues/1401))
 - `[Toolbar]` Adjustment in title width. ([#7113](https://github.com/infor-design/enterprise/issues/7113))
