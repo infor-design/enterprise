@@ -143,6 +143,10 @@ button {
     }
   }
 
+  &.custom-button > .icon {
+    position: relative;
+  }
+
   .icon {
     @include transition(color 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
   }
