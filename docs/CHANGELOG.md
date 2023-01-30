@@ -8,6 +8,7 @@
 - `[Datagrid]` Added ability to change the color of the header in datagrid between (`dark` or `light`). ([#7008](https://github.com/infor-design/enterprise/issues/7008))
 - `[Searchfield]` Completed a design review of searchfield and enhanced it with updated design changes enhancement changes. ([#6707](https://github.com/infor-design/enterprise/issues/6707))
 - `[Header]` Changed the default color from azure to white. I.E. The default header color is now white but can still be set to any of the other 8 colors. So far the older look azure can be used. ([#6979](https://github.com/infor-design/enterprise/issues/6979))
+- `[Personalization]` The default color is now alabaster (white) rather than the previous azure color. This effects header and tabs header as previously noted. ([#6979](https://github.com/infor-design/enterprise/issues/6979))
 - `[Tabs Header]` Changed the default background color for tabs header to also use white with the same ability to use any of the other 8 personalization colors. ([#6979](https://github.com/infor-design/enterprise/issues/6979))
 
 ## v4.71.0 Features
