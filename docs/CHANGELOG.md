@@ -19,6 +19,7 @@
 - `[Colors]` Re-add yellow alerts.([#6922](https://github.com/infor-design/enterprise/issues/6922))
 - `[Chart]` Added 'info' and theme color options in settings.([#7084](https://github.com/infor-design/enterprise/issues/7084))
 - `[Icons]` Added three new icons: `icon-paint-brush, icon-psych-precaution, icon-observation-precaution`. ([#7040](https://github.com/infor-design/enterprise/issues/7040))
+- `[Icons]` Added four new icons: `up-down-chevron, approve-all, import-spreadsheet, microphone`. ([#7142](https://github.com/infor-design/enterprise/issues/7142))
 
 ## v4.71.0 Fixes
 
