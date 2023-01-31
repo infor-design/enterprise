@@ -1515,9 +1515,6 @@ SearchField.prototype = {
 
       width = baseWidth;
 
-      if ($(this.toolbarParent).closest('.header').length) {
-        width = `calc(${baseWidth} - 40px)`;
-      }
       if ($(this.toolbarParent).closest('.tab-container.module-tabs').length) {
         width = `calc(${baseWidth} - 1px)`;
       }
@@ -1566,8 +1563,10 @@ SearchField.prototype = {
     if (this.hasCategories()) {
       subtractWidth += this.categoryButton.outerWidth(true);
     }
-    
-    subtractWidth += this.hasGoButton() ? this.goButton.outerWidth(true) + 40 : 80;
+
+    if (this.hasGoButton()) {
+      subtractWidth += this.goButton.outerWidth(true) + 40;
+    }
 
     // NOTE: final width can only be 100% if no value is subtracted for other elements
     if (subtractWidth > 0) {

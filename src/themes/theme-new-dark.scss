@@ -25,7 +25,7 @@ $dropdown-search-bg-color: $ids-color-palette-slate-80;
 $panel-bg-color: $ids-color-palette-slate-100;
 $panel-border-color: $ids-color-palette-slate-70;
 $drop-shadow-depth: rgba($ids-color-boxshadow-base, 0.4);
-$focus-box-shadow-color: rgba(141, 201, 230, 0.3);
+$focus-box-shadow-color: rgba($ids-color-palette-slate-10, 0.3);
 $focus-box-shadow: 0 0 4px 2px $focus-box-shadow-color;
 
 $focus-box-shadow-spinbox: 0 -3px 3px 0 $focus-box-shadow-color,
@@ -73,6 +73,7 @@ $hr-top-color: $ids-color-palette-slate-90;
 $hr-bottom-color: transparent;
 
 // Buttons
+$button-color-secondary-focus-background: $ids-color-palette-slate-10;
 $button-color-primary-disabled-background: $ids-color-palette-slate-80;
 $button-color-primary-disabled-border: $ids-color-palette-slate-80;
 $button-color-primary-active-background: $ids-color-palette-slate-60;
@@ -91,20 +92,20 @@ $button-color-secondary-hover-border-new: $ids-color-palette-azure-40;
 $button-color-secondary-hover-background-new: $ids-color-palette-slate-90;
 $button-color-secondary-disabled-background-new: $ids-color-palette-slate-80;
 $button-color-secondary-disabled-border-new: $ids-color-palette-slate-50;
-$button-color-secondary-disabled-font-new: $ids-color-palette-slate-50;
+$button-color-secondary-disabled-font-new: $ids-color-palette-slate-40;
 
 $button-color-tertiary-disabled-background-new: $ids-color-palette-slate-80;
 $button-color-tertiary-hover-background-new: $ids-color-palette-slate-90;
-$button-color-tertiary-hover-font-new: $ids-color-palette-azure-30;
+$button-color-tertiary-hover-font-new: $ids-color-palette-white;
 
-$button-color-primary-destructive-initial-background-new: $ids-color-palette-ruby-40;
-$button-color-primary-destructive-hover-background-new: $ids-color-palette-ruby-30;
+$button-color-primary-destructive-initial-background-new: $ids-color-palette-ruby-60;
+$button-color-primary-destructive-hover-background-new: $ids-color-palette-ruby-70;
 
 $button-color-tertiary-destructive-initial-background-new: $ids-color-palette-ruby-40;
-$button-color-tertiary-destructive-hover-font-new: $ids-color-palette-ruby-80;
-$button-color-tertiary-destructive-hover-background-new: $ids-color-palette-ruby-30;
+$button-color-tertiary-destructive-hover-font-new: $ids-color-palette-ruby-30;
+$button-color-tertiary-destructive-hover-background-new: $ids-color-palette-ruby-60;
 
-$button-color-tertiary-destructive-disabled-font-new: $ids-color-palette-ruby-30;
+$button-color-tertiary-destructive-disabled-font-new: $ids-color-palette-slate-50;
 $button-color-tertiary-destructive-disabled-background-new: $ids-color-palette-slate-80;
 
 // Button Ripple
@@ -282,6 +283,9 @@ $listbuilder-bg-color-hover: $ids-color-palette-slate-60;
 $listbuilder-border-color: $ids-color-palette-slate-40;
 $listbuilder-icon-color-hover: $ids-color-palette-white;
 $listbuilder-text-color: $ids-color-palette-white;
+
+// Lookup
+$lookup-modal-searchfield-input-hover-border-color: $ids-color-palette-white;
 
 // Toolbar
 $toolbar-standalone-bg-color: $ids-color-palette-slate-60;
@@ -543,9 +547,12 @@ $rating-hover-color: $ids-color-brand-primary-base;
 
 // Tabs
 $tab-text-color: $ids-color-palette-slate-20;
-$tab-selected-color: $ids-color-brand-primary-lighter;
+$tab-selected-color: $ids-color-palette-azure-40;
 $tab-border-color: $ids-color-palette-slate-70;
-$tab-hover-color: $font-color-extrahighcontrast;
+// $tab-hover-color: $font-color-extrahighcontrast;
+$tab-hover-color: $ids-color-palette-slate-10;
+$tab-text-color-horizontal: $ids-color-palette-slate-20;
+$tab-add-tab-color: $ids-color-palette-slate-20;
 
 $tab-alt-bg-color: $ids-color-palette-slate-100;
 $tab-alt-border-color: $ids-color-palette-slate-80;
@@ -709,9 +716,11 @@ $searchfield-lighter-text-color: $ids-color-palette-slate-40;
 $searchfield-lighter-placeholder-text-color: $ids-color-brand-secondary-alt;
 $searchfield-active-icon-color: $ids-color-brand-primary-alt;
 $searchfield-icon-hover-color: $ids-color-palette-slate-20;
-$searchfield-header-color: white;
+$searchfield-header-color: $ids-color-palette-white;
 
 $searchfield-toolbar-bg-color: $ids-color-palette-slate-100;
+$searchfield-toolbar-border-color: $ids-color-palette-slate-40;
+$searchfield-toolbar-focus-color: $ids-color-palette-slate-10;
 
 $searchfield-alt-bg-color: $ids-color-palette-slate-70;
 $searchfield-alt-border-color: $ids-color-palette-slate-80;
@@ -784,7 +793,7 @@ $header-tab-separator: rgba(255, 255, 255, 0.4);
 $header-tab-normal-color: $ids-color-palette-slate-30;
 $header-tab-hover-color: $inverse-color;
 $header-tab-selected-color: $inverse-color;
-$header-tab-alt-bg-color: transparent;
+$header-tab-alt-bg-color: $ids-color-palette-slate-60;
 $header-tab-alt-separator: $ids-color-palette-white;
 $header-tab-alt-normal-color: $ids-color-palette-slate-30;
 $header-tab-alt-hover-color: $inverse-color;
@@ -800,8 +809,6 @@ $header-flex-toolbar-close-icon-color-hover: $ids-color-palette-white;
 $searchfield-header-hover-icon-color: $ids-color-palette-white;
 $header-tab-background-hover-color-new: transparent;
 $header-tab-indicator-hover-color-new: $ids-color-palette-white;
-
-$tab-text-color-horizontal: $ids-color-palette-white;
 
 // Header Breadcrumb
 $header-breadcrumb-current-color: $ids-color-palette-white;

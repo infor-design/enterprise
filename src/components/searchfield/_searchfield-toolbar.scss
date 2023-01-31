@@ -515,14 +515,13 @@ $toolbarsearchfield-category-empty-width: 51px;
     &.searchfield-wrapper.show-category {
       .searchfield {
         border-left-color: $header-searchfield-input-border-color !important;
-        border-right: 0;
       }
     }
   }
 
   &:not(.active) {
     .btn-icon.close,
-    .icon.close {
+    &:not(.is-hovered) .icon.close {
       display: none;
     }
   }
@@ -628,7 +627,7 @@ $toolbarsearchfield-category-empty-width: 51px;
     &.non-collapsible {
       .searchfield {
         background-color: $searchfield-header-bg-color;
-        border-bottom-color: rgba($searchfield-header-border-color, 0.7);
+        border-color: rgba($searchfield-header-border-color, 0.7);
         color: $header-flex-toolbar-input-searchfield-color;
         height: 38px;
       }

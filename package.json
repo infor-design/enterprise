@@ -74,7 +74,7 @@
     "watch:js": "nodemon --watch \"src/\" -e js --ignore dist/ --ignore app/ -x \"npm run build:js\" --on-change-only",
     "watch:scss": "nodemon --watch \"src/\" -e scss --ignore dist/ --ignore app/ -x \"npm run build:css\" --on-change-only",
     "webdriver:clean": "npx webdriver-manager clean",
-    "webdriver:update": "npx webdriver-manager update --versions.chrome=107.0.5304.87 --standalone false --quiet --gecko=false",
+    "webdriver:update": "npx webdriver-manager update --versions.chrome=109.0.5414.74 --standalone false --quiet --gecko=false",
     "zip-dist": "npx grunt zip-dist"
   },
   "browserslist": [
@@ -83,7 +83,7 @@
   ],
   "dependencies": {
     "d3": "^5.16.0",
-    "ids-identity": "4.14.4",
+    "ids-identity": "4.14.5",
     "jquery": "^3.6.0",
     "promise-polyfill": "^8.2.3"
   },
@@ -141,7 +141,7 @@
     "jest-image-snapshot": "^4.5.1",
     "jest-puppeteer": "^6.1.0",
     "js-yaml": "^3.13.1",
-    "karma": "5.0.9",
+    "karma": "6.4.1",
     "karma-browserstack-launcher": "^1.6.0",
     "karma-chrome-launcher": "^3.1.0",
     "karma-jasmine": "^3.1.1",
@@ -178,7 +178,7 @@
   "optionalDependencies": {
     "fsevents": "*"
   },
-  "chrome-version": "107.0.5304.87",
+  "chrome-version": "109.0.5414.74",
   "jspm": {
     "main": "dist/js/sohoxi.js"
   },

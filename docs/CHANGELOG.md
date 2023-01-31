@@ -4,23 +4,27 @@
 
 ## v4.71.0 Important Changes
 
-- `[Button]` Changed style and features of existing buttons and added destructive buttons. ([#6977](https://github.com/infor-design/enterprise/issues/6977))
-- `[Datagrid]` Added ability to set the color of the header in datagrid (`dark` or `light`). ([#7008](https://github.com/infor-design/enterprise/issues/7008))
-- `[Searchfield]` Added enhancement changes in searchfield. ([#6707](https://github.com/infor-design/enterprise/issues/6707))
-- `[Tabs]` Added puppeteer scripts for tooltip title. ([#7003](https://github.com/infor-design/enterprise/issues/7003))
-- `[Tabs Header]` Changed the default background for tabs header in default and alternate. ([#6979](https://github.com/infor-design/enterprise/issues/6979))
+- `[Personalization]` The default color is now alabaster (white) rather than the previous azure color. This effects header and tabs header as previously noted. ([#6979](https://github.com/infor-design/enterprise/issues/6979))
+- `[Header]` Changed the default color from azure to alabaster. I.E. The default header color is now alabaster but can still be set to any of the other 8 colors. So far the older look azure can be used. ([#6979](https://github.com/infor-design/enterprise/issues/6979))
+- `[Tabs Header]` Changed the default background color for tabs header to also use alabaster with the same ability to use any of the other 8 personalization colors. ([#6979](https://github.com/infor-design/enterprise/issues/6979))
+- `[Button]` The style of all buttons (primary/tertiary and secondary) have been updated and changed, in addition we added new destructive buttons. ([#6977](https://github.com/infor-design/enterprise/issues/6977))
+- `[Datagrid]` Added ability to change the color of the header in datagrid between (`dark` or `light (alabaster)`). ([#7008](https://github.com/infor-design/enterprise/issues/7008))
+- `[Searchfield]` Completed a design review of searchfield and enhanced it with updated several design improvements. ([#6707](https://github.com/infor-design/enterprise/issues/6707))
 
 ## v4.71.0 Features
 
-- `[About]` Browser version for crhome no longer contains minor version. ([#7067](https://github.com/infor-design/enterprise/issues/7067))
+- `[About]` Browser version for chrome no longer contains minor version. ([#7067](https://github.com/infor-design/enterprise/issues/7067))
 - `[Lookup]` Added modal settings to lookup. ([#4319](https://github.com/infor-design/enterprise/issues/4319))
 - `[Radar]` Converted Radar scripts to puppeteer. ([#6989](https://github.com/infor-design/enterprise/issues/6989))
 - `[Colors]` Correct Status Colors.([#6993](https://github.com/infor-design/enterprise/issues/6993))
 - `[Colors]` Re-add yellow alerts.([#6922](https://github.com/infor-design/enterprise/issues/6922))
+- `[Chart]` Added 'info' and theme color options in settings.([#7084](https://github.com/infor-design/enterprise/issues/7084))
 - `[Icons]` Added three new icons: `icon-paint-brush, icon-psych-precaution, icon-observation-precaution`. ([#7040](https://github.com/infor-design/enterprise/issues/7040))
+- `[Icons]` Added four new icons: `up-down-chevron, approve-all, import-spreadsheet, microphone`. ([#7142](https://github.com/infor-design/enterprise/issues/7142))
 
 ## v4.71.0 Fixes
 
+- `[Button]` Fixed a bug where buttons are not readable in dark mode in the new design. ([#7082](https://github.com/infor-design/enterprise/issues/7082))
 - `[Checkbox]` Fixed a bug where checkbox labels not wrapping when using `form-responsive` class. ([#6826](https://github.com/infor-design/enterprise/issues/6826))
 - `[Datagrid]` Fixed a bug in datagrid where icon is not aligned in custom card. ([#7000](https://github.com/infor-design/enterprise/issues/7000))
 - `[Datagrid]` Fixed a bug where datepicker icon background color is incorrect upon hovering. ([#7053](https://github.com/infor-design/enterprise/issues/7053))
@@ -28,17 +32,32 @@
 - `[Datagrid]` Fixed a bug in datagrid where flex toolbar is not properly destroyed. ([NG#1423](https://github.com/infor-design/enterprise-ng/issues/1423))
 - `[Datagrid]` Fixed a bug in datagrid in datagrid where the icon cause clipping issues. ([#7000](https://github.com/infor-design/enterprise/issues/7000))
 - `[Datagrid]` Fixed a bug in datagrid where date cell is still in edit state after editing when using Safari. ([#6963](https://github.com/infor-design/enterprise/issues/6963))
+- `[Datagrid]` Fixed a bug in datagrid where summary row become selected after selecting row one. ([#7128](https://github.com/infor-design/enterprise/issues/7128))
 - `[Datagrid]` Updated dirty cell check in datagrid. ([#6893](https://github.com/infor-design/enterprise/issues/6893))
 - `[Datepicker]` Fixed a bug in datagrid where disabled dates were not showing in Safari. ([#6920](https://github.com/infor-design/enterprise/issues/6920))
 - `[Datepicker]` Fixed a bug where range display is malformed in RTL. ([#6933](https://github.com/infor-design/enterprise/issues/6933))
 - `[Datepicker]` Fixed exception occuring in disable dates. ([#7086](https://github.com/infor-design/enterprise/issues/7086))
 - `[Header]` Adjusted classic header colors. ([#7069](https://github.com/infor-design/enterprise/issues/7069))
 - `[Lookup]` Adjusted width in lookup. ([#6924](https://github.com/infor-design/enterprise/issues/6924))
+- `[Searchfield]` Searchfield enhancement bugfixes on colors. ([#7079](https://github.com/infor-design/enterprise/issues/7079))
+- `[Searchfield]` Searchfield icon placement fixes in classic. ([#7134](https://github.com/infor-design/enterprise/issues/7134))
+- `[Lookup]` Adjusted width in lookup. ([#6924](https://github.com/infor-design/enterprise/issues/6924))
 - `[Lookup]` Fixed a bug where custom modal script gets error after closing the modal in the second time. ([#7057](https://github.com/infor-design/enterprise/issues/7057))
 - `[Listview]` Fix on contextual button hover color. ([#7090](https://github.com/infor-design/enterprise/issues/7090))
-- `[Tabs Module]` Fixed a bug in go button where it was affected by the latest changes for button. ([#7037](https://github.com/infor-design/enterprise/issues/7037))
+- `[Searchfield]` Searchfield enhancement bugfixes on colors. ([#7079](https://github.com/infor-design/enterprise/issues/7079))
+- `[Searchfield]` Fix on non-collapsible positioning and borders. ([#7111](https://github.com/infor-design/enterprise/issues/7111))
+- `[Searchfield]` Adjust icon position and colors. ([#7106](https://github.com/infor-design/enterprise/issues/7106))
+- `[Searchfield]` Adjust border colors in category. ([#7110](https://github.com/infor-design/enterprise/issues/7110))
+- `[Splitter]` Store location only when save setting is set to true. ([#7045](https://github.com/infor-design/enterprise/issues/7045))
+- `[Tabs]` Fixed a bug where add tab button is not visible in new default view. ([#7146](https://github.com/infor-design/enterprise/issues/7146))
+- `[Tabs]` Fixed a bug where tab list is not viewable dark mode classic view. ([#7097](https://github.com/infor-design/enterprise/issues/7097))
 - `[Tabs]` Fixed a bug in tabs header and swatch personalize colors. ([#7046](https://github.com/infor-design/enterprise/issues/7046))
+- `[Tabs]` Added puppeteer scripts for tooltip title. ([#7003](https://github.com/infor-design/enterprise/issues/7003))
+- `[Tabs Header]` Updated example page, recalibrated positionining and fixed theme discrepancies. ([#7085](https://github.com/infor-design/enterprise/issues/7085))
+- `[Tabs Module]` Fixed a bug in go button where it was affected by the latest changes for button. ([#7037](https://github.com/infor-design/enterprise/issues/7037))
 - `[Textarea]` Added paste event listener for textarea. ([NG#6924](https://github.com/infor-design/enterprise-ng/issues/1401))
+- `[Toolbar]` Adjustment in title width. ([#7113](https://github.com/infor-design/enterprise/issues/7113))
+- `[Toolbar Flex]` Fix on toolbar key navigation.([#7041](https://github.com/infor-design/enterprise/issues/7041))
 - `[User Status Icons]` Now have a more visible fill and a stroke behind them. ([#7040](https://github.com/infor-design/enterprise/issues/7040))
 
 ## v4.70.0

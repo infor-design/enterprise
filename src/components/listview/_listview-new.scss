@@ -20,7 +20,8 @@
 
   .searchfield-wrapper {
     &.has-focus:not(.toolbar-searchfield-wrapper) {
-      box-shadow: none;
+      box-shadow: $focus-box-shadow;
+      z-index: 1;
     }
 
     &.non-collapsible.is-open {

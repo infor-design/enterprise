@@ -193,6 +193,32 @@ Personalize.prototype = {
     });
     isDark = foundColor ? 'white' : null;
 
+    // START OF NEW THEME COLOR STYLES 
+    const buttonNewColors = {
+      amber: ['#bb5500', '#fbaf50', '#fcc888', '#fef2e5'],
+      amethyst: ['#7928e1', '#c2a1f1', '#ddcbf7', '#f1ebfc'],
+      azure: ['#0066d4', '#55a3f3', '#8abff7', '#e6f1fd'],
+      emerald: ['#1f9254', '#78d8a3', '#a1e4bf', '#ebf9f1'],
+      graphite: ['#535353', '#97979b', '#b7b7ba', '#efeff0'],
+      ruby: ['#8d0b0e', '#ee9496', '#f5c3c4', '#fbe7e8'],
+      slate: ['#606066', '#97979b', '#b7b7ba', '#efeff0'],
+      turquoise: ['#297b7b', '#82d4d4', '#a8e1e1', '#ecf8f8'] 
+    };
+    
+    const currentColor = `${colors.header || defaultColors.header}`.toLowerCase();
+    Object.keys(buttonNewColors).forEach((color) => {
+      if (buttonNewColors[color].indexOf(currentColor) > -1) {
+        colors.darkNewButton = buttonNewColors[color][1];
+        colors.darkNewButtonHover = buttonNewColors[color][2];
+        colors.secondaryButtonHover = buttonNewColors[color][3]; 
+      }
+    });
+
+    colors.darkNewButtonLighterHover = '#3e3e42';
+    colors.darkNewButtonDisabled = '#47474c';
+    colors.darkNewButtonTextDisabled = '#77777c';
+    // END OF NEW THEME COLOR STYLES 
+
     // Evaluate text contrast colors.
     // If the primary color is too "bright", this will flip the text color to black.
     const lightest = colorUtils.validateHex(colors.lightest ||
@@ -295,6 +321,7 @@ Personalize.prototype = {
     defaultColors.tooltipText = tooltipContrast === 'white' ? 'ffffff' : '000000';
     colors.tooltipText = colorUtils.validateHex(colors.tooltipText || defaultColors.tooltipText);
 
+    console.log(colors);
     return personalizeStyles(colors);
   },
 

@@ -67,6 +67,10 @@ $horizontal-tabs-height: 40px;
         padding: 11px 11px 8px;
       }
 
+      svg.icon {
+        color: $tab-text-color-horizontal;
+      }
+
       &:hover {
         color: $tab-hover-color;
 
@@ -120,6 +124,10 @@ $horizontal-tabs-height: 40px;
         color: $tab-selected-color;
       }
     }
+  }
+
+  .add-tab-button {
+    color: $tab-add-tab-color;
   }
 
   .tab-more {

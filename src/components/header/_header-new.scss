@@ -39,6 +39,10 @@
 
       .toolbar-searchfield-wrapper.has-text:not(.active) {
         width: 34px;
+
+        &.non-collapsible {
+          width: 100%;
+        }
       }
     }
 
@@ -53,8 +57,6 @@
 
             background-color: $subheader-searchfield-context-bg;
             border-left-color: $subheader-input-color-focus-border;
-            border-right-color: transparent;
-            border-top-color: transparent;
             color: $header-flex-toolbar-input-searchfield-color;
 
             + .btn-icon.close {
@@ -85,7 +87,6 @@
 
         &.context.has-focus {
           .searchfield {
-            border-color: transparent;
             border-left-color: $subheader-input-color-focus-border;
           }
         }
@@ -104,7 +105,8 @@
     .searchfield-wrapper.context.non-collapsible {
       &.has-go-button {
         .btn-icon.close {
-          right: 50px;
+          right: 95px;
+          top: 8px;
           width: 34px;
 
           &:hover svg {
