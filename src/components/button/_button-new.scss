@@ -54,7 +54,15 @@
 .btn-primary[disabled] {
   background-color: $button-color-primary-disabled-background-new;
   border: 2px solid $button-color-primary-disabled-background-new;
-  color: $button-color-primary-disabled-font-new;
+  color: $button-color-primary-disabled-font-new !important;
+
+  svg.icon {
+    color: $button-color-primary-disabled-font-new !important;
+
+    &:hover {
+      color: $button-color-primary-disabled-font-new;
+    }
+  }
 
   &:hover {
     background-color: $button-color-primary-disabled-background-new;
@@ -98,8 +106,16 @@
 
 .btn-secondary[disabled] {
   background-color: $button-color-secondary-disabled-background-new;
-  color: $button-color-secondary-disabled-font-new;
+  color: $button-color-secondary-disabled-font-new !important;
   border: 2px solid $button-color-secondary-disabled-border-new;
+
+  svg.icon {
+    color: $button-color-secondary-disabled-font-new !important;
+
+    &:hover {
+      color: $button-color-secondary-disabled-font-new;
+    }
+  }
 
   &:hover {
     background-color: $button-color-secondary-disabled-background-new;
