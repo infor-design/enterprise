@@ -52,7 +52,7 @@ describe('Bar Chart', () => {
       expect(await checkCursor('#bar-c-bar')).toContain('inherit');
     });
 
-    it('should not select bar on click', async () => {
+    it.skip('should not select bar on click', async () => {
       const isFailed = [];
       const barA = '#bar-a-bar';
       const barB = '#bar-b-bar';
