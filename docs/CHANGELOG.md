@@ -37,6 +37,7 @@
 - `[Datepicker]` Fixed a bug in datagrid where disabled dates were not showing in Safari. ([#6920](https://github.com/infor-design/enterprise/issues/6920))
 - `[Datepicker]` Fixed a bug where range display is malformed in RTL. ([#6933](https://github.com/infor-design/enterprise/issues/6933))
 - `[Datepicker]` Fixed exception occuring in disable dates. ([#7086](https://github.com/infor-design/enterprise/issues/7086))
+- `[Dropdown]` Fixed swatch default color in dark theme. ([#7108](https://github.com/infor-design/enterprise/issues/7108))
 - `[Header]` Adjusted classic header colors. ([#7069](https://github.com/infor-design/enterprise/issues/7069))
 - `[Lookup]` Adjusted width in lookup. ([#6924](https://github.com/infor-design/enterprise/issues/6924))
 - `[Searchfield]` Searchfield enhancement bugfixes on colors. ([#7079](https://github.com/infor-design/enterprise/issues/7079))
