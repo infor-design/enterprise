@@ -92,20 +92,20 @@ $button-color-secondary-hover-border-new: $ids-color-palette-azure-40;
 $button-color-secondary-hover-background-new: $ids-color-palette-slate-90;
 $button-color-secondary-disabled-background-new: $ids-color-palette-slate-80;
 $button-color-secondary-disabled-border-new: $ids-color-palette-slate-50;
-$button-color-secondary-disabled-font-new: $ids-color-palette-slate-50;
+$button-color-secondary-disabled-font-new: $ids-color-palette-slate-40;
 
 $button-color-tertiary-disabled-background-new: $ids-color-palette-slate-80;
 $button-color-tertiary-hover-background-new: $ids-color-palette-slate-90;
 $button-color-tertiary-hover-font-new: $ids-color-palette-white;
 
-$button-color-primary-destructive-initial-background-new: $ids-color-palette-ruby-40;
-$button-color-primary-destructive-hover-background-new: $ids-color-palette-ruby-30;
+$button-color-primary-destructive-initial-background-new: $ids-color-palette-ruby-60;
+$button-color-primary-destructive-hover-background-new: $ids-color-palette-ruby-70;
 
 $button-color-tertiary-destructive-initial-background-new: $ids-color-palette-ruby-40;
-$button-color-tertiary-destructive-hover-font-new: $ids-color-palette-ruby-80;
-$button-color-tertiary-destructive-hover-background-new: $ids-color-palette-ruby-30;
+$button-color-tertiary-destructive-hover-font-new: $ids-color-palette-ruby-30;
+$button-color-tertiary-destructive-hover-background-new: $ids-color-palette-ruby-60;
 
-$button-color-tertiary-destructive-disabled-font-new: $ids-color-palette-ruby-30;
+$button-color-tertiary-destructive-disabled-font-new: $ids-color-palette-slate-50;
 $button-color-tertiary-destructive-disabled-background-new: $ids-color-palette-slate-80;
 
 // Button Ripple
@@ -552,6 +552,7 @@ $tab-border-color: $ids-color-palette-slate-70;
 // $tab-hover-color: $font-color-extrahighcontrast;
 $tab-hover-color: $ids-color-palette-slate-10;
 $tab-text-color-horizontal: $ids-color-palette-slate-20;
+$tab-add-tab-color: $ids-color-palette-slate-20;
 
 $tab-alt-bg-color: $ids-color-palette-slate-100;
 $tab-alt-border-color: $ids-color-palette-slate-80;
@@ -718,7 +719,7 @@ $searchfield-icon-hover-color: $ids-color-palette-slate-20;
 $searchfield-header-color: $ids-color-palette-white;
 
 $searchfield-toolbar-bg-color: $ids-color-palette-slate-100;
-$searchfield-toolbar-border-color: $ids-color-palette-slate-90;
+$searchfield-toolbar-border-color: $ids-color-palette-slate-40;
 $searchfield-toolbar-focus-color: $ids-color-palette-slate-10;
 
 $searchfield-alt-bg-color: $ids-color-palette-slate-70;

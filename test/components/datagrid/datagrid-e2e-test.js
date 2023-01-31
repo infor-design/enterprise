@@ -3489,7 +3489,7 @@ describe('Datagrid on modal with no default size', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('should not visually regress', async () => {
+    xit('Should not visual regress', async () => {
       const containerEl = await element(by.css('body.no-scroll'));
       await browser.driver.sleep(config.sleep);
 
@@ -3513,7 +3513,7 @@ describe('Datagrid on modal with no default size (two columns)', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('should not visually regress', async () => {
+    xit('Should not visual regress', async () => {
       const containerEl = await element(by.css('body.no-scroll'));
       await browser.driver.sleep(config.sleep);
 

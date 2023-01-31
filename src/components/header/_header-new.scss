@@ -57,8 +57,6 @@
 
             background-color: $subheader-searchfield-context-bg;
             border-left-color: $subheader-input-color-focus-border;
-            border-right-color: transparent;
-            border-top-color: transparent;
             color: $header-flex-toolbar-input-searchfield-color;
 
             + .btn-icon.close {
@@ -89,7 +87,6 @@
 
         &.context.has-focus {
           .searchfield {
-            border-color: transparent;
             border-left-color: $subheader-input-color-focus-border;
           }
         }

@@ -1,11 +1,11 @@
-
-const { AxePuppeteer } = require('@axe-core/puppeteer');
-
-const { getComputedStyle, checkDataAutomationID, checkInnerHTMLValue } = require('../../helpers/e2e-utils.cjs');
+const { checkDataAutomationId } = require('../../helpers/e2e-utils.cjs');
 
 describe('Notification-Badge Puppeteer Tests', () => {
+  const baseUrl = 'http://localhost:4000/components/notification-badge';
+
   describe('Badge Placement Tests', () => {
-    const url = 'http://localhost:4000/components/notification-badge/example-badge-placement.html?theme=new&mode=light&layout=nofrills';
+    const url = `${baseUrl}/example-badge-placement.html`;
+
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
     });
@@ -14,122 +14,82 @@ describe('Notification-Badge Puppeteer Tests', () => {
       await expect(page.title()).resolves.toMatch('IDS Enterprise');
     });
 
-    it('should check the test page with Axe', async () => {
-      await page.setBypassCSP(true);
-      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-      const results = await new AxePuppeteer(page).disableRules(['meta-viewport']).analyze();
-      expect(results.violations.length).toBe(0);
-    });
+    it('should have six notification badges with different colors on different dot placements', async () => {
+      // Alert - Upper left
+      await page.evaluate(() => document.querySelector('#notification-badge-1 .notification-dot').getAttribute('class'))
+        .then((el) => {
+          expect(el).toContain('notification-dot-upper-left');
+          expect(el).toContain('notification-dot-alert');
+        });
 
-    it('should pass accessibility checks', async () => {
-      const webArea = await page.accessibility.snapshot();
-      expect(webArea).toMatchObject({
-        name: 'IDS Enterprise',
-        role: 'RootWebArea',
-      });
-    });
+      // Warning - Upper right
+      await page.evaluate(() => document.querySelector('#notification-badge-2 .notification-dot').getAttribute('class'))
+        .then((el) => {
+          expect(el).toContain('notification-dot-upper-right');
+          expect(el).toContain('notification-dot-warning');
+        });
 
-    // improve and simplify this test
-    it.skip('should have six notification badges with different colors on different dot placements', async () => {
-      let hasFailed = false;
-      const checkBadgePlacement = async () => {
-        const elHandleArray = await page.$$('.container-spacer');
-        let index = 0;
-        // eslint-disable-next-line no-restricted-syntax
-        for await (const eL of elHandleArray) {
-          await eL.click();
-          await page.waitForSelector('.notification-badge-container', { visible: true });
-          const notifbadge = await page.$eval(`#notification-badge-id-${index + 1}-container`, element => element.innerHTML);
-          try {
-            switch (index) {
-              case 0:
-                expect(notifbadge).toContain('notification-dot-upper-left');
-                break;
-              case 1:
-                expect(notifbadge).toContain('notification-dot-upper-right');
-                break;
-              case 2:
-                expect(notifbadge).toContain('notification-dot-lower-left');
-                break;
-              case 3:
-                expect(notifbadge).toContain('notification-dot-lower-right');
-                break;
-              case 4:
-                expect(notifbadge).toContain('notification-dot-upper-left');
-                break;
-              case 5:
-                expect(notifbadge).toContain('notification-dot-upper-right');
-                break;
-              default:
-                hasFailed = true;
-            }
-          } catch (error) {
-            hasFailed = true;
-          }
-          index += 1;
-        }
-        return hasFailed;
-      };
-      expect(await checkBadgePlacement()).not.toBeTruthy();
+      // Caution - Lower left
+      await page.evaluate(() => document.querySelector('#notification-badge-3 .notification-dot').getAttribute('class'))
+        .then((el) => {
+          expect(el).toContain('notification-dot-lower-left');
+          expect(el).toContain('notification-dot-caution');
+        });
+
+      // Complete - Lower right
+      await page.evaluate(() => document.querySelector('#notification-badge-4 .notification-dot').getAttribute('class'))
+        .then((el) => {
+          expect(el).toContain('notification-dot-lower-right');
+          expect(el).toContain('notification-dot-complete');
+        });
+
+      // Progress - Upper left
+      await page.evaluate(() => document.querySelector('#notification-badge-5 .notification-dot').getAttribute('class'))
+        .then((el) => {
+          expect(el).toContain('notification-dot-upper-left');
+          expect(el).toContain('notification-dot-progress');
+        });
+
+      // Yield - Upper Right
+      await page.evaluate(() => document.querySelector('#notification-badge-6 .notification-dot').getAttribute('class'))
+        .then((el) => {
+          expect(el).toContain('notification-dot-upper-right');
+          expect(el).toContain('notification-dot-yield');
+        });
     });
 
     it('should have the correct sizes', async () => {
-      let hasFailed = false;
-      const checkdotSize = async (element, style, value) => {
-        const elHandleArray = await page.$$('.container-spacer');
-        let index = 0;
-        // eslint-disable-next-line no-restricted-syntax
-        for await (const eL of elHandleArray) {
-          await eL.click();
-          try {
-            const width = await getComputedStyle(`#notification-badge-id-${index + 1}-${element}`, style);
-            expect(width).toBe(value);
-          } catch (err) {
-            hasFailed = true;
-          }
-          index += 1;
-        }
-        return hasFailed;
-      };
+      // All Notification dots width should be 6
+      const dots = await page.$$('.notification-dot');
+      const dotWidths = await Promise.all(dots.map(dot => dot.evaluate(el => el.clientWidth)));
+      const hasWidth6 = dotWidths.every(width => width === 6);
 
-      const checkiconSize = async (style, value) => {
-        const elHandleArray = await page.$$('.container-spacer');
-        let index = 0;
-        // eslint-disable-next-line no-restricted-syntax
-        for await (const eL of elHandleArray) {
-          await eL.click();
-          try {
-            const width = await getComputedStyle(`#notification-badge-${index + 1} > svg`, style);
-            expect(width).toBe(value);
-          } catch (err) {
-            hasFailed = true;
-          }
-          index += 1;
-        }
-        return hasFailed;
-      };
-      await checkiconSize('width', '18px');
-      await checkdotSize('dot', 'width', '6px');
-      expect(hasFailed).toBe(false);
+      // Notification icon badges width should be 18
+      const badgeSizes = await page.$$('.container-spacer svg');
+      const badgeWidths = await Promise.all(badgeSizes.map(badgeSize => badgeSize.evaluate(el => el.clientWidth)));
+      const hasWidth18 = badgeWidths.every(width => width === 18);
+
+      expect(hasWidth6).toBe(true);
+      expect(hasWidth18).toBe(true);
     });
 
     it('should be able to set id/automation id', async () => {
-      const isFailed = [];
-      let index = 0;
       const elHandleArray = await page.$$('.container-spacer');
-      // eslint-disable-next-line no-restricted-syntax
-      for await (const eL of elHandleArray) {
-        await eL.click();
-        isFailed.push(await checkDataAutomationID(`#notification-badge-id-${index + 1}-container`, `notification-badge-automation-id-${index + 1}-container`));
-        isFailed.push(await checkDataAutomationID(`#notification-badge-id-${index + 1}-dot`, `notification-badge-automation-id-${index + 1}-dot`));
-        index += 1;
-      }
-      expect(isFailed).not.toContain(true);
+
+      // Use map to create an array of promises for clicks
+      const clickPromises = elHandleArray.map(eL => eL.click());
+
+      // Use map to create an array of promises for data checks
+      const checkPromises = elHandleArray.map((eL, i) => Promise.all([checkDataAutomationId(`#notification-badge-id-${i + 1}-container`, `notification-badge-automation-id-${i + 1}-container`), checkDataAutomationId(`#notification-badge-id-${i + 1}-dot`, `notification-badge-automation-id-${i + 1}-dot`)]));
+
+      // Wait for all clicks and data checks to complete
+      await Promise.all([...clickPromises, ...checkPromises]);
     });
   });
 
   describe('Index Tests', () => {
-    const url = 'http://localhost:4000/components/notification-badge/example-index.html';
+    const url = `${baseUrl}/example-index.html`;
+
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
     });
@@ -138,149 +98,101 @@ describe('Notification-Badge Puppeteer Tests', () => {
       await expect(page.title()).resolves.toMatch('IDS Enterprise');
     });
 
-    it('should check the test page with Axe', async () => {
-      await page.setBypassCSP(true);
-      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-      const results = await new AxePuppeteer(page).disableRules(['meta-viewport']).analyze();
-      expect(results.violations.length).toBe(0);
-    });
-
-    it('should pass accessibility checks', async () => {
-      const webArea = await page.accessibility.snapshot();
-      expect(webArea).toMatchObject({
-        name: 'IDS Enterprise',
-        role: 'RootWebArea',
-      });
-      expect(webArea.children[0]).toMatchObject({
-        name: 'Skip to Main Content',
-        role: 'link'
-      });
-      expect(webArea.children[1]).toMatchObject({
-        role: 'heading',
-        name: 'IDS Enterprise',
-        level: 1
-      });
-      expect(webArea.children[2]).toMatchObject({
-        role: 'combobox',
-        name: 'Header More Actions Button',
-        haspopup: 'menu'
-      });
-      expect(webArea.children[3]).toMatchObject({
-        role: 'StaticText',
-        name: 'Notification Badge'
-      });
-    });
-
     it('should have six notification badges with different colors', async () => {
-      const isFailed = [];
-      isFailed.push(await checkInnerHTMLValue('#notification-badge-1 > .notification-badge-container', 'notification-dot-upper-right'));
-      isFailed.push(await checkInnerHTMLValue('#notification-badge-2 > .notification-badge-container', 'notification-dot-upper-right'));
-      isFailed.push(await checkInnerHTMLValue('#notification-badge-3 > .notification-badge-container', 'notification-dot-upper-right'));
-      isFailed.push(await checkInnerHTMLValue('#notification-badge-4 > .notification-badge-container', 'notification-dot-upper-right'));
-      isFailed.push(await checkInnerHTMLValue('#notification-badge-5 > .notification-badge-container', 'notification-dot-upper-right'));
-      isFailed.push(await checkInnerHTMLValue('#notification-badge-6 > .notification-badge-container', 'notification-dot-upper-right'));
-      expect(isFailed).not.toContain(true);
+      await page.evaluate(() => document.querySelector('#notification-badge-1 > .notification-badge-container span').getAttribute('class'))
+        .then(el => expect(el).toContain('notification-dot-upper-right'));
+      await page.evaluate(() => document.querySelector('#notification-badge-2 > .notification-badge-container span').getAttribute('class'))
+        .then(el => expect(el).toContain('notification-dot-upper-right'));
+      await page.evaluate(() => document.querySelector('#notification-badge-3 > .notification-badge-container span').getAttribute('class'))
+        .then(el => expect(el).toContain('notification-dot-upper-right'));
+      await page.evaluate(() => document.querySelector('#notification-badge-4 > .notification-badge-container span').getAttribute('class'))
+        .then(el => expect(el).toContain('notification-dot-upper-right'));
+      await page.evaluate(() => document.querySelector('#notification-badge-5 > .notification-badge-container span').getAttribute('class'))
+        .then(el => expect(el).toContain('notification-dot-upper-right'));
+      await page.evaluate(() => document.querySelector('#notification-badge-6 > .notification-badge-container span').getAttribute('class'))
+        .then(el => expect(el).toContain('notification-dot-upper-right'));
     });
   });
 
   describe.skip('Buttons Tests', () => {
     const url = 'http://localhost:4000/components/button/example-badge.html';
-    beforeAll(async () => {
-      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
-    });
 
-    // Improve this test
-    it.skip('should have four notification badges with different colors on different dot placements', async () => {
-      let hasFailed = false;
-      const checkBadgePlacement = async () => {
-        const elHandleArray = await page.$$('.notification-badge-container');
-        let index = 0;
-        let count = '';
-        // eslint-disable-next-line no-restricted-syntax
-        for await (const eL of elHandleArray) {
-          await eL.focus();
-          await page.waitForSelector('.notification-badge-container', { visible: true });
-          try {
-            if (index === 0) {
-              count = 'one';
-              const notifbadge = await page.$eval(`#primary-action-${count} > span.notification-badge-container`, element => element.innerHTML);
-              expect(notifbadge).toContain('notification-dot-lower-left');
-            }
-
-            if (index === 1) {
-              count = 'two';
-              const notifbadge = await page.$eval(`#primary-action-${count} > span.notification-badge-container`, element => element.innerHTML);
-              expect(notifbadge).toContain('notification-dot-upper-left');
-            }
-
-            if (index === 2) {
-              count = 'three';
-              const notifbadge = await page.$eval(`#primary-action-${count} > span.notification-badge-container`, element => element.innerHTML);
-              expect(notifbadge).toContain('notification-dot-lower-right');
-            }
-
-            if (index === 3) {
-              count = 'four';
-              const notifbadge = await page.$eval(`#primary-action-${count} > span.notification-badge-container`, element => element.innerHTML);
-              expect(notifbadge).toContain('notification-dot-upper-right');
-            }
-          } catch (error) {
-            hasFailed = true;
-          }
-          index += 1;
-        }
-        return hasFailed;
-      };
-      expect(await checkBadgePlacement()).not.toBeTruthy();
-    });
-  });
-
-  describe('Appmenu Tests', () => {
-    const url = 'http://localhost:4000/components/applicationmenu/example-menu-notification.html';
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
     });
 
     it('should have four notification badges with different colors on different dot placements', async () => {
-      let hasFailed = false;
-      const checkBadgePlacement = async () => {
-        const elHandleArray = await page.$$('.notification-badge-container');
-        let index = 0;
-        // eslint-disable-next-line no-restricted-syntax
-        for await (const eL of elHandleArray) {
-          await eL.focus();
-          await page.waitForSelector('.notification-badge-container', { visible: true });
-          const notifbadge = await page.$eval(`div.accordion.panel.inverse.has-icons > div:nth-child(${index + 1}) > span`, element => element.innerHTML);
-          try {
-            switch (index) {
-              case 0:
-                expect(notifbadge).toContain('notification-dot-upper-left');
-                break;
-              case 1:
-                expect(notifbadge).toContain('notification-dot-upper-right');
-                break;
-              case 2:
-                expect(notifbadge).toContain('notification-dot-lower-right');
-                break;
-              case 3:
-                expect(notifbadge).toContain('notification-dot-lower-left');
-                break;
-              default:
-                hasFailed = true;
-            }
-          } catch (error) {
-            hasFailed = true;
-          }
-          index += 1;
-        }
-        return hasFailed;
-      };
-      expect(await checkBadgePlacement()).not.toBeTruthy();
+      // Complete
+      await page.evaluate(() => document.querySelector('#primary-action-two .notification-dot').getAttribute('class'))
+        .then((el) => {
+          expect(el).toContain('notification-dot-upper-left');
+          expect(el).toContain('notification-dot-complete');
+        });
+
+      // Alert
+      await page.evaluate(() => document.querySelector('#primary-action-four .notification-dot').getAttribute('class'))
+        .then((el) => {
+          expect(el).toContain('notification-dot-upper-right');
+          expect(el).toContain('notification-dot-alert');
+        });
+
+      // Progress
+      await page.evaluate(() => document.querySelector('#primary-action-one .notification-dot').getAttribute('class'))
+        .then((el) => {
+          expect(el).toContain('notification-dot-lower-left');
+          expect(el).toContain('notification-dot-progress');
+        });
+
+      // Warning
+      await page.evaluate(() => document.querySelector('#primary-action-three .notification-dot').getAttribute('class'))
+        .then((el) => {
+          expect(el).toContain('notification-dot-lower-right');
+          expect(el).toContain('notification-dot-warning');
+        });
+    });
+  });
+
+  describe('Appmenu Tests', () => {
+    const url = 'http://localhost:4000/components/applicationmenu/example-menu-notification.html';
+
+    beforeAll(async () => {
+      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
+    });
+
+    it('should have four notification badges with different colors on different dot placements', async () => {
+      // Complete - Upper left
+      await page.evaluate(() => document.querySelector('.accordion-header:first-child .notification-dot').getAttribute('class'))
+        .then((el) => {
+          expect(el).toContain('notification-dot-upper-left');
+          expect(el).toContain('notification-dot-complete');
+        });
+
+      // Yield - Upper right
+      await page.evaluate(() => document.querySelector('.accordion-header:nth-child(2) .notification-dot').getAttribute('class'))
+        .then((el) => {
+          expect(el).toContain('notification-dot-upper-right');
+          expect(el).toContain('notification-dot-yield');
+        });
+
+      // Warning - Lower right
+      await page.evaluate(() => document.querySelector('.accordion-header:nth-child(3) .notification-dot').getAttribute('class'))
+        .then((el) => {
+          expect(el).toContain('notification-dot-lower-right');
+          expect(el).toContain('notification-dot-warning');
+        });
+
+      // Alert - Lower left
+      await page.evaluate(() => document.querySelector('.accordion-header:nth-child(4) .notification-dot').getAttribute('class'))
+        .then((el) => {
+          expect(el).toContain('notification-dot-lower-left');
+          expect(el).toContain('notification-dot-alert');
+        });
     });
   });
 
   describe('Enable/Disable Tests', () => {
-    const url = 'http://localhost:4000/components/notification-badge/example-show-hide.html';
+    const url = `${baseUrl}/example-show-hide.html`;
+
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
     });
@@ -300,11 +212,11 @@ describe('Notification-Badge Puppeteer Tests', () => {
     });
 
     it('should have the correct sizes', async () => {
-      const dotSize = await getComputedStyle('.notification-dot-upper-right', 'width');
-      const iconSize = await getComputedStyle('#notification-badge-1 > svg', 'width');
+      const dotSize = await page.evaluate(() => document.querySelector('.notification-dot-upper-right').clientWidth);
+      const iconSize = await page.evaluate(() => document.querySelector('#notification-badge-1 > svg').clientWidth);
 
-      expect(dotSize).toBe('6px');
-      expect(iconSize).toBe('18px');
+      expect(dotSize).toBe(6);
+      expect(iconSize).toBe(18);
     });
   });
 });

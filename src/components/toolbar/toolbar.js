@@ -619,6 +619,10 @@ Toolbar.prototype = {
         self.handleKeys(e);
       }).on('click.toolbar', (e) => {
         self.handleClick(e);
+      }).on('collapsed.toolbar.searchfield', () => {
+        setTimeout(() => {
+          self.handleResize();
+        }, 150);
       });
 
     this.items.filter('.btn-menu, .btn-actions')
@@ -977,7 +981,9 @@ Toolbar.prototype = {
         return parseInt(titleSize, 10);
       }
       if (self.settings.favorButtonset === true) {
-        return toolbarDims.width - (toolbarPadding + getTargetButtonsetWidth() + moreDims.width - 2);
+        let buttonset = getTargetButtonsetWidth();
+        buttonset = buttonset > 0 ? buttonset : $(buttonsetElem).width();
+        return $(window).width() - (toolbarPadding + buttonset + moreDims.width - 10);
       }
       return titleDims.scrollWidth;
     }
@@ -1159,9 +1165,7 @@ Toolbar.prototype = {
     this.activeButton.addClass('is-selected').attr('tabindex', '0');
 
     if (!noFocus && this.activeButton[0]) {
-      if (this.buttonsetItems.length > 1) {
-        this.activeButton[0].focus();
-      }
+      this.activeButton[0].focus();
 
       /**
        * Fires when the Toolbar's currently `active` element has changed.
