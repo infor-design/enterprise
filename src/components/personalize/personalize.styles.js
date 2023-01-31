@@ -25,8 +25,8 @@ html.theme-new-dark .is-personalizable .btn-primary:not(.destructive):not(.is-se
   border-color: ${colors.darkNewButton} !important;
 }
 
-.is-personalizable .btn-secondary:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane),
-.is-personalizable .btn-secondary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane) svg.icon  {
+html[class*="new-"] .is-personalizable .btn-secondary:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane),
+html[class*="new-"] .is-personalizable .btn-secondary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane) svg.icon  {
   border-color: ${colors.base} !important;
   color: ${colors.darkest} !important;
 }
@@ -54,8 +54,8 @@ html.theme-new-dark .is-personalizable .btn-primary:not(.destructive):not(.is-se
   color: ${colors.darkNewButtonTextDisabled} !important;
 }
 
-.is-personalizable .btn-secondary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled,
-.is-personalizable .btn-secondary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane).is-personalizable:disabled svg {
+html[class*="new-"] .is-personalizable .btn-secondary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled,
+html[class*="new-"] .is-personalizable .btn-secondary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane).is-personalizable:disabled svg {
   border-color: ${colors.baseDisabled} !important;
   color: ${colors.base} !important;
 }
@@ -111,9 +111,8 @@ html.theme-new-dark .is-personalizable .btn-primary:not(.destructive):not(.is-se
   border-color: ${colors.darkNewButtonHover} !important;
 }
 
-.is-personalizable .btn-secondary:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
-  background-color: ${colors.lightest} !important;
-  color: ${colors.contrast} !important;
+html[class*="new-"] .is-personalizable .btn-secondary:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
+  background-color: ${colors.secondaryButtonHover} !important;
 }
 
 html.theme-new-dark .is-personalizable .btn-secondary:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
@@ -122,8 +121,7 @@ html.theme-new-dark .is-personalizable .btn-secondary:not(.go-button):not(.is-se
   border-color: ${colors.darkNewButtonHover} !important;
 }
 
-.is-personalizable .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
-  background-color: ${colors.darker} !important;
+html[class*="new-"] .is-personalizable .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
   color: ${colors.lightest};
 }
 
@@ -135,7 +133,7 @@ html.theme-new-dark .is-personalizable .btn-link:hover:not(:disabled) svg.icon {
   color: ${colors.darkNewButtonHover} !important;
 }
 
-.is-personalizable .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) svg {
+html[class*="new-"] .is-personalizable .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) svg {
   color: ${colors.lightest};
 }
 

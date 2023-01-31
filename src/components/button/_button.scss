@@ -394,6 +394,21 @@ button {
       }
     }
   }
+
+  &.destructive:not(:disabled) {
+    background-color: $button-color-primary-destructive-initial-background-new;
+    border: 2px solid $button-color-primary-destructive-initial-background-new;
+    color: $ids-color-palette-white;
+
+    &:focus:not(:disabled) {
+      border-color: $button-color-destructive-focus-border-new;
+    }
+
+    &:hover:not(:disabled) {
+      background-color: $button-color-primary-destructive-hover-background-new;
+      border: 2px solid $button-color-primary-destructive-hover-background-new;
+    }
+  }
 }
 
 a.btn,
@@ -641,6 +656,40 @@ a.btn-close {
 
 .btn-tertiary {
   padding: 0 10px;
+}
+
+.btn-tertiary,
+.btn-icon,
+.btn-menu {
+  &.destructive:not(:disabled) {
+    color: $button-color-tertiary-destructive-initial-background-new;
+
+    svg.icon {
+      color: $button-color-tertiary-destructive-initial-background-new;
+    }
+
+    &:focus:not(:disabled) {
+      border-color: $button-color-destructive-focus-border-new;
+    }
+
+    &:hover:not(:disabled) {
+      color: $button-color-tertiary-destructive-hover-font-new;
+      background-color: $button-color-tertiary-destructive-hover-background-new;
+
+      svg.icon {
+        color: $button-color-tertiary-destructive-hover-font-new;
+      }
+    }
+
+    &:disabled {
+      color: $button-color-tertiary-destructive-disabled-font-new;
+      background-color: $button-color-tertiary-destructive-disabled-background-new;
+
+      svg.icon {
+        color: $button-color-tertiary-destructive-disabled-font-new;
+      }
+    }
+  }
 }
 
 .btn-menu {
