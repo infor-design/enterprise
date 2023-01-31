@@ -1,8 +1,8 @@
 # What's New with Enterprise
 
-## v4.71.0
+## v4.80.0
 
-## v4.71.0 Important Changes
+## v4.80.0 Important Changes
 
 - `[Personalization]` The default color is now alabaster (white) rather than the previous azure color. This effects header and tabs header as previously noted. ([#6979](https://github.com/infor-design/enterprise/issues/6979))
 - `[Header]` Changed the default color from azure to alabaster. I.E. The default header color is now alabaster but can still be set to any of the other 8 colors. So far the older look azure can be used. ([#6979](https://github.com/infor-design/enterprise/issues/6979))
@@ -11,7 +11,7 @@
 - `[Datagrid]` Added ability to change the color of the header in datagrid between (`dark` or `light (alabaster)`). ([#7008](https://github.com/infor-design/enterprise/issues/7008))
 - `[Searchfield]` Completed a design review of searchfield and enhanced it with updated several design improvements. ([#6707](https://github.com/infor-design/enterprise/issues/6707))
 
-## v4.71.0 Features
+## v4.80.0 Features
 
 - `[About]` Browser version for chrome no longer contains minor version. ([#7067](https://github.com/infor-design/enterprise/issues/7067))
 - `[Lookup]` Added modal settings to lookup. ([#4319](https://github.com/infor-design/enterprise/issues/4319))
@@ -22,7 +22,7 @@
 - `[Icons]` Added three new icons: `icon-paint-brush, icon-psych-precaution, icon-observation-precaution`. ([#7040](https://github.com/infor-design/enterprise/issues/7040))
 - `[Icons]` Added four new icons: `up-down-chevron, approve-all, import-spreadsheet, microphone`. ([#7142](https://github.com/infor-design/enterprise/issues/7142))
 
-## v4.71.0 Fixes
+## v4.80.0 Fixes
 
 - `[Button]` Fixed a bug where buttons are not readable in dark mode in the new design. ([#7082](https://github.com/infor-design/enterprise/issues/7082))
 - `[Checkbox]` Fixed a bug where checkbox labels not wrapping when using `form-responsive` class. ([#6826](https://github.com/infor-design/enterprise/issues/6826))
