@@ -316,7 +316,7 @@ html[class*="theme-new-"] .is-personalizable.tab-container.header-tabs > .tab-li
 
 .header.is-personalizable .flex-toolbar [class^='btn'][disabled] .icon,
 .header.is-personalizable  .flex-toolbar [class^='btn']:focus:not(.hide-focus) .icon,
-.header.is-personalizable .btn span {
+.header.is-personalizable .btn:not(.searchfield-category-button) span {
   color: ${colors.contrast} !important;
 }
 
@@ -501,7 +501,7 @@ html[dir='rtl'] .scrollable-flex-header.is-personalizable .breadcrumb.truncated:
   fill: ${colors.contrast} !important;
 }
 
-.header.is-personalizable .toolbar [class^='btn'][disabled], 
+.header.is-personalizable .toolbar [class^='btn'][disabled],
 .header.is-personalizable .toolbar [class^='btn'][disabled] .icon,
 .header.is-personalizable .toolbar [class^='btn'][disabled] span {
   color: rgba(255, 255, 255, 0.3) !important;
