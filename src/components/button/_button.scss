@@ -272,6 +272,8 @@ button {
 
   &[disabled],
   &[disabled]:hover {
+    cursor: default;
+
     .disabled-tooltip {
       bottom: 0;
       left: 0;
@@ -361,14 +363,15 @@ button {
 
   &[disabled],
   &[disabled]:hover {
-    background-color: $button-color-primary-disabled-background;
-    border-color: $button-color-primary-disabled-border;
-    box-shadow: none;
-    color: $button-color-primary-disabled-font;
-    cursor: default;
+    &:not(.destructive) {
+      background-color: $button-color-primary-disabled-background;
+      border-color: $button-color-primary-disabled-border;
+      box-shadow: none;
+      color: $button-color-primary-disabled-font;
 
-    .icon {
-      color: $button-color-primary-disabled-icon;
+      .icon {
+        color: $button-color-primary-disabled-icon;
+      }
     }
   }
 
@@ -395,7 +398,7 @@ button {
     }
   }
 
-  &.destructive:not(:disabled) {
+  &.destructive {
     background-color: $button-color-primary-destructive-initial-background-new;
     border: 2px solid $button-color-primary-destructive-initial-background-new;
     color: $ids-color-palette-white;
@@ -407,6 +410,12 @@ button {
     &:hover:not(:disabled) {
       background-color: $button-color-primary-destructive-hover-background-new;
       border: 2px solid $button-color-primary-destructive-hover-background-new;
+    }
+
+    &[disabled] {
+      background-color: $button-color-primary-disabled-background-new;
+      border-color: $button-color-primary-disabled-background-new;
+      color: $button-color-primary-disabled-font-new;
     }
   }
 }
