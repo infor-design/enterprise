@@ -54,6 +54,7 @@
 - `[Tabs Header]` Updated example page, recalibrated positionining and fixed theme discrepancies. ([#7085](https://github.com/infor-design/enterprise/issues/7085))
 - `[Textarea]` Added paste event listener for textarea. ([NG#6924](https://github.com/infor-design/enterprise-ng/issues/1401))
 - `[Toolbar]` Adjustment in title width. ([#7113](https://github.com/infor-design/enterprise/issues/7113))
+- `[Toolbar Flex]` Fix on toolbar key navigation.([#7041](https://github.com/infor-design/enterprise/issues/7041))
 - `[User Status Icons]` Now have a more visible fill and a stroke behind them. ([#7040](https://github.com/infor-design/enterprise/issues/7040))
 
 ## v4.70.0
