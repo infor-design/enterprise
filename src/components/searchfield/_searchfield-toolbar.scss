@@ -521,7 +521,7 @@ $toolbarsearchfield-category-empty-width: 51px;
 
   &:not(.active) {
     .btn-icon.close,
-    .icon.close {
+    &:not(.is-hovered) .icon.close {
       display: none;
     }
   }
