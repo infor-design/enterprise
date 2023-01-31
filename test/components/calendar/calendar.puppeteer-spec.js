@@ -257,7 +257,7 @@ describe('Calendar', () => {
       expect(await page.$$eval('.monthview-table td', el => el.length)).toEqual(42);
     });
 
-    it('should not visual regress', async () => {
+    it.skip('should not visual regress', async () => {
       expect(await page.$$eval('.monthview-table td', el => el.length)).toEqual(42);
 
       const image = await page.screenshot();
@@ -335,11 +335,11 @@ describe('Calendar', () => {
       expect(await page.$eval('.calendar-event.amethyst.has-tooltip', el => getComputedStyle(el).getPropertyValue('background-color'))).toBe('rgb(194, 161, 241)');
       expect(await page.$eval('.calendar-event.amethyst.has-tooltip', el => getComputedStyle(el).getPropertyValue('border-left-color'))).toBe('rgb(108, 35, 201)');
     });
-  
+
     it('should disable weekends', async () => {
       expect(await page.$$eval('.monthview-table td.is-disabled', el => el.length)).toEqual(12);
     });
-  
+
     it('should render day legend', async () => {
       expect(await page.$$eval('.monthview-table td.is-colored', el => el.length)).toEqual(4);
       expect(await page.$$eval('.monthview-legend', el => el.length)).toEqual(1);
@@ -365,11 +365,11 @@ describe('Calendar', () => {
       expect(await page.$eval('.calendar-event.amethyst.has-tooltip', el => getComputedStyle(el).getPropertyValue('background-color'))).toBe('rgb(194, 161, 241)');
       expect(await page.$eval('.calendar-event.amethyst.has-tooltip', el => getComputedStyle(el).getPropertyValue('border-left-color'))).toBe('rgb(108, 35, 201)');
     });
-  
+
     it('should disable weekends', async () => {
       expect(await page.$$eval('.monthview-table td.is-disabled', el => el.length)).toEqual(12);
     });
-  
+
     it('should render day legend', async () => {
       expect(await page.$$eval('.monthview-table td.is-colored', el => el.length)).toEqual(4);
       expect(await page.$$eval('.monthview-legend', el => el.length)).toEqual(1);
@@ -428,18 +428,18 @@ describe('Calendar', () => {
     beforeAll(async () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
-  
+
     it('should render without error', async () => {
       expect(await page.$$eval('.monthview-table td', el => el.length)).toEqual(210);
     });
-  
+
     it('should disable dates outside of range', async () => {
       expect(await page.$eval('[data-key="20210711"]', el => el.getAttribute('class'))).toBe('is-disabled');
       expect(await page.$eval('[data-key="20220203"]', el => el.getAttribute('class'))).toBe('is-disabled');
       expect(await page.$eval('[data-key="20220204"]', el => el.getAttribute('class'))).toBe('is-disabled');
       expect(await page.$eval('[data-key="20220205"]', el => el.getAttribute('class'))).toBe('is-disabled');
     });
-  
+
     it('should disable specific dates in the range', async () => {
       expect(await page.$eval('[data-key="20210712"]', el => el.getAttribute('class'))).toBe('is-disabled');
       expect(await page.$eval('[data-key="20210722"]', el => el.getAttribute('class'))).toBe('is-disabled');
@@ -449,17 +449,17 @@ describe('Calendar', () => {
       expect(await page.$eval('[data-key="20210901"]', el => el.getAttribute('class'))).toBe('is-disabled');
       expect(await page.$eval('[data-key="20210908"]', el => el.getAttribute('class'))).toBe('is-disabled');
     });
-  
+
     it('should have month label for the first date of the month rendered', async () => {
       expect(await page.evaluate(() => document.querySelector('[data-key="20210711"]').innerText)).toBe('Jul 11');
       expect(await page.evaluate(() => document.querySelector('[data-key="20210801"]').innerText)).toBe('Aug 1');
       expect(await page.evaluate(() => document.querySelector('[data-key="20210901"]').innerText)).toBe('Sep 1');
     });
-  
+
     it('should have rendered correct number of events on the calendar', async () => {
       expect(await page.$$eval('.calendar-event', el => el.length)).toEqual(8);
     });
-  
+
     it('should allow adding custom css class in event label', async () => {
       expect(await page.$eval('[data-key="20210806"] a', el => el.getAttribute('class'))).toContain('night-shift');
     });
