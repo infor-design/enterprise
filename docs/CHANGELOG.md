@@ -21,7 +21,6 @@
 - `[Chart]` Added 'info' and theme color options in settings.([#7084](https://github.com/infor-design/enterprise/issues/7084))
 - `[Icons]` Added three new icons: `icon-paint-brush, icon-psych-precaution, icon-observation-precaution`. ([#7040](https://github.com/infor-design/enterprise/issues/7040))
 - `[Icons]` Added four new icons: `up-down-chevron, approve-all, import-spreadsheet, microphone`. ([#7142](https://github.com/infor-design/enterprise/issues/7142))
-- `[Toolbar Flex]` Added left and right key traversal for searchfield.([#7041](https://github.com/infor-design/enterprise/issues/7041))
 
 ## v4.71.0 Fixes
 
@@ -55,6 +54,7 @@
 - `[Tabs Header]` Updated example page, recalibrated positionining and fixed theme discrepancies. ([#7085](https://github.com/infor-design/enterprise/issues/7085))
 - `[Textarea]` Added paste event listener for textarea. ([NG#6924](https://github.com/infor-design/enterprise-ng/issues/1401))
 - `[Toolbar]` Adjustment in title width. ([#7113](https://github.com/infor-design/enterprise/issues/7113))
+- `[Toolbar Flex]` Fix on toolbar key navigation.([#7041](https://github.com/infor-design/enterprise/issues/7041))
 - `[User Status Icons]` Now have a more visible fill and a stroke behind them. ([#7040](https://github.com/infor-design/enterprise/issues/7040))
 
 ## v4.70.0
