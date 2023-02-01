@@ -2,10 +2,10 @@ const INPUT_FILENAME = 'dist/js/sohoxi.js';
 const INPUT_SOURCEMAP = 'dist/js/sohoxi.js.map';
 const OUTPUT_FILENAME = 'dist/js/sohoxi.min.js';
 const OUTPUT_URL = 'sohoxi.min.js.map';
-const OUTPUT_SOURCEMAP = 'dist/js/' + OUTPUT_URL;
+const OUTPUT_SOURCEMAP = `dist/js/${OUTPUT_URL}`;
 const CULTURES_FOLDER = 'dist/js/cultures/';
 
-module.exports = {
+export default {
 
   // Path of the `dist/` language cultures folder
   culturesFolder: CULTURES_FOLDER,

@@ -8,7 +8,7 @@ function removeButtonFromScript(html) {
   return html.replace('id="info-btn" class="btn-icon ignore-in-menu"', 'id="info-btn" class="btn-icon ignore-in-menu invisible"');
 }
 
-module.exports = function () {
+export default function () {
   return function infoHandler(req, res, next) {
     // Modify `res.send()` to always remove the info button if there is no info to show.
     const oldSend = res.send;
@@ -33,4 +33,4 @@ module.exports = function () {
 
     next();
   };
-};
+}

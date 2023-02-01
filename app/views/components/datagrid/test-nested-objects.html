@@ -10,7 +10,7 @@
 
 <script>
   $('body').one('initialized', function () {
-    Locale.set('en-US').done(function () {
+    Soho.Locale.set('en-US').done(function () {
       var grid,
         columns = [],
         data = [];
@@ -20,11 +20,11 @@
       data.push({ id: 2, productId: 2241202, fields: {field1: {value: 'Compressor'},field2: {value: 'test'}}, properties: {value: 'test'}, activity:  'Inspect and Repair', quantity: '2', price: 210.99, status: '', orderDate: new Date(2015, 7, 3), action: 'On Hold'});
 
       //Define Columns for the Grid.
-      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly});
-      columns.push({ id: 'productName', name: 'Nested Array Link', sortable: false, field: 'fields.field1.value', formatter: Formatters.Hyperlink, editor: Editors.Input});
-      columns.push({ id: 'productName', name: 'Nested Prop Link', sortable: false, field: 'properties.value', formatter: Formatters.Hyperlink, editor: Editors.Input});
-      columns.push({ id: 'productName', name: 'Nested Array', sortable: false, field: 'fields.field1.value', formatter: Formatters.Text, editor: Editors.Input});
-      columns.push({ id: 'productName', name: 'Nested Prop', sortable: false, field: 'properties.value', formatter: Formatters.Text, editor: Editors.Input});
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Readonly});
+      columns.push({ id: 'productName', name: 'Nested Array Link', sortable: false, field: 'fields.field1.value', formatter: Soho.Formatters.Hyperlink, editor: Soho.Editors.Input});
+      columns.push({ id: 'productName', name: 'Nested Prop Link', sortable: false, field: 'properties.value', formatter: Soho.Formatters.Hyperlink, editor: Soho.Editors.Input});
+      columns.push({ id: 'productName', name: 'Nested Array', sortable: false, field: 'fields.field1.value', formatter: Soho.Formatters.Text, editor: Soho.Editors.Input});
+      columns.push({ id: 'productName', name: 'Nested Prop', sortable: false, field: 'properties.value', formatter: Soho.Formatters.Text, editor: Soho.Editors.Input});
 
       //Init and get the api for the grid
       grid = $('#datagrid').datagrid({

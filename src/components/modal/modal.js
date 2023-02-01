@@ -1079,6 +1079,7 @@ Modal.prototype = {
 
       // When changes happen within the subtree on the Modal, rebuilds the internal hash of
       // tabbable elements used for retaining focus.
+      // eslint-disable-next-line compat/compat
       self.changeObserver = new MutationObserver(() => {
         self.setFocusableElems();
       });
@@ -1427,6 +1428,7 @@ Modal.prototype = {
    * @param {string} customId ID of element
    * @returns {boolean} If the dialog was open returns false. If the dialog was closed is true.
    */
+  // eslint-disable-next-line default-param-last
   close(destroy, noRefresh, force = false, customId) {
     if (!force && !this.visible) {
       return true;

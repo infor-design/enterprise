@@ -48,7 +48,7 @@ jobs:
           total=$(echo $all_changed_and_modified_files | wc -w)
 
           if [ "$total" -eq 1 ] || [ "$total" -gt 2 ]; then
-            echo "changes to package.json and package-lock.json should be commited together as a single commit"
+            echo "Changes to package.json and package-lock.json detected. This might be ok, but this PR Needs detailed review."
             exit 1
           fi
 
@@ -57,7 +57,7 @@ jobs:
             then
               exit 0
             else
-              echo "changes to package.json or package-lock.json should be commited together as a single commit"
+              echo "Changes to package.json and package-lock.json detected. This might be ok, but this PR Needs detailed review."
               exit 1
             fi
           fi

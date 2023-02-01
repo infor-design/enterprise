@@ -26,8 +26,8 @@
         }});
 
       //Define Columns for the Grid.
-      columns.push({ id: 'productDesc', resizable: false, name: 'Product Desc', sortable: false, field: 'fields.productName.value', formatter: Formatters.Hyperlink});
-      columns.push({ id: 'singleline', name: 'Singleline', field: 'fields.comment.value', formatter: Formatters.Editor, editor: Editors.Editor, singleline: true, contentTooltip: true, width: 200 });
+      columns.push({ id: 'productDesc', resizable: false, name: 'Product Desc', sortable: false, field: 'fields.productName.value', formatter: Soho.Formatters.Hyperlink});
+      columns.push({ id: 'singleline', name: 'Singleline', field: 'fields.comment.value', formatter: Soho.Formatters.Editor, editor: Soho.Editors.Editor, singleline: true, contentTooltip: true, width: 200 });
       columns.push({ id: 'activity', name: 'Activity', field: 'fields.activity.value' });
       columns.push({ id: 'productId', name: 'Product Id', field: 'fields.productId.value'});
       columns.push({ id: 'price', name: 'Price', field: 'fields.price.value'});

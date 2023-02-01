@@ -1,13 +1,13 @@
 // -------------------------------------
 // Requirements
 // -------------------------------------
-const path = require('path');
-const sass = require('node-sass');
-const onceImporter = require('node-sass-once-importer');
+import * as path from 'path';
+import sass from 'node-sass';
+import onceImporter from 'node-sass-once-importer';
 
-const logger = require('../logger');
-const createDirs = require('./create-dirs');
-const writeFile = require('./write-file');
+import logger from '../logger.js';
+import createDirs from './create-dirs.js';
+import writeFile from './write-file.js';
 
 const dirs = [
   'dist',
@@ -74,7 +74,7 @@ function compileSass(options = {}) {
  * @param {object} config object containing file paths and other "sass" settings.
  * @returns {Array<Promises>} resolved at the end of each "sass" run
  */
-module.exports = function buildSass(config) {
+export default function buildSass(config) {
   if (!config || !config.files) {
     throw new Error('Configuration object with a "files" sub-object must be provided.');
   }
@@ -97,4 +97,4 @@ module.exports = function buildSass(config) {
   });
 
   return renderPromises;
-};
+}

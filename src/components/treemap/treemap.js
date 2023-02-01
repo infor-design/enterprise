@@ -20,7 +20,7 @@ const TREEMAP_DEFAULTS = {
   showLabel: true,
   labelFormatter: '.0%',
   showTitle: true,
-  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' }
+  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data-new' }
 };
 
 /**
@@ -39,7 +39,7 @@ const TREEMAP_DEFAULTS = {
  * @param {object} [settings.emptyMessage] An empty message will be displayed when there is no chart data.
  * This accepts an object of the form emptyMessage:
  * `{title: 'No Data Available',
- *  info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data',
+ *  info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data-new',
  *  button: {text: 'xxx', click: <function>}
  *  }`
  * Set this to null for no message or will default to 'No Data Found with an icon.'
@@ -209,7 +209,7 @@ Treemap.prototype = {
           });
         });
       })
-      .on('mouseenter.treemap', function (d) {
+      .on('mouseenter.treemap', function (event, d) {
         const rect = this.getBoundingClientRect();
         const percentText = this.querySelector('.chart-treemap-percent').innerText;
         let content = d.parent.data.tooltip;

@@ -8,20 +8,22 @@
 // -------------------------------------
 // Requirements
 // -------------------------------------
-const commandLineArgs = require('yargs').argv;
+import _yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
+import config from './configs/sass.js';
+import buildSass from './build/sass.js';
 
-const config = require('./configs/sass').sass;
-const buildSass = require('./build/sass');
+const argv = _yargs(hideBin(process.argv)).argv;
 
 // -------------------------------------
 // Main
 // -------------------------------------
 let type = 'dist';
-if (commandLineArgs.type) {
-  type = commandLineArgs.type;
+if (argv.type) {
+  type = argv.type;
 }
-if (!config[type]) {
+if (!config.sass[type]) {
   throw new Error(`No "Node Sass" configuration available for type "${type}"`);
 }
 
-module.exports = buildSass(config[type]);
+buildSass(config.sass[type]);

@@ -142,7 +142,7 @@
       id: 'selectionCheckbox',
       sortable: false,
       resizable: false,
-      formatter: Formatters.SelectionCheckbox,
+      formatter: Soho.Formatters.SelectionCheckbox,
       align: 'center'
     });
     columns.push({
@@ -150,7 +150,7 @@
       name: 'Id',
       field: 'productId',
       width: 100,
-      formatter: Formatters.Text
+      formatter: Soho.Formatters.Text
     });
     columns.push({
       id: 'product',
@@ -164,7 +164,7 @@
       id: 'misc',
       name: 'Misc',
       field: 'misc',
-      formatter: Formatters.Text
+      formatter: Soho.Formatters.Text
     });
 
     //Init and get the api for the grid

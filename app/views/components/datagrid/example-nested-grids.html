@@ -14,10 +14,10 @@
       $.getJSON('{{basepath}}api/datagrid-sample-data', function(res) {
 
         //Define Columns for the Grid.
-        columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Expander, filterType: 'text', textOverflow: 'ellipsis'});
-        columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', filterType: 'text', formatter: Formatters.Hyperlink});
+        columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Expander, filterType: 'text', textOverflow: 'ellipsis'});
+        columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', filterType: 'text', formatter: Soho.Formatters.Hyperlink});
         columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
-        columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal});
+        columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Soho.Formatters.Decimal});
         columns.push({ id: 'activity', name: 'Activity', field: 'activity', filterType: 'text'});
 
         //Init and get the api for the grid
@@ -46,11 +46,11 @@
 
           var subColumns = [];
           subColumns.push({ id: 'id', name: 'Part Id', field: 'id', width: 200});
-          subColumns.push({ id: 'partName', name: 'Part Name',field: 'partName', formatter: Formatters.Hyperlink});
+          subColumns.push({ id: 'partName', name: 'Part Name',field: 'partName', formatter: Soho.Formatters.Hyperlink});
           subColumns.push({ id: 'price', name: 'Price', field: 'price'});
           subColumns.push({ id: 'amount', name: 'Amount', field: 'amount'});
           subColumns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
-          subColumns.push({ id: 'action', name: 'Active', sortable: false, width: 80, formatter: Formatters.Button, icon: 'delete', tooltip: 'Delete', click: clickHandler });
+          subColumns.push({ id: 'action', name: 'Active', sortable: false, width: 80, formatter: Soho.Formatters.Button, icon: 'delete', tooltip: 'Delete', click: clickHandler });
 
           var subData = [];
 

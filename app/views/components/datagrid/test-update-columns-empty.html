@@ -42,7 +42,7 @@
 
 <script>
   $('body').one('initialized', function () {
-    Locale.set('en-US').done(function () {
+    Soho.Locale.set('en-US').done(function () {
       var grid,
         columns = [],
         data = [];
@@ -57,11 +57,11 @@
       data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: '123.99', status: 'OK', orderDate: null, action: 'On Hold'});
 
       // Define Columns for the Grid.
-      columns.push({ id: 'productId', name: 'Product Id New', field: 'productId', formatter: Formatters.Readonly});
-      columns.push({ id: 'productName', name: 'Product Name New', sortable: false, field: 'productName', formatter: Formatters.Hyperlink});
+      columns.push({ id: 'productId', name: 'Product Id New', field: 'productId', formatter: Soho.Formatters.Readonly});
+      columns.push({ id: 'productName', name: 'Product Name New', sortable: false, field: 'productName', formatter: Soho.Formatters.Hyperlink});
       columns.push({ id: 'activity', name: 'Activity New', field: 'activity'});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
-      columns.push({ id: 'price', name: 'Price', field: 'price',formatter: Formatters.Decimal});
+      columns.push({ id: 'price', name: 'Price', field: 'price',formatter: Soho.Formatters.Decimal});
 
       //Init and get the api for the grid
       grid = $('#datagrid').datagrid({
@@ -74,13 +74,13 @@
 
       $('#update').on('click', function () {
         var newColumns = [];
-        newColumns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly});
-        newColumns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink});
+        newColumns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Readonly});
+        newColumns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Soho.Formatters.Hyperlink});
         newColumns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity'});
         newColumns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
-        newColumns.push({ id: 'price', name: 'Price', field: 'price',formatter: Formatters.Decimal});
-        newColumns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
-        newColumns.push({ id: 'status', name: 'Status', field: 'status', formatter: Formatters.Text});
+        newColumns.push({ id: 'price', name: 'Price', field: 'price',formatter: Soho.Formatters.Decimal});
+        newColumns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy'});
+        newColumns.push({ id: 'status', name: 'Status', field: 'status', formatter: Soho.Formatters.Text});
         newColumns.push({ id: 'action', name: 'Action Item', field: 'action'});
 
         grid.updateColumns(newColumns);

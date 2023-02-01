@@ -1,6 +1,6 @@
 // Custom Redirects for examples that coexist in two places.
 //= ====================================================
-const express = require('express');
+import express from 'express';
 
 const router = express.Router();
 const redirect = (req, res, item, example, route) => {
@@ -19,4 +19,4 @@ router.get('/:item/:example', (req, res, next) => {
   next();
 });
 
-module.exports = router;
+export default router;

@@ -16,7 +16,7 @@
 
 <script>
   $('body').on('initialized', function(locale, args) {
-    const numberInfo = Locale.currentLocale.data.numbers;
+    const numberInfo = Soho.Locale.currentLocale.data.numbers;
 
     $('#percentage-field').mask({
       pattern: numberInfo.percentFormat.replace(numberInfo.percentPrefix, '').replace(numberInfo.percentSuffix, ''),

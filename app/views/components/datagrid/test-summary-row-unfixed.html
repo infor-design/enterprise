@@ -20,12 +20,12 @@
 
       // Define Columns for the Grid.
       columns.push({ id: 'id', name: 'Customer Id', field: 'id'});
-      columns.push({ id: 'location', name: 'Location', field: 'location', formatter: Formatters.Hyperlink});
+      columns.push({ id: 'location', name: 'Location', field: 'location', formatter: Soho.Formatters.Hyperlink});
       columns.push({ id: 'firstname', name: 'First Name', field: 'firstname'});
       columns.push({ id: 'lastname', name: 'Last Name', field: 'lastname'});
       columns.push({ id: 'phone', name: 'Phone', field: 'phone'});
-      columns.push({ id: 'purchases', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 2, maximumFractionDigits: 2}, summaryRowFormatter: Formatters.SummaryRow, aggregator: 'sum', align: 'right', name: 'Purchases', field: 'purchases'});
-      columns.push({ id: 'percentage', summaryRowFormatter: Formatters.SummaryRow, aggregator: 'sum', summaryText: ' %', summaryTextPlacement: 'after', name: 'Percentage', field: 'percentage'});
+      columns.push({ id: 'purchases', formatter: Soho.Formatters.Decimal, numberFormat: {minimumFractionDigits: 2, maximumFractionDigits: 2}, summaryRowformatter: Soho.Formatters.SummaryRow, aggregator: 'sum', align: 'right', name: 'Purchases', field: 'purchases'});
+      columns.push({ id: 'percentage', summaryRowformatter: Soho.Formatters.SummaryRow, aggregator: 'sum', summaryText: ' %', summaryTextPlacement: 'after', name: 'Percentage', field: 'percentage'});
 
       // Get some data via ajax
       var url = '{{basepath}}api/accounts-sm';

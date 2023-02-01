@@ -25,7 +25,7 @@
 
   $('body').one('initialized', function () {
 
-    Locale.set('en-US').done(function () {
+    Soho.Locale.set('en-US').done(function () {
         var grid,
           data = [],
           columns = [],
@@ -113,16 +113,16 @@
         data.push({ id: 7, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', portable: true, quantity: 41, price: 123.99, status: 'OK', state:'Idaho', orderDate: new Date(2014, 6, 9), action: 'oh'});
 
         //Define Columns for the Grid.
-        columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
-        columns.push({ id: 'id', name: 'Row Id', field: 'id', width: 70, formatter: Formatters.Readonly});
-        columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, editor: Editors.Input});
-	      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', align: 'right', required: true, validate: 'required', editor: Editors.Input, mask: '##0', maskMode: 'number', isEditable: function (row) {
+        columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center'});
+        columns.push({ id: 'id', name: 'Row Id', field: 'id', width: 70, formatter: Soho.Formatters.Readonly});
+        columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Soho.Formatters.Hyperlink, editor: Soho.Editors.Input});
+	      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', align: 'right', required: true, validate: 'required', editor: Soho.Editors.Input, mask: '##0', maskMode: 'number', isEditable: function (row) {
             //For this fake logic just disable odd rows
             return (row % 2 === 0);
           }});
-        columns.push({ id: 'state', name: 'State', field: 'state', width: 200, formatter: Formatters.Autocomplete, editor: Editors.Autocomplete, editorOptions: {'source': autocompleteSource} });
-        columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, align: 'right', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input, mask: '###.000'});
-        columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date});
+        columns.push({ id: 'state', name: 'State', field: 'state', width: 200, formatter: Soho.Formatters.Autocomplete, editor: Soho.Editors.Autocomplete, editorOptions: {'source': autocompleteSource} });
+        columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, align: 'right', formatter: Soho.Formatters.Decimal, numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Soho.Editors.Input, mask: '###.000'});
+        columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, editor: Soho.Editors.Date});
 
         //Init and get the api for the grid
         grid = $('#datagrid').datagrid({

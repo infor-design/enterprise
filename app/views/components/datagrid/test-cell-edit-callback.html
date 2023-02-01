@@ -26,11 +26,11 @@
         data.push({ id: 7, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', portable: true, quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'oh'});
 
         //Define Columns for the Grid.
-        columns.push({ id: 'id', name: 'Row Id', field: 'id', formatter: Formatters.Readonly});
-        columns.push({ id: 'productName', hidden: true, name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, editor: Editors.Input});
-        columns.push({ id: 'activity', name: 'Activity', field: 'activity', required: true, editor: Editors.Input, validate: 'required'});
-        columns.push({ id: 'price', name: 'Price', field: 'price', align: 'right', formatter: Formatters.Decimal, validate: 'required', numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input, mask: '####.00', maskMode: 'number'});
-        columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date , validate: 'required date'});
+        columns.push({ id: 'id', name: 'Row Id', field: 'id', formatter: Soho.Formatters.Readonly});
+        columns.push({ id: 'productName', hidden: true, name: 'Product Name', sortable: false, field: 'productName', formatter: Soho.Formatters.Hyperlink, editor: Soho.Editors.Input});
+        columns.push({ id: 'activity', name: 'Activity', field: 'activity', required: true, editor: Soho.Editors.Input, validate: 'required'});
+        columns.push({ id: 'price', name: 'Price', field: 'price', align: 'right', formatter: Soho.Formatters.Decimal, validate: 'required', numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Soho.Editors.Input, mask: '####.00', maskMode: 'number'});
+        columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, editor: Soho.Editors.Date , validate: 'required date'});
 
         //Init and get the api for the grid
         grid = $('#datagrid').datagrid({

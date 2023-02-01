@@ -1,4 +1,4 @@
-const browser = require('browser-detect');
+import browser from 'browser-detect';
 
 // Adds a stored "nonce" attribute to all script tags to conform with security policy.
 function addNonceToScript(html, nonce) {
@@ -24,7 +24,7 @@ function addNonceToStyle(html, nonce) {
 
 // Appends "nonce" attributes to script tags inside the response body that match the demoapp's
 // Content Security Policy (CSP).
-module.exports = function () {
+export default function () {
   return function cspHandler(req, res, next) {
     if (!res.opts.csp) {
       next();
@@ -111,4 +111,4 @@ module.exports = function () {
 
     next();
   };
-};
+}

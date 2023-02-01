@@ -60,11 +60,11 @@
     toggleMatchOnly.prop('disabled', !allowChildExpandOnMatch);
 
     // Define columns for the grid.
-    columns.push({ id: 'taskName', name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Formatters.Tree, filterType: 'text', width: 500});
+    columns.push({ id: 'taskName', name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Soho.Formatters.Tree, filterType: 'text', width: 500});
     columns.push({ id: 'id', name: 'Id', field: 'id', filterType: 'text', filterDisabled: true});
-    columns.push({ id: 'portable', name: 'Portable', field: 'portable', align: 'center', formatter: Formatters.Checkbox, filterType: 'checkbox'});
+    columns.push({ id: 'portable', name: 'Portable', field: 'portable', align: 'center', formatter: Soho.Formatters.Checkbox, filterType: 'checkbox'});
     columns.push({ id: 'desc', name: 'Description', field: 'desc', filterType: 'text'});
-    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'MM/dd/yyyy', filterType: 'date'});
+    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'MM/dd/yyyy', filterType: 'date'});
 
     // Get some data via ajax
     var url = '{{basepath}}api/tree-tasks';

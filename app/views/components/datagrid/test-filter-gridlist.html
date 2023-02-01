@@ -30,15 +30,15 @@
                          {id: 'Inspect and Repair', value:'Inspect and Repair', label: 'Inspect and Repair'}];
 
       //Define Columns for the Grid.
-      columns.push({ id: 'id', name: 'Id', field: 'id', width: 70, formatter: Formatters.Readonly, filterType: 'text', filterDisabled: true});
-      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 120, formatter: Formatters.Readonly, filterType: 'text'});
-      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', width: 200, formatter: Formatters.Hyperlink, filterType: 'text'});
+      columns.push({ id: 'id', name: 'Id', field: 'id', width: 70, formatter: Soho.Formatters.Readonly, filterType: 'text', filterDisabled: true});
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 120, formatter: Soho.Formatters.Readonly, filterType: 'text'});
+      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', width: 200, formatter: Soho.Formatters.Hyperlink, filterType: 'text'});
       columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 140, filterType: 'contents', options: activities});
       columns.push({ id: 'quantity', name: 'Accuml. Quantity', field: 'quantity', align: 'right', width: 150, filterType: 'integer'});
-      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', width: 130, formatter: Formatters.Date, dateFormat: 'MM/dd/yyyy', filterType: 'date'});
-      columns.push({ id: 'inStock', name: 'In Stock', field: 'inStock', width: 90, formatter: Formatters.Checkbox, align: 'center', filterType: 'checkbox'});
-      columns.push({ id: 'status', name: 'Status', field: 'status', width: 150, formatter: Formatters.Alert, filterType: 'select', filterDisabled: true, options: statuses, ranges: [{'value':'Confirmed', 'classes': 'success', text: 'Confirmed'}, {'value':'Error', 'classes': 'error', text: 'Error'}]});
-      columns.push({ id: 'price', name: 'Price', field: 'price', width: 145, formatter: Formatters.Decimal, filterType: 'decimal', numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input, mask: '####.000'});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', width: 130, formatter: Soho.Formatters.Date, dateFormat: 'MM/dd/yyyy', filterType: 'date'});
+      columns.push({ id: 'inStock', name: 'In Stock', field: 'inStock', width: 90, formatter: Soho.Formatters.Checkbox, align: 'center', filterType: 'checkbox'});
+      columns.push({ id: 'status', name: 'Status', field: 'status', width: 150, formatter: Soho.Formatters.Alert, filterType: 'select', filterDisabled: true, options: statuses, ranges: [{'value':'Confirmed', 'classes': 'success', text: 'Confirmed'}, {'value':'Error', 'classes': 'error', text: 'Error'}]});
+      columns.push({ id: 'price', name: 'Price', field: 'price', width: 145, formatter: Soho.Formatters.Decimal, filterType: 'decimal', numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Soho.Editors.Input, mask: '####.000'});
 
       //Supported Filter Types: text, integer, date, select, decimal, checkbox, contents (FUTURE: lookup, percent)
 

@@ -13,7 +13,6 @@
 - Add a view like current examples to `views/controls/`
 - Add link to view to `index.html` page
 - if Javascript is needed, copy the `template.js` in the `js/controls` folder.
-- modify the `gruntfie.js` to add the new script.
 - add initializer code to `initialize.js` (should be able to bootstrap the page).
 - write the code for the component
 - write functional/e2e tests. See [Testing.md](./TESTING.md) for guidelines/instructions.

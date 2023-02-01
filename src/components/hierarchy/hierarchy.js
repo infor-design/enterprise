@@ -29,7 +29,7 @@ const COMPONENT_NAME = 'hierarchy';
  * @param {object} [settings.emptyMessage] An optional settings object for the empty message when there is no data.
  * @param {string} [settings.emptyMessage.title=(Locale ? Locale.translate('NoData')] The text to show
  * @param {string} [settings.emptyMessage.info=''] Longer block of test to show.
- * @param {string} [settings.emptyMessage.icon='icon-empty-no-data'] The icon to show.
+ * @param {string} [settings.emptyMessage.icon='icon-empty-no-data-new'] The icon to show.
  * @param {object} [settings.emptyMessage.button='{}'] The button and text to show with an optional click function.
  */
 const HIERARCHY_DEFAULTS = {
@@ -44,7 +44,7 @@ const HIERARCHY_DEFAULTS = {
   renderSubLevel: false,
   layout: 'horizontal', // stacked, horizontal, paging, mobile-only
   rootId: null,
-  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' }
+  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data-new' }
 };
 
 function Hierarchy(element, settings) {

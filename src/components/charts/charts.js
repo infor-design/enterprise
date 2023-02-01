@@ -1080,16 +1080,17 @@ charts.applyAltLabels = function (svg, dataArray, elem, selector, isNoEclipse) {
  * @param  {object} container  The svg container.
  * @param  {object} elem The element that was right clicked.
  * @param  {object} d The data object
+ * @param  {object} event The event object
  */
-charts.triggerContextMenu = function (container, elem, d) {
-  d3.event.preventDefault();
-  d3.event.stopPropagation();
-  d3.event.stopImmediatePropagation();
+charts.triggerContextMenu = function (container, elem, d, event) {
+  event.preventDefault();
+  event.stopPropagation();
+  event.stopImmediatePropagation();
 
   const e = $.Event('contextmenu');
   e.target = elem;
-  e.pageX = d3.event.pageX;
-  e.pageY = d3.event.pageY;
+  e.pageX = event.pageX;
+  e.pageY = event.pageY;
   $(container).trigger(e, [elem, d]);
 };
 
@@ -1101,6 +1102,7 @@ charts.triggerContextMenu = function (container, elem, d) {
  * @returns {number} The calculated text width in pixels.
  */
 charts.calculateTextRenderWidth = function (textStr, fonts) {
+  if (!this.canvas) return 0;
   const defaultFonts = {
     soho: '700 12px arial',
     uplift: '600 14px arial',
@@ -1111,7 +1113,7 @@ charts.calculateTextRenderWidth = function (textStr, fonts) {
   let themeId = (theme?.currentTheme?.id || '').match(/soho|uplift|new|classic/);
   themeId = themeId ? themeId[0] : 'new';
   this.canvas = this.canvas || (this.canvas = document.createElement('canvas'));
-  const context = this.canvas.getContext('2d');
+  const context = this.canvas?.getContext('2d');
   context.font = fonts[themeId];
   return context.measureText(textStr).width;
 };

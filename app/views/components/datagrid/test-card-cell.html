@@ -117,10 +117,10 @@
     });
 
     //Define Columns for the Grid.
-    columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
-    columns.push({ id: 'productId', name: 'Id',      field: 'productId', width: 100, formatter: Formatters.Text });
+    columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center'});
+    columns.push({ id: 'productId', name: 'Id',      field: 'productId', width: 100, formatter: Soho.Formatters.Text });
     columns.push({ id: 'product',   name: 'Product', field: 'product',   width: 340, formatter: customFormatter });
-    columns.push({ id: 'misc',      name: 'Misc',    field: 'misc',      formatter: Formatters.Text });
+    columns.push({ id: 'misc',      name: 'Misc',    field: 'misc',      formatter: Soho.Formatters.Text });
 
     //Init and get the api for the grid
     $('#datagrid').datagrid({

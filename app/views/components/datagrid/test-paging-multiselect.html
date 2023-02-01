@@ -60,14 +60,14 @@
         data = [];
 
       //Define Columns for the Grid.
-      columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
+      columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center'});
       columns.push({ id: 'id', name: 'Id', field: 'id'});
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140});
-      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 150, formatter: Formatters.Hyperlink, editor: Editors.Input});
-      columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125, editor: Editors.Input});
+      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 150, formatter: Soho.Formatters.Hyperlink, editor: Soho.Editors.Input});
+      columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125, editor: Soho.Editors.Input});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 125});
-      columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Formatters.Decimal});
-      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+      columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Soho.Formatters.Decimal});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy'});
 
       //Init and get the api for the grid
       grid = $('#datagrid').datagrid({

@@ -11,7 +11,7 @@
 <script>
   $('body').one('initialized', function () {
 
-    Locale.set('en-US').done(function () {
+    Soho.Locale.set('en-US').done(function () {
         var grid,
           columns = [],
           data = [];
@@ -26,8 +26,8 @@
           return `Tooltip for ${cell}`
         }
 
-        columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly, tooltip: 'This is a product', headerTooltip: 'This is the header'});
-        columns.push({ id: 'productName', name: 'Product Name', sortable: false,  width: 200, field: 'productName', formatter: Formatters.Readonly, tooltip: callback });
+        columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Readonly, tooltip: 'This is a product', headerTooltip: 'This is the header'});
+        columns.push({ id: 'productName', name: 'Product Name', sortable: false,  width: 200, field: 'productName', formatter: Soho.Formatters.Readonly, tooltip: callback });
 
         //Init the grid
         $('#datagrid').datagrid({

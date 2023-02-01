@@ -54,7 +54,7 @@
 
   $('body').one('initialized', function () {
 
-    Locale.set('en-AU').done(function () {
+    Soho.Locale.set('en-AU').done(function () {
       var grid,
         multilineText = '',
         columns = [],
@@ -73,14 +73,14 @@
       data.push({ id: 6, productId: 2642206, sku: 'SKU #9000001-231', productName: 'Some Compressor', activity: 'inspect and Repair', quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold' });
 
       // Define Columns for the Grid.
-      columns.push({ id: 'selectionCheckbox', name: '', width: 70, formatter: Formatters.SelectionCheckbox, align: 'center', resizable: false, sortable: false });
-      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Text, editor: Editors.Input });
-      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Textarea, editor: Editors.Textarea, editorOptions: { autoGrow: true, autoGrowMaxHeight: 500 } });
-      columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 360, formatter: Formatters.Textarea, editor: Editors.Textarea, editorOptions: { maxLength: 500, minHeight: 60 } });
+      columns.push({ id: 'selectionCheckbox', name: '', width: 70, formatter: Soho.Formatters.SelectionCheckbox, align: 'center', resizable: false, sortable: false });
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Text, editor: Soho.Editors.Input });
+      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Soho.Formatters.Textarea, editor: Soho.Editors.Textarea, editorOptions: { autoGrow: true, autoGrowMaxHeight: 500 } });
+      columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 360, formatter: Soho.Formatters.Textarea, editor: Soho.Editors.Textarea, editorOptions: { maxLength: 500, minHeight: 60 } });
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity' });
-      columns.push({ id: 'price', name: 'Price', field: 'price',  formatter: Formatters.Decimal, editor: Editors.Input });
-      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy', editor: Editors.Date });
-      columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Formatters.Text, editor: Editors.Input });
+      columns.push({ id: 'price', name: 'Price', field: 'price',  formatter: Soho.Formatters.Decimal, editor: Soho.Editors.Input });
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy', editor: Soho.Editors.Date });
+      columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Soho.Formatters.Text, editor: Soho.Editors.Input });
       columns.push({ id: 'action', name: 'Action Item', field: 'action' });
 
 

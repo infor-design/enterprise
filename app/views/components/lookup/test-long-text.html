@@ -30,10 +30,10 @@
 
   //Define Columns for the Grid.
   columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 50});
-  columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Textarea, width: 100, maxWidth: 100, textOverflow: 'ellipsis'});
+  columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Soho.Formatters.Textarea, width: 100, maxWidth: 100, textOverflow: 'ellipsis'});
   columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 50});
   columns.push({ id: 'quantity', filterType: 'text', name: 'Quantity', field: 'quantity', width: 20});
-  columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal, width: 50});
+  columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Soho.Formatters.Decimal, width: 50});
 
   $('body').on('initialized', function () {
     //Init and get the api for the grid

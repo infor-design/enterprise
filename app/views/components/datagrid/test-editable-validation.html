@@ -11,7 +11,7 @@
 
   $('body').one('initialized', function () {
 
-    Locale.set('en-US').done(function () {
+    Soho.Locale.set('en-US').done(function () {
         var grid,
           data = [],
           columns = [];
@@ -60,10 +60,10 @@
         };
 
         //Define Columns for the Grid.
-        columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, required: true, validate: 'required customRule', editor: Editors.Input});
-        columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Input, editor: Editors.Input, required: true, validate: 'required customAsyncRule'});
-        columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, align: 'right', editor: Editors.Input, formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input, mask: '###.000', required: true, validate: 'required'});
-        columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date, required: true, validate: 'required date'});
+        columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Soho.Formatters.Hyperlink, required: true, validate: 'required customRule', editor: Soho.Editors.Input});
+        columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Input, editor: Soho.Editors.Input, required: true, validate: 'required customAsyncRule'});
+        columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, align: 'right', editor: Soho.Editors.Input, formatter: Soho.Formatters.Decimal, numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Soho.Editors.Input, mask: '###.000', required: true, validate: 'required'});
+        columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, editor: Soho.Editors.Date, required: true, validate: 'required date'});
 
         //Init and get the api for the grid
         $('#datagrid').datagrid({

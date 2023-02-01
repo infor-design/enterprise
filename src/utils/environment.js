@@ -51,6 +51,7 @@ const Environment = {
    * Global Classes for browser, version and device as needed.
    */
   addBrowserClasses() {
+    // eslint-disable-next-line compat/compat
     const ua = navigator.userAgent || navigator.vendor || window.opera;
     const platform = navigator.platform;
     const html = $('html');

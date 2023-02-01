@@ -41,7 +41,7 @@
       }]
     };
 
-    Locale.setCurrentLocale('de-DE', localeData);
+    Soho.Locale.setCurrentLocale('de-DE', localeData);
 
     var grid, columns = [], data = [];
 
@@ -70,27 +70,27 @@
       id: 'id', 
       name: 'Id', 
       field: 'id', 
-      formatter: Formatters.Readonly});
+      formatter: Soho.Formatters.Readonly});
     columns.push({ 
       id: 'productId', 
       name: 'Product Id', 
       field: 'productId', 
-      formatter: Formatters.Readonly});
+      formatter: Soho.Formatters.Readonly});
     columns.push({ 
       id: 'productName', 
       name: 'Product Name', 
       field: 'productName',  
-      formatter: Formatters.Hyperlink});
+      formatter: Soho.Formatters.Hyperlink});
     columns.push({ 
       id: 'activity', 
       name: 'Activity', 
       field: 'activity', 
-      formatter: Formatters.Dropdown});
+      formatter: Soho.Formatters.Dropdown});
     columns.push({ 
       id: 'orderDate', 
       name: 'Order Date', 
       field: 'orderDate', 
-      formatter: Formatters.Date,
+      formatter: Soho.Formatters.Date,
       width: 150});
 
     //Init and get the api for the grid

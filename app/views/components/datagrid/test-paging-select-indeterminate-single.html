@@ -15,11 +15,11 @@
           data = [];
 
         //Define Columns for the Grid.
-        columns.push({ id: 'rowStatus', sortable: false, resizable: false, formatter: Formatters.Status, align: 'center' });
-        columns.push({ id: 'id', name: 'Row Id', field: 'id', formatter: Formatters.Readonly });
-        columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink });
+        columns.push({ id: 'rowStatus', sortable: false, resizable: false, formatter: Soho.Formatters.Status, align: 'center' });
+        columns.push({ id: 'id', name: 'Row Id', field: 'id', formatter: Soho.Formatters.Readonly });
+        columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Soho.Formatters.Hyperlink });
         columns.push({ id: 'activity', name: 'Activity', field: 'activity' });
-        columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, width: 120 });
+        columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, width: 120 });
         columns.push({ id: '', name: '', field: '' });
 
         var activePage = 1;

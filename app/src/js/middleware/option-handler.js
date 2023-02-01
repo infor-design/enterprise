@@ -1,11 +1,11 @@
-const logger = require('../logger');
-const setLayout = require('../set-layout');
-const setImportStyle = require('../set-import-style');
+import logger from '../logger.js';
+import setLayout from '../set-layout.js';
+import setImportStyle from '../set-import-style.js';
 
 // Option Handling - Custom Middleware
 // Writes a set of default options the 'req' object.  These options are always eventually passed to the HTML template.
 // In some cases, these options can be modified based on query parameters.  Check the default route for these options.
-module.exports = function () {
+export default function () {
   return function optionHandler(req, res, next) {
     // Change Locale (which also changes right-to-left text setting)
     if (req.query.locale && req.query.locale.length > 0) {
@@ -85,4 +85,4 @@ module.exports = function () {
 
     next();
   };
-};
+}

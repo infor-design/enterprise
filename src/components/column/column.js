@@ -39,12 +39,12 @@ const COMPONENT_NAME = 'column';
 * @param {function} [settings.xAxis.formatText] A function that passes the text element and a counter.
 * You can return a formatted svg markup element to replace the current element.
 * For example you could use tspans to wrap the strings or color them.
-* @param {object} [settings.emptyMessage = { title: 'No Data', info: , icon: 'icon-empty-no-data' }]
+* @param {object} [settings.emptyMessage = { title: 'No Data', info: , icon: 'icon-empty-no-data-new' }]
 * An empty message will be displayed when there is no chart data. This accepts an object of the form
 * `emptyMessage: {
 *   title: 'No Data Available',
 *   info: 'Make a selection on the list above to see results',
-*   icon: 'icon-empty-no-data',
+*   icon: 'icon-empty-no-data-new',
 *   button: {text: 'xxx', click: <function>
 *   }`
 * Set this to null for no message or will default to 'No Data Found with an icon.'
@@ -63,7 +63,7 @@ const COLUMN_DEFAULTS = {
   hideDots: false,
   ticks: 9,
   fitHeight: true,
-  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' }
+  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data-new' }
 };
 
 function Column(element, settings) {
@@ -827,7 +827,7 @@ Column.prototype = {
                 .style('fill', classicDark ? '#BDBDBD' : newDark ? '#B7B7BA' : theme.new && theme.currentTheme.modeId !== 'dark' ? '#47474c' : '#313236')
                 .style('stroke-width', 2)
                 .style('cursor', 'default')
-                .on(`mouseenter.${self.namespace}`, function (lineTooltipData) {
+                .on(`mouseenter.${self.namespace}`, function (event, lineTooltipData) {
                   lineTooltip(this, lineTooltipData.line);
                 })
                 .on(`mouseleave.${self.namespace}`, function () {
@@ -946,7 +946,8 @@ Column.prototype = {
       });
 
     (isPositiveNegative ? pnBars : bars)
-      .on(`mouseenter.${self.namespace}`, function (d, i) {
+      .on(`mouseenter.${self.namespace}`, function (event, d) {
+        const i = $(this).index();
         let x;
         let y;  //eslint-disable-line
         let j;
@@ -959,7 +960,7 @@ Column.prototype = {
         const shape = $(this);
         let content = '';
         let tooltipTargetEl = null;
-        const ePageY = d3.event.pageY;
+        const ePageY = event.pageY;
 
         const setPattern = function (pattern, hexColor) { //eslint-disable-line
           return !pattern || !hexColor ? '' :
@@ -1199,30 +1200,32 @@ Column.prototype = {
       })
 
       // Contextmenu
-      .on(`contextmenu.${self.namespace}`, function (d) {
-        charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], d);
+      .on(`contextmenu.${self.namespace}`, function (event, d) {
+        charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], d, event);
       })
       // Click and double click events
       // Use very slight delay to fire off the normal click action
       // It alow to cancel when the double click event happens
-      .on(`click.${self.namespace}`, function (d, i, clickedLegend) {
+      .on(`click.${self.namespace}`, function (event, d, i, clickedLegend) {
         const selector = this;
 
         if (self.settings.selectable) {
           timer = setTimeout(function () {
             if (!prevent) {
               // Run click action
-              self.doClickAction(d, i, selector, clickedLegend);
+              i = $(selector).index();
+              self.doClickAction(event, d, i, selector, clickedLegend);
             }
             prevent = false;
           }, delay);
         }
       })
-      .on(`dblclick.${self.namespace}`, function (d, i) {
+      .on(`dblclick.${self.namespace}`, function (event, d, i) {
         const selector = this;
         clearTimeout(timer);
         prevent = true;
         // Run double click action
+        i = $(selector).index();
         self.doDoubleClickAction(d, i, selector);
       });
 
@@ -1415,7 +1418,7 @@ Column.prototype = {
             $(legends.selectAll('.chart-legend-item')[0][barIndex]).trigger('click.chart');
           }
         } else {
-          selector.on(`click.${self.namespace}`).call(selector.node(), selector.datum(), barIndex);
+          d3.select(selector.node()).dispatch('click');
         }
       }
     };
@@ -1535,7 +1538,7 @@ Column.prototype = {
         }
       } else {
         this.initialSelectCall = true;
-        selector.on(`click.${self.namespace}`).call(selector.node(), selector.datum(), barIndex);
+        d3.select(selector.node()).dispatch('click');
       }
     }
     this.initialSelectCall = false;
@@ -1618,13 +1621,14 @@ Column.prototype = {
   /**
    * Action to happen on click.
    * @private
+   * @param {object} event - The event object
    * @param {object} d - The data object
    * @param {number} i - The index
    * @param {object} selector - The selector element
    * @param {boolean} clickedLegend - Is clicked by legend
    * @returns {void}
    */
-  doClickAction(d, i, selector, clickedLegend) {
+  doClickAction(event, d, i, selector, clickedLegend) {
     const self = this;
     const isTargetBar = selector && d3.select(selector).classed('target-bar');
     let isSelected = selector && d3.select(selector).classed('is-selected');

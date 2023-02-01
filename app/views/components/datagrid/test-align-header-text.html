@@ -54,11 +54,11 @@
 
       //Define Columns for the Grid.
       columns.push({ id: 'productId', headerAlign: 'center', name: 'Product Id', field: 'productId', width: 120, filterType: 'text'});
-      columns.push({ id: 'productName', headerAlign: 'right', name: 'Product Name', field: 'productName', width: 200, formatter: Formatters.Hyperlink, filterType: 'text'});
+      columns.push({ id: 'productName', headerAlign: 'right', name: 'Product Name', field: 'productName', width: 200, formatter: Soho.Formatters.Hyperlink, filterType: 'text'});
       columns.push({ id: 'quantity', align: 'center', headerAlign: 'left', name: 'Quantity', field: 'quantity', width: 120, filterType: 'integer'});
-      columns.push({ id: 'status',  align: 'center', headerAlign: 'right', name: 'Tag', field: 'price', width: 120, formatter: Formatters.Tag, ranges: [{'min': 151, 'max': 9999, 'classes': 'azure07'}]});
-      columns.push({ id: 'price', align: 'right', headerAlign: 'left', name: 'Price', field: 'price', width: 120, formatter: Formatters.Decimal, filterType: 'decimal'});
-      columns.push({ id: 'orderDate', align: 'right', headerAlign: 'center', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy', filterType: 'date'});
+      columns.push({ id: 'status',  align: 'center', headerAlign: 'right', name: 'Tag', field: 'price', width: 120, formatter: Soho.Formatters.Tag, ranges: [{'min': 151, 'max': 9999, 'classes': 'azure07'}]});
+      columns.push({ id: 'price', align: 'right', headerAlign: 'left', name: 'Price', field: 'price', width: 120, formatter: Soho.Formatters.Decimal, filterType: 'decimal'});
+      columns.push({ id: 'orderDate', align: 'right', headerAlign: 'center', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy', filterType: 'date'});
 
       //Init and get the api for the grid
       grid = $('#datagrid').datagrid({

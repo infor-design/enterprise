@@ -53,9 +53,9 @@
       data.push({ id: 7, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: '100.99', status: 'OK', orderDate: new Date(2014, 6, 9, 12, 12, 12), action: 'On Hold', ordered: 0});
 
       //Define Columns for the Grid.
-      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly, editor: Editors.Input });
-      columns.push({ id: 'productDesc', name: 'Product Desc', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, editor: Editors.Input});
-      columns.push({ id: 'custom', name: 'Custom', field: 'quantity', editor: Editors.MyCustom});
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Readonly, editor: Soho.Editors.Input });
+      columns.push({ id: 'productDesc', name: 'Product Desc', sortable: false, field: 'productName', formatter: Soho.Formatters.Hyperlink, editor: Soho.Editors.Input});
+      columns.push({ id: 'custom', name: 'Custom', field: 'quantity', editor: Soho.Editors.MyCustom});
 
       //Init and get the api for the grid
       $('#datagrid').datagrid({

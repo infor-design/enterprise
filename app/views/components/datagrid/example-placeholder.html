@@ -30,11 +30,11 @@
 
         //Define Columns for the Lookup Grid.
         lookupColumns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140});
-        lookupColumns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 250, formatter: Formatters.Hyperlink});
+        lookupColumns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 250, formatter: Soho.Formatters.Hyperlink});
         lookupColumns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125});
         lookupColumns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 125});
-        lookupColumns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Formatters.Decimal});
-        lookupColumns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+        lookupColumns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Soho.Formatters.Decimal});
+        lookupColumns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy'});
 
         lookupOptions = {
           // field: 'productId',
@@ -62,20 +62,20 @@
         data.push({ id: 7, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', portable: true, quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'oh'});
 
         //Define Columns for the Grid.
-        columns.push({ id: 'rowStatus', sortable: false, resizable: false, formatter: Formatters.Status, align: 'center'});
-        columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
-        columns.push({ id: 'id', name: 'Row Id', field: 'id', formatter: Formatters.Readonly});
-        columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Lookup, placeholder: 'Default Product', editor: Editors.Lookup, editorOptions: lookupOptions });
-        columns.push({ id: 'productName', hidden: true, name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, placeholder: 'First Select Product', editor: Editors.Input});
-        columns.push({ id: 'activity', name: 'Activity', field: 'activity', formatter: Formatters.Placeholder, editor: Editors.Input, placeholder: 'Default Activity' });  //maxLength: 2
-        columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', align: 'right', formatter: Formatters.Placeholder, editor: Editors.Input, mask: '###', placeholder: dynamicPlaceholder, isEditable: function (row, cell, value, col, item) {
+        columns.push({ id: 'rowStatus', sortable: false, resizable: false, formatter: Soho.Formatters.Status, align: 'center'});
+        columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center'});
+        columns.push({ id: 'id', name: 'Row Id', field: 'id', formatter: Soho.Formatters.Readonly});
+        columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Lookup, placeholder: 'Default Product', editor: Soho.Editors.Lookup, editorOptions: lookupOptions });
+        columns.push({ id: 'productName', hidden: true, name: 'Product Name', sortable: false, field: 'productName', formatter: Soho.Formatters.Hyperlink, placeholder: 'First Select Product', editor: Soho.Editors.Input});
+        columns.push({ id: 'activity', name: 'Activity', field: 'activity', formatter: Soho.Formatters.Placeholder, editor: Soho.Editors.Input, placeholder: 'Default Activity' });  //maxLength: 2
+        columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', align: 'right', formatter: Soho.Formatters.Placeholder, editor: Soho.Editors.Input, mask: '###', placeholder: dynamicPlaceholder, isEditable: function (row, cell, value, col, item) {
             //For this fake logic just disable odd rows
             return (row % 2 === 0);
           }});
-        columns.push({ id: 'portable', name: 'Portable', field: 'portable', align: 'center', formatter: Formatters.Checkbox, editor: Editors.Checkbox});
-        columns.push({ id: 'price', name: 'Price', field: 'price', align: 'right', formatter: Formatters.Decimal, placeholder: 'Default Price', numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input});
-        columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date , validate: 'required date'});
-        columns.push({ id: 'action', name: 'Action', field: 'action', formatter: Formatters.Dropdown, editor: Editors.Dropdown, placeholder: 'Default Action',
+        columns.push({ id: 'portable', name: 'Portable', field: 'portable', align: 'center', formatter: Soho.Formatters.Checkbox, editor: Soho.Editors.Checkbox});
+        columns.push({ id: 'price', name: 'Price', field: 'price', align: 'right', formatter: Soho.Formatters.Decimal, placeholder: 'Default Price', numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Soho.Editors.Input});
+        columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, editor: Soho.Editors.Date , validate: 'required date'});
+        columns.push({ id: 'action', name: 'Action', field: 'action', formatter: Soho.Formatters.Dropdown, editor: Soho.Editors.Dropdown, placeholder: 'Default Action',
         options: [{id: '', label: '', value: ''}, {id: 'oh1', label: 'On Hold', value: 'oh'}, {id: 'sh1', label: 'Shipped', value: 'sh'} , {id: 'ac1', label: 'Action', value: 'ac'}]
         });
 

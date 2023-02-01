@@ -21,12 +21,12 @@
     data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: '123.99', status: 'OK', orderDate: null, action: 'On Hold'});
 
     //Define Columns for the Grid.
-    columns.push({ id: 'id', reorderable: false, name: 'Id', field: 'id', formatter: Formatters.Text, filterType: 'text'});
-    columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, filterType: 'text'});
+    columns.push({ id: 'id', reorderable: false, name: 'Id', field: 'id', formatter: Soho.Formatters.Text, filterType: 'text'});
+    columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Soho.Formatters.Hyperlink, filterType: 'text'});
     columns.push({ id: 'activity', name: 'Activity', field: 'activity', filterType: 'text'});
     columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', filterType: 'integer'});
-    columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal, filterType: 'decimal'});
-    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy', filterType: 'date'});
+    columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Soho.Formatters.Decimal, filterType: 'decimal'});
+    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy', filterType: 'date'});
 
     //Get some data via ajax
     var url = '{{basepath}}api/compressors?pageNum=1&pageSize=1000';

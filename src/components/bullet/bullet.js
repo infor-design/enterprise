@@ -242,7 +242,7 @@ Bullet.prototype = {
           // Run double click action
           self.element.trigger('dblclick', [bar, chartData.data[bar.attr('data-idx')]]);
         })
-        .on(`mouseenter.${self.namespace}`, function (d, mouseEnterIdx) {
+        .on(`mouseenter.${self.namespace}`, function (event, d, mouseEnterIdx) {
           const bar = d3.select(this);
           const data = chartData.data[bar.attr('data-idx')];
           const rect = this.getBoundingClientRect();
@@ -291,8 +291,8 @@ Bullet.prototype = {
           clearInterval(tooltipInterval);
           charts.hideTooltip();
         })
-        .on(`contextmenu.${self.namespace}`, function (d) {
-          charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], d);
+        .on(`contextmenu.${self.namespace}`, function (event, d) {
+          charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], d, event);
         })
         .merge(range)
         .transition()

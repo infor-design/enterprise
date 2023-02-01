@@ -975,7 +975,7 @@ Accordion.prototype = {
       expander.children('.audible').text(Locale.translate('Expand'));
     }
 
-    if (closeChildren) {
+    if (closeChildren && pane.closeChildren) {
       pane.closeChildren();
     }
 

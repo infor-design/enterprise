@@ -54,13 +54,13 @@
         data = [];
 
       //Define Columns for the Grid.
-      columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Readonly});
-      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', editor: Editors.Input});
-      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, editor: Editors.Input});
-      columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', editor: Editors.Input});
-      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', formatter: Formatters.Integer, editor: Editors.Input});
-      columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal, editor: Editors.Input});
-      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+      columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Soho.Formatters.Readonly});
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', editor: Soho.Editors.Input});
+      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Soho.Formatters.Hyperlink, editor: Soho.Editors.Input});
+      columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', editor: Soho.Editors.Input});
+      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', formatter: Soho.Formatters.Integer, editor: Soho.Editors.Input});
+      columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Soho.Formatters.Decimal, editor: Soho.Editors.Input});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy'});
 
       //Init and get the api for the grid
       grid = $('#datagrid').datagrid({

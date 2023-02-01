@@ -95,11 +95,11 @@
 
     //Define Columns for the Lookup Grid.
     lookupColumns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140});
-    lookupColumns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 250, formatter: Formatters.Hyperlink});
+    lookupColumns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 250, formatter: Soho.Formatters.Hyperlink});
     lookupColumns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125});
     lookupColumns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 125});
-    lookupColumns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Formatters.Decimal});
-    lookupColumns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+    lookupColumns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Soho.Formatters.Decimal});
+    lookupColumns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy'});
 
     lookupOptions = {
       // field: 'productId',
@@ -124,11 +124,11 @@
     data.push({ id: 3, productId: 203, productName: 'Portable Compressor', activity:  'Inspect and Repair', portable: true, quantity: 1, price: 120.992, status: null, orderDate: new Date(2014, 6, 3), action: 'On Hold' });
 
     //Define Columns for the Grid.
-    columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Lookup, editor: Editors.Lookup, editorOptions: lookupOptions, align: 'right' });
-    columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, editor: Editors.Input, align: 'right' });
+    columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Lookup, editor: Soho.Editors.Lookup, editorOptions: lookupOptions, align: 'right' });
+    columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Soho.Formatters.Hyperlink, editor: Soho.Editors.Input, align: 'right' });
 
-    columns2.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Lookup, editor: Editors.Lookup, editorOptions: lookupOptions});
-    columns2.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, editor: Editors.Input });
+    columns2.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Lookup, editor: Soho.Editors.Lookup, editorOptions: lookupOptions});
+    columns2.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Soho.Formatters.Hyperlink, editor: Soho.Editors.Input });
 
     //Init and get the api for the grid
     grid = $('#datagrid').datagrid({

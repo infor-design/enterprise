@@ -107,7 +107,7 @@
       id: 'selectionCheckbox',
       sortable: false,
       resizable: false,
-      formatter: Formatters.SelectionCheckbox,
+      formatter: Soho.Formatters.SelectionCheckbox,
       align: 'center'
     });
     columns.push({
@@ -120,22 +120,22 @@
       name: 'Product Name',
       sortable: false,
       field: 'productName',
-      formatter: Formatters.Hyperlink,
-      editor: Editors.Input
+      formatter: Soho.Formatters.Hyperlink,
+      editor: Soho.Editors.Input
     });
     columns.push({
       id: 'activity',
       name: 'Activity',
       field: 'activity',
       required: true,
-      editor: Editors.Input
+      editor: Soho.Editors.Input
     }); //maxLength: 2
     columns.push({
       id: 'quantity',
       name: 'Quantity',
       field: 'quantity',
       align: 'right',
-      editor: Editors.Input,
+      editor: Soho.Editors.Input,
       mask: '###'
     });
     columns.push({
@@ -143,34 +143,34 @@
       name: 'Portable',
       field: 'portable',
       align: 'center',
-      formatter: Formatters.Checkbox,
-      editor: Editors.Checkbox
+      formatter: Soho.Formatters.Checkbox,
+      editor: Soho.Editors.Checkbox
     });
     columns.push({
       id: 'price',
       name: 'Price',
       field: 'price',
       align: 'right',
-      formatter: Formatters.Decimal,
+      formatter: Soho.Formatters.Decimal,
       numberFormat: {
         minimumFractionDigits: 3,
         maximumFractionDigits: 3
       },
-      editor: Editors.Input
+      editor: Soho.Editors.Input
     });
     columns.push({
       id: 'orderDate',
       name: 'Order Date',
       field: 'orderDate',
-      formatter: Formatters.Date,
-      editor: Editors.Date
+      formatter: Soho.Formatters.Date,
+      editor: Soho.Editors.Date
     });
     columns.push({
       id: 'action',
       name: 'Action',
       field: 'action',
-      formatter: Formatters.Dropdown,
-      editor: Editors.Dropdown,
+      formatter: Soho.Formatters.Dropdown,
+      editor: Soho.Editors.Dropdown,
       options: [{
         id: '',
         label: '',

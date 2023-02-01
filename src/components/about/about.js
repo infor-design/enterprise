@@ -161,6 +161,7 @@ About.prototype = {
    * @returns {string} The specs of the browser.
    */
   getDeviceSpecs() {
+    // eslint-disable-next-line compat/compat
     const locale = navigator.appName === 'Microsoft Internet Explorer' ? navigator.userLanguage : navigator.language;
     const browser = (function () {
       const ua = navigator.userAgent;

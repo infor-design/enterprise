@@ -1,4 +1,4 @@
-module.exports = (req, res) => {
+export default function orgChilden(req, res) {
   const womenPath = `${res.opts.basepath}images/`;
   const orgdata = [
     { id: `AA${Math.floor(Math.random() * 1000)}`, Name: 'Kaylee Edwards', Position: 'Records Manager', EmploymentType: 'FT', Picture: `${womenPath}11.jpg` },
@@ -8,4 +8,4 @@ module.exports = (req, res) => {
 
   res.setHeader('Content-Type', 'application/json');
   res.end(JSON.stringify(orgdata));
-};
+}

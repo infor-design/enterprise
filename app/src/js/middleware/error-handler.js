@@ -1,7 +1,7 @@
-const path = require('path');
-const logger = require('../logger');
-const setLayout = require('../set-layout');
-const utils = require('../utils');
+import * as path from 'path';
+import logger from '../logger.js';
+import setLayout from '../set-layout.js';
+import utils from '../utils.js';
 
 // Gets a URL to use where the "Try getting a fresh start" link appears on the error page.
 // For some "virtual" (read: not file-system-based) routes, this needs manual intervention.
@@ -13,7 +13,7 @@ function getRedirectedURL(url, viewsRoot) {
 }
 
 // Simple Middleware for handling errors
-module.exports = function () {
+export default function () {
   return function errorHandler(err, req, res, next) {
     const viewsRoot = req.app.get('views');
 
@@ -48,4 +48,4 @@ module.exports = function () {
     // If all else fails, respond with plain text.
     res.type('txt').send(err.message);
   };
-};
+}

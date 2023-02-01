@@ -53,18 +53,18 @@
     };
 
       // Define Columns for the Grid.
-      columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Readonly, filterType: 'text'});
-      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Lookup, editorOptions: lookupOptions, filterType: 'lookup', mask: '#######' });
-      columns.push({ id: 'productName', name: 'Product Name', field: 'productName',  formatter: Formatters.Hyperlink, filterType: 'text'});
-      columns.push({ id: 'activity', name: 'Activity', field: 'activity', formatter: Formatters.Dropdown, filterType: 'multiselect', options: activities, editorOptions: {showSelectAll: true}});
+      columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Soho.Formatters.Readonly, filterType: 'text'});
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Lookup, editorOptions: lookupOptions, filterType: 'lookup', mask: '#######' });
+      columns.push({ id: 'productName', name: 'Product Name', field: 'productName',  formatter: Soho.Formatters.Hyperlink, filterType: 'text'});
+      columns.push({ id: 'activity', name: 'Activity', field: 'activity', formatter: Soho.Formatters.Dropdown, filterType: 'multiselect', options: activities, editorOptions: {showSelectAll: true}});
       columns.push({ id: 'activity1', name: 'Activity (Multi)', field: 'activity', filterType: 'contents', options: activities});
       columns.push({ id: 'quantity', name: 'Qty', field: 'quantity', align: 'right', filterType: 'integer', minWidth: 95});
-      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'MM/dd/yyyy', filterType: 'date', editorOptions: {showMonthYearPicker: true}});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'MM/dd/yyyy', filterType: 'date', editorOptions: {showMonthYearPicker: true}});
       columns.push({id: 'orderOtherDate', name: 'Order Date (Custom Format)', field: 'orderDate', filterType: 'date', filterConditions: ['equals', 'does-not-equal', 'in-range', 'less-than', 'less-equals', 'greater-than', 'greater-equals'], formatter: Soho.Formatters.Date, dateFormat: 'yyyyMMdd'});
-      columns.push({ id: 'time', name: 'Time', field: 'time', formatter: Formatters.Time, editor: Editors.Time, filterType: 'time' });
-      columns.push({ id: 'inStock', name: 'In Stock', field: 'inStock', formatter: Formatters.Checkbox, sortable: false, align: 'center', filterType: 'checkbox'});
-      columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Formatters.Alert, filterType: 'select', editorOptions: {clearable: true}, options: statuses, ranges: [{'value':'Confirmed', 'classes': 'success', text: 'Confirmed'}, {'value':'Error', 'classes': 'error', text: 'Error'}, { value: "En file d\'attente", classes: 'error', label: "En file d\'attente" }]});
-      columns.push({ id: 'price',  name: 'Price', field: 'price', formatter: Formatters.Decimal, filterType: 'decimal', numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input, mask: '###,####.000'});
+      columns.push({ id: 'time', name: 'Time', field: 'time', formatter: Soho.Formatters.Time, editor: Soho.Editors.Time, filterType: 'time' });
+      columns.push({ id: 'inStock', name: 'In Stock', field: 'inStock', formatter: Soho.Formatters.Checkbox, sortable: false, align: 'center', filterType: 'checkbox'});
+      columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Soho.Formatters.Alert, filterType: 'select', editorOptions: {clearable: true}, options: statuses, ranges: [{'value':'Confirmed', 'classes': 'success', text: 'Confirmed'}, {'value':'Error', 'classes': 'error', text: 'Error'}, { value: "En file d\'attente", classes: 'error', label: "En file d\'attente" }]});
+      columns.push({ id: 'price',  name: 'Price', field: 'price', formatter: Soho.Formatters.Decimal, filterType: 'decimal', numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Soho.Editors.Input, mask: '###,####.000'});
 
 
       // Init and get the api for the grid
@@ -78,7 +78,7 @@
         editable: true,
         attributes: [{ name: 'id', value: 'custom-id' }, { name: 'data-automation-id', value: 'custom-automation-id' } ],
         frozenColumns: {left: ['id', 'productId']},
-        emptyMessage: {title: Locale.translate('NoData'), info: Locale.translate('NoDataFilter'), icon: 'icon-empty-no-data'},
+        emptyMessage: {title: Soho.Locale.translate('NoData'), info: Soho.Locale.translate('NoDataFilter'), icon: 'icon-empty-no-data-new'},
         toolbar: {title: 'Filterable Datagrid', filterRow: true, results: true, dateFilter: false ,keywordFilter: false, actions: true, views: false, rowHeight: true, collapsibleFilter: false}
       }).on('filtered', function (e, args) {
         console.log('filter ran', args);

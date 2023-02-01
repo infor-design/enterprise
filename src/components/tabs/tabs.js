@@ -4013,7 +4013,7 @@ Tabs.prototype = {
           });
         }
 
-        t.disable();
+        t?.disable();
       });
     });
 

@@ -1,7 +1,12 @@
-const path = require('path');
-const getJSONFile = require('../src/js/get-json-file');
+/* eslint-disable no-underscore-dangle */
+import { fileURLToPath } from 'url';
+import * as path from 'path';
+import getJSONFile from '../src/js/get-json-file.js';
 
-module.exports = (req, res) => {
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+export default function data(req, res) {
   const allStates = getJSONFile(path.resolve(__dirname, 'states-all.json'));
 
   function done(results) {
@@ -23,4 +28,4 @@ module.exports = (req, res) => {
   }
 
   done(filtered);
-};
+}

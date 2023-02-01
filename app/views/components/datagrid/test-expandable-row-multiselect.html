@@ -24,9 +24,9 @@
       data.push({ id: 6, productId: 2642206, sku: '<b>SKU #9000001-231</b>', productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
 
       // Define Columns for the Grid
-      columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
-      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Expander, filterType: 'text', textOverflow: 'ellipsis', width: 150, hideable: false});
-      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', filterType: 'text', formatter: Formatters.Hyperlink});
+      columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center'});
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Expander, filterType: 'text', textOverflow: 'ellipsis', width: 150, hideable: false});
+      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', filterType: 'text', formatter: Soho.Formatters.Hyperlink});
       columns.push({ id: 'activity', name: 'Activity', field: 'activity', filterType: 'text'});
       columns.push({ id: 'quantity1', name: 'Quantity 1', field: 'quantity'});
       columns.push({ id: 'quantity2', name: 'Quantity 2', field: 'quantity'});

@@ -23,14 +23,14 @@
       data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: '123.99', status: 'OK', orderDate: null, action: 'On Hold'});
 
       // Define Columns for the Grid.
-      // columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
+      // columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center'});
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId'});
-      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', filterType: 'text', formatter: Formatters.Text});
+      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', filterType: 'text', formatter: Soho.Formatters.Text});
       columns.push({ id: 'activity', name: 'Activity', field: 'activity', filterType: 'text'});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', filterType: 'text', align: 'center' });
-      columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal, align: 'center' });
-      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
-      columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Formatters.Text});
+      columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Soho.Formatters.Decimal, align: 'center' });
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy'});
+      columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Soho.Formatters.Text});
       columns.push({ id: 'action', name: 'Action Item', field: 'action'});
 
       // Init and get the api for the grid
