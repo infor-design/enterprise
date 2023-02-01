@@ -38,6 +38,7 @@
 - `[Datepicker]` Fixed a bug where range display is malformed in RTL. ([#6933](https://github.com/infor-design/enterprise/issues/6933))
 - `[Datepicker]` Fixed exception occuring in disable dates. ([#7086](https://github.com/infor-design/enterprise/issues/7086))
 - `[Header]` Adjusted classic header colors. ([#7069](https://github.com/infor-design/enterprise/issues/7069))
+- `[Hyperlink]` Changed hover color in dark theme. ([#7095](https://github.com/infor-design/enterprise/issues/7095))
 - `[Lookup]` Adjusted width in lookup. ([#6924](https://github.com/infor-design/enterprise/issues/6924))
 - `[Searchfield]` Searchfield enhancement bugfixes on colors. ([#7079](https://github.com/infor-design/enterprise/issues/7079))
 - `[Searchfield]` Searchfield icon placement fixes in classic. ([#7134](https://github.com/infor-design/enterprise/issues/7134))
