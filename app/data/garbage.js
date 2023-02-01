@@ -1,4 +1,4 @@
-module.exports = (req, res) => {
+export default function garbageData(req, res) {
   let amount = 25;
   let paragraphs = 1;
   let text = '';
@@ -109,4 +109,4 @@ module.exports = (req, res) => {
   }
 
   done(text);
-};
+}

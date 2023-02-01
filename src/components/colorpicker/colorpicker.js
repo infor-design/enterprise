@@ -300,7 +300,7 @@ ColorPicker.prototype = {
     if (this.element[0].style && this.element[0].style.width) {
       const w = parseInt(this.element[0].style.width, 10);
       this.container.css({ width: w });
-      this.element.css({ width: ((w - 4) - this.swatch?.width()) });
+      this.element.css({ width: ((w - 4) - Number(this.swatch?.width())) });
     }
   },
 

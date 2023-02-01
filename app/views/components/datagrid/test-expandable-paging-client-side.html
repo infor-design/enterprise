@@ -24,14 +24,14 @@
         data = [];
 
       //Define Columns for the Grid.
-      columns.push({ id: 'expander', field: 'expander', formatter: Formatters.Expander, exportable: false });
+      columns.push({ id: 'expander', field: 'expander', formatter: Soho.Formatters.Expander, exportable: false });
       columns.push({ id: 'id', name: 'Id', field: 'id'});
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140});
-      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', width: 150, formatter: Formatters.Hyperlink, editor: Editors.Input});
-      columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125, editor: Editors.Input});
+      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', width: 150, formatter: Soho.Formatters.Hyperlink, editor: Soho.Editors.Input});
+      columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125, editor: Soho.Editors.Input});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 125});
-      columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Formatters.Decimal});
-      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+      columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Soho.Formatters.Decimal});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy'});
 
       var rowTemplate = '<div class="datagrid-cell-layout"><div class="img-placeholder"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-camera"></use></svg></div></div>'+
                         '<div class="datagrid-cell-layout"><p class="datagrid-row-heading">Expandable Content Area</p>' +

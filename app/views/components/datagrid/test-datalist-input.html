@@ -50,11 +50,11 @@ $('body').one('initialized', function () {
 
   //Define Columns for the Grid.
   columns.push({ id: 'item', name: 'Item', field: 'item'});
-  columns.push({ id: 'qty_uom1', name: 'Quantity/UOM1', field: 'qty', formatter: Formatters.Text, editor: Editors.Input});
+  columns.push({ id: 'qty_uom1', name: 'Quantity/UOM1', field: 'qty', formatter: Soho.Formatters.Text, editor: Soho.Editors.Input});
   columns.push({ id: 'qty_uom2', name: 'Quantity/UOM2', field: 'qty', formatter: inputFormatter, formatterOptions: {'prefix': 'uom', 'afterTemplate': '&nbsp; / {uom}', 'type': 'number'} });
-  columns.push({ id: 'cost', name: 'Cost', field: 'cost', formatter: Formatters.Integer });
+  columns.push({ id: 'cost', name: 'Cost', field: 'cost', formatter: Soho.Formatters.Integer });
   columns.push({ id: 'availability', name: 'Available', field: 'availability'});
-  columns.push({ id: 'button', name: ' ', field: 'button', formatter: Formatters.Button, align: 'center' });
+  columns.push({ id: 'button', name: ' ', field: 'button', formatter: Soho.Formatters.Button, align: 'center' });
 
   $('#datagrid').datagrid({
     columns: columns,

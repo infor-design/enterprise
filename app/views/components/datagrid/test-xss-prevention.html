@@ -45,7 +45,7 @@
 
   $('body').one('initialized', function () {
 
-    Locale.set('en-US').done(function () {
+    Soho.Locale.set('en-US').done(function () {
         var grid,
           columns = [],
           data = [];
@@ -62,11 +62,11 @@
         data.push({ id: 2, productId: 2142201, productName: 'Compressor', activity:  '<svg/onload=alert(1)>', quantity: 1, price: 210.99, status: 'OK', orderDate:  new Date(2016, 2, 15, 12, 30, 36), portable: false, action: 'ac' });
 
         //Define Columns for the Grid.
-        columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
-        columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink});
-        columns.push({ id: 'activity', name: '<script>alert(1)<\/script>', field: 'activity', editor: Editors.Input });
-        columns.push({ id: 'activity', name: '<script>alert(2)<\/script>', field: 'activity', formatter: Formatters.Editor, editor: Editors.Editor, singleline: true, contentTooltip: true});
-        columns.push({ id: 'quantity', name: '<img src=x onerror=alert("kocicka")>test', field: 'quantity', align: 'right', editor: Editors.Input, mask: '###'});
+        columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center'});
+        columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Soho.Formatters.Hyperlink});
+        columns.push({ id: 'activity', name: '<script>alert(1)<\/script>', field: 'activity', editor: Soho.Editors.Input });
+        columns.push({ id: 'activity', name: '<script>alert(2)<\/script>', field: 'activity', formatter: Soho.Formatters.Editor, editor: Soho.Editors.Editor, singleline: true, contentTooltip: true});
+        columns.push({ id: 'quantity', name: '<img src=x onerror=alert("kocicka")>test', field: 'quantity', align: 'right', editor: Soho.Editors.Input, mask: '###'});
 
         //Init and get the api for the grid
         grid = $('#datagrid').datagrid({

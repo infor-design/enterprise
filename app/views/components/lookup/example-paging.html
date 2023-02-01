@@ -17,11 +17,11 @@
 
       //Define Columns for the Grid.
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140});
-      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 150, formatter: Formatters.Hyperlink});
+      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 150, formatter: Soho.Formatters.Hyperlink});
       columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 125});
-      columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Formatters.Decimal});
-      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+      columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Soho.Formatters.Decimal});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy'});
 
       //Get some data via ajax
       var url = '{{basepath}}api/compressors?pageNum=1&pageSize=1000';

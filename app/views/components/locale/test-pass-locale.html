@@ -13,19 +13,19 @@
           output.append('<div class="row"><div class="twelve columns">' + value + '</div></div>');
         };
 
-        Locale.getLocale('nl-NL').done(function () {
+        Soho.Locale.getLocale('nl-NL').done(function () {
           append('nl-NL');
           append(Locale.formatNumber(123456789.1234, { locale: 'en-US' }));
           append(Locale.formatNumber(123456789.1234, { locale: 'nl-NL' }));
         });
 
-        Locale.getLocale('it-IT').done(function () {
+        Soho.Locale.getLocale('it-IT').done(function () {
           append('it-IT');
           append(Locale.parseNumber('1.123', { locale: 'nl-NL' }));
           append(Locale.parseNumber('$123456.789,12', { locale: 'nl-NL' }));
         });
 
-        Locale.getLocale('es-ES').done(function () {
+        Soho.Locale.getLocale('es-ES').done(function () {
           append('es-ES');
           append(Locale.parseDate('2019-01-01', 'yyyy-MM-dd'));
           append(Locale.parseDate('2019-01-01', { dateFormat: 'yyyy-MM-dd', locale: 'es-ES' } ));

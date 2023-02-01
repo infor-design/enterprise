@@ -50,13 +50,13 @@
     ];
 
     // Define Columns for the Grid.
-    columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center' });
-    columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Readonly, filterType: 'text', filterDisabled: true });
-    columns.push({ id: 'propertyName', name: 'Property Name Title', field: 'propertyName', formatter: Formatters.Text, filterType: 'text' });
-    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', align: 'center', formatter: Formatters.Date, dateFormat: 'MM/dd/yyyy', filterType: 'date' });
-    columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, filterType: 'text' });
-    columns.push({ id: 'inStock', name: 'In Stock', field: 'inStock', formatter: Formatters.Checkbox, align: 'center', filterType: 'checkbox' });
-    columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Formatters.Alert, filterType: 'select', options: statuses, ranges: [{ value:'Confirmed', classes: 'success', text: 'Confirmed' }, { value:'Error', classes: 'error', text: 'Error' }]});
+    columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center' });
+    columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Soho.Formatters.Readonly, filterType: 'text', filterDisabled: true });
+    columns.push({ id: 'propertyName', name: 'Property Name Title', field: 'propertyName', formatter: Soho.Formatters.Text, filterType: 'text' });
+    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', align: 'center', formatter: Soho.Formatters.Date, dateFormat: 'MM/dd/yyyy', filterType: 'date' });
+    columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Soho.Formatters.Hyperlink, filterType: 'text' });
+    columns.push({ id: 'inStock', name: 'In Stock', field: 'inStock', formatter: Soho.Formatters.Checkbox, align: 'center', filterType: 'checkbox' });
+    columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Soho.Formatters.Alert, filterType: 'select', options: statuses, ranges: [{ value:'Confirmed', classes: 'success', text: 'Confirmed' }, { value:'Error', classes: 'error', text: 'Error' }]});
 
     // Init the grid
     $('#datagrid').datagrid({

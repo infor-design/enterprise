@@ -144,8 +144,8 @@
       };
 
       Formatters.PriceText = function (row, cell, value, col, item, api) {
-        Locale.currentLocale.data.currencySign = '£';
-        var formatted = Locale.formatNumber(value, (col.numberFormat ? col.numberFormat : {style: 'currency'}));
+        Soho.Locale.currentLocale.data.currencySign = '£';
+        var formatted = Soho.Locale.formatNumber(value, (col.numberFormat ? col.numberFormat : {style: 'currency'}));
 
         //Set the href here based on data?
         return '<p><b> Trade: ' + formatted + '</b><br><a href="#" class="hyperlink micro-text">Price Details</a></p>';
@@ -158,15 +158,15 @@
       };
 
       //Define Columns for the Grid.
-      columns.push({ id: 'image', name: '', field: 'image', formatter: Formatters.Image, width: 80, align: 'image'});
-      columns.push({ id: 'productInfo', name: 'Name / Product Code', formatter: Formatters.LinkText, fields: ['productName', 'productDesc', 'productId'], width: 170});
-      // columns.push({ id: 'stock', name: 'Stock', field: 'stock', align: 'center', formatter: Formatters.BadgeDecimal, width: 70});
-      //columns.push({ id: 'stock', name: 'Stock', field: 'stock', align: 'center', formatter: Formatters.Badge, ranges: [{'min': 0, 'max': 200, 'classes': 'good'}], width: 70});
-      // columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 175, formatter: Formatters.Spinbox, inlineEditor: true, editor: Editors.Spinbox});
-      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 175, formatter: Formatters.Input, inlineEditor: true, editor: Editors.Input, mask: '###.###', align: 'right'});
-      columns.push({ id: 'uom', name: 'Unit of Measure', field: 'uom', width: 140, formatter: Formatters.Dropdown, inlineEditor: true, editor: Editors.Dropdown, options: [{id: 'e', value: 'e', label: 'each'}, {id: 'p', value: 'p', label: 'pieces'}, {id: 'm', value: 'm', label: 'meters'}] });
-      columns.push({ id: 'price', name: 'Price (ex VAT)', field: 'price', width: 110, formatter: Formatters.PriceText});
-      columns.push({ id: 'add', name: '', field: '', text: 'Add Product', sortable: false, align: 'center',formatter: Formatters.Button, click: function (e, args) {console.log('Button was clicked', args);}});
+      columns.push({ id: 'image', name: '', field: 'image', formatter: Soho.Formatters.Image, width: 80, align: 'image'});
+      columns.push({ id: 'productInfo', name: 'Name / Product Code', formatter: Soho.Formatters.LinkText, fields: ['productName', 'productDesc', 'productId'], width: 170});
+      // columns.push({ id: 'stock', name: 'Stock', field: 'stock', align: 'center', formatter: Soho.Formatters.BadgeDecimal, width: 70});
+      //columns.push({ id: 'stock', name: 'Stock', field: 'stock', align: 'center', formatter: Soho.Formatters.Badge, ranges: [{'min': 0, 'max': 200, 'classes': 'good'}], width: 70});
+      // columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 175, formatter: Soho.Formatters.Spinbox, inlineEditor: true, editor: Soho.Editors.Spinbox});
+      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 175, formatter: Soho.Formatters.Input, inlineEditor: true, editor: Soho.Editors.Input, mask: '###.###', align: 'right'});
+      columns.push({ id: 'uom', name: 'Unit of Measure', field: 'uom', width: 140, formatter: Soho.Formatters.Dropdown, inlineEditor: true, editor: Soho.Editors.Dropdown, options: [{id: 'e', value: 'e', label: 'each'}, {id: 'p', value: 'p', label: 'pieces'}, {id: 'm', value: 'm', label: 'meters'}] });
+      columns.push({ id: 'price', name: 'Price (ex VAT)', field: 'price', width: 110, formatter: Soho.Formatters.PriceText});
+      columns.push({ id: 'add', name: '', field: '', text: 'Add Product', sortable: false, align: 'center',formatter: Soho.Formatters.Button, click: function (e, args) {console.log('Button was clicked', args);}});
 
       //Init and get the api for the grid
       $('#datagrid').datagrid({

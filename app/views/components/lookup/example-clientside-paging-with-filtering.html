@@ -16,12 +16,12 @@
       var columns = [];
 
       //Define Columns for the Grid.
-      columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, width: 50, formatter: Formatters.SelectionCheckbox, align: 'center'});
+      columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, width: 50, formatter: Soho.Formatters.SelectionCheckbox, align: 'center'});
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', filterType: 'text'});
-      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, filterType: 'text'});
+      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Soho.Formatters.Hyperlink, filterType: 'text'});
       columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', filterType: 'text'});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', filterType: 'integer', filterType: 'integer'});
-      columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal, filterType: 'decimal'});
+      columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Soho.Formatters.Decimal, filterType: 'decimal'});
 
       //Get some data via ajax
       var url = '{{basepath}}api/compressors?pageNum=1&pageSize=1000';

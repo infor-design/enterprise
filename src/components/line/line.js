@@ -54,7 +54,7 @@ const COMPONENT_NAME = 'line';
  * @param {object} [settings.emptyMessage] An empty message will be displayed when there is no chart data.
  * This accepts an object of the form emptyMessage:
  * `{title: 'No Data Available',
- *  info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data',
+ *  info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data-new',
  *  button: {text: 'xxx', click: <function>}
  *  }`
  *  Set this to null for no message or will default to 'No Data Found with an icon.'
@@ -71,7 +71,7 @@ const LINE_DEFAULTS = {
   animate: true,
   redrawOnResize: true,
   fitHeight: true,
-  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' }
+  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data-new' }
 };
 
 function Line(element, settings) {
@@ -323,7 +323,7 @@ Line.prototype = {
 
     const yScale = y.domain([0, d3.max(s.isBubble ||
       s.isScatterPlot ? maxes.y : maxes)]).nice();
-    const zScale = z.domain([0, d3.max(s.isBubble ? maxes.z : maxes)]).nice();
+    const zScale = z.domain([0, d3.max(s.isBubble ? maxes.z : s.isScatterPlot ? maxes.y : maxes)]).nice();
     let numTicks = entries;
     if (s.xAxis && s.xAxis.ticks) {
       numTicks = s.xAxis.ticks === 'auto' ? Math.max(width / 85, 2) : s.xAxis.ticks;
@@ -533,12 +533,12 @@ Line.prototype = {
           const args = [{ elem: [this.parentNode], data: d }];
           self.element.triggerHandler('dblclick', [args]);
         })
-        .on(`contextmenu.${self.namespace}`, function () {
-          charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], d);
+        .on(`contextmenu.${self.namespace}`, function (event) {
+          charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], d, event);
         });
 
       // Add animation
-      const totalLength = path.node().getTotalLength();
+      const totalLength = path.node().getTotalLength ? path.node().getTotalLength() : 0;
       path
         .attr('stroke-dasharray', `${totalLength} ${totalLength}`)
         .attr('stroke-dashoffset', totalLength)
@@ -547,7 +547,7 @@ Line.prototype = {
         .ease(d3.easeCubic)
         .attr('stroke-dashoffset', 0);
 
-      const handleMouseEnter = function (elem, mouseEnterData) {
+      const handleMouseEnter = function (elem, event, mouseEnterData) {
         const rect = elem.getBoundingClientRect();
         let content = `<p><b>${mouseEnterData.name} </b> ${format(mouseEnterData.value)}</p>`;
 
@@ -659,9 +659,9 @@ Line.prototype = {
             .style('cursor', !self.settings.selectable ? 'inherit' : 'pointer')
             .style('fill', function () { return charts.chartColor(lineIdx, 'line', d); })
             .style('opacity', (s.isBubble || s.isScatterPlot ? '.7' : '1'))
-            .on(`mouseenter.${self.namespace}`, function (mouseEnterData) {
+            .on(`mouseenter.${self.namespace}`, function (event, mouseEnterData) {
               mouseEnterData.lineIdx = lineIdx;
-              handleMouseEnter(this, mouseEnterData);
+              handleMouseEnter(this, event, mouseEnterData);
             })
             .on(`mouseleave.${self.namespace}`, function () {
               clearInterval(tooltipInterval);
@@ -674,7 +674,7 @@ Line.prototype = {
             // Click and double click events
             // Use very slight delay to fire off the normal click action
             // It alow to cancel when the double click event happens
-            .on(`click.${self.namespace}`, function (dh) {
+            .on(`click.${self.namespace}`, function (event, dh) {
               const selector = this;
 
               if (self.settings.selectable) {
@@ -687,7 +687,7 @@ Line.prototype = {
                 }, clickStatus.dot.delay);
               }
             })
-            .on(`dblclick.${self.namespace}`, function (dh) {
+            .on(`dblclick.${self.namespace}`, function (event, dh) {
               // const selector = this;
               clearTimeout(clickStatus.dot.timer);
               clickStatus.dot.prevent = true;
@@ -695,8 +695,8 @@ Line.prototype = {
               const args = [{ elem: [this.parentNode], data: dh }];
               self.element.triggerHandler('dblclick', [args]);
             })
-            .on(`contextmenu.${self.namespace}`, function (di) {
-              charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], di);
+            .on(`contextmenu.${self.namespace}`, function (event, di) {
+              charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], di, event);
             });
         }
 
@@ -720,9 +720,9 @@ Line.prototype = {
             .attr('d', d3.symbol().size(dots.strokeWidth).type(function () { return d3.symbols[lineIdx]; }))
             .style('opacity', 0)
             .style('fill', function () { return charts.chartColor(lineIdx, 'line', d); })
-            .on(`mouseenter.${self.namespace}`, function (mouseEnterData) {
+            .on(`mouseenter.${self.namespace}`, function (event, mouseEnterData) {
               mouseEnterData.lineIdx = lineIdx;
-              handleMouseEnter(this, mouseEnterData);
+              handleMouseEnter(this, event, mouseEnterData);
             })
             .on(`mouseleave.${self.namespace}`, function () {
               clearInterval(tooltipInterval);
@@ -735,7 +735,7 @@ Line.prototype = {
             // Click and double click events
             // Use very slight delay to fire off the normal click action
             // It alow to cancel when the double click event happens
-            .on(`click.${self.namespace}`, function (dh) {
+            .on(`click.${self.namespace}`, function (event, dh) {
               const selector = this;
 
               if (self.settings.selectable) {
@@ -748,7 +748,7 @@ Line.prototype = {
                 }, clickStatus.symbol.delay);
               }
             })
-            .on(`dblclick.${self.namespace}`, function (dh) {
+            .on(`dblclick.${self.namespace}`, function (event, dh) {
               // const selector = this;
               clearTimeout(clickStatus.symbol.timer);
               clickStatus.symbol.prevent = true;
@@ -756,8 +756,8 @@ Line.prototype = {
               const args = [{ elem: [this.parentNode], data: dh }];
               self.element.triggerHandler('dblclick', [args]);
             })
-            .on(`contextmenu.${self.namespace}`, function (di) {
-              charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], di);
+            .on(`contextmenu.${self.namespace}`, function (event, di) {
+              charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], di, event);
             });
         }
         if (s.isBubble) {
@@ -953,8 +953,8 @@ Line.prototype = {
       arrow: { left: this.isRTL ? 'calc(100% - 20px)' : '20px' }
     });
 
-    yAxis.width = yAxis.el.getBBox().width;
-    line.width = line.el ? line.el.getBBox().width : 0;
+    yAxis.width = yAxis.el.getBBox ? yAxis.el.getBBox().width : 0;
+    line.width = line.el && line.el.getBBox ? line.el.getBBox().width : 0;
     brief.xDiff = yAxis.width - line.width;
 
     if (!this.settings.selectable) {
@@ -1014,8 +1014,8 @@ Line.prototype = {
 
     if (!isLeftAxis) {
       // Reasign values, could be truncation applied
-      yAxis.width = yAxis.el.getBBox().width;
-      line.width = line.el ? line.el.getBBox().width : 0;
+      yAxis.width = yAxis.el.getBBox ? yAxis.el.getBBox().width : 0;
+      line.width = line.el && line.el.getBBox ? line.el.getBBox().width : 0;
       brief.xDiff = yAxis.width - line.width;
       const variations = [
         { min: 0, max: 23, val: 62 },

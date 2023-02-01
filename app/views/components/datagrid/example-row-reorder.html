@@ -12,9 +12,9 @@
 
       //Define Columns for the Grid.
 
-      columns.push({ id: 'rowReorder', name: '', field: 'id', align: 'center', sortable: false, formatter: Formatters.RowReorder});
+      columns.push({ id: 'rowReorder', name: '', field: 'id', align: 'center', sortable: false, formatter: Soho.Formatters.RowReorder});
       columns.push({ id: 'id', name: 'Id', field: 'id', sortable: false});
-      columns.push({ id: 'taskName', name: 'Task Name', sortable: false, field: 'taskName',formatter: Formatters.Hyperlink});
+      columns.push({ id: 'taskName', name: 'Task Name', sortable: false, field: 'taskName',formatter: Soho.Formatters.Hyperlink});
       columns.push({ id: 'desc', name: 'Description', sortable: false, field: 'desc'});
       columns.push({ id: 'comments', name: 'Comments', sortable: false, field: 'comments'});
       columns.push({ id: 'escalated', name: 'Status', sortable: false, field: 'escalated'});

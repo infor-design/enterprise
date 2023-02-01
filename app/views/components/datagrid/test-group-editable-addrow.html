@@ -73,13 +73,13 @@ $('body').one('initialized', function () {
   var data2 = [];
 
   // Define Columns for the Grid.
-  columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center' });
-  columns.push({ id: 'id', name: 'Customer Id', field: 'id', formatter: Formatters.Readonly });
-  columns.push({ id: 'type', name: 'Type', field: 'type', formatter: Formatters.Readonly });
-  columns.push({ id: 'name', name: 'Name', field: 'name', editor: Editors.Input });
-  columns.push({ id: 'location', name: 'Location', field: 'location', formatter: Formatters.Hyperlink, editor: Editors.Input });
-  columns.push({ id: 'phone', name: 'Phone', field: 'phone', editor: Editors.Input });
-  columns.push({ id: 'purchases', name: 'Purchases', field: 'purchases', editor: Editors.Input, mask: '#####' });
+  columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center' });
+  columns.push({ id: 'id', name: 'Customer Id', field: 'id', formatter: Soho.Formatters.Readonly });
+  columns.push({ id: 'type', name: 'Type', field: 'type', formatter: Soho.Formatters.Readonly });
+  columns.push({ id: 'name', name: 'Name', field: 'name', editor: Soho.Editors.Input });
+  columns.push({ id: 'location', name: 'Location', field: 'location', formatter: Soho.Formatters.Hyperlink, editor: Soho.Editors.Input });
+  columns.push({ id: 'phone', name: 'Phone', field: 'phone', editor: Soho.Editors.Input });
+  columns.push({ id: 'purchases', name: 'Purchases', field: 'purchases', editor: Soho.Editors.Input, mask: '#####' });
 
   // Some Sample Data
   data.push({ id: 1, type: 'Hardware Customer', name: 'Abbott Ltd.', location: 'CA, USA', phone: '(312) 555-7854', purchases: 1200 });

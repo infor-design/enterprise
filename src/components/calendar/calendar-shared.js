@@ -49,7 +49,8 @@ calendarShared.addCalculatedFields = function addCalculatedFields(event, locale,
   const eventStart = new Date(event.starts);
   const eventStartUTC = Date.UTC(
     eventStart.getUTCFullYear(),
-    eventStart.getUTCMonth(), eventStart.getUTCDate()
+    eventStart.getUTCMonth(),
+    eventStart.getUTCDate()
   );
 
   const eventStartFormatted = `${eventStart.getDate()}-${eventStart.getMonth() + 1}-${eventStart.getFullYear()}`;

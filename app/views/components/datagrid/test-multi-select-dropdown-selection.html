@@ -168,34 +168,34 @@
     });
 
     //Define Columns for the Grid.
-    // columns.push({ id: 'rowStatus', sortable: false, resizable: false, formatter: Formatters.Status, align: 'center'});
+    // columns.push({ id: 'rowStatus', sortable: false, resizable: false, formatter: Soho.Formatters.Status, align: 'center'});
     columns.push({
       id: 'selectionCheckbox',
       sortable: false,
       resizable: false,
-      formatter: Formatters.SelectionCheckbox,
+      formatter: Soho.Formatters.SelectionCheckbox,
       align: 'center'
     });
     columns.push({
       id: 'id',
       name: 'Row Id',
       field: 'id',
-      formatter: Formatters.Readonly
+      formatter: Soho.Formatters.Readonly
     });
     columns.push({
       id: 'productName',
       name: 'Product Name',
       sortable: false,
       field: 'productName',
-      formatter: Formatters.Hyperlink,
-      editor: Editors.Input
+      formatter: Soho.Formatters.Hyperlink,
+      editor: Soho.Editors.Input
     });
     columns.push({
       id: 'activity',
       name: 'Activity',
       field: 'activity',
       required: true,
-      editor: Editors.Input,
+      editor: Soho.Editors.Input,
       validate: 'required'
     }); //maxLength: 2
     columns.push({
@@ -203,7 +203,7 @@
       name: 'Quantity',
       field: 'quantity',
       align: 'right',
-      editor: Editors.Input,
+      editor: Soho.Editors.Input,
       mask: '###',
       isEditable: isDisabled
     });
@@ -212,28 +212,28 @@
       name: 'Portable',
       field: 'portable',
       align: 'center',
-      formatter: Formatters.Checkbox,
-      editor: Editors.Checkbox
+      formatter: Soho.Formatters.Checkbox,
+      editor: Soho.Editors.Checkbox
     });
     columns.push({
       id: 'price',
       name: 'Price',
       field: 'price',
       align: 'right',
-      formatter: Formatters.Decimal,
+      formatter: Soho.Formatters.Decimal,
       validate: 'required',
       numberFormat: {
         minimumFractionDigits: 3,
         maximumFractionDigits: 3
       },
-      editor: Editors.Input
+      editor: Soho.Editors.Input
     });
     columns.push({
       id: 'orderDate',
       name: 'Order Date',
       field: 'orderDate',
-      formatter: Formatters.Date,
-      editor: Editors.Date,
+      formatter: Soho.Formatters.Date,
+      editor: Soho.Editors.Date,
       editorOptions: {
         showLegend: true,
         legend: [{
@@ -261,8 +261,8 @@
       id: "multiDropDown",
       name: "Multiple Selection",
       field: "multiDropDown",
-      formatter: Formatters.MultiSelect,
-      editor: Editors.MultiSelect,
+      formatter: Soho.Formatters.MultiSelect,
+      editor: Soho.Editors.MultiSelect,
       editorOptions: {
         multiple: true,
         closeOnSelect: false,

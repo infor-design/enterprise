@@ -19,23 +19,29 @@
 // -------------------------------------
 //   Node Modules/Options
 // -------------------------------------
-const archiver = require('archiver');
-const chalk = require('chalk');
-const del = require('del');
-const documentation = require('documentation');
-const frontMatter = require('front-matter');
-const fs = require('fs');
-const glob = require('glob');
-const handlebars = require('handlebars');
-const hbsRegistrar = require('handlebars-registrar');
-const marked = require('marked');
-const path = require('path');
-const slash = require('slash');
-const yaml = require('js-yaml');
-const hljs = require('highlight.js');
-const FormData = require('form-data');
+import archiver from 'archiver';
+import { build, formats } from 'documentation';
+import frontMatter from 'front-matter';
+import * as fs from 'fs';
+import glob from 'glob';
+import handlebars from 'handlebars';
+import hbsRegistrar from 'handlebars-wax';
+import { marked, setOptions } from 'marked';
+import * as path from 'path';
+import slash from 'slash';
+import yaml from 'js-yaml';
+import hljs from 'highlight.js';
+import FormData from 'form-data';
+import _yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
 
-const argv = require('yargs')
+// Local
+import swlog from './helpers/stopwatch-log.js';
+import getJSONFile from '../app/src/js/get-json-file.js';
+
+const yargs = _yargs(hideBin(process.argv));
+
+const argv = await yargs
   .usage('Usage $node ./scripts/deploy-documentation.js [-s] [-d] [-T]')
   .option('site', {
     alias: 's',
@@ -56,10 +62,8 @@ const argv = require('yargs')
   .alias('h', 'help')
   .argv;
 
-const swlog = require('./helpers/stopwatch-log');
-
 // Set Marked options
-marked.setOptions({
+setOptions({
   gfm: true,
   highlight: (code, lang, callback) => {
     const language = hljs.getLanguage(lang) ? lang : 'html';
@@ -108,7 +112,8 @@ const serverURIs = {
   prod: 'https://design.infor.com/api/docs/',
   dev: 'https://dev.design.infor.com/api/docs/'
 };
-const packageJson = require(`${rootPath}/package.json`);
+
+const packageJson = getJSONFile('../../../package.json');
 const testComponents = [
   'button',
   'datagrid'
@@ -141,7 +146,7 @@ hbsRegistrar(handlebars, {
 const opStart = swlog.logTaskStart(`deploying ${packageJson.version}`);
 
 if (argv.testMode) {
-  console.log(chalk.bgGreen.bold('\n!! TEST MODE !!'));
+  console.log('\n!! TEST MODE !!');
 }
 
 if (argv.site && Object.keys(serverURIs).includes(argv.site)) {
@@ -151,7 +156,7 @@ if (argv.site && Object.keys(serverURIs).includes(argv.site)) {
 // Failsafe to prevent accidentally uploading dev/beta/rc documentation to
 // production as those semver's will have a dash in them (-dev, -beta, -rc)
 if (packageJson.version.includes('-') && deployTo === 'prod') {
-  console.error(chalk.red('Error!'), 'You can NOT deploy documentation for a non-final version to "prod".');
+  console.error('Error', 'You can NOT deploy documentation for a non-final version to "prod".');
   process.exit(0);
 }
 
@@ -218,7 +223,7 @@ function compileComponents() {
         }
 
         if (!documentationExists(compName)) {
-          swlog.logTaskAction('Skipping', compName, 'yellow');
+          swlog.logTaskAction('Skipping', compName);
           componentStats.numSkipped++;
           return;
         }
@@ -341,7 +346,10 @@ async function cleanAll() {
   }
 
   try {
-    await del(filesToDel);
+    // eslint-disable-next-line no-restricted-syntax
+    for (const file of filesToDel) {
+      if (fs.existsSync(file)) fs.unlinkSync(file);
+    }
     await createDirs([
       paths.idsWebsite.root,
       paths.idsWebsite.dist,
@@ -351,7 +359,7 @@ async function cleanAll() {
     ]);
     swlog.logTaskEnd(cleanStart);
   } catch (err) {
-    console.error(chalk.red('Error!'), err);
+    console.error('Error', err);
   }
 }
 
@@ -421,10 +429,9 @@ function documentJsToHtml(componentName) {
   const compFilePath = `${paths.components}/${componentName}/${componentName}.js`;
   const themeName = 'theme-ids-website';
 
-  return documentation
-    .build([compFilePath], { extension: 'js', shallow: true })
+  return build([compFilePath], { extension: 'js', shallow: true })
     .then(comments => {
-      return documentation.formats.html(comments, { theme: `${paths.templates.docjs}/${themeName}` });
+      return formats.html(comments, { theme: `${paths.templates.docjs}/${themeName}/index.js` });
     })
     .then(res => {
       res.map(async file => {
@@ -460,12 +467,12 @@ function postZippedBundle() {
     swlog.logTaskEnd(publishStart);
     if (err) {
       console.error(err);
-      swlog.logTaskAction('Failed!', `Status ${err}`, 'red');
+      swlog.logTaskAction('Failed!', `Status ${err}`);
     } else {
       if (res.statusCode === 200) {
         swlog.logTaskAction('Success', `to "${serverURIs[deployTo]}"`);
       } else {
-        swlog.logTaskAction('Failed!', `Status ${res.statusCode}: ${res.statusMessage}`, 'red');
+        swlog.logTaskAction('Failed!', `Status ${res.statusCode}: ${res.statusMessage}`);
       }
       res.resume();
       numArchivesSent++;
@@ -480,7 +487,7 @@ function postZippedBundle() {
  */
 function readSitemapYaml() {
   let sitemap = {};
-  sitemap = yaml.safeLoad(fs.readFileSync(`${paths.docs}/sitemap.yml`, 'utf8'));
+  sitemap = yaml.load(fs.readFileSync(`${paths.docs}/sitemap.yml`, 'utf8'));
   return sitemap;
 }
 
@@ -500,14 +507,14 @@ function statsConclusion() {
   swlog.logTaskEnd(opStart);
   // did not use multiline string for formatting reasons
   let str = '';
-  str += `\nComponents ${chalk.green('converted')}:  ${componentStats.numConverted}/${componentStats.total}`;
-  str += `\nComponents ${chalk.green('documented')}: ${componentStats.numDocumented}/${componentStats.total}`;
-  str += `\nComponents ${chalk.yellow('skipped')}:    ${componentStats.numSkipped}/${componentStats.total}`;
-  str += `\nComponents ${chalk.green('written')}:    ${componentStats.numWritten}/${componentStats.total}`;
+  str += `\nComponents ${'converted'}:  ${componentStats.numConverted}/${componentStats.total}`;
+  str += `\nComponents ${'documented'}: ${componentStats.numDocumented}/${componentStats.total}`;
+  str += `\nComponents ${'skipped'}:    ${componentStats.numSkipped}/${componentStats.total}`;
+  str += `\nComponents ${'written'}:    ${componentStats.numWritten}/${componentStats.total}`;
   if (numArchivesSent === 0) {
-    str += `\n\nBundles ${chalk.red('deployed')}: ${numArchivesSent}/1`;
+    str += `\n\nBundles ${'deployed'}: ${numArchivesSent}/1`;
   } else {
-    str += `\n\nBundles ${chalk.green('deployed')}: ${numArchivesSent}/1`;
+    str += `\n\nBundles ${'deployed'}: ${numArchivesSent}/1`;
   }
   str += '\n';
   console.log(str);
@@ -539,7 +546,7 @@ function writeHtmlFile(hbsTemplate, componentName) {
       if (err) {
         reject(err);
       } else {
-        swlog.logTaskAction('Created', `${dest.replace(process.cwd(), '')}`);
+        swlog.logTaskAction('Created', `${dest.replace(process.cwd())}`);
         resolve();
       }
     });
@@ -561,7 +568,7 @@ function writeJsonFile(componentName) {
         reject(err);
       } else {
         componentStats.numWritten++;
-        swlog.logTaskAction('Created', dest.replace(process.cwd(), ''));
+        swlog.logTaskAction('Created', dest.replace(process.cwd()));
         resolve();
       }
     });
@@ -626,7 +633,7 @@ function zipAndDeploy() {
     swlog.logTaskEnd(zipStart);
 
     if (argv.dryRun) {
-      console.log(chalk.bgRed.bold('\n!! NO PUBLISH - DRY RUN !!\n'));
+      console.log('\n!! NO PUBLISH - DRY RUN !!\n');
       statsConclusion();
     } else {
       postZippedBundle();

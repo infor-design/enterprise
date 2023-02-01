@@ -1035,8 +1035,17 @@ MonthView.prototype = {
 
       self.setDisabled(th, rangeCurrentYear, rangeCurrentMonth, dayCnt);
       self.setLegendColor(th, rangeCurrentYear, rangeCurrentMonth, dayCnt);
-      self.setMonthLabel(th, rangeCurrentYear, rangeCurrentMonth, dayCnt,
-        monthLabelsToSet, s.displayRange.months?.showAbbr);
+      self.setMonthLabel(
+        th,
+        rangeCurrentYear,
+
+        rangeCurrentMonth,
+
+        dayCnt,
+        monthLabelsToSet,
+
+        s.displayRange.months?.showAbbr
+      );
       th.attr('role', 'link');
       dayCnt++;
     });
@@ -1684,7 +1693,7 @@ MonthView.prototype = {
     }
     const e = evt.touches ? evt.touches[0] : evt;
     const r = el.getBoundingClientRect();
-    const d = Math.sqrt(Math.pow(r.width, 2) + Math.pow(r.height, 2)) * 2;
+    const d = Math.sqrt(r.width ** 2 + r.height ** 2) * 2;
     const x = e.clientX ? (e.clientX - r.left) : (el.offsetWidth / 2);
     const y = e.clientY ? (e.clientY - r.top) : (el.offsetHeight / 2);
     const orig = el.style.cssText;
@@ -2795,9 +2804,9 @@ MonthView.prototype = {
    * @private
    */
   teardown() {
-    this.header.off();
-    this.days.off();
-    this.element.off();
+    this.header?.off();
+    this.days?.off();
+    this.element?.off();
     if (this.monthYearPane) {
       this.monthYearPane.off();
       this.monthYearPane = null;

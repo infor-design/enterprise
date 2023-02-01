@@ -5,18 +5,21 @@
  * When a build is finished, this script double-checks the output in the `/dist`
  * folder to ensure that all expected files are present.
  */
+import * as fs from 'fs';
+import glob from 'glob';
+import * as path from 'path';
+import slash from 'slash';
+import { hideBin } from 'yargs/helpers';
+import _yargs from 'yargs';
 
-// -------------------------------------
-// Requirements
-// -------------------------------------
-const chalk = require('chalk');
-const fs = require('fs');
-const glob = require('glob');
-const path = require('path');
-const slash = require('slash');
+// Locals
+import createDirs from './build/create-dirs.js';
+import logger from './logger.js';
+import writeFile from './build/write-file.js';
 
-// Argv
-const commandLineArgs = require('yargs')
+const yargs = _yargs(hideBin(process.argv));
+
+const argv = await yargs
   .usage('Usage: $node ./scripts/verify.js [-v] [-r]')
   .option('verbose', {
     alias: 'v',
@@ -31,11 +34,6 @@ const commandLineArgs = require('yargs')
   .help('h')
   .alias('h', 'help')
   .argv;
-
-// Locals
-const createDirs = require('./build/create-dirs');
-const logger = require('./logger');
-const writeFile = require('./build/write-file');
 
 // Lists
 const rootPath = slash(process.cwd());
@@ -66,8 +64,8 @@ function isDirectory(filePath) {
 // Main
 // -------------------------------------
 
-if (commandLineArgs.rebuild) {
-  logger('info', `Creating a new ${chalk.yellow('expected-files.json')} list...`);
+if (argv.rebuild) {
+  logger('info', `Creating a new ${'expected-files.json'} list...`);
 } else {
   logger('info', 'Verifying the last build...');
 }
@@ -79,8 +77,8 @@ let expectedFiles;
 try {
   expectedFiles = JSON.parse(fs.readFileSync(expectedFilesListPath, 'utf8'));
 } catch (err) {
-  if (!commandLineArgs.rebuild) {
-    logger('error', `No files list available at "${chalk.yellow(expectedFilesListPath)}".`);
+  if (!argv.rebuild) {
+    logger('error', `No files list available at "${expectedFilesListPath}".`);
     logger('padded', 'Please re-run this script with the "--rebuild" flag to generate agaist the current distributable.');
     process.exit(1);
   }
@@ -106,18 +104,18 @@ glob(`${paths.dist}/**/*`, globOptions, (err, files) => {
   });
 
   // Log Folders
-  logger('padded', `${chalk.cyan(`folders: ${chalk.bold(foundFolders.length)}`)}`);
+  logger('padded', `${`folders: ${foundFolders.length}`}`);
 
   // Log Files
-  logger('padded', `${chalk.cyan(`files: ${chalk.bold(foundFiles.length)}`)}`);
-  if (commandLineArgs.verbose) {
+  logger('padded', `${`files: ${foundFiles.length}`}`);
+  if (argv.verbose) {
     foundFiles.forEach((file) => {
       logger('padded', `${file}`);
     });
   }
 
   // Save a new list, if applicable
-  if (commandLineArgs.rebuild) {
+  if (argv.rebuild) {
     // Write all files to a... file...
     const filesListTxt = JSON.stringify(foundFiles, null, '\t');
 
@@ -130,7 +128,7 @@ glob(`${paths.dist}/**/*`, globOptions, (err, files) => {
 
     // Save new file
     writeFile(outputPath, filesListTxt).then(() => {
-      logger('beer', `New file list saved to "${chalk.yellow(outputPath)}"`);
+      logger('beer', `New file list saved to "${outputPath}"`);
       process.exit(0);
     });
     return;
@@ -141,13 +139,13 @@ glob(`${paths.dist}/**/*`, globOptions, (err, files) => {
 
   // If files are missing, print each of them and exit.
   if (missingFiles.length) {
-    logger('error', `${chalk.red.bold(`(${missingFiles.length})`)} expected files are missing from the last build:`);
+    logger('error', `${`(${missingFiles.length})`} expected files are missing from the last build:`);
     missingFiles.forEach((file) => {
-      logger('padded', `${chalk.red(file)}`);
+      logger('padded', `${file}`);
     });
     process.exit(1);
   }
 
-  logger('beer', `All ${chalk.green.bold(`(${expectedFiles.length})`)} expected files have been found!`);
+  logger('beer', `All ${`(${expectedFiles.length})`} expected files have been found!`);
   process.exit(0);
 });

@@ -210,7 +210,7 @@
       }
     };
 
-    var thisLocale = Locale.currentLocale,
+    var thisLocale = Soho.Locale.currentLocale,
       localeString = thisLocale.name,
       isLocalized = localeString !== 'en-US'; // default for the test suite
 
@@ -265,8 +265,8 @@
         }
 
         // Get all locale-formatted values
-        var number = Locale.parseNumber(preparedLabelText, localizedLabelOpts);
-        var formattedSpanText = Locale.formatNumber(number, localizedLabelOpts);
+        var number = Soho.Locale.parseNumber(preparedLabelText, localizedLabelOpts);
+        var formattedSpanText = Soho.Locale.formatNumber(number, localizedLabelOpts);
         var placeholderText = formattedSpanText.replace(/\d/g, '#');
 
         // Put them back in

@@ -1,5 +1,5 @@
 // Used for Builder Pattern Example
-module.exports = (req, res) => {
+export default function csOrders(req, res) {
   const companies = [
     { id: 1, orderId: '4231212-3', items: 0, companyName: 'John Smith Construction', total: '$0.00' },
     { id: 2, orderId: '1092212-3', items: 4, companyName: 'Top Grade Construction', total: '$10,000.00' },
@@ -13,4 +13,4 @@ module.exports = (req, res) => {
 
   res.setHeader('Content-Type', 'application/json');
   res.end(JSON.stringify(companies));
-};
+}

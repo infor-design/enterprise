@@ -362,7 +362,7 @@ ExpandableArea.prototype = {
       .removeAttr('aria-expanded');
 
     this.header.children('a').off();
-    this.header.off();
+    this.header?.off();
     this.header
       .removeAttr('id');
     this.content.removeAttr('id').removeClass('no-transition');

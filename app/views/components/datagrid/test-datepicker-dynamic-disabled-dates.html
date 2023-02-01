@@ -25,7 +25,7 @@
 
   $('body').one('initialized', function () {
 
-    Locale.set('en-US').done(function () {
+    Soho.Locale.set('en-US').done(function () {
         var grid,
           data = [],
           columns = [];
@@ -40,9 +40,9 @@
         data.push({ id: 7, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', portable: true, quantity: 41, price: 123.99, status: 'OK', state:'Idaho', orderDate: new Date(2018, 4, 9), action: 'oh'});
 
         //Define Columns for the Grid.
-        columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center', width: 65});
+        columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center', width: 65});
         columns.push({ id: 'productId', name: 'ProductId Id ', field: 'productId'});
-        columns.push({ id: 'orderDate', name: 'Order Date Disabled', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date, filterType: 'date', width: 200, validate: 'availableDate required date', editorOptions: {disable: {'dates': ['5/9/2018', '5/10/2018'], 'dayOfWeek': [0,6]}} });
+        columns.push({ id: 'orderDate', name: 'Order Date Disabled', field: 'orderDate', formatter: Soho.Formatters.Date, editor: Soho.Editors.Date, filterType: 'date', width: 200, validate: 'availableDate required date', editorOptions: {disable: {'dates': ['5/9/2018', '5/10/2018'], 'dayOfWeek': [0,6]}} });
         columns.push({ id: 'productName', name: 'Product Name', field: 'productName', filterType: 'text'});
 
         //Init and get the api for the grid

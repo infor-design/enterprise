@@ -28,11 +28,12 @@ breakpoints.available = availableBreakpoints;
  * @returns {string} name of the current breakpoint
  */
 breakpoints.current = function () {
+  if (!window.getComputedStyle) return '';
   const afterElement = window.getComputedStyle ? window.getComputedStyle(document.body, ':after') : false;
   if (!afterElement) {
     return '';
   }
-  return (afterElement.getPropertyValue('content') || '').replace(/"/g, '');
+  return (afterElement.getPropertyValue ? afterElement.getPropertyValue('content') : '' || '').replace(/"/g, '');
 };
 
 /**

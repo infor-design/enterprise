@@ -28,9 +28,9 @@
       //Define Columns for the Grid.
       columns.push({ id: 'percent1', name: 'Value', field: 'value', width: 150, filterType: 'text', filterDisabled: true });
 
-      columns.push({ id: 'percent2', name: 'Integer', field: 'value', align: 'right', formatter: Formatters.Integer, numberFormat: {style: "percent"}, editor: Editors.Input, mask: '-####', maskMode: 'number', filterType: 'percent'});
+      columns.push({ id: 'percent2', name: 'Integer', field: 'value', align: 'right', formatter: Soho.Formatters.Integer, numberFormat: {style: "percent"}, editor: Soho.Editors.Input, mask: '-####', maskMode: 'number', filterType: 'percent'});
 
-      columns.push({ id: 'percent3', name: 'Decimal', field: 'value', align: 'right', formatter: Formatters.Decimal, numberFormat: {style: "percent", minimumFractionDigits: 1}, editor: Editors.Input, mask: '-####.00', maskMode: 'number', filterType: 'percent'});
+      columns.push({ id: 'percent3', name: 'Decimal', field: 'value', align: 'right', formatter: Soho.Formatters.Decimal, numberFormat: {style: "percent", minimumFractionDigits: 1}, editor: Soho.Editors.Input, mask: '-####.00', maskMode: 'number', filterType: 'percent'});
 
 
       //Init and get the api for the grid

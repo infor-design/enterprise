@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { keyboard } from '../../utils/keyboard';

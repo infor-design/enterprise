@@ -15,7 +15,7 @@
 
     // Change locale to ar-SA which has the default calendar as umalqura (Hijri)
     // But use the optional gregorian calendar in that locale instead
-    Locale.set('ar-SA').done(function () {
+    Soho.Locale.set('ar-SA').done(function () {
       $('#islamic-date').datepicker({calendarName: 'gregorian'}).on('change', function () {
         $('body').toast({
           'title': 'Change Event Fired',

@@ -8,10 +8,10 @@
     $.getJSON('{{basepath}}api/tree-tasks', function(data) {
       $('#datagrid').datagrid({
         columns: [
-          { id: 'taskName', name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Formatters.Tree },
+          { id: 'taskName', name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Soho.Formatters.Tree },
           { id: 'desc', name: 'Description', field: 'desc' },
-          { id: 'comments', name: 'Comments', field: 'comments', formatter: Formatters.Hyperlink },
-          { id: 'secured', name: 'Secured', field: 'secured', formatter: Formatters.Checkbox, editor: Editors.Checkbox }
+          { id: 'comments', name: 'Comments', field: 'comments', formatter: Soho.Formatters.Hyperlink },
+          { id: 'secured', name: 'Secured', field: 'secured', formatter: Soho.Formatters.Checkbox, editor: Soho.Editors.Checkbox }
         ],
         dataset: data.map(function(row) {
           row.layoutlock = true;

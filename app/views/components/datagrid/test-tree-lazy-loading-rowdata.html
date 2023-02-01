@@ -31,10 +31,10 @@
 
 
     //Define Columns for the Grid.
-    columns.push({ id: 'taskName', name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Formatters.Tree, width: 250});
+    columns.push({ id: 'taskName', name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Soho.Formatters.Tree, width: 250});
     columns.push({ id: 'id', name: 'Id', field: 'id', width: 25});
-    columns.push({ id: 'desc', name: 'Description', field: 'desc', width: 200, editor: Editors.Input});
-    columns.push({ id: 'comments', name: 'Comments', field: 'comments',  formatter: Formatters.Hyperlink, width: 60});
+    columns.push({ id: 'desc', name: 'Description', field: 'desc', width: 200, editor: Soho.Editors.Input});
+    columns.push({ id: 'comments', name: 'Comments', field: 'comments',  formatter: Soho.Formatters.Hyperlink, width: 60});
     columns.push({ id: 'time', name: 'Time', field: 'time', width: 60});
 
     $('#datagrid').datagrid({

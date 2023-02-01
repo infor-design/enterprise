@@ -43,7 +43,7 @@
 
   $('body').one('initialized', function () {
 
-    Locale.set('en-US').done(function () {
+    Soho.Locale.set('en-US').done(function () {
         var grid,
           columns = [],
           data = [];
@@ -58,10 +58,10 @@
         data.push({ id: 6, productId: 2642206});
 
         //Define Columns for the Grid.
-        columns.push({ id: 'productId0', name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Text});
-        columns.push({ id: 'productId1', name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Text});
-        columns.push({ id: 'productId2', name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Text});
-        columns.push({ id: 'productId3', name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Text});
+        columns.push({ id: 'productId0', name: 'Product Id', field: 'productId', width: 140, formatter: Soho.Formatters.Text});
+        columns.push({ id: 'productId1', name: 'Product Id', field: 'productId', width: 140, formatter: Soho.Formatters.Text});
+        columns.push({ id: 'productId2', name: 'Product Id', field: 'productId', width: 140, formatter: Soho.Formatters.Text});
+        columns.push({ id: 'productId3', name: 'Product Id', field: 'productId', width: 140, formatter: Soho.Formatters.Text});
 
         //Init and get the api for the grid
         grid = $('#datagrid').datagrid({

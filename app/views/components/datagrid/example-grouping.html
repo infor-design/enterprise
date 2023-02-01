@@ -41,12 +41,12 @@
         data = [];
 
       //Define Columns for the Grid.
-      columns.push({ id: 'drilldown', name: '', field: '', resizable: false, formatter: Formatters.Drilldown, click: function(e, args) {
+      columns.push({ id: 'drilldown', name: '', field: '', resizable: false, formatter: Soho.Formatters.Drilldown, click: function(e, args) {
         console.log('Drilldown ', args[0]);
       }, align: 'center', sortable: false});
       columns.push({ id: 'id', name: 'Customer Id', field: 'id'});
       columns.push({ id: 'type', name: 'Type', field: 'type'});
-      columns.push({ id: 'location', name: 'Location', field: 'location', formatter: Formatters.Hyperlink});
+      columns.push({ id: 'location', name: 'Location', field: 'location', formatter: Soho.Formatters.Hyperlink});
       columns.push({ id: 'firstname', name: 'First Name', field: 'firstname'});
       columns.push({ id: 'lastname', name: 'Last Name', field: 'lastname'});
       columns.push({ id: 'phone', name: 'Phone', field: 'phone'});

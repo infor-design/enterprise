@@ -14,13 +14,13 @@
       //Define Columns for the Grid.
       columns.push({ id: 'activity', name: 'Activity', field: 'activity'});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
-      columns.push({ id: 'price1', name: 'Price', field: 'price', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input, mask: '####,00'});
-      columns.push({ id: 'price2', name: 'Price ($)', field: 'price', formatter: Formatters.Decimal, numberFormat: {style: 'currency'}});
-      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', formatter: Formatters.Decimal, numberFormat: {style: 'percent'}});
-      columns.push({ id: 'quantity', name: 'Integer', field: 'quantity', formatter: Formatters.Integer});
-      columns.push({ id: 'quantity', name: 'Decimal', field: 'quantity', formatter: Formatters.Decimal});
-      columns.push({ id: 'quantity', name: 'Decimal (NL)', field: 'quantityStr', formatter: Formatters.Decimal});
-      columns.push({ id: 'quantity', name: 'Change Group', field: 'quantityStr', formatter: Formatters.Decimal, numberFormat: { decimal: ',', group: '.'}, mask: '#.###,00' , editor: Editors.Input});
+      columns.push({ id: 'price1', name: 'Price', field: 'price', formatter: Soho.Formatters.Decimal, numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Soho.Editors.Input, mask: '####,00'});
+      columns.push({ id: 'price2', name: 'Price ($)', field: 'price', formatter: Soho.Formatters.Decimal, numberFormat: {style: 'currency'}});
+      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', formatter: Soho.Formatters.Decimal, numberFormat: {style: 'percent'}});
+      columns.push({ id: 'quantity', name: 'Integer', field: 'quantity', formatter: Soho.Formatters.Integer});
+      columns.push({ id: 'quantity', name: 'Decimal', field: 'quantity', formatter: Soho.Formatters.Decimal});
+      columns.push({ id: 'quantity', name: 'Decimal (NL)', field: 'quantityStr', formatter: Soho.Formatters.Decimal});
+      columns.push({ id: 'quantity', name: 'Change Group', field: 'quantityStr', formatter: Soho.Formatters.Decimal, numberFormat: { decimal: ',', group: '.'}, mask: '#.###,00' , editor: Soho.Editors.Input});
 
       //Init and get the api for the grid
       grid = $('#datagrid').datagrid({
@@ -36,13 +36,13 @@
           var clone = JSON.parse(JSON.stringify(data.data));;
           clone[0].quantity = 145000;
           clone[1].quantity = 283423;
-          clone[0].quantityStr = '100' + Locale.currentLocale.data.numbers.decimal + '00';
-          clone[1].quantityStr = '836' + Locale.currentLocale.data.numbers.decimal + '45';
-          clone[2].quantityStr = '1200' + Locale.currentLocale.data.numbers.decimal + '12';
-          clone[3].quantityStr = '1' + Locale.currentLocale.data.numbers.group + '200' + Locale.currentLocale.data.numbers.decimal + '12';
-          clone[4].quantityStr = '10' + Locale.currentLocale.data.numbers.decimal + '99';
-          clone[5].quantityStr = '130300' + Locale.currentLocale.data.numbers.decimal + '00';
-          clone[6].quantityStr = '130' + Locale.currentLocale.data.numbers.group + '300' + Locale.currentLocale.data.numbers.decimal + '00';
+          clone[0].quantityStr = '100' + Soho.Locale.currentLocale.data.numbers.decimal + '00';
+          clone[1].quantityStr = '836' + Soho.Locale.currentLocale.data.numbers.decimal + '45';
+          clone[2].quantityStr = '1200' + Soho.Locale.currentLocale.data.numbers.decimal + '12';
+          clone[3].quantityStr = '1' + Soho.Locale.currentLocale.data.numbers.group + '200' + Soho.Locale.currentLocale.data.numbers.decimal + '12';
+          clone[4].quantityStr = '10' + Soho.Locale.currentLocale.data.numbers.decimal + '99';
+          clone[5].quantityStr = '130300' + Soho.Locale.currentLocale.data.numbers.decimal + '00';
+          clone[6].quantityStr = '130' + Soho.Locale.currentLocale.data.numbers.group + '300' + Soho.Locale.currentLocale.data.numbers.decimal + '00';
 
           data.data.splice(0, 0, clone[0], clone[1], clone[2], clone[3], clone[4], clone[5], clone[6]);
         }

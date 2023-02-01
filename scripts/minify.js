@@ -7,10 +7,12 @@
 // -------------------------------------
 // Requirements
 // -------------------------------------
-const commandLineArgs = require('yargs').argv;
+import _yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
+import logger from './logger.js';
+import runBuildProcess from './build/run-build-process.js';
 
-const logger = require('./logger');
-const runBuildProcess = require('./build/run-build-process');
+const argv = _yargs(hideBin(process.argv)).argv;
 
 // -------------------------------------
 // Main
@@ -19,7 +21,7 @@ const runBuildProcess = require('./build/run-build-process');
 const cssArgs = ['./scripts/minify-css'];
 const jsArgs = ['./scripts/minify-js'];
 
-if (commandLineArgs.verbose) {
+if (argv.verbose) {
   const vb = '--verbose';
   cssArgs.push(vb);
   jsArgs.push(vb);

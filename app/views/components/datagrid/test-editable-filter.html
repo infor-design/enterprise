@@ -32,12 +32,12 @@
 
 		var columns = [];
 
-		columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
-		columns.push({ id: 'rowStatus', resizable: false, formatter: Formatters.Status, align: 'center'});
-		columns.push({ id: 'SCREEN_NAME', name: 'Screen Name', required: true, field: 'SCREEN_NAME', filterType: 'text', editor: Editors.Input});
-		columns.push({ id: 'SCREEN_VERSION', name: 'Version', required: true, field: 'SCREEN_VERSION', filterType: 'text', editor: Editors.Input});
-		columns.push({ id: 'PROC', name: 'Process', required: false, field: 'PROC', filterType: 'text', editor: Editors.Input});
-		columns.push({ id: 'STDPROD', name: 'Standard Product', field: 'STDPROD', filterType: 'checkbox', align: 'center', formatter: Formatters.Checkbox, editor: Editors.Checkbox});
+		columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center'});
+		columns.push({ id: 'rowStatus', resizable: false, formatter: Soho.Formatters.Status, align: 'center'});
+		columns.push({ id: 'SCREEN_NAME', name: 'Screen Name', required: true, field: 'SCREEN_NAME', filterType: 'text', editor: Soho.Editors.Input});
+		columns.push({ id: 'SCREEN_VERSION', name: 'Version', required: true, field: 'SCREEN_VERSION', filterType: 'text', editor: Soho.Editors.Input});
+		columns.push({ id: 'PROC', name: 'Process', required: false, field: 'PROC', filterType: 'text', editor: Soho.Editors.Input});
+		columns.push({ id: 'STDPROD', name: 'Standard Product', field: 'STDPROD', filterType: 'checkbox', align: 'center', formatter: Soho.Formatters.Checkbox, editor: Soho.Editors.Checkbox});
 
 		var pagesize = 10;
 

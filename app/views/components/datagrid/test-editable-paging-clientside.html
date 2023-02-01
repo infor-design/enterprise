@@ -16,10 +16,10 @@
           data = [];
 
         //Define Columns for the Grid.
-        columns.push({ id: 'id', name: 'Row Id', field: 'id', formatter: Formatters.Readonly});
-        columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, editor: Editors.Input});
-        columns.push({ id: 'activity', name: 'Activity', field: 'activity', editor: Editors.Input});
-		    columns.push({ id: 'boolean', name: 'Checkbox', field: 'Boolean', formatter: Formatters.Checkbox, editor: Editors.Checkbox});
+        columns.push({ id: 'id', name: 'Row Id', field: 'id', formatter: Soho.Formatters.Readonly});
+        columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Soho.Formatters.Hyperlink, editor: Soho.Editors.Input});
+        columns.push({ id: 'activity', name: 'Activity', field: 'activity', editor: Soho.Editors.Input});
+		    columns.push({ id: 'boolean', name: 'Checkbox', field: 'Boolean', formatter: Soho.Formatters.Checkbox, editor: Soho.Editors.Checkbox});
 
         var url = '{{basepath}}api/compressors?pageNum=1&pageSize=100';
 

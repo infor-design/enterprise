@@ -26,7 +26,7 @@
    <script>
       $('body').one('initialized', function () {
 
-         Locale.set('en-US').done(function () {
+         Soho.Locale.set('en-US').done(function () {
             var grid,
                columns = [],
                data = [];
@@ -41,15 +41,15 @@
             data.push({ id: 6, productId: 2642206, sku: 'SKU #9000001-231', productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
 
             //Define Columns for the Grid.
-            columns.push({ id: 'expander', name: '', field: '',formatter: Formatters.Expander, align: 'center', resizable: false, sortable: false});
-            columns.push({ id: 'selectionCheckbox', name: '', width: 70, formatter: Formatters.SelectionCheckbox, align: 'center', resizable: false, sortable: false});
-            columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Text});
-            columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 125, formatter: Formatters.Hyperlink});
+            columns.push({ id: 'expander', name: '', field: '',formatter: Soho.Formatters.Expander, align: 'center', resizable: false, sortable: false});
+            columns.push({ id: 'selectionCheckbox', name: '', width: 70, formatter: Soho.Formatters.SelectionCheckbox, align: 'center', resizable: false, sortable: false});
+            columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, formatter: Soho.Formatters.Text});
+            columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 125, formatter: Soho.Formatters.Hyperlink});
             columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 160});
             columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 200});
-            columns.push({ id: 'price', name: 'Price', field: 'price', width: 10, formatter: Formatters.Decimal});
-            columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, width: 10, dateFormat: 'M/d/yyyy'});
-            columns.push({ id: 'status', name: 'Status', field: 'status', width: 200, formatter: Formatters.Text});
+            columns.push({ id: 'price', name: 'Price', field: 'price', width: 10, formatter: Soho.Formatters.Decimal});
+            columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, width: 10, dateFormat: 'M/d/yyyy'});
+            columns.push({ id: 'status', name: 'Status', field: 'status', width: 200, formatter: Soho.Formatters.Text});
             columns.push({ id: 'action', name: 'Action Item', field: 'action', width: 200});
 
             var rowTemplate = '<div class="row-content">Some content</div>';

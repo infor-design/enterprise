@@ -110,8 +110,8 @@
         columns.push({ id: 'fromGregorianOld', name: 'fromGregorianOld', field: 'fromGregorianOld' });
         columns.push({ id: 'gregorianToUmalqura', name: 'gregorianToUmalqura', field: 'gregorianToUmalqura' });
         columns.push({ id: 'umalquraToGregorian', name: 'umalquraToGregorian', field: 'umalquraToGregorian' });
-        columns.push({ id: 'statsUmalqura', name: 'statsUmalqura', field: 'statsUmalqura', formatter: Formatters.Alert, ranges: statuses });
-        columns.push({ id: 'statusGregorian', name: 'statusGregorian', field: 'statusGregorian', formatter: Formatters.Alert, ranges: statuses });
+        columns.push({ id: 'statsUmalqura', name: 'statsUmalqura', field: 'statsUmalqura', formatter: Soho.Formatters.Alert, ranges: statuses });
+        columns.push({ id: 'statusGregorian', name: 'statusGregorian', field: 'statusGregorian', formatter: Soho.Formatters.Alert, ranges: statuses });
 
         // Invoke grid
         gridElem.datagrid({
@@ -119,7 +119,7 @@
           dataset: data,
           paging: true,
           pagesize: 10,
-          emptyMessage: { title: Locale.translate('NoData'), info: Locale.translate('NoData'), icon: 'icon-empty-no-data' },
+          emptyMessage: { title: Soho.Locale.translate('NoData'), info: Soho.Locale.translate('NoData'), icon: 'icon-empty-no-data-new' },
           toolbar: { title: 'Gregorian and Umalqura Dates', results: true, actions: true, rowHeight: true }
         });
       }

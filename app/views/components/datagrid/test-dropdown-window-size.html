@@ -63,11 +63,11 @@
       }, 1);
     };
 
-    columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
-    columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, editor: Editors.Input});
-    columns.push({ id: 'price', name: 'Price', field: 'price', align: 'right', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input, mask: '###.000'});
-    columns.push({ id: 'action', name: 'Action', field: 'action', formatter: dropDownFormatter, editor: Editors.Dropdown, editorOptions: {editable: false, source: dropDownSource}, align: 'center' });
-    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date});
+    columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center'});
+    columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Soho.Formatters.Hyperlink, editor: Soho.Editors.Input});
+    columns.push({ id: 'price', name: 'Price', field: 'price', align: 'right', formatter: Soho.Formatters.Decimal, numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Soho.Editors.Input, mask: '###.000'});
+    columns.push({ id: 'action', name: 'Action', field: 'action', formatter: dropDownFormatter, editor: Soho.Editors.Dropdown, editorOptions: {editable: false, source: dropDownSource}, align: 'center' });
+    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, editor: Soho.Editors.Date});
 
     //Init and get the api for the grid
     grid = $('#datagrid').datagrid({

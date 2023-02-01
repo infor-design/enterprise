@@ -53,11 +53,11 @@
     };
 
     // Define Columns for the Grid.
-    columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Readonly, filterType: 'text' });
-    columns.push({ id: 'productId', name: 'Lookup', field: 'productId', formatter: Formatters.Lookup, editorOptions: lookupOptions, filterType: 'lookup', editor: Editors.Lookup  });
-    columns.push({ id: 'activity', name: 'Left Align DD', field: 'activity', formatter: Formatters.Dropdown, filterType: 'multiselect', options: activities, editorOptions: { showSelectAll: true }, textOverflow: 'ellipsis', editor: Editors.Dropdown });
-    columns.push({ id: 'activity', name: 'Centered DD', field: 'activity', formatter: Formatters.Dropdown, align: 'center', filterType: 'multiselect', options: activities, editorOptions: { showSelectAll: true }, textOverflow: 'ellipsis', editor: Editors.Dropdown });
-    columns.push({ id: 'activity', name: 'Right Align DD', field: 'activity', formatter: Formatters.Dropdown, align: 'right', filterType: 'multiselect', options: activities, editorOptions: { showSelectAll: true }, textOverflow: 'ellipsis', editor: Editors.Dropdown });
+    columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Soho.Formatters.Readonly, filterType: 'text' });
+    columns.push({ id: 'productId', name: 'Lookup', field: 'productId', formatter: Soho.Formatters.Lookup, editorOptions: lookupOptions, filterType: 'lookup', editor: Soho.Editors.Lookup  });
+    columns.push({ id: 'activity', name: 'Left Align DD', field: 'activity', formatter: Soho.Formatters.Dropdown, filterType: 'multiselect', options: activities, editorOptions: { showSelectAll: true }, textOverflow: 'ellipsis', editor: Soho.Editors.Dropdown });
+    columns.push({ id: 'activity', name: 'Centered DD', field: 'activity', formatter: Soho.Formatters.Dropdown, align: 'center', filterType: 'multiselect', options: activities, editorOptions: { showSelectAll: true }, textOverflow: 'ellipsis', editor: Soho.Editors.Dropdown });
+    columns.push({ id: 'activity', name: 'Right Align DD', field: 'activity', formatter: Soho.Formatters.Dropdown, align: 'right', filterType: 'multiselect', options: activities, editorOptions: { showSelectAll: true }, textOverflow: 'ellipsis', editor: Soho.Editors.Dropdown });
     columns.push({ id: 'quantity', name: 'Qty', field: 'quantity', align: 'right', filterType: 'integer' });
 
     // Init and get the api for the grid

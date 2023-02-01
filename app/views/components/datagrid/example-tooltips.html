@@ -11,7 +11,7 @@
 <script>
   $('body').one('initialized', function () {
 
-    Locale.set('en-US').done(function () {
+    Soho.Locale.set('en-US').done(function () {
         var grid,
           columns = [],
           data = [];
@@ -31,15 +31,15 @@
           return `Tooltip for ${cell}`
         }
 
-        columns.push({ id: 'drilldown', name: '', field: '', formatter: Formatters.Drilldown, width: 50, align: 'center', tooltip: callback });
-        columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly, tooltip: 'This is a product', headerTooltip: 'This is the header'});
-        columns.push({ id: 'productName', name: 'Product Name', sortable: false,  width: 200, field: 'productName', formatter: Formatters.Hyperlink, hyperlinkTooltip: 'Navigate to This Product' });
+        columns.push({ id: 'drilldown', name: '', field: '', formatter: Soho.Formatters.Drilldown, width: 50, align: 'center', tooltip: callback });
+        columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Readonly, tooltip: 'This is a product', headerTooltip: 'This is the header'});
+        columns.push({ id: 'productName', name: 'Product Name', sortable: false,  width: 200, field: 'productName', formatter: Soho.Formatters.Hyperlink, hyperlinkTooltip: 'Navigate to This Product' });
         columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity'});
         columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
-        columns.push({ id: 'status', name: 'Status', field: 'price', textOverflow: 'none', width: 155, formatter: Formatters.Alert, ranges: [{'min': 0, 'max': 150, 'classes': 'success', text: 'Confirmed'}, {'min': 151, 'max': 9999, 'classes': 'error', text: 'Error'}]});
-        columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal});
-        columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy', textOverflow: 'ellipsis', width: 80});
-        columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 150, formatter: Formatters.Ellipsis});
+        columns.push({ id: 'status', name: 'Status', field: 'price', textOverflow: 'none', width: 155, formatter: Soho.Formatters.Alert, ranges: [{'min': 0, 'max': 150, 'classes': 'success', text: 'Confirmed'}, {'min': 151, 'max': 9999, 'classes': 'error', text: 'Error'}]});
+        columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Soho.Formatters.Decimal});
+        columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy', textOverflow: 'ellipsis', width: 80});
+        columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 150, formatter: Soho.Formatters.Ellipsis});
         columns.push({ id: 'blank', name: '', field: 'blank'});
 
         //Init the grid

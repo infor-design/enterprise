@@ -83,10 +83,10 @@
       //Define Columns for the Grid.
       //columns.push({ id: 'incidentId', name: 'Incident Id', field: 'incidentId', width: 50});
       columns.push({ id: 'priority', name: 'Priority', field: 'priority'});
-      columns.push({ id: 'location', name: 'Location', field: 'location', formatter: Formatters.Hyperlink});
+      columns.push({ id: 'location', name: 'Location', field: 'location', formatter: Soho.Formatters.Hyperlink});
       columns.push({ id: 'nature', name: 'Nature', field: 'nature'});
       columns.push({ id: 'time', name: 'Time', field: 'time'});
-      columns.push({ id: 'units', width: '40%', name: 'Vehicles on Scene', field: 'units', formatter: Formatters.VehicalsOnScene});
+      columns.push({ id: 'units', width: '40%', name: 'Vehicles on Scene', field: 'units', formatter: Soho.Formatters.VehicalsOnScene});
 
       //Get some data via ajax
       var url = '{{basepath}}api/incidents';

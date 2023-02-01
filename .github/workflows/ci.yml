@@ -1,6 +1,6 @@
-# This workflow will do a clean install of node dependencies, 
+# This workflow will do a clean install of node dependencies,
 # build the source code and run tests across different versions of node.
-# For more information see: 
+# For more information see:
 # https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
 name: CI
@@ -15,11 +15,11 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     strategy:
       matrix:
-        node-version: [14.x]
+        node-version: [18.x]
 
     steps:
     - uses: actions/checkout@v2
@@ -36,27 +36,21 @@ jobs:
         key: enterprise-1021
 
     - name: Setup timezone
-      uses: zcong1993/setup-timezone@master
+      uses: szenius/set-timezone@v1.0
       with:
-        timezone: America/New_York
+        timezoneMacos: "America/New_York"
 
     - name: Install Dependencies
-      run: npm i
+      run: npm ci
 
     - name: Build
       run: npm run build
 
-    - name: Run e2e tests
-      run:  (npm run quickstart &) && sleep 5; npm run e2e:ci:debug;
-
     - name: Run Lint Checks
-      run: npm run lint:ci
+      run: npm run lint
 
-    - name: Run functional tests
-      run: npm run functional:ci
-
-    - name: Run puppeteer tests
-      run:  npm run e2e:puppeteer;
+    - name: Run tests
+      run:  (npm run quickstart &) && sleep 5; npm run test;
 
     - name: Dump GitHub context
       env:

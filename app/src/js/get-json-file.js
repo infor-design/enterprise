@@ -1,7 +1,12 @@
+/* eslint-disable no-underscore-dangle */
 // Small tool that retrieves JSON data from a file and turns it into objects for use in the demo app.
 // NOTE: Synchronous for now.
-const fs = require('fs');
-const path = require('path');
+import * as fs from 'fs';
+import * as path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 function readJsonFileSync(filepath, encoding) {
   if (typeof encoding === 'undefined') {
@@ -12,9 +17,7 @@ function readJsonFileSync(filepath, encoding) {
   return JSON.parse(file);
 }
 
-function getJSONFile(file) {
+export default function getJSONFile(file) {
   const filepath = path.resolve(__dirname, file);
   return readJsonFileSync(filepath);
 }
-
-module.exports = getJSONFile;

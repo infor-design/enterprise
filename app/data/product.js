@@ -1,8 +1,13 @@
-const path = require('path');
-const getJSONFile = require('../src/js/get-json-file');
+/* eslint-disable no-underscore-dangle */
+import { fileURLToPath } from 'url';
+import * as path from 'path';
+import getJSONFile from '../src/js/get-json-file.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Sample Product Data
-module.exports = (req, res) => {
+export default function product(req, res) {
   let products = getJSONFile(path.resolve(__dirname, 'products.json'));
 
   if (req.query.limit) {
@@ -11,4 +16,4 @@ module.exports = (req, res) => {
 
   res.setHeader('Content-Type', 'application/json');
   res.json(products);
-};
+}

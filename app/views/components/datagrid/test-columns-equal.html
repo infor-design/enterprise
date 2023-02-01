@@ -27,12 +27,12 @@
       data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: '123.99', status: 'OK', orderDate: null, action: 'On Hold'});
 
       //Define Columns for the Grid.
-      columns.push({ id: 'productId', name: 'Id', field: 'productId', formatter: Formatters.Text});
-      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink});
+      columns.push({ id: 'productId', name: 'Id', field: 'productId', formatter: Soho.Formatters.Text});
+      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Soho.Formatters.Hyperlink});
       columns.push({ id: 'activity', name: 'Activity', field: 'activity'});
       columns.push({ id: 'hidden', hidden: true, name: 'Hidden', field: 'hidden'});
-      columns.push({ id: 'price', align: 'right', name: 'Actual Price', field: 'price', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
-      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+      columns.push({ id: 'price', align: 'right', name: 'Actual Price', field: 'price', formatter: Soho.Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy'});
 
       //Init and get the api for the grid
       $('#datagrid').datagrid({

@@ -992,7 +992,14 @@ const editors = {
 
       addStandardInputFeatures(
         this.input,
-        row, cell, value, container, column, event, grid, rowData
+        row,
+        cell,
+        value,
+        container,
+        column,
+        event,
+        grid,
+        rowData
       );
 
       if (!column.editorOptions) {
