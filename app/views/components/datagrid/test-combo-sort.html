@@ -45,7 +45,7 @@
 
   $('body').one('initialized', function () {
 
-    Locale.set('en-US').done(function () {
+    Soho.Locale.set('en-US').done(function () {
         var grid,
           columns = [],
           data = [];
@@ -65,10 +65,10 @@
         data.push({ id: 12, productId: 2642206, productName: '10CD', activity:  'Inspect and Repair', portable: true, quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'oh'});
 
         //Define Columns for the Grid.
-        columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
-        columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink});
-        columns.push({ id: 'activity', name: 'Activity', field: 'activity', editor: Editors.Input });
-        columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', align: 'right', editor: Editors.Input, mask: '###'});
+        columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center'});
+        columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Soho.Formatters.Hyperlink});
+        columns.push({ id: 'activity', name: 'Activity', field: 'activity', editor: Soho.Editors.Input });
+        columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', align: 'right', editor: Soho.Editors.Input, mask: '###'});
 
         //Init and get the api for the grid
         grid = $('#datagrid').datagrid({

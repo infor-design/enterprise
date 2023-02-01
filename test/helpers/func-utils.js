@@ -40,7 +40,7 @@ function triggerContextmenu(el) {
     } else if (document.createEvent) {
       const e = document.createEvent('HTMLEvents');
       e.initEvent('contextmenu', true, false);
-      element.dispatchEvent(e);
+      el.dispatchEvent(e);
     } else { // Internet Explorer
       el.fireEvent('oncontextmenu');
     }

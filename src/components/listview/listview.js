@@ -248,7 +248,7 @@ ListView.prototype = {
     }
 
     if (this.settings.emptyMessage) {
-      // Object { title: "No Data Available", info: "", icon: "icon-empty-no-data" }
+      // Object { title: "No Data Available", info: "", icon: "icon-empty-no-data-new" }
       self.emptyMessageContainer = $('<div>').emptymessage(this.settings.emptyMessage);
     }
   },

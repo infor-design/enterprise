@@ -1,12 +1,16 @@
 #!/usr/bin/env node
+/* eslint-disable no-underscore-dangle */
 /*
  * Detects established custom build test manifests, and provides the list of
  * required tests to another script.
  */
+import * as fs from 'fs';
+import * as path from 'path';
+import { fileURLToPath } from 'url';
+import logger from '../../scripts/logger.js';
 
-const fs = require('fs');
-const path = require('path');
-const logger = require('../../scripts/logger');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const types = ['functional', 'e2e'];
 const EMPTY = [];
@@ -75,7 +79,7 @@ function getCustomSpecs(type, group) {
   return specs.split('\n').filter(el => el !== null && el !== '');
 }
 
-module.exports = function (testType, envSpecs, group) {
+export default function (testType, envSpecs, group) {
   if (envSpecs) {
     return envSpecs.split(',');
   }
@@ -85,4 +89,4 @@ module.exports = function (testType, envSpecs, group) {
   }
 
   return getCustomSpecs(testType, group);
-};
+}

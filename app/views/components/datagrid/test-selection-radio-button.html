@@ -10,7 +10,7 @@
   
     $('body').one('initialized', function () {
   
-      Locale.set('en-US').done(function () {
+      Soho.Locale.set('en-US').done(function () {
           var grid,
             data = [],
             columns = [];
@@ -29,17 +29,17 @@
           };
   
           // Define Columns for the Grid.
-          columns.push({ id: 'selectionRadio', sortable: false, resizable: false, formatter: Formatters.SelectionRadio, align: 'center'});
-          columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Readonly});
-          columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, editor: Editors.Input});
-          columns.push({ id: 'price', name: 'Price', field: 'price', align: 'right', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input, mask: '###.000'});
-          columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date});
-          columns.push({ id: 'portable', name: 'Portable', field: 'portable', formatter: Formatters.Checkbox, isEditable: isEditable, editor: Editors.Checkbox});
-          columns.push({ id: 'used', name: 'Used', field: 'used', formatter: Formatters.Checkbox, isEditable: isEditable, editor: Editors.Checkbox});
-          columns.push({ id: 'electric', name: 'electric', field: 'Electric', formatter: Formatters.Checkbox, isEditable: isEditable, editor: Editors.Checkbox});
-          columns.push({ id: 'pneumatic', name: 'Pneumatic', field: 'pneumatic', formatter: Formatters.Checkbox, isEditable: isEditable, editor: Editors.Checkbox});
-          columns.push({ id: 'comments', name: 'Comments', field: 'comments', formatter: Formatters.Input, isEditable: isEditable, editor: Editors.Input});
-          columns.push({ id: 'isFiltered', name: 'Filtered', field: 'isFiltered', formatter: Formatters.Checkbox, isEditable: isEditable, editor: Editors.Checkbox});
+          columns.push({ id: 'selectionRadio', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionRadio, align: 'center'});
+          columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Soho.Formatters.Readonly});
+          columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Soho.Formatters.Hyperlink, editor: Soho.Editors.Input});
+          columns.push({ id: 'price', name: 'Price', field: 'price', align: 'right', formatter: Soho.Formatters.Decimal, numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Soho.Editors.Input, mask: '###.000'});
+          columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, editor: Soho.Editors.Date});
+          columns.push({ id: 'portable', name: 'Portable', field: 'portable', formatter: Soho.Formatters.Checkbox, isEditable: isEditable, editor: Soho.Editors.Checkbox});
+          columns.push({ id: 'used', name: 'Used', field: 'used', formatter: Soho.Formatters.Checkbox, isEditable: isEditable, editor: Soho.Editors.Checkbox});
+          columns.push({ id: 'electric', name: 'electric', field: 'Electric', formatter: Soho.Formatters.Checkbox, isEditable: isEditable, editor: Soho.Editors.Checkbox});
+          columns.push({ id: 'pneumatic', name: 'Pneumatic', field: 'pneumatic', formatter: Soho.Formatters.Checkbox, isEditable: isEditable, editor: Soho.Editors.Checkbox});
+          columns.push({ id: 'comments', name: 'Comments', field: 'comments', formatter: Soho.Formatters.Input, isEditable: isEditable, editor: Soho.Editors.Input});
+          columns.push({ id: 'isFiltered', name: 'Filtered', field: 'isFiltered', formatter: Soho.Formatters.Checkbox, isEditable: isEditable, editor: Soho.Editors.Checkbox});
   
 
           // Init and get the api for the grid

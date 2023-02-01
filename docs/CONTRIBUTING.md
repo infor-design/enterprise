@@ -50,7 +50,7 @@ Feature requests are welcome. Before you submit one be sure to have:
 
 1. Does your idea fits with the our general scope of the project? Might better fit being an app/plugin/extension?
 1. Would anyone else but you want this feature?
-1. Remember, it's up to *you* to make a strong case to convince the merits of this feature. "We did it like this for the last ten years" isn't strong enough.
+1. Remember, it's up to you to make a strong case to convince the merits of this feature.
 
 ## Submitting Pull Requests
 

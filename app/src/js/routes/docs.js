@@ -1,6 +1,6 @@
-const fs = require('fs');
+import * as fs from 'fs';
 
-module.exports = function sendGeneratedDocPage(options, req, res, next) {
+export default function sendGeneratedDocPage(options, req, res, next) {
   if (!options.path) {
     next('No generated documentation page path was provided.');
   }
@@ -19,4 +19,4 @@ module.exports = function sendGeneratedDocPage(options, req, res, next) {
   }
 
   res.send(output);
-};
+}

@@ -1,6 +1,4 @@
-// Sample Hierarchical Data
-// Sample Tree Tasks
-module.exports = (req, res) => {
+export default function treeTasks(req, res) {
   const tasks = [
     {
       id: 1,
@@ -144,4 +142,4 @@ module.exports = (req, res) => {
 
   res.setHeader('Content-Type', 'application/json');
   res.end(JSON.stringify(tasks));
-};
+}

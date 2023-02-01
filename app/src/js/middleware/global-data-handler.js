@@ -1,7 +1,7 @@
-const getJunkDropdownData = require('../get-junk-dropdown-data');
+import getJunkDropdownData from '../get-junk-dropdown-data.js';
 
 // Simple Middleware that passes API data back as a template option if we're on a certain page
-module.exports = function () {
+export default function () {
   return function globalDataHandler(req, res, next) {
     const url = req.url;
 
@@ -15,4 +15,4 @@ module.exports = function () {
 
     next();
   };
-};
+}

@@ -33,9 +33,9 @@
 <script>
 $('body').on('initialized', function () {
   $('#MMMyyyy-date').datepicker({dateFormat: 'MMM yyyy'});
-  $('#MMMMd-date').datepicker({dateFormat: Locale.calendar().dateFormat.month});
+  $('#MMMMd-date').datepicker({dateFormat: Soho.Locale.calendar().dateFormat.month});
   $('#yyyy-date').datepicker({dateFormat: 'yyyy'});
-  $('#MMMMyyyy-date').datepicker({dateFormat: Locale.calendar().dateFormat.year});
-  $('#Mdyyyy-date').datepicker({dateFormat: Locale.calendar().dateFormat.short});
+  $('#MMMMyyyy-date').datepicker({dateFormat: Soho.Locale.calendar().dateFormat.year});
+  $('#Mdyyyy-date').datepicker({dateFormat: Soho.Locale.calendar().dateFormat.short});
 });
 </script>

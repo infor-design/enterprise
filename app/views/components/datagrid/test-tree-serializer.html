@@ -15,11 +15,11 @@
 
     // Define Columns for the Grid.
     var columns = [];
-    columns.push({ id: 'taskName', name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Formatters.Tree, editor: Editors.Input });
+    columns.push({ id: 'taskName', name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Soho.Formatters.Tree, editor: Soho.Editors.Input });
     columns.push({ id: 'id', name: 'Id', field: 'id' });
-    columns.push({ id: 'portable', name: 'Portable', field: 'portable', align: 'center', formatter: Formatters.Checkbox, editor: Editors.Checkbox});
-    columns.push({ id: 'comments', name: 'Comments', field: 'comments',  formatter: Formatters.Hyperlink, editor: Editors.Input, width: 60});
-    columns.push({ id: 'desc', name: 'Description', field: 'desc', editor: Editors.Input, serialize: serializer  });
+    columns.push({ id: 'portable', name: 'Portable', field: 'portable', align: 'center', formatter: Soho.Formatters.Checkbox, editor: Soho.Editors.Checkbox});
+    columns.push({ id: 'comments', name: 'Comments', field: 'comments',  formatter: Soho.Formatters.Hyperlink, editor: Soho.Editors.Input, width: 60});
+    columns.push({ id: 'desc', name: 'Description', field: 'desc', editor: Soho.Editors.Input, serialize: serializer  });
 
     // Get some data via ajax
     var url = '{{basepath}}api/tree-tasks';

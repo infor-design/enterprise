@@ -1,16 +1,27 @@
-#!/usr/bin/env node
-/* eslint-disable import/no-extraneous-dependencies, import/no-unresolved */
-const fs = require('fs');
-const path = require('path');
-const childProcess = require('child_process');
-const pjson = require('../package.json');
-const args = require('yargs').argv;
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable camelcase */
+import * as fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import child_process from 'child_process';
+import _yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
+
+const argv = _yargs(hideBin(process.argv)).argv;
+
+const exec = child_process;
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Using the environment variables
+const version = process.env.npm_package_version;
 
 // CR-LF on Windows, LF on Linux/Mac
 const NL = process.platform === 'win32' ? '\r\n' : '\n';
 
 const projectName = 'IDS Enterprise Components';
-const commitHash = childProcess.execSync('git rev-parse HEAD') || '';
+const commitHash = exec.execSync('git rev-parse HEAD') || '';
 
 function prependLines(str, prepender) {
   prepender = prepender || '';
@@ -38,9 +49,9 @@ function render(useComments) {
   let componentsList = '';
 
   // Grabs a list of included components (optional)
-  if (args.components) {
+  if (argv.components) {
     isCustom = ' (custom)';
-    componentsArgs = args.components.split(',');
+    componentsArgs = argv.components.split(',');
 
     componentsList += 'Custom bundle containing the following components:';
     componentsArgs.forEach((comp) => {
@@ -50,7 +61,7 @@ function render(useComments) {
   }
 
   // Project Name and Version Headline
-  const headline = `${projectName} - v${pjson.version}${isCustom}`;
+  const headline = `${projectName} - v${version}${isCustom}`;
 
   // Prepend comments to each line of the license
   let license = fs.readFileSync(path.join(__dirname, '..', 'LICENSE'), 'utf8');
@@ -66,5 +77,4 @@ function render(useComments) {
     endComment}`;
 }
 
-// default export is just the string (backwards compat)
-module.exports = render(true);
+export default render(true);

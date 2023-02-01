@@ -199,7 +199,7 @@ Calendar.prototype = {
     const s = this.settings;
 
     $('.calendar-event-legend').remove();
-    if (!s.showEventLegend) { 
+    if (!s.showEventLegend) {
       return;
     }
 

@@ -130,11 +130,11 @@ const COMPONENT_NAME = 'datagrid';
  * @param {object}   [settings.emptyMessage]
  * @param {object}   [settings.emptyMessage.title='No Data Available']
  * @param {object}   [settings.emptyMessage.info='']
- * @param {object}   [settings.emptyMessage.icon='icon-empty-no-data']
+ * @param {object}   [settings.emptyMessage.icon='icon-empty-no-data-new']
  * @param {object}   [settings.emptyMessage.height=null]
  * An empty message will be displayed when there is no rows in the grid. This accepts an object of the form
  * emptyMessage: {title: 'No Data Available', info: 'Make a selection on the list above to see results',
- * icon: 'icon-empty-no-data', button: {text: 'Button Text', click: <function>}, height: null|'small'} set this to null for no message
+ * icon: 'icon-empty-no-data-new', button: {text: 'Button Text', click: <function>}, height: null|'small'} set this to null for no message
  * or will default to 'No Data Found with an icon.'
  * height: The empty message container height. If set to 'small' will show only title and all other will not be render (like: icon, button, info)
  * @param {boolean} [settings.allowChildExpandOnMatchOnly=false] If set to true, it will only expand children from matching node. If false will show children for all matching nodes.
@@ -241,7 +241,7 @@ const DATAGRID_DEFAULTS = {
   onExpandChildren: null, // Callback fires when expanding children with treeGrid
   onCollapseChildren: null, // Callback fires when collapseing children with treeGrid
   onKeyDown: null,
-  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data', height: null },
+  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data-new', height: null },
   searchExpandableRow: true,
   allowChildExpandOnMatchOnly: false,
   allowChildExpandOnMatch: false,
@@ -5319,9 +5319,10 @@ Datagrid.prototype = {
    * @returns {number} the calculated text width in pixels.
    */
   calculateTextRenderWidth(maxText, isHeader) {
+    if (!this.canvas) return 0;
     // if given, use cached canvas for better performance, else, create new canvas
     this.canvas = this.canvas || (this.canvas = document.createElement('canvas'));
-    const context = this.canvas.getContext('2d');
+    const context = this.canvas?.getContext('2d');
     const isNewTheme = (theme.currentTheme.id.indexOf('uplift') > -1 || theme.currentTheme.id.indexOf('new') > -1);
 
     if (!this.fontCached || !this.fontHeaderCached) {
@@ -5351,6 +5352,7 @@ Datagrid.prototype = {
    * @private
    */
   setScrollClass() {
+    if (!this.bodyWrapperCenter[0] || !this.bodyWrapperCenter[0].offsetHeight) return;
     const height = parseInt(this.bodyWrapperCenter[0].offsetHeight, 10);
     const headerHeight = this.headerRow ? this.headerRow[0].offsetHeight : 0;
     const tableHeight = parseInt(this.tableBody[0].offsetHeight, 10);
@@ -6827,7 +6829,8 @@ Datagrid.prototype = {
         if (self.grandTotal) {
           countText = self.settings.resultsText(
             self,
-            self.grandTotal, count === self.grandTotal ? 0 : count
+            self.grandTotal,
+            count === self.grandTotal ? 0 : count
           );
         } else {
           const filteredCount = (self.filteredCount === 0 ? 0 : count - self.filteredCount);

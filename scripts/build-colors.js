@@ -8,7 +8,7 @@
 // -------------------------------------
 // Requirements
 // -------------------------------------
-const createColorJson = require('./build/create-color-json');
+import createColorJson from './build/create-color-json.js';
 
 // -------------------------------------
 // Main

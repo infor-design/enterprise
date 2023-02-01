@@ -1,4 +1,4 @@
-module.exports = (req, res) => {
+export default function lookupInfoData(req, res) {
   const columns = [];
   const data = [];
 
@@ -37,4 +37,4 @@ module.exports = (req, res) => {
 
   res.setHeader('Content-Type', 'application/json');
   res.end(JSON.stringify(lookupInfo));
-};
+}

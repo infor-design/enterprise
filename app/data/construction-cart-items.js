@@ -1,4 +1,4 @@
-module.exports = (req, res) => {
+export default function csCartItems(req, res) {
   const cartItems = [
     { id: 1, itemId: '#PMS0510', itemName: 'Masonry Bricks, Red Solid 6" Brick', itemPrice: '$12.00', quantifier: 'bag', quantity: '1,000', totalPrice: '$1,700.00' },
     { id: 2, itemId: '#PMS0640', itemName: 'Gravel, Gray Natural Stone', itemPrice: '$86.00', quantifier: 'stone', quantity: '19', totalPrice: '$1,634.00' },
@@ -12,4 +12,4 @@ module.exports = (req, res) => {
 
   res.setHeader('Content-Type', 'application/json');
   res.end(JSON.stringify(cartItems));
-};
+}

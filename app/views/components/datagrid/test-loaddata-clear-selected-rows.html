@@ -25,7 +25,7 @@
 <script>
   $('body').one('initialized', function () {
 
-     Locale.set('en-US').done(function () {
+     Soho.Locale.set('en-US').done(function () {
         var grid,
            columns = [],
            data = [],
@@ -44,9 +44,9 @@
         data2.push({ id: 8, productId: 2241208, sku: 'SKU #9000001-231', productName: 'Different Compressor', activity:  'Inspect and Repair', quantity: 2, price: 210.99, status: '', orderDate: new Date(2015, 7, 3), action: 'On Hold'});
 
         // Define Columns for the Grid.
-        columns.push({ id: 'selectionCheckbox', name: '', width: 70, formatter: Formatters.SelectionCheckbox, align: 'center', resizable: false, sortable: false});
-        columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Text});
-        columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink});
+        columns.push({ id: 'selectionCheckbox', name: '', width: 70, formatter: Soho.Formatters.SelectionCheckbox, align: 'center', resizable: false, sortable: false});
+        columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Text});
+        columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Soho.Formatters.Hyperlink});
         columns.push({ id: 'activity', name: 'Activity', field: 'activity'});
         columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
         columns.push({ id: 'status', name: 'Status', field: 'status'});

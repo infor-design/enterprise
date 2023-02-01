@@ -1,5 +1,3 @@
-import Promise from 'promise-polyfill';
-
 import { Environment as env } from '../../utils/environment';
 import * as debug from '../../utils/debug';
 import { warnAboutDeprecation } from '../../utils/deprecated';
@@ -1761,6 +1759,7 @@ SearchField.prototype = {
    */
   expand(noFocus) {
     const self = this;
+    // eslint-disable-next-line compat/compat
     const expandPromise = new Promise((resolve) => {
       if (self.isExpanded || self.isExpanding || self.isCollapsing) {
         resolve();
@@ -1859,6 +1858,7 @@ SearchField.prototype = {
    */
   collapse() {
     const self = this;
+    // eslint-disable-next-line compat/compat
     const collapsePromise = new Promise((resolve) => {
       if (!self.isExpanded && self.isExpanding && !self.isCollapsing) {
         resolve();

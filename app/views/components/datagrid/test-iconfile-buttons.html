@@ -17,7 +17,7 @@
 
 <script>
     $('body').on('initialized', function () {
-      Locale.set('en-US').done(function () {
+      Soho.Locale.set('en-US').done(function () {
         var grid,
           columns = [],
           data = [];
@@ -34,15 +34,15 @@
 
         //Define Columns for the Grid.
 
-        columns.push({ id: 'id', hidden: true, name: ' Id', field: 'id', formatter: Formatters.Readonly });
-        columns.push({ id: 'productDesc', name: 'Product Desc', field: 'productName', formatter: Formatters.Hyperlink});
+        columns.push({ id: 'id', hidden: true, name: ' Id', field: 'id', formatter: Soho.Formatters.Readonly });
+        columns.push({ id: 'productDesc', name: 'Product Desc', field: 'productName', formatter: Soho.Formatters.Hyperlink});
         columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
-        columns.push({ id: 'actionLink', name: 'As Link',  align: 'center', sortable: false, formatter: Formatters.Hyperlink, icon: 'reset', tooltip: 'Reset', click: function (e, args) {console.log(args[0].cell, args[0].row, args[0].item.id);}});
-        columns.push({ id: 'action', name: 'Active',  align: 'center', sortable: false, formatter: Formatters.Button, icon: 'reset', tooltip: 'Reset', click: function (e, args) {console.log(args[0].cell, args[0].row, args[0].item.id);},
+        columns.push({ id: 'actionLink', name: 'As Link',  align: 'center', sortable: false, formatter: Soho.Formatters.Hyperlink, icon: 'reset', tooltip: 'Reset', click: function (e, args) {console.log(args[0].cell, args[0].row, args[0].item.id);}});
+        columns.push({ id: 'action', name: 'Active',  align: 'center', sortable: false, formatter: Soho.Formatters.Button, icon: 'reset', tooltip: 'Reset', click: function (e, args) {console.log(args[0].cell, args[0].row, args[0].item.id);},
           contentVisible: function (row, cell, data, col, item) { return (item.status === 'OK');} });
-        columns.push({ id: 'iconText', name: 'Icon + Text',  align: 'center', sortable: false, formatter: Formatters.Button, icon: 'camera', text: 'Testing' });
-        columns.push({ id: 'iconFile', name: 'Icon File',  align: 'center', sortable: false, formatter: Formatters.Button, icon: 'binoculars', iconFile: '{{basepath}}/images/additional-icons/binoculars.png' });
-        columns.push({ id: 'button', name: 'Button', text: 'Action', align: 'center', sortable: false, formatter: Formatters.Button, click: function (e, args) {console.log('Button was clicked', args);} });
+        columns.push({ id: 'iconText', name: 'Icon + Text',  align: 'center', sortable: false, formatter: Soho.Formatters.Button, icon: 'camera', text: 'Testing' });
+        columns.push({ id: 'iconFile', name: 'Icon File',  align: 'center', sortable: false, formatter: Soho.Formatters.Button, icon: 'binoculars', iconFile: '{{basepath}}/images/additional-icons/binoculars.png' });
+        columns.push({ id: 'button', name: 'Button', text: 'Action', align: 'center', sortable: false, formatter: Soho.Formatters.Button, click: function (e, args) {console.log('Button was clicked', args);} });
         columns.push({ id: 'activity', name: 'Activity', field: 'activity'});
 
         //Init and get the api for the grid

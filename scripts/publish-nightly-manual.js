@@ -1,4 +1,5 @@
-#!/usr/bin/env node
+/* eslint-disable consistent-return */
+/* eslint-disable no-console */
 
 /**
  * @fileoverview Append the date to the library package.json version
@@ -8,17 +9,19 @@
 // -------------------------------------
 //   Node Modules/Options
 // -------------------------------------
-const fs = require('fs');
-const slash = require('slash');
-const inquirer = require('inquirer');
+import * as fs from 'fs';
+import slash from 'slash';
+import inquirer from 'inquirer';
+import * as child from 'child_process';
 
+const loadJSON = path => JSON.parse(fs.readFileSync(new URL(path, import.meta.url)));
+const pkgJson = loadJSON('../package.json');
 
 // -------------------------------------
 //   Constants
 // -------------------------------------
 const rootPath = slash(process.cwd());
 const pkgJsonPath = `${rootPath}/package.json`;
-const pkgJson = require(pkgJsonPath);
 const versionTag = 'dev';
 
 // -------------------------------------
@@ -29,14 +32,14 @@ const versionTag = 'dev';
  * Format the date as YYYYMMDD
  * @param {date} date
  */
-function formatDate (date) {
-  var d = new Date(date),
-    month = '' + (d.getMonth() + 1),
-    day = '' + d.getDate(),
-    year = d.getFullYear();
+function formatDate(date) {
+  const d = new Date(date);
+  let month = `${d.getMonth() + 1}`;
+  let day = `${d.getDate()}`;
+  const year = d.getFullYear();
 
-  if (month.length < 2) month = '0' + month;
-  if (day.length < 2) day = '0' + day;
+  if (month.length < 2) month = `0${month}`;
+  if (day.length < 2) day = `0${day}`;
 
   return [year, month, day].join('');
 }
@@ -46,8 +49,7 @@ function formatDate (date) {
  * @param {string} cmd - The command
  */
 function executeUpdate(cmd) {
-  const exec = require('child_process').exec
-  const updateProcess = exec(cmd, (err, stdout, stderr) => {
+  child.exec(cmd, (err, stdout, stderr) => {
     if (err) {
       console.error(`exec error: ${err}`);
       return;
@@ -66,15 +68,21 @@ function getBaseVersion(str) {
   return str.substr(0, str.indexOf(versionTag) + versionTag.length);
 }
 
+function checkVersion() {
+  if (pkgJson.version.indexOf('-dev') === -1) {
+    console.log('Error! Cannot append date to non-dev version. Are you on the main branch?');
+    return false;
+  }
+
+  return true;
+}
+
 // -------------------------------------
 //   Main
 // -------------------------------------
 console.log('Manually publish a nightly build...');
 
-if (pkgJson.version.indexOf('-dev') === -1) {
-  console.log('Error! Cannot append date to non-dev version. Are you on the main branch?');
-  return false;
-}
+checkVersion();
 
 const questionsArr = [{
   type: 'list',
@@ -97,7 +105,6 @@ inquirer.prompt(questionsArr).then((answers) => {
   const cmdArr = [
     'git status -sb',
     'npm run build',
-    'npm run zip-dist',
     'npm publish --tag=dev',
     'echo Reset the package.json version',
     'git checkout package.json'

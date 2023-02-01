@@ -16,19 +16,19 @@
         // Define Columns for the Grid.
         var filterOptions = [{id: 'Test', value: 'Test', label: 'Test'} ];
 
-        columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
-        columns.push({ id: 'book', name: 'Book', field: 'book', formatter: Formatters.Text, filterType: 'text', textOverflow: 'ellipsis' });
-        columns.push({ id: 'description', name: 'Description', field: 'description', formatter: Formatters.Text, filterType: 'text', textOverflow: 'ellipsis' });
-	      columns.push({ id: 'ledger', name: 'Ledger', field: 'ledger', formatter: Formatters.Lookup, filterType: 'text', textOverflow: 'ellipsis' });
-	      columns.push({ id: 'bookCurrency', name: 'Book Currency', field: 'bookCurrency', formatter: Formatters.Dropdown, filterType: 'select', options: filterOptions, textOverflow: 'ellipsis' });
-        columns.push({ id: 'transactionCurrency', name: 'Transaction Currency', field: 'transactionCurrency', formatter: Formatters.Dropdown, filterType: 'select', options: filterOptions, textOverflow: 'ellipsis' });
-        columns.push({ id: 'postHistory', name: 'Post History', field: 'postHistory', formatter: Formatters.Dropdown, filterType: 'select', options: filterOptions, textOverflow: 'ellipsis' });
-        columns.push({ id: 'active', name: 'Active', field: 'active', formatter: Formatters.Dropdown, filterType: 'select', options: filterOptions, textOverflow: 'ellipsis' });
-        columns.push({ id: 'convention', name: 'Convention', field: 'convention', formatter: Formatters.Dropdown, filterType: 'select', options: filterOptions, textOverflow: 'ellipsis' });
-        columns.push({ id: 'methodSwitch', name: 'Method Switch', field: 'methodSwitch', formatter: Formatters.Dropdown, filterType: 'select', options: filterOptions, textOverflow: 'ellipsis' });
-        columns.push({ id: 'trackDeprecationHistory', name: 'Track Deprecation History', field: 'trackDeprecationHistory', formatter: Formatters.Dropdown, filterType: 'select', options: filterOptions, textOverflow: 'ellipsis'  });
-        columns.push({ id: 'useForEmployee', name: 'Use For Employee', field: 'useForEmployee', formatter: Formatters.Dropdown, filterType: 'select', options: filterOptions, textOverflow: 'ellipsis'  });
-        columns.push({ id: 'deprecationHistory', name: 'Deprecation History', field: 'deprecationHistory', formatter: Formatters.Dropdown, filterType: 'select', options: filterOptions, textOverflow: 'ellipsis'  });
+        columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center'});
+        columns.push({ id: 'book', name: 'Book', field: 'book', formatter: Soho.Formatters.Text, filterType: 'text', textOverflow: 'ellipsis' });
+        columns.push({ id: 'description', name: 'Description', field: 'description', formatter: Soho.Formatters.Text, filterType: 'text', textOverflow: 'ellipsis' });
+	      columns.push({ id: 'ledger', name: 'Ledger', field: 'ledger', formatter: Soho.Formatters.Lookup, filterType: 'text', textOverflow: 'ellipsis' });
+	      columns.push({ id: 'bookCurrency', name: 'Book Currency', field: 'bookCurrency', formatter: Soho.Formatters.Dropdown, filterType: 'select', options: filterOptions, textOverflow: 'ellipsis' });
+        columns.push({ id: 'transactionCurrency', name: 'Transaction Currency', field: 'transactionCurrency', formatter: Soho.Formatters.Dropdown, filterType: 'select', options: filterOptions, textOverflow: 'ellipsis' });
+        columns.push({ id: 'postHistory', name: 'Post History', field: 'postHistory', formatter: Soho.Formatters.Dropdown, filterType: 'select', options: filterOptions, textOverflow: 'ellipsis' });
+        columns.push({ id: 'active', name: 'Active', field: 'active', formatter: Soho.Formatters.Dropdown, filterType: 'select', options: filterOptions, textOverflow: 'ellipsis' });
+        columns.push({ id: 'convention', name: 'Convention', field: 'convention', formatter: Soho.Formatters.Dropdown, filterType: 'select', options: filterOptions, textOverflow: 'ellipsis' });
+        columns.push({ id: 'methodSwitch', name: 'Method Switch', field: 'methodSwitch', formatter: Soho.Formatters.Dropdown, filterType: 'select', options: filterOptions, textOverflow: 'ellipsis' });
+        columns.push({ id: 'trackDeprecationHistory', name: 'Track Deprecation History', field: 'trackDeprecationHistory', formatter: Soho.Formatters.Dropdown, filterType: 'select', options: filterOptions, textOverflow: 'ellipsis'  });
+        columns.push({ id: 'useForEmployee', name: 'Use For Employee', field: 'useForEmployee', formatter: Soho.Formatters.Dropdown, filterType: 'select', options: filterOptions, textOverflow: 'ellipsis'  });
+        columns.push({ id: 'deprecationHistory', name: 'Deprecation History', field: 'deprecationHistory', formatter: Soho.Formatters.Dropdown, filterType: 'select', options: filterOptions, textOverflow: 'ellipsis'  });
 
         // Init and get the api for the grid
         var api = $('#datagrid').datagrid({

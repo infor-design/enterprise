@@ -11,7 +11,7 @@
 
   $('body').one('initialized', function () {
 
-    Locale.set('en-US').done(function () {
+    Soho.Locale.set('en-US').done(function () {
         var grid,
           data = [],
           columns = [];
@@ -30,11 +30,11 @@
         };
 
         // Define Columns for the Grid.
-        columns.push({ id: 'attachmentId', name: 'Attachment', field: 'attachment', formatter: Formatters.Fileupload, editorOptions: {allowedTypes: 'jpg|png'}, editor: Editors.Fileupload, width: 290});
-        columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date, width: 130});
-        columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink});
-        columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Input, editor: Editors.Input});
-        columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, align: 'right', editor: Editors.Input, formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input, mask: '###.000'});
+        columns.push({ id: 'attachmentId', name: 'Attachment', field: 'attachment', formatter: Soho.Formatters.Fileupload, editorOptions: {allowedTypes: 'jpg|png'}, editor: Soho.Editors.Fileupload, width: 290});
+        columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, editor: Soho.Editors.Date, width: 130});
+        columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Soho.Formatters.Hyperlink});
+        columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Input, editor: Soho.Editors.Input});
+        columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, align: 'right', editor: Soho.Editors.Input, formatter: Soho.Formatters.Decimal, numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Soho.Editors.Input, mask: '###.000'});
         columns.push({ id: 'activity', name: 'Activity', field: 'activity'});
 
         // Init and get the api for the grid

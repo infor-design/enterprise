@@ -1,77 +1,77 @@
- <div class="row">
-    <div class="twelve columns">
-       <h3>
-          Grid Example: Performance Test
-       </h3>
-       <p>
-          Test by clicking "Load Data" and see how long it takes to render the rows. IE was very slow (30 + seconds)
-       </p>
-      <br/>
+<div class="row">
+   <div class="twelve columns">
+      <h3>
+         Grid Example: Performance Test
+      </h3>
+      <p>
+         Test by clicking "Load Data" and see how long it takes to render the rows. IE was very slow (30 + seconds)
+      </p>
+   <br/>
 
-      <div class="field">
-        <label for="record-count">Record Count</label>
-        <input id="record-count" name="record-count" type="text" class="new-mask input-sm" value="2000" data-options='{ "process": "number", "pattern" : "#,###,###" }' />
-      </div>
+   <div class="field">
+      <label for="record-count">Record Count</label>
+      <input id="record-count" name="record-count" type="text" class="new-mask input-sm" value="2000" data-options='{ "process": "number", "pattern" : "#,###,###" }' />
+   </div>
 
-       <button type="button" id="load" class="btn-secondary"><span>Load Data</span></button>
-       <hr class="fieldset-hr">
-    </div>
- </div>
+      <button type="button" id="load" class="btn-secondary"><span>Load Data</span></button>
+      <hr class="fieldset-hr">
+   </div>
+</div>
 
- <div class="row">
-    <div class="twelve columns" style="height:60vh;">
-       <div id="datagrid"></div>
-    </div>
- </div>
+<div class="row">
+   <div class="twelve columns" style="height:60vh;">
+      <div id="datagrid"></div>
+   </div>
+</div>
 
- <script>
-    $('body').one('initialized', function () {
-       var grid, columns = [];
+<script>
+   $('body').one('initialized', function () {
+      var grid, columns = [];
 
-       //Define Columns for the Grid.
-       columns.push({ id: 'productId', name: 'Product #', field: 'productId', formatter: Formatters.Text, align: 'right' });
-       columns.push({ id: 'productName', name: 'Product Name & Description', field: 'productName', formatter: Formatters.Text });
-       columns.push({ id: 'quantityback', name: 'Quantity Back Ordered', field: 'quantity', formatter: Formatters.Integer });
-       columns.push({ id: 'quantity', name: 'Quantity Available', field: 'quantity', formatter: Formatters.Integer, align: 'right' });
-       columns.push({ id: 'status', name: 'Status Indicator', field: 'status', formatter: Formatters.Checkbox, align: 'center' });
-       columns.push({ id: 'badge', name: 'Badge', field: 'quantity', align: 'center', formatter: Formatters.Badge, ranges: [{'min': 0, 'max': 150, 'classes': 'azure07', sortable: false}]});
-       columns.push({ id: 'tag', name: 'Tag', field: 'price', align: 'center', formatter: Formatters.Tag, ranges: [{'min': 151, 'max': 9999, 'classes': 'info'}]});
-       columns.push({ id: 'listprice', name: 'List Price', field: 'price', align: 'right', formatter: Formatters.Decimal});
-       columns.push({ id: 'price', name: 'Final Price', field: 'price', align: 'right', formatter: Formatters.Decimal});
-       columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
-       columns.push({ id: 'shipDate', name: 'Estimated Ship Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
-       columns.push({ id: 'activity', name: 'Activity', field: 'activity' });
+      //Define Columns for the Grid.
+      columns.push({ id: 'productId', name: 'Product #', field: 'productId', formatter: Soho.Formatters.Text, align: 'right' });
+      columns.push({ id: 'productName', name: 'Product Name & Description', field: 'productName', formatter: Soho.Formatters.Text });
+      columns.push({ id: 'quantityback', name: 'Quantity Back Ordered', field: 'quantity', formatter: Soho.Formatters.Integer });
+      columns.push({ id: 'quantity', name: 'Quantity Available', field: 'quantity', formatter: Soho.Formatters.Integer, align: 'right' });
+      columns.push({ id: 'status', name: 'Status Indicator', field: 'status', formatter: Soho.Formatters.Checkbox, align: 'center' });
+      columns.push({ id: 'badge', name: 'Badge', field: 'quantity', align: 'center', formatter: Soho.Formatters.Badge, ranges: [{'min': 0, 'max': 150, 'classes': 'azure07', sortable: false}]});
+      columns.push({ id: 'tag', name: 'Tag', field: 'price', align: 'center', formatter: Soho.Formatters.Tag, ranges: [{'min': 151, 'max': 9999, 'classes': 'info'}]});
+      columns.push({ id: 'listprice', name: 'List Price', field: 'price', align: 'right', formatter: Soho.Formatters.Decimal});
+      columns.push({ id: 'price', name: 'Final Price', field: 'price', align: 'right', formatter: Soho.Formatters.Decimal});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy'});
+      columns.push({ id: 'shipDate', name: 'Estimated Ship Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy'});
+      columns.push({ id: 'activity', name: 'Activity', field: 'activity' });
 
-       grid = $('#datagrid').datagrid({
-          columns: columns,
-          dataset: [],
-          isList: true,
-          selectable: 'multiple',
-          columnReorder: true,
-          toolbar: {title: 'Records', results: true, actions: true, exportToExcel: true, views: true, rowHeight: true, collapsibleFilter: true}
-       }).data('datagrid');
+      grid = $('#datagrid').datagrid({
+         columns: columns,
+         dataset: [],
+         isList: true,
+         selectable: 'multiple',
+         columnReorder: true,
+         toolbar: {title: 'Records', results: true, actions: true, exportToExcel: true, views: true, rowHeight: true, collapsibleFilter: true}
+      }).data('datagrid');
 
-       // Load function
-       $('#load').click(function () {
-         var data = [], i;
-         var count = $('#record-count').val();
-         count = count ? Locale.parseNumber(count) : 0;
+      // Load function
+      $('#load').click(function () {
+      var data = [], i;
+      var count = $('#record-count').val();
+      count = count ? Soho.Locale.parseNumber(count) : 0;
 
-         // Build Sample Data
-         for (i = 1; i <= count; i++) {
-           data.push({ id: i, productId: i, productName: 'Compressor', activity:  'Assemble Paint', quantity: 1, price: 210.99, status: 'OK', orderDate: new Date(2014, 12, 8), action: 'Action' });
-         }
+      // Build Sample Data
+      for (i = 1; i <= count; i++) {
+         data.push({ id: i, productId: i, productName: 'Compressor', activity:  'Assemble Paint', quantity: 1, price: 210.99, status: 'OK', orderDate: new Date(2014, 12, 8), action: 'Action' });
+      }
 
-          // Time the loadData call
-          var start = new Date().getTime();
-          grid.loadData(data);
-          var end = new Date().getTime();
+         // Time the loadData call
+         var start = new Date().getTime();
+         grid.loadData(data);
+         var end = new Date().getTime();
 
-          $('body').toast({
-             title: 'Time to Load Data',
-             message: (end - start) / 1000 + ' seconds'
-          });
-       });
-    });
+         $('body').toast({
+            title: 'Time to Load Data',
+            message: (end - start) / 1000 + ' seconds'
+         });
+      });
+   });
 
- </script>
+</script>

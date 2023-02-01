@@ -39,28 +39,28 @@
     data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: '123.99', percent: .10, status: 'OK', orderDate: null, action: 'On Hold'});
 
     //Define Columns for the Grid.
-    columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
-    columns.push({ id: 'productId', name: 'Id', field: 'productId', formatter: Formatters.Text});
-    columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink});
+    columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center'});
+    columns.push({ id: 'productId', name: 'Id', field: 'productId', formatter: Soho.Formatters.Text});
+    columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Soho.Formatters.Hyperlink});
     columns.push({ id: 'activity', name: 'Activity', field: 'activity'});
 //    columns.push({ id: 'hidden', hidden: true, name: 'Hidden', field: 'hidden'});
-    columns.push({ id: 'price', align: 'right', name: 'Actual Price', field: 'price', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
-    columns.push({ id: 'percent', align: 'right', name: 'Actual %', field: 'percent', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'percent'}});
-    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
-    columns.push({ id: '', name: 'Actions', field: '', width: 200, formatter: Formatters.Actions, menuId: 'grid-actions-menu'});
-//    columns.push({ id: 'phone', name: 'Phone', field: 'phone', formatter: Formatters.Text});
-    columns.push({ id: 'field1', name: 'Field1', field: 'field1', formatter: Formatters.Text });
-    columns.push({ id: 'field2', name: 'Field2', field: 'field2', formatter: Formatters.Text });
-    columns.push({ id: 'field3', name: 'Field3', field: 'field3', formatter: Formatters.Text });
-    columns.push({ id: 'field4', name: 'Field4', field: 'field4', formatter: Formatters.Text });
-    columns.push({ id: 'field5', name: 'Field5', field: 'field5', formatter: Formatters.Text });
-    columns.push({ id: 'field6', name: 'Field6', field: 'field6', formatter: Formatters.Text });
-    columns.push({ id: 'field7', name: 'Field7', field: 'field7', formatter: Formatters.Text });
-    columns.push({ id: 'field8', name: 'Field8', field: 'field8', formatter: Formatters.Text });
-    columns.push({ id: 'field9', name: 'Field9', field: 'field9', formatter: Formatters.Text });
-    columns.push({ id: 'field10', name: 'Field10', field: 'field10', formatter: Formatters.Text });
-    columns.push({ id: 'field11', name: 'Field11', field: 'field11', formatter: Formatters.Text });
-    columns.push({ id: 'field12', name: 'Field12', field: 'field12', formatter: Formatters.Text });
+    columns.push({ id: 'price', align: 'right', name: 'Actual Price', field: 'price', formatter: Soho.Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
+    columns.push({ id: 'percent', align: 'right', name: 'Actual %', field: 'percent', formatter: Soho.Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'percent'}});
+    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy'});
+    columns.push({ id: '', name: 'Actions', field: '', width: 200, formatter: Soho.Formatters.Actions, menuId: 'grid-actions-menu'});
+//    columns.push({ id: 'phone', name: 'Phone', field: 'phone', formatter: Soho.Formatters.Text});
+    columns.push({ id: 'field1', name: 'Field1', field: 'field1', formatter: Soho.Formatters.Text });
+    columns.push({ id: 'field2', name: 'Field2', field: 'field2', formatter: Soho.Formatters.Text });
+    columns.push({ id: 'field3', name: 'Field3', field: 'field3', formatter: Soho.Formatters.Text });
+    columns.push({ id: 'field4', name: 'Field4', field: 'field4', formatter: Soho.Formatters.Text });
+    columns.push({ id: 'field5', name: 'Field5', field: 'field5', formatter: Soho.Formatters.Text });
+    columns.push({ id: 'field6', name: 'Field6', field: 'field6', formatter: Soho.Formatters.Text });
+    columns.push({ id: 'field7', name: 'Field7', field: 'field7', formatter: Soho.Formatters.Text });
+    columns.push({ id: 'field8', name: 'Field8', field: 'field8', formatter: Soho.Formatters.Text });
+    columns.push({ id: 'field9', name: 'Field9', field: 'field9', formatter: Soho.Formatters.Text });
+    columns.push({ id: 'field10', name: 'Field10', field: 'field10', formatter: Soho.Formatters.Text });
+    columns.push({ id: 'field11', name: 'Field11', field: 'field11', formatter: Soho.Formatters.Text });
+    columns.push({ id: 'field12', name: 'Field12', field: 'field12', formatter: Soho.Formatters.Text });
 
     //Init and get the api for the grid
     grid = $('#datagrid').datagrid({

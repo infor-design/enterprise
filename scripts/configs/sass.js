@@ -2,7 +2,7 @@ const genericOpts = {
   sourceMap: true
 };
 
-module.exports = {
+export default {
   sass: {
     dist: {
       options: genericOpts,

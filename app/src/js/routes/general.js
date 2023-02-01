@@ -1,13 +1,13 @@
 // General Route
 //= ====================================================
-const path = require('path');
-const express = require('express');
+import * as path from 'path';
+import express from 'express';
 
-const utils = require('../utils');
-const directoryListing = require('./directory-list');
-const sendGeneratedDocPage = require('./docs');
-const customRouteOptions = require('../custom-route-options');
-const setLayout = require('../set-layout');
+import utils from '../utils.js';
+import directoryListing from './directory-list.js';
+import sendGeneratedDocPage from './docs.js';
+import customRouteOptions from '../custom-route-options.js';
+import setLayout from '../set-layout.js';
 
 const router = express.Router();
 
@@ -148,4 +148,4 @@ router.get('*', (req, res, next) => {
   next(`File "${req.originalUrl}" was not found`);
 });
 
-module.exports = router;
+export default router;

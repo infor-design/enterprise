@@ -20,14 +20,14 @@
       $.getJSON('{{basepath}}api/datagrid-sample-data', function(res) {
 
         // Define Columns for the Grid.
-        columns.push({ id: 'productId', hideable: false, name: 'Id', field: 'productId', formatter: Formatters.Text });
-        columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, click: function(e) { console.log('Click Fired') } });
+        columns.push({ id: 'productId', hideable: false, name: 'Id', field: 'productId', formatter: Soho.Formatters.Text });
+        columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Soho.Formatters.Hyperlink, click: function(e) { console.log('Click Fired') } });
         columns.push({ id: 'activity', name: 'Activity', field: 'activity'});
         columns.push({ id: 'hidden', hidden: true, name: 'Hidden', field: 'hidden'});
-        columns.push({ id: 'price', align: 'right', name: 'Actual Price', field: 'price', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
-        columns.push({ id: 'percent', align: 'right', name: 'Actual %', field: 'percent', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'percent'}});
-        columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
-        columns.push({ id: 'phone', name: 'Phone', field: 'phone', formatter: Formatters.Text});
+        columns.push({ id: 'price', align: 'right', name: 'Actual Price', field: 'price', formatter: Soho.Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
+        columns.push({ id: 'percent', align: 'right', name: 'Actual %', field: 'percent', formatter: Soho.Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'percent'}});
+        columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy'});
+        columns.push({ id: 'phone', name: 'Phone', field: 'phone', formatter: Soho.Formatters.Text});
 
         // Init and get the api for the grid
         datagrid = $('#datagrid').datagrid({

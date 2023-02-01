@@ -248,7 +248,7 @@ Arrange.prototype = {
           if ((typeof result === 'boolean' && !result) || (typeof result === 'string' && result.toLowerCase() === 'false')) {
             self.dragging = null;
             return;
-          } 
+          }
 
           // Get size of drag item and its position
           const rect = self.dragging[0].getBoundingClientRect();

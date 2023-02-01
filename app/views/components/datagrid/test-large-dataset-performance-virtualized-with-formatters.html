@@ -30,17 +30,17 @@
 
 
      //Define Columns for the Grid.
-     columns.push({ id: 'productId', name: 'Product #', field: 'productId', formatter: Formatters.Text, align: 'right' });
-     columns.push({ id: 'productName', name: 'Product Name & Description', field: 'productName', formatter: Formatters.Text });
-     columns.push({ id: 'quantityback', name: 'Quantity Back Ordered', field: 'quantity', formatter: Formatters.Integer });
-     columns.push({ id: 'quantity', name: 'Quantity Available', field: 'quantity', formatter: Formatters.Integer, align: 'right' });
-     columns.push({ id: 'status', name: 'Status Indicator', field: 'status', formatter: Formatters.Checkbox, align: 'center' });
-     columns.push({ id: 'badge', name: 'Badge', field: 'quantity', align: 'center', formatter: Formatters.Badge, ranges: [{'min': 0, 'max': 150, 'classes': 'azure07', sortable: false}]});
-     columns.push({ id: 'tag', name: 'Tag', field: 'price', align: 'center', formatter: Formatters.Tag, ranges: [{'min': 151, 'max': 9999, 'classes': 'info'}]});
-     columns.push({ id: 'listprice', name: 'List Price', field: 'price', align: 'right', formatter: Formatters.Decimal});
-     columns.push({ id: 'price', name: 'Final Price', field: 'price', align: 'right', formatter: Formatters.Decimal});
-     columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
-     columns.push({ id: 'shipDate', name: 'Estimated Ship Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+     columns.push({ id: 'productId', name: 'Product #', field: 'productId', formatter: Soho.Formatters.Text, align: 'right' });
+     columns.push({ id: 'productName', name: 'Product Name & Description', field: 'productName', formatter: Soho.Formatters.Text });
+     columns.push({ id: 'quantityback', name: 'Quantity Back Ordered', field: 'quantity', formatter: Soho.Formatters.Integer });
+     columns.push({ id: 'quantity', name: 'Quantity Available', field: 'quantity', formatter: Soho.Formatters.Integer, align: 'right' });
+     columns.push({ id: 'status', name: 'Status Indicator', field: 'status', formatter: Soho.Formatters.Checkbox, align: 'center' });
+     columns.push({ id: 'badge', name: 'Badge', field: 'quantity', align: 'center', formatter: Soho.Formatters.Badge, ranges: [{'min': 0, 'max': 150, 'classes': 'azure07', sortable: false}]});
+     columns.push({ id: 'tag', name: 'Tag', field: 'price', align: 'center', formatter: Soho.Formatters.Tag, ranges: [{'min': 151, 'max': 9999, 'classes': 'info'}]});
+     columns.push({ id: 'listprice', name: 'List Price', field: 'price', align: 'right', formatter: Soho.Formatters.Decimal});
+     columns.push({ id: 'price', name: 'Final Price', field: 'price', align: 'right', formatter: Soho.Formatters.Decimal});
+     columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy'});
+     columns.push({ id: 'shipDate', name: 'Estimated Ship Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy'});
      columns.push({ id: 'activity', name: 'Activity', field: 'activity' });
 
      grid = $('#datagrid').datagrid({
@@ -57,7 +57,7 @@
      $('#load').click(function () {
        var data = [], i;
        var count = $('#record-count').val();
-       count = count ? Locale.parseNumber(count) : 0;
+       count = count ? Soho.Locale.parseNumber(count) : 0;
 
        // Build Sample Data
        for (i = 1; i <= count; i++) {

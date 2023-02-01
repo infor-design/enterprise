@@ -1,11 +1,10 @@
 // Directory List Route
 // =============================================
-
-const fs = require('fs');
-const path = require('path');
-const logger = require('../logger');
-const setLayout = require('../set-layout');
-const utils = require('../utils');
+import * as fs from 'fs';
+import * as path from 'path';
+import logger from '../logger.js';
+import setLayout from '../set-layout.js';
+import utils from '../utils.js';
 
 // Excluded file names that should never appear in the DemoApp List Pages
 const GENERAL_LISTING_EXCLUDES = [
@@ -24,7 +23,7 @@ function formatPath(filename) {
 }
 
 // Returns a directory listing as page content with working links
-module.exports = function directoryList(directory, viewsRoot, req, res, next) {
+export default function directoryList(directory, viewsRoot, req, res, next) {
   fs.readdir(directory, (err, paths) => {
     if (err) {
       logger('error', `Directory Listing Error: ${err}`);
@@ -108,4 +107,4 @@ module.exports = function directoryList(directory, viewsRoot, req, res, next) {
 
     res.render(path.join(viewsRoot, 'listing.html'), res.opts);
   });
-};
+}

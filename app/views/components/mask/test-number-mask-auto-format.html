@@ -23,7 +23,7 @@
   $('body').on('initialized', function() {
     $('#input-masked-number').on('focusout.test', function() {
       var val = $(this).val();
-      val = Locale.formatNumber(val, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+      val = Soho.Locale.formatNumber(val, {minimumFractionDigits: 2, maximumFractionDigits: 2});
       $(this).val(val);
     });
   });

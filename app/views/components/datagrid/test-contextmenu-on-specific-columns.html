@@ -42,11 +42,11 @@
     data.push({ id: 7, productId: 2642206, productName: 'Some Compressor', activity: 'inspect and Repair', quantity: 41, price: '100.99', status: 'OK', orderDate: new Date(2014, 6, 9, 12, 12, 12), action: 'On Hold', ordered: 0, linkName: 'CNN', linkHref: 'http://cnn.com' });
 
     // Define Columns for the Grid.
-    columns.push({ id: 'productDesc', name: 'Product Desc', sortable: false, field: 'productName', formatter: Formatters.Text });
+    columns.push({ id: 'productDesc', name: 'Product Desc', sortable: false, field: 'productName', formatter: Soho.Formatters.Text });
     columns.push({ id: 'activity', name: 'Activity', field: 'activity' });
     columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity' });
-    columns.push({ id: 'price1', name: 'Price', field: 'price', formatter: Formatters.Decimal });
-    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'yy/MM/dd' });
+    columns.push({ id: 'price1', name: 'Price', field: 'price', formatter: Soho.Formatters.Decimal });
+    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'yy/MM/dd' });
     columns.push({ id: 'link', name: 'Link', field: 'linkName', formatter: customLinkFormatter });
 
     // Invoke the Grid

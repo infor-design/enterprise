@@ -24,11 +24,11 @@
 
       // Define Columns for the Lookup Grid.
       lookupColumns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140});
-      lookupColumns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 250, formatter: Formatters.Hyperlink});
+      lookupColumns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 250, formatter: Soho.Formatters.Hyperlink});
       lookupColumns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125});
       lookupColumns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 125});
-      lookupColumns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Formatters.Decimal});
-      lookupColumns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+      lookupColumns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Soho.Formatters.Decimal});
+      lookupColumns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy'});
 
       lookupOptions = {
         // field: 'productId',
@@ -50,13 +50,13 @@
         columns = [];
 
       // Define Columns for the Grid.
-      columns.push({ id: 'favorite', name: '', field: 'favorite', formatter: Formatters.Favorite});
-      columns.push({ id: 'companyName', name: 'Company Name', field: 'companyName', formatter: Formatters.Hyperlink});
+      columns.push({ id: 'favorite', name: '', field: 'favorite', formatter: Soho.Formatters.Favorite});
+      columns.push({ id: 'companyName', name: 'Company Name', field: 'companyName', formatter: Soho.Formatters.Hyperlink});
       columns.push({ id: 'phone', name: 'Phone', field: 'phone'});
       columns.push({ id: 'location', name: 'Location', field: 'location'});
       columns.push({ id: 'contact', name: 'Contact Name', field: 'contact'});
-      columns.push({ id: 'customerSince', name: 'Customer Since', field: 'customerSince', sortFunction: function (value) { return Locale.parseDate(value).getTime(); } });
-      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Lookup, minWidth: 100, editor: Editors.Lookup, textOverflow: 'ellipsis', editorOptions: lookupOptions });
+      columns.push({ id: 'customerSince', name: 'Customer Since', field: 'customerSince', sortFunction: function (value) { return Soho.Locale.parseDate(value).getTime(); } });
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Lookup, minWidth: 100, editor: Soho.Editors.Lookup, textOverflow: 'ellipsis', editorOptions: lookupOptions });
 
       var url = '{{basepath}}api/companies';
 

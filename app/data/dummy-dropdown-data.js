@@ -1,5 +1,5 @@
-const data = require('../src/js/get-junk-dropdown-data');
+const data = import('../src/js/get-junk-dropdown-data');
 
-module.exports = (req, res) => {
+export default function dummyData(req, res) {
   res.json(data);
-};
+}

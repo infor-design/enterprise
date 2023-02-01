@@ -1,14 +1,36 @@
 /* eslint-disable no-underscore-dangle */
-const csp = require('express-csp');
-const express = require('express');
-const csrf = require('csurf');
-const session = require('express-session');
-const mmm = require('mmm');
-const path = require('path');
-const crypto = require('crypto');
+import csp from 'express-csp';
+import express from 'express';
 
-const utils = require('./src/js/utils');
-const getJSONFile = require('./src/js/get-json-file');
+import session from 'express-session';
+import mmm from 'mmm';
+import * as path from 'path';
+import { fileURLToPath } from 'url';
+import crypto from 'crypto';
+
+import requestLoggers from './src/js/middleware/request-logger.js';
+import cmdParamsHandlers from './src/js/middleware/cmd-params-handler.js';
+import optionHandlers from './src/js/middleware/option-handler.js';
+import optionHandlerThemes from './src/js/middleware/option-handler-themes.js';
+import optionHandlerFonts from './src/js/middleware/option-handler-fonts.js';
+import basePathHandler from './src/js/middleware/basepath-handler.js';
+import globalDataHandler from './src/js/middleware/global-data-handler.js';
+import responseThrottler from './src/js/middleware/response-throttler.js';
+import removeHeaders from './src/js/middleware/remove-headers.js';
+// import cspHandler from './src/js/middleware/csp-handler.js';
+import infoHandler from './src/js/middleware/info-handler.js';
+
+import utils from './src/js/utils.js';
+import getJSONFile from './src/js/get-json-file.js';
+
+import customRoutes from './src/js/routes/custom-routes.js';
+import generalRoute from './src/js/routes/general.js';
+import sendGeneratedDocPage from './src/js/routes/docs.js';
+import data from './src/js/routes/data.js';
+import errorHandler from './src/js/middleware/error-handler.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 
@@ -52,11 +74,6 @@ app.use(session({
     secure: false
   }
 }));
-app.use(csrf());
-app.use((req, res, next) => {
-  res.locals._csrf = req.csrfToken();
-  next();
-});
 
 // Create the express router with the same settings as the app.
 const router = express.Router({
@@ -83,23 +100,20 @@ const DEFAULT_RESPONSE_OPTS = {
 csp.extend(app);
 
 // Import various custom middleware (order matters!)
-app.use(require('./src/js/middleware/request-logger')(app));
-app.use(require('./src/js/middleware/cmd-params-handler')(app, DEFAULT_RESPONSE_OPTS));
-app.use(require('./src/js/middleware/option-handler')(app));
-app.use(require('./src/js/middleware/option-handler-themes')(app));
-app.use(require('./src/js/middleware/option-handler-fonts')());
-app.use(require('./src/js/middleware/basepath-handler')(app));
-app.use(require('./src/js/middleware/global-data-handler')(app));
-app.use(require('./src/js/middleware/response-throttler')(app));
-app.use(require('./src/js/middleware/remove-headers')(app));
-app.use(require('./src/js/middleware/csp-handler')(app));
-app.use(require('./src/js/middleware/info-handler')(app));
+app.use(requestLoggers(app));
+app.use(cmdParamsHandlers(app, DEFAULT_RESPONSE_OPTS));
+app.use(optionHandlers(app));
+app.use(optionHandlerThemes(app));
+app.use(optionHandlerFonts());
+app.use(basePathHandler(app));
+app.use(globalDataHandler(app));
+app.use(responseThrottler(app));
+app.use(removeHeaders(app));
+// TODO
+// app.use(cspHandler(app));
+app.use(infoHandler(app));
 
 app.use(router);
-
-const customRoutes = require('./src/js/routes/custom-routes');
-const generalRoute = require('./src/js/routes/general');
-const sendGeneratedDocPage = require('./src/js/routes/docs');
 
 // ======================================
 //  Main Routing and Param Handling
@@ -136,7 +150,7 @@ app.use('/utils', generalRoute);
 // =========================================
 // Fake 'API' Calls for use with AJAX-ready Controls
 // =========================================
-app.use('/api', require('./src/js/routes/data'));
+app.use('/api', data);
 
 // =========================================
 // Catch-all 404 at the base router level
@@ -149,6 +163,6 @@ app.use((req, res, next) => {
 // =========================================
 // Error Handling
 // =========================================
-app.use(require('./src/js/middleware/error-handler')(app));
+app.use(errorHandler(app));
 
-module.exports = app;
+export default app;

@@ -81,10 +81,10 @@
         data.push({ action: 'val5' });
 
         // Define Columns for the Grid.
-        columns.push({ id: 'c0', name: 'Action 0', field: 'action', formatter: Formatters.Dropdown, editor: Editors.Dropdown, validate: 'required', options: dropdowndOptions, editorOptions: { noSearch: true }, width: 170 });
-        columns.push({ id: 'c1', name: 'Action 1', field: 'action', formatter: Formatters.Dropdown, editor: Editors.Dropdown, validate: 'required', options: dropdowndOptions, width: 170 });
-        columns.push({ id: 'c2', name: 'Action 2', field: 'action', formatter: Formatters.Dropdown, editor: Editors.Dropdown, validate: 'required', options: dropdowndOptions });
-        columns.push({ id: 'c3', name: 'Action 3', field: 'action', formatter: Formatters.Dropdown, editor: Editors.Dropdown, validate: 'required', options: dropdowndOptions });
+        columns.push({ id: 'c0', name: 'Action 0', field: 'action', formatter: Soho.Formatters.Dropdown, editor: Soho.Editors.Dropdown, validate: 'required', options: dropdowndOptions, editorOptions: { noSearch: true }, width: 170 });
+        columns.push({ id: 'c1', name: 'Action 1', field: 'action', formatter: Soho.Formatters.Dropdown, editor: Soho.Editors.Dropdown, validate: 'required', options: dropdowndOptions, width: 170 });
+        columns.push({ id: 'c2', name: 'Action 2', field: 'action', formatter: Soho.Formatters.Dropdown, editor: Soho.Editors.Dropdown, validate: 'required', options: dropdowndOptions });
+        columns.push({ id: 'c3', name: 'Action 3', field: 'action', formatter: Soho.Formatters.Dropdown, editor: Soho.Editors.Dropdown, validate: 'required', options: dropdowndOptions });
 
         $('#datagrid').datagrid({
           columns: columns,

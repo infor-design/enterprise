@@ -10,7 +10,7 @@
 
   $('body').one('initialized', function () {
 
-    Locale.set('en-US').done(function () {
+    Soho.Locale.set('en-US').done(function () {
         var grid,
           data = [],
           columns = [];
@@ -30,9 +30,9 @@
 
         //Define Columns for the Grid.
         columns.push({ id: 'productId', name: 'Product Id', field: 'productId'});
-        columns.push({ id: 'productName', name: 'Product Name', field: 'productName', editor: Editors.Input});
-        columns.push({ id: 'spinBox1', name: 'Spinbox Max (50)', field: 'quantity', formatter: Formatters.Spinbox, editor: Editors.Spinbox, isEditable: isDisabled, editorOptions: {min: 0, max: 50}, width: 150});
-        columns.push({ id: 'spinBox2', name: 'Spinbox (step-3)', field: 'price', formatter: Formatters.Spinbox, editor: Editors.Spinbox, isEditable: isDisabled, editorOptions: {step: 3}, width: 150});
+        columns.push({ id: 'productName', name: 'Product Name', field: 'productName', editor: Soho.Editors.Input});
+        columns.push({ id: 'spinBox1', name: 'Spinbox Max (50)', field: 'quantity', formatter: Soho.Formatters.Spinbox, editor: Soho.Editors.Spinbox, isEditable: isDisabled, editorOptions: {min: 0, max: 50}, width: 150});
+        columns.push({ id: 'spinBox2', name: 'Spinbox (step-3)', field: 'price', formatter: Soho.Formatters.Spinbox, editor: Soho.Editors.Spinbox, isEditable: isDisabled, editorOptions: {step: 3}, width: 150});
         columns.push({ id: 'buffer', name: '', field: ''});
 
         //Init and get the api for the grid

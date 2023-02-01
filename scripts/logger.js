@@ -2,8 +2,6 @@
 // Wraps `console.log` so we don't have errors
 // all over the place.
 // ===============================================
-const chalk = require('chalk'); //eslint-disable-line
-
 const logTypes = [
   'normal', 'timestamp', 'success', 'info', 'error', 'alert', 'skip', 'callout'
 ];
@@ -33,7 +31,7 @@ function pad(n) {
 }
 
 // Simple wrapper for `console.log`
-function logger(type, msg) {
+export default function logger(type, msg) {
   let consoleType = type;
   let consoleMsg = msg;
 
@@ -55,28 +53,28 @@ function logger(type, msg) {
       prefix = pad(3);
       break;
     case 'timestamp':
-      prefix = chalk.gray(new Date().toISOString().replace('T', ' ').replace('Z', '') + pad(1));
+      prefix = new Date().toISOString().replace('T', ' ').replace('Z', '') + pad(1);
       break;
     case 'success':
-      prefix = chalk.green(CHECKMARK) + pad(2);
+      prefix = CHECKMARK + pad(2);
       break;
     case 'error':
-      prefix = chalk.red(ERROR_X) + pad(2);
+      prefix = ERROR_X + pad(2);
       break;
     case 'alert':
-      prefix = chalk.yellow(WARN) + pad(2);
+      prefix = WARN + pad(2);
       break;
     case 'skip':
-      prefix = chalk.cyan(NDASH) + pad(2);
+      prefix = NDASH + pad(2);
       break;
     case 'bullet':
-      prefix = chalk.gray(NDASH) + pad(2);
+      prefix = NDASH + pad(2);
       break;
     case 'info':
-      prefix = chalk.blue(INFO_I) + pad(2);
+      prefix = INFO_I + pad(2);
       break;
     case 'callout':
-      prefix = chalk.cyan(CALLOUT) + pad(1);
+      prefix = CALLOUT + pad(1);
       break;
     case 'beer':
       prefix = BEER + pad(1);
@@ -90,5 +88,3 @@ function logger(type, msg) {
     console.log(prefix + consoleMsg);
   }
 }
-
-module.exports = logger;

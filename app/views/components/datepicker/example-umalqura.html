@@ -10,7 +10,7 @@
 <script>
   $('body').on('initialized', function () {
     // Change locale to one that supports umalqura calendar (Hijri)
-    Locale.set('ar-SA').done(function () {
+    Soho.Locale.set('ar-SA').done(function () {
       $('#islamic-date').datepicker();
     });
   });

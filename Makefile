@@ -30,5 +30,4 @@ tail :
 	docker logs -f $(SOHO_CONTAINER)
 
 watch :
-	docker exec -ti $(SOHO_CONTAINER) /bin/bash -c "cd /controls && grunt watch"
-	@echo "[Info] ctrl-c to stop grunt watch"
+	docker exec -ti $(SOHO_CONTAINER) /bin/bash -c "cd /controls && npm run watch"

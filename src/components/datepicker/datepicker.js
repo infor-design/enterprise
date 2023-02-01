@@ -624,6 +624,7 @@ DatePicker.prototype = {
 
   /**
    * Loads legend list to the monthview settings.
+   * @param {object} legendList The legend object
    * @returns {void}
    */
   loadLegend(legendList) {

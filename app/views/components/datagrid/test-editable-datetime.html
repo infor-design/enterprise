@@ -38,13 +38,13 @@
       data.push({ id: 7, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', portable: true, quantity: 41, price: 123.99, status: 'OK', state:'Idaho', orderDate: new Date(2014, 6, 9), action: 'oh'});
 
       //Define Columns for the Grid.
-      columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center', width: 65});
+      columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center', width: 65});
       columns.push({ id: 'productId', name: 'ProductId Id ', field: 'productId'});
-      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date,filterType: 'date', dateFormat: 'M/d/yyyy', width: 200});
-      columns.push({ id: 'orderDate', name: 'Order Date 2', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date, filterType: 'date', width: 200, editorOptions: {secondInterval: 1, minuteInterval: 1, showTime: false, dateFormat: 'M/d/yyyy HH:mm:ss' }, dateFormat: 'M/d/yyyy HH:mm:ss'});
-      columns.push({ id: 'orderDate2', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date, filterType: 'date', width: 200, editorOptions: {showTime: true, dateFormat: Locale.calendar().dateFormat.datetime}, dateFormat: Locale.calendar().dateFormat.datetime});
-      columns.push({ id: 'orderDateOnly', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, filterType: 'date', width: 200, editorOptions: {showTime: false, dateFormat: Locale.calendar().dateFormat.date}, dateFormat: Locale.calendar().dateFormat.date});
-      columns.push({ id: 'orderTime', name: 'Order Time', field: 'orderDate', formatter: Formatters.Time, filterType: 'time', width: 200, editorOptions: {secondInterval: 1, minuteInterval: 1,timeFormat: Locale.calendar().dateFormat.timestamp}, timeFormat: Locale.calendar().dateFormat.timestamp});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date,filterType: 'date', dateFormat: 'M/d/yyyy', width: 200});
+      columns.push({ id: 'orderDate', name: 'Order Date 2', field: 'orderDate', formatter: Soho.Formatters.Date, editor: Soho.Editors.Date, filterType: 'date', width: 200, editorOptions: {secondInterval: 1, minuteInterval: 1, showTime: false, dateFormat: 'M/d/yyyy HH:mm:ss' }, dateFormat: 'M/d/yyyy HH:mm:ss'});
+      columns.push({ id: 'orderDate2', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, editor: Soho.Editors.Date, filterType: 'date', width: 200, editorOptions: {showTime: true, dateFormat: Soho.Locale.calendar().dateFormat.datetime}, dateFormat: Soho.Locale.calendar().dateFormat.datetime});
+      columns.push({ id: 'orderDateOnly', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, filterType: 'date', width: 200, editorOptions: {showTime: false, dateFormat: Soho.Locale.calendar().dateFormat.date}, dateFormat: Soho.Locale.calendar().dateFormat.date});
+      columns.push({ id: 'orderTime', name: 'Order Time', field: 'orderDate', formatter: Soho.Formatters.Time, filterType: 'time', width: 200, editorOptions: {secondInterval: 1, minuteInterval: 1,timeFormat: Soho.Locale.calendar().dateFormat.timestamp}, timeFormat: Soho.Locale.calendar().dateFormat.timestamp});
       columns.push({ id: 'productName', name: 'Row Id', field: 'productName', filterType: 'text'});
 
       //Init and get the api for the grid

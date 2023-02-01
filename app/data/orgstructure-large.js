@@ -1,4 +1,4 @@
-module.exports = (req, res) => {
+export default function orgLarge(req, res) {
   const menPath = `${res.opts.basepath}images/`;
   const womenPath = `${res.opts.basepath}images/`;
   const orgdata = [{
@@ -86,4 +86,4 @@ module.exports = (req, res) => {
 
   res.setHeader('Content-Type', 'application/json');
   res.end(JSON.stringify(orgdata));
-};
+}

@@ -928,8 +928,10 @@ Tree.prototype = {
     if (currentIcon === this.settings.folderIconClosed || this.settings.useExpandTarget) {
       this.setFolderIcon(node, true, false, this.settings.expandPlusminusRotate);
     } else if (/open|close/g.test(currentIcon) && !this.settings.useExpandTarget) {
-      this.setTreeIcon(node.find('svg.icon-tree'),
-        currentIcon.replace('closed', 'open').replace(/\s?is-selected/, ''));
+      this.setTreeIcon(
+        node.find('svg.icon-tree'),
+        currentIcon.replace('closed', 'open').replace(/\s?is-selected/, '')
+      );
     }
 
     if (this.hasIconClass(nodeClass)) {

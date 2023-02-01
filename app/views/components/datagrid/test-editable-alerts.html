@@ -71,18 +71,18 @@
       data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'Processing'});
 
       // Define Columns for the Grid.
-      columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
-      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, href: 'http://www.google.com' });
+      columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center'});
+      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Soho.Formatters.Hyperlink, href: 'http://www.google.com' });
       columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity'});
-      columns.push({ id: 'alert', name: 'Alert w Text', field: 'quantity', formatter: Formatters.Alert, editor: Editors.Input, ranges: [{'min': 0, 'max': 8, 'classes': 'info', 'text': ' Alert Text'}, {'min': 9, 'max': 1000, 'classes': 'error', 'text': ' Alert Text'}]});
-      columns.push({ id: 'price', name: 'Alert Choose Header', field: 'price', formatter: Formatters.Alert, editor: Editors.Input, ranges: [{'min': 0, 'max': 150, 'classes': 'success', text: ' '}, {'min': 151, 'max': 9999, 'classes': 'error', text: ' '}]});
-      columns.push({ id: 'price2', name: 'Alert', field: 'price', align: 'center', formatter: Formatters.Alert, editor: Editors.Input, ranges: [{'min': 0, 'max': 150, 'classes': 'success', text: ' '}, {'min': 151, 'max': 9999, 'classes': 'alert', text: ' '}]});
-      columns.push({ id: 'quantity', name: 'Badge', field: 'quantity', align: 'center', formatter: Formatters.Badge, editor: Editors.Input, sortable: false, ranges: [{'min': 0, 'max': 2, 'classes': 'error'}, {'value': 41, 'classes': 'good'}]});
-      columns.push({ id: 'price3', name: 'Tag', field: 'price', align: 'center', formatter: Formatters.Tag, editor: Editors.Input, ranges: [{'min': 151, 'max': 9999, 'classes': 'info'}]});
-      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: customDate, editor: Editors.Date, dateFormat: 'M/d/yyyy'});
-      columns.push({ id: 'action', name: 'Action', field: 'action', formatter: myCustom, editor: Editors.Dropdown,
+      columns.push({ id: 'alert', name: 'Alert w Text', field: 'quantity', formatter: Soho.Formatters.Alert, editor: Soho.Editors.Input, ranges: [{'min': 0, 'max': 8, 'classes': 'info', 'text': ' Alert Text'}, {'min': 9, 'max': 1000, 'classes': 'error', 'text': ' Alert Text'}]});
+      columns.push({ id: 'price', name: 'Alert Choose Header', field: 'price', formatter: Soho.Formatters.Alert, editor: Soho.Editors.Input, ranges: [{'min': 0, 'max': 150, 'classes': 'success', text: ' '}, {'min': 151, 'max': 9999, 'classes': 'error', text: ' '}]});
+      columns.push({ id: 'price2', name: 'Alert', field: 'price', align: 'center', formatter: Soho.Formatters.Alert, editor: Soho.Editors.Input, ranges: [{'min': 0, 'max': 150, 'classes': 'success', text: ' '}, {'min': 151, 'max': 9999, 'classes': 'alert', text: ' '}]});
+      columns.push({ id: 'quantity', name: 'Badge', field: 'quantity', align: 'center', formatter: Soho.Formatters.Badge, editor: Soho.Editors.Input, sortable: false, ranges: [{'min': 0, 'max': 2, 'classes': 'error'}, {'value': 41, 'classes': 'good'}]});
+      columns.push({ id: 'price3', name: 'Tag', field: 'price', align: 'center', formatter: Soho.Formatters.Tag, editor: Soho.Editors.Input, ranges: [{'min': 151, 'max': 9999, 'classes': 'info'}]});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: customDate, editor: Soho.Editors.Date, dateFormat: 'M/d/yyyy'});
+      columns.push({ id: 'action', name: 'Action', field: 'action', formatter: myCustom, editor: Soho.Editors.Dropdown,
         options: [{id: '', label: '', value: -1}, {id: 'oh1', label: 'On Hold', value: 1}, {id: 'sh1', label: 'Shipped', value: 2} , {id: 'ac1', label: 'Action', value: 3}, {id: 'pen', label: 'Pending', value: 4}, {id: 'bk1', label: 'Backorder', value: 5}, {id: 'can', label: 'Cancelled', value: 6}, {id: 'pro', label: 'Processing', value: 7}]});;
-      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', editor: Editors.Input, formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', editor: Soho.Editors.Input, formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy'});
 
       // Init and get the api for the grid
       $('#datagrid').datagrid({

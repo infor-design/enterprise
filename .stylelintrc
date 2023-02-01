@@ -34,6 +34,7 @@
     "color-hex-length": "short",
     "color-no-invalid-hex": true,
     "color-function-notation": null,
+    "selector-not-notation": null,
     "comment-empty-line-before": [
       "always",
       {

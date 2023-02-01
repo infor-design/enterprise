@@ -56,7 +56,7 @@ git config --global credential.helper wincred
 
 1. Check that the change log notes are up to date by verifying the [changelog](/changelog). Note that we add a counts section to the bottom of each release, this section should be manually added by looking at the [git project board](https://github.com/orgs/infor-design/projects) counts and searching for `it('` to count the tests.
 1. Run the script to set the variables configured above (ignore this if they are already set)
-1. Make sure you have a branched and tagged the release branch. Using for example `git checkout -b 4.xx.x`. Or checkout the release branch if not already on it. If you do not do this the docs will not properly deploy to the design site [design.infor.com](/http://design.infor.com)
+1. Make sure you have a branched and tagged the release branch. Using for example `git checkout -b 4.xx.x`. Or checkout the release branch if not already on it. If you do not do this the docs will not properly deploy to the design site [design.infor.com](http://design.infor.com)
 1. Run `git pull {remote} {branch name} && git pull --tags` to ensure you have the latest code.
 1. Run a release cmd using [release it.](https://www.npmjs.com/package/release-it)
 

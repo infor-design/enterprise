@@ -21,10 +21,10 @@
     append(Locale.translate('SomeTextThatDoesntExist') + '<br>');
 
     // Add a new locale not in the setup ones
-    Locale.defaultLocales.push({ lang: 'la', default: 'la-IT' });
-    Locale.supportedLocales.push('la-IT');
+    Soho.Locale.defaultLocales.push({ lang: 'la', default: 'la-IT' });
+    Soho.Locale.supportedLocales.push('la-IT');
 
-    Locale.set('la-lT').done(function () {
+    Soho.Locale.set('la-lT').done(function () {
       append(Locale.translate('AboutText') + '<br>');
       append(Locale.translate('SomeTextThatDoesntExist') + '<br>');
     });
