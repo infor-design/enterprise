@@ -7,6 +7,10 @@
 - `[General]` Project now uses node 18 (18.13.0) for development. All dependencies are updated. ([#6634](https://github.com/infor-design/enterprise/issues/6634))
 - `[General]` Updated to d3.v7 which impacts all charts. ([#6634](https://github.com/infor-design/enterprise/issues/6634))
 
+## v4.82.0 Fixes
+
+- `[Popupmenu]` Fix on inverse colors not showing in popupmenu in masthead. ([#7005](https://github.com/infor-design/enterprise/issues/7005))
+
 ## v4.81.0
 
 ## v4.80.0
