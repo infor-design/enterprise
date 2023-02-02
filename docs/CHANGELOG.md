@@ -9,6 +9,10 @@
 
 ## v4.81.0
 
+## v4.81.0 Fixes
+
+- `[Dropdown]` Fixed swatch default color in themes. ([#7108](https://github.com/infor-design/enterprise/issues/7108))
+
 ## v4.80.0
 
 ## v4.80.0 Important Changes
