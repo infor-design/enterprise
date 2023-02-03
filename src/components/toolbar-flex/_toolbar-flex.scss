@@ -305,11 +305,21 @@ html[class*='theme-classic-'] .flex-toolbar .toolbar-section .searchfield-wrappe
     left: -38px;
   }
 
-  &.has-text.active.has-close-icon-button .custom-button {
-    left: -60px;
-  }
-
   &:not(.has-categories) .btn-icon.close {
     right: 40px;
+  }
+
+  &.has-text.active.has-close-icon-button .custom-button {
+    left: -60px;
+
+    @media (max-width: $breakpoint-phone-to-tablet) {
+      left: -73px;
+    }
+  }
+
+  &.is-open .custom-button {
+    @media (max-width: $breakpoint-phone-to-tablet) {
+      left: -73px;
+    }
   }
 }

@@ -10,6 +10,7 @@
 ## v4.81.0 Fixes
 
 - `[Hyperlink]` Changed hover color in dark theme. ([#7095](https://github.com/infor-design/enterprise/issues/7095))
+- `[Searchfield]` Custom button adjustments in mobile. ([#7134](https://github.com/infor-design/enterprise/issues/7134))
 
 ## v4.81.0 Fixes
 
