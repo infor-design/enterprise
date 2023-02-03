@@ -39,6 +39,10 @@
   }
 }
 
+.masthead .toolbar-searchfield-wrapper:not(.active) .icon:not(.close):not(.icon-dropdown)  {
+  top: -3px;
+}
+
 .masthead .toolbar.has-title,
 .masthead .formatter-toolbar.has-title {
   padding: 0 8px;
