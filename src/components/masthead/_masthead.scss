@@ -29,6 +29,20 @@
     height: 32px;
     min-width: 32px;
 
+    &:hover:not(:disabled),
+    &.is-open {
+      color: $ids-color-palette-white;
+      background-color: transparent;
+
+      svg.icon {
+        color: $ids-color-palette-white;
+      }
+    }
+
+    &:focus:not(.hide-focus) {
+      box-shadow: 0 0 0 2px transparent, 0 0 0 1px $ids-color-palette-white, $focus-box-shadow;
+    }
+
     &.collapse-button {
       height: inherit;
     }
@@ -137,9 +151,7 @@
 
     [class^='btn'] {
       background-color: transparent;
-      border-left-color: transparent;
-      border-right-color: transparent;
-      border-top-color: transparent;
+      border-color: transparent;
       color: $masthead-text-color;
 
       .ripple-effect {
