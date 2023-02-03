@@ -12,6 +12,8 @@
 - `[Hyperlink]` Changed hover color in dark theme. ([#7095](https://github.com/infor-design/enterprise/issues/7095))
 - `[Searchfield]` Custom button adjustments in mobile. ([#7134](https://github.com/infor-design/enterprise/issues/7134))
 
+## v4.81.0
+
 ## v4.81.0 Fixes
 
 - `[Dropdown]` Fixed swatch default color in themes. ([#7108](https://github.com/infor-design/enterprise/issues/7108))
