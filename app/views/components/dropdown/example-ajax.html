@@ -26,7 +26,7 @@
     $('#ajax-test').dropdown({
       source: function (response, term) {
         $.getJSON('{{basepath}}api/states', function(data, term) {
-          // Making some data items disabled for testing purposes
+          // Make some data items disabled for testing purposes
           response(data.map(item => ['AK', 'AR', 'WY'].includes(item.value) ? {
             ...item,
             disabled: true
