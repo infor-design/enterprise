@@ -19,7 +19,6 @@ check_required_vars \
   GITHUB_ACCESS_TOKEN \
   NPM_TOKEN \
   BRANCH \
-  RELEASE_INCREMENT \
   REPO_OWNER_NAME
 
 rm -rf /root/enterprise/{..?*,.[!.]*,*} 2>/dev/null

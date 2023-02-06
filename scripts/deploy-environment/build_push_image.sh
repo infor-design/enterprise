@@ -46,7 +46,7 @@ else
 fi
 
 npm run build
-npx grunt demo
+npm run build:demoapp
 
 cat >Dockerfile <<EOL
 FROM hookandloop/sohoxi-demo:1.0.1
