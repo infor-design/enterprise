@@ -4,6 +4,8 @@
 import { Dropdown } from '../../../src/components/dropdown/dropdown';
 import { cleanup } from '../../helpers/func-utils';
 
+const statesDropdownData = require('../../../app/data/states-all.json');
+
 const dropdownHTML = `<div class="row">
   <div class="twelve columns">
     <div class="field">
@@ -161,3 +163,50 @@ describe('Dropdown API', () => {
     expect(dropdownObj.element.val()).toBe('NH');
   });
 });
+
+describe('Dropdown API (ajax)', () => {
+  const dropdownAjaxHtml = `
+    <div class="field">
+      <label for="custom-dropdown-ajax" class="label">State</label>
+      <select id="custom-dropdown-ajax" class="dropdown"></select>
+    </div>
+  `;
+
+  beforeEach(() => {
+    dropdownEl = null;
+    dropdownObj = null;
+    document.body.insertAdjacentHTML('afterbegin', dropdownAjaxHtml);
+    dropdownEl = document.body.querySelector('.dropdown');
+  });
+
+  afterEach(() => {
+    dropdownObj.destroy();
+    cleanup();
+  });
+
+  it('should disable options', () => {
+    const statesToDisable = ['AK', 'AR', 'WY'];
+    const statesDisabledData = statesDropdownData.map((item) => {
+      if (statesToDisable.includes(item.value)) {
+        return {
+          ...item,
+          disabled: true
+        };
+      }
+
+      return item;
+    });
+    dropdownObj = new Dropdown(dropdownEl, {
+      source: (response) => {
+        response(statesDisabledData);
+      }
+    });
+
+    dropdownObj.open();
+
+    const listDisabled = document.querySelectorAll('.dropdown-list[data-element-id="custom-dropdown-ajax"] .is-disabled');
+
+    expect([...listDisabled].map(item => item.dataset.val)).toEqual(statesToDisable);
+  });
+});
+

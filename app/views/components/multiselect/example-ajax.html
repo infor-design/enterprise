@@ -78,7 +78,11 @@
     console.log('Searching for term: "' + term + '".');
     $.getJSON(apiRoute, function(data) {
       cachedData = data;
-      response(data);
+      // Make some data items disabled for testing purposes
+      response(data.map(item => ['AK', 'AR', 'WY'].includes(item.value) ? {
+        ...item,
+        disabled: true
+      } : item));
     });
   }
 
