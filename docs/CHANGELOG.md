@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.80.1
+
+## v4.80.1 Fixes
+
+- `[Button]` Fixed button status colors disabled in toolbar/toolbar flex in alabaster and personalize colors. ([#7166](https://github.com/infor-design/enterprise/issues/7166))
+
 ## v4.80.0
 
 ## v4.80.0 Important Changes

@@ -380,8 +380,11 @@ html[class*="theme-new-"] .is-personalizable.tab-container.header-tabs > .tab-li
 }
 
 .header.is-personalizable .flex-toolbar [class^='btn'][disabled] .icon,
-.header.is-personalizable  .flex-toolbar [class^='btn']:focus:not(.hide-focus) .icon,
-.header.is-personalizable .btn:not(.searchfield-category-button) span {
+.header.is-personalizable .btn:not(.searchfield-category-button)[disabled] span {
+  color: rgba(255, 255, 255, 0.3) !important;
+}
+
+.header.is-personalizable  .flex-toolbar [class^='btn']:focus:not(.hide-focus) .icon {
   color: ${colors.contrast} !important;
 }
 
