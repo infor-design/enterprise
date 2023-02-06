@@ -7,16 +7,13 @@
 - `[General]` Project now uses node 18 (18.13.0) for development. All dependencies are updated. ([#6634](https://github.com/infor-design/enterprise/issues/6634))
 - `[General]` Updated to d3.v7 which impacts all charts. ([#6634](https://github.com/infor-design/enterprise/issues/6634))
 
-## v4.82.0 Fixes
-
-- `[Hyperlink]` Changed hover color in dark theme. ([#7095](https://github.com/infor-design/enterprise/issues/7095))
-- `[Searchfield]` Custom button adjustments in mobile. ([#7134](https://github.com/infor-design/enterprise/issues/7134))
-
 ## v4.81.0
 
 ## v4.81.0 Fixes
 
 - `[Dropdown]` Fixed swatch default color in themes. ([#7108](https://github.com/infor-design/enterprise/issues/7108))
+- `[Hyperlink]` Changed hover color in dark theme. ([#7095](https://github.com/infor-design/enterprise/issues/7095))
+- `[Searchfield]` Custom button adjustments in mobile. ([#7134](https://github.com/infor-design/enterprise/issues/7134))
 
 ## v4.80.0
 
