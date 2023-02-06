@@ -28,6 +28,7 @@
   [class^='btn'] {
     height: 32px;
     min-width: 32px;
+    color: $masthead-text-color;
 
     &:hover:not(:disabled),
     &.is-open {
@@ -40,7 +41,7 @@
     }
 
     &:focus:not(.hide-focus) {
-      box-shadow: 0 0 0 2px transparent, 0 0 0 1px $ids-color-palette-white, $focus-box-shadow;
+      box-shadow: 0 0 0 2px transparent, 0 0 0 1px $masthead-button-focus-color, $header-focus-box-shadow;
     }
 
     &.collapse-button {
