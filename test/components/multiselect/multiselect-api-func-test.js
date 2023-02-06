@@ -107,8 +107,8 @@ describe('MultiSelect API', () => {
 describe('Multiselect API (ajax)', () => {
   const multiSelectSingleItemHTML = `
     <div class="field">
-      <label for="multi-standard" class="label">Multiselect</label>
-      <select multiple id="multi-standard" name="multi-standard" data-maxselected="10" class="multiselect">
+      <label for="multi-standard-ajax" class="label">Multiselect</label>
+      <select multiple id="multi-standard-ajax" name="multi-standard" data-maxselected="10" class="multiselect">
         <option selected value="FL">Florida</option>
       </div>
     </div>
@@ -151,5 +151,30 @@ describe('Multiselect API (ajax)', () => {
       expect(multiSelectObj.dropdown.selectedValues.includes(predefinedOpt.value)).toBeTruthy();
       done();
     }, 650);
+  });
+
+  it('should disable options', () => {
+    const statesToDisable = ['AK', 'AR', 'WY'];
+    const statesDisabledData = statesMultiselectData.map((item) => {
+      if (statesToDisable.includes(item.value)) {
+        return {
+          ...item,
+          disabled: true
+        };
+      }
+
+      return item;
+    });
+    multiSelectObj = new MultiSelect(multiSelectEl, {
+      source: (response) => {
+        response(statesDisabledData);
+      }
+    });
+
+    multiSelectObj.dropdown.open();
+
+    const listDisabled = document.querySelectorAll('.dropdown-list[data-element-id="multi-standard-ajax"] .is-disabled');
+
+    expect([...listDisabled].map(item => item.dataset.val)).toEqual(statesToDisable);
   });
 });
