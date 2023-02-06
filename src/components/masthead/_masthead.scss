@@ -30,6 +30,10 @@
     min-width: 32px;
     color: $masthead-text-color;
 
+    svg.icon {
+      color: $masthead-button-color;
+    }
+
     &:hover:not(:disabled),
     &.is-open {
       color: $ids-color-palette-white;
