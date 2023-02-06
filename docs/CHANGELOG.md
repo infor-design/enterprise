@@ -5,6 +5,7 @@
 ## v4.80.1 Fixes
 
 - `[Button]` Fixed button status colors disabled in toolbar/toolbar flex in alabaster and personalize colors. ([#7166](https://github.com/infor-design/enterprise/issues/7166))
+- `[Dropdown]` Fixed swatch default color in themes. ([#7108](https://github.com/infor-design/enterprise/issues/7108))
 
 ## v4.80.0
 

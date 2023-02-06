@@ -17,11 +17,6 @@ div.multiselect {
 
     &.swatch {
       left: 13px;
-
-      &.primary-bg-color {
-        border: 1px solid $ids-color-palette-slate-30;
-        background-color: $ids-color-palette-white;
-      }
     }
 
     + span {
@@ -84,11 +79,6 @@ div.multiselect {
 
     &.swatch {
       left: 12px;
-
-      &.primary-bg-color {
-        border: 1px solid $ids-color-palette-slate-30;
-        background-color: $ids-color-palette-white;
-      }
     }
   }
 
@@ -96,11 +86,6 @@ div.multiselect {
     span {
       &.swatch {
         margin-left: -18px;
-
-        &.primary-bg-color {
-          border: 1px solid $ids-color-palette-slate-30;
-          background-color: $ids-color-palette-white;
-        }
       }
     }
   }
@@ -645,4 +630,22 @@ html[dir='rtl'] {
   left: -1px;
   right: 0;
   top: 3px;
+}
+
+// Default swatch's list option icon color
+div.dropdown > .listoption-icon,
+div.multiselect > .listoption-icon,
+.dropdown-list > .listoption-icon,
+.dropdown-list li span {
+  &.swatch {
+    html.theme-new-light &.primary-bg-color,
+    html.theme-new-contrast &.primary-bg-color {
+      border: 1px solid $ids-color-palette-slate-30;
+      background-color: $ids-color-palette-white;
+    }
+
+    html.theme-new-dark &.primary-bg-color {
+      background-color: $ids-color-brand-primary-base;
+    }
+  }
 }
