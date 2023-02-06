@@ -1,3 +1,9 @@
+<style>
+  .popupmenu.has-icons.is-selectable a {
+    padding-left: 48px !important;
+  }
+</style>
+
 <header id="test-header" class="header is-personalizable">
   <div class="flex-toolbar">
     <div class="toolbar-section">
@@ -47,25 +53,6 @@
       </button>
     </div>
 
-    <div id="more-button" class="toolbar-section more">
-      <button class="btn-actions" type="button">
-        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-          <use href="#icon-more"></use>
-        </svg>
-        <span class="audible" data-translate="text">More</span>
-      </button>
-      <ul class="popupmenu">
-        <li><a href="#">Item One</a></li>
-        <li><a href="#">Item Two</a></li>
-        <li class="submenu">
-          <a href="#">Item Three</a>
-          <ul class="popupmenu">
-            <li><a href="#">Sub-Item One</a></li>
-            <li><a href="#">Sub-Item Two</a></li>
-          </ul>
-        </li>
-        <li><a href="#">Item Four</a></li>
-      </ul>
-    </div>
+    {{> includes/header-actionbutton}}
   </div>
 </header>
