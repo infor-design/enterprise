@@ -123,6 +123,16 @@
 .ids-action {
   display: block;
   margin-right: 0;
+
+  &.btn-tertiary {
+    &:hover:not(:disabled) {
+      color: $button-color-tertiary-actionsheet-hover-font;
+
+      svg.icon {
+        color: $button-color-tertiary-actionsheet-hover-font;
+      }
+    }
+  }
 }
 
 .separator,
