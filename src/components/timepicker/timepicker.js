@@ -1005,7 +1005,13 @@ TimePicker.prototype = {
     let timeString = `${hours}${sep}${minutes}${this.hasSeconds() ? sep + seconds : ''}`;
 
     period = (!this.is24HourFormat() && period === '') ? document.querySelector(`#${this.periodId}-shdo`).value : period;
-    timeString += period ? ` ${this.translateDayPeriod(period)}` : '';
+
+    // Day period goes first in time format
+    if (this.settings.timeFormat?.indexOf('a') === 0) {
+      timeString = period ? `${this.translateDayPeriod(period)} ${timeString}` : timeString;
+    } else {
+      timeString += period ? ` ${this.translateDayPeriod(period)}` : '';
+    }
 
     if (timeString.indexOf(sep) > -1 && this.settings.timeFormat === 'HHmm') {
       timeString = timeString.replace(sep, '');
