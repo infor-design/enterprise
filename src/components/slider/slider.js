@@ -597,6 +597,7 @@ Slider.prototype = {
         $(this).removeClass('is-dragging');
         self.range.removeClass('is-dragging');
         self.element.trigger('slidestop', handle);
+        self.element.trigger('change', { element: self.element, value: self._value });
       });
   },
 
