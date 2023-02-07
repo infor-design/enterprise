@@ -15,6 +15,7 @@ spec:
     spec:
       containers:
         - name: enterprise-demo
+          imagePullPolicy: Always
           image: hookandloop/enterprise:%IMAGE_VERSION%
           ports:
             - name: http
