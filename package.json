@@ -26,6 +26,7 @@
     "build:css": "node ./scripts/build --disable-js",
     "build:full": "npm run clean && npm run build -- --types=iife,es && npm run minify && npm run build:verify",
     "build:icons": "node ./scripts/build-icons.js",
+    "build:demoapp": "node ./scripts/build-sass --type=app",
     "build:js": "node ./scripts/build --disable-css",
     "build:release": "npm run clean && npm run build -- --types=iife,es && npm run minify && npm run zip-dist && npm run build:verify",
     "build:verify": "node ./scripts/verify.js",
