@@ -204,7 +204,7 @@ MonthView.prototype = {
     }
 
     this.setCurrentCalendar();
-
+    
     // Calendar Html in Popups
     this.prevButton = '' +
       `<button type="button" class="btn-icon prev">
@@ -216,6 +216,16 @@ MonthView.prototype = {
         ${$.createIcon('caret-right')}
         <span>${Locale.translate('NextMonth', { locale: this.locale.name, language: this.language })}</span>
       </button>`;
+
+    this.weekNumberTable = $(`<table class="monthview-week-table" role="application"></table>`);
+    this.weekHeader = $('' +
+      `<thead>
+        <tr>
+          <th><span>W#</span></th>
+        </tr>
+      </thead>`).appendTo(this.weekNumberTable);
+    this.weekNumber = $(`<tbody></tbody>`).appendTo(this.weekNumberTable);
+    this.getWeekNumbers(this.settings.year, this.settings.month);
 
     this.table = $(`<table class="monthview-table" aria-label="${Locale.translate('Calendar', { locale: this.locale.name })}" role="application"></table>`);
     this.dayNames = $('' +
@@ -304,6 +314,9 @@ MonthView.prototype = {
     }
 
     const useElement = this.settings.inPage && this.settings.inPageToggleable && this.table !== '' ? inPageCalendarPane : this.table;
+    this.monthAndWeekContainer = $(`<div class="monthview-week-container"></div>`);
+    this.monthAndWeekContainer.append(this.weekNumberTable);
+    this.monthAndWeekContainer.append(useElement);
 
     // Reconfigure the header
     this.header = $('<div class="monthview-header"><div class="calendar-toolbar"></div></div>');
@@ -314,7 +327,7 @@ MonthView.prototype = {
     }
 
     this.showMonth(this.settings.month, this.settings.year);
-    this.calendar = this.element.addClass('monthview').append(this.header, this.monthYearPane, useElement);
+    this.calendar = this.element.addClass('monthview').append(this.header, this.monthYearPane, this.monthAndWeekContainer);
 
     if (!(this.settings.isPopup || this.settings.inPage)) {
       this.element.addClass('is-fullsize');
@@ -383,7 +396,6 @@ MonthView.prototype = {
     }
 
     this.setCurrentCalendar();
-
     this.table = $(`<table class="monthview-table" aria-label="${Locale.translate('Calendar', { locale: this.locale.name })}" role="application"></table>`);
 
     this.dayNames = $('' +
@@ -564,6 +576,26 @@ MonthView.prototype = {
     });
   },
 
+  getWeekCount(year, monthNumber) {
+    var firstOfMonth = new Date(year, monthNumber - 1, 1);
+    var lastOfMonth = new Date(year, monthNumber, 0);
+
+    var used = firstOfMonth.getDay() + lastOfMonth.getDate();
+
+    return Math.ceil( used / 7);
+  },
+
+  getWeekNumbers(year, monthNumber) {
+    this.weekNumber.empty();
+    let currentWeekCount = this.getWeekCount(year, monthNumber + 1);
+    const now = new Date(year, monthNumber, 1);
+    const startMonth = new Date(now.getFullYear(), 0, 1);
+    const week = Math.ceil((((now.getTime() - startMonth.getTime()) / 86400000) + startMonth.getDay() + 1) / 7);
+    for (let i = 0; i < currentWeekCount; i++) {
+      this.weekNumber.append(`<tr><td><span>${week + i}</span></td></tr>`)
+    }
+  },
+
   /**
    * Update the calendar to show the given month and year
    * @param {number} month The zero based month to display
@@ -648,6 +680,9 @@ MonthView.prototype = {
 
     this.currentMonth = month;
     this.currentYear = year;
+
+    // CONSOLE TEST
+    this.getWeekNumbers(this.currentYear, this.currentMonth);
 
     // Set the Days of the week
     let firstDayofWeek = (this.currentCalendar.firstDayofWeek || 0);

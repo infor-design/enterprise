@@ -892,6 +892,37 @@
       }
     }
   }
+
+  .monthview-week-container {
+    display: flex;
+
+    .monthview-week-table {
+      height: 244px;
+      margin-top: 20px;
+      border-right: 1px solid $ids-color-palette-slate-40;
+
+      thead tr {
+        height: 20px;
+
+        th {
+          width: 42px;
+
+          span {
+            position: relative;
+            top: -1px;
+            color: $ids-color-palette-slate-40;
+          }
+        }
+      }
+
+      tbody tr td span {
+        font-size: 14px;
+        position: relative;
+        top: -1px;
+        color: $ids-color-palette-slate-40;
+      }
+    }
+  }
 }
 
 //monthview legend
