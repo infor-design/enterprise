@@ -26,8 +26,10 @@
   }
 
   [class^='btn'] {
-    height: 32px;
+    height: 30px !important;
     min-width: 32px;
+    padding-right: 8px;
+    min-height: 32px;
     color: $masthead-text-color;
 
     svg.icon {
@@ -112,7 +114,7 @@
       }
 
       .toolbar-searchfield-wrapper {
-        margin: 2px 5px 1px 0;
+        margin: 1px 0 0;
       }
     }
 

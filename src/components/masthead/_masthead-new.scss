@@ -32,7 +32,7 @@
 
   &.btn-menu {
     margin-right: -6px !important;
-    margin-top: 6px;
+    margin-top: 3px;
   }
 
   .icon {
@@ -53,4 +53,12 @@
 .masthead .image-initials,
 .masthead .image-round {
   line-height: 28px;
+}
+
+.masthead .toolbar-searchfield-wrapper.active .searchfield {
+  height: 32px !important;
+}
+
+.masthead .toolbar-searchfield-wrapper.is-open .icon:not(.close) {
+  top: -2px !important;
 }
