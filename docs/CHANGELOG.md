@@ -28,6 +28,7 @@
 - `[Header]` Changed the default color from azure to alabaster. I.E. The default header color is now alabaster but can still be set to any of the other 8 colors. So far the older look azure can be used. ([#6979](https://github.com/infor-design/enterprise/issues/6979))
 - `[Tabs Header]` Changed the default background color for tabs header to also use alabaster with the same ability to use any of the other 8 personalization colors. ([#6979](https://github.com/infor-design/enterprise/issues/6979))
 - `[Button]` The style of all buttons (primary/tertiary and secondary) have been updated and changed, in addition we added new destructive buttons. ([#6977](https://github.com/infor-design/enterprise/issues/6977))
+- `[Button]` Fixed button status colors disabled in toolbar/toolbar flex in alabaster and personalize colors. ([#7166](https://github.com/infor-design/enterprise/issues/7166))
 - `[Datagrid]` Added ability to change the color of the header in datagrid between (`dark` or `light (alabaster)`). ([#7008](https://github.com/infor-design/enterprise/issues/7008))
 - `[Searchfield]` Completed a design review of searchfield and enhanced it with updated several design improvements. ([#6707](https://github.com/infor-design/enterprise/issues/6707))
 

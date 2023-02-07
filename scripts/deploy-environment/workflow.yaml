@@ -233,7 +233,6 @@ spec:
                             - -c
                             - cp /usr/src/secrets/gitconfig /root/.gitconfig
 
-
     - name: publish-docs
       inputs:
         parameters:
