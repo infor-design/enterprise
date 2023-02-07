@@ -894,10 +894,8 @@
   }
 
   .monthview-week-container {
-    display: flex;
-
     .monthview-week-table {
-      height: 244px;
+      display: inline-block;
       margin-top: 20px;
       border-right: 1px solid $ids-color-palette-slate-40;
 
@@ -921,6 +919,10 @@
         top: -1px;
         color: $ids-color-palette-slate-40;
       }
+    }
+
+    .monthview-table {
+      display: inline-block;
     }
   }
 }
