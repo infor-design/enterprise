@@ -780,6 +780,7 @@ $toolbarsearchfield-category-empty-width: 51px;
     &.is-open {
       .icon {
         color: $searchfield-header-icon-color;
+        top: 1px;
       }
     }
   }

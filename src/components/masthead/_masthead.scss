@@ -159,6 +159,10 @@
       border-color: transparent;
       color: $masthead-text-color;
 
+      &.btn-menu {
+        margin-top: 1px;
+      }
+
       .ripple-effect {
         background-color: $ids-color-palette-white;
       }
