@@ -307,16 +307,16 @@ MonthView.prototype = {
     const useElement = this.settings.inPage && this.settings.inPageToggleable && this.table !== '' ? inPageCalendarPane : this.table;
 
     if (this.settings.showWeekNumber) {
-      this.weekNumberTable = $(`<table class="monthview-week-table" role="application"></table>`);
+      this.weekNumberTable = $('<table class="monthview-week-table" role="application"></table>');
       this.weekHeader = $('' +
         `<thead>
           <tr>
             <th><span>W#</span></th>
           </tr>
         </thead>`).appendTo(this.weekNumberTable);
-      this.weekNumber = $(`<tbody></tbody>`).appendTo(this.weekNumberTable);
-      this.getWeekNumbers(this.settings.year, this.settings.month);
-      this.monthAndWeekContainer = $(`<div class="monthview-week-container"></div>`);
+      this.weekNumber = $('<tbody></tbody>').appendTo(this.weekNumberTable);
+      this.getWeekNumbers(this.settings.month, this.settings.year);
+      this.monthAndWeekContainer = $('<div class="monthview-week-container"></div>');
       this.monthAndWeekContainer.append(this.weekNumberTable);
       this.monthAndWeekContainer.append(useElement);
     }
@@ -579,23 +579,35 @@ MonthView.prototype = {
     });
   },
 
-  getWeekCount(year, monthNumber) {
-    var firstOfMonth = new Date(year, monthNumber - 1, 1);
-    var lastOfMonth = new Date(year, monthNumber, 0);
+  /**
+   * Gets the total weeks of the desired month
+   * @param {number} month The zero based month to display
+   * @param {number} year The year to display
+   * @returns {void}
+   */
+  getWeekCount(monthNumber, year) {
+    const firstOfMonth = new Date(year, monthNumber - 1, 1);
+    const lastOfMonth = new Date(year, monthNumber, 0);
 
-    var used = firstOfMonth.getDay() + lastOfMonth.getDate();
+    const weeks = firstOfMonth.getDay() + lastOfMonth.getDate();
 
-    return Math.ceil( used / 7);
+    return Math.ceil(weeks / 7);
   },
 
-  getWeekNumbers(year, monthNumber) {
+  /**
+   * Gets the total number of weeks passed up to the desired month
+   * @param {number} month The zero based month to display
+   * @param {number} year The year to display
+   * @returns {void}
+   */
+  getWeekNumbers(monthNumber, year) {
     this.weekNumber.empty();
-    let currentWeekCount = this.getWeekCount(year, monthNumber + 1);
+    const currentWeekCount = this.getWeekCount(monthNumber + 1, year);
     const now = new Date(year, monthNumber, 1);
     const startMonth = new Date(now.getFullYear(), 0, 1);
     const week = Math.ceil((((now.getTime() - startMonth.getTime()) / 86400000) + startMonth.getDay() + 1) / 7);
     for (let i = 0; i < currentWeekCount; i++) {
-      this.weekNumber.append(`<tr><td><span>${week + i}</span></td></tr>`)
+      this.weekNumber.append(`<tr><td><span>${week + i}</span></td></tr>`);
     }
   },
 
@@ -685,7 +697,7 @@ MonthView.prototype = {
     this.currentYear = year;
 
     if (this.settings.showWeekNumber) {
-      this.getWeekNumbers(this.currentYear, this.currentMonth);
+      this.getWeekNumbers(this.currentMonth, this.currentYear);
     }
 
     // Set the Days of the week
