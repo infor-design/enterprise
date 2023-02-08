@@ -12,6 +12,7 @@
 - `[Dropdown]` Fixed swatch default color in themes. ([#7108](https://github.com/infor-design/enterprise/issues/7108))
 - `[Dropdown/Multiselect]` Fixed disabled options are not displayed as disabled when using ajax. ([#7150](https://github.com/infor-design/enterprise/issues/7150))
 - `[Hyperlink]` Changed hover color in dark theme. ([#7095](https://github.com/infor-design/enterprise/issues/7095))
+- `[Popupmenu]` Fix on inverse colors not showing in popupmenu in masthead. ([#7005](https://github.com/infor-design/enterprise/issues/7005))
 
 ## v4.80.0
 
