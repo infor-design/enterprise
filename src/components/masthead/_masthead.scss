@@ -26,8 +26,29 @@
   }
 
   [class^='btn'] {
-    height: 32px;
+    height: 30px !important;
     min-width: 32px;
+    padding-right: 8px;
+    min-height: 32px;
+    color: $masthead-text-color;
+
+    svg.icon {
+      color: $masthead-button-color;
+    }
+
+    &:hover:not(:disabled),
+    &.is-open {
+      color: $ids-color-palette-white;
+      background-color: transparent;
+
+      svg.icon {
+        color: $ids-color-palette-white;
+      }
+    }
+
+    &:focus:not(.hide-focus) {
+      box-shadow: 0 0 0 2px transparent, 0 0 0 1px $masthead-button-focus-color, $header-focus-box-shadow;
+    }
 
     &.collapse-button {
       height: inherit;
@@ -93,7 +114,7 @@
       }
 
       .toolbar-searchfield-wrapper {
-        margin: 2px 5px 1px 0;
+        margin: 1px 0 0;
       }
     }
 
@@ -137,10 +158,12 @@
 
     [class^='btn'] {
       background-color: transparent;
-      border-left-color: transparent;
-      border-right-color: transparent;
-      border-top-color: transparent;
+      border-color: transparent;
       color: $masthead-text-color;
+
+      &.btn-menu {
+        margin-top: 1px;
+      }
 
       .ripple-effect {
         background-color: $ids-color-palette-white;

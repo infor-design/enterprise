@@ -75,12 +75,6 @@ $toolbarsearchfield-category-empty-width: 51px;
     }
   }
 
-  &.is-open {
-    .icon:not(.close) {
-      top: 2px;
-    }
-  }
-
   &.non-collapsible {
     .searchfield {
       padding-bottom: 6px !important;
@@ -786,6 +780,7 @@ $toolbarsearchfield-category-empty-width: 51px;
     &.is-open {
       .icon {
         color: $searchfield-header-icon-color;
+        top: 1px;
       }
     }
   }
