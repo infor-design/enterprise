@@ -3387,6 +3387,7 @@ Dropdown.prototype = {
         let id = '';
         let selected = '';
         let textContent = '';
+        let disabled = '';
 
         if (isString) {
           option = {
@@ -3426,6 +3427,9 @@ Dropdown.prototype = {
         if (option.selected) {
           selected = ' selected';
         }
+        if (option.disabled) {
+          disabled = ' disabled';
+        }
 
         // Make sure that text content is populated.
         // If all else fails, just use the value.
@@ -3434,7 +3438,7 @@ Dropdown.prototype = {
         }
 
         // Render the option element
-        list += `<option${id} value="${option.value}"${selected}>
+        list += `<option${id} value="${option.value}"${selected}${disabled}>
           ${textContent}
         </option>`;
       }

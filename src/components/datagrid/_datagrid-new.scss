@@ -136,6 +136,10 @@
         }
       }
 
+      .lookup-wrapper .searchfield-wrapper.has-close-icon-button .icon {
+        color: $datagrid-light-header-icon-hover-color;
+      }
+
       input {
         color: $datagrid-light-header-font-color;
 
@@ -154,6 +158,10 @@
         .icon {
           color: $datagrid-light-header-icon-color;
         }
+      }
+
+      input.lookup.is-not-editable {
+        color: $datagrid-light-header-font-color !important;
       }
     }
 
@@ -1118,7 +1126,8 @@
 }
 
 .datagrid-header .datagrid-filter-wrapper .lookup-wrapper .searchfield-wrapper.has-close-icon-button .icon {
-  top: calc(50% + 2px);
+  top: calc(50% + 3px);
+  height: 15px;
 }
 
 .datagrid-container.small-rowheight.has-filterable-columns .is-filterable .datagrid-filter-wrapper .has-close-icon-button .icon {

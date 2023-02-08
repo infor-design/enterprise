@@ -290,7 +290,7 @@ a.is-personalizable svg.ripple-effect {
 .header.is-personalizable button:not(:disabled),
 .header.is-personalizable button:not(:disabled) .icon,
 .header.is-personalizable button:not(:disabled) .app-header.icon > span {
-  color: ${colors.contrast};
+  color: ${colors.contrast} !important;
 }
 
 .header.is-personalizable button:not(:disabled) .app-header.icon > span {
@@ -377,6 +377,10 @@ html[class*="theme-new-"] .is-personalizable.tab-container.header-tabs > .tab-li
 
 .header.is-personalizable .page-title {
   color: ${colors.contrast};
+}
+
+.header.is-personalizable button:not(:disabled) {
+  color: #fff !important;
 }
 
 .header.is-personalizable .flex-toolbar [class^='btn'][disabled] .icon,
@@ -867,6 +871,10 @@ html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.i
 
 .is-personalizable .personalize-subheader {
   background-color: ${colors.lighter} !important;
+}
+
+.is-personalizable .personalize-subheader  p, h1 {
+  color: ${colors.contrast} !important;
 }
 
 .is-personalizable .personalize-text {

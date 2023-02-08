@@ -24,12 +24,23 @@
     </div>
 
     <div class="toolbar-section buttonset">
-      <button id="settings-button" class="btn">
+      <button id="settings-button" class="btn-menu"
+        data-options="{ 'attributes': [ { 'name': 'data-automation-id', 'value': 'menu-button' } ] }">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
           <use href="#icon-settings"></use>
         </svg>
         <span>Settings</span>
       </button>
+      <ul class="popupmenu is-selectable has-icons">
+        <li><a href="#">Create a form</a></li>
+        <li class="separator"></li>
+        <li><a href="#">Spelling...</a></li>
+        <li><a href="#" disabled aria-disabled="true">Solver...</a></li>
+        <li class="separator"></li>
+        <li class="is-checked"><a href="#">Enable Autocomplete</a></li>
+        <li><a href="#">Notification Rules</a></li>
+        <li><a href="#">Protect Sheet Rules</a></li>
+      </ul>
 
       <button id="delete-button" class="btn">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
