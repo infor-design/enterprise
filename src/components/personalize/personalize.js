@@ -109,6 +109,40 @@ Personalize.prototype = {
   },
 
   /**
+   * Returns the color map based on the input value.
+   * @private
+   * @param {number} value - The value used to determine which color map to return (either 10 or 100).
+   * @returns {Object} colorMap - An object containing the color palette values.
+   */
+  getColorMap(value) {
+    // Get the corresponding color hexes
+    const themeColors = theme.themeColors();
+    const colorPalette = {
+      amber: themeColors.palette.amber[90].value,
+      amethyst: themeColors.palette.amethyst[60].value,
+      azure: themeColors.palette.azure[70].value,
+      emerald: themeColors.palette.emerald[80].value,
+      graphite: themeColors.palette.graphite[60].value,
+      ruby: themeColors.palette.ruby[90].value,
+      slate: themeColors.palette.slate[60].value,
+      turquoise: themeColors.palette.turquoise[90].value
+    };
+
+    const colorMap = {
+      [colorPalette.amber]: themeColors.palette.amber[value].value,
+      [colorPalette.amethyst]: themeColors.palette.amethyst[value].value,
+      [colorPalette.azure]: themeColors.palette.azure[value].value,
+      [colorPalette.emerald]: themeColors.palette.emerald[value].value,
+      [colorPalette.graphite]: themeColors.palette.graphite[value].value,
+      [colorPalette.ruby]: themeColors.palette.ruby[value].value,
+      [colorPalette.slate]: themeColors.palette.slate[value].value,
+      [colorPalette.turquoise]: themeColors.palette.turquoise[value].value
+    };
+
+    return colorMap;
+  },
+
+  /**
    * Generate a style sheet to append in the page.
    * @private
    * @param {array} colors The rules to append.
@@ -193,7 +227,7 @@ Personalize.prototype = {
     });
     isDark = foundColor ? 'white' : null;
 
-    // START OF NEW THEME COLOR STYLES 
+    // START OF NEW THEME COLOR STYLES
     const buttonNewColors = {
       amber: ['#bb5500', '#fbaf50', '#fcc888', '#fef2e5'],
       amethyst: ['#7928e1', '#c2a1f1', '#ddcbf7', '#f1ebfc'],
@@ -202,22 +236,22 @@ Personalize.prototype = {
       graphite: ['#535353', '#97979b', '#b7b7ba', '#efeff0'],
       ruby: ['#8d0b0e', '#ee9496', '#f5c3c4', '#fbe7e8'],
       slate: ['#606066', '#97979b', '#b7b7ba', '#efeff0'],
-      turquoise: ['#297b7b', '#82d4d4', '#a8e1e1', '#ecf8f8'] 
+      turquoise: ['#297b7b', '#82d4d4', '#a8e1e1', '#ecf8f8']
     };
-    
+
     const currentColor = `${colors.header || defaultColors.header}`.toLowerCase();
     Object.keys(buttonNewColors).forEach((color) => {
       if (buttonNewColors[color].indexOf(currentColor) > -1) {
         colors.darkNewButton = buttonNewColors[color][1];
         colors.darkNewButtonHover = buttonNewColors[color][2];
-        colors.secondaryButtonHover = buttonNewColors[color][3]; 
+        colors.secondaryButtonHover = buttonNewColors[color][3];
       }
     });
 
     colors.darkNewButtonLighterHover = '#3e3e42';
     colors.darkNewButtonDisabled = '#47474c';
     colors.darkNewButtonTextDisabled = '#77777c';
-    // END OF NEW THEME COLOR STYLES 
+    // END OF NEW THEME COLOR STYLES
 
     // Evaluate text contrast colors.
     // If the primary color is too "bright", this will flip the text color to black.
@@ -266,6 +300,12 @@ Personalize.prototype = {
     colors.dark = colors.btnColorSubheader;
     colors.darker = colors.inactive;
     colors.darkest = colors.horizontalBorder;
+
+    const darkestColorMap = this.getColorMap(100);
+    const lightestColorMap = this.getColorMap(10);
+
+    colors.darkestPalette = darkestColorMap[colors.base] || null;
+    colors.lightestPalette = lightestColorMap[colors.base] || null;
 
     // Some disabled colors on some preset color schemes come out terrible,
     // unless they are adjusted here. { color: ['classic', 'new'] }
@@ -321,7 +361,6 @@ Personalize.prototype = {
     defaultColors.tooltipText = tooltipContrast === 'white' ? 'ffffff' : '000000';
     colors.tooltipText = colorUtils.validateHex(colors.tooltipText || defaultColors.tooltipText);
 
-    console.log(colors);
     return personalizeStyles(colors);
   },
 

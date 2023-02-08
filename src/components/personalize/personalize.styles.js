@@ -112,7 +112,7 @@ html.theme-new-dark .is-personalizable .btn-primary:not(.destructive):not(.is-se
 }
 
 html[class*="new-"] .is-personalizable .btn-secondary:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
-  background-color: ${colors.secondaryButtonHover} !important;
+  background-color: ${colors.lightestPalette} !important;
 }
 
 html.theme-new-dark .is-personalizable .btn-secondary:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
@@ -620,7 +620,18 @@ html[dir='rtl'].theme-new-dark .is-personalizable .tab-container.header-tabs:not
 }
 
 .hero-widget.is-personalizable {
-  background-color: ${colors.lighter};
+  background-color: ${colors.darkestPalette};
+}
+
+.hero-widget.is-personalizable .hero-content .circlepager.is-active .controls .control-button.is-active::before,
+.hero-widget.is-personalizable .hero-content .circlepager.is-active .controls .control-button.is-active:hover::before {
+  background-color: #fff;
+  border-color: #fff;
+}
+
+.hero-widget.is-personalizable .hero-content .circlepager.is-active .controls .control-button:hover::before,
+.hero-widget.is-personalizable .hero-content .circlepager.is-active .controls .control-button::before {
+  border-color: #fff;
 }
 
 .hero-widget.is-personalizable .hero-bottom {
@@ -647,6 +658,11 @@ html[class*="theme-new-"] .application-menu.is-personalizable button .icon,
 html[class*="theme-new-"] .application-menu.is-personalizable button span,
 html[class*="theme-new-"] .application-menu.is-personalizable .hyperlink {
   color: ${colors.contrast} !important;
+}
+
+html[class*="theme-new-"] .is-personalizable .btn-tertiary:not(:disabled):hover,
+html[class*="theme-new-"] .is-personalizable .btn-link:not(:disabled):hover {
+  background-color: ${colors.lightestPalette};
 }
 
 html[class*="theme-new-"] .application-menu.is-personalizable button:not(:disabled):hover .icon,
