@@ -293,7 +293,7 @@ a.is-personalizable svg.ripple-effect {
 .is-personalizable .personalize-subheader button:not(:disabled),
 .is-personalizable .personalize-subheader button:not(:disabled) .icon,
 .is-personalizable .personalize-subheader button:not(:disabled) .app-header.icon > span  {
-  color: ${colors.contrast};
+  color: ${colors.contrast} !important;
 }
 
 .header.is-personalizable button:not(:disabled) .app-header.icon > span,
