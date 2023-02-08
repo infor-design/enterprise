@@ -3868,6 +3868,10 @@ $datagrid-small-row-height: 25px;
         min-width: 20px;
         width: 20px;
 
+        &:hover {
+          background-color: transparent !important;
+        }
+
         &:hover .icon {
           color: $datagrid-filter-hover-color;
         }
