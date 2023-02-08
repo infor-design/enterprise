@@ -384,6 +384,10 @@ html[class*="theme-new-"] .is-personalizable.tab-container.header-tabs > .tab-li
   color: rgba(255, 255, 255, 0.3) !important;
 }
 
+.header.is-personalizable button:not(:disabled) {
+  color: #fff !important;
+}
+
 .header.is-personalizable  .flex-toolbar [class^='btn']:focus:not(.hide-focus) .icon {
   color: ${colors.contrast} !important;
 }
