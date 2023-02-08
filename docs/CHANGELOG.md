@@ -7,6 +7,10 @@
 - `[General]` Project now uses node 18 (18.13.0) for development. All dependencies are updated. ([#6634](https://github.com/infor-design/enterprise/issues/6634))
 - `[General]` Updated to d3.v7 which impacts all charts. ([#6634](https://github.com/infor-design/enterprise/issues/6634))
 
+## v4.81.0 Features
+
+- `[Calendar]` Added weekview number on the monthview in datepicker. Use `showWeekNumber` to enable it. ([#5785](https://github.com/infor-design/enterprise/issues/5785))
+
 ## v4.81.0 Fixes
 
 - `[Dropdown]` Fixed swatch default color in themes. ([#7108](https://github.com/infor-design/enterprise/issues/7108))
