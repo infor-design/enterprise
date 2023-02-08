@@ -1,16 +1,18 @@
 # What's New with Enterprise
 
-## v4.82.0
+## v4.81.0
 
-## v4.82.0 Important Changes
+## v4.81.0 Important Changes
 
 - `[General]` Project now uses node 18 (18.13.0) for development. All dependencies are updated. ([#6634](https://github.com/infor-design/enterprise/issues/6634))
 - `[General]` Updated to d3.v7 which impacts all charts. ([#6634](https://github.com/infor-design/enterprise/issues/6634))
 
 ## v4.81.0 Fixes
 
+- `[Datagrid]` Fixed background color of lookups in filter row when in light mode. ([#7176](https://github.com/infor-design/enterprise/issues/7176))
 - `[Dropdown]` Fixed swatch default color in themes. ([#7108](https://github.com/infor-design/enterprise/issues/7108))
 - `[Dropdown/Multiselect]` Fixed disabled options are not displayed as disabled when using ajax. ([#7150](https://github.com/infor-design/enterprise/issues/7150))
+- `[MenuButton]` Fixed some color on menu buttons. ([#7184](https://github.com/infor-design/enterprise/issues/7184))
 - `[Hyperlink]` Changed hover color in dark theme. ([#7095](https://github.com/infor-design/enterprise/issues/7095))
 - `[Popupmenu]` Fix on inverse colors not showing in popupmenu in masthead. ([#7005](https://github.com/infor-design/enterprise/issues/7005))
 
