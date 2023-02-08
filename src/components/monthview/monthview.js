@@ -47,6 +47,7 @@ const COMPONENT_NAME_DEFAULTS = {
   legend: [],
   hideDays: false, // TODO
   showMonthYearPicker: true,
+  showWeekNumber: false,
   yearsAhead: 3,
   yearsBack: 2,
   range: {
@@ -217,16 +218,6 @@ MonthView.prototype = {
         <span>${Locale.translate('NextMonth', { locale: this.locale.name, language: this.language })}</span>
       </button>`;
 
-    this.weekNumberTable = $(`<table class="monthview-week-table" role="application"></table>`);
-    this.weekHeader = $('' +
-      `<thead>
-        <tr>
-          <th><span>W#</span></th>
-        </tr>
-      </thead>`).appendTo(this.weekNumberTable);
-    this.weekNumber = $(`<tbody></tbody>`).appendTo(this.weekNumberTable);
-    this.getWeekNumbers(this.settings.year, this.settings.month);
-
     this.table = $(`<table class="monthview-table" aria-label="${Locale.translate('Calendar', { locale: this.locale.name })}" role="application"></table>`);
     this.dayNames = $('' +
       `<thead>
@@ -314,9 +305,21 @@ MonthView.prototype = {
     }
 
     const useElement = this.settings.inPage && this.settings.inPageToggleable && this.table !== '' ? inPageCalendarPane : this.table;
-    this.monthAndWeekContainer = $(`<div class="monthview-week-container"></div>`);
-    this.monthAndWeekContainer.append(this.weekNumberTable);
-    this.monthAndWeekContainer.append(useElement);
+
+    if (this.settings.showWeekNumber) {
+      this.weekNumberTable = $(`<table class="monthview-week-table" role="application"></table>`);
+      this.weekHeader = $('' +
+        `<thead>
+          <tr>
+            <th><span>W#</span></th>
+          </tr>
+        </thead>`).appendTo(this.weekNumberTable);
+      this.weekNumber = $(`<tbody></tbody>`).appendTo(this.weekNumberTable);
+      this.getWeekNumbers(this.settings.year, this.settings.month);
+      this.monthAndWeekContainer = $(`<div class="monthview-week-container"></div>`);
+      this.monthAndWeekContainer.append(this.weekNumberTable);
+      this.monthAndWeekContainer.append(useElement);
+    }
 
     // Reconfigure the header
     this.header = $('<div class="monthview-header"><div class="calendar-toolbar"></div></div>');
@@ -327,7 +330,7 @@ MonthView.prototype = {
     }
 
     this.showMonth(this.settings.month, this.settings.year);
-    this.calendar = this.element.addClass('monthview').append(this.header, this.monthYearPane, this.monthAndWeekContainer);
+    this.calendar = this.element.addClass('monthview').append(this.header, this.monthYearPane, this.settings.showWeekNumber ? this.monthAndWeekContainer : useElement);
 
     if (!(this.settings.isPopup || this.settings.inPage)) {
       this.element.addClass('is-fullsize');
@@ -681,8 +684,9 @@ MonthView.prototype = {
     this.currentMonth = month;
     this.currentYear = year;
 
-    // CONSOLE TEST
-    this.getWeekNumbers(this.currentYear, this.currentMonth);
+    if (this.settings.showWeekNumber) {
+      this.getWeekNumbers(this.currentYear, this.currentMonth);
+    }
 
     // Set the Days of the week
     let firstDayofWeek = (this.currentCalendar.firstDayofWeek || 0);

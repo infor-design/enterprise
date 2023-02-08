@@ -122,6 +122,7 @@ const DATEPICKER_DEFAULTS = {
   },
   showLegend: false,
   showMonthYearPicker: true,
+  showWeekNumber: false,
   hideDays: false,
   hitbox: false,
   yearsAhead: 3,
