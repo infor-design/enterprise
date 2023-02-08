@@ -873,6 +873,10 @@ html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.i
   background-color: ${colors.lighter} !important;
 }
 
+.is-personalizable .personalize-subheader  p, h1 {
+  color: ${colors.contrast} !important;
+}
+
 .is-personalizable .personalize-text {
   color: ${colors.contrast} !important;
 }
