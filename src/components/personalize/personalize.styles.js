@@ -290,7 +290,7 @@ a.is-personalizable svg.ripple-effect {
 .header.is-personalizable button:not(:disabled),
 .header.is-personalizable button:not(:disabled) .icon,
 .header.is-personalizable button:not(:disabled) .app-header.icon > span {
-  color: ${colors.contrast};
+  color: ${colors.contrast} !important;
 }
 
 .header.is-personalizable button:not(:disabled) .app-header.icon > span {
@@ -382,6 +382,10 @@ html[class*="theme-new-"] .is-personalizable.tab-container.header-tabs > .tab-li
 .header.is-personalizable .flex-toolbar [class^='btn'][disabled] .icon,
 .header.is-personalizable .btn:not(.searchfield-category-button)[disabled] span {
   color: rgba(255, 255, 255, 0.3) !important;
+}
+
+.header.is-personalizable button:not(:disabled) {
+  color: #fff !important;
 }
 
 .header.is-personalizable  .flex-toolbar [class^='btn']:focus:not(.hide-focus) .icon {
