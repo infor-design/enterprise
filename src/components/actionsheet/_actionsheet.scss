@@ -125,6 +125,12 @@
   margin-right: 0;
 
   &.btn-tertiary {
+    color: $button-color-tertiary-actionsheet-initial-font;
+
+    svg.icon {
+      color: $button-color-tertiary-actionsheet-initial-font;
+    }
+
     &:hover:not(:disabled) {
       color: $button-color-tertiary-actionsheet-hover-font;
 
