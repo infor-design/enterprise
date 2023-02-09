@@ -139,7 +139,7 @@ html[dir='rtl'] {
     @media (max-width: 766px) {
       .flex-toolbar.searchfield-active .toolbar-section .searchfield-wrapper,
       .flex-toolbar.searchfield-active .toolbar-section .toolbar-searchfield-wrapper {
-        width: 107%;
+        width: calc(100% + 35px);
       }
     }
   }
