@@ -1,0 +1,54 @@
+<div class="full-height full-width">
+  <div id="datagrid" class="datagrid">
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+
+      var grid,
+        columns = [],
+        data = [];
+
+      // Some Sample Data
+      data.push({ id: 1, productId: 2142201, productName: 'Compressor', activity:  'Assemble Paint', quantity: 1, price: '500', status: 'OK', orderDate: new Date(2014, 12, 8), action: 'Action'});
+      data.push({ id: 2, productId: 2241202, productName: 'Different Compressor', activity:  'Inspect and Repair', quantity: '2', price: 210.99, status: '', orderDate: new Date(2015, 7, 3), action: 'On Hold'});
+      data.push({ id: 3, productId: 2342203, productName: 'Compressor', activity:  'Inspect and Repair', quantity: 1, price: '120.99', status: null, orderDate: new Date(2014, 6, 3), action: 'Action'});
+      data.push({ id: 4, productId: 2445204, productName: 'Another Compressor', activity:  'Assemble Paint', quantity: 3, price: '2345', status: 'OK', orderDate: new Date(2015, 3, 3), action: 'Action'});
+      data.push({ id: 5, productId: 2542205, productName: 'I Love Compressors', activity:  'Inspect and Repair', quantity: 4, price: '210.99', status: 'OK', orderDate: new Date(2015, 5, 5), action: 'On Hold'});
+      data.push({ id: 5, productId: 2642205, productName: 'Air Compressors', activity:  'Inspect and Repair', quantity: 41, price: '120.99', status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
+      data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: '123.99', status: 'OK', orderDate: null, action: 'On Hold'});
+
+      // Define Columns for the Grid.
+      columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center'});
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', reorderable: false, hideable: false, formatter: Soho.Formatters.Readonly});
+      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', filterType: 'text', formatter: Soho.Formatters.Text});
+      columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', filterType: 'text'});
+      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', filterType: 'text', reorderable: false, hideable: false});
+      columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Soho.Formatters.Decimal});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy'});
+      columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Soho.Formatters.Text});
+      columns.push({ id: 'action', name: 'Action Item', field: 'action', reorderable: false, hideable: false});
+
+      // Init and get the api for the grid
+      $('#datagrid').datagrid({
+        columns: columns,
+        // Numeric Column Span Groups (3 + 1 + 2 + 3 === 9)
+        columnGroups: [
+          { colspan: 3, id: 'group1', name: 'Column Group One', align: 'center' },
+          { colspan: 1, id: 'group2', name: 'Column Group Two' },
+          { colspan: 2, id: 'group3', name: 'Column Group Three', align: 'right' },
+          { colspan: 3, id: 'group4', name: 'Column Group Four', align: 'left' }
+        ],
+        dataset: data,
+        columnReorder: true,
+        saveColumns: false,
+        filterable: true,
+        selectable: 'multiple',
+        headerBackgroundColor: 'light',
+        toolbar: { title: 'Groups', actions: true, collapsibleFilter: true, keywordFilter: true,  personalize: true, results: true, resetLayout: true, rowHeight: true }
+      });
+
+ });
+
+</script>
