@@ -71,7 +71,16 @@ const theme = {
     const brand = this.themeColors().brand;
     const personalize = {};
     const opts = { showBrackets: false };
-    personalize.default = { id: 'default', name: Locale.translate('Default', opts), backgroundColorClass: 'primary-bg-color', value: brand.primary.base.value };
+    const defaultColor = () => ([
+      { id: 'theme-classic-light', color: '#2578a9' },
+      { id: 'theme-classic-dark', color: '#50535A' },
+      { id: 'theme-classic-contrast', color: '#134d71' },
+      { id: 'theme-new-light', color: '#ffffff' },
+      { id: 'theme-new-dark', color: '#606066' },
+      { id: 'theme-new-contrast', color: '#ffffff' }
+    ].filter(color => color.id === this.currentTheme.id)?.[0]?.color);
+
+    personalize.default = { id: 'default', name: Locale.translate('Default', opts), backgroundColorClass: 'primary-bg-color', value: defaultColor() || brand.primary.base.value };
     personalize.amber = { id: 'amber', name: Locale.translate('Amber', opts), backgroundColorClass: 'amber09', value: palette.amber['90'].value };
     personalize.amethyst = { id: 'amethyst', name: Locale.translate('Amethyst', opts), backgroundColorClass: 'amethyst06', value: palette.amethyst['60'].value };
     personalize.azure = { id: 'azure', name: Locale.translate('Azure', opts), backgroundColorClass: 'azure07', value: palette.azure['70'].value };
