@@ -16,6 +16,7 @@
 - `[MenuButton]` Fixed some color on menu buttons. ([#7184](https://github.com/infor-design/enterprise/issues/7184))
 - `[Hyperlink]` Changed hover color in dark theme. ([#7095](https://github.com/infor-design/enterprise/issues/7095))
 - `[Popupmenu]` Fix on inverse colors not showing in popupmenu in masthead. ([#7005](https://github.com/infor-design/enterprise/issues/7005))
+- `[Personalization]` Fix default values in the personalization API. ([#7167](https://github.com/infor-design/enterprise/issues/7167))
 
 ## v4.80.1 Fixes
 
@@ -24,7 +25,7 @@
 - `[Hyperlink]` Changed hover color in dark theme. ([#7095](https://github.com/infor-design/enterprise/issues/7095))
 - `[Datagrid]` Fixed background color of lookups in filter row when in light mode. ([#7176](https://github.com/infor-design/enterprise/issues/7176))
 - `[Dropdown/Multiselect]` Fixed disabled options are not displayed as disabled when using ajax. ([#7150](https://github.com/infor-design/enterprise/issues/7150))
-- `[Header]` Fixed a bug in subheader where the color its not appropriate on default theme. ([#7173](https://github.com/infor-design/enterprise/issues/7173))
+- `[Header]` Fixed a bug in `subheader` where the color its not appropriate on default theme. ([#7173](https://github.com/infor-design/enterprise/issues/7173))
 - `[MenuButton]` Fixed some color on menu buttons. ([#7184](https://github.com/infor-design/enterprise/issues/7184))
 
 ## v4.80.0

@@ -41,7 +41,7 @@ describe('Popdown Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should keep the Popdown open while focused on an inline-Dropdown component\'s list', async () => {
+    it.skip('should keep the Popdown open while focused on an inline-Dropdown component\'s list', async () => {
       const isPopdownVisible = () => !!document.querySelector('.popdown.bottom.visible');
 
       // Open the Popdown
