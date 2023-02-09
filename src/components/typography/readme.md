@@ -64,13 +64,17 @@ The following classes can be used for text alignment
 - `align-text-right` or `center-text` - Set text alignment to center.
 
 ## Usage
+
 ### Singular vs. Plural
 
-Aim to use the singular form when referring to a single object and plural when referring to a collection of objects. 
+Aim to use the singular form when referring to a single object and plural when referring to a collection of objects.
 
 For example:
+
 - Navigation (menu) items are in plural form when referring to business objects (Sales Orders or Purchase Orders)
 - Headers (page titles, section titles, tab labels) are in plural form when containing a list or collection of objects (parts or orders) and singular form if they display a single business object (a part detail or order detail)
+
+### More details
 
 Find guidance for capitalization, date formats, and other UI copy in [UX Writing](https://design.infor.com/product/ux-writing/introduction).
 
