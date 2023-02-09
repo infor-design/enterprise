@@ -279,7 +279,9 @@ a.is-personalizable svg.ripple-effect {
   color: ${colors.contrast};
 }
 
-.header.is-personalizable h1 {
+.header.is-personalizable h1,
+.header.is-personalizable h2,
+.header.is-personalizable h3 {
   color: ${colors.contrast};
 }
 
@@ -883,7 +885,9 @@ html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.i
 }
 
 .is-personalizable .personalize-subheader  h1,
-.personalize-subheader.is-personalizable h1 {
+.personalize-subheader.is-personalizable h1,
+.is-personalizable .personalize-subheader h2,
+.personalize-subheader.is-personalizable h2 {
   color: ${colors.contrast} !important;
 }
 

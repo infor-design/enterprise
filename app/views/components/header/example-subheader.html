@@ -19,15 +19,15 @@
     -->
     <div class="toolbar">
       <div class="title">
-        {{> includes/header-appmenu-trigger}}
-        <h1>Sub-Header</h1>
+        <h2>Sub-Header</h2>
       </div>
 
-      <div class="buttonset">
-        <label for="subheader-searchfield" class="audible">Search</label>
-        <input id="subheader-searchfield" class="searchfield" name="subheader-searchfield" />
-      </div>
-      {{> includes/header-actionbutton}}
+      <button type="button" class="btn">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-filter"></use>
+        </svg>
+        <span>Filter</span>
+      </button>
     </div>
   </header>
 </div>
