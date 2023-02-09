@@ -311,7 +311,7 @@ MonthView.prototype = {
       this.weekHeader = $('' +
         `<thead>
           <tr>
-            <th><span>W#</span></th>
+            <th><span>${Locale.translate('WeekNumber')}</span></th>
           </tr>
         </thead>`).appendTo(this.weekNumberTable);
       this.weekNumber = $('<tbody></tbody>').appendTo(this.weekNumberTable);
@@ -581,7 +581,7 @@ MonthView.prototype = {
 
   /**
    * Gets the total weeks of the desired month
-   * @param {number} month The zero based month to display
+   * @param {number} monthNumber The zero based month to display
    * @param {number} year The year to display
    * @returns {void}
    */
@@ -596,19 +596,22 @@ MonthView.prototype = {
 
   /**
    * Gets the total number of weeks passed up to the desired month
-   * @param {number} month The zero based month to display
+   * @param {number} monthNumber The zero based month to display
    * @param {number} year The year to display
    * @returns {void}
    */
   getWeekNumbers(monthNumber, year) {
     this.weekNumber.empty();
+    let weekNumbersHTML = '';
     const currentWeekCount = this.getWeekCount(monthNumber + 1, year);
     const now = new Date(year, monthNumber, 1);
     const startMonth = new Date(now.getFullYear(), 0, 1);
     const week = Math.ceil((((now.getTime() - startMonth.getTime()) / 86400000) + startMonth.getDay() + 1) / 7);
     for (let i = 0; i < currentWeekCount; i++) {
-      this.weekNumber.append(`<tr><td><span>${week + i}</span></td></tr>`);
+      weekNumbersHTML += `<tr><td><span>${week + i}</span></td></tr>`;
     }
+    this.weekNumber.append(weekNumbersHTML);
+
   },
 
   /**
