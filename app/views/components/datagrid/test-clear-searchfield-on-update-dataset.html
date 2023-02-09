@@ -102,7 +102,7 @@
           quantity: 4
         }];
 
-        $('#datagrid1').datagrid({ columns }).data('datagrid').updateDataset(dataset3);
+        $('#datagrid1').datagrid({ columns, toolbar: { keywordFilter: true } }).data('datagrid').updateDataset(dataset3);
       });
     });
   </script>

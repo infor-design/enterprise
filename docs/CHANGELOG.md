@@ -1,5 +1,15 @@
 # What's New with Enterprise
 
+## v4.80.2
+
+## v4.80.2 Fixes
+
+- `[Accordion]` Additional fix in accordion collapsing cards on expand bug. ([#6820](https://github.com/infor-design/enterprise/issues/6820))
+- `[Datagrid]` Fixed a bug in datagrid where custom toolbar is being replaced with data grid generated toolbar. ([NG#1434](https://github.com/infor-design/enterprise-ng/issues/1434))
+- `[Header]` Fixed a bug in subheader where the color its not appropriate on default theme. ([#7173](https://github.com/infor-design/enterprise/issues/7173))
+- `[Personalization]` Fix default values in the personalization API. ([#7167](https://github.com/infor-design/enterprise/issues/7167))
+- `[Personalization]` Fixed H1 had turned white and invisible ([#7193](https://github.com/infor-design/enterprise/issues/7193))
+
 ## v4.80.1
 
 ## v4.80.1 Fixes

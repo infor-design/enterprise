@@ -7731,7 +7731,7 @@ Datagrid.prototype = {
       toolbar = this.element.parent().find('.toolbar:not(.contextual-toolbar), .flex-toolbar:not(.contextual-toolbar)');
       this.refreshSelectedRowHeight();
     } else {
-      toolbar = $('<div class="toolbar" role="toolbar"></div>');
+      toolbar = $('<div class="toolbar datagrid-toolbar" role="toolbar"></div>');
       this.removeToolbarOnDestroy = true;
 
       if (this.settings.toolbar.title) {
@@ -13303,8 +13303,13 @@ Datagrid.prototype = {
       this.settings.columns = settings.columns;
     }
 
-    if (settings && settings.toolbar && this.toolbar) {
-      const toolbar = this.element.parent().find('.toolbar:not(.contextual-toolbar), .flex-toolbar:not(.contextual-toolbar)').length === 1 ? this.element.prev('.flex-toolbar') : this.element.prev('.toolbar');
+    if (settings && settings.toolbar && !this.toolbar) {
+      this.appendToolbar();
+    }
+
+    // Refresh toolbar only if it's rendered by datagrid, not custom added toolbars
+    if (settings && settings.toolbar && this.toolbar && this.toolbar.hasClass('datagrid-toolbar')) {
+      const toolbar = this.element.parent().find('.toolbar:not(.contextual-toolbar), .flex-toolbar:not(.contextual-toolbar)');
       const toolbarApi = this.toolbar.data('toolbar') ? this.toolbar.data('toolbar') : this.toolbar.data('toolbarFlex');
       if (toolbarApi) {
         toolbarApi.destroy();
