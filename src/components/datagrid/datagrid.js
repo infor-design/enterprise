@@ -7730,11 +7730,11 @@ Datagrid.prototype = {
     }
 
     // Allow menu to be added manually
-    if (this.element.parent().find('.toolbar:not(.contextual-toolbar), .flex-toolbar:not(.contextual-toolbar)').length === 1) {
-      toolbar = this.element.parent().find('.toolbar:not(.contextual-toolbar), .flex-toolbar:not(.contextual-toolbar)');
+    if (this.element.parent().find('.datagrid-toolbar').length === 1) {
+      toolbar = this.element.parent().find('.datagrid-toolbar');
       this.refreshSelectedRowHeight();
     } else {
-      toolbar = $('<div class="toolbar" role="toolbar"></div>');
+      toolbar = $('<div class="toolbar datagrid-toolbar" role="toolbar"></div>');
       this.removeToolbarOnDestroy = true;
 
       if (this.settings.toolbar.title) {
@@ -13307,12 +13307,12 @@ Datagrid.prototype = {
     }
 
     if (settings && settings.toolbar && this.toolbar) {
-      const toolbar = this.element.parent().find('.toolbar:not(.contextual-toolbar), .flex-toolbar:not(.contextual-toolbar)').length === 1 ? this.element.prev('.flex-toolbar') : this.element.prev('.toolbar');
+      const toolbar = this.element.parent().find('.datagrid-toolbar');
       const toolbarApi = this.toolbar.data('toolbar') ? this.toolbar.data('toolbar') : this.toolbar.data('toolbarFlex');
       if (toolbarApi) {
         toolbarApi.destroy();
       }
-      toolbar.remove();
+      toolbar?.remove();
       this.appendToolbar();
     }
 
