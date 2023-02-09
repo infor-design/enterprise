@@ -10,6 +10,7 @@
 ## v4.81.0 Fixes
 
 - `[Datagrid]` Fixed background color of lookups in filter row when in light mode. ([#7176](https://github.com/infor-design/enterprise/issues/7176))
+- `[Datagrid]` Fixed a bug in datagrid where custom toolbar is being replaced with data grid generated toolbar. ([NG#1434](https://github.com/infor-design/enterprise-ng/issues/1434))
 - `[Dropdown]` Fixed swatch default color in themes. ([#7108](https://github.com/infor-design/enterprise/issues/7108))
 - `[Dropdown/Multiselect]` Fixed disabled options are not displayed as disabled when using ajax. ([#7150](https://github.com/infor-design/enterprise/issues/7150))
 - `[MenuButton]` Fixed some color on menu buttons. ([#7184](https://github.com/infor-design/enterprise/issues/7184))
