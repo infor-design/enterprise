@@ -611,7 +611,6 @@ MonthView.prototype = {
       weekNumbersHTML += `<tr><td><span>${week + i}</span></td></tr>`;
     }
     this.weekNumber.append(weekNumbersHTML);
-
   },
 
   /**
