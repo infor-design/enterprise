@@ -161,7 +161,8 @@ $subheader-height: 60px;
         top: 2px;
       }
 
-      h1 {
+      h1,
+      h2 {
         display: inline-block;
         max-width: 100%;
         overflow: hidden;
@@ -176,7 +177,13 @@ $subheader-height: 60px;
         }
       }
 
-      [class^='btn'] + h1 {
+      h2 {
+        font-size: 1.8rem;
+        margin-inline-start: 8px;
+      }
+
+      [class^='btn'] + h1,
+      [class^='btn'] + h2 {
         margin: 3px;
         max-width: calc(100% - 40px);
       }

@@ -1,0 +1,33 @@
+<div class="is-personalizable">
+  <header class="header is-personalizable">
+    <div class="toolbar">
+      <div class="title">
+        {{> includes/header-appmenu-trigger}}
+        <h1>Header</h1>
+      </div>
+
+      <div class="buttonset">
+        <label for="header-searchfield" class="audible">Search</label>
+        <input id="header-searchfield" class="searchfield" name="header-searchfield" />
+      </div>
+      {{> includes/header-actionbutton}}
+    </div>
+  </header>
+  <header class="header personalize-subheader">
+    <!--
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rutrum hendrerit nunc sed mollis.</p>
+    -->
+    <div class="toolbar">
+      <div class="title">
+        <h2>Sub-Header</h2>
+      </div>
+
+      <button type="button" class="btn">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-filter"></use>
+        </svg>
+        <span>Filter</span>
+      </button>
+    </div>
+  </header>
+</div>
