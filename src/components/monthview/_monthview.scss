@@ -210,6 +210,12 @@
       }
     }
   }
+  
+  &.has-monthview-week-table {
+    .monthview-monthyear-pane .picklist-section.is-month::after {
+      left: 189px;
+    }
+  }
 
   tr {
     text-align: center;

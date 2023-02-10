@@ -130,6 +130,7 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {boolean} [settings.range.includeDisabled=false] Include disable dates in range of dates.
  * @param {boolean} [settings.hideDays=false] If true the days portion of the calendar will be hidden. Usefull for Month/Year only formats.
  * @param {boolean} [settings.showMonthYearPicker=true] If false the year and month switcher will be disabled.
+ * @param {boolean} [settings.showWeekNumber=false] If set to true, the week number will be displayed on monthview.
  * @param {number} [settings.yearsAhead=3] The number of years ahead to show in the month/year picker should total 9 with yearsBack.
  * @param {number} [settings.yearsBack=2] The number of years back to show in the month/year picker should total 9 with yearsAhead.
  * @param {array} [settings.legend]  Legend Build up
@@ -331,6 +332,10 @@ MonthView.prototype = {
 
     this.showMonth(this.settings.month, this.settings.year);
     this.calendar = this.element.addClass('monthview').append(this.header, this.monthYearPane, this.settings.showWeekNumber ? this.monthAndWeekContainer : useElement);
+
+    if (this.settings.showWeekNumber) {
+      this.calendar.addClass('has-monthview-week-table');
+    }
 
     if (!(this.settings.isPopup || this.settings.inPage)) {
       this.element.addClass('is-fullsize');

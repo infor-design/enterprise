@@ -60,6 +60,7 @@ const COMPONENT_NAME = 'datepicker';
  * For example if you have more non specific dates to disable then enable ect.
  * @param {boolean} [settings.showLegend=false] If true a legend is show to associate dates.
  * @param {boolean} [settings.showMonthYearPicker=true] If false the year and month switcher will be disabled.
+ * @param {boolean} [settings.showWeekNumber=false] If set to true, the week number will be displayed on monthview.
  * @param {boolean} [settings.hideDays=false] If true the days portion of the calendar will be hidden.
  *  Usefull for Month/Year only formats.
  * @param {number} [settings.yearsAhead=3] The number of years ahead to show in the month/year picker should total 9 with yearsBack.
