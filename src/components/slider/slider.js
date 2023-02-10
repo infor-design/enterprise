@@ -406,7 +406,7 @@ Slider.prototype = {
    */
   handleRangeClick(e) {
     e.preventDefault();
-    if (this.isDisabled()) {
+    if (this.isDisabled() || this.isDragging) {
       return;
     }
 
@@ -545,10 +545,8 @@ Slider.prototype = {
         }
       }
 
-      // Round the value to the nearest step, if the step is defined
-      if (self.settings.step) {
-        rangeVal = Math.round(rangeVal / self.settings.step) * self.settings.step;
-      }
+      // Round the value to the nearest step
+      rangeVal = roundToIncrement(rangeVal, self.settings.step);
 
       /**
       * Fires while the slider is being slid.
@@ -587,6 +585,7 @@ Slider.prototype = {
     handle.drag(draggableOptions)
       .on('drag.slider', (e, args) => {
         updateHandleFromDraggable(e, $(e.currentTarget), args);
+        self.isDragging = true;
       })
       .on('dragstart', function () {
         $(this).addClass('is-dragging');
@@ -598,6 +597,11 @@ Slider.prototype = {
         self.range.removeClass('is-dragging');
         self.element.trigger('slidestop', handle);
         self.element.trigger('change', { element: self.element, value: self._value });
+
+        // Changing dragging status, on timer to fire after dragend/click events
+        setTimeout(() => {
+          self.isDragging = false;
+        }, 0);
       });
   },
 
