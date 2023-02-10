@@ -5319,9 +5319,10 @@ Datagrid.prototype = {
    * @returns {number} the calculated text width in pixels.
    */
   calculateTextRenderWidth(maxText, isHeader) {
-    if (!this.canvas) return 0;
     // if given, use cached canvas for better performance, else, create new canvas
     this.canvas = this.canvas || (this.canvas = document.createElement('canvas'));
+
+    if (!this.canvas || !this.canvas?.getContext) return 0;
     const context = this.canvas?.getContext('2d');
     const isNewTheme = (theme.currentTheme.id.indexOf('uplift') > -1 || theme.currentTheme.id.indexOf('new') > -1);
 
@@ -5339,6 +5340,7 @@ Datagrid.prototype = {
       }
     }
 
+    if (!context?.font) return 0;
     context.font = this.fontCached;
     if (isHeader) {
       context.font = this.fontHeaderCached;
