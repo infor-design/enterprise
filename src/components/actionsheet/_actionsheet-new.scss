@@ -3,3 +3,11 @@
 .ids-actionsheet {
   color: $popupmenu-color;
 }
+
+.ids-action {
+  &.btn-secondary:hover {
+    border-color: $button-color-secondary-actionsheet-hover-border;
+    background-color: $button-color-secondary-actionsheet-hover-background;
+    color: $button-color-secondary-actionsheet-hover-font;
+  }
+}
