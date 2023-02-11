@@ -595,6 +595,7 @@ Soho.Locale.addCulture('en-US', {
     ViewSource: { id: 'ViewSource', value: 'View Source', comment: 'Toggle between the source view and visual view' },
     ViewVisual: { id: 'ViewVisual', value: 'View Visual', comment: 'Toggle between the source view and visual view' },
     Week: { id: 'Week', value: 'Week', comment: 'Shows a view of the current weeks events' },
+    WeekNumber: { id: 'WeekNumber', value: 'W#', comment: 'Week view number header on the datepicker' },
     Year: { id: 'Year', value: 'Year', comment: 'As in a date year' },
     Yes: { id: 'Yes', value: 'Yes', comment: 'On a dialog button' }
   }

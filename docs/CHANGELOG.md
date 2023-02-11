@@ -9,6 +9,10 @@
 - `[Bar]` Fixed missing left axis label. ([#7181](https://github.com/infor-design/enterprise/issues/7181))
 - `[Bar]` Fixed regressed long text example. ([#7183](https://github.com/infor-design/enterprise/issues/7183))
 
+## v4.81.0 Features
+
+- `[Calendar]` Added weekview number on the monthview in datepicker. Use `showWeekNumber` to enable it. ([#5785](https://github.com/infor-design/enterprise/issues/5785))
+
 ## v4.81.0 Fixes
 
 - `[Bar]` Fixed bug introduced by d3 changes with bar selection. ([#7182](https://github.com/infor-design/enterprise/issues/7182))
