@@ -828,7 +828,7 @@ TimePicker.prototype = {
     val = val.replace('午', `午${sep}`);
     parts = val.split(sep);
 
-    const isStandardTimeFormatOnly = timeFormat.slice(0, 2) === 'ah' && !$('.datepicker').length > 0;
+    const isStandardTimeFormatOnly = timeFormat.replace(' ', '').slice(0, 2) !== 'ah' && !$('.datepicker').length > 0;
     const aLoc = this.currentCalendar.timeFormat.toLowerCase().indexOf('a');
     const isAmFirst = aLoc !== -1 && (aLoc <
       this.currentCalendar.timeFormat.toLowerCase().indexOf('h'));
