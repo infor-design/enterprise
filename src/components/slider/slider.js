@@ -546,7 +546,9 @@ Slider.prototype = {
       }
 
       // Round the value to the nearest step
-      rangeVal = roundToIncrement(rangeVal, self.settings.step);
+      if (self.settings.step) {
+        rangeVal = roundToIncrement(rangeVal, self.settings.step);
+      }
 
       /**
       * Fires while the slider is being slid.
@@ -592,7 +594,16 @@ Slider.prototype = {
         self.range.addClass('is-dragging');
         self.element.trigger('slidestart', handle);
       })
-      .on('dragend', function () {
+      .on('dragend', function (e) {
+        // Round values when sliding is over
+        if (!self.settings.step) {
+          self.value($(e.currentTarget).hasClass('higher') ?
+            [undefined, roundToIncrement(self._value[1], self.settings.step)] :
+            [roundToIncrement(self._value[0], self.settings.step)]);
+          self.updateRange();
+          self.updateTooltip($(e.currentTarget));
+        }
+
         $(this).removeClass('is-dragging');
         self.range.removeClass('is-dragging');
         self.element.trigger('slidestop', handle);
