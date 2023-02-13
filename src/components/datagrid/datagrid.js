@@ -5319,9 +5319,10 @@ Datagrid.prototype = {
    * @returns {number} the calculated text width in pixels.
    */
   calculateTextRenderWidth(maxText, isHeader) {
-    if (!this.canvas) return 0;
     // if given, use cached canvas for better performance, else, create new canvas
     this.canvas = this.canvas || (this.canvas = document.createElement('canvas'));
+
+    if (!this.canvas || !this.canvas?.getContext) return 0;
     const context = this.canvas?.getContext('2d');
     const isNewTheme = (theme.currentTheme.id.indexOf('uplift') > -1 || theme.currentTheme.id.indexOf('new') > -1);
 
@@ -5339,6 +5340,7 @@ Datagrid.prototype = {
       }
     }
 
+    if (!context?.font) return 0;
     context.font = this.fontCached;
     if (isHeader) {
       context.font = this.fontHeaderCached;
@@ -7734,7 +7736,7 @@ Datagrid.prototype = {
       toolbar = this.element.parent().find('.toolbar:not(.contextual-toolbar), .flex-toolbar:not(.contextual-toolbar)');
       this.refreshSelectedRowHeight();
     } else {
-      toolbar = $('<div class="toolbar" role="toolbar"></div>');
+      toolbar = $('<div class="toolbar datagrid-toolbar" role="toolbar"></div>');
       this.removeToolbarOnDestroy = true;
 
       if (this.settings.toolbar.title) {
@@ -13306,8 +13308,13 @@ Datagrid.prototype = {
       this.settings.columns = settings.columns;
     }
 
-    if (settings && settings.toolbar && this.toolbar) {
-      const toolbar = this.element.parent().find('.toolbar:not(.contextual-toolbar), .flex-toolbar:not(.contextual-toolbar)').length === 1 ? this.element.prev('.flex-toolbar') : this.element.prev('.toolbar');
+    if (settings && settings.toolbar && !this.toolbar) {
+      this.appendToolbar();
+    }
+
+    // Refresh toolbar only if it's rendered by datagrid, not custom added toolbars
+    if (settings && settings.toolbar && this.toolbar && this.toolbar.hasClass('datagrid-toolbar')) {
+      const toolbar = this.element.parent().find('.toolbar:not(.contextual-toolbar), .flex-toolbar:not(.contextual-toolbar)');
       const toolbarApi = this.toolbar.data('toolbar') ? this.toolbar.data('toolbar') : this.toolbar.data('toolbarFlex');
       if (toolbarApi) {
         toolbarApi.destroy();

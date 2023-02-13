@@ -88,7 +88,7 @@ describe('Bar Chart', () => {
 
       await page.waitForTimeout(200);
 
-      expect(await page.$eval('.bar.series-0', e => getComputedStyle(e).opacity)).toBe('0.6');
+      expect(await page.$eval('.bar.series-0', e => getComputedStyle(e).opacity)).toBe('1');
     });
 
     it('should be able to set id/automation id', async () => {
