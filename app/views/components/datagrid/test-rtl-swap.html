@@ -1,0 +1,87 @@
+
+<div class="row">
+  <div class="twelve columns">
+    <div role="toolbar" class="toolbar">
+      <div class="title">
+        Data Grid Header Title
+        <span class="datagrid-result-count">(N Results)</span>
+      </div>
+
+      <div class="buttonset">
+        <button id="btn-eng" class="btn btn-secondary" type="button">English</button>
+        <button id="btn-ar" class="btn btn-secondary" type="button">Arabic</button>
+      </div>
+    </div>
+
+    <div class="contextual-toolbar toolbar is-hidden">
+      <div class="title selection-count">1 Selected</div>
+      <div class="buttonset">
+        <button class="btn-icon" type="button" id="remove-btn">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-delete"></use>
+          </svg>
+          <span class="audible">Remove</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="datagrid"></div>
+  </div>
+</div>
+
+<script>
+  var gridApi = null;
+
+  $('body').one('initialized', function () {
+    var grid,
+      columns = [],
+      data = [];
+
+    var isDisabled = function(row, cell, value, item) {
+      return (row % 2 === 0);
+    }
+
+    data.push({ id: 1, productName: 'Compressor', quantity: 1, portable: false, action: 1 });
+    data.push({ id: 2, productName: 'console.log', quantity: 2, portable: false, action: 1 });
+    data.push({ id: 3, productName: 'Portable Compressor', portable: true, quantity: null, action: 2});
+    data.push({ id: 4, productName: 'Another Compressor', portable: true, quantity: 3, action: 3 });
+    data.push({ id: 5, productName: 'De Wallt Compressor', portable: false, quantity: 4, action: 1});
+    data.push({ id: 6, productName: 'Air Compressors', portable: false, quantity: 41, action: 2});
+    data.push({ id: 7, productName: 'Some Compressor', portable: true, quantity: 41, action: 2});
+
+    columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center'});
+    columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Soho.Formatters.Hyperlink, editor: Soho.Editors.Input});
+    columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', align: 'right', editor: Soho.Editors.Input, mask: '###', isEditable: isDisabled});
+    columns.push({ id: 'portable', name: 'Portable', field: 'portable', align: 'center', formatter: Soho.Formatters.Checkbox, editor: Soho.Editors.Checkbox});
+    columns.push({ id: 'action', name: 'Action', field: 'action', formatter: Soho.Formatters.Dropdown, editor: Soho.Editors.Dropdown, validate: 'required', isEditable: isDisabled,
+    options: [{id: '', label: '', value: -1}, {id: 'oh1', label: 'On Hold', value: 1}, {id: 'sh1', label: 'Shipped', value: 2} , {id: 'ac1', label: 'Action', value: 3}, {id: 'pen', label: 'Pending', value: 4}, {id: 'bk1', label: 'Backorder', value: 5}, {id: 'can', label: 'Cancelled', value: 6}, {id: 'pro', label: 'Processing', value: 7}]
+    });
+
+    //Init and get the api for the grid
+    grid = $('#datagrid').datagrid({
+      columns: columns,
+      dataset: data,
+      editable: true,
+      showNewRowIndicator: false,
+      clickToSelect: false,
+      selectable: 'multiple',
+      toolbar: {title: 'Data Grid Header Title', results: true, personalize: true, actions: true, rowHeight: true, keywordFilter: true,  collapsibleFilter: true},
+      paging: true,
+      pagesize: 5,
+      pagesizes: [2, 5, 6],
+      trimSpaces: true,
+      columnReorder: true,
+      showDirty: true
+    });
+    gridApi = $('#datagrid').data('datagrid');
+    window.data = data;
+  });
+
+  $('#btn-ar').on('click', () => {
+    Soho.Locale.set('ar-SA');
+  });
+
+  $('#btn-eng').on('click', () => {
+    Soho.Locale.set('en-US');
+  });
+</script>
