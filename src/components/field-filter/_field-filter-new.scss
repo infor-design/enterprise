@@ -62,10 +62,6 @@
   .field.fieldfilter-wrapper div:first-of-type,
   .field-short.fieldfilter-wrapper div:first-of-type {
     height: 38px;
-
-    .listoption-icon {
-      top: 1px;
-    }
   }
 
   .dropdown-list.ffdropdown {
@@ -74,7 +70,6 @@
 
       .icon {
         left: 2px !important;
-        top: 7px !important;
       }
     }
 
@@ -89,12 +84,6 @@
 
   &:not(.is-mac) {
     .dropdown-list.ffdropdown {
-      > .trigger {
-        .icon {
-          top: 6px !important;
-        }
-      }
-
       &.is-ontop {
         > .trigger {
           .icon {
