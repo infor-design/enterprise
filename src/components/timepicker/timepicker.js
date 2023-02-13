@@ -2,6 +2,7 @@ import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
 import { stringUtils as str } from '../../utils/string';
+import { dateUtils } from '../../utils/date';
 
 // jQuery components
 import '../dropdown/dropdown.jquery';
@@ -997,25 +998,15 @@ TimePicker.prototype = {
    * @returns {void}
    */
   setTimeOnField() {
+    const timeFormat = this.settings.timeFormat;
     const hours = this.hourSelect ? this.hourSelect[0]?.value : '';
     const minutes = this.minuteSelect ? this.minuteSelect[0]?.value : '';
     const seconds = this.secondSelect ? this.secondSelect[0]?.value : '';
-    let period = (this.periodSelect ? this.periodSelect[0]?.value : '');
-    const sep = this.getTimeSeparator();
-    let timeString = `${hours}${sep}${minutes}${this.hasSeconds() ? sep + seconds : ''}`;
-
-    period = (!this.is24HourFormat() && period === '') ? document.querySelector(`#${this.periodId}-shdo`).value : period;
-
-    // Day period goes first in time format
-    if (this.settings.timeFormat?.indexOf('a') === 0) {
-      timeString = period ? `${this.translateDayPeriod(period)} ${timeString}` : timeString;
-    } else {
-      timeString += period ? ` ${this.translateDayPeriod(period)}` : '';
-    }
-
-    if (timeString.indexOf(sep) > -1 && this.settings.timeFormat === 'HHmm') {
-      timeString = timeString.replace(sep, '');
-    }
+    const dayPeriod = (this.periodSelect ? this.periodSelect[0]?.value : '');
+    const dayPeriodIndex = Locale?.calendar().dayPeriods?.indexOf(dayPeriod);
+    const date = new Date();
+    date.setHours(dateUtils.hoursTo24(parseInt(hours, 10), dayPeriodIndex), minutes, seconds);
+    const timeFormatted = Locale.formatDate(date, { date: 'hour', pattern: timeFormat });
 
     /**
     * Fires when the value is changed by typing or the picker.
@@ -1023,7 +1014,7 @@ TimePicker.prototype = {
     * @memberof TimePicker
     * @property {object} event - The jquery event object
     */
-    this.element.val(timeString)
+    this.element.val(timeFormatted)
       .trigger('change');
 
     this.element

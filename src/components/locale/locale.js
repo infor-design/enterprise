@@ -596,7 +596,7 @@ const Locale = {  // eslint-disable-line
       pattern = options.pattern;
     }
 
-    if (options.date) {
+    if (options.date && cal) {
       pattern = cal.dateFormat[options.date];
     }
 

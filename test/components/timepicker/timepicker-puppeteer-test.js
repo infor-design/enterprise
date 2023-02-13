@@ -88,7 +88,8 @@ describe('Timepicker Puppeteer Tests', () => {
       await page.click('#timepicker-id-1-trigger');
       await page.click('.set-time');
 
-      expect(await page.evaluate(el => el.value, timepickerEl)).toEqual('1:00 上午');
+      // ah:mm
+      expect(await page.evaluate(el => el.value, timepickerEl)).toEqual('上午1:00');
       // eslint-disable-next-line jasmine/prefer-jasmine-matcher
       expect(errorMessage === null).toBeTruthy(); // Error message should not be shown/presented.
     });
