@@ -716,7 +716,7 @@ Bar.prototype = {
             // Run click action
             if (self.settings.selectable) {
               const ii = Array.from(selector.parentElement.children).indexOf(selector);
-              self.doClickAction(d, s.isStacked ? ii : i, selector);
+              self.doClickAction(d, s.isStacked && !s.isSingle ? ii : i, selector);
             }
           }
           prevent = false;
@@ -729,7 +729,7 @@ Bar.prototype = {
         // Run double click action
         const i = sGroup.select('rect').nodes().indexOf(this);
         const ii = Array.from(this.parentElement.children).indexOf(this);
-        self.doDoubleClickAction(d, s.isStacked ? ii : i, selector);
+        self.doDoubleClickAction(d, s.isStacked && !s.isSingle ? ii : i, selector);
       });
 
     $(sGroup._parents).each((parentPos, parentEl) => {

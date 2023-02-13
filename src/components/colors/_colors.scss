@@ -21,7 +21,31 @@
 
 // Css variables for Primary Colors
 .primary-bg-color {
-  background: $ids-color-brand-primary-base;
+  background: #fff;
+}
+
+html.theme-new-light .primary-bg-color {
+  background: #fff;
+}
+
+html.theme-new-contrast .primary-bg-color {
+  background: #fff;
+}
+
+html.theme-new-dark .primary-bg-color {
+  background: #606066;
+}
+
+html.theme-classic-light .primary-bg-color {
+  background: #368ac0;
+}
+
+html.theme-classic-contrast .primary-bg-color {
+  background: #134d71;
+}
+
+html.theme-classic-dark .primary-bg-color {
+  background: #50535a;
 }
 
 .primary-color {

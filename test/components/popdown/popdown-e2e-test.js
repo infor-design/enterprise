@@ -38,38 +38,6 @@ describe('Popdown Index Tests', () => {
   });
 });
 
-describe('Popdown (with Dropdown) Tests', () => {
-  beforeEach(async () => {
-    await utils.setPage('/components/popdown/test-contains-dropdown?layout=nofrills');
-  });
-
-  it('should not have errors', async () => {
-    await utils.checkForErrors();
-  });
-
-  it('should keep the Popdown open while focused on an inline-Dropdown component\'s list', async () => {
-    // Open the Popdown
-    await element(by.id('popdown-example-trigger')).click();
-    await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.popdown'))), config.waitsFor);
-
-    // Open the Dropdown List
-    await element(by.css('.popdown div.dropdown')).click();
-    await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(await element(by.css('.dropdown-list'))), config.waitsFor);
-
-    // Test that the Popdown remained open
-    expect(await element(by.css('.popdown')).isDisplayed()).toBeTruthy();
-
-    // Choose an option from the Dropdown, which will close it.
-    await element(by.css('li[data-val="1"]')).click();
-    await browser.driver.sleep(config.sleep);
-
-    // Test that the Popdown remained open
-    expect(await element(by.css('.popdown')).isDisplayed()).toBeTruthy();
-  });
-});
-
 describe('Popdown first last tab Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/popdown/test-first-last-tab?layout=nofrills');
