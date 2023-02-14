@@ -406,7 +406,7 @@ Slider.prototype = {
    */
   handleRangeClick(e) {
     e.preventDefault();
-    if (this.isDisabled()) {
+    if (this.isDisabled() || this.isDragging) {
       return;
     }
 
@@ -545,9 +545,9 @@ Slider.prototype = {
         }
       }
 
-      // Round the value to the nearest step, if the step is defined
+      // Round the value to the nearest step
       if (self.settings.step) {
-        rangeVal = Math.round(rangeVal / self.settings.step) * self.settings.step;
+        rangeVal = roundToIncrement(rangeVal, self.settings.step);
       }
 
       /**
@@ -587,16 +587,32 @@ Slider.prototype = {
     handle.drag(draggableOptions)
       .on('drag.slider', (e, args) => {
         updateHandleFromDraggable(e, $(e.currentTarget), args);
+        self.isDragging = true;
       })
       .on('dragstart', function () {
         $(this).addClass('is-dragging');
         self.range.addClass('is-dragging');
         self.element.trigger('slidestart', handle);
       })
-      .on('dragend', function () {
+      .on('dragend', function (e) {
+        // Round values when sliding is over
+        if (!self.settings.step) {
+          self.value($(e.currentTarget).hasClass('higher') ?
+            [undefined, roundToIncrement(self._value[1], self.settings.step)] :
+            [roundToIncrement(self._value[0], self.settings.step)]);
+          self.updateRange();
+          self.updateTooltip($(e.currentTarget));
+        }
+
         $(this).removeClass('is-dragging');
         self.range.removeClass('is-dragging');
         self.element.trigger('slidestop', handle);
+        self.element.trigger('change', { element: self.element, value: self._value });
+
+        // Changing dragging status, on timer to fire after dragend/click events
+        setTimeout(() => {
+          self.isDragging = false;
+        }, 0);
       });
   },
 

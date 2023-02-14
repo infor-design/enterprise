@@ -26,7 +26,6 @@ html[class*='classic-'] .is-personalizable.tab-container > .tab-list-container .
   color: rgba(255, 255, 255, 0.5);
 }
 
-.is-personalizable .personalize-subheader,
 .is-personalizable.tab-container.module-tabs {
   background-color: $ids-color-palette-azure-80;
 }
@@ -38,11 +37,6 @@ html[class*='classic-'] .is-personalizable.tab-container > .tab-list-container .
 .is-personalizable .personalize-actionable,
 .is-personalizable .personalize-actionable svg {
   color: $font-color;
-}
-
-.is-personalizable .personalize-actionable:hover:not([disabled]),
-.is-personalizable .personalize-actionable:hover:not([disabled]) svg {
-  color: rgba(255, 255, 255, 1);
 }
 
 .is-personalizable .personalize-actionable.is-focused:not(.hide-focus),

@@ -92,6 +92,26 @@
             </div>
           </div>
         </div>
+        <div id="expandable-card-2" class="card is-expanded">
+          <div class="card-header">
+            <p class="heading">Less Important Details</p>
+            <button type="button" class="btn-actions" type="button" id="btn-1">
+              <span class="audible">Actions</span>
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-more"></use>
+              </svg>
+            </button>
+            <ul class="popupmenu actions">
+              <li><a href="#" id="action-1">Action One</a></li>
+              <li><a href="#" id="action-2">Action Two</a></li>
+            </ul>
+          </div>
+          <div class="card-pane">
+            <div class="card-content" style="padding: 20px">
+              <p>Man bun portland venmo, reprehenderit cillum exercitation culpa adaptogen pitchfork unicorn.</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -100,18 +120,11 @@
 
   <script>
     $('#expandable-card').cards({
-    expandableHeader: true,
-    verticalButtonAction: true,
-    attributes: [{
-        name: 'id',
-        value: 'card-id-1'
-      },
-      {
-        name: 'data-automation-id',
-        value: 'card-automation-id-1'
-      }
-    ]
-  });
+      expandableHeader: true
+    });
+    $('#expandable-card-2').cards({
+      expandableHeader: true
+    });
   </script>
 </body>
 </html>
