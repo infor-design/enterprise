@@ -111,7 +111,8 @@
   .field {
     [data-error-type='tooltip'] ~ .icon-error,
     [data-error-type='tooltip'] ~ .icon-success {
-      top: -7px;
+      top: unset !important;
+      position: absolute;
     }
 
     .dropdown-wrapper {
