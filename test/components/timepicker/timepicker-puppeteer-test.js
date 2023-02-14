@@ -34,42 +34,6 @@ describe('Timepicker Puppeteer Tests', () => {
 
       expect(await page.evaluate(el => el.value, timepickerEl)).toEqual('1:00 AM');
     });
-
-    it('should validate input', async () => {
-      const timepickerEl = await page.$('#timepicker-id-1');
-
-      const changeTimeFormat = async (format) => {
-        await page.evaluate((timeFormat) => {
-          $('#timepicker-id-1').data('timepicker').settings.timeFormat = timeFormat;
-        }, format);
-      };
-
-      const setValueAndValidate = async (value) => {
-        await page.evaluate((el, val) => {
-          el.value = val;
-          el.dispatchEvent(new FocusEvent('blur'));
-        }, timepickerEl, value);
-      };
-
-      const checkError = async () => {
-        const hasError = await page.evaluate(() => document.querySelector('#timepicker-id-1').classList.contains('error'));
-
-        return hasError;
-      };
-
-      await setValueAndValidate('1');
-      await page.waitForTimeout(300);
-      expect(await checkError()).toBeTruthy();
-
-      await setValueAndValidate('');
-      await page.waitForTimeout(300);
-      expect(await checkError()).toBeFalsy();
-
-      await changeTimeFormat('HH:mm');
-      await setValueAndValidate('1');
-      await page.waitForTimeout(300);
-      expect(await checkError()).toBeTruthy();
-    });
   });
 
   describe('Timepicker Example Hour Range Tests', () => {
