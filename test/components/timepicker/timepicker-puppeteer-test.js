@@ -34,6 +34,86 @@ describe('Timepicker Puppeteer Tests', () => {
 
       expect(await page.evaluate(el => el.value, timepickerEl)).toEqual('1:00 AM');
     });
+
+    it('should set time on field from popup', async () => {
+      const timepickerEl = await page.$('#timepicker-id-1');
+
+      const openPopup = async () => {
+        await page.click('#timepicker-id-1-trigger');
+      };
+
+      const setTime = async () => {
+        await page.click('.set-time');
+      };
+
+      const getValue = async () => {
+        const value = await page.evaluate(el => el.value, timepickerEl);
+
+        return value;
+      };
+
+      const clearValue = async () => {
+        await page.$('#timepicker-id-1', (el) => {
+          el.value = '';
+        });
+      };
+
+      const changeTimeFormat = async (format) => {
+        await page.evaluate((timeFormat) => {
+          $('#timepicker-id-1').data('timepicker').settings.timeFormat = timeFormat;
+        }, format);
+      };
+
+      const setDropdowns = async (value) => {
+        await page.evaluate((items) => {
+          Object.keys(items).forEach((item) => {
+            document.querySelector(`.${item}.dropdown`).value = items[item];
+          });
+        }, value);
+      };
+
+      await openPopup();
+      await setDropdowns({ period: 'PM', hours: '11', minutes: '05' });
+      await setTime();
+
+      expect(await getValue()).toEqual('11:05 PM');
+
+      await openPopup();
+      await setDropdowns({ period: 'AM', hours: '5', minutes: '20' });
+      await setTime();
+
+      expect(await getValue()).toEqual('5:20 AM');
+
+      await clearValue();
+      await changeTimeFormat('ah:mm');
+
+      await openPopup();
+      await setDropdowns({ period: 'PM', hours: '11', minutes: '05' });
+      await setTime();
+
+      expect(await getValue()).toEqual('PM11:05');
+
+      await openPopup();
+      await setDropdowns({ period: 'AM', hours: '5', minutes: '20' });
+      await setTime();
+
+      expect(await getValue()).toEqual('AM5:20');
+
+      await clearValue();
+      await changeTimeFormat('HH:mm:ss');
+
+      await openPopup();
+      await setDropdowns({ hours: '23', minutes: '05', seconds: '05' });
+      await setTime();
+
+      expect(await getValue()).toEqual('23:05:05');
+
+      await openPopup();
+      await setDropdowns({ hours: '00', minutes: '00', seconds: '00' });
+      await setTime();
+
+      expect(await getValue()).toEqual('00:00:00');
+    });
   });
 
   describe('Timepicker Example Hour Range Tests', () => {
