@@ -1190,7 +1190,7 @@ SearchField.prototype = {
       this.handleSafeBlur();
     }
 
-    if (this.isContainedByFlexToolbar) {
+    if (this.isContainedByFlexToolbar && this.toolbarFlexItem.toolbarAPI.items.length > 1) {
       const yKeys = ['ArrowUp', 'Up', 'ArrowDown', 'Down'];
       if (yKeys.indexOf(keyName) > -1) {
         this.collapse();
