@@ -499,10 +499,6 @@
     .hero-content {
       max-width: 1120px;
     }
-
-    .hero-bottom {
-      display: none;
-    }
   }
 }
 
@@ -511,10 +507,6 @@
     .hero-content {
       max-width: calc(100% - 200px);
     }
-
-    .hero-bottom {
-      display: none;
-    }
   }
 }
 
@@ -522,6 +514,10 @@
   .hero-widget {
     .hero-content {
       max-width: 100%;
+    }
+
+    .hero-bottom {
+      display: none;
     }
   }
 }
