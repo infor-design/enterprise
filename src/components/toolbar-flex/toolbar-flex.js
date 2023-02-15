@@ -500,6 +500,10 @@ ToolbarFlex.prototype = {
       return;
     }
 
+    if (this.focusedItem === targetItem && this.items.length === 1) {
+      return;
+    }
+
     // Retain a reference to the focused item and set focus, if applicable.
     this.focusedItem = targetItem;
     if (doSetFocus && this.canManageFocus) {
