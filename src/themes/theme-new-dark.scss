@@ -799,11 +799,12 @@ $header-tab-alt-normal-color: $ids-color-palette-slate-30;
 $header-tab-alt-hover-color: $inverse-color;
 $header-tab-alt-selected-color: $inverse-color;
 
-$header-tab-background-initial-color-new: $ids-color-palette-slate-100;
+$header-tab-background-initial-color-new: $ids-color-palette-slate-60;
 $header-tab-normal-color-new: $ids-color-palette-slate-30;
 $header-tab-hover-color-new: $ids-color-palette-white;
 $header-tab-selected-color-new: $inverse-color;
-$header-tab-gradient-initial-color-new: $ids-color-palette-slate-100;
+$header-tab-gradient-initial-color-new: $ids-color-palette-slate-60;
+$header-tab-disabled-color-new: $ids-color-palette-slate-40;
 
 $header-flex-toolbar-close-icon-color-hover: $ids-color-palette-white;
 $searchfield-header-hover-icon-color: $ids-color-palette-white;

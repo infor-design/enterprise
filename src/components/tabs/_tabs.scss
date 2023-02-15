@@ -501,7 +501,7 @@
         border-bottom: 4px solid $tab-hover-color;
       }
 
-      &.is-selected {
+      &:not(.is-disabled).is-selected {
         border-bottom: 4px solid $tab-selected-color;
       }
 
@@ -523,7 +523,7 @@
       }
 
       &.is-disabled {
-        color: $disabled-color !important;
+        color: $disabled-color;
 
         &::before {
           content: none !important;
