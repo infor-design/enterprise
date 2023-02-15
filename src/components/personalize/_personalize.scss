@@ -30,10 +30,6 @@ html[class*='classic-'] .is-personalizable.tab-container > .tab-list-container .
   background-color: $ids-color-palette-azure-80;
 }
 
-.is-personalizable .personalize-text {
-  color: $ids-color-palette-slate-100 !important;
-}
-
 .is-personalizable .personalize-actionable.is-focused:not(.hide-focus),
 .is-personalizable .personalize-actionable:focus:not(.hide-focus) {
   border-color: $ids-color-palette-white;
