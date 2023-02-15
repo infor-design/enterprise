@@ -346,7 +346,7 @@ html.theme-new-dark .header.is-personalizable.has-tabs .tab-container.header-tab
 }
 
 .header.is-personalizable.has-tabs .tab-more::before,
-.tab-container.is-personalizable .tab-more::before {
+.tab-container.is-personalizable.header-tabs:not(.alternate) .tab-more::before {
   background-color: ${colors.contrast};
 }
 
@@ -1081,6 +1081,10 @@ html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::af
 
 html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::before {
   background-image: linear-gradient(to right, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base});
+}
+
+.is-personalizable.tab-container.header-tabs:not(.alternate) {
+  border-bottom-color: ${colors.base};
 }
 
 /*
