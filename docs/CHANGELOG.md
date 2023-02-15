@@ -15,6 +15,7 @@
 
 ## v4.81.0 Fixes
 
+- `[Actionsheet]` Updated font and icon colors for classic actionsheet. ([#7012](https://github.com/infor-design/enterprise/issues/7012))
 - `[Bar]` Fixed bug introduced by d3 changes with bar selection. ([#7182](https://github.com/infor-design/enterprise/issues/7182))
 - `[Button]` Fixed icon button size and icon centering. ([#7201](https://github.com/infor-design/enterprise/issues/7201))
 - `[Accordion]` Additional fix in accordion collapsing cards on expand bug. ([#6820](https://github.com/infor-design/enterprise/issues/6820))

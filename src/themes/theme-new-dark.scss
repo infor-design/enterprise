@@ -76,8 +76,8 @@ $button-color-secondary-focus-background: $ids-color-palette-slate-10;
 $button-color-primary-disabled-background: $ids-color-palette-slate-80;
 $button-color-primary-disabled-border: $ids-color-palette-slate-80;
 $button-color-primary-active-background: $ids-color-palette-slate-60;
-$btn-hyperlink-color: $ids-color-palette-azure-40;
-$btn-hyperlink-hover-color: $ids-color-palette-slate-40;
+$button-hyperlink-color: $ids-color-palette-azure-40;
+$button-hyperlink-hover-color: $ids-color-palette-slate-40;
 
 $button-color-primary-initial-font: $ids-color-palette-slate-90;
 $button-color-primary-initial-background: $ids-color-palette-azure-40;
@@ -481,6 +481,16 @@ $modal-btn-disabled-color: $ids-color-palette-white;
 $modal-btn-disabled-opacity: 0.3;
 $modal-primary-color: $ids-color-palette-white;
 $modal-secondary-color: $ids-color-palette-slate-30;
+
+// Actionsheet
+$actionsheet-bg-color: $ids-color-palette-slate-70;
+$button-color-tertiary-actionsheet-initial-font: $ids-color-palette-slate-20;
+$button-color-tertiary-actionsheet-hover-font: $button-color-tertiary-hover-font-new;
+$button-color-secondary-actionsheet-border: $ids-color-palette-slate-10;
+$button-color-secondary-actionsheet-font: $ids-color-palette-slate-10;
+$button-color-secondary-actionsheet-hover-border: $ids-color-palette-white;
+$button-color-secondary-actionsheet-hover-font: $ids-color-palette-white;
+$button-color-secondary-actionsheet-hover-background: $ids-color-palette-slate-90;
 
 // Accordion
 $accordion-bg-color: $ids-color-palette-slate-80;
