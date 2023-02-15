@@ -34,11 +34,6 @@ html[class*='classic-'] .is-personalizable.tab-container>.tab-list-container .ta
   color: $ids-color-palette-slate-100 !important;
 }
 
-.is-personalizable .personalize-actionable,
-.is-personalizable .personalize-actionable svg {
-  color: $font-color;
-}
-
 .is-personalizable .personalize-actionable.is-focused:not(.hide-focus),
 .is-personalizable .personalize-actionable:focus:not(.hide-focus) {
   border-color: $ids-color-palette-white;
