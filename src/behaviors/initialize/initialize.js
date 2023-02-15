@@ -71,6 +71,13 @@ const PLUGIN_MAPPINGS = [
     });
   }],
 
+  // Navigation Menu
+  ['navigationmenu', '.navigationmenu', function (rootElem, pluginName, selector) {
+    matchedItems(rootElem, selector).each((i, item) => {
+      $(item).navigationmenu();
+    });
+  }],
+
   // Personalization
   ['personalize', null, function () {
     $('html').personalize();
