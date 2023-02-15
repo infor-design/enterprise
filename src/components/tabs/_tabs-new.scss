@@ -67,11 +67,11 @@
       }
 
       &.is-disabled {
-        color: $header-tab-disabled-color-new !important;
+        color: $header-tab-disabled-color-new;
       }
 
       // Adds "semi-bold" style to selected/active tabs
-      &.is-selected {
+      &:not(.is-disabled).is-selected {
         a {
           font-weight: 700;
           letter-spacing: -0.2px;

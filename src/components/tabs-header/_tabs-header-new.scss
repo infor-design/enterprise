@@ -34,10 +34,13 @@
       border-bottom: 0;
 
       .tab {
-        color: $header-tab-normal-color-new;
         font-weight: $ids-number-font-weight-bold;
         overflow: hidden;
         height: 34px;
+
+        &:not(.is-disabled) {
+          color: $header-tab-normal-color-new;
+        }
 
         a {
           margin-top: -5px;

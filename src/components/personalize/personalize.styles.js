@@ -224,9 +224,9 @@ a.is-personalizable svg.ripple-effect {
 }
 
 .tab-container.is-personalizable.header-tabs:not(.alternate) .tab-focus-indicator.is-visible,
-.tab-container.is-personalizable.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected,
+.tab-container.is-personalizable.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled).is-selected,
 .header.is-personalizable .tab-container.header-tabs:not(.alternate) .tab-focus-indicator.is-visible,
-.header.is-personalizable .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected {
+.header.is-personalizable .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled).is-selected {
   border-color: ${colors.contrast} !important;
 }
 
@@ -350,10 +350,10 @@ html.theme-new-dark .header.is-personalizable.has-tabs .tab-container.header-tab
   background-color: ${colors.contrast};
 }
 
-.header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab,
+.header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab:not(.is-disabled),
 .header.is-personalizable .tab-container.header-tabs .tab-more svg.icon,
 .tab-container.is-personalizable .tab-more svg.icon,
-.is-personalizable.tab-container.header-tabs > .tab-list-container .tab  {
+.is-personalizable.tab-container.header-tabs > .tab-list-container .tab:not(.is-disabled)  {
   color: ${colors.contrast} !important;
   opacity: .8;
 }
@@ -376,8 +376,8 @@ html.theme-new-dark .header.is-personalizable.has-tabs .tab-container.header-tab
   opacity: 1;
 }
 
-html[class*="theme-new-"] .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab,
-html[class*="theme-new-"] .is-personalizable.tab-container.header-tabs > .tab-list-container .tab  {
+html[class*="theme-new-"] .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab:not(.is-disabled),
+html[class*="theme-new-"] .is-personalizable.tab-container.header-tabs > .tab-list-container .tab:not(.is-disabled) {
   opacity: 1;
 }
 
@@ -868,7 +868,7 @@ html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.i
 }
 
 .tab-container.is-personalizable .tab-list-container .tab-list .tab.is-disabled {
-  opacity: .6 !important
+  opacity: .8 !important;
 }
 
 .is-personalizable .personalize-header {
