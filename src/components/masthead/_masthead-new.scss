@@ -32,11 +32,16 @@
 
   &.btn-menu {
     margin-right: -6px !important;
+    margin-top: 3px;
   }
 
   .icon {
     color: $ids-color-palette-slate-40;
   }
+}
+
+.masthead .toolbar-searchfield-wrapper:not(.active) .icon:not(.close):not(.icon-dropdown) {
+  top: -2px;
 }
 
 .masthead .toolbar.has-title,
@@ -48,4 +53,12 @@
 .masthead .image-initials,
 .masthead .image-round {
   line-height: 28px;
+}
+
+.masthead .toolbar-searchfield-wrapper.active .searchfield {
+  height: 32px !important;
+}
+
+.masthead .toolbar-searchfield-wrapper.is-open .icon:not(.close) {
+  top: -2px !important;
 }

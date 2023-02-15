@@ -212,6 +212,7 @@
   > .icon {
     position: relative;
     top: -1px;
+    left: 0;
   }
 }
 
@@ -219,6 +220,7 @@
 .btn-actions {
   > .icon {
     height: 19px;
+    top: -1px;
   }
 }
 

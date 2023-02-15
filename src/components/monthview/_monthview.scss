@@ -211,6 +211,12 @@
     }
   }
 
+  &.has-monthview-week-table {
+    .monthview-monthyear-pane .picklist-section.is-month::after {
+      left: 189px;
+    }
+  }
+
   tr {
     text-align: center;
   }
@@ -889,6 +895,37 @@
         transform: translate(-50%, -50%) scale(var(--s, 1));
         transform-origin: center;
         transition: calc(var(--t, 0) * 600ms) linear;
+      }
+    }
+  }
+
+  .monthview-week-container {
+    display: flex;
+
+    .monthview-week-table {
+      min-width: 45px;
+      margin-top: 20px;
+      border-right: 1px solid $datepicker-monthview-week-table-border;
+
+      thead tr {
+        height: 20px;
+
+        th {
+          width: 42px;
+
+          span {
+            position: relative;
+            top: -1px;
+            color: $ids-color-palette-slate-40;
+          }
+        }
+      }
+
+      tbody tr td span {
+        font-size: 14px;
+        position: relative;
+        top: -1px;
+        color: $ids-color-palette-slate-40;
       }
     }
   }
