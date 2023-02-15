@@ -299,7 +299,12 @@ html[dir='rtl'] {
 
 html[class*='theme-classic-'] .flex-toolbar .toolbar-section .searchfield-wrapper.toolbar-searchfield-wrapper.has-close-icon-button {
   .custom-button {
-    top: -1px;
+    top: 1px;
+
+    + .collapse-button,
+    + .close + .collapse-button {
+      left: -37px;
+    }
   }
 
   &.has-close-icon-button .custom-button {
@@ -310,21 +315,11 @@ html[class*='theme-classic-'] .flex-toolbar .toolbar-section .searchfield-wrappe
     right: 40px;
 
     @media (max-width: $breakpoint-phone-to-tablet) {
-      right: 73px;
+      right: 75px;
     }
   }
 
   &.has-text.active.has-close-icon-button .custom-button {
-    left: -60px;
-
-    @media (max-width: $breakpoint-phone-to-tablet) {
-      left: -93px;
-    }
-  }
-
-  &.is-open .custom-button {
-    @media (max-width: $breakpoint-phone-to-tablet) {
-      left: -73px;
-    }
+    left: -53px;
   }
 }

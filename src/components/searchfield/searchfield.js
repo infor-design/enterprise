@@ -458,7 +458,7 @@ SearchField.prototype = {
       this.wrapper.addClass('has-custom-button');
       this.customButton = $('<button class="btn-icon custom-button"></button>');
       this.customButton.append($.createIconElement(this.settings.button.icon));
-      this.wrapper.append(this.customButton);
+      this.element.after(this.customButton);
     }
 
     // Stagger a calculation for setting the size of the Searchfield element, if applicable
@@ -1025,6 +1025,12 @@ SearchField.prototype = {
       }
     }
 
+    if (this.customButton && this.customButton.length) {
+      if (this.customButton.has(active).length) {
+        return true;
+      }
+    }
+
     return false;
   },
 
@@ -1187,6 +1193,7 @@ SearchField.prototype = {
     }
 
     if (key === 9) { // Tab
+      console.log('tab')
       this.handleSafeBlur();
     }
 
