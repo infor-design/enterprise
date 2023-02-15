@@ -29,7 +29,6 @@
 - `[Personalization]` Fix default values in the personalization API. ([#7167](https://github.com/infor-design/enterprise/issues/7167))
 - `[Popupmenu]` Fix on inverse colors not showing in popupmenu in masthead. ([#7005](https://github.com/infor-design/enterprise/issues/7005))
 - `[Tabs]` Changed header tabs disabled color to darker color. ([#7219](https://github.com/infor-design/enterprise/issues/7219))
-- `[Typography]` Updated documentation to align usage guidance. ([#7187](https://github.com/infor-design/enterprise/issues/7187))
 - `[Personalization]` Fix default values in the personalization API. ([#7167](https://github.com/infor-design/enterprise/issues/7167))
 - `[Personalization]` Fix header tabs/header colors for a variation when header tabs are not in header element. ([#7153](https://github.com/infor-design/enterprise/issues/7153) [#7211](https://github.com/infor-design/enterprise/issues/7211) [#7212](https://github.com/infor-design/enterprise/issues/7212) [#7217](https://github.com/infor-design/enterprise/issues/7217) [#7218](https://github.com/infor-design/enterprise/issues/7218))
 - `[Searchfield]` Custom button adjustments in mobile. ([#7134](https://github.com/infor-design/enterprise/issues/7134))
