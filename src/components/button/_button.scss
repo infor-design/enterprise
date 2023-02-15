@@ -1091,17 +1091,17 @@ html[lang^='fr-'] {
 }
 
 .btn-link {
-  color: $btn-hyperlink-color;
+  color: $button-hyperlink-color;
 
   .icon {
-    color: $btn-hyperlink-color;
+    color: $button-hyperlink-color;
   }
 
   &:hover {
-    color: $btn-hyperlink-hover-color;
+    color: $button-hyperlink-hover-color;
 
     .icon {
-      color: $btn-hyperlink-hover-color;
+      color: $button-hyperlink-hover-color;
     }
   }
 }
