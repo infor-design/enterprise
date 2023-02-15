@@ -22,6 +22,7 @@
   .toolbar-section {
     &.title {
       padding: 1px 0;
+      font-size: 1.6rem;
     }
 
     .searchfield-wrapper {
@@ -298,18 +299,27 @@ html[dir='rtl'] {
 
 html[class*='theme-classic-'] .flex-toolbar .toolbar-section .searchfield-wrapper.toolbar-searchfield-wrapper.has-close-icon-button {
   .custom-button {
-    top: -1px;
+    top: 1px;
+
+    + .collapse-button,
+    + .close + .collapse-button {
+      left: -37px;
+    }
   }
 
   &.has-close-icon-button .custom-button {
     left: -38px;
   }
 
-  &.has-text.active.has-close-icon-button .custom-button {
-    left: -60px;
-  }
-
   &:not(.has-categories) .btn-icon.close {
     right: 40px;
+
+    @media (max-width: $breakpoint-phone-to-tablet) {
+      right: 75px;
+    }
+  }
+
+  &.has-text.active.has-close-icon-button .custom-button {
+    left: -53px;
   }
 }
