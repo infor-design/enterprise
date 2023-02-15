@@ -867,6 +867,10 @@ html[class*="theme-classic-"] .tab-container.is-personalizable .tab-list-contain
   opacity: .4 !important;
 }
 
+.tab-container.is-personalizable .tab-list-container .tab-list .tab.is-disabled {
+  opacity: .6 !important
+}
+
 .is-personalizable .personalize-header {
   background-color: ${colors.base} !important;
 }
@@ -1061,6 +1065,22 @@ html[class*="theme-classic-"] .tab-container.is-personalizable .tab-list-contain
   box-shadow: 0 0 0 2px transparent,
   0 0 0 1px ${colors.subtext},
   0 0 2px 1px ${colors.subtext} !important;
+}
+
+.is-personalizable.tab-container.header-tabs:not(.alternate)::after {
+  background-image: linear-gradient(to right, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base});
+}
+
+.is-personalizable.tab-container.header-tabs:not(.alternate)::before {
+  background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base});
+}
+
+html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::after {
+  background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base});
+}
+
+html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::before {
+  background-image: linear-gradient(to right, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base});
 }
 
 /*
