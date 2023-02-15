@@ -868,7 +868,7 @@ html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.i
 }
 
 .tab-container.is-personalizable .tab-list-container .tab-list .tab.is-disabled {
-  color: ${colors.lightest} !important
+  opacity: .6 !important
 }
 
 .is-personalizable .personalize-header {
@@ -1065,6 +1065,22 @@ html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.i
   box-shadow: 0 0 0 2px transparent,
   0 0 0 1px ${colors.subtext},
   0 0 2px 1px ${colors.subtext} !important;
+}
+
+.is-personalizable.tab-container.header-tabs:not(.alternate)::after {
+  background-image: linear-gradient(to right, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base});
+}
+
+.is-personalizable.tab-container.header-tabs:not(.alternate)::before {
+  background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base});
+}
+
+html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::after {
+  background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base});
+}
+
+html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::before {
+  background-image: linear-gradient(to right, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base});
 }
 
 /*
