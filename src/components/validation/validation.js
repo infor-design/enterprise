@@ -445,7 +445,8 @@ function ValidationRules() {
 
     time: {
       check(value, field) {
-        value = value.replace(/ /g, '');
+        if (!value) return true;
+
         this.message = Locale.translate('InvalidTime');
         const timepicker = field && field.data('timepicker');
         const timepickerSettings = timepicker ? field.data('timepicker').settings : {};
@@ -460,62 +461,9 @@ function ValidationRules() {
           }
         }
 
-        const is24Hour = (pattern.match('HH') || pattern.match('H') || []).length > 0;
-        const maxHours = is24Hour ? 24 : 12;
-        const sep = value.indexOf(Locale.calendar().dateFormat.timeSeparator);
-        let valueHours = 0;
-        let valueMins = 0;
-        let valueSecs = 0;
-        let valueM;
-        let timeparts;
+        const parsedTime = Locale.parseDate(value, { dateFormat: pattern, strictTime: true });
 
-        if (value === '') {
-          return true;
-        }
-
-        valueHours = parseInt(value.substring(0, sep), 10);
-        valueMins = parseInt(value.substring(sep + 1, sep + 3), 10);
-
-        // getTimeFromField
-        if (timepicker) {
-          timeparts = timepicker.getTimeFromField();
-
-          valueHours = timeparts.hours;
-          valueMins = timeparts.minutes;
-
-          if (timepicker.hasSeconds()) {
-            valueSecs = timeparts.seconds;
-          }
-        }
-
-        if (valueHours.toString().length < 1 || isNaN(valueHours) ||
-          parseInt(valueHours, 10) < 0 || parseInt(valueHours, 10) > maxHours) {
-          return false;
-        }
-        if (valueMins.toString().length < 1 || isNaN(valueMins) ||
-          parseInt(valueMins, 10) < 0 || parseInt(valueMins, 10) > 59) {
-          return false;
-        }
-        if (valueSecs.toString().length < 1 || isNaN(valueSecs) ||
-          parseInt(valueSecs, 10) < 0 || parseInt(valueSecs, 10) > 59) {
-          return false;
-        }
-
-        // AM/PM
-        if (!is24Hour) {
-          if (parseInt(valueHours, 10) < 1) {
-            return false;
-          }
-          const period0 = new RegExp(Locale.calendar().dayPeriods[0], 'i');
-          const period1 = new RegExp(Locale.calendar().dayPeriods[1], 'i');
-
-          valueM = value.match(period0) || value.match(period1) || [];
-          if (valueM.length === 0) {
-            return false;
-          }
-        }
-
-        return true;
+        return parsedTime instanceof Date && !Number.isNaN(parsedTime) && parsedTime.toString() !== 'Invalid Date';
       },
       message: 'Invalid Time',
       type: 'error',
