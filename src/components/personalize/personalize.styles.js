@@ -586,43 +586,27 @@ html[dir='rtl'] .scrollable-flex-header.is-personalizable .breadcrumb.truncated:
 }
 
 .is-personalizable .tab-container.header-tabs:not(.alternate)::before,
-.is-personalizable .tab-container.header-tabs:not(.alternate)::before {
+.is-personalizable.tab-container.header-tabs:not(.alternate)::before {
   background-image: linear-gradient(to right, ${colors.base} , ${colorUtils.hexToRgba(colors.base, 0)}) !important;
-}
-
-.theme-new-dark .is-personalizable .tab-container.header-tabs:not(.alternate)::before,
-.theme-new-dark .is-personalizable .tab-container.header-tabs:not(.alternate)::before {
-  background-image: linear-gradient(to right, ${colors.base} , ${colorUtils.hexToRgba(colors.base, 0)}) !important;
-}
-
-html[dir='rtl'].theme-new-dark .is-personalizable .tab-container.header-tabs:not(.alternate)::before,
-html[dir='rtl'].theme-new-dark .is-personalizable .tab-container.header-tabs:not(.alternate)::before {
-  background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base});
 }
 
 html[dir='rtl'] .is-personalizable .tab-container.header-tabs:not(.alternate)::before,
-html[dir='rtl'] .is-personalizable .tab-container.header-tabs:not(.alternate)::before {
+html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::before {
   background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base});
 }
 
 .is-personalizable .tab-container.header-tabs:not(.alternate)::after,
-.is-personalizable .tab-container.header-tabs:not(.alternate)::after {
-  background-image: linear-gradient(to right, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base}) !important;
-}
-
-.theme-new-dark .is-personalizable .tab-container.header-tabs:not(.alternate)::after,
-.theme-new-dark .is-personalizable .tab-container.header-tabs:not(.alternate)::after {
+.is-personalizable.tab-container.header-tabs:not(.alternate)::after {
   background-image: linear-gradient(to right, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base}) !important;
 }
 
 html[dir='rtl'] .is-personalizable .tab-container.header-tabs:not(.alternate)::after,
-html[dir='rtl'] .is-personalizable .tab-container.header-tabs:not(.alternate)::after {
-  background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.contrast, 0)}, ${colors.contrast}) !important;
+html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::after {
+  background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base}) !important;
 }
 
-html[dir='rtl'].theme-new-dark .is-personalizable .tab-container.header-tabs:not(.alternate)::after,
-html[dir='rtl'].theme-new-dark .is-personalizable .tab-container.header-tabs:not(.alternate)::after {
-  background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base}) !important;
+.is-personalizable.tab-container.header-tabs:not(.alternate) {
+  border-bottom-color: ${colors.base};
 }
 
 .hero-widget.is-personalizable {
@@ -1065,26 +1049,6 @@ html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.i
   box-shadow: 0 0 0 2px transparent,
   0 0 0 1px ${colors.subtext},
   0 0 2px 1px ${colors.subtext} !important;
-}
-
-.is-personalizable.tab-container.header-tabs:not(.alternate)::after {
-  background-image: linear-gradient(to right, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base});
-}
-
-.is-personalizable.tab-container.header-tabs:not(.alternate)::before {
-  background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base});
-}
-
-html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::after {
-  background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base});
-}
-
-html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::before {
-  background-image: linear-gradient(to right, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base});
-}
-
-.is-personalizable.tab-container.header-tabs:not(.alternate) {
-  border-bottom-color: ${colors.base};
 }
 
 /*
