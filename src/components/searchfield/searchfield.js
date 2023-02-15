@@ -1193,7 +1193,6 @@ SearchField.prototype = {
     }
 
     if (key === 9) { // Tab
-      console.log('tab')
       this.handleSafeBlur();
     }
 
