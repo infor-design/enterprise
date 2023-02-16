@@ -21,9 +21,28 @@
   }
 }
 
-html[class*='classic-'] .is-personalizable > .tab-list-container .tab.is-disabled a,
-html[class*='classic-'] .is-personalizable.tab-container > .tab-list-container .tab.is-disabled a {
-  color: rgba(255, 255, 255, 0.5);
+// Classic themes default color personalization
+html[class*='classic-'] {
+  & .is-personalizable {
+    & .personalize-text,
+    & .hyperlink:not(.today) {
+      color: $ids-color-palette-white;
+    }
+
+    & .personalize-actionable:not(:hover) {
+      opacity: .8;
+    }
+
+    & .tab-container.horizontal > .tab-list-container .tab:not(.is-selected):not(.is-disabled):hover,
+    & .tab-container.header-tabs > .tab-list-container .tab:not(.is-selected):not(.is-disabled):hover {
+      border-bottom-color: $ids-color-palette-white;
+    }
+  }
+
+  .is-personalizable.tab-container.horizontal > .tab-list-container .tab:not(.is-selected):not(.is-disabled):hover,
+  .is-personalizable.tab-container.header-tabs > .tab-list-container .tab:not(.is-selected):not(.is-disabled):hover {
+    border-bottom-color: $ids-color-palette-white;
+  }
 }
 
 .is-personalizable.tab-container.module-tabs {

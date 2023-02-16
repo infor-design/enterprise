@@ -723,6 +723,14 @@
   }
 }
 
+.tab-container.header-tabs > .tab-list-container .tab.is-disabled {
+  color: rgba($ids-color-palette-white, 0.5);
+}
+
+html.theme-classic-dark .tab-container.header-tabs > .tab-list-container .tab.is-disabled {
+  color: rgba($ids-color-palette-white, 0.4);
+}
+
 .tab-list-spillover {
   li a > .count {
     display: none;

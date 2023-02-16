@@ -358,7 +358,7 @@ html.theme-new-dark .header.is-personalizable.has-tabs .tab-container.header-tab
   opacity: .8;
 }
 
-html.theme-new-dark .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab,
+.header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab,
 .is-personalizable.tab-container.header-tabs > .tab-list-container .tab  {
   color: ${colors.contrast} !important;
   opacity: .8;
@@ -851,8 +851,14 @@ html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.i
   background-color: ${colors.base} !important;
 }
 
-.tab-container.is-personalizable .tab-list-container .tab-list .tab.is-disabled {
+.is-personalizable .tab-container .tab-list-container .tab-list .tab.is-disabled,
+.tab-container .tab-list-container .tab-list .tab.is-disabled {
   opacity: .8 !important;
+}
+
+html[class*="theme-classic-"] .is-personalizable .tab-container .tab-list-container .tab-list .tab.is-disabled,
+html[class*="theme-classic-"] .tab-container.is-personalizable .tab-list-container .tab-list .tab.is-disabled {
+  opacity: .5 !important;
 }
 
 .is-personalizable .personalize-header {
