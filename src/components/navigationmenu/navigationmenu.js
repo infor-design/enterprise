@@ -7,7 +7,8 @@ const COMPONENT_NAME = 'navigationmenu';
 const NAVIGATION_MENU_DISPLAY_MODES = [false, 'collapsed', 'expanded'];
 
 const NAVIGATIONMENU_DEFAULTS = {
-  displayMode: NAVIGATION_MENU_DISPLAY_MODES[0]
+  displayMode: NAVIGATION_MENU_DISPLAY_MODES[0],
+  showDetailView: false
 };
 
 /**
@@ -43,6 +44,7 @@ NavigationMenu.prototype = {
    */
   build() {
     if (this.settings.displayMode) this.setDisplayMode(this.settings.displayMode);
+    this.setShowDetailView(this.settings.showDetailView);
     return this;
   },
 
@@ -62,7 +64,7 @@ NavigationMenu.prototype = {
   },
 
   /**
-   * Example Method.
+   * Configures the navigation menu's display mode.
    * @param {string} val desired display mode
    * @returns {void}
    */
@@ -71,6 +73,15 @@ NavigationMenu.prototype = {
     if (typeof val === 'string' && NAVIGATION_MENU_DISPLAY_MODES.includes(val)) {
       this.element[0].classList.add(`mode-${val}`);
     }
+  },
+
+  /**
+   * Configures display of the navigation menu's detail view pane.
+   * @param {boolean} val true if the detail view should be shown
+   * @returns {void}
+   */
+  setShowDetailView(val) {
+    this.element[0].classList[val ? 'add' : 'remove']('show-detail');
   },
 
   /**

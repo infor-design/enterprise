@@ -2,21 +2,24 @@
   <aside id="nav" class="navigationmenu"></aside>
   <div class="page-container no-scroll">
     <div class="row top-padding">
-      <div class="twelve columns">
-        <div class="row top-padding">
-          <div class="six columns">
-            <h2>Navigation Menu</h2>
-            <p>Displays top-level navigation in a flyout menu</p>
+      <div class="four columns">&nbsp;</div>
+      <div class="four columns">&nbsp;</div>
+      <div class="four columns">
+        <h2 class="fieldset-title">Navigation Menu</h2>
+        <p>Displays top-level navigation in a flyout menu</p>
 
-            <div class="field">
-              <label for="display-mode-dropdown" class="label">Display Mode:</label>
-              <select id="display-mode-dropdown" class="dropdown">
-                <option value="">Hidden</option>
-                <option value="collapsed">Collapsed</option>
-                <option value="expanded">Expanded</option>
-              </select>
-            </div>
-          </div>
+        <div class="field">
+          <label for="display-mode-dropdown" class="label">Display Mode</label>
+          <select id="display-mode-dropdown" class="dropdown">
+            <option value="">Hidden</option>
+            <option value="collapsed">Collapsed</option>
+            <option value="expanded">Expanded</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <input type="checkbox" class="checkbox" name="display-detail-check" id="display-detail-check" />
+          <label for="display-detail-check" class="checkbox-label">Display Detail View</label>
         </div>
       </div>
     </div>
@@ -25,12 +28,16 @@
 
 <script>
   $('body').on('initialized', () => {
-    const nav = $('#nav').data('navigationmenu');
-    const dropdown = $('#display-mode-dropdown').data('dropdown');
+    const navAPI = $('#nav').data('navigationmenu');
+    const dropdownAPI = $('#display-mode-dropdown').data('dropdown');
+    const checkEl = $('#display-detail-check')
 
-    dropdown.element.on('change.test', (e) => {
-      debugger;
-      nav.updated({ displayMode: dropdown.value });
+    dropdownAPI.element.on('change.test', (e) => {
+      navAPI.updated({ displayMode: dropdownAPI.value });
+    });
+
+    checkEl.on('change.test', (e) => {
+      navAPI.updated({ showDetailView: checkEl[0].checked });
     });
   });
 </script>
