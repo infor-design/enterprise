@@ -11,6 +11,20 @@
   .page-container {
     position: static;
   }
+
+  // No detail view = box shadow on the menu itself
+  &:not(.show-detail) {
+    .navigationmenu.mode-expanded {
+      @include drawer-box-shadow;
+    }
+  }
+
+  // Detail view = box shadow on detail view
+  &.show-detail {
+    .navigationmenu-detail {
+      @include drawer-box-shadow;
+    }
+  }
 }
 
 .navigationmenu {
@@ -32,8 +46,6 @@
   }
 
   &.mode-expanded {
-    @include drawer-box-shadow;
-
     width: $nav-menu-expanded-size;
     z-index: 1;
 
@@ -44,9 +56,19 @@
 }
 
 .navigationmenu-detail {
+  background-color: $nav-menu-detail-bg-color;
   border-right: 1px solid $nav-menu-border-color;
-
   position: absolute;
-  top: 0;
-  right: 0;
+
+  &:not(.visible) {
+    display: none;
+  }
+
+  &.visible {
+    width: $nav-menu-submenu-size;
+    height: 100%;
+
+    top: 0;
+    right: ($nav-menu-submenu-size + 1) * -1;
+  }
 }

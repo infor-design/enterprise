@@ -1,4 +1,3 @@
-import * as debug from '../../utils/debug'; // NOTE: update this path when moving to a component folder
 import { utils } from '../../utils/utils'; // NOTE: update this path when moving to a component folder
 
 // Settings and Options
@@ -43,6 +42,11 @@ NavigationMenu.prototype = {
    * @private
    */
   build() {
+    // Refs
+    this.containerEl = $(this.element).parent('.navigationmenu-container');
+    this.detailViewEl = $(this.element).find('.navigationmenu-detail');
+
+    // Configure
     if (this.settings.displayMode) this.setDisplayMode(this.settings.displayMode);
     this.setShowDetailView(this.settings.showDetailView);
     return this;
@@ -81,7 +85,8 @@ NavigationMenu.prototype = {
    * @returns {void}
    */
   setShowDetailView(val) {
-    this.element[0].classList[val ? 'add' : 'remove']('show-detail');
+    this.containerEl[0].classList[val ? 'add' : 'remove']('show-detail');
+    this.detailViewEl[0].classList[val ? 'add' : 'remove']('visible');
   },
 
   /**
