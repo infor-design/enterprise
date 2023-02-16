@@ -30,7 +30,7 @@ html[class*='classic-'] {
     }
 
     & .personalize-actionable:not(:hover) {
-      opacity: .8;
+      opacity: 0.8;
     }
 
     & .tab-container.horizontal > .tab-list-container .tab:not(.is-selected):not(.is-disabled):hover,
