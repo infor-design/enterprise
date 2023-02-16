@@ -605,6 +605,7 @@ html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::af
   background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base}) !important;
 }
 
+.is-personalizable .tab-container.header-tabs:not(.alternate),
 .is-personalizable.tab-container.header-tabs:not(.alternate) {
   border-bottom-color: ${colors.base};
 }
@@ -851,9 +852,9 @@ html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.i
   background-color: ${colors.base} !important;
 }
 
-.is-personalizable .tab-container .tab-list-container .tab-list .tab.is-disabled,
-.tab-container .tab-list-container .tab-list .tab.is-disabled {
-  opacity: .8 !important;
+.is-personalizable .tab-container.header-tabs .tab-list-container .tab-list .tab.is-disabled,
+.is-personalizable.tab-container.header-tabs .tab-list-container .tab-list .tab.is-disabled {
+  opacity: .6;
 }
 
 html[class*="theme-classic-"] .is-personalizable .tab-container .tab-list-container .tab-list .tab.is-disabled,

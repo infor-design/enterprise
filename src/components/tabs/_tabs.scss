@@ -278,15 +278,17 @@
         margin-top: 2px !important;
       }
 
-      .tab:not(.is-disabled) {
-        top: -2px !important;
+      .tab {
+        top: -2px;
 
-        &:hover {
-          border-bottom: 4px solid $header-tab-hover-color;
-        }
+        &:not(.is-disabled) {
+          &:hover {
+            border-bottom: 4px solid $header-tab-hover-color;
+          }
 
-        &.is-selected {
-          border-bottom: 4px solid $header-tab-hover-color;
+          &.is-selected {
+            border-bottom: 4px solid $header-tab-hover-color;
+          }
         }
       }
     }
