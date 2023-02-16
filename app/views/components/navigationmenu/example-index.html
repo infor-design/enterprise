@@ -1,5 +1,5 @@
 <section class="navigationmenu-container">
-  <aside class="navigationmenu"></aside>
+  <aside id="nav" class="navigationmenu"></aside>
   <div class="page-container no-scroll">
     <div class="row top-padding">
       <div class="twelve columns">
@@ -9,8 +9,8 @@
             <p>Displays top-level navigation in a flyout menu</p>
 
             <div class="field">
-              <label for="display-mode-dropdown">Display Mode:</label>
-              <select id="display-mode-dropdown">
+              <label for="display-mode-dropdown" class="label">Display Mode:</label>
+              <select id="display-mode-dropdown" class="dropdown">
                 <option value="">Hidden</option>
                 <option value="collapsed">Collapsed</option>
                 <option value="expanded">Expanded</option>
@@ -22,3 +22,15 @@
     </div>
   </div>
 </section>
+
+<script>
+  $('body').on('initialized', () => {
+    const nav = $('#nav').data('navigationmenu');
+    const dropdown = $('#display-mode-dropdown').data('dropdown');
+
+    dropdown.element.on('change.test', (e) => {
+      debugger;
+      nav.updated({ displayMode: dropdown.value });
+    });
+  });
+</script>

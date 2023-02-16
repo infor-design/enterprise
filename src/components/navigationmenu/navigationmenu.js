@@ -75,9 +75,13 @@ NavigationMenu.prototype = {
 
   /**
    * Handle updated settings and values.
-   * @returns {object} [description]
+   * @param {object} [settings] if provided, updates nav menu settings
+   * @returns {object} chainable API
    */
-  updated() {
+  updated(settings) {
+    if (settings) {
+      this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
+    }
     return this
       .teardown()
       .init();
