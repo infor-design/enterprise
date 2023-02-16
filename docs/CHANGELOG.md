@@ -15,6 +15,7 @@
 
 ## v4.81.0 Fixes
 
+- `[Actionsheet]` Updated font and icon colors for classic actionsheet. ([#7012](https://github.com/infor-design/enterprise/issues/7012))
 - `[Bar]` Fixed bug introduced by d3 changes with bar selection. ([#7182](https://github.com/infor-design/enterprise/issues/7182))
 - `[Button]` Fixed icon button size and icon centering. ([#7201](https://github.com/infor-design/enterprise/issues/7201))
 - `[Accordion]` Additional fix in accordion collapsing cards on expand bug. ([#6820](https://github.com/infor-design/enterprise/issues/6820))
@@ -25,16 +26,19 @@
 - `[Header]` Fixed a bug in subheader where the color its not appropriate on default theme. ([#7173](https://github.com/infor-design/enterprise/issues/7173))
 - `[MenuButton]` Fixed some color on menu buttons. ([#7184](https://github.com/infor-design/enterprise/issues/7184))
 - `[Hyperlink]` Changed hover color in dark theme. ([#7095](https://github.com/infor-design/enterprise/issues/7095))
-- `[Slider]` Fixed sliding and dropping the handle outside of the component doesn't trigger the change event. ([#7028](https://github.com/infor-design/enterprise/issues/7028))
-- `[Popupmenu]` Fix on inverse colors not showing in popupmenu in masthead. ([#7005](https://github.com/infor-design/enterprise/issues/7005))
-- `[Typography]` Updated documentation to align usage guidance. ([#7187](https://github.com/infor-design/enterprise/issues/7187))
 - `[Personalization]` Fix default values in the personalization API. ([#7167](https://github.com/infor-design/enterprise/issues/7167))
+- `[Popupmenu]` Fix on inverse colors not showing in popupmenu in masthead. ([#7005](https://github.com/infor-design/enterprise/issues/7005))
+- `[Searchfield]` Custom button adjustments in mobile. ([#7134](https://github.com/infor-design/enterprise/issues/7134))
+- `[Slider]` Fixed sliding and dropping the handle outside of the component doesn't trigger the change event. ([#7028](https://github.com/infor-design/enterprise/issues/7028))
+- `[Timepicker]` Fixed 24h time validation. ([#7188](https://github.com/infor-design/enterprise/issues/7188))
+- `[Typography]` Updated documentation to align usage guidance. ([#7187](https://github.com/infor-design/enterprise/issues/7187))
 
 ## v4.80.1 Fixes
 
 - `[Button]` Fixed button status colors disabled in toolbar/toolbar flex in alabaster and personalize colors. ([#7166](https://github.com/infor-design/enterprise/issues/7166))
 - `[Dropdown]` Fixed swatch default color in themes. ([#7108](https://github.com/infor-design/enterprise/issues/7108))
 - `[Hyperlink]` Changed hover color in dark theme. ([#7095](https://github.com/infor-design/enterprise/issues/7095))
+- `[Timepicker]` Fixed field value when day period goes first in the time format. ([#7116](https://github.com/infor-design/enterprise/issues/7116))
 - `[Datagrid]` Fixed background color of lookups in filter row when in light mode. ([#7176](https://github.com/infor-design/enterprise/issues/7176))
 - `[Dropdown/Multiselect]` Fixed disabled options are not displayed as disabled when using ajax. ([#7150](https://github.com/infor-design/enterprise/issues/7150))
 - `[Header]` Fixed a bug in `subheader` where the color its not appropriate on default theme. ([#7173](https://github.com/infor-design/enterprise/issues/7173))
