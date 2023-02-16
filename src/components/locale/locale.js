@@ -592,12 +592,13 @@ const Locale = {  // eslint-disable-line
     let ret = '';
     const cal = (localeData.calendars ? localeData.calendars[0] : null);
 
-    if (options.pattern) {
-      pattern = options.pattern;
+    if (options.date && cal) {
+      pattern = cal.dateFormat[options.date];
     }
 
-    if (options.date) {
-      pattern = cal.dateFormat[options.date];
+    // If pattern is defined in options it will override date format from locale
+    if (options.pattern) {
+      pattern = options.pattern;
     }
 
     if (typeof options === 'string' && options !== '') {

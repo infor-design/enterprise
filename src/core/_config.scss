@@ -83,8 +83,8 @@ $hyperlink-focus-border-color: $link-color-initial-font;
 $hyperlink-visited-color: $link-color-visited-font;
 $hyperlink-disabled-color: $link-color-disabled-font;
 $hyperlink-hover-color: $link-color-hover-font;
-$btn-hyperlink-color: $hyperlink-color;
-$btn-hyperlink-hover-color: $hyperlink-hover-color;
+$button-hyperlink-color: $hyperlink-color;
+$button-hyperlink-hover-color: $hyperlink-hover-color;
 
 // Rules
 $hr-top-color: $ids-color-brand-secondary-base;
@@ -267,6 +267,14 @@ $button-color-tertiary-destructive-hover-background-new: $ids-color-palette-ruby
 
 $button-color-tertiary-destructive-disabled-font-new: $ids-color-palette-ruby-30;
 $button-color-tertiary-destructive-disabled-background-new: transparent;
+
+$button-color-tertiary-actionsheet-initial-font: $ids-color-palette-slate-60;
+$button-color-tertiary-actionsheet-hover-font: $ids-color-palette-black;
+$button-color-secondary-actionsheet-hover-border: $button-color-secondary-hover-border-new;
+$button-color-secondary-actionsheet-hover-font: $button-color-secondary-hover-border-new;
+$button-color-secondary-actionsheet-hover-background: $button-color-tertiary-hover-background-new;
+$button-color-secondary-actionsheet-border: $button-color-secondary-initial-font-new;
+$button-color-secondary-actionsheet-font: $button-color-secondary-initial-border-new;
 
 //States
 $error-color: #da1217;
