@@ -1075,7 +1075,7 @@ TimePicker.prototype = {
         const maxHourCount = is24HourFormat ? 24 : 13;
         const hourSelect = $('select.hours.dropdown');
         let hourValue = hourSelect.siblings('.dropdown-wrapper').find('.dropdown').children('span').text();
-        if (hourValue.indexOf('Hours') > -1) {
+        if (hourValue.indexOf(Locale.translate('Hours')) > -1) {
           hourValue = hourValue.split(' ')[1];
         }
 
