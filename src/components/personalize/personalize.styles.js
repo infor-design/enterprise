@@ -224,14 +224,16 @@ a.is-personalizable svg.ripple-effect {
 }
 
 .tab-container.is-personalizable.header-tabs:not(.alternate) .tab-focus-indicator.is-visible,
+.tab-container.personalize-header.header-tabs:not(.alternate) .tab-focus-indicator.is-visible,
 .tab-container.is-personalizable.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled).is-selected,
+.tab-container.personalize-header.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled).is-selected,
 .header.is-personalizable .tab-container.header-tabs:not(.alternate) .tab-focus-indicator.is-visible,
 .header.is-personalizable .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled).is-selected {
   border-color: ${colors.contrast} !important;
 }
 
 .tab-container.is-personalizable.header-tabs:not(.alternate) > .tab-list-container .tab:hover:not(.is-disabled),
-.tab-container.is-personalizable.header-tabs:not(.alternate) > .tab-list-container .tab:hover:not(.is-disabled),
+.tab-container.personalize-header.header-tabs:not(.alternate) > .tab-list-container .tab:hover:not(.is-disabled),
 .header.is-personalizable .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:hover:not(.is-disabled) {
   color: ${colors.contrast};
   background-color: ${colors.darker};
@@ -353,13 +355,15 @@ html.theme-new-dark .header.is-personalizable.has-tabs .tab-container.header-tab
 .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab:not(.is-disabled),
 .header.is-personalizable .tab-container.header-tabs .tab-more svg.icon,
 .tab-container.is-personalizable .tab-more svg.icon,
-.is-personalizable.tab-container.header-tabs > .tab-list-container .tab:not(.is-disabled)  {
+.is-personalizable.tab-container.header-tabs > .tab-list-container .tab:not(.is-disabled),
+.personalize-header.tab-container.header-tabs > .tab-list-container .tab:not(.is-disabled)  {
   color: ${colors.contrast} !important;
   opacity: .8;
 }
 
 .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab,
-.is-personalizable.tab-container.header-tabs > .tab-list-container .tab  {
+.is-personalizable.tab-container.header-tabs > .tab-list-container .tab,
+.personalize-header.tab-container.header-tabs > .tab-list-container .tab {
   color: ${colors.contrast} !important;
   opacity: .8;
 }
@@ -377,7 +381,8 @@ html.theme-new-dark .header.is-personalizable.has-tabs .tab-container.header-tab
 }
 
 html[class*="theme-new-"] .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab:not(.is-disabled),
-html[class*="theme-new-"] .is-personalizable.tab-container.header-tabs > .tab-list-container .tab:not(.is-disabled) {
+html[class*="theme-new-"] .is-personalizable.tab-container.header-tabs > .tab-list-container .tab:not(.is-disabled),
+html[class*="theme-new-"] .personalize-header.tab-container.header-tabs > .tab-list-container .tab:not(.is-disabled) {
   opacity: 1;
 }
 

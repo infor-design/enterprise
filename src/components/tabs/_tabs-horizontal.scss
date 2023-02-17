@@ -71,15 +71,11 @@ $horizontal-tabs-height: 40px;
         color: $tab-text-color-horizontal;
       }
 
-      &:hover {
+      &:not(.is-disabled):hover {
         color: $tab-hover-color;
 
         .icon:not(.is-error):not(.icon-error) {
           color: $tab-hover-color;
-        }
-
-        &.is-disabled {
-          color: $disabled-color;
         }
       }
 
