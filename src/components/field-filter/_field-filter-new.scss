@@ -90,6 +90,16 @@
         }
       }
     }
+
+    &.dropdown-short {
+      > .trigger {
+        margin-left: 0;
+
+        .icon {
+          top: 6px;
+        }
+      }
+    }
   }
 
   &:not(.is-mac) {
