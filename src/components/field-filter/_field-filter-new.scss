@@ -64,6 +64,16 @@
     height: 38px;
   }
 
+  .field-short.fieldfilter-wrapper {
+    .dropdown-wrapper {
+      .dropdown {
+        .listoption-icon {
+          top: 0;
+        }
+      }
+    }
+  }
+
   .dropdown-list.ffdropdown {
     > .trigger {
       margin-left: -40px;
@@ -87,7 +97,7 @@
       &.is-ontop {
         > .trigger {
           .icon {
-            top: 14px !important;
+            top: 6px !important;
           }
         }
       }
