@@ -73,9 +73,9 @@ NavigationMenu.prototype = {
    * @returns {void}
    */
   setDisplayMode(val) {
-    this.element[0].classList.remove('mode-collapsed', 'mode-expanded');
+    this.containerEl[0].classList.remove('mode-collapsed', 'mode-expanded');
     if (typeof val === 'string' && NAVIGATION_MENU_DISPLAY_MODES.includes(val)) {
-      this.element[0].classList.add(`mode-${val}`);
+      this.containerEl[0].classList.add(`mode-${val}`);
     }
   },
 

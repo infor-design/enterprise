@@ -12,9 +12,12 @@
     position: static;
   }
 
+  // =====================================================
+  // Show/Hide Detail View
+
   // No detail view = box shadow on the menu itself
   &:not(.show-detail) {
-    .navigationmenu.mode-expanded {
+    &.mode-expanded .navigationmenu-bar {
       @include drawer-box-shadow;
     }
   }
@@ -25,40 +28,83 @@
       @include drawer-box-shadow;
     }
   }
-}
 
-.navigationmenu {
-  background-color: $nav-menu-bg-color;
-  border-right: 1px solid $nav-menu-border-color;
-  color: $nav-menu-text-color;
-
-  height: 100%;
-  position: relative;
+  // =====================================================
+  // Display Mode
 
   &:not(.mode-expanded):not(.mode-collapsed) {
-    border-right: none;
-    width: 0px;
-    pointer-events: none;
+    .navigationmenu {
+      pointer-events: none;
+    }
+
+    .navigationmenu-bar {
+      width: 0px;
+    }
+  }
+
+  &.mode-collapsed,
+  &.mode-expanded {
+    .navigationmenu-bar {
+      z-index: 1;
+    }
   }
 
   &.mode-collapsed {
-    width: $nav-menu-collapsed-size;
+    .navigationmenu {
+      border-right: 1px solid $nav-menu-border-color;
+    }
+
+    .navigationmenu-bar {
+      width: $nav-menu-collapsed-size;
+    }
+
+    &.show-detail {
+      .page-container {
+        margin-inline-start: ($nav-menu-submenu-size * -1);
+      }
+    }
   }
 
   &.mode-expanded {
-    width: $nav-menu-expanded-size;
-    z-index: 1;
+    border-right: 1px solid $nav-menu-border-color;
 
-    +.page-container {
-      margin-inline-start: (($nav-menu-submenu-size - 10) * -1);
+    .navigationmenu-bar {
+      width: $nav-menu-expanded-size;
+    }
+
+    .page-container {
+      margin-inline-start: ($nav-menu-submenu-size * -1);
+    }
+
+    &.show-detail {
+      .navigationmenu-detail {
+        width: $nav-menu-submenu-size;
+      }
+
+      .page-container {
+        margin-inline-start: ($nav-menu-submenu-size * -2);
+      }
     }
   }
+}
+
+.navigationmenu {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  position: relative;
+}
+
+.navigationmenu-bar {
+  background-color: $nav-menu-bg-color;
+  color: $nav-menu-text-color;
+  height: 100%;
 }
 
 .navigationmenu-detail {
   background-color: $nav-menu-detail-bg-color;
   border-right: 1px solid $nav-menu-border-color;
-  position: absolute;
+  height: 100%;
 
   &:not(.visible) {
     display: none;
@@ -66,9 +112,5 @@
 
   &.visible {
     width: $nav-menu-submenu-size;
-    height: 100%;
-
-    top: 0;
-    right: ($nav-menu-submenu-size + 1) * -1;
   }
 }
