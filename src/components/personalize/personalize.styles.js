@@ -352,7 +352,7 @@ html.theme-new-dark .header.is-personalizable.has-tabs .tab-container.header-tab
   background-color: ${colors.contrast};
 }
 
-.header.is-personalizable.has-tabs .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled),
+.is-personalizable .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled),
 .header.is-personalizable .tab-container.header-tabs:not(.alternate) .tab-more svg.icon,
 .tab-container.is-personalizable .tab-more svg.icon,
 .is-personalizable.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled),
@@ -857,14 +857,14 @@ html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.i
   background-color: ${colors.base} !important;
 }
 
-.is-personalizable .tab-container.header-tabs .tab-list-container .tab-list .tab.is-disabled,
-.is-personalizable.tab-container.header-tabs .tab-list-container .tab-list .tab.is-disabled {
+.is-personalizable .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab-list .tab.is-disabled,
+.is-personalizable.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab-list .tab.is-disabled {
   opacity: .6;
 }
 
 html[class*="theme-classic-"] .is-personalizable .tab-container .tab-list-container .tab-list .tab.is-disabled,
 html[class*="theme-classic-"] .tab-container.is-personalizable .tab-list-container .tab-list .tab.is-disabled {
-  opacity: .5 !important;
+  opacity: .4 !important;
 }
 
 .is-personalizable .personalize-header {
