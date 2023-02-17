@@ -273,7 +273,7 @@ a.is-personalizable svg.ripple-effect {
   background-color: ${colors.base};
 }
 
-.header.is-personalizable.has-tabs .tab-container.header-tabs {
+.header.is-personalizable.has-tabs .tab-container.header-tabs:not(.alternate) {
   background-color: ${colors.base};
 }
 
@@ -306,7 +306,7 @@ a.is-personalizable svg.ripple-effect {
   opacity: .8;
 }
 
-.header.is-personalizable:not(.has-alternate-tabs) .tab-container.header-tabs > .tab-list-container .tab:not(.is-disabled):hover {
+.header.is-personalizable:not(.has-alternate-tabs) .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled):hover {
   border-bottom: 4px solid ${colors.contrast};
 }
 
@@ -339,37 +339,37 @@ a.is-personalizable svg.ripple-effect {
   color: ${colors.contrast};
 }
 
-.header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab.is-selected:not(.is-disabled) {
+.header.is-personalizable.has-tabs .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected:not(.is-disabled) {
   color: ${colors.contrast} !important;
 }
 
-html.theme-new-dark .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab.is-selected:not(.is-disabled) {
+html.theme-new-dark .header.is-personalizable.has-tabs .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected:not(.is-disabled) {
   color: ${colors.contrast} !important;
 }
 
-.header.is-personalizable.has-tabs .tab-more::before,
+.header.is-personalizable .tab-container.header-tabs:not(.alternate) .tab-more::before,
 .tab-container.is-personalizable.header-tabs:not(.alternate) .tab-more::before {
   background-color: ${colors.contrast};
 }
 
-.header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab:not(.is-disabled),
-.header.is-personalizable .tab-container.header-tabs .tab-more svg.icon,
+.header.is-personalizable.has-tabs .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled),
+.header.is-personalizable .tab-container.header-tabs:not(.alternate) .tab-more svg.icon,
 .tab-container.is-personalizable .tab-more svg.icon,
-.is-personalizable.tab-container.header-tabs > .tab-list-container .tab:not(.is-disabled),
-.personalize-header.tab-container.header-tabs > .tab-list-container .tab:not(.is-disabled)  {
+.is-personalizable.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled),
+.personalize-header.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled)  {
   color: ${colors.contrast} !important;
   opacity: .8;
 }
 
-.header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab,
-.is-personalizable.tab-container.header-tabs > .tab-list-container .tab,
-.personalize-header.tab-container.header-tabs > .tab-list-container .tab {
+.header.is-personalizable.has-tabs .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab,
+.is-personalizable.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab,
+.personalize-header.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab {
   color: ${colors.contrast} !important;
   opacity: .8;
 }
 
-.header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab:hover:not(.is-disabled),
-.is-personalizable.tab-container.header-tabs > .tab-list-container .tab:hover:not(.is-disabled)  {
+.header.is-personalizable.has-tabs .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:hover:not(.is-disabled),
+.is-personalizable.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:hover:not(.is-disabled)  {
   color: ${colors.contrast} !important;
   opacity: 1;
 }
@@ -380,9 +380,9 @@ html.theme-new-dark .header.is-personalizable.has-tabs .tab-container.header-tab
   opacity: 1;
 }
 
-html[class*="theme-new-"] .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab:not(.is-disabled),
-html[class*="theme-new-"] .is-personalizable.tab-container.header-tabs > .tab-list-container .tab:not(.is-disabled),
-html[class*="theme-new-"] .personalize-header.tab-container.header-tabs > .tab-list-container .tab:not(.is-disabled) {
+html[class*="theme-new-"] .header.is-personalizable.has-tabs .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled),
+html[class*="theme-new-"] .is-personalizable.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled),
+html[class*="theme-new-"] .personalize-header.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled) {
   opacity: 1;
 }
 
