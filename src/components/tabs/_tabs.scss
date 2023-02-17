@@ -726,11 +726,11 @@
 }
 
 .tab-container.header-tabs > .tab-list-container .tab.is-disabled {
-  color: rgba($ids-color-palette-white, 0.5);
+  color: rgba($ids-color-palette-white, 0.4);
 }
 
 html.theme-classic-dark .tab-container.header-tabs > .tab-list-container .tab.is-disabled {
-  color: rgba($ids-color-palette-white, 0.4);
+  color: rgba($ids-color-palette-white, 0.2);
 }
 
 .tab-list-spillover {
