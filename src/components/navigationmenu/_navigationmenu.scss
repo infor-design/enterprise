@@ -13,24 +13,7 @@
   }
 
   // =====================================================
-  // Show/Hide Detail View
-
-  // No detail view = box shadow on the menu itself
-  &:not(.show-detail) {
-    &.mode-expanded .navigationmenu-bar {
-      @include drawer-box-shadow;
-    }
-  }
-
-  // Detail view = box shadow on detail view
-  &.show-detail {
-    .navigationmenu-detail {
-      @include drawer-box-shadow;
-    }
-  }
-
-  // =====================================================
-  // Display Mode
+  // Display Mode: Hidden
 
   &:not(.mode-expanded):not(.mode-collapsed) {
     .navigationmenu {
@@ -40,14 +23,42 @@
     .navigationmenu-bar {
       width: 0px;
     }
+
+    .navigationmenu-detail {
+      display: none;
+    }
   }
+
+  // =====================================================
+  // Display Mode: Collapsed/Expanded
 
   &.mode-collapsed,
   &.mode-expanded {
     .navigationmenu-bar {
       z-index: 1;
     }
+
+    &:not(.show-detail) {
+      .navigationmenu-detail {
+        display: none;
+      }
+    }
+
+    &.show-detail {
+      .navigationmenu-bar {
+        border-right: 1px solid $nav-menu-border-color;
+      }
+
+      .navigationmenu-detail {
+        @include drawer-box-shadow;
+
+        width: $nav-menu-submenu-size;
+      }
+    }
   }
+
+  // =====================================================
+  // Display Mode: Collapsed
 
   &.mode-collapsed {
     .navigationmenu {
@@ -65,6 +76,9 @@
     }
   }
 
+  // =====================================================
+  // Display Mode: Expanded
+
   &.mode-expanded {
     border-right: 1px solid $nav-menu-border-color;
 
@@ -74,6 +88,12 @@
 
     .page-container {
       margin-inline-start: ($nav-menu-submenu-size * -1);
+    }
+
+    &:not(.show-detail) {
+      .navigationmenu-bar {
+        @include drawer-box-shadow;
+      }
     }
 
     &.show-detail {
@@ -105,12 +125,4 @@
   background-color: $nav-menu-detail-bg-color;
   border-right: 1px solid $nav-menu-border-color;
   height: 100%;
-
-  &:not(.visible) {
-    display: none;
-  }
-
-  &.visible {
-    width: $nav-menu-submenu-size;
-  }
 }
