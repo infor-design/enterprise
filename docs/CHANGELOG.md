@@ -22,6 +22,7 @@
 - `[Datagrid]` Fixed background color of lookups in filter row when in light mode. ([#7176](https://github.com/infor-design/enterprise/issues/7176))
 - `[Datagrid]` Fixed a bug in datagrid where custom toolbar is being replaced with data grid generated toolbar. ([NG#1434](https://github.com/infor-design/enterprise-ng/issues/1434))
 - `[Datagrid]` Fixed bug in Safari where dynamically switching from RTL to LTR doesn't update all the alignments. ([NG#1431](https://github.com/infor-design/enterprise-ng/issues/1431))
+- `[Datagrid]` Fixed odd hover color when using row activation and is list. ([#7232](https://github.com/infor-design/enterprise/issues/7232))
 - `[Dropdown]` Fixed swatch default color in themes. ([#7108](https://github.com/infor-design/enterprise/issues/7108))
 - `[Dropdown/Multiselect]` Fixed disabled options are not displayed as disabled when using ajax. ([#7150](https://github.com/infor-design/enterprise/issues/7150))
 - `[Header]` Fixed a bug in subheader where the color its not appropriate on default theme. ([#7173](https://github.com/infor-design/enterprise/issues/7173))
