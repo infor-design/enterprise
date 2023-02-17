@@ -113,6 +113,11 @@
     [data-error-type='tooltip'] ~ .icon-success {
       top: unset !important;
       position: absolute;
+
+      &:focus {
+        outline: none;
+        box-shadow: none;
+      }
     }
 
     .dropdown-wrapper {
