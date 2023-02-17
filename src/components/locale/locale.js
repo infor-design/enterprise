@@ -107,7 +107,7 @@ const Locale = {  // eslint-disable-line
     if (this.isRTL()) {
       html.attr('dir', 'rtl');
     } else {
-      html.removeAttr('dir');
+      html.attr('dir', 'ltr');
     }
 
     // ICONS: Right to Left Direction
@@ -1016,7 +1016,7 @@ const Locale = {  // eslint-disable-line
     dateString = dateString.replace(' de ', ' ');
 
     // Fix ah
-    dateFormat = dateFormat.replace('/ah/', '/a/h/');
+    dateFormat = dateFormat.replace('ah', 'a/h');
     dateString = dateString.replace('午', '午/');
 
     // Remove commas
