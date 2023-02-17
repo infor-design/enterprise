@@ -1,6 +1,10 @@
 // Navigation Menu
 //================================================== //
 
+@mixin nav-item-box-shadow() {
+  @include css3(box-shadow, 0 0 8px 1px rgba(0, 0, 0, 0.16));
+}
+
 .navigationmenu-container {
   display: flex;
   flex-direction: row;
@@ -22,7 +26,7 @@
     }
 
     .navigationmenu-bar {
-      width: 0px;
+      display: none;
     }
 
     .navigationmenu-detail {
@@ -70,6 +74,17 @@
       width: $nav-menu-collapsed-size;
     }
 
+    .navigationmenu-item {
+      justify-content: center;
+
+      // Can't use `audible` here, need to retain line height
+      span {
+        clip: rect(0, 0, 0, 0);
+        width: 1px;
+        overflow: hidden;
+      }
+    }
+
     &.show-detail {
       .page-container {
         margin-inline-start: ($nav-menu-submenu-size * -1);
@@ -85,6 +100,12 @@
 
     .navigationmenu-bar {
       width: $nav-menu-expanded-size;
+    }
+
+    .navigationmenu-item {
+      .icon {
+        margin-right: 8px;
+      }
     }
 
     .page-container {
@@ -117,13 +138,36 @@
 }
 
 .navigationmenu-bar {
+  display: flex;
+  flex-direction: column;
   background-color: $nav-menu-bg-color;
   color: $nav-menu-text-color;
   height: 100%;
+  padding: 8px;
+  gap: 8px;
 }
 
 .navigationmenu-detail {
   background-color: $nav-menu-detail-bg-color;
   border-right: 1px solid $nav-menu-border-color;
   height: 100%;
+}
+
+.navigationmenu-item {
+  align-items: center;
+  border-radius: 4px;
+  display: flex;
+  padding: 13px;
+
+  span {
+    @include font-size(16);
+  }
+
+  &:not([disabled]):not(.is-disabled) {
+    cursor: pointer;
+  }
+
+  &:hover {
+    @include nav-item-box-shadow;
+  }
 }
