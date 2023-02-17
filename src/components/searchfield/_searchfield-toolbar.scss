@@ -381,8 +381,8 @@ $toolbarsearchfield-category-empty-width: 51px;
     // Ignored due to out-of-order properties that need to be in this order for proper cascade.
     .btn,
     .collapse-button {
-      border-color: rgba($searchfield-bg-color, 1);
-      border-bottom-color: rgba($searchfield-border-color, 1);
+      border-color: rgba($searchfield-toolbar-border-color, 1);
+      border-bottom-color: rgba($searchfield-toolbar-border-color, 0.6);
     }
     /* stylelint-enable */
   }
