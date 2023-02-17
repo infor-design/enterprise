@@ -27,6 +27,7 @@
 - `[Dropdown]` Fixed swatch default color in themes. ([#7108](https://github.com/infor-design/enterprise/issues/7108))
 - `[Dropdown/Multiselect]` Fixed disabled options are not displayed as disabled when using ajax. ([#7150](https://github.com/infor-design/enterprise/issues/7150))
 - `[Header]` Fixed a bug in subheader where the color its not appropriate on default theme. ([#7173](https://github.com/infor-design/enterprise/issues/7173))
+- `[Homepage/Personalize/Page-Patterns]` Fixed homepage hero widget, builder header, and other section of tabs with the new design and color combination. ([#7136](https://github.com/infor-design/enterprise/issues/7136))
 - `[MenuButton]` Fixed some color on menu buttons. ([#7184](https://github.com/infor-design/enterprise/issues/7184))
 - `[Hyperlink]` Changed hover color in dark theme. ([#7095](https://github.com/infor-design/enterprise/issues/7095))
 - `[Personalization]` Fix default values in the personalization API. ([#7167](https://github.com/infor-design/enterprise/issues/7167))
