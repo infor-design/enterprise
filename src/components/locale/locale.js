@@ -1016,7 +1016,7 @@ const Locale = {  // eslint-disable-line
     dateString = dateString.replace(' de ', ' ');
 
     // Fix ah
-    dateFormat = dateFormat.replace('/ah/', '/a/h/');
+    dateFormat = dateFormat.replace('ah', 'a/h');
     dateString = dateString.replace('午', '午/');
 
     // Remove commas

@@ -349,6 +349,18 @@ describe('Locale API', () => {
 
     expect(Locale.parseDate('2020/3/4 下午9:00', { pattern: 'yyyy/M/d ah:mm' }).getTime())
       .toEqual(new Date(2020, 2, 4, 21, 0, 0).getTime());
+
+    expect(Locale.parseDate('上午1:00', { dateFormat: 'ah:mm' }).getHours()).toEqual(1);
+    expect(Locale.parseDate('上午12:00', { dateFormat: 'ah:mm' }).getHours()).toEqual(0);
+    expect(Locale.parseDate('下午2:00', { dateFormat: 'ah:mm' }).getHours()).toEqual(14);
+    expect(Locale.parseDate('下午12:00', { dateFormat: 'ah:mm' }).getHours()).toEqual(12);
+  });
+
+  it('should not parse incorrect time string with strictTime option', () => {
+    Locale.set('en-US');
+
+    expect(Locale.parseDate('1', { dateFormat: 'h:mm a', strictTime: true })).toBeUndefined();
+    expect(Locale.parseDate('1', { dateFormat: 'HH:mm', strictTime: true })).toBeUndefined();
   });
 
   it('should format en-US dates', () => {
