@@ -72,6 +72,12 @@
         height: 38px;
       }
     }
+
+    &.has-focus.active .searchfield-category-button,
+    .searchfield-category-button {
+      background-color: transparent;
+      border-color: $searchfield-border-color;
+    }
   }
 
   .btn-icon.close {

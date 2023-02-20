@@ -38,6 +38,12 @@ $responsive-searchfield-filled-out-width: 34px;
       }
     }
 
+    .searchfield-category-button {
+      svg.icon {
+        transform: translateY(0);
+      }
+    }
+
     > svg.icon {
       top: 10px;
       width: 18px;

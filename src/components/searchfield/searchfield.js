@@ -1579,8 +1579,9 @@ SearchField.prototype = {
       if (this.element[0].parentElement == null) {
         isAlternate = false;
       } else {
-        isAlternate = this.element[0].parentElement.classList.contains('alternate');
+        isAlternate = this.element[0].parentElement.classList.contains('alternate') || this.isContainedByFlexToolbar;
       }
+
       targetWidthProp = `calc(${isAlternate ? '100%' : baseWidth} - ${subtractWidth}px)`;
     }
     if (targetWidthProp) {

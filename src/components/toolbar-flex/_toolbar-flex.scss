@@ -40,6 +40,13 @@
           }
         }
 
+        &.has-categories.has-go-button {
+          .btn-icon.close {
+            right: 70px;
+            top: 8px;
+          }
+        }
+
         &:not(.has-categories) {
           .btn-icon.close {
             top: 50%;
