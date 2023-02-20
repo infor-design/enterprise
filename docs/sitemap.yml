@@ -25,6 +25,8 @@ sections:
   pages:
   - name: Accordion
     slug: accordion
+  - name: Action Sheet
+    slug: actionsheet
   - name: Alerts
     slug: alerts
   - name: Autocomplete
