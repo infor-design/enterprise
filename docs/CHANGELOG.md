@@ -4,10 +4,12 @@
 
 ## v4.81.0 Important Changes
 
+- `[Docs]` Added action sheet to the doc site. ([#7230](https://github.com/infor-design/enterprise/issues/7230))
 - `[General]` Project now uses node 18 (18.13.0) for development. All dependencies are updated. ([#6634](https://github.com/infor-design/enterprise/issues/6634))
 - `[General]` Updated to d3.v7 which impacts all charts. ([#6634](https://github.com/infor-design/enterprise/issues/6634))
 - `[Bar]` Fixed missing left axis label. ([#7181](https://github.com/infor-design/enterprise/issues/7181))
 - `[Bar]` Fixed regressed long text example. ([#7183](https://github.com/infor-design/enterprise/issues/7183))
+- `[Build]` Fixed build errors on windows. ([#7228](https://github.com/infor-design/enterprise/issues/7228))
 
 ## v4.81.0 Features
 
