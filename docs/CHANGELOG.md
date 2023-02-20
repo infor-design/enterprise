@@ -1,5 +1,12 @@
 # What's New with Enterprise
 
+## v4.80.3
+
+## v4.80.3 Fixes
+
+- `[Personalization]` Fix header tabs/header colors for a variation when header tabs are not in header element. ([#7153](https://github.com/infor-design/enterprise/issues/7153) [#7211](https://github.com/infor-design/enterprise/issues/7211) [#7212](https://github.com/infor-design/enterprise/issues/7212) [#7217](https://github.com/infor-design/enterprise/issues/7217) [#7218](https://github.com/infor-design/enterprise/issues/7218))
+- `[Tabs]` Changed header tabs disabled color to darker color. ([#7219](https://github.com/infor-design/enterprise/issues/7219))
+
 ## v4.80.2
 
 ## v4.80.2 Fixes
