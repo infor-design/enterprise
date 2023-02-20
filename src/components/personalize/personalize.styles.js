@@ -20,6 +20,10 @@ function personalizeStyles(colors) {
   border-color: ${colors.base} !important;
 }
 
+html.theme-classic-dark .is-personalizable .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled {
+  color: #888B94 !important;
+}
+
 html.theme-new-dark .is-personalizable .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):not(:disabled) {
   background-color: ${colors.darkNewButton} !important;
   border-color: ${colors.darkNewButton} !important;

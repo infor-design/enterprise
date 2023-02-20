@@ -20,6 +20,7 @@
 - `[Actionsheet]` Updated font and icon colors for classic actionsheet. ([#7012](https://github.com/infor-design/enterprise/issues/7012))
 - `[Bar]` Fixed bug introduced by d3 changes with bar selection. ([#7182](https://github.com/infor-design/enterprise/issues/7182))
 - `[Button]` Fixed icon button size and icon centering. ([#7201](https://github.com/infor-design/enterprise/issues/7201))
+- `[Button]` Fixed disabled button color in classic version. ([#7185](https://github.com/infor-design/enterprise/issues/7185))
 - `[Accordion]` Additional fix in accordion collapsing cards on expand bug. ([#6820](https://github.com/infor-design/enterprise/issues/6820))
 - `[Datagrid]` Fixed background color of lookups in filter row when in light mode. ([#7176](https://github.com/infor-design/enterprise/issues/7176))
 - `[Datagrid]` Fixed a bug in datagrid where custom toolbar is being replaced with data grid generated toolbar. ([NG#1434](https://github.com/infor-design/enterprise-ng/issues/1434))
