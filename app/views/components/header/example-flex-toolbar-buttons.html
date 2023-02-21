@@ -1,0 +1,90 @@
+<header class="header is-personalizable">
+  <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
+
+  <div class="flex-toolbar">
+    <div class="title">
+      {{> includes/header-appmenu-trigger}}
+
+      <h1>
+      {{#subtitle}}
+        <span class="page-title">{{title}}</span>
+        <span class="section-title">{{subtitle}}</span>
+      {{/subtitle}}
+
+      {{^subtitle}}
+        {{title}}
+      {{/subtitle}}
+      </h1>
+    </div>
+
+   <div class="buttonset">
+      <button class="btn btn-primary" type="submit">
+        <svg class="icon" focusable="false">
+          <use href="#icon-save"></use>
+        </svg>
+        <span>Primary</span>
+      </button>
+      <button class="btn btn-primary" type="submit" disabled="true">
+        <svg class="icon" focusable="false">
+          <use href="#icon-save"></use>
+        </svg>
+        <span>Primary</span>
+      </button>
+      <button class="btn btn-secondary" type="button">
+        <svg class="icon" focusable="false">
+        <use href="#icon-undo"></use>
+        </svg>
+        <span>Secondary</span>
+      </button>
+      <button class="btn btn-secondary" type="button" disabled="true">
+        <svg class="icon" focusable="false">
+        <use href="#icon-undo"></use>
+        </svg>
+        <span>Secondary</span>
+      </button>
+      <button class="btn btn-tertiary" type="button">
+        <svg class="icon" focusable="false">
+        <use href="#icon-open-folder"></use>
+        </svg>
+        <span>Tertiary</span>
+      </button>
+      <button class="btn btn-tertiary" type="button" disabled="true">
+        <svg class="icon" focusable="false">
+        <use href="#icon-open-folder"></use>
+        </svg>
+        <span>Tertiary</span>
+      </button>
+      <button class="btn btn-icon" type="button">
+        <svg class="icon" focusable="false">
+          <use href="#icon-calendar"></use>
+        </svg>
+        <span>Icon Button</span>
+      </button>
+      <button class="btn btn-icon" type="button" disabled="true">
+        <svg class="icon" focusable="false">
+          <use href="#icon-calendar"></use>
+        </svg>
+        <span>Icon Button</span>
+      </button>
+      <button type="button" class="btn btn-menu">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-settings"></use>
+        </svg>
+        <span>Menu</span>
+      </button>
+      <ul class="popupmenu">
+        <li><a href="#">One</a></li>
+        <li><a href="#">Two</a></li>
+        <li><a href="#">Three</a></li>
+      </ul>
+      <button type="button" class="btn btn-menu" disabled="true">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-settings"></use>
+        </svg>
+        <span>Menu</span>
+      </button>
+    </div>
+
+    {{> includes/header-actionbutton}}
+  </div>
+</header>
