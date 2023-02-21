@@ -44,6 +44,10 @@
           .btn-icon.close {
             right: 70px;
             top: 8px;
+
+            @media (max-width: $breakpoint-phone-to-tablet) {
+              right: 85px;
+            }
           }
         }
 

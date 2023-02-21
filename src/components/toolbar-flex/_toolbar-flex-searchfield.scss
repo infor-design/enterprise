@@ -38,9 +38,26 @@ $responsive-searchfield-filled-out-width: 34px;
       }
     }
 
+    @media (max-width: $breakpoint-phone-to-tablet) {
+        &:not(.is-open) {
+          .searchfield-category-button {
+            position: absolute;
+            border-color: transparent;
+
+            .icon-dropdown {
+              visibility: hidden;
+            }
+          }
+        }
+    }
+
     .searchfield-category-button {
       svg.icon {
         transform: translateY(0);
+
+        @media (max-width: $breakpoint-phone-to-tablet) {
+          transform: translateX(-5px);
+        }
       }
     }
 
