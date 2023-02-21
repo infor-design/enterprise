@@ -449,6 +449,7 @@ Soho.Locale.addCulture('en-US', {
     Range: { id: 'Range', value: 'Range', comment: 'Range for tooltip' },
     RecordsPerPage: { id: 'RecordsPerPage', value: '{0} Records per page', comment: 'Shows an actual number of pages in the pager' },
     RecordsPerPageNoToken: { id: 'RecordsPerPageNoToken', value: 'Records per page', comment: 'Shows as a title list of values for page number (without the slot/token value)' },
+    RecordsSelected: { id: 'RecordsSelected', value: 'Record(s) Selected', comment: 'text describing a selected objects' },
     Redo: { id: 'Redo', value: 'Redo', comment: 'Redo tooltip' },
     Refresh: { id: 'Refresh', value: 'Refresh', comment: 'Refresh tooltip' },
     ReorderRows: { id: 'ReorderRows', value: 'Reorder Rows', comment: 'Drag and Reorder Grid Rows' },

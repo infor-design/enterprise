@@ -1126,7 +1126,7 @@ ListView.prototype = {
         title = $(toolbar.hasClass('contextual-toolbar') ? '<div class="toolbar-section title selection-count"></div>' : '<div class="title selection-count"></div>');
         toolbar.prepend(title);
       }
-      title.text(`${self.selectedItems.length} ${Locale ? Locale.translate('Selected') : 'Selected'}`);
+      title.text(`${self.selectedItems.length} ${Locale ? Locale.translate('RecordsSelected') : 'Record(s) Selected'}`);
     } else {
       toolbar.addClass('is-hidden').one('animateclosedcomplete', function (e) {
         e.stopPropagation();
