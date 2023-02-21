@@ -385,8 +385,7 @@ $toolbarsearchfield-category-empty-width: 51px;
     }
 
     .collapse-button {
-      border-color: rgba($searchfield-toolbar-border-color, 1);
-      border-bottom-color: rgba($searchfield-toolbar-border-color, 0.6);
+      border-color: transparent;
     }
     /* stylelint-enable */
   }
@@ -397,11 +396,6 @@ $toolbarsearchfield-category-empty-width: 51px;
 
       &:focus {
         border-color: $searchfield-toolbar-focus-color;
-
-        + .collapse-button {
-          border-color: rgba($searchfield-toolbar-focus-color, 1);
-          border-bottom-color: rgba($searchfield-toolbar-focus-color, 0.6);
-        }
       }
     }
 
