@@ -386,6 +386,11 @@ $toolbarsearchfield-category-empty-width: 51px;
 
     .collapse-button {
       border-color: transparent;
+
+      &:focus {
+        box-shadow: none;
+        border-color: rgba($searchfield-toolbar-focus-color, 0.7);
+      }
     }
     /* stylelint-enable */
   }
