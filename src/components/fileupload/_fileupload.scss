@@ -39,6 +39,11 @@
     }
   }
 
+  .trigger-close .icon {
+    height: 15px;
+    top: 1px;
+  }
+
   label {
     &.fileupload {
       display: inline-block;
@@ -434,9 +439,15 @@
 // Overides
 //================================================== //
 .form-layout-compact {
-  .field-fileupload .trigger .icon,
-  .field-fileupload .trigger-close .icon {
-    top: 3px;
+  .field-fileupload {
+    .trigger .icon {
+      top: 4px;
+    }
+
+    .trigger-close .icon {
+      height: 14px;
+      top: 2px;
+    }
   }
 }
 
