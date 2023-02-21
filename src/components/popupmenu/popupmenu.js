@@ -983,6 +983,8 @@ PopupMenu.prototype = {
                 .removeClass('longpress-target');
             })
             .on('longpress.popupmenu', (e, originalE) => {
+              e.stopPropagation();
+
               self.openedWithTouch = true;
               contextMenuHandler(originalE);
             });
