@@ -1569,7 +1569,7 @@ SearchField.prototype = {
     }
 
     if (this.hasGoButton()) {
-      subtractWidth += this.goButton.outerWidth(true) + 40;
+      subtractWidth += this.goButton.outerWidth(true);
     }
 
     // NOTE: final width can only be 100% if no value is subtracted for other elements

@@ -53,11 +53,7 @@ $responsive-searchfield-filled-out-width: 34px;
 
     .searchfield-category-button {
       svg.icon {
-        transform: translateY(0);
-
-        @media (max-width: $breakpoint-phone-to-tablet) {
-          transform: translateX(-5px);
-        }
+        transform: translateX(-5px);
       }
     }
 
