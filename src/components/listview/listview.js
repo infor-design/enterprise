@@ -218,14 +218,10 @@ ListView.prototype = {
       this.element.pager(this.pagerSettings);
     }
 
-    const cardWidgetContent = this.element.parent('.card-content, .widget-content');
-    if (cardWidgetContent[0]) {
-      cardWidgetContent[0].style.overflow = 'visible';
-      cardWidgetContent.css({
-        display: 'flex',
-        'justify-content': 'flex-end',
-        'flex-direction': 'column'
-      });
+    const cardWidgetContent = this.element.parents('.card-content, .widget-content');
+    
+    if (this.element.prev().is('.listview-search') && cardWidgetContent[0]) {
+      cardWidgetContent.css({ overflow: 'visible' });
     }
 
     // Associate with an existing searchfield, if applicable

@@ -113,6 +113,7 @@ html[dir='rtl'] {
       &.is-open {
         .collapse-button {
           display: inline;
+          margin-left: 3px;
         }
 
         &.has-collapse-button {
@@ -137,9 +138,22 @@ html[dir='rtl'] {
 
   html[class*='theme-classic-'] {
     @media (max-width: 766px) {
-      .flex-toolbar.searchfield-active .toolbar-section .searchfield-wrapper,
-      .flex-toolbar.searchfield-active .toolbar-section .toolbar-searchfield-wrapper {
-        width: calc(100% + 35px);
+      .flex-toolbar.searchfield-active .toolbar-section {
+        .searchfield-wrapper,
+        .toolbar-searchfield-wrapper {
+          width: calc(98% + 35px);
+
+          &.is-open.has-collapse-button {
+            .searchfield {
+              width: calc(85% + 35px);
+            }
+
+            .collapse-button {
+              background-color: transparent;
+              border-width: 2px;
+            }
+          }
+        }
       }
     }
   }
