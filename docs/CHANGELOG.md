@@ -33,6 +33,7 @@
 - `[Modal]` Fixed alignment of tooltip error in modal. ([#7125](https://github.com/infor-design/enterprise/issues/7125))
 - `[Hyperlink]` Changed hover color in dark theme. ([#7095](https://github.com/infor-design/enterprise/issues/7095))
 - `[Icon]` Changed icon alert info color in dark theme. ([#7158](https://github.com/infor-design/enterprise/issues/7158))
+- `[Listview]` Fixed overflow in listview when there is a search bar included. ([#7015](https://github.com/infor-design/enterprise/issues/7015))
 - `[Personalization]` Fix default values in the personalization API. ([#7167](https://github.com/infor-design/enterprise/issues/7167))
 - `[Personalization]` Fix header tabs/header colors for a variation when header tabs are not in header element. ([#7153](https://github.com/infor-design/enterprise/issues/7153) [#7211](https://github.com/infor-design/enterprise/issues/7211) [#7212](https://github.com/infor-design/enterprise/issues/7212) [#7217](https://github.com/infor-design/enterprise/issues/7217) [#7218](https://github.com/infor-design/enterprise/issues/7218))
 - `[Personalization]` Fix secondary button color in header. ([#7204](https://github.com/infor-design/enterprise/issues/7204))
