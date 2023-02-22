@@ -4,6 +4,7 @@ import { colorUtils } from '../../utils/color';
 import { xssUtils } from '../../utils/xss';
 import { theme } from '../theme/theme';
 import { personalizeStyles } from './personalize.styles';
+import { color } from 'd3';
 
 // Component name as referenced by jQuery/event namespace/etc
 const COMPONENT_NAME = 'personalize';
@@ -304,8 +305,8 @@ Personalize.prototype = {
     const darkestColorMap = this.getColorMap(100);
     const lightestColorMap = this.getColorMap(10);
 
-    colors.darkestPalette = darkestColorMap[colors.base] || null;
-    colors.lightestPalette = lightestColorMap[colors.base] || null;
+    colors.darkestPalette = darkestColorMap[colors.base] || colors.subheader;
+    colors.lightestPalette = lightestColorMap[colors.base] || colors.subheader;
 
     // Some disabled colors on some preset color schemes come out terrible,
     // unless they are adjusted here. { color: ['classic', 'new'] }
