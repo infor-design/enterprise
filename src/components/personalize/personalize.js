@@ -4,7 +4,6 @@ import { colorUtils } from '../../utils/color';
 import { xssUtils } from '../../utils/xss';
 import { theme } from '../theme/theme';
 import { personalizeStyles } from './personalize.styles';
-import { color } from 'd3';
 
 // Component name as referenced by jQuery/event namespace/etc
 const COMPONENT_NAME = 'personalize';
