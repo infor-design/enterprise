@@ -33,9 +33,12 @@
     border-bottom: 0;
 
     .tab {
-      color: $header-tab-normal-color;
-      font-weight: $ids-number-font-weight-bold;
       overflow: hidden;
+
+      &:not(.is-disabled) {
+        color: $header-tab-normal-color;
+        font-weight: $ids-number-font-weight-bold;
+      }
 
       &::before {
         background-color: rgba($header-tab-normal-color, 0);

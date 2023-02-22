@@ -224,11 +224,14 @@ a.is-personalizable svg.ripple-effect {
 }
 
 .tab-container.is-personalizable.header-tabs:not(.alternate) .tab-focus-indicator.is-visible,
-.tab-container.is-personalizable.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected,
+.tab-container.personalize-header.header-tabs:not(.alternate) .tab-focus-indicator.is-visible,
+.tab-container.is-personalizable.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled).is-selected,
+.tab-container.personalize-header.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled).is-selected,
 .header.is-personalizable .tab-container.header-tabs:not(.alternate) .tab-focus-indicator.is-visible,
 .header.is-personalizable .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected,
 .personalize-header.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected:not(.is-disabled),
-.personalize-header.tab-container.header-tabs:not(.alternate) .tab-focus-indicator.is-visible {
+.personalize-header.tab-container.header-tabs:not(.alternate) .tab-focus-indicator.is-visible,
+.header.is-personalizable .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled).is-selected {
   border-color: ${colors.contrast} !important;
 }
 
@@ -274,7 +277,7 @@ a.is-personalizable svg.ripple-effect {
   background-color: ${colors.base};
 }
 
-.header.is-personalizable.has-tabs .tab-container.header-tabs {
+.header.is-personalizable.has-tabs .tab-container.header-tabs:not(.alternate) {
   background-color: ${colors.base};
 }
 
@@ -307,7 +310,7 @@ a.is-personalizable svg.ripple-effect {
   opacity: .8;
 }
 
-.header.is-personalizable:not(.has-alternate-tabs) .tab-container.header-tabs > .tab-list-container .tab:not(.is-disabled):hover {
+.header.is-personalizable:not(.has-alternate-tabs) .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled):hover {
   border-bottom: 4px solid ${colors.contrast};
 }
 
@@ -340,38 +343,39 @@ a.is-personalizable svg.ripple-effect {
   color: ${colors.contrast};
 }
 
-.header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab.is-selected:not(.is-disabled),
+.header.is-personalizable.has-tabs .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected:not(.is-disabled),
 .personalize-header.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected:not(.is-disabled) {
   color: ${colors.contrast} !important;
   opacity: 1;
 }
 
-html.theme-new-dark .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab.is-selected:not(.is-disabled) {
+html.theme-new-dark .header.is-personalizable.has-tabs .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected:not(.is-disabled) {
   color: ${colors.contrast} !important;
 }
 
-.header.is-personalizable.has-tabs .tab-more::before,
-.tab-container.is-personalizable .tab-more::before {
+.header.is-personalizable .tab-container.header-tabs:not(.alternate) .tab-more::before,
+.tab-container.is-personalizable.header-tabs:not(.alternate) .tab-more::before {
   background-color: ${colors.contrast};
 }
 
-.header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab,
-.header.is-personalizable .tab-container.header-tabs .tab-more svg.icon,
+.is-personalizable .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled),
+.header.is-personalizable .tab-container.header-tabs:not(.alternate) .tab-more svg.icon,
 .tab-container.is-personalizable .tab-more svg.icon,
-.is-personalizable.tab-container.header-tabs > .tab-list-container .tab,
+.is-personalizable.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled),
+.personalize-header.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled)  {
+  color: ${colors.contrast} !important;
+  opacity: .8;
+}
+
+.header.is-personalizable.has-tabs .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab,
+.is-personalizable.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab,
 .personalize-header.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab {
   color: ${colors.contrast} !important;
   opacity: .8;
 }
 
-html.theme-new-dark .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab,
-.is-personalizable.tab-container.header-tabs > .tab-list-container .tab  {
-  color: ${colors.contrast} !important;
-  opacity: .8;
-}
-
-.header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab:hover:not(.is-disabled),
-.is-personalizable.tab-container.header-tabs > .tab-list-container .tab:hover:not(.is-disabled),
+.header.is-personalizable.has-tabs .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:hover:not(.is-disabled),
+.is-personalizable.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:hover:not(.is-disabled),
 .personalize-header.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:hover:not(.is-disabled) {
   color: ${colors.contrast} !important;
   opacity: 1;
@@ -383,8 +387,9 @@ html.theme-new-dark .header.is-personalizable.has-tabs .tab-container.header-tab
   opacity: 1;
 }
 
-html[class*="theme-new-"] .header.is-personalizable.has-tabs .tab-container.header-tabs > .tab-list-container .tab,
-html[class*="theme-new-"] .is-personalizable.tab-container.header-tabs > .tab-list-container .tab  {
+html[class*="theme-new-"] .header.is-personalizable.has-tabs .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled),
+html[class*="theme-new-"] .is-personalizable.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled),
+html[class*="theme-new-"] .personalize-header.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled) {
   opacity: 1;
 }
 
@@ -604,43 +609,28 @@ html[dir='rtl'] .scrollable-flex-header.is-personalizable .breadcrumb.truncated:
 }
 
 .is-personalizable .tab-container.header-tabs:not(.alternate)::before,
-.is-personalizable .tab-container.header-tabs:not(.alternate)::before {
+.is-personalizable.tab-container.header-tabs:not(.alternate)::before {
   background-image: linear-gradient(to right, ${colors.base} , ${colorUtils.hexToRgba(colors.base, 0)}) !important;
-}
-
-.theme-new-dark .is-personalizable .tab-container.header-tabs:not(.alternate)::before,
-.theme-new-dark .is-personalizable .tab-container.header-tabs:not(.alternate)::before {
-  background-image: linear-gradient(to right, ${colors.base} , ${colorUtils.hexToRgba(colors.base, 0)}) !important;
-}
-
-html[dir='rtl'].theme-new-dark .is-personalizable .tab-container.header-tabs:not(.alternate)::before,
-html[dir='rtl'].theme-new-dark .is-personalizable .tab-container.header-tabs:not(.alternate)::before {
-  background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base});
 }
 
 html[dir='rtl'] .is-personalizable .tab-container.header-tabs:not(.alternate)::before,
-html[dir='rtl'] .is-personalizable .tab-container.header-tabs:not(.alternate)::before {
+html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::before {
   background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base});
 }
 
 .is-personalizable .tab-container.header-tabs:not(.alternate)::after,
-.is-personalizable .tab-container.header-tabs:not(.alternate)::after {
-  background-image: linear-gradient(to right, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base}) !important;
-}
-
-.theme-new-dark .is-personalizable .tab-container.header-tabs:not(.alternate)::after,
-.theme-new-dark .is-personalizable .tab-container.header-tabs:not(.alternate)::after {
+.is-personalizable.tab-container.header-tabs:not(.alternate)::after {
   background-image: linear-gradient(to right, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base}) !important;
 }
 
 html[dir='rtl'] .is-personalizable .tab-container.header-tabs:not(.alternate)::after,
-html[dir='rtl'] .is-personalizable .tab-container.header-tabs:not(.alternate)::after {
-  background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.contrast, 0)}, ${colors.contrast}) !important;
+html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::after {
+  background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base}) !important;
 }
 
-html[dir='rtl'].theme-new-dark .is-personalizable .tab-container.header-tabs:not(.alternate)::after,
-html[dir='rtl'].theme-new-dark .is-personalizable .tab-container.header-tabs:not(.alternate)::after {
-  background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base}) !important;
+.is-personalizable .tab-container.header-tabs:not(.alternate),
+.is-personalizable.tab-container.header-tabs:not(.alternate) {
+  border-bottom-color: ${colors.base};
 }
 
 .hero-widget.is-personalizable {
@@ -908,8 +898,14 @@ html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.i
   background-color: ${colors.base} !important;
 }
 
-.tab-container.is-personalizable .tab-list-container .tab-list .tab.is-disabled {
-  color: ${colors.lightest} !important
+.is-personalizable .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab-list .tab.is-disabled,
+.is-personalizable.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab-list .tab.is-disabled {
+  opacity: .6;
+}
+
+html[class*="theme-classic-"] .is-personalizable .tab-container .tab-list-container .tab-list .tab.is-disabled,
+html[class*="theme-classic-"] .tab-container.is-personalizable .tab-list-container .tab-list .tab.is-disabled {
+  opacity: .4 !important;
 }
 
 .is-personalizable .personalize-header {

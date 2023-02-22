@@ -2239,7 +2239,7 @@ $datagrid-small-row-height: 25px;
 
     &.is-rowactivated td:not(.is-editing),
     &.is-rowactivated td:not(.is-editing) .datagrid-cell-wrapper {
-      background-color: $datagrid-row-selected-color;
+      background-color: $datagrid-row-selected-color !important;
 
       button.datagrid-expand-btn .icon {
         background-color: transparent;
@@ -2259,6 +2259,10 @@ $datagrid-small-row-height: 25px;
           background-color: $button-color-primary-active-background;
         }
       }
+    }
+
+    &.is-hover-row {
+      background-color: $datagrid-row-hover-color;
     }
 
     &.is-rowdisabled {

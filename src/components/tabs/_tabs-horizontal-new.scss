@@ -27,7 +27,7 @@ $horizontal-tabs-height: 40px;
 
 .tab-container.horizontal {
   > .tab-list-container {
-    .tab {
+    .tab:not(.is-disabled) {
       &:hover {
         color: $tab-hover-color;
         border-bottom: 4px solid $tab-hover-color;
@@ -91,7 +91,9 @@ $horizontal-tabs-height: 40px;
     }
 
     .tab {
-      color: $tab-text-color-horizontal;
+      &:not(.is-disabled) {
+        color: $tab-text-color-horizontal;
+      }
 
       a {
         padding: 11px 11px 8px;
@@ -108,10 +110,6 @@ $horizontal-tabs-height: 40px;
 
         .icon:not(.is-error):not(.icon-error) {
           color: $tab-hover-color;
-        }
-
-        &.is-disabled {
-          color: $disabled-color;
         }
       }
 

@@ -1,0 +1,137 @@
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid"></div>
+  </div>
+</div>
+
+<style>
+  .custom-card {
+    padding: 18px;
+  }
+
+  .custom-card h3 {
+    color: #1a1a1a;
+    font-size: 16px;
+    line-height: 18px;
+    padding-bottom: 14px;
+  }
+
+  .custom-card dl>div {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+
+  .custom-card dt,
+  .custom-card dd {
+    display: inline-block;
+    padding-bottom: 4px;
+  }
+
+  .custom-card dt {
+    color: #5c5c5c;
+    font-size: 12px;
+    line-height: 14px;
+    min-width: 120px;
+    padding-right: 18px;
+    text-align: right;
+  }
+
+  .custom-card dt::after {
+    content: ':';
+    display: inline-block;
+  }
+
+  .custom-card dd {
+    color: #1a1a1a;
+    font-size: 14px;
+    line-height: 16px;
+  }
+
+  .custom-card .price dd {
+    margin-top: 5px;
+  }
+</style>
+
+<script>
+  $('body').one('initialized', function () {
+
+    var grid,
+      columns = [],
+      data = [];
+
+    var customFormatter = function (row, cell, value, col) {
+      return `<div class="custom-card">
+          <h3>${value.title}</h3>
+          <dl>
+            <div><dt>Location</dt><dd>${value.location}</dd></div>
+            <div><dt>Phone</dt><dd>${value.phone}</dd></div>
+            <div><dt>Quantity</dt><dd>${value.quantity}</dd></div>
+            <div class="price">
+                <dt>
+                    <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                      <use href="#icon-alert"></use>
+                    </svg>
+                    Price
+                </dt>
+                <dd>${value.price}</dd>
+            </div>
+          </dl>
+          <div class="toolbar card-toolbar has-more-button">
+            <div class="buttonset">
+              <button class="btn"><span>Order</span></button>
+              <button class="btn"><span>Save</span></button>
+              <button class="btn"><span>Delete</span></button>
+              <button class="btn"><span>Update</span></button>
+            </div>
+          </div>
+        </div>`;
+    };
+
+    // Some Sample Data
+    data.push({
+      id: 1,
+      productId: 'T100',
+      product: {
+        title: 'Compressor (mx500)',
+        location: 'Acme Inc',
+        phone: '(888) 888-8889',
+        quantity: '100',
+        price: '$500'
+      },
+      misc: 'This is a basic cell'
+    });
+
+    data.push({
+      id: 2,
+      productId: 'C100',
+      product: {
+        title: 'Compressor (m3000)',
+        location: 'Assembly Inc',
+        phone: '(888) 888-8888',
+        quantity: '15',
+        price: '$800'
+      },
+      misc: 'This is another basic cell'
+    });
+
+    //Define Columns for the Grid.
+    columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center' });
+    columns.push({ id: 'productId', name: 'Id', field: 'productId', width: 100, formatter: Soho.Formatters.Text });
+    columns.push({ id: 'product', name: 'Product', field: 'product', width: 340, formatter: customFormatter });
+    columns.push({ id: 'misc', name: 'Misc', field: 'misc', formatter: Soho.Formatters.Text });
+
+    //Init and get the api for the grid
+    $('#datagrid').datagrid({
+      isList: true,
+      columns: columns,
+      selectable: 'mixed',
+      dataset: data,
+      saveColumns: false,
+      toolbar: { title: 'Compressors', actions: true, rowHeight: true, personalize: true }
+    });
+
+    $('.card-toolbar').toolbar({ rightAligned: true });
+
+  });
+</script>
