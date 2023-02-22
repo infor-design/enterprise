@@ -142,10 +142,13 @@ html[class*="new-"] .is-personalizable .btn-tertiary:not(.destructive):not(.is-s
 }
 
 html.theme-new-dark .is-personalizable .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):not(:disabled),
-html.theme-new-dark .is-personalizable .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):not(:disabled) svg.icon,
+html.theme-new-dark .is-personalizable .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):not(:disabled) svg.icon {
+  color: ${colors.contrast} !important;
+}
+
 html.theme-new-dark .is-personalizable .btn-link:not(:disabled),
 html.theme-new-dark .is-personalizable .btn-link:not(:disabled) svg.icon {
-  color: ${colors.contrast} !important;
+  color: ${colors.darkNewButton} !important;
 }
 
 .is-personalizable .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled),
