@@ -421,6 +421,7 @@ $toolbarsearchfield-category-empty-width: 51px;
 
             @media only screen and (max-width: $breakpoint-phone-to-tablet) {
               width: auto;
+              border-color: $searchfield-toolbar-border-color
             }
           }
         }
@@ -509,7 +510,11 @@ $toolbarsearchfield-category-empty-width: 51px;
       }
 
       .go-button {
+        border: 1px solid $searchfield-toolbar-border-color;
+        border-left: none;
         border-radius: 0;
+        background-color: rgba($searchfield-bg-color, 1);
+        color: $searchfield-icon-color;
         height: 38px;
         position: relative;
         right: 0;
