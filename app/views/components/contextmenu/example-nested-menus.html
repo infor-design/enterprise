@@ -1,0 +1,37 @@
+<div class="row top-padding">
+  <div class="twelve columns">
+    <ul id="parent" style="height: 500px; border: 1px solid red; padding: 10px;">
+      <p style="color: red;">Parent</p>
+      <li id="child" style="height: 100px; border: 1px solid orange;">
+        <p style="color: orange;">Child</p>
+      </li>
+      <ul id="child-menu">
+        <li><a>Child 1</a></li>
+        <li><a>Child 2</a></li>
+        <li><a>Child 3</a></li>
+      </ul>
+    </ul>
+    <ul id="parent-menu">
+      <li><a>Parent 1</a></li>
+      <li><a>Parent 2</a></li>
+      <li><a>Parent 3</a></li>
+    </ul>
+  </div>
+</div>
+
+<script id="test-script">
+  $('#child').popupmenu({
+    menu: 'child-menu',
+    trigger: 'rightClick',
+    attributes: [
+      { name: 'data-automation-id', value: 'contextmenu-child' }
+    ]
+  });
+  $('#parent').popupmenu({
+    menu: 'parent-menu',
+    trigger: 'rightClick',
+    attributes: [
+      { name: 'data-automation-id', value: 'contextmenu-parent' }
+    ]
+  });
+</script>
