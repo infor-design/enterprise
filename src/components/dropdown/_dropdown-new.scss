@@ -94,7 +94,7 @@ div.multiselect {
     &.is-ontop {
       > .trigger {
         .icon {
-          top: 10px;
+          top: 11px;
         }
       }
     }
@@ -386,7 +386,7 @@ html.is-firefox:not([dir='rtl']) {
 
   .dropdown-list {
     > .trigger .icon {
-      top: 8px;
+      top: 7.5px;
     }
 
     &.datagrid-dropdown-list.is-editing .trigger .icon {

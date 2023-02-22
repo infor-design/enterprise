@@ -29,10 +29,10 @@ $panel-bg-color: $ids-color-palette-white;
 $panel-border-color: $ids-color-palette-graphite-30;
 $panel-light-border-color: $ids-color-palette-graphite-20;
 $panel-header-bg-color: $ids-color-palette-graphite-20;
-$drop-shadow-depth: rgba(0, 0, 0, 0.2);
+$drop-shadow-depth: rgba(0, 0, 0, 0.1);
 $drop-shadow-depth-tray: rgba(0, 0, 0, 0.1);
 
-$focus-box-shadow-color: rgba(54, 138, 192, 0.3); //Should be same size as $focus-box-shadow (only color transparent)
+$focus-box-shadow-color: rgba(54, 138, 192, 0.1); //Should be same size as $focus-box-shadow (only color transparent)
 $focus-box-shadow-transparent: 0 0 4px 3px transparent;
 $focus-box-shadow: 0 0 4px 3px $focus-box-shadow-color; //Old Style: 0 0 5px rgba(8, 150, 233, .2)
 $focus-box-shadow-spinbox: 0 3px 3px 0 $focus-box-shadow-color,
