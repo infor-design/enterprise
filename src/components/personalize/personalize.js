@@ -348,7 +348,7 @@ Personalize.prototype = {
     }
 
     const colorMapping = Soho.theme.personalizationColors();
-    if (colorMapping[colors] != undefined) {
+    if (colorMapping[colors] !== undefined) {
       colors = colorMapping[colors].value; // Get the Hex value
     }
 
