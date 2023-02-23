@@ -338,7 +338,7 @@ Personalize.prototype = {
   * @returns {this} component instance
   */
   setColors(colors) {
-    if (colors === '') {
+    if (colors === '' || colors.header === 'default') {
       this.setColorsToDefault();
       return this;
     }
@@ -379,6 +379,7 @@ Personalize.prototype = {
       sheet.parentNode.removeChild(sheet);
     }
     this.element.triggerHandler('colorschanged', {
+      colors: 'default',
       isDefault: true,
       theme: this.currentTheme || 'theme-new-light'
     });
