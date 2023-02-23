@@ -370,7 +370,7 @@ Personalize.prototype = {
   },
 
   /**
-   * Sets the colors back to the default color (by removing the geneated stylesheet).
+   * Sets the colors back to the default color (by removing the generated stylesheet).
    */
   setColorsToDefault() {
     this.settings.colors = '';
@@ -379,7 +379,6 @@ Personalize.prototype = {
       sheet.parentNode.removeChild(sheet);
     }
     this.element.triggerHandler('colorschanged', {
-      colors: theme.themeColors().brand.primary.alt.value,
       isDefault: true,
       theme: this.currentTheme || 'theme-new-light'
     });
