@@ -338,13 +338,18 @@ Personalize.prototype = {
   * @returns {this} component instance
   */
   setColors(colors) {
-    if (colors === '' || colors.header === 'default') {
+    if (colors === '' || colors === 'default' || colors.header === 'default') {
       this.setColorsToDefault();
       return this;
     }
 
     if (!colors) {
       return this;
+    }
+
+    const colorMapping = Soho.theme.personalizationColors();
+    if (colorMapping[colors] != undefined) {
+      colors = colorMapping[colors].value; // Get the Hex value
     }
 
     this.appendStyleSheet(this.getColorStyleSheet(colors));
