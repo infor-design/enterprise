@@ -26,11 +26,13 @@
       top: 3px;
       vertical-align: baseline;
       width: 18px;
+      border-radius: 5px;
     }
 
     &:hover {
       .icon {
-        color: $trigger-hover-color;
+        background-color: $button-color-tertiary-hover-background-new;
+        color: $button-color-tertiary-hover-font-new;
       }
     }
 
