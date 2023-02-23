@@ -410,6 +410,7 @@ Soho.Locale.addCulture('en-US', {
     NoDataFilter: { id: 'NoDataFilter', value: 'No data available, make a new filter selection to see more results.', comment: 'Shown when there is no rows shown in a list' },
     NoDataList: { id: 'NoDataList', value: 'No data available, make a selection in the list above to see more results.', comment: 'Shown when there is no rows shown in a list' },
     NoResults: { id: 'NoResults', value: 'No results', comment: 'Search Results Text' },
+    NoRecordSelected: { id: 'NoRecordSelected', value: '0 Records Selected', comment: 'Text showing no records selected' },
     NoTitle: { id: 'NoTitle', value: '(No Title)', comment: 'Placeholder text for when you add an event to the calendar with no title typed.' },
     None: { id: 'None', value: 'None', comment: 'None to pick clear color' },
     Normal: { id: 'Normal', value: 'Normal', comment: 'Normal row height' },
