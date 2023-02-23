@@ -446,6 +446,7 @@ SearchField.prototype = {
       this.goButton[0].setAttribute('id', utils.uniqueId(this.goButton, 'searchfield-go-button-'));
       this.wrapper.addClass('has-go-button');
       this.element.after(this.goButton);
+      this.goButton.button();
     } else {
       this.wrapper.removeClass('has-go-button');
     }
