@@ -36,6 +36,8 @@
 - `[Listview]` Added an additional translation for records selected in listview. ([#6528](https://github.com/infor-design/enterprise/issues/6528))
 - `[Lookup]` Fixed a bug in lookup where items are not selected for async data. ([NG#1409](https://github.com/infor-design/enterprise-ng/issues/1409))
 - `[Listview]` Fixed overflow in listview when there is a search bar included. ([#7015](https://github.com/infor-design/enterprise/issues/7015))
+- `[Personalization]` Added color mapping in personalization. ([#7073](https://github.com/infor-design/enterprise/issues/7073))
+- `[Personalization]` Fixed style changed when changing the modes and colors. ([#7171](https://github.com/infor-design/enterprise/issues/7171))
 - `[Personalization]` Fix default values in the personalization API. ([#7167](https://github.com/infor-design/enterprise/issues/7167))
 - `[Personalization]` Fix header tabs/header colors for a variation when header tabs are not in header element. ([#7153](https://github.com/infor-design/enterprise/issues/7153) [#7211](https://github.com/infor-design/enterprise/issues/7211) [#7212](https://github.com/infor-design/enterprise/issues/7212) [#7217](https://github.com/infor-design/enterprise/issues/7217) [#7218](https://github.com/infor-design/enterprise/issues/7218))
 - `[Personalization]` Fix secondary button color in header. ([#7204](https://github.com/infor-design/enterprise/issues/7204))
