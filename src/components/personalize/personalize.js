@@ -347,7 +347,7 @@ Personalize.prototype = {
       return this;
     }
 
-    const colorMapping = Soho.theme.personalizationColors();
+    const colorMapping = theme.personalizationColors();
     if (colorMapping[colors] !== undefined) {
       colors = colorMapping[colors].value; // Get the Hex value
     }
