@@ -694,6 +694,8 @@ ToolbarFlexItem.prototype = {
       menuAPI.refreshMenuItem(item.actionButtonLink, itemData, itemRefreshCallback);
     });
 
+    menuAPI.refreshHasIcons();
+
     // Set a record for display
     this.hasNoOverflowedItems = hasNoOverflowedItems;
   },

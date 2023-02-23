@@ -280,17 +280,17 @@
   }
 
   &.has-icons {
-    a {
+    > li > a {
       padding-left: 35px;
     }
 
-    &.is-selectable {
-      a {
+    &.is-selectable > li {
+      > a {
         overflow: auto;
         padding-left: 57px;
       }
 
-      .icon {
+      .icon:not(.arrow) {
         left: 58px;
       }
     }
