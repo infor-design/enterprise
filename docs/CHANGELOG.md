@@ -28,6 +28,7 @@
 - `[Datagrid]` Fixed odd hover color when using row activation and is list. ([#7232](https://github.com/infor-design/enterprise/issues/7232))
 - `[Dropdown]` Fixed swatch default color in themes. ([#7108](https://github.com/infor-design/enterprise/issues/7108))
 - `[Dropdown/Multiselect]` Fixed disabled options are not displayed as disabled when using ajax. ([#7150](https://github.com/infor-design/enterprise/issues/7150))
+- `[Fileupload]` Icon adjustments in compact mode. ([#7149](https://github.com/infor-design/enterprise/issues/7149))
 - `[Header]` Fixed a bug in subheader where the color its not appropriate on default theme. ([#7173](https://github.com/infor-design/enterprise/issues/7173))
 - `[MenuButton]` Fixed some color on menu buttons. ([#7184](https://github.com/infor-design/enterprise/issues/7184))
 - `[Modal]` Fixed alignment of tooltip error in modal. ([#7125](https://github.com/infor-design/enterprise/issues/7125))
