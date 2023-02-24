@@ -519,6 +519,11 @@ $toolbarsearchfield-category-empty-width: 51px;
         position: relative;
         right: 0;
         margin-left: 0;
+
+        &:hover {
+          background-color: $button-color-tertiary-hover-background-new;
+          color: $button-color-tertiary-hover-font-new;
+        }
       }
     }
 
