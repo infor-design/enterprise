@@ -12678,9 +12678,9 @@ Datagrid.prototype = {
         return ascending * -1;
       } else if (typeof a === 'string' && typeof b === 'number' && a !== '') {
         return ascending;
-      } else {
-        return ascending * ((a > b) - (b > a));
       }
+
+      return ascending * ((a > b) - (b > a));
     };
   },
 
