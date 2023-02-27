@@ -3218,6 +3218,7 @@ Datagrid.prototype = {
         header.drag({
           clone: true, cloneAppendTo: headers.first().parent().parent(), clonePosIsFixed: true
         })
+          .off('dragstart.datagrid')
           .on('dragstart.datagrid', (dragStartEvent, pos, thisClone) => {
             clone = thisClone;
 
@@ -3240,6 +3241,7 @@ Datagrid.prototype = {
             self.draggableStatus.startIndex = index;
             e.stopImmediatePropagation();
           })
+          .off('drag.datagrid')
           .on('drag.datagrid', (dragEvent, pos) => {
             clone[0].style.left = `${parseInt(!Locale.isRTL() ? pos.left : ((pos.left + pos.offset.x) - pos.clone.width()), 10)}px`;
             clone[0].style.top = `${parseInt(pos.top, 10)}px`;
@@ -3280,6 +3282,7 @@ Datagrid.prototype = {
 
             e.stopImmediatePropagation();
           })
+          .off('dragend.datagrid')
           .on('dragend.datagrid', (dragendEvent, pos) => {
             if (!Locale.isRTL()) {
               clone[0].style.left = `${parseInt(pos.left, 10)}px`;

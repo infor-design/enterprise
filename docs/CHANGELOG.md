@@ -26,6 +26,7 @@
 - `[Datagrid]` Fixed a bug in datagrid where custom toolbar is being replaced with data grid generated toolbar. ([NG#1434](https://github.com/infor-design/enterprise-ng/issues/1434))
 - `[Datagrid]` Fixed bug in Safari where dynamically switching from RTL to LTR doesn't update all the alignments. ([NG#1431](https://github.com/infor-design/enterprise-ng/issues/1431))
 - `[Datagrid]` Fixed odd hover color when using row activation and is list. ([#7232](https://github.com/infor-design/enterprise/issues/7232))
+- `[Datagrid]` Fixed dragging columns after a cancelled drop moves more than one column. ([#7017](https://github.com/infor-design/enterprise/issues/7017))
 - `[Dropdown]` Fixed swatch default color in themes. ([#7108](https://github.com/infor-design/enterprise/issues/7108))
 - `[Dropdown/Multiselect]` Fixed disabled options are not displayed as disabled when using ajax. ([#7150](https://github.com/infor-design/enterprise/issues/7150))
 - `[Fileupload]` Icon adjustments in compact mode. ([#7149](https://github.com/infor-design/enterprise/issues/7149))
