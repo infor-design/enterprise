@@ -446,6 +446,7 @@ SearchField.prototype = {
       this.goButton[0].setAttribute('id', utils.uniqueId(this.goButton, 'searchfield-go-button-'));
       this.wrapper.addClass('has-go-button');
       this.element.after(this.goButton);
+      this.goButton.button();
     } else {
       this.wrapper.removeClass('has-go-button');
     }
@@ -1569,7 +1570,7 @@ SearchField.prototype = {
     }
 
     if (this.hasGoButton()) {
-      subtractWidth += this.goButton.outerWidth(true) + 40;
+      subtractWidth += this.goButton.outerWidth(true);
     }
 
     // NOTE: final width can only be 100% if no value is subtracted for other elements
@@ -1579,8 +1580,9 @@ SearchField.prototype = {
       if (this.element[0].parentElement == null) {
         isAlternate = false;
       } else {
-        isAlternate = this.element[0].parentElement.classList.contains('alternate');
+        isAlternate = this.element[0].parentElement.classList.contains('alternate') || this.isContainedByFlexToolbar;
       }
+
       targetWidthProp = `calc(${isAlternate ? '100%' : baseWidth} - ${subtractWidth}px)`;
     }
     if (targetWidthProp) {

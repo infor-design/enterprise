@@ -44,6 +44,7 @@
 - `[Personalization]` Fix secondary button color in header. ([#7204](https://github.com/infor-design/enterprise/issues/7204))
 - `[Popupmenu]` Fix on inverse colors not showing in popupmenu in masthead. ([#7005](https://github.com/infor-design/enterprise/issues/7005))
 - `[Searchfield]` Custom button adjustments in mobile. ([#7134](https://github.com/infor-design/enterprise/issues/7134))
+- `[Searchfield]` Go button adjustments for flex toolbar. ([#6014](https://github.com/infor-design/enterprise/issues/6014))
 - `[Searchfield]` Collapse button adjustments in mobile. ([#7164](https://github.com/infor-design/enterprise/issues/7164))
 - `[Slider]` Fixed sliding and dropping the handle outside of the component doesn't trigger the change event. ([#7028](https://github.com/infor-design/enterprise/issues/7028))
 - `[Tabs]` Changed header tabs disabled color to darker color. ([#7219](https://github.com/infor-design/enterprise/issues/7219))
