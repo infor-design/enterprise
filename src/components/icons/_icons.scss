@@ -136,6 +136,7 @@ svg.icon-dirty,
 }
 
 .icon-success,
+.icon-good,
 .icon-success-alert {
   color: $success-icon-fill !important;
 }
@@ -148,6 +149,10 @@ svg.icon-dirty,
 .icon-alert,
 .icon-alert-alert {
   color: $ids-color-status-warning !important;
+}
+
+.icon-warning {
+  color: $ids-color-status-status-03 !important;
 }
 
 .icon-pending {
