@@ -12663,16 +12663,16 @@ Datagrid.prototype = {
       // Example: The following string values will sort in this order (ascending): 1, 2, 07, 11, 1a, 22a, 2ab, a, B, c
       if (typeof a === 'number' && typeof b === 'string' && b !== '') {
         return ascending * -1;
-      } else if (typeof a === 'string' && typeof b === 'number' && a !== '') {
-        return ascending; // eslint-disable-line
+      } else if (typeof a === 'string' && typeof b === 'number' && a !== '') { // eslint-disable-line
+        return ascending;
       }
 
       // Imitate how Excel sorts blank values (always at end of list for both ascending and descending).
       // Note: It is annoying to see a bunch a blank values at the top of the list when trying to see sorted values.
       if (a === '') {
         return b === '' ? 0 : 1;
-      } else if (b === '') {
-        return a === '' ? 0 : -1; // eslint-disable-line
+      } else if (b === '') { // eslint-disable-line
+        return a === '' ? 0 : -1;
       }
 
       if (typeof a !== typeof b) {
