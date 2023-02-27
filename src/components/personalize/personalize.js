@@ -338,13 +338,18 @@ Personalize.prototype = {
   * @returns {this} component instance
   */
   setColors(colors) {
-    if (colors === '') {
+    if (colors === '' || colors === 'default' || colors.header === 'default') {
       this.setColorsToDefault();
       return this;
     }
 
     if (!colors) {
       return this;
+    }
+
+    const colorMapping = theme.personalizationColors();
+    if (colorMapping[colors] !== undefined) {
+      colors = colorMapping[colors].value; // Get the Hex value
     }
 
     this.appendStyleSheet(this.getColorStyleSheet(colors));
@@ -370,7 +375,7 @@ Personalize.prototype = {
   },
 
   /**
-   * Sets the colors back to the default color (by removing the geneated stylesheet).
+   * Sets the colors back to the default color (by removing the generated stylesheet).
    */
   setColorsToDefault() {
     this.settings.colors = '';
@@ -379,7 +384,7 @@ Personalize.prototype = {
       sheet.parentNode.removeChild(sheet);
     }
     this.element.triggerHandler('colorschanged', {
-      colors: theme.themeColors().brand.primary.alt.value,
+      colors: 'default',
       isDefault: true,
       theme: this.currentTheme || 'theme-new-light'
     });
