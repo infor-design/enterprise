@@ -12660,9 +12660,9 @@ Datagrid.prototype = {
       // Imitate how Excel sorts blank values (always at end of list for both ascending and descending).
       // Note: It is annoying to see a bunch a blank values at the top of the list when trying to see sorted values.
       if (a === '') {
-        b === '' ? 0 : 1; // an empty a always returns 1 (or 0 if equal with b)
+        b = '' ? 0 : 1; // an empty a always returns 1 (or 0 if equal with b)
       } else if (b === '') {
-        a === '' ? 0 : -1; // an empty b always returns -1 (or 0 if equal with a)
+        a = '' ? 0 : -1; // an empty b always returns -1 (or 0 if equal with a)
       }
 
       if (typeof a !== typeof b) {
