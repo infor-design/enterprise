@@ -3856,13 +3856,9 @@ Tabs.prototype = {
           targetRectObj.right -= tabMoreWidth;
         }
 
-        // Composite Form has additional padding on the right
-        if (isRTL && hasCompositeForm && !hasHeader) {
+        if (isRTL && !hasCompositeForm && !hasHeader) {
           targetRectObj.right -= 42;
-
-          if (isRTL) {
-            targetRectObj.width += 1;
-          }
+          targetRectObj.width += 1;
         }
 
         // Scaling

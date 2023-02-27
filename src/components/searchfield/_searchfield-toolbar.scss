@@ -105,9 +105,8 @@ $toolbarsearchfield-category-empty-width: 51px;
   }
 
   &.has-go-button {
-    &.has-categories {
+    &.has-categories.is-open {
       .searchfield {
-        border: none;
         border-left: 1px solid $searchfield-toolbar-border-color;
       }
     }
@@ -214,6 +213,10 @@ $toolbarsearchfield-category-empty-width: 51px;
       .btn,
       .collapse-btn {
         border-bottom-color: rgba($searchfield-border-color, 1);
+      }
+
+      .searchfield-category-button {
+        border-bottom-color: rgba($searchfield-toolbar-border-color, 1);
       }
     }
   }
@@ -418,6 +421,7 @@ $toolbarsearchfield-category-empty-width: 51px;
 
             @media only screen and (max-width: $breakpoint-phone-to-tablet) {
               width: auto;
+              border-color: $searchfield-toolbar-border-color;
             }
           }
         }
@@ -506,11 +510,20 @@ $toolbarsearchfield-category-empty-width: 51px;
       }
 
       .go-button {
-        border-bottom-left-radius: 0;
-        border-top-left-radius: 0;
+        border: 1px solid $searchfield-toolbar-border-color;
+        border-left: none;
+        border-radius: 0;
+        background-color: transparent;
+        color: $searchfield-icon-color;
         height: 38px;
         position: relative;
         right: 0;
+        margin-left: 0;
+
+        &:hover {
+          background-color: $button-color-tertiary-hover-background-new;
+          color: $button-color-tertiary-hover-font-new;
+        }
       }
     }
 
@@ -1183,8 +1196,14 @@ html[class*='theme-new-'] .header > .toolbar > .buttonset > .toolbar-searchfield
   }
 }
 
-html[class*='theme-new-'] .toolbar-searchfield-wrapper.has-categories.has-go-button .go-button {
+html[class*='theme-new-'] .header .toolbar .toolbar-searchfield-wrapper.has-categories.has-go-button .go-button {
   height: 38px;
+  border-bottom-right-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+html[class*='theme-classic-'] .header .toolbar .toolbar-searchfield-wrapper.has-go-button.has-categories .searchfield {
+  border: none;
 }
 
 html[dir='rtl'] {
