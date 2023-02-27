@@ -10,6 +10,23 @@
     border-bottom-left-radius: 0;
     border-top-left-radius: 0;
   }
+
+  div.dropdown-wrapper .dropdown:hover {
+    transition: 0.3s;
+    border-right: transparent;
+  }
+
+  div.dropdown-wrapper .dropdown:focus {
+    border-right: transparent;
+  }
+
+  div.dropdown-wrapper:hover + input {
+    border-left: 1px solid $trigger-hover-color;
+  }
+
+  div.dropdown-wrapper:focus-within + input {
+    border-left: 1px solid $input-color-focus-border;
+  }
 }
 
 .field-short.fieldfilter-wrapper {
