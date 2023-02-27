@@ -206,7 +206,7 @@ MonthView.prototype = {
     }
 
     this.setCurrentCalendar();
-    
+
     // Calendar Html in Popups
     this.prevButton = '' +
       `<button type="button" class="btn-icon prev">
