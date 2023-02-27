@@ -12676,7 +12676,7 @@ Datagrid.prototype = {
       // Example: The following string values will sort in this order (ascending): 1, 2, 07, 11, 1a, 22a, 2ab, a, B, c
       if (typeof a === 'number' && typeof b === 'string' && b !== '') {
         return ascending * -1;
-      } else if (typeof a === 'string' && typeof b === 'number' && a !== '') {
+      } else if (typeof a === 'string' && typeof b === 'number' && a !== '') { // eslint-disable-line
         return ascending;
       }
 
