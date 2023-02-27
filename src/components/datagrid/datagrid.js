@@ -12657,27 +12657,27 @@ Datagrid.prototype = {
       a = key(a);
       b = key(b);
 
-      // Imitate how Excel sorts blank values (always at end of list for both ascending and descending).
-      // Note: It is annoying to see a bunch a blank values at the top of the list when trying to see sorted values.
-      if (a === '') {
-        b = '' ? 0 : 1; // an empty a always returns 1 (or 0 if equal with b)
-      } else if (b === '') {
-        a = '' ? 0 : -1; // an empty b always returns -1 (or 0 if equal with a)
-      }
-
-      if (typeof a !== typeof b) {
-        a = a.toString().toLowerCase();
-        b = b.toString().toLowerCase();
-      }
-
       // Imitate how Excel does sorting when comparing numbers with strings (numbers are always less than strings).
       // Note: The above primer function makes the data type of $.isNumeric() values to be number, which is important
       //       in imitating Excel sorting (i.e. the string '5' becomes 5 and is treated as a number in sorting).
       // Example: The following string values will sort in this order (ascending): 1, 2, 07, 11, 1a, 22a, 2ab, a, B, c
       if (typeof a === 'number' && typeof b === 'string' && b !== '') {
         return ascending * -1;
-      } else if (typeof a === 'string' && typeof b === 'number' && a !== '') { // eslint-disable-line
-        return ascending;
+      } else if (typeof a === 'string' && typeof b === 'number' && a !== '') {
+        return ascending; // eslint-disable-line
+      }
+
+      // Imitate how Excel sorts blank values (always at end of list for both ascending and descending).
+      // Note: It is annoying to see a bunch a blank values at the top of the list when trying to see sorted values.
+      if (a === '') {
+        return b === '' ? 0 : 1;
+      } else if (b === '') {
+        return a === '' ? 0 : -1; // eslint-disable-line
+      }
+
+      if (typeof a !== typeof b) {
+        a = a.toString().toLowerCase();
+        b = b.toString().toLowerCase();
       }
 
       return ascending * ((a > b) - (b > a));
