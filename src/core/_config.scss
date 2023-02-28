@@ -17,6 +17,9 @@ $header-text-color: $ids-color-palette-slate-100;
 $header-disabled-color: $ids-color-palette-slate-50;
 $header-focus-box-shadow: 0 0 4px 3px rgba(255, 255, 255, 0.3);
 
+$header-hero-text-color: $ids-color-palette-slate-100;
+$header-hero-widget-bg-color: $subhead-bg-color;
+
 $masthead-bg-color: $ids-color-palette-slate-80;
 $masthead-border-color: $ids-color-palette-slate-80;
 $masthead-text-color: $ids-color-palette-slate-30;
@@ -1101,3 +1104,4 @@ $swipeaction-right-hover-color: $ids-color-palette-white;
 
 //Misc
 $cubic-ease: cubic-bezier(0.17, 0.04, 0.03, 0.94);
+$button-size-compact-height: 24px;

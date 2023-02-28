@@ -865,11 +865,15 @@ a.btn-close {
   }
 
   .btn,
-  .btn-primary,
-  .btn-secondary,
-  .btn-tertiary,
   .btn-menu {
     padding: 0 5px;
+  }
+
+  .btn-primary,
+  .btn-secondary,
+  .btn-tertiary {
+    padding: 0 9px;
+    font-size: 12px;
   }
 
   .btn-icon,

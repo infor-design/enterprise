@@ -109,6 +109,40 @@ Personalize.prototype = {
   },
 
   /**
+   * Returns the color map based on the input value.
+   * @private
+   * @param {number} value - The value used to determine which color map to return (either 10 or 100).
+   * @returns {Object} colorMap - An object containing the color palette values.
+   */
+  getColorMap(value) {
+    // Get the corresponding color hexes
+    const themeColors = theme.themeColors();
+    const colorPalette = {
+      amber: themeColors.palette.amber[90].value,
+      amethyst: themeColors.palette.amethyst[60].value,
+      azure: themeColors.palette.azure[70].value,
+      emerald: themeColors.palette.emerald[80].value,
+      graphite: themeColors.palette.graphite[60].value,
+      ruby: themeColors.palette.ruby[90].value,
+      slate: themeColors.palette.slate[60].value,
+      turquoise: themeColors.palette.turquoise[90].value
+    };
+
+    const colorMap = {
+      [colorPalette.amber]: themeColors.palette.amber[value].value,
+      [colorPalette.amethyst]: themeColors.palette.amethyst[value].value,
+      [colorPalette.azure]: themeColors.palette.azure[value].value,
+      [colorPalette.emerald]: themeColors.palette.emerald[value].value,
+      [colorPalette.graphite]: themeColors.palette.graphite[value].value,
+      [colorPalette.ruby]: themeColors.palette.ruby[value].value,
+      [colorPalette.slate]: themeColors.palette.slate[value].value,
+      [colorPalette.turquoise]: themeColors.palette.turquoise[value].value
+    };
+
+    return colorMap;
+  },
+
+  /**
    * Generate a style sheet to append in the page.
    * @private
    * @param {array} colors The rules to append.
@@ -266,6 +300,12 @@ Personalize.prototype = {
     colors.dark = colors.btnColorSubheader;
     colors.darker = colors.inactive;
     colors.darkest = colors.horizontalBorder;
+
+    const darkestColorMap = this.getColorMap(100);
+    const lightestColorMap = this.getColorMap(10);
+
+    colors.darkestPalette = darkestColorMap[colors.base] || colors.subheader;
+    colors.lightestPalette = lightestColorMap[colors.base] || colors.subheader;
 
     // Some disabled colors on some preset color schemes come out terrible,
     // unless they are adjusted here. { color: ['classic', 'new'] }
