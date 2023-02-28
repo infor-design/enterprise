@@ -135,17 +135,27 @@
       pagesizes: [2, 5, 6],
       trimSpaces: true,
       columnReorder: true,
-      showDirty: true
+      showDirty: true,
+      saveUserSettings: {
+        activePage: true,
+        pagesize: true,
+        sortOrder: true
+      }
     });
     gridApi = $('#datagrid').data('datagrid');
-    window.data = data;
   });
 
+  const localeUpdate = (locale) => {
+    Soho.Locale.set(locale).then(() => {
+      gridApi.updated({}, { preserveSelected: true });
+    });
+  }
+
   $('#btn-ar').on('click', () => {
-    Soho.Locale.set('ar-SA');
+    localeUpdate('ar-SA');
   });
 
   $('#btn-eng').on('click', () => {
-    Soho.Locale.set('en-US');
+    localeUpdate('en-US');
   });
 </script>
