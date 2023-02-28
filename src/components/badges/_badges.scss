@@ -555,7 +555,7 @@ html[dir='rtl'] {
   }
 }
 
-html[class*="-dark"] {
+html[class*='-dark'] {
   .badge {
     &:not(.alert):not(.good):not(.info):not(.error):not(.warning) {
       &::before,
@@ -573,7 +573,7 @@ html[class*="-dark"] {
   }
 }
 
-html[class*="-contrast"] {
+html[class*='-contrast'] {
   .badge {
     &.warning {
       &::before,
