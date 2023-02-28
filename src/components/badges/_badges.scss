@@ -245,11 +245,11 @@
 
     .btn-dismissible,
     .btn-linkable {
-      color: $badge-alert-icon-color;
+      color: $badge-pending-light-icon-color;
 
       &:hover {
         .icon {
-          color: $badge-alert-icon-color;
+          color: $badge-pending-light-icon-color;
         }
       }
     }
@@ -267,6 +267,19 @@
   &.warning {
     background-color: $ids-color-status-status-03;
     color: $badge-warning-text-color;
+
+    .btn-dismissible,
+    .btn-linkable {
+      color: $badge-warning-text-color;
+
+      &:hover {
+        color: $badge-warning-text-color;
+
+        .icon {
+          color: $badge-warning-text-color;
+        }
+      }
+    }
   }
 
   // Good (Success) Tags
