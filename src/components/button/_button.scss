@@ -587,7 +587,7 @@ a.btn-close {
   &[disabled],
   &[disabled]:hover {
     background-color: $button-disabled-background-color;
-    color: $button-color-tertiary-disabled-font;
+    color: $button-color-secondary-disabled-font-new;
     cursor: default;
 
     .icon {
