@@ -1,7 +1,7 @@
 <!-- <body> -->
   {{> includes/masthead}}
 
-  <section class="header">
+  <section class="header is-personalizable">
     <div class="toolbar">
       <div class="title">
         {{> includes/header-go-back-trigger}}
@@ -17,18 +17,7 @@
         </button>
       </div>
 
-      <div class="more">
-        <button class="btn-actions" type="button">
-          <svg class="icon" focusable="false" aria-hidden="true">
-            <use href="#icon-more"></use>
-          </svg>
-          <span class="audible">More Actions</span>
-        </button>
-        <ul class="popupmenu">
-          <li><a href="#">Action #1</a></li>
-          <li><a href="#">Action #2</a></li>
-        </ul>
-      </div>
+      {{> includes/header-actionbutton}}
     </div>
   </section>
 
@@ -43,7 +32,7 @@
         <div class="toolbar no-actions-button">
           <div class="title">
             <h2>
-              <span class="panel-title">John Smith Construction</span><br>
+              <span class="panel-title">John Smith Construction</span>
               <span class="panel-subhead">Order #423121-3 | $250,000 Credit Approved</span>
             </h2>
           </div>
