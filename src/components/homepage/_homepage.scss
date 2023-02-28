@@ -316,7 +316,7 @@
 
 // Hero widget
 .hero-widget {
-  background-color: $subhead-bg-color;
+  background-color: $header-hero-widget-bg-color;
   color: $header-button-color;
   max-height: 410px;
   min-height: 370px;
@@ -350,7 +350,7 @@
     }
 
     .title {
-      color: $header-button-color;
+      color: $header-hero-text-color;
       padding-left: 15px;
     }
 
@@ -470,6 +470,17 @@
 
       a {
         margin-top: 5px;
+        border-bottom: 4px solid transparent;
+
+        &.btn-tertiary {
+          border-radius: 0;
+
+          &:hover {
+            background-color: $header-tab-background-hover-color-new;
+            border-bottom-color: $header-tab-indicator-hover-color-new;
+            color: $header-tab-hover-color-new;
+          }
+        }
       }
     }
 
@@ -494,14 +505,19 @@
   }
 }
 
+// Homepage New Theme rules
+html[class*='new-'] {
+  .hero-widget .hero-header .toolbar .buttonset {
+    .btn-tertiary.btn-menu:not(:disabled):hover {
+      background-color: transparent;
+    }
+  }
+}
+
 @media only screen and (max-width: 1500px) {
   .hero-widget {
     .hero-content {
       max-width: 1120px;
-    }
-
-    .hero-bottom {
-      display: none;
     }
   }
 }
@@ -511,10 +527,6 @@
     .hero-content {
       max-width: calc(100% - 200px);
     }
-
-    .hero-bottom {
-      display: none;
-    }
   }
 }
 
@@ -522,6 +534,10 @@
   .hero-widget {
     .hero-content {
       max-width: 100%;
+    }
+
+    .hero-bottom {
+      display: none;
     }
   }
 }

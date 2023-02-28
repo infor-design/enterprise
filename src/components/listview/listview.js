@@ -219,7 +219,7 @@ ListView.prototype = {
     }
 
     const cardWidgetContent = this.element.parents('.card-content, .widget-content');
-    
+
     if (this.element.prev().is('.listview-search') && cardWidgetContent[0]) {
       cardWidgetContent.css({ overflow: 'visible' });
     }
