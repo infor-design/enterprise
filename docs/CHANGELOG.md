@@ -30,6 +30,7 @@
 - `[Datagrid]` Fixed dragging columns after a cancelled drop moves more than one column. ([#7017](https://github.com/infor-design/enterprise/issues/7017))
 - `[Dropdown]` Fixed swatch default color in themes. ([#7108](https://github.com/infor-design/enterprise/issues/7108))
 - `[Dropdown/Multiselect]` Fixed disabled options are not displayed as disabled when using ajax. ([#7150](https://github.com/infor-design/enterprise/issues/7150))
+- `[EmptyMessage]` Updated the example page for widgets. ([#7033](https://github.com/infor-design/enterprise/issues/7033))
 - `[Fileupload]` Icon adjustments in compact mode. ([#7149](https://github.com/infor-design/enterprise/issues/7149))
 - `[Header]` Fixed a bug in subheader where the color its not appropriate on default theme. ([#7173](https://github.com/infor-design/enterprise/issues/7173))
 - `[Homepage/Personalize/Page-Patterns]` Fixed homepage hero widget, builder header, and other section of tabs with the new design and color combination. ([#7136](https://github.com/infor-design/enterprise/issues/7136))
