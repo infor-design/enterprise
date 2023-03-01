@@ -34,6 +34,7 @@
 - `[Dropdown/Multiselect]` Fixed disabled options are not displayed as disabled when using ajax. ([#7150](https://github.com/infor-design/enterprise/issues/7150))
 - `[EmptyMessage]` Updated the example page for widgets. ([#7033](https://github.com/infor-design/enterprise/issues/7033))
 - `[Fileupload]` Icon adjustments in compact mode. ([#7149](https://github.com/infor-design/enterprise/issues/7149))
+- `[Fileupload]` Icon adjustments in classic mode. ([#7265](https://github.com/infor-design/enterprise/issues/7265))
 - `[Header]` Fixed a bug in subheader where the color its not appropriate on default theme. ([#7173](https://github.com/infor-design/enterprise/issues/7173))
 - `[Homepage/Personalize/Page-Patterns]` Fixed homepage hero widget, builder header, and other section of tabs with the new design and color combination. ([#7136](https://github.com/infor-design/enterprise/issues/7136))
 - `[MenuButton]` Fixed some color on menu buttons. ([#7184](https://github.com/infor-design/enterprise/issues/7184))
