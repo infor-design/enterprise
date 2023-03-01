@@ -238,8 +238,9 @@
     @include disabled-tag();
   }
 
-  // Alert Tags
-  &.alert {
+  // Alert / Warning Tags
+  &.alert,
+  &.warning {
     background-color: $alert-color;
     color: $badge-alert-text-color;
 
@@ -264,7 +265,7 @@
     @include disabled-tag();
   }
 
-  &.warning {
+  &.caution {
     background-color: $ids-color-status-status-03;
     color: $badge-warning-text-color;
 
@@ -283,7 +284,8 @@
   }
 
   // Good (Success) Tags
-  &.good {
+  &.good,
+  &.success {
     background-color: $badge-good-bg-color;
     color: $badge-good-color;
 
@@ -400,6 +402,7 @@
 
     &.alert,
     &.good,
+    &.success,
     &.info,
     &.error {
       &::before,
@@ -409,7 +412,7 @@
     }
   }
 
-  &:not(.alert):not(.good):not(.info):not(.error):not(.warning) {
+  &:not(.alert):not(.good):not(.info):not(.error):not(.warning):not(.success) {
     &::before,
     &::after {
       border-color: $badge-pending-dark-icon-color;
@@ -570,14 +573,15 @@ html[dir='rtl'] {
 
 html[class*='-dark'] {
   .badge {
-    &:not(.alert):not(.good):not(.info):not(.error):not(.warning) {
+    &:not(.alert):not(.good):not(.info):not(.error):not(.warning):not(.success):not(.caution) {
       &::before,
       &::after {
         border-color: $badge-pending-light-icon-color;
       }
     }
 
-    &.good {
+    &.good,
+    &.success {
       &::before,
       &::after {
         border-color: $badge-pending-dark-icon-color;
