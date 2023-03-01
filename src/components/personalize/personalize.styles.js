@@ -99,6 +99,10 @@ html.theme-new-dark .is-personalizable:not(.header) .btn-tertiary:not(.is-select
   color: ${colors.light} !important;
 }
 
+.is-personalizable:not(.header) .btn-link:not(:disabled):hover {
+  background-color: ${colors.secondaryButtonHover} !important;
+}
+
 .is-personalizable:not(.header) .btn-link:not(:disabled) .icon,
 .btn-link.is-personalizable:not(:disabled) .icon {
   color: ${colors.light} !important;
@@ -136,6 +140,7 @@ html.theme-new-dark .is-personalizable:not(.header) .btn-secondary:not(.go-butto
 }
 
 html[class*="new-"] .is-personalizable:not(.header) .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
+  background-color: ${colors.secondaryButtonHover} !important;
   color: ${colors.lightest};
 }
 
@@ -157,13 +162,11 @@ html[class*="new-"] .is-personalizable .btn-tertiary:not(.destructive):not(.is-s
 
 html.theme-new-dark .is-personalizable .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):not(:disabled),
 html.theme-new-dark .is-personalizable .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):not(:disabled) svg.icon {
-  color: ${colors.darkNewButton} !important;
+  color: ${colors.contrast} !important;
 }
 
-html.theme-new-dark .is-personalizable:not(.hero-widget) .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):not(:disabled) svg.icon,
-html.theme-new-dark .is-personalizable .btn-link:not(:disabled),
-html.theme-new-dark .is-personalizable .btn-link:not(:disabled) svg.icon {
-  color: ${colors.darkNewButton} !important;
+html.theme-new-dark .is-personalizable:not(.hero-widget) .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):not(:disabled) svg.icon {
+  color: ${colors.contrast} !important;
 }
 
 .is-personalizable:not(.header) .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled),
@@ -697,7 +700,8 @@ html[class*="theme-new-"] .application-menu.is-personalizable .hyperlink {
 }
 
 html[class*="-dark"] .is-personalizable .btn-tertiary:not(:disabled):hover,
-html[class*="-dark"] .is-personalizable .btn-link:not(:disabled):hover {
+html[class*="-dark"] .is-personalizable .btn-link:not(:disabled):hover,
+html[class*="-dark"] .is-personalizable:not(.header) .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
   background-color: #3E3E42 !important;
 }
 
