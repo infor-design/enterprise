@@ -378,7 +378,7 @@ Personalize.prototype = {
   * @returns {this} component instance
   */
   setColors(colors) {
-    if (colors === '' || colors === 'default' || colors.header === 'default') {
+    if (colors === '' || colors === 'default' || colors?.header === 'default') {
       this.setColorsToDefault();
       return this;
     }

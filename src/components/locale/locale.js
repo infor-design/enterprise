@@ -111,9 +111,8 @@ const Locale = {  // eslint-disable-line
     }
 
     // ICONS: Right to Left Direction
-    if (this.isRTL()) {
-      Locale.flipIconsHorizontally();
-    }
+    Locale.flipIconsHorizontally(this.isRTL());
+
     $('body').removeClass('busy-loading-locale');
   },
 
@@ -2035,9 +2034,10 @@ const Locale = {  // eslint-disable-line
    * Modifies a specified list of icons by flipping them horizontally to make them
    * compatible for RTL-based locales.
    * @private
+   * @param {boolean} flipRTL Check to see if icons should be flipped for RTL or LTR
    * @returns {void}
    */
-  flipIconsHorizontally() {
+  flipIconsHorizontally(flipRTL = true) {
     const icons = [
       'attach',
       'bottom-aligned',
@@ -2156,8 +2156,10 @@ const Locale = {  // eslint-disable-line
     $('svg').each(function () {
       const iconName = $(this).getIconName();
 
-      if (iconName && $.inArray(iconName, icons) !== -1 && $(this).closest('.monthview').length === 0) {
+      if (flipRTL && (iconName && $.inArray(iconName, icons) !== -1 && $(this).closest('.monthview').length === 0)) {
         $(this).addClass('icon-rtl-rotate');
+      } else {
+        $(this).removeClass('icon-rtl-rotate');
       }
     });
   }
