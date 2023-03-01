@@ -12,6 +12,10 @@
       .status-icon {
         margin-top: 12px;
 
+        .btn-icon:hover {
+          background-color: transparent;
+        }
+
         &.file-error {
           margin-top: 15px;
         }
