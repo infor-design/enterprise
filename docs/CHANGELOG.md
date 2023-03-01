@@ -55,6 +55,7 @@
 - `[Slider]` Fixed sliding and dropping the handle outside of the component doesn't trigger the change event. ([#7028](https://github.com/infor-design/enterprise/issues/7028))
 - `[Tabs]` Changed header tabs disabled color to darker color. ([#7219](https://github.com/infor-design/enterprise/issues/7219))
 - `[Tabs]` Fixed the alignment of focus in RTL view. ([#6992](https://github.com/infor-design/enterprise/issues/6992))
+- `[Tabs]` Fixed incorrect fade out color in horizontal header tabs. ([#7244](https://github.com/infor-design/enterprise/issues/7244))
 - `[Timepicker]` Fixed 24h time validation. ([#7188](https://github.com/infor-design/enterprise/issues/7188))
 - `[Typography]` Updated documentation to align usage guidance. ([#7187](https://github.com/infor-design/enterprise/issues/7187))
 

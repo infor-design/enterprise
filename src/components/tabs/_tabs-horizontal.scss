@@ -3,7 +3,7 @@
 
 $horizontal-tabs-height: 40px;
 
-.has-more-button.tab-container.horizontal {
+.has-more-button.tab-container.horizontal:not(.header-tabs) {
   &::after {
     background-image:
       linear-gradient(
