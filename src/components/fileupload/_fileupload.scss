@@ -319,7 +319,10 @@
           width: 10px;
 
           &.icon-error {
+            top: -3px;
             left: 0;
+            height: 18px !important;
+            width: 18px;
           }
         }
 
@@ -354,18 +357,24 @@
         width: 16px;
       }
 
-      &.file-row .l-pull-right .action {
-        float: right;
-        height: 16px;
-        margin-top: 7px;
-
-        .icon {
-          color: $fileupload-secondary-color;
+      &.file-row {
+        .status-icon.file-error {
+          background-color: transparent;
         }
 
-        &:hover {
+        .l-pull-right .action {
+          float: right;
+          height: 16px;
+          margin-top: 7px;
+
           .icon {
-            color: $fileupload-hover-color;
+            color: $fileupload-secondary-color;
+          }
+
+          &:hover {
+            .icon {
+              color: $fileupload-hover-color;
+            }
           }
         }
       }
