@@ -11,12 +11,12 @@
     border-top-left-radius: 0;
   }
 
-  div.dropdown-wrapper .dropdown:hover {
+  div.dropdown-wrapper .dropdown:not(.dropdown-md):hover {
     transition: 0.3s;
     border-right: transparent;
   }
 
-  div.dropdown-wrapper .dropdown:focus {
+  div.dropdown-wrapper .dropdown:not(.dropdown-md):focus {
     border-right: transparent;
   }
 
