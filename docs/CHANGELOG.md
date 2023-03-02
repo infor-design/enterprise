@@ -40,6 +40,7 @@
 - `[Modal]` Fixed alignment of tooltip error in modal. ([#7125](https://github.com/infor-design/enterprise/issues/7125))
 - `[Hyperlink]` Changed hover color in dark theme. ([#7095](https://github.com/infor-design/enterprise/issues/7095))
 - `[Icon]` Changed icon alert info color in dark theme. ([#7158](https://github.com/infor-design/enterprise/issues/7158))
+- `[Icon]` Updated icon name in example page. ([#7269](https://github.com/infor-design/enterprise/issues/7269))
 - `[Listview]` Added an additional translation for records selected in listview. ([#6528](https://github.com/infor-design/enterprise/issues/6528))
 - `[Lookup]` Fixed a bug in lookup where items are not selected for async data. ([NG#1409](https://github.com/infor-design/enterprise-ng/issues/1409))
 - `[Listview]` Fixed overflow in listview when there is a search bar included. ([#7015](https://github.com/infor-design/enterprise/issues/7015))
