@@ -322,7 +322,7 @@ html[class*='theme-classic-'] .flex-toolbar .toolbar-section .searchfield-wrappe
     left: -38px;
   }
 
-  &:not(.has-categories) .btn-icon.close {
+  &:not(.has-categories).has-custom-button .btn-icon.close {
     right: 40px;
 
     @media (max-width: $breakpoint-phone-to-tablet) {
