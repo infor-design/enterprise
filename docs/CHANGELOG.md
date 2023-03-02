@@ -35,6 +35,7 @@
 - `[Fileupload]` Icon adjustments in compact mode. ([#7149](https://github.com/infor-design/enterprise/issues/7149))
 - `[Fileupload]` Icon adjustments in classic mode. ([#7265](https://github.com/infor-design/enterprise/issues/7265))
 - `[Header]` Fixed a bug in subheader where the color its not appropriate on default theme. ([#7173](https://github.com/infor-design/enterprise/issues/7173))
+- `[Header]` Changed the header from pseudo elements to actual icon. ([#7163](https://github.com/infor-design/enterprise/issues/7163))
 - `[Homepage/Personalize/Page-Patterns]` Fixed homepage hero widget, builder header, and other section of tabs with the new design and color combination. ([#7136](https://github.com/infor-design/enterprise/issues/7136))
 - `[MenuButton]` Fixed some color on menu buttons. ([#7184](https://github.com/infor-design/enterprise/issues/7184))
 - `[Modal]` Fixed alignment of tooltip error in modal. ([#7125](https://github.com/infor-design/enterprise/issues/7125))
