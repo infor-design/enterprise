@@ -640,7 +640,7 @@ html[dir='rtl'] .scrollable-flex-header.is-personalizable .breadcrumb.truncated:
 
 html[dir='rtl'] .is-personalizable .tab-container.header-tabs:not(.alternate)::before,
 html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::before {
-  background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base});
+  background-image: linear-gradient(to left, ${colors.base}, ${colorUtils.hexToRgba(colors.base, 0)}) !important;
 }
 
 .is-personalizable .tab-container.header-tabs:not(.alternate)::after,
