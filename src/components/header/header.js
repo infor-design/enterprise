@@ -208,11 +208,9 @@ Header.prototype = {
       // Build Title Button
       const titleButton = $(`<button class="btn-icon back-button" type="button">
         <span class="audible">${Locale.translate('Drillup')}</span>
-        <span class="icon app-header go-back">
-          <span class="one"></span>
-          <span class="two"></span>
-          <span class="three"></span>
-        </span>
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-arrow-left"></use>
+        </svg>
       </button>`);
 
       const titleElem = this.toolbarElem.find('.title');

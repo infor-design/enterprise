@@ -32,10 +32,10 @@ $panel-bg-color: $ids-color-palette-white;
 $panel-border-color: $ids-color-palette-graphite-30;
 $panel-light-border-color: $ids-color-palette-graphite-20;
 $panel-header-bg-color: $ids-color-palette-graphite-20;
-$drop-shadow-depth: rgba(0, 0, 0, 0.2);
+$drop-shadow-depth: rgba(0, 0, 0, 0.1);
 $drop-shadow-depth-tray: rgba(0, 0, 0, 0.1);
 
-$focus-box-shadow-color: rgba(54, 138, 192, 0.3); //Should be same size as $focus-box-shadow (only color transparent)
+$focus-box-shadow-color: rgba(54, 138, 192, 0.1); //Should be same size as $focus-box-shadow (only color transparent)
 $focus-box-shadow-transparent: 0 0 4px 3px transparent;
 $focus-box-shadow: 0 0 4px 3px $focus-box-shadow-color; //Old Style: 0 0 5px rgba(8, 150, 233, .2)
 $focus-box-shadow-spinbox: 0 3px 3px 0 $focus-box-shadow-color,
@@ -176,6 +176,15 @@ $badge-info-hover-icon-color: $ids-color-palette-azure-20;
 $badge-disabled-text-color: $ids-color-palette-slate-50;
 $badge-disabled-bg-color: $ids-color-palette-graphite-20;
 
+$badge-default-text-color: $ids-color-palette-white;
+$badge-info-text-color: $ids-color-palette-white;
+$badge-error-text-color: $ids-color-palette-white;
+$badge-alert-text-color: $ids-color-palette-white;
+$badge-warning-text-color: $ids-color-palette-slate-100;
+$badge-good-text-color: $ids-color-palette-white;
+$badge-pending-light-icon-color: $ids-color-palette-white;
+$badge-pending-dark-icon-color: $ids-color-palette-slate-100;
+
 // Cards
 $card-content-button-color: $ids-color-palette-azure-60;
 $card-content-status-success-color: $ids-color-palette-emerald-60;
@@ -245,6 +254,8 @@ $input-color-border-space: $header-bg-color;
 $button-color-primary-disabled-background-new: $ids-color-palette-slate-20;
 $button-color-primary-hover-background-new: $ids-color-palette-azure-10;
 $button-color-primary-disabled-font-new: $ids-color-palette-slate-40;
+
+$button-disabled-background-color: $ids-color-palette-graphite-80;
 
 $button-color-secondary-initial-font-new: $ids-color-palette-azure-60;
 $button-color-secondary-initial-border-new: $ids-color-palette-azure-60;

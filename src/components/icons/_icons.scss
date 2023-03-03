@@ -20,6 +20,8 @@
 .icon-success,
 .icon-alert,
 .icon-info,
+.icon-warning,
+.icon-caution,
 .icon-info-field,
 .icon-in-progress,
 svg.icon-dirty,
@@ -136,6 +138,7 @@ svg.icon-dirty,
 }
 
 .icon-success,
+.icon-good,
 .icon-success-alert {
   color: $success-icon-fill !important;
 }
@@ -146,8 +149,13 @@ svg.icon-dirty,
 }
 
 .icon-alert,
-.icon-alert-alert {
+.icon-alert-alert,
+.icon-warning {
   color: $ids-color-status-warning !important;
+}
+
+.icon-caution {
+  color: $ids-color-status-status-03 !important;
 }
 
 .icon-pending {
