@@ -196,8 +196,12 @@ $toolbarsearchfield-category-empty-width: 51px;
 
     .btn,
     .collapse-button {
-      border-color: transparent;
       border-bottom-color: rgba($searchfield-border-color, 0);
+      border-color: transparent;
+    }
+
+    .searchfield-category-button {
+      border-color: $input-color-initial-border;
     }
 
     .go-button {
@@ -212,11 +216,9 @@ $toolbarsearchfield-category-empty-width: 51px;
     &.is-open {
       .btn,
       .collapse-btn {
-        border-bottom-color: rgba($searchfield-border-color, 1);
-      }
-
-      .searchfield-category-button {
-        border-bottom-color: rgba($searchfield-toolbar-border-color, 1);
+        &:not(.searchfield-category-button) {
+          border-bottom-color: rgba($searchfield-border-color, 1);
+        }
       }
     }
   }
@@ -270,8 +272,15 @@ $toolbarsearchfield-category-empty-width: 51px;
     .searchfield,
     .btn {
       background-color: rgba($searchfield-bg-color, 1);
-      border-bottom-color: rgba($searchfield-border-color, 1);
       height: 38px;
+
+      &:not(.searchfield-category-button) {
+        border-bottom-color: rgba($searchfield-border-color, 1);
+      }
+    }
+
+    &.has-categories .searchfield {
+      border-bottom-color: $searchfield-toolbar-border-color;
     }
 
     &.has-categories.alternate {
@@ -429,6 +438,10 @@ $toolbarsearchfield-category-empty-width: 51px;
 
       .btn {
         border-color: transparent transparent rgba($searchfield-border-color, 1);
+
+        &.searchfield-category-button {
+          border-color: $searchfield-border-color;
+        }
       }
     }
   }
