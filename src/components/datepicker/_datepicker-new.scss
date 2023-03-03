@@ -76,6 +76,10 @@ html.is-safari {
   .form-layout-compact {
     .datepicker + .trigger {
       top: 2px;
+
+      .icon {
+        top: -2px;
+      }
     }
   }
 }
