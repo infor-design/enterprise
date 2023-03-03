@@ -2376,6 +2376,7 @@ Dropdown.prototype = {
       }
       const listStyle = window.getComputedStyle(self.list[0]);
       const listStyleTop = listStyle.top ? parseInt(listStyle.top, 10) : 0;
+      const isChrome = $('html').hasClass('is-chrome');
 
       // Firefox has different alignments without an adjustment:
       let browserOffset = 0;
@@ -2415,6 +2416,11 @@ Dropdown.prototype = {
       if (adjustedUlHeight === undefined && self.list[0].classList.contains('is-ontop')) {
         adjustedUlHeight = `${listHeight - searchInputHeight - browserOffset - 7}`;
         self.list[0].style.top = `${listStyleTop - adjustedUlHeight}px`;
+      }
+
+      console.log(placementObj);
+      if (!isChrome && placementObj.placement === 'bottom') {
+        self.list[0].style.top = `${listStyleTop - 1}px`;
       }
 
       return placementObj;
