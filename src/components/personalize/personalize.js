@@ -304,8 +304,12 @@ Personalize.prototype = {
     const darkestColorMap = this.getColorMap(100);
     const lightestColorMap = this.getColorMap(10);
 
+    const buttonDisabledColorMap = this.getColorMap(30);
+
     colors.darkestPalette = darkestColorMap[colors.base] || colors.subheader;
     colors.lightestPalette = lightestColorMap[colors.base] || colors.subheader;
+
+    colors.buttonDisabledColor = buttonDisabledColorMap[colors.base] || null;
 
     // Some disabled colors on some preset color schemes come out terrible,
     // unless they are adjusted here. { color: ['classic', 'new'] }

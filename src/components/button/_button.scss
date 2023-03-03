@@ -586,7 +586,8 @@ a.btn-close {
 
   &[disabled],
   &[disabled]:hover {
-    color: $button-color-tertiary-disabled-font;
+    background-color: $button-disabled-background-color;
+    color: $button-color-secondary-disabled-font-new;
     cursor: default;
 
     .icon {
@@ -612,6 +613,13 @@ a.btn-close {
 
   .ripple-effect {
     background-color: $tertiary-btn-ripple-color;
+  }
+}
+
+.btn-icon {
+  &[disabled],
+  &:hover {
+    background-color: transparent !important;
   }
 }
 
