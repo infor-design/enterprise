@@ -42,8 +42,12 @@
 
         &.has-categories.has-go-button {
           .btn-icon.close {
-            right: 44px;
+            right: 46px;
             top: 8px;
+
+            svg.close {
+              top: 1px;
+            }
 
             @media (max-width: $breakpoint-phone-to-tablet) {
               right: 85px;
