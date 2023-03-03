@@ -21,30 +21,6 @@
   }
 }
 
-// Classic themes default color personalization
-html[class*='classic-'] {
-  & .is-personalizable {
-    & .personalize-text,
-    & .hyperlink:not(.today) {
-      color: $ids-color-palette-white;
-    }
-
-    & .personalize-actionable:not(:hover) {
-      opacity: 0.8;
-    }
-
-    & .tab-container.horizontal > .tab-list-container .tab:not(.is-selected):not(.is-disabled):hover,
-    & .tab-container.header-tabs > .tab-list-container .tab:not(.is-selected):not(.is-disabled):hover {
-      border-bottom-color: $ids-color-palette-white;
-    }
-  }
-
-  .is-personalizable.tab-container.horizontal > .tab-list-container .tab:not(.is-selected):not(.is-disabled):hover,
-  .is-personalizable.tab-container.header-tabs > .tab-list-container .tab:not(.is-selected):not(.is-disabled):hover {
-    border-bottom-color: $ids-color-palette-white;
-  }
-}
-
 .is-personalizable.tab-container.module-tabs {
   background-color: $ids-color-palette-azure-80;
 }
@@ -108,5 +84,38 @@ html[class*='classic-'] {
     .small-bottom-padding {
       padding-bottom: 5px !important;
     }
+  }
+}
+
+// Classic themes default color personalization
+html[class*='classic-'] {
+  & .is-personalizable {
+    & .personalize-text,
+    & .hyperlink:not(.today) {
+      color: $ids-color-palette-white;
+    }
+
+    .personalize-header {
+      .personalize-chart-targeted .label,
+      .info-message .icon,
+      .info-message p,
+      .btn-icon .icon {
+        color: $ids-color-palette-white !important;
+      }
+    }
+
+    & .personalize-actionable:not(:hover) {
+      opacity: 0.8;
+    }
+
+    & .tab-container.horizontal > .tab-list-container .tab:not(.is-selected):not(.is-disabled):hover,
+    & .tab-container.header-tabs > .tab-list-container .tab:not(.is-selected):not(.is-disabled):hover {
+      border-bottom-color: $ids-color-palette-white;
+    }
+  }
+
+  .is-personalizable.tab-container.horizontal > .tab-list-container .tab:not(.is-selected):not(.is-disabled):hover,
+  .is-personalizable.tab-container.header-tabs > .tab-list-container .tab:not(.is-selected):not(.is-disabled):hover {
+    border-bottom-color: $ids-color-palette-white;
   }
 }
