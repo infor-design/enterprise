@@ -148,6 +148,19 @@
         }
       }
     }
+
+    &.dropdown-short {
+      > .trigger {
+        .icon {
+          top: 6px !important;
+          left: -36px;
+        }
+      }
+
+      > .listoption-icon {
+        top: -2px;
+      }
+    }
   }
 }
 
