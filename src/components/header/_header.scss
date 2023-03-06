@@ -225,6 +225,17 @@ $subheader-height: 60px;
       }
     }
 
+    .application-menu-trigger,
+    .list-detail-back-button,
+    .back-button,
+    .go-back {
+      svg.icon {
+        height: 24px;
+        top: 1px;
+        width: 24px;
+      }
+    }
+
     .buttonset .toolbar-searchfield-wrapper {
       &.is-hovered {
         .btn-icon {

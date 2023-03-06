@@ -48,6 +48,36 @@ button {
       }
     }
   }
+
+  // Styles for svg hamburger menu
+  &.application-menu-trigger {
+    svg.icon {
+      height: 24px;
+      top: 1px;
+      width: 24px;
+
+      + .notification-badge-container {
+        .notification-dot.notification-dot-upper-left {
+          left: -22px;
+          top: 5px;
+        }
+
+        .notification-dot.notification-dot-upper-right {
+          right: 5px;
+          top: 5px;
+        }
+
+        .notification-dot.notification-dot-lower-left {
+          left: -22px;
+          top: 13px;
+        }
+
+        .notification-dot.notification-dot-lower-right {
+          top: 13px;
+        }
+      }
+    }
+  }
 }
 
 .btn-primary,
