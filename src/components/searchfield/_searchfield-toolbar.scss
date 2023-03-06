@@ -159,6 +159,10 @@ $toolbarsearchfield-category-empty-width: 51px;
   .btn {
     background-color: rgba(0, 0, 0, 0);
     border-radius: 2px 0 0 2px;
+
+    &.searchfield-category-button {
+      background-color: rgba($searchfield-bg-color, 1);
+    }
   }
 
   .searchfield-category-button,
@@ -440,7 +444,8 @@ $toolbarsearchfield-category-empty-width: 51px;
         border-color: transparent transparent rgba($searchfield-border-color, 1);
 
         &.searchfield-category-button {
-          border-color: $searchfield-border-color;
+          border-color: $input-color-initial-border;
+          background-color: rgba($searchfield-bg-color, 1);
         }
       }
     }
