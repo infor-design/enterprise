@@ -62,6 +62,7 @@
 - `[Tabs]` Fixed the alignment of focus in RTL view. ([#6992](https://github.com/infor-design/enterprise/issues/6992))
 - `[Tabs]` Fixed incorrect fade out color in horizontal header tabs. ([#7244](https://github.com/infor-design/enterprise/issues/7244))
 - `[Timepicker]` Fixed 24h time validation. ([#7188](https://github.com/infor-design/enterprise/issues/7188))
+- `[Toolbar]` Fixed buttons aren't going in the overflow menu if placed after search field. ([#7194](https://github.com/infor-design/enterprise/issues/7194))
 - `[Typography]` Updated documentation to align usage guidance. ([#7187](https://github.com/infor-design/enterprise/issues/7187))
 
 ## v4.80.1 Fixes
