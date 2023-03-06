@@ -308,3 +308,27 @@
 .btn-icon .icon.app-header {
   top: 2px;
 }
+
+.btn-icon.application-menu-trigger {
+  svg.icon {
+    + .notification-badge-container {
+      .notification-dot.notification-dot-upper-left {
+        left: -19px;
+      }
+
+      .notification-dot.notification-dot-upper-right {
+        right: 8px;
+      }
+
+      .notification-dot.notification-dot-lower-left {
+        left: -19px;
+        top: 10px;
+      }
+
+      .notification-dot.notification-dot-lower-right {
+        left: -11px;
+        top: 10px;
+      }
+    }
+  }
+}
