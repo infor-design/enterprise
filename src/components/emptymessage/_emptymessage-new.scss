@@ -15,6 +15,22 @@
     color: $icon-empty-bg-color;
     fill: transparent !important;
   }
+
+  &.icon-empty-state-lg {
+    height: 150px;
+    width: 150px;
+  }
+
+  &.icon-empty-state-xl {
+    height: 300px;
+    width: 300px;
+  }
+
+
+  &.icon-empty-state-xxl {
+    height: 500px;
+    width: 500px;
+  }
 }
 
 .card-empty-title,
