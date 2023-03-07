@@ -1,0 +1,84 @@
+<div class="is-personalizable">
+  <div class="card" style="height: 155px; min-height: 155px; border: none; border-radius: 0;">
+    <div class="card-content l-center personalize-header" style="height: 155px; min-height: 155px;">
+      <div class="instance-count">
+        <span class="count ruby06">5352</span>
+        <svg class="icon icon-alert ruby06" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-alert"></use>
+        </svg>
+        <span class="title">High</span>
+      </div>
+
+      <div class="instance-count">
+        <span class="count amber06">10021</span>
+        <svg class="icon icon-alert" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-alert"></use>
+        </svg>
+        <span class="title">Medium</span>
+      </div>
+
+      <div class="instance-count">
+        <span class="count amber03">4k</span>
+        <svg class="icon icon-alert amber03" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-alert"></use>
+        </svg>
+        <span class="title">Low</span>
+      </div>
+
+      <div class="instance-count">
+        <span class="count azure06">103910</span>
+        <svg class="icon icon-alert azure06" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-alert"></use>
+        </svg>
+        <span class="title">Info</span>
+      </div>
+
+      <div class="instance-count">
+        <span class="count turquoise05">5352</span>
+        <svg class="icon icon-alert turquoise05" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-alert"></use>
+        </svg>
+        <span class="title">Unknown</span>
+      </div>
+
+      <div class="instance-count">
+          <span class="count slate06">5352</span>
+          <svg class="icon icon-alert slate06" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-alert"></use>
+          </svg>
+          <span class="title">Standard</span>
+        </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const addFilled = (color) => {
+    if (color !== 'default') {
+      $('.instance-count').addClass('filled');
+    } else {
+      $('.instance-count').removeClass('filled');
+    }
+  };
+
+  $('body').on('initialized', () => {
+    const url = location.href.split('?');
+
+    if (url.length > 1) {
+      const query = url[1].split('&');
+
+      for (let i = 0; i < query.length; i++) {
+        const pair = query[i].split('=');
+
+        if (pair[0] === 'colors') {
+          addFilled(pair[1]);
+          break;
+        }
+      }
+    }
+  });
+
+  $('html').on('colorschanged', (e, a) => {
+    addFilled(a.colors)
+  });
+</script>
