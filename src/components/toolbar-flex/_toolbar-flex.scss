@@ -242,6 +242,11 @@
       &.flex-grow-1 {
         flex-grow: 1;
       }
+
+      .btn {
+        flex-shrink: 0;
+        text-overflow: unset;
+      }
     }
   }
 

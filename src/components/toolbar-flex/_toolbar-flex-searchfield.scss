@@ -69,13 +69,21 @@ $responsive-searchfield-filled-out-width: 34px;
     &.has-collapse-button.is-open:not(.non-collapsible) {
       .icon:not(.close):not(.icon-error) {
         color: $searchfield-header-icon-color;
-        top: 0;
+        top: 50%;
       }
     }
 
     &.searchfield-wrapper > svg.icon:not(.icon-error) {
       width: 18px;
       height: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    &.has-collapse-button.has-close-icon-button.is-hovered:not(.is-open) {
+      svg.close.icon {
+        opacity: 0;
+      }
     }
   }
 }
