@@ -153,6 +153,12 @@ div.multiselect {
     }
   }
 
+  &.ffdropdown {
+    .trigger .icon {
+      left: -36px;
+    }
+  }
+
   > .listoption-icon {
     top: 8px;
   }
