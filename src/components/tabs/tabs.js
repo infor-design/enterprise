@@ -488,7 +488,7 @@ Tabs.prototype = {
     
     // Re-renders focus state of tab indicator after rendering all of the elements
     setTimeout(() => {
-      this.positionFocusState(selectedAnchor);
+      this.positionFocusState();
     }, 100);
 
     return this;
