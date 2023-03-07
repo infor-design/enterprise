@@ -1066,7 +1066,7 @@ Tabs.prototype = {
     }
     this.changeHash(href);
 
-    this.focusState.removeClass('is-visible');
+    this.focusState?.removeClass('is-visible');
 
     a.focus();
 
@@ -1233,7 +1233,7 @@ Tabs.prototype = {
 
     $.removeData(this.moreButton[0], 'focused-by-click');
 
-    this.focusState.removeClass('is-visible');
+    this.focusState?.removeClass('is-visible');
     this.positionFocusState(this.moreButton, focusedByKeyboard);
   },
 
@@ -3771,7 +3771,7 @@ Tabs.prototype = {
    * @returns {void}
    */
   hideFocusState() {
-    this.focusState.removeClass('is-visible');
+    this.focusState?.removeClass('is-visible');
   },
 
   /**
@@ -3794,7 +3794,7 @@ Tabs.prototype = {
 
     if (!target || target === undefined || !target.length ||
       (target.is(this.moreButton) && this.isScrollableTabs())) {
-      this.focusState.removeClass('is-visible');
+      this.focusState?.removeClass('is-visible');
       return;
     }
 
