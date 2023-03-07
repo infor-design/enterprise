@@ -77,6 +77,15 @@
   color: $button-color-secondary-initial-font-new;
   border: 2px solid $button-color-secondary-initial-border-new;
 
+  &.btn-menu {
+    color: $button-color-secondary-initial-font-new;
+    border-color: $button-color-secondary-initial-border-new;
+
+    .icon {
+      color: $button-color-secondary-initial-font-new;
+    }
+  }
+
   svg.icon {
     color: $button-color-secondary-initial-font-new;
   }
