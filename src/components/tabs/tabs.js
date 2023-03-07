@@ -460,6 +460,8 @@ Tabs.prototype = {
 
     this.setOverflow();
 
+    this.positionFocusState(selectedAnchor);
+
     // Setup Edge Fades
     if (this.tablistContainer) {
       this.tablistContainer.on('scroll.tabs', () => {
@@ -484,7 +486,7 @@ Tabs.prototype = {
       }
     }
     
-    // Renders focus state of tab indicator after rendering all of the elements
+    // Re-renders focus state of tab indicator after rendering all of the elements
     setTimeout(() => {
       this.positionFocusState(selectedAnchor);
     }, 100);
