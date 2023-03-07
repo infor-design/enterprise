@@ -168,8 +168,6 @@ $toolbarsearchfield-category-empty-width: 51px;
   .searchfield-category-button,
   .go-button {
     &:focus {
-      // border: 1px solid transparent;
-
       &:not(.hide-focus) {
         box-shadow: none !important;
         color: $button-color-secondary-initial-font;
@@ -383,6 +381,14 @@ $toolbarsearchfield-category-empty-width: 51px;
           border: 1px solid $header-searchfield-input-border-hover-color;
         }
       }
+    }
+  }
+
+  &.non-collapsible {
+    &.has-focus.active .searchfield-category-button,
+    .searchfield-category-button {
+      background-color: transparent;
+      border-color: $searchfield-toolbar-border-color;
     }
   }
 
