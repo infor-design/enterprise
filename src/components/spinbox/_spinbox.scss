@@ -326,3 +326,17 @@ html[dir='rtl'] {
     }
   }
 }
+
+// iOS fix
+html[class*='theme-classic'].ios {
+  .field-short,
+  .form-layout-compact .field {
+    .spinbox-control {
+      padding: 3px 7px;
+    }
+
+    .spinbox {
+      height: 2.6rem;
+    }
+  }
+}
