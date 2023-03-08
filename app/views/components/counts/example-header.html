@@ -51,34 +51,3 @@
     </div>
   </div>
 </div>
-
-<script>
-  const addFilled = (color) => {
-    if (color !== 'default') {
-      $('.instance-count').addClass('filled');
-    } else {
-      $('.instance-count').removeClass('filled');
-    }
-  };
-
-  $('body').on('initialized', () => {
-    const url = location.href.split('?');
-
-    if (url.length > 1) {
-      const query = url[1].split('&');
-
-      for (let i = 0; i < query.length; i++) {
-        const pair = query[i].split('=');
-
-        if (pair[0] === 'colors') {
-          addFilled(pair[1]);
-          break;
-        }
-      }
-    }
-  });
-
-  $('html').on('colorschanged', (e, a) => {
-    addFilled(a.colors)
-  });
-</script>

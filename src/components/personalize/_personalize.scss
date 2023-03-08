@@ -21,6 +21,10 @@
   }
 }
 
+.is-personalizable .personalize-header .instance-count svg.icon {
+  background-color: $header-bg-color;
+}
+
 .is-personalizable.tab-container.module-tabs {
   background-color: $ids-color-palette-azure-80;
 }

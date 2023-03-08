@@ -14,22 +14,6 @@
   position: relative;
   width: 120px;
 
-  &.filled {
-    background-color: inherit;
-
-    svg.icon {
-      background-color: inherit;
-    }
-
-    .count {
-      color: $ids-color-palette-slate-10;
-    }
-
-    .title {
-      color: $ids-color-palette-slate-20;
-    }
-  }
-
   .count {
     @include font-size(16);
     @include colorPalettesProperty(border-color);
