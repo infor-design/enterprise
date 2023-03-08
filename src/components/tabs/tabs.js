@@ -3822,7 +3822,7 @@ Tabs.prototype = {
     const tabMoreWidth = !isVerticalTabs ? this.moreButton.outerWidth(true) - 8 : 0;
     const parentContainer = this.element;
     const scrollingTablist = this.tablistContainer;
-    const hasCompositeForm = parentContainer.parents('.composite-form').length;
+    const hasSectionForm = parentContainer.parents('section.scrollable-flex').length;
     const hasHeader = parentContainer.parents('.header.has-tabs').length;
     const accountForPadding = scrollingTablist && this.focusState.parent().is(scrollingTablist);
     const widthPercentage = target[0].getBoundingClientRect().width / target[0].offsetWidth * 100;
@@ -3861,7 +3861,7 @@ Tabs.prototype = {
           targetRectObj.right -= tabMoreWidth;
         }
 
-        if (isRTL && !hasCompositeForm && !hasHeader) {
+        if (isRTL && !hasSectionForm && !hasHeader ) {
           targetRectObj.right -= 42;
           targetRectObj.width += 1;
         }
