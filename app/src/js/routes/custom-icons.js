@@ -39,7 +39,7 @@ const template = handlebars.compile(hbsTemplate);
  */
 export default (url, theme) => {
   const fileName = path.basename(url, '.html');
-  const iconSet = fileName.includes('example-empty-widgets') ? 'empty' : 'standard';
+  const iconSet = fileName.includes('example-empty-states') ? 'empty' : 'standard';
 
   const metaPath = `node_modules/ids-identity/dist/theme-${theme}/icons/${iconSet}/metadata.json`;
   const meta = JSON.parse(fs.readFileSync(metaPath, 'utf-8').toString());

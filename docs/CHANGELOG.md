@@ -10,6 +10,7 @@
 - `[Bar]` Fixed missing left axis label. ([#7181](https://github.com/infor-design/enterprise/issues/7181))
 - `[Bar]` Fixed regressed long text example. ([#7183](https://github.com/infor-design/enterprise/issues/7183))
 - `[Build]` Fixed build errors on windows. ([#7228](https://github.com/infor-design/enterprise/issues/7228))
+- `[Icons]` Added new empty state icons, and in different and larger sizes. ([#7115](https://github.com/infor-design/enterprise/issues/7115))
 
 ## v4.81.0 Features
 
@@ -24,6 +25,7 @@
 - `[Button]` Fixed icon button size and icon centering. ([#7201](https://github.com/infor-design/enterprise/issues/7201))
 - `[Button]` Fixed disabled button color in classic version. ([#7185](https://github.com/infor-design/enterprise/issues/7185))
 - `[Button]` Button adjustments for compact mode. ([#7161](https://github.com/infor-design/enterprise/issues/7161))
+- `[Button]` Button adjustments for secondary menu in dark and contrast mode. ([#7221](https://github.com/infor-design/enterprise/issues/7221))
 - `[ContextMenu]` Fixed a bug where wrong menu is displayed in nested menus on mobile device. ([NG#1417](https://github.com/infor-design/enterprise-ng/issues/1417))
 - `[Datagrid]` Fixed a bug in datagrid where sorting is not working properly. ([#6787](https://github.com/infor-design/enterprise/issues/6787))
 - `[Datagrid]` Fixed background color of lookups in filter row when in light mode. ([#7176](https://github.com/infor-design/enterprise/issues/7176))
@@ -62,6 +64,7 @@
 - `[Tabs]` Fixed the alignment of focus in RTL view. ([#6992](https://github.com/infor-design/enterprise/issues/6992))
 - `[Tabs]` Fixed incorrect fade out color in horizontal header tabs. ([#7244](https://github.com/infor-design/enterprise/issues/7244))
 - `[Timepicker]` Fixed 24h time validation. ([#7188](https://github.com/infor-design/enterprise/issues/7188))
+- `[Toolbar]` Fixed buttons aren't going in the overflow menu if placed after search field. ([#7194](https://github.com/infor-design/enterprise/issues/7194))
 - `[Typography]` Updated documentation to align usage guidance. ([#7187](https://github.com/infor-design/enterprise/issues/7187))
 
 ## v4.80.1 Fixes
