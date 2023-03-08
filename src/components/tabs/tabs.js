@@ -3854,16 +3854,19 @@ Tabs.prototype = {
         // Account for the container's scrolling
         targetRectObj.left += tablistScrollLeft;
         targetRectObj.right += tablistScrollLeft;
+        
+        if (isRTL) {
+          targetRectObj.right += 1;
 
-        // On RTL, remove the width of the controls on the left-most side of the tab container
-        if (isRTL && !isNotHeaderTabs) {
-          targetRectObj.left -= tabMoreWidth;
-          targetRectObj.right -= tabMoreWidth;
-        }
+          // On RTL, remove the width of the controls on the left-most side of the tab container
+          if (!isNotHeaderTabs) {
+            targetRectObj.left -= tabMoreWidth;
+            targetRectObj.right -= tabMoreWidth;
+          }
 
-        if (isRTL && !hasSectionForm && !hasHeader) {
-          targetRectObj.right -= 42;
-          targetRectObj.width += 1;
+          if (!hasSectionForm && !hasHeader) {
+            targetRectObj.right -= 42;
+          }
         }
 
         // Scaling
