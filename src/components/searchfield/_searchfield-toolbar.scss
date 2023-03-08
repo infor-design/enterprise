@@ -65,7 +65,7 @@ $toolbarsearchfield-category-empty-width: 51px;
       padding-top: 8px;
     }
 
-    .icon:not(.close) {
+    .icon:not(.close, .searchfield-category-button) {
       top: 0;
 
       &:not(.icon-dropdown) {
@@ -95,8 +95,8 @@ $toolbarsearchfield-category-empty-width: 51px;
     }
 
     .icon:not(.close) {
-      height: 20px;
-      width: 20px;
+      height: 18px;
+      width: 18px;
 
       @media only screen and (max-width: $breakpoint-phone-to-tablet) {
         top: 12px;
@@ -159,13 +159,15 @@ $toolbarsearchfield-category-empty-width: 51px;
   .btn {
     background-color: rgba(0, 0, 0, 0);
     border-radius: 2px 0 0 2px;
+
+    &.searchfield-category-button {
+      background-color: rgba($searchfield-bg-color, 1);
+    }
   }
 
   .searchfield-category-button,
   .go-button {
     &:focus {
-      // border: 1px solid transparent;
-
       &:not(.hide-focus) {
         box-shadow: none !important;
         color: $button-color-secondary-initial-font;
@@ -196,8 +198,12 @@ $toolbarsearchfield-category-empty-width: 51px;
 
     .btn,
     .collapse-button {
-      border-color: transparent;
       border-bottom-color: rgba($searchfield-border-color, 0);
+      border-color: transparent;
+    }
+
+    .searchfield-category-button {
+      border-color: $input-color-initial-border;
     }
 
     .go-button {
@@ -212,11 +218,9 @@ $toolbarsearchfield-category-empty-width: 51px;
     &.is-open {
       .btn,
       .collapse-btn {
-        border-bottom-color: rgba($searchfield-border-color, 1);
-      }
-
-      .searchfield-category-button {
-        border-bottom-color: rgba($searchfield-toolbar-border-color, 1);
+        &:not(.searchfield-category-button) {
+          border-bottom-color: rgba($searchfield-border-color, 1);
+        }
       }
     }
   }
@@ -270,8 +274,15 @@ $toolbarsearchfield-category-empty-width: 51px;
     .searchfield,
     .btn {
       background-color: rgba($searchfield-bg-color, 1);
-      border-bottom-color: rgba($searchfield-border-color, 1);
       height: 38px;
+
+      &:not(.searchfield-category-button) {
+        border-bottom-color: rgba($searchfield-border-color, 1);
+      }
+    }
+
+    &.has-categories .searchfield {
+      border-bottom-color: $searchfield-toolbar-border-color;
     }
 
     &.has-categories.alternate {
@@ -373,6 +384,14 @@ $toolbarsearchfield-category-empty-width: 51px;
     }
   }
 
+  &.non-collapsible {
+    &.has-focus.active .searchfield-category-button,
+    .searchfield-category-button {
+      background-color: transparent;
+      border-color: $searchfield-toolbar-border-color;
+    }
+  }
+
   &.active {
     // During the animation "out", the text goes transparent
     .searchfield {
@@ -429,6 +448,10 @@ $toolbarsearchfield-category-empty-width: 51px;
 
       .btn {
         border-color: transparent transparent rgba($searchfield-border-color, 1);
+
+        &.searchfield-category-button {
+          border-color: $input-color-initial-border;
+        }
       }
     }
   }

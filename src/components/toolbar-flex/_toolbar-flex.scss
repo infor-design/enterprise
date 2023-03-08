@@ -42,8 +42,12 @@
 
         &.has-categories.has-go-button {
           .btn-icon.close {
-            right: 44px;
+            right: 46px;
             top: 8px;
+
+            svg.close {
+              top: 1px;
+            }
 
             @media (max-width: $breakpoint-phone-to-tablet) {
               right: 85px;
@@ -327,7 +331,11 @@ html[class*='theme-classic-'] .flex-toolbar .toolbar-section .searchfield-wrappe
     left: -38px;
   }
 
-  &:not(.has-categories) .btn-icon.close {
+  &.has-categories.has-go-button .btn-icon.close {
+    top: 6px;
+  }
+
+  &:not(.has-categories).has-custom-button .btn-icon.close {
     right: 40px;
 
     @media (max-width: $breakpoint-phone-to-tablet) {
