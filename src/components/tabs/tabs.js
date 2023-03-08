@@ -3861,7 +3861,7 @@ Tabs.prototype = {
           targetRectObj.right -= tabMoreWidth;
         }
 
-        if (isRTL && !hasSectionForm && !hasHeader ) {
+        if (isRTL && !hasSectionForm && !hasHeader) {
           targetRectObj.right -= 42;
           targetRectObj.width += 1;
         }
