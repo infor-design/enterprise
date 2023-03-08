@@ -243,6 +243,16 @@ a.is-personalizable svg.ripple-effect {
   border-color: ${colors.contrast} !important;
 }
 
+.is-personalizable .personalize-header .instance-count,
+.is-personalizable .personalize-header .instance-count svg.icon {
+  background-color: ${colors.base};
+}
+
+.is-personalizable .personalize-header .instance-count .count,
+.is-personalizable .personalize-header .instance-count .title {
+  color: ${colors.contrast};
+}
+
 .tab-container.module-tabs.is-personalizable {
   border-top: 1px solid ${colors.darkest} !important;
   border-bottom: 1px solid ${colors.darkest} !important;
