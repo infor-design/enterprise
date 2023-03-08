@@ -95,9 +95,6 @@ $toolbarsearchfield-category-empty-width: 51px;
     }
 
     .icon:not(.close) {
-      height: 20px;
-      width: 20px;
-
       @media only screen and (max-width: $breakpoint-phone-to-tablet) {
         top: 12px;
       }
@@ -451,7 +448,6 @@ $toolbarsearchfield-category-empty-width: 51px;
 
         &.searchfield-category-button {
           border-color: $input-color-initial-border;
-          background-color: rgba($searchfield-bg-color, 1);
         }
       }
     }
