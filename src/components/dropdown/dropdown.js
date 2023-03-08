@@ -2418,7 +2418,6 @@ Dropdown.prototype = {
         self.list[0].style.top = `${listStyleTop - adjustedUlHeight}px`;
       }
 
-      console.log(placementObj);
       if (!isChrome && placementObj.placement === 'bottom') {
         self.list[0].style.top = `${listStyleTop - 1}px`;
       }

@@ -178,6 +178,10 @@
   }
 }
 
+.btn-icon.trigger:hover:not(:disabled){
+  background-color: $button-color-tertiary-hover-background-new !important;
+}
+
 .btn-link {
   border-radius: 8px;
 

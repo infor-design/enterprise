@@ -44,7 +44,7 @@
     > .listoption-icon {
       left: 1px;
       position: relative;
-      top: -1px;
+      top: -1.5px;
     }
   }
 }
@@ -135,6 +135,8 @@
 // Safari
 .is-safari {
   .dropdown-list.ffdropdown {
+    width: 288px;
+
     > .trigger {
       .icon {
         top: 8.5px !important;
@@ -145,6 +147,15 @@
       > .trigger {
         .icon {
           top: 12px !important;
+        }
+      }
+    }
+
+    &.dropdown-short {
+      > .trigger {
+        .icon {
+          top: 6px !important;
+          left: -36px;
         }
       }
     }
