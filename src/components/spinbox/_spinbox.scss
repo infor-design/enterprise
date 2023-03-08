@@ -240,7 +240,7 @@ input::-webkit-inner-spin-button {
 
   .spinbox-control {
     height: inherit;
-    padding: 3px 0 5px 0;
+    padding: 3px 0 5px;
     width: 25px;
   }
 }
@@ -332,7 +332,7 @@ html[class*='theme-classic'].ios {
   .field-short,
   .form-layout-compact .field {
     .spinbox-control {
-      padding: 2px 0 4px 0;
+      padding: 2px 0 4px;
     }
 
     .spinbox {
