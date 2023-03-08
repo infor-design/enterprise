@@ -65,7 +65,7 @@ $toolbarsearchfield-category-empty-width: 51px;
       padding-top: 8px;
     }
 
-    .icon:not(.close) {
+    .icon:not(.close, .searchfield-category-button) {
       top: 0;
 
       &:not(.icon-dropdown) {
@@ -95,6 +95,9 @@ $toolbarsearchfield-category-empty-width: 51px;
     }
 
     .icon:not(.close) {
+      height: 18px;
+      width: 18px;
+
       @media only screen and (max-width: $breakpoint-phone-to-tablet) {
         top: 12px;
       }
