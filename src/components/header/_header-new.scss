@@ -11,6 +11,16 @@
     margin-top: 0;
   }
 
+  .toolbar {
+    .buttonset {
+      .searchfield-wrapper.non-collapsible.toolbar-searchfield-wrapper.has-categories.has-go-button.has-close-icon-button {
+        button.searchfield-category-button {
+          border-right: transparent;
+        }
+      }
+    }
+  }
+
   .flex-toolbar {
     .toolbar-section.search {
       &.search-categories {

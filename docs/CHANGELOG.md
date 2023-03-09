@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.82.0
+
+## v4.82.0 Fixes
+
+- `[Header]` Fixed border in search field in the header. ([#7297](https://github.com/infor-design/enterprise/issues/7297))
+
 ## v4.81.0
 
 ## v4.81.0 Important Changes
