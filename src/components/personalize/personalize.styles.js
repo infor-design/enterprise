@@ -391,7 +391,7 @@ a.is-personalizable svg.ripple-effect {
 
 .header.is-personalizable .flex-toolbar .has-collapse-button .collapse-button:focus:not(.hide-focus) {
   box-shadow: none !important;
-  border-color: ${colors.darkest};
+  border-color: ${colors.contrast};
 }
 
 html.theme-new-dark .header.is-personalizable.has-tabs .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected:not(.is-disabled),
