@@ -27,6 +27,7 @@
 - `[Actionsheet]` Updated font and icon colors for classic actionsheet. ([#7012](https://github.com/infor-design/enterprise/issues/7012))
 - `[Accordion]` Additional fix in accordion collapsing cards on expand bug. ([#6820](https://github.com/infor-design/enterprise/issues/6820))
 - `[Alerts/Badges/Tags]` Updated warning and alert colors. ([#7162](https://github.com/infor-design/enterprise/issues/7162))
+- `[App Menu]` Updated appmenu icon colors. ([#7303](https://github.com/infor-design/enterprise/issues/7303))
 - `[Background]` Updated default background color in high contrast. ([#7261](https://github.com/infor-design/enterprise/issues/7261))
 - `[Bar]` Fixed bug introduced by d3 changes with bar selection. ([#7182](https://github.com/infor-design/enterprise/issues/7182))
 - `[Button]` Fixed icon button size and icon centering. ([#7201](https://github.com/infor-design/enterprise/issues/7201))
