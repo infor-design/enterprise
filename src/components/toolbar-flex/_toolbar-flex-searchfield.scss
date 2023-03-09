@@ -139,6 +139,7 @@ html[dir='rtl'] {
     .searchfield-wrapper {
       &.is-open {
         .collapse-button {
+          border-radius: 0;
           display: inline;
           margin-left: 3px;
         }
@@ -180,10 +181,38 @@ html[dir='rtl'] {
 
           .collapse-button {
             background-color: transparent;
-            border-width: 2px;
           }
         }
       }
     }
+
+    .header .flex-toolbar .toolbar-section {
+      .searchfield-wrapper,
+      .toolbar-searchfield-wrapper {
+        &:not(.is-open).has-collapse-button {
+          left: 22px;
+          top: 0;
+        }
+      }
+    }
+
+    // .header .flex-toolbar.searchfield-active .toolbar-section {
+    //   .searchfield-wrapper,
+    //   .toolbar-searchfield-wrapper {
+    //     &.is-open.has-collapse-button .searchfield {
+    //       width: calc(85% + 24px);
+    //     }
+    //   }
+    // }
+
+    // .header .flex-toolbar .toolbar-section {
+    //   .searchfield-wrapper,
+    //   .toolbar-searchfield-wrapper {
+    //     &:not(.is-open).has-collapse-button {
+    //       left: 22px;
+    //       top: 0;
+    //     }
+    //   }
+    // }
   }
 }
