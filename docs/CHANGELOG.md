@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.82.0
+
+## v4.82.0 Fixes
+
+- `[Tabs]` Fixed the alignment of focus in RTL view. ([#6992](https://github.com/infor-design/enterprise/issues/6992))
+
 ## v4.81.0
 
 ## v4.81.0 Important Changes
@@ -63,7 +69,6 @@
 - `[Searchfield]` Collapse button adjustments in mobile. ([#7164](https://github.com/infor-design/enterprise/issues/7164))
 - `[Slider]` Fixed sliding and dropping the handle outside of the component doesn't trigger the change event. ([#7028](https://github.com/infor-design/enterprise/issues/7028))
 - `[Tabs]` Changed header tabs disabled color to darker color. ([#7219](https://github.com/infor-design/enterprise/issues/7219))
-- `[Tabs]` Fixed the alignment of focus in RTL view. ([#6992](https://github.com/infor-design/enterprise/issues/6992))
 - `[Tabs]` Fixed incorrect fade out color in horizontal header tabs. ([#7244](https://github.com/infor-design/enterprise/issues/7244))
 - `[Timepicker]` Fixed 24h time validation. ([#7188](https://github.com/infor-design/enterprise/issues/7188))
 - `[Toolbar]` Fixed buttons aren't going in the overflow menu if placed after search field. ([#7194](https://github.com/infor-design/enterprise/issues/7194))
