@@ -5,6 +5,7 @@
 ## v4.82.0 Fixes
 
 - `[Header]` Fixed border in search field in the header. ([#7297](https://github.com/infor-design/enterprise/issues/7297))
+- `[Tabs]` Fixed the alignment of focus in RTL view. ([#6992](https://github.com/infor-design/enterprise/issues/6992))
 
 ## v4.81.0
 
@@ -27,6 +28,7 @@
 - `[Actionsheet]` Updated font and icon colors for classic actionsheet. ([#7012](https://github.com/infor-design/enterprise/issues/7012))
 - `[Accordion]` Additional fix in accordion collapsing cards on expand bug. ([#6820](https://github.com/infor-design/enterprise/issues/6820))
 - `[Alerts/Badges/Tags]` Updated warning and alert colors. ([#7162](https://github.com/infor-design/enterprise/issues/7162))
+- `[App Menu]` Updated appmenu icon colors. ([#7303](https://github.com/infor-design/enterprise/issues/7303))
 - `[Background]` Updated default background color in high contrast. ([#7261](https://github.com/infor-design/enterprise/issues/7261))
 - `[Bar]` Fixed bug introduced by d3 changes with bar selection. ([#7182](https://github.com/infor-design/enterprise/issues/7182))
 - `[Button]` Fixed icon button size and icon centering. ([#7201](https://github.com/infor-design/enterprise/issues/7201))
@@ -69,7 +71,6 @@
 - `[Searchfield]` Collapse button adjustments in mobile. ([#7164](https://github.com/infor-design/enterprise/issues/7164))
 - `[Slider]` Fixed sliding and dropping the handle outside of the component doesn't trigger the change event. ([#7028](https://github.com/infor-design/enterprise/issues/7028))
 - `[Tabs]` Changed header tabs disabled color to darker color. ([#7219](https://github.com/infor-design/enterprise/issues/7219))
-- `[Tabs]` Fixed the alignment of focus in RTL view. ([#6992](https://github.com/infor-design/enterprise/issues/6992))
 - `[Tabs]` Fixed incorrect fade out color in horizontal header tabs. ([#7244](https://github.com/infor-design/enterprise/issues/7244))
 - `[Timepicker]` Fixed 24h time validation. ([#7188](https://github.com/infor-design/enterprise/issues/7188))
 - `[Toolbar]` Fixed buttons aren't going in the overflow menu if placed after search field. ([#7194](https://github.com/infor-design/enterprise/issues/7194))

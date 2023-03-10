@@ -551,6 +551,10 @@ $subheader-height: 60px;
 
       &.application-menu-trigger {
         top: 0;
+
+        &:not(:focus) .icon {
+          color: $header-button-color;
+        }
       }
 
       &.is-open .icon,
