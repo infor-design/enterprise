@@ -20,6 +20,20 @@ function personalizeStyles(colors) {
   border-color: ${colors.base} !important;
 }
 
+.header.is-personalizable .buttonset .searchfield-wrapper.is-open button {
+  background-color: ${colors.contrast};
+  color: ${colors.darkest} !important;
+}
+
+.header.is-personalizable .buttonset .searchfield-wrapper.is-open button.go-button:hover {
+  background-color: ${colors.secondaryButtonHover} !important;
+  color: ${colors.darkest} !important;
+}
+
+.header.is-personalizable .buttonset .searchfield-wrapper.is-open svg {
+  color: ${colors.darkest} !important;
+}
+
 html.theme-classic-dark .is-personalizable .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled {
   color: #888B94 !important;
 }
