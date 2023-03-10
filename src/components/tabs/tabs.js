@@ -485,6 +485,11 @@ Tabs.prototype = {
         this.ro.observe(this.containerElement[0]);
       }
     }
+    
+    // Re-renders focus state of tab indicator after rendering all of the elements
+    setTimeout(() => {
+      this.positionFocusState();
+    }, 100);
 
     return this;
   },
@@ -1061,7 +1066,7 @@ Tabs.prototype = {
     }
     this.changeHash(href);
 
-    this.focusState.removeClass('is-visible');
+    this.focusState?.removeClass('is-visible');
 
     a.focus();
 
@@ -1228,7 +1233,7 @@ Tabs.prototype = {
 
     $.removeData(this.moreButton[0], 'focused-by-click');
 
-    this.focusState.removeClass('is-visible');
+    this.focusState?.removeClass('is-visible');
     this.positionFocusState(this.moreButton, focusedByKeyboard);
   },
 
@@ -3766,7 +3771,7 @@ Tabs.prototype = {
    * @returns {void}
    */
   hideFocusState() {
-    this.focusState.removeClass('is-visible');
+    this.focusState?.removeClass('is-visible');
   },
 
   /**
@@ -3789,7 +3794,7 @@ Tabs.prototype = {
 
     if (!target || target === undefined || !target.length ||
       (target.is(this.moreButton) && this.isScrollableTabs())) {
-      this.focusState.removeClass('is-visible');
+      this.focusState?.removeClass('is-visible');
       return;
     }
 
@@ -3817,7 +3822,7 @@ Tabs.prototype = {
     const tabMoreWidth = !isVerticalTabs ? this.moreButton.outerWidth(true) - 8 : 0;
     const parentContainer = this.element;
     const scrollingTablist = this.tablistContainer;
-    const hasCompositeForm = parentContainer.parents('.composite-form').length;
+    const hasSectionForm = parentContainer.parents('section.scrollable-flex').length;
     const hasHeader = parentContainer.parents('.header.has-tabs').length;
     const accountForPadding = scrollingTablist && this.focusState.parent().is(scrollingTablist);
     const widthPercentage = target[0].getBoundingClientRect().width / target[0].offsetWidth * 100;
@@ -3849,16 +3854,19 @@ Tabs.prototype = {
         // Account for the container's scrolling
         targetRectObj.left += tablistScrollLeft;
         targetRectObj.right += tablistScrollLeft;
+        
+        if (isRTL) {
+          targetRectObj.right += 1;
 
-        // On RTL, remove the width of the controls on the left-most side of the tab container
-        if (isRTL && !isNotHeaderTabs) {
-          targetRectObj.left -= tabMoreWidth;
-          targetRectObj.right -= tabMoreWidth;
-        }
+          // On RTL, remove the width of the controls on the left-most side of the tab container
+          if (!isNotHeaderTabs) {
+            targetRectObj.left -= tabMoreWidth;
+            targetRectObj.right -= tabMoreWidth;
+          }
 
-        if (isRTL && !hasCompositeForm && !hasHeader) {
-          targetRectObj.right -= 42;
-          targetRectObj.width += 1;
+          if (!hasSectionForm && !hasHeader) {
+            targetRectObj.right -= 42;
+          }
         }
 
         // Scaling

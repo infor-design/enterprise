@@ -363,7 +363,7 @@ a.is-personalizable svg.ripple-effect {
 .header.is-personalizable button:not(:disabled):hover .app-header.icon > span,
 .header.is-personalizable .toolbar [class^='btn']:hover:not(.go-button):not(.searchfield-category-button):not([disabled]) {
   color: ${colors.contrast};
-  background-color: ${colors.darker};
+  background-color: ${colors.darker} !important;
   opacity: 1;
 }
 
