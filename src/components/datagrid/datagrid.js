@@ -510,7 +510,7 @@ Datagrid.prototype = {
     const self = this;
     const height = parseInt(self.bodyWrapperCenter[0].offsetHeight, 10);
     const hasVerticalScrollbar = parseInt(self.bodyWrapperCenter[0].scrollHeight, 10) > height + 2 ||
-                                  self.element[0].scrollHeight > self.element[0].clientHeight;
+      self.element[0].scrollHeight > self.element[0].clientHeight;
 
     self.hasVerticalScrollbar = hasVerticalScrollbar !== false;
   },
@@ -902,7 +902,7 @@ Datagrid.prototype = {
   removeRow(row, noSync, noTrigger) {
     const rowNode = this.tableBody.find(`tr[aria-rowindex="${row + 1}"]`);
     const arrayToUse = this.settings.groupable &&
-        this.originalDataset ? this.originalDataset : this.settings.dataset;
+      this.originalDataset ? this.originalDataset : this.settings.dataset;
     const rowData = arrayToUse[row];
 
     this.saveDirtyRows();
@@ -1247,8 +1247,7 @@ Datagrid.prototype = {
         .replace(/[^-\w]+/g, '')
         .replace(/\./g, '-')
         .replace(/ /g, '-')
-        .replace(/%20/g, '-')}-${
-        this.element.attr('id') || 'datagrid'}-${this.gridCount || 0}${suffix}`);
+        .replace(/%20/g, '-')}-${this.element.attr('id') || 'datagrid'}-${this.gridCount || 0}${suffix}`);
 
     return uniqueid.replace(/--/g, '-');
   },
@@ -1531,8 +1530,8 @@ Datagrid.prototype = {
       if ((self.hasLeftPane || self.hasRightPane) &&
         (self.settings.frozenColumns.left &&
           self.settings.frozenColumns.left.indexOf(column.id) > -1 ||
-        self.settings.frozenColumns.right &&
-        self.settings.frozenColumns.right.indexOf(column.id) > -1)) {
+          self.settings.frozenColumns.right &&
+          self.settings.frozenColumns.right.indexOf(column.id) > -1)) {
         column.hideable = false;
       }
 
@@ -1771,8 +1770,7 @@ Datagrid.prototype = {
         }
       }
 
-      filterMarkup = `<div class="datagrid-filter-wrapper${headerAlignmentClass}" ${!self.settings.filterable ? ' style="display:none"' : ''}>${self.filterButtonHtml(col)}<label class="audible" for="${filterId}">${
-        col.name}</label>`;
+      filterMarkup = `<div class="datagrid-filter-wrapper${headerAlignmentClass}" ${!self.settings.filterable ? ' style="display:none"' : ''}>${self.filterButtonHtml(col)}<label class="audible" for="${filterId}">${col.name}</label>`;
 
       let attrs = utils.stringAttributes(this, this.settings.attributes, `filter-${col.id?.toLowerCase()}`);
       if (!attrs) {
@@ -2257,9 +2255,8 @@ Datagrid.prototype = {
 
     const renderButton = function (defaultValue, extraClass) {
       return `<button type="button" ${attrs} class="btn-menu btn-filter${extraClass ? ` ${extraClass}` : ''}" data-init="false" ${isDisabled ? ' disabled' : ''}${defaultValue ? ` data-default="${defaultValue}"` : ''} tabindex="0" type="button"><span class="audible">Filter</span>` +
-      `<svg class="icon-dropdown icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-filter-{{icon}}"></use></svg>${
-        $.createIcon({ icon: 'dropdown', classes: 'icon-dropdown' })
-      }</button><ul class="popupmenu has-icons is-translatable is-selectable">`;
+        `<svg class="icon-dropdown icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-filter-{{icon}}"></use></svg>${$.createIcon({ icon: 'dropdown', classes: 'icon-dropdown' })
+        }</button><ul class="popupmenu has-icons is-translatable is-selectable">`;
     };
     const formatFilterText = function (str) {
       let tempStr = str;
@@ -2362,20 +2359,18 @@ Datagrid.prototype = {
     }
 
     if (/\b(date|time)\b/g.test(col.filterType)) {
-      btnMarkup += `${
-        render('less-than', 'EarlyThan')
-      }${render('less-equals', 'EarlyOrEquals')
-      }${render('greater-than', 'LaterThan')
-      }${render('greater-equals', 'LaterOrEquals')}`;
+      btnMarkup += `${render('less-than', 'EarlyThan')
+        }${render('less-equals', 'EarlyOrEquals')
+        }${render('greater-than', 'LaterThan')
+        }${render('greater-equals', 'LaterOrEquals')}`;
       btnMarkup = btnMarkup.replace('{{icon}}', 'less-than');
     }
 
     if (/\b(integer|decimal|percent)\b/g.test(col.filterType)) {
-      btnMarkup += `${
-        render('less-than', 'LessThan')
-      }${render('less-equals', 'LessOrEquals')
-      }${render('greater-than', 'GreaterThan')
-      }${render('greater-equals', 'GreaterOrEquals')}`;
+      btnMarkup += `${render('less-than', 'LessThan')
+        }${render('less-equals', 'LessOrEquals')
+        }${render('greater-than', 'GreaterThan')
+        }${render('greater-equals', 'GreaterOrEquals')}`;
       btnMarkup = btnMarkup.replace('{{icon}}', 'less-than');
     }
 
@@ -2533,7 +2528,7 @@ Datagrid.prototype = {
 
         if ((typeof rowValue === 'number' || (!isNaN(rowValue) && rowValue !== '') &&
           !(conditions[i].value instanceof Array)) &&
-            !(/^(date|time|text)$/.test(columnDef.filterType))) {
+          !(/^(date|time|text)$/.test(columnDef.filterType))) {
           rowValue = rowValue === null ? rowValue : parseFloat(rowValue);
 
           if (columnDef && columnDef.maskOptions?.process === 'rangeNumber') {
@@ -2835,7 +2830,7 @@ Datagrid.prototype = {
 
     this.setChildExpandOnMatch();
 
-    if (!this.settings.source) {
+    if (!this.settings.source && !this.settings.disableClientFilter) {
       this.clearCache();
       this.renderRows();
     }
@@ -3314,7 +3309,7 @@ Datagrid.prototype = {
                 // Swap columns
                 for (i = 0, l = self.settings.columns.length; i < l; i++) {
                   if (!self.settings.columns[i].hidden &&
-                        self.settings.columns[i].id !== 'selectionCheckbox') {
+                    self.settings.columns[i].id !== 'selectionCheckbox') {
                     tempArray.push(i);
                   }
                 }
@@ -3447,7 +3442,7 @@ Datagrid.prototype = {
     for (i = 0, l = self.draggableColumnTargets.length - 1; i < l; i++) {
       target = self.draggableColumnTargets[i];
       if (pos.left > target.dropArea.x1 && pos.left < target.dropArea.x2 &&
-          pos.top > target.dropArea.y1 && pos.top < target.dropArea.y2) {
+        pos.top > target.dropArea.y1 && pos.top < target.dropArea.y2) {
         idx = target.index;
 
         // In RTL mode return the first one found. In LTR return the last one found.
@@ -4365,7 +4360,7 @@ Datagrid.prototype = {
 
     const focusedEl = document.activeElement;
     if (self.activeCell.isFocused &&
-        (!focusedEl || (focusedEl && focusedEl.tagName.toLowerCase() === 'body'))) {
+      (!focusedEl || (focusedEl && focusedEl.tagName.toLowerCase() === 'body'))) {
       self.setActiveCell(self.activeCell.row, self.activeCell.cell);
     }
 
@@ -4512,7 +4507,7 @@ Datagrid.prototype = {
     if (!this.settings.virtualized) {
       if (this.settings.paging && !this.settings.source && rowIndex && this.pagerAPI) {
         return (this.pagerAPI.activePage - 1) * this.settings.pagesize <= rowIndex &&
-            (this.pagerAPI.activePage) * this.settings.pagesize >= rowIndex;
+          (this.pagerAPI.activePage) * this.settings.pagesize >= rowIndex;
       }
 
       return true;
@@ -4769,15 +4764,11 @@ Datagrid.prototype = {
     }
 
     containerHtml.center = `<tr role="row" aria-rowindex="${ariaRowindex}"` +
-      ` data-index="${actualIndex}"${
-        actualIndexLineage ? ` data-lineage="${actualIndexLineage}"` : ''
-      }${
-        self.settings.treeGrid && rowData.children ? ` aria-expanded="${rowData.expanded ? 'true"' : 'false"'}` : ''
+      ` data-index="${actualIndex}"${actualIndexLineage ? ` data-lineage="${actualIndexLineage}"` : ''
+      }${self.settings.treeGrid && rowData.children ? ` aria-expanded="${rowData.expanded ? 'true"' : 'false"'}` : ''
       }${self.settings.treeGrid ? ` aria-level="${depth}"` : ''
       }${isRowDisabled ? ' aria-disabled="true"' : ''
-      }${isSelected ? ' aria-selected="true"' : ''} class="datagrid-row${rowStatus.class}${
-        isHidden ? ' is-hidden' : ''}${
-        rowData._isFilteredOut ? ' is-filtered' : ''
+      }${isSelected ? ' aria-selected="true"' : ''} class="datagrid-row${rowStatus.class}${isHidden ? ' is-hidden' : ''}${rowData._isFilteredOut ? ' is-filtered' : ''
       }${isActivated ? ' is-rowactivated' : ''
       }${isRowDisabled ? ' is-rowdisabled' : ''
       }${isEnabledTooltips ? ' is-tooltips-enabled' : ''
@@ -5128,9 +5119,9 @@ Datagrid.prototype = {
 
     let editorName = editor.name;
     // In IE functions do not have names
-    if (!(function f() {}).name) {
+    if (!(function f() { }).name) {
       const getFnName = function getFnName(fn) {
-        return (fn.toString().match(/function (.+?)\(/)||[,''])[1]; //eslint-disable-line
+        return (fn.toString().match(/function (.+?)\(/) || [, ''])[1]; //eslint-disable-line
       };
       editorName = getFnName(editor);
     }
@@ -7149,8 +7140,8 @@ Datagrid.prototype = {
       .on('click.datagrid-header', '.datagrid-header th.is-sortable, .datagrid-header th.btn-filter', function (e) {
         const parent = $(e.target).parent();
         if (parent.is('.datagrid-filter-wrapper') ||
-            parent.is('.lookup-wrapper') ||
-            parent.is('.has-close-icon-button')) {
+          parent.is('.lookup-wrapper') ||
+          parent.is('.has-close-icon-button')) {
           return false;
         }
 
@@ -7268,9 +7259,9 @@ Datagrid.prototype = {
       }
 
       const isSelectionCheckbox = target.is('.datagrid-selection-checkbox') ||
-                                target.find('.datagrid-selection-checkbox').length === 1;
+        target.find('.datagrid-selection-checkbox').length === 1;
       const isSelectionRadio = target.is('.datagrid-selection-radio') ||
-                                target.find('.datagrid-selection-radio').length === 1;
+        target.find('.datagrid-selection-radio').length === 1;
       let canSelect = self.settings.clickToSelect ? true : isSelectionCheckbox ? true : isSelectionRadio;
 
       if (target.is('.datagrid-drilldown')) {
@@ -7385,7 +7376,7 @@ Datagrid.prototype = {
       if (isEditable) {
         setTimeout(() => {
           if ($('textarea, input', td).length &&
-              (!$('.dropdown,' +
+            (!$('.dropdown,' +
               '[type=file],' +
               '[type=image],' +
               '[type=button],' +
@@ -7602,7 +7593,7 @@ Datagrid.prototype = {
           const focusElem = $('*:focus');
 
           if (!$('.lookup-modal.is-visible, #timepicker-popup, #monthview-popup, #colorpicker-menu').length &&
-              self.editor) {
+            self.editor) {
             if (focusElem.is('.spinbox, .trigger, .code-block-actions') || !$(target).is(':visible')) {
               return;
             }
@@ -8706,9 +8697,9 @@ Datagrid.prototype = {
 
     // Do not run if checkbox in same state
     if ((selectedRowsLength !== rowsLength &&
-          selectedRowsLength > 0 && status === 'partial') ||
-            (selectedRowsLength === rowsLength && status === 'all' && selectedRowsLength !== 0) ||
-              (selectedRowsLength === 0 && status === 'none')) {
+      selectedRowsLength > 0 && status === 'partial') ||
+      (selectedRowsLength === rowsLength && status === 'all' && selectedRowsLength !== 0) ||
+      (selectedRowsLength === 0 && status === 'none')) {
       return;
     }
 
@@ -9239,7 +9230,7 @@ Datagrid.prototype = {
             }
           } else if (self._selectedRows[i].idx === selIdx) {
             if (isServerSideMultiSelect &&
-                self._selectedRows[i].elem && !self._selectedRows[i].elem.is(elem)) {
+              self._selectedRows[i].elem && !self._selectedRows[i].elem.is(elem)) {
               continue;
             }
             self._selectedRows.splice(i, 1);
@@ -9863,7 +9854,7 @@ Datagrid.prototype = {
             self.focusNextPrev('prev', node);
           } else {
             if ((!isRTL && (key === 37 || key === 9 && e.shiftKey)) || // eslint-disable-line
-                (isRTL && (key === 39 || key === 9))) { // eslint-disable-line
+              (isRTL && (key === 39 || key === 9))) { // eslint-disable-line
               cell = getNextVisibleCell(cell, lastCell, true);
             } else {
               cell = getNextVisibleCell(cell, lastCell);
@@ -10330,7 +10321,7 @@ Datagrid.prototype = {
       cellParent.addClass('has-singlecolumn');
     }
 
-    this.editor =  new col.editor(idx, cell, cellValue, cellNode, col, event, this, rowData); // eslint-disable-line
+    this.editor = new col.editor(idx, cell, cellValue, cellNode, col, event, this, rowData); // eslint-disable-line
     this.editor.row = idx;
     this.editor.cell = cell;
 
@@ -11974,8 +11965,8 @@ Datagrid.prototype = {
     }
 
     if (!rowElement.hasClass('datagrid-tree-parent') ||
-        (!$(e.target).is(expandButton) &&
-          (self.settings.editable || self.settings.selectable))) {
+      (!$(e.target).is(expandButton) &&
+        (self.settings.editable || self.settings.selectable))) {
       return;
     }
 
