@@ -394,6 +394,10 @@ a.is-personalizable svg.ripple-effect {
   border-color: ${colors.contrast};
 }
 
+.header .toolbar-searchfield-wrapper.has-collapse-button:not(.is-open) .searchfield {
+  color: ${colors.contrast};
+}
+
 html.theme-new-dark .header.is-personalizable.has-tabs .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected:not(.is-disabled),
 .header.is-personalizable .flex-toolbar .toolbar-searchfield-wrapper.has-collapse-button:not(.is-open) > svg.icon:not(.icon-error) {
   color: ${colors.contrast} !important;
