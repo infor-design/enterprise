@@ -1,0 +1,220 @@
+<div class="row">
+  <div class="twelve columns">
+    <h3>
+      Grid Example: Violation Issues
+    </h3>
+    <p>
+      Test by clicking "Load Data" and see how long it takes to render the rows.
+    </p>
+    <br>
+
+    <div class="field">
+      <label for="record-count">Record Count</label>
+      <input id="record-count" name="record-count" type="text" class="new-mask input-sm" value="200"
+        data-options='{ "process": "number", "pattern" : "#,###,###" }' />
+    </div>
+
+    <button type="button" id="load" class="btn-secondary"><span>Load Data</span></button>
+    <hr class="fieldset-hr">
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid"></div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+    var grid, columns = [];
+
+    var activities = [{
+        id: 'Assemble Paint',
+        value: 'Assemble Paint',
+        label: 'Assemble Paint'
+      },
+      {
+        id: '',
+        value: '',
+        label: 'Default Activity'
+      },
+      {
+        id: 'Inspect and Repair',
+        value: 'Inspect and Repair',
+        label: 'Inspect and Repair'
+      }
+    ];
+
+    //Define Columns for the Grid.
+    columns.push({
+      id: 'selectionCheckbox',
+      sortable: false,
+      resizable: false,
+      formatter: Soho.Formatters.SelectionCheckbox,
+      align: 'center'
+    });
+    columns.push({
+      id: 'productId',
+      name: 'Product #',
+      field: 'productId',
+      formatter: Soho.Formatters.Text,
+      align: 'right'
+    });
+    columns.push({
+      id: 'productName',
+      name: 'Product Name & Description',
+      field: 'productName',
+      formatter: Soho.Formatters.Text
+    });
+    columns.push({
+      id: 'quantityback',
+      name: 'Quantity Back Ordered',
+      field: 'quantity',
+      formatter: Soho.Formatters.Integer
+    });
+    columns.push({
+      id: 'quantity',
+      name: 'Quantity Available',
+      field: 'quantity',
+      formatter: Soho.Formatters.Integer,
+      align: 'right'
+    });
+    columns.push({
+      id: 'status',
+      name: 'Status Indicator',
+      field: 'status',
+      formatter: Soho.Formatters.Checkbox,
+      align: 'center'
+    });
+    columns.push({
+      id: 'badge',
+      name: 'Badge',
+      field: 'quantity',
+      align: 'center',
+      formatter: Soho.Formatters.Badge,
+      ranges: [{
+        'min': 0,
+        'max': 150,
+        'classes': 'azure07',
+        sortable: false
+      }]
+    });
+    columns.push({
+      id: 'tag',
+      name: 'Tag',
+      field: 'price',
+      align: 'center',
+      formatter: Soho.Formatters.Tag,
+      ranges: [{
+        'min': 151,
+        'max': 9999,
+        'classes': 'info'
+      }]
+    });
+    columns.push({
+      id: 'listprice',
+      name: 'List Price',
+      field: 'price',
+      align: 'right',
+      formatter: Soho.Formatters.Decimal,
+      filterType: 'decimal'
+    });
+    columns.push({
+      id: 'price',
+      name: 'Final Price',
+      field: 'price',
+      align: 'right',
+      formatter: Soho.Formatters.Decimal,
+      filterType: 'decimal'
+    });
+    columns.push({
+      id: 'orderDate',
+      name: 'Order Date',
+      field: 'orderDate',
+      formatter: Soho.Formatters.Date,
+      dateFormat: 'M/d/yyyy'
+    });
+    columns.push({
+      id: 'shipDate',
+      name: 'Estimated Ship Date',
+      field: 'orderDate',
+      formatter: Soho.Formatters.Date,
+      dateFormat: 'M/d/yyyy'
+    });
+    columns.push({
+      id: 'activity',
+      name: 'Activity',
+      field: 'activity',
+      formatter: Soho.Formatters.Dropdown,
+      filterType: 'multiselect',
+      options: activities,
+      editorOptions: {
+        showSelectAll: true
+      }
+    });
+
+    function loadDataIntoGrid() {
+      var data = [],
+        i;
+      var count = $('#record-count').val();
+      count = count ? Soho.Locale.parseNumber(count) : 0;
+
+      // Build Sample Data
+      for (i = 1; i <= count; i++) {
+        data.push({
+          id: i,
+          productId: i,
+          productName: 'Compressor',
+          activity: 'Assemble Paint',
+          quantity: 1,
+          price: 210.99,
+          status: 'OK',
+          orderDate: new Date(2014, 12, 8),
+          action: 'Action'
+        });
+      }
+
+      // Time the loadData call
+      var start = new Date().getTime();
+      grid.loadData(data);
+      var end = new Date().getTime();
+
+      $('body').toast({
+        title: 'Time to Load Data',
+        message: (end - start) / 1000 + ' seconds',
+        timeout: 8000
+      });
+    }
+
+    grid = $('#datagrid').datagrid({
+      columns: columns,
+      dataset: [],
+      isList: true,
+      selectable: 'multiple',
+      disableClientFilter: true,
+      filterWhenTyping: false,
+      redrawOnResize: false,
+      enableTooltips: true,
+      rowHeight: 'extra-small',
+      cellNavigation: true,
+      columnSizing: 'data',
+      filterable: true,
+      toolbar: {
+        title: 'Records',
+        results: true,
+        filterRow: true,
+        rowHeight: true,
+        collapsibleFilter: true
+      }
+    }).on('filtered', function (e, args) {
+      console.log('filtered', args);
+      loadDataIntoGrid();
+    }).data('datagrid');
+
+    // Load function
+    $('#load').click(function () {
+      loadDataIntoGrid();
+    });
+  });
+</script>
