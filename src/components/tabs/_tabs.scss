@@ -271,30 +271,6 @@
   }
 }
 
-.tab-container.header-tabs {
-  &:not(.alternate) {
-    > .tab-list-container {
-      .tab-focus-indicator {
-        margin-top: 2px !important;
-      }
-
-      .tab {
-        top: -2px;
-
-        &:not(.is-disabled) {
-          &:hover {
-            border-bottom: 4px solid $header-tab-hover-color;
-          }
-
-          &.is-selected {
-            border-bottom: 4px solid $header-tab-hover-color;
-          }
-        }
-      }
-    }
-  }
-}
-
 .tab-container.has-counts {
   > .tab-list-container {
     .tab-list {
@@ -723,10 +699,6 @@
       }
     }
   }
-}
-
-.tab-container.header-tabs > .tab-list-container .tab.is-disabled {
-  color: rgba($ids-color-palette-white, 0.4);
 }
 
 html.theme-classic-dark .tab-container.header-tabs > .tab-list-container .tab.is-disabled {
