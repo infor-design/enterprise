@@ -1195,12 +1195,6 @@ html[dir='rtl'] {
     }
   }
 
-  @media (min-width: $breakpoint-tablet-reduced) {
-    &.has-go-button.has-text {
-      width: auto !important;
-    }
-  }
-
   @media (max-width: $breakpoint-tablet-reduced) {
     &.has-go-button.has-text {
       .searchfield {
