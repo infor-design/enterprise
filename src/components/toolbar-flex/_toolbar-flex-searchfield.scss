@@ -192,14 +192,22 @@ html[dir='rtl'] {
           }
 
           .btn-icon.close {
-            right: 75px;
+            right: 11%;
+
+            @media (max-width: $breakpoint-slim) {
+              right: 12%;
+            }
           }
         }
       }
     }
 
     .flex-toolbar .searchfield-wrapper > .icon.close {
-      right: 78px;
+      right: 11%;
+
+      @media (max-width: $breakpoint-slim) {
+        right: 12%;
+      }
     }
   }
 }
