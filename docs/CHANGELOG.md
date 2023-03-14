@@ -35,6 +35,7 @@
 - `[Button]` Button adjustments for compact mode. ([#7161](https://github.com/infor-design/enterprise/issues/7161))
 - `[Button]` Button adjustments for secondary menu in dark and contrast mode. ([#7221](https://github.com/infor-design/enterprise/issues/7221))
 - `[ContextMenu]` Fixed a bug where wrong menu is displayed in nested menus on mobile device. ([NG#1417](https://github.com/infor-design/enterprise-ng/issues/1417))
+- `[Datagrid]` Fixed re-rendering of the grid when `disableClientFilter` set to true. ([#7282](https://github.com/infor-design/enterprise/issues/7282))
 - `[Datagrid]` Fixed a bug in datagrid where sorting is not working properly. ([#6787](https://github.com/infor-design/enterprise/issues/6787))
 - `[Datagrid]` Fixed background color of lookups in filter row when in light mode. ([#7176](https://github.com/infor-design/enterprise/issues/7176))
 - `[Datagrid]` Fixed a bug in datagrid where custom toolbar is being replaced with data grid generated toolbar. ([NG#1434](https://github.com/infor-design/enterprise-ng/issues/1434))
