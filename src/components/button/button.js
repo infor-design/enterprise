@@ -238,6 +238,21 @@ Button.prototype = {
   },
 
   /**
+   * Behavior of button on resize
+   * @private
+   * @returns {void}
+   */
+  onResize() {
+    const elem = this.element[0];
+    const iconDiff = elem.offsetWidth - $(this.icon).width();
+    if (elem.offsetWidth < elem.scrollWidth && iconDiff <= 20) {
+      $(this.icon).css('transform', `translate(-${iconDiff <= 10 ? 45 : 10}%, 0)`);
+    } else {
+      $(this.icon).css('transform', '');
+    }
+  },
+
+  /**
    * Renders the contents of the button
    * @returns {void}
    */
@@ -460,6 +475,12 @@ Button.prototype = {
     if (!this.element.data('hidefocus')) {
       this.element.hideFocus();
     }
+
+    // Resize
+    this.onResize();
+    $('body').on('resize', () => {
+      this.onResize();
+    });
   },
 
   /**
