@@ -69,6 +69,7 @@
 - `[Searchfield]` Custom button adjustments in mobile. ([#7134](https://github.com/infor-design/enterprise/issues/7134))
 - `[Searchfield]` Go button adjustments for flex toolbar. ([#6014](https://github.com/infor-design/enterprise/issues/6014))
 - `[Searchfield]` Collapse button adjustments in mobile. ([#7164](https://github.com/infor-design/enterprise/issues/7164))
+- `[Searchfield]` Collapse button adjustments in header. ([#7210](https://github.com/infor-design/enterprise/issues/7210))
 - `[Slider]` Fixed sliding and dropping the handle outside of the component doesn't trigger the change event. ([#7028](https://github.com/infor-design/enterprise/issues/7028))
 - `[Tabs]` Changed header tabs disabled color to darker color. ([#7219](https://github.com/infor-design/enterprise/issues/7219))
 - `[Tabs]` Fixed incorrect fade out color in horizontal header tabs. ([#7244](https://github.com/infor-design/enterprise/issues/7244))
