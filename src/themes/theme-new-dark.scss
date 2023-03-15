@@ -17,6 +17,9 @@
 // Theme Overrides
 $body-color-primary-background: $ids-color-palette-slate-100;
 
+$header-default-bg-color: $ids-color-palette-slate-60;
+$header-default-bg-hover-color: $ids-color-palette-slate-80;
+
 // Form Background Color
 $header-toolbar-button-hover-color: transparent;
 $subhead-bg-color: $ids-color-brand-primary-alt;
@@ -783,7 +786,6 @@ $subheader-input-text-color-focus: $ids-color-palette-slate-20;
 $subheader-searchfield-category-button-font-color: $subheader-input-text-color-focus;
 
 // Header
-$header-bg-color: $ids-color-brand-primary-base;
 $header-text-color: $ids-color-palette-white;
 $header-toolbar-searchfield-icon-color: rgba($ids-color-palette-white, 1);
 $header-button-hover-color: rgba($ids-color-palette-white, 1);
