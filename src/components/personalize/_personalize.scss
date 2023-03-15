@@ -98,6 +98,13 @@
   }
 }
 
+
+html[class*='new-'] {
+  .personalize-text .object-count {
+    color: $ids-color-palette-white;
+  }
+}
+
 // Classic themes default color personalization
 html[class*='classic-'] {
   & .is-personalizable {

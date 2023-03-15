@@ -991,6 +991,10 @@ html[class*="theme-classic-"] .tab-container.is-personalizable .tab-list-contain
   background-color: ${colors.base} !important;
 }
 
+html[class*="-dark"] .header.alabaster + .is-personalizable .personalize-header {
+  background-color: #606066 !important;
+}
+
 .is-personalizable .personalize-subheader {
   background-color: ${colors.lighter} !important;
 }
@@ -1017,14 +1021,10 @@ html[class*="theme-classic-"] .tab-container.is-personalizable .tab-list-contain
   color: ${colors.theme.text} !important;
 }
 
-.is-personalizable .personalize-text {
-  color: ${colors.contrast} !important;
-}
-
 .is-personalizable .personalize-actionable,
 .is-personalizable .personalize-actionable svg,
 .is-personalizable .personalize-actionable .icon {
-  color: ${colors.contrast} !important;
+  color: rgba(255, 255, 255, 0.8) !important;
   opacity: .8;
 }
 
@@ -1033,6 +1033,10 @@ html[class*="theme-classic-"] .tab-container.is-personalizable .tab-list-contain
 .is-personalizable .personalize-actionable:hover:not([disabled]) .icon  {
   color: ${colors.contrast} !important;
   opacity: 1;
+}
+
+.header.alabaster + .is-personalizable .personalize-actionable:hover:not([disabled]) {
+  color: #fff !important;
 }
 
 .is-personalizable .personalize-actionable.is-focused:not(.hide-focus),
@@ -1049,10 +1053,6 @@ html[class*="theme-classic-"] .tab-container.is-personalizable .tab-list-contain
 
 .is-personalizable .personalize-vertical-border {
   border-color: ${colors.light};
-}
-
-.is-personalizable .personalize-horizontal-bottom-border {
-  border-bottom: 1px solid ${colors.darkest};
 }
 
 .is-personalizable .personalize-horizontal-top-border {
