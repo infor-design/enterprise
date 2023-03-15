@@ -70,6 +70,7 @@ Soho.Locale.addCulture('en-US', {
     AdministrativeLeave: { id: 'AdministrativeLeave', value: 'Administrative Leave', comment: 'As in vacation time from work' },
     AdvancedFilter: { id: 'AdvancedFilter', value: 'Create Advanced Filter', comment: 'In a data grid active an advanced filtering feature' },
     Afrikaans: { id: 'Afrikaans', value: 'Afrikaans', comment: 'Language name for Afrikaans (South Africa)' },
+    Alabaster: { id: 'Alabaster', value: 'Alabaster', comment: 'Color in our color palette' },
     Alert: { id: 'Alert', value: 'Alert', comment: 'Alert' },
     AlertOnPage: { id: 'AlertOnPage', value: 'Alert message(s) on page', comment: 'Alert message(s) on page n' },
     AlignCenterHorizontally: { id: 'AlignCenterHorizontally', value: 'Horizontal Align Center', comment: 'Align Center Horizontally tooltip' },

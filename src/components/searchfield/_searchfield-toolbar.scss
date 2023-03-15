@@ -649,6 +649,21 @@ $toolbarsearchfield-category-empty-width: 51px;
   }
 }
 
+:not(.alabaster) {
+  &.header,
+  &.masthead {
+    .toolbar-searchfield-wrapper {
+      &.is-hovered {
+        &:not(.active) {
+          .icon {
+            color: $header-toolbar-searchfield-icon-color;
+          }
+        }
+      }
+    }
+  }
+}
+
 .header,
 .masthead {
   .toolbar-searchfield-wrapper {
@@ -824,7 +839,8 @@ $toolbarsearchfield-category-empty-width: 51px;
     &.is-open {
       .icon {
         color: $searchfield-header-icon-color;
-        top: 1px;
+        transform: translateY(-50%);
+        top: 50%;
       }
     }
   }

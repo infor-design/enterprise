@@ -17,11 +17,11 @@
 @import '../core/config';
 
 // Form Background Color
-$header-bg-color: $ids-color-palette-white;
+$header-bg-color: $ids-color-brand-primary-base;
 $subhead-bg-color: $ids-color-palette-white;
 $header-border-color: $ids-color-palette-slate-100;
-$header-button-color: $ids-color-palette-slate-100;
-$header-button-focus-color: $ids-color-palette-slate-70;
+$header-button-color: $ids-color-palette-white;
+$header-button-focus-color: $ids-color-palette-white;
 $header-button-hover-color: rgba($ids-color-palette-slate-70, 0.85);
 $header-button-disabled-color: rgba($ids-color-palette-slate-50, 0.3);
 $header-primary-btn-background-color: $ids-color-brand-primary-base;

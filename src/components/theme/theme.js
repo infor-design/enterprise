@@ -70,32 +70,33 @@ const theme = {
     const palette = this.themeColors().palette;
     const personalize = {};
     const opts = { showBrackets: false };
-    let defaulColor = '#ffffff';
+    let defaulColor = '#0066D4';
 
     switch (this.currentTheme.id) {
       case 'theme-new-light':
-        defaulColor = '#ffffff';
+        defaulColor = '#0066D4';
         break;
       case 'theme-new-contrast':
-        defaulColor = '#ffffff';
+        defaulColor = '#0066D4';
         break;
       case 'theme-new-dark':
-        defaulColor = '#606066';
+        defaulColor = '#0066D4';
         break;
       case 'theme-classic-light':
-        defaulColor = '#368ac0';
+        defaulColor = '#2578a9';
         break;
       case 'theme-classic-contrast':
         defaulColor = '#134d71';
         break;
       case 'theme-classic-dark':
-        defaulColor = '#50535a';
+        defaulColor = '#50535A';
         break;
       default:
-        defaulColor = '#ffffff';
+        defaulColor = '#0066D4';
         break;
     }
     personalize.default = { id: 'default', name: Locale.translate('Default', opts), backgroundColorClass: 'primary-bg-color', value: defaulColor };
+    personalize.alabaster = { id: 'alabaster', name: Locale.translate('Alabaster', opts), backgroundColorClass: 'alabaster', value: palette.white.value };
     personalize.amber = { id: 'amber', name: Locale.translate('Amber', opts), backgroundColorClass: 'amber09', value: palette.amber['90'].value };
     personalize.amethyst = { id: 'amethyst', name: Locale.translate('Amethyst', opts), backgroundColorClass: 'amethyst06', value: palette.amethyst['60'].value };
     personalize.azure = { id: 'azure', name: Locale.translate('Azure', opts), backgroundColorClass: 'azure07', value: palette.azure['70'].value };

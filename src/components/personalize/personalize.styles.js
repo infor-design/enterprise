@@ -359,12 +359,48 @@ a.is-personalizable svg.ripple-effect {
 }
 
 .header.is-personalizable button:not(.go-button):not(.searchfield-category-button):not(:disabled):hover,
-.header.is-personalizable button:not(.searchfield-category-button):not(:disabled):hover .icon,
 .header.is-personalizable button:not(:disabled):hover .app-header.icon > span,
 .header.is-personalizable .toolbar [class^='btn']:hover:not(.go-button):not(.searchfield-category-button):not([disabled]) {
   color: ${colors.contrast};
   background-color: ${colors.darker} !important;
   opacity: 1;
+}
+
+.header.is-personalizable button:not(.searchfield-category-button):not(:disabled):hover .icon {
+  background-color: transparent !important;
+}
+
+html.theme-new-dark .header.alabaster.is-personalizable {
+  background-color: #606066;
+}
+
+html.theme-new-dark .header.alabaster.is-personalizable .title h1 {
+  color: #ffffff;
+}
+
+html.theme-new-dark .header.alabaster.is-personalizable button:not(:disabled) .icon {
+  color: #ffffff !important;
+}
+
+html.theme-new-dark .header.alabaster.is-personalizable .personalize-actionable:focus:not(.hide-focus) {
+  border-color: #ffffff !important;
+}
+
+html.theme-new-dark .header.alabaster.is-personalizable button:not(.go-button):not(.searchfield-category-button):not(:disabled):hover,
+html.theme-new-dark .header.alabaster.is-personalizable button:not(:disabled):hover .app-header.icon > span,
+html.theme-new-dark .header.alabaster.is-personalizable .toolbar [class^='btn']:hover:not(.go-button):not(.searchfield-category-button):not([disabled]) {
+  background-color: #47474C !important;
+}
+
+html.theme-new-dark .header.alabaster.is-personalizable button:not(.searchfield-category-button):not(:disabled):hover .icon {
+  background-color: transparent !important;
+}
+
+
+.header.alabaster.is-personalizable button:not(.go-button):not(.searchfield-category-button):not(:disabled):hover,
+.header.alabaster.is-personalizable button:not(:disabled):hover .app-header.icon > span,
+.header.alabaster.is-personalizable .toolbar [class^='btn']:hover:not(.go-button):not(.searchfield-category-button):not([disabled]) {
+  background-color: #E6F1FD !important;
 }
 
 .header.is-personalizable button:not(:disabled) .app-header.icon > span {
@@ -458,8 +494,15 @@ html[class*="theme-new-"] .personalize-header.tab-container.header-tabs:not(.alt
 }
 
 .header.is-personalizable .toolbar-searchfield-wrapper:not(.non-collapsible):not(.is-open) .icon:not(.close),
+.header .toolbar-searchfield-wrapper .searchfield,
+.masthead .toolbar-searchfield-wrapper .searchfield,
 .header.is-personalizable .toolbar [class^='btn']:focus .icon {
   color: ${colors.contrast};
+}
+
+html[class*="-dark"] .header.alabaster.is-personalizable .toolbar-searchfield-wrapper:not(.non-collapsible):not(.is-open) .icon:not(.close),
+html[class*="-dark"] .header.alabaster .toolbar-searchfield-wrapper .searchfield {
+  color: #ffffff;
 }
 
 .header .toolbar [class^='btn']:hover:not(.go-button):not(.searchfield-category-button) {
@@ -1133,7 +1176,7 @@ html[class*="theme-classic-"] .tab-container.is-personalizable .tab-list-contain
     0 0 2px 1px ${colors.subtext};
 }
 
-.header.is-personalizable .toolbar [class^='btn']:focus:not(.hide-focus),
+.header.is-personalizable:not(.alabaster) .toolbar [class^='btn']:focus:not(.hide-focus),
 .header.is-personalizable .flex-toolbar [class^='btn']:focus:not(.hide-focus) {
   box-shadow: 0 0 0 2px transparent,
   0 0 0 1px ${colors.subtext},
