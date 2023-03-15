@@ -4,6 +4,7 @@
 
 ## v4.82.0 Fixes
 
+- `[Lookup]` Fix in keyword search not filtering single comma. ([#7165](https://github.com/infor-design/enterprise/issues/7165))
 - `[Tabs]` Fixed the alignment of focus in RTL view. ([#6992](https://github.com/infor-design/enterprise/issues/6992))
 
 ## v4.81.0
