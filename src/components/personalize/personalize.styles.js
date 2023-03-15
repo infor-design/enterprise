@@ -381,6 +381,17 @@ a.is-personalizable svg.ripple-effect {
   opacity: 1;
 }
 
+.header.is-personalizable .buttonset .searchfield-wrapper.non-collapsible.toolbar-searchfield-wrapper.has-categories .btn-icon.close:hover {
+  background-color: ${colors.contrast} !important;
+}
+
+html.theme-new-dark .header.is-personalizable .buttonset .searchfield-wrapper.non-collapsible.toolbar-searchfield-wrapper.has-categories .btn-icon.close,
+html.theme-new-dark .header.is-personalizable .buttonset .searchfield-wrapper.non-collapsible.toolbar-searchfield-wrapper.has-categories .btn-icon.close svg.close,
+html.theme-classic-dark .header.is-personalizable .buttonset .searchfield-wrapper.non-collapsible.toolbar-searchfield-wrapper.has-categories .btn-icon.close,
+html.theme-classic-dark .header.is-personalizable .buttonset .searchfield-wrapper.non-collapsible.toolbar-searchfield-wrapper.has-categories .btn-icon.close svg.close {
+  background-color: transparent !important;
+}
+
 .header.is-personalizable button:not(:disabled) .app-header.icon > span {
   background-color: ${colors.contrast} !important;
   opacity: 1;
