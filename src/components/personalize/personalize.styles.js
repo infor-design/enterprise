@@ -444,11 +444,7 @@ html.theme-new-dark .header.alabaster.is-personalizable button:not(.searchfield-
   opacity: 1;
 }
 
-.header.alabaster.is-personalizable.has-tabs .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected:not(.is-disabled),
-.personalize-header.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected:not(.is-disabled) {
-  color: #fff !important;
-  opacity: 1;
-}
+//xxxx
 
 .header.is-personalizable .flex-toolbar .has-collapse-button .collapse-button {
   background-color: transparent;
@@ -480,6 +476,12 @@ html.theme-new-dark .header.is-personalizable.has-tabs .tab-container.header-tab
 .is-personalizable.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled),
 .personalize-header.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled)  {
   color: ${colors.contrast} !important;
+  opacity: .8;
+}
+
+html.theme-new-dark .personalize-header.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled),
+html.theme-classic-dark .personalize-header.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled) {
+  color: #fff !important;
   opacity: .8;
 }
 

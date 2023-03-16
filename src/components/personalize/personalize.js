@@ -358,8 +358,7 @@ Personalize.prototype = {
 
     // Hyperlink/Text Selection
     colors.hyperlinkText = colors.text;
-    colors.hyperlinkTextHover = colorUtils.getContrastColor(colors.text);
-    console.log(colorUtils.getContrastColor(colors.text))
+    colors.hyperlinkTextHover = defaultColors.subtext;
     colors.selection = defaultColors.subtext;
 
     const tooltipContrast = colorUtils.getContrastColor(colors.darkest);
