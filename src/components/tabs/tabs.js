@@ -3829,6 +3829,7 @@ Tabs.prototype = {
     const isClassic = $('html[class*="classic-"]').length > 0;
     const isAlternate = parentContainer.hasClass('alternate');
     const isTabContainerHeader = parentContainer.hasClass('header-tabs');
+    const isAddTabButton = target.is('.add-tab-button');
 
     function adjustForParentContainer(targetRectObj, parentElement, tablistContainer, transformPercentage) {
       const parentRect = parentElement[0].getBoundingClientRect();
@@ -3893,7 +3894,7 @@ Tabs.prototype = {
       }
 
       targetRectObj.height -= 4;
-      if (!isClassic && !isAlternate && isTabContainerHeader) {
+      if (!isClassic && !isAlternate && isTabContainerHeader && !isAddTabButton) {
         targetRectObj.top -= 9;
       }
 

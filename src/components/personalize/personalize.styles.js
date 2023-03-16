@@ -440,7 +440,22 @@ html.theme-new-dark .header.alabaster.is-personalizable button:not(.searchfield-
   opacity: 1;
 }
 
-html.theme-new-dark .header.is-personalizable.has-tabs .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected:not(.is-disabled) {
+.header.is-personalizable .flex-toolbar .has-collapse-button .collapse-button {
+  background-color: transparent;
+  border-color: ${colors.contrast};
+}
+
+.header.is-personalizable .flex-toolbar .has-collapse-button .collapse-button:focus:not(.hide-focus) {
+  box-shadow: none !important;
+  border-color: ${colors.contrast};
+}
+
+.header .toolbar-searchfield-wrapper.has-collapse-button:not(.is-open) .searchfield {
+  color: ${colors.contrast};
+}
+
+html.theme-new-dark .header.is-personalizable.has-tabs .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected:not(.is-disabled),
+.header.is-personalizable .flex-toolbar .toolbar-searchfield-wrapper.has-collapse-button:not(.is-open) > svg.icon:not(.icon-error) {
   color: ${colors.contrast} !important;
 }
 

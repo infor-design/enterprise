@@ -345,7 +345,7 @@ $toolbarsearchfield-category-empty-width: 51px;
 
     &.non-collapsible.is-hovered,
     &.is-hovered {
-      .icon {
+      :not(.collapse-button) .icon {
         color: $searchfield-icon-hover-color;
       }
     }
@@ -667,8 +667,12 @@ $toolbarsearchfield-category-empty-width: 51px;
 .header,
 .masthead {
   .toolbar-searchfield-wrapper {
-    .icon:not(.close) {
+    :not(.collapse-button) .icon:not(.close) {
       color: $searchfield-header-icon-color;
+    }
+
+    &:not(.is-open) .icon:not(.close) {
+      color: $searchfield-header-inactive-icon-color;
     }
 
     .searchfield {
@@ -683,6 +687,13 @@ $toolbarsearchfield-category-empty-width: 51px;
         border-color: rgba($searchfield-header-border-color, 0.7);
         color: $header-flex-toolbar-input-searchfield-color;
         height: 38px;
+      }
+    }
+
+    &.has-collapse-button:not(.is-open) {
+      .searchfield {
+        background-color: transparent;
+        border-color: transparent;
       }
     }
 
@@ -782,8 +793,12 @@ $toolbarsearchfield-category-empty-width: 51px;
         color: rgba($searchfield-header-text-color, 0.7);
       }
 
-      .icon {
+      :not(.collapse-button) .icon {
         color: $searchfield-header-icon-color;
+      }
+
+      &:not(.is-open) .icon:not(.close) {
+        color: $searchfield-header-inactive-icon-color;
       }
     }
 
@@ -837,7 +852,7 @@ $toolbarsearchfield-category-empty-width: 51px;
     }
 
     &.is-open {
-      .icon {
+      :not(.collapse-button) .icon {
         color: $searchfield-header-icon-color;
         transform: translateY(-50%);
         top: 50%;

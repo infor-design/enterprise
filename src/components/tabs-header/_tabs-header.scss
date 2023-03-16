@@ -268,6 +268,33 @@
   }
 }
 
+.tab-container.header-tabs {
+  &:not(.alternate) {
+    > .tab-list-container {
+      .tab-focus-indicator {
+        margin-top: 2px !important;
+      }
+
+      .tab {
+        top: -2px;
+
+        &:not(.is-disabled) {
+          &:hover {
+            color: $header-tab-hover-color;
+            border-bottom: 4px solid $header-tab-indicator-hover-color;
+            background-color: $header-tab-background-hover-color;
+          }
+
+          &.is-selected {
+            color: $header-tab-hover-color;
+            border-bottom: 4px solid $header-tab-hover-color;
+          }
+        }
+      }
+    }
+  }
+}
+
 // RTL Styles for Header Tabs
 html[dir='rtl'] {
   .tab-container.header-tabs {

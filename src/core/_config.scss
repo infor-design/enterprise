@@ -925,6 +925,7 @@ $searchfield-header-text-color: $ids-color-palette-white;
 $searchfield-header-placeholder-text-color: rgba(255, 255, 255, 0.5);
 $searchfield-header-icon-color: $ids-color-palette-slate-60;
 $searchfield-header-hover-icon-color: $ids-color-palette-slate-100;
+$searchfield-header-inactive-icon-color: $searchfield-header-icon-color;
 
 $searchfield-moduletabs-bg-color: $ids-color-palette-slate-90;
 $searchfield-moduletabs-border-color: $ids-color-palette-slate-100;
@@ -978,10 +979,10 @@ $header-toolbar-button-hover-color: $ids-color-palette-azure-80;
 // Header Tabs
 $header-tabcontainer-border-color: $ids-color-palette-graphite-30;
 $header-tab-separator: $ids-color-palette-graphite-30;
-$header-tab-normal-color: $ids-color-palette-slate-100;
+$header-tab-normal-color: $ids-color-palette-graphite-60;
 $header-tab-text-color: $ids-color-palette-azure-70;
-$header-tab-hover-color: $ids-color-palette-azure-10;
-$header-tab-selected-color: $ids-color-palette-graphite-10;
+$header-tab-hover-color: $ids-color-palette-azure-60;
+$header-tab-selected-color: $ids-color-brand-primary-base;
 $header-tab-focus-border-color: $button-color-primary-initial-font;
 
 $header-tab-alt-bg-color: $ids-color-palette-white;
@@ -995,13 +996,16 @@ $header-tab-disabled-color-new: $ids-color-palette-slate-30;
 
 $header-tab-background-initial-color-new: $ids-color-palette-white;
 $header-tab-gradient-initial-color-new: $ids-color-palette-slate-10;
+$header-tab-background-hover-color: $ids-color-palette-azure-10;
 $header-tab-background-hover-color-new: $ids-color-palette-azure-10;
+$header-tab-indicator-hover-color: $ids-color-brand-primary-base;
 $header-tab-indicator-hover-color-new: $ids-color-brand-primary-base;
 
 $header-tabcontainer-border-color-new: $ids-color-palette-graphite-30;
 $header-tab-normal-color-new: $ids-color-palette-graphite-60;
 $header-tab-hover-color-new: $ids-color-palette-azure-60;
 $header-tab-selected-color-new: $ids-color-brand-primary-base;
+
 
 // Header Breadcrumb
 $header-breadcrumb-color: $ids-color-palette-slate-90;

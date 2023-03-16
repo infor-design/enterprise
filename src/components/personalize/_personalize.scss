@@ -141,8 +141,7 @@ html[class*='classic-'] {
       opacity: 0.8;
     }
 
-    & .tab-container.horizontal > .tab-list-container .tab:not(.is-selected):not(.is-disabled):hover,
-    & .tab-container.header-tabs > .tab-list-container .tab:not(.is-selected):not(.is-disabled):hover {
+    & .tab-container.horizontal > .tab-list-container .tab:not(.is-selected):not(.is-disabled):hover {
       border-bottom-color: $ids-color-palette-white;
     }
   }
