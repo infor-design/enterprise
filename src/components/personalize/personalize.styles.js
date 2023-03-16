@@ -216,11 +216,11 @@ a.btn-close.is-personalizable:focus:not(.hide-focus) {
 
 .is-personalizable .hyperlink:not(.today),
 .hyperlink:not(.today).is-personalizable {
-  color: ${colors.hyperlinkText}
+  color: ${colors.hyperlinkText} !important;
 }
 .is-personalizable .hyperlink:not(.today):hover,
 .hyperlink:not(.today).is-personalizable:hover {
-  color: ${colors.hyperlinkTextHover};
+  color: ${colors.hyperlinkTextHover} !important;
 }
 .is-personalizable .hyperlink:not(.today):focus:not(.hide-focus),
 .hyperlink:not(.today).is-personalizable:focus:not(.hide-focus) {
@@ -326,6 +326,10 @@ a.is-personalizable svg.ripple-effect {
   color: ${colors.contrast};
 }
 
+.object-count.personalize-text {
+  color: ${colors.contrast};
+}
+
 .header.is-personalizable button svg.ripple-effect {
   background-color: ${colors.contrast} !important;
 }
@@ -359,12 +363,68 @@ a.is-personalizable svg.ripple-effect {
 }
 
 .header.is-personalizable button:not(.go-button):not(.searchfield-category-button):not(:disabled):hover,
-.header.is-personalizable button:not(.searchfield-category-button):not(:disabled):hover .icon,
 .header.is-personalizable button:not(:disabled):hover .app-header.icon > span,
 .header.is-personalizable .toolbar [class^='btn']:hover:not(.go-button):not(.searchfield-category-button):not([disabled]) {
   color: ${colors.contrast};
   background-color: ${colors.darker} !important;
   opacity: 1;
+}
+
+.header.is-personalizable button:not(.searchfield-category-button):not(:disabled):hover .icon {
+  background-color: transparent !important;
+}
+
+html.theme-new-dark .header.alabaster.is-personalizable {
+  background-color: #606066 !important;
+}
+
+html.theme-classic-dark .header.alabaster.is-personalizable {
+  background-color: #50535A !important;
+}
+
+html.theme-classic-dark .header.alabaster.is-personalizable .title h1 {
+  color: #fff;
+}
+
+html.theme-classic-dark .header.alabaster.is-personalizable button:not(:disabled) .icon {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+html.theme-classic-dark .header.alabaster.is-personalizable button:not(:disabled):hover .icon {
+  color: #fff !important;
+}
+
+html.theme-classic-dark .header.alabaster.is-personalizable .toolbar [class^='btn']:hover:not(.go-button):not(.searchfield-category-button):not([disabled]) {
+  background-color: #313236 !important;
+}
+
+html.theme-new-dark .header.alabaster.is-personalizable .title h1 {
+  color: #ffffff;
+}
+
+html.theme-new-dark .header.alabaster.is-personalizable button:not(:disabled) .icon {
+  color: #ffffff !important;
+}
+
+html.theme-new-dark .header.alabaster.is-personalizable .personalize-actionable:focus:not(.hide-focus) {
+  border-color: #ffffff !important;
+}
+
+html.theme-new-dark .header.alabaster.is-personalizable button:not(.go-button):not(.searchfield-category-button):not(:disabled):hover,
+html.theme-new-dark .header.alabaster.is-personalizable button:not(:disabled):hover .app-header.icon > span,
+html.theme-new-dark .header.alabaster.is-personalizable .toolbar [class^='btn']:hover:not(.go-button):not(.searchfield-category-button):not([disabled]) {
+  background-color: #47474C !important;
+}
+
+html.theme-new-dark .header.alabaster.is-personalizable button:not(.searchfield-category-button):not(:disabled):hover .icon {
+  background-color: transparent !important;
+}
+
+
+.header.alabaster.is-personalizable button:not(.go-button):not(.searchfield-category-button):not(:disabled):hover,
+.header.alabaster.is-personalizable button:not(:disabled):hover .app-header.icon > span,
+.header.alabaster.is-personalizable .toolbar [class^='btn']:hover:not(.go-button):not(.searchfield-category-button):not([disabled]) {
+  background-color: #E6F1FD !important;
 }
 
 .header.is-personalizable button:not(:disabled) .app-header.icon > span {
@@ -383,6 +443,8 @@ a.is-personalizable svg.ripple-effect {
   color: ${colors.contrast} !important;
   opacity: 1;
 }
+
+//xxxx
 
 .header.is-personalizable .flex-toolbar .has-collapse-button .collapse-button {
   background-color: transparent;
@@ -408,6 +470,10 @@ html.theme-new-dark .header.is-personalizable.has-tabs .tab-container.header-tab
   background-color: ${colors.contrast};
 }
 
+.tab-container.header-tabs.alternate::after {
+  background-image: linear-gradient(to right, rgba(28, 24, 25, 0), ${colors.base});
+}
+
 .is-personalizable .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled),
 .header.is-personalizable .tab-container.header-tabs:not(.alternate) .tab-more svg.icon,
 .tab-container.is-personalizable .tab-more svg.icon,
@@ -417,11 +483,87 @@ html.theme-new-dark .header.is-personalizable.has-tabs .tab-container.header-tab
   opacity: .8;
 }
 
+html.theme-new-dark .personalize-header.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled),
+html.theme-classic-dark .personalize-header.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled) {
+  color: #fff !important;
+  opacity: .8;
+}
+
 .header.is-personalizable.has-tabs .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab,
 .is-personalizable.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab,
 .personalize-header.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab {
   color: ${colors.contrast} !important;
   opacity: .8;
+}
+
+html.theme-new-dark .header.alabaster + .page-container .is-personalizable.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab {
+  color: #ffffff !important;
+}
+
+html.theme-new-dark .header.alabaster + .page-container .is-personalizable.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled) {
+  opacity: 0.8;
+}
+
+html.theme-new-dark .header.alabaster + .page-container .is-personalizable.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled):hover {
+  opacity: 1;
+}
+
+html.theme-new-dark .header.alabaster + .page-container .is-personalizable.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled).is-selected {
+  border-color: #fff !important;
+}
+
+html.theme-new-dark .header.alabaster + .page-container .tab-container.header-tabs:not(.alternate) {
+  border-bottom: 1px solid #3E3E42 !important;
+}
+
+html.theme-new-dark .header.alabaster + .page-container .is-personalizable .hyperlink:not(.today),
+html.theme-new-dark .header.alabaster + .page-container .hyperlink:not(.today).is-personalizable {
+  color: #55A3F3 !important;
+}
+
+html.theme-new-dark .header.alabaster + .page-container .is-personalizable .hyperlink:hover:not([disabled]) {
+  color: #1C86EF !important;
+}
+
+html.theme-new-dark .header.alabaster + .page-container .tab-container.is-personalizable.header-tabs:not(.alternate) > .tab-list-container .tab:hover:not(.is-disabled), .tab-container.is-personalizable.header-tabs:not(.alternate) > .tab-list-container .tab:hover:not(.is-disabled) {
+  background-color: transparent;
+  border-color: #fff;
+}
+
+html.theme-new-dark .header.alabaster + .page-container .tab-container.is-personalizable.header-tabs:not(.alternate) .tab-focus-indicator.is-visible {
+  border-color: #fff !important;
+}
+
+html.theme-new-contrast:not(.theme-new-dark) .header.alabaster + .page-container .hyperlink:not([disabled]),
+html.theme-new-contrast:not(.theme-new-dark) .header.alabaster + .page-container .hyperlink:not(.today).is-personalizable {
+  color: #004A99 !important;
+}
+
+html.theme-new-contrast:not(.theme-new-dark) .header.alabaster + .page-container .hyperlink:hover:not([disabled]),
+html.theme-new-contrast:not(.theme-new-dark) .header.alabaster + .page-container .hyperlink:not(.today).is-personalizable:hover {
+  color: #003876 !important;
+}
+
+html.theme-classic-contrast .header.alabaster + .page-container .hyperlink:not(.today).is-personalizable,
+html.theme-classic-contrast .header.alabaster + .page-container .hyperlink:not(.today).personalize-actionable {
+  color: #55A3F3 !important;
+  opacity: 1;
+}
+
+html.theme-classic-contrast .header.alabaster + .page-container .hyperlink:not(.today).is-personalizable:hover,
+html.theme-classic-contrast .header.alabaster + .page-container .hyperlink:not(.today).personalize-actionable:hover {
+  color: #003876 !important;
+}
+
+html.theme-new-light .header.alabaster + .page-container .is-personalizable .hyperlink:not(.today),
+html.theme-new-light .header.alabaster + .page-container  .hyperlink:not(.today).is-personalizable {
+  color: #0072ED !important;
+  opacity: 1;
+}
+
+html.theme-new-light .header.alabaster + .page-container .is-personalizable .hyperlink:not(.today):hover,
+html.theme-new-light .header.alabaster + .page-container  .hyperlink:not(.today).is-personalizable:hover {
+  color: #0054B1 !important;
 }
 
 .header.is-personalizable.has-tabs .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:hover:not(.is-disabled),
@@ -473,8 +615,15 @@ html[class*="theme-new-"] .personalize-header.tab-container.header-tabs:not(.alt
 }
 
 .header.is-personalizable .toolbar-searchfield-wrapper:not(.non-collapsible):not(.is-open) .icon:not(.close),
+.header .toolbar-searchfield-wrapper .searchfield,
+.masthead .toolbar-searchfield-wrapper .searchfield,
 .header.is-personalizable .toolbar [class^='btn']:focus .icon {
   color: ${colors.contrast};
+}
+
+html[class*="-dark"] .header.alabaster.is-personalizable .toolbar-searchfield-wrapper:not(.non-collapsible):not(.is-open) .icon:not(.close),
+html[class*="-dark"] .header.alabaster .toolbar-searchfield-wrapper .searchfield {
+  color: #ffffff;
 }
 
 .header .toolbar [class^='btn']:hover:not(.go-button):not(.searchfield-category-button) {
@@ -949,6 +1098,10 @@ html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.i
   background-color: ${colors.base} !important;
 }
 
+html.theme-new-dark .header.alabaster + .page-container .is-personalizable.tab-container {
+  background-color: #606066 !important;
+}
+
 .is-personalizable .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab-list .tab.is-disabled,
 .is-personalizable.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab-list .tab.is-disabled {
   opacity: .6;
@@ -961,6 +1114,10 @@ html[class*="theme-classic-"] .tab-container.is-personalizable .tab-list-contain
 
 .is-personalizable .personalize-header {
   background-color: ${colors.base} !important;
+}
+
+html[class*="-dark"] .header.alabaster + .is-personalizable .personalize-header {
+  background-color: #606066 !important;
 }
 
 .is-personalizable .personalize-subheader {
@@ -989,14 +1146,10 @@ html[class*="theme-classic-"] .tab-container.is-personalizable .tab-list-contain
   color: ${colors.theme.text} !important;
 }
 
-.is-personalizable .personalize-text {
-  color: ${colors.contrast} !important;
-}
-
 .is-personalizable .personalize-actionable,
 .is-personalizable .personalize-actionable svg,
 .is-personalizable .personalize-actionable .icon {
-  color: ${colors.contrast} !important;
+  color: rgba(255, 255, 255, 0.8) !important;
   opacity: .8;
 }
 
@@ -1005,6 +1158,65 @@ html[class*="theme-classic-"] .tab-container.is-personalizable .tab-list-contain
 .is-personalizable .personalize-actionable:hover:not([disabled]) .icon  {
   color: ${colors.contrast} !important;
   opacity: 1;
+}
+
+.header.alabaster + .content.personalize-header .is-personalizable .personalize-text {
+  color: #fff;
+}
+
+html.theme-new-dark .header.alabaster + .page-container .is-personalizable .personalize-header {
+  background-color: #606066 !important;
+}
+
+html.theme-classic-dark .header.alabaster + .page-container .is-personalizable .personalize-header {
+  background-color: #50535A !important;
+}
+
+html.theme-classic-dark header.alabaster + .page-container .is-personalizable .personalize-header,
+html.theme-classic-dark header.alabaster + .page-container .is-personalizable.tab-container {
+  background-color: #50535A !important;
+  border-bottom-color: #414247;
+}
+
+html.theme-classic-dark header.alabaster + .page-container .is-personalizable.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled) {
+  color: #fff !important;
+}
+
+html.theme-classic-dark .header.alabaster + .page-container .tab-container.header-tabs > .tab-list-container .tab.is-disabled {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+html.theme-classic-dark .header.alabaster + .page-container .tab-container.is-personalizable.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled).is-selected,
+html.theme-classic-dark .header.alabaster + .page-container .tab-container.is-personalizable.header-tabs:not(.alternate) .tab-focus-indicator.is-visible {
+  border-color: #fff !important;
+}
+
+html.theme-classic-dark .header.alabaster + .page-container .is-personalizable .personalize-actionable {
+  color: #55A3F3 !important;
+}
+
+html.theme-classic-dark .header.alabaster + .page-container .hyperlink:not(.today).is-personalizable {
+  opacity: 0.8 !important;
+}
+
+html.theme-classic-light .header.alabaster + .page-container .hyperlink:not(.today).is-personalizable {
+  opacity: 0.8 !important;
+}
+
+html.theme-classic-light .header.alabaster + .page-container .hyperlink:not(.today).is-personalizable:hover {
+  opacity: 1 !important;
+}
+
+html.theme-classic-dark .header.alabaster + .page-container .hyperlink:not(.today).is-personalizable:hover {
+  opacity: 1 !important;
+}
+
+html.theme-classic-light .header.alabaster + .page-container .is-personalizable .personalize-actionable {
+  color: #55A3F3 !important;
+}
+
+.header.alabaster + .is-personalizable .personalize-actionable:hover:not([disabled]) {
+  color: #000 !important;
 }
 
 .is-personalizable .personalize-actionable.is-focused:not(.hide-focus),
@@ -1021,10 +1233,6 @@ html[class*="theme-classic-"] .tab-container.is-personalizable .tab-list-contain
 
 .is-personalizable .personalize-vertical-border {
   border-color: ${colors.light};
-}
-
-.is-personalizable .personalize-horizontal-bottom-border {
-  border-bottom: 1px solid ${colors.darkest};
 }
 
 .is-personalizable .personalize-horizontal-top-border {
@@ -1148,11 +1356,38 @@ html[class*="theme-classic-"] .tab-container.is-personalizable .tab-list-contain
     0 0 2px 1px ${colors.subtext};
 }
 
-.header.is-personalizable .toolbar [class^='btn']:focus:not(.hide-focus),
+.header.is-personalizable:not(.alabaster) .toolbar [class^='btn']:focus:not(.hide-focus),
 .header.is-personalizable .flex-toolbar [class^='btn']:focus:not(.hide-focus) {
   box-shadow: 0 0 0 2px transparent,
   0 0 0 1px ${colors.subtext},
   0 0 2px 1px ${colors.subtext} !important;
+}
+
+html.theme-new-dark .header.alabaster.is-personalizable .flex-toolbar [class^='btn']:focus:not(.hide-focus) .icon {
+  color: #fff !important;
+}
+
+html.theme-new-dark .header.alabaster.is-personalizable .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):not(:disabled),
+html.theme-new-dark .header.alabaster.is-personalizable .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):not(:disabled) svg.icon {
+  color: #fff !important;
+}
+
+html[class*="theme-new-"]:not(.theme-new-dark) .header.alabaster.is-personalizable button:not(:disabled) {
+  color: #000 !important;
+}
+
+html[class*="theme-new-"]:not(.theme-new-dark) .header.alabaster.is-personalizable .flex-toolbar [class^='btn'][disabled] span,
+html[class*="theme-new-"]:not(.theme-new-dark) .header.alabaster.is-personalizable .flex-toolbar [class^='btn'][disabled] .icon {
+  color: #B7B7BA !important;
+}
+
+html[class*="theme-classic-"]:not(.theme-classic-dark) .header.alabaster.is-personalizable .flex-toolbar [class^='btn'][disabled] span,
+html[class*="theme-classic-"]:not(.theme-classic-dark) .header.alabaster.is-personalizable .flex-toolbar [class^='btn'][disabled] .icon {
+  color: #888B94 !important;
+}
+
+html[class*="theme-classic-"]:not(.theme-classic-dark) .header.alabaster.is-personalizable button:not(:disabled) {
+  color: #000 !important;
 }
 
 /*

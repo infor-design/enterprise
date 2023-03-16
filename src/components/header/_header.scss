@@ -18,6 +18,42 @@ $subheader-height: 60px;
     color: $inverse-color;
   }
 
+  // Header with color personalization classes
+  &.default {
+    background-color: $header-default-bg-color;
+
+    .toolbar [class^='btn'] {
+      &:hover {
+        background-color: $header-default-bg-hover-color !important;
+
+        .icon {
+          color: $ids-color-palette-white;
+        }
+      }
+
+      &.is-open {
+        .icon {
+          color: $ids-color-palette-white;
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  &.alabaster {
+    background-color: $ids-color-palette-white;
+
+    .toolbar [class^='btn'] {
+      &:hover {
+        background-color: $header-toolbar-button-hover-color;
+
+        .icon {
+          background-color: $header-toolbar-button-hover-color;
+        }
+      }
+    }
+  }
+
   .searchfield {
     background-color: transparent;
     border: 1px solid transparent;
@@ -519,7 +555,7 @@ $subheader-height: 60px;
       }
 
       .icon {
-        color: $header-button-color;
+        color: $header-button-color !important;
       }
 
       &.application-menu-trigger {
@@ -564,7 +600,7 @@ $subheader-height: 60px;
         }
 
         &:not(.collapse-button) {
-          box-shadow: 0 0 0 2px transparent, 0 0 0 1px $header-button-focus-color, $header-focus-box-shadow !important;
+          box-shadow: 0 0 0 2px transparent, 0 0 0 0 $header-button-focus-color, $header-focus-box-shadow !important;
         }
 
         .icon {

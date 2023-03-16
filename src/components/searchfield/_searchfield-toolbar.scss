@@ -95,6 +95,7 @@ $toolbarsearchfield-category-empty-width: 51px;
     }
 
     .icon:not(.close) {
+      color: $searchfield-icon-color !important;
       height: 18px;
       width: 18px;
 
@@ -649,6 +650,21 @@ $toolbarsearchfield-category-empty-width: 51px;
   }
 }
 
+:not(.alabaster) {
+  &.header,
+  &.masthead {
+    .toolbar-searchfield-wrapper {
+      &.is-hovered {
+        &:not(.active) {
+          .icon {
+            color: $header-toolbar-searchfield-icon-color;
+          }
+        }
+      }
+    }
+  }
+}
+
 .header,
 .masthead {
   .toolbar-searchfield-wrapper {
@@ -672,13 +688,6 @@ $toolbarsearchfield-category-empty-width: 51px;
         border-color: rgba($searchfield-header-border-color, 0.7);
         color: $header-flex-toolbar-input-searchfield-color;
         height: 38px;
-      }
-    }
-
-    &.has-collapse-button:not(.is-open) {
-      .searchfield {
-        background-color: transparent;
-        border-color: transparent;
       }
     }
 
@@ -838,8 +847,9 @@ $toolbarsearchfield-category-empty-width: 51px;
 
     &.is-open {
       :not(.collapse-button) .icon {
-        color: $searchfield-header-icon-color;
-        top: 1px;
+        color: $searchfield-header-icon-color !important;
+        transform: translateY(-50%);
+        top: 50%;
       }
     }
   }
@@ -993,7 +1003,7 @@ html.is-firefox {
 
       &.is-open {
         .icon {
-          color: $searchfield-header-icon-color;
+          color: $searchfield-header-icon-color !important;
         }
 
         &.is-hovered {

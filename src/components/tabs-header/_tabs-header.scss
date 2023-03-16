@@ -343,3 +343,7 @@ html[dir='rtl'] {
     }
   }
 }
+
+html.theme-classic-dark .tab-container.header-tabs.alternate::after {
+  background-image: linear-gradient(to right, rgba(28, 24, 25, 0), #50535A);
+}

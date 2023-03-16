@@ -5,6 +5,7 @@
 ## v4.82.0 Fixes
 
 - `[Lookup]` Fix in keyword search not filtering single comma. ([#7165](https://github.com/infor-design/enterprise/issues/7165))
+- `[Personalization]` Changed default color back to azure and add alabaster in personalization colors. ([#7320](https://github.com/infor-design/enterprise/issues/7320))
 - `[Tabs]` Fixed the alignment of focus in RTL view. ([#6992](https://github.com/infor-design/enterprise/issues/6992))
 - `[Tabs Header]` Fixed the alignment of close button. ([#7273](https://github.com/infor-design/enterprise/issues/7273))
 
