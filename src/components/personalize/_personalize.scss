@@ -93,19 +93,34 @@
 
 
 html[class*='new-'] {
-  .personalize-text .object-count {
+  .header:not(.alabaster) + .page-container {
+    .personalize-text,
+    .personalize-text .object-count,
+    .hyperlink.is-personalizable {
+      color: $ids-color-palette-white;
+    }
+  }
+}
+
+.header:not(.alabaster) + .page-container .content.personalize-header {
+  .personalize-text {
     color: $ids-color-palette-white;
+  }
+}
+
+html.theme-classic-contrast {
+  .header.alabaster {
+    + .page-container {
+      .is-personalizable .personalize-text {
+        color: $ids-color-palette-graphite-80;
+      }
+    }
   }
 }
 
 // Classic themes default color personalization
 html[class*='classic-'] {
   & .is-personalizable {
-    & .personalize-text,
-    & .hyperlink:not(.today) {
-      color: $ids-color-palette-white;
-    }
-
     .personalize-header {
       .personalize-chart-targeted .label,
       .info-message .icon,
