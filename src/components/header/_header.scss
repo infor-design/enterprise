@@ -24,7 +24,7 @@ $subheader-height: 60px;
 
     .toolbar [class^='btn'] {
       &:hover {
-        background-color: $header-default-bg-hover-color;
+        background-color: $header-default-bg-hover-color !important;
 
         .icon {
           color: $ids-color-palette-white;
@@ -600,7 +600,7 @@ $subheader-height: 60px;
         }
 
         &:not(.collapse-button) {
-          box-shadow: 0 0 0 2px transparent, 0 0 0 1px $header-button-focus-color, $header-focus-box-shadow !important;
+          box-shadow: 0 0 0 2px transparent, 0 0 0 0 $header-button-focus-color, $header-focus-box-shadow !important;
         }
 
         .icon {

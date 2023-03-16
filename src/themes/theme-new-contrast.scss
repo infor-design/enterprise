@@ -17,7 +17,9 @@
 @import '../core/config';
 
 // Form Background Color
-$header-bg-color: $ids-color-palette-azure-60;
+$header-bg-color: $ids-color-palette-azure-80;
+$header-default-bg-color: $ids-color-palette-azure-80;
+$header-default-bg-hover-color: rgba(0, 0, 0, .3);
 $subhead-bg-color: $ids-color-palette-white;
 $header-border-color: $ids-color-palette-slate-100;
 $header-button-color: $ids-color-palette-white;
@@ -717,7 +719,7 @@ $searchfield-card-text-color: $font-color;
 
 $searchfield-header-bg-color: $ids-color-palette-white;
 $searchfield-header-border-color: $ids-color-palette-slate-90;
-$searchfield-header-text-color: $ids-color-palette-slate-90;
+$searchfield-header-text-color: $ids-color-palette-white;;
 $searchfield-header-placeholder-text-color: rgba(255, 255, 255, 0.7);
 $searchfield-header-icon-color: $ids-color-palette-slate-60;
 

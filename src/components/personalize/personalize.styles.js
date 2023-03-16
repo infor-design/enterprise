@@ -216,11 +216,11 @@ a.btn-close.is-personalizable:focus:not(.hide-focus) {
 
 .is-personalizable .hyperlink:not(.today),
 .hyperlink:not(.today).is-personalizable {
-  color: ${colors.hyperlinkText};
+  color: ${colors.hyperlinkText} !important;
 }
 .is-personalizable .hyperlink:not(.today):hover,
 .hyperlink:not(.today).is-personalizable:hover {
-  color: ${colors.hyperlinkTextHover};
+  color: ${colors.hyperlinkTextHover} !important;
 }
 .is-personalizable .hyperlink:not(.today):focus:not(.hide-focus),
 .hyperlink:not(.today).is-personalizable:focus:not(.hide-focus) {
@@ -326,6 +326,10 @@ a.is-personalizable svg.ripple-effect {
   color: ${colors.contrast};
 }
 
+.object-count.personalize-text {
+  color: ${colors.contrast};
+}
+
 .header.is-personalizable button svg.ripple-effect {
   background-color: ${colors.contrast} !important;
 }
@@ -371,7 +375,7 @@ a.is-personalizable svg.ripple-effect {
 }
 
 html.theme-new-dark .header.alabaster.is-personalizable {
-  background-color: #606066;
+  background-color: #606066 !important;
 }
 
 html.theme-classic-dark .header.alabaster.is-personalizable {
@@ -437,6 +441,12 @@ html.theme-new-dark .header.alabaster.is-personalizable button:not(.searchfield-
 .header.is-personalizable.has-tabs .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected:not(.is-disabled),
 .personalize-header.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected:not(.is-disabled) {
   color: ${colors.contrast} !important;
+  opacity: 1;
+}
+
+.header.alabaster.is-personalizable.has-tabs .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected:not(.is-disabled),
+.personalize-header.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected:not(.is-disabled) {
+  color: #fff !important;
   opacity: 1;
 }
 
@@ -1200,7 +1210,7 @@ html.theme-classic-light .header.alabaster + .page-container .is-personalizable 
 }
 
 .header.alabaster + .is-personalizable .personalize-actionable:hover:not([disabled]) {
-  color: #fff !important;
+  color: #000 !important;
 }
 
 .is-personalizable .personalize-actionable.is-focused:not(.hide-focus),
