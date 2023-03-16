@@ -95,6 +95,7 @@ $toolbarsearchfield-category-empty-width: 51px;
     }
 
     .icon:not(.close) {
+      color: $searchfield-icon-color !important;
       height: 18px;
       width: 18px;
 
@@ -690,13 +691,6 @@ $toolbarsearchfield-category-empty-width: 51px;
       }
     }
 
-    &.has-collapse-button:not(.is-open) {
-      .searchfield {
-        background-color: transparent;
-        border-color: transparent;
-      }
-    }
-
     .go-button {
       background-color: $button-color-secondary-initial-background;
       border-color: $button-color-secondary-initial-background;
@@ -853,7 +847,7 @@ $toolbarsearchfield-category-empty-width: 51px;
 
     &.is-open {
       :not(.collapse-button) .icon {
-        color: $searchfield-header-icon-color;
+        color: $searchfield-header-icon-color !important;
         transform: translateY(-50%);
         top: 50%;
       }
@@ -1009,7 +1003,7 @@ html.is-firefox {
 
       &.is-open {
         .icon {
-          color: $searchfield-header-icon-color;
+          color: $searchfield-header-icon-color !important;
         }
 
         &.is-hovered {
