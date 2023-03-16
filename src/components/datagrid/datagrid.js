@@ -2835,7 +2835,7 @@ Datagrid.prototype = {
 
     this.setChildExpandOnMatch();
 
-    if (!this.settings.source) {
+    if (!this.settings.source && !this.settings.disableClientFilter) {
       this.clearCache();
       this.renderRows();
     }

@@ -170,6 +170,14 @@ html[dir='rtl'] {
         &.is-open.has-collapse-button {
           width: calc(98% + 35px);
 
+          &.has-go-button {
+            width: calc(94% + 35px);
+
+            .btn-icon.close {
+              right: 82px;
+            }
+          }
+
           @media (max-width: $breakpoint-phablet) {
             width: calc(90% + 35px);
           }
@@ -182,7 +190,23 @@ html[dir='rtl'] {
             background-color: transparent;
             border-width: 2px;
           }
+
+          .btn-icon.close {
+            right: 11%;
+
+            @media (max-width: $breakpoint-slim) {
+              right: 12%;
+            }
+          }
         }
+      }
+    }
+
+    .flex-toolbar .searchfield-wrapper > .icon.close {
+      right: 11%;
+
+      @media (max-width: $breakpoint-slim) {
+        right: 12%;
       }
     }
   }

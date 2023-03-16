@@ -21,8 +21,15 @@
   }
 }
 
-.is-personalizable .personalize-header .instance-count svg.icon {
-  background-color: $header-bg-color;
+.is-personalizable .personalize-header .instance-count {
+  .title,
+  .count {
+    color: $count-font-color;
+  }
+
+  svg.icon {
+    background-color: $header-bg-color;
+  }
 }
 
 .is-personalizable.tab-container.module-tabs {
@@ -112,8 +119,7 @@ html[class*='classic-'] {
       opacity: 0.8;
     }
 
-    & .tab-container.horizontal > .tab-list-container .tab:not(.is-selected):not(.is-disabled):hover,
-    & .tab-container.header-tabs > .tab-list-container .tab:not(.is-selected):not(.is-disabled):hover {
+    & .tab-container.horizontal > .tab-list-container .tab:not(.is-selected):not(.is-disabled):hover {
       border-bottom-color: $ids-color-palette-white;
     }
   }

@@ -66,6 +66,7 @@ $font-color-lowcontrast: $ids-color-palette-slate-30;
 $label-disabled-color: $ids-color-palette-slate-40;
 $disabled-color: $ids-color-palette-slate-50;
 $signin-title-color: $ids-color-palette-slate-10;
+$count-font-color: $ids-color-palette-slate-10;
 
 // New Text Colors
 $font-color-default: $ids-color-palette-white;
@@ -744,13 +745,15 @@ $header-flex-toolbar-close-icon-color: $ids-color-palette-white;
 $header-tabcontainer-border-color: $ids-color-palette-slate-90;
 $header-tab-separator: rgba(255, 255, 255, 0.4);
 $header-tab-normal-color: $ids-color-palette-slate-30;
-$header-tab-hover-color: $inverse-color;
+$header-tab-hover-color: $ids-color-palette-white;
+$header-tab-indicator-hover-color: $ids-color-palette-white;
 $header-tab-selected-color: $inverse-color;
 $header-tab-alt-bg-color: $ids-color-palette-slate-100;
 $header-tab-alt-separator: $ids-color-palette-white;
 $header-tab-alt-normal-color: $ids-color-palette-slate-30;
 $header-tab-alt-hover-color: $inverse-color;
 $header-tab-alt-selected-color: $inverse-color;
+$header-tab-background-hover-color: transparent;
 
 // Header Breadcrumb
 $header-breadcrumb-color: $ids-color-palette-slate-10;
