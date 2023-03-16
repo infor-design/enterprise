@@ -552,7 +552,7 @@ $subheader-height: 60px;
       }
 
       .icon {
-        color: $header-button-color;
+        color: $header-button-color !important;
       }
 
       &.application-menu-trigger {
