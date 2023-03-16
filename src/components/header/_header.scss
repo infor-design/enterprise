@@ -242,6 +242,25 @@ $subheader-height: 60px;
           border: 1px solid $searchfield-toolbar-border-color;
           border-right: transparent;
           border-radius: 8px 0 0 8px;
+
+          svg.icon-dropdown {
+            position: relative;
+            left: -3px;
+          }
+        }
+
+        .go-button {
+          &:focus {
+            box-shadow: none !important;
+          }
+
+          &:active {
+            border-left: none;
+          }
+
+          &::after {
+            border-right: none;
+          }
         }
 
         input.searchfield {
