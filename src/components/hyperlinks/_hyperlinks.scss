@@ -17,6 +17,14 @@
     color: $hyperlink-hover-color;
   }
 
+  &.personalize-actionable {
+    color: rgba(255, 255, 255, 0.8);
+
+    &:hover {
+      color: $ids-color-palette-white;
+    }
+  }
+
   &.show-visited:visited,
   &.force-visited {
     color: $hyperlink-visited-color;

@@ -21,15 +21,19 @@
 
 // Css variables for Primary Colors
 .primary-bg-color {
-  background: #fff;
+  background: $ids-color-brand-primary-base;
+}
+
+.alabaster {
+  background: $ids-color-palette-alabaster !important;
 }
 
 html.theme-new-light .primary-bg-color {
-  background: #fff;
+  background: $ids-color-palette-azure-60;
 }
 
 html.theme-new-contrast .primary-bg-color {
-  background: #fff;
+  background: $ids-color-palette-azure-60;
 }
 
 html.theme-new-dark .primary-bg-color {

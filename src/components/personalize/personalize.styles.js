@@ -14,78 +14,96 @@ function personalizeStyles(colors) {
   background-color: ${colors.darker} !important;
 }
 
-.is-personalizable .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane),
+.is-personalizable:not(.header) .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane),
 .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane).is-personalizable {
   background-color: ${colors.base} !important;
   border-color: ${colors.base} !important;
 }
 
-html.theme-new-dark .is-personalizable .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):not(:disabled) {
+html.theme-classic-dark .is-personalizable .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled {
+  color: #888B94 !important;
+}
+
+html.theme-new-dark .is-personalizable:not(.header) .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):not(:disabled) {
   background-color: ${colors.darkNewButton} !important;
   border-color: ${colors.darkNewButton} !important;
 }
 
-html[class*="new-"] .is-personalizable .btn-secondary:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane),
-html[class*="new-"] .is-personalizable .btn-secondary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane) svg.icon  {
+html[class*="new-"] .is-personalizable:not(.header) .btn-secondary:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane),
+html[class*="new-"] .is-personalizable:not(.header) .btn-secondary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane) svg.icon  {
   border-color: ${colors.base} !important;
   color: ${colors.darkest} !important;
 }
 
-html.theme-new-dark .is-personalizable .btn-secondary:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):not(:disabled),
-html.theme-new-dark .is-personalizable .btn-secondary:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):not(:disabled) svg.icon {
+html.theme-new-dark .is-personalizable:not(.header) .btn-secondary:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):not(:disabled),
+html.theme-new-dark .is-personalizable:not(.header) .btn-secondary:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):not(:disabled) svg.icon {
   border-color: ${colors.darkNewButton} !important;
   color: ${colors.darkNewButton} !important;
 }
 
-.is-personalizable .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled,
+html.theme-classic-dark .is-personalizable:not(.header) .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled {
+  background-color: ${colors.baseDisabled} !important;
+  border-color: ${colors.baseDisabled} !important;
+}
+
+.is-personalizable:not(.header) .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled,
 .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane).is-personalizable:disabled {
   color: ${colors.contrast} !important;
   background-color: ${colors.baseDisabled} !important;
   border-color: ${colors.baseDisabled} !important;
 }
 
-html.theme-new-dark .is-personalizable .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled {
+html.theme-new-dark .is-personalizable:not(.header) .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled {
   color: ${colors.darkNewButtonTextDisabled} !important;
   background-color: ${colors.darkNewButtonDisabled} !important;
   border-color: ${colors.darkNewButtonDisabled} !important;
 }
 
-html.theme-new-dark .is-personalizable .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled svg.icon {
+html.theme-new-dark .is-personalizable:not(.header) .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled svg.icon {
   color: ${colors.darkNewButtonTextDisabled} !important;
 }
 
-html[class*="new-"] .is-personalizable .btn-secondary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled,
-html[class*="new-"] .is-personalizable .btn-secondary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane).is-personalizable:disabled svg {
+html[class*="new-"] .is-personalizable:not(.header) .btn-secondary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled,
+html[class*="new-"] .is-personalizable:not(.header) .btn-secondary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane).is-personalizable:disabled svg.icon,
+html[class*="new-"] .is-personalizable:not(.header) .btn-secondary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled svg.icon {
   border-color: ${colors.baseDisabled} !important;
-  color: ${colors.base} !important;
+  color: ${colors.baseDisabled} !important;
 }
 
-html.theme-new-dark .is-personalizable .btn-secondary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled {
+html[class*="new-contrast"] .is-personalizable:not(.header) .btn-secondary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled {
+  background-color: #fff;
+}
+
+html.theme-new-dark .is-personalizable:not(.header) .btn-secondary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled {
   border-color: ${colors.darkNewButtonTextDisabled} !important;
   background-color: ${colors.darkNewButtonDisabled} !important;
   color: ${colors.darkNewButtonTextDisabled} !important;
 }
 
-html.theme-new-dark .is-personalizable .btn-secondary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled svg.icon {
+html.theme-new-dark .is-personalizable:not(.header) .btn-secondary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled svg.icon {
   color: ${colors.darkNewButtonTextDisabled} !important;
 }
 
-html.theme-new-dark .is-personalizable .btn-tertiary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled,
-html.theme-new-dark .is-personalizable .btn-link:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled {
+html.theme-new-dark .is-personalizable:not(.header) .btn-tertiary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled,
+html.theme-new-dark .is-personalizable:not(.header) .btn-link:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled {
   background-color: ${colors.darkNewButtonDisabled} !important;
   color: ${colors.darkNewButtonTextDisabled} !important;
 }
 
-html.theme-new-dark .is-personalizable .btn-tertiary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled svg.icon {
+html.theme-new-dark .is-personalizable:not(.header) .btn-tertiary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled svg.icon {
   color: ${colors.darkNewButtonTextDisabled} !important;
 }
 
-.is-personalizable .btn-link:not(:disabled),
+.is-personalizable:not(.header) .btn-link:not(:disabled),
 .btn-link.is-personalizable:not(:disabled) {
   color: ${colors.light} !important;
 }
 
-.is-personalizable .btn-link:not(:disabled) .icon,
+.is-personalizable:not(.header) .btn-link:not(:disabled):hover {
+  background-color: ${colors.secondaryButtonHover} !important;
+}
+
+.is-personalizable:not(.header) .btn-link:not(:disabled) .icon,
 .btn-link.is-personalizable:not(:disabled) .icon {
   color: ${colors.light} !important;
 }
@@ -100,35 +118,40 @@ button.is-personalizable.is-pressed .icon {
   color: ${colors.base};
 }
 
-.is-personalizable .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled),
+.is-personalizable:not(.header) .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled),
 .btn-primary.is-personalizable:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
   background-color: ${colors.darker} !important;
   border-color: ${colors.darker} !important;
 }
 
-html.theme-new-dark .is-personalizable .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
+html.theme-new-dark .is-personalizable:not(.header) .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
   background-color: ${colors.darkNewButtonHover} !important;
   border-color: ${colors.darkNewButtonHover} !important;
 }
 
-html[class*="new-"] .is-personalizable .btn-secondary:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
+html[class*="new-"] .is-personalizable:not(.header) .btn-secondary:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
   background-color: ${colors.secondaryButtonHover} !important;
 }
 
-html.theme-new-dark .is-personalizable .btn-secondary:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
+html.theme-new-dark .is-personalizable:not(.header) .btn-secondary:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
   background-color: ${colors.darkNewButtonLighterHover} !important;
   color: ${colors.darkNewButtonHover} !important;
   border-color: ${colors.darkNewButtonHover} !important;
 }
 
-html[class*="new-"] .is-personalizable .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
+html[class*="new-"] .is-personalizable:not(.header) .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
+  background-color: ${colors.secondaryButtonHover} !important;
   color: ${colors.lightest};
 }
 
-html.theme-new-dark .is-personalizable .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled),
+html.theme-new-dark .is-personalizable:not(.hero-widget) .btn-tertiary:not:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled),
 html.theme-new-dark .is-personalizable .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) svg.icon,
 html.theme-new-dark .is-personalizable .btn-link:hover:not(:disabled),
-html.theme-new-dark .is-personalizable .btn-link:hover:not(:disabled) svg.icon {
+html.theme-new-dark .is-personalizable .btn-link:hover:not(:disabled) svg.icon,
+html.theme-new-dark .is-personalizable:not(.header) .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled),
+html.theme-new-dark .is-personalizable:not(.header) .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) svg.icon,
+html.theme-new-dark .is-personalizable:not(.header) .btn-link:hover:not(:disabled),
+html.theme-new-dark .is-personalizable:not(.header) .btn-link:hover:not(:disabled) svg.icon {
   background-color: ${colors.darkNewButtonLighterHover} !important;
   color: ${colors.darkNewButtonHover} !important;
 }
@@ -138,13 +161,15 @@ html[class*="new-"] .is-personalizable .btn-tertiary:not(.destructive):not(.is-s
 }
 
 html.theme-new-dark .is-personalizable .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):not(:disabled),
-html.theme-new-dark .is-personalizable .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):not(:disabled) svg.icon,
-html.theme-new-dark .is-personalizable .btn-link:not(:disabled),
-html.theme-new-dark .is-personalizable .btn-link:not(:disabled) svg.icon {
+html.theme-new-dark .is-personalizable .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):not(:disabled) svg.icon {
   color: ${colors.contrast} !important;
 }
 
-.is-personalizable .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled),
+html.theme-new-dark .is-personalizable:not(.hero-widget) .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):not(:disabled) svg.icon {
+  color: ${colors.contrast} !important;
+}
+
+.is-personalizable:not(.header) .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled),
 .btn-primary.is-personalizable:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
   background-color: ${colors.darker} !important;
   border-color: ${colors.darker} !important;
@@ -191,11 +216,11 @@ a.btn-close.is-personalizable:focus:not(.hide-focus) {
 
 .is-personalizable .hyperlink:not(.today),
 .hyperlink:not(.today).is-personalizable {
-  color: ${colors.hyperlinkText}
+  color: ${colors.hyperlinkText} !important;
 }
 .is-personalizable .hyperlink:not(.today):hover,
 .hyperlink:not(.today).is-personalizable:hover {
-  color: ${colors.hyperlinkTextHover};
+  color: ${colors.hyperlinkTextHover} !important;
 }
 .is-personalizable .hyperlink:not(.today):focus:not(.hide-focus),
 .hyperlink:not(.today).is-personalizable:focus:not(.hide-focus) {
@@ -218,6 +243,16 @@ a.is-personalizable svg.ripple-effect {
   border-color: ${colors.contrast} !important;
 }
 
+.is-personalizable .personalize-header .instance-count,
+.is-personalizable .personalize-header .instance-count svg.icon {
+  background-color: ${colors.base};
+}
+
+.is-personalizable .personalize-header .instance-count .count,
+.is-personalizable .personalize-header .instance-count .title {
+  color: ${colors.contrast};
+}
+
 .tab-container.module-tabs.is-personalizable {
   border-top: 1px solid ${colors.darkest} !important;
   border-bottom: 1px solid ${colors.darkest} !important;
@@ -228,13 +263,17 @@ a.is-personalizable svg.ripple-effect {
 .tab-container.is-personalizable.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled).is-selected,
 .tab-container.personalize-header.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled).is-selected,
 .header.is-personalizable .tab-container.header-tabs:not(.alternate) .tab-focus-indicator.is-visible,
+.header.is-personalizable .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected,
+.personalize-header.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected:not(.is-disabled),
+.personalize-header.tab-container.header-tabs:not(.alternate) .tab-focus-indicator.is-visible,
 .header.is-personalizable .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled).is-selected {
   border-color: ${colors.contrast} !important;
 }
 
 .tab-container.is-personalizable.header-tabs:not(.alternate) > .tab-list-container .tab:hover:not(.is-disabled),
-.tab-container.personalize-header.header-tabs:not(.alternate) > .tab-list-container .tab:hover:not(.is-disabled),
-.header.is-personalizable .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:hover:not(.is-disabled) {
+.tab-container.is-personalizable.header-tabs:not(.alternate) > .tab-list-container .tab:hover:not(.is-disabled),
+.header.is-personalizable .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:hover:not(.is-disabled),
+.personalize-header.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:hover:not(.is-disabled) {
   color: ${colors.contrast};
   background-color: ${colors.darker};
   border-bottom: 4px solid ${colors.contrast};
@@ -287,6 +326,10 @@ a.is-personalizable svg.ripple-effect {
   color: ${colors.contrast};
 }
 
+.object-count.personalize-text {
+  color: ${colors.contrast};
+}
+
 .header.is-personalizable button svg.ripple-effect {
   background-color: ${colors.contrast} !important;
 }
@@ -320,12 +363,68 @@ a.is-personalizable svg.ripple-effect {
 }
 
 .header.is-personalizable button:not(.go-button):not(.searchfield-category-button):not(:disabled):hover,
-.header.is-personalizable button:not(.searchfield-category-button):not(:disabled):hover .icon,
 .header.is-personalizable button:not(:disabled):hover .app-header.icon > span,
 .header.is-personalizable .toolbar [class^='btn']:hover:not(.go-button):not(.searchfield-category-button):not([disabled]) {
   color: ${colors.contrast};
-  background-color: ${colors.darker};
+  background-color: ${colors.darker} !important;
   opacity: 1;
+}
+
+.header.is-personalizable button:not(.searchfield-category-button):not(:disabled):hover .icon {
+  background-color: transparent !important;
+}
+
+html.theme-new-dark .header.alabaster.is-personalizable {
+  background-color: #606066 !important;
+}
+
+html.theme-classic-dark .header.alabaster.is-personalizable {
+  background-color: #50535A !important;
+}
+
+html.theme-classic-dark .header.alabaster.is-personalizable .title h1 {
+  color: #fff;
+}
+
+html.theme-classic-dark .header.alabaster.is-personalizable button:not(:disabled) .icon {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+html.theme-classic-dark .header.alabaster.is-personalizable button:not(:disabled):hover .icon {
+  color: #fff !important;
+}
+
+html.theme-classic-dark .header.alabaster.is-personalizable .toolbar [class^='btn']:hover:not(.go-button):not(.searchfield-category-button):not([disabled]) {
+  background-color: #313236 !important;
+}
+
+html.theme-new-dark .header.alabaster.is-personalizable .title h1 {
+  color: #ffffff;
+}
+
+html.theme-new-dark .header.alabaster.is-personalizable button:not(:disabled) .icon {
+  color: #ffffff !important;
+}
+
+html.theme-new-dark .header.alabaster.is-personalizable .personalize-actionable:focus:not(.hide-focus) {
+  border-color: #ffffff !important;
+}
+
+html.theme-new-dark .header.alabaster.is-personalizable button:not(.go-button):not(.searchfield-category-button):not(:disabled):hover,
+html.theme-new-dark .header.alabaster.is-personalizable button:not(:disabled):hover .app-header.icon > span,
+html.theme-new-dark .header.alabaster.is-personalizable .toolbar [class^='btn']:hover:not(.go-button):not(.searchfield-category-button):not([disabled]) {
+  background-color: #47474C !important;
+}
+
+html.theme-new-dark .header.alabaster.is-personalizable button:not(.searchfield-category-button):not(:disabled):hover .icon {
+  background-color: transparent !important;
+}
+
+
+.header.alabaster.is-personalizable button:not(.go-button):not(.searchfield-category-button):not(:disabled):hover,
+.header.alabaster.is-personalizable button:not(:disabled):hover .app-header.icon > span,
+.header.alabaster.is-personalizable .toolbar [class^='btn']:hover:not(.go-button):not(.searchfield-category-button):not([disabled]) {
+  background-color: #E6F1FD !important;
 }
 
 .header.is-personalizable button:not(:disabled) .app-header.icon > span {
@@ -339,17 +438,40 @@ a.is-personalizable svg.ripple-effect {
   color: ${colors.contrast};
 }
 
-.header.is-personalizable.has-tabs .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected:not(.is-disabled) {
+.header.is-personalizable.has-tabs .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected:not(.is-disabled),
+.personalize-header.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected:not(.is-disabled) {
   color: ${colors.contrast} !important;
+  opacity: 1;
 }
 
-html.theme-new-dark .header.is-personalizable.has-tabs .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected:not(.is-disabled) {
+//xxxx
+
+.header.is-personalizable .flex-toolbar .has-collapse-button .collapse-button {
+  background-color: transparent;
+  border-color: ${colors.contrast};
+}
+
+.header.is-personalizable .flex-toolbar .has-collapse-button .collapse-button:focus:not(.hide-focus) {
+  box-shadow: none !important;
+  border-color: ${colors.contrast};
+}
+
+.header .toolbar-searchfield-wrapper.has-collapse-button:not(.is-open) .searchfield {
+  color: ${colors.contrast};
+}
+
+html.theme-new-dark .header.is-personalizable.has-tabs .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected:not(.is-disabled),
+.header.is-personalizable .flex-toolbar .toolbar-searchfield-wrapper.has-collapse-button:not(.is-open) > svg.icon:not(.icon-error) {
   color: ${colors.contrast} !important;
 }
 
 .header.is-personalizable .tab-container.header-tabs:not(.alternate) .tab-more::before,
 .tab-container.is-personalizable.header-tabs:not(.alternate) .tab-more::before {
   background-color: ${colors.contrast};
+}
+
+.tab-container.header-tabs.alternate::after {
+  background-image: linear-gradient(to right, rgba(28, 24, 25, 0), ${colors.base});
 }
 
 .is-personalizable .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled),
@@ -361,6 +483,12 @@ html.theme-new-dark .header.is-personalizable.has-tabs .tab-container.header-tab
   opacity: .8;
 }
 
+html.theme-new-dark .personalize-header.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled),
+html.theme-classic-dark .personalize-header.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled) {
+  color: #fff !important;
+  opacity: .8;
+}
+
 .header.is-personalizable.has-tabs .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab,
 .is-personalizable.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab,
 .personalize-header.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab {
@@ -368,8 +496,79 @@ html.theme-new-dark .header.is-personalizable.has-tabs .tab-container.header-tab
   opacity: .8;
 }
 
+html.theme-new-dark .header.alabaster + .page-container .is-personalizable.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab {
+  color: #ffffff !important;
+}
+
+html.theme-new-dark .header.alabaster + .page-container .is-personalizable.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled) {
+  opacity: 0.8;
+}
+
+html.theme-new-dark .header.alabaster + .page-container .is-personalizable.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled):hover {
+  opacity: 1;
+}
+
+html.theme-new-dark .header.alabaster + .page-container .is-personalizable.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled).is-selected {
+  border-color: #fff !important;
+}
+
+html.theme-new-dark .header.alabaster + .page-container .tab-container.header-tabs:not(.alternate) {
+  border-bottom: 1px solid #3E3E42 !important;
+}
+
+html.theme-new-dark .header.alabaster + .page-container .is-personalizable .hyperlink:not(.today),
+html.theme-new-dark .header.alabaster + .page-container .hyperlink:not(.today).is-personalizable {
+  color: #55A3F3 !important;
+}
+
+html.theme-new-dark .header.alabaster + .page-container .is-personalizable .hyperlink:hover:not([disabled]) {
+  color: #1C86EF !important;
+}
+
+html.theme-new-dark .header.alabaster + .page-container .tab-container.is-personalizable.header-tabs:not(.alternate) > .tab-list-container .tab:hover:not(.is-disabled), .tab-container.is-personalizable.header-tabs:not(.alternate) > .tab-list-container .tab:hover:not(.is-disabled) {
+  background-color: transparent;
+  border-color: #fff;
+}
+
+html.theme-new-dark .header.alabaster + .page-container .tab-container.is-personalizable.header-tabs:not(.alternate) .tab-focus-indicator.is-visible {
+  border-color: #fff !important;
+}
+
+html.theme-new-contrast:not(.theme-new-dark) .header.alabaster + .page-container .hyperlink:not([disabled]),
+html.theme-new-contrast:not(.theme-new-dark) .header.alabaster + .page-container .hyperlink:not(.today).is-personalizable {
+  color: #004A99 !important;
+}
+
+html.theme-new-contrast:not(.theme-new-dark) .header.alabaster + .page-container .hyperlink:hover:not([disabled]),
+html.theme-new-contrast:not(.theme-new-dark) .header.alabaster + .page-container .hyperlink:not(.today).is-personalizable:hover {
+  color: #003876 !important;
+}
+
+html.theme-classic-contrast .header.alabaster + .page-container .hyperlink:not(.today).is-personalizable,
+html.theme-classic-contrast .header.alabaster + .page-container .hyperlink:not(.today).personalize-actionable {
+  color: #55A3F3 !important;
+  opacity: 1;
+}
+
+html.theme-classic-contrast .header.alabaster + .page-container .hyperlink:not(.today).is-personalizable:hover,
+html.theme-classic-contrast .header.alabaster + .page-container .hyperlink:not(.today).personalize-actionable:hover {
+  color: #003876 !important;
+}
+
+html.theme-new-light .header.alabaster + .page-container .is-personalizable .hyperlink:not(.today),
+html.theme-new-light .header.alabaster + .page-container  .hyperlink:not(.today).is-personalizable {
+  color: #0072ED !important;
+  opacity: 1;
+}
+
+html.theme-new-light .header.alabaster + .page-container .is-personalizable .hyperlink:not(.today):hover,
+html.theme-new-light .header.alabaster + .page-container  .hyperlink:not(.today).is-personalizable:hover {
+  color: #0054B1 !important;
+}
+
 .header.is-personalizable.has-tabs .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:hover:not(.is-disabled),
-.is-personalizable.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:hover:not(.is-disabled)  {
+.is-personalizable.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:hover:not(.is-disabled),
+.personalize-header.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:hover:not(.is-disabled) {
   color: ${colors.contrast} !important;
   opacity: 1;
 }
@@ -416,8 +615,15 @@ html[class*="theme-new-"] .personalize-header.tab-container.header-tabs:not(.alt
 }
 
 .header.is-personalizable .toolbar-searchfield-wrapper:not(.non-collapsible):not(.is-open) .icon:not(.close),
+.header .toolbar-searchfield-wrapper .searchfield,
+.masthead .toolbar-searchfield-wrapper .searchfield,
 .header.is-personalizable .toolbar [class^='btn']:focus .icon {
   color: ${colors.contrast};
+}
+
+html[class*="-dark"] .header.alabaster.is-personalizable .toolbar-searchfield-wrapper:not(.non-collapsible):not(.is-open) .icon:not(.close),
+html[class*="-dark"] .header.alabaster .toolbar-searchfield-wrapper .searchfield {
+  color: #ffffff;
 }
 
 .header .toolbar [class^='btn']:hover:not(.go-button):not(.searchfield-category-button) {
@@ -438,6 +644,17 @@ html[class*="theme-new-"] .personalize-header.tab-container.header-tabs:not(.alt
 .header.is-personalizable .wizard-header .tick:focus .label,
 .header.is-personalizable .wizard-header .tick.current::before {
   border-color: ${colors.light};
+}
+
+.is-personalizable.hero-widget .hero-footer .hero-footer-nav-title {
+  color: #ffffff;
+}
+
+html[class*='new-'] .is-personalizable.hero-widget .hero-header .toolbar .buttonset .btn-tertiary.btn-menu:not(:disabled):hover,
+html[class*='new-'] .is-personalizable.hero-widget .hero-header .toolbar .buttonset .btn-tertiary.btn-menu:not(:disabled):hover svg.icon,
+html[class*='new-'] .is-personalizable.hero-widget .hero-header .toolbar .buttonset .btn-tertiary.btn-menu:not(:disabled).is-open svg.icon {
+  background-color: transparent;
+  color: ${colors.contrast};
 }
 
 .header.is-personalizable .wizard-header .bar,
@@ -597,7 +814,7 @@ html[dir='rtl'] .scrollable-flex-header.is-personalizable .breadcrumb.truncated:
 
 html[dir='rtl'] .is-personalizable .tab-container.header-tabs:not(.alternate)::before,
 html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::before {
-  background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base});
+  background-image: linear-gradient(to left, ${colors.base}, ${colorUtils.hexToRgba(colors.base, 0)}) !important;
 }
 
 .is-personalizable .tab-container.header-tabs:not(.alternate)::after,
@@ -616,7 +833,18 @@ html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::af
 }
 
 .hero-widget.is-personalizable {
-  background-color: ${colors.lighter};
+  background-color: ${colors.darkestPalette};
+}
+
+.hero-widget.is-personalizable .hero-content .circlepager.is-active .controls .control-button.is-active::before,
+.hero-widget.is-personalizable .hero-content .circlepager.is-active .controls .control-button.is-active:hover::before {
+  background-color: #fff;
+  border-color: #fff;
+}
+
+.hero-widget.is-personalizable .hero-content .circlepager.is-active .controls .control-button:hover::before,
+.hero-widget.is-personalizable .hero-content .circlepager.is-active .controls .control-button::before {
+  border-color: #fff;
 }
 
 .hero-widget.is-personalizable .hero-bottom {
@@ -642,6 +870,19 @@ html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::af
 html[class*="theme-new-"] .application-menu.is-personalizable button .icon,
 html[class*="theme-new-"] .application-menu.is-personalizable button span,
 html[class*="theme-new-"] .application-menu.is-personalizable .hyperlink {
+  color: ${colors.contrast} !important;
+}
+
+html[class*="-dark"] .is-personalizable .btn-tertiary:not(:disabled):hover,
+html[class*="-dark"] .is-personalizable .btn-link:not(:disabled):hover,
+html[class*="-dark"] .is-personalizable:not(.header) .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
+  background-color: #3E3E42 !important;
+}
+
+.is-personalizable.hero-widget .hero-bottom .hero-footer .hero-footer-nav a.btn-tertiary:not(:disabled):hover {
+  border-radius: 0;
+  border-bottom: 4px solid ${colors.contrast};
+  background-color: ${colors.darker};
   color: ${colors.contrast} !important;
 }
 
@@ -857,6 +1098,10 @@ html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.i
   background-color: ${colors.base} !important;
 }
 
+html.theme-new-dark .header.alabaster + .page-container .is-personalizable.tab-container {
+  background-color: #606066 !important;
+}
+
 .is-personalizable .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab-list .tab.is-disabled,
 .is-personalizable.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab-list .tab.is-disabled {
   opacity: .6;
@@ -867,12 +1112,12 @@ html[class*="theme-classic-"] .tab-container.is-personalizable .tab-list-contain
   opacity: .4 !important;
 }
 
-.tab-container.is-personalizable .tab-list-container .tab-list .tab.is-disabled {
-  opacity: .6 !important
-}
-
 .is-personalizable .personalize-header {
   background-color: ${colors.base} !important;
+}
+
+html[class*="-dark"] .header.alabaster + .is-personalizable .personalize-header {
+  background-color: #606066 !important;
 }
 
 .is-personalizable .personalize-subheader {
@@ -901,14 +1146,10 @@ html[class*="theme-classic-"] .tab-container.is-personalizable .tab-list-contain
   color: ${colors.theme.text} !important;
 }
 
-.is-personalizable .personalize-text {
-  color: ${colors.contrast} !important;
-}
-
 .is-personalizable .personalize-actionable,
 .is-personalizable .personalize-actionable svg,
 .is-personalizable .personalize-actionable .icon {
-  color: ${colors.contrast} !important;
+  color: rgba(255, 255, 255, 0.8) !important;
   opacity: .8;
 }
 
@@ -917,6 +1158,65 @@ html[class*="theme-classic-"] .tab-container.is-personalizable .tab-list-contain
 .is-personalizable .personalize-actionable:hover:not([disabled]) .icon  {
   color: ${colors.contrast} !important;
   opacity: 1;
+}
+
+.header.alabaster + .content.personalize-header .is-personalizable .personalize-text {
+  color: #fff;
+}
+
+html.theme-new-dark .header.alabaster + .page-container .is-personalizable .personalize-header {
+  background-color: #606066 !important;
+}
+
+html.theme-classic-dark .header.alabaster + .page-container .is-personalizable .personalize-header {
+  background-color: #50535A !important;
+}
+
+html.theme-classic-dark header.alabaster + .page-container .is-personalizable .personalize-header,
+html.theme-classic-dark header.alabaster + .page-container .is-personalizable.tab-container {
+  background-color: #50535A !important;
+  border-bottom-color: #414247;
+}
+
+html.theme-classic-dark header.alabaster + .page-container .is-personalizable.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled) {
+  color: #fff !important;
+}
+
+html.theme-classic-dark .header.alabaster + .page-container .tab-container.header-tabs > .tab-list-container .tab.is-disabled {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+html.theme-classic-dark .header.alabaster + .page-container .tab-container.is-personalizable.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled).is-selected,
+html.theme-classic-dark .header.alabaster + .page-container .tab-container.is-personalizable.header-tabs:not(.alternate) .tab-focus-indicator.is-visible {
+  border-color: #fff !important;
+}
+
+html.theme-classic-dark .header.alabaster + .page-container .is-personalizable .personalize-actionable {
+  color: #55A3F3 !important;
+}
+
+html.theme-classic-dark .header.alabaster + .page-container .hyperlink:not(.today).is-personalizable {
+  opacity: 0.8 !important;
+}
+
+html.theme-classic-light .header.alabaster + .page-container .hyperlink:not(.today).is-personalizable {
+  opacity: 0.8 !important;
+}
+
+html.theme-classic-light .header.alabaster + .page-container .hyperlink:not(.today).is-personalizable:hover {
+  opacity: 1 !important;
+}
+
+html.theme-classic-dark .header.alabaster + .page-container .hyperlink:not(.today).is-personalizable:hover {
+  opacity: 1 !important;
+}
+
+html.theme-classic-light .header.alabaster + .page-container .is-personalizable .personalize-actionable {
+  color: #55A3F3 !important;
+}
+
+.header.alabaster + .is-personalizable .personalize-actionable:hover:not([disabled]) {
+  color: #000 !important;
 }
 
 .is-personalizable .personalize-actionable.is-focused:not(.hide-focus),
@@ -933,10 +1233,6 @@ html[class*="theme-classic-"] .tab-container.is-personalizable .tab-list-contain
 
 .is-personalizable .personalize-vertical-border {
   border-color: ${colors.light};
-}
-
-.is-personalizable .personalize-horizontal-bottom-border {
-  border-bottom: 1px solid ${colors.darkest};
 }
 
 .is-personalizable .personalize-horizontal-top-border {
@@ -1060,27 +1356,38 @@ html[class*="theme-classic-"] .tab-container.is-personalizable .tab-list-contain
     0 0 2px 1px ${colors.subtext};
 }
 
-.header.is-personalizable .toolbar [class^='btn']:focus:not(.hide-focus),
+.header.is-personalizable:not(.alabaster) .toolbar [class^='btn']:focus:not(.hide-focus),
 .header.is-personalizable .flex-toolbar [class^='btn']:focus:not(.hide-focus) {
   box-shadow: 0 0 0 2px transparent,
   0 0 0 1px ${colors.subtext},
   0 0 2px 1px ${colors.subtext} !important;
 }
 
-.is-personalizable.tab-container.header-tabs:not(.alternate)::after {
-  background-image: linear-gradient(to right, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base});
+html.theme-new-dark .header.alabaster.is-personalizable .flex-toolbar [class^='btn']:focus:not(.hide-focus) .icon {
+  color: #fff !important;
 }
 
-.is-personalizable.tab-container.header-tabs:not(.alternate)::before {
-  background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base});
+html.theme-new-dark .header.alabaster.is-personalizable .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):not(:disabled),
+html.theme-new-dark .header.alabaster.is-personalizable .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):not(:disabled) svg.icon {
+  color: #fff !important;
 }
 
-html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::after {
-  background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base});
+html[class*="theme-new-"]:not(.theme-new-dark) .header.alabaster.is-personalizable button:not(:disabled) {
+  color: #000 !important;
 }
 
-html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::before {
-  background-image: linear-gradient(to right, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base});
+html[class*="theme-new-"]:not(.theme-new-dark) .header.alabaster.is-personalizable .flex-toolbar [class^='btn'][disabled] span,
+html[class*="theme-new-"]:not(.theme-new-dark) .header.alabaster.is-personalizable .flex-toolbar [class^='btn'][disabled] .icon {
+  color: #B7B7BA !important;
+}
+
+html[class*="theme-classic-"]:not(.theme-classic-dark) .header.alabaster.is-personalizable .flex-toolbar [class^='btn'][disabled] span,
+html[class*="theme-classic-"]:not(.theme-classic-dark) .header.alabaster.is-personalizable .flex-toolbar [class^='btn'][disabled] .icon {
+  color: #888B94 !important;
+}
+
+html[class*="theme-classic-"]:not(.theme-classic-dark) .header.alabaster.is-personalizable button:not(:disabled) {
+  color: #000 !important;
 }
 
 /*

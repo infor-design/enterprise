@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.80.4
+
+## v4.80.4 Fixes
+
+- `[Personalization]` Changed default color back to azure and added alabaster in personalization colors. ([#7320](https://github.com/infor-design/enterprise/issues/7320))
+
 ## v4.80.3
 
 ## v4.80.3 Fixes

@@ -1,3 +1,10 @@
+<style>
+  div.dropdown>.listoption-icon.swatch,
+  .dropdown-list li span.swatch {
+    border: 1px solid #B7B7BA;
+  }
+</style>
+
 <div class="page-container no-scroll">
   <header class="header is-personalizable">
     <div class="toolbar">
@@ -37,8 +44,8 @@
     var themeDropdown = $('#example-theme');
     var themes = Soho.theme.themes();
     var themeHtml = '';
-    for (var i = 0; i < themes.length; i++){
-       themeHtml += '<option value="' + themes[i].id + '">'+ themes[i].name +'</option>';
+    for (var i = 0; i < themes.length; i++) {
+      themeHtml += '<option value="' + themes[i].id + '">' + themes[i].name + '</option>';
     }
 
     themeDropdown
@@ -48,8 +55,8 @@
       })
       .html(themeHtml)
       .dropdown()
-        .val(Soho.theme.currentTheme.id)
-        .trigger('updated');
+      .val(Soho.theme.currentTheme.id)
+      .trigger('updated');
 
     $html.on('themechanged', function (e, args) {
       themeDropdown.val(args.theme).trigger('updated');
@@ -64,23 +71,23 @@
       let colors = Soho.theme.personalizationColors();
       let colorsHtml = '';
       for (color in colors) {
-        colorsHtml += '<option data-icon="{icon: \'swatch\', class: \'' + colors[color].backgroundColorClass +' swatch\'}" value="' + colors[color].id + '" data-hex="' + colors[color].value + '">'+ colors[color].name +'</option>';
+        colorsHtml += '<option data-icon="{icon: \'swatch\', class: \'' + colors[color].backgroundColorClass + ' swatch\'}" value="' + colors[color].id + '" data-hex="' + colors[color].value + '">' + colors[color].name + '</option>';
       }
 
       colorsDropdown
         .html(colorsHtml)
         .dropdown()
-          .trigger('updated');
+        .trigger('updated');
     }
 
     colorsDropdown.on('selected', function (e, args) {
-        var val = this.options[this.selectedIndex].value;
-        if (val === 'default') {
-          PERSONALIZE_API.setColorsToDefault(val);
-        } else {
-          PERSONALIZE_API.setColors(this.options[this.selectedIndex].getAttribute('data-hex'));
-        }
-      });
+      var val = this.options[this.selectedIndex].value;
+      if (val === 'default') {
+        PERSONALIZE_API.setColorsToDefault(val);
+      } else {
+        PERSONALIZE_API.setColors(this.options[this.selectedIndex].getAttribute('data-hex'));
+      }
+    });
 
     updateColorDropdown();
 

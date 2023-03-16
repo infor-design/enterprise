@@ -21,27 +21,14 @@
   }
 }
 
-// Classic themes default color personalization
-html[class*='classic-'] {
-  & .is-personalizable {
-    & .personalize-text,
-    & .hyperlink:not(.today) {
-      color: $ids-color-palette-white;
-    }
-
-    & .personalize-actionable:not(:hover) {
-      opacity: 0.8;
-    }
-
-    & .tab-container.horizontal > .tab-list-container .tab:not(.is-selected):not(.is-disabled):hover,
-    & .tab-container.header-tabs > .tab-list-container .tab:not(.is-selected):not(.is-disabled):hover {
-      border-bottom-color: $ids-color-palette-white;
-    }
+.is-personalizable .personalize-header .instance-count {
+  .title,
+  .count {
+    color: $count-font-color;
   }
 
-  .is-personalizable.tab-container.horizontal > .tab-list-container .tab:not(.is-selected):not(.is-disabled):hover,
-  .is-personalizable.tab-container.header-tabs > .tab-list-container .tab:not(.is-selected):not(.is-disabled):hover {
-    border-bottom-color: $ids-color-palette-white;
+  svg.icon {
+    background-color: $header-bg-color;
   }
 }
 
@@ -108,5 +95,58 @@ html[class*='classic-'] {
     .small-bottom-padding {
       padding-bottom: 5px !important;
     }
+  }
+}
+
+html[class*='new-'] {
+  .header:not(.alabaster) + .page-container {
+    .personalize-text,
+    .personalize-text .object-count,
+    .hyperlink.is-personalizable {
+      color: $ids-color-palette-white;
+    }
+  }
+}
+
+.header:not(.alabaster) + .page-container .content.personalize-header {
+  .personalize-text {
+    color: $ids-color-palette-white;
+  }
+}
+
+html.theme-classic-contrast {
+  .header.alabaster {
+    +.page-container {
+      .is-personalizable .personalize-text {
+        color: $ids-color-palette-graphite-80;
+      }
+    }
+  }
+}
+
+// Classic themes default color personalization
+html[class*='classic-'] {
+  & .is-personalizable {
+    .personalize-header {
+      .personalize-chart-targeted .label,
+      .info-message .icon,
+      .info-message p,
+      .btn-icon .icon {
+        color: $ids-color-palette-white !important;
+      }
+    }
+
+    & .personalize-actionable:not(:hover) {
+      opacity: 0.8;
+    }
+
+    & .tab-container.horizontal > .tab-list-container .tab:not(.is-selected):not(.is-disabled):hover {
+      border-bottom-color: $ids-color-palette-white;
+    }
+  }
+
+  .is-personalizable.tab-container.horizontal > .tab-list-container .tab:not(.is-selected):not(.is-disabled):hover,
+  .is-personalizable.tab-container.header-tabs > .tab-list-container .tab:not(.is-selected):not(.is-disabled):hover {
+    border-bottom-color: $ids-color-palette-white;
   }
 }

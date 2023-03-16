@@ -18,6 +18,42 @@ $subheader-height: 60px;
     color: $inverse-color;
   }
 
+  // Header with color personalization classes
+  &.default {
+    background-color: $header-default-bg-color;
+
+    .toolbar [class^='btn'] {
+      &:hover {
+        background-color: $header-default-bg-hover-color !important;
+
+        .icon {
+          color: $ids-color-palette-white;
+        }
+      }
+
+      &.is-open {
+        .icon {
+          color: $ids-color-palette-white;
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  &.alabaster {
+    background-color: $ids-color-palette-white;
+
+    .toolbar [class^='btn'] {
+      &:hover {
+        background-color: $header-toolbar-button-hover-color;
+
+        .icon {
+          background-color: $header-toolbar-button-hover-color;
+        }
+      }
+    }
+  }
+
   .searchfield {
     background-color: transparent;
     border: 1px solid transparent;
@@ -32,7 +68,7 @@ $subheader-height: 60px;
     width: 100%;
   }
 
-  > * {
+  >* {
     vertical-align: middle;
   }
 
@@ -56,7 +92,7 @@ $subheader-height: 60px;
 
   // Used for the popupmenu header pattern
   [class^='btn'] {
-    > h1 {
+    >h1 {
       width: auto;
     }
 
@@ -168,7 +204,7 @@ $subheader-height: 60px;
         overflow: hidden;
         text-overflow: ellipsis;
 
-        + [class^='btn'] {
+        +[class^='btn'] {
           margin-left: 5px;
         }
 
@@ -222,6 +258,17 @@ $subheader-height: 60px;
           left: 8px;
           top: 0;
         }
+      }
+    }
+
+    .application-menu-trigger,
+    .list-detail-back-button,
+    .back-button,
+    .go-back {
+      svg.icon {
+        height: 24px;
+        top: 1px;
+        width: 24px;
       }
     }
 
@@ -483,13 +530,16 @@ $subheader-height: 60px;
   .toolbar,
   .flex-toolbar {
     .buttonset {
-      > .separator {
+      >.separator {
         background-color: $header-button-color;
         padding: 0;
       }
 
       [class^='btn']:not(.searchfield-category-button) {
         margin-right: 3px;
+        min-width: 45px;
+        text-overflow: ellipsis;
+        flex-shrink: 1;
       }
     }
 
@@ -505,11 +555,15 @@ $subheader-height: 60px;
       }
 
       .icon {
-        color: $header-button-color;
+        color: $header-button-color !important;
       }
 
       &.application-menu-trigger {
         top: 0;
+
+        &:not(:focus) .icon {
+          color: $header-button-color;
+        }
       }
 
       &.is-open .icon,
@@ -539,8 +593,15 @@ $subheader-height: 60px;
       }
 
       &:focus:not(.hide-focus) {
-        box-shadow: 0 0 0 2px transparent, 0 0 0 1px $header-button-focus-color, $header-focus-box-shadow !important;
         color: $header-button-focus-color;
+
+        &.collapse-button {
+          border-color: $header-button-focus-color;
+        }
+
+        &:not(.collapse-button) {
+          box-shadow: 0 0 0 2px transparent, 0 0 0 0 $header-button-focus-color, $header-focus-box-shadow !important;
+        }
 
         .icon {
           color: $header-button-focus-color;
@@ -672,7 +733,7 @@ $subheader-height: 60px;
 
   [class^='btn'] {
     .icon.app-header {
-      > span {
+      >span {
         background-color: $header-button-color;
       }
     }
@@ -680,7 +741,7 @@ $subheader-height: 60px;
     &:focus,
     &:hover {
       .icon.app-header {
-        > span {
+        >span {
           background-color: $header-button-hover-color;
         }
       }
@@ -789,7 +850,7 @@ $subheader-height: 60px;
       .app-header,
       .app-drawer {
         &.icon {
-          > span {
+          >span {
             background-color: $header-button-color;
           }
         }
@@ -800,7 +861,7 @@ $subheader-height: 60px;
         .app-drawer,
         .app-header {
           &.icon {
-            > span {
+            >span {
               background-color: $header-button-hover-color;
             }
           }
@@ -811,7 +872,7 @@ $subheader-height: 60px;
         .app-drawer,
         .app-header {
           &.icon {
-            > span {
+            >span {
               background-color: $header-button-focus-color;
             }
           }
