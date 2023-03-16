@@ -5,6 +5,7 @@
 ## v4.82.0 Fixes
 
 - `[Tabs]` Fixed the alignment of focus in RTL view. ([#6992](https://github.com/infor-design/enterprise/issues/6992))
+- `[Tabs Header]` Fixed the alignment of close button. ([#7273](https://github.com/infor-design/enterprise/issues/7273))
 
 ## v4.81.0
 
