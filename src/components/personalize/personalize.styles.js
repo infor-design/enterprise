@@ -470,6 +470,10 @@ html.theme-new-dark .header.is-personalizable.has-tabs .tab-container.header-tab
   background-color: ${colors.contrast};
 }
 
+.tab-container.header-tabs.alternate::after {
+  background-image: linear-gradient(to right, rgba(28, 24, 25, 0), ${colors.base});
+}
+
 .is-personalizable .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled),
 .header.is-personalizable .tab-container.header-tabs:not(.alternate) .tab-more svg.icon,
 .tab-container.is-personalizable .tab-more svg.icon,
