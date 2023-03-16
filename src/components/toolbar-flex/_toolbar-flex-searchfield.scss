@@ -139,6 +139,7 @@ html[dir='rtl'] {
     .searchfield-wrapper {
       &.is-open {
         .collapse-button {
+          border-radius: 0;
           display: inline;
           margin-left: 3px;
         }
@@ -188,7 +189,6 @@ html[dir='rtl'] {
 
           .collapse-button {
             background-color: transparent;
-            border-width: 2px;
           }
 
           .btn-icon.close {
@@ -207,6 +207,24 @@ html[dir='rtl'] {
 
       @media (max-width: $breakpoint-slim) {
         right: 12%;
+      }
+    }
+
+    .header .flex-toolbar .toolbar-section {
+      .searchfield-wrapper,
+      .toolbar-searchfield-wrapper {
+        &.is-open.has-collapse-button {
+          width: calc(95% + 35px);
+
+          @media (max-width: $breakpoint-phablet) {
+            width: calc(89% + 35px);
+          }
+        }
+
+        &:not(.is-open).has-collapse-button {
+          left: 22px;
+          top: 0;
+        }
       }
     }
   }

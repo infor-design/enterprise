@@ -501,6 +501,9 @@ $subheader-height: 60px;
 
       [class^='btn']:not(.searchfield-category-button) {
         margin-right: 3px;
+        min-width: 45px;
+        text-overflow: ellipsis;
+        flex-shrink: 1;
       }
     }
 
@@ -554,8 +557,15 @@ $subheader-height: 60px;
       }
 
       &:focus:not(.hide-focus) {
-        box-shadow: 0 0 0 2px transparent, 0 0 0 1px $header-button-focus-color, $header-focus-box-shadow !important;
         color: $header-button-focus-color;
+
+        &.collapse-button {
+          border-color: $header-button-focus-color;
+        }
+
+        &:not(.collapse-button) {
+          box-shadow: 0 0 0 2px transparent, 0 0 0 1px $header-button-focus-color, $header-focus-box-shadow !important;
+        }
 
         .icon {
           color: $header-button-focus-color;
