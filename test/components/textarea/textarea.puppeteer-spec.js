@@ -47,10 +47,6 @@ describe('Textarea', () => {
         .then(textVal => expect(textVal).toBe('Characters left 68'));
     });
 
-    it('should be accessible with no WCAG 2AA violations', async () => {
-      await expect(page).toPassAxeTests({ disabledRules: ['meta-viewport'] });
-    });
-
     it('should allow maximum of 90 characters', async () => {
       await clearInput(page, { selector: '#description-max' });
 

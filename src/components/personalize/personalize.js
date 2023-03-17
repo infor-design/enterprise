@@ -383,6 +383,9 @@ Personalize.prototype = {
       isDefault: true,
       theme: this.currentTheme || 'theme-new-light'
     });
+    const headers = $('.header, .subheader, .personalize-subheader');
+    headers.removeClass('alabaster');
+    headers.addClass('default');
   },
 
   /**
@@ -571,6 +574,10 @@ Personalize.prototype = {
 
     if (this.settingsDidChange(prevSettings, 'theme')) {
       this.setTheme(this.settings.theme);
+    }
+
+    if (this.settings?.colors === '') {
+      this.settings.colors = 'default';
     }
 
     if (this.settingsDidChange(prevSettings, 'colors')) {
