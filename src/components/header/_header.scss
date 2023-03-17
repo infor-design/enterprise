@@ -40,20 +40,6 @@ $subheader-height: 60px;
     }
   }
 
-  &.alabaster {
-    background-color: $ids-color-palette-white;
-
-    .toolbar [class^='btn'] {
-      &:hover {
-        background-color: $header-toolbar-button-hover-color;
-
-        .icon {
-          background-color: $header-toolbar-button-hover-color;
-        }
-      }
-    }
-  }
-
   .searchfield {
     background-color: transparent;
     border: 1px solid transparent;
@@ -68,7 +54,7 @@ $subheader-height: 60px;
     width: 100%;
   }
 
-  > * {
+  >* {
     vertical-align: middle;
   }
 
@@ -92,7 +78,7 @@ $subheader-height: 60px;
 
   // Used for the popupmenu header pattern
   [class^='btn'] {
-    > h1 {
+    >h1 {
       width: auto;
     }
 
@@ -192,7 +178,7 @@ $subheader-height: 60px;
       position: absolute;
       text-overflow: clip;
 
-      button + span {
+      button+span {
         position: relative;
         top: 2px;
       }
@@ -204,7 +190,7 @@ $subheader-height: 60px;
         overflow: hidden;
         text-overflow: ellipsis;
 
-        + [class^='btn'] {
+        +[class^='btn'] {
           margin-left: 5px;
         }
 
@@ -218,8 +204,8 @@ $subheader-height: 60px;
         margin-inline-start: 8px;
       }
 
-      [class^='btn'] + h1,
-      [class^='btn'] + h2 {
+      [class^='btn']+h1,
+      [class^='btn']+h2 {
         margin: 3px;
         max-width: calc(100% - 40px);
       }
@@ -233,7 +219,7 @@ $subheader-height: 60px;
       }
     }
 
-    &.has-title-button + .breadcrumb {
+    &.has-title-button+.breadcrumb {
       padding-left: 50px;
     }
 
@@ -303,7 +289,7 @@ $subheader-height: 60px;
     max-height: $header-height;
     padding: 0 1.3rem;
 
-    &.has-title-button + .breadcrumb {
+    &.has-title-button+.breadcrumb {
       padding-left: 56px;
     }
 
@@ -381,8 +367,15 @@ $subheader-height: 60px;
     z-index: 9000;
   }
 
-  &.subheader {
+  &.subheader,
+  &.personalize-subheader {
     background-color: $subhead-bg-color;
+
+    h1,
+    h2,
+    h3 {
+      color: $header-text-color;
+    }
   }
 
   .go-button {
@@ -487,6 +480,7 @@ $subheader-height: 60px;
 
   .full-searchfield-container {
     .searchfield-wrapper.context.has-focus {
+
       .searchfield,
       .btn {
         border-color: $header-searchfield-input-border-color;
@@ -503,6 +497,7 @@ $subheader-height: 60px;
 
     .searchfield-wrapper.has-focus {
       .btn {
+
         &:focus,
         &:active {
           color: $header-searchfield-btn-font-color;
@@ -527,16 +522,20 @@ $subheader-height: 60px;
 
 .header,
 .subheader {
+
   .toolbar,
   .flex-toolbar {
     .buttonset {
-      > .separator {
+      >.separator {
         background-color: $header-button-color;
         padding: 0;
       }
 
       [class^='btn']:not(.searchfield-category-button) {
         margin-right: 3px;
+        min-width: 45px;
+        text-overflow: ellipsis;
+        flex-shrink: 1;
       }
     }
 
@@ -590,7 +589,6 @@ $subheader-height: 60px;
       }
 
       &:focus:not(.hide-focus) {
-        box-shadow: 0 0 0 2px transparent, 0 0 0 1px $header-button-focus-color, $header-focus-box-shadow !important;
         color: $header-button-focus-color;
 
         &.collapse-button {
@@ -598,7 +596,7 @@ $subheader-height: 60px;
         }
 
         &:not(.collapse-button) {
-          box-shadow: 0 0 0 2px transparent, 0 0 0 0 $header-button-focus-color, $header-focus-box-shadow !important;
+          box-shadow: 0 0 0 2px transparent, 0 0 0 0 $header-button-focus-color, $header-focus-box-shadow;
         }
 
         .icon {
@@ -731,7 +729,7 @@ $subheader-height: 60px;
 
   [class^='btn'] {
     .icon.app-header {
-      > span {
+      >span {
         background-color: $header-button-color;
       }
     }
@@ -739,7 +737,7 @@ $subheader-height: 60px;
     &:focus,
     &:hover {
       .icon.app-header {
-        > span {
+        >span {
           background-color: $header-button-hover-color;
         }
       }
@@ -839,16 +837,22 @@ $subheader-height: 60px;
   }
 }
 
+.subheader .toolbar [class^='btn']:focus:not(.hide-focus):not(.collapse-button),
+.personalize-subheader .toolbar [class^='btn']:focus:not(.hide-focus):not(.collapse-button) {
+  box-shadow: 0 0 0 2px transparent, 0 0 0 1px $header-button-focus-color, $header-focus-box-shadow !important;
+}
+
 // Title Button Styles for these three elements
 .header,
 .subheader,
 .masthead {
   .toolbar {
     [class^='btn'] {
+
       .app-header,
       .app-drawer {
         &.icon {
-          > span {
+          >span {
             background-color: $header-button-color;
           }
         }
@@ -856,10 +860,11 @@ $subheader-height: 60px;
 
       &:hover:not([disabled]),
       &:active:not([disabled]) {
+
         .app-drawer,
         .app-header {
           &.icon {
-            > span {
+            >span {
               background-color: $header-button-hover-color;
             }
           }
@@ -867,10 +872,11 @@ $subheader-height: 60px;
       }
 
       &:focus {
+
         .app-drawer,
         .app-header {
           &.icon {
-            > span {
+            >span {
               background-color: $header-button-focus-color;
             }
           }
@@ -967,5 +973,37 @@ html[dir='rtl'] {
 
   svg {
     color: $ids-color-palette-slate-70 !important;
+  }
+}
+
+.header,
+.subheader,
+.personalize-subheader {
+  &.alabaster {
+    background-color: $ids-color-palette-white;
+
+    .toolbar [class^='btn'] {
+      &:focus {
+        border-color: #000 !important;
+        box-shadow: 0 0 0 2px transparent,
+          0 0 0 0 #606066,
+          0 0 2px 1px rgba(0, 0, 0, 0.3) !important
+      }
+
+      &:hover {
+        background-color: $header-toolbar-button-hover-color;
+
+        .icon {
+          background-color: $header-toolbar-button-hover-color;
+        }
+      }
+    }
+
+    &.subheader .toolbar [class^='btn']:focus:not(.hide-focus):not(.collapse-button),
+    &.personalize-subheader .toolbar [class^='btn']:focus:not(.hide-focus):not(.collapse-button) {
+      box-shadow: 0 0 0 2px transparent,
+        0 0 0 0 #606066,
+        0 0 2px 1px rgba(0, 0, 0, 0.3) !important
+    }
   }
 }

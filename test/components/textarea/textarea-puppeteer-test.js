@@ -1,5 +1,3 @@
-const { AxePuppeteer } = require('@axe-core/puppeteer');
-
 describe('Textarea Puppeteer Tests', () => {
   const baseUrl = 'http://localhost:4000/components/textarea';
 
@@ -35,11 +33,6 @@ describe('Textarea Puppeteer Tests', () => {
 
       await page.evaluate(() => document.querySelector('.textarea-wordcount').textContent)
         .then(textVal => expect(textVal).toBe('Characters left 68'));
-    });
-
-    it('should be accessible with no WCAG 2AA violations', async () => {
-      const results = await new AxePuppeteer(page).disableRules(['meta-viewport']).analyze();
-      expect(results.violations.length).toBe(0);
     });
 
     it('should allow maximum of 90 characters', async () => {

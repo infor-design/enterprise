@@ -330,6 +330,7 @@
   }
 
   .hero-bottom {
+    border-bottom: 1px solid $header-hero-text-color;
     background-color: $header-bg-color;
     height: 40px;
     max-height: 40px;
