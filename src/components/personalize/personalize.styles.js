@@ -28,7 +28,9 @@ function personalizeStyles(colors) {
   background-color: ${colors.secondaryButtonHover} !important;
   color: ${colors.darkest} !important;
 }
-.header.is-personalizable .buttonset .searchfield-wrapper.is-open svg {
+
+.header.is-personalizable .buttonset .searchfield-wrapper.is-open svg,
+.header .toolbar .buttonset .searchfield-wrapper.non-collapsible.toolbar-searchfield-wrapper.has-categories.has-go-button.has-close-icon-button.is-open button.searchfield-category-button svg.icon {
   color: ${colors.darkest} !important;
 }
 
