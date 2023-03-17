@@ -44,6 +44,12 @@ $subheader-height: 60px;
     background-color: $ids-color-palette-white;
 
     .toolbar [class^='btn'] {
+      &:focus {
+        box-shadow: 0 0 0 2px transparent,
+        0 0 0 1px $header-toolbar-button-hover-color,
+        0 0 3px 2px rgba(0, 0, 0, 0.3) !important;
+      }
+
       &:hover {
         background-color: $header-toolbar-button-hover-color;
 
@@ -51,6 +57,13 @@ $subheader-height: 60px;
           background-color: $header-toolbar-button-hover-color;
         }
       }
+    }
+
+    &.subheader .toolbar [class^='btn']:focus:not(.hide-focus):not(.collapse-button),
+    &.personalize-subheader .toolbar [class^='btn']:focus:not(.hide-focus):not(.collapse-button) {
+        box-shadow: 0 0 0 2px transparent,
+            0 0 0 1px $header-toolbar-button-hover-color,
+            0 0 3px 2px rgba(0, 0, 0, 0.3) !important;
     }
   }
 
@@ -381,8 +394,15 @@ $subheader-height: 60px;
     z-index: 9000;
   }
 
-  &.subheader {
+  &.subheader,
+  &.personalize-subheader {
     background-color: $subhead-bg-color;
+
+    h1,
+    h2,
+    h3 {
+      color: $header-text-color;
+    }
   }
 
   .go-button {
@@ -839,6 +859,11 @@ $subheader-height: 60px;
       }
     }
   }
+}
+
+.subheader .toolbar [class^='btn']:focus:not(.hide-focus):not(.collapse-button),
+.personalize-subheader .toolbar [class^='btn']:focus:not(.hide-focus):not(.collapse-button) {
+  box-shadow: 0 0 0 2px transparent, 0 0 0 1px $header-button-focus-color, $header-focus-box-shadow !important;
 }
 
 // Title Button Styles for these three elements

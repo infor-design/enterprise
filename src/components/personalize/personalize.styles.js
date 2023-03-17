@@ -630,6 +630,10 @@ html[class*="-dark"] .header.alabaster .toolbar-searchfield-wrapper .searchfield
   background-color: ${colors.base};
 }
 
+.header.alabaster .toolbar [class^='btn']:hover:not(.go-button):not(.searchfield-category-button) {
+  background-color: #E6F1FD !important
+}
+
 .header .toolbar-searchfield-wrapper.active .searchfield:focus {
   border-color: ${colors.contrast};
 }
@@ -1345,7 +1349,7 @@ html.theme-classic-light .header.alabaster + .page-container .is-personalizable 
 .hero-widget.is-personalizable .hero-footer .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary).is-open span:focus:not(.hide-focus),
 .hero-widget.is-personalizable .hero-footer .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary):focus:not(.hide-focus) {
   box-shadow: 0 0 0 2px transparent,
-    0 0 0 1px ${colors.subtext},
+    0 0 0 0 ${colors.subtext},
     0 0 2px 1px ${colors.subtext};
 }
 
@@ -1359,7 +1363,7 @@ html.theme-classic-light .header.alabaster + .page-container .is-personalizable 
 .header.is-personalizable:not(.alabaster) .toolbar [class^='btn']:focus:not(.hide-focus),
 .header.is-personalizable .flex-toolbar [class^='btn']:focus:not(.hide-focus) {
   box-shadow: 0 0 0 2px transparent,
-  0 0 0 1px ${colors.subtext},
+  0 0 0 0 ${colors.subtext},
   0 0 2px 1px ${colors.subtext} !important;
 }
 
