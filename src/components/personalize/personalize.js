@@ -622,6 +622,10 @@ Personalize.prototype = {
       this.setTheme(this.settings.theme);
     }
 
+    if (this.settings?.colors === '') {
+      this.settings.colors = 'default';
+    }
+
     if (this.settingsDidChange(prevSettings, 'colors')) {
       this.setColors(this.settings.colors);
     }
