@@ -39,7 +39,6 @@ describe('Textarea Puppeteer Tests', () => {
 
     it.skip('should be accessible with no WCAG 2AA violations', async () => {
       const results = await new AxePuppeteer(page).disableRules(['meta-viewport']).analyze();
-      console.log(results);
       expect(results.violations.length).toBe(0);
     });
 
