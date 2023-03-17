@@ -248,16 +248,29 @@ Header.prototype = {
    */
   setHeaderColorClass() {
     const colorSelected = document.querySelector('.submenu:last-child ul li.is-checked')?.innerText.toLowerCase() || 'default';
-    const headerElement = document.querySelector('header.header');
+    const headerElement = document.querySelectorAll('header.header');
+    const subheaderElement = document.querySelectorAll('.subheader');
+    const personalizeSubheaderElement = document.querySelectorAll('.personalize-subheader');
     const colors = theme.personalizationColors();
     const colorArr = Object.keys(colors);
 
     const colorMap = this.personalizationColors(colors);
 
     const colorToRemove = [...colorArr, 'default'];
-    this.removeClasses(headerElement, colorToRemove);
     const colorToAdd = colorMap[colorSelected];
-    headerElement.classList.add(colorToAdd);
+
+    headerElement.forEach((elem) => {
+      this.removeClasses(elem, colorToRemove);
+      elem?.classList.add(colorToAdd);
+    });
+    subheaderElement.forEach((elem) => {
+      this.removeClasses(elem, colorToRemove);
+      elem?.classList.add(colorToAdd);
+    });
+    personalizeSubheaderElement.forEach((elem) => {
+      this.removeClasses(elem, colorToRemove);
+      elem?.classList.add(colorToAdd);
+    });
   },
 
   /**

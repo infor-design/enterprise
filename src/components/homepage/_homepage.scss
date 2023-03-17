@@ -331,6 +331,7 @@
 
   .hero-bottom {
     background-color: $header-bg-color;
+    border-bottom: 1px solid $header-hero-text-color;
     height: 40px;
     max-height: 40px;
     min-height: 40px;

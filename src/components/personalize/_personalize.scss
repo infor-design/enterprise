@@ -39,12 +39,12 @@
 .is-personalizable .personalize-actionable.is-focused:not(.hide-focus),
 .is-personalizable .personalize-actionable:focus:not(.hide-focus) {
   border-color: $ids-color-palette-white;
-  box-shadow: 0 0 4px 3px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.2);
 }
 
 .is-personalizable .personalize-actionable.hyperlink:focus:not(.hide-focus)::after {
   border-color: $ids-color-palette-white;
-  box-shadow: 0 0 4px 3px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.2);
   opacity: 1;
 }
 
