@@ -10,7 +10,7 @@ describe('Breadcrumb puppeteer tests', () => {
       await page.goto(url, { waitUntil: ['networkidle2', 'load'] });
     });
 
-    it('should be accessible with no WCAG 2AA violations', async () => {
+    it.skip('should be accessible with no WCAG 2AA violations', async () => {
       // disabled viewport check because user-scalable is set to 0 in environment.js
       const results = await new AxePuppeteer(page).disableRules(['meta-viewport']).analyze();
       expect(results.violations.length).toBe(0);

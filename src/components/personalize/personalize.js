@@ -432,6 +432,9 @@ Personalize.prototype = {
       isDefault: true,
       theme: this.currentTheme || 'theme-new-light'
     });
+    const headers = $('.header, .subheader, .personalize-subheader');
+    headers.removeClass('alabaster');
+    headers.addClass('default');
   },
 
   /**
