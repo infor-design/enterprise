@@ -613,7 +613,7 @@ Personalize.prototype = {
     }
 
     // Copy the old settings to compare
-    const prevSettings = utils.extend({ }, this.settings);
+    const prevSettings = utils.extend({}, this.settings);
 
     // Merge in the new settings
     this.settings = utils.mergeSettings(this.element[0], settings, this.settings);

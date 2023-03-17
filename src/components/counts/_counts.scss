@@ -75,6 +75,10 @@
   width: auto;
 }
 
+.object-count.personalize-text {
+  color: $ids-color-palette-white;
+}
+
 .object-count {
   color: $font-color-descriptive;
   display: inline-block;

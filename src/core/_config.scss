@@ -2,20 +2,26 @@
 //================================================== //
 
 // Form Background Color
-$header-bg-color: $ids-color-palette-white;
+$header-bg-color: $ids-color-palette-azure-60;
 $subhead-bg-color: $ids-color-palette-white;
 $transparent: transparent;
 
 $header-border-color: $ids-color-palette-azure-80;
-$header-button-color: rgba($ids-color-palette-slate-100, 0.7);
-$header-button-focus-color: rgba($ids-color-palette-azure-60, 1);
-$header-button-hover-color: rgba($ids-color-palette-slate-100, 0.7);
-$header-button-disabled-color: $ids-color-palette-slate-40;
+$header-button-color: rgba($ids-color-palette-white, 1);
+$header-button-focus-color: rgba($ids-color-palette-white, 1);
+$header-button-hover-color: rgba($ids-color-palette-white, 0.7);
+$header-button-disabled-color: rgba($ids-color-palette-white, 0.3);
 $header-primary-btn-background-color: $ids-color-palette-azure-50;
 $header-primary-btn-background-hover-color: $ids-color-brand-primary-base;
-$header-text-color: $ids-color-palette-slate-100;
+$header-text-color: $ids-color-palette-white;
 $header-disabled-color: $ids-color-palette-slate-50;
 $header-focus-box-shadow: 0 0 4px 3px rgba(255, 255, 255, 0.3);
+
+$ids-color-palette-alabaster: $ids-color-palette-white;
+
+// Color Personalization in header
+$header-default-bg-color: $ids-color-palette-azure-60;
+$header-default-bg-hover-color: $ids-color-palette-azure-80;
 
 $header-hero-text-color: $ids-color-palette-slate-100;
 $header-hero-widget-bg-color: $subhead-bg-color;
@@ -915,10 +921,11 @@ $searchfield-header-color: $ids-color-palette-slate-100;
 $searchfield-header-bg-color: $ids-color-palette-white;
 $searchfield-header-border-color: $ids-color-palette-slate-90;
 $searchfield-header-border-color-new: $ids-color-palette-slate-30;
-$searchfield-header-text-color: $ids-color-palette-slate-60;
+$searchfield-header-text-color: $ids-color-palette-white;
 $searchfield-header-placeholder-text-color: rgba(255, 255, 255, 0.5);
 $searchfield-header-icon-color: $ids-color-palette-slate-60;
 $searchfield-header-hover-icon-color: $ids-color-palette-slate-100;
+$searchfield-header-inactive-icon-color: $searchfield-header-icon-color;
 
 $searchfield-moduletabs-bg-color: $ids-color-palette-slate-90;
 $searchfield-moduletabs-border-color: $ids-color-palette-slate-100;
@@ -966,8 +973,8 @@ $subheader-searchfield-category-button-font-color: $ids-color-palette-slate-80;
 $header-searchfield-input-border-color: $ids-color-palette-slate-40;
 $header-searchfield-input-border-hover-color: $ids-color-palette-slate-100;
 $header-searchfield-btn-font-color: $ids-color-palette-slate-80;
-$header-toolbar-searchfield-icon-color: $ids-color-palette-slate-100;
-$header-toolbar-button-hover-color: $ids-color-palette-azure-10;
+$header-toolbar-searchfield-icon-color: $ids-color-palette-white;
+$header-toolbar-button-hover-color: $ids-color-palette-azure-80;
 
 // Header Tabs
 $header-tabcontainer-border-color: $ids-color-palette-graphite-30;

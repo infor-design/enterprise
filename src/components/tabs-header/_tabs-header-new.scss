@@ -84,14 +84,15 @@
 
         &.dismissible {
           .icon {
-            color: $ids-color-palette-white;
+            color: $ids-color-palette-black;
             opacity: 0.6;
+            margin-top: unset;
           }
 
           &:hover,
           &.is-selected {
             .icon:not(.is-error):not(.icon-error) {
-              color: $ids-color-palette-white;
+              color: $ids-color-palette-slate-60;
               opacity: 1;
             }
           }

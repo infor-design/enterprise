@@ -5,7 +5,10 @@
 ## v4.82.0 Fixes
 
 - `[Header]` Fixed border in search field in the header. ([#7297](https://github.com/infor-design/enterprise/issues/7297))
+- `[Lookup]` Fix in keyword search not filtering single comma. ([#7165](https://github.com/infor-design/enterprise/issues/7165))
+- `[Personalization]` Changed default color back to azure and add alabaster in personalization colors. ([#7320](https://github.com/infor-design/enterprise/issues/7320))
 - `[Tabs]` Fixed the alignment of focus in RTL view. ([#6992](https://github.com/infor-design/enterprise/issues/6992))
+- `[Tabs Header]` Fixed the alignment of close button. ([#7273](https://github.com/infor-design/enterprise/issues/7273))
 
 ## v4.81.0
 
@@ -70,6 +73,7 @@
 - `[Searchfield]` Custom button adjustments in mobile. ([#7134](https://github.com/infor-design/enterprise/issues/7134))
 - `[Searchfield]` Go button adjustments for flex toolbar. ([#6014](https://github.com/infor-design/enterprise/issues/6014))
 - `[Searchfield]` Collapse button adjustments in mobile. ([#7164](https://github.com/infor-design/enterprise/issues/7164))
+- `[Searchfield]` Collapse button adjustments in header. ([#7210](https://github.com/infor-design/enterprise/issues/7210))
 - `[Slider]` Fixed sliding and dropping the handle outside of the component doesn't trigger the change event. ([#7028](https://github.com/infor-design/enterprise/issues/7028))
 - `[Tabs]` Changed header tabs disabled color to darker color. ([#7219](https://github.com/infor-design/enterprise/issues/7219))
 - `[Tabs]` Fixed incorrect fade out color in horizontal header tabs. ([#7244](https://github.com/infor-design/enterprise/issues/7244))
