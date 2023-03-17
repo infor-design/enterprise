@@ -3,12 +3,25 @@
 
 .header {
   h1 {
-    font-size: $ids-size-font-md;
+    font-size: 20px;
   }
 
   .page-title {
     font-size: $ids-size-font-md;
     margin-top: 0;
+  }
+
+  .toolbar {
+    .application-menu-trigger {
+      svg.icon {
+        width: 18px;
+        height: 18px;
+      }
+    }
+
+    .page-title, .section-title {
+      font-size: 20px;
+    }
   }
 
   .flex-toolbar {
