@@ -20,6 +20,18 @@ function personalizeStyles(colors) {
   border-color: ${colors.base} !important;
 }
 
+.header.is-personalizable .buttonset .searchfield-wrapper.is-open button {
+  background-color: ${colors.contrast};
+  color: ${colors.darkest} !important;
+}
+.header.is-personalizable .buttonset .searchfield-wrapper.is-open button.go-button:hover {
+  background-color: ${colors.secondaryButtonHover} !important;
+  color: ${colors.darkest} !important;
+}
+.header.is-personalizable .buttonset .searchfield-wrapper.is-open svg {
+  color: ${colors.darkest} !important;
+}
+
 html.theme-classic-dark .is-personalizable .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled {
   color: #888B94 !important;
 }
@@ -368,6 +380,16 @@ a.is-personalizable svg.ripple-effect {
   color: ${colors.contrast};
   background-color: ${colors.darker} !important;
   opacity: 1;
+}
+
+.header.is-personalizable .buttonset .searchfield-wrapper.non-collapsible.toolbar-searchfield-wrapper.has-categories .btn-icon.close:hover {
+  background-color: ${colors.contrast} !important;
+}
+html.theme-new-dark .header.is-personalizable .buttonset .searchfield-wrapper.non-collapsible.toolbar-searchfield-wrapper.has-categories .btn-icon.close,
+html.theme-new-dark .header.is-personalizable .buttonset .searchfield-wrapper.non-collapsible.toolbar-searchfield-wrapper.has-categories .btn-icon.close svg.close,
+html.theme-classic-dark .header.is-personalizable .buttonset .searchfield-wrapper.non-collapsible.toolbar-searchfield-wrapper.has-categories .btn-icon.close,
+html.theme-classic-dark .header.is-personalizable .buttonset .searchfield-wrapper.non-collapsible.toolbar-searchfield-wrapper.has-categories .btn-icon.close svg.close {
+  background-color: transparent !important;
 }
 
 .header.is-personalizable button:not(.searchfield-category-button):not(:disabled):hover .icon {
