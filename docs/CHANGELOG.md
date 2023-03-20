@@ -9,6 +9,7 @@
 - `[Personalization]` Changed default color back to azure and add alabaster in personalization colors. ([#7320](https://github.com/infor-design/enterprise/issues/7320))
 - `[Tabs]` Fixed the alignment of focus in RTL view. ([#6992](https://github.com/infor-design/enterprise/issues/6992))
 - `[Tabs Header]` Fixed the alignment of close button. ([#7273](https://github.com/infor-design/enterprise/issues/7273))
+- `[Timeline]` Fixed the alignment when timeline is inside a card. ([#7278](https://github.com/infor-design/enterprise/issues/7278))
 
 ## v4.81.0
 

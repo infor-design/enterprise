@@ -357,6 +357,13 @@ a.is-personalizable svg.ripple-effect {
   color: ${colors.contrast} !important;
 }
 
+html[class*="-dark"] .is-personalizable .personalize-subheader button:not(:disabled),
+html[class*="-dark"] .is-personalizable .subheader button:not(:disabled),
+html[class*="-dark"] .is-personalizable .personalize-subheader button:not(:disabled) .icon,
+html[class*="-dark"] .is-personalizable .subheader button:not(:disabled) .icon {
+  color: #ffff !important;
+}
+
 .header.is-personalizable button:not(:disabled) .app-header.icon > span,
 .is-personalizable .personalize-subheader button:not(:disabled) .app-header.icon > span {
   background-color: ${colors.contrast} !important;
@@ -443,7 +450,6 @@ html.theme-new-dark .header.alabaster.is-personalizable .toolbar [class^='btn']:
 html.theme-new-dark .header.alabaster.is-personalizable button:not(.searchfield-category-button):not(:disabled):hover .icon {
   background-color: transparent !important;
 }
-
 
 .header.alabaster.is-personalizable button:not(.go-button):not(.searchfield-category-button):not(:disabled):hover,
 .header.alabaster.is-personalizable button:not(:disabled):hover .app-header.icon > span,
@@ -652,6 +658,14 @@ html[class*="-dark"] .header.alabaster .toolbar-searchfield-wrapper .searchfield
 
 .header .toolbar [class^='btn']:hover:not(.go-button):not(.searchfield-category-button) {
   background-color: ${colors.base};
+}
+
+.header.alabaster .toolbar [class^='btn']:hover:not(.go-button):not(.searchfield-category-button) {
+  background-color: #E6F1FD !important;
+}
+
+html[class*="-dark"] .header.alabaster .toolbar [class^='btn']:hover:not(.go-button):not(.searchfield-category-button) {
+  background-color: #47474C !important;
 }
 
 .header .toolbar-searchfield-wrapper.active .searchfield:focus {
@@ -1148,6 +1162,14 @@ html[class*="-dark"] .header.alabaster + .is-personalizable .personalize-header 
   background-color: ${colors.lighter} !important;
 }
 
+html[class*="-dark"] .is-personalizable .personalize-subheader:not(.amber):not(.azure):not(.amber):not(.amethyst):not(.emerald):not(.graphite):not(.ruby):not(.slate):not(.turquoise) {
+  background-color: #77777C !important;
+}
+
+html[class*="-dark"] .is-personalizable .subheader:not(.amber):not(.azure):not(.amber):not(.amethyst):not(.emerald):not(.graphite):not(.ruby):not(.slate):not(.turquoise) {
+  background-color: #77777C !important;
+}
+
 .is-personalizable .personalize-subheader  p,
 .personalize-subheader.is-personalizable p {
   color: ${colors.contrast} !important;
@@ -1158,6 +1180,16 @@ html[class*="-dark"] .header.alabaster + .is-personalizable .personalize-header 
 .is-personalizable .personalize-subheader h2,
 .personalize-subheader.is-personalizable h2 {
   color: ${colors.contrast} !important;
+}
+
+html[class*="-dark"] .is-personalizable .personalize-subheader h1,
+html[class*="-dark"] .is-personalizable .personalize-subheader h2 {
+  color: #fff !important;
+}
+
+html[class*="-dark"] .is-personalizable .subheader h1,
+html[class*="-dark"] .is-personalizable .subheader h2 {
+  color: #fff !important;
 }
 
 .is-personalizable .personalize-subheader  .icon,
@@ -1369,7 +1401,7 @@ html.theme-classic-light .header.alabaster + .page-container .is-personalizable 
 .hero-widget.is-personalizable .hero-footer .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary).is-open span:focus:not(.hide-focus),
 .hero-widget.is-personalizable .hero-footer .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary):focus:not(.hide-focus) {
   box-shadow: 0 0 0 2px transparent,
-    0 0 0 1px ${colors.subtext},
+    0 0 0 0 ${colors.subtext},
     0 0 2px 1px ${colors.subtext};
 }
 
@@ -1383,7 +1415,7 @@ html.theme-classic-light .header.alabaster + .page-container .is-personalizable 
 .header.is-personalizable:not(.alabaster) .toolbar [class^='btn']:focus:not(.hide-focus),
 .header.is-personalizable .flex-toolbar [class^='btn']:focus:not(.hide-focus) {
   box-shadow: 0 0 0 2px transparent,
-  0 0 0 1px ${colors.subtext},
+  0 0 0 0 ${colors.subtext},
   0 0 2px 1px ${colors.subtext} !important;
 }
 

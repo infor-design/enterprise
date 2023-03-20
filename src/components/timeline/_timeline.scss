@@ -141,6 +141,36 @@
   margin-top: 20px;
 }
 
+.column {
+  &.one-third {
+    .card .timeline,
+    .widget .timeline {
+      &::before {
+        bottom: 60px;
+        left: 1.125em;
+        height: 85%;
+      }
+
+      .timeline-block {
+        .indicator-container {
+          margin-left: 0;
+        }
+
+        .content,
+        .date {
+          margin-left: 5em;
+          float: none;
+        }
+
+        .date {
+          width: auto;
+          top: 85%;
+        }
+      }
+    }
+  }
+}
+
 // RTL Styles
 html[dir='rtl'] {
   .timeline {
