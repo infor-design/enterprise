@@ -1,33 +1,134 @@
 <div class="is-personalizable">
   <header class="header personalize-header">
-    <div class="toolbar">
-      <div class="title">
-        {{> includes/header-appmenu-trigger}}
-        <h1>Header</h1>
+    <div class="flex-toolbar">
+      <div class="toolbar-section title">
+        <h2>Incredibly Long Toolbar (Favor's Buttonset)</h2>
       </div>
 
-      <div class="buttonset">
-        <label for="header-searchfield" class="audible">Search</label>
-        <input id="header-searchfield" class="searchfield" name="header-searchfield" />
+      <div class="toolbar-section buttonset">
+        <button class="btn">
+          <span>Text Button</span>
+        </button>
+
+        <button class="btn-menu"
+          data-options="{ 'attributes': [ { 'name': 'data-automation-id', 'value': 'my-menubutton' } ] }">
+          <span>Menu Button</span>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Item One</a></li>
+          <li><a href="#">Item Two</a></li>
+          <li class="submenu">
+            <a href="#">Item Three</a>
+            <ul class="popupmenu">
+              <li><a href="#">Sub-Item One</a></li>
+              <li><a href="#">Sub-Item Two</a></li>
+            </ul>
+          </li>
+          <li><a href="#">Item Four</a></li>
+        </ul>
+
+        <button class="btn-icon" disabled="true">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-settings"></use>
+          </svg>
+          <span class="audible">Settings</span>
+        </button>
+
+        <button class="btn-icon">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-delete"></use>
+          </svg>
+          <span class="audible">Trash</span>
+        </button>
       </div>
-      {{> includes/header-actionbutton}}
+
+      <div class="toolbar-section search">
+        <div class="searchfield-wrapper">
+          <label for="toolbar-searchfield-01" class="audible">Toolbar Search</label>
+          <input id="toolbar-searchfield-01" class="searchfield" placeholder="Search..."
+            data-options="{ clearable: true }" />
+        </div>
+      </div>
+
+      <div class="toolbar-section more">
+        <button class="btn-actions">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-more"></use>
+          </svg>
+          <span class="audible">More Actions</span>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Pre-defined Item #1</a></li>
+          <li><a href="#">Pre-defined Item #2</a></li>
+          <li><a href="#">Pre-defined Item #3</a></li>
+        </ul>
+      </div>
     </div>
   </header>
   <header class="header personalize-subheader">
-    <!--
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rutrum hendrerit nunc sed mollis.</p>
-      -->
-    <div class="toolbar">
-      <div class="title">
-        <h2>Sub-Header 2</h2>
+    <div class="flex-toolbar">
+      <div class="toolbar-section title">
+        <h2>Incredibly Long Toolbar (Favor's Buttonset)</h2>
       </div>
 
-      <button type="button" class="btn">
-        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-          <use href="#icon-filter"></use>
-        </svg>
-        <span>Filter 2</span>
-      </button>
+      <div class="toolbar-section buttonset">
+        <button class="btn">
+          <span>Text Button</span>
+        </button>
+
+        <button class="btn-menu"
+          data-options="{ 'attributes': [ { 'name': 'data-automation-id', 'value': 'my-menubutton' } ] }">
+          <span>Menu Button</span>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Item One</a></li>
+          <li><a href="#">Item Two</a></li>
+          <li class="submenu">
+            <a href="#">Item Three</a>
+            <ul class="popupmenu">
+              <li><a href="#">Sub-Item One</a></li>
+              <li><a href="#">Sub-Item Two</a></li>
+            </ul>
+          </li>
+          <li><a href="#">Item Four</a></li>
+        </ul>
+
+        <button class="btn-icon" disabled="true">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-settings"></use>
+          </svg>
+          <span class="audible">Settings</span>
+        </button>
+
+        <button class="btn-icon">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-delete"></use>
+          </svg>
+          <span class="audible">Trash</span>
+        </button>
+      </div>
+
+      <div class="toolbar-section search">
+        <div class="searchfield-wrapper">
+          <label for="toolbar-searchfield-01" class="audible">Toolbar Search</label>
+          <input id="toolbar-searchfield-01" class="searchfield" placeholder="Search..."
+            data-options="{ clearable: true }" />
+        </div>
+      </div>
+
+      <div class="toolbar-section more">
+        <button class="btn-actions">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-more"></use>
+          </svg>
+          <span class="audible">More Actions</span>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Pre-defined Item #1</a></li>
+          <li><a href="#">Pre-defined Item #2</a></li>
+          <li><a href="#">Pre-defined Item #3</a></li>
+        </ul>
+      </div>
     </div>
   </header>
 </div>

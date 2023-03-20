@@ -18,24 +18,19 @@ $subheader-height: 60px;
     color: $inverse-color;
   }
 
-  // Header with color personalization classes
-  &.default {
-    background-color: $header-default-bg-color;
+  .toolbar [class^='btn'] {
+    &:hover {
+      background-color: $header-default-bg-hover-color !important;
 
-    .toolbar [class^='btn'] {
-      &:hover {
-        background-color: $header-default-bg-hover-color !important;
-
-        .icon {
-          color: $ids-color-palette-white;
-        }
+      .icon {
+        color: $ids-color-palette-white;
       }
+    }
 
-      &.is-open {
-        .icon {
-          color: $ids-color-palette-white;
-          opacity: 1;
-        }
+    &.is-open {
+      .icon {
+        color: $ids-color-palette-white;
+        opacity: 1;
       }
     }
   }
@@ -252,9 +247,9 @@ $subheader-height: 60px;
     .back-button,
     .go-back {
       svg.icon {
-        height: 24px;
+        height: 18px;
         top: 1px;
-        width: 24px;
+        width: 18px;
       }
     }
 
@@ -367,15 +362,10 @@ $subheader-height: 60px;
     z-index: 9000;
   }
 
-  &.subheader,
-  &.personalize-subheader {
-    background-color: $subhead-bg-color;
-
-    h1,
-    h2,
-    h3 {
-      color: $header-text-color;
-    }
+  h1,
+  h2,
+  h3 {
+    color: $header-text-color;
   }
 
   .go-button {
@@ -530,7 +520,7 @@ $subheader-height: 60px;
 
       [class^='btn']:not(.searchfield-category-button) {
         margin-right: 3px;
-        min-width: 45px;
+        min-width: 32px;
         text-overflow: ellipsis;
         flex-shrink: 1;
       }
@@ -839,9 +829,23 @@ $subheader-height: 60px;
   box-shadow: 0 0 0 2px transparent, 0 0 0 1px $header-button-focus-color, $header-focus-box-shadow !important;
 }
 
+.subheader,
+.personalize-subheader {
+  h1,
+  h2,
+  h3 {
+    color: $header-text-color;
+  }
+
+  .flex-toolbar > .title h2 {
+    padding-inline-start: 14px;
+  }
+}
+
 // Title Button Styles for these three elements
 .header,
 .subheader,
+.personalize-subheader,
 .masthead {
   .toolbar {
     [class^='btn'] {
@@ -967,37 +971,5 @@ html[dir='rtl'] {
 
   svg {
     color: $ids-color-palette-slate-70 !important;
-  }
-}
-
-.header,
-.subheader,
-.personalize-subheader {
-  &.alabaster {
-    background-color: $ids-color-palette-white;
-
-    .toolbar [class^='btn'] {
-      &:focus {
-        border-color: #000 !important;
-        box-shadow: 0 0 0 2px transparent,
-          0 0 0 0 #606066,
-          0 0 2px 1px rgba(0, 0, 0, 0.3) !important;
-      }
-
-      &:hover {
-        background-color: $header-toolbar-button-hover-color;
-
-        .icon {
-          background-color: $header-toolbar-button-hover-color;
-        }
-      }
-    }
-
-    &.subheader .toolbar [class^='btn']:focus:not(.hide-focus):not(.collapse-button),
-    &.personalize-subheader .toolbar [class^='btn']:focus:not(.hide-focus):not(.collapse-button) {
-      box-shadow: 0 0 0 2px transparent,
-        0 0 0 0 #606066,
-        0 0 2px 1px rgba(0, 0, 0, 0.3) !important;
-    }
   }
 }

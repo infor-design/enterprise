@@ -974,7 +974,7 @@ $header-searchfield-input-border-color: $ids-color-palette-slate-40;
 $header-searchfield-input-border-hover-color: $ids-color-palette-slate-100;
 $header-searchfield-btn-font-color: $ids-color-palette-slate-80;
 $header-toolbar-searchfield-icon-color: $ids-color-palette-white;
-$header-toolbar-button-hover-color: #E6F1FD;
+$header-toolbar-button-hover-color: rgba(0, 0, 0, 0.3);
 
 // Header Tabs
 $header-tabcontainer-border-color: $ids-color-palette-graphite-30;
@@ -1005,7 +1005,6 @@ $header-tabcontainer-border-color-new: $ids-color-palette-graphite-30;
 $header-tab-normal-color-new: $ids-color-palette-graphite-60;
 $header-tab-hover-color-new: $ids-color-palette-azure-60;
 $header-tab-selected-color-new: $ids-color-brand-primary-base;
-
 
 // Header Breadcrumb
 $header-breadcrumb-color: $ids-color-palette-slate-90;

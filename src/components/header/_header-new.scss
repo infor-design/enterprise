@@ -93,6 +93,14 @@
       }
     }
   }
+
+  .toolbar [class^='btn'].application-menu-trigger {
+    top: 3px;
+  }
+
+  .toolbar .application-menu-trigger svg.icon {
+    top: 0;
+  }
 }
 
 .subheader {

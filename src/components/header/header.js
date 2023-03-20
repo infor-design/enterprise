@@ -130,10 +130,6 @@ Header.prototype = {
 
     const headerElem = document.querySelector('header.header');
 
-    if (headerElem && !headerElem.classList.contains('default')) {
-      this.setHeaderColorClass();
-    }
-
     // Used to track levels deep
     this.levelsDeep = [];
     this.levelsDeep.push(`${this.titleText.text()}`);
@@ -239,38 +235,6 @@ Header.prototype = {
     }
 
     return true;
-  },
-
-  /**
-   * Appending personalization color class
-   * @private
-   * @returns {void}
-   */
-  setHeaderColorClass() {
-    const colorSelected = document.querySelector('.submenu:last-child ul li.is-checked')?.innerText.toLowerCase() || 'default';
-    const headerElement = document.querySelectorAll('header.header');
-    const subheaderElement = document.querySelectorAll('.subheader');
-    const personalizeSubheaderElement = document.querySelectorAll('.personalize-subheader');
-    const colors = theme.personalizationColors();
-    const colorArr = Object.keys(colors);
-
-    const colorMap = this.personalizationColors(colors);
-
-    const colorToRemove = [...colorArr, 'default'];
-    const colorToAdd = colorMap[colorSelected];
-
-    headerElement.forEach((elem) => {
-      this.removeClasses(elem, colorToRemove);
-      elem?.classList.add(colorToAdd);
-    });
-    subheaderElement.forEach((elem) => {
-      this.removeClasses(elem, colorToRemove);
-      elem?.classList.add(colorToAdd);
-    });
-    personalizeSubheaderElement.forEach((elem) => {
-      this.removeClasses(elem, colorToRemove);
-      elem?.classList.add(colorToAdd);
-    });
   },
 
   /**
@@ -548,7 +512,6 @@ Header.prototype = {
 
     $('html').on(`themechanged.${COMPONENT_NAME}`, () => {
       this.updatePageChanger();
-      this.setHeaderColorClass();
     });
 
     // Events for the title button.  e.preventDefault(); stops Application Menu
@@ -651,13 +614,10 @@ Header.prototype = {
       const isDefault = link.parent().hasClass('is-default');
       if (isDefault) {
         personalization.setColorsToDefault();
-        this.setHeaderColorClass();
         return;
       }
       const color = link.attr('data-rgbcolor');
       personalization.setColors(color);
-
-      this.setHeaderColorClass();
     });
 
     // Mark theme as checked
@@ -678,8 +638,6 @@ Header.prototype = {
 
       $('body').find('.popupmenu [data-rgbcolor]').parent().removeClass('is-checked');
       $('body').find(`.popupmenu [data-rgbcolor="#${colors}"]`).parent().addClass('is-checked');
-
-      this.setHeaderColorClass();
     }
   },
 

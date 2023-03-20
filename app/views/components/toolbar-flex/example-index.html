@@ -8,7 +8,8 @@
   <div class="twelve columns">
 
     <!-- BEGIN Toolbar with All Buttons (Buttonset Favoring) -->
-    <div class="flex-toolbar" data-options="{ 'attributes': [ { 'name': 'data-automation-id', 'value': 'my-toolbar' } ] }">
+    <div class="flex-toolbar"
+      data-options="{ 'attributes': [ { 'name': 'data-automation-id', 'value': 'my-toolbar' } ] }">
       <div class="toolbar-section title">
         <h2>Incredibly Long Toolbar (Favor's Buttonset)</h2>
       </div>
@@ -18,7 +19,7 @@
           <span>Text Button</span>
         </button>
 
-        <button class="btn-menu" data-options="{ 'attributes': [ { 'name': 'data-automation-id', 'value': 'my-menubutton' } ] }">
+        <button class="btn-menu">
           <span>Menu Button</span>
         </button>
         <ul class="popupmenu">
@@ -52,7 +53,8 @@
       <div class="toolbar-section search">
         <div class="searchfield-wrapper">
           <label for="toolbar-searchfield-01" class="audible">Toolbar Search</label>
-          <input id="toolbar-searchfield-01" class="searchfield" placeholder="Search..." data-options="{ clearable: true }"/>
+          <input id="toolbar-searchfield-01" class="searchfield" placeholder="Search..."
+            data-options="{ clearable: true }" />
         </div>
       </div>
 
@@ -78,7 +80,8 @@
   <div class="twelve columns">
 
     <!-- BEGIN Toolbar with All Buttons (Title Favoring) -->
-    <div class="flex-toolbar" data-options="{ 'attributes': [ { 'name': 'data-automation-id', 'value': 'flex-toolbar-title' } ] }">
+    <div class="flex-toolbar"
+      data-options="{ 'attributes': [ { 'name': 'data-automation-id', 'value': 'flex-toolbar-title' } ] }">
       <div class="toolbar-section title favor">
         <h2>Incredibly Long Toolbar (Favor's Title)</h2>
       </div>
@@ -122,7 +125,8 @@
       <div class="toolbar-section search">
         <div class="searchfield-wrapper">
           <label for="toolbar-searchfield-02" class="audible">Toolbar Search</label>
-          <input id="toolbar-searchfield-02" class="searchfield" placeholder="Search..." data-options="{ clearable: true }"/>
+          <input id="toolbar-searchfield-02" class="searchfield" placeholder="Search..."
+            data-options="{ clearable: true }" />
         </div>
       </div>
 
@@ -148,7 +152,8 @@
   <div class="twelve columns">
 
     <!-- BEGIN Toolbar similar to Header Toolbar -->
-    <div class="flex-toolbar" data-options="{ 'attributes': [ { 'name': 'data-automation-id', 'value': 'flex-toolbar-header' } ] }">
+    <div class="flex-toolbar"
+      data-options="{ 'attributes': [ { 'name': 'data-automation-id', 'value': 'flex-toolbar-header' } ] }">
       <div class="toolbar-section">
         {{> includes/header-appmenu-trigger}}
       </div>
@@ -164,7 +169,8 @@
       <div class="toolbar-section search">
         <div class="searchfield-wrapper">
           <label for="toolbar-searchfield-04" class="audible">Toolbar Search</label>
-          <input id="toolbar-searchfield-04" class="searchfield" placeholder="Search..." data-options="{ clearable: true }"/>
+          <input id="toolbar-searchfield-04" class="searchfield" placeholder="Search..."
+            data-options="{ clearable: true }" />
         </div>
       </div>
     </div>
@@ -176,7 +182,8 @@
   <div class="twelve columns">
 
     <!-- BEGIN Toolbar with Title Eyebrow -->
-    <div class="flex-toolbar" data-options="{ 'attributes': [ { 'name': 'data-automation-id', 'value': 'flex-toolbar-eyebrow' } ] }">
+    <div class="flex-toolbar"
+      data-options="{ 'attributes': [ { 'name': 'data-automation-id', 'value': 'flex-toolbar-eyebrow' } ] }">
       <div class="toolbar-section">
         <button class="btn-icon" type="button">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
@@ -194,7 +201,8 @@
       <div class="toolbar-section search">
         <div class="searchfield-wrapper">
           <label for="toolbar-searchfield-03" class="audible">Toolbar Search</label>
-          <input id="toolbar-searchfield-03" class="searchfield" placeholder="Search..." data-options="{ clearable: true }"/>
+          <input id="toolbar-searchfield-03" class="searchfield" placeholder="Search..."
+            data-options="{ clearable: true }" />
         </div>
       </div>
 
@@ -218,7 +226,7 @@
 </div>
 
 <script>
-  $('.flex-toolbar').on('selected.test', function(e, item, secondArg) {
+  $('.flex-toolbar').on('selected.test', function (e, item, secondArg) {
     var text = $(item.element).text().trim();
     var selectedItem;
 
@@ -229,10 +237,10 @@
     $('body').toast({
       title: 'Toolbar Item Selected',
       message: '<p>' +
-        'text content: "<b>'+ text +'</b>"<br/>' +
-        'item type: "<b>'+ item.type +'</b>"' +
+        'text content: "<b>' + text + '</b>"<br/>' +
+        'item type: "<b>' + item.type + '</b>"' +
         (selectedItem ? '<br />' + selectedItem : '') +
-      '</p>'
+        '</p>'
     });
   });
 </script>

@@ -179,7 +179,7 @@ Personalize.prototype = {
       amber: ['#db7726', '#bb5500'], // amber 09
       amethyst: ['#9279a6', '#7834dd'], // amethyst 06
       azure: ['#2578a9', '#0563c2', '#368AC0', '#368ac0'], // azure 07/08
-      emerald: ['#56932e', '#1f9254', '#2AC371'], // emerald 08
+      emerald: ['#56932e', '#1f9254'], // emerald 08
       graphite: ['#5c5c5c', '#808080'], // graphite 06
       ruby: ['#941e1e', '#7b0f11'], // ruby 09
       slate: ['#50535a', '#98949e'], // slate 06
@@ -192,32 +192,6 @@ Personalize.prototype = {
       foundColor = foundColor || forceToBeLightTextOn[color].indexOf(isDark) > -1;
     });
     isDark = foundColor ? 'white' : null;
-
-    // START OF NEW THEME COLOR STYLES
-    const buttonNewColors = {
-      amber: ['#bb5500', '#fbaf50', '#fcc888', '#fef2e5'],
-      amethyst: ['#7928e1', '#c2a1f1', '#ddcbf7', '#f1ebfc'],
-      azure: ['#0066d4', '#55a3f3', '#8abff7', '#e6f1fd'],
-      emerald: ['#1f9254', '#78d8a3', '#a1e4bf', '#ebf9f1'],
-      graphite: ['#535353', '#97979b', '#b7b7ba', '#efeff0'],
-      ruby: ['#8d0b0e', '#ee9496', '#f5c3c4', '#fbe7e8'],
-      slate: ['#606066', '#97979b', '#b7b7ba', '#efeff0'],
-      turquoise: ['#297b7b', '#82d4d4', '#a8e1e1', '#ecf8f8']
-    };
-
-    const currentColor = `${colors.header || defaultColors.header}`.toLowerCase();
-    Object.keys(buttonNewColors).forEach((color) => {
-      if (buttonNewColors[color].indexOf(currentColor) > -1) {
-        colors.darkNewButton = buttonNewColors[color][1];
-        colors.darkNewButtonHover = buttonNewColors[color][2];
-        colors.secondaryButtonHover = buttonNewColors[color][3];
-      }
-    });
-
-    colors.darkNewButtonLighterHover = '#3e3e42';
-    colors.darkNewButtonDisabled = '#47474c';
-    colors.darkNewButtonTextDisabled = '#77777c';
-    // END OF NEW THEME COLOR STYLES
 
     // Evaluate text contrast colors.
     // If the primary color is too "bright", this will flip the text color to black.
@@ -266,6 +240,22 @@ Personalize.prototype = {
     colors.dark = colors.btnColorSubheader;
     colors.darker = colors.inactive;
     colors.darkest = colors.horizontalBorder;
+    colors.btnHoverColor = colors.contrast;
+    colors.focusBoxShadow = `0 0 0 2px transparent, 0 0 0 0 ${colors.subtext}, 0 0 2px 1px ${colors.subtext}`
+    colors.btnFocusBorderColor = colors.contrast;
+    colors.btnDisabledColor = `rgba(255, 255, 255, 0.3) !important`;
+
+    // Alabaster is different so readjust the colors
+    if (colors.header === '#ffffff') {
+      colors.text = '#0072ED';
+      colors.darker = '#E6F1FD';
+      colors.contrast = '#2F2F32';
+      colors.btnHoverColor = '#0072ED';
+      colors.focusBoxShadow = `0 0 0 2px transparent, 0 0 0 0 ${colors.contrast}, 0 0 1px 0px ${colors.contrast}`;
+      colors.btnFocusBorderColor = '#2F2F32';
+      colors.btnDisabledColor = `rgba(0, 0, 0, 0.6) !important`;
+      console.log(colors);
+    }
 
     // Some disabled colors on some preset color schemes come out terrible,
     // unless they are adjusted here. { color: ['classic', 'new'] }
@@ -273,7 +263,7 @@ Personalize.prototype = {
     const alternateDisabledColors = {
       amber: ['#db7726', '#bb5500'], // amber 09
       amethyst: ['#9279a6', '#7834dd'], // amethyst 06
-      emerald: ['#56932e', '#1f9254', '#2AC371'], // emerald 08
+      emerald: ['#56932e', '#1f9254'], // emerald 08
       slate: ['#50535a', '#98949e'], // slate 06
     };
     let useAlternates = false;
@@ -383,9 +373,6 @@ Personalize.prototype = {
       isDefault: true,
       theme: this.currentTheme || 'theme-new-light'
     });
-    const headers = $('.header, .subheader, .personalize-subheader');
-    headers.removeClass('alabaster');
-    headers.addClass('default');
   },
 
   /**
@@ -574,10 +561,6 @@ Personalize.prototype = {
 
     if (this.settingsDidChange(prevSettings, 'theme')) {
       this.setTheme(this.settings.theme);
-    }
-
-    if (this.settings?.colors === '') {
-      this.settings.colors = 'default';
     }
 
     if (this.settingsDidChange(prevSettings, 'colors')) {
