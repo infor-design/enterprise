@@ -133,7 +133,7 @@ Personalize.prototype = {
 
     // Default Colors...
     // (Color)07 for the main color (fx headers)
-    // (Color)06 for the secondary color (fx sub-headers)
+    // (Color)06 for the secondary color (fx subheaders)
     // Light or Dark (fff or 000) for the contrast color
 
     // (Color)06 for the vertical borders between module tabs - 133C59
