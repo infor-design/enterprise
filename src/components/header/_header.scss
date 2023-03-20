@@ -282,6 +282,12 @@ $subheader-height: 60px;
           }
         }
 
+        button.btn-icon.close {
+          svg.close.icon {
+            top: 8px !important;
+          }
+        }
+
         button.go-button {
           background-color: $ids-color-palette-white;
           color: $searchfield-header-buttons;
