@@ -246,6 +246,7 @@ Personalize.prototype = {
     colors.btnDisabledColor = `rgba(255, 255, 255, 0.3) !important`;
 
     // Alabaster is different so readjust the colors
+
     if (colors.header === '#ffffff') {
       colors.text = '#0072ED';
       colors.darker = '#E6F1FD';

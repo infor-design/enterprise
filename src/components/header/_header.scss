@@ -511,10 +511,28 @@ $subheader-height: 60px;
       }
     }
   }
+
+  .toolbar [class^='btn'] {
+    &:hover {
+      background-color: $header-default-bg-hover-color !important;
+
+      .icon {
+        color: $ids-color-palette-white;
+      }
+    }
+
+    &.is-open {
+      .icon {
+        color: $ids-color-palette-white;
+        opacity: 1;
+      }
+    }
+  }
 }
 
 .header,
-.subheader {
+.subheader,
+.personalize-subheader {
   .toolbar,
   .flex-toolbar {
     .buttonset {
@@ -538,7 +556,7 @@ $subheader-height: 60px;
       border-radius: 8px;
       color: $header-button-color;
 
-      &:hover {
+      &:not(.close):hover {
         background-color: $header-toolbar-button-hover-color;
       }
 

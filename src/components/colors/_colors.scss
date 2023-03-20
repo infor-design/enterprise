@@ -48,6 +48,14 @@ html.theme-classic-dark .primary-bg-color {
   background: #50535a;
 }
 
+.alabaster {
+  background-color: #fff;
+
+  &.swatch {
+    border: 1px solid #b7b7ba;
+  }
+}
+
 .primary-color {
   color: $ids-color-brand-primary-base !important;
 }

@@ -317,17 +317,17 @@ a.is-personalizable svg.ripple-effect {
 }
 
 .header.is-personalizable .title {
-  color: ${colors.contrast};
+  color: ${colors.contrast} !important;
 }
 
 .header.is-personalizable h1,
 .header.is-personalizable h2,
 .header.is-personalizable h3 {
-  color: ${colors.contrast};
+  color: ${colors.contrast} !important;
 }
 
 .object-count.personalize-text {
-  color: ${colors.contrast};
+  color: ${colors.contrast} !important;
 }
 
 .header.is-personalizable button svg.ripple-effect {
@@ -337,6 +337,9 @@ a.is-personalizable svg.ripple-effect {
 .header.is-personalizable button:not(:disabled),
 .header.is-personalizable button:not(:disabled) .icon,
 .header.is-personalizable button:not(:disabled) .app-header.icon > span,
+.subheader.is-personalizable button:not(:disabled),
+.subheader.is-personalizable button:not(:disabled) .icon,
+.subheader.is-personalizable button:not(:disabled) .app-header.icon > span,
 .is-personalizable .personalize-subheader button:not(:disabled),
 .is-personalizable .personalize-subheader button:not(:disabled) .icon,
 .is-personalizable .personalize-subheader button:not(:disabled) .app-header.icon > span  {
@@ -369,9 +372,15 @@ html[class*="-dark"] .is-personalizable .subheader button:not(:disabled) .icon {
   background-color: ${colors.contrast} !important;
 }
 
-.header.is-personalizable button:not(.go-button):not(.searchfield-category-button):not(:disabled):hover,
+.header.is-personalizable button:not(.go-button):not(.close):not(.searchfield-category-button):not(:disabled):hover,
 .header.is-personalizable button:not(:disabled):hover .app-header.icon > span,
-.header.is-personalizable .toolbar [class^='btn']:hover:not(.go-button):not(.searchfield-category-button):not([disabled]) {
+.header.is-personalizable .toolbar [class^='btn']:hover:not(.go-button):not(.close):not(.searchfield-category-button):not([disabled]),
+.subheader.is-personalizable button:not(.go-button):not(.close):not(.searchfield-category-button):not(:disabled):hover,
+.subheader.is-personalizable button:not(:disabled):hover .app-header.icon > span,
+.subheader.is-personalizable .toolbar [class^='btn']:hover:not(.go-button):not(.close):not(.searchfield-category-button):not([disabled]),
+.personalize-subheader button:not(.go-button):not(.close):not(.searchfield-category-button):not(:disabled):hover,
+.personalize-subheader button:not(:disabled):hover .app-header.icon > span,
+.personalize-subheader .toolbar [class^='btn']:hover:not(.go-button):not(.close):not(.searchfield-category-button):not([disabled]) {
   color: ${colors.contrast};
   background-color: ${colors.darker} !important;
   opacity: 1;
@@ -474,8 +483,9 @@ html[class*="theme-new-"] .personalize-header.tab-container.header-tabs:not(.alt
   color: rgba(255, 255, 255, 0.3) !important;
 }
 
-.header.is-personalizable button:not(:disabled) {
-  color: #fff !important;
+.header.is-personalizable button:not(:disabled),
+.subheader.is-personalizable button:not(:disabled)  {
+  color: ${colors.contrast} !important;
 }
 
 .header.is-personalizable  .flex-toolbar [class^='btn']:focus:not(.hide-focus) .icon {
@@ -989,14 +999,6 @@ html[class*="theme-classic-"] .tab-container.is-personalizable .tab-list-contain
 
 .is-personalizable .personalize-subheader {
   background-color: ${colors.lighter} !important;
-}
-
-html[class*="-dark"] .is-personalizable .personalize-subheader:not(.amber):not(.azure):not(.amber):not(.amethyst):not(.emerald):not(.graphite):not(.ruby):not(.slate):not(.turquoise) {
-  background-color: #77777C !important;
-}
-
-html[class*="-dark"] .is-personalizable .subheader:not(.amber):not(.azure):not(.amber):not(.amethyst):not(.emerald):not(.graphite):not(.ruby):not(.slate):not(.turquoise) {
-  background-color: #77777C !important;
 }
 
 .is-personalizable .personalize-subheader  p,
