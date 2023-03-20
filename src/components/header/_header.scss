@@ -396,7 +396,7 @@ $subheader-height: 60px;
     }
 
     svg.icon:not(.close) {
-      color: $header-tab-normal-color;
+      color: $header-toolbar-searchfield-icon-color;
       opacity: 1;
     }
   }
@@ -448,6 +448,11 @@ $subheader-height: 60px;
     &.has-focus {
       box-shadow: none;
     }
+  }
+
+  .toolbar {
+    height: $header-height;
+    padding: 0 1rem;
   }
 
   .go-button {
@@ -835,10 +840,6 @@ $subheader-height: 60px;
   h2,
   h3 {
     color: $header-text-color;
-  }
-
-  .flex-toolbar > .title h2 {
-    padding-inline-start: 14px;
   }
 }
 
