@@ -40,20 +40,6 @@ $subheader-height: 60px;
     }
   }
 
-  &.alabaster {
-    background-color: $ids-color-palette-white;
-
-    .toolbar [class^='btn'] {
-      &:hover {
-        background-color: $header-toolbar-button-hover-color;
-
-        .icon {
-          background-color: $header-toolbar-button-hover-color;
-        }
-      }
-    }
-  }
-
   .searchfield {
     background-color: transparent;
     border: 1px solid transparent;
@@ -381,8 +367,15 @@ $subheader-height: 60px;
     z-index: 9000;
   }
 
-  &.subheader {
+  &.subheader,
+  &.personalize-subheader {
     background-color: $subhead-bg-color;
+
+    h1,
+    h2,
+    h3 {
+      color: $header-text-color;
+    }
   }
 
   .go-button {
@@ -600,7 +593,7 @@ $subheader-height: 60px;
         }
 
         &:not(.collapse-button) {
-          box-shadow: 0 0 0 2px transparent, 0 0 0 0 $header-button-focus-color, $header-focus-box-shadow !important;
+          box-shadow: 0 0 0 2px transparent, 0 0 0 0 $header-button-focus-color, $header-focus-box-shadow;
         }
 
         .icon {
@@ -841,6 +834,11 @@ $subheader-height: 60px;
   }
 }
 
+.subheader .toolbar [class^='btn']:focus:not(.hide-focus):not(.collapse-button),
+.personalize-subheader .toolbar [class^='btn']:focus:not(.hide-focus):not(.collapse-button) {
+  box-shadow: 0 0 0 2px transparent, 0 0 0 1px $header-button-focus-color, $header-focus-box-shadow !important;
+}
+
 // Title Button Styles for these three elements
 .header,
 .subheader,
@@ -969,5 +967,37 @@ html[dir='rtl'] {
 
   svg {
     color: $ids-color-palette-slate-70 !important;
+  }
+}
+
+.header,
+.subheader,
+.personalize-subheader {
+  &.alabaster {
+    background-color: $ids-color-palette-white;
+
+    .toolbar [class^='btn'] {
+      &:focus {
+        border-color: #000 !important;
+        box-shadow: 0 0 0 2px transparent,
+          0 0 0 0 #606066,
+          0 0 2px 1px rgba(0, 0, 0, 0.3) !important
+      }
+
+      &:hover {
+        background-color: $header-toolbar-button-hover-color;
+
+        .icon {
+          background-color: $header-toolbar-button-hover-color;
+        }
+      }
+    }
+
+    &.subheader .toolbar [class^='btn']:focus:not(.hide-focus):not(.collapse-button),
+    &.personalize-subheader .toolbar [class^='btn']:focus:not(.hide-focus):not(.collapse-button) {
+      box-shadow: 0 0 0 2px transparent,
+        0 0 0 0 #606066,
+        0 0 2px 1px rgba(0, 0, 0, 0.3) !important
+    }
   }
 }
