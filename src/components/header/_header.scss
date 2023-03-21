@@ -19,7 +19,7 @@ $subheader-height: 60px;
   }
 
   .toolbar [class^='btn'] {
-    &:hover {
+    &:not(.close):not([disabled]):hover {
       background-color: $header-default-bg-hover-color !important;
 
       .icon {
@@ -80,6 +80,10 @@ $subheader-height: 60px;
     .icon.icon-dropdown {
       margin-left: 5px;
     }
+
+    &.btn-menu .icon.icon-dropdown {
+      margin-top: 1px;
+    }
   }
 
   .btn-primary {
@@ -116,7 +120,7 @@ $subheader-height: 60px;
 
   .section-title {
     color: $header-text-color;
-    font-size: $ids-size-font-base;
+    font-size: $ids-size-font-base !important;
     margin-top: 2px;
     padding: 0;
     text-transform: capitalize;
@@ -211,6 +215,7 @@ $subheader-height: 60px;
 
       .btn-icon {
         border-radius: 8px;
+        top: 3px;
       }
     }
 
@@ -272,7 +277,8 @@ $subheader-height: 60px;
           .icon.close {
             color: $searchfield-header-icon-color !important;
             opacity: unset;
-            top: 0;
+            top: 8px;
+            inset-inline: 6px;
           }
         }
       }
@@ -556,7 +562,7 @@ $subheader-height: 60px;
       border-radius: 8px;
       color: $header-button-color;
 
-      &:not(.close):hover {
+      &:not(.close):not(.collapse-button):hover {
         background-color: $header-toolbar-button-hover-color;
       }
 
@@ -606,6 +612,7 @@ $subheader-height: 60px;
         }
 
         &:not(.collapse-button) {
+          border-color: $header-button-focus-color;
           box-shadow: 0 0 0 2px transparent, 0 0 0 0 $header-button-focus-color, $header-focus-box-shadow;
         }
 

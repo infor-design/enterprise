@@ -3,13 +3,11 @@
 
   <div class="toolbar">
     <div class="title">
-      <button id="button1" type="button" class="btn-icon application-menu-trigger hide-focus" tabindex="0">
-        <span class="audible">Show navigation</span>
-        <span class="icon app-header go-back">
-          <span class="one"></span>
-          <span class="two"></span>
-          <span class="three"></span>
-        </span>
+      <button class="btn-icon application-menu-trigger personalize-actionable" type="button">
+        <span class="audible">Drill Down</span>
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-arrow-left"></use>
+        </svg>
       </button>
 
       <h1>
@@ -18,7 +16,7 @@
       </h1>
     </div>
 
-   <div class="buttonset">
+    <div class="buttonset">
       <button class="btn" type="submit">
         <svg class="icon" focusable="false">
           <use href="#icon-logout"></use>
@@ -28,7 +26,7 @@
       <button class="btn" type="button">
 
         <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
-          <use href="#icon-cart"/>
+          <use href="#icon-cart" />
         </svg>
         <span>Cart(37)</span>
       </button>
@@ -39,13 +37,14 @@
 
   <scriptvascript">
     $('body').on('initialized', function() {
-      $('#parameter-maintenance-save').on('click', function (e) {
-        $('body').toast({
-          'title': 'Disabled Button Click',
-          'message': 'The button <span style="font-weight: bold;">' + $(e.target).text().trim() + '</span> is supposed to be disabled, and therefore should not have triggered this messsage.  Something\'s wrong.'
-        });
-      });
+    $('#parameter-maintenance-save').on('click', function (e) {
+    $('body').toast({
+    'title': 'Disabled Button Click',
+    'message': 'The button <span style="font-weight: bold;">' + $(e.target).text().trim() + '</span> is supposed to be
+    disabled, and therefore should not have triggered this messsage. Something\'s wrong.'
     });
-  </script>
+    });
+    });
+    </script>
 
 </header>

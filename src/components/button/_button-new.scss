@@ -129,7 +129,7 @@
 .btn-menu {
   border-radius: 8px;
 
-  &:hover:not(:disabled) {
+  &:hover:not(:disabled):not(.close) {
     background-color: $button-color-tertiary-hover-background-new;
     color: $button-color-tertiary-hover-font-new;
 

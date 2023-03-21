@@ -2,13 +2,11 @@
 
   <div class="toolbar">
     <div class="title">
-      <button id="button1" type="button" class="btn-icon application-menu-trigger hide-focus" tabindex="0">
-        <span class="audible">Show navigation</span>
-        <span class="icon app-header go-back">
-          <span class="one"></span>
-          <span class="two"></span>
-          <span class="three"></span>
-        </span>
+      <button class="btn-icon application-menu-trigger personalize-actionable" type="button">
+        <span class="audible">Drill Down</span>
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-arrow-left"></use>
+        </svg>
       </button>
 
       <h1>
@@ -17,7 +15,7 @@
       </h1>
     </div>
 
-   <div class="buttonset">
+    <div class="buttonset">
       <button class="btn" type="submit">
         <span>View Profile</span>
       </button>
@@ -30,7 +28,7 @@
   </div>
 
   <script>
-    $('body').on('initialized', function() {
+    $('body').on('initialized', function () {
       $('#parameter-maintenance-save').on('click', function (e) {
         $('body').toast({
           'title': 'Disabled Button Click',

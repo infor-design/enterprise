@@ -876,11 +876,11 @@ $wizard-disabled-color: $ids-color-brand-secondary-alt;
 $wizard-active-color: $ids-color-brand-primary-base;
 $wizard-active-text-color: $ids-color-brand-primary-base;
 $wizard-focus-box-shadow: 0 0 0 1px $ids-color-brand-primary-base;
-$wizard-header-color: $ids-color-palette-azure-60;
-$wizard-header-tick-color: $ids-color-palette-slate-60;
-$wizard-header-secondary-color: $ids-color-palette-slate-20;
+$wizard-header-color: $ids-color-palette-white;
+$wizard-header-tick-color: $ids-color-palette-white;
+$wizard-header-secondary-color: rgba($ids-color-palette-white, 0.4);
 $wizard-header-disabled-color: rgba($ids-color-palette-white, 0.3);
-$wizard-header-text-color: $ids-color-palette-slate-60;
+$wizard-header-text-color: rgba($ids-color-palette-white, 0.5);
 $wizard-header-focus-box-shadow: 0 0 0 1px $ids-color-palette-white;
 
 $wizard-toolbar-bg-color: $panel-bg-color;

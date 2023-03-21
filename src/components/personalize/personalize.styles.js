@@ -738,6 +738,10 @@ html[dir='rtl'] .scrollable-flex-header.is-personalizable .breadcrumb.truncated:
   color: ${colors.btnDisabledColor};
 }
 
+.header .toolbar [class^='btn']:focus:not(.hide-focus):not(.collapse-button) {
+  border-color: ${colors.contrast};
+}
+
 .is-personalizable .tab-container.header-tabs:not(.alternate)::before,
 .is-personalizable.tab-container.header-tabs:not(.alternate)::before {
   background-image: linear-gradient(to right, ${colors.base} , ${colorUtils.hexToRgba(colors.base, 0)}) !important;
@@ -1052,6 +1056,10 @@ html[class*="theme-classic-"] .tab-container.is-personalizable .tab-list-contain
 }
 
 .is-personalizable .personalize-subheader {
+  background-color: ${colors.lighter} !important;
+}
+
+.section-wizard {
   background-color: ${colors.lighter} !important;
 }
 

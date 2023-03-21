@@ -269,7 +269,7 @@ Personalize.prototype = {
         colors.btnHoverColor = '#ffffff';
         colors.hyperlinkText = '#ffffff';
         colors.lighter = '#77777C';
-        colors.btnDisabledColor = 'rgba(255, 255, 255, 0.8) !important';
+        colors.btnDisabledColor = 'rgba(255, 255, 255, 0.4) !important';
       }
 
       if (isClassicDark) {
@@ -281,7 +281,7 @@ Personalize.prototype = {
         colors.btnHoverColor = '#ffffff';
         colors.hyperlinkText = '#ffffff';
         colors.lighter = '#656871';
-        colors.btnDisabledColor = 'rgba(255, 255, 255, 0.8) !important';
+        colors.btnDisabledColor = 'rgba(255, 255, 255, 0.4) !important';
       }
     }
 
