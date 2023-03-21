@@ -545,9 +545,12 @@ html[class*="theme-new-"] .personalize-header.tab-container.header-tabs:not(.alt
   color: ${colors.contrast};
 }
 
-.header.is-personalizable .wizard-header .tick:focus .label,
+.header.is-personalizable .wizard-header .tick:focus .label {
+  border-color: ${colors.lighter};
+}
+
 .header.is-personalizable .wizard-header .tick.current::before {
-  border-color: ${colors.light};
+  border-color: ${colors.contrast};
 }
 
 .is-personalizable.hero-widget .hero-footer .hero-footer-nav-title {
@@ -591,21 +594,32 @@ html[class*='new-'] .is-personalizable.hero-widget .hero-header .toolbar .button
   color: ${colors.contrast};
 }
 
+.header.is-personalizable .wizard-header .tick::after {
+  background-color: ${colors.base};
+  border: 2px solid ${colors.contrast};
+}
+
 .header.is-personalizable .wizard-header .bar,
-.header.is-personalizable .wizard-header .tick.current::after,
-.header .wizard-header .tick::after,
 .header.is-personalizable .wizard-header .tick.complete {
   background-color: ${colors.darkest};
 }
 
 .header.is-personalizable .wizard-header .tick.complete::after,
-.header.is-personalizable .wizard-header .completed-range,
-.header.is-personalizable .wizard-header .tick.current {
+.header.is-personalizable .wizard-header .completed-range {
   background-color: ${colors.contrast};
 }
 
 .header.is-personalizable .wizard-header .tick.complete .label {
   color: ${colors.contrast};
+}
+
+.header.is-personalizable .wizard-header .tick.current {
+  box-shadow: none;
+}
+
+.header.is-personalizable .wizard-header .tick.current::after {
+  background-color: ${colors.contrast};
+  border-color: ${colors.contrast};
 }
 
 .subheader.is-personalizable .go-button.is-personalizable {
