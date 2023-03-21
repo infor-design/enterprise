@@ -742,6 +742,14 @@ html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::af
   background-image: linear-gradient(to left, ${colorUtils.hexToRgba(colors.base, 0)}, ${colors.base}) !important;
 }
 
+.is-personalizable.header .section-title {
+  color: ${colors.contrast};
+}
+
+.is-personalizable.header button.application-menu-trigger:hover:not(:disabled) .icon.app-header.go-back > span {
+  background-color: ${colors.contrast} !important;
+}
+
 .is-personalizable .tab-container.header-tabs:not(.alternate),
 .is-personalizable.tab-container.header-tabs:not(.alternate) {
   border-bottom-color: ${colors.base};
