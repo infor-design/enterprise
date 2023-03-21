@@ -3376,7 +3376,10 @@ $datagrid-small-row-height: 25px;
         top: 0;
         width: 0;
       }
+    }
 
+    &.is-dirty-cell,
+    &.error {
       .icon-rowstatus {
         display: none;
       }
@@ -4385,6 +4388,8 @@ td .btn-actions {
     &:focus {
       .icon {
         visibility: visible;
+        background-color: transparent;
+        box-shadow: none;
       }
 
       .icon-error,
