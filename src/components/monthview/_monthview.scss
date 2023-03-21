@@ -175,6 +175,7 @@
             border-color: $datepicker-focus-border-color;
             box-shadow: $focus-box-shadow;
             outline: none;
+            outline-style: none;
             -moz-outline-style: none;
           }
         }
@@ -538,6 +539,7 @@
       border-color: $datepicker-focus-border-color;
       box-shadow: $focus-box-shadow;
       outline: none;
+      outline-style: none;
       -moz-outline-style: none;
     }
 

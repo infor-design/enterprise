@@ -312,6 +312,10 @@ a.is-personalizable svg.ripple-effect {
   background-color: ${colors.base};
 }
 
+.scrollable-flex-header .breadcrumb {
+  background-color: ${colors.base};
+}
+
 .header.is-personalizable.has-tabs .tab-container.header-tabs:not(.alternate) {
   background-color: ${colors.base};
 }
@@ -513,6 +517,18 @@ html[class*="theme-new-"] .personalize-header.tab-container.header-tabs:not(.alt
 
 .header .toolbar [class^='btn']:hover:not(.go-button):not(.searchfield-category-button) {
   background-color: ${colors.base};
+}
+
+.scrollable-flex-header .breadcrumb .hyperlink,
+.scrollable-flex-header .breadcrumb .breadcrumb-text,
+.scrollable-flex-header .breadcrumb .hyperlink,
+.scrollable-flex-header .breadcrumb .breadcrumb-list li::after,
+.scrollable-flex-header .breadcrumb ol li::after {
+  color: ${colors.contrast} !important;
+}
+
+.scrollable-flex-header .breadcrumb .hyperlink:focus:not([disabled]) {
+  border: 1px solid ${colors.contrast};
 }
 
 .header .toolbar-searchfield-wrapper.active .searchfield:focus {

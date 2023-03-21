@@ -51,12 +51,6 @@
   color: rgba(255, 255, 255, 0.8);
 }
 
-.is-personalizable .personalize-actionable:hover:not([disabled]),
-.is-personalizable .personalize-actionable:hover:not([disabled]) svg {
-  background: $personalize-header-icon-hover-bg-color;
-  color: rgba(255, 255, 255, 1) !important;
-}
-
 .is-personalizable .personalize-actionable.is-focused:not(.hide-focus),
 .is-personalizable .personalize-actionable:focus:not(.hide-focus) {
   border-color: $ids-color-palette-white;

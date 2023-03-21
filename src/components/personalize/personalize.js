@@ -241,9 +241,9 @@ Personalize.prototype = {
     colors.darker = colors.inactive;
     colors.darkest = colors.horizontalBorder;
     colors.btnHoverColor = colors.contrast;
-    colors.focusBoxShadow = `0 0 0 2px transparent, 0 0 0 0 ${colors.subtext}, 0 0 2px 1px ${colors.subtext}`
+    colors.focusBoxShadow = `0 0 0 2px transparent, 0 0 0 0 ${colors.subtext}, 0 0 2px 1px ${colors.subtext}`;
     colors.btnFocusBorderColor = colors.contrast;
-    colors.btnDisabledColor = `rgba(255, 255, 255, 0.3) !important`;
+    colors.btnDisabledColor = 'rgba(255, 255, 255, 0.3) !important';
 
     // Alabaster is different so readjust the colors
 
@@ -258,30 +258,30 @@ Personalize.prototype = {
       colors.btnHoverColor = '#0072ED';
       colors.focusBoxShadow = `0 0 0 2px transparent, 0 0 0 0 ${colors.contrast}, 0 0 1px 0px ${colors.contrast}`;
       colors.btnFocusBorderColor = '#2F2F32';
-      colors.btnDisabledColor = `rgba(0, 0, 0, 0.6) !important`;
+      colors.btnDisabledColor = 'rgba(0, 0, 0, 0.6) !important';
 
       if (isNewDark) {
         colors.base = '#606066';
         colors.dark = colors.base;
         colors.contrast = '#ffffff';
-        colors.focusBoxShadow = `0 0 0 2px transparent, 0 0 0 0 ${colors.contrast}, 0 0 1px 0px ${colors.contrast}`;
+        colors.focusBoxShadow = `0 0 0 2px transparent, 0 0 0 1px ${colors.contrast}, 0 0 1px 1px ${colors.contrast}`;
         colors.darker = '#47474C';
         colors.btnHoverColor = '#ffffff';
         colors.hyperlinkText = '#ffffff';
         colors.lighter = '#77777C';
-        colors.btnDisabledColor = `rgba(255, 255, 255, 0.8) !important`;
+        colors.btnDisabledColor = 'rgba(255, 255, 255, 0.8) !important';
       }
 
       if (isClassicDark) {
         colors.base = '#50535a';
         colors.dark = colors.base;
         colors.contrast = '#ffffff';
-        colors.focusBoxShadow = `0 0 0 2px transparent, 0 0 0 0 ${colors.contrast}, 0 0 1px 0px ${colors.contrast}`;
+        colors.focusBoxShadow = `0 0 0 2px transparent, 0 0 0 1px ${colors.contrast}, 0 0 1px 1px ${colors.contrast}`;
         colors.darker = '#313236';
         colors.btnHoverColor = '#ffffff';
         colors.hyperlinkText = '#ffffff';
         colors.lighter = '#656871';
-        colors.btnDisabledColor = `rgba(255, 255, 255, 0.8) !important`;
+        colors.btnDisabledColor = 'rgba(255, 255, 255, 0.8) !important';
       }
     }
 
