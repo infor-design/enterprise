@@ -32,7 +32,6 @@ label,
   min-height: 19px; //prevents need to use &nbsp; for blank labels
 }
 
-.fieldset-title,
-.section-title {
+.fieldset-title {
   font-size: $ids-size-font-md !important;
 }
