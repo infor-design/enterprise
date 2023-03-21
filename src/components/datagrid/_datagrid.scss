@@ -3376,6 +3376,10 @@ $datagrid-small-row-height: 25px;
         top: 0;
         width: 0;
       }
+
+      .icon-rowstatus {
+        display: none;
+      }
     }
   }
 
@@ -4281,7 +4285,9 @@ td .btn-actions {
   }
 
   .icon:not(.datagrid-alert-icon) {
-    @include trigger-icon-background($datagrid-cell-bg-color);
+    &:not(.icon-rowstatus) {
+      @include trigger-icon-background($datagrid-cell-bg-color);
+    }
 
     color: $trigger-icon-fill-color;
     left: 3px;
@@ -4415,7 +4421,7 @@ td .btn-actions {
 // Change BG color of hovered Datagrid row cell icons
 .is-hover-row:not(.hide-selected-color) {
   .datagrid-trigger-cell {
-    .icon {
+    .icon:not(.icon-rowstatus) {
       @include trigger-icon-background($datagrid-row-hover-color);
     }
 
