@@ -247,7 +247,11 @@ Personalize.prototype = {
 
     // Alabaster is different so readjust the colors
 
-    if (colors.header === '#ffffff') {
+    const isAlabaster = colors.header === '#ffffff';
+    const isNewDark = this.currentTheme.indexOf('new-dark') >= 0;
+    const isClassicDark = this.currentTheme.indexOf('classic-dark') >= 0;
+
+    if (isAlabaster) {
       colors.text = '#0072ED';
       colors.darker = '#E6F1FD';
       colors.contrast = '#2F2F32';
@@ -255,7 +259,26 @@ Personalize.prototype = {
       colors.focusBoxShadow = `0 0 0 2px transparent, 0 0 0 0 ${colors.contrast}, 0 0 1px 0px ${colors.contrast}`;
       colors.btnFocusBorderColor = '#2F2F32';
       colors.btnDisabledColor = `rgba(0, 0, 0, 0.6) !important`;
-      console.log(colors);
+
+      if (isNewDark) {
+        colors.base = '#606066';
+        colors.contrast = '#ffffff';
+        colors.focusBoxShadow = `0 0 0 2px transparent, 0 0 0 0 ${colors.contrast}, 0 0 1px 0px ${colors.contrast}`;
+        colors.darker = '#47474C';
+        colors.btnHoverColor = '#ffffff';
+        colors.hyperlinkText = '#ffffff';
+        colors.btnDisabledColor = `rgba(255, 255, 255, 0.8) !important`;
+      }
+
+      if (isClassicDark) {
+        colors.base = '#50535a';
+        colors.contrast = '#ffffff';
+        colors.focusBoxShadow = `0 0 0 2px transparent, 0 0 0 0 ${colors.contrast}, 0 0 1px 0px ${colors.contrast}`;
+        colors.darker = '#313236';
+        colors.btnHoverColor = '#ffffff';
+        colors.hyperlinkText = '#ffffff';
+        colors.btnDisabledColor = `rgba(255, 255, 255, 0.8) !important`;
+      }
     }
 
     // Some disabled colors on some preset color schemes come out terrible,
@@ -304,7 +327,9 @@ Personalize.prototype = {
     colors.baseDisabled = disabledBGColor;
 
     // Hyperlink/Text Selection
-    colors.hyperlinkText = colors.text;
+    const hyperLinkTextColor = (isAlabaster && (isNewDark || isClassicDark)) ? '#ffffff' : colors.text;
+
+    colors.hyperlinkText = hyperLinkTextColor;
     colors.hyperlinkTextHover = defaultColors.subtext;
     colors.selection = defaultColors.subtext;
 

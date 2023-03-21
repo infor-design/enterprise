@@ -33,18 +33,17 @@
   }
 }
 
-.is-personalizable > .tab-list-container .tab.is-disabled a,
-.is-personalizable.tab-container > .tab-list-container .tab.is-disabled a {
-  color: rgba(255, 255, 255, 0.5);
-}
-
 .is-personalizable .personalize-subheader,
 .is-personalizable.tab-container.module-tabs {
   background-color: $subhead-bg-color;
 }
 
 .is-personalizable .personalize-text {
-  color: $ids-color-palette-white !important;
+  color: $ids-color-palette-white;
+}
+
+.is-personalizable .label + .personalize-text.data {
+  color: $ids-color-palette-white;
 }
 
 .is-personalizable .personalize-actionable,
@@ -54,7 +53,8 @@
 
 .is-personalizable .personalize-actionable:hover:not([disabled]),
 .is-personalizable .personalize-actionable:hover:not([disabled]) svg {
-  color: rgba(255, 255, 255, 1);
+  background: $personalize-header-icon-hover-bg-color;
+  color: rgba(255, 255, 255, 1) !important;
 }
 
 .is-personalizable .personalize-actionable.is-focused:not(.hide-focus),
@@ -87,7 +87,7 @@
 
 .is-personalizable .personalize-chart-targeted .chart-percent-text,
 .is-personalizable .personalize-chart-targeted .label {
-  color: $ids-color-palette-white !important;
+  color: $ids-color-palette-white;
 }
 
 .is-personalizable .info-message,

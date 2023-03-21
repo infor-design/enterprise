@@ -99,6 +99,9 @@ $button-hyperlink-hover-color: $hyperlink-hover-color;
 $hr-top-color: $ids-color-brand-secondary-base;
 $hr-bottom-color: $ids-color-palette-white;
 
+// Personalize
+$personalize-header-icon-hover-bg-color: $ids-color-palette-azure-80;
+
 // Circle Pager
 $circlepager-bg-color: transparent;
 $circlepager-border-color: $ids-color-brand-secondary-alt;
@@ -992,7 +995,7 @@ $header-tab-alt-selected-color: $ids-color-brand-primary-base;
 $header-tab-alt-separator: $header-tabcontainer-border-color;
 
 $header-tab-separator-new: $ids-color-palette-white;
-$header-tab-disabled-color-new: $ids-color-palette-slate-30;
+$header-tab-disabled-color-new: $ids-color-palette-slate-100;
 
 $header-tab-background-initial-color-new: $ids-color-palette-white;
 $header-tab-gradient-initial-color-new: $ids-color-palette-slate-10;

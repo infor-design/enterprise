@@ -535,6 +535,36 @@ html[class*="theme-new-"] .personalize-header.tab-container.header-tabs:not(.alt
   color: #ffffff;
 }
 
+.is-personalizable .personalize-text {
+  color: ${colors.contrast};
+}
+
+.is-personalizable .tab-container.header-tabs.alternate > .tab-list-container .tab:not(.is-disabled) {
+  color: ${colors.contrast};
+}
+
+.is-personalizable .tab-container.header-tabs.alternate > .tab-list-container .tab.is-selected:not(.is-disabled) {
+  border-color: ${colors.contrast};
+}
+
+.is-personalizable .tab-container.header-tabs.alternate > .tab-list-container .tab-focus-indicator.is-selected {
+  border-color: ${colors.contrast};
+}
+
+.is-personalizable .tab-container.header-tabs.alternate > .tab-list-container .tab:hover:not(.is-disabled) {
+  background-color: ${colors.darker};
+  border-color: ${colors.contrast};
+}
+
+.tab-container.header-tabs.alternate > .tab-list-container .tab.is-disabled {
+  color: ${colors.contrast};
+  opacity: 0.6;
+}
+
+.is-personalizable .label + .personalize-text.data {
+  color: ${colors.contrast};
+}
+
 html[class*='new-'] .is-personalizable.hero-widget .hero-header .toolbar .buttonset .btn-tertiary.btn-menu:not(:disabled):hover,
 html[class*='new-'] .is-personalizable.hero-widget .hero-header .toolbar .buttonset .btn-tertiary.btn-menu:not(:disabled):hover svg.icon,
 html[class*='new-'] .is-personalizable.hero-widget .hero-header .toolbar .buttonset .btn-tertiary.btn-menu:not(:disabled).is-open svg.icon {
@@ -985,7 +1015,7 @@ html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.i
 
 .is-personalizable .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab-list .tab.is-disabled,
 .is-personalizable.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab-list .tab.is-disabled {
-  opacity: .6;
+  opacity: .4;
 }
 
 html[class*="theme-classic-"] .is-personalizable .tab-container .tab-list-container .tab-list .tab.is-disabled,
@@ -1036,13 +1066,14 @@ html[class*="-dark"] .is-personalizable .subheader h2 {
 .is-personalizable .personalize-actionable,
 .is-personalizable .personalize-actionable svg,
 .is-personalizable .personalize-actionable .icon {
-  color: rgba(255, 255, 255, 0.8) !important;
+  color: ${colors.contrast};
   opacity: .8;
 }
 
 .is-personalizable .personalize-actionable:hover:not([disabled]),
 .is-personalizable .personalize-actionable:hover:not([disabled]) svg,
 .is-personalizable .personalize-actionable:hover:not([disabled]) .icon  {
+  background: ${colors.darker};
   color: ${colors.btnHoverColor} !important;
   opacity: 1;
 }
@@ -1068,18 +1099,18 @@ html[class*="-dark"] .is-personalizable .subheader h2 {
 }
 
 .is-personalizable .personalize-chart-targeted .total.bar {
-  background-color: rgba(255, 255, 255, .8);
+  background-color: ${colors.btnDisabledColor};
 }
 
 .is-personalizable .personalize-chart-targeted .chart-percent-text,
 .is-personalizable .personalize-chart-targeted .label {
-  color: ${colors.text};
+  color: ${colors.contrast};
 }
 
 .is-personalizable .info-message,
 .is-personalizable .info-message .icon,
 .is-personalizable .info-message p {
-  color: ${colors.text} !important;
+  color: ${colors.contrast} !important;
 }
 
 .is-personalizable .personalize-actionable-disabled,
