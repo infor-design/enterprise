@@ -217,11 +217,14 @@ a.btn-close.is-personalizable:focus:not(.hide-focus) {
 .is-personalizable .hyperlink:not(.today),
 .hyperlink:not(.today).is-personalizable {
   color: ${colors.hyperlinkText} !important;
+  opacity: 0.8;
 }
+
 .is-personalizable .hyperlink:not(.today):hover,
 .hyperlink:not(.today).is-personalizable:hover {
   color: ${colors.hyperlinkTextHover} !important;
 }
+
 .is-personalizable .hyperlink:not(.today):focus:not(.hide-focus),
 .hyperlink:not(.today).is-personalizable:focus:not(.hide-focus) {
   border-color: ${colors.hyperlinkText};
@@ -1113,12 +1116,12 @@ html[class*="-dark"] .is-personalizable .subheader h2 {
 .is-personalizable .personalize-actionable svg,
 .is-personalizable .personalize-actionable .icon {
   color: ${colors.contrast};
-  opacity: .8;
+  color: ${colors.btnOpacity};
 }
 
-.is-personalizable .personalize-actionable:hover:not([disabled]),
-.is-personalizable .personalize-actionable:hover:not([disabled]) svg,
-.is-personalizable .personalize-actionable:hover:not([disabled]) .icon  {
+.is-personalizable .personalize-actionable:hover:not([disabled]):not(.personalize-actionable-disabled):not(a) ,
+.is-personalizable .personalize-actionable:hover:not([disabled]):not(.personalize-actionable-disabled) svg,
+.is-personalizable .personalize-actionable:hover:not([disabled]):not(.personalize-actionable-disabled) .icon  {
   background: ${colors.darker};
   color: ${colors.btnHoverColor} !important;
   opacity: 1;
