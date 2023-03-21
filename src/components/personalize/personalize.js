@@ -262,6 +262,7 @@ Personalize.prototype = {
 
       if (isNewDark) {
         colors.base = '#606066';
+        colors.dark = colors.base;
         colors.contrast = '#ffffff';
         colors.focusBoxShadow = `0 0 0 2px transparent, 0 0 0 0 ${colors.contrast}, 0 0 1px 0px ${colors.contrast}`;
         colors.darker = '#47474C';
@@ -273,6 +274,7 @@ Personalize.prototype = {
 
       if (isClassicDark) {
         colors.base = '#50535a';
+        colors.dark = colors.base;
         colors.contrast = '#ffffff';
         colors.focusBoxShadow = `0 0 0 2px transparent, 0 0 0 0 ${colors.contrast}, 0 0 1px 0px ${colors.contrast}`;
         colors.darker = '#313236';
