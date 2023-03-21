@@ -244,18 +244,19 @@ Personalize.prototype = {
     colors.focusBoxShadow = `0 0 0 2px transparent, 0 0 0 0 ${colors.subtext}, 0 0 2px 1px ${colors.subtext}`;
     colors.btnFocusBorderColor = colors.contrast;
     colors.btnDisabledColor = 'rgba(255, 255, 255, 0.3) !important';
-
-    // Alabaster is different so readjust the colors
+    colors.btnOpacity = 0.8;
 
     const isAlabaster = colors.header === '#ffffff';
     const isNewDark = this.currentTheme.indexOf('new-dark') >= 0;
     const isClassicDark = this.currentTheme.indexOf('classic-dark') >= 0;
 
+    // Alabaster is different so readjust the colors
     if (isAlabaster) {
       colors.text = '#0072ED';
       colors.darker = '#E6F1FD';
       colors.contrast = '#2F2F32';
       colors.btnHoverColor = '#0072ED';
+      colors.btnOpacity = 1;
       colors.focusBoxShadow = `0 0 0 2px transparent, 0 0 0 0 ${colors.contrast}, 0 0 1px 0px ${colors.contrast}`;
       colors.btnFocusBorderColor = '#2F2F32';
       colors.btnDisabledColor = 'rgba(0, 0, 0, 0.6) !important';

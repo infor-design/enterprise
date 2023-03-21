@@ -640,7 +640,7 @@ div.multiselect > .listoption-icon,
   &.swatch {
     html.theme-new-light &.primary-bg-color,
     html.theme-new-contrast &.primary-bg-color {
-      border: 1px solid $ids-color-palette-slate-30;
+      border: 1px solid $input-color-initial-border;
     }
 
     html.theme-new-dark &.primary-bg-color {

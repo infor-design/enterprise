@@ -129,12 +129,20 @@
 .btn-menu {
   border-radius: 8px;
 
-  &:hover:not(:disabled):not(.close) {
+  &:hover:not(:disabled):not(.close):not(.personalize-actionable) {
     background-color: $button-color-tertiary-hover-background-new;
     color: $button-color-tertiary-hover-font-new;
 
     svg.icon {
       color: $button-color-tertiary-hover-font-new;
+    }
+  }
+
+  &.personalize-actionable:hover:not(:disabled) {
+    background-color: rgba(0, 0, 0, 0.3);
+
+    svg.icon {
+      color: $ids-color-palette-white;
     }
   }
 
