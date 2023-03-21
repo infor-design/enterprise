@@ -219,6 +219,13 @@
     }
   }
 
+  .card {
+    .listview-search
+    + .listview {
+      max-height: none;
+    }
+  }
+
   .listview-search {
     + .listview {
       max-height: 220px;
