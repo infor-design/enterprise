@@ -267,6 +267,7 @@ Personalize.prototype = {
         colors.darker = '#47474C';
         colors.btnHoverColor = '#ffffff';
         colors.hyperlinkText = '#ffffff';
+        colors.lighter = '#77777C';
         colors.btnDisabledColor = `rgba(255, 255, 255, 0.8) !important`;
       }
 
@@ -277,6 +278,7 @@ Personalize.prototype = {
         colors.darker = '#313236';
         colors.btnHoverColor = '#ffffff';
         colors.hyperlinkText = '#ffffff';
+        colors.lighter = '#656871';
         colors.btnDisabledColor = `rgba(255, 255, 255, 0.8) !important`;
       }
     }

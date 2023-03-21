@@ -748,7 +748,7 @@ html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::af
 }
 
 .hero-widget.is-personalizable {
-  background-color: ${colors.darkestPalette};
+  background-color: ${colors.subheader};
 }
 
 .hero-widget.is-personalizable .hero-content .circlepager.is-active .controls .control-button.is-active::before,
