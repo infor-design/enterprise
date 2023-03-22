@@ -75,7 +75,7 @@
     "watch:js": "nodemon --watch \"src/\" -e js --ignore dist/ --ignore app/ -x \"npm run build:js\" --on-change-only",
     "watch:scss": "nodemon --watch \"src/\" -e scss --ignore dist/ --ignore app/ -x \"npm run build:css\" --on-change-only",
     "webdriver:clean": "npx webdriver-manager clean",
-    "webdriver:update": "npx webdriver-manager update --versions.chrome=109.0.5414.74 --standalone false --quiet --gecko=false",
+    "webdriver:update": "npx webdriver-manager update --versions.chrome=111.0.5563.64 --standalone false --quiet --gecko=false",
     "zip-dist": "npx grunt zip-dist"
   },
   "browserslist": [
@@ -179,7 +179,7 @@
   "optionalDependencies": {
     "fsevents": "*"
   },
-  "chrome-version": "109.0.5414.74",
+  "chrome-version": "111.0.5563.64",
   "jspm": {
     "main": "dist/js/sohoxi.js"
   },
