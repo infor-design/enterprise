@@ -300,6 +300,11 @@
     @include auto-height;
     @include auto-width;
   }
+
+  &.border-less {
+    border-color: transparent;
+    box-shadow: none;
+  }
 }
 
 // CSS Rule for new expandable card
