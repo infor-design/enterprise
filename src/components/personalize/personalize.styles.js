@@ -1204,8 +1204,12 @@ html[class*="-dark"] .is-personalizable .subheader h2 {
 
 .is-personalizable .personalize-actionable,
 .is-personalizable .personalize-actionable svg,
-.is-personalizable .personalize-actionable .icon {
-  color: rgba(255, 255, 255, 0.8) !important;
+.is-personalizable .personalize-actionable .icon,
+.is-personalizable .personalize-header .personalize-chart-targeted .label,
+.is-personalizable .personalize-header .info-message .icon,
+.is-personalizable .personalize-header .info-message p,
+.is-personalizable .personalize-header .btn-icon .icon {
+  color: ${colors.text} !important;
   opacity: .8;
 }
 
