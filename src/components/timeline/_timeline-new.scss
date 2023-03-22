@@ -8,6 +8,16 @@
   }
 }
 
+.timeline-block {
+  &:nth-last-child(2)::before {
+    bottom: -20px;
+
+    @media (min-width: 767px) {
+      left: 20.3rem;
+    }
+  }
+}
+
 // Brings the dotted line into alignment with the text
 .indicator-container {
   top: 1px;
