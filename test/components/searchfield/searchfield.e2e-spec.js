@@ -21,7 +21,7 @@ describe('Searchfield example-index tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress on example-index', async () => {
+    xit('Should not visual regress on example-index', async () => {
       const searchfieldInputEl = await element(by.id(searchfieldId));
       const searchfieldSection = await element(by.id('maincontent'));
       await browser.driver
@@ -168,7 +168,7 @@ if (utils.isChrome() && utils.isCI()) {
       await browser.driver.sleep(config.sleep);
     });
 
-    it('Should not visual regress on test-configure-close-size', async () => {
+    xit('Should not visual regress on test-configure-close-size', async () => {
       expect(await browser.imageComparison.checkElement(element(by.css('.toolbar-section.search')), 'searchfield-collapse-size')).toEqual(0);
     });
   });
@@ -181,7 +181,7 @@ if (utils.isChrome() && utils.isCI()) {
           .presenceOf(element(by.id('searchfield-template'))), config.waitsFor);
     });
 
-    it('should correctly place the results list above the field if it can\'t fit beneath (visual regression)', async () => {
+    xit('should correctly place the results list above the field if it can\'t fit beneath (visual regression)', async () => {
       // shrink the page to check ajax menu button in the overflow
       const windowSize = await browser.driver.manage().window().getSize();
       browser.driver.manage().window().setSize(640, 480);

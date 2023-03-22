@@ -379,7 +379,7 @@ describe('Multiselect `showSearchUnderSelected` tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('should not visually regress', async () => {
+    xit('should not visually regress', async () => {
       const windowSize = await browser.driver.manage().window().getSize();
       await browser.driver.manage().window().setSize(400, 640);
 

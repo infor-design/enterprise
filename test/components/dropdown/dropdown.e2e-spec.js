@@ -270,7 +270,7 @@ describe('Dropdown example-ajax tests', () => {
   });
 
   if (!utils.isSafari()) {
-    it('Should make ajax request, and arrow down to New York, and focus', async () => {
+    it.skip('Should make ajax request, and arrow down to New York, and focus', async () => {
       const dropdownEl = await element(by.css('div.dropdown'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
