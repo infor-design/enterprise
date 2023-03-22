@@ -128,8 +128,6 @@ Header.prototype = {
 
     this.titleText = this.element.find('.title > h1');
 
-    const headerElem = document.querySelector('header.header');
-
     // Used to track levels deep
     this.levelsDeep = [];
     this.levelsDeep.push(`${this.titleText.text()}`);
