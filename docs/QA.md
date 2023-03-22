@@ -23,17 +23,17 @@ The components should be tested in several ways:
 
 - Browser Testing - Edge, Firefox, Safari, Chrome, IOS  (Phone and Tablet), Android (Phone and Tablet)
 - Touch Device Support Testing (IOS And Android)
-- Accessibility Testing according to [WCAG Accessibility Standards](https://www.w3.org/WAI/standards-guidelines/wcag/wcag3-intro/
+- Accessibility Testing according to [WCAG Accessibility Standards](https://www.w3.org/WAI/standards-guidelines/wcag/wcag3-intro/)
 - Developer Testing - Can the Components be easily coded from the documentation
 - Testing against requirements
 - Any issues or inconsistencies would be reported to the repos above
 
 ## QA Process
 
-The QA process consists of reviewing a Pull request and approving the issue. For "issue QA".
+The QA process consists of reviewing a Pull request (PR) and approving the issue. For "issue QA".
 
-- Look at the current project board to see which issues need "issue QA". https://github.com/orgs/infor-design/projects
-- You can also look at the active PRS since you will be reviewing it on the PR https://github.com/infor-design/enterprise/pulls the ones that need QA will have a "needs qa" tag all others can be ignored
+- Look at the current project board to see which issues need "issue QA" see the [project board](https://github.com/orgs/infor-design/projects)
+- You can also look at the active PRS since you will be reviewing it on the [PR list](https://github.com/infor-design/enterprise/pulls). The ones that need QA will have a "needs qa" tag all others can be ignored and ones with "wip" can also be ignored.
 - Open the PR and review the fix details
 - To run it first copy the branch name on the top button
 - If not cloned yet do the following in the command line
