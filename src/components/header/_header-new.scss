@@ -24,6 +24,22 @@
     }
   }
 
+  .toolbar {
+    .buttonset {
+      .searchfield-wrapper.non-collapsible.toolbar-searchfield-wrapper.has-categories.has-go-button.has-close-icon-button.is-open {
+        button.searchfield-category-button {
+          border-right: transparent;
+        }
+
+        button.btn-icon.close {
+          svg.close.icon {
+            top: 10px !important;
+          }
+        }
+      }
+    }
+  }
+
   .flex-toolbar {
     .toolbar-section.search {
       &.search-categories {
