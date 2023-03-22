@@ -13311,7 +13311,7 @@ Datagrid.prototype = {
   updated(settings, pagingInfo) {
     this.settings = utils.mergeSettings(this.element, settings, this.settings);
 
-    if (this.pagerAPI && typeof this.pagerAPI.destroy === 'function') {
+    if (!settings?.paging && this.pagerAPI && typeof this.pagerAPI.destroy === 'function') {
       this.pagerAPI.destroy();
     }
 
