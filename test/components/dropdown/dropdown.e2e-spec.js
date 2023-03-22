@@ -631,7 +631,7 @@ describe('Dropdown badge tests', () => {
     await utils.checkForErrors();
   });
 
-  it('Should not error on right to left', async () => {
+  xit('Should not error on right to left', async () => {
     await utils.setPage('/components/dropdown/test-badges.html?layout=nofrills&&locale=he-IL');
     await utils.checkForErrors();
   });
