@@ -9,6 +9,7 @@
 ## v4.82.0 Fixes
 
 - `[Datagrid]` Fix on styling in row status icon when first column is not a select column. ([NG#5913](https://github.com/infor-design/enterprise-ng/issues/5913))
+- `[Datagrid]` Fixed paging source argument is empty when re-assigning grid options. ([6947](https://github.com/infor-design/enterprise/issues/6947))
 - `[Header]` Fixed border in search field in the header. ([#7297](https://github.com/infor-design/enterprise/issues/7297))
 - `[Header]` Fixed the font sizes and alignments. ([#7317](https://github.com/infor-design/enterprise/issues/7317))
 - `[Lookup]` Fix in keyword search not filtering single comma. ([#7165](https://github.com/infor-design/enterprise/issues/7165))
