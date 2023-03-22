@@ -258,6 +258,79 @@ $subheader-height: 60px;
       }
     }
 
+    .buttonset {
+      .searchfield-wrapper.non-collapsible.toolbar-searchfield-wrapper.has-categories.has-go-button.has-close-icon-button.is-open {
+        button.searchfield-category-button {
+          border: 1px solid $searchfield-toolbar-border-color;
+          border-right: transparent;
+          border-radius: 8px 0 0 8px;
+          background-color: $ids-color-palette-white;
+          color: $searchfield-header-buttons;
+
+          svg.icon {
+            color: $searchfield-header-buttons !important;
+          }
+
+          svg.icon-dropdown {
+            position: relative;
+            left: -3px;
+            top: unset;
+          }
+
+          &:hover {
+            background-color: $ids-color-palette-white !important;
+          }
+        }
+
+        button.btn-icon.close {
+          svg.close.icon {
+            top: 8px !important;
+          }
+        }
+
+        button.go-button {
+          background-color: $ids-color-palette-white;
+          color: $searchfield-header-buttons;
+
+          &:hover {
+            background-color: $ids-color-palette-white !important;
+          }
+
+          &:focus {
+            box-shadow: none !important;
+          }
+
+          &:active {
+            border-left: none;
+          }
+
+          &::after {
+            border-right: none;
+          }
+        }
+
+        input.searchfield {
+          border: 1px solid $searchfield-toolbar-border-color;
+        }
+
+        &.is-hovered {
+          button.searchfield-category-button {
+            border: 1px solid $searchfield-header-hover-icon-color;
+            border-right: transparent;
+          }
+
+          input.searchfield {
+            border: 1px solid $searchfield-header-hover-icon-color !important;
+          }
+
+          button.go-button {
+            border: 1px solid $searchfield-header-hover-icon-color;
+            border-left: transparent;
+          }
+        }
+      }
+    }
+
     .buttonset .toolbar-searchfield-wrapper {
       &.is-hovered {
         .btn-icon {
