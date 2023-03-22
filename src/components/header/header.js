@@ -247,7 +247,7 @@ Header.prototype = {
    * @returns {void}
    */
   setHeaderColorClass() {
-    const colorSelected = document.querySelector('.submenu:last-child ul li.is-checked')?.innerText.toLowerCase() || 'default';
+    const colorSelected = document.querySelector('.submenu:last-child ul li.is-checked')?.innerText.toLowerCase().trim() || 'default';
     const headerElement = document.querySelectorAll('header.header');
     const subheaderElement = document.querySelectorAll('.subheader');
     const personalizeSubheaderElement = document.querySelectorAll('.personalize-subheader');
