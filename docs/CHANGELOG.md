@@ -8,6 +8,7 @@
 
 ## v4.82.0 Fixes
 
+- `[Datagrid]` Fixed paging source argument is empty when re-assigning grid options. ([6947](https://github.com/infor-design/enterprise/issues/6947))
 - `[Header]` Fixed border in search field in the header. ([#7297](https://github.com/infor-design/enterprise/issues/7297))
 - `[Header]` Fixed the font sizes and alignments. ([#7317](https://github.com/infor-design/enterprise/issues/7317))
 - `[Listview]` Fixed the height restriction in listview when used in card. ([#7094](https://github.com/infor-design/enterprise/issues/7094))
