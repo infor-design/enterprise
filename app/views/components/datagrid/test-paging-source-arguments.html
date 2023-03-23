@@ -1,0 +1,101 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Datagrid Paging Test: Source Function Arguments</h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+    <div class="field">
+      <button id="apply" class="btn-primary">
+        <span>Apply</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+    <div class="toolbar">
+      <div class="title">
+        &nbsp;
+      </div>
+      <div class="buttonset"></div>
+      <div class="more">
+        <button class="btn-actions" type="button">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-more"></use>
+          </svg>
+          <span class="audible">More Actions</span>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Option One</a></li>
+          <li><a href="#">Option Two</a></li>
+          <li><a href="#">Option Three</a></li>
+          <li class="separator single-selectable-section"></li>
+          <li class="heading">Row Height</li>
+          <li class="is-selectable"><a data-option="row-extra-small" href="#" data-translate="text">ExtraSmall</a></li>
+          <li class="is-selectable"><a data-option="row-small" href="#" data-translate="text">Small</a></li>
+          <li class="is-selectable"><a data-option="row-medium" href="#" data-translate="text">Medium</a></li>
+          <li class="is-selectable is-checked"><a data-option="row-large" href="#" data-translate="text">Large</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="datagrid"></div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+    var columns = [],
+      data = [];
+
+    //Define Columns for the Grid.
+    columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Soho.Formatters.Readonly});
+    columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, formatter: Soho.Formatters.Readonly});
+    columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 150, formatter: Soho.Formatters.Hyperlink});
+    columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125});
+    columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 125});
+    columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Soho.Formatters.Decimal});
+    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy'});
+
+    function loadActiveGrid() {
+      function source(req, done) {
+        console.info('paging', req);
+
+        var url = '{{basepath}}api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
+
+        return $.getJSON(url, function(res) {
+          req.total = res.total;
+          done(res.data, req);
+        });
+      }
+
+      // Init and get the api for the grid
+      gridApi = $('#datagrid').datagrid({
+        columns: columns,
+        selectable: 'multiple',
+        paging: true,
+        pagesize: 5,
+        source: source,
+        toolbar: {
+          title: 'Data Grid Header Title',
+          results: true,
+          dateFilter: false,
+          keywordFilter: true,
+          advancedFilter: true,
+          actions: true,
+          views: true,
+          rowHeight: true,
+          collapsibleFilter: true
+        }
+      }).data('datagrid');
+    }
+
+    loadActiveGrid();
+
+    $('#apply').on('click', function() {
+      loadActiveGrid();
+    });
+  });
+</script>
