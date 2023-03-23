@@ -1420,6 +1420,11 @@ $datagrid-small-row-height: 25px;
         left: 3px;
         top: 5px;
 
+        &.icon-rowstatus {
+          left: 1px;
+          top: 2px;
+        }
+
         &.icon-search-list {
           left: 0;
           top: 0;
@@ -1599,6 +1604,10 @@ $datagrid-small-row-height: 25px;
           .icon:not(.datagrid-alert-icon) {
             height: 16px;
             top: 4px;
+
+            &.icon-rowstatus {
+              top: -3px;
+            }
 
             &.icon-calendar {
               height: 15px;
