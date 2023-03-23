@@ -73,6 +73,9 @@
       &:hover {
         > .btn-icon {
           border-bottom: 1px solid $pager-text-color;
+          border-radius: 0;
+          border-width: 0 0 1px;
+          box-shadow: none;
 
           &[disabled] {
             border-bottom: 1px solid transparent;
