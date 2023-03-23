@@ -224,6 +224,11 @@
     + .listview {
       max-height: none;
     }
+
+    .listview-search .searchfield-wrapper {
+      min-width: unset;
+      top: -1px;
+    }
   }
 
   .listview-search {
