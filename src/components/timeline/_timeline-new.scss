@@ -12,7 +12,7 @@
   &:nth-last-child(2)::before {
     bottom: -20px;
 
-    @media (min-width: 767px) {
+    @media (min-width: $breakpoint-phone-to-tablet) {
       left: 20.3rem;
     }
   }

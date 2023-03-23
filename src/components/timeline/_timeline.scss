@@ -57,7 +57,7 @@
       height: 100%;
       left: 1.22em;
 
-      @media (min-width: 767px) {
+      @media (min-width: $breakpoint-phone-to-tablet) {
         left: 15.27rem;
       }
     }
