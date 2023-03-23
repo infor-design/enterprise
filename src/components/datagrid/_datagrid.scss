@@ -1420,6 +1420,11 @@ $datagrid-small-row-height: 25px;
         left: 3px;
         top: 5px;
 
+        &.icon-rowstatus {
+          left: 1px;
+          top: 2px;
+        }
+
         &.icon-search-list {
           left: 0;
           top: 0;
@@ -1599,6 +1604,10 @@ $datagrid-small-row-height: 25px;
           .icon:not(.datagrid-alert-icon) {
             height: 16px;
             top: 4px;
+
+            &.icon-rowstatus {
+              top: -3px;
+            }
 
             &.icon-calendar {
               height: 15px;
@@ -3377,6 +3386,13 @@ $datagrid-small-row-height: 25px;
         width: 0;
       }
     }
+
+    &.is-dirty-cell,
+    &.error {
+      .icon-rowstatus {
+        display: none;
+      }
+    }
   }
 
   // Nested Grids
@@ -4281,7 +4297,9 @@ td .btn-actions {
   }
 
   .icon:not(.datagrid-alert-icon) {
-    @include trigger-icon-background($datagrid-cell-bg-color);
+    &:not(.icon-rowstatus) {
+      @include trigger-icon-background($datagrid-cell-bg-color);
+    }
 
     color: $trigger-icon-fill-color;
     left: 3px;
@@ -4379,6 +4397,8 @@ td .btn-actions {
     &:focus {
       .icon {
         visibility: visible;
+        background-color: transparent;
+        box-shadow: none;
       }
 
       .icon-error,
@@ -4415,7 +4435,7 @@ td .btn-actions {
 // Change BG color of hovered Datagrid row cell icons
 .is-hover-row:not(.hide-selected-color) {
   .datagrid-trigger-cell {
-    .icon {
+    .icon:not(.icon-rowstatus) {
       @include trigger-icon-background($datagrid-row-hover-color);
     }
 
