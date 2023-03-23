@@ -10,8 +10,8 @@
     background-image:
       linear-gradient(
         to right,
-        rgba($header-bg-color, 1),
-        rgba($header-bg-color, 0)
+        rgba($header-default-bg-color, 1),
+        rgba($header-default-bg-color, 0)
       );
     left: 20px;
   }
@@ -20,8 +20,8 @@
     background-image:
       linear-gradient(
         to right,
-        rgba($header-bg-color, 0),
-        rgba($header-bg-color, 1)
+        rgba($header-default-bg-color, 0),
+        rgba($header-default-bg-color, 1)
       );
   }
 
@@ -82,6 +82,10 @@
             background-color: rgba($header-tab-hover-color, 1);
           }
         }
+      }
+
+      &.is-disabled {
+        color: $header-tab-disabled-color-new;
       }
 
       &.dismissible {

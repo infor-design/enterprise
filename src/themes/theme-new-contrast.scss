@@ -545,6 +545,7 @@ $tab-text-color: $ids-color-palette-slate-100;
 $tab-selected-color: $ids-color-palette-azure-90;
 $tab-border-color: $ids-color-brand-secondary-alt;
 $tab-hover-color: $ids-color-palette-azure-90;
+$tab-background-hover-color-new: $ids-color-palette-azure-10;
 
 // Vertical Tabs
 $vertical-tab-text-color: $font-color-extrahighcontrast;
@@ -755,21 +756,14 @@ $subheader-searchfield-category-button-font-color: $ids-color-palette-slate-100;
 // Header Tabs
 $header-tabcontainer-border-color: $ids-color-brand-secondary-alt;
 $header-tab-separator: $ids-color-brand-secondary-alt;
-$header-tab-normal-color: $ids-color-palette-slate-10;
-$header-tab-hover-color: $inverse-color;
 $header-tab-selected-color: $inverse-color;
 $header-tab-alt-bg-color: $ids-color-palette-slate-10;
 $header-tab-alt-separator: $header-tabcontainer-border-color;
-$header-tab-alt-normal-color: $inverse-color;
-$header-tab-alt-hover-color: $inverse-color;
-$header-tab-alt-selected-color: $inverse-color;
-$header-tab-focus-border-color: $ids-color-palette-azure-90;
+$header-tab-alt-normal-color: $ids-color-palette-slate-100;
+$header-tab-alt-hover-color: $ids-color-palette-slate-100;
+$header-tab-alt-selected-color: $ids-color-palette-slate-100;
 
-$header-tab-separator-new: $ids-color-palette-slate-100;
-$header-tab-background-initial-color-new: $ids-color-palette-white;
-$header-tab-gradient-initial-color-new: $header-tab-background-initial-color-new;
-$header-tab-hover-color-new: $header-tab-focus-border-color;
-$header-tab-disabled-color-new: $ids-color-palette-slate-30;
+$header-tab-background-initial-color-new: $header-default-bg-color;
 
 // Header Breadcrumb
 $header-breadcrumb-color: $ids-color-palette-slate-100;

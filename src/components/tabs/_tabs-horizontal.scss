@@ -79,7 +79,7 @@ $horizontal-tabs-height: 40px;
         }
       }
 
-      &.is-selected {
+      &:not(.is-disabled).is-selected {
         color: $tab-selected-color;
 
         .icon:not(.is-error):not(.icon-error) {
