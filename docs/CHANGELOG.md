@@ -9,6 +9,7 @@
 ## v4.82.0 Fixes
 
 - `[Datagrid]` Fixed paging source argument is empty when re-assigning grid options. ([6947](https://github.com/infor-design/enterprise/issues/6947))
+- `[Editor]` Fixed links are not readable in dark mode. ([#7331](https://github.com/infor-design/enterprise/issues/7331))
 - `[Header]` Fixed border in search field in the header. ([#7297](https://github.com/infor-design/enterprise/issues/7297))
 - `[Header]` Fixed the font sizes and alignments. ([#7317](https://github.com/infor-design/enterprise/issues/7317))
 - `[Lookup]` Fix in keyword search not filtering single comma. ([#7165](https://github.com/infor-design/enterprise/issues/7165))
