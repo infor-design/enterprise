@@ -13,7 +13,7 @@
 
 .is-personalizable .personalize-header,
 .is-personalizable.tab-container {
-  background-color: $header-bg-color;
+  background-color: $header-default-bg-color;
 
   ::selection {
     background: $ids-color-palette-azure-90;
@@ -64,17 +64,6 @@
   background-color: rgba(255, 255, 255, 0.8);
 }
 
-.is-personalizable .personalize-chart-targeted .chart-percent-text,
-.is-personalizable .personalize-chart-targeted .label {
-  color: $font-color !important;
-}
-
-.is-personalizable .info-message,
-.is-personalizable .info-message .icon,
-.is-personalizable .info-message p {
-  color: $font-color !important;
-}
-
 .is-personalizable .personalize-actionable-disabled,
 .is-personalizable .personalize-actionable-disabled:hover {
   cursor: default;
@@ -98,19 +87,12 @@
   }
 }
 
-
-html[class*='new-'] {
-  .header:not(.alabaster) + .page-container {
-    .personalize-text,
-    .personalize-text .object-count,
-    .hyperlink.is-personalizable {
-      color: $ids-color-palette-white;
-    }
-  }
-}
-
-.header:not(.alabaster) + .page-container .content.personalize-header {
-  .personalize-text {
+.header:not(.alabaster) + .page-container,
+.header:not(.alabaster) + .is-personalizable .personalize-header {
+  .personalize-text,
+  .personalize-text .object-count,
+  .hyperlink.is-personalizable,
+  .content.personalize-header .personalize-text {
     color: $ids-color-palette-white;
   }
 }
@@ -126,28 +108,26 @@ html.theme-classic-contrast {
 }
 
 // Classic themes default color personalization
-html[class*='classic-'] {
-  & .is-personalizable {
-    .personalize-header {
-      .personalize-chart-targeted .label,
-      .info-message .icon,
-      .info-message p,
-      .btn-icon .icon {
-        color: $ids-color-palette-white !important;
-      }
-    }
-
-    & .personalize-actionable:not(:hover) {
-      opacity: 0.8;
-    }
-
-    & .tab-container.horizontal > .tab-list-container .tab:not(.is-selected):not(.is-disabled):hover {
-      border-bottom-color: $ids-color-palette-white;
+.is-personalizable {
+  .personalize-header {
+    .personalize-chart-targeted .label,
+    .info-message .icon,
+    .info-message p,
+    .btn-icon .icon {
+      color: $ids-color-palette-white !important;
     }
   }
 
-  .is-personalizable.tab-container.horizontal > .tab-list-container .tab:not(.is-selected):not(.is-disabled):hover,
-  .is-personalizable.tab-container.header-tabs > .tab-list-container .tab:not(.is-selected):not(.is-disabled):hover {
+  & .personalize-actionable:not(:hover) {
+    opacity: 0.8;
+  }
+
+  & .tab-container.horizontal > .tab-list-container .tab:not(.is-selected):not(.is-disabled):hover {
     border-bottom-color: $ids-color-palette-white;
   }
+}
+
+.is-personalizable.tab-container.horizontal > .tab-list-container .tab:not(.is-selected):not(.is-disabled):hover,
+.is-personalizable.tab-container.header-tabs > .tab-list-container .tab:not(.is-selected):not(.is-disabled):hover {
+  border-bottom-color: $ids-color-palette-white;
 }
