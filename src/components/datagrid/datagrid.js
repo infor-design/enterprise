@@ -1572,14 +1572,12 @@ Datagrid.prototype = {
       // If header text is center aligned, for proper styling,
       // place the sortIndicator as a child of datagrid-header-text.
 
-      let svgHeaderIcon = '';
-      if (column?.headerIconTooltip !== undefined || column?.headerIconTooltip?.length > 0) {
-        svgHeaderIcon = `
-          <svg class="icon datagrid-header-icon" focusable="false" aria-hidden="true" role="presentation" title="${column?.headerIconTooltip}">
-            <use href="#icon-${column.headerIcon}"></use>
-          </svg>
-        `;
-      } 
+      const svgHeaderTooltip = column?.headerIconTooltip !== undefined || column?.headerIconTooltip?.length > 0 ? column?.headerIconTooltip : '';
+      const svgHeaderIcon = `
+        <svg class="icon datagrid-header-icon" focusable="false" aria-hidden="true" role="presentation" title="${svgHeaderTooltip}">
+          <use href="#icon-${column.headerIcon}"></use>
+        </svg>
+      `;
       
       headerRows[container] += `<div class="${isSelection ? 'datagrid-checkbox-wrapper ' : 'datagrid-column-wrapper'}${headerAlignmentClass}">
       <span class="datagrid-header-text${column.required ? ' required' : ''}">${self.headerText(this.settings.columns[j])}${headerAlignmentClass === ' l-center-text' ? sortIndicator : ''}</span>
