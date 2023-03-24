@@ -47,7 +47,7 @@
       display: none;
     }
 
-    .hyperlink {
+    a {
       cursor: pointer;
     }
   }
@@ -63,7 +63,7 @@
     color: $input-readonly-color;
     cursor: text;
 
-    .hyperlink {
+    a {
       color: $hyperlink-color !important;
     }
   }
@@ -124,7 +124,7 @@
       display: none;
     }
 
-    .hyperlink {
+    a {
       cursor: pointer;
     }
 
@@ -251,7 +251,7 @@
     color: $editor-color;
     font-size: $input-size-regular-font-size;
 
-    .hyperlink {
+    a {
       color: $hyperlink-color;
       font-size: $input-size-regular-font-size !important;
       margin-left: -1px;
@@ -259,6 +259,11 @@
       padding: 0;
       white-space: pre-wrap;
       word-wrap: break-word;
+      border: 1px solid transparent;
+
+      &:hover:not([disabled]) {
+        color: $hyperlink-hover-color;
+      }
     }
   }
 
@@ -271,7 +276,7 @@
     color: $editor-color;
     line-height: normal;
 
-    .hyperlink {
+    a {
       font-size: inherit;
     }
   }
@@ -345,7 +350,7 @@
     font-weight: inherit;
   }
 
-  .hyperlink {
+  a {
     cursor: auto;
     font-size: $input-size-regular-font-size;
     position: static;
