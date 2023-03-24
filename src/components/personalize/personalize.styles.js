@@ -257,14 +257,18 @@ a.is-personalizable svg.ripple-effect {
   border-color: ${colors.contrast} !important;
 }
 
-.is-personalizable .personalize-header .instance-count,
-.is-personalizable .personalize-header .instance-count svg.icon {
-  background-color: ${colors.base};
+.is-personalizable .count-container .instance-count svg.icon {
+  background-color: ${colors.base} !important;
+  color: ${colors.contrast} !important;
 }
 
-.is-personalizable .personalize-header .instance-count .count,
-.is-personalizable .personalize-header .instance-count .title {
-  color: ${colors.contrast};
+.is-personalizable .count-container .instance-count .count,
+.is-personalizable .count-container .instance-count .title {
+  color: ${colors.contrast} !important;
+}
+
+.is-personalizable .count-container .instance-count .count {
+  border-color: ${colors.contrast} !important;
 }
 
 .tab-container.module-tabs.is-personalizable {
@@ -903,6 +907,10 @@ html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::af
 
 .hero-widget.is-personalizable .chart-container.line-chart .dot {
   stroke: ${colors.lighter};
+}
+
+.hero-widget.is-personalizable .count-container .instance-count svg.icon {
+  background-color: ${colors.darkestPalette} !important;
 }
 
 html[class*="theme-new-"] .application-menu.is-personalizable button .icon,

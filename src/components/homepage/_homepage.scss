@@ -437,6 +437,27 @@
         }
       }
     }
+
+    .count-container {
+      background-color: inherit;
+      box-shadow: none;
+      border: none;
+      border-radius: 0;
+
+      .instance-count {
+        .count {
+          color: $header-hero-text-color;
+        }
+
+        svg.icon {
+          background-color: $header-hero-widget-bg-color;
+        }
+
+        .title {
+          padding: 0;
+        }
+      }
+    }
   }
 
   .hero-footer {
