@@ -220,6 +220,22 @@
   }
 
   .card {
+    .listview-search {
+      width: 370px;
+
+      @media only screen and (max-width: 520px) {
+        width: 100%;
+      }
+    }
+
+    .listview {
+      width: 370px;
+
+      @media only screen and (max-width: 520px) {
+        width: 100%;
+      }
+    }
+
     .listview-search
     + .listview {
       max-height: none;
