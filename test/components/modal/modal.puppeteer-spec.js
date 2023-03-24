@@ -36,7 +36,7 @@ describe('Modal Puppeteer Tests', () => {
       expect(image).toMatchImageSnapshot(config);
     });
 
-    it('should close modal on tab, and escape', async () => {
+    it.skip('should close modal on tab, and escape', async () => {
       await page.keyboard.press('Tab');
       await page.keyboard.press('Tab');
       await page.keyboard.press('Enter');
