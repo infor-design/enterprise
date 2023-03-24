@@ -53,7 +53,7 @@
       //Define Columns for the Grid.
       columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center'});
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', minWidth: 75, textOverflow: 'ellipsis' });
-      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', textOverflow: 'ellipsis', headerTooltip: headerIconTooltipContent, headerIcon: 'info', headerCssClass: 'lm-custom-class-header', headerTooltipCssClass: 'tooltip-extra-class', formatter: Soho.Formatters.Hyperlink });
+      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', textOverflow: 'ellipsis', headerIcon: 'info', headerCssClass: 'lm-custom-class-header', headerTooltipCssClass: 'tooltip-extra-class', formatter: Soho.Formatters.Hyperlink });
       columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', textOverflow: 'ellipsis'});
       columns.push({ id: 'quantity', align: 'right', name: 'Quantity', minWidth: 75, field: 'quantity', textOverflow: 'ellipsis'});
       columns.push({ id: 'status', name: 'Status', field: 'price', textOverflow: 'ellipsis', formatter: Soho.Formatters.Alert, ranges: [{'min': 0, 'max': 150, 'classes': 'success', text: 'Confirmed'}, {'min': 151, 'max': 9999, 'classes': 'error', text: 'Error'}]});
