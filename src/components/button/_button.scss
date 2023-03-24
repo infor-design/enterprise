@@ -724,11 +724,11 @@ a.btn-close {
     }
 
     &:hover:not(:disabled) {
-      color: $button-color-tertiary-destructive-hover-font-new;
-      background-color: $button-color-tertiary-destructive-hover-background-new;
+      color: $button-color-tertiary-destructive-hover-font-new !important;
+      background-color: $button-color-tertiary-destructive-hover-background-new !important;
 
       svg.icon {
-        color: $button-color-tertiary-destructive-hover-font-new;
+        color: $button-color-tertiary-destructive-hover-font-new !important;
       }
     }
 

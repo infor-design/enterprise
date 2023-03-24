@@ -52,11 +52,9 @@ This is a simple configuration.
     <div class="title">
       <button id="application-menu-trigger" class="btn-icon application-menu-trigger" type="button">
         <span class="audible">Show navigation</span>
-        <span class="icon app-header">
-          <span class="one"></span>
-          <span class="two"></span>
-          <span class="three"></span>
-        </span>
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-menu"></use>
+        </svg>
       </button>
 
       <h1>Page Title</h1>
