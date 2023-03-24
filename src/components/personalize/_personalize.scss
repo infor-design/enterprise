@@ -21,30 +21,45 @@
   }
 }
 
-.is-personalizable .personalize-header .instance-count {
-  .title,
-  .count {
-    color: $count-font-color;
-  }
-
-  svg.icon {
-    background-color: $header-bg-color;
+.is-personalizable.has-more-button.tab-container.horizontal {
+  &::after {
+    background-image:
+      linear-gradient(
+        to left,
+        rgba($header-bg-color, 1),
+        rgba($header-bg-color, 0)
+      );
+    height: 39px;
   }
 }
 
+.is-personalizable .personalize-subheader,
 .is-personalizable.tab-container.module-tabs {
-  background-color: $ids-color-palette-azure-80;
+  background-color: $subhead-bg-color;
+}
+
+.is-personalizable .personalize-text {
+  color: $ids-color-palette-white;
+}
+
+.is-personalizable .label + .personalize-text.data {
+  color: $ids-color-palette-white;
+}
+
+.is-personalizable .personalize-actionable,
+.is-personalizable .personalize-actionable svg {
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .is-personalizable .personalize-actionable.is-focused:not(.hide-focus),
 .is-personalizable .personalize-actionable:focus:not(.hide-focus) {
   border-color: $ids-color-palette-white;
-  box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 4px 3px rgba(0, 0, 0, 0.2);
 }
 
 .is-personalizable .personalize-actionable.hyperlink:focus:not(.hide-focus)::after {
   border-color: $ids-color-palette-white;
-  box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 4px 3px rgba(0, 0, 0, 0.2);
   opacity: 1;
 }
 
@@ -66,13 +81,13 @@
 
 .is-personalizable .personalize-chart-targeted .chart-percent-text,
 .is-personalizable .personalize-chart-targeted .label {
-  color: $font-color !important;
+  color: $ids-color-palette-white;
 }
 
 .is-personalizable .info-message,
 .is-personalizable .info-message .icon,
 .is-personalizable .info-message p {
-  color: $font-color !important;
+  color: $ids-color-palette-white !important;
 }
 
 .is-personalizable .personalize-actionable-disabled,
@@ -95,58 +110,5 @@
     .small-bottom-padding {
       padding-bottom: 5px !important;
     }
-  }
-}
-
-html[class*='new-'] {
-  .header:not(.alabaster) + .page-container {
-    .personalize-text,
-    .personalize-text .object-count,
-    .hyperlink.is-personalizable {
-      color: $ids-color-palette-white;
-    }
-  }
-}
-
-.header:not(.alabaster) + .page-container .content.personalize-header {
-  .personalize-text {
-    color: $ids-color-palette-white;
-  }
-}
-
-html.theme-classic-contrast {
-  .header.alabaster {
-    +.page-container {
-      .is-personalizable .personalize-text {
-        color: $ids-color-palette-graphite-80;
-      }
-    }
-  }
-}
-
-// Classic themes default color personalization
-html[class*='classic-'] {
-  & .is-personalizable {
-    .personalize-header {
-      .personalize-chart-targeted .label,
-      .info-message .icon,
-      .info-message p,
-      .btn-icon .icon {
-        color: $ids-color-palette-white !important;
-      }
-    }
-
-    & .personalize-actionable:not(:hover) {
-      opacity: 0.8;
-    }
-
-    & .tab-container.horizontal > .tab-list-container .tab:not(.is-selected):not(.is-disabled):hover {
-      border-bottom-color: $ids-color-palette-white;
-    }
-  }
-
-  .is-personalizable.tab-container.horizontal > .tab-list-container .tab:not(.is-selected):not(.is-disabled):hover,
-  .is-personalizable.tab-container.header-tabs > .tab-list-container .tab:not(.is-selected):not(.is-disabled):hover {
-    border-bottom-color: $ids-color-palette-white;
   }
 }

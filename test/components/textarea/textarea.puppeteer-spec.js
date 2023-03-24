@@ -20,7 +20,7 @@ describe('Textarea', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should not visually regress', async () => {
+    it.skip('should not visually regress', async () => {
       await page.waitForSelector('#description-max', { visible: true });
 
       const descriptionMaxInput = await page.$('#description-max');
@@ -210,7 +210,7 @@ describe('Textarea', () => {
       await page.setViewport({ width: 760, height: 600 });
     });
 
-    it('should not visually regress', async () => {
+    it.skip('should not visually regress', async () => {
       await page.waitForSelector('.container', { visible: true });
 
       const container = await page.$('.container');

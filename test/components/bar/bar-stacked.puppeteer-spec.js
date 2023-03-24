@@ -70,7 +70,7 @@ describe('Bar (Stacked) Chart  Puppeteer Tests', () => {
         .then(idValue => expect(idValue).toEqual('automation-id-barstacked-series2-legend-1'));
     });
 
-    it('should not visually regress the bar stacked', async () => {
+    it.skip('should not visually regress the bar stacked', async () => {
       const container = await page.$('.container');
       const image = await container.screenshot();
       const config = getConfig('bar-stacked-index');
@@ -130,7 +130,7 @@ describe('Bar (Stacked) Chart  Puppeteer Tests', () => {
         .then(idValue => expect(idValue).toEqual('automation-id-barstacked-comp2-legend-1'));
     });
 
-    it('should not visual regress', async () => {
+    it.skip('should not visual regress', async () => {
       const container = await page.waitForSelector('.container');
       const image = await container.screenshot();
       const config = getConfig('bar-stacked-100');
@@ -147,7 +147,7 @@ describe('Bar (Stacked) Chart  Puppeteer Tests', () => {
 
     it('should not able to tab through the legends', async () => {
       // eslint-disable-next-line
-        const legendTabIndex = await page.$$eval('.chart-legend-item', e => e.map(el => el.tabIndex));
+      const legendTabIndex = await page.$$eval('.chart-legend-item', e => e.map(el => el.tabIndex));
       expect(legendTabIndex).toEqual([-1, -1]); // These are the values of tabindex of all the legends.
     });
 

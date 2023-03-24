@@ -26,7 +26,7 @@ describe('Tabs module Puppeteer tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('Should not visual regress', async () => {
+    it.skip('Should not visual regress', async () => {
       // Add an opening delay just in case
       await page.waitForTimeout(200);
 

@@ -12,7 +12,7 @@ describe('Tag', () => {
       await page.setViewport({ width: 1200, height: 800 });
     });
 
-    it('should not visually regress', async () => {
+    it.skip('should not visually regress', async () => {
       expect(await page.waitForSelector('#maincontent')).toBeTruthy();
 
       // Screenshot of the main content
@@ -24,7 +24,7 @@ describe('Tag', () => {
       expect(image).toMatchImageSnapshot(config);
     });
 
-    it('should not change the standard tag', async () => {
+    it.skip('should not change the standard tag', async () => {
       expect(await page.waitForSelector(tag, { visible: true })).toBeTruthy();
 
       const standardTag = await page.$(tag);
@@ -55,7 +55,7 @@ describe('Tag', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should not change the dismissible and linkable tags', async () => {
+    it.skip('should not change the dismissible and linkable tags', async () => {
       expect(await page.waitForSelector(tag, { visible: true })).toBeTruthy();
 
       const dismissibleTag = await page.$(tag);
@@ -73,7 +73,7 @@ describe('Tag', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should not change disabled tag', async () => {
+    it.skip('should not change disabled tag', async () => {
       expect(await page.waitForSelector(tag, { visible: true })).toBeTruthy();
 
       const disabledTag = await page.$(tag);

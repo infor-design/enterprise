@@ -21,6 +21,7 @@ $header-default-bg-color: $ids-color-palette-slate-60;
 $header-default-bg-hover-color: $ids-color-palette-slate-80;
 
 $ids-color-palette-alabaster: $ids-color-palette-white;
+$input-color-focus-border: $ids-color-palette-slate-10;
 
 // Form Background Color
 $header-toolbar-button-hover-color: transparent;
@@ -831,9 +832,9 @@ $header-tab-indicator-hover-color-new: $ids-color-palette-white;
 // Header Breadcrumb
 $header-breadcrumb-current-color: $ids-color-palette-white;
 $header-breadcrumb-color: $ids-color-palette-slate-10;
-$header-breadcrumb-alt-bg-color: $ids-color-palette-slate-100;
+$header-breadcrumb-alt-bg-color: $ids-color-palette-white;
 $header-breadcrumb-alt-color: $ids-color-palette-white;
-$header-breadcrumb-border-color: $ids-color-palette-slate-50;
+$header-breadcrumb-border-color: $ids-color-palette-white;
 
 // Module Tabs
 $module-tabs-bg-color: $header-bg-color;

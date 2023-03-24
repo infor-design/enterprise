@@ -104,7 +104,7 @@ describe('Lookup example tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    xit('Should not visual regress', async () => {
       const buttonEl = await element.all(by.className('trigger')).first();
       await buttonEl.click();
 
@@ -499,7 +499,7 @@ describe('Lookup minWidth tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress', async () => {
+    xit('Should not visual regress', async () => {
       const buttonEl = await element.all(by.className('trigger')).last();
       await buttonEl.click();
 

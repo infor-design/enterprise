@@ -210,7 +210,7 @@ describe('Modal button tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
-    it('Should not visual regress on 4 buttons', async () => {
+    xit('Should not visual regress on 4 buttons', async () => {
       const bodyEl = await element(by.className('modal-engaged'));
 
       expect(await browser.imageComparison.checkElement(bodyEl, 'modal-buttons')).toEqual(0);

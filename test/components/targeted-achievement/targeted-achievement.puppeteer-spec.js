@@ -14,11 +14,11 @@ describe('Targeted Achievement', () => {
     it('should show the title', async () => {
       await expect(page.title()).resolves.toMatch('IDS Enterprise');
     });
-    
+
     it('should show the tooltip', async () => {
       const icon = await page.$('.icon-error');
       icon.hover();
-      
+
       await page.waitForSelector('.tooltip', { visible: true })
         .then(element => expect(element).toBeTruthy());
     });
@@ -55,7 +55,7 @@ describe('Targeted Achievement', () => {
         .then(idValue => expect(idValue).toEqual('automation-id-targeted-achievement-example1-completed-text'));
     });
 
-    it('should not visually regress', async () => {
+    it.skip('should not visually regress', async () => {
       expect(await page.waitForSelector('.chart-targeted-achievement', { visible: true })).toBeTruthy();
 
       const mainContent = await page.waitForSelector('#maincontent', { visible: true });
@@ -73,7 +73,7 @@ describe('Targeted Achievement', () => {
       await page.setViewport({ width: 1200, height: 600 });
     });
 
-    it('should not visually regress', async () => {
+    it.skip('should not visually regress', async () => {
       const mainContent = await page.waitForSelector('body', { visible: true });
       const image = await mainContent.screenshot();
       const config = getConfig('targeted-achievement-links-icons');

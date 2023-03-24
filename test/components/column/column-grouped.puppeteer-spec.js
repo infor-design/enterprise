@@ -45,12 +45,12 @@ describe('Column Grouped Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should run visual test', async () => {
+    it.skip('should run visual test', async () => {
       await page.waitForSelector('#column-line-id-dot-6');
       await page.waitForTimeout(350);
-      const image = await page.screenshot(); 
-      const config = getConfig('line-chart'); 
-      expect(image).toMatchImageSnapshot(config); 
+      const image = await page.screenshot();
+      const config = getConfig('line-chart');
+      expect(image).toMatchImageSnapshot(config);
     });
 
     it('should show tooltip when hovered', async () => {

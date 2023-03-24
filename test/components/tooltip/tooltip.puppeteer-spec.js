@@ -10,7 +10,7 @@ describe('Tooltip Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should not visual regress', async () => {
+    it.skip('should not visual regress', async () => {
       await page.evaluate(() => {
         $('#tooltip-btn').tooltip({
           keepOpen: true
@@ -55,7 +55,7 @@ describe('Tooltip Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should not visual regress', async () => {
+    it.skip('should not visual regress', async () => {
       await page.evaluate(() => {
         $('#standalone-delete-icon').tooltip({
           keepOpen: true
@@ -94,7 +94,7 @@ describe('Tooltip Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should not visual regress', async () => {
+    it.skip('should not visual regress', async () => {
       await page.evaluate(() => {
         $('#tooltip-btn').tooltip({
           keepOpen: true

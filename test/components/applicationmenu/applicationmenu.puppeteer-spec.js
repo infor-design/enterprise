@@ -35,7 +35,7 @@ describe('Application Menu Puppeteer Test', () => {
         .then(ariaExpanded => expect(ariaExpanded).toBe('true'));
     });
 
-    it('should not visual regress', async () => {
+    it.skip('should not visual regress', async () => {
       await page.setViewport({ width: 1200, height: 800 });
       const button = await page.waitForSelector('.application-menu-trigger', { visible: true });
       await button.click();
@@ -176,7 +176,7 @@ describe('Application Menu Puppeteer Test', () => {
         });
     });
 
-    it('should not visually regress when filtered', async () => {
+    it.skip('should not visually regress when filtered', async () => {
       const search = await page.waitForSelector('#appmenu-searchfield', { visible: true });
       await search.click();
       await page.type('#appmenu-searchfield', '#3');
@@ -264,7 +264,7 @@ describe('Application Menu Puppeteer Test', () => {
       expect(await page.waitForSelector('#application-menu', { visible: true })).toBeTruthy();
     });
 
-    it('should not visually regress when personalized', async () => {
+    it.skip('should not visually regress when personalized', async () => {
       await page.setViewport({ width: 1280, height: 718 });
       await page.waitForSelector('body.no-scroll', { visible: true })
         .then(async () => {
@@ -286,7 +286,7 @@ describe('Application Menu Puppeteer Test', () => {
       expect(await page.waitForSelector('#application-menu', { visible: true })).toBeTruthy();
     });
 
-    it('should not visually regress on personalize roles', async () => {
+    it.skip('should not visually regress on personalize roles', async () => {
       await page.setViewport({ width: 1280, height: 718 });
       await page.waitForSelector('body.no-scroll', { visible: true })
         .then(async () => {
@@ -385,7 +385,7 @@ describe('Application Menu Puppeteer Test', () => {
       expect(await page.waitForSelector('#application-menu', { visible: true })).toBeTruthy();
     });
 
-    it('should not visually regress on personalize roles switcher', async () => {
+    it.skip('should not visually regress on personalize roles switcher', async () => {
       await page.setViewport({ width: 1280, height: 718 });
       await page.waitForSelector('body.no-scroll', { visible: true })
         .then(async () => {

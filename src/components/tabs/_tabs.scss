@@ -526,6 +526,7 @@
 
       &.is-disabled {
         color: $disabled-color;
+        opacity: 0.4;
 
         &::before {
           content: none !important;
@@ -730,7 +731,7 @@
 }
 
 html.theme-classic-dark .tab-container.header-tabs > .tab-list-container .tab.is-disabled {
-  color: rgba($ids-color-palette-white, 0.2);
+  color: rgba($ids-color-palette-white, 0.4);
 }
 
 .tab-list-spillover {

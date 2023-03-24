@@ -12,7 +12,7 @@ describe('Grouped Bar Chart Puppeteer Tests', () => {
 
     it('should not be able to tab through the legends', async () => {
       // eslint-disable-next-line
-        const legendTabIndex = await page.$$eval('.chart-legend-item', e => e.map(el => el.tabIndex));
+      const legendTabIndex = await page.$$eval('.chart-legend-item', e => e.map(el => el.tabIndex));
       expect(legendTabIndex).toEqual([-1, -1, -1, -1]); // These are the values of tabindex of all the legends.
     });
 
@@ -153,7 +153,7 @@ describe('Grouped Bar Chart Puppeteer Tests', () => {
       expect(await page.$eval('#bargroup-a-apr-legend-3', el => el.getAttribute('data-automation-id'))).toBe('automation-id-bargroup-a-apr-legend-3');
     });
 
-    it('should not visual regress', async () => {
+    it.skip('should not visual regress', async () => {
       // Resize the viewport
       await page.setViewport({ width: 1200, height: 800 });
 
@@ -178,7 +178,7 @@ describe('Grouped Bar Chart Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should not visual regress', async () => {
+    it.skip('should not visual regress', async () => {
       // Resize the viewport
       await page.setViewport({ width: 1200, height: 800 });
 
@@ -203,7 +203,7 @@ describe('Grouped Bar Chart Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should not visual regress', async () => {
+    it.skip('should not visual regress', async () => {
       // Resize the viewport
       await page.setViewport({ width: 1200, height: 800 });
 

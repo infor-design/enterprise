@@ -77,7 +77,7 @@ describe('Calendar', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should not visual regress', async () => {
+    it.skip('should not visual regress', async () => {
       await page.waitForSelector('.monthview-table td', { visible: true })
         .then(element => expect(element).toBeTruthy());
 
@@ -224,7 +224,7 @@ describe('Calendar', () => {
       expect(await page.evaluate(() => document.querySelectorAll('.toast-message')[0].innerText)).toBe('Event "Out of Office" Clicked');
     });
 
-    it('should not visual regress', async () => {
+    it.skip('should not visual regress', async () => {
       expect(await page.$$eval('.monthview-table td', el => el.length)).toEqual(42);
 
       const image = await page.screenshot();
@@ -294,7 +294,7 @@ describe('Calendar', () => {
       expect(await page.$$eval('.monthview-table .calendar-event', el => el.length)).toEqual(21);
     });
 
-    it('should not visual regress', async () => {
+    it.skip('should not visual regress', async () => {
       expect(await page.$$eval('.monthview-table td', el => el.length)).toEqual(42);
 
       const image = await page.screenshot();

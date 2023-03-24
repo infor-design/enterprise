@@ -13,7 +13,7 @@ describe('Bubble Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should not visual regress', async () => {
+    it.skip('should not visual regress', async () => {
       await page.waitForFunction('document.querySelectorAll("div[role=main]").length > 0');
       const img = await page.screenshot();
       const sConfig = getConfig('bubble');

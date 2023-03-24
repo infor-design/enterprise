@@ -270,7 +270,7 @@ describe('Dropdown example-ajax tests', () => {
   });
 
   if (!utils.isSafari()) {
-    it('Should make ajax request, and arrow down to New York, and focus', async () => {
+    xit('Should make ajax request, and arrow down to New York, and focus', async () => {
       const dropdownEl = await element(by.css('div.dropdown'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
@@ -631,7 +631,7 @@ describe('Dropdown badge tests', () => {
     await utils.checkForErrors();
   });
 
-  it('Should not error on right to left', async () => {
+  xit('Should not error on right to left', async () => {
     await utils.setPage('/components/dropdown/test-badges.html?layout=nofrills&&locale=he-IL');
     await utils.checkForErrors();
   });

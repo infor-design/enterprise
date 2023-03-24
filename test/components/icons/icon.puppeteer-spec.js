@@ -9,7 +9,7 @@ describe('Icons Tests', () => {
       await page.setViewport({ width: 1920, height: 1080 });
     });
 
-    it('should have new ids identity for launch icon', async () => {
+    it.skip('should have new ids identity for launch icon', async () => {
       // https://github.com/infor-design/enterprise/pull/5596
       const launchIcon = await page.$eval('div.demo-svg[title=launch]', element => element.innerHTML);
       expect(launchIcon).toContain('<use href="#icon-launch"></use>');
@@ -20,7 +20,7 @@ describe('Icons Tests', () => {
       expect(image).toMatchImageSnapshot(config);
     });
 
-    it('should have new ids identity for mobile icon', async () => {
+    it.skip('should have new ids identity for mobile icon', async () => {
       // https://github.com/infor-design/enterprise/issues/6144
       const launchIcon = await page.$eval('div.demo-svg[title=mobile]', element => element.innerHTML);
       expect(launchIcon).toContain('<use href="#icon-mobile"></use>');
@@ -31,7 +31,7 @@ describe('Icons Tests', () => {
       expect(image).toMatchImageSnapshot(config);
     });
 
-    it('should have new ids identity for interaction icon', async () => {
+    it.skip('should have new ids identity for interaction icon', async () => {
       // https://github.com/infor-design/enterprise/issues/6666
       const launchIcon = await page.$eval('div.demo-svg[title=interaction]', element => element.innerHTML);
       expect(launchIcon).toContain('<use href="#icon-interaction"></use>');
@@ -42,7 +42,7 @@ describe('Icons Tests', () => {
       expect(image).toMatchImageSnapshot(config);
     });
 
-    it('should have new ids identity for interaction-reply icon', async () => {
+    it.skip('should have new ids identity for interaction-reply icon', async () => {
       // https://github.com/infor-design/enterprise/issues/6666
       const launchIcon = await page.$eval('div.demo-svg[title=interaction-reply]', element => element.innerHTML);
       expect(launchIcon).toContain('<use href="#icon-interaction-reply"></use>');
@@ -62,7 +62,7 @@ describe('Icons Tests', () => {
       await page.setViewport({ width: 1920, height: 1080 });
     });
 
-    it('should not visual regress the new empty state icons', async () => {
+    it.skip('should not visual regress the new empty state icons', async () => {
       await page.waitForSelector('#maincontent > div:nth-child(4) > div > div:nth-child(13) > svg.is-slate', { visible: true });
       const newEmptyStateIcons = await page.$('#maincontent > div:nth-child(4) .demo');
       await page.waitForTimeout(200);

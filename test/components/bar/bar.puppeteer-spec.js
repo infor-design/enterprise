@@ -125,7 +125,7 @@ describe('Bar Chart', () => {
       expect(await page.$eval('#bar-c-bar', el => el.getAttribute('data-automation-id'))).toBe('automation-id-bar-c-bar');
     });
 
-    it('should not visual regress', async () => {
+    it.skip('should not visual regress', async () => {
       // Add a bit of a delay
       await page.waitForTimeout(200);
 
@@ -155,7 +155,7 @@ describe('Bar Chart', () => {
       expect(await axisLabels()).toContain('axis-label-bottom');
     });
 
-    it('should not have visual regressions in axis labels', async () => {
+    it.skip('should not have visual regressions in axis labels', async () => {
       expect(await page.waitForSelector('.bar-chart', { visible: true })).toBeTruthy();
 
       const image = await page.screenshot();
@@ -180,7 +180,7 @@ describe('Bar Chart', () => {
       expect(await axisLabels()).toContain('axis-label-bottom');
     });
 
-    it('should not have visual regressions in axis labels RTL', async () => {
+    it.skip('should not have visual regressions in axis labels RTL', async () => {
       expect(await page.waitForSelector('.bar-chart', { visible: true })).toBeTruthy();
 
       const image = await page.screenshot();

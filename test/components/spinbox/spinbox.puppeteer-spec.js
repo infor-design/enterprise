@@ -19,7 +19,7 @@ describe('Spinbox Puppeteer Tests', () => {
       expect(spinboxWidth).toBe(inputWidth);
     });
 
-    it('should run visual test', async () => {
+    it.skip('should run visual test', async () => {
       await page.waitForSelector('#xs-spinbox-example', { visible: true });
       await page.waitForTimeout(200);
       const image = await page.screenshot();

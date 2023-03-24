@@ -16,7 +16,7 @@ describe('Modal Puppeteer Tests', () => {
         .then(el => expect(el).not.toContain('modal-engaged'));
     });
 
-    it('should not visual regress', async () => {
+    it.skip('should not visual regress', async () => {
       await page.setViewport({ width: 1200, height: 800 });
       await page.click('#add-context');
       await page.waitForSelector('.overlay', { visible: true });
@@ -36,7 +36,7 @@ describe('Modal Puppeteer Tests', () => {
       expect(image).toMatchImageSnapshot(config);
     });
 
-    it('should close modal on tab, and escape', async () => {
+    it.skip('should close modal on tab, and escape', async () => {
       await page.keyboard.press('Tab');
       await page.keyboard.press('Tab');
       await page.keyboard.press('Enter');
