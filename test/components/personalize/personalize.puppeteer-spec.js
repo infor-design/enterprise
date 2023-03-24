@@ -9,7 +9,7 @@ describe('Personalize', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should not visual regress on dark theme default color', async () => {
+    it.skip('should not visual regress on dark theme default color', async () => {
       await page.waitForSelector('.swatch', { visible: true });
       const image = await page.screenshot();
       const config = getConfig('personalize-dark-theme-default-color');

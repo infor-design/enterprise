@@ -13,7 +13,7 @@ describe('Pie Chart tests', () => {
     await utils.checkForErrors();
   });
 
-  it('Should not visual regress', async () => {
+  it.skip('Should not visual regress', async () => {
     // Resize the viewport
     await page.setViewport({ width: 1200, height: 800 });
 

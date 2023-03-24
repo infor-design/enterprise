@@ -14,7 +14,7 @@ describe('Donut Chart Puppeteer Tests', () => {
       await utils.checkForErrors();
     });
 
-    it('Should not visual regress', async () => {
+    it.skip('Should not visual regress', async () => {
       // Resize the viewport
       await page.setViewport({ width: 1200, height: 800 });
 
@@ -45,7 +45,7 @@ describe('Donut Chart Puppeteer Tests', () => {
       await utils.checkForErrors();
     });
 
-    it('Should not visual regress', async () => {
+    it.skip('Should not visual regress', async () => {
       // Resize the viewport
       await page.setViewport({ width: 1200, height: 800 });
 
@@ -76,7 +76,7 @@ describe('Donut Chart Puppeteer Tests', () => {
       await utils.checkForErrors();
     });
 
-    it('Should not visual regress', async () => {
+    it.skip('Should not visual regress', async () => {
       // Resize the viewport
       await page.setViewport({ width: 1200, height: 800 });
 

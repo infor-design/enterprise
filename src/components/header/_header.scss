@@ -864,7 +864,14 @@ $subheader-height: 60px;
   h1,
   h2,
   h3 {
+    display: inline-block;
+    margin: 16px 15px;
     color: $header-text-color;
+  }
+
+  h2,
+  h3 {
+    font-size: 2rem;
   }
 }
 

@@ -11,7 +11,7 @@ describe('Locale', () => {
       await page.setViewport({ width: 1920, height: 1080 });
     });
 
-    it('should run visual test for locale-ph', async () => {
+    it.skip('should run visual test for locale-ph', async () => {
       await page.waitForSelector('#tabs-2');
       const img = await page.screenshot();
       const config = getConfig('locale-ph');

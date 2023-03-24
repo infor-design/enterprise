@@ -320,6 +320,11 @@ $wizard-current-state-size: ($wizard-tick-size * 1.3);
       background-color: $ids-color-palette-white;
     }
   }
+
+  &.alternate {
+    background-color: $panel-bg-color;
+    border-bottom-color: $panel-border-color;
+  }
 }
 
 // RTL Styles

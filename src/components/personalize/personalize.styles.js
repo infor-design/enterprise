@@ -1076,7 +1076,7 @@ html[class*="theme-classic-"] .tab-container.is-personalizable .tab-list-contain
   background-color: ${colors.lighter} !important;
 }
 
-.section-wizard {
+.is-personalizable .section-wizard {
   background-color: ${colors.lighter} !important;
 }
 

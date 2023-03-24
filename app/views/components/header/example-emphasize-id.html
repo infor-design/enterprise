@@ -12,7 +12,7 @@
 
       <h1>
         <span class="page-title">Order #431231</span>
-        <span class="section-title">John Smith | Customer </span>
+        <span class="section-title">John Smith | Customer</span>
       </h1>
     </div>
 
@@ -34,17 +34,5 @@
 
     {{> includes/header-actionbutton}}
   </div>
-
-  <scriptvascript">
-    $('body').on('initialized', function() {
-    $('#parameter-maintenance-save').on('click', function (e) {
-    $('body').toast({
-    'title': 'Disabled Button Click',
-    'message': 'The button <span style="font-weight: bold;">' + $(e.target).text().trim() + '</span> is supposed to be
-    disabled, and therefore should not have triggered this messsage. Something\'s wrong.'
-    });
-    });
-    });
-    </script>
 
 </header>

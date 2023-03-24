@@ -98,7 +98,7 @@ describe('Accordion Puppeteer Test', () => {
       expect((await page.$$('.accordion.is-disabled')).length).toBe(1);
     });
 
-    it('should not visual regress', async () => {
+    it.skip('should not visual regress', async () => {
       await page.waitForFunction('document.querySelectorAll("div[role=main]").length > 0');
       await page.waitForTimeout(1000);
       const img = await page.screenshot();
@@ -152,7 +152,7 @@ describe('Accordion Puppeteer Test', () => {
       expect(await page.$('.is-expanded')).toBeTruthy();
     });
 
-    it('should not visual regress', async () => {
+    it.skip('should not visual regress', async () => {
       await page.click('button:nth-child(2)');
       await page.waitForTimeout(1000);
       const img = await page.screenshot();

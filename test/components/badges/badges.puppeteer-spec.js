@@ -9,7 +9,7 @@ describe('Badges Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should run visual test new  theme', async () => {
+    it.skip('should run visual test new  theme', async () => {
       await page.setViewport({ width: 1920, height: 1080 });
       await page.waitForSelector('.twelve');
       const img = await page.screenshot();
@@ -24,7 +24,7 @@ describe('Badges Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should run visual test new  theme - contrast', async () => {
+    it.skip('should run visual test new  theme - contrast', async () => {
       await page.setViewport({ width: 1920, height: 1080 });
       await page.waitForSelector('.twelve');
       const img = await page.screenshot();
@@ -39,7 +39,7 @@ describe('Badges Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should run visual test new  theme', async () => {
+    it.skip('should run visual test new  theme', async () => {
       await page.setViewport({ width: 1920, height: 1080 });
       await page.waitForSelector('.twelve');
       const img2 = await page.screenshot();

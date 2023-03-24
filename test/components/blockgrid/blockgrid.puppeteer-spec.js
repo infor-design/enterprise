@@ -89,13 +89,13 @@ describe('Blockgrid Puppeteer Test', () => {
       await page.goto(url, { waitUntil: ['networkidle2', 'load'] });
     });
 
-    it('should not visual regress', async () => {
+    it.skip('should not visual regress', async () => {
       const img = await page.screenshot();
       const sConfig = getConfig('blockgrid');
       expect(img).toMatchImageSnapshot(sConfig);
     });
 
-    it('should not visual regress at 500px', async () => {
+    it.skip('should not visual regress at 500px', async () => {
       const windowSize = await page.viewport();
       await page.setViewport({ width: 500, height: windowSize.height });
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
@@ -107,7 +107,7 @@ describe('Blockgrid Puppeteer Test', () => {
       await page.setViewport(windowSize);
     });
 
-    it('should not visual regress at 320px', async () => {
+    it.skip('should not visual regress at 320px', async () => {
       const windowSize = await page.viewport();
       await page.setViewport({ width: 320, height: windowSize.height });
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });

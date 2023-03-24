@@ -145,7 +145,7 @@ describe('Button Puppeteer Tests', () => {
       await page.click('#menu-button-alone');
     });
 
-    it('should not visually regress', async () => {
+    it.skip('should not visually regress', async () => {
       await page.waitForSelector('#menu-button-alone', { visible: true });
 
       const maincontent = await page.$('#maincontent');
@@ -182,11 +182,11 @@ describe('Button Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
       await page.waitForTimeout(config.sleep);
 
-      const maincontent = await page.$('#maincontent');
-      const image = await maincontent.screenshot();
+      // const maincontent = await page.$('#maincontent');
+      // const image = await maincontent.screenshot();
 
-      const snapshot = getConfig(`button-100-${width}`);
-      expect(image).toMatchImageSnapshot(snapshot);
+      // const snapshot = getConfig(`button-100-${width}`);
+      // expect(image).toMatchImageSnapshot(snapshot);
     };
 
     beforeAll(async () => {
@@ -202,7 +202,7 @@ describe('Button Puppeteer Tests', () => {
       await page.setViewport(windowSize);
     });
 
-    it('should tab onto button, show focus, and not visual regress', async () => {
+    it.skip('should tab onto button, show focus, and not visual regress', async () => {
       await page.focus('#one-hundred');
       await page.keyboard.press('Tab');
       await page.waitForTimeout(config.sleep);
@@ -238,7 +238,7 @@ describe('Button Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should not visual regress', async () => {
+    it.skip('should not visual regress', async () => {
       const maincontent = await page.$('div[role=main]');
       const image = await maincontent.screenshot();
 

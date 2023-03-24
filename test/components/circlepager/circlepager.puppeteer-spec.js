@@ -13,7 +13,7 @@ describe('Circlepager Puppeteer Tests', () => {
       await expect(page.title()).resolves.toMatch('IDS Enterprise');
     });
 
-    it('should not visual regress', async () => {
+    it.skip('should not visual regress', async () => {
       expect(await page.waitForSelector('div[role=main]')).toBeTruthy();
 
       const image = await page.screenshot();

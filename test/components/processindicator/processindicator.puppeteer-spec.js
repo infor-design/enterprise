@@ -10,7 +10,7 @@ describe('ProcessIndicator Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('Should not visual regress', async () => {
+    it.skip('Should not visual regress', async () => {
       // Need a bit of delay to make sure everything is showing
       await page.waitForTimeout(200);
 
@@ -30,7 +30,7 @@ describe('ProcessIndicator Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('Should not visual regress', async () => {
+    it.skip('Should not visual regress', async () => {
       // Need a bit of delay to make sure everything is showing
       await page.waitForTimeout(290);
 

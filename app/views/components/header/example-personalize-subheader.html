@@ -8,34 +8,9 @@
       <button class="btn">
         <span>Text Button</span>
       </button>
-
-      <button class="btn-menu">
-        <span>Menu Button</span>
-      </button>
-      <button class="btn-icon" disabled="true">
-        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-          <use href="#icon-settings"></use>
-        </svg>
-        <span class="audible">Settings</span>
-      </button>
-
-      <button class="btn-icon">
-        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-          <use href="#icon-delete"></use>
-        </svg>
-        <span class="audible">Trash</span>
-      </button>
     </div>
 
-    <div class="toolbar-section search">
-      <div class="searchfield-wrapper">
-        <label for="toolbar-searchfield-01" class="audible">Toolbar Search</label>
-        <input id="toolbar-searchfield-01" class="searchfield" placeholder="Search..."
-          data-options="{ clearable: true }" />
-      </div>
-    </div>
-
-    <div class="toolbar-section buttonset flex-grow-1 flex-end">
+    <div id="more-button" class="toolbar-section more">
       {{> includes/header-actionbutton}}
     </div>
   </div>
@@ -50,24 +25,6 @@
       <div class="toolbar-section buttonset">
         <button class="btn">
           <span>Text Button</span>
-        </button>
-
-        <button class="btn-menu">
-          <span>Menu Button</span>
-        </button>
-
-        <button class="btn-icon" disabled="true">
-          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-            <use href="#icon-settings"></use>
-          </svg>
-          <span class="audible">Settings</span>
-        </button>
-
-        <button class="btn-icon">
-          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-            <use href="#icon-delete"></use>
-          </svg>
-          <span class="audible">Trash</span>
         </button>
       </div>
     </div>

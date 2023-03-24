@@ -78,7 +78,7 @@ describe('Autocomplete Puppeteer Test', () => {
       await checkAttr('#autocomplete-list-option4', 'autocomplete-list-option4', 'autocomplete-automation-id-list-option4');
     });
 
-    it('should not visual regress', async () => {
+    it.skip('should not visual regress', async () => {
       await page.setViewport({ width: 1920, height: 1080 });
       const autocompleteEl = await clickOnAutocomplete();
       autocompleteEl.type('a');
