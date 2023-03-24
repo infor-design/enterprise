@@ -504,10 +504,6 @@ html.theme-new-dark .header.is-personalizable.has-tabs .tab-container.header-tab
   background-color: ${colors.contrast};
 }
 
-.tab-container.header-tabs.alternate::after {
-  background-image: linear-gradient(to right, rgba(28, 24, 25, 0), ${colors.base});
-}
-
 .is-personalizable .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled),
 .header.is-personalizable .tab-container.header-tabs:not(.alternate) .tab-more svg.icon,
 .tab-container.is-personalizable .tab-more svg.icon,
@@ -1158,7 +1154,7 @@ html[class*="theme-classic-"] .tab-container.is-personalizable .tab-list-contain
   opacity: .4 !important;
 }
 
-.is-personalizable .personalize-header {
+.is-personalizable .personalize-header:not(.header-tabs.alternate) {
   background-color: ${colors.base} !important;
 }
 
@@ -1212,8 +1208,12 @@ html[class*="-dark"] .is-personalizable .subheader h2 {
 
 .is-personalizable .personalize-actionable,
 .is-personalizable .personalize-actionable svg,
-.is-personalizable .personalize-actionable .icon {
-  color: rgba(255, 255, 255, 0.8) !important;
+.is-personalizable .personalize-actionable .icon,
+.is-personalizable .personalize-header .personalize-chart-targeted .label,
+.is-personalizable .personalize-header .info-message .icon,
+.is-personalizable .personalize-header .info-message p,
+.is-personalizable .personalize-header .btn-icon .icon {
+  color: ${colors.text} !important;
   opacity: .8;
 }
 

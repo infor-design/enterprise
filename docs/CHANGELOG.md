@@ -9,16 +9,21 @@
 ## v4.82.0 Fixes
 
 - `[Count]` Fix personalize styles for instance count to adjust icon colors. ([6947](https://github.com/infor-design/enterprise/issues/6947))
+- `[Badge]` Fixed success state badge color in new light theme. ([#7353](https://github.com/infor-design/enterprise/issues/7353))
+- `[Datagrid]` Fix on styling in row status icon when first column is not a select column. ([NG#5913](https://github.com/infor-design/enterprise-ng/issues/5913))
 - `[Datagrid]` Fixed paging source argument is empty when re-assigning grid options. ([6947](https://github.com/infor-design/enterprise/issues/6947))
+- `[Editor]` Fixed links are not readable in dark mode. ([#7331](https://github.com/infor-design/enterprise/issues/7331))
 - `[Header]` Fixed border in search field in the header. ([#7297](https://github.com/infor-design/enterprise/issues/7297))
 - `[Header]` Fixed the font sizes and alignments. ([#7317](https://github.com/infor-design/enterprise/issues/7317))
-- `[Lookup]` Fix in keyword search not filtering single comma. ([#7165](https://github.com/infor-design/enterprise/issues/7165))
 - `[Lookup]` Fix in keyword search not filtering single quote. ([#7165](https://github.com/infor-design/enterprise/issues/7165))
+- `[Pager]` Fixed the pager's underline style to enhance its appearance when it is being hovered over. ([#7352](https://github.com/infor-design/enterprise/issues/7352))
 - `[Personalization]` Changed default color back to azure and add alabaster in personalization colors. ([#7320](https://github.com/infor-design/enterprise/issues/7320))
 - `[Personalization]` Fixed color changing doesn't add CSS class to the header in Safari browser. ([#7338](https://github.com/infor-design/enterprise/issues/7338))
+- `[Personalization]` Adjusted header text/tabs colors. ([#7319](https://github.com/infor-design/enterprise/issues/7319))
 - `[Tabs]` Fixed the alignment of focus in RTL view. ([#6992](https://github.com/infor-design/enterprise/issues/6992))
 - `[Tabs Header]` Fixed the alignment of close button. ([#7273](https://github.com/infor-design/enterprise/issues/7273))
 - `[Timeline]` Fixed the alignment when timeline is inside a card. ([#7278](https://github.com/infor-design/enterprise/issues/7278))
+- `[Timeline]` Fixed issue with timeline content exceeding allotted space when additional elements were added. ([#7299](https://github.com/infor-design/enterprise/issues/7299))
 
 ## v4.81.0
 

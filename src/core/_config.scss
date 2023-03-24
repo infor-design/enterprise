@@ -711,6 +711,7 @@ $tab-hover-color: $font-color-extrahighcontrast;
 $tab-text-color-horizontal: $ids-color-palette-slate-70;
 $tab-horizontal-text-color: $ids-color-palette-graphite-60;
 $tab-add-tab-color: $ids-color-palette-slate-70;
+$tab-background-hover-color-new: $ids-color-palette-azure-10;
 
 $tab-alt-bg-color: $ids-color-palette-white;
 $tab-alt-border-color: $ids-color-palette-graphite-30;
@@ -981,11 +982,11 @@ $header-toolbar-button-hover-color: #E6F1FD;
 // Header Tabs
 $header-tabcontainer-border-color: $ids-color-palette-graphite-30;
 $header-tab-separator: $ids-color-palette-graphite-30;
-$header-tab-normal-color: $ids-color-palette-graphite-60;
+$header-tab-normal-color: $ids-color-palette-white;
 $header-tab-text-color: $ids-color-palette-azure-70;
-$header-tab-hover-color: $ids-color-palette-azure-60;
-$header-tab-selected-color: $ids-color-brand-primary-base;
-$header-tab-focus-border-color: $button-color-primary-initial-font;
+$header-tab-hover-color: $ids-color-palette-white;
+$header-tab-selected-color: $ids-color-palette-white;
+$header-tab-focus-border-color: $ids-color-palette-white;
 
 $header-tab-alt-bg-color: $ids-color-palette-white;
 $header-tab-alt-normal-color: $ids-color-palette-graphite-60;
@@ -994,19 +995,19 @@ $header-tab-alt-selected-color: $ids-color-brand-primary-base;
 $header-tab-alt-separator: $header-tabcontainer-border-color;
 
 $header-tab-separator-new: $ids-color-palette-white;
-$header-tab-disabled-color-new: $ids-color-palette-slate-30;
+$header-tab-disabled-color-new: rgba($ids-color-palette-white, 0.4);
 
-$header-tab-background-initial-color-new: $ids-color-palette-white;
-$header-tab-gradient-initial-color-new: $ids-color-palette-slate-10;
-$header-tab-background-hover-color: $ids-color-palette-azure-10;
-$header-tab-background-hover-color-new: $ids-color-palette-azure-10;
-$header-tab-indicator-hover-color: $ids-color-brand-primary-base;
-$header-tab-indicator-hover-color-new: $ids-color-brand-primary-base;
+$header-tab-background-initial-color-new: $header-default-bg-color;
+$header-tab-gradient-initial-color-new: $header-default-bg-color;
+$header-tab-background-hover-color: $ids-color-palette-azure-80;
+$header-tab-background-hover-color-new: $ids-color-palette-azure-80;
+$header-tab-indicator-hover-color: $ids-color-palette-white;
+$header-tab-indicator-hover-color-new: $ids-color-palette-white;
 
-$header-tabcontainer-border-color-new: $ids-color-palette-graphite-30;
-$header-tab-normal-color-new: $ids-color-palette-graphite-60;
-$header-tab-hover-color-new: $ids-color-palette-azure-60;
-$header-tab-selected-color-new: $ids-color-brand-primary-base;
+$header-tabcontainer-border-color-new: $ids-color-brand-primary-base;
+$header-tab-normal-color-new: $ids-color-palette-white;
+$header-tab-hover-color-new: $ids-color-palette-white;
+$header-tab-selected-color-new: $ids-color-palette-white;
 
 
 // Header Breadcrumb
