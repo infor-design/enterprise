@@ -15,6 +15,8 @@
 - `[Editor]` Fixed links are not readable in dark mode. ([#7331](https://github.com/infor-design/enterprise/issues/7331))
 - `[Header]` Fixed border in search field in the header. ([#7297](https://github.com/infor-design/enterprise/issues/7297))
 - `[Header]` Fixed the font sizes and alignments. ([#7317](https://github.com/infor-design/enterprise/issues/7317))
+- `[Listview]` Fixed the height restriction in listview when used in card. ([#7094](https://github.com/infor-design/enterprise/issues/7094))
+- `[Lookup]` Fix in keyword search not filtering single comma. ([#7165](https://github.com/infor-design/enterprise/issues/7165))
 - `[Lookup]` Fix in keyword search not filtering single quote. ([#7165](https://github.com/infor-design/enterprise/issues/7165))
 - `[Pager]` Fixed the pager's underline style to enhance its appearance when it is being hovered over. ([#7352](https://github.com/infor-design/enterprise/issues/7352))
 - `[Personalization]` Changed default color back to azure and add alabaster in personalization colors. ([#7320](https://github.com/infor-design/enterprise/issues/7320))
