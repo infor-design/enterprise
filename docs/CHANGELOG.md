@@ -24,6 +24,7 @@
 - `[Tabs Header]` Fixed the alignment of close button. ([#7273](https://github.com/infor-design/enterprise/issues/7273))
 - `[Timeline]` Fixed the alignment when timeline is inside a card. ([#7278](https://github.com/infor-design/enterprise/issues/7278))
 - `[Timeline]` Fixed issue with timeline content exceeding allotted space when additional elements were added. ([#7299](https://github.com/infor-design/enterprise/issues/7299))
+- `[Timeline]` Added test page to test scenario of timeline with no dates. ([#7298](https://github.com/infor-design/enterprise/issues/7298))
 
 ## v4.81.0
 
