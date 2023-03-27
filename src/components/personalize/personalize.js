@@ -245,6 +245,13 @@ Personalize.prototype = {
     colors.btnFocusBorderColor = colors.contrast;
     colors.btnDisabledColor = 'rgba(255, 255, 255, 0.3) !important';
     colors.btnOpacity = 0.8;
+    colors.btnPrimaryColor = colors.base;
+    colors.btnPrimaryColorHover = colors.darker;
+    colors.btnSecondaryColor = colors.darkest;
+    colors.btnSecondaryBorderColor = colors.base;
+    colors.btnTertiaryBgHoverColor = '#E6F1FD';
+    colors.btnTertiaryHoverColor = colors.lightest;
+    colors.btnLinkColor = colors.light;
 
     const isAlabaster = colors.header === '#ffffff';
     const isNewDark = this.currentTheme.indexOf('new-dark') >= 0;
@@ -260,9 +267,17 @@ Personalize.prototype = {
       colors.focusBoxShadow = `0 0 0 2px transparent, 0 0 0 0 ${colors.contrast}, 0 0 1px 0px ${colors.contrast}`;
       colors.btnFocusBorderColor = '#2F2F32';
       colors.btnDisabledColor = 'rgba(0, 0, 0, 0.6) !important';
+      colors.btnPrimaryColor = '#0072ED';
+      colors.btnPrimaryColorHover = '#0066D4';
+      colors.btnSecondaryColor = '#0072ED';
+      colors.btnSecondaryBorderColor = '#0072ED';
+      colors.btnTertiaryBgHoverColor = '#E6F1FD';
+      colors.btnTertiaryHoverColor = '#0072ED';
+      colors.btnLinkColor = '0072ED';
 
       if (isNewDark) {
         colors.base = '#606066';
+        colors.btnPrimaryColor = colors.base;
         colors.dark = colors.base;
         colors.contrast = '#ffffff';
         colors.focusBoxShadow = `0 0 0 2px transparent, 0 0 0 1px ${colors.contrast}, 0 0 1px 1px ${colors.contrast}`;
@@ -271,18 +286,31 @@ Personalize.prototype = {
         colors.hyperlinkText = '#ffffff';
         colors.lighter = '#77777C';
         colors.btnDisabledColor = 'rgba(255, 255, 255, 0.4) !important';
+        colors.btnPrimaryColorHover = colors.darker;
+        colors.btnSecondaryColor = colors.darkest;
+        colors.btnSecondaryBorderColor = colors.base;
+        colors.btnTertiaryBgHoverColor = '#3E3E42';
+        colors.btnTertiaryHoverColor = colors.lightest;
+        colors.btnLinkColor = colors.light;
       }
 
       if (isClassicDark) {
         colors.base = '#50535a';
+        colors.btnPrimaryColor = colors.base;
         colors.dark = colors.base;
         colors.contrast = '#ffffff';
         colors.focusBoxShadow = `0 0 0 2px transparent, 0 0 0 1px ${colors.contrast}, 0 0 1px 1px ${colors.contrast}`;
         colors.darker = '#313236';
+        colors.btnPrimaryColorHover = colors.darker;
         colors.btnHoverColor = '#ffffff';
         colors.hyperlinkText = '#ffffff';
         colors.lighter = '#656871';
         colors.btnDisabledColor = 'rgba(255, 255, 255, 0.4) !important';
+        colors.btnSecondaryColor = colors.darkest;
+        colors.btnSecondaryBorderColor = colors.base;
+        colors.btnTertiaryBgHoverColor = 'transparent';
+        colors.btnTertiaryHoverColor = colors.lightest;
+        colors.btnLinkColor = colors.light;
       }
     }
 
@@ -329,7 +357,8 @@ Personalize.prototype = {
 
     let disabledBGColor = colorUtils.getLuminousColorShade(baseColor, lum);
     disabledBGColor = colorUtils.getDesaturatedColor(disabledBGColor, sat);
-    colors.baseDisabled = disabledBGColor;
+    colors.baseDisabled = isAlabaster ? '#D7D7D8' : disabledBGColor;
+    colors.baseDisabledText = isAlabaster ? '#ffffff' : disabledBGColor;
 
     // Hyperlink/Text Selection
     const hyperLinkTextColor = (isAlabaster && (isNewDark || isClassicDark)) ? '#ffffff' : colors.text;
