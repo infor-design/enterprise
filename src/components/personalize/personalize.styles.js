@@ -16,8 +16,8 @@ function personalizeStyles(colors) {
 
 .is-personalizable:not(.header) .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane),
 .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane).is-personalizable {
-  background-color: ${colors.base} !important;
-  border-color: ${colors.base} !important;
+  background-color: ${colors.btnPrimaryColor} !important;
+  border-color: ${colors.btnPrimaryColor} !important;
 }
 
 .header.is-personalizable .buttonset .searchfield-wrapper.is-open button {
@@ -45,8 +45,8 @@ html.theme-new-dark .is-personalizable:not(.header) .btn-primary:not(.destructiv
 
 html[class*="new-"] .is-personalizable:not(.header) .btn-secondary:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane),
 html[class*="new-"] .is-personalizable:not(.header) .btn-secondary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane) svg.icon  {
-  border-color: ${colors.base} !important;
-  color: ${colors.darkest} !important;
+  border-color: ${colors.btnSecondaryBorderColor} !important;
+  color: ${colors.btnSecondaryColor} !important;
 }
 
 html.theme-new-dark .is-personalizable:not(.header) .btn-secondary:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):not(:disabled),
@@ -62,7 +62,7 @@ html.theme-classic-dark .is-personalizable:not(.header) .btn-primary:not(.destru
 
 .is-personalizable:not(.header) .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled,
 .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane).is-personalizable:disabled {
-  color: ${colors.contrast} !important;
+  color: ${colors.baseDisabledText} !important;
   background-color: ${colors.baseDisabled} !important;
   border-color: ${colors.baseDisabled} !important;
 }
@@ -110,7 +110,7 @@ html.theme-new-dark .is-personalizable:not(.header) .btn-tertiary:not(.is-select
 
 .is-personalizable:not(.header) .btn-link:not(:disabled),
 .btn-link.is-personalizable:not(:disabled) {
-  color: ${colors.light} !important;
+  color: ${colors.btnLinkColor} !important;
 }
 
 .is-personalizable:not(.header) .btn-link:not(:disabled):hover {
@@ -119,7 +119,7 @@ html.theme-new-dark .is-personalizable:not(.header) .btn-tertiary:not(.is-select
 
 .is-personalizable:not(.header) .btn-link:not(:disabled) .icon,
 .btn-link.is-personalizable:not(:disabled) .icon {
-  color: ${colors.light} !important;
+  color: ${colors.btnLinkColor} !important;
 }
 
 .is-personalizable button.is-pressed,
@@ -134,8 +134,8 @@ button.is-personalizable.is-pressed .icon {
 
 .is-personalizable:not(.header) .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled),
 .btn-primary.is-personalizable:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
-  background-color: ${colors.darker} !important;
-  border-color: ${colors.darker} !important;
+  background-color: ${colors.btnPrimaryColorHover} !important;
+  border-color: ${colors.btnPrimaryColorHover} !important;
 }
 
 html.theme-new-dark .is-personalizable:not(.header) .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
@@ -154,8 +154,8 @@ html.theme-new-dark .is-personalizable:not(.header) .btn-secondary:not(.go-butto
 }
 
 html[class*="new-"] .is-personalizable:not(.header) .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
-  background-color: ${colors.secondaryButtonHover} !important;
-  color: ${colors.lightest};
+  background-color: ${colors.btnTertiaryBgHoverColor} !important;
+  color: ${colors.btnTertiaryHoverColor};
 }
 
 html.theme-new-dark .is-personalizable:not(.hero-widget) .btn-tertiary:not:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled),
@@ -171,7 +171,7 @@ html.theme-new-dark .is-personalizable:not(.header) .btn-link:hover:not(:disable
 }
 
 html[class*="new-"] .is-personalizable .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) svg {
-  color: ${colors.lightest};
+  color: ${colors.btnTertiaryHoverColor};
 }
 
 html.theme-new-dark .is-personalizable .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):not(:disabled),
@@ -185,8 +185,8 @@ html.theme-new-dark .is-personalizable:not(.hero-widget) .btn-tertiary:not(.dest
 
 .is-personalizable:not(.header) .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled),
 .btn-primary.is-personalizable:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
-  background-color: ${colors.darker} !important;
-  border-color: ${colors.darker} !important;
+  background-color: ${colors.btnPrimaryColorHover} !important;
+  border-color: ${colors.btnPrimaryColorHover} !important;
 }
 
 button.is-personalizable button:focus:not(.hide-focus),
@@ -377,6 +377,10 @@ a.is-personalizable svg.ripple-effect {
   color: ${colors.contrast} !important;
 }
 
+.header.is-personalizable button:not(:disabled):hover .icon {
+  color: ${colors.btnTertiaryHoverColor} !important;
+}
+
 html[class*="-dark"] .is-personalizable .personalize-subheader button:not(:disabled),
 html[class*="-dark"] .is-personalizable .subheader button:not(:disabled),
 html[class*="-dark"] .is-personalizable .personalize-subheader button:not(:disabled) .icon,
@@ -412,8 +416,8 @@ html[class*="-dark"] .is-personalizable .subheader button:not(:disabled) .icon {
 .personalize-subheader button:not(.go-button):not(.close):not(.searchfield-category-button):not(:disabled):hover,
 .personalize-subheader button:not(:disabled):hover .app-header.icon > span,
 .personalize-subheader .toolbar [class^='btn']:hover:not(.go-button):not(.close):not(.searchfield-category-button):not([disabled]) {
-  color: ${colors.contrast};
-  background-color: ${colors.darker} !important;
+  color: ${colors.btnTertiaryHoverColor} !important;
+  background-color: ${colors.btnTertiaryBgHoverColor} !important;
   opacity: 1;
 }
 
@@ -517,7 +521,7 @@ html[class*="theme-new-"] .personalize-header.tab-container.header-tabs:not(.alt
 
 .header.is-personalizable .flex-toolbar [class^='btn'][disabled] .icon,
 .header.is-personalizable .btn:not(.searchfield-category-button)[disabled] span {
-  color: rgba(255, 255, 255, 0.3) !important;
+  color: ${colors.btnDisabledColor};
 }
 
 .header.is-personalizable button:not(:disabled),
@@ -595,23 +599,34 @@ html[class*="theme-new-"] .personalize-header.tab-container.header-tabs:not(.alt
 .is-personalizable .personalize-text {
   color: ${colors.contrast};
 }
+
 .is-personalizable .tab-container.header-tabs.alternate > .tab-list-container .tab:not(.is-disabled) {
   color: ${colors.contrast};
 }
+
 .is-personalizable .tab-container.header-tabs.alternate > .tab-list-container .tab.is-selected:not(.is-disabled) {
   border-color: ${colors.contrast};
 }
+
 .is-personalizable .tab-container.header-tabs.alternate > .tab-list-container .tab-focus-indicator.is-selected {
   border-color: ${colors.contrast};
 }
+
 .is-personalizable .tab-container.header-tabs.alternate > .tab-list-container .tab:hover:not(.is-disabled) {
   background-color: ${colors.darker};
   border-color: ${colors.contrast};
 }
+
 .tab-container.header-tabs.alternate > .tab-list-container .tab.is-disabled {
   color: ${colors.contrast};
   opacity: 0.6;
 }
+
+.is-personalizable .tab-container.header-tabs > .tab-list-container .tab.is-disabled {
+  color: ${colors.contrast};
+  opacity: 0.6;
+}
+
 .is-personalizable .label + .personalize-text.data {
   color: ${colors.contrast};
 }

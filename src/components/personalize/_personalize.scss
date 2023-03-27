@@ -21,6 +21,10 @@
   }
 }
 
+.is-personalizable.header {
+  background-color: $header-default-bg-color;
+}
+
 .is-personalizable.has-more-button.tab-container.horizontal {
   &::after {
     background-image:

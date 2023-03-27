@@ -139,11 +139,11 @@
   border-radius: 8px;
 
   &:hover:not(:disabled):not(.close):not(.personalize-actionable) {
-    background-color: $button-color-tertiary-hover-background-new;
+    background-color: $button-color-tertiary-hover-background-new !important;
     color: $button-color-tertiary-hover-font-new;
 
     svg.icon {
-      color: $button-color-tertiary-hover-font-new;
+      color: $button-color-tertiary-hover-font-new !important;
     }
   }
 

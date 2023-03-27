@@ -443,7 +443,8 @@ $subheader-height: 60px;
 
   h1,
   h2,
-  h3 {
+  h3,
+  .toolbar-section.title {
     color: $header-text-color;
   }
 
@@ -633,10 +634,10 @@ $subheader-height: 60px;
       background-color: transparent;
       border: 1px solid transparent;
       border-radius: 8px;
-      color: $header-button-color;
+      color: $header-button-color !important;
 
-      &:not(.close):not(.collapse-button):hover {
-        background-color: $header-toolbar-button-hover-color;
+      &:not(.close):not(.collapse-button):not([disabled]):hover {
+        background-color: $header-toolbar-button-hover-color !important;
       }
 
       .icon {
