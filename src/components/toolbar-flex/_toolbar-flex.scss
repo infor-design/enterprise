@@ -132,6 +132,19 @@
 
     [class^='btn'] {
       color: $contextual-toolbar-button-color;
+
+      svg {
+        color: $contextual-toolbar-button-color;
+      }
+
+      &:hover {
+        color: $contextual-toolbar-button-hover-color;
+        background-color: transparent;
+
+        svg {
+          color: $contextual-toolbar-button-hover-color;
+        }
+      }
     }
   }
 

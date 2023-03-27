@@ -1,0 +1,244 @@
+
+<div class="row">
+  <div class="twelve columns">
+    <div role="toolbar" class="toolbar">
+
+      <div class="title">
+        Data Grid Header Title
+        <span class="datagrid-result-count">(N Results)</span>
+      </div>
+
+      <div class="buttonset">
+          <button type="button" id="toggle-row-status" class="btn">
+            <span>Add Row Status</span>
+          </button>
+          <button type="button" id="validate" class="btn-menu">
+            <span>Validate</span>
+          </button>
+          <ul class="popupmenu">
+            <li><a href="#" data-action="specific-row-error">Specific Row Error</a></li>
+            <li><a href="#" data-action="all-cells-in-row">All Cells in Row</a></li>
+            <li><a href="#" data-action="all-rows-and-cells">All Rows and Cells</a></li>
+            <li class="separator"></li>
+            <li><a href="#" data-action="clear-specific-row-error">Clear Specific Row Error</a></li>
+            <!-- <li><a href="#" data-action="clear-all-cells-in-row">Clear All Cells in Row</a></li> -->
+            <li><a href="#" data-action="clear-all-rows-and-cells">Clear All Rows and Cells</a></li>
+          </ul>
+        <button class="btn-icon" type="button" id="add-btn">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-add"></use>
+          </svg>
+          <span class="audible">Add</span>
+        </button>
+        <button class="btn" type="button" id="clearDirtyRows-btn">
+          <span class="audible">Clear Dirty Row</span>
+        </button>
+      </div>
+
+      <div class="more">
+        <button class="btn-actions" type="button">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-more"></use>
+          </svg>
+          <span class="audible">More Actions</span>
+        </button>
+        <ul class="popupmenu">
+          <li class="single-selectable-section"></li>
+          <li class="heading">Row Height</li>
+          <li class="is-selectable"><a data-option="row-extra-small" href="#" data-translate="text">ExtraSmall</a></li>
+          <li class="is-selectable"><a data-option="row-small" href="#" data-translate="text">Small</a></li>
+          <li class="is-selectable"><a data-option="row-medium" href="#" data-translate="text">Medium</a></li>
+          <li class="is-selectable is-checked"><a data-option="row-large" href="#" data-translate="text">Large</a></li>
+        </ul>
+
+      </div>
+    </div>
+
+    <div class="contextual-toolbar flex-toolbar is-hidden">
+      <div class="toolbar-section title selection-count">
+        <h2>Incredibly Long Toolbar (Favor's Buttonset)</h2>
+      </div>
+      <div class="toolbar-section buttonset">
+        <button type="button" class="btn" id="action1">
+          <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+            <use href="#icon-open-folder"></use>
+          </svg>
+          <span>Action</span>
+        </button>
+        <button type="button" class="btn" id="action2">
+          <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+            <use href="#icon-open-folder"></use>
+          </svg>
+          <span>Action</span>
+        </button>
+        <button type="button" class="btn" id="action3">
+          <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+            <use href="#icon-open-folder"></use>
+          </svg>
+          <span>Action</span>
+        </button>
+        <button type="button" class="btn" id="action4">
+          <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+            <use href="#icon-open-folder"></use>
+          </svg>
+          <span>Action</span>
+        </button>
+        <button type="button" class="btn" id="action5">
+          <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+            <use href="#icon-open-folder"></use>
+          </svg>
+          <span>Action</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="datagrid"></div>
+  </div>
+</div>
+
+<script>
+  var gridApi = null;
+
+  $('body').one('initialized', function () {
+    var grid,
+      columns = [],
+      data = [];
+
+    var isDisabled = function(row, cell, value, item) {
+      return (row % 2 === 0);
+    }
+
+    var newDate = new Date();
+    let year = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(newDate);
+    let month = new Intl.DateTimeFormat('en', { month: 'numeric' }).format(newDate);
+    let day = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(newDate);
+    console.log(`${month}-${day}-${year}`);
+
+    // Some Sample Data
+    data.push({ id: 1, productId: 2142201, productName: 'Compressor', activity: '<svg/onload=alert(1)>', quantity: 1, price: 210.99, status: 'OK', orderDate: '00000000', portable: false, action: 1, description: 'Compressor comes with various air compressor accessories, to help you with a variety of projects. All fittings are with 1/4 NPT connectors. The kit has an air blow gun that can be used for cleaning'});
+    data.push({ id: 2, productId: 2241202, productName: 'console.log', activity: 'Inspect and Repair', quantity: 2, price: 210.991, status: '', orderDate: '', portable: false, action: 1, description: 'The kit has an air blow gun that can be used for cleaning'});
+    data.push({ id: 3, productId: 2342203, productName: 'Portable Compressor', activity: '', portable: true, quantity: null, price: 120.992, status: null, orderDate: new Date(2014, 6, 3), action: 2});
+    data.push({ id: 4, productId: 2445204, productName: 'Another Compressor', activity: 'Assemble Paint', portable: true, quantity: 3, price: null, status: 'OK', orderDate: new Date(2015, 3, 3), action: 3, description: 'Compressor comes with with air tool kit'});
+    data.push({ id: 5, productId: 2542205, productName: 'De Wallt Compressor', activity:  'Inspect and Repair', portable: false, quantity: 4, price: 210.99, status: 'OK', orderDate: new Date(2015, 5, 5), action: 1});
+    data.push({ id: 6, productId: 2642205, productName: 'Air Compressors', activity: 'Inspect and Repair', portable: false, quantity: 41, price: 120.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 2});
+    data.push({ id: 7, productId: 2642206, productName: 'Some Compressor', activity: 'inspect and Repair', portable: true, quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 2});
+
+    //Define Columns for the Grid.
+    // columns.push({ id: 'rowStatus', sortable: false, resizable: false, formatter: Soho.Formatters.Status, align: 'center'});
+    columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center'});
+    columns.push({ id: 'id', name: 'Row Id', field: 'id', formatter: Soho.Formatters.Readonly});
+    columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Soho.Formatters.Hyperlink, editor: Soho.Editors.Input});
+    columns.push({ id: 'activity', name: 'Activity', field: 'activity', required: true, editor: Soho.Editors.Input, validate: 'required'});  //maxLength: 2
+    columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', align: 'right', editor: Soho.Editors.Input, mask: '###', isEditable: isDisabled});
+    columns.push({ id: 'portable', name: 'Portable', field: 'portable', align: 'center', formatter: Soho.Formatters.Checkbox, editor: Soho.Editors.Checkbox});
+    columns.push({ id: 'price', name: 'Price', field: 'price', align: 'right', formatter: Soho.Formatters.Decimal, validate: 'required', numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Soho.Editors.Input});
+    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, editor: Soho.Editors.Date, editorOptions: {
+      showLegend: true, legend:
+      [{name: 'Weekend', color: '#579E95', dayOfWeek: [0,6]}],
+      disable: { years: [], dates: [], minDate: '01-01-2014', maxDate: `${month}-${day}-${year}`,
+      dayOfWeek: [],
+      isEnable: false,
+      restrictMonths: false },
+      showTime: false,
+      showMonthYearPicker: true,
+      placeholder: true,
+      incrementWithKeyboard: true,
+      todayWithKeyboard: true},
+      validate: 'availableDate required date', width: 120
+    });
+    columns.push({ id: 'action', name: 'Action', field: 'action', formatter: Soho.Formatters.Dropdown, editor: Soho.Editors.Dropdown, validate: 'required', isEditable: isDisabled,
+    options: [{id: '', label: '', value: -1}, {id: 'oh1', label: 'On Hold', value: 1}, {id: 'sh1', label: 'Shipped', value: 2} , {id: 'ac1', label: 'Action', value: 3}, {id: 'pen', label: 'Pending', value: 4}, {id: 'bk1', label: 'Backorder', value: 5}, {id: 'can', label: 'Cancelled', value: 6}, {id: 'pro', label: 'Processing', value: 7}]
+    });
+
+    //Init and get the api for the grid
+    grid = $('#datagrid').datagrid({
+      columns: columns,
+      dataset: data,
+      editable: true,
+      showNewRowIndicator: false,
+      clickToSelect: false,
+      selectable: 'multiple',
+      toolbar: {title: 'Data Grid Header Title', results: true, personalize: true, actions: true, rowHeight: true, keywordFilter: true,  collapsibleFilter: true},
+      paging: true,
+      pagesize: 5,
+      pagesizes: [2, 5, 6],
+      trimSpaces: true,
+      columnReorder: true,
+      showDirty: true
+    }).on('cellchange', function (e, args) {
+      console.log('cellchange', args);
+    }).on('rowadd', function (e, args) {
+      console.log(e, args);
+    }).on('rowremove', function (e, args) {
+      console.log(e, args);
+    }).on('dblclick', function (e, args) {
+      console.log('dblclick', args);
+    });
+
+    gridApi = $('#datagrid').data('datagrid');
+
+    //Example row status
+    $('#toggle-row-status').on('click', function () {
+      var btn = $(this).find('span');
+      var status = {
+        add: 'Add Row Status',
+        remove: 'Remove Row Status'
+      };
+      if (btn.text() === status.add) {
+        btn.text(status.remove);
+        gridApi.rowStatus(0, 'error', 'Error');
+        gridApi.rowStatus(0, 'error', 'Error 2');
+        gridApi.rowStatus(0, 'error', 'Error 3');
+        gridApi.rowStatus(1, 'alert', 'Alert');
+        gridApi.rowStatus(2, 'info', 'Info');
+        gridApi.rowStatus(3, 'in-progress', 'inProgress');
+        gridApi.rowStatus(4, 'success', 'Confirm');
+        gridApi.rowStatus(6, 'new', 'new');
+        gridApi.rowStatus(6, 'error', 'This row has errors');
+      } else {
+        btn.text(status.add);
+        gridApi.resetRowStatus();
+      }
+    });
+
+    window.data = data;
+  });
+
+  var newId = 8;
+  //Add Code for Add and icon-delete
+  $('#add-btn').on('click', function () {
+    gridApi.addRow({ id: newId++, productId: 2642206, productName: 'New Product'});
+    console.log(gridApi.settings.dataset[1]);
+  });
+
+  //Add Code for Add and icon-delete
+  $('#remove-btn').on('click', function () {
+    gridApi.removeSelected();
+  });
+
+  $('#clearDirtyRows-btn').on('click', function() {
+    gridApi.clearDirty();
+  })
+
+  //A few other ways
+  $('#validate').on('selected', function (e, args) {
+    var action = args.attr('data-action');
+
+    if (action === 'specific-row-error') {
+      gridApi.showRowError(2, 'This row has a custom error message.', 'error');
+    }
+    if (action === 'all-cells-in-row') {
+      gridApi.validateRow(2);
+    }
+    if (action === 'all-rows-and-cells') {
+      gridApi.validateAll();
+    }
+    if (action === 'clear-specific-row-error') {
+      gridApi.clearRowError(2);
+    }
+    if (action === 'clear-all-rows-and-cells') {
+      gridApi.clearAllErrors();
+    }
+  });
+
+</script>
