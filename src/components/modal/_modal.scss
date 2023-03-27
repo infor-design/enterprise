@@ -160,7 +160,7 @@
       }
     }
 
-    &:first-child .audible ~ input:not(.spinbox):not(.colorpicker),
+    &:first-child .audible ~ input:not(.spinbox):not(.colorpicker):not(.field-filter),
     &:first-child .audible ~ .searchfield-wrapper {
       margin-top: 4px;
     }
