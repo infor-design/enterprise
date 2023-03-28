@@ -323,7 +323,8 @@
   overflow: hidden;
   width: 100%;
 
-  .card.auto-height {
+  &.auto-height,
+  &.auto-height .hero-top {
     height: fit-content;
     min-height: 0;
     max-height: none;
