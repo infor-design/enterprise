@@ -8,7 +8,8 @@
   <div class="twelve columns">
 
     <button class="btn-secondary" type="button" id="list-tasks">List of Tasks</button><br><br>
-    <button class="btn-secondary" type="button" id="list-companies">List of Companies</button>
+    <button class="btn-secondary" type="button" id="list-companies">List of Companies</button><br><br>
+    <button class="btn-secondary" type="button" id="list-tasks-card">List of Task (Card)</button>
 
     <!-- List of Tasks -->
     <div id="modal-list-tasks" style="display: none;">
@@ -50,6 +51,33 @@
       </div>
     </div>
 
+    <!-- List of Tasks (Card) -->
+    <div id="modal-list-tasks-card" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title" >Modal</h1>
+        </div>
+
+        <div class="modal-body-wrapper">
+          <div class="modal-body">
+            <div class="row full-height">
+              <div class="twelve columns full-height">
+                <div class="card full-height no-padding" style="height: 400px;">
+                  <div class="listview-search alternate-bg">
+                    <label class="audible" for="search-task">Search</label>
+                    <input class="searchfield" placeholder="Search for a task" name="search-task" id="search-task" data-options="{clearable: true}">
+                </div>
+                <div class="listview" id="listview-task" data-options="{'source': '{{basepath}}api/inventory-tasks', 'template': 'tmpl-task', 'searchable': 'true'}"></div>
+              </div>
+            </div>
+            <div class="modal-buttonset">
+              <button type="button" class="btn-modal">Close</button>
+              <!-- <button type="button" id="submit" class="btn-modal-primary">Submit</button> -->
+            </div>
+          </div>
+        </div>
+      </div>
+   </div>
   </div>
 </div>
 
@@ -91,6 +119,12 @@ var modals = {
 
   $('#list-tasks, #list-companies').on('click', function () {
     setModal(modals[this.id]);
+  });
+
+  $('#list-tasks-card').on('click', function () {
+    $('body').modal({
+      content: $('#modal-list-tasks-card')
+    });
   });
 </script>
 
