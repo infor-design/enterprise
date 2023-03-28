@@ -563,6 +563,24 @@
   }
 }
 
+.header + .page-container .scrollable-flex-header .breadcrumb {
+  background-color: $subhead-bg-color;
+
+  &.truncated {
+    .breadcrumb-list,
+    ol {
+      &::before {
+        background-image:
+          linear-gradient(
+            to right,
+            rgba($subhead-bg-color, 1),
+            rgba($subhead-bg-color, 0)
+          );
+      }
+    }
+  }
+}
+
 // RTL Styles
 html[dir='rtl'] {
   .breadcrumb {
