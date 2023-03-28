@@ -74,6 +74,7 @@ const TOOLTIP_DEFAULTS = {
   delay: 500,
   onHidden: null,
   attachToBody: true,
+  appendTo: '[role="main"]',
   attributes: null,
 };
 
@@ -886,7 +887,7 @@ Tooltip.prototype = {
     // Popovers need to be contained by an element with the correct ARIA role.
     // See infor-design/enterprise#4403
     if (this.isPopover) {
-      targetContainer = $('[role="main"]');
+      targetContainer = $(this.settings.appendTo);
     }
 
     if (!targetContainer.length) {
