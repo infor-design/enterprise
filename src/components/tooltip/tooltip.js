@@ -906,6 +906,8 @@ Tooltip.prototype = {
     if (!this.settings.attachToBody) {
       attachAfterTriggerElem = true;
       targetContainer = modalParent;
+    } else {
+      targetContainer = $('body');
     }
 
     // If a specific parent element is defined, use that
@@ -1010,6 +1012,7 @@ Tooltip.prototype = {
    * @returns {void}
    */
   hide(force) {
+    return;
     if ((this.settings.keepOpen && !force) || !this.visible) {
       return;
     }
