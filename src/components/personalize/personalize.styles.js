@@ -158,6 +158,11 @@ html[class*="new-"] .is-personalizable:not(.header) .btn-tertiary:not(.destructi
   color: ${colors.btnTertiaryHoverColor};
 }
 
+html[class*="new-"] .hero-widget.is-personalizable .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled),
+html[class*="new-"] .hero-widget.is-personalizable .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) svg {
+  color: ${colors.contrast} !important;
+}
+
 html.theme-new-dark .is-personalizable:not(.hero-widget) .btn-tertiary:not:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled),
 html.theme-new-dark .is-personalizable .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) svg.icon,
 html.theme-new-dark .is-personalizable .btn-link:hover:not(:disabled),
@@ -421,9 +426,14 @@ html[class*="-dark"] .is-personalizable .subheader button:not(:disabled) .icon {
   opacity: 1;
 }
 
+.header .flex-toolbar [class^='btn'][disabled] {
+  color: ${colors.btnDisabledColor};
+}
+
 .header.is-personalizable .buttonset .searchfield-wrapper.non-collapsible.toolbar-searchfield-wrapper.has-categories .btn-icon.close:hover {
   background-color: ${colors.contrast} !important;
 }
+
 html.theme-new-dark .header.is-personalizable .buttonset .searchfield-wrapper.non-collapsible.toolbar-searchfield-wrapper.has-categories .btn-icon.close,
 html.theme-new-dark .header.is-personalizable .buttonset .searchfield-wrapper.non-collapsible.toolbar-searchfield-wrapper.has-categories .btn-icon.close svg.close,
 html.theme-classic-dark .header.is-personalizable .buttonset .searchfield-wrapper.non-collapsible.toolbar-searchfield-wrapper.has-categories .btn-icon.close,
@@ -1169,7 +1179,6 @@ html[class*="-dark"] .is-personalizable .subheader h2 {
 .is-personalizable .personalize-actionable:hover:not([disabled]):not(.personalize-actionable-disabled):not(a) ,
 .is-personalizable .personalize-actionable:hover:not([disabled]):not(.personalize-actionable-disabled) svg,
 .is-personalizable .personalize-actionable:hover:not([disabled]):not(.personalize-actionable-disabled) .icon  {
-  background: ${colors.darker};
   color: ${colors.btnHoverColor} !important;
   opacity: 1;
 }

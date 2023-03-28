@@ -646,6 +646,10 @@ a.btn-close {
   }
 }
 
+.header .btn-tertiary:hover:not(:disabled):not(.close):not(.personalize-actionable) svg.icon {
+  color: #fff !important;
+}
+
 .btn-icon {
   &[disabled],
   &:hover {

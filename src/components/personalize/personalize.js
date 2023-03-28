@@ -283,13 +283,13 @@ Personalize.prototype = {
     colors.btnPrimaryColorHover = colors.darker;
     colors.btnSecondaryColor = colors.darkest;
     colors.btnSecondaryBorderColor = colors.base;
-    colors.btnTertiaryBgHoverColor = '#E6F1FD';
     colors.btnTertiaryHoverColor = colors.lightest;
     colors.btnLinkColor = colors.light;
 
     const isAlabaster = colors.header === '#ffffff';
     const isNewDark = this.currentTheme.indexOf('new-dark') >= 0;
     const isClassicDark = this.currentTheme.indexOf('classic-dark') >= 0;
+    colors.btnTertiaryBgHoverColor = isAlabaster ? '#E6F1FD' : colors.darker;
 
     // Alabaster is different so readjust the colors
     if (isAlabaster) {
@@ -300,7 +300,7 @@ Personalize.prototype = {
       colors.btnOpacity = 1;
       colors.focusBoxShadow = `0 0 0 2px transparent, 0 0 0 0 ${colors.contrast}, 0 0 1px 0px ${colors.contrast}`;
       colors.btnFocusBorderColor = '#2F2F32';
-      colors.btnDisabledColor = 'rgba(0, 0, 0, 0.6) !important';
+      colors.btnDisabledColor = 'rgba(0, 0, 0, 0.4) !important';
       colors.btnPrimaryColor = '#0072ED';
       colors.btnPrimaryColorHover = '#0066D4';
       colors.btnSecondaryColor = '#0072ED';
