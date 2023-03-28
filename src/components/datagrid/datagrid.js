@@ -13343,9 +13343,9 @@ Datagrid.prototype = {
     }
 
     this.setRowHeightClass();
+    this.handlePaging();
     this.render(null, pagingInfo);
     this.renderHeader();
-    this.handlePaging();
     return this;
   }
 };
