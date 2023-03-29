@@ -184,6 +184,10 @@ Tooltip.prototype = {
       this.description = $(`<span id="tooltip-description-${this.descriptionId}" class="tooltip-description audible"></span>`).insertAfter(this.element);
     }
 
+    if (!this.settings.appendTo) {
+      this.settings.appendTo = '[role="main"]';
+    }
+
     if (this.element.is('.dropdown, .multiselect')) {
       this.activeElement = this.element.nextAll('.dropdown-wrapper:first').find('>.dropdown');
     }
