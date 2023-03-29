@@ -142,7 +142,28 @@
         background-color: transparent;
 
         svg {
-          color: $contextual-toolbar-button-hover-color;
+          color: inherit;
+        }
+      }
+
+      &:focus {
+        box-shadow: 0 0 0 2px transparent, 0 0 0 1px $contextual-toolbar-color;
+
+        &:not(.hide-focus) {
+          color: $contextual-toolbar-color;
+        }
+      }
+
+      &[disabled] {
+        color: $contextual-toolbar-button-disabled-color;
+
+        svg {
+          color: inherit;
+        }
+
+        &:hover {
+          background-color: transparent;
+          border-color: transparent;
         }
       }
     }
