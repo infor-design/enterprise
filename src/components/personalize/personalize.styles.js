@@ -1172,8 +1172,7 @@ html[class*="-dark"] .is-personalizable .subheader h2 {
 .is-personalizable .personalize-header .info-message .icon,
 .is-personalizable .personalize-header .info-message p,
 .is-personalizable .personalize-header .btn-icon .icon {
-  color: ${colors.contrast};
-  color: ${colors.btnOpacity};
+  color: ${colors.contrast} !important;
 }
 
 .is-personalizable .personalize-actionable:hover:not([disabled]):not(.personalize-actionable-disabled):not(a) ,
