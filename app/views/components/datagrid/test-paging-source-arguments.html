@@ -8,7 +8,7 @@
   <div class="six columns">
     <div class="field">
       <button id="apply" class="btn-primary">
-        <span>Apply</span>
+        <span>Load Data With Paging</span>
       </button>
     </div>
   </div>
@@ -59,36 +59,26 @@
     columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Soho.Formatters.Decimal});
     columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy'});
 
+    function source(req, done) {
+      console.info('paging', req);
+
+      var url = '{{basepath}}api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
+
+      return $.getJSON(url, function(res) {
+        req.total = res.total;
+        done(res.data, req);
+      });
+    }
+
     const datagrid = $('#datagrid').datagrid({
       columns: columns,
-      paging: true,
-      source: function (req, done) {
-        console.info('paging initial argument', req);
-
-        var url = '{{basepath}}api/compressors?pageNum=1&pageSize=10';
-
-        return $.getJSON(url, function(res) {
-          done(res.data, req);
-        });
-      }
     }).data('datagrid');
 
     function loadActiveGrid() {
-      function source(req, done) {
-        console.info('paging argument', req);
-
-        var url = '{{basepath}}api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
-
-        return $.getJSON(url, function(res) {
-          req.total = res.total;
-          done(res.data, req);
-        });
-      }
-
       const settings = {
         paging: true,
-        pagesize: 10,
-        pagesizes: [10, 25, 50, 75, 150],
+        pagesize: 5,
+        pagesizes: [5, 10, 25, 50, 100],
         clickToSelect: false,
         saveUserSettings: {
           activePage: true,

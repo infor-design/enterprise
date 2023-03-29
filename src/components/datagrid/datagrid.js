@@ -7051,26 +7051,7 @@ Datagrid.prototype = {
         }
       });
 
-    // Handle Paging
-    if (this.settings.paging) {
-      // Need to store the original id to work the wrapping and unwrapping in popupmenu
-      // before the paging initiate
-      this.pagerId = $('.pager-toolbar .btn-menu').attr('aria-controls');
-      this.tableBody.on(`page.${COMPONENT_NAME}`, (e, pagingInfo) => {
-        if (pagingInfo.type === 'filtered' && this.settings.source) {
-          return;
-        }
-        self.closePopupmenuOnPaging();
-        self.saveUserSettings();
-        self.render(null, pagingInfo);
-        self.afterPaging(pagingInfo);
-      }).on(`pagesizechange.${COMPONENT_NAME}`, (e, pagingInfo) => {
-        pagingInfo.preserveSelected = true;
-        self.closePopupmenuOnPaging();
-        self.render(null, pagingInfo);
-        self.afterPaging(pagingInfo);
-      });
-    }
+    this.attachPagingEvents();
 
     // Handle Hover States
     if (self.settings.showHoverState) {
@@ -7631,6 +7612,39 @@ Datagrid.prototype = {
         self.commitCellEdit();
       }
     });
+  },
+
+  /**
+   * Handle paging events
+   * @private
+   * @returns {void}
+   */
+  attachPagingEvents() {
+    const self = this;
+
+    if (this.settings.paging) {
+      // Need to store the original id to work the wrapping and unwrapping in popupmenu
+      // before the paging initiate
+      this.pagerId = $('.pager-toolbar .btn-menu').attr('aria-controls');
+      this.tableBody
+        .off(`page.${COMPONENT_NAME}`)
+        .on(`page.${COMPONENT_NAME}`, (e, pagingInfo) => {
+          if (pagingInfo.type === 'filtered' && this.settings.source) {
+            return;
+          }
+          self.closePopupmenuOnPaging();
+          self.saveUserSettings();
+          self.render(null, pagingInfo);
+          self.afterPaging(pagingInfo);
+        })
+        .off(`pagesizechange.${COMPONENT_NAME}`)
+        .on(`pagesizechange.${COMPONENT_NAME}`, (e, pagingInfo) => {
+          pagingInfo.preserveSelected = true;
+          self.closePopupmenuOnPaging();
+          self.render(null, pagingInfo);
+          self.afterPaging(pagingInfo);
+        });
+    }
   },
 
   /**
@@ -13344,6 +13358,7 @@ Datagrid.prototype = {
 
     this.setRowHeightClass();
     this.handlePaging();
+    this.attachPagingEvents();
     this.render(null, pagingInfo);
     this.renderHeader();
     return this;
