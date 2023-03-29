@@ -259,7 +259,6 @@ a.is-personalizable svg.ripple-effect {
 
 .is-personalizable .count-container .instance-count svg.icon {
   background-color: ${colors.base} !important;
-  color: ${colors.contrast} !important;
 }
 
 .is-personalizable .count-container .instance-count .count,
