@@ -51,7 +51,9 @@
   background-color: $subhead-bg-color;
 }
 
-.is-personalizable .personalize-text {
+.is-personalizable .personalize-text,
+.is-personalizable.hyperlink:not(.personalize-actionable),
+.is-personalizable.hyperlink:not(.personalize-actionable):not([disabled]):not(.personalize-actionable-disabled):hover {
   color: $ids-color-palette-white;
 }
 
