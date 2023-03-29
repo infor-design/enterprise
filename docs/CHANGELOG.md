@@ -13,6 +13,8 @@
 - `[Breadcrumb]` Updated breadcrumb hover color. ([#7337](https://github.com/infor-design/enterprise/issues/7337))
 - `[Card]` Fixed group-action unnecessary scroll bar. ([#7343](https://github.com/infor-design/enterprise/issues/7343))
 - `[Datagrid]` Fixed table layout with a distinct hover background color for both activated and non-activated rows. ([#7320](https://github.com/infor-design/enterprise/issues/7369))
+- `[Body]` Updated background color in classic high contrast. ([#7374](https://github.com/infor-design/enterprise/issues/7374))
+- `[Card]` Fixed group-action unnecessary scroll bar. ([#7343](https://github.com/infor-design/enterprise/issues/7343))
 - `[Datagrid]` Fixed header icon tooltip showing when undefined. ([#6929](https://github.com/infor-design/enterprise/issues/6929))
 - `[Datagrid]` Fix on styling in row status icon when first column is not a select column. ([NG#5913](https://github.com/infor-design/enterprise-ng/issues/5913))
 - `[Datagrid]` Fixed paging source argument is empty when re-assigning grid options. ([6947](https://github.com/infor-design/enterprise/issues/6947))
