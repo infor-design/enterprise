@@ -502,7 +502,6 @@
 
       &.is-disabled {
         color: $disabled-color;
-        opacity: 0.4;
 
         &::before {
           content: none !important;
@@ -702,7 +701,15 @@
   }
 }
 
-html.theme-classic-dark .tab-container.header-tabs > .tab-list-container .tab.is-disabled {
+html.theme-classic-light .tab-container.alternate.header-tabs > .tab-list-container .tab.is-disabled {
+  color: $disabled-color;
+}
+
+html.theme-classic-dark .tab-container.alternate.header-tabs > .tab-list-container .tab.is-disabled {
+  color: rgba($ids-color-palette-white, 0.2);
+}
+
+html.theme-classic-contrast .tab-container.alternate.header-tabs > .tab-list-container .tab.is-disabled {
   color: rgba($ids-color-palette-white, 0.4);
 }
 
