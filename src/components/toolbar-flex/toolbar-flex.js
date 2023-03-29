@@ -52,6 +52,7 @@ ToolbarFlex.prototype = {
    * @returns {void}
    */
   init() {
+    const self = this;
     this.uniqueId = utils.uniqueId(this.element);
     this.items = this.getElements().map((item) => {
       let itemComponentSettings = {};
@@ -87,6 +88,111 @@ ToolbarFlex.prototype = {
       }
     });
 
+    this.jQueryEl = $(this.element);
+    this.more = this.jQueryEl.find('.btn-actions');
+    if (this.more.length === 0 && !this.jQueryEl.hasClass('no-actions-button')) {
+      let moreContainer = this.jQueryEl.find('.more');
+
+      if (!moreContainer.length) {
+        moreContainer = $('<div class="toolbar-section more"></div>').appendTo(this.jQueryEl);
+      }
+
+      this.more = $('<button class="btn-actions" type="button"></button>')
+        .html(`${$.createIcon({ icon: 'more' })
+        }<span class="audible">${Locale.translate('MoreActions')}</span>`)
+        .attr('title', Locale.translate('More'))
+        .appendTo(moreContainer);
+    }
+
+    // Reference all interactive items in the toolbar
+    this.buttonset = $('.toolbar-section.buttonset');
+    this.buttonsetItems = this.buttonset.children('button')
+      .add(this.buttonset.find('input')); // Searchfield Wrappers
+
+    // Items contains all actionable items in the toolbar, including the ones in
+    // the title, and the more button
+    this.toolBarItems = this.buttonsetItems
+      // .add(this.title.children('button'))
+      .add(this.more);
+
+    const popupMenuInstance = this.more.data('popupmenu');
+    const moreAriaAttr = this.more.attr('aria-controls');
+
+    if (!popupMenuInstance) {
+      this.moreMenu = $(`#${moreAriaAttr}`);
+      if (!this.moreMenu.length || moreAriaAttr === undefined) {
+        this.moreMenu = this.more.next('.popupmenu, .popupmenu-wrapper');
+      }
+      if (!this.moreMenu.length) {
+        this.moreMenu = $(`<ul id="popupmenu-toolbar-${this.uniqueId}" class="popupmenu"></ul>`).insertAfter(this.more);
+      }
+
+      // Allow toolbar to understand pre-wrapped popupmenus
+      // Angular Support -- See SOHO-7008
+      if (this.moreMenu.is('.popupmenu-wrapper')) {
+        this.moreMenu = this.moreMenu.children('.popupmenu');
+      }
+    } else {
+      this.moreMenu = popupMenuInstance.menu;
+    }
+    
+    function menuItemFilter() {
+      return $(this).parent('.buttonset, .inline').length;
+    }
+
+    const menuItems = [];
+    this.toolBarItems.not(this.more).not('.ignore-in-menu').filter(menuItemFilter).each(function () {
+      menuItems.push(self.buildMoreActionsMenuItem($(this)));
+    });
+
+    menuItems.reverse();
+    $.each(menuItems, (i, item) => {
+      if (item.text() !== '') {
+        item.prependTo(self.moreMenu);
+      }
+    });
+
+    this.defaultMenuItems = this.moreMenu.children('li:not(.separator)');
+    this.hasDefaultMenuItems = this.defaultMenuItems.length > 0;
+
+    // If no more menu attributes are directly added through settings,
+    // use the toolbar's with an `actionbutton` suffix
+    let moreMenuAttrs;
+    if (this.settings.moreMenuSettings && Array.isArray(this.settings.moreMenuSettings.attributes)) {
+      moreMenuAttrs = this.settings.moreMenuSettings.attributes;
+    }
+    if ((!moreMenuAttrs || !moreMenuAttrs.length) && Array.isArray(this.settings.attributes)) {
+      moreMenuAttrs = this.settings.attributes.map((attr) => {
+        const value = `${attr.value}-actionbutton`;
+        return {
+          name: attr.name,
+          value
+        };
+      });
+    }
+    if (!moreMenuAttrs?.length) {
+      moreMenuAttrs = null;
+    }
+
+    // Setup an Event Listener that will refresh the contents of the More Actions
+    // Menu's items each time the menu is opened.
+    const menuButtonSettings = utils.extend({}, this.settings.moreMenuSettings, {
+      trigger: 'click',
+      menu: this.moreMenu,
+      attributes: moreMenuAttrs
+    }, (this.hasDefaultMenuItems ? { predefined: this.defaultMenuItems } : {}));
+    if (popupMenuInstance) {
+      this.more
+        .on('beforeopen.toolbar-flex', () => {
+          self.refreshMoreActionsMenu(self.moreMenu);
+        })
+        .triggerHandler('updated', [menuButtonSettings]);
+    } else {
+      this.more.popupmenu(menuButtonSettings).on('beforeopen.toolbar-flex', () => {
+        self.refreshMoreActionsMenu(self.moreMenu);
+      });
+    }
+
     // Check for a focused item
     if (!this.settings.allowTabs) {
       this.items.forEach((item) => {
@@ -109,6 +215,249 @@ ToolbarFlex.prototype = {
 
     this.render();
     this.handleEvents();
+  },
+
+  buildMoreActionsMenuItem(item) {
+    const isSplitButton = false;
+    let popupLi;
+
+    // If this item should be skipped, just return out
+    if (item.data('skipit') === true) {
+      item.data('skipit', undefined);
+      return popupLi;
+    }
+
+    // Attempt to re-use an existing <li>, if possible.
+    // If a new one is created, setup the linkage between the original element and its
+    // "More Actions" menu counterpart.
+    let a = item.data('action-button-link');
+
+    if (!a || !a.length) {
+      popupLi = $('<li></li>');
+      a = $('<a href="#"></a>').appendTo(popupLi);
+
+      // Setup data links between the buttons and their corresponding list items
+      item.data('action-button-link', a);
+      a.data('original-button', item);
+    } else {
+      popupLi = a.parent();
+    }
+
+    // Refresh states
+    if (item.hasClass('hidden')) {
+      popupLi.addClass('hidden');
+    }
+    if (item.is(':disabled')) {
+      popupLi.addClass('is-disabled');
+      a.prop('disabled', true);
+    } else {
+      popupLi.removeClass('is-disabled');
+      a.prop('disabled', false);
+    }
+
+    // Refresh Text
+    a.text(this.getItemText(item));
+
+    // Pass along any icons except for the dropdown (which is added as part of the submenu design)
+    const submenuDesignIcon = $.getBaseURL('#icon-dropdown');
+    const icon = item.children('.icon').filter(function () {
+      const iconName = $(this).getIconName();
+      return iconName && iconName !== submenuDesignIcon && iconName.indexOf('dropdown') === -1;
+    });
+
+    if (icon && icon.length) {
+      a.html(`<span>${a.text()}</span>`);
+      icon.clone().detach().prependTo(a);
+    }
+
+    const linkspan = popupLi.find('b');
+    if (linkspan.length) {
+      this.moreMenu.addClass('has-icons');
+      linkspan.detach().prependTo(popupLi);
+    }
+
+    function addItemLinksRecursively(menu, diffMenu, parentItem) {
+      const children = menu.children('li');
+      const id = diffMenu.attr('id');
+
+      diffMenu.children('li').each((i, diffMenuItem) => {
+        const dmi = $(diffMenuItem); // "Diffed" Menu Item
+        const omi = children.eq(i); // Corresponding "Original" menu item
+        const dmiA = dmi.children('a'); // Anchor inside of "Diffed" menu item
+        const omiA = omi.children('a'); // Anchor inside of "Original" menu item
+        const dmiID = dmi.attr('id');
+        const dmiAID = dmiA.attr('id');
+
+        // replace menu item ids with spillover-menu specific ids.
+        if (dmiID) {
+          dmi.removeAttr('id').attr('data-original-menu-item', dmiID);
+        }
+        if (dmiAID) {
+          dmiA.removeAttr('id').attr('data-original-menu-anchor', dmiAID);
+        }
+
+        omiA.data('action-button-link', dmiA);
+        dmiA.data('original-button', omiA);
+
+        const omiSubMenu = omi.children('.wrapper').children('.popupmenu');
+        const dmiSubMenu = dmi.children('.wrapper').children('.popupmenu');
+
+        if (omiSubMenu.length && dmiSubMenu.length) {
+          addItemLinksRecursively(omiSubMenu, dmiSubMenu, dmi);
+        }
+
+        if (isSplitButton) {
+          dmi.removeClass('is-checked');
+        }
+      });
+
+      diffMenu.removeAttr('id').attr('data-original-menu', id);
+      parentItem.addClass('submenu');
+
+      let appendTarget;
+      if (parentItem.is(popupLi)) {
+        appendTarget = parentItem.children('.wrapper');
+        if (!appendTarget || !appendTarget.length) {
+          appendTarget = $('<div class="wrapper"></div>');
+        }
+        appendTarget.html(diffMenu);
+        parentItem.append(appendTarget);
+      }
+    }
+
+    const index = this.toolbarItems?.not(this.more).not('.searchfield').index(item);
+    if (item.is('.btn-menu')) {
+      // Automatically apply attributes to menu buttons if attributes are set on the toolbar,
+      // but the menubutton doesn't have them.
+      // If no more menu attributes are directly added through settings,
+      // use the toolbar's with an `actionbutton` suffix
+      let menuBtnAttrs;
+      if (this.settings.attributes && this.settings.attributes.length) {
+        menuBtnAttrs = this.settings.attributes.map(attr => ({
+          name: attr.name,
+          value: `${attr.value}-menubutton-${index}`
+        }));
+      }
+      if (!menuBtnAttrs?.length) {
+        menuBtnAttrs = null;
+      }
+
+      if (!item.data('popupmenu')) {
+        item.popupmenu({
+          attributes: menuBtnAttrs
+        });
+      } else if (!a.children('.icon.arrow').length) {
+        a.append($.createIcon({
+          classes: 'icon arrow icon-dropdown',
+          icon: 'dropdown'
+        }));
+      }
+
+      const menu = item.data('popupmenu').menu;
+      const diffMenu = menu.clone();
+
+      addItemLinksRecursively(menu, diffMenu, popupLi);
+    }
+
+    if (item.is('[data-popdown]')) {
+      item.popdown();
+    }
+
+    return popupLi;
+  },
+
+  getItemText(item) {
+    if (!item) {
+      return '';
+    }
+    const span = item.find('span').first();
+    const title = item.attr('title');
+    const tooltip = item.data('tooltip');
+    const tooltipText = tooltip && typeof tooltip.content === 'string' ? tooltip.content : undefined;
+    let popupLiText;
+
+    if (title !== '' && title !== undefined) {
+      popupLiText = title;
+    } else if (tooltipText) {
+      popupLiText = tooltipText;
+    } else if (span.length) {
+      popupLiText = span.text();
+    } else {
+      popupLiText = item.text();
+    }
+
+    // return xssUtils.stripHTML(popupLiText);
+    return popupLiText;
+  },
+
+  refreshMoreActionsMenu(menu) {
+    const self = this;
+
+    $('li > a', menu).each(function () {
+      const a = $(this);
+      const li = a.parent();
+      const item = a.data('originalButton');
+      let itemParent;
+      const text = self.getItemText(item);
+      let submenu;
+
+      if (item) {
+        if (a.find('span').length) {
+          a.find('span').text(text.trim());
+        } else {
+          a.text(text.trim());
+        }
+
+        if (item.isHiddenAtBreakpoint() || item.parent().isHiddenAtBreakpoint()) {
+          li.addClass('hidden');
+        } else {
+          li.removeClass('hidden');
+        }
+
+        if (item.parent().is('.is-disabled') || item.is(':disabled')) { // if it's disabled menu item, OR a disabled menu-button
+          li.addClass('is-disabled');
+          a.prop('disabled', true);
+          a.attr('tabindex', '-1');
+        } else {
+          li.removeClass('is-disabled');
+          a.prop('disabled', false);
+        }
+
+        if (item.is('a')) {
+          itemParent = item.parent('li');
+
+          if (itemParent.is('.is-checked')) {
+            li.addClass('is-checked');
+          } else {
+            li.removeClass('is-checked');
+          }
+        }
+
+        if (item.is('.btn-menu')) {
+          submenu = a.parent().find('.popupmenu').first();
+          self.refreshMoreActionsMenu(submenu);
+        }
+      }
+    });
+  },
+
+  recalculateButtonset() {
+    if (this.toolBarItems?.not('.btn-actions').length > 5) {
+      const visibleItems = this.toolBarItems?.not('.btn-actions').slice(0, 5);
+      const overflowedItems = this.toolBarItems?.not('.btn-actions').slice(5);
+      overflowedItems.addClass('is-overflowed');
+
+      for (let i = 0; i < visibleItems.length; i++) {
+        $(visibleItems[i]).data('action-button-link').parent()[0].classList.add('hidden');
+      }
+
+      this.more.parent().css('display', 'inline-block');
+    } else {
+      this.more.parent().siblings('.buttonset').css('width', 'calc(55% - 1px');
+    }
+
+    const testTemp = this.toolBarItems?.not('.btn-actions').get(4);
+    console.log(testTemp);
   },
 
   /**
@@ -150,6 +499,18 @@ ToolbarFlex.prototype = {
     $(this.element).on(`collapsed-responsive.${COMPONENT_NAME}`, (e, direction) => {
       e.stopPropagation();
       this.navigate(direction, null, true);
+    });
+
+    $(this.element).on(`recalculate-buttonset.toolbar-flex-${this.uniqueId}`, () => {
+      this.recalculateButtonset();
+    })
+    
+    this.more.on(`beforeopen.buttonset.toolbar-flex-${this.uniqueId}`, () => {
+      this.recalculateButtonset();
+    });
+
+    $('body').on(`resize.toolbar-flex-${this.uniqueId}`, () => {
+      this.recalculateButtonset();
     });
   },
 

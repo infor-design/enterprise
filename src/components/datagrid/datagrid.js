@@ -8922,7 +8922,11 @@ Datagrid.prototype = {
     if (this._selectedRows?.length > 0 && (this.contextualToolbar?.height() === 0 || !this.contextualToolbar?.is(':visible') || !this.contextualToolbar?.hasClass('is-hidden'))) {
       this.contextualToolbar.find('.selection-count').text(`${this._selectedRows.length} ${Locale.translate('Selected')}`);
       this.contextualToolbar.removeClass('is-hidden').css('display', 'block').one('animateopencomplete.datagrid', function () {
-        $(this).removeClass('is-hidden').triggerHandler('recalculate-buttons');
+        if ($(this).hasClass('flex-toolbar')) {
+          $(this).removeClass('is-hidden').triggerHandler('recalculate-buttonset')
+        } else {
+          $(this).removeClass('is-hidden').triggerHandler('recalculate-buttons');
+        }
       }).animateOpen();
     }
   },
