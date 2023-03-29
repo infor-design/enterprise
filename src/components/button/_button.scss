@@ -653,7 +653,14 @@ a.btn-close {
 .btn-icon {
   &[disabled],
   &:hover {
-    background-color: transparent !important;
+    background-color: transparent;
+  }
+}
+
+.btn-icon.personalize-actionable {
+  &[disabled],
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.3);
   }
 }
 
@@ -762,7 +769,7 @@ a.btn-close {
 .btn-icon,
 .btn-actions,
 .btn-close {
-  border-radius: 18px;
+  border-radius: 8px;
   height: 34px;
   margin-top: 0;
   min-height: 34px;

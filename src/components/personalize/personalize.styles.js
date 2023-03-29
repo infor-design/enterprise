@@ -842,7 +842,7 @@ html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::af
 
 .is-personalizable .tab-container.header-tabs:not(.alternate),
 .is-personalizable.tab-container.header-tabs:not(.alternate) {
-  border-bottom-color: ${colors.base};
+  border-bottom-color: ${colors.tabBottomBorderColor};
 }
 
 .hero-widget.is-personalizable {
@@ -1180,6 +1180,21 @@ html[class*="-dark"] .is-personalizable .subheader h2 {
 .is-personalizable .personalize-actionable:hover:not([disabled]):not(.personalize-actionable-disabled) .icon  {
   color: ${colors.btnHoverColor} !important;
   opacity: 1;
+}
+
+.is-personalizable .personalize-actionable:hover:not([disabled]):not(.personalize-actionable-disabled):not(a) {
+  color: ${colors.btnHoverColor} !important;
+  background-color: ${colors.btnBgHoverColor};
+  opacity: 1;
+}
+
+.is-personalizable .btn-icon.personalize-actionable {
+  height: 34px;
+  width: 34px;
+}
+
+.is-personalizable .btn-icon.personalize-actionable:hover {
+  background-color: ${colors.btnBgHoverColor} !important;
 }
 
 .is-personalizable .personalize-actionable.is-focused:not(.hide-focus),

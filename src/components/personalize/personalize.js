@@ -275,6 +275,7 @@ Personalize.prototype = {
     colors.darker = colors.inactive;
     colors.darkest = colors.horizontalBorder;
     colors.btnHoverColor = colors.contrast;
+    colors.btnBgHoverColor = 'rgba(0, 0, 0, 0.3) !important';
     colors.focusBoxShadow = `0 0 0 2px transparent, 0 0 0 0 ${colors.subtext}, 0 0 2px 1px ${colors.subtext}`;
     colors.btnFocusBorderColor = colors.contrast;
     colors.btnDisabledColor = 'rgba(255, 255, 255, 0.3) !important';
@@ -285,6 +286,7 @@ Personalize.prototype = {
     colors.btnSecondaryBorderColor = colors.base;
     colors.btnTertiaryHoverColor = colors.lightest;
     colors.btnLinkColor = colors.light;
+    colors.tabBottomBorderColor = colors.base;
 
     const isAlabaster = colors.header === '#ffffff';
     const isNewDark = this.currentTheme.indexOf('new-dark') >= 0;
@@ -297,6 +299,7 @@ Personalize.prototype = {
       colors.darker = '#E6F1FD';
       colors.contrast = '#2F2F32';
       colors.btnHoverColor = '#0072ED';
+      colors.btnBgHoverColor = '#E6F1FD';
       colors.btnOpacity = 1;
       colors.focusBoxShadow = `0 0 0 2px transparent, 0 0 0 0 ${colors.contrast}, 0 0 1px 0px ${colors.contrast}`;
       colors.btnFocusBorderColor = '#2F2F32';
@@ -308,6 +311,7 @@ Personalize.prototype = {
       colors.btnTertiaryBgHoverColor = '#E6F1FD';
       colors.btnTertiaryHoverColor = '#0072ED';
       colors.btnLinkColor = '0072ED';
+      colors.tabBottomBorderColor = '#B7B7BA';
 
       if (isNewDark) {
         colors.base = '#606066';
@@ -326,6 +330,8 @@ Personalize.prototype = {
         colors.btnTertiaryBgHoverColor = '#3E3E42';
         colors.btnTertiaryHoverColor = colors.lightest;
         colors.btnLinkColor = colors.light;
+        colors.btnBgHoverColor = '#47474C';
+        colors.tabBottomBorderColor = '#606066';
       }
 
       if (isClassicDark) {
@@ -345,6 +351,8 @@ Personalize.prototype = {
         colors.btnTertiaryBgHoverColor = 'transparent';
         colors.btnTertiaryHoverColor = colors.lightest;
         colors.btnLinkColor = colors.light;
+        colors.btnBgHoverColor = '#313236';
+        colors.tabBottomBorderColor = '#50535a';
       }
     }
 

@@ -148,10 +148,10 @@
   }
 
   &.personalize-actionable:hover:not(:disabled) {
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.3) !important;
 
     svg.icon {
-      color: $ids-color-palette-white;
+      color: $ids-color-palette-white !important;
     }
   }
 
