@@ -835,6 +835,10 @@ Tooltip.prototype = {
       if (window.orientation === undefined) {
         $('body').on(`resize.${COMPONENT_NAME}`, () => {
           self.hide();
+
+          if (self.settings.keepOpen) {
+            self.show();
+          }
         });
       }
 
