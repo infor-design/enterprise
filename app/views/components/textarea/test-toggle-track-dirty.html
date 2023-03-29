@@ -1,0 +1,28 @@
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <label for="description-dirty">Textarea</label>
+      <textarea id="description-dirty" class="textarea" data-trackdirty="true" name="description-dirty" readonly></textarea>
+    </div>
+
+    <button class="btn-primary" type="button" id="btn-toggle">Toggle TextArea Readonly</button>
+  </div>
+</div>
+
+<script>
+
+  $('body').one('initialized', function () {
+    $('#btn-toggle').on('click', () => {
+      const textEl = document.getElementById('description-dirty');
+      if (textEl.readOnly) {
+        textEl.readOnly='';
+      } else {
+        textEl.readOnly='true';
+      }
+
+      $('#description-dirty').data('textarea').updated();
+    })
+  });
+</script>

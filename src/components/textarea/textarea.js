@@ -270,6 +270,10 @@ Textarea.prototype = {
     this.destroy();
     this.init();
 
+    if (this.element.data('trackdirty')) {
+      this.element.data('trackdirty').updated();
+    }
+
     if (this.element.data('validate')) {
       this.element.validate();
     }
