@@ -4433,7 +4433,7 @@ td .btn-actions {
 }
 
 // Change BG color of hovered Datagrid row cell icons
-.is-hover-row:not(.hide-selected-color) {
+.is-hover-row:not(.hide-selected-color):not(.is-rowactivated) {
   .datagrid-trigger-cell {
     .icon:not(.icon-rowstatus) {
       @include trigger-icon-background($datagrid-row-hover-color);
