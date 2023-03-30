@@ -217,6 +217,15 @@ ToolbarFlex.prototype = {
     this.handleEvents();
   },
 
+  /**
+   * Builds a single "More Actions Menu" item from a source toolbar item.
+   * Also sets up linkage between the menu item and the original toolbar item to
+   * allow events/properties to propagate when the More Actions item is acted upon.
+   * @private
+   * @param {jQuery[]} item the source item from the toolbar.
+   * @returns {jQuery[]} a jQuery-wrapped <li> representing a More Actions menu
+   *  implementation of the toolbar item.
+   */
   buildMoreActionsMenuItem(item) {
     const isSplitButton = false;
     let popupLi;
@@ -366,6 +375,17 @@ ToolbarFlex.prototype = {
     return popupLi;
   },
 
+  /**
+   * Gets the complete text contnts of a Toolbar Item, in order to create its
+   * corresponding "more actions" menu item.
+   *
+   * Order of operations for populating the List Item text:
+   * 1. span contents (.audible), then
+   * 2. button title attribute, then
+   * 3. tooltip text (if applicable)
+   * @param {jQuery[]} item the item being evaluated.
+   * @returns {string} the complete text representation.
+   */
   getItemText(item) {
     if (!item) {
       return '';
@@ -390,6 +410,12 @@ ToolbarFlex.prototype = {
     return popupLiText;
   },
 
+  /**
+   * Refreshes the More Actions Menu items' text content, icons, states, and submenu content
+   * based on changes made directly to their counterpart elements in the Toolbar.  Can also
+   * optionally refresh only part of the menu.
+   * @param {jQuery[]} menu the menu/submenu to be refreshed.
+   */
   refreshMoreActionsMenu(menu) {
     const self = this;
 
@@ -406,12 +432,6 @@ ToolbarFlex.prototype = {
           a.find('span').text(text.trim());
         } else {
           a.text(text.trim());
-        }
-
-        if (item.isHiddenAtBreakpoint() || item.parent().isHiddenAtBreakpoint()) {
-          li.addClass('hidden');
-        } else {
-          li.removeClass('hidden');
         }
 
         if (item.parent().is('.is-disabled') || item.is(':disabled')) { // if it's disabled menu item, OR a disabled menu-button
@@ -441,23 +461,49 @@ ToolbarFlex.prototype = {
     });
   },
 
-  recalculateButtonset() {
+  /**
+   * Renders the buttons based on the width of the current buttonset
+   */
+  renderButtonSet() {
+    function isItemOverflowed(item) {
+      const isRTL = Locale.isRTL();
+      const itemRect = item.getBoundingClientRect();
+      const buttonsetRect = item.parentElement.getBoundingClientRect();
+      const itemOutsideXEdge = isRTL ? (itemRect.left <= buttonsetRect.left) :
+        (itemRect.right >= buttonsetRect.right || itemRect.right);
+      const itemBelowYEdge = itemRect.bottom >= buttonsetRect.bottom;
+
+      return itemBelowYEdge === true || itemOutsideXEdge === true;
+    }
+
     if (this.toolBarItems?.not('.btn-actions').length > 5) {
-      const visibleItems = this.toolBarItems?.not('.btn-actions').slice(0, 5);
+      const targetItems = this.toolBarItems?.not('.btn-actions').slice(0, 5).removeClass('is-overflowed');
       const overflowedItems = this.toolBarItems?.not('.btn-actions').slice(5);
+      const visibleItems = $();
+    
+      for (let i = 0; i < targetItems.length; i++) {
+        if (isItemOverflowed(targetItems[i])) {
+          overflowedItems.push(targetItems[i]);
+        } else {
+          visibleItems.push(targetItems[i]);
+        }
+      }
+
       overflowedItems.addClass('is-overflowed');
 
       for (let i = 0; i < visibleItems.length; i++) {
         $(visibleItems[i]).data('action-button-link').parent()[0].classList.add('hidden');
       }
 
+      for (let i = 0; i < overflowedItems.length; i++) {
+        $(overflowedItems[i]).data('action-button-link').parent()[0].classList.remove('hidden');
+      }
+
       this.more.parent().css('display', 'inline-block');
     } else {
       this.more.parent().siblings('.buttonset').css('width', 'calc(55% - 1px');
     }
-
-    const testTemp = this.toolBarItems?.not('.btn-actions').get(4);
-    console.log(testTemp);
+    
   },
 
   /**
@@ -502,15 +548,15 @@ ToolbarFlex.prototype = {
     });
 
     $(this.element).on(`recalculate-buttonset.toolbar-flex-${this.uniqueId}`, () => {
-      this.recalculateButtonset();
+      this.renderButtonSet();
     })
     
     this.more.on(`beforeopen.buttonset.toolbar-flex-${this.uniqueId}`, () => {
-      this.recalculateButtonset();
+      this.renderButtonSet();
     });
 
     $('body').on(`resize.toolbar-flex-${this.uniqueId}`, () => {
-      this.recalculateButtonset();
+      this.renderButtonSet();
     });
   },
 
@@ -1011,7 +1057,11 @@ ToolbarFlex.prototype = {
 
     $(this.element).off(`selected.${COMPONENT_NAME}`);
     $(this.element).off(`collapsed-responsive.${COMPONENT_NAME}`);
+    $(this.element).off(`recalculate-buttonset.toolbar-flex-${this.uniqueId}`);
 
+    this.more.off(`beforeopen.buttonset.toolbar-flex-${this.uniqueId}`);
+    $('body').off(`resize.toolbar-flex-${this.uniqueId}`);
+  
     this.items.forEach((item) => {
       item.teardown();
     });

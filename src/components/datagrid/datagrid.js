@@ -8923,7 +8923,7 @@ Datagrid.prototype = {
       this.contextualToolbar.find('.selection-count').text(`${this._selectedRows.length} ${Locale.translate('Selected')}`);
       this.contextualToolbar.removeClass('is-hidden').css('display', 'block').one('animateopencomplete.datagrid', function () {
         if ($(this).hasClass('flex-toolbar')) {
-          $(this).removeClass('is-hidden').triggerHandler('recalculate-buttonset')
+          $(this).removeClass('is-hidden').triggerHandler('recalculate-buttonset');
         } else {
           $(this).removeClass('is-hidden').triggerHandler('recalculate-buttons');
         }
