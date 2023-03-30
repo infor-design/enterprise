@@ -1016,7 +1016,6 @@ Tooltip.prototype = {
    * @returns {void}
    */
   hide(force) {
-    // return;
     if ((this.settings.keepOpen && !force) || !this.visible) {
       return;
     }
