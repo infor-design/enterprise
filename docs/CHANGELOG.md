@@ -9,7 +9,7 @@
 ## v4.82.0 Fixes
 
 - `[Badge]` Fixed success state badge color in new light theme. ([#7353](https://github.com/infor-design/enterprise/issues/7353))
-- `[Body]` Updated background color in classic high contrast. ([#7374](https://github.com/infor-design/enterprise/issues/7374))
+- `[Card]` Updated background color in classic high contrast. ([#7374](https://github.com/infor-design/enterprise/issues/7374))
 - `[Card]` Fixed group-action unnecessary scroll bar. ([#7343](https://github.com/infor-design/enterprise/issues/7343))
 - `[Datagrid]` Fixed table layout with a distinct hover background color for both activated and non-activated rows. ([#7320](https://github.com/infor-design/enterprise/issues/7369))
 - `[Datagrid]` Fixed header icon tooltip showing when undefined. ([#6929](https://github.com/infor-design/enterprise/issues/6929))
