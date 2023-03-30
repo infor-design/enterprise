@@ -144,6 +144,7 @@ describe('Dropdown updates, events', () => {
       tagListMaxHeight: 120,
       selectAllFilterOnly: true,
       attributes: null,
+      appendTo: '[role="main"]',
       virtualScroll: false
     };
 
@@ -179,6 +180,7 @@ describe('Dropdown updates, events', () => {
       tagListMaxHeight: 120,
       selectAllFilterOnly: true,
       attributes: null,
+      appendTo: '[role="main"]',
       virtualScroll: false
     };
     dropdownObj.updated(settings);
@@ -220,6 +222,7 @@ describe('Dropdown updates, events', () => {
       tagListMaxHeight: 120,
       selectAllFilterOnly: true,
       attributes: null,
+      appendTo: '[role="main"]',
       virtualScroll: false
     };
 
