@@ -1,0 +1,282 @@
+<div class="row top-padding">
+	<div class="twelve columns">
+
+		<button class="btn-secondary" type="button" id="add-context">Show Modal</button>
+
+		<!-- Modal Example -->
+		<div id="modal-add-context" class="hidden">
+      <div class="container">
+        <div class="row top-padding">
+          <div class="twelve columns">
+            
+            <div class="field">
+              <label for="example-textfield">Text Field</label>
+              <input type="text" class="field-filter input-md" name="example-textfield" id="example-textfield"/>
+            </div>
+
+            <div class="field">
+              <label for="example-datepicker" class="label">Date Picker</label>
+              <input class="datepicker field-filter input-md" name="example-datepicker" type="text" id="example-datepicker"/>
+            </div>
+
+            <div class="field">
+              <label for="example-timepicker" class="label">Time Picker</label>
+              <input class="timepicker field-filter input-md" name="example-timepicker" type="text" id="example-timepicker"/>
+            </div>
+
+            <div class="field">
+              <label for="example-lookup" class="label">Lookup</label>
+              <input class="lookup field-filter input-md" name="example-lookup" type="text" id="example-lookup" data-init="false"/>
+            </div>
+
+            <div class="field">
+              <label for="example-dropdown" class="label">Dropdown</label>
+              <select id="example-dropdown" class="dropdown field-filter input-md">
+                <option value=""></option>
+                <option value="1">Inquiry</option>
+                <option value="2">Setup</option>
+              </select>
+            </div>
+
+          </div>
+        </div>
+      </div>
+	</div>
+</div>
+
+<script>
+var modals = {
+    'add-context': {
+      'title': 'Add Context',
+      'id': 'my-id',
+      'content': $('#modal-add-context')
+    }
+  },
+
+  setModal = function (opt) {
+    opt = $.extend({
+      buttons: [{
+        text: 'Cancel',
+      //  id: 'modal-button-1',
+        click: function(e, modal) {
+          modal.close();
+        }
+      }, {
+        text: 'Save',
+      //  id: 'modal-button-2',
+        click: function(e, modal) {
+          modal.close();
+        },
+        validate: false,
+        isDefault: true
+      }]
+    }, opt);
+
+    $('body').modal(opt);
+  };
+
+  $('#add-context').on('click', function () {
+		$(this).focus();
+    setModal(modals[this.id]);
+
+    setTimeout(() => {
+      var columns = [],
+      data = [];
+      data.push({ id: 1, productId: 2142201, productName: 'Compressor', activity:  'Assemble Paint', quantity: 1, price: 210.99, status: 'OK', orderDate: new Date(2014, 12, 8), action: 'Action'});
+      data.push({ id: 2, productId: 2241202, productName: 'Different Compressor', activity:  'Inspect and Repair', quantity: 2, price: 210.99, status: '', orderDate: new Date(2015, 7, 3), action: 'On Hold'});
+      data.push({ id: 3, productId: 2342203, productName: 'Compressor', activity:  'Inspect and Repair', quantity: 1, price: 120.99, status: null, orderDate: new Date(2014, 6, 3), action: 'Action'});
+      data.push({ id: 4, productId: 2445204, productName: 'Another Compressor', activity:  'Assemble Paint', quantity: 3, price: 210.99, status: 'OK', orderDate: new Date(2015, 3, 3), action: 'Action'});
+      data.push({ id: 5, productId: 2542205, productName: 'I Love Compressors', activity:  'Inspect and Repair', quantity: 4, price: 210.99, status: 'OK', orderDate: new Date(2015, 5, 5), action: 'On Hold'});
+      data.push({ id: 5, productId: 2642205, productName: 'Air Compressors', activity:  'Inspect and Repair', quantity: 41, price: 120.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
+      data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
+
+      // Define Columns for the Grid.
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId'});
+      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Soho.Formatters.Hyperlink});
+      columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity'});
+      columns.push({ id: 'quantity', filterType: 'text', name: 'Quantity', field: 'quantity'});
+      columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Soho.Formatters.Decimal});
+
+      // Invoke Lookup
+      var initLookup = function (el) {
+        el.lookup({
+          field: 'productId',
+          autoApply: true,
+          options: {
+            columns: columns,
+            dataset: data,
+            selectable: 'single', // multiselect|single
+            toolbar: {
+              results: true,
+              keywordFilter: true,
+              advancedFilter: true,
+              actions: true,
+              selectable: 'single',
+              filterable: true,
+              views: true,
+              rowHeight: false,
+              collapsibleFilter: false,
+              fullWidth: true
+            }
+          }
+        });
+      };
+
+      // Lookup on load
+      initLookup($('#example-lookup'));
+
+      // Some Sample Data for Field Filter
+      var fieldfilterData = [
+        { value: 'equals', text: 'Equals', icon: 'filter-equals' },
+        { value: 'in-range', text: 'In Range', icon: 'filter-in-range' },
+        { value: 'does-not-equal', text: 'Does Not Equal', icon: 'filter-does-not-equal' },
+        { value: 'before', text: 'Before', icon: 'filter-less-than' },
+        { value: 'on-or-before', text: 'On Or Before', icon: 'filter-less-equals' },
+        { value: 'after', text: 'After', icon: 'filter-greater-than' },
+        { value: 'on-or-after', text: 'On Or After', icon: 'filter-greater-equals' },
+      ];
+
+      // Globals default
+      var g = {
+        elem: null,
+        api: {},
+        isRange: {}
+      };
+
+      // Destroy current api
+      var destroy = function () {
+        if (g.api.datepicker) {
+          g.api.datepicker.destroy();
+        } else if (g.api.timepicker) {
+          g.api.timepicker.destroy();
+        } else if (g.api.lookup) {
+          g.api.lookup.destroy();
+        } else if (g.api.dropdown) {
+          g.api.dropdown.destroy();
+        }
+        g.elem.removeClass('datepicker timepicker lookup dropdown').val('');
+      };
+
+      // Copy dropdown html
+      var dropdownHtml = $('#example-dropdown')[0].outerHTML;
+
+      // Toggle dropdown
+      var toggleDropdown = function (value) {
+        var isRange = (value === 'in-range');
+        var html = !isRange ? dropdownHtml : '<input type="text" class="field-filter input-md" id="example-dropdown"/>';
+        var el = $('#example-dropdown');
+        var parent = el.parent();
+        var fieldfilterApi = el.data('fieldfilter');
+
+        // Set filter
+        var setFilter = function () {
+          g.elem = parent.find('#example-dropdown');
+          if (!isRange) {
+            g.elem.addClass('dropdown').dropdown();
+          }
+          g.elem.fieldfilter({ dataset: fieldfilterData });
+          fieldfilterApi = g.elem.data('fieldfilter');
+          if (fieldfilterApi && fieldfilterApi.ddApi) {
+            fieldfilterApi.ddApi.selectValue(value);
+          }
+          setEvents();
+        };
+
+        if (fieldfilterApi && typeof fieldfilterApi.destroy === 'function') {
+          fieldfilterApi.destroy();
+        }
+
+        // Replace filter element
+        el.remove();
+        parent.append(html);
+
+        // Initialize and set events to switched element
+        if (isRange) {
+          setFilter();
+        } else {
+          setTimeout(function () {
+            setFilter();
+          }, 0);
+        }
+      };
+
+      // Toggle isRange
+      var toggleIsRange = function (control, isRange) {
+        destroy();
+        g.isRange[control] = isRange;
+      };
+
+      // Invoke Datepicker
+      var initDatepicker = function (control) {
+        toggleIsRange(control, true);
+        g.elem.addClass('datepicker').datepicker({range: { useRange: true }});
+      };
+
+      // Init Field Filter and bind `filtered` event
+      $('.field-filter').fieldfilter({
+        dataset: fieldfilterData,
+        attributes: [
+          {
+            name: 'id',
+            value: 'custom-field-filter-id-1'
+          },
+          {
+            name: 'data-automation-id',
+            value: 'custom-automation-field-filter-id'
+          }
+        ]
+      });
+
+      var setEvents = function() {
+        $('.field-filter').on('filtered', function (e, args) {
+          // Set current element and api
+          g.elem = $(this);
+          g.api = {
+            datepicker: g.elem.data('datepicker'),
+            timepicker: g.elem.data('timepicker'),
+            lookup: g.elem.data('lookup'),
+            dropdown: g.elem.data('dropdown'),
+          };
+
+          // Range Datepicker
+          if (args.data.value === 'in-range') {
+            if (g.elem.is('#example-textfield') && !g.isRange.textfield) {
+              initDatepicker('textfield');
+            } else if (g.elem.is('#example-datepicker') && !g.isRange.datepicker) {
+              initDatepicker('datepicker');
+            } else if (g.elem.is('#example-timepicker') && !g.isRange.timepicker) {
+              initDatepicker('timepicker');
+            } else if (g.elem.is('#example-lookup') && !g.isRange.lookup) {
+              initDatepicker('lookup');
+            } else if (g.elem.is('#example-dropdown') && !g.isRange.dropdown) {
+              toggleDropdown(args.data.value);
+              initDatepicker('dropdown');
+            }
+          }
+          // All other controls
+          else {
+            if (g.elem.is('#example-textfield') && g.isRange.textfield) {
+              toggleIsRange('textfield', false);
+            } else if (g.elem.is('#example-datepicker') && g.isRange.datepicker) {
+              toggleIsRange('datepicker', false);
+              g.elem.addClass('datepicker').datepicker();
+            } else if (g.elem.is('#example-timepicker') && g.isRange.timepicker) {
+              toggleIsRange('timepicker', false);
+              g.elem.addClass('timepicker').timepicker();
+            } else if (g.elem.is('#example-dropdown') && g.isRange.dropdown) {
+              toggleDropdown(args.data.value);
+              toggleIsRange('dropdown', false);
+            } else if (g.elem.is('#example-lookup') && g.isRange.lookup) {
+              toggleIsRange('lookup', false);
+              g.elem.addClass('lookup');
+              initLookup(g.elem);
+            }
+          }
+        });
+      };
+
+      setEvents();
+    }, 50);
+  });
+
+</script>
