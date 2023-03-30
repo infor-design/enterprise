@@ -503,7 +503,6 @@ ToolbarFlex.prototype = {
     } else {
       this.more.parent().siblings('.buttonset').css('width', 'calc(55% - 1px');
     }
-    
   },
 
   /**
@@ -549,7 +548,7 @@ ToolbarFlex.prototype = {
 
     $(this.element).on(`recalculate-buttonset.toolbar-flex-${this.uniqueId}`, () => {
       this.renderButtonSet();
-    })
+    });
     
     this.more.on(`beforeopen.buttonset.toolbar-flex-${this.uniqueId}`, () => {
       this.renderButtonSet();
