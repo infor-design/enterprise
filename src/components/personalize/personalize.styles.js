@@ -20,10 +20,11 @@ function personalizeStyles(colors) {
   border-color: ${colors.btnPrimaryColor} !important;
 }
 
-.header.is-personalizable .buttonset .searchfield-wrapper.is-open button {
+.header.is-personalizable .buttonset .searchfield-wrapper.is-open button:not(.close) {
   background-color: ${colors.contrast};
   color: ${colors.darkest} !important;
 }
+
 .header.is-personalizable .buttonset .searchfield-wrapper.is-open button.go-button:hover {
   background-color: ${colors.secondaryButtonHover} !important;
   color: ${colors.darkest} !important;
@@ -570,11 +571,11 @@ html[class*="theme-new-"] .personalize-header.tab-container.header-tabs:not(.alt
   background-color: #E6F1FD !important;
 }
 
-.scrollable-flex-header .breadcrumb .hyperlink,
-.scrollable-flex-header .breadcrumb .breadcrumb-text,
-.scrollable-flex-header .breadcrumb .hyperlink,
-.scrollable-flex-header .breadcrumb .breadcrumb-list li::after,
-.scrollable-flex-header .breadcrumb ol li::after {
+.scrollable-flex-header .breadcrumb:not(.alternate) .hyperlink,
+.scrollable-flex-header .breadcrumb:not(.alternate) .breadcrumb-text,
+.scrollable-flex-header .breadcrumb:not(.alternate) .hyperlink,
+.scrollable-flex-header .breadcrumb:not(.alternate) .breadcrumb-list li::after,
+.scrollable-flex-header .breadcrumb:not(.alternate) ol li::after {
   color: ${colors.contrast} !important;
 }
 
