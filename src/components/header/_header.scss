@@ -811,9 +811,13 @@ $subheader-height: 60px;
     }
 
     .hyperlink {
-      color: $ids-color-palette-azure-70;
+      color: $header-full-searchfield-hyperlink-color;
       float: right;
       font-size: $ids-size-font-base;
+
+      &:hover {
+        color: $header-full-searchfield-hyperlink-color;
+      }
 
       &:focus:not(.hide-focus)::after,
       &:active::after {
@@ -849,6 +853,10 @@ $subheader-height: 60px;
     color: $header-button-color;
 
     .icon {
+      color: $header-button-color;
+    }
+
+    &:hover .icon {
       color: $header-button-color;
     }
 

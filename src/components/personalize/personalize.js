@@ -297,6 +297,7 @@ Personalize.prototype = {
     if (isAlabaster) {
       colors.text = '#0072ED';
       colors.darker = '#E6F1FD';
+      colors.darkest = '#2F2F32';
       colors.contrast = '#2F2F32';
       colors.btnHoverColor = '#0072ED';
       colors.btnBgHoverColor = '#E6F1FD';
