@@ -160,7 +160,7 @@
       }
     }
 
-    &:first-child .audible ~ input:not(.spinbox):not(.colorpicker),
+    &:first-child .audible ~ input:not(.spinbox):not(.colorpicker):not(.field-filter),
     &:first-child .audible ~ .searchfield-wrapper {
       margin-top: 4px;
     }
@@ -216,6 +216,34 @@
       .modal-body-wrapper {
         padding: 0;
       }
+    }
+  }
+
+  .card {
+    .listview-search {
+      width: 370px;
+
+      @media only screen and (max-width: 520px) {
+        width: 100%;
+      }
+    }
+
+    .listview {
+      width: 370px;
+
+      @media only screen and (max-width: 520px) {
+        width: 100%;
+      }
+    }
+
+    .listview-search
+    + .listview {
+      max-height: none;
+    }
+
+    .listview-search .searchfield-wrapper {
+      min-width: unset;
+      top: -1px;
     }
   }
 

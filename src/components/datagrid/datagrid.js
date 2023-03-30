@@ -1571,11 +1571,14 @@ Datagrid.prototype = {
 
       // If header text is center aligned, for proper styling,
       // place the sortIndicator as a child of datagrid-header-text.
+
+      const svgHeaderTooltip = column?.headerIconTooltip !== undefined || column?.headerIconTooltip?.length > 0 ? column?.headerIconTooltip : '';
       const svgHeaderIcon = `
-        <svg class="icon datagrid-header-icon" focusable="false" aria-hidden="true" role="presentation" title="${column?.headerIconTooltip}">
+        <svg class="icon datagrid-header-icon" focusable="false" aria-hidden="true" role="presentation" title="${svgHeaderTooltip}">
           <use href="#icon-${column.headerIcon}"></use>
         </svg>
       `;
+      
       headerRows[container] += `<div class="${isSelection ? 'datagrid-checkbox-wrapper ' : 'datagrid-column-wrapper'}${headerAlignmentClass}">
       <span class="datagrid-header-text${column.required ? ' required' : ''}">${self.headerText(this.settings.columns[j])}${headerAlignmentClass === ' l-center-text' ? sortIndicator : ''}</span>
       ${this.settings.columns[j]?.headerIcon ? svgHeaderIcon : ''}`;
@@ -7048,26 +7051,7 @@ Datagrid.prototype = {
         }
       });
 
-    // Handle Paging
-    if (this.settings.paging) {
-      // Need to store the original id to work the wrapping and unwrapping in popupmenu
-      // before the paging initiate
-      this.pagerId = $('.pager-toolbar .btn-menu').attr('aria-controls');
-      this.tableBody.on(`page.${COMPONENT_NAME}`, (e, pagingInfo) => {
-        if (pagingInfo.type === 'filtered' && this.settings.source) {
-          return;
-        }
-        self.closePopupmenuOnPaging();
-        self.saveUserSettings();
-        self.render(null, pagingInfo);
-        self.afterPaging(pagingInfo);
-      }).on(`pagesizechange.${COMPONENT_NAME}`, (e, pagingInfo) => {
-        pagingInfo.preserveSelected = true;
-        self.closePopupmenuOnPaging();
-        self.render(null, pagingInfo);
-        self.afterPaging(pagingInfo);
-      });
-    }
+    this.attachPagingEvents();
 
     // Handle Hover States
     if (self.settings.showHoverState) {
@@ -7628,6 +7612,39 @@ Datagrid.prototype = {
         self.commitCellEdit();
       }
     });
+  },
+
+  /**
+   * Handle paging events
+   * @private
+   * @returns {void}
+   */
+  attachPagingEvents() {
+    const self = this;
+
+    if (this.settings.paging) {
+      // Need to store the original id to work the wrapping and unwrapping in popupmenu
+      // before the paging initiate
+      this.pagerId = $('.pager-toolbar .btn-menu').attr('aria-controls');
+      this.tableBody
+        .off(`page.${COMPONENT_NAME}`)
+        .on(`page.${COMPONENT_NAME}`, (e, pagingInfo) => {
+          if (pagingInfo.type === 'filtered' && this.settings.source) {
+            return;
+          }
+          self.closePopupmenuOnPaging();
+          self.saveUserSettings();
+          self.render(null, pagingInfo);
+          self.afterPaging(pagingInfo);
+        })
+        .off(`pagesizechange.${COMPONENT_NAME}`)
+        .on(`pagesizechange.${COMPONENT_NAME}`, (e, pagingInfo) => {
+          pagingInfo.preserveSelected = true;
+          self.closePopupmenuOnPaging();
+          self.render(null, pagingInfo);
+          self.afterPaging(pagingInfo);
+        });
+    }
   },
 
   /**
@@ -13344,9 +13361,10 @@ Datagrid.prototype = {
     }
 
     this.setRowHeightClass();
+    this.handlePaging();
+    this.attachPagingEvents();
     this.render(null, pagingInfo);
     this.renderHeader();
-    this.handlePaging();
     return this;
   }
 };

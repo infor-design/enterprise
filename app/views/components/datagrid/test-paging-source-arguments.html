@@ -8,7 +8,7 @@
   <div class="six columns">
     <div class="field">
       <button id="apply" class="btn-primary">
-        <span>Apply</span>
+        <span>Load Data With Paging</span>
       </button>
     </div>
   </div>
@@ -59,40 +59,39 @@
     columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Soho.Formatters.Decimal});
     columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy'});
 
-    function loadActiveGrid() {
-      function source(req, done) {
-        console.info('paging', req);
+    function source(req, done) {
+      console.info('paging', req);
 
-        var url = '{{basepath}}api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
+      var url = '{{basepath}}api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
 
-        return $.getJSON(url, function(res) {
-          req.total = res.total;
-          done(res.data, req);
-        });
-      }
-
-      // Init and get the api for the grid
-      gridApi = $('#datagrid').datagrid({
-        columns: columns,
-        selectable: 'multiple',
-        paging: true,
-        pagesize: 5,
-        source: source,
-        toolbar: {
-          title: 'Data Grid Header Title',
-          results: true,
-          dateFilter: false,
-          keywordFilter: true,
-          advancedFilter: true,
-          actions: true,
-          views: true,
-          rowHeight: true,
-          collapsibleFilter: true
-        }
-      }).data('datagrid');
+      return $.getJSON(url, function(res) {
+        req.total = res.total;
+        done(res.data, req);
+      });
     }
 
-    loadActiveGrid();
+    const datagrid = $('#datagrid').datagrid({
+      columns: columns,
+    }).data('datagrid');
+
+    function loadActiveGrid() {
+      const settings = {
+        paging: true,
+        pagesize: 5,
+        pagesizes: [5, 10, 25, 50, 100],
+        clickToSelect: false,
+        saveUserSettings: {
+          activePage: true,
+          columns: true,
+          filter: true,
+          pagesize: true,
+          sortOrder: true
+        },
+        source: source
+      }
+
+      datagrid.updated(settings);
+    }
 
     $('#apply').on('click', function() {
       loadActiveGrid();
