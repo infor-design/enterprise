@@ -112,6 +112,7 @@ describe('Dropdown updates, events', () => {
       tagListMaxHeight: 120,
       selectAllFilterOnly: true,
       attributes: null,
+      appendTo: '[role="main"]',
       virtualScroll: false
     };
 
