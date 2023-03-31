@@ -364,11 +364,12 @@
         color: $header-button-color;
       }
 
-      &:hover {
+      &:not([disabled]):hover {
+        background-color: rgba(0, 0, 0, 0.3) !important;
         color: $header-text-color;
 
         .icon {
-          color: $header-text-color;
+          color: $header-text-color !important;
         }
       }
 
@@ -571,4 +572,8 @@ html[dir='rtl'] {
       }
     }
   }
+}
+
+.hero-header .btn-tertiary:hover:not(:disabled):not(.close):not(.personalize-actionable) svg.icon {
+  color: $header-text-color !important;
 }
