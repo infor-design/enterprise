@@ -82,11 +82,9 @@ In another place (usually the header toolbar) you should have a button with the 
   <div class="title">
     <button class="btn-icon application-menu-trigger" type="button">
       <span class="audible">Show navigation</span>
-      <span class="icon app-header">
-        <span class="one"></span>
-        <span class="two"></span>
-        <span class="three"></span>
-      </span>
+      <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+        <use href="#icon-menu"></use>
+      </svg>
     </button>
 
     <h1>

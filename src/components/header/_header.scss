@@ -18,24 +18,19 @@ $subheader-height: 60px;
     color: $inverse-color;
   }
 
-  // Header with color personalization classes
-  &.default {
-    background-color: $header-default-bg-color;
+  .toolbar [class^='btn'] {
+    &:not(.close):not([disabled]):hover {
+      background-color: $header-default-bg-hover-color !important;
 
-    .toolbar [class^='btn'] {
-      &:hover {
-        background-color: $header-default-bg-hover-color !important;
-
-        .icon {
-          color: $ids-color-palette-white;
-        }
+      .icon {
+        color: $ids-color-palette-white;
       }
+    }
 
-      &.is-open {
-        .icon {
-          color: $ids-color-palette-white;
-          opacity: 1;
-        }
+    &.is-open {
+      .icon {
+        color: $ids-color-palette-white;
+        opacity: 1;
       }
     }
   }
@@ -85,6 +80,10 @@ $subheader-height: 60px;
     .icon.icon-dropdown {
       margin-left: 5px;
     }
+
+    &.btn-menu .icon.icon-dropdown {
+      margin-top: 1px;
+    }
   }
 
   .btn-primary {
@@ -121,7 +120,7 @@ $subheader-height: 60px;
 
   .section-title {
     color: $header-text-color;
-    font-size: $ids-size-font-base;
+    font-size: $ids-size-font-base !important;
     margin-top: 2px;
     padding: 0;
     text-transform: capitalize;
@@ -216,6 +215,7 @@ $subheader-height: 60px;
 
       .btn-icon {
         border-radius: 8px;
+        top: 3px;
       }
     }
 
@@ -252,9 +252,9 @@ $subheader-height: 60px;
     .back-button,
     .go-back {
       svg.icon {
-        height: 24px;
+        height: 18px;
         top: 1px;
-        width: 24px;
+        width: 18px;
       }
     }
 
@@ -350,7 +350,8 @@ $subheader-height: 60px;
           .icon.close {
             color: $searchfield-header-icon-color !important;
             opacity: unset;
-            top: 0;
+            top: 8px;
+            inset-inline: 6px;
           }
         }
       }
@@ -440,15 +441,11 @@ $subheader-height: 60px;
     z-index: 9000;
   }
 
-  &.subheader,
-  &.personalize-subheader {
-    background-color: $subhead-bg-color;
-
-    h1,
-    h2,
-    h3 {
-      color: $header-text-color;
-    }
+  h1,
+  h2,
+  h3,
+  .toolbar-section.title {
+    color: $header-text-color;
   }
 
   .go-button {
@@ -479,7 +476,7 @@ $subheader-height: 60px;
     }
 
     svg.icon:not(.close) {
-      color: $header-tab-normal-color;
+      color: $header-toolbar-searchfield-icon-color;
       opacity: 1;
     }
   }
@@ -533,6 +530,11 @@ $subheader-height: 60px;
     }
   }
 
+  .toolbar {
+    height: $header-height;
+    padding: 0 1rem;
+  }
+
   .go-button {
     background-color: $header-primary-btn-background-color;
     border-color: $header-primary-btn-background-color;
@@ -548,6 +550,23 @@ $subheader-height: 60px;
 
     &:not(.hide-focus) {
       box-shadow: 0 0 0 1px $body-color-primary-background, 0 0 0 2px $button-color-secondary-focus-border, $focus-box-shadow;
+    }
+  }
+
+  .toolbar [class^='btn'] {
+    &:hover {
+      background-color: $header-default-bg-hover-color !important;
+
+      .icon {
+        color: $ids-color-palette-white;
+      }
+    }
+
+    &.is-open {
+      .icon {
+        color: $ids-color-palette-white;
+        opacity: 1;
+      }
     }
   }
 
@@ -592,7 +611,8 @@ $subheader-height: 60px;
 }
 
 .header,
-.subheader {
+.subheader,
+.personalize-subheader {
   .toolbar,
   .flex-toolbar {
     .buttonset {
@@ -603,7 +623,7 @@ $subheader-height: 60px;
 
       [class^='btn']:not(.searchfield-category-button):not(.btn-actions) {
         margin-right: 3px;
-        min-width: 45px;
+        min-width: 32px;
         text-overflow: ellipsis;
         flex-shrink: 1;
       }
@@ -614,10 +634,14 @@ $subheader-height: 60px;
       background-color: transparent;
       border: 1px solid transparent;
       border-radius: 8px;
-      color: $header-button-color;
+      color: $header-button-color !important;
 
-      &:hover {
-        background-color: $header-toolbar-button-hover-color;
+      &:not([disabled]) {
+        cursor: pointer;
+      }
+
+      &:not(.close):not(.collapse-button):not([disabled]):hover {
+        background-color: $header-toolbar-button-hover-color !important;
       }
 
       .icon {
@@ -666,6 +690,7 @@ $subheader-height: 60px;
         }
 
         &:not(.collapse-button) {
+          border-color: $header-button-focus-color;
           box-shadow: 0 0 0 2px transparent, 0 0 0 0 $header-button-focus-color, $header-focus-box-shadow;
         }
 
@@ -786,9 +811,13 @@ $subheader-height: 60px;
     }
 
     .hyperlink {
-      color: $ids-color-palette-azure-70;
+      color: $header-full-searchfield-hyperlink-color;
       float: right;
       font-size: $ids-size-font-base;
+
+      &:hover {
+        color: $header-full-searchfield-hyperlink-color;
+      }
 
       &:focus:not(.hide-focus)::after,
       &:active::after {
@@ -824,6 +853,10 @@ $subheader-height: 60px;
     color: $header-button-color;
 
     .icon {
+      color: $header-button-color;
+    }
+
+    &:hover .icon {
       color: $header-button-color;
     }
 
@@ -912,9 +945,26 @@ $subheader-height: 60px;
   box-shadow: 0 0 0 2px transparent, 0 0 0 1px $header-button-focus-color, $header-focus-box-shadow !important;
 }
 
+.subheader,
+.personalize-subheader {
+  h1,
+  h2,
+  h3 {
+    display: inline-block;
+    margin: 16px 15px;
+    color: $header-text-color;
+  }
+
+  h2,
+  h3 {
+    font-size: 2rem;
+  }
+}
+
 // Title Button Styles for these three elements
 .header,
 .subheader,
+.personalize-subheader,
 .masthead {
   .toolbar {
     [class^='btn'] {
@@ -1040,37 +1090,5 @@ html[dir='rtl'] {
 
   svg {
     color: $ids-color-palette-slate-70 !important;
-  }
-}
-
-.header,
-.subheader,
-.personalize-subheader {
-  &.alabaster {
-    background-color: $ids-color-palette-white;
-
-    .toolbar [class^='btn'] {
-      &:focus {
-        border-color: #000 !important;
-        box-shadow: 0 0 0 2px transparent,
-          0 0 0 0 #606066,
-          0 0 2px 1px rgba(0, 0, 0, 0.3) !important
-      }
-
-      &:hover {
-        background-color: $header-toolbar-button-hover-color;
-
-        .icon {
-          background-color: $header-toolbar-button-hover-color;
-        }
-      }
-    }
-
-    &.subheader .toolbar [class^='btn']:focus:not(.hide-focus):not(.collapse-button),
-    &.personalize-subheader .toolbar [class^='btn']:focus:not(.hide-focus):not(.collapse-button) {
-      box-shadow: 0 0 0 2px transparent,
-        0 0 0 0 #606066,
-        0 0 2px 1px rgba(0, 0, 0, 0.3) !important
-    }
   }
 }

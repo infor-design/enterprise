@@ -689,7 +689,6 @@ Dropdown.prototype = {
     this.tooltipApi = this.pseudoElem.find('span')
       .tooltip({
         content: xssUtils.escapeHTML(optText),
-        parentElement: this.pseudoElem,
         trigger: this.isMobile() ? 'immediate' : 'hover',
       })
       .on('blur.dropdowntooltip', () => {
