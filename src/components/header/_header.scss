@@ -381,8 +381,7 @@ $subheader-height: 60px;
       .searchfield-category-button {
         border: 1px solid $header-searchfield-input-border-color;
         border-right: 0;
-        border-top-left-radius: 2px;
-        border-bottom-left-radius: 2px;
+        border-radius: 0;
 
         &:focus:not(.hide-focus),
         &.is-open {

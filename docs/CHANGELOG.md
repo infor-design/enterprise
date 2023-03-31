@@ -25,6 +25,7 @@
 - `[Personalization]` Changed default color back to azure and add alabaster in personalization colors. ([#7320](https://github.com/infor-design/enterprise/issues/7320))
 - `[Personalization]` Fixed color changing doesn't add CSS class to the header in Safari browser. ([#7338](https://github.com/infor-design/enterprise/issues/7338))
 - `[Personalization]` Adjusted header text/tabs colors. ([#7319](https://github.com/infor-design/enterprise/issues/7319))
+- `[Searchfield]` Searchfield icon adjustments. ([#7387](https://github.com/infor-design/enterprise/issues/7387))
 - `[Tabs]` Fixed the alignment of focus in RTL view. ([#6992](https://github.com/infor-design/enterprise/issues/6992))
 - `[Tabs Header]` Fixed the alignment of close button. ([#7273](https://github.com/infor-design/enterprise/issues/7273))
 - `[Textarea]` Fixed track dirty when updated() method was triggered. ([NG#1429](https://github.com/infor-design/enterprise-ng/issues/1429))
