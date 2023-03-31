@@ -563,7 +563,7 @@ html[class*="theme-new-"] .personalize-header.tab-container.header-tabs:not(.alt
   color: ${colors.contrast};
 }
 
-.header .toolbar [class^='btn']:hover:not(.go-button):not(.searchfield-category-button) {
+.header .toolbar [class^='btn']:hover:not(.go-button):not(.close):not(.searchfield-category-button) {
   background-color: ${colors.base};
 }
 
