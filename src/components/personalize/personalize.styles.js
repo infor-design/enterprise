@@ -1130,6 +1130,48 @@ html[class*="theme-classic-"] .tab-container.is-personalizable .tab-list-contain
   background-color: ${colors.lighter} !important;
 }
 
+.header.is-personalizable + .page-container .scrollable-flex-header.personalize-subheader .breadcrumb {
+  background-color: ${colors.lighter};
+}
+
+.header.is-personalizable + .page-container .scrollable-flex-header.personalize-subheader .breadcrumb.truncated .breadcrumb-list::before,
+.header.is-personalizable + .page-container .scrollable-flex-header.personalize-subheader .breadcrumb.truncated ol::before {
+  background-image: linear-gradient(to right, ${colors.lighter}, ${colors.lighter}80);
+}
+
+.header.is-personalizable + .page-container .scrollable-flex-header.personalize-subheader .breadcrumb .hyperlink,
+.header.is-personalizable + .page-container .scrollable-flex-header.personalize-subheader .breadcrumb .btn-actions .icon,
+.header.is-personalizable + .page-container .scrollable-flex-header.personalize-subheader .breadcrumb .breadcrumb-overflow-container::after,
+.header.is-personalizable + .page-container .scrollable-flex-header.personalize-subheader .breadcrumb .breadcrumb-list li::after,
+.header.is-personalizable + .page-container .scrollable-flex-header.personalize-subheader .breadcrumb ol li::after  {
+  color: ${colors.contrast};
+}
+
+.header.is-personalizable + .page-container .scrollable-flex-header.personalize-subheader .breadcrumb {
+  background-color: ${colors.lighter};
+}
+
+.is-personalizable .section-wizard {
+  background-color: ${colors.lighter} !important;
+}
+
+.header.is-personalizable + .page-container .scrollable-flex-header.personalize-subheader .breadcrumb.truncated .breadcrumb-list::before,
+.header.is-personalizable + .page-container .scrollable-flex-header.personalize-subheader .breadcrumb.truncated ol::before {
+  background-image: linear-gradient(to right, ${colors.lighter}, ${colors.lighter}80);
+}
+
+.is-personalizable .section-wizard {
+  background-color: ${colors.lighter} !important;
+}
+
+.header.is-personalizable + .page-container .scrollable-flex-header.personalize-subheader .breadcrumb .hyperlink,
+.header.is-personalizable + .page-container .scrollable-flex-header.personalize-subheader .breadcrumb .btn-actions .icon,
+.header.is-personalizable + .page-container .scrollable-flex-header.personalize-subheader .breadcrumb .breadcrumb-overflow-container::after,
+.header.is-personalizable + .page-container .scrollable-flex-header.personalize-subheader .breadcrumb .breadcrumb-list li::after,
+.header.is-personalizable + .page-container .scrollable-flex-header.personalize-subheader .breadcrumb ol li::after  {
+  color: ${colors.contrast};
+}
+
 .is-personalizable .section-wizard {
   background-color: ${colors.lighter} !important;
 }
@@ -1339,7 +1381,67 @@ html[class*="-dark"] .is-personalizable .subheader h2 {
 html.theme-new-dark .header.alabaster.is-personalizable .flex-toolbar [class^='btn']:focus:not(.hide-focus) .icon {
   color: #fff !important;
 }
-`;
+
+html.theme-new-dark .header.alabaster.is-personalizable .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):not(:disabled),
+html.theme-new-dark .header.alabaster.is-personalizable .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):not(:disabled) svg.icon {
+  color: #fff !important;
+}
+
+html[class*="theme-new-"]:not(.theme-new-dark) .header.alabaster.is-personalizable button:not(:disabled) {
+  color: #000 !important;
+}
+
+html[class*="theme-new-"]:not(.theme-new-dark) .header.alabaster.is-personalizable .flex-toolbar [class^='btn'][disabled] span,
+html[class*="theme-new-"]:not(.theme-new-dark) .header.alabaster.is-personalizable .flex-toolbar [class^='btn'][disabled] .icon {
+  color: #B7B7BA !important;
+}
+
+html[class*="theme-classic-"]:not(.theme-classic-dark) .header.alabaster.is-personalizable .flex-toolbar [class^='btn'][disabled] span,
+html[class*="theme-classic-"]:not(.theme-classic-dark) .header.alabaster.is-personalizable .flex-toolbar [class^='btn'][disabled] .icon {
+  color: #888B94 !important;
+}
+
+html[class*="theme-classic-"]:not(.theme-classic-dark) .header.alabaster.is-personalizable button:not(:disabled) {
+  color: #000 !important;
+}
+
+
+html[class*="theme-new-"]:not(.theme-new-dark) .alabaster.header.is-personalizable + .page-container .scrollable-flex-header.personalize-subheader .breadcrumb .btn-actions .icon,
+html[class*="theme-new-"]:not(.theme-new-dark) .alabaster.header.is-personalizable + .page-container .scrollable-flex-header.personalize-subheader .breadcrumb .hyperlink,
+html[class*="theme-new-"]:not(.theme-new-dark) .alabaster.header.is-personalizable + .page-container .scrollable-flex-header.personalize-subheader .breadcrumb .breadcrumb-overflow-container::after,
+html[class*="theme-new-"]:not(.theme-new-dark) .alabaster.header.is-personalizable + .page-container .scrollable-flex-header.personalize-subheader .breadcrumb .breadcrumb-list li::after,
+html[class*="theme-new-"]:not(.theme-new-dark) .alabaster.header.is-personalizable + .page-container .scrollable-flex-header.personalize-subheader .breadcrumb ol li::after {
+  color: #000 !important;
+}
+
+/*
+.tooltip.is-personalizable {
+  background-color: ${colors.darkest};
+  border-color: ${colors.darkest};
+}
+.tooltip.is-personalizable .chart-swatch .swatch-row div {
+  border-bottom-color: ${colors.darkest};
+}
+.tooltip.is-personalizable,
+.tooltip.is-personalizable p,
+.tooltip.is-personalizable .chart-swatch .swatch-row span,
+.tooltip.is-personalizable .chart-swatch .swatch-row b {
+  color: ${colors.tooltipText};
+}
+.tooltip.is-personalizable.top .arrow::after {
+  border-top-color: ${colors.darkest};
+}
+.tooltip.is-personalizable.right .arrow::after {
+  border-right-color: ${colors.darkest};
+}
+.tooltip.is-personalizable.bottom .arrow::after {
+  border-bottom-color: ${colors.darkest};
+}
+.tooltip.is-personalizable.left .arrow::after {
+  border-left-color: ${colors.darkest};
+}
+*/
+    `;
 }
 
 export { personalizeStyles };

@@ -621,7 +621,7 @@ $subheader-height: 60px;
         padding: 0;
       }
 
-      [class^='btn']:not(.searchfield-category-button) {
+      [class^='btn']:not(.searchfield-category-button):not(.btn-actions) {
         margin-right: 3px;
         min-width: 32px;
         text-overflow: ellipsis;
