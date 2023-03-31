@@ -32,6 +32,7 @@
 - `[Timeline]` Fixed the alignment when timeline is inside a card. ([#7278](https://github.com/infor-design/enterprise/issues/7278))
 - `[Timeline]` Fixed issue with timeline content exceeding allotted space when additional elements were added. ([#7299](https://github.com/infor-design/enterprise/issues/7299))
 - `[Timeline]` Added test page to test scenario of timeline with no dates. ([#7298](https://github.com/infor-design/enterprise/issues/7298))
+- `[Tooltip]` Fixed tooltip not on top of all elements when shown and manually moved. ([#7130](https://github.com/infor-design/enterprise/issues/7130))
 
 ## v4.81.0
 
