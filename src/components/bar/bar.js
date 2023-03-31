@@ -716,7 +716,7 @@ Bar.prototype = {
             // Run click action
             if (self.settings.selectable) {
               const ii = Array.from(selector.parentElement.children).indexOf(selector);
-              self.doClickAction(d, s.isStacked && !s.isSingle ? ii : i, selector);
+              self.doClickAction(d, (s.isStacked && !s.isSingle) || s.isGrouped ? ii : i, selector);
             }
           }
           prevent = false;
@@ -1156,7 +1156,7 @@ Bar.prototype = {
       i,
       type: s.type,
       dataset: s.dataset,
-      isSingle: self.isSingular,
+      isSingle: s.isSingle,
       isGrouped: s.isGrouped,
       isStacked: s.isStacked,
       svg: self.svg,
