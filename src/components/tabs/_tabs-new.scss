@@ -56,10 +56,6 @@
         padding: 12px 11px 5px;
       }
 
-      &.is-disabled {
-        color: $disabled-color;
-      }
-
       // Adds "semi-bold" style to selected/active tabs
       &:not(.is-disabled).is-selected {
         a {

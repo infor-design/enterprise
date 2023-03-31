@@ -17,6 +17,8 @@ $header-text-color: $ids-color-palette-white;
 $header-disabled-color: $ids-color-palette-slate-50;
 $header-focus-box-shadow: 0 0 3px 2px rgba(255, 255, 255, 0.3);
 
+$header-full-searchfield-hyperlink-color: $ids-color-palette-white;
+
 $ids-color-palette-alabaster: $ids-color-palette-white;
 
 // Color Personalization in header
@@ -877,11 +879,11 @@ $wizard-disabled-color: $ids-color-brand-secondary-alt;
 $wizard-active-color: $ids-color-brand-primary-base;
 $wizard-active-text-color: $ids-color-brand-primary-base;
 $wizard-focus-box-shadow: 0 0 0 1px $ids-color-brand-primary-base;
-$wizard-header-color: $ids-color-palette-azure-60;
-$wizard-header-tick-color: $ids-color-palette-slate-60;
-$wizard-header-secondary-color: $ids-color-palette-slate-20;
+$wizard-header-color: $ids-color-palette-white;
+$wizard-header-tick-color: $ids-color-palette-white;
+$wizard-header-secondary-color: rgba($ids-color-palette-white, 0.4);
 $wizard-header-disabled-color: rgba($ids-color-palette-white, 0.3);
-$wizard-header-text-color: $ids-color-palette-slate-60;
+$wizard-header-text-color: rgba($ids-color-palette-white, 0.5);
 $wizard-header-focus-box-shadow: 0 0 0 1px $ids-color-palette-white;
 
 $wizard-toolbar-bg-color: $panel-bg-color;
@@ -924,7 +926,7 @@ $searchfield-header-border-color: $ids-color-palette-slate-90;
 $searchfield-header-border-color-new: $ids-color-palette-slate-30;
 $searchfield-header-text-color: $ids-color-palette-white;
 $searchfield-header-placeholder-text-color: rgba(255, 255, 255, 0.5);
-$searchfield-header-icon-color: $ids-color-palette-slate-60;
+$searchfield-header-icon-color: $ids-color-palette-white;
 $searchfield-header-hover-icon-color: $ids-color-palette-slate-100;
 $searchfield-header-inactive-icon-color: $searchfield-header-icon-color;
 
@@ -977,7 +979,7 @@ $header-searchfield-input-border-color: $ids-color-palette-slate-40;
 $header-searchfield-input-border-hover-color: $ids-color-palette-slate-100;
 $header-searchfield-btn-font-color: $ids-color-palette-slate-80;
 $header-toolbar-searchfield-icon-color: $ids-color-palette-white;
-$header-toolbar-button-hover-color: #E6F1FD;
+$header-toolbar-button-hover-color: rgba(0, 0, 0, 0.3);
 
 // Header Tabs
 $header-tabcontainer-border-color: $ids-color-palette-graphite-30;
@@ -995,7 +997,7 @@ $header-tab-alt-selected-color: $ids-color-brand-primary-base;
 $header-tab-alt-separator: $header-tabcontainer-border-color;
 
 $header-tab-separator-new: $ids-color-palette-white;
-$header-tab-disabled-color-new: rgba($ids-color-palette-white, 0.4);
+$header-tab-disabled-color-new: rgba(255, 255, 255, .4);
 
 $header-tab-background-initial-color-new: $header-default-bg-color;
 $header-tab-gradient-initial-color-new: $header-default-bg-color;
@@ -1011,8 +1013,8 @@ $header-tab-selected-color-new: $ids-color-palette-white;
 
 
 // Header Breadcrumb
-$header-breadcrumb-color: $ids-color-palette-white;
-$header-breadcrumb-current-color: $ids-color-palette-azure-60;
+$header-breadcrumb-color: $ids-color-palette-slate-10;
+$header-breadcrumb-current-color: $ids-color-palette-white;
 $header-breadcrumb-alt-bg-color: $ids-color-palette-white;
 $header-breadcrumb-alt-color: $font-color-highcontrast;
 $header-breadcrumb-border-color: $ids-color-palette-graphite-30;
