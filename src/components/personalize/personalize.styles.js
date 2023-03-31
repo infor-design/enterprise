@@ -1158,6 +1158,23 @@ html[class*="-dark"] .header.alabaster + .is-personalizable .personalize-header 
   background-color: ${colors.lighter} !important;
 }
 
+.header.is-personalizable + .page-container .scrollable-flex-header.personalize-subheader .breadcrumb {
+  background-color: ${colors.lighter};
+}
+
+.header.is-personalizable + .page-container .scrollable-flex-header.personalize-subheader .breadcrumb.truncated .breadcrumb-list::before,
+.header.is-personalizable + .page-container .scrollable-flex-header.personalize-subheader .breadcrumb.truncated ol::before {
+  background-image: linear-gradient(to right, ${colors.lighter}, ${colors.lighter}80);
+}
+
+.header.is-personalizable + .page-container .scrollable-flex-header.personalize-subheader .breadcrumb .hyperlink,
+.header.is-personalizable + .page-container .scrollable-flex-header.personalize-subheader .breadcrumb .btn-actions .icon,
+.header.is-personalizable + .page-container .scrollable-flex-header.personalize-subheader .breadcrumb .breadcrumb-overflow-container::after,
+.header.is-personalizable + .page-container .scrollable-flex-header.personalize-subheader .breadcrumb .breadcrumb-list li::after,
+.header.is-personalizable + .page-container .scrollable-flex-header.personalize-subheader .breadcrumb ol li::after  {
+  color: ${colors.contrast};
+}
+
 html[class*="-dark"] .is-personalizable .personalize-subheader:not(.amber):not(.azure):not(.amber):not(.amethyst):not(.emerald):not(.graphite):not(.ruby):not(.slate):not(.turquoise) {
   background-color: #77777C !important;
 }
@@ -1443,6 +1460,15 @@ html[class*="theme-classic-"]:not(.theme-classic-dark) .header.alabaster.is-pers
 }
 
 html[class*="theme-classic-"]:not(.theme-classic-dark) .header.alabaster.is-personalizable button:not(:disabled) {
+  color: #000 !important;
+}
+
+
+html[class*="theme-new-"]:not(.theme-new-dark) .alabaster.header.is-personalizable + .page-container .scrollable-flex-header.personalize-subheader .breadcrumb .btn-actions .icon,
+html[class*="theme-new-"]:not(.theme-new-dark) .alabaster.header.is-personalizable + .page-container .scrollable-flex-header.personalize-subheader .breadcrumb .hyperlink,
+html[class*="theme-new-"]:not(.theme-new-dark) .alabaster.header.is-personalizable + .page-container .scrollable-flex-header.personalize-subheader .breadcrumb .breadcrumb-overflow-container::after,
+html[class*="theme-new-"]:not(.theme-new-dark) .alabaster.header.is-personalizable + .page-container .scrollable-flex-header.personalize-subheader .breadcrumb .breadcrumb-list li::after,
+html[class*="theme-new-"]:not(.theme-new-dark) .alabaster.header.is-personalizable + .page-container .scrollable-flex-header.personalize-subheader .breadcrumb ol li::after {
   color: #000 !important;
 }
 

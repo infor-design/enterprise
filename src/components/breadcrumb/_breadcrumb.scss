@@ -414,7 +414,11 @@
       &:active:not([disabled]),
       &:hover:not([disabled]),
       &:focus:not([disabled]) {
-        color: $breadcrumb-hover-color;
+        color: $header-breadcrumb-color;
+      }
+
+      &:hover:not([disabled]) {
+        border-bottom: 1px solid $header-breadcrumb-color;
       }
 
       &:focus:not([disabled]) {
@@ -554,6 +558,24 @@
               );
           }
         }
+      }
+    }
+  }
+}
+
+.header + .page-container .scrollable-flex-header .breadcrumb {
+  background-color: $subhead-bg-color;
+
+  &.truncated {
+    .breadcrumb-list,
+    ol {
+      &::before {
+        background-image:
+          linear-gradient(
+            to right,
+            rgba($subhead-bg-color, 1),
+            rgba($subhead-bg-color, 0)
+          );
       }
     }
   }
