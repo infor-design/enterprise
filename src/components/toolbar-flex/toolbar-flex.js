@@ -476,31 +476,35 @@ ToolbarFlex.prototype = {
       return itemBelowYEdge === true || itemOutsideXEdge === true;
     }
 
-    if (this.toolBarItems?.not('.btn-actions').length > 5) {
-      const targetItems = this.toolBarItems?.not('.btn-actions').slice(0, 5).removeClass('is-overflowed');
-      const overflowedItems = this.toolBarItems?.not('.btn-actions').slice(5);
-      const visibleItems = $();
-    
-      for (let i = 0; i < targetItems.length; i++) {
-        if (isItemOverflowed(targetItems[i])) {
-          overflowedItems.push(targetItems[i]);
-        } else {
-          visibleItems.push(targetItems[i]);
-        }
+    const isMoreThanFive = this.toolBarItems?.not('.btn-actions').length > 5;
+    const targetItems = isMoreThanFive ? this.toolBarItems?.not('.btn-actions').slice(0, 5) : this.toolBarItems?.not('.btn-actions');
+    targetItems.removeClass('is-overflowed');
+    const overflowedItems = isMoreThanFive ? this.toolBarItems?.not('.btn-actions').slice(5) : $();
+    const visibleItems = $();
+
+    for (let i = 0; i < targetItems.length; i++) {
+      if (isItemOverflowed(targetItems[i])) {
+        overflowedItems.push(targetItems[i]);
+      } else {
+        visibleItems.push(targetItems[i]);
       }
+    }
 
-      overflowedItems.addClass('is-overflowed');
+    overflowedItems.addClass('is-overflowed');
 
-      for (let i = 0; i < visibleItems.length; i++) {
-        $(visibleItems[i]).data('action-button-link').parent()[0].classList.add('hidden');
-      }
+    for (let i = 0; i < visibleItems.length; i++) {
+      $(visibleItems[i]).data('action-button-link').parent()[0].classList.add('hidden');
+    }
 
-      for (let i = 0; i < overflowedItems.length; i++) {
-        $(overflowedItems[i]).data('action-button-link').parent()[0].classList.remove('hidden');
-      }
+    for (let i = 0; i < overflowedItems.length; i++) {
+      $(overflowedItems[i]).data('action-button-link').parent()[0].classList.remove('hidden');
+    }
 
+    if (overflowedItems.length > 0) {
       this.more.parent().css('display', 'inline-block');
+      this.more.parent().siblings('.buttonset').css('width', 'calc(55% - 41px');
     } else {
+      this.more.parent().css('display', 'none');
       this.more.parent().siblings('.buttonset').css('width', 'calc(55% - 1px');
     }
   },
