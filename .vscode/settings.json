@@ -1,5 +1,6 @@
 {
   "js/ts.implicitProjectConfig.experimentalDecorators": true,
   "editor.tabSize": 2,
-  "files.eol" : "\n"
+  "editor.formatOnSave": false,
+  "files.eol": "\n"
 }

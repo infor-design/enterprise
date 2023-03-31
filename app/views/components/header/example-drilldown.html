@@ -2,13 +2,23 @@
   <div class="{{#useFlexToolbar}}flex-{{/useFlexToolbar}}toolbar">
     {{#useFlexToolbar}}
     <div class="toolbar-section">
-      {{> includes/header-appmenu-trigger}}
+      <button class="btn-icon personalize-actionable" type="button">
+        <span class="audible">Drill Down</span>
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-arrow-left"></use>
+        </svg>
+      </button>
     </div>
     {{/useFlexToolbar}}
 
     <div class="{{#useFlexToolbar}}toolbar-section {{/useFlexToolbar}}title">
       {{^useFlexToolbar}}
-      {{> includes/header-appmenu-trigger}}
+      <button class="btn-icon personalize-actionable" type="button">
+        <span class="audible">Drill Down</span>
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-arrow-left"></use>
+        </svg>
+      </button>
       {{/useFlexToolbar}}
 
       <h1>Level One Detail Page</h1>
