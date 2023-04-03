@@ -93,6 +93,9 @@
   text-align: left;
   -webkit-touch-callout: none;
   padding: 0 15px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
 
   .toolbar-section {
     @include enable-select();
@@ -121,8 +124,12 @@
       width: calc(55% - 41px);
       height: 42px;
       user-select: none;
-      overflow: hidden;
+      overflow: hidden !important;
       padding-left: 1px;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: flex-end;
 
       > * {
         margin: -1px 0 0 2px;
