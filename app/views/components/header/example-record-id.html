@@ -24,16 +24,4 @@
 
     {{> includes/header-actionbutton}}
   </div>
-
-  <script>
-    $('body').on('initialized', function() {
-      $('#parameter-maintenance-save').on('click', function (e) {
-        $('body').toast({
-          'title': 'Disabled Button Click',
-          'message': 'The button <span style="font-weight: bold;">' + $(e.target).text().trim() + '</span> is supposed to be disabled, and therefore should not have triggered this messsage.  Something\'s wrong.'
-        });
-      });
-    });
-  </script>
-
 </header>

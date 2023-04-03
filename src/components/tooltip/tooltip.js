@@ -835,6 +835,10 @@ Tooltip.prototype = {
       if (window.orientation === undefined) {
         $('body').on(`resize.${COMPONENT_NAME}`, () => {
           self.hide();
+
+          if (self.settings.keepOpen) {
+            self.show();
+          }
         });
       }
 
@@ -906,6 +910,8 @@ Tooltip.prototype = {
     if (!this.settings.attachToBody) {
       attachAfterTriggerElem = true;
       targetContainer = modalParent;
+    } else {
+      targetContainer = $('body');
     }
 
     // If a specific parent element is defined, use that
