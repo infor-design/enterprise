@@ -23,6 +23,7 @@
 - `[Listview]` Fixed the height restriction in listview when used in card. ([#7094](https://github.com/infor-design/enterprise/issues/7094))
 - `[Lookup]` Fix in keyword search not filtering single comma. ([#7165](https://github.com/infor-design/enterprise/issues/7165))
 - `[Lookup]` Fix in keyword search not filtering single quote. ([#7165](https://github.com/infor-design/enterprise/issues/7165))
+- `[Notification]` Fix in example page of notification, updated parent element. ([#7391](https://github.com/infor-design/enterprise/issues/7391))
 - `[Pager]` Fixed the pager's underline style to enhance its appearance when it is being hovered over. ([#7352](https://github.com/infor-design/enterprise/issues/7352))
 - `[Personalization]` Changed default color back to azure and add alabaster in personalization colors. ([#7320](https://github.com/infor-design/enterprise/issues/7320))
 - `[Personalization]` Fixed color changing doesn't add CSS class to the header in Safari browser. ([#7338](https://github.com/infor-design/enterprise/issues/7338))

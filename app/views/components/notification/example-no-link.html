@@ -1,7 +1,14 @@
+<div>
+  <div id="mock-header"></div>
+</div>
+
 <script>
-  $('body').notification({
-    type: 'error',
-    message: 'DTO rejected by your manager for Sept 30, 2018.',
-    linkText: ''
+  $('body').on('initialized', () => {
+    $('#mock-header').notification({
+      parent: '#mock-header',
+      type: 'error',
+      message: 'DTO rejected by your manager for Sept 30, 2018.',
+      linkText: ''
+    });
   });
 </script>
