@@ -11,6 +11,7 @@
 - `[Badge]` Fixed success state badge color in new light theme. ([#7353](https://github.com/infor-design/enterprise/issues/7353))
 - `[Bar]` Fixed items not being selected/deselected from the legend. ([#7330](https://github.com/infor-design/enterprise/issues/7330))
 - `[Breadcrumb]` Updated breadcrumb hover color. ([#7337](https://github.com/infor-design/enterprise/issues/7337))
+- `[Card]` Updated background color in classic high contrast. ([#7374](https://github.com/infor-design/enterprise/issues/7374))
 - `[Card]` Fixed group-action unnecessary scroll bar. ([#7343](https://github.com/infor-design/enterprise/issues/7343))
 - `[Column]` Fixed data chart and legend doesn't match up. ([#7199](https://github.com/infor-design/enterprise/issues/7199))
 - `[Datagrid]` Fixed table layout with a distinct hover background color for both activated and non-activated rows. ([#7320](https://github.com/infor-design/enterprise/issues/7369))
@@ -24,6 +25,7 @@
 - `[Listview]` Fixed the height restriction in listview when used in card. ([#7094](https://github.com/infor-design/enterprise/issues/7094))
 - `[Lookup]` Fix in keyword search not filtering single comma. ([#7165](https://github.com/infor-design/enterprise/issues/7165))
 - `[Lookup]` Fix in keyword search not filtering single quote. ([#7165](https://github.com/infor-design/enterprise/issues/7165))
+- `[Notification]` Fix in example page of notification, updated parent element. ([#7391](https://github.com/infor-design/enterprise/issues/7391))
 - `[Pager]` Fixed the pager's underline style to enhance its appearance when it is being hovered over. ([#7352](https://github.com/infor-design/enterprise/issues/7352))
 - `[Personalization]` Changed default color back to azure and add alabaster in personalization colors. ([#7320](https://github.com/infor-design/enterprise/issues/7320))
 - `[Personalization]` Fixed color changing doesn't add CSS class to the header in Safari browser. ([#7338](https://github.com/infor-design/enterprise/issues/7338))
@@ -35,6 +37,7 @@
 - `[Timeline]` Fixed the alignment when timeline is inside a card. ([#7278](https://github.com/infor-design/enterprise/issues/7278))
 - `[Timeline]` Fixed issue with timeline content exceeding allotted space when additional elements were added. ([#7299](https://github.com/infor-design/enterprise/issues/7299))
 - `[Timeline]` Added test page to test scenario of timeline with no dates. ([#7298](https://github.com/infor-design/enterprise/issues/7298))
+- `[Tooltip]` Added appendTo settings to fix tooltip positioning on the structure. ([#7220](https://github.com/infor-design/enterprise/issues/7220))
 - `[Tooltip]` Fixed tooltip not on top of all elements when shown and manually moved. ([#7130](https://github.com/infor-design/enterprise/issues/7130))
 
 ## v4.81.0
