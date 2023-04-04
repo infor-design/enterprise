@@ -90,7 +90,7 @@
 
             + .btn-icon.close {
               svg {
-                color: $header-flex-toolbar-close-icon-color;
+                color: $header-flex-toolbar-close-icon-color !important;
               }
 
               &:hover svg {
