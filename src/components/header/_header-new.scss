@@ -100,11 +100,11 @@
           }
 
           .btn.searchfield-category-button {
-            background-color: $subheader-searchfield-context-bg;
-            color: $subheader-searchfield-category-button-font-color;
+            background-color: $subheader-searchfield-context-bg !important;
+            color: $subheader-searchfield-category-button-font-color !important;
 
             svg.icon {
-              color: $subheader-searchfield-category-button-font-color;
+              color: $subheader-searchfield-category-button-font-color !important;
 
               &.icon-dropdown {
                 margin-left: 1px;
@@ -149,6 +149,10 @@
           &:hover svg {
             color: $header-flex-toolbar-close-icon-color-hover;
           }
+        }
+
+        &.show-category .btn-icon.close {
+          right: 50px;
         }
       }
     }
