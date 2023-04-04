@@ -30,6 +30,7 @@
 - `[Personalization]` Fixed color changing doesn't add CSS class to the header in Safari browser. ([#7338](https://github.com/infor-design/enterprise/issues/7338))
 - `[Personalization]` Adjusted header text/tabs colors. ([#7319](https://github.com/infor-design/enterprise/issues/7319))
 - `[Personalization]` Additional fixes for default color back to azure and added alabaster in personalization colors. ([#7340](https://github.com/infor-design/enterprise/issues/7340))
+- `[Popupmenu]` Fix on popupmenu more icon not visible when open. ([#7383](https://github.com/infor-design/enterprise/issues/7383))
 - `[Tabs]` Fixed the alignment of focus in RTL view. ([#6992](https://github.com/infor-design/enterprise/issues/6992))
 - `[Tabs Header]` Fixed the alignment of close button. ([#7273](https://github.com/infor-design/enterprise/issues/7273))
 - `[Textarea]` Fixed track dirty when updated() method was triggered. ([NG#1429](https://github.com/infor-design/enterprise-ng/issues/1429))

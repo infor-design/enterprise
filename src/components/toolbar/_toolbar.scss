@@ -144,6 +144,10 @@ $toolbar-buttonset-height: 40px;
     > * {
       margin-right: 1px;
     }
+
+    .btn-actions.is-open .icon {
+      color: $button-color-tertiary-initial-font;
+    }
   }
 
   &.do-resize {
