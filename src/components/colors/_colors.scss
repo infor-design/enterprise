@@ -24,10 +24,6 @@
   background: $ids-color-brand-primary-base;
 }
 
-.alabaster {
-  background: $ids-color-palette-alabaster !important;
-}
-
 html.theme-new-light .primary-bg-color {
   background: $ids-color-palette-azure-60;
 }
@@ -50,6 +46,14 @@ html.theme-classic-contrast .primary-bg-color {
 
 html.theme-classic-dark .primary-bg-color {
   background: #50535a;
+}
+
+.alabaster {
+  background-color: #fff;
+
+  &.swatch {
+    border: 1px solid $input-color-initial-border;
+  }
 }
 
 .primary-color {

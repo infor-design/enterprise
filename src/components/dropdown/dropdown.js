@@ -87,6 +87,7 @@ const DROPDOWN_DEFAULTS = {
   allTextString: null,
   selectedTextString: null,
   selectAllFilterOnly: true,
+  appendTo: '[role="main"]',
   attributes: null
 };
 
@@ -688,7 +689,6 @@ Dropdown.prototype = {
     this.tooltipApi = this.pseudoElem.find('span')
       .tooltip({
         content: xssUtils.escapeHTML(optText),
-        parentElement: this.pseudoElem,
         trigger: this.isMobile() ? 'immediate' : 'hover',
       })
       .on('blur.dropdowntooltip', () => {
@@ -2043,7 +2043,7 @@ Dropdown.prototype = {
     if (this.list.hasClass('datagrid-filter-dropdown') && document.querySelector('.datagrid-container') !== null) {
       const gridContainerPos = this.dropdownParent.closest('.datagrid-container').getBoundingClientRect();
       const gridFilterDropdownPos = document.querySelector('.datagrid-filter-dropdown').getBoundingClientRect();
-      const pageContainerPos = document.querySelector('[role="main"]').getBoundingClientRect().right;
+      const pageContainerPos = document.querySelector(this.settings.appendTo).getBoundingClientRect().right;
       const adjustedPosition = pageContainerPos - gridContainerPos.right;
       const elementDropdown = document.querySelector('.datagrid-filter-dropdown').getBoundingClientRect();
       let shouldAdjust = false;

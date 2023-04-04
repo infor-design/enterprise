@@ -485,7 +485,7 @@ Tabs.prototype = {
         this.ro.observe(this.containerElement[0]);
       }
     }
-    
+
     // Re-renders focus state of tab indicator after rendering all of the elements
     setTimeout(() => {
       this.positionFocusState();
@@ -674,11 +674,9 @@ Tabs.prototype = {
           appMenuTrigger = $(`
             <li class="tab application-menu-trigger">
               <a href="#">
-                <span class="icon app-header">
-                  <span class="one"></span>
-                  <span class="two"></span>
-                  <span class="three"></span>
-                </span>
+                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                    <use href="#icon-menu"></use>
+                </svg>
                 <span${audibleClass}>${this.settings.appMenuTriggerText || Locale.translate('AppMenuTriggerText')}</span>
               </a>
             </li>
@@ -3855,7 +3853,7 @@ Tabs.prototype = {
         // Account for the container's scrolling
         targetRectObj.left += tablistScrollLeft;
         targetRectObj.right += tablistScrollLeft;
-        
+
         if (isRTL) {
           targetRectObj.right += 1;
 

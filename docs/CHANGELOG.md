@@ -9,7 +9,11 @@
 ## v4.82.0 Fixes
 
 - `[Badge]` Fixed success state badge color in new light theme. ([#7353](https://github.com/infor-design/enterprise/issues/7353))
+- `[Bar]` Fixed items not being selected/deselected from the legend. ([#7330](https://github.com/infor-design/enterprise/issues/7330))
+- `[Breadcrumb]` Updated breadcrumb hover color. ([#7337](https://github.com/infor-design/enterprise/issues/7337))
+- `[Card]` Updated background color in classic high contrast. ([#7374](https://github.com/infor-design/enterprise/issues/7374))
 - `[Card]` Fixed group-action unnecessary scroll bar. ([#7343](https://github.com/infor-design/enterprise/issues/7343))
+- `[Column]` Fixed data chart and legend doesn't match up. ([#7199](https://github.com/infor-design/enterprise/issues/7199))
 - `[Datagrid]` Fixed on styling in row status icon when first column is not a select column. ([NG#5913](https://github.com/infor-design/enterprise-ng/issues/5913))
 - `[Datagrid]` Fixed table layout with a distinct hover background color for both activated and non-activated rows. ([#7320](https://github.com/infor-design/enterprise/issues/7369))
 - `[Datagrid]` Fixed header icon tooltip showing when undefined. ([#6929](https://github.com/infor-design/enterprise/issues/6929))
@@ -23,16 +27,20 @@
 - `[Listview]` Fixed the height restriction in listview when used in card. ([#7094](https://github.com/infor-design/enterprise/issues/7094))
 - `[Lookup]` Fix in keyword search not filtering single comma. ([#7165](https://github.com/infor-design/enterprise/issues/7165))
 - `[Lookup]` Fix in keyword search not filtering single quote. ([#7165](https://github.com/infor-design/enterprise/issues/7165))
+- `[Notification]` Fix in example page of notification, updated parent element. ([#7391](https://github.com/infor-design/enterprise/issues/7391))
 - `[Pager]` Fixed the pager's underline style to enhance its appearance when it is being hovered over. ([#7352](https://github.com/infor-design/enterprise/issues/7352))
 - `[Personalization]` Changed default color back to azure and add alabaster in personalization colors. ([#7320](https://github.com/infor-design/enterprise/issues/7320))
 - `[Personalization]` Fixed color changing doesn't add CSS class to the header in Safari browser. ([#7338](https://github.com/infor-design/enterprise/issues/7338))
 - `[Personalization]` Adjusted header text/tabs colors. ([#7319](https://github.com/infor-design/enterprise/issues/7319))
+- `[Personalization]` Additional fixes for default color back to azure and added alabaster in personalization colors. ([#7340](https://github.com/infor-design/enterprise/issues/7340))
 - `[Tabs]` Fixed the alignment of focus in RTL view. ([#6992](https://github.com/infor-design/enterprise/issues/6992))
 - `[Tabs Header]` Fixed the alignment of close button. ([#7273](https://github.com/infor-design/enterprise/issues/7273))
 - `[Textarea]` Fixed track dirty when updated() method was triggered. ([NG#1429](https://github.com/infor-design/enterprise-ng/issues/1429))
 - `[Timeline]` Fixed the alignment when timeline is inside a card. ([#7278](https://github.com/infor-design/enterprise/issues/7278))
 - `[Timeline]` Fixed issue with timeline content exceeding allotted space when additional elements were added. ([#7299](https://github.com/infor-design/enterprise/issues/7299))
 - `[Timeline]` Added test page to test scenario of timeline with no dates. ([#7298](https://github.com/infor-design/enterprise/issues/7298))
+- `[Tooltip]` Added appendTo settings to fix tooltip positioning on the structure. ([#7220](https://github.com/infor-design/enterprise/issues/7220))
+- `[Tooltip]` Fixed tooltip not on top of all elements when shown and manually moved. ([#7130](https://github.com/infor-design/enterprise/issues/7130))
 
 ## v4.81.0
 
@@ -48,14 +56,14 @@
 
 ## v4.81.0 Features
 
-- `[Calendar]` Added weekview number on the monthview in datepicker. Use `showWeekNumber` to enable it. ([#5785](https://github.com/infor-design/enterprise/issues/5785))
+- `[Calendar]` Added `weekview` number on the monthview in datepicker. Use `showWeekNumber` to enable it. ([#5785](https://github.com/infor-design/enterprise/issues/5785))
 
 ## v4.81.0 Fixes
 
 - `[Actionsheet]` Updated font and icon colors for classic actionsheet. ([#7012](https://github.com/infor-design/enterprise/issues/7012))
 - `[Accordion]` Additional fix in accordion collapsing cards on expand bug. ([#6820](https://github.com/infor-design/enterprise/issues/6820))
 - `[Alerts/Badges/Tags]` Updated warning and alert colors. ([#7162](https://github.com/infor-design/enterprise/issues/7162))
-- `[App Menu]` Updated appmenu icon colors. ([#7303](https://github.com/infor-design/enterprise/issues/7303))
+- `[App Menu]` Updated `appmenu` icon colors. ([#7303](https://github.com/infor-design/enterprise/issues/7303))
 - `[Background]` Updated default background color in high contrast. ([#7261](https://github.com/infor-design/enterprise/issues/7261))
 - `[Bar]` Fixed bug introduced by d3 changes with bar selection. ([#7182](https://github.com/infor-design/enterprise/issues/7182))
 - `[Button]` Fixed icon button size and icon centering. ([#7201](https://github.com/infor-design/enterprise/issues/7201))
@@ -77,7 +85,7 @@
 - `[Field-Filter]` Icon adjustments in Safari. ([#7264](https://github.com/infor-design/enterprise/issues/7264))
 - `[Fileupload]` Icon adjustments in compact mode. ([#7149](https://github.com/infor-design/enterprise/issues/7149))
 - `[Fileupload]` Icon adjustments in classic mode. ([#7265](https://github.com/infor-design/enterprise/issues/7265))
-- `[Header]` Fixed a bug in subheader where the color its not appropriate on default theme. ([#7173](https://github.com/infor-design/enterprise/issues/7173))
+- `[Header]` Fixed a bug in `subheader` where the color its not appropriate on default theme. ([#7173](https://github.com/infor-design/enterprise/issues/7173))
 - `[Header]` Changed the header from pseudo elements to actual icon. Please make the follow [change to your app menu icon](https://github.com/infor-design/enterprise/pull/7285/files#diff-4ee8ef8a5fe8ef128f558004ce5a73d8b2939256ea3c614ac26492078171529bL3-R5) to get the best output. ([#7163](https://github.com/infor-design/enterprise/issues/7163))
 - `[Homepage/Personalize/Page-Patterns]` Fixed homepage hero widget, builder header, and other section of tabs with the new design and color combination. ([#7136](https://github.com/infor-design/enterprise/issues/7136))
 - `[MenuButton]` Fixed some color on menu buttons. ([#7184](https://github.com/infor-design/enterprise/issues/7184))

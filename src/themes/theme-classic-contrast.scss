@@ -23,7 +23,7 @@ $subhead-bg-color: $ids-color-palette-azure-70;
 $header-border-color: $ids-color-palette-slate-100;
 $header-text-color: $ids-color-palette-white;
 $header-button-color: rgba($ids-color-palette-white, 0.7);
-$header-button-focus-color: rgba($ids-color-palette-azure-60, 1);
+$header-button-focus-color: $ids-color-palette-white;
 $header-button-hover-color: rgba($ids-color-palette-white, 0.7);
 $header-button-disabled-color: rgba($ids-color-palette-white, 0.3);
 $header-primary-btn-background-color: $ids-color-brand-primary-base;
@@ -371,7 +371,6 @@ $card-selected-background-color: $selected-bg-color;
 $card-expandable-sub-heading: $ids-color-palette-graphite-90;
 
 // Cardlist
-$cardlist-bg-color: $ids-color-palette-graphite-10;
 $cardlist-border-color: $ids-color-palette-graphite-60;
 $cardlist-header-color: $ids-color-palette-black;
 $cardlist-actions-color: $ids-color-palette-graphite-90;

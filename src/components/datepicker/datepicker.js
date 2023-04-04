@@ -901,6 +901,7 @@ DatePicker.prototype = {
       },
       placement: popPlacement,
       popover: true,
+      appendTo: this.settings.appendTo,
       trigger: 'immediate',
       isRangeDatepicker: s.range.useRange,
       extraClass: this.settings.range.selectWeek ? 'monthview-popup is-range-week' : 'monthview-popup',
