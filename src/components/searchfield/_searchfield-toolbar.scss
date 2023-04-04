@@ -492,6 +492,16 @@ $toolbarsearchfield-category-empty-width: 51px;
   &.has-categories {
     width: $toolbarsearchfield-category-empty-width;
 
+    &:not(.is-open) {
+      .searchfield-category-button {
+        border-color: transparent;
+      }
+
+      .icon.icon-dropdown {
+        color: transparent;
+      }
+    }
+
     &.active {
       width: $toolbarsearchfield-max-width;
     }
