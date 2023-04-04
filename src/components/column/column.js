@@ -626,6 +626,9 @@ Column.prototype = {
                   (pnPatterns.positive ? `url(#${pnPatterns.positive})` : null))
               );
           })
+          .attr('data-index', function (d, i) {
+            return i;
+          })
           .style('cursor', !self.settings.selectable ? 'inherit' : 'pointer')
           .style('fill', function (d) {
             return !isPositiveNegative ? null :
@@ -1213,7 +1216,7 @@ Column.prototype = {
           timer = setTimeout(function () {
             if (!prevent) {
               // Run click action
-              i = $(selector).index();
+              i = s.isSingle || s.isPositiveNegative ? $(selector).data('index') : $(selector).index();
               self.doClickAction(event, d, i, selector, clickedLegend);
             }
             prevent = false;
