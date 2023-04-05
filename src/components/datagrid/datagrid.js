@@ -13324,7 +13324,7 @@ Datagrid.prototype = {
   * @returns {object} The plugin api for chaining.
   */
   updated(settings, pagingInfo) {
-    const isInitialPaging = this.settings.paging !== settings.paging && settings.paging && !pagingInfo;
+    const isInitialPaging = this.settings.paging !== settings?.paging && settings?.paging && !pagingInfo;
     this.settings = utils.mergeSettings(this.element, settings, this.settings);
 
     if (!settings?.paging && this.pagerAPI && typeof this.pagerAPI.destroy === 'function') {
