@@ -9,6 +9,10 @@
       margin-right: 0;
 
       &.toolbar-searchfield-wrapper.has-close-icon-button:not(.has-categories) {
+        &.is-hovered > svg.icon.close {
+          color: $searchfield-text-color;
+        }
+
         > svg.icon.close {
           top: 50%;
         }

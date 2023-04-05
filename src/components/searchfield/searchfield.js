@@ -882,7 +882,9 @@ SearchField.prototype = {
       });
 
       self.xButton.on(`blur.${this.id}`, (e) => {
-        self.handleSafeBlur(e);
+        if (!self.xButton.hasClass('collapsed')) {
+          self.handleSafeBlur(e);
+        }
       });
     }
 
@@ -1849,6 +1851,10 @@ SearchField.prototype = {
           delete self.isExpanding;
           self.isExpanded = true;
 
+          if (self.settings.clearable) {
+            self.xButton.removeClass('collapsed');
+          }
+
           if (self.isCurrentlyCollapsible && !self.isFocused && !self.focusElem) {
             self.handleSafeBlur();
           }
@@ -1926,6 +1932,11 @@ SearchField.prototype = {
            * @property {object} event - The jquery event object
            */
           self.element.trigger('collapsed');
+
+          if (self.settings.clearable) {
+            self.xButton.addClass('collapsed');
+          }
+
           resolve();
         }
       });
