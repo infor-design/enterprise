@@ -407,9 +407,10 @@ Datagrid.prototype = {
    * Render or render both the header and row area.
    * @param {string} isToggleFilter Check if filterrow type should be passed to the data source request
    * @param {object} pagingInfo information about the pager state
+   * @param {boolean} isInitialPaging if paging setting set initially
    * @returns {void}
    */
-  render(isToggleFilter, pagingInfo) {
+  render(isToggleFilter, pagingInfo, isInitialPaging) {
     if (!pagingInfo) {
       pagingInfo = {};
     }
@@ -420,7 +421,7 @@ Datagrid.prototype = {
 
     if (this.settings.source) {
       pagingInfo.preserveSelected = this.settings.allowSelectAcrossPages;
-      this.triggerSource(pagingInfo);
+      this.triggerSource(isInitialPaging ? 'initial' : pagingInfo);
       return;
     }
 
@@ -1578,7 +1579,7 @@ Datagrid.prototype = {
           <use href="#icon-${column.headerIcon}"></use>
         </svg>
       `;
-      
+
       headerRows[container] += `<div class="${isSelection ? 'datagrid-checkbox-wrapper ' : 'datagrid-column-wrapper'}${headerAlignmentClass}">
       <span class="datagrid-header-text${column.required ? ' required' : ''}">${self.headerText(this.settings.columns[j])}${headerAlignmentClass === ' l-center-text' ? sortIndicator : ''}</span>
       ${this.settings.columns[j]?.headerIcon ? svgHeaderIcon : ''}`;
@@ -13323,6 +13324,7 @@ Datagrid.prototype = {
   * @returns {object} The plugin api for chaining.
   */
   updated(settings, pagingInfo) {
+    const isInitialPaging = this.settings.paging !== settings.paging && settings.paging && !pagingInfo;
     this.settings = utils.mergeSettings(this.element, settings, this.settings);
 
     if (!settings?.paging && this.pagerAPI && typeof this.pagerAPI.destroy === 'function') {
@@ -13361,7 +13363,7 @@ Datagrid.prototype = {
     this.setRowHeightClass();
     this.handlePaging();
     this.attachPagingEvents();
-    this.render(null, pagingInfo);
+    this.render(null, pagingInfo, isInitialPaging);
     this.renderHeader();
     return this;
   }

@@ -21,6 +21,7 @@
 - `[Datagrid]` Fixed header icon tooltip showing when undefined. ([#6929](https://github.com/infor-design/enterprise/issues/6929))
 - `[Datagrid]` Fix on styling in row status icon when first column is not a select column. ([NG#5913](https://github.com/infor-design/enterprise-ng/issues/5913))
 - `[Datagrid]` Fixed paging source argument is empty when re-assigning grid options. ([6947](https://github.com/infor-design/enterprise/issues/6947))
+- `[Datagrid]` Changed pager type to initial when updating datagrid with paging setting. ([#7398](https://github.com/infor-design/enterprise/issues/7398))
 - `[Datagrid]` Fixed datagrid toolbar to be able to show buttons more than two. ([6921](https://github.com/infor-design/enterprise/issues/6921))
 - `[Editor]` Fixed links are not readable in dark mode. ([#7331](https://github.com/infor-design/enterprise/issues/7331))
 - `[Field-Filter]` Fixed a bug in field filter where the design is not properly aligned on Modal. ([#7358](https://github.com/infor-design/enterprise/issues/7358))
