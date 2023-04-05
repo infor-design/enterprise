@@ -8938,9 +8938,11 @@ Datagrid.prototype = {
     }
 
     if (this._selectedRows?.length > 0 && (this.contextualToolbar?.height() === 0 || !this.contextualToolbar?.is(':visible') || !this.contextualToolbar?.hasClass('is-hidden'))) {
+      const trigger = this.contextualToolbar.hasClass('flex-toolbar') ? 'recalculate-buttonset' : 'recalculate-buttons';
+      const displayStyle = this.contextualToolbar.hasClass('flex-toolbar') ? 'flex' : 'block';
       this.contextualToolbar.find('.selection-count').text(`${this._selectedRows.length} ${Locale.translate('Selected')}`);
-      this.contextualToolbar.removeClass('is-hidden').css('display', 'block').one('animateopencomplete.datagrid', function () {
-        $(this).removeClass('is-hidden').triggerHandler('recalculate-buttons');
+      this.contextualToolbar.removeClass('is-hidden').css('display', displayStyle).one('animateopencomplete.datagrid', function () {
+        $(this).removeClass('is-hidden').triggerHandler(trigger);
       }).animateOpen();
     }
   },
