@@ -112,6 +112,10 @@
     white-space: nowrap;
     width: 100%;
 
+    &.has-categories button.close:not(.is-empty) {
+      top: 9px;
+    }
+
     > button.close {
       top: 5px;
     }
@@ -157,7 +161,6 @@
 
     .btn {
       background-color: $searchfield-context-bg;
-      border: 1px solid $searchfield-context-border-color;
       height: 38px;
 
       + .searchfield {

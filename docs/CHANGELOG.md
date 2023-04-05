@@ -35,6 +35,7 @@
 - `[Personalization]` Fixed color changing doesn't add CSS class to the header in Safari browser. ([#7338](https://github.com/infor-design/enterprise/issues/7338))
 - `[Personalization]` Adjusted header text/tabs colors. ([#7319](https://github.com/infor-design/enterprise/issues/7319))
 - `[Personalization]` Additional fixes for default color back to azure and added alabaster in personalization colors. ([#7340](https://github.com/infor-design/enterprise/issues/7340))
+- `[Searchfield]` Fixed on misalignment in searchfield clear icon. ([#7382](https://github.com/infor-design/enterprise/issues/7382))
 - `[Searchfield]` Fixed searchfield icon adjustments. ([#7387](https://github.com/infor-design/enterprise/issues/7387))
 - `[SearchField]` Fixed undefined error on `toolbarFlexItem`. ([#7402](https://github.com/infor-design/enterprise/issues/7402))
 - `[Tabs]` Fixed the alignment of focus in RTL view. ([#6992](https://github.com/infor-design/enterprise/issues/6992))
