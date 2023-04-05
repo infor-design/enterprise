@@ -92,7 +92,10 @@
   position: relative;
   text-align: left;
   -webkit-touch-callout: none;
-  padding: 0 15px;
+  padding: 0 0 0 15px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
 
   .toolbar-section {
     @include enable-select();
@@ -115,23 +118,114 @@
       &::before {
         @include vertical-alignment-spacer;
       }
+
+      &.selection-count {
+        top: 2px;
+      }
     }
 
     &.buttonset {
-      width: calc(55% - 1px);
+      width: calc(55% - 41px);
       height: 42px;
       user-select: none;
-      overflow: hidden;
+      overflow: hidden !important;
       padding-left: 1px;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: flex-end;
 
       > * {
         margin: -1px 0 0 2px;
         vertical-align: top;
       }
+
+      [class^='btn'] {
+        color: $contextual-toolbar-button-color;
+
+        &.is-overflowed {
+          display: none;
+        }
+  
+        svg {
+          color: $contextual-toolbar-button-color;
+        }
+  
+        &:hover {
+          color: $contextual-toolbar-button-hover-color;
+          background-color: transparent;
+  
+          svg {
+            color: inherit;
+          }
+        }
+  
+        &:focus {
+          box-shadow: 0 0 0 2px transparent, 0 0 0 1px $contextual-toolbar-color;
+  
+          &:not(.hide-focus) {
+            color: $contextual-toolbar-color;
+          }
+        }
+  
+        &[disabled] {
+          color: $contextual-toolbar-button-disabled-color;
+  
+          svg {
+            color: inherit;
+          }
+  
+          &:hover {
+            background-color: transparent;
+            border-color: transparent;
+          }
+        }
+      }
     }
 
-    [class^='btn'] {
-      color: $contextual-toolbar-button-color;
+    &.more {
+      display: none;
+      width: 40px;
+
+      [class^='btn-actions'] {
+        top: 3px;
+        left: 1px;
+        color: $contextual-toolbar-button-color;
+  
+        svg {
+          color: $contextual-toolbar-button-color;
+        }
+  
+        &:hover {
+          color: $contextual-toolbar-button-hover-color;
+          background-color: transparent;
+  
+          svg {
+            color: inherit;
+          }
+        }
+  
+        &:focus {
+          box-shadow: 0 0 0 2px transparent, 0 0 0 1px $contextual-toolbar-color;
+  
+          &:not(.hide-focus) {
+            color: $contextual-toolbar-color;
+          }
+        }
+  
+        &[disabled] {
+          color: $contextual-toolbar-button-disabled-color;
+  
+          svg {
+            color: inherit;
+          }
+  
+          &:hover {
+            background-color: transparent;
+            border-color: transparent;
+          }
+        }
+      }
     }
   }
 

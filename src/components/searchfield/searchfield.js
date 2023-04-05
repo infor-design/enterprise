@@ -1197,7 +1197,7 @@ SearchField.prototype = {
       this.handleSafeBlur();
     }
 
-    if (this.isContainedByFlexToolbar && this.toolbarFlexItem.toolbarAPI.items.length > 1) {
+    if (this.isContainedByFlexToolbar && this.toolbarFlexItem?.toolbarAPI?.items?.length > 1) {
       const yKeys = ['ArrowUp', 'Up', 'ArrowDown', 'Down'];
       if (yKeys.indexOf(keyName) > -1) {
         this.collapse();
@@ -1952,7 +1952,7 @@ SearchField.prototype = {
     let dir = 1;
     if (e && !e.key) {
       dir = 0;
-      if (this.toolbarFlexItem && this.toolbarFlexItem.focused) {
+      if (this.toolbarFlexItem && this.toolbarFlexItem?.focused) {
         dir = 1;
       }
     }
