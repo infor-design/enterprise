@@ -210,6 +210,10 @@ html[dir='rtl'] {
       height: 39px;
     }
 
+    &.has-categories button.close:not(.is-empty) {
+      top: 0;
+    }
+
     &:not(.toolbar-searchfield-wrapper):not(.context) {
       &.has-categories {
         .searchfield {

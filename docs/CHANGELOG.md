@@ -16,6 +16,8 @@
 - `[Column]` Fixed data chart and legend doesn't match up. ([#7199](https://github.com/infor-design/enterprise/issues/7199))
 - `[Datagrid]` Fixed on styling in row status icon when first column is not a select column. ([NG#5913](https://github.com/infor-design/enterprise-ng/issues/5913))
 - `[Datagrid]` Fixed table layout with a distinct hover background color for both activated and non-activated rows. ([#7320](https://github.com/infor-design/enterprise/issues/7369))
+- `[Body]` Updated background color in classic high contrast. ([#7374](https://github.com/infor-design/enterprise/issues/7374))
+- `[Card]` Fixed group-action unnecessary scroll bar. ([#7343](https://github.com/infor-design/enterprise/issues/7343))
 - `[Datagrid]` Fixed header icon tooltip showing when undefined. ([#6929](https://github.com/infor-design/enterprise/issues/6929))
 - `[Datagrid]` Fix on styling in row status icon when first column is not a select column. ([NG#5913](https://github.com/infor-design/enterprise-ng/issues/5913))
 - `[Datagrid]` Fixed paging source argument is empty when re-assigning grid options. ([6947](https://github.com/infor-design/enterprise/issues/6947))
@@ -33,6 +35,7 @@
 - `[Personalization]` Fixed color changing doesn't add CSS class to the header in Safari browser. ([#7338](https://github.com/infor-design/enterprise/issues/7338))
 - `[Personalization]` Adjusted header text/tabs colors. ([#7319](https://github.com/infor-design/enterprise/issues/7319))
 - `[Personalization]` Additional fixes for default color back to azure and added alabaster in personalization colors. ([#7340](https://github.com/infor-design/enterprise/issues/7340))
+- `[Searchfield]` Fixed searchfield icon adjustments. ([#7387](https://github.com/infor-design/enterprise/issues/7387))
 - `[SearchField]` Fixed undefined error on `toolbarFlexItem`. ([#7402](https://github.com/infor-design/enterprise/issues/7402))
 - `[Tabs]` Fixed the alignment of focus in RTL view. ([#6992](https://github.com/infor-design/enterprise/issues/6992))
 - `[Tabs Header]` Fixed the alignment of close button. ([#7273](https://github.com/infor-design/enterprise/issues/7273))
@@ -42,6 +45,7 @@
 - `[Timeline]` Added test page to test scenario of timeline with no dates. ([#7298](https://github.com/infor-design/enterprise/issues/7298))
 - `[Tooltip]` Added appendTo settings to fix tooltip positioning on the structure. ([#7220](https://github.com/infor-design/enterprise/issues/7220))
 - `[Tooltip]` Fixed tooltip not on top of all elements when shown and manually moved. ([#7130](https://github.com/infor-design/enterprise/issues/7130))
+- `[Tooltip]` Added appendTo settings to fix tooltip positioning on the structure. ([#7220](https://github.com/infor-design/enterprise/issues/7220))
 
 ## v4.81.0
 
