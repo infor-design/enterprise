@@ -388,7 +388,7 @@ $toolbarsearchfield-category-empty-width: 51px;
   &.non-collapsible {
     &.has-focus.active .searchfield-category-button,
     .searchfield-category-button {
-      background-color: transparent;
+      background-color: $searchfield-toolbar-bg-color;
       border-color: $searchfield-toolbar-border-color;
     }
   }
