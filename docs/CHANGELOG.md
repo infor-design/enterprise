@@ -26,6 +26,7 @@
 - `[Field-Filter]` Fixed a bug in field filter where the design is not properly aligned on Modal. ([#7358](https://github.com/infor-design/enterprise/issues/7358))
 - `[Header]` Fixed border in search field in the header. ([#7297](https://github.com/infor-design/enterprise/issues/7297))
 - `[Header]` Fixed the font sizes and alignments. ([#7317](https://github.com/infor-design/enterprise/issues/7317))
+- `[Listbuilder]` Fixed icon alignment on toolbar so that it's centered on focused. ([#7397](https://github.com/infor-design/enterprise/issues/7397))
 - `[Listview]` Fixed the height restriction in listview when used in card. ([#7094](https://github.com/infor-design/enterprise/issues/7094))
 - `[Lookup]` Fix in keyword search not filtering single comma. ([#7165](https://github.com/infor-design/enterprise/issues/7165))
 - `[Lookup]` Fix in keyword search not filtering single quote. ([#7165](https://github.com/infor-design/enterprise/issues/7165))
