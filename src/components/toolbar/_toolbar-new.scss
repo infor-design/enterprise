@@ -34,6 +34,10 @@
   .buttonset {
     height: 41px;
   }
+
+  .more .btn-actions:hover:not(:disabled) {
+    background-color: $button-color-tertiary-hover-background-new;
+  }
 }
 
 @media (max-width: $breakpoint-phablet) {
