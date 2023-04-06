@@ -1,5 +1,5 @@
 ---
-title: Navigation Menu
+title: Module Nav
 description: Left-side, fly-out navigation menu
 demo:
   embedded:
@@ -12,12 +12,12 @@ demo:
 Information TBD
 
 ```html
-<section class="navigationmenu-container">
-  <aside id="nav" class="navigationmenu">
-    <div class="navigationmenu-bar">
+<section class="module-nav-container">
+  <aside id="nav" class="module-nav">
+    <div class="module-nav-bar">
         <!-- nav items go here -->
     </div>
-    <div class="navigationmenu-detail">
+    <div class="module-nav-detail">
         <!-- detail pane content goes here -->
     </div>
   </aside>

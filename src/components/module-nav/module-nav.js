@@ -1,29 +1,29 @@
 import { utils } from '../../utils/utils'; // NOTE: update this path when moving to a component folder
 
 // Settings and Options
-const COMPONENT_NAME = 'navigationmenu';
+const COMPONENT_NAME = 'modulenav';
 
-const NAVIGATION_MENU_DISPLAY_MODES = [false, 'collapsed', 'expanded'];
+const MODULE_NAV_DISPLAY_MODES = [false, 'collapsed', 'expanded'];
 
-const NAVIGATIONMENU_DEFAULTS = {
-  displayMode: NAVIGATION_MENU_DISPLAY_MODES[0],
+const MODULE_NAV_DEFAULTS = {
+  displayMode: MODULE_NAV_DISPLAY_MODES[0],
   showDetailView: false
 };
 
 /**
- * Navigation Menu - Fly-out, left-side navigation menu used as top-level navigation in some apps.
- * @class NavigationMenu
+ * Module Nav - Fly-out, left-side navigation menu used as top-level navigation in some apps.
+ * @class ModuleNav
  * @param {string} element The plugin element for the constuctor
  * @param {string} [settings] The settings element.
  */
-function NavigationMenu(element, settings) {
-  this.settings = utils.mergeSettings(element, settings, NAVIGATIONMENU_DEFAULTS);
+function ModuleNav(element, settings) {
+  this.settings = utils.mergeSettings(element, settings, MODULE_NAV_DEFAULTS);
   this.element = $(element);
   this.init();
 }
 
 // Plugin Methods
-NavigationMenu.prototype = {
+ModuleNav.prototype = {
 
   /**
    * Do initialization, build up and / or add events ect.
@@ -43,8 +43,8 @@ NavigationMenu.prototype = {
    */
   build() {
     // Refs
-    this.containerEl = $(this.element).parent('.navigationmenu-container');
-    this.detailViewEl = $(this.element).find('.navigationmenu-detail');
+    this.containerEl = $(this.element).parent('.module-nav-container');
+    this.detailViewEl = $(this.element).find('.module-nav-detail');
 
     // Configure
     if (this.settings.displayMode) this.setDisplayMode(this.settings.displayMode);
@@ -68,19 +68,19 @@ NavigationMenu.prototype = {
   },
 
   /**
-   * Configures the navigation menu's display mode.
+   * Configures the Module Nav's display mode.
    * @param {string} val desired display mode
    * @returns {void}
    */
   setDisplayMode(val) {
     this.containerEl[0].classList.remove('mode-collapsed', 'mode-expanded');
-    if (typeof val === 'string' && NAVIGATION_MENU_DISPLAY_MODES.includes(val)) {
+    if (typeof val === 'string' && MODULE_NAV_DISPLAY_MODES.includes(val)) {
       this.containerEl[0].classList.add(`mode-${val}`);
     }
   },
 
   /**
-   * Configures display of the navigation menu's detail view pane.
+   * Configures display of the Module Nav's detail view pane.
    * @param {boolean} val true if the detail view should be shown
    * @returns {void}
    */
@@ -91,7 +91,7 @@ NavigationMenu.prototype = {
 
   /**
    * Handle updated settings and values.
-   * @param {object} [settings] if provided, updates nav menu settings
+   * @param {object} [settings] if provided, updates module nav settings
    * @returns {object} chainable API
    */
   updated(settings) {
@@ -123,4 +123,4 @@ NavigationMenu.prototype = {
   }
 };
 
-export { NavigationMenu, COMPONENT_NAME };
+export { ModuleNav, COMPONENT_NAME };

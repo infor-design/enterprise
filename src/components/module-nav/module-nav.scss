@@ -5,7 +5,7 @@
   @include css3(box-shadow, 0 0 8px 1px rgba(0, 0, 0, 0.16));
 }
 
-.navigationmenu-container {
+.module-nav-container {
   display: flex;
   flex-direction: row;
   overflow: hidden;
@@ -21,15 +21,15 @@
   // Display Mode: Hidden
 
   &:not(.mode-expanded):not(.mode-collapsed) {
-    .navigationmenu {
+    .module-nav {
       pointer-events: none;
     }
 
-    .navigationmenu-bar {
+    .module-nav-bar {
       display: none;
     }
 
-    .navigationmenu-detail {
+    .module-nav-detail {
       display: none;
     }
   }
@@ -39,25 +39,25 @@
 
   &.mode-collapsed,
   &.mode-expanded {
-    .navigationmenu-bar {
+    .module-nav-bar {
       z-index: 1;
     }
 
     &:not(.show-detail) {
-      .navigationmenu-detail {
+      .module-nav-detail {
         display: none;
       }
     }
 
     &.show-detail {
-      .navigationmenu-bar {
-        border-inline-end: 1px solid $nav-menu-border-color;
+      .module-nav-bar {
+        border-inline-end: 1px solid $module-nav-border-color;
       }
 
-      .navigationmenu-detail {
+      .module-nav-detail {
         @include drawer-box-shadow;
 
-        width: $nav-menu-submenu-size;
+        width: $module-nav-submenu-size;
       }
     }
   }
@@ -66,17 +66,17 @@
   // Display Mode: Collapsed
 
   &.mode-collapsed {
-    .navigationmenu {
-      border-inline-end: 1px solid $nav-menu-border-color;
+    .module-nav {
+      border-inline-end: 1px solid $module-nav-border-color;
     }
 
-    .navigationmenu-bar {
-      width: $nav-menu-collapsed-size;
+    .module-nav-bar {
+      width: $module-nav-collapsed-size;
     }
 
-    .navigationmenu-item {
+    .module-nav-item {
       justify-content: center;
-      padding-block: $nav-menu-item-padding-size;
+      padding-block: $module-nav-item-padding-size;
 
       // Can't use `audible` here, need to retain line height
       span {
@@ -88,7 +88,7 @@
 
     &.show-detail {
       .page-container {
-        margin-inline-start: ($nav-menu-submenu-size * -1);
+        margin-inline-start: ($module-nav-submenu-size * -1);
       }
     }
   }
@@ -97,66 +97,66 @@
   // Display Mode: Expanded
 
   &.mode-expanded {
-    border-right: 1px solid $nav-menu-border-color;
+    border-right: 1px solid $module-nav-border-color;
 
-    .navigationmenu-bar {
-      width: $nav-menu-expanded-size;
+    .module-nav-bar {
+      width: $module-nav-expanded-size;
     }
 
-    .navigationmenu-item {
-      padding: $nav-menu-item-padding-size;
+    .module-nav-item {
+      padding: $module-nav-item-padding-size;
 
       .icon {
-        margin-inline-end: $nav-menu-item-text-icon-spacing;
+        margin-inline-end: $module-nav-item-text-icon-spacing;
       }
     }
 
     .page-container {
-      margin-inline-start: ($nav-menu-submenu-size * -1);
+      margin-inline-start: ($module-nav-submenu-size * -1);
     }
 
     &:not(.show-detail) {
-      .navigationmenu-bar {
+      .module-nav-bar {
         @include drawer-box-shadow;
       }
     }
 
     &.show-detail {
-      .navigationmenu-detail {
-        width: $nav-menu-submenu-size;
+      .module-nav-detail {
+        width: $module-nav-submenu-size;
       }
 
       .page-container {
-        margin-inline-start: ($nav-menu-submenu-size * -2);
+        margin-inline-start: ($module-nav-submenu-size * -2);
       }
     }
   }
 }
 
-.navigationmenu {
+.module-nav {
   display: flex;
   flex-direction: row;
   height: 100%;
   position: relative;
 }
 
-.navigationmenu-bar {
+.module-nav-bar {
   display: flex;
   flex-direction: column;
-  background-color: $nav-menu-bg-color;
-  color: $nav-menu-text-color;
+  background-color: $module-nav-bg-color;
+  color: $module-nav-text-color;
   height: 100%;
   padding: 8px;
   gap: 8px;
 }
 
-.navigationmenu-detail {
-  background-color: $nav-menu-detail-bg-color;
-  border-inline-end: 1px solid $nav-menu-border-color;
+.module-nav-detail {
+  background-color: $module-nav-detail-bg-color;
+  border-inline-end: 1px solid $module-nav-border-color;
   height: 100%;
 }
 
-.navigationmenu-item {
+.module-nav-item {
   align-items: center;
   border-radius: 4px;
   display: flex;

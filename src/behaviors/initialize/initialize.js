@@ -71,10 +71,10 @@ const PLUGIN_MAPPINGS = [
     });
   }],
 
-  // Navigation Menu
-  ['navigationmenu', '.navigationmenu', function (rootElem, pluginName, selector) {
+  // Module Nav
+  ['modulenav', '.module-nav', function (rootElem, pluginName, selector) {
     matchedItems(rootElem, selector).each((i, item) => {
-      $(item).navigationmenu();
+      $(item).modulenav();
     });
   }],
 

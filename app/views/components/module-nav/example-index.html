@@ -4,48 +4,48 @@
   }
 </style>
 
-<section class="navigationmenu-container">
-  <aside id="nav" class="navigationmenu">
-    <div class="navigationmenu-bar">
-      <div class="navigationmenu-item">
+<section class="module-nav-container">
+  <aside id="nav" class="module-nav">
+    <div class="module-nav-bar">
+      <div class="module-nav-item">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
           <use href="#icon-url"></use>
         </svg>
         <span>Label</span>
       </div>
-      <div class="navigationmenu-item">
+      <div class="module-nav-item">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
           <use href="#icon-url"></use>
         </svg>
         <span>Label</span>
       </div>
-      <div class="navigationmenu-item">
+      <div class="module-nav-item">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
           <use href="#icon-url"></use>
         </svg>
         <span>Label</span>
       </div>
-      <div class="navigationmenu-item">
+      <div class="module-nav-item">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
           <use href="#icon-url"></use>
         </svg>
         <span>Label</span>
       </div>
-      <div class="navigationmenu-item">
+      <div class="module-nav-item">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
           <use href="#icon-url"></use>
         </svg>
         <span>Label</span>
       </div>
     </div>
-    <div class="navigationmenu-detail">&nbsp;</div>
+    <div class="module-nav-detail">&nbsp;</div>
   </aside>
   <div class="page-container scrollable">
     <div class="row top-padding">
       <div class="four columns">&nbsp;</div>
       <div class="four columns">&nbsp;</div>
       <div class="four columns">
-        <h2 class="fieldset-title">Navigation Menu</h2>
+        <h2 class="fieldset-title">Module Nav</h2>
         <p>Displays top-level navigation in a flyout menu</p>
 
         <div class="field">
@@ -74,7 +74,7 @@
 
 <script>
   $('body').on('initialized', () => {
-    const navAPI = $('#nav').data('navigationmenu');
+    const navAPI = $('#nav').data('modulenav');
     const dropdownAPI = $('#display-mode-dropdown').data('dropdown');
     const checkEl = $('#display-detail-check')
 
