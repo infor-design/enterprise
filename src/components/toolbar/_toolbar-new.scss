@@ -35,8 +35,36 @@
     height: 41px;
   }
 
+  // Buttons hover
   .more .btn-actions:hover:not(:disabled) {
     background-color: $toolbar-btn-actions-hover-bg-color;
+  }
+
+  &:not(.standalone) .searchfield-wrapper.toolbar-searchfield-wrapper:not(.is-open) {
+    height: 34px;
+    margin-top: 4px;
+
+    &:hover {
+      border-radius: 8px;
+      background-color: $toolbar-btn-actions-hover-bg-color;
+    }
+
+    .icon:not(.icon-dropdown) {
+      top: -3px;
+      left: 7px;
+    }
+
+    .searchfield {
+      padding-bottom: 11px;
+    }
+  }
+
+  &:not(.standalone) .buttonset > [class^='btn'] {
+    border-radius: 8px;
+
+    &:not(:disabled):hover {
+      background-color: $toolbar-btn-actions-hover-bg-color;
+    }
   }
 }
 
