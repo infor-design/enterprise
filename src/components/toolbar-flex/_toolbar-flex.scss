@@ -445,3 +445,13 @@ html[class*='theme-classic-'] .flex-toolbar .toolbar-section .searchfield-wrappe
     left: -53px;
   }
 }
+
+html[class*='theme-new-'] .flex-toolbar {
+  .toolbar-section.buttonset [class^='btn']:not(:disabled) {
+    border-radius: 8px;
+
+    &:hover {
+      background-color: $toolbar-btn-actions-hover-bg-color;
+    }
+  }
+}
