@@ -40,29 +40,42 @@
     background-color: $toolbar-btn-actions-hover-bg-color;
   }
 
-  &:not(.standalone) .searchfield-wrapper.toolbar-searchfield-wrapper:not(.is-open) {
-    height: 34px;
-    margin-top: 4px;
+  &:not(.standalone) {
+    .searchfield-wrapper.toolbar-searchfield-wrapper:not(.is-open) {
+      height: 34px;
+      margin-top: 4px;
 
-    &:hover {
+      &:hover {
+        border-radius: 8px;
+        background-color: $toolbar-btn-actions-hover-bg-color;
+      }
+
+      .icon:not(.icon-dropdown) {
+        top: -3px;
+        left: 7px;
+      }
+
+      .searchfield {
+        padding-bottom: 11px;
+      }
+    }
+
+    .buttonset [class^='btn'] {
       border-radius: 8px;
-      background-color: $toolbar-btn-actions-hover-bg-color;
-    }
 
-    .icon:not(.icon-dropdown) {
-      top: -3px;
-      left: 7px;
-    }
-
-    .searchfield {
-      padding-bottom: 11px;
+      &:not(:disabled):hover {
+        background-color: $toolbar-btn-actions-hover-bg-color;
+      }
     }
   }
 
-  &:not(.standalone) .buttonset > [class^='btn'] {
+  .searchfield-wrapper.toolbar-searchfield-wrapper.has-close-icon-button.is-open .close {
+    padding: 4px;
+    width: 24px;
+    height: 24px;
     border-radius: 8px;
 
-    &:not(:disabled):hover {
+    &:hover {
       background-color: $toolbar-btn-actions-hover-bg-color;
     }
   }
