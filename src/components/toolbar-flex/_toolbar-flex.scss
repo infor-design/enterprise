@@ -446,8 +446,9 @@ html[class*='theme-classic-'] .flex-toolbar .toolbar-section .searchfield-wrappe
   }
 }
 
-html[class*='theme-new-'] .flex-toolbar {
-  .toolbar-section.buttonset [class^='btn']:not(:disabled) {
+// Buttons hover state
+html[class*='theme-new-'] .flex-toolbar:not(.editor-toolbar):not(.formatter-toolbar) {
+  .toolbar-section [class^='btn']:not(:disabled) {
     border-radius: 8px;
 
     &:hover {
