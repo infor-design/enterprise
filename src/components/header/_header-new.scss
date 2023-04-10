@@ -131,7 +131,7 @@
     top: 0;
   }
 
-  // Unset search icon hover state
+  // Reset search icon hover state
   .toolbar:not(.standalone) .searchfield-wrapper.toolbar-searchfield-wrapper:not(.is-open) {
     height: unset;
     margin: 3px 5px 3px 0;
@@ -145,6 +145,27 @@
       top: -2px;
       right: 8px;
       left: 8px;
+    }
+
+    .searchfield {
+      padding-bottom: 7px;
+    }
+  }
+
+  .flex-toolbar .toolbar-section.search {
+    .searchfield-wrapper.toolbar-searchfield-wrapper:not(.is-open) {
+      height: unset;
+      margin-top: unset;
+      margin-bottom: unset;
+
+      &:hover {
+        border-radius: unset;
+        background-color: transparent;
+      }
+
+      .searchfield {
+        padding-bottom: 7px;
+      }
     }
   }
 }
