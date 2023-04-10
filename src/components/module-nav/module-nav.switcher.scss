@@ -5,6 +5,25 @@
 
 .module-nav-switcher {
   @include nav-item-style;
+
+  gap: ($module-nav-gutter-size * 2);
+  justify-content: center;
+  padding-block: $module-nav-item-padding-size;
+  padding-inline: ($module-nav-item-padding-size / 2);
+}
+
+.section {
+  align-content: center;
+}
+
+.section.role-dropdown {
+  display: none;
+
+  // IDS Dropdown
+  .dropdown-wrapper {
+    max-width: ($module-nav-submenu-size - $module-nav-gutter-size);
+    margin-bottom: 0;
+  }
 }
 
 // =====================================================
@@ -13,7 +32,6 @@
 .module-nav-container.mode-collapsed {
   .module-nav-switcher {
     justify-content: center;
-    padding-block: ($module-nav-item-padding-size / 2);
   }
 }
 
@@ -21,7 +39,7 @@
 // Display Mode: Expanded
 
 .module-nav-container.mode-expanded {
-  .module-nav-switcher {
-    padding: $module-nav-item-padding-size;
+  .section.role-dropdown {
+    display: block;
   }
 }

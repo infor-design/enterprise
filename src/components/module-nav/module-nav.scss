@@ -113,11 +113,13 @@
       margin-inline-start: ($module-nav-submenu-size * -1);
     }
 
+    /*
     &:not(.show-detail) {
       .module-nav-bar {
         @include drawer-box-shadow;
       }
     }
+    */
 
     &.show-detail {
       .module-nav-detail {

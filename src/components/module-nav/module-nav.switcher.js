@@ -1,6 +1,15 @@
 import { utils } from '../../utils/utils';
 
+import { Locale } from '../locale/locale';
+
 import { MODULE_NAV_DISPLAY_MODES, setDisplayMode } from './module-nav.common';
+
+// Settings and Options
+const COMPONENT_NAME = 'modulenavswitcher';
+
+const MODULE_NAV_SWITCHER_DEFAULTS = {
+  displayMode: MODULE_NAV_DISPLAY_MODES[0],
+};
 
 // Icon for "24/Financial and Supply Management/Amethyst" from Figma designs
 const SWITCHER_ICON_HTML = `
@@ -26,12 +35,20 @@ const SWITCHER_ICON_HTML = `
 </svg>
 `;
 
-// Settings and Options
-const COMPONENT_NAME = 'modulenavswitcher';
+const buttonTemplate = () => `<div class="section module-btn">
+  <button id="module-nav-homepage-btn" class="btn-icon btn-tertiary">
+    ${SWITCHER_ICON_HTML}
+    <span>${Locale ? Locale.translate('ModuleSwitch') : 'Switch Modules'}</span>
+  </button>
+</div>`;
 
-const MODULE_NAV_SWITCHER_DEFAULTS = {
-  displayMode: MODULE_NAV_DISPLAY_MODES[0],
-};
+const dropdownTemplate = () => `<div class="section role-dropdown">
+  <label for="module-nav-role-switcher" class="label audible">Roles</label>
+  <select id="module-nav-role-switcher" name="module-nav-role-switcher" class="dropdown" data-automation-id="custom-automation-dropdown-id" >
+    <option value="admin">Admin</option>
+    <option value="user">User</option>
+  </select>
+</div>`;
 
 /**
  * Module Nav Switcher - Controls top-level navigation for an application
@@ -66,12 +83,11 @@ ModuleNavSwitcher.prototype = {
    */
   build() {
     // Refs
-    this.containerEl = $(this.element).parents('.module-nav-container');
-    this.dropdown = $(this.element).find('.module-nav-dropdown');
+    this.renderChildComponents();
 
     // Configure
     if (this.settings.displayMode) this.setDisplayMode(this.settings.displayMode);
-    this.renderIcon();
+
     return this;
   },
 
@@ -88,6 +104,26 @@ ModuleNavSwitcher.prototype = {
     });
 
     return this;
+  },
+
+  /**
+   * Draws important UI elements if they aren't found
+   */
+  renderChildComponents() {
+    this.containerEl = this.element.parents('.module-nav-container')[0];
+
+    this.moduleButtonEl = this.element[0].querySelector('.btn');
+    if (!this.moduleButton) {
+      this.element[0].insertAdjacentHTML('afterbegin', buttonTemplate());
+      this.moduleButtonContainer = this.element[0].querySelector('.section-module-btn');
+      this.moduleButton = this.element[0].querySelector('.btn');
+    }
+
+    this.roleDropdown = this.element[0].querySelector('.module-role-dropdown');
+    if (!this.roleDropdown) {
+      this.element[0].insertAdjacentHTML('beforeend', dropdownTemplate());
+      this.roleDropdown = this.element[0].querySelector('.section-role-dropdown');
+    }
   },
 
   /**

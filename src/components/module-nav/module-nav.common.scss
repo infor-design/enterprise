@@ -8,6 +8,6 @@
 
 @mixin nav-item-style() {
   align-items: center;
-  border-radius: 4px;
+  border-radius: $module-nav-gutter-size;
   display: flex;
 }
