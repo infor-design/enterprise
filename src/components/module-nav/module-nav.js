@@ -1,9 +1,9 @@
-import { utils } from '../../utils/utils'; // NOTE: update this path when moving to a component folder
+import { utils } from '../../utils/utils';
+
+import { MODULE_NAV_DISPLAY_MODES, setDisplayMode } from './module-nav.common';
 
 // Settings and Options
 const COMPONENT_NAME = 'modulenav';
-
-const MODULE_NAV_DISPLAY_MODES = [false, 'collapsed', 'expanded'];
 
 const MODULE_NAV_DEFAULTS = {
   displayMode: MODULE_NAV_DISPLAY_MODES[0],
@@ -73,10 +73,7 @@ ModuleNav.prototype = {
    * @returns {void}
    */
   setDisplayMode(val) {
-    this.containerEl[0].classList.remove('mode-collapsed', 'mode-expanded');
-    if (typeof val === 'string' && MODULE_NAV_DISPLAY_MODES.includes(val)) {
-      this.containerEl[0].classList.add(`mode-${val}`);
-    }
+    setDisplayMode(val, this.containerEl[0]);
   },
 
   /**

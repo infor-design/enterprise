@@ -78,6 +78,13 @@ const PLUGIN_MAPPINGS = [
     });
   }],
 
+  // Module Nav Switcher
+  ['modulenavswitcher', '.module-nav-switcher', function (rootElem, pluginName, selector) {
+    matchedItems(rootElem, selector).each((i, item) => {
+      $(item).modulenavswitcher();
+    });
+  }],
+
   // Personalization
   ['personalize', null, function () {
     $('html').personalize();

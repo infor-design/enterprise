@@ -45,6 +45,7 @@ import './modal/modal.jquery';
 import './monthview/monthview.jquery';
 import './multiselect/multiselect.jquery';
 import './module-nav/module-nav.jquery';
+import './module-nav/module-nav.switcher.jquery';
 import './notification/notification.jquery';
 import './notification-badge/notification-badge.jquery';
 import './pager/pager.jquery';

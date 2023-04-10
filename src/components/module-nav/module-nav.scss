@@ -1,9 +1,7 @@
-// Navigation Menu
-//================================================== //
+@import './module-nav.common.scss';
 
-@mixin nav-item-box-shadow() {
-  @include css3(box-shadow, 0 0 8px 1px rgba(0, 0, 0, 0.16));
-}
+// Module Nav Component
+//================================================== //
 
 .module-nav-container {
   display: flex;
@@ -55,7 +53,7 @@
       }
 
       .module-nav-detail {
-        @include drawer-box-shadow;
+        @include module-nav-box-shadow;
 
         width: $module-nav-submenu-size;
       }
@@ -157,9 +155,7 @@
 }
 
 .module-nav-item {
-  align-items: center;
-  border-radius: 4px;
-  display: flex;
+  @include nav-item-style;
 
   span {
     @include font-size(16);

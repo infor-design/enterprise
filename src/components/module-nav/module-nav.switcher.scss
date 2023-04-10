@@ -1,0 +1,27 @@
+@import './module-nav.common.scss';
+
+// Module Nav Switcher Component
+//================================================== //
+
+.module-nav-switcher {
+  @include nav-item-style;
+}
+
+// =====================================================
+// Display Mode: Collapsed
+
+.module-nav-container.mode-collapsed {
+  .module-nav-switcher {
+    justify-content: center;
+    padding-block: ($module-nav-item-padding-size / 2);
+  }
+}
+
+// =====================================================
+// Display Mode: Expanded
+
+.module-nav-container.mode-expanded {
+  .module-nav-switcher {
+    padding: $module-nav-item-padding-size;
+  }
+}
