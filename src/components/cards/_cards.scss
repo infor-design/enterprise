@@ -526,7 +526,8 @@
 
 .widget-content,
 .card-content {
-  display: flex;
+  @extend .flex-center;
+
   flex-direction: column;
   height: 318px;
   min-height: 318px;
