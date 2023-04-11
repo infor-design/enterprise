@@ -526,6 +526,7 @@
 
 .widget-content,
 .card-content {
+  // stylelint-disable-next-line scss/at-extend-no-missing-placeholder
   @extend .flex-center;
 
   flex-direction: column;
