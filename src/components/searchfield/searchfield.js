@@ -882,7 +882,9 @@ SearchField.prototype = {
       });
 
       self.xButton.on(`blur.${this.id}`, (e) => {
-        self.handleSafeBlur(e);
+        if (!self.xButton.hasClass('collapsed')) {
+          self.handleSafeBlur(e);
+        }
       });
     }
 
@@ -1197,7 +1199,7 @@ SearchField.prototype = {
       this.handleSafeBlur();
     }
 
-    if (this.isContainedByFlexToolbar && this.toolbarFlexItem.toolbarAPI.items.length > 1) {
+    if (this.isContainedByFlexToolbar && this.toolbarFlexItem?.toolbarAPI?.items?.length > 1) {
       const yKeys = ['ArrowUp', 'Up', 'ArrowDown', 'Down'];
       if (yKeys.indexOf(keyName) > -1) {
         this.collapse();
@@ -1849,6 +1851,10 @@ SearchField.prototype = {
           delete self.isExpanding;
           self.isExpanded = true;
 
+          if (self.settings.clearable) {
+            self.xButton.removeClass('collapsed');
+          }
+
           if (self.isCurrentlyCollapsible && !self.isFocused && !self.focusElem) {
             self.handleSafeBlur();
           }
@@ -1926,6 +1932,11 @@ SearchField.prototype = {
            * @property {object} event - The jquery event object
            */
           self.element.trigger('collapsed');
+
+          if (self.settings.clearable) {
+            self.xButton.addClass('collapsed');
+          }
+
           resolve();
         }
       });
@@ -1952,7 +1963,7 @@ SearchField.prototype = {
     let dir = 1;
     if (e && !e.key) {
       dir = 0;
-      if (this.toolbarFlexItem && this.toolbarFlexItem.focused) {
+      if (this.toolbarFlexItem && this.toolbarFlexItem?.focused) {
         dir = 1;
       }
     }

@@ -54,8 +54,7 @@ git config --global credential.helper wincred
 
 ## Release
 
-1. Check that the change log notes are up to date by verifying the [changelog](/changelog). Note that we add a counts section to the bottom of each release, this section should be manually added by looking at the [git project board](https://github.com/orgs/infor-design/projects) counts and searching for `it('` to count the tests.
-1. Run the script to set the variables configured above (ignore this if they are already set)
+1. Run the scripts to set the variables configured above (ignore this if they are already set)
 1. Make sure you have a branched and tagged the release branch. Using for example `git checkout -b 4.xx.x`. Or checkout the release branch if not already on it. If you do not do this the docs will not properly deploy to the design site [design.infor.com](http://design.infor.com)
 1. Run `git pull {remote} {branch name} && git pull --tags` to ensure you have the latest code.
 1. Run a release cmd using [release it.](https://www.npmjs.com/package/release-it)
@@ -66,7 +65,7 @@ git config --global credential.helper wincred
     - **Always** verify the release version when the script asks. You MAY have to use a different release-it command than what we provide with the NPM script.
     - You may get warnings about the release you are trying to do, will not line up with the previous tag. This is usually nothing, but spend a minute or two to think through it.
 
-1. Set the main branch to the next minor dev version. For example if we made branch `4.23.x`, then the `main` package.json version should now be changed to `4.24.0-dev`
+1. Set the main branch to the next minor dev version. For example if we made branch `4.82.x`, then the `main` package.json version should now be changed to `4.82.0-dev`
 1. Check that the build is running after for the deploy on the [Jenkins Server](http://jenkins.design.infor.com:8080/job/soho-kubernetes-deploy/)
 1. Watch Ms Teams for a posted release and notify QA for beta and minor
 1. Update the [Stackblitz](https://stackblitz.com/edit/ids-enterprise-4610) under my account but can be under any
@@ -104,7 +103,7 @@ git push origin main
 1. Check the [npm link](https://www.npmjs.com/package/ids-enterprise) page that the expected version is the latest. If you patched it could change. If you need to reset this then run a command such as:
 
 ```sh
-npm dist-tags add ids-enterprise@4.61.0 latest
+npm dist-tags add ids-enterprise@4.82.0 latest
 ```
 
 ## Publishing docs
