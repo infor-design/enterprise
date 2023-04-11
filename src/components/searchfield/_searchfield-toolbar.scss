@@ -95,7 +95,7 @@ $toolbarsearchfield-category-empty-width: 51px;
     }
 
     .icon:not(.close) {
-      color: $searchfield-icon-color !important;
+      color: $searchfield-icon-color;
       height: 18px;
       width: 18px;
 
@@ -687,15 +687,6 @@ $toolbarsearchfield-category-empty-width: 51px;
       color: $searchfield-header-text-color;
     }
 
-    &.non-collapsible {
-      .searchfield {
-        background-color: $searchfield-header-bg-color;
-        border-color: rgba($searchfield-header-border-color, 0.7);
-        color: $header-flex-toolbar-input-searchfield-color;
-        height: 38px;
-      }
-    }
-
     .go-button {
       background-color: $button-color-secondary-initial-background;
       border-color: $button-color-secondary-initial-background;
@@ -1003,18 +994,6 @@ html.is-firefox {
 
         &:-ms-input-placeholder {
           color: $searchfield-placeholder-text-color;
-        }
-      }
-
-      &.is-open {
-        .icon {
-          color: $searchfield-header-icon-color !important;
-        }
-
-        &.is-hovered {
-          .icon {
-            color: $searchfield-header-hover-icon-color;
-          }
         }
       }
     }

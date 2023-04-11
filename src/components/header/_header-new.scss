@@ -66,7 +66,7 @@
         }
       }
 
-      .toolbar-searchfield-wrapper.has-text:not(.active) {
+      .toolbar-searchfield-wrapper.has-text:not(.active):not(.non-collapsible) {
         width: 34px;
 
         &.non-collapsible {
