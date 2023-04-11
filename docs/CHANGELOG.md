@@ -1,5 +1,15 @@
 # What's New with Enterprise
 
+## v.4.83.0
+
+## Features
+
+- `[Utilities]` Added CSS utility classes to the library to provide a standardized and efficient way of achieving consistent styling. ([#7377](https://github.com/infor-design/enterprise/issues/7377))
+
+## v4.83.0 Fixes
+
+- `[EmptyMessage]` Improved centering of widget and homepage contents for various widget sizes to enhance the overall user experience. ([#7360](https://github.com/infor-design/enterprise/issues/7360))
+
 ## v4.82.0
 
 ## v4.82.0 Features
