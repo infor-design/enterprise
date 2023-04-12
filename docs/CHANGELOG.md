@@ -8,6 +8,7 @@
 
 ## v4.82.0 Fixes
 
+- `[App Menu]` Colors should remain the same when changing theme colors. ([#7302](https://github.com/infor-design/enterprise/issues/7302))
 - `[Badge]` Fixed success state badge color in new light theme. ([#7353](https://github.com/infor-design/enterprise/issues/7353))
 - `[Bar]` Fixed items not being selected/deselected from the legend. ([#7330](https://github.com/infor-design/enterprise/issues/7330))
 - `[Breadcrumb]` Updated breadcrumb hover color. ([#7337](https://github.com/infor-design/enterprise/issues/7337))

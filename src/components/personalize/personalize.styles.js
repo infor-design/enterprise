@@ -881,7 +881,6 @@ html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::af
   stroke: ${colors.lighter};
 }
 
-html[class*="theme-new-"] .application-menu.is-personalizable button .icon,
 html[class*="theme-new-"] .application-menu.is-personalizable button span,
 html[class*="theme-new-"] .application-menu.is-personalizable .hyperlink {
   color: ${colors.contrast} !important;
@@ -907,45 +906,16 @@ html[class*="theme-new-"] .application-menu.is-personalizable .hyperlink:hover {
   opacity: 1;
 }
 
-html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel {
-  background-color: ${colors.lighter};
-}
-
 html[class*="theme-new-"] .application-menu.is-personalizable .name-xl,
 html[class*="theme-new-"] .application-menu.is-personalizable .name,
 html[class*="theme-new-"] .application-menu.is-personalizable .accordion-heading {
   color: ${colors.contrast};
 }
 
-html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel .accordion-header {
-  background-color: ${colors.lighter} !important;
-  border: 1px solid transparent !important;
-  color: ${colors.contrast};
-}
-
-html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel .accordion-header .icon {
-  color: ${colors.contrast} !important;
-}
-
 .application-menu.is-personalizable .btn-icon:focus:not(.hide-focus) {
   box-shadow: 0 0 0 2px transparent,
     0 0 0 1px ${colors.lighter},
     0 0 2px 1px ${colors.lighter};
-}
-
-.application-menu.is-personalizable .accordion.panel .accordion-header.is-selected {
-  background-color: ${colors.base} !important;
-}
-
-.application-menu.is-personalizable .accordion.panel .accordion-header.is-selected:hover {
-  border-bottom-color: ${colors.dark} !important;
-}
-
-.application-menu.is-personalizable .accordion.panel .accordion-header.is-selected > a,
-.application-menu.is-personalizable .accordion.panel .accordion-header.is-selected:hover > a,
-.application-menu.is-personalizable .accordion.panel .accordion-header.is-selected > a,
-.application-menu.is-personalizable .accordion.panel .accordion-header.is-selected .icon {
-  color: ${colors.contrast} !important;
 }
 
 .application-menu.is-personalizable .accordion.panel .accordion-header.is-selected button .icon.plus-minus::before,
@@ -956,10 +926,6 @@ html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel .
 .application-menu.is-personalizable .accordion.panel .accordion-header.is-focused:not(.hide-focus) {
   border: 1px solid ${colors.contrast} !important;
   box-shadow: none !important;
-}
-
-html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.inverse .accordion-pane {
-  background-color: ${colors.lighter};
 }
 
 html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.inverse .accordion-pane .accordion-header {
@@ -1030,11 +996,6 @@ html[class*="theme-new-"] .application-menu.is-personalizable button svg.ripple-
   background-color: ${colors.contrast} !important;
 }
 
-html[class*="theme-new-"] .application-menu.is-personalizable {
-  background-color: ${colors.lighter};
-  border-right: ${colors.light};
-}
-
 html[class*="theme-new-"] .application-menu.is-personalizable .application-menu-header {
   background-color: ${colors.lighter};
   border-bottom-color: ${colors.light};
@@ -1049,39 +1010,6 @@ html[class*="theme-new-"] .application-menu.is-personalizable .searchfield-wrapp
   background-color: ${colors.dark};
 }
 
-html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.inverse .accordion-header {
-  background-color: transparent !important;
-}
-
-html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.inverse .accordion-header:hover {
-  background-color: ${colors.darkest} !important;
-}
-
-html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.inverse .accordion-header.is-selected {
-  background-color: ${colors.darkest} !important;
-}
-
-html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.inverse .accordion-header .icon.plus-minus::before {
-  background-color: ${colors.subtext};
-}
-
-html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.inverse .accordion-header .icon.plus-minus::after {
-  background-color: ${colors.subtext};
-}
-
-html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.inverse .accordion-pane {
-  background-color: transparent !important;
-}
-
-html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.inverse .accordion-pane .accordion-header {
-  color: ${colors.subtext};
-}
-
-html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.inverse > .accordion-header.is-expanded {
-  background-color: ${colors.dark} !important;
-  color: ${colors.subtext} !important;
-}
-
 html[class*="theme-new"] .application-menu.is-personalizable .accordion.panel.inverse > .accordion-header.is-focused:not(.hide-focus):not(.is-expanded) {
   border-color: ${colors.contrast} !important;
 }
@@ -1090,22 +1018,8 @@ html[class*="theme-new"] .application-menu.is-personalizable .accordion.panel.in
   border-color: transparent !important;
 }
 
-html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.inverse > .accordion-header.is-expanded.is-selected::before {
-  background-color: ${colors.darker} !important;
-  border-color: ${colors.darker} !important;
-}
-
 html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.inverse > .accordion-header.is-expanded.is-focused::before {
   border-color: ${colors.contrast} !important;
-}
-
-html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.inverse > .accordion-header.is-expanded + .accordion-pane {
-  background-color: ${colors.dark} !important;
-}
-
-html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.inverse > .accordion-header.is-expanded:hover::before {
-  border-color: ${colors.darkest} !important;
-  background-color: ${colors.darkest} !important;
 }
 
 .is-personalizable.tab-container {
