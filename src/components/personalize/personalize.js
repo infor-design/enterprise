@@ -406,7 +406,7 @@ Personalize.prototype = {
     let disabledBGColor = colorUtils.getLuminousColorShade(baseColor, lum);
     disabledBGColor = colorUtils.getDesaturatedColor(disabledBGColor, sat);
     colors.baseDisabled = isAlabaster ? '#D7D7D8' : disabledBGColor;
-    colors.baseDisabledText = isAlabaster ? '#ffffff' : disabledBGColor;
+    colors.baseDisabledText = '#ffffff';
 
     // Hyperlink/Text Selection
     const hyperLinkTextColor = (isAlabaster && (isNewDark || isClassicDark)) ? '#ffffff' : colors.text;

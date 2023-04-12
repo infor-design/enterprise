@@ -11,6 +11,7 @@
 - `[Badge]` Fixed success state badge color in new light theme. ([#7353](https://github.com/infor-design/enterprise/issues/7353))
 - `[Bar]` Fixed items not being selected/deselected from the legend. ([#7330](https://github.com/infor-design/enterprise/issues/7330))
 - `[Breadcrumb]` Updated breadcrumb hover color. ([#7337](https://github.com/infor-design/enterprise/issues/7337))
+- `[Button]` Adjusted personalized colors. ([#7406](https://github.com/infor-design/enterprise/issues/7406))
 - `[Card]` Updated background color in classic high contrast. ([#7374](https://github.com/infor-design/enterprise/issues/7374))
 - `[Card]` Fixed group-action unnecessary scroll bar. ([#7343](https://github.com/infor-design/enterprise/issues/7343))
 - `[Column]` Fixed data chart and legend doesn't match up. ([#7199](https://github.com/infor-design/enterprise/issues/7199))
