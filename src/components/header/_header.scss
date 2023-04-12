@@ -484,7 +484,7 @@ $subheader-height: 60px;
 .header,
 .masthead {
   &.is-personalizable {
-    .toolbar-searchfield-wrapper:not(.non-collapsible):not(.is-open) {
+    .toolbar-searchfield-wrapper:not(.is-open) {
       .icon:not(.close) {
         color: $header-toolbar-searchfield-icon-color;
         opacity: 0.8;
@@ -503,7 +503,6 @@ $subheader-height: 60px;
       }
 
       .has-collapse-button .collapse-button {
-        border-color: rgba($searchfield-header-border-color, 0.7);
         right: 1px;
       }
     }

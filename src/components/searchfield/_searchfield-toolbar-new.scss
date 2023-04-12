@@ -28,9 +28,10 @@
     &.active {
       .collapse-button,
       .btn {
-        border-top: 1px solid $searchfield-header-border-color-new;
-        border-bottom: 1px solid $searchfield-header-border-color-new;
-        border-left: 1px solid $searchfield-header-border-color-new;
+        background-color: transparent;
+        border-top: 1px solid transparent;
+        border-bottom: 1px solid transparent;
+        border-left: 1px solid transparent;
         border-bottom-left-radius: 8px;
         border-top-left-radius: 8px;
       }
