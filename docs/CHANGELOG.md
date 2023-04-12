@@ -1,5 +1,13 @@
 # What's New with Enterprise
 
+## v4.83.0
+
+## v4.83.0 Features
+
+## v4.83.0 Fixes
+
+- `[Datepicker]` Fixed validation not showing after component update. ([#7240](https://github.com/infor-design/enterprise/issues/7240))
+
 ## v4.82.0
 
 ## v4.82.0 Features
