@@ -338,7 +338,7 @@ PopupMenu.prototype = {
 
     // `true` setting takes precedent over all else
     if (this.settings.showArrow === true) {
-      doSetArrow = false;
+      doSetArrow = true;
     } else if (this.settings.showArrow === null) {
       const closestToolbar = this.element.closest('.toolbar');
       const closestMasthead = this.element.closest('.masthead');

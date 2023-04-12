@@ -38,6 +38,7 @@
 - `[Personalization]` Adjusted header text/tabs colors. ([#7319](https://github.com/infor-design/enterprise/issues/7319))
 - `[Personalization]` Additional fixes for default color back to azure and added alabaster in personalization colors. ([#7340](https://github.com/infor-design/enterprise/issues/7340))
 - `[Popupmenu]` Fixed on popupmenu more icon not visible when open. ([#7383](https://github.com/infor-design/enterprise/issues/7383))
+- `[Popupmenu]` Fix on popupmenu arrow not appearing when showArrow is true. ([#5061](https://github.com/infor-design/enterprise/issues/5061))
 - `[Searchfield]` Fixed on misalignment in searchfield clear icon. ([#7382](https://github.com/infor-design/enterprise/issues/7382))
 - `[Searchfield]` Fixed searchfield icon adjustments. ([#7387](https://github.com/infor-design/enterprise/issues/7387))
 - `[SearchField]` Fixed undefined error on `toolbarFlexItem`. ([#7402](https://github.com/infor-design/enterprise/issues/7402))
