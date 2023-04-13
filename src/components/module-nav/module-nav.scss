@@ -42,7 +42,7 @@
   &.mode-collapsed,
   &.mode-expanded {
     .module-nav-bar {
-      z-index: 1;
+      z-index: $module-nav-z-index;
     }
 
     &:not(.show-detail) {
@@ -58,6 +58,7 @@
 
       .module-nav-detail {
         width: $module-nav-submenu-size;
+        z-index: $module-nav-z-index;
       }
     }
   }
