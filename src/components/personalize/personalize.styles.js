@@ -914,18 +914,9 @@ html[class*="theme-new-"] .application-menu.is-personalizable .hyperlink:focus:n
   box-shadow: none !important;
 }
 
-html[class*="theme-new-"] .application-menu.is-personalizable .searchfield-wrapper .searchfield {
-  color: ${colors.contrast} !important;
-}
-
 .application-menu.is-personalizable .accordion-header.has-filtered-children > a,
 .application-menu.is-personalizable .accordion.panel .accordion-header.has-filtered-children.is-focused {
   color: ${colors.contrast} !important;
-}
-
-.application-menu.is-personalizable .searchfield-wrapper.active .icon {
-  color: ${colors.contrast};
-  opacity: 1;
 }
 
 html[dir='rtl'] .application-menu.is-personalizable {
