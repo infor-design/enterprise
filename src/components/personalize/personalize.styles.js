@@ -222,14 +222,14 @@ a.btn-close.is-personalizable:focus:not(.hide-focus) {
 
 .is-personalizable .btn-menu:not(.btn-primary):not(.btn-secondary).is-open,
 .btn-menu:not(.btn-primary):not(.btn-secondary).is-personalizable.is-open,
-.is-personalizable .btn-actions:not(.btn-primary):not(.btn-secondary).is-open,
+.is-personalizable:not(.application-menu) .btn-actions:not(.btn-primary):not(.btn-secondary).is-open,
 .btn-actions:not(.btn-primary):not(.btn-secondary).is-personalizable.is-open {
   color: ${colors.base};
 }
 
 .is-personalizable .btn-menu:not(.btn-primary):not(.btn-secondary).is-open .icon,
 .btn-menu:not(.btn-primary):not(.btn-secondary).is-personalizable.is-open .icon,
-.is-personalizable .btn-actions:not(.btn-primary):not(.btn-secondary).is-open .icon,
+.is-personalizable:not(.application-menu) .btn-actions:not(.btn-primary):not(.btn-secondary).is-open .icon,
 .btn-actions:not(.btn-primary):not(.btn-secondary).is-personalizable.is-open .icon {
   color: ${colors.base};
 }
@@ -881,11 +881,6 @@ html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::af
   stroke: ${colors.lighter};
 }
 
-html[class*="theme-new-"] .application-menu.is-personalizable button span,
-html[class*="theme-new-"] .application-menu.is-personalizable .hyperlink {
-  color: ${colors.contrast} !important;
-}
-
 html[class*="-dark"] .is-personalizable .btn-tertiary:not(:disabled):hover,
 html[class*="-dark"] .is-personalizable .btn-link:not(:disabled):hover,
 html[class*="-dark"] .is-personalizable:not(.header) .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
@@ -897,25 +892,6 @@ html[class*="-dark"] .is-personalizable:not(.header) .btn-tertiary:not(.destruct
   border-bottom: 4px solid ${colors.contrast};
   background-color: ${colors.darker};
   color: ${colors.contrast} !important;
-}
-
-html[class*="theme-new-"] .application-menu.is-personalizable button:not(:disabled):hover .icon,
-html[class*="theme-new-"] .application-menu.is-personalizable button:not(:disabled):hover span,
-html[class*="theme-new-"] .application-menu.is-personalizable .hyperlink:hover {
-  color: ${colors.contrast};
-  opacity: 1;
-}
-
-html[class*="theme-new-"] .application-menu.is-personalizable .name-xl,
-html[class*="theme-new-"] .application-menu.is-personalizable .name,
-html[class*="theme-new-"] .application-menu.is-personalizable .accordion-heading {
-  color: ${colors.contrast};
-}
-
-.application-menu.is-personalizable .btn-icon:focus:not(.hide-focus) {
-  box-shadow: 0 0 0 2px transparent,
-    0 0 0 1px ${colors.lighter},
-    0 0 2px 1px ${colors.lighter};
 }
 
 .application-menu.is-personalizable .accordion.panel .accordion-header.is-selected button .icon.plus-minus::before,
@@ -938,11 +914,6 @@ html[class*="theme-new-"] .application-menu.is-personalizable .hyperlink:focus:n
   box-shadow: none !important;
 }
 
-html[class*="theme-new-"] .application-menu .application-menu-header button:hover,
-html[class*="theme-new-"] .application-menu .application-menu-footer button:hover {
-  background-color: ${colors.base} !important;
-}
-
 html[class*="theme-new-"] .application-menu.is-personalizable .searchfield-wrapper .searchfield {
   color: ${colors.contrast} !important;
 }
@@ -952,39 +923,9 @@ html[class*="theme-new-"] .application-menu.is-personalizable .searchfield-wrapp
   color: ${colors.contrast} !important;
 }
 
-.application-menu.is-personalizable .searchfield-wrapper .searchfield::placeholder {
-  color: ${colors.contrast};
-  opacity: .5;
-}
-
-.application-menu.is-personalizable .searchfield-wrapper .icon {
-  color: ${colors.contrast};
-  opacity: .8;
-}
-
 .application-menu.is-personalizable .searchfield-wrapper.active .icon {
   color: ${colors.contrast};
   opacity: 1;
-}
-
-.application-menu.is-personalizable .application-menu-switcher-panel,
-.application-menu.is-personalizable .application-menu-switcher-panel .accordion.panel,
-.application-menu.is-personalizable .application-menu-switcher-panel .accordion.panel .accordion-header {
-  background-color: ${colors.base} !important;
-  border-top-color: transparent;
-}
-
-.application-menu.is-personalizable .application-menu-switcher-panel .accordion.panel .accordion-header:hover {
-  background-color: ${colors.darkest} !important;
-}
-
-.application-menu.is-personalizable .application-menu-switcher-panel .accordion-heading {
-  border-top-color: ${colors.darkest};
-}
-
-.application-menu.is-personalizable .searchfield-wrapper {
-  background-color: ${colors.base};
-  border-bottom: none !important;
 }
 
 html[dir='rtl'] .application-menu.is-personalizable {
@@ -994,20 +935,6 @@ html[dir='rtl'] .application-menu.is-personalizable {
 
 html[class*="theme-new-"] .application-menu.is-personalizable button svg.ripple-effect {
   background-color: ${colors.contrast} !important;
-}
-
-html[class*="theme-new-"] .application-menu.is-personalizable .application-menu-header {
-  background-color: ${colors.lighter};
-  border-bottom-color: ${colors.light};
-}
-
-html[class*="theme-new-"] .application-menu.is-personalizable .application-menu-footer {
-  background-color: ${colors.lighter};
-  border-top-color: ${colors.light};
-}
-
-html[class*="theme-new-"] .application-menu.is-personalizable .searchfield-wrapper {
-  background-color: ${colors.dark};
 }
 
 html[class*="theme-new"] .application-menu.is-personalizable .accordion.panel.inverse > .accordion-header.is-focused:not(.hide-focus):not(.is-expanded) {

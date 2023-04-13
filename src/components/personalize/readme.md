@@ -68,7 +68,6 @@ Only a subset of components support personalization:
 - [Accordion]( ./accordion) - The selection states.
 - Builder Pattern - The headers and subheaders.
 - [Hero Widget]( ./homepage) - Gets a contrasting back color.
-- [Application Menu]( ./applicationmenu) - Gets contrasting back colors for the sections and all elements in it are reflected.
 
 ## Personalize Classes
 
