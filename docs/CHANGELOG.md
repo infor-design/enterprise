@@ -1,5 +1,13 @@
 # What's New with Enterprise
 
+## v4.83.0
+
+## v4.83.0 Features
+
+## v4.83.0 Fixes
+
+- `[Builder]` Fixed subtitle text not shown properly. ([#7207](https://github.com/infor-design/enterprise/issues/7207))
+
 ## v4.82.0
 
 ## v4.82.0 Features
