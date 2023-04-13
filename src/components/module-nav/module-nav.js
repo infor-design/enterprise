@@ -43,13 +43,26 @@ ModuleNav.prototype = {
    */
   build() {
     // Refs
-    this.containerEl = $(this.element).parent('.module-nav-container');
-    this.detailViewEl = $(this.element).find('.module-nav-detail');
+    this.renderChildComponents();
 
     // Configure
     if (this.settings.displayMode) this.setDisplayMode(this.settings.displayMode);
     this.setShowDetailView(this.settings.showDetailView);
     return this;
+  },
+
+  /**
+   * @private
+   */
+  renderChildComponents() {
+    // Containers
+    this.containerEl = $(this.element).parent('.module-nav-container')[0];
+    this.detailViewEl = this.element[0].querySelector('.module-nav-detail');
+
+    // Sections
+    this.switcherEl = this.element[0].querySelector('.module-nav-switcher');
+    this.itemMenuEl = this.element[0].querySelector('.module-nav-main');
+    this.footerEl = this.element[0].querySelector('.module-nav-footer');
   },
 
   /**
@@ -73,7 +86,7 @@ ModuleNav.prototype = {
    * @returns {void}
    */
   setDisplayMode(val) {
-    setDisplayMode(val, this.containerEl[0]);
+    setDisplayMode(val, this.containerEl);
   },
 
   /**
@@ -82,8 +95,8 @@ ModuleNav.prototype = {
    * @returns {void}
    */
   setShowDetailView(val) {
-    this.containerEl[0].classList[val ? 'add' : 'remove']('show-detail');
-    this.detailViewEl[0].classList[val ? 'add' : 'remove']('visible');
+    this.containerEl.classList[val ? 'add' : 'remove']('show-detail');
+    this.detailViewEl.classList[val ? 'add' : 'remove']('visible');
   },
 
   /**

@@ -6,17 +6,19 @@
 .module-nav-switcher {
   @include nav-item-style;
 
-  gap: ($module-nav-gutter-size * 2);
+  gap: $module-nav-switcher-button-gutter-size;
   justify-content: center;
   padding-block: $module-nav-item-padding-size;
   padding-inline: ($module-nav-item-padding-size / 2);
 }
 
-.section {
-  align-content: center;
+.module-nav-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.section.role-dropdown {
+.module-nav-section.role-dropdown {
   display: none;
 
   // IDS Dropdown
@@ -41,5 +43,17 @@
 .module-nav-container.mode-expanded {
   .section.role-dropdown {
     display: block;
+  }
+}
+
+// Reset location of icon in Module Switcher button (user defined?)
+.module-nav-section.module-btn {
+  .btn-icon {
+    // Reset size
+    font-size: 0;
+    height: $module-nav-switcher-button-size;
+    min-height: 0;
+    min-width: 0;
+    width: $module-nav-switcher-button-size;
   }
 }

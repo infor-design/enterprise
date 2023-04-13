@@ -35,14 +35,14 @@ const SWITCHER_ICON_HTML = `
 </svg>
 `;
 
-const buttonTemplate = () => `<div class="section module-btn">
+const buttonTemplate = () => `<div class="module-nav-section module-btn">
   <button id="module-nav-homepage-btn" class="btn-icon btn-tertiary">
     ${SWITCHER_ICON_HTML}
     <span>${Locale ? Locale.translate('ModuleSwitch') : 'Switch Modules'}</span>
   </button>
 </div>`;
 
-const dropdownTemplate = () => `<div class="section role-dropdown">
+const dropdownTemplate = () => `<div class="module-nav-section role-dropdown">
   <label for="module-nav-role-switcher" class="label audible">Roles</label>
   <select id="module-nav-role-switcher" name="module-nav-role-switcher" class="dropdown" data-automation-id="custom-automation-dropdown-id" >
     <option value="admin">Admin</option>
@@ -115,14 +115,14 @@ ModuleNavSwitcher.prototype = {
     this.moduleButtonEl = this.element[0].querySelector('.btn');
     if (!this.moduleButton) {
       this.element[0].insertAdjacentHTML('afterbegin', buttonTemplate());
-      this.moduleButtonContainer = this.element[0].querySelector('.section-module-btn');
+      this.moduleButtonContainer = this.element[0].querySelector('.module-nav-section.module-btn');
       this.moduleButton = this.element[0].querySelector('.btn');
     }
 
     this.roleDropdown = this.element[0].querySelector('.module-role-dropdown');
     if (!this.roleDropdown) {
       this.element[0].insertAdjacentHTML('beforeend', dropdownTemplate());
-      this.roleDropdown = this.element[0].querySelector('.section-role-dropdown');
+      this.roleDropdown = this.element[0].querySelector('.module-nav-section.role-dropdown');
     }
   },
 

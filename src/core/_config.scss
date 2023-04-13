@@ -708,16 +708,18 @@ $application-menu-searchfield-icon-active-color: $ids-color-palette-white;
 $application-menu-searchfield-text-active-color: $ids-color-palette-white;
 
 // Module Nav (App menu alternative)
-$module-nav-bg-color: #f7f7f7; // $ids-color-palette-white;
+$module-nav-bg-color: $ids-color-palette-slate-10;
 $module-nav-border-color: transparent; // $ids-color-palette-slate-20;
 $module-nav-text-color: $ids-color-palette-slate-60;
-$module-nav-detail-bg-color: $ids-color-palette-slate-10;
+$module-nav-detail-bg-color: $ids-color-palette-slate-20;
 $module-nav-collapsed-size: 56px;
 $module-nav-expanded-size: 360px;
 $module-nav-submenu-size: 300px;
 $module-nav-item-padding-size: 13px;
 $module-nav-item-text-icon-spacing: 16px;
 $module-nav-gutter-size: 4px;
+$module-nav-switcher-button-size: 40px;
+$module-nav-switcher-button-gutter-size: 8px;
 
 // Contextual Action Panel
 $contextual-panel-bg: $ids-color-palette-graphite-20;
