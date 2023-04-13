@@ -80,6 +80,11 @@
       margin-inline: $module-nav-item-margin-inline;
       padding-block: $module-nav-item-padding-size;
 
+      > .icon {
+        margin-block: auto;
+        margin-inline: 0;
+      }
+
       // Can't use `audible` here, need to retain line height
       span {
         clip: rect(0, 0, 0, 0);
@@ -108,9 +113,10 @@
     .module-nav-item {
       margin-inline: $module-nav-item-margin-inline;
       padding: $module-nav-item-padding-size;
+      padding-inline-start: $module-nav-item-margin-inline;
 
-      .icon {
-        margin-inline-end: $module-nav-item-text-icon-spacing;
+      > .icon {
+        margin-inline-end: $module-nav-item-icon-end-spacing;
       }
     }
 
@@ -178,14 +184,4 @@
 
   display: block;
   position: relative;
-
-  /*
-  &::before {
-    content: ' ';
-    display: block;
-    position: absolute;
-    height: 1px;
-    width: 100%;
-  }
-  */
 }

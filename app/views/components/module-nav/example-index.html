@@ -9,6 +9,30 @@
     <div class="module-nav-bar">
       <div class="module-nav-switcher"></div>
       <div class="module-nav-main">
+        <div class="module-nav-accordion accordion panel" data-options="{'allowOnePane': true}">
+          <div class="accordion-header is-selected">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-url"></use>
+            </svg>
+            <a href="#" id="item-one" data-automation-id="appmenu-a-item-one"><span>Label One</span></a>
+          </div>
+
+          <div class="accordion-header">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-url"></use>
+            </svg>
+            <a href="#" id="item-two" data-automation-id="appmenu-a-item-two"><span>Label Two</span></a>
+          </div>
+
+          <div class="accordion-header">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-url"></use>
+            </svg>
+            <a href="#" id="item-three" data-automation-id="appmenu-a-item-three"><span>Label Three</span></a>
+          </div>
+        </div>
+
+        <!--
         <div class="module-nav-item">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use href="#icon-url"></use>
@@ -39,8 +63,33 @@
           </svg>
           <span>Label</span>
         </div>
+        -->
       </div>
       <div class="module-nav-footer">
+        <div class="module-nav-accordion accordion panel" data-options="{'allowOnePane': true}">
+          <div class="accordion-header is-selected">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-report"></use>
+            </svg>
+            <a href="#" id="module-nav-item-reports" data-automation-id="module-nav-reports"><span>Reports</span></a>
+          </div>
+
+          <div class="accordion-header">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-notification"></use>
+            </svg>
+            <a href="#" id="module-nav-item-notifications" data-automation-id="module-nav-notifications"><span>Notification</span></a>
+          </div>
+
+          <div class="accordion-header">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-settings"></use>
+            </svg>
+            <a href="#" id="module-nav-item-settings" data-automation-id="module-nav-settings"><span>Settings</span></a>
+          </div>
+        </div>
+
+        <!--
         <div class="module-nav-item">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use href="#icon-report"></use>
@@ -59,6 +108,7 @@
           </svg>
           <span>Settings</span>
         </div>
+        -->
       </div>
     </div>
     <div class="module-nav-detail">&nbsp;</div>

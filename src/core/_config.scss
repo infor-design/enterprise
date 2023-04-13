@@ -718,11 +718,15 @@ $module-nav-expanded-size: 360px;
 $module-nav-submenu-size: 300px;
 $module-nav-item-padding-size: 13px;
 $module-nav-item-margin-inline: 8px;
-$module-nav-item-text-icon-spacing: 16px;
+$module-nav-item-selected-bg-color: $ids-color-palette-azure-10;
+$module-nav-item-selected-text-color: $ids-color-palette-azure-60;
+$module-nav-item-icon-start-spacing: 10px;
+$module-nav-item-icon-end-spacing: 20px;
 $module-nav-separator-color: $ids-color-palette-slate-20;
 $module-nav-gutter-size: 4px;
 $module-nav-switcher-button-size: 40px;
 $module-nav-switcher-button-gutter-size: 8px;
+$module-nav-accordion-gutter-size: 8px;
 $module-nav-footer-gutter-size: 12px;
 
 // Contextual Action Panel

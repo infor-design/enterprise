@@ -1,0 +1,81 @@
+@import './module-nav.common.scss';
+
+// Module Nav Accordion Component
+//================================================== //
+
+.accordion.panel.module-nav-accordion {
+  background-color: transparent;
+  border: 0;
+  margin: $module-nav-accordion-gutter-size;
+
+  // Module Nav Accordion Header Component
+  //================================================== //
+
+  .accordion-header {
+    border-color: transparent;
+    border-radius: $module-nav-gutter-size;
+    border-style: solid;
+    border-width: 1px;
+    margin-block-end: $module-nav-accordion-gutter-size;
+
+    > a,
+    > .icon {
+      color: inherit;
+    }
+
+    &.is-focused {
+      border-color: $module-nav-item-selected-text-color;
+
+      > a,
+      > .icon {
+        color: inherit;
+      }
+    }
+
+    &.is-selected {
+      background-color: $module-nav-item-selected-bg-color;
+      border-color: $module-nav-item-selected-text-color;
+      color: $module-nav-item-selected-text-color;
+      font-weight: bold;
+
+      > a,
+      > .icon {
+        color: inherit;
+      }
+    }
+  }
+}
+
+// Module Nav Accordion Component (Collapsed Mode)
+//================================================== //
+
+.module-nav-container {
+  &.mode-collapsed {
+    .accordion-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: static;
+
+      > .icon {
+        position: static;
+        margin: 0;
+        top: auto;
+      }
+    }
+  }
+}
+
+// Module Nav Accordion Component (Expanded Mode)
+//================================================== //
+
+.module-nav-container {
+  &.mode-expanded {
+    .accordion-header {
+      > .icon {
+        margin-inline-end: $module-nav-item-icon-end-spacing;
+        margin-inline-start: $module-nav-item-icon-start-spacing;
+      }
+    }
+  }
+}
