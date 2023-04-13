@@ -1,5 +1,13 @@
 # What's New with Enterprise
 
+## v4.83.0
+
+## v4.83.0 Features
+
+## v4.83.0 Fixes
+
+- `[Searchfield]` Fixed collapsible issues with search icon color and behaviour. ([#7390](https://github.com/infor-design/enterprise/issues/7390))
+
 ## v4.82.0
 
 ## v4.82.0 Features
