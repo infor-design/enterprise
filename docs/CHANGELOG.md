@@ -1,5 +1,13 @@
 # What's New with Enterprise
 
+## v4.83.0
+
+## v4.83.0 Features
+
+## v4.83.0 Fixes
+
+- `[Toolbar-Flex]` Fixed redundant aria-disabled in toolbar when element is disabled. ([#6339](https://github.com/infor-design/enterprise/issues/6339))
+
 ## v4.82.0
 
 ## v4.82.0 Features
