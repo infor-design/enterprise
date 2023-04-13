@@ -546,7 +546,8 @@ html[class*="theme-new-"] .personalize-header.tab-container.header-tabs:not(.alt
   background-color: ${colors.contrast} !important;
 }
 
-.header.is-personalizable .toolbar-searchfield-wrapper:not(.non-collapsible):not(.is-open) .icon:not(.close),
+.header.is-personalizable .buttonset .toolbar-searchfield-wrapper:not(.is-open) svg.icon:not(.close),
+.header.is-personalizable .toolbar-searchfield-wrapper:not(.is-open) .icon:not(.close),
 .header .toolbar-searchfield-wrapper .searchfield,
 .masthead .toolbar-searchfield-wrapper .searchfield,
 .header.is-personalizable .toolbar [class^='btn']:focus .icon {
