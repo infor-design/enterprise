@@ -7,6 +7,7 @@
 ## v4.83.0 Fixes
 
 - `[Builder]` Fixed subtitle text not shown properly. ([#7207](https://github.com/infor-design/enterprise/issues/7207))
+- `[Toolbar-Flex]` Fixed redundant aria-disabled in toolbar when element is disabled. ([#6339](https://github.com/infor-design/enterprise/issues/6339))
 
 ## v4.82.0
 
