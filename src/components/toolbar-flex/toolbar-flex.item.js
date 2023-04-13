@@ -314,13 +314,11 @@ ToolbarFlexItem.prototype = {
   set disabled(boolean) {
     if (boolean) {
       this.element.disabled = true;
-      this.element.setAttribute('aria-disabled', true);
       this.element.readOnly = false;
       return;
     }
 
     this.element.disabled = false;
-    this.element.removeAttribute('aria-disabled');
   },
 
   /**
