@@ -28,6 +28,18 @@
   }
 }
 
+// Reset location of icon in Module Switcher button (user defined?)
+.module-nav-section.module-btn {
+  .btn-icon {
+    // Reset size
+    font-size: 0;
+    height: $module-nav-switcher-button-size;
+    min-height: 0;
+    min-width: 0;
+    width: $module-nav-switcher-button-size;
+  }
+}
+
 // =====================================================
 // Display Mode: Collapsed
 
@@ -41,19 +53,7 @@
 // Display Mode: Expanded
 
 .module-nav-container.mode-expanded {
-  .section.role-dropdown {
+  .module-nav-section.role-dropdown {
     display: block;
-  }
-}
-
-// Reset location of icon in Module Switcher button (user defined?)
-.module-nav-section.module-btn {
-  .btn-icon {
-    // Reset size
-    font-size: 0;
-    height: $module-nav-switcher-button-size;
-    min-height: 0;
-    min-width: 0;
-    width: $module-nav-switcher-button-size;
   }
 }

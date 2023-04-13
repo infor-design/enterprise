@@ -30,6 +30,10 @@
     .module-nav-detail {
       display: none;
     }
+
+    .module-nav-footer {
+      display: none;
+    }
   }
 
   // =====================================================
@@ -74,6 +78,7 @@
 
     .module-nav-item {
       justify-content: center;
+      margin-inline: $module-nav-item-margin-inline;
       padding-block: $module-nav-item-padding-size;
 
       // Can't use `audible` here, need to retain line height
@@ -102,6 +107,7 @@
     }
 
     .module-nav-item {
+      margin-inline: $module-nav-item-margin-inline;
       padding: $module-nav-item-padding-size;
 
       .icon {
@@ -112,14 +118,6 @@
     .page-container {
       margin-inline-start: ($module-nav-submenu-size * -1);
     }
-
-    /*
-    &:not(.show-detail) {
-      .module-nav-bar {
-        @include drawer-box-shadow;
-      }
-    }
-    */
 
     &.show-detail {
       .module-nav-detail {
@@ -146,14 +144,16 @@
   background-color: $module-nav-bg-color;
   color: $module-nav-text-color;
   height: 100%;
-  padding: 8px;
-  gap: 8px;
 }
 
 .module-nav-detail {
   background-color: $module-nav-detail-bg-color;
   border-inline-end: 1px solid $module-nav-border-color;
   height: 100%;
+}
+
+.module-nav-main {
+  flex-grow: 1;
 }
 
 .module-nav-item {
@@ -170,4 +170,23 @@
   &:hover {
     @include nav-item-box-shadow;
   }
+}
+
+.module-nav-footer {
+  border-top: 1px solid $module-nav-separator-color;
+  margin-block-start: $module-nav-footer-gutter-size;
+  padding-block-start: $module-nav-footer-gutter-size;
+
+  display: block;
+  position: relative;
+
+  /*
+  &::before {
+    content: ' ';
+    display: block;
+    position: absolute;
+    height: 1px;
+    width: 100%;
+  }
+  */
 }
