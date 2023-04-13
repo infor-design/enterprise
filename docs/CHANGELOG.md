@@ -1,5 +1,13 @@
 # What's New with Enterprise
 
+## v4.83.0
+
+## v4.83.0 Features
+
+## v4.83.0 Fixes
+
+- `[Header]` Fixed header components not aligned and visibly shown properly. ([#7209](https://github.com/infor-design/enterprise/issues/7209))
+
 ## v4.82.0
 
 ## v4.82.0 Features
