@@ -205,7 +205,7 @@ PopupMenu.prototype = {
   },
 
   /**
-   * Add markip including Aria
+   * Add markup including Aria
    * @private
    * @returns {void}
    */
@@ -724,7 +724,7 @@ PopupMenu.prototype = {
         }
 
         // disabled menu items, by prop and by className
-        if ($li.hasClass('is-disabled') || (a.getAttribute('disabled') === 'true' || a.getAttribute('disabled') === 'disabled')) {
+        if ($li.hasClass('is-disabled')) {
           $li.addClass('is-disabled');
           a.setAttribute('aria-disabled', 'true');
           a.setAttribute('disabled', true);
