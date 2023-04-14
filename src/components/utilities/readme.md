@@ -1,5 +1,5 @@
 ---
-title: Utilities
+title: CSS Utilities
 description: null
 demo:
   embedded:
