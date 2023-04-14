@@ -660,13 +660,6 @@ a.btn-close {
   }
 }
 
-.btn-icon.personalize-actionable {
-  &[disabled],
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.3);
-  }
-}
-
 .btn,
 .btn-primary,
 .btn-secondary,
