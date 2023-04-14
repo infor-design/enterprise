@@ -89,6 +89,14 @@
     vertical-align: top;
   }
 
+  h2 {
+    top: -1px;
+
+    .panel-subhead {
+      height: 20px;
+    }
+  }
+
   .panel-subhead {
     margin-top: 3px;
     overflow: hidden;

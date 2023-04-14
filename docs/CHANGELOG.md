@@ -6,6 +6,7 @@
 
 ## v4.83.0 Fixes
 
+- `[Builder]` Fixed subtitle text not shown properly. ([#7207](https://github.com/infor-design/enterprise/issues/7207))
 - `[Toolbar-Flex]` Fixed redundant aria-disabled in toolbar when element is disabled. ([#6339](https://github.com/infor-design/enterprise/issues/6339))
 - `[Toolbar Flex]` Fixed buttons being not visible on window resize. ([#7421](https://github.com/infor-design/enterprise/issues/7421))
 - `[Popupmenu]` Fix on popupmenu arrow not appearing when showArrow is true. ([#5061](https://github.com/infor-design/enterprise/issues/5061))
