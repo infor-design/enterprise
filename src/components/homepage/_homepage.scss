@@ -363,6 +363,7 @@
     }
 
     .btn-tertiary,
+    .btn-tertiary:hover:not(:disabled):not(.close):not(.btn-filter):not(.personalize-actionable),
     .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary).is-open span,
     .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary) {
       color: $header-button-color;

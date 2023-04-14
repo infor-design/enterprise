@@ -1375,6 +1375,10 @@ html[class*="-dark"] .is-personalizable .subheader h2 {
   box-shadow: ${colors.focusBoxShadow};
 }
 
+html.theme-new-dark .hero-widget.is-personalizable .hero-header .title {
+  color: #fff !important;
+}
+
 .subheader.is-personalizable .toolbar [class^='btn']:focus:not(.hide-focus),
 .subheader.is-personalizable .flex-toolbar [class^='btn']:focus:not(.hide-focus) {
   box-shadow: ${colors.focusBoxShadow};
