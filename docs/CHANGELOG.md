@@ -2,7 +2,7 @@
 
 ## v.4.83.0
 
-## Features
+## v4.83.0 Features
 
 - `[Utilities]` Added CSS utility classes to the library to provide a standardized and efficient way of achieving consistent styling. ([#7377](https://github.com/infor-design/enterprise/issues/7377))
 
