@@ -6,6 +6,7 @@
 
 ## v4.83.0 Fixes
 
+- `[Popupmenu]` Fixed popupmenu previous states not getting saved when called resize and update. ([#6601](https://github.com/infor-design/enterprise/issues/6601))
 - `[Toolbar-Flex]` Fixed redundant aria-disabled in toolbar when element is disabled. ([#6339](https://github.com/infor-design/enterprise/issues/6339))
 
 ## v4.82.0
