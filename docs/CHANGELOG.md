@@ -6,8 +6,10 @@
 
 ## v4.83.0 Fixes
 
+- `[Builder]` Fixed subtitle text not shown properly. ([#7207](https://github.com/infor-design/enterprise/issues/7207))
 - `[Monthview]` Fix on updated method creating duplicates. ([NG#1446](https://github.com/infor-design/enterprise-ng/issues/1446))
 - `[Toolbar-Flex]` Fixed redundant aria-disabled in toolbar when element is disabled. ([#6339](https://github.com/infor-design/enterprise/issues/6339))
+- `[Popupmenu]` Fix on popupmenu arrow not appearing when showArrow is true. ([#5061](https://github.com/infor-design/enterprise/issues/5061))
 
 ## v4.82.0
 
