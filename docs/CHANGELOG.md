@@ -5,6 +5,11 @@
 ## v4.83.0 Fixes
 
 - `[Popupmenu]` Fix on popupmenu arrow not appearing when showArrow is true. ([#5061](https://github.com/infor-design/enterprise/issues/5061))
+## v4.83.0 Features
+
+## v4.83.0 Fixes
+
+- `[Toolbar-Flex]` Fixed redundant aria-disabled in toolbar when element is disabled. ([#6339](https://github.com/infor-design/enterprise/issues/6339))
 
 ## v4.82.0
 
