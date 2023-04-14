@@ -6,6 +6,7 @@
 
 ## v4.83.0 Fixes
 
+- `[Monthview]` Fix on updated method creating duplicates. ([NG#1446](https://github.com/infor-design/enterprise-ng/issues/1446))
 - `[Toolbar-Flex]` Fixed redundant aria-disabled in toolbar when element is disabled. ([#6339](https://github.com/infor-design/enterprise/issues/6339))
 
 ## v4.82.0
