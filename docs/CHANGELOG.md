@@ -8,7 +8,10 @@
 
 ## v4.83.0 Fixes
 
+- `[Builder]` Fixed subtitle text not shown properly. ([#7207](https://github.com/infor-design/enterprise/issues/7207))
 - `[EmptyMessage]` Improved centering of widget and homepage contents for various widget sizes to enhance the overall user experience. ([#7360](https://github.com/infor-design/enterprise/issues/7360))
+- `[Icons]` Icons updated for 44 icons, added new `success-message` empty state and two new icons `vertical-ellipsis` and `microphone-filled`. ([#7394](https://github.com/infor-design/enterprise/issues/7394))
+- `[Popupmenu]` Fix on popupmenu arrow not appearing when showArrow is true. ([#5061](https://github.com/infor-design/enterprise/issues/5061))
 - `[Toolbar-Flex]` Fixed redundant aria-disabled in toolbar when element is disabled. ([#6339](https://github.com/infor-design/enterprise/issues/6339))
 
 ## v4.82.0
