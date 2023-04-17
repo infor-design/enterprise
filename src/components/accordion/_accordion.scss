@@ -154,11 +154,11 @@
         color: $accordion-selected-text-color;
 
         > a {
-          color: $accordion-selected-text-color;
+          color: inherit;
         }
 
         > .icon {
-          color: $accordion-selected-text-color;
+          color: inherit;
 
           .chevron {
             top: -1px;
@@ -167,7 +167,7 @@
 
         > [class^='btn'] {
           .icon {
-            color: $accordion-selected-text-color;
+            color: inherit;
 
             &.plus-minus {
               &::before,
@@ -178,7 +178,7 @@
           }
 
           .audible {
-            color: $ids-color-palette-white;
+            color: inherit;
           }
         }
 
@@ -255,7 +255,10 @@
         + .accordion-content {
           border-top-color: $accordion-alternate-border-color;
 
-          &.is-focused,
+          &.is-focused:not(.hide-focus) {
+            border-top-color: $accordion-selected-bg-color;
+          }
+
           &.is-selected {
             border-top-color: transparent;
           }
