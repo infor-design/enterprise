@@ -30,14 +30,6 @@ $responsive-searchfield-filled-out-width: 34px;
 
 .flex-toolbar {
   .toolbar-searchfield-wrapper {
-    &.non-collapsible.has-close-icon-button {
-      .btn-icon.close {
-        .icon.close {
-          top: 8px;
-        }
-      }
-    }
-
     @media (max-width: $breakpoint-phone-to-tablet) {
       &:not(.is-open) {
         .searchfield-category-button {

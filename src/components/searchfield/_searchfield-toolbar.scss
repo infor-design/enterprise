@@ -276,10 +276,6 @@ $toolbarsearchfield-category-empty-width: 51px;
     .btn {
       background-color: rgba($searchfield-bg-color, 1);
       height: 38px;
-
-      &:not(.searchfield-category-button) {
-        border-bottom-color: rgba($searchfield-border-color, 1);
-      }
     }
 
     &.has-categories .searchfield {
