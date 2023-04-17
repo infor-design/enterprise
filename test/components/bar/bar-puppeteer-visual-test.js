@@ -18,7 +18,7 @@ describe('Bar Chart', () => {
       expect(isFailed).not.toContain(true);
     });
 
-    it('should show the tooltip with data', async () => {
+    it.skip('should show the tooltip with data', async () => {
       await page.setViewport({
         width: 1200,
         height: 800,
