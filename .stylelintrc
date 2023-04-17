@@ -25,6 +25,7 @@
     "color-no-invalid-hex": true,
     "color-function-notation": null,
     "selector-not-notation": null,
+    "media-feature-range-notation": null,
     "comment-empty-line-before": [
       "always",
       {
