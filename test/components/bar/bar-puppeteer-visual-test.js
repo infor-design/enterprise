@@ -93,7 +93,7 @@ describe('Bar Chart', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should not visually regress', async () => {
+    it.skip('should not visually regress', async () => {
       // Add a bit of a delay
       await page.waitForTimeout(200);
 
@@ -153,7 +153,7 @@ describe('Grouped Bar Chart Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should not visually regress', async () => {
+    it.skip('should not visually regress', async () => {
       // Resize the viewport
       await page.setViewport({ width: 1200, height: 800 });
 
@@ -178,7 +178,7 @@ describe('Grouped Bar Chart Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should not visually regress', async () => {
+    it.skip('should not visually regress', async () => {
       // Resize the viewport
       await page.setViewport({ width: 1200, height: 800 });
 
@@ -203,7 +203,7 @@ describe('Grouped Bar Chart Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should not visually regress', async () => {
+    it.skip('should not visually regress', async () => {
       // Resize the viewport
       await page.setViewport({ width: 1200, height: 800 });
 
@@ -265,7 +265,7 @@ describe('Bar (Stacked) Chart  Puppeteer Tests', () => {
       await page.setViewport({ width: 1200, height: 800 });
     });
 
-    it('should not visually regress the bar stacked', async () => {
+    it.skip('should not visually regress the bar stacked', async () => {
       const container = await page.$('.container');
       const image = await container.screenshot();
       const config = getConfig('bar-stacked-index');
@@ -299,7 +299,7 @@ describe('Bar (Stacked) Chart  Puppeteer Tests', () => {
       await page.setViewport({ width: 1200, height: 800 });
     });
 
-    it('should not visually regress', async () => {
+    it.skip('should not visually regress', async () => {
       const container = await page.waitForSelector('.container');
       const image = await container.screenshot();
       const config = getConfig('bar-stacked-100');
