@@ -411,6 +411,14 @@ $subheader-height: 60px;
           border-color: $header-searchfield-input-border-color;
         }
       }
+
+      &.non-collapsible.has-close-icon-button {
+        .btn-icon.close {
+          .icon.close {
+            top: 8px;
+          }
+        }
+      }
     }
   }
 
