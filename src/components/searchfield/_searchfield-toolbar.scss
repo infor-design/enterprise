@@ -143,10 +143,6 @@ $toolbarsearchfield-category-empty-width: 51px;
     }
 
     &:not(.close) {
-      @include transition(height 300ms $cubic-ease,
-      top 300ms $cubic-ease,
-      left 300ms $cubic-ease);
-
       height: 18px;
       top: 0;
       transform: translateY(50%);
