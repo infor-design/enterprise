@@ -484,6 +484,10 @@
           outline: 1px solid $header-breadcrumb-alt-color;
         }
 
+        &:focus:not([disabled]) {
+          border: 1px solid $header-breadcrumb-alt-color;
+        }
+
         &:hover:not([disabled]) {
           border-bottom: 1px solid $header-breadcrumb-alt-color;
         }
