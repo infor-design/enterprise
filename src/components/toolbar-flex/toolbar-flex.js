@@ -497,11 +497,17 @@ ToolbarFlex.prototype = {
     overflowedItems.addClass('is-overflowed');
 
     for (let i = 0; i < visibleItems.length; i++) {
-      $(visibleItems[i]).data('action-button-link').parent()[0].classList.add('hidden');
+      const actionButtonLinkData = $(visibleItems[i]).data('action-button-link');
+      if (actionButtonLinkData) {
+        actionButtonLinkData.parent()[0].classList.add('hidden');
+      }
     }
 
     for (let i = 0; i < overflowedItems.length; i++) {
-      $(overflowedItems[i]).data('action-button-link').parent()[0].classList.remove('hidden');
+      const actionButtonLinkData = $(overflowedItems[i]).data('action-button-link');
+      if (actionButtonLinkData) {
+        actionButtonLinkData.parent()[0].classList.remove('hidden');
+      }
     }
 
     if (overflowedItems.length > 0) {
