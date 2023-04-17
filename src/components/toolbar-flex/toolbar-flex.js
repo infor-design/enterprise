@@ -466,7 +466,6 @@ ToolbarFlex.prototype = {
    * Renders the buttons based on the width of the current buttonset
    */
   renderButtonSet() {
-    console.log('renderButtonSet', this.jQueryEl.hasClass('contextual-toolbar'));
     if (!this.jQueryEl.hasClass('contextual-toolbar')) return;
 
     function isItemOverflowed(item) {
