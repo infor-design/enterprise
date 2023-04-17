@@ -419,18 +419,18 @@
 
       &:hover:not([disabled]) {
         border-bottom: 1px solid $header-breadcrumb-color;
-        color: $header-breadcrumb-alt-bg-color;
+        color: $header-breadcrumb-color;
       }
 
       &:focus:not([disabled]) {
         border-radius: 8px;
-        border: 1px solid $header-breadcrumb-alt-bg-color;
+        border: 1px solid $header-breadcrumb-color;
       }
 
       &:focus:not([disabled]):not(.hide-focus) {
         border-color: transparent;
         box-shadow: none;
-        outline: 1px solid $header-breadcrumb-alt-bg-color;
+        outline: 1px solid $header-breadcrumb-color;
       }
     }
 
@@ -564,7 +564,7 @@
   }
 }
 
-.header + .page-container .scrollable-flex-header .breadcrumb {
+.header + .page-container .scrollable-flex-header .breadcrumb:not(.alternate) {
   background-color: $subhead-bg-color;
 
   &.truncated {
