@@ -588,6 +588,22 @@
 
 // RTL Styles
 html[dir='rtl'] {
+  .header + .page-container .scrollable-flex-header .breadcrumb:not(.alternate) {
+    &.truncated {
+      .breadcrumb-list,
+      ol {
+        &::before {
+          background-image:
+            linear-gradient(
+              to left,
+              rgba($subhead-bg-color, 1),
+              rgba($subhead-bg-color, 0)
+            );
+        }
+      }
+    }
+  }
+
   .breadcrumb {
     // Hyperlinks already have this by default
     .breadcrumb-text {
