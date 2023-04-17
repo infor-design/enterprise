@@ -280,15 +280,6 @@ a.is-personalizable svg.ripple-effect {
   }
 }
 
-.is-personalizable .count-container .instance-count .count,
-.is-personalizable .count-container .instance-count .title {
-  color: ${colors.contrast} !important;
-}
-
-.is-personalizable .count-container .instance-count .count {
-  border-color: ${colors.contrast} !important;
-}
-
 .tab-container.module-tabs.is-personalizable {
   border-top: 1px solid ${colors.darkest} !important;
   border-bottom: 1px solid ${colors.darkest} !important;
@@ -527,6 +518,33 @@ html[class*="theme-new-"] .header.is-personalizable.has-tabs .tab-container.head
 html[class*="theme-new-"] .is-personalizable.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled),
 html[class*="theme-new-"] .personalize-header.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled) {
   opacity: 1;
+}
+
+html[class*="theme-new-"] .is-personalizable .count-container .instance-count .count {
+  border-color: ${colors.contrast} !important;
+  color: ${colors.contrast} !important;
+}
+
+html[class*="theme-new-"] .is-personalizable .count-container .instance-count .title {
+  color: ${colors.contrast} !important;
+}
+
+html.theme-classic-dark .is-personalizable .count-container .instance-count .count {
+  border-color: ${colors.subtext} !important;
+  color: ${colors.subtext} !important;
+}
+
+html.theme-classic-dark .hero-widget.is-personalizable .hero-content .circlepager.is-active .controls .control-button:hover::before,
+html.theme-classic-dark .hero-widget.is-personalizable .hero-content .circlepager.is-active .controls .control-button::before {
+  border-color: ${colors.subtext};
+}
+
+html.theme-classic-dark .hero-widget.is-personalizable .hero-content .circlepager.is-active .controls .control-button.is-active::before {
+  background-color: ${colors.subtext};
+}
+
+.hero-widget.is-personalizable .hero-header .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary).is-open span {
+  color: ${colors.contrast} !important;
 }
 
 .header.is-personalizable .page-title {
@@ -855,13 +873,13 @@ html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::af
 
 .hero-widget.is-personalizable .hero-content .circlepager.is-active .controls .control-button.is-active::before,
 .hero-widget.is-personalizable .hero-content .circlepager.is-active .controls .control-button.is-active:hover::before {
-  background-color: #fff;
-  border-color: #fff;
+  background-color: ${colors.contrast};
+  border-color: ${colors.contrast};
 }
 
 .hero-widget.is-personalizable .hero-content .circlepager.is-active .controls .control-button:hover::before,
 .hero-widget.is-personalizable .hero-content .circlepager.is-active .controls .control-button::before {
-  border-color: #fff;
+  border-color: ${colors.contrast};
 }
 
 .hero-widget.is-personalizable .hero-bottom {
