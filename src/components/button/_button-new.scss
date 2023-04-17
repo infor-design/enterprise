@@ -51,23 +51,23 @@
   }
 }
 
-.btn-primary[disabled] {
+.btn-primary[disabled]:not(.destructive) {
   background-color: $button-color-primary-disabled-background-new;
   border: 2px solid $button-color-primary-disabled-background-new;
-  color: $button-color-primary-disabled-font-new !important;
+  color: $button-color-primary-disabled-font-new;
 
   svg.icon {
-    color: $button-color-primary-disabled-font-new !important;
-
-    &:hover {
-      color: $button-color-primary-disabled-font-new;
-    }
+    color: $button-color-primary-disabled-font-new;
   }
 
   &:hover {
     background-color: $button-color-primary-disabled-background-new;
     border: 2px solid $button-color-primary-disabled-background-new;
     color: $button-color-primary-disabled-font-new;
+
+    svg.icon {
+      color: $button-color-primary-disabled-font-new;
+    }
   }
 }
 
@@ -138,7 +138,7 @@
 .btn-menu {
   border-radius: 8px;
 
-  &:hover:not(:disabled):not(.close):not(.btn-filter):not(.personalize-actionable) {
+  &:hover:not(:disabled):not(.close):not(.btn-filter):not(.personalize-actionable):not(.destructive) {
     background-color: $button-color-tertiary-hover-background-new !important;
     color: $button-color-tertiary-hover-font-new;
 
