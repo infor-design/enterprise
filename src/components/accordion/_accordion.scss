@@ -149,9 +149,8 @@
       // Selected state only exists on Paneled accordions.
       &.is-selected,
       &.is-selected:hover,
-      &.is-focused.is-selected {
+      &.is-selected.is-focused {
         background-color: $accordion-selected-bg-color;
-        border-bottom-color: $accordion-selected-bg-color;
         color: $accordion-selected-text-color;
 
         > a {
@@ -194,6 +193,10 @@
         .accordion-header {
           border-bottom-color: $accordion-selected-bg-color;
         }
+      }
+
+      &.is-selected.is-focused:not(.hide-focus) {
+        border-bottom-color: $accordion-selected-bg-color;
       }
 
       &.filtered.has-filtered-children {
