@@ -114,6 +114,8 @@ $button-color-tertiary-destructive-hover-background-new: $ids-color-palette-ruby
 $button-color-tertiary-destructive-disabled-font-new: $ids-color-palette-slate-50;
 $button-color-tertiary-destructive-disabled-background-new: $ids-color-palette-slate-80;
 
+$button-icon-disabled-color: $ids-color-palette-slate-60;
+
 // Button Ripple
 $secondary-btn-ripple-color: $ids-color-palette-slate-60;
 $tertiary-btn-ripple-color: $ids-color-palette-slate-40;
@@ -298,6 +300,7 @@ $toolbar-standalone-bg-color: $ids-color-palette-slate-60;
 $toolbar-standalone-border-color: $ids-color-palette-slate-50;
 $toolbar-standalone-disabled-color: $ids-color-palette-slate-40;
 $toolbar-separator-color: $ids-color-palette-slate-50;
+$toolbar-btn-actions-hover-bg-color: $button-color-tertiary-hover-background-new;
 
 // Color Palette Background
 $color-border-color: rgba(255, 255, 255, 0.2);
