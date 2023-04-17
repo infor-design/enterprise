@@ -147,14 +147,6 @@
     }
   }
 
-  &.personalize-actionable:hover:not(:disabled) {
-    background-color: rgba(0, 0, 0, 0.3) !important;
-
-    svg.icon {
-      color: $ids-color-palette-white !important;
-    }
-  }
-
   &.destructive {
     color: $button-color-tertiary-destructive-initial-background-new;
 

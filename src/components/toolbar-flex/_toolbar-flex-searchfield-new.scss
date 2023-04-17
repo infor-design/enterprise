@@ -23,6 +23,25 @@
         }
       }
     }
+
+    &.search {
+      padding: 4px;
+
+      .searchfield-wrapper.toolbar-searchfield-wrapper:not(.is-open):not(.non-collapsible) {
+        height: 34px;
+        margin-top: 2px;
+        margin-bottom: 2px;
+
+        &:hover {
+          border-radius: 8px;
+          background-color: $toolbar-btn-actions-hover-bg-color;
+        }
+
+        .searchfield {
+          padding-bottom: 11px;
+        }
+      }
+    }
   }
 }
 
