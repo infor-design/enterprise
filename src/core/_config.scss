@@ -299,6 +299,7 @@ $button-color-secondary-actionsheet-hover-font: $button-color-secondary-hover-bo
 $button-color-secondary-actionsheet-hover-background: $button-color-tertiary-hover-background-new;
 $button-color-secondary-actionsheet-border: $button-color-secondary-initial-font-new;
 $button-color-secondary-actionsheet-font: $button-color-secondary-initial-border-new;
+$button-icon-disabled-color: $button-color-tertiary-disabled-font;
 
 //States
 $error-color: #da1217;
@@ -384,6 +385,7 @@ $toolbar-standalone-bg-color: $ids-color-palette-graphite-20;
 $toolbar-standalone-border-color: $ids-color-palette-graphite-30;
 $toolbar-standalone-disabled-color: $ids-color-palette-graphite-40;
 $toolbar-separator-color: $ids-color-palette-graphite-30;
+$toolbar-btn-actions-hover-bg-color: $button-color-tertiary-hover-background-new;
 
 // Field Filter
 $fieldfilter-border-side-color: transparent;
