@@ -182,6 +182,12 @@
       background-color: transparent;
     }
   }
+
+  html[class*='theme-'] & .flex-toolbar:not(.editor-toolbar):not(.formatter-toolbar) .toolbar-section [class^='btn']:not(:disabled):not(.searchfield-category-button).close {
+    &:hover {
+      background-color: transparent;
+    }
+  }
 }
 
 .subheader {
