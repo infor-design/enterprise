@@ -562,6 +562,22 @@ html[class*="theme-new-"] .personalize-header.tab-container.header-tabs:not(.alt
   background-color: #E6F1FD !important;
 }
 
+.personalize-subheader.scrollable-flex-header .breadcrumb:not(.alternate) .hyperlink,
+.personalize-subheader..scrollable-flex-header .breadcrumb:not(.alternate) .breadcrumb-text,
+.personalize-subheader.scrollable-flex-header .breadcrumb:not(.alternate) .hyperlink,
+.personalize-subheader.scrollable-flex-header .breadcrumb:not(.alternate) .breadcrumb-list li::after,
+.personalize-subheader.scrollable-flex-header .breadcrumb:not(.alternate) ol li::after {
+  color: ${colors.contrast};
+}
+
+.personalize-subheader.scrollable-flex-header .breadcrumb .hyperlink:focus:not([disabled]) {
+  border: 1px solid ${colors.contrast};
+}
+
+.personalize-subheader.scrollable-flex-header .breadcrumb:not(.alternate) .hyperlink:hover:not([disabled]) {
+  border-bottom: 1px solid ${colors.contrast};
+}
+
 .header .toolbar-searchfield-wrapper.active .searchfield:focus {
   border-color: ${colors.contrast};
 }
