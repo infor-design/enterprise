@@ -77,6 +77,12 @@ ModuleNav.prototype = {
       self.updated();
     });
 
+    this.element.on(`beforeexpand.${COMPONENT_NAME}`, (e) => {
+      e.preventDefault();
+      if (this.settings.displayMode !== 'expanded') return false;
+      return true;
+    });
+
     return this;
   },
 

@@ -34,6 +34,7 @@
     &.is-focused {
       &:not(.hide-focus) {
         border-color: $module-nav-item-selected-text-color;
+        box-shadow: none;
       }
 
       > a,
@@ -48,10 +49,6 @@
 
       &:not(.hide-focus) {
         border-color: $module-nav-item-selected-text-color;
-
-        &:hover {
-          border-bottom-color: $module-nav-item-selected-text-color;
-        }
       }
 
       > a,
@@ -66,14 +63,26 @@
       }
     }
 
-    &:active {
-      background-color: $module-nav-item-selected-bg-color;
-      border-color: $module-nav-item-selected-text-color;
-      color: $module-nav-item-selected-text-color;
+    &:not(.is-disabled) {
+      &:hover {
+        background-color: $module-nav-item-hover-bg-color;
+        color: $module-nav-item-hover-text-color;
 
-      > a,
-      > .icon {
-        color: inherit;
+        // Override
+        &.is-selected:not(.is-focused) {
+          border-bottom-color: transparent;
+        }
+      }
+
+      &:active {
+        background-color: $module-nav-item-selected-bg-color;
+        border-color: $module-nav-item-selected-text-color;
+        color: $module-nav-item-selected-text-color;
+
+        > a,
+        > .icon {
+          color: inherit;
+        }
       }
     }
 
@@ -92,16 +101,18 @@
     background-color: transparent;
 
     .accordion-header {
+      > a {
+        @include font-size(14);
+      }
+
       &:last-child {
         border-bottom-color: transparent;
       }
 
       &.is-focused {
-        border-color: $module-nav-item-selected-text-color;
-      }
-
-      &.is-selected {
-        border-color: $module-nav-item-selected-text-color;
+        &:not(.hide-focus) {
+          border-color: $module-nav-item-selected-text-color;
+        }
       }
     }
 
@@ -112,11 +123,9 @@
       }
 
       &.is-focused {
-        border-top-color: $module-nav-item-selected-text-color;
-      }
-
-      &.is-selected {
-        border-top-color: $module-nav-item-selected-text-color;
+        &:not(.hide-focus) {
+          border-top-color: $module-nav-item-selected-text-color;
+        }
       }
     }
 
@@ -142,6 +151,19 @@
         position: static;
         margin: 0;
         top: auto;
+      }
+
+      .btn {
+        display: none;
+        pointer-events: none;
+      }
+    }
+
+    .accordion-pane {
+      .accordion-header,
+      .accordion-pane {
+        display: none;
+        pointer-events: none;
       }
     }
   }
