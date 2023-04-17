@@ -8,7 +8,7 @@
   border: 0;
   margin: $module-nav-accordion-gutter-size;
 
-  // Module Nav Accordion Header Component
+  // Module Nav Accordion Header
   //================================================== //
 
   .accordion-header {
@@ -18,13 +18,23 @@
     border-width: 1px;
     margin-block-end: $module-nav-accordion-gutter-size;
 
+    > [class^='btn'] {
+      color: inherit;
+
+      > .icon {
+        color: inherit;
+      }
+    }
+
     > a,
     > .icon {
       color: inherit;
     }
 
     &.is-focused {
-      border-color: $module-nav-item-selected-text-color;
+      &:not(.hide-focus) {
+        border-color: $module-nav-item-selected-text-color;
+      }
 
       > a,
       > .icon {
@@ -34,14 +44,85 @@
 
     &.is-selected {
       background-color: $module-nav-item-selected-bg-color;
-      border-color: $module-nav-item-selected-text-color;
       color: $module-nav-item-selected-text-color;
-      font-weight: bold;
+
+      &:not(.hide-focus) {
+        border-color: $module-nav-item-selected-text-color;
+
+        &:hover {
+          border-bottom-color: $module-nav-item-selected-text-color;
+        }
+      }
 
       > a,
       > .icon {
         color: inherit;
       }
+
+      > a {
+        span {
+          font-weight: 700;
+        }
+      }
+    }
+
+    &:active {
+      background-color: $module-nav-item-selected-bg-color;
+      border-color: $module-nav-item-selected-text-color;
+      color: $module-nav-item-selected-text-color;
+
+      > a,
+      > .icon {
+        color: inherit;
+      }
+    }
+
+    // Override to inherit text color
+    &.is-focused.is-selected {
+      > [class^='btn'] .icon {
+        color: inherit;
+      }
+    }
+  }
+
+  // Module Nav Accordion Pane
+  //================================================== //
+
+  .accordion-pane {
+    background-color: transparent;
+
+    .accordion-header {
+      &:last-child {
+        border-bottom-color: transparent;
+      }
+
+      &.is-focused {
+        border-color: $module-nav-item-selected-text-color;
+      }
+
+      &.is-selected {
+        border-color: $module-nav-item-selected-text-color;
+      }
+    }
+
+    // 1st-level Accordion Headers that come after a pane
+    + .accordion-header {
+      &:last-child {
+        border-top-color: transparent;
+      }
+
+      &.is-focused {
+        border-top-color: $module-nav-item-selected-text-color;
+      }
+
+      &.is-selected {
+        border-top-color: $module-nav-item-selected-text-color;
+      }
+    }
+
+    // Expanded accordion panes
+    &.is-expanded {
+
     }
   }
 }
