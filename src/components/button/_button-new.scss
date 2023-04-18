@@ -17,8 +17,8 @@
   }
 
   &:active {
-    background-color: $button-color-primary-active-background;
-    border: 2px solid $button-color-primary-active-background;
+    background-color: $button-color-primary-hover-background;
+    border: 2px solid $button-color-primary-hover-background;
     box-shadow: none;
   }
 
@@ -30,7 +30,7 @@
     }
 
     &:active {
-      background-color: $button-color-primary-active-background;
+      background-color: $button-color-primary-hover-background;
       box-shadow: none;
     }
   }
@@ -139,7 +139,7 @@
   border-radius: 8px;
 
   &:hover:not(:disabled):not(.close):not(.btn-filter):not(.personalize-actionable):not(.destructive) {
-    background-color: $button-color-tertiary-hover-background-new !important;
+    background-color: $button-color-tertiary-hover-background-new;
     color: $button-color-tertiary-hover-font-new;
 
     svg.icon {

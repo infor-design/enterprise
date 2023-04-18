@@ -81,7 +81,7 @@ html.theme-new-dark .btn-link.is-personalizable:not(:disabled):hover .icon {
 }
 
 .is-personalizable:not(.header) .btn-link:not(:disabled):hover {
-  background-color: ${colors.secondaryButtonHover} !important;
+  background-color: ${colors.lightestPalette};
 }
 
 .is-personalizable:not(.header) .btn-link:not(:disabled) .icon,
@@ -101,8 +101,8 @@ button.is-personalizable.is-pressed .icon {
 
 .is-personalizable:not(.header) .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled),
 .btn-primary.is-personalizable:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
-  background-color: ${colors.btnPrimaryColorHover} !important;
-  border-color: ${colors.btnPrimaryColorHover} !important;
+  background-color: ${colors.btnPrimaryColorHover};
+  border-color: ${colors.btnPrimaryColorHover};
 }
 
 html.theme-new-dark .is-personalizable:not(.header) .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
@@ -157,12 +157,6 @@ html.theme-new-dark .is-personalizable:not(.hero-widget) .btn-tertiary:not(.dest
   color: ${colors.contrast} !important;
 }
 
-.is-personalizable:not(.header) .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled),
-.btn-primary.is-personalizable:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
-  background-color: ${colors.btnPrimaryColorHover} !important;
-  border-color: ${colors.btnPrimaryColorHover} !important;
-}
-
 button.is-personalizable button:focus:not(.hide-focus),
 .is-personalizable a.btn:focus:not(.hide-focus),
 a.btn.is-personalizable:focus:not(.hide-focus),
@@ -177,15 +171,6 @@ a.btn-close.is-personalizable:focus:not(.hide-focus) {
   box-shadow: 0 0 0 2px transparent,
     0 0 0 1px ${colors.base},
     0 0 4px 2px rgba(${baseColorObj.r}, ${baseColorObj.g}, ${baseColorObj.b}, 0.3) !important;
-}
-
-.is-personalizable .btn-primary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):focus:not(.hide-focus),
-.btn-primary.is-personalizable button:focus:not(.hide-focus),
-.is-personalizable .btn-secondary:focus:not(.hide-focus),
-.btn-secondary.is-personalizable button:focus:not(.hide-focus) {
-  box-shadow: 0 0 0 2px ${colors.theme.bg},
-    0 0 0 3px ${colors.base},
-    0 0 4px 2px rgba(${baseColorObj.r}, ${baseColorObj.g}, ${baseColorObj.b}, 0.3);
 }
 
 .is-personalizable .btn-menu:not(.btn-primary):not(.btn-secondary).is-open,
@@ -342,13 +327,13 @@ a.is-personalizable svg.ripple-effect {
 .header.is-personalizable button:not(:disabled),
 .header.is-personalizable button:not(:disabled) .icon,
 .header.is-personalizable button:not(:disabled) .app-header.icon > span,
-.subheader.is-personalizable button:not(:disabled),
-.subheader.is-personalizable button:not(:disabled) .icon,
-.subheader.is-personalizable button:not(:disabled) .app-header.icon > span,
+.subheader.is-personalizable button:not(:disabled):not(.searchfield-category-button),
+.subheader.is-personalizable button:not(:disabled):not(.searchfield-category-button) .icon,
+.subheader.is-personalizable button:not(:disabled):not(.searchfield-category-button) .app-header.icon > span,
 .is-personalizable .personalize-subheader button:not(:disabled),
 .is-personalizable .personalize-subheader button:not(:disabled) .icon,
 .is-personalizable .personalize-subheader button:not(:disabled) .app-header.icon > span  {
-  color: ${colors.contrast} !important;
+  color: ${colors.contrast};
 }
 
 .header.is-personalizable button:not(:disabled):hover .icon {
@@ -504,8 +489,8 @@ html[class*="theme-new-"] .personalize-header.tab-container.header-tabs:not(.alt
 }
 
 .header.is-personalizable button:not(:disabled),
-.subheader.is-personalizable button:not(:disabled)  {
-  color: ${colors.contrast} !important;
+.subheader.is-personalizable button:not(:disabled):not(.searchfield-category-button) {
+  color: ${colors.contrast};
 }
 
 .header.is-personalizable  .flex-toolbar [class^='btn']:focus:not(.hide-focus) .icon {
