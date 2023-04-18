@@ -1,0 +1,178 @@
+<div class="row">
+  <div class="four columns">
+
+    <div class="card double-height is-empty">
+      <div class="card-header">
+        <h2 class="widget-title">Projects</h2>
+        <button class="btn-actions" type="button">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-more"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu actions top">
+          <li><a href="#">Action One</a></li>
+          <li><a href="#">Action Two</a></li>
+        </ul>
+      </div>
+      <div class="card-content">
+        <div class="card-empty-icon">
+          <svg class="icon-empty-state is-slate" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-empty-new-project-new"></use>
+          </svg>
+        </div>
+        <div class="card-empty-title">
+          Add a New Project
+        </div>
+        <div class="card-empty-info">
+          Description of empty message that explains why and possibly contains a hyperlink.
+        </div>
+        <div class="card-empty-actions">
+          <button type="button" class="btn-primary">
+            <span>Action</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="four columns">
+
+    <!-- Data (None Available) -->
+    <div class="card double-height is-empty">
+      <div class="card-header">
+        <h2 class="widget-title">Data</h2>
+        <button class="btn-actions" type="button">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-more"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu actions top">
+          <li><a href="#">Action One</a></li>
+          <li><a href="#">Action Two</a></li>
+        </ul>
+      </div>
+      <div class="card-content">
+        <div class="card-empty-icon">
+          <svg class="icon-empty-state is-slate" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-empty-no-data-new"></use>
+          </svg>
+        </div>
+        <div class="card-empty-title">
+          No Data Available
+        </div>
+        <div class="card-empty-info">
+          Description of empty message that explains why and possibly contains a hyperlink.
+        </div>
+        <div class="card-empty-actions">
+          <button type="button" class="btn-primary">
+            <span>Action</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="four columns">
+
+    <!-- Analytics -->
+    <div class="card double-height is-empty">
+      <div class="card-header">
+        <h2 class="widget-title">Analytics</h2>
+        <button class="btn-actions" type="button">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-more"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu actions top">
+          <li><a href="#">Action One</a></li>
+          <li><a href="#">Action Two</a></li>
+        </ul>
+      </div>
+      <div class="card-content">
+        <div class="card-empty-icon">
+          <svg class="icon-empty-state is-slate" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-empty-no-analytics-new"></use>
+          </svg>
+        </div>
+        <div class="card-empty-title">
+          No Analytics Available
+        </div>
+        <div class="card-empty-info">
+          Description of empty message that explains why and possibly contains a hyperlink.
+        </div>
+        <div class="card-empty-actions">
+          <button type="button" class="btn-primary">
+            <span>Action</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <!-- Budget -->
+    <div class="card double-height is-empty">
+      <div class="card-header">
+        <h2 class="widget-title">Budget</h2>
+        <button class="btn-actions" type="button">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-more"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu actions top">
+          <li><a href="#">Action One</a></li>
+          <li><a href="#">Action Two</a></li>
+        </ul>
+      </div>
+      <div class="card-content">
+        <div class="card-empty-icon">
+          <svg class="icon-empty-state is-slate" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-empty-no-budget-new"></use>
+          </svg>
+        </div>
+        <div class="card-empty-title">
+          No Budget Assigned
+        </div>
+        <div class="card-empty-info">
+          Description of empty message that explains why and possibly contains a hyperlink.
+        </div>
+        <div class="card-empty-actions">
+          <button type="button" class="btn-primary">
+            <span>Action</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  var setIcons = (isClassic) => {
+    $('.icon-empty-state use').each(function( index ) {
+      var icon = this.getAttribute('href');
+      if (icon.substring(icon.length - 4) === '-new')
+        icon = icon.substring(0, icon.length - 4);
+
+
+      if (isClassic)
+        $(this).parent().removeClass('is-slate');
+      else
+        $(this).parent().addClass('is-slate');
+      this.setAttribute('href', isClassic ? icon : icon + '-new');
+    });
+  }
+  $('html').on('themechanged', function (e, args) {
+    var theme = args ? args.theme : null;
+    setIcons(theme.indexOf('theme-classic') > -1);
+  });
+  setIcons(document.querySelector('html').getAttribute('class').indexOf('theme-classic') > -1);
+</script>

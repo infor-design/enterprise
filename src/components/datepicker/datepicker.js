@@ -2130,6 +2130,11 @@ DatePicker.prototype = {
     if (typeof settings !== 'undefined') {
       this.settings = utils.mergeSettings(this.element, settings, DATEPICKER_DEFAULTS);
     }
+
+    if (this.element.data('validate')) {
+      this.element.data('validate').updated();
+    }
+
     return this
       .teardown()
       .init();

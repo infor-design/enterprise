@@ -314,6 +314,7 @@
 	"/dist/sass/src/core/_mixins.scss",
 	"/dist/sass/src/core/_required.scss",
 	"/dist/sass/src/core/_reset.scss",
+	"/dist/sass/src/core/_css-utilities.scss",
 	"/dist/sass/src/components/page-layouts/_layouts.scss",
 	"/dist/sass/src/components/page-layouts/_object-summary.scss",
 	"/dist/sass/src/components/page-layouts/_panes.scss",
