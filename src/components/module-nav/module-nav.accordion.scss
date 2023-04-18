@@ -49,8 +49,10 @@
       background-color: $module-nav-item-selected-bg-color;
       color: $module-nav-item-selected-text-color;
 
-      &:not(.hide-focus) {
-        border-color: $module-nav-item-selected-text-color;
+      [class^='btn'] {
+        &:focus:not(.hide-focus) {
+          border-color: $module-nav-item-selected-text-color;
+        }
       }
 
       > a,
@@ -120,7 +122,7 @@
       > a {
         @include font-size(14);
 
-        padding: 11px 0 13px 20px;
+        padding: 12px 0 12px 20px;
       }
 
       &:last-child {
