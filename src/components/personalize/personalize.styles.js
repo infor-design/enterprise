@@ -144,7 +144,7 @@ html.theme-new-dark .is-personalizable:not(.header) .btn-link:hover:not(:disable
   color: ${colors.lightest};
 }
 
-html[class*="new-"] .is-personalizable .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) svg {
+html[class*="new-"] .is-personalizable .btn-tertiary:hover:not(:disabled):not(.close):not(.btn-filter):not(.personalize-actionable):not(.destructive) svg.icon {
   color: ${colors.btnTertiaryHoverColor};
 }
 
@@ -333,7 +333,7 @@ a.is-personalizable svg.ripple-effect {
 .is-personalizable .personalize-subheader button:not(:disabled),
 .is-personalizable .personalize-subheader button:not(:disabled) .icon,
 .is-personalizable .personalize-subheader button:not(:disabled) .app-header.icon > span  {
-  color: ${colors.contrast};
+  color: ${colors.contrast} !important;
 }
 
 .header.is-personalizable button:not(:disabled):hover .icon {
@@ -633,6 +633,10 @@ html[class*='new-'] .is-personalizable.hero-widget .hero-header .toolbar .button
   background-color: ${colors.dark};
   border-color: ${colors.dark};
   color: ${colors.contrast};
+}
+
+.subheader.is-personalizable .go-button.is-personalizable:not(.hide-focus) {
+  box-shadow: 0 0 0 1px #efeff0, 0 0 0 2px ${colors.darkest}, 0 0 4px 2px rgba(41, 41, 41, 0.3);
 }
 
 .is-personalizable .breadcrumb .hyperlink,

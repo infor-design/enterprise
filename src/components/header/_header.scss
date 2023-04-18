@@ -545,6 +545,7 @@ $subheader-height: 60px;
     &:focus:active {
       background-color: $header-primary-btn-background-hover-color;
       border-color: $header-primary-btn-background-hover-color;
+      color: $searchfield-go-text-color;
     }
 
     &:not(.hide-focus) {
