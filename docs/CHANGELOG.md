@@ -4,8 +4,13 @@
 
 ## v4.83.0 Features
 
+- `[CSS Utilities]` Added CSS utility classes to the library to provide a standardized and efficient way of achieving consistent styling. ([#7377](https://github.com/infor-design/enterprise/issues/7377))
+
 ## v4.83.0 Fixes
 
+- `[Builder]` Fixed subtitle text not shown properly. ([#7207](https://github.com/infor-design/enterprise/issues/7207))
+- `[EmptyMessage]` Improved centering of widget and homepage contents for various widget sizes to enhance the overall user experience. ([#7360](https://github.com/infor-design/enterprise/issues/7360))
+- `[Icons]` Icons updated for 44 icons, added new `success-message` empty state and two new icons `vertical-ellipsis` and `microphone-filled`. ([#7394](https://github.com/infor-design/enterprise/issues/7394))
 - `[Builder]` Fixed a bug where subtitle text was not shown properly. ([#7207](https://github.com/infor-design/enterprise/issues/7207))
 - `[Datepicker]` Fixed validation not showing after component update. ([#7240](https://github.com/infor-design/enterprise/issues/7240))
 - `[Icons]` Icons updated for 44 icons, added new `success-message` empty state and two new icons: `vertical-ellipsis` and `microphone-filled`. ([#7394](https://github.com/infor-design/enterprise/issues/7394))
