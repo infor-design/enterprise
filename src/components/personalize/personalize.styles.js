@@ -1400,7 +1400,6 @@ html[class*="theme-classic-"]:not(.theme-classic-dark) .header.alabaster.is-pers
   color: #000 !important;
 }
 
-
 html[class*="theme-new-"]:not(.theme-new-dark) .alabaster.header.is-personalizable + .page-container .scrollable-flex-header.personalize-subheader .breadcrumb .btn-actions .icon,
 html[class*="theme-new-"]:not(.theme-new-dark) .alabaster.header.is-personalizable + .page-container .scrollable-flex-header.personalize-subheader .breadcrumb .hyperlink,
 html[class*="theme-new-"]:not(.theme-new-dark) .alabaster.header.is-personalizable + .page-container .scrollable-flex-header.personalize-subheader .breadcrumb .breadcrumb-overflow-container::after,
@@ -1408,35 +1407,7 @@ html[class*="theme-new-"]:not(.theme-new-dark) .alabaster.header.is-personalizab
 html[class*="theme-new-"]:not(.theme-new-dark) .alabaster.header.is-personalizable + .page-container .scrollable-flex-header.personalize-subheader .breadcrumb ol li::after {
   color: #000 !important;
 }
-
-/*
-.tooltip.is-personalizable {
-  background-color: ${colors.darkest};
-  border-color: ${colors.darkest};
-}
-.tooltip.is-personalizable .chart-swatch .swatch-row div {
-  border-bottom-color: ${colors.darkest};
-}
-.tooltip.is-personalizable,
-.tooltip.is-personalizable p,
-.tooltip.is-personalizable .chart-swatch .swatch-row span,
-.tooltip.is-personalizable .chart-swatch .swatch-row b {
-  color: ${colors.tooltipText};
-}
-.tooltip.is-personalizable.top .arrow::after {
-  border-top-color: ${colors.darkest};
-}
-.tooltip.is-personalizable.right .arrow::after {
-  border-right-color: ${colors.darkest};
-}
-.tooltip.is-personalizable.bottom .arrow::after {
-  border-bottom-color: ${colors.darkest};
-}
-.tooltip.is-personalizable.left .arrow::after {
-  border-left-color: ${colors.darkest};
-}
-*/
-    `;
+`;
 }
 
 export { personalizeStyles };
