@@ -40,8 +40,8 @@ html.theme-classic-dark .is-personalizable .btn-primary:not(.destructive):not(.i
 }
 
 html.theme-new-dark .is-personalizable:not(.header) .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):not(:disabled) {
-  background-color: ${colors.lighter} !important;
-  border-color: ${colors.lighter} !important;
+  background-color: ${colors.lighter};
+  border-color: ${colors.lighter};
 }
 
 html[class*="new-"] .is-personalizable:not(.header) .btn-secondary:not(:disabled):not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane),
@@ -52,8 +52,8 @@ html[class*="new-"] .is-personalizable:not(.header) .btn-secondary:not(:disabled
 
 html.theme-new-dark .is-personalizable:not(.header) .btn-secondary:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):not(:disabled),
 html.theme-new-dark .is-personalizable:not(.header) .btn-secondary:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):not(:disabled) svg.icon {
-  border-color: ${colors.lighter} !important;
-  color: ${colors.lighter} !important;
+  border-color: ${colors.lighter};
+  color: ${colors.lighter};
 }
 
 html.theme-classic-dark .is-personalizable:not(.header) .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled {
@@ -63,21 +63,21 @@ html.theme-classic-dark .is-personalizable:not(.header) .btn-primary:not(.destru
 
 .is-personalizable:not(.header) .btn-link:not(:disabled),
 .btn-link.is-personalizable:not(:disabled) {
-  color: ${colors.btnLinkColor} !important;
+  color: ${colors.btnLinkColor};
 }
 
 html.theme-new-dark .is-personalizable:not(.header) .btn-link:not(:disabled),
 html.theme-new-dark .btn-link.is-personalizable:not(:disabled),
 html.theme-new-dark .is-personalizable:not(.header) .btn-link:not(:disabled) .icon,
 html.theme-new-dark .btn-link.is-personalizable:not(:disabled) .icon {
-  color: ${colors.lighter} !important;
+  color: ${colors.lighter};
 }
 
 html.theme-new-dark .is-personalizable:not(.header) .btn-link:not(:disabled):hover,
 html.theme-new-dark .btn-link.is-personalizable:not(:disabled):hover,
 html.theme-new-dark .is-personalizable:not(.header) .btn-link:not(:disabled):hover .icon,
 html.theme-new-dark .btn-link.is-personalizable:not(:disabled):hover .icon {
-  color: ${colors.lightest} !important;
+  color: ${colors.lightest};
 }
 
 .is-personalizable:not(.header) .btn-link:not(:disabled):hover {
@@ -86,7 +86,7 @@ html.theme-new-dark .btn-link.is-personalizable:not(:disabled):hover .icon {
 
 .is-personalizable:not(.header) .btn-link:not(:disabled) .icon,
 .btn-link.is-personalizable:not(:disabled) .icon {
-  color: ${colors.btnLinkColor} !important;
+  color: ${colors.btnLinkColor};
 }
 
 .is-personalizable button.is-pressed,
@@ -106,25 +106,25 @@ button.is-personalizable.is-pressed .icon {
 }
 
 html.theme-new-dark .is-personalizable:not(.header) .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
-  background-color: ${colors.lightest} !important;
-  border-color: ${colors.lightest} !important;
+  background-color: ${colors.lightest};
+  border-color: ${colors.lightest};
 }
 
 html[class*="new-"]:not(.theme-new-dark) .is-personalizable:not(.header) .btn-secondary:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
-  background-color: ${colors.lightestPalette} !important;
+  background-color: ${colors.lightestPalette};
 }
 
 html.theme-new-dark .is-personalizable:not(.header) .btn-secondary:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
-  color: ${colors.lightest} !important;
-  border-color: ${colors.lightest} !important;
+  color: ${colors.lightest};
+  border-color: ${colors.lightest};
 }
 
 html.theme-new-dark .is-personalizable:not(.header) .btn-secondary:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) svg.icon {
-  color: ${colors.lightest} !important;
+  color: ${colors.lightest};
 }
 
 html[class*="new-"] .is-personalizable:not(.header) .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
-  background-color: ${colors.btnTertiaryBgHoverColor} !important;
+  background-color: ${colors.btnTertiaryBgHoverColor};
   color: ${colors.btnTertiaryHoverColor};
 }
 
@@ -141,7 +141,7 @@ html.theme-new-dark .is-personalizable:not(.header) .btn-tertiary:not(.destructi
 html.theme-new-dark .is-personalizable:not(.header) .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) svg.icon,
 html.theme-new-dark .is-personalizable:not(.header) .btn-link:hover:not(:disabled),
 html.theme-new-dark .is-personalizable:not(.header) .btn-link:hover:not(:disabled) svg.icon {
-  color: ${colors.lightest} !important;
+  color: ${colors.lightest};
 }
 
 html[class*="new-"] .is-personalizable .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) svg {
@@ -855,10 +855,10 @@ html[class*="theme-new-"] .application-menu.is-personalizable .hyperlink {
   color: ${colors.contrast} !important;
 }
 
-html[class*="-dark"] .is-personalizable .btn-tertiary:not(:disabled):hover,
+html[class*="-dark"] .is-personalizable .btn-tertiary:not(.destructive):not(:disabled):hover,
 html[class*="-dark"] .is-personalizable .btn-link:not(:disabled):hover,
 html[class*="-dark"] .is-personalizable:not(.header) .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
-  background-color: #3E3E42 !important;
+  background-color: #3E3E42;
 }
 
 .is-personalizable.hero-widget .hero-bottom .hero-footer .hero-footer-nav a.btn-tertiary:not(:disabled):hover {
