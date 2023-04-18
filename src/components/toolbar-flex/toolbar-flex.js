@@ -89,108 +89,109 @@ ToolbarFlex.prototype = {
     });
 
     this.jQueryEl = $(this.element);
-    this.more = this.jQueryEl.find('.btn-actions');
-    if (this.more.length === 0 && !this.jQueryEl.hasClass('no-actions-button')) {
-      let moreContainer = this.jQueryEl.find('.more');
 
-      if (!moreContainer.length) {
-        moreContainer = $('<div class="toolbar-section more"></div>').appendTo(this.jQueryEl);
+    if (this.jQueryEl.hasClass('contextual-toolbar')) {
+      this.more = this.jQueryEl.find('.btn-actions');
+      if (this.more.length === 0 && !this.jQueryEl.hasClass('no-actions-button')) {
+        let moreContainer = this.jQueryEl.find('.more');
+
+        if (!moreContainer.length) {
+          moreContainer = $('<div class="toolbar-section more"></div>').appendTo(this.jQueryEl);
+        }
+
+        this.more = $('<button class="btn-actions" type="button"></button>')
+          .html(`${$.createIcon({ icon: 'more' })
+          }<span class="audible">${Locale.translate('MoreActions')}</span>`)
+          .attr('title', Locale.translate('More'))
+          .appendTo(moreContainer);
       }
 
-      this.more = $('<button class="btn-actions" type="button"></button>')
-        .html(`${$.createIcon({ icon: 'more' })
-        }<span class="audible">${Locale.translate('MoreActions')}</span>`)
-        .attr('title', Locale.translate('More'))
-        .appendTo(moreContainer);
-    }
+      // Reference all interactive items in the toolbar
+      this.buttonset = $('.toolbar-section.buttonset');
+      this.buttonsetItems = this.buttonset.children('button')
+        .add(this.buttonset.find('input')); // Searchfield Wrappers
 
-    // Reference all interactive items in the toolbar
-    this.buttonset = $('.toolbar-section.buttonset');
-    this.buttonsetItems = this.buttonset.children('button')
-      .add(this.buttonset.find('input')); // Searchfield Wrappers
+      // Items contains all actionable items in the toolbar, including the ones in
+      // the title, and the more button
+      this.toolBarItems = this.buttonsetItems
+        // .add(this.title.children('button'))
+        .add(this.more);
 
-    // Items contains all actionable items in the toolbar, including the ones in
-    // the title, and the more button
-    this.toolBarItems = this.buttonsetItems
-      // .add(this.title.children('button'))
-      .add(this.more);
+      const popupMenuInstance = this.more.data('popupmenu');
+      const moreAriaAttr = this.more.attr('aria-controls');
 
-    const popupMenuInstance = this.more.data('popupmenu');
-    const moreAriaAttr = this.more.attr('aria-controls');
+      if (!popupMenuInstance) {
+        this.moreMenu = $(`#${moreAriaAttr}`);
+        if (!this.moreMenu.length || moreAriaAttr === undefined) {
+          this.moreMenu = this.more.next('.popupmenu, .popupmenu-wrapper');
+        }
+        if (!this.moreMenu.length) {
+          this.moreMenu = $(`<ul id="popupmenu-toolbar-${this.uniqueId}" class="popupmenu"></ul>`).insertAfter(this.more);
+        }
 
-    if (!popupMenuInstance) {
-      this.moreMenu = $(`#${moreAriaAttr}`);
-      if (!this.moreMenu.length || moreAriaAttr === undefined) {
-        this.moreMenu = this.more.next('.popupmenu, .popupmenu-wrapper');
+        // Allow toolbar to understand pre-wrapped popupmenus
+        // Angular Support -- See SOHO-7008
+        if (this.moreMenu.is('.popupmenu-wrapper')) {
+          this.moreMenu = this.moreMenu.children('.popupmenu');
+        }
+      } else {
+        this.moreMenu = popupMenuInstance.menu;
       }
-      if (!this.moreMenu.length) {
-        this.moreMenu = $(`<ul id="popupmenu-toolbar-${this.uniqueId}" class="popupmenu"></ul>`).insertAfter(this.more);
-      }
 
-      // Allow toolbar to understand pre-wrapped popupmenus
-      // Angular Support -- See SOHO-7008
-      if (this.moreMenu.is('.popupmenu-wrapper')) {
-        this.moreMenu = this.moreMenu.children('.popupmenu');
-      }
-    } else {
-      this.moreMenu = popupMenuInstance.menu;
-    }
-    
-    function menuItemFilter() {
-      return $(this).parent('.buttonset, .inline').length;
-    }
-
-    const menuItems = [];
-    this.toolBarItems.not(this.more).not('.ignore-in-menu').filter(menuItemFilter).each(function () {
-      menuItems.push(self.buildMoreActionsMenuItem($(this)));
-    });
-
-    menuItems.reverse();
-    $.each(menuItems, (i, item) => {
-      if (item.text() !== '') {
-        item.prependTo(self.moreMenu);
-      }
-    });
-
-    this.defaultMenuItems = this.moreMenu.children('li:not(.separator)');
-    this.hasDefaultMenuItems = this.defaultMenuItems.length > 0;
-
-    // If no more menu attributes are directly added through settings,
-    // use the toolbar's with an `actionbutton` suffix
-    let moreMenuAttrs;
-    if (this.settings.moreMenuSettings && Array.isArray(this.settings.moreMenuSettings.attributes)) {
-      moreMenuAttrs = this.settings.moreMenuSettings.attributes;
-    }
-    if ((!moreMenuAttrs || !moreMenuAttrs.length) && Array.isArray(this.settings.attributes)) {
-      moreMenuAttrs = this.settings.attributes.map((attr) => {
-        const value = `${attr.value}-actionbutton`;
-        return {
-          name: attr.name,
-          value
-        };
+      const menuItems = [];
+      this.toolBarItems.not(this.more).not('.ignore-in-menu').filter(function () {
+        return $(this).parent('.buttonset, .inline').length;
+      }).each(function () {
+        menuItems.push(self.buildMoreActionsMenuItem($(this)));
       });
-    }
-    if (!moreMenuAttrs?.length) {
-      moreMenuAttrs = null;
-    }
 
-    // Setup an Event Listener that will refresh the contents of the More Actions
-    // Menu's items each time the menu is opened.
-    const menuButtonSettings = utils.extend({}, this.settings.moreMenuSettings, {
-      trigger: 'click',
-      menu: this.moreMenu,
-      attributes: moreMenuAttrs
-    }, (this.hasDefaultMenuItems ? { predefined: this.defaultMenuItems } : {}));
-    if (popupMenuInstance) {
-      this.more
-        .on('beforeopen.toolbar-flex', () => {
+      menuItems.reverse();
+      $.each(menuItems, (i, item) => {
+        if (item.text() !== '') {
+          item.prependTo(self.moreMenu);
+        }
+      });
+
+      this.defaultMenuItems = this.moreMenu.children('li:not(.separator)');
+      this.hasDefaultMenuItems = this.defaultMenuItems.length > 0;
+
+      // If no more menu attributes are directly added through settings,
+      // use the toolbar's with an `actionbutton` suffix
+      let moreMenuAttrs;
+      if (this.settings.moreMenuSettings && Array.isArray(this.settings.moreMenuSettings.attributes)) {
+        moreMenuAttrs = this.settings.moreMenuSettings.attributes;
+      }
+      if ((!moreMenuAttrs || !moreMenuAttrs.length) && Array.isArray(this.settings.attributes)) {
+        moreMenuAttrs = this.settings.attributes.map((attr) => {
+          const value = `${attr.value}-actionbutton`;
+          return {
+            name: attr.name,
+            value
+          };
+        });
+      }
+      if (!moreMenuAttrs?.length) {
+        moreMenuAttrs = null;
+      }
+
+      // Setup an Event Listener that will refresh the contents of the More Actions
+      // Menu's items each time the menu is opened.
+      const menuButtonSettings = utils.extend({}, this.settings.moreMenuSettings, {
+        trigger: 'click',
+        menu: this.moreMenu,
+        attributes: moreMenuAttrs
+      }, (this.hasDefaultMenuItems ? { predefined: this.defaultMenuItems } : {}));
+      if (popupMenuInstance) {
+        this.more
+          .on('beforeopen.toolbar-flex', () => {
+            self.refreshMoreActionsMenu(self.moreMenu);
+          })
+          .triggerHandler('updated', [menuButtonSettings]);
+      } else {
+        this.more.popupmenu(menuButtonSettings).on('beforeopen.toolbar-flex', () => {
           self.refreshMoreActionsMenu(self.moreMenu);
-        })
-        .triggerHandler('updated', [menuButtonSettings]);
-    } else {
-      this.more.popupmenu(menuButtonSettings).on('beforeopen.toolbar-flex', () => {
-        self.refreshMoreActionsMenu(self.moreMenu);
-      });
+        });
+      }
     }
 
     // Check for a focused item
@@ -465,6 +466,8 @@ ToolbarFlex.prototype = {
    * Renders the buttons based on the width of the current buttonset
    */
   renderButtonSet() {
+    if (!this.jQueryEl.hasClass('contextual-toolbar')) return;
+
     function isItemOverflowed(item) {
       const isRTL = Locale.isRTL();
       const itemRect = item.getBoundingClientRect();
@@ -556,17 +559,19 @@ ToolbarFlex.prototype = {
       this.navigate(direction, null, true);
     });
 
-    $(this.element).on(`recalculate-buttonset.toolbar-flex-${this.uniqueId}`, () => {
-      this.renderButtonSet();
-    });
-    
-    this.more.on(`beforeopen.buttonset.toolbar-flex-${this.uniqueId}`, () => {
-      this.renderButtonSet();
-    });
+    if ($(this.element).hasClass('contextual-toolbar')) {
+      $(this.element).on(`recalculate-buttonset.toolbar-flex-${this.uniqueId}`, () => {
+        this.renderButtonSet();
+      });
 
-    $('body').on(`resize.toolbar-flex-${this.uniqueId}`, () => {
-      this.renderButtonSet();
-    });
+      this.more.on(`beforeopen.buttonset.toolbar-flex-${this.uniqueId}`, () => {
+        this.renderButtonSet();
+      });
+
+      $('body').on(`resize.toolbar-flex-${this.uniqueId}`, () => {
+        this.renderButtonSet();
+      });
+    }
   },
 
   /**
@@ -1066,11 +1071,13 @@ ToolbarFlex.prototype = {
 
     $(this.element).off(`selected.${COMPONENT_NAME}`);
     $(this.element).off(`collapsed-responsive.${COMPONENT_NAME}`);
-    $(this.element).off(`recalculate-buttonset.toolbar-flex-${this.uniqueId}`);
 
-    this.more.off(`beforeopen.buttonset.toolbar-flex-${this.uniqueId}`);
-    $('body').off(`resize.toolbar-flex-${this.uniqueId}`);
-  
+    if ($(this.element).hasClass('contextual-toolbar')) {
+      $(this.element).off(`recalculate-buttonset.toolbar-flex-${this.uniqueId}`);
+      this.more.off(`beforeopen.buttonset.toolbar-flex-${this.uniqueId}`);
+      $('body').off(`resize.toolbar-flex-${this.uniqueId}`);
+    }
+
     this.items.forEach((item) => {
       item.teardown();
     });
