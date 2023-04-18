@@ -5,6 +5,7 @@
 // Standard CSS reset
 @import '../core/reset';
 @import '../core/mixins';
+@import '../core/css-utilities';
 
 // ids-identity token vars
 @import '../../node_modules/ids-identity/dist/theme-classic/tokens/web/theme-classic-contrast';
