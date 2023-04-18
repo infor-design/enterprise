@@ -1,0 +1,110 @@
+// IDS CSS Utilities
+
+.text-center {
+  text-align: center !important;
+}
+.text-left {
+  text-align: left !important;
+}
+.text-right {
+  text-align: right !important;
+}
+.text-uppercase {
+  text-transform: uppercase !important;
+}
+.text-lowercase {
+  text-transform: lowercase !important;
+}
+
+.d-flex {
+  display: flex !important;
+}
+
+.align-items-center {
+  align-items: center !important;
+}
+
+.justify-content-center {
+  justify-content: center !important;
+}
+
+.d-block {
+  display: block !important;
+}
+
+.d-inline {
+  display: inline !important;
+}
+
+.d-i-block {
+  display: inline-block !important;
+}
+
+.d-none {
+  display: none !important;
+}
+
+.f-left {
+  float: left !important;
+}
+
+.f-right {
+  float: right !important;
+}
+
+.f-none {
+  float: none !important;
+}
+
+.flex-center {    
+  @extend .d-flex;
+  @extend .align-items-center;
+  @extend .justify-content-center;
+
+  flex-wrap: wrap;
+  align-content: center;
+  flex-direction: column;
+}
+
+// Margin and padding utilities up to 50px
+@for $i from 0 through 80 {
+  .p-bottom-#{$i} {
+    $padding: $i * 1px;
+    padding-bottom: $padding !important;
+  }
+
+  .p-top-#{$i} {
+    $padding: $i * 1px;
+    padding-top: $padding !important;
+  }
+
+  .p-left-#{$i} {
+    $padding: $i * 1px;
+    padding-left: $padding !important;
+  }
+
+  .p-right-#{$i} {
+    $padding: $i * 1px;
+    padding-right: $padding !important;
+  }
+
+  .m-bottom-#{$i} {
+    $padding: $i * 1px;
+    margin-bottom: $padding !important;
+  }
+
+  .m-top-#{$i} {
+    $padding: $i * 1px;
+    margin-top: $padding !important;
+  }
+
+  .m-left-#{$i} {
+    $padding: $i * 1px;
+    margin-left: $padding !important;
+  }
+
+  .m-right-#{$i} {
+    $padding: $i * 1px;
+    margin-right: $padding !important;
+  }
+}

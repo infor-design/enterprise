@@ -1,0 +1,98 @@
+<style>
+  html[class*="-dark"] p[class*="01"],
+  html[class*="-dark"] div[class*="01"],
+  html[class*="-dark"] span[class*="01"] {
+    color: #606066;
+  }
+
+  h2:not(.section-title) {
+    font-weight: 900;
+  }
+
+  .width-100 {
+    width: 100%;
+  }
+
+  .padding-16 {
+    padding: 16px;
+  }
+</style>
+
+<div class="row p-top-20">
+  <div class="twelve columns p-bottom-30">
+    <h2 class="section-title">CSS Utilities</h2>
+  </div>
+</div>
+
+<div class="row p-bottom-50">
+  <div class="six columns">
+    <h2>Text</h2>
+    <p class="text-center padding-16 azure01">.text-center</p>
+    <p class="text-left padding-16 emerald01">.text-left</p>
+    <p class="text-right padding-16 amethyst01">.text-right</p>
+    <p class="text-lowercase ruby01 padding-16">TEXT IN LOWERCASE use .text-lowercase</p>
+    <p class="text-uppercase turquoise01 padding-16 text-right">text in uppercase use .text-uppercase</p>
+  </div>
+</div>
+
+<div class="row p-bottom-50">
+  <six class="six columns">
+    <h2 class="m-bottom-20">Display</h2>
+    <div class="d-flex azure01 padding-16">I'm a flex (.d-flex) container!</div>
+    <br />
+    <span class="d-block padding-16 amethyst01">.d-block</span>
+    <span class="d-block padding-16 ruby01">.d-block</span>
+    <br />
+    <span class="d-i-block padding-16 amethyst01">.d-i-block</span>
+    <span class="d-i-block padding-16 ruby01">.d-i-block</span>
+    <br /><br />
+    <p class="padding-16 emerald01">This is some text. <span class="d-inline amber01">This is an inline (.d-inline) element.</span> This is some more text.</p>
+  </six>
+</div>
+
+
+<div class="row p-bottom-50">
+  <div class="six columns">
+    <h2 class="m-bottom-20">Float</h2>
+    <div class="f-left padding-16 turquoise01">Float left, use .f-left</div><br />
+    <div class="f-right padding-16 ruby01">Float right, use .f-right</div><br />
+    <div class="f-none padding-16 emerald01">Float none, use .f-none</div>
+  </div>
+</div>
+
+<div class="row p-bottom-50">
+  <div class="six columns">
+    <h2 class="m-bottom-20">Flexbox</h2>
+    <p>Align Items Center (.align-items-center)</p>
+    <div class="d-flex align-items-center padding-16 azure01">
+      <div class="padding-16 azure02">Item 1</div>
+      <div class="padding-16 azure02">Item 2</div>
+      <div class="padding-16 azure02">Item 3</div>
+    </div><br />
+    <p class="m-bottom-20">Justify Content Center (.justify-content-center)</p>
+    <div class="d-flex justify-content-center padding-16 emerald01">
+      <div class="padding-16 emerald02">Item 1</div>
+      <div class="padding-16 emerald02">Item 2</div>
+      <div class="padding-16 emerald02">Item 3</div>
+    </div><br />
+    <p class="m-bottom-20">Flex Center (.flex-center)</p>
+    <div class="d-flex flex-center padding-16 ruby01">
+      <div class="padding-16 ruby02">Item 1</div>
+      <div class="padding-16 ruby02">Item 2</div>
+      <div class="padding-16 ruby02">Item 3</div>
+    </div><br />
+  </div>
+</div>
+
+<div class="row p-bottom-50">
+  <div class="six columns">
+    <h2>Spacing</h2>
+    <p>The padding and margin utilities provide classes for adding padding and margin to elements in increments of 0, up to a maximum of 80 pixels.</p>
+
+    <p class="m-bottom-12 p-bottom-12 d-i-block azure01">(.m-bottom-12) Margin bottom 12px with (.p-bottom-12) padding bottom 12px</p>
+    <p class="m-bottom-16 p-top-32 d-i-block amethyst01">Margin bottom 16px with 32px padding top</p>
+    <p class="p-padding-16 m-bottom-16 p-left-32 p-bottom-64 p-top-44 p-right-28 d-i-block ruby01">.p-padding-16 .p-left-32 .m-bottom-16 .p-top-44 .p-bottom-64 .p-right-28</p>
+    <p class="m-bottom-20 m-top-28 p-top-44 p-bottom-60 d-i-block emerald01">.m-bottom-20 .m-top-28 .p-top-44 .p-bottom-60</p>
+    <p class="m-bottom-20 m-top-40 p-top-20 p-bottom-20 p-left-40 d-i-block turquoise01">.m-bottom-20 .m-top-40 .p-top-20 .p-bottom-20 .p-left-40</p>
+  </div>
+</div>
