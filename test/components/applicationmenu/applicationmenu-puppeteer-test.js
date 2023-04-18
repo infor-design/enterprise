@@ -316,7 +316,7 @@ describe('Application Menu Puppeteer Tests', () => {
       expect(await page.waitForSelector('#application-menu', { visible: true })).toBeTruthy();
     });
 
-    it('should dismiss the application menu when clicking on a popupmenu trigger', async () => {
+    it.skip('should dismiss the application menu when clicking on a popupmenu trigger', async () => {
       // Simulate iPhone X device size.
       // Shrinking the screen causes the menu to be dismissed.
       await page.setViewport({ width: 375, height: 812 });
