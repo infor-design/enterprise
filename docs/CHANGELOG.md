@@ -8,8 +8,9 @@
 
 - `[Button]` Adjusted personalized colors. ([#7406](https://github.com/infor-design/enterprise/issues/7406))
 - `[Builder]` Fixed subtitle text not shown properly. ([#7207](https://github.com/infor-design/enterprise/issues/7207))
+- `[Builder]` Fixed a bug where subtitle text was not shown properly. ([#7207](https://github.com/infor-design/enterprise/issues/7207))
 - `[Datepicker]` Fixed validation not showing after component update. ([#7240](https://github.com/infor-design/enterprise/issues/7240))
-- `[Icons]` Icons updated for 44 icons, added new `success-message` empty state and two new icons `vertical-ellipsis` and `microphone-filled`. ([#7394](https://github.com/infor-design/enterprise/issues/7394))
+- `[Icons]` Icons updated for 44 icons, added new `success-message` empty state and two new icons: `vertical-ellipsis` and `microphone-filled`. ([#7394](https://github.com/infor-design/enterprise/issues/7394))
 - `[Popupmenu]` Fixed a bug where the popupmenu arrow was not appearing despite `showArrow` being set to true. ([#5061](https://github.com/infor-design/enterprise/issues/5061))
 - `[Popupmenu]` Fix on popupmenu arrow not appearing when showArrow is true. ([#5061](https://github.com/infor-design/enterprise/issues/5061))
 - `[Toolbar/Toolbar Flex]` Added hover state to buttons. ([#7327](https://github.com/infor-design/enterprise/issues/7327))

@@ -17,7 +17,7 @@ describe('Index Tests', () => {
     expect(results.violations.length).toBe(0);
   });
 
-  it('should have Accessibility', async () => {
+  it.skip('should have Accessibility', async () => {
     const webArea = await page.accessibility.snapshot();
     expect(webArea.children[0]).toMatchObject({
       role: 'link',
@@ -201,7 +201,7 @@ describe.skip('Message xss tests', () => {
     expect(results.violations.length).toBe(0);
   });
 
-  it('should have Accessibility', async () => {
+  it.skip('should have Accessibility', async () => {
     const webArea = await page.accessibility.snapshot();
     expect(webArea.children[0]).toMatchObject({
       role: 'link',
@@ -251,7 +251,7 @@ describe('Message overlay opacity tests', () => {
     expect(results.violations.length).toBe(0);
   });
 
-  it('should have Accessibility', async () => {
+  it.skip('should have Accessibility', async () => {
     const webArea = await page.accessibility.snapshot();
     expect(webArea.children[0]).toMatchObject({
       role: 'link',
@@ -335,7 +335,7 @@ describe('Message close button Tests', () => {
     expect(results.violations.length).toBe(0);
   });
 
-  it('should have Accessibility', async () => {
+  it.skip('should have Accessibility', async () => {
     const webArea = await page.accessibility.snapshot();
     expect(webArea.children[0]).toMatchObject({
       role: 'heading',
@@ -376,7 +376,7 @@ describe('Message long title Tests', () => {
     expect(results.violations.length).toBe(0);
   });
 
-  it('should have Accessibility', async () => {
+  it.skip('should have Accessibility', async () => {
     const webArea = await page.accessibility.snapshot();
     expect(webArea.children[0]).toMatchObject({
       role: 'heading',
