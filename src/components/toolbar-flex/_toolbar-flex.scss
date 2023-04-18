@@ -195,8 +195,8 @@
         svg {
           color: $contextual-toolbar-button-color;
         }
-  
-        &:hover {
+
+        &:not(:disabled):hover {
           color: $contextual-toolbar-button-hover-color;
           background-color: transparent;
   
@@ -447,7 +447,7 @@ html[class*='theme-classic-'] .flex-toolbar .toolbar-section .searchfield-wrappe
 }
 
 // Buttons hover state
-html[class*='theme-new-'] .flex-toolbar:not(.editor-toolbar):not(.formatter-toolbar) {
+html[class*='theme-new-'] .flex-toolbar:not(.editor-toolbar):not(.formatter-toolbar):not(.contextual-toolbar) {
   .toolbar-section [class^='btn']:not(:disabled):not(.searchfield-category-button) {
     border-radius: 8px;
 
