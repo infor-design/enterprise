@@ -170,7 +170,8 @@
   
         &[disabled] {
           color: $contextual-toolbar-button-disabled-color;
-  
+          background-color: transparent;
+
           svg {
             color: inherit;
           }
