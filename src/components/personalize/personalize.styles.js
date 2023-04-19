@@ -894,16 +894,6 @@ html[class*="-dark"] .is-personalizable:not(.header) .btn-tertiary:not(.destruct
   color: ${colors.contrast} !important;
 }
 
-.application-menu.is-personalizable .accordion.panel .accordion-header.is-selected button .icon.plus-minus::before,
-.application-menu.is-personalizable .accordion.panel .accordion-header.is-selected button .icon.plus-minus::after {
-  background-color: ${colors.contrast};
-}
-
-.application-menu.is-personalizable .accordion.panel .accordion-header.is-focused:not(.hide-focus) {
-  border: 1px solid ${colors.contrast} !important;
-  box-shadow: none !important;
-}
-
 html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.inverse .accordion-pane .accordion-header {
   border: 1px solid ${colors.lighter};
 }
@@ -926,10 +916,6 @@ html[dir='rtl'] .application-menu.is-personalizable {
 
 html[class*="theme-new-"] .application-menu.is-personalizable button svg.ripple-effect {
   background-color: ${colors.contrast} !important;
-}
-
-html[class*="theme-new"] .application-menu.is-personalizable .accordion.panel.inverse > .accordion-header.is-focused:not(.hide-focus):not(.is-expanded) {
-  border-color: ${colors.contrast} !important;
 }
 
 html[class*="theme-new"] .application-menu.is-personalizable .accordion.panel.inverse > .accordion-header.is-focused.is-expanded {
