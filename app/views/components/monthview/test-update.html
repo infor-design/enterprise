@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="twelve columns">
+    <div class="field">
+      <button class="btn-primary" type="button" id="update-monthview">Update Monthview</button>
+    </div>
+    <div id="monthview" class="monthview" data-init="false">
+    </div>
+</div>
+
+<script>
+  let monthviewEl, monthviewAPI, index = 0;
+
+  const settings = [
+    {
+      day: 0,
+      month: 1,
+      year: 2022
+    },
+    {
+      day: 1,
+      month: 2,
+      year: 2024
+    }
+  ]
+
+  $('body').on('initialized', function () {
+    monthviewEl = $('#monthview').monthview(settings[0]);
+
+    monthviewAPI = monthviewEl.data('monthview');
+
+    $('#update-monthview').on('click', () => {
+      index = index == 1 ? 0 : 1;
+      monthviewAPI.updated(settings[index]);
+    });
+  });
+
+</script>

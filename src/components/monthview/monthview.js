@@ -2848,11 +2848,20 @@ MonthView.prototype = {
 
   /**
    * Handle updated settings and values.
+   * @param {object} settings The new settings object to use.
    * @returns {object} [description]
    */
-  updated() {
+  updated(settings = {}) {
+    if (!settings) {
+      settings = {};
+    }
+
+    if (settings) {
+      this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
+    }
+
     return this
-      .teardown()
+      .destroy()
       .init();
   },
 
