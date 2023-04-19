@@ -86,7 +86,7 @@
         }
       }
 
-      .title {
+      &:not(.has-more-button) .title {
         @media (max-width: ($breakpoint-phone-to-tablet - 1)) {
           width: auto !important;
         }
