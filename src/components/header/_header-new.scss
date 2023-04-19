@@ -133,7 +133,7 @@
 
   // Reset search icon hover state
   .toolbar:not(.standalone) {
-    .searchfield-wrapper.toolbar-searchfield-wrapper:not(.is-open) {
+    .searchfield-wrapper.toolbar-searchfield-wrapper:not(.has-categories):not(.is-open) {
       height: unset;
       margin: 3px 5px 3px 0;
 
@@ -168,6 +168,10 @@
       .searchfield {
         padding-bottom: 7px;
       }
+    }
+
+    .toolbar-searchfield-wrapper.non-collapsible.has-close-icon-button .btn-icon.close .icon.close {
+      top: 50%;
     }
   }
 

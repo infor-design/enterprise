@@ -1,6 +1,14 @@
 // Toolbar Searchfields New
 //================================================== */
 
+.toolbar-searchfield-wrapper {
+  &.has-categories {
+    &:not(.is-open) {
+      width: 35px;
+    }
+  }
+}
+
 .header {
   .toolbar-searchfield-wrapper {
     .searchfield-category-button {

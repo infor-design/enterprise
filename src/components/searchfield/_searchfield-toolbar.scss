@@ -273,10 +273,6 @@ $toolbarsearchfield-category-empty-width: 51px;
       height: 38px;
     }
 
-    &.has-categories .searchfield {
-      border-bottom-color: $searchfield-toolbar-border-color;
-    }
-
     &.has-categories.alternate {
       .searchfield-category-button {
         border: 1px solid $header-searchfield-input-border-color;
@@ -426,15 +422,15 @@ $toolbarsearchfield-category-empty-width: 51px;
       &.toolbar-searchfield-wrapper {
         &.has-categories:not(.alternate) {
           .searchfield {
-            &:focus {
-              border-color: $header-searchfield-input-border-color;
-            }
-
             @media only screen and (max-width: $breakpoint-phone-to-tablet) {
               width: auto;
               border-color: $searchfield-toolbar-border-color;
             }
           }
+        }
+
+        &.has-categories:not(.alternate).has-focus .searchfield {
+          border-color: $header-searchfield-input-border-color;
         }
       }
 
