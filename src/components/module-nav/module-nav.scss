@@ -179,7 +179,7 @@
 
 .module-nav-footer {
   border-top: 1px solid $module-nav-separator-color;
-  margin-block: $module-nav-footer-gutter-size;
+  margin-block-start: $module-nav-footer-gutter-size;
   padding-block-start: $module-nav-footer-gutter-size;
 
   display: block;

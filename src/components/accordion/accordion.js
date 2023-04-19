@@ -139,8 +139,13 @@ Accordion.prototype = {
     headers.each(function addExpander() {
       const header = $(this);
       let hasIcons = false;
-      const containerPane = header.parent();
-      const isTopLevel = containerPane.is('.accordion');
+      let containerPane = header.parent();
+      let isTopLevel = containerPane.is('.accordion');
+
+      if (containerPane.is('.accordion-section')) {
+        containerPane = containerPane.parentsUntil('.accordion');
+        isTopLevel = true;
+      }
 
       function checkIfIcons() {
         if (isTopLevel) {

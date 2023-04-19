@@ -8,8 +8,8 @@
   <aside id="nav" class="module-nav">
     <div class="module-nav-bar">
       <div class="module-nav-switcher"></div>
-      <div class="module-nav-main">
-        <div class="module-nav-accordion accordion panel" data-options="{'allowOnePane': true}">
+      <div class="module-nav-accordion accordion panel" data-options="{'allowOnePane': true}">
+        <div class="module-nav-main accordion-section">
           <div class="accordion-header is-selected">
             <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
               <use href="#icon-url"></use>
@@ -35,7 +35,7 @@
             <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
               <use href="#icon-url"></use>
             </svg>
-            <a href="#" id="item-four" data-automation-id="module-nav-item-four"><span>Label Three</span></a>
+            <a href="#" id="item-four" data-automation-id="module-nav-item-four"><span>Label Four</span></a>
           </div>
           <div class="accordion-pane">
             <div class="accordion-header">
@@ -59,12 +59,12 @@
             <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
               <use href="#icon-url"></use>
             </svg>
-            <a href="#" id="item-five" data-automation-id="module-nav-item-five"><span>Label Three</span></a>
+            <a href="#" id="item-five" data-automation-id="module-nav-item-five"><span>Label Five</span></a>
           </div>
         </div>
-      </div>
-      <div class="module-nav-footer">
-        <div class="module-nav-accordion accordion panel" data-options="{'allowOnePane': true}">
+
+        <!-- Footer is still part of Accordion, but renders as a separate section -->
+        <div class="module-nav-footer accordion-section">
           <div class="accordion-header is-selected">
             <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
               <use href="#icon-report"></use>
@@ -76,7 +76,8 @@
             <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
               <use href="#icon-notification"></use>
             </svg>
-            <a href="#" id="module-nav-item-notifications" data-automation-id="module-nav-notifications"><span>Notification</span></a>
+            <a href="#" id="module-nav-item-notifications"
+              data-automation-id="module-nav-notifications"><span>Notification</span></a>
           </div>
 
           <div class="accordion-header">
@@ -88,6 +89,7 @@
         </div>
       </div>
     </div>
+
     <div class="module-nav-detail">&nbsp;</div>
   </aside>
   <div class="page-container scrollable">

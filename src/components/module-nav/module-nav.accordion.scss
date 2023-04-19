@@ -3,10 +3,23 @@
 // Module Nav Accordion Component
 //================================================== //
 
+.module-nav-accordion {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 .accordion.panel.module-nav-accordion {
   background-color: transparent;
   border: 0;
   margin: $module-nav-accordion-gutter-size;
+
+  // Module Nav Accordion Section
+  //================================================== //
+
+  .accordion-section {
+    display: block;
+  }
 
   // Module Nav Accordion Header
   //================================================== //
