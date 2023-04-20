@@ -1092,6 +1092,7 @@ Accordion.prototype = {
     let anchor;
     let expander;
     let pane = null;
+    let section = null;
 
     if (target.is('.accordion-header')) {
       header = target;
@@ -1112,12 +1113,14 @@ Accordion.prototype = {
     }
 
     pane = header.next('.accordion-pane');
+    if (header.parent('.accordion-section')) section = header.parent('.accordion-section');
 
     return {
       header,
       expander,
       anchor,
-      pane
+      pane,
+      section
     };
   },
 
@@ -1136,10 +1139,31 @@ Accordion.prototype = {
     let target = $(adjacentHeaders.get(xssUtils.ensureAlphaNumeric(currentIndex) - 1));
 
     if (!adjacentHeaders.length || currentIndex === 0) {
+      // Handle parent panes
       if (elem.header.parent('.accordion-pane').length) {
         return this.ascend(elem.header);
       }
-      target = adjacentHeaders.last();
+
+      // Handle adjacent sections
+      if (elem.header.is(':first-child') && elem.section) {
+        let prevSection = elem.section.prev('.accordion-section');
+        let prevSectionChildren;
+        if (prevSection.length) {
+          prevSectionChildren = prevSection.children();
+          target = $(prevSectionChildren[prevSectionChildren.length - 1]);
+        } else {
+          prevSection = elem.section.parent().children().last('.accordion-section');
+          if (prevSection.length) {
+            prevSectionChildren = prevSection.children();
+            target = $(prevSectionChildren[prevSectionChildren.length - 1]);
+          }
+        }
+      }
+
+      // Use the last-possible header
+      if (!target.length) {
+        target = adjacentHeaders.last();
+      }
     }
 
     while (target.is('.accordion-content') || this.isDisabled(target) || this.isFiltered(target)) {
@@ -1165,7 +1189,15 @@ Accordion.prototype = {
           return this.ascend(elem.header);
         }
 
-        target = adjacentHeaders.last();
+        const prevSection = elem.header.parent('.accordion-section')?.prev('.accordion-section');
+        if (prevSection.length) {
+          target = $(prevSection.children()[0]);
+        }
+
+        if (!target.length) {
+          target = adjacentHeaders.last();
+        }
+
         while (target.is('.accordion-content') || this.isDisabled(target) || this.isFiltered(target)) {
           target = target.prev();
         }
@@ -1194,7 +1226,22 @@ Accordion.prototype = {
       if (elem.header.parent('.accordion-pane').length) {
         return this.ascend(elem.header, -1);
       }
-      target = adjacentHeaders.first();
+
+      if (elem.header.is(':last-child') && elem.section) {
+        let nextSection = elem.section.next('.accordion-section');
+        if (nextSection.length) {
+          target = $(nextSection.children()[0]);
+        } else {
+          nextSection = elem.section.parent().children().first('.accordion-section');
+          if (nextSection.length) {
+            target = $(nextSection.children()[0]);
+          }
+        }
+      }
+
+      if (!target.length) {
+        target = adjacentHeaders.first();
+      }
     }
 
     while (target.is('.accordion-content') || this.isDisabled(target) || this.isFiltered(target)) {
@@ -1220,7 +1267,15 @@ Accordion.prototype = {
           return this.ascend(elem.header, -1);
         }
 
-        target = adjacentHeaders.first();
+        const nextSection = elem.header.parent('.accordion-section')?.next('.accordion-section');
+        if (nextSection.length) {
+          target = $(nextSection.children()[0]);
+        }
+
+        if (!target.length) {
+          target = adjacentHeaders.first();
+        }
+
         while (target.is('.accordion-content') || this.isDisabled(target) || this.isFiltered(target)) {
           target = target.next();
         }
