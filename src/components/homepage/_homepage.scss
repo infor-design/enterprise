@@ -323,6 +323,13 @@
   overflow: hidden;
   width: 100%;
 
+  &.auto-height,
+  &.auto-height .hero-top {
+    height: fit-content;
+    min-height: 0;
+    max-height: none;
+  }
+
   .hero-top {
     height: 370px;
     max-height: 370px;
@@ -356,6 +363,7 @@
     }
 
     .btn-tertiary,
+    .btn-tertiary:hover:not(:disabled):not(.close):not(.btn-filter):not(.personalize-actionable),
     .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary).is-open span,
     .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary) {
       color: $header-button-color;
@@ -435,6 +443,24 @@
         &::before {
           box-shadow: $header-focus-box-shadow;
           outline-color: $header-button-color;
+        }
+      }
+    }
+
+    .count-container {
+      background-color: inherit;
+
+      .instance-count {
+        .count {
+          color: $header-hero-text-color;
+        }
+
+        svg.icon {
+          background-color: $header-hero-widget-bg-color;
+        }
+
+        .title {
+          padding: 0;
         }
       }
     }

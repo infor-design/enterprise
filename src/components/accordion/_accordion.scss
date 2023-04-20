@@ -369,6 +369,7 @@
         &.is-selected,
         &.is-selected:hover,
         &.is-focused.is-selected {
+          border-color: $ids-color-palette-white;
           color: $accordion-selected-text-color;
 
           .icon {
