@@ -2131,13 +2131,12 @@ DatePicker.prototype = {
       this.settings = utils.mergeSettings(this.element, settings, DATEPICKER_DEFAULTS);
     }
 
-    if (this.element.data('validate')) {
+    this.teardown();
+    this.init();
+
+    if (this.element.data('validate') && this.element.data('validate') instanceof Object) {
       this.element.data('validate').updated();
     }
-
-    return this
-      .teardown()
-      .init();
   },
 
   /**
