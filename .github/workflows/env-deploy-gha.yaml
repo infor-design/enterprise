@@ -75,10 +75,19 @@ jobs:
           cd $REPOROOT
           CHANGES=$(git status --porcelain)
 
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+
           if [[ -z $CHANGES ]]; then
               echo "there are no changes"
           else
               git add *
               git commit -am "$CHANGES"
-              git push origin main
           fi
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          directory: apps
+          repository: infor-design/apps
+          github_token: ${{ secrets.GH_ACCESS_TOKEN }}
+          branch: main
