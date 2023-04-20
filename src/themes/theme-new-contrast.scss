@@ -6,6 +6,7 @@
 // Standard CSS reset stuff here
 @import '../core/reset';
 @import '../core/mixins';
+@import '../core/css-utilities';
 
 // ids-identity token vars
 @import '../../node_modules/ids-identity/dist/theme-new/tokens/web/theme-new-contrast';
@@ -278,6 +279,7 @@ $toolbar-standalone-bg-color: $ids-color-palette-slate-10;
 $toolbar-standalone-border-color: $ids-color-palette-slate-60;
 $toolbar-standalone-disabled-color: $ids-color-palette-slate-40;
 $toolbar-separator-color: $ids-color-palette-slate-60;
+$toolbar-btn-actions-hover-bg-color: $button-color-tertiary-hover-background-new;
 
 // Field Filter
 $fieldfilter-border-side-color: $input-color-initial-border;

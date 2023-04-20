@@ -4,6 +4,7 @@
 // Standard CSS reset
 @import '../core/reset';
 @import '../core/mixins';
+@import '../core/css-utilities';
 
 // ids-identity token vars
 @import '../../node_modules/ids-identity/dist/theme-classic/tokens/web/theme-classic-dark';
@@ -100,6 +101,7 @@ $button-color-tertiary-hover-font-new: $ids-color-palette-white;
 $button-hyperlink-color: $ids-color-palette-slate-50;
 $button-hyperlink-hover-color: $ids-color-palette-slate-40;
 $button-color-tertiary-hover-background-new: transparent;
+$button-icon-disabled-color: $ids-color-palette-slate-60;
 
 // Button Ripple
 $secondary-btn-ripple-color: $ids-color-palette-slate-60;
@@ -269,6 +271,7 @@ $toolbar-standalone-bg-color: $ids-color-palette-slate-60;
 $toolbar-standalone-border-color: $ids-color-palette-slate-50;
 $toolbar-standalone-disabled-color: $ids-color-palette-slate-50;
 $toolbar-separator-color: $ids-color-palette-slate-50;
+$toolbar-btn-actions-hover-bg-color: transparent;
 
 // Formatter Toolbar
 $formatter-toolbar-separator-color: $ids-color-palette-slate-40;

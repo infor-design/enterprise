@@ -170,7 +170,8 @@
   
         &[disabled] {
           color: $contextual-toolbar-button-disabled-color;
-  
+          background-color: transparent;
+
           svg {
             color: inherit;
           }
@@ -195,8 +196,8 @@
         svg {
           color: $contextual-toolbar-button-color;
         }
-  
-        &:hover {
+
+        &:not(:disabled):hover {
           color: $contextual-toolbar-button-hover-color;
           background-color: transparent;
   
@@ -372,6 +373,10 @@
         display: none;
       }
     }
+
+    .btn-actions:hover:not(:disabled) {
+      background-color: $toolbar-btn-actions-hover-bg-color;
+    }
   }
 }
 
@@ -439,5 +444,27 @@ html[class*='theme-classic-'] .flex-toolbar .toolbar-section .searchfield-wrappe
 
   &.has-text.active.has-close-icon-button .custom-button {
     left: -53px;
+  }
+}
+
+// Buttons hover state
+html[class*='theme-new-'] .flex-toolbar:not(.editor-toolbar):not(.formatter-toolbar):not(.contextual-toolbar) {
+  .toolbar-section [class^='btn']:not(:disabled):not(.searchfield-category-button) {
+    border-radius: 8px;
+
+    &:hover {
+      background-color: $toolbar-btn-actions-hover-bg-color;
+    }
+  }
+
+  .toolbar-section.search .searchfield-wrapper.toolbar-searchfield-wrapper.has-close-icon-button.is-open svg.close {
+    padding: 4px;
+    width: 24px;
+    height: 24px;
+    border-radius: 8px;
+
+    &:hover {
+      background-color: $toolbar-btn-actions-hover-bg-color;
+    }
   }
 }

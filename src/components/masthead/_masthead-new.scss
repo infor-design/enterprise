@@ -62,3 +62,14 @@
 .masthead .toolbar-searchfield-wrapper.is-open .icon:not(.close) {
   top: -2px !important;
 }
+
+// Reset toolbar buttons hover
+html[class*='theme-new-'] .masthead .flex-toolbar:not(.editor-toolbar):not(.formatter-toolbar):not(.contextual-toolbar) {
+  .toolbar-section [class^='btn']:not(:disabled):not(.searchfield-category-button) {
+    border-radius: unset;
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
+}
