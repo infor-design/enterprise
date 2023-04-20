@@ -134,6 +134,16 @@
       }
     }
   }
+
+  // =====================================================
+  // Display Mode: Expanded
+
+  &:not(.pin-sections) {
+    .module-nav-main {
+      flex-grow: 1;
+      overflow: auto;
+    }
+  }
 }
 
 .module-nav {
@@ -155,10 +165,6 @@
   background-color: $module-nav-detail-bg-color;
   border-inline-end: 1px solid $module-nav-border-color;
   height: 100%;
-}
-
-.module-nav-main {
-  flex-grow: 1;
 }
 
 .module-nav-item {

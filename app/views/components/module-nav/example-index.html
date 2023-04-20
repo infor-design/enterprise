@@ -113,6 +113,11 @@
           <input type="checkbox" class="checkbox" name="display-detail-check" id="display-detail-check" />
           <label for="display-detail-check" class="checkbox-label">Display Detail View</label>
         </div>
+
+        <div class="field">
+          <input type="checkbox" class="checkbox" name="pin-sections" id="pin-sections" checked="true" />
+          <label for="pin-sections" class="checkbox-label">Pin Sections</label>
+        </div>
       </div>
     </div>
     <div class="row test-spacer">&nbsp;</div>
@@ -128,14 +133,19 @@
   $('body').on('initialized', () => {
     const navAPI = $('#nav').data('modulenav');
     const dropdownAPI = $('#display-mode-dropdown').data('dropdown');
-    const checkEl = $('#display-detail-check')
+    const displayCheckEl = $('#display-detail-check');
+    const pinSectionsCheckEl = $('#pin-sections');
 
     dropdownAPI.element.on('change.test', (e) => {
       navAPI.updated({ displayMode: dropdownAPI.value });
     });
 
-    checkEl.on('change.test', (e) => {
-      navAPI.updated({ showDetailView: checkEl[0].checked });
+    displayCheckEl.on('change.test', (e) => {
+      navAPI.updated({ showDetailView: displayCheckEl[0].checked });
+    });
+
+    pinSectionsCheckEl.on('change.test', (e) => {
+      navAPI.updated({ pinSections: !(pinSectionsCheckEl[0].checked) });
     });
   });
 </script>

@@ -7,7 +7,8 @@ const COMPONENT_NAME = 'modulenav';
 
 const MODULE_NAV_DEFAULTS = {
   displayMode: MODULE_NAV_DISPLAY_MODES[0],
-  showDetailView: false
+  pinSections: false,
+  showDetailView: false,
 };
 
 /**
@@ -46,6 +47,7 @@ ModuleNav.prototype = {
 
     // Configure
     if (this.settings.displayMode) this.setDisplayMode(this.settings.displayMode);
+    this.setPinSections(this.settings.pinSections);
     this.setShowDetailView(this.settings.showDetailView);
     return this;
   },
@@ -115,6 +117,15 @@ ModuleNav.prototype = {
     if (this.settings.displayMode !== 'expanded') {
       this.collapseAccordionHeaders();
     }
+  },
+
+  /**
+   * Configures the Module Nav's header and footer area placement fixing to the bottom
+   * @param {boolean} val true if the footer should be pinned
+   * @returns {void}
+   */
+  setPinSections(val) {
+    this.containerEl.classList[val ? 'add' : 'remove']('pin-sections');
   },
 
   /**
