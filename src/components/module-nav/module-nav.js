@@ -24,7 +24,6 @@ function ModuleNav(element, settings) {
 
 // Plugin Methods
 ModuleNav.prototype = {
-
   /**
    * Do initialization, build up and / or add events ect.
    * @returns {object} The Component prototype, useful for chaining.
@@ -63,6 +62,10 @@ ModuleNav.prototype = {
     this.switcherEl = this.element[0].querySelector('.module-nav-switcher');
     this.itemMenuEl = this.element[0].querySelector('.module-nav-main');
     this.footerEl = this.element[0].querySelector('.module-nav-footer');
+
+    // Components
+    this.accordionEl = this.element[0].querySelector('.accordion');
+    this.accordionAPI = $(this.accordion).data('accordion');
   },
 
   /**
@@ -77,13 +80,29 @@ ModuleNav.prototype = {
       self.updated();
     });
 
-    this.element.on(`beforeexpand.${COMPONENT_NAME}`, (e) => {
-      e.preventDefault();
-      if (this.settings.displayMode !== 'expanded') return false;
-      return true;
-    });
+    if (this.accordionEl) {
+      $(this.accordionEl).on(`beforeexpand.${COMPONENT_NAME}`, (e) => {
+        e.preventDefault();
+        if (this.settings.displayMode !== 'expanded') return false;
+        return true;
+      });
+    }
 
     return this;
+  },
+
+  /**
+   * @private
+   */
+  collapseAccordionHeaders() {
+    const accordionEl = this.containerEl.querySelector('.accordion');
+    const accordionHeaderEls = [...this.containerEl.querySelectorAll('.accordion-header')];
+    const api = $(accordionEl).data('accordion');
+    accordionHeaderEls.forEach((header) => {
+      if ($(header).next('.accordion-pane').length) {
+        api.collapse($(header), true);
+      }
+    });
   },
 
   /**
@@ -93,6 +112,9 @@ ModuleNav.prototype = {
    */
   setDisplayMode(val) {
     setDisplayMode(val, this.containerEl);
+    if (this.settings.displayMode !== 'expanded') {
+      this.collapseAccordionHeaders();
+    }
   },
 
   /**
@@ -125,8 +147,30 @@ ModuleNav.prototype = {
    * @private
    */
   teardown() {
-    this.element.off(`updated.${COMPONENT_NAME}`);
+    this.teardownEvents();
+
+    // Containers
+    this.containerEl = null;
+    this.detailViewEl = null;
+
+    // Sections
+    this.switcherEl = null;
+    this.itemMenuEl = null;
+    this.footerEl = null;
+
+    // Components
+    this.accordionEl = null;
+    this.accordionAPI = null;
+
     return this;
+  },
+
+  /**
+   * @private
+   */
+  teardownEvents() {
+    this.element.off(`updated.${COMPONENT_NAME}`);
+    $(this.accordionEl).off(`beforeexpand.${COMPONENT_NAME}`);
   },
 
   /**
