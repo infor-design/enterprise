@@ -24,7 +24,7 @@ jobs:
 
       - name: Prepare Dockerfile
         run: |
-          source ${GITHUB_WORKSPACE}/utils.sh
+          source ${GITHUB_WORKSPACE}/scripts/deploy-environment/utils.sh
           install_packages
           make_dockerfile
 
