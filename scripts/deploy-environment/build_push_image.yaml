@@ -43,8 +43,6 @@ spec:
               value: ""
             - name: BASE_CONTAINER_NAME
               value: ""
-            - name: BUILD_AS_LATEST
-              value: ""
             - name: BUILD_FROM
               value: ""
             - name: APP_REPO
