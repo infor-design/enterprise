@@ -378,7 +378,7 @@ a.is-personalizable svg.ripple-effect {
   color: ${colors.contrast} !important;
 }
 
-.header.is-personalizable button:not(:disabled):hover .icon {
+.header.is-personalizable button:not(.close):not(:disabled):hover .icon {
   color: ${colors.btnTertiaryHoverColor} !important;
 }
 

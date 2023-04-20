@@ -169,28 +169,6 @@
         padding-bottom: 7px;
       }
     }
-
-    .toolbar-searchfield-wrapper.non-collapsible.has-close-icon-button .btn-icon.close .icon.close {
-      top: 50%;
-    }
-  }
-
-  .toolbar:not(.standalone) .searchfield-wrapper.toolbar-searchfield-wrapper.has-close-icon-button.is-open .close,
-  html[class*='theme-new-'] & .flex-toolbar:not(.editor-toolbar):not(.formatter-toolbar) .toolbar-section.search .searchfield-wrapper.toolbar-searchfield-wrapper.has-close-icon-button.is-open svg.close {
-    padding: unset;
-    width: 18px;
-    height: 18px;
-    border-radius: unset;
-
-    &:hover {
-      background-color: transparent;
-    }
-  }
-
-  html[class*='theme-'] & .flex-toolbar:not(.editor-toolbar):not(.formatter-toolbar) .toolbar-section [class^='btn']:not(:disabled):not(.searchfield-category-button).close {
-    &:hover {
-      background-color: transparent;
-    }
   }
 }
 

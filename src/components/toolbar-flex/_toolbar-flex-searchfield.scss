@@ -65,9 +65,12 @@ $responsive-searchfield-filled-out-width: 34px;
       }
     }
 
-    &.searchfield-wrapper > svg.icon:not(.icon-error) {
+    &.searchfield-wrapper svg.icon:not(.icon-error) {
       width: 18px;
       height: 18px;
+    }
+
+    &.searchfield-wrapper > svg.icon:not(.icon-error) {
       top: 50%;
       transform: translateY(-50%);
     }

@@ -328,7 +328,6 @@ $toolbarsearchfield-category-empty-width: 51px;
 
     .icon {
       color: $searchfield-icon-color;
-      height: 18px;
     }
 
     &.non-collapsible.is-hovered,
@@ -818,12 +817,10 @@ $toolbarsearchfield-category-empty-width: 51px;
       }
     }
 
-    &.is-open {
-      :not(.collapse-button) .icon {
-        color: $searchfield-header-icon-color !important;
-        transform: translateY(-50%);
-        top: 50%;
-      }
+    &.is-open .icon.close {
+      color: $searchfield-header-icon-color !important;
+      transform: translateY(-50%);
+      top: 50%;
     }
   }
 
