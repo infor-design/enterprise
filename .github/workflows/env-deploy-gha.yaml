@@ -60,12 +60,14 @@ jobs:
           SERVICE_NAME=${IMAGE_VERSION//./}
 
           rm -rf $WORKDIR/$SERVICE_NAME 2>/dev/null
-          mkdir -p $WORKDIR/$SERVICE_NAME && cp -R $WORKDIR/manifests/* $WORKDIR/$SERVICE_NAME/
+          mkdir -p $WORKDIR/$SERVICE_NAME && cp -R $WORKDIR/scripts/deploy-environment/manifests/* $WORKDIR/$SERVICE_NAME/
           sed -i -e "s/%SERVICE_NAME%/$SERVICE_NAME/g" $WORKDIR/$SERVICE_NAME/ingress.yaml
           sed -i -e "s/%SERVICE_NAME%/$SERVICE_NAME/g" $WORKDIR/$SERVICE_NAME/service.yaml
           sed -i -e "s/%SERVICE_NAME%/$SERVICE_NAME/g" $WORKDIR/$SERVICE_NAME/deployment.yaml
           sed -i -e "s/%IMAGE_VERSION%/$IMAGE_VERSION/g" $WORKDIR/$SERVICE_NAME/deployment.yaml
-          python3.10 $WORKDIR/scripts/annotations.py -p $WORKDIR/$SERVICE_NAME/deployment.yaml
+          python $WORKDIR/scripts/deploy-environment/scripts/annotations.py -p $WORKDIR/$SERVICE_NAME/deployment.yaml
+
+          echo python -V
 
           mkdir -p $REPOROOT/enterprise/enterprise-$SERVICE_NAME/
           mv -f $WORKDIR/$SERVICE_NAME/* $REPOROOT/enterprise/enterprise-$SERVICE_NAME/
