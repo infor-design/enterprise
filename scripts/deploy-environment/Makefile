@@ -20,36 +20,11 @@ run-workflow :
 		-o ${ORG_NAME} \
 		-c ${BASE_CONTAINER_NAME} \
 		-f ${BUILD_FROM} \
-		-l ${BUILD_AS_LATEST} \
 		-n ${SERVICE_NAME} \
 		-i ${IMAGE_VERSION} \
 		-a ${APP_REPO} \
 		-m ${MANIFESTS_REPO} \
 		-s ${SITE}
-
-run-worker :
-	docker run --rm --name $(WORKER_CONTAINER_NAME) \
-		--env IMAGE_LIBRARY_USER=${IMAGE_LIBRARY_USER} \
-		--env IMAGE_LIBRARY_PASS=${IMAGE_LIBRARY_PASS} \
-		--env GITHUB_ACCESS_TOKEN=${GITHUB_ACCESS_TOKEN} \
-		--env AWF_URL=${AWF_URL} \
-		--env ORG_NAME=${ORG_NAME} \
-		--env BASE_CONTAINER_NAME=${BASE_CONTAINER_NAME} \
-		--env BUILD_FROM=${BUILD_FROM} \
-		--env BUILD_AS_LATEST=${BUILD_AS_LATEST} \
-		--env SERVICE_NAME=${SERVICE_NAME} \
-		--env IMAGE_VERSION=${IMAGE_VERSION} \
-		--env APP_REPO=${APP_REPO} \
-		--env MANIFESTS_REPO=${MANIFESTS_REPO} \
-		--env SITE=${SITE} \
-		-v /var/run/docker.sock:/var/run/docker.sock \
-		-v ${PWD}/build:/root/enterprise \
-		-v ${PWD}/manifests:/usr/src/manifests \
-		-v ${PWD}/scripts:/usr/src/scripts \
-		-v ${PWD}/build_push_image.sh:/usr/src/build_push_image.sh \
-		-v ${PWD}/build_push_manifests.sh:/usr/src/build_push_manifests.sh \
-		-v ${PWD}/.gitconfig:/root/.gitconfig \
-		$(ORGANIZATION)/$(WORKER_CONTAINER_NAME):$(WORKER_CONTAINER_VERSION)
 
 shell-worker :
 	docker run -it --rm --name $(WORKER_CONTAINER_NAME) \
@@ -61,18 +36,18 @@ shell-worker :
 			--env ORG_NAME=${ORG_NAME} \
 			--env BASE_CONTAINER_NAME=${BASE_CONTAINER_NAME} \
 			--env BUILD_FROM=${BUILD_FROM} \
-			--env BUILD_AS_LATEST=${BUILD_AS_LATEST} \
 			--env SERVICE_NAME=${SERVICE_NAME} \
 			--env IMAGE_VERSION=${IMAGE_VERSION} \
 			--env APP_REPO=${APP_REPO} \
 			--env MANIFESTS_REPO=${MANIFESTS_REPO} \
 			--env SITE=${SITE} \
 			-v /var/run/docker.sock:/var/run/docker.sock \
-			-v ${PWD}/build:/root/enterprise \
+			-v ${PWD}/build:/usr/src/enterprise \
 			-v ${PWD}/manifests:/usr/src/manifests \
 			-v ${PWD}/scripts:/usr/src/scripts \
 			-v ${PWD}/build_push_image.sh:/usr/src/build_push_image.sh \
 			-v ${PWD}/build_push_manifests.sh:/usr/src/build_push_manifests.sh \
+			-v ${PWD}/utils.sh:/usr/src/utils.sh \
 			-v ${PWD}/.gitconfig:/root/.gitconfig \
 			$(ORGANIZATION)/$(WORKER_CONTAINER_NAME):$(WORKER_CONTAINER_VERSION)
 
