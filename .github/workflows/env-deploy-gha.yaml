@@ -51,7 +51,7 @@ jobs:
       
       - name: Push app update
         run: |
-          source ./utils.sh
+          source ${GITHUB_WORKSPACE}/scripts/deploy-environment/utils.sh
 
           WORKDIR=${GITHUB_WORKSPACE}
           REPOROOT=${GITHUB_WORKSPACE}/apps
