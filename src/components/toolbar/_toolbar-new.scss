@@ -89,7 +89,7 @@
     }
   }
 
-  .searchfield-wrapper.toolbar-searchfield-wrapper.has-close-icon-button.is-open .close {
+  .searchfield-wrapper.toolbar-searchfield-wrapper.has-close-icon-button.is-open > svg.close {
     padding: 4px;
     width: 24px;
     height: 24px;
