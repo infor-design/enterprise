@@ -578,8 +578,8 @@ html[class*="theme-new-"] .personalize-header.tab-container.header-tabs:not(.alt
   border-bottom: 1px solid ${colors.contrast};
 }
 
-.header .toolbar-searchfield-wrapper.active .searchfield:focus {
-  border-color: ${colors.contrast};
+.header .toolbar-searchfield-wrapper.active.has-focus .searchfield {
+  border-color: ${colors.darkest};
 }
 
 .header.is-personalizable .btn-actions:not(.btn-primary):not(.btn-secondary).is-open .icon,
