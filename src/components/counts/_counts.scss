@@ -1,7 +1,7 @@
 // Instance Count
 //================================================== //
 
-.card-content:has(> .instance-count) {
+.card-content.has-instance-count {
   display: flex;
   justify-content: center;
   text-align: center;
