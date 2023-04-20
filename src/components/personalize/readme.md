@@ -65,7 +65,8 @@ Only a subset of components support personalization:
 
 - [Headers and Subheaders]( ./header) - Each gets a contrasting back color and all elements in it are reflected.
 - [Module Tabs]( ./tabs-module) - The tabs and sub tabs and states.
-- [Accordion]( ./accordion) - The selection states.
+- [Button (Primary)]( ./button) - The selection states.
+- [Links (Primary)]( ./hyperlinnk) - The link 
 - Builder Pattern - The headers and subheaders.
 - [Hero Widget]( ./homepage) - Gets a contrasting back color.
 
