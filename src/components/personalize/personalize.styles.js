@@ -266,6 +266,10 @@ a.is-personalizable svg.ripple-effect {
   border-color: ${colors.contrast} !important;
 }
 
+.is-personalizable .count-container .instance-count svg.icon {
+  background-color: ${colors.base} !important;
+}
+
 .is-personalizable.has-more-button.tab-container.horizontal {
   &::after {
     background-image:
@@ -274,16 +278,6 @@ a.is-personalizable svg.ripple-effect {
         rgba($header-bg-color, 0));
     height: 39px;
   }
-}
-
-.is-personalizable .personalize-header .instance-count,
-.is-personalizable .personalize-header .instance-count svg.icon {
-  background-color: ${colors.base};
-}
-
-.is-personalizable .personalize-header .instance-count .count,
-.is-personalizable .personalize-header .instance-count .title {
-  color: ${colors.contrast};
 }
 
 .tab-container.module-tabs.is-personalizable {
@@ -524,6 +518,33 @@ html[class*="theme-new-"] .header.is-personalizable.has-tabs .tab-container.head
 html[class*="theme-new-"] .is-personalizable.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled),
 html[class*="theme-new-"] .personalize-header.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled) {
   opacity: 1;
+}
+
+html[class*="theme-new-"] .is-personalizable .count-container .instance-count .count {
+  border-color: ${colors.contrast} !important;
+  color: ${colors.contrast} !important;
+}
+
+html[class*="theme-new-"] .is-personalizable .count-container .instance-count .title {
+  color: ${colors.contrast} !important;
+}
+
+html.theme-classic-dark .is-personalizable .count-container .instance-count .count {
+  border-color: ${colors.subtext} !important;
+  color: ${colors.subtext} !important;
+}
+
+html.theme-classic-dark .hero-widget.is-personalizable .hero-content .circlepager.is-active .controls .control-button:hover::before,
+html.theme-classic-dark .hero-widget.is-personalizable .hero-content .circlepager.is-active .controls .control-button::before {
+  border-color: ${colors.subtext};
+}
+
+html.theme-classic-dark .hero-widget.is-personalizable .hero-content .circlepager.is-active .controls .control-button.is-active::before {
+  background-color: ${colors.subtext};
+}
+
+.hero-widget.is-personalizable .hero-header .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary).is-open span {
+  color: ${colors.contrast} !important;
 }
 
 .header.is-personalizable .page-title {
@@ -852,13 +873,13 @@ html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::af
 
 .hero-widget.is-personalizable .hero-content .circlepager.is-active .controls .control-button.is-active::before,
 .hero-widget.is-personalizable .hero-content .circlepager.is-active .controls .control-button.is-active:hover::before {
-  background-color: #fff;
-  border-color: #fff;
+  background-color: ${colors.contrast};
+  border-color: ${colors.contrast};
 }
 
 .hero-widget.is-personalizable .hero-content .circlepager.is-active .controls .control-button:hover::before,
 .hero-widget.is-personalizable .hero-content .circlepager.is-active .controls .control-button::before {
-  border-color: #fff;
+  border-color: ${colors.contrast};
 }
 
 .hero-widget.is-personalizable .hero-bottom {
@@ -879,6 +900,10 @@ html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::af
 
 .hero-widget.is-personalizable .chart-container.line-chart .dot {
   stroke: ${colors.lighter};
+}
+
+.hero-widget.is-personalizable .count-container .instance-count svg.icon {
+  background-color: ${colors.darkestPalette} !important;
 }
 
 html[class*="theme-new-"] .application-menu.is-personalizable button .icon,
@@ -1366,6 +1391,10 @@ html[class*="-dark"] .is-personalizable .subheader h2 {
 .hero-widget.is-personalizable .hero-footer .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary).is-open span:focus:not(.hide-focus),
 .hero-widget.is-personalizable .hero-footer .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary):focus:not(.hide-focus) {
   box-shadow: ${colors.focusBoxShadow};
+}
+
+html.theme-new-dark .hero-widget.is-personalizable .hero-header .title {
+  color: #fff !important;
 }
 
 .subheader.is-personalizable .toolbar [class^='btn']:focus:not(.hide-focus),

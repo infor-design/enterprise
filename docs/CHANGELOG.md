@@ -34,6 +34,7 @@
 - `[Breadcrumb]` Updated breadcrumb hover color. ([#7337](https://github.com/infor-design/enterprise/issues/7337))
 - `[Card]` Updated background color in classic high contrast. ([#7374](https://github.com/infor-design/enterprise/issues/7374))
 - `[Card]` Fixed group-action unnecessary scroll bar. ([#7343](https://github.com/infor-design/enterprise/issues/7343))
+- `[Count]` Fix personalize styles for instance count to adjust icon colors. ([6947](https://github.com/infor-design/enterprise/issues/6947))
 - `[Column]` Fixed data chart and legend doesn't match up. ([#7199](https://github.com/infor-design/enterprise/issues/7199))
 - `[Datagrid]` Fixed on styling in row status icon when first column is not a select column. ([NG#5913](https://github.com/infor-design/enterprise-ng/issues/5913))
 - `[Datagrid]` Fixed table layout with a distinct hover background color for both activated and non-activated rows. ([#7320](https://github.com/infor-design/enterprise/issues/7369))
