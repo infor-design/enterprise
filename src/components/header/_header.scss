@@ -19,14 +19,6 @@ $subheader-height: 60px;
   }
 
   .toolbar [class^='btn'] {
-    &:not(.close):not([disabled]):hover {
-      background-color: $header-default-bg-hover-color !important;
-
-      .icon {
-        color: $ids-color-palette-white;
-      }
-    }
-
     &.is-open {
       .icon {
         color: $ids-color-palette-white;
@@ -636,10 +628,6 @@ $subheader-height: 60px;
 
       &:not([disabled]) {
         cursor: pointer;
-      }
-
-      &:not(.close):not(.collapse-button):not([disabled]):hover {
-        background-color: $header-toolbar-button-hover-color !important;
       }
 
       &:not(.close) .icon {

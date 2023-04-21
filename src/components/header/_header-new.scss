@@ -245,6 +245,20 @@
   }
 }
 
+.header,
+.subheader,
+.personalize-subheader {
+  .toolbar,
+  .flex-toolbar {
+    [class^='btn'] {
+      &:not(.close):not(.collapse-button):not([disabled]):hover {
+        color: $ids-color-palette-white !important;
+        background-color: $header-toolbar-button-hover-color !important;
+      }
+    }
+  }
+}
+
 html[dir='rtl'] {
   .header {
     .flex-toolbar .toolbar-section {

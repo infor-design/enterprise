@@ -372,7 +372,7 @@ a.is-personalizable svg.ripple-effect {
   color: ${colors.contrast} !important;
 }
 
-.header.is-personalizable button:not(.close):not(:disabled):hover .icon {
+html[class*="theme-new"] .header.is-personalizable button:not(.close):not(:disabled):hover .icon {
   color: ${colors.btnTertiaryHoverColor} !important;
 }
 
@@ -402,15 +402,15 @@ html[class*="-dark"] .is-personalizable .subheader button:not(:disabled) .icon {
   background-color: ${colors.contrast} !important;
 }
 
-.header.is-personalizable button:not(.go-button):not(.close):not(.searchfield-category-button):not(:disabled):hover,
-.header.is-personalizable button:not(:disabled):hover .app-header.icon > span,
-.header.is-personalizable .toolbar [class^='btn']:hover:not(.go-button):not(.close):not(.searchfield-category-button):not([disabled]),
-.subheader.is-personalizable button:not(.go-button):not(.close):not(.searchfield-category-button):not(:disabled):hover,
-.subheader.is-personalizable button:not(:disabled):hover .app-header.icon > span,
-.subheader.is-personalizable .toolbar [class^='btn']:hover:not(.go-button):not(.close):not(.searchfield-category-button):not([disabled]),
-.personalize-subheader button:not(.go-button):not(.close):not(.searchfield-category-button):not(:disabled):hover,
-.personalize-subheader button:not(:disabled):hover .app-header.icon > span,
-.personalize-subheader .toolbar [class^='btn']:hover:not(.go-button):not(.close):not(.searchfield-category-button):not([disabled]) {
+html[class*="theme-new-"] .header.is-personalizable button:not(.go-button):not(.close):not(.searchfield-category-button):not(:disabled):hover,
+html[class*="theme-new-"] .header.is-personalizable button:not(:disabled):hover .app-header.icon > span,
+html[class*="theme-new-"] .header.is-personalizable .toolbar [class^='btn']:hover:not(.go-button):not(.close):not(.searchfield-category-button):not([disabled]),
+html[class*="theme-new-"] .subheader.is-personalizable button:not(.go-button):not(.close):not(.searchfield-category-button):not(:disabled):hover,
+html[class*="theme-new-"] .subheader.is-personalizable button:not(:disabled):hover .app-header.icon > span,
+html[class*="theme-new-"] .subheader.is-personalizable .toolbar [class^='btn']:hover:not(.go-button):not(.close):not(.searchfield-category-button):not([disabled]),
+html[class*="theme-new-"] .personalize-subheader button:not(.go-button):not(.close):not(.searchfield-category-button):not(:disabled):hover,
+html[class*="theme-new-"] .personalize-subheader button:not(:disabled):hover .app-header.icon > span,
+html[class*="theme-new-"] .personalize-subheader .toolbar [class^='btn']:hover:not(.go-button):not(.close):not(.searchfield-category-button):not([disabled]) {
   color: ${colors.btnTertiaryHoverColor} !important;
   background-color: ${colors.btnTertiaryBgHoverColor} !important;
   opacity: 1;
@@ -908,9 +908,9 @@ html[class*="theme-new-"] .application-menu.is-personalizable .hyperlink {
   color: ${colors.contrast} !important;
 }
 
-html[class*="-dark"] .is-personalizable .btn-tertiary:not(:disabled):hover,
-html[class*="-dark"] .is-personalizable .btn-link:not(:disabled):hover,
-html[class*="-dark"] .is-personalizable:not(.header) .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
+html[class*="new-dark"] .is-personalizable .btn-tertiary:not(:disabled):hover,
+html[class*="new-dark"] .is-personalizable .btn-link:not(:disabled):hover,
+html[class*="new-dark"] .is-personalizable:not(.header) .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
   background-color: #3E3E42 !important;
 }
 
@@ -1063,14 +1063,14 @@ html[class*="-dark"] .is-personalizable .subheader h2 {
   color: ${colors.contrast} !important;
 }
 
-.is-personalizable .personalize-actionable:hover:not([disabled]):not(.personalize-actionable-disabled):not(a) ,
-.is-personalizable .personalize-actionable:hover:not([disabled]):not(.personalize-actionable-disabled) svg,
-.is-personalizable .personalize-actionable:hover:not([disabled]):not(.personalize-actionable-disabled) .icon  {
+html[class*="theme-new-"] .is-personalizable .personalize-actionable:hover:not([disabled]):not(.personalize-actionable-disabled):not(a) ,
+html[class*="theme-new-"] .is-personalizable .personalize-actionable:hover:not([disabled]):not(.personalize-actionable-disabled) svg,
+html[class*="theme-new-"] .is-personalizable .personalize-actionable:hover:not([disabled]):not(.personalize-actionable-disabled) .icon  {
   color: ${colors.btnHoverColor} !important;
   opacity: 1;
 }
 
-.is-personalizable .personalize-actionable:hover:not([disabled]):not(.personalize-actionable-disabled):not(a) {
+html[class*="theme-new-"] .is-personalizable .personalize-actionable:hover:not([disabled]):not(.personalize-actionable-disabled):not(a) {
   color: ${colors.btnHoverColor} !important;
   background-color: ${colors.btnBgHoverColor};
   opacity: 1;
@@ -1081,7 +1081,7 @@ html[class*="-dark"] .is-personalizable .subheader h2 {
   width: 34px;
 }
 
-.is-personalizable .btn-icon.personalize-actionable:hover {
+html[class*="theme-new-"] .is-personalizable .btn-icon.personalize-actionable:hover {
   background-color: ${colors.btnBgHoverColor} !important;
 }
 
