@@ -41,6 +41,21 @@
           padding-bottom: 11px;
         }
       }
+
+      .searchfield-wrapper.toolbar-searchfield-wrapper.has-close-icon-button.is-open > svg.close {
+        padding: 3px;
+        width: 24px;
+        height: 24px;
+        border-radius: 8px;
+
+        @media (min-width: $breakpoint-phone-to-tablet) {
+          right: 5px;
+        }
+
+        &:hover {
+          background-color: $toolbar-btn-actions-hover-bg-color;
+        }
+      }
     }
   }
 

@@ -631,7 +631,7 @@ $subheader-height: 60px;
       border-radius: 8px;
 
       &:not(.close) {
-        color: $header-button-color !important;
+        color: $header-button-color;
       }
 
       &:not([disabled]) {
