@@ -68,6 +68,7 @@ ModuleNav.prototype = {
     // Components
     this.accordionEl = this.element[0].querySelector('.accordion');
     this.accordionAPI = $(this.accordion).data('accordion');
+    this.configureAccordion();
   },
 
   /**
@@ -88,6 +89,10 @@ ModuleNav.prototype = {
         if (this.settings.displayMode !== 'expanded') return false;
         return true;
       });
+
+      $(this.accordionEl).on(`rendered.${COMPONENT_NAME}`, () => {
+        this.configureAccordion();
+      });
     }
 
     return this;
@@ -105,6 +110,32 @@ ModuleNav.prototype = {
         api.collapse($(header), true);
       }
     });
+  },
+
+  /**
+   * @private
+   */
+  configureAccordion() {
+    if (!this.accordionEl) return;
+
+    // Override this accordion behavior to include a check for Module Nav switchers
+    const navFocusCallback = (header, defaultFocusBehavior) => {
+      // Handle focus of accordion headers containing Module Nav Switcher Components
+      if (header.is('.module-nav-switcher')) {
+        if (this.settings.displayMode === 'expanded') {
+          header.find('.dropdown').focus();
+        } else {
+          header.find('.module-btn button').focus();
+        }
+      } else {
+        defaultFocusBehavior();
+      }
+    };
+
+    const api = $(this.accordionEl).data('accordion');
+    if (!api) return;
+
+    api.settings.accordionFocusCallback = navFocusCallback;
   },
 
   /**
@@ -182,6 +213,7 @@ ModuleNav.prototype = {
   teardownEvents() {
     this.element.off(`updated.${COMPONENT_NAME}`);
     $(this.accordionEl).off(`beforeexpand.${COMPONENT_NAME}`);
+    $(this.accordionEl).off(`rendered.${COMPONENT_NAME}`);
   },
 
   /**

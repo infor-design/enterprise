@@ -28,6 +28,7 @@ const expanderDisplayModes = ['classic', 'plus-minus', 'chevron'];
  * @class Accordion
  * @param {object} element The component element.
  * @param {object} [settings] The component settings.
+ * @param {function} [settings.accordionFocusCallback] Hook for controlling focus of a desired accordion section, which may contain custom content,
  * @param {string} [settings.allowOnePane=true] If set to true, allows only one pane of the Accordion to be open at a
  * time. If an Accordion pane is open, and that pane contains sub-headers only one of the pane's sub-headers can be open at a time. (default true)
  * @param {boolean} [settings.displayChevron=true] (deprecated in v4.23.0) Displays a "Chevron" icon that sits off to the right-most
@@ -38,6 +39,7 @@ const expanderDisplayModes = ['classic', 'plus-minus', 'chevron'];
  * @param {boolean} [settings.source=null]  A callback function that when implemented provided a call back for "ajax loading" of tab contents on open.
  */
 const ACCORDION_DEFAULTS = {
+  accordionFocusCallback: (header, defaultFocusBehavior) => defaultFocusBehavior,
   allowOnePane: true,
   expanderDisplay: expanderDisplayModes[0],
   enableTooltips: true,
@@ -72,7 +74,6 @@ function Accordion(element, settings) {
 
 // Plugin Methods
 Accordion.prototype = {
-
   /**
   * Initialization kickoff point
   * @private
@@ -1354,15 +1355,23 @@ Accordion.prototype = {
   * @returns {void}
   */
   focusOriginalType(header) {
-    const btns = header.children('[class*="btn"]');
-    this.headers.not(header).removeClass('is-focused');
+    const defaultFocusBehavior = () => {
+      const btns = header.children('[class*="btn"]');
+      this.headers.not(header).removeClass('is-focused');
 
-    if (this.originalSelection.is('[class*="btn"]') && btns.length) {
-      btns.first()[0].focus();
-    } else {
-      header.children('a')[0].focus();
-      header.addClass('is-focused').removeClass('hide-focus');
+      if (this.originalSelection.is('[class*="btn"]') && btns.length) {
+        btns.first()[0].focus();
+      } else {
+        header.children('a')[0].focus();
+        header.addClass('is-focused').removeClass('hide-focus');
+      }
+    };
+
+    if (typeof this.settings.accordionFocusCallback === 'function') {
+      this.settings.accordionFocusCallback(header, defaultFocusBehavior);
+      return;
     }
+    defaultFocusBehavior();
   },
 
   /**

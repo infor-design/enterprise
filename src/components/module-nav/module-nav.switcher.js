@@ -65,6 +65,10 @@ function ModuleNavSwitcher(element, settings) {
 // Plugin Methods
 ModuleNavSwitcher.prototype = {
 
+  get accordion() {
+    return this.element.parents('.accordion').first();
+  },
+
   /**
    * Do initialization, build up and / or add events ect.
    * @returns {object} The Component prototype, useful for chaining.
@@ -103,6 +107,21 @@ ModuleNavSwitcher.prototype = {
       self.updated();
     });
 
+    this.element.on(`keydown.${COMPONENT_NAME}`, (e) => {
+      const key = e.key;
+
+      if (key === 'ArrowUp') {
+        console.info('navigate to last accordion item');
+        // this.accordion.prevHeader(this.element);
+        return;
+      }
+
+      if (key === 'ArrowDown') {
+        console.info('navigate to first accordion item');
+        // this.accordion.nextHeader(this.element);
+      }
+    });
+
     return this;
   },
 
@@ -119,10 +138,10 @@ ModuleNavSwitcher.prototype = {
       this.moduleButton = this.element[0].querySelector('.btn');
     }
 
-    this.roleDropdown = this.element[0].querySelector('.module-role-dropdown');
-    if (!this.roleDropdown) {
+    this.roleDropdownEl = this.element[0].querySelector('.module-role-dropdown');
+    if (!this.roleDropdownEl) {
       this.element[0].insertAdjacentHTML('beforeend', dropdownTemplate());
-      this.roleDropdown = this.element[0].querySelector('.module-nav-section.role-dropdown');
+      this.roleDropdownEl = this.element[0].querySelector('.module-nav-section.role-dropdown');
     }
   },
 
