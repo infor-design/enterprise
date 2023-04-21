@@ -136,11 +136,27 @@
   }
 
   // =====================================================
-  // Display Mode: Expanded
+  // Optional Pinned Area: disabled
+  // Entire menu is scrollable
 
-  &:not(.pin-sections) {
-    .module-nav-main {
+  &:not(.pinned-optional) {
+    .module-nav-accordion {
+      overflow-y: auto;
       flex-grow: 1;
+    }
+  }
+
+  // =====================================================
+  // Optional Pinned Area: enabled
+  // individual areas are scrollable
+
+  &.pinned-optional {
+    .module-nav-main {
+      overflow: auto;
+      flex-grow: 1;
+    }
+
+    .module-nav-footer {
       overflow: auto;
     }
   }
@@ -185,7 +201,7 @@
 
 .module-nav-footer {
   border-top: 1px solid $module-nav-separator-color;
-  margin-block-start: $module-nav-footer-gutter-size;
+  // margin-block-start: $module-nav-footer-gutter-size;
   padding-block-start: $module-nav-footer-gutter-size;
 
   display: block;

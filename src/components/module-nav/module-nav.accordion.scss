@@ -12,13 +12,13 @@
 .accordion.panel.module-nav-accordion {
   background-color: transparent;
   border: 0;
-  margin: $module-nav-accordion-gutter-size;
 
   // Module Nav Accordion Section
   //================================================== //
 
   .accordion-section {
     display: block;
+    padding: $module-nav-accordion-gutter-size;
   }
 
   // Module Nav Accordion Header

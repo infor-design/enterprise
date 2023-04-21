@@ -156,7 +156,7 @@ ModuleNav.prototype = {
    * @returns {void}
    */
   setPinSections(val) {
-    this.containerEl.classList[val ? 'add' : 'remove']('pin-sections');
+    this.containerEl.classList[val ? 'add' : 'remove']('pinned-optional');
   },
 
   /**
