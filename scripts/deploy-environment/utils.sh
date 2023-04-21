@@ -2,14 +2,8 @@
 
 function cleanup() {
   exit_code=$?
-
-  if [[ ${exit_code} -eq 0 ]]; then
-    pkill dockerd
-    exit $exit_code
-  elif [[ ${exit_code} -eq 1 ]]; then
-    pkill dockerd
-    exit $exit_code
-  fi
+  pkill dockerd
+  exit $exit_code
 }
 
 function exit_trap () {

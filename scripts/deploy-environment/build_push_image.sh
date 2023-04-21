@@ -3,7 +3,7 @@ set -e
 
 source ./utils.sh
 trap exit_trap EXIT
-trap "cleanup" EXIT
+trap cleanup EXIT
 
 REPOROOT=/usr/src/enterprise
 
