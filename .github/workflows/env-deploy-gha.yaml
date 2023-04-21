@@ -1,0 +1,93 @@
+name: Build and deploy demo environment
+
+on:
+  push:
+    branches: ["*"]
+
+jobs:
+  build-and-push-docker-image:
+    name: Build and push image
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Extract branch name
+        shell: bash
+        run: echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >>$GITHUB_OUTPUT
+        id: extract_branch
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Prepare Dockerfile
+        run: |
+          source ${GITHUB_WORKSPACE}/scripts/deploy-environment/utils.sh
+          install_packages
+          make_dockerfile
+          ls -al
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build image and push to Docker Hub
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          tags: hookandloop/enterprise:${{ steps.extract_branch.outputs.branch }}
+          push: true
+
+      - uses: actions/checkout@v3
+        with:
+          repository: infor-design/apps
+          ref: main
+          path: apps
+          token: ${{ secrets.GH_ACCESS_TOKEN }}
+      
+      - name: Push app update
+        run: |
+          source ${GITHUB_WORKSPACE}/scripts/deploy-environment/utils.sh
+
+          WORKDIR=${GITHUB_WORKSPACE}
+          REPOROOT=${GITHUB_WORKSPACE}/apps
+
+          IMAGE_VERSION=${{ steps.extract_branch.outputs.branch }}
+          SERVICE_NAME=${IMAGE_VERSION//./}
+
+          rm -rf $WORKDIR/$SERVICE_NAME 2>/dev/null
+          mkdir -p $WORKDIR/$SERVICE_NAME && cp -R $WORKDIR/scripts/deploy-environment/manifests/* $WORKDIR/$SERVICE_NAME/
+          sed -i -e "s/%SERVICE_NAME%/$SERVICE_NAME/g" $WORKDIR/$SERVICE_NAME/ingress.yaml
+          sed -i -e "s/%SERVICE_NAME%/$SERVICE_NAME/g" $WORKDIR/$SERVICE_NAME/service.yaml
+          sed -i -e "s/%SERVICE_NAME%/$SERVICE_NAME/g" $WORKDIR/$SERVICE_NAME/deployment.yaml
+          sed -i -e "s/%IMAGE_VERSION%/$IMAGE_VERSION/g" $WORKDIR/$SERVICE_NAME/deployment.yaml
+          python $WORKDIR/scripts/deploy-environment/scripts/annotations.py -p $WORKDIR/$SERVICE_NAME/deployment.yaml
+
+          echo python -V
+
+          mkdir -p $REPOROOT/enterprise/enterprise-$SERVICE_NAME/
+          mv -f $WORKDIR/$SERVICE_NAME/* $REPOROOT/enterprise/enterprise-$SERVICE_NAME/
+
+          cd $REPOROOT
+          CHANGES=$(git status --porcelain)
+
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+
+          if [[ -z $CHANGES ]]; then
+              echo "there are no changes"
+          else
+              git add *
+              git commit -am "$CHANGES"
+          fi
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          directory: apps
+          repository: infor-design/apps
+          github_token: ${{ secrets.GH_ACCESS_TOKEN }}
+          branch: main
