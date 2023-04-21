@@ -361,13 +361,13 @@ a.is-personalizable svg.ripple-effect {
 }
 
 .header.is-personalizable button:not(:disabled),
-.header.is-personalizable button:not(:disabled) .icon,
+.header.is-personalizable button:not(:disabled):not(.close) .icon,
 .header.is-personalizable button:not(:disabled) .app-header.icon > span,
 .subheader.is-personalizable button:not(:disabled),
-.subheader.is-personalizable button:not(:disabled) .icon,
+.subheader.is-personalizable button:not(:disabled):not(.close) .icon,
 .subheader.is-personalizable button:not(:disabled) .app-header.icon > span,
 .is-personalizable .personalize-subheader button:not(:disabled),
-.is-personalizable .personalize-subheader button:not(:disabled) .icon,
+.is-personalizable .personalize-subheader button:not(:disabled):not(.close) .icon,
 .is-personalizable .personalize-subheader button:not(:disabled) .app-header.icon > span  {
   color: ${colors.contrast} !important;
 }

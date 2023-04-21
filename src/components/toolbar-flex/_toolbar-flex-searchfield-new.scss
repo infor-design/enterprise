@@ -43,6 +43,12 @@
       }
     }
   }
+
+  .toolbar-searchfield-wrapper {
+    .btn-icon .icon.close {
+      top: -1px;
+    }
+  }
 }
 
 @include respond-to(phone) {

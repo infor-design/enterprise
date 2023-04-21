@@ -64,9 +64,8 @@ $responsive-searchfield-filled-out-width: 34px;
       }
     }
 
-    &.searchfield-wrapper svg.icon:not(.icon-error) {
-      width: 18px;
-      height: 18px;
+    .btn-icon .icon.close {
+      top: 0;
     }
 
     &.searchfield-wrapper > svg.icon:not(.icon-error) {

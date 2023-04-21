@@ -37,6 +37,10 @@
           }
         }
       }
+
+      .toolbar-searchfield-wrapper .btn-icon.close .icon.close {
+        top: 9px;
+      }
     }
   }
 
@@ -72,6 +76,10 @@
         &.non-collapsible {
           width: 100%;
         }
+      }
+
+      .toolbar-searchfield-wrapper.non-collapsible.has-close-icon-button .btn-icon.close .icon.close {
+        top: 8px;
       }
     }
 

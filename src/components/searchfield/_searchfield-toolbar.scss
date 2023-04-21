@@ -330,10 +330,12 @@ $toolbarsearchfield-category-empty-width: 51px;
       color: $searchfield-icon-color;
     }
 
-    &.non-collapsible.is-hovered,
-    &.is-hovered {
-      :not(.collapse-button) .icon {
-        color: $searchfield-icon-hover-color;
+    &.has-close-icon-button.is-open {
+      & > .close:not(.collapse-button):hover {
+        &,
+        & .icon {
+          color: $searchfield-icon-hover-color;
+        }
       }
     }
 
@@ -457,13 +459,13 @@ $toolbarsearchfield-category-empty-width: 51px;
     .btn-icon {
       .icon {
         &.close {
-          top: 0;
+          top: -1px;
         }
       }
     }
 
     button.close {
-      top: 6px;
+      top: 7px;
     }
 
     &.has-custom-collapse-size {
@@ -818,7 +820,7 @@ $toolbarsearchfield-category-empty-width: 51px;
     }
 
     &.is-open .icon.close {
-      color: $searchfield-header-icon-color !important;
+      color: $searchfield-header-icon-color;
       transform: translateY(-50%);
       top: 50%;
     }
