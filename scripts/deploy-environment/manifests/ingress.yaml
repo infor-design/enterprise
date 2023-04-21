@@ -8,7 +8,7 @@ spec:
       hosts:
         - demo.design.infor.com
   rules:
-    - host: %SERVICE_NAME%-enterprise.demo.design.infor.com
+    - host: "%SERVICE_NAME%-enterprise.demo.design.infor.com"
       http:
         paths:
         - path: /
