@@ -1,0 +1,23 @@
+@import './module-nav.common.scss';
+
+// Module Nav Dropdown Component
+//================================================== //
+
+.module-nav-section.role-dropdown {
+  .dropdown-wrapper {
+    max-width: ($module-nav-submenu-size - $module-nav-gutter-size);
+    margin-bottom: 0;
+  }
+
+  select.dropdown {}
+
+  div.dropdown {
+    border-radius:
+    border: 2px solid $module-nav-
+  }
+}
+
+// Module Nav Dropdown List variant
+.dropdown-list.role-dropdown {
+
+}
