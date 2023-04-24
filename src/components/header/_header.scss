@@ -631,7 +631,7 @@ $subheader-height: 60px;
       }
 
       &:not(.close) .icon {
-        color: $header-button-color !important;
+        color: $header-button-color;
       }
 
       &.application-menu-trigger {
