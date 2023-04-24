@@ -1,5 +1,7 @@
 import { utils } from '../../utils/utils';
 
+import '../accordion/accordion';
+
 import { MODULE_NAV_DISPLAY_MODES, setDisplayMode } from './module-nav.common';
 
 // Settings and Options

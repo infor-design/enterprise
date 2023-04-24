@@ -1,6 +1,8 @@
 import { utils } from '../../utils/utils';
 
 import { Locale } from '../locale/locale';
+import '../button/button.jquery';
+import '../dropdown/dropdown.jquery';
 
 import { MODULE_NAV_DISPLAY_MODES, setDisplayMode } from './module-nav.common';
 
@@ -132,16 +134,21 @@ ModuleNavSwitcher.prototype = {
     this.containerEl = this.element.parents('.module-nav-container')[0];
 
     this.moduleButtonEl = this.element[0].querySelector('.btn');
-    if (!this.moduleButton) {
+    if (!this.moduleButtonEl) {
       this.element[0].insertAdjacentHTML('afterbegin', buttonTemplate());
       this.moduleButtonContainer = this.element[0].querySelector('.module-nav-section.module-btn');
-      this.moduleButton = this.element[0].querySelector('.btn');
+      this.moduleButtonEl = this.element[0].querySelector('.btn');
+      $(this.moduleButtonEl).button();
     }
 
     this.roleDropdownEl = this.element[0].querySelector('.module-role-dropdown');
     if (!this.roleDropdownEl) {
       this.element[0].insertAdjacentHTML('beforeend', dropdownTemplate());
       this.roleDropdownEl = this.element[0].querySelector('.module-nav-section.role-dropdown');
+      $(this.roleDropdownEl).find('.dropdown').dropdown({
+        cssClass: 'role-dropdown',
+        dropdownIcon: 'expand-all'
+      });
     }
   },
 

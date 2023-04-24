@@ -31,6 +31,7 @@ const reloadSourceStyles = ['none', 'open', 'typeahead'];
 * @param {object} [settings] The component settings.
 * @param {boolean} [settings.closeOnSelect = true]  When an option is selected, the list will close if set to "true".  List stays open if "false".
 * @param {string} [settings.cssClass = null]  Append an optional css class to dropdown-list
+* @param {string} [settings.dropdownIcon = 'dropdown'] Change the icon used as the "dropdown" arrow.
 * @param {string} [settings.filterMode = 'contains']  Search mode to use between 'startsWith' and 'contains', false will not allow client side filter
 * @param {boolean} [settings.virtualScroll = false] If true virtual scrolling will be used, this is good for larger lists but may not work with all other features.
 * @param {boolean} [settings.noSearch = false]  If true, disables the ability of the user to enter text
@@ -63,6 +64,7 @@ const reloadSourceStyles = ['none', 'open', 'typeahead'];
 const DROPDOWN_DEFAULTS = {
   closeOnSelect: true,
   cssClass: null,
+  dropdownIcon: 'dropdown',
   filterMode: 'contains',
   virtualScroll: false,
   maxSelected: undefined, // (multiselect) sets a limit on the number of items that can be selected
@@ -305,7 +307,7 @@ Dropdown.prototype = {
     // Check for and add the icon
     this.icon = this.wrapper.find('.icon');
     if (!this.icon.length) {
-      this.icon = $.createIconElement('dropdown');
+      this.icon = $.createIconElement(this.settings.dropdownIcon || 'dropdown');
       this.wrapper.append(this.icon);
     }
 
@@ -827,7 +829,7 @@ Dropdown.prototype = {
       listContents = `<div class="dropdown-list${reverseText}${isMobile ? ' mobile' : ''}${this.settings.multiple ? ' multiple' : ''}" id="${listId}" ${this.settings.multiple ? 'aria-multiselectable="true"' : ''}>
         <label for="dropdown-search" class="audible">${this.settings.noSearch ? Locale.translate('PressDown') : Locale.translate('TypeToFilter')}</label>
         <input type="text" class="dropdown-search${reverseText}" ${this.settings.noSearch ? 'aria-readonly="true"' : ''} id="dropdown-search" autocomplete="off" />
-        <span class="trigger">${isMobile ? $.createIcon({ icon: 'close', classes: ['close'] }) : $.createIcon('dropdown')}</span>`;
+        <span class="trigger">${isMobile ? $.createIcon({ icon: 'close', classes: ['close'] }) : $.createIcon(this.settings.dropdownIcon || 'dropdown')}</span>`;
 
       if (this.settings.virtualScroll) {
         listContents += `<div class="virtual-scroll-container">
