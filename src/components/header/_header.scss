@@ -617,7 +617,7 @@ $subheader-height: 60px;
     }
 
     // Buttons in the header will all appear as Tertiary/Destructive-style
-    [class^='btn'] {
+    [class^='btn']:not(.collapse-button) {
       background-color: transparent;
       border: 1px solid transparent;
       border-radius: 8px;
