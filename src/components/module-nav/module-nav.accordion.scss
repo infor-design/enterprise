@@ -162,7 +162,14 @@
       }
     }
 
+    &.is-expanded {
+      + .accordion-header {
+        border-top-color: transparent;
+      }
+    }
+
     // No support for 3+ layers
+    // @TODO: Build further support for this in the styles
     .accordion-pane {
       display: none;
       pointer-events: none;
