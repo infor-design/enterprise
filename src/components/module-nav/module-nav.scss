@@ -136,12 +136,27 @@
   }
 
   // =====================================================
+  // Footer/Settings section padding is removed to
+  // appear "connected" when touching
+  .module-nav-footer:not(:last-child) {
+    padding-block-end: 0;
+  }
+
+  .module-nav-footer + .module-nav-settings {
+    padding-block-start: 0;
+  }
+
+  // =====================================================
   // Optional Pinned Area: disabled
   // Entire menu is scrollable
 
   &:not(.pinned-optional) {
     .module-nav-accordion {
       overflow-y: auto;
+      flex-grow: 1;
+    }
+
+    .module-nav-footer:not(:last-child) {
       flex-grow: 1;
     }
   }
@@ -201,9 +216,16 @@
 
 .module-nav-footer {
   border-top: 1px solid $module-nav-separator-color;
-  // margin-block-start: $module-nav-footer-gutter-size;
   padding-block-start: $module-nav-footer-gutter-size;
 
   display: block;
   position: relative;
+}
+
+// =====================================================
+// Settings area is always pinned to the bottom (below footer)
+
+.module-nav-settings {
+  flex-shrink: 0;
+  overflow: hidden;
 }

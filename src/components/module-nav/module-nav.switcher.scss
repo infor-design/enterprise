@@ -6,6 +6,7 @@
 .module-nav-switcher {
   @include nav-item-style;
 
+  flex-shrink: 0;
   gap: $module-nav-switcher-button-gutter-size;
   justify-content: center;
   padding-block: $module-nav-item-padding-size;
