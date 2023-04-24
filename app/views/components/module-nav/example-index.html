@@ -7,37 +7,20 @@
 <section class="module-nav-container">
   <aside id="nav" class="module-nav">
     <div class="module-nav-bar">
+      <!-- Module Nav's top-level navigation items are inside the accordion -->
       <div class="module-nav-accordion accordion panel" data-options="{'allowOnePane': true}">
+        <!-- Module switcher -->
         <div class="module-nav-header accordion-section">
           <div class="module-nav-switcher"></div>
         </div>
+
+        <!-- Most accordion items should be placed in the "main" section -->
         <div class="module-nav-main accordion-section">
-          <div class="accordion-header is-selected">
-            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-              <use href="#icon-url"></use>
-            </svg>
-            <a href="#" id="item-one" data-automation-id="module-nav-item-one"><span>Label One</span></a>
-          </div>
-
           <div class="accordion-header">
             <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-              <use href="#icon-url"></use>
+              <use href="#icon-male"></use>
             </svg>
-            <a href="#" id="item-two" data-automation-id="module-nav-item-two"><span>Label Two</span></a>
-          </div>
-
-          <div class="accordion-header">
-            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-              <use href="#icon-url"></use>
-            </svg>
-            <a href="#" id="item-three" data-automation-id="module-nav-item-three"><span>Label Three</span></a>
-          </div>
-
-          <div class="accordion-header">
-            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-              <use href="#icon-url"></use>
-            </svg>
-            <a href="#" id="item-four" data-automation-id="module-nav-item-four"><span>Label Four</span></a>
+            <a href="#" id="item-config" data-automation-id="module-nav-item-config"><span>Configuration and Personalization</span></a>
           </div>
           <div class="accordion-pane">
             <div class="accordion-header">
@@ -51,6 +34,22 @@
             <div class="accordion-header">
               <a href="#"><span>Label</span></a>
             </div>
+          </div>
+
+          <div class="accordion-header">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-database"></use>
+            </svg>
+            <a href="#" id="item-database" data-automation-id="module-nav-item-databasde"><span>Database</span></a>
+          </div>
+          <div class="accordion-pane">
+            <div class="accordion-header">
+              <a href="#"><span>Label</span></a>
+            </div>
+
+            <div class="accordion-header">
+              <a href="#"><span>Label</span></a>
+            </div>
 
             <div class="accordion-header">
               <a href="#"><span>Label</span></a>
@@ -59,14 +58,94 @@
 
           <div class="accordion-header">
             <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-              <use href="#icon-url"></use>
+              <use href="#icon-translate"></use>
             </svg>
-            <a href="#" id="item-five" data-automation-id="module-nav-item-five"><span>Label Five</span></a>
+            <a href="#" id="item-translation" data-automation-id="module-nav-item-translation"><span>Data Translation</span></a>
+          </div>
+          <div class="accordion-pane">
+            <div class="accordion-header">
+              <a href="#"><span>Label</span></a>
+            </div>
+
+            <div class="accordion-header">
+              <a href="#"><span>Label</span></a>
+            </div>
+
+            <div class="accordion-header">
+              <a href="#"><span>Label</span></a>
+            </div>
+          </div>
+
+          <div class="accordion-header">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-security-on"></use>
+            </svg>
+            <a href="#" id="item-security" data-automation-id="module-nav-item-security"><span>Security</span></a>
+          </div>
+          <div class="accordion-pane">
+            <div class="accordion-header">
+              <a href="#"><span>Label</span></a>
+            </div>
+
+            <div class="accordion-header">
+              <a href="#"><span>Label</span></a>
+            </div>
+
+            <div class="accordion-header">
+              <a href="#"><span>Label</span></a>
+            </div>
+          </div>
+
+          <div class="accordion-header">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-line-bar-chart"></use>
+            </svg>
+            <a href="#" id="item-analytics" data-automation-id="module-nav-item-analytics"><span>Analytics</span></a>
+          </div>
+          <div class="accordion-pane">
+            <div class="accordion-header">
+              <a href="#"><span>Label</span></a>
+            </div>
+
+            <div class="accordion-header">
+              <a href="#"><span>Label</span></a>
+            </div>
+
+            <div class="accordion-header">
+              <a href="#"><span>Label</span></a>
+            </div>
+          </div>
+
+          <div class="accordion-header">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-import-spreadsheet"></use>
+            </svg>
+            <a href="#" id="item-audit" data-automation-id="module-nav-item-audit"><span>Audit and Monitoring</span></a>
+          </div>
+          <div class="accordion-pane">
+            <div class="accordion-header">
+              <a href="#"><span>Label</span></a>
+            </div>
+
+            <div class="accordion-header">
+              <a href="#"><span>Label</span></a>
+            </div>
+
+            <div class="accordion-header">
+              <a href="#"><span>Label</span></a>
+            </div>
           </div>
         </div>
 
-        <!-- Footer is still part of Accordion, but renders as a separate section -->
+        <!-- Footer items are separate and "optionally" pinnable -->
         <div class="module-nav-footer accordion-section">
+          <div class="accordion-header">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-document"></use>
+            </svg>
+            <a href="#" id="module-nav-item-documents" data-automation-id="module-nav-documents"><span>Documents</span></a>
+          </div>
+
           <div class="accordion-header is-selected">
             <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
               <use href="#icon-report"></use>
@@ -95,6 +174,7 @@
       </div>
     </div>
 
+    <!-- Detail area is optional and can have additional context -->
     <div class="module-nav-detail">&nbsp;</div>
   </aside>
   <div class="page-container scrollable">
@@ -121,7 +201,7 @@
 
         <div class="field">
           <input type="checkbox" class="checkbox" name="pin-sections" id="pin-sections" />
-          <label for="pin-sections" class="checkbox-label">Pin Sections</label>
+          <label for="pin-sections" class="checkbox-label">Pin "optionally-pinned" Sections</label>
         </div>
       </div>
     </div>
