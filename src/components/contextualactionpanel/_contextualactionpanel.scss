@@ -76,6 +76,14 @@
     }
 
     .toolbar {
+      .toolbar-searchfield-wrapper:not(.is-open):not(.non-collapsible) {
+        border-radius: 0;
+
+        .searchfield {
+          height: 34px;
+        }
+      }
+
       &.searchfield-active {
         .title + .buttonset {
           .toolbar-searchfield-wrapper {
@@ -94,6 +102,7 @@
         + .buttonset {
           @media (max-width: ($breakpoint-phone-to-tablet - 1)) {
             width: calc(100% - 5px) !important;
+            height: 41px;
           }
         }
       }
