@@ -603,6 +603,10 @@ html.theme-classic-dark .hero-widget.is-personalizable .hero-content .circlepage
   border-color: ${colors.darkest};
 }
 
+html[class*="-dark"] .header .toolbar-searchfield-wrapper.active.has-focus .searchfield {
+  border-color: ${colors.contrast};
+}
+
 .header.is-personalizable .btn-actions:not(.btn-primary):not(.btn-secondary).is-open .icon,
 .header.is-personalizable .wizard-header .tick,
 .header.is-personalizable .wizard-header .tick .label,
