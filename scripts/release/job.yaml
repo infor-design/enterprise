@@ -44,17 +44,17 @@ spec:
                   name: npm-token
                   key: token
             - name: BRANCH
-              value:
+              value: ""
             - name: NPM_COMMAND
-              value:
+              value: ""
             - name: NPM_LATEST
-              value:
+              value: ""
             - name: RELEASEIT_FLAGS
-              value:
+              value: ""
             - name: RELEASE_INCREMENT
-              value:
+              value: ""
             - name: REPO_OWNER_NAME
-              value:
+              value: ""
           lifecycle:
             postStart:
               exec:
@@ -64,4 +64,3 @@ spec:
                   - cp /usr/src/secrets/gitconfig /root/.gitconfig
           command: ["/bin/bash"]
           args: ["-c", ". ./run.sh"]
-      restartPolicy: Never
