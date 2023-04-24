@@ -1,0 +1,58 @@
+<div class="row">
+  <div class="twelve columns">
+
+    <div id="second" class="toolbar" role="toolbar">
+      <div class="buttonset">
+        <button id="second-1" class="btn" type="button"><span>First</span></button>
+        <button id="second-2" class="btn" type="button"><span>Second</span></button>
+        <button id="second-3" class="btn" type="button"><span>Third</span></button>
+        <button id="second-4" class="btn" type="button"><span>Fourth</span></button>
+        <button id="second-5" class="btn" type="button"><span>Fifth</span></button>
+        <button id="second-6" class="btn" type="button"><span>Sixth</span></button>
+        <button id="second-7" class="btn" type="button"><span>Seventh</span></button>
+        <button id="second-8" class="btn" type="button"><span>Eighth</span></button>
+        <button id="second-9" class="btn" type="button"><span>Ninth</span></button>
+        <button id="second-10" class="btn" type="button"><span>Tenth</span></button>
+        <button id="second-11" class="btn" type="button"><span>Eleventh</span></button>
+        <button id="second-12" class="btn-menu" type="button"><span>Twelfth</span></button>
+        <ul class="popupmenu is-selectable has-icons">
+          <li><a href="#">Create a form</a></li>
+          <li class="separator"></li>
+          <li><a href="#">Spelling...</a></li>
+          <li class="is-disabled"><a disabled aria-disabled="true" id="solverBtn">Solver...</a></li>
+          <li class="separator"></li>
+          <li class="is-checked"><a href="#">Enable Autocomplete</a></li>
+          <li><a href="#">Notification Rules</a></li>
+          <li><a href="#">Protect Sheet Rules</a></li>
+        </ul>
+        <button id="second-13" class="btn" type="button"><span>Thirteenth</span></button>
+        <button id="second-14" class="btn" type="button"><span>Fourteenth</span></button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div id="searchable-toolbar" class="toolbar" role="toolbar" data-options="{'rightAligned': true }">
+      <div class="buttonset">
+        <button id="btn-enable-12" class="btn-primary">
+          <span>Enable solver option</span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  $('body').on('resize', function() {
+    $('#second-12').trigger('updated.popupmenu');
+  })
+
+  $('#btn-enable-12').on('click', function() {
+    $('#solverBtn').parent().removeClass('is-disabled');
+  })
+</script>

@@ -27,6 +27,10 @@
   .toolbar.formatter-toolbar {
     margin-bottom: -1px;
 
+    &:not(.standalone) .buttonset [class^='btn']:not(:disabled):hover {
+      background-color: transparent;
+    }
+
     .buttonset {
       [class^='btn'] {
         height: 24px;
