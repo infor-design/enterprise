@@ -616,8 +616,7 @@ a.btn-close {
 
   &[disabled]:not(.btn-icon),
   &[disabled]:not(.btn-icon):hover {
-    background-color: $button-disabled-background-color;
-    color: $button-color-secondary-disabled-font-new;
+    color: $button-color-tertiary-disabled-font;
     cursor: default;
 
     .icon {
@@ -647,7 +646,7 @@ a.btn-close {
 }
 
 .header .btn-tertiary:hover:not(:disabled):not(.close):not(.personalize-actionable) svg.icon {
-  color: #fff !important;
+  color: #fff;
 }
 
 .btn-icon {
