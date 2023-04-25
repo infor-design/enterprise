@@ -64,12 +64,17 @@
 }
 
 // Reset toolbar buttons hover
-html[class*='theme-new-'] .masthead .flex-toolbar:not(.editor-toolbar):not(.formatter-toolbar):not(.contextual-toolbar) {
-  .toolbar-section [class^='btn']:not(:disabled):not(.searchfield-category-button) {
-    border-radius: unset;
+html[class*='theme-new-'] .masthead .flex-toolbar:not(.editor-toolbar):not(.formatter-toolbar):not(.contextual-toolbar) .toolbar-section [class^='btn']:not(:disabled):not(.searchfield-category-button),
+.masthead .toolbar:not(.standalone) .buttonset [class^='btn']:not(.searchfield-category-button) {
+  border-radius: unset;
 
-    &:hover {
-      background-color: transparent;
-    }
+  &:not(:disabled):hover {
+    background-color: transparent;
+  }
+}
+
+.masthead .toolbar:not(.standalone) .searchfield-wrapper.toolbar-searchfield-wrapper:not(.has-categories):not(.is-open) {
+  &:hover {
+    background-color: transparent;
   }
 }
