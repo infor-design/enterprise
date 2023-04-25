@@ -18,6 +18,7 @@
 - `[Monthview]` Fixed on updated method creating duplicates. ([NG#1446](https://github.com/infor-design/enterprise-ng/issues/1446))
 - `[Popupmenu]` Fixed a bug where the popupmenu arrow was not appearing despite `showArrow` being set to true. ([#5061](https://github.com/infor-design/enterprise/issues/5061))
 - `[Popupmenu]` Fixed popupmenu previous states not getting saved when called resize and update. ([#6601](https://github.com/infor-design/enterprise/issues/6601))
+- `[Toolbar]` Added hover style for contextual toolbar. ([#7459](https://github.com/infor-design/enterprise/issues/7459))
 - `[Toolbar/Toolbar Flex]` Added hover state to buttons. ([#7327](https://github.com/infor-design/enterprise/issues/7327))
 - `[Toolbar-Flex]` Fixed redundant aria-disabled in toolbar when element is disabled. ([#6339](https://github.com/infor-design/enterprise/issues/6339))
 - `[Toolbar Flex]` Fixed buttons being not visible on window resize. ([#7421](https://github.com/infor-design/enterprise/issues/7421))
