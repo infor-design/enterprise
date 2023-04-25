@@ -41,7 +41,7 @@
   }
 
   &:not(.standalone) {
-    .searchfield-wrapper.toolbar-searchfield-wrapper:not(.is-open) {
+    .searchfield-wrapper.toolbar-searchfield-wrapper:not(.has-categories):not(.is-open) {
       height: 34px;
       margin-top: 4px;
 
@@ -51,7 +51,7 @@
       }
 
       .icon:not(.icon-dropdown) {
-        top: -3px;
+        top: -2px;
         left: 7px;
       }
 
@@ -60,17 +60,37 @@
       }
     }
 
-    .buttonset [class^='btn'] {
+    .buttonset [class^='btn']:not(.searchfield-category-button) {
       border-radius: 8px;
 
       &:not(:disabled):hover {
         background-color: $toolbar-btn-actions-hover-bg-color;
       }
     }
+
+    .searchfield-wrapper.toolbar-searchfield-wrapper.has-categories:not(.is-open) {
+      .searchfield-category-button {
+        width: 34px;
+        height: 34px;
+        padding-right: 7px;
+        padding-left: 7px;
+        border-radius: 8px;
+        margin-top: 2px;
+        text-overflow: unset;
+
+        &:not(:disabled):hover {
+          background-color: $toolbar-btn-actions-hover-bg-color;
+
+          .icon:not(.icon-dropdown) {
+            color: $searchfield-icon-hover-color;
+          }
+        }
+      }
+    }
   }
 
-  .searchfield-wrapper.toolbar-searchfield-wrapper.has-close-icon-button.is-open .close {
-    padding: 4px;
+  .searchfield-wrapper.toolbar-searchfield-wrapper.has-close-icon-button.is-open > svg.close {
+    padding: 3px;
     width: 24px;
     height: 24px;
     border-radius: 8px;

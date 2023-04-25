@@ -505,7 +505,7 @@ SearchField.prototype = {
    */
   simpleAdjustOnBreakpoint() {
     if (this.shouldBeFullWidth()) {
-      if (!this.isFocused) {
+      if (!this.isFocused && (this.settings.collapsible || this.isContainedByFlexToolbar)) {
         this.wrapper[0].classList.remove('is-open');
       }
       return;
@@ -1093,7 +1093,7 @@ SearchField.prototype = {
 
       if (self.isCurrentlyCollapsible) {
         self.collapse();
-      } else if (self.isContainedByFlexToolbar) {
+      } else if (self.isContainedByFlexToolbar && (self.settings.collapsible || breakpoints.isBelow('phone-to-tablet'))) {
         self.wrapper[0].classList.remove('is-open');
       }
     }
@@ -1800,7 +1800,7 @@ SearchField.prototype = {
         buttonset: buttonsetElemWidth
       };
 
-      if (!this.isContainedByFlexToolbar && breakpoints.isAbove('phone-to-tablet')) {
+      if (!this.isContainedByFlexToolbar) {
         this.wrapper[0].classList.add('is-open');
       }
       this.calculateOpenWidth();
