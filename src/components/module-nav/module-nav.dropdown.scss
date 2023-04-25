@@ -9,17 +9,23 @@
     margin-bottom: 0;
   }
 
-  select.dropdown {}
-
   div.dropdown {
     background-color: $module-nav-input-bg-color;
     border-radius: $module-nav-input-border-radius;
     border: $module-nav-input-border-width solid $module-nav-input-border-color;
     color: $module-nav-input-text-color;
 
+    height: $module-nav-switcher-dropdown-height;
+    width: ($module-nav-submenu-size - $module-nav-gutter-size - 2);
+
     .icon {
       color: inherit;
       margin-block-end: $module-nav-input-border-radius;
+    }
+
+    // Override top/right from Dropdown
+    + .icon {
+      right: 14px;
     }
   }
 }
@@ -30,4 +36,15 @@
   border-radius: $module-nav-input-border-radius;
   border: $module-nav-input-border-width solid $module-nav-input-border-color;
   color: $module-nav-input-text-color;
+}
+
+// =====================================================
+// Scrollable, non-pinned (changes some component sizes)
+
+.module-nav-accordion.has-scrollbar {
+  .module-nav-section.role-dropdown {
+    div.dropdown {
+      width: $module-nav-switcher-dropdown-size;
+    }
+  }
 }

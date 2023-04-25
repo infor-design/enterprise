@@ -48,7 +48,13 @@ const dropdownTemplate = () => `<div class="module-nav-section role-dropdown">
   <label for="module-nav-role-switcher" class="label audible">Roles</label>
   <select id="module-nav-role-switcher" name="module-nav-role-switcher" class="dropdown" data-automation-id="custom-automation-dropdown-id" >
     <option value="admin">Admin</option>
-    <option value="user">User</option>
+    <option value="job-console">Job Console</option>
+    <option value="process-server-admin">Process Server Administrator</option>
+    <option value="user-1">User 1</option>
+    <option value="user-2">User 2</option>
+    <option value="user-3">User 3</option>
+    <option value="user-4">User 4</option>
+    <option value="user-5">User 5</option>
   </select>
 </div>`;
 

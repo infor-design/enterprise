@@ -51,6 +51,8 @@ ModuleNav.prototype = {
     if (this.settings.displayMode) this.setDisplayMode(this.settings.displayMode);
     this.setPinSections(this.settings.pinSections);
     this.setShowDetailView(this.settings.showDetailView);
+    this.setScrollable();
+    this.configureResize();
     return this;
   },
 
@@ -79,10 +81,12 @@ ModuleNav.prototype = {
    * @private
    */
   handleEvents() {
-    const self = this;
-
     this.element.on(`updated.${COMPONENT_NAME}`, () => {
-      self.updated();
+      this.updated();
+    });
+
+    $('body').on(`resize.${COMPONENT_NAME}`, () => {
+      this.setScrollable();
     });
 
     if (this.accordionEl) {
@@ -141,6 +145,20 @@ ModuleNav.prototype = {
   },
 
   /**
+   * @private
+   */
+  configureResize() {
+    if (!this.ro) {
+      this.ro = new ResizeObserver(() => {
+        this.setScrollable();
+      });
+    }
+    if (this.accordionEl) {
+      this.ro.observe(this.accordionEl);
+    }
+  },
+
+  /**
    * Configures the Module Nav's display mode.
    * @param {string} val desired display mode
    * @returns {void}
@@ -159,6 +177,22 @@ ModuleNav.prototype = {
    */
   setPinSections(val) {
     this.containerEl.classList[val ? 'add' : 'remove']('pinned-optional');
+  },
+
+  /**
+   * Detects if the main accordion element is scrolled (not "optionally-pinned" mode)
+   * Toggles a class on/off based on ability to scroll.
+   * @returns {void}
+   */
+  setScrollable() {
+    const el = this.accordionEl;
+    if (el) {
+      if (el.scrollHeight > el.clientHeight) {
+        el.classList.add('has-scrollbar');
+      } else {
+        el.classList.remove('has-scrollbar');
+      }
+    }
   },
 
   /**
@@ -192,6 +226,7 @@ ModuleNav.prototype = {
    */
   teardown() {
     this.teardownEvents();
+    this.teardownResize();
 
     // Containers
     this.containerEl = null;
@@ -216,6 +251,16 @@ ModuleNav.prototype = {
     this.element.off(`updated.${COMPONENT_NAME}`);
     $(this.accordionEl).off(`beforeexpand.${COMPONENT_NAME}`);
     $(this.accordionEl).off(`rendered.${COMPONENT_NAME}`);
+  },
+
+  /**
+   * @private
+   */
+  teardownResize() {
+    if (this.ro) {
+      this.ro.disconnect();
+      this.ro = null;
+    }
   },
 
   /**

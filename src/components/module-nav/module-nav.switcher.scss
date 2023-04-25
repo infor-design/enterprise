@@ -8,9 +8,6 @@
 
   flex-shrink: 0;
   gap: $module-nav-switcher-button-gutter-size;
-  justify-content: center;
-  padding-block: $module-nav-item-padding-size;
-  padding-inline: ($module-nav-item-padding-size / 2);
 }
 
 .module-nav-section {
@@ -21,12 +18,6 @@
 
 .module-nav-section.role-dropdown {
   display: none;
-
-  // IDS Dropdown
-  .dropdown-wrapper {
-    max-width: ($module-nav-submenu-size - $module-nav-gutter-size);
-    margin-bottom: 0;
-  }
 }
 
 // Reset location of icon in Module Switcher button (user defined?)

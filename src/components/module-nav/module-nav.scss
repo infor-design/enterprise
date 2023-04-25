@@ -143,12 +143,12 @@
   }
 
   .module-nav-footer + .module-nav-settings {
-    padding-block-start: 0;
+    padding-block: 0;
   }
 
   // =====================================================
   // Optional Pinned Area: disabled
-  // Entire menu is scrollable
+  // Entire menu can become scrollable
 
   &:not(.pinned-optional) {
     .module-nav-accordion {
@@ -163,7 +163,7 @@
 
   // =====================================================
   // Optional Pinned Area: enabled
-  // individual areas are scrollable
+  // individual areas can become scrollable
 
   &.pinned-optional {
     .module-nav-main {
