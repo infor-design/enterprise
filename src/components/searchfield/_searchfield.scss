@@ -113,7 +113,7 @@
     width: 100%;
 
     &.has-categories button.close:not(.is-empty) {
-      top: 9px;
+      top: 7px;
     }
 
     > button.close {
@@ -343,7 +343,7 @@
 
       svg.close {
         left: 0;
-        top: 0;
+        top: 1px;
       }
     }
   }
@@ -365,8 +365,6 @@
 }
 
 .searchfield-category-button {
-  height: 38px;
-
   .category {
     margin-bottom: 2px;
     padding-left: 5px;

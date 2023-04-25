@@ -23,7 +23,7 @@ $header-bg-color: $ids-color-palette-azure-60;
 $subhead-bg-color: $ids-color-palette-azure-70;
 $header-border-color: $ids-color-palette-slate-100;
 $header-text-color: $ids-color-palette-white;
-$header-button-color: rgba($ids-color-palette-white, 0.7);
+$header-button-color: $ids-color-palette-white;
 $header-button-focus-color: $ids-color-palette-white;
 $header-button-hover-color: rgba($ids-color-palette-white, 0.7);
 $header-button-disabled-color: rgba($ids-color-palette-white, 0.3);
@@ -484,7 +484,7 @@ $accordion-inverse-focus-state-color: $ids-color-palette-white;
 $accordion-focused-text-color: $ids-color-palette-azure-50;
 $accordion-focused-border-color: $ids-color-palette-azure-50;
 
-$accordion-selected-bg-color: $ids-color-palette-azure-50;
+$accordion-selected-bg-color: $ids-color-palette-slate-40;
 $accordion-selected-text-color: $ids-color-palette-white;
 
 $accordion-highcontrast-text-decoration: underline;

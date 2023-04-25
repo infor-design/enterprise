@@ -202,7 +202,6 @@ $timepicker-readonly-icon-color: $ids-color-palette-slate-40;
 
 // Buttons
 $header-button-disabled-color: rgba($ids-color-palette-white, 0.6);
-$button-color-primary-disabled-font-new: $ids-color-palette-white;
 $button-color-tertiary-initial-font: $ids-color-palette-slate-60;
 $button-color-tertiary-actionsheet-hover-font: $button-color-tertiary-hover-font-new;
 $button-disabled-background-color: transparent;
@@ -446,7 +445,7 @@ $swipeaction-right-hover-bg-color: $ids-color-palette-azure-80;
 $swipeaction-right-hover-color: $ids-color-palette-white;
 
 // New Theme only Variables
-$new-acc-border-radius: 2px;
+$new-acc-border-radius: 6px;
 $new-acc-header-text-color: $ids-color-palette-slate-20;
 $new-acc-header-selected-text-color: $ids-color-palette-white;
 

@@ -17,8 +17,8 @@
   }
 
   &:active {
-    background-color: $button-color-primary-active-background;
-    border: 2px solid $button-color-primary-active-background;
+    background-color: $button-color-primary-hover-background;
+    border: 2px solid $button-color-primary-hover-background;
     box-shadow: none;
   }
 
@@ -30,7 +30,7 @@
     }
 
     &:active {
-      background-color: $button-color-primary-active-background;
+      background-color: $button-color-primary-hover-background;
       box-shadow: none;
     }
   }
@@ -51,23 +51,23 @@
   }
 }
 
-.btn-primary[disabled] {
+.btn-primary[disabled]:not(.destructive) {
   background-color: $button-color-primary-disabled-background-new;
   border: 2px solid $button-color-primary-disabled-background-new;
-  color: $button-color-primary-disabled-font-new !important;
+  color: $button-color-primary-disabled-font-new;
 
   svg.icon {
-    color: $button-color-primary-disabled-font-new !important;
-
-    &:hover {
-      color: $button-color-primary-disabled-font-new;
-    }
+    color: $button-color-primary-disabled-font-new;
   }
 
   &:hover {
     background-color: $button-color-primary-disabled-background-new;
-    border: 2px solid $button-color-primary-disabled-background-new;
+    border-color: $button-color-primary-disabled-background-new;
     color: $button-color-primary-disabled-font-new;
+
+    svg.icon {
+      color: $button-color-primary-disabled-font-new;
+    }
   }
 }
 
@@ -138,8 +138,8 @@
 .btn-menu {
   border-radius: 8px;
 
-  &:hover:not(:disabled):not(.close):not(.btn-filter):not(.personalize-actionable) {
-    background-color: $button-color-tertiary-hover-background-new !important;
+  &:hover:not(:disabled):not(.close):not(.btn-filter):not(.personalize-actionable):not(.destructive) {
+    background-color: $button-color-tertiary-hover-background-new;
     color: $button-color-tertiary-hover-font-new;
 
     svg.icon {
@@ -164,15 +164,6 @@
 
       svg.icon {
         color: $button-color-tertiary-destructive-hover-font-new;
-      }
-    }
-
-    &:disabled {
-      color: $button-color-tertiary-destructive-disabled-font-new;
-      background-color: $button-color-tertiary-destructive-disabled-background-new;
-
-      svg.icon {
-        color: $button-color-tertiary-destructive-disabled-font-new;
       }
     }
   }
