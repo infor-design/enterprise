@@ -56,6 +56,13 @@ html.theme-classic-dark .is-personalizable:not(.header) .btn-primary:not(.destru
   border-color: ${colors.baseDisabled} !important;
 }
 
+html[class*="theme-classic-"]:not(.theme-classic-dark) .is-personalizable:not(.header) .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled,
+html[class*="theme-classic-"]:not(.theme-classic-dark) .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane).is-personalizable:disabled {
+  color: ${colors.baseDisabledText};
+  background-color: ${colors.baseDisabled};
+  border-color: ${colors.baseDisabled};
+}
+
 .is-personalizable:not(.header) .btn-link:not(:disabled),
 .btn-link.is-personalizable:not(:disabled) {
   color: ${colors.btnLinkColor};
