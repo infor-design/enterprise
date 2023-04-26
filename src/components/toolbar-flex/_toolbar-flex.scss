@@ -146,28 +146,28 @@
         &.is-overflowed {
           display: none;
         }
-  
+
         svg {
           color: $contextual-toolbar-button-color;
         }
-  
+
         &:hover {
           color: $contextual-toolbar-button-hover-color;
           background-color: transparent;
-  
+
           svg {
             color: inherit;
           }
         }
-  
+
         &:focus {
           box-shadow: 0 0 0 2px transparent, 0 0 0 1px $contextual-toolbar-color;
-  
+
           &:not(.hide-focus) {
             color: $contextual-toolbar-color;
           }
         }
-  
+
         &[disabled] {
           color: $contextual-toolbar-button-disabled-color;
           background-color: transparent;
@@ -175,7 +175,7 @@
           svg {
             color: inherit;
           }
-  
+
           &:hover {
             background-color: transparent;
             border-color: transparent;
@@ -192,7 +192,7 @@
         top: 3px;
         left: 1px;
         color: $contextual-toolbar-button-color;
-  
+
         svg {
           color: $contextual-toolbar-button-color;
         }
@@ -200,27 +200,27 @@
         &:not(:disabled):hover {
           color: $contextual-toolbar-button-hover-color;
           background-color: transparent;
-  
+
           svg {
             color: inherit;
           }
         }
-  
+
         &:focus {
           box-shadow: 0 0 0 2px transparent, 0 0 0 1px $contextual-toolbar-color;
-  
+
           &:not(.hide-focus) {
             color: $contextual-toolbar-color;
           }
         }
-  
+
         &[disabled] {
           color: $contextual-toolbar-button-disabled-color;
-  
+
           svg {
             color: inherit;
           }
-  
+
           &:hover {
             background-color: transparent;
             border-color: transparent;
@@ -452,18 +452,7 @@ html[class*='theme-new-'] .flex-toolbar:not(.editor-toolbar):not(.formatter-tool
   .toolbar-section [class^='btn']:not(:disabled):not(.searchfield-category-button) {
     border-radius: 8px;
 
-    &:hover {
-      background-color: $toolbar-btn-actions-hover-bg-color;
-    }
-  }
-
-  .toolbar-section.search .searchfield-wrapper.toolbar-searchfield-wrapper.has-close-icon-button.is-open svg.close {
-    padding: 4px;
-    width: 24px;
-    height: 24px;
-    border-radius: 8px;
-
-    &:hover {
+    &:not(.collapse-button):hover {
       background-color: $toolbar-btn-actions-hover-bg-color;
     }
   }

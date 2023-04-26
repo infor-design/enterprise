@@ -89,7 +89,7 @@ $button-hyperlink-hover-color: $ids-color-palette-slate-40;
 $button-color-primary-initial-font: $ids-color-palette-slate-90;
 $button-color-primary-initial-background: $ids-color-palette-azure-40;
 $button-color-primary-hover-background: $ids-color-palette-azure-30;
-$button-color-primary-disabled-background-new: $ids-color-palette-slate-80;
+$button-color-primary-disabled-background-new: $ids-color-palette-slate-90;
 $button-color-primary-disabled-font-new: $ids-color-palette-slate-40;
 
 $button-color-secondary-initial-font-new: $ids-color-palette-azure-40;
@@ -799,7 +799,7 @@ $header-text-color: $ids-color-palette-white;
 $header-toolbar-searchfield-icon-color: rgba($ids-color-palette-white, 1);
 $header-button-hover-color: rgba($ids-color-palette-white, 1);
 $header-button-focus-color: rgba($ids-color-palette-white, 1);
-$header-button-color: rgba($ids-color-palette-white, 0.7);
+$header-button-color: $ids-color-palette-white;
 $header-bg-color: $ids-color-palette-slate-60;
 $header-primary-btn-background-color: $ids-color-palette-slate-70;
 $header-primary-btn-background-hover-color: $ids-color-palette-slate-80;

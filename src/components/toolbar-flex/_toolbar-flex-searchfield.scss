@@ -60,14 +60,15 @@ $responsive-searchfield-filled-out-width: 34px;
   .toolbar-searchfield-wrapper {
     &.has-collapse-button.is-open:not(.non-collapsible) {
       .icon:not(.close):not(.icon-error) {
-        color: $searchfield-header-toolbar-icon-color;
         top: 50%;
       }
     }
 
+    .btn-icon .icon.close {
+      top: 0;
+    }
+
     &.searchfield-wrapper > svg.icon:not(.icon-error) {
-      width: 18px;
-      height: 18px;
       top: 50%;
       transform: translateY(-50%);
     }
