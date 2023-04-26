@@ -470,7 +470,7 @@ html[class*="theme-new-"] .personalize-header.tab-container.header-tabs:not(.alt
   opacity: 1;
 }
 
-html[class*="theme-new-"] .is-personalizable .count-container .instance-count .count {
+.is-personalizable .count-container .instance-count .count {
   border-color: ${colors.contrast} !important;
   color: ${colors.contrast} !important;
 }
@@ -493,7 +493,7 @@ html.theme-classic-dark .hero-widget.is-personalizable .hero-content .circlepage
   background-color: ${colors.subtext};
 }
 
-.hero-widget.is-personalizable .hero-header .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary).is-open span {
+.hero-widget.is-personalizable .hero-header .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):hover span {
   color: ${colors.contrast} !important;
 }
 
