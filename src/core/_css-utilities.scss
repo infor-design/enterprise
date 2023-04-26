@@ -107,4 +107,16 @@
     $padding: $i * 1px;
     margin-right: $padding !important;
   }
+
+  .padding-x-#{$i} {
+    $padding: $i * 1px;
+    padding-left: $padding !important;
+    padding-right: $padding !important;
+  }
+
+  .padding-y-#{$i} {
+    $padding: $i * 1px;
+    padding-bottom: $padding !important;
+    padding-top: $padding !important;
+  }
 }

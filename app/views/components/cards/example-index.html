@@ -1,7 +1,7 @@
 
 <div class="row">
   <div class="one-third column">
-    <div class="card">
+    <div class="card" id="idx-card-1">
       <div class="card-header">
           <h2 class="widget-title">Card Title</h2>
           <button class="btn-actions" type="button" id="btn-1">
@@ -57,5 +57,9 @@
 <script>
   $('.btn-actions').on('selected', function (e, args) {
     console.log(e, args);
+  });
+
+  $('#idx-card-1').cards({
+    contentPaddingX: 16,
   });
 </script>

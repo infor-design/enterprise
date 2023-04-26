@@ -98,3 +98,10 @@ This utility adds margin to the left of an element, where # is a number from 1 t
 
 `.m-right-#`
 This utility adds margin to the right of an element, where # is a number from 1 to 80 that specifies the amount of margin in pixels.
+
+`.padding-x-#`
+This utility adds padding to the left and right of an element, where # is a number from 1 to 80 that specifies the amount of padding in pixels.
+
+`.padding-y-#`
+This utility adds padding to the top and bottom of an element, where # is a number from 1 to 80 that specifies the amount of padding in pixels.
+

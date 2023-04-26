@@ -12,7 +12,11 @@ const COMPONENT_NAME = 'cards';
  * @class Cards
  * @param {string} element The plugin element for the constuctor
  * @param {string} [settings] The settings element.
- * @param {boolean} [settings.expandableHeader] Abilty to expand the card header
+ * @param {boolean} [settings.bordered] Ability to add bordered or boreder-less styles to the card element.
+ * @param {boolean} [settings.showCardHeader] Determine wheter the card header should be displayed or not.
+ * @param {boolean} [settings.expandableHeader] Abilty to expand the card header.
+ * @param {number} [settings.contentPaddingX] The padding left and right of the content of the card element. It will generate the css utlity classes for paddings
+ * @param {number} [settings.contentPaddingY] The padding top and bottom of the content of the card element. It will generate the css utlity classes for paddings.
  * @param {boolean} [settings.verticalButtonAction] Ability to rotate the button action vertically
  * @param {array} [settings.dataset=[]] An array of data objects that will be represented as cards.
  * @param {string} [settings.template] Html Template String.
@@ -21,6 +25,10 @@ const COMPONENT_NAME = 'cards';
  */
 
 const CARDS_DEFAULTS = {
+  bordered: null,
+  showCardHeader: true,
+  contentPaddingX: 0,
+  contentPaddingY: 0,
   dataset: [],
   template: null,
   selectable: false,
@@ -159,6 +167,21 @@ Cards.prototype = {
       utils.addAttributes(this.buttonAction, this, this.settings.attributes, 'action', true);
       utils.addAttributes(this.cardContentPane, this, this.settings.attributes, 'content', true);
     }
+
+    if (this.settings.bordered === true) {
+      this.element.addClass('bordered');
+    }
+
+    if (this.settings.bordered === false) {
+      this.element.addClass('border-less');
+    }
+
+    if (!this.settings.showCardHeader) {
+      this.cardHeader.remove();
+      this.element.addClass('no-header');
+    }
+
+    this.element.find('.card-content').addClass(`padding-x-${this.settings.contentPaddingX} padding-y-${this.settings.contentPaddingY}`);
 
     if (this.settings.selectable === 'multiple') {
       const self = this;

@@ -71,6 +71,15 @@
       }
     }
   }
+
+  &.multiple,
+  &.single {
+    .card-content,
+    .widget-content {
+      align-items: start !important;
+      flex-wrap: nowrap;
+    }
+  }
 }
 
 .card,
@@ -300,11 +309,6 @@
     @include auto-height;
     @include auto-width;
   }
-
-  &.border-less {
-    border-color: transparent;
-    box-shadow: none;
-  }
 }
 
 // CSS Rule for new expandable card
@@ -392,9 +396,8 @@
 
 .card-header,
 .widget-header {
-  border-bottom: 1px solid $cardlist-border-color;
-  height: 50px;
-  line-height: 50px;
+  height: 48px;
+  line-height: 48px;
 
   &.has-toolbar {
     padding: 0 13px 0 20px;
@@ -526,9 +529,6 @@
 
 .widget-content,
 .card-content {
-  // stylelint-disable-next-line scss/at-extend-no-missing-placeholder
-  @extend .flex-center;
-
   flex-direction: column;
   height: 318px;
   min-height: 318px;

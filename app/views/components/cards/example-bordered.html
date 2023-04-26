@@ -1,0 +1,171 @@
+
+<div class="row">
+  <div class="full-width column">
+    <h2 class="fieldset-title">Bordered with Header</h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="one-third column">
+    <div class="card" id="example-card-bordered-2">
+      <div class="card-header">
+        <h2 class="card-title">Tasks</h2>
+        <button class="btn-actions" type="button">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-more"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li class="is-checked"><a href="#" id="single-selection">Single Selection</a></li>
+          <li><a href="#" id="mixed-selection">Mixed Selection</a></li>
+          <li><a href="#" id="multiple-selection">Multiple Selection</a></li>
+        </ul>
+      </div>
+
+      <div class="card-content">
+        <div class="listview" id="task-listview" data-options="{'source': '{{basepath}}api/inventory-tasks', 'template': 'task-tmpl', 'disableItemDeactivation': true, 'selectOnFocus': 'false'}"></div>
+      </div>
+    </div>
+
+  </div>
+  <div class="one-third column">
+    <div class="card" id="example-card-bordered-1">
+      <div class="card-header">
+          <h2 class="widget-title">Some Interesting Widget</h2>
+          <button type="button" class="btn" id="tertiary-filter-one">
+            <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+              <use href="#icon-open-folder"></use>
+            </svg>
+            <span>Action</span>
+          </button>
+          <button class="btn-actions" type="button" id="btn-1">
+            <span class="audible">Actions</span>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-more"></use>
+            </svg>
+          </button>
+          <ul class="popupmenu">
+            <li><a href="#" id="action-1">Action 1</a></li>
+            <li><a href="#" id="action-2">Action 2</a></li>
+            <li><a href="#" id="action-3">Action 3</a></li>
+            <li><a href="#" id="action-4">Action 4</a></li>
+            <li><a href="#" id="action-5">Action 5</a></li>
+            <li><a href="#" id="action-6">Action 6</a></li>
+            <li><a href="#" id="action-7">Action 7</a></li>
+            <li><a href="#" id="action-8">Action 8</a></li>
+            <li><a href="#" id="action-9">Action 9</a></li>
+            <li><a href="#" id="action-10">Action 10</a></li>
+            <li><a href="#" id="action-11">Action 11</a></li>
+            <li><a href="#" id="action-12">Action 12</a></li>
+          </ul>
+      </div><!-- .card-header -->
+
+      <div class="card-content">
+        <div id="line-example-widget" class="chart-container"></div>
+      </div><!-- .card-content -->
+    </div>
+  </div>
+</div>
+
+{{={{{ }}}=}}
+<script id="task-tmpl" type="text/html">
+  <ul>
+    {{#dataset}}
+      {{#disabled}}
+        <li class="is-disabled">
+      {{/disabled}}
+      {{^disabled}}
+        <li>
+      {{/disabled}}
+        <p class="listview-heading">Task #{{task}}</p>
+        <p class="listview-subheading">{{desc}} </p>
+        <p class="listview-micro">Due: {{date}}</p>
+      </li>
+    {{/dataset}}
+  </ul>
+</script>
+
+<script>
+  $('body').on('initialized', function () {
+    const listview = $('#task-listview').listview().data('listview');
+    
+    $('#single-selection').on('click', () => listview.updated({ selectable: 'single' }));
+    $('#mixed-selection').on('click', () => listview.updated({ selectable: 'mixed' }));
+    $('#multiple-selection').on('click', () => listview.updated({ selectable: 'multiple' }));
+  });
+</script>
+
+<script id="test-script">
+  $('.btn-actions').on('selected', function (e, args) {
+    console.log(e, args);
+  });
+
+  $('[id^=example-card-bordered-]').each(function() {
+    // apply the 'cards' method with the 'bordered' option set to 'false'
+    $(this).cards({ bordered: true });
+  });
+
+  $('body').on('initialized', function () {
+    // Some data
+    var dataset = [{
+      data: [{
+        name: 'one',
+        value: 10000
+      }, {
+        name: 'two',
+        value: 67000
+      }, {
+        name: 'three',
+        value: 10
+      }, {
+        name: 'four',
+        value: 500
+      }, {
+        name: 'five',
+        value: 1340
+      }, {
+        name: 'six',
+        value: 3800
+      }, {
+        name: 'seven',
+        value: 51500
+      }, {
+        name: 'eight',
+        value: 76000
+      }, {
+        name: 'nine',
+        value: 2000
+      }, {
+        name: 'ten',
+        value: 9000
+      }, {
+        name: 'eleven',
+        value: 59000
+      }, {
+        name: 'twelve',
+        value: 57000
+      }, {
+        name: 'thirteen',
+        value: 50000
+      }],
+      name: 'Component A'
+    }];
+
+    // Get setting with copy dataset
+    function getSetting(xAxis) {
+      return {
+        type: 'line',
+        showLegend: false,
+        dataset: JSON.parse(JSON.stringify(dataset)),
+        xAxis: xAxis
+      };
+    }
+
+    // Set setting
+    var setting3 = getSetting({ rotateOnSmallView: true });
+
+    // Initialized
+    $('#line-example-widget').chart(setting3);
+  });
+</script>

@@ -1,8 +1,68 @@
 .card,
 .small-widget,
 .widget {
-  border-radius: 3px;
-  box-shadow: 0 0 8px $cardlist-box-shadow-color;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px 1px $cardlist-box-shadow-color;
+
+  &.bordered {
+    border: 1px solid transparent;
+
+    &:hover {
+      border: 1px solid $widget-border-color-hover;
+      box-shadow: 0 2px 4px 1px $cardlist-box-shadow-color-hover;
+    }
+  }
+
+  &.no-header {
+    .card-content {
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+    }
+  }
+
+  &.border-less {
+    background: none;
+    border-color: transparent;
+    box-shadow: none;
+
+    &:hover {
+      button {
+        opacity: 1;
+      }
+    }
+
+    .btn-actions.is-open,
+    .btn-actions.has-open-tooltip {
+      opacity: 1;
+    }
+
+    button {
+      opacity: 0;
+    }
+  }
+
+  &.is-empty {
+    .widget-content,
+    .card-content {
+      // stylelint-disable-next-line scss/at-extend-no-missing-placeholder
+      @extend .flex-center;
+    }
+  }
+
+  .card-header,
+  .widget-header {
+    .btn-actions {
+      svg {
+        transform: rotate(90deg);
+      }
+    }
+  }
+
+  .card-content,
+  .widget-content {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
 
   &.card-variant {
     .card-buttonset {
@@ -19,7 +79,7 @@
 .card-header,
 .widget-header {
   border-bottom: none;
-  height: 34px;
+  height: 48px;
   line-height: normal;
 
   .card-title,
@@ -48,14 +108,73 @@
 
 .card-header,
 .widget-header {
-  margin: 8px 2px 8px 16px;
-  padding: 0;
+  align-items: center;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  margin: 0;
+  padding-bottom: 0;
+  padding-left: 16px;
+  padding-right: 8px;
+  padding-top: 0;
+
+  > button.btn-actions:not(.has-toolbar) {
+    position: relative;
+
+    svg.icon {
+      top: 0;
+    }
+  }
+
+  .widget-title {
+    margin: 0;
+  }
 
   &:not(.has-toolbar) {
     > .btn-actions {
-      right: 13px;
+      right: 0;
       top: -1px;
     }
+  }
+}
+
+.card-header-section,
+.widget-header-section {
+  white-space: nowrap;
+  width: auto;
+
+  &.title,
+  &.buttonset {
+    flex-grow: 1;
+  }
+
+  &.title {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      display: inline;
+      font-size: $ids-size-font-px-20;
+      font-weight: $ids-number-font-weight-base;
+      line-height: $ids-number-font-line-height-sm;
+    }
+  }
+
+  &.title {
+    overflow: ellipsis;
+    overflow-x: hidden;
+    overflow-y: auto;
+    text-overflow: ellipsis;
+  }
+
+  &.title + &.buttonset {
+    text-align: right;
+  }
+
+  &.buttonset > .btn-icon {
+    margin: 0;
   }
 }
 

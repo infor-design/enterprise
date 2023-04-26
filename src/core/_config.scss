@@ -101,6 +101,11 @@ $button-hyperlink-hover-color: $hyperlink-hover-color;
 $hr-top-color: $ids-color-brand-secondary-base;
 $hr-bottom-color: $ids-color-palette-white;
 
+// Cards/Widget
+$widget-border-color-hover: $ids-color-palette-slate-30;
+$cardlist-box-shadow-color-hover: rgba(0, 0, 0, 0.15);
+$cardlist-box-shadow-color: rgba(0, 0, 0, 0.05);
+
 // Circle Pager
 $circlepager-bg-color: transparent;
 $circlepager-border-color: $ids-color-brand-secondary-alt;
