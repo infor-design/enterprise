@@ -101,6 +101,19 @@
   }
 }
 
+// Styles for contextual toolbar
+.contextual-toolbar {
+  &.toolbar {
+    &:not(.standalone) {
+      .buttonset [class^='btn'] {
+        &:not(:disabled):hover {
+          background-color: transparent;
+        }
+      }
+    }
+  }
+}
+
 @media (max-width: $breakpoint-phablet) {
   .toolbar {
     .buttonset {
