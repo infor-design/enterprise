@@ -11189,7 +11189,7 @@ Datagrid.prototype = {
 
     if (col.serialize) {
       const s = this.settings;
-      let dataset = s.tree13237 ? s.treeDepth : s.dataset;
+      let dataset = s.treeGrid ? s.treeDepth : s.dataset;
       if (this.settings.groupable) {
         dataset = this.originalDataset || dataset;
       }
