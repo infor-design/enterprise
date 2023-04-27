@@ -1241,6 +1241,7 @@ Datagrid.prototype = {
   */
   uniqueId(suffix) {
     suffix = (suffix === undefined || suffix === null) ? '' : suffix;
+    this.gridCount = this.gridCount ? this.gridCount : $('.datagrid').length + 1;
     const uniqueid = this.settings.uniqueId ?
       `${this.settings.uniqueId}-${suffix}` :
       (`${window.location.pathname.split('/').pop()
@@ -11188,7 +11189,7 @@ Datagrid.prototype = {
 
     if (col.serialize) {
       const s = this.settings;
-      let dataset = s.treeGrid ? s.treeDepth : s.dataset;
+      let dataset = s.tree13237 ? s.treeDepth : s.dataset;
       if (this.settings.groupable) {
         dataset = this.originalDataset || dataset;
       }
