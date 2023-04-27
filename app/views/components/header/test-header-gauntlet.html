@@ -1,37 +1,23 @@
 <header id="customizable-header" class="header">
-  <div class="{{#useFlexToolbar}}flex-toolbar{{/useFlexToolbar}}{{^useFlexToolbar}}toolbar{{/useFlexToolbar}}">
-    {{#useFlexToolbar}}
+  <div class="flex-toolbar">
     <div class="toolbar-section">
       {{> includes/header-appmenu-trigger}}
     </div>
-    {{/useFlexToolbar}}
 
-    <div class="{{#useFlexToolbar}}toolbar-section {{/useFlexToolbar}}title">
-      {{^useFlexToolbar}}
-      {{> includes/header-appmenu-trigger}}
-      {{/useFlexToolbar}}
+    <div class="toolbar-section title">
       <h1 id="title-text-elem">
         <span class="page-title">Header Toolbar Gauntlet</span>
       </h1>
     </div>
 
-    {{#useFlexToolbar}}
     <div class="toolbar-section search">
       <div id="header-searchfield-wrapper" class="searchfield-wrapper">
         <label for="header-searchfield" class="audible">Search</label>
         <input id="header-searchfield" class="searchfield" name="header-searchfield" />
       </div>
     </div>
-    {{/useFlexToolbar}}
 
-    <div class="{{#useFlexToolbar}}toolbar-section {{/useFlexToolbar}}buttonset">
-      {{^useFlexToolbar}}
-      <div id="header-searchfield-wrapper" class="searchfield-wrapper toolbar-searchfield-wrapper">
-        <label for="header-searchfield" class="audible">Search</label>
-        <input id="header-searchfield" class="searchfield" name="header-searchfield" />
-      </div>
-      {{/useFlexToolbar}}
-
+    <div class="toolbar-section buttonset">
       <button id="settings-button" class="btn">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
           <use href="#icon-settings"></use>
@@ -54,7 +40,7 @@
       </button>
     </div>
 
-    <div id="more-button" class="{{#useFlexToolbar}}toolbar-section {{/useFlexToolbar}}more">
+    <div id="more-button" class="toolbar-section more">
       <button class="btn-actions" type="button">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
           <use href="#icon-more"></use>

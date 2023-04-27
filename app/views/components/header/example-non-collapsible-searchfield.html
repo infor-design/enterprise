@@ -1,10 +1,11 @@
 <header class="header is-personalizable">
   <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
 
-  <div id="test-toolbar" class="toolbar">
-    <div class="title">
+  <div id="test-toolbar" class="flex-toolbar">
+    <div class="toolbar-section">
       {{> includes/header-appmenu-trigger}}
-
+    </div>
+    <div class="toolbar-section title">
       <h1>
       {{#subtitle}}
         <span class="page-title">{{title}}</span>
@@ -17,10 +18,11 @@
       </h1>
     </div>
 
-    <div class="buttonset">
+    <div class="toolbar-section search">
       <label class="audible" for="test-searchfield">Keyword Search</label>
       <input id="test-searchfield" name="test-searchfield" class="searchfield" data-options="{collapsible: false}" />
-
+    </div>
+    <div class="toolbar-section buttonset">
       <button type="button" class="btn">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
           <use href="#icon-filter"></use>
