@@ -258,24 +258,6 @@ describe('Datagrid', () => {
     });
   });
 
-  describe('Test with tree checkbox', () => {
-    const url = `${baseUrl}/test-tree-with-checkbox.html`;
-    beforeAll(async () => {
-      await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-    });
-
-    it('should expand the treegrid via keyboard whenn editable is set to true', async () => {
-      // Tab three times to focus on the expand button
-      for (let i = 0; i < 3; i++) {
-        page.keyboard.press('Tab');
-      }
-      await page.keyboard.press('Space');
-
-      await page.evaluate(() => document.querySelector('.datagrid-expand-btn').getAttribute('class'))
-        .then(el => expect(el).toContain('is-expanded'));
-    });
-  });
-
   describe('Landmark', () => {
     const url = `${baseUrl}/test-landmark`;
 

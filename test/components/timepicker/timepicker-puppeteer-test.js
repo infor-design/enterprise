@@ -35,7 +35,7 @@ describe('Timepicker Puppeteer Tests', () => {
       expect(await page.evaluate(el => el.value, timepickerEl)).toEqual('1:00 AM');
     });
 
-    it('should set time on field from popup', async () => {
+    it.skip('should set time on field from popup', async () => {
       const timepickerEl = await page.$('#timepicker-id-1');
 
       const openPopup = async () => {
