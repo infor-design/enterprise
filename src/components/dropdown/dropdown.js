@@ -90,7 +90,9 @@ const DROPDOWN_DEFAULTS = {
   selectedTextString: null,
   selectAllFilterOnly: true,
   appendTo: '[role="main"]',
-  attributes: null
+  attributes: null,
+  width: undefined,
+  widthTarget: undefined
 };
 
 function Dropdown(element, settings) {
@@ -2105,15 +2107,7 @@ Dropdown.prototype = {
       });
     }
 
-    // Limit the width
-    if (this.settings.maxWidth) {
-      this.list.css('max-width', `${this.settings.maxWidth}px`);
-    }
-
-    // Limit the width
-    if (this.settings.width) {
-      this.list.css('width', `${this.settings.width}px`);
-    }
+    this.setListWidth();
 
     // Set the contents of the search input.
     // If we've got a stored typeahead
@@ -2469,15 +2463,7 @@ Dropdown.prototype = {
       positionOpts.x = self.settings.placementOpts.x;
     }
 
-    // Limit the maxWidth
-    if (this.settings.maxWidth) {
-      this.list.css('max-width', `${this.settings.maxWidth}px`);
-    }
-
-    // Limit the width
-    if (this.settings.width) {
-      this.list.css('width', `${this.settings.width}px`);
-    }
+    this.setListWidth();
 
     this.list.one('afterplace.dropdown', dropdownAfterPlaceCallback).place(positionOpts);
 
@@ -2671,6 +2657,27 @@ Dropdown.prototype = {
     this.list = null;
     this.searchInput = null;
     this.listUl = null;
+  },
+
+  /**
+   * @private
+   */
+  setListWidth() {
+    // Limit the maxWidth
+    if (this.settings.maxWidth) {
+      const maxWidthAttr = typeof this.settings.maxWidth === 'number' ? `${this.settings.maxWidth}px` : 'auto';
+      this.list.css('max-width', maxWidthAttr);
+    }
+
+    // Limit the dropdown list width
+    if (this.settings.width) {
+      let widthAttr = typeof this.settings.width === 'number' ? `${this.settings.width}px` : 'auto';
+      if (this.settings.width === 'parent' && typeof this.settings.widthTarget === 'string') {
+        const el = document.querySelector(this.settings.widthTarget);
+        if (el) widthAttr = `${el.clientWidth}px`;
+      }
+      this.list.css('width', widthAttr);
+    }
   },
 
   /**

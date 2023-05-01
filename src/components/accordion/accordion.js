@@ -39,7 +39,7 @@ const expanderDisplayModes = ['classic', 'plus-minus', 'chevron'];
  * @param {boolean} [settings.source=null]  A callback function that when implemented provided a call back for "ajax loading" of tab contents on open.
  */
 const ACCORDION_DEFAULTS = {
-  accordionFocusCallback: (header, defaultFocusBehavior) => defaultFocusBehavior,
+  accordionFocusCallback: (header, defaultFocusBehavior) => defaultFocusBehavior(),
   allowOnePane: true,
   expanderDisplay: expanderDisplayModes[0],
   enableTooltips: true,
@@ -1305,6 +1305,8 @@ Accordion.prototype = {
     if (direction === -1) {
       target = pane.next('.accordion-header');
       if (!target.length) {
+        // @TODO Detect adjacent accordion sections here
+
         if (pane.parent('.accordion').length) {
           return this.nextHeader(pane.prev().children('a'), true);
         }

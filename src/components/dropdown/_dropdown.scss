@@ -251,11 +251,11 @@ div.multiselect {
 // The List
 .dropdown-list {
   @include unselectable();
+  @include dropdown-box-shadow();
 
   background-color: transparent;
   border: 1px solid $dropdown-menu-border-color;
   border-radius: 3px;
-  box-shadow: $dropdown-box-shadow-top, $focus-box-shadow;
   font-size: $ids-size-font-base;
   max-height: 340px;
   min-height: 30px;

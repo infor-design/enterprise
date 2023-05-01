@@ -1,5 +1,8 @@
 @import './module-nav.common.scss';
 
+// button + button borders + dropdown size
+$module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switcher-button-gutter-size + 2;
+
 // Module Nav Dropdown Component
 //================================================== //
 
@@ -30,12 +33,69 @@
   }
 }
 
-// Module Nav Dropdown List variant
+// Module Nav Dropdown List Component
+//================================================== //
+
 .dropdown-list.role-dropdown {
-  background-color: $module-nav-input-bg-color;
-  border-radius: $module-nav-input-border-radius;
-  border: $module-nav-input-border-width solid $module-nav-input-border-color;
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
   color: $module-nav-input-text-color;
+
+  margin-block-start: $module-nav-gutter-size;
+
+  > .trigger {
+    margin-inline-start: -33px;
+    color: inherit;
+
+    .icon {
+      top: 10px;
+    }
+  }
+
+  input.dropdown-search {
+    background-color: $module-nav-input-bg-color;
+    border-radius: $module-nav-input-border-radius;
+    border: $module-nav-input-border-width solid $module-nav-input-border-color;
+    color: inherit;
+    height: $module-nav-switcher-dropdown-height;
+
+    // visibly separate the input field from the list
+    margin-inline-start: $module-nav-container-size;
+    width: calc(100% - #{$module-nav-container-size});
+
+    // re-align text with in-page dropdown
+    padding-block-start: 7px;
+    padding-block-end: 9px;
+  }
+
+  ul {
+    @include dropdown-box-shadow;
+
+    background-color: $module-nav-input-bg-color;
+    border-radius: $module-nav-input-border-radius;
+    border: $module-nav-input-border-width solid $module-nav-input-border-color;
+    color: inherit;
+
+    margin-block-start: $module-nav-switcher-button-gutter-size;
+  }
+
+  li {
+    // height: $module-nav-switcher-dropdown-item-height;
+
+    a {
+      color: $module-nav-switcher-dropdown-item-text-color;
+      margin-block: $module-nav-switcher-button-gutter-size;
+    }
+
+    &.is-focused:not(.is-disabled) {
+      background-color: $module-nav-switcher-dropdown-item-focus-bg-color;
+
+      a {
+        color: $module-nav-switcher-dropdown-item-text-color;
+      }
+    }
+  }
 }
 
 // =====================================================

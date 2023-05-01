@@ -153,7 +153,12 @@ ModuleNavSwitcher.prototype = {
       this.roleDropdownEl = this.element[0].querySelector('.module-nav-section.role-dropdown');
       $(this.roleDropdownEl).find('.dropdown').dropdown({
         cssClass: 'role-dropdown',
-        dropdownIcon: 'expand-all'
+        dropdownIcon: 'expand-all',
+        placementOpts: {
+          x: 50
+        },
+        width: 'parent',
+        widthTarget: '.module-nav-switcher'
       });
     }
   },
