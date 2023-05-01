@@ -433,7 +433,9 @@ TimePicker.prototype = {
     const validation = 'time';
     const events = { time: 'blur change enter' };
 
+    this.addedValidation = false;
     if (!this.element[0].getAttribute('data-validate')) {
+      this.addedValidation = true;
       this.element
         .attr('data-validate', validation)
         .attr('data-validation-events', JSON.stringify(events))
@@ -1253,10 +1255,13 @@ TimePicker.prototype = {
     if (settings) {
       this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
     }
+    
+    this.teardown();
+    this.init();
 
-    return this
-      .teardown()
-      .init();
+    if (this.element.data('validate') && this.element.data('validate') instanceof Object) {
+      this.element.data('validate').updated();
+    }
   },
 
   /**
@@ -1278,9 +1283,12 @@ TimePicker.prototype = {
       mask.destroy();
     }
 
-    $.removeData(this.element[0], 'validate');
-    $.removeData(this.element[0], 'validationEvents');
-    this.element.removeAttr('data-validate').removeData('validate validationEvents');
+    if (this.addedValidation) {
+      $.removeData(this.element[0], 'validate');
+      $.removeData(this.element[0], 'validationEvents');
+      this.element.removeAttr('data-validate').removeData('validate validationEvents');
+      delete this.addedValidation;
+    }
 
     this.label.find('.audible').remove();
     $('#timepicker-popup').remove();
