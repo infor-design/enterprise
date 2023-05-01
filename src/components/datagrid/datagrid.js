@@ -1241,6 +1241,7 @@ Datagrid.prototype = {
   */
   uniqueId(suffix) {
     suffix = (suffix === undefined || suffix === null) ? '' : suffix;
+    this.gridCount = this.gridCount ? this.gridCount : $('.datagrid').length + 1;
     const uniqueid = this.settings.uniqueId ?
       `${this.settings.uniqueId}-${suffix}` :
       (`${window.location.pathname.split('/').pop()

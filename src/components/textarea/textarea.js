@@ -274,8 +274,8 @@ Textarea.prototype = {
       this.element.data('trackdirty').updated();
     }
 
-    if (this.element.data('validate')) {
-      this.element.validate();
+    if (this.element.data('validate') && this.element.data('validate') instanceof Object) {
+      this.element.data('validate').updated();
     }
   },
 
