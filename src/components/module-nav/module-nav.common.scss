@@ -2,6 +2,11 @@
   @include drawer-box-shadow;
 }
 
+@mixin module-nav-section-separator() {
+  border-top: 1px solid $module-nav-separator-color;
+  padding-block-start: $module-nav-footer-gutter-size;
+}
+
 @mixin nav-item-box-shadow() {
   @include css3(box-shadow, 0 0 8px 1px rgba(0, 0, 0, 0.16));
 }

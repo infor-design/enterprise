@@ -239,3 +239,10 @@
     }
   }
 }
+
+// Module Nav Accordion Component (Scrollbars)
+//================================================== //
+
+.accordion-section.has-scrollbar {
+  @include module-nav-section-separator;
+}

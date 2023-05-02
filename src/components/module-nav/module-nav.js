@@ -13,6 +13,16 @@ const MODULE_NAV_DEFAULTS = {
   showDetailView: false,
 };
 
+const toggleScrollbar = (el) => {
+  if (el instanceof HTMLElement) {
+    if (el.scrollHeight > el.clientHeight) {
+      el.classList.add('has-scrollbar');
+    } else {
+      el.classList.remove('has-scrollbar');
+    }
+  }
+};
+
 /**
  * Module Nav - Fly-out, left-side navigation menu used as top-level navigation in some apps.
  * @class ModuleNav
@@ -85,9 +95,11 @@ ModuleNav.prototype = {
       this.updated();
     });
 
+    /*
     $('body').on(`resize.${COMPONENT_NAME}`, () => {
       this.setScrollable();
     });
+    */
 
     if (this.accordionEl) {
       $(this.accordionEl).on(`beforeexpand.${COMPONENT_NAME}`, (e) => {
@@ -185,13 +197,30 @@ ModuleNav.prototype = {
    * @returns {void}
    */
   setScrollable() {
+    if (!this.settings.pinSections) {
+      this.setMainAccordionScrollable();
+    } else {
+      this.setAccordionSectionsScrollable();
+    }
+  },
+
+  /**
+   * @private
+   */
+  setMainAccordionScrollable() {
     const el = this.accordionEl;
-    if (el) {
-      if (el.scrollHeight > el.clientHeight) {
-        el.classList.add('has-scrollbar');
-      } else {
-        el.classList.remove('has-scrollbar');
-      }
+    toggleScrollbar(el);
+  },
+
+  /**
+   * @private
+   */
+  setAccordionSectionsScrollable() {
+    const sections = this.accordionEl?.querySelectorAll('.accordion-section');
+    if (sections.length) {
+      [...sections].forEach((section) => {
+        toggleScrollbar(section);
+      });
     }
   },
 

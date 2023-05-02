@@ -120,6 +120,10 @@
       }
     }
 
+    .module-nav-footer {
+      @include module-nav-section-separator;
+    }
+
     .page-container {
       margin-inline-start: ($module-nav-submenu-size * -1);
     }
@@ -215,9 +219,6 @@
 }
 
 .module-nav-footer {
-  border-top: 1px solid $module-nav-separator-color;
-  padding-block-start: $module-nav-footer-gutter-size;
-
   display: block;
   position: relative;
 }

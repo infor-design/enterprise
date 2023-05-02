@@ -31,6 +31,17 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
       right: 14px;
     }
   }
+
+  // Hide built-in input field icon in favor of Module Switcher button
+  .dropdown {
+    > .listoption-icon {
+      display: none;
+
+      + span {
+        padding-inline-start: 0;
+      }
+    }
+  }
 }
 
 // Module Nav Dropdown List Component
@@ -51,6 +62,10 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
     .icon {
       top: 10px;
     }
+  }
+
+  > .listoption-icon {
+    display: none;
   }
 
   input.dropdown-search {
@@ -77,15 +92,21 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
     border: $module-nav-input-border-width solid $module-nav-input-border-color;
     color: inherit;
 
+    height: $module-nav-switcher-dropdown-size;
     margin-block-start: $module-nav-switcher-button-gutter-size;
   }
 
   li {
-    // height: $module-nav-switcher-dropdown-item-height;
+    height: $module-nav-switcher-dropdown-item-height;
 
     a {
       color: $module-nav-switcher-dropdown-item-text-color;
-      margin-block: $module-nav-switcher-button-gutter-size;
+      padding-block: $module-nav-switcher-button-gutter-size;
+    }
+
+    .listoption-icon {
+      margin-inline-start: 3px;
+      margin-inline-end: 30px;
     }
 
     &.is-focused:not(.is-disabled) {
@@ -94,6 +115,13 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
       a {
         color: $module-nav-switcher-dropdown-item-text-color;
       }
+    }
+  }
+
+  // When configured with icons, don't show icon in "search" area
+  &.has-icons {
+    input.dropdown-search {
+      padding-inline-start: $module-nav-input-padding-inline-start-size;
     }
   }
 }
