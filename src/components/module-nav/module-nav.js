@@ -1,6 +1,9 @@
 import { utils } from '../../utils/utils';
 
-import '../accordion/accordion';
+import '../accordion/accordion.jquery';
+import '../button/button.jquery';
+import '../dropdown/dropdown.jquery';
+import '../tooltip/tooltip.jquery';
 
 import { MODULE_NAV_DISPLAY_MODES, setDisplayMode } from './module-nav.common';
 
@@ -95,12 +98,6 @@ ModuleNav.prototype = {
       this.updated();
     });
 
-    /*
-    $('body').on(`resize.${COMPONENT_NAME}`, () => {
-      this.setScrollable();
-    });
-    */
-
     if (this.accordionEl) {
       $(this.accordionEl).on(`beforeexpand.${COMPONENT_NAME}`, (e) => {
         e.preventDefault();
@@ -136,6 +133,9 @@ ModuleNav.prototype = {
   configureAccordion() {
     if (!this.accordionEl) return;
 
+    const api = $(this.accordionEl).data('accordion');
+    if (!api) return;
+
     // Override this accordion behavior to include a check for Module Nav switchers
     const navFocusCallback = (header, defaultFocusBehavior) => {
       // Handle focus of accordion headers containing Module Nav Switcher Components
@@ -149,11 +149,21 @@ ModuleNav.prototype = {
         defaultFocusBehavior();
       }
     };
-
-    const api = $(this.accordionEl).data('accordion');
-    if (!api) return;
-
     api.settings.accordionFocusCallback = navFocusCallback;
+
+    // Build tooltips on top-level accordion headers in collapsed mode
+    const headers = this.accordionEl.querySelectorAll('.accordion-section > .accordion-header');
+    if (headers.length) {
+      [...headers].forEach((header) => {
+        if (this.settings.displayMode === 'collapsed') {
+          header.setAttribute('title', header.textContent.trim());
+          $(header).tooltip({ placement: 'right' });
+        } else {
+          $(header).data('tooltip').destroy();
+          header.removeAttribute('title');
+        }
+      });
+    }
   },
 
   /**
