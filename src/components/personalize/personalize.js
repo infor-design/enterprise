@@ -315,6 +315,7 @@ Personalize.prototype = {
       colors.tabBottomBorderColor = '#B7B7BA';
 
       if (isNewDark) {
+        colors.text = '#ffffff';
         colors.base = '#606066';
         colors.btnPrimaryColor = colors.base;
         colors.dark = colors.base;
@@ -336,6 +337,7 @@ Personalize.prototype = {
       }
 
       if (isClassicDark) {
+        colors.text = '#ffffff';
         colors.base = '#50535a';
         colors.btnPrimaryColor = colors.base;
         colors.dark = colors.base;
