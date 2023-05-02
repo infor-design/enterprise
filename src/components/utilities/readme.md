@@ -104,4 +104,3 @@ This utility adds padding to the left and right of an element, where # is a numb
 
 `.padding-y-#`
 This utility adds padding to the top and bottom of an element, where # is a number from 1 to 80 that specifies the amount of padding in pixels.
-
