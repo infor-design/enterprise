@@ -870,12 +870,6 @@ html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::af
   background-color: ${colors.darkestPalette} !important;
 }
 
-html[class*="theme-new-"] .application-menu.is-personalizable button .icon,
-html[class*="theme-new-"] .application-menu.is-personalizable button span,
-html[class*="theme-new-"] .application-menu.is-personalizable .hyperlink {
-  color: ${colors.contrast} !important;
-}
-
 html[class*="-dark"] .is-personalizable .btn-tertiary:not(.destructive):not(:disabled):hover,
 html[class*="-dark"] .is-personalizable .btn-link:not(:disabled):hover,
 html[class*="-dark"] .is-personalizable:not(.header) .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
