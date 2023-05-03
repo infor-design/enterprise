@@ -13,10 +13,11 @@ const COMPONENT_NAME = 'cards';
  * @param {string} element The plugin element for the constuctor
  * @param {string} [settings] The settings element.
  * @param {boolean} [settings.bordered] Ability to add bordered or boreder-less styles to the card element.
- * @param {boolean} [settings.showCardHeader] Determine wheter the card header should be displayed or not.
+ * @param {boolean} [settings.noHeader] Determine wheter the card header should be displayed or not.
  * @param {boolean} [settings.expandableHeader] Abilty to expand the card header.
- * @param {number} [settings.contentPaddingX] The padding left and right of the content of the card element. It will generate the css utlity classes for paddings
+ * @param {number} [settings.contentPaddingX] The padding left and right of the content of the card element. It will generate the css utlity classes for paddings.
  * @param {number} [settings.contentPaddingY] The padding top and bottom of the content of the card element. It will generate the css utlity classes for paddings.
+ * @param {boolean} [settings.noShadow] Ability to remove the shadow of the card element.
  * @param {boolean} [settings.verticalButtonAction] Ability to rotate the button action vertically
  * @param {array} [settings.dataset=[]] An array of data objects that will be represented as cards.
  * @param {string} [settings.template] Html Template String.
@@ -26,9 +27,10 @@ const COMPONENT_NAME = 'cards';
 
 const CARDS_DEFAULTS = {
   bordered: null,
-  showCardHeader: true,
+  noHeader: false,
   contentPaddingX: 0,
   contentPaddingY: 0,
+  noShadow: false,
   dataset: [],
   template: null,
   selectable: false,
@@ -176,9 +178,13 @@ Cards.prototype = {
       this.element.addClass('border-less');
     }
 
-    if (!this.settings.showCardHeader) {
-      this.cardHeader.remove();
+    if (this.settings.noHeader) {
       this.element.addClass('no-header');
+      this.cardHeader.remove();
+    }
+
+    if (this.settings.noShadow) {
+      this.element.addClass('no-shadow');
     }
 
     this.element.find('.card-content').addClass(`padding-x-${this.settings.contentPaddingX} padding-y-${this.settings.contentPaddingY}`);
