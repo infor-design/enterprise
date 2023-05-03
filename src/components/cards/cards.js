@@ -187,7 +187,9 @@ Cards.prototype = {
       this.element.addClass('no-shadow');
     }
 
-    this.element.find('.card-content').addClass(`padding-x-${this.settings.contentPaddingX} padding-y-${this.settings.contentPaddingY}`);
+    if (!this.element.closest('.swipe-element')) {
+      this.element.find('.card-content').addClass(`padding-x-${this.settings.contentPaddingX} padding-y-${this.settings.contentPaddingY}`);
+    }
 
     if (this.settings.selectable === 'multiple') {
       const self = this;
