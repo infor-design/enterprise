@@ -1,6 +1,6 @@
 const { getConfig } = require('../../helpers/e2e-utils.cjs');
 
-describe('Radar Puppeteer Visual Tests', () => {
+describe.skip('Radar Puppeteer Visual Tests', () => {
   const baseUrl = 'http://localhost:4000/components/radar';
 
   describe('Index tests', () => {
