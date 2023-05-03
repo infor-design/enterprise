@@ -966,9 +966,17 @@ Toolbar.prototype = {
 
       const searchfield = self.buttonsetItems.filter('.searchfield').data('searchfield');
 
-      if (searchfield && searchfield.settings.showGoButton === true) {
-        buttonsetWidth = buttonsetWidth + searchfield.goButton.width() > buttonsetWidth ?
-          buttonsetWidth + searchfield.goButton.width() : buttonsetWidth;
+      if (searchfield) {
+        if (searchfield.settings.showGoButton === true) {
+          buttonsetWidth = buttonsetWidth + searchfield.goButton.width() > buttonsetWidth ?
+            buttonsetWidth + searchfield.goButton.width() : buttonsetWidth;
+        }
+
+        const diff = searchfield.wrapper.width() - buttonsetWidth;
+
+        if (diff > 0) {
+          buttonsetWidth += diff;
+        }
       }
 
       return buttonsetWidth;

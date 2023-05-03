@@ -273,6 +273,16 @@ a.is-personalizable svg.ripple-effect {
   background-color: ${colors.base} !important;
 }
 
+.module-tabs.is-personalizable .tab.is-selected,
+.module-tabs.is-personalizable .tab {
+  color: ${colors.contrast};
+}
+
+.is-personalizable.tab-container.module-tabs .tab-more,
+.is-personalizable.tab-container.module-tabs .add-tab-button {
+  color: ${colors.contrast};
+}
+
 .tab-container.vertical.is-personalizable > .tab-list-container > .tab-list > .tab.is-selected {
   background-color: ${colors.base} !important;
 }
@@ -470,7 +480,7 @@ html[class*="theme-new-"] .personalize-header.tab-container.header-tabs:not(.alt
   opacity: 1;
 }
 
-html[class*="theme-new-"] .is-personalizable .count-container .instance-count .count {
+.is-personalizable .count-container .instance-count .count {
   border-color: ${colors.contrast} !important;
   color: ${colors.contrast} !important;
 }
@@ -493,7 +503,7 @@ html.theme-classic-dark .hero-widget.is-personalizable .hero-content .circlepage
   background-color: ${colors.subtext};
 }
 
-.hero-widget.is-personalizable .hero-header .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary).is-open span {
+.hero-widget.is-personalizable .hero-header .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):hover span {
   color: ${colors.contrast} !important;
 }
 
@@ -721,6 +731,7 @@ html[dir='rtl'] .scrollable-flex-header.is-personalizable .breadcrumb.truncated:
 
 .module-tabs.is-personalizable .tab-more:hover {
   background-color: ${colors.hover} !important;
+  color: ${colors.contrast};
 }
 
 .module-tabs.is-personalizable .tab-more.is-open {
@@ -751,6 +762,11 @@ html[dir='rtl'] .scrollable-flex-header.is-personalizable .breadcrumb.truncated:
 
 .module-tabs.is-personalizable .tab:hover {
   background-color: ${colors.darker} !important;
+  color: ${colors.contrast};
+}
+
+.is-personalizable.tab-container.module-tabs .tab .icon {
+  color: ${colors.contrast};
 }
 
 .module-tabs.has-toolbar.is-personalizable .tab-list-container + .toolbar {
@@ -868,12 +884,6 @@ html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::af
 
 .hero-widget.is-personalizable .count-container .instance-count svg.icon {
   background-color: ${colors.darkestPalette} !important;
-}
-
-html[class*="theme-new-"] .application-menu.is-personalizable button .icon,
-html[class*="theme-new-"] .application-menu.is-personalizable button span,
-html[class*="theme-new-"] .application-menu.is-personalizable .hyperlink {
-  color: ${colors.contrast} !important;
 }
 
 html[class*="-dark"] .is-personalizable .btn-tertiary:not(.destructive):not(:disabled):hover,
