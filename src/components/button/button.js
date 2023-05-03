@@ -371,11 +371,14 @@ Button.prototype = {
       targetIcon = 'icon-more';
     }
 
-    // if (targetIcon && ['btn-toggle', 'icon-favorite'].indexOf(this.settings.type) > -1) {
+    const isCardHeader = this.element.closest('.card-header').length > 0;
+
     if (targetIcon) {
       targetIcon = xssUtils.stripHTML(targetIcon);
       if (!(iconElem instanceof SVGElement) && !(iconElem instanceof HTMLElement)) {
         iconElem = $.createIconElement({ icon: targetIcon.replace('icon-', '') });
+        this.element.prepend($(iconElem));
+      } else if (isCardHeader) {
         this.element.prepend($(iconElem));
       } else {
         iconElem.querySelector('use').setAttribute('href', `#${targetIcon}`);
