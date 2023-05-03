@@ -1,5 +1,6 @@
 import { utils } from '../../utils/utils';
 
+import './module-nav.switcher.jquery';
 import '../accordion/accordion.jquery';
 import '../button/button.jquery';
 import '../dropdown/dropdown.jquery';
@@ -79,6 +80,8 @@ ModuleNav.prototype = {
 
     // Sections
     this.switcherEl = this.element[0].querySelector('.module-nav-switcher');
+    if (!$(this.switcherEl).data('modulenavswitcher')) $(this.switcherEl).modulenavswitcher();
+
     this.itemMenuEl = this.element[0].querySelector('.module-nav-main');
     this.footerEl = this.element[0].querySelector('.module-nav-footer');
 
@@ -159,7 +162,7 @@ ModuleNav.prototype = {
           header.setAttribute('title', header.textContent.trim());
           $(header).tooltip({ placement: 'right' });
         } else {
-          $(header).data('tooltip').destroy();
+          $(header).data('tooltip')?.destroy();
           header.removeAttribute('title');
         }
       });
@@ -272,11 +275,13 @@ ModuleNav.prototype = {
     this.detailViewEl = null;
 
     // Sections
+    $(this.switcherEl).data('modulenavswitcher')?.destroy();
     this.switcherEl = null;
     this.itemMenuEl = null;
     this.footerEl = null;
 
     // Components
+    this.accordionAPI?.destroy();
     this.accordionEl = null;
     this.accordionAPI = null;
 

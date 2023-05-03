@@ -138,15 +138,16 @@ ModuleNavSwitcher.prototype = {
   renderChildComponents() {
     this.containerEl = this.element.parents('.module-nav-container')[0];
 
-    this.moduleButtonEl = this.element[0].querySelector('.btn');
-    if (!this.moduleButtonEl) {
+    this.moduleButtonContainer = this.element[0].querySelector('.module-nav-section.module-btn');
+    this.moduleButtonEl = this.element[0].querySelector('.module-btn button');
+    if (!this.moduleButtonContainer || !this.moduleButtonEl) {
       this.element[0].insertAdjacentHTML('afterbegin', buttonTemplate());
       this.moduleButtonContainer = this.element[0].querySelector('.module-nav-section.module-btn');
-      this.moduleButtonEl = this.element[0].querySelector('.btn');
+      this.moduleButtonEl = this.moduleButtonContainer.querySelector('button');
       $(this.moduleButtonEl).button();
     }
 
-    this.roleDropdownEl = this.element[0].querySelector('.module-role-dropdown');
+    this.roleDropdownEl = this.element[0].querySelector('.module-nav-section.role-dropdown');
     if (!this.roleDropdownEl) {
       this.element[0].insertAdjacentHTML('beforeend', dropdownTemplate());
       this.roleDropdownEl = this.element[0].querySelector('.module-nav-section.role-dropdown');
@@ -201,6 +202,18 @@ ModuleNavSwitcher.prototype = {
    */
   teardown() {
     this.element.off(`updated.${COMPONENT_NAME}`);
+
+    if (this.moduleButtonEl) {
+      $(this.moduleButtonEl).data('button')?.destroy();
+      this.moduleButtonEl = null;
+    }
+
+    if (this.roleDropdownEl) {
+      $(this.roleDropdownEl).data('dropdown')?.destroy();
+      this.roleDropdownEl = null;
+    }
+
+
     return this;
   },
 

@@ -180,6 +180,19 @@
     <div class="module-nav-detail">&nbsp;</div>
   </aside>
   <div class="page-container scrollable">
+    <!--
+    <div class="flex-toolbar">
+      <div class="toolbar-section">
+        <button id="header-hamburger" class="btn-icon module-nav-trigger-btn personalize-actionable" type="button">
+          <span class="audible" data-translate="text">ModuleNavTriggerTextAlt</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-menu"></use>
+          </svg>
+        </button>
+      </div>
+    </div>
+    -->
+
     <div class="row top-padding">
       <div class="four columns">&nbsp;</div>
       <div class="four columns">&nbsp;</div>
@@ -221,6 +234,7 @@
     const navAPI = $('#nav').data('modulenav');
     const dropdownAPI = $('#display-mode-dropdown').data('dropdown');
     const displayCheckEl = $('#display-detail-check');
+    const hamburgerBtnEl = $('#header-hamburger');
     const pinSectionsCheckEl = $('#pin-sections');
 
     dropdownAPI.element.on('change.test', (e) => {
@@ -234,5 +248,15 @@
     pinSectionsCheckEl.on('change.test', (e) => {
       navAPI.updated({ pinSections: pinSectionsCheckEl[0].checked });
     });
+
+    if (hamburgerBtnEl.length) {
+      hamburgerBtnEl.on('click.test', (e) => {
+        if (!dropdownAPI.value === 'collapsed') {
+          dropdownAPI.selectListItem($('option[value="expanded"]'));
+        } else {
+          dropdownAPI.selectListItem($('option[value="collapsed"]'));
+        }
+      });
+    }
   });
 </script>
