@@ -2727,7 +2727,8 @@ Tabs.prototype = {
     }
 
     let wasSelected = false;
-    if (targetLi.hasClass('is-selected')) {
+
+    if (targetAnchor[0]?.href && self.getActiveTab()[0]?.href && targetAnchor[0].href === self.getActiveTab()[0].href) {
       wasSelected = true;
     } else {
       prevLi = $(this.tablist.children('li').not(notATab).filter('.is-selected'));

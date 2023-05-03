@@ -273,6 +273,16 @@ a.is-personalizable svg.ripple-effect {
   background-color: ${colors.base} !important;
 }
 
+.module-tabs.is-personalizable .tab.is-selected,
+.module-tabs.is-personalizable .tab {
+  color: ${colors.contrast};
+}
+
+.is-personalizable.tab-container.module-tabs .tab-more,
+.is-personalizable.tab-container.module-tabs .add-tab-button {
+  color: ${colors.contrast};
+}
+
 .tab-container.vertical.is-personalizable > .tab-list-container > .tab-list > .tab.is-selected {
   background-color: ${colors.base} !important;
 }
@@ -721,6 +731,7 @@ html[dir='rtl'] .scrollable-flex-header.is-personalizable .breadcrumb.truncated:
 
 .module-tabs.is-personalizable .tab-more:hover {
   background-color: ${colors.hover} !important;
+  color: ${colors.contrast};
 }
 
 .module-tabs.is-personalizable .tab-more.is-open {
@@ -751,6 +762,11 @@ html[dir='rtl'] .scrollable-flex-header.is-personalizable .breadcrumb.truncated:
 
 .module-tabs.is-personalizable .tab:hover {
   background-color: ${colors.darker} !important;
+  color: ${colors.contrast};
+}
+
+.is-personalizable.tab-container.module-tabs .tab .icon {
+  color: ${colors.contrast};
 }
 
 .module-tabs.has-toolbar.is-personalizable .tab-list-container + .toolbar {
