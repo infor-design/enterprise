@@ -1,0 +1,32 @@
+<div class="full-height full-width">
+  <div class="week-view" data-init="false">
+  </div>
+</div>
+
+<script id="test-script">
+$('body').one('initialized', function () {
+  // Get the Event Type and Events to show in the calendar
+  var eventTypes = [];
+  var events = [];
+
+  $.getJSON('{{basepath}}api/event-types', function(res) {
+    eventTypes = res;
+
+    $.getJSON('{{basepath}}api/events', function(res) {
+      events = res;
+      $('.week-view').weekview({
+        eventTypes: eventTypes,
+        events: events,
+        showViewChanger: false,
+        startDate: new Date(2019, 9, 20),
+        endDate: new Date(2019, 9, 26),
+        stacked: true,
+        attributes: [
+          { name: 'id', value: 'custom-id' },
+          { name: 'data-automation-id', value: 'custom-automation-id' }
+        ]
+      });
+    });
+  });
+});
+</script>

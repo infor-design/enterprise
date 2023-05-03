@@ -199,6 +199,40 @@ describe('WeekView API', () => {
     expect(document.body.querySelectorAll('thead tr th').length).toEqual(15);
   });
 
+  it('can set week start and end dates from target date', () => {
+    const targetDate = new Date(2019, 11, 5);
+    weekViewAPI.setWeekFromDate(targetDate);
+    expect(weekViewAPI.settings.startDate.getDate()).toEqual(1);
+    expect(weekViewAPI.settings.endDate.getDate()).toEqual(7);
+  });
+
+  it('should render stacked view', () => {
+    weekViewAPI?.destroy();
+    weekViewAPI = new WeekView(weekViewEl, {
+      eventTypes,
+      events,
+      showViewChanger: false,
+      startDate: new Date(2019, 11, 1),
+      endDate: new Date(2019, 11, 7),
+      showAllDay: true,
+      stacked: true
+    });
+
+    expect(weekViewAPI.settings.stacked).toEqual(true);
+    const event1 = document.body.querySelectorAll('.week-view .calendar-event')[0];
+    const event2 = document.body.querySelectorAll('.week-view .calendar-event')[1];
+    const event3 = document.body.querySelectorAll('.week-view .calendar-event')[2];
+    const event4 = document.body.querySelectorAll('.week-view .calendar-event')[3];
+    const event5 = document.body.querySelectorAll('.week-view .calendar-event')[4];
+
+    expect(event1.getAttribute('data-key')).toEqual('20191204');
+    expect(event2.getAttribute('data-key')).toEqual('20191204');
+    expect(event3.getAttribute('data-key')).toEqual('20191202');
+    expect(event4.getAttribute('data-key')).toEqual('20191203');
+    expect(event5.getAttribute('data-key')).toEqual('20191204');
+    expect(document.body.querySelectorAll('.calendar-event').length).toEqual(5);
+  });
+
   it('should render events', () => {
     weekViewAPI?.destroy();
     weekViewAPI = new WeekView(weekViewEl, {

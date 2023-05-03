@@ -4,6 +4,7 @@ import { Locale } from '../locale/locale';
 import { colorUtils } from '../../utils/color';
 import { stringUtils } from '../../utils/string';
 import { dateUtils } from '../../utils/date';
+import { breakpoints } from '../../utils/breakpoints';
 import { theme } from '../theme/theme';
 import { CalendarToolbar } from '../calendar/calendar-toolbar';
 import { calendarShared } from '../calendar/calendar-shared';
@@ -53,6 +54,7 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {boolean} [settings.firstDayOfWeek=0] Set first day of the week. '1' would be Monday.
  * @param {boolean} [settings.showAllDay=true] Detemines if the all day events row should be shown.
  * @param {boolean} [settings.showTimeLine=true] Shows a bar across the current time.
+ * @param {boolean} [settings.stacked] Shows stacked week view layout
  * @param {number} [settings.startHour=7] The hour (0-24) to end on each day.
  * @param {number} [settings.endHour=19] The hour (0-24) to end on each day.
  * @param {boolean} [settings.showToday=true] Deterimines if the today button should be shown.
@@ -133,6 +135,7 @@ WeekView.prototype = {
    * @returns {object} The WeekView prototype, useful for chaining.
    */
   build() {
+    this.id = this.id || utils.uniqueId(this.element, COMPONENT_NAME);
     this.addToolbar();
     this.showWeek(this.settings.startDate, this.settings.endDate);
     this.handleEvents();
@@ -253,7 +256,11 @@ WeekView.prototype = {
 
     // Event is only on this day
     if (days.length === 1 && !event.isAllDay) {
-      this.appendEventToHours(days[0].elem, event);
+      if (this.isStackedView()) {
+        this.appendToDayContainer(event);
+      } else {
+        this.appendEventToHours(days[0].elem, event);
+      }
     }
 
     if (days.length === 1 && event.isAllDay) {
@@ -416,6 +423,31 @@ WeekView.prototype = {
   },
 
   /**
+   * Add the ui event to day column
+   * @param {object} event calendar event
+   */
+  appendToDayContainer(event) {
+    const container = this.element[0].querySelector(`.week-view-body-cell[data-key="${event.startKey}"]`);
+
+    if (container) {
+      const displayTime = ` ${Locale.formatHourRange(event.startsHour, event.endsHour, { locale: this.locale })}`;
+      const eventElem = document.createElement('a');
+      DOM.addClass(eventElem, 'calendar-event', event.color);
+      eventElem.setAttribute('data-id', event.id);
+      eventElem.setAttribute('data-key', event.startKey);
+      eventElem.setAttribute('href', '#');
+
+      eventElem.innerHTML = `<div class="calendar-event-content">
+        ${event.icon ? `<span class="calendar-event-icon"><svg class="icon ${event.icon}" focusable="false" aria-hidden="true" role="presentation" data-status="${event.status}"><use href="#${event.icon}"></use></svg></span>` : ''}
+        <span class="calendar-event-title">${event.shortSubject || event.subject}</span>
+        <span class="calendar-event-time">${displayTime}</span>
+      </div>`;
+
+      container?.appendChild(eventElem);
+    }
+  },
+
+  /**
    * Add the tooltip functionality.
    * @private
    * @param {object} node The dom element.
@@ -509,7 +541,7 @@ WeekView.prototype = {
 
     this.dayMap = [];
     this.isDayView = false;
-    this.element.removeClass('is-day-view');
+    this.element.removeClass('is-day-view stacked-view');
 
     if (this.numberOfDays === 0 || this.numberOfDays === 1) {
       this.element.addClass('is-day-view');
@@ -518,8 +550,81 @@ WeekView.prototype = {
     }
     this.hasIrregularDays = this.numberOfDays !== 7;
 
+    if (!this.isDayView && this.settings.stacked && breakpoints.isBelow('phone-to-tablet')) {
+      this.showWeek(startDate, startDate);
+      return;
+    }
+
+    const isStackedView = this.isStackedView();
+    if (isStackedView) {
+      this.element.addClass('stacked-view');
+    }
+
+    // Render the week view and show the event
+    this.weekContainer = isStackedView ?
+      this.createStackedTemplate(startDate, endDate) :
+      this.createTableTemplate(startDate, endDate);
+    this.element.find('.week-view-container').remove();
+
+    const args = {
+      isDayView: this.isDayView,
+      isStackedView,
+      startDate: Locale.isIslamic(this.locale.name) ? gregStartDate : startDate,
+      endDate: Locale.isIslamic(this.locale.name) ? gregEndDate : endDate,
+      elem: this.element,
+      api: this
+    };
+
+    /**
+    * Fires as the calendar popup is opened.
+    * @event weekrendered
+    * @memberof WeekView
+    * @property {object} event - The jquery event object
+    * @property {object} args - The event arguments
+    * @property {boolean} args.isDayView - True if one day is showing.
+    * @property {boolean} args.isStackedView - True if is stacked view
+    * @property {object} args.startDate - The start date of the event
+    * @property {object} args.endDate - The start date of the event
+    * @property {object} args.elem - The current element.
+    * @property {object} args.api - The WeekView api
+    */
+    this.element
+      .append(this.weekContainer)
+      .trigger('weekrendered', args);
+
+    if (this.settings.onChangeWeek) {
+      this.settings.onChangeWeek(args);
+    }
+
+    this.element.find('.week-view-header-cell').each((i, elem) => {
+      const key = elem.getAttribute('data-key');
+      if (key) {
+        this.dayMap.push({ key, elem });
+      }
+    });
+
+    // Add the time line and update the text on the month
+    this.addTimeLine();
+    this.showToolbarMonth(startDate, endDate);
+    this.renderDisable();
+    this.renderLegend();
+    this.renderAllEvents();
+
+    // Update currently set start and end date
+    this.settings.startDate = Locale.isIslamic(this.locale.name) ? gregStartDate : startDate;
+    this.settings.endDate = Locale.isIslamic(this.locale.name) ? gregEndDate : endDate;
+  },
+
+  /**
+   * Create week view table template
+   * @param {date} startDate start date
+   * @param {date} endDate end date
+   * @returns {string} table template
+   * @private
+   */
+  createTableTemplate(startDate, endDate) {
     // Create the header consisting of days in the range
-    this.weekHeader = `<thead class="week-view-table-header"><tr><th><div class="week-view-header-wrapper"><span class="audible">${Locale.translate('Hour')}</span></div>`;
+    this.weekHeader = `<thead class="week-view-table-header"><tr><th class="week-view-header-cell"><div class="week-view-header-wrapper"><span class="audible">${Locale.translate('Hour')}</span></div>`;
     if (this.settings.showAllDay) {
       this.weekHeader += `<div class="week-view-all-day-wrapper">${Locale.translate('AllDay', this.locale.name)}</div>`;
     }
@@ -531,7 +636,7 @@ WeekView.prototype = {
       const dayNameValue = Locale.formatDate(day, { pattern: 'EEE', locale: this.locale.name });
       const dayOfWeekSetting = this.currentCalendar.dateFormat.dayOfWeek;
       const emphasis = dayOfWeekSetting ? dayOfWeekSetting.split(' ')[0] === 'EEE' : 'd EEE';
-      this.weekHeader += `<th data-key="${stringUtils.padDate(day.getFullYear(), day.getMonth(), day.getDate())}"><div class="week-view-header-wrapper${dateUtils.isToday(day) ? ' is-today' : ''}"><span class="week-view-header-day-of-week${emphasis ? '' : ' is-emphasis'}">${emphasis ? dayNameValue : dayValue}</span><span class="week-view-header-day-of-week${emphasis ? ' is-emphasis' : ''}">${emphasis ? dayValue : dayNameValue}</span></div>`;
+      this.weekHeader += `<th class="week-view-header-cell" data-key="${stringUtils.padDate(day.getFullYear(), day.getMonth(), day.getDate())}"><div class="week-view-header-wrapper${dateUtils.isToday(day) ? ' is-today' : ''}"><span class="week-view-header-day-of-week${emphasis ? '' : ' is-emphasis'}">${emphasis ? dayNameValue : dayValue}</span><span class="week-view-header-day-of-week${emphasis ? ' is-emphasis' : ''}">${emphasis ? dayValue : dayNameValue}</span></div>`;
       if (this.settings.showAllDay) {
         this.weekHeader += '<div class="week-view-all-day-wrapper"></div>';
       }
@@ -556,54 +661,49 @@ WeekView.prototype = {
     this.weekBody += '</tbody>';
 
     // Render the table and show the event
-    this.weekContainer = `<div class="week-view-container"><table class="week-view-table">${this.weekHeader}${this.weekBody}</table></div>`;
-    this.element.find('.week-view-container').remove();
+    return `<div class="week-view-container"><table class="week-view-table">${this.weekHeader}${this.weekBody}</table></div>`;
+  },
 
-    const args = {
-      isDayView: this.isDayView,
-      startDate: Locale.isIslamic(this.locale.name) ? gregStartDate : startDate,
-      endDate: Locale.isIslamic(this.locale.name) ? gregEndDate : endDate,
-      elem: this.element,
-      api: this
-    };
+  /**
+   * Create stacked template
+   * @param {date} startDate start date
+   * @param {date} endDate end date
+   * @returns {string} stacked template
+   * @private
+   */
+  createStackedTemplate(startDate, endDate) {
+    let header = '';
+    let body = '';
+    let footer = '';
 
-    /**
-    * Fires as the calendar popup is opened.
-    * @event weekrendered
-    * @memberof WeekView
-    * @property {object} event - The jquery event object
-    * @property {object} args - The event arguments
-    * @property {boolean} args.isDayView - True if one day is showing.
-    * @property {object} args.startDate - The start date of the event
-    * @property {object} args.endDate - The start date of the event
-    * @property {object} args.elem - The current element.
-    * @property {object} args.api - The WeekView api
-    */
-    this.element
-      .append(this.weekContainer)
-      .trigger('weekrendered', args);
+    for (let day = new Date(startDate.getTime()); day <= endDate; day.setDate(day.getDate() + 1)) {
+      const daykey = `${stringUtils.padDate(day.getFullYear(), day.getMonth(), day.getDate())}`;
+      const dayValue = Locale.formatDate(day, { pattern: 'd', locale: this.locale.name });
+      const dayNameValue = Locale.formatDate(day, { pattern: 'EEE', locale: this.locale.name });
+      const isToday = dateUtils.isToday(day);
 
-    if (this.settings.onChangeWeek) {
-      this.settings.onChangeWeek(args);
+      header += `<div data-key="${daykey}" class="week-view-header-cell">
+        <div class="week-view-header-wrapper ${isToday ? 'is-today' : ''}">
+          <span class="week-view-header-day-of-week is-emphasis">${dayValue}</span>
+          <span class="week-view-header-day-of-week">${dayNameValue}</span>
+        </div>
+        <div class="week-view-all-day-wrapper"></div>
+      </div>`;
+
+      body += `<div data-key="${daykey}" class="week-view-body-cell"></div>`;
+
+      footer += `<div data-key="${daykey}" class="week-view-footer-cell"></div>`;
     }
 
-    this.element.find('th').each((i, elem) => {
-      const key = elem.getAttribute('data-key');
-      if (key) {
-        this.dayMap.push({ key, elem });
-      }
-    });
+    return `<div class="week-view-container">
+      <div class="week-view-stacked-header">${header}</div>
+      <div class="week-view-stacked-body">${body}</div>
+      <div class="week-view-stacked-footer">${footer}</div>
+    </div>`;
+  },
 
-    // Add the time line and update the text on the month
-    this.addTimeLine();
-    this.showToolbarMonth(startDate, endDate);
-    this.renderDisable();
-    this.renderLegend();
-    this.renderAllEvents();
-
-    // Update currently set start and end date
-    this.settings.startDate = Locale.isIslamic(this.locale.name) ? gregStartDate : startDate;
-    this.settings.endDate = Locale.isIslamic(this.locale.name) ? gregEndDate : endDate;
+  isStackedView() {
+    return this.settings.stacked && !this.isDayView;
   },
 
   renderDisable() {
@@ -648,7 +748,7 @@ WeekView.prototype = {
   },
 
   renderLegend() {
-    if (!this.settings.showLegend) {
+    if (!this.settings.showLegend || this.isStackedView()) {
       return;
     }
 
@@ -749,7 +849,7 @@ WeekView.prototype = {
    * @private
    */
   addTimeLine() {
-    if (!this.settings.showTimeLine) {
+    if (!this.settings.showTimeLine || this.isStackedView()) {
       return;
     }
 
@@ -832,6 +932,21 @@ WeekView.prototype = {
   },
 
   /**
+   * Set week dates from provided date
+   * @param {date} date target date
+   * @private
+   */
+  setWeekFromDate(date) {
+    this.numberOfDays = 7;
+    this.settings.startDate = dateUtils.firstDayOfWeek(date, this.settings.firstDayOfWeek);
+    this.settings.startDate.setHours(0, 0, 0, 0);
+    this.settings.endDate = new Date(this.settings.startDate);
+    this.settings.endDate.setDate(this.settings.endDate.getDate() + this.numberOfDays - 1);
+    this.settings.endDate.setHours(23, 59, 59, 59);
+    this.showWeek(this.settings.startDate, this.settings.endDate);
+  },
+
+  /**
    * Sets up event handlers for this component and its sub-elements.
    * @returns {object} The Calendar prototype, useful for chaining.
    * @private
@@ -851,7 +966,6 @@ WeekView.prototype = {
         this.settings.startDate = this.hasIrregularDays ? startDate :
           dateUtils.firstDayOfWeek(startDate, this.settings.firstDayOfWeek);
         this.settings.startDate.setHours(0, 0, 0, 0);
-
         this.settings.endDate = new Date(this.settings.startDate);
         this.settings.endDate.setDate(this.settings.endDate.getDate() + this.numberOfDays - 1);
         this.settings.endDate.setHours(23, 59, 59, 59);
@@ -906,7 +1020,24 @@ WeekView.prototype = {
     this.element.off(`dblclick.${COMPONENT_NAME}`).on(`dblclick.${COMPONENT_NAME}`, '.calendar-event', (e) => {
       fireEvent(e.currentTarget, 'eventdblclick');
     });
+
+    $('body').off(`breakpoint-change.${this.id}`).on(`breakpoint-change.${this.id}`, () => this.onBreakPointChange());
+
     return this;
+  },
+
+  onBreakPointChange() {
+    // only stacked view monitors breakpoint changes
+    if (this.settings.stacked) {
+      if (breakpoints.isBelow('phone-to-tablet') && !this.isDayView) {
+        const today = new Date();
+        const isCurrentWeek = dateUtils.isWithinRange(this.settings.startDate, this.settings.endDate, today);
+        const startDate = isCurrentWeek ? today : this.settings.startDate;
+        this.showWeek(startDate, startDate);
+      } else if (this.isDayView) {
+        this.setWeekFromDate(this.settings.startDate);
+      }
+    }
   },
 
   /**
@@ -1054,6 +1185,7 @@ WeekView.prototype = {
    */
   teardown() {
     this.element.off();
+    $('body').off(`breakpoint-change.${this.id}`);
     clearInterval(this.timer);
     this.timer = null;
     return this;
