@@ -18,6 +18,7 @@ $('body').one('initialized', function () {
         eventTypes: eventTypes,
         events: events,
         showViewChanger: false,
+        showFooter: true,
         startDate: new Date(2019, 9, 20),
         endDate: new Date(2019, 9, 26),
         stacked: true,
@@ -27,6 +28,22 @@ $('body').one('initialized', function () {
         ]
       });
     });
+  });
+
+  const elem = $('.week-view')
+  elem.on('weekrendered', (evt, weekView) => {
+    const api = weekView.api;
+    const dayMap = api.dayMap;
+
+    // Example - Append element to footer
+    dayMap.forEach((day) => {
+      const events = day.events;
+      const footer = day.footer;
+
+      if (footer) {
+        footer.innerHTML = `<span>${events.length} Events</span>`
+      }
+    })
   });
 });
 </script>

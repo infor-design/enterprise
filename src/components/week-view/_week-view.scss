@@ -256,6 +256,7 @@ $week-view-cell-height: 25px;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    background-color: $calendar-bg-color;
   }
 
   .week-view-header-cell,
@@ -274,8 +275,6 @@ $week-view-cell-height: 25px;
     align-self: flex-start;
     top: 0;
     width: 100%;
-    //min-height: 100px; // needed?
-    background-color: $calendar-bg-color;
     border-bottom: 1px solid $calendar-line-color;
     z-index: 2;
   }
@@ -292,24 +291,22 @@ $week-view-cell-height: 25px;
       display: block;
       position: relative;
       margin-block: 4px;
-      height: 52px;
-
-      .calendar-event-time {
-        display: block;
-      }
+      min-height: 52px;
+      height: unset;
     }
   }
 
   .week-view-stacked-footer {
     position: sticky;
     bottom: 0;
-    width: 100%;
     min-height: 24px;
-    background-color: $calendar-bg-color;
     border-top: 1px solid $calendar-line-color;
     z-index: 2;
 
     .week-view-footer-cell {
+      display: flex;
+      justify-content: center;
+      align-items: center;
       width: 100%;
       text-align: center;
       white-space: nowrap;
