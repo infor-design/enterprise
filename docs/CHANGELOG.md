@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.84.0
+
+## v4.84.0 Fixes
+
+- `[Button]` Adjusted alignment for popupmenu icon buttons. ([#7408](https://github.com/infor-design/enterprise/issues/7408))
+
 ## v4.83.0
 
 ## v4.83.0 Features
