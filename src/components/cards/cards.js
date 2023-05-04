@@ -28,8 +28,8 @@ const COMPONENT_NAME = 'cards';
 const CARDS_DEFAULTS = {
   bordered: null,
   noHeader: false,
-  contentPaddingX: 0,
-  contentPaddingY: 0,
+  contentPaddingX: null,
+  contentPaddingY: null,
   noShadow: false,
   dataset: [],
   template: null,
@@ -92,9 +92,14 @@ Cards.prototype = {
    * @private
    */
   build() {
+    const element = this.element;
     const expanded = this.element.hasClass('is-expanded');
     const selectText = (Locale ? Locale.translate('Select') : 'Select');
     const isSingle = this.settings.selectable === 'single';
+    const isBordered = this.settings.bordered === true;
+    const isBorderLess = this.settings.bordered === false;
+    const hasCustomAction = this.element.find('.card-header .widget-header-section.custom-action').length > 0;
+    const { contentPaddingX, contentPaddingY } = this.settings;
 
     this.renderTemplate();
 
@@ -170,25 +175,38 @@ Cards.prototype = {
       utils.addAttributes(this.cardContentPane, this, this.settings.attributes, 'content', true);
     }
 
-    if (this.settings.bordered === true) {
-      this.element.addClass('bordered');
+    if (isBordered) {
+      element.addClass('bordered');
     }
 
-    if (this.settings.bordered === false) {
-      this.element.addClass('border-less');
+    if (isBorderLess) {
+      element.addClass('border-less');
     }
 
     if (this.settings.noHeader) {
-      this.element.addClass('no-header');
+      element.addClass('no-header');
       this.cardHeader.remove();
     }
 
     if (this.settings.noShadow) {
-      this.element.addClass('no-shadow');
+      element.addClass('no-shadow');
     }
 
-    if (!this.element.closest('.swipe-element')) {
-      this.element.find('.card-content').addClass(`padding-x-${this.settings.contentPaddingX} padding-y-${this.settings.contentPaddingY}`);
+    if (contentPaddingX !== null || contentPaddingY !== null) {
+      const content = element.find('.card-content');
+
+      if (contentPaddingX !== null) {
+        content.addClass(`padding-x-${contentPaddingX}`);
+      }
+
+      if (contentPaddingY !== null) {
+        content.addClass(`padding-y-${contentPaddingY}`);
+      }
+    }
+
+    // If there's custom action, show the buttons
+    if (hasCustomAction) {
+      element.addClass('show-buttons');
     }
 
     if (this.settings.selectable === 'multiple') {

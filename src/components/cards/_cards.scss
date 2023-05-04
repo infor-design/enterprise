@@ -204,6 +204,7 @@
         .btn-actions {
           border-radius: 50% !important;
           margin-right: 8px;
+          transform: rotate(90deg);
           width: 44px;
           height: 44px;
 
@@ -334,6 +335,7 @@
 
     button.btn-actions {
       position: absolute;
+      right: 15px;
       top: 50%;
       transform: translateY(-50%);
     }

@@ -17,28 +17,34 @@
     .card-content {
       border-top-left-radius: 8px;
       border-top-right-radius: 8px;
+
+      .btn-actions-wrapper {
+        display: flex;
+        justify-content: flex-end;
+        padding: 1px;
+      }
     }
   }
+
+  &:not(.show-buttons) button {
+    opacity: 0;
+  }
+
+  &:hover {
+    button {
+      opacity: 1;
+    }
+  }
+
+  .btn-actions.is-open,
+    .btn-actions.has-open-tooltip {
+      opacity: 1;
+    }
 
   &.border-less {
     background: none;
     border-color: transparent;
     box-shadow: none;
-
-    &:hover {
-      button {
-        opacity: 1;
-      }
-    }
-
-    .btn-actions.is-open,
-    .btn-actions.has-open-tooltip {
-      opacity: 1;
-    }
-
-    button {
-      opacity: 0;
-    }
   }
 
   &.is-empty {
@@ -64,6 +70,10 @@
         }
       }
     }
+  }
+
+  &.show-buttons button {
+    opacity: 1;
   }
 }
 
@@ -99,15 +109,17 @@
 
 .card-header,
 .widget-header {
-  align-items: center;
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
-  margin: 0;
-  padding-bottom: 0;
-  padding-left: 16px;
-  padding-right: 8px;
-  padding-top: 0;
+  &:not(.expandable-card-header) {
+    align-items: center;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    margin: 0;
+    padding-bottom: 0;
+    padding-left: 16px;
+    padding-right: 8px;
+    padding-top: 0;
+  }
 
   > button.btn-actions:not(.has-toolbar) {
     position: relative;
@@ -135,7 +147,7 @@
   width: auto;
 
   &.title,
-  &.buttonset {
+  &.custom-action {
     flex-grow: 1;
   }
 
@@ -160,11 +172,11 @@
     text-overflow: ellipsis;
   }
 
-  &.title + &.buttonset {
+  &.title + &.custom-action {
     text-align: right;
   }
 
-  &.buttonset > .btn-icon {
+  &.custom-action > .btn-icon {
     margin: 0;
   }
 }

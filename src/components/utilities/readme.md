@@ -71,6 +71,11 @@ This utility floats an element to the right.
 `.f-none`
 This utility removes the float from an element.
 
+### Styles Utilities
+
+`.no-shadow`
+This utility removes the shadow from an element.
+
 ### Padding and Margin Utilities
 
 The padding and margin utilities provide classes for adding padding and margin to elements in increments of 0, up to a maximum of 80 pixels.
