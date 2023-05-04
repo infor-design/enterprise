@@ -173,6 +173,7 @@ ModuleNav.prototype = {
    * @private
    */
   configureResize() {
+    if (typeof ResizeObserver === 'undefined') return;
     if (!this.ro) {
       this.ro = new ResizeObserver(() => {
         this.setScrollable();

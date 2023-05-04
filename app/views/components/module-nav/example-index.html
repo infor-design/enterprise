@@ -11,7 +11,20 @@
       <div class="module-nav-accordion accordion panel" data-options="{'allowOnePane': true}">
         <!-- Module switcher -->
         <div class="module-nav-header accordion-section">
-          <div class="module-nav-switcher"></div>
+          <div class="module-nav-switcher">
+            <div class="module-nav-section role-dropdown">
+              <label for="module-nav-role-switcher" class="label audible">Roles</label>
+              <select id="module-nav-role-switcher" name="module-nav-role-switcher" class="dropdown" data-automation-id="custom-automation-dropdown-id">
+                <option value="admin" data-icon="{icon: 'circle-empty', colorOver: 'slate08'}">Admin</option>
+                <option value="job-console" data-icon="{icon: 'circle-empty', colorOver: 'slate08'}">Job Console</option>
+                <option value="landing-page-designer" data-icon="{icon: 'circle-empty', colorOver: 'slate08'}">Landing Page Designer</option>
+                <option value="process-server-admin" data-icon="{icon: 'circle-empty', colorOver: 'slate08'}">Process Server Administrator</option>
+                <option value="proxy-management" data-icon="{icon: 'circle-empty', colorOver: 'slate08'}">Proxy Management</option>
+                <option value="security-system-management" data-icon="{icon: 'circle-empty', colorOver: 'slate08'}">Security System Management</option>
+                <option value="user-management" data-icon="{icon: 'circle-empty', colorOver: 'slate08'}">User Management</option>
+              </select>
+            </div>
+          </div>
         </div>
 
         <!-- Most accordion items should be placed in the "main" section -->
