@@ -24,10 +24,15 @@
 - `[Popupmenu]` Fixed on popupmenu arrow not appearing when showArrow is true. ([#5061](https://github.com/infor-design/enterprise/issues/5061))
 - `[Popupmenu]` Fixed popupmenu previous states not getting saved when called resize and update. ([#6601](https://github.com/infor-design/enterprise/issues/6601))
 - `[Searchfield]` Fixed collapsible issues with search icon color and behavior. ([#7390](https://github.com/infor-design/enterprise/issues/7390))
+- `[Popupmenu]` Fixed on popupmenu arrow not appearing when showArrow is true. ([#5061](https://github.com/infor-design/enterprise/issues/5061))
+- `[Monthview]` Fix on updated method creating duplicates. ([NG#1446](https://github.com/infor-design/enterprise-ng/issues/1446))
+- `[Monthview]` Fixed on updated method creating duplicates. ([NG#1446](https://github.com/infor-design/enterprise-ng/issues/1446))
+- `[Tabs Module]` Fixed closing an active tab in the overflow menu results in a blank screen. ([#7321](https://github.com/infor-design/enterprise/issues/7321))
 - `[Toolbar]` Added hover style for contextual toolbar. ([#7459](https://github.com/infor-design/enterprise/issues/7459))
 - `[Toolbar/Toolbar Flex]` Added hover state to buttons. ([#7327](https://github.com/infor-design/enterprise/issues/7327))
 - `[Toolbar-Flex]` Fixed redundant aria-disabled in toolbar when element is disabled. ([#6339](https://github.com/infor-design/enterprise/issues/6339))
 - `[Toolbar Flex]` Fixed buttons being not visible on window resize. ([#7421](https://github.com/infor-design/enterprise/issues/7421))
+- `[Toolbar Flex]` Updated header examples and included header to use flex toolbar by default. ([#6837](https://github.com/infor-design/enterprise/issues/6837))
 
 ## v4.82.0
 

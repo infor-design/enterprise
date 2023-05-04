@@ -1,16 +1,18 @@
 <header class="header is-personalizable">
-  <div class="toolbar" role="toolbar" data-options='{"maxVisibleButtons": 4}'>
-    <div class="title">
+  <div class="flex-toolbar" role="toolbar" data-options='{"maxVisibleButtons": 4}'>
+    <div class="toolbar-section">
       {{> includes/header-appmenu-trigger}}
+    </div>
+    <div class="toolbar-section title">
       <h1>Page Title</h1>
     </div>
-    <div class="buttonset">
-
+    <div class="toolbar-section search">
       <div class="searchfield-wrapper toolbar-searchfield-wrapper">
-        <label class="audible" for="regular-toolbar-searchfield">Toolbar Searchfield</label>
-        <input class="searchfield input-lg" placeholder="keyword" id="regular-toolbar-searchfield" name="regular-toolbar-searchfield" data-options="{ collapsible: false }"/>
+        <label class="audible" for="flex-toolbar-searchfield">Toolbar Searchfield</label>
+        <input class="searchfield input-lg" placeholder="keyword" id="flex-toolbar-searchfield" name="regular-toolbar-searchfield" data-options="{ collapsible: false }"/>
       </div>
-
+    </div>
+    <div class="toolbar-section buttonset">
       <button class="btn-icon" type="button">
         <svg class="icon is-expanded" focusable="false" aria-hidden="true" role="presentation">
           <use href="#icon-star-filled"></use>
@@ -26,18 +28,7 @@
       </button>
 
     </div>
-    <div class="more">
-      <button type="button" class="btn-actions">
-        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-          <use href="#icon-more"></use>
-        </svg>
-        <span class="audible">More Actions</span>
-      </button>
-      <ul class="popupmenu">
-        <li><a href="#">Option #1</a></li>
-        <li><a href="#">Option #2</a></li>
-        <li><a href="#">Option #3</a></li>
-      </ul>
-    </div>
+
+    {{> includes/header-actionbutton}}
   </div>
 </header>
