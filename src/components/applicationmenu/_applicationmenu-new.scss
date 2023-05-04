@@ -72,6 +72,12 @@
         background-color: $new-appmenu-hover-bg-color;
       }
     }
+
+    .flex-toolbar:not(.editor-toolbar):not(.formatter-toolbar):not(.contextual-toolbar) .toolbar-section {
+      [class^='btn']:not(:disabled):not(.searchfield-category-button):not(.collapse-button):hover {
+        background-color: $new-appmenu-hover-bg-color;
+      }
+    }
   }
 
   .accordion-static-panel {

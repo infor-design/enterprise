@@ -98,6 +98,7 @@
 
             + .btn-icon.close {
               svg {
+                top: 0 !important;
                 color: $header-flex-toolbar-close-icon-color !important;
               }
 

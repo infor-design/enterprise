@@ -1,11 +1,11 @@
 <header class="header is-personalizable">
-  <div class="{{#useFlexToolbar}}flex-{{/useFlexToolbar}}toolbar">
-    <div class="{{#useFlexToolbar}}toolbar-section {{/useFlexToolbar}}title">
+  <div class="flex-toolbar">
+    <div class="toolbar-section title">
       <h1>Level Two Detail View</h1>
     </div>
 
-    <div class="{{#useFlexToolbar}}toolbar-section search{{/useFlexToolbar}}{{^useFlexToolbar}}buttonset{{/useFlexToolbar}}">
-      <input class="searchfield" data-options='{ clearable: true, collapsible: true }'/>
+    <div class="toolbar-section search">
+      <input class="searchfield" data-options="{'clearable': true, 'collapsible': true}"/>
     </div>
 
     {{> includes/header-actionbutton}}
