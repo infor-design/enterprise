@@ -99,6 +99,7 @@ Cards.prototype = {
     const isBordered = this.settings.bordered === true;
     const isBorderLess = this.settings.bordered === false;
     const hasCustomAction = this.element.find('.card-header .widget-header-section.custom-action').length > 0;
+    // Apply content padding if provided
     const { contentPaddingX, contentPaddingY } = this.settings;
 
     this.renderTemplate();
@@ -175,30 +176,41 @@ Cards.prototype = {
       utils.addAttributes(this.cardContentPane, this, this.settings.attributes, 'content', true);
     }
 
+    // Apply the 'bordered' class if necessary
     if (isBordered) {
       element.addClass('bordered');
     }
 
+    // Apply the 'bordered-less' class if necessary
     if (isBorderLess) {
       element.addClass('border-less');
     }
 
+    // Remove the card header if necessary
     if (this.settings.noHeader) {
+      // Apply the 'no-header' class to the element
       element.addClass('no-header');
+
+      // Remove the card header element from the DOM
       this.cardHeader.remove();
     }
 
+    // Remove the card shadow if necessary
     if (this.settings.noShadow) {
       element.addClass('no-shadow');
     }
 
+    // Only apply padding if at least one of the values is not null
     if (contentPaddingX !== null || contentPaddingY !== null) {
+      // Find the card content element
       const content = element.find('.card-content');
 
+      // Apply the X-axis padding if provided
       if (contentPaddingX !== null) {
         content.addClass(`padding-x-${contentPaddingX}`);
       }
 
+      // Apply the Y-axis padding if provided
       if (contentPaddingY !== null) {
         content.addClass(`padding-y-${contentPaddingY}`);
       }
