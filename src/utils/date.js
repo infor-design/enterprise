@@ -133,7 +133,7 @@ dateUtils.isDaylightSavingTime = function (date) {
  * @param {date} targetDate target date
  * @returns {boolean} true if targetDate is within range
  */
-dateUtils.isWithinRange = function(startDate, endDate, targetDate) {
+dateUtils.isWithinRange = function (startDate, endDate, targetDate) {
   return startDate <= targetDate && targetDate <= endDate;
 };
 
