@@ -3,6 +3,8 @@
 .widget {
   border-radius: 8px;
   box-shadow: 0 2px 4px 1px $cardlist-box-shadow-color;
+  height: 368px;
+  min-height: 368px;
 
   &.bordered {
     border: 1px solid transparent;
@@ -19,26 +21,28 @@
       border-top-right-radius: 8px;
 
       .btn-actions-wrapper {
-        display: flex;
-        justify-content: flex-end;
+        min-width: 35px;
         padding: 1px;
+        position: absolute;
+        right: 8px;
+        top: 8px;
       }
     }
   }
 
-  &:not(.show-buttons) button {
+  &:not(.show-buttons) button.btn-actions {
     opacity: 0;
   }
 
   &:hover {
-    button {
+    button.btn-actions {
       opacity: 1;
     }
   }
 
   .btn-actions.is-open,
     .btn-actions.has-open-tooltip {
-      opacity: 1;
+      opacity: 1 !important;
     }
 
   &.border-less {
@@ -73,6 +77,26 @@
 
   &.show-buttons button {
     opacity: 1;
+  }
+}
+
+.widget,
+.card {
+  &.no-header {
+    .card-content,
+    .widget-content {
+      min-height: 368px;
+
+      .content-top,
+      .content-center {
+        display: flex;
+      }
+
+      .content-center {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
   }
 }
 

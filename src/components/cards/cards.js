@@ -192,7 +192,7 @@ Cards.prototype = {
       element.addClass('no-header');
 
       // Remove the card header element from the DOM
-      this.cardHeader.remove();
+      this.cardHeader?.remove();
     }
 
     // Remove the card shadow if necessary
