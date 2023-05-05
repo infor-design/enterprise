@@ -1,6 +1,5 @@
 import { utils } from '../../utils/utils';
 
-import { Locale } from '../locale/locale';
 import '../button/button.jquery';
 import '../dropdown/dropdown.jquery';
 
@@ -85,7 +84,7 @@ ModuleNavSwitcher.prototype = {
       const key = e.key;
 
       if (key === 'ArrowUp') {
-        console.info('navigate to last accordion item');
+        console.info('navigate to Module Nav Settings component');
         // this.accordion.prevHeader(this.element);
         return;
       }

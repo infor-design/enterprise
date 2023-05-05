@@ -40,6 +40,7 @@ export { ListView } from './listview/listview';
 export { Message } from './message/message';
 export { MultiSelect } from './multiselect/multiselect';
 export { ModuleNav } from './module-nav/module-nav';
+export { ModuleNavSettings } from './module-nav/module-nav.settings';
 export { ModuleNavSwitcher } from './module-nav/module-nav.switcher';
 export { Notification } from './notification/notification';
 export { Pager } from './pager/pager';

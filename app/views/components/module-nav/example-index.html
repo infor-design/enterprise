@@ -179,12 +179,20 @@
 
         <!-- Settings area is also separate and permanently "pinned" to the bottom -->
         <div class="module-nav-settings accordion-section">
-          <div class="accordion-header">
+          <div
+            class="module-nav-settings-btn accordion-header"
+            data-automation-id="module-nav-settings"
+            id="module-nav-settings-btn">
             <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
               <use href="#icon-settings"></use>
             </svg>
-            <a href="#" id="module-nav-item-settings" data-automation-id="module-nav-settings"><span>Settings</span></a>
+            <a href="#"><span>Settings</span></a>
           </div>
+          <ul class="popupmenu module-nav-settings-menu">
+            <li><a href="#">Setting 1</a></li>
+            <li><a href="#">Setting 2</a></li>
+            <li><a href="#">Setting 3</a></li>
+          </ul>
         </div>
       </div>
     </div>

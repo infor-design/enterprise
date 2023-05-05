@@ -360,6 +360,11 @@ Accordion.prototype = {
       return;
     }
 
+    // Pass through clicks on Module Nav Settings elements
+    if (header.is('.module-nav-settings-btn')) {
+      return true;
+    }
+
     const anchor = header.children('a');
     return this.handleAnchorClick(e, anchor);
   },

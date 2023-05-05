@@ -78,6 +78,13 @@ const PLUGIN_MAPPINGS = [
     });
   }],
 
+  // Module Nav Settings
+  ['modulenavsettings', '.module-nav-settings-btn', function (rootElem, pluginName, selector) {
+    matchedItems(rootElem, selector).each((i, item) => {
+      $(item).modulenavsettings();
+    });
+  }],
+
   // Module Nav Switcher
   ['modulenavswitcher', '.module-nav-switcher', function (rootElem, pluginName, selector) {
     matchedItems(rootElem, selector).each((i, item) => {
@@ -298,7 +305,7 @@ const PLUGIN_MAPPINGS = [
   }],
 
   // Menu Buttons - Popupmenu Components attached to trigger buttons
-  ['popupmenu', '.btn-actions, .btn-filter, .btn-menu', function (rootElem, pluginName, selector) {
+  ['popupmenu', '.btn-actions, .btn-filter, .btn-menu, .module-nav-settings-btn', function (rootElem, pluginName, selector) {
     matchedItems(rootElem, selector).each((i, item) => {
       const triggerButton = $(item);
 

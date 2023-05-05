@@ -43,6 +43,7 @@ const triggerTypes = ['click', 'rightClick', 'immediate', 'manual'];
 })] Gets passed to this control's Place behavior.
  * @param {object} [settings.offset={x: 0, y: 0}] Can tweak the menu position in the x and y direction. Takes an object of form: `{x: 0, y: 0}`.
  * @param {jQuery[]} [settings.predefined=$()] containing references to menu items that should be passed to the "predefined" hash.
+ * @param {string} [settings.cssClass = null]  Append an optional css class to popupmenu-wrapper/popupmenu elements
  */
 
 const POPUPMENU_DEFAULTS = {
@@ -71,6 +72,7 @@ const POPUPMENU_DEFAULTS = {
   duplicateMenu: null,
   stretchToWidestMenuItem: false,
   attributes: null,
+  cssClass: null
 };
 
 function PopupMenu(element, settings) {
@@ -302,6 +304,12 @@ PopupMenu.prototype = {
     if (!this.wrapper.length) {
       this.menu.wrap('<div class="popupmenu-wrapper"></div>');
       this.wrapper = this.menu.parent('.popupmenu-wrapper');
+    }
+
+    // Add optional class to wrapper
+    const cssClass = this.settings.cssClass;
+    if (cssClass && typeof cssClass === 'string') {
+      this.wrapper.addClass(cssClass);
     }
 
     // Invoke all icons as icons
