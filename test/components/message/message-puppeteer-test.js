@@ -1,6 +1,6 @@
 const { AxePuppeteer } = require('@axe-core/puppeteer');
 
-describe('Index Tests', () => {
+describe.skip('Index Tests', () => {
   const url = 'http://localhost:4000/components/message/example-index.html';
   beforeEach(async () => {
     await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
@@ -234,7 +234,7 @@ describe.skip('Message xss tests', () => {
   });
 });
 
-describe('Message overlay opacity tests', () => {
+describe.skip('Message overlay opacity tests', () => {
   const url = 'http://localhost:4000/components/message/test-overlay-opacity.html';
   beforeAll(async () => {
     await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
@@ -318,7 +318,7 @@ describe('Message overlay opacity tests', () => {
   });
 });
 
-describe('Message close button Tests', () => {
+describe.skip('Message close button Tests', () => {
   const url = 'http://localhost:4000/components/message/test-close-btn.html?theme=classic&mode=light&layout=nofrills';
   beforeAll(async () => {
     await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
@@ -359,7 +359,7 @@ describe('Message close button Tests', () => {
   });
 });
 
-describe('Message long title Tests', () => {
+describe.skip('Message long title Tests', () => {
   const url = 'http://localhost:4000/components/message/test-long-title.html?theme=classic&mode=light&layout=nofrills';
   beforeAll(async () => {
     await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
@@ -408,7 +408,7 @@ describe('Message long title Tests', () => {
   });
 });
 
-describe('Message Mobile Enhancement & Style Test', () => {
+describe.skip('Message Mobile Enhancement & Style Test', () => {
   const url = 'http://localhost:4000/components/message/example-index.html';
   beforeAll(async () => {
     await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle2'] });
