@@ -231,7 +231,7 @@ ModuleNav.prototype = {
    */
   setAccordionSectionsScrollable() {
     const sections = this.accordionEl?.querySelectorAll('.accordion-section');
-    if (sections.length) {
+    if (sections && sections.length) {
       [...sections].forEach((section) => {
         toggleScrollbar(section);
       });

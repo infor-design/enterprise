@@ -3,7 +3,6 @@
 */
 import { ModuleNav } from '../../../src/components/module-nav/module-nav';
 import { Locale } from '../../../src/components/locale/locale';
-
 import { cleanup } from '../../helpers/func-utils';
 
 Soho.Locale = Locale;
@@ -51,9 +50,30 @@ describe('Module Nav API', () => {
     expect(moduleNavAPI).toBeTruthy();
   });
 
-  it('should render a Module Switcher component', () => {
-    console.dir(moduleNavEl.children);
-    console.log(moduleNavEl.children.length);
-    expect(moduleNavEl.children.length).toBeTruthy();
+  it('can display as collapsed', () => {
+    moduleNavAPI.updated({ displayMode: 'collapsed' });
+
+    expect(moduleNavContainerEl.classList.contains('mode-collapsed')).toBeTruthy();
+  });
+
+  it('can display as expanded', () => {
+    moduleNavAPI.updated({ displayMode: 'expanded' });
+
+    expect(moduleNavContainerEl.classList.contains('mode-expanded')).toBeTruthy();
+  });
+
+  it('can have the Module Switcher and footer areas pinned', () => {
+    moduleNavAPI.updated({ pinSections: true });
+
+    expect(moduleNavContainerEl.classList.contains('pinned-optional')).toBeTruthy();
+  });
+
+  // @TODO Have this element construct itself empty
+  it.skip('should render a Module Switcher component if one does not exist', () => {
+    const moduleBtn = moduleNavContainerEl.querySelector('.module-nav-section.module-btn');
+    expect(moduleBtn).toBeTruthy();
+
+    const dd = moduleNavContainerEl.querySelector('.module-nav-section.role-dropdown');
+    expect(dd).toBeTruthy();
   });
 });
