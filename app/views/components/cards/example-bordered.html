@@ -68,11 +68,11 @@
             <li><a href="#" id="action-12">Action 12</a></li>
           </ul>
         </div>
-      </div><!-- .card-header -->
+      </div>
 
       <div class="card-content">
         <div id="line-example-widget" class="chart-container"></div>
-      </div><!-- .card-content -->
+      </div>
     </div>
   </div>
 </div>
@@ -98,7 +98,7 @@
 <script>
   $('body').on('initialized', function () {
     const listview = $('#task-listview').listview().data('listview');
-    
+
     $('#single-selection').on('click', () => listview.updated({ selectable: 'single' }));
     $('#mixed-selection').on('click', () => listview.updated({ selectable: 'mixed' }));
     $('#multiple-selection').on('click', () => listview.updated({ selectable: 'multiple' }));

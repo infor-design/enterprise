@@ -16,6 +16,7 @@
   }
 
   .is-scrolling {
+    border-top: 1px solid $card-scrolling-border-color;
     box-shadow: $card-scrolling-box-shadow;
   }
 
