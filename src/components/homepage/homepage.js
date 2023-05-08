@@ -1,5 +1,6 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { widgetUtils } from '../../utils/widget-utils';
 import { Locale } from '../locale/locale';
 
 // Default Settings
@@ -98,6 +99,10 @@ Homepage.prototype = {
 
     // Initial Sizing
     this.resize(this, false);
+
+    setTimeout(() => {
+      widgetUtils.moveLastCustomAction(this.element.find('.widget'), this.element.find('.widget-header'));
+    }, 1);
   },
 
   /**
@@ -822,6 +827,10 @@ Homepage.prototype = {
   handleEvents() {
     $('body').on('resize.homepage', () => {
       this.resize(this, this.settings.animate);
+
+      setTimeout(() => {
+        widgetUtils.moveLastCustomAction(this.element.find('.widget'), this.element.find('.widget-header'));
+      }, 300);
     });
 
     $('.application-menu').on('applicationmenuopen.homepage applicationmenuclose.homepage', () => {

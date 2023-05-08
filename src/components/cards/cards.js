@@ -1,5 +1,6 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { widgetUtils } from '../../utils/widget-utils';
 import { Locale } from '../locale/locale';
 import { stringUtils as str } from '../../utils/string';
 import { Tmpl } from '../tmpl/tmpl';
@@ -237,6 +238,8 @@ Cards.prototype = {
     if (Locale.isRTL()) {
       this.removeInfoIconTooltip();
     }
+
+    widgetUtils.moveLastCustomAction(this.element, this.cardHeader);
 
     return this;
   },
@@ -476,6 +479,7 @@ Cards.prototype = {
       if (Locale.isRTL()) {
         this.removeInfoIconTooltip();
       }
+      widgetUtils.moveLastCustomAction(this.element, this.cardHeader);
     });
 
     return this;
