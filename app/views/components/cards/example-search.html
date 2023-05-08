@@ -1,0 +1,96 @@
+<div class="row">
+  <div class="four columns">
+    <div class="card">
+      <div class="card-header">
+        <div class="widget-header-section title">
+          <h2 class="card-title">Search on a Card</h2>
+        </div>
+        <div class="widget-header-section more">
+          <button class="btn-actions" type="button">
+            <span class="audible">Actions</span>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-vertical-ellipsis"></use>
+            </svg>
+          </button>
+          <ul class="popupmenu">
+            <li><a href="#">Add new action item</a></li>
+            <li><a href="#">Regular action</a></li>
+            <li><a href="#">Individual Action</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card-content">
+        <div class="card-search">
+          <label class="audible" for="gridfilter">Search</label>
+          <input class="searchfield" placeholder="Search My Widget" name="searchfield" id="gridfilter" data-options="{clearable: true}"/>
+        </div>
+        <div class="fake-content" style="height: calc(100% - 48px);overflow: auto;">
+          <br/><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="four columns">
+
+    <div class="card">
+      <div class="card-header">
+        <div class="widget-header-section title">
+          <h2 class="card-title">Search a Listview</h2>
+        </div>
+        <div class="widget-header-section more">
+          <button class="btn-actions" type="button">
+            <span class="audible">Actions</span>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-vertical-ellipsis"></use>
+            </svg>
+          </button>
+          <ul class="popupmenu">
+            <li><a href="#">Add new action item</a></li>
+            <li><a href="#">Regular action</a></li>
+            <li><a href="#">Individual Action</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card-content">
+        <div class="listview-search">
+          <label class="audible" for="gridfilter">Search</label>
+          <input class="searchfield" placeholder="Search My List" name="searchfield" id="gridfilter2"
+            data-options="{clearable: true}" />
+        </div>
+
+        <div class="listview" id="search-listview" data-init="false"></div>
+
+        {{={{{ }}}=}}
+        <script id="search-tmpl" type="text/html">
+                <ul>
+                  {{#dataset}}
+                      <li>
+                      <p>{{desc}}</p>
+                    </li>
+                  {{/dataset}}
+                </ul>
+            </script>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script id="test-script">
+  $('body').on('initialized', function () {
+    var listviewEl = $('#search-listview');
+    listviewEl.listview({
+      template: 'search-tmpl',
+      source: '/api/tasks',
+      searchable: true,
+      listFilterSettings: {
+        filterMode: 'contains',
+        searchableTextCallback: function (item) {
+          return item.desc;
+        }
+      }
+    });
+  });
+</script>

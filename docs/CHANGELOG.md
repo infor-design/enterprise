@@ -11,6 +11,7 @@
 ## v4.83.0 Features
 
 - `[Cards/Widgets]` Added new design and features for the cards/widget component. ([#7379](https://github.com/infor-design/enterprise/issues/7379))
+- `[Cards/Widgets]` Please change any icons on cards from `icon-more` to `icon-vertical-ellipsis`. ([#7379](https://github.com/infor-design/enterprise/issues/7379))
 - `[CSS Utilities]` Added CSS utility classes to the library to provide a standardized and efficient way of achieving consistent styling. ([#7377](https://github.com/infor-design/enterprise/issues/7377))
 - `[Homepage]` Changed the gutter size, banner size, and widget size for the homepage. ([#7445](https://github.com/infor-design/enterprise/issues/7445))
 

@@ -482,6 +482,12 @@ Cards.prototype = {
       widgetUtils.moveLastCustomAction(this.element, this.cardHeader);
     });
 
+    this.element.find('.card-content').children().on('scroll.card', (e) => {
+      const target = e.target;
+      if (target.scrollTop > 0) $(target).addClass('is-scrolling');
+      else $(target).removeClass('is-scrolling');
+    });
+
     return this;
   },
 
@@ -497,6 +503,7 @@ Cards.prototype = {
     $('body').off('resize.card');
     this.selectedRows = [];
     this.cardContentPane.off();
+    this.element.find('.card-content').children().off('scroll.card');
     this.cardContentPane = null;
     return this;
   },

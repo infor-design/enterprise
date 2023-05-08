@@ -497,6 +497,10 @@
     .audible {
       color: $cardlist-actions-color;
     }
+
+    &:hover .icon {
+      color: $card-actions-toolbar-button-hover-color;
+    }
   }
 
   &:not(.has-toolbar) {

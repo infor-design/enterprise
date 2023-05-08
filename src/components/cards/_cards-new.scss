@@ -15,6 +15,10 @@
     }
   }
 
+  .is-scrolling {
+    box-shadow: $card-scrolling-box-shadow;
+  }
+
   &.no-header {
     .card-content {
       border-top-left-radius: 8px;

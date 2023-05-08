@@ -15,7 +15,7 @@
           <button class="btn-actions" type="button">
             <span class="audible">Actions</span>
             <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-              <use href="#icon-more"></use>
+              <use href="#icon-vertical-ellipsis"></use>
             </svg>
           </button>
           <ul class="popupmenu actions top">
@@ -34,7 +34,7 @@ var addCount = 0;
 $(".add-popup").click(function(){
 	var newCard = $('<div class="one-third column"><div class="card"><div class="card-header"><h2 class="widget-title">Chart Title' + addCount + '</h2>'
         +	'<button class="btn-actions" type="button"><span class="audible">Actions</span><svg class="icon" focusable="false" aria-hidden="true" role="presentation">'
-        +	'<use href="#icon-more"></use></svg></button><ul class="popupmenu actions top"><li><a href="#">Action One</a></li><li><a href="#">Action Two</a></li>'
+        +	'<use href="#icon-vertical-ellipsis"></use></svg></button><ul class="popupmenu actions top"><li><a href="#">Action One</a></li><li><a href="#">Action Two</a></li>'
         +	'</ul></div><div class="card-content"></div></div></div>');
 	$(".widgets-row").append(newCard);
 	newCard.find(".btn-actions").popupmenu();
