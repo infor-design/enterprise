@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.84.0
+
+## v4.84.0 Fixes
+
+- `[Button]` Adjusted alignment for popupmenu icon buttons. ([#7408](https://github.com/infor-design/enterprise/issues/7408))
+
 ## v4.83.0
 
 ## v4.83.0 Features
@@ -33,6 +39,7 @@
 - `[Toolbar/Toolbar Flex]` Added hover state to buttons. ([#7327](https://github.com/infor-design/enterprise/issues/7327))
 - `[Toolbar-Flex]` Fixed redundant aria-disabled in toolbar when element is disabled. ([#6339](https://github.com/infor-design/enterprise/issues/6339))
 - `[Toolbar Flex]` Fixed buttons being not visible on window resize. ([#7421](https://github.com/infor-design/enterprise/issues/7421))
+- `[Toolbar Flex]` Updated header examples and included header to use flex toolbar by default. ([#6837](https://github.com/infor-design/enterprise/issues/6837))
 
 ## v4.82.0
 
