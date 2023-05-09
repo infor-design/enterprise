@@ -8,6 +8,10 @@ const widgetUtils = {};
  * @returns {void}
  */
 widgetUtils.moveLastCustomAction = function (element, header) {
+  if (element.find('.widget-header-section.more').length < 1) {
+    return;
+  }
+
   const card = element;
   const cardWidth = card.width();
   const btnControlId = card.find('.widget-header-section.more .btn-actions').attr('aria-controls');

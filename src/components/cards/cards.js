@@ -482,10 +482,22 @@ Cards.prototype = {
       widgetUtils.moveLastCustomAction(this.element, this.cardHeader);
     });
 
-    this.element.find('.card-content').children().on('scroll.card', (e) => {
+    const cardHeader = this.element.find('.card-header, .widget-header');
+
+    this.element.find('.card-content, .widget-content').children().on('scroll.card, scroll.widget', (e) => {
       const target = e.target;
-      if (target.scrollTop > 0) $(target).addClass('is-scrolling');
-      else $(target).removeClass('is-scrolling');
+      const listviewSearch = $(target).siblings('.listview-search');
+
+      if (target.scrollTop > 0) {
+        if (listviewSearch.length > 0) {
+          $(target).addClass('is-scrolling');
+        } else {
+          cardHeader.addClass('is-shadow-scrolling');
+        }
+      } else {
+        $(target).removeClass('is-scrolling');
+        cardHeader.removeClass('is-shadow-scrolling');
+      }
     });
 
     return this;
