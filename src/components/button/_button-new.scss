@@ -211,11 +211,18 @@
 
 // Icon/Actions button icons should be better-centered against the focus state.
 .btn-actions,
-.btn-icon,
 .btn-close {
   > .icon {
     position: relative;
     top: -1px;
+    left: 0;
+  }
+}
+
+.btn-icon {
+  >.icon {
+    position: relative;
+    top: 2px;
     left: 0;
   }
 }
