@@ -1,0 +1,77 @@
+<div class="row">
+  <div class="four columns">
+    <div class="card bordered" id="back-button-1">
+      <div class="card-header has-subtitle">
+        <div class="widget-header-section detail-title">
+          <h2 class="card-title">December</h2>
+        </div>
+        <div class="widget-header-section detail-custom-action">
+          <button type="button" class="btn-icon" id="star-id">
+            <span>Star</span>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-star-outlined"></use>
+            </svg>
+            <span class="audible">Star</span>
+          </button>
+          <button type="button" class="btn-icon" id="new-doc-id">
+            <span>New Document</span>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-new-document"></use>
+            </svg>
+            <span class="audible">New Document</span>
+          </button>
+        </div>
+        <div class="widget-header-section title">
+          <h2 class="card-title">Birthdays</h2>
+          <p class="label font-size-px-14 m-bottom-0">November 2023</p>
+        </div>
+        <div class="widget-header-section custom-action">
+          <button type="button" class="btn-icon" id="search-id">
+            <span>Calendar</span>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-calendar"></use>
+            </svg>
+            <span class="audible">Calendar</span>
+          </button>
+        </div>
+        <div class="widget-header-section more">
+          <button class="btn-actions">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-vertical-ellipsis"></use>
+            </svg>
+            <span class="audible">More Actions</span>
+          </button>
+          <ul class="popupmenu">
+            <li><a href="#">More One</a></li>
+            <li><a href="#">More Two</a></li>
+            <li class="submenu">
+              <a href="#">More Three</a>
+              <ul class="popupmenu">
+                <li><a href="#">Sub-Item One</a></li>
+                <li><a href="#">Sub-Item Two</a></li>
+              </ul>
+            </li>
+            <li><a href="#">More Three</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="card-content">
+        <div class="content-main">
+          <button id="trigger-btn" type="button" class="btn-tertiary">Action</button>
+        </div>
+        <div class="content-detail">
+          <p>It works!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  $('#back-button-1').cards({
+    contentPaddingX: 16,
+    contentPaddingY: 16,
+    detailRefId: 'trigger-btn'
+  })
+</script>
