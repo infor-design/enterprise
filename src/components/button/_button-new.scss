@@ -214,9 +214,9 @@
 .btn-icon,
 .btn-close {
   > .icon {
-    position: relative;
-    top: -1px;
-    left: 0;
+    display: inline-flex;
+    vertical-align: middle;
+    flex-direction: row;
   }
 }
 

@@ -177,16 +177,18 @@ a.btn-close.is-personalizable:focus:not(.hide-focus) {
 
 .is-personalizable .btn-menu:not(.btn-primary):not(.btn-secondary).is-open,
 .btn-menu:not(.btn-primary):not(.btn-secondary).is-personalizable.is-open,
-.is-personalizable:not(.application-menu) .btn-actions:not(.btn-primary):not(.btn-secondary).is-open,
 .btn-actions:not(.btn-primary):not(.btn-secondary).is-personalizable.is-open {
   color: ${colors.base};
 }
 
 .is-personalizable .btn-menu:not(.btn-primary):not(.btn-secondary).is-open .icon,
 .btn-menu:not(.btn-primary):not(.btn-secondary).is-personalizable.is-open .icon,
-.is-personalizable:not(.application-menu) .btn-actions:not(.btn-primary):not(.btn-secondary).is-open .icon,
 .btn-actions:not(.btn-primary):not(.btn-secondary).is-personalizable.is-open .icon {
   color: ${colors.base};
+}
+
+.is-personalizable:not(.application-menu) .btn-actions:not(.btn-primary):not(.btn-secondary).is-open .icon {
+  color: ${colors.btnActionsHoverColor};
 }
 
 .is-personalizable .hyperlink:not(.today),
