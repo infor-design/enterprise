@@ -10906,8 +10906,6 @@ Datagrid.prototype = {
     for (let cell = 0; cell < this.settings.columns.length; cell++) {
       this.clearAllCellError(row, cell);
     }
-
-    this.render();
   },
 
   /**
