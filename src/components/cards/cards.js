@@ -22,6 +22,7 @@ const COMPONENT_NAME = 'cards';
  * @param {boolean} [settings.verticalButtonAction] Ability to rotate the button action vertically
  * @param {array} [settings.dataset=[]] An array of data objects that will be represented as cards.
  * @param {string} [settings.template] Html Template String.
+ * @param {string} [seettings.detailRefId] The id of the detail element that will be used to display the detail content.
  * @param {string} [settings.selectable=false] Ability to enable the selection state e.g. 'single', 'multiple' or false.
  * @param {string} [settings.attributes=null] Add extra attributes like id's to the element. e.g. `attributes: { name: 'id', value: 'my-unique-id' }`
  */
@@ -37,6 +38,7 @@ const CARDS_DEFAULTS = {
   selectable: false,
   expandableHeader: false,
   verticalButtonAction: false,
+  detailRefId: undefined,
   attributes: null
 };
 
@@ -447,6 +449,49 @@ Cards.prototype = {
   },
 
   /**
+   * Show the card detail
+   */
+  showCardDetail() {
+    this.showCardDetail = true;
+
+    if (this.showCardDetail) {
+      this.element.addClass('show-card-detail');
+    }
+
+    this.addBackButton();
+  },
+
+  /**
+   * Hide the card detail
+   */
+  hideCardDetail() {
+    this.showCardDetail = false;
+
+    this.element.removeClass('show-card-detail');
+  },
+
+  /**
+   * Add back button in card header
+   */
+  addBackButton() {
+    if (this.cardHeader) {
+      const backButton = `
+      <div class="widget-header-section go-back-button">
+        <button id="go-back" class="btn-icon go-back" type="button">
+          <span class="audible">Show navigation</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-arrow-left"></use>
+          </svg>
+        </button>
+      </div>
+      `;
+
+      this.cardHeader.addClass('has-back-button');
+      this.cardHeader.prepend(backButton);
+    }
+  },
+
+  /**
    * Attach event handlers
    * @private
    * @returns {object} Api for chaining.
@@ -474,6 +519,16 @@ Cards.prototype = {
         e.preventDefault();
       });
     }
+
+    $(this.element.find('.card-content, .widget-content').find(`#${this.settings.detailRefId}, .is-selected`)).on('click', (e) => {
+      e.stopPropagation();
+      self.showCardDetail();
+    });
+
+    $(this.element.find('.widget-header-section.go-back-button')).on('click', (e) => {
+      e.stopPropagation();
+      self.hideCardDetail();
+    });
 
     $('body').on('resize.card', () => {
       if (Locale.isRTL()) {
