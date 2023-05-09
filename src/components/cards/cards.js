@@ -487,9 +487,10 @@ Cards.prototype = {
     this.element.find('.card-content, .widget-content').children().on('scroll.card, scroll.widget', (e) => {
       const target = e.target;
       const listviewSearch = $(target).siblings('.listview-search');
+      const searchFieldWrapper = $(target).siblings('.card-search').find('.searchfield-wrapper');
 
       if (target.scrollTop > 0) {
-        if (listviewSearch.length > 0) {
+        if (listviewSearch.length > 0 || searchFieldWrapper.length > 0) {
           $(target).addClass('is-scrolling');
         } else {
           cardHeader.addClass('is-shadow-scrolling');
