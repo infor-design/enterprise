@@ -287,6 +287,7 @@ Personalize.prototype = {
     colors.btnTertiaryHoverColor = '#ffffff';
     colors.btnLinkColor = colors.light;
     colors.tabBottomBorderColor = colors.base;
+    colors.btnActionsHoverColor = colors.base;
 
     const isAlabaster = colors.header === '#ffffff';
     const isNewDark = this.currentTheme.indexOf('new-dark') >= 0;
@@ -313,6 +314,7 @@ Personalize.prototype = {
       colors.btnTertiaryHoverColor = '#0072ED';
       colors.btnLinkColor = '0072ED';
       colors.tabBottomBorderColor = '#B7B7BA';
+      colors.btnActionsHoverColor = '#2F2F32';
 
       if (isNewDark) {
         colors.base = '#606066';
@@ -333,6 +335,7 @@ Personalize.prototype = {
         colors.btnLinkColor = colors.light;
         colors.btnBgHoverColor = '#47474C';
         colors.tabBottomBorderColor = '#606066';
+        colors.btnActionsHoverColor = '#ffffff';
       }
 
       if (isClassicDark) {
