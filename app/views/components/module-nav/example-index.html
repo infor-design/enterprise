@@ -259,7 +259,9 @@
     const pinSectionsCheckEl = $('#pin-sections');
 
     dropdownAPI.element.on('change.test', (e) => {
-      navAPI.updated({ displayMode: dropdownAPI.value });
+      let val = dropdownAPI.value;
+      if (val === 'Hidden') val = false;
+      navAPI.updated({ displayMode: val });
     });
 
     displayCheckEl.on('change.test', (e) => {

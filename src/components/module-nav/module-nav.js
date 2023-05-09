@@ -6,7 +6,7 @@ import '../button/button.jquery';
 import '../dropdown/dropdown.jquery';
 import '../tooltip/tooltip.jquery';
 
-import { MODULE_NAV_DISPLAY_MODES, setDisplayMode } from './module-nav.common';
+import { MODULE_NAV_DISPLAY_MODES, setDisplayMode, isValidDisplayMode } from './module-nav.common';
 
 // Settings and Options
 const COMPONENT_NAME = 'modulenav';
@@ -41,6 +41,28 @@ function ModuleNav(element, settings) {
 
 // Plugin Methods
 ModuleNav.prototype = {
+
+  /**
+   * @returns {Accordion} Accordion API, if one is available
+   */
+  get accordionAPI() {
+    return this.accordionEl ? $(this.accordionEl).data('accordion') : undefined;
+  },
+
+  /**
+   * @returns {ModuleNavSwitcher} Module Nav Switcher API, if one is available
+   */
+  get switcherAPI() {
+    return this.switcherEl ? $(this.switcherEl).data('modulenavswitcher') : undefined;
+  },
+
+  /**
+   * @returns {ModuleNavSettings} Module Nav Switcher API, if one is available
+   */
+  get settingsAPI() {
+    return this.settingsEl ? $(this.settingsEl).data('modulenavswitcher') : undefined;
+  },
+
   /**
    * Do initialization, build up and / or add events ect.
    * @returns {object} The Component prototype, useful for chaining.
@@ -62,7 +84,7 @@ ModuleNav.prototype = {
     this.renderChildComponents();
 
     // Configure
-    if (this.settings.displayMode) this.setDisplayMode(this.settings.displayMode);
+    this.setDisplayMode(this.settings.displayMode);
     this.setPinSections(this.settings.pinSections);
     this.setShowDetailView(this.settings.showDetailView);
     this.setScrollable();
@@ -80,15 +102,18 @@ ModuleNav.prototype = {
 
     // Sections
     this.switcherEl = this.element[0].querySelector('.module-nav-switcher');
-    if (!$(this.switcherEl).data('modulenavswitcher')) $(this.switcherEl).modulenavswitcher();
-
+    if (!this.switcherAPI) $(this.switcherEl).modulenavswitcher({ displayMode: this.settings.displayMode });
     this.itemMenuEl = this.element[0].querySelector('.module-nav-main');
+    this.settingsEl = this.element[0].querySelector('.module-nav-settings');
+    if (!this.settingsAPI) $(this.settingsEl).modulenavsettings({ displayMode: this.settings.displayMode });
     this.footerEl = this.element[0].querySelector('.module-nav-footer');
 
     // Components
     this.accordionEl = this.element[0].querySelector('.accordion');
-    this.accordionAPI = $(this.accordion).data('accordion');
-    this.configureAccordion();
+    if (!this.accordionAPI) {
+      $(this.accordionEl).accordion();
+      this.configureAccordion();
+    }
   },
 
   /**
@@ -120,12 +145,12 @@ ModuleNav.prototype = {
    * @private
    */
   collapseAccordionHeaders() {
-    const accordionEl = this.containerEl.querySelector('.accordion');
+    if (!this.accordonEl || !this.accordionAPI) return;
+
     const accordionHeaderEls = [...this.containerEl.querySelectorAll('.accordion-header')];
-    const api = $(accordionEl).data('accordion');
     accordionHeaderEls.forEach((header) => {
       if ($(header).next('.accordion-pane').length) {
-        api.collapse($(header), true);
+        this.accordionAPI.collapse($(header), true);
       }
     });
   },
@@ -134,10 +159,7 @@ ModuleNav.prototype = {
    * @private
    */
   configureAccordion() {
-    if (!this.accordionEl) return;
-
-    const api = $(this.accordionEl).data('accordion');
-    if (!api) return;
+    if (!this.accordionEl || !this.accordionAPI) return;
 
     // Override this accordion behavior to include a check for Module Nav switchers
     const navFocusCallback = (header, defaultFocusBehavior) => {
@@ -152,7 +174,8 @@ ModuleNav.prototype = {
         defaultFocusBehavior();
       }
     };
-    api.settings.accordionFocusCallback = navFocusCallback;
+
+    this.accordionAPI.settings.accordionFocusCallback = navFocusCallback;
 
     // Build tooltips on top-level accordion headers in collapsed mode
     const headers = this.accordionEl.querySelectorAll('.accordion-section > .accordion-header');
@@ -190,7 +213,16 @@ ModuleNav.prototype = {
    * @returns {void}
    */
   setDisplayMode(val) {
+    if (!isValidDisplayMode(val)) return;
+
+    if (this.settings.displayMode !== val) this.settings.displayMode = val;
     setDisplayMode(val, this.containerEl);
+
+    // Reconfigure child elements to use the same display mode
+    this.switcherAPI?.setDisplayMode(val);
+    this.settingsAPI?.setDisplayMode(val);
+
+    // Don't show collapsed accordion headers if not in "expanded" mode
     if (this.settings.displayMode !== 'expanded') {
       this.collapseAccordionHeaders();
     }
@@ -256,7 +288,10 @@ ModuleNav.prototype = {
   updated(settings) {
     if (settings) {
       this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
+      if (this.switcherAPI) this.switcherAPI.settings.displayMode = this.settings.displayMode;
+      if (this.settingsAPI) this.settingsAPI.settings.displayMode = this.settings.displayMode;
     }
+
     return this
       .teardown()
       .init();
@@ -276,15 +311,17 @@ ModuleNav.prototype = {
     this.detailViewEl = null;
 
     // Sections
-    $(this.switcherEl).data('modulenavswitcher')?.destroy();
+    this.switcherAPI?.destroy();
     this.switcherEl = null;
     this.itemMenuEl = null;
+
+    this.settingsAPI?.destroy();
+    this.settingsEl = null;
     this.footerEl = null;
 
     // Components
     this.accordionAPI?.destroy();
     this.accordionEl = null;
-    this.accordionAPI = null;
 
     return this;
   },

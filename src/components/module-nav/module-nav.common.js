@@ -44,6 +44,12 @@ export const dropdownTemplate = () => `<div class="module-nav-section role-dropd
 </div>`;
 
 /**
+ * @param {string} val desired display mode
+ * @returns {boolean} true if the display mode exists
+ */
+export const isValidDisplayMode = val => MODULE_NAV_DISPLAY_MODES.includes(val);
+
+/**
  * @param {string} value defines the HTMLOptionElement value
  * @param {string} [text] optionally defines the HTMLOptionElement textContent
  * @param {string} [icon] optionally defines the HTMLOptionElement icon
@@ -62,7 +68,5 @@ export const roleTemplate = (value, text, icon, iconColor) => `<option
  */
 export const setDisplayMode = (val, el) => {
   el.classList.remove('mode-collapsed', 'mode-expanded');
-  if (typeof val === 'string' && MODULE_NAV_DISPLAY_MODES.includes(val)) {
-    el.classList.add(`mode-${val}`);
-  }
+  if (isValidDisplayMode(val) && val) el.classList.add(`mode-${val}`);
 };

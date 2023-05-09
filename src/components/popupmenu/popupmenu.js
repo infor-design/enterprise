@@ -2400,7 +2400,7 @@ PopupMenu.prototype = {
       isCancelled = false;
     }
 
-    if (!this.menu || !this.menu.add(this.element).hasClass('is-open')) {
+    if (!this.menu || !this.isOpen) {
       return;
     }
 

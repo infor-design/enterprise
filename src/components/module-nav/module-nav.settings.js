@@ -3,13 +3,16 @@ import { utils } from '../../utils/utils';
 import '../popupmenu/popupmenu.jquery';
 
 import {
+  isValidDisplayMode,
   setDisplayMode
 } from './module-nav.common';
 
 // Settings and Options
 const COMPONENT_NAME = 'modulenavsettings';
 
-const MODULE_NAV_SETTINGS_DEFAULTS = {};
+const MODULE_NAV_SETTINGS_DEFAULTS = {
+  displayMode: false
+};
 
 const popupmenuTemplate = () => '<div class="popupmenu-wrapper><ul class="popupmenu"></ul></div>';
 
@@ -55,6 +58,7 @@ ModuleNavSettings.prototype = {
     this.renderChildComponents();
 
     // Configure
+    this.setDisplayMode(this.settings.displayMode);
     this.configurePopupMenu();
 
     return this;
@@ -81,10 +85,9 @@ ModuleNavSettings.prototype = {
   renderChildComponents() {
     this.containerEl = this.element.parents('.module-nav-container')[0];
 
-    this.menuEl = this.element.next('.popupmenu');
-    if (this.element.next('.popupmenu-wrapper').length) {
-      this.menuEl = this.element.next('.popupenu-wrapper').find('.popupmenu');
-    }
+    this.detectPopupMenu();
+
+    // If menu isn't found after detection, generate a new one
     if (!this.menuEl?.length) {
       this.element[0].insertAdjacentHTML('afterend', popupmenuTemplate());
       this.menuEl = this.element.next('.popupenu-wrapper').find('.popupmenu');
@@ -92,14 +95,41 @@ ModuleNavSettings.prototype = {
   },
 
   /**
+   * @private
+   */
+  detectPopupMenu() {
+    this.menuEl = this.element.next('.popupmenu');
+    if (this.element.next('.popupmenu-wrapper').length) {
+      this.menuEl = this.element.next('.popupenu-wrapper').find('.popupmenu');
+    }
+    if (!this.menuEl.length) {
+      const inPageMenu = $('.popupmenu-wrapper.module-nav-settings-menu').find('.popupmenu');
+      if (inPageMenu.length) this.menuEl = inPageMenu;
+    }
+  },
+
+  /**
    * Draws the Settings menu
+   * @private
    */
   configurePopupMenu() {
-    if (this.menuEl.length) {
-      this.element.popupmenu({
-        cssClass: 'module-nav-settings-menu'
-      });
+    if (!this.menuEl.length) {
+      this.detectPopupMenu();
     }
+
+    this.element.popupmenu({
+      cssClass: 'module-nav-settings-menu',
+      offset: (this.settings.displayMode === 'collapsed' ? {
+        x: 10
+      } : {
+        y: 10
+      }),
+      placementOpts: {
+        placement: (this.settings.displayMode === 'collapsed' ? 'right' : 'bottom'),
+        containerOffsetX: 8,
+        containerOffsetY: 8
+      }
+    });
   },
 
   /**
@@ -108,7 +138,10 @@ ModuleNavSettings.prototype = {
    * @returns {void}
    */
   setDisplayMode(val) {
+    if (!isValidDisplayMode(val)) return;
+    if (this.settings.displayMode !== val) this.settings.displayMode = val;
     setDisplayMode(val, this.element[0]);
+    this.configurePopupMenu();
   },
 
   /**

@@ -7,6 +7,7 @@ import {
   buttonTemplate,
   dropdownTemplate,
   roleTemplate,
+  isValidDisplayMode,
   MODULE_NAV_DISPLAY_MODES,
   SWITCHER_ICON_HTML,
   setDisplayMode
@@ -60,7 +61,7 @@ ModuleNavSwitcher.prototype = {
     this.renderChildComponents();
 
     // Configure
-    if (this.settings.displayMode) this.setDisplayMode(this.settings.displayMode);
+    this.setDisplayMode(this.settings.displayMode);
     if (!$(this.roleDropdownEl).find('option').length) {
       this.renderDropdownOptions(true);
     }
@@ -159,6 +160,9 @@ ModuleNavSwitcher.prototype = {
    * @returns {void}
    */
   setDisplayMode(val) {
+    if (!isValidDisplayMode(val)) return;
+
+    if (this.settings.displayMode !== val) this.settings.displayMode = val;
     setDisplayMode(val, this.element[0]);
   },
 

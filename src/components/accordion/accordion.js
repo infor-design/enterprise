@@ -360,11 +360,6 @@ Accordion.prototype = {
       return;
     }
 
-    // Pass through clicks on Module Nav Settings elements
-    if (header.is('.module-nav-settings-btn')) {
-      return true;
-    }
-
     const anchor = header.children('a');
     return this.handleAnchorClick(e, anchor);
   },
@@ -382,7 +377,7 @@ Accordion.prototype = {
     const pane = header.next('.accordion-pane');
     const ngLink = anchor.attr('ng-reflect-href');
 
-    if (e && !ngLink) {
+    if (e && !ngLink && !header.is('.module-nav-settings-btn')) {
       e.preventDefault();
     }
 
@@ -413,7 +408,7 @@ Accordion.prototype = {
       return false;
     }
 
-    this.closePopups(e);
+    if (!header.is('.module-nav-settings-btn')) this.closePopups(e);
 
     /**
      * If the anchor is a real link, follow the link and die here.
@@ -1664,7 +1659,9 @@ Accordion.prototype = {
       const type = getElementType(element);
 
       // Trigger a document click since we stop propgation, to close any open menus/popups.
-      $('body').children().not('.application-menu, .modal-page-container, .page-container, .resize-app-menu-container').closeChildren();
+      if (!element.is('.module-nav-settings-btn')) {
+        $('body').children().not('.application-menu, .modal-page-container, .module-nav, .page-container, .resize-app-menu-container').closeChildren();
+      }
 
       return self[`handle${type}Click`](e, element);
     }
@@ -1715,7 +1712,7 @@ Accordion.prototype = {
       });
     }
 
-    this.element.trigger('rendered');
+    // this.element.trigger('rendered');
 
     return this;
   },
