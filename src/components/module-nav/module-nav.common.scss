@@ -11,6 +11,10 @@
   @include css3(box-shadow, 0 0 8px 1px rgba(0, 0, 0, 0.16));
 }
 
+@mixin settings-menu-box-shadow() {
+  @include css3(box-shadow, 0 0 8px 1px rgba(0, 0, 0, 0.16));
+}
+
 @mixin nav-item-style() {
   align-items: center;
   border-radius: $module-nav-gutter-size;

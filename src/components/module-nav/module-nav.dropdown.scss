@@ -53,6 +53,7 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
   box-shadow: none;
   color: $module-nav-input-text-color;
 
+  max-height: 100%;
   margin-block-start: $module-nav-gutter-size;
 
   > .trigger {
@@ -92,7 +93,7 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
     border: $module-nav-input-border-width solid $module-nav-input-border-color;
     color: inherit;
 
-    height: $module-nav-switcher-dropdown-size;
+    // height: $module-nav-switcher-dropdown-size;
     margin-block-start: $module-nav-switcher-button-gutter-size;
   }
 

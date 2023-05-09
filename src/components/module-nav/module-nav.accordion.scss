@@ -30,9 +30,6 @@
     border-style: solid;
     border-width: 1px;
 
-    height: $module-nav-item-height;
-    margin-block-end: $module-nav-accordion-gutter-size;
-
     > [class^='btn'] {
       color: inherit;
 
@@ -204,6 +201,19 @@
       justify-content: center;
       position: static;
 
+      min-height: 34px;
+      margin-block: 16px;
+      margin-inline: 4px;
+      height: 34px;
+
+      &:first-child {
+        margin-block-start: 0;
+      }
+
+      &:last-child {
+        margin-block-start: 0;
+      }
+
       > .icon {
         position: static;
         margin: 0;
@@ -222,6 +232,11 @@
         display: none;
         pointer-events: none;
       }
+
+      &.is-expanded {
+        display: none;
+        pointer-events: none;
+      }
     }
   }
 }
@@ -232,6 +247,9 @@
 .module-nav-container {
   &.mode-expanded {
     .accordion-header {
+      height: $module-nav-item-height;
+      margin-block-end: $module-nav-accordion-gutter-size;
+
       > .icon {
         margin-inline-end: $module-nav-item-icon-end-spacing;
         margin-inline-start: $module-nav-item-icon-start-spacing;

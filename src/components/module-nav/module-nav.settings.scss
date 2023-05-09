@@ -3,29 +3,46 @@
 // Module Nav Settings Component
 //================================================== //
 
-/*
-.module-nav-settings-btn {
-  @include nav-item-style;
+.popupmenu.module-nav-settings-menu {
+  @include settings-menu-box-shadow;
+  border: 0;
 
-  flex-shrink: 0;
-  gap: $module-nav-switcher-button-gutter-size;
-}
+  ul {
+    border-radius: 8px;
+  }
 
-// =====================================================
-// Display Mode: Collapsed
+  li {
+    line-height: 36px;
 
-.module-nav-container.mode-collapsed {
-  .module-nav-settings-btn {
-    justify-content: center;
+    &.is-focused {
+      background-color: $module-nav-switcher-dropdown-item-focus-bg-color;
+    }
+  }
+
+  a {
+    min-height: $module-nav-settings-menu-item-height;
+    color: $module-nav-settings-menu-item-text-color;
+
+    span {
+      line-height: 36px;
+    }
+  }
+
+  .separator {
+    border-bottom: thin solid $module-nav-settings-menu-separator-color;
+  }
+
+  &.has-icons {
+    .icon:not(.arrow) {
+      height: 18px;
+      margin-left: -38px;
+      margin-top: 10px;
+    }
+
+    > li {
+      > a {
+        padding-left: 48px;
+      }
+    }
   }
 }
-
-// =====================================================
-// Display Mode: Expanded
-
-.module-nav-container.mode-expanded {
-  .module-nav-settings-btn {
-    // display: block;
-  }
-}
-*/
