@@ -1,0 +1,65 @@
+<div class="row">
+  <div class="two-thirds column">
+    <div class="card">
+      <div class="card-header">
+          <h2 class="widget-title">Stacked Week View</h2>
+      </div>
+      <div class="card-content">
+        <div id="week-view-stacked" class="week-view" data-init="false"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+    // Get the Event Type and Events to show in the calendar
+    var eventTypes = [];
+    var events = [];
+
+    $.getJSON('{{basepath}}api/event-types', function(res) {
+    eventTypes = res;
+
+    $.getJSON('{{basepath}}api/events', function(res) {
+      events = res;
+
+      const opts = {
+        borderless: true,
+        eventTypes: eventTypes,
+        events: events,
+        showViewChanger: false,
+        showFooter: false,
+        startDate: new Date(2019, 9, 20),
+        endDate: new Date(2019, 9, 26),
+        stacked: false,
+        attributes: [
+          { name: 'id', value: 'custom-id' },
+          { name: 'data-automation-id', value: 'custom-automation-id' }
+        ]
+      }
+
+      $('#week-view-stacked').weekview({
+        ...opts,
+        stacked: true,
+        showFooter: true
+      });
+    });
+  });
+
+  const elem = $('#week-view-stacked')
+  elem.on('weekrendered', (evt, weekView) => {
+    const api = weekView.api;
+    const dayMap = api.dayMap;
+
+    // Example - Append element to footer
+    dayMap.forEach((day) => {
+      const events = day.events;
+      const footer = day.footer;
+
+      if (footer) {
+        footer.innerHTML = `<span>${events.length} Events</span>`
+      }
+    })
+  });
+ });
+</script>

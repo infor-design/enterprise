@@ -51,6 +51,7 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {string} [settings.language] The name of the language to use for this instance. If not set the current locale will be used or the passed locale will be used.
  * @param {date} [settings.startDate] Start of the week to show.
  * @param {date} [settings.endDate] End of the week to show.
+ * @param {boolean} [settings.borderless] If true, week view is rendered without border.
  * @param {boolean} [settings.firstDayOfWeek=0] Set first day of the week. '1' would be Monday.
  * @param {boolean} [settings.showAllDay=true] Detemines if the all day events row should be shown.
  * @param {boolean} [settings.showTimeLine=true] Shows a bar across the current time.
@@ -551,6 +552,10 @@ WeekView.prototype = {
     this.dayMap = [];
     this.isDayView = false;
     this.element.removeClass('is-day-view stacked-view');
+
+    if (this.settings.borderless) {
+      this.element.addClass('is-borderless');
+    }
 
     if (this.numberOfDays === 0 || this.numberOfDays === 1) {
       this.element.addClass('is-day-view');

@@ -9,7 +9,12 @@ $week-view-cell-height: 25px;
   display: flex;
   flex-direction: column;
   height: 100%;
+  width: 100%;
   overflow: auto;
+
+  &.is-borderless {
+    border: none;
+  }
 
   .week-view-header {
     background-color: $calendar-bg-color;
