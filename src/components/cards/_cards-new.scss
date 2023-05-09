@@ -100,6 +100,10 @@
       padding-left: 8px;
       padding-top: 6px;
     }
+
+    &.has-back-button {
+      padding-left: 8px;
+    }
   }
 }
 
@@ -216,6 +220,12 @@
       font-size: $ids-size-font-px-20;
       font-weight: $ids-number-font-weight-base;
       line-height: $ids-number-font-line-height-sm;
+    }
+
+    .badge {
+      left: 4px;
+      position: relative;
+      top: -3px;
     }
   }
 
