@@ -601,20 +601,11 @@ html[class*="-dark"] .header .toolbar-searchfield-wrapper.active.has-focus .sear
   color: ${colors.contrast};
 }
 
-.is-personalizable .tab-container.header-tabs.alternate > .tab-list-container .tab:not(.is-disabled) {
-  color: ${colors.contrast};
-}
-
 .is-personalizable .tab-container.header-tabs.alternate > .tab-list-container .tab.is-selected:not(.is-disabled) {
   border-color: ${colors.contrast};
 }
 
 .is-personalizable .tab-container.header-tabs.alternate > .tab-list-container .tab-focus-indicator.is-selected {
-  border-color: ${colors.contrast};
-}
-
-.is-personalizable .tab-container.header-tabs.alternate > .tab-list-container .tab:hover:not(.is-disabled) {
-  background-color: ${colors.darker};
   border-color: ${colors.contrast};
 }
 
