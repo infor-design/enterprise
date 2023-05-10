@@ -110,7 +110,6 @@
   // Collapsible Month/Year Pane
   .monthview-monthyear-pane {
     background-color: $popover-bg-color;
-    margin: 0 -1px;
     max-height: calc(100% - 50px);
     overflow: hidden;
     position: absolute;
