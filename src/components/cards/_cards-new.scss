@@ -55,6 +55,11 @@
     }
   }
 
+  .btn-actions.floating-actions {
+    border: 1px solid $ids-color-palette-slate-40;
+    background-color: $ids-color-palette-white;
+  }
+
   .btn-actions.is-open,
   .btn-actions.has-open-tooltip {
     opacity: 1 !important;

@@ -45,16 +45,14 @@
             </div>
           </div>
           <div class="two-thirds column">
-            <div class="card border-less" style="background-color: #D8EFFA">
+            <div class="card border-less" id="benefits">
               <div class="card-header has-subtitle">
                 <div class="widget-header-section title">
-                  <h2 class="card-title">Birthdays</h2>
-                  <p class="label font-size-px-14 m-bottom-0">November 2023</p>
                 </div>
                 <div class="widget-header-section">
                 </div>
                 <div class="widget-header-section more">
-                  <button class="btn-actions">
+                  <button class="btn-actions floating-actions">
                     <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
                       <use href="#icon-vertical-ellipsis"></use>
                     </svg>
@@ -68,8 +66,18 @@
                 </div>
               </div>
               <div class="card-content">
-                <img class="hero-image" src="{{basepath}}images/headshot.png" alt="Headshot" tabindex="0"
-                  style="height: 80px; width: 80px" />
+                <div class="row">
+                  <div class="one-half column">
+                    <svg class="icon icon-empty-state is-slate" focusable="false" aria-hidden="true" role="presentation">
+                      <use href="#icon-empty-no-orders-new"></use>
+                    </svg>
+                    <span class="label font-size-px-32 text-strong">Benefits Enrollment</span>
+                    <p class="label font-size-px-16 text-strong">It’s that time of year for us all where each of you can enroll in the services offered by the company as part of an
+                    overall benefits package <b>—for you and your loved ones.</b></p>
+
+                    <a class="label font-size-px-16 text-strong" href="#">Complete Enrollment</a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -80,7 +88,6 @@
 
   <div class="homepage" data-columns="4">
     <div class="content">
-
 
       <div class="widget">
         <div class="widget-header">
@@ -116,8 +123,11 @@
 </div>
 
 <style>
-  .hero-image {
-    position: relative;
+  #benefits {
+    background-color: #D8EFFA;
+    background-image: url("{{basepath}}images/hero-placeholder.png");
+    background-position: right 50%;
+    background-repeat: no-repeat;
   }
 </style>
 <script>
