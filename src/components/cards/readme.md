@@ -196,6 +196,20 @@ You can add a search field to the card content section and it will appear integr
 </div>
 ```
 
+## Cards with padding in the content
+
+You can add padding to the content section of the card. This is useful when you want to add a form or a list to the card. To add padding to the content section, either use the `contentPaddingX` for left and right paddings, and `contentPaddingY` for top and bottom paddings. The othe option is to use css utility classes `.padding-x-#` and `.padding-y-#`.
+
+```js
+$('#no-header-1').cards({ contentPaddingX: 16, contentPaddingY: 16 });
+```
+
+or
+
+```html
+<div class="card-content padding-x-16 padding-y-16"></div>
+```
+
 ## Searchable lists
 
 You can add a search field that operates search typeahead on a list. See the example-search above for a working example.
