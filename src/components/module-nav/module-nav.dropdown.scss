@@ -7,6 +7,7 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
 //================================================== //
 
 .module-nav-section.role-dropdown {
+
   .dropdown-wrapper {
     max-width: ($module-nav-submenu-size - $module-nav-gutter-size);
     margin-bottom: 0;
@@ -55,6 +56,7 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
 
   max-height: 100%;
   margin-block-start: $module-nav-gutter-size;
+  overflow: hidden;
 
   > .trigger {
     margin-inline-start: -33px;
@@ -93,7 +95,6 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
     border: $module-nav-input-border-width solid $module-nav-input-border-color;
     color: inherit;
 
-    // height: $module-nav-switcher-dropdown-size;
     margin-block-start: $module-nav-switcher-button-gutter-size;
   }
 

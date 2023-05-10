@@ -201,9 +201,10 @@
       justify-content: center;
       position: static;
 
+      max-width: 34px;
       min-height: 34px;
       margin-block: 16px;
-      margin-inline: 4px;
+      margin-inline: 2px;
       height: 34px;
 
       &:first-child {
