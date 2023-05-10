@@ -22,6 +22,9 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
     height: $module-nav-switcher-dropdown-height;
     width: ($module-nav-submenu-size - $module-nav-gutter-size);
 
+    padding-inline-start: 10px;
+    padding-inline-end: 40px;
+
     .icon {
       color: inherit;
       margin-block-end: $module-nav-input-border-radius;
@@ -29,7 +32,7 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
 
     // Override top/right from Dropdown
     + .icon {
-      right: 14px;
+      right: 16px;
     }
   }
 
@@ -61,7 +64,7 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
   overflow: visible;
 
   > .trigger {
-    margin-inline-start: -33px;
+    margin-inline-start: -36px;
     color: inherit;
 
     .icon {
@@ -89,8 +92,9 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
     padding-block-end: 9px;
   }
 
-  ul {
+  .dropdown-list-wrapper {
     @include dropdown-box-shadow;
+    @include drawer-scrollable-area;
 
     background-color: $module-nav-input-bg-color;
     border-radius: $module-nav-input-border-radius;
@@ -126,6 +130,16 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
   &.has-icons {
     input.dropdown-search {
       padding-inline-start: $module-nav-input-padding-inline-start-size;
+    }
+  }
+
+  // Search Mode displays filter matches in the correct color
+  // (Module Nav changes the default highlight color)
+  &.search-mode {
+    li.is-focused {
+      .dropdown-highlight {
+        color: $module-nav-switcher-dropdown-item-text-color;
+      }
     }
   }
 }

@@ -36,8 +36,12 @@ function ModuleNavSwitcher(element, settings) {
 // Plugin Methods
 ModuleNavSwitcher.prototype = {
 
-  get accordion() {
+  get accordionEl() {
     return this.element.parents('.accordion').first();
+  },
+
+  get accordionAPI() {
+    return this.accordionEl ? $(this.accordionEl).data('accordion') : undefined;
   },
 
   /**
@@ -85,14 +89,14 @@ ModuleNavSwitcher.prototype = {
       const key = e.key;
 
       if (key === 'ArrowUp') {
-        console.info('navigate to Module Nav Settings component');
-        // this.accordion.prevHeader(this.element);
+        // console.info('navigate to Module Nav Settings component');
+        this.accordionAPI?.prevHeader(this.element);
         return;
       }
 
       if (key === 'ArrowDown') {
-        console.info('navigate to first accordion item');
-        // this.accordion.nextHeader(this.element);
+        // console.info('navigate to first accordion item');
+        this.accordionAPI?.nextHeader(this.element);
       }
     });
 

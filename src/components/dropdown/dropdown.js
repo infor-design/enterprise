@@ -838,7 +838,7 @@ Dropdown.prototype = {
         <span class="trigger">${isMobile ? $.createIcon({ icon: 'close', classes: ['close'] }) : $.createIcon(this.settings.dropdownIcon || 'dropdown')}</span>`;
 
       if (this.settings.virtualScroll) {
-        listContents += `<div class="virtual-scroll-container${this.settings.extraListWrapper ? ' dropdown-list-wrapper' : ''}">
+        listContents += `<div class="virtual-scroll-container">
             <div class="ids-virtual-scroll">
               <div class="ids-virtual-scroll-viewport">
                 <ul id="${listUlId}"${listAria} class="contents" aria-label="${Locale.translate('Dropdown')}"></ul>
@@ -2371,7 +2371,7 @@ Dropdown.prototype = {
       // Turn upside-down if flipped to the top of the pseudoElem
       self.list[placementObj.wasFlipped === true ? 'addClass' : 'removeClass']('is-ontop');
       if (!self.settings.virtualScroll) {
-        self.listUl[placementObj.wasFlipped === true ? 'prependTo' : 'appendTo'](self.list);
+        self.listUl[placementObj.wasFlipped === true ? 'prependTo' : 'appendTo'](self.settings.extraListWrapper ? self.list.find('.dropdown-list-wrapper') : self.list);
       }
       const listStyle = window.getComputedStyle(self.list[0]);
       const listStyleTop = listStyle.top ? parseInt(listStyle.top, 10) : 0;
