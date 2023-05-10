@@ -132,6 +132,7 @@ Soho.Locale.addCulture('en-US', {
     Color: { id: 'Color', value: 'Color', comment: 'Color' },
     Colors: { id: 'Colors', value: 'Colors', comment: 'Color (plural)' },
     Columns: { id: 'Columns', value: 'Columns', comment: 'Columns tooltip' },
+    Comma: { id: 'Comma', value: ',', comment: 'Comma for lists' },
     Comments: { id: 'Comments', value: 'Comments', comment: 'Comments on an form' },
     CompanyHoliday: { id: 'CompanyHoliday', value: 'Company Holiday', comment: 'A holiday provided by work.' },
     Completed: { id: 'Completed', value: 'Completed', comment: 'Text For a Completed Status' },

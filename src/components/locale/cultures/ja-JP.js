@@ -129,6 +129,7 @@ Soho.Locale.addCulture('ja-JP', {
     CollapseAppTray: { id: 'CollapseAppTray', value: 'アプリトレイを折りたたむ', comment: 'Collapse App Tray tooltip' },
     Color: { id: 'Color', value: '色', comment: 'Color' },
     Colors: { id: 'Colors', value: '色', comment: 'Color (plural)' },
+    Comma: { id: 'Comma', value: '、', comment: 'Comma for lists' },
     Columns: { id: 'Columns', value: '列', comment: 'Columns tooltip' },
     Comments: { id: 'Comments', value: 'コメント', comment: 'Comments on an form' },
     CompanyHoliday: { id: 'CompanyHoliday', value: '休業日', comment: 'A holiday provided by work.' },
