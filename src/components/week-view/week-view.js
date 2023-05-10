@@ -924,6 +924,7 @@ WeekView.prototype = {
       showToday: this.settings.showToday,
       isAlternate: false,
       isMenuButton: true,
+      isMonthPicker: true,
       showViewChanger: this.settings.showViewChanger,
       hitbox: this.settings.hitbox,
       onChangeView: this.settings.onChangeView,
