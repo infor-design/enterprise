@@ -81,6 +81,10 @@
 
   .card-content,
   .widget-content {
+    &.has-back-button {
+      overflow-x: hidden;
+    }
+
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
     position: relative;
