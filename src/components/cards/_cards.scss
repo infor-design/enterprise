@@ -724,3 +724,37 @@ html[dir='rtl'] {
     }
   }
 }
+
+.card-header,
+.widget-header {
+  &:not(.expandable-card-header) {
+    align-items: center;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    margin: 0;
+    padding-bottom: 0;
+    padding-left: 16px;
+    padding-right: 8px;
+    padding-top: 0;
+  }
+
+  >button.btn-actions:not(.has-toolbar) {
+    position: relative;
+
+    svg.icon {
+      top: 0;
+    }
+  }
+
+  .widget-title {
+    margin: 0;
+  }
+
+  &:not(.has-toolbar) {
+    >.btn-actions {
+      right: 0;
+      top: -1px;
+    }
+  }
+}
