@@ -56,10 +56,12 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {boolean} [settings.showAllDay=true] Detemines if the all day events row should be shown.
  * @param {boolean} [settings.showTimeLine=true] Shows a bar across the current time.
  * @param {boolean} [settings.stacked] Shows stacked week view layout
+ * @param {boolean} [settings.responsive] If true and stacked mode is enabled, it switches to one day view for phone/tablet sizes.
  * @param {number} [settings.startHour=7] The hour (0-24) to end on each day.
  * @param {number} [settings.endHour=19] The hour (0-24) to end on each day.
  * @param {boolean} [settings.showToday=true] Deterimines if the today button should be shown.
  * @param {boolean} [settings.showViewChanger] If false the dropdown to change views will not be shown.
+ * @param {boolean} [settings.hideToolbar] If true the week view is rendered without toolbar.
  * @param {boolean} [settings.showFooter] If true shows footer in staced view mode.
  * @param {boolean} [settings.hitbox=false] Enable hitbox for toolbar buttons.
  * @param {function} [settings.onChangeView] Call back for when the view changer is changed.
@@ -551,10 +553,14 @@ WeekView.prototype = {
 
     this.dayMap = [];
     this.isDayView = false;
-    this.element.removeClass('is-day-view stacked-view');
+    this.element.removeClass('is-day-view stacked-view is-borderless toolbar-hidden');
 
     if (this.settings.borderless) {
       this.element.addClass('is-borderless');
+    }
+
+    if (this.settings.hideToolbar) {
+      this.element.addClass('toolbar-hidden');
     }
 
     if (this.numberOfDays === 0 || this.numberOfDays === 1) {
@@ -564,7 +570,8 @@ WeekView.prototype = {
     }
     this.hasIrregularDays = this.numberOfDays !== 7;
 
-    if (!this.isDayView && this.settings.stacked && this.isMobileWidth) {
+    // switch to one day view if responsive is enabled and in stacked view mode
+    if (this.settings.responsive && !this.isDayView && this.settings.stacked && this.isMobileWidth) {
       this.showWeek(startDate, startDate);
       return;
     }
@@ -850,6 +857,8 @@ WeekView.prototype = {
    * @returns {void}
    */
   showToolbarMonth(startDate, endDate) {
+    if (this.settings.hideToolbar) return;
+
     const startMonth = Locale.formatDate(startDate, { pattern: 'MMMM', locale: this.locale.name });
     const endMonth = Locale.formatDate(endDate, { pattern: 'MMMM', locale: this.locale.name });
     const startYear = Locale.formatDate(startDate, { pattern: 'yyyy', locale: this.locale.name });
@@ -900,6 +909,8 @@ WeekView.prototype = {
    * @private
    */
   addToolbar() {
+    if (this.settings.hideToolbar) return;
+
     // Invoke the toolbar
     const view = !this.isDayView ? 'week' : 'day';
     this.header = $('<div class="week-view-header"><div class="calendar-toolbar"></div></div>').appendTo(this.element);
@@ -1052,13 +1063,15 @@ WeekView.prototype = {
     this.isMobileWidth = breakpoints.isBelow('phone-to-tablet');
 
     // only stacked view monitors breakpoint changes
-    if (this.isStackedView() && this.isMobileWidth) {
-      const today = new Date();
-      const isCurrentWeek = dateUtils.isWithinRange(this.settings.startDate, this.settings.endDate, today);
-      const startDate = isCurrentWeek ? today : this.settings.startDate;
-      this.showWeek(startDate, startDate);
-    } else if (this.isDayView && this.settings.stacked) {
-      this.setWeekFromDate(this.settings.startDate);
+    if (this.settings.stacked && this.settings.responsive) {
+      if (!this.isDayView && this.isMobileWidth) {
+        const today = new Date();
+        const isCurrentWeek = dateUtils.isWithinRange(this.settings.startDate, this.settings.endDate, today);
+        const startDate = isCurrentWeek ? today : this.settings.startDate;
+        this.showWeek(startDate, startDate);
+      } else if (this.isDayView) {
+        this.setWeekFromDate(this.settings.startDate);
+      }
     }
   },
 

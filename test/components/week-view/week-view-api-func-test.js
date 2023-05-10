@@ -206,6 +206,17 @@ describe('WeekView API', () => {
     expect(weekViewAPI.settings.endDate.getDate()).toEqual(7);
   });
 
+  it('can hide toolbar', () => {
+    weekViewAPI?.destroy();
+    weekViewAPI = new WeekView(weekViewEl, {
+      hideToolbar: true
+    });
+
+    const toolbarElem = document.body.querySelector('.week-view .calendar-toolbar');
+    expect(weekViewAPI.settings.hideToolbar).toEqual(true);
+    expect(toolbarElem).toBeNull();
+  });
+
   it('should render stacked view', () => {
     const startDate = new Date(2019, 11, 1);
     const endDate = new Date(2019, 11, 7);

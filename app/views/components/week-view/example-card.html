@@ -2,10 +2,32 @@
   <div class="two-thirds column">
     <div class="card">
       <div class="card-header">
+          <h2 class="widget-title">Week View</h2>
+      </div>
+      <div class="card-content">
+        <div id="week-view" class="week-view" data-init="false"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="two-thirds column">
+    <div class="card">
+      <div class="card-header">
           <h2 class="widget-title">Stacked Week View</h2>
       </div>
       <div class="card-content">
         <div id="week-view-stacked" class="week-view" data-init="false"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="two-thirds column">
+    <div class="card">
+      <div class="card-header">
+          <h2 class="widget-title">Stacked Week View (Hidden Toolbar/Footer)</h2>
+      </div>
+      <div class="card-content">
+        <div id="week-view-stacked-no-toolbar" class="week-view" data-init="false"></div>
       </div>
     </div>
   </div>
@@ -24,6 +46,7 @@
       events = res;
 
       const opts = {
+        hideToolbar: false,
         borderless: true,
         eventTypes: eventTypes,
         events: events,
@@ -31,6 +54,7 @@
         showFooter: false,
         startDate: new Date(2019, 9, 20),
         endDate: new Date(2019, 9, 26),
+        responsive: false,
         stacked: false,
         attributes: [
           { name: 'id', value: 'custom-id' },
@@ -38,10 +62,20 @@
         ]
       }
 
+      $('#week-view').weekview({...opts});
+
       $('#week-view-stacked').weekview({
         ...opts,
-        stacked: true,
-        showFooter: true
+        hideToolbar: false,
+        showFooter: true,
+        stacked: true
+      });
+
+      $('#week-view-stacked-no-toolbar').weekview({
+        ...opts,
+        hideToolbar: true,
+        showFooter: false,
+        stacked: true
       });
     });
   });

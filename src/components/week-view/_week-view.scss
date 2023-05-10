@@ -176,6 +176,16 @@ $week-view-cell-height: 25px;
     }
   }
 
+  &.toolbar-hidden {
+    .week-view-container .week-view-header-cell {
+      top: 0;
+    }
+
+    &.is-borderless .week-view-container .week-view-header-cell {
+      border-top: 1px solid $calendar-line-color;
+    }
+  }
+
   .week-view-cell-wrapper {
     height: $week-view-cell-height;
     min-width: 50px;
@@ -309,9 +319,6 @@ $week-view-cell-height: 25px;
     z-index: 2;
 
     .week-view-footer-cell {
-      display: flex;
-      justify-content: center;
-      align-items: center;
       width: 100%;
       text-align: center;
       white-space: nowrap;
