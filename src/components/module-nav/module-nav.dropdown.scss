@@ -20,7 +20,7 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
     color: $module-nav-input-text-color;
 
     height: $module-nav-switcher-dropdown-height;
-    width: ($module-nav-submenu-size - $module-nav-gutter-size - 2);
+    width: ($module-nav-submenu-size - $module-nav-gutter-size);
 
     .icon {
       color: inherit;
@@ -51,12 +51,14 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
 .dropdown-list.role-dropdown {
   background-color: transparent;
   border: none;
+  border-radius: 0;
   box-shadow: none;
+
   color: $module-nav-input-text-color;
 
   max-height: 100%;
   margin-block-start: $module-nav-gutter-size;
-  overflow: hidden;
+  overflow: visible;
 
   > .trigger {
     margin-inline-start: -33px;
@@ -80,7 +82,7 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
 
     // visibly separate the input field from the list
     margin-inline-start: $module-nav-container-size;
-    width: calc(100% - #{$module-nav-container-size});
+    width: calc(100% - #{$module-nav-container-size - 3});
 
     // re-align text with in-page dropdown
     padding-block-start: 7px;

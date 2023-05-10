@@ -32,6 +32,7 @@ const reloadSourceStyles = ['none', 'open', 'typeahead'];
 * @param {boolean} [settings.closeOnSelect = true]  When an option is selected, the list will close if set to "true".  List stays open if "false".
 * @param {string} [settings.cssClass = null]  Append an optional css class to dropdown-list
 * @param {string} [settings.dropdownIcon = 'dropdown'] Change the icon used as the "dropdown" arrow.
+* @param {boolean} [settings.extraListWrapper = false] If true, adds an extra wrapping element in the Dropdown List (used for styling/scrolling).
 * @param {string} [settings.filterMode = 'contains']  Search mode to use between 'startsWith' and 'contains', false will not allow client side filter
 * @param {boolean} [settings.virtualScroll = false] If true virtual scrolling will be used, this is good for larger lists but may not work with all other features.
 * @param {boolean} [settings.noSearch = false]  If true, disables the ability of the user to enter text
@@ -65,6 +66,7 @@ const DROPDOWN_DEFAULTS = {
   closeOnSelect: true,
   cssClass: null,
   dropdownIcon: 'dropdown',
+  extraListWrapper: false,
   filterMode: 'contains',
   virtualScroll: false,
   maxSelected: undefined, // (multiselect) sets a limit on the number of items that can be selected
@@ -814,6 +816,8 @@ Dropdown.prototype = {
       self.settings.allTextString : `${headerText.all}`;
     headerText.selected = (typeof s.selectedTextString === 'string' && s.selectedTextString !== '') ?
       self.settings.selectedTextString : `${headerText.selected}`;
+    const wrapperStart = this.settings.extraListWrapper ? '<div class="dropdown-list-wrapper">' : '';
+    const wrapperEnd = this.settings.extraListWrapper ? '</div>' : '';
 
     // Find custom ID attributes
     const baseIdAttr = utils.getAttribute(this, 'id', this.settings.attributes);
@@ -834,7 +838,7 @@ Dropdown.prototype = {
         <span class="trigger">${isMobile ? $.createIcon({ icon: 'close', classes: ['close'] }) : $.createIcon(this.settings.dropdownIcon || 'dropdown')}</span>`;
 
       if (this.settings.virtualScroll) {
-        listContents += `<div class="virtual-scroll-container">
+        listContents += `<div class="virtual-scroll-container${this.settings.extraListWrapper ? ' dropdown-list-wrapper' : ''}">
             <div class="ids-virtual-scroll">
               <div class="ids-virtual-scroll-viewport">
                 <ul id="${listUlId}"${listAria} class="contents" aria-label="${Locale.translate('Dropdown')}"></ul>
@@ -842,7 +846,7 @@ Dropdown.prototype = {
             </div>
           </div>`;
       } else {
-        listContents += `<ul id="${listUlId}"${listAria} aria-label="${Locale.translate('Dropdown')}">`;
+        listContents += `${wrapperStart}<ul id="${listUlId}"${listAria} aria-label="${Locale.translate('Dropdown')}">`;
       }
     } else {
       this.list.attr('id', listId);
@@ -969,7 +973,7 @@ Dropdown.prototype = {
     // Build the entire thing and set references if this is the first opening.
     // Otherwise, simply replace the elements inside the <ul>.
     if (!listExists) {
-      listContents += this.settings.virtualScroll ? `${ulContents}</div>` : `${ulContents}</ul></div>`;
+      listContents += this.settings.virtualScroll ? `${ulContents}</div>` : `${ulContents}</ul>${wrapperEnd}</div>`;
 
       // Append markup to the DOM
       this.list = $(listContents);

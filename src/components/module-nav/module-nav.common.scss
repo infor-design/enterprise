@@ -20,3 +20,8 @@
   border-radius: $module-nav-gutter-size;
   display: flex;
 }
+
+@mixin drawer-scrollable-area() {
+  overflow-y: auto;
+  overflow-x: hidden;
+}

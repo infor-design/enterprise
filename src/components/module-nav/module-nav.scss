@@ -156,7 +156,8 @@
 
   &:not(.pinned-optional) {
     .module-nav-accordion {
-      overflow-y: auto;
+      @include drawer-scrollable-area;
+      // overflow-y: auto;
       flex-grow: 1;
     }
 
@@ -171,12 +172,12 @@
 
   &.pinned-optional {
     .module-nav-main {
-      overflow: auto;
+      @include drawer-scrollable-area;
       flex-grow: 1;
     }
 
     .module-nav-footer {
-      overflow: auto;
+      @include drawer-scrollable-area;
     }
   }
 }

@@ -129,6 +129,7 @@ ModuleNavSwitcher.prototype = {
     $(this.roleDropdownEl).dropdown({
       cssClass: 'role-dropdown',
       dropdownIcon: 'expand-all',
+      extraListWrapper: true,
       placementOpts: {
         x: 50
       },

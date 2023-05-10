@@ -17,9 +17,9 @@ const MODULE_NAV_DEFAULTS = {
   showDetailView: false,
 };
 
-const toggleScrollbar = (el) => {
+const toggleScrollbar = (el, doToggle) => {
   if (el instanceof HTMLElement) {
-    if (el.scrollHeight > el.clientHeight) {
+    if ((doToggle === undefined && el.scrollHeight > el.clientHeight) || doToggle === true) {
       el.classList.add('has-scrollbar');
     } else {
       el.classList.remove('has-scrollbar');
@@ -87,7 +87,6 @@ ModuleNav.prototype = {
     this.setDisplayMode(this.settings.displayMode);
     this.setPinSections(this.settings.pinSections);
     this.setShowDetailView(this.settings.showDetailView);
-    this.setScrollable();
     this.configureResize();
     return this;
   },
@@ -235,6 +234,7 @@ ModuleNav.prototype = {
    */
   setPinSections(val) {
     this.containerEl.classList[val ? 'add' : 'remove']('pinned-optional');
+    this.setScrollable();
   },
 
   /**
@@ -244,28 +244,32 @@ ModuleNav.prototype = {
    */
   setScrollable() {
     if (!this.settings.pinSections) {
+      this.setAccordionSectionsScrollable(false);
       this.setMainAccordionScrollable();
     } else {
+      this.setMainAccordionScrollable(false);
       this.setAccordionSectionsScrollable();
     }
   },
 
   /**
    * @private
+   * @param {boolean|undefined} [doToggle] if defined, dictates which direction to force toggle (false for off, true for on)
    */
-  setMainAccordionScrollable() {
+  setMainAccordionScrollable(doToggle) {
     const el = this.accordionEl;
-    toggleScrollbar(el);
+    toggleScrollbar(el, doToggle);
   },
 
   /**
    * @private
+   * @param {boolean|undefined} [doToggle] if defined, dictates which direction to force toggle (false for off, true for on)
    */
-  setAccordionSectionsScrollable() {
+  setAccordionSectionsScrollable(doToggle) {
     const sections = this.accordionEl?.querySelectorAll('.accordion-section');
     if (sections && sections.length) {
       [...sections].forEach((section) => {
-        toggleScrollbar(section);
+        toggleScrollbar(section, doToggle);
       });
     }
   },
