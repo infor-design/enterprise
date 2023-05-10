@@ -20,6 +20,14 @@
   display: flex !important;
 }
 
+.rounded {
+  border-radius: 4px;
+}
+
+.rounded-lg {
+  border-radius: 8px;
+}
+
 .align-items-center {
   align-items: center !important;
 }
@@ -60,7 +68,7 @@
   float: none !important;
 }
 
-.flex-center {    
+.flex-center {
   @extend .d-flex;
   @extend .align-items-center;
   @extend .justify-content-center;
