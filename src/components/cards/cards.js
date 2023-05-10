@@ -59,6 +59,7 @@ Cards.prototype = {
    */
   init() {
     this.selectedRows = [];
+    this.showCardDetailFlag = false;
     this
       .setup()
       .build()
@@ -452,9 +453,9 @@ Cards.prototype = {
    * Show the card detail
    */
   showCardDetail() {
-    this.showCardDetail = true;
+    this.showCardDetailFlag = true;
 
-    if (this.showCardDetail) {
+    if (this.showCardDetailFlag) {
       this.element.addClass('show-card-detail');
     }
 
@@ -465,9 +466,11 @@ Cards.prototype = {
    * Hide the card detail
    */
   hideCardDetail() {
-    this.showCardDetail = false;
+    this.showCardDetailFlag = false;
 
     this.element.removeClass('show-card-detail');
+    this.cardHeader.removeClass('has-back-button');
+    this.cardHeader.find('.go-back-button').remove();
   },
 
   /**
@@ -498,6 +501,9 @@ Cards.prototype = {
    */
   handleEvents() {
     const self = this;
+    const $cardContent = $(self.element).find('.card-content, .widget-content');
+    const $detailElement = `#${self.settings.detailRefId}, .is-selected`;
+
     this.expandableCardHeader?.on('click.cards', (e) => {
       if (!self.isDisabled()) {
         e.preventDefault();
@@ -520,14 +526,19 @@ Cards.prototype = {
       });
     }
 
-    $(this.element.find('.card-content, .widget-content').find(`#${this.settings.detailRefId}, .is-selected`)).on('click', (e) => {
+    // Attach click event handler to $detailElement within $cardContent
+    $cardContent.find($detailElement).on('click', (e) => {
       e.stopPropagation();
       self.showCardDetail();
-    });
 
-    $(this.element.find('.widget-header-section.go-back-button')).on('click', (e) => {
-      e.stopPropagation();
-      self.hideCardDetail();
+      // Find goBackElement within self.element
+      const goBackElement = self.element.find('.card-header, .widget-header').find('.go-back');
+
+      // Attach click event handler to goBackElement
+      $(goBackElement).on('click', (evt) => {
+        evt.stopPropagation();
+        self.hideCardDetail();
+      });
     });
 
     $('body').on('resize.card', () => {
@@ -569,6 +580,8 @@ Cards.prototype = {
     this.expandableCardHeader?.off('click.cards');
     this.expandableCardHeader = null;
     $('body').off('resize.card');
+    $(this.element.find('.card-content, .widget-content').find(`#${this.settings.detailRefId}, .is-selected`)).off();
+    $(this.element.find('.card-header, .widget-header')?.find('.go-back')).off();
     this.selectedRows = [];
     this.cardContentPane.off();
     this.element.find('.card-content').children().off('scroll.card');
