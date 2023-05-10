@@ -83,6 +83,103 @@ Sometimes you might want cards that look more integrated into the page. To achie
 $(this).cards({ bordered: true });
 ```
 
+## Card with badge
+
+The component represents a card-like element with a badge displaying additional information.
+
+To use the Card with Badge component, you can include the following HTML markup:
+
+```html
+<div class="widget-header-section title">
+  <h2 class="card-title">Card Title</h2>
+  <span class="round info badge">5</span>
+</div>
+```
+
+The `div` element with the class `widget-header-section` represents the header section of the card. Inside this div, we have a `h2` element with the class `card-title` to display the title of the card. Additionally, we have a `span` element with the classes `round`, `info`, and `badge` to display the badge indicating additional information. In the example above, the badge displays the number 5.
+
+## Card Header with Subtitle
+
+The component represents a card header with a title and a subtitle.
+
+To use the Card Header with Subtitle component, you can include the following HTML markup:
+
+```html
+<div class="card-header has-subtitle">
+  <div class="widget-header-section title">
+    <h2 class="card-title">Birthdays</h2>
+    <p class="label font-size-px-14 m-bottom-0">November 2023</p>
+  </div>
+  <div class="widget-header-section custom-action">
+    <!-- Custom action content goes here -->
+  </div>
+  <div class="widget-header-section more">
+    <!-- More actions content goes here -->
+  </div>
+</div>
+
+```
+
+## Card with back button
+
+The Card with Back Button component provides a way to toggle between two states. The first state, known as the default state, displays the card title, custom action buttons, button actions, and the card content. The second state, known as the back state, displays the back button, detail custom action buttons, and the detail content.
+
+To toggle an element to the second state, you need to click on it while ensuring that the `detailRefId` is populated. This setting acts as a binder, connecting the element to the second view. If you're working with a list, the component is already configured to target the `.is-selected` selector, binding it automatically to the second state.
+
+To use the Card with Back Button component, you can include the following HTML markup
+
+```html
+<div class="card bordered" id="back-button-1">
+  <div class="card-header has-subtitle">
+    <div class="widget-header-section detail-title">
+      <h2 class="card-title">November</h2>
+    </div>
+    <div class="widget-header-section detail-custom-action">
+      <button type="button" class="btn-icon" id="star-id">
+        <span>Star</span>
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-star-outlined"></use>
+        </svg>
+        <span class="audible">Star</span>
+      </button>
+      <button type="button" class="btn-icon" id="new-doc-id">
+        <span>New Document</span>
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-new-document"></use>
+        </svg>
+        <span class="audible">New Document</span>
+      </button>
+    </div>
+    <div class="widget-header-section title">
+      <h2 class="card-title">Birthdays</h2>
+      <p class="label font-size-px-14 m-bottom-0">November 2023</p>
+    </div>
+    <div class="widget-header-section custom-action">
+      <button type="button" class="btn-icon" id="search-id">
+        <span>Calendar</span>
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-calendar"></use>
+        </svg>
+        <span class="audible">Calendar</span>
+      </button>
+    </div>
+    <div class="widget-header-section more">
+      <!-- More actions content goes here -->
+    </div>
+  </div>
+  <div class="card-content">
+    <div class="content-main">
+      <button id="trigger-btn" type="button" class="btn-secondary">Click to open widget detail view</button>
+    </div>
+    <div class="content-detail">
+      <!-- Detail view content of the card goes here -->
+    </div>
+  </div>
+</div>
+```
+
+Remember to include the following divs in the template of the card header: `<div class="widget-header-section detail-title"></div>` and `<div class="widget-header-section detail-custom-action"></div>`. These divs are essential for displaying the title and custom action of the card in the second state.
+
 ## Scrollable Content
 
 You can add a search field to the card content section and it will appear integrated with the header. As you scroll in the content the card component will add an `is-scrolling` class. To avoid a jump put `border-top: 1px solid transparent` in any custom css. But if you use the soho components this will adjust.
@@ -97,6 +194,20 @@ You can add a search field to the card content section and it will appear integr
         <br/><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
     </div>
 </div>
+```
+
+## Cards with padding in the content
+
+You can add padding to the content section of the card. This is useful when you want to add a form or a list to the card. To add padding to the content section, either use the `contentPaddingX` for left and right paddings, and `contentPaddingY` for top and bottom paddings. The othe option is to use css utility classes `.padding-x-#` and `.padding-y-#`.
+
+```js
+$('#no-header-1').cards({ contentPaddingX: 16, contentPaddingY: 16 });
+```
+
+or
+
+```html
+<div class="card-content padding-x-16 padding-y-16"></div>
 ```
 
 ## Searchable lists

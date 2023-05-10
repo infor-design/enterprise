@@ -83,6 +83,14 @@
   .widget-content {
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
+    position: relative;
+
+    &.padding-x-16 {
+      .content-main,
+      .content-detail {
+        width: calc(100% - 32px); // Calculate the width of the card/widget considering padding (to prevent overflow when using position: absolute)
+      }
+    }
   }
 
   &.show-buttons button {
@@ -125,6 +133,32 @@
         }
       }
     }
+  }
+
+  &.show-card-detail {
+    .content-main {
+      transform: translateX(-110%);
+    }
+
+    .content-detail {
+      transform: translateX(0);
+    }
+  }
+
+  .content-main {
+    transform: translateX(0);
+    width: 100%;
+  }
+
+  .content-detail {
+    transform: translateX(110%);
+  }
+
+  .content-detail,
+  .content-main {
+    @include transform-transition-list(300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
+
+    position: absolute;
   }
 }
 
