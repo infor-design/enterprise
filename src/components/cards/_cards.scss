@@ -758,3 +758,30 @@ html[dir='rtl'] {
     }
   }
 }
+
+html[class*='theme-classic-'] {
+  .card-header,
+  .widget-header {
+    border-bottom: 1px solid $cardlist-border-color;
+  }
+
+  .card-header-section,
+  .widget-header-section {
+    &.title,
+    &.custom-action,
+    &.detail-title,
+    &.detail-custom-action {
+      flex-grow: 1;
+    }
+  }
+
+  .card-header-section,
+  .widget-header-section {
+    &.title {
+      + .custom-action,
+      + .detail-custom-action {
+        text-align: right;
+      }
+    }
+  }
+}
