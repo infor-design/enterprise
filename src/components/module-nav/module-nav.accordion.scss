@@ -30,6 +30,8 @@
     border-style: solid;
     border-width: 1px;
 
+    color: $module-nav-item-text-color;
+
     > [class^='btn'] {
       color: inherit;
 

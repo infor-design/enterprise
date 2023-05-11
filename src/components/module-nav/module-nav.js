@@ -4,6 +4,7 @@ import './module-nav.switcher.jquery';
 import '../accordion/accordion.jquery';
 import '../button/button.jquery';
 import '../dropdown/dropdown.jquery';
+import '../searchfield/searchfield.jquery';
 import '../tooltip/tooltip.jquery';
 
 import { MODULE_NAV_DISPLAY_MODES, setDisplayMode, isValidDisplayMode } from './module-nav.common';
@@ -54,6 +55,13 @@ ModuleNav.prototype = {
    */
   get switcherAPI() {
     return this.switcherEl ? $(this.switcherEl).data('modulenavswitcher') : undefined;
+  },
+
+  /**
+   * @returns {SearchField} Searchfield API, if one is available
+   */
+  get searchAPI() {
+    return this.searchEl ? $(this.searchEl).data('searchfield') : undefined;
   },
 
   /**
@@ -112,6 +120,11 @@ ModuleNav.prototype = {
     if (!this.accordionAPI) {
       $(this.accordionEl).accordion();
       this.configureAccordion();
+    }
+    this.searchEl = this.element[0].querySelector('.searchfield');
+    if (this.searchEl) {
+      $(this.searchEl).searchfield();
+      this.configureSearch();
     }
   },
 
@@ -192,6 +205,7 @@ ModuleNav.prototype = {
   },
 
   /**
+   * Configures Module Nav's resize detection behavior
    * @private
    */
   configureResize() {
@@ -204,6 +218,15 @@ ModuleNav.prototype = {
     if (this.accordionEl) {
       this.ro.observe(this.accordionEl);
     }
+  },
+
+  /**
+   * Configures the Module Nav's Search component
+   * @private
+   */
+  configureSearch() {
+    this.searchEl.classList.add('module-nav-search');
+    $(this.searchEl).parents('.accordion-section')?.[0].classList.add('module-nav-search-container');
   },
 
   /**
@@ -326,6 +349,8 @@ ModuleNav.prototype = {
     // Components
     this.accordionAPI?.destroy();
     this.accordionEl = null;
+    this.searchAPI?.destroy();
+    this.searchEl = null;
 
     return this;
   },

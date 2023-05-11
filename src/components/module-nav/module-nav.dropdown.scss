@@ -14,10 +14,7 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
   }
 
   div.dropdown {
-    background-color: $module-nav-input-bg-color;
-    border-radius: $module-nav-input-border-radius;
-    border: $module-nav-input-border-width solid $module-nav-input-border-color;
-    color: $module-nav-input-text-color;
+    @include module-nav-input-style;
 
     height: $module-nav-switcher-dropdown-height;
     width: ($module-nav-submenu-size - $module-nav-gutter-size);
@@ -26,7 +23,6 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
     padding-inline-end: 40px;
 
     .icon {
-      color: inherit;
       margin-block-end: $module-nav-input-border-radius;
     }
 
