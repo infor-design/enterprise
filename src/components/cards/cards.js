@@ -567,6 +567,22 @@ Cards.prototype = {
       }
     });
 
+    // Change icon (Hack until icon is added)
+    const card = this.element;
+    $('html').on(`themechanged.${COMPONENT_NAME}`, (e, args) => {
+      card.find('use').each(function (index) {
+        console.log($(this).attr('href'), args?.theme)
+        if ($(this).attr('href') === '#icon-vertical-ellipsis' && args?.theme?.indexOf('classic') > -1) {
+          $(this).attr('href', '#icon-more');
+          $(this).attr('old-href', '#icon-vertical-ellipsis');
+        }
+
+        if ($(this).attr('old-href') === '#icon-vertical-ellipsis' && args?.theme?.indexOf('new') > -1) {
+          $(this).attr('href', '#icon-vertical-ellipsis');
+        }
+      });
+    });
+
     return this;
   },
 
@@ -576,6 +592,7 @@ Cards.prototype = {
    * @private
    */
   teardown() {
+    $('html').off(`themechanged.${COMPONENT_NAME}`);
     this.element.off(`click.${COMPONENT_NAME}`);
     this.expandableCardHeader?.off('click.cards');
     this.expandableCardHeader = null;

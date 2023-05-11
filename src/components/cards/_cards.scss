@@ -777,6 +777,7 @@ html[class*='theme-classic-'] {
     &.custom-action,
     &.detail-title,
     &.detail-custom-action {
+      display: flex;
       flex-grow: 1;
     }
   }
@@ -833,7 +834,7 @@ html[class*='theme-classic-'] {
 
       &.has-back-button {
         padding-left: 8px;
-  
+
         .widget-header-section,
         .card-header-section {
           &.title,
@@ -843,7 +844,7 @@ html[class*='theme-classic-'] {
           }
         }
       }
-  
+
       &:not(.has-back-button) {
         .widget-header-section,
         .card-header-section {
@@ -877,25 +878,25 @@ html[class*='theme-classic-'] {
       .content-main {
         transform: translateX(-110%);
       }
-  
+
       .content-detail {
         transform: translateX(0);
       }
     }
-  
+
     .content-main {
       transform: translateX(0);
       width: 100%;
     }
-  
+
     .content-detail {
       transform: translateX(110%);
     }
-  
+
     .content-main,
     .content-detail {
       @include transform-transition-list(300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
-  
+
       position: absolute;
     }
   }
