@@ -1,6 +1,5 @@
 {
   "recommendations": [
-    "mkaufman.htmlhint",
     "stylelint.vscode-stylelint",
     "dbaeumer.vscode-eslint"
   ]

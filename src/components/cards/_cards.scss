@@ -473,19 +473,20 @@ $card-header-section: '.card-header-section', '.widget-header-section';
     float: left;
   }
 
-  .btn-actions {
-    background-color: transparent;
+  .btn-actions,
+  .btn-system {
+    background-color: transparent !important;
 
     .icon {
-      color: $cardlist-actions-color;
+      color: $cardlist-actions-color !important;
     }
 
     .audible {
-      color: $cardlist-actions-color;
+      color: $cardlist-actions-color !important;
     }
 
     &:hover .icon {
-      color: $card-actions-toolbar-button-hover-color;
+      color: $card-actions-toolbar-button-hover-color !important;
     }
   }
 

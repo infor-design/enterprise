@@ -140,6 +140,10 @@
   overflow: scroll;
 }
 
+.header + .page-container > .homepage {
+  height: 100%;
+}
+
 .card.double-height,
 .widget.double-height {
   height: 752px;
