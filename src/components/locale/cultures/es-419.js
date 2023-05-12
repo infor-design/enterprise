@@ -58,5 +58,8 @@ Soho.Locale.addCulture('es-419', {
     decimal: '.',
     group: ',',
     groupSizes: [3, 3]
+  },
+  punctuation: {
+    comma: ','
   }
 });

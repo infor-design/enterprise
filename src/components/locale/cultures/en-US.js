@@ -60,6 +60,9 @@ Soho.Locale.addCulture('en-US', {
     group: ',',
     groupSizes: [3, 3]
   },
+  punctuation: {
+    comma: ','
+  },
   // Resx - Provided By Translation Team
   messages: {
     AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. All rights reserved. The word and design marks set forth herein are trademarks and/or registered trademarks of Infor and/or its affiliates and subsidiaries. All other trademarks listed herein are the property of their respective owners' },
@@ -132,7 +135,6 @@ Soho.Locale.addCulture('en-US', {
     Color: { id: 'Color', value: 'Color', comment: 'Color' },
     Colors: { id: 'Colors', value: 'Colors', comment: 'Color (plural)' },
     Columns: { id: 'Columns', value: 'Columns', comment: 'Columns tooltip' },
-    Comma: { id: 'Comma', value: ',', comment: 'Comma for lists' },
     Comments: { id: 'Comments', value: 'Comments', comment: 'Comments on an form' },
     CompanyHoliday: { id: 'CompanyHoliday', value: 'Company Holiday', comment: 'A holiday provided by work.' },
     Completed: { id: 'Completed', value: 'Completed', comment: 'Text For a Completed Status' },

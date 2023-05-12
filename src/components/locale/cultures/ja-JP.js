@@ -59,6 +59,9 @@ Soho.Locale.addCulture('ja-JP', {
     group: ',',
     groupSizes: [3, 3]
   },
+  punctuation: {
+    comma: '、'
+  },
   // Resx - Provided By Translation Team
   messages: {
     AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. All rights reserved. ここに示す文字標章及び図形標章は、Infor及び/またはその関連会社ならびに子会社の商標または登録商標、あるいはその両方です。本書に記載されるその他すべての商標名は各所有者の所有物です。' },
@@ -129,7 +132,6 @@ Soho.Locale.addCulture('ja-JP', {
     CollapseAppTray: { id: 'CollapseAppTray', value: 'アプリトレイを折りたたむ', comment: 'Collapse App Tray tooltip' },
     Color: { id: 'Color', value: '色', comment: 'Color' },
     Colors: { id: 'Colors', value: '色', comment: 'Color (plural)' },
-    Comma: { id: 'Comma', value: '、', comment: 'Comma for lists' },
     Columns: { id: 'Columns', value: '列', comment: 'Columns tooltip' },
     Comments: { id: 'Comments', value: 'コメント', comment: 'Comments on an form' },
     CompanyHoliday: { id: 'CompanyHoliday', value: '休業日', comment: 'A holiday provided by work.' },

@@ -59,6 +59,9 @@ Soho.Locale.addCulture('ko-KR', {
     group: ',',
     groupSizes: [3, 3]
   },
+  punctuation: {
+    comma: ','
+  },
   // Resx - Provided By Translation Team
   messages: {
     AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. All rights reserved. 여기에 명시된 용어와 디자인 마크는 Infor 및 해당 자회사 및/또는 계열사의 상표 및/또는 등록 상표입니다. 여기에 나열된 모든 기타 상표는 각 소유주의 재산입니다.' },

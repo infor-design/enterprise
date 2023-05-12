@@ -59,6 +59,9 @@ Soho.Locale.addCulture('ro-RO', {
     group: '.',
     groupSizes: [3, 3]
   },
+  punctuation: {
+    comma: ','
+  },
   // Resx - Provided By Translation Team
   messages: {
     AboutText: { id: 'AboutText', value: 'Drepturi de autor &copy; {0} Infor. Toate drepturile rezervate. Grupul de simboluri și mărcile de design menționate în acest document sunt mărci comerciale și/sau mărci comerciale înregistrate ale Infor și/sau ale afiliaților și filialelor sale. Toate celelalte mărci comerciale menționate în acest document aparțin deținătorilor respectivi.' },

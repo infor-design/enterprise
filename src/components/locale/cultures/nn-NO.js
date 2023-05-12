@@ -60,6 +60,9 @@ Soho.Locale.addCulture('nn-NO', {
     group: '.',
     groupSizes: [3, 3]
   },
+  punctuation: {
+    comma: ','
+  },
   // Resx - Provided By Translation Team
   messages: {
     AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. Med enerett. Navne- og designmerkene som er vist her, er varemerker og/eller registrerte varemerker for Infor og/eller tilknyttede selskap og datterselskap. Alle andre varemerker som er oppført, tilhører sine respektive eiere.' },

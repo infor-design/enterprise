@@ -59,6 +59,9 @@ Soho.Locale.addCulture('cs-CZ', {
     group: ' ',
     groupSizes: [3, 3]
   },
+  punctuation: {
+    comma: ','
+  },
   // Resx - Provided By Translation Team
   messages: {
     AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. Všechna práva vyhrazena. Zde použité slovní a grafické značky jsou ochrannými známkami nebo registrovanými ochrannými známkami společnosti Infor nebo jejích partnerů a dceřiných společností. Všechny ostatní ochranné známky zde uvedené jsou v držení svých příslušných vlastníků.' },

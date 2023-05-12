@@ -59,6 +59,9 @@ Soho.Locale.addCulture('pt-BR', {
     group: '.',
     groupSizes: [3, 3]
   },
+  punctuation: {
+    comma: ','
+  },
   messages: {
     AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. Todos os direitos reservados. Os nomes e os logotipos de marcas aqui contidos são marcas comerciais e/ou marcas registradas da Infor e/ou de suas afiliadas e subsidiárias. Todas as outras marcas comerciais relacionadas aqui são de propriedade de seus respectivos proprietários.' },
     Actions: { id: 'Actions', value: 'Ações', comment: 'Tooltip text for the action button with additional in context actions' },
