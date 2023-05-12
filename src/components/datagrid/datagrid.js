@@ -9572,6 +9572,11 @@ Datagrid.prototype = {
 
     if (!status) {
       delete arrayToUse[idx].rowStatus;
+
+      if (this.settings.treeGrid) {
+        delete arrayToUse[idx].node.rowStatus;
+      }
+
       this.updateRow(idx);
       return;
     }
