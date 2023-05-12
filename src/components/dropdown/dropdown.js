@@ -2301,7 +2301,6 @@ Dropdown.prototype = {
       this.parentScrollableArea.on('scroll.dropdown', (e) => {
         this.scrollDocument(e);
       });
-      this.parentScrollableArea.css('overscroll-behavior', 'none');
     }
 
     $('body').on('resize.dropdown', () => {
