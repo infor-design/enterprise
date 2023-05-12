@@ -3,6 +3,11 @@
  */
 import { MultiSelect } from '../../../src/components/multiselect/multiselect';
 import { cleanup } from '../../helpers/func-utils';
+import { Locale } from '../../../src/components/locale/locale';
+
+Soho.Locale = Locale;
+
+require('../../../src/components/locale/cultures/en-US.js');
 
 const multiSelectHTML = `<div class="field">
   <label for="multi-standard" class="label">States (Max 10)</label>
@@ -74,6 +79,7 @@ Object.defineProperty(window, 'getComputedStyle', {
 
 describe('MultiSelect API', () => {
   beforeEach(() => {
+    Locale.set('en-US');
     multiSelectEl = null;
     multiSelectObj = null;
     document.body.insertAdjacentHTML('afterbegin', multiSelectHTML);
