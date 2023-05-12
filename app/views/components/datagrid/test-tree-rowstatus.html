@@ -6,9 +6,12 @@
       <span class="datagrid-result-count">(N Results)</span>
     </div>
 
-    <div class="buttonset" style="padding-right: 175px;">
+    <div class="buttonset">
         <button type="button" id="toggle-row-status" class="btn">
           <span>Add Row Status</span>
+        </button>
+        <button type="button" id="toggle-row-error" class="btn">
+          <span>Add Row Error</span>
         </button>
     </div>
 
@@ -39,6 +42,7 @@
   $('body').one('initialized', function () {
 
       var grid,
+        gridApi,
         columns = [];
 
       //Define Columns for the Grid.
@@ -64,14 +68,14 @@
           }).on('rowactivated', function (e, args) {
             console.log(args);
           });
+
+        gridApi = $('#datagrid').data('datagrid');
       });
 
     //Example row status
     $('#toggle-row-status').on('click', function () {
-      var gridApi = $('#datagrid').data('datagrid');
-
-      var btn = $(this).find('span');
-      var status = {
+      const btn = $(this).find('span');
+      const status = {
         add: 'Add Row Status',
         remove: 'Remove Row Status'
       };
@@ -92,5 +96,33 @@
       }
     });
 
+    $('#toggle-row-error').on('click', () => {
+      const btn = $('#toggle-row-error').find('span');
+      const status = {
+        add: 'Add Row Error',
+        remove: 'Remove Row Error'
+      };
+
+      if (btn.text() === status.add) {
+        btn.text(status.remove);
+        gridApi.rowStatus(0, 'error', 'Error');
+        gridApi.rowStatus(0, 'error', 'Error 2');
+        gridApi.rowStatus(0, 'error', 'Error 3');
+        gridApi.rowStatus(1, 'error', 'Error 4');
+        gridApi.rowStatus(2, 'error', 'Error 5');
+        gridApi.rowStatus(3, 'error', 'Error 6');
+        gridApi.rowStatus(4, 'error', 'Error 7');
+        gridApi.rowStatus(6, 'error', 'Error 8');
+        gridApi.rowStatus(6, 'error', 'This row has errors');
+      } else {
+        btn.text(status.add);
+        gridApi.clearRowError(0);
+        gridApi.clearRowError(1);
+        gridApi.clearRowError(2);
+        gridApi.clearRowError(3);
+        gridApi.clearRowError(4);
+        gridApi.clearRowError(6);
+      }
+    });
   });
 </script>
