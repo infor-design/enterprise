@@ -299,7 +299,7 @@ Soho.Locale.addCulture('ar-EG', {
     groupSizes: [3, 3]
   },
   punctuation: {
-    comma: ','
+    comma: '،'
   },
   // Resx - Provided By Translation Team
   messages: {
