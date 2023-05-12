@@ -571,7 +571,7 @@ WeekView.prototype = {
     this.hasIrregularDays = this.numberOfDays !== 7;
 
     // switch to one day view if responsive is enabled and in stacked view mode
-    if (this.settings.responsive && !this.isDayView && this.settings.stacked && this.isMobileWidth) {
+    if (this.settings.responsive && !this.isDayView && this.isStackedView() && this.isMobileWidth) {
       this.showWeek(startDate, startDate);
       return;
     }
@@ -732,7 +732,7 @@ WeekView.prototype = {
    * @returns {boolean} true if stack view enabled
    */
   isStackedView() {
-    return !!this.settings.stacked && !this.isDayView;
+    return !!this.settings.stacked;
   },
 
   renderDisable() {
@@ -1064,7 +1064,7 @@ WeekView.prototype = {
     this.isMobileWidth = breakpoints.isBelow('phone-to-tablet');
 
     // only stacked view monitors breakpoint changes
-    if (this.settings.stacked && this.settings.responsive) {
+    if (this.isStackedView() && this.settings.responsive) {
       if (!this.isDayView && this.isMobileWidth) {
         const today = new Date();
         const isCurrentWeek = dateUtils.isWithinRange(this.settings.startDate, this.settings.endDate, today);
