@@ -10,7 +10,7 @@
     border: 1px solid transparent;
 
     &:hover {
-      border: 1px solid $widget-border-color-hover;
+      border: 1px solid $card-border-color-hover;
       box-shadow: 0 2px 4px 1px $cardlist-box-shadow-color-hover;
     }
   }
@@ -332,3 +332,12 @@ html[dir='rtl'] {
     }
   }
 }
+
+// Show Actions button on touch devices
+@media all and (any-pointer: coarse) {
+  /* This rule will only apply to touch devices */
+  .card:not(.show-buttons) button.btn-actions {
+    opacity: 1;
+  }
+}
+

@@ -46,7 +46,7 @@
           </div>
           <div class="two-thirds column">
             <div class="widget border-less azure03" id="benefits">
-              <div class="widget-header has-subtitle">
+              <div class="widget-header no-border has-subtitle">
                 <div class="widget-header-section title">
                 </div>
                 <div class="widget-header-section">
@@ -65,7 +65,7 @@
                   </ul>
                 </div>
               </div>
-              <div class="widget-content">
+              <div class="widget-content no-scroll">
                 <div class="row">
                   <div class="one-half column">
                     <svg class="icon icon-empty-state is-slate" focusable="false" aria-hidden="true" role="presentation">
@@ -89,11 +89,11 @@
   <div class="homepage" data-columns="4">
     <div class="content">
 
-      <div class="widget bordered no-header">
-        <div class="widget-content">
+      <div class="widget bordered no-header" id="link-widget">
+        <div class="widget-content no-scroll">
           <div class="row p-top-40">
             <div class="one-half column">
-              <div class="widget-empty-icon ruby03 rounded-lg p-top-8 p-bottom-8">
+              <div class="widget-empty-icon ruby03 rounded-lg p-top-12 p-bottom-8">
                 <svg class="icon-empty-state is-slate" focusable="false" aria-hidden="true" role="presentation">
                   <use href="#icon-empty-no-budget-new"></use>
                 </svg>
@@ -103,7 +103,7 @@
               </div>
             </div>
             <div class="one-half column">
-                <div class="text-center rounded-lg p-top-8 p-bottom-8 azure03">
+                <div class="text-center rounded-lg p-top-12 p-bottom-8 azure03">
                   <svg class="icon-empty-state is-slate" focusable="false" aria-hidden="true" role="presentation">
                     <use href="#icon-empty-no-orders-new"></use>
                   </svg>
@@ -133,7 +133,7 @@
           <div class="widget-header-section title">
             <h2 class="widget-title">My Schedule</h2>
           </div>
-          <div class="widget-header-section">
+          <div class="widget-header-section custom-action">
             <button type="button" class="btn">
               <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
                 <use href="#icon-calendar"></use>
@@ -165,7 +165,7 @@
         </div>
 
         <div class="widget-content">
-          <p class="p-left-16 p-right-16">Quickly access your profile, set your availability, time sheets, and see your pay information.</p>
+          <p class="p-top-8 p-left-16 p-right-16">Quickly access your profile, set your availability, time sheets, and see your pay information.</p>
           <p class="d-flex align-items-center p-left-16 p-top-8 p-right-16 text-strong">
             <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
               <use href="#icon-profile"></use>
@@ -259,7 +259,7 @@
           <h2 class="widget-title">Other Priorities</h2>
         </div>
         <div class="widget-content">
-          <p class="p-left-16 p-right-16">Add additional example widget.</p>
+          <p class="p-top-8 p-left-16 p-right-16">Additional example widget.</p>
           <p class="d-flex align-items-center p-left-16 p-top-8 p-right-16 text-strong">
             <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
               <use href="#icon-profile"></use>
@@ -285,6 +285,36 @@
     background-position: right 50%;
     background-repeat: no-repeat;
   }
+
+  .rounded-lg.p-top-12 {
+    cursor: pointer;
+  }
+
+  @media (max-width: 1279px) {
+    #benefits {
+      background-image: none;
+    }
+
+    .one-half {
+      color: white;
+      width: 100% !important;
+    }
+
+    #link-widget .one-half {
+      margin-left: 10px;
+    }
+
+    #link-widget .full {
+      margin-left: 10px;
+      margin-top: -32px;
+      width: 100%;
+    }
+
+    .rounded-lg.p-top-12 {
+      padding-top: 0px !important;
+      padding-bottom: 2px !important;
+    }
+  }
 </style>
 
 {{={{{ }}}=}}
@@ -304,14 +334,6 @@
   $('body').on('initialized', function () {
     var homepageApi = $('.homepage').data('homepage');
     $('html').personalize({ colors: 'alabaster' });
-
-    const editButton = $(`<button type="button" class="personalize-actionable btn-icon">
-        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-          <use href="#icon-edit"></use>
-        </svg>
-        <span class="audible">Edit</span>
-      </button>`).on('click', () => alert())
-    $('header .buttonset').append(editButton);
 
     $('#todays-date').text(Soho.Locale.formatDate(new Date(), { date: 'full'}));
 

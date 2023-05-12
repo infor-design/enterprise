@@ -36,7 +36,7 @@ Note that either the class `card` or `widget` can be used interchangeably. A car
 
 Our new code uses a new flex box based widget for the toolbar. Place the title in a section called `widget-header-section title`. And the buttons in a section like `<div class="widget-header-section custom-action">`.
 
-The icon used on cards should be a flipped icon labelled `icon-vertical-ellipsis` (not `icon-more`).
+The icon used on cards should use a flipped icon labelled `icon-vertical-ellipsis` (not `icon-more`).
 
 ```html
 <div class="card">
@@ -62,6 +62,10 @@ The icon used on cards should be a flipped icon labelled `icon-vertical-ellipsis
     </div>
 </div>
 ```
+
+## Actions and System Buttons
+
+The overflow button also known as `btn-actions` or the action button. Will be hidden by default if its the only button on a card. Some other buttons like a back button are considered `system buttons`. These buttons are added by the home page dev team and cannot be removed vs buttons added by the widget developers. Think integrated vs normal buttons. These buttons have a hidden look to clean up the form. When on a touch device it can be trigger to hover so we show them on touch only devices. To add a special `system button` to the widget add the `btn-actions` class to any button.
 
 ## Auto Size
 
@@ -198,7 +202,7 @@ You can add a search field to the card content section and it will appear integr
 
 ## Cards with padding in the content
 
-You can add padding to the content section of the card. This is useful when you want to add a form or a list to the card. To add padding to the content section, either use the `contentPaddingX` for left and right paddings, and `contentPaddingY` for top and bottom paddings. The othe option is to use css utility classes `.padding-x-#` and `.padding-y-#`.
+You can add padding to the content section of the card. This is useful when you want to add a form or a list to the card. To add padding to the content section, either use the `contentPaddingX` for left and right paddings, and `contentPaddingY` for top and bottom paddings. The other option is to use css utility classes `.padding-x-#` and `.padding-y-#`.
 
 ```js
 $('#no-header-1').cards({ contentPaddingX: 16, contentPaddingY: 16 });

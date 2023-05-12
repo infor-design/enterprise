@@ -242,8 +242,6 @@ Cards.prototype = {
       this.removeInfoIconTooltip();
     }
 
-    widgetUtils.moveLastCustomAction(this.element, this.cardHeader);
-
     return this;
   },
 
@@ -545,7 +543,6 @@ Cards.prototype = {
       if (Locale.isRTL()) {
         this.removeInfoIconTooltip();
       }
-      widgetUtils.moveLastCustomAction(this.element, this.cardHeader);
     });
 
     const cardHeader = this.element.find('.card-header, .widget-header');

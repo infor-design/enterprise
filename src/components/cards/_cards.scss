@@ -96,6 +96,7 @@ $card-header-section: '.card-header-section', '.widget-header-section';
   border-radius: 2px;
   margin-bottom: 16px;
   min-height: 360px;
+  max-height: 368px;
   position: relative;
   width: 100%;
 
@@ -469,7 +470,6 @@ $card-header-section: '.card-header-section', '.widget-header-section';
   > h2,
   > h1,
   > button {
-    display: inline-block;
     float: left;
   }
 
@@ -766,10 +766,20 @@ html[dir='rtl'] {
 }
 
 html[class*='theme-classic-'] {
+  .card-header.no-border,
+  .widget-header.no-border {
+      border-bottom: 1px solid transparent;
+  }
+
   .card-header,
   .widget-header {
     border-bottom: 1px solid $cardlist-border-color;
+
+    &.has-subtitle .widget-header-section.more {
+      padding-top: 0;
+    }
   }
+
 
   .card-header-section,
   .widget-header-section {
@@ -788,7 +798,22 @@ html[class*='theme-classic-'] {
       + .custom-action,
       + .detail-custom-action {
         text-align: right;
+        flex-direction: row-reverse;
       }
+
+      .badge {
+        left: 6px;
+        position: relative;
+        top: 2px;
+      }
+    }
+
+    &.custom-action + .more {
+      padding-top: 10px;
+    }
+
+    &.more {
+      padding-top: 6px;
     }
   }
 
@@ -810,7 +835,19 @@ html[class*='theme-classic-'] {
       &.has-subtitle {
         align-items: flex-start;
         height: 64px;
-        padding-top: 6px;
+        padding-top: 9px;
+
+        .widget-header-section.title {
+          display: block;
+        }
+
+        .widget-header-section.custom-action {
+          display: block;
+
+          button:last-child {
+            margin-inline-end: 2px;
+          }
+        }
       }
 
       #{$card-header-section} {
@@ -829,6 +866,8 @@ html[class*='theme-classic-'] {
 
         &.detail-title + .detail-custom-action {
           text-align: right;
+          flex-direction: row-reverse;
+          padding-top: 5px;
         }
       }
 
@@ -860,6 +899,10 @@ html[class*='theme-classic-'] {
     #{$card-content} {
       position: relative;
 
+      &.has-back-button {
+        overflow-x: hidden;
+      }
+
       &.padding-x-16 {
         .content-main,
         .content-detail {
@@ -868,10 +911,14 @@ html[class*='theme-classic-'] {
       }
     }
 
+    .go-back-button {
+      margin-top: -2px;
+    }
+
     &.show-card-detail {
       #{$card-header-section} {
         &.detail-title {
-          margin-top: 12px;
+          margin-top: 9px;
         }
       }
 
