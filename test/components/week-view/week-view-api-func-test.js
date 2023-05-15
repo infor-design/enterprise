@@ -199,6 +199,76 @@ describe('WeekView API', () => {
     expect(document.body.querySelectorAll('thead tr th').length).toEqual(15);
   });
 
+  it('can set week start and end dates from target date', () => {
+    const targetDate = new Date(2019, 11, 5);
+    weekViewAPI.setWeekFromDate(targetDate);
+    expect(weekViewAPI.settings.startDate.getDate()).toEqual(1);
+    expect(weekViewAPI.settings.endDate.getDate()).toEqual(7);
+  });
+
+  it('can hide toolbar', () => {
+    weekViewAPI?.destroy();
+    weekViewAPI = new WeekView(weekViewEl, {
+      hideToolbar: true
+    });
+
+    const toolbarElem = document.body.querySelector('.week-view .calendar-toolbar');
+    expect(weekViewAPI.settings.hideToolbar).toEqual(true);
+    expect(toolbarElem).toBeNull();
+  });
+
+  it('should render stacked view', () => {
+    const startDate = new Date(2019, 11, 1);
+    const endDate = new Date(2019, 11, 7);
+
+    weekViewAPI?.destroy();
+    weekViewAPI = new WeekView(weekViewEl, {
+      eventTypes,
+      events,
+      showViewChanger: false,
+      startDate,
+      endDate,
+      showAllDay: true,
+      stacked: true
+    });
+
+    // forces stacked view layout in jsdom
+    weekViewAPI.isMobileWidth = false;
+    weekViewAPI.showWeek(startDate, endDate);
+
+    const eventElems = document.body.querySelectorAll('.week-view.stacked-view .calendar-event');
+    const footerElem = document.body.querySelector('.week-view.stacked-view .week-view-stacked-footer');
+    expect(weekViewAPI.settings.stacked).toEqual(true);
+    expect(footerElem).toBeNull();
+    expect(eventElems[0].getAttribute('data-key')).toEqual('20191204');
+    expect(eventElems[1].getAttribute('data-key')).toEqual('20191204');
+    expect(eventElems[2].getAttribute('data-key')).toEqual('20191202');
+    expect(eventElems[3].getAttribute('data-key')).toEqual('20191203');
+    expect(eventElems[4].getAttribute('data-key')).toEqual('20191204');
+    expect(document.body.querySelectorAll('.calendar-event').length).toEqual(5);
+  });
+
+  it('can render a footer in stacked view mode', () => {
+    const startDate = new Date(2019, 11, 1);
+    const endDate = new Date(2019, 11, 7);
+
+    weekViewAPI?.destroy();
+    weekViewAPI = new WeekView(weekViewEl, {
+      eventTypes,
+      events,
+      showViewChanger: false,
+      startDate,
+      endDate,
+      showAllDay: true,
+      stacked: true,
+      showFooter: true,
+    });
+
+    const footerElem = document.body.querySelector('.week-view.stacked-view .week-view-stacked-footer');
+    expect(weekViewAPI.settings.showFooter).toEqual(true);
+    expect(footerElem).toBeDefined();
+  });
+
   it('should render events', () => {
     weekViewAPI?.destroy();
     weekViewAPI = new WeekView(weekViewEl, {
@@ -212,11 +282,13 @@ describe('WeekView API', () => {
       endHour: 17
     });
 
-    const event1 = document.body.querySelectorAll('.week-view .calendar-event')[0];
-    const event2 = document.body.querySelectorAll('.week-view .calendar-event')[1];
-    const event3 = document.body.querySelectorAll('.week-view .calendar-event')[2];
-    const event4 = document.body.querySelectorAll('.week-view .calendar-event')[3];
-    const event5 = document.body.querySelectorAll('.week-view .calendar-event')[4];
+    const eventElems = document.body.querySelectorAll('.week-view .calendar-event');
+
+    const event1 = eventElems[0];
+    const event2 = eventElems[1];
+    const event3 = eventElems[2];
+    const event4 = eventElems[3];
+    const event5 = eventElems[4];
 
     expect(event1.getAttribute('data-key')).toEqual('20191204');
     expect(event2.getAttribute('data-key')).toEqual('20191204');

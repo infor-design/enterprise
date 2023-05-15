@@ -252,15 +252,6 @@ html[dir='rtl'] {
   }
 }
 
-html.is-safari {
-  .datepicker {
-    + .trigger {
-      position: relative;
-      margin-top: 2px;
-    }
-  }
-}
-
 @include respond-to(tabletdown) {
   .monthview-popup.popover .monthview {
     min-width: 310px;
