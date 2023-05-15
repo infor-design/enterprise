@@ -51,7 +51,7 @@
     &::after {
       border-bottom: 1px solid $card-scrolling-border-color;
       box-shadow: $card-scrolling-box-shadow;
-      bottom: -1px;
+      bottom: 0;
       content: '';
       height: 2px;
       left: 0;

@@ -22,7 +22,7 @@
   }
 
   + .listview {
-    height: calc(100% - 46px);
+    height: calc(100% - 45px);
     border-radius: 0 8px;
   }
 
@@ -169,5 +169,5 @@ html[dir='rtl'] {
 
 .card .listview li:last-child,
 .widget .listview li:last-child {
-  border-radius: 0 8px;
+  border-radius: 0 0 0 8px;
 }
