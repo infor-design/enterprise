@@ -23,7 +23,7 @@
 
   + .listview {
     height: calc(100% - 46px);
-    border-radius: 0 6px;
+    border-radius: 0 8px;
   }
 
   .searchfield-wrapper {
@@ -165,4 +165,9 @@ html[dir='rtl'] {
       }
     }
   }
+}
+
+.card .listview li:last-child,
+.widget .listview li:last-child {
+  border-radius: 0 8px;
 }
