@@ -1,4 +1,5 @@
 import { utils } from '../../utils/utils';
+import { accordionSearchUtils } from '../../utils/accordion-search-utils';
 
 import './module-nav.switcher.jquery';
 import '../accordion/accordion.jquery';
@@ -14,6 +15,7 @@ const COMPONENT_NAME = 'modulenav';
 
 const MODULE_NAV_DEFAULTS = {
   displayMode: MODULE_NAV_DISPLAY_MODES[0],
+  filterable: false,
   pinSections: false,
   showDetailView: false,
 };
@@ -123,7 +125,7 @@ ModuleNav.prototype = {
     }
     this.searchEl = this.element[0].querySelector('.searchfield');
     if (this.searchEl) {
-      $(this.searchEl).searchfield();
+      this.settings.filterable = true;
       this.configureSearch();
     }
   },
@@ -151,6 +153,14 @@ ModuleNav.prototype = {
     }
 
     return this;
+  },
+
+  /**
+ * handles the Searchfield Input event
+ * @param {jQuery.Event} e jQuery `input` event
+ */
+  handleSearchfieldInputEvent() {
+    accordionSearchUtils.handleSearchfieldInputEvent.apply(this, [COMPONENT_NAME]);
   },
 
   /**
@@ -225,6 +235,9 @@ ModuleNav.prototype = {
    * @private
    */
   configureSearch() {
+    accordionSearchUtils.attachFilter.apply(this, [COMPONENT_NAME]);
+    accordionSearchUtils.attachFilterEvents.apply(this, [COMPONENT_NAME]);
+
     this.searchEl.classList.add('module-nav-search');
     $(this.searchEl).parents('.accordion-section')?.[0].classList.add('module-nav-search-container');
   },
@@ -332,6 +345,7 @@ ModuleNav.prototype = {
   teardown() {
     this.teardownEvents();
     this.teardownResize();
+    accordionSearchUtils.teardownFilter.apply(this, [COMPONENT_NAME]);
 
     // Containers
     this.containerEl = null;

@@ -643,10 +643,7 @@ Autocomplete.prototype = {
 
     clearTimeout(this.loadingTimeout);
 
-    function done(searchTerm, response, deferredStatus) {
-      if (self.lastTerm !== searchTerm) {
-        return dfd.reject(searchTerm);
-      }
+    function fireDoneEvents(searchTerm, response) {
       self.element.triggerHandler('complete'); // For Busy Indicator
 
       /**
@@ -658,6 +655,13 @@ Autocomplete.prototype = {
       * @param {array} An array containing the searchTerm and call back function
       */
       self.element.trigger('requestend', [searchTerm, response]);
+    }
+
+    function done(searchTerm, response, deferredStatus) {
+      if (self.lastTerm !== searchTerm) {
+        return dfd.reject(searchTerm);
+      }
+      fireDoneEvents(searchTerm, response);
 
       if (deferredStatus === false) {
         return dfd.reject(searchTerm);
@@ -676,6 +680,7 @@ Autocomplete.prototype = {
         if (self.element.data('popupmenu')) {
           self.element.data('popupmenu').close();
         }
+        fireDoneEvents();
         return;
       }
 

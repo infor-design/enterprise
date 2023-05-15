@@ -620,7 +620,7 @@ Accordion.prototype = {
    * @returns {object} The data the represents the accodion structure
    */
   toData(flatten, addElementReference) {
-    const data = [];
+    let data = [];
     const topHeaders = this.element.children('.accordion-header');
 
     function buildElementJSON(el, index, parentNesting, parentArr) {
@@ -682,7 +682,43 @@ Accordion.prototype = {
       parentArr.push(elemData);
     }
 
+    function buildSectionJSON(el, index, parentNesting) {
+      const sectionData = {
+        index: `${parentNesting !== undefined ? `${parentNesting}.` : ''}${index}`,
+        type: 'section'
+      };
+
+      if (addElementReference) {
+        sectionData.element = el;
+      }
+
+      if (el.getAttribute('id')) {
+        sectionData.id = el.getAttribute('id');
+      }
+
+      const children = $(el).children('.accordion-header');
+      let childrenData = [];
+      if (children.length) {
+        children.each((j, childEl) => {
+          buildElementJSON(childEl, j, index, childrenData);
+        });
+      }
+      sectionData.children = childrenData;
+
+      return flatten ? childrenData : sectionData;
+    }
+
     // Start traversing the accordion
+    if (!topHeaders.length) {
+      const sections = this.element.find('.accordion-section');
+
+      sections.each((i, section) => {
+        const sectionArray = buildSectionJSON(section, i, undefined, data);
+        if (flatten) data = data.concat(sectionArray);
+        else data.push(sectionArray);
+      });
+    }
+
     topHeaders.each((i, item) => {
       buildElementJSON(item, i, undefined, data);
     });
