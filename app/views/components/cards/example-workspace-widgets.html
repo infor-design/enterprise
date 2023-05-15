@@ -194,6 +194,38 @@
       </div>
     </div>
 
+    <div class="widget" id="example-widget-search-2">
+      <div class="widget-header">
+        <div class="widget-header-section title">
+          <h2 class="widget-title">Search on a widget</h2>
+        </div>
+        <div class="widget-header-section more">
+          <button class="btn-actions" type="button">
+            <span class="audible">Actions</span>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-vertical-ellipsis"></use>
+            </svg>
+          </button>
+          <ul class="popupmenu">
+            <li><a href="#">Add new action item</a></li>
+            <li><a href="#">Regular action</a></li>
+            <li><a href="#">Individual Action</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="widget-content">
+        <div class="listview-search">
+          <label class="audible" for="gridfilter">Search</label>
+          <input class="searchfield" placeholder="Search My Widget" name="searchfield" id="gridfilter"
+            data-options="{clearable: true}" />
+        </div>
+        <div class="fake-content" style="height: calc(100% - 48px);overflow: auto;border-top: 1px solid transparent">
+          <div class="fake-content" style="height: 1000px"></div>
+        </div>
+      </div>
+    </div>
+
     <div class="widget bordered" id="example-widget-back-button-1">
       <div class="widget-header has-subtitle">
         <div class="widget-header-section detail-title">
@@ -340,7 +372,7 @@
   });
 
   // Setup Search
-  $('#example-widget-search').cards();
+  $('#example-widget-search, #example-widget-search-2').cards();
   $('#search-listview').listview({
     template: 'search-tmpl',
     source: '/api/tasks',

@@ -549,17 +549,19 @@ Cards.prototype = {
     const cardHeader = this.element.find('.card-header, .widget-header');
     this.element.find('.card-content, .widget-content').children().on('scroll.card', (e) => {
       const target = e.target;
-      const listviewSearch = $(target).siblings('.listview-search');
+      const listviewSearch = $(target).siblings('.listview-search, .widget-search');
       const searchFieldWrapper = $(target).siblings('.card-search, .widget-search').find('.searchfield-wrapper');
-
       if (target.scrollTop > 0) {
-        if (listviewSearch.length > 0 || searchFieldWrapper.length > 0) {
+        if (listviewSearch.length > 0) {
           listviewSearch.addClass('is-scrolling');
+        } else if (searchFieldWrapper.length > 0) {
+          searchFieldWrapper.addClass('is-scrolling');
         } else {
           cardHeader.addClass('is-shadow-scrolling');
         }
       } else {
         listviewSearch.removeClass('is-scrolling');
+        searchFieldWrapper.removeClass('is-scrolling');
         cardHeader.removeClass('is-shadow-scrolling');
       }
     });

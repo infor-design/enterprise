@@ -7,10 +7,10 @@
   min-height: 368px;
 
   &.bordered {
-    border: 1px solid transparent;
+    border: none;
 
     &:hover {
-      border: 1px solid $card-border-color-hover;
+      outline: 1px solid $card-border-color-hover;
       box-shadow: 0 2px 4px 1px $cardlist-box-shadow-color-hover;
     }
   }
@@ -137,7 +137,7 @@
     &.has-subtitle {
       align-items: flex-start;
       height: 64px;
-      padding-top: 6px;
+      padding-top: 8px;
 
       + .card-content {
         height: 302px;
@@ -337,6 +337,7 @@
   &.title + &.custom-action,
   &.detail-title + &.detail-custom-action {
     text-align: right;
+    margin-top: -2px;
   }
 
   &.custom-action > .btn-icon,
