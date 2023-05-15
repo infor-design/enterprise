@@ -25,9 +25,40 @@
     }
   }
 
+  .card-content,
+  .widget-content {
+    .listview-search.is-scrolling {
+      .searchfield-wrapper {
+        z-index: 10;
+      }
+    }
+  }
+
   .is-scrolling {
-    border-top: 1px solid $card-scrolling-border-color;
-    box-shadow: $card-scrolling-box-shadow;
+    position: relative;
+
+    &::before {
+      background: $cardlist-bg-color;
+      bottom: 1px;
+      content: '';
+      display: block;
+      height: 10px;
+      position: absolute;
+      width: 100%;
+      z-index: 7;
+    }
+
+    &::after {
+      border-bottom: 1px solid $card-scrolling-border-color;
+      box-shadow: $card-scrolling-box-shadow;
+      bottom: -1px;
+      content: '';
+      height: 2px;
+      left: 0;
+      position: absolute;
+      z-index: 6;
+      width: 100%;
+    }
   }
 
   &.no-header {
@@ -291,7 +322,7 @@
     .badge {
       left: 4px;
       position: relative;
-      top: -3px;
+      top: -6px;
     }
   }
 

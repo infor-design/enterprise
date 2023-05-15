@@ -101,7 +101,7 @@ Cards.prototype = {
     const isSingle = this.settings.selectable === 'single';
     const isBordered = this.settings.bordered === true;
     const isBorderLess = this.settings.bordered === false;
-    const hasCustomAction = this.element.find('.card-header .widget-header-section.custom-action, .widget-header .widget-header-section.custom-action').length > 0;
+    const hasCustomAction = this.element.find('.card-header .card-header-section.custom-action, .widget-header .widget-header-section.custom-action').length > 0;
     // Apply content padding if provided
     const { contentPaddingX, contentPaddingY } = this.settings;
 
@@ -554,12 +554,12 @@ Cards.prototype = {
 
       if (target.scrollTop > 0) {
         if (listviewSearch.length > 0 || searchFieldWrapper.length > 0) {
-          $(target).addClass('is-scrolling');
+          listviewSearch.addClass('is-scrolling');
         } else {
           cardHeader.addClass('is-shadow-scrolling');
         }
       } else {
-        $(target).removeClass('is-scrolling');
+        listviewSearch.removeClass('is-scrolling');
         cardHeader.removeClass('is-shadow-scrolling');
       }
     });
