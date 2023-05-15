@@ -335,8 +335,12 @@
     text-overflow: ellipsis;
   }
 
-  &.title + &.custom-action,
-  &.detail-title + &.detail-custom-action {
+  &.title + &.custom-action {
+    text-align: right;
+    margin-top: 1px;
+  }
+
+  &.detail-title+&.detail-custom-action {
     text-align: right;
     margin-top: -2px;
   }
