@@ -2,6 +2,10 @@
 
 ## v4.84.0
 
+## v4.84.0 Features
+
+- `[WeekView]` Added stacked view template for week view agenda variant. ([#7373](https://github.com/infor-design/enterprise/issues/7373))
+
 ## v4.84.0 Fixes
 
 - `[Button]` Adjusted alignment for popupmenu icon buttons. ([#7408](https://github.com/infor-design/enterprise/issues/7408))
