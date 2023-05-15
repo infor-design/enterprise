@@ -59,6 +59,9 @@ Soho.Locale.addCulture('vi-VN', {
     group: '.',
     groupSizes: [3, 3]
   },
+  punctuation: {
+    comma: ','
+  },
   // Resx - Provided By Translation Team
   messages: {
     AboutText: { id: 'AboutText', value: 'Bản quyền &copy; {0} Infor. Bảo lưu mọi quyền. Từ ngữ và các nhãn hiệu thiết kế trong đây là các thương hiệu và/hoặc thương hiệu đã được đăng ký của công ty và/hoặc các chi nhánh và công ty con của Infor. Tất cả thương hiệu khác được liệt kê ở đây là tài sản của chủ sở hữu tương ứng' },

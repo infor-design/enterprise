@@ -59,6 +59,9 @@ Soho.Locale.addCulture('uk-UA', {
     group: ' ',
     groupSizes: [3, 3]
   },
+  punctuation: {
+    comma: ','
+  },
   // Resx - Provided By Translation Team
   messages: {
     AboutText: { id: 'AboutText', value: 'Авторські права &copy; Infor, {0}. Усі права збережено. Усі зазначені у цьому документі назви та дизайн елементів є товарними знаками або захищеними товарними знаками Infor та/або афілійованих організацій і філіалів Infor. Усі інші товарні знаки, перелічені тут, є власністю відповідних власників.' },

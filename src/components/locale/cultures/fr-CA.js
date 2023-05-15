@@ -59,6 +59,9 @@ Soho.Locale.addCulture('fr-CA', {
     group: ' ',
     groupSizes: [3, 3]
   },
+  punctuation: {
+    comma: ','
+  },
   messages: {
     AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. Les termes et dessins de marque mentionnés ci-après sont des marques et/ou des marques déposées d\'Infor et/ou de ses partenaires et filiales. Toutes les autres marques répertoriées ci-après sont la propriété de leurs propriétaires respectifs.' },
     Actions: { id: 'Actions', value: 'Actions', comment: 'Tooltip text for the action button with additional in context actions' },

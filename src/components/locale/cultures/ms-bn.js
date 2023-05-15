@@ -59,6 +59,9 @@ Soho.Locale.addCulture('ms-bn', {
     group: ',',
     groupSizes: [3, 3]
   },
+  punctuation: {
+    comma: ','
+  },
   // Resx - Provided By Translation Team
   messages: {
     AboutText: { id: 'AboutText', value: 'Hak Cipta &copy; {0} Infor. Hak cipta terpelihara. Perkataan dan tanda reka bentuk yang ditetapkan di sini ialah tanda dagangan dan/atau tanda dagangan berdaftar Infor dan/atau ahli gabungan dan anak syarikatnya. Semua tanda dagangan lain yang disenaraikan di sini ialah hak milik pemiliknya masing-masing.' },

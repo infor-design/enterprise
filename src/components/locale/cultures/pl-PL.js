@@ -59,6 +59,9 @@ Soho.Locale.addCulture('pl-PL', {
     group: ' ',
     groupSizes: [3, 3]
   },
+  punctuation: {
+    comma: ','
+  },
   // Resx - Provided By Translation Team
   messages: {
     AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. Wszelkie prawa zastrzeżone. Wymienione tu znaki słowne i graficzne są znakami towarowymi lub zastrzeżonymi znakami towarowymi firmy Infor lub jej podmiotów stowarzyszonych i przedstawicielstw. Wszystkie pozostałe znaki towarowe są własnością odpowiednich podmiotów' },

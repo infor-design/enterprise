@@ -59,6 +59,9 @@ Soho.Locale.addCulture('ms-MY', {
     group: ',',
     groupSizes: [3, 3]
   },
+  punctuation: {
+    comma: ','
+  },
   messages: {
     AboutText: { id: 'AboutText', value: 'Hak Cipta &copy; {0} Infor. Hak cipta terpelihara. Perkataan dan tanda reka bentuk yang ditetapkan di sini ialah tanda dagangan dan/atau tanda dagangan berdaftar Infor dan/atau ahli gabungan dan anak syarikatnya. Semua tanda dagangan lain yang disenaraikan di sini ialah hak milik pemiliknya masing-masing.' },
     Actions: { id: 'Actions', value: 'Tindakan', comment: 'Tooltip text for the action button with additional in context actions' },

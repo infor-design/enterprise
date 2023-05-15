@@ -59,6 +59,9 @@ Soho.Locale.addCulture('hu-HU', {
     group: ' ',
     groupSizes: [3, 3]
   },
+  punctuation: {
+    comma: ','
+  },
   // Resx - Provided By Translation Team
   messages: {
     AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. Minden jog fenntartva. Az itt felsorolt szó- és ábrás megjelölések az Infor és/vagy kapcsolt vállalkozásainak és leányvállalatainak védjegyei és/vagy bejegyzett védjegyei. Minden más felsorolt védjegy a védjegytulajdonos tulajdonát képezi.' },

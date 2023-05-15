@@ -59,6 +59,9 @@ Soho.Locale.addCulture('it-IT', {
     group: '.',
     groupSizes: [3, 3]
   },
+  punctuation: {
+    comma: ','
+  },
   // Resx - Provided By Translation Team
   messages: {
     AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. Tutti i diritti riservati. I marchi, ovvero il testo e gli elementi grafici che li costituiscono, citati nel presente documento sono marchi o marchi registrati di Infor e/o delle relative società affiliate o controllate. Tutti gli altri marchi citati appartengono ai rispettivi proprietari.' },
