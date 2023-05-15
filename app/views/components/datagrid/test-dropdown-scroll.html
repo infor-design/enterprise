@@ -57,7 +57,17 @@
     grid = $('#datagrid').datagrid({
       columns: columns,
       dataset: data,
-      editable: true
+      saveColumns: false,
+      paging: false,
+      pagesize: 5,
+      actionableMode: true,
+      cellNavigation: true,
+      editable: true,
+      enableTooltips: true,
+      filterWhenTyping: false,
+      redrawOnResize: false,
+      rowHeight: 'small',
+      selectable: 'multiple',
     }).data('datagrid');
 
     var modals = {
