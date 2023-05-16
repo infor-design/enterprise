@@ -96,6 +96,7 @@ ModuleNav.prototype = {
     // Configure
     this.setDisplayMode(this.settings.displayMode);
     this.setPinSections(this.settings.pinSections);
+    this.setScrollable();
     this.setShowDetailView(this.settings.showDetailView);
     this.configureResize();
     return this;
@@ -222,6 +223,7 @@ ModuleNav.prototype = {
     if (typeof ResizeObserver === 'undefined') return;
     if (!this.ro) {
       this.ro = new ResizeObserver(() => {
+        this.setPinSections(this.settings.pinSections);
         this.setScrollable();
       });
     }
@@ -270,7 +272,6 @@ ModuleNav.prototype = {
    */
   setPinSections(val) {
     this.containerEl.classList[val ? 'add' : 'remove']('pinned-optional');
-    this.setScrollable();
   },
 
   /**

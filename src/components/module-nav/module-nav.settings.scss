@@ -6,6 +6,7 @@
 .popupmenu.module-nav-settings-menu {
   @include settings-menu-box-shadow;
   border: 0;
+  border-radius: $module-nav-common-border-radius;
 
   ul {
     border-radius: 8px;

@@ -3,13 +3,19 @@
 }
 
 @mixin module-nav-section-separator() {
-  border-top: 1px solid $module-nav-separator-color;
-  padding-block-start: $module-nav-footer-gutter-size;
+  &:before {
+    content: ' ';
+    display: block;
+    border-top: 1px solid $module-nav-separator-color;
+    padding-block-start: $module-nav-footer-gutter-size;
+    margin: 0 auto;
+    justify-self: center;
+  }
 }
 
 @mixin module-nav-input-style() {
   background-color: $module-nav-input-bg-color;
-  border-radius: $module-nav-input-border-radius;
+  border-radius: $module-nav-common-border-radius;
   border: $module-nav-input-border-width solid $module-nav-input-border-color;
   color: $module-nav-input-text-color;
 

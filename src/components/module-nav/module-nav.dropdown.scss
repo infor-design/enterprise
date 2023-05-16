@@ -23,7 +23,7 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
     padding-inline-end: 40px;
 
     .icon {
-      margin-block-end: $module-nav-input-border-radius;
+      margin-block-end: $module-nav-common-border-radius;
     }
 
     // Override top/right from Dropdown
@@ -74,7 +74,7 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
 
   input.dropdown-search {
     background-color: $module-nav-input-bg-color;
-    border-radius: $module-nav-input-border-radius;
+    border-radius: $module-nav-common-border-radius;
     border: $module-nav-input-border-width solid $module-nav-input-border-color;
     color: inherit;
     height: $module-nav-switcher-dropdown-height;
@@ -93,7 +93,7 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
     @include drawer-scrollable-area;
 
     background-color: $module-nav-input-bg-color;
-    border-radius: $module-nav-input-border-radius;
+    border-radius: $module-nav-common-border-radius;
     border: $module-nav-input-border-width solid $module-nav-input-border-color;
     color: inherit;
 

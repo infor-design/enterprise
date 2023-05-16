@@ -12,7 +12,7 @@
 
     input.module-nav-search {
       background-color: transparent;
-      border-radius: $module-nav-input-border-radius;
+      border-radius: $module-nav-common-border-radius;
       border: $module-nav-input-border-width solid transparent;
       color: inherit;
 
@@ -95,5 +95,25 @@
   .module-nav-search-container {
     display: none;
     pointer-events: none;
+  }
+}
+
+// =====================================================
+// Optional Pinning: Disabled
+
+.module-nav-container:not(.pinned-optional) {
+  .module-nav-search-container {
+    &.accordion-section {
+      padding-block-end: 0;
+    }
+  }
+}
+
+// =====================================================
+// Optional Pinning: Enabled
+
+.module-nav-container.pinned-optional {
+  .module-nav-search-container {
+
   }
 }
