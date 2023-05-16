@@ -88,7 +88,7 @@
 
   .btn-actions.floating-actions {
     border: 1px solid $ids-color-palette-slate-40;
-    background-color: $ids-color-palette-white;
+    background-color: $ids-color-palette-white !important;
   }
 
   .btn-actions.is-open,
@@ -342,7 +342,7 @@
 
   &.detail-title+&.detail-custom-action {
     text-align: right;
-    margin-top: -2px;
+    margin-top: -1px;
   }
 
   &.custom-action > .btn-icon,
