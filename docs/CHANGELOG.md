@@ -25,7 +25,6 @@
 - `[Homepage]` Changed the gutter size, banner size, and widget size for the homepage. ([#7445](https://github.com/infor-design/enterprise/issues/7445))
 - `[Icons]` Icon updated for 16 icons, added new icons `change-department, shifting, shift-origin, shift-destination, swap-list-left, swap-list-right`. ([#7510](https://github.com/infor-design/enterprise/issues/7510))
 
-
 ## v4.83.0 Fixes
 
 - `[Busy Indicator]` Updated colors for busy indicator. ([#7098](https://github.com/infor-design/enterprise/issues/7098))
