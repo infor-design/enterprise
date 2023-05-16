@@ -2,10 +2,19 @@
   <div class="two-thirds column">
       <div class="widget">
         <div class="widget-header">
-          <h2 class="widget-title">Line Chart Title</h2>
+          <h2 class="widget-title">Abbreviated Labels</h2>
         </div>
         <div class="widget-content">
           <div id="line-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Short Labels</h2>
+        </div>
+        <div class="widget-content">
+          <div id="line-example-2" class="chart-container">
           </div>
         </div>
       </div>
@@ -15,7 +24,7 @@
 <script id="line-script">
 $('body').on('initialized', function () {
 
-  var dataset = [{
+  const dataset = [{
     data: [
       {
         name: 'Automotive Parts and Services',
@@ -107,7 +116,69 @@ $('body').on('initialized', function () {
     id: '1'
   }];
 
+  const dataset2 = [{
+    data: [
+      {
+        name: 'Automotive Parts and Services',
+        abbrName: 'A',
+        value: 0.7
+      }, {
+        name: 'Distribution',
+        shortName: 'Dist',
+        abbrName: 'D',
+        value: 0.10
+      }, {
+        name: 'Equipment',
+        shortName: 'Equip',
+        abbrName: 'E',
+        value: 1.4
+      }, {
+        name: 'Fashion',
+        shortName: 'Fash',
+        abbrName: 'F',
+        value: 1.0
+      }, {
+        name: 'Food',
+        shortName: 'Food',
+        abbrName: 'F',
+        value: 0.14
+      }, {
+        name: 'Healthcare',
+        shortName: 'Health',
+        abbrName: 'H',
+        value: 4.8
+      }, {
+        name: 'Other dd dsfdsf',
+        abbrName: 'O',
+        value: 2.7
+      }, {
+        name: 'Automotive Parts and Services',
+        abbrName: 'A',
+        value: 0.7
+      }, {
+        name: 'Distribution',
+        shortName: 'Dist',
+        abbrName: 'D',
+        value: 0.10
+      }, {
+        name: 'Equipment',
+        shortName: 'Equip',
+        abbrName: 'E',
+        value: 1.4
+      }, {
+        name: 'Fashion',
+        shortName: 'Fash',
+        abbrName: 'F',
+        value: 1.0
+      },
+    ],
+    name: 'Component B',
+    id: '2'
+  }];
+
   $('#line-example').chart({type: 'line', dataset: dataset });
+
+  $('#line-example-2').chart({type: 'line', dataset: dataset2 });
 
 });
 </script>
