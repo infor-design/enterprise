@@ -1,13 +1,13 @@
 <div class="row">
     <div class="four columns">
-  
+
       <div class="card">
         <div class="card-header">
           <h2 class="card-title">Tasks</h2>
           <button class="btn-actions" type="button">
             <span class="audible">Actions</span>
             <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-              <use href="#icon-more"></use>
+              <use href="#icon-vertical-ellipsis"></use>
             </svg>
           </button>
           <ul class="popupmenu">
@@ -16,15 +16,15 @@
             <li><a href="#">Individual Action</a></li>
           </ul>
         </div>
-  
+
         <div class="card-content">
           <div class="listview-search">
             <label class="audible" for="gridfilter">Search</label>
             <input class="searchfield" placeholder="Search My Alerts" name="searchfield" id="gridfilter" data-options="{clearable: true}" disabled="true">
           </div>
-  
+
           <div class="listview" id="search-listview" data-options="{template: 'search-tmpl', source: '{{basepath}}api/tasks', searchable: true}"></div>
-  
+
           {{={{{ }}}=}}
           <script id="search-tmpl" type="text/html">
               <ul>
@@ -37,7 +37,6 @@
           </script>
         </div>
       </div>
-  
+
     </div>
   </div>
-  

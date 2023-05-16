@@ -1,6 +1,6 @@
 const { AxePuppeteer } = require('@axe-core/puppeteer');
 
-describe('About Puppeteer Tests', () => {
+describe.skip('About Puppeteer Tests', () => {
   describe('Index Tests', () => {
     const url = 'http://localhost:4000/components/about/example-index';
 

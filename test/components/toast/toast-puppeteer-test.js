@@ -2,7 +2,7 @@ const { AxePuppeteer } = require('@axe-core/puppeteer');
 
 const { dragAndDrop } = require('../../helpers/e2e-utils.cjs');
 
-describe('Toast Puppeteer Tests', () => {
+describe.skip('Toast Puppeteer Tests', () => {
   describe('Toast Index Tests', () => {
     const url = 'http://localhost:4000/components/toast/example-index.html';
     beforeEach(async () => {

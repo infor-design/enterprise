@@ -9,6 +9,7 @@
 ## v4.84.0 Fixes
 
 - `[Button]` Adjusted alignment for popupmenu icon buttons. ([#7408](https://github.com/infor-design/enterprise/issues/7408))
+- `[Datagrid]` Clear `rowstatus` in tree node for clearRowError to work correctly. ([#6033](https://github.com/infor-design/enterprise/issues/6033))
 - `[Busy Indicator]` Updated colors for busy indicator. ([#7098](https://github.com/infor-design/enterprise/issues/7098))
 - `[Datagrid]` Clear rowstatus in tree node for clearRowError to work correctly. ([#6033](https://github.com/infor-design/enterprise/issues/6033))
 - `[Header]` Fix on header text not being readable due to color styles. ([#7466](https://github.com/infor-design/enterprise/issues/7466))
@@ -18,17 +19,25 @@
 
 ## v4.83.0 Features
 
+- `[Cards/Widgets]` Added new design and features for the cards/widget component, this includes different rounded corners and shadows. ([#7379](https://github.com/infor-design/enterprise/issues/7379))
+- `[Cards/Widgets]` All icon buttons on cards should use a new icon please change `icon-more` to `icon-vertical-ellipsis`. ([#7379](https://github.com/infor-design/enterprise/issues/7379))
 - `[CSS Utilities]` Added CSS utility classes to the library to provide a standardized and efficient way of achieving consistent styling. ([#7377](https://github.com/infor-design/enterprise/issues/7377))
+- `[Homepage]` Changed the gutter size, banner size, and widget size for the homepage. ([#7445](https://github.com/infor-design/enterprise/issues/7445))
+- `[Icons]` Icon updated for 16 icons, added new icons `change-department, shifting, shift-origin, shift-destination, swap-list-left, swap-list-right`. ([#7510](https://github.com/infor-design/enterprise/issues/7510))
 
 ## v4.83.0 Fixes
 
+- `[Busy Indicator]` Updated colors for busy indicator. ([#7098](https://github.com/infor-design/enterprise/issues/7098))
 - `[Builder]` Fixed subtitle text not shown properly. ([#7207](https://github.com/infor-design/enterprise/issues/7207))
 - `[Builder]` Fixed a bug where subtitle text was not shown properly. ([#7207](https://github.com/infor-design/enterprise/issues/7207))
+- `[Button]` Adjusted alignment for popupmenu icon buttons. ([#7408](https://github.com/infor-design/enterprise/issues/7408))
 - `[Button]` Adjusted personalized colors. ([#7406](https://github.com/infor-design/enterprise/issues/7406))
 - `[Datagrid]` Fix on unique ID generator for tooltips. ([#7393](https://github.com/infor-design/enterprise/issues/7393))
+- `[Datagrid]` Made `clearRowStatus` in tree node for `clearRowError` work correctly. ([#6033](https://github.com/infor-design/enterprise/issues/6033))
 - `[Datepicker]` Fixed validation not showing after component update. ([#7240](https://github.com/infor-design/enterprise/issues/7240))
 - `[EmptyMessage]` Improved centering of widget and homepage contents for various widget sizes to enhance the overall user experience. ([#7360](https://github.com/infor-design/enterprise/issues/7360))
 - `[Header]` Fixed header components not aligned and visibly shown properly. ([#7209](https://github.com/infor-design/enterprise/issues/7209))
+- `[Header]` Fix on header text not being readable due to color styles. ([#7466](https://github.com/infor-design/enterprise/issues/7466))
 - `[Icons]` Icons updated for 44 icons, added new `success-message` empty state and two new icons `vertical-ellipsis` and `microphone-filled`. ([#7394](https://github.com/infor-design/enterprise/issues/7394))
 - `[Icons]` Icons updated for 44 icons, added new `success-message` empty state and two new icons: `vertical-ellipsis` and `microphone-filled`. ([#7394](https://github.com/infor-design/enterprise/issues/7394))
 - `[Monthview]` Fixed on updated method creating duplicates. ([NG#1446](https://github.com/infor-design/enterprise-ng/issues/1446))
