@@ -37,7 +37,6 @@ require('../../../src/components/locale/cultures/id-ID.js');
 require('../../../src/components/locale/cultures/it-IT.js');
 require('../../../src/components/locale/cultures/ja-JP.js');
 require('../../../src/components/locale/cultures/ko-KR.js');
-require('../../../src/components/locale/cultures/la-IT.js');
 require('../../../src/components/locale/cultures/lt-LT.js');
 require('../../../src/components/locale/cultures/lv-LV.js');
 require('../../../src/components/locale/cultures/ms-bn.js');
