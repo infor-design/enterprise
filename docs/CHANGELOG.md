@@ -4,8 +4,8 @@
 
 ## v4.84.0 Features
 
-- `[WeekView]` Added stacked view template for week view agenda variant. ([#7373](https://github.com/infor-design/enterprise/issues/7373))
 - `[Line Chart]` Added short and abbreviated name options for the data. ([#5906](https://github.com/infor-design/enterprise/issues/5906))
+- `[WeekView]` Added stacked view template for week view agenda variant. ([#7373](https://github.com/infor-design/enterprise/issues/7373))
 
 ## v4.84.0 Fixes
 
