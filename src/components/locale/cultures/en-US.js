@@ -60,6 +60,9 @@ Soho.Locale.addCulture('en-US', {
     group: ',',
     groupSizes: [3, 3]
   },
+  punctuation: {
+    comma: ','
+  },
   // Resx - Provided By Translation Team
   messages: {
     AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. All rights reserved. The word and design marks set forth herein are trademarks and/or registered trademarks of Infor and/or its affiliates and subsidiaries. All other trademarks listed herein are the property of their respective owners' },

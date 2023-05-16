@@ -59,6 +59,9 @@ Soho.Locale.addCulture('zh-Hans', {
     group: ',',
     groupSizes: [3, 3]
   },
+  punctuation: {
+    comma: ','
+  },
   // Resx - Provided By Translation Team
   messages: {
     AboutText: { id: 'AboutText', value: '版权所有 &copy; {0} Infor。保留所有权利。此处的文字信息和设计标志均为 Infor 和/或其关联公司及子公司的商标和/或注册商标。在此所列举的其它商标则属于其各自拥有人的财产。' },

@@ -60,6 +60,9 @@ Soho.Locale.addCulture('de-DE', {
     group: '.',
     groupSizes: [3, 3]
   },
+  punctuation: {
+    comma: ','
+  },
   // Resx
   messages: {
     AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. Alle Rechte vorbehalten. Die hier aufgelisteten Wort- und Designmarken sind Markenzeichen und/oder geschützte Marken der Infor und/oder verbundener Unternehmen. Alle anderen hier genannten Markenzeichen sind das Eigentum der betreffenden Unternehmen.' },

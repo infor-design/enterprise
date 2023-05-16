@@ -59,6 +59,9 @@ Soho.Locale.addCulture('sv-SE', {
     group: ' ',
     groupSizes: [3, 3]
   },
+  punctuation: {
+    comma: ','
+  },
   // Resx - Provided By Translation Team
   messages: {
     AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. Med ensamrätt. Ord- och figurmärken i den här publikationen är varumärken och/eller registrerade varumärken som tillhör Infor och/eller dess dotterbolag. Alla andra varumärken i den här publikationen tillhör respektive ägare' },

@@ -59,6 +59,9 @@ Soho.Locale.addCulture('tr-TR', {
     group: '.',
     groupSizes: [3, 3]
   },
+  punctuation: {
+    comma: ','
+  },
   // Resx - Provided By Translation Team
   messages: {
     AboutText: { id: 'AboutText', value: 'Telif hakkı &copy; {0} Infor. Tüm hakları saklıdır. Bu belgede belirtilen marka isimleri ve tasarımları, Infor ve/veya bağlı şirketleri ve iştiraklerinin ticari markaları ve/veya tescilli ticari markalarıdır. Burada belirtilen diğer tüm ticari markalar ilgili sahiplerinin mülkiyetindedir' },

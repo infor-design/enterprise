@@ -127,6 +127,17 @@ dateUtils.isDaylightSavingTime = function (date) {
 };
 
 /**
+ * Check if date is within range
+ * @param {date} startDate start of date range
+ * @param {date} endDate end of date range
+ * @param {date} targetDate target date
+ * @returns {boolean} true if targetDate is within range
+ */
+dateUtils.isWithinRange = function (startDate, endDate, targetDate) {
+  return startDate <= targetDate && targetDate <= endDate;
+};
+
+/**
  * Convert 12/24 hour format to 24 hour format based on a day period
  * @param {number} hours in 12 or 24 hour format
  * @param {number} dayPeriodIndex 0 or 1 if time format with a day period
