@@ -59,6 +59,9 @@ Soho.Locale.addCulture('he-IL', {
     group: ',',
     groupSizes: [3, 3]
   },
+  punctuation: {
+    comma: ','
+  },
   // Resx - Provided By Translation Team
   messages: {
     AboutText: { id: 'AboutText', value: 'זכויות יוצרים &copy; {0} Infor. כל הזכויות שמורות. סימני המילים והעיצוב המתוארים במסמך הם סימני מסחר ו/או סימני מסחר רשומים של Infor ו/או של חברות מסונפות או חברות-בנות. כל שאר סימני המסחר המצוינים במסמך הם רכושם של בעליהם, בהתאמה.' },

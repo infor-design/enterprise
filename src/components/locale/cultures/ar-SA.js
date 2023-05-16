@@ -297,5 +297,8 @@ Soho.Locale.addCulture('ar-SA', {
     decimal: '٫',
     group: '٬',
     groupSizes: [3, 3]
+  },
+  punctuation: {
+    comma: '،'
   }
 });

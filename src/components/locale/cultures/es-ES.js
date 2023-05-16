@@ -59,6 +59,9 @@ Soho.Locale.addCulture('es-ES', {
     group: '.',
     groupSizes: [3, 3]
   },
+  punctuation: {
+    comma: ','
+  },
   // Resx
   messages: {
     AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. Todos los derechos están reservados. Las marcas denominativas y figurativas mencionadas a continuación son marcas comerciales y marcas comerciales registradas de Infor y/o sus empresas filiales y subsidiarias. Las demás marcas comerciales mencionadas a continuación son propiedad de sus respectivos propietarios.' },

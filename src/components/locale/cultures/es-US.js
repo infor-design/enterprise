@@ -58,5 +58,8 @@ Soho.Locale.addCulture('es-US', {
     decimal: '.',
     group: ',',
     groupSizes: [3, 0]
+  },
+  punctuation: {
+    comma: ','
   }
 });

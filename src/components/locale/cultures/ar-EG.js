@@ -298,6 +298,9 @@ Soho.Locale.addCulture('ar-EG', {
     group: '٬',
     groupSizes: [3, 3]
   },
+  punctuation: {
+    comma: '،'
+  },
   // Resx - Provided By Translation Team
   messages: {
     AboutText: { id: 'AboutText', value: 'حقوق النشر &copy; {0} Infor. جميع الحقوق محفوظة. تعتبر الكلمات والعلامات المنصوص عليها بهذه الوثيقة علامات تجارية و/أو علامات تجارية مسجلة لشركة Infor و/أو الشركات التابعة لها والفرعية. تعتبر كافة العلامات التجارية المدرجة هنا ملكية خاصة بأصحابها.' },

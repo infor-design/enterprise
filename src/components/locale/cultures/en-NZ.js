@@ -58,5 +58,8 @@ Soho.Locale.addCulture('en-NZ', {
     decimal: '.',
     group: ',',
     groupSizes: [3, 3]
+  },
+  punctuation: {
+    comma: ','
   }
 });

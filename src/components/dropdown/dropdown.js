@@ -1891,7 +1891,7 @@ Dropdown.prototype = {
 
     opts.each(function () {
       if (text.length > 0) {
-        text += ', ';
+        text += `${Locale.currentLocale.data.punctuation.comma} `;
       }
       text += $(this).text().trim();
     });

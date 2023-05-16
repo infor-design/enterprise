@@ -58,6 +58,9 @@ Soho.Locale.addCulture('la-IT', {
     decimal: ',',
     group: '.'
   },
+  punctuation: {
+    comma: ','
+  },
   // Resx - Provided By Translation Team
   messages: {
     AboutText: { id: 'AboutText', value: 'Copyright & exemplum; Similiter finis {0}. Omnia iura reservantur. Verbum consilio et quae hoc loco enuntiata sunt trademark marcas set et / vel a registered trademark similiter finis et / vel Aliquam, et subsidiaries. Omnia iura reservantur. Morbi in hac proprietate ceteris trademarks arcu' },
