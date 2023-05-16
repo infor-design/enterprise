@@ -38,6 +38,7 @@
 - `[Popupmenu]` Fixed popupmenu previous states not getting saved when called resize and update. ([#6601](https://github.com/infor-design/enterprise/issues/6601))
 - `[Searchfield]` Fixed collapsible issues with search icon color and behavior. ([#7390](https://github.com/infor-design/enterprise/issues/7390))
 - `[Popupmenu]` Fixed on popupmenu arrow not appearing when showArrow is true. ([#5061](https://github.com/infor-design/enterprise/issues/5061))
+- `[Locale]` Added new translations. ([#1243](https://github.com/infor-design/enterprise/issues/7512)
 - `[Monthview]` Fix on updated method creating duplicates. ([NG#1446](https://github.com/infor-design/enterprise-ng/issues/1446))
 - `[Monthview]` Fixed on updated method creating duplicates. ([NG#1446](https://github.com/infor-design/enterprise-ng/issues/1446))
 - `[Tabs Module]` Fixed closing an active tab in the overflow menu results in a blank screen. ([#7321](https://github.com/infor-design/enterprise/issues/7321))
