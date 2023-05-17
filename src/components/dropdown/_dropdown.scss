@@ -652,6 +652,10 @@ div.multiselect {
       }
     }
   }
+
+  li span.swatch:not(.alabaster) {
+    border: 1px solid $dropdown-swatch-border-color;
+  }
 }
 
 .dropdown-search {
