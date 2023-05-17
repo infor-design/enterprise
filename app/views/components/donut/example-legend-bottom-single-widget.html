@@ -23,6 +23,52 @@
           </div>
         </div>
       </div>
+
+      <div class="one-third column">
+        <div class="widget">
+          <div class="widget-header">
+            <h2 class="widget-title">Pie Chart Two</h2>
+            <button class="btn-actions" type="button">
+              <span class="audible">Actions</span>
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-more"></use>
+              </svg>
+            </button>
+            <ul class="popupmenu actions top">
+              <li><a href="#">Action One</a></li>
+              <li><a href="#">Action Two</a></li>
+            </ul>
+          </div>
+
+          <div class="widget-content">
+            <div id="pie-chart-example2" class="chart-container">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="one-third column">
+        <div class="widget">
+          <div class="widget-header">
+            <h2 class="widget-title">Pie Chart Three</h2>
+            <button class="btn-actions" type="button">
+              <span class="audible">Actions</span>
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-more"></use>
+              </svg>
+            </button>
+            <ul class="popupmenu actions top">
+              <li><a href="#">Action One</a></li>
+              <li><a href="#">Action Two</a></li>
+            </ul>
+          </div>
+
+          <div class="widget-content">
+            <div id="pie-chart-example3" class="chart-container">
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -63,9 +109,53 @@ $('body').on('initialized', function () {
     }]
   }];
 
+  var pieData2 = [{
+  centerLabel: '<tspan x="0.15em" dy="-0.1em" style="font-size:1.6rem">Total Hours</tspan> <tspan x="0" dy="1.4em" style="font-size:1.6rem">265</tspan>',
+  data: [{
+      name: 'Regulars',
+      value: 192,
+      tooltip: 'Regular 192'
+    }, {
+      name: 'Unpaid bills',
+      value: 24,
+      tooltip: 'Unpaid 24'
+    }]
+  }];
+
+  var pieData3 = [{
+  centerLabel: '<tspan x="0.15em" dy="-0.1em" style="font-size:1.6rem">Total Hours</tspan> <tspan x="0" dy="1.4em" style="font-size:1.6rem">265</tspan>',
+  data: [{
+      name: 'Open',
+      value: 1,
+      tooltip: 'Open 1'
+    }, {
+      name: 'Past Expiry',
+      value: 1,
+      tooltip: 'Past Expiry 1'
+    }, {
+      name: 'Color3',
+      value: 1,
+      tooltip: 'Color3 1'
+    }]
+  }];
+
   $('#pie-chart-example').chart({
     type: 'donut',
     dataset: pieData,
+    showLegend: true,
+    legendPlacement: 'bottom'
+  });
+
+  $('#pie-chart-example2').chart({
+    type: 'donut',
+    dataset: pieData2,
+    showLegend: true,
+    legendPlacement: 'bottom'
+  });
+
+  $('#pie-chart-example3').chart({
+    type: 'donut',
+    dataset: pieData3,
     showLegend: true,
     legendPlacement: 'bottom'
   });

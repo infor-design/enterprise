@@ -10,6 +10,7 @@
 ## v4.84.0 Fixes
 
 - `[Button]` Adjusted alignment for popupmenu icon buttons. ([#7408](https://github.com/infor-design/enterprise/issues/7408))
+- `[Charts]` Improved the positioning of chart legend. ([#7452](https://github.com/infor-design/enterprise/issues/7452))
 - `[Datagrid]` Clear `rowstatus` in tree node for clearRowError to work correctly. ([#6033](https://github.com/infor-design/enterprise/issues/6033))
 - `[Busy Indicator]` Updated colors for busy indicator. ([#7098](https://github.com/infor-design/enterprise/issues/7098))
 - `[Datagrid]` Clear rowstatus in tree node for clearRowError to work correctly. ([#6033](https://github.com/infor-design/enterprise/issues/6033))

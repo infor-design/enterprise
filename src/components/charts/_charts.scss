@@ -16,6 +16,35 @@
 .chart-container {
   overflow: hidden;
 
+  &.has-bottom-legend.auto-height {
+    .chart-legend.is-bottom {
+      padding: 5px 0 0;
+    }
+  }
+
+  .chart-legend {
+    &.is-bottom {
+      align-items: center;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      padding-left: 30px;
+
+      .chart-legend-item.is-two-column {
+        display: flex;
+
+        .chart-legend-color {
+          min-height: 20px;
+          min-width: 20px;
+        }
+
+        .chart-legend-item-text {
+          top: 0;
+        }
+      }
+    }
+  }
+
   // Center
   svg {
     display: block;
@@ -85,7 +114,8 @@
   .list-button {
     float: right;
     margin-right: 17px;
-    padding-top: 1%;
+    margin-top: 1px;
+    margin-bottom: 1px;
   }
 
   // Right aligned Legend
@@ -227,12 +257,13 @@
 
     &.adjusted-height {
       .chart-legend-item {
+        align-items: center;
+        display: flex !important;
         font-size: 0;
       }
 
       .chart-legend-item-text {
         position: relative;
-        top: -4px;
       }
     }
   }
@@ -269,13 +300,13 @@
       display: inline-block;
       float: none;
       margin: 0;
-      padding: 0 30px;
-      width: 50%;
+      padding: 0;
+      width: 160px;
     }
 
     &.is-one-line {
       height: inherit;
-      padding: 7px 0 0 7px;
+      padding: 0;
       min-height: 35px;
     }
   }
@@ -283,6 +314,7 @@
   .chart-legend-color {
     display: inline-block;
     height: 12px;
+    margin-bottom: 2px;
     margin-right: 10px;
     position: relative;
     top: 1px;

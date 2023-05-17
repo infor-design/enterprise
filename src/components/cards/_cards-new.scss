@@ -76,7 +76,7 @@
     }
   }
 
-  &:not(.show-buttons) button.btn-actions {
+  &:not(.show-buttons) button.btn-actions:not(.list-button) {
     opacity: 0;
   }
 
