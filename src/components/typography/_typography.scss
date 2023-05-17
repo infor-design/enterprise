@@ -40,6 +40,13 @@ html {
   }
 }
 
+html.theme-new-light {
+  &.darker-background,
+  &.slate05 {
+    background-color: rgba($ids-color-palette-slate-10, 0.5);
+  }
+}
+
 // Text Elements
 h1,
 h2,
