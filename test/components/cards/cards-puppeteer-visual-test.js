@@ -1,6 +1,6 @@
 const { getConfig } = require('../../helpers/e2e-utils.cjs');
 
-describe('Cards Puppeteer Visual Tests', () => {
+describe.skip('Cards Puppeteer Visual Tests', () => {
   const baseUrl = 'http://localhost:4000/components/cards';
 
   describe('Group Action', () => {

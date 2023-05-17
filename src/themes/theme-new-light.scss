@@ -22,7 +22,7 @@ $label-disabled-color: $input-color-disabled-border;
 $input-disabled-color: $input-color-disabled-font;
 $dropdown-search-bg-color: $ids-color-palette-slate-10;
 
-$body-color-primary-background: $ids-color-palette-white;
+$body-color-primary-background: rgba($ids-color-palette-slate-10, 0.5);
 $drop-shadow-depth: rgba($ids-color-boxshadow-base, 0.2);
 
 $application-menu-border-color: $ids-color-palette-slate-90;
@@ -69,10 +69,14 @@ $builder-header-bg-color: $ids-color-palette-slate-60;
 // Cards (New)
 $card-selected-border-color: $ids-color-palette-azure-60;
 $card-selected-background-color: $ids-color-palette-azure-10;
+$card-scrolling-box-shadow: 0 0 4px 0 #00000040;
+$card-scrolling-border-color: $ids-color-palette-slate-20;
 $card-expandable-sub-heading: $ids-color-palette-slate-60;
+$cardlist-actions-color: $ids-color-palette-slate-60;
+$card-actions-toolbar-button-hover-color: $ids-color-palette-slate-100;
 
 // Cardlist
-$cardlist-box-shadow-color: rgba(0, 0, 0, 0.1);
+$cardlist-box-shadow-color: rgba(0, 0, 0, 0.05);
 $cardlist-border-color: $ids-color-palette-slate-30;
 
 $masthead-bg-color: $ids-color-palette-black;

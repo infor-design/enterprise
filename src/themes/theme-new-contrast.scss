@@ -385,13 +385,15 @@ $expandable-area-title-color: $ids-color-palette-black;
 
 // Cards
 $card-selected-background-color: $selected-bg-color;
+$card-scrolling-box-shadow: 0 0 4px 0 #00000050;
+$card-scrolling-border-color: $ids-color-palette-slate-30;
 $card-expandable-sub-heading: $ids-color-palette-slate-90;
 
 // Cardlist
 $cardlist-border-color: $ids-color-palette-slate-60;
 $cardlist-header-color: $ids-color-palette-black;
 $cardlist-actions-color: $ids-color-palette-slate-90;
-$cardlist-box-shadow-color: rgba(0, 0, 0, 0.1);
+$cardlist-box-shadow-color: rgba(0, 0, 0, 0.15);
 
 // Switch
 $radio-checked-color: $ids-color-palette-azure-100;

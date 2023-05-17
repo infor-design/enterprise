@@ -20,8 +20,20 @@
   display: flex !important;
 }
 
+.rounded {
+  border-radius: 4px;
+}
+
+.rounded-lg {
+  border-radius: 8px;
+}
+
 .align-items-center {
   align-items: center !important;
+}
+
+.no-shadow {
+  box-shadow: none !important;
 }
 
 .justify-content-center {
@@ -56,7 +68,7 @@
   float: none !important;
 }
 
-.flex-center {    
+.flex-center {
   @extend .d-flex;
   @extend .align-items-center;
   @extend .justify-content-center;
@@ -106,5 +118,17 @@
   .m-right-#{$i} {
     $padding: $i * 1px;
     margin-right: $padding !important;
+  }
+
+  .padding-x-#{$i} {
+    $padding: $i * 1px;
+    padding-left: $padding !important;
+    padding-right: $padding !important;
+  }
+
+  .padding-y-#{$i} {
+    $padding: $i * 1px;
+    padding-bottom: $padding !important;
+    padding-top: $padding !important;
   }
 }
