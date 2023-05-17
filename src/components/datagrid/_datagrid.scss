@@ -531,6 +531,17 @@ $datagrid-small-row-height: 25px;
     .datagrid-header {
       background-color: $datagrid-list-header-bg-color;
 
+      &.light {
+        .datagrid-header-groups th {
+          background-color: $datagrid-light-header-bg-color;
+          border-bottom: 1px solid $datagrid-light-header-border-color;
+        }
+
+        th.is-sortable:hover {
+          background-color: $datagrid-light-header-bg-hover-color;
+        }
+      }
+
       .is-filterable .datagrid-filter-wrapper {
         input,
         div.dropdown {
