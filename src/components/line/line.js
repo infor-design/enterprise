@@ -793,6 +793,23 @@ Line.prototype = {
     }
     charts.appendTooltip();
 
+    if ((!isAxisXRotate && !s.xAxis && !self.settings.xAxis?.rotate) && charts.labelsColide(self.svg)) {
+      let dataArray = [];
+      dataset.forEach(function (d) {
+        dataArray = dataArray.concat(d.data);
+      });
+
+      charts.applyAltLabels(self.svg, dataArray, 'shortName');
+
+      if (charts.labelsColide(self.svg)) {
+        charts.applyAltLabels(self.svg, dataArray, 'abbrName');
+      }
+
+      if (charts.labelsColide(self.svg)) {
+        charts.applyAltLabels(self.svg, dataArray, null, null, true);
+      }
+    }
+
     charts.setSelected = function (o, isToggle) {
       let selected = 0;
       const equals = utils.equals;
