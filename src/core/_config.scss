@@ -712,6 +712,7 @@ $module-nav-bg-color: $ids-color-palette-slate-10;
 $module-nav-border-color: transparent;
 $module-nav-detail-bg-color: $ids-color-palette-slate-20;
 $module-nav-separator-color: $ids-color-palette-slate-20;
+$module-nav-separator-edge-distance: 15px;
 $module-nav-text-color: $ids-color-palette-slate-60;
 
 // Module Nav (Common Sizes)
@@ -736,6 +737,7 @@ $module-nav-item-margin-inline: 8px;
 $module-nav-item-icon-start-spacing: 10px;
 $module-nav-item-icon-end-spacing: 20px;
 $module-nav-item-dropdown-icon-size: 13px; // 10px in Figma
+$module-nav-item-collapsed-size: 32px;
 $module-nav-item-text-color: $ids-color-palette-slate-80;
 $module-nav-item-hover-bg-color: $ids-color-palette-slate-20;
 $module-nav-item-hover-text-color: $ids-color-palette-slate-100;
@@ -752,6 +754,7 @@ $module-nav-switcher-dropdown-item-focus-bg-color: $ids-color-palette-slate-20;
 $module-nav-switcher-dropdown-item-text-color: $ids-color-palette-slate-60;
 
 // Module Nav Search (Input Field)
+$module-nav-search-input-height: 48px;
 $module-nav-search-input-text-color: $ids-color-palette-slate-80;
 $module-nav-search-input-focused-text-color: $ids-color-palette-slate-100;
 $module-nav-search-input-placeholder-text-color: $ids-color-palette-slate-100;

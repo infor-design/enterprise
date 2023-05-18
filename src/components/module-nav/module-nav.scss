@@ -171,6 +171,12 @@
   // individual areas can become scrollable
 
   &.pinned-optional {
+    .module-nav-main,
+    .module-nav-search,
+    .module-nav-footer {
+      padding-block-start: 0;
+    }
+
     .module-nav-main {
       @include drawer-scrollable-area;
       flex-grow: 1;

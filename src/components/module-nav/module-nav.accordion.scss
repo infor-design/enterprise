@@ -232,12 +232,12 @@
       justify-content: center;
       position: static;
 
-      max-width: 34px;
-      min-height: 34px;
+      max-width: $module-nav-item-collapsed-size;
+      min-height: $module-nav-item-collapsed-size;
       margin-block: 16px;
-      margin-inline: 2px;
-      height: 34px;
-      width: 34px;
+      margin-inline: auto;
+      height: $module-nav-item-collapsed-size;
+      width: $module-nav-item-collapsed-size;
 
       &:first-child {
         margin-block-start: 0;

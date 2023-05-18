@@ -16,10 +16,10 @@
       border: $module-nav-input-border-width solid transparent;
       color: inherit;
 
-      padding-inline-start: 48px;
+      padding-inline-start: $module-nav-search-input-height;
       padding-inline-end: 10px;
 
-      height: 40px;
+      height: $module-nav-search-input-height;
       width: 100%;
 
       + .icon {
@@ -32,6 +32,7 @@
     }
 
     button.close {
+      top: 11px;
       right: 12px;
 
       .icon {

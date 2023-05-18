@@ -3,6 +3,13 @@
 // button + button borders
 $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switcher-button-gutter-size + 2;
 
+@mixin module-nav-div-dropdown-adjustment() {
+  padding-block-start: 9px;
+  padding-block-end: 7px;
+  padding-inline-start: 8px;
+  padding-inline-end: 40px;
+}
+
 // Module Nav Dropdown Component
 //================================================== //
 
@@ -15,12 +22,10 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
 
   div.dropdown {
     @include module-nav-input-style;
+    @include module-nav-div-dropdown-adjustment;
 
     height: $module-nav-switcher-dropdown-height;
     width: $module-nav-switcher-dropdown-width;
-
-    padding-inline-start: 10px;
-    padding-inline-end: 40px;
 
     .icon {
       margin-block-end: $module-nav-common-border-radius;
@@ -110,7 +115,7 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
 
     .listoption-icon {
       margin-inline-start: 3px;
-      margin-inline-end: 30px;
+      margin-inline-end: 27px;
     }
 
     &.is-focused:not(.is-disabled) {
@@ -125,7 +130,8 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
   // When configured with icons, don't show icon in "search" area
   &.has-icons {
     input.dropdown-search {
-      padding-inline-start: $module-nav-input-padding-inline-start-size;
+      @include module-nav-div-dropdown-adjustment;
+      padding-block-start: 7px; // Adjustment needed for the input field
     }
   }
 
@@ -146,7 +152,7 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
 .module-nav-accordion.has-scrollbar {
   .module-nav-section.role-dropdown {
     div.dropdown {
-      width: $module-nav-switcher-dropdown-width;
+      width: ($module-nav-switcher-dropdown-width - $module-nav-item-padding-size);
     }
   }
 }

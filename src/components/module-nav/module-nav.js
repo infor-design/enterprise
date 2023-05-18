@@ -207,6 +207,7 @@ ModuleNav.prototype = {
       [...headers].forEach((header) => {
         if (this.settings.displayMode === 'collapsed') {
           $(header).tooltip({
+            offset: { x: 12 },
             placement: 'right',
             title: header.textContent.trim()
           });
