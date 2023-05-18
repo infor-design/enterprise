@@ -234,17 +234,17 @@
 
       max-width: $module-nav-item-collapsed-size;
       min-height: $module-nav-item-collapsed-size;
-      margin-block: 16px;
+      margin-block: $module-nav-item-collapsed-general-spacing-size;
       margin-inline: auto;
       height: $module-nav-item-collapsed-size;
       width: $module-nav-item-collapsed-size;
 
       &:first-child {
-        margin-block-start: 0;
+        margin-block-start: $module-nav-item-collapsed-first-last-spacing-size;
       }
 
       &:last-child {
-        margin-block-start: 0;
+        margin-block-start: 8px;
       }
 
       > .icon {
