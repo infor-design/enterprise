@@ -17,6 +17,7 @@
   }
 }
 
+// IDS Accordion Style Overrides
 .accordion.panel.module-nav-accordion {
   background-color: transparent;
   border: 0;
@@ -44,6 +45,24 @@
     > a,
     > .icon {
       color: inherit;
+    }
+
+    > a {
+      padding-block: 11px;
+    }
+
+    .icon {
+      top: -1px;
+
+      &.chevron {
+        &.active {
+          top: -2px;
+        }
+      }
+    }
+
+    .btn {
+      top: 0;
     }
 
     &.is-focused {
@@ -98,8 +117,11 @@
 
       &:active {
         background-color: $module-nav-item-selected-bg-color;
-        border-color: $module-nav-item-selected-text-color;
         color: $module-nav-item-selected-text-color;
+
+        &:not(.hide-focus) {
+          border-color: $module-nav-item-selected-text-color;
+        }
 
         > a,
         > .icon {
@@ -135,7 +157,7 @@
       > a {
         @include font-size(14);
 
-        padding: 12px 0 12px 20px;
+        padding: 13px 0 11px 20px;
       }
 
       &:last-child {
@@ -178,6 +200,12 @@
 
   // Module Nav Accordion Alignment-only rules
   // =================================================== //
+
+  /*
+  &:not(.has-icons) {
+
+  }
+  */
 
   &.has-icons {
     // 2nd-level Accordion Headers
@@ -266,6 +294,6 @@
 // Module Nav Accordion Component (Scrollbars)
 //================================================== //
 
-.accordion-section.has-scrollbar {
+.accordion-section.next-scrollbar {
   @include module-nav-section-separator;
 }

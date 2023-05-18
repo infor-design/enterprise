@@ -1,5 +1,6 @@
 import { utils } from '../../utils/utils';
 import { accordionSearchUtils } from '../../utils/accordion-search-utils';
+import '../../utils/behaviors';
 
 import './module-nav.switcher.jquery';
 import '../accordion/accordion.jquery';
@@ -205,11 +206,14 @@ ModuleNav.prototype = {
     if (headers.length) {
       [...headers].forEach((header) => {
         if (this.settings.displayMode === 'collapsed') {
-          header.setAttribute('title', header.textContent.trim());
-          $(header).tooltip({ placement: 'right' });
+          $(header).tooltip({
+            placement: 'right',
+            title: header.textContent.trim()
+          });
+          $(header).hideFocus();
         } else {
           $(header).data('tooltip')?.destroy();
-          header.removeAttribute('title');
+          $(header).data('hidefocus')?.destroy();
         }
       });
     }
@@ -307,6 +311,13 @@ ModuleNav.prototype = {
     if (sections && sections.length) {
       [...sections].forEach((section) => {
         toggleScrollbar(section, doToggle);
+
+        const isSearch = section.classList.contains('module-nav-search-container');
+        const isHeader = section.classList.contains('module-nav-header');
+        if (isHeader || isSearch) {
+          if (doToggle) section.classList.add('next-scrollbar');
+          else section.classList.remove('next-scrollbar');
+        }
       });
     }
   },

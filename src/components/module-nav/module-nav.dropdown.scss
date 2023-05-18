@@ -1,6 +1,6 @@
 @import './module-nav.common.scss';
 
-// button + button borders + dropdown size
+// button + button borders
 $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switcher-button-gutter-size + 2;
 
 // Module Nav Dropdown Component
@@ -9,7 +9,7 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
 .module-nav-section.role-dropdown {
 
   .dropdown-wrapper {
-    max-width: ($module-nav-submenu-size - $module-nav-gutter-size);
+    max-width: $module-nav-switcher-dropdown-width;
     margin-bottom: 0;
   }
 
@@ -17,7 +17,7 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
     @include module-nav-input-style;
 
     height: $module-nav-switcher-dropdown-height;
-    width: ($module-nav-submenu-size - $module-nav-gutter-size);
+    width: $module-nav-switcher-dropdown-width;
 
     padding-inline-start: 10px;
     padding-inline-end: 40px;
@@ -60,7 +60,7 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
   overflow: visible;
 
   > .trigger {
-    margin-inline-start: -36px;
+    margin-inline-start: -35px;
     color: inherit;
 
     .icon {
@@ -81,7 +81,7 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
 
     // visibly separate the input field from the list
     margin-inline-start: $module-nav-container-size;
-    width: calc(100% - #{$module-nav-container-size - 3});
+    width: calc(100% - #{$module-nav-container-size});
 
     // re-align text with in-page dropdown
     padding-block-start: 7px;
@@ -146,7 +146,7 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
 .module-nav-accordion.has-scrollbar {
   .module-nav-section.role-dropdown {
     div.dropdown {
-      width: $module-nav-switcher-dropdown-size;
+      width: $module-nav-switcher-dropdown-width;
     }
   }
 }

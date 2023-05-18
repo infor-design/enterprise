@@ -125,7 +125,7 @@
     }
 
     .page-container {
-      margin-inline-start: ($module-nav-submenu-size * -1);
+      margin-inline-start: (($module-nav-expanded-size - $module-nav-collapsed-size) * -1);
     }
 
     &.show-detail {

@@ -2678,7 +2678,7 @@ Dropdown.prototype = {
       let widthAttr = typeof this.settings.width === 'number' ? `${this.settings.width}px` : 'auto';
       if (this.settings.width === 'parent' && typeof this.settings.widthTarget === 'string') {
         const el = document.querySelector(this.settings.widthTarget);
-        if (el) widthAttr = `${el.clientWidth}px`;
+        if (el) widthAttr = `${el.clientWidth + 2}px`;
       }
       this.list.css('width', widthAttr);
     }

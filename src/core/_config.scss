@@ -719,7 +719,7 @@ $module-nav-z-index: 1;
 $module-nav-common-border-radius: 8px;
 $module-nav-collapsed-size: 56px;
 $module-nav-gutter-size: 4px;
-$module-nav-expanded-size: 360px;
+$module-nav-expanded-size: 320px;
 $module-nav-submenu-size: 300px;
 
 // Module Nav Input Field (Search/Role Dropdown)
@@ -730,7 +730,7 @@ $module-nav-input-border-color: $ids-color-palette-slate-20;
 $module-nav-input-text-color: $ids-color-palette-slate-60;
 
 // Module Nav Item (Accordion Header/Menu Button)
-$module-nav-item-height: 45px;
+$module-nav-item-height: 48px;
 $module-nav-item-padding-size: 13px;
 $module-nav-item-margin-inline: 8px;
 $module-nav-item-icon-start-spacing: 10px;
@@ -746,7 +746,7 @@ $module-nav-item-selected-text-color: $ids-color-palette-azure-60;
 $module-nav-switcher-button-size: 40px;
 $module-nav-switcher-button-gutter-size: 8px;
 $module-nav-switcher-dropdown-height: 40px;
-$module-nav-switcher-dropdown-size: 282px;
+$module-nav-switcher-dropdown-width: 256px;
 $module-nav-switcher-dropdown-item-height: 48px;
 $module-nav-switcher-dropdown-item-focus-bg-color: $ids-color-palette-slate-20;
 $module-nav-switcher-dropdown-item-text-color: $ids-color-palette-slate-60;

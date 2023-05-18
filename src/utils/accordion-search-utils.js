@@ -20,7 +20,7 @@ const ACCORDION_SEARCH_SETTINGS = {
 accordionSearchUtils.attachFilter = function (componentName, cssClassTargetEl) {
   if (!this.element.length) return;
   const self = this;
-  const inputId = componentName === 'applicationmenu' ? 'application-menu-searchfield' : 'module-nav-search';
+  // const inputId = componentName === 'applicationmenu' ? 'application-menu-searchfield' : 'module-nav-search';
 
   // Build Searchfield in App Menu only (allow composition in Module Nav)
   if (componentName === 'applicationmenu') {
@@ -28,11 +28,13 @@ accordionSearchUtils.attachFilter = function (componentName, cssClassTargetEl) {
     if (this.searchfield.is('.searchfield-wrapper')) {
       this.searchfield = this.searchfield.find('.searchfield');
     }
+    /*
     if (!this.searchfield.length) {
       this.searchfield =
         $(`<input id="${inputId}" class="searchfield" placeholder="Search" />`)
           .prependTo(this.element);
     }
+    */
   }
 
   // Setup filtering, if applicable.

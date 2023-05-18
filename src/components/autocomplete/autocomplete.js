@@ -211,10 +211,12 @@ Autocomplete.prototype = {
     const input = this.element[0];
     const $list = this.list;
 
-    if (input.isEqualNode(active) || ($list && $list.length && $list[0].contains(active))) {
-      return true;
-    }
-    return false;
+    const fieldIsFocused = input.isEqualNode(active);
+    const listItemIsFocused = ($list && $list.length && $list[0].contains(active));
+    const isClearableField = $(this.element).data('clearable') !== undefined;
+    const clearableBtnIsFocused = isClearableField && this.element.parent().find(active);
+
+    return fieldIsFocused || listItemIsFocused || clearableBtnIsFocused;
   },
 
   addMarkup() {
@@ -573,9 +575,7 @@ Autocomplete.prototype = {
         e.preventDefault();
         self.noSelect = true;
         self.select(highlighted);
-      } else {
-        self.closeList();
-      }
+      } else if (!self.isFocused) self.closeList();
     }
 
     return null;

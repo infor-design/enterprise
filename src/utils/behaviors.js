@@ -74,9 +74,11 @@ HideFocus.prototype = {
           handleMousedown(e);
         })
         .on('focusin.hide-focus', (e) => {
-          if (!isClick && !isFocused) {
+          if (!isClick) {
             $el.removeClass('hide-focus');
             $el.triggerHandler('hidefocusremove', [e]);
+          } else if (isClick) {
+            $el.addClass('hide-focus');
           }
           isClick = false;
           isFocused = true;
@@ -114,6 +116,11 @@ HideFocus.prototype = {
     this.element?.classList.remove('hide-focus');
 
     return this;
+  },
+
+  destroy() {
+    this.teardown();
+    $.removeData(this.element, 'hidefocus');
   }
 };
 
@@ -128,11 +135,6 @@ $.fn.hideFocus = function () {
       instance.updated();
     } else {
       instance = $.data(this, 'hidefocus', new HideFocus(this));
-      instance.destroy = function destroy() {
-        this.teardown();
-        $.removeData(this, 'hidefocus');
-        this.element = undefined;
-      };
     }
   });
 };
