@@ -4,6 +4,7 @@
 
 ## v4.84.0 Features
 
+- `[Line Chart]` Added short and abbreviated name options for the data. ([#5906](https://github.com/infor-design/enterprise/issues/5906))
 - `[WeekView]` Added stacked view template for week view agenda variant. ([#7373](https://github.com/infor-design/enterprise/issues/7373))
 
 ## v4.84.0 Fixes
@@ -11,6 +12,7 @@
 - `[Busy Indicator]` Updated colors for busy indicator. ([#7098](https://github.com/infor-design/enterprise/issues/7098))
 - `[Button]` Adjusted alignment for popupmenu icon buttons. ([#7408](https://github.com/infor-design/enterprise/issues/7408))
 - `[Datagrid]` Clear `rowstatus` in tree node for clearRowError to work correctly. ([#6033](https://github.com/infor-design/enterprise/issues/6033))
+- `[Dropdown]` Removed overflow none style for dropdown modal. ([#6033](https://github.com/infor-design/enterprise/issues/6033))
 - `[Header]` Fix on header text not being readable due to color styles. ([#7466](https://github.com/infor-design/enterprise/issues/7466))
 - `[Locale]` Added Comma translate option for locale for generating lists. ([#5887](https://github.com/infor-design/enterprise/issues/5887))
 - `[Lookup]` Added undefined check for lookup values when updating grid. ([#7403](https://github.com/infor-design/enterprise/issues/7403))
@@ -47,6 +49,7 @@
 - `[Popupmenu]` Fixed popupmenu previous states not getting saved when called resize and update. ([#6601](https://github.com/infor-design/enterprise/issues/6601))
 - `[Searchfield]` Fixed collapsible issues with search icon color and behavior. ([#7390](https://github.com/infor-design/enterprise/issues/7390))
 - `[Popupmenu]` Fixed on popupmenu arrow not appearing when showArrow is true. ([#5061](https://github.com/infor-design/enterprise/issues/5061))
+- `[Locale]` Added new translations. ([#1243](https://github.com/infor-design/enterprise/issues/7512)
 - `[Monthview]` Fix on updated method creating duplicates. ([NG#1446](https://github.com/infor-design/enterprise-ng/issues/1446))
 - `[Monthview]` Fixed on updated method creating duplicates. ([NG#1446](https://github.com/infor-design/enterprise-ng/issues/1446))
 - `[Tabs Module]` Fixed closing an active tab in the overflow menu results in a blank screen. ([#7321](https://github.com/infor-design/enterprise/issues/7321))
