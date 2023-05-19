@@ -285,7 +285,8 @@
     }
 
     &.is-selectable > li {
-      .icon + a {
+      .icon + a,
+      > a {
         overflow: auto;
         padding-left: 57px;
       }
