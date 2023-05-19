@@ -698,6 +698,21 @@
       top: 1px;
     }
   }
+
+  &.is-gridlist {
+    .datagrid-header {
+      &.light {
+        .datagrid-header-groups th {
+          background-color: $datagrid-light-header-bg-color;
+          border-bottom: 1px solid $datagrid-light-header-border-color;
+        }
+
+        th.is-sortable:hover {
+          background-color: $datagrid-light-header-bg-hover-color;
+        }
+      }
+    }
+  }
 }
 
 .datagrid.small-rowheight tbody tr td {
