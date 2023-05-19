@@ -29,6 +29,10 @@ html {
     -webkit-overflow-scrolling: touch;
   }
 
+  .body-background-color {
+    background-color: $body-color-primary-background;
+  }
+
   &.font-source-sans body {
     font-family: $font-source-sans;
   }
