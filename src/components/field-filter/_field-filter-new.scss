@@ -10,6 +10,23 @@
     border-bottom-left-radius: 0;
     border-top-left-radius: 0;
   }
+
+  div.dropdown-wrapper .dropdown:not(.dropdown-md):hover {
+    transition: 0.3s;
+    border-right: transparent;
+  }
+
+  div.dropdown-wrapper .dropdown:not(.dropdown-md):focus {
+    border-right: transparent;
+  }
+
+  div.dropdown-wrapper:hover + input {
+    border-left: 1px solid $trigger-hover-color;
+  }
+
+  div.dropdown-wrapper:focus-within + input {
+    border-left: 1px solid $input-color-focus-border;
+  }
 }
 
 .field-short.fieldfilter-wrapper {
@@ -27,7 +44,7 @@
     > .listoption-icon {
       left: 1px;
       position: relative;
-      top: -1px;
+      top: -1.5px;
     }
   }
 }
@@ -62,9 +79,15 @@
   .field.fieldfilter-wrapper div:first-of-type,
   .field-short.fieldfilter-wrapper div:first-of-type {
     height: 38px;
+  }
 
-    .listoption-icon {
-      top: 1px;
+  .field-short.fieldfilter-wrapper {
+    .dropdown-wrapper {
+      .dropdown {
+        .listoption-icon {
+          top: 0;
+        }
+      }
     }
   }
 
@@ -74,7 +97,6 @@
 
       .icon {
         left: 2px !important;
-        top: 7px !important;
       }
     }
 
@@ -85,20 +107,24 @@
         }
       }
     }
+
+    &.dropdown-short {
+      > .trigger {
+        margin-left: 0;
+
+        .icon {
+          top: 6px;
+        }
+      }
+    }
   }
 
   &:not(.is-mac) {
     .dropdown-list.ffdropdown {
-      > .trigger {
-        .icon {
-          top: 6px !important;
-        }
-      }
-
       &.is-ontop {
         > .trigger {
           .icon {
-            top: 14px !important;
+            top: 6px !important;
           }
         }
       }
@@ -109,16 +135,27 @@
 // Safari
 .is-safari {
   .dropdown-list.ffdropdown {
+    width: 288px;
+
     > .trigger {
       .icon {
-        top: 8px !important;
+        top: 8.5px !important;
       }
     }
 
     &.is-ontop {
       > .trigger {
         .icon {
-          top: 10px !important;
+          top: 12px !important;
+        }
+      }
+    }
+
+    &.dropdown-short {
+      > .trigger {
+        .icon {
+          top: 6px !important;
+          left: -36px;
         }
       }
     }

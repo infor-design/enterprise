@@ -126,4 +126,35 @@ dateUtils.isDaylightSavingTime = function (date) {
   return Math.max(jan, jul) !== date.getTimezoneOffset();
 };
 
+/**
+ * Check if date is within range
+ * @param {date} startDate start of date range
+ * @param {date} endDate end of date range
+ * @param {date} targetDate target date
+ * @returns {boolean} true if targetDate is within range
+ */
+dateUtils.isWithinRange = function (startDate, endDate, targetDate) {
+  return startDate <= targetDate && targetDate <= endDate;
+};
+
+/**
+ * Convert 12/24 hour format to 24 hour format based on a day period
+ * @param {number} hours in 12 or 24 hour format
+ * @param {number} dayPeriodIndex 0 or 1 if time format with a day period
+ * @returns {number} hours in 24 hour format
+ */
+dateUtils.hoursTo24 = function (hours, dayPeriodIndex) {
+  const hasDayPeriod = dayPeriodIndex >= 0;
+
+  if (hours === 12 && hasDayPeriod) {
+    if (dayPeriodIndex === 0) {
+      return 0;
+    }
+
+    return hours;
+  }
+
+  return hours + (!hasDayPeriod ? 0 : dayPeriodIndex) * 12;
+};
+
 export { dateUtils }; //eslint-disable-line

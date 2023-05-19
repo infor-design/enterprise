@@ -12,7 +12,7 @@
           <button type="button" class="btn-actions" id="btn-1">
             <span class="audible">Actions</span>
             <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-              <use href="#icon-more"></use>
+              <use href="#icon-vertical-ellipsis"></use>
             </svg>
           </button>
           <ul class="popupmenu actions top">
@@ -29,7 +29,7 @@
 
 <script>
   $('body').one('initialized', function () {
-    Locale.set('en-US').done(function () {
+    Soho.Locale.set('en-US').done(function () {
       var grid,
         columns = [],
         data = [];
@@ -67,13 +67,13 @@
       data.push({ id: 30, productId: 2642230, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: '123.99', status: 'OK', orderDate: null, action: 'On Hold'});
 
       //Define Columns for the Grid.
-      columns.push({ id: 'productId', name: 'Product Id', field: 'productId',formatter: Formatters.Readonly});
-      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', ormatter: Formatters.Hyperlink});
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId',formatter: Soho.Formatters.Readonly});
+      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Soho.Formatters.Hyperlink});
       columns.push({ id: 'activity', name: 'Activity', field: 'activity'});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
-      columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal});
-      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
-      columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Formatters.Text});
+      columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Soho.Formatters.Decimal});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy'});
+      columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Soho.Formatters.Text});
       columns.push({ id: 'action', name: 'Action Item', field: 'action'});
 
       //Init and get the api for the grid

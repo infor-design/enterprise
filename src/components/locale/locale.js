@@ -107,13 +107,12 @@ const Locale = {  // eslint-disable-line
     if (this.isRTL()) {
       html.attr('dir', 'rtl');
     } else {
-      html.removeAttr('dir');
+      html.attr('dir', 'ltr');
     }
 
     // ICONS: Right to Left Direction
-    if (this.isRTL()) {
-      Locale.flipIconsHorizontally();
-    }
+    Locale.flipIconsHorizontally(this.isRTL());
+
     $('body').removeClass('busy-loading-locale');
   },
 
@@ -491,7 +490,7 @@ const Locale = {  // eslint-disable-line
   setCurrentLocale(name, data) {
     const lang = this.remapLanguage(name.substr(0, 2));
     this.currentLocale.name = name;
-    const selectedLang = (this.languages[lang] !== undefined && this.languages[name] !== undefined) && 
+    const selectedLang = (this.languages[lang] !== undefined && this.languages[name] !== undefined) &&
       (this.languages[lang].nativeName !== this.languages[name].nativeName) ? name : lang;
 
     if (data) {
@@ -592,12 +591,13 @@ const Locale = {  // eslint-disable-line
     let ret = '';
     const cal = (localeData.calendars ? localeData.calendars[0] : null);
 
-    if (options.pattern) {
-      pattern = options.pattern;
+    if (options.date && cal) {
+      pattern = cal.dateFormat[options.date];
     }
 
-    if (options.date) {
-      pattern = cal.dateFormat[options.date];
+    // If pattern is defined in options it will override date format from locale
+    if (options.pattern) {
+      pattern = options.pattern;
     }
 
     if (typeof options === 'string' && options !== '') {
@@ -801,6 +801,7 @@ const Locale = {  // eslint-disable-line
     const currentLocale = Locale.currentLocale.name || 'en-US';
 
     if (env.browser.name === 'ie' && env.browser.version === '11') {
+      // eslint-disable-next-line prefer-regex-literals
       return (date).toTimeString().match(new RegExp('[A-Z](?!.*[\(])', 'g')).join('');
     }
 
@@ -830,6 +831,7 @@ const Locale = {  // eslint-disable-line
   */
   dateToTimeZone(date, timeZone, timeZoneName) {
     if (env.browser.name === 'ie' && env.browser.version === '11') {
+      // eslint-disable-next-line prefer-regex-literals
       return `${(date).toLocaleString(Locale.currentLocale.name)} ${(date).toTimeString().match(new RegExp('[A-Z](?!.*[\(])', 'g')).join('')}`;
     }
 
@@ -1013,7 +1015,7 @@ const Locale = {  // eslint-disable-line
     dateString = dateString.replace(' de ', ' ');
 
     // Fix ah
-    dateFormat = dateFormat.replace('/ah/', '/a/h/');
+    dateFormat = dateFormat.replace('ah', 'a/h');
     dateString = dateString.replace('午', '午/');
 
     // Remove commas
@@ -1664,6 +1666,7 @@ const Locale = {  // eslint-disable-line
     const percentSign = options && options.percentSign ? options.percentSign : numSettings ? numSettings.percentSign : '%';
     const currencySign = options && options.currencySign ? options.currencySign : localeData.currencySign || '$';
 
+    // eslint-disable-next-line prefer-regex-literals
     const exp = (group === ' ' || group === '') ? new RegExp(/\s/g) : new RegExp(`\\${group}`, 'g');
     numString = numString.replace(exp, '');
     numString = numString.replace(decimal, '.');
@@ -2031,9 +2034,10 @@ const Locale = {  // eslint-disable-line
    * Modifies a specified list of icons by flipping them horizontally to make them
    * compatible for RTL-based locales.
    * @private
+   * @param {boolean} flipRTL Check to see if icons should be flipped for RTL or LTR
    * @returns {void}
    */
-  flipIconsHorizontally() {
+  flipIconsHorizontally(flipRTL = true) {
     const icons = [
       'attach',
       'bottom-aligned',
@@ -2152,8 +2156,10 @@ const Locale = {  // eslint-disable-line
     $('svg').each(function () {
       const iconName = $(this).getIconName();
 
-      if (iconName && $.inArray(iconName, icons) !== -1 && $(this).closest('.monthview').length === 0) {
+      if (flipRTL && (iconName && $.inArray(iconName, icons) !== -1 && $(this).closest('.monthview').length === 0)) {
         $(this).addClass('icon-rtl-rotate');
+      } else {
+        $(this).removeClass('icon-rtl-rotate');
       }
     });
   }

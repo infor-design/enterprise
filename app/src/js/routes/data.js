@@ -6,11 +6,14 @@
 // Sample Json call that returns States
 // Example Call: http://localhost:4000/api/states?term=al
 
-const path = require('path');
-const getJSONFile = require('../get-json-file');
-const utils = require('../utils');
-const express = require('express');
-const generalRoute = require('./general');
+import * as path from 'path';
+import getJSONFile from '../get-json-file.js';
+import utils from '../utils.js';
+import express from 'express';
+import { fileURLToPath, pathToFileURL } from 'url';
+import generalRoute from './general.js';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const router = express.Router();
 
@@ -34,14 +37,14 @@ function getDataFilePath(filename) {
 }
 
 // Calls out to an external piece of middleware that will pass JS data.
-function handleJSFile(jsFilename, req, res, next) {
+async function handleJSFile(jsFilename, req, res, next) {
   res.set({
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
   });
 
-  const middleware = require(jsFilename);
-  return middleware(req, res, next);
+  const middleware = await import(pathToFileURL(jsFilename).toString());
+  return middleware.default(req, res, next);
 }
 
 // ========================================
@@ -98,4 +101,4 @@ router.get('/:fileName', (req, res, next) => {
   next(`Invalid/Missing data file "${filename}".`);
 });
 
-module.exports = router;
+export default router;

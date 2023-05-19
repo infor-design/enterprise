@@ -47,6 +47,7 @@ const COMPONENT_NAME_DEFAULTS = {
   legend: [],
   hideDays: false, // TODO
   showMonthYearPicker: true,
+  showWeekNumber: false,
   yearsAhead: 3,
   yearsBack: 2,
   range: {
@@ -129,6 +130,7 @@ const COMPONENT_NAME_DEFAULTS = {
  * @param {boolean} [settings.range.includeDisabled=false] Include disable dates in range of dates.
  * @param {boolean} [settings.hideDays=false] If true the days portion of the calendar will be hidden. Usefull for Month/Year only formats.
  * @param {boolean} [settings.showMonthYearPicker=true] If false the year and month switcher will be disabled.
+ * @param {boolean} [settings.showWeekNumber=false] If set to true, the week number will be displayed on monthview.
  * @param {number} [settings.yearsAhead=3] The number of years ahead to show in the month/year picker should total 9 with yearsBack.
  * @param {number} [settings.yearsBack=2] The number of years back to show in the month/year picker should total 9 with yearsAhead.
  * @param {array} [settings.legend]  Legend Build up
@@ -305,6 +307,21 @@ MonthView.prototype = {
 
     const useElement = this.settings.inPage && this.settings.inPageToggleable && this.table !== '' ? inPageCalendarPane : this.table;
 
+    if (this.settings.showWeekNumber) {
+      this.weekNumberTable = $('<table class="monthview-week-table" role="application"></table>');
+      this.weekHeader = $('' +
+        `<thead>
+          <tr>
+            <th><span>${Locale.translate('WeekNumber')}</span></th>
+          </tr>
+        </thead>`).appendTo(this.weekNumberTable);
+      this.weekNumber = $('<tbody></tbody>').appendTo(this.weekNumberTable);
+      this.getWeekNumbers(this.settings.month, this.settings.year);
+      this.monthAndWeekContainer = $('<div class="monthview-week-container"></div>');
+      this.monthAndWeekContainer.append(this.weekNumberTable);
+      this.monthAndWeekContainer.append(useElement);
+    }
+
     // Reconfigure the header
     this.header = $('<div class="monthview-header"><div class="calendar-toolbar"></div></div>');
     if (this.settings.headerStyle === 'full') {
@@ -314,7 +331,11 @@ MonthView.prototype = {
     }
 
     this.showMonth(this.settings.month, this.settings.year);
-    this.calendar = this.element.addClass('monthview').append(this.header, this.monthYearPane, useElement);
+    this.calendar = this.element.addClass('monthview').append(this.header, this.monthYearPane, this.settings.showWeekNumber ? this.monthAndWeekContainer : useElement);
+
+    if (this.settings.showWeekNumber) {
+      this.calendar.addClass('has-monthview-week-table');
+    }
 
     if (!(this.settings.isPopup || this.settings.inPage)) {
       this.element.addClass('is-fullsize');
@@ -383,7 +404,6 @@ MonthView.prototype = {
     }
 
     this.setCurrentCalendar();
-
     this.table = $(`<table class="monthview-table" aria-label="${Locale.translate('Calendar', { locale: this.locale.name })}" role="application"></table>`);
 
     this.dayNames = $('' +
@@ -565,6 +585,40 @@ MonthView.prototype = {
   },
 
   /**
+   * Gets the total weeks of the desired month
+   * @param {number} monthNumber The zero based month to display
+   * @param {number} year The year to display
+   * @returns {void}
+   */
+  getWeekCount(monthNumber, year) {
+    const firstOfMonth = new Date(year, monthNumber - 1, 1);
+    const lastOfMonth = new Date(year, monthNumber, 0);
+
+    const weeks = firstOfMonth.getDay() + lastOfMonth.getDate();
+
+    return Math.ceil(weeks / 7);
+  },
+
+  /**
+   * Gets the total number of weeks passed up to the desired month
+   * @param {number} monthNumber The zero based month to display
+   * @param {number} year The year to display
+   * @returns {void}
+   */
+  getWeekNumbers(monthNumber, year) {
+    this.weekNumber.empty();
+    let weekNumbersHTML = '';
+    const currentWeekCount = this.getWeekCount(monthNumber + 1, year);
+    const now = new Date(year, monthNumber, 1);
+    const startMonth = new Date(now.getFullYear(), 0, 1);
+    const week = Math.ceil((((now.getTime() - startMonth.getTime()) / 86400000) + startMonth.getDay() + 1) / 7);
+    for (let i = 0; i < currentWeekCount; i++) {
+      weekNumbersHTML += `<tr><td><span>${week + i}</span></td></tr>`;
+    }
+    this.weekNumber.append(weekNumbersHTML);
+  },
+
+  /**
    * Update the calendar to show the given month and year
    * @param {number} month The zero based month to display
    * @param {number} year The year to display
@@ -648,6 +702,10 @@ MonthView.prototype = {
 
     this.currentMonth = month;
     this.currentYear = year;
+
+    if (this.settings.showWeekNumber) {
+      this.getWeekNumbers(this.currentMonth, this.currentYear);
+    }
 
     // Set the Days of the week
     let firstDayofWeek = (this.currentCalendar.firstDayofWeek || 0);
@@ -1035,8 +1093,17 @@ MonthView.prototype = {
 
       self.setDisabled(th, rangeCurrentYear, rangeCurrentMonth, dayCnt);
       self.setLegendColor(th, rangeCurrentYear, rangeCurrentMonth, dayCnt);
-      self.setMonthLabel(th, rangeCurrentYear, rangeCurrentMonth, dayCnt,
-        monthLabelsToSet, s.displayRange.months?.showAbbr);
+      self.setMonthLabel(
+        th,
+        rangeCurrentYear,
+
+        rangeCurrentMonth,
+
+        dayCnt,
+        monthLabelsToSet,
+
+        s.displayRange.months?.showAbbr
+      );
       th.attr('role', 'link');
       dayCnt++;
     });
@@ -1684,7 +1751,7 @@ MonthView.prototype = {
     }
     const e = evt.touches ? evt.touches[0] : evt;
     const r = el.getBoundingClientRect();
-    const d = Math.sqrt(Math.pow(r.width, 2) + Math.pow(r.height, 2)) * 2;
+    const d = Math.sqrt(r.width ** 2 + r.height ** 2) * 2;
     const x = e.clientX ? (e.clientX - r.left) : (el.offsetWidth / 2);
     const y = e.clientY ? (e.clientY - r.top) : (el.offsetHeight / 2);
     const orig = el.style.cssText;
@@ -2781,11 +2848,20 @@ MonthView.prototype = {
 
   /**
    * Handle updated settings and values.
+   * @param {object} settings The new settings object to use.
    * @returns {object} [description]
    */
-  updated() {
+  updated(settings = {}) {
+    if (!settings) {
+      settings = {};
+    }
+
+    if (settings) {
+      this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
+    }
+
     return this
-      .teardown()
+      .destroy()
       .init();
   },
 
@@ -2795,9 +2871,9 @@ MonthView.prototype = {
    * @private
    */
   teardown() {
-    this.header.off();
-    this.days.off();
-    this.element.off();
+    this.header?.off();
+    this.days?.off();
+    this.element?.off();
     if (this.monthYearPane) {
       this.monthYearPane.off();
       this.monthYearPane = null;

@@ -104,10 +104,10 @@
     data.push({ id: 6, action: 'Perform Paste Action', hotkey: 'Ctrl+Alt+V'});
 
     //Define Columns for the Grid.
-    columns.push({ id: 'selectionCheckbox', name: '', sortable: false, resizable: false, width: 50, formatter: Formatters.SelectionCheckbox, align: 'center'});
-    columns.push({ id: 'action', name: 'Action', field: 'action', editor: Editors.Input});
-    columns.push({ id: 'hotkey', name: 'Hotkey', field: 'hotkey', editor: Editors.Input, width: 130, align: 'right' });
-    columns.push({ id: 'restore', name: 'Restore', field: 'restore', sortable: false, resizable: false, width: 80, formatter: Formatters.Button, icon: 'reset', contentVisible: function (row, cell, value, col, item) { return (item.hotkey);} });
+    columns.push({ id: 'selectionCheckbox', name: '', sortable: false, resizable: false, width: 50, formatter: Soho.Formatters.SelectionCheckbox, align: 'center'});
+    columns.push({ id: 'action', name: 'Action', field: 'action', editor: Soho.Editors.Input});
+    columns.push({ id: 'hotkey', name: 'Hotkey', field: 'hotkey', editor: Soho.Editors.Input, width: 130, align: 'right' });
+    columns.push({ id: 'restore', name: 'Restore', field: 'restore', sortable: false, resizable: false, width: 80, formatter: Soho.Formatters.Button, icon: 'reset', contentVisible: function (row, cell, value, col, item) { return (item.hotkey);} });
 
     //Init and get the api for the grid
     grid = $('#datagrid-hotkeys-infor-lawson').datagrid({

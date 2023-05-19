@@ -1,6 +1,6 @@
-const extend = require('extend');
-const utils = require('./utils');
-const customIconsRoute = require('./routes/custom-icons');
+import extend from 'extend';
+import utils from './utils.js';
+import customIconsRoute from './routes/custom-icons.js';
 
 // Object with settings that gets stringify
 const SohoConfig = {};
@@ -26,7 +26,7 @@ class CustomOptions {
 }
 
 // Augments the current set of options for a specific route's needs
-module.exports = function customRouteOptions(req, res) {
+export default function customRouteOptions(req, res) {
   const customOpts = new CustomOptions(req, res);
   const url = req.originalUrl;
 
@@ -124,4 +124,4 @@ module.exports = function customRouteOptions(req, res) {
   }
 
   return extend({}, res.opts, customOpts.getOptions());
-};
+}

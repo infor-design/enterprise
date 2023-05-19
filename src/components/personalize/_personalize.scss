@@ -13,7 +13,7 @@
 
 .is-personalizable .personalize-header,
 .is-personalizable.tab-container {
-  background-color: $header-bg-color;
+  background-color: $header-default-bg-color;
 
   ::selection {
     background: $ids-color-palette-azure-90;
@@ -21,28 +21,49 @@
   }
 }
 
-html[class*='classic-'] .is-personalizable > .tab-list-container .tab.is-disabled a,
-html[class*='classic-'] .is-personalizable.tab-container > .tab-list-container .tab.is-disabled a {
-  color: rgba(255, 255, 255, 0.5);
+.is-personalizable.header {
+  background-color: $header-default-bg-color;
+}
+
+.is-personalizable.has-more-button.tab-container.horizontal {
+  &::after {
+    background-image:
+      linear-gradient(to left,
+        rgba($header-bg-color, 1),
+        rgba($header-bg-color, 0));
+    height: 39px;
+  }
+}
+
+.is-personalizable .personalize-header .instance-count {
+  .title,
+  .count {
+    color: $count-font-color;
+  }
+
+  svg.icon {
+    background-color: $header-bg-color;
+  }
 }
 
 .is-personalizable .personalize-subheader,
 .is-personalizable.tab-container.module-tabs {
-  background-color: $ids-color-palette-azure-80;
+  background-color: $subhead-bg-color;
 }
 
-.is-personalizable .personalize-text {
-  color: $ids-color-palette-slate-100 !important;
+.is-personalizable .personalize-text,
+.is-personalizable.hyperlink:not(.personalize-actionable),
+.is-personalizable.hyperlink:not(.personalize-actionable):not([disabled]):not(.personalize-actionable-disabled):hover {
+  color: $ids-color-palette-white;
+}
+
+.is-personalizable .label+.personalize-text.data {
+  color: $ids-color-palette-white;
 }
 
 .is-personalizable .personalize-actionable,
 .is-personalizable .personalize-actionable svg {
-  color: $font-color;
-}
-
-.is-personalizable .personalize-actionable:hover:not([disabled]),
-.is-personalizable .personalize-actionable:hover:not([disabled]) svg {
-  color: rgba(255, 255, 255, 1);
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .is-personalizable .personalize-actionable.is-focused:not(.hide-focus),
@@ -73,17 +94,6 @@ html[class*='classic-'] .is-personalizable.tab-container > .tab-list-container .
   background-color: rgba(255, 255, 255, 0.8);
 }
 
-.is-personalizable .personalize-chart-targeted .chart-percent-text,
-.is-personalizable .personalize-chart-targeted .label {
-  color: $font-color !important;
-}
-
-.is-personalizable .info-message,
-.is-personalizable .info-message .icon,
-.is-personalizable .info-message p {
-  color: $font-color !important;
-}
-
 .is-personalizable .personalize-actionable-disabled,
 .is-personalizable .personalize-actionable-disabled:hover {
   cursor: default;
@@ -105,4 +115,29 @@ html[class*='classic-'] .is-personalizable.tab-container > .tab-list-container .
       padding-bottom: 5px !important;
     }
   }
+}
+
+// Classic themes default color personalization
+.is-personalizable {
+  .personalize-header {
+    .personalize-chart-targeted .label,
+    .info-message .icon,
+    .info-message p,
+    .btn-icon .icon {
+      color: $ids-color-palette-white !important;
+    }
+  }
+
+  & .personalize-actionable:not(:hover) {
+    opacity: 0.8;
+  }
+
+  & .tab-container.horizontal > .tab-list-container .tab:not(.is-selected):not(.is-disabled):hover {
+    border-bottom-color: $ids-color-palette-white;
+  }
+}
+
+.is-personalizable.tab-container.horizontal > .tab-list-container .tab:not(.is-selected):not(.is-disabled):hover,
+.is-personalizable.tab-container.header-tabs > .tab-list-container .tab:not(.is-selected):not(.is-disabled):hover {
+  border-bottom-color: $ids-color-palette-white;
 }

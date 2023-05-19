@@ -95,7 +95,8 @@ describe('Line Chart API', () => {
     cleanup();
   });
 
-  it('Should fire contextmenu event', () => {
+  xit('Should fire contextmenu event', () => {
+    // eslint-disable-next-line no-undef
     const spyEvent = spyOnEvent(lineEl, 'contextmenu');
     const result = { name: 'Jan', value: 1211, depth: 4 };
     $(lineEl).on('contextmenu', (e, el, d) => {

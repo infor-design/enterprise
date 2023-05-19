@@ -48,6 +48,36 @@ button {
       }
     }
   }
+
+  // Styles for svg hamburger menu
+  &.application-menu-trigger {
+    svg.icon {
+      height: 18px;
+      top: 1px;
+      width: 18px;
+
+      + .notification-badge-container {
+        .notification-dot.notification-dot-upper-left {
+          left: -22px;
+          top: 5px;
+        }
+
+        .notification-dot.notification-dot-upper-right {
+          right: 5px;
+          top: 5px;
+        }
+
+        .notification-dot.notification-dot-lower-left {
+          left: -22px;
+          top: 13px;
+        }
+
+        .notification-dot.notification-dot-lower-right {
+          top: 13px;
+        }
+      }
+    }
+  }
 }
 
 .btn-primary,
@@ -584,8 +614,8 @@ a.btn-close {
     }
   }
 
-  &[disabled],
-  &[disabled]:hover {
+  &[disabled]:not(.btn-icon),
+  &[disabled]:not(.btn-icon):hover {
     color: $button-color-tertiary-disabled-font;
     cursor: default;
 
@@ -612,6 +642,20 @@ a.btn-close {
 
   .ripple-effect {
     background-color: $tertiary-btn-ripple-color;
+  }
+}
+
+.header .btn-tertiary:hover:not(:disabled):not(.close):not(.personalize-actionable) svg.icon {
+  color: #fff;
+}
+
+.btn-icon {
+  &[disabled] {
+    background-color: transparent;
+
+    .icon {
+      color: $button-icon-disabled-color;
+    }
   }
 }
 
@@ -686,11 +730,11 @@ a.btn-close {
     }
 
     &:hover:not(:disabled) {
-      color: $button-color-tertiary-destructive-hover-font-new;
-      background-color: $button-color-tertiary-destructive-hover-background-new;
+      color: $button-color-tertiary-destructive-hover-font-new !important;
+      background-color: $button-color-tertiary-destructive-hover-background-new !important;
 
       svg.icon {
-        color: $button-color-tertiary-destructive-hover-font-new;
+        color: $button-color-tertiary-destructive-hover-font-new !important;
       }
     }
 
@@ -720,13 +764,13 @@ a.btn-close {
 .btn-icon,
 .btn-actions,
 .btn-close {
-  border-radius: 18px;
-  height: 36px;
+  border-radius: 8px;
+  height: 34px;
   margin-top: 0;
-  min-height: 36px;
-  min-width: 36px;
+  min-height: 34px;
+  min-width: 34px;
   padding: 0;
-  width: 36px;
+  width: 34px;
 
   // Icon Buttons only have one icon (never two) and no text visible, so disable padding
   > .icon {
@@ -857,11 +901,15 @@ a.btn-close {
   }
 
   .btn,
-  .btn-primary,
-  .btn-secondary,
-  .btn-tertiary,
   .btn-menu {
     padding: 0 5px;
+  }
+
+  .btn-primary,
+  .btn-secondary,
+  .btn-tertiary {
+    padding: 0 9px;
+    font-size: 12px;
   }
 
   .btn-icon,
@@ -1091,17 +1139,17 @@ html[lang^='fr-'] {
 }
 
 .btn-link {
-  color: $btn-hyperlink-color;
+  color: $button-hyperlink-color;
 
   .icon {
-    color: $btn-hyperlink-color;
+    color: $button-hyperlink-color;
   }
 
   &:hover {
-    color: $btn-hyperlink-hover-color;
+    color: $button-hyperlink-hover-color;
 
     .icon {
-      color: $btn-hyperlink-hover-color;
+      color: $button-hyperlink-hover-color;
     }
   }
 }

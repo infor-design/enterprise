@@ -3,12 +3,45 @@
 
 .header {
   h1 {
-    font-size: $ids-size-font-md;
+    font-size: $ids-size-font-px-20;
   }
 
   .page-title {
     font-size: $ids-size-font-md;
     margin-top: 0;
+  }
+
+  .toolbar {
+    .application-menu-trigger {
+      svg.icon {
+        width: 18px;
+        height: 18px;
+      }
+    }
+
+    .page-title, .section-title {
+      font-size: 20px;
+    }
+  }
+
+  .toolbar {
+    .buttonset {
+      .searchfield-wrapper.non-collapsible.toolbar-searchfield-wrapper.has-categories.has-go-button.has-close-icon-button.is-open {
+        button.searchfield-category-button {
+          border-right: transparent;
+        }
+
+        button.btn-icon.close {
+          svg.close.icon {
+            top: 10px !important;
+          }
+        }
+      }
+
+      .toolbar-searchfield-wrapper .btn-icon.close .icon.close {
+        top: 9px;
+      }
+    }
   }
 
   .flex-toolbar {
@@ -37,12 +70,16 @@
         }
       }
 
-      .toolbar-searchfield-wrapper.has-text:not(.active) {
+      .toolbar-searchfield-wrapper.has-text:not(.active):not(.non-collapsible) {
         width: 34px;
 
         &.non-collapsible {
           width: 100%;
         }
+      }
+
+      .toolbar-searchfield-wrapper.non-collapsible.has-close-icon-button .btn-icon.close .icon.close {
+        top: 8px;
       }
     }
 
@@ -61,7 +98,8 @@
 
             + .btn-icon.close {
               svg {
-                color: $header-flex-toolbar-close-icon-color;
+                top: 0 !important;
+                color: $header-flex-toolbar-close-icon-color !important;
               }
 
               &:hover svg {
@@ -71,11 +109,11 @@
           }
 
           .btn.searchfield-category-button {
-            background-color: $subheader-searchfield-context-bg;
-            color: $subheader-searchfield-category-button-font-color;
+            background-color: $subheader-searchfield-context-bg !important;
+            color: $subheader-searchfield-category-button-font-color !important;
 
             svg.icon {
-              color: $subheader-searchfield-category-button-font-color;
+              color: $subheader-searchfield-category-button-font-color !important;
 
               &.icon-dropdown {
                 margin-left: 1px;
@@ -93,6 +131,54 @@
       }
     }
   }
+
+  .toolbar [class^='btn'].application-menu-trigger {
+    top: 3px;
+  }
+
+  .toolbar .application-menu-trigger svg.icon {
+    top: 0;
+  }
+
+  // Reset search icon hover state
+  .toolbar:not(.standalone) {
+    .searchfield-wrapper.toolbar-searchfield-wrapper:not(.has-categories):not(.is-open) {
+      height: unset;
+      margin: 3px 5px 3px 0;
+
+      &:hover {
+        border-radius: unset;
+        background-color: transparent;
+      }
+
+      .icon:not(.icon-dropdown) {
+        top: -2px;
+        right: 8px;
+        left: 8px;
+      }
+
+      .searchfield {
+        padding-bottom: 7px;
+      }
+    }
+  }
+
+  .flex-toolbar .toolbar-section.search {
+    .searchfield-wrapper.toolbar-searchfield-wrapper:not(.is-open):not(.non-collapsible) {
+      height: unset;
+      margin-top: unset;
+      margin-bottom: unset;
+
+      &:hover {
+        border-radius: unset;
+        background-color: transparent;
+      }
+
+      .searchfield {
+        padding-bottom: 7px;
+      }
+    }
+  }
 }
 
 .subheader {
@@ -105,13 +191,17 @@
     .searchfield-wrapper.context.non-collapsible {
       &.has-go-button {
         .btn-icon.close {
-          right: 95px;
+          right: 100px;
           top: 8px;
           width: 34px;
 
           &:hover svg {
             color: $header-flex-toolbar-close-icon-color-hover;
           }
+        }
+
+        &.show-category .btn-icon.close {
+          right: 50px;
         }
       }
     }
@@ -151,6 +241,20 @@
         .icon {
           color: $subheader-input-text-color-focus;
         }
+      }
+    }
+  }
+}
+
+.header,
+.subheader,
+.personalize-subheader {
+  .toolbar,
+  .flex-toolbar {
+    [class^='btn'] {
+      &:not(.close):not(.collapse-button):not([disabled]):hover {
+        color: $ids-color-palette-white !important;
+        background-color: $header-toolbar-button-hover-color !important;
       }
     }
   }

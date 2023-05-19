@@ -18,6 +18,15 @@ $subheader-height: 60px;
     color: $inverse-color;
   }
 
+  .toolbar [class^='btn'] {
+    &.is-open {
+      .icon {
+        color: $ids-color-palette-white;
+        opacity: 1;
+      }
+    }
+  }
+
   .searchfield {
     background-color: transparent;
     border: 1px solid transparent;
@@ -63,6 +72,10 @@ $subheader-height: 60px;
     .icon.icon-dropdown {
       margin-left: 5px;
     }
+
+    &.btn-menu .icon.icon-dropdown {
+      margin-top: 1px;
+    }
   }
 
   .btn-primary {
@@ -99,7 +112,7 @@ $subheader-height: 60px;
 
   .section-title {
     color: $header-text-color;
-    font-size: $ids-size-font-base;
+    font-size: $ids-size-font-base !important;
     margin-top: 2px;
     padding: 0;
     text-transform: capitalize;
@@ -161,7 +174,8 @@ $subheader-height: 60px;
         top: 2px;
       }
 
-      h1 {
+      h1,
+      h2 {
         display: inline-block;
         max-width: 100%;
         overflow: hidden;
@@ -176,7 +190,13 @@ $subheader-height: 60px;
         }
       }
 
-      [class^='btn'] + h1 {
+      h2 {
+        font-size: 1.8rem;
+        margin-inline-start: 8px;
+      }
+
+      [class^='btn'] + h1,
+      [class^='btn'] + h2 {
         margin: 3px;
         max-width: calc(100% - 40px);
       }
@@ -187,6 +207,7 @@ $subheader-height: 60px;
 
       .btn-icon {
         border-radius: 8px;
+        top: 3px;
       }
     }
 
@@ -218,26 +239,100 @@ $subheader-height: 60px;
       }
     }
 
-    .buttonset .toolbar-searchfield-wrapper {
-      &.is-hovered {
-        .btn-icon {
-          &.close {
-            .icon.close {
-              color: $searchfield-header-hover-icon-color !important;
-            }
+    .application-menu-trigger,
+    .list-detail-back-button,
+    .back-button,
+    .go-back {
+      svg.icon {
+        height: 18px;
+        top: 1px;
+        width: 18px;
+      }
+    }
+
+    .buttonset {
+      .searchfield-wrapper.non-collapsible.toolbar-searchfield-wrapper.has-categories.has-go-button.has-close-icon-button.is-open {
+        button.searchfield-category-button {
+          border: 1px solid $searchfield-toolbar-border-color;
+          border-right: transparent;
+          border-radius: 8px 0 0 8px;
+          background-color: $ids-color-palette-white;
+          color: $searchfield-header-buttons;
+
+          svg.icon {
+            color: $searchfield-header-buttons !important;
+          }
+
+          svg.icon-dropdown {
+            position: relative;
+            left: -3px;
+            top: unset;
+          }
+
+          &:hover {
+            background-color: $ids-color-palette-white !important;
+          }
+        }
+
+        button.btn-icon.close {
+          svg.close.icon {
+            top: 8px !important;
+          }
+        }
+
+        button.go-button {
+          background-color: $ids-color-palette-white;
+          color: $searchfield-header-buttons;
+
+          &:hover {
+            background-color: $ids-color-palette-white !important;
+          }
+
+          &:focus {
+            box-shadow: none !important;
+          }
+
+          &:active {
+            border-left: none;
+          }
+
+          &::after {
+            border-right: none;
+          }
+        }
+
+        input.searchfield {
+          border: 1px solid $searchfield-toolbar-border-color;
+        }
+
+        &.is-hovered {
+          button.searchfield-category-button {
+            border: 1px solid $searchfield-header-hover-icon-color;
+            border-right: transparent;
+          }
+
+          input.searchfield {
+            border: 1px solid $searchfield-header-hover-icon-color !important;
+          }
+
+          button.go-button {
+            border: 1px solid $searchfield-header-hover-icon-color;
+            border-left: transparent;
           }
         }
       }
+    }
 
+    .buttonset .toolbar-searchfield-wrapper {
       .btn-icon {
         &.close {
           top: 50%;
           transform: translateY(-50%);
 
           .icon.close {
-            color: $searchfield-header-icon-color !important;
+            color: $searchfield-header-icon-color;
             opacity: unset;
-            top: 0;
+            top: 7px;
           }
         }
       }
@@ -268,8 +363,7 @@ $subheader-height: 60px;
       .searchfield-category-button {
         border: 1px solid $header-searchfield-input-border-color;
         border-right: 0;
-        border-top-left-radius: 2px;
-        border-bottom-left-radius: 2px;
+        border-radius: 0;
 
         &:focus:not(.hide-focus),
         &.is-open {
@@ -296,6 +390,14 @@ $subheader-height: 60px;
       &.is-open {
         .searchfield {
           border-color: $header-searchfield-input-border-color;
+        }
+      }
+
+      &.non-collapsible.has-close-icon-button {
+        .btn-icon.close {
+          .icon.close {
+            top: 7px;
+          }
         }
       }
     }
@@ -327,8 +429,11 @@ $subheader-height: 60px;
     z-index: 9000;
   }
 
-  &.subheader {
-    background-color: $subhead-bg-color;
+  h1,
+  h2,
+  h3,
+  .toolbar-section.title {
+    color: $header-text-color;
   }
 
   .go-button {
@@ -359,7 +464,7 @@ $subheader-height: 60px;
     }
 
     svg.icon:not(.close) {
-      color: $header-tab-normal-color;
+      color: $header-toolbar-searchfield-icon-color;
       opacity: 1;
     }
   }
@@ -368,7 +473,7 @@ $subheader-height: 60px;
 .header,
 .masthead {
   &.is-personalizable {
-    .toolbar-searchfield-wrapper:not(.non-collapsible):not(.is-open) {
+    .toolbar-searchfield-wrapper:not(.is-open) {
       .icon:not(.close) {
         color: $header-toolbar-searchfield-icon-color;
         opacity: 0.8;
@@ -387,7 +492,6 @@ $subheader-height: 60px;
       }
 
       .has-collapse-button .collapse-button {
-        border-color: rgba($searchfield-header-border-color, 0.7);
         right: 1px;
       }
     }
@@ -413,6 +517,11 @@ $subheader-height: 60px;
     }
   }
 
+  .toolbar {
+    height: $header-height;
+    padding: 0 1rem;
+  }
+
   .go-button {
     background-color: $header-primary-btn-background-color;
     border-color: $header-primary-btn-background-color;
@@ -424,10 +533,28 @@ $subheader-height: 60px;
     &:focus:active {
       background-color: $header-primary-btn-background-hover-color;
       border-color: $header-primary-btn-background-hover-color;
+      color: $searchfield-go-text-color;
     }
 
     &:not(.hide-focus) {
       box-shadow: 0 0 0 1px $body-color-primary-background, 0 0 0 2px $button-color-secondary-focus-border, $focus-box-shadow;
+    }
+  }
+
+  .toolbar [class^='btn'] {
+    &:hover {
+      background-color: $header-default-bg-hover-color !important;
+
+      .icon {
+        color: $ids-color-palette-white;
+      }
+    }
+
+    &.is-open {
+      .icon {
+        color: $ids-color-palette-white;
+        opacity: 1;
+      }
     }
   }
 
@@ -472,7 +599,8 @@ $subheader-height: 60px;
 }
 
 .header,
-.subheader {
+.subheader,
+.personalize-subheader {
   .toolbar,
   .flex-toolbar {
     .buttonset {
@@ -481,8 +609,11 @@ $subheader-height: 60px;
         padding: 0;
       }
 
-      [class^='btn']:not(.searchfield-category-button) {
+      [class^='btn']:not(.searchfield-category-button):not(.btn-actions):not(.close) {
         margin-right: 3px;
+        min-width: 32px;
+        text-overflow: ellipsis;
+        flex-shrink: 1;
       }
     }
 
@@ -491,18 +622,26 @@ $subheader-height: 60px;
       background-color: transparent;
       border: 1px solid transparent;
       border-radius: 8px;
-      color: $header-button-color;
 
-      &:hover {
-        background-color: $header-toolbar-button-hover-color;
+      &:not(.close) {
+        color: $header-button-color;
       }
 
-      .icon {
+      &:not([disabled]) {
+        cursor: pointer;
+      }
+
+      &:not(.close) svg.icon,
+      &:hover:not(:disabled):not(.close):not(.btn-filter):not(.personalize-actionable) svg.icon {
         color: $header-button-color;
       }
 
       &.application-menu-trigger {
         top: 0;
+
+        &:not(:focus) .icon {
+          color: $header-button-color;
+        }
       }
 
       &.is-open .icon,
@@ -532,8 +671,16 @@ $subheader-height: 60px;
       }
 
       &:focus:not(.hide-focus) {
-        box-shadow: 0 0 0 2px transparent, 0 0 0 1px $header-button-focus-color, $header-focus-box-shadow !important;
         color: $header-button-focus-color;
+
+        &.collapse-button {
+          border-color: $header-button-focus-color;
+        }
+
+        &:not(.collapse-button) {
+          border-color: $header-button-focus-color;
+          box-shadow: 0 0 0 2px transparent, 0 0 0 0 $header-button-focus-color, $header-focus-box-shadow;
+        }
 
         .icon {
           color: $header-button-focus-color;
@@ -652,9 +799,13 @@ $subheader-height: 60px;
     }
 
     .hyperlink {
-      color: $ids-color-palette-azure-70;
+      color: $header-full-searchfield-hyperlink-color;
       float: right;
       font-size: $ids-size-font-base;
+
+      &:hover {
+        color: $header-full-searchfield-hyperlink-color;
+      }
 
       &:focus:not(.hide-focus)::after,
       &:active::after {
@@ -690,6 +841,10 @@ $subheader-height: 60px;
     color: $header-button-color;
 
     .icon {
+      color: $header-button-color;
+    }
+
+    &:hover .icon {
       color: $header-button-color;
     }
 
@@ -773,9 +928,31 @@ $subheader-height: 60px;
   }
 }
 
+.subheader .toolbar [class^='btn']:focus:not(.hide-focus):not(.collapse-button),
+.personalize-subheader .toolbar [class^='btn']:focus:not(.hide-focus):not(.collapse-button) {
+  box-shadow: 0 0 0 2px transparent, 0 0 0 1px $header-button-focus-color, $header-focus-box-shadow !important;
+}
+
+.subheader,
+.personalize-subheader {
+  h1,
+  h2,
+  h3 {
+    display: inline-block;
+    margin: 16px 15px;
+    color: $header-text-color;
+  }
+
+  h2,
+  h3 {
+    font-size: 2rem;
+  }
+}
+
 // Title Button Styles for these three elements
 .header,
 .subheader,
+.personalize-subheader,
 .masthead {
   .toolbar {
     [class^='btn'] {

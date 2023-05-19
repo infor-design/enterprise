@@ -26,13 +26,13 @@
       data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: '123.99', percent: 0.10, status: 'OK', orderDate: null, action: 'On Hold'});
 
       //Define Columns for the Grid.
-      columns.push({ id: 'productId', name: 'معرف', field: 'productId', formatter: Formatters.Text, width: 100});
-      columns.push({ id: 'productName', name: 'معرف BOD', field: 'productName', formatter: Formatters.Hyperlink, width: 300});
+      columns.push({ id: 'productId', name: 'معرف', field: 'productId', formatter: Soho.Formatters.Text, width: 100});
+      columns.push({ id: 'productName', name: 'معرف BOD', field: 'productName', formatter: Soho.Formatters.Hyperlink, width: 300});
       columns.push({ id: 'activity', name: 'معرف', field: 'activity'});
-      columns.push({ id: 'price', align: 'right', name: 'معرف BOD', field: 'price', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
-      columns.push({ id: 'percent', align: 'right', name: 'معرف %', field: 'percent', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'percent'}});
-      columns.push({ id: 'orderDate', align: 'center', name: 'معرف Center', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
-      columns.push({ id: 'phone', name: 'معرف', field: 'phone', formatter: Formatters.Text});
+      columns.push({ id: 'price', align: 'right', name: 'معرف BOD', field: 'price', formatter: Soho.Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
+      columns.push({ id: 'percent', align: 'right', name: 'معرف %', field: 'percent', formatter: Soho.Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'percent'}});
+      columns.push({ id: 'orderDate', align: 'center', name: 'معرف Center', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy'});
+      columns.push({ id: 'phone', name: 'معرف', field: 'phone', formatter: Soho.Formatters.Text});
 
       //Init and get the api for the grid
       $('#datagrid').datagrid({

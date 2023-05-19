@@ -5,11 +5,9 @@
       <div class="title">
         <button id="app-menu-trigger" class="btn-icon application-menu-trigger" type="button list-detail-back-button">
           <span class="audible" data-text="translate">AppMenuTriggerTextAlt</span>
-          <span class="icon app-header">
-            <span class="one"></span>
-            <span class="two"></span>
-            <span class="three"></span>
-          </span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-menu"></use>
+          </svg>
         </button>
         <h1>All Requisitions</h1>
       </div>
@@ -66,12 +64,12 @@
               <div class="row">
                 <div class="twelve columns">
                   <div role="toolbar" class="toolbar">
-      
+
                     <div class="title">
                       Data Grid Header Title
                       <span class="datagrid-result-count">(N Results)</span>
                     </div>
-              
+
                     <div class="buttonset">
                         <button type="button" id="toggle-row-status" class="btn">
                           <span>Add Row Status</span>
@@ -98,11 +96,11 @@
                         <span class="audible">Clear Dirty Row</span>
                       </button>
                     </div>
-              
+
                     <div class="more">
                       <button class="btn-actions" type="button">
                         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-                          <use href="#icon-more"></use>
+                          <use href="#icon-vertical-ellipsis"></use>
                         </svg>
                         <span class="audible">More Actions</span>
                       </button>
@@ -114,10 +112,10 @@
                         <li class="is-selectable"><a data-option="row-medium" href="#" data-translate="text">Medium</a></li>
                         <li class="is-selectable is-checked"><a data-option="row-large" href="#" data-translate="text">Large</a></li>
                       </ul>
-              
+
                     </div>
                   </div>
-              
+
                   <div class="contextual-toolbar toolbar is-hidden">
                     <div class="title selection-count">1 Selected</div>
                     <div class="buttonset">
@@ -129,7 +127,7 @@
                       </button>
                     </div>
                   </div>
-              
+
                   <div id="datagrid"></div>
                 </div>
               </div>

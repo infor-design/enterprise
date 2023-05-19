@@ -11,8 +11,6 @@ spec:
         value: ""
       - name: build_from
         value: ""
-      - name: build_as_latest
-        value: ""
       - name: service_name
         value: ""
       - name: image_version
@@ -47,8 +45,6 @@ spec:
                   value: "{{workflow.parameters.base_container_name}}"
                 - name: image_version
                   value: "{{workflow.parameters.image_version}}"
-                - name: build_as_latest
-                  value: "{{workflow.parameters.build_as_latest}}"
                 - name: build_from
                   value: "{{workflow.parameters.build_from}}"
                 - name: app_repo
@@ -82,7 +78,6 @@ spec:
           - name: org_name
           - name: image_version
           - name: base_container_name
-          - name: build_as_latest
           - name: build_from
           - name: app_repo
 
@@ -138,8 +133,6 @@ spec:
                         value: "{{inputs.parameters.image_version}}"
                       - name: BASE_CONTAINER_NAME
                         value: "{{inputs.parameters.base_container_name}}"
-                      - name: BUILD_AS_LATEST
-                        value: "{{inputs.parameters.build_as_latest}}"
                       - name: BUILD_FROM
                         value: "{{inputs.parameters.build_from}}"
                       - name: APP_REPO
@@ -232,7 +225,6 @@ spec:
                             - /bin/sh
                             - -c
                             - cp /usr/src/secrets/gitconfig /root/.gitconfig
-
 
     - name: publish-docs
       inputs:

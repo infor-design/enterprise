@@ -1,11 +1,10 @@
-const path = require('path');
-
-const logger = require('./logger');
-const utils = require('./utils');
+import * as path from 'path';
+import logger from './logger.js';
+import utils from './utils.js';
 
 const DEFAULT_LAYOUT = 'layout.html';
 
-module.exports = function setLayout(req, res, layoutPath) {
+export default function setLayout(req, res, layoutPath) {
   // All file paths are based off of `<project root>/app/views/`.
   const viewsRoot = req.app.get('views');
   const directoryURL = utils.getDirectory(path.join(viewsRoot, req.originalUrl), viewsRoot);
@@ -43,4 +42,4 @@ module.exports = function setLayout(req, res, layoutPath) {
   if (res.opts.layout !== targetLayoutPath) {
     res.opts.layout = targetLayoutPath;
   }
-};
+}

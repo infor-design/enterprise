@@ -89,12 +89,12 @@
     $(this).find('span').text('Location: ' + anchor.text().trim());
   }
 
-  columns.push({ id: 'orderId', name: 'Order #', field: 'productId', formatter: Formatters.Readonly, width: 80 });
-  columns.push({ id: 'lastEdited', name: 'lastEdited', field: 'lastEdited', formatter: Formatters.Date, dateFormat: 'M/d/yyyy', width: 125 });
-  columns.push({ id: 'company', name: 'Company', field: 'company', formatter: Formatters.Text, width: 175 });
-  columns.push({ id: 'customer', name: 'Customer', field: 'customer', formatter: Formatters.Text, width: 175 });
-  columns.push({ id: 'siteAddress', name: 'Site Address', field: 'siteAddress', formatter: Formatters.Text });
-  columns.push({ id: 'resume-order', name: '', field: 'resume-order', text: 'Resume Order', sortable: false, align: 'center', formatter: Formatters.Button, click: gridButtonOnClickCallback });
+  columns.push({ id: 'orderId', name: 'Order #', field: 'productId', formatter: Soho.Formatters.Readonly, width: 80 });
+  columns.push({ id: 'lastEdited', name: 'lastEdited', field: 'lastEdited', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy', width: 125 });
+  columns.push({ id: 'company', name: 'Company', field: 'company', formatter: Soho.Formatters.Text, width: 175 });
+  columns.push({ id: 'customer', name: 'Customer', field: 'customer', formatter: Soho.Formatters.Text, width: 175 });
+  columns.push({ id: 'siteAddress', name: 'Site Address', field: 'siteAddress', formatter: Soho.Formatters.Text });
+  columns.push({ id: 'resume-order', name: '', field: 'resume-order', text: 'Resume Order', sortable: false, align: 'center', formatter: Soho.Formatters.Button, click: gridButtonOnClickCallback });
 
   while(dataCount < 100) {
     data.push({
@@ -111,7 +111,7 @@
   $('body').one('initialized', function () {
     $('#location-button').on('selected.test', cardToolbarMenuButtonSelectCallback);
 
-    Locale.set('en-US').done(function () {
+    Soho.Locale.set('en-US').done(function () {
       //Init and get the api for the grid
       grid = $('#open-orders-datagrid').datagrid({
         columns: columns,

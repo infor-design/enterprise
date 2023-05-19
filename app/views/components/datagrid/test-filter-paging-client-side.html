@@ -29,9 +29,9 @@
             {id: 'Inspect and Repair', value:'Inspect and Repair', label: 'Inspect and Repair'}];
 
          //Define Columns for the Grid.
-         columns.push({ id: 'selectionCheckbox', name: '', width: 50, formatter: Formatters.SelectionCheckbox, align: 'center', resizable: false, sortable: false});
-         columns.push({ id: '1', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly, filterType: 'text'});
-         columns.push({ id: '2', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, filterType: 'text'});
+         columns.push({ id: 'selectionCheckbox', name: '', width: 50, formatter: Soho.Formatters.SelectionCheckbox, align: 'center', resizable: false, sortable: false});
+         columns.push({ id: '1', name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Readonly, filterType: 'text'});
+         columns.push({ id: '2', name: 'Product Name', field: 'productName', formatter: Soho.Formatters.Hyperlink, filterType: 'text'});
          columns.push({ id: '3', name: 'Activity', field: 'activity', filterType: 'contents', options: activities});
          columns.push({ id: '4', name: 'Bin Location', field: 'binLoc', filterType: 'text', formatter: function (row, cell, value) {
             if (value && value.length >= 10) {
@@ -49,12 +49,12 @@
             }
          }});
          columns.push({ id: '6', name: 'Accuml. Quantity', field: 'quantity', align: 'right', filterType: 'integer'});
-         columns.push({ id: '7', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'MM/dd/yyyy', filterType: 'date'});
-         columns.push({ id: '8', name: 'In Stock', field: 'inStock', width: 125, formatter: Formatters.Checkbox, align: 'center', filterType: 'checkbox'});
-         columns.push({ id: '9', name: 'Active Status', field: 'status', formatter: Formatters.Checkbox, align: 'center', filterType: 'checkbox', isChecked: function (value) {
+         columns.push({ id: '7', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'MM/dd/yyyy', filterType: 'date'});
+         columns.push({ id: '8', name: 'In Stock', field: 'inStock', width: 125, formatter: Soho.Formatters.Checkbox, align: 'center', filterType: 'checkbox'});
+         columns.push({ id: '9', name: 'Active Status', field: 'status', formatter: Soho.Formatters.Checkbox, align: 'center', filterType: 'checkbox', isChecked: function (value) {
             return value && value.toLowerCase() === 'a';
          }});
-         columns.push({ id: '10', name: 'Price', field: 'price', formatter: Formatters.Decimal, filterType: 'decimal', numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input, mask: '####.000'});
+         columns.push({ id: '10', name: 'Price', field: 'price', formatter: Soho.Formatters.Decimal, filterType: 'decimal', numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Soho.Editors.Input, mask: '####.000'});
 
          //Init and get the api for the grid
          $('#datagrid').datagrid({

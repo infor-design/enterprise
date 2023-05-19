@@ -94,7 +94,7 @@ div.multiselect {
     &.is-ontop {
       > .trigger {
         .icon {
-          top: 10px;
+          top: 11px;
         }
       }
     }
@@ -132,6 +132,10 @@ div.multiselect {
       width: 16px;
     }
 
+    > .listoption-icon {
+      top: 8.5px;
+    }
+
     &.has-tags {
       .tag-content {
         line-height: 17px;
@@ -143,10 +147,20 @@ div.multiselect {
 .dropdown-list.dropdown-short {
   .trigger {
     .icon {
-      left: -1px;
-      top: 5px;
+      left: -5px;
+      top: 6px;
       width: 16px;
     }
+  }
+
+  &.ffdropdown {
+    .trigger .icon {
+      left: -36px;
+    }
+  }
+
+  > .listoption-icon {
+    top: 8px;
   }
 
   .dropdown-search {
@@ -235,7 +249,7 @@ div.multiselect {
     div.dropdown,
     div.multiselect {
       > .listoption-icon {
-        top: 6px;
+        top: 8.5px;
       }
     }
   }
@@ -386,7 +400,7 @@ html.is-firefox:not([dir='rtl']) {
 
   .dropdown-list {
     > .trigger .icon {
-      top: 8px;
+      top: 7.5px;
     }
 
     &.datagrid-dropdown-list.is-editing .trigger .icon {
@@ -431,7 +445,7 @@ html.is-firefox:not([dir='rtl']) {
       }
 
       > .trigger .icon {
-        top: 5px;
+        top: 6px;
       }
 
       &.has-icons {
@@ -640,8 +654,7 @@ div.multiselect > .listoption-icon,
   &.swatch {
     html.theme-new-light &.primary-bg-color,
     html.theme-new-contrast &.primary-bg-color {
-      border: 1px solid $ids-color-palette-slate-30;
-      background-color: $ids-color-palette-white;
+      border: 1px solid $input-color-initial-border;
     }
 
     html.theme-new-dark &.primary-bg-color {

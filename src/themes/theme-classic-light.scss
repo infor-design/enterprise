@@ -4,6 +4,7 @@
 // Standard CSS reset
 @import '../core/reset';
 @import '../core/mixins';
+@import '../core/css-utilities';
 
 // ids-identity token vars
 @import '../../node_modules/ids-identity/dist/theme-classic/tokens/web/theme-classic';
@@ -14,17 +15,14 @@
 // Local vars
 @import '../core/config';
 
-$header-bg-color: $ids-color-palette-azure-70;
-$header-text-color: $ids-color-palette-white;
-$header-button-color: $ids-color-palette-white;
-$header-button-focus-color: $ids-color-palette-white;
-$header-button-hover-color: $ids-color-palette-white;
-
-$header-toolbar-searchfield-icon-color: $ids-color-palette-white;
 $header-toolbar-button-hover-color: transparent;
+$toolbar-btn-actions-hover-bg-color: transparent;
 
-$header-tab-normal-color: rgba($ids-color-palette-white, 0.7);
-$header-tab-hover-color: $ids-color-palette-white;
+// Accordion
+$accordion-selected-bg-color: $ids-color-palette-slate-50;
+
+// Buttons
+$button-disabled-background-color: transparent;
 
 //================================================== //
 // Core Components

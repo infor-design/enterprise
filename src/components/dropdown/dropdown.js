@@ -87,6 +87,7 @@ const DROPDOWN_DEFAULTS = {
   allTextString: null,
   selectedTextString: null,
   selectAllFilterOnly: true,
+  appendTo: '[role="main"]',
   attributes: null
 };
 
@@ -688,7 +689,6 @@ Dropdown.prototype = {
     this.tooltipApi = this.pseudoElem.find('span')
       .tooltip({
         content: xssUtils.escapeHTML(optText),
-        parentElement: this.pseudoElem,
         trigger: this.isMobile() ? 'immediate' : 'hover',
       })
       .on('blur.dropdowntooltip', () => {
@@ -1891,7 +1891,7 @@ Dropdown.prototype = {
 
     opts.each(function () {
       if (text.length > 0) {
-        text += ', ';
+        text += `${Locale.currentLocale.data.punctuation.comma} `;
       }
       text += $(this).text().trim();
     });
@@ -2043,7 +2043,7 @@ Dropdown.prototype = {
     if (this.list.hasClass('datagrid-filter-dropdown') && document.querySelector('.datagrid-container') !== null) {
       const gridContainerPos = this.dropdownParent.closest('.datagrid-container').getBoundingClientRect();
       const gridFilterDropdownPos = document.querySelector('.datagrid-filter-dropdown').getBoundingClientRect();
-      const pageContainerPos = document.querySelector('[role="main"]').getBoundingClientRect().right;
+      const pageContainerPos = document.querySelector(this.settings.appendTo).getBoundingClientRect().right;
       const adjustedPosition = pageContainerPos - gridContainerPos.right;
       const elementDropdown = document.querySelector('.datagrid-filter-dropdown').getBoundingClientRect();
       let shouldAdjust = false;
@@ -2376,6 +2376,7 @@ Dropdown.prototype = {
       }
       const listStyle = window.getComputedStyle(self.list[0]);
       const listStyleTop = listStyle.top ? parseInt(listStyle.top, 10) : 0;
+      const isChrome = $('html').hasClass('is-chrome');
 
       // Firefox has different alignments without an adjustment:
       let browserOffset = 0;
@@ -2415,6 +2416,10 @@ Dropdown.prototype = {
       if (adjustedUlHeight === undefined && self.list[0].classList.contains('is-ontop')) {
         adjustedUlHeight = `${listHeight - searchInputHeight - browserOffset - 7}`;
         self.list[0].style.top = `${listStyleTop - adjustedUlHeight}px`;
+      }
+
+      if (!isChrome && placementObj.placement === 'bottom') {
+        self.list[0].style.top = `${listStyleTop - 1}px`;
       }
 
       return placementObj;
@@ -3387,6 +3392,7 @@ Dropdown.prototype = {
         let id = '';
         let selected = '';
         let textContent = '';
+        let disabled = '';
 
         if (isString) {
           option = {
@@ -3426,6 +3432,9 @@ Dropdown.prototype = {
         if (option.selected) {
           selected = ' selected';
         }
+        if (option.disabled) {
+          disabled = ' disabled';
+        }
 
         // Make sure that text content is populated.
         // If all else fails, just use the value.
@@ -3434,7 +3443,7 @@ Dropdown.prototype = {
         }
 
         // Render the option element
-        list += `<option${id} value="${option.value}"${selected}>
+        list += `<option${id} value="${option.value}"${selected}${disabled}>
           ${textContent}
         </option>`;
       }

@@ -10,8 +10,8 @@
     background-image:
       linear-gradient(
         to right,
-        rgba($header-bg-color, 1),
-        rgba($header-bg-color, 0)
+        rgba($header-default-bg-color, 1),
+        rgba($header-default-bg-color, 0)
       );
     left: 20px;
   }
@@ -20,8 +20,8 @@
     background-image:
       linear-gradient(
         to right,
-        rgba($header-bg-color, 0),
-        rgba($header-bg-color, 1)
+        rgba($header-default-bg-color, 0),
+        rgba($header-default-bg-color, 1)
       );
   }
 
@@ -33,9 +33,12 @@
     border-bottom: 0;
 
     .tab {
-      color: $header-tab-normal-color;
-      font-weight: $ids-number-font-weight-bold;
       overflow: hidden;
+
+      &:not(.is-disabled) {
+        color: $header-tab-normal-color;
+        font-weight: $ids-number-font-weight-bold;
+      }
 
       &::before {
         background-color: rgba($header-tab-normal-color, 0);
@@ -79,6 +82,10 @@
             background-color: rgba($header-tab-hover-color, 1);
           }
         }
+      }
+
+      &.is-disabled {
+        color: $header-tab-disabled-color-new;
       }
 
       &.dismissible {
@@ -265,6 +272,33 @@
   }
 }
 
+.tab-container.header-tabs {
+  &:not(.alternate) {
+    > .tab-list-container {
+      .tab-focus-indicator {
+        margin-top: 2px !important;
+      }
+
+      .tab {
+        top: -2px;
+
+        &:not(.is-disabled) {
+          &:hover {
+            color: $header-tab-hover-color;
+            border-bottom: 4px solid $header-tab-indicator-hover-color;
+            background-color: $header-tab-background-hover-color;
+          }
+
+          &.is-selected {
+            color: $header-tab-hover-color;
+            border-bottom: 4px solid $header-tab-hover-color;
+          }
+        }
+      }
+    }
+  }
+}
+
 // RTL Styles for Header Tabs
 html[dir='rtl'] {
   .tab-container.header-tabs {
@@ -312,4 +346,8 @@ html[dir='rtl'] {
       }
     }
   }
+}
+
+html.theme-classic-dark .tab-container.header-tabs.alternate::after {
+  background-image: linear-gradient(to right, rgba(28, 24, 25, 0), #50535a);
 }

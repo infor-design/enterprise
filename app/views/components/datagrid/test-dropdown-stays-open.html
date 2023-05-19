@@ -98,14 +98,14 @@
       }, 1);
     };
 
-    columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center' });
-    columns.push({ id: 'id', name: 'Product Id', field: 'id', formatter: Formatters.Readonly });
-    columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, editor: Editors.Input });
-    columns.push({ id: 'activity', name: 'Activity', field: 'activity', required: true, editor: Editors.Input, validate: 'required' });  //maxLength: 2
-    columns.push({ id: 'portable', name: 'Portable', field: 'portable', align: 'center', formatter: Formatters.Checkbox, editor: Editors.Checkbox });
-    columns.push({ id: 'price', name: 'Price', field: 'price', align: 'right', formatter: Formatters.Decimal, numberFormat: { minimumFractionDigits: 3, maximumFractionDigits: 3 }, editor: Editors.Input, mask: '###.000' });
-    columns.push({ id: 'action', name: 'Action', field: 'action', formatter: Formatters.Dropdown, editor: Editors.Dropdown, options: actionOptions});
-    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date });
+    columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center' });
+    columns.push({ id: 'id', name: 'Product Id', field: 'id', formatter: Soho.Formatters.Readonly });
+    columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Soho.Formatters.Hyperlink, editor: Soho.Editors.Input });
+    columns.push({ id: 'activity', name: 'Activity', field: 'activity', required: true, editor: Soho.Editors.Input, validate: 'required' });  //maxLength: 2
+    columns.push({ id: 'portable', name: 'Portable', field: 'portable', align: 'center', formatter: Soho.Formatters.Checkbox, editor: Soho.Editors.Checkbox });
+    columns.push({ id: 'price', name: 'Price', field: 'price', align: 'right', formatter: Soho.Formatters.Decimal, numberFormat: { minimumFractionDigits: 3, maximumFractionDigits: 3 }, editor: Soho.Editors.Input, mask: '###.000' });
+    columns.push({ id: 'action', name: 'Action', field: 'action', formatter: Soho.Formatters.Dropdown, editor: Soho.Editors.Dropdown, options: actionOptions});
+    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, editor: Soho.Editors.Date });
 
     // Init and get the api for the grid
     grid = $('#datagrid').datagrid({

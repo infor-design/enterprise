@@ -1,13 +1,15 @@
-<header class="header is-personalizable is-personalizable">
-  <div class="toolbar">
-    <div class="title">
+<header class="header is-personalizable">
+  <div class="flex-toolbar">
+    <div class="toolbar-section">
       {{> includes/header-appmenu-trigger}}
+    </div>
+    <div class="toolbar-section title">
       <h1>Page Title</h1>
     </div>
 
-    <div class="buttonset">
+    <div class="toolbar-section search">
       <label for="header-searchfield" class="audible">Search</label>
-      <input id="header-searchfield" class="searchfield" name="header-searchfield" />
+      <input id="header-searchfield" class="searchfield" name="header-searchfield" data-options="{'collapsible': true}" />
     </div>
 
     {{> includes/header-actionbutton}}

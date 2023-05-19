@@ -30,11 +30,11 @@
 
     //Define Columns for the Grid.
     columns.push({ id: 'time1', name: 'Value', field: 'value' });
-    columns.push({ id: 'time2', name: 'Default', field: 'value', formatter: Formatters.Time, editor: Editors.Time, filterType: 'time' });
-    columns.push({ id: 'time3', name: 'Time 24', field: 'value', formatter: Formatters.Time, editor: Editors.Time, editorOptions: {'timeFormat': 'HH:mm'}, timeFormat: 'HH:mm', filterType: 'time' });
-    columns.push({ id: 'time4', name: 'Time 24 (no separator)', field: 'value', formatter: Formatters.Time, editor: Editors.Time, editorOptions: {'timeFormat': 'HHmm'}, timeFormat: 'HHmm', filterType: 'time' });
-    columns.push({ id: 'time5', name: 'Seconds', field: 'value', formatter: Formatters.Time, editor: Editors.Time, editorOptions: {'timeFormat': 'h:mm:ss a'}, timeFormat: 'h:mm:ss a', filterType: 'time' });
-    columns.push({ id: 'time6', name: 'Seconds 24', field: 'value', formatter: Formatters.Time, editor: Editors.Time, editorOptions: {'timeFormat': 'HH:mm:ss'}, timeFormat: 'HH:mm:ss', filterType: 'time' });
+    columns.push({ id: 'time2', name: 'Default', field: 'value', formatter: Soho.Formatters.Time, editor: Soho.Editors.Time, filterType: 'time' });
+    columns.push({ id: 'time3', name: 'Time 24', field: 'value', formatter: Soho.Formatters.Time, editor: Soho.Editors.Time, editorOptions: {'timeFormat': 'HH:mm'}, timeFormat: 'HH:mm', filterType: 'time' });
+    columns.push({ id: 'time4', name: 'Time 24 (no separator)', field: 'value', formatter: Soho.Formatters.Time, editor: Soho.Editors.Time, editorOptions: {'timeFormat': 'HHmm'}, timeFormat: 'HHmm', filterType: 'time' });
+    columns.push({ id: 'time5', name: 'Seconds', field: 'value', formatter: Soho.Formatters.Time, editor: Soho.Editors.Time, editorOptions: {'timeFormat': 'h:mm:ss a'}, timeFormat: 'h:mm:ss a', filterType: 'time' });
+    columns.push({ id: 'time6', name: 'Seconds 24', field: 'value', formatter: Soho.Formatters.Time, editor: Soho.Editors.Time, editorOptions: {'timeFormat': 'HH:mm:ss'}, timeFormat: 'HH:mm:ss', filterType: 'time' });
     columns.push({ id: 'buffer', name: '', field: ''});
 
     //Init and get the api for the grid

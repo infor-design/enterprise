@@ -39,12 +39,12 @@
       data.push({ id: 8, productId: 2642207, productName: 'Some Compressor', activity:  'inspect and Repair', portable: true, quantity: 41, price: 123.99, status: 'OK', state:'Idaho', orderDate: '2015-01-02T06:00:00.120Z'});
 
       // Define Columns for the Grid.
-      columns.push({ id: 'orderDate', name: 'Date (Normal)', field: 'orderDate', formatter: Formatters.Date,filterType: 'date'});
-      columns.push({ id: 'orderDate1', name: 'Date (Time 24hr)', field: 'orderDate', formatter: Formatters.Date, filterType: 'date', dateFormat: 'M/d/yyyy HH:mm:ss'});
-      columns.push({ id: 'orderDate2', name: 'Date (Time Am/Pm)', field: 'orderDate', formatter: Formatters.Date, filterType: 'date', dateFormat: Locale.calendar().dateFormat.datetime});
-      columns.push({ id: 'orderDate3', name: 'Date (Time Millis)', field: 'orderDate', formatter: Formatters.Date, filterType: 'date', dateFormat: 'yyyy-MM-ddTHH:mm:ss.SSS'});
-      columns.push({ id: 'orderDate4', name: 'Date (Normal w settings)', field: 'orderDate', formatter: Formatters.Date, dateFormat: Locale.calendar().dateFormat.date});
-      columns.push({ id: 'orderTime', name: 'Order Time', field: 'orderDate', formatter: Formatters.Time, filterType: 'time', timeFormat: Locale.calendar().dateFormat.timestamp});
+      columns.push({ id: 'orderDate', name: 'Date (Normal)', field: 'orderDate', formatter: Soho.Formatters.Date,filterType: 'date'});
+      columns.push({ id: 'orderDate1', name: 'Date (Time 24hr)', field: 'orderDate', formatter: Soho.Formatters.Date, filterType: 'date', dateFormat: 'M/d/yyyy HH:mm:ss'});
+      columns.push({ id: 'orderDate2', name: 'Date (Time Am/Pm)', field: 'orderDate', formatter: Soho.Formatters.Date, filterType: 'date', dateFormat: Soho.Locale.calendar().dateFormat.datetime});
+      columns.push({ id: 'orderDate3', name: 'Date (Time Millis)', field: 'orderDate', formatter: Soho.Formatters.Date, filterType: 'date', dateFormat: 'yyyy-MM-ddTHH:mm:ss.SSS'});
+      columns.push({ id: 'orderDate4', name: 'Date (Normal w settings)', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: Soho.Locale.calendar().dateFormat.date});
+      columns.push({ id: 'orderTime', name: 'Order Time', field: 'orderDate', formatter: Soho.Formatters.Time, filterType: 'time', timeFormat: Soho.Locale.calendar().dateFormat.timestamp});
 
       // Init and get the api for the grid
       $('#datagrid').datagrid({

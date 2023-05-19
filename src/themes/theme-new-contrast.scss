@@ -6,6 +6,7 @@
 // Standard CSS reset stuff here
 @import '../core/reset';
 @import '../core/mixins';
+@import '../core/css-utilities';
 
 // ids-identity token vars
 @import '../../node_modules/ids-identity/dist/theme-new/tokens/web/theme-new-contrast';
@@ -17,19 +18,23 @@
 @import '../core/config';
 
 // Form Background Color
-$header-bg-color: $ids-color-palette-white;
-$subhead-bg-color: $ids-color-palette-white;
+$header-bg-color: $ids-color-palette-azure-80;
+$header-default-bg-color: $ids-color-palette-azure-80;
+$header-default-bg-hover-color: rgba(0, 0, 0, .3);
+$subhead-bg-color: $ids-color-palette-azure-90;
 $header-border-color: $ids-color-palette-slate-100;
-$header-button-color: $ids-color-palette-slate-100;
-$header-button-focus-color: $ids-color-palette-slate-70;
+$header-button-color: $ids-color-palette-white;
+$header-button-focus-color: $ids-color-palette-white;
 $header-button-hover-color: rgba($ids-color-palette-slate-70, 0.85);
-$header-button-disabled-color: rgba($ids-color-palette-slate-50, 0.3);
+$header-button-disabled-color: rgba($ids-color-palette-white, 0.3);
 $header-primary-btn-background-color: $ids-color-brand-primary-base;
 $header-primary-btn-background-hover-color: $ids-color-palette-azure-50;
 $header-disabled-color: $ids-color-palette-slate-50;
 $header-focus-box-shadow: 0 0 4px 3px rgba(255, 255, 255, 0.3);
 
-$body-color-primary-background: $ids-color-palette-white;
+$body-color-primary-background: rgba($ids-color-palette-slate-10, 0.5);
+$homepage-background-color: $body-color-primary-background;
+$header-hero-widget-bg-color: $subhead-bg-color;
 
 $dropdown-search-bg-color: $ids-color-palette-white;
 $panel-bg-color: $ids-color-palette-white;
@@ -181,6 +186,7 @@ $button-color-secondary-hover-background-new: $ids-color-palette-azure-10;
 $button-color-secondary-disabled-background-new: $ids-color-palette-slate-10;
 $button-color-secondary-disabled-border-new: $ids-color-palette-slate-50;
 $button-color-secondary-disabled-font-new: $ids-color-palette-slate-50;
+$button-disabled-background-color: transparent;
 
 $button-color-tertiary-hover-background-new: $ids-color-palette-azure-20;
 $button-color-tertiary-hover-font-new: $ids-color-palette-azure-80;
@@ -189,6 +195,7 @@ $button-color-primary-disabled-font-new: $ids-color-palette-white;
 
 // Tertiary Buttons
 $button-color-tertiary-initial-font: $ids-color-palette-slate-80;
+$button-color-tertiary-actionsheet-hover-font: $button-color-tertiary-hover-font-new;
 $tertiary-btn-ripple-color: $ids-color-brand-primary-alt;
 
 // Secondary with Border
@@ -209,6 +216,7 @@ $error-color: #a30d11;
 $error-icon-fill: #a30d11;
 $error-border-color: #a30d11;
 $alert-color: $ids-color-palette-amber-100;
+$error-text-color: $ids-color-status-danger;
 $success-color: $ids-color-status-success;
 $info-color: $status-05-color;
 $error-focus-box-shadow: 0 0 4px 2px rgba(222, 129, 129, 0.3);
@@ -265,13 +273,15 @@ $listbuilder-text-color: $ids-color-palette-black;
 $listbuilder-input-selection-bg-color: $ids-color-palette-azure-100;
 
 $listview-search-border-color: $ids-color-palette-black;
-$listview-full-width-bg-color: $ids-color-palette-graphite-20;
+$listview-full-width-bg-color: $ids-color-palette-white;
+$listview-search-wrapper-border-color: $ids-color-palette-slate-50;
 
 // Toolbar
 $toolbar-standalone-bg-color: $ids-color-palette-slate-10;
 $toolbar-standalone-border-color: $ids-color-palette-slate-60;
 $toolbar-standalone-disabled-color: $ids-color-palette-slate-40;
 $toolbar-separator-color: $ids-color-palette-slate-60;
+$toolbar-btn-actions-hover-bg-color: $button-color-tertiary-hover-background-new;
 
 // Field Filter
 $fieldfilter-border-side-color: $input-color-initial-border;
@@ -379,14 +389,15 @@ $expandable-area-title-color: $ids-color-palette-black;
 
 // Cards
 $card-selected-background-color: $selected-bg-color;
+$card-scrolling-box-shadow: 0 0 4px 0 #00000050;
+$card-scrolling-border-color: $ids-color-palette-slate-30;
 $card-expandable-sub-heading: $ids-color-palette-slate-90;
 
 // Cardlist
-$cardlist-bg-color: $ids-color-palette-slate-10;
 $cardlist-border-color: $ids-color-palette-slate-60;
 $cardlist-header-color: $ids-color-palette-black;
 $cardlist-actions-color: $ids-color-palette-slate-90;
-$cardlist-box-shadow-color: rgba(0, 0, 0, 0.1);
+$cardlist-box-shadow-color: rgba(0, 0, 0, 0.15);
 
 // Switch
 $radio-checked-color: $ids-color-palette-azure-100;
@@ -494,7 +505,7 @@ $accordion-inverse-focus-state-color: $ids-color-palette-white;
 $accordion-focused-text-color: $ids-color-palette-azure-50;
 $accordion-focused-border-color: $ids-color-palette-azure-50;
 
-$accordion-selected-bg-color: $ids-color-palette-azure-50;
+$accordion-selected-bg-color: $ids-color-palette-slate-50;
 $accordion-selected-text-color: $ids-color-palette-white;
 
 $accordion-highcontrast-text-decoration: underline;
@@ -539,6 +550,7 @@ $tab-text-color: $ids-color-palette-slate-100;
 $tab-selected-color: $ids-color-palette-azure-90;
 $tab-border-color: $ids-color-brand-secondary-alt;
 $tab-hover-color: $ids-color-palette-azure-90;
+$tab-background-hover-color-new: $ids-color-palette-azure-10;
 
 // Vertical Tabs
 $vertical-tab-text-color: $font-color-extrahighcontrast;
@@ -749,24 +761,17 @@ $subheader-searchfield-category-button-font-color: $ids-color-palette-slate-100;
 // Header Tabs
 $header-tabcontainer-border-color: $ids-color-brand-secondary-alt;
 $header-tab-separator: $ids-color-brand-secondary-alt;
-$header-tab-normal-color: $ids-color-palette-slate-10;
-$header-tab-hover-color: $inverse-color;
 $header-tab-selected-color: $inverse-color;
 $header-tab-alt-bg-color: $ids-color-palette-slate-10;
 $header-tab-alt-separator: $header-tabcontainer-border-color;
-$header-tab-alt-normal-color: $inverse-color;
-$header-tab-alt-hover-color: $inverse-color;
-$header-tab-alt-selected-color: $inverse-color;
-$header-tab-focus-border-color: $ids-color-palette-azure-90;
+$header-tab-alt-normal-color: $ids-color-palette-slate-100;
+$header-tab-alt-hover-color: $ids-color-palette-slate-100;
+$header-tab-alt-selected-color: $ids-color-palette-slate-100;
 
-$header-tab-separator-new: $ids-color-palette-slate-100;
-$header-tab-background-initial-color-new: $ids-color-palette-white;
-$header-tab-gradient-initial-color-new: $header-tab-background-initial-color-new;
-$header-tab-hover-color-new: $header-tab-focus-border-color;
-$header-tab-disabled-color-new: $ids-color-palette-slate-30;
+$header-tab-background-initial-color-new: $header-default-bg-color;
 
 // Header Breadcrumb
-$header-breadcrumb-color: $ids-color-palette-slate-100;
+$header-breadcrumb-color: $ids-color-palette-slate-10;
 $header-breadcrumb-alt-bg-color: $ids-color-palette-white;
 $header-breadcrumb-alt-color: $font-color-highcontrast;
 $header-breadcrumb-border-color: $ids-color-palette-slate-60;

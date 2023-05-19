@@ -5,16 +5,6 @@
   height: 7px;
 }
 
-.tab-container.header-tabs {
-  &:not(.alternate) {
-    > .tab-list-container {
-      .tab {
-        top: unset !important;
-      }
-    }
-  }
-}
-
 .tab-container.has-counts {
   > .tab-list-container {
     .tab-list {
@@ -66,12 +56,8 @@
         padding: 12px 11px 5px;
       }
 
-      &.is-disabled {
-        color: $header-tab-disabled-color-new !important;
-      }
-
       // Adds "semi-bold" style to selected/active tabs
-      &.is-selected {
+      &:not(.is-disabled).is-selected {
         a {
           font-weight: 700;
           letter-spacing: -0.2px;

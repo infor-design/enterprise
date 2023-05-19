@@ -60,5 +60,8 @@ RUN python3.10 -m pip install -r requirements.txt
 RUN chmod +x scripts/annotations.py
 RUN chmod +x build_push_image.sh
 
+COPY ./utils.sh utils.sh
+RUN chmod +x utils.sh
+
 COPY ./build_push_manifests.sh build_push_manifests.sh
 RUN chmod +x build_push_manifests.sh

@@ -65,19 +65,13 @@ $toolbarsearchfield-category-empty-width: 51px;
       padding-top: 8px;
     }
 
-    .icon:not(.close) {
+    .icon:not(.close, .searchfield-category-button) {
       top: 0;
 
       &:not(.icon-dropdown) {
         height: 20px;
         width: 20px;
       }
-    }
-  }
-
-  &.is-open {
-    .icon:not(.close) {
-      top: 2px;
     }
   }
 
@@ -101,8 +95,9 @@ $toolbarsearchfield-category-empty-width: 51px;
     }
 
     .icon:not(.close) {
-      height: 20px;
-      width: 20px;
+      color: $searchfield-icon-color;
+      height: 18px;
+      width: 18px;
 
       @media only screen and (max-width: $breakpoint-phone-to-tablet) {
         top: 12px;
@@ -111,9 +106,8 @@ $toolbarsearchfield-category-empty-width: 51px;
   }
 
   &.has-go-button {
-    &.has-categories {
+    &.has-categories.is-open {
       .searchfield {
-        border: none;
         border-left: 1px solid $searchfield-toolbar-border-color;
       }
     }
@@ -149,10 +143,6 @@ $toolbarsearchfield-category-empty-width: 51px;
     }
 
     &:not(.close) {
-      @include transition(height 300ms $cubic-ease,
-      top 300ms $cubic-ease,
-      left 300ms $cubic-ease);
-
       height: 18px;
       top: 0;
       transform: translateY(50%);
@@ -166,13 +156,15 @@ $toolbarsearchfield-category-empty-width: 51px;
   .btn {
     background-color: rgba(0, 0, 0, 0);
     border-radius: 2px 0 0 2px;
+
+    &.searchfield-category-button {
+      background-color: rgba($searchfield-bg-color, 1);
+    }
   }
 
   .searchfield-category-button,
   .go-button {
     &:focus {
-      // border: 1px solid transparent;
-
       &:not(.hide-focus) {
         box-shadow: none !important;
         color: $button-color-secondary-initial-font;
@@ -203,8 +195,12 @@ $toolbarsearchfield-category-empty-width: 51px;
 
     .btn,
     .collapse-button {
-      border-color: transparent;
       border-bottom-color: rgba($searchfield-border-color, 0);
+      border-color: transparent;
+    }
+
+    .searchfield-category-button {
+      border-color: $input-color-initial-border;
     }
 
     .go-button {
@@ -219,7 +215,9 @@ $toolbarsearchfield-category-empty-width: 51px;
     &.is-open {
       .btn,
       .collapse-btn {
-        border-bottom-color: rgba($searchfield-border-color, 1);
+        &:not(.searchfield-category-button) {
+          border-bottom-color: rgba($searchfield-border-color, 1);
+        }
       }
     }
   }
@@ -272,8 +270,6 @@ $toolbarsearchfield-category-empty-width: 51px;
   &.is-open {
     .searchfield,
     .btn {
-      background-color: rgba($searchfield-bg-color, 1);
-      border-bottom-color: rgba($searchfield-border-color, 1);
       height: 38px;
     }
 
@@ -332,13 +328,14 @@ $toolbarsearchfield-category-empty-width: 51px;
 
     .icon {
       color: $searchfield-icon-color;
-      height: 18px;
     }
 
-    &.non-collapsible.is-hovered,
-    &.is-hovered {
-      .icon {
-        color: $searchfield-icon-hover-color;
+    &.has-close-icon-button.is-open {
+      & > .close:not(.collapse-button):hover {
+        &,
+        & .icon {
+          color: $searchfield-icon-hover-color;
+        }
       }
     }
 
@@ -376,6 +373,14 @@ $toolbarsearchfield-category-empty-width: 51px;
     }
   }
 
+  &.non-collapsible {
+    &.has-focus.active .searchfield-category-button,
+    .searchfield-category-button {
+      background-color: $searchfield-toolbar-bg-color;
+      border-color: $searchfield-toolbar-border-color;
+    }
+  }
+
   &.active {
     // During the animation "out", the text goes transparent
     .searchfield {
@@ -385,10 +390,18 @@ $toolbarsearchfield-category-empty-width: 51px;
 
     /* stylelint-disable */
     // Ignored due to out-of-order properties that need to be in this order for proper cascade.
-    .btn,
-    .collapse-button {
+    .btn {
       border-color: rgba($searchfield-bg-color, 1);
       border-bottom-color: rgba($searchfield-border-color, 1);
+    }
+
+    .collapse-button {
+      border-color: transparent;
+
+      &:focus {
+        box-shadow: none;
+        border-color: rgba($searchfield-toolbar-focus-color, 0.7);
+      }
     }
     /* stylelint-enable */
   }
@@ -410,19 +423,24 @@ $toolbarsearchfield-category-empty-width: 51px;
       &.toolbar-searchfield-wrapper {
         &.has-categories:not(.alternate) {
           .searchfield {
-            &:focus {
-              border-color: $header-searchfield-input-border-color;
-            }
-
             @media only screen and (max-width: $breakpoint-phone-to-tablet) {
               width: auto;
+              border-color: $searchfield-toolbar-border-color;
             }
           }
+        }
+
+        &.has-categories:not(.alternate).has-focus .searchfield {
+          border-color: $header-searchfield-input-border-color;
         }
       }
 
       .btn {
         border-color: transparent transparent rgba($searchfield-border-color, 1);
+
+        &.searchfield-category-button {
+          border-color: $input-color-initial-border;
+        }
       }
     }
   }
@@ -432,16 +450,15 @@ $toolbarsearchfield-category-empty-width: 51px;
 
     .icon {
       &.close {
-        color: $searchfield-text-color;
         height: 16px;
-        top: 10px;
+        top: 11px;
       }
     }
 
     .btn-icon {
       .icon {
         &.close {
-          top: 0;
+          top: -1px;
         }
       }
     }
@@ -461,6 +478,16 @@ $toolbarsearchfield-category-empty-width: 51px;
 
   &.has-categories {
     width: $toolbarsearchfield-category-empty-width;
+
+    &:not(.is-open) {
+      .searchfield-category-button {
+        border-color: transparent;
+      }
+
+      .icon.icon-dropdown {
+        color: transparent;
+      }
+    }
 
     &.active {
       width: $toolbarsearchfield-max-width;
@@ -504,11 +531,20 @@ $toolbarsearchfield-category-empty-width: 51px;
       }
 
       .go-button {
-        border-bottom-left-radius: 0;
-        border-top-left-radius: 0;
+        border: 1px solid $searchfield-toolbar-border-color;
+        border-left: none;
+        border-radius: 0;
+        background-color: transparent;
+        color: $searchfield-icon-color;
         height: 38px;
         position: relative;
         right: 0;
+        margin-left: 0;
+
+        &:hover {
+          background-color: $button-color-tertiary-hover-background-new;
+          color: $button-color-tertiary-hover-font-new;
+        }
       }
     }
 
@@ -614,7 +650,17 @@ $toolbarsearchfield-category-empty-width: 51px;
 .header,
 .masthead {
   .toolbar-searchfield-wrapper {
-    .icon:not(.close) {
+    &.is-hovered {
+      &:not(.active):not(.is-open) {
+        .icon {
+          color: $header-toolbar-searchfield-icon-color;
+        }
+      }
+    }
+  }
+
+  .toolbar-searchfield-wrapper {
+    :not(.collapse-button) .icon:not(.close) {
       color: $searchfield-header-icon-color;
     }
 
@@ -624,7 +670,7 @@ $toolbarsearchfield-category-empty-width: 51px;
       color: $searchfield-header-text-color;
     }
 
-    &.non-collapsible {
+    &.non-collapsible.is-open {
       .searchfield {
         background-color: $searchfield-header-bg-color;
         border-color: rgba($searchfield-header-border-color, 0.7);
@@ -724,16 +770,6 @@ $toolbarsearchfield-category-empty-width: 51px;
       }
     }
 
-    &.is-hovered {
-      .btn {
-        color: rgba($searchfield-header-text-color, 0.7);
-      }
-
-      .icon {
-        color: $searchfield-header-icon-color;
-      }
-    }
-
     &.is-open {
       .searchfield,
       .btn {
@@ -746,7 +782,6 @@ $toolbarsearchfield-category-empty-width: 51px;
 
     &.active {
       .searchfield,
-      .collapse-button,
       .btn {
         background-color: $searchfield-header-bg-color;
         border-bottom-color: rgba($searchfield-header-border-color, 0.7);
@@ -783,10 +818,10 @@ $toolbarsearchfield-category-empty-width: 51px;
       }
     }
 
-    &.is-open {
-      .icon {
-        color: $searchfield-header-icon-color;
-      }
+    &.is-open .icon.close {
+      color: $searchfield-header-icon-color;
+      transform: translateY(-50%);
+      top: 50%;
     }
   }
 
@@ -934,18 +969,6 @@ html.is-firefox {
 
         &:-ms-input-placeholder {
           color: $searchfield-placeholder-text-color;
-        }
-      }
-
-      &.is-open {
-        .icon {
-          color: $searchfield-header-icon-color;
-        }
-
-        &.is-hovered {
-          .icon {
-            color: $searchfield-header-hover-icon-color;
-          }
         }
       }
     }
@@ -1156,12 +1179,6 @@ html[dir='rtl'] {
     }
   }
 
-  @media (min-width: $breakpoint-tablet-reduced) {
-    &.has-go-button.has-text {
-      width: auto !important;
-    }
-  }
-
   @media (max-width: $breakpoint-tablet-reduced) {
     &.has-go-button.has-text {
       .searchfield {
@@ -1180,8 +1197,14 @@ html[class*='theme-new-'] .header > .toolbar > .buttonset > .toolbar-searchfield
   }
 }
 
-html[class*='theme-new-'] .toolbar-searchfield-wrapper.has-categories.has-go-button .go-button {
+html[class*='theme-new-'] .header .toolbar .toolbar-searchfield-wrapper.has-categories.has-go-button .go-button {
   height: 38px;
+  border-bottom-right-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+html[class*='theme-classic-'] .header .toolbar .toolbar-searchfield-wrapper.has-go-button.has-categories .searchfield {
+  border: none;
 }
 
 html[dir='rtl'] {

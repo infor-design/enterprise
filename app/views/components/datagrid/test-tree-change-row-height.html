@@ -14,7 +14,7 @@
         name: 'Name',
         field: 'displayName',
         expanded: 'expanded',
-        formatter: Formatters.Tree,
+        formatter: Soho.Formatters.Tree,
         filterType: 'text',
         width: 500,
         hideable: false,
@@ -24,8 +24,8 @@
         id: 'view',
         name: 'view',
         field: 'view',
-        formatter: Formatters.Checkbox,
-        editor: Editors.Checkbox,
+        formatter: Soho.Formatters.Checkbox,
+        editor: Soho.Editors.Checkbox,
         isEditable: () => {
           return true;
         },
@@ -35,8 +35,8 @@
         id: 'create',
         name: 'create',
         field: 'create',
-        formatter: Formatters.Checkbox,
-        editor: Editors.Checkbox,
+        formatter: Soho.Formatters.Checkbox,
+        editor: Soho.Editors.Checkbox,
         isEditable: () => {
           return true;
         },

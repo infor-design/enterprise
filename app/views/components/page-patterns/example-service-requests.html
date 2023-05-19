@@ -78,14 +78,14 @@
         columns = [];
 
       //Define Columns for the Grid.
-      columns.push({ id: 'type', name: 'Type', field: 'type', formatter: Formatters.Text, cssClass: 'uppercase'});
-      columns.push({ id: 'datetime', name: 'Time', field: 'datetime', formatter: Formatters.Date, dateFormat: 'dd-MM-yyyy, HH:mm:ss'});
+      columns.push({ id: 'type', name: 'Type', field: 'type', formatter: Soho.Formatters.Text, cssClass: 'uppercase'});
+      columns.push({ id: 'datetime', name: 'Time', field: 'datetime', formatter: Soho.Formatters.Date, dateFormat: 'dd-MM-yyyy, HH:mm:ss'});
       columns.push({ id: 'requestor', name: 'Requested By', field: 'requestor'});
       columns.push({ id: 'deployment', name: 'Deployment', field: 'deployment'});
-      columns.push({ id: 'scheduled', name: 'Scheduled Time', field: 'scheduled', formatter: Formatters.Date, dateFormat: 'dd-MM-yyyy, HH:mm:ss'});
-      columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Formatters.Color,
+      columns.push({ id: 'scheduled', name: 'Scheduled Time', field: 'scheduled', formatter: Soho.Formatters.Date, dateFormat: 'dd-MM-yyyy, HH:mm:ss'});
+      columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Soho.Formatters.Color,
         ranges: [{'value': 'Success', 'classes': 'emerald08-color'}, {'value': 'Queued', classes: ''}]});
-      columns.push({ id: 'action', name: 'Action Item', field: 'action', width: 200, formatter: Formatters.Button, text: 'Cancel', click: function () {
+      columns.push({ id: 'action', name: 'Action Item', field: 'action', width: 200, formatter: Soho.Formatters.Button, text: 'Cancel', click: function () {
           alert('test');
         }, focusable: true, contentVisible: function (row, cell, data) {
           return (data.status === 'Queued');

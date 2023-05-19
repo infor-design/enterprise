@@ -29,6 +29,8 @@ $toolbar-buttonset-height: 40px;
     }
 
     .searchfield-category-button {
+      background-color: transparent;
+
       .icon {
         transform: translateY(0);
       }
@@ -141,6 +143,10 @@ $toolbar-buttonset-height: 40px;
 
     > * {
       margin-right: 1px;
+    }
+
+    .btn-actions.is-open .icon {
+      color: $button-color-tertiary-initial-font;
     }
   }
 

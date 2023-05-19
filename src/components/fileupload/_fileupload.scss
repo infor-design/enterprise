@@ -26,17 +26,24 @@
       top: 3px;
       vertical-align: baseline;
       width: 18px;
+      border-radius: 5px;
     }
 
     &:hover {
       .icon {
-        color: $trigger-hover-color;
+        background-color: $button-color-tertiary-hover-background-new;
+        color: $button-color-tertiary-hover-font-new;
       }
     }
 
     &:active .icon {
       color: $trigger-active-color;
     }
+  }
+
+  .trigger-close .icon {
+    height: 15px;
+    top: 1px;
   }
 
   label {
@@ -312,7 +319,10 @@
           width: 10px;
 
           &.icon-error {
+            top: -3px;
             left: 0;
+            height: 18px !important;
+            width: 18px;
           }
         }
 
@@ -347,18 +357,24 @@
         width: 16px;
       }
 
-      &.file-row .l-pull-right .action {
-        float: right;
-        height: 16px;
-        margin-top: 7px;
-
-        .icon {
-          color: $fileupload-secondary-color;
+      &.file-row {
+        .status-icon.file-error {
+          background-color: transparent;
         }
 
-        &:hover {
+        .l-pull-right .action {
+          float: right;
+          height: 16px;
+          margin-top: 7px;
+
           .icon {
-            color: $fileupload-hover-color;
+            color: $fileupload-secondary-color;
+          }
+
+          &:hover {
+            .icon {
+              color: $fileupload-hover-color;
+            }
           }
         }
       }
@@ -434,9 +450,15 @@
 // Overides
 //================================================== //
 .form-layout-compact {
-  .field-fileupload .trigger .icon,
-  .field-fileupload .trigger-close .icon {
-    top: 3px;
+  .field-fileupload {
+    .trigger .icon {
+      top: 4px;
+    }
+
+    .trigger-close .icon {
+      height: 14px;
+      top: 2px;
+    }
   }
 }
 

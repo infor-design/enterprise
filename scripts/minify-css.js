@@ -8,14 +8,41 @@
 // -------------------------------------
 // Requirements
 // -------------------------------------
-const cssmin = require('cssmin');
-const commandLineArgs = require('yargs').argv;
+import cssmin from 'cssmin';
+import _yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
 
-const logger = require('./logger');
-const getFileContents = require('./build/get-file-contents');
-const writeFile = require('./build/write-file');
+import logger from './logger.js';
+import getFileContents from './build/get-file-contents.js';
+import writeFile from './build/write-file.js';
 
-const config = require('./configs/cssmin').cssmin;
+const config = {
+  // Minify css
+  cssmin: {
+    options: {
+      roundingPrecision: -1
+    },
+    dist: {
+      files: {
+        'dist/css/theme-classic-contrast.min.css': ['dist/css/theme-classic-contrast.css'],
+        'dist/css/theme-classic-dark.min.css': ['dist/css/theme-classic-dark.css'],
+        'dist/css/theme-classic-light.min.css': ['dist/css/theme-classic-light.css'],
+        'dist/css/theme-new-light.min.css': ['dist/css/theme-new-light.css'],
+        'dist/css/theme-new-dark.min.css': ['dist/css/theme-new-dark.css'],
+        'dist/css/theme-new-contrast.min.css': ['dist/css/theme-new-contrast.css'],
+        'dist/css/theme-soho-contrast.min.css': ['dist/css/theme-soho-contrast.css'],
+        'dist/css/theme-soho-dark.min.css': ['dist/css/theme-soho-dark.css'],
+        'dist/css/theme-soho-light.min.css': ['dist/css/theme-soho-light.css'],
+        'dist/css/theme-uplift-light.min.css': ['dist/css/theme-uplift-light.css'],
+        'dist/css/theme-uplift-dark.min.css': ['dist/css/theme-uplift-dark.css'],
+        'dist/css/theme-uplift-contrast.min.css': ['dist/css/theme-uplift-contrast.css'],
+      }
+    },
+  }
+
+};
+
+const argv = _yargs(hideBin(process.argv)).argv;
 
 // -------------------------------------
 // Functions
@@ -30,7 +57,7 @@ function minify(srcFilePath, targetFilePath) {
       return;
     }
     // Only log if not in --verbose mode (file logger has more detailed results)
-    if (!commandLineArgs.verbose) {
+    if (!argv.verbose) {
       logger('success', `Successfully minified "${targetFilePath}"`);
     }
   });
@@ -38,18 +65,19 @@ function minify(srcFilePath, targetFilePath) {
 
 function minifyCSS() {
   return new Promise((resolve, reject) => {
-    if (!config.dist || !config.dist.files) {
+    if (!config.cssmin.dist || !config.cssmin.dist.files) {
       throw new Error('Need to have target CSS files passed in for minifier');
     }
 
-    const files = Object.keys(config.dist.files);
+    const files = Object.keys(config.cssmin.dist.files);
     const processes = [];
 
     files.forEach((targetFileName) => {
-      const srcFileName = config.dist.files[targetFileName][0];
+      const srcFileName = config.cssmin.dist.files[targetFileName][0];
       processes.push(minify(srcFileName, targetFileName));
     });
 
+    // eslint-disable-next-line no-promise-executor-return
     return Promise.all(processes).then(() => {
       resolve();
     }).catch((e) => {
@@ -61,4 +89,4 @@ function minifyCSS() {
 // -------------------------------------
 // Main
 // -------------------------------------
-module.exports = minifyCSS();
+minifyCSS();

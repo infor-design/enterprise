@@ -46,7 +46,7 @@
   $('body').on('initialized', function () {
 
     //Dynamically populate the month with current locale data.
-    var wideMonths = Locale.calendar().months.wide,
+    var wideMonths = Soho.Locale.calendar().months.wide,
       months = '';
 
     wideMonths.map(function (month, i) {

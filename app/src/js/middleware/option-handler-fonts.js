@@ -1,4 +1,4 @@
-const logger = require('../logger');
+import logger from '../logger.js';
 
 // Matches required font weights as defined by the Design System:
 // https://github.com/infor-design/design-system/blob/main/design-tokens/theme-new/theme.json#L80-L84
@@ -51,7 +51,7 @@ const ASSISTANT_LOCALE = 'he-IL';
 // Font Switching Middleware.
 // For the IDS New/Uplift theme modes, certain Locales require specific fonts.
 // See the discussion on https://github.com/infor-design/design-system/issues/385
-module.exports = function () {
+export default function () {
   return function optionHandlerFonts(req, res, next) {
     const localeString = res.opts.locale;
     let changedLocale = false;
@@ -139,4 +139,4 @@ module.exports = function () {
 
     next();
   };
-};
+}

@@ -17,8 +17,8 @@
   }
 
   &:active {
-    background-color: $button-color-primary-active-background;
-    border: 2px solid $button-color-primary-active-background;
+    background-color: $button-color-primary-hover-background;
+    border: 2px solid $button-color-primary-hover-background;
     box-shadow: none;
   }
 
@@ -30,7 +30,7 @@
     }
 
     &:active {
-      background-color: $button-color-primary-active-background;
+      background-color: $button-color-primary-hover-background;
       box-shadow: none;
     }
   }
@@ -51,23 +51,23 @@
   }
 }
 
-.btn-primary[disabled] {
+.btn-primary[disabled]:not(.destructive) {
   background-color: $button-color-primary-disabled-background-new;
   border: 2px solid $button-color-primary-disabled-background-new;
-  color: $button-color-primary-disabled-font-new !important;
+  color: $button-color-primary-disabled-font-new;
 
   svg.icon {
-    color: $button-color-primary-disabled-font-new !important;
-
-    &:hover {
-      color: $button-color-primary-disabled-font-new;
-    }
+    color: $button-color-primary-disabled-font-new;
   }
 
   &:hover {
     background-color: $button-color-primary-disabled-background-new;
-    border: 2px solid $button-color-primary-disabled-background-new;
+    border-color: $button-color-primary-disabled-background-new;
     color: $button-color-primary-disabled-font-new;
+
+    svg.icon {
+      color: $button-color-primary-disabled-font-new;
+    }
   }
 }
 
@@ -76,6 +76,15 @@
   border-radius: 8px;
   color: $button-color-secondary-initial-font-new;
   border: 2px solid $button-color-secondary-initial-border-new;
+
+  &.btn-menu {
+    color: $button-color-secondary-initial-font-new;
+    border-color: $button-color-secondary-initial-border-new;
+
+    .icon {
+      color: $button-color-secondary-initial-font-new;
+    }
+  }
 
   svg.icon {
     color: $button-color-secondary-initial-font-new;
@@ -126,10 +135,11 @@
 
 .btn-tertiary,
 .btn-icon,
-.btn-menu {
+.btn-menu,
+.btn {
   border-radius: 8px;
 
-  &:hover:not(:disabled) {
+  &:hover:not(:disabled):not(.close):not(.btn-filter):not(.personalize-actionable):not(.destructive) {
     background-color: $button-color-tertiary-hover-background-new;
     color: $button-color-tertiary-hover-font-new;
 
@@ -157,16 +167,11 @@
         color: $button-color-tertiary-destructive-hover-font-new;
       }
     }
-
-    &:disabled {
-      color: $button-color-tertiary-destructive-disabled-font-new;
-      background-color: $button-color-tertiary-destructive-disabled-background-new;
-
-      svg.icon {
-        color: $button-color-tertiary-destructive-disabled-font-new;
-      }
-    }
   }
+}
+
+.btn-icon.trigger:hover:not(:disabled){
+  background-color: $button-color-tertiary-hover-background-new !important;
 }
 
 .btn-link {
@@ -210,8 +215,9 @@
 .btn-icon,
 .btn-close {
   > .icon {
-    position: relative;
-    top: -1px;
+    display: inline-flex;
+    vertical-align: middle;
+    flex-direction: row;
   }
 }
 
@@ -219,6 +225,7 @@
 .btn-actions {
   > .icon {
     height: 19px;
+    top: -1px;
   }
 }
 
@@ -301,4 +308,28 @@
 
 .btn-icon .icon.app-header {
   top: 2px;
+}
+
+.btn-icon.application-menu-trigger {
+  svg.icon {
+    + .notification-badge-container {
+      .notification-dot.notification-dot-upper-left {
+        left: -19px;
+      }
+
+      .notification-dot.notification-dot-upper-right {
+        right: 8px;
+      }
+
+      .notification-dot.notification-dot-lower-left {
+        left: -19px;
+        top: 10px;
+      }
+
+      .notification-dot.notification-dot-lower-right {
+        left: -11px;
+        top: 10px;
+      }
+    }
+  }
 }

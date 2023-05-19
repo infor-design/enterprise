@@ -14,10 +14,10 @@
         data = [];
 
       //Define Columns for the Grid.
-      columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
+      columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center'});
       columns.push({ id: 'id', name: 'Customer Id', field: 'id'});
       columns.push({ id: 'type', name: 'Type', field: 'type'});
-      columns.push({ id: 'location', name: 'Location', field: 'location', formatter: Formatters.Hyperlink});
+      columns.push({ id: 'location', name: 'Location', field: 'location', formatter: Soho.Formatters.Hyperlink});
       columns.push({ id: 'firstname', name: 'First Name', field: 'firstname'});
       columns.push({ id: 'lastname', name: 'Last Name', field: 'lastname'});
       columns.push({ id: 'phone', name: 'Phone', field: 'phone'});

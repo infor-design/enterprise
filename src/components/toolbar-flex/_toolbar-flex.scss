@@ -22,6 +22,7 @@
   .toolbar-section {
     &.title {
       padding: 1px 0;
+      font-size: 1.6rem;
     }
 
     .searchfield-wrapper {
@@ -36,6 +37,21 @@
 
           @media (min-width: $breakpoint-phone-to-tablet) {
             right: 5px;
+          }
+        }
+
+        &.has-categories.has-go-button {
+          .btn-icon.close {
+            right: 46px;
+            top: 8px;
+
+            svg.close {
+              top: 1px;
+            }
+
+            @media (max-width: $breakpoint-phone-to-tablet) {
+              right: 85px;
+            }
           }
         }
 
@@ -76,7 +92,10 @@
   position: relative;
   text-align: left;
   -webkit-touch-callout: none;
-  padding: 0 15px;
+  padding: 0 0 0 15px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
 
   .toolbar-section {
     @include enable-select();
@@ -99,23 +118,115 @@
       &::before {
         @include vertical-alignment-spacer;
       }
+
+      &.selection-count {
+        top: 2px;
+      }
     }
 
     &.buttonset {
-      width: calc(55% - 1px);
+      width: calc(55% - 41px);
       height: 42px;
       user-select: none;
-      overflow: hidden;
+      overflow: hidden !important;
       padding-left: 1px;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: flex-end;
 
       > * {
         margin: -1px 0 0 2px;
         vertical-align: top;
       }
+
+      [class^='btn'] {
+        color: $contextual-toolbar-button-color;
+
+        &.is-overflowed {
+          display: none;
+        }
+
+        svg {
+          color: $contextual-toolbar-button-color;
+        }
+
+        &:hover {
+          color: $contextual-toolbar-button-hover-color;
+          background-color: transparent;
+
+          svg {
+            color: inherit;
+          }
+        }
+
+        &:focus {
+          box-shadow: 0 0 0 2px transparent, 0 0 0 1px $contextual-toolbar-color;
+
+          &:not(.hide-focus) {
+            color: $contextual-toolbar-color;
+          }
+        }
+
+        &[disabled] {
+          color: $contextual-toolbar-button-disabled-color;
+          background-color: transparent;
+
+          svg {
+            color: inherit;
+          }
+
+          &:hover {
+            background-color: transparent;
+            border-color: transparent;
+          }
+        }
+      }
     }
 
-    [class^='btn'] {
-      color: $contextual-toolbar-button-color;
+    &.more {
+      display: none;
+      width: 40px;
+
+      [class^='btn-actions'] {
+        top: 3px;
+        left: 1px;
+        color: $contextual-toolbar-button-color;
+
+        svg {
+          color: $contextual-toolbar-button-color;
+        }
+
+        &:not(:disabled):hover {
+          color: $contextual-toolbar-button-hover-color;
+          background-color: transparent;
+
+          svg {
+            color: inherit;
+          }
+        }
+
+        &:focus {
+          box-shadow: 0 0 0 2px transparent, 0 0 0 1px $contextual-toolbar-color;
+
+          &:not(.hide-focus) {
+            color: $contextual-toolbar-color;
+          }
+        }
+
+        &[disabled] {
+          color: $contextual-toolbar-button-disabled-color;
+
+          svg {
+            color: inherit;
+          }
+
+          &:hover {
+            background-color: transparent;
+            border-color: transparent;
+          }
+        }
+      }
     }
   }
 
@@ -226,6 +337,11 @@
       &.flex-grow-1 {
         flex-grow: 1;
       }
+
+      .btn {
+        flex-shrink: 0;
+        text-overflow: unset;
+      }
     }
   }
 
@@ -256,6 +372,10 @@
       &.no-overflowed-items {
         display: none;
       }
+    }
+
+    .btn-actions:hover:not(:disabled) {
+      background-color: $toolbar-btn-actions-hover-bg-color;
     }
   }
 }
@@ -298,18 +418,42 @@ html[dir='rtl'] {
 
 html[class*='theme-classic-'] .flex-toolbar .toolbar-section .searchfield-wrapper.toolbar-searchfield-wrapper.has-close-icon-button {
   .custom-button {
-    top: -1px;
+    top: 1px;
+
+    + .collapse-button,
+    + .close + .collapse-button {
+      left: -37px;
+    }
   }
 
   &.has-close-icon-button .custom-button {
     left: -38px;
   }
 
-  &.has-text.active.has-close-icon-button .custom-button {
-    left: -60px;
+  &.has-categories.has-go-button .btn-icon.close {
+    top: 6px;
   }
 
-  &:not(.has-categories) .btn-icon.close {
+  &:not(.has-categories).has-custom-button .btn-icon.close {
     right: 40px;
+
+    @media (max-width: $breakpoint-phone-to-tablet) {
+      right: 75px;
+    }
+  }
+
+  &.has-text.active.has-close-icon-button .custom-button {
+    left: -53px;
+  }
+}
+
+// Buttons hover state
+html[class*='theme-new-'] .flex-toolbar:not(.editor-toolbar):not(.formatter-toolbar):not(.contextual-toolbar) {
+  .toolbar-section [class^='btn']:not(:disabled):not(.searchfield-category-button) {
+    border-radius: 8px;
+
+    &:not(.collapse-button):hover {
+      background-color: $toolbar-btn-actions-hover-bg-color;
+    }
   }
 }

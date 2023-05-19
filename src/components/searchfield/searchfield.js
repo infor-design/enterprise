@@ -1,5 +1,3 @@
-import Promise from 'promise-polyfill';
-
 import { Environment as env } from '../../utils/environment';
 import * as debug from '../../utils/debug';
 import { warnAboutDeprecation } from '../../utils/deprecated';
@@ -448,6 +446,7 @@ SearchField.prototype = {
       this.goButton[0].setAttribute('id', utils.uniqueId(this.goButton, 'searchfield-go-button-'));
       this.wrapper.addClass('has-go-button');
       this.element.after(this.goButton);
+      this.goButton.button();
     } else {
       this.wrapper.removeClass('has-go-button');
     }
@@ -460,7 +459,7 @@ SearchField.prototype = {
       this.wrapper.addClass('has-custom-button');
       this.customButton = $('<button class="btn-icon custom-button"></button>');
       this.customButton.append($.createIconElement(this.settings.button.icon));
-      this.wrapper.append(this.customButton);
+      this.element.after(this.customButton);
     }
 
     // Stagger a calculation for setting the size of the Searchfield element, if applicable
@@ -506,7 +505,7 @@ SearchField.prototype = {
    */
   simpleAdjustOnBreakpoint() {
     if (this.shouldBeFullWidth()) {
-      if (!this.isFocused) {
+      if (!this.isFocused && (this.settings.collapsible || this.isContainedByFlexToolbar)) {
         this.wrapper[0].classList.remove('is-open');
       }
       return;
@@ -883,7 +882,9 @@ SearchField.prototype = {
       });
 
       self.xButton.on(`blur.${this.id}`, (e) => {
-        self.handleSafeBlur(e);
+        if (!self.xButton.hasClass('collapsed')) {
+          self.handleSafeBlur(e);
+        }
       });
     }
 
@@ -1027,6 +1028,12 @@ SearchField.prototype = {
       }
     }
 
+    if (this.customButton && this.customButton.length) {
+      if (this.customButton.has(active).length) {
+        return true;
+      }
+    }
+
     return false;
   },
 
@@ -1086,7 +1093,7 @@ SearchField.prototype = {
 
       if (self.isCurrentlyCollapsible) {
         self.collapse();
-      } else if (self.isContainedByFlexToolbar) {
+      } else if (self.isContainedByFlexToolbar && (self.settings.collapsible || breakpoints.isBelow('phone-to-tablet'))) {
         self.wrapper[0].classList.remove('is-open');
       }
     }
@@ -1192,7 +1199,7 @@ SearchField.prototype = {
       this.handleSafeBlur();
     }
 
-    if (this.isContainedByFlexToolbar) {
+    if (this.isContainedByFlexToolbar && this.toolbarFlexItem?.toolbarAPI?.items?.length > 1) {
       const yKeys = ['ArrowUp', 'Up', 'ArrowDown', 'Down'];
       if (yKeys.indexOf(keyName) > -1) {
         this.collapse();
@@ -1565,7 +1572,7 @@ SearchField.prototype = {
     }
 
     if (this.hasGoButton()) {
-      subtractWidth += this.goButton.outerWidth(true) + 40;
+      subtractWidth += this.goButton.outerWidth(true);
     }
 
     // NOTE: final width can only be 100% if no value is subtracted for other elements
@@ -1575,8 +1582,9 @@ SearchField.prototype = {
       if (this.element[0].parentElement == null) {
         isAlternate = false;
       } else {
-        isAlternate = this.element[0].parentElement.classList.contains('alternate');
+        isAlternate = this.element[0].parentElement.classList.contains('alternate') || this.isContainedByFlexToolbar;
       }
+
       targetWidthProp = `calc(${isAlternate ? '100%' : baseWidth} - ${subtractWidth}px)`;
     }
     if (targetWidthProp) {
@@ -1761,6 +1769,7 @@ SearchField.prototype = {
    */
   expand(noFocus) {
     const self = this;
+    // eslint-disable-next-line compat/compat
     const expandPromise = new Promise((resolve) => {
       if (self.isExpanded || self.isExpanding || self.isCollapsing) {
         resolve();
@@ -1791,7 +1800,7 @@ SearchField.prototype = {
         buttonset: buttonsetElemWidth
       };
 
-      if (!this.isContainedByFlexToolbar && breakpoints.isAbove('phone-to-tablet')) {
+      if (!this.isContainedByFlexToolbar) {
         this.wrapper[0].classList.add('is-open');
       }
       this.calculateOpenWidth();
@@ -1842,6 +1851,10 @@ SearchField.prototype = {
           delete self.isExpanding;
           self.isExpanded = true;
 
+          if (self.settings.clearable) {
+            self.xButton.removeClass('collapsed');
+          }
+
           if (self.isCurrentlyCollapsible && !self.isFocused && !self.focusElem) {
             self.handleSafeBlur();
           }
@@ -1859,6 +1872,7 @@ SearchField.prototype = {
    */
   collapse() {
     const self = this;
+    // eslint-disable-next-line compat/compat
     const collapsePromise = new Promise((resolve) => {
       if (!self.isExpanded && self.isExpanding && !self.isCollapsing) {
         resolve();
@@ -1918,6 +1932,11 @@ SearchField.prototype = {
            * @property {object} event - The jquery event object
            */
           self.element.trigger('collapsed');
+
+          if (self.settings.clearable) {
+            self.xButton.addClass('collapsed');
+          }
+
           resolve();
         }
       });
@@ -1944,7 +1963,7 @@ SearchField.prototype = {
     let dir = 1;
     if (e && !e.key) {
       dir = 0;
-      if (this.toolbarFlexItem && this.toolbarFlexItem.focused) {
+      if (this.toolbarFlexItem && this.toolbarFlexItem?.focused) {
         dir = 1;
       }
     }

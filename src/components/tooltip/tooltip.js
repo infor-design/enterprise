@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { keyboard } from '../../utils/keyboard';
@@ -73,6 +74,7 @@ const TOOLTIP_DEFAULTS = {
   delay: 500,
   onHidden: null,
   attachToBody: true,
+  appendTo: '[role="main"]',
   attributes: null,
 };
 
@@ -180,6 +182,10 @@ Tooltip.prototype = {
     this.description = this.element.parent().find('.tooltip-description');
     if (!this.description.length && this.settings.isError) {
       this.description = $(`<span id="tooltip-description-${this.descriptionId}" class="tooltip-description audible"></span>`).insertAfter(this.element);
+    }
+
+    if (!this.settings.appendTo) {
+      this.settings.appendTo = '[role="main"]';
     }
 
     if (this.element.is('.dropdown, .multiselect')) {
@@ -834,6 +840,10 @@ Tooltip.prototype = {
       if (window.orientation === undefined) {
         $('body').on(`resize.${COMPONENT_NAME}`, () => {
           self.hide();
+
+          if (self.settings.keepOpen) {
+            self.show();
+          }
         });
       }
 
@@ -885,7 +895,7 @@ Tooltip.prototype = {
     // Popovers need to be contained by an element with the correct ARIA role.
     // See infor-design/enterprise#4403
     if (this.isPopover) {
-      targetContainer = $('[role="main"]');
+      targetContainer = $(this.settings.appendTo);
     }
 
     if (!targetContainer.length) {
@@ -905,6 +915,8 @@ Tooltip.prototype = {
     if (!this.settings.attachToBody) {
       attachAfterTriggerElem = true;
       targetContainer = modalParent;
+    } else {
+      targetContainer = $('body');
     }
 
     // If a specific parent element is defined, use that

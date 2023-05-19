@@ -34,7 +34,7 @@
         lookupColumns = [];
       //Define Columns for the Lookup Grid.
       lookupColumns.push({ id: 'productId', name: 'Product Id', field: 'productId'});
-      lookupColumns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink});
+      lookupColumns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Soho.Formatters.Hyperlink});
       lookupOptions = {
         field: 'productId',
         options: {
@@ -64,23 +64,23 @@
         }
       };
       //Define Columns for the Grid.
-      columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Readonly});
-      columns.push({ id: 'productId', name: 'Product', field: 'productId', formatter: Formatters.Lookup, editor: Editors.Lookup, validate: 'required', editorOptions: lookupOptions, filterType: 'lookup' });
-      columns.push({ id: 'orderDateTime', name: 'Date / Time', field: 'orderDate', filterType: 'date', dateFormat: Soho.Locale.calendar().dateFormat['short'] + ' ' + Soho.Locale.calendar().dateFormat['timestamp'], editorOptions: { showTime: true, dateFormat: Soho.Locale.calendar().dateFormat['short'] + ' ' + Soho.Locale.calendar().dateFormat['timestamp'], minuteInterval: 1, secondInterval: 1 }, editor: Editors.Date, formatter: Soho.Formatters.Date });
-      columns.push({ id: 'orderDate', name: 'Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy', editor: Editors.Date, filterType: 'date' });
-      columns.push({ id: 'orderTime', name: 'Time', field: 'orderDate', formatter: Formatters.Time, editor: Editors.Time, filterType: 'time' });
-      columns.push({ id: 'action', name: 'Action', field: 'action', formatter: Formatters.Dropdown, editor: Editors.Dropdown, validate: 'required', filterType: 'multiselect',
+      columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Soho.Formatters.Readonly});
+      columns.push({ id: 'productId', name: 'Product', field: 'productId', formatter: Soho.Formatters.Lookup, editor: Soho.Editors.Lookup, validate: 'required', editorOptions: lookupOptions, filterType: 'lookup' });
+      columns.push({ id: 'orderDateTime', name: 'Date / Time', field: 'orderDate', filterType: 'date', dateFormat: Soho.Locale.calendar().dateFormat['short'] + ' ' + Soho.Locale.calendar().dateFormat['timestamp'], editorOptions: { showTime: true, dateFormat: Soho.Locale.calendar().dateFormat['short'] + ' ' + Soho.Locale.calendar().dateFormat['timestamp'], minuteInterval: 1, secondInterval: 1 }, editor: Soho.Editors.Date, formatter: Soho.Formatters.Date });
+      columns.push({ id: 'orderDate', name: 'Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy', editor: Soho.Editors.Date, filterType: 'date' });
+      columns.push({ id: 'orderTime', name: 'Time', field: 'orderDate', formatter: Soho.Formatters.Time, editor: Soho.Editors.Time, filterType: 'time' });
+      columns.push({ id: 'action', name: 'Action', field: 'action', formatter: Soho.Formatters.Dropdown, editor: Soho.Editors.Dropdown, validate: 'required', filterType: 'multiselect',
         options: [{id: '', label: '', value: -1}, {id: 'oh1', label: 'On Hold', value: 1}, {id: 'sh1', label: 'Shipped', value: 2} , {id: 'ac1', label: 'Action', value: 'Action'}, {id: 'pen', label: 'Pending', value: 4}, {id: 'bk1', label: 'Backorder', value: 5}, {id: 'can', label: 'Cancelled', value: 6}, {id: 'pro', label: 'Processing', value: 7}]
       });
-      columns.push({ id: 'capacity', name: 'Capacity', field: 'capacity', formatter: Formatters.Spinbox, editor: Editors.Spinbox, filterType: 'integer' });
-      columns.push({ id: 'portable', name: 'Portable', field: 'portable', align: 'center', formatter: Formatters.Checkbox, editor: Editors.Checkbox, filterType: 'checkbox' });
-      columns.push({ id: 'activity', name: 'Activity', field: 'activity', required: true, editor: Editors.Input, validate: 'required', filterType: 'text' });
-      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', formatter: Formatters.Decimal, numberFormat: { minimumFractionDigits: 0, maximumFractionDigits: 1 }, editor: Editors.Input, filterType: 'decimal' });
-      columns.push({ id: 'price', name: 'Price', field: 'price', align: 'right', formatter: Formatters.Decimal, numberFormat: { minimumFractionDigits: 3, maximumFractionDigits: 3 }, editor: Editors.Input, mask: '###.000', filterType: 'decimal' });
-      columns.push({ id: 'color', name: 'Color', field: 'color', hidden: true, formatter: Formatters.Colorpicker, editor: Editors.Colorpicker });
-      columns.push({ id: 'favorite', name: 'Favorite', field: 'favorite', hidden: true, formatter: Formatters.Favorite, editor: Editors.Favorite });
-      columns.push({ id: 'file', name: 'File', field: 'file', hidden: true, formatter: Formatters.Fileupload, editor: Editors.Fileupload });
-      columns.push({ id: 'comment', resizable: true, hidden: true, name: 'Comment', field: 'comment', formatter: Formatters.Textarea, editor: Editors.Textarea, filterType: 'text' });
+      columns.push({ id: 'capacity', name: 'Capacity', field: 'capacity', formatter: Soho.Formatters.Spinbox, editor: Soho.Editors.Spinbox, filterType: 'integer' });
+      columns.push({ id: 'portable', name: 'Portable', field: 'portable', align: 'center', formatter: Soho.Formatters.Checkbox, editor: Soho.Editors.Checkbox, filterType: 'checkbox' });
+      columns.push({ id: 'activity', name: 'Activity', field: 'activity', required: true, editor: Soho.Editors.Input, validate: 'required', filterType: 'text' });
+      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', formatter: Soho.Formatters.Decimal, numberFormat: { minimumFractionDigits: 0, maximumFractionDigits: 1 }, editor: Soho.Editors.Input, filterType: 'decimal' });
+      columns.push({ id: 'price', name: 'Price', field: 'price', align: 'right', formatter: Soho.Formatters.Decimal, numberFormat: { minimumFractionDigits: 3, maximumFractionDigits: 3 }, editor: Soho.Editors.Input, mask: '###.000', filterType: 'decimal' });
+      columns.push({ id: 'color', name: 'Color', field: 'color', hidden: true, formatter: Soho.Formatters.Colorpicker, editor: Soho.Editors.Colorpicker });
+      columns.push({ id: 'favorite', name: 'Favorite', field: 'favorite', hidden: true, formatter: Soho.Formatters.Favorite, editor: Soho.Editors.Favorite });
+      columns.push({ id: 'file', name: 'File', field: 'file', hidden: true, formatter: Soho.Formatters.Fileupload, editor: Soho.Editors.Fileupload });
+      columns.push({ id: 'comment', resizable: true, hidden: true, name: 'Comment', field: 'comment', formatter: Soho.Formatters.Textarea, editor: Soho.Editors.Textarea, filterType: 'text' });
 
       //Init and get the api for the grid
       grid = $('#datagrid').datagrid({

@@ -15,6 +15,7 @@
     position: absolute;
     top: 0;
     width: 3px;
+    height: 70%;
   }
 
   .indicator {
@@ -44,6 +45,22 @@
 
   &:last-child {
     margin-bottom: 0;
+  }
+
+  &:nth-last-child(2) {
+    &::before {
+      border-left: 1px dashed $timeline-line-color;
+      content: '';
+      position: absolute;
+      width: 3px;
+      bottom: -18px;
+      height: 100%;
+      left: 1.22em;
+
+      @media (min-width: $breakpoint-phone-to-tablet) {
+        left: 15.27rem;
+      }
+    }
   }
 
   .date {
@@ -139,6 +156,40 @@
 .widget .timeline {
   margin-left: 20px;
   margin-top: 20px;
+}
+
+.column {
+  &.one-third {
+    .card .timeline,
+    .widget .timeline {
+      &::before {
+        bottom: 60px;
+        left: 1.125em;
+        height: 85%;
+      }
+
+      .timeline-block {
+        &:nth-last-child(2)::before {
+          visibility: hidden;
+        }
+
+        .indicator-container {
+          margin-left: 0;
+        }
+
+        .content,
+        .date {
+          margin-left: 5em;
+          float: none;
+        }
+
+        .date {
+          width: auto;
+          top: 85%;
+        }
+      }
+    }
+  }
 }
 
 // RTL Styles

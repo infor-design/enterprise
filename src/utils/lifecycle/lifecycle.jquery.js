@@ -1,6 +1,7 @@
 import { siftFor } from './lifecycle';
 
 const EXCLUDED_FROM_CLOSE_CHILDREN = [
+  '.expandable-card',
   '.expandable-area',
   '.accordion',
   '[soho-busyindicator]',

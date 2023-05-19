@@ -16,10 +16,10 @@
       data.push({ id: 3, productId: 2342203, productName: 'Compressor', activity:  'Inspect and Repair', quantity: 1, price: 120.99, status: null, orderDate: new Date(2014, 6, 3), action: 'Action'});
 
       //Adding a width to the first column, I lose my scrollbar
-      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly, width: 115 });
-      columns.push({ id: 'productName', name: 'Product Name', field: 'productName',  formatter: Formatters.Hyperlink, width: 200});
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Readonly, width: 115 });
+      columns.push({ id: 'productName', name: 'Product Name', field: 'productName',  formatter: Soho.Formatters.Hyperlink, width: 200});
       columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 200 });
-      columns.push({ id: 'activity1', name: 'Activity', field: 'activity1', formatter: Formatters.TextArea });
+      columns.push({ id: 'activity1', name: 'Activity', field: 'activity1', formatter: Soho.Formatters.TextArea });
 
       //Init and get the api for the grid
       var grid = $('#datagrid2').datagrid({

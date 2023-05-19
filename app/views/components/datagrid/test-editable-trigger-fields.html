@@ -44,13 +44,13 @@
     data.push({ id: 7, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', portable: true, quantity: 41, price: 123.99, status: 'OK', state:'Idaho', orderDate: new Date(2014, 6, 9), action: 'val4' , color: '#66A140'});
 
     // Define Columns for the Grid.
-    columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox});
-    columns.push({ id: 'time', name: 'Time', field: 'time', formatter: Formatters.Time, editor: Editors.Time, validate: 'required customRule' });
-    columns.push({ id: 'date', name: 'Date', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date, dateFormat: 'M/d/yyyy', validate: 'required customRule' });
-    columns.push({ id: 'productId', name: 'Lookup', field: 'productId', formatter: Formatters.Lookup, minWidth: 100, editor: Editors.Lookup, maxLength: 7, validate: 'required customRule' });
-    columns.push({ id: 'dropdown', name: 'Dropdown', field: 'action', formatter: Formatters.Dropdown, editor: Editors.Dropdown, validate: 'required', options: dropdowndOptions, validate: 'required customRule' });
-    columns.push({ id: 'colorpicker', name: 'Colorpicker', field: 'color', formatter: Formatters.Colorpicker, editor: Editors.Colorpicker, validate: 'required customRule'});
-    columns.push({ id: 'fileupload', name: 'Fileupload', field: 'attachment', formatter: Formatters.Fileupload, editorOptions: {allowedTypes: 'jpg|png'}, editor: Editors.Fileupload, validate: 'required customRule' });
+    columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox});
+    columns.push({ id: 'time', name: 'Time', field: 'time', formatter: Soho.Formatters.Time, editor: Soho.Editors.Time, validate: 'required customRule' });
+    columns.push({ id: 'date', name: 'Date', field: 'orderDate', formatter: Soho.Formatters.Date, editor: Soho.Editors.Date, dateFormat: 'M/d/yyyy', validate: 'required customRule' });
+    columns.push({ id: 'productId', name: 'Lookup', field: 'productId', formatter: Soho.Formatters.Lookup, minWidth: 100, editor: Soho.Editors.Lookup, maxLength: 7, validate: 'required customRule' });
+    columns.push({ id: 'dropdown', name: 'Dropdown', field: 'action', formatter: Soho.Formatters.Dropdown, editor: Soho.Editors.Dropdown, validate: 'required', options: dropdowndOptions, validate: 'required customRule' });
+    columns.push({ id: 'colorpicker', name: 'Colorpicker', field: 'color', formatter: Soho.Formatters.Colorpicker, editor: Soho.Editors.Colorpicker, validate: 'required customRule'});
+    columns.push({ id: 'fileupload', name: 'Fileupload', field: 'attachment', formatter: Soho.Formatters.Fileupload, editorOptions: {allowedTypes: 'jpg|png'}, editor: Soho.Editors.Fileupload, validate: 'required customRule' });
     columns.push({ id: 'buffer', name: '', field: ''});
 
     // Init and get the api for the grid

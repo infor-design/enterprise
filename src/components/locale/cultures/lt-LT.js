@@ -59,6 +59,9 @@ Soho.Locale.addCulture('lt-LT', {
     group: ' ',
     groupSizes: [3, 3]
   },
+  punctuation: {
+    comma: ','
+  },
   // Resx - Provided By Translation Team
   messages: {
     AboutText: { id: 'AboutText', value: '&copy;‎ ‏{0}‎ „Infor“. Visos teisės saugomos. Čia pateikti žodiniai ir vaizdiniai prekių ženklai yra įmonės „Infor“ ir (arba) jos antrinių bendrovių ir filialų prekių ženklai ir (arba) registruotieji prekių ženklai. Visi kiti čia nurodyti prekių ženklai yra jų atitinkamų savininkų nuosavybė.' },

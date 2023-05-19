@@ -1,23 +1,27 @@
 #!/usr/bin/env node
+/* eslint-disable no-underscore-dangle */
 
 /**
  * IDS Enterprise Minify Process (Terser Wrapper)
  */
 
-// -------------------------------------
-// Requirements
-// -------------------------------------
-const chalk = require('chalk');
-const glob = require('glob');
-const path = require('path');
-const extend = require('extend');
-const Terser = require('terser');
-const commandLineArgs = require('yargs').argv;
+import glob from 'glob';
+import * as path from 'path';
+import extend from 'extend';
+import { minify } from 'terser';
+import _yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
+import { fileURLToPath } from 'url';
 
-const logger = require('./logger');
-const config = require('./configs/terser');
-const getFileContents = require('./build/get-file-contents');
-const writeFile = require('./build/write-file');
+import logger from './logger.js';
+import config from './configs/terser.js';
+import getFileContents from './build/get-file-contents.js';
+import writeFile from './build/write-file.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const argv = _yargs(hideBin(process.argv)).argv;
 
 const paths = {
   ids: {
@@ -41,7 +45,7 @@ let compressedFileCount = 0;
 function openUncompressedFile(name, filePath) {
   const uncompressedFile = getFileContents(filePath);
 
-  if (commandLineArgs.verbose) {
+  if (argv.verbose) {
     if (!uncompressedFile) {
       logger('alert', `WARNING: No ${name} was available at "${filePath}"`);
     } else {
@@ -52,7 +56,7 @@ function openUncompressedFile(name, filePath) {
   return uncompressedFile;
 }
 
-//==============================
+// =============================
 // Each of the following functions returns a promise.
 // When the promise resolves successfully, the resulting object looks like:
 // @param {string} result.code the minified code from Terser.
@@ -61,32 +65,37 @@ function openUncompressedFile(name, filePath) {
 // @param {string} [result.inputSourceMapFileName] if applicable, the filename for the uncompressed sourcemap.
 // @param {string} result.outputFile the target filename for the compressed code.
 // @param {stirng} [result.outputSourceMapFile] if applicable, the target filename for the compressed sourcemap.
-//==============================
+// =============================
 
 /**
  * Minifies the main IDS JS library.
  * Wraps the execution of Terser CLI and returns the result when resolved.
  * @returns {Promise} resovled once the CLI process completes.
  */
-function minify() {
-  return new Promise((resolve, reject) => {
+function minifyIdsJs() {
+  // eslint-disable-next-line no-async-promise-executor
+  return new Promise(async (resolve, reject) => {
     const code = openUncompressedFile('Uncompressed "sohoxi.js" library', paths.ids.input.js);
-    config.terser.sourceMap.content = openUncompressedFile('Uncompressed "sohoxi.js" sourceMap', paths.ids.input.sourceMap);
+    // config.terser.sourceMap.content = openUncompressedFile('Uncompressed "sohoxi.js" sourceMap', paths.ids.input.sourceMap);
 
-    const result = Terser.minify(code, config.terser);
+    // const result = minify(code, config.terser);
+    const result = await minify(code, config.terser);
+
     if (result.error) {
       reject(new Error(`Error running Terser: ${result.error}`));
       return;
     }
-    if (commandLineArgs.verbose) {
-      logger('success', `Compressed library file "${chalk.yellow('sohoxi.js')}" with sourcemap successfully.`);
+    if (argv.verbose) {
+      logger('success', `Compressed library file "${'sohoxi.js'}" with sourcemap successfully.`);
     }
     compressedFileCount++;
+
     resolve(extend({}, result, {
       inputFile: paths.ids.input.js,
       inputSourceMapFileName: paths.ids.input.sourceMap,
       outputFile: paths.ids.output.js,
-      outputSourceMapFile: paths.ids.output.sourceMap
+      outputSourceMapFile: paths.ids.output.sourceMap,
+      code: result.code
     }));
   });
 }
@@ -98,22 +107,24 @@ function minify() {
  * @returns {Promise} resolves when the Terser process completes or throws an error.
  */
 function minifyCulture(inputFileName) {
-  return new Promise((resolve, reject) => {
+  // eslint-disable-next-line no-async-promise-executor
+  return new Promise(async (resolve, reject) => {
     const culture = inputFileName.substring(inputFileName.lastIndexOf(path.sep) + 1, inputFileName.lastIndexOf('.'));
     const code = openUncompressedFile(`Uncompressed culture "${culture}"`, path.resolve(paths.cultures, inputFileName));
 
-    const result = Terser.minify(code);
+    const result = await minify(code);
     if (result.error) {
       reject(new Error(`Error running Terser: ${result.error}`));
       return;
     }
-    if (commandLineArgs.verbose) {
-      logger('success', `Compressed culture file "${chalk.yellow(inputFileName)}" successfully.`);
+    if (argv.verbose) {
+      logger('success', `Compressed culture file "${inputFileName}" successfully.`);
     }
     compressedFileCount++;
     resolve(extend({}, result, {
       inputFile: inputFileName,
-      outputFile: path.resolve(paths.cultures, `${culture}.min.js`)
+      outputFile: path.resolve(paths.cultures, `${culture}.min.js`),
+      code: result.code
     }));
   });
 }
@@ -129,12 +140,12 @@ function minifyJS() {
 
     // First result is the main `sohoxi.js` minification.
     // All subsequent results are culture files.
-    const minifyResults = [minify()];
+    const minifyResults = [minifyIdsJs()];
     cultureFiles.forEach((culture) => {
       minifyResults.push(minifyCulture(culture));
     });
 
-    Promise.all(minifyResults).then((results, i) => {
+    Promise.all(minifyResults).then((results) => {
       const fileWrites = [];
       results.forEach((result) => {
         fileWrites.push(writeFile(result.outputFile, result.code));
@@ -148,7 +159,7 @@ function minifyJS() {
 
       // After all file writing is complete, successfully exit.
       Promise.all(fileWrites).then((values) => {
-        logger('beer', `Terser successfully compressed ${chalk.green.bold('(' + compressedFileCount + ')')} JS files!`);
+        logger('beer', `Terser successfully compressed ${`(${compressedFileCount})`} JS files!`);
         resolve(values);
         process.exit(0);
       });
@@ -160,4 +171,5 @@ function minifyJS() {
   });
 }
 
-module.exports = minifyJS();
+minifyJS();
+/// export default minifyJS;

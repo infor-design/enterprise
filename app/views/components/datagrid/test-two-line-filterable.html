@@ -5,13 +5,13 @@
       </div>
     </div>
   </div>
-  
+
   <script>
     $('body').one('initialized', function () {
         var grid,
           columns = [],
           data = [];
-  
+
         // Define Some Sample Data
         data.push({ id: 1, productId: undefined, productName: 'Compressor', inStock: true, activity:  'Assemble Paint', quantity: 1, price: 410.99, orderDate: new Date(2014, 12, 8), action: 'Action', status: 'Error'});
         data.push({ id: 2, productId: 2241202, productName: '1 Different Compressor', inStock: true, activity:  'Inspect and Repair', quantity: 2, price: 310.99, orderDate: new Date(2015, 7, 3), action: 'On Hold', status: 'Error'});
@@ -22,27 +22,27 @@
         data.push({ id: 6, productId: null, productName: 'Some Compressor', inStock: true, activity:  'inspect and Repair', quantity: 41, price: 123.99, orderDate: new Date(2014, 6, 9), action: 'On Hold', status: 'Confirmed'});
         data.push({ id: 7, productId: null, productName: null, activity:  '', quantity: null, price: null, orderDate: null, action: 'Blank Row', status: 'Confirmed'});
         data.push({ id: 8, productId: null, productName: null, activity:  null, quantity: null, price: null, orderDate: null, action: 'Blank Row', status: 'Confirmed'});
-  
+
         var statuses = [{id:'Confirmed', value:'Confirmed', label:'Confirmed'},
                            {id:'Error', value:'Error', label:'Error'}];
-  
+
         var activities = [{id: 'Assemble Paint', value:'Assemble Paint', label: 'Assemble Paint'},
                            {id: '', value: '', label: 'Default Activity'},
                            {id: 'Inspect and Repair', value:'Inspect and Repair', label: 'Inspect and Repair'}];
-  
+
         //Define Columns for the Grid.
-        columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Readonly, filterType: 'text'});
-        columns.push({ id: 'productId', name: 'Product Id <br> Second Line', field: 'productId', formatter: Formatters.Readonly, filterType: 'text'});
-        columns.push({ id: 'productName', name: 'Product Name <br> Second Line', field: 'productName',  formatter: Formatters.Hyperlink, filterType: 'text', click: function(e, args){ console.log(e, args);}});
-        columns.push({ id: 'activity', name: 'Activity', field: 'activity', formatter: Formatters.Dropdown, filterType: 'multiselect', options: activities, editorOptions: {showSelectAll: true}});
+        columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Soho.Formatters.Readonly, filterType: 'text'});
+        columns.push({ id: 'productId', name: 'Product Id <br> Second Line', field: 'productId', formatter: Soho.Formatters.Readonly, filterType: 'text'});
+        columns.push({ id: 'productName', name: 'Product Name <br> Second Line', field: 'productName',  formatter: Soho.Formatters.Hyperlink, filterType: 'text', click: function(e, args){ console.log(e, args);}});
+        columns.push({ id: 'activity', name: 'Activity', field: 'activity', formatter: Soho.Formatters.Dropdown, filterType: 'multiselect', options: activities, editorOptions: {showSelectAll: true}});
         columns.push({ id: 'quantity', name: 'Qty', field: 'quantity', align: 'right', filterType: 'integer'});
-        columns.push({ id: 'orderDate', name: 'Order Date <br> Second Line', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'MM/dd/yyyy', filterType: 'date', width: 250});
-        columns.push({ id: 'inStock', name: 'In Stock', field: 'inStock', formatter: Formatters.Checkbox, align: 'center', filterType: 'checkbox'});
-        columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Formatters.Alert, filterType: 'select', options: statuses, ranges: [{'value':'Confirmed', 'classes': 'success', text: 'Confirmed'}, {'value':'Error', 'classes': 'error', text: 'Error'}]});
-        columns.push({ id: 'price',  name: 'Price', field: 'price', formatter: Formatters.Decimal, filterType: 'decimal', numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input, mask: '###,####.000'});
-  
+        columns.push({ id: 'orderDate', name: 'Order Date <br> Second Line', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'MM/dd/yyyy', filterType: 'date', width: 250});
+        columns.push({ id: 'inStock', name: 'In Stock', field: 'inStock', formatter: Soho.Formatters.Checkbox, align: 'center', filterType: 'checkbox'});
+        columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Soho.Formatters.Alert, filterType: 'select', options: statuses, ranges: [{'value':'Confirmed', 'classes': 'success', text: 'Confirmed'}, {'value':'Error', 'classes': 'error', text: 'Error'}]});
+        columns.push({ id: 'price',  name: 'Price', field: 'price', formatter: Soho.Formatters.Decimal, filterType: 'decimal', numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Soho.Editors.Input, mask: '###,####.000'});
+
         //Supported Filter Types: text, integer, date, select, decimal, checkbox, contents (FUTURE: lookup, percent)
-  
+
         //Init and get the api for the grid
         var api = $('#datagrid').datagrid({
           columns: columns,
@@ -51,20 +51,20 @@
           selectable: 'single',
           twoLineHeader: true,
           editable: true,
-          emptyMessage: {title: Locale.translate('NoData'), info: Locale.translate('NoDataFilter'), icon: 'icon-empty-no-data'},
+          emptyMessage: {title: Soho.Locale.translate('NoData'), info: Soho.Locale.translate('NoDataFilter'), icon: 'icon-empty-no-data-new'},
           toolbar: {title: 'Filterable Datagrid', filterRow: true, results: true, dateFilter: false ,keywordFilter: false, actions: true, views: false, rowHeight: true, collapsibleFilter: false}
         }).on('filtered', function (e, args) {
           console.log('filter ran', args);
         }).data('datagrid');
-  
+
       var newOptions = [{id:'Confirmed', value:'Confirmed', label:'Confirmed'},
                       {id:'Error', value:'Error', label:'Error'},
                       {id:'None', value:'None', label:'None'}];
-  
+
       columns[7].options = newOptions;
       api.updateColumns(columns);
-  
+
    });
-  
+
   </script>
-  
+

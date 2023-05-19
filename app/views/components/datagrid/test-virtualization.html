@@ -17,7 +17,7 @@ $('body').on('initialized', function () {
 
   for (var j = 0; j < columnCount; j++) {
     var colName = 'column'+j;
-    columns.push({ id: colName, name: colName, field: colName, width: 150, filterType: 'text', editor: Editors.Input, formatter: Formatters.Input});
+    columns.push({ id: colName, name: colName, field: colName, width: 150, filterType: 'text', editor: Soho.Editors.Input, formatter: Soho.Formatters.Input});
   }
 
   for (var i = 0; i < rowCount; i++) {

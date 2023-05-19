@@ -59,6 +59,9 @@ Soho.Locale.addCulture('tl-PH', {
     group: ',',
     groupSizes: [3, 3]
   },
+  punctuation: {
+    comma: ','
+  },
   // Resx - Provided By Translation Team
   messages: {
     AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. Nakalaan ang lahat ng mga karapatan. Ang mga marka ng salita at disenyo na nakalagay dito ay mga trademark at / o rehistradong trademark ng Infor at / o mga kaakibat at subsidiary nito. Nakalaan ang lahat ng mga karapatan. Ang lahat ng iba pang mga trademark na nakalista dito ay pag-aari ng kani-kanilang mga may-ari' },

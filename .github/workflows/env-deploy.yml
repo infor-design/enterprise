@@ -1,5 +1,5 @@
-# Checks if a branch is a candidate for environment deployment, 
-# start an Argo Workflow and waits for it to finish. 
+# Checks if a branch is a candidate for environment deployment,
+# start an Argo Workflow and waits for it to finish.
 # The run-workflow.sh script will exit with a 0 or 1.
 
 name: Environment deploy
@@ -20,7 +20,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.x]
+        node-version: [18.x]
 
     steps:
       - uses: actions/checkout@v2
@@ -116,7 +116,6 @@ jobs:
           branch_name=${{ steps.extract_branch_name.outputs.branch }}
           repo_name=${{ steps.extract_repo_name.outputs.repo_name }}
           repo_owner=${{ steps.extract_repo_owner.outputs.repo_owner }}
-          build_as_latest=false
           site="prod"
 
           case $branch_name in
@@ -126,10 +125,6 @@ jobs:
 
             *"staging"*)
               site="staging"
-              ;;
-
-            *"main"*)
-              build_as_latest=true
               ;;
           esac
 
@@ -142,7 +137,6 @@ jobs:
             -o hookandloop \
             -c enterprise \
             -f ${branch_name} \
-            -l ${build_as_latest} \
             -n ${branch_name//./} \
             -i ${image_version} \
             -a ${repo_owner}/${repo_name} \

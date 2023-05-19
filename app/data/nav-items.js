@@ -1,8 +1,8 @@
 // Ajax Accordion Contents
-const path = require('path');
+import * as path from 'path';
 
-module.exports = (req, res) => {
+export default function navItems(req, res) {
   const viewsRoot = req.app.get('views');
   req.app.set('layout', '');
   res.render(path.join(viewsRoot, 'components', 'accordion', '_example-ajax-results.html'));
-};
+}

@@ -17,12 +17,12 @@
 
       //Define Columns for the Grid.
 
-      columns.push({ id: 'favorite', name: '', field: 'favorite', showEmpty: true, align: 'center', formatter: Formatters.Favorite, editor: Editors.Favorite});
-      columns.push({ id: 'companyName', name: 'Company Name', field: 'companyName', formatter: Formatters.Hyperlink});
-      columns.push({ id: 'phone', name: 'Phone', field: 'phone', editor: Editors.Input});
-      columns.push({ id: 'location', name: 'Location', field: 'location', editor: Editors.Input});
-      columns.push({ id: 'contact', name: 'Contact Name', field: 'contact', editor: Editors.Input});
-      columns.push({ id: 'customerSince', name: 'Customer Since', field: 'customerSince', editor: Editors.Input});
+      columns.push({ id: 'favorite', name: '', field: 'favorite', showEmpty: true, align: 'center', formatter: Soho.Formatters.Favorite, editor: Soho.Editors.Favorite});
+      columns.push({ id: 'companyName', name: 'Company Name', field: 'companyName', formatter: Soho.Formatters.Hyperlink});
+      columns.push({ id: 'phone', name: 'Phone', field: 'phone', editor: Soho.Editors.Input});
+      columns.push({ id: 'location', name: 'Location', field: 'location', editor: Soho.Editors.Input});
+      columns.push({ id: 'contact', name: 'Contact Name', field: 'contact', editor: Soho.Editors.Input});
+      columns.push({ id: 'customerSince', name: 'Customer Since', field: 'customerSince', editor: Soho.Editors.Input});
 
        var url = '{{basepath}}api/companies';
 

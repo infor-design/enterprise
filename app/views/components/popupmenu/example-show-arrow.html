@@ -1,0 +1,38 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Popupmenu Test:  Icon as popup</h2>
+    <p>Left star should show a menu with no arrow, right star shows an arrow.</p>
+    <br />
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <button id="no-arrow" class="btn-icon" type="button">
+      <svg class="icon">
+        <use href="#icon-star-filled"></use>
+      </svg>
+    </button>
+    <ul id="menu-no-arrow" class="popupmenu">
+      <li><a href="#" id="menu-option-1">Menu Option #1</a></li>
+      <li><a href="#" id="menu-option-2">Menu Option #2</a></li>
+    </ul>
+
+    <button id="has-arrow" class="btn-icon" type="button">
+      <svg class="icon">
+        <use href="#icon-star-filled"></use>
+      </svg>
+    </button>
+    <ul id="menu-arrow" class="popupmenu">
+      <li><a href="#" id="menu-option-3">Menu Option #3</a></li>
+      <li><a href="#" id="menu-option-4">Menu Option #4</a></li>
+    </ul>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('#no-arrow').popupmenu({ menu: 'menu-no-arrow', trigger: 'click', showArrow: false });
+  $('#has-arrow').popupmenu({ menu: 'menu-arrow', trigger: 'click', showArrow: true });
+</script>

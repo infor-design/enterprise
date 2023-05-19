@@ -1,9 +1,9 @@
 // Icons Route
 //= ====================================================
-const fs = require('fs');
-const path = require('path');
-const handlebars = require('handlebars');
-const hbsRegistrar = require('handlebars-registrar');
+import * as fs from 'fs';
+import * as path from 'path';
+import handlebars from 'handlebars';
+import hbsRegistrar from 'handlebars-wax';
 
 hbsRegistrar('toUpperCase', str => str.toUowerCase());
 
@@ -37,9 +37,9 @@ const template = handlebars.compile(hbsTemplate);
  * @param {string} theme - The theme
  * @returns {string} The html
  */
-module.exports = (url, theme) => {
+export default (url, theme) => {
   const fileName = path.basename(url, '.html');
-  const iconSet = fileName.includes('example-empty-widgets') ? 'empty' : 'standard';
+  const iconSet = fileName.includes('example-empty-states') ? 'empty' : 'standard';
 
   const metaPath = `node_modules/ids-identity/dist/theme-${theme}/icons/${iconSet}/metadata.json`;
   const meta = JSON.parse(fs.readFileSync(metaPath, 'utf-8').toString());

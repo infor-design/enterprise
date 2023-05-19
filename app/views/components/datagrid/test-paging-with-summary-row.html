@@ -25,14 +25,14 @@
         data = [];
 
       //Define Columns for the Grid.
-      columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, width: 50, formatter: Formatters.SelectionCheckbox, align: 'center' }),
-      columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Readonly, filterType: 'text'});
-      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Readonly, filterType: 'text'});
-      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 150, filterType: 'text', formatter: Formatters.Hyperlink, editor: Editors.Input});
-      columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125, filterType: 'integer', editor: Editors.Input});
+      columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, width: 50, formatter: Soho.Formatters.SelectionCheckbox, align: 'center' }),
+      columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Soho.Formatters.Readonly, filterType: 'text'});
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, formatter: Soho.Formatters.Readonly, filterType: 'text'});
+      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 150, filterType: 'text', formatter: Soho.Formatters.Hyperlink, editor: Soho.Editors.Input});
+      columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125, filterType: 'integer', editor: Soho.Editors.Input});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', filterType: 'integer', width: 125});
-      columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, filterType: 'decimal', formatter: Formatters.Decimal, summaryRowFormatter: Formatters.SummaryRow, aggregator: 'sum', summaryText: ' $'});
-      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', filterType: 'date', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+      columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, filterType: 'decimal', formatter: Soho.Formatters.Decimal, summaryRowformatter: Soho.Formatters.SummaryRow, aggregator: 'sum', summaryText: ' $'});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', filterType: 'date', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy'});
 
       //Init and get the api for the grid
       grid = $('#datagrid').datagrid({

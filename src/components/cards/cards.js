@@ -12,20 +12,32 @@ const COMPONENT_NAME = 'cards';
  * @class Cards
  * @param {string} element The plugin element for the constuctor
  * @param {string} [settings] The settings element.
- * @param {boolean} [settings.expandableHeader] Abilty to expand the card header
+ * @param {boolean} [settings.bordered] Ability to add bordered or boreder-less styles to the card element.
+ * @param {boolean} [settings.noHeader] Determine wheter the card header should be displayed or not.
+ * @param {boolean} [settings.expandableHeader] Abilty to expand the card header.
+ * @param {number} [settings.contentPaddingX] The padding left and right of the content of the card element. It will generate the css utlity classes for paddings.
+ * @param {number} [settings.contentPaddingY] The padding top and bottom of the content of the card element. It will generate the css utlity classes for paddings.
+ * @param {boolean} [settings.noShadow] Ability to remove the shadow of the card element.
  * @param {boolean} [settings.verticalButtonAction] Ability to rotate the button action vertically
  * @param {array} [settings.dataset=[]] An array of data objects that will be represented as cards.
  * @param {string} [settings.template] Html Template String.
+ * @param {string} [seettings.detailRefId] The id of the detail element that will be used to display the detail content.
  * @param {string} [settings.selectable=false] Ability to enable the selection state e.g. 'single', 'multiple' or false.
  * @param {string} [settings.attributes=null] Add extra attributes like id's to the element. e.g. `attributes: { name: 'id', value: 'my-unique-id' }`
  */
 
 const CARDS_DEFAULTS = {
+  bordered: null,
+  noHeader: false,
+  contentPaddingX: null,
+  contentPaddingY: null,
+  noShadow: false,
   dataset: [],
   template: null,
   selectable: false,
   expandableHeader: false,
   verticalButtonAction: false,
+  detailRefId: undefined,
   attributes: null
 };
 
@@ -46,6 +58,7 @@ Cards.prototype = {
    */
   init() {
     this.selectedRows = [];
+    this.showCardDetailFlag = false;
     this
       .setup()
       .build()
@@ -56,17 +69,17 @@ Cards.prototype = {
     this.id = this.element.attr('id');
 
     if (!this.id || this.id === undefined) {
-      this.id = `expandable-card-${$('body').find('.card').index(this.element)}`;
+      this.id = `expandable-card-${$('body').find('.card, .widget').index(this.element)}`;
       this.element.attr('id', this.id);
     }
 
     if (this.settings.expandableHeader) {
       this.element.addClass('expandable-card');
-      this.expandableCardHeader = this.element.children('.card-header').addClass('expandable-card-header');
+      this.expandableCardHeader = this.element.children('.card-header, .widget-header').addClass('expandable-card-header');
     }
 
-    this.cardHeader = this.element.children('.card-header');
-    this.cardContentPane = this.element.children('.card-pane');
+    this.cardHeader = this.element.children('.card-header, .widget-header');
+    this.cardContentPane = this.element.children('.card-pane, .widget-pane');
     this.buttonAction = this.cardHeader.children('.btn-actions');
 
     if (this.settings.selectable !== false) {
@@ -82,9 +95,15 @@ Cards.prototype = {
    * @private
    */
   build() {
+    const element = this.element;
     const expanded = this.element.hasClass('is-expanded');
     const selectText = (Locale ? Locale.translate('Select') : 'Select');
     const isSingle = this.settings.selectable === 'single';
+    const isBordered = this.settings.bordered === true;
+    const isBorderLess = this.settings.bordered === false;
+    const hasCustomAction = this.element.find('.card-header .card-header-section.custom-action, .widget-header .widget-header-section.custom-action').length > 0;
+    // Apply content padding if provided
+    const { contentPaddingX, contentPaddingY } = this.settings;
 
     this.renderTemplate();
 
@@ -94,17 +113,17 @@ Cards.prototype = {
       this.cards.addClass(isSingle ? 'single' : 'multiple');
 
       this.element.attr('role', 'list');
-      this.element.find('.card').attr({
+      this.element.find('.card, .widget').attr({
         role: 'listitem',
         tabindex: '0'
       });
     }
 
     if (this.settings.selectable === 'multiple') {
-      const items = this.cards.find('.card');
+      const items = this.cards.find('.card, .widget');
 
       items.each(function (i) {
-        const item = $(this).find('.card-content');
+        const item = $(this).find('.card-content, .widget-content');
 
         item.prepend(`
           <input type="checkbox" id="checkbox-${i}" aria-hidden="true" tabindex="0" role="presentation"
@@ -153,6 +172,8 @@ Cards.prototype = {
 
     utils.addAttributes(this.element, this, this.settings.attributes, 'card', true);
     utils.addAttributes(this.element.find('.card .card-content'), this, this.settings.attributes, 'card-content', true);
+    utils.addAttributes(this.element, this, this.settings.attributes, 'widget', true);
+    utils.addAttributes(this.element.find('.card .card-content'), this, this.settings.attributes, 'widget-content', true);
 
     if (!this.settings.selectable) {
       utils.addAttributes(this.expandableCardHeader, this, this.settings.attributes, 'expander', true);
@@ -160,10 +181,55 @@ Cards.prototype = {
       utils.addAttributes(this.cardContentPane, this, this.settings.attributes, 'content', true);
     }
 
+    // Apply the 'bordered' class if necessary
+    if (isBordered) {
+      element.addClass('bordered');
+    }
+
+    // Apply the 'bordered-less' class if necessary
+    if (isBorderLess) {
+      element.addClass('border-less');
+    }
+
+    // Remove the card header if necessary
+    if (this.settings.noHeader) {
+      // Apply the 'no-header' class to the element
+      element.addClass('no-header');
+
+      // Remove the card header element from the DOM
+      this.cardHeader?.remove();
+    }
+
+    // Remove the card shadow if necessary
+    if (this.settings.noShadow) {
+      element.addClass('no-shadow');
+    }
+
+    // Only apply padding if at least one of the values is not null
+    if (contentPaddingX !== null || contentPaddingY !== null) {
+      // Find the card content element
+      const content = element.find('.card-content, .widget-content');
+
+      // Apply the X-axis padding if provided
+      if (contentPaddingX !== null) {
+        content.addClass(`padding-x-${contentPaddingX}`);
+      }
+
+      // Apply the Y-axis padding if provided
+      if (contentPaddingY !== null) {
+        content.addClass(`padding-y-${contentPaddingY}`);
+      }
+    }
+
+    // If there's custom action, show the buttons
+    if (hasCustomAction) {
+      element.addClass('show-buttons');
+    }
+
     if (this.settings.selectable === 'multiple') {
       const self = this;
       setTimeout(() => {
-        const options = this.cards.find('.card');
+        const options = this.cards.find('.card, .widget');
         options.each(function (i) {
           const opt = $(this);
           utils.addAttributes(opt.find('.checkbox-label'), self, self.settings.attributes, `checkbox-label-${i}`, true);
@@ -383,12 +449,60 @@ Cards.prototype = {
   },
 
   /**
+   * Show the card detail
+   */
+  showCardDetail() {
+    this.showCardDetailFlag = true;
+
+    if (this.showCardDetailFlag) {
+      this.element.addClass('show-card-detail');
+    }
+
+    this.addBackButton();
+  },
+
+  /**
+   * Hide the card detail
+   */
+  hideCardDetail() {
+    this.showCardDetailFlag = false;
+
+    this.element.removeClass('show-card-detail');
+    this.cardHeader.removeClass('has-back-button');
+    this.cardHeader.find('.go-back-button').remove();
+  },
+
+  /**
+   * Add back button in card header
+   */
+  addBackButton() {
+    if (this.cardHeader) {
+      const backButton = `
+      <div class="widget-header-section go-back-button">
+        <button id="go-back" class="btn-icon go-back btn-system" type="button">
+          <span class="audible">Show navigation</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-arrow-left"></use>
+          </svg>
+        </button>
+      </div>
+      `;
+
+      this.cardHeader.addClass('has-back-button');
+      this.cardHeader.prepend(backButton);
+    }
+  },
+
+  /**
    * Attach event handlers
    * @private
    * @returns {object} Api for chaining.
    */
   handleEvents() {
     const self = this;
+    const $cardContent = $(self.element).find('.card-content, .widget-content');
+    const $detailElement = `#${self.settings.detailRefId}, .is-selected`;
+
     this.expandableCardHeader?.on('click.cards', (e) => {
       if (!self.isDisabled()) {
         e.preventDefault();
@@ -411,9 +525,44 @@ Cards.prototype = {
       });
     }
 
+    // Attach click event handler to $detailElement within $cardContent
+    $cardContent.find($detailElement).on('click', (e) => {
+      e.stopPropagation();
+      self.showCardDetail();
+
+      // Find goBackElement within self.element
+      const goBackElement = self.element.find('.card-header, .widget-header').find('.go-back');
+
+      // Attach click event handler to goBackElement
+      $(goBackElement).on('click', (evt) => {
+        evt.stopPropagation();
+        self.hideCardDetail();
+      });
+    });
+
     $('body').on('resize.card', () => {
       if (Locale.isRTL()) {
         this.removeInfoIconTooltip();
+      }
+    });
+
+    const cardHeader = this.element.find('.card-header, .widget-header');
+    this.element.find('.card-content, .widget-content').children().on('scroll.card', (e) => {
+      const target = e.target;
+      const listviewSearch = $(target).siblings('.listview-search, .widget-search');
+      const searchFieldWrapper = $(target).siblings('.card-search, .widget-search').find('.searchfield-wrapper');
+      if (target.scrollTop > 0) {
+        if (listviewSearch.length > 0) {
+          listviewSearch.addClass('is-scrolling');
+        } else if (searchFieldWrapper.length > 0) {
+          searchFieldWrapper.addClass('is-scrolling');
+        } else {
+          cardHeader.addClass('is-shadow-scrolling');
+        }
+      } else {
+        listviewSearch.removeClass('is-scrolling');
+        searchFieldWrapper.removeClass('is-scrolling');
+        cardHeader.removeClass('is-shadow-scrolling');
       }
     });
 
@@ -426,12 +575,16 @@ Cards.prototype = {
    * @private
    */
   teardown() {
+    $('html').off(`themechanged.${COMPONENT_NAME}`);
     this.element.off(`click.${COMPONENT_NAME}`);
     this.expandableCardHeader?.off('click.cards');
     this.expandableCardHeader = null;
     $('body').off('resize.card');
+    $(this.element.find('.card-content, .widget-content').find(`#${this.settings.detailRefId}, .is-selected`)).off();
+    $(this.element.find('.card-header, .widget-header')?.find('.go-back')).off();
     this.selectedRows = [];
     this.cardContentPane.off();
+    this.element.find('.card-content').children().off('scroll.card');
     this.cardContentPane = null;
     return this;
   },

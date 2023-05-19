@@ -62,7 +62,7 @@ The following icons are available:
 - icon-empty-no-alerts - For indicating no new alerts
 - icon-empty-no-analytics - For indicating no new analytics
 - icon-empty-no-budget - Shows a piggy bank icon with a question mark indicating no budgets or money assigned
-- icon-empty-no-data - Shows a database icon with a question mark indicating a situation of no data found
+- icon-empty-no-data-new - Shows a database icon with a question mark indicating a situation of no data found
 - icon-empty-no-events - Shows a calendar icon with a question mark indicating a situation of no events or dates found
 - icon-empty-no-notes - Shows a notepad icon with a question mark indicating a situation of no notes or comments
 - icon-empty-no-orders - Shows a file folder icon with a question mark indicating a situation of no orders or some similar missing object

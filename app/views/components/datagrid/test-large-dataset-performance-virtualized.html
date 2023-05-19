@@ -31,8 +31,8 @@
       return fieldValue;
       }
      //Define Columns for the Grid.
-     columns.push({ id: 'productId', name: 'Product #', field: 'productId', formatter: Formatters.Text, align: 'right' });
-     columns.push({ id: 'productName', name: 'Product Name & Description', field: 'productName', formatter: Formatters.Text });
+     columns.push({ id: 'productId', name: 'Product #', field: 'productId', formatter: Soho.Formatters.Text, align: 'right' });
+     columns.push({ id: 'productName', name: 'Product Name & Description', field: 'productName', formatter: Soho.Formatters.Text });
      columns.push({ id: 'quantityback', name: 'Quantity Back Ordered', field: 'quantity', formatter: formatter });
      columns.push({ id: 'quantity', name: 'Quantity Available', field: 'quantity', formatter: formatter, align: 'right' });
      columns.push({ id: 'status', name: 'Status Indicator', field: 'status', formatter: formatter, align: 'center' });
@@ -61,7 +61,7 @@
      $('#load').click(function () {
        var data = [], i;
        var count = $('#record-count').val();
-       count = count ? Locale.parseNumber(count) : 0;
+       count = count ? Soho.Locale.parseNumber(count) : 0;
 
        // Build Sample Data
        for (i = 1; i <= count; i++) {

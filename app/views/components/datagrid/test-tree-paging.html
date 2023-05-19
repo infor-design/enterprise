@@ -14,10 +14,10 @@
 
       //Define Columns for the Grid.
       columns.push({ id: "selectionCheckbox", sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: "center" });
-      columns.push({ id: 'taskName', name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Formatters.Tree});
+      columns.push({ id: 'taskName', name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Soho.Formatters.Tree});
       columns.push({ id: 'id', name: 'Id', field: 'id'});
       columns.push({ id: 'desc', name: 'Description', field: 'desc'});
-      columns.push({ id: 'comments', name: 'Comments', field: 'comments',  formatter: Formatters.Hyperlink});
+      columns.push({ id: 'comments', name: 'Comments', field: 'comments',  formatter: Soho.Formatters.Hyperlink});
       columns.push({ id: 'time', name: 'Time', field: 'time'});
 
       //Get some data via ajax

@@ -3,15 +3,15 @@
 
 .tab-container.header-tabs {
   &:not(.alternate) {
-    background-color: $header-tab-background-initial-color-new;
+    background-color: $header-default-bg-color;
     border-bottom: 1px solid $header-tabcontainer-border-color;
 
     &::before {
       background-image:
         linear-gradient(
           to right,
-          rgba($header-tab-gradient-initial-color-new, 1),
-          rgba($header-tab-gradient-initial-color-new, 0)
+          rgba($header-default-bg-color, 1),
+          rgba($header-default-bg-color, 0)
         );
       left: 20px;
     }
@@ -20,8 +20,8 @@
       background-image:
         linear-gradient(
           to right,
-          rgba($header-tab-gradient-initial-color-new, 0),
-          rgba($header-tab-gradient-initial-color-new, 1)
+          rgba($header-default-bg-color, 0),
+          rgba($header-default-bg-color, 1)
         );
     }
 
@@ -34,10 +34,13 @@
       border-bottom: 0;
 
       .tab {
-        color: $header-tab-normal-color-new;
         font-weight: $ids-number-font-weight-bold;
         overflow: hidden;
         height: 34px;
+
+        &:not(.is-disabled) {
+          color: $header-tab-normal-color-new;
+        }
 
         a {
           margin-top: -5px;
@@ -81,14 +84,15 @@
 
         &.dismissible {
           .icon {
-            color: $ids-color-palette-white;
+            color: $ids-color-palette-black;
             opacity: 0.6;
+            margin-top: unset;
           }
 
           &:hover,
           &.is-selected {
             .icon:not(.is-error):not(.icon-error) {
-              color: $ids-color-palette-white;
+              color: $ids-color-palette-slate-60;
               opacity: 1;
             }
           }
@@ -125,6 +129,7 @@
 
       .icon {
         color: $header-tab-normal-color-new;
+        top: -2px;
       }
 
       &:hover {
@@ -194,34 +199,38 @@
       margin-top: -1px;
 
       .tab-focus-indicator.is-selected {
-        border: 1px solid $header-tab-selected-color-new;
+        border: 1px solid $header-tab-alt-selected-color;
       }
 
       .tab {
-        color: $header-tab-normal-color-new;
+        color: $header-tab-alt-normal-color;
 
         &.is-focused {
-          color: $header-tab-hover-color-new;
+          color: $header-tab-alt-selected-color;
         }
 
         &:hover {
           &:not(.is-disabled) {
-            color: $header-tab-hover-color-new;
-            border-bottom: 4px solid $header-tab-hover-color-new;
-            background-color: $header-tab-background-hover-color-new;
+            color: $header-tab-alt-hover-color;
+            border-bottom: 4px solid $header-tab-alt-hover-color;
+            background-color: transparent;
           }
         }
 
         &.is-selected {
           &:not(.is-disabled) {
-            color: $header-tab-selected-color-new;
-            border-bottom: 4px solid $header-tab-selected-color-new;
+            color: $header-tab-alt-selected-color;
+            border-bottom: 4px solid $header-tab-alt-selected-color;
           }
         }
 
         a {
           height: 37px;
           padding: 12px 11px 5px;
+        }
+
+        &.is-disabled {
+          color: $disabled-color;
         }
       }
     }
@@ -232,7 +241,7 @@
         box-shadow: unset;
 
         &:not(.is-selected) {
-          border-color: $header-tab-focus-border-color;
+          border-color: $header-tab-alt-selected-color;
           border-radius: 7px;
         }
       }
@@ -242,18 +251,18 @@
     .tab-more.is-open {
       &:hover {
         .icon:not(.is-error):not(.icon-error) {
-          color: $header-tab-hover-color-new;
+          color: $header-tab-alt-separator;
         }
       }
 
       .icon {
-        color: $header-tab-normal-color-new;
+        color: $header-tab-alt-separator;
       }
     }
 
     .tab-more.is-open {
       .icon:not(.is-error):not(.icon-error) {
-        color: $header-tab-hover-color-new;
+        color: $header-tab-alt-separator;
       }
     }
   }
@@ -276,8 +285,8 @@ html[dir='rtl'] {
       background-image:
         linear-gradient(
           to left,
-          rgba($header-tab-gradient-initial-color-new, 1),
-          rgba($header-tab-gradient-initial-color-new, 0)
+          rgba($header-default-bg-color, 1),
+          rgba($header-default-bg-color, 0)
         );
       left: auto;
       right: 20px;
@@ -287,8 +296,8 @@ html[dir='rtl'] {
       background-image:
         linear-gradient(
           to left,
-          rgba($header-tab-gradient-initial-color-new, 0),
-          rgba($header-tab-gradient-initial-color-new, 1)
+          rgba($header-default-bg-color, 0),
+          rgba($header-default-bg-color, 1)
         );
       left: 51px;
       right: auto;

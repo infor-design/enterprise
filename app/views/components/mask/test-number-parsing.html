@@ -20,7 +20,7 @@
 
 <script>
   $('body').on('initialized', function(locale, args) {
-    const numberInfo = Locale.currentLocale.data.numbers;
+    const numberInfo = Soho.Locale.currentLocale.data.numbers;
 
     $('#number-field').mask({
       process       : 'number',

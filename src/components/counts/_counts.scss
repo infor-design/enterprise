@@ -1,7 +1,7 @@
 // Instance Count
 //================================================== //
 
-.card-content:has(> .instance-count) {
+.card-content.has-instance-count {
   display: flex;
   justify-content: center;
   text-align: center;
@@ -73,6 +73,10 @@
   margin: 15px 20px;
   text-align: center;
   width: auto;
+}
+
+.object-count.personalize-text {
+  color: $ids-color-palette-white;
 }
 
 .object-count {

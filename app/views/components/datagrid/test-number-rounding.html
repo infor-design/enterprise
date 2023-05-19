@@ -34,14 +34,14 @@
         data.push({ id: 8, productId: 2142202, revenue: 800.9905673502324, col2: 20, col3: 30, col4: 40, col5: 60, col6: 70, col6: new Date(2018, 0, 7)});
 
         // Define Columns for the Grid.
-        columns.push({ id: 'id', name: 'Row Id', field: 'id', formatter: Formatters.Readonly, editor: Editors.Input});
-        columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Hyperlink, editor: Editors.Input});
-        columns.push({ id: 'revenue', name: 'Revenue', field: 'revenue', formatter: Formatters.Decimal, align: 'right', numberFormat: {round: true, minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
-        columns.push({ id: 'col2', name: 'Column One', field: 'col2', filterType: 'decimal', editor: Editors.Input});
-        columns.push({ id: 'col3', name: 'Column One', field: 'col3', filterType: 'decimal', editor: Editors.Input});
-        columns.push({ id: 'col4', name: 'Column One', field: 'col4', filterType: 'decimal', editor: Editors.Input});
-        columns.push({ id: 'col5', name: 'Column One', field: 'col5', filterType: 'decimal', editor: Editors.Input});
-        columns.push({ id: 'col6', name: 'Column One', field: 'col6', formatter: Formatters.Date, editor: Editors.Date, validate: 'required date'});
+        columns.push({ id: 'id', name: 'Row Id', field: 'id', formatter: Soho.Formatters.Readonly, editor: Soho.Editors.Input});
+        columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Hyperlink, editor: Soho.Editors.Input});
+        columns.push({ id: 'revenue', name: 'Revenue', field: 'revenue', formatter: Soho.Formatters.Decimal, align: 'right', numberFormat: {round: true, minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
+        columns.push({ id: 'col2', name: 'Column One', field: 'col2', filterType: 'decimal', editor: Soho.Editors.Input});
+        columns.push({ id: 'col3', name: 'Column One', field: 'col3', filterType: 'decimal', editor: Soho.Editors.Input});
+        columns.push({ id: 'col4', name: 'Column One', field: 'col4', filterType: 'decimal', editor: Soho.Editors.Input});
+        columns.push({ id: 'col5', name: 'Column One', field: 'col5', filterType: 'decimal', editor: Soho.Editors.Input});
+        columns.push({ id: 'col6', name: 'Column One', field: 'col6', formatter: Soho.Formatters.Date, editor: Soho.Editors.Date, validate: 'required date'});
 
         // Init and get the api for the grid
         grid = $('#datagrid').datagrid({

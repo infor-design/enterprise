@@ -34,6 +34,84 @@
   .buttonset {
     height: 41px;
   }
+
+  // Buttons hover
+  .more .btn-actions:hover:not(:disabled) {
+    background-color: $toolbar-btn-actions-hover-bg-color;
+  }
+
+  &:not(.standalone) {
+    .searchfield-wrapper.toolbar-searchfield-wrapper:not(.has-categories):not(.is-open) {
+      height: 34px;
+      margin-top: 4px;
+
+      &:hover {
+        border-radius: 8px;
+        background-color: $toolbar-btn-actions-hover-bg-color;
+      }
+
+      .icon:not(.icon-dropdown) {
+        top: -2px;
+        left: 7px;
+      }
+
+      .searchfield {
+        padding-bottom: 11px;
+      }
+    }
+
+    .buttonset [class^='btn']:not(.searchfield-category-button) {
+      border-radius: 8px;
+
+      &:not(:disabled):hover {
+        background-color: $toolbar-btn-actions-hover-bg-color;
+      }
+    }
+
+    .searchfield-wrapper.toolbar-searchfield-wrapper.has-categories:not(.is-open) {
+      .searchfield-category-button {
+        width: 34px;
+        height: 34px;
+        padding-right: 7px;
+        padding-left: 7px;
+        border-radius: 8px;
+        margin-top: 2px;
+        text-overflow: unset;
+
+        &:not(:disabled):hover {
+          background-color: $toolbar-btn-actions-hover-bg-color;
+
+          .icon:not(.icon-dropdown) {
+            color: $searchfield-icon-hover-color;
+          }
+        }
+      }
+    }
+  }
+
+  .searchfield-wrapper.toolbar-searchfield-wrapper.has-close-icon-button.is-open > svg.close {
+    padding: 3px;
+    width: 24px;
+    height: 24px;
+    border-radius: 8px;
+
+    &:hover {
+      background-color: $toolbar-btn-actions-hover-bg-color;
+    }
+  }
+}
+
+// Styles for contextual toolbar
+.contextual-toolbar {
+  &.toolbar {
+    &:not(.standalone) {
+      .buttonset [class^='btn'] {
+        &:not(:disabled):hover {
+          background-color: transparent;
+        }
+      }
+    }
+  }
 }
 
 @media (max-width: $breakpoint-phablet) {

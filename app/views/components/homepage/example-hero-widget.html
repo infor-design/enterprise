@@ -1,16 +1,13 @@
 <div id="maincontent" class="page-container scrollable" role="main">
-  <!-- BEGIN: hero-widget -->
   <div class="hero-widget is-personalizable">
 
-    <!-- BEGIN: hero-top -->
     <div class="hero-top">
 
-      <!-- BEGIN: hero-header -->
       <div class="hero-header" style="height: 45px;">
         <div id="hero-header-toolbar" class="toolbar" role="toolbar">
           <div class="title">Oakham Branch Sales Report</div>
           <div class="buttonset">
-            <button id="hero-header-toolbar-btn-view" class="btn-menu" type="button">
+            <button id="hero-header-toolbar-btn-view" class="btn-tertiary btn-menu" type="button">
               <span>View: Last 6 Months</span>
             </button>
             <ul class="popupmenu is-selectable">
@@ -21,20 +18,14 @@
           </div>
         </div>
       </div>
-      <!-- ENDS: hero-header -->
 
-      <!-- BEGIN: hero-content -->
       <div class="hero-content">
-
-
-        <!-- BEGIN: circlepager -->
         <div class="circlepager">
-          <!-- BEGIN: slides -->
           <div class="slides">
 
             <div class="slide">
               <div style="height: 325px; width: 400px; margin: 0 auto;">
-                <div  id="donut-alert1" class="chart-container"></div>
+                <div id="donut-alert1" class="chart-container"></div>
               </div>
             </div>
             <div class="slide">
@@ -49,39 +40,16 @@
             </div>
 
           </div>
-          <!-- END: slides -->
         </div>
-        <!-- END: circlepager -->
-
-
       </div>
-      <!-- ENDS: hero-content -->
-
     </div>
-    <!-- ENDS: hero-top -->
-
-    <!-- BEGIN: hero-bottom -->
-    <div class="hero-bottom">
-      <!-- BEGIN: hero-footer -->
-      <div class="hero-footer">
-        <span class="hero-footer-nav-title">My Quick Links</span>
-        <ul class="hero-footer-nav">
-          <li><a class="btn-tertiary" href="#"><span>Start new order</span></a></li>
-          <li><a class="btn-tertiary" href="#"><span>Access credit management</span></a></li>
-          <li><a class="btn-tertiary" href="#"><span>Manage my team</span></a></li>
-        </ul>
-      </div>
-      <!-- ENDS: hero-footer -->
-    </div>
-    <!-- ENDS: hero-bottom -->
-
   </div>
-  <!-- ENDS: hero-widget -->
+
   <div class="homepage" data-columns="4">
     <div class="content">
 
 
-     <div class="widget">
+      <div class="widget">
         <div class="widget-header">
           <h2 class="widget-title">Widget 4x1 (Dom Order 1) - A</h2>
         </div>
@@ -93,13 +61,13 @@
         </div>
       </div>
 
-     <div class="widget">
+      <div class="widget">
         <div class="widget-header">
           <h2 class="widget-title">Widget 1x1 (Dom Order 3) - C</h2>
         </div>
       </div>
 
-     <div class="widget">
+      <div class="widget">
         <div class="widget-header">
           <h2 class="widget-title">Widget 1x1 (Dom Order 4) - D</h2>
         </div>
@@ -180,48 +148,48 @@
   }];
 
   var barData = [{
-        data: [
-          {name: 'Jan', value: 12, color: 'alertYellow'},
-          {name: 'Feb', value: 11, color: 'good'},
-          {name: 'Mar', value: -5, color: 'error'},
-          {name: 'Apr', value: 10, color: '#7cc0b5'},
-          {name: 'May', value: 14, color: '#ff9426'}
-        ],
-        name: 'Team A'
-      }, {
-        data: [
-          {name: 'Jan', value: 22, color: 'alertYellow'},
-          {name: 'Feb', value: 24, color: 'good'},
-          {name: 'Mar', value: 12, color: 'error'},
-          {name: 'Apr', value: 20, color: '#7cc0b5'},
-          {name: 'May', value: 21, color: '#ff9426'}
-        ],
-        name: 'Team B'
-      }, {
-        data: [
-          {name: 'Jan', value: 32, color: 'alertYellow'},
-          {name: 'Feb', value: 31, color: 'good'},
-          {name: 'Mar', value: 34, color: 'error'},
-          {name: 'Apr', value: 30, color: '#7cc0b5'},
-          {name: 'May', value: 33, color: '#ff9426'}
-        ],
-        name: 'Team C'
-      }];
+    data: [
+      { name: 'Jan', value: 12, color: 'alertYellow' },
+      { name: 'Feb', value: 11, color: 'good' },
+      { name: 'Mar', value: -5, color: 'error' },
+      { name: 'Apr', value: 10, color: '#7cc0b5' },
+      { name: 'May', value: 14, color: '#ff9426' }
+    ],
+    name: 'Team A'
+  }, {
+    data: [
+      { name: 'Jan', value: 22, color: 'alertYellow' },
+      { name: 'Feb', value: 24, color: 'good' },
+      { name: 'Mar', value: 12, color: 'error' },
+      { name: 'Apr', value: 20, color: '#7cc0b5' },
+      { name: 'May', value: 21, color: '#ff9426' }
+    ],
+    name: 'Team B'
+  }, {
+    data: [
+      { name: 'Jan', value: 32, color: 'alertYellow' },
+      { name: 'Feb', value: 31, color: 'good' },
+      { name: 'Mar', value: 34, color: 'error' },
+      { name: 'Apr', value: 30, color: '#7cc0b5' },
+      { name: 'May', value: 33, color: '#ff9426' }
+    ],
+    name: 'Team C'
+  }];
 
   var areaData = [{
     data: [
-      {name: 'Jan', value: 12}, {name: 'Feb', value: 11}, {name: 'Mar', value: 14},
-      {name: 'Apr', value: 10}, {name: 'May', value: 14}, {name: 'Jun', value: 8}],
+      { name: 'Jan', value: 12 }, { name: 'Feb', value: 11 }, { name: 'Mar', value: 14 },
+      { name: 'Apr', value: 10 }, { name: 'May', value: 14 }, { name: 'Jun', value: 8 }],
     name: 'Metals', color: '#ede3fc'
   }, {
     data: [
-      {name: 'Jan', value: 22}, {name: 'Feb', value: 21}, {name: 'Mar', value: 24},
-      {name: 'Apr', value: 20}, {name: 'May', value: 24}, {name: 'Jun', value: 28}],
+      { name: 'Jan', value: 22 }, { name: 'Feb', value: 21 }, { name: 'Mar', value: 24 },
+      { name: 'Apr', value: 20 }, { name: 'May', value: 24 }, { name: 'Jun', value: 28 }],
     name: 'Stone', color: 'alertYellow'
   }, {
     data: [
-      {name: 'Jan', value: 32}, {name: 'Feb', value: 31}, {name: 'Mar', value: 34},
-      {name: 'Apr', value: 30}, {name: 'May', value: 34}, {name: 'Jun', value: 38}],
+      { name: 'Jan', value: 32 }, { name: 'Feb', value: 31 }, { name: 'Mar', value: 34 },
+      { name: 'Apr', value: 30 }, { name: 'May', value: 34 }, { name: 'Jun', value: 38 }],
     name: 'Wood', color: 'error'
   }];
 
@@ -263,7 +231,7 @@
     return d;
   };
 
-  const donut =  $('#donut-alert1');
+  const donut = $('#donut-alert1');
   const bar = $('#bar-grouped-example');
   const area = $('#area-example');
 
@@ -272,12 +240,12 @@
   });
 
   // Wait for initialize
-  $('body').on('initialized', function() {
+  $('body').on('initialized', function () {
     var homepageApi = $('.homepage').data('homepage');
     var circlepagerApi = $('.circlepager').data('circlepager');
 
     // Set view type
-    var setView = function() {
+    var setView = function () {
       if (Soho.breakpoints.isAbove('tablet-to-desktop')) {
         circlepagerApi.showExpandedView();
       } else {
@@ -286,7 +254,7 @@
     };
 
     // Bind resize
-    homepageApi.element.on('resize', function(e, metaData) {
+    homepageApi.element.on('resize', function (e, metaData) {
       console.log(this, 'metaData:', metaData);
       setView();
     });
@@ -308,9 +276,9 @@
       area.parent().width(width);
     }
 
-    donut.chart({type: 'donut', dataset: getDonutData()});
-    bar.chart({type: 'bar-grouped', dataset: getBarData(), showLegend: false});
-    area.chart({type: 'area', dataset: getAreaData()});
+    donut.chart({ type: 'donut', dataset: getDonutData() });
+    bar.chart({ type: 'bar-grouped', dataset: getBarData(), showLegend: false });
+    area.chart({ type: 'area', dataset: getAreaData() });
 
     var donutApi = donut.data('pie');
     var barApi = bar.data('bar');

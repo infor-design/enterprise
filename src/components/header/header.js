@@ -197,6 +197,45 @@ Header.prototype = {
   },
 
   /**
+   * @param {Object} colorsObj - list of personalization colors
+   * @returns {Object} list of personalization color names including default
+   */
+  personalizationColors(colorsObj) {
+    const colorNamesAndIds = Object.values(colorsObj)
+      .reduce((acc, { id }) => {
+        acc[id] = id;
+        return acc;
+      }, {});
+
+    return colorNamesAndIds;
+  },
+
+  /**
+   * Removes one or more classes from an element's classlist.
+   * @private
+   * @param {HTMLElement} elem - The DOM element whose classList we want to modify.
+   * @param {(string|string[])} classes - The class or classes to remove from the element's classList.
+   * Can be a string representing a single class name, or an array of strings representing multiple classes to remove.
+   * @returns {boolean} Returns `false` if `elem` or `classes` are falsy, otherwise returns `true`.
+   */
+  removeClasses(elem, classes) {
+    if (!elem || !classes) return false;
+
+    const classList = elem.classList;
+    if (classList) {
+      if (typeof classes === 'string') {
+        classList.remove(classes);
+      } else if (Array.isArray(classes)) {
+        classes.forEach(className => classList.remove(className));
+      } else {
+        throw new TypeError('Classes parameter must be a string or an array of strings.');
+      }
+    }
+
+    return true;
+  },
+
+  /**
    * @private
    * @returns {void}
    */
@@ -208,11 +247,9 @@ Header.prototype = {
       // Build Title Button
       const titleButton = $(`<button class="btn-icon back-button" type="button">
         <span class="audible">${Locale.translate('Drillup')}</span>
-        <span class="icon app-header go-back">
-          <span class="one"></span>
-          <span class="two"></span>
-          <span class="three"></span>
-        </span>
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-arrow-left"></use>
+        </svg>
       </button>`);
 
       const titleElem = this.toolbarElem.find('.title');

@@ -138,6 +138,7 @@
 
     a {
       outline: none;
+      outline-style: none;
       -moz-outline-style: none;
     }
   }
@@ -238,18 +239,19 @@
     @include disabled-tag();
   }
 
-  // Alert (Warning) Tags
-  &.alert {
-    background-color: $badge-alert-bg-color;
-    color: $badge-alert-color;
+  // Alert / Warning Tags
+  &.alert,
+  &.warning {
+    background-color: $alert-color;
+    color: $badge-alert-text-color;
 
     .btn-dismissible,
     .btn-linkable {
-      color: $badge-alert-icon-color;
+      color: $badge-pending-light-icon-color;
 
       &:hover {
         .icon {
-          color: $badge-alert-icon-color;
+          color: $badge-pending-light-icon-color;
         }
       }
     }
@@ -264,8 +266,27 @@
     @include disabled-tag();
   }
 
+  &.caution {
+    background-color: $ids-color-status-status-03;
+    color: $badge-warning-text-color;
+
+    .btn-dismissible,
+    .btn-linkable {
+      color: $badge-warning-text-color;
+
+      &:hover {
+        color: $badge-warning-text-color;
+
+        .icon {
+          color: $badge-warning-text-color;
+        }
+      }
+    }
+  }
+
   // Good (Success) Tags
-  &.good {
+  &.good,
+  &.success {
     background-color: $badge-good-bg-color;
     color: $badge-good-color;
 
@@ -378,6 +399,24 @@
 
     &.current {
       background-color: $ids-color-status-warning;
+    }
+
+    &.alert,
+    &.good,
+    &.success,
+    &.info,
+    &.error {
+      &::before,
+      &::after {
+        border-color: $badge-pending-light-icon-color;
+      }
+    }
+  }
+
+  &:not(.alert):not(.good):not(.info):not(.error):not(.warning):not(.success) {
+    &::before,
+    &::after {
+      border-color: $badge-pending-dark-icon-color;
     }
   }
 
@@ -528,6 +567,36 @@ html[dir='rtl'] {
         border-left: 0;
         border-right: 1px solid $ids-color-palette-white;
         left: 8px;
+      }
+    }
+  }
+}
+
+html[class*='-dark'] {
+  .badge {
+    &:not(.alert):not(.good):not(.info):not(.error):not(.warning):not(.success):not(.caution) {
+      &::before,
+      &::after {
+        border-color: $badge-pending-light-icon-color;
+      }
+    }
+
+    &.good,
+    &.success {
+      &::before,
+      &::after {
+        border-color: $badge-pending-dark-icon-color;
+      }
+    }
+  }
+}
+
+html[class*='-contrast'] {
+  .badge {
+    &.warning {
+      &::before,
+      &::after {
+        border-color: $badge-pending-dark-icon-color;
       }
     }
   }

@@ -6,26 +6,28 @@
 // Different Widget Heights and Widths
 
 .homepage {
+  background-color: $homepage-background-color;
   height: inherit;
   margin: 0 auto;
-  padding: 20px 0;
+  padding: 32px 0;
   position: relative;
 
   .card,
   .small-widget,
   .widget {
-    height: 370px;
+    height: 368px;
     left: 0;
     position: absolute;
     top: 0;
+    overflow: hidden;
     width: 360px;
 
     &:last-child::after {
       content: '';
       display: inline-block;
-      height: 20px;
+      height: 16px;
       position: absolute;
-      top: 370px;
+      top: 368px;
       width: 10px;
     }
   }
@@ -140,9 +142,13 @@
   overflow: scroll;
 }
 
+.header + .page-container > .homepage {
+  height: 100%;
+}
+
 .card.double-height,
 .widget.double-height {
-  height: 760px;
+  height: 752px;
 
   .widget-content,
   .card-content {
@@ -219,7 +225,7 @@
 .widget.quintuple-width.to-double,
 .card.sextuple-width.to-double,
 .widget.sextuple-width.to-double {
-  width: 740px; // 660 (double: 380 + single)
+  width: 736px; // 660 (double: 380 + single)
 }
 
 .small-widget.double-width,
@@ -238,7 +244,7 @@
 .widget.quintuple-width.to-triple,
 .card.sextuple-width.to-triple,
 .widget.sextuple-width.to-triple {
-  width: 1120px; //1000 (triple: 380 + double)
+  width: 1112px; //1000 (triple: 380 + double)
 }
 
 .small-widget.triple-width,
@@ -316,21 +322,30 @@
 
 // Hero widget
 .hero-widget {
-  background-color: $subhead-bg-color;
+  background-color: $header-hero-widget-bg-color;
   color: $header-button-color;
-  max-height: 410px;
-  min-height: 370px;
+  max-height: 384px;
+  min-height: 368px;
   overflow: hidden;
+  padding: 8px 0;
   width: 100%;
 
+  &.auto-height,
+  &.auto-height .hero-top {
+    height: fit-content;
+    min-height: 0;
+    max-height: none;
+  }
+
   .hero-top {
-    height: 370px;
-    max-height: 370px;
-    min-height: 370px;
+    height: 368px;
+    max-height: 368px;
+    min-height: 368px;
   }
 
   .hero-bottom {
     background-color: $header-bg-color;
+    border-bottom: 1px solid $header-hero-text-color;
     height: 40px;
     max-height: 40px;
     min-height: 40px;
@@ -350,11 +365,12 @@
     }
 
     .title {
-      color: $header-button-color;
+      color: $header-hero-text-color;
       padding-left: 15px;
     }
 
     .btn-tertiary,
+    .btn-tertiary:hover:not(:disabled):not(.close):not(.btn-filter):not(.personalize-actionable),
     .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary).is-open span,
     .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary) {
       color: $header-button-color;
@@ -363,11 +379,12 @@
         color: $header-button-color;
       }
 
-      &:hover {
+      &:not([disabled]):hover {
+        background-color: rgba(0, 0, 0, 0.3) !important;
         color: $header-text-color;
 
         .icon {
-          color: $header-text-color;
+          color: $header-text-color !important;
         }
       }
 
@@ -436,6 +453,24 @@
         }
       }
     }
+
+    .count-container {
+      background-color: inherit;
+
+      .instance-count {
+        .count {
+          color: $header-hero-text-color;
+        }
+
+        svg.icon {
+          background-color: $header-hero-widget-bg-color;
+        }
+
+        .title {
+          padding: 0;
+        }
+      }
+    }
   }
 
   .hero-footer {
@@ -470,6 +505,17 @@
 
       a {
         margin-top: 5px;
+        border-bottom: 4px solid transparent;
+
+        &.btn-tertiary {
+          border-radius: 0;
+
+          &:hover {
+            background-color: $header-tab-background-hover-color-new;
+            border-bottom-color: $header-tab-indicator-hover-color-new;
+            color: $header-tab-hover-color-new;
+          }
+        }
       }
     }
 
@@ -494,14 +540,19 @@
   }
 }
 
+// Homepage New Theme rules
+html[class*='new-'] {
+  .hero-widget .hero-header .toolbar .buttonset {
+    .btn-tertiary.btn-menu:not(:disabled):hover {
+      background-color: transparent;
+    }
+  }
+}
+
 @media only screen and (max-width: 1500px) {
   .hero-widget {
     .hero-content {
       max-width: 1120px;
-    }
-
-    .hero-bottom {
-      display: none;
     }
   }
 }
@@ -511,10 +562,6 @@
     .hero-content {
       max-width: calc(100% - 200px);
     }
-
-    .hero-bottom {
-      display: none;
-    }
   }
 }
 
@@ -522,6 +569,10 @@
   .hero-widget {
     .hero-content {
       max-width: 100%;
+    }
+
+    .hero-bottom {
+      display: none;
     }
   }
 }
@@ -554,4 +605,8 @@ html[dir='rtl'] {
       }
     }
   }
+}
+
+.hero-header .btn-tertiary:hover:not(:disabled):not(.close):not(.personalize-actionable) svg.icon {
+  color: $header-text-color !important;
 }

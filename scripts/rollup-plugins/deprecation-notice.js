@@ -1,9 +1,8 @@
 // Simple plugin for rollup that detects the existence of JSDoc @deprecated comments
 // and pumps them into the console during the build process.
-const chalk = require('chalk');
-const documentation = require('documentation');
-const path = require('path');
-const logger = require('../logger');
+import { build } from 'documentation';
+import * as path from 'path';
+import logger from '../logger.js';
 
 const projectRoot = process.cwd();
 
@@ -25,7 +24,7 @@ const parseChildren = function (obj) {
 
 // Logs the deprecation notice in the terminal
 const logDeprecation = function (componentName, methodName, deprecatedObj) {
-  const formattedName = chalk.white.bold(`${componentName}.${methodName}()`);
+  const formattedName = `${componentName}.${methodName}()`;
   const msgStr = `${parseChildren(deprecatedObj)}` || '';
 
   logger('alert', `${formattedName} is deprecated ${msgStr}`);
@@ -41,8 +40,7 @@ const transform = function (code, filePath) {
     return ret;
   }
 
-  documentation
-    .build([filePath], { extension: 'js', shallow: true })
+  build([filePath], { extension: 'js', shallow: true })
     .then((docs) => {
       if (!docs || !docs.length) {
         return;
@@ -69,7 +67,7 @@ const transform = function (code, filePath) {
 };
 
 // The actual Rollup.js plugin wrapper
-const plugin = function (opts = {}) {
+export default function (opts = {}) {
   const pluginContents = {
     name: 'deprecation-notice'
   };
@@ -82,6 +80,4 @@ const plugin = function (opts = {}) {
 
   pluginContents.transform = transform;
   return pluginContents;
-};
-
-module.exports = plugin;
+}

@@ -59,6 +59,9 @@ Soho.Locale.addCulture('id-ID', {
     group: '.',
     groupSizes: [3, 3]
   },
+  punctuation: {
+    comma: ','
+  },
   // Resx - Provided By Translation Team
   messages: {
     AboutText: { id: 'AboutText', value: 'Hak Cipta &copy; {0} Infor. Hak cipta dilindungi undang-undang. Kata dan merek desain yang tercantum di sini adalah merek dagang dan/atau merek dagang terdaftar Infor dan/atau afiliasi dan anak perusahaannya. Semua merek dagang lain yang tercantum di sini adalah properti dari pemilik masing-masing merek' },

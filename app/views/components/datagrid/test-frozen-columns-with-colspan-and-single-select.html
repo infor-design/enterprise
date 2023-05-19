@@ -129,14 +129,14 @@
     function getColumns() {
       if (!PAGING_COLUMNS) {
         PAGING_COLUMNS = [
-          { id: 'productType', name: 'Product Type', field: 'productType', sortable: false, filterType: 'integer', formatter: Formatters.Text, colspan: customColSpan },
-          { id: 'productId', name: 'Product Id',   field: 'productId',   sortable: false, filterType: 'integer', formatter: Formatters.Text, colspan: customColSpan },
-          { id: 'productName', name: 'Product Name', field: 'productName', sortable: false, filterType: 'text', formatter: Formatters.Hyperlink, colspan: customColSpan },
-          { id: 'price', name: 'Price', field: 'price', sortable: false, filterType: 'decimal', formatter: Formatters.Decimal, colspan: customColSpan },
+          { id: 'productType', name: 'Product Type', field: 'productType', sortable: false, filterType: 'integer', formatter: Soho.Formatters.Text, colspan: customColSpan },
+          { id: 'productId', name: 'Product Id',   field: 'productId',   sortable: false, filterType: 'integer', formatter: Soho.Formatters.Text, colspan: customColSpan },
+          { id: 'productName', name: 'Product Name', field: 'productName', sortable: false, filterType: 'text', formatter: Soho.Formatters.Hyperlink, colspan: customColSpan },
+          { id: 'price', name: 'Price', field: 'price', sortable: false, filterType: 'decimal', formatter: Soho.Formatters.Decimal, colspan: customColSpan },
           { id: 'quantity', name: 'Quantity', field: 'quantity', sortable: false, colspan: customColSpan },
-          { id: 'orderDate', name: 'Order Date', field: 'orderDate', sortable: false, filterType: 'date',  formatter: Formatters.Date, dateFormat: 'M/d/yyyy', colspan: customColSpan },
-          { id: 'status', name: 'Status', field: 'status', sortable: false, filterType: 'text', formatter: Formatters.Text, colspan: customColSpan },
-          { id: 'rated', name: 'Rated', field: 'rated', sortable: false, filterType: 'decimal', formatter: Formatters.Decimal, colspan: customColSpan }
+          { id: 'orderDate', name: 'Order Date', field: 'orderDate', sortable: false, filterType: 'date',  formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy', colspan: customColSpan },
+          { id: 'status', name: 'Status', field: 'status', sortable: false, filterType: 'text', formatter: Soho.Formatters.Text, colspan: customColSpan },
+          { id: 'rated', name: 'Rated', field: 'rated', sortable: false, filterType: 'decimal', formatter: Soho.Formatters.Decimal, colspan: customColSpan }
         ];
       }
 

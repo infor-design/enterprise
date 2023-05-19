@@ -26,9 +26,9 @@
     data.push({ id: 6, productId: 2642206, summary: 'Brings out the best in people'});
 
     //Define Columns for the Grid.
-    columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
-    columns.push({ id: 'productId', name: 'Id', field: 'productId', formatter: Formatters.Text});
-    columns.push({ id: 'summary', name: 'Summary', field: 'summary', formatter: Formatters.Editor, textOverflow: 'ellipsis', width: 300, singleline: true, contentTooltip: true, filterType: 'text', align: 'left' });
+    columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center'});
+    columns.push({ id: 'productId', name: 'Id', field: 'productId', formatter: Soho.Formatters.Text});
+    columns.push({ id: 'summary', name: 'Summary', field: 'summary', formatter: Soho.Formatters.Editor, textOverflow: 'ellipsis', width: 300, singleline: true, contentTooltip: true, filterType: 'text', align: 'left' });
 
     // Init and get the api for the grid
     grid = $('#datagrid').datagrid({

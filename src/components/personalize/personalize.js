@@ -109,6 +109,40 @@ Personalize.prototype = {
   },
 
   /**
+   * Returns the color map based on the input value.
+   * @private
+   * @param {number} value - The value used to determine which color map to return (either 10 or 100).
+   * @returns {Object} colorMap - An object containing the color palette values.
+   */
+  getColorMap(value) {
+    // Get the corresponding color hexes
+    const themeColors = theme.themeColors();
+    const colorPalette = {
+      amber: themeColors.palette.amber[90].value,
+      amethyst: themeColors.palette.amethyst[60].value,
+      azure: themeColors.palette.azure[70].value,
+      emerald: themeColors.palette.emerald[80].value,
+      graphite: themeColors.palette.graphite[60].value,
+      ruby: themeColors.palette.ruby[90].value,
+      slate: themeColors.palette.slate[60].value,
+      turquoise: themeColors.palette.turquoise[90].value
+    };
+
+    const colorMap = {
+      [colorPalette.amber]: themeColors.palette.amber[value].value,
+      [colorPalette.amethyst]: themeColors.palette.amethyst[value].value,
+      [colorPalette.azure]: themeColors.palette.azure[value].value,
+      [colorPalette.emerald]: themeColors.palette.emerald[value].value,
+      [colorPalette.graphite]: themeColors.palette.graphite[value].value,
+      [colorPalette.ruby]: themeColors.palette.ruby[value].value,
+      [colorPalette.slate]: themeColors.palette.slate[value].value,
+      [colorPalette.turquoise]: themeColors.palette.turquoise[value].value
+    };
+
+    return colorMap;
+  },
+
+  /**
    * Generate a style sheet to append in the page.
    * @private
    * @param {array} colors The rules to append.
@@ -133,7 +167,7 @@ Personalize.prototype = {
 
     // Default Colors...
     // (Color)07 for the main color (fx headers)
-    // (Color)06 for the secondary color (fx sub-headers)
+    // (Color)06 for the secondary color (fx subheaders)
     // Light or Dark (fff or 000) for the contrast color
 
     // (Color)06 for the vertical borders between module tabs - 133C59
@@ -179,7 +213,7 @@ Personalize.prototype = {
       amber: ['#db7726', '#bb5500'], // amber 09
       amethyst: ['#9279a6', '#7834dd'], // amethyst 06
       azure: ['#2578a9', '#0563c2', '#368AC0', '#368ac0'], // azure 07/08
-      emerald: ['#56932e', '#1f9254', '#2AC371'], // emerald 08
+      emerald: ['#56932e', '#1f9254'], // emerald 08
       graphite: ['#5c5c5c', '#808080'], // graphite 06
       ruby: ['#941e1e', '#7b0f11'], // ruby 09
       slate: ['#50535a', '#98949e'], // slate 06
@@ -192,32 +226,6 @@ Personalize.prototype = {
       foundColor = foundColor || forceToBeLightTextOn[color].indexOf(isDark) > -1;
     });
     isDark = foundColor ? 'white' : null;
-
-    // START OF NEW THEME COLOR STYLES 
-    const buttonNewColors = {
-      amber: ['#bb5500', '#fbaf50', '#fcc888', '#fef2e5'],
-      amethyst: ['#7928e1', '#c2a1f1', '#ddcbf7', '#f1ebfc'],
-      azure: ['#0066d4', '#55a3f3', '#8abff7', '#e6f1fd'],
-      emerald: ['#1f9254', '#78d8a3', '#a1e4bf', '#ebf9f1'],
-      graphite: ['#535353', '#97979b', '#b7b7ba', '#efeff0'],
-      ruby: ['#8d0b0e', '#ee9496', '#f5c3c4', '#fbe7e8'],
-      slate: ['#606066', '#97979b', '#b7b7ba', '#efeff0'],
-      turquoise: ['#297b7b', '#82d4d4', '#a8e1e1', '#ecf8f8'] 
-    };
-    
-    const currentColor = `${colors.header || defaultColors.header}`.toLowerCase();
-    Object.keys(buttonNewColors).forEach((color) => {
-      if (buttonNewColors[color].indexOf(currentColor) > -1) {
-        colors.darkNewButton = buttonNewColors[color][1];
-        colors.darkNewButtonHover = buttonNewColors[color][2];
-        colors.secondaryButtonHover = buttonNewColors[color][3]; 
-      }
-    });
-
-    colors.darkNewButtonLighterHover = '#3e3e42';
-    colors.darkNewButtonDisabled = '#47474c';
-    colors.darkNewButtonTextDisabled = '#77777c';
-    // END OF NEW THEME COLOR STYLES 
 
     // Evaluate text contrast colors.
     // If the primary color is too "bright", this will flip the text color to black.
@@ -266,6 +274,96 @@ Personalize.prototype = {
     colors.dark = colors.btnColorSubheader;
     colors.darker = colors.inactive;
     colors.darkest = colors.horizontalBorder;
+    colors.btnHoverColor = colors.contrast;
+    colors.btnBgHoverColor = 'rgba(0, 0, 0, 0.3) !important';
+    colors.focusBoxShadow = `0 0 0 2px transparent, 0 0 0 0 ${colors.subtext}, 0 0 2px 1px ${colors.subtext}`;
+    colors.btnFocusBorderColor = colors.contrast;
+    colors.btnDisabledColor = 'rgba(255, 255, 255, 0.3) !important';
+    colors.btnOpacity = 0.8;
+    colors.btnPrimaryColor = colors.base;
+    colors.btnPrimaryColorHover = colors.darker;
+    colors.btnSecondaryColor = colors.darkest;
+    colors.btnSecondaryBorderColor = colors.base;
+    colors.btnTertiaryHoverColor = '#ffffff';
+    colors.btnLinkColor = colors.light;
+    colors.tabBottomBorderColor = colors.base;
+    colors.btnActionsHoverColor = colors.base;
+
+    const isAlabaster = colors.header === '#ffffff';
+    const isNewDark = this.currentTheme.indexOf('new-dark') >= 0;
+    const isClassicDark = this.currentTheme.indexOf('classic-dark') >= 0;
+    colors.btnTertiaryBgHoverColor = isAlabaster ? '#E6F1FD' : colors.darker;
+
+    // Alabaster is different so readjust the colors
+    if (isAlabaster) {
+      colors.text = '#0072ED';
+      colors.darker = '#E6F1FD';
+      colors.darkest = '#2F2F32';
+      colors.contrast = '#2F2F32';
+      colors.btnHoverColor = '#0072ED';
+      colors.btnBgHoverColor = '#E6F1FD';
+      colors.btnOpacity = 1;
+      colors.focusBoxShadow = `0 0 0 2px transparent, 0 0 0 0 ${colors.contrast}, 0 0 1px 0px ${colors.contrast}`;
+      colors.btnFocusBorderColor = '#2F2F32';
+      colors.btnDisabledColor = 'rgba(0, 0, 0, 0.4) !important';
+      colors.btnPrimaryColor = '#0072ED';
+      colors.btnPrimaryColorHover = '#0066D4';
+      colors.btnSecondaryColor = '#0072ED';
+      colors.btnSecondaryBorderColor = '#0072ED';
+      colors.btnTertiaryBgHoverColor = '#E6F1FD';
+      colors.btnTertiaryHoverColor = '#0072ED';
+      colors.btnLinkColor = '0072ED';
+      colors.tabBottomBorderColor = '#B7B7BA';
+      colors.btnActionsHoverColor = '#2F2F32';
+
+      if (isNewDark) {
+        colors.base = '#606066';
+        colors.btnPrimaryColor = colors.base;
+        colors.dark = colors.base;
+        colors.contrast = '#ffffff';
+        colors.focusBoxShadow = `0 0 0 2px transparent, 0 0 0 1px ${colors.contrast}, 0 0 1px 1px ${colors.contrast}`;
+        colors.darker = '#47474C';
+        colors.btnHoverColor = '#ffffff';
+        colors.hyperlinkText = '#ffffff';
+        colors.lighter = '#77777C';
+        colors.btnDisabledColor = 'rgba(255, 255, 255, 0.4) !important';
+        colors.btnPrimaryColorHover = colors.darker;
+        colors.btnSecondaryColor = colors.darkest;
+        colors.btnSecondaryBorderColor = colors.base;
+        colors.btnTertiaryBgHoverColor = '#3E3E42';
+        colors.btnTertiaryHoverColor = '#ffffff';
+        colors.btnLinkColor = colors.light;
+        colors.btnBgHoverColor = '#47474C';
+        colors.tabBottomBorderColor = '#606066';
+        colors.btnActionsHoverColor = '#ffffff';
+      }
+
+      if (isClassicDark) {
+        colors.base = '#50535a';
+        colors.btnPrimaryColor = colors.base;
+        colors.dark = colors.base;
+        colors.contrast = '#ffffff';
+        colors.focusBoxShadow = `0 0 0 2px transparent, 0 0 0 1px ${colors.contrast}, 0 0 1px 1px ${colors.contrast}`;
+        colors.darker = '#313236';
+        colors.btnPrimaryColorHover = colors.darker;
+        colors.btnHoverColor = '#ffffff';
+        colors.hyperlinkText = '#ffffff';
+        colors.lighter = '#656871';
+        colors.btnDisabledColor = 'rgba(255, 255, 255, 0.4) !important';
+        colors.btnSecondaryColor = colors.darkest;
+        colors.btnSecondaryBorderColor = colors.base;
+        colors.btnTertiaryBgHoverColor = 'transparent';
+        colors.btnTertiaryHoverColor = '#ffffff';
+        colors.btnLinkColor = colors.light;
+        colors.btnBgHoverColor = '#313236';
+        colors.tabBottomBorderColor = '#50535a';
+      }
+    }
+
+    const darkestColorMap = this.getColorMap(100);
+    const lightestColorMap = this.getColorMap(10);
+    colors.darkestPalette = darkestColorMap[colors.base] || colors.subheader;
+    colors.lightestPalette = lightestColorMap[colors.base] || colors.subheader;
 
     // Some disabled colors on some preset color schemes come out terrible,
     // unless they are adjusted here. { color: ['classic', 'new'] }
@@ -273,7 +371,7 @@ Personalize.prototype = {
     const alternateDisabledColors = {
       amber: ['#db7726', '#bb5500'], // amber 09
       amethyst: ['#9279a6', '#7834dd'], // amethyst 06
-      emerald: ['#56932e', '#1f9254', '#2AC371'], // emerald 08
+      emerald: ['#56932e', '#1f9254'], // emerald 08
       slate: ['#50535a', '#98949e'], // slate 06
     };
     let useAlternates = false;
@@ -310,10 +408,13 @@ Personalize.prototype = {
 
     let disabledBGColor = colorUtils.getLuminousColorShade(baseColor, lum);
     disabledBGColor = colorUtils.getDesaturatedColor(disabledBGColor, sat);
-    colors.baseDisabled = disabledBGColor;
+    colors.baseDisabled = isAlabaster ? '#D7D7D8' : disabledBGColor;
+    colors.baseDisabledText = '#ffffff';
 
     // Hyperlink/Text Selection
-    colors.hyperlinkText = colors.text;
+    const hyperLinkTextColor = (isAlabaster && (isNewDark || isClassicDark)) ? '#ffffff' : colors.text;
+
+    colors.hyperlinkText = hyperLinkTextColor;
     colors.hyperlinkTextHover = defaultColors.subtext;
     colors.selection = defaultColors.subtext;
 
@@ -321,7 +422,6 @@ Personalize.prototype = {
     defaultColors.tooltipText = tooltipContrast === 'white' ? 'ffffff' : '000000';
     colors.tooltipText = colorUtils.validateHex(colors.tooltipText || defaultColors.tooltipText);
 
-    console.log(colors);
     return personalizeStyles(colors);
   },
 
@@ -339,13 +439,18 @@ Personalize.prototype = {
   * @returns {this} component instance
   */
   setColors(colors) {
-    if (colors === '') {
+    if (colors === '' || colors === 'default' || colors?.header === 'default') {
       this.setColorsToDefault();
       return this;
     }
 
     if (!colors) {
       return this;
+    }
+
+    const colorMapping = theme.personalizationColors();
+    if (colorMapping[colors] !== undefined) {
+      colors = colorMapping[colors].value; // Get the Hex value
     }
 
     this.appendStyleSheet(this.getColorStyleSheet(colors));
@@ -371,7 +476,7 @@ Personalize.prototype = {
   },
 
   /**
-   * Sets the colors back to the default color (by removing the geneated stylesheet).
+   * Sets the colors back to the default color (by removing the generated stylesheet).
    */
   setColorsToDefault() {
     this.settings.colors = '';
@@ -380,7 +485,7 @@ Personalize.prototype = {
       sheet.parentNode.removeChild(sheet);
     }
     this.element.triggerHandler('colorschanged', {
-      colors: theme.themeColors().brand.primary.alt.value,
+      colors: 'default',
       isDefault: true,
       theme: this.currentTheme || 'theme-new-light'
     });
@@ -565,7 +670,7 @@ Personalize.prototype = {
     }
 
     // Copy the old settings to compare
-    const prevSettings = utils.extend({ }, this.settings);
+    const prevSettings = utils.extend({}, this.settings);
 
     // Merge in the new settings
     this.settings = utils.mergeSettings(this.element[0], settings, this.settings);

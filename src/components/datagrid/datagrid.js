@@ -130,11 +130,11 @@ const COMPONENT_NAME = 'datagrid';
  * @param {object}   [settings.emptyMessage]
  * @param {object}   [settings.emptyMessage.title='No Data Available']
  * @param {object}   [settings.emptyMessage.info='']
- * @param {object}   [settings.emptyMessage.icon='icon-empty-no-data']
+ * @param {object}   [settings.emptyMessage.icon='icon-empty-no-data-new']
  * @param {object}   [settings.emptyMessage.height=null]
  * An empty message will be displayed when there is no rows in the grid. This accepts an object of the form
  * emptyMessage: {title: 'No Data Available', info: 'Make a selection on the list above to see results',
- * icon: 'icon-empty-no-data', button: {text: 'Button Text', click: <function>}, height: null|'small'} set this to null for no message
+ * icon: 'icon-empty-no-data-new', button: {text: 'Button Text', click: <function>}, height: null|'small'} set this to null for no message
  * or will default to 'No Data Found with an icon.'
  * height: The empty message container height. If set to 'small' will show only title and all other will not be render (like: icon, button, info)
  * @param {boolean} [settings.allowChildExpandOnMatchOnly=false] If set to true, it will only expand children from matching node. If false will show children for all matching nodes.
@@ -241,7 +241,7 @@ const DATAGRID_DEFAULTS = {
   onExpandChildren: null, // Callback fires when expanding children with treeGrid
   onCollapseChildren: null, // Callback fires when collapseing children with treeGrid
   onKeyDown: null,
-  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data', height: null },
+  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data-new', height: null },
   searchExpandableRow: true,
   allowChildExpandOnMatchOnly: false,
   allowChildExpandOnMatch: false,
@@ -407,9 +407,10 @@ Datagrid.prototype = {
    * Render or render both the header and row area.
    * @param {string} isToggleFilter Check if filterrow type should be passed to the data source request
    * @param {object} pagingInfo information about the pager state
+   * @param {boolean} isInitialPaging if paging setting set initially
    * @returns {void}
    */
-  render(isToggleFilter, pagingInfo) {
+  render(isToggleFilter, pagingInfo, isInitialPaging) {
     if (!pagingInfo) {
       pagingInfo = {};
     }
@@ -420,7 +421,7 @@ Datagrid.prototype = {
 
     if (this.settings.source) {
       pagingInfo.preserveSelected = this.settings.allowSelectAcrossPages;
-      this.triggerSource(pagingInfo);
+      this.triggerSource(isInitialPaging ? 'initial' : pagingInfo);
       return;
     }
 
@@ -1240,6 +1241,7 @@ Datagrid.prototype = {
   */
   uniqueId(suffix) {
     suffix = (suffix === undefined || suffix === null) ? '' : suffix;
+    this.gridCount = this.gridCount ? this.gridCount : $('.datagrid').length + 1;
     const uniqueid = this.settings.uniqueId ?
       `${this.settings.uniqueId}-${suffix}` :
       (`${window.location.pathname.split('/').pop()
@@ -1571,11 +1573,14 @@ Datagrid.prototype = {
 
       // If header text is center aligned, for proper styling,
       // place the sortIndicator as a child of datagrid-header-text.
+
+      const svgHeaderTooltip = column?.headerIconTooltip !== undefined || column?.headerIconTooltip?.length > 0 ? column?.headerIconTooltip : '';
       const svgHeaderIcon = `
-        <svg class="icon datagrid-header-icon" focusable="false" aria-hidden="true" role="presentation" title="${column?.headerIconTooltip}">
+        <svg class="icon datagrid-header-icon" focusable="false" aria-hidden="true" role="presentation" title="${svgHeaderTooltip}">
           <use href="#icon-${column.headerIcon}"></use>
         </svg>
       `;
+
       headerRows[container] += `<div class="${isSelection ? 'datagrid-checkbox-wrapper ' : 'datagrid-column-wrapper'}${headerAlignmentClass}">
       <span class="datagrid-header-text${column.required ? ' required' : ''}">${self.headerText(this.settings.columns[j])}${headerAlignmentClass === ' l-center-text' ? sortIndicator : ''}</span>
       ${this.settings.columns[j]?.headerIcon ? svgHeaderIcon : ''}`;
@@ -2835,7 +2840,7 @@ Datagrid.prototype = {
 
     this.setChildExpandOnMatch();
 
-    if (!this.settings.source) {
+    if (!this.settings.source && !this.settings.disableClientFilter) {
       this.clearCache();
       this.renderRows();
     }
@@ -3218,6 +3223,7 @@ Datagrid.prototype = {
         header.drag({
           clone: true, cloneAppendTo: headers.first().parent().parent(), clonePosIsFixed: true
         })
+          .off('dragstart.datagrid')
           .on('dragstart.datagrid', (dragStartEvent, pos, thisClone) => {
             clone = thisClone;
 
@@ -3240,6 +3246,7 @@ Datagrid.prototype = {
             self.draggableStatus.startIndex = index;
             e.stopImmediatePropagation();
           })
+          .off('drag.datagrid')
           .on('drag.datagrid', (dragEvent, pos) => {
             clone[0].style.left = `${parseInt(!Locale.isRTL() ? pos.left : ((pos.left + pos.offset.x) - pos.clone.width()), 10)}px`;
             clone[0].style.top = `${parseInt(pos.top, 10)}px`;
@@ -3280,6 +3287,7 @@ Datagrid.prototype = {
 
             e.stopImmediatePropagation();
           })
+          .off('dragend.datagrid')
           .on('dragend.datagrid', (dragendEvent, pos) => {
             if (!Locale.isRTL()) {
               clone[0].style.left = `${parseInt(pos.left, 10)}px`;
@@ -5321,7 +5329,9 @@ Datagrid.prototype = {
   calculateTextRenderWidth(maxText, isHeader) {
     // if given, use cached canvas for better performance, else, create new canvas
     this.canvas = this.canvas || (this.canvas = document.createElement('canvas'));
-    const context = this.canvas.getContext('2d');
+
+    if (!this.canvas || !this.canvas?.getContext) return 0;
+    const context = this.canvas?.getContext('2d');
     const isNewTheme = (theme.currentTheme.id.indexOf('uplift') > -1 || theme.currentTheme.id.indexOf('new') > -1);
 
     if (!this.fontCached || !this.fontHeaderCached) {
@@ -5338,6 +5348,7 @@ Datagrid.prototype = {
       }
     }
 
+    if (!context?.font) return 0;
     context.font = this.fontCached;
     if (isHeader) {
       context.font = this.fontHeaderCached;
@@ -5351,6 +5362,7 @@ Datagrid.prototype = {
    * @private
    */
   setScrollClass() {
+    if (!this.bodyWrapperCenter[0] || !this.bodyWrapperCenter[0].offsetHeight) return;
     const height = parseInt(this.bodyWrapperCenter[0].offsetHeight, 10);
     const headerHeight = this.headerRow ? this.headerRow[0].offsetHeight : 0;
     const tableHeight = parseInt(this.tableBody[0].offsetHeight, 10);
@@ -6827,7 +6839,8 @@ Datagrid.prototype = {
         if (self.grandTotal) {
           countText = self.settings.resultsText(
             self,
-            self.grandTotal, count === self.grandTotal ? 0 : count
+            self.grandTotal,
+            count === self.grandTotal ? 0 : count
           );
         } else {
           const filteredCount = (self.filteredCount === 0 ? 0 : count - self.filteredCount);
@@ -7040,26 +7053,7 @@ Datagrid.prototype = {
         }
       });
 
-    // Handle Paging
-    if (this.settings.paging) {
-      // Need to store the original id to work the wrapping and unwrapping in popupmenu
-      // before the paging initiate
-      this.pagerId = $('.pager-toolbar .btn-menu').attr('aria-controls');
-      this.tableBody.on(`page.${COMPONENT_NAME}`, (e, pagingInfo) => {
-        if (pagingInfo.type === 'filtered' && this.settings.source) {
-          return;
-        }
-        self.closePopupmenuOnPaging();
-        self.saveUserSettings();
-        self.render(null, pagingInfo);
-        self.afterPaging(pagingInfo);
-      }).on(`pagesizechange.${COMPONENT_NAME}`, (e, pagingInfo) => {
-        pagingInfo.preserveSelected = true;
-        self.closePopupmenuOnPaging();
-        self.render(null, pagingInfo);
-        self.afterPaging(pagingInfo);
-      });
-    }
+    this.attachPagingEvents();
 
     // Handle Hover States
     if (self.settings.showHoverState) {
@@ -7623,6 +7617,39 @@ Datagrid.prototype = {
   },
 
   /**
+   * Handle paging events
+   * @private
+   * @returns {void}
+   */
+  attachPagingEvents() {
+    const self = this;
+
+    if (this.settings.paging) {
+      // Need to store the original id to work the wrapping and unwrapping in popupmenu
+      // before the paging initiate
+      this.pagerId = $('.pager-toolbar .btn-menu').attr('aria-controls');
+      this.tableBody
+        .off(`page.${COMPONENT_NAME}`)
+        .on(`page.${COMPONENT_NAME}`, (e, pagingInfo) => {
+          if (pagingInfo.type === 'filtered' && this.settings.source) {
+            return;
+          }
+          self.closePopupmenuOnPaging();
+          self.saveUserSettings();
+          self.render(null, pagingInfo);
+          self.afterPaging(pagingInfo);
+        })
+        .off(`pagesizechange.${COMPONENT_NAME}`)
+        .on(`pagesizechange.${COMPONENT_NAME}`, (e, pagingInfo) => {
+          pagingInfo.preserveSelected = true;
+          self.closePopupmenuOnPaging();
+          self.render(null, pagingInfo);
+          self.afterPaging(pagingInfo);
+        });
+    }
+  },
+
+  /**
    * Close opened popupmenus when paging.
    * @private
    * @returns {void}
@@ -7731,7 +7758,7 @@ Datagrid.prototype = {
       toolbar = this.element.parent().find('.toolbar:not(.contextual-toolbar), .flex-toolbar:not(.contextual-toolbar)');
       this.refreshSelectedRowHeight();
     } else {
-      toolbar = $('<div class="toolbar" role="toolbar"></div>');
+      toolbar = $('<div class="toolbar datagrid-toolbar" role="toolbar"></div>');
       this.removeToolbarOnDestroy = true;
 
       if (this.settings.toolbar.title) {
@@ -8114,7 +8141,7 @@ Datagrid.prototype = {
         // Strip any html markup that might be in the formatted value
         value = value.replace(/(<([^>]+)>)|(amp;)|(&lt;([^>]+)&gt;)/ig, '');
 
-        return value.indexOf(filterExpr.value) > -1;
+        return value.indexOf(xssUtils.escapeHTML(filterExpr.value)) > -1;
       };
 
       // Check in all visible columns
@@ -8912,9 +8939,11 @@ Datagrid.prototype = {
     }
 
     if (this._selectedRows?.length > 0 && (this.contextualToolbar?.height() === 0 || !this.contextualToolbar?.is(':visible') || !this.contextualToolbar?.hasClass('is-hidden'))) {
+      const trigger = this.contextualToolbar.hasClass('flex-toolbar') ? 'recalculate-buttonset' : 'recalculate-buttons';
+      const displayStyle = this.contextualToolbar.hasClass('flex-toolbar') ? 'flex' : 'block';
       this.contextualToolbar.find('.selection-count').text(`${this._selectedRows.length} ${Locale.translate('Selected')}`);
-      this.contextualToolbar.removeClass('is-hidden').css('display', 'block').one('animateopencomplete.datagrid', function () {
-        $(this).removeClass('is-hidden').triggerHandler('recalculate-buttons');
+      this.contextualToolbar.removeClass('is-hidden').css('display', displayStyle).one('animateopencomplete.datagrid', function () {
+        $(this).removeClass('is-hidden').triggerHandler(trigger);
       }).animateOpen();
     }
   },
@@ -9543,6 +9572,11 @@ Datagrid.prototype = {
 
     if (!status) {
       delete arrayToUse[idx].rowStatus;
+
+      if (this.settings.treeGrid) {
+        delete arrayToUse[idx].node.rowStatus;
+      }
+
       this.updateRow(idx);
       return;
     }
@@ -12652,14 +12686,27 @@ Datagrid.prototype = {
       a = key(a);
       b = key(b);
 
+      // Imitate how Excel does sorting when comparing numbers with strings (numbers are always less than strings).
+      // Note: The above primer function makes the data type of $.isNumeric() values to be number, which is important
+      //       in imitating Excel sorting (i.e. the string '5' becomes 5 and is treated as a number in sorting).
+      // Example: The following string values will sort in this order (ascending): 1, 2, 07, 11, 1a, 22a, 2ab, a, B, c
+      if (typeof a === 'number' && typeof b === 'string' && b !== '') {
+        return ascending * -1;
+      } else if (typeof a === 'string' && typeof b === 'number' && a !== '') { // eslint-disable-line
+        return ascending;
+      }
+
+      // Imitate how Excel sorts blank values (always at end of list for both ascending and descending).
+      // Note: It is annoying to see a bunch a blank values at the top of the list when trying to see sorted values.
+      if (a === '') {
+        return b === '' ? 0 : 1;
+      } else if (b === '') { // eslint-disable-line
+        return a === '' ? 0 : -1;
+      }
+
       if (typeof a !== typeof b) {
         a = a.toString().toLowerCase();
         b = b.toString().toLowerCase();
-      }
-
-      // Negate the comparison when comparing integer vs string value
-      if ((!isNaN(a) && isNaN(b)) || (isNaN(a) && !isNaN(b))) {
-        return ascending * (!(a > b) - !(b > a));
       }
 
       return ascending * ((a > b) - (b > a));
@@ -13283,9 +13330,10 @@ Datagrid.prototype = {
   * @returns {object} The plugin api for chaining.
   */
   updated(settings, pagingInfo) {
+    const isInitialPaging = this.settings.paging !== settings?.paging && settings?.paging && !pagingInfo;
     this.settings = utils.mergeSettings(this.element, settings, this.settings);
 
-    if (this.pagerAPI && typeof this.pagerAPI.destroy === 'function') {
+    if (!settings?.paging && this.pagerAPI && typeof this.pagerAPI.destroy === 'function') {
       this.pagerAPI.destroy();
     }
 
@@ -13303,8 +13351,13 @@ Datagrid.prototype = {
       this.settings.columns = settings.columns;
     }
 
-    if (settings && settings.toolbar && this.toolbar) {
-      const toolbar = this.element.parent().find('.toolbar:not(.contextual-toolbar), .flex-toolbar:not(.contextual-toolbar)').length === 1 ? this.element.prev('.flex-toolbar') : this.element.prev('.toolbar');
+    if (settings && settings.toolbar && !this.toolbar) {
+      this.appendToolbar();
+    }
+
+    // Refresh toolbar only if it's rendered by datagrid, not custom added toolbars
+    if (settings && settings.toolbar && this.toolbar && this.toolbar.hasClass('datagrid-toolbar')) {
+      const toolbar = this.element.parent().find('.toolbar:not(.contextual-toolbar), .flex-toolbar:not(.contextual-toolbar)');
       const toolbarApi = this.toolbar.data('toolbar') ? this.toolbar.data('toolbar') : this.toolbar.data('toolbarFlex');
       if (toolbarApi) {
         toolbarApi.destroy();
@@ -13314,9 +13367,10 @@ Datagrid.prototype = {
     }
 
     this.setRowHeightClass();
-    this.render(null, pagingInfo);
-    this.renderHeader();
     this.handlePaging();
+    this.attachPagingEvents();
+    this.render(null, pagingInfo, isInitialPaging);
+    this.renderHeader();
     return this;
   }
 };

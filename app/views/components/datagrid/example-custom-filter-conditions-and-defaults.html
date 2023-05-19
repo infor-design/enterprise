@@ -24,9 +24,9 @@
       data.push({ id: 8, productId: null, productName: null, activity:  null, quantity: null, price: null, orderDate: null, action: 'Blank Row', status: 'Confirmed'});
 
       // Define Columns for the Grid.
-      columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Readonly, filterConditions: [{value: 'contains'}, {value: 'equals', selected: true}], filterType: 'text'});
-      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly, filterConditions: ['equals', 'does-not-equal', 'contains', 'does-not-contain', 'is-empty', 'is-not-empty', 'end-with', 'does-not-end-with', 'start-with', 'does-not-start-with'], filterType: 'text'});
-      columns.push({ id: 'productName', name: 'Product Name', field: 'productName',  formatter: Formatters.Hyperlink, filterConditions: ['contains', 'equals'], filterType: 'text'});
+      columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Soho.Formatters.Readonly, filterConditions: [{value: 'contains'}, {value: 'equals', selected: true}], filterType: 'text'});
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Readonly, filterConditions: ['equals', 'does-not-equal', 'contains', 'does-not-contain', 'is-empty', 'is-not-empty', 'end-with', 'does-not-end-with', 'start-with', 'does-not-start-with'], filterType: 'text'});
+      columns.push({ id: 'productName', name: 'Product Name', field: 'productName',  formatter: Soho.Formatters.Hyperlink, filterConditions: ['contains', 'equals'], filterType: 'text'});
       columns.push({ id: 'date', name: 'Date', field: 'orderDate', filterType: 'date', filterConditions: ['equals', 'does-not-equal', {value: 'in-range', selected: true}, 'less-than', 'less-equals', 'greater-than', 'greater-equals'], width: 240, formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy'});
 
       // Init and get the api for the grid
@@ -36,7 +36,7 @@
         filterable: true,
         selectable: 'single',
         editable: true,
-        emptyMessage: {title: Locale.translate('NoData'), info: Locale.translate('NoDataFilter'), icon: 'icon-empty-no-data'},
+        emptyMessage: {title: Soho.Locale.translate('NoData'), info: Soho.Locale.translate('NoDataFilter'), icon: 'icon-empty-no-data-new'},
         toolbar: {title: 'Filterable Datagrid', filterRow: true, results: true, dateFilter: false ,keywordFilter: false, actions: true, views: false, rowHeight: true, collapsibleFilter: false}
       });
  });

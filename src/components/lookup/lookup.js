@@ -17,6 +17,7 @@ let LOOKUP_GRID_ID = 'lookup-datagrid';
 
 // When passing on attributes from the Lookup component to its subcomponents (modal/grid),
 // This helper appends suffixes representing those components to each attribute.
+// eslint-disable-next-line default-param-last
 function addSuffixToAttributes(parentAttrs = [], childAttrs = [], suffix) {
   let attrs = [];
   if (!parentAttrs?.length && !childAttrs?.length) {
@@ -724,7 +725,7 @@ Lookup.prototype = {
     // Restore selected rows when pages change
     if (this.settings.options.source) {
       lookupGrid.off('afterpaging.lookup').on('afterpaging.lookup', (e, pagingInfo) => {
-        if (!(self.settings.options.source && self.settings.options.selectable === 'multiple')) {
+        if (self.settings.options.source) {
           const fieldVal = self.element.val();
           this.selectGridRows(fieldVal);
         }

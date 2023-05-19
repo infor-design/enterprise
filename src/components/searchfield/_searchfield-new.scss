@@ -66,7 +66,6 @@
   &:not(.is-open),
   &.non-collapsible {
     .searchfield {
-      padding-bottom: 6px;
       padding-top: 6px;
 
       @media only screen and (max-width: $breakpoint-phone-to-tablet) {
@@ -209,6 +208,10 @@ html[dir='rtl'] {
 
     .searchfield-category-button {
       height: 39px;
+    }
+
+    &.has-categories button.close:not(.is-empty) {
+      top: 0;
     }
 
     &:not(.toolbar-searchfield-wrapper):not(.context) {

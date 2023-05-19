@@ -637,7 +637,7 @@ ActionSheet.prototype = {
     this.element.add($(this.trayBtn)).off('click.trigger');
 
     // Remove the Action Sheet Element
-    if (this.actionSheetElem) {
+    if (this.actionSheetElem && $(this.actionSheetElem).find('button').destroy) {
       $(this.actionSheetElem).find('button').destroy();
       this.actionSheetElem.remove();
     }

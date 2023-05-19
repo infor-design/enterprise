@@ -60,6 +60,7 @@ const COMPONENT_NAME = 'datepicker';
  * For example if you have more non specific dates to disable then enable ect.
  * @param {boolean} [settings.showLegend=false] If true a legend is show to associate dates.
  * @param {boolean} [settings.showMonthYearPicker=true] If false the year and month switcher will be disabled.
+ * @param {boolean} [settings.showWeekNumber=false] If set to true, the week number will be displayed on monthview.
  * @param {boolean} [settings.hideDays=false] If true the days portion of the calendar will be hidden.
  *  Usefull for Month/Year only formats.
  * @param {number} [settings.yearsAhead=3] The number of years ahead to show in the month/year picker should total 9 with yearsBack.
@@ -122,6 +123,7 @@ const DATEPICKER_DEFAULTS = {
   },
   showLegend: false,
   showMonthYearPicker: true,
+  showWeekNumber: false,
   hideDays: false,
   hitbox: false,
   yearsAhead: 3,
@@ -624,6 +626,7 @@ DatePicker.prototype = {
 
   /**
    * Loads legend list to the monthview settings.
+   * @param {object} legendList The legend object
    * @returns {void}
    */
   loadLegend(legendList) {
@@ -778,6 +781,7 @@ DatePicker.prototype = {
     if (this.settings.onOpenCalendar) {
       // In some cases, month picker wants to set a specifc time.
       this.settings.activeDate = this.settings.onOpenCalendar();
+      this.currentDate = this.settings.activeDate;
       if (this.isIslamic) {
         this.settings.activeDateIslamic = Locale.gregorianToUmalqura(this.settings.activeDate);
         this.settings.year = this.settings.activeDateIslamic[0];
@@ -898,6 +902,7 @@ DatePicker.prototype = {
       },
       placement: popPlacement,
       popover: true,
+      appendTo: this.settings.appendTo,
       trigger: 'immediate',
       isRangeDatepicker: s.range.useRange,
       extraClass: this.settings.range.selectWeek ? 'monthview-popup is-range-week' : 'monthview-popup',
@@ -2126,9 +2131,13 @@ DatePicker.prototype = {
     if (typeof settings !== 'undefined') {
       this.settings = utils.mergeSettings(this.element, settings, DATEPICKER_DEFAULTS);
     }
-    return this
-      .teardown()
-      .init();
+
+    this.teardown();
+    this.init();
+
+    if (this.element.data('validate') && this.element.data('validate') instanceof Object) {
+      this.element.data('validate').updated();
+    }
   },
 
   /**

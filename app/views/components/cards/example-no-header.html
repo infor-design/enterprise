@@ -1,0 +1,58 @@
+<div class="row">
+  <div class="twelve columns">
+    <div class="section-title">No header Widget/Card</div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+    <div class="card" id="no-header-1">
+      <div class="card-content">
+        <div class="btn-actions-wrapper">
+          <button class="btn-actions" type="button" id="btn-1">
+            <span class="audible">Actions</span>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-vertical-ellipsis"></use>
+            </svg>
+          </button>
+          <ul class="popupmenu">
+            <li><a href="#" id="action-1">Action 1</a></li>
+            <li><a href="#" id="action-2">Action 2</a></li>
+            <li><a href="#" id="action-3">Action 3</a></li>
+            <li><a href="#" id="action-4">Action 4</a></li>
+            <li><a href="#" id="action-5">Action 5</a></li>
+            <li><a href="#" id="action-6">Action 6</a></li>
+            <li><a href="#" id="action-7">Action 7</a></li>
+            <li><a href="#" id="action-8">Action 8</a></li>
+            <li><a href="#" id="action-9">Action 9</a></li>
+            <li><a href="#" id="action-10">Action 10</a></li>
+            <li><a href="#" id="action-11">Action 11</a></li>
+            <li><a href="#" id="action-12">Action 12</a></li>
+          </ul>
+        </div>
+        <div class="content-top m-bottom-20">
+          <p>Wednesday Nov 9, 2023 12:20</p>
+        </div>
+        <div class="content-center p-top-20">
+          <h1>Welcome to our online store!</h1>
+          <p>We specialize in providing high-quality, sustainable products that are both stylish and functional. Our products are made from eco-friendly materials and are designed to last, so you can feel good about your purchase knowing that it's good for the planet. From reusable water bottles to organic cotton t-shirts, we have everything you need to live a more sustainable lifestyle. Plus, with our fast and reliable shipping, you can get your order delivered right to your doorstep in no time. Thank you for choosing us and we hope you enjoy your shopping experience with us!</p>
+          <button type="button" class="btn btn-link" id="btn-link-launch">
+            <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+              <use href="#icon-launch"></use>
+            </svg>
+            <span>Read more</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('#no-header-1').cards({
+    noHeader: true,
+    bordered: true,
+    contentPaddingY: 16,
+    contentPaddingX: 16,
+  })
+</script>

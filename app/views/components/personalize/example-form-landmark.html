@@ -37,18 +37,20 @@
           </div>
         </div>
       </div>
-      <div class="tab-container header-tabs personalize-header" data-options="{ containerElement: '#scrollable-tab-panels' }" style="position: sticky; top: 60px; z-index: 29">
+      <div class="tab-container alternate header-tabs personalize-header"
+        data-options="{ containerElement: '#scrollable-tab-panels' }" style="position: sticky; top: 60px; z-index: 29">
         <div class="tab-list-container">
           <ul class="tab-list">
             <li class="tab is-selected"><a id="detail" href="#composite-form-detail">Detail</a></li>
             <li class="tab"><a id="options" href="#composite-form-options">Options</a></li>
             <li class="tab"><a id="quantity-detail" href="#composite-form-quantity-detail">Quantity Detail</a></li>
-            <li class="tab"><a id="user-fields" href="#composite-form-user-fields">User Fields</a></li>
+            <li class="tab is-disabled"><a id="user-fields" href="#composite-form-user-fields">User Fields</a></li>
             <li class="tab"><a id="messages" href="#composite-form-messages">Messages</a></li>
             <li class="tab"><a id="add-on-changes" href="#composite-form-addon-changes">Add-On Changes</a></li>
             <li class="tab"><a id="sources" href="#composite-form-sources">Sources</a></li>
             <li class="tab"><a id="optionsTwo" href="#composite-form-options">Options Two</a></li>
-            <li class="tab"><a id="quantity-detailTwo" href="#composite-form-quantity-detail">Quantity Detail Two</a></li>
+            <li class="tab"><a id="quantity-detailTwo" href="#composite-form-quantity-detail">Quantity Detail Two</a>
+            </li>
             <li class="tab"><a id="user-fieldsTwo" href="#composite-form-user-fields">User Fields Two</a></li>
             <li class="tab"><a id="messagesTwo" href="#composite-form-messages">Messages Two</a></li>
             <li class="tab"><a id="add-on-changesTwo" href="#composite-form-addon-changes">Add-On Changes Two</a></li>
@@ -63,13 +65,13 @@
               <div class="six columns">
                 <div class="field">
                   <label for="composite-form-detail-item">Item</label>
-                  <input id="composite-form-detail-item" class="lookup"/>
+                  <input id="composite-form-detail-item" class="lookup" />
                 </div>
               </div>
               <div class="six columns">
                 <div class="field">
                   <label for="composite-form-detail-quantity">Quantity</label>
-                  <input id="composite-form-detail-quantity" class="lookup"/>
+                  <input id="composite-form-detail-quantity" class="lookup" />
                 </div>
               </div>
             </div>
@@ -78,13 +80,13 @@
               <div class="six columns">
                 <div class="field">
                   <label for="composite-form-detail-entered-by-uom">Entered Buy UOM</label>
-                  <input id="composite-form-detail-entered-by-uom" class="lookup"/>
+                  <input id="composite-form-detail-entered-by-uom" class="lookup" />
                 </div>
               </div>
               <div class="six columns">
                 <div class="field">
                   <label for="composite-form-detail-item-type">Item Type</label>
-                  <input id="composite-form-detail-item-type" class="lookup"/>
+                  <input id="composite-form-detail-item-type" class="lookup" />
                 </div>
               </div>
             </div>
@@ -93,13 +95,13 @@
               <div class="six columns">
                 <div class="field">
                   <label for="composite-form-detail-description">Description</label>
-                  <input id="composite-form-detail-description" class="lookup"/>
+                  <input id="composite-form-detail-description" class="lookup" />
                 </div>
               </div>
               <div class="six columns">
                 <div class="field">
                   <label for="composite-form-detail-service-code">Service Code</label>
-                  <input id="composite-form-detail-service-code" class="lookup"/>
+                  <input id="composite-form-detail-service-code" class="lookup" />
                 </div>
               </div>
             </div>
@@ -108,13 +110,13 @@
               <div class="six columns">
                 <div class="field">
                   <label for="composite-form-detail-unit-cost">Item</label>
-                  <input id="composite-form-detail-unit-cost" class="lookup"/>
+                  <input id="composite-form-detail-unit-cost" class="lookup" />
                 </div>
               </div>
               <div class="six columns">
                 <div class="field">
                   <label for="composite-form-detail-late-delivery-date">Late Delivery Date</label>
-                  <input id="composite-form-detail-late-delivery-date" class="lookup"/>
+                  <input id="composite-form-detail-late-delivery-date" class="lookup" />
                 </div>
               </div>
             </div>
@@ -160,110 +162,111 @@
                 <h3>Sources</h3>
               </div>
             </div>
-          </div><div class="row form-responsive">
-              <div class="six columns">
-                <div class="field">
-                  <label for="fourteen">Fourteen</label>
-                  <input id="fourteen" class="lookup"/>
-                </div>
-              </div>
-              <div class="six columns">
-                <div class="field">
-                  <label for="thirteen">Thirteen</label>
-                  <input id="thirteen" class="lookup"/>
-                </div>
+          </div>
+          <div class="row form-responsive">
+            <div class="six columns">
+              <div class="field">
+                <label for="fourteen">Fourteen</label>
+                <input id="fourteen" class="lookup" />
               </div>
             </div>
+            <div class="six columns">
+              <div class="field">
+                <label for="thirteen">Thirteen</label>
+                <input id="thirteen" class="lookup" />
+              </div>
+            </div>
+          </div>
 
-            <div class="row form-responsive">
-              <div class="six columns">
-                <div class="field">
-                  <label for="twelve">Twelve</label>
-                  <input id="twelve" class="lookup"/>
-                </div>
-              </div>
-              <div class="six columns">
-                <div class="field">
-                  <label for="eleven">Eleven</label>
-                  <input id="eleven" class="lookup"/>
-                </div>
+          <div class="row form-responsive">
+            <div class="six columns">
+              <div class="field">
+                <label for="twelve">Twelve</label>
+                <input id="twelve" class="lookup" />
               </div>
             </div>
+            <div class="six columns">
+              <div class="field">
+                <label for="eleven">Eleven</label>
+                <input id="eleven" class="lookup" />
+              </div>
+            </div>
+          </div>
 
-            <div class="row form-responsive">
-              <div class="six columns">
-                <div class="field">
-                  <label for="ten">Ten</label>
-                  <input id="ten" class="lookup"/>
-                </div>
-              </div>
-              <div class="six columns">
-                <div class="field">
-                  <label for="nine">Nine</label>
-                  <input id="nine" class="lookup"/>
-                </div>
+          <div class="row form-responsive">
+            <div class="six columns">
+              <div class="field">
+                <label for="ten">Ten</label>
+                <input id="ten" class="lookup" />
               </div>
             </div>
+            <div class="six columns">
+              <div class="field">
+                <label for="nine">Nine</label>
+                <input id="nine" class="lookup" />
+              </div>
+            </div>
+          </div>
 
-            <div class="row form-responsive">
-              <div class="six columns">
-                <div class="field">
-                  <label for="eight">Eight</label>
-                  <input id="eight" class="lookup"/>
-                </div>
-              </div>
-              <div class="six columns">
-                <div class="field">
-                  <label for="seven">Seven</label>
-                  <input id="seven" class="lookup"/>
-                </div>
+          <div class="row form-responsive">
+            <div class="six columns">
+              <div class="field">
+                <label for="eight">Eight</label>
+                <input id="eight" class="lookup" />
               </div>
             </div>
-          </div>
-          <div id="six" class="tab-panel" role="tabpanel">
-            <div class="row">
-              <div class="twelve columns">
-                <h3>Six</h3>
-              </div>
-            </div>
-          </div>
-          <div id="five" class="tab-panel" role="tabpanel">
-            <div class="row">
-              <div class="twelve columns">
-                <h3>Five</h3>
-              </div>
-            </div>
-          </div>
-          <div id="four" class="tab-panel" role="tabpanel">
-            <div class="row">
-              <div class="twelve columns">
-                <h3>Four</h3>
-              </div>
-            </div>
-          </div>
-          <div id="three" class="tab-panel" role="tabpanel">
-            <div class="row">
-              <div class="twelve columns">
-                <h3>Three</h3>
-              </div>
-            </div>
-          </div>
-          <div id="two" class="tab-panel" role="tabpanel">
-            <div class="row">
-              <div class="twelve columns">
-                <h3>Two</h3>
-              </div>
-            </div>
-          </div>
-          <div id="one" class="tab-panel" role="tabpanel">
-            <div class="row">
-              <div class="twelve columns">
-                <h3>One</h3>
+            <div class="six columns">
+              <div class="field">
+                <label for="seven">Seven</label>
+                <input id="seven" class="lookup" />
               </div>
             </div>
           </div>
         </div>
-      </section>
-    </section>
-  </section>
+        <div id="six" class="tab-panel" role="tabpanel">
+          <div class="row">
+            <div class="twelve columns">
+              <h3>Six</h3>
+            </div>
+          </div>
+        </div>
+        <div id="five" class="tab-panel" role="tabpanel">
+          <div class="row">
+            <div class="twelve columns">
+              <h3>Five</h3>
+            </div>
+          </div>
+        </div>
+        <div id="four" class="tab-panel" role="tabpanel">
+          <div class="row">
+            <div class="twelve columns">
+              <h3>Four</h3>
+            </div>
+          </div>
+        </div>
+        <div id="three" class="tab-panel" role="tabpanel">
+          <div class="row">
+            <div class="twelve columns">
+              <h3>Three</h3>
+            </div>
+          </div>
+        </div>
+        <div id="two" class="tab-panel" role="tabpanel">
+          <div class="row">
+            <div class="twelve columns">
+              <h3>Two</h3>
+            </div>
+          </div>
+        </div>
+        <div id="one" class="tab-panel" role="tabpanel">
+          <div class="row">
+            <div class="twelve columns">
+              <h3>One</h3>
+            </div>
+          </div>
+        </div>
+</div>
+</section>
+</section>
+</section>
 </div>

@@ -3,7 +3,7 @@
 
 $horizontal-tabs-height: 40px;
 
-.has-more-button.tab-container.horizontal {
+.has-more-button.tab-container.horizontal:not(.header-tabs) {
   &::after {
     background-image:
       linear-gradient(
@@ -71,19 +71,15 @@ $horizontal-tabs-height: 40px;
         color: $tab-text-color-horizontal;
       }
 
-      &:hover {
+      &:not(.is-disabled):hover {
         color: $tab-hover-color;
 
         .icon:not(.is-error):not(.icon-error) {
           color: $tab-hover-color;
         }
-
-        &.is-disabled {
-          color: $disabled-color;
-        }
       }
 
-      &.is-selected {
+      &:not(.is-disabled).is-selected {
         color: $tab-selected-color;
 
         .icon:not(.is-error):not(.icon-error) {

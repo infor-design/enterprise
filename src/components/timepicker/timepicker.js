@@ -2,6 +2,7 @@ import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
 import { stringUtils as str } from '../../utils/string';
+import { dateUtils } from '../../utils/date';
 
 // jQuery components
 import '../dropdown/dropdown.jquery';
@@ -432,7 +433,9 @@ TimePicker.prototype = {
     const validation = 'time';
     const events = { time: 'blur change enter' };
 
+    this.addedValidation = false;
     if (!this.element[0].getAttribute('data-validate')) {
+      this.addedValidation = true;
       this.element
         .attr('data-validate', validation)
         .attr('data-validation-events', JSON.stringify(events))
@@ -827,7 +830,7 @@ TimePicker.prototype = {
     val = val.replace('午', `午${sep}`);
     parts = val.split(sep);
 
-    const isStandardTimeFormatOnly = timeFormat.slice(0, 2) === 'ah' && !$('.datepicker').length > 0;
+    const isStandardTimeFormatOnly = timeFormat.replace(' ', '').slice(0, 2) !== 'ah' && !$('.datepicker').length > 0;
     const aLoc = this.currentCalendar.timeFormat.toLowerCase().indexOf('a');
     const isAmFirst = aLoc !== -1 && (aLoc <
       this.currentCalendar.timeFormat.toLowerCase().indexOf('h'));
@@ -997,19 +1000,15 @@ TimePicker.prototype = {
    * @returns {void}
    */
   setTimeOnField() {
+    const timeFormat = this.settings.timeFormat;
     const hours = this.hourSelect ? this.hourSelect[0]?.value : '';
     const minutes = this.minuteSelect ? this.minuteSelect[0]?.value : '';
     const seconds = this.secondSelect ? this.secondSelect[0]?.value : '';
-    let period = (this.periodSelect ? this.periodSelect[0]?.value : '');
-    const sep = this.getTimeSeparator();
-    let timeString = `${hours}${sep}${minutes}${this.hasSeconds() ? sep + seconds : ''}`;
-
-    period = (!this.is24HourFormat() && period === '') ? document.querySelector(`#${this.periodId}-shdo`).value : period;
-    timeString += period ? ` ${this.translateDayPeriod(period)}` : '';
-
-    if (timeString.indexOf(sep) > -1 && this.settings.timeFormat === 'HHmm') {
-      timeString = timeString.replace(sep, '');
-    }
+    const dayPeriod = (this.periodSelect ? this.periodSelect[0]?.value : '');
+    const dayPeriodIndex = Locale?.calendar().dayPeriods?.indexOf(dayPeriod);
+    const date = new Date();
+    date.setHours(dateUtils.hoursTo24(parseInt(hours, 10), dayPeriodIndex), minutes, seconds);
+    const timeFormatted = Locale.formatDate(date, { date: 'hour', pattern: timeFormat });
 
     /**
     * Fires when the value is changed by typing or the picker.
@@ -1017,7 +1016,7 @@ TimePicker.prototype = {
     * @memberof TimePicker
     * @property {object} event - The jquery event object
     */
-    this.element.val(timeString)
+    this.element.val(timeFormatted)
       .trigger('change');
 
     this.element
@@ -1078,7 +1077,7 @@ TimePicker.prototype = {
         const maxHourCount = is24HourFormat ? 24 : 13;
         const hourSelect = $('select.hours.dropdown');
         let hourValue = hourSelect.siblings('.dropdown-wrapper').find('.dropdown').children('span').text();
-        if (hourValue.indexOf('Hours') > -1) {
+        if (hourValue.indexOf(Locale.translate('Hours')) > -1) {
           hourValue = hourValue.split(' ')[1];
         }
 
@@ -1089,7 +1088,7 @@ TimePicker.prototype = {
           if (hourCounter > maxHourRange) {
             break;
           }
-          
+
           selected = '';
           if (parseInt(hourValue, 10) === hourCounter) {
             selected = ' selected';
@@ -1256,10 +1255,13 @@ TimePicker.prototype = {
     if (settings) {
       this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
     }
+    
+    this.teardown();
+    this.init();
 
-    return this
-      .teardown()
-      .init();
+    if (this.element.data('validate') && this.element.data('validate') instanceof Object) {
+      this.element.data('validate').updated();
+    }
   },
 
   /**
@@ -1281,9 +1283,12 @@ TimePicker.prototype = {
       mask.destroy();
     }
 
-    $.removeData(this.element[0], 'validate');
-    $.removeData(this.element[0], 'validationEvents');
-    this.element.removeAttr('data-validate').removeData('validate validationEvents');
+    if (this.addedValidation) {
+      $.removeData(this.element[0], 'validate');
+      $.removeData(this.element[0], 'validationEvents');
+      this.element.removeAttr('data-validate').removeData('validate validationEvents');
+      delete this.addedValidation;
+    }
 
     this.label.find('.audible').remove();
     $('#timepicker-popup').remove();

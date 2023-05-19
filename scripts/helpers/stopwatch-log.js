@@ -1,14 +1,10 @@
-'use strict';
-
-const chalk = require('chalk');
-const logSymbols = require('log-symbols');
-
+/* eslint-disable no-console */
+/* eslint-disable class-methods-use-this */
 /**
  * @class stopwatchLog
  * Allows you to log the starting and stopping of tasks with elapsed time
  */
 class StopwatchLog {
-
   /**
    * Create a stopwatchLog instance
    */
@@ -20,10 +16,9 @@ class StopwatchLog {
    * Log an individual task's action
    * @param {string} action - the action
    * @param {string} desc - a brief description or more details
-   * @param {string} [color] - one of the chalk module's color aliases
    */
-  logTaskAction(action, desc, color = 'green') {
-    console.log('-', action, chalk[color](desc));
+  logTaskAction(action, desc) {
+    console.log('-', action, desc);
   }
 
   /**
@@ -31,7 +26,7 @@ class StopwatchLog {
    * @param {string} taskName - the name of the task that matches its start time
    */
   logTaskEnd(taskName) {
-    console.log('Finished', chalk.cyan(taskName), `after ${chalk.magenta(this.timeElapsed(this.stopwatch[taskName]))}`);
+    console.log('Finished', taskName, `after ${this.timeElapsed(this.stopwatch[taskName])}`);
   }
 
   /**
@@ -41,7 +36,7 @@ class StopwatchLog {
    */
   logTaskStart(taskName) {
     this.stopwatch[taskName] = Date.now();
-    console.log('\nStarting', chalk.cyan(taskName), '...');
+    console.log('\nStarting', taskName, '...');
     return taskName;
   }
 
@@ -50,7 +45,7 @@ class StopwatchLog {
    * @param {string} [desc] - a brief description or more details
    */
   error(desc = '') {
-    console.error(`\n`, logSymbols.error, chalk['red'](desc), `\n`);
+    console.error('\n', desc, '\n');
   }
 
   /**
@@ -58,7 +53,7 @@ class StopwatchLog {
    * @param {string} [desc] - a brief description or more details
    */
   success(desc = '') {
-    console.log(logSymbols.success, chalk['green'](desc));
+    console.log(desc);
   }
 
   /**
@@ -67,9 +62,9 @@ class StopwatchLog {
    * @return {string} - "0.00s"
    */
   timeElapsed(startTime) {
-    const elapsed = ((Date.now() - startTime)/1000).toFixed(2);
-    return elapsed + 's';
+    const elapsed = ((Date.now() - startTime) / 1000).toFixed(2);
+    return `${elapsed}s`;
   }
 }
 
-module.exports = new StopwatchLog();
+export default new StopwatchLog();

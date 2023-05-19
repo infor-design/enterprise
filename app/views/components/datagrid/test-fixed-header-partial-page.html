@@ -26,7 +26,7 @@
 <script>
     $('body').one('initialized', function () {
 
-        Locale.set('en-US').done(function () {
+        Soho.Locale.set('en-US').done(function () {
             var columns = [], data = [];
 
             // Define Some Sample Data
@@ -40,12 +40,12 @@
 
             //Define Columns for the Grid.
             columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140});
-            columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 250, formatter: Formatters.Hyperlink});
+            columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 250, formatter: Soho.Formatters.Hyperlink});
             columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 160});
             columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 200});
-            columns.push({ id: 'price', name: 'Price', field: 'price', width: 90, formatter: Formatters.Decimal});
-            columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, width: 90, dateFormat: 'M/d/yyyy'});
-            columns.push({ id: 'status', name: 'Status', field: 'status', width: 200, formatter: Formatters.Text});
+            columns.push({ id: 'price', name: 'Price', field: 'price', width: 90, formatter: Soho.Formatters.Decimal});
+            columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, width: 90, dateFormat: 'M/d/yyyy'});
+            columns.push({ id: 'status', name: 'Status', field: 'status', width: 200, formatter: Soho.Formatters.Text});
 
             //Init and get the api for the grid
             $('#datagrid').datagrid({

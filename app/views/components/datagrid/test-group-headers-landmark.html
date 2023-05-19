@@ -95,13 +95,13 @@
     function getColumns() {
       if (!PAGING_COLUMNS) {
         PAGING_COLUMNS = [
-          { id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center' },
+          { id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center' },
           { id: 'activity',  hidden: true,  name: 'Activity',     field: 'activity',    sortable: false, filterType: 'text',                                        },
-          { id: 'productId',   name: 'Product Id',   field: 'productId',   sortable: false, filterType: 'integer', formatter: Formatters.Integer                     },
-          { id: 'productName', name: 'Product Name', field: 'productName', sortable: false, filterType: 'text',    formatter: Formatters.Hyperlink                    },
+          { id: 'productId',   name: 'Product Id',   field: 'productId',   sortable: false, filterType: 'integer', formatter: Soho.Formatters.Integer                     },
+          { id: 'productName', name: 'Product Name', field: 'productName', sortable: false, filterType: 'text',    formatter: Soho.Formatters.Hyperlink                    },
           { id: 'quantity',    name: 'Quantity',     field: 'quantity',    sortable: false,                                                                             },
-          { id: 'price',       name: 'Price',        field: 'price',       sortable: false, filterType: 'decimal', formatter: Formatters.Decimal                      },
-          { id: 'orderDate',   name: 'Order Date',   field: 'orderDate',   sortable: false, filterType: 'date',                formatter: Formatters.Date, dateFormat: 'M/d/yyyy' }
+          { id: 'price',       name: 'Price',        field: 'price',       sortable: false, filterType: 'decimal', formatter: Soho.Formatters.Decimal                      },
+          { id: 'orderDate',   name: 'Order Date',   field: 'orderDate',   sortable: false, filterType: 'date',                formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy' }
         ];
       }
 

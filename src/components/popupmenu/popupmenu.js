@@ -205,7 +205,7 @@ PopupMenu.prototype = {
   },
 
   /**
-   * Add markip including Aria
+   * Add markup including Aria
    * @private
    * @returns {void}
    */
@@ -338,7 +338,7 @@ PopupMenu.prototype = {
 
     // `true` setting takes precedent over all else
     if (this.settings.showArrow === true) {
-      doSetArrow = false;
+      doSetArrow = true;
     } else if (this.settings.showArrow === null) {
       const closestToolbar = this.element.closest('.toolbar');
       const closestMasthead = this.element.closest('.masthead');
@@ -371,8 +371,7 @@ PopupMenu.prototype = {
 
     // If button is part of a header/masthead or a container using the "alternate"
     // UI color, add the "alternate" class.
-    if (containerClass !== undefined &&
-      (this.element.closest('.masthead').not('.search-results .masthead').length > 0)) {
+    if (this.element.closest('.masthead').not('.search-results .masthead').length > 0) {
       this.menu.parent('.popupmenu-wrapper').addClass('inverse');
     }
 
@@ -687,7 +686,6 @@ PopupMenu.prototype = {
     }
 
     const lis = contextElement.find('li:not(.heading):not(.separator)');
-    let hasIcons = false;
     contextElement[0].setAttribute('role', 'menu');
     contextElement[0].setAttribute('aria-labelledby', this.element.attr('id'));
 
@@ -710,7 +708,6 @@ PopupMenu.prototype = {
       const $li = $(li);
       let span = $a.children('span')[0];
       let submenu = $li.children('ul')[0];
-      const icon = $li.find('.icon:not(.close):not(.icon-dropdown):not(.image-user-status .icon)');
       const submenuWrapper = $li.children('.wrapper')[0];
 
       li.setAttribute('role', 'none');
@@ -727,7 +724,7 @@ PopupMenu.prototype = {
         }
 
         // disabled menu items, by prop and by className
-        if ($li.hasClass('is-disabled') || (a.getAttribute('disabled') === 'true' || a.getAttribute('disabled') === 'disabled')) {
+        if ($li.hasClass('is-disabled')) {
           $li.addClass('is-disabled');
           a.setAttribute('aria-disabled', 'true');
           a.setAttribute('disabled', true);
@@ -790,17 +787,29 @@ PopupMenu.prototype = {
           a.removeAttribute('aria-checked');
         }
       }
-
-      if (icon && icon.length > 0) {
-        hasIcons = true;
-      }
     });
 
-    if (hasIcons) {
-      contextElement.addClass('has-icons');
-    } else {
-      contextElement.removeClass('has-icons');
+    self.refreshHasIcons(contextElement);
+  },
+
+  /**
+   * Toggles has-icons class for the menu if any of the menu's items has icon
+   * @private
+   * @param {jQuery[]|undefined} menu a menu to handle
+   */
+  refreshHasIcons(menu) {
+    if (!menu) {
+      menu = this.menu;
     }
+
+    const lis = menu.find('li:not(.heading):not(.separator):not(.hidden)');
+    const hasIcons = lis.filter((index, item) => {
+      const icon = $(item).find('.icon:not(.close):not(.icon-dropdown):not(.image-user-status .icon)');
+
+      return icon.length > 0;
+    }).length > 0;
+
+    menu.toggleClass('has-icons', hasIcons);
   },
 
   /**
@@ -984,6 +993,8 @@ PopupMenu.prototype = {
                 .removeClass('longpress-target');
             })
             .on('longpress.popupmenu', (e, originalE) => {
+              e.stopPropagation();
+
               self.openedWithTouch = true;
               contextMenuHandler(originalE);
             });

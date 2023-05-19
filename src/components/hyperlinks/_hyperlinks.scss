@@ -13,8 +13,17 @@
 
   @include css3(transition, border-color 100ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
 
-  &:hover:not([disabled]) {
+  &:hover:not([disabled]):not(.personalize-actionable-disabled) {
     color: $hyperlink-hover-color;
+  }
+
+  &.personalize-actionable {
+    color: rgba(255, 255, 255, 0.8);
+
+    &:not([disabled]):not(.personalize-actionable-disabled):hover {
+      color: $ids-color-palette-white;
+      opacity: 1;
+    }
   }
 
   &.show-visited:visited,

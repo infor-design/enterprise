@@ -24,6 +24,38 @@
   background: $ids-color-brand-primary-base;
 }
 
+html.theme-new-light .primary-bg-color {
+  background: $ids-color-palette-azure-60;
+}
+
+html.theme-new-contrast .primary-bg-color {
+  background: $ids-color-palette-azure-60;
+}
+
+html.theme-new-dark .primary-bg-color {
+  background: #606066;
+}
+
+html.theme-classic-light .primary-bg-color {
+  background: #368ac0;
+}
+
+html.theme-classic-contrast .primary-bg-color {
+  background: #134d71;
+}
+
+html.theme-classic-dark .primary-bg-color {
+  background: #50535a;
+}
+
+.alabaster {
+  background-color: #fff;
+
+  &.swatch {
+    border: 1px solid $input-color-initial-border;
+  }
+}
+
 .primary-color {
   color: $ids-color-brand-primary-base !important;
 }

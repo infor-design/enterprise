@@ -4,6 +4,7 @@
 // Standard CSS reset stuff here
 @import '../core/reset';
 @import '../core/mixins';
+@import '../core/css-utilities';
 
 // ids-identity token vars
 @import '../../node_modules/ids-identity/dist/theme-new/tokens/web/theme-new';
@@ -15,19 +16,19 @@
 @import '../core/config';
 
 // New Theme Light Overrides
-$header-bg-color: $ids-color-palette-white;
-$subhead-bg-color: $ids-color-palette-white;
+$subhead-bg-color: $ids-color-palette-azure-70;
 $disabled-color: $ids-color-palette-slate-30;
 $label-disabled-color: $input-color-disabled-border;
 $input-disabled-color: $input-color-disabled-font;
 $dropdown-search-bg-color: $ids-color-palette-slate-10;
 
 $body-color-primary-background: $ids-color-palette-white;
+$homepage-background-color: rgba($ids-color-palette-slate-10, 0.5);
 $drop-shadow-depth: rgba($ids-color-boxshadow-base, 0.2);
 
 $application-menu-border-color: $ids-color-palette-slate-90;
 
-$button-color-tertiary-initial-font: $ids-color-palette-slate-60;
+$header-default-bg-color: $ids-color-palette-azure-60;
 
 // Icons
 $icon-color: $icon-color-fill;
@@ -69,10 +70,14 @@ $builder-header-bg-color: $ids-color-palette-slate-60;
 // Cards (New)
 $card-selected-border-color: $ids-color-palette-azure-60;
 $card-selected-background-color: $ids-color-palette-azure-10;
+$card-scrolling-box-shadow: 0 0 4px 0 #00000040;
+$card-scrolling-border-color: $ids-color-palette-slate-20;
 $card-expandable-sub-heading: $ids-color-palette-slate-60;
+$cardlist-actions-color: $ids-color-palette-slate-60;
+$card-actions-toolbar-button-hover-color: $ids-color-palette-slate-100;
 
 // Cardlist
-$cardlist-box-shadow-color: rgba(0, 0, 0, 0.1);
+$cardlist-box-shadow-color: rgba(0, 0, 0, 0.05);
 $cardlist-border-color: $ids-color-palette-slate-30;
 
 $masthead-bg-color: $ids-color-palette-black;
@@ -201,8 +206,10 @@ $timepicker-disabled-color: $ids-color-palette-slate-30;
 $timepicker-readonly-icon-color: $ids-color-palette-slate-40;
 
 // Buttons
-$header-button-disabled-color: $ids-color-palette-slate-30;
-$button-color-primary-disabled-font-new: $ids-color-palette-white;
+$header-button-disabled-color: rgba($ids-color-palette-white, 0.6);
+$button-color-tertiary-initial-font: $ids-color-palette-slate-60;
+$button-color-tertiary-actionsheet-hover-font: $button-color-tertiary-hover-font-new;
+$button-disabled-background-color: transparent;
 
 // Badges
 $badge-neutral-color: $ids-color-palette-slate-100;
@@ -220,7 +227,7 @@ $badge-secondary-disabled-border-color: $ids-color-palette-slate-40;
 $badge-alert-color: $ids-color-palette-slate-100;
 $badge-alert-bg-color: #ffd726;
 $badge-alert-icon-color: $ids-color-palette-slate-100;
-$badge-good-bg-color: $ids-color-palette-emerald-90;
+$badge-good-bg-color: $status-04-color;
 $badge-good-hover-icon-color: $ids-color-palette-white;
 $badge-disabled-bg-color: $ids-color-palette-slate-20;
 
@@ -343,7 +350,6 @@ $tab-text-color: $ids-color-palette-white;
 $tab-border-color: $ids-color-palette-slate-30;
 $tab-alt-border-color: $ids-color-palette-slate-30;
 $tab-hover-color: $ids-color-brand-primary-base;
-$header-tab-gradient-initial-color-new: $ids-color-palette-white;
 
 // Header
 $subheader-input-color-focus-border: $ids-color-palette-slate-40;
@@ -352,9 +358,7 @@ $subheader-input-color-focus-border: $ids-color-palette-slate-40;
 $header-tabcontainer-border-color: $ids-color-palette-slate-30;
 $header-tab-selected-color: $ids-color-palette-slate-10;
 $header-tab-alt-normal-color: $ids-color-palette-slate-60;
-$header-tab-focus-border-color: $ids-color-palette-azure-60;
 
-$header-tab-normal-color-new: $ids-color-palette-graphite-60;
 $header-tab-alt-selected-color: $ids-color-palette-azure-60;
 
 // Header Breadcrumb
@@ -445,10 +449,8 @@ $swipeaction-right-active-bg-color: $ids-color-palette-azure-80;
 $swipeaction-right-hover-bg-color: $ids-color-palette-azure-80;
 $swipeaction-right-hover-color: $ids-color-palette-white;
 
-$header-tab-separator-new: $ids-color-palette-slate-30;
-
 // New Theme only Variables
-$new-acc-border-radius: 2px;
+$new-acc-border-radius: 6px;
 $new-acc-header-text-color: $ids-color-palette-slate-20;
 $new-acc-header-selected-text-color: $ids-color-palette-white;
 

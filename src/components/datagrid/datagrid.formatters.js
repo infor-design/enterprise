@@ -844,6 +844,7 @@ const formatters = {
     let processHtml = '<div class="process-indicator compact responsive"><div class="display">';
 
     for (let i = 0; i < value.steps; i++) {
+      // eslint-disable-next-line no-unsafe-optional-chaining
       const isCurrent = i === value?.current - 1;
 
       processHtml += `<div class="step">

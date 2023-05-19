@@ -1,14 +1,18 @@
 /* eslint-disable */
-var fs = require('fs'),
-  path = require('path'),
-  File = require('vinyl'),
-  vfs = require('vinyl-fs'),
-  _ = require('lodash'),
-  concat = require('concat-stream'),
-  GithubSlugger = require('github-slugger'),
-  createFormatters = require('documentation').util.createFormatters,
-  LinkerStack = require('documentation').util.LinkerStack,
-  hljs = require('highlight.js');
+import * as fs from 'fs';
+import path from 'path';
+import * as _events from 'events';
+import File from 'vinyl';
+import vfs from 'vinyl-fs';
+import _ from 'lodash';
+import concat from 'concat-stream';
+import { util } from 'documentation';
+import GithubSlugger from 'github-slugger';
+import hljs from 'highlight.js';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 function isFunction(section) {
   return (
@@ -19,11 +23,11 @@ function isFunction(section) {
   );
 }
 
-module.exports = function(
+export default function(
   comments,
   config
 ) {
-  var linkerStack = new LinkerStack(config).namespaceResolver(
+  var linkerStack = new util.LinkerStack(config).namespaceResolver(
     comments,
     function(namespace) {
       var slugger = new GithubSlugger();
@@ -31,7 +35,7 @@ module.exports = function(
     }
   );
 
-  var formatters = createFormatters(linkerStack.link);
+  var formatters = util.createFormatters(linkerStack.link);
 
   hljs.configure(config.hljs || {});
 

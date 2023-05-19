@@ -37,7 +37,7 @@
 <script>
   $('body').one('initialized', function () {
 
-    Locale.set('en-US').done(function () {
+    Soho.Locale.set('en-US').done(function () {
         var grid,
           data = [],
           columns = [],
@@ -59,11 +59,11 @@
 
           //Define Columns for the Lookup Grid.
           lookupColumns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140});
-          lookupColumns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 250, formatter: Formatters.Hyperlink});
+          lookupColumns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 250, formatter: Soho.Formatters.Hyperlink});
           lookupColumns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125});
           lookupColumns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 125});
-          lookupColumns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Formatters.Decimal});
-          lookupColumns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+          lookupColumns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Soho.Formatters.Decimal});
+          lookupColumns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy'});
 
           lookupOptions = {
             icon: 'icon-launch',
@@ -100,10 +100,10 @@
         data.push({ id: 7, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', portable: true, quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'oh'});
 
         // Define Columns for the Grid.
-        columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, filterType: 'text'});
-        columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Lookup, minWidth: 100, textOverflow: 'ellipsis', maxLength: 7, editorOptions: lookupOptions, filterType: 'lookup' });
-        columns.push({ id: 'price', name: 'Price', field: 'price', align: 'right', formatter: Formatters.Decimal, minWidth: 100, numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, filterType: 'decimal'});
-        columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, minWidth: 100, filterType: 'date'});
+        columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Soho.Formatters.Hyperlink, filterType: 'text'});
+        columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Lookup, minWidth: 100, textOverflow: 'ellipsis', maxLength: 7, editorOptions: lookupOptions, filterType: 'lookup' });
+        columns.push({ id: 'price', name: 'Price', field: 'price', align: 'right', formatter: Soho.Formatters.Decimal, minWidth: 100, numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, filterType: 'decimal'});
+        columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, minWidth: 100, filterType: 'date'});
 
         // Init and get the api for the grid
         grid = $('#datagrid').datagrid({

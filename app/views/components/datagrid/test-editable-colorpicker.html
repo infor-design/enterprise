@@ -17,10 +17,10 @@
     data.push({ id: 2, productId: 2445204, productName: 'Another Compressor', comment: 'Some comments about the item', activity:  'Assemble Paint', quantity: 9, price: 210.99, status: 'OK', orderDate: new Date(2015, 3, 3), action: 'Action', ordered: true});
 
     //Define Columns for the Grid.
-    columns.push({ id: 'productDesc', resizable: false, name: 'Product Desc', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, width: 200});
+    columns.push({ id: 'productDesc', resizable: false, name: 'Product Desc', sortable: false, field: 'productName', formatter: Soho.Formatters.Hyperlink, width: 200});
     columns.push({ id: 'comment', name: 'Comment', field: 'comment', width: '60%' });
     columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 160 });
-    columns.push({ id: 'colorpickerId', name: 'Colorpicker', field: 'color', formatter: Formatters.Colorpicker, editor: Editors.Colorpicker, width: 190});
+    columns.push({ id: 'colorpickerId', name: 'Colorpicker', field: 'color', formatter: Soho.Formatters.Colorpicker, editor: Soho.Editors.Colorpicker, width: 190});
 
     //Init and get the api for the grid
     $grid = $('#datagrid').datagrid({

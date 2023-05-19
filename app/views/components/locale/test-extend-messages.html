@@ -21,10 +21,10 @@
       Thanks: { id: 'Thanks', value: '~Thanks~', comment: ''},
       YourWelcome: { id: 'YourWelcome', value: '~You\'re Welcome~', comment: ''}
     };
-    Locale.extendTranslations(Soho.Locale.currentLanguage.name, myStrings);
+    Soho.Locale.extendTranslations(Soho.Locale.currentLanguage.name, myStrings);
 
-    append(Locale.translate('Comments') + '<br>');
-    append(Locale.translate('Thanks') + '<br>');
-    append(Locale.translate('YourWelcome') + '<br>');
+    append(Soho.Locale.translate('Comments') + '<br>');
+    append(Soho.Locale.translate('Thanks') + '<br>');
+    append(Soho.Locale.translate('YourWelcome') + '<br>');
   });
 </script>

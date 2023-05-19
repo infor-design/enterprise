@@ -11,11 +11,11 @@
     var columns = [];
 
     //Define Columns for the Grid.
-    columns.push({ id: 'taskName', name: 'Task', field: 'taskName', expanded: 'expanded', tooltip: 'This is a Task', formatter: Formatters.Tree});
+    columns.push({ id: 'taskName', name: 'Task', field: 'taskName', expanded: 'expanded', tooltip: 'This is a Task', formatter: Soho.Formatters.Tree});
     columns.push({ id: 'id', name: 'Id', field: 'id'});
     columns.push({ id: 'desc', name: 'Description', field: 'desc'});
     columns.push({ id: 'time', name: 'Time', field: 'time'});
-    columns.push({ id: 'action', name: 'Action Item', field: 'portable', text: 'New Order', formatter: Formatters.Button, focusable: true, click: function () {console.log('Nice Clicking'); } });
+    columns.push({ id: 'action', name: 'Action Item', field: 'portable', text: 'New Order', formatter: Soho.Formatters.Button, focusable: true, click: function () {console.log('Nice Clicking'); } });
 
     //Get some data via ajax
     var url = '{{basepath}}api/tree-tasks';

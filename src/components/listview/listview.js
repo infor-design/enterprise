@@ -218,14 +218,10 @@ ListView.prototype = {
       this.element.pager(this.pagerSettings);
     }
 
-    const cardWidgetContent = this.element.parent('.card-content, .widget-content');
-    if (cardWidgetContent[0]) {
-      cardWidgetContent[0].style.overflow = 'visible';
-      cardWidgetContent.css({
-        display: 'flex',
-        'justify-content': 'flex-end',
-        'flex-direction': 'column'
-      });
+    const cardWidgetContent = this.element.parents('.card-content, .widget-content');
+
+    if (this.element.prev().is('.listview-search') && cardWidgetContent[0]) {
+      cardWidgetContent.css({ overflow: 'visible' });
     }
 
     // Associate with an existing searchfield, if applicable
@@ -248,7 +244,7 @@ ListView.prototype = {
     }
 
     if (this.settings.emptyMessage) {
-      // Object { title: "No Data Available", info: "", icon: "icon-empty-no-data" }
+      // Object { title: "No Data Available", info: "", icon: "icon-empty-no-data-new" }
       self.emptyMessageContainer = $('<div>').emptymessage(this.settings.emptyMessage);
     }
   },
@@ -1126,7 +1122,9 @@ ListView.prototype = {
         title = $(toolbar.hasClass('contextual-toolbar') ? '<div class="toolbar-section title selection-count"></div>' : '<div class="title selection-count"></div>');
         toolbar.prepend(title);
       }
-      title.text(`${self.selectedItems.length} ${Locale ? Locale.translate('Selected') : 'Selected'}`);
+      let countText = `(${Locale.translate(self.selectedItems.length === 1 ? 'RecordSelected' : 'RecordsSelected')})`;
+      countText = countText.replace('{0}', self.selectedItems.length);
+      title.text(countText);
     } else {
       toolbar.addClass('is-hidden').one('animateclosedcomplete', function (e) {
         e.stopPropagation();

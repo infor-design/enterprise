@@ -1,0 +1,46 @@
+<div class="is-personalizable">
+  <header class="header is-personalizable">
+    <div class="flex-toolbar">
+      <div class="toolbar-section">
+        {{> includes/header-appmenu-trigger}}
+      </div>
+      <div class="toolbar-section title">
+        <h1>Header</h1>
+      </div>
+
+      <div class="toolbar-section search">
+        <label for="header-searchfield" class="audible">Search</label>
+        <input id="header-searchfield" class="searchfield" name="header-searchfield" data-options="{ collapsible: true }" />
+      </div>
+      {{> includes/header-actionbutton}}
+    </div>
+  </header>
+  <header class="header subheader personalize-subheader">
+    <div class="toolbar">
+      <div class="title">
+        <h2>Sub-Header</h2>
+      </div>
+
+      <button type="button" class="btn">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-filter"></use>
+        </svg>
+        <span>Filter</span>
+      </button>
+    </div>
+  </header>
+  <header class="header personalize-subheader">
+    <div class="toolbar">
+      <div class="title">
+        <h2>Sub-Header 2</h2>
+      </div>
+
+      <button type="button" class="btn">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-filter"></use>
+        </svg>
+        <span>Filter 2</span>
+      </button>
+    </div>
+  </header>
+</div>

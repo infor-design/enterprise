@@ -137,18 +137,18 @@
     function getColumns() {
       if (!PAGING_COLUMNS) {
         PAGING_COLUMNS = [
-          { id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center' },
-          { id: 'id',          name: 'Actual Id',    field: 'id',          sortable: false, filterType: 'integer', formatter: Formatters.Text                         },
-          { id: 'productId',   name: 'Product Id',   field: 'productId',   sortable: false, filterType: 'integer', formatter: Formatters.Text                         },
-          { id: 'productName', name: 'Product Name', field: 'productName', sortable: false, filterType: 'text',    formatter: Formatters.Hyperlink                    },
+          { id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center' },
+          { id: 'id',          name: 'Actual Id',    field: 'id',          sortable: false, filterType: 'integer', formatter: Soho.Formatters.Text                         },
+          { id: 'productId',   name: 'Product Id',   field: 'productId',   sortable: false, filterType: 'integer', formatter: Soho.Formatters.Text                         },
+          { id: 'productName', name: 'Product Name', field: 'productName', sortable: false, filterType: 'text',    formatter: Soho.Formatters.Hyperlink                    },
           { id: 'activity',    name: 'Activity',     field: 'activity',    sortable: false, filterType: 'text'                                                        },
-          { id: 'price',       name: 'Price',        field: 'price',       sortable: false, filterType: 'decimal', formatter: Formatters.Decimal                      },
+          { id: 'price',       name: 'Price',        field: 'price',       sortable: false, filterType: 'decimal', formatter: Soho.Formatters.Decimal                      },
           { id: 'quantity',    name: 'Quantity',     field: 'quantity',    sortable: false                                                                            },
-          { id: 'orderDate',   name: 'Order Date',   field: 'orderDate',   sortable: false, filterType: 'date',    formatter: Formatters.Date, dateFormat: 'M/d/yyyy' },
-          { id: 'status',      name: 'Status',       field: 'status',      sortable: false, filterType: 'text',    formatter: Formatters.Text                         },
-          { id: 'action',      name: 'Action Date',  field: 'action',      sortable: false, filterType: 'text',    formatter: Formatters.Text                         },
+          { id: 'orderDate',   name: 'Order Date',   field: 'orderDate',   sortable: false, filterType: 'date',    formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy' },
+          { id: 'status',      name: 'Status',       field: 'status',      sortable: false, filterType: 'text',    formatter: Soho.Formatters.Text                         },
+          { id: 'action',      name: 'Action Date',  field: 'action',      sortable: false, filterType: 'text',    formatter: Soho.Formatters.Text                         },
           { id: 'activity2',   name: 'Activity2',    field: 'activity2',    sortable: false, filterType: 'text'                                                        },
-          { id: 'rated',       name: 'Rated',        field: 'rated',       sortable: false, filterType: 'decimal', formatter: Formatters.Decimal                      }
+          { id: 'rated',       name: 'Rated',        field: 'rated',       sortable: false, filterType: 'decimal', formatter: Soho.Formatters.Decimal                      }
         ];
       }
 

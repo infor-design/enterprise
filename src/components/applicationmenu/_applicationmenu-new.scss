@@ -72,6 +72,12 @@
         background-color: $new-appmenu-hover-bg-color;
       }
     }
+
+    .flex-toolbar:not(.editor-toolbar):not(.formatter-toolbar):not(.contextual-toolbar) .toolbar-section {
+      [class^='btn']:not(:disabled):not(.searchfield-category-button):not(.collapse-button):hover {
+        background-color: $new-appmenu-hover-bg-color;
+      }
+    }
   }
 
   .accordion-static-panel {
@@ -175,7 +181,6 @@
       }
 
       .icon {
-        color: inherit;
         top: auto;
 
         &.plus-minus {
@@ -192,7 +197,7 @@
       }
 
       &.is-focused:not(.hide-focus) {
-        border-color: $new-appmenu-selected-border-color;
+        border-color: $ids-color-palette-white;
         box-shadow: none;
       }
 
@@ -217,15 +222,7 @@
       }
 
       &.is-selected {
-        border-bottom-color: transparent;
-
-        &:hover {
-          border-bottom-color: transparent;
-        }
-
-        &.is-focused {
-          border-bottom-color: $new-appmenu-selected-border-color;
-        }
+        border-bottom-color: $ids-color-palette-white;
 
         > a > span {
           font-weight: $ids-number-font-weight-bold;
@@ -241,7 +238,7 @@
 
         &:not(.is-focused),
         &:not(.is-selected) {
-          border-bottom-color: transparent;
+          border-bottom-color: $ids-color-palette-white;
         }
 
         // Shared pseudo-element for hovering/focusing/selecting this particular level

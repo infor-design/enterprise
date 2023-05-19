@@ -1,6 +1,5 @@
 <section class="masthead">
-  <div class="{{#useFlexToolbar}}flex-toolbar{{/useFlexToolbar}}{{^useFlexToolbar}}toolbar{{/useFlexToolbar}} no-actions-button">
-    {{#useFlexToolbar}}
+  <div class="flex-toolbar no-actions-button">
     <div class="toolbar-section logo">
       <button type="button" class="masthead-icon">
         <svg class="icon icon-logo" focusable="false" aria-hidden="true" role="presentation">
@@ -9,32 +8,11 @@
          <span class="audible">Go To Home</span>
       </button>
     </div>
-    {{/useFlexToolbar}}
 
-    <div class="{{#useFlexToolbar}}toolbar-section static {{/useFlexToolbar}}title">
-      {{^useFlexToolbar}}
-      <button type="button" class="masthead-icon">
-        <svg class="icon icon-logo" focusable="false" aria-hidden="true" role="presentation">
-          <use href="#icon-logo"></use>
-        </svg>
-         <span class="audible">Go To Home</span>
-      </button>
-      {{/useFlexToolbar}}
+    <div class="toolbar-section static title">
       <h1 class="masthead-appname">Infor Application</h1>
-
-      {{^useFlexToolbar}}
-      <button id="status-button" type="button" class="btn-secondary btn-menu">
-        <span>Status</span>
-      </button>
-      <ul class="popupmenu is-selectable">
-        <li><a href="#">New</a></li>
-        <li class="is-selected"><a href="#">Active</a></li>
-        <li><a href="#">Processing</a></li>
-      </ul>
-      {{/useFlexToolbar}}
     </div>
 
-    {{#useFlexToolbar}}
     <div class="toolbar-section fluid">
       <button id="status-button" type="button" class="btn-secondary btn-menu">
         <span>Status</span>
@@ -49,13 +27,8 @@
     <div class="toolbar-section search">
       <input id="masthead-searchfield" class="searchfield" data-options='{ collapsible: true, clearable: true }'/>
     </div>
-    {{/useFlexToolbar}}
 
-    <div class="{{#useFlexToolbar}}toolbar-section {{/useFlexToolbar}}buttonset">
-      {{^useFlexToolbar}}
-      <input id="masthead-searchfield" class="searchfield" />
-      {{/useFlexToolbar}}
-
+    <div class="toolbar-section buttonset">
       <button id="settings-button" type="button" class="btn-menu">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
           <use href="#icon-settings"></use>

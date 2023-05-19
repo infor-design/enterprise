@@ -3,7 +3,7 @@
 
 $horizontal-tabs-height: 40px;
 
-.has-more-button.tab-container.header-tabs.horizontal {
+.has-more-button.tab-container.header-tabs.horizontal:not(.header-tabs) {
   &::before {
     background-image:
       linear-gradient(
@@ -27,11 +27,11 @@ $horizontal-tabs-height: 40px;
 
 .tab-container.horizontal {
   > .tab-list-container {
-    .tab {
+    .tab:not(.is-disabled) {
       &:hover {
         color: $tab-hover-color;
         border-bottom: 4px solid $tab-hover-color;
-        background-color: $header-tab-background-hover-color-new;
+        background-color: $tab-background-hover-color-new;
       }
     }
   }
@@ -91,7 +91,9 @@ $horizontal-tabs-height: 40px;
     }
 
     .tab {
-      color: $tab-text-color-horizontal;
+      &:not(.is-disabled) {
+        color: $tab-text-color-horizontal;
+      }
 
       a {
         padding: 11px 11px 8px;
@@ -104,18 +106,14 @@ $horizontal-tabs-height: 40px;
       &:not(.is-disabled):hover {
         color: $header-tab-hover-color-new;
         border-bottom: 4px solid $header-tab-hover-color-new;
-        background-color: $header-tab-background-hover-color-new;
+        background-color: $tab-background-hover-color-new;
 
         .icon:not(.is-error):not(.icon-error) {
           color: $tab-hover-color;
         }
-
-        &.is-disabled {
-          color: $disabled-color;
-        }
       }
 
-      &.is-selected {
+      &:not(.is-disabled).is-selected {
         color: $header-tab-selected-color-new;
         border-bottom: 4px solid $header-tab-selected-color-new;
 

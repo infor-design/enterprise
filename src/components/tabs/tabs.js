@@ -486,6 +486,11 @@ Tabs.prototype = {
       }
     }
 
+    // Re-renders focus state of tab indicator after rendering all of the elements
+    setTimeout(() => {
+      this.positionFocusState();
+    }, 100);
+
     return this;
   },
 
@@ -669,11 +674,9 @@ Tabs.prototype = {
           appMenuTrigger = $(`
             <li class="tab application-menu-trigger">
               <a href="#">
-                <span class="icon app-header">
-                  <span class="one"></span>
-                  <span class="two"></span>
-                  <span class="three"></span>
-                </span>
+                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                    <use href="#icon-menu"></use>
+                </svg>
                 <span${audibleClass}>${this.settings.appMenuTriggerText || Locale.translate('AppMenuTriggerText')}</span>
               </a>
             </li>
@@ -1061,7 +1064,7 @@ Tabs.prototype = {
     }
     this.changeHash(href);
 
-    this.focusState.removeClass('is-visible');
+    this.focusState?.removeClass('is-visible');
 
     a.focus();
 
@@ -1228,7 +1231,7 @@ Tabs.prototype = {
 
     $.removeData(this.moreButton[0], 'focused-by-click');
 
-    this.focusState.removeClass('is-visible');
+    this.focusState?.removeClass('is-visible');
     this.positionFocusState(this.moreButton, focusedByKeyboard);
   },
 
@@ -2724,7 +2727,8 @@ Tabs.prototype = {
     }
 
     let wasSelected = false;
-    if (targetLi.hasClass('is-selected')) {
+
+    if (targetAnchor[0]?.href && self.getActiveTab()[0]?.href && targetAnchor[0].href === self.getActiveTab()[0].href) {
       wasSelected = true;
     } else {
       prevLi = $(this.tablist.children('li').not(notATab).filter('.is-selected'));
@@ -3766,7 +3770,7 @@ Tabs.prototype = {
    * @returns {void}
    */
   hideFocusState() {
-    this.focusState.removeClass('is-visible');
+    this.focusState?.removeClass('is-visible');
   },
 
   /**
@@ -3789,7 +3793,7 @@ Tabs.prototype = {
 
     if (!target || target === undefined || !target.length ||
       (target.is(this.moreButton) && this.isScrollableTabs())) {
-      this.focusState.removeClass('is-visible');
+      this.focusState?.removeClass('is-visible');
       return;
     }
 
@@ -3817,13 +3821,14 @@ Tabs.prototype = {
     const tabMoreWidth = !isVerticalTabs ? this.moreButton.outerWidth(true) - 8 : 0;
     const parentContainer = this.element;
     const scrollingTablist = this.tablistContainer;
-    const hasCompositeForm = parentContainer.parents('.composite-form').length;
+    const hasSectionForm = parentContainer.parents('section.scrollable-flex').length;
     const hasHeader = parentContainer.parents('.header.has-tabs').length;
     const accountForPadding = scrollingTablist && this.focusState.parent().is(scrollingTablist);
     const widthPercentage = target[0].getBoundingClientRect().width / target[0].offsetWidth * 100;
     const isClassic = $('html[class*="classic-"]').length > 0;
     const isAlternate = parentContainer.hasClass('alternate');
     const isTabContainerHeader = parentContainer.hasClass('header-tabs');
+    const isAddTabButton = target.is('.add-tab-button');
 
     function adjustForParentContainer(targetRectObj, parentElement, tablistContainer, transformPercentage) {
       const parentRect = parentElement[0].getBoundingClientRect();
@@ -3850,18 +3855,17 @@ Tabs.prototype = {
         targetRectObj.left += tablistScrollLeft;
         targetRectObj.right += tablistScrollLeft;
 
-        // On RTL, remove the width of the controls on the left-most side of the tab container
-        if (isRTL && !isNotHeaderTabs) {
-          targetRectObj.left -= tabMoreWidth;
-          targetRectObj.right -= tabMoreWidth;
-        }
+        if (isRTL) {
+          targetRectObj.right += 1;
 
-        // Composite Form has additional padding on the right
-        if (isRTL && hasCompositeForm && !hasHeader) {
-          targetRectObj.right -= 42;
+          // On RTL, remove the width of the controls on the left-most side of the tab container
+          if (!isNotHeaderTabs) {
+            targetRectObj.left -= tabMoreWidth;
+            targetRectObj.right -= tabMoreWidth;
+          }
 
-          if (isRTL) {
-            targetRectObj.width += 1;
+          if (!hasSectionForm && !hasHeader) {
+            targetRectObj.right -= 42;
           }
         }
 
@@ -3889,7 +3893,7 @@ Tabs.prototype = {
       }
 
       targetRectObj.height -= 4;
-      if (!isClassic && !isAlternate && isTabContainerHeader) {
+      if (!isClassic && !isAlternate && isTabContainerHeader && !isAddTabButton) {
         targetRectObj.top -= 9;
       }
 
@@ -4013,7 +4017,7 @@ Tabs.prototype = {
           });
         }
 
-        t.disable();
+        t?.disable();
       });
     });
 

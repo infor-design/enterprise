@@ -37,4 +37,3 @@ spec:
               value: ""
           command: ["/bin/bash"]
           args: ["-c", ". ./run.sh"]
-      restartPolicy: Never

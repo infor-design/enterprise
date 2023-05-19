@@ -60,6 +60,9 @@ Soho.Locale.addCulture('en-US', {
     group: ',',
     groupSizes: [3, 3]
   },
+  punctuation: {
+    comma: ','
+  },
   // Resx - Provided By Translation Team
   messages: {
     AboutText: { id: 'AboutText', value: 'Copyright &copy; {0} Infor. All rights reserved. The word and design marks set forth herein are trademarks and/or registered trademarks of Infor and/or its affiliates and subsidiaries. All other trademarks listed herein are the property of their respective owners' },
@@ -70,6 +73,7 @@ Soho.Locale.addCulture('en-US', {
     AdministrativeLeave: { id: 'AdministrativeLeave', value: 'Administrative Leave', comment: 'As in vacation time from work' },
     AdvancedFilter: { id: 'AdvancedFilter', value: 'Create Advanced Filter', comment: 'In a data grid active an advanced filtering feature' },
     Afrikaans: { id: 'Afrikaans', value: 'Afrikaans', comment: 'Language name for Afrikaans (South Africa)' },
+    Alabaster: { id: 'Alabaster', value: 'Alabaster', comment: 'Color in our color palette' },
     Alert: { id: 'Alert', value: 'Alert', comment: 'Alert' },
     AlertOnPage: { id: 'AlertOnPage', value: 'Alert message(s) on page', comment: 'Alert message(s) on page n' },
     AlignCenterHorizontally: { id: 'AlignCenterHorizontally', value: 'Horizontal Align Center', comment: 'Align Center Horizontally tooltip' },
@@ -410,6 +414,7 @@ Soho.Locale.addCulture('en-US', {
     NoDataFilter: { id: 'NoDataFilter', value: 'No data available, make a new filter selection to see more results.', comment: 'Shown when there is no rows shown in a list' },
     NoDataList: { id: 'NoDataList', value: 'No data available, make a selection in the list above to see more results.', comment: 'Shown when there is no rows shown in a list' },
     NoResults: { id: 'NoResults', value: 'No results', comment: 'Search Results Text' },
+    NoRecordSelected: { id: 'NoRecordSelected', value: '0 Records Selected', comment: 'Text showing no records selected' },
     NoTitle: { id: 'NoTitle', value: '(No Title)', comment: 'Placeholder text for when you add an event to the calendar with no title typed.' },
     None: { id: 'None', value: 'None', comment: 'None to pick clear color' },
     Normal: { id: 'Normal', value: 'Normal', comment: 'Normal row height' },
@@ -449,6 +454,8 @@ Soho.Locale.addCulture('en-US', {
     Range: { id: 'Range', value: 'Range', comment: 'Range for tooltip' },
     RecordsPerPage: { id: 'RecordsPerPage', value: '{0} Records per page', comment: 'Shows an actual number of pages in the pager' },
     RecordsPerPageNoToken: { id: 'RecordsPerPageNoToken', value: 'Records per page', comment: 'Shows as a title list of values for page number (without the slot/token value)' },
+    RecordSelected: { id: 'RecordSelected', value: '{0} Record Selected', comment: 'Text showing current total of record selected' },
+    RecordsSelected: { id: 'RecordsSelected', value: '{0} Records Selected', comment: 'Text showing current total of records selected' },
     Redo: { id: 'Redo', value: 'Redo', comment: 'Redo tooltip' },
     Refresh: { id: 'Refresh', value: 'Refresh', comment: 'Refresh tooltip' },
     ReorderRows: { id: 'ReorderRows', value: 'Reorder Rows', comment: 'Drag and Reorder Grid Rows' },
@@ -595,6 +602,7 @@ Soho.Locale.addCulture('en-US', {
     ViewSource: { id: 'ViewSource', value: 'View Source', comment: 'Toggle between the source view and visual view' },
     ViewVisual: { id: 'ViewVisual', value: 'View Visual', comment: 'Toggle between the source view and visual view' },
     Week: { id: 'Week', value: 'Week', comment: 'Shows a view of the current weeks events' },
+    WeekNumber: { id: 'WeekNumber', value: 'W#', comment: 'Week view number header on the datepicker' },
     Year: { id: 'Year', value: 'Year', comment: 'As in a date year' },
     Yes: { id: 'Yes', value: 'Yes', comment: 'On a dialog button' }
   }

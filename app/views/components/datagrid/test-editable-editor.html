@@ -23,8 +23,8 @@
       data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold', ordered: 0});
 
       //Define Columns for the Grid.
-      columns.push({ id: 'productDesc', resizable: false, name: 'Product Desc', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, width: 200});
-      columns.push({ id: 'comment', name: 'Comment', field: 'comment', formatter: Formatters.Editor, editor: Editors.Editor, width: '60%' });
+      columns.push({ id: 'productDesc', resizable: false, name: 'Product Desc', sortable: false, field: 'productName', formatter: Soho.Formatters.Hyperlink, width: 200});
+      columns.push({ id: 'comment', name: 'Comment', field: 'comment', formatter: Soho.Formatters.Editor, editor: Soho.Editors.Editor, width: '60%' });
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 160 });
 
       //Init and get the api for the grid

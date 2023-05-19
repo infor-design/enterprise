@@ -39,11 +39,11 @@
     data.push({ id: 6, productId: 2642205, productName: 'Air Compressors', price: 120.99, orderDate: new Date(2014, 6, 9), unit: 1 , units: unitList});
     data.push({ id: 7, productId: 2642206, productName: 'Some Compressor', price: 123.99, orderDate: new Date(2014, 6, 9), unit: 0 , units: unitList});
 
-    columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
-    columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink});
+    columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center'});
+    columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Soho.Formatters.Hyperlink});
     columns.push({ id: 'price', name: 'Price', field: 'price', align: 'right'});
-    columns.push({ id: 'unit', name: 'Units', field: 'unit', formatter: Formatters.Dropdown, editor: Editors.Dropdown, options: unitList});
-    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date});
+    columns.push({ id: 'unit', name: 'Units', field: 'unit', formatter: Soho.Formatters.Dropdown, editor: Soho.Editors.Dropdown, options: unitList});
+    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, editor: Soho.Editors.Date});
 
     //Init and get the api for the grid
     grid = $('#datagrid').datagrid({
