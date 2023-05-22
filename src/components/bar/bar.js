@@ -33,7 +33,7 @@ const COMPONENT_NAME = 'bar';
  * @param {object} [settings.ticks=null] Settings for the chart ticks. Can set ticks: {format: d3Format, number: n}
  * @param {boolean} [settings.showLines=true] Show the in the axis lines or not.
  * @param {boolean} [settings.selectable=true] Ability to disable selections of the charts.
- * @param {number} [settings.defaultTickCount=5] Default number of ticks on the x axis if there are data values.
+ * @param {number} [settings.defaultTickCount=5] Default number of ticks on the x axis if there are no data values.
  * @param {number} [settings.labelFactor=1.27] How far out than the outer circle should the labels be placed, this
  * may be useful to adjust for some labels.
  * @param {number} [settings.wrapWidth=60] The number of pixels after which a label needs to be given a new line.
