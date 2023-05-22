@@ -6,11 +6,13 @@
 @mixin auto-height {
   height: auto;
   min-height: 0;
+  max-height: none;
 
   .widget-content,
   .card-content {
     height: auto;
     min-height: auto;
+    max-height: none;
   }
 }
 
