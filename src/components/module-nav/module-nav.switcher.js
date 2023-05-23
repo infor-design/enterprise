@@ -36,10 +36,12 @@ function ModuleNavSwitcher(element, settings) {
 // Plugin Methods
 ModuleNavSwitcher.prototype = {
 
+  /** Reference to the parent accordion element, if present */
   get accordionEl() {
-    return this.element.parents('.accordion').first();
+    return this.element.parents('.accordion').first()?.[0];
   },
 
+  /** Reference to the parent accordion API, if present */
   get accordionAPI() {
     return this.accordionEl ? $(this.accordionEl).data('accordion') : undefined;
   },

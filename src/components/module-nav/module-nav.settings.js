@@ -33,8 +33,8 @@ function ModuleNavSettings(element, settings) {
 // Plugin Methods
 ModuleNavSettings.prototype = {
 
-  get accordion() {
-    return this.element.parents('.accordion').first();
+  get accordionEl() {
+    return this.element.parents('.accordion').first()?.[0];
   },
 
   /**
