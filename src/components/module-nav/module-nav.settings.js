@@ -33,8 +33,14 @@ function ModuleNavSettings(element, settings) {
 // Plugin Methods
 ModuleNavSettings.prototype = {
 
+  /** Reference to the parent accordion element, if present */
   get accordionEl() {
     return this.element.parents('.accordion').first()?.[0];
+  },
+
+  /** Reference to the settings button's Popupmenu API, if present */
+  get menuAPI() {
+    return $(this.element).data('popupmenu') || undefined;
   },
 
   /**
@@ -161,22 +167,19 @@ ModuleNavSettings.prototype = {
   /**
    * Simple Teardown - remove events & rebuildable markup.
    * @returns {object} The Component prototype, useful for chaining.
-   * @private
    */
   teardown() {
     this.element.off(`updated.${COMPONENT_NAME}`);
 
-    if (this.menuEl) {
-      $(this.menuEl).data('popupmenu')?.destroy();
-      this.menuEl = null;
-    }
+    // Cleanup menu
+    this.popupmenuAPI?.destroy();
+    this.menuEl = null;
 
     return this;
   },
 
   /**
-   * Teardown - Remove added markup and events.
-   * @private
+   * Destroy - Remove added markup and events.
    */
   destroy() {
     this.teardown();

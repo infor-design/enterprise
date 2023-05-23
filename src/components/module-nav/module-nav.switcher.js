@@ -46,6 +46,16 @@ ModuleNavSwitcher.prototype = {
     return this.accordionEl ? $(this.accordionEl).data('accordion') : undefined;
   },
 
+  /** Reference to the Module Button API, if present */
+  get moduleButtonAPI() {
+    return this.moduleButtonEl ? $(this.moduleButtonEl).data('button') : undefined;
+  },
+
+  /** Reference to the Module Switcher Dropdown API, if present */
+  get roleDropdownAPI() {
+    return this.roleDropdownEl ? $(this.roleDropdownEl).data('dropdown') : undefined;
+  },
+
   /**
    * Do initialization, build up and / or add events ect.
    * @returns {object} The Component prototype, useful for chaining.
@@ -112,12 +122,12 @@ ModuleNavSwitcher.prototype = {
     this.containerEl = this.element.parents('.module-nav-container')[0];
 
     // Module Button
-    this.moduleButtonContainer = this.element[0].querySelector('.module-nav-section.module-btn');
+    this.moduleButtonContainerEl = this.element[0].querySelector('.module-nav-section.module-btn');
     this.moduleButtonEl = this.element[0].querySelector('.module-btn button');
-    if (!this.moduleButtonContainer || !this.moduleButtonEl) {
+    if (!this.moduleButtonContainerEl || !this.moduleButtonEl) {
       this.element[0].insertAdjacentHTML('afterbegin', buttonTemplate());
-      this.moduleButtonContainer = this.element[0].querySelector('.module-nav-section.module-btn');
-      this.moduleButtonEl = this.moduleButtonContainer.querySelector('button');
+      this.moduleButtonContainerEl = this.element[0].querySelector('.module-nav-section.module-btn');
+      this.moduleButtonEl = this.moduleButtonContainerEl.querySelector('button');
     }
     $(this.moduleButtonEl).button();
 
@@ -212,7 +222,6 @@ ModuleNavSwitcher.prototype = {
   /**
    * Simple Teardown - remove events & rebuildable markup.
    * @returns {object} The Component prototype, useful for chaining.
-   * @private
    */
   teardown() {
     this.element.off(`updated.${COMPONENT_NAME}`);
@@ -220,7 +229,7 @@ ModuleNavSwitcher.prototype = {
     if (this.moduleButtonEl) {
       $(this.moduleButtonEl).data('button')?.destroy();
       this.moduleButtonEl = null;
-      this.moduleButtonContainer = null;
+      this.moduleButtonContainerEl = null;
     }
 
     if (this.roleDropdownEl) {
@@ -233,8 +242,7 @@ ModuleNavSwitcher.prototype = {
   },
 
   /**
-   * Teardown - Remove added markup and events.
-   * @private
+   * Destroy - Remove added markup and events.
    */
   destroy() {
     this.teardown();

@@ -71,7 +71,7 @@ ModuleNav.prototype = {
    * @returns {ModuleNavSettings} Module Nav Switcher API, if one is available
    */
   get settingsAPI() {
-    return this.settingsEl ? $(this.settingsEl).data('modulenavswitcher') : undefined;
+    return this.settingsEl ? $(this.settingsEl).data('modulenavsettings') : undefined;
   },
 
   /**
@@ -353,7 +353,6 @@ ModuleNav.prototype = {
   /**
    * Simple Teardown - remove events & rebuildable markup.
    * @returns {object} The Component prototype, useful for chaining.
-   * @private
    */
   teardown() {
     this.teardownEvents();
@@ -402,8 +401,7 @@ ModuleNav.prototype = {
   },
 
   /**
-   * Teardown - Remove added markup and events.
-   * @private
+   * Destroy - Remove added markup and events.
    */
   destroy() {
     this.teardown();
