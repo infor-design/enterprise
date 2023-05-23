@@ -272,11 +272,20 @@ a.is-personalizable svg.ripple-effect {
 }
 
 .module-tabs.is-personalizable .tab.is-selected {
-  background-color: ${colors.base} !important;
+  background-color: ${colors.darker};
 }
 
 .module-tabs.is-personalizable .tab.is-selected,
 .module-tabs.is-personalizable .tab {
+  color: ${colors.contrast};
+}
+
+.is-personalizable.tab-container.module-tabs .tab-focus-indicator.is-visible {
+  border-color: ${colors.darkest};
+}
+
+.is-personalizable.tab-container.module-tabs .tab.is-selected {
+  background-color: ${colors.darker};
   color: ${colors.contrast};
 }
 
@@ -370,8 +379,8 @@ html[class*="-dark"] .is-personalizable .subheader button:not(:disabled) .icon {
 }
 
 .header.is-personalizable .searchfield-wrapper.has-categories button.btn-icon:not(:disabled):hover,
-.header.is-personalizable .searchfield-wrapper.has-categories button:not(.searchfield-category-button):not(:disabled):hover .icon {
-  background-color: ${colors.contrast} !important;
+.header.is-personalizable .searchfield-wrapper.has-categories button:not(.searchfield-category-button):not(.close):not(:disabled):hover .icon {
+  background-color: ${colors.contrast};
 }
 
 html[class*="theme-new-"] .header.is-personalizable button:not(.go-button):not(.close):not(.searchfield-category-button):not(:disabled):hover,
@@ -393,7 +402,7 @@ html[class*="theme-new-"] .personalize-subheader .toolbar [class^='btn']:hover:n
 }
 
 .header.is-personalizable .buttonset .searchfield-wrapper.non-collapsible.toolbar-searchfield-wrapper.has-categories .btn-icon.close:hover {
-  background-color: ${colors.contrast} !important;
+  background-color: transparent;
 }
 
 html.theme-new-dark .header.is-personalizable .buttonset .searchfield-wrapper.non-collapsible.toolbar-searchfield-wrapper.has-categories .btn-icon.close,
