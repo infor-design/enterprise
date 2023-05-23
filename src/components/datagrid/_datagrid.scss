@@ -4715,6 +4715,10 @@ td .btn-actions {
       }
     }
   }
+
+  .modal table {
+    min-width: -moz-available;
+  }
 }
 
 .datagrid-row-count {
