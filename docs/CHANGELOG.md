@@ -9,6 +9,7 @@
 
 ## v4.84.0 Fixes
 
+- `[Bar]` Added a setting called `defaultTickCount` (`5` as default) to automatically add ticks when there are no dataset values. ([#NG1463](https://github.com/infor-design/enterprise-ng/issues/1463))
 - `[Busy Indicator]` Updated colors for busy indicator. ([#7098](https://github.com/infor-design/enterprise/issues/7098))
 - `[Button]` Adjusted alignment for popupmenu icon buttons. ([#7408](https://github.com/infor-design/enterprise/issues/7408))
 - `[Charts]` Improved the positioning of chart legend. ([#7452](https://github.com/infor-design/enterprise/issues/7452))
