@@ -270,7 +270,7 @@ Textarea.prototype = {
     this.destroy();
     this.init();
 
-    if (this.element.data('trackdirty')) {
+    if (this.element.data('trackdirty') && this.element.data('trackdirty') instanceof Object) {
       this.element.data('trackdirty').updated();
     }
 
