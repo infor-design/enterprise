@@ -146,9 +146,6 @@ ModuleNavSwitcher.prototype = {
       cssClass: 'role-dropdown',
       dropdownIcon: 'expand-all',
       extraListWrapper: true,
-      placementOpts: {
-        x: 50
-      },
       width: 'parent',
       widthTarget: '.module-nav-switcher'
     });

@@ -163,8 +163,16 @@ div.multiselect {
     }
   }
 
-  &:hover:not([disabled]):not(.is-disabled):not(.is-readonly):not(.is-open):not(.error) {
+  &:hover {
     border-color: $trigger-hover-color;
+
+    &[disabled],
+    &.is-disabled,
+    &.is-readonly,
+    &.is-open,
+    &.error {
+      border-color: currentColor;
+    }
 
     + .icon {
       color: $trigger-hover-color;

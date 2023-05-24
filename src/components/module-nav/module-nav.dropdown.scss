@@ -1,7 +1,7 @@
 @import './module-nav.common.scss';
 
 // button + button borders
-$module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switcher-button-gutter-size + 2;
+$module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switcher-button-gutter-size;
 
 @mixin module-nav-div-dropdown-adjustment() {
   padding-block-start: 9px;
@@ -34,6 +34,30 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
     // Override top/right from Dropdown
     + .icon {
       right: 16px;
+    }
+
+    &:hover {
+      background-color: $module-nav-item-hover-bg-color;
+
+      &:not(:focus) {
+        border-color: transparent;
+      }
+    }
+
+    &:active {
+      background-color: $module-nav-item-selected-bg-color;
+      color: $module-nav-item-selected-text-color;
+    }
+
+    &.focus {
+      border-color: $module-nav-item-selected-text-color;
+      box-shadow: none;
+    }
+  }
+
+  input {
+    &:focus {
+      box-shadow: none;
     }
   }
 
@@ -152,7 +176,7 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
 .module-nav-accordion.has-scrollbar {
   .module-nav-section.role-dropdown {
     div.dropdown {
-      width: ($module-nav-switcher-dropdown-width - $module-nav-item-padding-size);
+      width: ($module-nav-switcher-dropdown-width - $module-nav-item-padding-size - 2);
     }
   }
 }

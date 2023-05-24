@@ -2432,6 +2432,9 @@ Dropdown.prototype = {
     if (this.isInGrid) {
       parentElement = this.element.closest('.datagrid-cell-wrapper');
     }
+    if (this.widthTargetEnabled) {
+      parentElement = $(this.settings.widthTarget);
+    }
 
     // If the list would end up being wider parent,
     // use the list's width instead of the parent's width
@@ -2444,7 +2447,7 @@ Dropdown.prototype = {
     // the parent element.
     this.searchInput[0].style.cssText = `width: ${parentElementWidth}px !important`;
     const listDefaultWidth = Math.round(this.list.width());
-    const useParentWidth = listDefaultWidth <= parentElementWidth;
+    const useParentWidth = this.widthTargetEnabled || listDefaultWidth <= parentElementWidth;
     this.searchInput[0].style.width = '';
 
     // Add parent info to positionOpts
@@ -2664,6 +2667,14 @@ Dropdown.prototype = {
   },
 
   /**
+   * @readonly
+   * @returns {boolean} true if usage of `widthTarget` is enabled
+   */
+  get widthTargetEnabled() {
+    return this.settings.width === 'parent' && typeof this.settings.widthTarget === 'string';
+  },
+
+  /**
    * @private
    */
   setListWidth() {
@@ -2676,9 +2687,9 @@ Dropdown.prototype = {
     // Limit the dropdown list width
     if (this.settings.width) {
       let widthAttr = typeof this.settings.width === 'number' ? `${this.settings.width}px` : 'auto';
-      if (this.settings.width === 'parent' && typeof this.settings.widthTarget === 'string') {
+      if (this.widthTargetEnabled) {
         const el = document.querySelector(this.settings.widthTarget);
-        if (el) widthAttr = `${el.clientWidth + 2}px`;
+        if (el) widthAttr = `${el.clientWidth}px`;
       }
       this.list.css('width', widthAttr);
     }
