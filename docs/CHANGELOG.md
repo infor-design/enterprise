@@ -13,6 +13,7 @@
 - `[Button]` Adjusted alignment for popupmenu icon buttons. ([#7408](https://github.com/infor-design/enterprise/issues/7408))
 - `[Charts]` Improved the positioning of chart legend. ([#7452](https://github.com/infor-design/enterprise/issues/7452))
 - `[Datagrid]` Clear `rowstatus` in tree node for clearRowError to work correctly. ([#6033](https://github.com/infor-design/enterprise/issues/6033))
+- `[Datagrid]` Changed `enterkeykhint` behavior for filtering to filter with the virtual keyboard on mobile devices. ([#1489](https://github.com/infor-design/enterprise/issues/1489))
 - `[Dropdown]` Fixed the visibility of dropdown palette icons in dark mode. ([#7431](https://github.com/infor-design/enterprise/issues/7431))
 - `[Dropdown]` Removed overflow none style for dropdown modal. ([#6033](https://github.com/infor-design/enterprise/issues/6033))
 - `[Header]` Fix on header text not being readable due to color styles. ([#7466](https://github.com/infor-design/enterprise/issues/7466))
