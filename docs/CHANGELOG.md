@@ -18,6 +18,7 @@
 - `[Header]` Fix on header text not being readable due to color styles. ([#7466](https://github.com/infor-design/enterprise/issues/7466))
 - `[Locale]` Added Comma translate option for locale for generating lists. ([#5887](https://github.com/infor-design/enterprise/issues/5887))
 - `[Lookup]` Added undefined check for lookup values when updating grid. ([#7403](https://github.com/infor-design/enterprise/issues/7403))
+- `[Textarea]` Fixed an issue where the textarea was throwing an error. ([#7536](https://github.com/infor-design/enterprise/issues/7536))
 
 ## v4.83.0
 
