@@ -205,16 +205,15 @@ ModuleNav.prototype = {
     const headers = this.accordionEl.querySelectorAll('.accordion-section > .accordion-header');
     if (headers.length) {
       [...headers].forEach((header) => {
+        $(header).hideFocus();
         if (this.settings.displayMode === 'collapsed') {
           $(header).tooltip({
-            offset: { x: 12 },
+            placementOpts: { x: 16 },
             placement: 'right',
             title: header.textContent.trim()
           });
-          $(header).hideFocus();
         } else {
           $(header).data('tooltip')?.destroy();
-          $(header).data('hidefocus')?.destroy();
         }
       });
     }
