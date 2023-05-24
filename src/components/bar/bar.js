@@ -33,6 +33,7 @@ const COMPONENT_NAME = 'bar';
  * @param {object} [settings.ticks=null] Settings for the chart ticks. Can set ticks: {format: d3Format, number: n}
  * @param {boolean} [settings.showLines=true] Show the in the axis lines or not.
  * @param {boolean} [settings.selectable=true] Ability to disable selections of the charts.
+ * @param {number} [settings.defaultTickCount=5] Default number of ticks on the x axis if there are no data values.
  * @param {number} [settings.labelFactor=1.27] How far out than the outer circle should the labels be placed, this
  * may be useful to adjust for some labels.
  * @param {number} [settings.wrapWidth=60] The number of pixels after which a label needs to be given a new line.
@@ -65,6 +66,7 @@ const BAR_DEFAULTS = {
   useLogScale: false,
   ticks: null,
   selectable: true,
+  defaultTickCount: 5,
   showLines: true,
   labelFactor: 1.27,
   wrapWidth: 60,
@@ -96,6 +98,7 @@ Bar.prototype = {
     this.namespace = utils.uniqueId({ classList: [this.settings.type, 'chart'] });
     this.width = 0;
     this.initialSelectCall = false;
+    this.tickCountFlag = false;
 
     if (this.settings.localeInfo) {
       d3.formatDefaultLocale(this.settings.localeInfo);
@@ -158,6 +161,17 @@ Bar.prototype = {
 
     this.isRTL = Locale.isRTL();
     this.dataset = dataset;
+
+    const zeroValues = this.allZeroValues(this.dataset);
+
+    if (zeroValues) {
+      this.dataset.forEach((item) => {
+        item.data.forEach((dataItem) => {
+          dataItem.value = this.settings.defaultTickCount;
+          this.tickCountFlag = true;
+        });
+      });
+    }
 
     const innerWidth = window.innerWidth;
     this.viewport = {
@@ -305,7 +319,7 @@ Bar.prototype = {
       .append('g')
       .attr('class', 'group')
       .attr('aria-label', `${s.dataset[0].name ? s.dataset[0].name : 'Name Group'}`)
-      .attr('transform', `translate(${textWidth},${margins.top - (isAxisLabels.atLeastOne ? 3 : 0)})`);
+      .attr('transform', `translate(${textWidth},${margins.top - (isAxisLabels.atLeastOne ? 3 : 15)})`);
 
     // Adding title for accessibility
     if (self.settings.type === 'bar') {
@@ -841,6 +855,8 @@ Bar.prototype = {
     // Set x-axix tick css class
     self.svg.selectAll('.x.axis .tick').attr('class', d => `tick${d === 0 ? ' tick0' : ''}`);
 
+    this.setBarWidthToZero();
+
     // Animate the Bars In
     self.svg.selectAll('.bar')
       .transition().duration(s.animate ? 600 : 0)
@@ -1080,6 +1096,27 @@ Bar.prototype = {
   },
 
   /**
+   * Sets the bar width to zero.
+   * @private
+   * @returns {void}
+   */
+  setBarWidthToZero() {
+    if (this.tickCountFlag) {
+      $('.bar').css('width', '0');
+      $('.bar').attr('width', '0');
+    }
+  },
+
+  /**
+   * Checks if all values in the dataset are zero.
+   * @param {Array} dataset - The dataset to be checked.
+   * @returns {boolean} - True if all values in the dataset are zero, false otherwise.
+   */
+  allZeroValues(dataset) {
+    return dataset.every(item => item.data.every(dataItem => dataItem.value === 0));
+  },
+
+  /**
    * Sets up event handlers for this component and its sub-elements.
    * @returns {object} The Component prototype, useful for chaining.
    * @private
@@ -1092,15 +1129,18 @@ Bar.prototype = {
     if (this.settings.redrawOnResize) {
       $('body').on(`resize.${this.namespace}`, () => {
         this.handleResize();
+        this.setBarWidthToZero();
       });
 
       this.element.on(`resize.${this.namespace}`, () => {
         this.handleResize();
+        this.setBarWidthToZero();
       });
     }
 
     $('html').on(`themechanged.${this.namespace}`, () => {
       this.updated();
+      this.setBarWidthToZero();
     });
     return this;
   },
@@ -1216,6 +1256,7 @@ Bar.prototype = {
       if (!this.element.is(':visible')) {
         return;
       }
+
       this.updated();
     };
     // Waiting to complete the animatin on widget
