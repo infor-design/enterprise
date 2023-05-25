@@ -16,8 +16,6 @@ const MODULE_NAV_SETTINGS_DEFAULTS = {
 
 const popupmenuTemplate = () => '<div class="popupmenu-wrapper><ul class="popupmenu"></ul></div>';
 
-// const popupmenuItemTemplate = (text, icon) => `<li><a href="#">${text}${icon ? `<svg class="icon">${icon}</svg>` : ''}</a></li>`;
-
 /**
  * Module Nav Settings - Creates a settings menu trigger button with specific styles for the Module Nav
  * @class ModuleNavSettings
@@ -122,20 +120,36 @@ ModuleNavSettings.prototype = {
     if (!this.menuEl.length) {
       this.detectPopupMenu();
     }
+    this.element.popupmenu(this.getPopupmenuConfig());
+  },
 
-    this.element.popupmenu({
+  /**
+   * @private
+   * @returns {object} containing Popupmenu config
+   */
+  getPopupmenuConfig() {
+    const placementOpts = {
+      placement: 'bottom',
+      containerOffsetX: 8,
+      containerOffsetY: 8
+    };
+
+    if (this.settings.displayMode === 'collapsed') {
+      placementOpts.placement = 'right';
+      placementOpts.width = 290;
+    }
+
+    const offset = this.settings.displayMode === 'collapsed' ? {
+      x: 10, y: 0
+    } : {
+      x: 0, y: 10
+    };
+
+    return {
       cssClass: 'module-nav-settings-menu',
-      offset: (this.settings.displayMode === 'collapsed' ? {
-        x: 10
-      } : {
-        y: 10
-      }),
-      placementOpts: {
-        placement: (this.settings.displayMode === 'collapsed' ? 'right' : 'bottom'),
-        containerOffsetX: 8,
-        containerOffsetY: 8
-      }
-    });
+      offset,
+      placementOpts
+    };
   },
 
   /**

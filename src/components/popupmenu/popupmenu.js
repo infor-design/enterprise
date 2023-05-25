@@ -118,6 +118,13 @@ PopupMenu.prototype = {
   },
 
   /**
+   * @returns {string} containing the ID of the menu
+   */
+  get idString() {
+    return this.id ? `popupmenu-${this.id}` : undefined;
+  },
+
+  /**
    * @returns {boolean} whether or not the popupmenu is currently open
    */
   get isOpen() {
@@ -219,8 +226,8 @@ PopupMenu.prototype = {
     if (!this.menu || !this.menu.length) {
       switch (typeof this.settings.menu) {
         case 'string': // ID Selector
-          id = this.settings.menu;
-          this.menu = $(`#${this.settings.menu}`);
+          id = this.idString || this.settings.menu;
+          this.menu = $(`#${id}`);
 
           // duplicate menu if shared by multiple triggers
           if (this.settings.duplicateMenu && this.settings.attachToBody && this.menu.parent().not('body').length > 0) {
@@ -244,7 +251,7 @@ PopupMenu.prototype = {
 
           id = this.menu.attr('id');
           if (!id || id === '') {
-            this.menu.attr('id', `popupmenu-${this.id}`);
+            this.menu.attr('id', this.idString);
             id = this.menu.attr('id');
           }
           triggerId = this.element.attr('id');
