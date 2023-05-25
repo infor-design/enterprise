@@ -244,7 +244,8 @@
       }
 
       &:last-child {
-        margin-block-start: 8px;
+        margin-block-start: $module-nav-item-collapsed-first-last-spacing-size;
+        margin-block-end: 12px;
       }
 
       > .icon {

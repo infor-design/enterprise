@@ -9,7 +9,12 @@ import '../dropdown/dropdown.jquery';
 import '../searchfield/searchfield.jquery';
 import '../tooltip/tooltip.jquery';
 
-import { MODULE_NAV_DISPLAY_MODES, setDisplayMode, isValidDisplayMode, separatorTemplate } from './module-nav.common';
+import {
+  MODULE_NAV_DISPLAY_MODES,
+  setDisplayMode,
+  isValidDisplayMode,
+  separatorTemplate
+} from './module-nav.common';
 
 // Settings and Options
 const COMPONENT_NAME = 'modulenav';

@@ -144,14 +144,20 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
     }
 
     .listoption-icon {
+      color: $module-nav-switcher-dropdown-item-text-color;
       margin-inline-start: 1px;
       margin-inline-end: 27px;
     }
 
     &.is-focused:not(.is-disabled) {
       background-color: $module-nav-switcher-dropdown-item-focus-bg-color;
+      color: $module-nav-switcher-dropdown-item-text-color;
 
       a {
+        color: $module-nav-switcher-dropdown-item-text-color;
+      }
+
+      .listoption-icon {
         color: $module-nav-switcher-dropdown-item-text-color;
       }
     }
