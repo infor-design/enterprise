@@ -6,6 +6,7 @@ import '../dropdown/dropdown.jquery';
 import {
   buttonTemplate,
   dropdownTemplate,
+  iconTemplate,
   roleTemplate,
   isValidDisplayMode,
   MODULE_NAV_DISPLAY_MODES,
@@ -18,6 +19,7 @@ const COMPONENT_NAME = 'modulenavswitcher';
 
 const MODULE_NAV_SWITCHER_DEFAULTS = {
   displayMode: MODULE_NAV_DISPLAY_MODES[0],
+  icon: () => SWITCHER_ICON_HTML,
   roles: []
 };
 
@@ -78,6 +80,7 @@ ModuleNavSwitcher.prototype = {
 
     // Configure
     this.setDisplayMode(this.settings.displayMode);
+    this.setModuleButtonIcon();
     if (!$(this.roleDropdownEl).find('option').length) {
       this.renderDropdownOptions(true);
     }
@@ -154,15 +157,6 @@ ModuleNavSwitcher.prototype = {
   },
 
   /**
-   * Draws the app menu switcher icon
-   * @private
-   * @returns {void}
-   */
-  renderIcon() {
-    this.element[0].insertAdjacentHTML('afterbegin', SWITCHER_ICON_HTML);
-  },
-
-  /**
    * @param {boolean} doUpdate true if the Dropdown API should update
    * @private
    */
@@ -180,6 +174,32 @@ ModuleNavSwitcher.prototype = {
 
     if (this.settings.displayMode !== val) this.settings.displayMode = val;
     setDisplayMode(val, this.element[0]);
+  },
+
+  /**
+   * Configures the Module Button's icon
+   * @returns {void}
+   */
+  setModuleButtonIcon() {
+    let iconHTML = '';
+
+    switch(typeof this.settings.icon) {
+      case 'function':
+        iconHTML = this.settings.icon(this);
+        break;
+      case 'string':
+        iconHTML = iconTemplate(this.settings.icon);
+        break;
+      default:
+        break;
+    }
+
+    // if Icon HTML exists, replace the current one
+    if (iconHTML.length) {
+      const svgEl = this.moduleButtonEl.querySelector('svg');
+      svgEl?.remove();
+      this.moduleButtonEl.insertAdjacentHTML('afterbegin', iconHTML);
+    }
   },
 
   /**
