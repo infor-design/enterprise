@@ -129,7 +129,9 @@ ModuleNavSwitcher.prototype = {
       this.moduleButtonContainerEl = this.element[0].querySelector('.module-nav-section.module-btn');
       this.moduleButtonEl = this.moduleButtonContainerEl.querySelector('button');
     }
-    $(this.moduleButtonEl).button();
+    $(this.moduleButtonEl).button({
+      ripple: false
+    });
 
     // Dropdown for Role Switcher
     this.roleDropdownContainerEl = this.element[0].querySelector('.module-nav-section.role-dropdown');

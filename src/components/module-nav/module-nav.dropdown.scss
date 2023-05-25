@@ -34,6 +34,7 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
     // Override top/right from Dropdown
     + .icon {
       right: 16px;
+      top: 4px;
     }
 
     &:hover {
@@ -93,7 +94,7 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
     color: inherit;
 
     .icon {
-      top: 10px;
+      top: 11px;
     }
   }
 

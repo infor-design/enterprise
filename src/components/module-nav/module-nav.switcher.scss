@@ -24,11 +24,29 @@
 .module-nav-section.module-btn {
   .btn-icon {
     // Reset size
+    border-width: 1px;
     font-size: 0;
     height: $module-nav-switcher-button-size;
     min-height: 0;
     min-width: 0;
     width: $module-nav-switcher-button-size;
+
+    &:focus {
+      background-color: $module-nav-item-selected-bg-color;
+
+      &:not(.hide-focus) {
+        border-color: $module-nav-item-selected-text-color;
+        box-shadow: none;
+      }
+    }
+
+    &:hover {
+      background-color: $module-nav-item-hover-bg-color;
+    }
+
+    &:active {
+      background-color: $module-nav-item-selected-bg-color;
+    }
   }
 }
 
