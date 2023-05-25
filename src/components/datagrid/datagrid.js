@@ -6271,7 +6271,10 @@ Datagrid.prototype = {
     }
 
     this.settings.columns[idx].hidden = true;
-    this.headerNodeCheckbox = this.headerNodes().eq(idx);
+
+    const hideColumn = this.headerNodes().eq(idx);
+    this.headerNodeCheckbox = hideColumn.find('.datagrid-checkbox').length > 0 ? hideColumn : undefined;
+
     if (!this.settings?.frozenColumns?.left.length) this.headerNodes().eq(idx).addClass('is-hidden');
 
     if (idx === 0 && id === 'selectionCheckbox' && this.settings?.frozenColumns?.left.length) {
