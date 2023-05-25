@@ -10,7 +10,6 @@
   font-size: 0;
   justify-self: center;
 
-  padding-block-start: $module-nav-footer-gutter-size;
   margin: 0 $module-nav-separator-expanded-edge-distance;
 }
 
@@ -167,7 +166,6 @@
   &:not(.pinned-optional) {
     .module-nav-accordion {
       @include drawer-scrollable-area;
-      // overflow-y: auto;
       flex-grow: 1;
     }
 
@@ -181,12 +179,6 @@
   // individual areas can become scrollable
 
   &.pinned-optional {
-    .module-nav-main,
-    .module-nav-search,
-    .module-nav-footer {
-      padding-block-start: 0;
-    }
-
     .module-nav-main {
       @include drawer-scrollable-area;
       flex-grow: 1;
@@ -194,6 +186,19 @@
 
     .module-nav-footer {
       @include drawer-scrollable-area;
+    }
+
+    &:not(.has-section-scrollbars) {
+      .module-nav-search-container + .module-nav-separator,
+      .module-nav-header + .module-nav-separator {
+        display: none;
+      }
+    }
+
+    &.has-section-scrollbars {
+      .module-nav-separator + .module-nav-footer {
+        margin-block-start: 0;
+      }
     }
   }
 }
@@ -238,6 +243,7 @@
 .module-nav-footer {
   display: block;
   position: relative;
+  flex-shrink: 0;
 }
 
 // =====================================================
@@ -246,4 +252,5 @@
 .module-nav-settings {
   flex-shrink: 0;
   overflow: hidden;
+  margin-block-start: $module-nav-accordion-gutter-size;
 }

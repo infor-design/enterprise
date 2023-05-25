@@ -123,15 +123,3 @@
     padding-block-end: 0;
   }
 }
-
-// =====================================================
-// Optional Pinning: Enabled
-
-.module-nav-container.pinned-optional {
-  &:not(.has-section-scrollbars) {
-    .module-nav-search-container + .module-nav-separator,
-    .module-nav-header + .module-nav-separator {
-      display: none;
-    }
-  }
-}
