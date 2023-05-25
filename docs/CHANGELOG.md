@@ -22,6 +22,7 @@
 - `[Locale]` Added Comma translate option for locale for generating lists. ([#5887](https://github.com/infor-design/enterprise/issues/5887))
 - `[Lookup]` Added undefined check for lookup values when updating grid. ([#7403](https://github.com/infor-design/enterprise/issues/7403))
 - `[SearchField]` Fixed misaligned icons on toolbar search and pager buttons. ([#7527](https://github.com/infor-design/enterprise/issues/7527))
+- `[Textarea]` Fixed an issue where the textarea was throwing an error. ([#7536](https://github.com/infor-design/enterprise/issues/7536))
 
 ## v4.83.0
 
