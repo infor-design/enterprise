@@ -156,14 +156,19 @@ ModuleNav.prototype = {
     });
 
     if (this.accordionEl) {
+      $(this.accordionEl).on(`rendered.${COMPONENT_NAME}`, () => {
+        this.configureAccordion();
+      });
       $(this.accordionEl).on(`beforeexpand.${COMPONENT_NAME}`, (e) => {
         e.preventDefault();
         if (this.settings.displayMode !== 'expanded') return false;
         return true;
       });
-
-      $(this.accordionEl).on(`rendered.${COMPONENT_NAME}`, () => {
-        this.configureAccordion();
+      $(this.accordionEl).on(`afterexpand.${COMPONENT_NAME}`, () => {
+        this.setScrollable();
+      });
+      $(this.accordionEl).on(`aftercollapse.${COMPONENT_NAME}`, () => {
+        this.setScrollable();
       });
     }
 
@@ -407,8 +412,10 @@ ModuleNav.prototype = {
    */
   teardownEvents() {
     this.element.off(`updated.${COMPONENT_NAME}`);
-    $(this.accordionEl).off(`beforeexpand.${COMPONENT_NAME}`);
     $(this.accordionEl).off(`rendered.${COMPONENT_NAME}`);
+    $(this.accordionEl).off(`beforeexpand.${COMPONENT_NAME}`);
+    $(this.accordionEl).off(`afterexpand.${COMPONENT_NAME}`);
+    $(this.accordionEl).off(`aftercollapse.${COMPONENT_NAME}`);
   },
 
   /**

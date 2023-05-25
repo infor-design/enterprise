@@ -33,8 +33,7 @@
     }
 
     button.close {
-      top: 11px;
-      right: 12px;
+      right: $module-nav-search-close-icon-x-offset;
 
       .icon {
         top: 0;
