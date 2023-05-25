@@ -1132,6 +1132,16 @@ $datagrid-small-row-height: 25px;
   &.right {
     flex-shrink: 0;
     overflow-x: auto;
+
+    + .datagrid-wrapper.center {
+      td.is-hidden:first-child + td {
+        border-left: 1px solid $datagrid-cell-border-color;
+      }
+
+      th.is-hidden:first-child + th {
+        border-left: 1px solid $datagrid-header-border-color;
+      }
+    }
   }
 
   .datagrid-row.is-selected.is-hover-row {
