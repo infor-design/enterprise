@@ -1783,13 +1783,14 @@ Datagrid.prototype = {
       if (!attrs) {
         attrs = `id="${filterId}"`;
       }
+      const enterKeyHint = col.enterKeyHint ? ` enterkeyhint="${col.enterKeyHint}"` : ' enterkeyhint="enter"';
 
       switch (col.filterType) {
         case 'checkbox':
           // just the button
           break;
         case 'date':
-          filterMarkup += `<input ${col.filterDisabled ? ' disabled' : ''} type="text" class="datepicker" ${attrs}/>`;
+          filterMarkup += `<input ${col.filterDisabled ? ' disabled' : ''} type="text" class="datepicker" ${attrs} ${enterKeyHint}/>`;
           break;
         case 'integer': {
           integerDefaults = {
@@ -1814,7 +1815,7 @@ Datagrid.prototype = {
             col.maskOptions = utils.extend(true, {}, integerDefaults, col.maskOptions);
           }
 
-          filterMarkup += `<input${col.filterDisabled ? ' disabled' : ''} type="text" ${attrs} />`;
+          filterMarkup += `<input${col.filterDisabled ? ' disabled' : ''} type="text" ${attrs} ${enterKeyHint} />`;
           break;
         }
         case 'percent':
@@ -1866,7 +1867,7 @@ Datagrid.prototype = {
             }
           }
 
-          filterMarkup += `<input${col.filterDisabled ? ' disabled' : ''} type="text" ${attrs} />`;
+          filterMarkup += `<input${col.filterDisabled ? ' disabled' : ''} type="text" ${attrs} ${enterKeyHint} />`;
           break;
         }
         case 'contents':
@@ -1899,13 +1900,13 @@ Datagrid.prototype = {
 
           break;
         case 'time':
-          filterMarkup += `<input ${col.filterDisabled ? ' disabled' : ''} type="text" class="timepicker" ${attrs}/>`;
+          filterMarkup += `<input ${col.filterDisabled ? ' disabled' : ''} type="text" class="timepicker" ${attrs} ${enterKeyHint}/>`;
           break;
         case 'lookup':
-          filterMarkup += `<input ${col.filterDisabled ? ' disabled' : ''} type="text" class="lookup" ${attrs} >`;
+          filterMarkup += `<input ${col.filterDisabled ? ' disabled' : ''} type="text" class="lookup" ${attrs} ${enterKeyHint} >`;
           break;
         default:
-          filterMarkup += `<input${col.filterDisabled ? ' disabled' : ''} tabindex="0" type="text" ${attrs}/>`;
+          filterMarkup += `<input${col.filterDisabled ? ' disabled' : ''} tabindex="0" type="text" ${attrs} ${enterKeyHint}/>`;
           break;
       }
 
