@@ -37,6 +37,11 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
       top: 4px;
     }
 
+    // Overrides a dropdown default
+    &:focus {
+      box-shadow: none;
+    }
+
     &:hover {
       background-color: $module-nav-item-hover-bg-color;
 
