@@ -697,7 +697,7 @@ Accordion.prototype = {
       }
 
       const children = $(el).children('.accordion-header');
-      let childrenData = [];
+      let childrenData = []; // eslint-disable-line
       if (children.length) {
         children.each((j, childEl) => {
           buildElementJSON(childEl, j, index, childrenData);
@@ -1399,9 +1399,12 @@ Accordion.prototype = {
 
       if (this.originalSelection.is('[class*="btn"]') && btns.length) {
         btns.first()[0].focus();
+      } else if (header.is('.searchfield-wrapper')) {
+        header.find('input')[0].focus();
+        header.addClass('is-focused');
       } else {
         header.children('a')[0].focus();
-        header.addClass('is-focused').removeClass('hide-focus');
+        header.addClass('is-focused');
       }
     };
 
