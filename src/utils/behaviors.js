@@ -63,32 +63,43 @@ HideFocus.prototype = {
       };
       const isTouch = env.features.touch;
 
+      // In some cases, detect a child element as the target for some events
+      let eventTargetEl = $el;
+      if ($el.hasClass('accordion-header')) {
+        eventTargetEl = $el.find('a');
+      }
+
+      // Click/Touch events go to the event target
+      eventTargetEl.on('mousedown.hide-focus', (e) => {
+        handleMousedown(e);
+      });
       if (isTouch) {
-        $el.on('touchstart.hide-focus', (e) => {
+        eventTargetEl.on('touchstart.hide-focus', (e) => {
           handleMousedown(e);
         });
       }
 
-      $el.addClass('hide-focus')
-        .on('mousedown.hide-focus', (e) => {
-          handleMousedown(e);
-        })
-        .on('focusin.hide-focus', (e) => {
-          if (!isClick) {
-            $el.removeClass('hide-focus');
-            $el.triggerHandler('hidefocusremove', [e]);
-          } else if (isClick) {
-            $el.addClass('hide-focus');
-          }
-          isClick = false;
-          isFocused = true;
-        })
+      // Focus events apply to the container
+      $el.addClass('hide-focus');
+      $el.on('focusin.hide-focus', (e) => {
+        if (!isClick) {
+          $el.removeClass('hide-focus');
+          $el.triggerHandler('hidefocusremove', [e]);
+        }
+        isClick = false;
+        isFocused = true;
+      })
         .on('focusout.hide-focus', (e) => {
           $el.addClass('hide-focus');
           isClick = false;
           isFocused = false;
           $el.triggerHandler('hidefocusadd', [e]);
         });
+
+      // Store separate event target, if applicable
+      if (!$el.is(eventTargetEl)) {
+        this.separateEventTarget = eventTargetEl;
+      }
     }
 
     return this;
@@ -111,7 +122,12 @@ HideFocus.prototype = {
       'mousedown.hide-focus',
       'touchstart.hide-focus'
     ];
-    $(this.element).off(elemEvents.join(' '));
+    const elemEventStr = elemEvents.join(' ');
+    $(this.element).off(elemEventStr);
+    if (this.separateEventTarget?.length) {
+      this.separateEventTarget.off(elemEventStr);
+      this.separateEventTarget = null;
+    }
 
     this.element?.classList.remove('hide-focus');
 
