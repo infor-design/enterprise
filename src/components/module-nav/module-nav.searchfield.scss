@@ -93,6 +93,10 @@
 // Display Mode: Collapsed
 
 .module-nav-container.mode-collapsed {
+  .module-nav-separator {
+    display: none;
+  }
+
   .module-nav-search-container {
     display: none;
     pointer-events: none;
@@ -103,10 +107,14 @@
 // Optional Pinning: Disabled
 
 .module-nav-container:not(.pinned-optional) {
+  // Hide "header" separators in this mode
+  .module-nav-search-container + .module-nav-separator,
+  .module-nav-header + .module-nav-separator {
+    display: none;
+  }
+
   .module-nav-search-container {
-    &.accordion-section {
-      padding-block-end: 0;
-    }
+    padding-block-end: 0;
   }
 }
 
@@ -114,7 +122,10 @@
 // Optional Pinning: Enabled
 
 .module-nav-container.pinned-optional {
-  .module-nav-search-container {
-
+  &:not(.has-section-scrollbars) {
+    .module-nav-search-container + .module-nav-separator,
+    .module-nav-header + .module-nav-separator {
+      display: none;
+    }
   }
 }

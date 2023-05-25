@@ -1,5 +1,19 @@
 @import './module-nav.common.scss';
 
+// Module Nav Separator Element
+.module-nav-separator {
+  display: block;
+  pointer-events: none;
+  user-select: none;
+
+  border-top: 1px solid $module-nav-separator-color;
+  font-size: 0;
+  justify-self: center;
+
+  padding-block-start: $module-nav-footer-gutter-size;
+  margin: 0 $module-nav-separator-expanded-edge-distance;
+}
+
 // Module Nav Component
 //================================================== //
 
@@ -118,10 +132,6 @@
       > .icon {
         margin-inline-end: $module-nav-item-icon-end-spacing;
       }
-    }
-
-    .module-nav-footer {
-      @include module-nav-section-separator;
     }
 
     .page-container {

@@ -44,6 +44,11 @@ export const dropdownTemplate = () => `<div class="module-nav-section role-dropd
 </div>`;
 
 /**
+ * @returns {string} Module Nav Separator element template
+ */
+export const separatorTemplate = () => `<div class="module-nav-separator">&nbsp;</div>`;
+
+/**
  * @param {string} val desired display mode
  * @returns {boolean} true if the display mode exists
  */

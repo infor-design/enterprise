@@ -9,7 +9,7 @@ import '../dropdown/dropdown.jquery';
 import '../searchfield/searchfield.jquery';
 import '../tooltip/tooltip.jquery';
 
-import { MODULE_NAV_DISPLAY_MODES, setDisplayMode, isValidDisplayMode } from './module-nav.common';
+import { MODULE_NAV_DISPLAY_MODES, setDisplayMode, isValidDisplayMode, separatorTemplate } from './module-nav.common';
 
 // Settings and Options
 const COMPONENT_NAME = 'modulenav';
@@ -22,13 +22,16 @@ const MODULE_NAV_DEFAULTS = {
 };
 
 const toggleScrollbar = (el, doToggle) => {
+  let didToggle = false;
   if (el instanceof HTMLElement) {
     if ((doToggle === undefined && el.scrollHeight > el.clientHeight) || doToggle === true) {
       el.classList.add('has-scrollbar');
+      didToggle = true;
     } else {
       el.classList.remove('has-scrollbar');
     }
   }
+  return didToggle;
 };
 
 /**
@@ -130,6 +133,16 @@ ModuleNav.prototype = {
       this.settings.filterable = true;
       this.configureSearch();
     }
+
+    this.renderSeparators();
+  },
+
+  /**
+   * @private
+   */
+  renderSeparators() {
+    if (this.switcherEl || this.searchEl) this.itemMenuEl.insertAdjacentHTML('beforebegin', separatorTemplate());
+    if (this.footerEl) this.footerEl.insertAdjacentHTML('beforebegin', separatorTemplate());
   },
 
   /**
@@ -307,10 +320,13 @@ ModuleNav.prototype = {
    * @param {boolean|undefined} [doToggle] if defined, dictates which direction to force toggle (false for off, true for on)
    */
   setAccordionSectionsScrollable(doToggle) {
+    let sectionHasScrollbar = false;
+
     const sections = this.accordionEl?.querySelectorAll('.accordion-section');
     if (sections && sections.length) {
       [...sections].forEach((section) => {
-        toggleScrollbar(section, doToggle);
+        const didToggle = toggleScrollbar(section, doToggle);
+        if (didToggle) sectionHasScrollbar = true;
 
         const isSearch = section.classList.contains('module-nav-search-container');
         const isHeader = section.classList.contains('module-nav-header');
@@ -320,6 +336,8 @@ ModuleNav.prototype = {
         }
       });
     }
+
+    this.containerEl.classList[sectionHasScrollbar ? 'add' : 'remove']('has-section-scrollbars');
   },
 
   /**
@@ -357,6 +375,10 @@ ModuleNav.prototype = {
     this.teardownEvents();
     this.teardownResize();
     accordionSearchUtils.teardownFilter.apply(this, [COMPONENT_NAME]);
+
+    // Separators
+    const separators = $(this.element).find('.module-nav-separator');
+    separators.remove();
 
     // Containers
     this.containerEl = null;

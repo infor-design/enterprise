@@ -2,17 +2,6 @@
   @include drawer-box-shadow;
 }
 
-@mixin module-nav-section-separator() {
-  &:before {
-    content: ' ';
-    display: block;
-    border-top: 1px solid $module-nav-separator-color;
-    padding-block-start: $module-nav-footer-gutter-size;
-    margin: 0 $module-nav-separator-edge-distance;
-    justify-self: center;
-  }
-}
-
 @mixin module-nav-input-style() {
   background-color: $module-nav-input-bg-color;
   border-radius: $module-nav-common-border-radius;
