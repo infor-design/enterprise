@@ -107,7 +107,8 @@
     &:not(.standalone) {
       .buttonset [class^='btn'] {
         &:not(:disabled):hover {
-          background-color: transparent;
+          background-color: $toolbar-contextual-button-hover-bg-color;
+          color: $toolbar-contextual-button-color;
         }
       }
     }

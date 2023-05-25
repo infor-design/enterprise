@@ -19,6 +19,9 @@
 - `[Locale]` Added Comma translate option for locale for generating lists. ([#5887](https://github.com/infor-design/enterprise/issues/5887))
 - `[Lookup]` Added undefined check for lookup values when updating grid. ([#7403](https://github.com/infor-design/enterprise/issues/7403))
 - `[Textarea]` Fixed an issue where the textarea was throwing an error. ([#7536](https://github.com/infor-design/enterprise/issues/7536))
+- `[Listview]` Fixed invisible button on hover. ([#7544](https://github.com/infor-design/enterprise/issues/7544))
+- `[Modal]` Fixed button alignment on modals. ([#7543](https://github.com/infor-design/enterprise/issues/7543))
+- `[SearchField]` Fixed misaligned icons on toolbar search and pager buttons. ([#7527](https://github.com/infor-design/enterprise/issues/7527))
 
 ## v4.83.0
 
