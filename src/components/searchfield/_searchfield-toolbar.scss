@@ -1247,6 +1247,8 @@ html[class*='theme-new-'] .header .toolbar .toolbar-searchfield-wrapper.has-cate
   height: 38px;
   border-bottom-right-radius: 8px;
   border-top-right-radius: 8px;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
 }
 
 html[class*='theme-classic-'] .header .toolbar .toolbar-searchfield-wrapper.has-go-button.has-categories .searchfield {

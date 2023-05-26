@@ -287,6 +287,7 @@ Personalize.prototype = {
     colors.btnTertiaryHoverColor = '#ffffff';
     colors.btnLinkColor = colors.light;
     colors.tabBottomBorderColor = colors.base;
+    colors.moduleTabsSelectedTextColor = '#ffffff';
 
     const isAlabaster = colors.header === '#ffffff';
     const isNewDark = this.currentTheme.indexOf('new-dark') >= 0;
@@ -313,6 +314,8 @@ Personalize.prototype = {
       colors.btnTertiaryHoverColor = '#0072ED';
       colors.btnLinkColor = '0072ED';
       colors.tabBottomBorderColor = '#B7B7BA';
+      colors.btnActionsHoverColor = '#2F2F32';
+      colors.moduleTabsSelectedTextColor = colors.contrast;
 
       if (isNewDark) {
         colors.base = '#606066';
