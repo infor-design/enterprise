@@ -25,6 +25,7 @@
 - `[Modal]` Fixed button alignment on modals. ([#7543](https://github.com/infor-design/enterprise/issues/7543))
 - `[SearchField]` Fixed misaligned icons on toolbar search and pager buttons. ([#7527](https://github.com/infor-design/enterprise/issues/7527))
 - `[Textarea]` Fixed an issue where the textarea was throwing an error. ([#7536](https://github.com/infor-design/enterprise/issues/7536))
+- `[Toolbar]` Fixed x alignment on old toolbars. ([#7550](https://github.com/infor-design/enterprise/issues/7550))
 
 ## v4.83.0
 
