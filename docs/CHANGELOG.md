@@ -13,6 +13,7 @@
 - `[Busy Indicator]` Updated colors for busy indicator. ([#7098](https://github.com/infor-design/enterprise/issues/7098))
 - `[Button]` Adjusted alignment for popupmenu icon buttons. ([#7408](https://github.com/infor-design/enterprise/issues/7408))
 - `[Charts]` Improved the positioning of chart legend. ([#7452](https://github.com/infor-design/enterprise/issues/7452))
+- `[Datagrid]` Fixed a bug where the colorpicker editor could not be toggles. ([#7362](https://github.com/infor-design/enterprise/issues/7362))
 - `[Datagrid]` Clear `rowstatus` in tree node for clearRowError to work correctly. ([#6033](https://github.com/infor-design/enterprise/issues/6033))
 - `[Datagrid]` Fix an issue where `showColumn` was not functioning correctly with frozen columns. ([#7428](https://github.com/infor-design/enterprise/issues/7428))
 - `[Datagrid]` Changed `enterkeykhint` behavior for filtering to filter with the virtual keyboard on mobile devices. ([#1489](https://github.com/infor-design/enterprise/issues/1489))
