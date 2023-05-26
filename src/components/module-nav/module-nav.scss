@@ -5,11 +5,9 @@
   display: block;
   pointer-events: none;
   user-select: none;
-
   border-top: 1px solid $module-nav-separator-color;
   font-size: 0;
   justify-self: center;
-
   margin: 0 $module-nav-separator-expanded-edge-distance;
 }
 
@@ -166,6 +164,7 @@
   &:not(.pinned-optional) {
     .module-nav-accordion {
       @include drawer-scrollable-area;
+
       flex-grow: 1;
     }
 
@@ -181,6 +180,7 @@
   &.pinned-optional {
     .module-nav-main {
       @include drawer-scrollable-area;
+
       flex-grow: 1;
     }
 

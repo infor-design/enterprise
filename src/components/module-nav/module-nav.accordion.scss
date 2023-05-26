@@ -30,7 +30,6 @@
     border-radius: $module-nav-common-border-radius;
     border-style: solid;
     border-width: 1px;
-
     color: $module-nav-item-text-color;
 
     > [class^='btn'] {
@@ -231,7 +230,6 @@
       align-items: center;
       justify-content: center;
       position: static;
-
       max-width: $module-nav-item-collapsed-size;
       min-height: $module-nav-item-collapsed-size;
       margin-block: $module-nav-item-collapsed-general-spacing-size;

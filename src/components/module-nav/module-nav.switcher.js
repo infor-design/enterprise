@@ -183,7 +183,7 @@ ModuleNavSwitcher.prototype = {
   setModuleButtonIcon() {
     let iconHTML = '';
 
-    switch(typeof this.settings.icon) {
+    switch (typeof this.settings.icon) {
       case 'function':
         iconHTML = this.settings.icon(this);
         break;

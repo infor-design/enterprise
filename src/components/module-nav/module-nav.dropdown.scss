@@ -14,7 +14,6 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
 //================================================== //
 
 .module-nav-section.role-dropdown {
-
   .dropdown-wrapper {
     max-width: $module-nav-switcher-dropdown-width;
     margin-bottom: 0;
@@ -87,9 +86,7 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
   border: none;
   border-radius: 0;
   box-shadow: none;
-
   color: $module-nav-input-text-color;
-
   max-height: 100%;
   margin-block-start: $module-nav-gutter-size;
   overflow: visible;
@@ -131,7 +128,6 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
     border-radius: $module-nav-common-border-radius;
     border: $module-nav-input-border-width solid $module-nav-input-border-color;
     color: inherit;
-
     margin-block-start: $module-nav-switcher-button-gutter-size;
   }
 
@@ -167,6 +163,7 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
   &.has-icons {
     input.dropdown-search {
       @include module-nav-div-dropdown-adjustment;
+
       padding-block-start: 7px; // Adjustment needed for the input field
     }
   }

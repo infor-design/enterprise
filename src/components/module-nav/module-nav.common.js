@@ -45,15 +45,16 @@ export const dropdownTemplate = () => `<div class="module-nav-section role-dropd
 
 /**
  * @returns {string} IdsIcon component HTML used to define Module Nav icons (Module Nav Switcher/Accordion Header)
+ * @param {string} type the icon name/type
  */
-export const iconTemplate = (type) => `<svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+export const iconTemplate = type => `<svg class="icon" focusable="false" aria-hidden="true" role="presentation">
   <use href="#icon-${type}"></use>
 </svg>`;
 
 /**
  * @returns {string} Module Nav Separator element template
  */
-export const separatorTemplate = () => `<div class="module-nav-separator">&nbsp;</div>`;
+export const separatorTemplate = () => '<div class="module-nav-separator">&nbsp;</div>';
 
 /**
  * @param {string} val desired display mode
