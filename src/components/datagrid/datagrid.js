@@ -7222,6 +7222,7 @@ Datagrid.prototype = {
         e.stopPropagation();
       }
 
+      let colorPicker = $('#colorpicker-menu.is-open');
       if (!self.settings.dblClickApply) {
         /**
         * Fires after a row is clicked.
@@ -7297,6 +7298,10 @@ Datagrid.prototype = {
         return;
       }
 
+      if (colorPicker?.length === 1) {
+        colorPicker = null;
+        return; // color picker closes on cell re-click;
+      }
       const isEditable = self.makeCellEditable(self.activeCell.rowIndex, self.activeCell.cell, e);
 
       if (col.click && typeof col.click === 'function' && target.is('button, input[checkbox], a, a.search-mode i') || target.parent().is('button:not(.trigger)')) {
@@ -7367,7 +7372,7 @@ Datagrid.prototype = {
       }
 
       // Apply Quick Edit Mode
-      if (isEditable) {
+      if (isEditable && self.settings?.actionableMode) {
         setTimeout(() => {
           if ($('textarea, input', td).length &&
               (!$('.dropdown,' +
@@ -7377,7 +7382,7 @@ Datagrid.prototype = {
               '[type=submit],' +
               '[type=reset],' +
               '[type=checkbox],' +
-              '[type=radio]', td).length)) {
+                '[type=radio]', td).length)) {
             self.quickEditMode = true;
           }
         }, 0);
@@ -10159,7 +10164,7 @@ Datagrid.prototype = {
    */
   containsTextField(container) {
     const noTextTypes = ['image', 'button', 'submit', 'reset', 'checkbox', 'radio'];
-    let selector = 'textarea, input';
+    let selector = 'textarea, input:not(.colorpicker)';
     const l = noTextTypes.length;
     let i;
 
@@ -11831,7 +11836,7 @@ Datagrid.prototype = {
       self.activeCell = prevCell;
     }
 
-    if ((!$('input, select, button:not(.btn-secondary, .row-btn, .datagrid-expand-btn, .datagrid-drilldown, .btn-icon)', self.activeCell.node).length) || (self.activeCell.node.is('.has-btn-actions') && self.activeCell.node.find('.btn-actions').length)) {
+    if ((!$('input:not(.colorpicker), select, button:not(.btn-secondary, .row-btn, .datagrid-expand-btn, .datagrid-drilldown, .btn-icon)', self.activeCell.node).length) || (self.activeCell.node.is('.has-btn-actions') && self.activeCell.node.find('.btn-actions').length)) {
       self.activeCell.node.focus();
       if (isGroupRow) {
         self.activeCell.groupNode = self.activeCell.node;
