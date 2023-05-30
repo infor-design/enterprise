@@ -342,6 +342,32 @@ MaskInput.prototype = {
       finalValue += this.settings.patternOptions.suffix;
     }
 
+    if (this.settings.retainValue && posBegin < rawValue.length) {
+      if (this.settings.process === 'number') {
+        const pOpt = this.settings.patternOptions;
+        let numLength = pOpt.integerLimit;
+
+        if (pOpt.allowThousandsSeparator) {
+          const sepCount = pOpt.integerLimit - 3 <= 0 ? 0 : (pOpt.integerLimit - 3) / 3;
+          numLength += Math.floor(sepCount);
+        }
+
+        if (pOpt.allowDecimal && rawValue.includes(pOpt.symbols.decimal)) {
+          numLength += pOpt.decimalLimit + 1;
+        }
+
+        if (pOpt.allowNegative) {
+          numLength += 1;
+        }
+
+        if (rawValue.length > numLength) {
+          finalValue = this.currentValue;
+        }
+      } else if (rawValue.length > processed.placeholder.length) {
+        finalValue = this.currentValue;
+      }
+    }
+
     if (opts.patternOptions && opts.patternOptions.delimeter &&
       finalValue && finalValue !== rawValue) {
       rawValue = finalValue;
@@ -398,6 +424,7 @@ MaskInput.prototype = {
      * @param {string} finalValue the final, masked value
      */
     $(this.element).trigger('write.mask', [finalValue]);
+    this.currentValue = finalValue;
 
     // return event handler true/false
     return processed.maskResult;
