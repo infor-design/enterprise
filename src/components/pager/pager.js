@@ -269,8 +269,8 @@ Pager.prototype = {
     this.setup();
     this.createPagerBar();
     // Wait for the component tol render first before activation of page
+    this.setActivePage(this.settings.activePage, true); // Get First Page
     setTimeout(() => {
-      this.setActivePage(this.settings.activePage, true); // Get First Page
       this.triggerPagingEvents(this.settings.activePage);
     });
     this.handleEvents();
