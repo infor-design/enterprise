@@ -10,8 +10,6 @@ demo:
     slug: example-empty-widgets
   - name: Infor / SoHo Logos
     slug: example-logos
-  - name: Animated Pseudo Elements (Hamburger / Back) / SoHo Logos
-    slug: example-pseudo-elements
 ---
 
 ## SVG Icons Support

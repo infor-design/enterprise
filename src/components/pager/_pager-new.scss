@@ -19,18 +19,22 @@
     &.pager-last,
     &.pager-next {
       > .btn-icon {
+        border-radius: 8px;
         margin-top: -4px;
         min-width: 30px;
         width: 30px;
 
         .icon {
-          margin-top: -10px;
+          margin-top: -3px;
         }
       }
     }
 
     &.pager-no {
+      border-radius: 8px;
+
       > .btn-icon {
+        border-radius: 8px;
         margin-top: -4px;
 
         .icon {
@@ -94,27 +98,6 @@
         &.pager-no {
           > .btn-icon {
             margin-top: -4px;
-          }
-        }
-      }
-    }
-  }
-}
-
-.ie {
-  &.ie11 {
-    .pager-toolbar {
-      > li {
-        &.pager-prev,
-        &.pager-first,
-        &.pager-last,
-        &.pager-next {
-          > .btn-icon {
-            margin-top: 0;
-
-            .icon {
-              top: 0;
-            }
           }
         }
       }

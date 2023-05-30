@@ -273,9 +273,13 @@ a.is-personalizable svg.ripple-effect {
 
 .module-tabs.is-personalizable .tab.is-selected {
   background-color: ${colors.base} !important;
+  color: ${colors.moduleTabsSelectedTextColor} !important;
 }
 
-.module-tabs.is-personalizable .tab.is-selected,
+.module-tabs.is-personalizable .tab:not(.is-selected) {
+  background-color: ${colors.dark} !important;
+}
+
 .module-tabs.is-personalizable .tab {
   color: ${colors.contrast};
 }

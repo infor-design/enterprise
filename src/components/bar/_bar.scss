@@ -33,6 +33,16 @@
   }
 }
 
+.bar-chart {
+  .chart-legend {
+    margin-top: 0;
+
+    .chart-legend-color {
+      margin-bottom: 0;
+    }
+  }
+}
+
 // RTL Styles
 html[dir='rtl'] {
   .chart-container {

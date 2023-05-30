@@ -9,16 +9,26 @@
 
 ## v4.84.0 Fixes
 
+- `[Bar]` Added a setting called `defaultTickCount` (`5` as default) to automatically add ticks when there are no dataset values. ([#NG1463](https://github.com/infor-design/enterprise-ng/issues/1463))
 - `[Busy Indicator]` Updated colors for busy indicator. ([#7098](https://github.com/infor-design/enterprise/issues/7098))
 - `[Button]` Adjusted alignment for popupmenu icon buttons. ([#7408](https://github.com/infor-design/enterprise/issues/7408))
 - `[Charts]` Improved the positioning of chart legend. ([#7452](https://github.com/infor-design/enterprise/issues/7452))
 - `[Datagrid]` Fixed an issue where the table was not filling the entire datagrid container in firefox. ([#6956](https://github.com/infor-design/enterprise/issues/6956))
+- `[Datagrid]` Fixed a bug where the colorpicker editor could not be toggles. ([#7362](https://github.com/infor-design/enterprise/issues/7362))
 - `[Datagrid]` Clear `rowstatus` in tree node for clearRowError to work correctly. ([#6033](https://github.com/infor-design/enterprise/issues/6033))
+- `[Datagrid]` Fix an issue where `showColumn` was not functioning correctly with frozen columns. ([#7428](https://github.com/infor-design/enterprise/issues/7428))
+- `[Datagrid]` Changed `enterkeykhint` behavior for filtering to filter with the virtual keyboard on mobile devices. ([#1489](https://github.com/infor-design/enterprise/issues/1489))
 - `[Dropdown]` Fixed the visibility of dropdown palette icons in dark mode. ([#7431](https://github.com/infor-design/enterprise/issues/7431))
 - `[Dropdown]` Removed overflow none style for dropdown modal. ([#6033](https://github.com/infor-design/enterprise/issues/6033))
 - `[Header]` Fixed an issue where the header text was difficult to read due to color styles. ([#7466](https://github.com/infor-design/enterprise/issues/7466))
 - `[Locale]` Added Comma translate option for locale for generating lists. ([#5887](https://github.com/infor-design/enterprise/issues/5887))
 - `[Lookup]` Added undefined check for lookup values when updating grid. ([#7403](https://github.com/infor-design/enterprise/issues/7403))
+- `[Listview]` Fixed invisible button on hover. ([#7544](https://github.com/infor-design/enterprise/issues/7544))
+- `[Modal]` Fixed button alignment on modals. ([#7543](https://github.com/infor-design/enterprise/issues/7543))
+- `[Tabs/Module]` Fixed a bug the personalization color was the same as the tab color (again). ([#7516](https://github.com/infor-design/enterprise/issues/7516))
+- `[SearchField]` Fixed misaligned icons on toolbar search and pager buttons. ([#7527](https://github.com/infor-design/enterprise/issues/7527))
+- `[Textarea]` Fixed an issue where the textarea was throwing an error. ([#7536](https://github.com/infor-design/enterprise/issues/7536))
+- `[Toolbar]` Fixed x alignment on old toolbars. ([#7550](https://github.com/infor-design/enterprise/issues/7550))
 
 ## v4.83.0
 

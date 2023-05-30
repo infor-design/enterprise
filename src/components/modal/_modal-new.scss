@@ -15,16 +15,10 @@
   }
 }
 
-.modal:not(.about):not(.message):not(.contextual-action-panel) .modal-header {
-  svg.icon {
-    top: 6px;
-  }
-}
-
 .modal-content {
   > .btn-close {
     right: 11px;
-    top: 15px;
+    top: 12px;
   }
 }
 

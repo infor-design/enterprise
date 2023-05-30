@@ -403,6 +403,8 @@ $toolbar-standalone-border-color: $ids-color-palette-graphite-30;
 $toolbar-standalone-disabled-color: $ids-color-palette-graphite-40;
 $toolbar-separator-color: $ids-color-palette-graphite-30;
 $toolbar-btn-actions-hover-bg-color: $button-color-tertiary-hover-background-new;
+$toolbar-contextual-button-hover-bg-color: rgba(0, 0, 0, .3);
+$toolbar-contextual-button-color: $ids-color-palette-white;
 
 // Field Filter
 $fieldfilter-border-side-color: transparent;
@@ -410,7 +412,7 @@ $fieldfilter-border-side-color: transparent;
 // Formatter Toolbar
 $formatter-toolbar-separator-color: $ids-color-brand-secondary-alt;
 
-//Contextual Toolbar
+// Contextual Toolbar
 $contextual-toolbar-bg-color: $ids-color-brand-primary-base;
 $contextual-toolbar-color: $button-color-primary-initial-font;
 $contextual-toolbar-button-color: rgba($button-color-primary-initial-font, 0.8);
