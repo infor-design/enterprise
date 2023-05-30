@@ -39,6 +39,11 @@
         color: inherit;
         width: $module-nav-item-dropdown-icon-size;
       }
+
+      &:focus:not(.hide-focus) {
+        border-color: $module-nav-item-selected-text-color;
+        box-shadow: none;
+      }
     }
 
     > a,
@@ -52,16 +57,18 @@
 
     .icon {
       top: -2px;
-
-      &.chevron {
-        &.active {
-          top: -2px;
-        }
-      }
     }
 
     .btn {
       top: 0;
+
+      > .icon.chevron {
+        top: -1px;
+
+        &.active {
+          top: -2px;
+        }
+      }
     }
 
     &.is-focused {
