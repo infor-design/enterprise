@@ -148,8 +148,7 @@
 
       // Selected state only exists on Paneled accordions.
       &.is-selected,
-      &.is-selected:hover,
-      &.is-selected.is-focused {
+      &.is-selected:hover {
         background-color: $accordion-selected-bg-color;
         color: $accordion-selected-text-color;
 
@@ -824,17 +823,18 @@
     }
 
     &.is-selected,
-    &.is-selected:hover,
-    &.is-focused.is-selected {
+    &.is-selected:hover {
+      color: $accordion-selected-text-color;
+
       &.list-item {
         &::before {
-          color: $accordion-selected-text-color !important;
+          color: inherit;
         }
       }
     }
 
     &.is-disabled {
-      background-color: $accordion-disabled-pane-bg-color !important;
+      background-color: $accordion-disabled-pane-bg-color;
     }
 
     // Subheaders can now have chevrons as of v4.23.x

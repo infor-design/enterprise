@@ -6,26 +6,26 @@
 
 @mixin left-align-cascade-styles-header($a-padding, $icon-margin, $width, $li-padding) {
   > a {
-    padding-left: $a-padding;
+    padding-inline-start: $a-padding;
   }
 
   > .icon,
   > [class^='btn'] {
-    margin-left: $icon-margin;
+    margin-inline-start: $icon-margin;
 
     + a {
-      padding-left: 0;
+      padding-inline-start: 0;
       width: calc(100% - #{$width});
     }
   }
 
   &.list-item {
     &::before {
-      padding-left: $li-padding;
+      padding-inline-start: $li-padding;
     }
 
     a {
-      padding-left: 0;
+      padding-inline-start: 0;
       width: calc(100% - #{$width});
     }
   }
@@ -33,16 +33,16 @@
 
 @mixin left-align-cascade-styles-pane($leftPadding, $iconLinkPadding, $iconContentPadding) {
   .accordion-content {
-    padding-left: $leftPadding;
+    padding-inline-start: $leftPadding;
   }
 
   &.has-icons {
     .accordion-header.no-icon > a {
-      padding-left: $iconLinkPadding;
+      padding-inline-start: $iconLinkPadding;
     }
 
     .accordion-content {
-      padding-left: $iconContentPadding;
+      padding-inline-start: $iconContentPadding;
     }
   }
 }
@@ -52,29 +52,29 @@
 
 @mixin right-align-cascade-styles-header($a-padding, $icon-margin, $width, $li-padding) {
   > a {
-    padding-left: 0;
-    padding-right: $a-padding;
+    padding-inline-start: 0;
+    padding-inline-end: $a-padding;
   }
 
   > .icon,
   > [class^='btn'] {
-    margin-left: auto;
-    margin-right: $icon-margin;
+    margin-inline-start: auto;
+    margin-inline-end: $icon-margin;
 
     + a {
-      padding-right: 0;
+      padding-inline-end: 0;
       width: calc(100% - #{$width});
     }
   }
 
   &.list-item {
     &::before {
-      padding-left: 0;
-      padding-right: $li-padding;
+      padding-inline-start: 0;
+      padding-inline-end: $li-padding;
     }
 
     a {
-      padding-right: 0;
+      padding-inline-end: 0;
       width: calc(100% - #{$width});
     }
   }
@@ -82,19 +82,19 @@
 
 @mixin right-align-cascade-styles-pane($rightPadding, $iconLinkPadding, $iconContentPadding) {
   .accordion-content {
-    padding-left: 0;
-    padding-right: $rightPadding;
+    padding-inline-start: 0;
+    padding-inline-end: $rightPadding;
   }
 
   &.has-icons {
     .accordion-header.no-icon > a {
-      padding-left: 0;
-      padding-right: $iconLinkPadding;
+      padding-inline-start: 0;
+      padding-inline-end: $iconLinkPadding;
     }
 
     .accordion-content {
-      padding-left: 0;
-      padding-right: $iconContentPadding;
+      padding-inline-start: 0;
+      padding-inline-end: $iconContentPadding;
     }
   }
 }

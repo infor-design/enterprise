@@ -51,10 +51,6 @@
       color: inherit;
     }
 
-    > a {
-      padding-block: 11px;
-    }
-
     .icon {
       top: -2px;
     }
@@ -122,6 +118,15 @@
         &:focus:not(.hide-focus) {
           border-color: $module-nav-item-selected-text-color;
         }
+
+        .icon {
+          &.plus-minus {
+            &::before,
+            &::after {
+              background-color: $module-nav-item-selected-text-color;
+            }
+          }
+        }
       }
 
       > a,
@@ -162,8 +167,6 @@
 
       > a {
         @include font-size(14);
-
-        padding: 13px 0 11px 20px;
       }
 
       &:last-child {
@@ -195,28 +198,82 @@
         border-top-color: transparent;
       }
     }
+  }
 
-    // No support for 3+ layers
-    // @TODO: Build further support for this in the styles
-    .accordion-pane {
-      display: none;
-      pointer-events: none;
+  // Module Nav Accordion Alignment-only rules (all alignments)
+  // =================================================== //
+
+  .accordion-header {
+    > a {
+      padding-block: 11px;
+    }
+
+    &.has-chevron {
+      > a {
+        width: calc(100% - 43px);
+      }
     }
   }
 
-  // Module Nav Accordion Alignment-only rules
-  // =================================================== //
+  .accordion-pane {
+    .accordion-header {
+      height: $module-nav-item-height;
+
+      > a {
+        padding-block-start: 13px;
+      }
+
+      &.list-item {
+        &::before {
+          padding-block-start: 4px;
+          padding-block-end: 8px;
+          padding-inline-start: 16px;
+          padding-inline-end: 5px;
+        }
+      }
+    }
+  }
 
   /*
-  &:not(.has-icons) {
-
-  }
+  @TODO Discuss styles for top level navigation with no icons
   */
+  // Module Nav Accordion Alignment-only rules (no top-level icons)
+  // =================================================== //
+
+  &:not(.has-icons) {
+    .accordion-header {
+      > a {
+        padding-block-start: 13px;
+        padding-inline-start: 13px;
+      }
+    }
+
+    .accordion-pane {
+      .accordion-header {
+        > [class^='btn'] {
+          margin-inline-start: 9px;
+        }
+
+        &.no-icon {
+          > a {
+            padding-inline-start: 44px;
+          }
+        }
+      }
+    }
+  }
+
+  // Module Nav Accordion Alignment-only rules (has top-level icons)
+  // =================================================== //
 
   &.has-icons {
     // 2nd-level Accordion Headers
     .accordion-pane {
       .accordion-header {
+        > a {
+          padding-inline-start: 20px;
+        }
+
         &.no-icon {
           > a {
             padding-inline-start: 49px;
