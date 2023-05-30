@@ -11,6 +11,8 @@ require('../../../src/components/locale/cultures/ar-EG.js');
 require('../../../src/components/locale/cultures/ar-SA.js');
 require('../../../src/components/locale/cultures/da-DK.js');
 require('../../../src/components/locale/cultures/en-US.js');
+require('../../../src/components/module-nav/module-nav.settings.jquery.js');
+require('../../../src/components/module-nav/module-nav.switcher.jquery.js');
 
 // Bare-minimum Module Nav HTML
 const moduleNavHTML = `<section class="module-nav-container">
