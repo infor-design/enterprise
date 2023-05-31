@@ -2150,7 +2150,6 @@ describe('Locale API', () => {
     expect(Locale.translate('testing')).toEqual('this is a test fr-CA');
   });
 
-
   it('should be able to set language to full code', () => {
     Locale.set('en-US');
     Locale.setLanguage('fr-CA');
