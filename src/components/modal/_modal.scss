@@ -773,3 +773,10 @@ html[dir='rtl'] {
     }
   }
 }
+
+@media all and (orientation: landscape) {
+  .modal-content .modal-body-wrapper {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+}
