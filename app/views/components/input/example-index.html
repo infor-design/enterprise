@@ -24,12 +24,12 @@
 
     <div class="field">
       <label for="number">Number</label>
-      <input type="text" id="number" data-automation-id="number" name="number" inputmode="numeric" placeholder="0.00" data-mask data-options='{ "pattern" : "###.00", "mode": "number" }' />
+      <input type="text" id="number" data-automation-id="number" name="number" inputmode="numeric" placeholder="0.00" data-mask data-options='{ "pattern" : "###,###.0000", "mode": "number" }' />
     </div>
 
     <div class="field">
       <label for="number">Number - Retain Value</label>
-      <input type="text" id="number-retain" data-automation-id="number-retain" name="number-retain" inputmode="numeric" placeholder="0.00" data-mask data-options='{ "pattern" : "###.00", "mode": "number", retainValue: true }' />
+      <input type="text" id="number-retain" data-automation-id="number-retain" name="number-retain" inputmode="numeric" placeholder="0.00" data-mask data-options='{ "pattern" : "###,###.0000", "mode": "number", useInsert: true }' />
     </div>
 
     <div class="field is-disabled">

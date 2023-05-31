@@ -193,6 +193,15 @@ MaskInput.prototype = {
     };
     this.element.addEventListener('focus', this.focusEventHandler);
 
+    // ELEPHANT
+    // // the other option for the insert thing?
+    // this.element.addEventListener('keypress', () => {
+    //   const s = this.element.selectionStart;
+    //   // need to add check for the mask symbols present
+    //   this.element.value = this.element.value.slice(0, s) + this.element.value.slice(s + 1);
+    //   this.element.selectionEnd = s;
+    // });
+
     // Handle all masking on the `input` event
     this.inputEventHandler = function (e) {
       self.hasTriggeredChangeEvent = false;
@@ -301,6 +310,47 @@ MaskInput.prototype = {
       posEnd = rawValue.length;
     }
 
+    if (this.settings.useInsert && posBegin < rawValue.length) {
+      let overwrite = false;
+      const pOpt = this.settings.patternOptions;
+
+      if (this.settings.process === 'number') {
+        let numLength = pOpt.integerLimit;
+
+        if (pOpt.allowThousandsSeparator) {
+          const sepCount = pOpt.integerLimit - 3 <= 0 ? 0 : (pOpt.integerLimit - 3) / 3;
+          numLength += Math.floor(sepCount);
+        }
+
+        if (pOpt.allowDecimal && rawValue.includes(pOpt.symbols.decimal)) {
+          numLength += pOpt.decimalLimit + 1;
+        }
+
+        if (pOpt.allowNegative) {
+          numLength += 1;
+        }
+
+        if (rawValue.length > numLength) {
+          overwrite = true;
+        }
+      } else if (typeof this.settings.pattern === 'string' && rawValue.length > this.settings.pattern.length) {
+        overwrite = true;
+      } else if (this.settings.state && rawValue.length > this.settings.state.previousPlaceholder.length) {
+        overwrite = true;
+      }
+
+      if (overwrite) {
+        if (/^[!@#$%^&*()_+\-=\\[\]{};':"\\|,.<>\\/?]*$/.test(rawValue.charAt(posBegin))) {
+          rawValue = rawValue.slice(0, posBegin - 1) + rawValue.charAt(posBegin) +
+            rawValue.charAt(posBegin - 1) + rawValue.slice(posBegin + 2);
+          posBegin++;
+          posEnd++;
+        } else {
+          rawValue = rawValue.slice(0, posBegin) + rawValue.slice(posBegin + 1);
+        }
+      }
+    }
+
     // Attempt to make the raw value safe to use.  If it's not in a viable format
     // this will throw an error.
     rawValue = this._getSafeRawValue(rawValue);
@@ -340,32 +390,6 @@ MaskInput.prototype = {
     let finalValue = processed.pipedValue ? processed.pipedValue : processed.conformedValue;
     if (finalValue !== '' && patternOptions && patternOptions.suffix && finalValue.indexOf(patternOptions.suffix) < 0) {
       finalValue += this.settings.patternOptions.suffix;
-    }
-
-    if (this.settings.retainValue && posBegin < rawValue.length) {
-      if (this.settings.process === 'number') {
-        const pOpt = this.settings.patternOptions;
-        let numLength = pOpt.integerLimit;
-
-        if (pOpt.allowThousandsSeparator) {
-          const sepCount = pOpt.integerLimit - 3 <= 0 ? 0 : (pOpt.integerLimit - 3) / 3;
-          numLength += Math.floor(sepCount);
-        }
-
-        if (pOpt.allowDecimal && rawValue.includes(pOpt.symbols.decimal)) {
-          numLength += pOpt.decimalLimit + 1;
-        }
-
-        if (pOpt.allowNegative) {
-          numLength += 1;
-        }
-
-        if (rawValue.length > numLength) {
-          finalValue = this.currentValue;
-        }
-      } else if (rawValue.length > processed.placeholder.length) {
-        finalValue = this.currentValue;
-      }
     }
 
     if (opts.patternOptions && opts.patternOptions.delimeter &&
