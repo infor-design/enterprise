@@ -19,7 +19,7 @@
 - `[Datagrid]` Changed `enterkeykhint` behavior for filtering to filter with the virtual keyboard on mobile devices. ([#1489](https://github.com/infor-design/enterprise/issues/1489))
 - `[Dropdown]` Fixed the visibility of dropdown palette icons in dark mode. ([#7431](https://github.com/infor-design/enterprise/issues/7431))
 - `[Dropdown]` Removed overflow none style for dropdown modal. ([#6033](https://github.com/infor-design/enterprise/issues/6033))
-- `[Dropdown]` Fixed editor hover styles. ([#7535](https://github.com/infor-design/enterprise/issues/7535))
+- `[Editor]` Fixed editor hover styles. ([#7535](https://github.com/infor-design/enterprise/issues/7535))
 - `[Header]` Fixed on header text not being readable due to color styles. ([#7466](https://github.com/infor-design/enterprise/issues/7466))
 - `[Locale]` Added Comma translate option for locale for generating lists. ([#5887](https://github.com/infor-design/enterprise/issues/5887))
 - `[Lookup]` Added undefined check for lookup values when updating grid. ([#7403](https://github.com/infor-design/enterprise/issues/7403))
