@@ -193,15 +193,6 @@ MaskInput.prototype = {
     };
     this.element.addEventListener('focus', this.focusEventHandler);
 
-    // ELEPHANT
-    // // the other option for the insert thing?
-    // this.element.addEventListener('keypress', () => {
-    //   const s = this.element.selectionStart;
-    //   // need to add check for the mask symbols present
-    //   this.element.value = this.element.value.slice(0, s) + this.element.value.slice(s + 1);
-    //   this.element.selectionEnd = s;
-    // });
-
     // Handle all masking on the `input` event
     this.inputEventHandler = function (e) {
       self.hasTriggeredChangeEvent = false;
@@ -448,7 +439,6 @@ MaskInput.prototype = {
      * @param {string} finalValue the final, masked value
      */
     $(this.element).trigger('write.mask', [finalValue]);
-    this.currentValue = finalValue;
 
     // return event handler true/false
     return processed.maskResult;
