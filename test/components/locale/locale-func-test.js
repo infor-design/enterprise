@@ -2128,16 +2128,28 @@ describe('Locale API', () => {
     Locale.set('fr-FR');
 
     expect(Locale.currentLocale.name).toEqual('fr-FR');
-    expect(Locale.currentLanguage.name).toEqual('fr');
+    expect(Locale.currentLanguage.name).toEqual('fr-FR');
 
     expect(Locale.translate('From')).toEqual('Début');
 
     Locale.set('fr-CA');
 
     expect(Locale.currentLocale.name).toEqual('fr-CA');
-    expect(Locale.currentLanguage.name).toEqual('fr');
+    expect(Locale.currentLanguage.name).toEqual('fr-CA');
     expect(Locale.translate('From')).toEqual('De');
   });
+
+  it('should be able to extend fr-CA and fr-FR', () => {
+    Locale.set('fr-FR');
+    Locale.extendTranslations('fr', { testing: { id: 'testing', value: 'this is a test 1' } });
+    Locale.extendTranslations('fr-FR', { testing: { id: 'testing', value: 'this is a test 2' } });
+    expect(Locale.translate('testing')).toEqual('this is a test 2');
+
+    Locale.set('fr-CA');
+    Locale.extendTranslations('fr-CA', { testing: { id: 'testing', value: 'this is a test fr-CA' } });
+    expect(Locale.translate('testing')).toEqual('this is a test fr-CA');
+  });
+
 
   it('should be able to set language to full code', () => {
     Locale.set('en-US');

@@ -803,7 +803,7 @@ Dropdown.prototype = {
     const showSelectAll = this.settings.showSelectAll === true;
     const headerText = {
       all: Locale.translate('All'),
-      selected: Locale.translate('Selected'),
+      selected: Locale.translate('Selection'),
       labelText: self.isInlineLabel ? self.inlineLabelText.text() : this.label.text()
     };
     headerText.all = (typeof s.allTextString === 'string' && s.allTextString !== '') ?
