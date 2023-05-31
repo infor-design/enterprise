@@ -1,10 +1,28 @@
 // Accordion Mixins
 //================================================== //
 
+@mixin reset-padding-start-rule($size, $reset-padding: 'false', $reset-size: 0) {
+  @if $reset-padding =='true' {
+    padding-inline-start: $reset-size;
+  }
+  @else {
+    padding-inline-start: $size;
+  }
+}
+
+@mixin reset-padding-end-rule($size, $reset-padding: 'false', $reset-size: 0) {
+  @if $reset-padding =='true' {
+    padding-inline-end: $reset-size;
+  }
+  @else {
+    padding-inline-end: $size;
+  }
+}
+
 // Left-to-Right
 //================================================== //
 
-@mixin left-align-cascade-styles-header($a-padding, $icon-margin, $width, $li-padding) {
+@mixin left-align-cascade-styles-header($a-padding, $icon-margin, $width, $li-padding, $reset-padding: 'true', $reset-size: 0) {
   > a {
     padding-inline-start: $a-padding;
   }
@@ -14,18 +32,18 @@
     margin-inline-start: $icon-margin;
 
     + a {
-      padding-inline-start: 0;
+      @include reset-padding-start-rule($li-padding, $reset-padding, $reset-size);
       width: calc(100% - #{$width});
     }
   }
 
   &.list-item {
     &::before {
-      padding-inline-start: $li-padding;
+      @include reset-padding-start-rule($li-padding);
     }
 
     a {
-      padding-inline-start: 0;
+      @include reset-padding-start-rule($li-padding, $reset-padding, $reset-size);
       width: calc(100% - #{$width});
     }
   }
@@ -50,7 +68,7 @@
 // Right-To-Left
 //================================================== //
 
-@mixin right-align-cascade-styles-header($a-padding, $icon-margin, $width, $li-padding) {
+@mixin right-align-cascade-styles-header($a-padding, $icon-margin, $width, $li-padding, $reset-padding: 'true', $reset-size: 0) {
   > a {
     padding-inline-start: 0;
     padding-inline-end: $a-padding;
@@ -62,7 +80,7 @@
     margin-inline-end: $icon-margin;
 
     + a {
-      padding-inline-end: 0;
+      @include reset-padding-end-rule($li-padding, $reset-padding, $reset-size);
       width: calc(100% - #{$width});
     }
   }
@@ -70,11 +88,11 @@
   &.list-item {
     &::before {
       padding-inline-start: 0;
-      padding-inline-end: $li-padding;
+      @include reset-padding-end-rule($li-padding);
     }
 
     a {
-      padding-inline-end: 0;
+      @include reset-padding-end-rule($li-padding, $reset-padding, $reset-size);
       width: calc(100% - #{$width});
     }
   }

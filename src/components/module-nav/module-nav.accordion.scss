@@ -147,13 +147,6 @@
         color: inherit;
       }
     }
-
-    // Fix padding/margin for current size
-    &.has-chevron {
-      > .icon + a {
-        width: calc(100% - 90px);
-      }
-    }
   }
 
   // Module Nav Accordion Pane
@@ -196,89 +189,6 @@
     &.is-expanded {
       + .accordion-header {
         border-top-color: transparent;
-      }
-    }
-  }
-
-  // Module Nav Accordion Alignment-only rules (all alignments)
-  // =================================================== //
-
-  .accordion-header {
-    > a {
-      padding-block: 11px;
-    }
-
-    &.has-chevron {
-      > a {
-        width: calc(100% - 43px);
-      }
-    }
-  }
-
-  .accordion-pane {
-    .accordion-header {
-      height: $module-nav-item-height;
-
-      > a {
-        padding-block-start: 13px;
-      }
-
-      &.list-item {
-        &::before {
-          padding-block-start: 4px;
-          padding-block-end: 8px;
-          padding-inline-start: 16px;
-          padding-inline-end: 5px;
-        }
-      }
-    }
-  }
-
-  /*
-  @TODO Discuss styles for top level navigation with no icons
-  */
-  // Module Nav Accordion Alignment-only rules (no top-level icons)
-  // =================================================== //
-
-  &:not(.has-icons) {
-    .accordion-header {
-      > a {
-        padding-block-start: 13px;
-        padding-inline-start: 13px;
-      }
-    }
-
-    .accordion-pane {
-      .accordion-header {
-        > [class^='btn'] {
-          margin-inline-start: 9px;
-        }
-
-        &.no-icon {
-          > a {
-            padding-inline-start: 44px;
-          }
-        }
-      }
-    }
-  }
-
-  // Module Nav Accordion Alignment-only rules (has top-level icons)
-  // =================================================== //
-
-  &.has-icons {
-    // 2nd-level Accordion Headers
-    .accordion-pane {
-      .accordion-header {
-        > a {
-          padding-inline-start: 20px;
-        }
-
-        &.no-icon {
-          > a {
-            padding-inline-start: 49px;
-          }
-        }
       }
     }
   }
@@ -342,16 +252,196 @@
 
 .module-nav-container {
   &.mode-expanded {
-    .accordion-header {
-      height: $module-nav-item-height;
+    .accordion {
 
-      &:not(:last-child) {
-        margin-block-end: $module-nav-accordion-gutter-size;
+      // Module Nav Accordion Alignment-only rules
+      // These rules apply to both "collapsed" and "expanded" display modes
+      // =================================================== //
+
+      .accordion-header {
+        height: $module-nav-item-height;
+
+        > a {
+          padding-block: 11px;
+        }
+
+        &:not(:last-child) {
+          margin-block-end: $module-nav-accordion-gutter-size;
+        }
+
+        > .icon {
+          margin-inline-end: $module-nav-item-icon-end-spacing;
+          margin-inline-start: $module-nav-item-icon-start-spacing;
+        }
       }
 
-      > .icon {
-        margin-inline-end: $module-nav-item-icon-end-spacing;
-        margin-inline-start: $module-nav-item-icon-start-spacing;
+      .accordion-pane {
+        .accordion-header {
+          height: $module-nav-item-height;
+
+          > a {
+            padding-block-start: 13px;
+          }
+
+          &.list-item {
+            &::before {
+              padding-inline-start: 16px;
+            }
+          }
+        }
+      }
+
+      /*
+        @TODO Discuss styles for top level navigation with no icons
+        */
+      // Module Nav Accordion Alignment-only rules
+      // (the container detected NO top-level accordion header icons)
+      // =================================================== //
+
+      &:not(.has-icons) {
+
+        // 1st-level Accordion Headers
+        .accordion-header {
+          @include left-align-cascade-styles-header(13px, 9px, 51px, 16px, 'true', 16px);
+
+          &.has-chevron {
+            > a {
+              width: calc(100% - 51px);
+            }
+          }
+        }
+
+        // 1st-level Accordion Panes
+        .accordion-pane {
+          @include left-align-cascade-styles-pane(13px, 47px, 47px);
+
+          // 2nd-level Accordion Headers
+          .accordion-header {
+            @include left-align-cascade-styles-header(13px, 9px, 51px, 16px, 'true', 16px);
+          }
+
+          // 2nd-level Accordion Panes
+          .accordion-pane {
+            @include left-align-cascade-styles-pane(48px, 80px, 80px);
+
+            // 3rd-level Accordion Headers
+            .accordion-header {
+              @include left-align-cascade-styles-header(55px, 41px, 66px, 48px, 'true', 16px);
+            }
+
+            // 3rd-level Accordion Panes
+            .accordion-pane {
+              @include left-align-cascade-styles-pane(81px, 113px, 113px);
+
+              // 4th-level Accordion Headers
+              .accordion-header {
+                @include left-align-cascade-styles-header(80px, 73px, 98px, 80px, 'true', 16px);
+              }
+
+              // 4th-level Accordion Panes
+              .accordion-pane {
+                @include left-align-cascade-styles-pane(117px, 144px, 144px);
+
+                // 5th-level Accordion Headers
+                .accordion-header {
+                  @include left-align-cascade-styles-header(115px, 106px, 130px, 112px, 'true', 16px);
+                }
+
+                // 5th-level Accordion Panes
+                .accordion-pane {
+                  @include left-align-cascade-styles-pane(153px, 177px, 177px);
+
+                  // 6th-level Accordion Headers
+                  .accordion-header {
+                    @include left-align-cascade-styles-header(151px, 138px, 162px, 144px, 'true', 16px);
+                  }
+
+                  // 6th-level Accordion Pane
+                  .accordion-pane {
+                    .accordion-content {
+                      padding-inline-start: 177px;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      // Module Nav Accordion Alignment-only rules
+      // (the container detected top-level accordion header icons)
+      // =================================================== //
+
+      &.has-icons {
+
+        // 1st-level Accordion Headers
+        .accordion-header {
+          @include left-align-cascade-styles-header(49px, 9px, 97px, 16px, 'true', 2px);
+
+          &.has-chevron {
+            > a:first-child {
+              width: calc(100% - 50px);
+            }
+          }
+        }
+
+        // 1st-level Accordion Panes
+        .accordion-pane {
+          @include left-align-cascade-styles-pane(13px, 49px, 49px);
+
+          // 2nd-level Accordion Headers
+          .accordion-header {
+            @include left-align-cascade-styles-header(47px, 9px, 97px, 16px, 'true', 16px);
+          }
+
+          // 2nd-level Accordion Panes
+          .accordion-pane {
+            @include left-align-cascade-styles-pane(48px, 80px, 80px);
+
+            // 3rd-level Accordion Headers
+            .accordion-header {
+              @include left-align-cascade-styles-header(55px, 41px, 66px, 48px, 'true', 16px);
+            }
+
+            // 3rd-level Accordion Panes
+            .accordion-pane {
+              @include left-align-cascade-styles-pane(81px, 113px, 113px);
+
+              // 4th-level Accordion Headers
+              .accordion-header {
+                @include left-align-cascade-styles-header(80px, 73px, 98px, 80px, 'true', 16px);
+              }
+
+              // 4th-level Accordion Panes
+              .accordion-pane {
+                @include left-align-cascade-styles-pane(117px, 144px, 144px);
+
+                // 5th-level Accordion Headers
+                .accordion-header {
+                  @include left-align-cascade-styles-header(115px, 106px, 130px, 112px, 'true', 16px);
+                }
+
+                // 5th-level Accordion Panes
+                .accordion-pane {
+                  @include left-align-cascade-styles-pane(153px, 177px, 177px);
+
+                  // 6th-level Accordion Headers
+                  .accordion-header {
+                    @include left-align-cascade-styles-header(151px, 138px, 162px, 144px, 'true', 16px);
+                  }
+
+                  // 6th-level Accordion Pane
+                  .accordion-pane {
+                    .accordion-content {
+                      padding-inline-start: 177px;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
