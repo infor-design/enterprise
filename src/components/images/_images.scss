@@ -111,6 +111,10 @@ $images-size: (
   }
 }
 
+.actionable {
+  cursor: pointer;
+}
+
 // Print Support
 @media print {
   .image-initials {
