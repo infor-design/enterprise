@@ -313,7 +313,7 @@
 
         // 1st-level Accordion Panes
         .accordion-pane {
-          @include left-align-cascade-styles-pane(13px, 47px, 47px);
+          @include left-align-cascade-styles-pane(13px, 49px, 47px);
 
           // 2nd-level Accordion Headers
           .accordion-header {
@@ -322,7 +322,7 @@
 
           // 2nd-level Accordion Panes
           .accordion-pane {
-            @include left-align-cascade-styles-pane(48px, 80px, 80px);
+            @include left-align-cascade-styles-pane(48px, 82px, 80px);
 
             // 3rd-level Accordion Headers
             .accordion-header {
@@ -331,7 +331,7 @@
 
             // 3rd-level Accordion Panes
             .accordion-pane {
-              @include left-align-cascade-styles-pane(81px, 113px, 113px);
+              @include left-align-cascade-styles-pane(81px, 115px, 113px);
 
               // 4th-level Accordion Headers
               .accordion-header {
@@ -340,7 +340,7 @@
 
               // 4th-level Accordion Panes
               .accordion-pane {
-                @include left-align-cascade-styles-pane(117px, 144px, 144px);
+                @include left-align-cascade-styles-pane(117px, 146px, 144px);
 
                 // 5th-level Accordion Headers
                 .accordion-header {
@@ -349,7 +349,7 @@
 
                 // 5th-level Accordion Panes
                 .accordion-pane {
-                  @include left-align-cascade-styles-pane(153px, 177px, 177px);
+                  @include left-align-cascade-styles-pane(153px, 179px, 177px);
 
                   // 6th-level Accordion Headers
                   .accordion-header {
