@@ -118,10 +118,14 @@ PopupMenu.prototype = {
   },
 
   /**
-   * @returns {string} containing the ID of the menu
+   * @returns {string | undefined} containing the ID of the menu
    */
   get idString() {
-    return this.id ? `popupmenu-${this.id}` : undefined;
+    if (this.id) {
+      if (this.id.charAt(0).match(/\d/)) return `popupmenu-${this.id}`;
+      return `${this.id}`;
+    }
+    return undefined;
   },
 
   /**
@@ -151,13 +155,14 @@ PopupMenu.prototype = {
    * @returns {void}
    */
   setup() {
-    if (this.element.attr('data-popupmenu') && !this.settings.menu) {
-      this.settings.menu = this.element.attr('data-popupmenu').replace(/#/g, '');
+    if (this.element[0].getAttribute('data-popupmenu') && !this.settings.menu) {
+      this.settings.menu = this.element[0].getAttribute('data-popupmenu').replace(/#/g, '');
     }
     // Backwards compatibility for "menuId" menu options coming from other controls
     // that utilize the Popupmenu.
     if (this.settings.menuId) {
       this.settings.menu = this.settings.menuId;
+      this.id = this.settings.menuId;
       this.settings.menuId = undefined;
     }
 
@@ -226,7 +231,7 @@ PopupMenu.prototype = {
     if (!this.menu || !this.menu.length) {
       switch (typeof this.settings.menu) {
         case 'string': // ID Selector
-          id = this.idString || this.settings.menu;
+          id = this.settings.menu || this.idString;
           this.menu = $(`#${id}`);
 
           // duplicate menu if shared by multiple triggers
