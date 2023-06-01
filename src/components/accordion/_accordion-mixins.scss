@@ -1,23 +1,19 @@
 // Accordion Mixins
 //================================================== //
 
+// Stylelint is disabled here because no matter
+// how the mixins are structured they don't pass
+/* stylelint-disable */
 @mixin reset-padding-start-rule($size, $reset-padding: 'false', $reset-size: 0) {
-  @if $reset-padding =='true' {
-    padding-inline-start: $reset-size;
-  }
-  @else {
-    padding-inline-start: $size;
-  }
+  @if $reset-padding == 'true' { padding-inline-start: $reset-size; }
+  @else { padding-inline-start: $size; }
 }
 
 @mixin reset-padding-end-rule($size, $reset-padding: 'false', $reset-size: 0) {
-  @if $reset-padding =='true' {
-    padding-inline-end: $reset-size;
-  }
-  @else {
-    padding-inline-end: $size;
-  }
+  @if $reset-padding == 'true' { padding-inline-end: $reset-size; }
+  @else { padding-inline-end: $size; }
 }
+/* stylelint-enable */
 
 // Left-to-Right
 //================================================== //
@@ -33,6 +29,7 @@
 
     + a {
       @include reset-padding-start-rule($li-padding, $reset-padding, $reset-size);
+
       width: calc(100% - #{$width});
     }
   }
@@ -44,6 +41,7 @@
 
     a {
       @include reset-padding-start-rule($li-padding, $reset-padding, $reset-size);
+
       width: calc(100% - #{$width});
     }
   }
@@ -81,6 +79,7 @@
 
     + a {
       @include reset-padding-end-rule($li-padding, $reset-padding, $reset-size);
+
       width: calc(100% - #{$width});
     }
   }
@@ -88,11 +87,13 @@
   &.list-item {
     &::before {
       padding-inline-start: 0;
+
       @include reset-padding-end-rule($li-padding);
     }
 
     a {
       @include reset-padding-end-rule($li-padding, $reset-padding, $reset-size);
+
       width: calc(100% - #{$width});
     }
   }

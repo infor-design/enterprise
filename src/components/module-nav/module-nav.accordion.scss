@@ -253,7 +253,6 @@
 .module-nav-container {
   &.mode-expanded {
     .accordion {
-
       // Module Nav Accordion Alignment-only rules
       // These rules apply to both "collapsed" and "expanded" display modes
       // =================================================== //
@@ -299,7 +298,6 @@
       // =================================================== //
 
       &:not(.has-icons) {
-
         // 1st-level Accordion Headers
         .accordion-header {
           @include left-align-cascade-styles-header(13px, 9px, 51px, 16px, 'true', 16px);
@@ -374,7 +372,6 @@
       // =================================================== //
 
       &.has-icons {
-
         // 1st-level Accordion Headers
         .accordion-header {
           @include left-align-cascade-styles-header(49px, 9px, 97px, 16px, 'true', 2px);
