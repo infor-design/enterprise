@@ -466,7 +466,6 @@ body.modal-engaged {
   }
 
   .modal-body-wrapper {
-    overflow: auto;
     padding: 32px 16px;
 
     .field:not(.label-left).last-child {
@@ -754,5 +753,12 @@ html[dir='rtl'] {
       left: 10px;
       right: auto;
     }
+  }
+}
+
+@media all and (orientation: landscape) {
+  .modal-content .modal-body-wrapper {
+    overflow-x: hidden;
+    overflow-y: auto;
   }
 }
