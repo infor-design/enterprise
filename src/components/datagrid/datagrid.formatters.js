@@ -583,7 +583,7 @@ const formatters = {
   },
 
   Image(row, cell, value, col) {
-    return `<img class="datagrid-img" src="${value}" alt="${(col.alt ? col.alt : Locale.translate('Image'))}"${(col.dimensions ? ` style="height:${col.dimensions.height};width:${col.dimensions.height}"` : '')}/>`;
+    return `<img class="${ col.click ? 'datagrid-img actionable' : 'datagrid-img'}" src="${value}" alt="${(col.alt ? col.alt : Locale.translate('Image'))}"${(col.dimensions ? ` style="height:${col.dimensions.height};width:${col.dimensions.height}"` : '')}/>`;
   },
 
   Color(row, cell, value, col) {

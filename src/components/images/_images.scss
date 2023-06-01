@@ -113,6 +113,9 @@ $images-size: (
 
 .actionable {
   cursor: pointer;
+  &.datagrid-img {
+    margin: auto;
+  }
 }
 
 // Print Support
