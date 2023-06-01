@@ -291,8 +291,8 @@
       }
 
       /*
-        @TODO Discuss styles for top level navigation with no icons
-        */
+      @TODO Discuss styles for top level navigation with no icons
+      */
       // Module Nav Accordion Alignment-only rules
       // (the container detected NO top-level accordion header icons)
       // =================================================== //
@@ -389,7 +389,7 @@
 
           // 2nd-level Accordion Headers
           .accordion-header {
-            @include left-align-cascade-styles-header(47px, 9px, 97px, 16px, 'true', 16px);
+            @include left-align-cascade-styles-header(49px, 9px, 97px, 16px, 'true', 16px);
           }
 
           // 2nd-level Accordion Panes
