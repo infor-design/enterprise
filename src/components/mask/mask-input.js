@@ -180,6 +180,18 @@ MaskInput.prototype = {
   handleEvents() {
     const self = this;
 
+    this.element.addEventListener('keydown', (e) => {
+      if (e.key === 'Insert') {
+        self.insertOn = true;
+      }
+    });
+
+    this.element.addEventListener('keyup', (e) => {
+      if (e.key === 'Insert') {
+        self.insertOn = false;
+      }
+    });
+
     // On change event
     this.changeEventHandler = function () {
       self.hasTriggeredChangeEvent = true;
@@ -301,7 +313,7 @@ MaskInput.prototype = {
       posEnd = rawValue.length;
     }
 
-    if (this.settings.useInsert && posBegin < rawValue.length) {
+    if ((this.insertOn || this.settings.useInsert) && posBegin < rawValue.length) {
       let overwrite = false;
       const pOpt = this.settings.patternOptions;
 
