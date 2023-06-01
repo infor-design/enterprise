@@ -170,6 +170,19 @@
   }
 }
 
+.btn-editor {
+  border-radius: 8px;
+
+  &:hover:not(:disabled):not(.close):not(.btn-filter):not(.personalize-actionable):not(.destructive) {
+    background-color: $button-editor-color-hover-background-new;
+    color: $button-editor-color-tertiary-hover-font-new;
+
+    svg.icon {
+      color: $button-editor-color-tertiary-hover-font-new;
+    }
+  }
+}
+
 .btn-icon.trigger:hover:not(:disabled){
   background-color: $button-color-tertiary-hover-background-new !important;
 }
