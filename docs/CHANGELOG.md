@@ -1,12 +1,5 @@
 # What's New with Enterprise
 
-## v4.85.0
-
-## v4.85.0 Fixes
-
-- `[Locale]` Fixed a bug using extend translations on some languages (`fr-CA/pt-BR`). ([#7491](https://github.com/infor-design/enterprise/issues/7491))
-- `[Locale/Multiselect]` Changed text from selected to selection as requested by translators. ([#5886](https://github.com/infor-design/enterprise/issues/5886))
-
 ## v4.84.0
 
 ## v4.84.0 Features
@@ -36,6 +29,8 @@
 - `[Header]` Fixed an issue where the header text was difficult to read due to color styles. ([#7466](https://github.com/infor-design/enterprise/issues/7466))
 - `[Header]` Fixed on header text not being readable due to color styles. ([#7466](https://github.com/infor-design/enterprise/issues/7466))
 - `[Locale]` Added Comma translate option for locale for generating lists. ([#5887](https://github.com/infor-design/enterprise/issues/5887))
+- `[Locale]` Fixed a bug using extend translations on some languages (`fr-CA/pt-BR`). ([#7491](https://github.com/infor-design/enterprise/issues/7491))
+- `[Locale/Multiselect]` Changed text from selected to selection as requested by translators. ([#5886](https://github.com/infor-design/enterprise/issues/5886))
 - `[Lookup]` Added undefined check for lookup values when updating grid. ([#7403](https://github.com/infor-design/enterprise/issues/7403))
 - `[Listview]` Fixed invisible button on hover. ([#7544](https://github.com/infor-design/enterprise/issues/7544))
 - `[Modal]` Fixed button alignment on modals. ([#7543](https://github.com/infor-design/enterprise/issues/7543))
