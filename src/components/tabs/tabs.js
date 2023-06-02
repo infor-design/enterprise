@@ -3689,6 +3689,10 @@ Tabs.prototype = {
       return false;
     }
 
+    if (!li) {
+      return false;
+    }
+
     if (this.tablist.scrollTop() > 0) {
       this.tablist.scrollTop(0);
     }

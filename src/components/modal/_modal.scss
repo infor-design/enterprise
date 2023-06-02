@@ -79,23 +79,6 @@
     opacity: 1;
   }
 
-  &.lookup-modal {
-    &:not(.about):not(.message):not(.contextual-action-panel) .modal-header {
-      svg.icon {
-        top: 3px;
-        margin-right: 0;
-      }
-    }
-  }
-
-  &:not(.about):not(.message):not(.contextual-action-panel) .modal-header {
-    svg.icon {
-      margin-right: 10px;
-      top: 3px;
-      vertical-align: top;
-    }
-  }
-
   &:not(.hide-underneath) {
     &.is-visible {
       @include css3(transform, scale(1, 1));

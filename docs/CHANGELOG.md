@@ -1,5 +1,14 @@
 # What's New with Enterprise
 
+## v4.83.1
+
+## v4.83.1 Features
+
+- `[Listview]` Fixed invisible button on hover. ([#7544](https://github.com/infor-design/enterprise/issues/7544))
+- `[Modal]` Fixed button alignment on modals. ([#7543](https://github.com/infor-design/enterprise/issues/7543))
+- `[Tabs]` Fixed tab overflow error. ([#7540](https://github.com/infor-design/enterprise/issues/7540))
+- `[Textarea]` Fixed an issue where the textarea was throwing an error. ([#7536](https://github.com/infor-design/enterprise/issues/7536))
+
 ## v4.83.0
 
 ## v4.83.0 Features
