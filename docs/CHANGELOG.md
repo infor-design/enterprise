@@ -23,6 +23,8 @@
 - `[Datagrid]` Fixed Pager not rendering correctly on page refresh. ([#6811](https://github.com/infor-design/enterprise/issues/6811))
 - `[Dropdown]` Fixed the visibility of dropdown palette icons in dark mode. ([#7431](https://github.com/infor-design/enterprise/issues/7431))
 - `[Dropdown]` Removed overflow none style for dropdown modal. ([#6033](https://github.com/infor-design/enterprise/issues/6033))
+- `[Header]` Fix on header text not being readable due to color styles. ([#7466](https://github.com/infor-design/enterprise/issues/7466))
+- `[Images]` Added class for images cursor pointer and make an example with click handler. ([#7007](https://github.com/infor-design/enterprise/issues/7007))
 - `[Editor]` Fixed editor hover styles. ([#7535](https://github.com/infor-design/enterprise/issues/7535))
 - `[Header]` Fixed an issue where the header text was difficult to read due to color styles. ([#7466](https://github.com/infor-design/enterprise/issues/7466))
 - `[Header]` Fixed on header text not being readable due to color styles. ([#7466](https://github.com/infor-design/enterprise/issues/7466))

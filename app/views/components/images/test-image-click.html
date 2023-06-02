@@ -1,0 +1,16 @@
+
+<div class="row top-padding">
+  <div class="twelve columns">
+    <label for="click-image" class="label">Image with Click Event</label>
+    <img id="click-image" class="image-md actionable" src="{{basepath}}images/placeholder-154x120.png" alt="image-md 154x120" tabindex="0"/>
+    <h3>Note: Click the image above.</h3>
+  </div>
+</div>
+
+<script>
+  const clickImage = document.getElementById('click-image');
+
+  clickImage.addEventListener('click', function() {
+    alert('this image was clicked!');
+  });
+</script>
