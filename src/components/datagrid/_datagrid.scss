@@ -3759,6 +3759,7 @@ $datagrid-small-row-height: 25px;
         border-color: $datagrid-filter-disabled-color !important;
 
         + .icon {
+          background-color: transparent;
           color: $datagrid-filter-disabled-color;
         }
       }
@@ -3838,6 +3839,10 @@ $datagrid-small-row-height: 25px;
       }
 
       &:disabled + .trigger {
+        background-color: transparent !important;
+        color: $timepicker-disabled-icon-color;
+        cursor: default;
+
         .icon {
           color: $datagrid-list-filter-disabled-color !important;
           opacity: 0.6;
