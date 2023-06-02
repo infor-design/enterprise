@@ -148,18 +148,16 @@
 
       // Selected state only exists on Paneled accordions.
       &.is-selected,
-      &.is-selected:hover,
-      &.is-focused.is-selected {
+      &.is-selected:hover {
         background-color: $accordion-selected-bg-color;
-        border-bottom-color: $accordion-selected-bg-color;
         color: $accordion-selected-text-color;
 
         > a {
-          color: $accordion-selected-text-color;
+          color: inherit;
         }
 
         > .icon {
-          color: $accordion-selected-text-color;
+          color: inherit;
 
           .chevron {
             top: -1px;
@@ -168,7 +166,7 @@
 
         > [class^='btn'] {
           .icon {
-            color: $accordion-selected-text-color;
+            color: inherit;
 
             &.plus-minus {
               &::before,
@@ -179,7 +177,7 @@
           }
 
           .audible {
-            color: $ids-color-palette-white;
+            color: inherit;
           }
         }
 
@@ -194,6 +192,10 @@
         .accordion-header {
           border-bottom-color: $accordion-selected-bg-color;
         }
+      }
+
+      &.is-selected.is-focused:not(.hide-focus) {
+        border-bottom-color: $accordion-selected-bg-color;
       }
 
       &.filtered.has-filtered-children {
@@ -252,7 +254,10 @@
         + .accordion-content {
           border-top-color: $accordion-alternate-border-color;
 
-          &.is-focused,
+          &.is-focused:not(.hide-focus) {
+            border-top-color: $accordion-selected-bg-color;
+          }
+
           &.is-selected {
             border-top-color: transparent;
           }
@@ -818,17 +823,18 @@
     }
 
     &.is-selected,
-    &.is-selected:hover,
-    &.is-focused.is-selected {
+    &.is-selected:hover {
+      color: $accordion-selected-text-color;
+
       &.list-item {
         &::before {
-          color: $accordion-selected-text-color !important;
+          color: inherit;
         }
       }
     }
 
     &.is-disabled {
-      background-color: $accordion-disabled-pane-bg-color !important;
+      background-color: $accordion-disabled-pane-bg-color;
     }
 
     // Subheaders can now have chevrons as of v4.23.x

@@ -346,6 +346,7 @@ Soho.Locale.addCulture('en-US', {
     Mobile: { id: 'Mobile', value: 'Mobile', comment: 'Indicates a mobile device (phone tablet ect)' },
     Mode: { id: 'Mode', value: 'Mode', comment: 'Indicates a Mode of a theme (like dark or light mode)' },
     Modes: { id: 'Modes', value: 'Modes', comment: 'Indicates a selection of Modes of a theme (like dark or light mode)' },
+    ModuleNavTriggerTextAlt: { id: 'ModuleNavTriggerTextAlt', value: 'Module Nav Trigger Button', comment: 'Default text used inside of Module Nav trigger buttons' },
     Month: { id: 'Month', value: 'Month', comment: 'As in a date month' },
     MonthAbbreviatedApr: { id: 'MonthAbbreviatedApr', value: 'Apr', comment: 'Month in abbreviated form' },
     MonthAbbreviatedAug: { id: 'MonthAbbreviatedAug', value: 'Aug', comment: 'Month in abbreviated form' },

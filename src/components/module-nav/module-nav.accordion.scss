@@ -1,0 +1,445 @@
+@import './module-nav.common.scss';
+
+// Module Nav Accordion Component
+//================================================== //
+
+.module-nav-accordion {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  // Module Nav Accordion Section
+  //================================================== //
+
+  .accordion-section {
+    display: block;
+    padding: $module-nav-accordion-gutter-size;
+  }
+}
+
+// IDS Accordion Style Overrides
+.accordion.panel.module-nav-accordion {
+  background-color: transparent;
+  border: 0;
+
+  // Module Nav Accordion Header
+  //================================================== //
+
+  .accordion-header {
+    border-color: transparent;
+    border-radius: $module-nav-common-border-radius;
+    border-style: solid;
+    border-width: 1px;
+    color: $module-nav-item-text-color;
+
+    > [class^='btn'] {
+      color: inherit;
+
+      > .icon {
+        color: inherit;
+        width: $module-nav-item-dropdown-icon-size;
+      }
+
+      &:focus:not(.hide-focus) {
+        border-color: $module-nav-item-selected-text-color;
+        box-shadow: none;
+      }
+    }
+
+    > a,
+    > .icon {
+      color: inherit;
+    }
+
+    .icon {
+      top: -2px;
+    }
+
+    .btn {
+      top: 0;
+
+      > .icon.chevron {
+        top: -1px;
+
+        &.active {
+          top: -2px;
+        }
+      }
+    }
+
+    &.is-focused {
+      &:not(.hide-focus) {
+        border-color: $module-nav-item-selected-text-color;
+        box-shadow: none;
+      }
+
+      > a,
+      > .icon {
+        color: inherit;
+      }
+    }
+
+    &:not(.is-disabled) {
+      &:hover {
+        background-color: $module-nav-item-hover-bg-color;
+        color: $module-nav-item-hover-text-color;
+
+        > a,
+        > .icon {
+          color: inherit;
+        }
+
+        // Override
+        &.is-selected:not(.is-focused) {
+          border-bottom-color: transparent;
+        }
+      }
+
+      &:active {
+        background-color: $module-nav-item-selected-bg-color;
+        color: $module-nav-item-selected-text-color;
+
+        &:not(.hide-focus) {
+          border-color: $module-nav-item-selected-text-color;
+        }
+
+        > a,
+        > .icon {
+          color: inherit;
+        }
+      }
+    }
+
+    &:not(.is-disabled).is-selected {
+      background-color: $module-nav-item-selected-bg-color;
+      color: $module-nav-item-selected-text-color;
+
+      [class^='btn'] {
+        &:focus:not(.hide-focus) {
+          border-color: $module-nav-item-selected-text-color;
+        }
+
+        .icon {
+          &.plus-minus {
+            &::before,
+            &::after {
+              background-color: $module-nav-item-selected-text-color;
+            }
+          }
+        }
+      }
+
+      > a,
+      > .icon {
+        color: inherit;
+      }
+
+      > a {
+        span {
+          font-weight: 700;
+        }
+      }
+    }
+
+    // Override to inherit text color
+    &.is-focused.is-selected {
+      > [class^='btn'] .icon {
+        color: inherit;
+      }
+    }
+  }
+
+  // Module Nav Accordion Pane
+  //================================================== //
+
+  .accordion-pane {
+    background-color: transparent;
+
+    .accordion-header {
+      height: $module-nav-item-height;
+
+      > a {
+        @include font-size(14);
+      }
+
+      &:last-child {
+        border-bottom-color: transparent;
+      }
+
+      &.is-focused {
+        &:not(.hide-focus) {
+          border-color: $module-nav-item-selected-text-color;
+        }
+      }
+    }
+
+    // 1st-level Accordion Headers that come after a pane
+    + .accordion-header {
+      &:last-child {
+        border-top-color: transparent;
+      }
+
+      &.is-focused {
+        &:not(.hide-focus) {
+          border-top-color: $module-nav-item-selected-text-color;
+        }
+      }
+    }
+
+    &.is-expanded {
+      + .accordion-header {
+        border-top-color: transparent;
+      }
+    }
+  }
+}
+
+// Module Nav Accordion Component (Collapsed Mode)
+//================================================== //
+
+.module-nav-container {
+  &.mode-collapsed {
+    .accordion-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: static;
+      max-width: $module-nav-item-collapsed-size;
+      min-height: $module-nav-item-collapsed-size;
+      margin-block: $module-nav-item-collapsed-general-spacing-size;
+      margin-inline: auto;
+      height: $module-nav-item-collapsed-size;
+      width: $module-nav-item-collapsed-size;
+
+      &:first-child {
+        margin-block-start: $module-nav-item-collapsed-first-last-spacing-size;
+      }
+
+      &:last-child {
+        margin-block-start: $module-nav-item-collapsed-first-last-spacing-size;
+        margin-block-end: 12px;
+      }
+
+      > .icon {
+        position: static;
+        margin: 0;
+        top: auto;
+      }
+
+      .btn {
+        display: none;
+        pointer-events: none;
+      }
+    }
+
+    .accordion-pane {
+      .accordion-header,
+      .accordion-pane {
+        display: none;
+        pointer-events: none;
+      }
+
+      &.is-expanded {
+        display: none;
+        pointer-events: none;
+      }
+    }
+  }
+}
+
+// Module Nav Accordion Component (Expanded Mode)
+//================================================== //
+
+.module-nav-container {
+  &.mode-expanded {
+    .accordion {
+      // Module Nav Accordion Alignment-only rules
+      // These rules apply to both "collapsed" and "expanded" display modes
+      // =================================================== //
+
+      .accordion-header {
+        height: $module-nav-item-height;
+
+        > a {
+          padding-block: 11px;
+        }
+
+        &:not(:last-child) {
+          margin-block-end: $module-nav-accordion-gutter-size;
+        }
+
+        > .icon {
+          margin-inline-end: $module-nav-item-icon-end-spacing;
+          margin-inline-start: $module-nav-item-icon-start-spacing;
+        }
+      }
+
+      .accordion-pane {
+        .accordion-header {
+          height: $module-nav-item-height;
+
+          > a {
+            padding-block-start: 13px;
+          }
+
+          &.list-item {
+            &::before {
+              padding-inline-start: 16px;
+            }
+          }
+        }
+      }
+
+      /*
+      @TODO Discuss styles for top level navigation with no icons
+      */
+      // Module Nav Accordion Alignment-only rules
+      // (the container detected NO top-level accordion header icons)
+      // =================================================== //
+
+      &:not(.has-icons) {
+        // 1st-level Accordion Headers
+        .accordion-header {
+          @include left-align-cascade-styles-header(13px, 9px, 51px, 16px, 'true', 16px);
+
+          &.has-chevron {
+            > a {
+              width: calc(100% - 51px);
+            }
+          }
+        }
+
+        // 1st-level Accordion Panes
+        .accordion-pane {
+          @include left-align-cascade-styles-pane(13px, 49px, 47px);
+
+          // 2nd-level Accordion Headers
+          .accordion-header {
+            @include left-align-cascade-styles-header(13px, 9px, 51px, 16px, 'true', 16px);
+          }
+
+          // 2nd-level Accordion Panes
+          .accordion-pane {
+            @include left-align-cascade-styles-pane(48px, 82px, 80px);
+
+            // 3rd-level Accordion Headers
+            .accordion-header {
+              @include left-align-cascade-styles-header(55px, 41px, 66px, 48px, 'true', 16px);
+            }
+
+            // 3rd-level Accordion Panes
+            .accordion-pane {
+              @include left-align-cascade-styles-pane(81px, 115px, 113px);
+
+              // 4th-level Accordion Headers
+              .accordion-header {
+                @include left-align-cascade-styles-header(80px, 73px, 98px, 80px, 'true', 16px);
+              }
+
+              // 4th-level Accordion Panes
+              .accordion-pane {
+                @include left-align-cascade-styles-pane(117px, 146px, 144px);
+
+                // 5th-level Accordion Headers
+                .accordion-header {
+                  @include left-align-cascade-styles-header(115px, 106px, 130px, 112px, 'true', 16px);
+                }
+
+                // 5th-level Accordion Panes
+                .accordion-pane {
+                  @include left-align-cascade-styles-pane(153px, 179px, 177px);
+
+                  // 6th-level Accordion Headers
+                  .accordion-header {
+                    @include left-align-cascade-styles-header(151px, 138px, 162px, 144px, 'true', 16px);
+                  }
+
+                  // 6th-level Accordion Pane
+                  .accordion-pane {
+                    .accordion-content {
+                      padding-inline-start: 177px;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      // Module Nav Accordion Alignment-only rules
+      // (the container detected top-level accordion header icons)
+      // =================================================== //
+
+      &.has-icons {
+        // 1st-level Accordion Headers
+        .accordion-header {
+          @include left-align-cascade-styles-header(49px, 9px, 97px, 16px, 'true', 2px);
+
+          &.has-chevron {
+            > a:first-child {
+              width: calc(100% - 50px);
+            }
+          }
+        }
+
+        // 1st-level Accordion Panes
+        .accordion-pane {
+          @include left-align-cascade-styles-pane(13px, 49px, 49px);
+
+          // 2nd-level Accordion Headers
+          .accordion-header {
+            @include left-align-cascade-styles-header(49px, 9px, 97px, 16px, 'true', 16px);
+          }
+
+          // 2nd-level Accordion Panes
+          .accordion-pane {
+            @include left-align-cascade-styles-pane(48px, 80px, 80px);
+
+            // 3rd-level Accordion Headers
+            .accordion-header {
+              @include left-align-cascade-styles-header(55px, 41px, 66px, 48px, 'true', 16px);
+            }
+
+            // 3rd-level Accordion Panes
+            .accordion-pane {
+              @include left-align-cascade-styles-pane(81px, 113px, 113px);
+
+              // 4th-level Accordion Headers
+              .accordion-header {
+                @include left-align-cascade-styles-header(80px, 73px, 98px, 80px, 'true', 16px);
+              }
+
+              // 4th-level Accordion Panes
+              .accordion-pane {
+                @include left-align-cascade-styles-pane(117px, 144px, 144px);
+
+                // 5th-level Accordion Headers
+                .accordion-header {
+                  @include left-align-cascade-styles-header(115px, 106px, 130px, 112px, 'true', 16px);
+                }
+
+                // 5th-level Accordion Panes
+                .accordion-pane {
+                  @include left-align-cascade-styles-pane(153px, 177px, 177px);
+
+                  // 6th-level Accordion Headers
+                  .accordion-header {
+                    @include left-align-cascade-styles-header(151px, 138px, 162px, 144px, 'true', 16px);
+                  }
+
+                  // 6th-level Accordion Pane
+                  .accordion-pane {
+                    .accordion-content {
+                      padding-inline-start: 177px;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

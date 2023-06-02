@@ -6,6 +6,7 @@
 
 - `[Line Chart]` Added short and abbreviated name options for the data. ([#5906](https://github.com/infor-design/enterprise/issues/5906))
 - `[Masked Input]` Added setting to retain value if maximum length is already reached. ([#7274](https://github.com/infor-design/enterprise/issues/7274))
+- `[Module Nav]` Added the new Module Nav component. ([#7386](https://github.com/infor-design/enterprise/issues/7386))
 - `[WeekView]` Added stacked view template for week view agenda variant. ([#7373](https://github.com/infor-design/enterprise/issues/7373))
 
 ## v4.84.0 Fixes
@@ -14,13 +15,17 @@
 - `[Busy Indicator]` Updated colors for busy indicator. ([#7098](https://github.com/infor-design/enterprise/issues/7098))
 - `[Button]` Adjusted alignment for popupmenu icon buttons. ([#7408](https://github.com/infor-design/enterprise/issues/7408))
 - `[Charts]` Improved the positioning of chart legend. ([#7452](https://github.com/infor-design/enterprise/issues/7452))
+- `[Datagrid]` Fixed an issue where the table was not filling the entire datagrid container in firefox. ([#6956](https://github.com/infor-design/enterprise/issues/6956))
 - `[Datagrid]` Fixed a bug where the colorpicker editor could not be toggles. ([#7362](https://github.com/infor-design/enterprise/issues/7362))
 - `[Datagrid]` Clear `rowstatus` in tree node for clearRowError to work correctly. ([#6033](https://github.com/infor-design/enterprise/issues/6033))
-- `[Datagrid]` Fix an issue where `showColumn` was not functioning correctly with frozen columns. ([#7428](https://github.com/infor-design/enterprise/issues/7428))
+- `[Datagrid]` Fixed an issue where `showColumn` was not functioning correctly with frozen columns. ([#7428](https://github.com/infor-design/enterprise/issues/7428))
 - `[Datagrid]` Changed `enterkeykhint` behavior for filtering to filter with the virtual keyboard on mobile devices. ([#1489](https://github.com/infor-design/enterprise/issues/1489))
+- `[Datagrid]` Fixed Pager not rendering correctly on page refresh. ([#6811](https://github.com/infor-design/enterprise/issues/6811))
 - `[Dropdown]` Fixed the visibility of dropdown palette icons in dark mode. ([#7431](https://github.com/infor-design/enterprise/issues/7431))
 - `[Dropdown]` Removed overflow none style for dropdown modal. ([#6033](https://github.com/infor-design/enterprise/issues/6033))
-- `[Header]` Fix on header text not being readable due to color styles. ([#7466](https://github.com/infor-design/enterprise/issues/7466))
+- `[Editor]` Fixed editor hover styles. ([#7535](https://github.com/infor-design/enterprise/issues/7535))
+- `[Header]` Fixed an issue where the header text was difficult to read due to color styles. ([#7466](https://github.com/infor-design/enterprise/issues/7466))
+- `[Header]` Fixed on header text not being readable due to color styles. ([#7466](https://github.com/infor-design/enterprise/issues/7466))
 - `[Locale]` Added Comma translate option for locale for generating lists. ([#5887](https://github.com/infor-design/enterprise/issues/5887))
 - `[Lookup]` Added undefined check for lookup values when updating grid. ([#7403](https://github.com/infor-design/enterprise/issues/7403))
 - `[Listview]` Fixed invisible button on hover. ([#7544](https://github.com/infor-design/enterprise/issues/7544))
