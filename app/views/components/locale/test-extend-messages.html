@@ -22,9 +22,14 @@
       YourWelcome: { id: 'YourWelcome', value: '~You\'re Welcome~', comment: ''}
     };
     Soho.Locale.extendTranslations(Soho.Locale.currentLanguage.name, myStrings);
+    Soho.Locale.extendTranslations(Soho.Locale.currentLanguage.name, { testing: { id: 'testing', value: '~this is a test~' } })
+    Soho.Locale.extendTranslations('fr-CA', { testing: { id: 'testing', value: '~this is a test (fr-CA)~' } })
 
+    append(`Langauge Name: ${Soho.Locale.currentLanguage.name}`);
     append(Soho.Locale.translate('Comments') + '<br>');
+    append(Soho.Locale.translate('MonthWideMar') + '<br>');
     append(Soho.Locale.translate('Thanks') + '<br>');
     append(Soho.Locale.translate('YourWelcome') + '<br>');
+    append(Soho.Locale.translate('testing') + '<br>');
   });
 </script>

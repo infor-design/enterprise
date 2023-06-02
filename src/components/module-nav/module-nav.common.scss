@@ -1,0 +1,34 @@
+@mixin module-nav-box-shadow() {
+  @include drawer-box-shadow;
+}
+
+@mixin module-nav-input-style() {
+  background-color: $module-nav-input-bg-color;
+  border-radius: $module-nav-common-border-radius;
+  border: $module-nav-input-border-width solid $module-nav-input-border-color;
+  color: $module-nav-input-text-color;
+
+  .icon,
+  + .icon {
+    color: inherit;
+  }
+}
+
+@mixin nav-item-box-shadow() {
+  @include css3(box-shadow, 0 0 8px 1px rgba(0, 0, 0, 0.16));
+}
+
+@mixin settings-menu-box-shadow() {
+  @include css3(box-shadow, 0 0 8px 1px rgba(0, 0, 0, 0.16));
+}
+
+@mixin nav-item-style() {
+  align-items: center;
+  border-radius: $module-nav-gutter-size;
+  display: flex;
+}
+
+@mixin drawer-scrollable-area() {
+  overflow-y: auto;
+  overflow-x: hidden;
+}

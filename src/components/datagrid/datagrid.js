@@ -7309,7 +7309,7 @@ Datagrid.prototype = {
       }
       const isEditable = self.makeCellEditable(self.activeCell.rowIndex, self.activeCell.cell, e);
 
-      if (col.click && typeof col.click === 'function' && target.is('button, input[checkbox], a, a.search-mode i') || target.parent().is('button:not(.trigger)')) {
+      if (col.click && typeof col.click === 'function' && target.is('button, input[checkbox], a, a.search-mode i, img') || target.parent().is('button:not(.trigger)')) {
         const rowElem = $(this).closest('tr');
         let rowIdx = self.actualRowIndex(rowElem);
         dataRowIdx = self.dataRowIndex(rowElem);
@@ -7335,7 +7335,7 @@ Datagrid.prototype = {
           }
         }
 
-        if (!td.hasClass('is-cell-readonly') && !target.is('[disabled]') && target.is('button, input[checkbox], a, a.search-mode i') || target.parent().is('button')) {  //eslint-disable-line
+        if (!td.hasClass('is-cell-readonly') && !target.is('[disabled]') && target.is('button, input[checkbox], a, a.search-mode i, img') || target.parent().is('button')) {  //eslint-disable-line
           col.click(e, [{ row: rowIdx, cell: self.activeCell.cell, item, originalEvent: e }]);
         }
         if (target.is('[disabled]') && col.formatter === Formatters.Hyperlink) {

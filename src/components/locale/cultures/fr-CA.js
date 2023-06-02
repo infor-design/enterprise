@@ -1,7 +1,7 @@
 // Get Latest from http://www.unicode.org/Public/cldr/25/
 Soho.Locale.addCulture('fr-CA', {
   // layout/language
-  language: 'fr',
+  language: 'fr-CA',
   englishName: 'French (Canada)',
   nativeName: 'français (Canada)',
   // layout/orientation/@characters

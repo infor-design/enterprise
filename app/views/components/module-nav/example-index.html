@@ -1,0 +1,369 @@
+<style>
+  .test-spacer {
+    height: 2000px;
+  }
+</style>
+
+<section class="module-nav-container">
+  <aside id="nav" class="module-nav">
+    <div class="module-nav-bar">
+      <!-- Module Nav's top-level navigation items are inside the accordion -->
+      <div class="module-nav-accordion accordion panel" data-options="{'allowOnePane': false}">
+        <!-- Module switcher -->
+        <div class="module-nav-header accordion-section">
+          <div class="module-nav-switcher">
+            <div class="module-nav-section role-dropdown">
+              <label for="module-nav-role-switcher" class="label audible">Roles</label>
+              <select id="module-nav-role-switcher" name="module-nav-role-switcher" class="dropdown" data-automation-id="custom-automation-dropdown-id">
+                <option value="admin" data-icon="{icon: 'database'}">Admin</option>
+                <option value="job-console" data-icon="{icon: 'database'}">Job Console</option>
+                <option value="landing-page-designer" data-icon="{icon: 'database'}">Landing Page Designer</option>
+                <option value="process-server-admin" data-icon="{icon: 'database'}">Process Server Administrator</option>
+                <option value="proxy-management" data-icon="{icon: 'database'}">Proxy Management</option>
+                <option value="security-system-management" data-icon="{icon: 'database'}">Security System Management</option>
+                <option value="user-management" data-icon="{icon: 'database'}">User Management</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="module-nav-search-container accordion-section">
+          <label class="audible" for="module-nav-searchfield">Search</label>
+          <input id="module-nav-searchfield" data-init="false" class="searchfield module-nav-search" placeholder="Search" />
+        </div>
+
+        <!-- Most accordion items should be placed in the "main" section -->
+        <div class="module-nav-main accordion-section">
+          <div class="accordion-header">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-male"></use>
+            </svg>
+            <a href="#" id="item-config" data-automation-id="module-nav-item-config"><span>Configuration and Personalization</span></a>
+          </div>
+          <div class="accordion-pane">
+            <div class="accordion-header">
+              <a href="#"><span>Label</span></a>
+            </div>
+
+            <div class="accordion-header">
+              <a href="#"><span>Label</span></a>
+            </div>
+
+            <div class="accordion-header">
+              <a href="#"><span>Label</span></a>
+            </div>
+          </div>
+
+          <div class="accordion-header">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-database"></use>
+            </svg>
+            <a href="#" id="item-database" data-automation-id="module-nav-item-databasde"><span>Database</span></a>
+          </div>
+          <div class="accordion-pane">
+            <div class="accordion-header">
+              <a href="#"><span>Label</span></a>
+            </div>
+
+            <div class="accordion-header">
+              <a href="#"><span>Label</span></a>
+            </div>
+
+            <div class="accordion-header">
+              <a href="#"><span>Label</span></a>
+            </div>
+          </div>
+
+          <div class="accordion-header">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-translate"></use>
+            </svg>
+            <a href="#" id="item-translation" data-automation-id="module-nav-item-translation"><span>Data Translation</span></a>
+          </div>
+          <div class="accordion-pane">
+            <div class="accordion-header">
+              <a href="#"><span>Label</span></a>
+            </div>
+
+            <div class="accordion-header">
+              <a href="#"><span>Label</span></a>
+            </div>
+
+            <div class="accordion-header">
+              <a href="#"><span>Label</span></a>
+            </div>
+          </div>
+
+          <div class="accordion-header">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-security-on"></use>
+            </svg>
+            <a href="#" id="item-security" data-automation-id="module-nav-item-security"><span>Security</span></a>
+          </div>
+          <div class="accordion-pane">
+            <div class="accordion-header">
+              <a href="#"><span>Label</span></a>
+            </div>
+
+            <div class="accordion-header">
+              <a href="#"><span>Label</span></a>
+            </div>
+
+            <div class="accordion-header">
+              <a href="#"><span>Label</span></a>
+            </div>
+          </div>
+
+          <div class="accordion-header">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-line-bar-chart"></use>
+            </svg>
+            <a href="#" id="item-analytics" data-automation-id="module-nav-item-analytics"><span>Analytics</span></a>
+          </div>
+          <div class="accordion-pane">
+            <div class="accordion-header">
+              <a href="#"><span>Label</span></a>
+            </div>
+
+            <div class="accordion-header">
+              <a href="#"><span>Label</span></a>
+            </div>
+
+            <div class="accordion-header">
+              <a href="#"><span>Label</span></a>
+            </div>
+          </div>
+
+          <div class="accordion-header">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-import-spreadsheet"></use>
+            </svg>
+            <a href="#" id="item-audit" data-automation-id="module-nav-item-audit"><span>Audit and Monitoring</span></a>
+          </div>
+          <!--
+          <div class="accordion-pane">
+            <div class="accordion-header">
+              <a href="#"><span>Label</span></a>
+            </div>
+
+            <div class="accordion-header">
+              <a href="#"><span>Label</span></a>
+            </div>
+
+            <div class="accordion-header">
+              <a href="#"><span>Label</span></a>
+            </div>
+          </div>
+          -->
+        </div>
+
+        <!-- Footer items are separate and "optionally" pinnable -->
+        <div class="module-nav-footer accordion-section">
+          <div class="accordion-header">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-document"></use>
+            </svg>
+            <a href="#" id="module-nav-item-documents" data-automation-id="module-nav-documents"><span>Documents</span></a>
+          </div>
+
+          <div class="accordion-header is-selected">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-report"></use>
+            </svg>
+            <a href="#" id="module-nav-item-reports" data-automation-id="module-nav-reports"><span>Reports</span></a>
+          </div>
+
+          <div class="accordion-header">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-notification"></use>
+            </svg>
+            <a href="#" id="module-nav-item-notifications"
+              data-automation-id="module-nav-notifications"><span>Notification</span></a>
+          </div>
+        </div>
+
+        <!-- Settings area is also separate and permanently "pinned" to the bottom -->
+        <div class="module-nav-settings accordion-section">
+          <div
+            class="module-nav-settings-btn accordion-header"
+            data-automation-id="module-nav-settings"
+            id="module-nav-settings-btn">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-settings"></use>
+            </svg>
+            <a href="#"><span>Settings</span></a>
+          </div>
+          <ul class="popupmenu module-nav-settings-menu">
+            <li>
+              <a href="#">
+                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                  <use href="#icon-observation-precautions"></use>
+                </svg>
+                <span>Jobs</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                  <use href="#icon-report"></use>
+                </svg>
+                <span>Reports</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                  <use href="#icon-isolation"></use>
+                </svg>
+                <span>Actions</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                  <use href="#icon-edit"></use>
+                </svg>
+                <span>Personalization</span>
+              </a>
+            </li>
+            <li class="separator"></li>
+            <li>
+              <a href="#">
+                <span>Create Report</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <span>Proxy</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <span>Set "As Of Date"</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <span>User Context</span>
+              </a>
+            </li>
+            <li class="separator"></li>
+            <li>
+              <a href="#">
+                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                  <use href="#icon-settings"></use>
+                </svg>
+                <span>Settings</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                  <use href="#icon-info"></use>
+                </svg>
+                <span>About</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                  <use href="#icon-help"></use>
+                </svg>
+                <span>Help</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Detail area is optional and can have additional context -->
+    <div class="module-nav-detail">&nbsp;</div>
+  </aside>
+  <div class="page-container scrollable">
+    <!--
+    <div class="flex-toolbar">
+      <div class="toolbar-section">
+        <button id="header-hamburger" class="btn-icon module-nav-trigger-btn personalize-actionable" type="button">
+          <span class="audible" data-translate="text">ModuleNavTriggerTextAlt</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-menu"></use>
+          </svg>
+        </button>
+      </div>
+    </div>
+    -->
+
+    <div class="row top-padding">
+      <div class="four columns">&nbsp;</div>
+      <div class="four columns">&nbsp;</div>
+      <div class="four columns">
+        <h2 class="fieldset-title">Module Nav</h2>
+        <p>Displays top-level navigation in a flyout menu</p>
+
+        <div class="field">
+          <label for="display-mode-dropdown" class="label">Display Mode</label>
+          <select id="display-mode-dropdown" class="dropdown">
+            <option value="">Hidden</option>
+            <option value="collapsed">Collapsed</option>
+            <option value="expanded">Expanded</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <input type="checkbox" class="checkbox" name="display-detail-check" id="display-detail-check" />
+          <label for="display-detail-check" class="checkbox-label">Display Detail View</label>
+        </div>
+
+        <div class="field">
+          <input type="checkbox" class="checkbox" name="pin-sections" id="pin-sections" />
+          <label for="pin-sections" class="checkbox-label">Pin "optionally-pinned" Sections</label>
+        </div>
+      </div>
+    </div>
+    <div class="row test-spacer">&nbsp;</div>
+    <div class="row">
+      <div class="four columns">&nbsp;</div>
+      <div class="four columns">&nbsp;</div>
+      <div class="four columns">Scrolling this area shouldn't affect the navigation columns.</div>
+    </div>
+  </div>
+</section>
+
+<script>
+  $('body').on('initialized', () => {
+    const navAPI = $('#nav').data('modulenav');
+    const dropdownAPI = $('#display-mode-dropdown').data('dropdown');
+    const displayCheckEl = $('#display-detail-check');
+    const hamburgerBtnEl = $('#header-hamburger');
+    const pinSectionsCheckEl = $('#pin-sections');
+
+    dropdownAPI.element.on('change.test', (e) => {
+      let val = dropdownAPI.value;
+      if (val === 'Hidden') val = false;
+      navAPI.updated({ displayMode: val });
+    });
+
+    displayCheckEl.on('change.test', (e) => {
+      navAPI.updated({ showDetailView: displayCheckEl[0].checked });
+    });
+
+    displayCheckEl.on('change.test', (e) => {
+      navAPI.updated({ showDetailView: displayCheckEl[0].checked });
+    });
+
+    pinSectionsCheckEl.on('change.test', (e) => {
+      navAPI.updated({ pinSections: pinSectionsCheckEl[0].checked });
+    });
+
+    if (hamburgerBtnEl.length) {
+      hamburgerBtnEl.on('click.test', (e) => {
+        if (!dropdownAPI.value === 'collapsed') {
+          dropdownAPI.selectListItem($('option[value="expanded"]'));
+        } else {
+          dropdownAPI.selectListItem($('option[value="collapsed"]'));
+        }
+      });
+    }
+  });
+</script>

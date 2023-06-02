@@ -1,7 +1,7 @@
 // Get Latest from http://www.unicode.org/Public/cldr/25/
 Soho.Locale.addCulture('pt-BR', {
   // layout/language
-  language: 'pt',
+  language: 'pt-BR',
   englishName: 'Portuguese (Brazil)',
   nativeName: 'Português (Brasil)',
   // layout/orientation/@characters

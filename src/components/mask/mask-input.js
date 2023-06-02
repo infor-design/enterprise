@@ -180,6 +180,18 @@ MaskInput.prototype = {
   handleEvents() {
     const self = this;
 
+    this.element.addEventListener('keydown', (e) => {
+      if (e.key === 'Insert') {
+        self.insertOn = true;
+      }
+    });
+
+    this.element.addEventListener('keyup', (e) => {
+      if (e.key === 'Insert') {
+        self.insertOn = false;
+      }
+    });
+
     // On change event
     this.changeEventHandler = function () {
       self.hasTriggeredChangeEvent = true;
@@ -299,6 +311,47 @@ MaskInput.prototype = {
       utils.safeSetSelection(rawValue.length, rawValue.length);
       posBegin = rawValue.length;
       posEnd = rawValue.length;
+    }
+
+    if ((this.insertOn || this.settings.useInsert) && posBegin < rawValue.length) {
+      let overwrite = false;
+      const pOpt = this.settings.patternOptions;
+
+      if (this.settings.process === 'number') {
+        let numLength = pOpt.integerLimit;
+
+        if (pOpt.allowThousandsSeparator) {
+          const sepCount = pOpt.integerLimit - 3 <= 0 ? 0 : (pOpt.integerLimit - 3) / 3;
+          numLength += Math.floor(sepCount);
+        }
+
+        if (pOpt.allowDecimal && rawValue.includes(pOpt.symbols.decimal)) {
+          numLength += pOpt.decimalLimit + 1;
+        }
+
+        if (pOpt.allowNegative) {
+          numLength += 1;
+        }
+
+        if (rawValue.length > numLength) {
+          overwrite = true;
+        }
+      } else if (typeof this.settings.pattern === 'string' && rawValue.length > this.settings.pattern.length) {
+        overwrite = true;
+      } else if (this.settings.state && rawValue.length > this.settings.state.previousPlaceholder.length) {
+        overwrite = true;
+      }
+
+      if (overwrite) {
+        if (/^[!@#$%^&*()_+\-=\\[\]{};':"\\|,.<>\\/?]*$/.test(rawValue.charAt(posBegin))) {
+          rawValue = rawValue.slice(0, posBegin - 1) + rawValue.charAt(posBegin) +
+            rawValue.charAt(posBegin - 1) + rawValue.slice(posBegin + 2);
+          posBegin++;
+          posEnd++;
+        } else {
+          rawValue = rawValue.slice(0, posBegin) + rawValue.slice(posBegin + 1);
+        }
+      }
     }
 
     // Attempt to make the raw value safe to use.  If it's not in a viable format
