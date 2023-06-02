@@ -5,6 +5,7 @@
 ## v4.84.0 Features
 
 - `[Line Chart]` Added short and abbreviated name options for the data. ([#5906](https://github.com/infor-design/enterprise/issues/5906))
+- `[Masked Input]` Added setting to retain value if maximum length is already reached. ([#7274](https://github.com/infor-design/enterprise/issues/7274))
 - `[Module Nav]` Added the new Module Nav component. ([#7386](https://github.com/infor-design/enterprise/issues/7386))
 - `[WeekView]` Added stacked view template for week view agenda variant. ([#7373](https://github.com/infor-design/enterprise/issues/7373))
 
