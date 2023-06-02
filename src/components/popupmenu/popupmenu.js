@@ -43,6 +43,7 @@ const triggerTypes = ['click', 'rightClick', 'immediate', 'manual'];
 })] Gets passed to this control's Place behavior.
  * @param {object} [settings.offset={x: 0, y: 0}] Can tweak the menu position in the x and y direction. Takes an object of form: `{x: 0, y: 0}`.
  * @param {jQuery[]} [settings.predefined=$()] containing references to menu items that should be passed to the "predefined" hash.
+ * @param {string} [settings.cssClass = null]  Append an optional css class to popupmenu-wrapper/popupmenu elements
  */
 
 const POPUPMENU_DEFAULTS = {
@@ -71,6 +72,7 @@ const POPUPMENU_DEFAULTS = {
   duplicateMenu: null,
   stretchToWidestMenuItem: false,
   attributes: null,
+  cssClass: null
 };
 
 function PopupMenu(element, settings) {
@@ -116,6 +118,17 @@ PopupMenu.prototype = {
   },
 
   /**
+   * @returns {string | undefined} containing the ID of the menu
+   */
+  get idString() {
+    if (this.id) {
+      if (this.id.charAt(0).match(/\d/)) return `popupmenu-${this.id}`;
+      return `${this.id}`;
+    }
+    return undefined;
+  },
+
+  /**
    * @returns {boolean} whether or not the popupmenu is currently open
    */
   get isOpen() {
@@ -142,13 +155,14 @@ PopupMenu.prototype = {
    * @returns {void}
    */
   setup() {
-    if (this.element.attr('data-popupmenu') && !this.settings.menu) {
-      this.settings.menu = this.element.attr('data-popupmenu').replace(/#/g, '');
+    if (this.element[0].getAttribute('data-popupmenu') && !this.settings.menu) {
+      this.settings.menu = this.element[0].getAttribute('data-popupmenu').replace(/#/g, '');
     }
     // Backwards compatibility for "menuId" menu options coming from other controls
     // that utilize the Popupmenu.
     if (this.settings.menuId) {
       this.settings.menu = this.settings.menuId;
+      this.id = this.settings.menuId;
       this.settings.menuId = undefined;
     }
 
@@ -217,8 +231,8 @@ PopupMenu.prototype = {
     if (!this.menu || !this.menu.length) {
       switch (typeof this.settings.menu) {
         case 'string': // ID Selector
-          id = this.settings.menu;
-          this.menu = $(`#${this.settings.menu}`);
+          id = this.settings.menu || this.idString;
+          this.menu = $(`#${id}`);
 
           // duplicate menu if shared by multiple triggers
           if (this.settings.duplicateMenu && this.settings.attachToBody && this.menu.parent().not('body').length > 0) {
@@ -242,7 +256,7 @@ PopupMenu.prototype = {
 
           id = this.menu.attr('id');
           if (!id || id === '') {
-            this.menu.attr('id', `popupmenu-${this.id}`);
+            this.menu.attr('id', this.idString);
             id = this.menu.attr('id');
           }
           triggerId = this.element.attr('id');
@@ -302,6 +316,12 @@ PopupMenu.prototype = {
     if (!this.wrapper.length) {
       this.menu.wrap('<div class="popupmenu-wrapper"></div>');
       this.wrapper = this.menu.parent('.popupmenu-wrapper');
+    }
+
+    // Add optional class to wrapper
+    const cssClass = this.settings.cssClass;
+    if (cssClass && typeof cssClass === 'string') {
+      this.wrapper.addClass(cssClass);
     }
 
     // Invoke all icons as icons
@@ -2392,7 +2412,7 @@ PopupMenu.prototype = {
       isCancelled = false;
     }
 
-    if (!this.menu || !this.menu.add(this.element).hasClass('is-open')) {
+    if (!this.menu || !this.isOpen) {
       return;
     }
 

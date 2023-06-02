@@ -1,0 +1,69 @@
+@import './module-nav.common.scss';
+
+// Module Nav Switcher Component
+//================================================== //
+
+.module-nav-switcher {
+  @include nav-item-style;
+
+  flex-shrink: 0;
+  gap: $module-nav-switcher-button-gutter-size;
+}
+
+.module-nav-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.module-nav-section.role-dropdown {
+  display: none;
+}
+
+// Reset location of icon in Module Switcher button (user defined?)
+.module-nav-section.module-btn {
+  .btn-icon {
+    // Reset size
+    border-width: 1px;
+    font-size: 0;
+    height: $module-nav-switcher-button-size;
+    min-height: 0;
+    min-width: 0;
+    width: $module-nav-switcher-button-size;
+
+    &:focus {
+      background-color: $module-nav-item-selected-bg-color;
+
+      &:not(.hide-focus) {
+        border-color: $module-nav-item-selected-text-color;
+        box-shadow: none;
+      }
+    }
+
+    &:hover {
+      background-color: $module-nav-item-hover-bg-color;
+    }
+
+    &:active {
+      background-color: $module-nav-item-selected-bg-color;
+    }
+  }
+}
+
+// =====================================================
+// Display Mode: Collapsed
+
+.module-nav-container.mode-collapsed {
+  .module-nav-switcher {
+    justify-content: center;
+  }
+}
+
+// =====================================================
+// Display Mode: Expanded
+
+.module-nav-container.mode-expanded {
+  .module-nav-section.role-dropdown {
+    display: block;
+  }
+}

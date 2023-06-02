@@ -1,4 +1,5 @@
 /* eslint-disable no-underscore-dangle, prefer-arrow-callback */
+import { accordionSearchUtils } from '../../utils/accordion-search-utils';
 import { DOM } from '../../utils/dom';
 import { utils } from '../../utils/utils';
 import { Environment as env } from '../../utils/environment';
@@ -52,14 +53,26 @@ function ApplicationMenu(element, settings) {
 // Plugin Methods
 ApplicationMenu.prototype = {
 
+  get accordionEl() {
+    return this.accordion[0];
+  },
+
+  get searchEl() {
+    return this.element[0].querySelector('.searchfield');
+  },
+
+  /**
+   * @returns {SearchField} Searchfield API, if one is available
+   */
+  get searchAPI() {
+    return this.searchEl ? $(this.searchEl).data('searchfield') : undefined;
+  },
+
   /**
    * @returns {SearchField|undefined} an IDS SearchField API, if one exists.
    */
   get searchfieldAPI() {
-    if (!this.searchfield || !this.searchfield.length) {
-      return undefined;
-    }
-    return this.searchfield.data('searchfield');
+    return this.searchAPI;
   },
 
   /**
@@ -125,51 +138,7 @@ ApplicationMenu.prototype = {
     }
     this.accordionAPI = accordion;
 
-    // detect the presence of a searchfield
-    this.searchfield = this.element.find('.searchfield, .searchfield-wrapper');
-
-    // Setup filtering, if applicable.
-    if (this.settings.filterable && typeof $.fn.searchfield === 'function') {
-      if (this.searchfield.length) {
-        if (this.searchfield.is('.searchfield-wrapper')) {
-          this.searchfield = this.searchfield.children('.searchfield');
-        }
-      } else {
-        this.searchfield =
-          $('<input id="application-menu-searchfield" class="searchfield" placeholder="Search" />')
-            .prependTo(this.element);
-      }
-
-      this.element.addClass('has-searchfield');
-      const self = this;
-      this.searchfield.searchfield({
-        clearable: true,
-        filterMode: this.settings.filterMode,
-        source(term, done, args) {
-          done(term, self.accordion?.data('accordion')?.toData(true, true), args);
-        },
-        searchableTextCallback(item) {
-          return item.text || item.contentText || '';
-        },
-        resultIteratorCallback(item) {
-          item.highlightTarget = 'text';
-          return item;
-        },
-        clearResultsCallback() {
-          if (self.searchfieldAPI && !self.searchfieldAPI.isFocused) {
-            self.accordionAPI?.unfilter();
-          }
-        },
-        displayResultsCallback(results, done, term) {
-          return self.filterResultsCallback(results, done, term);
-        }
-      });
-
-      this.searchfield.on(`cleared.${COMPONENT_NAME}`, () => {
-        self.accordionAPI?.unfilter(null, true);
-      });
-    }
-
+    this.attachFilter();
     this.renderResizableAppMenu();
 
     // Sync with application menus that have an 'is-open' CSS class.
@@ -242,24 +211,6 @@ ApplicationMenu.prototype = {
     this.element.find('.searchfield').on('keydown.applicationmenu', (e) => {
       self.handleKeyDown(e);
     });
-
-    this.element.find('.searchfield').on('input.applicationmenu', () => {
-      self.handleInput();
-    });
-  },
-
-  /**
-   * Handles Input Events on the App Menu
-   * @returns {boolean} whether or not the keydown event was successful
-   */
-  handleInput() {
-    if (!this.element.find('.searchfield').val() && !this.element.find('.searchfield').val()?.length) {
-      this.accordionAPI?.unfilter(null, true);
-    } else {
-      this.accordionAPI?.unfilter(null);
-    }
-
-    return true;
   },
 
   /**
@@ -408,6 +359,22 @@ ApplicationMenu.prototype = {
     }
 
     this.openMenu(true);
+  },
+
+  /**
+   * Detects the presence of a searchfield and attaches the filtering system
+   * to the Application Menu Accordion.
+   * @private
+   */
+  attachFilter() {
+    accordionSearchUtils.attachFilter.apply(this, [COMPONENT_NAME]);
+  },
+
+  /**
+   * @private
+   */
+  attachFilterEvents() {
+    accordionSearchUtils.attachFilterEvents.apply(this, [COMPONENT_NAME]);
   },
 
   /**
@@ -741,43 +708,11 @@ ApplicationMenu.prototype = {
   },
 
   /**
-   * @param {array} results list of items that passed the filtering process.
-   * @param {function} done method to be called when the display of filtered items completes.
-   * @param {string} term the filter term.
-   * @returns {void}
-   */
-  filterResultsCallback(results, done) {
-    if (!results) {
-      this.accordionAPI?.unfilter();
-      done();
-      return;
-    }
-
-    const targets = $(results.map(item => item.element));
-    this.accordionAPI?.filter(targets, true);
-
-    this.element.triggerHandler('filtered', [results]);
-    done();
-  },
-
-  /**
    * handles the Searchfield Input event
    * @param {jQuery.Event} e jQuery `input` event
    */
   handleSearchfieldInputEvent() {
-    if (!this.searchfield || !this.searchfield.length) {
-      return;
-    }
-
-    const val = this.searchfield.val();
-
-    if (!val || val === '') {
-      const filteredParentHeaders = this.accordion.find('.has-filtered-children');
-      this.accordionAPI?.headers.removeClass('filtered has-filtered-children');
-      this.accordionAPI?.collapse(filteredParentHeaders);
-      this.accordionAPI?.updated();
-      this.element.triggerHandler('filtered', [[]]);
-    }
+    accordionSearchUtils.handleSearchfieldInputEvent.apply(this, [COMPONENT_NAME]);
   },
 
   /**
@@ -871,22 +806,20 @@ ApplicationMenu.prototype = {
       delete this.switcherPanel;
     }
 
-    if (this.searchfield && this.searchfield.length) {
-      this.searchfield.off([
-        'input.applicationmenu',
-        `cleared.${COMPONENT_NAME}`
-      ].join(' '));
-      const sfAPI = this.searchfield.data('searchfield');
-      if (sfAPI) {
-        sfAPI.destroy();
-      }
-    }
+    this.teardownFilter();
 
     if (this.hasTriggers()) {
       this.triggers.off('click.applicationmenu');
     }
 
     return this;
+  },
+
+  /**
+   * @private
+   */
+  teardownFilter() {
+    accordionSearchUtils.teardownFilter.apply(this, [COMPONENT_NAME]);
   },
 
   /**
@@ -1026,11 +959,7 @@ ApplicationMenu.prototype = {
       self.toggleScrollClass();
     });
 
-    if (this.settings.filterable === true && this.searchfield && this.searchfield.length) {
-      this.searchfield.on('input.applicationmenu', (e) => {
-        self.handleSearchfieldInputEvent(e);
-      });
-    }
+    this.attachFilterEvents();
 
     if (this.settings.openOnLarge && this.isLargerThanBreakpoint()) {
       this.menu.addClass('no-transition');

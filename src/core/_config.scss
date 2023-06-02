@@ -707,6 +707,71 @@ $application-menu-searchfield-icon-color: $ids-color-palette-slate-60;
 $application-menu-searchfield-icon-active-color: $ids-color-palette-white;
 $application-menu-searchfield-text-active-color: $ids-color-palette-white;
 
+// Module Nav (App menu alternative)
+$module-nav-bg-color: $ids-color-palette-slate-10;
+$module-nav-border-color: transparent;
+$module-nav-detail-bg-color: $ids-color-palette-slate-20;
+$module-nav-separator-color: $ids-color-palette-slate-20;
+$module-nav-separator-expanded-edge-distance: 22px;
+$module-nav-text-color: $ids-color-palette-slate-60;
+
+// Module Nav (Common Sizes)
+$module-nav-z-index: 1;
+$module-nav-common-border-radius: 8px;
+$module-nav-collapsed-size: 56px;
+$module-nav-gutter-size: 4px;
+$module-nav-expanded-size: 320px;
+$module-nav-submenu-size: 300px;
+
+// Module Nav Input Field (Search/Role Dropdown)
+$module-nav-input-border-width: 1px;
+$module-nav-input-padding-inline-start-size: 10px;
+$module-nav-input-bg-color: $ids-color-palette-white;
+$module-nav-input-border-color: $ids-color-palette-slate-20;
+$module-nav-input-text-color: $ids-color-palette-slate-60;
+
+// Module Nav Item (Accordion Header/Menu Button)
+$module-nav-item-height: 48px;
+$module-nav-item-padding-size: 13px;
+$module-nav-item-margin-inline: 8px;
+$module-nav-item-icon-start-spacing: 11px;
+$module-nav-item-icon-end-spacing: 19px;
+$module-nav-item-dropdown-icon-size: 13px; // 10px in Figma
+$module-nav-item-collapsed-size: 32px;
+$module-nav-item-collapsed-general-spacing-size: 24px;
+$module-nav-item-collapsed-first-last-spacing-size: 8px;
+$module-nav-item-text-color: $ids-color-palette-slate-80;
+$module-nav-item-hover-bg-color: $ids-color-palette-slate-20;
+$module-nav-item-hover-text-color: $ids-color-palette-slate-100;
+$module-nav-item-selected-bg-color: $ids-color-palette-azure-20;
+$module-nav-item-selected-text-color: $ids-color-palette-azure-80;
+
+// Module Nav Switcher (Role Dropdown + Button)
+$module-nav-switcher-button-size: 40px;
+$module-nav-switcher-button-gutter-size: 8px;
+$module-nav-switcher-dropdown-height: 40px;
+$module-nav-switcher-dropdown-width: 256px;
+$module-nav-switcher-dropdown-item-height: 48px;
+$module-nav-switcher-dropdown-item-focus-bg-color: $ids-color-palette-slate-20;
+$module-nav-switcher-dropdown-item-text-color: $ids-color-palette-slate-60;
+
+// Module Nav Search (Input Field)
+$module-nav-search-wrapper-height: 48px;
+$module-nav-search-input-height: 40px;
+$module-nav-search-input-icon-y-offset: 20px;
+$module-nav-search-input-text-color: $ids-color-palette-slate-80;
+$module-nav-search-input-focused-text-color: $ids-color-palette-slate-100;
+$module-nav-search-input-placeholder-text-color: $ids-color-palette-slate-100;
+$module-nav-search-input-focused-placeholder-text-color: $ids-color-palette-slate-20;
+$module-nav-search-close-icon-x-offset: 12px;
+
+// Module Nav Settings Menu (Accordion Header + Popupmenu)
+$module-nav-settings-menu-item-height: 40px;
+$module-nav-settings-menu-item-text-color: $ids-color-palette-slate-60;
+$module-nav-settings-menu-separator-color: $ids-color-palette-slate-10;
+$module-nav-accordion-gutter-size: 8px;
+$module-nav-footer-gutter-size: 12px;
+
 // Contextual Action Panel
 $contextual-panel-bg: $ids-color-palette-graphite-20;
 $contextual-panel-color: $ids-color-palette-graphite-60;
