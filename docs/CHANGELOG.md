@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.85.0
+
+## v4.85.0 Fixes
+
+- `[Datagrid]` Fixed disabled filter columns in datagrid. ([#7467](https://github.com/infor-design/enterprise/issues/7467))
+
 ## v4.84.0
 
 ## v4.84.0 Features
