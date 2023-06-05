@@ -1704,22 +1704,20 @@ Accordion.prototype = {
     headerElems.addClass('hide-focus').on('click.accordion', function (e) {
       return clickInterceptor(e, $(this));
     }).on('focusin.accordion', function (e) {
-      requestAnimationFrame(() => {
-        const target = $(e.target);
+      const target = $(e.target);
 
-        if (!self.originalSelection) {
-          self.originalSelection = target;
-        }
+      if (!self.originalSelection) {
+        self.originalSelection = target;
+      }
 
-        if (clickedToFocus) {
-          clickedToFocus = false;
-          return;
-        }
-        headerElems.not($(this)).removeClass('is-focused');
-        if (target.is(':not(.btn)')) {
-          $(this).addClass('is-focused').removeClass('hide-focus');
-        }
-      });
+      if (clickedToFocus) {
+        clickedToFocus = false;
+        return;
+      }
+      headerElems.not($(this)).removeClass('is-focused');
+      if (target.is(':not(.btn)')) {
+        $(this).addClass('is-focused').removeClass('hide-focus');
+      }
     }).on('focusout.accordion', function () {
       if (!$.contains(this, headerWhereMouseDown) || $(this).is($(headerWhereMouseDown))) {
         $(this).removeClass('is-focused');
