@@ -66,7 +66,7 @@
       }
     }
 
-    &:hover {
+    &:hover:not(.has-focus) {
       color: $module-nav-search-input-text-color;
 
       input.module-nav-search {

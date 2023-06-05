@@ -316,7 +316,7 @@ $button-color-secondary-actionsheet-font: $button-color-secondary-initial-border
 $button-icon-disabled-color: $button-color-tertiary-disabled-font;
 
 $button-editor-color-hover-background-new: rgba(0, 0, 0, .3);
-$button-editor-color-tertiary-hover-font-new: white;
+$button-editor-color-tertiary-hover-font-new: $ids-color-palette-white;
 
 //States
 $error-color: #da1217;
@@ -762,7 +762,7 @@ $module-nav-search-input-icon-y-offset: 20px;
 $module-nav-search-input-text-color: $ids-color-palette-slate-80;
 $module-nav-search-input-focused-text-color: $ids-color-palette-slate-100;
 $module-nav-search-input-placeholder-text-color: $ids-color-palette-slate-100;
-$module-nav-search-input-focused-placeholder-text-color: $ids-color-palette-slate-20;
+$module-nav-search-input-focused-placeholder-text-color: $ids-color-palette-slate-40;
 $module-nav-search-close-icon-x-offset: 12px;
 
 // Module Nav Settings Menu (Accordion Header + Popupmenu)

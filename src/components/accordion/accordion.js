@@ -161,8 +161,6 @@ Accordion.prototype = {
         containerPane.addClass('has-icons');
       }
 
-      header.hideFocus();
-
       // For backwards compatibility:  If an icon is found inside an anchor, bring it up to the
       // level of the header.
       header.children('a').find('svg').detach().insertBefore(header.children('a'));
@@ -202,9 +200,6 @@ Accordion.prototype = {
         expander[method](header.children('a'));
         header.data('addedExpander', expander);
       }
-
-      // Hide Focus functionality
-      expander.hideFocus();
 
       // If Chevrons are turned off and an icon is present, it becomes the expander
       if (outerIcon.length && (self.settings.expanderDisplay === 'plus-minus')) {
@@ -1705,28 +1700,38 @@ Accordion.prototype = {
       return self[`handle${type}Click`](e, element);
     }
 
-    headerElems.on('click.accordion', function (e) {
+    let clickedToFocus = false;
+    headerElems.addClass('hide-focus').on('click.accordion', function (e) {
       return clickInterceptor(e, $(this));
     }).on('focusin.accordion', function (e) {
-      const target = $(e.target);
+      requestAnimationFrame(() => {
+        const target = $(e.target);
 
-      if (!self.originalSelection) {
-        self.originalSelection = target;
-      }
+        if (!self.originalSelection) {
+          self.originalSelection = target;
+        }
 
-      headerElems.not($(this)).removeClass('is-focused');
-      if (target.is(':not(.btn)')) {
-        $(this).addClass('is-focused').removeClass('hide-focus');
-      }
+        if (clickedToFocus) {
+          clickedToFocus = false;
+          return;
+        }
+        headerElems.not($(this)).removeClass('is-focused');
+        if (target.is(':not(.btn)')) {
+          $(this).addClass('is-focused').removeClass('hide-focus');
+        }
+      });
     }).on('focusout.accordion', function () {
       if (!$.contains(this, headerWhereMouseDown) || $(this).is($(headerWhereMouseDown))) {
         $(this).removeClass('is-focused');
+        $(this).addClass('hide-focus');
       }
-    }).on('keydown.accordion', (e) => {
-      self.handleKeys(e);
     })
+      .on('keydown.accordion', (e) => {
+        self.handleKeys(e);
+      })
       .on('mousedown.accordion', function (e) {
-        $(this).addClass('is-focused').removeClass('hide-focus');
+        clickedToFocus = true;
+        $(this).addClass('is-focused');
         headerWhereMouseDown = e.target;
       })
       .on('mouseup.accordion', () => {

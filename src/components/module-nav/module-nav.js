@@ -228,7 +228,6 @@ ModuleNav.prototype = {
     const headers = this.accordionEl.querySelectorAll('.accordion-section > .accordion-header');
     if (headers.length) {
       [...headers].forEach((header) => {
-        $(header).hideFocus();
         if (this.settings.displayMode === 'collapsed') {
           $(header).tooltip({
             placementOpts: { x: 16 },
