@@ -162,6 +162,16 @@
         @include font-size(14);
       }
 
+      .btn {
+        top: -1px;
+      }
+
+      &.list-item {
+        &::before {
+          @include font-size(14);
+        }
+      }
+
       &:last-child {
         border-bottom-color: transparent;
       }
@@ -385,7 +395,7 @@
 
         // 1st-level Accordion Panes
         .accordion-pane {
-          @include left-align-cascade-styles-pane(13px, 49px, 49px);
+          @include left-align-cascade-styles-pane(50px, 49px, 49px);
 
           // 2nd-level Accordion Headers
           .accordion-header {
