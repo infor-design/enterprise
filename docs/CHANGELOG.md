@@ -1,26 +1,90 @@
 # What's New with Enterprise
 
+## v4.85.0
+
+## v4.85.0 Fixes
+
+- `[Locale]` Fixed a bug using extend translations on some languages (`fr-CA/pt-BR`). ([#7491](https://github.com/infor-design/enterprise/issues/7491))
+- `[Locale/Multiselect]` Changed text from selected to selection as requested by translators. ([#5886](https://github.com/infor-design/enterprise/issues/5886))
+
+## v4.84.0
+
+## v4.84.0 Features
+
+- `[Line Chart]` Added short and abbreviated name options for the data. ([#5906](https://github.com/infor-design/enterprise/issues/5906))
+- `[Masked Input]` Added setting to retain value if maximum length is already reached. ([#7274](https://github.com/infor-design/enterprise/issues/7274))
+- `[Module Nav]` Added the new Module Nav component. ([#7386](https://github.com/infor-design/enterprise/issues/7386))
+- `[WeekView]` Added stacked view template for week view agenda variant. ([#7373](https://github.com/infor-design/enterprise/issues/7373))
+
+## v4.84.0 Fixes
+
+- `[Bar]` Added a setting called `defaultTickCount` (`5` as default) to automatically add ticks when there are no dataset values. ([#NG1463](https://github.com/infor-design/enterprise-ng/issues/1463))
+- `[Busy Indicator]` Updated colors for busy indicator. ([#7098](https://github.com/infor-design/enterprise/issues/7098))
+- `[Button]` Adjusted alignment for popupmenu icon buttons. ([#7408](https://github.com/infor-design/enterprise/issues/7408))
+- `[Charts]` Improved the positioning of chart legend. ([#7452](https://github.com/infor-design/enterprise/issues/7452))
+- `[Datagrid]` Fixed an issue where the table was not filling the entire datagrid container in firefox. ([#6956](https://github.com/infor-design/enterprise/issues/6956))
+- `[Datagrid]` Fixed a bug where the colorpicker editor could not be toggles. ([#7362](https://github.com/infor-design/enterprise/issues/7362))
+- `[Datagrid]` Clear `rowstatus` in tree node for clearRowError to work correctly. ([#6033](https://github.com/infor-design/enterprise/issues/6033))
+- `[Datagrid]` Fixed an issue where `showColumn` was not functioning correctly with frozen columns. ([#7428](https://github.com/infor-design/enterprise/issues/7428))
+- `[Datagrid]` Changed `enterkeykhint` behavior for filtering to filter with the virtual keyboard on mobile devices. ([#1489](https://github.com/infor-design/enterprise/issues/1489))
+- `[Datagrid]` Fixed Pager not rendering correctly on page refresh. ([#6811](https://github.com/infor-design/enterprise/issues/6811))
+- `[Dropdown]` Fixed the visibility of dropdown palette icons in dark mode. ([#7431](https://github.com/infor-design/enterprise/issues/7431))
+- `[Dropdown]` Removed overflow none style for dropdown modal. ([#6033](https://github.com/infor-design/enterprise/issues/6033))
+- `[Header]` Fix on header text not being readable due to color styles. ([#7466](https://github.com/infor-design/enterprise/issues/7466))
+- `[Images]` Added class for images cursor pointer and make an example with click handler. ([#7007](https://github.com/infor-design/enterprise/issues/7007))
+- `[Editor]` Fixed editor hover styles. ([#7535](https://github.com/infor-design/enterprise/issues/7535))
+- `[Header]` Fixed an issue where the header text was difficult to read due to color styles. ([#7466](https://github.com/infor-design/enterprise/issues/7466))
+- `[Header]` Fixed on header text not being readable due to color styles. ([#7466](https://github.com/infor-design/enterprise/issues/7466))
+- `[Locale]` Added Comma translate option for locale for generating lists. ([#5887](https://github.com/infor-design/enterprise/issues/5887))
+- `[Lookup]` Added undefined check for lookup values when updating grid. ([#7403](https://github.com/infor-design/enterprise/issues/7403))
+- `[Listview]` Fixed invisible button on hover. ([#7544](https://github.com/infor-design/enterprise/issues/7544))
+- `[Modal]` Fixed button alignment on modals. ([#7543](https://github.com/infor-design/enterprise/issues/7543))
+- `[Tabs/Module]` Fixed a bug the personalization color was the same as the tab color (again). ([#7516](https://github.com/infor-design/enterprise/issues/7516))
+- `[SearchField]` Fixed misaligned icons on toolbar search and pager buttons. ([#7527](https://github.com/infor-design/enterprise/issues/7527))
+- `[Textarea]` Fixed an issue where the textarea was throwing an error. ([#7536](https://github.com/infor-design/enterprise/issues/7536))
+- `[Toolbar]` Fixed x alignment on old toolbars. ([#7550](https://github.com/infor-design/enterprise/issues/7550))
+
 ## v4.83.0
 
 ## v4.83.0 Features
 
+- `[Cards/Widgets]` Added new design and features for the cards/widget component, this includes different rounded corners and shadows. ([#7379](https://github.com/infor-design/enterprise/issues/7379))
+- `[Cards/Widgets]` All icon buttons on cards should use a new icon please change `icon-more` to `icon-vertical-ellipsis`. ([#7379](https://github.com/infor-design/enterprise/issues/7379))
 - `[CSS Utilities]` Added CSS utility classes to the library to provide a standardized and efficient way of achieving consistent styling. ([#7377](https://github.com/infor-design/enterprise/issues/7377))
+- `[Homepage]` Changed the gutter size, banner size, and widget size for the homepage. ([#7445](https://github.com/infor-design/enterprise/issues/7445))
+- `[Icons]` Icon updated for 16 icons, added new icons `change-department, shifting, shift-origin, shift-destination, swap-list-left, swap-list-right`. ([#7510](https://github.com/infor-design/enterprise/issues/7510))
 
 ## v4.83.0 Fixes
 
+- `[Busy Indicator]` Updated colors for busy indicator. ([#7098](https://github.com/infor-design/enterprise/issues/7098))
 - `[Builder]` Fixed subtitle text not shown properly. ([#7207](https://github.com/infor-design/enterprise/issues/7207))
 - `[Builder]` Fixed a bug where subtitle text was not shown properly. ([#7207](https://github.com/infor-design/enterprise/issues/7207))
+- `[Button]` Adjusted alignment for popupmenu icon buttons. ([#7408](https://github.com/infor-design/enterprise/issues/7408))
+- `[Button]` Adjusted personalized colors. ([#7406](https://github.com/infor-design/enterprise/issues/7406))
+- `[Datagrid]` Fix on unique ID generator for tooltips. ([#7393](https://github.com/infor-design/enterprise/issues/7393))
+- `[Datagrid]` Made `clearRowStatus` in tree node for `clearRowError` work correctly. ([#6033](https://github.com/infor-design/enterprise/issues/6033))
 - `[Datepicker]` Fixed validation not showing after component update. ([#7240](https://github.com/infor-design/enterprise/issues/7240))
 - `[EmptyMessage]` Improved centering of widget and homepage contents for various widget sizes to enhance the overall user experience. ([#7360](https://github.com/infor-design/enterprise/issues/7360))
+- `[Header]` Fixed header components not aligned and visibly shown properly. ([#7209](https://github.com/infor-design/enterprise/issues/7209))
+- `[Header]` Fix on header text not being readable due to color styles. ([#7466](https://github.com/infor-design/enterprise/issues/7466))
 - `[Icons]` Icons updated for 44 icons, added new `success-message` empty state and two new icons `vertical-ellipsis` and `microphone-filled`. ([#7394](https://github.com/infor-design/enterprise/issues/7394))
 - `[Icons]` Icons updated for 44 icons, added new `success-message` empty state and two new icons: `vertical-ellipsis` and `microphone-filled`. ([#7394](https://github.com/infor-design/enterprise/issues/7394))
-- `[Popupmenu]` Fixed popupmenu previous states not getting saved when called resize and update. ([#6601](https://github.com/infor-design/enterprise/issues/6601))
+- `[Monthview]` Fixed on updated method creating duplicates. ([NG#1446](https://github.com/infor-design/enterprise-ng/issues/1446))
+- `[Popupmenu]` Fix on popupmenu arrow not appearing when showArrow is true. ([#5061](https://github.com/infor-design/enterprise/issues/5061))
 - `[Popupmenu]` Fixed a bug where the popupmenu arrow was not appearing despite `showArrow` being set to true. ([#5061](https://github.com/infor-design/enterprise/issues/5061))
 - `[Popupmenu]` Fixed on popupmenu arrow not appearing when showArrow is true. ([#5061](https://github.com/infor-design/enterprise/issues/5061))
+- `[Popupmenu]` Fixed popupmenu previous states not getting saved when called resize and update. ([#6601](https://github.com/infor-design/enterprise/issues/6601))
+- `[Searchfield]` Fixed collapsible issues with search icon color and behavior. ([#7390](https://github.com/infor-design/enterprise/issues/7390))
+- `[Popupmenu]` Fixed on popupmenu arrow not appearing when showArrow is true. ([#5061](https://github.com/infor-design/enterprise/issues/5061))
+- `[Locale]` Added new translations. ([#1243](https://github.com/infor-design/enterprise/issues/7512)
 - `[Monthview]` Fix on updated method creating duplicates. ([NG#1446](https://github.com/infor-design/enterprise-ng/issues/1446))
+- `[Monthview]` Fixed on updated method creating duplicates. ([NG#1446](https://github.com/infor-design/enterprise-ng/issues/1446))
+- `[Tabs Module]` Fixed closing an active tab in the overflow menu results in a blank screen. ([#7321](https://github.com/infor-design/enterprise/issues/7321))
+- `[Toolbar]` Added hover style for contextual toolbar. ([#7459](https://github.com/infor-design/enterprise/issues/7459))
 - `[Toolbar/Toolbar Flex]` Added hover state to buttons. ([#7327](https://github.com/infor-design/enterprise/issues/7327))
 - `[Toolbar-Flex]` Fixed redundant aria-disabled in toolbar when element is disabled. ([#6339](https://github.com/infor-design/enterprise/issues/6339))
 - `[Toolbar Flex]` Fixed buttons being not visible on window resize. ([#7421](https://github.com/infor-design/enterprise/issues/7421))
+- `[Toolbar Flex]` Updated header examples and included header to use flex toolbar by default. ([#6837](https://github.com/infor-design/enterprise/issues/6837))
 
 ## v4.82.0
 

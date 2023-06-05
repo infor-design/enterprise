@@ -58,7 +58,7 @@ Creating a Multiselect Listview also uses the listview component. API guidelines
     <button class="btn-actions" type="button">
       <span class="audible">Actions</span>
       <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-        <use href="#icon-more"></use>
+        <use href="#icon-vertical-ellipsis"></use>
       </svg>
     </button>
     <ul class="popupmenu">

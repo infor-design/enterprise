@@ -1,6 +1,17 @@
 // Visibility Classes - To hide and show at various media
 //================================================== //
 
+@mixin audible() {
+  clip: rect(0, 0, 0, 0);
+  height: 0;
+  line-height: 0;
+  min-height: 0;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
 .show {
   display: block !important;
 }
@@ -21,14 +32,7 @@
 // Off Screen Text for Accessibility
 .sr-only,
 .audible {
-  clip: rect(0, 0, 0, 0);
-  height: 0;
-  line-height: 0;
-  min-height: 0;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
+  @include audible();
 }
 
 // Disable transitions

@@ -781,6 +781,7 @@ DatePicker.prototype = {
     if (this.settings.onOpenCalendar) {
       // In some cases, month picker wants to set a specifc time.
       this.settings.activeDate = this.settings.onOpenCalendar();
+      this.currentDate = this.settings.activeDate;
       if (this.isIslamic) {
         this.settings.activeDateIslamic = Locale.gregorianToUmalqura(this.settings.activeDate);
         this.settings.year = this.settings.activeDateIslamic[0];
@@ -2131,13 +2132,12 @@ DatePicker.prototype = {
       this.settings = utils.mergeSettings(this.element, settings, DATEPICKER_DEFAULTS);
     }
 
-    if (this.element.data('validate')) {
+    this.teardown();
+    this.init();
+
+    if (this.element.data('validate') && this.element.data('validate') instanceof Object) {
       this.element.data('validate').updated();
     }
-
-    return this
-      .teardown()
-      .init();
   },
 
   /**

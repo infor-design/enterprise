@@ -1,31 +1,47 @@
 // Accordion Mixins
 //================================================== //
 
+// Stylelint is disabled here because no matter
+// how the mixins are structured they don't pass
+/* stylelint-disable */
+@mixin reset-padding-start-rule($size, $reset-padding: 'false', $reset-size: 0) {
+  @if $reset-padding == 'true' { padding-inline-start: $reset-size; }
+  @else { padding-inline-start: $size; }
+}
+
+@mixin reset-padding-end-rule($size, $reset-padding: 'false', $reset-size: 0) {
+  @if $reset-padding == 'true' { padding-inline-end: $reset-size; }
+  @else { padding-inline-end: $size; }
+}
+/* stylelint-enable */
+
 // Left-to-Right
 //================================================== //
 
-@mixin left-align-cascade-styles-header($a-padding, $icon-margin, $width, $li-padding) {
+@mixin left-align-cascade-styles-header($a-padding, $icon-margin, $width, $li-padding, $reset-padding: 'true', $reset-size: 0) {
   > a {
-    padding-left: $a-padding;
+    padding-inline-start: $a-padding;
   }
 
   > .icon,
   > [class^='btn'] {
-    margin-left: $icon-margin;
+    margin-inline-start: $icon-margin;
 
     + a {
-      padding-left: 0;
+      @include reset-padding-start-rule($li-padding, $reset-padding, $reset-size);
+
       width: calc(100% - #{$width});
     }
   }
 
   &.list-item {
     &::before {
-      padding-left: $li-padding;
+      @include reset-padding-start-rule($li-padding);
     }
 
     a {
-      padding-left: 0;
+      @include reset-padding-start-rule($li-padding, $reset-padding, $reset-size);
+
       width: calc(100% - #{$width});
     }
   }
@@ -33,16 +49,16 @@
 
 @mixin left-align-cascade-styles-pane($leftPadding, $iconLinkPadding, $iconContentPadding) {
   .accordion-content {
-    padding-left: $leftPadding;
+    padding-inline-start: $leftPadding;
   }
 
   &.has-icons {
     .accordion-header.no-icon > a {
-      padding-left: $iconLinkPadding;
+      padding-inline-start: $iconLinkPadding;
     }
 
     .accordion-content {
-      padding-left: $iconContentPadding;
+      padding-inline-start: $iconContentPadding;
     }
   }
 }
@@ -50,31 +66,34 @@
 // Right-To-Left
 //================================================== //
 
-@mixin right-align-cascade-styles-header($a-padding, $icon-margin, $width, $li-padding) {
+@mixin right-align-cascade-styles-header($a-padding, $icon-margin, $width, $li-padding, $reset-padding: 'true', $reset-size: 0) {
   > a {
-    padding-left: 0;
-    padding-right: $a-padding;
+    padding-inline-start: 0;
+    padding-inline-end: $a-padding;
   }
 
   > .icon,
   > [class^='btn'] {
-    margin-left: auto;
-    margin-right: $icon-margin;
+    margin-inline-start: auto;
+    margin-inline-end: $icon-margin;
 
     + a {
-      padding-right: 0;
+      @include reset-padding-end-rule($li-padding, $reset-padding, $reset-size);
+
       width: calc(100% - #{$width});
     }
   }
 
   &.list-item {
     &::before {
-      padding-left: 0;
-      padding-right: $li-padding;
+      padding-inline-start: 0;
+
+      @include reset-padding-end-rule($li-padding);
     }
 
     a {
-      padding-right: 0;
+      @include reset-padding-end-rule($li-padding, $reset-padding, $reset-size);
+
       width: calc(100% - #{$width});
     }
   }
@@ -82,19 +101,19 @@
 
 @mixin right-align-cascade-styles-pane($rightPadding, $iconLinkPadding, $iconContentPadding) {
   .accordion-content {
-    padding-left: 0;
-    padding-right: $rightPadding;
+    padding-inline-start: 0;
+    padding-inline-end: $rightPadding;
   }
 
   &.has-icons {
     .accordion-header.no-icon > a {
-      padding-left: 0;
-      padding-right: $iconLinkPadding;
+      padding-inline-start: 0;
+      padding-inline-end: $iconLinkPadding;
     }
 
     .accordion-content {
-      padding-left: 0;
-      padding-right: $iconContentPadding;
+      padding-inline-start: 0;
+      padding-inline-end: $iconContentPadding;
     }
   }
 }

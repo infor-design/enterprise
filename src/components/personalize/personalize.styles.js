@@ -14,10 +14,10 @@ function personalizeStyles(colors) {
   background-color: ${colors.darker} !important;
 }
 
-.is-personalizable:not(.header) .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane),
-.btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane).is-personalizable {
-  background-color: ${colors.btnPrimaryColor} !important;
-  border-color: ${colors.btnPrimaryColor} !important;
+.is-personalizable:not(.header) .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):not(:disabled),
+.btn-primary:not(:disabled):not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane).is-personalizable {
+  background-color: ${colors.btnPrimaryColor};
+  border-color: ${colors.btnPrimaryColor};
 }
 
 .header.is-personalizable .buttonset .searchfield-wrapper.is-open button:not(.close) {
@@ -30,30 +30,25 @@ function personalizeStyles(colors) {
   color: ${colors.darkest} !important;
 }
 
-.header.is-personalizable .buttonset .searchfield-wrapper.is-open svg,
-.header .toolbar .buttonset .searchfield-wrapper.non-collapsible.toolbar-searchfield-wrapper.has-categories.has-go-button.has-close-icon-button.is-open button.searchfield-category-button svg.icon {
-  color: ${colors.darkest} !important;
-}
-
 html.theme-classic-dark .is-personalizable .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled {
   color: #888B94 !important;
 }
 
 html.theme-new-dark .is-personalizable:not(.header) .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):not(:disabled) {
-  background-color: ${colors.darkNewButton} !important;
-  border-color: ${colors.darkNewButton} !important;
+  background-color: ${colors.lighter};
+  border-color: ${colors.lighter};
 }
 
-html[class*="new-"] .is-personalizable:not(.header) .btn-secondary:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane),
-html[class*="new-"] .is-personalizable:not(.header) .btn-secondary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane) svg.icon  {
-  border-color: ${colors.btnSecondaryBorderColor} !important;
-  color: ${colors.btnSecondaryColor} !important;
+html[class*="new-"] .is-personalizable:not(.header) .btn-secondary:not(:disabled):not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane),
+html[class*="new-"] .is-personalizable:not(.header) .btn-secondary:not(:disabled):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane) svg.icon  {
+  border-color: ${colors.btnSecondaryBorderColor};
+  color: ${colors.btnSecondaryBorderColor};
 }
 
 html.theme-new-dark .is-personalizable:not(.header) .btn-secondary:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):not(:disabled),
 html.theme-new-dark .is-personalizable:not(.header) .btn-secondary:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):not(:disabled) svg.icon {
-  border-color: ${colors.darkNewButton} !important;
-  color: ${colors.darkNewButton} !important;
+  border-color: ${colors.lighter};
+  color: ${colors.lighter};
 }
 
 html.theme-classic-dark .is-personalizable:not(.header) .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled {
@@ -61,66 +56,39 @@ html.theme-classic-dark .is-personalizable:not(.header) .btn-primary:not(.destru
   border-color: ${colors.baseDisabled} !important;
 }
 
-.is-personalizable:not(.header) .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled,
-.btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane).is-personalizable:disabled {
-  color: ${colors.baseDisabledText} !important;
-  background-color: ${colors.baseDisabled} !important;
-  border-color: ${colors.baseDisabled} !important;
-}
-
-html.theme-new-dark .is-personalizable:not(.header) .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled {
-  color: ${colors.darkNewButtonTextDisabled} !important;
-  background-color: ${colors.darkNewButtonDisabled} !important;
-  border-color: ${colors.darkNewButtonDisabled} !important;
-}
-
-html.theme-new-dark .is-personalizable:not(.header) .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled svg.icon {
-  color: ${colors.darkNewButtonTextDisabled} !important;
-}
-
-html[class*="new-"] .is-personalizable:not(.header) .btn-secondary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled,
-html[class*="new-"] .is-personalizable:not(.header) .btn-secondary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane).is-personalizable:disabled svg.icon,
-html[class*="new-"] .is-personalizable:not(.header) .btn-secondary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled svg.icon {
-  border-color: ${colors.baseDisabled} !important;
-  color: ${colors.baseDisabled} !important;
-}
-
-html[class*="new-contrast"] .is-personalizable:not(.header) .btn-secondary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled {
-  background-color: #fff;
-}
-
-html.theme-new-dark .is-personalizable:not(.header) .btn-secondary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled {
-  border-color: ${colors.darkNewButtonTextDisabled} !important;
-  background-color: ${colors.darkNewButtonDisabled} !important;
-  color: ${colors.darkNewButtonTextDisabled} !important;
-}
-
-html.theme-new-dark .is-personalizable:not(.header) .btn-secondary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled svg.icon {
-  color: ${colors.darkNewButtonTextDisabled} !important;
-}
-
-html.theme-new-dark .is-personalizable:not(.header) .btn-tertiary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled,
-html.theme-new-dark .is-personalizable:not(.header) .btn-link:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled {
-  background-color: ${colors.darkNewButtonDisabled} !important;
-  color: ${colors.darkNewButtonTextDisabled} !important;
-}
-
-html.theme-new-dark .is-personalizable:not(.header) .btn-tertiary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled svg.icon {
-  color: ${colors.darkNewButtonTextDisabled} !important;
+html[class*="theme-classic-"]:not(.theme-classic-dark) .is-personalizable:not(.header) .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):disabled,
+html[class*="theme-classic-"]:not(.theme-classic-dark) .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane).is-personalizable:disabled {
+  color: ${colors.baseDisabledText};
+  background-color: ${colors.baseDisabled};
+  border-color: ${colors.baseDisabled};
 }
 
 .is-personalizable:not(.header) .btn-link:not(:disabled),
 .btn-link.is-personalizable:not(:disabled) {
-  color: ${colors.btnLinkColor} !important;
+  color: ${colors.btnLinkColor};
+}
+
+html.theme-new-dark .is-personalizable:not(.header) .btn-link:not(:disabled),
+html.theme-new-dark .btn-link.is-personalizable:not(:disabled),
+html.theme-new-dark .is-personalizable:not(.header) .btn-link:not(:disabled) .icon,
+html.theme-new-dark .btn-link.is-personalizable:not(:disabled) .icon {
+  color: ${colors.lighter};
+}
+
+html.theme-new-dark .is-personalizable:not(.header) .btn-link:not(:disabled):hover,
+html.theme-new-dark .btn-link.is-personalizable:not(:disabled):hover,
+html.theme-new-dark .is-personalizable:not(.header) .btn-link:not(:disabled):hover .icon,
+html.theme-new-dark .btn-link.is-personalizable:not(:disabled):hover .icon {
+  color: ${colors.lightest};
 }
 
 .is-personalizable:not(.header) .btn-link:not(:disabled):hover {
-  background-color: ${colors.secondaryButtonHover} !important;
+  background-color: ${colors.lightestPalette};
 }
 
 .is-personalizable:not(.header) .btn-link:not(:disabled) .icon,
 .btn-link.is-personalizable:not(:disabled) .icon {
-  color: ${colors.btnLinkColor} !important;
+  color: ${colors.btnLinkColor};
 }
 
 .is-personalizable button.is-pressed,
@@ -135,27 +103,30 @@ button.is-personalizable.is-pressed .icon {
 
 .is-personalizable:not(.header) .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled),
 .btn-primary.is-personalizable:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
-  background-color: ${colors.btnPrimaryColorHover} !important;
-  border-color: ${colors.btnPrimaryColorHover} !important;
+  background-color: ${colors.btnPrimaryColorHover};
+  border-color: ${colors.btnPrimaryColorHover};
 }
 
 html.theme-new-dark .is-personalizable:not(.header) .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
-  background-color: ${colors.darkNewButtonHover} !important;
-  border-color: ${colors.darkNewButtonHover} !important;
+  background-color: ${colors.lightest};
+  border-color: ${colors.lightest};
 }
 
-html[class*="new-"] .is-personalizable:not(.header) .btn-secondary:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
-  background-color: ${colors.secondaryButtonHover} !important;
+html[class*="new-"]:not(.theme-new-dark) .is-personalizable:not(.header) .btn-secondary:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
+  background-color: ${colors.lightestPalette};
 }
 
 html.theme-new-dark .is-personalizable:not(.header) .btn-secondary:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
-  background-color: ${colors.darkNewButtonLighterHover} !important;
-  color: ${colors.darkNewButtonHover} !important;
-  border-color: ${colors.darkNewButtonHover} !important;
+  color: ${colors.lightest};
+  border-color: ${colors.lightest};
+}
+
+html.theme-new-dark .is-personalizable:not(.header) .btn-secondary:not(.go-button):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) svg.icon {
+  color: ${colors.lightest};
 }
 
 html[class*="new-"] .is-personalizable:not(.header) .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
-  background-color: ${colors.btnTertiaryBgHoverColor} !important;
+  background-color: ${colors.btnTertiaryBgHoverColor};
   color: ${colors.btnTertiaryHoverColor};
 }
 
@@ -172,11 +143,10 @@ html.theme-new-dark .is-personalizable:not(.header) .btn-tertiary:not(.destructi
 html.theme-new-dark .is-personalizable:not(.header) .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) svg.icon,
 html.theme-new-dark .is-personalizable:not(.header) .btn-link:hover:not(:disabled),
 html.theme-new-dark .is-personalizable:not(.header) .btn-link:hover:not(:disabled) svg.icon {
-  background-color: ${colors.darkNewButtonLighterHover} !important;
-  color: ${colors.darkNewButtonHover} !important;
+  color: ${colors.lightest};
 }
 
-html[class*="new-"] .is-personalizable .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) svg {
+html[class*="new-"] .is-personalizable .btn-tertiary:hover:not(:disabled):not(.close):not(.btn-filter):not(.personalize-actionable):not(.destructive) svg.icon {
   color: ${colors.btnTertiaryHoverColor};
 }
 
@@ -187,12 +157,6 @@ html.theme-new-dark .is-personalizable .btn-tertiary:not(.destructive):not(.is-s
 
 html.theme-new-dark .is-personalizable:not(.hero-widget) .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):not(:disabled) svg.icon {
   color: ${colors.contrast} !important;
-}
-
-.is-personalizable:not(.header) .btn-primary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled),
-.btn-primary.is-personalizable:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
-  background-color: ${colors.btnPrimaryColorHover} !important;
-  border-color: ${colors.btnPrimaryColorHover} !important;
 }
 
 button.is-personalizable button:focus:not(.hide-focus),
@@ -211,27 +175,20 @@ a.btn-close.is-personalizable:focus:not(.hide-focus) {
     0 0 4px 2px rgba(${baseColorObj.r}, ${baseColorObj.g}, ${baseColorObj.b}, 0.3) !important;
 }
 
-.is-personalizable .btn-primary:not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):focus:not(.hide-focus),
-.btn-primary.is-personalizable button:focus:not(.hide-focus),
-.is-personalizable .btn-secondary:focus:not(.hide-focus),
-.btn-secondary.is-personalizable button:focus:not(.hide-focus) {
-  box-shadow: 0 0 0 2px ${colors.theme.bg},
-    0 0 0 3px ${colors.base},
-    0 0 4px 2px rgba(${baseColorObj.r}, ${baseColorObj.g}, ${baseColorObj.b}, 0.3);
-}
-
 .is-personalizable .btn-menu:not(.btn-primary):not(.btn-secondary).is-open,
 .btn-menu:not(.btn-primary):not(.btn-secondary).is-personalizable.is-open,
-.is-personalizable:not(.application-menu) .btn-actions:not(.btn-primary):not(.btn-secondary).is-open,
 .btn-actions:not(.btn-primary):not(.btn-secondary).is-personalizable.is-open {
   color: ${colors.base};
 }
 
 .is-personalizable .btn-menu:not(.btn-primary):not(.btn-secondary).is-open .icon,
 .btn-menu:not(.btn-primary):not(.btn-secondary).is-personalizable.is-open .icon,
-.is-personalizable:not(.application-menu) .btn-actions:not(.btn-primary):not(.btn-secondary).is-open .icon,
 .btn-actions:not(.btn-primary):not(.btn-secondary).is-personalizable.is-open .icon {
   color: ${colors.base};
+}
+
+.is-personalizable:not(.application-menu) .btn-actions:not(.btn-primary):not(.btn-secondary).is-open .icon {
+  color: ${colors.btnActionsHoverColor};
 }
 
 .is-personalizable .hyperlink:not(.today),
@@ -316,6 +273,20 @@ a.is-personalizable svg.ripple-effect {
 
 .module-tabs.is-personalizable .tab.is-selected {
   background-color: ${colors.base} !important;
+  color: ${colors.moduleTabsSelectedTextColor} !important;
+}
+
+.module-tabs.is-personalizable .tab:not(.is-selected) {
+  background-color: ${colors.dark} !important;
+}
+
+.module-tabs.is-personalizable .tab {
+  color: ${colors.contrast};
+}
+
+.is-personalizable.tab-container.module-tabs .tab-more,
+.is-personalizable.tab-container.module-tabs .add-tab-button {
+  color: ${colors.contrast};
 }
 
 .tab-container.vertical.is-personalizable > .tab-list-container > .tab-list > .tab.is-selected {
@@ -366,18 +337,18 @@ a.is-personalizable svg.ripple-effect {
 }
 
 .header.is-personalizable button:not(:disabled),
-.header.is-personalizable button:not(:disabled) .icon,
+.header.is-personalizable button:not(:disabled):not(.close) .icon,
 .header.is-personalizable button:not(:disabled) .app-header.icon > span,
-.subheader.is-personalizable button:not(:disabled),
-.subheader.is-personalizable button:not(:disabled) .icon,
-.subheader.is-personalizable button:not(:disabled) .app-header.icon > span,
+.subheader.is-personalizable button:not(:disabled):not(.searchfield-category-button),
+.subheader.is-personalizable button:not(:disabled):not(.searchfield-category-button) .icon,
+.subheader.is-personalizable button:not(:disabled):not(.searchfield-category-button) .app-header.icon > span,
 .is-personalizable .personalize-subheader button:not(:disabled),
-.is-personalizable .personalize-subheader button:not(:disabled) .icon,
+.is-personalizable .personalize-subheader button:not(:disabled):not(.close) .icon,
 .is-personalizable .personalize-subheader button:not(:disabled) .app-header.icon > span  {
   color: ${colors.contrast} !important;
 }
 
-.header.is-personalizable button:not(:disabled):hover .icon {
+html[class*="theme-new"] .header.is-personalizable button:not(.close):not(:disabled):hover .icon {
   color: ${colors.btnTertiaryHoverColor} !important;
 }
 
@@ -407,15 +378,15 @@ html[class*="-dark"] .is-personalizable .subheader button:not(:disabled) .icon {
   background-color: ${colors.contrast} !important;
 }
 
-.header.is-personalizable button:not(.go-button):not(.close):not(.searchfield-category-button):not(:disabled):hover,
-.header.is-personalizable button:not(:disabled):hover .app-header.icon > span,
-.header.is-personalizable .toolbar [class^='btn']:hover:not(.go-button):not(.close):not(.searchfield-category-button):not([disabled]),
-.subheader.is-personalizable button:not(.go-button):not(.close):not(.searchfield-category-button):not(:disabled):hover,
-.subheader.is-personalizable button:not(:disabled):hover .app-header.icon > span,
-.subheader.is-personalizable .toolbar [class^='btn']:hover:not(.go-button):not(.close):not(.searchfield-category-button):not([disabled]),
-.personalize-subheader button:not(.go-button):not(.close):not(.searchfield-category-button):not(:disabled):hover,
-.personalize-subheader button:not(:disabled):hover .app-header.icon > span,
-.personalize-subheader .toolbar [class^='btn']:hover:not(.go-button):not(.close):not(.searchfield-category-button):not([disabled]) {
+html[class*="theme-new-"] .header.is-personalizable button:not(.go-button):not(.close):not(.searchfield-category-button):not(:disabled):hover,
+html[class*="theme-new-"] .header.is-personalizable button:not(:disabled):hover .app-header.icon > span,
+html[class*="theme-new-"] .header.is-personalizable .toolbar [class^='btn']:hover:not(.go-button):not(.close):not(.searchfield-category-button):not([disabled]),
+html[class*="theme-new-"] .subheader.is-personalizable button:not(.go-button):not(.close):not(.searchfield-category-button):not(:disabled):hover,
+html[class*="theme-new-"] .subheader.is-personalizable button:not(:disabled):hover .app-header.icon > span,
+html[class*="theme-new-"] .subheader.is-personalizable .toolbar [class^='btn']:hover:not(.go-button):not(.close):not(.searchfield-category-button):not([disabled]),
+html[class*="theme-new-"] .personalize-subheader button:not(.go-button):not(.close):not(.searchfield-category-button):not(:disabled):hover,
+html[class*="theme-new-"] .personalize-subheader button:not(:disabled):hover .app-header.icon > span,
+html[class*="theme-new-"] .personalize-subheader .toolbar [class^='btn']:hover:not(.go-button):not(.close):not(.searchfield-category-button):not([disabled]) {
   color: ${colors.btnTertiaryHoverColor} !important;
   background-color: ${colors.btnTertiaryBgHoverColor} !important;
   opacity: 1;
@@ -465,12 +436,7 @@ html.theme-classic-dark .header.is-personalizable .buttonset .searchfield-wrappe
   border-color: ${colors.contrast};
 }
 
-.header .toolbar-searchfield-wrapper.has-collapse-button:not(.is-open) .searchfield {
-  color: ${colors.contrast};
-}
-
-html.theme-new-dark .header.is-personalizable.has-tabs .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected:not(.is-disabled),
-.header.is-personalizable .flex-toolbar .toolbar-searchfield-wrapper.has-collapse-button:not(.is-open) > svg.icon:not(.icon-error) {
+html.theme-new-dark .header.is-personalizable.has-tabs .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected:not(.is-disabled) {
   color: ${colors.contrast} !important;
 }
 
@@ -520,7 +486,7 @@ html[class*="theme-new-"] .personalize-header.tab-container.header-tabs:not(.alt
   opacity: 1;
 }
 
-html[class*="theme-new-"] .is-personalizable .count-container .instance-count .count {
+.is-personalizable .count-container .instance-count .count {
   border-color: ${colors.contrast} !important;
   color: ${colors.contrast} !important;
 }
@@ -543,7 +509,7 @@ html.theme-classic-dark .hero-widget.is-personalizable .hero-content .circlepage
   background-color: ${colors.subtext};
 }
 
-.hero-widget.is-personalizable .hero-header .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary).is-open span {
+.hero-widget.is-personalizable .hero-header .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):hover span {
   color: ${colors.contrast} !important;
 }
 
@@ -557,8 +523,8 @@ html.theme-classic-dark .hero-widget.is-personalizable .hero-content .circlepage
 }
 
 .header.is-personalizable button:not(:disabled),
-.subheader.is-personalizable button:not(:disabled)  {
-  color: ${colors.contrast} !important;
+.subheader.is-personalizable button:not(:disabled):not(.searchfield-category-button) {
+  color: ${colors.contrast};
 }
 
 .header.is-personalizable  .flex-toolbar [class^='btn']:focus:not(.hide-focus) .icon {
@@ -577,7 +543,8 @@ html.theme-classic-dark .hero-widget.is-personalizable .hero-content .circlepage
   background-color: ${colors.contrast} !important;
 }
 
-.header.is-personalizable .toolbar-searchfield-wrapper:not(.non-collapsible):not(.is-open) .icon:not(.close),
+.header.is-personalizable .buttonset .toolbar-searchfield-wrapper:not(.is-open) svg.icon:not(.close),
+.header.is-personalizable .toolbar-searchfield-wrapper:not(.is-open) .icon:not(.close),
 .header .toolbar-searchfield-wrapper .searchfield,
 .masthead .toolbar-searchfield-wrapper .searchfield,
 .header.is-personalizable .toolbar [class^='btn']:focus .icon {
@@ -592,19 +559,27 @@ html.theme-classic-dark .hero-widget.is-personalizable .hero-content .circlepage
   background-color: #E6F1FD !important;
 }
 
-.scrollable-flex-header .breadcrumb:not(.alternate) .hyperlink,
-.scrollable-flex-header .breadcrumb:not(.alternate) .breadcrumb-text,
-.scrollable-flex-header .breadcrumb:not(.alternate) .hyperlink,
-.scrollable-flex-header .breadcrumb:not(.alternate) .breadcrumb-list li::after,
-.scrollable-flex-header .breadcrumb:not(.alternate) ol li::after {
-  color: ${colors.contrast} !important;
+.personalize-subheader.scrollable-flex-header .breadcrumb:not(.alternate) .hyperlink,
+.personalize-subheader..scrollable-flex-header .breadcrumb:not(.alternate) .breadcrumb-text,
+.personalize-subheader.scrollable-flex-header .breadcrumb:not(.alternate) .hyperlink,
+.personalize-subheader.scrollable-flex-header .breadcrumb:not(.alternate) .breadcrumb-list li::after,
+.personalize-subheader.scrollable-flex-header .breadcrumb:not(.alternate) ol li::after {
+  color: ${colors.contrast};
 }
 
-.scrollable-flex-header .breadcrumb .hyperlink:focus:not([disabled]) {
+.personalize-subheader.scrollable-flex-header .breadcrumb .hyperlink:focus:not([disabled]) {
   border: 1px solid ${colors.contrast};
 }
 
-.header .toolbar-searchfield-wrapper.active .searchfield:focus {
+.personalize-subheader.scrollable-flex-header .breadcrumb:not(.alternate) .hyperlink:hover:not([disabled]) {
+  border-bottom: 1px solid ${colors.contrast};
+}
+
+.header .toolbar-searchfield-wrapper.active.has-focus .searchfield {
+  border-color: ${colors.darkest};
+}
+
+html[class*="-dark"] .header .toolbar-searchfield-wrapper.active.has-focus .searchfield {
   border-color: ${colors.contrast};
 }
 
@@ -632,20 +607,7 @@ html.theme-classic-dark .hero-widget.is-personalizable .hero-content .circlepage
   color: ${colors.contrast};
 }
 
-.is-personalizable .tab-container.header-tabs.alternate > .tab-list-container .tab:not(.is-disabled) {
-  color: ${colors.contrast};
-}
-
-.is-personalizable .tab-container.header-tabs.alternate > .tab-list-container .tab.is-selected:not(.is-disabled) {
-  border-color: ${colors.contrast};
-}
-
-.is-personalizable .tab-container.header-tabs.alternate > .tab-list-container .tab-focus-indicator.is-selected {
-  border-color: ${colors.contrast};
-}
-
-.is-personalizable .tab-container.header-tabs.alternate > .tab-list-container .tab:hover:not(.is-disabled) {
-  background-color: ${colors.darker};
+html[class*='classic-'] .is-personalizable .tab-container.header-tabs.alternate > .tab-list-container .tab.is-selected:not(.is-disabled) {
   border-color: ${colors.contrast};
 }
 
@@ -703,6 +665,10 @@ html[class*='new-'] .is-personalizable.hero-widget .hero-header .toolbar .button
   color: ${colors.contrast};
 }
 
+.subheader.is-personalizable .go-button.is-personalizable:not(.hide-focus) {
+  box-shadow: 0 0 0 1px #efeff0, 0 0 0 2px ${colors.darkest}, 0 0 4px 2px rgba(41, 41, 41, 0.3);
+}
+
 .is-personalizable .breadcrumb .hyperlink,
 .breadcrumb.is-personalizable .hyperlink {
   color: ${colors.theme.text};
@@ -758,6 +724,7 @@ html[dir='rtl'] .scrollable-flex-header.is-personalizable .breadcrumb.truncated:
 
 .module-tabs.is-personalizable .tab-more:hover {
   background-color: ${colors.hover} !important;
+  color: ${colors.contrast};
 }
 
 .module-tabs.is-personalizable .tab-more.is-open {
@@ -788,6 +755,11 @@ html[dir='rtl'] .scrollable-flex-header.is-personalizable .breadcrumb.truncated:
 
 .module-tabs.is-personalizable .tab:hover {
   background-color: ${colors.darker} !important;
+  color: ${colors.contrast};
+}
+
+.is-personalizable.tab-container.module-tabs .tab .icon {
+  color: ${colors.contrast};
 }
 
 .module-tabs.has-toolbar.is-personalizable .tab-list-container + .toolbar {
@@ -907,16 +879,10 @@ html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::af
   background-color: ${colors.darkestPalette} !important;
 }
 
-html[class*="theme-new-"] .application-menu.is-personalizable button .icon,
-html[class*="theme-new-"] .application-menu.is-personalizable button span,
-html[class*="theme-new-"] .application-menu.is-personalizable .hyperlink {
-  color: ${colors.contrast} !important;
-}
-
-html[class*="-dark"] .is-personalizable .btn-tertiary:not(:disabled):hover,
+html[class*="-dark"] .is-personalizable .btn-tertiary:not(.destructive):not(:disabled):hover,
 html[class*="-dark"] .is-personalizable .btn-link:not(:disabled):hover,
 html[class*="-dark"] .is-personalizable:not(.header) .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
-  background-color: #3E3E42 !important;
+  background-color: #3E3E42;
 }
 
 .is-personalizable.hero-widget .hero-bottom .hero-footer .hero-footer-nav a.btn-tertiary:not(:disabled):hover {
@@ -1068,14 +1034,14 @@ html[class*="-dark"] .is-personalizable .subheader h2 {
   color: ${colors.contrast} !important;
 }
 
-.is-personalizable .personalize-actionable:hover:not([disabled]):not(.personalize-actionable-disabled):not(a) ,
-.is-personalizable .personalize-actionable:hover:not([disabled]):not(.personalize-actionable-disabled) svg,
-.is-personalizable .personalize-actionable:hover:not([disabled]):not(.personalize-actionable-disabled) .icon  {
+html[class*="theme-new-"] .is-personalizable .personalize-actionable:hover:not([disabled]):not(.personalize-actionable-disabled):not(a) ,
+html[class*="theme-new-"] .is-personalizable .personalize-actionable:hover:not([disabled]):not(.personalize-actionable-disabled) svg,
+html[class*="theme-new-"] .is-personalizable .personalize-actionable:hover:not([disabled]):not(.personalize-actionable-disabled) .icon  {
   color: ${colors.btnHoverColor} !important;
   opacity: 1;
 }
 
-.is-personalizable .personalize-actionable:hover:not([disabled]):not(.personalize-actionable-disabled):not(a) {
+html[class*="theme-new-"] .is-personalizable .personalize-actionable:hover:not([disabled]):not(.personalize-actionable-disabled):not(a) {
   color: ${colors.btnHoverColor} !important;
   background-color: ${colors.btnBgHoverColor};
   opacity: 1;
@@ -1086,7 +1052,7 @@ html[class*="-dark"] .is-personalizable .subheader h2 {
   width: 34px;
 }
 
-.is-personalizable .btn-icon.personalize-actionable:hover {
+html[class*="theme-new-"] .is-personalizable .btn-icon.personalize-actionable:hover {
   background-color: ${colors.btnBgHoverColor} !important;
 }
 

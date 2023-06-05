@@ -1,11 +1,13 @@
 <header class="header is-personalizable">
-  <div class="toolbar">
-    <div class="title">
+  <div class="flex-toolbar">
+    <div class="toolbar-section">
       {{> includes/header-appmenu-trigger}}
+    </div>
+    <div class="toolbar-section title">
       <h1>Page Title</h1>
     </div>
 
-    <div class="buttonset">
+    <div class="toolbar-section buttonset">
       <button type="button" class="btn btn-toggle" title="Show Filter Row" aria-pressed="false">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
           <use href="#icon-filter"></use>

@@ -711,7 +711,11 @@ Lookup.prototype = {
     // Mark selected rows
     lookupGrid.off('selected.lookup');
     if (self.initValues) {
-      self.initValues.forEach(initval => self.selectGridRows(initval.value.toString()));
+      self.initValues.forEach((initval) => {
+        if (initval) {
+          self.selectGridRows(initval.value.toString());
+        }
+      });
       delete self.initValues;
     } else {
       const fieldVal = self.element.val();

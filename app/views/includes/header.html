@@ -1,6 +1,6 @@
-<header class="header is-personalizable">
-  <div class="{{#useFlexToolbar}}flex-toolbar{{/useFlexToolbar}}{{^useFlexToolbar}}toolbar{{/useFlexToolbar}} has-more-button do-resize">
-    <div class="{{#useFlexToolbar}}toolbar-section {{/useFlexToolbar}}title">
+<header class="header is-personalizable" data-options="{'useFlexToolbar': true}">
+  <div class="flex-toolbar has-more-button do-resize">
+    <div class="toolbar-section title">
       {{#headerHamburger}}
       <button class="btn-icon application-menu-trigger" type="button">
         <span class="audible">Show navigation</span>
@@ -13,7 +13,7 @@
       {{> includes/page-title}}
     </div>
 
-    <div class="{{#useFlexToolbar}}toolbar-section {{/useFlexToolbar}}buttonset">
+    <div class="toolbar-section buttonset">
       <button type="button" id="info-btn" class="btn-icon ignore-in-menu" data-options="{'placement': 'below', 'keepOpen': 'true'}">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
           <use href="#icon-info"></use>

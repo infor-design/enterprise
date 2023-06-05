@@ -31,6 +31,8 @@ const reloadSourceStyles = ['none', 'open', 'typeahead'];
 * @param {object} [settings] The component settings.
 * @param {boolean} [settings.closeOnSelect = true]  When an option is selected, the list will close if set to "true".  List stays open if "false".
 * @param {string} [settings.cssClass = null]  Append an optional css class to dropdown-list
+* @param {string} [settings.dropdownIcon = 'dropdown'] Change the icon used as the "dropdown" arrow.
+* @param {boolean} [settings.extraListWrapper = false] If true, adds an extra wrapping element in the Dropdown List (used for styling/scrolling).
 * @param {string} [settings.filterMode = 'contains']  Search mode to use between 'startsWith' and 'contains', false will not allow client side filter
 * @param {boolean} [settings.virtualScroll = false] If true virtual scrolling will be used, this is good for larger lists but may not work with all other features.
 * @param {boolean} [settings.noSearch = false]  If true, disables the ability of the user to enter text
@@ -63,6 +65,8 @@ const reloadSourceStyles = ['none', 'open', 'typeahead'];
 const DROPDOWN_DEFAULTS = {
   closeOnSelect: true,
   cssClass: null,
+  dropdownIcon: 'dropdown',
+  extraListWrapper: false,
   filterMode: 'contains',
   virtualScroll: false,
   maxSelected: undefined, // (multiselect) sets a limit on the number of items that can be selected
@@ -88,7 +92,9 @@ const DROPDOWN_DEFAULTS = {
   selectedTextString: null,
   selectAllFilterOnly: true,
   appendTo: '[role="main"]',
-  attributes: null
+  attributes: null,
+  width: undefined,
+  widthTarget: undefined
 };
 
 function Dropdown(element, settings) {
@@ -305,7 +311,7 @@ Dropdown.prototype = {
     // Check for and add the icon
     this.icon = this.wrapper.find('.icon');
     if (!this.icon.length) {
-      this.icon = $.createIconElement('dropdown');
+      this.icon = $.createIconElement(this.settings.dropdownIcon || 'dropdown');
       this.wrapper.append(this.icon);
     }
 
@@ -803,13 +809,15 @@ Dropdown.prototype = {
     const showSelectAll = this.settings.showSelectAll === true;
     const headerText = {
       all: Locale.translate('All'),
-      selected: Locale.translate('Selected'),
+      selected: Locale.translate('Selection'),
       labelText: self.isInlineLabel ? self.inlineLabelText.text() : this.label.text()
     };
     headerText.all = (typeof s.allTextString === 'string' && s.allTextString !== '') ?
       self.settings.allTextString : `${headerText.all}`;
     headerText.selected = (typeof s.selectedTextString === 'string' && s.selectedTextString !== '') ?
       self.settings.selectedTextString : `${headerText.selected}`;
+    const wrapperStart = this.settings.extraListWrapper ? '<div class="dropdown-list-wrapper">' : '';
+    const wrapperEnd = this.settings.extraListWrapper ? '</div>' : '';
 
     // Find custom ID attributes
     const baseIdAttr = utils.getAttribute(this, 'id', this.settings.attributes);
@@ -827,7 +835,7 @@ Dropdown.prototype = {
       listContents = `<div class="dropdown-list${reverseText}${isMobile ? ' mobile' : ''}${this.settings.multiple ? ' multiple' : ''}" id="${listId}" ${this.settings.multiple ? 'aria-multiselectable="true"' : ''}>
         <label for="dropdown-search" class="audible">${this.settings.noSearch ? Locale.translate('PressDown') : Locale.translate('TypeToFilter')}</label>
         <input type="text" class="dropdown-search${reverseText}" ${this.settings.noSearch ? 'aria-readonly="true"' : ''} id="dropdown-search" autocomplete="off" />
-        <span class="trigger">${isMobile ? $.createIcon({ icon: 'close', classes: ['close'] }) : $.createIcon('dropdown')}</span>`;
+        <span class="trigger">${isMobile ? $.createIcon({ icon: 'close', classes: ['close'] }) : $.createIcon(this.settings.dropdownIcon || 'dropdown')}</span>`;
 
       if (this.settings.virtualScroll) {
         listContents += `<div class="virtual-scroll-container">
@@ -838,7 +846,7 @@ Dropdown.prototype = {
             </div>
           </div>`;
       } else {
-        listContents += `<ul id="${listUlId}"${listAria} aria-label="${Locale.translate('Dropdown')}">`;
+        listContents += `${wrapperStart}<ul id="${listUlId}"${listAria} aria-label="${Locale.translate('Dropdown')}">`;
       }
     } else {
       this.list.attr('id', listId);
@@ -965,7 +973,7 @@ Dropdown.prototype = {
     // Build the entire thing and set references if this is the first opening.
     // Otherwise, simply replace the elements inside the <ul>.
     if (!listExists) {
-      listContents += this.settings.virtualScroll ? `${ulContents}</div>` : `${ulContents}</ul></div>`;
+      listContents += this.settings.virtualScroll ? `${ulContents}</div>` : `${ulContents}</ul>${wrapperEnd}</div>`;
 
       // Append markup to the DOM
       this.list = $(listContents);
@@ -1891,7 +1899,7 @@ Dropdown.prototype = {
 
     opts.each(function () {
       if (text.length > 0) {
-        text += ', ';
+        text += `${Locale.currentLocale.data.punctuation.comma} `;
       }
       text += $(this).text().trim();
     });
@@ -2103,15 +2111,7 @@ Dropdown.prototype = {
       });
     }
 
-    // Limit the width
-    if (this.settings.maxWidth) {
-      this.list.css('max-width', `${this.settings.maxWidth}px`);
-    }
-
-    // Limit the width
-    if (this.settings.width) {
-      this.list.css('width', `${this.settings.width}px`);
-    }
+    this.setListWidth();
 
     // Set the contents of the search input.
     // If we've got a stored typeahead
@@ -2301,7 +2301,6 @@ Dropdown.prototype = {
       this.parentScrollableArea.on('scroll.dropdown', (e) => {
         this.scrollDocument(e);
       });
-      this.parentScrollableArea.css('overscroll-behavior', 'none');
     }
 
     $('body').on('resize.dropdown', () => {
@@ -2372,7 +2371,7 @@ Dropdown.prototype = {
       // Turn upside-down if flipped to the top of the pseudoElem
       self.list[placementObj.wasFlipped === true ? 'addClass' : 'removeClass']('is-ontop');
       if (!self.settings.virtualScroll) {
-        self.listUl[placementObj.wasFlipped === true ? 'prependTo' : 'appendTo'](self.list);
+        self.listUl[placementObj.wasFlipped === true ? 'prependTo' : 'appendTo'](self.settings.extraListWrapper ? self.list.find('.dropdown-list-wrapper') : self.list);
       }
       const listStyle = window.getComputedStyle(self.list[0]);
       const listStyleTop = listStyle.top ? parseInt(listStyle.top, 10) : 0;
@@ -2433,6 +2432,9 @@ Dropdown.prototype = {
     if (this.isInGrid) {
       parentElement = this.element.closest('.datagrid-cell-wrapper');
     }
+    if (this.widthTargetEnabled) {
+      parentElement = $(this.settings.widthTarget);
+    }
 
     // If the list would end up being wider parent,
     // use the list's width instead of the parent's width
@@ -2445,7 +2447,7 @@ Dropdown.prototype = {
     // the parent element.
     this.searchInput[0].style.cssText = `width: ${parentElementWidth}px !important`;
     const listDefaultWidth = Math.round(this.list.width());
-    const useParentWidth = listDefaultWidth <= parentElementWidth;
+    const useParentWidth = this.widthTargetEnabled || listDefaultWidth <= parentElementWidth;
     this.searchInput[0].style.width = '';
 
     // Add parent info to positionOpts
@@ -2468,15 +2470,7 @@ Dropdown.prototype = {
       positionOpts.x = self.settings.placementOpts.x;
     }
 
-    // Limit the maxWidth
-    if (this.settings.maxWidth) {
-      this.list.css('max-width', `${this.settings.maxWidth}px`);
-    }
-
-    // Limit the width
-    if (this.settings.width) {
-      this.list.css('width', `${this.settings.width}px`);
-    }
+    this.setListWidth();
 
     this.list.one('afterplace.dropdown', dropdownAfterPlaceCallback).place(positionOpts);
 
@@ -2670,6 +2664,35 @@ Dropdown.prototype = {
     this.list = null;
     this.searchInput = null;
     this.listUl = null;
+  },
+
+  /**
+   * @readonly
+   * @returns {boolean} true if usage of `widthTarget` is enabled
+   */
+  get widthTargetEnabled() {
+    return this.settings.width === 'parent' && typeof this.settings.widthTarget === 'string';
+  },
+
+  /**
+   * @private
+   */
+  setListWidth() {
+    // Limit the maxWidth
+    if (this.settings.maxWidth) {
+      const maxWidthAttr = typeof this.settings.maxWidth === 'number' ? `${this.settings.maxWidth}px` : 'auto';
+      this.list.css('max-width', maxWidthAttr);
+    }
+
+    // Limit the dropdown list width
+    if (this.settings.width) {
+      let widthAttr = typeof this.settings.width === 'number' ? `${this.settings.width}px` : 'auto';
+      if (this.widthTargetEnabled) {
+        const el = document.querySelector(this.settings.widthTarget);
+        if (el) widthAttr = `${el.clientWidth}px`;
+      }
+      this.list.css('width', widthAttr);
+    }
   },
 
   /**

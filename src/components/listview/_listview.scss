@@ -128,7 +128,7 @@
     border: 1px solid transparent;
     border-bottom-color: $listview-border-color;
     color: $listview-color;
-    padding: 16px 20px 15px;
+    padding: 16px 16px 15px;
     position: relative;
 
     &:hover {
@@ -627,7 +627,9 @@
 }
 
 // Search Toolbar on Listview
-.listview-search {
+.listview-search,
+.card-search,
+.widget-search {
   .searchfield-wrapper {
     background-color: $body-color-primary-background;
     height: 100%;
@@ -643,8 +645,12 @@
       }
     }
 
+    &.non-collapsible.is-open > .icon:not(.close):not(.icon-error) {
+      left: 18px !important;
+    }
+
     .btn-icon {
-      top: 9px;
+      top: 7px;
     }
 
     &.has-listview-filters {

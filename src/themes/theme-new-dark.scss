@@ -17,6 +17,7 @@
 
 // Theme Overrides
 $body-color-primary-background: $ids-color-palette-slate-100;
+$homepage-background-color: $body-color-primary-background;
 
 $header-default-bg-color: $ids-color-palette-slate-60;
 $header-default-bg-hover-color: $ids-color-palette-slate-80;
@@ -89,7 +90,7 @@ $button-hyperlink-hover-color: $ids-color-palette-slate-40;
 $button-color-primary-initial-font: $ids-color-palette-slate-90;
 $button-color-primary-initial-background: $ids-color-palette-azure-40;
 $button-color-primary-hover-background: $ids-color-palette-azure-30;
-$button-color-primary-disabled-background-new: $ids-color-palette-slate-80;
+$button-color-primary-disabled-background-new: $ids-color-palette-slate-90;
 $button-color-primary-disabled-font-new: $ids-color-palette-slate-40;
 
 $button-color-secondary-initial-font-new: $ids-color-palette-azure-40;
@@ -101,7 +102,7 @@ $button-color-secondary-disabled-border-new: $ids-color-palette-slate-50;
 $button-color-secondary-disabled-font-new: $ids-color-palette-slate-40;
 
 $button-color-tertiary-disabled-background-new: $ids-color-palette-slate-90;
-$button-color-tertiary-hover-background-new: $ids-color-palette-slate-90;
+$button-color-tertiary-hover-background-new: rgba(0, 0, 0, .3);
 $button-color-tertiary-hover-font-new: $ids-color-palette-white;
 
 $button-color-primary-destructive-initial-background-new: $ids-color-palette-ruby-60;
@@ -192,6 +193,9 @@ $status-03-bg-color: $ids-color-palette-amber-50;
 $status-04-bg-color: $ids-color-palette-emerald-50;
 $status-05-bg-color: $ids-color-palette-azure-60;
 
+// Busy Indicator
+$busy-indicator-color: $ids-color-palette-azure-40;
+
 // Cards
 $card-content-button-color: $ids-color-palette-slate-10;
 $card-content-status-success-color: $ids-color-palette-emerald-60;
@@ -204,8 +208,12 @@ $card-content-header-status-busy-color: $ids-color-palette-ruby-60;
 $card-content-header-status-away-color: $ids-color-palette-amber-60;
 
 $card-selected-background-color: rgba($ids-color-brand-primary-base, 0.3);
+$card-scrolling-box-shadow: 0 0 4px 0 #ffffff60;
+$card-scrolling-border-color: $ids-color-palette-slate-80;
 $card-expandable-sub-heading: $ids-color-palette-slate-20;
 $card-selected-border-color: $ids-color-brand-primary-lighter;
+$card-actions-toolbar-button-hover-color: $ids-color-palette-slate-10;
+$card-border-color-hover: $ids-color-palette-slate-70;
 
 // Popup Menu
 $popupmenu-color: $ids-color-palette-white;
@@ -321,6 +329,9 @@ $dropdown-menu-separator-color: $ids-color-palette-slate-40;
 $dropdown-menu-separator-border-color: $ids-color-palette-slate-50;
 $dropdown-readonly-icon-color: $ids-color-palette-slate-40;
 
+$dropdown-swatch-border-color: $ids-color-palette-slate-40;
+$ids-color-status-base: $ids-color-palette-slate-40;
+
 // Date Picker
 $datepicker-month-year-color: $inverse-color;
 $datepicker-alternate-month-color: $ids-color-palette-slate-50;
@@ -404,7 +415,7 @@ $cardlist-bg-color: $ids-color-palette-slate-90;
 $cardlist-border-color: $ids-color-palette-slate-70;
 $cardlist-header-color: $ids-color-palette-white;
 $cardlist-actions-color: $ids-color-palette-slate-30;
-$cardlist-box-shadow-color: rgba(0, 0, 0, 0.7);
+$cardlist-box-shadow-color: rgba(0, 0, 0, 0.15);
 
 // Checkboxes
 $checkbox-disabled-text-color: $checkbox-color-unchecked-disabled-font;
@@ -799,7 +810,7 @@ $header-text-color: $ids-color-palette-white;
 $header-toolbar-searchfield-icon-color: rgba($ids-color-palette-white, 1);
 $header-button-hover-color: rgba($ids-color-palette-white, 1);
 $header-button-focus-color: rgba($ids-color-palette-white, 1);
-$header-button-color: rgba($ids-color-palette-white, 0.7);
+$header-button-color: $ids-color-palette-white;
 $header-bg-color: $ids-color-palette-slate-60;
 $header-primary-btn-background-color: $ids-color-palette-slate-70;
 $header-primary-btn-background-hover-color: $ids-color-palette-slate-80;

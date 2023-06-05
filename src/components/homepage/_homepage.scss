@@ -6,26 +6,28 @@
 // Different Widget Heights and Widths
 
 .homepage {
+  background-color: $homepage-background-color;
   height: inherit;
   margin: 0 auto;
-  padding: 20px 0;
+  padding: 32px 0;
   position: relative;
 
   .card,
   .small-widget,
   .widget {
-    height: 370px;
+    height: 368px;
     left: 0;
     position: absolute;
     top: 0;
+    overflow: hidden;
     width: 360px;
 
     &:last-child::after {
       content: '';
       display: inline-block;
-      height: 20px;
+      height: 16px;
       position: absolute;
-      top: 370px;
+      top: 368px;
       width: 10px;
     }
   }
@@ -140,9 +142,13 @@
   overflow: scroll;
 }
 
+.header + .page-container > .homepage {
+  height: 100%;
+}
+
 .card.double-height,
 .widget.double-height {
-  height: 760px;
+  height: 752px;
 
   .widget-content,
   .card-content {
@@ -219,7 +225,7 @@
 .widget.quintuple-width.to-double,
 .card.sextuple-width.to-double,
 .widget.sextuple-width.to-double {
-  width: 740px; // 660 (double: 380 + single)
+  width: 736px; // 660 (double: 380 + single)
 }
 
 .small-widget.double-width,
@@ -238,7 +244,7 @@
 .widget.quintuple-width.to-triple,
 .card.sextuple-width.to-triple,
 .widget.sextuple-width.to-triple {
-  width: 1120px; //1000 (triple: 380 + double)
+  width: 1112px; //1000 (triple: 380 + double)
 }
 
 .small-widget.triple-width,
@@ -318,9 +324,10 @@
 .hero-widget {
   background-color: $header-hero-widget-bg-color;
   color: $header-button-color;
-  max-height: 410px;
-  min-height: 370px;
+  max-height: 384px;
+  min-height: 368px;
   overflow: hidden;
+  padding: 8px 0;
   width: 100%;
 
   &.auto-height,
@@ -331,9 +338,9 @@
   }
 
   .hero-top {
-    height: 370px;
-    max-height: 370px;
-    min-height: 370px;
+    height: 368px;
+    max-height: 368px;
+    min-height: 368px;
   }
 
   .hero-bottom {

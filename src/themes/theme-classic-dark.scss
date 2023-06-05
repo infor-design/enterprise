@@ -26,7 +26,7 @@ $header-bg-color: $ids-color-palette-slate-60;
 $subhead-bg-color: $ids-color-palette-slate-50;
 $header-text-color: $ids-color-palette-white;
 $header-border-color: $ids-color-palette-slate-100;
-$header-button-color: rgba($ids-color-palette-white, 0.7);
+$header-button-color: $ids-color-palette-white;
 $header-button-focus-color: rgba($ids-color-palette-white, 1);
 $header-button-hover-color: rgba($ids-color-palette-white, 1);
 $header-button-disabled-color: rgba($ids-color-palette-white, 0.3);
@@ -170,6 +170,9 @@ $badge-neutral-hover-icon-color: $ids-color-palette-white;
 $badge-disabled-text-color: $ids-color-palette-slate-30;
 $badge-disabled-bg-color: $ids-color-palette-graphite-70;
 
+// Busy Indicator
+$busy-indicator-color: $ids-color-palette-azure-40;
+
 // Cards
 $card-content-button-color: $ids-color-palette-slate-10;
 $card-content-status-success-color: $ids-color-palette-emerald-60;
@@ -258,6 +261,7 @@ $listview-search-disabled-color: $ids-color-palette-slate-40;
 $listview-search-disabled-opacity: 0.5;
 $listview-search-disabled-border-color: $ids-color-palette-slate-50;
 $listview-search-disabled-icon-color: $ids-color-palette-slate-50;
+$listview-search-placeholder-color: $ids-color-palette-slate-30;
 
 // Listbuilder
 $listbuilder-bg-color: $panel-bg-color;
@@ -286,6 +290,8 @@ $dropdown-menu-border-color: $ids-color-brand-primary-base;
 $dropdown-menu-separator-color: $ids-color-palette-slate-40;
 $dropdown-menu-separator-border-color: $ids-color-palette-slate-50;
 $dropdown-readonly-icon-color: $ids-color-palette-slate-40;
+
+$dropdown-swatch-border-color: $ids-color-palette-slate-40;
 
 // Date Picker
 $datepicker-month-year-color: $inverse-color;
@@ -690,7 +696,7 @@ $searchfield-lighter-bg-color: $ids-color-palette-slate-80;
 $searchfield-lighter-text-color: $ids-color-palette-slate-40;
 $searchfield-lighter-placeholder-text-color: $ids-color-brand-secondary-alt;
 $searchfield-active-icon-color: $ids-color-brand-primary-alt;
-$searchfield-icon-hover-color: $ids-color-palette-slate-20;
+$searchfield-icon-hover-color: $ids-color-palette-white;
 $searchfield-header-color: $ids-color-palette-white;
 
 $searchfield-toolbar-bg-color: $ids-color-palette-slate-100;

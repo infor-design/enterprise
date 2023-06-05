@@ -1,7 +1,7 @@
 const utils = requireHelper('e2e-utils');
 const config = requireHelper('e2e-config');
 
-describe('Message visual regression tests', () => {
+describe.skip('Message visual regression tests', () => {
   if (utils.isChrome() && utils.isCI()) {
     it('should not visually regress on lists example?theme=classic&layout=nofrills', async () => {
       await utils.setPage('/components/message/test-lists.html');

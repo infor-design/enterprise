@@ -25,9 +25,9 @@ const HOMEPAGE_DEFAULTS = {
   columns: 3,
   editing: false,
   easing: 'blockslide',
-  gutterSize: 20,
+  gutterSize: 16,
   widgetWidth: 360,
-  widgetHeight: 370,
+  widgetHeight: 368,
   useSmall: false,
   timeout: 100
 };

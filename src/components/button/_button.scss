@@ -52,9 +52,9 @@ button {
   // Styles for svg hamburger menu
   &.application-menu-trigger {
     svg.icon {
-      height: 24px;
+      height: 18px;
       top: 1px;
-      width: 24px;
+      width: 18px;
 
       + .notification-badge-container {
         .notification-dot.notification-dot-upper-left {
@@ -616,8 +616,7 @@ a.btn-close {
 
   &[disabled]:not(.btn-icon),
   &[disabled]:not(.btn-icon):hover {
-    background-color: $button-disabled-background-color;
-    color: $button-color-secondary-disabled-font-new;
+    color: $button-color-tertiary-disabled-font;
     cursor: default;
 
     .icon {
@@ -647,7 +646,7 @@ a.btn-close {
 }
 
 .header .btn-tertiary:hover:not(:disabled):not(.close):not(.personalize-actionable) svg.icon {
-  color: #fff !important;
+  color: #fff;
 }
 
 .btn-icon {

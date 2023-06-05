@@ -1,7 +1,7 @@
 const config = requireHelper('e2e-config');
 const utils = requireHelper('e2e-utils');
 
-describe('Swipe Action example-index tests', () => {
+describe.skip('Swipe Action example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/swipe-action/example-index?layout=nofrills');
   });

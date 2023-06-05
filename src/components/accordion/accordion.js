@@ -28,6 +28,7 @@ const expanderDisplayModes = ['classic', 'plus-minus', 'chevron'];
  * @class Accordion
  * @param {object} element The component element.
  * @param {object} [settings] The component settings.
+ * @param {function} [settings.accordionFocusCallback] Hook for controlling focus of a desired accordion section, which may contain custom content,
  * @param {string} [settings.allowOnePane=true] If set to true, allows only one pane of the Accordion to be open at a
  * time. If an Accordion pane is open, and that pane contains sub-headers only one of the pane's sub-headers can be open at a time. (default true)
  * @param {boolean} [settings.displayChevron=true] (deprecated in v4.23.0) Displays a "Chevron" icon that sits off to the right-most
@@ -38,6 +39,7 @@ const expanderDisplayModes = ['classic', 'plus-minus', 'chevron'];
  * @param {boolean} [settings.source=null]  A callback function that when implemented provided a call back for "ajax loading" of tab contents on open.
  */
 const ACCORDION_DEFAULTS = {
+  accordionFocusCallback: (header, defaultFocusBehavior) => defaultFocusBehavior(),
   allowOnePane: true,
   expanderDisplay: expanderDisplayModes[0],
   enableTooltips: true,
@@ -72,7 +74,6 @@ function Accordion(element, settings) {
 
 // Plugin Methods
 Accordion.prototype = {
-
   /**
   * Initialization kickoff point
   * @private
@@ -139,8 +140,13 @@ Accordion.prototype = {
     headers.each(function addExpander() {
       const header = $(this);
       let hasIcons = false;
-      const containerPane = header.parent();
-      const isTopLevel = containerPane.is('.accordion');
+      let containerPane = header.parent();
+      let isTopLevel = containerPane.is('.accordion');
+
+      if (containerPane.is('.accordion-section')) {
+        containerPane = containerPane.parentsUntil('.accordion');
+        isTopLevel = true;
+      }
 
       function checkIfIcons() {
         if (isTopLevel) {
@@ -371,7 +377,7 @@ Accordion.prototype = {
     const pane = header.next('.accordion-pane');
     const ngLink = anchor.attr('ng-reflect-href');
 
-    if (e && !ngLink) {
+    if (e && !ngLink && !header.is('.module-nav-settings-btn')) {
       e.preventDefault();
     }
 
@@ -402,7 +408,7 @@ Accordion.prototype = {
       return false;
     }
 
-    this.closePopups(e);
+    if (!header.is('.module-nav-settings-btn')) this.closePopups(e);
 
     /**
      * If the anchor is a real link, follow the link and die here.
@@ -614,7 +620,7 @@ Accordion.prototype = {
    * @returns {object} The data the represents the accodion structure
    */
   toData(flatten, addElementReference) {
-    const data = [];
+    let data = [];
     const topHeaders = this.element.children('.accordion-header');
 
     function buildElementJSON(el, index, parentNesting, parentArr) {
@@ -676,7 +682,43 @@ Accordion.prototype = {
       parentArr.push(elemData);
     }
 
+    function buildSectionJSON(el, index, parentNesting) {
+      const sectionData = {
+        index: `${parentNesting !== undefined ? `${parentNesting}.` : ''}${index}`,
+        type: 'section'
+      };
+
+      if (addElementReference) {
+        sectionData.element = el;
+      }
+
+      if (el.getAttribute('id')) {
+        sectionData.id = el.getAttribute('id');
+      }
+
+      const children = $(el).children('.accordion-header');
+      let childrenData = []; // eslint-disable-line
+      if (children.length) {
+        children.each((j, childEl) => {
+          buildElementJSON(childEl, j, index, childrenData);
+        });
+      }
+      sectionData.children = childrenData;
+
+      return flatten ? childrenData : sectionData;
+    }
+
     // Start traversing the accordion
+    if (!topHeaders.length) {
+      const sections = this.element.find('.accordion-section');
+
+      sections.each((i, section) => {
+        const sectionArray = buildSectionJSON(section, i, undefined, data);
+        if (flatten) data = data.concat(sectionArray);
+        else data.push(sectionArray);
+      });
+    }
+
     topHeaders.each((i, item) => {
       buildElementJSON(item, i, undefined, data);
     });
@@ -1087,6 +1129,7 @@ Accordion.prototype = {
     let anchor;
     let expander;
     let pane = null;
+    let section = null;
 
     if (target.is('.accordion-header')) {
       header = target;
@@ -1107,12 +1150,14 @@ Accordion.prototype = {
     }
 
     pane = header.next('.accordion-pane');
+    if (header.parent('.accordion-section')) section = header.parent('.accordion-section');
 
     return {
       header,
       expander,
       anchor,
-      pane
+      pane,
+      section
     };
   },
 
@@ -1131,10 +1176,31 @@ Accordion.prototype = {
     let target = $(adjacentHeaders.get(xssUtils.ensureAlphaNumeric(currentIndex) - 1));
 
     if (!adjacentHeaders.length || currentIndex === 0) {
+      // Handle parent panes
       if (elem.header.parent('.accordion-pane').length) {
         return this.ascend(elem.header);
       }
-      target = adjacentHeaders.last();
+
+      // Handle adjacent sections
+      if (elem.header.is(':first-child') && elem.section) {
+        let prevSection = elem.section.prev('.accordion-section');
+        let prevSectionChildren;
+        if (prevSection.length) {
+          prevSectionChildren = prevSection.children();
+          target = $(prevSectionChildren[prevSectionChildren.length - 1]);
+        } else {
+          prevSection = elem.section.parent().children().last('.accordion-section');
+          if (prevSection.length) {
+            prevSectionChildren = prevSection.children();
+            target = $(prevSectionChildren[prevSectionChildren.length - 1]);
+          }
+        }
+      }
+
+      // Use the last-possible header
+      if (!target.length) {
+        target = adjacentHeaders.last();
+      }
     }
 
     while (target.is('.accordion-content') || this.isDisabled(target) || this.isFiltered(target)) {
@@ -1160,7 +1226,15 @@ Accordion.prototype = {
           return this.ascend(elem.header);
         }
 
-        target = adjacentHeaders.last();
+        const prevSection = elem.header.parent('.accordion-section')?.prev('.accordion-section');
+        if (prevSection.length) {
+          target = $(prevSection.children()[0]);
+        }
+
+        if (!target.length) {
+          target = adjacentHeaders.last();
+        }
+
         while (target.is('.accordion-content') || this.isDisabled(target) || this.isFiltered(target)) {
           target = target.prev();
         }
@@ -1189,7 +1263,22 @@ Accordion.prototype = {
       if (elem.header.parent('.accordion-pane').length) {
         return this.ascend(elem.header, -1);
       }
-      target = adjacentHeaders.first();
+
+      if (elem.header.is(':last-child') && elem.section) {
+        let nextSection = elem.section.next('.accordion-section');
+        if (nextSection.length) {
+          target = $(nextSection.children()[0]);
+        } else {
+          nextSection = elem.section.parent().children().first('.accordion-section');
+          if (nextSection.length) {
+            target = $(nextSection.children()[0]);
+          }
+        }
+      }
+
+      if (!target.length) {
+        target = adjacentHeaders.first();
+      }
     }
 
     while (target.is('.accordion-content') || this.isDisabled(target) || this.isFiltered(target)) {
@@ -1215,7 +1304,15 @@ Accordion.prototype = {
           return this.ascend(elem.header, -1);
         }
 
-        target = adjacentHeaders.first();
+        const nextSection = elem.header.parent('.accordion-section')?.next('.accordion-section');
+        if (nextSection.length) {
+          target = $(nextSection.children()[0]);
+        }
+
+        if (!target.length) {
+          target = adjacentHeaders.first();
+        }
+
         while (target.is('.accordion-content') || this.isDisabled(target) || this.isFiltered(target)) {
           target = target.next();
         }
@@ -1244,6 +1341,8 @@ Accordion.prototype = {
     if (direction === -1) {
       target = pane.next('.accordion-header');
       if (!target.length) {
+        // @TODO Detect adjacent accordion sections here
+
         if (pane.parent('.accordion').length) {
           return this.nextHeader(pane.prev().children('a'), true);
         }
@@ -1294,15 +1393,26 @@ Accordion.prototype = {
   * @returns {void}
   */
   focusOriginalType(header) {
-    const btns = header.children('[class*="btn"]');
-    this.headers.not(header).removeClass('is-focused');
+    const defaultFocusBehavior = () => {
+      const btns = header.children('[class*="btn"]');
+      this.headers.not(header).removeClass('is-focused');
 
-    if (this.originalSelection.is('[class*="btn"]') && btns.length) {
-      btns.first()[0].focus();
-    } else {
-      header.children('a')[0].focus();
-      header.addClass('is-focused').removeClass('hide-focus');
+      if (this.originalSelection.is('[class*="btn"]') && btns.length) {
+        btns.first()[0].focus();
+      } else if (header.is('.searchfield-wrapper')) {
+        header.find('input')[0].focus();
+        header.addClass('is-focused');
+      } else {
+        header.children('a')[0].focus();
+        header.addClass('is-focused');
+      }
+    };
+
+    if (typeof this.settings.accordionFocusCallback === 'function') {
+      this.settings.accordionFocusCallback(header, defaultFocusBehavior);
+      return;
     }
+    defaultFocusBehavior();
   },
 
   /**
@@ -1588,7 +1698,9 @@ Accordion.prototype = {
       const type = getElementType(element);
 
       // Trigger a document click since we stop propgation, to close any open menus/popups.
-      $('body').children().not('.application-menu, .modal-page-container, .page-container, .resize-app-menu-container').closeChildren();
+      if (!element.is('.module-nav-settings-btn')) {
+        $('body').children().not('.application-menu, .modal-page-container, .module-nav, .page-container, .resize-app-menu-container').closeChildren();
+      }
 
       return self[`handle${type}Click`](e, element);
     }
@@ -1639,7 +1751,7 @@ Accordion.prototype = {
       });
     }
 
-    this.element.trigger('rendered');
+    // this.element.trigger('rendered');
 
     return this;
   },

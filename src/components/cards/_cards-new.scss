@@ -1,16 +1,221 @@
 .card,
 .small-widget,
 .widget {
-  border-radius: 3px;
-  box-shadow: 0 0 8px $cardlist-box-shadow-color;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px 1px $cardlist-box-shadow-color;
+  height: 368px;
+  min-height: 368px;
 
-  &.card-variant {
-    .card-buttonset {
-      .card-content-action {
-        .btn-actions {
-          height: 44px;
-          width: 44px;
+  &.bordered {
+    border: none;
+
+    &:hover {
+      outline: 1px solid $card-border-color-hover;
+      box-shadow: 0 2px 4px 1px $cardlist-box-shadow-color-hover;
+    }
+  }
+
+  .card-header,
+  .widget-header {
+    &.is-shadow-scrolling {
+      border-bottom: 1px solid $card-scrolling-border-color;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+      box-shadow: $card-scrolling-box-shadow;
+    }
+  }
+
+  .card-content,
+  .widget-content {
+    .listview-search.is-scrolling {
+      .searchfield-wrapper {
+        z-index: 10;
+      }
+    }
+  }
+
+  .is-scrolling {
+    position: relative;
+
+    &::before {
+      background: $cardlist-bg-color;
+      bottom: 1px;
+      content: '';
+      display: block;
+      height: 10px;
+      position: absolute;
+      width: 100%;
+      z-index: 7;
+    }
+
+    &::after {
+      border-bottom: 1px solid $card-scrolling-border-color;
+      box-shadow: $card-scrolling-box-shadow;
+      bottom: 0;
+      content: '';
+      height: 2px;
+      left: 0;
+      position: absolute;
+      z-index: 6;
+      width: 100%;
+    }
+  }
+
+  &.no-header {
+    .card-content {
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+
+      .btn-actions-wrapper {
+        min-width: 35px;
+        padding: 1px;
+        position: absolute;
+        right: 8px;
+        top: 8px;
+      }
+    }
+  }
+
+  &:not(.show-buttons) button.btn-actions:not(.list-button) {
+    opacity: 0;
+  }
+
+  &:hover {
+    button.btn-actions {
+      opacity: 1;
+    }
+  }
+
+  .btn-actions.floating-actions {
+    border: 1px solid $ids-color-palette-slate-40;
+    background-color: $ids-color-palette-white !important;
+  }
+
+  .btn-actions.is-open,
+  .btn-actions.has-open-tooltip {
+    opacity: 1 !important;
+  }
+
+  &.border-less {
+    background: none;
+    border-color: transparent;
+    box-shadow: none;
+  }
+
+  &.is-empty {
+    .widget-content,
+    .card-content {
+      // stylelint-disable-next-line scss/at-extend-no-missing-placeholder
+      @extend .flex-center;
+    }
+  }
+
+  .card-content,
+  .widget-content {
+    &.has-back-button {
+      overflow-x: hidden;
+    }
+
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    position: relative;
+
+    &.padding-x-16 {
+      .content-main,
+      .content-detail {
+        width: calc(100% - 32px); // Calculate the width of the card/widget considering padding (to prevent overflow when using position: absolute)
+      }
+    }
+  }
+
+  &.show-buttons button {
+    opacity: 1;
+  }
+
+  .widget-header,
+  .card-header {
+    &.has-subtitle {
+      align-items: flex-start;
+      height: 64px;
+      padding-top: 8px;
+
+      + .card-content {
+        height: 302px;
+        min-height: 302px;
+      }
+    }
+
+    &.has-back-button {
+      padding-left: 8px;
+
+      .widget-header-section,
+      .card-header-section {
+        &.title,
+        &.more,
+        &.custom-action {
+          display: none;
         }
+      }
+    }
+
+    &:not(.has-back-button) {
+      .widget-header-section,
+      .card-header-section {
+        &.detail-title,
+        &.detail-more,
+        &.detail-custom-action {
+          display: none;
+        }
+      }
+    }
+  }
+
+  &.show-card-detail {
+    .content-main {
+      transform: translateX(-110%);
+    }
+
+    .content-detail {
+      transform: translateX(0);
+    }
+  }
+
+  .content-main {
+    transform: translateX(0);
+    width: 100%;
+  }
+
+  .content-detail {
+    transform: translateX(110%);
+  }
+
+  .content-detail,
+  .content-main {
+    @include transform-transition-list(300ms cubic-bezier(0.17, 0.04, 0.03, 0.94));
+
+    position: absolute;
+  }
+}
+
+.small-widget {
+  min-height: 260px;
+}
+
+.widget,
+.card {
+  &.no-header {
+    .card-content,
+    .widget-content {
+      min-height: 368px;
+
+      .content-top,
+      .content-center {
+        display: flex;
+      }
+
+      .content-center {
+        flex-direction: column;
+        align-items: flex-start;
       }
     }
   }
@@ -19,7 +224,7 @@
 .card-header,
 .widget-header {
   border-bottom: none;
-  height: 34px;
+  height: 48px;
   line-height: normal;
 
   .card-title,
@@ -30,6 +235,10 @@
 
     ~ svg.icon {
       top: 9px;
+    }
+
+    + p {
+      line-height: 1.4rem;
     }
   }
 }
@@ -48,14 +257,97 @@
 
 .card-header,
 .widget-header {
-  margin: 8px 2px 8px 16px;
-  padding: 0;
+  &:not(.expandable-card-header) {
+    align-items: center;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    margin: 0;
+    padding-bottom: 0;
+    padding-left: 16px;
+    padding-right: 8px;
+    padding-top: 0;
+  }
+
+  > button.btn-actions:not(.has-toolbar) {
+    position: relative;
+
+    svg.icon {
+      top: 0;
+    }
+  }
+
+  .widget-title {
+    margin: 0;
+  }
 
   &:not(.has-toolbar) {
     > .btn-actions {
-      right: 13px;
+      right: 0;
       top: -1px;
     }
+  }
+}
+
+.card-header-section,
+.widget-header-section {
+  white-space: nowrap;
+  width: auto;
+
+  &.title,
+  &.custom-action,
+  &.detail-title,
+  &.detail-custom-action {
+    flex-grow: 1;
+  }
+
+  &.custom-action button
+  &.detail-custom-action button {
+    margin: 0;
+  }
+
+  &.title {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      display: inline;
+      font-size: $ids-size-font-px-20;
+      font-weight: $ids-number-font-weight-base;
+      line-height: $ids-number-font-line-height-sm;
+    }
+
+    .badge {
+      left: 4px;
+      padding: 1px;
+      position: relative;
+      top: -6px;
+    }
+  }
+
+  &.title,
+  &.detail-title {
+    overflow: ellipsis;
+    overflow-x: hidden;
+    overflow-y: auto;
+    text-overflow: ellipsis;
+  }
+
+  &.title + &.custom-action {
+    text-align: right;
+    margin-top: 1px;
+  }
+
+  &.detail-title+&.detail-custom-action {
+    text-align: right;
+    margin-top: -1px;
+  }
+
+  &.custom-action > .btn-icon,
+  &.detail-custom-action > .btn-icon {
+    margin: 0;
   }
 }
 
@@ -77,3 +369,12 @@ html[dir='rtl'] {
     }
   }
 }
+
+// Show Actions button on touch devices
+@media all and (any-pointer: coarse) {
+  /* This rule will only apply to touch devices */
+  .card:not(.show-buttons) button.btn-actions {
+    opacity: 1;
+  }
+}
+

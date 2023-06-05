@@ -64,6 +64,25 @@ grid = $('#product-lookup').lookup({
 });
 ```
 
+## Mobile Enter Key Behavior
+
+Note that you may want to further customize the enter key behavior for mobile devices. In order to do this you can set it via the attributes option that allows you to pass any option.
+
+```js
+$('#product-lookup, #product-mask').lookup({
+    ....
+    },
+    attributes: [
+    {
+        name: 'enterkeyhint',
+        value: 'go'
+    }
+    ]
+});
+```
+
+Please refer to the [enterkeyhint documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/enterkeyhint) for further details.
+
 ## Accessibility
 
 - This is a very complex control and interaction and is not currently accessible to screen readers

@@ -446,6 +446,7 @@
   [class^='btn'] {
     background-color: $editor-toolbar-bg-color;
     border: 1px solid transparent;
+    border-radius: 4px;
     color: $editor-btn-color;
     height: 20px;
     line-height: normal;

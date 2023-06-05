@@ -163,8 +163,16 @@ div.multiselect {
     }
   }
 
-  &:hover:not([disabled]):not(.is-disabled):not(.is-readonly):not(.is-open):not(.error) {
+  &:hover {
     border-color: $trigger-hover-color;
+
+    &[disabled],
+    &.is-disabled,
+    &.is-readonly,
+    &.is-open,
+    &.error {
+      border-color: currentColor;
+    }
 
     + .icon {
       color: $trigger-hover-color;
@@ -251,11 +259,11 @@ div.multiselect {
 // The List
 .dropdown-list {
   @include unselectable();
+  @include dropdown-box-shadow();
 
   background-color: transparent;
   border: 1px solid $dropdown-menu-border-color;
   border-radius: 3px;
-  box-shadow: $dropdown-box-shadow-top, $focus-box-shadow;
   font-size: $ids-size-font-base;
   max-height: 340px;
   min-height: 30px;
@@ -651,6 +659,10 @@ div.multiselect {
         padding-right: 19px !important;
       }
     }
+  }
+
+  li span.swatch:not(.alabaster) {
+    border: 1px solid $dropdown-swatch-border-color;
   }
 }
 

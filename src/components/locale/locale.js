@@ -239,7 +239,9 @@ const Locale = {  // eslint-disable-line
     if (lang === 'nb' || lang === 'nn' || lang === 'nb-NO' || lang === 'nn-NO') {
       correctLanguage = 'no';
     }
-    return correctLanguage;
+    if (this.translatedLocales.indexOf(lang) > -1) return this.translatedLocales[this.translatedLocales.indexOf(lang)];
+
+    return correctLanguage.substr(0, 2);
   },
 
   /**
@@ -251,7 +253,7 @@ const Locale = {  // eslint-disable-line
    * @returns {void}
    */
   addCulture(locale, data, langData) {
-    const lang = locale.substr(0, 2);
+    const lang = this.remapLanguage(locale);
 
     this.cultures[locale] = data;
     this.cultures[locale].name = locale;
@@ -488,7 +490,7 @@ const Locale = {  // eslint-disable-line
    * @returns {void}
    */
   setCurrentLocale(name, data) {
-    const lang = this.remapLanguage(name.substr(0, 2));
+    const lang = this.remapLanguage(name);
     this.currentLocale.name = name;
     const selectedLang = (this.languages[lang] !== undefined && this.languages[name] !== undefined) &&
       (this.languages[lang].nativeName !== this.languages[name].nativeName) ? name : lang;
@@ -1457,13 +1459,13 @@ const Locale = {  // eslint-disable-line
    * @returns {object} The language data.
    */
   useLanguage(options) {
-    let languageData = this.currentLanguage;
+    let languageData = this.languages[this.currentLanguage.name];
     if (options && options.locale) {
-      const lang = options.locale.split('-')[0];
+      const lang = this.remapLanguage(options.locale);
       languageData = this.languages[lang];
     }
     if (options && options.locale &&
-      this.currentLanguage.name !== this.currentLocale.name.substr(0, 2) &&
+      this.currentLanguage.name !== this.currentLocale.name &&
       this.languages[this.currentLanguage.name]) {
       languageData = this.languages[this.currentLanguage.name];
     }

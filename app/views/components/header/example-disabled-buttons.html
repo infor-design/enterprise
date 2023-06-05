@@ -1,10 +1,11 @@
 <header class="header is-personalizable">
   <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
 
-  <div class="toolbar">
-    <div class="title">
+  <div class="flex-toolbar">
+    <div class="toolbar-section">
       {{> includes/header-appmenu-trigger}}
-
+    </div>
+    <div class="toolbar-section title">
       <h1>
       {{#subtitle}}
         <span class="page-title">{{title}}</span>
@@ -17,7 +18,7 @@
       </h1>
     </div>
 
-   <div class="buttonset">
+   <div class="toolbar-section buttonset">
       <button id="parameter-maintenance-save" class="btn" type="submit" title="Save the current record." disabled>
         <svg class="icon" focusable="false">
         <use href="#icon-save"></use>

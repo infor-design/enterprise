@@ -365,6 +365,10 @@ $prefixes: -webkit-, -moz-, -o-, -ms-, '';
   -ms-flexbox-direction: $value;
 }
 
+@mixin dropdown-box-shadow() {
+  box-shadow: $dropdown-box-shadow-top, $focus-box-shadow;
+}
+
 // Re-usable box shadow statement for drawer-style stuff
 $box-shadow-on-color: rgba(0, 0, 0, 0.75);
 $box-shadow-off-color: rgba(0, 0, 0, 0);

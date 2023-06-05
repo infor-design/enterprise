@@ -7,7 +7,7 @@ $subhead-bg-color: $ids-color-palette-azure-70;
 $transparent: transparent;
 
 $header-border-color: $ids-color-palette-azure-80;
-$header-button-color: rgba($ids-color-palette-white, 1);
+$header-button-color: $ids-color-palette-white;
 $header-button-focus-color: rgba($ids-color-palette-white, 1);
 $header-button-hover-color: rgba($ids-color-palette-white, 0.7);
 $header-button-disabled-color: rgba($ids-color-palette-white, 0.3);
@@ -20,6 +20,9 @@ $header-focus-box-shadow: 0 0 3px 2px rgba(255, 255, 255, 0.3);
 $header-full-searchfield-hyperlink-color: $ids-color-palette-white;
 
 $ids-color-palette-alabaster: $ids-color-palette-white;
+
+// home pages
+$homepage-background-color: $body-color-primary-background;
 
 // Color Personalization in header
 $header-default-bg-color: $ids-color-palette-azure-60;
@@ -100,6 +103,14 @@ $button-hyperlink-hover-color: $hyperlink-hover-color;
 // Rules
 $hr-top-color: $ids-color-brand-secondary-base;
 $hr-bottom-color: $ids-color-palette-white;
+
+// Cards/Widget
+$card-border-color-hover: $ids-color-palette-slate-30;
+$cardlist-box-shadow-color-hover: rgba(0, 0, 0, 0.15);
+$cardlist-box-shadow-color: rgba(0, 0, 0, 0.05);
+$card-scrolling-box-shadow: 0 0 4px 0 #00000040;
+$card-scrolling-border-color: $ids-color-palette-slate-20;
+$card-actions-toolbar-button-hover-color: $ids-color-brand-primary-base;
 
 // Circle Pager
 $circlepager-bg-color: transparent;
@@ -196,6 +207,9 @@ $badge-good-text-color: $ids-color-palette-white;
 $badge-pending-light-icon-color: $ids-color-palette-white;
 $badge-pending-dark-icon-color: $ids-color-palette-slate-100;
 
+// Busy Indicator
+$busy-indicator-color: $button-color-primary-initial-background;
+
 // Cards
 $card-content-button-color: $ids-color-palette-azure-60;
 $card-content-status-success-color: $ids-color-palette-emerald-60;
@@ -263,7 +277,6 @@ $input-color-border-space: $header-bg-color;
 
 // Buttons
 $button-color-primary-disabled-background-new: $ids-color-palette-slate-20;
-$button-color-primary-hover-background-new: $ids-color-palette-azure-10;
 $button-color-primary-disabled-font-new: $ids-color-palette-slate-40;
 
 $button-disabled-background-color: $ids-color-palette-graphite-80;
@@ -302,6 +315,9 @@ $button-color-secondary-actionsheet-border: $button-color-secondary-initial-font
 $button-color-secondary-actionsheet-font: $button-color-secondary-initial-border-new;
 $button-icon-disabled-color: $button-color-tertiary-disabled-font;
 
+$button-editor-color-hover-background-new: rgba(0, 0, 0, .3);
+$button-editor-color-tertiary-hover-font-new: white;
+
 //States
 $error-color: #da1217;
 $error-text-color: #da1217;
@@ -336,6 +352,8 @@ $dropdown-menu-separator-border-color: $ids-color-palette-graphite-30;
 $dropdown-box-shadow-top: 0 0 5px $drop-shadow-depth;
 $dropdown-readonly-icon-color: $ids-color-palette-graphite-40;
 
+$dropdown-swatch-border-color: transparent;
+
 // List View
 $listview-bg-color: $ids-color-palette-white;
 $listview-bg-color-alternate: $ids-color-palette-graphite-10;
@@ -369,6 +387,7 @@ $listview-search-disabled-border-color: $input-color-readonly-background;
 $listview-search-disabled-icon-color: $input-color-readonly-font;
 $listview-search-placeholder-color: $ids-color-palette-slate-60;
 $listview-search-border-color: $ids-color-palette-slate-80;
+$listview-search-wrapper-border-color: transparent;
 
 // Listbuilder
 $listbuilder-bg-color: $panel-bg-color;
@@ -387,6 +406,8 @@ $toolbar-standalone-border-color: $ids-color-palette-graphite-30;
 $toolbar-standalone-disabled-color: $ids-color-palette-graphite-40;
 $toolbar-separator-color: $ids-color-palette-graphite-30;
 $toolbar-btn-actions-hover-bg-color: $button-color-tertiary-hover-background-new;
+$toolbar-contextual-button-hover-bg-color: rgba(0, 0, 0, .3);
+$toolbar-contextual-button-color: $ids-color-palette-white;
 
 // Field Filter
 $fieldfilter-border-side-color: transparent;
@@ -394,7 +415,7 @@ $fieldfilter-border-side-color: transparent;
 // Formatter Toolbar
 $formatter-toolbar-separator-color: $ids-color-brand-secondary-alt;
 
-//Contextual Toolbar
+// Contextual Toolbar
 $contextual-toolbar-bg-color: $ids-color-brand-primary-base;
 $contextual-toolbar-color: $button-color-primary-initial-font;
 $contextual-toolbar-button-color: rgba($button-color-primary-initial-font, 0.8);
@@ -686,6 +707,71 @@ $application-menu-searchfield-icon-color: $ids-color-palette-slate-60;
 $application-menu-searchfield-icon-active-color: $ids-color-palette-white;
 $application-menu-searchfield-text-active-color: $ids-color-palette-white;
 
+// Module Nav (App menu alternative)
+$module-nav-bg-color: $ids-color-palette-slate-10;
+$module-nav-border-color: transparent;
+$module-nav-detail-bg-color: $ids-color-palette-slate-20;
+$module-nav-separator-color: $ids-color-palette-slate-20;
+$module-nav-separator-expanded-edge-distance: 22px;
+$module-nav-text-color: $ids-color-palette-slate-60;
+
+// Module Nav (Common Sizes)
+$module-nav-z-index: 1;
+$module-nav-common-border-radius: 8px;
+$module-nav-collapsed-size: 56px;
+$module-nav-gutter-size: 4px;
+$module-nav-expanded-size: 320px;
+$module-nav-submenu-size: 300px;
+
+// Module Nav Input Field (Search/Role Dropdown)
+$module-nav-input-border-width: 1px;
+$module-nav-input-padding-inline-start-size: 10px;
+$module-nav-input-bg-color: $ids-color-palette-white;
+$module-nav-input-border-color: $ids-color-palette-slate-20;
+$module-nav-input-text-color: $ids-color-palette-slate-60;
+
+// Module Nav Item (Accordion Header/Menu Button)
+$module-nav-item-height: 48px;
+$module-nav-item-padding-size: 13px;
+$module-nav-item-margin-inline: 8px;
+$module-nav-item-icon-start-spacing: 11px;
+$module-nav-item-icon-end-spacing: 19px;
+$module-nav-item-dropdown-icon-size: 13px; // 10px in Figma
+$module-nav-item-collapsed-size: 32px;
+$module-nav-item-collapsed-general-spacing-size: 24px;
+$module-nav-item-collapsed-first-last-spacing-size: 8px;
+$module-nav-item-text-color: $ids-color-palette-slate-80;
+$module-nav-item-hover-bg-color: $ids-color-palette-slate-20;
+$module-nav-item-hover-text-color: $ids-color-palette-slate-100;
+$module-nav-item-selected-bg-color: $ids-color-palette-azure-20;
+$module-nav-item-selected-text-color: $ids-color-palette-azure-80;
+
+// Module Nav Switcher (Role Dropdown + Button)
+$module-nav-switcher-button-size: 40px;
+$module-nav-switcher-button-gutter-size: 8px;
+$module-nav-switcher-dropdown-height: 40px;
+$module-nav-switcher-dropdown-width: 256px;
+$module-nav-switcher-dropdown-item-height: 48px;
+$module-nav-switcher-dropdown-item-focus-bg-color: $ids-color-palette-slate-20;
+$module-nav-switcher-dropdown-item-text-color: $ids-color-palette-slate-60;
+
+// Module Nav Search (Input Field)
+$module-nav-search-wrapper-height: 48px;
+$module-nav-search-input-height: 40px;
+$module-nav-search-input-icon-y-offset: 20px;
+$module-nav-search-input-text-color: $ids-color-palette-slate-80;
+$module-nav-search-input-focused-text-color: $ids-color-palette-slate-100;
+$module-nav-search-input-placeholder-text-color: $ids-color-palette-slate-100;
+$module-nav-search-input-focused-placeholder-text-color: $ids-color-palette-slate-20;
+$module-nav-search-close-icon-x-offset: 12px;
+
+// Module Nav Settings Menu (Accordion Header + Popupmenu)
+$module-nav-settings-menu-item-height: 40px;
+$module-nav-settings-menu-item-text-color: $ids-color-palette-slate-60;
+$module-nav-settings-menu-separator-color: $ids-color-palette-slate-10;
+$module-nav-accordion-gutter-size: 8px;
+$module-nav-footer-gutter-size: 12px;
+
 // Contextual Action Panel
 $contextual-panel-bg: $ids-color-palette-graphite-20;
 $contextual-panel-color: $ids-color-palette-graphite-60;
@@ -928,7 +1014,7 @@ $searchfield-header-border-color: $ids-color-palette-slate-90;
 $searchfield-header-border-color-new: $ids-color-palette-slate-30;
 $searchfield-header-text-color: $ids-color-palette-white;
 $searchfield-header-placeholder-text-color: rgba(255, 255, 255, 0.5);
-$searchfield-header-icon-color: $ids-color-palette-white;
+$searchfield-header-icon-color: $ids-color-palette-slate-60;
 $searchfield-header-hover-icon-color: $ids-color-palette-slate-100;
 $searchfield-header-inactive-icon-color: $searchfield-header-icon-color;
 $searchfield-header-toolbar-icon-color: $ids-color-palette-slate-60;

@@ -32,7 +32,8 @@ $header-primary-btn-background-hover-color: $ids-color-palette-azure-50;
 $header-disabled-color: $ids-color-palette-slate-50;
 $header-focus-box-shadow: 0 0 4px 3px rgba(255, 255, 255, 0.3);
 
-$body-color-primary-background: $ids-color-palette-slate-10;
+$body-color-primary-background: rgba($ids-color-palette-slate-10, 0.5);
+$homepage-background-color: $body-color-primary-background;
 $header-hero-widget-bg-color: $subhead-bg-color;
 
 $dropdown-search-bg-color: $ids-color-palette-white;
@@ -182,20 +183,20 @@ $button-color-secondary-initial-font-new: $ids-color-palette-azure-80;
 $button-color-secondary-initial-border-new: $ids-color-palette-azure-80;
 $button-color-secondary-hover-border-new: $ids-color-palette-azure-90;
 $button-color-secondary-hover-background-new: $ids-color-palette-azure-10;
-$button-color-secondary-disabled-background-new: $ids-color-palette-white;
-$button-color-secondary-disabled-border-new: $ids-color-palette-slate-30;
-$button-color-secondary-disabled-font-new: $ids-color-palette-slate-30;
+$button-color-secondary-disabled-background-new: $ids-color-palette-slate-10;
+$button-color-secondary-disabled-border-new: $ids-color-palette-slate-50;
+$button-color-secondary-disabled-font-new: $ids-color-palette-slate-50;
 $button-disabled-background-color: transparent;
 
 $button-color-tertiary-hover-background-new: $ids-color-palette-azure-20;
 $button-color-tertiary-hover-font-new: $ids-color-palette-azure-80;
 
-$button-color-primary-disabled-font-new: $ids-color-palette-white;
-
 // Tertiary Buttons
 $button-color-tertiary-initial-font: $ids-color-palette-slate-80;
 $button-color-tertiary-actionsheet-hover-font: $button-color-tertiary-hover-font-new;
 $tertiary-btn-ripple-color: $ids-color-brand-primary-alt;
+
+$button-editor-color-hover-background-new: rgba(0, 0, 0, .7);
 
 // Secondary with Border
 $secondary-border-btn-color: $ids-color-palette-slate-90;
@@ -272,7 +273,8 @@ $listbuilder-text-color: $ids-color-palette-black;
 $listbuilder-input-selection-bg-color: $ids-color-palette-azure-100;
 
 $listview-search-border-color: $ids-color-palette-black;
-$listview-full-width-bg-color: $ids-color-palette-graphite-20;
+$listview-full-width-bg-color: $ids-color-palette-white;
+$listview-search-wrapper-border-color: $ids-color-palette-slate-50;
 
 // Toolbar
 $toolbar-standalone-bg-color: $ids-color-palette-slate-10;
@@ -387,13 +389,15 @@ $expandable-area-title-color: $ids-color-palette-black;
 
 // Cards
 $card-selected-background-color: $selected-bg-color;
+$card-scrolling-box-shadow: 0 0 4px 0 #00000050;
+$card-scrolling-border-color: $ids-color-palette-slate-30;
 $card-expandable-sub-heading: $ids-color-palette-slate-90;
 
 // Cardlist
 $cardlist-border-color: $ids-color-palette-slate-60;
 $cardlist-header-color: $ids-color-palette-black;
 $cardlist-actions-color: $ids-color-palette-slate-90;
-$cardlist-box-shadow-color: rgba(0, 0, 0, 0.1);
+$cardlist-box-shadow-color: rgba(0, 0, 0, 0.15);
 
 // Switch
 $radio-checked-color: $ids-color-palette-azure-100;

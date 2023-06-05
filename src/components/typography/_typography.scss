@@ -29,6 +29,10 @@ html {
     -webkit-overflow-scrolling: touch;
   }
 
+  .body-background-color {
+    background-color: $body-color-primary-background;
+  }
+
   &.font-source-sans body {
     font-family: $font-source-sans;
   }
@@ -37,6 +41,13 @@ html {
     &[lang='#{$key}'] body {
       font-family: $value;
     }
+  }
+}
+
+html.theme-new-light {
+  &.darker-background,
+  &.slate05 {
+    background-color: rgba($ids-color-palette-slate-10, 0.5);
   }
 }
 
