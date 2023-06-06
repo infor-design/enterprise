@@ -305,7 +305,7 @@
           <label for="display-mode-dropdown" class="label">Display Mode</label>
           <select id="display-mode-dropdown" class="dropdown">
             <option value="">Hidden</option>
-            <option value="collapsed">Collapsed</option>
+            <option value="collapsed" selected>Collapsed</option>
             <option value="expanded">Expanded</option>
           </select>
         </div>
@@ -365,5 +365,7 @@
         }
       });
     }
+
+    navAPI.updated({ displayMode: 'collapsed' });
   });
 </script>

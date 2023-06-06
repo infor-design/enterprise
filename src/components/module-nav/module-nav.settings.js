@@ -134,16 +134,18 @@ ModuleNavSettings.prototype = {
       containerOffsetY: 8
     };
 
-    if (this.settings.displayMode === 'collapsed') {
-      placementOpts.placement = 'right';
-      placementOpts.width = 290;
-    }
+    placementOpts.callback = (placementObj) => {
+      const moduleNav = this.element.closest('.module-nav').data('modulenav');
 
-    const offset = this.settings.displayMode === 'collapsed' ? {
-      x: 10, y: 0
-    } : {
-      x: 0, y: 10
+      if (moduleNav.settings.displayMode === 'collapsed') {
+        placementObj.x += 20;
+        placementObj.containerOffsetY = 20;
+        placementObj.placement = 'right';
+      }
+      return placementObj;
     };
+
+    const offset = { x: 0, y: 10 };
 
     return {
       cssClass: 'module-nav-settings-menu',
