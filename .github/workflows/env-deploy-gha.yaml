@@ -58,6 +58,7 @@ jobs:
 
           IMAGE_VERSION=${{ steps.extract_branch.outputs.branch }}
           SERVICE_NAME=${IMAGE_VERSION//./}
+          SERVICE_NAME=$(echo "$SERVICE_NAME" | tr '[:punct:]' '-' | tr '[:upper:]' '[:lower:]')
 
           rm -rf $WORKDIR/$SERVICE_NAME 2>/dev/null
           mkdir -p $WORKDIR/$SERVICE_NAME && cp -R $WORKDIR/scripts/deploy-environment/manifests/* $WORKDIR/$SERVICE_NAME/

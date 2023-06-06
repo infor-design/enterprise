@@ -19,6 +19,8 @@ test-reports/
 views/docs
 scripts/release/build
 scripts/deploy-environment/build
+scripts/deploy-environment/apps
+scripts/publish-docs/build
 
 # Packages #
 ############
@@ -46,6 +48,7 @@ views/docs/changelog-contents.html
 xunit.xml
 .env
 .gitconfig
+.vscode
 
 # OS generated files #
 ######################
