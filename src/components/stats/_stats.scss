@@ -1,0 +1,150 @@
+.card.card-stat {
+  width: 362px;
+}
+
+.stat {
+  display: inline-block;
+  min-height: 136px;
+  max-height: 136px;
+  width: 156px;
+  border: 1px solid #B7B7BA;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
+  margin-left: 16px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+
+  &:nth-last-child(-n + 1) {
+    margin-bottom: 16px;
+  }
+
+  &.dual {
+    width: 328px;
+  }
+
+  .assessment {
+    display: flex;
+    margin: 10px 11px 0 15px;
+
+    .percentage {
+      min-width: 49px;
+      min-height: 18px;
+      font-size: 14px;
+      font-weight: bold;
+      flex-grow: 1;
+      line-height: 25px;
+    }
+
+    .status {
+      height: 26px;
+      max-height: 26px;
+      width: 26px;
+      max-width: 26px;
+      flex-grow: 1;
+      text-align: center;
+      border-radius: 14px;
+
+      .icon {
+        margin: 0;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+
+    &.info {
+      .percentage {
+        color: #0066D4;
+      }
+
+      .status {
+        background-color: #E6F1FD;
+
+        .icon {
+          color: #0066D4;
+        }
+      }
+    }
+
+    &.alert {
+      .percentage {
+        color: #DA1217;
+      }
+
+      .status {
+        background-color: #FBE7E8;
+
+        .icon {
+          color: #DA1217;
+        }
+      }
+    }
+
+    &.caution {
+      .percentage {
+        color: #F98300;
+      }
+
+      .status {
+        background-color: #FEF2E5;
+
+        .icon {
+          color: #F98300;
+        }
+      }
+    }
+
+    &.success {
+      .success {
+        color: #2AC371;
+      }
+
+      .status {
+        background-color: #EBF9F1;
+
+        .icon {
+          color: #2AC371;
+        }
+      }
+    }
+  }
+
+  .details {
+    position: relative;
+    margin: 17px 15px 16px 15px;
+
+    .value {
+      font-size: 40px;
+      font-weight: 600;
+      color: #2F2F32;
+
+      &.success {
+        .icon {
+          color: #2AC371;
+        }
+      }
+
+      &.alert {
+        .icon {
+          color: #DA1217;
+        }
+      }
+    }
+  
+    .title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #606066;
+    }
+  
+    .subtitle {
+      font-size: 10px;
+      font-weight: 400;
+      color: #77777C;
+    }
+
+    &:has(> :last-child:nth-child(3)) { /* 3 elements */
+      margin-top: 4px;
+    }
+  }
+  
+}
