@@ -731,20 +731,22 @@ $module-nav-input-border-color: $ids-color-palette-slate-20;
 $module-nav-input-text-color: $ids-color-palette-slate-60;
 
 // Module Nav Item (Accordion Header/Menu Button)
-$module-nav-item-height: 48px;
+$module-nav-item-height: 40px;
 $module-nav-item-padding-size: 13px;
 $module-nav-item-margin-inline: 8px;
 $module-nav-item-icon-start-spacing: 11px;
 $module-nav-item-icon-end-spacing: 19px;
 $module-nav-item-dropdown-icon-size: 13px; // 10px in Figma
 $module-nav-item-collapsed-size: 32px;
-$module-nav-item-collapsed-general-spacing-size: 24px;
+$module-nav-item-collapsed-general-spacing-size: 16px;
 $module-nav-item-collapsed-first-last-spacing-size: 8px;
 $module-nav-item-text-color: $ids-color-palette-slate-80;
 $module-nav-item-hover-bg-color: $ids-color-palette-slate-20;
 $module-nav-item-hover-text-color: $ids-color-palette-slate-100;
 $module-nav-item-selected-bg-color: $ids-color-palette-azure-20;
 $module-nav-item-selected-text-color: $ids-color-palette-azure-80;
+$module-nav-item-top-expander-size: 31px;
+$module-nav-item-sub-expander-size: 23px;
 
 // Module Nav Switcher (Role Dropdown + Button)
 $module-nav-switcher-button-size: 40px;
@@ -757,10 +759,11 @@ $module-nav-switcher-dropdown-item-text-color: $ids-color-palette-slate-60;
 $module-nav-switcher-dropdown-icon-top-offset: 11px;
 
 // Module Nav Search (Input Field)
-$module-nav-search-wrapper-height: 48px;
+$module-nav-search-wrapper-height: 40px;
 $module-nav-search-input-height: 40px;
 $module-nav-search-input-icon-y-offset: 20px;
 $module-nav-search-input-text-color: $ids-color-palette-slate-80;
+$module-nav-search-input-text-y-offset: 48px;
 $module-nav-search-input-focused-text-color: $ids-color-palette-slate-100;
 $module-nav-search-input-placeholder-text-color: $ids-color-palette-slate-100;
 $module-nav-search-input-focused-placeholder-text-color: $ids-color-palette-slate-40;
