@@ -62,6 +62,13 @@ ModuleNav.prototype = {
   },
 
   /**
+   * @returns {HTMLElement | undefined} container element for Module Nav component and page content
+   */
+  get containerEl() {
+    return this.element[0]?.parentElement;
+  },
+
+  /**
    * @returns {ModuleNavSwitcher} Module Nav Switcher API, if one is available
    */
   get switcherAPI() {
@@ -116,7 +123,6 @@ ModuleNav.prototype = {
    */
   renderChildComponents() {
     // Containers
-    this.containerEl = $(this.element).parent('.module-nav-container')[0];
     this.detailViewEl = this.element[0].querySelector('.module-nav-detail');
 
     // Sections
@@ -356,7 +362,7 @@ ModuleNav.prototype = {
    */
   setShowDetailView(val) {
     this.containerEl.classList[val ? 'add' : 'remove']('show-detail');
-    this.detailViewEl.classList[val ? 'add' : 'remove']('visible');
+    this.detailViewEl?.classList[val ? 'add' : 'remove']('visible');
   },
 
   /**
@@ -390,7 +396,6 @@ ModuleNav.prototype = {
     separators.remove();
 
     // Containers
-    this.containerEl = null;
     this.detailViewEl = null;
 
     // Sections
