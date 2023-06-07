@@ -139,9 +139,10 @@
       height: 64px;
       padding-top: 8px;
 
-      + .card-content {
-        height: 302px;
-        min-height: 302px;
+      + .card-content,
+      + .widget-content {
+        height: 304px;
+        min-height: 304px;
       }
     }
 
