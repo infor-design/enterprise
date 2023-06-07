@@ -104,6 +104,10 @@
       }
     }
 
+    .module-nav-settings {
+      padding-block-end: 28px;
+    }
+
     &.show-detail {
       .page-container {
         margin-inline-start: ($module-nav-submenu-size * -1);
@@ -143,6 +147,10 @@
       .page-container {
         margin-inline-start: ($module-nav-submenu-size * -2);
       }
+    }
+
+    .module-nav-settings {
+      padding-block-end: 24px;
     }
   }
 
