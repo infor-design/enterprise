@@ -1701,29 +1701,32 @@ Accordion.prototype = {
     }
 
     let clickedToFocus = false;
-    headerElems.addClass('hide-focus').on('click.accordion', function (e) {
-      return clickInterceptor(e, $(this));
-    }).on('focusin.accordion', function (e) {
-      const target = $(e.target);
+    headerElems.addClass('hide-focus')
+      .off('click.accordion focusin.accordion focusout.accordion keydown.accordion mousedown.accordion mouseup.accordion')
+      .on('click.accordion', function (e) {
+        return clickInterceptor(e, $(this));
+      }).on('focusin.accordion', function (e) {
+        const target = $(e.target);
 
-      if (!self.originalSelection) {
-        self.originalSelection = target;
-      }
+        if (!self.originalSelection) {
+          self.originalSelection = target;
+        }
 
-      if (clickedToFocus) {
-        clickedToFocus = false;
-        return;
-      }
-      headerElems.not($(this)).removeClass('is-focused');
-      if (target.is(':not(.btn)')) {
-        $(this).addClass('is-focused').removeClass('hide-focus');
-      }
-    }).on('focusout.accordion', function () {
-      if (!$.contains(this, headerWhereMouseDown) || $(this).is($(headerWhereMouseDown))) {
-        $(this).removeClass('is-focused');
-        $(this).addClass('hide-focus');
-      }
-    })
+        if (clickedToFocus) {
+          clickedToFocus = false;
+          return;
+        }
+        headerElems.not($(this)).removeClass('is-focused');
+        if (target.is(':not(.btn)')) {
+          $(this).addClass('is-focused').removeClass('hide-focus');
+        }
+      })
+      .on('focusout.accordion', function () {
+        if (!$.contains(this, headerWhereMouseDown) || $(this).is($(headerWhereMouseDown))) {
+          $(this).removeClass('is-focused');
+          $(this).addClass('hide-focus');
+        }
+      })
       .on('keydown.accordion', (e) => {
         self.handleKeys(e);
       })
@@ -1737,6 +1740,7 @@ Accordion.prototype = {
       });
 
     headerElems.children('[class^="btn"]')
+      .off('click.accordion keydown.accordion')
       .on('click.accordion', function (e) {
         return clickInterceptor(e, $(this));
       }).on('keydown.accordion', (e) => {
@@ -1744,7 +1748,7 @@ Accordion.prototype = {
       });
 
     if (globalEventSetup) {
-      this.element.on('selected.accordion', (e) => {
+      this.element.off('selected.accordion updated.accordion').on('selected.accordion', (e) => {
         // Don't propagate this event above the accordion element
         e.stopPropagation();
       }).on('updated.accordion', (e, settings) => {
