@@ -312,6 +312,10 @@
               padding-inline-start: 16px;
             }
           }
+
+          &:last-child {
+            margin-block-end: $module-nav-accordion-gutter-size;
+          }
         }
       }
 
