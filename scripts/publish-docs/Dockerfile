@@ -12,6 +12,8 @@ RUN apt-get -y update \
     git
 
 COPY ./run.sh run.sh
+COPY ./utils.sh utils.sh
+RUN chmod +x utils.sh
 RUN chmod +x run.sh
 
 ENTRYPOINT ["/bin/bash", "run.sh"]
