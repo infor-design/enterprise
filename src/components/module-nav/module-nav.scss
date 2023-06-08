@@ -26,6 +26,11 @@
     position: static;
   }
 
+  // Resets app menu-related placement adjustments
+  .header + .page-container {
+    margin-top: 0;
+  }
+
   // =====================================================
   // Display Mode: Hidden
 
@@ -137,7 +142,7 @@
 
     // use `.has-module-nav-offset` on inner page containers to make
     // the page container stay out from underneath the Module Nav bar
-    .page-container:not(.has-module-nav-offset) {
+    > .page-container:not(.has-module-nav-offset) {
       margin-inline-start: (($module-nav-expanded-size - $module-nav-collapsed-size) * -1);
     }
 
