@@ -4454,6 +4454,14 @@ td .btn-actions {
         @include trigger-icon-background($datagrid-cell-bg-color);
       }
     }
+
+    .datagrid-cell-wrapper .trigger {
+      + .icon-calendar,
+      + .icon-calendar + .icon-error {
+        background-color: transparent;
+        box-shadow: none;
+      }
+    }
   }
 }
 
