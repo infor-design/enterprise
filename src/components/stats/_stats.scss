@@ -13,7 +13,7 @@
   max-height: 136px;
   width: 156px;
   border: 1px solid #B7B7BA;
-  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
   margin-left: 16px;
   margin-top: 8px;
   margin-bottom: 8px;
@@ -41,7 +41,7 @@
       min-width: 49px;
       min-height: 18px;
       font-size: 14px;
-      font-weight: bold;
+      font-weight: 700;
       flex-grow: 1;
       line-height: 25px;
     }
@@ -121,7 +121,7 @@
 
   .details {
     position: relative;
-    margin: 17px 15px 16px 15px;
+    margin: 17px 15px 16px;
 
     .value {
       font-size: 40px;
