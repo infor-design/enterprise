@@ -1,0 +1,74 @@
+<div class="page-container scrollable">
+
+  <div class="header-detail">
+    <div class="header scrollable">
+
+      <!-- Start: header-content -->
+      <div class="row top-padding">
+
+        <div class="one-third column">
+          <div class="card">
+            <div class="card-header">
+              <p class="card-title">Listview Title</p>
+            </div>
+            <div class="card-content">
+              <div class="listview" id="test-listview-1" data-options="{'source': '{{basepath}}api/inventory-tasks', 'template': 'task-tmpl', 'selectable': 'multiple'}">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="one-third column">
+          <div class="card">
+            <div class="card-header">
+              <p class="card-title">Listview Title</p>
+            </div>
+            <div class="card-content">
+              <div class="listview" id="test-listview-2" data-options="{'source': '{{basepath}}api/inventory-tasks', 'template': 'task-tmpl', 'selectable': 'multiple'}">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="one-third column">
+          <div class="card">
+            <div class="card-header">
+              <p class="card-title">Listview Title</p>
+            </div>
+            <div class="card-content">
+              <div class="listview" id="test-listview-3" data-options="{'source': '{{basepath}}api/inventory-tasks', 'template': 'task-tmpl', 'selectable': 'multiple'}">
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- Ends: header-content -->
+
+    </div>
+    <div id="splitter" class="splitter splitter-horizontal" data-options="{axis: 'y', 'save':false}"></div>
+    <div class="detail">
+    </div>
+  </div>
+
+</div>
+
+{{={{{ }}}=}}
+<script id="task-tmpl" type="text/html">
+  <ul>
+    {{#dataset}}
+    {{#disabled}}
+    <li class="is-disabled">
+      {{/disabled}}
+      {{^disabled}}
+    <li>
+      {{/disabled}}
+      <p class="listview-heading">Task #{{task}}</p>
+      <p class="listview-subheading">{{desc}} </p>
+      <p class="listview-micro">Due: {{date}}</p>
+    </div>
+    </li>
+    {{/dataset}}
+  </ul>
+</script>
+

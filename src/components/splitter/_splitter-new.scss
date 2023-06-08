@@ -1,22 +1,11 @@
 // Splitter
 //========================================================
 .splitter .splitter-btn {
-  margin-left: -1px;
+//   margin-left: -1px;
   margin-top: -6px;
 
   .icon {
     height: 12px;
     width: 12px;
-  }
-}
-
-.splitter {
-  .splitter-drag-handle {
-    left: -2px;
-
-    .icon {
-      height: 24px;
-      width: 24px;
-    }
   }
 }

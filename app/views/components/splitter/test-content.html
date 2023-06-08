@@ -1,16 +1,5 @@
-﻿<div class="page-container two-column fixed">
-
-  <section class="main">
-    <div class="content scrollable">
-    </div>
-  </section>
-
-  <!-- <nav class="sidebar scrollable">
-    <div class="content">
-      <div id="splitter" class="splitter" data-options="{'side':'right', 'save':false}"></div>
-    </div>
-  </nav> -->
-  <nav class="sidebar scrollable">
+<div class="two-column fixed page-container" role="main">
+  <div class="sidebar scrollable">
     <div class="row">
       <div class="twelve columns">
         <h2 class="fieldset-title">Title</h2>
@@ -18,13 +7,16 @@
     </div>
     <div class="field">
       <label for="searchfield-tasks" class="audible">Search Tasks</label>
-      <input id="searchfield-tasks" name="searchfield" class="searchfield context" data-options="{'clearable': 'true'}"
-        placeholder="Search My Alerts" />
+      <input id="searchfield-tasks" name="searchfield" class="searchfield context" data-options="{'clearable': 'true'}" placeholder="Search My Alerts" />
     </div>
     <div class="listview" id="task-listview" data-init="false"></div>
     <div id="splitter" class="splitter" data-options="{'side':'right', 'save':false}"></div>
-  </nav>
+  </div>
 
+  <div class="main" role="main">
+    <div class="content">
+    </div>
+  </div>
 </div>
 
 {{={{{ }}}=}}
@@ -62,4 +54,3 @@
     });
   });
 </script>
-

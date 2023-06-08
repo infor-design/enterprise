@@ -767,10 +767,9 @@ $module-tabs-disabled-text-color: $ids-color-palette-azure-40;
 $composite-tabs-panel-bg-color: $ids-color-palette-white;
 
 // Splitter
-$splitter-grip-bg-color: $ids-color-palette-graphite-90;
-$splitter-active-bg-color: $ids-color-brand-secondary-base;
-$splitter-active-grip-bg-color: $ids-color-palette-black;
-$splitter-box-shadow-color: rgba(37, 120, 169, 0.75);
+$splitter-border-color: $ids-color-palette-slate-30;
+$splitter-focus-border-color: $ids-color-palette-azure-40;
+$splitter-handle-background-color: $ids-color-palette-azure-80;
 
 // Step Chart
 $step-chart-bg-color: $ids-color-palette-graphite-20;

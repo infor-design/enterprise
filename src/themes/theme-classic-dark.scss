@@ -797,10 +797,9 @@ $formcompact-field-bg-focus-color: $ids-color-palette-azure-90;
 $formcompact-field-border-color: $ids-color-palette-white;
 
 // Splitter
-$splitter-grip-bg-color: $ids-color-palette-slate-30;
-$splitter-active-bg-color: $ids-color-palette-slate-70;
-$splitter-active-grip-bg-color: $ids-color-palette-white;
-$splitter-box-shadow-color: rgba(54, 138, 192, 0.75);
+$splitter-border-color: $ids-color-palette-slate-60;
+$splitter-focus-border-color: $ids-color-palette-slate-50;
+$splitter-handle-background-color: $ids-color-palette-slate-30;
 
 // Step Chart
 $step-chart-bg-color: $ids-color-palette-slate-70;

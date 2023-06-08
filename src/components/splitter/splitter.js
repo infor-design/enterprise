@@ -84,9 +84,46 @@ Splitter.prototype = {
     this.isSplitterHorizontal = splitter.is('.splitter-horizontal') || s.axis === 'y';
     s.uniqueId = utils.uniqueId(this.element, 'splitter');
     if (!dragHandle.length) {
-      dragHandle = $(`<div class="splitter-drag-handle"><span class="audible">${Locale.translate('SplitterDragHandle')}</span>${$.createIcon('drag')}</div>`);
+      dragHandle = $(`<div class="splitter-drag-handle"><span class="audible">${Locale.translate('SplitterDragHandle')}</span></div>`);
       dragHandle.appendTo(splitter);
     }
+
+    // Position the splitter handle as the mouse position
+    splitter.off('mouseenter.splitter').on('mouseenter.splitter', (e) => {
+      // Ignore collapse button
+      if ($(e.target).is('.splitter-btn')) {
+        dragHandle[0].style.opacity = '0';
+        return;
+      }
+      dragHandle[0].style.opacity = '';
+
+      // Drag handle
+      const rect = splitter[0].getBoundingClientRect();
+      const size = 32;
+      const pad = size / 2;
+      let start;
+      let end;
+      let position;
+
+      // Horizontal
+      if (this.isSplitterHorizontal) {
+        const clientX = e.clientX;
+        start = clientX - rect.left - pad;
+        if (start < pad) start = 0;
+        end = rect.width - size;
+        position = start > end ? end : start;
+        dragHandle[0].style.left = `${position}px`;
+        return;
+      }
+
+      // Vertical
+      const clientY = e.clientY;
+      start = clientY - rect.top - pad;
+      if (start < pad) start = 0;
+      end = rect.height - size;
+      position = start > end ? end : start;
+      dragHandle[0].style.top = `${position}px`;
+    });
 
     const handleCollapseButton = () => {
       let savedOffset = 0;
@@ -357,7 +394,7 @@ Splitter.prototype = {
    * @returns {void}
    */
   resizeLeft(splitter, leftArg) {
-    const left = this.isRTL ? (leftArg + 20) : this.leftSide.outerWidth() - leftArg;
+    const left = this.isRTL ? leftArg : this.leftSide.outerWidth() - leftArg;
 
     // Adjust Left and Right Side
     this.rightSide[0].style.width = `${left}px`;
@@ -374,21 +411,21 @@ Splitter.prototype = {
    * @returns {void}
    */
   resizeRight(splitter, w) {
-    const parent = splitter.parent();
-    const thisSide = parent.is('.content') ? parent.parent() : parent;
+    // const parent = splitter.parent();
+    // const thisSide = parent.is('.content') ? parent.parent() : parent;
     let width = w;
     let left = w - 1;
 
     if (this.isRTL && !this.isSplitterHorizontal) {
       const containerWidth = this.getContainerWidth();
-      width = containerWidth >= w ? ((containerWidth - w) - 20) : w;
+      width = containerWidth >= w ? (containerWidth - w) : w;
       left = w;
     }
 
-    if (!this.isSplitterRightSide && this.settings.side === 'left' ||
-        this.isSplitterRightSide && this.settings.side === 'right') {
-      thisSide[0].style.width = '0px';
-    }
+    // if (!this.isSplitterRightSide && this.settings.side === 'left' ||
+    //     this.isSplitterRightSide && this.settings.side === 'right') {
+    //   thisSide[0].style.width = '0px';
+    // }
 
     // Adjust Left and Right Side
     this.leftSide[0].style.width = `${width}px`;

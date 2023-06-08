@@ -13,6 +13,10 @@ $subheader-height: 60px;
   overflow: hidden;
   width: 100%;
 
+  &.scrollable {
+    overflow: auto;
+  }
+
   ::selection {
     background: $ids-color-palette-azure-90;
     color: $inverse-color;
