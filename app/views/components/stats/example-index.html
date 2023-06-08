@@ -129,16 +129,102 @@
       </div>
     </div>
 
+    <div class="widget no-shadow" id="example-widget-borderless-3">
+      <div class="widget-header has-subtitle">
+        <div class="widget-header-section title">
+          <h2 class="widget-title">Status</h2>
+          <p class="label font-size-px-14 m-bottom-0">Additional Info</p>
+        </div>
+        <div class="widget-header-section more">
+          <button class="btn-actions">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-vertical-ellipsis"></use>
+            </svg>
+            <span class="audible">More Actions</span>
+          </button>
+          <ul class="popupmenu">
+            <li><a href="#">Action One</a></li>
+            <li><a href="#">Action Two</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="widget-content">
+        <div class="stat actionable" tabindex="0">
+          <div class="assessment success">
+            <div class="percentage">+38.62%</div>
+            <div class="status">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-success"></use>
+              </svg>
+            </div>
+          </div>
+          <div class="details">
+            <div class="value">11</div>
+            <div class="title">Main Title</div>
+            <div class="subtitle">Sub Title Goes Here</div>
+          </div>
+        </div>
+        <div class="stat actionable" tabindex="0">
+          <div class="assessment caution">
+            <div class="percentage"></div>
+            <div class="status">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-alert"></use>
+              </svg>
+            </div>
+          </div>
+          <div class="details">
+            <div class="value">$401k</div>
+            <div class="title">Revenue</div>
+            <div class="subtitle">Q4 2023</div>
+          </div>
+        </div>
+        <div class="stat actionable" tabindex="0">
+          <div class="assessment info">
+            <div class="percentage"></div>
+            <div class="status">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-alert"></use>
+              </svg>
+            </div>
+          </div>
+          <div class="details">
+            <div class="value">1,827</div>
+            <div class="title">On Time</div>
+          </div>
+        </div>
+        <div class="stat actionable" tabindex="0">
+          <div class="assessment error">
+            <div class="percentage">-52.01%</div>
+            <div class="status">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-error"></use>
+              </svg>
+            </div>
+          </div>
+          <div class="details">
+            <div class="value">12</div>
+            <div class="title">All KPIs</div>
+            <div class="subtitle">Subtitle Goes Here</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
 <script>
+  $('body').on('initialized', function () {
     $('.widget').cards({
       bordered: false
     });
+
     $('.homepage').homepage();
+
     $('.stat.actionable').hideFocus().on('click', (e) => {
       $(e.currentTarget).toggleClass('is-selected');
       console.log('Stat was clicked', e);
     });
+  });
 </script>

@@ -81,7 +81,7 @@
   }
 
   &:hover {
-    button.btn-actions {
+    button.btn-actions:not(.list-button) {
       opacity: 1;
     }
   }

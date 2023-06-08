@@ -2,7 +2,7 @@
   display: inline-block;
   min-height: 136px;
   max-height: 136px;
-  width: 156px;
+  width: 155px;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
   margin-inline-start: 16px;
   margin-top: 8px;
@@ -158,7 +158,7 @@
     }
 
     .subtitle {
-      font-size: 10px;
+      font-size: 12px;
       font-weight: 400;
       color: $stats-subtitle-color;
       text-transform: uppercase;
@@ -169,6 +169,14 @@
     }
   }
 
+}
+
+.has-subtitle+.widget-content,
+.has-subtitle+.card-content {
+  .stat {
+    min-height: 128px;
+    max-height: 128px;
+  }
 }
 
 // Theme Adjustments
