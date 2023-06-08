@@ -4,7 +4,7 @@
 
 ## v4.85.0 Features
 
-- `[SearchField]` Added a new component called stats. ([#7506](https://github.com/infor-design/enterprise/issues/7506))
+- `[Stats]` Added a new component called stats. ([#7506](https://github.com/infor-design/enterprise/issues/7506))
 
 ## v4.85.0 Fixes
 
