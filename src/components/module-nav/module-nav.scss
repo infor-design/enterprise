@@ -135,7 +135,9 @@
       }
     }
 
-    .page-container {
+    // use `.has-module-nav-offset` on inner page containers to make
+    // the page container stay out from underneath the Module Nav bar
+    .page-container:not(.has-module-nav-offset) {
       margin-inline-start: (($module-nav-expanded-size - $module-nav-collapsed-size) * -1);
     }
 

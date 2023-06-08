@@ -319,6 +319,11 @@
           <input type="checkbox" class="checkbox" name="pin-sections" id="pin-sections" />
           <label for="pin-sections" class="checkbox-label">Pin "optionally-pinned" Sections</label>
         </div>
+
+        <div class="field">
+          <input type="checkbox" class="checkbox" name="offset-check" id="offset-check" />
+          <label for="offset-check" class="checkbox-label">Offset the page container (don't hide any content)</label>
+        </div>
       </div>
     </div>
     <div class="row test-spacer">&nbsp;</div>
@@ -333,8 +338,10 @@
 <script>
   $('body').on('initialized', () => {
     const navAPI = $('#nav').data('modulenav');
+    const containerEl = $('.module-nav-container');
     const dropdownAPI = $('#display-mode-dropdown').data('dropdown');
     const displayCheckEl = $('#display-detail-check');
+    const offsetCheckEl = $('#offset-check');
     const hamburgerBtnEl = $('#header-hamburger');
     const pinSectionsCheckEl = $('#pin-sections');
 
@@ -346,6 +353,11 @@
 
     displayCheckEl.on('change.test', (e) => {
       navAPI.updated({ showDetailView: displayCheckEl[0].checked });
+    });
+
+    offsetCheckEl.on('change.test', (e) => {
+      const pageContainer = containerEl.find('.page-container');
+      pageContainer[0].classList[ offsetCheckEl[0].checked ? 'add' : 'remove' ]('has-module-nav-offset');
     });
 
     pinSectionsCheckEl.on('change.test', (e) => {
