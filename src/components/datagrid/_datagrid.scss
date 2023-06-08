@@ -3726,7 +3726,7 @@ $datagrid-small-row-height: 25px;
       }
 
       &:disabled {
-        border-color: $datagrid-filter-disabled-color;
+        border-color: $datagrid-filter-disabled-color !important;
       }
     }
 
@@ -6104,9 +6104,12 @@ html[dir='rtl'] {
     .datepicker,
     .timepicker {
       + .trigger {
-        top: -9px;
         margin-left: -16px;
       }
+    }
+
+    .timepicker + .trigger {
+      top: -9px;
     }
 
     .timepicker + .trigger .icon {
