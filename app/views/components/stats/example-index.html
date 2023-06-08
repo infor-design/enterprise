@@ -1,17 +1,20 @@
 
-<div class="row">
-  <div class="one-half column">
-    <div class="card auto-height card-stat" id="idx-card-1">
-      <div class="card-header">
-          <h2 class="widget-title">Needs Attention</h2>
+<div class="homepage page-container scrollable" data-init="false" id="maincontent" data-columns="3" role="main">
+  <div class="content">
+
+    <div class="widget no-shadow" id="example-widget-borderless-1">
+      <div class="widget-header">
+        <div class="widget-header-section title">
+          <h2>Actionable Stats</h2>
+        </div>
       </div>
-      <div class="card-content">
-        <div class="stat">
+      <div class="widget-content">
+        <div class="stat actionable" tabindex="0">
           <div class="assessment success">
             <div class="percentage">+28.62%</div>
             <div class="status">
               <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-                <use href="#icon-apply-rule"></use>
+                <use href="#icon-success"></use>
               </svg>
             </div>
           </div>
@@ -21,7 +24,7 @@
             <div class="subtitle">Sub Title Goes Here</div>
           </div>
         </div>
-        <div class="stat">
+        <div class="stat actionable" tabindex="0">
           <div class="assessment caution">
             <div class="percentage"></div>
             <div class="status">
@@ -36,7 +39,7 @@
             <div class="subtitle">Q4 2024</div>
           </div>
         </div>
-        <div class="stat">
+        <div class="stat actionable" tabindex="0">
           <div class="assessment info">
             <div class="percentage"></div>
             <div class="status">
@@ -50,8 +53,8 @@
             <div class="title">On Time</div>
           </div>
         </div>
-        <div class="stat">
-          <div class="assessment alert">
+        <div class="stat actionable" tabindex="0">
+          <div class="assessment error">
             <div class="percentage">-54.01%</div>
             <div class="status">
               <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
@@ -67,26 +70,27 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="one-half column">
-    <div class="card auto-height card-stat" id="idx-card-2">
-      <div class="card-header">
-          <h2 class="widget-title">Needs Attention</h2>
+
+    <div class="widget no-shadow"" id=" example-widget-borderless-2">
+      <div class="widget-header">
+        <div class="widget-header-section title">
+          <h2>Non Actionable Stats</h2>
+        </div>
       </div>
-      <div class="card-content">
+      <div class="widget-content">
         <div class="stat dual">
           <div class="assessment success">
             <div class="percentage">+28.62%</div>
             <div class="status">
               <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-                <use href="#icon-apply-rule"></use>
+                <use href="#icon-success"></use>
               </svg>
             </div>
           </div>
           <div class="details">
             <div class="value success">24.57%
               <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-                <use href="#icon-up-double-chevron"></use>
+                <use href="#icon-up-arrow"></use>
               </svg>
             </div>
             <div class="title">Total Revenue</div>
@@ -124,5 +128,17 @@
         </div>
       </div>
     </div>
+
   </div>
 </div>
+
+<script>
+    $('.widget').cards({
+      bordered: false
+    });
+    $('.homepage').homepage();
+    $('.stat.actionable').hideFocus().on('click', (e) => {
+      $(e.currentTarget).toggleClass('is-selected');
+      console.log('Stat was clicked', e);
+    });
+</script>

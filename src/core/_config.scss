@@ -316,7 +316,7 @@ $button-color-secondary-actionsheet-font: $button-color-secondary-initial-border
 $button-icon-disabled-color: $button-color-tertiary-disabled-font;
 
 $button-editor-color-hover-background-new: rgba(0, 0, 0, .3);
-$button-editor-color-tertiary-hover-font-new: white;
+$button-editor-color-tertiary-hover-font-new: $ids-color-palette-white;
 
 //States
 $error-color: #da1217;
@@ -1138,6 +1138,11 @@ $formcompact-field-bg-focus-color: $ids-color-palette-azure-10;
 $formcompact-field-border-color: $ids-color-palette-black;
 $formcompact-field-border-focus-color: $ids-color-brand-primary-base;
 $formcompact-field-required-color: $ids-color-brand-primary-base;
+
+// Stats
+$stats-title-color: $ids-color-palette-slate-60;
+$stats-subtitle-color: $ids-color-palette-slate-50;
+$stats-value-color: $ids-color-palette-slate-100;
 
 // Typography
 $typography-background-inverted: $ids-color-palette-slate-100;

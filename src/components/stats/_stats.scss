@@ -1,27 +1,37 @@
-.card.card-stat {
-  width: 362px;
-
-  @media (max-width: 396px) {
-    width: auto;
-  }
-  
-}
-
 .stat {
   display: inline-block;
   min-height: 136px;
   max-height: 136px;
   width: 156px;
-  border: 1px solid #B7B7BA;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
-  margin-left: 16px;
+  margin-inline-start: 16px;
   margin-top: 8px;
   margin-bottom: 8px;
   border-radius: 8px;
-  background-color: $ids-color-palette-white;
+  background-color: $cardlist-bg-color;
 
   &:nth-last-child(-n + 1) {
     margin-bottom: 16px;
+  }
+
+  &.actionable {
+    cursor: pointer;
+
+    &:hover {
+      outline: 1px solid $card-border-color-hover;
+      box-shadow: 0 2px 4px 1px $cardlist-box-shadow-color-hover;
+    }
+
+    &.is-selected {
+      outline: 2px solid $ids-color-brand-primary-base;
+    }
+
+    &:focus {
+      &:not(.hide-focus) {
+        box-shadow: 0 0 0 2px $body-color-primary-background, 0 0 0 3px $button-color-primary-initial-background, $focus-box-shadow;
+        outline: 0;
+      }
+    }
   }
 
   &.dual {
@@ -64,28 +74,28 @@
 
     &.info {
       .percentage {
-        color: $ids-color-palette-azure-60;
+        color: $info-color;
       }
 
       .status {
         background-color: $ids-color-palette-azure-10;
 
         .icon {
-          color: $ids-color-palette-azure-60;
+          color: $info-color;
         }
       }
     }
 
-    &.alert {
+    &.error {
       .percentage {
-        color: $ids-color-palette-ruby-60;
+        color: $error-color;
       }
 
       .status {
         background-color: $ids-color-palette-ruby-10;
 
         .icon {
-          color: $ids-color-palette-ruby-60;
+          color: $error-color;
         }
       }
     }
@@ -126,7 +136,7 @@
     .value {
       font-size: 40px;
       font-weight: 600;
-      color: $ids-color-palette-slate-100;
+      color: $stats-value-color;
 
       &.success {
         .icon {
@@ -140,22 +150,35 @@
         }
       }
     }
-  
+
     .title {
       font-size: 14px;
       font-weight: 600;
-      color: $ids-color-palette-slate-60;
+      color: $stats-title-color;
     }
-  
+
     .subtitle {
       font-size: 10px;
       font-weight: 400;
-      color: $ids-color-palette-slate-50;
+      color: $stats-subtitle-color;
+      text-transform: uppercase;
     }
 
     &:has(> :last-child:nth-child(3)) { /* 3 elements */
       margin-top: 4px;
     }
   }
-  
+
+}
+
+// Theme Adjustments
+.theme-new-dark,
+.theme-classic-dark {
+  .stat .assessment .status {
+    background-color: transparent;
+  }
+}
+
+html[class*="theme-classic-"] .stat {
+  box-shadow: none;
 }
