@@ -1,5 +1,10 @@
 .card.card-stat {
   width: 362px;
+
+  @media (max-width: 396px) {
+    width: auto;
+  }
+  
 }
 
 .stat {
@@ -13,6 +18,7 @@
   margin-top: 8px;
   margin-bottom: 8px;
   border-radius: 8px;
+  background-color: $ids-color-palette-white;
 
   &:nth-last-child(-n + 1) {
     margin-bottom: 16px;
@@ -20,6 +26,11 @@
 
   &.dual {
     width: 328px;
+
+    @media (max-width: 396px) {
+      width: auto;
+      min-width: 156px;
+    }
   }
 
   .assessment {
@@ -53,56 +64,56 @@
 
     &.info {
       .percentage {
-        color: #0066D4;
+        color: $ids-color-palette-azure-60;
       }
 
       .status {
-        background-color: #E6F1FD;
+        background-color: $ids-color-palette-azure-10;
 
         .icon {
-          color: #0066D4;
+          color: $ids-color-palette-azure-60;
         }
       }
     }
 
     &.alert {
       .percentage {
-        color: #DA1217;
+        color: $ids-color-palette-ruby-60;
       }
 
       .status {
-        background-color: #FBE7E8;
+        background-color: $ids-color-palette-ruby-10;
 
         .icon {
-          color: #DA1217;
+          color: $ids-color-palette-ruby-60;
         }
       }
     }
 
     &.caution {
       .percentage {
-        color: #F98300;
+        color: $ids-color-palette-amber-60;
       }
 
       .status {
-        background-color: #FEF2E5;
+        background-color: $ids-color-palette-amber-10;
 
         .icon {
-          color: #F98300;
+          color: $ids-color-palette-amber-60;
         }
       }
     }
 
     &.success {
       .success {
-        color: #2AC371;
+        color: $ids-color-palette-emerald-60;
       }
 
       .status {
-        background-color: #EBF9F1;
+        background-color: $ids-color-palette-emerald-10;
 
         .icon {
-          color: #2AC371;
+          color: $ids-color-palette-emerald-60;
         }
       }
     }
@@ -115,17 +126,17 @@
     .value {
       font-size: 40px;
       font-weight: 600;
-      color: #2F2F32;
+      color: $ids-color-palette-slate-100;
 
       &.success {
         .icon {
-          color: #2AC371;
+          color: $ids-color-palette-emerald-60;
         }
       }
 
       &.alert {
         .icon {
-          color: #DA1217;
+          color: $ids-color-palette-ruby-60;
         }
       }
     }
@@ -133,13 +144,13 @@
     .title {
       font-size: 14px;
       font-weight: 600;
-      color: #606066;
+      color: $ids-color-palette-slate-60;
     }
   
     .subtitle {
       font-size: 10px;
       font-weight: 400;
-      color: #77777C;
+      color: $ids-color-palette-slate-50;
     }
 
     &:has(> :last-child:nth-child(3)) { /* 3 elements */
