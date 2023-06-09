@@ -4,6 +4,7 @@
 
 ## v4.85.0 Fixes
 
+- `[Datagrid]` Fix on incorrect row updates on adding a new row to the next page. ([#7486](https://github.com/infor-design/enterprise/issues/7486))
 - `[Button]` Adjusted the left and right paddings of the button from `30px` to `32px`. ([#7508](https://github.com/infor-design/enterprise/issues/7508))
 - `[Datagrid]` Fixed disabled filter columns in datagrid. ([#7467](https://github.com/infor-design/enterprise/issues/7467))
 - `[Card]` Fixed widget size for subtitle examples. ([#7580](https://github.com/infor-design/enterprise/issues/7580))
