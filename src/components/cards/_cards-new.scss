@@ -136,7 +136,7 @@
   .card-header {
     &.has-subtitle {
       align-items: flex-start;
-      height: 64px;
+      height: 60px; // was 64 but need to be flush so for better visuals
       padding-top: 8px;
 
       + .card-content {

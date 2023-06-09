@@ -14,6 +14,11 @@
 
   &:nth-last-child(-n + 1) {
     margin-bottom: 16px;
+    min-height: 138px;
+  }
+
+  &.no-margin-top {
+    margin-top: -2px;
   }
 
   &.actionable {
@@ -171,14 +176,6 @@
     }
   }
 
-}
-
-.has-subtitle+.widget-content,
-.has-subtitle+.card-content {
-  .stat {
-    min-height: 128px;
-    max-height: 128px;
-  }
 }
 
 // Theme Adjustments
