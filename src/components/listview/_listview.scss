@@ -503,6 +503,32 @@
 
     margin-top: -20px;
   }
+
+  &.card-list {
+    li {
+      background-color: transparent;
+      border: none;
+      padding: 0 16px;
+
+      &.is-selected,
+      &:hover,
+      &.is-selected:not(.hide-selected-color):hover {
+        background-color: transparent;
+      }
+
+      .tag-list {
+        margin: 0;
+        min-width: 11%;
+      }
+    }
+
+    .card-header {
+      &.has-subheader {
+        display: block;
+        height: fit-content;
+      }
+    }
+  }
 }
 
 .listview-table {

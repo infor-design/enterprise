@@ -193,6 +193,8 @@ $card-header-section: '.card-header-section', '.widget-header-section';
     }
 
     .card-buttonset {
+      display: flex;
+
       .card-content-action {
         .btn {
           margin-right: 8px;
