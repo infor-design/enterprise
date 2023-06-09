@@ -92,7 +92,9 @@ describe('Dropdown updates, events', () => {
       closeOnSelect: true,
       cssClass: null,
       delay: 300,
+      dropdownIcon: 'dropdown',
       empty: false,
+      extraListWrapper: false,
       filterMode: 'contains',
       maxWidth: null,
       moveSelected: 'none',
@@ -113,7 +115,7 @@ describe('Dropdown updates, events', () => {
       selectAllFilterOnly: true,
       attributes: null,
       appendTo: '[role="main"]',
-      virtualScroll: false
+      virtualScroll: false,
     };
 
     expect(dropdownObj.settings).toEqual(settings);
@@ -124,7 +126,9 @@ describe('Dropdown updates, events', () => {
       closeOnSelect: true,
       cssClass: null,
       delay: 2000,
+      dropdownIcon: 'dropdown',
       empty: false,
+      extraListWrapper: false,
       filterMode: 'contains',
       maxWidth: 1000,
       moveSelected: 'none',
@@ -145,7 +149,7 @@ describe('Dropdown updates, events', () => {
       selectAllFilterOnly: true,
       attributes: null,
       appendTo: '[role="main"]',
-      virtualScroll: false
+      virtualScroll: false,
     };
 
     dropdownObj.updated();
@@ -160,7 +164,9 @@ describe('Dropdown updates, events', () => {
       closeOnSelect: true,
       cssClass: null,
       delay: 2000,
+      dropdownIcon: 'dropdown',
       empty: false,
+      extraListWrapper: false,
       filterMode: 'contains',
       maxWidth: 1000,
       moveSelected: 'none',
@@ -181,7 +187,9 @@ describe('Dropdown updates, events', () => {
       selectAllFilterOnly: true,
       attributes: null,
       appendTo: '[role="main"]',
-      virtualScroll: false
+      virtualScroll: false,
+      width: null,
+      widthTarget: null
     };
     dropdownObj.updated(settings);
 
@@ -202,7 +210,9 @@ describe('Dropdown updates, events', () => {
       closeOnSelect: true,
       cssClass: null,
       delay: 2000,
+      dropdownIcon: 'dropdown',
       empty: false,
+      extraListWrapper: false,
       filterMode: 'contains',
       maxWidth: 1000,
       moveSelected: 'none',
@@ -223,7 +233,9 @@ describe('Dropdown updates, events', () => {
       selectAllFilterOnly: true,
       attributes: null,
       appendTo: '[role="main"]',
-      virtualScroll: false
+      virtualScroll: false,
+      width: null,
+      widthTarget: null
     };
 
     const callback = jest.fn();

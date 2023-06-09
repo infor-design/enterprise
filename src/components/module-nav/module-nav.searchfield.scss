@@ -1,0 +1,123 @@
+@import './module-nav.common.scss';
+
+// Module Nav Searchfield Component
+//================================================== //
+
+.module-nav-search-container {
+  // outer component styles are on the "wrapper" element
+  .searchfield-wrapper {
+    color: $module-nav-search-input-text-color;
+    margin-block-end: 0;
+    height: $module-nav-search-wrapper-height;
+    width: 100%;
+
+    input.module-nav-search {
+      background-color: transparent;
+      border-radius: $module-nav-common-border-radius;
+      border: $module-nav-input-border-width solid transparent;
+      color: inherit;
+      padding-inline-start: $module-nav-search-input-text-y-offset;
+      padding-inline-end: 10px;
+      height: $module-nav-search-input-height;
+      width: 100%;
+
+      + .icon {
+        color: inherit;
+      }
+
+      &::placeholder {
+        color: $module-nav-search-input-placeholder-text-color;
+      }
+    }
+
+    button.close {
+      right: $module-nav-search-close-icon-x-offset;
+
+      .icon {
+        top: 0;
+      }
+    }
+
+    .icon {
+      color: inherit;
+    }
+
+    &.non-collapsible.is-open {
+      > .icon:not(.close):not(.icon-error) {
+        left: $module-nav-item-icon-start-spacing;
+        top: $module-nav-search-input-icon-y-offset;
+      }
+    }
+
+    &.is-open {
+      border-color: $module-nav-input-border-color;
+    }
+
+    &.has-focus {
+      color: $module-nav-search-input-focused-text-color;
+
+      input.module-nav-search {
+        background-color: $module-nav-input-bg-color;
+        border-color: $module-nav-item-selected-text-color;
+
+        &::placeholder {
+          color: $module-nav-search-input-focused-placeholder-text-color;
+        }
+      }
+    }
+
+    &:hover:not(.has-focus) {
+      color: $module-nav-search-input-text-color;
+
+      input.module-nav-search {
+        background-color: $module-nav-item-hover-bg-color;
+
+        &::placeholder {
+          color: $module-nav-search-input-placeholder-text-color;
+        }
+      }
+    }
+
+    &:active {
+      color: $module-nav-search-input-text-color;
+
+      input.module-nav-search {
+        background-color: $module-nav-item-selected-bg-color;
+        border-color: $module-nav-item-selected-text-color;
+
+        &::placeholder {
+          color: $module-nav-search-input-placeholder-text-color;
+        }
+      }
+    }
+  }
+}
+
+// =====================================================
+// Display Mode: Collapsed
+
+.module-nav-container.mode-collapsed {
+  .module-nav-separator {
+    display: none;
+  }
+
+  .module-nav-search-container {
+    display: none;
+    pointer-events: none;
+  }
+}
+
+// =====================================================
+// Optional Pinning: Disabled
+
+.module-nav-container:not(.pinned-optional) {
+  // Hide "header" separators in this mode
+  .module-nav-search-container + .module-nav-separator,
+  .module-nav-header + .module-nav-separator {
+    display: none;
+  }
+
+  .module-nav-search-container {
+    padding-block-end: 0;
+  }
+}

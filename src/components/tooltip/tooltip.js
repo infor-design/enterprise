@@ -970,7 +970,7 @@ Tooltip.prototype = {
     const rect = this.tooltip[0].getBoundingClientRect();
     const opts = $.extend({}, {
       x: 0,
-      y: distance,
+      y: 0,
       container: this.scrollparent,
       containerOffsetX: tooltipPlacementOpts.containerOffsetX || this.settings.offset.left,
       containerOffsetY: tooltipPlacementOpts.containerOffsetY || this.settings.offset.top,
@@ -980,9 +980,14 @@ Tooltip.prototype = {
     }, tooltipPlacementOpts);
 
     if (opts.placement === 'left' || opts.placement === 'right') {
-      opts.x = distance;
+      opts.x = opts.x || distance;
       opts.y = 0;
     }
+    if (opts.placement === 'top' || opts.placement === 'bottom') {
+      opts.y = opts.y || distance;
+      opts.x = 0;
+    }
+
     if (rect.width >= windowW && /left|right/g.test(opts.placement)) {
       this.tooltip[0].classList.add('no-arrow');
     } else if (rect.height >= windowH && /top|bottom/g.test(opts.placement)) {

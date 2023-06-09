@@ -6,11 +6,13 @@
 @mixin auto-height {
   height: auto;
   min-height: 0;
+  max-height: none;
 
   .widget-content,
   .card-content {
     height: auto;
     min-height: auto;
+    max-height: none;
   }
 }
 
@@ -96,7 +98,6 @@ $card-header-section: '.card-header-section', '.widget-header-section';
   border-radius: 2px;
   margin-bottom: 16px;
   min-height: 360px;
-  max-height: 368px;
   position: relative;
   width: 100%;
 

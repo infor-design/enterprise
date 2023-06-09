@@ -17,7 +17,7 @@ spec:
             defaultMode: 0600
       containers:
         - name: enterprise-release
-          image: hookandloop/enterprise-release:0.0.1
+          image: hookandloop/enterprise-release:1.0.0
           imagePullPolicy: Always
           volumeMounts:
             - name: gitconfig
@@ -54,7 +54,7 @@ spec:
             - name: RELEASE_INCREMENT
               value: ""
             - name: REPO_OWNER_NAME
-              value: ""
+              value: "infor-design/enterprise"
           lifecycle:
             postStart:
               exec:

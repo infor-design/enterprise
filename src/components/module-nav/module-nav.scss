@@ -1,0 +1,272 @@
+@import './module-nav.common.scss';
+
+// Module Nav Separator Element
+.module-nav-separator {
+  display: block;
+  pointer-events: none;
+  user-select: none;
+  border-top: 1px solid $module-nav-separator-color;
+  font-size: 0;
+  justify-self: center;
+  margin: 0 $module-nav-separator-expanded-edge-distance;
+}
+
+// Module Nav Component
+//================================================== //
+
+.module-nav-container {
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  gap: 0;
+  width: 100%;
+  height: 100%;
+
+  .page-container {
+    position: static;
+  }
+
+  // Resets app menu-related placement adjustments
+  .header + .page-container {
+    margin-top: 0;
+  }
+
+  // =====================================================
+  // Display Mode: Hidden
+
+  &:not(.mode-expanded):not(.mode-collapsed) {
+    .module-nav {
+      pointer-events: none;
+    }
+
+    .module-nav-bar {
+      display: none;
+    }
+
+    .module-nav-detail {
+      display: none;
+    }
+
+    .module-nav-footer {
+      display: none;
+    }
+  }
+
+  // =====================================================
+  // Display Mode: Collapsed/Expanded
+
+  &.mode-collapsed,
+  &.mode-expanded {
+    .module-nav-bar {
+      z-index: $module-nav-z-index;
+    }
+
+    &:not(.show-detail) {
+      .module-nav-detail {
+        display: none;
+      }
+    }
+
+    &.show-detail {
+      .module-nav-bar {
+        border-inline-end: 1px solid $module-nav-border-color;
+      }
+
+      .module-nav-detail {
+        width: $module-nav-submenu-size;
+        z-index: $module-nav-z-index;
+      }
+    }
+  }
+
+  // =====================================================
+  // Display Mode: Collapsed
+
+  &.mode-collapsed {
+    .module-nav {
+      border-inline-end: 1px solid $module-nav-border-color;
+    }
+
+    .module-nav-bar {
+      width: $module-nav-collapsed-size;
+    }
+
+    .module-nav-item {
+      justify-content: center;
+      margin-inline: $module-nav-item-margin-inline;
+      padding-block: $module-nav-item-padding-size;
+
+      > .icon {
+        margin-block: auto;
+        margin-inline: 0;
+      }
+
+      // Can't use `audible` here, need to retain line height
+      span {
+        clip: rect(0, 0, 0, 0);
+        width: 1px;
+        overflow: hidden;
+      }
+    }
+
+    .module-nav-settings {
+      padding-block-end: 28px;
+    }
+
+    &.show-detail {
+      .page-container {
+        margin-inline-start: ($module-nav-submenu-size * -1);
+      }
+    }
+  }
+
+  // =====================================================
+  // Display Mode: Expanded
+
+  &.mode-expanded {
+    border-right: 1px solid $module-nav-border-color;
+
+    .module-nav-bar {
+      width: $module-nav-expanded-size;
+    }
+
+    .module-nav-item {
+      margin-inline: $module-nav-item-margin-inline;
+      padding: $module-nav-item-padding-size;
+      padding-inline-start: $module-nav-item-margin-inline;
+
+      > .icon {
+        margin-inline-end: $module-nav-item-icon-end-spacing;
+      }
+    }
+
+    // use `.has-module-nav-offset` on inner page containers to make
+    // the page container stay out from underneath the Module Nav bar
+    > .page-container:not(.has-module-nav-offset) {
+      margin-inline-start: (($module-nav-expanded-size - $module-nav-collapsed-size) * -1);
+    }
+
+    &.show-detail {
+      .module-nav-detail {
+        width: $module-nav-submenu-size;
+      }
+
+      .page-container {
+        margin-inline-start: ($module-nav-submenu-size * -2);
+      }
+    }
+
+    .module-nav-settings {
+      padding-block-end: 24px;
+    }
+  }
+
+  // =====================================================
+  // Footer/Settings section padding is removed to
+  // appear "connected" when touching
+  .module-nav-footer:not(:last-child) {
+    padding-block-end: 0;
+  }
+
+  .module-nav-footer + .module-nav-settings {
+    padding-block-start: 0;
+  }
+
+  // =====================================================
+  // Optional Pinned Area: disabled
+  // Entire menu can become scrollable
+
+  &:not(.pinned-optional) {
+    .module-nav-accordion {
+      @include drawer-scrollable-area;
+
+      flex-grow: 1;
+    }
+
+    .module-nav-footer:not(:last-child) {
+      flex-grow: 1;
+    }
+  }
+
+  // =====================================================
+  // Optional Pinned Area: enabled
+  // individual areas can become scrollable
+
+  &.pinned-optional {
+    .module-nav-main {
+      @include drawer-scrollable-area;
+
+      flex-grow: 1;
+    }
+
+    .module-nav-footer {
+      @include drawer-scrollable-area;
+    }
+
+    &:not(.has-section-scrollbars) {
+      .module-nav-search-container + .module-nav-separator,
+      .module-nav-header + .module-nav-separator {
+        display: none;
+      }
+    }
+
+    &.has-section-scrollbars {
+      .module-nav-separator + .module-nav-footer {
+        margin-block-start: 0;
+      }
+    }
+  }
+}
+
+.module-nav {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  position: relative;
+  z-index: 0;
+}
+
+.module-nav-bar {
+  display: flex;
+  flex-direction: column;
+  background-color: $module-nav-bg-color;
+  color: $module-nav-text-color;
+  height: 100%;
+}
+
+.module-nav-detail {
+  background-color: $module-nav-detail-bg-color;
+  border-inline-end: 1px solid $module-nav-border-color;
+  height: 100%;
+}
+
+.module-nav-item {
+  @include nav-item-style;
+
+  span {
+    @include font-size(16);
+  }
+
+  &:not([disabled]):not(.is-disabled) {
+    cursor: pointer;
+  }
+
+  &:hover {
+    @include nav-item-box-shadow;
+  }
+}
+
+.module-nav-footer {
+  display: block;
+  position: relative;
+  flex-shrink: 0;
+}
+
+// =====================================================
+// Settings area is always pinned to the bottom (below footer)
+
+.module-nav-settings {
+  flex-shrink: 0;
+  overflow: hidden;
+  margin-block-start: $module-nav-accordion-gutter-size;
+}

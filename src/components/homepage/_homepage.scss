@@ -22,6 +22,11 @@
     overflow: hidden;
     width: 360px;
 
+    // Edit mode is on
+    &[draggable] {
+      overflow: initial;
+    }
+
     &:last-child::after {
       content: '';
       display: inline-block;

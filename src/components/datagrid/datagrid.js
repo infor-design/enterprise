@@ -1783,13 +1783,14 @@ Datagrid.prototype = {
       if (!attrs) {
         attrs = `id="${filterId}"`;
       }
+      const enterKeyHint = col.enterKeyHint ? ` enterkeyhint="${col.enterKeyHint}"` : ' enterkeyhint="enter"';
 
       switch (col.filterType) {
         case 'checkbox':
           // just the button
           break;
         case 'date':
-          filterMarkup += `<input ${col.filterDisabled ? ' disabled' : ''} type="text" class="datepicker" ${attrs}/>`;
+          filterMarkup += `<input ${col.filterDisabled ? ' disabled' : ''} type="text" class="datepicker" ${attrs} ${enterKeyHint}/>`;
           break;
         case 'integer': {
           integerDefaults = {
@@ -1814,7 +1815,7 @@ Datagrid.prototype = {
             col.maskOptions = utils.extend(true, {}, integerDefaults, col.maskOptions);
           }
 
-          filterMarkup += `<input${col.filterDisabled ? ' disabled' : ''} type="text" ${attrs} />`;
+          filterMarkup += `<input${col.filterDisabled ? ' disabled' : ''} type="text" ${attrs} ${enterKeyHint} />`;
           break;
         }
         case 'percent':
@@ -1866,7 +1867,7 @@ Datagrid.prototype = {
             }
           }
 
-          filterMarkup += `<input${col.filterDisabled ? ' disabled' : ''} type="text" ${attrs} />`;
+          filterMarkup += `<input${col.filterDisabled ? ' disabled' : ''} type="text" ${attrs} ${enterKeyHint} />`;
           break;
         }
         case 'contents':
@@ -1899,13 +1900,13 @@ Datagrid.prototype = {
 
           break;
         case 'time':
-          filterMarkup += `<input ${col.filterDisabled ? ' disabled' : ''} type="text" class="timepicker" ${attrs}/>`;
+          filterMarkup += `<input ${col.filterDisabled ? ' disabled' : ''} type="text" class="timepicker" ${attrs} ${enterKeyHint}/>`;
           break;
         case 'lookup':
-          filterMarkup += `<input ${col.filterDisabled ? ' disabled' : ''} type="text" class="lookup" ${attrs} >`;
+          filterMarkup += `<input ${col.filterDisabled ? ' disabled' : ''} type="text" class="lookup" ${attrs} ${enterKeyHint} >`;
           break;
         default:
-          filterMarkup += `<input${col.filterDisabled ? ' disabled' : ''} tabindex="0" type="text" ${attrs}/>`;
+          filterMarkup += `<input${col.filterDisabled ? ' disabled' : ''} tabindex="0" type="text" ${attrs} ${enterKeyHint}/>`;
           break;
       }
 
@@ -6270,7 +6271,10 @@ Datagrid.prototype = {
     }
 
     this.settings.columns[idx].hidden = true;
-    this.headerNodeCheckbox = this.headerNodes().eq(idx);
+
+    const hideColumn = this.headerNodes().eq(idx);
+    this.headerNodeCheckbox = hideColumn.find('.datagrid-checkbox').length > 0 ? hideColumn : undefined;
+
     if (!this.settings?.frozenColumns?.left.length) this.headerNodes().eq(idx).addClass('is-hidden');
 
     if (idx === 0 && id === 'selectionCheckbox' && this.settings?.frozenColumns?.left.length) {
@@ -7223,6 +7227,7 @@ Datagrid.prototype = {
         e.stopPropagation();
       }
 
+      let colorPicker = $('#colorpicker-menu.is-open');
       if (!self.settings.dblClickApply) {
         /**
         * Fires after a row is clicked.
@@ -7298,9 +7303,13 @@ Datagrid.prototype = {
         return;
       }
 
+      if (colorPicker?.length === 1) {
+        colorPicker = null;
+        return; // color picker closes on cell re-click;
+      }
       const isEditable = self.makeCellEditable(self.activeCell.rowIndex, self.activeCell.cell, e);
 
-      if (col.click && typeof col.click === 'function' && target.is('button, input[checkbox], a, a.search-mode i') || target.parent().is('button:not(.trigger)')) {
+      if (col.click && typeof col.click === 'function' && target.is('button, input[checkbox], a, a.search-mode i, img') || target.parent().is('button:not(.trigger)')) {
         const rowElem = $(this).closest('tr');
         let rowIdx = self.actualRowIndex(rowElem);
         dataRowIdx = self.dataRowIndex(rowElem);
@@ -7326,7 +7335,7 @@ Datagrid.prototype = {
           }
         }
 
-        if (!td.hasClass('is-cell-readonly') && !target.is('[disabled]') && target.is('button, input[checkbox], a, a.search-mode i') || target.parent().is('button')) {  //eslint-disable-line
+        if (!td.hasClass('is-cell-readonly') && !target.is('[disabled]') && target.is('button, input[checkbox], a, a.search-mode i, img') || target.parent().is('button')) {  //eslint-disable-line
           col.click(e, [{ row: rowIdx, cell: self.activeCell.cell, item, originalEvent: e }]);
         }
         if (target.is('[disabled]') && col.formatter === Formatters.Hyperlink) {
@@ -7368,7 +7377,7 @@ Datagrid.prototype = {
       }
 
       // Apply Quick Edit Mode
-      if (isEditable) {
+      if (isEditable && self.settings?.actionableMode) {
         setTimeout(() => {
           if ($('textarea, input', td).length &&
               (!$('.dropdown,' +
@@ -7378,7 +7387,7 @@ Datagrid.prototype = {
               '[type=submit],' +
               '[type=reset],' +
               '[type=checkbox],' +
-              '[type=radio]', td).length)) {
+                '[type=radio]', td).length)) {
             self.quickEditMode = true;
           }
         }, 0);
@@ -10165,7 +10174,7 @@ Datagrid.prototype = {
    */
   containsTextField(container) {
     const noTextTypes = ['image', 'button', 'submit', 'reset', 'checkbox', 'radio'];
-    let selector = 'textarea, input';
+    let selector = 'textarea, input:not(.colorpicker)';
     const l = noTextTypes.length;
     let i;
 
@@ -11837,7 +11846,7 @@ Datagrid.prototype = {
       self.activeCell = prevCell;
     }
 
-    if ((!$('input, select, button:not(.btn-secondary, .row-btn, .datagrid-expand-btn, .datagrid-drilldown, .btn-icon)', self.activeCell.node).length) || (self.activeCell.node.is('.has-btn-actions') && self.activeCell.node.find('.btn-actions').length)) {
+    if ((!$('input:not(.colorpicker), select, button:not(.btn-secondary, .row-btn, .datagrid-expand-btn, .datagrid-drilldown, .btn-icon)', self.activeCell.node).length) || (self.activeCell.node.is('.has-btn-actions') && self.activeCell.node.find('.btn-actions').length)) {
       self.activeCell.node.focus();
       if (isGroupRow) {
         self.activeCell.groupNode = self.activeCell.node;

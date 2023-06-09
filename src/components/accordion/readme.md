@@ -121,6 +121,37 @@ Inside this `accordion-content` element can be any HTML markup, including other 
 
 ```
 
+### Sections
+
+Accordions with complex styling can have groups of accordion headers wrapped in `accordion-section` elements:
+
+```html
+<div class="accordion">
+    <div class="accordion-section main">
+        <div class="accordion-header">
+            <a href="#"><span>One</span></a>
+        </div>
+        <div class="accordion-header">
+            <a href="#"><span>Two</span></a>
+        </div>
+        <div class="accordion-header">
+            <a href="#"><span>Three</span></a>
+        </div>
+    </div>
+    <div class="accordion-section footer">
+        <div class="accordion-header">
+            <a href="#"><span>Four</span></a>
+        </div>
+        <div class="accordion-header">
+            <a href="#"><span>Five</span></a>
+        </div>
+        <div class="accordion-header">
+            <a href="#"><span>Six</span></a>
+        </div>
+    </div>
+</div>
+```
+
 ## Implementation Tips
 
 On the IDS Enterprise Components Accordion, top-level Accordion Headers have support for using SVG icons. However, Accordion sub-headers are only text-based.

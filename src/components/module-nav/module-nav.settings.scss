@@ -1,0 +1,51 @@
+@import './module-nav.common.scss';
+
+// Module Nav Settings Component
+//================================================== //
+
+.popupmenu.module-nav-settings-menu {
+  @include settings-menu-box-shadow;
+
+  border: 0;
+  border-radius: $module-nav-common-border-radius;
+  min-width: 304px;
+
+  ul {
+    border-radius: 8px;
+  }
+
+  li {
+    line-height: 36px;
+
+    &.is-focused {
+      background-color: $module-nav-switcher-dropdown-item-focus-bg-color;
+    }
+  }
+
+  a {
+    min-height: $module-nav-settings-menu-item-height;
+    color: $module-nav-settings-menu-item-text-color;
+
+    span {
+      line-height: 36px;
+    }
+  }
+
+  .separator {
+    border-bottom: thin solid $module-nav-settings-menu-separator-color;
+  }
+
+  &.has-icons {
+    .icon:not(.arrow) {
+      height: 18px;
+      margin-left: -38px;
+      margin-top: 10px;
+    }
+
+    > li {
+      > a {
+        padding-left: 48px;
+      }
+    }
+  }
+}

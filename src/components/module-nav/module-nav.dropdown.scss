@@ -1,0 +1,220 @@
+@import './module-nav.common.scss';
+
+// button + button borders
+$module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switcher-button-gutter-size;
+
+@mixin module-nav-div-dropdown-adjustment() {
+  padding-block-start: 9px;
+  padding-block-end: 7px;
+  padding-inline-start: 8px;
+  padding-inline-end: 40px;
+}
+
+// Module Nav Dropdown Component
+//================================================== //
+
+.module-nav-section.role-dropdown {
+  .dropdown-wrapper {
+    max-width: $module-nav-switcher-dropdown-width;
+    margin-bottom: 0;
+  }
+
+  div.dropdown {
+    @include module-nav-input-style;
+    @include module-nav-div-dropdown-adjustment;
+
+    height: $module-nav-switcher-dropdown-height;
+    width: $module-nav-switcher-dropdown-width;
+
+    .icon {
+      margin-block-end: $module-nav-common-border-radius;
+    }
+
+    // Override top/right from Dropdown
+    + .icon {
+      right: 16px;
+      top: 4px;
+    }
+
+    // Overrides a dropdown default
+    &:focus {
+      box-shadow: none;
+    }
+
+    &:hover {
+      background-color: $module-nav-item-hover-bg-color;
+
+      &:not(:focus) {
+        border-color: transparent;
+      }
+    }
+
+    &:active {
+      background-color: $module-nav-item-selected-bg-color;
+      color: $module-nav-item-selected-text-color;
+    }
+
+    &.focus {
+      border-color: $module-nav-item-selected-text-color;
+      box-shadow: none;
+    }
+  }
+
+  input {
+    &:focus {
+      box-shadow: none;
+    }
+  }
+
+  // Hide built-in input field icon in favor of Module Switcher button
+  .dropdown {
+    > .listoption-icon {
+      display: none;
+
+      + span {
+        padding-inline-start: 0;
+      }
+    }
+  }
+}
+
+// Module Nav Dropdown List Component
+//================================================== //
+
+.dropdown-list.role-dropdown {
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  color: $module-nav-input-text-color;
+  max-height: 100%;
+  margin-block-start: $module-nav-gutter-size;
+  overflow: visible;
+
+  > .trigger {
+    margin-inline-start: -35px;
+    color: inherit;
+
+    .icon {
+      top: $module-nav-switcher-dropdown-icon-top-offset;
+    }
+  }
+
+  > .listoption-icon {
+    display: none;
+  }
+
+  input.dropdown-search {
+    background-color: $module-nav-input-bg-color;
+    border-radius: $module-nav-common-border-radius;
+    border: $module-nav-input-border-width solid $module-nav-input-border-color;
+    color: inherit;
+    height: $module-nav-switcher-dropdown-height;
+
+    // visibly separate the input field from the list
+    margin-inline-start: $module-nav-container-size;
+    width: calc(100% - #{$module-nav-container-size});
+
+    // re-align text with in-page dropdown
+    padding-block-start: 7px;
+    padding-block-end: 9px;
+  }
+
+  .dropdown-list-wrapper {
+    @include dropdown-box-shadow;
+    @include drawer-scrollable-area;
+
+    background-color: $module-nav-input-bg-color;
+    border-radius: $module-nav-common-border-radius;
+    border: $module-nav-input-border-width solid $module-nav-input-border-color;
+    color: inherit;
+    margin-block-start: $module-nav-switcher-button-gutter-size;
+  }
+
+  li {
+    height: $module-nav-switcher-dropdown-item-height;
+
+    a {
+      color: $module-nav-switcher-dropdown-item-text-color;
+      padding-block: $module-nav-switcher-button-gutter-size;
+    }
+
+    .listoption-icon {
+      color: $module-nav-switcher-dropdown-item-text-color;
+      margin-inline-start: 1px;
+      margin-inline-end: 27px;
+    }
+
+    &.is-focused:not(.is-disabled) {
+      background-color: $module-nav-switcher-dropdown-item-focus-bg-color;
+      color: $module-nav-switcher-dropdown-item-text-color;
+
+      a {
+        color: $module-nav-switcher-dropdown-item-text-color;
+      }
+
+      .listoption-icon {
+        color: $module-nav-switcher-dropdown-item-text-color;
+      }
+    }
+  }
+
+  // When configured with icons, don't show icon in "search" area
+  &.has-icons {
+    input.dropdown-search {
+      @include module-nav-div-dropdown-adjustment;
+
+      padding-block-start: 7px; // Adjustment needed for the input field
+    }
+  }
+
+  // Search Mode displays filter matches in the correct color
+  // (Module Nav changes the default highlight color)
+  &.search-mode {
+    li.is-focused {
+      .dropdown-highlight {
+        color: $module-nav-switcher-dropdown-item-text-color;
+      }
+    }
+  }
+}
+
+// =====================================================
+// Scrollable, non-pinned (changes some component sizes)
+
+.module-nav-accordion.has-scrollbar {
+  .module-nav-section.role-dropdown {
+    div.dropdown {
+      width: ($module-nav-switcher-dropdown-width - $module-nav-item-padding-size - 2);
+    }
+  }
+}
+
+// =====================================================
+// 4.x Component Overrides
+
+// Firefox override for Dropdown
+html.is-firefox,
+html.is-firefox:not([dir="rtl"]) {
+  .module-nav-section.role-dropdown {
+    div.dropdown {
+      @include module-nav-div-dropdown-adjustment();
+
+      > .listoption-icon + span {
+        padding-inline-start: 0;
+      }
+    }
+  }
+
+  .dropdown-list.role-dropdown {
+    &.has-icons {
+      .dropdown-search {
+        @include module-nav-div-dropdown-adjustment();
+      }
+    }
+
+    > .trigger .icon {
+      top: $module-nav-switcher-dropdown-icon-top-offset;
+    }
+  }
+}

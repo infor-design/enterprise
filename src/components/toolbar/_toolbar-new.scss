@@ -15,7 +15,8 @@
   &.do-resize {
     .toolbar-searchfield-wrapper {
       > svg.icon.close {
-        top: 50%;
+        transform: translateY(50%);
+        top: -5px;
       }
     }
   }

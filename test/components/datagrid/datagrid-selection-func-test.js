@@ -422,11 +422,9 @@ describe('Datagrid Selection API', () => {
     expect(datagridObj.selectedRows().length).toEqual(0);
     datagridObj.selectRows([1, 4]);
 
-    setTimeout(() => {
-      expect(datagridObj.selectedRows().length).toEqual(2);
-      datagridObj.unSelectAllRows();
-      done();
-    }, 1);
+    expect(datagridObj.selectedRows().length).toEqual(2);
+    datagridObj.unSelectAllRows();
+    done();
   });
 
   it('should allow a number in selectRows', (done) => {
@@ -437,11 +435,9 @@ describe('Datagrid Selection API', () => {
     expect(datagridObj.selectedRows().length).toEqual(0);
     datagridObj.selectRows(1);
 
-    setTimeout(() => {
-      expect(datagridObj.selectedRows().length).toEqual(1);
-      datagridObj.unSelectAllRows();
-      done();
-    }, 1);
+    expect(datagridObj.selectedRows().length).toEqual(1);
+    datagridObj.unSelectAllRows();
+    done();
   });
 
   it('should be able to call onBeforeSelect', (done) => {
