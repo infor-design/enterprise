@@ -96,7 +96,7 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
     color: inherit;
 
     .icon {
-      top: 11px;
+      top: $module-nav-switcher-dropdown-icon-top-offset;
     }
   }
 
@@ -186,6 +186,35 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
   .module-nav-section.role-dropdown {
     div.dropdown {
       width: ($module-nav-switcher-dropdown-width - $module-nav-item-padding-size - 2);
+    }
+  }
+}
+
+// =====================================================
+// 4.x Component Overrides
+
+// Firefox override for Dropdown
+html.is-firefox,
+html.is-firefox:not([dir="rtl"]) {
+  .module-nav-section.role-dropdown {
+    div.dropdown {
+      @include module-nav-div-dropdown-adjustment();
+
+      > .listoption-icon + span {
+        padding-inline-start: 0;
+      }
+    }
+  }
+
+  .dropdown-list.role-dropdown {
+    &.has-icons {
+      .dropdown-search {
+        @include module-nav-div-dropdown-adjustment();
+      }
+    }
+
+    > .trigger .icon {
+      top: $module-nav-switcher-dropdown-icon-top-offset;
     }
   }
 }
