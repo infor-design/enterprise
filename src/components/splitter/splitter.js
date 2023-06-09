@@ -88,8 +88,8 @@ Splitter.prototype = {
       dragHandle.appendTo(splitter);
     }
 
-    // Position the splitter handle as the mouse position
-    splitter.off('mouseenter.splitter').on('mouseenter.splitter', (e) => {
+    // Position the splitter handle with the mouse position
+    const moveDragger = (e) => {
       // Ignore collapse button
       if ($(e.target).is('.splitter-btn')) {
         dragHandle[0].style.opacity = '0';
@@ -123,6 +123,12 @@ Splitter.prototype = {
       end = rect.height - size;
       position = start > end ? end : start;
       dragHandle[0].style.top = `${position}px`;
+    };
+
+    splitter.off('mouseenter.splitter').on('mouseenter.splitter', (e) => {
+      moveDragger(e);
+    }).off('mousemove.splitter').on('mousemove.splitter', (me) => {
+      moveDragger(me);
     });
 
     const handleCollapseButton = () => {

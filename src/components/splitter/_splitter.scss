@@ -41,6 +41,16 @@
   width: 0;
   z-index: 100;
 
+  // Hit Box
+  &::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 100%;
+    z-index: -1;
+    margin-left: -3px;
+  }
+
   .splitter-drag-handle {
     background-color: $splitter-handle-background-color;
     border-radius: 20%;
@@ -128,6 +138,16 @@
       margin-block-start: -2px;
       width: 32px;
     }
+
+    // Hit Box
+    &::after {
+      content: '';
+      position: absolute;
+      height: 8px;
+      width: 100%;
+      z-index: -1;
+      margin-top: -3px;
+    }
   }
 
   &.is-dragging {
@@ -141,14 +161,6 @@
 
     &.splitter-horizontal {
       display: block;
-    }
-  }
-}
-
-.ie {
-  .splitter-container {
-    .toolbar .buttonset > [class^='btn'] {
-      line-height: normal;
     }
   }
 }
