@@ -223,6 +223,7 @@
     $('.homepage').homepage();
 
     $('.stat.actionable').hideFocus().on('click', (e) => {
+      $('.stat.actionable').removeClass('is-selected');
       $(e.currentTarget).toggleClass('is-selected');
       console.log('Stat was clicked', e);
     });
