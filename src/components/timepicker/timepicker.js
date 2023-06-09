@@ -1229,6 +1229,7 @@ TimePicker.prototype = {
   disable() {
     this.enable();
     this.element.attr('disabled', 'disabled').closest('.field').addClass('is-disabled');
+    this.trigger.prop('disabled', true);
   },
 
   /**
@@ -1255,7 +1256,7 @@ TimePicker.prototype = {
     if (settings) {
       this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
     }
-    
+
     this.teardown();
     this.init();
 
