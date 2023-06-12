@@ -30,7 +30,7 @@
     }
 
     &.is-selected {
-      outline: 1px solid $ids-color-brand-primary-base;
+      outline: 2px solid $stats-selected-border-color;
     }
 
     &:focus {
@@ -165,7 +165,7 @@
     }
 
     .subtitle {
-      font-size: 10px;
+      font-size: 12px;
       font-weight: 400;
       color: $stats-subtitle-color;
       text-transform: uppercase;
@@ -175,7 +175,11 @@
       margin-top: 4px;
     }
   }
+}
 
+.card.bordered .stat,
+.widget.bordered .stat {
+  box-shadow: none;
 }
 
 // Theme Adjustments

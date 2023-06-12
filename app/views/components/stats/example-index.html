@@ -72,7 +72,7 @@
       </div>
     </div>
 
-    <div class="widget no-shadow"" id=" example-widget-borderless-2">
+    <div class="widget no-shadow"" id="example-widget-borderless-2">
       <div class="widget-header">
         <div class="widget-header-section title">
           <h2>Non Actionable Stats</h2>
@@ -131,7 +131,7 @@
       </div>
     </div>
 
-    <div class="widget no-shadow">
+    <div class="widget no-shadow" id="example-widget-borderless-3">
       <div class="widget-header has-subtitle">
         <div class="widget-header-section title">
           <h2 class="widget-title">Interesting Stats</h2>
@@ -150,8 +150,8 @@
           </ul>
         </div>
       </div>
-      <div class="widget-content">
-        <div class="stat no-margin-top" tabindex="0">
+      <div class="widget-content overflow-visible">
+        <div class="stat no-margin-top actionable" tabindex="0">
           <div class="assessment success">
             <div class="percentage">+38.62%</div>
             <div class="status">
@@ -166,7 +166,7 @@
             <div class="subtitle">Sub Title Goes Here</div>
           </div>
         </div>
-        <div class="stat no-margin-top" tabindex="0">
+        <div class="stat no-margin-top actionable" tabindex="0">
           <div class="assessment caution">
             <div class="percentage"></div>
             <div class="status">
@@ -181,7 +181,7 @@
             <div class="subtitle">Q4 2023</div>
           </div>
         </div>
-        <div class="stat" tabindex="0">
+        <div class="stat actionable" tabindex="0">
           <div class="assessment info">
             <div class="percentage"></div>
             <div class="status">
@@ -196,7 +196,7 @@
             <div class="subtitle">&nbsp;</div>
           </div>
         </div>
-        <div class="stat" tabindex="0">
+        <div class="stat actionable" tabindex="0">
           <div class="assessment error">
             <div class="percentage">-52.01%</div>
             <div class="status">
@@ -233,9 +233,9 @@
         </div>
       </div>
 
+      <div class="widget-content" id="example-widget-bordered-1">
       <div class="widget-content">
-      <div class="widget-content">
-        <div class="stat no-margin-top" tabindex="0">
+        <div class="stat actionable" tabindex="0">
           <div class="assessment success">
             <div class="percentage">+32.62%</div>
             <div class="status">
@@ -250,7 +250,7 @@
             <div class="subtitle">Sub Title Goes Here</div>
           </div>
         </div>
-        <div class="stat no-margin-top" tabindex="0">
+        <div class="stat actionable" tabindex="0">
           <div class="assessment caution">
             <div class="percentage"></div>
             <div class="status">
@@ -265,7 +265,7 @@
             <div class="subtitle">Q3 2023</div>
           </div>
         </div>
-        <div class="stat" tabindex="0">
+        <div class="stat actionable" tabindex="0">
           <div class="assessment info">
             <div class="percentage"></div>
             <div class="status">
@@ -280,7 +280,7 @@
             <div class="subtitle">&nbsp;</div>
           </div>
         </div>
-        <div class="stat" tabindex="0">
+        <div class="stat actionable" tabindex="0">
           <div class="assessment error">
             <div class="percentage">-22.01%</div>
             <div class="status">
@@ -314,10 +314,8 @@
 
     $('.homepage').homepage();
 
-    $('.stat.actionable').hideFocus().on('click', (e) => {
-      $('.stat.actionable').removeClass('is-selected');
-      $(e.currentTarget).toggleClass('is-selected');
-      console.log('Stat was clicked', e);
-    });
+    $('#example-widget-bordered-1 .stat.actionable').selectable().on('click', () => console.log('A Stat Was Clicked'));
+    $('#example-widget-borderless-1 .stat.actionable').selectable().on('click', () => console.log('A Stat Was Clicked'));
+    $('#example-widget-borderless-3 .stat.actionable').selectable().on('click', () => console.log('A Stat Was Clicked'));
   });
 </script>

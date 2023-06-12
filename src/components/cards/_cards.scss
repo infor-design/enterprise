@@ -558,6 +558,10 @@ $card-header-section: '.card-header-section', '.widget-header-section';
   .widget-chart-action {
     padding-top: 3px;
   }
+
+  &.overflow-visible {
+    overflow: initial;
+  }
 }
 
 .card-footer,
