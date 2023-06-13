@@ -168,7 +168,7 @@ ToolbarFlexItem.prototype = {
       this.element.tabIndex = 0;
       return;
     }
-    this.element.tabIndex = -1;
+    if (this.element) this.element.tabIndex = -1;
   },
 
   /**
