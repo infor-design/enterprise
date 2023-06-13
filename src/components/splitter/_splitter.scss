@@ -32,12 +32,12 @@
 }
 
 .splitter {
-  border-inline-end: 2px solid $splitter-border-color;
+  border-inline-end: 1px solid $splitter-border-color;
   cursor: ew-resize;
   height: 100%;
-  margin-inline-start: -1px;
   outline: none;
   position: absolute;
+  margin-inline-start: -1px;
   width: 0;
   z-index: 100;
 
@@ -45,34 +45,35 @@
   &::after {
     content: '';
     position: absolute;
-    width: 8px;
+    width: 7px;
     height: 100%;
-    z-index: -1;
-    margin-left: -3px;
+    margin-inline-start: -6px;
   }
 
   .splitter-drag-handle {
     background-color: $splitter-handle-background-color;
-    border-radius: 20%;
+    border-radius: 4px;
     display: block;
     height: 32px;
-    margin-inline-start: -2px;
+    margin-inline-start: -3px;
     opacity: 0;
     position: absolute;
-    transition: opacity 0.3s;
     width: 6px;
   }
 
   &:hover,
   &:active,
   &.is-dragging {
+    border: 2px solid $splitter-focus-border-color;
+    margin-inline-start: -1.5px;
+
     .splitter-drag-handle {
       opacity: 1;
     }
   }
 
   &:focus:not(:hover) {
-    border-color: $splitter-focus-border-color;
+    border: 2px solid $splitter-focus-border-color;
 
     .splitter-drag-handle {
       opacity: 1;
@@ -110,6 +111,7 @@
   //Other Layouts
   &.splitter-right {
     left: 229px;
+    margin-inline-start: 0;
     top: 0;
 
     .splitter-btn {
@@ -127,7 +129,7 @@
   //Other Layouts
   &.splitter-horizontal {
     border-inline-end: none;
-    border-block-end: 2px solid $splitter-border-color;
+    border-block-end: 1px solid $splitter-border-color;
     cursor: ns-resize;
     height: 0;
     width: 100%;
@@ -135,7 +137,7 @@
     .splitter-drag-handle {
       height: 6px;
       margin-inline-start: unset;
-      margin-block-start: -2px;
+      margin-block-start: -3px;
       width: 32px;
     }
 
@@ -143,10 +145,10 @@
     &::after {
       content: '';
       position: absolute;
-      height: 8px;
+      height: 11px;
       width: 100%;
-      z-index: -1;
-      margin-top: -3px;
+      z-index: 0;
+      margin-top: -5px;
     }
   }
 
