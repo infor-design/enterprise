@@ -251,7 +251,7 @@
     border-top: 1px solid $listview-border-color;
   }
 
-  .listview li:first-child {
+  .listview:not(.card-list) li:first-child {
     border-top: 1px solid $listview-border-color;
   }
 }
