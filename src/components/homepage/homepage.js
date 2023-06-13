@@ -526,7 +526,7 @@ Homepage.prototype = {
    * @returns {void}
    */
   setBlocks() {
-    const cards = this.element.find('.card, .widget, .small-widget');
+    const cards = this.element.find('.card, .widget, .small-widget').not('.card-list .card');
     this.blocks = [];
 
     for (let i = 0, l = cards.length; i < l; i++) {

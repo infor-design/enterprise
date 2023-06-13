@@ -23,7 +23,7 @@
     width: 360px;
 
     // Edit mode is on
-    &[draggable] {
+    &[draggable]:not(.auto-height) {
       overflow: initial;
     }
 

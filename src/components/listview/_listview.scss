@@ -520,12 +520,28 @@
         margin: 0;
         min-width: 11%;
       }
-    }
 
-    .card-header {
-      &.has-subheader {
-        display: block;
-        height: fit-content;
+      .card,
+      .widget {
+        height: auto;
+        width: 100%;
+        position: relative;
+
+        .card-header {
+          &.has-subheader {
+            display: block;
+            height: fit-content;
+          }
+        }
+
+        .card-content {
+          height: auto;
+          min-height: auto;
+        }
+
+        button {
+          border-radius: 8px;
+        }
       }
     }
   }
