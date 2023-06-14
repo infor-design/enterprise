@@ -19,6 +19,17 @@
   }
 
   .is-right-side {
+    .splitter {
+      margin-inline-start: 0;
+
+      &:hover,
+      &:active,
+      &:focus,
+      &.is-active {
+        margin-inline-start: 1px;
+      }
+    }
+
     .panel-header {
       border-bottom: 0;
       height: 41px;
@@ -61,11 +72,19 @@
     width: 6px;
   }
 
-  &:hover,
+  &:hover {
+    border-inline-end: 1px solid $splitter-border-color;
+    margin-inline-start: 0;
+
+    .splitter-drag-handle {
+      opacity: 1;
+    }
+  }
+
   &:active,
   &.is-dragging {
-    border: 2px solid $splitter-focus-border-color;
-    margin-inline-start: -1.5px;
+    border-color: $splitter-focus-border-color;
+    margin-inline-start: 0;
 
     .splitter-drag-handle {
       opacity: 1;
@@ -73,7 +92,8 @@
   }
 
   &:focus:not(:hover) {
-    border: 2px solid $splitter-focus-border-color;
+    border-color: $splitter-border-color;
+    margin-inline-start: 0;
 
     .splitter-drag-handle {
       opacity: 1;
@@ -134,10 +154,27 @@
     height: 0;
     width: 100%;
 
+    &:hover {
+      border-block-end: 2px solid $splitter-border-color;
+
+      .splitter-drag-handle {
+        margin-block-start: -2px;
+      }
+    }
+
+    &:active,
+    &.is-dragging {
+      border-color: $splitter-focus-border-color;
+    }
+
+    &:focus .splitter-drag-handle {
+      margin-block-start: 0.5px;
+    }
+
     .splitter-drag-handle {
       height: 6px;
       margin-inline-start: unset;
-      margin-block-start: -3px;
+      margin-block-start: -2.5px;
       width: 32px;
     }
 
