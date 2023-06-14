@@ -124,6 +124,7 @@ $card-header-section: '.card-header-section', '.widget-header-section';
       div {
         &.card-content-status {
           margin-left: -4px;
+          margin-bottom: 5px;
           color: $card-content-status-success-color;
 
           .icon {

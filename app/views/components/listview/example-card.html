@@ -1,8 +1,8 @@
 <div class="homepage page-container scrollable" data-columns="3">
   <div class="content">
-    <div class="widget double-width auto-height border-less show-buttons">
+    <div class="widget double-width double-height border-less show-buttons">
       <div class="widget-content">
-        <div class="listview card-list" id="custom-listview" style="overflow-y: hidden;">
+        <div class="listview card-list" id="custom-listview">
           <ul id="custom-listview-items" role="presentation">
             <li>
               <div class="card card-variant show-buttons">
@@ -157,8 +157,8 @@
             </li>
 
             <li>
-              <div class="card show-buttons">
-                <div class="card-content padding-x-16 padding-y-16">
+              <div class="card card-variant">
+                <div class="card-content">
                   <p class="listview-heading-lg">listview-heading-lg</p>
                   <p class="listview-heading">listview-heading</p>
                   <p class="listview-subheading">
@@ -176,7 +176,7 @@
         </div>
       </div>
     </div>
-    <div class="widget auto-height show-buttons">
+    <div class="widget show-buttons">
       <div class="widget-header">
         <h2 class="widget-title">Listview Title</h2>
         <div class="card-buttonset">
@@ -205,9 +205,9 @@
         <div class="listview" id="search-listview" data-init="false" style="overflow-x: hidden">
           <ul>
             <li class="d-flex">
-              <div style="width: 78%;">
-                <p class="listview-heading">8 Mile Resurfacing</p>
-                <p class="listview-subheading">City of Detroit</p>
+              <div style="width: 240px">
+                <p class="listview-data">8 Mile Resurfacing</p>
+                <p class="listview-micro">City of Detroit</p>
               </div>
               <span class="tag warning"><span class="audible">Alert</span>On Hold</span>
             </li>
@@ -242,6 +242,120 @@
         </div>
       </div>
     </div>
+    <div class="widget show-buttons">
+      <div class="widget-header">
+        <h2 class="widget-title">Listview Title</h2>
+        <div class="card-buttonset">
+          <button type="button" class="btn-icon hide-focus" id="search-id">
+            <span>Search</span>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-search"></use>
+            </svg>
+            <span class="audible">Search</span>
+          </button>
+          <button class="btn-actions" type="button">
+            <span class="audible">Actions</span>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-vertical-ellipsis"></use>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="widget-content">
+        <div class="listview card-list" id="small-card-listview" data-init="false" style="overflow-x: hidden">
+          <ul>
+            <li>
+              <div class="card card-variant show-buttons">
+                <div class="card-image">
+                  <svg class="icon amber05-color" focusable="false" aria-hidden="true" role="presentation">
+                    <use href="#icon-clock"></use>
+                  </svg>
+                </div>
+                <div class="card-content">
+                  <div class="card-content-header">There are <b>5 records</b> for the company ‘Masrani Corp.’, location ‘WH28 - Main Warehouse’ and item ‘23- Bandage’</div>
+                </div>
+                <div class="card-buttonset">
+                  <button class="btn-actions" type="button">
+                    <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                        <use href="#icon-settings"></use>
+                    </svg>
+                  </button>
+                  <button class="btn-actions" type="button">
+                    <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                        <use href="#icon-settings"></use>
+                    </svg>
+                  </button>
+                  <div class="card-content-action">
+                    <button class="btn-actions" type="button">
+                      <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                          <use href="#icon-more"></use>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </li>
+
+            <li>
+              <div class="card card-variant show-buttons">
+                <div class="card-image">
+                  <svg class="icon amber05-color" focusable="false" aria-hidden="true" role="presentation">
+                    <use href="#icon-clock"></use>
+                  </svg>
+                </div>
+                <div class="card-content">
+                  <div class="card-content-header">There are <b>5 records</b> for the company ‘Masrani Corp.’, location ‘WH28 - Main Warehouse’ and item ‘23- Bandage’</div>
+                </div>
+                <div class="card-buttonset">
+                  <button class="btn-secondary" type="button">
+                    <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                      <use href="#icon-filter"></use>
+                    </svg>
+                    <span>Filter</span>
+                  </button>
+                  <div class="card-content-action">
+                    <button class="btn-actions" type="button">
+                      <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                          <use href="#icon-more"></use>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </li>
+
+            <li>
+              <div class="card card-variant show-buttons">
+                <div class="card-image">
+                  <svg class="icon amber05-color" focusable="false" aria-hidden="true" role="presentation">
+                    <use href="#icon-clock"></use>
+                  </svg>
+                </div>
+                <div class="card-content">
+                  <div class="card-content-header">There are <b>5 records</b> for the company ‘Masrani Corp.’, location ‘WH28 - Main Warehouse’ and item ‘23- Bandage’</div>
+                </div>
+                <div class="card-buttonset">
+                  <button class="btn" type="button">
+                    <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                      <use href="#icon-filter"></use>
+                    </svg>
+                    <span>Filter</span>
+                  </button>
+                  <div class="card-content-action">
+                    <button class="btn-actions" type="button">
+                      <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                          <use href="#icon-more"></use>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -250,5 +364,6 @@
   $('body').on('initialized', function () {
     const cardlistview = $('#custom-listview').listview().data('listview');
     const listviewEl = $('#search-listview').listview().data('listview');
+    const smallCardListview = $('#small-card-listview').listview().data('listview');
   });
 </script>
