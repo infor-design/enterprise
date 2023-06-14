@@ -531,8 +531,17 @@ Homepage.prototype = {
 
     for (let i = 0, l = cards.length; i < l; i++) {
       const card = $(cards[i]);
-      const h = card.hasClass('double-height') ? 2 : 1;
+      let h = card.hasClass('double-height') ? 2 : 1;
       let w;
+      let hExtra = 0;
+
+      if (card.hasClass('auto-height')) {
+        const height = this.settings.widgetHeight + this.settings.gutterSize;
+        if (card.height() > height * h) {
+          h = Math.floor(card.height() / height);
+          hExtra = (card.height() / height) - h;
+        }
+      }
 
       if (card.hasClass('sextuple-width')) {
         w = 6;
@@ -548,7 +557,7 @@ Homepage.prototype = {
         w = 1;
       }
 
-      this.blocks.push({ w, h, elem: card, text: card.text() });
+      this.blocks.push({ w, h, hExtra, elem: card, text: card.text() });
     }
 
     // Max sized columns brings to top
@@ -648,6 +657,8 @@ Homepage.prototype = {
     this.setBlocks(); // setup blocks
     this.initRowsAndCols(); // setup colums
 
+    const hExtras = [];
+
     // Loop thru each block, make fit where available and
     // If block more wider than available size, make as available size
     // Assign new left and top css positions
@@ -678,12 +689,21 @@ Homepage.prototype = {
       // Get Availability
       const available = self.getAvailability(block);
 
+      if (!hExtras[available.row]) {
+        hExtras[available.row] = 0;
+      }
+
       // Set positions
       const box = self.settings.widgetWidth + self.settings.gutterSize;
       const totalWidth = box * self.columns;
-
       const left = Locale.isRTL() ? totalWidth - ((box * block.w) + (box * available.col)) : box * available.col;// eslint-disable-line
-      const top = (self.settings.widgetHeight + self.settings.gutterSize) * available.row;
+
+      hExtras[available.row] += block.hExtra;
+      let top = (self.settings.widgetHeight + self.settings.gutterSize) * available.row;
+      for (let h = 0; h < available.row; h++) {
+        top += hExtras[h] ? (self.settings.widgetHeight + self.settings.gutterSize) * hExtras[h] : 0;
+      }
+
       const pos = { left, top };
 
       if (animate && !this.editing) {
