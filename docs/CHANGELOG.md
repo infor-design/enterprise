@@ -18,6 +18,7 @@
 - `[Locale/Multiselect]` Changed text from selected to selection as requested by translators. ([#5886](https://github.com/infor-design/enterprise/issues/5886))
 - `[SearchField]` Fix x alignment on older toolbar example. ([#7572](https://github.com/infor-design/enterprise/issues/7572))
 
+
 ## v4.84.1
 
 ## v4.84.1 Fixes
