@@ -1711,6 +1711,15 @@ MonthView.prototype = {
         animationSpeed: 150,
         trigger: this.element.find(s.showMonthYearPicker ? '#btn-inpage-cal' : '#btn-cal-month-year')
       });
+
+      inPageCalendarEl.on('afterexpand', () => {
+        this.element.trigger('monthviewexpanded');
+      });
+
+      inPageCalendarEl.on('aftercollapse', () => {
+        this.element.trigger('monthviewcollapsed');
+      });
+      
       const calExpandableareaApi = inPageCalendarEl.data('expandablearea');
 
       // Set expandable area for month year picker
