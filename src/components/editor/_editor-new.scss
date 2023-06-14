@@ -83,7 +83,7 @@
       .icon {
         height: 18px;
         left: 0 !important;
-        margin: -3px -1px 1px;
+        margin: -3px 0 1px;
         width: 18px;
       }
     }
@@ -115,6 +115,14 @@
       width: 52px;
     }
   }
+
+  .more {
+    [class^='btn'].btn-editor .icon:not(.icon-dropdown) {
+      height: 18px;
+      margin: -6px -1px 0;
+      width: 18px;
+    }
+  }
 }
 
 .editor-container .icon-dirty {
@@ -131,18 +139,6 @@
   .flex-toolbar.formatter-toolbar {
     > * {
       display: unset;
-    }
-  }
-}
-
-// IE/Edge have different icon alignments
-.ie-edge {
-  .toolbar.formatter-toolbar,
-  .flex-toolbar.formatter-toolbar {
-    [class^='btn'] {
-      &[data-action='visual'] {
-        width: 85px;
-      }
     }
   }
 }

@@ -73,6 +73,8 @@ xssUtils.sanitizeHTML = function (html) {
   let santizedHtml = html.replace(/\bon\w+=\S+?(?=(>|&|<| |"))/g, '');
   // Remove Script tags
   santizedHtml = santizedHtml.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/g, '');
+  // Remove iframe tags
+  santizedHtml = santizedHtml.replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/g, '');
 
   // Remove console methods
   santizedHtml = this.sanitizeConsoleMethods(santizedHtml);

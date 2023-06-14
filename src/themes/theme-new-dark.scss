@@ -415,7 +415,7 @@ $cardlist-bg-color: $ids-color-palette-slate-90;
 $cardlist-border-color: $ids-color-palette-slate-70;
 $cardlist-header-color: $ids-color-palette-white;
 $cardlist-actions-color: $ids-color-palette-slate-30;
-$cardlist-box-shadow-color: rgba(0, 0, 0, 0.15);
+$cardlist-box-shadow-color: rgba(0, 0, 0, 0.1);
 
 // Checkboxes
 $checkbox-disabled-text-color: $checkbox-color-unchecked-disabled-font;
@@ -909,6 +909,12 @@ $swipeaction-right-color: $ids-color-palette-white;
 $swipeaction-right-active-bg-color: $ids-color-palette-azure-60;
 $swipeaction-right-hover-bg-color: $ids-color-palette-azure-60;
 $swipeaction-right-hover-color: $ids-color-palette-white;
+
+// Stats
+$stats-title-color: $ids-color-palette-slate-30;
+$stats-subtitle-color: $ids-color-palette-slate-40;
+$stats-value-color: $ids-color-palette-slate-10;
+$stats-selected-border-color: $ids-color-palette-azure-60;
 
 // New Theme Only Variables
 $new-acc-border-radius: 6px;
