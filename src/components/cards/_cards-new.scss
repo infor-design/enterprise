@@ -2,7 +2,7 @@
 .small-widget,
 .widget {
   border-radius: 8px;
-  box-shadow: 0 2px 4px 1px $cardlist-box-shadow-color;
+  box-shadow: 0 0 4px $cardlist-box-shadow-color-hover;
   height: 368px;
   min-height: 368px;
 
@@ -81,7 +81,7 @@
   }
 
   &:hover {
-    button.btn-actions {
+    button.btn-actions:not(.list-button) {
       opacity: 1;
     }
   }
@@ -136,7 +136,7 @@
   .card-header {
     &.has-subtitle {
       align-items: flex-start;
-      height: 64px;
+      height: 60px; // was 64 but need to be flush so for better visuals
       padding-top: 8px;
 
       + .card-content,
@@ -355,7 +355,7 @@
 html[dir='rtl'] {
   .card-header,
   .widget-header {
-    margin: 8px 20px 8px 2px;
+    margin: 8px 16px 8px 2px;
 
     &:not(.has-toolbar) {
       > .btn-actions {

@@ -271,6 +271,7 @@
 	"/dist/sass/src/components/splitter/_splitter-new.scss",
 	"/dist/sass/src/components/splitter/_splitter.scss",
 	"/dist/sass/src/components/stepchart/_stepchart.scss",
+	"/dist/sass/src/components/stats/_stats.scss",
 	"/dist/sass/src/components/swaplist/_swaplist-new.scss",
 	"/dist/sass/src/components/swaplist/_swaplist.scss",
 	"/dist/sass/src/components/switch/_switch.scss",

@@ -107,7 +107,7 @@ $hr-bottom-color: $ids-color-palette-white;
 // Cards/Widget
 $card-border-color-hover: $ids-color-palette-slate-30;
 $cardlist-box-shadow-color-hover: rgba(0, 0, 0, 0.15);
-$cardlist-box-shadow-color: rgba(0, 0, 0, 0.05);
+$cardlist-box-shadow-color: rgba(0, 0, 0, 0.1);
 $card-scrolling-box-shadow: 0 0 4px 0 #00000040;
 $card-scrolling-border-color: $ids-color-palette-slate-20;
 $card-actions-toolbar-button-hover-color: $ids-color-brand-primary-base;
@@ -1142,6 +1142,12 @@ $formcompact-field-bg-focus-color: $ids-color-palette-azure-10;
 $formcompact-field-border-color: $ids-color-palette-black;
 $formcompact-field-border-focus-color: $ids-color-brand-primary-base;
 $formcompact-field-required-color: $ids-color-brand-primary-base;
+
+// Stats
+$stats-title-color: $ids-color-palette-slate-60;
+$stats-subtitle-color: $ids-color-palette-slate-50;
+$stats-value-color: $ids-color-palette-slate-100;
+$stats-selected-border-color: $ids-color-brand-primary-base;
 
 // Typography
 $typography-background-inverted: $ids-color-palette-slate-100;

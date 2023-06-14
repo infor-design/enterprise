@@ -3,6 +3,7 @@ import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
 import { stringUtils as str } from '../../utils/string';
 import { Tmpl } from '../tmpl/tmpl';
+import '../../utils/selectable.jquery';
 
 // Settings and Options
 const COMPONENT_NAME = 'cards';

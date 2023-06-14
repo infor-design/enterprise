@@ -641,10 +641,12 @@ Datagrid.prototype = {
       });
     }
 
+    const page = this.settings.paging && this.pagerAPI.activePage > 1 ?
+      (this.pagerAPI.activePage - 1) * this.settings.pagesize : 0;
     this.element.find('.datagrid-wrapper.center tbody > tr').each((idx, obj) => {
       const el = $(obj);
-      el.attr('aria-rowindex', idx + 1);
-      el.attr('data-index', idx);
+      el.attr('aria-rowindex', idx + page + 1);
+      el.attr('data-index', idx + page);
     });
 
     if (this.hasRightPane) {
@@ -10301,9 +10303,16 @@ Datagrid.prototype = {
     }
 
     const thisRow = this.actualRowNode(row);
-    const idx = this.settings.treeGrid ?
+    let idx = this.settings.treeGrid ?
       this.actualPagingRowIndex(this.actualRowIndex(thisRow)) :
       this.dataRowIndex(thisRow);
+
+    if (!this.settings.treeGrid && this.settings.paging && this.pagerAPI.activePage > 1) {
+      if (idx < (this.pagerAPI.activePage - 1) * this.settings.pagesize) {
+        idx += (this.pagerAPI.activePage - 1) * this.settings.pagesize;
+      }
+    }
+
     const rowData = this.rowData(idx);
 
     const isEditor = $('.is-editor', cellParent).length > 0;
@@ -11284,6 +11293,13 @@ Datagrid.prototype = {
     if (dataRowIndex === null || dataRowIndex === undefined || isNaN(dataRowIndex)) {
       dataRowIndex = row;
     }
+
+    if (!isTreeGrid && this.settings.paging && this.pagerAPI.activePage > 1) {
+      if (dataRowIndex < (this.pagerAPI.activePage - 1) * this.settings.pagesize) {
+        dataRowIndex += (this.pagerAPI.activePage - 1) * this.settings.pagesize;
+      }
+    }
+
     const rowData = this.rowData(dataRowIndex);
 
     if (rowNodes.length === 0 && this.settings.paging) {
@@ -11395,14 +11411,14 @@ Datagrid.prototype = {
       this.validateCell(dataRowIndex, cell);
 
       // Update and set trackdirty
-      if (!this.isDirtyCellUndefined(row, cell)) {
-        this.dirtyArray[row][cell].value = value;
-        this.dirtyArray[row][cell].coercedVal = coercedVal;
-        this.dirtyArray[row][cell].escapedCoercedVal = xssUtils.escapeHTML(coercedVal);
-        this.dirtyArray[row][cell].cellNodeText = cellNode.text();
-        this.dirtyArray[row][cell].cell = cell;
-        this.dirtyArray[row][cell].column = this.settings.columns[cell];
-        this.setDirtyCell(row, cell);
+      if (!this.isDirtyCellUndefined(dataRowIndex, cell)) {
+        this.dirtyArray[dataRowIndex][cell].value = value;
+        this.dirtyArray[dataRowIndex][cell].coercedVal = coercedVal;
+        this.dirtyArray[dataRowIndex][cell].escapedCoercedVal = xssUtils.escapeHTML(coercedVal);
+        this.dirtyArray[dataRowIndex][cell].cellNodeText = cellNode.text();
+        this.dirtyArray[dataRowIndex][cell].cell = cell;
+        this.dirtyArray[dataRowIndex][cell].column = this.settings.columns[cell];
+        this.setDirtyCell(dataRowIndex, cell);
       }
     }
 
@@ -11540,7 +11556,6 @@ Datagrid.prototype = {
    */
   setDirtyCell(row, cell, dirtyOptions) {
     const cellNode = this.cellNode(row, cell);
-
     if (dirtyOptions) {
       this.addToDirtyArray(row, cell, dirtyOptions);
     }

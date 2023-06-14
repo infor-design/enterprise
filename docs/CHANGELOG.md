@@ -2,15 +2,23 @@
 
 ## v4.85.0
 
+## v4.85.0 Features
+
+- `[Stats]` Added a new component called stats similar to counts. We would like counts deprecated so please use stats in place of counts now as it has a cleaner UI. ([#7506](https://github.com/infor-design/enterprise/issues/7506))
+
 ## v4.85.0 Fixes
 
+- `[Datagrid]` Fix on incorrect row updates on adding a new row to the next page. ([#7486](https://github.com/infor-design/enterprise/issues/7486))
 - `[Button]` Adjusted the left and right paddings of the button from `30px` to `32px`. ([#7508](https://github.com/infor-design/enterprise/issues/7508))
 - `[Card]` Fixed widget size for subtitle examples. ([#7580](https://github.com/infor-design/enterprise/issues/7580))
+- `[Datagrid]` Fixed disabled filter columns in datagrid. ([#7467](https://github.com/infor-design/enterprise/issues/7467))
+- `[Editor]` Fixed an xss issue in editor (iframes not permitted). ([#7590](https://github.com/infor-design/enterprise/issues/7590))
 - `[Homepage]` Fixed invisible edit options and vertical dragging/resizing. ([#7579](https://github.com/infor-design/enterprise/issues/7579))
 - `[Locale]` Fixed a bug using extend translations on some languages (`fr-CA/pt-BR`). ([#7491](https://github.com/infor-design/enterprise/issues/7491))
 - `[Locale/Multiselect]` Changed text from selected to selection as requested by translators. ([#5886](https://github.com/infor-design/enterprise/issues/5886))
 - `[SearchField]` Fix x alignment on older toolbar example. ([#7572](https://github.com/infor-design/enterprise/issues/58875726))
 - `[Splitter]` Added new design changes and more examples. Note that the collapse button is no longer supported for now. ([#7542](https://github.com/infor-design/enterprise/issues/7542))
+- `[SearchField]` Fix x alignment on older toolbar example. ([#7572](https://github.com/infor-design/enterprise/issues/7572))
 
 ## v4.84.0
 

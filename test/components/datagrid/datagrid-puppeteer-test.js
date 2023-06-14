@@ -339,7 +339,7 @@ describe('Datagrid', () => {
       await page.hover('#popupmenu-2 > li:nth-child(3) > a');
       await page.click('#popupmenu-2 > li:nth-child(3) > a');
       const ariaRowT4 = await page.$eval('tr.datagrid-row.rowstatus-row-new.is-tooltips-enabled', element => element.getAttribute('aria-rowindex'));
-      expect(ariaRowT4).toMatch('4');
+      expect(ariaRowT4).toMatch('7');
     });
   });
 
