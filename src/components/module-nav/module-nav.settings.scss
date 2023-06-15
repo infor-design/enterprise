@@ -3,6 +3,10 @@
 // Module Nav Settings Component
 //================================================== //
 
+.module-nav-settings-btn.btn-menu {
+  padding-inline: 0;
+}
+
 .popupmenu.module-nav-settings-menu {
   @include settings-menu-box-shadow;
 

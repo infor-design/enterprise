@@ -721,7 +721,10 @@ Tooltip.prototype = {
 
     if (this.settings.beforeShow && !ajaxReturn) {
       const response = function (content) {
-        if (typeof content === 'boolean' && !content) {
+        if (typeof content === 'boolean') {
+          if (content) {
+            self.show(null, true);
+          }
           return;
         }
         self.content = content;
