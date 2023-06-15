@@ -23,6 +23,14 @@
 - `[SearchField]` Fix x alignment on older toolbar example. ([#7572](https://github.com/infor-design/enterprise/issues/58875726))
 - `[Tooltip]` Changed response method in beforeShow to allow passing true instead of content explicitly ([#7594](https://github.com/infor-design/enterprise/issues/7594))
 
+## v4.84.1
+
+## v4.84.1 Fixes
+
+- `[Module Nav]` Fixed an issue where it was not possible to disable filtering events. ([NG #1477](https://github.com/infor-design/enterprise-ng/issues/1477))
+- `[Popupmenu]` Fixed some styling bugs when attached as a menu button menu in Module Nav components. ([NG #1477](https://github.com/infor-design/enterprise-ng/issues/1477))
+- `[Dropdown]` Fixed an issue where Module Nav Role Switcher wasn't properly rendering the Dropdown pseudo-elements in Angular environments. ([NG #1477](https://github.com/infor-design/enterprise-ng/issues/1477))
+
 ## v4.84.0
 
 ## v4.84.0 Features
