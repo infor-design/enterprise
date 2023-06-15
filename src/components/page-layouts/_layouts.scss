@@ -116,7 +116,7 @@ body.no-scroll {
   > .sidebar {
     background-color: $body-color-primary-background;
     border-right: 1px solid $panel-border-color;
-    height: auto;
+    height: inherit;
     min-height: 100%;
     vertical-align: top;
     width: 25%;
