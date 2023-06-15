@@ -397,7 +397,7 @@ $card-expandable-sub-heading: $ids-color-palette-slate-90;
 $cardlist-border-color: $ids-color-palette-slate-60;
 $cardlist-header-color: $ids-color-palette-black;
 $cardlist-actions-color: $ids-color-palette-slate-90;
-$cardlist-box-shadow-color: rgba(0, 0, 0, 0.15);
+$cardlist-box-shadow-color: rgba(0, 0, 0, 0.1);
 
 // Switch
 $radio-checked-color: $ids-color-palette-azure-100;
@@ -795,10 +795,9 @@ $module-tabs-disabled-text-color: $ids-color-palette-azure-40;
 $composite-tabs-panel-bg-color: $ids-color-palette-white;
 
 // Splitter
-$splitter-grip-bg-color: $ids-color-palette-slate-90;
-$splitter-active-bg-color: $ids-color-palette-slate-20;
-$splitter-active-grip-bg-color: $ids-color-palette-black;
-$splitter-box-shadow-color: rgba(37, 120, 169, 0.75);
+$splitter-border-color: $ids-color-palette-slate-40;
+$splitter-focus-border-color: $ids-color-palette-azure-40;
+$splitter-handle-background-color: $ids-color-palette-azure-80;
 
 // Step Chart
 $step-chart-bg-color: $ids-color-palette-slate-20;

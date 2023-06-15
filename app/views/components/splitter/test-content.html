@@ -1,14 +1,13 @@
-﻿<div class="page-container two-column fixed no-scroll">
+<div class="two-column fixed page-container" role="main">
+  <div class="sidebar">
+    <div class="listview" id="task-listview" data-init="false"></div>
+    <div id="splitter" class="splitter" data-options="{'side':'right', 'save': false}"></div>
+  </div>
 
-  <section class="main">
-    <div class="content scrollable">
+  <div class="main" role="main">
+    <div class="content">
     </div>
-  </section>
-
-  <nav class="sidebar scrollable">
-    <div id="splitter" class="splitter" data-options="{'side':'right', 'save':false}"></div>
-  </nav>
-
+  </div>
 </div>
 
 {{={{{ }}}=}}
@@ -46,4 +45,3 @@
     });
   });
 </script>
-
