@@ -561,6 +561,10 @@ $card-header-section: '.card-header-section', '.widget-header-section';
   .widget-chart-action {
     padding-top: 3px;
   }
+
+  &.overflow-visible {
+    overflow: initial;
+  }
 }
 
 .card-footer,
@@ -841,7 +845,7 @@ html[class*='theme-classic-'] {
 
       &.has-subtitle {
         align-items: flex-start;
-        height: 64px;
+        height: 61px; // was 64 but need to be flush so for better visuals
         padding-top: 9px;
 
         .widget-header-section.title {
