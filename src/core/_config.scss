@@ -1155,10 +1155,9 @@ $typography-card-title-inverted: $ids-color-palette-white;
 $typography-card-info-inverted: $ids-color-palette-slate-10;
 
 // Splitter
-$splitter-grip-bg-color: $ids-color-palette-graphite-60;
-$splitter-active-bg-color: $ids-color-palette-graphite-20;
-$splitter-active-grip-bg-color: $ids-color-palette-graphite-100;
-$splitter-box-shadow-color: rgba(54, 138, 192, 0.75);
+$splitter-border-color: $ids-color-palette-slate-30;
+$splitter-focus-border-color: $ids-color-palette-azure-30;
+$splitter-handle-background-color: $ids-color-palette-azure-60;
 
 // Step Chart
 $step-chart-bg-color: $ids-color-palette-graphite-20;

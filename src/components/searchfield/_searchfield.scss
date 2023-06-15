@@ -22,8 +22,7 @@
   margin-bottom: 20px;
   position: relative;
 
-  @include transition(width 300ms $cubic-ease,
-  left 300ms $cubic-ease,
+  @include transition(left 300ms $cubic-ease,
   right 300ms $cubic-ease,
   box-shadow 300ms $cubic-ease);
 
@@ -594,6 +593,10 @@ html[class*='theme-classic-'] {
       position: relative;
       right: unset;
     }
+  }
+
+  .searchfield-wrapper > .icon {
+    top: 7px;
   }
 
   .application-menu.has-searchfield {

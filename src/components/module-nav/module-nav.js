@@ -141,7 +141,6 @@ ModuleNav.prototype = {
     }
     this.searchEl = this.element[0].querySelector('.searchfield');
     if (this.searchEl) {
-      this.settings.filterable = true;
       this.configureSearch();
     }
 
@@ -269,8 +268,16 @@ ModuleNav.prototype = {
    * @private
    */
   configureSearch() {
-    accordionSearchUtils.attachFilter.apply(this, [COMPONENT_NAME]);
-    accordionSearchUtils.attachFilterEvents.apply(this, [COMPONENT_NAME]);
+    // If the filterable setting is disabled, no events should be applied automatically
+    // (This behavior is intended for allowing custom filtering applications)
+    if (this.settings.filterable) {
+      accordionSearchUtils.attachFilter.apply(this, [COMPONENT_NAME]);
+      accordionSearchUtils.attachFilterEvents.apply(this, [COMPONENT_NAME]);
+    } else {
+      // Invoke searchfield with default settings here since we found one
+      // (main init process ignores searchfields inside nav menus)
+      $(this.searchEl).searchfield();
+    }
 
     this.searchEl.classList.add('module-nav-search');
     $(this.searchEl).parents('.accordion-section')?.[0].classList.add('module-nav-search-container');

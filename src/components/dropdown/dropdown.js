@@ -235,12 +235,20 @@ Dropdown.prototype = {
     this.isHidden = style && style.indexOf('display: none') >= 0;
 
     // Build the wrapper if it doesn't exist
-    const baseElement = this.isInlineLabel ? this.inlineLabel : this.element;
-    this.wrapper = baseElement.next('.dropdown-wrapper');
+    let baseElement;
+    if (this.isInlineLabel) {
+      baseElement = this.inlineLabel.next('.dropdown-wrapper');
+    } else {
+      baseElement = this.element.parent('.dropdown-wrapper');
+      if (!baseElement.length) {
+        baseElement = this.element.next('.dropdown-wrapper');
+      }
+    }
+    this.wrapper = baseElement;
     this.isWrapped = this.wrapper.length > 0;
 
     if (!this.isWrapped) {
-      this.wrapper = $('<div class="dropdown-wrapper"></div>').insertAfter(baseElement);
+      this.wrapper = $('<div class="dropdown-wrapper"></div>').insertAfter(this.element);
     }
 
     if (this.isWrapped) {
