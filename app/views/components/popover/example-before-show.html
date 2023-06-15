@@ -1,0 +1,112 @@
+<div class="row top-padding">
+  <div class="twelve columns">
+
+  
+    <div class="field">
+      <input type="checkbox" class="checkbox" name="checkbox1"  id="canShow"/>
+      <label for="canShow" class="checkbox-label">Can show</label>
+    </div>
+
+    <div class="field">
+      <button id="popover-1-trigger" class="btn-secondary" type="button">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-upload"></use>
+        </svg>
+        <span>Show Popover 1</span>
+      </button>
+    </div>
+
+    <div class="field">
+      <button id="popover-2-trigger" class="btn-secondary" type="button">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-upload"></use>
+        </svg>
+        <span>Show Popover 2</span>
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<div id="popover-1" class="popover-content-area hidden">
+  <p>Purchase <strong>2</strong> more to save <a href="#" class="hyperlink"><strong>$100</strong></a> total</p>
+  <div class="demo-popover">
+    <table role="grid" class="l-pull-left">
+      <thead>
+        <tr>
+          <th scope="col" role="columnheader">Quantity</th>
+          <th scope="col" role="columnheader">Unit Price</th>
+          <th scope="col" role="columnheader">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>50</td>
+          <td>$18.00</td>
+          <td><strong>$900.00</strong></td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="btn-primary" id="popover-btn-apply" data-automation-id="popover-btn-apply-automation-id" type="button">Apply</button>
+  </div>
+  <div class="modal-buttonset">
+    <button type="button" class="btn-modal-primary" id="popover-1-btn-view-more">View more</button>
+  </div>
+</div>
+
+<div id="popover-2" class="popover-content-area hidden">
+  <p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+    veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+    commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+    velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+    occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+    mollit anim id est laborum.
+  </p>
+  <div class="modal-buttonset">
+    <button type="button" class="btn-modal-primary" id="popover-2-btn-view-more">
+      View more
+    </button>
+  </div>
+</div>
+
+<script>
+const beforeShow = (response) => {
+    const canShow = !!$('#canShow').prop('checked');
+    response(canShow);
+  }
+
+  const POPOVER_1_OPTIONS = {
+    closebutton: true,
+    content: '#popover-1',
+    extraClass: 'alternate',
+    placement: 'right',
+    popover: true,
+    offset: {
+      y: 10
+    },
+    title: 'Popover 1',
+    trigger: 'click',
+    beforeShow: beforeShow
+  };
+
+  const POPOVER_2_OPTIONS = {
+    closebutton: true,
+    content: '#popover-2',
+    extraClass: 'alternate',
+    placement: 'right',
+    popover: true,
+    offset: {
+      y: 10
+    },
+    maxWidth: '250px',
+    title: 'Popover 2',
+    trigger: 'click',
+    beforeShow: beforeShow
+  };
+
+  $('#popover-1-trigger').popover(POPOVER_1_OPTIONS);
+  $('#popover-2-trigger').popover(POPOVER_2_OPTIONS);
+
+</script>
