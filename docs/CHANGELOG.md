@@ -16,6 +16,7 @@
 - `[Homepage]` Fixed invisible edit options and vertical dragging/resizing. ([#7579](https://github.com/infor-design/enterprise/issues/7579))
 - `[Locale]` Fixed a bug using extend translations on some languages (`fr-CA/pt-BR`). ([#7491](https://github.com/infor-design/enterprise/issues/7491))
 - `[Locale/Multiselect]` Changed text from selected to selection as requested by translators. ([#5886](https://github.com/infor-design/enterprise/issues/5886))
+- `[Lookup]` Fixed a bug in lookup width not responsive in grid system. ([#7205](https://github.com/infor-design/enterprise/issues/7205))
 - `[SearchField]` Fix x alignment on older toolbar example. ([#7572](https://github.com/infor-design/enterprise/issues/58875726))
 - `[Splitter]` Added new design changes and more examples. Note that the collapse button is no longer supported for now. ([#7542](https://github.com/infor-design/enterprise/issues/7542))
 - `[SearchField]` Fix x alignment on older toolbar example. ([#7572](https://github.com/infor-design/enterprise/issues/7572))
