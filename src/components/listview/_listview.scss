@@ -516,6 +516,26 @@
         background-color: transparent;
       }
 
+      &:focus,
+      &:hover {
+        .card,
+        .widget {
+          border: 1px solid $card-border-color-hover;
+          box-shadow: 0 2px 4px 1px $cardlist-box-shadow-color-hover;
+        }
+      }
+
+      &.is-selected {
+        .card,
+        .widget {
+          border: 2px solid $card-selected-border-color;
+
+          .card-content {
+            border: none;
+          }
+        }
+      }
+
       .tag-list {
         margin: 0;
         min-width: 11%;
