@@ -102,7 +102,7 @@ Cards.prototype = {
     const isSingle = this.settings.selectable === 'single';
     const isBordered = this.settings.bordered === true;
     const isBorderLess = this.settings.bordered === false;
-    const hasCustomAction = this.element.find('.card-header .card-header-section.custom-action, .widget-header .widget-header-section.custom-action').length > 0;
+    const hasCustomAction = this.element.find('.card-header-section.custom-action, .widget-header-section.custom-action').length > 0;
     // Apply content padding if provided
     const { contentPaddingX, contentPaddingY } = this.settings;
 
