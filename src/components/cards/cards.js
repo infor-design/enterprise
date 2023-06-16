@@ -363,33 +363,6 @@ Cards.prototype = {
 
     const shouldOverflow = this.element.width() <= 360;
 
-    const pushToList = (children, len, more) => {
-      const api = more.data('popupmenu');
-      let popupList;
-
-      if (api) {
-        popupList = api.settings.menu;
-      } else {
-        popupList = $('<ul class="popupmenu"></ul>');
-        popupList.insertAfter(more);
-      }
-
-      for (let i = 0; i < len; i++) {
-        const button = children[i];
-        const listItem = $(`<li><a href="#">${button.innerHTML}</a></li>`);
-        listItem.data('originalButton', button);
-        listItem.on('click', () => $(button).triggerHandler('click'));
-        popupList.append(listItem);
-        $(button).hide();
-      }
-
-      if (api) {
-        api.updated({ menu: popupList });
-      } else {
-        more.popupmenu({ menu: popupList });
-      }
-    };
-
     const addMore = (element, children, len) => {
       let more;
       if (element.hasClass('is-overflowed')) {
@@ -416,7 +389,31 @@ Cards.prototype = {
         container.append(more);
         element.append(container);
       }
-      pushToList(children, len, more);
+
+      const api = more.data('popupmenu');
+      let popupList;
+
+      if (api) {
+        popupList = api.settings.menu;
+      } else {
+        popupList = $('<ul class="popupmenu"></ul>');
+        popupList.insertAfter(more);
+      }
+
+      for (let i = 0; i < len; i++) {
+        const button = children[i];
+        const listItem = $(`<li><a href="#">${button.innerHTML}</a></li>`);
+        listItem.data('originalButton', button);
+        listItem.on('click', () => $(button).triggerHandler('click'));
+        popupList.prepend(listItem);
+        $(button).hide();
+      }
+
+      if (api) {
+        api.updated({ menu: popupList });
+      } else {
+        more.popupmenu({ menu: popupList });
+      }
     };
 
     const visibleChildren = buttonset.children(':visible:not(.card-content-action)');
