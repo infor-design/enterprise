@@ -244,6 +244,8 @@ Cards.prototype = {
       this.removeInfoIconTooltip();
     }
 
+    this.resizeButtonset();
+
     return this;
   },
 
@@ -347,6 +349,108 @@ Cards.prototype = {
       this.cards.html(renderedTmpl);
     } else if (s.dataset.length === 0) {
       this.cards.html(renderedTmpl || '<div class="cards auto-height"></div>');
+    }
+  },
+
+  /**
+   * Add More button if card reaches a certain size
+   */
+  resizeButtonset() {
+    const buttonset = this.element.find('.card-buttonset');
+    if (buttonset.length === 0) {
+      return;
+    }
+
+    const shouldOverflow = this.element.width() <= 360;
+
+    const pushToList = (children, len, more) => {
+      const api = more.data('popupmenu');
+      let popupList;
+
+      if (api) {
+        popupList = api.settings.menu;
+      } else {
+        popupList = $('<ul class="popupmenu"></ul>');
+        popupList.insertAfter(more);
+      }
+
+      for (let i = 0; i < len; i++) {
+        const button = children[i];
+        const listItem = $(`<li><a href="#">${button.innerHTML}</a></li>`);
+        listItem.data('originalButton', button);
+        listItem.on('click', () => $(button).triggerHandler('click'));
+        popupList.append(listItem);
+        $(button).hide();
+      }
+
+      if (api) {
+        api.updated({ menu: popupList });
+      } else {
+        more.popupmenu({ menu: popupList });
+      }
+    };
+
+    const addMore = (element, children, len) => {
+      let more;
+      if (element.hasClass('is-overflowed')) {
+        let container = element.find('.card-content-action');
+
+        if (!container) {
+          container = $('<div class="card-content-action"></div>');
+          more = $('<button class="btn-actions" type="button"></button>')
+            .html(`${$.createIcon({ icon: 'more' })
+            }<span class="audible">${Locale.translate('MoreActions')}</span>`)
+            .attr('title', Locale.translate('More'));
+          container.append(more);
+          element.append(container);
+        } else {
+          more = element.find('.card-content-action button');
+        }
+      } else {
+        element.addClass('is-overflowed');
+        const container = $('<div class="card-content-action"></div>');
+        more = $('<button class="btn-actions" type="button"></button>')
+          .html(`${$.createIcon({ icon: 'more' })
+          }<span class="audible">${Locale.translate('MoreActions')}</span>`)
+          .attr('title', Locale.translate('More'));
+        container.append(more);
+        element.append(container);
+      }
+      pushToList(children, len, more);
+    };
+
+    const visibleChildren = buttonset.children(':visible:not(.card-content-action)');
+
+    if (shouldOverflow) {
+      addMore(buttonset, visibleChildren, visibleChildren.length);
+    } else if (visibleChildren.length > 2) {
+      addMore(buttonset, visibleChildren, visibleChildren.length - 2);
+    } else if (buttonset.hasClass('is-overflowed') && visibleChildren.length < 2) {
+      const more = this.element.find('.card-content-action button');
+      const api = more.data('popupmenu');
+      const parent = more.parent();
+
+      if (api && api.settings.menu) {
+        const popupList = api.settings.menu.children();
+        const n = 2 - visibleChildren.length;
+
+        for (let i = 0; i < n; i++) {
+          const li = $(popupList).get(i);
+          $($(li).data('originalButton')).show();
+        }
+
+        if (popupList.length === n) {
+          api.destroy();
+          more.remove();
+          parent.remove();
+          buttonset.removeClass('is-overflowed');
+        } else {
+          for (let i = 0; i < n; i++) {
+            $(popupList).get(i).remove();
+          }
+          api.updated();
+        }
+      }
     }
   },
 
@@ -545,6 +649,9 @@ Cards.prototype = {
       if (Locale.isRTL()) {
         this.removeInfoIconTooltip();
       }
+      setTimeout(() => {
+        this.resizeButtonset();
+      }, 250);
     });
 
     const cardHeader = this.element.find('.card-header, .widget-header');
