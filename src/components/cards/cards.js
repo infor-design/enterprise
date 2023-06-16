@@ -651,7 +651,7 @@ Cards.prototype = {
       }
       setTimeout(() => {
         this.resizeButtonset();
-      }, 250);
+      }, 300);
     });
 
     const cardHeader = this.element.find('.card-header, .widget-header');
