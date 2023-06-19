@@ -10,6 +10,7 @@
   color: $tooltip-color;
   font-size: $ids-size-font-sm;
   left: -9999px;
+  min-height: 36px;
   max-width: 300px;
   min-width: 40px;
   opacity: 1;
@@ -342,7 +343,7 @@
 }
 
 .tooltip-content {
-  padding: 7px 10px 5px;
+  padding: 6px 10px 3px;
   word-break: normal;
 
   &.header-icon {
@@ -356,6 +357,7 @@
 
   p {
     margin-left: 0;
+    margin-top: 2px;
     text-align: center;
 
     &.align-text-left,
