@@ -400,7 +400,7 @@ Cards.prototype = {
         popupList.insertAfter(more);
       }
 
-      for (let i = 0; i < len; i++) {
+      for (let i = children.length - 1, j = 0; i >= 0 && j < len; i--, j++) {
         const button = children[i];
         const listItem = $(`<li><a href="#">${button.innerHTML}</a></li>`);
         listItem.data('originalButton', button);
@@ -418,33 +418,56 @@ Cards.prototype = {
 
     const visibleChildren = buttonset.children(':visible:not(.card-content-action)');
 
+    let visibleLen = 0;
+    let weight = 0;
+
+    for (let i = 0; i < visibleChildren.length; i++) {
+      const add = $(visibleChildren.get(i)).hasClass('btn-icon') ? 1 : 2;
+      if (weight + add > 3) {
+        break;
+      }
+      weight += add;
+      visibleLen = i;
+    }
+    visibleLen++;
+
     if (shouldOverflow) {
       addMore(buttonset, visibleChildren, visibleChildren.length);
-    } else if (visibleChildren.length > 2) {
-      addMore(buttonset, visibleChildren, visibleChildren.length - 2);
-    } else if (buttonset.hasClass('is-overflowed') && visibleChildren.length < 2) {
+    } else if (visibleChildren.length > visibleLen) {
+      addMore(buttonset, visibleChildren, visibleChildren.length - visibleLen);
+    } else if (buttonset.hasClass('is-overflowed') && weight < 3) {
       const more = this.element.find('.card-content-action button');
       const api = more.data('popupmenu');
       const parent = more.parent();
 
       if (api && api.settings.menu) {
         const popupList = api.settings.menu.children();
-        const n = 2 - visibleChildren.length;
+        let n = 0;
+
+        for (let i = 0; i < popupList.length; i++) {
+          const button = $($($(popupList).get(i)).data('originalButton'));
+          const add = button.hasClass('btn-icon') ? 1 : 2;
+
+          if (weight + add > 3) {
+            break;
+          }
+
+          button.show();
+          weight += add;
+          n = i;
+        }
+        n++;
 
         for (let i = 0; i < n; i++) {
-          const li = $(popupList).get(i);
-          $($(li).data('originalButton')).show();
+          $(popupList).get(i).remove();
         }
 
-        if (popupList.length === n) {
+        if ($(api.settings.menu.children()).length === 0) {
           api.destroy();
           more.remove();
           parent.remove();
           buttonset.removeClass('is-overflowed');
         } else {
-          for (let i = 0; i < n; i++) {
-            $(popupList).get(i).remove();
-          }
           api.updated();
         }
       }
