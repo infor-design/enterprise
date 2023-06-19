@@ -19,17 +19,6 @@
   }
 
   .is-right-side {
-    .splitter {
-      margin-inline-start: 0;
-
-      &:hover,
-      &:active,
-      &:focus,
-      &.is-active {
-        margin-inline-start: 1px;
-      }
-    }
-
     .panel-header {
       border-bottom: 0;
       height: 41px;
@@ -42,13 +31,26 @@
   }
 }
 
+.splitter-container {
+  &.two-column > .main {
+    border-right: 0;
+  }
+
+  &.two-column.fixed > .sidebar {
+    border-right: 0;
+  }
+
+  &.header-detail .detail {
+    border-top: 0;
+  }
+}
+
 .splitter {
   border-inline-end: 1px solid $splitter-border-color;
   cursor: ew-resize;
   height: 100%;
   outline: none;
   position: absolute;
-  margin-inline-start: -1px;
   width: 0;
   z-index: 100;
 
@@ -66,15 +68,15 @@
     border-radius: 4px;
     display: block;
     height: 32px;
-    margin-inline-start: -3px;
     opacity: 0;
     position: absolute;
+    margin-inline-start: -2px;
     width: 6px;
+    z-index: 1;
   }
 
   &:hover {
-    border-inline-end: 1px solid $splitter-border-color;
-    margin-inline-start: 0;
+    border-inline-end: 2px solid $splitter-border-color;
 
     .splitter-drag-handle {
       opacity: 1;
@@ -84,7 +86,6 @@
   &:active,
   &.is-dragging {
     border-color: $splitter-focus-border-color;
-    margin-inline-start: 0;
 
     .splitter-drag-handle {
       opacity: 1;
@@ -93,7 +94,6 @@
 
   &:focus:not(:hover) {
     border-color: $splitter-border-color;
-    margin-inline-start: 0;
 
     .splitter-drag-handle {
       opacity: 1;
