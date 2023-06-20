@@ -1252,7 +1252,6 @@ Modal.prototype = {
       }
     }
 
-    
     if (calcHeight < this.element.find('.modal-body').height()) {
       wrapper[0].style.overflow = 'auto';
     }
