@@ -21,6 +21,8 @@ const MODULE_NAV_SWITCHER_DEFAULTS = {
   displayMode: MODULE_NAV_DISPLAY_MODES[0],
   generate: true,
   icon: () => SWITCHER_ICON_HTML,
+  moduleButtonText: 'Standard Module',
+  roleDropdownLabel: 'Roles',
   roles: []
 };
 
@@ -154,7 +156,7 @@ ModuleNavSwitcher.prototype = {
 
   renderModuleButton() {
     if (this.settings.generate && (!this.moduleButtonContainerEl || !this.moduleButtonEl)) {
-      this.element[0].insertAdjacentHTML('afterbegin', buttonTemplate());
+      this.element[0].insertAdjacentHTML('afterbegin', buttonTemplate(this.settings.moduleButtonText));
     }
     if (this.moduleButtonEl) {
       $(this.moduleButtonEl).button({
@@ -165,7 +167,7 @@ ModuleNavSwitcher.prototype = {
 
   renderRoleDropdown() {
     if (this.settings.generate && (!this.roleDropdownContainerEl || !this.roleDropdownEl)) {
-      this.element[0].insertAdjacentHTML('beforeend', dropdownTemplate());
+      this.element[0].insertAdjacentHTML('beforeend', dropdownTemplate(this.settings.roleDropdownLabel));
     }
     if (!$(this.roleDropdownEl).find('option').length) {
       this.renderDropdownOptions();
