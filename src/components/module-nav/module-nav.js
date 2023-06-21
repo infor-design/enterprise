@@ -151,8 +151,8 @@ ModuleNav.prototype = {
    * @private
    */
   renderSeparators() {
-    if (this.switcherEl || this.searchEl) this.itemMenuEl.insertAdjacentHTML('beforebegin', separatorTemplate());
-    if (this.footerEl) this.footerEl.insertAdjacentHTML('beforebegin', separatorTemplate());
+    if (this.switcherEl || this.searchEl) this.itemMenuEl?.insertAdjacentHTML('beforebegin', separatorTemplate());
+    if (this.footerEl) this.footerEl?.insertAdjacentHTML('beforebegin', separatorTemplate());
   },
 
   /**
