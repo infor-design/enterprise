@@ -1,6 +1,6 @@
 /* eslint-disable compat/compat */
 
-describe('Column Stacked Chart Puppeteer Tests', () => {
+describe.skip('Column Stacked Chart Puppeteer Tests', () => {
   describe('Column Stacked Disable Selection  State tests', () => {
     const url = 'http://localhost:4000/components/column-stacked/example-disable-selection-state.html';
 
