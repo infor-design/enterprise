@@ -1296,6 +1296,11 @@ Column.prototype = {
 
         DOM.html(elem.node(), markup, '<tspan>');
       });
+
+      self.element.find('.chart-legend').addClass('m-top-0');
+      self.element.find('.chart-legend .chart-legend-color').each((i, elem) => {
+        elem.classList.add('m-bottom-0');
+      });
     }
 
     if (self.settings.isStacked) {
