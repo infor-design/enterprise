@@ -505,6 +505,8 @@
   }
 
   &.card-list {
+    padding: 2px 0;
+
     li {
       background-color: transparent;
       border: none;
@@ -528,7 +530,7 @@
       &.is-selected {
         .card,
         .widget {
-          border: 2px solid $card-selected-border-color;
+          outline: 2px solid $card-selected-border-color;
 
           .card-content {
             border: none;

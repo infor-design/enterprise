@@ -1464,7 +1464,7 @@ ListView.prototype = {
           const target = $(e.target);
 
           // ignore clicking favorites element or a hyperlink
-          if (target.hasClass('icon-favorite') || target.hasClass('hyperlink')) {
+          if (target.hasClass('icon-favorite') || target.hasClass('hyperlink') || (item.hasClass('is-selected') && target.is('button'))) {
             return;
           }
 
