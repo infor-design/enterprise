@@ -1298,7 +1298,7 @@ Column.prototype = {
       });
 
       self.element.find('.chart-legend').addClass('m-top-0');
-      self.element.find('.chart-legend .chart-legend-color').each((i, elem) => {
+      self.element.find('.chart-legend .chart-legend-color').each((_, elem) => {
         elem.classList.add('m-bottom-0');
       });
     }
