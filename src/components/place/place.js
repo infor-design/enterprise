@@ -556,16 +556,16 @@ Place.prototype = {
    * @returns {boolean}
    */
   isParentElementinViewport(parentElement) {
-    if (typeof jQuery === "function" && parentElement instanceof jQuery) {
+    if (typeof jQuery === 'function' && parentElement instanceof jQuery) {
       parentElement = parentElement[0];
     }
 
-    var rect = parentElement.getBoundingClientRect();
+    const rect = parentElement.getBoundingClientRect();
     return (
-        rect.top >= 0 &&
-        rect.left >= 0 &&
-        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && /* or $(window).height() */
-        rect.right <= (window.innerWidth || document.documentElement.clientWidth) /* or $(window).width() */
+      rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && 
+      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
     );
   },
 
@@ -576,7 +576,8 @@ Place.prototype = {
    * @returns {PlacementObject} modified placementObject with updated settings.
    */
   checkBleeds(placementObj) {
-    const containerBleed = this.settings.bleedFromContainer === false ? !this.isParentElementinViewport(this.element) : this.settings.bleedFromContainer;
+    const containerBleed = this.settings.bleedFromContainer === false ? 
+      !this.isParentElementinViewport(this.element) : this.settings.bleedFromContainer;
     const container = this.getContainer(placementObj);
     const containerIsBody = container.length && container[0] === document.body;
     const BoundingRect = this.element[0].getBoundingClientRect();
