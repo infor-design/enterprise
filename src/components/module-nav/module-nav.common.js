@@ -26,20 +26,22 @@ export const SWITCHER_ICON_HTML = `<svg
 </svg>`;
 
 /**
+ * @param {string} [buttonText] provides the template with descriptive button text, if applicable
  * @returns {string} IdsButton component HTML template used to define Module Nav Switcher Button
  */
-export const buttonTemplate = () => `<div class="module-nav-section module-btn">
+export const buttonTemplate = buttonText => `<div class="module-nav-section module-btn">
   <button id="module-nav-homepage-btn" class="btn-icon btn-tertiary">
     ${SWITCHER_ICON_HTML}
-    <span>${Locale ? Locale.translate('ModuleSwitch') : 'Switch Modules'}</span>
+    <span>${buttonText || (Locale ? Locale.translate('ModuleSwitch') : 'Switch Modules')}</span>
   </button>
 </div>`;
 
 /**
+ * @param {string} [labelText] provides the template with descriptive label text, if applicable
  * @returns {string} IdsDropdown component HTML template used to define Module Nav Switcher Dropdown
  */
-export const dropdownTemplate = () => `<div class="module-nav-section role-dropdown">
-  <label for="module-nav-role-switcher" class="label audible">Roles</label>
+export const dropdownTemplate = labelText => `<div class="module-nav-section role-dropdown">
+  <label for="module-nav-role-switcher" class="label audible">${labelText || 'Roles'}</label>
   <select id="module-nav-role-switcher" name="module-nav-role-switcher" class="dropdown"></select>
 </div>`;
 
