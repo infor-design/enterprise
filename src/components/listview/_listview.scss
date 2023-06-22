@@ -518,20 +518,16 @@
         background-color: transparent;
       }
 
-      &:focus,
       &:hover {
         .card,
         .widget {
-          border: 1px solid $card-border-color-hover;
-          box-shadow: 0 2px 4px 1px $cardlist-box-shadow-color-hover;
+          background-color: $listview-hover-bg-color;
         }
       }
 
       &.is-selected {
         .card,
         .widget {
-          outline: 2px solid $card-selected-border-color;
-
           .card-content {
             border: none;
           }

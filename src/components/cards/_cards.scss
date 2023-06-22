@@ -34,7 +34,8 @@ $card-header: '.card-header', '.widget-header';
 $card-header-section: '.card-header-section', '.widget-header-section';
 
 // For Cards selection that uses .cards as parent class
-.cards {
+.cards,
+.card-list {
   &.single .card.is-selectable:focus-visible {
     @include focus-state();
   }
