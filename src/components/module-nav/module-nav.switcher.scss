@@ -31,7 +31,8 @@
     min-width: 0;
     width: $module-nav-switcher-button-size;
 
-    &:focus {
+    &:focus,
+    &.is-focused {
       background-color: $module-nav-item-selected-bg-color;
 
       &:not(.hide-focus) {

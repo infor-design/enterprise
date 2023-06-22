@@ -250,6 +250,17 @@ ModuleNavSwitcher.prototype = {
   },
 
   /**
+   * Toggles the Module Button's focus state
+   * @param {boolean} [doFocus] force the focus state
+   */
+  toggleModuleButtonFocus(doFocus) {
+    if (!this.moduleButtonEl) return;
+    const currentlyHasFocus = document.activeElement?.isEqualNode(this.moduleButtonEl) || this.moduleButtonEl?.classList.contains('is-focused');
+    const trueDoFocus = typeof doFocus === 'boolean' ? doFocus : !currentlyHasFocus;
+    this.moduleButtonEl.classList[trueDoFocus ? 'add' : 'remove']('is-focused');
+  },
+
+  /**
    * Handle updated settings and values.
    * @param {object} [settings] if provided, updates module nav settings
    * @returns {object} chainable API
