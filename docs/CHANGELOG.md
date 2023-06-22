@@ -10,14 +10,18 @@
 
 - `[Button]` Adjusted the left and right paddings of the button from `30px` to `32px`. ([#7508](https://github.com/infor-design/enterprise/issues/7508))
 - `[Card]` Fixed widget size for subtitle examples. ([#7580](https://github.com/infor-design/enterprise/issues/7580))
+- `[ContextualActionPanel]` Fixed overflow issues on mobile view. ([#7585](https://github.com/infor-design/enterprise/issues/7585))
 - `[Datagrid]` Fixed on incorrect row updates on adding a new row to the next page. ([#7486](https://github.com/infor-design/enterprise/issues/7486))
 - `[Datagrid]` Fixed disabled filter columns in datagrid. ([#7467](https://github.com/infor-design/enterprise/issues/7467))
 - `[Editor]` Fixed an xss issue in editor (iframes not permitted). ([#7590](https://github.com/infor-design/enterprise/issues/7590))
 - `[Homepage]` Fixed invisible edit options and vertical dragging/resizing. ([#7579](https://github.com/infor-design/enterprise/issues/7579))
 - `[Locale]` Fixed a bug using extend translations on some languages (`fr-CA/pt-BR`). ([#7491](https://github.com/infor-design/enterprise/issues/7491))
 - `[Locale/Multiselect]` Changed text from selected to selection as requested by translators. ([#5886](https://github.com/infor-design/enterprise/issues/5886))
+- `[MonthView]` Added event triggers for when monthview is expanded and collapsed. ([#7605](https://github.com/infor-design/enterprise/issues/7605))
+- `[Multiselect]` Fixed a bug where the multiselect dropdown icon was overlapping the field. ([#7502](https://github.com/infor-design/enterprise/issues/7502))
 - `[Lookup]` Fixed a bug in lookup width not responsive in grid system. ([#7205](https://github.com/infor-design/enterprise/issues/7205))
 - `[SearchField]` Fixed x alignment on older toolbar example. ([#7572](https://github.com/infor-design/enterprise/issues/58875726))
+- `[SearchField]` Fix x alignment on older toolbar example. ([#7572](https://github.com/infor-design/enterprise/issues/7572))
 - `[Splitter]` Added new design changes and more examples. Note that the collapse button is no longer supported for now. ([#7542](https://github.com/infor-design/enterprise/issues/7542))
 - `[Tooltip]` Improved consistency of tooltip size between text and text with icon. ([#7509](https://github.com/infor-design/enterprise/issues/7509))
 - `[Tooltip]` Changed response method in beforeShow to allow passing true instead of content explicitly ([#7594](https://github.com/infor-design/enterprise/issues/7594))
@@ -26,9 +30,9 @@
 
 ## v4.84.1 Fixes
 
+- `[Dropdown]` Fixed an issue where Module Nav Role Switcher wasn't properly rendering the Dropdown pseudo-elements in Angular environments. ([NG #1477](https://github.com/infor-design/enterprise-ng/issues/1477))
 - `[Module Nav]` Fixed an issue where it was not possible to disable filtering events. ([NG #1477](https://github.com/infor-design/enterprise-ng/issues/1477))
 - `[Popupmenu]` Fixed some styling bugs when attached as a menu button menu in Module Nav components. ([NG #1477](https://github.com/infor-design/enterprise-ng/issues/1477))
-- `[Dropdown]` Fixed an issue where Module Nav Role Switcher wasn't properly rendering the Dropdown pseudo-elements in Angular environments. ([NG #1477](https://github.com/infor-design/enterprise-ng/issues/1477))
 
 ## v4.84.0
 
