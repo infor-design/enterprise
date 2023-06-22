@@ -3,6 +3,9 @@
 ## v4.84.2 Fixes
 
 - `[Module Nav]` Added more fixes to support the angular wrapper. ([#7386](https://github.com/infor-design/enterprise/issues/7386))
+- `[Card]` Fixed widget size for subtitle examples. ([#7580](https://github.com/infor-design/enterprise/issues/7580))
+- `[Homepage]` Fixed invisible edit options and vertical dragging/resizing. ([#7579](https://github.com/infor-design/enterprise/issues/7579))
+
 ## v4.85.0 Features
 
 - `[Stats]` Added a new component called stats similar to counts. We would like counts deprecated so please use stats in place of counts now as it has a cleaner UI. ([#7506](https://github.com/infor-design/enterprise/issues/7506))
