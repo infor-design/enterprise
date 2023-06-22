@@ -20,6 +20,7 @@
 - `[MonthView]` Added event triggers for when monthview is expanded and collapsed. ([#7605](https://github.com/infor-design/enterprise/issues/7605))
 - `[Multiselect]` Fixed a bug where the multiselect dropdown icon was overlapping the field. ([#7502](https://github.com/infor-design/enterprise/issues/7502))
 - `[Lookup]` Fixed a bug in lookup width not responsive in grid system. ([#7205](https://github.com/infor-design/enterprise/issues/7205))
+- `[Popupmenu]` Fixed the placement of popup when parent element is outside of viewport. ([#5018](https://github.com/infor-design/enterprise/issues/5018))
 - `[SearchField]` Fixed x alignment on older toolbar example. ([#7572](https://github.com/infor-design/enterprise/issues/58875726))
 - `[SearchField]` Fix x alignment on older toolbar example. ([#7572](https://github.com/infor-design/enterprise/issues/7572))
 - `[Splitter]` Added new design changes and more examples. Note that the collapse button is no longer supported for now. ([#7542](https://github.com/infor-design/enterprise/issues/7542))
