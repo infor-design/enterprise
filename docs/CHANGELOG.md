@@ -18,6 +18,7 @@
 - `[Locale]` Fixed a bug using extend translations on some languages (`fr-CA/pt-BR`). ([#7491](https://github.com/infor-design/enterprise/issues/7491))
 - `[Locale/Multiselect]` Changed text from selected to selection as requested by translators. ([#5886](https://github.com/infor-design/enterprise/issues/5886))
 - `[MonthView]` Added event triggers for when monthview is expanded and collapsed. ([#7605](https://github.com/infor-design/enterprise/issues/7605))
+- `[Modal]` Fixed icon alignment in the title. ([#7639](https://github.com/infor-design/enterprise/issues/7639))
 - `[Multiselect]` Fixed a bug where the multiselect dropdown icon was overlapping the field. ([#7502](https://github.com/infor-design/enterprise/issues/7502))
 - `[Lookup]` Fixed a bug in lookup width not responsive in grid system. ([#7205](https://github.com/infor-design/enterprise/issues/7205))
 - `[SearchField]` Fixed x alignment on older toolbar example. ([#7572](https://github.com/infor-design/enterprise/issues/58875726))

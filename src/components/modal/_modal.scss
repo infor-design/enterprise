@@ -403,7 +403,8 @@ body.modal-engaged {
     text-align: left;
 
     > * {
-      vertical-align: middle;
+      vertical-align: text-top;
+      margin: -1px 8px 0 0;
     }
 
     &:focus {
@@ -760,5 +761,12 @@ html[dir='rtl'] {
   .modal-content .modal-body-wrapper {
     overflow-x: hidden;
     overflow-y: auto;
+  }
+}
+
+html[class*='theme-classic-'] {
+  .modal-content h1 > * {
+    vertical-align: super;
+    margin: 0 8px 0 0;
   }
 }
