@@ -298,10 +298,6 @@ a.is-personalizable svg.ripple-effect {
   box-shadow: 0 0 4px 3px rgba(${baseColorObj.r}, ${baseColorObj.g}, ${baseColorObj.b}, 0.3);
 }
 
-.accordion.panel .accordion-header.is-selected {
-  color: ${colors.contrast} !important;
-}
-
 .builder-header.is-personalizable{
   background-color: ${colors.lighter};
 }
