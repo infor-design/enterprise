@@ -264,6 +264,12 @@
       display: flex;
       z-index: 10;
     }
+
+    .searchfield-wrapper {
+      .btn-icon:hover {
+        background-color: $button-color-tertiary-hover-background-new;
+      }
+    }
   }
 
   .listview {
