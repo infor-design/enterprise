@@ -102,6 +102,12 @@ $card-header-section: '.card-header-section', '.widget-header-section';
   position: relative;
   width: 100%;
 
+  &.border-less {
+    background: none;
+    border-color: transparent;
+    box-shadow: none;
+  }
+
   &.compact-bottom {
     margin-bottom: 8px;
   }
