@@ -28,7 +28,7 @@ html {
 
 label,
 .label {
-  color: $ids-color-font-muted;
+  color: $label-text-color;
   min-height: 19px; //prevents need to use &nbsp; for blank labels
 }
 

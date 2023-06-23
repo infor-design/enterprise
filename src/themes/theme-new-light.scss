@@ -19,6 +19,7 @@
 $subhead-bg-color: $ids-color-palette-azure-70;
 $disabled-color: $ids-color-palette-slate-30;
 $label-disabled-color: $input-color-disabled-border;
+$label-text-color: $ids-color-palette-slate-70;
 $input-disabled-color: $input-color-disabled-font;
 $dropdown-search-bg-color: $ids-color-palette-slate-10;
 
@@ -104,12 +105,12 @@ $module-tabs-active-bg-color: $ids-color-brand-primary-base;
 // DataGrid
 $datagrid-header-bg-color: $ids-color-palette-slate-80;
 $datagrid-list-header-color: $ids-color-font-base;
-$datagrid-list-header-bg-color: $ids-color-palette-slate-10;
+$datagrid-list-header-bg-color: $ids-color-palette-slate-20;
 $datagrid-list-group-header-bg-color: $ids-color-palette-slate-20;
 $datagrid-list-group-header-border-color: $ids-color-palette-slate-10;
 $datagrid-list-header-active-color: $ids-color-palette-slate-20;
-$datagrid-list-sort-icon-color: $ids-color-palette-slate-40;
-$datagrid-sort-icon-color: $ids-color-palette-slate-50;
+$datagrid-list-sort-icon-color: $ids-color-palette-slate-30;
+$datagrid-sort-icon-color: $ids-color-palette-slate-60;
 
 $datagrid-border-color: $ids-color-palette-slate-20;
 $datagrid-nested-header-border-color: $ids-color-palette-slate-30;
@@ -207,7 +208,7 @@ $timepicker-readonly-icon-color: $ids-color-palette-slate-40;
 
 // Buttons
 $header-button-disabled-color: rgba($ids-color-palette-white, 0.6);
-$button-color-tertiary-initial-font: $ids-color-palette-slate-60;
+$button-color-tertiary-initial-font: $ids-color-palette-slate-70;
 $button-color-tertiary-actionsheet-hover-font: $button-color-tertiary-hover-font-new;
 $button-disabled-background-color: transparent;
 
@@ -392,8 +393,8 @@ $skip-link-border-color: $ids-color-palette-slate-30;
 // Tree
 $tree-disabled-color: $ids-color-palette-slate-30;
 $tree-selected-bg-color: $ids-color-palette-slate-20;
-$tree-icon-color: $ids-color-palette-slate-60;
-$tree-link-color: $ids-color-palette-slate-60;
+$tree-icon-color: $ids-color-palette-slate-70;
+$tree-link-color: $ids-color-palette-slate-70;
 
 // Swaplist
 $swaplist-bg-color: $ids-color-palette-slate-10;

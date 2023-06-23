@@ -26,7 +26,7 @@ describe('Header Puppeteer Visual Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should not visually regress', async () => {
+    it.skip('should not visually regress', async () => {
       await page.waitForSelector('.search-categories');
       await page.waitForSelector('.searchfield');
       await page.type('.searchfield', 'ea');

@@ -4,6 +4,7 @@
 
 ## v4.85.0 Features
 
+- `[Colors]` Added new slate color palette with lower range colors. Some elements are updated. ([#7624](https://github.com/infor-design/enterprise/issues/7624))
 - `[Stats]` Added a new component called stats similar to counts. We would like counts deprecated so please use stats in place of counts now as it has a cleaner UI. ([#7506](https://github.com/infor-design/enterprise/issues/7506))
 
 ## v4.85.0 Fixes

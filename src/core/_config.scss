@@ -89,6 +89,7 @@ $font-color-default: $ids-color-font-base;
 $font-color-descriptive: $ids-color-font-info;
 $font-color-hyperlink: $ids-color-brand-primary-base;
 $font-color-muted: $ids-color-font-muted;
+$label-text-color: $ids-color-palette-slate-70;
 $font-color-alert: $ids-color-status-danger;
 
 //The hyperlink Style
@@ -1173,7 +1174,7 @@ $blockgrid-hover-color: $listview-hover-bg-color;
 $blockgrid-focus-border-color: $ids-color-brand-primary-base;
 
 // Tree Map
-$treemap-title-bg-color: $ids-color-palette-slate-60;
+$treemap-title-bg-color: $ids-color-palette-slate-70;
 $treemap-title-color: $ids-color-palette-white;
 
 // Textarea
