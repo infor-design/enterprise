@@ -551,13 +551,33 @@ Place.prototype = {
   },
 
   /**
+   * Checks if the parent element is in viewport
+   * @param {Object} parentElement element to be checked
+   * @returns {boolean}
+   */
+  isParentElementinViewport(parentElement) {
+    if (typeof jQuery === 'function' && parentElement instanceof jQuery) {
+      parentElement = parentElement[0];
+    }
+
+    const rect = parentElement.getBoundingClientRect();
+    return (
+      rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && 
+      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+  },
+
+  /**
    * Re-adjust a previously-placed element to account for bleeding off the edges.
    * Element must fit within the boundaries of the page or it's current scrollable pane.
    * @param {PlacementObject} placementObj settings for the placement routine.
    * @returns {PlacementObject} modified placementObject with updated settings.
    */
   checkBleeds(placementObj) {
-    const containerBleed = this.settings.bleedFromContainer;
+    const containerBleed = this.settings.bleedFromContainer === false ? 
+      !this.isParentElementinViewport(this.element) : this.settings.bleedFromContainer;
     const container = this.getContainer(placementObj);
     const containerIsBody = container.length && container[0] === document.body;
     const BoundingRect = this.element[0].getBoundingClientRect();
@@ -721,6 +741,7 @@ Place.prototype = {
     // Gets the distance between an edge on the target element, and its opposing viewport border
     function getDistance(dir) {
       let d = 0;
+      console.log('getDistance');
 
       switch (dir) {
         case 'left':
@@ -819,6 +840,7 @@ Place.prototype = {
     const windowH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
     const windowW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 
+    console.log('shrink');
     // Figure out the viewport boundaries
     const leftViewportEdge = (accountForScrolling ? scrollX : 0) +
       (containerBleed ? 0 : containerRect.left) + placementObj.containerOffsetX;
