@@ -523,13 +523,6 @@
         border: none;
       }
 
-      &:hover {
-        .card,
-        .widget {
-          background-color: $listview-hover-bg-color;
-        }
-      }
-
       &.is-selected {
         .card,
         .widget {
@@ -549,6 +542,7 @@
         height: auto;
         width: 100%;
         position: relative;
+        transition: 0.3s;
 
         .card-header {
           &.has-subheader {
@@ -568,6 +562,23 @@
 
         button {
           border-radius: 8px;
+        }
+
+        &:hover {
+          outline: 2px solid $card-border-color-hover;
+          border-color: transparent;
+        }
+
+        &.is-selected {
+          outline: 1px solid $card-selected-border-color;
+          border-color: $card-selected-border-color
+        }
+
+        &:focus {
+          &:not(.hide-focus) {
+            box-shadow: 0 0 0 2px $body-color-primary-background, 0 0 0 3px $button-color-primary-initial-background, $focus-box-shadow;
+            outline: 0;
+          }
         }
       }
     }
