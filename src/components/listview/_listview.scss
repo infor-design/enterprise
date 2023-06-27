@@ -542,7 +542,9 @@
         height: auto;
         width: 100%;
         position: relative;
-        transition: 0.3s;
+        border: none;
+        box-shadow: 0 0 4px $cardlist-box-shadow-color-hover;
+        padding-right: 10px;
 
         .card-header {
           &.has-subheader {
@@ -565,7 +567,8 @@
         }
 
         &:hover {
-          outline: 2px solid $card-border-color-hover;
+          outline: 1px solid $card-border-color-hover;
+          box-shadow: 0 2px 4px 1px $cardlist-box-shadow-color-hover;
           border-color: transparent;
         }
 

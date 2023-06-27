@@ -420,12 +420,21 @@ Cards.prototype = {
 
     let visibleLen = 0;
     let weight = 0;
+    let iconWeight = 0;
 
     for (let i = 0; i < visibleChildren.length; i++) {
       const add = $(visibleChildren.get(i)).hasClass('btn-icon') ? 1 : 2;
-      if (weight + add > 3) {
+      if (weight + add > 4) {
         break;
       }
+
+      if (add === 1) {
+        if (add + iconWeight > 3) {
+          break;
+        }
+        iconWeight++;
+      }
+
       weight += add;
       visibleLen = i;
     }
@@ -448,8 +457,15 @@ Cards.prototype = {
           const button = $($($(popupList).get(i)).data('originalButton'));
           const add = button.hasClass('btn-icon') ? 1 : 2;
 
-          if (weight + add > 3) {
+          if (weight + add > 4) {
             break;
+          }
+
+          if (add === 1) {
+            if (add + iconWeight > 3) {
+              break;
+            }
+            iconWeight++;
           }
 
           button.show();
