@@ -340,8 +340,8 @@
       background-color: transparent;
 
       .accordion-header {
-        border-bottom-color: transparent;
         color: $new-acc-subheader-text-color;
+        margin-top: 3px;
 
         a {
           font-size: 14px;
