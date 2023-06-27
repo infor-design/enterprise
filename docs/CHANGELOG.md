@@ -9,6 +9,7 @@
 ## v4.85.0 Fixes
 
 - `[Applicationmenu]` Fixed menu items cannot be seen properly when using alabaster. ([#7609](https://github.com/infor-design/enterprise/issues/7609))
+- `[Applicationmenu]` Fixed bottom border color cannot be seen properly. ([#7565](https://github.com/infor-design/enterprise/issues/7565))
 - `[Button]` Adjusted the left and right paddings of the button from `30px` to `32px`. ([#7508](https://github.com/infor-design/enterprise/issues/7508))
 - `[Card]` Fixed widget size for subtitle examples. ([#7580](https://github.com/infor-design/enterprise/issues/7580))
 - `[Column-Stacked]` Improved the column stacked and labels to be aligned correctly. ([#7266](https://github.com/infor-design/enterprise/issues/7266))
