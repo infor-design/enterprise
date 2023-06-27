@@ -129,6 +129,13 @@
         font-size: $ids-size-font-sm;
         font-weight: $ids-number-font-weight-bold;
 
+        .hyperlink,
+        .breadcrumb-text {
+          &:hover {
+            color: $breadcrumb-color;
+          }
+        }
+
         span {
           font-weight: inherit;
         }
@@ -181,7 +188,7 @@
     }
 
     &:last-child::after {
-      content: '';
+      content: none;
       padding: 0;
     }
   }
