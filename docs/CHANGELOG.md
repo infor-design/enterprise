@@ -11,6 +11,7 @@
 - `[Applicationmenu]` Fixed menu items cannot be seen properly when using alabaster. ([#7609](https://github.com/infor-design/enterprise/issues/7609))
 - `[Button]` Adjusted the left and right paddings of the button from `30px` to `32px`. ([#7508](https://github.com/infor-design/enterprise/issues/7508))
 - `[Card]` Fixed widget size for subtitle examples. ([#7580](https://github.com/infor-design/enterprise/issues/7580))
+- `[Chart]` Added setting to force legend to popup. ([#7453](https://github.com/infor-design/enterprise/issues/7453))
 - `[Column-Stacked]` Improved the column stacked and labels to be aligned correctly. ([#7266](https://github.com/infor-design/enterprise/issues/7266))
 - `[ContextualActionPanel]` Fixed overflow issues on mobile view. ([#7585](https://github.com/infor-design/enterprise/issues/7585))
 - `[Datagrid]` Fixed on incorrect row updates on adding a new row to the next page. ([#7486](https://github.com/infor-design/enterprise/issues/7486))
