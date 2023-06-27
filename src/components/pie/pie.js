@@ -68,6 +68,7 @@ const PIE_DEFAULTS = {
   },
   showLegend: true,
   legendPlacement: 'right', // Can be bottom or right
+  forceLegendPopup: false,
   legend: {
     show: 'label (percent)', // value, label, label (percent) or percent or custom function
     formatter: '.0f'
@@ -150,7 +151,7 @@ Pie.prototype = {
     self.mainGroup.append('g').attr('class', 'lines');
     this.element.addClass('chart-pie');
 
-    if (s.showMobile) {
+    if (s.showMobile || s.forceLegendPopup) {
       s.legendPlacement = 'bottom';
     }
 

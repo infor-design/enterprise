@@ -359,7 +359,7 @@ charts.addLegend = function (series, chartType, settings, container) {
   width += 55;
   const widthPercent = width / $(container).width() * 100;
   const exceedsMaxWidth = widthPercent > 45;
-  const isBottom = series[0].placement && series[0].placement === 'bottom';
+  const isBottom = series[0].placement && series[0].placement === 'bottom' || settings.forceLegendPopup === true;
 
   if (!(isBottom && exceedsMaxWidth)) {
     maxLength = series.length;
@@ -491,7 +491,7 @@ charts.addLegend = function (series, chartType, settings, container) {
       }
     });
 
-    if (isBottom && exceedsMaxWidth && series.length > maxLength) {
+    if (isBottom && exceedsMaxWidth && series.length > maxLength || settings?.forceLegendPopup) {
       const listButton = $(`
       <button class="btn-actions list-button" type="button">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation" style="min-height: 0">

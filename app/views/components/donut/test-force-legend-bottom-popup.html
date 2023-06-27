@@ -1,0 +1,69 @@
+
+<div class="row">
+  <div class="two-thirds column" style="min-width: 200px !important; max-width: 300px !important;">
+      <div class="widget auto-height">
+        <div class="widget-header">
+          <h2 class="widget-title">Pie Chart Three</h2>
+        </div>
+        <div class="widget-content">
+          <div id="pie-chart-popup" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<script>
+$('body').on('initialized', function () {
+
+  var pieData = [{
+      centerLabel: '<tspan x="0.1em" dy="-0.1em">Total Hours</tspan> <tspan x="0" dy="1.4em">265</tspan>',
+      data: [
+          {
+              name: 'Response Late',
+              value: 2885,
+              tooltip: 'Response Late 2885'
+          },
+          {
+              name: 'Past Expiry',
+              value: 375,
+              tooltip: 'Past Expiry 375'
+          },
+          {
+              name: 'Past Expiry',
+              value: 375,
+              tooltip: 'Past Expiry 375'
+          },
+          {
+              name: 'Past Expiry',
+              value: 375,
+              tooltip: 'Past Expiry 375'
+          },
+          {
+              name: 'Past Expiry',
+              value: 375,
+              tooltip: 'Past Expiry 375'
+          },
+          {
+              name: 'Past Expiry',
+              value: 375,
+              tooltip: 'Past Expiry 375'
+          },
+          {
+              name: 'Past Expiry',
+              value: 375,
+              tooltip: 'Past Expiry 375'
+          }
+      ]
+  }];
+
+  $('#pie-chart-popup').chart({
+    type: 'donut',
+    dataset: pieData,
+    showLegend: true,
+    legendPlacement: 'bottom',
+    forceLegendPopup: true
+  });
+
+});
+</script>
