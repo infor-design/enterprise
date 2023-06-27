@@ -317,6 +317,7 @@
     const hamburgerBtnEl = $('#header-hamburger');
     const pinSectionsCheckEl = $('#pin-sections');
 
+    // Connect form control event handling
     dropdownAPI.element.on('change.test', (e) => {
       let val = dropdownAPI.value;
       if (val === 'Hidden') val = false;
@@ -346,6 +347,21 @@
       });
     }
 
+    // Connect component event handling
+    const roleSwitcherEl = $('.role-dropdown');
+    const roleSwitcherAPI = roleSwitcherEl.data('modulenavswitcher');
+    const roleDropdownEl = $('#module-nav-role-switcher');
+    const roleButtonEl = $('.module-btn button');
+
+    roleDropdownEl.on('change.test', (e) => {
+      console.info('Module Nav Role Change:', e.target.value);
+    });
+
+    roleButtonEl.on('click.test', (e) => {
+      console.info('Module Button Click');
+    })
+
+    // Customizations to the component after init
     navAPI.updated({ displayMode: 'collapsed' });
   });
 </script>
