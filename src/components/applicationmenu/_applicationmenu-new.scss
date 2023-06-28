@@ -238,7 +238,7 @@
 
         &:not(.is-focused),
         &:not(.is-selected) {
-          border-bottom-color: $ids-color-palette-white;
+          border-bottom-color: transparent;
         }
 
         // Shared pseudo-element for hovering/focusing/selecting this particular level
