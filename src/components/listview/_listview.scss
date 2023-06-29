@@ -543,7 +543,8 @@
         width: 100%;
         position: relative;
         border: none;
-        box-shadow: 0 0 4px $cardlist-box-shadow-color-hover;
+        box-shadow: 0 0 4px $cardlist-box-shadow-color;
+        transition: box-shadow 0.3s cubic-bezier(.17, .04, .03, .94);
         padding-right: 10px;
 
         .card-header {
