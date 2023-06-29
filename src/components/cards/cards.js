@@ -404,10 +404,16 @@ Cards.prototype = {
 
       for (let i = children.length - 1, j = 0; i >= 0 && j < len; i--, j++) {
         const button = children[i];
-        const listItem = $(`<li><a href="#">${button.innerHTML}</a></li>`);
+        const popupItem = $(button.innerHTML);
+        const listItem = $('<li><a href="#"></a></li>');
+
+        listItem.find('a').append(popupItem);
         listItem.data('originalButton', button);
         listItem.on('click', () => $(button).triggerHandler('click'));
+        listItem.find('.audible').removeClass('audible');
+
         popupList.prepend(listItem);
+
         $(button).hide();
       }
 
