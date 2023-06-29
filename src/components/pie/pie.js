@@ -33,6 +33,7 @@ const COMPONENT_NAME = 'pie';
  * @param {boolean} [settings.showLegend=true] If false the legend will not be shown.
  * @param {boolean} [settings.showMobile=false] If true the chart is better formed to fit in a single widget.
  * @param {string} [settings.legendPlacement='right'] Where to locate the legend. This can be bottom or right at the moment.
+ * @param {boolean} [settings.forceLegendPopup=false] If true the chart is force to show legend popup.
  * @param {object} [settings.legend] A setting that controls the legend values and format.
  * @param {string} [settings.legend.show='label (percent)'] Controls what is visible
  * @param {boolean} [settings.selectable=true] Ability to enable/disable the selection of chart.
