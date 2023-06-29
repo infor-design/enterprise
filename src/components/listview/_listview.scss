@@ -577,7 +577,7 @@
         }
 
         &.is-selected {
-          outline: 1px solid $card-selected-border-color;
+          outline: 2px solid $card-selected-border-color;
           border-color: $card-selected-border-color
         }
 
@@ -1022,6 +1022,62 @@ html[dir='rtl'] {
     .icon.close {
       left: 12px !important;
       right: unset !important;
+    }
+  }
+}
+
+html[class*='-dark'] {
+  .card-image {
+    .amber01-border-color {
+      border-color: transparent !important;
+    }
+
+    .amber01 {
+      background-color: transparent !important;
+    }
+
+    .ruby01-border-color {
+      border-color: transparent !important;
+    }
+
+    .ruby01 {
+      background-color: transparent !important;
+    }
+
+    .emerald01-border-color {
+      border-color: transparent !important;
+    }
+
+    .emerald01 {
+      background-color: transparent !important;
+    }
+
+    .azure01-border-color {
+      border-color: transparent !important;
+    }
+
+    .azure01 {
+      background-color: transparent !important;
+    }
+
+    .turquoise01-border-color {
+      border-color: transparent !important;
+    }
+
+    .turquoise01 {
+      background-color: transparent !important;
+    }
+
+    .amethyst01-border-color {
+      border-color: transparent !important;
+    }
+
+    .slate01-border-color {
+      background-color: transparent !important;
+    }
+
+    .slate01 {
+      background-color: transparent !important;
     }
   }
 }
