@@ -17,6 +17,7 @@
 - `[Datagrid]` Fixed disabled filter columns in datagrid. ([#7467](https://github.com/infor-design/enterprise/issues/7467))
 - `[Editor]` Fixed an xss issue in editor (iframes not permitted). ([#7590](https://github.com/infor-design/enterprise/issues/7590))
 - `[Homepage]` Fixed invisible edit options and vertical dragging/resizing. ([#7579](https://github.com/infor-design/enterprise/issues/7579))
+- `[Icons]` Fixed size of icons and made them 80x80. ([#1369](https://jira.infor.com/browse/IDS-1360))
 - `[Listview/Card]` Fixed the UI of listview search with filters. ([#7546](https://github.com/infor-design/enterprise/issues/7546))
 - `[Locale]` Fixed a bug using extend translations on some languages (`fr-CA/pt-BR`). ([#7491](https://github.com/infor-design/enterprise/issues/7491))
 - `[Locale/Multiselect]` Changed text from selected to selection as requested by translators. ([#5886](https://github.com/infor-design/enterprise/issues/5886))
@@ -28,6 +29,7 @@
 - `[Popupmenu]` Fixed the placement of popup when parent element is outside of viewport. ([#5018](https://github.com/infor-design/enterprise/issues/5018))
 - `[SearchField]` Fixed x alignment on older toolbar example. ([#7572](https://github.com/infor-design/enterprise/issues/58875726))
 - `[Splitter]` Added new design changes and more examples. Note that the collapse button is no longer supported for now. ([#7542](https://github.com/infor-design/enterprise/issues/7542))
+- `[Toolbar]` Fixed a bug where search icon was not aligned properly. ([#7642](https://github.com/infor-design/enterprise/issues/7642))
 - `[Tooltip]` Improved consistency of tooltip size between text and text with icon. ([#7509](https://github.com/infor-design/enterprise/issues/7509))
 - `[Tooltip]` Changed response method in beforeShow to allow passing true instead of content explicitly ([#7594](https://github.com/infor-design/enterprise/issues/7594))
 
