@@ -386,9 +386,9 @@ Homepage.prototype = {
         });
     } else {
       cards.attr('draggable', false);
-      cards.css('cursor', 'auto');
       cards.children('.card-remove').remove();
       cards.off('mouseenter.card mouseleave.card dragstart.card dragenter.card dragend.card');
+      cards.not('.card-list .card').css('cursor', 'auto');
     }
   },
 
