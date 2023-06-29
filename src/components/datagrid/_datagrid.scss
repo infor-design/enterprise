@@ -353,6 +353,7 @@ $datagrid-small-row-height: 25px;
 
       + .datagrid-filter-wrapper.is-empty {
         left: -60px;
+        z-index: -1;
       }
     }
   }
