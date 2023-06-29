@@ -564,7 +564,7 @@ Place.prototype = {
     return (
       rect.top >= 0 &&
       rect.left >= 0 &&
-      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && 
+      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
       rect.right <= (window.innerWidth || document.documentElement.clientWidth)
     );
   },
@@ -576,7 +576,7 @@ Place.prototype = {
    * @returns {PlacementObject} modified placementObject with updated settings.
    */
   checkBleeds(placementObj) {
-    const containerBleed = this.settings.bleedFromContainer === false ? 
+    const containerBleed = this.settings.bleedFromContainer === false ?
       !this.isParentElementinViewport(this.element) : this.settings.bleedFromContainer;
     const container = this.getContainer(placementObj);
     const containerIsBody = container.length && container[0] === document.body;
@@ -741,7 +741,6 @@ Place.prototype = {
     // Gets the distance between an edge on the target element, and its opposing viewport border
     function getDistance(dir) {
       let d = 0;
-      console.log('getDistance');
 
       switch (dir) {
         case 'left':
