@@ -1,0 +1,69 @@
+
+<div class="row">
+  <div class="two-thirds column" style="min-width: 200px !important; max-width: 300px !important;">
+      <div class="widget auto-height">
+        <div class="widget-header">
+          <h2 class="widget-title">Pie Chart Three</h2>
+        </div>
+        <div class="widget-content">
+          <div id="pie-chart-popup" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<script>
+$('body').on('initialized', function () {
+
+  var pieData = [{
+      centerLabel: '<tspan x="0.1em" dy="-0.1em">Total Hours</tspan> <tspan x="0" dy="1.4em">265</tspan>',
+      data: [
+          {
+              name: 'Cupcake',
+              value: 2885,
+              tooltip: 'Cupcake'
+          },
+          {
+              name: 'Donut ',
+              value: 375,
+              tooltip: 'Donut'
+          },
+          {
+              name: 'Eclair',
+              value: 1250,
+              tooltip: 'Eclair'
+          },
+          {
+              name: 'Froyo',
+              value: 483,
+              tooltip: 'Froyo'
+          },
+          {
+              name: 'Gingerbread',
+              value: 670,
+              tooltip: 'Gingerbread'
+          },
+          {
+              name: 'Honeycomb',
+              value: 990,
+              tooltip: 'Honeycomb'
+          },
+          {
+              name: 'Jelly Bean',
+              value: 1280,
+              tooltip: 'Jelly Bean'
+          }
+      ]
+  }];
+
+  $('#pie-chart-popup').chart({
+    type: 'donut',
+    dataset: pieData,
+    showLegend: true,
+    legendPlacement: 'bottom',
+    forceLegendPopup: true
+  });
+
+});
+</script>
