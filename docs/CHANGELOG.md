@@ -29,6 +29,7 @@
 - `[SearchField]` Fixed x alignment on older toolbar example. ([#7572](https://github.com/infor-design/enterprise/issues/58875726))
 - `[SearchField]` Fix x alignment on older toolbar example. ([#7572](https://github.com/infor-design/enterprise/issues/7572))
 - `[Splitter]` Added new design changes and more examples. Note that the collapse button is no longer supported for now. ([#7542](https://github.com/infor-design/enterprise/issues/7542))
+- `[Toolbar]` Fixed a bug where search icon was not aligned properly. ([#7642](https://github.com/infor-design/enterprise/issues/7642))
 - `[Tooltip]` Improved consistency of tooltip size between text and text with icon. ([#7509](https://github.com/infor-design/enterprise/issues/7509))
 - `[Tooltip]` Changed response method in beforeShow to allow passing true instead of content explicitly ([#7594](https://github.com/infor-design/enterprise/issues/7594))
 

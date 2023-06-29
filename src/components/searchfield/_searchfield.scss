@@ -595,7 +595,7 @@ html[class*='theme-classic-'] {
     }
   }
 
-  .searchfield-wrapper > .close.icon {
+  .searchfield-wrapper:not(.toolbar-searchfield-wrapper) > .icon {
     top: 7px;
   }
 
