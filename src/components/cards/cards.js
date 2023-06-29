@@ -354,10 +354,12 @@ Cards.prototype = {
 
   /**
    * Add More button if card reaches a certain size
+   * Used for card list
    */
   resizeButtonset() {
     const buttonset = this.element.find('.card-buttonset');
-    if (buttonset.length === 0) {
+
+    if (buttonset.length === 0 || !this.element.parent().is('li')) {
       return;
     }
 

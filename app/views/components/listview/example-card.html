@@ -1,6 +1,6 @@
 <div class="homepage page-container scrollable" data-columns="3">
   <div class="content">
-    <div class="widget double-width double-height border-less show-buttons">
+    <div class="widget double-width double-height show-buttons" id="widget-big">
       <div class="widget-content">
         <div class="listview card-list" id="custom-listview">
           <ul id="card-list" role="presentation">
@@ -286,6 +286,7 @@
 <script>
   $('#card-list').clone().appendTo('#small-card-listview');
   $('body').on('initialized', function () {
+    $('#widget-big').cards({ bordered: false });
     const cardlistview = $('#custom-listview').listview().data('listview');
     const smallCardListview = $('#small-card-listview').listview().data('listview');
   });

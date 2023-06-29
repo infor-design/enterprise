@@ -560,6 +560,10 @@
 
         .card-buttonset {
           padding: 5px;
+
+          .card-content-action .btn-actions {
+            margin-right: 0;
+          }
         }
 
         button {
