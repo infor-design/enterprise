@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.84.3 Fixes
+
+- `[ContextualActionPanel/Modal]` Fixed overflow issues on mobile view. ([#7585](https://github.com/infor-design/enterprise/issues/7585))
+
 ## v4.84.2 Fixes
 
 - `[Module Nav]` Added more fixes to support the angular wrapper. ([#7386](https://github.com/infor-design/enterprise/issues/7386))
