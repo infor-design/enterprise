@@ -87,5 +87,11 @@
     $('.btn-list-add').on('click', (e) => {
       console.log('add', e);
     });
+
+    $('html').on('themechanged', function() {
+      var btnActions = $('.card-header .btn-actions, .widget-header .btn-actions').find('svg use');
+      var icon = (Soho.theme.currentTheme.themeId === 'theme-classic') ? '#icon-more' : '#icon-vertical-ellipsis';
+      btnActions.attr('href', icon);
+    });
   });
 </script>

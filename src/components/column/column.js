@@ -1296,6 +1296,34 @@ Column.prototype = {
 
         DOM.html(elem.node(), markup, '<tspan>');
       });
+
+      self.element.find('.chart-legend').addClass('m-top-0');
+      self.element.find('.chart-legend .chart-legend-color').each((_, elem) => {
+        elem.classList.add('m-bottom-0');
+      });
+    }
+
+    if (self.settings.isStacked) {
+      const $tick = $('.tick');
+      const $xAxisGroup = $('.x.axis > g');
+      const $seriesGroup = $('.series-group.g');
+      const hasTwoLines = $('g.x.axis > g text').find('tspan').length > 1;
+
+      // Extract the distance value from the "transform" attribute of the tick element
+      const distance = $tick.attr('transform').match(/translate\((\d+),/)[1];
+      const textWidth = $xAxisGroup[0].getBBox().width;
+      const barWidth = $seriesGroup.find('rect')[0].getBBox().width;
+      const textWidthHalf = textWidth / 2;
+      const barWidthHalf = barWidth / 2;
+
+      // calculates the desired position for the bars
+      const position = Math.round((distance - (hasTwoLines ? 14 : 10)) + textWidthHalf - barWidthHalf);
+
+      $seriesGroup.each(function () {
+        const transformValue = this.getAttribute('transform');
+        const updatedTransformValue = transformValue.replace(/translate\(\d+/, `translate(${position}`);
+        this.setAttribute('transform', updatedTransformValue);
+      });
     }
 
     if (charts.isRTL && charts.isIE) {

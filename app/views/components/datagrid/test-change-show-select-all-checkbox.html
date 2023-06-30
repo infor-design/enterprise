@@ -2,6 +2,7 @@
 <div class="row">
   <div class="full-width">
     <button class="btn-secondary" type="button" id="toggle-select-all">Toggle Select All</button>
+    <button class="btn-secondary" type="button" id="toggle-filter">Toggle Filter</button>
     <div id="datagrid">
     </div>
   </div>
@@ -26,9 +27,9 @@
 
       // Define Columns for the Grid.
       columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center'});
-      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Readonly});
-      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Soho.Formatters.Hyperlink, href: '/home/detail/{{value}}'});
-      columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity'});
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', filterType: 'text',  formatter: Soho.Formatters.Readonly});
+      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', filterType: 'text',  formatter: Soho.Formatters.Hyperlink, href: '/home/detail/{{value}}'});
+      columns.push({ id: 'activity', hidden: true, name: 'Activity', filterType: 'text',  field: 'activity'});
       columns.push({ id: 'quantity', name: 'Accuml. Quantity', field: 'quantity'});
       columns.push({ id: 'price', name: 'Status', field: 'price', formatter: Soho.Formatters.Alert, ranges: [{'min': 0, 'max': 150, 'classes': 'success', text: 'Confirmed'}, {'min': 151, 'max': 9999, 'classes': 'error', text: 'Error'}]});
       columns.push({ id: 'quantity', name: 'Badge', field: 'quantity', align: 'center', formatter: Soho.Formatters.Badge, sortable: false, ranges: [{'min': 0, 'max': 2, 'classes': 'error'}, {'value': 3, 'classes': 'alert'}, {'value': 41, 'classes': 'good'}]});
@@ -41,11 +42,16 @@
         dataset: data,
         showSelectAllCheckBox: false,
         selectable: 'multiple',
+        filterable: false,
         toolbar: {title: 'Data Grid Header Title', results: true, personalize: true, actions: true, rowHeight: true, keywordFilter: true,  collapsibleFilter: true}
       }).data('datagrid');
 
       $('#toggle-select-all').on('click', function () {
         dg.updated({ showSelectAllCheckBox: !dg.settings.showSelectAllCheckBox }, { preserveSelected: true });
+      });
+
+      $('#toggle-filter').on('click', function () {
+        dg.updated({ filterable: !dg.settings.filterable });
       });
  });
 

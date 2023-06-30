@@ -4,6 +4,23 @@
 @import '../popupmenu/popupmenu';
 @import '../tooltip/tooltip';
 
+.widget:not(.auto-height) {
+  .chart-container {
+    &.has-bottom-legend.auto-height {
+      .chart-legend.is-bottom {
+        margin-top: unset;
+      }
+    }
+
+    .chart-legend.is-bottom {
+      .chart-legend-item.is-one-line {
+        margin: 0 auto !important;
+      }
+    }
+  }
+
+}
+
 // Alternate Text message
 .chart-message {
   background-color: $ids-color-palette-ruby-10;
@@ -18,7 +35,8 @@
 
   &.has-bottom-legend.auto-height {
     .chart-legend.is-bottom {
-      padding: 5px 0 0;
+      padding: unset;
+      margin-top: 20px;
     }
   }
 
@@ -41,6 +59,10 @@
         .chart-legend-item-text {
           top: 0;
         }
+      }
+
+      .chart-legend-item.is-one-line {
+        margin: 15px auto !important;
       }
     }
   }

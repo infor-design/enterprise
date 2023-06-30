@@ -260,6 +260,28 @@
   .listview:not(.card-list) li:first-child {
     border-top: 1px solid $listview-border-color;
   }
+
+  .listview-search {
+    display: flex;
+
+    .listview-filter-wrapper {
+      background-color: transparent;
+      border: none;
+      display: flex;
+      z-index: 10;
+    }
+
+    .searchfield-wrapper {
+      .btn-icon:hover {
+        background-color: $button-color-tertiary-hover-background-new;
+      }
+    }
+  }
+
+  .listview {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
 }
 
 .card-header,

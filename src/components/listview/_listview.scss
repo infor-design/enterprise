@@ -1092,3 +1092,18 @@ html[dir='rtl'] {
     }
   }
 }
+
+html[class*='theme-classic-'] {
+  .card-content {
+    .listview-search {
+      display: flex;
+
+      .listview-filter-wrapper {
+        display: flex;
+        top: 0;
+        left: 0;
+        margin-left: 0;
+      }
+    }
+  }
+}
