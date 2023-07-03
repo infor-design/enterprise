@@ -2186,9 +2186,7 @@ Dropdown.prototype = {
           return;
         }
         self.highlightOption($(this), true);
-      });
-
-      
+      });      
 
     if (this.hasTooltips) {
       function clearTimer() { //eslint-disable-line
