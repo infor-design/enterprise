@@ -268,7 +268,7 @@
           border-color: transparent;
 
           &::before {
-            border-color: $application-menu-border-bottom-color;
+            border-color: $application-menu-new-border-color;
           }
         }
 
@@ -384,7 +384,7 @@
 
         &.is-selected {
           color: $new-acc-header-selected-text-color;
-          border-bottom-color: $application-menu-border-bottom-color;
+          border-bottom-color: $application-menu-new-border-color;
 
           > a > span {
             font-weight: $ids-number-font-weight-bold;
@@ -447,6 +447,10 @@
       }
     }
   }
+}
+
+.accordion.panel.inverse .accordion-pane.is-expanded + .accordion-header.is-selected {
+  border-color: $application-menu-new-border-color;
 }
 
 html.is-firefox {
