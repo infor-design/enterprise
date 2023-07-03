@@ -96,6 +96,22 @@ To add some color you can colorize the borders of the cells and some text. The f
 
 See example <a href="https://design.infor.com/code/ids-enterprise/latest/demo/components/listview/example-singleselect.html" target="_blank">To see it in action</a>
 
+### Listview - Card List
+
+You can have a list of cards by adding the `card-list` class in the list view component. Each `li` in the list should have a card. You can add `card-variant` in the card to minimize the height if needed. The cards can be customized using existing card settings and classes.
+
+```javascript
+  <div class="listview card-list">
+    <ul>
+      <li>
+        <div class="card card-variant"></div>
+      </li>
+    </ul>
+  </div>
+```
+
+See example <a href="https://design.infor.com/code/ids-enterprise/latest/demo/components/listview/example-card" target="_blank">To see it in action</a>
+
 ## Keyboard Shortcuts
 
 - <kbd>Tab</kbd> When a list is tabbed to, select the first item if nothing else is already selected. A second tab will take the user out of the widget to the next tab stop on the page.
