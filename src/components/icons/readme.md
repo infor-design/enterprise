@@ -36,6 +36,11 @@ It is required to inline the SVG icons in HTML markup in order to be able to cha
 <svg aria-hidden="true" focusable="false" role="presentation" class="icon" >
    <use href="#icon-calendar"></use>
 </svg>
+
+// Rounded Icon
+<svg class="icon icon-round" focusable="false" aria-hidden="true" role="presentation">
+  <use href="#icon-calendar"></use>
+</svg>
 ```
 
 ## Accessibility

@@ -100,7 +100,7 @@ See example <a href="https://design.infor.com/code/ids-enterprise/latest/demo/co
 
 You can have a list of cards by adding the `card-list` class in the list view component. Each `li` in the list should have a card. You can add `card-variant` in the card to minimize the height if needed. The cards can be customized using existing card settings and classes.
 
-```javascript
+```html
   <div class="listview card-list">
     <ul>
       <li>
