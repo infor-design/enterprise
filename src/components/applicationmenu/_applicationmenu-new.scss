@@ -238,7 +238,7 @@
 
         &:not(.is-focused),
         &:not(.is-selected) {
-          border-bottom-color: $ids-color-palette-white;
+          border-bottom-color: transparent;
         }
 
         // Shared pseudo-element for hovering/focusing/selecting this particular level
@@ -268,7 +268,7 @@
           border-color: transparent;
 
           &::before {
-            border-color: $new-appmenu-selected-border-color;
+            border-color: $application-menu-new-border-color;
           }
         }
 
@@ -340,8 +340,8 @@
       background-color: transparent;
 
       .accordion-header {
-        border-bottom-color: transparent;
         color: $new-acc-subheader-text-color;
+        margin-top: 3px;
 
         a {
           font-size: 14px;
@@ -384,6 +384,7 @@
 
         &.is-selected {
           color: $new-acc-header-selected-text-color;
+          border-bottom-color: $application-menu-new-border-color;
 
           > a > span {
             font-weight: $ids-number-font-weight-bold;
@@ -446,6 +447,10 @@
       }
     }
   }
+}
+
+.accordion.panel.inverse .accordion-pane.is-expanded + .accordion-header.is-selected {
+  border-color: $application-menu-new-border-color;
 }
 
 html.is-firefox {
