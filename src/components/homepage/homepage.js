@@ -89,7 +89,6 @@ Homepage.prototype = {
    * @returns {void}
    */
   init() {
-    this.isTransitionsSupports = this.supportsTransitions();
     this.setSmall();
     this.setColumns();
     this.initHeroWidget();
@@ -691,22 +690,15 @@ Homepage.prototype = {
         const blockslide = [0.09, 0.11, 0.24, 0.91];
 
         if (easing === 'blockslide') {
-          if (self.isTransitionsSupports) {
-            self.applyCubicBezier(block.elem, blockslide);
-            block.elem[0].style.left = `${pos.left}px`;
-            block.elem[0].style.top = `${pos.top}px`;
-          } else {
-            // IE-9
-            block.elem.animate(pos, self.settings.timeout);
-          }
+          self.applyCubicBezier(block.elem, blockslide);
+          block.elem[0].style.left = `${pos.left}px`;
+          block.elem[0].style.top = `${pos.top}px`;
         } else {
           // Other easing effects ie (linear, swing)
           block.elem.animate(pos, self.settings.timeout, easing);
         }
       } else {
-        if (self.isTransitionsSupports) {
-          self.applyCubicBezier(block.elem, null);
-        }
+        self.applyCubicBezier(block.elem, null);
         block.elem[0].style.left = `${pos.left}px`;
         block.elem[0].style.top = `${pos.top}px`;
       }
@@ -737,36 +729,7 @@ Homepage.prototype = {
    */
   applyCubicBezier(el, cubicBezier) {
     const value = cubicBezier ? `all .3s cubic-bezier(${cubicBezier})` : 'none';
-    el[0].style['-webkit-transition'] = value;
-    el[0].style['-moz-transition'] = value;
-    el[0].style['-ms-transition'] = value;
-    el[0].style['-o-transition'] = value;
     el[0].style.transition = value;
-  },
-
-  /**
-   * Check if browser supports transitions
-   * @private
-   * @returns {boolean} true if supports transitions
-   */
-  supportsTransitions() {
-    const s = document.createElement('p').style;
-    let p = 'transition';
-
-    if (typeof s[p] === 'string') {
-      return true;
-    }
-
-    // Tests for vendor specific prop
-    const v = ['Moz', 'webkit', 'Webkit', 'Khtml', 'O', 'ms'];
-    p = p.charAt(0).toUpperCase() + p.substr(1);
-
-    for (let i = 0, l = v.length; i < l; i++) {
-      if (typeof s[v[i] + p] === 'string') {
-        return true;
-      }
-    }
-    return false;
   },
 
   /**

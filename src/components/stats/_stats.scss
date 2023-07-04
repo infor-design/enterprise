@@ -10,7 +10,7 @@
   border-radius: 8px;
   background-color: $cardlist-bg-color;
   outline: 1px solid $cardlist-bg-color;
-  transition: 0.3s;
+  transition: 0.3s cubic-bezier(.17, .04, .03, .94);
 
   &:nth-last-child(-n + 1) {
     margin-bottom: 16px;
