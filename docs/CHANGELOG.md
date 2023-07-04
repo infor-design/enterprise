@@ -17,6 +17,7 @@
 - `[Datagrid]` Fixed on incorrect row updates on adding a new row to the next page. ([#7486](https://github.com/infor-design/enterprise/issues/7486))
 - `[Datagrid]` Fixed disabled filter columns in datagrid. ([#7467](https://github.com/infor-design/enterprise/issues/7467))
 - `[Datagrid]` Fixed a bug where the select all checkbox was not clickable. ([#7499](https://github.com/infor-design/enterprise/issues/7499))
+- `[Datagrid]` Fixed a bug in datepicker filter icon's hover state and alignment. ([#7562](https://github.com/infor-design/enterprise/issues/7562))
 - `[Editor]` Fixed an xss issue in editor (iframes not permitted). ([#7590](https://github.com/infor-design/enterprise/issues/7590))
 - `[Homepage]` Fixed invisible edit options and vertical dragging/resizing. ([#7579](https://github.com/infor-design/enterprise/issues/7579))
 - `[Icons]` Fixed size of icons and made them 80x80. ([#1369](https://jira.infor.com/browse/IDS-1360))

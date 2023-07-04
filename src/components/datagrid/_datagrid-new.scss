@@ -45,9 +45,12 @@
       }
     }
 
-    .datepicker + .trigger {
-      &:hover {
-        background-color: transparent;
+    .datepicker,
+    .timepicker {
+      + .trigger {
+       &:hover {
+         background-color: transparent;
+       }
       }
     }
 
@@ -1182,7 +1185,6 @@
     &.small-rowheight,
     &.extra-small-rowheight {
       .datagrid-header .datagrid-filter-wrapper {
-        .datepicker,
         .timepicker {
           + .trigger {
             top: -9px;
