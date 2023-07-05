@@ -309,6 +309,14 @@
     [class^='btn'] {
       margin-right: 0;
 
+      &.btn-menu.is-open {
+        color: $button-color-tertiary-initial-font;
+
+        .icon {
+          color: $button-color-tertiary-initial-font;
+        }
+      }
+
       @media (max-width: $breakpoint-slim) {
         width: auto;
       }
