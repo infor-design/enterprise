@@ -27,6 +27,7 @@
 - `[Lookup]` Fixed a bug in lookup width not responsive in grid system. ([#7205](https://github.com/infor-design/enterprise/issues/7205))
 - `[MonthView]` Added event triggers for when monthview is expanded and collapsed. ([#7605](https://github.com/infor-design/enterprise/issues/7605))
 - `[Modal]` Fixed icon alignment in the title. ([#7639](https://github.com/infor-design/enterprise/issues/7639))
+- `[Module Nav]` Added new settings for configuration of accordion, and auto-initialization of child components. ([NG#1477](https://github.com/infor-design/enterprise-ng/issues/1477))
 - `[Module Nav Switcher]` Made compatibility improvements for the Module Nav Switcher NG component. ([NG#1477](https://github.com/infor-design/enterprise-ng/issues/1477))
 - `[Multiselect]` Fixed a bug where the multiselect dropdown icon was overlapping the field. ([#7502](https://github.com/infor-design/enterprise/issues/7502))
 - `[Popupmenu]` Fixed the placement of popup when parent element is outside of viewport. ([#5018](https://github.com/infor-design/enterprise/issues/5018))
