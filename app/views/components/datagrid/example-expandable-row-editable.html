@@ -18,7 +18,7 @@
         field: 'productId',
         sortable: false,
         filterType: 'text',
-        formatter: Formatters.Expander,
+        formatter: Soho.Formatters.Expander,
       },
       {
         id: 'productName',
@@ -28,7 +28,7 @@
         filterType: 'text',
         filterConditions: ['equals', 'contains'],
         width: 150,
-        formatter: Formatters.Hyperlink,
+        formatter: Soho.Formatters.Hyperlink,
       },
       {
         id: 'activity',
@@ -44,8 +44,8 @@
         field: 'quantity',
         sortable: false,
         filterType: 'integer',
-        formatter: Formatters.Integer,
-        editor: Editors.Input,
+        formatter: Soho.Formatters.Integer,
+        editor: Soho.Editors.Input,
       },
       {
         id: 'price',
@@ -53,8 +53,8 @@
         field: 'price',
         sortable: false,
         filterType: 'decimal',
-        formatter: Formatters.Decimal,
-        editor: Editors.Input,
+        formatter: Soho.Formatters.Decimal,
+        editor: Soho.Editors.Input,
       },
       {
         id: 'orderDate',
@@ -62,7 +62,7 @@
         field: 'orderDate',
         sortable: false,
         filterType: 'date',
-        formatter: Formatters.Date,
+        formatter: Soho.Formatters.Date,
         dateFormat: 'M/d/yyyy',
       }];
 
