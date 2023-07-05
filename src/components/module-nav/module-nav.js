@@ -11,6 +11,7 @@ import '../tooltip/tooltip.jquery';
 
 import {
   MODULE_NAV_DISPLAY_MODES,
+  configureNavItemTooltip,
   setDisplayMode,
   isValidDisplayMode,
   separatorTemplate
@@ -20,7 +21,9 @@ import {
 const COMPONENT_NAME = 'modulenav';
 
 const MODULE_NAV_DEFAULTS = {
-  accordionSettings: null,
+  accordionSettings: {
+    expanderDisplay: 'classic'
+  },
   displayMode: MODULE_NAV_DISPLAY_MODES[0],
   filterable: false,
   initChildren: true,
@@ -143,7 +146,9 @@ ModuleNav.prototype = {
     if (this.settings.initChildren) {
       if (!this.switcherAPI) $(this.switcherEl).modulenavswitcher({ displayMode: this.settings.displayMode });
       if (!this.settingsAPI) $(this.settingsEl).modulenavsettings({ displayMode: this.settings.displayMode });
-      if (!this.accordionAPI) $(this.accordionEl).accordion(this.settings.accordionSettings);
+      if (!this.accordionAPI) {
+        $(this.accordionEl).accordion(this.settings.accordionSettings);
+      }
     }
 
     if (this.accordionEl) this.configureAccordion();
@@ -238,15 +243,7 @@ ModuleNav.prototype = {
     const headers = this.accordionEl.querySelectorAll('.accordion-section > .accordion-header');
     if (headers.length) {
       [...headers].forEach((header) => {
-        if (this.settings.displayMode === 'collapsed') {
-          $(header).tooltip({
-            placementOpts: { x: 16 },
-            placement: 'right',
-            title: header.textContent.trim()
-          });
-        } else {
-          $(header).data('tooltip')?.destroy();
-        }
+        configureNavItemTooltip(header, this.settings.displayMode);
       });
     }
   },
