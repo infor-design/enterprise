@@ -800,7 +800,7 @@ Accordion.prototype = {
    * @returns {void}
    */
   deselectAll() {
-    this.headers.removeClass('child-selected').removeClass('is-selected');
+    this.headers?.removeClass('child-selected').removeClass('is-selected');
   },
 
   /**
