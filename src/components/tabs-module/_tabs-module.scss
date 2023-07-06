@@ -60,7 +60,18 @@
 
   .tab-list-container {
     position: absolute;
-    width: calc(100% - 1px);
+    width: inherit;
+
+    .tab-list {
+      height: 34px;
+      overflow: hidden;
+      width: inherit;
+      &.has-arrange-placeholder {
+        .tab:hover {
+          background-color: $module-tabs-bg-color;
+        }
+      }
+    }
   }
 
   .tab-list-info {

@@ -3294,7 +3294,8 @@ Tabs.prototype = {
     // Divided by number of visible tabs
     // (doesn't include app menu trigger which shouldn't change size).
     // Minus one (for the left-side border of each tab)
-    visibleTabSize = ((tabContainerW - appTriggerSize) / sizeableTabs.length - 1);
+    // visibleTabSize = ((tabContainerW - appTriggerSize) / sizeableTabs.length - 1);
+    visibleTabSize = ((tabContainerW - appTriggerSize) / sizeableTabs.length);
 
     if (visibleTabSize < defaultTabSize) {
       visibleTabSize = defaultTabSize;
@@ -3894,6 +3895,11 @@ Tabs.prototype = {
       if (isNotHeaderTabs && !isVerticalTabs && !self.isModuleTabs()) {
         targetRectObj.height; // eslint-disable-line
         targetRectObj.top += 2;
+      }
+
+      if (self.isModuleTabs() && !isVerticalTabs) {
+        targetRectObj.width -= 4;
+        targetRectObj.left += 2;
       }
 
       targetRectObj.height -= 4;

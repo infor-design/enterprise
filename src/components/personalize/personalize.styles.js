@@ -238,8 +238,18 @@ a.is-personalizable svg.ripple-effect {
 }
 
 .tab-container.module-tabs.is-personalizable {
-  border-top: 1px solid ${colors.darkest} !important;
-  border-bottom: 1px solid ${colors.darkest} !important;
+  border-top: 1px solid ${colors.tabBorderColor} !important;
+  border-bottom: 1px solid ${colors.tabBorderColor} !important;
+}
+
+.tab-container.module-tabs .tab-focus-indicator.is-visible {
+  border-color: ${colors.tabFocusIndicator} !important;
+  box-shadow: ${colors.tabFocusBoxShadow} !important;
+}
+
+.tab-container.vertical.is-personalizable > .tab-list-container > .tab-focus-indicator.is-selected.is-visible {
+  border-color: ${colors.tabFocusIndicator} !important;
+  box-shadow: ${colors.tabFocusBoxShadow} !important;
 }
 
 .tab-container.is-personalizable.header-tabs:not(.alternate) .tab-focus-indicator.is-visible,
@@ -259,7 +269,7 @@ a.is-personalizable svg.ripple-effect {
 .header.is-personalizable .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:hover:not(.is-disabled),
 .personalize-header.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:hover:not(.is-disabled) {
   color: ${colors.contrast};
-  background-color: ${colors.darker};
+  background-color: ${colors.tabHoverColor};
   border-bottom: 4px solid ${colors.contrast};
 }
 
@@ -272,12 +282,12 @@ a.is-personalizable svg.ripple-effect {
 }
 
 .module-tabs.is-personalizable .tab.is-selected {
-  background-color: ${colors.base} !important;
+  background-color: ${colors.tabSelectedColor} !important;
   color: ${colors.moduleTabsSelectedTextColor} !important;
 }
 
 .module-tabs.is-personalizable .tab:not(.is-selected) {
-  background-color: ${colors.dark} !important;
+  background-color: ${colors.tabColor} !important;
 }
 
 .module-tabs.is-personalizable .tab {
@@ -290,7 +300,15 @@ a.is-personalizable svg.ripple-effect {
 }
 
 .tab-container.vertical.is-personalizable > .tab-list-container > .tab-list > .tab.is-selected {
-  background-color: ${colors.base} !important;
+  background-color: ${colors.tabVerticalSelectedColor} !important;
+}
+
+.tab-container.vertical.is-personalizable > .tab-list-container > .tab-list > .tab.is-selected a {
+  color: ${colors.tabSelectedTextColor} !important;
+}
+
+.tab-container.vertical.is-personalizable > .tab-list-container > .tab-list > .tab:hover {
+  background-color: ${colors.tabHoverColor} !important;
 }
 
 .tab-container.vertical.is-personalizable .tab-focus-indicator.is-visible {
@@ -303,7 +321,8 @@ a.is-personalizable svg.ripple-effect {
 }
 
 .header.is-personalizable {
-  background-color: ${colors.base};
+  background-color: ${colors.tabHeaderColor};
+  border-bottom: 1px solid ${colors.headerTabBorder};
 }
 
 .scrollable-flex-header .breadcrumb {
@@ -311,7 +330,7 @@ a.is-personalizable svg.ripple-effect {
 }
 
 .header.is-personalizable.has-tabs .tab-container.header-tabs:not(.alternate) {
-  background-color: ${colors.base};
+  background-color: ${colors.tabHeaderColor};
 }
 
 .header.is-personalizable .title {
@@ -750,7 +769,7 @@ html[dir='rtl'] .scrollable-flex-header.is-personalizable .breadcrumb.truncated:
 }
 
 .module-tabs.is-personalizable .tab:hover {
-  background-color: ${colors.darker} !important;
+  background-color: ${colors.tabHoverColor} !important;
   color: ${colors.contrast};
 }
 
@@ -833,6 +852,14 @@ html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::af
 .is-personalizable .tab-container.header-tabs:not(.alternate),
 .is-personalizable.tab-container.header-tabs:not(.alternate) {
   border-bottom-color: ${colors.tabBottomBorderColor};
+}
+
+.tab-container.is-personalizable.module-tabs .tab a {
+  font-weight: ${colors.tabTextWeight} !important;
+}
+
+.tab-container.is-personalizable.module-tabs .tab.is-selected a {
+  font-weight: ${colors.tabTextSelectedWeight} !important;
 }
 
 .hero-widget.is-personalizable {
@@ -921,7 +948,12 @@ html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.i
 }
 
 .is-personalizable.tab-container {
-  background-color: ${colors.base} !important;
+  background-color: ${colors.tabColor} !important;
+}
+
+.is-personalizable.tab-container.vertical,
+.is-personalizable.tab-container.vertical > .tab-list-container {
+  background-color: ${colors.tabVerticalColor} !important;
 }
 
 .is-personalizable .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab-list .tab.is-disabled,

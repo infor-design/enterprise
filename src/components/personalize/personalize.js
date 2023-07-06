@@ -289,10 +289,23 @@ Personalize.prototype = {
     colors.tabBottomBorderColor = colors.base;
     colors.btnActionsHoverColor = colors.base;
     colors.moduleTabsSelectedTextColor = '#ffffff';
+    colors.tabHoverColor = colors.darker;
+    colors.tabTextWeight = '600';
+    colors.tabTextSelectedWeight = '600';
+    colors.tabBorderColor = colors.darkest;
+    colors.tabSelectedColor = colors.dark;
+    colors.tabHeaderColor = colors.dark;
+    colors.tabColor = colors.base;
+    colors.tabVerticalColor = colors.base;
+    colors.headerTabBorder = 'transparent';
+    colors.tabTextColor = '#2f2f32';
+    colors.tabSelectedTextColor = '#2f2f32'
+    colors.tabVerticalSelectedColor = colors.base;
 
     const isAlabaster = colors.header === '#ffffff';
     const isNewDark = this.currentTheme.indexOf('new-dark') >= 0;
     const isClassicDark = this.currentTheme.indexOf('classic-dark') >= 0;
+    const isNewContrast = this.currentTheme.indexOf('new-contrast') >= 0;
     colors.btnTertiaryBgHoverColor = isAlabaster ? '#E6F1FD' : colors.darker;
 
     // Alabaster is different so readjust the colors
@@ -318,6 +331,23 @@ Personalize.prototype = {
       colors.btnActionsHoverColor = '#2F2F32';
       colors.moduleTabsSelectedTextColor = colors.contrast;
 
+      // Alabaster New Design
+      colors.headerTabBorder = '#b7b7ba';
+      colors.tabFocusIndicator = '#2f2f32';
+      colors.tabFocusBoxShadow = 'none';
+      colors.tabHoverColor = '#d7d7d8';
+      colors.tabTextWeight = '400';
+      colors.tabTextSelectedWeight = '700';
+      colors.tabSelectedColor = '#ffffff';
+      colors.tabHeaderColor = '#ffffff';
+      colors.tabFocusColor = '#2f2f32';
+      colors.tabBorderColor = '#ffffff';
+      colors.tabColor = '#efeff0';
+      colors.tabSelectedTextColor = '#2f2f32'
+
+      colors.tabVerticalColor = '#efeff0';
+      colors.tabVerticalSelectedColor = '#ffffff';
+
       if (isNewDark) {
         colors.base = '#606066';
         colors.btnPrimaryColor = colors.base;
@@ -338,6 +368,19 @@ Personalize.prototype = {
         colors.btnBgHoverColor = '#47474C';
         colors.tabBottomBorderColor = '#606066';
         colors.btnActionsHoverColor = '#ffffff';
+        colors.moduleTabsSelectedTextColor = '#ffffff';
+
+        // Alabaster New Design
+        colors.tabFocusIndicator = '#ffffff';
+        colors.tabSelectedColor = '#56565b';
+        colors.tabHeaderColor = '#56565b';
+        colors.tabBorderColor = '#56565b';
+        colors.tabColor = '#47474c';
+        colors.tabHoverColor = '#3e3e42';
+        colors.tabSelectedTextColor = '#ffffff';
+
+        colors.tabVerticalColor = '#56565b';
+        colors.tabVerticalSelectedColor = '#47474c';
       }
 
       if (isClassicDark) {
@@ -359,6 +402,14 @@ Personalize.prototype = {
         colors.btnLinkColor = colors.light;
         colors.btnBgHoverColor = '#313236';
         colors.tabBottomBorderColor = '#50535a';
+      }
+
+      if (isNewContrast) {
+         // Alabaster New Design
+        //  colors.tabSelectedColor = '#47474c';
+         colors.tabBorderColor = '#ffffff';
+        //  colors.tabColor = '#56565b';
+         colors.tabHoverColor = '#d7d7d8';
       }
     }
 
