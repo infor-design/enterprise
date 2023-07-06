@@ -1578,6 +1578,7 @@ Dropdown.prototype = {
           return true;
         }
         this.searchKeyMode = false;
+        this.keydownFlag = true;
 
         if (selectedIndex > 0) {
           next = $(options[selectedIndex - 1]);
