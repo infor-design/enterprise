@@ -342,6 +342,10 @@ $card-header-section: '.card-header-section', '.widget-header-section';
 
         .btn-icon {
           left: 10px;
+
+          &:hover {
+            background-color: transparent;
+          }
         }
       }
     }
