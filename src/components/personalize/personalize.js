@@ -299,7 +299,7 @@ Personalize.prototype = {
     colors.tabVerticalColor = colors.base;
     colors.headerTabBorder = 'transparent';
     colors.tabTextColor = '#2f2f32';
-    colors.tabSelectedTextColor = '#2f2f32'
+    colors.tabSelectedTextColor = '#2f2f32';
     colors.tabVerticalSelectedColor = colors.base;
 
     const isAlabaster = colors.header === '#ffffff';
@@ -343,7 +343,7 @@ Personalize.prototype = {
       colors.tabFocusColor = '#2f2f32';
       colors.tabBorderColor = '#ffffff';
       colors.tabColor = '#efeff0';
-      colors.tabSelectedTextColor = '#2f2f32'
+      colors.tabSelectedTextColor = '#2f2f32';
 
       colors.tabVerticalColor = '#efeff0';
       colors.tabVerticalSelectedColor = '#ffffff';
@@ -405,11 +405,11 @@ Personalize.prototype = {
       }
 
       if (isNewContrast) {
-         // Alabaster New Design
+        // Alabaster New Design
         //  colors.tabSelectedColor = '#47474c';
-         colors.tabBorderColor = '#ffffff';
+        colors.tabBorderColor = '#ffffff';
         //  colors.tabColor = '#56565b';
-         colors.tabHoverColor = '#d7d7d8';
+        colors.tabHoverColor = '#d7d7d8';
       }
     }
 
