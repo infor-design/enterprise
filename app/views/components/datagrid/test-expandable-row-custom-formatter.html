@@ -30,7 +30,7 @@
                     '<span>' + value + '</span>' +
                   '</svg>';
          }
-         return Formatters.Expander(row, cell, value, col, item, api);
+         return Soho.Formatters.Expander(row, cell, value, col, item, api);
       };
 
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: customErrorFormatter, filterType: 'text', textOverflow: 'ellipsis', width: 150, hideable: false});

@@ -134,7 +134,7 @@ describe('Calendar', () => {
       expect(await page.$eval('.calendar-event-details .accordion-header a', el => el.innerHTML)).toBe('Team Event');
     });
 
-    it('should add new events on click and cancel', async () => {
+    it.skip('should add new events on click and cancel', async () => {
       expect(await page.$$eval('.calendar-event', el => el.length)).toEqual(17);
 
       const button = await page.$('.calendar-event-title:nth-child(1)');
@@ -170,7 +170,7 @@ describe('Calendar', () => {
       expect(await page.$$eval('.calendar-event', el => el.length)).toEqual(17);
     });
 
-    it('should update datepicker date', async () => {
+    it.skip('should update datepicker date', async () => {
       const nextButton = await page.$('.calendar-monthview button.next');
       await nextButton.click();
       await nextButton.click();

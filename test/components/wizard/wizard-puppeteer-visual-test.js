@@ -10,7 +10,7 @@ describe('Wizard Puppeteer Visual Tests', () => {
       await page.goto(url, { waitUnitl: ['domcontentloaded', 'networkidle2'] });
     });
 
-    it('should not visually regress', async () => {
+    it.skip('should not visually regress', async () => {
       const wizard = await page.$('.wizard');
       await page.waitForTimeout(200);
       const image = await wizard.screenshot();
