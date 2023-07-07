@@ -4,11 +4,13 @@
 
 ## v4.85.0 Features
 
+- `[Colors]` Added new slate color palette with lower range colors. Some elements are updated. ([#7624](https://github.com/infor-design/enterprise/issues/7624))
 - `[Stats]` Added a new component called stats similar to counts. We would like counts deprecated so please use stats in place of counts now as it has a cleaner UI. ([#7506](https://github.com/infor-design/enterprise/issues/7506))
 
 ## v4.85.0 Fixes
 
 - `[Applicationmenu]` Fixed menu items cannot be seen properly when using alabaster. ([#7609](https://github.com/infor-design/enterprise/issues/7609))
+- `[Applicationmenu]` Fixed bottom border color cannot be seen properly. ([#7565](https://github.com/infor-design/enterprise/issues/7565))
 - `[Button]` Adjusted the left and right paddings of the button from `30px` to `32px`. ([#7508](https://github.com/infor-design/enterprise/issues/7508))
 - `[Card]` Fixed widget size for subtitle examples. ([#7580](https://github.com/infor-design/enterprise/issues/7580))
 - `[Chart]` Added setting to force legend to popup. ([#7453](https://github.com/infor-design/enterprise/issues/7453))
@@ -18,6 +20,8 @@
 - `[Datagrid]` Fixed disabled filter columns in datagrid. ([#7467](https://github.com/infor-design/enterprise/issues/7467))
 - `[Datagrid]` Fixed a bug where the select all checkbox was not clickable. ([#7499](https://github.com/infor-design/enterprise/issues/7499))
 - `[Datagrid]` Fixed a bug in datepicker filter icon's hover state and alignment. ([#7562](https://github.com/infor-design/enterprise/issues/7562))
+- `[Datagrid]` Fixed a bug where disabled buttons in cells were hoverable. ([#7611](https://github.com/infor-design/enterprise/issues/7611))
+- `[Dropdown]` Fixed a bug in dropdown where mouseenter and keydown triggers simulatenously. ([#7464](https://github.com/infor-design/enterprise/issues/7464))
 - `[Editor]` Fixed an xss issue in editor (iframes not permitted). ([#7590](https://github.com/infor-design/enterprise/issues/7590))
 - `[Homepage]` Fixed invisible edit options and vertical dragging/resizing. ([#7579](https://github.com/infor-design/enterprise/issues/7579))
 - `[Icons]` Fixed size of icons and made them 80x80. ([#1369](https://jira.infor.com/browse/IDS-1360))

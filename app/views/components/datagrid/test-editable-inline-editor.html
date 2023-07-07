@@ -18,12 +18,12 @@
     }
 
     // Custom Formatters
-    Formatters.LinkText = function (row, cell, value, col, item, api) {
-      var link = Formatters.Hyperlink(row, cell, item[col.fields[0]] + ' ' + item[col.fields[1]], col, item, api);
+    Soho.Formatters.LinkText = function (row, cell, value, col, item, api) {
+      var link = Soho.Formatters.Hyperlink(row, cell, item[col.fields[0]] + ' ' + item[col.fields[1]], col, item, api);
       return '<p class="word-wrap">' + link + '<br><small class="micro-text">'+ item[col.fields[2]] +'</small></p>';
     };
 
-    Formatters.PriceText = function (row, cell, value, col, item, api) {
+    Soho.Formatters.PriceText = function (row, cell, value, col, item, api) {
       Soho.Locale.currentLocale.data.currencySign = '£';
       var formatted = Soho.Locale.formatNumber(value, (col.numberFormat ? col.numberFormat : {style: 'currency'}));
 
@@ -31,7 +31,7 @@
       return '<p><b> Trade: ' + formatted + '</b><br><a href="#" class="hyperlink micro-text">Price Details</a></p>';
     };
 
-    Formatters.BadgeDecimal = function (row, cell, value, col, item, api) {
+    Soho.Formatters.BadgeDecimal = function (row, cell, value, col, item, api) {
       var colorClass = 'good';
       return '<span class="badge ' + colorClass +'">' + value +' </span>';
       return link;

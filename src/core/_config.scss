@@ -89,6 +89,7 @@ $font-color-default: $ids-color-font-base;
 $font-color-descriptive: $ids-color-font-info;
 $font-color-hyperlink: $ids-color-brand-primary-base;
 $font-color-muted: $ids-color-font-muted;
+$label-text-color: $ids-color-palette-slate-60;
 $font-color-alert: $ids-color-status-danger;
 
 //The hyperlink Style
@@ -706,6 +707,8 @@ $application-menu-trigger-icon-fill-color: $trigger-icon-fill-color;
 $application-menu-searchfield-icon-color: $ids-color-palette-slate-60;
 $application-menu-searchfield-icon-active-color: $ids-color-palette-white;
 $application-menu-searchfield-text-active-color: $ids-color-palette-white;
+
+$application-menu-new-border-color: $ids-color-palette-white;
 
 // Module Nav (App menu alternative)
 $module-nav-bg-color: $ids-color-palette-slate-10;
