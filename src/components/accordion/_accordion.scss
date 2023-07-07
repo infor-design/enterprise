@@ -150,7 +150,7 @@
       &.is-selected,
       &.is-selected:hover {
         background-color: $accordion-selected-bg-color;
-        color: $accordion-selected-text-color;
+        color: $accordion-panel-selected-text-color;
 
         > a {
           color: inherit;
