@@ -157,9 +157,18 @@
 
   .widget-content,
   .card-content {
-    height: 708px;
-    min-height: 708px;
+    height: 752px;
+    min-height: 752px;
     overflow: auto;
+  }
+
+  .widget-header,
+  .card-header {
+    + .widget-content,
+    + .card-content {
+      height: 708px;
+      min-height: 708px;
+    }
   }
 }
 

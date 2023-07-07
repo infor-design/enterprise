@@ -13,6 +13,10 @@
     color: $color !important;
   }
 
+  .#{$name}-border-color {
+    border-color: $color !important;
+  }
+
   //Classes for Tags
   .#{$name}.tag {
     background: nth($color-vars, $i);

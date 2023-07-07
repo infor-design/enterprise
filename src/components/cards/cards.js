@@ -244,6 +244,8 @@ Cards.prototype = {
       this.removeInfoIconTooltip();
     }
 
+    this.resizeButtonset();
+
     return this;
   },
 
@@ -347,6 +349,152 @@ Cards.prototype = {
       this.cards.html(renderedTmpl);
     } else if (s.dataset.length === 0) {
       this.cards.html(renderedTmpl || '<div class="cards auto-height"></div>');
+    }
+  },
+
+  /**
+   * Add More button if card reaches a certain size
+   * Used for card list
+   */
+  resizeButtonset() {
+    const buttonset = this.element.find('.card-buttonset');
+
+    if (buttonset.length === 0 || !this.element.parent().is('li')) {
+      return;
+    }
+
+    const shouldOverflow = this.element.width() <= 360;
+
+    const addMore = (element, children, len) => {
+      let more;
+      if (element.hasClass('is-overflowed')) {
+        let container = element.find('.card-content-action');
+
+        if (!container) {
+          container = $('<div class="card-content-action"></div>');
+          more = $('<button class="btn-actions" type="button"></button>')
+            .html(`${$.createIcon({ icon: 'more' })
+            }<span class="audible">${Locale.translate('MoreActions')}</span>`)
+            .attr('title', Locale.translate('More'));
+          container.append(more);
+          element.append(container);
+        } else {
+          more = element.find('.card-content-action button');
+        }
+      } else {
+        element.addClass('is-overflowed');
+        const container = $('<div class="card-content-action"></div>');
+        more = $('<button class="btn-actions" type="button"></button>')
+          .html(`${$.createIcon({ icon: 'more' })
+          }<span class="audible">${Locale.translate('MoreActions')}</span>`)
+          .attr('title', Locale.translate('More'));
+        container.append(more);
+        element.append(container);
+      }
+
+      const api = more.data('popupmenu');
+      let popupList;
+
+      if (api) {
+        popupList = api.settings.menu;
+      } else {
+        popupList = $('<ul class="popupmenu"></ul>');
+        popupList.insertAfter(more);
+      }
+
+      for (let i = children.length - 1, j = 0; i >= 0 && j < len; i--, j++) {
+        const button = children[i];
+        const popupItem = $(button.innerHTML);
+        const listItem = $('<li><a href="#"></a></li>');
+
+        listItem.find('a').append(popupItem);
+        listItem.data('originalButton', button);
+        listItem.on('click', () => $(button).triggerHandler('click'));
+        listItem.find('.audible').removeClass('audible');
+
+        popupList.prepend(listItem);
+
+        $(button).hide();
+      }
+
+      if (api) {
+        api.updated({ menu: popupList });
+      } else {
+        more.popupmenu({ menu: popupList });
+      }
+    };
+
+    const visibleChildren = buttonset.children(':visible:not(.card-content-action)');
+
+    let visibleLen = 0;
+    let weight = 0;
+    let iconWeight = 0;
+
+    for (let i = 0; i < visibleChildren.length; i++) {
+      const add = $(visibleChildren.get(i)).hasClass('btn-icon') ? 1 : 2;
+      if (weight + add > 4) {
+        break;
+      }
+
+      if (add === 1) {
+        if (add + iconWeight > 3) {
+          break;
+        }
+        iconWeight++;
+      }
+
+      weight += add;
+      visibleLen = i;
+    }
+    visibleLen++;
+
+    if (shouldOverflow) {
+      addMore(buttonset, visibleChildren, visibleChildren.length);
+    } else if (visibleChildren.length > visibleLen) {
+      addMore(buttonset, visibleChildren, visibleChildren.length - visibleLen);
+    } else if (buttonset.hasClass('is-overflowed') && weight < 3) {
+      const more = this.element.find('.card-content-action button');
+      const api = more.data('popupmenu');
+      const parent = more.parent();
+
+      if (api && api.settings.menu) {
+        const popupList = api.settings.menu.children();
+        let n = 0;
+
+        for (let i = 0; i < popupList.length; i++) {
+          const button = $($($(popupList).get(i)).data('originalButton'));
+          const add = button.hasClass('btn-icon') ? 1 : 2;
+
+          if (weight + add > 4) {
+            break;
+          }
+
+          if (add === 1) {
+            if (add + iconWeight > 3) {
+              break;
+            }
+            iconWeight++;
+          }
+
+          button.show();
+          weight += add;
+          n = i;
+        }
+        n++;
+
+        for (let i = 0; i < n; i++) {
+          $(popupList).get(i).remove();
+        }
+
+        if ($(api.settings.menu.children()).length === 0) {
+          api.destroy();
+          more.remove();
+          parent.remove();
+          buttonset.removeClass('is-overflowed');
+        } else {
+          api.updated();
+        }
+      }
     }
   },
 
@@ -545,6 +693,9 @@ Cards.prototype = {
       if (Locale.isRTL()) {
         this.removeInfoIconTooltip();
       }
+      setTimeout(() => {
+        this.resizeButtonset();
+      }, 300);
     });
 
     const cardHeader = this.element.find('.card-header, .widget-header');
