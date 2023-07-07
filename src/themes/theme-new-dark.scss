@@ -25,7 +25,7 @@ $header-default-bg-hover-color: $ids-color-palette-slate-80;
 $input-color-focus-border: $ids-color-palette-slate-10;
 
 // Form Background Color
-$header-toolbar-button-hover-color: #47474C;
+$header-toolbar-button-hover-color: #3B3B3F;
 $subhead-bg-color: $ids-color-brand-primary-alt;
 
 $dropdown-search-bg-color: $ids-color-palette-slate-80;
@@ -58,6 +58,7 @@ $font-color-highcontrast: $ids-color-palette-slate-10;
 $font-color: $ids-color-palette-slate-20;
 $font-color-lowcontrast: $ids-color-palette-slate-30;
 $label-disabled-color: $input-color-disabled-border;
+$label-text-color: $ids-color-palette-slate-30;
 $disabled-color: $ids-color-palette-slate-50;
 $signin-title-color: $ids-color-palette-slate-10;
 $count-font-color: $ids-color-palette-slate-10;
@@ -556,6 +557,38 @@ $accordion-disabled-pane-text-color: $ids-color-palette-slate-50;
 // Application Menu (extends Accoridon)
 $application-menu-border-color: $ids-color-palette-slate-100;
 $application-menu-trigger-icon-fill-color: $trigger-icon-fill-color;
+
+// Module Nav (App menu alternative)
+$module-nav-bg-color: $ids-color-palette-slate-90;
+$module-nav-detail-bg-color: $ids-color-palette-slate-80;
+$module-nav-separator-color: $ids-color-palette-slate-80;
+$module-nav-text-color: $ids-color-palette-slate-30;
+
+// Module Nav Input Field (Search/Role Dropdown)
+$module-nav-input-bg-color: $ids-color-palette-slate-80;
+$module-nav-input-border-color: $ids-color-palette-slate-70;
+$module-nav-input-text-color: $ids-color-palette-slate-10;
+
+// Module Nav Item (Accordion Header/Menu Button)
+$module-nav-item-text-color: $ids-color-palette-slate-10;
+$module-nav-item-hover-bg-color: $ids-color-palette-slate-80;
+$module-nav-item-hover-text-color: $ids-color-palette-slate-10;
+$module-nav-item-selected-bg-color: $ids-color-palette-azure-60;
+$module-nav-item-selected-text-color: $ids-color-palette-slate-10;
+
+// Module Nav Switcher (Role Dropdown + Button)
+$module-nav-switcher-dropdown-item-focus-bg-color: $ids-color-palette-slate-80;
+$module-nav-switcher-dropdown-item-text-color: $ids-color-palette-slate-30;
+
+// Module Nav Search (Input Field)
+$module-nav-search-input-text-color: $ids-color-palette-slate-10;
+$module-nav-search-input-focused-text-color: $ids-color-palette-slate-10;
+$module-nav-search-input-placeholder-text-color: $ids-color-palette-slate-10;
+$module-nav-search-input-focused-placeholder-text-color: $ids-color-palette-slate-80;
+
+// Module Nav Settings Menu (Accordion Header + Popupmenu)
+$module-nav-settings-menu-item-text-color: $ids-color-palette-slate-30;
+$module-nav-settings-menu-separator-color: $ids-color-palette-slate-90;
 
 // Contextual Action Panel
 $contextual-panel-bg: $ids-color-palette-slate-80;

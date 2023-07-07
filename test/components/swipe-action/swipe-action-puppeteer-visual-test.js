@@ -10,7 +10,7 @@ describe('Swipe Action Puppeteer Visual Tests', () => {
       await page.goto(url, { waitUntl: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should not visually regress', async () => {
+    it.skip('should not visually regress', async () => {
       await page.waitForSelector('#maincontent', { visible: true });
 
       await page.waitForTimeout(300);

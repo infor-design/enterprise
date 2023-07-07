@@ -806,7 +806,7 @@ Column.prototype = {
               .attr('d', line(dataset))
               .attr('class', 'line')
               .style('opacity', 0)
-              .attr('stroke', classicDark ? '#BDBDBD' : newDark ? '#B7B7BA' : theme.new && theme.currentTheme.modeId !== 'dark' ? '#47474c' : '#313236')
+              .attr('stroke', classicDark ? '#BDBDBD' : newDark ? '#C5C5C9' : theme.new && theme.currentTheme.modeId !== 'dark' ? '#3B3B3F' : '#313236')
               .attr('stroke-width', 2)
               .attr('fill', 'none');
 
@@ -827,7 +827,7 @@ Column.prototype = {
                 .attr('cx', d => (xScaleLine(d.name) + xScaleLine.bandwidth() / 2))
                 .attr('cy', d => yScaleLine(d.line.value))
                 .attr('r', 5)
-                .style('fill', classicDark ? '#BDBDBD' : newDark ? '#B7B7BA' : theme.new && theme.currentTheme.modeId !== 'dark' ? '#47474c' : '#313236')
+                .style('fill', classicDark ? '#BDBDBD' : newDark ? '#C5C5C9' : theme.new && theme.currentTheme.modeId !== 'dark' ? '#3B3B3F' : '#313236')
                 .style('stroke-width', 2)
                 .style('cursor', 'default')
                 .on(`mouseenter.${self.namespace}`, function (event, lineTooltipData) {
