@@ -26,20 +26,22 @@ export const SWITCHER_ICON_HTML = `<svg
 </svg>`;
 
 /**
+ * @param {string} [buttonText] provides the template with descriptive button text, if applicable
  * @returns {string} IdsButton component HTML template used to define Module Nav Switcher Button
  */
-export const buttonTemplate = () => `<div class="module-nav-section module-btn">
+export const buttonTemplate = buttonText => `<div class="module-nav-section module-btn">
   <button id="module-nav-homepage-btn" class="btn-icon btn-tertiary">
     ${SWITCHER_ICON_HTML}
-    <span>${Locale ? Locale.translate('ModuleSwitch') : 'Switch Modules'}</span>
+    <span>${buttonText || (Locale ? Locale.translate('ModuleSwitch') : 'Switch Modules')}</span>
   </button>
 </div>`;
 
 /**
+ * @param {string} [labelText] provides the template with descriptive label text, if applicable
  * @returns {string} IdsDropdown component HTML template used to define Module Nav Switcher Dropdown
  */
-export const dropdownTemplate = () => `<div class="module-nav-section role-dropdown">
-  <label for="module-nav-role-switcher" class="label audible">Roles</label>
+export const dropdownTemplate = labelText => `<div class="module-nav-section role-dropdown">
+  <label for="module-nav-role-switcher" class="label audible">${labelText || 'Roles'}</label>
   <select id="module-nav-role-switcher" name="module-nav-role-switcher" class="dropdown"></select>
 </div>`;
 
@@ -82,4 +84,22 @@ export const roleTemplate = (value, text, icon, iconColor) => `<option
 export const setDisplayMode = (val, el) => {
   el.classList.remove('mode-collapsed', 'mode-expanded');
   if (isValidDisplayMode(val) && val) el.classList.add(`mode-${val}`);
+};
+
+/**
+ * Establishes/destroys a Tooltip attached to a Module Nav Item
+ * @param {HTMLElement} el target element to receive the tooltip
+ * @param {string} displayMode current display mode
+ * @param {HTMLElement} textContentEl target element to use for detection of Tooltip text
+ */
+export const configureNavItemTooltip = (el, displayMode, textContentEl) => {
+  if (displayMode === 'collapsed') {
+    $(el).tooltip({
+      placementOpts: { x: 16 },
+      placement: 'right',
+      title: (textContentEl || el).textContent.trim()
+    });
+  } else {
+    $(el).data('tooltip')?.destroy();
+  }
 };

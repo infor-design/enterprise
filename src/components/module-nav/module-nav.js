@@ -11,6 +11,7 @@ import '../tooltip/tooltip.jquery';
 
 import {
   MODULE_NAV_DISPLAY_MODES,
+  configureNavItemTooltip,
   setDisplayMode,
   isValidDisplayMode,
   separatorTemplate
@@ -20,8 +21,12 @@ import {
 const COMPONENT_NAME = 'modulenav';
 
 const MODULE_NAV_DEFAULTS = {
+  accordionSettings: {
+    expanderDisplay: 'classic'
+  },
   displayMode: MODULE_NAV_DISPLAY_MODES[0],
   filterable: false,
+  initChildren: true,
   pinSections: false,
   showDetailView: false,
 };
@@ -127,33 +132,35 @@ ModuleNav.prototype = {
 
     // Sections
     this.switcherEl = this.element[0].querySelector('.module-nav-switcher');
-    if (!this.switcherAPI) $(this.switcherEl).modulenavswitcher({ displayMode: this.settings.displayMode });
     this.itemMenuEl = this.element[0].querySelector('.module-nav-main');
     this.settingsEl = this.element[0].querySelector('.module-nav-settings');
-    if (!this.settingsAPI) $(this.settingsEl).modulenavsettings({ displayMode: this.settings.displayMode });
     this.footerEl = this.element[0].querySelector('.module-nav-footer');
 
     // Components
     this.accordionEl = this.element[0].querySelector('.accordion');
-    if (!this.accordionAPI) {
-      $(this.accordionEl).accordion();
-      this.configureAccordion();
-    }
     this.searchEl = this.element[0].querySelector('.searchfield');
-    if (this.searchEl) {
-      this.settings.filterable = true;
-      this.configureSearch();
-    }
 
     this.renderSeparators();
+
+    // Auto-init child components, if applicable
+    if (this.settings.initChildren) {
+      if (!this.switcherAPI) $(this.switcherEl).modulenavswitcher({ displayMode: this.settings.displayMode });
+      if (!this.settingsAPI) $(this.settingsEl).modulenavsettings({ displayMode: this.settings.displayMode });
+      if (!this.accordionAPI) {
+        $(this.accordionEl).accordion(this.settings.accordionSettings);
+      }
+    }
+
+    if (this.accordionEl) this.configureAccordion();
+    if (this.searchEl) this.configureSearch();
   },
 
   /**
    * @private
    */
   renderSeparators() {
-    if (this.switcherEl || this.searchEl) this.itemMenuEl.insertAdjacentHTML('beforebegin', separatorTemplate());
-    if (this.footerEl) this.footerEl.insertAdjacentHTML('beforebegin', separatorTemplate());
+    if (this.switcherEl || this.searchEl) this.itemMenuEl?.insertAdjacentHTML('beforebegin', separatorTemplate());
+    if (this.footerEl) this.footerEl?.insertAdjacentHTML('beforebegin', separatorTemplate());
   },
 
   /**
@@ -228,21 +235,15 @@ ModuleNav.prototype = {
       }
     };
 
+    this.accordionAPI.settings = this.settings.accordionSettings;
     this.accordionAPI.settings.accordionFocusCallback = navFocusCallback;
+    this.accordionAPI.updated();
 
     // Build tooltips on top-level accordion headers in collapsed mode
     const headers = this.accordionEl.querySelectorAll('.accordion-section > .accordion-header');
     if (headers.length) {
       [...headers].forEach((header) => {
-        if (this.settings.displayMode === 'collapsed') {
-          $(header).tooltip({
-            placementOpts: { x: 16 },
-            placement: 'right',
-            title: header.textContent.trim()
-          });
-        } else {
-          $(header).data('tooltip')?.destroy();
-        }
+        configureNavItemTooltip(header, this.settings.displayMode);
       });
     }
   },
@@ -269,8 +270,16 @@ ModuleNav.prototype = {
    * @private
    */
   configureSearch() {
-    accordionSearchUtils.attachFilter.apply(this, [COMPONENT_NAME]);
-    accordionSearchUtils.attachFilterEvents.apply(this, [COMPONENT_NAME]);
+    // If the filterable setting is disabled, no events should be applied automatically
+    // (This behavior is intended for allowing custom filtering applications)
+    if (this.settings.filterable) {
+      accordionSearchUtils.attachFilter.apply(this, [COMPONENT_NAME]);
+      accordionSearchUtils.attachFilterEvents.apply(this, [COMPONENT_NAME]);
+    } else {
+      // Invoke searchfield with default settings here since we found one
+      // (main init process ignores searchfields inside nav menus)
+      $(this.searchEl).searchfield();
+    }
 
     this.searchEl.classList.add('module-nav-search');
     $(this.searchEl).parents('.accordion-section')?.[0].classList.add('module-nav-search-container');

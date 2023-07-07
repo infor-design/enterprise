@@ -748,7 +748,7 @@ Accordion.prototype = {
       return;
     }
 
-    this.headers.removeClass('child-selected').removeClass('is-selected');
+    this.deselectAll();
 
     header.addClass('is-selected');
 
@@ -756,6 +756,51 @@ Accordion.prototype = {
       .prev('.accordion-header');
 
     items.addClass('child-selected');
+  },
+
+  /**
+  * Makes a single accordion header "deselected"
+  * @param {object} element - a jQuery object containing either an expander button or an anchor tag.
+  * @returns {void}
+  */
+  deselect(element) {
+    if (!element || !element.length) {
+      return;
+    }
+
+    // Make sure we select the anchor
+    let anchor = element;
+    let header = anchor.parent();
+
+    if (element.is('.accordion-header')) {
+      header = element;
+      anchor = header.children('a');
+    }
+
+    if (anchor.is('[class^="btn"]')) {
+      anchor = element.next('a');
+    }
+
+    header.removeClass('is-selected');
+
+    const items = header
+      .parentsUntil(this.element, '.accordion-pane')
+      .prev('.accordion-header');
+
+    items.each((i, item) => {
+      const $item = $(item);
+      if (!$item.find('.is-selected').length) {
+        $(item).removeClass('child-selected');
+      }
+    });
+  },
+
+  /**
+   * Makes all headers appear "deselected"
+   * @returns {void}
+   */
+  deselectAll() {
+    this.headers?.removeClass('child-selected').removeClass('is-selected');
   },
 
   /**

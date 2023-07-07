@@ -11,7 +11,8 @@ import {
   isValidDisplayMode,
   MODULE_NAV_DISPLAY_MODES,
   SWITCHER_ICON_HTML,
-  setDisplayMode
+  setDisplayMode,
+  configureNavItemTooltip
 } from './module-nav.common';
 
 // Settings and Options
@@ -19,7 +20,10 @@ const COMPONENT_NAME = 'modulenavswitcher';
 
 const MODULE_NAV_SWITCHER_DEFAULTS = {
   displayMode: MODULE_NAV_DISPLAY_MODES[0],
+  generate: true,
   icon: () => SWITCHER_ICON_HTML,
+  moduleButtonText: 'Standard Module',
+  roleDropdownLabel: 'Roles',
   roles: []
 };
 
@@ -48,9 +52,34 @@ ModuleNavSwitcher.prototype = {
     return this.accordionEl ? $(this.accordionEl).data('accordion') : undefined;
   },
 
+  /** Reference to the Module Nav container element, if present */
+  get containerEl() {
+    return this.element.parents('.module-nav-container')[0];
+  },
+
+  /** Reference to the Module Button container element, if present */
+  get moduleButtonContainerEl() {
+    return this.element[0].querySelector('.module-nav-section.module-btn');
+  },
+
+  /** Reference to the Module Button element, if present */
+  get moduleButtonEl() {
+    return this.moduleButtonContainerEl.querySelector('button');
+  },
+
   /** Reference to the Module Button API, if present */
   get moduleButtonAPI() {
     return this.moduleButtonEl ? $(this.moduleButtonEl).data('button') : undefined;
+  },
+
+  /** Reference to the Role Dropdown container element, if present */
+  get roleDropdownContainerEl() {
+    return this.element[0].querySelector('.module-nav-section.role-dropdown');
+  },
+
+  /** Reference to the Role Dropdown element, if present */
+  get roleDropdownEl() {
+    return this.element[0].querySelector('.dropdown');
   },
 
   /** Reference to the Module Switcher Dropdown API, if present */
@@ -104,13 +133,11 @@ ModuleNavSwitcher.prototype = {
       const key = e.key;
 
       if (key === 'ArrowUp') {
-        // console.info('navigate to Module Nav Settings component');
         this.accordionAPI?.prevHeader(this.element);
         return;
       }
 
       if (key === 'ArrowDown') {
-        // console.info('navigate to first accordion item');
         this.accordionAPI?.nextHeader(this.element);
       }
     });
@@ -122,27 +149,25 @@ ModuleNavSwitcher.prototype = {
    * Draws important UI elements if they aren't found
    */
   renderChildComponents() {
-    this.containerEl = this.element.parents('.module-nav-container')[0];
+    this.renderModuleButton();
+    this.renderRoleDropdown();
+  },
 
-    // Module Button
-    this.moduleButtonContainerEl = this.element[0].querySelector('.module-nav-section.module-btn');
-    this.moduleButtonEl = this.element[0].querySelector('.module-btn button');
-    if (!this.moduleButtonContainerEl || !this.moduleButtonEl) {
-      this.element[0].insertAdjacentHTML('afterbegin', buttonTemplate());
-      this.moduleButtonContainerEl = this.element[0].querySelector('.module-nav-section.module-btn');
-      this.moduleButtonEl = this.moduleButtonContainerEl.querySelector('button');
+  renderModuleButton() {
+    if (this.settings.generate && (!this.moduleButtonContainerEl || !this.moduleButtonEl)) {
+      this.element[0].insertAdjacentHTML('afterbegin', buttonTemplate(this.settings.moduleButtonText));
     }
-    $(this.moduleButtonEl).button({
-      ripple: false
-    });
+    if (this.moduleButtonEl) {
+      $(this.moduleButtonEl).button({
+        ripple: false
+      });
+      configureNavItemTooltip(this.element, this.settings.displayMode, this.moduleButtonEl);
+    }
+  },
 
-    // Dropdown for Role Switcher
-    this.roleDropdownContainerEl = this.element[0].querySelector('.module-nav-section.role-dropdown');
-    this.roleDropdownEl = $(this.roleDropdownContainerEl).find('.dropdown');
-    if (!this.roleDropdownContainerEl || !this.roleDropdownEl) {
-      this.element[0].insertAdjacentHTML('beforeend', dropdownTemplate());
-      this.roleDropdownContainerEl = this.element[0].querySelector('.module-nav-section.role-dropdown');
-      this.roleDropdownEl = $(this.roleDropdownContainerEl).find('.dropdown');
+  renderRoleDropdown() {
+    if (this.settings.generate && (!this.roleDropdownContainerEl || !this.roleDropdownEl)) {
+      this.element[0].insertAdjacentHTML('beforeend', dropdownTemplate(this.settings.roleDropdownLabel));
     }
     if (!$(this.roleDropdownEl).find('option').length) {
       this.renderDropdownOptions();
@@ -210,7 +235,7 @@ ModuleNavSwitcher.prototype = {
     if (!Array.isArray(val) || !this.roleDropdownEl) return;
 
     let newRoles = '';
-    this.roleDropdownEl.innerHTML = '';
+    if (this.roleDropdownEl) this.roleDropdownEl.innerHTML = '';
 
     if (val.length) {
       val.forEach((entry) => {
@@ -219,9 +244,20 @@ ModuleNavSwitcher.prototype = {
     }
 
     if (newRoles.length) {
-      this.roleDropdownEl.insertAdjacentHTML('afterbegin', newRoles);
+      this.roleDropdownEl?.insertAdjacentHTML('afterbegin', newRoles);
       if (doUpdate) $(this.roleDropdownEl).updated();
     }
+  },
+
+  /**
+   * Toggles the Module Button's focus state
+   * @param {boolean} [doFocus] force the focus state
+   */
+  toggleModuleButtonFocus(doFocus) {
+    if (!this.moduleButtonEl) return;
+    const currentlyHasFocus = document.activeElement?.isEqualNode(this.moduleButtonEl) || this.moduleButtonEl?.classList.contains('is-focused');
+    const trueDoFocus = typeof doFocus === 'boolean' ? doFocus : !currentlyHasFocus;
+    this.moduleButtonEl.classList[trueDoFocus ? 'add' : 'remove']('is-focused');
   },
 
   /**
@@ -243,18 +279,14 @@ ModuleNavSwitcher.prototype = {
    * @returns {object} The Component prototype, useful for chaining.
    */
   teardown() {
-    this.element.off(`updated.${COMPONENT_NAME}`);
+    this.element.off(`updated.${COMPONENT_NAME} keydown.${COMPONENT_NAME}`);
 
     if (this.moduleButtonEl) {
       $(this.moduleButtonEl).data('button')?.destroy();
-      this.moduleButtonEl = null;
-      this.moduleButtonContainerEl = null;
     }
 
     if (this.roleDropdownEl) {
       $(this.roleDropdownEl).data('dropdown')?.destroy();
-      this.roleDropdownEl = null;
-      this.roleDropdownContainerEl = null;
     }
 
     return this;

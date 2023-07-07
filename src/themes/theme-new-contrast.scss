@@ -526,6 +526,38 @@ $accordion-filtered-text-color: $ids-color-palette-slate-60;
 $application-menu-border-color: $ids-color-palette-slate-40;
 $application-menu-trigger-icon-fill-color: $ids-color-palette-slate-30;
 
+// Module Nav (App menu alternative)
+$module-nav-bg-color: $ids-color-palette-slate-20;
+$module-nav-detail-bg-color: $ids-color-palette-slate-30;
+$module-nav-separator-color: $ids-color-palette-slate-30;
+$module-nav-text-color: $ids-color-palette-slate-70;
+
+// Module Nav Input Field (Search/Role Dropdown)
+$module-nav-input-bg-color: $ids-color-palette-white;
+$module-nav-input-border-color: $ids-color-palette-slate-30;
+$module-nav-input-text-color: $ids-color-palette-slate-70;
+
+// Module Nav Item (Accordion Header/Menu Button)
+$module-nav-item-text-color: $ids-color-palette-slate-90;
+$module-nav-item-hover-bg-color: $ids-color-palette-slate-30;
+$module-nav-item-hover-text-color: $ids-color-palette-slate-100;
+$module-nav-item-selected-bg-color: $ids-color-palette-azure-20;
+$module-nav-item-selected-text-color: $ids-color-palette-azure-100;
+
+// Module Nav Switcher (Role Dropdown + Button)
+$module-nav-switcher-dropdown-item-focus-bg-color: $ids-color-palette-slate-30;
+$module-nav-switcher-dropdown-item-text-color: $ids-color-palette-slate-70;
+
+// Module Nav Search (Input Field)
+$module-nav-search-input-text-color: $ids-color-palette-slate-90;
+$module-nav-search-input-focused-text-color: $ids-color-palette-slate-100;
+$module-nav-search-input-placeholder-text-color: $ids-color-palette-slate-100;
+$module-nav-search-input-focused-placeholder-text-color: $ids-color-palette-slate-50;
+
+// Module Nav Settings Menu (Accordion Header + Popupmenu)
+$module-nav-settings-menu-item-text-color: $ids-color-palette-slate-70;
+$module-nav-settings-menu-separator-color: $ids-color-palette-slate-20;
+
 // Contextual Action Panel
 $contextual-panel-bg: $ids-color-palette-slate-10;
 $contextual-panel-border-color: $ids-color-palette-slate-50;
