@@ -385,9 +385,9 @@ Homepage.prototype = {
         });
     } else {
       cards.attr('draggable', false);
-      cards.css('cursor', 'auto');
       cards.children('.card-remove').remove();
       cards.off('mouseenter.card mouseleave.card dragstart.card dragenter.card dragend.card');
+      cards.not('.card-list .card').css('cursor', 'auto');
     }
   },
 
@@ -525,13 +525,20 @@ Homepage.prototype = {
    * @returns {void}
    */
   setBlocks() {
-    const cards = this.element.find('.card, .widget, .small-widget');
+    const cards = this.element.find('.card, .widget, .small-widget').not('.card-list .card');
     this.blocks = [];
 
     for (let i = 0, l = cards.length; i < l; i++) {
       const card = $(cards[i]);
-      const h = card.hasClass('double-height') ? 2 : 1;
+      let h = card.hasClass('double-height') ? 2 : 1;
       let w;
+
+      if (card.hasClass('auto-height')) {
+        const height = this.settings.widgetHeight + this.settings.gutterSize;
+        if (card.height() > height * h) {
+          h = Math.ceil(card.height() / height);
+        }
+      }
 
       if (card.hasClass('sextuple-width')) {
         w = 6;
@@ -680,7 +687,6 @@ Homepage.prototype = {
       // Set positions
       const box = self.settings.widgetWidth + self.settings.gutterSize;
       const totalWidth = box * self.columns;
-
       const left = Locale.isRTL() ? totalWidth - ((box * block.w) + (box * available.col)) : box * available.col;// eslint-disable-line
       const top = (self.settings.widgetHeight + self.settings.gutterSize) * available.row;
       const pos = { left, top };

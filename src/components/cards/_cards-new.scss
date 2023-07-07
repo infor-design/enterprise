@@ -35,6 +35,18 @@
     }
   }
 
+  .card-buttonset {
+    .card-content-action {
+      button.btn-actions:hover {
+        background-color: $button-color-tertiary-hover-background-new;
+
+        .icon {
+          color: $button-color-tertiary-hover-font-new;
+        }
+      }
+    }
+  }
+
   .is-scrolling {
     position: relative;
 
@@ -95,12 +107,6 @@
   .btn-actions.is-open,
   .btn-actions.has-open-tooltip {
     opacity: 1 !important;
-  }
-
-  &.border-less {
-    background: none;
-    border-color: transparent;
-    box-shadow: none;
   }
 
   &.is-empty {
@@ -252,7 +258,7 @@
     border-top: 1px solid $listview-border-color;
   }
 
-  .listview li:first-child {
+  .listview:not(.card-list) li:first-child {
     border-top: 1px solid $listview-border-color;
   }
 

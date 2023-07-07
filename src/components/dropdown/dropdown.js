@@ -205,6 +205,7 @@ Dropdown.prototype = {
 
     this.timer = null;
     this.filterTerm = '';
+    this.keydownFlag = false;
 
     if (!orgId) {
       orgId = utils.uniqueId(this.element, 'dropdown');
@@ -1577,6 +1578,7 @@ Dropdown.prototype = {
           return true;
         }
         this.searchKeyMode = false;
+        this.keydownFlag = true;
 
         if (selectedIndex > 0) {
           next = $(options[selectedIndex - 1]);
@@ -1604,6 +1606,7 @@ Dropdown.prototype = {
           return true;
         }
         this.searchKeyMode = false;
+        this.keydownFlag = true;
 
         if (selectedIndex < options.length - 1) {
           next = $(options[selectedIndex + 1]);
@@ -2178,8 +2181,13 @@ Dropdown.prototype = {
         e.stopPropagation();
       })
       .on('mouseenter.list', 'li', function () {
+        // Prevents from triggering with keydown simulatenously which causes jump issues
+        if (self.keydownFlag) {
+          self.keydownFlag = false;
+          return;
+        }
         self.highlightOption($(this), true);
-      });
+      });      
 
     if (this.hasTooltips) {
       function clearTimer() { //eslint-disable-line
