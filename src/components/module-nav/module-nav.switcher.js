@@ -11,7 +11,8 @@ import {
   isValidDisplayMode,
   MODULE_NAV_DISPLAY_MODES,
   SWITCHER_ICON_HTML,
-  setDisplayMode
+  setDisplayMode,
+  configureNavItemTooltip
 } from './module-nav.common';
 
 // Settings and Options
@@ -132,13 +133,11 @@ ModuleNavSwitcher.prototype = {
       const key = e.key;
 
       if (key === 'ArrowUp') {
-        // console.info('navigate to Module Nav Settings component');
         this.accordionAPI?.prevHeader(this.element);
         return;
       }
 
       if (key === 'ArrowDown') {
-        // console.info('navigate to first accordion item');
         this.accordionAPI?.nextHeader(this.element);
       }
     });
@@ -162,6 +161,7 @@ ModuleNavSwitcher.prototype = {
       $(this.moduleButtonEl).button({
         ripple: false
       });
+      configureNavItemTooltip(this.element, this.settings.displayMode, this.moduleButtonEl);
     }
   },
 
