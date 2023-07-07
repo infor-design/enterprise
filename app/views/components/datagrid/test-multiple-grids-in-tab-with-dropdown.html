@@ -145,39 +145,39 @@
     data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: '123.99', status: 'OK', orderDate: null, multiDropDown: 'R', action: 'On Hold'});
 
     // Define Columns for the Grid - Top grid in Top Bottom tab
-    columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
-    columns.push({ id: 'productId', name: 'Product Id', field: 'productId', filterType: 'text', formatter: Formatters.Readonly});
-    columns.push({ id: 'productName', name: 'Product Name', field: 'productName', filterType: 'text', formatter: Formatters.Hyperlink});
+    columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center'});
+    columns.push({ id: 'productId', name: 'Product Id', field: 'productId', filterType: 'text', formatter: Soho.Formatters.Readonly});
+    columns.push({ id: 'productName', name: 'Product Name', field: 'productName', filterType: 'text', formatter: Soho.Formatters.Hyperlink});
     columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', filterType: 'text'});
     columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', filterType: 'integer'});
-    columns.push({ id: 'price', name: 'Price', field: 'price', filterType: 'text', formatter: Formatters.Decimal});
-    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', filterType: 'text', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
-    columns.push({ id: 'status', name: 'Status', field: 'status', filterType: 'text', formatter: Formatters.Text});
+    columns.push({ id: 'price', name: 'Price', field: 'price', filterType: 'text', formatter: Soho.Formatters.Decimal});
+    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', filterType: 'text', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy'});
+    columns.push({ id: 'status', name: 'Status', field: 'status', filterType: 'text', formatter: Soho.Formatters.Text});
     columns.push({ id: 'action', name: 'Action Item', field: 'action', filterType: 'text'});
 
     // Define Columns2 for the Grid - Bottom grid in Top Bottom tab
-    columns2.push({ id: 'selectionCheckbox', width: 50, sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
-    columns2.push({ id: 'productId', name: 'Product Id', width: 50, field: 'productId', filterType: 'text', formatter: Formatters.Readonly});
-    columns2.push({ id: 'productName', name: 'Product Name', width: 50, field: 'productName', filterType: 'text', formatter: Formatters.Hyperlink});
+    columns2.push({ id: 'selectionCheckbox', width: 50, sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center'});
+    columns2.push({ id: 'productId', name: 'Product Id', width: 50, field: 'productId', filterType: 'text', formatter: Soho.Formatters.Readonly});
+    columns2.push({ id: 'productName', name: 'Product Name', width: 50, field: 'productName', filterType: 'text', formatter: Soho.Formatters.Hyperlink});
     columns2.push({ id: 'quantity', name: 'Quantity', width: 50, field: 'quantity', filterType: 'integer'});
-    columns2.push({ id: 'price', name: 'Price', field: 'price', filterType: 'text', formatter: Formatters.Decimal});
-    columns2.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', filterType: 'text', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
-    columns2.push({ id: 'status', name: 'Status', field: 'status', filterType: 'text', formatter: Formatters.Text});
-    columns2.push({ id: 'multiDropDown', name: 'Multiple Selection', width: 50, field: 'multiDropDown', sortable: false, align: 'center', textOverflow: 'ellipsis', filterType: 'multiselect', formatter: Formatters.Dropdown, editor: Editors.Dropdown, editorOptions: { showSelectAll: true },
+    columns2.push({ id: 'price', name: 'Price', field: 'price', filterType: 'text', formatter: Soho.Formatters.Decimal});
+    columns2.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', filterType: 'text', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy'});
+    columns2.push({ id: 'status', name: 'Status', field: 'status', filterType: 'text', formatter: Soho.Formatters.Text});
+    columns2.push({ id: 'multiDropDown', name: 'Multiple Selection', width: 50, field: 'multiDropDown', sortable: false, align: 'center', textOverflow: 'ellipsis', filterType: 'multiselect', formatter: Soho.Formatters.Dropdown, editor: Soho.Editors.Dropdown, editorOptions: { showSelectAll: true },
       filterRowEditorOptions: [{ label: 'Not Entered', value: 'Not Entered' }, { label: 'Active', value: 'A' }, { label: 'Ready For Completion', value: 'R' }, { label: 'Draft', value: 'D' }, { label: 'No longer meets eligibility requirements', value: 'X' } ],
       options: [{ label: 'Not Entered', value: 'Not Entered' }, { label: 'Active', value: 'A' }, { label: 'Ready For Completion', value: 'R' }, { label: 'Draft', value: 'D' }, { label: 'No longer meets eligibility requirements', value: 'X' } ]});
 
     // Define Columns for the Grid - only grid in Single Tab
-    columns3.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
-    columns3.push({ id: 'productId', name: 'Product Id', field: 'productId', filterType: 'text', formatter: Formatters.Readonly});
-    columns3.push({ id: 'productName', name: 'Product Name', field: 'productName', filterType: 'text', formatter: Formatters.Hyperlink});
+    columns3.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center'});
+    columns3.push({ id: 'productId', name: 'Product Id', field: 'productId', filterType: 'text', formatter: Soho.Formatters.Readonly});
+    columns3.push({ id: 'productName', name: 'Product Name', field: 'productName', filterType: 'text', formatter: Soho.Formatters.Hyperlink});
     columns3.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', filterType: 'text'});
     columns3.push({ id: 'quantity', name: 'Quantity', field: 'quantity', filterType: 'integer'});
-    columns3.push({ id: 'price', name: 'Price', field: 'price', filterType: 'text', formatter: Formatters.Decimal});
-    columns3.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', filterType: 'text', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
-    columns3.push({ id: 'status', name: 'Status', field: 'status', filterType: 'text', formatter: Formatters.Text});
+    columns3.push({ id: 'price', name: 'Price', field: 'price', filterType: 'text', formatter: Soho.Formatters.Decimal});
+    columns3.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', filterType: 'text', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy'});
+    columns3.push({ id: 'status', name: 'Status', field: 'status', filterType: 'text', formatter: Soho.Formatters.Text});
     columns3.push({ id: 'action', name: 'Action Item', field: 'action', filterType: 'text'});
-    columns3.push({ id: 'multiDropDown', name: 'Multiple Selection', width: 50, field: 'multiDropDown', sortable: false, align: 'center', textOverflow: 'ellipsis', filterType: 'multiselect', formatter: Formatters.Dropdown, editor: Editors.Dropdown, editorOptions: { showSelectAll: true },
+    columns3.push({ id: 'multiDropDown', name: 'Multiple Selection', width: 50, field: 'multiDropDown', sortable: false, align: 'center', textOverflow: 'ellipsis', filterType: 'multiselect', formatter: Soho.Formatters.Dropdown, editor: Soho.Editors.Dropdown, editorOptions: { showSelectAll: true },
       filterRowEditorOptions: [{ label: 'Not Entered', value: 'Not Entered' }, { label: 'Active', value: 'A' }, { label: 'Ready For Completion', value: 'R' }, { label: 'Draft', value: 'D' }, { label: 'No longer meets eligibility requirements', value: 'X' } ],
       options: [{ label: 'Not Entered', value: 'Not Entered' }, { label: 'Active', value: 'A' }, { label: 'Ready For Completion', value: 'R' }, { label: 'Draft', value: 'D' }, { label: 'No longer meets eligibility requirements', value: 'X' } ]});
 
