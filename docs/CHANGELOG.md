@@ -44,6 +44,19 @@
 - `[Tooltip]` Changed response method in beforeShow to allow passing true instead of content explicitly ([#7594](https://github.com/infor-design/enterprise/issues/7594))
 - `[Toast]` Changed background color in dark mode for better contrast. ([#7648](https://github.com/infor-design/enterprise/issues/7648))
 
+## v4.84.3 Fixes
+
+- `[Applicationmenu]` Fixed bottom border color cannot be seen properly. ([#7565](https://github.com/infor-design/enterprise/issues/7565))
+- `[ContextualActionPanel/Modal]` Fixed overflow issues on mobile view. ([#7585](https://github.com/infor-design/enterprise/issues/7585))
+- `[Colors]` Added dark and contrast mode for app nav. ([#7624](https://github.com/infor-design/enterprise/issues/7624))
+- `[Module Nav]` Added new settings for configuration of accordion, and auto-initialization of child components. ([NG#1477](https://github.com/infor-design/enterprise-ng/issues/1477))
+
+## v4.84.2 Fixes
+
+- `[Module Nav]` Added more fixes to support the angular wrapper. ([#7386](https://github.com/infor-design/enterprise/issues/7386))
+- `[Card]` Fixed widget size for subtitle examples. ([#7580](https://github.com/infor-design/enterprise/issues/7580))
+- `[Homepage]` Fixed invisible edit options and vertical dragging/resizing. ([#7579](https://github.com/infor-design/enterprise/issues/7579))
+
 ## v4.84.1
 
 ## v4.84.1 Fixes
