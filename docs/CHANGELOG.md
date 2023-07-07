@@ -5,6 +5,7 @@
 - `[Applicationmenu]` Fixed bottom border color cannot be seen properly. ([#7565](https://github.com/infor-design/enterprise/issues/7565))
 - `[ContextualActionPanel/Modal]` Fixed overflow issues on mobile view. ([#7585](https://github.com/infor-design/enterprise/issues/7585))
 - `[Colors]` Added dark and contrast mode for app nav. ([#7624](https://github.com/infor-design/enterprise/issues/7624))
+- `[Module Nav]` Added new settings for configuration of accordion, and auto-initialization of child components. ([NG#1477](https://github.com/infor-design/enterprise-ng/issues/1477))
 
 ## v4.84.2 Fixes
 
