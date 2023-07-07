@@ -19,6 +19,7 @@
 - `[Datagrid]` Fixed on incorrect row updates on adding a new row to the next page. ([#7486](https://github.com/infor-design/enterprise/issues/7486))
 - `[Datagrid]` Fixed disabled filter columns in datagrid. ([#7467](https://github.com/infor-design/enterprise/issues/7467))
 - `[Datagrid]` Fixed a bug where the select all checkbox was not clickable. ([#7499](https://github.com/infor-design/enterprise/issues/7499))
+- `[Datagrid]` Fixed a bug in datepicker filter icon's hover state and alignment. ([#7562](https://github.com/infor-design/enterprise/issues/7562))
 - `[Datagrid]` Fixed a bug where disabled buttons in cells were hoverable. ([#7611](https://github.com/infor-design/enterprise/issues/7611))
 - `[Dropdown]` Fixed a bug in dropdown where mouseenter and keydown triggers simulatenously. ([#7464](https://github.com/infor-design/enterprise/issues/7464))
 - `[Editor]` Fixed an xss issue in editor (iframes not permitted). ([#7590](https://github.com/infor-design/enterprise/issues/7590))
