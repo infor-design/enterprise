@@ -298,8 +298,8 @@ Personalize.prototype = {
     colors.tabColor = colors.base;
     colors.tabVerticalColor = colors.base;
     colors.headerTabBorder = 'transparent';
-    colors.tabTextColor = '#2f2f32';
-    colors.tabSelectedTextColor = '#2f2f32';
+    colors.tabTextColor = '#161618';
+    colors.tabSelectedTextColor = '#161618';
     colors.tabVerticalSelectedColor = colors.base;
 
     const isAlabaster = colors.header === '#ffffff';
@@ -332,20 +332,20 @@ Personalize.prototype = {
       colors.moduleTabsSelectedTextColor = colors.contrast;
 
       // Alabaster New Design
-      colors.headerTabBorder = '#b7b7ba';
-      colors.tabFocusIndicator = '#2f2f32';
+      colors.headerTabBorder = '#C5C5C9';
+      colors.tabFocusIndicator = '#161618';
       colors.tabFocusBoxShadow = 'none';
-      colors.tabHoverColor = '#d7d7d8';
+      colors.tabHoverColor = '#E0E0E1';
       colors.tabTextWeight = '400';
       colors.tabTextSelectedWeight = '700';
       colors.tabSelectedColor = '#ffffff';
       colors.tabHeaderColor = '#ffffff';
-      colors.tabFocusColor = '#2f2f32';
+      colors.tabFocusColor = '#161618';
       colors.tabBorderColor = '#ffffff';
-      colors.tabColor = '#efeff0';
-      colors.tabSelectedTextColor = '#2f2f32';
+      colors.tabColor = '#FAFAFA';
+      colors.tabSelectedTextColor = '#161618';
 
-      colors.tabVerticalColor = '#efeff0';
+      colors.tabVerticalColor = '#FAFAFA';
       colors.tabVerticalSelectedColor = '#ffffff';
 
       if (isNewDark) {
@@ -372,15 +372,15 @@ Personalize.prototype = {
 
         // Alabaster New Design
         colors.tabFocusIndicator = '#ffffff';
-        colors.tabSelectedColor = '#56565b';
-        colors.tabHeaderColor = '#56565b';
-        colors.tabBorderColor = '#56565b';
-        colors.tabColor = '#47474c';
-        colors.tabHoverColor = '#3e3e42';
+        colors.tabSelectedColor = '#525257';
+        colors.tabHeaderColor = '#525257';
+        colors.tabBorderColor = '#525257';
+        colors.tabColor = '#3B3B3F';
+        colors.tabHoverColor = '#28282A';
         colors.tabSelectedTextColor = '#ffffff';
 
-        colors.tabVerticalColor = '#56565b';
-        colors.tabVerticalSelectedColor = '#47474c';
+        colors.tabVerticalColor = '#525257';
+        colors.tabVerticalSelectedColor = '#3B3B3F';
       }
 
       if (isClassicDark) {
@@ -409,7 +409,7 @@ Personalize.prototype = {
         //  colors.tabSelectedColor = '#47474c';
         colors.tabBorderColor = '#ffffff';
         //  colors.tabColor = '#56565b';
-        colors.tabHoverColor = '#d7d7d8';
+        colors.tabHoverColor = '#E0E0E1';
       }
     }
 
