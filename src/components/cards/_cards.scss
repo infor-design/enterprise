@@ -101,6 +101,12 @@ $card-header-section: '.card-header-section', '.widget-header-section';
   position: relative;
   width: 100%;
 
+  &.border-less {
+    background: none;
+    border-color: transparent;
+    box-shadow: none;
+  }
+
   &.compact-bottom {
     margin-bottom: 8px;
   }
@@ -124,6 +130,7 @@ $card-header-section: '.card-header-section', '.widget-header-section';
       div {
         &.card-content-status {
           margin-left: -4px;
+          margin-bottom: 5px;
           color: $card-content-status-success-color;
 
           .icon {
@@ -183,6 +190,7 @@ $card-header-section: '.card-header-section', '.widget-header-section';
         &.card-content-sub {
           color: $card-content-sub-color;
           margin-top: 2px;
+          font-size: 1.6rem;
 
           .hyperlink {
             padding: 4px 3px;
@@ -192,6 +200,8 @@ $card-header-section: '.card-header-section', '.widget-header-section';
     }
 
     .card-buttonset {
+      display: flex;
+
       .card-content-action {
         .btn {
           margin-right: 8px;
@@ -342,6 +352,11 @@ $card-header-section: '.card-header-section', '.widget-header-section';
 
         .btn-icon {
           left: 10px;
+          border-radius: 50%;
+
+          &:hover {
+            background-color: transparent;
+          }
         }
       }
     }
@@ -677,6 +692,7 @@ button,
 a {
   &.btn.card {
     min-height: 50px;
+    height: 50px;
 
     &:focus {
       &:not(.hide-focus) {

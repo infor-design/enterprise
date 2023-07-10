@@ -13,6 +13,10 @@
     color: $color !important;
   }
 
+  .#{$name}-border-color {
+    border-color: $color !important;
+  }
+
   //Classes for Tags
   .#{$name}.tag {
     background: nth($color-vars, $i);
@@ -33,7 +37,7 @@ html.theme-new-contrast .primary-bg-color {
 }
 
 html.theme-new-dark .primary-bg-color {
-  background: #606066;
+  background: $ids-color-palette-slate-60;
 }
 
 html.theme-classic-light .primary-bg-color {

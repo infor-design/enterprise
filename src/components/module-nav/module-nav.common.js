@@ -85,3 +85,21 @@ export const setDisplayMode = (val, el) => {
   el.classList.remove('mode-collapsed', 'mode-expanded');
   if (isValidDisplayMode(val) && val) el.classList.add(`mode-${val}`);
 };
+
+/**
+ * Establishes/destroys a Tooltip attached to a Module Nav Item
+ * @param {HTMLElement} el target element to receive the tooltip
+ * @param {string} displayMode current display mode
+ * @param {HTMLElement} textContentEl target element to use for detection of Tooltip text
+ */
+export const configureNavItemTooltip = (el, displayMode, textContentEl) => {
+  if (displayMode === 'collapsed') {
+    $(el).tooltip({
+      placementOpts: { x: 16 },
+      placement: 'right',
+      title: (textContentEl || el).textContent.trim()
+    });
+  } else {
+    $(el).data('tooltip')?.destroy();
+  }
+};

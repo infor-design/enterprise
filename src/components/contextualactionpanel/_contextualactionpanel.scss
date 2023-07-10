@@ -179,6 +179,14 @@
   }
 
   .toolbar-section {
+    &.buttonset .btn-menu.is-open {
+      color: $button-color-tertiary-initial-font;
+
+      .icon {
+        color: $button-color-tertiary-initial-font;
+      }
+    }
+
     &.buttonset,
     &.search {
       &:last-child {
