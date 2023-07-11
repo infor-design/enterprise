@@ -1303,7 +1303,7 @@ Column.prototype = {
       });
     }
 
-    if (self.settings.isStacked) {
+    if (self.settings.isStacked && self.element.find('.x.axis').length > 0) {
       const $tick = $('.tick');
       const $xAxisGroup = $('.x.axis > g');
       const $seriesGroup = $('.series-group.g');
