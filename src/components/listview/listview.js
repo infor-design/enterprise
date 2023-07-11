@@ -167,6 +167,10 @@ ListView.prototype = {
       this.element.removeAttr('data-pagesize');
     }
 
+    if (this.element.hasClass('card-list')) {
+      this.element.find('li .card').selectable();
+    }
+
     // Convert a DOM-based list into a stored dataset (legacy)
     if (!this.settings.dataset.length) {
       if (this.element.is('ul') && this.element.children('li').length) {
@@ -1031,8 +1035,16 @@ ListView.prototype = {
 
     // Deselect all other items, when items
     if (this.settings.selectable !== 'multiple' && this.settings.selectable !== 'mixed') {
-      li.parent().children().removeAttr('aria-selected');
-      li.parent().find('.is-selected').removeClass('is-selected');
+      let children = li.parent().children();
+      let selected = li.parent().find('.is-selected');
+
+      if (this.element.hasClass('card-list')) {
+        children = children.not('.card');
+        selected = selected.not('.card');
+      }
+
+      children.removeAttr('aria-selected');
+      selected.removeClass('is-selected');
       self.selectedItems[0] = $(this);
     }
 

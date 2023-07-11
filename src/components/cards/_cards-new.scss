@@ -2,9 +2,9 @@
 .small-widget,
 .widget {
   border-radius: 8px;
-  box-shadow: 0 0 4px $cardlist-box-shadow-color;
-  height: 368px;
-  min-height: 368px;
+  box-shadow: 0 0 4px $cardlist-box-shadow-color-hover;
+  height: 373px;
+  min-height: 373px;
 
   &.bordered {
     border: none;
@@ -31,6 +31,18 @@
     .listview-search.is-scrolling {
       .searchfield-wrapper {
         z-index: 10;
+      }
+    }
+  }
+
+  .card-buttonset {
+    .card-content-action {
+      button.btn-actions:hover {
+        background-color: $button-color-tertiary-hover-background-new;
+
+        .icon {
+          color: $button-color-tertiary-hover-font-new;
+        }
       }
     }
   }
@@ -95,12 +107,6 @@
   .btn-actions.is-open,
   .btn-actions.has-open-tooltip {
     opacity: 1 !important;
-  }
-
-  &.border-less {
-    background: none;
-    border-color: transparent;
-    box-shadow: none;
   }
 
   &.is-empty {
@@ -252,7 +258,7 @@
     border-top: 1px solid $listview-border-color;
   }
 
-  .listview li:first-child {
+  .listview:not(.card-list) li:first-child {
     border-top: 1px solid $listview-border-color;
   }
 
@@ -276,6 +282,12 @@
   .listview {
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
+    overflow: hidden;
+    height: auto;
+
+    ul li:last-child {
+      border-bottom-color: transparent;
+    }
   }
 }
 
