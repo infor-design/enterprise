@@ -11,6 +11,7 @@
 
 - `[Applicationmenu]` Fixed menu items cannot be seen properly when using alabaster. ([#7609](https://github.com/infor-design/enterprise/issues/7609))
 - `[Applicationmenu]` Fixed bottom border color cannot be seen properly. ([#7565](https://github.com/infor-design/enterprise/issues/7565))
+- `[Bar]` Fixed a bug where the bottom axis label was cut off. ([#7612](https://github.com/infor-design/enterprise/issues/7612))
 - `[Button]` Adjusted the left and right paddings of the button from `30px` to `32px`. ([#7508](https://github.com/infor-design/enterprise/issues/7508))
 - `[Card]` Fixed widget size for subtitle examples. ([#7580](https://github.com/infor-design/enterprise/issues/7580))
 - `[Card]` Fixed height for card button. ([#7637](https://github.com/infor-design/enterprise/issues/7637))
