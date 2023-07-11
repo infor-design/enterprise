@@ -335,17 +335,17 @@ Personalize.prototype = {
       colors.headerTabBorder = '#C5C5C9';
       colors.tabFocusIndicator = '#161618';
       colors.tabFocusBoxShadow = 'none';
-      colors.tabHoverColor = '#E0E0E1';
+      colors.tabHoverColor = '#C5C5C9';
       colors.tabTextWeight = '400';
       colors.tabTextSelectedWeight = '700';
       colors.tabSelectedColor = '#ffffff';
       colors.tabHeaderColor = '#ffffff';
       colors.tabFocusColor = '#161618';
       colors.tabBorderColor = '#ffffff';
-      colors.tabColor = '#FAFAFA';
+      colors.tabColor = '#E0E0E1';
       colors.tabSelectedTextColor = '#161618';
 
-      colors.tabVerticalColor = '#FAFAFA';
+      colors.tabVerticalColor = '#E0E0E1';
       colors.tabVerticalSelectedColor = '#ffffff';
 
       if (isNewDark) {
@@ -371,6 +371,7 @@ Personalize.prototype = {
         colors.moduleTabsSelectedTextColor = '#ffffff';
 
         // Alabaster New Design
+        colors.headerTabBorder = '#8E8E95';
         colors.tabFocusIndicator = '#ffffff';
         colors.tabSelectedColor = '#525257';
         colors.tabHeaderColor = '#525257';
@@ -409,7 +410,7 @@ Personalize.prototype = {
         //  colors.tabSelectedColor = '#47474c';
         colors.tabBorderColor = '#ffffff';
         //  colors.tabColor = '#56565b';
-        colors.tabHoverColor = '#E0E0E1';
+        colors.tabHoverColor = '#C5C5C9';
       }
     }
 

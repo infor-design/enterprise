@@ -238,16 +238,11 @@ a.is-personalizable svg.ripple-effect {
 }
 
 .tab-container.module-tabs.is-personalizable {
-  border-top: 1px solid ${colors.tabBorderColor} !important;
-  border-bottom: 1px solid ${colors.tabBorderColor} !important;
+  border-top: 1px solid ${colors.tabBorderColor};
+  border-bottom: 1px solid ${colors.tabBorderColor};
 }
 
 .tab-container.module-tabs .tab-focus-indicator.is-visible {
-  border-color: ${colors.tabFocusIndicator} !important;
-  box-shadow: ${colors.tabFocusBoxShadow} !important;
-}
-
-.tab-container.vertical.is-personalizable > .tab-list-container > .tab-focus-indicator.is-selected.is-visible {
   border-color: ${colors.tabFocusIndicator} !important;
   box-shadow: ${colors.tabFocusBoxShadow} !important;
 }
@@ -303,17 +298,23 @@ a.is-personalizable svg.ripple-effect {
   background-color: ${colors.tabVerticalSelectedColor} !important;
 }
 
+.tab-container.vertical.is-personalizable > .tab-list-container > .tab-list > .tab a {
+  font-weight: ${colors.tabTextWeight} !important;
+}
+
 .tab-container.vertical.is-personalizable > .tab-list-container > .tab-list > .tab.is-selected a {
   color: ${colors.tabSelectedTextColor} !important;
+  font-weight: ${colors.tabTextSelectedWeight} !important;
 }
 
 .tab-container.vertical.is-personalizable > .tab-list-container > .tab-list > .tab:hover {
   background-color: ${colors.tabHoverColor} !important;
 }
 
+.tab-container.vertical.is-personalizable > .tab-list-container > .tab-focus-indicator.is-selected.is-visible,
 .tab-container.vertical.is-personalizable .tab-focus-indicator.is-visible {
-  border-color: ${colors.base} !important;
-  box-shadow: 0 0 4px 3px rgba(${baseColorObj.r}, ${baseColorObj.g}, ${baseColorObj.b}, 0.3);
+  border-color: ${colors.tabFocusIndicator} !important;
+  box-shadow: ${colors.tabFocusBoxShadow} !important;
 }
 
 .builder-header.is-personalizable{
@@ -768,7 +769,8 @@ html[dir='rtl'] .scrollable-flex-header.is-personalizable .breadcrumb.truncated:
   border-right: 1px solid ${colors.hover} !important;
 }
 
-.module-tabs.is-personalizable .tab:hover {
+.module-tabs.is-personalizable .tab:hover, 
+.module-tabs.is-personalizable .tab-more:hover {
   background-color: ${colors.tabHoverColor} !important;
   color: ${colors.contrast};
 }
