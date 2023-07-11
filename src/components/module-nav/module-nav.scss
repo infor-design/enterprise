@@ -223,7 +223,7 @@
   flex-direction: row;
   height: 100%;
   position: relative;
-  z-index: 0;
+  z-index: $module-nav-z-index;
 }
 
 .module-nav-bar {

@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.86.0 Fixes
+
+- `[ModuleNav]` Fixed rounding and zindex issues. ([#7654](https://github.com/infor-design/enterprise/issues/7654))
+
 ## v4.85.0
 
 ## v4.85.0 Features
