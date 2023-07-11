@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.86.0
+
+## v4.86.0 Fixes
+
+- `[Column-Stacked]` Fixed a regression bug where the stacked column chart was not rendering correctly. ([#7644](https://github.com/infor-design/enterprise/issues/7644))
+
 ## v4.85.0
 
 ## v4.85.0 Features
