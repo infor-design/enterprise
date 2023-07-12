@@ -2,13 +2,12 @@
 
 ## v4.86.0
 
-## v4.86.0 Features
-
-- `[Homepage]` In some cases the new background color did not fill all the way in the page. ([#7696](https://github.com/infor-design/enterprise/issues/7696))
-
 ## v4.86.0 Fixes
 
+- `[Column-Stacked]` Fixed a regression bug where the stacked column chart was not rendering correctly. ([#7644](https://github.com/infor-design/enterprise/issues/7644))
+- `[Bar]` Fixed a bug where the bottom axis label was cut off. ([#7612](https://github.com/infor-design/enterprise/issues/7612))
 - `[FileUpload]` Fixed the alignment of the close button and file icon button. ([#7570](https://github.com/infor-design/enterprise/issues/7570))
+- `[Homepage]` In some cases the new background color did not fill all the way in the page. ([#7696](https://github.com/infor-design/enterprise/issues/7696))
 
 ## v4.85.0
 
