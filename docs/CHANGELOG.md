@@ -6,6 +6,10 @@
 
 - `[Homepage]` In some cases the new background color did not fill all the way in the page. ([#7696](https://github.com/infor-design/enterprise/issues/7696))
 
+## v4.86.0 Fixes
+
+- `[Button]` Fixed a bug where submenu icons were not aligned correctly. ([#7626](https://github.com/infor-design/enterprise/issues/7626))
+
 ## v4.85.0
 
 ## v4.85.0 Features
