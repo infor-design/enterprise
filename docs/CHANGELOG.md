@@ -2,6 +2,10 @@
 
 ## v4.86.0
 
+## v4.86.0 Features
+
+- `[Homepage]` In some cases the new background color did not fill all the way in the page. ([#7696](https://github.com/infor-design/enterprise/issues/7696))
+
 ## v4.86.0 Fixes
 
 - `[Bar]` Fixed a bug where the bottom axis label was cut off. ([#7612](https://github.com/infor-design/enterprise/issues/7612))
