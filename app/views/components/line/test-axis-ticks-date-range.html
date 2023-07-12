@@ -135,8 +135,8 @@ var parseDate = d3.timeParse('%m/%d/%Y'),
   });
 
   // Get min and max dates
-  var minDate = (d3.min(d3.values(dates))),
-      maxDate = d3.max(d3.values(dates));
+  var minDate = (d3.min(Object.values(dates))),
+      maxDate = d3.max(Object.values(dates));
 
   // Invoke
   $('#line-example').chart({
