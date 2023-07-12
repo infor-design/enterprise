@@ -235,9 +235,11 @@ ModuleNav.prototype = {
       }
     };
 
-    this.accordionAPI.settings = this.settings.accordionSettings;
-    this.accordionAPI.settings.accordionFocusCallback = navFocusCallback;
-    this.accordionAPI.updated();
+    // Pass along updated settings, including local callback
+    const newSettings = utils.mergeSettings(this.accordionEl, {
+      accordionFocusCallback: navFocusCallback
+    }, this.settings.accordionSettings);
+    this.accordionAPI.updated(newSettings);
 
     // Build tooltips on top-level accordion headers in collapsed mode
     const headers = this.accordionEl.querySelectorAll('.accordion-section > .accordion-header');
