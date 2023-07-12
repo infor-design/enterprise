@@ -6,6 +6,10 @@
 
 - `[Homepage]` In some cases the new background color did not fill all the way in the page. ([#7696](https://github.com/infor-design/enterprise/issues/7696))
 
+## v4.86.0 Fixes
+
+- `[FileUpload]` Fixed the alignment of the close button and file icon button. ([#7570](https://github.com/infor-design/enterprise/issues/7570))
+
 ## v4.85.0
 
 ## v4.85.0 Features
