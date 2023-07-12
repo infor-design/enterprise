@@ -8,7 +8,7 @@
 
 ## v4.86.0 Fixes
 
-- `[Page-Patterns]` In some cases the new background color did not fill all the way in the page. ([#7561](https://github.com/infor-design/enterprise/issues/7561))
+- `[Page-Patterns]` Fixed the width of the search field in page pattern example. ([#7561](https://github.com/infor-design/enterprise/issues/7561))
 
 ## v4.85.0
 
