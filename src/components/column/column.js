@@ -1303,7 +1303,8 @@ Column.prototype = {
       });
     }
 
-    if (self.settings.isStacked) {
+    // This will fix the position of labels on the x axis
+    if (self.settings.isStacked && self.element.find('.x.axis').length > 0) {
       const $tick = $('.tick');
       const $xAxisGroup = $('.x.axis > g');
       const $seriesGroup = $('.series-group.g');
