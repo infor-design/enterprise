@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.84.4 Fixes
+
+- `[Editor]` Fixed an issue where an editor with an initial value containing `<br \>` tags were being seen as dirty when `resetdirty` is called. ([#7483](https://github.com/infor-design/enterprise/issues/7483))
+
 ## v4.84.3 Fixes
 
 - `[Applicationmenu]` Fixed bottom border color cannot be seen properly. ([#7565](https://github.com/infor-design/enterprise/issues/7565))
