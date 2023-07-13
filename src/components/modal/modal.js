@@ -1256,6 +1256,10 @@ Modal.prototype = {
       wrapper[0].style.overflow = 'auto';
     }
 
+    if (calcHeight < this.element.find('.modal-body').height()) {
+      wrapper[0].style.overflow = 'auto';
+    }
+
     const toolbars = this.element.find('.toolbar');
     if (toolbars.length) {
       toolbars.triggerHandler('recalculate-buttons');
