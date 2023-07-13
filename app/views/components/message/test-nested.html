@@ -1,0 +1,84 @@
+<div class="row">
+  <div class="twelve columns">
+    <button id="button-message" class="btn-secondary" type="button" >Show Message Dialogs</button>
+  </div>
+</div>
+
+<script>
+  //Create a dialog on button click
+$('#button-message').on('click', function() {
+  console.log('Creating dialog-message-1');
+  showDialog(
+    'message1',
+    'Message 1',
+    '<p>This is the first message</p>',
+    'Close'
+  );
+
+  console.log('Creating dialog-message-2');
+  showDialog(
+    'message2',
+    'Message 2',
+    '<p>This is the second message</p>',
+    'Close'
+  );
+});
+
+function showDialog(msgId, title, message, buttonText) {
+  $('body').message({
+    title: title,
+    message: message,
+    id: msgId,
+    buttons: [
+      {
+        text: buttonText,
+        click: function(e, modal) {
+          modal.close(undefined, undefined, undefined, msgId);
+        }
+      }
+    ]
+  });
+
+  // This will handle the delay of render in the second modal
+  setTimeout(() => {
+    const data = $(`#${msgId}`).data('modal');
+    attachEventHandlers(msgId, title, data.element);
+  }, 100);}
+
+  //Logging details of the dialog
+  function attachEventHandlers(modalId, modalTitle, modalElement) {
+    modalElement.on('open.' + modalId, function() {
+      toast(modalTitle + ' : open');
+      console.log(modalTitle + ' : open');
+    }).on('beforeclose.' + modalId, function(e) {
+      toast(modalTitle + ' : beforeclose');
+      console.log(modalTitle + ' : beforeclose');
+
+      return true;
+    }).on('close.' + modalId, function() {
+      toast(modalTitle + ' : close');
+      console.log(modalTitle + ' : close');
+    }).on('afterclose.' + modalId, function() {
+      toast(modalTitle + ' : afterclose');
+      console.log(modalTitle + ' : afterclose');
+    }).on('beforedestroy.' + modalId, function() {
+      toast(modalTitle + ' : beforedestroy');
+      console.log(modalTitle + ' : beforedestroy');
+
+      modalElement.off('open.' + modalId)
+        .off('beforeclose.' + modalId)
+        .off('close.' + modalId)
+        .off('afterclose.' + modalId);
+    });
+  }
+
+  //create toast message
+  function toast(message) {
+    $('body').toast({
+      title: '',
+      message: message,
+      timeout: 3000
+    });
+  }
+
+</script>

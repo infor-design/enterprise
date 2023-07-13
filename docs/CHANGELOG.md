@@ -2,15 +2,16 @@
 
 ## v4.86.0
 
-## v4.86.0 Features
-
-- `[Homepage]` In some cases the new background color did not fill all the way in the page. ([#7696](https://github.com/infor-design/enterprise/issues/7696))
-
 ## v4.86.0 Fixes
 
-- `[Column-Stacked]` Fixed a regression bug where the stacked column chart was not rendering correctly. ([#7644](https://github.com/infor-design/enterprise/issues/7644))
 - `[Bar]` Fixed a bug where the bottom axis label was cut off. ([#7612](https://github.com/infor-design/enterprise/issues/7612))
+- `[Bar]` Fixed incorrect legend position on stacked charts. ([#7693](https://github.com/infor-design/enterprise/issues/7693))
+- `[Button]` Fixed a bug where submenu icons were not aligned correctly. ([#7626](https://github.com/infor-design/enterprise/issues/7626))
+- `[Column-Stacked]` Fixed a regression bug where the stacked column chart was not rendering correctly. ([#7644](https://github.com/infor-design/enterprise/issues/7644))
 - `[Datagrid]` Fixed a bug in datagrid where default operator for lookup is not rendered properly. ([#7530](https://github.com/infor-design/enterprise/issues/7530))
+- `[Editor]` Fixed an issue where an editor with an initial value containing `<br \>` tags were being seen as dirty when resetdirty is called. ([#7483](https://github.com/infor-design/enterprise/issues/7483))
+- `[Homepage]` In some cases the new background color did not fill all the way in the page. ([#7696](https://github.com/infor-design/enterprise/issues/7696))
+- `[Page-Patterns]` Fixed the width of the search field in page pattern example. ([#7561](https://github.com/infor-design/enterprise/issues/7561))
 
 ## v4.85.0
 
@@ -21,6 +22,7 @@
 
 ## v4.85.0 Fixes
 
+- `[Accordion]` Updated color style for accordion selected panel. ([#7593](https://github.com/infor-design/enterprise/issues/7593))
 - `[Applicationmenu]` Fixed menu items cannot be seen properly when using alabaster. ([#7609](https://github.com/infor-design/enterprise/issues/7609))
 - `[Applicationmenu]` Fixed bottom border color cannot be seen properly. ([#7565](https://github.com/infor-design/enterprise/issues/7565))
 - `[Button]` Adjusted the left and right paddings of the button from `30px` to `32px`. ([#7508](https://github.com/infor-design/enterprise/issues/7508))
@@ -46,6 +48,7 @@
 - `[Lookup]` Fixed a bug in lookup width not responsive in grid system. ([#7205](https://github.com/infor-design/enterprise/issues/7205))
 - `[MonthView]` Added event triggers for when monthview is expanded and collapsed. ([#7605](https://github.com/infor-design/enterprise/issues/7605))
 - `[Modal]` Fixed icon alignment in the title. ([#7639](https://github.com/infor-design/enterprise/issues/7639))
+- `[Modal]` Added ID check in event triggers. ([#7475](https://github.com/infor-design/enterprise/issues/7475))
 - `[Module Nav]` Added new settings for configuration of accordion, and auto-initialization of child components. ([NG#1477](https://github.com/infor-design/enterprise-ng/issues/1477))
 - `[Module Nav Switcher]` Made compatibility improvements for the Module Nav Switcher NG component. ([NG#1477](https://github.com/infor-design/enterprise-ng/issues/1477))
 - `[Multiselect]` Fixed a bug where the multiselect dropdown icon was overlapping the field. ([#7502](https://github.com/infor-design/enterprise/issues/7502))

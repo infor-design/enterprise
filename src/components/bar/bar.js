@@ -316,6 +316,10 @@ Bar.prototype = {
       h += 30;
     }
 
+    if (s.isStacked) {
+      h -= (legendHeight - 8);
+    }
+
     self.svg = d3.select(this.element[0])
       .append('svg')
       .attr('width', w + (isAxisLabels.atLeastOne ? 20 : 0))
