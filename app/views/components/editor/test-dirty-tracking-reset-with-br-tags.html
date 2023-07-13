@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="twelve columns">
+    <div class="field">
+      <div class="field">
+        <button class="btn-secondary" type="button" id="reset-dirty">Reset Dirty</button>
+      </div>
+    </div>
+
+    <div class="field">
+      <span class="label">Comments</span>
+      <div class="editor" id="editor1" role="textbox" aria-multiline="true" aria-label="Comments" data-trackdirty="true">
+        <p>&nbsp;</p>
+        Company Welcome Text...        Competencies and skills:<br />Essential:<br />* Customer Relations<br />* Flexibility<br /> Credentials:<br />Essential:<br />* Law Basics<br /> Education:<br />Essential:<br />* Associate of Arts<br />   EOE M/F/V/D
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $( '#reset-dirty' ).on( 'click', function ( e ) {
+    $( '.editor' ).trigger( 'resetdirty' );
+  } );
+</script>
