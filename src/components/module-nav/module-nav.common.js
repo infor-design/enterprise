@@ -5,6 +5,9 @@ export const MODULE_NAV_DISPLAY_MODES = [false, 'collapsed', 'expanded'];
 // Icon for "24/Financial and Supply Management/Amethyst" from Figma designs
 // @TODO Remove and replace with built-in or custom setting
 export const SWITCHER_ICON_HTML = `<svg
+  class="icon-custom"
+  focusable="false"
+  aria-hidden="true"
   width="28"
   height="28"
   viewBox="0 0 28 28"
@@ -24,6 +27,12 @@ export const SWITCHER_ICON_HTML = `<svg
     </clipPath>
   </defs>
 </svg>`;
+
+/**
+ * Default function used for generating the Module Button Icon
+ * @returns {string} referencing Icon HTML
+ */
+export const defaultIconGenerator = () => SWITCHER_ICON_HTML;
 
 /**
  * @param {string} [buttonText] provides the template with descriptive button text, if applicable

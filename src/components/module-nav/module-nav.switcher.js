@@ -10,7 +10,7 @@ import {
   roleTemplate,
   isValidDisplayMode,
   MODULE_NAV_DISPLAY_MODES,
-  SWITCHER_ICON_HTML,
+  defaultIconGenerator,
   setDisplayMode,
   configureNavItemTooltip
 } from './module-nav.common';
@@ -21,7 +21,7 @@ const COMPONENT_NAME = 'modulenavswitcher';
 const MODULE_NAV_SWITCHER_DEFAULTS = {
   displayMode: MODULE_NAV_DISPLAY_MODES[0],
   generate: true,
-  icon: () => SWITCHER_ICON_HTML,
+  icon: defaultIconGenerator,
   moduleButtonText: 'Standard Module',
   roleDropdownLabel: 'Roles',
   roles: []
@@ -67,6 +67,11 @@ ModuleNavSwitcher.prototype = {
     return this.moduleButtonContainerEl.querySelector('button');
   },
 
+  /** Reference to the Module Button Icon element, if present */
+  get moduleButtonIconEl() {
+    return this.moduleButtonEl?.querySelector('svg, .icon');
+  },
+
   /** Reference to the Module Button API, if present */
   get moduleButtonAPI() {
     return this.moduleButtonEl ? $(this.moduleButtonEl).data('button') : undefined;
@@ -109,7 +114,11 @@ ModuleNavSwitcher.prototype = {
 
     // Configure
     this.setDisplayMode(this.settings.displayMode);
-    this.setModuleButtonIcon();
+
+    if (!this.moduleButtonIconEl || this.settings.icon !== defaultIconGenerator) {
+      this.setModuleButtonIcon();
+    }
+
     if (!$(this.roleDropdownEl).find('option').length) {
       this.renderDropdownOptions(true);
     }
@@ -221,8 +230,8 @@ ModuleNavSwitcher.prototype = {
 
     // if Icon HTML exists, replace the current one
     if (iconHTML.length) {
-      const svgEl = this.moduleButtonEl.querySelector('svg');
-      svgEl?.remove();
+      const iconEl = this.moduleButtonIconEl;
+      iconEl?.remove();
       this.moduleButtonEl.insertAdjacentHTML('afterbegin', iconHTML);
     }
   },
