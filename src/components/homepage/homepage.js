@@ -97,6 +97,7 @@ Homepage.prototype = {
 
     // Initial Sizing
     this.resize(this, false);
+    this.element.parent().addClass('homepage-background');
   },
 
   /**

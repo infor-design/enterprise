@@ -300,9 +300,9 @@ Bar.prototype = {
     const useHeight = s.fitHeight ? parentAvailableHeight : parseInt(parent.height(), 10);
     const height = useHeight - margins.top - margins.bottom - legendHeight;
     const isSingle = dataset?.length === 1;
-
-    const h = useHeight - margins.bottom - (s.isStacked ? 0 : (legendHeight / 2)) - (isSingle ? 30 : 0);
     const w = parseInt(parent.width(), 10) - margins.left;
+
+    let h = useHeight - margins.bottom - (s.isStacked ? 0 : (legendHeight / 2)) - (isSingle ? 30 : 0);
     let textWidth = charts.calculateTextRenderWidth(largestText);
     if (textWidth < 200) {
       textWidth += 26;
@@ -310,6 +310,10 @@ Bar.prototype = {
     if (charts.calculatePercentage(textWidth, w) > 55) {
       textWidth = charts.getPercentage(w, this.ellipsis.percentageWidth);
       this.ellipsis.use = true;
+    }
+
+    if (!!s?.axisLabels?.bottom && series[0].name === '') {
+      h += 30;
     }
 
     self.svg = d3.select(this.element[0])
