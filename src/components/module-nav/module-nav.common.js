@@ -63,6 +63,14 @@ export const iconTemplate = type => `<svg class="icon" focusable="false" aria-hi
 </svg>`;
 
 /**
+ * IdsIcon component HTML for using an `<img>` tag instead of raw SVG (used for populating icons via external URL)
+ * @param {string} url the URL string
+ * @param {string} [alt] optional alt text
+ * @returns {string} template for an image tag
+ */
+export const imageTemplate = (url, alt) => `<img src="${url}" alt="${alt || 'Module Button Icon'}" aria-hidden="true" role="presentation" />`;
+
+/**
  * @returns {string} Module Nav Separator element template
  */
 export const separatorTemplate = () => '<div class="module-nav-separator">&nbsp;</div>';

@@ -1,4 +1,5 @@
 import { utils } from '../../utils/utils';
+import { stringUtils } from '../../utils/string';
 
 import '../button/button.jquery';
 import '../dropdown/dropdown.jquery';
@@ -7,6 +8,7 @@ import {
   buttonTemplate,
   dropdownTemplate,
   iconTemplate,
+  imageTemplate,
   roleTemplate,
   isValidDisplayMode,
   MODULE_NAV_DISPLAY_MODES,
@@ -69,7 +71,7 @@ ModuleNavSwitcher.prototype = {
 
   /** Reference to the Module Button Icon element, if present */
   get moduleButtonIconEl() {
-    return this.moduleButtonEl?.querySelector('svg, .icon');
+    return this.moduleButtonEl?.querySelector('svg, img, .icon, .custom-icon');
   },
 
   /** Reference to the Module Button API, if present */
@@ -222,7 +224,16 @@ ModuleNavSwitcher.prototype = {
         iconHTML = this.settings.icon(this);
         break;
       case 'string':
-        iconHTML = iconTemplate(this.settings.icon);
+        if (stringUtils.isValidURL(this.settings.icon)) {
+          // treat string as a URL
+          iconHTML = imageTemplate(this.settings.icon, this.settings.moduleButtonText);
+        } else if (this.settings.icon.charAt(0) !== '<' && document.querySelector(`symbol#icon-${this.settings.icon}`)) {
+          // treat string as an IDS Icon def
+          iconHTML = iconTemplate(this.settings.icon);
+        } else {
+          // treat as HTML markup
+          iconHTML = this.settings.icon;
+        }
         break;
       default:
         break;
