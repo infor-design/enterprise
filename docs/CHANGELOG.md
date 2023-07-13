@@ -10,6 +10,7 @@
 
 - `[Column-Stacked]` Fixed a regression bug where the stacked column chart was not rendering correctly. ([#7644](https://github.com/infor-design/enterprise/issues/7644))
 - `[Bar]` Fixed a bug where the bottom axis label was cut off. ([#7612](https://github.com/infor-design/enterprise/issues/7612))
+- `[Datagrid]` Fixed a bug in datagrid where default operator for lookup is not rendered properly. ([#7530](https://github.com/infor-design/enterprise/issues/7530))
 
 ## v4.85.0
 
