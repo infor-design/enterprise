@@ -7,6 +7,7 @@
 - `[Bar]` Fixed a bug where the bottom axis label was cut off. ([#7612](https://github.com/infor-design/enterprise/issues/7612))
 - `[Button]` Fixed a bug where submenu icons were not aligned correctly. ([#7626](https://github.com/infor-design/enterprise/issues/7626))
 - `[Column-Stacked]` Fixed a regression bug where the stacked column chart was not rendering correctly. ([#7644](https://github.com/infor-design/enterprise/issues/7644))
+- `[Editor]` Fixed an issue where an editor with an initial value containing `<br \>` tags were being seen as dirty when resetdirty is called. ([#7483](https://github.com/infor-design/enterprise/issues/7483))
 - `[Homepage]` In some cases the new background color did not fill all the way in the page. ([#7696](https://github.com/infor-design/enterprise/issues/7696))
 
 ## v4.85.0
@@ -43,6 +44,7 @@
 - `[Lookup]` Fixed a bug in lookup width not responsive in grid system. ([#7205](https://github.com/infor-design/enterprise/issues/7205))
 - `[MonthView]` Added event triggers for when monthview is expanded and collapsed. ([#7605](https://github.com/infor-design/enterprise/issues/7605))
 - `[Modal]` Fixed icon alignment in the title. ([#7639](https://github.com/infor-design/enterprise/issues/7639))
+- `[Modal]` Added ID check in event triggers. ([#7475](https://github.com/infor-design/enterprise/issues/7475))
 - `[Module Nav]` Added new settings for configuration of accordion, and auto-initialization of child components. ([NG#1477](https://github.com/infor-design/enterprise-ng/issues/1477))
 - `[Module Nav Switcher]` Made compatibility improvements for the Module Nav Switcher NG component. ([NG#1477](https://github.com/infor-design/enterprise-ng/issues/1477))
 - `[Multiselect]` Fixed a bug where the multiselect dropdown icon was overlapping the field. ([#7502](https://github.com/infor-design/enterprise/issues/7502))
