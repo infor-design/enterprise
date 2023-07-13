@@ -118,6 +118,7 @@ FileUpload.prototype = {
 
     this.svgClose.on('click.fileupload', (e) => {
       this.clearUploadFile();
+      this.svgClose.removeClass('is-visible');
       if (hasInlineLabel) {
         this.fileInput.data(`handleEvent +${[(e.type || '')]}`, e.handleObj);
       }
@@ -190,7 +191,7 @@ FileUpload.prototype = {
   clearUploadFile() {
     this.clearing = true;
     this.fileInput.add(this.textInput).val('');
-    this.svgClose.hide().removeClass('is-visible');
+    this.svgClose.removeClass('is-visible');
     this.fileInput.triggerHandler('change');
     this.clearing = false;
   },
