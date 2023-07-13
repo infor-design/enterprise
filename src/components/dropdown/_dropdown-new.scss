@@ -503,6 +503,10 @@ html[dir='rtl'] {
     .listoption-icon {
       top: 10px;
     }
+
+    &.has-tags + .icon {
+      top: 2px;
+    }
   }
 
   .dropdown-list {

@@ -8,6 +8,13 @@
   height: 18px; //Older ones at 32 but now based on 40
   position: relative;
   width: 22px;
+
+  &.icon-round {
+    border-radius: 50%;
+    border: 2px solid;
+    width: 26px;
+    height: 26px;
+  }
 }
 
 //Glyphs on the Header
@@ -34,6 +41,10 @@ svg.icon-dirty,
   position: relative;
   top: 10px;
   vertical-align: top;
+
+  &.icon-round {
+    top: 0;
+  }
 }
 
 .icon-info-field {

@@ -33,6 +33,7 @@ const COMPONENT_NAME = 'pie';
  * @param {boolean} [settings.showLegend=true] If false the legend will not be shown.
  * @param {boolean} [settings.showMobile=false] If true the chart is better formed to fit in a single widget.
  * @param {string} [settings.legendPlacement='right'] Where to locate the legend. This can be bottom or right at the moment.
+ * @param {boolean} [settings.forceLegendPopup=false] If true the chart is force to show legend popup.
  * @param {object} [settings.legend] A setting that controls the legend values and format.
  * @param {string} [settings.legend.show='label (percent)'] Controls what is visible
  * @param {boolean} [settings.selectable=true] Ability to enable/disable the selection of chart.
@@ -68,6 +69,7 @@ const PIE_DEFAULTS = {
   },
   showLegend: true,
   legendPlacement: 'right', // Can be bottom or right
+  forceLegendPopup: false,
   legend: {
     show: 'label (percent)', // value, label, label (percent) or percent or custom function
     formatter: '.0f'
@@ -150,7 +152,7 @@ Pie.prototype = {
     self.mainGroup.append('g').attr('class', 'lines');
     this.element.addClass('chart-pie');
 
-    if (s.showMobile) {
+    if (s.showMobile || s.forceLegendPopup) {
       s.legendPlacement = 'bottom';
     }
 

@@ -1,0 +1,47 @@
+<div class="two-column fixed page-container" role="main">
+  <div class="sidebar">
+    <div class="listview" id="task-listview" data-init="false"></div>
+    <div id="splitter" class="splitter" data-options="{'side':'right', 'save': false}"></div>
+  </div>
+
+  <div class="main" role="main">
+    <div class="content">
+    </div>
+  </div>
+</div>
+
+{{={{{ }}}=}}
+<script id="task-tmpl" type="text/html">
+  <ul>
+    {{#dataset}}
+    {{#disabled}}
+    <li class="is-disabled">
+      {{/disabled}}
+      {{^disabled}}
+    <li>
+      {{/disabled}}
+      <p class="listview-heading">Task #{{task}}</p>
+      <p class="listview-subheading">{{desc}} </p>
+      <p class="listview-micro">Due: {{date}}</p>
+    </div>
+    </li>
+    {{/dataset}}
+  </ul>
+</script>
+<!--  -->
+<script id="test-script">
+  $('body').on('initialized', function () {
+    var listviewEl = $('#task-listview');
+    listviewEl.listview({
+      template: 'task-tmpl',
+      source: '/api/inventory-tasks',
+      searchable: true,
+      listFilterSettings: {
+        filterMode: 'contains',
+        searchableTextCallback: function (item) {
+          return item.task;
+        }
+      }
+    });
+  });
+</script>

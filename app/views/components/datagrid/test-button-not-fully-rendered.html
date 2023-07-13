@@ -61,7 +61,7 @@
       var buttonFormatter = function (row, cell, value, col, dataView, dataGrid) {
          if (cell !== undefined) { // Cell may be zero here
            // Would have business logic here to determine whether the button is visible
-           return Formatters.Button(row, cell, 'Approval Group', col, dataView, dataGrid);
+           return Soho.Formatters.Button(row, cell, 'Approval Group', col, dataView, dataGrid);
          } else {
            return '';
          }

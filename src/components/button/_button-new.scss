@@ -139,7 +139,7 @@
 .btn {
   border-radius: 8px;
 
-  &:hover {
+  &:hover:not([disabled]) {
     &:not(:disabled) {
       background-color: $button-color-tertiary-hover-background-new;
       color: $button-color-tertiary-hover-font-new;
@@ -193,7 +193,7 @@
 }
 
 .btn-icon.trigger:hover:not(:disabled){
-  background-color: $button-color-tertiary-hover-background-new !important;
+  background-color: $button-color-tertiary-hover-background-new;
 }
 
 .btn-link {

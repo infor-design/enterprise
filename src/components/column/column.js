@@ -806,7 +806,7 @@ Column.prototype = {
               .attr('d', line(dataset))
               .attr('class', 'line')
               .style('opacity', 0)
-              .attr('stroke', classicDark ? '#BDBDBD' : newDark ? '#B7B7BA' : theme.new && theme.currentTheme.modeId !== 'dark' ? '#47474c' : '#313236')
+              .attr('stroke', classicDark ? '#BDBDBD' : newDark ? '#C5C5C9' : theme.new && theme.currentTheme.modeId !== 'dark' ? '#3B3B3F' : '#313236')
               .attr('stroke-width', 2)
               .attr('fill', 'none');
 
@@ -827,7 +827,7 @@ Column.prototype = {
                 .attr('cx', d => (xScaleLine(d.name) + xScaleLine.bandwidth() / 2))
                 .attr('cy', d => yScaleLine(d.line.value))
                 .attr('r', 5)
-                .style('fill', classicDark ? '#BDBDBD' : newDark ? '#B7B7BA' : theme.new && theme.currentTheme.modeId !== 'dark' ? '#47474c' : '#313236')
+                .style('fill', classicDark ? '#BDBDBD' : newDark ? '#C5C5C9' : theme.new && theme.currentTheme.modeId !== 'dark' ? '#3B3B3F' : '#313236')
                 .style('stroke-width', 2)
                 .style('cursor', 'default')
                 .on(`mouseenter.${self.namespace}`, function (event, lineTooltipData) {
@@ -1295,6 +1295,34 @@ Column.prototype = {
         const markup = self.settings.xAxis.formatText(text, m);
 
         DOM.html(elem.node(), markup, '<tspan>');
+      });
+
+      self.element.find('.chart-legend').addClass('m-top-0');
+      self.element.find('.chart-legend .chart-legend-color').each((_, elem) => {
+        elem.classList.add('m-bottom-0');
+      });
+    }
+
+    if (self.settings.isStacked && self.element.find('.x.axis').length > 0) {
+      const $tick = $('.tick');
+      const $xAxisGroup = $('.x.axis > g');
+      const $seriesGroup = $('.series-group.g');
+      const hasTwoLines = $('g.x.axis > g text').find('tspan').length > 1;
+
+      // Extract the distance value from the "transform" attribute of the tick element
+      const distance = $tick.attr('transform')?.match(/translate\((\d+),/)[1] || 0;
+      const textWidth = $xAxisGroup[0].getBBox().width;
+      const barWidth = $seriesGroup.find('rect')[0].getBBox().width;
+      const textWidthHalf = textWidth / 2;
+      const barWidthHalf = barWidth / 2;
+
+      // calculates the desired position for the bars
+      const position = Math.round((distance - (hasTwoLines ? 14 : 10)) + textWidthHalf - barWidthHalf);
+
+      $seriesGroup.each(function () {
+        const transformValue = this.getAttribute('transform');
+        const updatedTransformValue = transformValue.replace(/translate\(\d+/, `translate(${position}`);
+        this.setAttribute('transform', updatedTransformValue);
       });
     }
 

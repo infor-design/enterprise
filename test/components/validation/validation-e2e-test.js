@@ -654,13 +654,13 @@ describe('Validation just error class tests', () => {
 describe('Validation message types', () => {
   const exprAlerts = /(error|alert|success|info|icon)/;
   const color = {
-    default: { field: '#000000', icon: '#606066' },
-    error: { field: '#da1217', icon: '#606066' },
-    alert: { field: '#f98300', icon: '#606066' },
-    success: { field: '#2ac371', icon: '#606066' },
-    info: { field: '#0066d4', icon: '#606066' },
-    customIcon: { field: '#000000', icon: '#606066' },
-    isHelpMessage: { field: '#000000', icon: '#606066' }
+    default: { field: '#000000', icon: '#7C7C83' },
+    error: { field: '#da1217', icon: '#7C7C83' },
+    alert: { field: '#f98300', icon: '#7C7C83' },
+    success: { field: '#2ac371', icon: '#7C7C83' },
+    info: { field: '#0066d4', icon: '#7C7C83' },
+    customIcon: { field: '#000000', icon: '#7C7C83' },
+    isHelpMessage: { field: '#000000', icon: '#7C7C83' }
   };
 
   beforeEach(async () => {

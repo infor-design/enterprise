@@ -44,7 +44,7 @@ $dropdown-search-bg-color: $ids-color-palette-slate-80;
 $panel-bg-color: $ids-color-palette-slate-70;
 $panel-border-color: $ids-color-palette-slate-50;
 $drop-shadow-depth: rgba(0, 0, 0, 0.4);
-$focus-box-shadow-color: rgba($ids-color-palette-slate-10, 0.3);
+$focus-box-shadow-color: rgba($ids-color-palette-slate-90, 0.3);
 $focus-box-shadow: 0 0 4px 2px $focus-box-shadow-color;
 
 $focus-box-shadow-spinbox: 0 3px 3px 0 $focus-box-shadow-color,
@@ -70,6 +70,7 @@ $font-color-highcontrast: $ids-color-palette-slate-10;
 $font-color: $ids-color-palette-slate-20;
 $font-color-lowcontrast: $ids-color-palette-slate-30;
 $label-disabled-color: $ids-color-palette-slate-40;
+$label-text-color: $ids-color-palette-slate-30;
 $disabled-color: $ids-color-palette-slate-50;
 $signin-title-color: $ids-color-palette-slate-10;
 $count-font-color: $ids-color-palette-slate-10;
@@ -102,6 +103,8 @@ $button-hyperlink-color: $ids-color-palette-slate-50;
 $button-hyperlink-hover-color: $ids-color-palette-slate-40;
 $button-color-tertiary-hover-background-new: transparent;
 $button-icon-disabled-color: $ids-color-palette-slate-60;
+$button-color-secondary-initial-font: $ids-color-palette-slate-30;
+$button-color-secondary-hover-background: $ids-color-palette-slate-50;
 
 // Button Ripple
 $secondary-btn-ripple-color: $ids-color-palette-slate-60;
@@ -626,7 +629,7 @@ $datagrid-cell-focus-box-shadow: 0 0 4px 1px rgba(101, 104, 113, 0.4);
 $datagrid-data-color: $font-color-extrahighcontrast;
 $datagrid-row-selected-color: #334d60;
 $datagrid-row-selected-color-dark: #3e586c;
-$datagrid-row-hover-color: $ids-color-palette-slate-60;
+$datagrid-row-hover-color: $ids-color-palette-slate-70;
 $datagrid-row-icon-color: $ids-color-palette-slate-30;
 
 $datagrid-header-focus-bg-color: $ids-color-brand-primary-base;
@@ -765,6 +768,7 @@ $image-background-color: $ids-color-palette-slate-40;
 
 // Toast
 $toast-bg-color: $ids-color-palette-slate-70;
+$toast-progress-color: $ids-color-palette-azure-40;
 $toast-border-color: $ids-color-palette-slate-50;
 $toast-header-color: $ids-color-palette-white;
 $toast-text-color: $ids-color-palette-white;
@@ -829,10 +833,9 @@ $formcompact-field-bg-focus-color: $ids-color-palette-azure-90;
 $formcompact-field-border-color: $ids-color-palette-white;
 
 // Splitter
-$splitter-grip-bg-color: $ids-color-palette-slate-30;
-$splitter-active-bg-color: $ids-color-palette-slate-70;
-$splitter-active-grip-bg-color: $ids-color-palette-white;
-$splitter-box-shadow-color: rgba(54, 138, 192, 0.75);
+$splitter-border-color: $ids-color-palette-slate-60;
+$splitter-focus-border-color: $ids-color-palette-azure-30;
+$splitter-handle-background-color: $ids-color-palette-azure-60;
 
 // Step Chart
 $step-chart-bg-color: $ids-color-palette-slate-70;
@@ -880,6 +883,12 @@ $swipeaction-right-color: $ids-color-palette-white;
 $swipeaction-right-active-bg-color: $ids-color-palette-azure-60;
 $swipeaction-right-hover-bg-color: $ids-color-palette-azure-60;
 $swipeaction-right-hover-color: $ids-color-palette-white;
+
+// Stats
+$stats-title-color: $ids-color-palette-graphite-30;
+$stats-subtitle-color: $ids-color-palette-graphite-40;
+$stats-value-color: $ids-color-palette-slate-10;
+$stats-selected-border-color: $ids-color-palette-azure-60;
 
 //================================================== //
 // Core Components

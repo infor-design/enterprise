@@ -32,7 +32,7 @@ $header-primary-btn-background-hover-color: $ids-color-palette-azure-50;
 $header-disabled-color: $ids-color-palette-slate-50;
 $header-focus-box-shadow: 0 0 4px 3px rgba(255, 255, 255, 0.3);
 
-$body-color-primary-background: rgba($ids-color-palette-slate-10, 0.5);
+$body-color-primary-background: $ids-color-palette-slate-10;
 $homepage-background-color: $body-color-primary-background;
 $header-hero-widget-bg-color: $subhead-bg-color;
 
@@ -63,6 +63,7 @@ $font-color-highcontrast: $ids-color-palette-slate-100;
 $font-color: $ids-color-palette-slate-90;
 $font-color-lowcontrast: $ids-color-palette-slate-70;
 $label-disabled-color: $input-color-disabled-border;
+$label-text-color: $ids-color-palette-slate-90;
 $disabled-color: $ids-color-palette-slate-50;
 $signin-title-color: $ids-color-palette-slate-100;
 
@@ -399,7 +400,7 @@ $card-expandable-sub-heading: $ids-color-palette-slate-90;
 $cardlist-border-color: $ids-color-palette-slate-60;
 $cardlist-header-color: $ids-color-palette-black;
 $cardlist-actions-color: $ids-color-palette-slate-90;
-$cardlist-box-shadow-color: rgba(0, 0, 0, 0.15);
+$cardlist-box-shadow-color: rgba(0, 0, 0, 0.1);
 
 // Switch
 $radio-checked-color: $ids-color-palette-azure-100;
@@ -663,7 +664,7 @@ $datagrid-filter-border-color: $ids-color-palette-slate-40;
 $datagrid-filter-hover-border-color: $ids-color-palette-white;
 $datagrid-filter-color: $ids-color-palette-white;
 $datagrid-filter-hover-color: $ids-color-palette-white;
-$datagrid-filter-disabled-color: $ids-color-palette-slate-60;
+$datagrid-filter-disabled-color: $ids-color-palette-slate-40;
 $datagrid-filter-icon-color: $ids-color-palette-slate-30;
 $datagrid-filter-focus-color: $ids-color-palette-azure-40;
 $datagrid-filter-active-color: $ids-color-palette-azure-40;
@@ -689,7 +690,7 @@ $sr-masthead-item-color: $font-color-lowcontrast;
 
 // Tree
 $tree-selected-color: $ids-color-palette-black;
-$tree-selected-bg-color: $ids-color-palette-slate-30;
+$tree-selected-bg-color: $ids-color-palette-slate-20;
 $tree-focus-border-color: $ids-color-brand-primary-alt;
 $tree-active-bg-color: $ids-color-palette-slate-10;
 $tree-icon-color: $ids-color-palette-slate-90;
@@ -829,10 +830,9 @@ $module-tabs-disabled-text-color: $ids-color-palette-azure-40;
 $composite-tabs-panel-bg-color: $ids-color-palette-white;
 
 // Splitter
-$splitter-grip-bg-color: $ids-color-palette-slate-90;
-$splitter-active-bg-color: $ids-color-palette-slate-20;
-$splitter-active-grip-bg-color: $ids-color-palette-black;
-$splitter-box-shadow-color: rgba(37, 120, 169, 0.75);
+$splitter-border-color: $ids-color-palette-slate-40;
+$splitter-focus-border-color: $ids-color-palette-azure-40;
+$splitter-handle-background-color: $ids-color-palette-azure-80;
 
 // Step Chart
 $step-chart-bg-color: $ids-color-palette-slate-20;

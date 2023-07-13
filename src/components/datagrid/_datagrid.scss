@@ -353,6 +353,7 @@ $datagrid-small-row-height: 25px;
 
       + .datagrid-filter-wrapper.is-empty {
         left: -60px;
+        z-index: -1;
       }
     }
   }
@@ -3726,7 +3727,7 @@ $datagrid-small-row-height: 25px;
       }
 
       &:disabled {
-        border-color: $datagrid-filter-disabled-color;
+        border-color: $datagrid-filter-disabled-color !important;
       }
     }
 
@@ -3759,6 +3760,7 @@ $datagrid-small-row-height: 25px;
         border-color: $datagrid-filter-disabled-color !important;
 
         + .icon {
+          background-color: transparent;
           color: $datagrid-filter-disabled-color;
         }
       }
@@ -3838,6 +3840,10 @@ $datagrid-small-row-height: 25px;
       }
 
       &:disabled + .trigger {
+        background-color: transparent !important;
+        color: $timepicker-disabled-icon-color;
+        cursor: default;
+
         .icon {
           color: $datagrid-list-filter-disabled-color !important;
           opacity: 0.6;
@@ -4452,6 +4458,14 @@ td .btn-actions {
     &.is-editing {
       .icon {
         @include trigger-icon-background($datagrid-cell-bg-color);
+      }
+    }
+
+    .datagrid-cell-wrapper .trigger {
+      + .icon-calendar,
+      + .icon-calendar + .icon-error {
+        background-color: transparent;
+        box-shadow: none;
       }
     }
   }
@@ -6099,9 +6113,12 @@ html[dir='rtl'] {
     .datepicker,
     .timepicker {
       + .trigger {
-        top: -9px;
         margin-left: -16px;
       }
+    }
+
+    .timepicker + .trigger {
+      top: -9px;
     }
 
     .timepicker + .trigger .icon {

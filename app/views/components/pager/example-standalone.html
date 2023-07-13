@@ -108,7 +108,8 @@
       lastPageTooltip: 'Custom Last Tooltip',
       attributes: [{ name: 'id', value: 'standalone-pager' }, { name: 'data-automation-id', value: 'standalone-pager-auto-id' } ],
     }).on('page', function (e, args) {
-      setButtonsState();
+       $('body').toast({ title: 'page jQuery Event Fired', message: '' });
+       setButtonsState();
     }).on('firstpage', function (e, args) {
       $('body').toast({title: 'firstpage jQuery Event Fired', message: ''});
     }).on('previouspage', function (e, args) {

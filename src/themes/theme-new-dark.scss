@@ -25,7 +25,7 @@ $header-default-bg-hover-color: $ids-color-palette-slate-80;
 $input-color-focus-border: $ids-color-palette-slate-10;
 
 // Form Background Color
-$header-toolbar-button-hover-color: #47474C;
+$header-toolbar-button-hover-color: #3B3B3F;
 $subhead-bg-color: $ids-color-brand-primary-alt;
 
 $dropdown-search-bg-color: $ids-color-palette-slate-80;
@@ -58,6 +58,7 @@ $font-color-highcontrast: $ids-color-palette-slate-10;
 $font-color: $ids-color-palette-slate-20;
 $font-color-lowcontrast: $ids-color-palette-slate-30;
 $label-disabled-color: $input-color-disabled-border;
+$label-text-color: $ids-color-palette-slate-30;
 $disabled-color: $ids-color-palette-slate-50;
 $signin-title-color: $ids-color-palette-slate-10;
 $count-font-color: $ids-color-palette-slate-10;
@@ -211,7 +212,7 @@ $card-selected-background-color: rgba($ids-color-brand-primary-base, 0.3);
 $card-scrolling-box-shadow: 0 0 4px 0 #ffffff60;
 $card-scrolling-border-color: $ids-color-palette-slate-80;
 $card-expandable-sub-heading: $ids-color-palette-slate-20;
-$card-selected-border-color: $ids-color-brand-primary-lighter;
+$card-selected-border-color: $ids-color-palette-azure-60;
 $card-actions-toolbar-button-hover-color: $ids-color-palette-slate-10;
 $card-border-color-hover: $ids-color-palette-slate-70;
 
@@ -415,7 +416,7 @@ $cardlist-bg-color: $ids-color-palette-slate-90;
 $cardlist-border-color: $ids-color-palette-slate-70;
 $cardlist-header-color: $ids-color-palette-white;
 $cardlist-actions-color: $ids-color-palette-slate-30;
-$cardlist-box-shadow-color: rgba(0, 0, 0, 0.15);
+$cardlist-box-shadow-color: rgba(0, 0, 0, 0.1);
 
 // Checkboxes
 $checkbox-disabled-text-color: $checkbox-color-unchecked-disabled-font;
@@ -813,6 +814,7 @@ $image-background-color: $ids-color-palette-slate-40;
 
 // Toast
 $toast-bg-color: $ids-color-palette-slate-70;
+$toast-progress-color: $ids-color-palette-azure-40;
 $toast-border-color: $ids-color-palette-slate-50;
 $toast-header-color: $ids-color-palette-white;
 $toast-text-color: $ids-color-palette-white;
@@ -899,10 +901,9 @@ $formcompact-field-bg-focus-color: $ids-color-palette-azure-90;
 $formcompact-field-border-color: $ids-color-palette-white;
 
 // Splitter
-$splitter-grip-bg-color: $ids-color-palette-slate-30;
-$splitter-active-bg-color: $ids-color-palette-slate-70;
-$splitter-active-grip-bg-color: $ids-color-palette-white;
-$splitter-box-shadow-color: rgba(54, 138, 192, 0.75);
+$splitter-border-color: $ids-color-palette-slate-60;
+$splitter-focus-border-color: $ids-color-palette-azure-30;
+$splitter-handle-background-color: $ids-color-palette-azure-60;
 
 // Step Chart
 $step-chart-bg-color: $ids-color-palette-slate-70;
@@ -941,6 +942,12 @@ $swipeaction-right-color: $ids-color-palette-white;
 $swipeaction-right-active-bg-color: $ids-color-palette-azure-60;
 $swipeaction-right-hover-bg-color: $ids-color-palette-azure-60;
 $swipeaction-right-hover-color: $ids-color-palette-white;
+
+// Stats
+$stats-title-color: $ids-color-palette-slate-30;
+$stats-subtitle-color: $ids-color-palette-slate-40;
+$stats-value-color: $ids-color-palette-slate-10;
+$stats-selected-border-color: $ids-color-palette-azure-60;
 
 // New Theme Only Variables
 $new-acc-border-radius: 6px;

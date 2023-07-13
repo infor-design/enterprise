@@ -4,6 +4,9 @@
 // Moved some of this stuff to `<project-root>/sass/controls/_card.scss`.
 
 // Different Widget Heights and Widths
+.homepage-background {
+  background-color: $homepage-background-color;
+}
 
 .homepage {
   background-color: $homepage-background-color;
@@ -157,9 +160,18 @@
 
   .widget-content,
   .card-content {
-    height: 708px;
-    min-height: 708px;
+    height: 752px;
+    min-height: 752px;
     overflow: auto;
+  }
+
+  .widget-header,
+  .card-header {
+    + .widget-content,
+    + .card-content {
+      height: 708px;
+      min-height: 708px;
+    }
   }
 }
 

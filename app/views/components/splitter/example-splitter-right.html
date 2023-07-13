@@ -1,4 +1,4 @@
-﻿<div class="page-container two-column fixed">
+﻿<div class="page-container two-column fixed no-scroll">
 
   <section class="main">
     <div class="content scrollable">
@@ -6,9 +6,44 @@
   </section>
 
   <nav class="sidebar scrollable">
-    <div class="content">
-      <div id="splitter" class="splitter" data-options="{'side':'right', 'save':false}"></div>
-    </div>
+    <div id="splitter" class="splitter" data-options="{'side':'right', 'save':false}"></div>
   </nav>
 
 </div>
+
+{{={{{ }}}=}}
+<script id="task-tmpl" type="text/html">
+  <ul>
+    {{#dataset}}
+    {{#disabled}}
+    <li class="is-disabled">
+      {{/disabled}}
+      {{^disabled}}
+    <li>
+      {{/disabled}}
+      <p class="listview-heading">Task #{{task}}</p>
+      <p class="listview-subheading">{{desc}} </p>
+      <p class="listview-micro">Due: {{date}}</p>
+    </div>
+    </li>
+    {{/dataset}}
+  </ul>
+</script>
+<!--  -->
+<script id="test-script">
+  $('body').on('initialized', function () {
+    var listviewEl = $('#task-listview');
+    listviewEl.listview({
+      template: 'task-tmpl',
+      source: '/api/inventory-tasks',
+      searchable: true,
+      listFilterSettings: {
+        filterMode: 'contains',
+        searchableTextCallback: function (item) {
+          return item.task;
+        }
+      }
+    });
+  });
+</script>
+

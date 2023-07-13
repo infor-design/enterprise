@@ -89,7 +89,6 @@ Homepage.prototype = {
    * @returns {void}
    */
   init() {
-    this.isTransitionsSupports = this.supportsTransitions();
     this.setSmall();
     this.setColumns();
     this.initHeroWidget();
@@ -98,6 +97,7 @@ Homepage.prototype = {
 
     // Initial Sizing
     this.resize(this, false);
+    this.element.parent().addClass('homepage-background');
   },
 
   /**
@@ -386,9 +386,9 @@ Homepage.prototype = {
         });
     } else {
       cards.attr('draggable', false);
-      cards.css('cursor', 'auto');
       cards.children('.card-remove').remove();
       cards.off('mouseenter.card mouseleave.card dragstart.card dragenter.card dragend.card');
+      cards.not('.card-list .card').css('cursor', 'auto');
     }
   },
 
@@ -526,13 +526,20 @@ Homepage.prototype = {
    * @returns {void}
    */
   setBlocks() {
-    const cards = this.element.find('.card, .widget, .small-widget');
+    const cards = this.element.find('.card, .widget, .small-widget').not('.card-list .card');
     this.blocks = [];
 
     for (let i = 0, l = cards.length; i < l; i++) {
       const card = $(cards[i]);
-      const h = card.hasClass('double-height') ? 2 : 1;
+      let h = card.hasClass('double-height') ? 2 : 1;
       let w;
+
+      if (card.hasClass('auto-height')) {
+        const height = this.settings.widgetHeight + this.settings.gutterSize;
+        if (card.height() > height * h) {
+          h = Math.ceil(card.height() / height);
+        }
+      }
 
       if (card.hasClass('sextuple-width')) {
         w = 6;
@@ -681,7 +688,6 @@ Homepage.prototype = {
       // Set positions
       const box = self.settings.widgetWidth + self.settings.gutterSize;
       const totalWidth = box * self.columns;
-
       const left = Locale.isRTL() ? totalWidth - ((box * block.w) + (box * available.col)) : box * available.col;// eslint-disable-line
       const top = (self.settings.widgetHeight + self.settings.gutterSize) * available.row;
       const pos = { left, top };
@@ -691,22 +697,15 @@ Homepage.prototype = {
         const blockslide = [0.09, 0.11, 0.24, 0.91];
 
         if (easing === 'blockslide') {
-          if (self.isTransitionsSupports) {
-            self.applyCubicBezier(block.elem, blockslide);
-            block.elem[0].style.left = `${pos.left}px`;
-            block.elem[0].style.top = `${pos.top}px`;
-          } else {
-            // IE-9
-            block.elem.animate(pos, self.settings.timeout);
-          }
+          self.applyCubicBezier(block.elem, blockslide);
+          block.elem[0].style.left = `${pos.left}px`;
+          block.elem[0].style.top = `${pos.top}px`;
         } else {
           // Other easing effects ie (linear, swing)
           block.elem.animate(pos, self.settings.timeout, easing);
         }
       } else {
-        if (self.isTransitionsSupports) {
-          self.applyCubicBezier(block.elem, null);
-        }
+        self.applyCubicBezier(block.elem, null);
         block.elem[0].style.left = `${pos.left}px`;
         block.elem[0].style.top = `${pos.top}px`;
       }
@@ -737,36 +736,7 @@ Homepage.prototype = {
    */
   applyCubicBezier(el, cubicBezier) {
     const value = cubicBezier ? `all .3s cubic-bezier(${cubicBezier})` : 'none';
-    el[0].style['-webkit-transition'] = value;
-    el[0].style['-moz-transition'] = value;
-    el[0].style['-ms-transition'] = value;
-    el[0].style['-o-transition'] = value;
     el[0].style.transition = value;
-  },
-
-  /**
-   * Check if browser supports transitions
-   * @private
-   * @returns {boolean} true if supports transitions
-   */
-  supportsTransitions() {
-    const s = document.createElement('p').style;
-    let p = 'transition';
-
-    if (typeof s[p] === 'string') {
-      return true;
-    }
-
-    // Tests for vendor specific prop
-    const v = ['Moz', 'webkit', 'Webkit', 'Khtml', 'O', 'ms'];
-    p = p.charAt(0).toUpperCase() + p.substr(1);
-
-    for (let i = 0, l = v.length; i < l; i++) {
-      if (typeof s[v[i] + p] === 'string') {
-        return true;
-      }
-    }
-    return false;
   },
 
   /**

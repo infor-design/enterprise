@@ -89,6 +89,7 @@ $font-color-default: $ids-color-font-base;
 $font-color-descriptive: $ids-color-font-info;
 $font-color-hyperlink: $ids-color-brand-primary-base;
 $font-color-muted: $ids-color-font-muted;
+$label-text-color: $ids-color-palette-slate-60;
 $font-color-alert: $ids-color-status-danger;
 
 //The hyperlink Style
@@ -107,7 +108,7 @@ $hr-bottom-color: $ids-color-palette-white;
 // Cards/Widget
 $card-border-color-hover: $ids-color-palette-slate-30;
 $cardlist-box-shadow-color-hover: rgba(0, 0, 0, 0.15);
-$cardlist-box-shadow-color: rgba(0, 0, 0, 0.05);
+$cardlist-box-shadow-color: rgba(0, 0, 0, 0.1);
 $card-scrolling-box-shadow: 0 0 4px 0 #00000040;
 $card-scrolling-border-color: $ids-color-palette-slate-20;
 $card-actions-toolbar-button-hover-color: $ids-color-brand-primary-base;
@@ -708,6 +709,8 @@ $application-menu-searchfield-icon-active-color: $ids-color-palette-white;
 $application-menu-searchfield-text-active-color: $ids-color-palette-white;
 $application-menu-new-border-color: $ids-color-palette-white;
 
+$application-menu-new-border-color: $ids-color-palette-white;
+
 // Module Nav (App menu alternative)
 $module-nav-bg-color: $ids-color-palette-slate-10;
 $module-nav-border-color: transparent;
@@ -1044,6 +1047,7 @@ $image-background-color: $ids-color-palette-graphite-20;
 
 //Toast
 $toast-bg-color: $ids-color-palette-white;
+$toast-progress-color: $ids-color-brand-primary-base;
 $toast-border-color: $ids-color-palette-graphite-30;
 $toast-header-color: $ids-color-palette-graphite-100;
 $toast-text-color: $ids-color-font-base;
@@ -1144,16 +1148,21 @@ $formcompact-field-border-color: $ids-color-palette-black;
 $formcompact-field-border-focus-color: $ids-color-brand-primary-base;
 $formcompact-field-required-color: $ids-color-brand-primary-base;
 
+// Stats
+$stats-title-color: $ids-color-palette-slate-60;
+$stats-subtitle-color: $ids-color-palette-slate-50;
+$stats-value-color: $ids-color-palette-slate-100;
+$stats-selected-border-color: $ids-color-brand-primary-base;
+
 // Typography
 $typography-background-inverted: $ids-color-palette-slate-100;
 $typography-card-title-inverted: $ids-color-palette-white;
 $typography-card-info-inverted: $ids-color-palette-slate-10;
 
 // Splitter
-$splitter-grip-bg-color: $ids-color-palette-graphite-60;
-$splitter-active-bg-color: $ids-color-palette-graphite-20;
-$splitter-active-grip-bg-color: $ids-color-palette-graphite-100;
-$splitter-box-shadow-color: rgba(54, 138, 192, 0.75);
+$splitter-border-color: $ids-color-palette-slate-30;
+$splitter-focus-border-color: $ids-color-palette-azure-30;
+$splitter-handle-background-color: $ids-color-palette-azure-60;
 
 // Step Chart
 $step-chart-bg-color: $ids-color-palette-graphite-20;

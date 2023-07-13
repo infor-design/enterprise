@@ -33,7 +33,6 @@ $header-disabled-color: $ids-color-palette-graphite-50;
 $header-focus-box-shadow: 0 0 4px 3px rgba(255, 255, 255, 0.3);
 $header-toolbar-searchfield-icon-color: $ids-color-palette-white;
 $header-toolbar-button-hover-color: transparent;
-
 $header-default-bg-color: $ids-color-palette-azure-80;
 
 $header-hero-text-color: rgba($ids-color-palette-white, 1);
@@ -69,6 +68,7 @@ $font-color-highcontrast: $ids-color-palette-graphite-100;
 $font-color: $ids-color-palette-graphite-90;
 $font-color-lowcontrast: $ids-color-palette-graphite-70;
 $label-disabled-color: $ids-color-palette-graphite-50;
+$label-text-color: $ids-color-palette-graphite-80;
 $disabled-color: $ids-color-palette-graphite-50;
 $signin-title-color: $ids-color-palette-slate-100;
 $count-font-color: $ids-color-palette-slate-10;
@@ -799,10 +799,9 @@ $module-tabs-disabled-text-color: $ids-color-palette-azure-40;
 $composite-tabs-panel-bg-color: $ids-color-palette-white;
 
 // Splitter
-$splitter-grip-bg-color: $ids-color-palette-graphite-90;
-$splitter-active-bg-color: $ids-color-brand-secondary-base;
-$splitter-active-grip-bg-color: $ids-color-palette-black;
-$splitter-box-shadow-color: rgba(37, 120, 169, 0.75);
+$splitter-border-color: $ids-color-palette-slate-40;
+$splitter-focus-border-color: $ids-color-palette-azure-40;
+$splitter-handle-background-color: $ids-color-palette-azure-80;
 
 // Step Chart
 $step-chart-bg-color: $ids-color-palette-graphite-20;

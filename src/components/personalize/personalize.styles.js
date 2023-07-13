@@ -298,10 +298,6 @@ a.is-personalizable svg.ripple-effect {
   box-shadow: 0 0 4px 3px rgba(${baseColorObj.r}, ${baseColorObj.g}, ${baseColorObj.b}, 0.3);
 }
 
-.accordion.panel .accordion-header.is-selected {
-  color: ${colors.contrast} !important;
-}
-
 .builder-header.is-personalizable{
   background-color: ${colors.lighter};
 }
@@ -666,7 +662,7 @@ html[class*='new-'] .is-personalizable.hero-widget .hero-header .toolbar .button
 }
 
 .subheader.is-personalizable .go-button.is-personalizable:not(.hide-focus) {
-  box-shadow: 0 0 0 1px #efeff0, 0 0 0 2px ${colors.darkest}, 0 0 4px 2px rgba(41, 41, 41, 0.3);
+  box-shadow: 0 0 0 1px #FAFAFA, 0 0 0 2px ${colors.darkest}, 0 0 4px 2px rgba(41, 41, 41, 0.3);
 }
 
 .is-personalizable .breadcrumb .hyperlink,
@@ -882,7 +878,7 @@ html[dir='rtl'] .is-personalizable.tab-container.header-tabs:not(.alternate)::af
 html[class*="-dark"] .is-personalizable .btn-tertiary:not(.destructive):not(:disabled):hover,
 html[class*="-dark"] .is-personalizable .btn-link:not(:disabled):hover,
 html[class*="-dark"] .is-personalizable:not(.header) .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
-  background-color: #3E3E42;
+  background-color: #28282A;
 }
 
 .is-personalizable.hero-widget .hero-bottom .hero-footer .hero-footer-nav a.btn-tertiary:not(:disabled):hover {
@@ -1213,7 +1209,7 @@ html[class*="theme-new-"]:not(.theme-new-dark) .header.alabaster.is-personalizab
 
 html[class*="theme-new-"]:not(.theme-new-dark) .header.alabaster.is-personalizable .flex-toolbar [class^='btn'][disabled] span,
 html[class*="theme-new-"]:not(.theme-new-dark) .header.alabaster.is-personalizable .flex-toolbar [class^='btn'][disabled] .icon {
-  color: #B7B7BA !important;
+  color: #C5C5C9 !important;
 }
 
 html[class*="theme-classic-"]:not(.theme-classic-dark) .header.alabaster.is-personalizable .flex-toolbar [class^='btn'][disabled] span,

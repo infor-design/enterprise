@@ -449,7 +449,7 @@
   }
 }
 
-.accordion.panel.inverse .accordion-pane.is-expanded+.accordion-header.is-selected {
+.accordion.panel.inverse .accordion-pane.is-expanded + .accordion-header.is-selected {
   border-color: $application-menu-new-border-color;
 }
 

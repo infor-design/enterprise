@@ -2,7 +2,7 @@
 .small-widget,
 .widget {
   border-radius: 8px;
-  box-shadow: 0 2px 4px 1px $cardlist-box-shadow-color;
+  box-shadow: 0 0 4px $cardlist-box-shadow-color;
   height: 368px;
   min-height: 368px;
 
@@ -12,6 +12,7 @@
     &:hover {
       outline: 1px solid $card-border-color-hover;
       box-shadow: 0 2px 4px 1px $cardlist-box-shadow-color-hover;
+      transition: box-shadow 0.3s cubic-bezier(.17, .04, .03, .94);
     }
   }
 
@@ -30,6 +31,18 @@
     .listview-search.is-scrolling {
       .searchfield-wrapper {
         z-index: 10;
+      }
+    }
+  }
+
+  .card-buttonset {
+    .card-content-action {
+      button.btn-actions:hover {
+        background-color: $button-color-tertiary-hover-background-new;
+
+        .icon {
+          color: $button-color-tertiary-hover-font-new;
+        }
       }
     }
   }
@@ -81,7 +94,7 @@
   }
 
   &:hover {
-    button.btn-actions {
+    button.btn-actions:not(.list-button) {
       opacity: 1;
     }
   }
@@ -94,12 +107,6 @@
   .btn-actions.is-open,
   .btn-actions.has-open-tooltip {
     opacity: 1 !important;
-  }
-
-  &.border-less {
-    background: none;
-    border-color: transparent;
-    box-shadow: none;
   }
 
   &.is-empty {
@@ -136,7 +143,7 @@
   .card-header {
     &.has-subtitle {
       align-items: flex-start;
-      height: 64px;
+      height: 60px; // was 64 but need to be flush so for better visuals
       padding-top: 8px;
 
       + .card-content,
@@ -251,8 +258,30 @@
     border-top: 1px solid $listview-border-color;
   }
 
-  .listview li:first-child {
+  .listview:not(.card-list) li:first-child {
     border-top: 1px solid $listview-border-color;
+  }
+
+  .listview-search {
+    display: flex;
+
+    .listview-filter-wrapper {
+      background-color: transparent;
+      border: none;
+      display: flex;
+      z-index: 10;
+    }
+
+    .searchfield-wrapper {
+      .btn-icon:hover {
+        background-color: $button-color-tertiary-hover-background-new;
+      }
+    }
+  }
+
+  .listview {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
   }
 }
 
@@ -355,7 +384,7 @@
 html[dir='rtl'] {
   .card-header,
   .widget-header {
-    margin: 8px 20px 8px 2px;
+    margin: 8px 16px 8px 2px;
 
     &:not(.has-toolbar) {
       > .btn-actions {
