@@ -51,6 +51,19 @@
   }
 }
 
+.field-fileupload {
+  .trigger,
+  .trigger-close {
+    &.trigger-close {
+      top: -4px;
+    }
+
+    &.trigger {
+      top: -2px;
+    }
+  }
+}
+
 // Firefox needs some hand-holding
 .is-firefox {
   &.is-mac {

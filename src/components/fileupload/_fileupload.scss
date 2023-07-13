@@ -10,16 +10,19 @@
   .trigger-close {
     cursor: pointer;
     display: inline-block;
-    margin-left: -28px;
+    margin-left: -35px;
     outline: 0;
     text-align: center;
     width: 35px;
 
     &.trigger-close {
       display: none;
-      margin-left: -45px;
-      width: 21px;
+      margin-left: -60px;
       border-radius: 8px;
+      height: 28px;
+      width: 28px;
+      position: relative;
+      top: -3px;
 
       &.is-visible {
         display: inline-block;
@@ -31,21 +34,17 @@
     }
 
     &.trigger {
-      width: 21px;
-      height: 20px;
+      height: 28px;
+      width: 28px;
       border-radius: 8px;
       position: relative;
-      top: 2px;
-
-      &:hover {
-        background-color: $button-color-tertiary-hover-background-new;
-      }
+      top: 0;
     }
 
     .icon {
       color: $trigger-icon-fill-color;
       height: 18px;
-      top: 2px;
+      top: 5px;
       vertical-align: baseline;
       width: 18px;
       border-radius: 5px;
@@ -53,7 +52,6 @@
 
     &:hover {
       .icon {
-        // background-color: $button-color-tertiary-hover-background-new;
         background-color: transparent;
         color: $button-color-tertiary-hover-font-new;
       }
@@ -63,10 +61,16 @@
       color: $trigger-active-color;
     }
   }
+  
+  .fileupload:not([disabled]) + .trigger {
+    &:hover {
+      background-color: $button-color-tertiary-hover-background-new;
+    }
+  }
 
   .trigger-close .icon {
     height: 15px;
-    top: 2px;
+    top: 6px;
   }
 
   label {
