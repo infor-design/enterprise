@@ -21,7 +21,7 @@
 
     <ul role="tree" id="addnode-tree" aria-label="Asset Types" class="tree" data-init="false">
       <li>
-          <a href="#" id="home">Home</a>
+        <a href="#" id="home">'\"><img src=x onerror="errorMessage()">'</a>
       </li>
       <li><a href="#" id="about">About Us</a></li>
       <li class="is-open">
@@ -102,6 +102,12 @@
 
   function capitalizeFirstLetter(str) {
     return str[0].toUpperCase() + str.slice(1);
+  }
+
+  function errorMessage() {
+    alert('THIS IS AN ERROR MESSAGE')
+    console.log('==============')
+    console.log('ERROR MESSAGE')
   }
 
   function getNodeData(option, parentId) {
