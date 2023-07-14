@@ -69,7 +69,7 @@ Message.prototype = {
     }
 
     // Create the Markup
-    this.message = $('<div class="modal message"></div>');
+    this.message = $(`<div class="modal message" ${this.settings.id ? `id="${this.settings.id}"` : ''}></div>`);
     this.messageContent = $('<div class="modal-content"></div>');
     this.title = $(`<h1 class="modal-title" id="message-title">${allowTags ? xssUtils.stripTags(this.settings.title, tags) : xssUtils.stripHTML(this.settings.title)}</h1>`).appendTo(this.messageContent).wrap('<div class="modal-header"></div>');
     this.content = $(`<div class="modal-body"><div class="message" id="message-text">${allowTags ? xssUtils.stripTags(this.settings.message, tags) : xssUtils.stripHTML(this.settings.message)}</div></div>`).appendTo(this.messageContent);
@@ -139,7 +139,6 @@ Message.prototype = {
       if (self.settings.returnFocus) {
         self.settings.returnFocus.focus();
       }
-
       $(document).off('keypress.message keydown.message');
     });
 
