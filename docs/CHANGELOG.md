@@ -7,6 +7,7 @@
 - `[Bar]` Fixed a bug where the bottom axis label was cut off. ([#7612](https://github.com/infor-design/enterprise/issues/7612))
 - `[Bar]` Fixed incorrect legend position on stacked charts. ([#7693](https://github.com/infor-design/enterprise/issues/7693))
 - `[Button]` Fixed a bug where submenu icons were not aligned correctly. ([#7626](https://github.com/infor-design/enterprise/issues/7626))
+- `[Cards]` Fixed alignments and positioning of other elements inside a card widget. ([#7589](https://github.com/infor-design/enterprise/issues/7589))
 - `[Column-Stacked]` Fixed a regression bug where the stacked column chart was not rendering correctly. ([#7644](https://github.com/infor-design/enterprise/issues/7644))
 - `[Editor]` Fixed an issue where an editor with an initial value containing `<br \>` tags were being seen as dirty when resetdirty is called. ([#7483](https://github.com/infor-design/enterprise/issues/7483))
 - `[Homepage]` In some cases the new background color did not fill all the way in the page. ([#7696](https://github.com/infor-design/enterprise/issues/7696))
