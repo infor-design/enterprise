@@ -530,9 +530,12 @@ $card-header-section: '.card-header-section', '.widget-header-section';
     }
 
     .icon {
-      top: -1px;
       position: relative;
     }
+  }
+
+  .btn-actions > .icon {
+    top: unset;
   }
 }
 
