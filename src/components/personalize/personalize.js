@@ -403,13 +403,24 @@ Personalize.prototype = {
         colors.btnLinkColor = colors.light;
         colors.btnBgHoverColor = '#313236';
         colors.tabBottomBorderColor = '#50535a';
+        colors.moduleTabsSelectedTextColor = '#ffffff';
+
+        // Alabaster New Design
+        colors.tabHeaderColor = '#525257';
+        colors.headerTabBorder = '#8E8E95';
+        colors.tabSelectedColor = '#525257';
+        colors.tabColor = '#3B3B3F';
+        colors.tabHoverColor = '#28282A';
+        colors.tabBorderColor = '#525257';
+        colors.tabSelectedTextColor = '#ffffff';
+
+        colors.tabVerticalColor = '#525257';
+        colors.tabVerticalSelectedColor = '#3B3B3F';
       }
 
       if (isNewContrast) {
         // Alabaster New Design
-        //  colors.tabSelectedColor = '#47474c';
         colors.tabBorderColor = '#ffffff';
-        //  colors.tabColor = '#56565b';
         colors.tabHoverColor = '#C5C5C9';
       }
     }
