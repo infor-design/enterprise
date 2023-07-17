@@ -888,6 +888,14 @@
   }
 }
 
+.sidebar.scrollable {
+  .listview-search .searchfield-wrapper {
+    display: inline-block;
+    margin: 0;
+    width: 100%
+  }
+}
+
 // RTL Styles
 html[dir='rtl'] {
   &.is-safari {

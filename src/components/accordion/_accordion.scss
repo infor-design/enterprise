@@ -150,7 +150,7 @@
       &.is-selected,
       &.is-selected:hover {
         background-color: $accordion-selected-bg-color;
-        color: $accordion-selected-text-color;
+        color: $accordion-panel-selected-text-color;
 
         > a {
           color: inherit;
@@ -378,7 +378,7 @@
           color: $accordion-selected-text-color;
 
           .icon {
-            color: $accordion-selected-text-color;
+            color: $accordion-panel-selected-text-color;
 
             &.plus-minus {
               &::before,
@@ -534,7 +534,7 @@
   > [class^='btn'] {
     @include btn-chevron-style;
 
-    border-radius: 50%;
+    border-radius: 8px;
     width: 38px;
     height: 38px;
     margin: unset;
