@@ -6,6 +6,7 @@
 - `[ContextualActionPanel]` Fixed overflow issues on mobile view. ([#7585](https://github.com/infor-design/enterprise/issues/7585))
 - `[Editor]` Fixed an issue where an editor with an initial value containing `<br \>` tags were being seen as dirty when `resetdirty` is called. ([#7483](https://github.com/infor-design/enterprise/issues/7483))
 - `[ModuleNav]` Fixed rounding and zindex issues. ([#7654](https://github.com/infor-design/enterprise/issues/7654))
+- `[ModuleNav]` Can add an extrernal image with a setting. ([#7694](https://github.com/infor-design/enterprise/issues/7694))
 
 ## v4.84.3 Fixes
 
