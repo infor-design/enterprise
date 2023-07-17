@@ -466,6 +466,7 @@ body.modal-engaged {
   }
 
   .modal-body-wrapper {
+    overflow: auto;
     padding: 32px 16px;
 
     .field:not(.label-left).last-child {

@@ -2386,23 +2386,25 @@ Datagrid.prototype = {
     }
 
     if (col.filterType === 'lookup') {
-      btnDefault = filterConditions.length ? filterConditions[0] : 'contains';
-      btnMarkup = renderButton(btnDefault) +
-        render('contains', 'Contains', true) +
-        render('does-not-contain', 'DoesNotContain') +
-        render('equals', 'Equals') +
-        render('does-not-equal', 'DoesNotEqual') +
-        render('is-empty', 'IsEmpty') +
-        render('is-not-empty', 'IsNotEmpty') +
-        render('end-with', 'EndsWith') +
-        render('does-not-end-with', 'DoesNotEndWith') +
-        render('start-with', 'StartsWith') +
-        render('does-not-start-with', 'DoesNotStartWith') +
-        render('less-than', 'LessThan') +
-        render('less-equals', 'LessOrEquals') +
-        render('greater-than', 'GreaterThan') +
-        render('greater-equals', 'GreaterOrEquals');
-      btnMarkup = btnMarkup.replace('{{icon}}', btnDefault);
+      btnDefault = determineFilterDefaultValue(filterConditions, filterConditions.length ? filterConditions[0] : 'contains');
+      if (filterConditions.length === 0) {
+        btnMarkup = renderButton(btnDefault) +
+          render('contains', 'Contains', true) +
+          render('does-not-contain', 'DoesNotContain') +
+          render('equals', 'Equals') +
+          render('does-not-equal', 'DoesNotEqual') +
+          render('is-empty', 'IsEmpty') +
+          render('is-not-empty', 'IsNotEmpty') +
+          render('end-with', 'EndsWith') +
+          render('does-not-end-with', 'DoesNotEndWith') +
+          render('start-with', 'StartsWith') +
+          render('does-not-start-with', 'DoesNotStartWith');
+        btnMarkup = btnMarkup.replace('{{icon}}', btnDefault);
+      } else {
+        btnMarkup = renderButton(btnDefault) +
+          filterConditions.map(filter => render(filter, formatFilterText(filter))).join('');
+        btnMarkup = btnMarkup.replace('{{icon}}', btnDefault);
+      }
     }
 
     btnMarkup += '</ul>';
