@@ -60,7 +60,7 @@
 
   .tab-list-container {
     position: absolute;
-    width: inherit;
+    width: calc(100% - 1px);
 
     .tab-list {
       height: 34px;

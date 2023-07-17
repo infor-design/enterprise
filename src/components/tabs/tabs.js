@@ -3821,9 +3821,8 @@ Tabs.prototype = {
     let targetPos = DOM.getDimensions(target[0]);
     const targetClassList = target[0].classList;
     const isNotHeaderTabs = (!this.isHeaderTabs() || this.isHeaderTabs() && this.element[0].classList.contains('alternate'));
-    const isVerticalTabs = this.isVerticalTabs();
     const isRTL = Locale.isRTL();
-    const tabMoreWidth = !isVerticalTabs ? this.moreButton.outerWidth(true) - 8 : 0;
+    const tabMoreWidth = !this.isVerticalTabs() ? this.moreButton.outerWidth(true) - 8 : 0;
     const parentContainer = this.element;
     const scrollingTablist = this.tablistContainer;
     const hasSectionForm = parentContainer.parents('section.scrollable-flex').length;
@@ -3842,7 +3841,7 @@ Tabs.prototype = {
 
       // Adjust from the top
       targetRectObj.top -= parentRect.top - 2;
-      if (isVerticalTabs) {
+      if (self.isVerticalTabs()) {
         targetRectObj.top += parentElement[0].scrollTop;
       }
 
@@ -3892,17 +3891,19 @@ Tabs.prototype = {
         }
       }
 
-      if (isNotHeaderTabs && !isVerticalTabs && !self.isModuleTabs()) {
+      if (isNotHeaderTabs && !self.isVerticalTabs() && !self.isModuleTabs()) {
         targetRectObj.height; // eslint-disable-line
         targetRectObj.top += 2;
       }
 
-      if (self.isModuleTabs() && !isVerticalTabs) {
+      if (self.isModuleTabs() && !self.isVerticalTabs()) {
+        targetRectObj.top -= 3;
         targetRectObj.width -= 4;
         targetRectObj.left += 2;
+      } else {
+        targetRectObj.height -= 4;
       }
 
-      targetRectObj.height -= 4;
       if (!isClassic && !isAlternate && isTabContainerHeader && !isAddTabButton) {
         targetRectObj.top -= 9;
       }
