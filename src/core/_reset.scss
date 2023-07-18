@@ -41,14 +41,14 @@ input,
 textarea,
 select,
 button,
-.editor:not(.editor) table,
+table,
 caption,
-.editor:not(.editor) thead,
-.editor:not(.editor) tbody,
+thead,
+tbody,
 tfoot,
-.editor:not(.editor) tr,
-.editor:not(.editor) th,
-.editor:not(.editor) td {
+tr,
+th,
+td {
   border: 0;
   margin: 0;
   padding: 0;
@@ -110,7 +110,7 @@ input,
 textarea,
 select,
 button,
-.editor:not(.editor) th {
+th {
   border: 0;
   font-family: inherit;
   font-weight: inherit;
