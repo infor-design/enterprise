@@ -302,7 +302,7 @@ Personalize.prototype = {
     colors.tabSelectedTextColor = '#161618';
     colors.tabVerticalSelectedColor = colors.base;
     
-    colors.tabCloseInactiveColor = `rgba('ffffff', 0.85)`;
+    colors.tabCloseInactiveColor = 'rgba(255, 255, 255, 0.85)';
     colors.tabCloseHoverColor = '#ffffff';
 
     const isAlabaster = colors.header === '#ffffff';
