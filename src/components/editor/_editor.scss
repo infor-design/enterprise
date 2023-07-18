@@ -806,7 +806,6 @@ html.is-firefox {
 }
 
 // Reset for editor (table)
-
 .editor {
   table,
   thead,
@@ -818,7 +817,7 @@ html.is-firefox {
   }
 
   th {
-    font-weight: bold;
+    font-weight: 700;
   }
 }
 
