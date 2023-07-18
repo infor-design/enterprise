@@ -5,6 +5,9 @@ export const MODULE_NAV_DISPLAY_MODES = [false, 'collapsed', 'expanded'];
 // Icon for "24/Financial and Supply Management/Amethyst" from Figma designs
 // @TODO Remove and replace with built-in or custom setting
 export const SWITCHER_ICON_HTML = `<svg
+  class="icon-custom"
+  focusable="false"
+  aria-hidden="true"
   width="28"
   height="28"
   viewBox="0 0 28 28"
@@ -24,6 +27,12 @@ export const SWITCHER_ICON_HTML = `<svg
     </clipPath>
   </defs>
 </svg>`;
+
+/**
+ * Default function used for generating the Module Button Icon
+ * @returns {string} referencing Icon HTML
+ */
+export const defaultIconGenerator = () => SWITCHER_ICON_HTML;
 
 /**
  * @param {string} [buttonText] provides the template with descriptive button text, if applicable
@@ -52,6 +61,14 @@ export const dropdownTemplate = labelText => `<div class="module-nav-section rol
 export const iconTemplate = type => `<svg class="icon" focusable="false" aria-hidden="true" role="presentation">
   <use href="#icon-${type}"></use>
 </svg>`;
+
+/**
+ * IdsIcon component HTML for using an `<img>` tag instead of raw SVG (used for populating icons via external URL)
+ * @param {string} url the URL string
+ * @param {string} [alt] optional alt text
+ * @returns {string} template for an image tag
+ */
+export const imageTemplate = (url, alt) => `<img src="${url}" alt="${alt || 'Module Button Icon'}" aria-hidden="true" role="presentation" />`;
 
 /**
  * @returns {string} Module Nav Separator element template

@@ -42,9 +42,10 @@ const pressableTypes = ['icon-favorite', 'btn-toggle'];
  * @class Button
  * @param {string} element The component element.
  * @param {string} [settings] The component settings.
- * @param {string} [settings.toggleOnIcon=null]  The icon to use for on state on toggle buttons
- * @param {string} [settings.toggleOffIcon=null]  The icon to use for off state on toggle buttons
- * @param {string} [settings.replaceText=false]  If true the selection will be used to replace the content
+ * @param {string} [settings.toggleOnIcon=null] The icon to use for on state on toggle buttons
+ * @param {string} [settings.toggleOffIcon=null] The icon to use for off state on toggle buttons
+ * @param {string} [settings.replaceText=false] If true the selection will be used to replace the content
+ * @param {string} [settings.hideMenuArrow=false] If true and the button is a menu button, the popup arrow will be hidden.
  * @param {boolean} [settings.hitbox=false] If true, it will add an invisible and clickable area around the button
  */
 const BUTTON_DEFAULTS = {
