@@ -265,12 +265,30 @@
     <!-- Detail area is optional and can have additional context -->
     <div class="module-nav-detail">&nbsp;</div>
   </aside>
-  <div class="page-container scrollable">
+  <div class="page-container scrollable has-module-nav-offset">
+    <header class="header is-personalizable">
+      <div class="flex-toolbar">
+        <div class="toolbar-section">
+          <button id="header-hamburger" class="btn-icon application-menu-trigger personalize-actionable" type="button">
+            <span class="audible" data-translate="text">AppMenuTriggerTextAlt</span>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-menu"></use>
+            </svg>
+          </button>
+        </div>
+        <div class="toolbar-section title">
+          <h1>Module Nav</h1>
+        </div>
+
+        {{> includes/header-actionbutton}}
+
+      </div>
+    </header>
+
     <div class="row top-padding">
       <div class="four columns">&nbsp;</div>
       <div class="four columns">&nbsp;</div>
       <div class="four columns">
-        <h2 class="fieldset-title">Module Nav</h2>
         <p>Displays top-level navigation in a flyout menu</p>
 
         <div class="field">
@@ -293,7 +311,7 @@
         </div>
 
         <div class="field">
-          <input type="checkbox" class="checkbox" name="offset-check" id="offset-check" />
+          <input type="checkbox" checked="true" class="checkbox" name="offset-check" id="offset-check" />
           <label for="offset-check" class="checkbox-label">Offset the page container (don't hide any content)</label>
         </div>
       </div>
@@ -309,8 +327,13 @@
 
 <script>
   $('body').on('initialized', () => {
+    // Enable alabaster and disable classic
+    $('html').personalize({ colors: '#fff' });
+    $('[data-theme-name="theme-classic"]').parent().addClass('is-disabled');
+
     const navAPI = $('#nav').data('modulenav');
     const containerEl = $('.module-nav-container');
+    const dropdownEl = $('#display-mode-dropdown')
     const dropdownAPI = $('#display-mode-dropdown').data('dropdown');
     const displayCheckEl = $('#display-detail-check');
     const offsetCheckEl = $('#offset-check');
@@ -339,10 +362,12 @@
 
     if (hamburgerBtnEl.length) {
       hamburgerBtnEl.on('click.test', (e) => {
-        if (!dropdownAPI.value === 'collapsed') {
-          dropdownAPI.selectListItem($('option[value="expanded"]'));
+        if (dropdownAPI.value === 'collapsed') {
+          dropdownAPI.selectValue('expanded')
+          dropdownEl.trigger('change');
         } else {
-          dropdownAPI.selectListItem($('option[value="collapsed"]'));
+          dropdownAPI.selectValue('collapsed')
+          dropdownEl.trigger('change');
         }
       });
     }
