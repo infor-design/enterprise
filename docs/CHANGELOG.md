@@ -9,6 +9,7 @@
 - `[Button]` Fixed a bug where submenu icons were not aligned correctly. ([#7626](https://github.com/infor-design/enterprise/issues/7626))
 - `[Column-Stacked]` Fixed a regression bug where the stacked column chart was not rendering correctly. ([#7644](https://github.com/infor-design/enterprise/issues/7644))
 - `[Editor]` Fixed an issue where an editor with an initial value containing `<br \>` tags were being seen as dirty when resetdirty is called. ([#7483](https://github.com/infor-design/enterprise/issues/7483))
+- `[Editor]` Fixed a bug where pasting an html table into the editor wouldn't show the borders. ([#7463](https://github.com/infor-design/enterprise/issues/7463))
 - `[Homepage]` In some cases the new background color did not fill all the way in the page. ([#7696](https://github.com/infor-design/enterprise/issues/7696))
 - `[ModuleNav]` Fixed rounding and zindex issues. ([#7654](https://github.com/infor-design/enterprise/issues/7654))
 - `[Page-Patterns]` Fixed the width of the search field in page pattern example. ([#7561](https://github.com/infor-design/enterprise/issues/7561))
