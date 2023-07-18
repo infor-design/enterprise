@@ -407,6 +407,16 @@ html[dir='rtl'] {
       margin-right: 5px;
       top: 8px;
     }
+
+    .widget-header-section.title .badge {
+      left: -4px;
+    }
+
+    .widget-header-section.custom-action,
+    .widget-header-section.detail-custom-action {
+      display: flex;
+      justify-content: flex-end;
+    }
   }
 }
 
