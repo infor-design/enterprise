@@ -60,6 +60,7 @@ const reloadSourceStyles = ['none', 'open', 'typeahead'];
 * @param {string} [settings.allTextString]  Custom text string for `All` text header use in MultiSelect.
 * @param {string} [settings.selectedTextString]  Custom text string for `Selected` text header use in MultiSelect.
 * @param {boolean} [settings.selectAllFilterOnly = true] if true, when using the optional "Select All" checkbox, the Multiselect will only select items that are in the current filter.  If false, or if there is no filter present, all items will be selected.
+* @param {boolean} [settings.noResultsTextString = 'NoResults'] Adds custom no results text to the dropdown
 * @param {string|array} [settings.attributes = null] Add extra attributes like id's to the chart elements. For example `attributes: { name: 'id', value: 'my-unique-id' }`
 */
 const DROPDOWN_DEFAULTS = {
@@ -94,7 +95,8 @@ const DROPDOWN_DEFAULTS = {
   appendTo: '[role="main"]',
   attributes: null,
   width: undefined,
-  widthTarget: undefined
+  widthTarget: undefined,
+  noResultsTextString: 'NoResults'
 };
 
 function Dropdown(element, settings) {
@@ -1271,6 +1273,7 @@ Dropdown.prototype = {
 
     const self = this;
     let selected = false;
+    self.listUl?.find('.no-results').remove();
     let list = $('.dropdown-option', this.listUl);
     const headers = $('.group-label', this.listUl);
     let results;
@@ -1324,6 +1327,10 @@ Dropdown.prototype = {
         }
       });
 
+      if (results.length === 0) {
+        const noResultsString = `<li class="dropdown-option is-disabled is-placeholder no-results" role="presentation"><span>${Locale.translate(this.settings.noResultsTextString)}</span></li>`;
+        self.listUl.append(noResultsString);
+      }
       term = '';
 
       // Checking the position of the dropdown element

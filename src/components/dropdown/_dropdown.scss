@@ -339,6 +339,15 @@ div.multiselect {
       text-decoration: none;
     }
 
+    &.is-placeholder {
+      cursor: pointer;
+      color: $dropdown-placeholder-text-color;
+
+      &:hover {
+        background-color: none;
+      }
+    }
+
     &.is-swatch {
       padding-left: 30px;
     }
