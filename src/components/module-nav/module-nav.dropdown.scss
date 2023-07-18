@@ -157,6 +157,10 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
         color: $module-nav-switcher-dropdown-item-text-color;
       }
     }
+
+    &.no-results {
+      line-height: 48px;
+    }
   }
 
   // When configured with icons, don't show icon in "search" area
