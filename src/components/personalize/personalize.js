@@ -301,6 +301,9 @@ Personalize.prototype = {
     colors.tabTextColor = '#161618';
     colors.tabSelectedTextColor = '#161618';
     colors.tabVerticalSelectedColor = colors.base;
+    
+    colors.tabCloseInactiveColor = `rgba('ffffff', 0.85)`;
+    colors.tabCloseHoverColor = '#ffffff';
 
     const isAlabaster = colors.header === '#ffffff';
     const isNewDark = this.currentTheme.indexOf('new-dark') >= 0;
@@ -344,9 +347,11 @@ Personalize.prototype = {
       colors.tabBorderColor = '#ffffff';
       colors.tabColor = '#E0E0E1';
       colors.tabSelectedTextColor = '#161618';
-
       colors.tabVerticalColor = '#E0E0E1';
       colors.tabVerticalSelectedColor = '#ffffff';
+
+      colors.tabCloseInactiveColor = 'rgb(111, 111, 118)';
+      colors.tabCloseHoverColor = colors.contrast;
 
       if (isNewDark) {
         colors.base = '#6F6F76';
@@ -379,9 +384,10 @@ Personalize.prototype = {
         colors.tabColor = '#3B3B3F';
         colors.tabHoverColor = '#28282A';
         colors.tabSelectedTextColor = '#ffffff';
-
         colors.tabVerticalColor = '#525257';
         colors.tabVerticalSelectedColor = '#3B3B3F';
+
+        colors.tabCloseHoverColor = '#ffffff';
       }
 
       if (isClassicDark) {

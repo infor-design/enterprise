@@ -238,6 +238,14 @@
       a {
         padding: 10px 35px 10px 10px;
       }
+
+      svg.close {
+        color: $module-tabs-inactive-text-color;
+
+        &:hover {
+          color: $module-tabs-hover-text-color;
+        }
+      }
     }
 
     &.application-menu-trigger {

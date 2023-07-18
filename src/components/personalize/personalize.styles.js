@@ -289,6 +289,14 @@ a.is-personalizable svg.ripple-effect {
   color: ${colors.contrast};
 }
 
+.tab-container.module-tabs.is-personalizable .tab.dismissible svg.close {
+  color: ${colors.tabCloseInactiveColor};
+}
+
+.tab-container.module-tabs.is-personalizable .tab.dismissible svg.close:hover {
+  color: ${colors.tabCloseHoverColor};
+}
+
 .is-personalizable.tab-container.module-tabs .tab-more,
 .is-personalizable.tab-container.module-tabs .add-tab-button {
   color: ${colors.contrast};
