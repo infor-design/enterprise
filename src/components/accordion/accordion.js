@@ -190,7 +190,7 @@ Accordion.prototype = {
 
       let expander = header.children('.btn');
       if (!expander.length) {
-        expander = $('<button class="btn" type="button"></button>');
+        expander = $('<button class="btn" type="button" tabindex="-1"></button>');
 
         let method = 'insertBefore';
         if (self.settings.expanderDisplay !== 'plus-minus' && isTopLevel) {
@@ -545,7 +545,7 @@ Accordion.prototype = {
         [...pane.children].forEach((el) => {
           if (!$(el).hasClass('is-disabled')) {
             $(el).find('a').removeAttr('tabindex');
-            $(el).find('button').removeAttr('tabindex');
+            $(el).find('button').attr('tabindex', '-1');
           }
         });
       });

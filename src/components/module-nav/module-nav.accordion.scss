@@ -44,7 +44,7 @@
       }
 
       &:focus:not(.hide-focus) {
-        border-color: $module-nav-item-selected-text-color;
+        border-color: transparent;
         box-shadow: none;
       }
     }
@@ -119,7 +119,7 @@
 
       [class^='btn'] {
         &:focus:not(.hide-focus) {
-          border-color: $module-nav-item-selected-text-color;
+          border-color: transparent;
         }
 
         .icon {

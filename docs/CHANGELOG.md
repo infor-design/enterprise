@@ -9,6 +9,7 @@
 
 ## v4.86.0 Fixes
 
+- `[Accordion/ModuleNav/Appmenu]` Focus does not focus the expander buttons only the parent items. ([#7626](https://github.com/infor-design/enterprise/issues/7626))
 - `[Bar]` Fixed a bug where the bottom axis label was cut off. ([#7612](https://github.com/infor-design/enterprise/issues/7612))
 - `[Bar]` Fixed incorrect legend position on stacked charts. ([#7693](https://github.com/infor-design/enterprise/issues/7693))
 - `[Button]` Fixed a bug where submenu icons were not aligned correctly. ([#7626](https://github.com/infor-design/enterprise/issues/7626))
