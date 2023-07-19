@@ -814,6 +814,7 @@ html.is-firefox {
   tr,
   td {
     border: inherit;
+    border-color: $datagrid-cell-border-color;
   }
 
   th {
