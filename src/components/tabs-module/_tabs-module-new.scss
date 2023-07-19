@@ -16,12 +16,24 @@
         height: 11px;
         margin-top: 1px;
       }
+
+      svg.icon.close {
+        display: none;
+      }
     }
 
     &.application-menu-trigger {
       a {
         padding: 5px 12px 7px;
         width: 100%;
+      }
+    }
+
+    &:hover {
+      &.dismissible {
+        svg.icon.close {
+          display: block;
+        }
       }
     }
   }
