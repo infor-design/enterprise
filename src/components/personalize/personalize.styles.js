@@ -269,7 +269,7 @@ a.is-personalizable svg.ripple-effect {
 }
 
 .module-tabs.is-personalizable .tab:not(:first-child) {
-  border-left: 1px solid ${colors.darkest} !important;
+  border-left: 1px solid ${colors.tabDivider} !important;
 }
 
 .module-tabs.is-personalizable {
