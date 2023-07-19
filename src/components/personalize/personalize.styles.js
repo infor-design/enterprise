@@ -319,6 +319,18 @@ a.is-personalizable svg.ripple-effect {
   background-color: ${colors.tabHoverColor} !important;
 }
 
+.tab-container.vertical.is-personalizable > .tab-list-container > .tab-list > .tab.is-selected:hover {
+  background-color: ${colors.tabVerticalSelectedColor} !important;
+}
+
+.tab-container.vertical.is-personalizable > .tab-list-container > .tab-list > .tab:hover a {
+  color: ${colors.tabHoverTextColor} !important;
+}
+
+.tab-container.vertical.is-personalizable > .tab-list-container > .tab-list > .tab.is-selected:hover a {
+  color: ${colors.tabSelectedTextColor} !important;
+}
+
 .tab-container.vertical.is-personalizable > .tab-list-container > .tab-focus-indicator.is-selected.is-visible,
 .tab-container.vertical.is-personalizable .tab-focus-indicator.is-visible {
   border-color: ${colors.tabFocusIndicator} !important;

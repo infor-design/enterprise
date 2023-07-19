@@ -289,17 +289,18 @@ Personalize.prototype = {
     colors.tabBottomBorderColor = colors.base;
     colors.btnActionsHoverColor = colors.base;
     colors.moduleTabsSelectedTextColor = '#ffffff';
-    colors.tabHoverColor = colors.darker;
+    colors.tabHoverColor = '#E0E0E1';
+    colors.tabHoverTextColor = '#161618';
     colors.tabTextWeight = '600';
     colors.tabTextSelectedWeight = '600';
     colors.tabBorderColor = colors.darkest;
     colors.tabSelectedColor = colors.dark;
     colors.tabHeaderColor = colors.dark;
     colors.tabColor = colors.base;
-    colors.tabVerticalColor = colors.base;
+    colors.tabVerticalColor = colors.contrast;
     colors.headerTabBorder = 'transparent';
     colors.tabTextColor = '#161618';
-    colors.tabSelectedTextColor = '#161618';
+    colors.tabSelectedTextColor = colors.contrast;
     colors.tabVerticalSelectedColor = colors.base;
     
     colors.tabCloseInactiveColor = 'rgba(255, 255, 255, 0.85)';
@@ -310,6 +311,10 @@ Personalize.prototype = {
     const isClassicDark = this.currentTheme.indexOf('classic-dark') >= 0;
     const isNewContrast = this.currentTheme.indexOf('new-contrast') >= 0;
     colors.btnTertiaryBgHoverColor = isAlabaster ? '#E6F1FD' : colors.darker;
+
+    if (isNewDark || isClassicDark) {
+      colors.tabVerticalColor = '#525257';
+    }
 
     // Alabaster is different so readjust the colors
     if (isAlabaster) {
@@ -386,7 +391,7 @@ Personalize.prototype = {
         colors.tabSelectedTextColor = '#ffffff';
         colors.tabVerticalColor = '#525257';
         colors.tabVerticalSelectedColor = '#3B3B3F';
-
+        colors.tabHoverTextColor = '#ffffff';
         colors.tabCloseHoverColor = '#ffffff';
       }
 
@@ -420,6 +425,7 @@ Personalize.prototype = {
         colors.tabBorderColor = '#525257';
         colors.tabSelectedTextColor = '#ffffff';
 
+        colors.tabHoverTextColor = '#ffffff';
         colors.tabVerticalColor = '#525257';
         colors.tabVerticalSelectedColor = '#3B3B3F';
       }
