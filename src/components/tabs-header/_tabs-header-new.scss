@@ -37,6 +37,7 @@
         font-weight: $ids-number-font-weight-bold;
         overflow: hidden;
         height: 34px;
+        max-width: 215px;
 
         &:not(.is-disabled) {
           color: $header-tab-normal-color-new;
@@ -44,6 +45,7 @@
 
         a {
           margin-top: -5px;
+          max-width: inherit;
         }
 
         &::before {
