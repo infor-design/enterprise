@@ -65,7 +65,7 @@ CompletionChart.prototype = {
     if (this.settings.dataset.length === 0) {
       chartData = {};
       chartData.data = [{
-        name: { text: Locale ? Locale.translate('NoData') : 'No Data Available' },
+        name: { text: Locale ? Locale.translate('NoData') : 'No data available' },
         completed: { value: 0 },
       }];
     }

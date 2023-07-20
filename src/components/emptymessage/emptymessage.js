@@ -69,7 +69,7 @@ EmptyMessage.prototype = {
     if (opts.title) {
       // Re-evaluate the text
       if (opts.title === '[NoData]') {
-        opts.title = Locale ? Locale.translate('NoData') : 'No Data Available';
+        opts.title = Locale ? Locale.translate('NoData') : 'No data available';
       }
 
       $(`<div class="empty-title">${opts.title}</div>`).appendTo(this.element);

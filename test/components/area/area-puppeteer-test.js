@@ -41,7 +41,7 @@ describe('Area Puppeteer Tests', () => {
       const emptyTitle = await page.waitForSelector('.empty-title', { visible: true });
 
       expect(emptyMsg).toBeTruthy();
-      expect(await emptyTitle.evaluate(el => el.textContent)).toContain('No Data Available');
+      expect(await emptyTitle.evaluate(el => el.textContent)).toContain('No data available');
     });
   });
 

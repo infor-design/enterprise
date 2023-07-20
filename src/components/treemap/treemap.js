@@ -20,7 +20,7 @@ const TREEMAP_DEFAULTS = {
   showLabel: true,
   labelFormatter: '.0%',
   showTitle: true,
-  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data-new' }
+  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No data available'), info: '', icon: 'icon-empty-no-data-new' }
 };
 
 /**
@@ -38,7 +38,7 @@ const TREEMAP_DEFAULTS = {
  * @param {boolean} [settings.showTitle] If true then the first name will be used for the title area.
  * @param {object} [settings.emptyMessage] An empty message will be displayed when there is no chart data.
  * This accepts an object of the form emptyMessage:
- * `{title: 'No Data Available',
+ * `{title: 'No data available',
  *  info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data-new',
  *  button: {text: 'xxx', click: <function>}
  *  }`

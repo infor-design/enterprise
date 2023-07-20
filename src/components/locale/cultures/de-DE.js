@@ -551,7 +551,7 @@ Soho.Locale.addCulture('de-DE', {
     Tall: { id: 'Tall', value: 'Groß', comment: 'Describes a Taller Row Height in a grid/list' },
     Target: { id: 'Target', value: 'Ziel', comment: 'Label for an input to enter a Target (Url Attribute)' },
     TeamEvent: { id: 'TeamEvent', value: 'Team-Veranstaltung', comment: 'Having an event with a work team' },
-    TestLocaleDefaults: { id: 'TestLocaleDefaults', value: 'Test Locale Defaults', comment: 'Do not translate' },
+    TestLocaleDefaults: { id: 'TestLocaleDefaults', value: 'Test locale defaults', comment: 'Do not translate' },
     TextBtnCancel: { id: 'TextBtnCancel', value: 'Upload für diese Datei abbrechen', comment: 'text for cancel button for advanced fileupload' },
     TextBtnCloseError: { id: 'TextBtnCloseError', value: 'Fehler schließen', comment: 'text for error close button for advanced fileupload' },
     TextBtnRemove: { id: 'TextBtnRemove', value: 'Fehler schließen', comment: 'text for remove button for advanced fileupload' },
