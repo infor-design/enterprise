@@ -1,4 +1,4 @@
-// Uplift Dropdown
+// Light Theme Dropdown
 //================================================== //
 
 // Create a token for this
@@ -14,6 +14,11 @@ div.multiselect {
   > .listoption-icon {
     left: 12px;
     top: 11px;
+
+    &.large-icon {
+      height: 32px;
+      width: 32px;
+    }
 
     &.swatch {
       left: 13px;

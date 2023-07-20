@@ -36,6 +36,7 @@ const expanderDisplayModes = ['classic', 'plus-minus', 'chevron'];
  * @param {boolean} [settings.enableTooltips=true] If false, does not run logic to apply tooltips to elements with truncated text.
  * @param {string} [settings.expanderDisplay='classic'] Changes the iconography used in accordion header expander buttons. By default, top level expanders will be chevrons, and sub-header expanders will be "plus-minus" style.  This setting can also be "plus-minus" or "chevron" to force the same icons throughout the accordion.
  * @param {string} [settings.rerouteOnLinkClick=true]  Can be set to false if routing is externally handled
+ * @param {string} [settings.tooltipStyle='light']  Will be white unless set to dark.
  * @param {boolean} [settings.source=null]  A callback function that when implemented provided a call back for "ajax loading" of tab contents on open.
  */
 const ACCORDION_DEFAULTS = {
@@ -45,7 +46,8 @@ const ACCORDION_DEFAULTS = {
   enableTooltips: true,
   rerouteOnLinkClick: true,
   notificationBadge: false,
-  source: null
+  source: null,
+  tooltipStyle: 'light'
 };
 
 // Handles the conversion of deprecated settings to current settings
@@ -1466,8 +1468,11 @@ Accordion.prototype = {
     const self = this;
 
     // Reset all the things
+    const moduleNav = this.headers.parents().find('.module-nav-accordion');
     this.headers?.removeClass('filtered has-filtered-children hide-focus');
     this.panes.removeClass('all-children-filtered no-transition');
+    moduleNav.find('.empty-message').remove();
+    moduleNav.find('.module-nav-separator').show();
     this.contentAreas.removeClass('filtered');
     this.currentlyFiltered = $();
 
@@ -1480,7 +1485,19 @@ Accordion.prototype = {
     const allContentAreas = $();
 
     // Perform filtering
-    this.headers.add(this.contentAreas).not(toFilter).addClass('filtered');
+    this.headers.add(this.contentAreas).not(toFilter).not('.module-nav-settings-btn').addClass('filtered');
+    // Exclude Pinned Items in Module Nav
+    const footerArea = this.headers.parents().find('.module-nav-footer');
+    if (footerArea) {
+      const isPinned = footerArea.closest('.pinned-optional');
+      if (isPinned.length === 1) {
+        const footer = this.headers.parents().find('.module-nav-footer');
+        footer.find('.filtered')
+          .removeClass('filtered')
+          .addClass('pinned');
+        footer.prev('.module-nav-separator').addClass('pinned');
+      }
+    }
     toFilter.each((i, target) => {
       const isContentArea = $(target).is('.accordion-content');
       const allParentPanes = $(target).parents('.accordion-pane');
@@ -1517,6 +1534,22 @@ Accordion.prototype = {
       this.currentlyFiltered = toFilter;
       self.build(undefined, true);
     });
+
+    moduleNav.find('.module-nav-separator').not('.pinned').hide();
+
+    if (moduleNav.length === 1 &&
+      this.headers.not('.module-nav-settings-btn').not('.pinned').length === this.headers.not('.module-nav-settings-btn').not('.pinned').filter('.filtered').length) {
+      moduleNav.find('.module-nav-search-container').append(`<div class="empty-message">
+              <div class="card-empty-icon">
+          <svg class="icon-empty-state is-slate" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-empty-search-data-new"></use>
+          </svg>
+        </div>
+        <div class="card-empty-title">
+          ${Locale.translate('NoResultsFound')}
+        </div>
+      </div>`);
+    }
   },
 
   /**
@@ -1542,6 +1575,9 @@ Accordion.prototype = {
     this.headers?.removeClass('filtered has-filtered-children hide-focus');
     this.panes.removeClass('all-children-filtered no-transition');
     this.contentAreas.removeClass('filtered');
+    const moduleNav = this.headers.parents().find('.module-nav-accordion');
+    moduleNav.find('.empty-message').remove();
+    moduleNav.find('.module-nav-separator').show();
 
     headers.each((i, header) => {
       const parentPanes = $(header).parents('.accordion-pane');
@@ -1865,7 +1901,7 @@ Accordion.prototype = {
           $(elem).tooltip({
             trigger: 'immediate',
             content: `${elem.innerText}`,
-            extraClass: 'tooltip-accordion-style'
+            extraClass: this.settings.tooltipStyle === 'light' ? 'tooltip-accordion-style' : ''
           });
         }, delay);
       }
