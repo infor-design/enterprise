@@ -15,6 +15,8 @@ describe('Locale Puppeteer Visual Tests', () => {
       await page.waitForSelector('#tabs-2');
       const img = await page.screenshot();
       const config = getConfig('locale-ph');
+
+      // eslint-disable-next-line
       expect(img).toMatchImageSnapshot(config);
     });
   });
