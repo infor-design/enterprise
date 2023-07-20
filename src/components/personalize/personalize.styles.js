@@ -405,6 +405,10 @@ html[class*="-dark"] .is-personalizable .subheader button:not(:disabled) .icon {
   border-bottom: 4px solid ${colors.contrast};
 }
 
+html[class*="theme-new"] .header.is-personalizable:not(.has-alternate-tabs) .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled):hover {
+  border-bottom: 2px solid ${colors.contrast};
+}
+
 .header.is-personalizable .tab-container.horizontal > .tab-list-container .tab:not(.is-disabled):hover {
   border-bottom: 4px solid ${colors.base};
 }

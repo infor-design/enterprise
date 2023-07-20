@@ -2,37 +2,55 @@
 //================================================== //
 
 .tab-container.module-tabs {
-  .tab {
-    > a {
-      padding: 7px 16px;
-    }
+  min-height: 40px;
+  max-height: 40px;
 
-    &.dismissible {
-      a {
-        padding: 7px 24px;
+  .tab-list-container {
+    min-height: 40px;
+    max-height: 40px;
+  }
+
+  .tab-list {
+    min-height: inherit;
+    max-height: inherit;
+
+    .tab {
+      min-height: inherit;
+      max-height: inherit;
+
+      > a {
+        height: 40px;
+        padding: 7px 16px;
+        line-height: 1.5;
       }
 
-      .icon {
-        height: 11px;
-        margin-top: 1px;
-      }
-
-      svg.icon.close {
-        display: none;
-      }
-    }
-
-    &.application-menu-trigger {
-      a {
-        padding: 5px 12px 7px;
-        width: 100%;
-      }
-    }
-
-    &:hover {
       &.dismissible {
+        a {
+          padding: 7px 24px;
+        }
+
+        .icon {
+          height: 11px;
+          margin-top: -1px;
+        }
+
         svg.icon.close {
-          display: block;
+          display: none;
+        }
+      }
+
+      &.application-menu-trigger {
+        a {
+          padding: 5px 12px 7px;
+          width: 100%;
+        }
+      }
+
+      &:hover {
+        &.dismissible {
+          svg.icon.close {
+            display: block;
+          }
         }
       }
     }
@@ -47,6 +65,7 @@
         position: relative;
         top: -2px;
         font-weight: 400;
+        line-height: 1.8;
       }
     }
   }
@@ -66,4 +85,14 @@
       width: 18px;
     }
   }
+}
+
+.tab-panel-container {
+  padding-top: 4px;
+}
+
+.multitabs-section {
+  .tab-panel-container {
+    padding-top: unset;
+  } 
 }
