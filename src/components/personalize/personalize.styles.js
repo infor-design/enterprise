@@ -793,7 +793,7 @@ html[dir='rtl'] .scrollable-flex-header.is-personalizable .breadcrumb.truncated:
   border-right: 1px solid ${colors.hover} !important;
 }
 
-.module-tabs.is-personalizable .tab:hover, 
+.module-tabs.is-personalizable .tab:not(.is-selected):hover, 
 .module-tabs.is-personalizable .tab-more:hover {
   background-color: ${colors.tabHoverColor} !important;
   color: ${colors.contrast};
