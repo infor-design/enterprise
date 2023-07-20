@@ -12,7 +12,7 @@
     width: 100%;
 
     input.module-nav-search {
-      background-color: transparent;
+      background-color: $module-nav-input-bg-color;
       border-radius: $module-nav-common-border-radius;
       border: $module-nav-input-border-width solid transparent;
       color: inherit;
@@ -90,6 +90,10 @@
         }
       }
     }
+  }
+
+  .empty-message {
+    margin-block: 30px;
   }
 }
 

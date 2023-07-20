@@ -732,7 +732,7 @@ $module-nav-submenu-size: 300px;
 $module-nav-input-border-width: 1px;
 $module-nav-input-padding-inline-start-size: 10px;
 $module-nav-input-bg-color: $ids-color-palette-white;
-$module-nav-input-border-color: $ids-color-palette-slate-20;
+$module-nav-input-border-color: $ids-color-palette-slate-30;
 $module-nav-input-text-color: $ids-color-palette-slate-60;
 
 // Module Nav Item (Accordion Header/Menu Button)
@@ -742,9 +742,9 @@ $module-nav-item-margin-inline: 8px;
 $module-nav-item-icon-start-spacing: 11px;
 $module-nav-item-icon-end-spacing: 19px;
 $module-nav-item-dropdown-icon-size: 13px; // 10px in Figma
-$module-nav-item-collapsed-size: 32px;
-$module-nav-item-collapsed-general-spacing-size: 16px;
-$module-nav-item-collapsed-first-last-spacing-size: 8px;
+$module-nav-item-collapsed-size: 40px;
+$module-nav-item-collapsed-general-spacing-size: 8px;
+$module-nav-item-collapsed-first-last-spacing-size: 5px;
 $module-nav-item-text-color: $ids-color-palette-slate-80;
 $module-nav-item-hover-bg-color: $ids-color-palette-slate-20;
 $module-nav-item-hover-text-color: $ids-color-palette-slate-100;
@@ -759,8 +759,8 @@ $module-nav-switcher-button-gutter-size: 8px;
 $module-nav-switcher-dropdown-height: 40px;
 $module-nav-switcher-dropdown-width: 256px;
 $module-nav-switcher-dropdown-item-height: 48px;
-$module-nav-switcher-dropdown-item-focus-bg-color: $ids-color-palette-slate-10;
-$module-nav-switcher-dropdown-item-text-color: $ids-color-palette-slate-60;
+$module-nav-switcher-dropdown-item-focus-bg-color: $ids-color-palette-slate-20;
+$module-nav-switcher-dropdown-item-text-color: $ids-color-palette-slate-80;
 $module-nav-switcher-dropdown-icon-top-offset: 11px;
 
 // Module Nav Search (Input Field)
