@@ -712,7 +712,7 @@ $application-menu-new-border-color: $ids-color-palette-white;
 
 // Module Nav (App menu alternative)
 $module-nav-bg-color: $ids-color-palette-slate-10;
-$module-nav-border-color: transparent;
+$module-nav-border-color: $ids-color-palette-slate-30;
 $module-nav-detail-bg-color: $ids-color-palette-slate-20;
 $module-nav-separator-color: $ids-color-palette-slate-20;
 $module-nav-separator-expanded-edge-distance: 22px;
@@ -729,7 +729,8 @@ $module-nav-submenu-size: 300px;
 // Module Nav Input Field (Search/Role Dropdown)
 $module-nav-input-border-width: 1px;
 $module-nav-input-padding-inline-start-size: 10px;
-$module-nav-input-bg-color: $ids-color-palette-white;
+$module-nav-input-bg-color: $ids-color-palette-slate-20;
+$module-nav-input-bg-color-focus: $ids-color-palette-white;
 $module-nav-input-border-color: $ids-color-palette-slate-30;
 $module-nav-input-text-color: $ids-color-palette-slate-60;
 
@@ -743,7 +744,7 @@ $module-nav-item-dropdown-icon-size: 13px; // 10px in Figma
 $module-nav-item-collapsed-size: 40px;
 $module-nav-item-collapsed-general-spacing-size: 8px;
 $module-nav-item-collapsed-first-last-spacing-size: 5px;
-$module-nav-item-text-color: $ids-color-palette-slate-80;
+$module-nav-item-text-color: $ids-color-palette-slate-100;
 $module-nav-item-hover-bg-color: $ids-color-palette-slate-20;
 $module-nav-item-hover-text-color: $ids-color-palette-slate-100;
 $module-nav-item-selected-bg-color: $ids-color-palette-azure-10;
@@ -752,6 +753,7 @@ $module-nav-item-top-expander-size: 31px;
 $module-nav-item-sub-expander-size: 23px;
 
 // Module Nav Switcher (Role Dropdown + Button)
+$module-nav-switcher-dropdown-background-color: $ids-color-palette-white;
 $module-nav-switcher-button-size: 40px;
 $module-nav-switcher-button-gutter-size: 8px;
 $module-nav-switcher-dropdown-height: 40px;

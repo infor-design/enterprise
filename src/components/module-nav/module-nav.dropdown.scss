@@ -4,6 +4,7 @@
 $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switcher-button-gutter-size;
 
 @mixin module-nav-div-dropdown-adjustment() {
+  background-color: $module-nav-switcher-dropdown-background-color;
   padding-block-start: 9px;
   padding-block-end: 7px;
   padding-inline-start: 8px;

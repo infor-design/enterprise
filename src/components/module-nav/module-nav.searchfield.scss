@@ -53,11 +53,12 @@
       border-color: $module-nav-input-border-color;
     }
 
-    &.has-focus {
+    &.has-focus,
+    &.has-text {
       color: $module-nav-search-input-focused-text-color;
 
       input.module-nav-search {
-        background-color: $module-nav-input-bg-color;
+        background-color: $module-nav-input-bg-color-focus;
         border-color: $module-nav-item-selected-text-color;
 
         &::placeholder {
