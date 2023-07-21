@@ -17,13 +17,34 @@
 
     &.trigger-close {
       display: none;
-      margin-left: -43px;
+      margin-left: -60px;
+      border-radius: 8px;
+      height: 28px;
+      width: 28px;
+      position: relative;
+      top: -3px;
+
+      &.is-visible {
+        display: inline-block;
+      }
+
+      &:hover {
+        background-color: $button-color-tertiary-hover-background-new;
+      }
+    }
+
+    &.trigger {
+      height: 28px;
+      width: 28px;
+      border-radius: 8px;
+      position: relative;
+      top: 0;
     }
 
     .icon {
       color: $trigger-icon-fill-color;
       height: 18px;
-      top: 3px;
+      top: 5px;
       vertical-align: baseline;
       width: 18px;
       border-radius: 5px;
@@ -31,7 +52,7 @@
 
     &:hover {
       .icon {
-        background-color: $button-color-tertiary-hover-background-new;
+        background-color: transparent;
         color: $button-color-tertiary-hover-font-new;
       }
     }
@@ -40,10 +61,16 @@
       color: $trigger-active-color;
     }
   }
+  
+  .fileupload:not([disabled]) + .trigger {
+    &:hover {
+      background-color: $button-color-tertiary-hover-background-new;
+    }
+  }
 
   .trigger-close .icon {
     height: 15px;
-    top: 1px;
+    top: 6px;
   }
 
   label {
