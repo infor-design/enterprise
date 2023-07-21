@@ -21,6 +21,8 @@
 - `[Modal]` On some devices the overflow/scrolling is still missing on modal and contents can break out the bottom of the modal. ([#7711](https://github.com/infor-design/enterprise/issues/7711))
 - `[ModuleNav]` Fixed rounding and `zindex` issues. ([#7654](https://github.com/infor-design/enterprise/issues/7654))
 - `[Dropdown/ModuleNav]` Fixed indents and UI improvements. ([#7662](https://github.com/infor-design/enterprise/issues/7662))
+- `[ModuleNav]` Fixed rounding and zindex issues. ([#7654](https://github.com/infor-design/enterprise/issues/7654))
+- `[Notification]` Updated color styles when notification is in subheader. ([#7623](https://github.com/infor-design/enterprise/issues/7623))
 - `[Page-Patterns]` Fixed the width of the search field in page pattern example. ([#7561](https://github.com/infor-design/enterprise/issues/7561))
 - `[Tooltip]` Fixed an error in tooltip where some string is unrecognizable. ([NG#1499](https://github.com/infor-design/enterprise-ng/issues/1499))
 - `[WeekView]` Fixed bug where agenda variant ignored `showAllDay` setting. ([#7700](https://github.com/infor-design/enterprise/issues/7700))
