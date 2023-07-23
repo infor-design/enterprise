@@ -418,6 +418,13 @@ html[dir='rtl'] {
       justify-content: flex-end;
     }
   }
+
+  .widget-content {
+    .searchfield-wrapper.has-close-icon-button.has-text .btn-icon.close {
+      top: 8px;
+      right: 315px;
+    }
+  }
 }
 
 // Show Actions button on touch devices
