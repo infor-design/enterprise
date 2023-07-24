@@ -1,0 +1,92 @@
+<div class="header is-personalizable">
+  <div class="flex-toolbar personalize-header">
+    <div class="toolbar-section title">
+      <h2>Header</h2>
+    </div>
+
+    <div class="toolbar-section buttonset">
+      <button class="btn">
+        <span>Text Button</span>
+      </button>
+    </div>
+
+    <div id="more-button" class="toolbar-section more">
+      {{> includes/header-actionbutton}}
+    </div>
+  </div>
+</div>
+<div class="is-personalizable">
+  <div class="personalize-subheader">
+    <div class="flex-toolbar" style="height: 60px" id="mock-header">
+      <div class="toolbar-section title">
+        <h2>&nbsp;&nbsp;&nbsp;&nbsp;Sub Header</h2>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', () => {
+    $('#mock-header').notification({
+      type: 'error',
+      message: 'DTO rejected by your manager for Sept 30, 2018.',
+      parent: '#mock-header',
+      link: '#',
+      linkText: 'Click to view',
+      attributes: [
+        { name: 'id', value: 'notification-id-1'},
+        { name: 'data-automation-id', value: 'notification-automation-id-1' }
+      ]
+    });
+  });
+</script>
+
+<script>
+  $('body').on('initialized', () => {
+    $('#mock-header').notification({
+      type: 'info',
+      message: 'DTO rejected by your manager for Sept 30, 2018. Please login to your Human Resources (HR) portal for an explanation on why. If you believe there was a mistake or wish to appeal the rejection, you can now also do that in the new HR portal. ',
+      parent: '#mock-header',
+      link: '#',
+      linkText: 'Click to view',
+      attributes: [
+        { name: 'id', value: 'notification-id-2'},
+        { name: 'data-automation-id', value: 'notification-automation-id-2' }
+      ]
+    });
+  });
+</script>
+
+
+<script>
+  $('body').on('initialized', () => {
+    $('#mock-header').notification({
+      type: 'alert',
+      message: 'DTO rejected by your manager for Sept 30, 2018.',
+      parent: '#mock-header',
+      link: '#',
+      linkText: 'Click to view',
+      attributes: [
+        { name: 'id', value: 'notification-id-3'},
+        { name: 'data-automation-id', value: 'notification-automation-id-3' }
+      ]
+    });
+  });
+</script>
+
+
+<script>
+  $('body').on('initialized', () => {
+    $('#mock-header').notification({
+      type: 'success',
+      message: 'DTO rejected by your manager for Sept 30, 2018.',
+      parent: '#mock-header',
+      link: '#',
+      linkText: 'Click to view',
+      attributes: [
+        { name: 'id', value: 'notification-id-4'},
+        { name: 'data-automation-id', value: 'notification-automation-id-4' }
+      ]
+    });
+  });
+</script>
