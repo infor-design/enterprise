@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.84.5 Fixes
+
+- `[ModuleNav]` Fixed issue setting `changeIconOnSelect`. ([#7694](https://github.com/infor-design/enterprise/issues/7694))
+
 ## v4.84.4 Fixes
 
 - `[Accordion]` Updated color style for accordion selected panel. ([#7593](https://github.com/infor-design/enterprise/issues/7593))
