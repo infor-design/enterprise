@@ -3949,7 +3949,7 @@ Tabs.prototype = {
     this.init();
 
     // In Angular, they call updated() method on AfterInit. We need to make sure that the arrangeAPI is also updated.
-    let arrangeApi = this.tablist.data('arrange');
+    const arrangeApi = this.tablist.data('arrange');
     if (arrangeApi) {
       arrangeApi?.updated();
     }
