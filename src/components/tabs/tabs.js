@@ -3945,9 +3945,16 @@ Tabs.prototype = {
       this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
     }
 
-    return this
-      .teardown()
-      .init();
+    this.teardown();
+    this.init();
+
+    // In Angular, they call updated() method on AfterInit. We need to make sure that the arrangeAPI is also updated.
+    let arrangeApi = this.tablist.data('arrange');
+    if (arrangeApi) {
+      arrangeApi?.updated();
+    }
+
+    return this;
   },
 
   /**
