@@ -379,7 +379,7 @@ a.is-personalizable svg.ripple-effect {
 .subheader.is-personalizable button:not(:disabled):not(.searchfield-category-button) .icon,
 .subheader.is-personalizable button:not(:disabled):not(.searchfield-category-button) .app-header.icon > span,
 .is-personalizable .personalize-subheader button:not(:disabled),
-.is-personalizable .personalize-subheader button:not(:disabled):not(.close) .icon,
+.is-personalizable .personalize-subheader button:not(:disabled):not(.close):not(.notification-close) .icon,
 .is-personalizable .personalize-subheader button:not(:disabled) .app-header.icon > span  {
   color: ${colors.contrast} !important;
 }
@@ -1046,8 +1046,8 @@ html[class*="theme-classic-"] .tab-container.is-personalizable .tab-list-contain
   background-color: ${colors.lighter} !important;
 }
 
-.is-personalizable .personalize-subheader  p,
-.personalize-subheader.is-personalizable p {
+.is-personalizable .personalize-subheader  p:not(.notification-text),
+.personalize-subheader.is-personalizable p:not(.notification-text) {
   color: ${colors.contrast} !important;
 }
 
@@ -1068,8 +1068,8 @@ html[class*="-dark"] .is-personalizable .subheader h2 {
   color: #fff !important;
 }
 
-.is-personalizable .personalize-subheader  .icon,
-.personalize-subheader.is-personalizable .icon {
+.is-personalizable .personalize-subheader button:not(.notification-close) .icon:not(.notification-icon),
+.personalize-subheader.is-personalizable button:not(.notification-close) .icon:not(.notification-icon) {
   color: ${colors.contrast} !important;
 }
 

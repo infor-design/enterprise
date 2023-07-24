@@ -118,6 +118,7 @@ FileUpload.prototype = {
 
     this.svgClose.on('click.fileupload', (e) => {
       this.clearUploadFile();
+      this.svgClose.removeClass('is-visible');
       if (hasInlineLabel) {
         this.fileInput.data(`handleEvent +${[(e.type || '')]}`, e.handleObj);
       }
@@ -150,7 +151,7 @@ FileUpload.prototype = {
     this.fileInput.on('change.fileupload', function () {
       if (this.files.length > 0) {
         self.textInput.val(this.files[0].name).trigger('change');
-        self.svgClose.show().addClass('is-visible');
+        self.svgClose.addClass('is-visible');
       } else if (!self.clearing) {
         self.clearUploadFile();
       }
@@ -190,7 +191,7 @@ FileUpload.prototype = {
   clearUploadFile() {
     this.clearing = true;
     this.fileInput.add(this.textInput).val('');
-    this.svgClose.hide().removeClass('is-visible');
+    this.svgClose.removeClass('is-visible');
     this.fileInput.triggerHandler('change');
     this.clearing = false;
   },
