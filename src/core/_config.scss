@@ -353,8 +353,8 @@ $dropdown-menu-separator-color: $ids-color-palette-graphite-40;
 $dropdown-menu-separator-border-color: $ids-color-palette-graphite-30;
 $dropdown-box-shadow-top: 0 0 5px $drop-shadow-depth;
 $dropdown-readonly-icon-color: $ids-color-palette-graphite-40;
-
 $dropdown-swatch-border-color: transparent;
+$dropdown-placeholder-text-color: $ids-color-palette-slate-60;
 
 // List View
 $listview-bg-color: $ids-color-palette-white;
@@ -683,7 +683,7 @@ $accordion-inverse-focus-state-color: $ids-color-brand-primary-base;
 $accordion-focused-border-color: $ids-color-brand-primary-base;
 $accordion-focused-text-color: $ids-color-brand-primary-base;
 $accordion-selected-bg-color: $ids-color-brand-primary-base;
-$accordion-selected-text-color: $ids-color-palette-slate-90;
+$accordion-selected-text-color: $ids-color-palette-white;
 $accordion-panel-selected-text-color: $ids-color-palette-white;
 
 $accordion-highcontrast-text-decoration: none;
@@ -714,7 +714,7 @@ $application-menu-new-border-color: $ids-color-palette-white;
 
 // Module Nav (App menu alternative)
 $module-nav-bg-color: $ids-color-palette-slate-10;
-$module-nav-border-color: transparent;
+$module-nav-border-color: $ids-color-palette-slate-30;
 $module-nav-detail-bg-color: $ids-color-palette-slate-20;
 $module-nav-separator-color: $ids-color-palette-slate-20;
 $module-nav-separator-expanded-edge-distance: 22px;
@@ -731,9 +731,10 @@ $module-nav-submenu-size: 300px;
 // Module Nav Input Field (Search/Role Dropdown)
 $module-nav-input-border-width: 1px;
 $module-nav-input-padding-inline-start-size: 10px;
-$module-nav-input-bg-color: $ids-color-palette-white;
-$module-nav-input-border-color: $ids-color-palette-slate-20;
-$module-nav-input-text-color: $ids-color-palette-slate-60;
+$module-nav-input-bg-color: $ids-color-palette-slate-20;
+$module-nav-input-bg-color-focus: $ids-color-palette-white;
+$module-nav-input-border-color: $ids-color-palette-slate-30;
+$module-nav-input-text-color: $ids-color-palette-slate-100;
 
 // Module Nav Item (Accordion Header/Menu Button)
 $module-nav-item-height: 40px;
@@ -742,25 +743,26 @@ $module-nav-item-margin-inline: 8px;
 $module-nav-item-icon-start-spacing: 11px;
 $module-nav-item-icon-end-spacing: 19px;
 $module-nav-item-dropdown-icon-size: 13px; // 10px in Figma
-$module-nav-item-collapsed-size: 32px;
-$module-nav-item-collapsed-general-spacing-size: 16px;
-$module-nav-item-collapsed-first-last-spacing-size: 8px;
-$module-nav-item-text-color: $ids-color-palette-slate-80;
+$module-nav-item-collapsed-size: 40px;
+$module-nav-item-collapsed-general-spacing-size: 8px;
+$module-nav-item-collapsed-first-last-spacing-size: 5px;
+$module-nav-item-text-color: $ids-color-palette-slate-100;
 $module-nav-item-hover-bg-color: $ids-color-palette-slate-20;
 $module-nav-item-hover-text-color: $ids-color-palette-slate-100;
-$module-nav-item-selected-bg-color: $ids-color-palette-azure-20;
-$module-nav-item-selected-text-color: $ids-color-palette-azure-80;
+$module-nav-item-selected-bg-color: $ids-color-palette-azure-10;
+$module-nav-item-selected-text-color: $ids-color-palette-azure-70;
 $module-nav-item-top-expander-size: 31px;
 $module-nav-item-sub-expander-size: 23px;
 
 // Module Nav Switcher (Role Dropdown + Button)
+$module-nav-switcher-dropdown-background-color: $ids-color-palette-white;
 $module-nav-switcher-button-size: 40px;
 $module-nav-switcher-button-gutter-size: 8px;
 $module-nav-switcher-dropdown-height: 40px;
 $module-nav-switcher-dropdown-width: 256px;
 $module-nav-switcher-dropdown-item-height: 48px;
 $module-nav-switcher-dropdown-item-focus-bg-color: $ids-color-palette-slate-20;
-$module-nav-switcher-dropdown-item-text-color: $ids-color-palette-slate-60;
+$module-nav-switcher-dropdown-item-text-color: $ids-color-palette-slate-80;
 $module-nav-switcher-dropdown-icon-top-offset: 11px;
 
 // Module Nav Search (Input Field)
@@ -776,8 +778,8 @@ $module-nav-search-close-icon-x-offset: 12px;
 
 // Module Nav Settings Menu (Accordion Header + Popupmenu)
 $module-nav-settings-menu-item-height: 40px;
-$module-nav-settings-menu-item-text-color: $ids-color-palette-slate-60;
-$module-nav-settings-menu-separator-color: $ids-color-palette-slate-10;
+$module-nav-settings-menu-item-text-color: $ids-color-palette-slate-80;
+$module-nav-settings-menu-separator-color: $ids-color-palette-slate-20;
 $module-nav-accordion-gutter-size: 8px;
 $module-nav-footer-gutter-size: 12px;
 

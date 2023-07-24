@@ -304,6 +304,7 @@ $dropdown-selected-bg-color: $ids-color-brand-primary-base;
 $dropdown-menu-separator-color: $ids-color-palette-slate-70;
 $dropdown-menu-separator-border-color: $ids-color-palette-slate-60;
 $dropdown-readonly-icon-color: $ids-color-palette-slate-40;
+$dropdown-placeholder-text-color: $ids-color-palette-slate-60;
 
 // Date Picker
 $datepicker-month-year-color: $ids-color-palette-black;
@@ -532,12 +533,12 @@ $module-nav-separator-color: $ids-color-palette-slate-30;
 $module-nav-text-color: $ids-color-palette-slate-70;
 
 // Module Nav Input Field (Search/Role Dropdown)
-$module-nav-input-bg-color: $ids-color-palette-white;
-$module-nav-input-border-color: $ids-color-palette-slate-30;
+$module-nav-input-bg-color: $ids-color-palette-slate-20;
+$module-nav-input-border-color: $ids-color-palette-slate-40;
 $module-nav-input-text-color: $ids-color-palette-slate-70;
 
 // Module Nav Item (Accordion Header/Menu Button)
-$module-nav-item-text-color: $ids-color-palette-slate-90;
+$module-nav-item-text-color: $ids-color-palette-slate-100;
 $module-nav-item-hover-bg-color: $ids-color-palette-slate-30;
 $module-nav-item-hover-text-color: $ids-color-palette-slate-100;
 $module-nav-item-selected-bg-color: $ids-color-palette-azure-20;
@@ -545,7 +546,7 @@ $module-nav-item-selected-text-color: $ids-color-palette-azure-100;
 
 // Module Nav Switcher (Role Dropdown + Button)
 $module-nav-switcher-dropdown-item-focus-bg-color: $ids-color-palette-slate-30;
-$module-nav-switcher-dropdown-item-text-color: $ids-color-palette-slate-70;
+$module-nav-switcher-dropdown-item-text-color: $ids-color-palette-slate-90;
 
 // Module Nav Search (Input Field)
 $module-nav-search-input-text-color: $ids-color-palette-slate-90;

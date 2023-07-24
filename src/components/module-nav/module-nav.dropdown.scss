@@ -4,6 +4,7 @@
 $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switcher-button-gutter-size;
 
 @mixin module-nav-div-dropdown-adjustment() {
+  background-color: $module-nav-switcher-dropdown-background-color;
   padding-block-start: 9px;
   padding-block-end: 7px;
   padding-inline-start: 8px;
@@ -136,13 +137,17 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
 
     a {
       color: $module-nav-switcher-dropdown-item-text-color;
-      padding-block: $module-nav-switcher-button-gutter-size;
+      padding-inline-start: 44px;
+      padding-block-start: $module-nav-switcher-button-gutter-size - 1px;
     }
 
     .listoption-icon {
       color: $module-nav-switcher-dropdown-item-text-color;
-      margin-inline-start: 1px;
-      margin-inline-end: 27px;
+      margin-inline-start: 8px;
+      margin-block-start: 4px;
+      position: absolute;
+      height: 32px;
+      width: 32px;
     }
 
     &.is-focused:not(.is-disabled) {
@@ -155,6 +160,22 @@ $module-nav-container-size: $module-nav-switcher-button-size + $module-nav-switc
 
       .listoption-icon {
         color: $module-nav-switcher-dropdown-item-text-color;
+      }
+    }
+
+    &.no-results {
+      line-height: 48px;
+      color: $module-nav-switcher-dropdown-item-text-color;
+
+      .icon {
+        margin-block: 13px;
+        margin-inline-start: 10px;
+        height: 18px;
+        width: 18px;
+      }
+
+      span {
+        padding-inline-start: 28px;
       }
     }
   }
