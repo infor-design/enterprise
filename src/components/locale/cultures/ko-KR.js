@@ -542,7 +542,7 @@ Soho.Locale.addCulture('ko-KR', {
     Tall: { id: 'Tall', value: '길게', comment: 'Describes a Taller Row Height in a grid/list' },
     Target: { id: 'Target', value: '대상', comment: 'Label for an input to enter a Target (Url Attribute)' },
     TeamEvent: { id: 'TeamEvent', value: '팀 이벤트', comment: 'Having an event with a work team' },
-    TestLocaleDefaults: { id: 'TestLocaleDefaults', value: 'Test Locale Defaults', comment: 'Do not translate' },
+    TestLocaleDefaults: { id: 'TestLocaleDefaults', value: 'Test locale defaults', comment: 'Do not translate' },
     TextBtnCancel: { id: 'TextBtnCancel', value: '이 파일 업로드 취소', comment: 'text for cancel button for advanced fileupload' },
     TextBtnCloseError: { id: 'TextBtnCloseError', value: '이 오류 닫기', comment: 'text for error close button for advanced fileupload' },
     TextBtnRemove: { id: 'TextBtnRemove', value: '이 오류 닫기', comment: 'text for remove button for advanced fileupload' },

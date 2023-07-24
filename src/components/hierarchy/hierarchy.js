@@ -44,7 +44,7 @@ const HIERARCHY_DEFAULTS = {
   renderSubLevel: false,
   layout: 'horizontal', // stacked, horizontal, paging, mobile-only
   rootId: null,
-  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data-new' }
+  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No data available'), info: '', icon: 'icon-empty-no-data-new' }
 };
 
 function Hierarchy(element, settings) {

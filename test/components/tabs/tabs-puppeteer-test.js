@@ -16,7 +16,7 @@ describe('Tabs Puppeteer tests', () => {
           const tooltip = await element.$eval('.tooltip-content', e => e.textContent);
 
           expect(display).toContain('is-open');
-          expect(tooltip).toContain('Add New Tab');
+          expect(tooltip).toContain('Add new tab');
         });
     });
   });

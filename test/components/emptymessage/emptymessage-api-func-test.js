@@ -32,7 +32,7 @@ let emptymessageEl;
 let emptymessageObj;
 
 const settings = {
-  title: 'No Data Available',
+  title: 'No data available',
   icon: 'icon-empty-no-data-new',
   info: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do siusmod temp.',
   button: {
@@ -80,7 +80,7 @@ describe('EmptyMessage API', () => { //eslint-disable-line
   it('should fire the click event from settings', (done) => {
     emptymessageObj.destroy();
     emptymessageObj = new EmptyMessage(emptymessageEl, {
-      title: 'No Data Available',
+      title: 'No data available',
       icon: 'icon-empty-no-data-new',
       info: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do siusmod temp.',
       button: {
