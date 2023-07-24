@@ -124,9 +124,8 @@
   // Display Mode: Expanded
 
   &.mode-expanded {
-    border-right: 1px solid $module-nav-border-color;
-
     .module-nav-bar {
+      border-inline-end: 1px solid $module-nav-border-color;
       width: $module-nav-expanded-size;
     }
 

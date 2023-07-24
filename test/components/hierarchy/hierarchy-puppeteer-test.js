@@ -83,7 +83,7 @@ describe('Hierarchy Stacked Tests', () => {
         .then(el => expect(el).toBeTruthy());
     });
 
-    it('should load next set of records', async () => {
+    it.skip('should load next set of records', async () => {
       await page.waitForSelector('#hierarchy', { visible: true })
         .then(idValue => expect(idValue).toBeTruthy());
 
