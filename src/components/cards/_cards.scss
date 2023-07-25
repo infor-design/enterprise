@@ -803,6 +803,10 @@ html[dir='rtl'] {
     width: 230px;
   }
 
+  .widget-title:has(+ .badge) {
+    width: unset;
+  }
+
   &:not(.has-toolbar) {
     >.btn-actions {
       right: 0;
