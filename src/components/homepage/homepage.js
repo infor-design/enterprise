@@ -96,7 +96,9 @@ Homepage.prototype = {
     this.initEdit();
 
     // Initial Sizing
-    this.resize(this, false);
+    setTimeout(() => { // Timeout to let rtl load first before the render of the resize
+      this.resize(this, false);
+    }, 100);
     this.element.parent().addClass('homepage-background');
   },
 
