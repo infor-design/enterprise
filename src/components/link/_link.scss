@@ -1,10 +1,18 @@
 .link {
+  cursor: pointer;
+  display: inline-block;
   width: 156px;
-  height: 136px;
+  min-height: 136px;
+  max-height: 136px;
+  background-color: $link-background-color;
   border-radius: 8px;
-  border: 1px solid #0000001A;
-  box-shadow: 0px 0px 4px 0px #0000001A;
+  border: 1px solid transparent;
+  box-shadow: 0px 0px 4px 0px $link-border-color;
   padding-top: 7%;
+  margin-inline-start: 16px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  transition: 0.3s cubic-bezier(.17, .04, .03, .94);
 
   .status {
     width: 48px;
@@ -12,6 +20,7 @@
     margin: auto;
 
     .icon {
+      color: $link-icon-color;
       width: 48px;
       height: 48px;
     }
@@ -20,13 +29,25 @@
   .text {
     width: 132px;
     height: 40px;
-    margin: auto;
-    margin-top: 5%;
+    margin: 12px;
+    color: $link-color-text-font;
 
     .title {
       font-size: 16px;
       font-weight: 600;
       text-align: center;
     }
+  }
+
+  &:hover {
+    border-color: $link-hover-color;
+  }
+
+  &.is-selected {
+    border-color: $link-selected-color;
+  }
+
+  &:focus:not(.is-selected) {
+    @include focus-state();
   }
 }
