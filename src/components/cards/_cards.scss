@@ -754,6 +754,19 @@ html[dir='rtl'] {
     .widget-group-action {
       padding: 0 20px 0 10px;
     }
+
+    .searchfield-wrapper.has-close-icon-button.has-text .btn-icon.close {
+      right: 330px;
+      top: 7px;
+    }
+
+    .listview-search .icon.close {
+      left: 0 !important;
+    }
+
+    .listview-search input {
+      padding: 9px 40px 9px 26px !important;
+    }
   }
 }
 
