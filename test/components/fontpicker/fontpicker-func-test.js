@@ -147,7 +147,7 @@ describe('Fontpicker API', () => {
     expect(styles.length).toEqual(3);
 
     expect(styles[0] instanceof FontPickerStyle).toBeTruthy();
-    expect(styles[0].displayName).toEqual('Normal Text');
+    expect(styles[0].displayName).toEqual('Normal text');
     expect(styles[0].tagName).toEqual('p');
   });
 
@@ -179,7 +179,7 @@ describe('Fontpicker API', () => {
     expect(styles.length).toEqual(3);
 
     expect(styles[0] instanceof FontPickerStyle).toBeTruthy();
-    expect(styles[0].displayName).toEqual('Normal Text');
+    expect(styles[0].displayName).toEqual('Normal text');
     expect(styles[0].tagName).toEqual('p');
   });
 

@@ -24,6 +24,7 @@ const MODULE_NAV_SWITCHER_DEFAULTS = {
   displayMode: MODULE_NAV_DISPLAY_MODES[0],
   generate: true,
   icon: defaultIconGenerator,
+  changeIconOnSelect: true,
   moduleButtonText: 'Standard Module',
   roleDropdownLabel: 'Roles',
   roles: []
@@ -189,6 +190,13 @@ ModuleNavSwitcher.prototype = {
       extraListWrapper: true,
       width: 'parent',
       widthTarget: '.module-nav-switcher'
+    }).off('change.module-nav').on('change.module-nav', (e) => {
+      if (!this.settings.changeIconOnSelect) return;
+      const selectedValue = e.currentTarget.value;
+      const icon = $(e.currentTarget)?.data('dropdown')?.list.find(`[data-val=${selectedValue}]`).find('.listoption-icon');
+      const svgInner = icon[0]?.innerHTML;
+      const svgHtml = `<svg class="icon-custom" focusable="false" aria-hidden="true" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">${svgInner}</svg>`;
+      this.setModuleButtonIcon(svgHtml);
     });
   },
 
@@ -214,9 +222,10 @@ ModuleNavSwitcher.prototype = {
 
   /**
    * Configures the Module Button's icon
+   * @param {string} iconStr can optionally pass in the icon
    * @returns {void}
    */
-  setModuleButtonIcon() {
+  setModuleButtonIcon(iconStr) {
     let iconHTML = '';
 
     switch (typeof this.settings.icon) {
@@ -237,6 +246,10 @@ ModuleNavSwitcher.prototype = {
         break;
       default:
         break;
+    }
+
+    if (iconStr) {
+      iconHTML = iconStr;
     }
 
     // if Icon HTML exists, replace the current one

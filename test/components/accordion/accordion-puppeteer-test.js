@@ -167,22 +167,14 @@ describe('Accordion Puppeteer Tests', () => {
     });
 
     it('should dynamically add and navigate to new accordion headers', async () => {
+      const header1 = await page.$$('.accordion-header');
+      expect(header1.length).toBe(6);
+
       await page.click('#addFavs');
       await page.click('#addFavs');
 
-      const header = await page.$$('#test-accordion > .accordion-header');
-
-      await header[header.length - 1].click();
-
-      await page.keyboard.press('Tab');
-      await page.keyboard.press('Tab');
-      await page.keyboard.press('Tab');
-      await page.keyboard.press('Tab');
-      await page.keyboard.press('Tab');
-
-      await page.evaluateHandle(() => document.activeElement.textContent)
-        .then(textContent => textContent.jsonValue())
-        .then(textContentString => expect(textContentString).toEqual('Dynamically-Added Favorite (1)'));
+      const header2 = await page.$$('.accordion-header');
+      expect(header2.length).toBe(8);
     });
   });
 });

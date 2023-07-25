@@ -56,7 +56,7 @@ A standard Text Input is a basic input element with `type="text"`. Password type
 ```html
 <div class="field">
   <label for="first-name">First Name</label>
-  <input type="text" id="first-name" name="first-name" placeholder="Normal text Field">
+  <input type="text" id="first-name" name="first-name" placeholder="Normal text field">
 </div>
 
 <div class="field">
@@ -92,7 +92,7 @@ A standard Text Input is a basic input element with `type="text"`. Password type
 
 ## Reveal Sensitive Information Feature
 
-We have a small utility to handle the use case of hiding and showing sensitive information in input fields. The `revealText` plugin will add a hide/show "button" to the input field and when clicked the input will toggle from obscured text to normal text. Also you can press CTRL+R to toggle with the keyboard.
+We have a small utility to handle the use case of hiding and showing sensitive information in input fields. The `revealText` plugin will add a hide/show "button" to the input field and when clicked the input will toggle from obscured text to Normal text. Also you can press CTRL+R to toggle with the keyboard.
 
 ```html
 <div class="field">
@@ -119,7 +119,7 @@ If automation id's or other attributes are needed for the Input component, simpl
 ```html
 <div class="field">
   <label for="first-name">First Name</label>
-  <input type="text" id="first-name" data-automation-id="input-first-name" name="first-name" placeholder="Normal text Field"/>
+  <input type="text" id="first-name" data-automation-id="input-first-name" name="first-name" placeholder="Normal text field"/>
 </div>
 ```
 

@@ -550,7 +550,7 @@ Soho.Locale.addCulture('sv-SE', {
     Tall: { id: 'Tall', value: 'Hög', comment: 'Describes a Taller Row Height in a grid/list' },
     Target: { id: 'Target', value: 'Mål', comment: 'Label for an input to enter a Target (Url Attribute)' },
     TeamEvent: { id: 'TeamEvent', value: 'Teamhändelse', comment: 'Having an event with a work team' },
-    TestLocaleDefaults: { id: 'TestLocaleDefaults', value: 'Test Locale Defaults', comment: 'Do not translate' },
+    TestLocaleDefaults: { id: 'TestLocaleDefaults', value: 'Test locale defaults', comment: 'Do not translate' },
     TextBtnCancel: { id: 'TextBtnCancel', value: 'Avbryt överföring av denna fil', comment: 'text for cancel button for advanced fileupload' },
     TextBtnCloseError: { id: 'TextBtnCloseError', value: 'Stäng detta fel', comment: 'text for error close button for advanced fileupload' },
     TextBtnRemove: { id: 'TextBtnRemove', value: 'Stäng detta fel', comment: 'text for remove button for advanced fileupload' },

@@ -1031,10 +1031,10 @@ describe('Locale API', () => {
     // Add due to SOHO-6782
     Locale.set('en-US');
 
-    expect(Locale.translate('TestLocaleDefaults')).toEqual('Test Locale Defaults');
+    expect(Locale.translate('TestLocaleDefaults')).toEqual('Test locale defaults');
     Locale.set('de-DE');
 
-    expect(Locale.translate('TestLocaleDefaults')).toEqual('Test Locale Defaults');
+    expect(Locale.translate('TestLocaleDefaults')).toEqual('Test locale defaults');
     Locale.set('ar-EG');
 
     expect(Locale.translate('XYZ')).toEqual('[XYZ]');
@@ -1044,7 +1044,7 @@ describe('Locale API', () => {
     Locale.set('en-US');
     Locale.currentLanguage.messages.CustomValue = { id: 'CustomValue', value: 'Added Custom Value' };
 
-    expect(Locale.translate('CollapseAppTray')).toEqual('Collapse App Tray');
+    expect(Locale.translate('CollapseAppTray')).toEqual('Collapse app tray');
     expect(Locale.translate('CustomValue')).toEqual('Added Custom Value');
   });
 
