@@ -768,6 +768,12 @@ html[dir='rtl'] {
       padding: 9px 40px 9px 26px !important;
     }
   }
+
+  &[class*='theme-classic-'] .card-header-section.title .badge,
+  &[class*='theme-classic-'] .widget-header-section.title .badge {
+    left: -5px;
+    top: 1px;
+  }
 }
 
 .card-header,
@@ -794,6 +800,7 @@ html[dir='rtl'] {
 
   .widget-title {
     margin: 0;
+    width: 230px;
   }
 
   &:not(.has-toolbar) {
