@@ -1,0 +1,61 @@
+<div class="homepage page-container scrollable" data-init="false" id="maincontent" data-columns="3" role="main">
+  <div class="content">
+    <div class="widget no-shadow" id="example-widget-borderless-1">
+      <div class="widget-header">
+        <div class="widget-header-section title">
+          <h2>Link Cards</h2>
+        </div>
+      </div>
+      <div class="widget-content">
+        <div class="link">
+          <div class="status">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-pizza"></use>
+            </svg>
+          </div>
+          <div class="text">
+            <div class="title">
+              AR Report
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="widget no-shadow" id="example-widget-borderless-2">
+      <div class="widget-header">
+        <div class="widget-header-section title">
+          <h2>Link List</h2>
+        </div>
+      </div>
+      <div class="widget-content">
+        <p>Link List Here</p>
+      </div>
+    </div>
+
+    <div class="widget no-shadow" id="example-widget-borderless-3">
+      <div class="widget-header">
+        <div class="widget-header-section title">
+          <h2>Link Colors</h2>
+        </div>
+      </div>
+      <div class="widget-content">
+        <p>Link Color Here</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+    $('.widget.no-shadow').cards({
+      bordered: false
+    });
+
+    $('.widget:not(.no-shadow)').cards({
+      bordered: true
+    });
+
+    $('.homepage').homepage();
+  });
+</script>

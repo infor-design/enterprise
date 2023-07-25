@@ -1,0 +1,32 @@
+.link {
+  width: 156px;
+  height: 136px;
+  border-radius: 8px;
+  border: 1px solid #0000001A;
+  box-shadow: 0px 0px 4px 0px #0000001A;
+  padding-top: 7%;
+
+  .status {
+    width: 48px;
+    height: 48px;
+    margin: auto;
+
+    .icon {
+      width: 48px;
+      height: 48px;
+    }
+  }
+
+  .text {
+    width: 132px;
+    height: 40px;
+    margin: auto;
+    margin-top: 5%;
+
+    .title {
+      font-size: 16px;
+      font-weight: 600;
+      text-align: center;
+    }
+  }
+}
