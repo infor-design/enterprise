@@ -530,9 +530,12 @@ $card-header-section: '.card-header-section', '.widget-header-section';
     }
 
     .icon {
-      top: -1px;
       position: relative;
     }
+  }
+
+  .btn-actions > .icon {
+    top: unset;
   }
 }
 
@@ -751,6 +754,25 @@ html[dir='rtl'] {
     .widget-group-action {
       padding: 0 20px 0 10px;
     }
+
+    .searchfield-wrapper.has-close-icon-button.has-text .btn-icon.close {
+      right: 330px;
+      top: 7px;
+    }
+
+    .listview-search .icon.close {
+      left: 0 !important;
+    }
+
+    .listview-search input {
+      padding: 9px 40px 9px 26px !important;
+    }
+  }
+
+  &[class*='theme-classic-'] .card-header-section.title .badge,
+  &[class*='theme-classic-'] .widget-header-section.title .badge {
+    left: -5px;
+    top: 1px;
   }
 }
 
@@ -778,6 +800,11 @@ html[dir='rtl'] {
 
   .widget-title {
     margin: 0;
+    width: 230px;
+  }
+
+  .widget-title:has(+ .badge) {
+    width: unset;
   }
 
   &:not(.has-toolbar) {
