@@ -73,7 +73,7 @@ describe('WeekView API', () => {
 
   it('should render week start and end day', () => {
     expect(document.getElementById('monthview-datepicker-field').textContent).toEqual('December 2019');
-    expect(document.body.querySelector('thead tr th:nth-child(1)').textContent.trim()).toEqual('HourAll Day');
+    expect(document.body.querySelector('thead tr th:nth-child(1)').textContent.trim()).toEqual('HourAll day');
     expect(document.body.querySelector('thead tr th:nth-child(2)').textContent.trim()).toEqual('1Sun');
     expect(document.body.querySelector('thead tr th:nth-child(8)').textContent.trim()).toEqual('7Sat');
 

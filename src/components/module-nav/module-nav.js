@@ -22,7 +22,8 @@ const COMPONENT_NAME = 'modulenav';
 
 const MODULE_NAV_DEFAULTS = {
   accordionSettings: {
-    expanderDisplay: 'classic'
+    expanderDisplay: 'classic',
+    tooltipStyle: 'dark'
   },
   displayMode: MODULE_NAV_DISPLAY_MODES[0],
   filterable: false,

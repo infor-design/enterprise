@@ -729,7 +729,7 @@
       border-top-color: $accordion-border-color;
 
       &.is-focused {
-        border-top-color: transparent;
+        border-top-color: $accordion-focused-border-color;
       }
     }
   }

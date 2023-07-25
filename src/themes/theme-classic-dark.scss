@@ -101,7 +101,7 @@ $button-color-primary-active-background: $ids-color-palette-slate-60;
 $button-color-tertiary-hover-font-new: $ids-color-palette-white;
 $button-hyperlink-color: $ids-color-palette-slate-50;
 $button-hyperlink-hover-color: $ids-color-palette-slate-40;
-$button-color-tertiary-hover-background-new: transparent;
+$button-color-tertiary-hover-background-new: $ids-color-palette-slate-90;
 $button-icon-disabled-color: $ids-color-palette-slate-60;
 $button-color-secondary-initial-font: $ids-color-palette-slate-10;
 $button-color-secondary-hover-background: $ids-color-palette-slate-50;
@@ -294,8 +294,8 @@ $dropdown-menu-border-color: $ids-color-brand-primary-base;
 $dropdown-menu-separator-color: $ids-color-palette-slate-40;
 $dropdown-menu-separator-border-color: $ids-color-palette-slate-50;
 $dropdown-readonly-icon-color: $ids-color-palette-slate-40;
-
 $dropdown-swatch-border-color: $ids-color-palette-slate-40;
+$dropdown-placeholder-text-color: $ids-color-palette-slate-40;
 
 // Date Picker
 $datepicker-month-year-color: $inverse-color;

@@ -104,7 +104,7 @@ $button-color-secondary-disabled-font-new: $ids-color-palette-slate-40;
 $button-color-secondary-initial-background: transparent;
 
 $button-color-tertiary-disabled-background-new: $ids-color-palette-slate-90;
-$button-color-tertiary-hover-background-new: rgba(0, 0, 0, .3);
+$button-color-tertiary-hover-background-new: $ids-color-palette-slate-90;
 $button-color-tertiary-hover-font-new: $ids-color-palette-white;
 
 $button-color-primary-destructive-initial-background-new: $ids-color-palette-ruby-60;
@@ -330,7 +330,7 @@ $dropdown-menu-border-color: $ids-color-brand-primary-base;
 $dropdown-menu-separator-color: $ids-color-palette-slate-40;
 $dropdown-menu-separator-border-color: $ids-color-palette-slate-50;
 $dropdown-readonly-icon-color: $ids-color-palette-slate-40;
-
+$dropdown-placeholder-text-color: $ids-color-palette-slate-30;
 $dropdown-swatch-border-color: $ids-color-palette-slate-40;
 $ids-color-status-base: $ids-color-palette-slate-40;
 
@@ -561,12 +561,14 @@ $application-menu-trigger-icon-fill-color: $trigger-icon-fill-color;
 
 // Module Nav (App menu alternative)
 $module-nav-bg-color: $ids-color-palette-slate-90;
+$module-nav-border-color: $ids-color-palette-slate-70;
 $module-nav-detail-bg-color: $ids-color-palette-slate-80;
 $module-nav-separator-color: $ids-color-palette-slate-80;
 $module-nav-text-color: $ids-color-palette-slate-30;
 
 // Module Nav Input Field (Search/Role Dropdown)
 $module-nav-input-bg-color: $ids-color-palette-slate-80;
+$module-nav-input-bg-color-focus: $ids-color-palette-slate-90;
 $module-nav-input-border-color: $ids-color-palette-slate-70;
 $module-nav-input-text-color: $ids-color-palette-slate-10;
 
@@ -579,7 +581,8 @@ $module-nav-item-selected-text-color: $ids-color-palette-slate-10;
 
 // Module Nav Switcher (Role Dropdown + Button)
 $module-nav-switcher-dropdown-item-focus-bg-color: $ids-color-palette-slate-80;
-$module-nav-switcher-dropdown-item-text-color: $ids-color-palette-slate-30;
+$module-nav-switcher-dropdown-item-text-color: $ids-color-palette-slate-20;
+$module-nav-switcher-dropdown-background-color: $ids-color-palette-white;
 
 // Module Nav Search (Input Field)
 $module-nav-search-input-text-color: $ids-color-palette-slate-10;
