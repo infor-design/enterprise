@@ -26,6 +26,7 @@
 - `[ModuleNav]` Fixed rounding and zindex issues. ([#7654](https://github.com/infor-design/enterprise/issues/7654))
 - `[Notification]` Updated color styles when notification is in subheader. ([#7623](https://github.com/infor-design/enterprise/issues/7623))
 - `[Page-Patterns]` Fixed the width of the search field in page pattern example. ([#7561](https://github.com/infor-design/enterprise/issues/7561))
+- `[Tabs Header]` Fixed colors of disabled in dark mode. ([#7465](https://github.com/infor-design/enterprise/issues/7465))
 - `[Tooltip]` Fixed an error in tooltip where some string is unrecognizable. ([NG#1499](https://github.com/infor-design/enterprise-ng/issues/1499))
 - `[WeekView]` Fixed bug where agenda variant ignored `showAllDay` setting. ([#7700](https://github.com/infor-design/enterprise/issues/7700))
 
