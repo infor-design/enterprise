@@ -1,117 +1,95 @@
-<style>
-  .form-responsive {
-    min-width: 320px;
-  }
-  .row:last-child {
-    margin-bottom: -10px;
-  }
-</style>
-<div class="row top-padding">
-	<div class="twelve columns">
 
-		<button class="btn-secondary" type="button" id="add-context">Show Modal</button><br/><br/>
+<div class="row">
+  <div class="twelve columns">
 
-    <button class="btn-secondary" type="button" id="suppress-key">Show Modal (Suppressed Enter)</button>
+    <button class="btn-secondary" type="button" data-modal="modal-1">Add Context</button>
+    <div class="modal" id="modal-1">
+      <div class="modal-content">
 
-		<!-- Modal Example -->
-		<div id="modal-add-context" class="hidden">
-      <div class="container">
-        <div class="form-responsive row no-indent">
-          <div class="full-width column">
+        <div class="modal-header">
+          <h1 class="modal-title">Add Context</h1>
+        </div>
 
-              <div class="field">
-                <label for="subject">Problem</label>
-                <input type="text" id="subject" name="subject"/>
-              </div>
+        <div class="modal-body">
 
-              <div class="field">
-                <label for="location" class="label">Location</label>
-                <select id="location" name="location" class="dropdown">
-                  <option value="N">North</option>
-                  <option value="S">South</option>
-                  <option value="E">East</option>
-                  <option value="W">West</option>
-                </select>
-              </div>
+          <div class="field">
+            <label for="context-type">Type</label>
+            <select class="dropdown" id="context-type" name="type">
+              <option value="1">Context 01</option>
+              <option value="2">Context 02</option>
+              <option value="3">Context 03</option>
+              <option value="4">Context 04</option>
+              <option value="5">Context 05</option>
+            </select>
+          </div>
 
-              <div class="field">
-                <label for="date-field-normal" class="label">Date Field</label>
-                <input id="date-field-normal" data-automation-id="custom-automation-id" class="datepicker" name="date-field" type="text" data-init="false"/>
-              </div>
+          <div class="field">
+            <label for="context-name" class="required">Name</label>
+            <input id="context-name" name="context-name" data-validate="required" type="text" placeholder="Example: Name One"/>
+          </div>
 
-              <div class="field">
-                <label for="range-novalue" class="label">Range - No Initial value</label>
-                <input id="range-novalue" name="range-novalue" class="datepicker input-md" type="text" data-options="{range: {useRange: true}}"/>
-              </div>
+          <div class="field">
+            <label for="date-field" class="label">Date Field</label>
+            <input id="date-field" class="datepicker" name="date-field" type="text"/>
+          </div>
 
-              <div class="field">
-                <label for="range-valuebyelem" class="label">Range - Initial value by Element value</label>
-                <input id="range-valuebyelem" name="range-valuebyelem" class="datepicker input-md" type="text" data-options="{range: {useRange: true}}" value="2/7/2018 - 2/22/2018"/>
-              </div>
-            </div>
+          <div class="field">
+            <label for="field-1" class="required">Extra Field</label>
+            <input id="field-1" name="field-1" data-validate="required" type="text"/>
+          </div>
+
+          <div class="field">
+            <label for="field-2" class="required">Extra Field</label>
+            <input id="field-2" name="field-2" data-validate="required" type="text"/>
+          </div>
+
+          <div class="field">
+            <label for="field-3" class="required">Extra Field</label>
+            <input id="field-3" name="field-3" data-validate="required" type="text"/>
+          </div>
+
+          <div class="field">
+            <label for="field-4" class="required">Extra Field</label>
+            <input id="field-4" name="field-4" data-validate="required" type="text"/>
+          </div>
+
+          <div class="field">
+            <label for="field-5" class="required">Extra Field</label>
+            <input id="field-5" name="field-5" data-validate="required" type="text"/>
+          </div>
+
+          <div class="field">
+            <label for="field-6" class="required">Extra Field</label>
+            <input id="field-6" name="field-6" data-validate="required" type="text"/>
+          </div>
+
+          <div class="field">
+            <label for="field-7" class="required">Extra Field</label>
+            <input id="field-7" name="field-7" data-validate="required" type="text"/>
+          </div>
+
+          <div class="field">
+            <label for="field-8" class="required">Extra Field</label>
+            <input id="field-8" name="field-8" data-validate="required" type="text"/>
+          </div>
+
+          <div class="field">
+            <label for="field-9" class="required">Extra Field</label>
+            <input id="field-9" name="field-9" data-validate="required" type="text"/>
+          </div>
+
+          <div class="field">
+            <label for="date-field-2" class="label">Date Field 2</label>
+            <input id="date-field-2" class="datepicker" name="date-field-2" type="text"/>
+          </div>
+
+          <div class="modal-buttonset">
+            <button type="button" class="btn-modal">Cancel</button>
+            <button type="button" id="submit" class="btn-modal-primary">Submit</button>
           </div>
         </div>
       </div>
-	</div>
+    </div>
+
+  </div>
 </div>
-
-<script>
-var modals = {
-    'add-context': {
-      'title': 'Add Context',
-      'id': 'my-id',
-      'content': $('#modal-add-context')
-    },
-    'suppress-key': {
-      'title': 'Suppress Key',
-      'id': 'my-id',
-      'content': $('#modal-add-context'),
-      'suppressEnterKey': true
-    }
-  },
-
-  setModal = function (opt) {
-    opt = $.extend({
-      buttons: [{
-        text: 'Cancel',
-      //  id: 'modal-button-1',
-        click: function(e, modal) {
-          modal.close();
-        }
-      }, {
-        text: 'Save',
-      //  id: 'modal-button-2',
-        click: function(e, modal) {
-          modal.close();
-        },
-        validate: false,
-        isDefault: true
-      }]
-    }, opt);
-
-    $('body').modal(opt);
-  };
-
-  $('body').on('initialized', function() {
-    $('#date-field-normal')
-      .datepicker({
-        attributes: [
-          { name: 'id', value: 'custom-id' },
-          { name: 'data-automation-id', value: 'custom-automation-id' }
-      ]})
-      .on('change', function () {
-        console.log('Change Event Fired')
-      });
-  });
-
-  $('#add-context').on('click', function () {
-		$(this).focus();
-    setModal(modals[this.id]);
-  });
-
-  $('#suppress-key').on('click', function () {
-		$(this).focus();
-    setModal(modals[this.id]);
-  });
-
-</script>
