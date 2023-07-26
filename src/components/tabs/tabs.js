@@ -3294,7 +3294,8 @@ Tabs.prototype = {
     // Divided by number of visible tabs
     // (doesn't include app menu trigger which shouldn't change size).
     // Minus one (for the left-side border of each tab)
-    visibleTabSize = ((tabContainerW - appTriggerSize) / sizeableTabs.length - 1);
+    // visibleTabSize = ((tabContainerW - appTriggerSize) / sizeableTabs.length - 1);
+    visibleTabSize = ((tabContainerW - appTriggerSize) / sizeableTabs.length);
 
     if (visibleTabSize < defaultTabSize) {
       visibleTabSize = defaultTabSize;
@@ -3820,9 +3821,8 @@ Tabs.prototype = {
     let targetPos = DOM.getDimensions(target[0]);
     const targetClassList = target[0].classList;
     const isNotHeaderTabs = (!this.isHeaderTabs() || this.isHeaderTabs() && this.element[0].classList.contains('alternate'));
-    const isVerticalTabs = this.isVerticalTabs();
     const isRTL = Locale.isRTL();
-    const tabMoreWidth = !isVerticalTabs ? this.moreButton.outerWidth(true) - 8 : 0;
+    const tabMoreWidth = !this.isVerticalTabs() ? this.moreButton.outerWidth(true) - 8 : 0;
     const parentContainer = this.element;
     const scrollingTablist = this.tablistContainer;
     const hasSectionForm = parentContainer.parents('section.scrollable-flex').length;
@@ -3841,7 +3841,7 @@ Tabs.prototype = {
 
       // Adjust from the top
       targetRectObj.top -= parentRect.top - 2;
-      if (isVerticalTabs) {
+      if (self.isVerticalTabs()) {
         targetRectObj.top += parentElement[0].scrollTop;
       }
 
@@ -3891,14 +3891,26 @@ Tabs.prototype = {
         }
       }
 
-      if (isNotHeaderTabs && !isVerticalTabs && !self.isModuleTabs()) {
+      if (isNotHeaderTabs && !self.isVerticalTabs() && !self.isModuleTabs()) {
         targetRectObj.height; // eslint-disable-line
         targetRectObj.top += 2;
       }
 
-      targetRectObj.height -= 4;
+      if (self.isModuleTabs() && !self.isVerticalTabs()) {
+        targetRectObj.top -= 3;
+        targetRectObj.width -= 4;
+        targetRectObj.left += 2;
+
+        if (!isClassic) {
+          targetRectObj.height -= 2;
+        }
+      } else {
+        targetRectObj.height -= 4;
+      }
+
       if (!isClassic && !isAlternate && isTabContainerHeader && !isAddTabButton) {
         targetRectObj.top -= 9;
+        targetRectObj.height += 2;
       }
 
       if (isClassic && isAlternate && isTabContainerHeader) {
@@ -3945,9 +3957,16 @@ Tabs.prototype = {
       this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
     }
 
-    return this
-      .teardown()
-      .init();
+    this.teardown();
+    this.init();
+
+    // In Angular, they call updated() method on AfterInit. We need to make sure that the arrangeAPI is also updated.
+    const arrangeApi = this.tablist.data('arrange');
+    if (arrangeApi) {
+      arrangeApi?.updated();
+    }
+
+    return this;
   },
 
   /**

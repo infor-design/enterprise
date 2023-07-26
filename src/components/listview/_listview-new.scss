@@ -22,6 +22,7 @@
 
   + .listview {
     height: calc(100% - 44px);
+    overflow-y: auto;
   }
 
   .searchfield-wrapper {
@@ -110,6 +111,17 @@ html.is-safari {
         top: 2px;
       }
     }
+  }
+}
+
+html[dir='rtl'] {
+  .listview-search,
+  .card-search,
+  .widget-search {
+    + .listview {
+      height: calc(100% - 55px);
+    }
+  
   }
 }
 
