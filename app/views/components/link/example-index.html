@@ -3,19 +3,55 @@
     <div class="widget no-shadow" id="example-widget-borderless-1">
       <div class="widget-header">
         <div class="widget-header-section title">
-          <h2>Link Cards</h2>
+          <h2>4 x 4</h2>
         </div>
       </div>
       <div class="widget-content">
-        <div class="link">
+        <div class="link" tabindex="0">
           <div class="status">
             <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-              <use href="#icon-pizza"></use>
+              <use href="#icon-stacked"></use>
             </svg>
           </div>
           <div class="text">
             <div class="title">
-              AR Report
+              Purchase Order Intake Workbench
+            </div>
+          </div>
+        </div>
+        <div class="link" tabindex="0">
+          <div class="status">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-push-cart"></use>
+            </svg>
+          </div>
+          <div class="text">
+            <div class="title">
+              Purchase Orders Fulfillment
+            </div>
+          </div>
+        </div>
+        <div class="link" tabindex="0">
+          <div class="status">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-load"></use>
+            </svg>
+          </div>
+          <div class="text">
+            <div class="title">
+              Req. Conversion Workbench
+            </div>
+          </div>
+        </div>
+        <div class="link" tabindex="0">
+          <div class="status">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-award"></use>
+            </svg>
+          </div>
+          <div class="text">
+            <div class="title">
+              Quotation Request
             </div>
           </div>
         </div>
@@ -25,22 +61,80 @@
     <div class="widget no-shadow" id="example-widget-borderless-2">
       <div class="widget-header">
         <div class="widget-header-section title">
-          <h2>Link List</h2>
+          <h2>Stack</h2>
         </div>
       </div>
       <div class="widget-content">
-        <p>Link List Here</p>
+        <div class="link dual" tabindex="0">
+          <div class="status">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-load"></use>
+            </svg>
+          </div>
+          <div class="text">
+            <div class="title">
+              Req. Conversion Workbench
+            </div>
+          </div>
+        </div>
+        <div class="link dual" tabindex="0">
+          <div class="status">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-award"></use>
+            </svg>
+          </div>
+          <div class="text">
+            <div class="title">
+              Quotation Request
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
     <div class="widget no-shadow" id="example-widget-borderless-3">
       <div class="widget-header">
         <div class="widget-header-section title">
-          <h2>Link Colors</h2>
+          <h2>Mix</h2>
         </div>
       </div>
       <div class="widget-content">
-        <p>Link Color Here</p>
+        <div class="link" tabindex="0">
+          <div class="status">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-stacked"></use>
+            </svg>
+          </div>
+          <div class="text">
+            <div class="title">
+              Purchase Order Intake Workbench
+            </div>
+          </div>
+        </div>
+        <div class="link" tabindex="0">
+          <div class="status">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-push-cart"></use>
+            </svg>
+          </div>
+          <div class="text">
+            <div class="title">
+              Purchase Orders Fulfillment
+            </div>
+          </div>
+        </div>
+        <div class="link dual" tabindex="0">
+          <div class="status">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use href="#icon-award"></use>
+            </svg>
+          </div>
+          <div class="text">
+            <div class="title">
+              Quotation Request
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -57,5 +151,7 @@
     });
 
     $('.homepage').homepage();
+
+    $('.link').selectable().on('click', () => console.log('A Link Was Clicked'));
   });
 </script>
