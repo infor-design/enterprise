@@ -61,6 +61,18 @@
   .tab-list-container {
     position: absolute;
     width: calc(100% - 1px);
+
+    .tab-list {
+      height: 34px;
+      overflow: hidden;
+      width: inherit;
+
+      &.has-arrange-placeholder {
+        .tab:hover {
+          background-color: $module-tabs-bg-color;
+        }
+      }
+    }
   }
 
   .tab-list-info {
@@ -225,6 +237,14 @@
 
       a {
         padding: 10px 35px 10px 10px;
+      }
+
+      svg.close {
+        color: $module-tabs-inactive-text-color;
+
+        &:hover {
+          color: $module-tabs-hover-text-color;
+        }
       }
     }
 

@@ -164,7 +164,7 @@
 
 .header {
   + .page-container {
-    @media (max-width: $breakpoint-phone-to-tablet - 1) {
+    @media (max-width: ($breakpoint-phone-to-tablet - 1)) {
       height: calc(100% - 50px);
       margin-top: 0;
       position: relative;
@@ -191,7 +191,7 @@
   }
 }
 
-.tab-panel-container {
+.tab-container.vertical .tab-panel-container {
   height: inherit;
 
   &.no-scroll {
@@ -202,13 +202,13 @@
   }
 
   .tab-panel {
-    @media (max-width: $breakpoint-phone-to-tablet - 1) {
+    @media (max-width: ($breakpoint-phone-to-tablet - 1)) {
       padding-left: 15px;
       padding-right: 15px;
     }
 
     p:last-child {
-      @media (max-width: $breakpoint-phone-to-tablet - 1) {
+      @media (max-width: ($breakpoint-phone-to-tablet - 1)) {
         padding-bottom: 10px;
       }
     }
@@ -262,6 +262,10 @@
     &.scrollable-y {
       height: 100%;
     }
+
+    &.no-scroll {
+      overflow: hidden;
+    }
   }
 
   > .tab-panel-container,
@@ -276,6 +280,10 @@
     &.scrollable-x,
     &.scrollable-y {
       height: 100%;
+    }
+
+    &.no-scroll {
+      overflow: hidden;
     }
   }
 
@@ -345,7 +353,7 @@
 // Set padding/height etc. when using Vertical Tabs directly inside a page container
 // Also works for placing a set of vertical tabs directly inside of a higher-level '.tab-panel' element
 .page-container,
-.tab-panel {
+.tab-container.vertical .tab-panel {
   > .tab-container.vertical {
     height: 100%;
     overflow: auto;

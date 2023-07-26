@@ -371,9 +371,13 @@
     text-overflow: ellipsis;
   }
 
+  &.detail-title {
+    position: relative;
+    top: 2px;
+  }
+
   &.title + &.custom-action {
     text-align: right;
-    margin-top: 1px;
   }
 
   &.detail-title+&.detail-custom-action {
@@ -402,6 +406,27 @@ html[dir='rtl'] {
     h2 ~ svg.icon.has-tooltip {
       margin-right: 5px;
       top: 8px;
+    }
+
+    .widget-header-section.title .badge {
+      left: -4px;
+    }
+
+    .widget-header-section.custom-action,
+    .widget-header-section.detail-custom-action {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+
+  .widget-content {
+    .searchfield-wrapper.has-close-icon-button.has-text .btn-icon.close {
+      top: 8px;
+      right: 315px;
+    }
+
+    .listview-search input {
+      padding: 9px 34px 9px 28px !important
     }
   }
 }
