@@ -1056,8 +1056,8 @@ PopupMenu.prototype = {
     // http://access.aol.com/dhtml-style-guide-working-group/#popupmenu
 
     // Handle Events in Anchors
-    this.menu.on('click.popupmenu', 'li', function (e) {
-      const a = $(this).find('a');
+    this.menu.find('li').on('click.popupmenu', function(e) {
+      const a = $(e.target);
       self.handleItemClick(e, a);
     });
 
@@ -2466,6 +2466,8 @@ PopupMenu.prototype = {
       'touchcancel.popupmenu',
       'mouseenter.popupmenu',
       'mouseleave.popupmenu'].join(' '));
+    
+    this.menu.find('li').off('click.popupmenu');
 
     // Get rid of internal flags that check for how the menu was opened
     delete this.keydownThenClick;
