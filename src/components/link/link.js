@@ -15,9 +15,11 @@ Link.prototype = {
     this.build();
   },
   build() {
-    console.log('Build', this.element);
-    // Tooltip here
-    // If overflow plop a tooltip
+    // Add a tooltip if link text overflows
+    const linkText = this.element.find('.text .title');
+    if (linkText[0].offsetHeight < linkText[0].scrollHeight || linkText[0].offsetWidth < linkText[0].scrollWidth) {
+      linkText.tooltip({ title: linkText.text() });
+    }
 
     return this;
   }
