@@ -1,0 +1,117 @@
+<style>
+  .form-responsive {
+    min-width: 320px;
+  }
+  .row:last-child {
+    margin-bottom: -10px;
+  }
+</style>
+<div class="row top-padding">
+	<div class="twelve columns">
+
+		<button class="btn-secondary" type="button" id="add-context">Show Modal</button><br/><br/>
+
+    <button class="btn-secondary" type="button" id="suppress-key">Show Modal (Suppressed Enter)</button>
+
+		<!-- Modal Example -->
+		<div id="modal-add-context" class="hidden">
+      <div class="container">
+        <div class="form-responsive row no-indent">
+          <div class="full-width column">
+
+              <div class="field">
+                <label for="subject">Problem</label>
+                <input type="text" id="subject" name="subject"/>
+              </div>
+
+              <div class="field">
+                <label for="location" class="label">Location</label>
+                <select id="location" name="location" class="dropdown">
+                  <option value="N">North</option>
+                  <option value="S">South</option>
+                  <option value="E">East</option>
+                  <option value="W">West</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="date-field-normal" class="label">Date Field</label>
+                <input id="date-field-normal" data-automation-id="custom-automation-id" class="datepicker" name="date-field" type="text" data-init="false"/>
+              </div>
+
+              <div class="field">
+                <label for="range-novalue" class="label">Range - No Initial value</label>
+                <input id="range-novalue" name="range-novalue" class="datepicker input-md" type="text" data-options="{range: {useRange: true}}"/>
+              </div>
+
+              <div class="field">
+                <label for="range-valuebyelem" class="label">Range - Initial value by Element value</label>
+                <input id="range-valuebyelem" name="range-valuebyelem" class="datepicker input-md" type="text" data-options="{range: {useRange: true}}" value="2/7/2018 - 2/22/2018"/>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+	</div>
+</div>
+
+<script>
+var modals = {
+    'add-context': {
+      'title': 'Add Context',
+      'id': 'my-id',
+      'content': $('#modal-add-context')
+    },
+    'suppress-key': {
+      'title': 'Suppress Key',
+      'id': 'my-id',
+      'content': $('#modal-add-context'),
+      'suppressEnterKey': true
+    }
+  },
+
+  setModal = function (opt) {
+    opt = $.extend({
+      buttons: [{
+        text: 'Cancel',
+      //  id: 'modal-button-1',
+        click: function(e, modal) {
+          modal.close();
+        }
+      }, {
+        text: 'Save',
+      //  id: 'modal-button-2',
+        click: function(e, modal) {
+          modal.close();
+        },
+        validate: false,
+        isDefault: true
+      }]
+    }, opt);
+
+    $('body').modal(opt);
+  };
+
+  $('body').on('initialized', function() {
+    $('#date-field-normal')
+      .datepicker({
+        attributes: [
+          { name: 'id', value: 'custom-id' },
+          { name: 'data-automation-id', value: 'custom-automation-id' }
+      ]})
+      .on('change', function () {
+        console.log('Change Event Fired')
+      });
+  });
+
+  $('#add-context').on('click', function () {
+		$(this).focus();
+    setModal(modals[this.id]);
+  });
+
+  $('#suppress-key').on('click', function () {
+		$(this).focus();
+    setModal(modals[this.id]);
+  });
+
+</script>
