@@ -621,8 +621,19 @@
           }
 
           > svg {
+            color: $linklist-color-text-font;
             left: 0;
             margin-right: 5px;
+          }
+
+          &[disabled] {
+            color: $linklist-color-disabled-text-font;
+            text-decoration: none;
+
+            svg,
+            span {
+              color: $linklist-color-disabled-text-font;
+            }
           }
         }
 
@@ -631,11 +642,6 @@
           &:hover:not([disabled]) {
             text-decoration: underline;
           }
-        }
-
-        [disabled] {
-          color: $linklist-color-disabled-text-font;
-          text-decoration: none;
         }
       }
 
