@@ -1098,9 +1098,10 @@ $header-tab-alt-normal-color: $ids-color-palette-graphite-60;
 $header-tab-alt-hover-color: $font-color-highcontrast;
 $header-tab-alt-selected-color: $ids-color-brand-primary-base;
 $header-tab-alt-separator: $header-tabcontainer-border-color;
-
+$header-tab-alt-disabled-color:  $ids-color-palette-slate-40;
 $header-tab-separator-new: $ids-color-palette-white;
 $header-tab-disabled-color-new: rgba(255, 255, 255, .4);
+$header-tab-disabled-color: rgba(255, 255, 255, .4);
 
 $header-tab-background-initial-color-new: $header-default-bg-color;
 $header-tab-gradient-initial-color-new: $header-default-bg-color;
