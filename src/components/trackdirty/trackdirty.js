@@ -244,7 +244,8 @@ Trackdirty.prototype = {
           // editors values are further down it's tree in a textarea,
           // so get the elements with the value
           const textArea = field.find('textarea');
-          original = this.trimEditorText(textArea.data('original'));
+          // trimEditorText has already been called when setting original, so don't need to call it again
+          original = textArea.data('original');
           current = field.find('.editor-source').is(':visible') ? textArea.val() : textArea.text();
           current = this.trimEditorText(current);
         }

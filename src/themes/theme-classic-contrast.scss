@@ -61,6 +61,7 @@ $inverse-color: $ids-color-palette-white;
 
 // Buttons
 $button-disabled-background-color: transparent;
+$button-color-secondary-initial-background: $ids-color-palette-graphite-70;
 
 // Text Color
 $font-color-extrahighcontrast: $ids-color-palette-graphite-100;
@@ -281,6 +282,7 @@ $dropdown-selected-bg-color: $ids-color-brand-primary-base;
 $dropdown-menu-separator-color: $ids-color-palette-slate-70;
 $dropdown-menu-separator-border-color: $ids-color-palette-slate-60;
 $dropdown-readonly-icon-color: $ids-color-palette-graphite-80;
+$dropdown-placeholder-text-color: $ids-color-palette-slate-70;
 
 // Date Picker
 $datepicker-month-year-color: $ids-color-palette-black;
@@ -485,7 +487,7 @@ $accordion-focused-text-color: $ids-color-palette-azure-50;
 $accordion-focused-border-color: $ids-color-palette-azure-50;
 
 $accordion-selected-bg-color: $ids-color-palette-slate-40;
-$accordion-selected-text-color: $ids-color-palette-white;
+$accordion-selected-text-color: $ids-color-palette-graphite-90;
 
 $accordion-highcontrast-text-decoration: underline;
 
@@ -741,6 +743,7 @@ $header-tab-alt-separator: $header-tabcontainer-border-color;
 $header-tab-alt-normal-color: $inverse-color;
 $header-tab-alt-hover-color: $inverse-color;
 $header-tab-alt-selected-color: $inverse-color;
+$header-tab-alt-disabled-color: $ids-color-palette-slate-50;
 
 // Header Breadcrumb
 $header-breadcrumb-color: $ids-color-palette-white;

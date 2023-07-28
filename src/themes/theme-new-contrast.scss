@@ -187,6 +187,7 @@ $button-color-secondary-hover-background-new: $ids-color-palette-azure-10;
 $button-color-secondary-disabled-background-new: $ids-color-palette-slate-10;
 $button-color-secondary-disabled-border-new: $ids-color-palette-slate-50;
 $button-color-secondary-disabled-font-new: $ids-color-palette-slate-50;
+$button-color-secondary-initial-background: transparent;
 $button-disabled-background-color: transparent;
 
 $button-color-tertiary-hover-background-new: $ids-color-palette-azure-20;
@@ -196,7 +197,6 @@ $button-color-tertiary-hover-font-new: $ids-color-palette-azure-80;
 $button-color-tertiary-initial-font: $ids-color-palette-slate-80;
 $button-color-tertiary-actionsheet-hover-font: $button-color-tertiary-hover-font-new;
 $tertiary-btn-ripple-color: $ids-color-brand-primary-alt;
-
 $button-editor-color-hover-background-new: rgba(0, 0, 0, .7);
 
 // Secondary with Border
@@ -304,6 +304,7 @@ $dropdown-selected-bg-color: $ids-color-brand-primary-base;
 $dropdown-menu-separator-color: $ids-color-palette-slate-70;
 $dropdown-menu-separator-border-color: $ids-color-palette-slate-60;
 $dropdown-readonly-icon-color: $ids-color-palette-slate-40;
+$dropdown-placeholder-text-color: $ids-color-palette-slate-60;
 
 // Date Picker
 $datepicker-month-year-color: $ids-color-palette-black;
@@ -507,7 +508,7 @@ $accordion-focused-text-color: $ids-color-palette-azure-50;
 $accordion-focused-border-color: $ids-color-palette-azure-50;
 
 $accordion-selected-bg-color: $ids-color-palette-slate-50;
-$accordion-selected-text-color: $ids-color-palette-white;
+$accordion-selected-text-color: $ids-color-palette-slate-90;
 
 $accordion-highcontrast-text-decoration: underline;
 
@@ -532,12 +533,12 @@ $module-nav-separator-color: $ids-color-palette-slate-30;
 $module-nav-text-color: $ids-color-palette-slate-70;
 
 // Module Nav Input Field (Search/Role Dropdown)
-$module-nav-input-bg-color: $ids-color-palette-white;
-$module-nav-input-border-color: $ids-color-palette-slate-30;
+$module-nav-input-bg-color: $ids-color-palette-slate-20;
+$module-nav-input-border-color: $ids-color-palette-slate-40;
 $module-nav-input-text-color: $ids-color-palette-slate-70;
 
 // Module Nav Item (Accordion Header/Menu Button)
-$module-nav-item-text-color: $ids-color-palette-slate-90;
+$module-nav-item-text-color: $ids-color-palette-slate-100;
 $module-nav-item-hover-bg-color: $ids-color-palette-slate-30;
 $module-nav-item-hover-text-color: $ids-color-palette-slate-100;
 $module-nav-item-selected-bg-color: $ids-color-palette-azure-20;
@@ -545,7 +546,7 @@ $module-nav-item-selected-text-color: $ids-color-palette-azure-100;
 
 // Module Nav Switcher (Role Dropdown + Button)
 $module-nav-switcher-dropdown-item-focus-bg-color: $ids-color-palette-slate-30;
-$module-nav-switcher-dropdown-item-text-color: $ids-color-palette-slate-70;
+$module-nav-switcher-dropdown-item-text-color: $ids-color-palette-slate-90;
 
 // Module Nav Search (Input Field)
 $module-nav-search-input-text-color: $ids-color-palette-slate-90;
@@ -800,7 +801,7 @@ $header-tab-alt-separator: $header-tabcontainer-border-color;
 $header-tab-alt-normal-color: $ids-color-palette-slate-100;
 $header-tab-alt-hover-color: $ids-color-palette-slate-100;
 $header-tab-alt-selected-color: $ids-color-palette-slate-100;
-
+$header-tab-alt-disabled-color: $ids-color-palette-slate-50;
 $header-tab-background-initial-color-new: $header-default-bg-color;
 
 // Header Breadcrumb

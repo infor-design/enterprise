@@ -18,7 +18,7 @@ Use an empty message when no data is present in a list or container and there is
 
 ```javascript
 $('.empty-message').emptymessage({
-  title: 'No Data Available',
+  title: 'No data available',
   icon: 'icon-empty-search-data',
   attributes: [
     { name: 'id', value: 'empty-message-automation-1' },

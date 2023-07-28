@@ -467,6 +467,7 @@ body.modal-engaged {
   }
 
   .modal-body-wrapper {
+    overflow: auto;
     padding: 32px 16px;
 
     .field:not(.label-left).last-child {
@@ -677,6 +678,13 @@ html.ie {
     [aria-hidden='true'],
     [aria-hidden='true'] * {
       overflow: hidden;
+    }
+
+    .monthview-popup.is-open .day-text {
+      &[aria-hidden='true'],
+      &[aria-hidden='true'] * {
+        overflow: unset;
+      }
     }
 
     .page-container.scrollable,

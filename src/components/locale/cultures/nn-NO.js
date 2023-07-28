@@ -543,7 +543,7 @@ Soho.Locale.addCulture('nn-NO', {
     Tall: { id: 'Tall', value: 'Høy', comment: 'Describes a Taller Row Height in a grid/list' },
     Target: { id: 'Target', value: 'Mål', comment: 'Label for an input to enter a Target (Url Attribute)' },
     TeamEvent: { id: 'TeamEvent', value: 'Teamarrangement', comment: 'Having an event with a work team' },
-    TestLocaleDefaults: { id: 'TestLocaleDefaults', value: 'Test Locale Defaults', comment: 'Do not translate' },
+    TestLocaleDefaults: { id: 'TestLocaleDefaults', value: 'Test locale defaults', comment: 'Do not translate' },
     TextBtnCancel: { id: 'TextBtnCancel', value: 'Avbryt opplasting av denne filen', comment: 'text for cancel button for advanced fileupload' },
     TextBtnCloseError: { id: 'TextBtnCloseError', value: 'Lukk denne feilen', comment: 'text for error close button for advanced fileupload' },
     TextBtnRemove: { id: 'TextBtnRemove', value: 'Lukk denne feilen', comment: 'text for remove button for advanced fileupload' },

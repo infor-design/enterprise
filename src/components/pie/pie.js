@@ -48,7 +48,7 @@ const COMPONENT_NAME = 'pie';
  * @param {boolean} [settings.fitHeight=true] If true chart height will fit in parent available height.
  * @param {object} [settings.emptyMessage] An empty message will be displayed when there is no chart data.
  * This accepts an object of the form emptyMessage:
- * `{title: 'No Data Available',
+ * `{title: 'No data available',
  *  info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data-new',
  *  button: {text: 'xxx', click: <function>}
  *  }`
@@ -81,7 +81,7 @@ const PIE_DEFAULTS = {
   },
   showCenterTooltip: false,
   fitHeight: true,
-  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data-new' }
+  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No data available'), info: '', icon: 'icon-empty-no-data-new' }
 };
 
 function Pie(element, settings) {

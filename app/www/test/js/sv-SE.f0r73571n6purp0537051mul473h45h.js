@@ -361,7 +361,7 @@ Soho.Locale.addCulture('sv-SE', {
     Tall: { id: 'Tall', value: 'Hög', comment: 'Describes a Taller Row Height in a grid/list' },
     Target: { id: 'Target', value: 'Mål', comment: 'Label for an input to enter a Target (Url Attribute)' },
     TeamEvent: { id: 'TeamEvent', value: 'Teamhändelse', comment: 'Having an event with a work team' },
-    TestLocaleDefaults: { id: 'TestLocaleDefaults', value: 'Test Locale Defaults', comment: 'Do not translate' },
+    TestLocaleDefaults: { id: 'TestLocaleDefaults', value: 'Test locale defaults', comment: 'Do not translate' },
     TextColor: { id: 'TextColor', value: 'Textfärg', comment: 'add or edit text color in the editor' },
     TextDropArea: { id: 'DropArea', value: 'Dra och släpp filer som ska överföras', comment: 'text for drop area for advanced fileupload' },
     TextDropAreaWithBrowse: { id: 'TextDropAreaWithBrowse', value: 'Dra och släpp eller <span class=”hyperlink”>markera filer</span> som ska överföras', comment: 'text for drop area with browse for advanced fileupload' },

@@ -120,7 +120,7 @@ StepChart.prototype = {
     completedText = completedText.replace('{1}', this.settings.steps);
 
     if (isEmpty) {
-      completedText = Locale ? Locale.translate('NoData') : 'No Data Available';
+      completedText = Locale ? Locale.translate('NoData') : 'No data available';
     }
     const label = $(`<span class="step-chart-label">${completedText}</span>`);
 

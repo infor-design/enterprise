@@ -1,4 +1,5 @@
 import { utils } from '../../utils/utils';
+import { stringUtils } from '../../utils/string';
 
 import '../button/button.jquery';
 import '../dropdown/dropdown.jquery';
@@ -7,10 +8,11 @@ import {
   buttonTemplate,
   dropdownTemplate,
   iconTemplate,
+  imageTemplate,
   roleTemplate,
   isValidDisplayMode,
   MODULE_NAV_DISPLAY_MODES,
-  SWITCHER_ICON_HTML,
+  defaultIconGenerator,
   setDisplayMode,
   configureNavItemTooltip
 } from './module-nav.common';
@@ -21,7 +23,8 @@ const COMPONENT_NAME = 'modulenavswitcher';
 const MODULE_NAV_SWITCHER_DEFAULTS = {
   displayMode: MODULE_NAV_DISPLAY_MODES[0],
   generate: true,
-  icon: () => SWITCHER_ICON_HTML,
+  icon: defaultIconGenerator,
+  changeIconOnSelect: true,
   moduleButtonText: 'Standard Module',
   roleDropdownLabel: 'Roles',
   roles: []
@@ -67,6 +70,11 @@ ModuleNavSwitcher.prototype = {
     return this.moduleButtonContainerEl.querySelector('button');
   },
 
+  /** Reference to the Module Button Icon element, if present */
+  get moduleButtonIconEl() {
+    return this.moduleButtonEl?.querySelector('svg, img, .icon, .custom-icon');
+  },
+
   /** Reference to the Module Button API, if present */
   get moduleButtonAPI() {
     return this.moduleButtonEl ? $(this.moduleButtonEl).data('button') : undefined;
@@ -109,7 +117,11 @@ ModuleNavSwitcher.prototype = {
 
     // Configure
     this.setDisplayMode(this.settings.displayMode);
-    this.setModuleButtonIcon();
+
+    if (!this.moduleButtonIconEl || this.settings.icon !== defaultIconGenerator) {
+      this.setModuleButtonIcon();
+    }
+
     if (!$(this.roleDropdownEl).find('option').length) {
       this.renderDropdownOptions(true);
     }
@@ -178,6 +190,13 @@ ModuleNavSwitcher.prototype = {
       extraListWrapper: true,
       width: 'parent',
       widthTarget: '.module-nav-switcher'
+    }).off('change.module-nav').on('change.module-nav', (e) => {
+      if (!this.settings.changeIconOnSelect) return;
+      const selectedValue = e.currentTarget.value;
+      const icon = $(e.currentTarget)?.data('dropdown')?.list.find(`[data-val=${selectedValue}]`).find('.listoption-icon');
+      const svgInner = icon[0]?.innerHTML;
+      const svgHtml = `<svg class="icon-custom" focusable="false" aria-hidden="true" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">${svgInner}</svg>`;
+      this.setModuleButtonIcon(svgHtml);
     });
   },
 
@@ -203,9 +222,10 @@ ModuleNavSwitcher.prototype = {
 
   /**
    * Configures the Module Button's icon
+   * @param {string} iconStr can optionally pass in the icon
    * @returns {void}
    */
-  setModuleButtonIcon() {
+  setModuleButtonIcon(iconStr) {
     let iconHTML = '';
 
     switch (typeof this.settings.icon) {
@@ -213,16 +233,29 @@ ModuleNavSwitcher.prototype = {
         iconHTML = this.settings.icon(this);
         break;
       case 'string':
-        iconHTML = iconTemplate(this.settings.icon);
+        if (stringUtils.isValidURL(this.settings.icon)) {
+          // treat string as a URL
+          iconHTML = imageTemplate(this.settings.icon, this.settings.moduleButtonText);
+        } else if (this.settings.icon.charAt(0) !== '<' && document.querySelector(`symbol#icon-${this.settings.icon}`)) {
+          // treat string as an IDS Icon def
+          iconHTML = iconTemplate(this.settings.icon);
+        } else {
+          // treat as HTML markup
+          iconHTML = this.settings.icon;
+        }
         break;
       default:
         break;
     }
 
+    if (iconStr) {
+      iconHTML = iconStr;
+    }
+
     // if Icon HTML exists, replace the current one
     if (iconHTML.length) {
-      const svgEl = this.moduleButtonEl.querySelector('svg');
-      svgEl?.remove();
+      const iconEl = this.moduleButtonIconEl;
+      iconEl?.remove();
       this.moduleButtonEl.insertAdjacentHTML('afterbegin', iconHTML);
     }
   },

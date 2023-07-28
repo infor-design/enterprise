@@ -143,4 +143,19 @@ stringUtils.count = function count(string, subString) {
   return string.split(subString).length - 1;
 };
 
+/**
+ * Checks a string to see if it represents a valid URL
+ * @param {string} val incoming string
+ * @returns {boolean} true if the value is a valid URL
+ */
+stringUtils.isValidURL = function isValidURL(val) {
+  const urlRegexPattern = new RegExp('^(https?:\\/\\/)?' + // validate protocol
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // validate domain name
+    '((\\d{1,3}\\.){3}\\d{1,3}))' + // validate OR ip (v4) address
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // validate port and path
+    '(\\?[;&a-z\\d%_.~+=-]*)?' + // validate query string
+    '(\\#[-a-z\\d_]*)?$', 'i'); // validate fragment locator
+  return !!urlRegexPattern.test(val);
+};
+
 export { stringUtils }; //eslint-disable-line

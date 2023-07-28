@@ -40,11 +40,11 @@ const COMPONENT_NAME = 'bar';
  * @param {boolean} [settings.fitHeight=true] If true chart height will fit in parent available height.
  * You may want to change this based on label data.
  * @param {object} [settings.emptyMessage={
- *  title: (Locale ? Locale.translate('NoData') : 'No Data Available'),
+ *  title: (Locale ? Locale.translate('NoData') : 'No data available'),
  *   info: '',
  *  icon: 'icon-empty-no-data-new' }]
  * An empty message will be displayed when there is no chart data. This accepts an object of the form emptyMessage:
- * `{title: 'No Data Available',
+ * `{title: 'No data available',
  *  info: 'Make a selection on the list above to see results'
  *  icon: 'icon-empty-no-data-new',
  *  button: {text: 'xxx', click: <function>}  }`
@@ -71,7 +71,7 @@ const BAR_DEFAULTS = {
   labelFactor: 1.27,
   wrapWidth: 60,
   fitHeight: true,
-  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data-new' }
+  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No data available'), info: '', icon: 'icon-empty-no-data-new' }
 };
 
 function Bar(element, settings) {
@@ -314,6 +314,10 @@ Bar.prototype = {
 
     if (!!s?.axisLabels?.bottom && series[0].name === '') {
       h += 30;
+    }
+
+    if (s.isStacked) {
+      h -= (legendHeight - 8);
     }
 
     self.svg = d3.select(this.element[0])

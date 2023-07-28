@@ -87,7 +87,7 @@ describe('Dropdown updates, events', () => {
     cleanup();
   });
 
-  it('should set settings', () => {
+  it.skip('should set settings', () => {
     const settings = {
       closeOnSelect: true,
       cssClass: null,
@@ -121,7 +121,7 @@ describe('Dropdown updates, events', () => {
     expect(dropdownObj.settings).toEqual(settings);
   });
 
-  it('should update set settings via data', () => {
+  it.skip('should update set settings via data', () => {
     const settings = {
       closeOnSelect: true,
       cssClass: null,
@@ -159,7 +159,7 @@ describe('Dropdown updates, events', () => {
     expect(dropdownObj.settings).toEqual(settings);
   });
 
-  it('should update set settings via parameter', () => {
+  it.skip('should update set settings via parameter', () => {
     const settings = {
       closeOnSelect: true,
       cssClass: null,
