@@ -591,6 +591,45 @@
       }
     }
   }
+
+  &.link-list {
+    li {
+      background-color: transparent;
+      border: none;
+      padding: 0 15px;
+
+      .link-item {
+        cursor: pointer;
+        color: $linklist-color-text-font;
+        padding: 0;
+        height: 28px;
+
+        .text {
+          font-size: 16px;
+          font-weight: 600;
+        }
+
+        &:hover {
+          .text {
+            text-decoration: underline;
+          }
+        }
+
+        &.visited {
+          color: $linklist-color-visited-text-font;
+        }
+      }
+
+      &.is-selected:not(.hide-selected-color) {
+        background-color: transparent;
+      }
+
+      &:focus {
+        border-color: transparent;
+        box-shadow: none;
+      }
+    }
+  }
 }
 
 .listview-table {

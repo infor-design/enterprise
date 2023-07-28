@@ -1584,6 +1584,14 @@ ListView.prototype = {
         });
     }
 
+    if (this.element.hasClass('link-list')) {
+      this.element
+        .off('click.listview', 'li .link-item')
+        .on('click.listview', 'li .link-item', (e) => {
+          $(e.currentTarget).addClass('visited');
+        });
+    }
+
     // If used with a Pager Control, listen for the end of the page and scroll
     // the Listview to the top
     if (this.pagerAPI) {

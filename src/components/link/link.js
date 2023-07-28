@@ -18,7 +18,9 @@ Link.prototype = {
     // Add a tooltip if link text overflows
     const linkText = this.element.find('.text .title');
     if (linkText[0].offsetHeight < linkText[0].scrollHeight || linkText[0].offsetWidth < linkText[0].scrollWidth) {
-      linkText.tooltip({ title: linkText.text() });
+      const tooltipOpt = { title: linkText.text(), maxWidth: this.element.hasClass('dual') ? 350 : 171 };
+
+      linkText.tooltip(tooltipOpt);
     }
 
     return this;
