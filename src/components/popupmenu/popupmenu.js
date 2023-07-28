@@ -1056,7 +1056,7 @@ PopupMenu.prototype = {
     // http://access.aol.com/dhtml-style-guide-working-group/#popupmenu
 
     // Handle Events in Anchors
-    this.menu.find('li').on('click.popupmenu', function(e) {
+    this.menu.find('li').on('click.popupmenu', function (e) {
       const a = $(e.target);
       self.handleItemClick(e, a);
     });
