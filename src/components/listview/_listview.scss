@@ -594,29 +594,48 @@
 
   &.link-list {
     li {
+      cursor: default;
       background-color: transparent;
       border: none;
       padding: 0 15px;
 
       .link-item {
-        cursor: pointer;
-        color: $linklist-color-text-font;
         padding: 0;
         height: 28px;
 
-        .text {
+        .hyperlink,
+        .hyperlink span {
+          color: $linklist-color-text-font;
+          text-decoration: none;
           font-size: 16px;
           font-weight: 600;
+
+          &.show-visited:visited,
+          &.force-visited {
+            color: $linklist-color-visited-text-font;
+
+            svg,
+            span {
+              color: $linklist-color-visited-text-font;
+            }
+          }
+
+          > svg {
+            left: 0;
+            margin-right: 5px;
+          }
         }
 
-        &:hover {
-          .text {
+        .hyperlink:not(.has-icon),
+        .hyperlink span {
+          &:hover:not([disabled]) {
             text-decoration: underline;
           }
         }
 
-        &.visited {
-          color: $linklist-color-visited-text-font;
+        [disabled] {
+          color: $linklist-color-disabled-text-font;
+          text-decoration: none;
         }
       }
 
