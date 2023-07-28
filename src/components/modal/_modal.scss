@@ -680,6 +680,13 @@ html.ie {
       overflow: hidden;
     }
 
+    .monthview-popup.is-open .day-text {
+      &[aria-hidden='true'],
+      &[aria-hidden='true'] * {
+        overflow: unset;
+      }
+    }
+
     .page-container.scrollable,
     .page-container.scrollable-x,
     .page-container.scrollable-y {
