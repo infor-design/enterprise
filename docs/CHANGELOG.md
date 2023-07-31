@@ -15,6 +15,7 @@
 - `[Cards]` Fixed alignments and positioning of other elements inside a card widget. ([#7589](https://github.com/infor-design/enterprise/issues/7589))
 - `[Column-Stacked]` Fixed a regression bug where the stacked column chart was not rendering correctly. ([#7644](https://github.com/infor-design/enterprise/issues/7644))
 - `[Datagrid]` Fixed a bug in datagrid where default operator for lookup is not rendered properly. ([#7530](https://github.com/infor-design/enterprise/issues/7530))
+- `[Datagrid]` Changed `updateColumns` to update column groups when null or empty. ([#7720](https://github.com/infor-design/enterprise/issues/7720))
 - `[Datepicker]` Fixed a bug in datepicker range not rendering properly in modal IOS. ([#7603](https://github.com/infor-design/enterprise/issues/7603))
 - `[Dropdown/ModuleNav]` Fixed indents and UI improvements. ([#7662](https://github.com/infor-design/enterprise/issues/7662))
 - `[Dropdown/ModuleNav]` Fixed indents and UI improvements and added empty states. ([#7662](https://github.com/infor-design/enterprise/issues/7662))

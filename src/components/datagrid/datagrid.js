@@ -5917,6 +5917,8 @@ Datagrid.prototype = {
   updateColumns(columns, columnGroups) {
     if (columnGroups === undefined) {
       columnGroups = null;
+    } else if (columnGroups === null || columnGroups.length === 0) {
+      this.settings.groupable = null;
     }
 
     let conditions = [];
@@ -5924,10 +5926,7 @@ Datagrid.prototype = {
       conditions = this.filterConditions();
     }
     this.settings.columns = columns;
-
-    if (columnGroups) {
-      this.settings.columnGroups = columnGroups;
-    }
+    this.settings.columnGroups = columnGroups;
 
     this.rerender();
 
