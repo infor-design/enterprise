@@ -1,0 +1,64 @@
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <div class="flex-toolbar"
+      data-options="{ 'attributes': [ { 'name': 'data-automation-id', 'value': 'my-toolbar' } ] }">
+      <div class="toolbar-section title">
+        <h2>Toolbar With 5 Buttons</h2>
+      </div>
+
+      <div class="toolbar-section buttonset">
+        <button class="btn">
+          <span>Button One</span>
+        </button>
+        <button class="btn">
+          <span>Button Two</span>
+        </button>
+        <button class="btn">
+          <span>Button Three</span>
+        </button>
+        <button class="btn">
+          <span>Button Four</span>
+        </button>
+        <button class="btn">
+          <span>Button Five</span>
+        </button>
+      </div>
+
+      <div class="toolbar-section more">
+        <button class="btn-actions">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-more"></use>
+          </svg>
+          <span class="audible">More Actions</span>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Pre-defined Item #1</a></li>
+          <li><a href="#">Pre-defined Item #2</a></li>
+          <li><a href="#">Pre-defined Item #3</a></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  $('.flex-toolbar').on('selected.test', function (e, item, secondArg) {
+    var text = $(item.element).text().trim();
+    var selectedItem;
+
+    if (secondArg) {
+      selectedItem = 'Selected Menu Item: ' + $(secondArg).text().trim() + '<br />';
+    }
+
+    $('body').toast({
+      title: 'Toolbar Item Selected',
+      message: '<p>' +
+        'text content: "<b>' + text + '</b>"<br/>' +
+        'item type: "<b>' + item.type + '</b>"' +
+        (selectedItem ? '<br />' + selectedItem : '') +
+        '</p>'
+    });
+  });
+</script>
