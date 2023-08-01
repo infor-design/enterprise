@@ -1,0 +1,41 @@
+<section class="module-nav-container mode-expanded">
+  <aside id="nav" class="module-nav" data-options="{ displayMode: 'expanded' }">
+    <div class="module-nav-bar">
+      <!-- Module Nav's top-level navigation items are inside the accordion -->
+      <div class="module-nav-accordion accordion panel" data-options="{'allowOnePane': false}">
+        <!-- Module switcher -->
+        <div class="module-nav-header accordion-section">
+          <div id="switcher" class="module-nav-switcher"  data-options="{'icon': false}">
+            <div class="module-nav-section module-btn">
+              <button id="module-nav-homepage-btn" class="btn-icon">
+                <span class="audible">Standard Module</span>
+              </button>
+            </div>
+            <div class="module-nav-section role-dropdown">
+              <label for="module-nav-role-switcher" class="label audible">Roles</label>
+              <select id="module-nav-role-switcher" name="module-nav-role-switcher" class="dropdown"
+                data-automation-id="custom-automation-dropdown-id">
+                <option value="admin">Admin Console</option>
+                <option value="job-console">Job Console</option>
+                <option value="landing-page-designer">Landing Page Designer</option>
+                <option value="process-server-admin">Process Server Administrator</option>
+                <option value="proxy-management">Proxy Management</option>
+                <option value="security-system-management">Security System Management</option>
+                <option value="user-management">User Management</option>
+                </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="module-nav-detail"></div>
+  </aside>
+  <div class="page-container scrollable">
+    <div class="row">
+      <div class="four columns">&nbsp;</div>
+      <div class="four columns">&nbsp;</div>
+      <div class="four columns">
+        <p>This example demonstrates how to provide no icons in the Module Switcher component</p>
+    </div>
+  </div>
+</section>

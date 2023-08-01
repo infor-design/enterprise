@@ -29,7 +29,7 @@ const MODULE_NAV_DEFAULTS = {
   filterable: false,
   initChildren: true,
   pinSections: false,
-  showDetailView: false,
+  showDetailView: false
 };
 
 const toggleScrollbar = (el, doToggle) => {
