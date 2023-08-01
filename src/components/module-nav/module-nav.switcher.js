@@ -253,7 +253,7 @@ ModuleNavSwitcher.prototype = {
     }
 
     // if Icon HTML exists, replace the current one
-    if (iconHTML.length) {
+    if (iconHTML.length && !this.settings.icon === false) {
       const iconEl = this.moduleButtonIconEl;
       iconEl?.remove();
       this.moduleButtonEl.insertAdjacentHTML('afterbegin', iconHTML);
