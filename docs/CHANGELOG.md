@@ -25,6 +25,7 @@
 - `[Editor]` Fixed a bug where pasting an html table into the editor wouldn't show the borders. ([#7463](https://github.com/infor-design/enterprise/issues/7463))
 - `[FileUpload]` Fixed the alignment of the close button and file icon button. ([#7570](https://github.com/infor-design/enterprise/issues/7570))
 - `[Homepage]` In some cases the new background color did not fill all the way in the page. ([#7696](https://github.com/infor-design/enterprise/issues/7696))
+- `[Icons]` Removed `phone-linear` in some examples as the icon is now called `phone`. ([#7747](https://github.com/infor-design/enterprise/issues/7747))
 - `[Locale]` Updated all internal strings in local files to sentence case. Updated translations will follow in a month. ([#7683](https://github.com/infor-design/enterprise/issues/7711))
 - `[Modal]` On some devices the overflow/scrolling is still missing on modal and contents can break out the bottom of the modal. ([#7711](https://github.com/infor-design/enterprise/issues/7711))
 - `[Layouts]` Removed some older layouts and examples from page layouts. ([#7733](https://github.com/infor-design/enterprise/issues/7733))
