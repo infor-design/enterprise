@@ -4262,6 +4262,21 @@ td .btn-actions {
   }
 }
 
+.datagrid > tbody > tr.datagrid-row {
+  &.is-selected.is-hover-row {
+    td .datagrid-cell-wrapper {
+      .btn-icon:hover {
+        background-color: $datagrid-button-icon-hover-bg-color !important;
+
+        svg {
+          background: unset !important;
+          box-shadow: none !important;
+        }
+      }
+    }
+  }
+}
+
 [aria-readonly='true'] {
   .datagrid-checkbox {
     cursor: default;
