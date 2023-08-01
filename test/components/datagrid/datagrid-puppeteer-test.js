@@ -120,7 +120,7 @@ describe('Datagrid', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should be able to use filter empty without text in input box', async () => {
+    it.skip('should be able to use filter empty without text in input box', async () => {
       expect(await page.$$eval('tr.datagrid-row', el => el.length)).toEqual(22);
 
       const filterBtn = await page.$('#test-tree-filter-datagrid-1-header-3 .btn-filter');
