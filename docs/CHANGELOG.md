@@ -1,5 +1,12 @@
 # What's New with Enterprise
 
+## v4.87.0
+
+## v4.87.0 Fixes
+
+- `[ModuleNav]` Fixed missing tooltip on the settings button. ([#1525](https://github.com/infor-design/enterprise-ng/issues/1525))
+- `[ModuleNav]` Fixed issues in dark mode. ([#7753](https://github.com/infor-design/enterprise/issues/7753))
+
 ## v4.86.0
 
 ## v4.86.0 Features
