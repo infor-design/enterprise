@@ -303,7 +303,7 @@ Personalize.prototype = {
     colors.tabSelectedTextColor = colors.contrast;
     colors.tabVerticalSelectedColor = colors.base;
     colors.tabDivider = colors.darkest;
-    
+
     colors.tabCloseInactiveColor = 'rgba(255, 255, 255, 0.85)';
     colors.tabCloseHoverColor = '#ffffff';
 
@@ -383,10 +383,10 @@ Personalize.prototype = {
         colors.moduleTabsSelectedTextColor = '#ffffff';
 
         // Alabaster New Design
-        colors.headerTabBorder = '#8E8E95';
+        colors.headerTabBorder = '#3B3B3F';
         colors.tabFocusIndicator = '#ffffff';
         colors.tabSelectedColor = '#525257';
-        colors.tabHeaderColor = '#525257';
+        colors.tabHeaderColor = '#28282A';
         colors.tabBorderColor = '#525257';
         colors.tabColor = '#3B3B3F';
         colors.tabHoverColor = '#28282A';
