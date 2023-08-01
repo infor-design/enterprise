@@ -29,7 +29,7 @@ const MODULE_NAV_DEFAULTS = {
   filterable: false,
   initChildren: true,
   pinSections: false,
-  showDetailView: false,
+  showDetailView: false
 };
 
 const toggleScrollbar = (el, doToggle) => {
@@ -243,7 +243,7 @@ ModuleNav.prototype = {
     this.accordionAPI.updated(newSettings);
 
     // Build tooltips on top-level accordion headers in collapsed mode
-    const headers = this.accordionEl.querySelectorAll('.accordion-section > .accordion-header');
+    const headers = this.accordionEl.querySelectorAll('.accordion-section > .accordion-header, .accordion-section > soho-module-nav-settings > .accordion-header');
     if (headers.length) {
       [...headers].forEach((header) => {
         configureNavItemTooltip(header, this.settings.displayMode);

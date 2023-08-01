@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.84.6 Fixes
+
+- `[ModuleNav]` Fixed missing tooltip on the settings button. ([#1525](https://github.com/infor-design/enterprise-ng/issues/1525))
+- `[ModuleNav]` Fixed issues in dark mode. ([#7753](https://github.com/infor-design/enterprise/issues/7753))
+- `[ModuleNav]` Added an option to set the icon to false initially. ([#7740](https://github.com/infor-design/enterprise/issues/7740))
+
 ## v4.84.5 Fixes
 
 - `[ModuleNav]` Fixed issue setting `changeIconOnSelect`. ([#7694](https://github.com/infor-design/enterprise/issues/7694))
