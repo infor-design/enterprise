@@ -265,6 +265,19 @@ $trigger-hover-color: $ids-color-palette-white;
 $trigger-active-color: $ids-color-brand-primary-base;
 $trigger-focus-color: $ids-color-brand-primary-base;
 
+// Link
+$link-color-text-font: $ids-color-palette-white;
+$link-icon-color: $ids-color-palette-amethyst-30;
+$link-border-color: $ids-color-palette-slate-90;
+$link-hover-color: $ids-color-palette-slate-70;
+$link-selected-color: $ids-color-palette-black;
+$link-background-color: $ids-color-palette-slate-80;
+
+// Link List
+$linklist-color-text-font: $ids-color-palette-slate-10;
+$linklist-color-visited-text-font: $ids-color-palette-amethyst-20;
+$linklist-color-disabled-text-font: $ids-color-palette-slate-50;
+
 // List View
 $listview-bg-color: $ids-color-palette-slate-90;
 $listview-bg-color-alternate: $ids-color-palette-slate-100;
