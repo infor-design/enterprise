@@ -155,6 +155,9 @@ const PLUGIN_MAPPINGS = [
   // Rating
   ['rating'],
 
+  // Link
+  ['link'],
+
   // Listbuilder
   ['listbuilder'],
 

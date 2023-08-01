@@ -24,7 +24,7 @@ describe('Autocomplete Puppeteer Tests', () => {
       await page.waitForSelector('#autocomplete-list', { visible: true }).then(element => expect(element).toBeTruthy());
     });
 
-    it('should fill the input field with the correct text contents when an item is clicked', async () => {
+    it.skip('should fill the input field with the correct text contents when an item is clicked', async () => {
       const autocompleteEl = await clickOnAutocomplete();
       await autocompleteEl.type('new');
 

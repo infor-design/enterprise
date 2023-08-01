@@ -228,6 +228,7 @@
 	"/dist/sass/src/components/input/_input-new.scss",
 	"/dist/sass/src/components/input/_input.scss",
 	"/dist/sass/src/components/line/_line.scss",
+	"/dist/sass/src/components/line/_link.scss",
 	"/dist/sass/src/components/listbuilder/_listbuilder.scss",
 	"/dist/sass/src/components/listbuilder/_listbuilder-new.scss",
   "/dist/sass/src/components/listview/_listview.scss",

@@ -19,13 +19,13 @@
 $body-color-primary-background: $ids-color-palette-slate-100;
 $homepage-background-color: $body-color-primary-background;
 
-$header-default-bg-color: $ids-color-palette-slate-60;
+$header-default-bg-color: $ids-color-palette-slate-90;
 $header-default-bg-hover-color: $ids-color-palette-slate-80;
 
 $input-color-focus-border: $ids-color-palette-slate-10;
 
 // Form Background Color
-$header-toolbar-button-hover-color: #3B3B3F;
+$header-toolbar-button-hover-color: $ids-color-palette-slate-70;
 $subhead-bg-color: $ids-color-brand-primary-alt;
 
 $dropdown-search-bg-color: $ids-color-palette-slate-80;
@@ -91,30 +91,30 @@ $button-hyperlink-hover-color: $ids-color-palette-slate-40;
 $button-color-primary-initial-font: $ids-color-palette-slate-90;
 $button-color-primary-initial-background: $ids-color-palette-azure-40;
 $button-color-primary-hover-background: $ids-color-palette-azure-30;
-$button-color-primary-disabled-background-new: $ids-color-palette-slate-90;
-$button-color-primary-disabled-font-new: $ids-color-palette-slate-40;
+$button-color-primary-disabled-background-new: $ids-color-palette-slate-60;
+$button-color-primary-disabled-font-new: $ids-color-palette-slate-100;
 
 $button-color-secondary-initial-font-new: $ids-color-palette-azure-40;
 $button-color-secondary-initial-border-new: $ids-color-palette-azure-40;
 $button-color-secondary-hover-border-new: $ids-color-palette-azure-40;
 $button-color-secondary-hover-background-new: $ids-color-palette-slate-90;
 $button-color-secondary-disabled-background-new: $ids-color-palette-slate-80;
-$button-color-secondary-disabled-border-new: $ids-color-palette-slate-50;
-$button-color-secondary-disabled-font-new: $ids-color-palette-slate-40;
+$button-color-secondary-disabled-border-new: $ids-color-palette-slate-60;
+$button-color-secondary-disabled-font-new: $ids-color-palette-slate-60;
 $button-color-secondary-initial-background: transparent;
 
 $button-color-tertiary-disabled-background-new: $ids-color-palette-slate-90;
-$button-color-tertiary-hover-background-new: $ids-color-palette-slate-90;
+$button-color-tertiary-hover-background-new: $ids-color-palette-slate-70;
 $button-color-tertiary-hover-font-new: $ids-color-palette-white;
+$button-color-tertiary-disabled-font: $ids-color-palette-slate-60;
 
 $button-color-primary-destructive-initial-background-new: $ids-color-palette-ruby-60;
 $button-color-primary-destructive-hover-background-new: $ids-color-palette-ruby-70;
-
 $button-color-tertiary-destructive-initial-background-new: $ids-color-palette-ruby-40;
-$button-color-tertiary-destructive-hover-font-new: $ids-color-palette-ruby-30;
-$button-color-tertiary-destructive-hover-background-new: $ids-color-palette-ruby-60;
+$button-color-tertiary-destructive-hover-font-new: $ids-color-palette-ruby-10;
+$button-color-tertiary-destructive-hover-background-new: $ids-color-palette-ruby-50;
 
-$button-color-tertiary-destructive-disabled-font-new: $ids-color-palette-slate-50;
+$button-color-tertiary-destructive-disabled-font-new: $ids-color-palette-slate-60;
 $button-color-tertiary-destructive-disabled-background-new: $ids-color-palette-slate-80;
 
 $button-icon-disabled-color: $ids-color-palette-slate-60;
@@ -264,6 +264,19 @@ $trigger-icon-fill-light-color: $ids-color-palette-slate-40;
 $trigger-hover-color: $ids-color-palette-white;
 $trigger-active-color: $ids-color-brand-primary-base;
 $trigger-focus-color: $ids-color-brand-primary-base;
+
+// Link
+$link-color-text-font: $ids-color-palette-white;
+$link-icon-color: $ids-color-palette-amethyst-30;
+$link-border-color: $ids-color-palette-slate-90;
+$link-hover-color: $ids-color-palette-slate-70;
+$link-selected-color: $ids-color-palette-black;
+$link-background-color: $ids-color-palette-slate-80;
+
+// Link List
+$linklist-color-text-font: $ids-color-palette-slate-10;
+$linklist-color-visited-text-font: $ids-color-palette-amethyst-20;
+$linklist-color-disabled-text-font: $ids-color-palette-slate-50;
 
 // List View
 $listview-bg-color: $ids-color-palette-slate-90;
@@ -849,7 +862,7 @@ $header-toolbar-searchfield-icon-color: rgba($ids-color-palette-white, 1);
 $header-button-hover-color: rgba($ids-color-palette-white, 1);
 $header-button-focus-color: rgba($ids-color-palette-white, 1);
 $header-button-color: $ids-color-palette-white;
-$header-bg-color: $ids-color-palette-slate-60;
+$header-bg-color: $ids-color-palette-slate-90;
 $header-primary-btn-background-color: $ids-color-palette-slate-70;
 $header-primary-btn-background-hover-color: $ids-color-palette-slate-80;
 $header-flex-toolbar-input-searchfield-color: $ids-color-palette-white;

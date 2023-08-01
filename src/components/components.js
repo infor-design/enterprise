@@ -35,6 +35,7 @@ export { EmptyMessage } from './emptymessage/emptymessage';
 export { ExpandableArea } from './expandablearea/expandablearea';
 export { FontPicker, FontPickerStyle } from './fontpicker/fontpicker';
 export { Line } from './line/line';
+export { Link } from './link/link';
 export { ListBuilder } from './listbuilder/listbuilder';
 export { ListView } from './listview/listview';
 export { Message } from './message/message';
