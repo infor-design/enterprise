@@ -1,5 +1,13 @@
 # What's New with Enterprise
 
+## v4.87.0
+
+## v4.87.0 Features
+
+## v4.87.0 Fixes
+
+- `[FieldFilter]` Fixed Dropdown border not rendered properly. ([#7600](https://github.com/infor-design/enterprise/issues/7600))
+
 ## v4.86.0
 
 ## v4.86.0 Features
