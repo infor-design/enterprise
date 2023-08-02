@@ -2,9 +2,9 @@
 
 ## v4.87.0
 
-## v4.86.0 Features
+## v4.87.0 Features
 
-## v4.86.0 Fixes
+## v4.87.0 Fixes
 
 - `[FileuploadAdvanced]` Fixed Close Button not rendered properly. ([#7604](https://github.com/infor-design/enterprise/issues/7604))
 
