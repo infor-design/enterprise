@@ -93,6 +93,8 @@ WeekView.prototype = {
 
     if (!this.settings.endDate) {
       this.settings.endDate = dateUtils.lastDayOfWeek(new Date(), this.settings.firstDayOfWeek);
+    } else {
+      this.settings.endDate.setHours(23, 59, 59, 999);
     }
 
     return this.setLocaleThenBuild();
