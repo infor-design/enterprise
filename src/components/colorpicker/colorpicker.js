@@ -403,11 +403,11 @@ ColorPicker.prototype = {
       })
       .on('selected.colorpicker', (e, item) => {
         if (!this.element.is('.colorpicker-editor-button')) {
-          this.itemLabel = item.data('label');
+          this.itemLabel = item.parent().data('label');
         }
 
         if (!this.isEditor) {
-          this.setColor(item.data('value'), this.itemLabel);
+          this.setColor(item.parent().data('value'), this.itemLabel);
         }
 
         // Editor colorpicker
