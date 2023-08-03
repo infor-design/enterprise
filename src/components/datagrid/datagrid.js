@@ -2370,12 +2370,19 @@ Datagrid.prototype = {
     }
 
     if (/\b(date|time)\b/g.test(col.filterType)) {
-      btnMarkup += `${
-        render('less-than', 'EarlyThan')
-      }${render('less-equals', 'EarlyOrEquals')
-      }${render('greater-than', 'LaterThan')
-      }${render('greater-equals', 'LaterOrEquals')}`;
-      btnMarkup = btnMarkup.replace('{{icon}}', 'less-than');
+      btnDefault = determineFilterDefaultValue(filterConditions, filterConditions.length ? filterConditions[0] : 'equals');
+      if (filterConditions.length === 0) {
+        btnMarkup = renderButton(btnDefault) +
+          render( 'less-than', 'EarlyThan' ) +
+          render( 'less-equals', 'EarlyOrEquals' ) +
+          render( 'greater-than', 'LaterThan' ) +
+          render( 'greater-equals', 'LaterOrEquals' );
+        btnMarkup = btnMarkup.replace( '{{icon}}', btnDefault );
+      } else {
+        btnMarkup = renderButton(btnDefault) +
+          filterConditions.map(filter => render(filter, formatFilterText(filter))).join('');
+        btnMarkup = btnMarkup.replace('{{icon}}', btnDefault);
+      }
     }
 
     if (/\b(integer|decimal|percent)\b/g.test(col.filterType)) {
