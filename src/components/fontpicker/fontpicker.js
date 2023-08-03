@@ -242,7 +242,7 @@ FontPicker.prototype = {
 
     $(this.element)
       .on(`selected.${COMPONENT_NAME}`, (e, selectedItem) => {
-        const val = selectedItem.parent().attr('data-val');
+        const val = selectedItem.attr('data-val');
         this.select(val);
       })
       .on(`updated.${COMPONENT_NAME}`, (e, settings) => {
