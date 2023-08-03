@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.87.0
+
+## v4.87.0 Fixes
+
+- `[WeekView]` Fixed bug where going to next didn't render the complete week. ([#7684](https://github.com/infor-design/enterprise/issues/7684))
+
 ## v4.86.0
 
 ## v4.86.0 Features
@@ -40,7 +46,6 @@
 - `[Tooltip]` Fixed an error in tooltip where some string is unrecognizable. ([NG#1499](https://github.com/infor-design/enterprise-ng/issues/1499))
 - `[Tooltip]` Fixed invisible links on hover on tooltips in contrast mode. ([7737](https://github.com/infor-design/enterprise/issues/7737))
 - `[WeekView]` Fixed bug where agenda variant ignored `showAllDay` setting. ([#7700](https://github.com/infor-design/enterprise/issues/7700))
-- `[WeekView]` Fixed bug where going to next didn't render the complete week. ([#7684](https://github.com/infor-design/enterprise/issues/7684))
 
 ## v4.85.0
 
