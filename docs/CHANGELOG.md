@@ -7,6 +7,7 @@
 ## v4.87.0 Fixes
 
 - `[FileuploadAdvanced]` Fixed Close Button not rendered properly. ([#7604](https://github.com/infor-design/enterprise/issues/7604))
+
 ## v4.87.0 Fixes
 
 - `[ModuleNav]` Fixed missing tooltip on the settings button. ([#1525](https://github.com/infor-design/enterprise-ng/issues/1525))
