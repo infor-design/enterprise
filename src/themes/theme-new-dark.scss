@@ -17,7 +17,14 @@
 
 // Theme Overrides
 $body-color-primary-background: $ids-color-palette-slate-100;
+
+// HomePage
 $homepage-background-color: $body-color-primary-background;
+
+$header-hero-text-color: $ids-color-palette-white;
+$header-label-text-color: $ids-color-palette-white;
+$homepage-button-color: $ids-color-palette-white;
+$header-hero-widget-bg-color: $ids-color-palette-white;
 
 $header-default-bg-color: $ids-color-palette-slate-90;
 $header-default-bg-hover-color: $ids-color-palette-slate-80;
@@ -868,7 +875,6 @@ $header-primary-btn-background-hover-color: $ids-color-palette-slate-80;
 $header-flex-toolbar-input-searchfield-color: $ids-color-palette-white;
 $header-flex-toolbar-close-icon-color: $header-flex-toolbar-input-searchfield-color;
 
-$header-hero-text-color: rgba($ids-color-palette-white, 1);
 $header-hero-widget-bg-color: $ids-color-palette-slate-90;
 
 // Header Tabs

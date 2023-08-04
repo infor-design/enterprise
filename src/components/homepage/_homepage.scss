@@ -390,18 +390,18 @@
     .btn-tertiary:hover:not(:disabled):not(.close):not(.btn-filter):not(.personalize-actionable),
     .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary).is-open span,
     .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary) {
-      color: $header-button-color;
+      color: $homepage-button-color;
 
       .icon {
-        color: $header-button-color;
+        color: $homepage-button-color;
       }
 
       &:not([disabled]):hover {
         background-color: rgba(0, 0, 0, 0.3) !important;
-        color: $header-text-color;
+        color: $header-label-text-color;
 
         .icon {
-          color: $header-text-color !important;
+          color: $header-label-text-color !important;
         }
       }
 
@@ -422,18 +422,18 @@
       }
 
       text {
-        color: $header-text-color;
-        fill: $header-text-color;
+        color: $header-label-text-color;
+        fill: $header-label-text-color;
       }
 
       .chart-legend-item-text {
-        color: $header-text-color;
-        fill: $header-text-color;
+        color: $header-label-text-color;
+        fill: $header-label-text-color;
       }
 
       .list-button {
         .icon {
-          color: $header-text-color;
+          color: $header-label-text-color;
         }
       }
     }
@@ -445,20 +445,20 @@
 
       &:hover {
         &::before {
-          border-color: $header-text-color;
+          border-color: $header-label-text-color;
         }
       }
 
       &.is-active {
         &::before {
-          background-color: $header-text-color;
-          border-color: $header-text-color;
+          background-color: $header-label-text-color;
+          border-color: $header-label-text-color;
         }
 
         &:hover {
           &::before {
-            background-color: $header-text-color;
-            border-color: $header-text-color;
+            background-color: $header-label-text-color;
+            border-color: $header-label-text-color;
           }
         }
       }
@@ -476,7 +476,7 @@
 
       .instance-count {
         .count {
-          color: $header-hero-text-color;
+          color: $header-label-text-color;
         }
 
         svg.icon {
@@ -625,5 +625,5 @@ html[dir='rtl'] {
 }
 
 .hero-header .btn-tertiary:hover:not(:disabled):not(.close):not(.personalize-actionable) svg.icon {
-  color: $header-text-color !important;
+  color: $header-label-text-color !important;
 }

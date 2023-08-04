@@ -35,7 +35,10 @@ $header-focus-box-shadow: 0 0 4px 3px rgba(255, 255, 255, 0.3);
 $header-toolbar-searchfield-icon-color: $ids-color-palette-white;
 $header-toolbar-button-hover-color: #313236;
 
-$header-hero-text-color: rgba($ids-color-palette-white, 0.7);
+// Homepages
+$header-hero-text-color: $ids-color-palette-white;
+$header-label-text-color: $ids-color-palette-white;
+$homepage-button-color: $ids-color-palette-white;
 $header-hero-widget-bg-color: $ids-color-palette-slate-90;
 
 $input-color-focus-border: $ids-color-palette-slate-10;
