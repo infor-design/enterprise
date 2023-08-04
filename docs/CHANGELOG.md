@@ -2,6 +2,7 @@
 
 ## v4.84.6 Fixes
 
+- `[Datagrid]` Fixed bug where default filter wasn't honored for date or time columns. ([#7766](https://github.com/infor-design/enterprise/issues/7766))
 - `[ModuleNav]` Fixed missing tooltip on the settings button. ([#1525](https://github.com/infor-design/enterprise-ng/issues/1525))
 - `[ModuleNav]` Fixed issues in dark mode. ([#7753](https://github.com/infor-design/enterprise/issues/7753))
 - `[ModuleNav]` Added an option to set the icon to false initially. ([#7740](https://github.com/infor-design/enterprise/issues/7740))
