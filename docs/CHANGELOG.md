@@ -1,15 +1,5 @@
 # What's New with Enterprise
 
-## v4.87.0
-
-## v4.87.0 Fixes
-
-- `[ModuleNav]` Fixed missing tooltip on the settings button. ([#1525](https://github.com/infor-design/enterprise-ng/issues/1525))
-- `[ModuleNav]` Reduced item padding so more items can fit in the menu before scrolling occurs. ([#7770](https://github.com/infor-design/enterprise/issues/7770))
-- `[ModuleNav]` Fixed issues in dark mode. ([#7753](https://github.com/infor-design/enterprise/issues/7753))
-- `[ModuleNav]` Added option/example to disable search in the dropdown menu ([#1535](https://github.com/infor-design/enterprise-ng/issues/1535))
-- `[WeekView]` Fixed bug where going to next didn't render the complete week. ([#7684](https://github.com/infor-design/enterprise/issues/7684))
-
 ## v4.86.0
 
 ## v4.86.0 Features
@@ -42,6 +32,8 @@
 - `[Message]` Fixed alignment issue on the icons. ([#7746](https://github.com/infor-design/enterprise/issues/7746))
 - `[ModuleNav]` Fixed rounding and `zindex` issues. ([#7654](https://github.com/infor-design/enterprise/issues/7654))
 - `[ModuleNav]` Added an option to set the icon to false initially. ([#7740](https://github.com/infor-design/enterprise/issues/7740))
+- `[ModuleNav]` Reduced item padding so more items can fit in the menu before scrolling occurs. ([#7770](https://github.com/infor-design/enterprise/issues/7770))
+- `[ModuleNav]` Added option/example to disable search in the dropdown menu ([#1535](https://github.com/infor-design/enterprise-ng/issues/1535))
 - `[Notification]` Updated color styles when notification is in subheader. ([#7623](https://github.com/infor-design/enterprise/issues/7623))
 - `[Page-Patterns]` Fixed the width of the search field in page pattern example. ([#7561](https://github.com/infor-design/enterprise/issues/7561))
 - `[Popupmenu]` Fixed the behavior of the component when having submenus in NG. ([#7556](https://github.com/infor-design/enterprise/issues/7556))
