@@ -593,6 +593,8 @@
   }
 
   &.link-list {
+    padding-top: 5px;
+
     li {
       cursor: default;
       background-color: transparent;
@@ -603,12 +605,21 @@
         padding: 0;
         height: 28px;
 
+        .hyperlink {
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          max-width: 327px;
+          display: inline-block;
+        }
+
         .hyperlink,
         .hyperlink span {
           color: $linklist-color-text-font;
           text-decoration: none;
           font-size: 16px;
           font-weight: 600;
+          height: 28px;
 
           &.show-visited:visited,
           &.force-visited {
