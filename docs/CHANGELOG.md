@@ -4,6 +4,8 @@
 
 ## v4.87.0 Features
 
+- `[Typography]` Added `text-wrap` class. ([#7497](https://github.com/infor-design/enterprise/issues/7497))
+
 ## v4.87.0 Fixes
 
 - `[FieldFilter]` Fixed Dropdown border not rendered properly. ([#7600](https://github.com/infor-design/enterprise/issues/7600))

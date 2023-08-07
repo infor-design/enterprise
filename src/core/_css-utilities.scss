@@ -15,6 +15,9 @@
 .text-lowercase {
   text-transform: lowercase !important;
 }
+.text-wrap {
+  word-break: break-all;
+}
 
 .d-flex {
   display: flex !important;
