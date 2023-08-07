@@ -5,6 +5,7 @@
 ## v4.87.0 Fixes
 
 - `[ModuleNav]` Fixed missing tooltip on the settings button. ([#1525](https://github.com/infor-design/enterprise-ng/issues/1525))
+- `[ModuleNav]` Reduced item padding so more items can fit in the menu before scrolling occurs. ([#7770](https://github.com/infor-design/enterprise/issues/7770))
 - `[ModuleNav]` Fixed issues in dark mode. ([#7753](https://github.com/infor-design/enterprise/issues/7753))
 - `[ModuleNav]` Added option/example to disable search in the dropdown menu ([#1535](https://github.com/infor-design/enterprise-ng/issues/1535))
 - `[WeekView]` Fixed bug where going to next didn't render the complete week. ([#7684](https://github.com/infor-design/enterprise/issues/7684))
