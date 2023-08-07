@@ -11,8 +11,6 @@ demo:
 
 We have two different versions of IDS designs for the components Soho/Subtle/Classic and Uplift/Vibrant/New.
 
-For: Soho/Subtle/Classic the default font family for the three themes is still for the moment `font-family: Helvetica, Arial` Arial/Helvetica are default system fonts for Mac/PC and do not need anything.
-
 For: Uplift/Vibrant/New we now use a custom font[Source Sans Pro](https://fonts.google.com/specimen/Source+Sans+Pro) `font-family: 'source sans pro', Helvetica, Arial`. We include two font-weights 400, 600 served from google fonts because our design is limited in terms of weights (just normal and bold), for example we dont use italics anywhere in the designs as it is difficult to read. Source Sans Pro supports a lot of languages but not some of these so these are the [fall backs](https://github.com/infor-design/enterprise/blob/main/src/components/typography/_typography.scss#L8)
 
 To use the custom font enable this font in the components first you need to add this link to the head of your pages.
