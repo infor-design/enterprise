@@ -134,6 +134,8 @@ Sparkline.prototype = {
       const scaleMedianRange = d3.scaleLinear().domain([min, max]).range([0, h]);
       const top = h - scaleMedianRange(median > range ? median : range);
       const bot = h - scaleMedianRange(median < range ? median : range);
+      const isDark = $('html').is('[class*="dark"]');
+      const medianFill = $('html').is('[class*="dark"]') ? '#F0F0F0' : '#525257';
 
       svg.append('g')
         .attr('class', 'medianrange')
@@ -142,6 +144,7 @@ Sparkline.prototype = {
         .attr('width', maxWidth)
         .attr('height', bot)
         .style('opacity', '0.06')
+        .style('fill', medianFill)
         .call((d) => {
           d._groups.forEach((medianranges) => {
             medianranges.forEach((medianrange) => {
