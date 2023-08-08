@@ -449,6 +449,14 @@ ListView.prototype = {
       if (self.settings.highlight && self.searchTerm) {
         item.highlight(self.searchTerm);
       }
+
+      const hyperlinkItem = item.find('.link-item .hyperlink');
+
+      if (hyperlinkItem.length > 0 &&
+        (hyperlinkItem[0].offsetHeight < hyperlinkItem[0].scrollHeight ||
+        hyperlinkItem[0].offsetWidth < hyperlinkItem[0].scrollWidth)) {
+        hyperlinkItem.tooltip({ title: hyperlinkItem.text() });
+      }
     });
 
     // Invoke all elements within the list view
