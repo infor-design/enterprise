@@ -1,4 +1,5 @@
 import { Icon, COMPONENT_NAME } from './icons';
+import { stringUtils } from '../../utils/string';
 
 /**
  * jQuery component wrappers
@@ -30,8 +31,14 @@ $.fn.icon = function (settings) {
     options = options || $.extend({}, defaults);
 
     if (typeof options === 'string') {
+      let icon = '';
+
+      if (options && options.indexOf('icon-') === 0) {
+        icon = options.replace('icon-', '');
+      }
+
       options = $.extend({}, defaults, {
-        icon: options.replace('icon-', '')
+        icon
       });
     }
 
@@ -63,11 +70,23 @@ $.fn.icon = function (settings) {
   $.createIcon = function createIcon(options) {
     options = normalizeIconOptions(options);
 
-    return [
-      `<svg class="${options.classes.join(' ')}" focusable="false" aria-hidden="true" role="presentation">` +
-        `<use href="#icon-${options.icon}"></use>` +
-      '</svg>'
-    ].join('');
+    // Use external URL to create an `<img>` based icon
+    if (stringUtils.isValidURL(options.icon)) {
+      return `<img
+        src="${options.icon}"
+        alt="Icon" class="icon custom-icon ${options.classes.join(' ')}"
+        aria-hidden="true"
+        role="presentation" preload="true"/>`;
+    }
+
+    // Use SVG with an official IDS Icon
+    return `<svg
+      class="${options.classes.join(' ')}"
+      focusable="false"
+      role="presentation">
+      aria-hidden="true"
+        <use href="#icon-${options.icon}"></use>
+      </svg>`;
   };
 
   // Returns a jQuery-wrapped element containing a new icon
