@@ -319,8 +319,8 @@ Dropdown.prototype = {
       this.wrapper.append(this.pseudoElem, this.trigger);
     }
 
-    // Check for and add the icon
-    this.icon = this.wrapper.find('.icon');
+    // Check for and add the trigger icon
+    this.icon = this.wrapper.find('.trigger').find('.icon');
     if (!this.icon.length) {
       this.icon = $.createIconElement(this.settings.dropdownIcon || 'dropdown');
       this.wrapper.append(this.icon);
@@ -573,7 +573,7 @@ Dropdown.prototype = {
       return;
     }
 
-    // Set icon properties
+    // Use as a settings object
     if (typeof listIconItem.icon === 'object') {
       listIconItem.obj = listIconItem.icon;
       listIconItem.icon = listIconItem.icon.icon;
@@ -623,15 +623,16 @@ Dropdown.prototype = {
       listIconItem.isClassListOver = true;
     }
 
-    // Build icon
-    listIconItem.html = $.createIcon({
-      icon: listIconItem.isIcon ? listIconItem.icon : '',
-      class: `listoption-icon${listIconItem.isClassList ? ` ${listIconItem.classList}` : ''}`
-    });
-
     if (listIconItem.icon === 'swatch') {
+      // Create a swatch span
       listIconItem.isSwatch = true;
       listIconItem.html = `<span class="swatch ${listIconItem.isClassList ? listIconItem.classList : ''}"></span>`;
+    } else {
+      // Build IDS Icon SVG or external icon
+      listIconItem.html = $.createIcon({
+        icon: listIconItem.isIcon ? listIconItem.icon : '',
+        class: `listoption-icon ${listIconItem.isClassList ? ` ${listIconItem.classList}` : ''}`
+      });
     }
 
     self.listIcon.items.push(listIconItem);
@@ -675,8 +676,9 @@ Dropdown.prototype = {
     }
 
     if (hasIcons) {
-      self.pseudoElem.prepend($.createIcon({ icon: '', class: 'listoption-icon' }));
-      self.listIcon.pseudoElemIcon = self.pseudoElem.find('> .listoption-icon');
+      const elem = $.createIconElement({ icon: '', class: 'listoption-icon' });
+      self.pseudoElem.prepend(elem);
+      self.listIcon.pseudoElemIcon = elem;
       self.listIcon.idx = -1;
     }
 
@@ -773,16 +775,16 @@ Dropdown.prototype = {
     if (self.listIcon.hasIcons) {
       const target = self.listIcon.pseudoElemIcon;
       const i = opt.index();
-      const idx = self.listIcon.idx;
+      // const idx = self.listIcon.idx;
       const iconRef = self.listIcon.items[i];
-      const icon = iconRef && iconRef.isIcon ? iconRef.icon : '';
-
+      // const icon = iconRef && iconRef.isIcon ? iconRef.icon : '';
       // Return out if this item has no icon
       if (!iconRef) {
         return;
       }
 
       // Reset class and color
+      /*
       if (idx > -1) {
         const iconAtIndex = self.listIcon.items[idx];
         if (iconAtIndex) {
@@ -790,13 +792,29 @@ Dropdown.prototype = {
           target[0].style.fill = '';
         }
       }
+      */
 
       // Update new stuff
+      target.remove();
+      const elem = $.createIconElement({
+        icon: iconRef.icon,
+        class: ['listoption-icon']
+      });
+
+      self.pseudoElem.prepend(elem);
+      self.listIcon.pseudoElemIcon = elem;
       self.listIcon.idx = i;
+
+      if (iconRef.isClassList) {
+        elem.addClass(iconRef.classList);
+      }
+
+      /*
       target.changeIcon(icon);
       if (iconRef.isClassList) {
         target.addClass(iconRef.classList);
       }
+      */
     }
   },
 
@@ -1014,7 +1032,10 @@ Dropdown.prototype = {
 
     if (this.listIcon.hasIcons) {
       this.list.addClass('has-icons');
-      this.listIcon.pseudoElemIcon.clone().appendTo(this.list);
+
+      const iconClone = this.listIcon.pseudoElemIcon.clone();
+      iconClone.addClass('listoption-icon');
+      iconClone.appendTo(this.list);
     }
 
     if (hasOptGroups) {
@@ -1169,7 +1190,7 @@ Dropdown.prototype = {
     }
     if (this.isHidden) {
       this.pseudoElem.hide().prev('label').hide();
-      this.pseudoElem.next('svg').hide();
+      this.pseudoElem.next('.icon').hide();
     }
   },
 
