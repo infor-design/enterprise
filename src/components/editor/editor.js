@@ -1066,7 +1066,7 @@ Editor.prototype = {
 
       strikethrough: `<button type="button" class="btn btn-editor" title="${Locale.translate('StrikeThrough')}" data-action="strikethrough" data-element="strike">${buttonLabels.strikethrough}</button>`,
 
-      foreColor: `<button type="button" class="btn btn-editor colorpicker-editor-button" title="${Locale.translate('TextColor')}" data-action="foreColor" data-element="foreColor" data-init="false">${buttonLabels.foreColor}</button>`,
+      foreColor: `<button type="button" class="btn btn-editor colorpicker-editor-button" title="${Locale.translate('TextColor')}" data-action="foreColor" data-element="foreColor" data-init="false"><span class="swatch"></span>${buttonLabels.foreColor}</button>`,
 
       backColor: `<button type="button" class="btn btn-editor colorpicker-editor-button" title="${Locale.translate('BackgroundColor')}" data-action="backColor" data-element="backColor">${buttonLabels.backColor}</button>`,
 
@@ -2294,6 +2294,7 @@ Editor.prototype = {
   // Run the CE action.
   execAction(action) {
     const currentElement = this.getCurrentElement();
+    console.log(action)
     // Visual Mode
     if (currentElement === this.element) {
       if (action.indexOf('append-') > -1) {
@@ -2686,7 +2687,8 @@ Editor.prototype = {
       }
       color = color ? cpApi.rgb2hex(color) : '';
       cpBtn.attr('data-value', color)
-        .find('.icon').css('color', (preventColors.indexOf(color.toLowerCase()) > -1) ? '' : color);
+        .find('.icon');
+      cpBtn.find('.swatch').css('background-color', (preventColors.indexOf(color.toLowerCase()) > -1) ? '' : color);
     }
     return { cpBtn, cpApi, color };
   },
@@ -2723,7 +2725,8 @@ Editor.prototype = {
         value = ''; // clear format
       }
 
-      cpBtn.attr('data-value', value).find('.icon').css('color', value);
+      cpBtn.attr('data-value', value).find('.icon');
+      cpBtn.find('.swatch').css('background-color', value);
 
       if (env.browser.name === 'ie' || action === 'foreColor') {
         if (value) {
