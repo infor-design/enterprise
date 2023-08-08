@@ -196,9 +196,10 @@ ModuleNavSwitcher.prototype = {
       if (!this.settings.changeIconOnSelect) return;
       const selectedValue = e.currentTarget.value;
       const icon = $(e.currentTarget)?.data('dropdown')?.list.find(`[data-val=${selectedValue}]`).find('.listoption-icon');
-      const svgInner = icon[0]?.innerHTML;
-      const svgHtml = `<svg class="icon-custom" focusable="false" aria-hidden="true" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">${svgInner}</svg>`;
-      this.setModuleButtonIcon(svgHtml);
+
+      const svgInner = icon[0]?.outerHTML;
+      // const svgHtml = `<svg class="icon-custom" focusable="false" aria-hidden="true" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">${svgInner}</svg>`;
+      this.setModuleButtonIcon(svgInner);
     });
   },
 
