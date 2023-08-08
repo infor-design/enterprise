@@ -2294,7 +2294,7 @@ Editor.prototype = {
   // Run the CE action.
   execAction(action) {
     const currentElement = this.getCurrentElement();
-    console.log(action)
+
     // Visual Mode
     if (currentElement === this.element) {
       if (action.indexOf('append-') > -1) {
