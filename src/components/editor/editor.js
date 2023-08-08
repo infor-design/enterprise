@@ -2686,8 +2686,7 @@ Editor.prototype = {
         color = cpApi.decimal2rgb(color);
       }
       color = color ? cpApi.rgb2hex(color) : '';
-      cpBtn.attr('data-value', color)
-        .find('.icon');
+      cpBtn.attr('data-value', color);
       cpBtn.find('.swatch').css('background-color', (preventColors.indexOf(color.toLowerCase()) > -1) ? '' : color);
     }
     return { cpBtn, cpApi, color };
@@ -2725,7 +2724,7 @@ Editor.prototype = {
         value = ''; // clear format
       }
 
-      cpBtn.attr('data-value', value).find('.icon');
+      cpBtn.attr('data-value', value);
       cpBtn.find('.swatch').css('background-color', value);
 
       if (env.browser.name === 'ie' || action === 'foreColor') {

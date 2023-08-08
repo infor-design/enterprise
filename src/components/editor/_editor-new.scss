@@ -44,6 +44,10 @@
     &.btn-editor.colorpicker-editor-button {
       right: 7px;
 
+      &.is-open > span.swatch {
+        background-color: $editor-btn-active-color;
+      }
+
       > span.swatch {
         background-color: $editor-btn-color;
         display: flex;
