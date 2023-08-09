@@ -8,7 +8,8 @@
 
 - `[FieldFilter]` Fixed Dropdown border not rendered properly. ([#7600](https://github.com/infor-design/enterprise/issues/7600))
 - `[FileuploadAdvanced]` Fixed Close Button not rendered properly. ([#7604](https://github.com/infor-design/enterprise/issues/7604))
-- `[ModuleNav]` Fixed missing tooltip on the settings button. ([#1525](https://github.com/infor-design/enterprise-ng/issues/1525))
+- `[ModuleNav]` Fixed missing tooltip on the settings button. ([NG#1525](https://github.com/infor-design/enterprise-ng/issues/1525))
+- `[ModuleNav/Dropdown]` Added support for external URLs to the Dropdown component's list, as well as support for setting these in Module Nav Switcher. ([NG#1533](https://github.com/infor-design/enterprise-ng/issues/1533))
 - `[ModuleNav]` Fixed issues in dark mode. ([#7753](https://github.com/infor-design/enterprise/issues/7753))
 - `[WeekView]` Fixed bug where going to next didn't render the complete week. ([#7684](https://github.com/infor-design/enterprise/issues/7684))
 
