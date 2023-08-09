@@ -322,7 +322,7 @@ Dropdown.prototype = {
     // Check for and add the trigger icon
     this.icon = this.wrapper.find('.trigger').find('.icon');
     if (!this.icon.length) {
-      this.icon = $.createIconElement(this.settings.dropdownIcon || 'dropdown');
+      this.icon = $.createIconElement({ icon: this.settings.dropdownIcon || 'dropdown' });
       this.wrapper.append(this.icon);
     }
 
@@ -848,7 +848,7 @@ Dropdown.prototype = {
       listContents = `<div class="dropdown-list${reverseText}${isMobile ? ' mobile' : ''}${this.settings.multiple ? ' multiple' : ''}" id="${listId}" ${this.settings.multiple ? 'aria-multiselectable="true"' : ''}>
         <label for="dropdown-search" class="audible">${this.settings.noSearch ? Locale.translate('PressDown') : Locale.translate('TypeToFilter')}</label>
         <input type="text" class="dropdown-search${reverseText}" ${this.settings.noSearch ? 'aria-readonly="true"' : ''} id="dropdown-search" autocomplete="off" />
-        <span class="trigger">${isMobile ? $.createIcon({ icon: 'close', classes: ['close'] }) : $.createIcon(this.settings.dropdownIcon || 'dropdown')}</span>`;
+        <span class="trigger">${isMobile ? $.createIcon({ icon: 'close', classes: ['close'] }) : $.createIcon({ icon: this.settings.dropdownIcon || 'dropdown' })}</span>`;
 
       if (this.settings.virtualScroll) {
         listContents += `<div class="virtual-scroll-container">
