@@ -651,7 +651,7 @@ Dropdown.prototype = {
     if (hasIcons) {
       let count = 0;
 
-      opts.each(function (i) {
+      opts.each(function (i, el) {
         const iconAttr = $(this).attr('data-icon');
         let icon = null;
 
@@ -664,7 +664,11 @@ Dropdown.prototype = {
         } else {
           icon = $.fn.parseOptions(this, 'data-icon');
         }
-        self.setItemIcon({ html: '', icon });
+        self.setItemIcon({
+          html: '',
+          icon,
+          value: el.value || null
+        });
 
         if (self.listIcon.items[i] && self.listIcon.items[i].isIcon) {
           count++;
@@ -772,29 +776,16 @@ Dropdown.prototype = {
   updateItemIcon(opt) {
     const self = this;
     if (self.listIcon.hasIcons) {
-      const target = self.listIcon.pseudoElemIcon;
+      const target = self.pseudoElem.find('.listoption-icon');
       const i = opt.index();
-      // const idx = self.listIcon.idx;
       const iconRef = self.listIcon.items[i];
-      // const icon = iconRef && iconRef.isIcon ? iconRef.icon : '';
       // Return out if this item has no icon
       if (!iconRef) {
         return;
       }
 
-      // Reset class and color
-      /*
-      if (idx > -1) {
-        const iconAtIndex = self.listIcon.items[idx];
-        if (iconAtIndex) {
-          target.removeClass(`${iconAtIndex.classList} ${iconAtIndex.classListOver}`);
-          target[0].style.fill = '';
-        }
-      }
-      */
-
       // Update new stuff
-      target.remove();
+      target.each((j, el) => el.remove());
       const elem = $.createIconElement({
         icon: iconRef.icon,
         class: ['listoption-icon']
@@ -807,13 +798,6 @@ Dropdown.prototype = {
       if (iconRef.isClassList) {
         elem.addClass(iconRef.classList);
       }
-
-      /*
-      target.changeIcon(icon);
-      if (iconRef.isClassList) {
-        target.addClass(iconRef.classList);
-      }
-      */
     }
   },
 
@@ -3784,6 +3768,7 @@ Dropdown.prototype = {
 
     // update the list and set a new value, if applicable
     this.updateList();
+    this.setListIcon();
     this.setDisplayedValues();
     this.toggleTooltip();
 
