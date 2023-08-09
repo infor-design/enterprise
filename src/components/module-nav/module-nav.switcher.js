@@ -192,12 +192,7 @@ ModuleNavSwitcher.prototype = {
       widthTarget: '.module-nav-switcher'
     }).off('change.module-nav').on('change.module-nav', (e) => {
       if (!this.settings.changeIconOnSelect) return;
-      const selectedValue = e.currentTarget.value;
-      const icon = $(e.currentTarget)?.data('dropdown')?.list.find(`[data-val=${selectedValue}]`).find('.listoption-icon');
-
-      const svgInner = icon[0]?.outerHTML;
-      // const svgHtml = `<svg class="icon-custom" focusable="false" aria-hidden="true" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">${svgInner}</svg>`;
-      this.setModuleButtonIcon(svgInner);
+      this.selectRole(e.currentTarget.value);
     });
   },
 
@@ -279,7 +274,31 @@ ModuleNavSwitcher.prototype = {
 
     if (newRoles.length) {
       this.roleDropdownEl?.insertAdjacentHTML('afterbegin', newRoles);
-      if (doUpdate) $(this.roleDropdownEl).updated();
+      if (doUpdate) {
+        this.roleDropdownAPI.updated();
+
+        const selected = this.roleDropdownAPI.selectedValues;
+        if (selected.length) {
+          this.selectRole(selected[0]);
+        }
+      }
+    }
+  },
+
+  /**
+   * Chooses a new role from the Role Switcher dropdown and syncs with the Module Button icon
+   * @param {string} val The selected role's value
+   */
+  selectRole(val) {
+    const ddItems = this.roleDropdownAPI.listIcon.items;
+    if (ddItems?.length) {
+      let icon;
+      ddItems.forEach((entry) => {
+        if (!icon && entry.value === val) {
+          icon = entry.html;
+        }
+      });
+      if (icon) this.setModuleButtonIcon(icon);
     }
   },
 
