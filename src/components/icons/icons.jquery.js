@@ -74,9 +74,10 @@ $.fn.icon = function (settings) {
     if (stringUtils.isValidURL(options.icon)) {
       return `<img
         src="${options.icon}"
-        alt="Icon" class="icon custom-icon ${options.classes.join(' ')}"
+        alt="Icon"
+        class="icon custom-icon ${options.classes.join(' ')}"
         aria-hidden="true"
-        role="presentation" preload="true"/>`;
+        role="presentation"/>`;
     }
 
     // Use SVG with an official IDS Icon
