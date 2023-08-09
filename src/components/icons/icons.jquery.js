@@ -31,14 +31,8 @@ $.fn.icon = function (settings) {
     options = options || $.extend({}, defaults);
 
     if (typeof options === 'string') {
-      let icon = '';
-
-      if (options && options.indexOf('icon-') === 0) {
-        icon = options.replace('icon-', '');
-      }
-
       options = $.extend({}, defaults, {
-        icon
+        icon: options.replace('icon-', '')
       });
     }
 
