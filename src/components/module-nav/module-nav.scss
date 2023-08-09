@@ -110,7 +110,7 @@
     }
 
     .module-nav-settings {
-      padding-block-end: 28px;
+      padding-block-end: $module-nav-bottom-margin;
     }
 
     &.show-detail {
@@ -267,5 +267,5 @@
 .module-nav-settings {
   flex-shrink: 0;
   overflow: hidden;
-  margin-block-start: $module-nav-accordion-gutter-size;
+  margin-block-start: 0;
 }
