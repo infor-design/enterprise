@@ -2567,7 +2567,7 @@ PopupMenu.prototype = {
     const menuId = this.menu[0]?.id;
     const otherTriggers = $(`[aria-controls="${menuId}"]`).not(this.element);
 
-    if (!otherTriggers.length) {
+    if (!otherTriggers.length || this.settings.trigger === 'immediate') {
       const parentNode = this.menu.parent();
       parentNode.find('.arrow').remove();
       parentNode.off('contextmenu.popupmenu');
