@@ -26,6 +26,7 @@ const MODULE_NAV_DEFAULTS = {
     tooltipStyle: 'dark'
   },
   displayMode: MODULE_NAV_DISPLAY_MODES[0],
+  enableOutsideClick: false,
   filterable: false,
   initChildren: true,
   pinSections: false,
@@ -59,6 +60,8 @@ function ModuleNav(element, settings) {
 
 // Plugin Methods
 ModuleNav.prototype = {
+
+  previousDisplayMode: false,
 
   /**
    * @returns {Accordion} Accordion API, if one is available
@@ -191,7 +194,33 @@ ModuleNav.prototype = {
       });
     }
 
+    this.enableOutsideClickEvent();
+
     return this;
+  },
+
+  /**
+   * @private
+   */
+  enableOutsideClickEvent() {
+    if (this.settings.enableOutsideClick) {
+      $(this.containerEl).on(`click.${COMPONENT_NAME}`, (e) => {
+        this.checkOutsideClick(e.target);
+      });
+    }
+  },
+
+  /**
+   * @param {HTMLElement} targetEl clicked
+   * @returns {void}
+   */
+  checkOutsideClick(targetEl) {
+    if (this.settings.displayMode === 'expanded') {
+      const target = targetEl;
+      if (target && !$(target).is('.application-menu-trigger') && !this.element[0].contains(target)) {
+        this.setDisplayMode(this.previousDisplayMode);
+      }
+    }
   },
 
   /**
@@ -296,6 +325,7 @@ ModuleNav.prototype = {
   setDisplayMode(val) {
     if (!isValidDisplayMode(val)) return;
 
+    if (this.settings.displayMode !== 'expanded') this.previousDisplayMode = this.settings.displayMode;
     if (this.settings.displayMode !== val) this.settings.displayMode = val;
     setDisplayMode(val, this.containerEl);
 
@@ -306,7 +336,11 @@ ModuleNav.prototype = {
     // Don't show collapsed accordion headers if not in "expanded" mode
     if (this.settings.displayMode !== 'expanded') {
       this.collapseAccordionHeaders();
+    } else {
+      this.enableOutsideClickEvent();
     }
+
+    this.element.trigger('displaymodechange', [val, this.previousDisplayMode]);
   },
 
   /**
@@ -433,6 +467,7 @@ ModuleNav.prototype = {
    */
   teardownEvents() {
     this.element.off(`updated.${COMPONENT_NAME}`);
+    $(this.containerEl).off(`click.${COMPONENT_NAME}`);
     $(this.accordionEl).off(`rendered.${COMPONENT_NAME}`);
     $(this.accordionEl).off(`beforeexpand.${COMPONENT_NAME}`);
     $(this.accordionEl).off(`afterexpand.${COMPONENT_NAME}`);
