@@ -203,11 +203,18 @@ ModuleNav.prototype = {
    * @private
    */
   enableOutsideClickEvent() {
-    if (this.settings.enableOutsideClick) {
+    if (this.settings.enableOutsideClick && this.settings.displayMode === 'expanded') {
       $(this.containerEl).on(`click.${COMPONENT_NAME}`, (e) => {
         this.checkOutsideClick(e.target);
       });
     }
+  },
+
+  /**
+   * @private
+   */
+  disableOutsideClick() {
+    $(this.containerEl).off(`click.${COMPONENT_NAME}`);
   },
 
   /**
@@ -219,6 +226,7 @@ ModuleNav.prototype = {
       const target = targetEl;
       if (target && !$(target).is('.application-menu-trigger') && !this.element[0].contains(target)) {
         this.setDisplayMode(this.previousDisplayMode);
+        this.disableOutsideClick();
       }
     }
   },
@@ -466,8 +474,8 @@ ModuleNav.prototype = {
    * @private
    */
   teardownEvents() {
+    this.disableOutsideClick();
     this.element.off(`updated.${COMPONENT_NAME}`);
-    $(this.containerEl).off(`click.${COMPONENT_NAME}`);
     $(this.accordionEl).off(`rendered.${COMPONENT_NAME}`);
     $(this.accordionEl).off(`beforeexpand.${COMPONENT_NAME}`);
     $(this.accordionEl).off(`afterexpand.${COMPONENT_NAME}`);

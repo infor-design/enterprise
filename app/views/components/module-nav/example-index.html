@@ -437,10 +437,8 @@
       navAPI.updated({ enableOutsideClick: collapseCheckEl[0].checked });
     });
 
-    navEl.on('displaymodechange', (e, mode) => {
-      if (dropdownAPI.value !== mode) {
-        dropdownAPI.selectValue(mode);
-      }
+    navEl.on('displaymodechange.test', (e, mode) => {
+      dropdownAPI.selectValue(mode === false ? '' : mode);
     });
 
     // Connect component event handling
