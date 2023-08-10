@@ -78,8 +78,8 @@ $.fn.icon = function (settings) {
     return `<svg
       class="${options.classes.join(' ')}"
       focusable="false"
-      role="presentation">
-      aria-hidden="true"
+      role="presentation"
+      aria-hidden="true">
         <use href="#icon-${options.icon}"></use>
       </svg>`;
   };
