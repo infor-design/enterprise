@@ -1075,18 +1075,6 @@ html[class*="theme-new-"] .is-personalizable .btn-icon.personalize-actionable:ho
   cursor: default;
 }
 
-.hero-widget.is-personalizable .hero-header .chart-container .arc,
-.hero-widget.is-personalizable .hero-header .chart-container .bar,
-.hero-widget.is-personalizable .hero-header .chart-container.line-chart .dot,
-.hero-widget.is-personalizable .hero-content .chart-container .arc,
-.hero-widget.is-personalizable .hero-content .chart-container .bar,
-.hero-widget.is-personalizable .hero-content .chart-container.line-chart .dot,
-.hero-widget.is-personalizable .hero-footer .chart-container .arc,
-.hero-widget.is-personalizable .hero-footer .chart-container .bar,
-.hero-widget.is-personalizable .hero-footer .chart-container.line-chart .dot {
-    stroke: ${colors.lighter} !important;
-}
-
 .subheader.is-personalizable .toolbar [class^='btn']:focus:not(.hide-focus),
 .subheader.is-personalizable .flex-toolbar [class^='btn']:focus:not(.hide-focus) {
   box-shadow: ${colors.focusBoxShadow};
