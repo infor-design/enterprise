@@ -89,6 +89,8 @@ sections:
     slug: images
   - name: Lookup
     slug: lookup
+  - name: Link (Widget)
+    slug: link
   - name: List
     slug: listview
   - name: List Builder
@@ -127,6 +129,8 @@ sections:
     slug: slider
   - name: Spinbox
     slug: spinbox
+  - name: Stats
+    slug: stats
   - name: Swaplist
     slug: swaplist
   - name: Switch

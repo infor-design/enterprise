@@ -24,6 +24,7 @@ const MODULE_NAV_SWITCHER_DEFAULTS = {
   displayMode: MODULE_NAV_DISPLAY_MODES[0],
   generate: true,
   icon: defaultIconGenerator,
+  noSearch: false,
   changeIconOnSelect: true,
   moduleButtonText: 'Standard Module',
   roleDropdownLabel: 'Roles',
@@ -189,7 +190,8 @@ ModuleNavSwitcher.prototype = {
       dropdownIcon: 'expand-all',
       extraListWrapper: true,
       width: 'parent',
-      widthTarget: '.module-nav-switcher'
+      widthTarget: '.module-nav-switcher',
+      noSearch: this.settings.noSearch
     }).off('change.module-nav').on('change.module-nav', (e) => {
       if (!this.settings.changeIconOnSelect) return;
       const selectedValue = e.currentTarget.value;
