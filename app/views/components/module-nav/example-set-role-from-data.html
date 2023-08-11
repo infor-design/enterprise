@@ -90,14 +90,7 @@
               <label for="module-nav-role-switcher" class="label audible">Roles</label>
               <select id="module-nav-role-switcher" name="module-nav-role-switcher" class="dropdown"
                 data-automation-id="custom-automation-dropdown-id">
-                <option value="admin" data-icon="{icon: 'https://randomuser.me/api/portraits/lego/1.jpg'}">Admin Console</option>
-                <option value="job-console" data-icon="{icon: 'app-jo'}">Job Console</option>
-                <option value="landing-page-designer" data-icon="{icon: 'app-lmd'}">Landing Page Designer</option>
-                <option value="process-server-admin" data-icon="{icon: 'app-psa'}">Process Server Administrator</option>
-                <option value="proxy-management" data-icon="{icon: 'app-pm'}">Proxy Management</option>
-                <option value="security-system-management" data-icon="{icon: 'app-ssm'}">Security System Management</option>
-                <option value="user-management" data-icon="{icon: 'app-um'}">User Management</option>
-                </select>
+              </select>
             </div>
           </div>
         </div>
@@ -110,19 +103,14 @@
       <div class="four columns">&nbsp;</div>
       <div class="four columns">&nbsp;</div>
       <div class="four columns">
-        <p>This example demonstrates how icons populate the Module Switcher component</p>
+        <p>This example demonstrates how to set roles Module Switcher component programmatically</p>
         <p></p>
         <div class="field">
-          <label for="display-mode-dropdown" class="label">Icon setting type</label>
-          <select id="display-mode-dropdown" class="dropdown">
-            <option value="" selected>Default (function returning app icon)</option>
-            <option value="ids">IDS Icon Definition ("database" string)</option>
-            <option value="url">Use URL (loads an external image)</option>
-            <option value="func">Function (creates an different avatar on the fly)</option>
-          </select>
+          <button id="set-roles"
+            class="btn-secondary"><span>Set Roles</span></button>
         </div>
+      </div>
     </div>
-  </div>
 </section>
 
 <script>
@@ -145,29 +133,27 @@
 
   $('body').on('initialized', () => {
     const navSwitcherAPI = $('#switcher').data('modulenavswitcher');
-    const dropdownAPI = $('#display-mode-dropdown').data('dropdown');
+    const buttonEl = $('#set-roles');
+    const buttonAPI = buttonEl.data('button');
 
-    // Connect form control event handling
-    dropdownAPI.element.on('change.test', (e) => {
-      let val = dropdownAPI.value;
-      let iconDef;
-
-      switch(val) {
-        case 'ids':
-          iconDef = 'database';
-          break;
-        case 'url':
-          iconDef = 'https://randomuser.me/api/portraits/lego/1.jpg';
-          break;
-        case 'func':
-          iconDef = SILLY_AVATAR;
-          break;
-        default:
-          iconDef = () => NAV_SWITCHER_DEFAULT_ICON;
-          break;
-      }
-
-      navSwitcherAPI.updated({ icon: iconDef });
+    buttonEl.on('click.test', (e) => {
+      navSwitcherAPI.setRoles([
+        {
+          value: '1',
+          text: 'One',
+          icon: 'https://randomuser.me/api/portraits/lego/1.jpg'
+        },
+        {
+          value: '2',
+          text: 'Two',
+          icon: 'https://randomuser.me/api/portraits/lego/2.jpg'
+        },
+        {
+          value: '3',
+          text: 'Three',
+          icon: 'https://randomuser.me/api/portraits/lego/3.jpg'
+        }
+      ], true);
     });
   });
 </script>
