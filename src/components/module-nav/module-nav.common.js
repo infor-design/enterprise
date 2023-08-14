@@ -57,7 +57,7 @@ export const iconTemplate = type => `<svg class="icon" focusable="false" aria-hi
  * @param {string} [alt] optional alt text
  * @returns {string} template for an image tag
  */
-export const imageTemplate = (url, alt) => `<img src="${url}" alt="${alt || 'Module Button Icon'}" aria-hidden="true" role="presentation" />`;
+export const imageTemplate = (url, alt) => `<img src="${url}" alt="${alt || 'Module Button Icon'}" class="custom-icon" aria-hidden="true" role="presentation" />`;
 
 /**
  * @returns {string} Module Nav Separator element template
