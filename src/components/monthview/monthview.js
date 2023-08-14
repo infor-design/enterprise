@@ -2721,8 +2721,8 @@ MonthView.prototype = {
         const includeDisabled = cell.is('.is-disabled') && s.range.includeDisabled;
         const includeDisableClass = includeDisabled ? ' include-disabled' : '';
         const date = self.getTime(dateObj(self.getCellDate(cell)));
-        let d1 = self.getTime(startDate, true);
-        let d2 = self.getTime(endDate, true);
+        const d1 = self.getTime(startDate, true);
+        const d2 = self.getTime(endDate, true);
 
         if ((date === d1 || date === d2) && !isDisabled) {
           cell.addClass(`is-selected${includeDisableClass}${d1 !== d2 ? ` range-selection${date === d2 && !self.isIslamic ? ' end-date' : ''}` : ''}`);
