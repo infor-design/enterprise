@@ -61,7 +61,7 @@
       color: $trigger-active-color;
     }
   }
-  
+
   .fileupload:not([disabled]) + .trigger {
     &:hover {
       background-color: $button-color-tertiary-hover-background-new;
@@ -232,8 +232,7 @@
 
         span {
           font-size: $ids-size-font-base;
-          margin-left: -2.5px;
-          margin-right: -2.5px;
+          margin-inline-start: -3px;
           padding: 5px;
         }
 
