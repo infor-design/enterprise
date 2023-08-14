@@ -22,7 +22,6 @@
 - `[ModuleNav]` Added option/example to disable search in the dropdown menu ([#1535](https://github.com/infor-design/enterprise-ng/issues/1535))
 - `[WeekView]` Fixed bug where going to next didn't render the complete week. ([#7684](https://github.com/infor-design/enterprise/issues/7684))
 
-
 ## v4.86.0
 
 ## v4.86.0 Features
