@@ -193,7 +193,7 @@
         .btn-icon.close {
           right: 100px;
           top: 8px;
-          width: 34px;
+          width: 24px;
 
           &:hover svg {
             color: $header-flex-toolbar-close-icon-color-hover;
@@ -201,7 +201,7 @@
         }
 
         &.show-category .btn-icon.close {
-          right: 50px;
+          right: 54px;
         }
       }
     }
