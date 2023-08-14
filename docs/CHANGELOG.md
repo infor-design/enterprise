@@ -8,13 +8,20 @@
 
 ## v4.87.0 Fixes
 
+- `[ColorPicker]` Fixed color selection on color picker. ([#7760](https://github.com/infor-design/enterprise-ng/issues/7760))
+- `[Editor]` Fixed fonts selection selection on editor. ([#7762](https://github.com/infor-design/enterprise-ng/issues/7762))
 - `[FieldFilter]` Fixed Dropdown border not rendered properly. ([#7600](https://github.com/infor-design/enterprise/issues/7600))
 - `[FileuploadAdvanced]` Fixed Close Button not rendered properly. ([#7604](https://github.com/infor-design/enterprise/issues/7604))
 - `[Icon]` Adjusted width of icons. ([#7616](https://github.com/infor-design/enterprise/issues/7616))
 - `[ModuleNav]` Fixed missing tooltip on the settings button. ([#1525](https://github.com/infor-design/enterprise-ng/issues/1525))
+- `[ModuleNav]` Addded `enableOutsideClick()` feature to collapse/hide menu via content click. ([#7786](https://github.com/infor-design/enterprise/issues/7786))
+- `[ModuleNav]` Fixed missing tooltip on the settings button. ([NG#1525](https://github.com/infor-design/enterprise-ng/issues/1525))
+- `[ModuleNav/Dropdown]` Added support for external URLs to the Dropdown component's list, as well as support for setting these in Module Nav Switcher. ([NG#1533](https://github.com/infor-design/enterprise-ng/issues/1533))
 - `[ModuleNav]` Reduced item padding so more items can fit in the menu before scrolling occurs. ([#7770](https://github.com/infor-design/enterprise/issues/7770))
 - `[ModuleNav]` Fixed issues in dark mode. ([#7753](https://github.com/infor-design/enterprise/issues/7753))
+- `[ModuleNav]` Added option/example to disable search in the dropdown menu ([#1535](https://github.com/infor-design/enterprise-ng/issues/1535))
 - `[WeekView]` Fixed bug where going to next didn't render the complete week. ([#7684](https://github.com/infor-design/enterprise/issues/7684))
+- `[Datagrid]` Fixed bug where default filter wasn't honored for date or time columns. ([#7766](https://github.com/infor-design/enterprise/issues/7766))
 
 ## v4.86.0
 
