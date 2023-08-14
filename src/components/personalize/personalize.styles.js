@@ -125,7 +125,7 @@ html.theme-new-dark .is-personalizable:not(.header) .btn-secondary:not(.go-butto
   color: ${colors.lightest};
 }
 
-html[class*="new-"] .is-personalizable:not(.header) .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
+html[class*="new-"] .is-personalizable:not(.header):not(.hero-widget) .btn-tertiary:not(.destructive):not(.is-select):not(.is-select-month-pane):not(.is-cancel):not(.is-cancel-month-pane):hover:not(:disabled) {
   background-color: ${colors.btnTertiaryBgHoverColor};
   color: ${colors.btnTertiaryHoverColor};
 }
