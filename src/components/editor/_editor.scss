@@ -196,7 +196,7 @@
   h4,
   h5,
   h6 {
-    margin-bottom: 15px;
+    margin-bottom: 16px;
   }
 
   ul,
@@ -237,7 +237,7 @@
   }
 
   blockquote {
-    margin-bottom: 15px;
+    margin-bottom: 16px;
   }
 }
 
@@ -338,7 +338,7 @@
     border-left: 3px solid $editor-blockquote-color;
     line-height: 22px;
     margin-left: 7px;
-    padding-left: 15px;
+    padding-left: 16px;
   }
 
   img {
@@ -351,7 +351,7 @@
   }
 
   a {
-    cursor: auto;
+    cursor: pointer;
     font-size: $input-size-regular-font-size;
     position: static;
     text-decoration: none;
@@ -470,7 +470,7 @@
     .icon {
       color: $editor-btn-color;
       height: 18px;
-      margin: -1px 0 0;
+      margin: 0 2px;
       padding: 0;
       pointer-events: none;
       width: 18px;
@@ -553,7 +553,7 @@
 
     &[data-element='h3'],
     &[data-element='h4'] {
-      margin-right: 15px;
+      margin-right: 14px;
 
       .icon {
         margin-left: -5px;
@@ -634,7 +634,7 @@
 
     &[data-element='blockquote'] {
       margin-left: 1px;
-      margin-right: 15px;
+      margin-right: 14px;
     }
 
     &[data-element='ol'] {
@@ -748,7 +748,7 @@
     background-color: $editor-bg-color;
     display: inline-block;
     min-height: 100%;
-    padding: 15px 10px 10px;
+    padding: 14px 10px 10px;
 
     > li {
       font-size: $ids-size-font-sm;
