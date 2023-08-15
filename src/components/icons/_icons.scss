@@ -9,7 +9,8 @@
   width: 18px;
   position: relative;
 
-  &.icon-round {
+  &.icon-round,
+  &.icon-status {
     border-radius: 50%;
     border: 2px solid;
     width: 26px;
@@ -42,7 +43,8 @@ svg.icon-dirty,
   top: 10px;
   vertical-align: top;
 
-  &.icon-round {
+  &.icon-round,
+  &.icon-status {
     top: 0;
   }
 }
@@ -148,6 +150,12 @@ svg.icon-dirty,
   color: $ids-color-status-danger !important;
 }
 
+.icon-info,
+.icon-info-alert,
+.icon-status {
+  color: $ids-color-status-info;
+}
+
 .icon-success,
 .icon-good,
 .icon-success-alert {
@@ -175,11 +183,6 @@ svg.icon-dirty,
 
 .icon-pending-alert {
   color: $ids-color-status-warning !important;
-}
-
-.icon-info,
-.icon-info-alert {
-  color: $info-icon-fill !important;
 }
 
 svg.icon-close {
@@ -681,4 +684,16 @@ html[dir='rtl'] {
     left: 0;
     top: 0;
   }
+}
+
+html[class*='-dark'] .icon-status {
+  background-color: transparent !important;
+}
+
+html[class*='-dark'] .icon-status {
+  border-color: transparent !important;
+}
+
+html[class*='-dark'] .icon-status.slate07-color {
+  color: $ids-color-palette-slate-30 !important;
 }
