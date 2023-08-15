@@ -9,6 +9,7 @@
 ## v4.87.0 Fixes
 
 - `[ColorPicker]` Fixed color selection on color picker. ([#7760](https://github.com/infor-design/enterprise-ng/issues/7760))
+- `[Dropdown]` Adjusted dropdown text in Firefox. ([#7763](https://github.com/infor-design/enterprise/issues/7763))
 - `[Editor]` Fixed fonts selection selection on editor. ([#7762](https://github.com/infor-design/enterprise-ng/issues/7762))
 - `[FieldFilter]` Fixed Dropdown border not rendered properly. ([#7600](https://github.com/infor-design/enterprise/issues/7600))
 - `[FileuploadAdvanced]` Fixed Close Button not rendered properly. ([#7604](https://github.com/infor-design/enterprise/issues/7604))
