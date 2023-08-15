@@ -14,6 +14,7 @@
 - `[Editor]` Fixed fonts selection selection on editor. ([#7762](https://github.com/infor-design/enterprise-ng/issues/7762))
 - `[FieldFilter]` Fixed Dropdown border not rendered properly. ([#7600](https://github.com/infor-design/enterprise/issues/7600))
 - `[FileuploadAdvanced]` Fixed Close Button not rendered properly. ([#7604](https://github.com/infor-design/enterprise/issues/7604))
+- `[Icon]` Adjusted width of icons. ([#7616](https://github.com/infor-design/enterprise/issues/7616))
 - `[Hyperlink]` Fixed hyperlink focus style in completion chart. ([#7731](https://github.com/infor-design/enterprise/issues/7731))
 - `[ModuleNav]` Fixed missing tooltip on the settings button. ([#1525](https://github.com/infor-design/enterprise-ng/issues/1525))
 - `[ModuleNav]` Addded `enableOutsideClick()` feature to collapse/hide menu via content click. ([#7786](https://github.com/infor-design/enterprise/issues/7786))

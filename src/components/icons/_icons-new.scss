@@ -3,7 +3,6 @@
 
 .icon {
   fill: transparent;
-  width: 18px; // Normalize against `height: 18px`;
 
   &.icon-empty-state {
     fill: $ids-color-brand-primary-base;
