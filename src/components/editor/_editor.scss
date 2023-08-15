@@ -588,7 +588,8 @@
       }
 
       + .separator {
-        margin-left: -3px;
+        margin-left: -1px;
+        margin-right: 7px;
       }
     }
 
@@ -676,10 +677,10 @@
 .flex-toolbar.formatter-toolbar {
   .toolbar-section.more {
     .btn-actions {
-      height: 23px;
+      height: 25px;
       margin-right: 12px;
-      min-height: 20px;
-      top: -3px;
+      min-height: 22px;
+      top: -2px;
       width: 23px;
 
       > .icon {
