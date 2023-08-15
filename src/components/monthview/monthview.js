@@ -2712,6 +2712,8 @@ MonthView.prototype = {
 
     if (s.range.useRange && s.range.second && s.range.second.date &&
       this.days && this.days.length) {
+      const startDate = s.range.data ? new Date(s.range.data.start) : s.range.first.date;
+      const endDate = s.range.data ? new Date(s.range.data.end) : s.range.second.date;
       this.days.find('td').removeClass('range range-next range-prev range-selection end-date is-selected');
       this.days.find('td:visible').each(function () {
         const cell = $(this);
@@ -2719,8 +2721,8 @@ MonthView.prototype = {
         const includeDisabled = cell.is('.is-disabled') && s.range.includeDisabled;
         const includeDisableClass = includeDisabled ? ' include-disabled' : '';
         const date = self.getTime(dateObj(self.getCellDate(cell)));
-        const d1 = self.getTime(s.range.first.date, true);
-        const d2 = self.getTime(s.range.second.date, true);
+        const d1 = self.getTime(startDate, true);
+        const d2 = self.getTime(endDate, true);
 
         if ((date === d1 || date === d2) && !isDisabled) {
           cell.addClass(`is-selected${includeDisableClass}${d1 !== d2 ? ` range-selection${date === d2 && !self.isIslamic ? ' end-date' : ''}` : ''}`);
