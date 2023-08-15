@@ -284,16 +284,16 @@ Personalize.prototype = {
     colors.btnPrimaryColorHover = colors.darker;
     colors.btnSecondaryColor = colors.darkest;
     colors.btnSecondaryBorderColor = colors.base;
-    colors.btnTertiaryHoverColor = '#ffffff';
+    colors.btnTertiaryHoverColor = themeColors.palette.white.value;
     colors.btnLinkColor = colors.light;
     colors.tabBottomBorderColor = colors.base;
     colors.btnActionsHoverColor = colors.base;
-    colors.moduleTabsSelectedTextColor = '#ffffff';
+    colors.moduleTabsSelectedTextColor = themeColors.palette.white.value;
     colors.headerTabsSelectedTextColor = colors.contrast;
     colors.headerTabsTextColor = colors.contrast;
     colors.headerTextColor = colors.contrast;
     colors.tabHoverColor = colors.darkest;
-    colors.tabHoverTextColor = '#161618';
+    colors.tabHoverTextColor = themeColors.palette.slate[100].value;
     colors.tabTextWeight = '600';
     colors.tabTextSelectedWeight = '600';
     colors.tabBorderColor = colors.darkest;
@@ -302,13 +302,13 @@ Personalize.prototype = {
     colors.tabColor = colors.base;
     colors.tabVerticalColor = colors.contrast;
     colors.headerTabBorder = 'transparent';
-    colors.tabTextColor = '#161618';
+    colors.tabTextColor = themeColors.palette.slate[100].value;
     colors.tabSelectedTextColor = colors.contrast;
     colors.tabVerticalSelectedColor = colors.base;
     colors.tabDivider = colors.darkest;
 
     colors.tabCloseInactiveColor = 'rgba(255, 255, 255, 0.85)';
-    colors.tabCloseHoverColor = '#ffffff';
+    colors.tabCloseHoverColor = themeColors.palette.white.value;
 
     const isAlabaster = colors.header === '#ffffff';
     const isNewDark = this.currentTheme.indexOf('new-dark') >= 0;
@@ -317,133 +317,132 @@ Personalize.prototype = {
     colors.btnTertiaryBgHoverColor = isAlabaster ? '#E6F1FD' : colors.darker;
 
     if (isNewDark || isClassicDark) {
-      colors.tabVerticalColor = '#525257';
+      colors.tabVerticalColor = themeColors.palette.slate[70].value;
     }
 
     // Alabaster is different so readjust the colors
     if (isAlabaster) {
-      colors.text = '#0072ED';
-      colors.darker = '#E6F1FD';
-      colors.darkest = '#161618';
-      colors.contrast = '#161618';
-      colors.btnHoverColor = '#0072ED';
-      colors.btnBgHoverColor = '#E6F1FD';
+      colors.text = themeColors.palette.azure[60].value;
+      colors.darker = themeColors.palette.azure[10].value;
+      colors.darkest = themeColors.palette.slate[100].value;
+      colors.contrast = themeColors.palette.slate[100].value;
+      colors.btnHoverColor = themeColors.palette.azure[60].value;
+      colors.btnBgHoverColor = themeColors.palette.azure[10].value;
       colors.btnOpacity = 1;
       colors.focusBoxShadow = `0 0 0 2px transparent, 0 0 0 0 ${colors.contrast}, 0 0 1px 0px ${colors.contrast}`;
-      colors.btnFocusBorderColor = '#161618';
+      colors.btnFocusBorderColor = themeColors.palette.slate[100].value;
       colors.btnDisabledColor = 'rgba(0, 0, 0, 0.4) !important';
-      colors.btnPrimaryColor = '#0072ED';
+      colors.btnPrimaryColor = themeColors.palette.azure[60].value;
       colors.btnPrimaryColorHover = '#0066D4';
-      colors.btnSecondaryColor = '#0072ED';
-      colors.btnSecondaryBorderColor = '#0072ED';
-      colors.btnTertiaryBgHoverColor = '#E6F1FD';
-      colors.btnTertiaryHoverColor = '#0072ED';
-      colors.btnLinkColor = '0072ED';
-      colors.tabBottomBorderColor = '#C5C5C9';
-      colors.btnActionsHoverColor = '#161618';
-      colors.moduleTabsSelectedTextColor = '#0072ED';
-      colors.headerTabsSelectedTextColor = '#0072ED';
+      colors.btnSecondaryColor = themeColors.palette.azure[60].value;
+      colors.btnSecondaryBorderColor = themeColors.palette.azure[60].value;
+      colors.btnTertiaryBgHoverColor = themeColors.palette.azure[10].value;
+      colors.btnTertiaryHoverColor = themeColors.palette.azure[60].value;
+      colors.btnLinkColor = themeColors.palette.azure[60].value;
+      colors.tabBottomBorderColor = themeColors.palette.slate[30].value;
+      colors.btnActionsHoverColor = themeColors.palette.slate[100].value;
+      colors.moduleTabsSelectedTextColor = themeColors.palette.azure[60].value;
+      colors.headerTabsSelectedTextColor = themeColors.palette.azure[60].value;
 
-      // Alabaster New Design
-      colors.headerTabBorder = '#C5C5C9';
-      colors.tabFocusIndicator = '#161618';
       colors.tabFocusBoxShadow = 'none';
-      colors.tabHoverColor = '#E0E0E1';
       colors.tabTextWeight = '400';
       colors.tabTextSelectedWeight = '700';
-      colors.tabSelectedColor = '#ffffff';
-      colors.tabHeaderColor = '#ffffff';
-      colors.tabFocusColor = '#161618';
-      colors.tabBorderColor = '#ffffff';
-      colors.tabColor = '#FAFAFA';
-      colors.tabSelectedTextColor = '#161618';
-      colors.tabVerticalColor = '#E0E0E1';
-      colors.tabVerticalSelectedColor = '#ffffff';
-      colors.tabDivider = '#C5C5C9';
-
+      colors.headerTabBorder = themeColors.palette.slate[30].value;
+      colors.tabDivider = themeColors.palette.slate[30].value;
+      colors.tabFocusIndicator = themeColors.palette.slate[100].value;
+      colors.tabHoverColor = themeColors.palette.slate[20].value;
+      colors.tabSelectedColor = themeColors.palette.white.value;
+      colors.tabHeaderColor = themeColors.palette.white.value;
+      colors.tabFocusColor = themeColors.palette.slate[100].value;
+      colors.tabBorderColor = themeColors.palette.white.value;
+      colors.tabColor = themeColors.palette.slate[10].value;
+      colors.tabSelectedTextColor = themeColors.palette.slate[100].value;
+      colors.tabVerticalColor = themeColors.palette.slate[20].value;
+      colors.tabVerticalSelectedColor = themeColors.palette.white.value;
+      
       colors.tabCloseInactiveColor = 'rgb(111, 111, 118)';
       colors.tabCloseHoverColor = colors.contrast;
 
       if (isNewDark) {
-        colors.base = '#6F6F76';
+        colors.base = themeColors.palette.slate[60].value;
         colors.btnPrimaryColor = colors.base;
         colors.dark = colors.base;
-        colors.contrast = '#ffffff';
+        colors.contrast = themeColors.palette.white.value;
         colors.focusBoxShadow = `0 0 0 2px transparent, 0 0 0 1px ${colors.contrast}, 0 0 1px 1px ${colors.contrast}`;
-        colors.darker = '#3B3B3F';
-        colors.btnHoverColor = '#ffffff';
-        colors.hyperlinkText = '#ffffff';
-        colors.lighter = '#8E8E95';
+        colors.darker = themeColors.palette.slate[80].value;
+        colors.btnHoverColor = themeColors.palette.white.value;
+        colors.hyperlinkText = themeColors.palette.white.value;
+        colors.lighter = themeColors.palette.slate[50].value;
         colors.btnDisabledColor = 'rgba(255, 255, 255, 0.4) !important';
         colors.btnPrimaryColorHover = colors.darker;
         colors.btnSecondaryColor = colors.darkest;
         colors.btnSecondaryBorderColor = colors.base;
-        colors.btnTertiaryBgHoverColor = '#28282A';
-        colors.btnTertiaryHoverColor = '#ffffff';
+        colors.btnTertiaryBgHoverColor = themeColors.palette.slate[90].value;
+        colors.btnTertiaryHoverColor = themeColors.palette.white.value;
         colors.btnLinkColor = colors.light;
-        colors.btnBgHoverColor = '#3B3B3F';
-        colors.tabBottomBorderColor = '#6F6F76';
-        colors.btnActionsHoverColor = '#ffffff';
-        colors.moduleTabsSelectedTextColor = '#FAFAFA';
-        colors.headerTextColor = '#FAFAFA';
-        colors.headerTabsTextColor = '#FAFAFA';
+        colors.btnBgHoverColor = themeColors.palette.slate[80].value;
+        colors.tabBottomBorderColor = themeColors.palette.slate[60].value;
+        colors.btnActionsHoverColor = themeColors.palette.white.value;
+        colors.moduleTabsSelectedTextColor = themeColors.palette.slate[10].value;
+        colors.headerTextColor = themeColors.palette.slate[10].value;
+        colors.headerTabsTextColor = themeColors.palette.slate[10].value;
 
         // Alabaster New Design
-        colors.headerTabBorder = '#6F6F76';
-        colors.tabFocusIndicator = '#ffffff';
-        colors.tabSelectedColor = '#28282A';
-        colors.tabHeaderColor = '#28282A';
-        colors.tabBorderColor = '#28282A';
-        colors.tabColor = '#3B3B3F';
-        colors.tabHoverColor = '#525257';
-        colors.tabSelectedTextColor = '#ffffff';
-        colors.tabVerticalColor = '#525257';
-        colors.tabVerticalSelectedColor = '#3B3B3F';
-        colors.tabHoverTextColor = '#ffffff';
-        colors.tabCloseHoverColor = '#ffffff';
-        colors.tabDivider = '#161618';
-        colors.headerTabsSelectedTextColor = '#FAFAFA';
+        colors.headerTabBorder = themeColors.palette.slate[60].value;
+        colors.tabFocusIndicator = themeColors.palette.white.value;
+        colors.tabSelectedColor = themeColors.palette.slate[90].value;
+        colors.tabHeaderColor = themeColors.palette.slate[90].value;
+        colors.tabBorderColor = themeColors.palette.slate[90].value;
+        colors.tabColor = themeColors.palette.slate[80].value;
+        colors.tabHoverColor = themeColors.palette.slate[70].value;
+        colors.tabSelectedTextColor = themeColors.palette.white.value;
+        colors.tabVerticalColor = themeColors.palette.slate[70].value;
+        colors.tabVerticalSelectedColor = themeColors.palette.slate[80].value;
+        colors.tabHoverTextColor = themeColors.palette.white.value;
+        colors.tabCloseHoverColor = themeColors.palette.white.value;
+        colors.tabDivider = themeColors.palette.slate[100].value;
+        colors.headerTabsSelectedTextColor = themeColors.palette.slate[10].value;
       }
 
       if (isClassicDark) {
-        colors.base = '#50535a';
+        colors.base = '#50535A';
         colors.btnPrimaryColor = colors.base;
         colors.dark = colors.base;
-        colors.contrast = '#ffffff';
+        colors.contrast = themeColors.palette.white.value;
         colors.focusBoxShadow = `0 0 0 2px transparent, 0 0 0 1px ${colors.contrast}, 0 0 1px 1px ${colors.contrast}`;
         colors.darker = '#313236';
         colors.btnPrimaryColorHover = colors.darker;
-        colors.btnHoverColor = '#ffffff';
-        colors.hyperlinkText = '#ffffff';
+        colors.btnHoverColor = themeColors.palette.white.value;
+        colors.hyperlinkText = themeColors.palette.white.value;
         colors.lighter = '#656871';
         colors.btnDisabledColor = 'rgba(255, 255, 255, 0.4) !important';
         colors.btnSecondaryColor = colors.darkest;
         colors.btnSecondaryBorderColor = colors.base;
         colors.btnTertiaryBgHoverColor = 'transparent';
-        colors.btnTertiaryHoverColor = '#ffffff';
+        colors.btnTertiaryHoverColor = themeColors.palette.white.value;
         colors.btnLinkColor = colors.light;
         colors.btnBgHoverColor = '#313236';
-        colors.tabBottomBorderColor = '#50535a';
-        colors.moduleTabsSelectedTextColor = '#ffffff';
+        colors.tabBottomBorderColor = '#50535A';
+        colors.moduleTabsSelectedTextColor = themeColors.palette.white.value;
 
         // Alabaster New Design
-        colors.tabHeaderColor = '#525257';
-        colors.headerTabBorder = '#8E8E95';
-        colors.tabSelectedColor = '#525257';
-        colors.tabColor = '#3B3B3F';
-        colors.tabHoverColor = '#28282A';
-        colors.tabBorderColor = '#525257';
-        colors.tabSelectedTextColor = '#ffffff';
+        colors.tabHeaderColor = themeColors.palette.slate[70].value;
+        colors.headerTabBorder = themeColors.palette.slate[50].value;
+        colors.tabSelectedColor = themeColors.palette.slate[70].value;
+        colors.tabColor = themeColors.palette.slate[80].value;
+        colors.tabHoverColor = themeColors.palette.slate[90].value;
+        colors.tabBorderColor = themeColors.palette.slate[70].value;
+        colors.tabSelectedTextColor = themeColors.palette.white.value;
 
-        colors.tabHoverTextColor = '#ffffff';
-        colors.tabVerticalColor = '#525257';
-        colors.tabVerticalSelectedColor = '#3B3B3F';
+        colors.tabHoverTextColor = themeColors.palette.white.value;
+        colors.tabVerticalColor = themeColors.palette.slate[70].value;
+        colors.tabVerticalSelectedColor = themeColors.palette.slate[80].value;
       }
 
       if (isNewContrast) {
         // Alabaster New Design
-        colors.tabBorderColor = '#ffffff';
-        colors.tabHoverColor = '#C5C5C9';
+        colors.tabBorderColor = themeColors.palette.white.value;
+        colors.tabHoverColor = themeColors.palette.slate[30].value;
       }
     }
 
