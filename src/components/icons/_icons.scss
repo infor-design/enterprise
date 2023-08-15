@@ -6,8 +6,8 @@
   color: $icon-color-fill;
   display: inline-block;
   height: 18px; //Older ones at 32 but now based on 40
+  width: 18px;
   position: relative;
-  width: 22px;
 
   &.icon-round {
     border-radius: 50%;
