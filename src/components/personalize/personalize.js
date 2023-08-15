@@ -289,6 +289,9 @@ Personalize.prototype = {
     colors.tabBottomBorderColor = colors.base;
     colors.btnActionsHoverColor = colors.base;
     colors.moduleTabsSelectedTextColor = '#ffffff';
+    colors.headerTabsSelectedTextColor = colors.contrast;
+    colors.headerTabsTextColor = colors.contrast;
+    colors.headerTextColor = colors.contrast;
     colors.tabHoverColor = colors.darkest;
     colors.tabHoverTextColor = '#161618';
     colors.tabTextWeight = '600';
@@ -338,7 +341,8 @@ Personalize.prototype = {
       colors.btnLinkColor = '0072ED';
       colors.tabBottomBorderColor = '#C5C5C9';
       colors.btnActionsHoverColor = '#161618';
-      colors.moduleTabsSelectedTextColor = colors.contrast;
+      colors.moduleTabsSelectedTextColor = '#0072ED';
+      colors.headerTabsSelectedTextColor = '#0072ED';
 
       // Alabaster New Design
       colors.headerTabBorder = '#C5C5C9';
@@ -380,21 +384,25 @@ Personalize.prototype = {
         colors.btnBgHoverColor = '#3B3B3F';
         colors.tabBottomBorderColor = '#6F6F76';
         colors.btnActionsHoverColor = '#ffffff';
-        colors.moduleTabsSelectedTextColor = '#ffffff';
+        colors.moduleTabsSelectedTextColor = '#FAFAFA';
+        colors.headerTextColor = '#FAFAFA';
+        colors.headerTabsTextColor = '#FAFAFA';
 
         // Alabaster New Design
-        colors.headerTabBorder = '#3B3B3F';
+        colors.headerTabBorder = '#6F6F76';
         colors.tabFocusIndicator = '#ffffff';
-        colors.tabSelectedColor = '#525257';
+        colors.tabSelectedColor = '#28282A';
         colors.tabHeaderColor = '#28282A';
-        colors.tabBorderColor = '#525257';
+        colors.tabBorderColor = '#28282A';
         colors.tabColor = '#3B3B3F';
-        colors.tabHoverColor = '#28282A';
+        colors.tabHoverColor = '#525257';
         colors.tabSelectedTextColor = '#ffffff';
         colors.tabVerticalColor = '#525257';
         colors.tabVerticalSelectedColor = '#3B3B3F';
         colors.tabHoverTextColor = '#ffffff';
         colors.tabCloseHoverColor = '#ffffff';
+        colors.tabDivider = '#161618';
+        colors.headerTabsSelectedTextColor = '#FAFAFA';
       }
 
       if (isClassicDark) {

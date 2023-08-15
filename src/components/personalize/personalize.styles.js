@@ -256,12 +256,12 @@ a.is-personalizable svg.ripple-effect {
 .personalize-header.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected:not(.is-disabled),
 .personalize-header.tab-container.header-tabs:not(.alternate) .tab-focus-indicator.is-visible,
 .header.is-personalizable .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled).is-selected {
-  border-color: ${colors.contrast} !important;
+  border-color: ${colors.headerTabsSelectedTextColor} !important;
 }
 
 .tab-container.is-personalizable.header-tabs:not(.alternate) > .tab-list-container .tab:hover:not(.is-disabled),
 .tab-container.is-personalizable.header-tabs:not(.alternate) > .tab-list-container .tab:hover:not(.is-disabled),
-.header.is-personalizable .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:hover:not(.is-disabled),
+.header.is-personalizable .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:hover:not(.is-disabled):not(.is-selected),
 .personalize-header.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:hover:not(.is-disabled) {
   color: ${colors.contrast};
   background-color: ${colors.tabHoverColor};
@@ -337,7 +337,7 @@ a.is-personalizable svg.ripple-effect {
   box-shadow: ${colors.tabFocusBoxShadow} !important;
 }
 
-.builder-header.is-personalizable{
+.builder-header.is-personalizable {
   background-color: ${colors.lighter};
 }
 
@@ -361,7 +361,7 @@ a.is-personalizable svg.ripple-effect {
 .header.is-personalizable h1,
 .header.is-personalizable h2,
 .header.is-personalizable h3 {
-  color: ${colors.contrast} !important;
+  color: ${colors.headerTextColor} !important;
 }
 
 .object-count.personalize-text {
@@ -406,7 +406,11 @@ html[class*="-dark"] .is-personalizable .subheader button:not(:disabled) .icon {
 }
 
 html[class*="theme-new"] .header.is-personalizable:not(.has-alternate-tabs) .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled):hover {
-  border-bottom: 2px solid ${colors.contrast};
+  border-bottom: 2px solid ${colors.headerTabsTextColor};
+}
+
+html[class*="theme-new"] .header.is-personalizable:not(.has-alternate-tabs) .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:is(.is-selected):not(.is-disabled):hover {
+  background-color: transparent;
 }
 
 .header.is-personalizable .tab-container.horizontal > .tab-list-container .tab:not(.is-disabled):hover {
@@ -460,11 +464,9 @@ html.theme-classic-dark .header.is-personalizable .buttonset .searchfield-wrappe
 
 .header.is-personalizable.has-tabs .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected:not(.is-disabled),
 .personalize-header.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected:not(.is-disabled) {
-  color: ${colors.contrast} !important;
+  color: ${colors.headerTabsSelectedTextColor} !important;
   opacity: 1;
 }
-
-//xxxx
 
 .header.is-personalizable .flex-toolbar .has-collapse-button .collapse-button {
   background-color: transparent;
@@ -507,7 +509,7 @@ html.theme-classic-dark .personalize-header.tab-container.header-tabs:not(.alter
   opacity: .8;
 }
 
-.header.is-personalizable.has-tabs .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:hover:not(.is-disabled),
+.header.is-personalizable.has-tabs .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:hover:not(.is-disabled):not(.is-selected),
 .is-personalizable.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:hover:not(.is-disabled),
 .personalize-header.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:hover:not(.is-disabled) {
   color: ${colors.contrast} !important;
@@ -759,7 +761,7 @@ html[dir='rtl'] .scrollable-flex-header.is-personalizable .breadcrumb.truncated:
 }
 
 .module-tabs.is-personalizable .tab-more {
-  border-left-color: ${colors.darkest} !important;
+  border-left-color: ${colors.tabDivider} !important;
 }
 
 .module-tabs.is-personalizable .tab-more:hover {
