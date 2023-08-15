@@ -33,7 +33,7 @@ $panel-bg-color: $ids-color-palette-slate-100;
 $panel-border-color: $ids-color-palette-slate-70;
 $drop-shadow-depth: rgba($ids-color-boxshadow-base, 0.4);
 $focus-box-shadow-color: rgba($ids-color-palette-slate-10, 0.3);
-$focus-box-shadow: 0 0 4px 2px $focus-box-shadow-color;
+$focus-box-shadow: rgba(54, 138, 192, 0.3) 0 0 3px 2px;
 
 $focus-box-shadow-spinbox: 0 -3px 3px 0 $focus-box-shadow-color,
   0 3px 3px 0 $focus-box-shadow-color;
@@ -72,7 +72,7 @@ $font-color-alert: $ids-color-status-danger;
 
 // The hyperlink Style
 $hyperlink-color: $ids-color-palette-azure-40;
-$hyperlink-focus-border-color: $ids-color-brand-primary-base;
+$hyperlink-focus-border-color: $ids-color-palette-azure-60;
 $hyperlink-visited-color: $ids-color-palette-amethyst-30;
 $hyperlink-disabled-color: $disabled-color;
 
@@ -370,17 +370,17 @@ $timepicker-readonly-icon-color: $ids-color-palette-slate-40;
 // Fileupload
 $fileupload-border-color: $ids-color-palette-slate-50;
 $fileupload-primary-color: $ids-color-palette-slate-30;
-$fileupload-secondary-color: $ids-color-palette-slate-40;
+$fileupload-secondary-color: $ids-color-palette-slate-20;
 $fileupload-status-color: $ids-color-palette-slate-90;
 $fileupload-status-hover-color: $ids-color-palette-slate-50;
 $fileupload-hover-color: $ids-color-palette-slate-20;
 $fileupload-droparea-color: $ids-color-palette-slate-40;
 $fileupload-droparea-hover-color: $ids-color-palette-slate-40;
-$fileupload-droparea-hover-bg-color: $ids-color-palette-azure-90;
-$fileupload-droparea-bg-color: rgba($ids-color-palette-slate-70, 0.5);
-$fileupload-droparea-hover-bg-color: $ids-color-palette-slate-70;
+$fileupload-droparea-bg-color: $ids-color-palette-slate-90;
+$fileupload-droparea-hover-bg-color: $ids-color-palette-slate-80;
 $fileupload-droparea-dd-hover-border-color: $ids-color-brand-primary-base;
 $fileupload-droparea-dd-hover-bg-color: rgba($ids-color-palette-slate-100, 0.3);
+$fileupload-droparea-hover-icon-color: $ids-color-palette-slate-30;
 
 // Spinbox
 $spinbox-active-color: $font-color-extrahighcontrast;

@@ -16,6 +16,7 @@
     width: 35px;
 
     &.trigger-close {
+      color: $ids-color-palette-white;
       display: none;
       margin-left: -60px;
       border-radius: 8px;
@@ -230,35 +231,12 @@
       .fileupload-adv-browse-lbl {
         color: $fileupload-primary-color;
 
-        span {
-          font-size: $ids-size-font-base;
-          margin-inline-start: -3px;
-          padding: 5px;
-        }
-
         input[type='file'] {
           height: 0.1px;
           opacity: 0;
           overflow: hidden;
           width: 0.1px;
           z-index: -1;
-        }
-      }
-
-      .hyperlink {
-        border: 1px solid transparent;
-
-        &:active::after,
-        &:focus::after {
-          border-color: transparent;
-          box-shadow: none;
-        }
-      }
-
-      &.is-focus {
-        .hyperlink {
-          border-color: $fileupload-droparea-dd-hover-border-color;
-          box-shadow: $focus-box-shadow;
         }
       }
 
@@ -273,7 +251,6 @@
 
       &:hover {
         background-color: $fileupload-droparea-hover-bg-color;
-        border-color: $fileupload-droparea-hover-border-color;
         color: $fileupload-droparea-hover-color;
 
         .icon {
@@ -333,7 +310,7 @@
           width: 18px;
 
           .icon {
-            margin-top: -2px;
+            margin-top: -3px;
           }
         }
 
@@ -354,10 +331,6 @@
 
         &:hover {
           background-color: $fileupload-cancel-hover-bg-color;
-
-          .icon {
-            color: $fileupload-status-hover-color;
-          }
         }
       }
 
@@ -419,10 +392,6 @@
 
         &:hover {
           background-color: $fileupload-completed-color;
-
-          .icon {
-            color: $fileupload-status-color;
-          }
         }
       }
 
