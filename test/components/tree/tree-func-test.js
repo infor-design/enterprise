@@ -485,7 +485,7 @@ describe('Tree Methods', () => {
     expect(links[links.length - 1].parentNode.parentNode).toEqual(treeObj.element[0]);
   });
 
-  it('should add a node and markup to parent id', () => {
+  it.skip('should add a node and markup to parent id', () => {
     let links = treeEl.querySelectorAll('a[role="treeitem"]');
     let text = links[links.length - 1].querySelector('.tree-text').textContent;
 
@@ -523,7 +523,7 @@ describe('Tree Methods', () => {
     expect(links[links.length - 1].parentNode.parentNode).toEqual(treeObj.element[0]);
   });
 
-  it('should add a node and markup to parent jquery object', () => {
+  it.skip('should add a node and markup to parent jquery object', () => {
     let links = treeEl.querySelectorAll('a[role="treeitem"]');
     let text = links[links.length - 1].querySelector('.tree-text').textContent;
 

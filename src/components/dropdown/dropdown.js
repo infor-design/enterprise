@@ -319,10 +319,10 @@ Dropdown.prototype = {
       this.wrapper.append(this.pseudoElem, this.trigger);
     }
 
-    // Check for and add the icon
-    this.icon = this.wrapper.find('.icon');
+    // Check for and add the trigger icon
+    this.icon = this.wrapper.find('.trigger').find('.icon');
     if (!this.icon.length) {
-      this.icon = $.createIconElement(this.settings.dropdownIcon || 'dropdown');
+      this.icon = $.createIconElement({ icon: this.settings.dropdownIcon || 'dropdown' });
       this.wrapper.append(this.icon);
     }
 
@@ -573,7 +573,7 @@ Dropdown.prototype = {
       return;
     }
 
-    // Set icon properties
+    // Use as a settings object
     if (typeof listIconItem.icon === 'object') {
       listIconItem.obj = listIconItem.icon;
       listIconItem.icon = listIconItem.icon.icon;
@@ -623,15 +623,16 @@ Dropdown.prototype = {
       listIconItem.isClassListOver = true;
     }
 
-    // Build icon
-    listIconItem.html = $.createIcon({
-      icon: listIconItem.isIcon ? listIconItem.icon : '',
-      class: `listoption-icon${listIconItem.isClassList ? ` ${listIconItem.classList}` : ''}`
-    });
-
     if (listIconItem.icon === 'swatch') {
+      // Create a swatch span
       listIconItem.isSwatch = true;
       listIconItem.html = `<span class="swatch ${listIconItem.isClassList ? listIconItem.classList : ''}"></span>`;
+    } else {
+      // Build IDS Icon SVG or external icon
+      listIconItem.html = $.createIcon({
+        icon: listIconItem.isIcon ? listIconItem.icon : '',
+        class: `listoption-icon ${listIconItem.isClassList ? ` ${listIconItem.classList}` : ''}`
+      });
     }
 
     self.listIcon.items.push(listIconItem);
@@ -651,7 +652,7 @@ Dropdown.prototype = {
     if (hasIcons) {
       let count = 0;
 
-      opts.each(function (i) {
+      opts.each(function (i, el) {
         const iconAttr = $(this).attr('data-icon');
         let icon = null;
 
@@ -664,7 +665,11 @@ Dropdown.prototype = {
         } else {
           icon = $.fn.parseOptions(this, 'data-icon');
         }
-        self.setItemIcon({ html: '', icon });
+        self.setItemIcon({
+          html: '',
+          icon,
+          value: el.value || null
+        });
 
         if (self.listIcon.items[i] && self.listIcon.items[i].isIcon) {
           count++;
@@ -675,8 +680,9 @@ Dropdown.prototype = {
     }
 
     if (hasIcons) {
-      self.pseudoElem.prepend($.createIcon({ icon: '', class: 'listoption-icon' }));
-      self.listIcon.pseudoElemIcon = self.pseudoElem.find('> .listoption-icon');
+      const elem = $.createIconElement({ icon: '', class: 'listoption-icon' });
+      self.pseudoElem.prepend(elem);
+      self.listIcon.pseudoElemIcon = elem;
       self.listIcon.idx = -1;
     }
 
@@ -771,31 +777,27 @@ Dropdown.prototype = {
   updateItemIcon(opt) {
     const self = this;
     if (self.listIcon.hasIcons) {
-      const target = self.listIcon.pseudoElemIcon;
+      const target = self.pseudoElem.find('.listoption-icon');
       const i = opt.index();
-      const idx = self.listIcon.idx;
       const iconRef = self.listIcon.items[i];
-      const icon = iconRef && iconRef.isIcon ? iconRef.icon : '';
-
       // Return out if this item has no icon
       if (!iconRef) {
         return;
       }
 
-      // Reset class and color
-      if (idx > -1) {
-        const iconAtIndex = self.listIcon.items[idx];
-        if (iconAtIndex) {
-          target.removeClass(`${iconAtIndex.classList} ${iconAtIndex.classListOver}`);
-          target[0].style.fill = '';
-        }
-      }
-
       // Update new stuff
+      target.each((j, el) => el.remove());
+      const elem = $.createIconElement({
+        icon: iconRef.icon,
+        class: ['listoption-icon']
+      });
+
+      self.pseudoElem.prepend(elem);
+      self.listIcon.pseudoElemIcon = elem;
       self.listIcon.idx = i;
-      target.changeIcon(icon);
+
       if (iconRef.isClassList) {
-        target.addClass(iconRef.classList);
+        elem.addClass(iconRef.classList);
       }
     }
   },
@@ -846,7 +848,7 @@ Dropdown.prototype = {
       listContents = `<div class="dropdown-list${reverseText}${isMobile ? ' mobile' : ''}${this.settings.multiple ? ' multiple' : ''}" id="${listId}" ${this.settings.multiple ? 'aria-multiselectable="true"' : ''}>
         <label for="dropdown-search" class="audible">${this.settings.noSearch ? Locale.translate('PressDown') : Locale.translate('TypeToFilter')}</label>
         <input type="text" class="dropdown-search${reverseText}" ${this.settings.noSearch ? 'aria-readonly="true"' : ''} id="dropdown-search" autocomplete="off" />
-        <span class="trigger">${isMobile ? $.createIcon({ icon: 'close', classes: ['close'] }) : $.createIcon(this.settings.dropdownIcon || 'dropdown')}</span>`;
+        <span class="trigger">${isMobile ? $.createIcon({ icon: 'close', classes: ['close'] }) : $.createIcon({ icon: this.settings.dropdownIcon || 'dropdown' })}</span>`;
 
       if (this.settings.virtualScroll) {
         listContents += `<div class="virtual-scroll-container">
@@ -1014,7 +1016,10 @@ Dropdown.prototype = {
 
     if (this.listIcon.hasIcons) {
       this.list.addClass('has-icons');
-      this.listIcon.pseudoElemIcon.clone().appendTo(this.list);
+
+      const iconClone = this.listIcon.pseudoElemIcon.clone();
+      iconClone.addClass('listoption-icon');
+      iconClone.appendTo(this.list);
     }
 
     if (hasOptGroups) {
@@ -1169,7 +1174,7 @@ Dropdown.prototype = {
     }
     if (this.isHidden) {
       this.pseudoElem.hide().prev('label').hide();
-      this.pseudoElem.next('svg').hide();
+      this.pseudoElem.next('.icon').hide();
     }
   },
 
@@ -3771,6 +3776,7 @@ Dropdown.prototype = {
 
     // update the list and set a new value, if applicable
     this.updateList();
+    this.setListIcon();
     this.setDisplayedValues();
     this.toggleTooltip();
 

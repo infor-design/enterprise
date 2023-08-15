@@ -114,12 +114,9 @@ div.multiselect {
     @include list-icon-colors();
 
     color: $popupmenu-icon-color;
-    height: 16px;
-    left: 14px;
     position: absolute;
     top: 9px;
     vertical-align: middle;
-    width: 16px;
 
     + span {
       padding-left: 29px;
@@ -128,6 +125,12 @@ div.multiselect {
     &.swatch {
       border-radius: 2px;
       left: 15px;
+    }
+
+    &:not(.custom-icon) {
+      left: 14px;
+      height: 16px;
+      width: 16px;
     }
   }
 
@@ -421,11 +424,14 @@ div.multiselect {
       @include list-icon-colors();
 
       color: $popupmenu-icon-color;
-      height: 16px;
       left: 0;
       margin-right: 7px;
       pointer-events: none;
       top: 3px;
+
+      &:not(.custom-icon) {
+        height: 16px;
+      }
     }
 
     // Badge Support
@@ -445,7 +451,6 @@ div.multiselect {
     @include list-icon-colors();
 
     color: $popupmenu-icon-color;
-    height: 16px;
     left: 10px;
     position: absolute;
     top: 8px;
@@ -453,11 +458,20 @@ div.multiselect {
     &.swatch {
       border-radius: 2px;
       left: 14px;
-      width: 16px;
     }
 
     + span {
       padding-left: 39px;
+    }
+  }
+
+  .listoption-icon {
+    &.swatch {
+      width: 16px;
+    }
+
+    &:not(.custom-icon) {
+      height: 16px;
     }
   }
 
