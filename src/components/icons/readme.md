@@ -8,8 +8,8 @@ demo:
   pages:
   - name: Empty Widget Icons
     slug: example-empty-widgets
-  - name: Infor / SoHo Logos
-    slug: example-logos
+  - name: Status Color Icons
+    slug: example-status-colors
 ---
 
 ## SVG Icons Support
@@ -42,6 +42,11 @@ It is required to inline the SVG icons in HTML markup in order to be able to cha
   <use href="#icon-calendar"></use>
 </svg>
 ```
+
+## Status and Alert Icons
+
+It is also possible to use status color icons in some cases for embellishment and to show a status. This would be for a softer
+status, something like an embellishment. For error messages and alerts use an alert icon [See alerts component](https://design.infor.com/code/ids-enterprise/latest/alerts). Note that the badges should not be used in place of alerts.
 
 ## Accessibility
 
