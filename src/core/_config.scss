@@ -29,6 +29,8 @@ $header-label-text-color: $ids-color-palette-slate-80;
 $homepage-button-color: $ids-color-palette-slate-80;
 $header-hero-widget-bg-color: $ids-color-palette-white;
 
+$homepage-header-menu-button-color: $ids-color-palette-black;
+
 $widget-editable-border-color: $ids-color-palette-azure-60;
 
 // Color Personalization in header
@@ -299,6 +301,8 @@ $button-color-secondary-initial-background: transparent;
 $button-color-tertiary-disabled-background-new: transparent;
 $button-color-tertiary-hover-background-new: $ids-color-palette-azure-10;
 $button-color-tertiary-hover-font-new: $ids-color-palette-azure-60;
+
+$hero-button-color-tertiary-hover-background-new: $button-color-tertiary-hover-background-new;
 
 $button-color-destructive-focus-border-new: $ids-color-palette-ruby-60;
 

@@ -143,6 +143,17 @@
   }
 }
 
+.hero-widget .btn-menu:not(.btn-primary):not(.btn-secondary),
+.hero-widget .btn-menu:not(.btn-primary):not(.btn-secondary) .icon,
+.hero-widget .btn-menu:not(.btn-primary):not(.btn-secondary).is-open,
+.hero-widget .btn-menu:not(.btn-primary):not(.btn-secondary).is-open .icon {
+  color: $homepage-header-menu-button-color;
+}
+
+.hero-widget .toolbar:not(.standalone) .buttonset [class^='btn']:not(.searchfield-category-button):not(:disabled):hover {
+  background-color: $hero-button-color-tertiary-hover-background-new;
+}
+
 .header + .homepage,
 .header + nav + .homepage {
   height: calc(100% - 60px);
