@@ -1,6 +1,6 @@
 ---
 title: Alerts
-description:
+description: Alerts are special icons that indicate a status/error situation.
 demo:
   embedded:
   - name: Alerts (Icons)
@@ -9,6 +9,10 @@ demo:
   - name: Alerts (Badges)
     slug: example-index
 ---
+
+## Status and Alert Icons
+
+Alerts should be used for error messages and warnings. It is also possible to use status color icons in some cases for embellishment and to show a status. This would be for a softer status, something like an embellishment [See icons component](https://design.infor.com/code/ids-enterprise/latest/icons). Note that the badges should not be used in place of alerts or status icons.
 
 ## Settings
 

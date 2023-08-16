@@ -1116,6 +1116,10 @@ div.dropdown-xs,
         top: 1px;
       }
     }
+
+    > span:not(.tag-list) {
+      padding-top: 2px;
+    }
   }
 
   // Reset the padding in the rule above for Short Fields
