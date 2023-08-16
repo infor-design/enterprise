@@ -10,6 +10,9 @@ demo:
   - name: Linkable
     slug: example-linkable
 ---
+
+Note that the tags and badges look the same but should not be used interchangeably. A badge is used mainly for alphanumeric values i.e. numbers currency ect. and should not cannot take an icon or text. For text embellishments use a tag. For icons use an icon or status icon or alert icon.
+
 ## Code Example
 
 Tags are simple span elements with the class `tag`. They can be mixed in to other elements like lists, grids and multiselect. You can optionally add a few classes to add color or status such as `error` for red, `good` to be green and `alert` for yellow. Since you should not use color alone to indicate state, this should be either supplemented with off-screen labels or visual labels near the element explaining the state.
