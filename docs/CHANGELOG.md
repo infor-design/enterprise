@@ -9,6 +9,7 @@
 ## v4.87.0 Fixes
 
 - `[Badges/Alerts/Tags/Icons]` Added docs and clearer examples. ([#7661](https://github.com/infor-design/enterprise-ng/issues/7661))
+- `[Color]` Fix on Slate's personalization header text color. ([#7811](https://github.com/infor-design/enterprise-ng/issues/7811))
 - `[ColorPicker]` Fixed color selection on color picker. ([#7760](https://github.com/infor-design/enterprise-ng/issues/7760))
 - `[Dropdown]` Adjusted dropdown text in Firefox. ([#7763](https://github.com/infor-design/enterprise/issues/7763))
 - `[Datagrid]` Fixed bug where default filter wasn't honored for date or time columns. ([#7766](https://github.com/infor-design/enterprise/issues/7766))
