@@ -1,0 +1,37 @@
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <div class="field">
+      <button id="popover-trigger" class="btn-secondary" type="button">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-upload"></use>
+        </svg>
+        <span>Click To Show Popover</span>
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<div id="popover-contents" class="popover-content-area hidden" data-automation-id="popover-contents-automation-id">
+  <div class="field">
+    <label for="context-desc" class="required">Page Title</label>
+    <textarea id="context-desc" aria-required="true" data-validate="required" name="context-desc" maxlength="90"></textarea>
+  </div>
+</div>
+
+<script>
+  var POPOVER_OPTIONS = {
+    closebutton: true,
+    content: $('#popover-contents'),
+    placement: 'right',
+    popover: true,
+    offset: {
+      y: 10
+    },
+    title: 'Text Area',
+    trigger: 'click'
+  };
+
+  $('#popover-trigger').popover(POPOVER_OPTIONS);
+</script>
