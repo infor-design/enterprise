@@ -162,7 +162,7 @@ Homepage.prototype = {
    * @returns {void}
    */
   initHeroWidget() {
-    let heroWidget = $('.hero-widget');
+    let heroWidget = this.element.parent().find('.hero-widget');
     if (heroWidget.length > 1) {
       heroWidget = heroWidget.not(':first').remove();
     }
