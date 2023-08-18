@@ -385,48 +385,6 @@
       color: $header-hero-text-color;
       padding-left: 15px;
     }
-
-    .chart-container {
-      .arc,
-      .bar,
-      &.line-chart .dot {
-        stroke: $subhead-bg-color;
-      }
-
-      text {
-        color: $header-label-text-color;
-        fill: $header-label-text-color;
-      }
-
-      .chart-legend-item-text {
-        color: $header-label-text-color;
-        fill: $header-label-text-color;
-      }
-
-      .list-button {
-        .icon {
-          color: $header-label-text-color;
-        }
-      }
-    }
-
-    .count-container {
-      background-color: inherit;
-
-      .instance-count {
-        .count {
-          color: $header-label-text-color;
-        }
-
-        svg.icon {
-          background-color: $header-hero-widget-bg-color;
-        }
-
-        .title {
-          padding: 0;
-        }
-      }
-    }
   }
 
   .hero-footer {
@@ -479,7 +437,6 @@
       @include font-size(16);
 
       display: inline-block;
-      float: left;
       height: 40px;
       line-height: 40px;
 
