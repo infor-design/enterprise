@@ -71,8 +71,8 @@ $images-size: (
   border: 1px solid transparent; // to prevent jump on focus
   border-radius: 50%;
   display: inline-block;
-  height: 50px;
-  width: 50px;
+  height: 48px;
+  width: 48px;
 
   &:focus {
     @include focus-state();
