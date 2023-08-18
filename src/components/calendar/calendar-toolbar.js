@@ -359,7 +359,7 @@ CalendarToolbar.prototype = {
    */
   setViewChangerValue(viewChangerValue) {
     this.settings.viewChangerValue = viewChangerValue;
-    this.viewChanger.val(viewChangerValue).trigger('updated');
+    this.viewChanger?.val(viewChangerValue)?.trigger('updated');
   },
 
   /**
