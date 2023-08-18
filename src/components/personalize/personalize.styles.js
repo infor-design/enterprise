@@ -418,7 +418,6 @@ html[class*="theme-new"] .header.is-personalizable:not(.has-alternate-tabs) .tab
   background-color: ${colors.contrast} !important;
 }
 
-html[class*="theme-new-"] .header.is-personalizable button:not(.go-button):not(.close):not(.searchfield-category-button):not(:disabled):hover,
 html[class*="theme-new-"] .header.is-personalizable button:not(:disabled):hover .app-header.icon > span,
 html[class*="theme-new-"] .header.is-personalizable .toolbar [class^='btn']:hover:not(.go-button):not(.close):not(.searchfield-category-button):not([disabled]),
 html[class*="theme-new-"] .subheader.is-personalizable button:not(.go-button):not(.close):not(.searchfield-category-button):not(:disabled):hover,
@@ -430,6 +429,10 @@ html[class*="theme-new-"] .personalize-subheader .toolbar [class^='btn']:hover:n
   color: ${colors.btnTertiaryHoverColor} !important;
   background-color: ${colors.btnTertiaryBgHoverColor} !important;
   opacity: 1;
+}
+
+html[class*="theme-new-"] .header.is-personalizable button:not(.go-button):not(.close):not(.searchfield-category-button):not(:disabled):hover {
+  background-color: ${colors.darkest} !important;
 }
 
 .header .flex-toolbar [class^='btn'][disabled] {
@@ -793,7 +796,7 @@ html[dir='rtl'] .scrollable-flex-header.is-personalizable .breadcrumb.truncated:
   border-right: 1px solid ${colors.hover} !important;
 }
 
-.module-tabs.is-personalizable .tab:not(.is-selected):hover, 
+.module-tabs.is-personalizable .tab:not(.is-selected):hover,
 .module-tabs.is-personalizable .tab-more:hover {
   background-color: ${colors.tabHoverColor} !important;
   color: ${colors.contrast};
