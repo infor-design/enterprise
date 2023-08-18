@@ -49,6 +49,19 @@ $toolbarsearchfield-category-empty-width: 51px;
     }
   }
 
+  &.has-collapse-button {
+    .searchfield {
+      width: 0%;
+    }
+  }
+
+  &.is-open {
+    .searchfield {
+      transition: 300ms;
+      width: 100%;
+    }
+  }
+
   &:not(.is-open):not(.non-collapsible) {
     .searchfield {
       height: 38px;
