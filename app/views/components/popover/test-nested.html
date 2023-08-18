@@ -1,12 +1,20 @@
+<style>
+  .popover {
+    max-width: fit-content;
+  }
+</style>
 <div class="row top-padding">
   <div class="twelve columns">
 
     <div class="field">
       <button id="popover-trigger" class="btn-secondary" type="button">
-        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-          <use href="#icon-upload"></use>
-        </svg>
-        <span>Click To Show Popover</span>
+        <span>Popover (Text Area)</span>
+      </button>
+    </div>
+
+    <div class="field">
+      <button id="popover-trigger-2" class="btn-secondary" type="button">
+        <span>Popover (Datagrid)</span>
       </button>
     </div>
 
@@ -20,18 +28,75 @@
   </div>
 </div>
 
-<script>
-  var POPOVER_OPTIONS = {
-    closebutton: true,
-    content: $('#popover-contents'),
-    placement: 'right',
-    popover: true,
-    offset: {
-      y: 10
-    },
-    title: 'Text Area',
-    trigger: 'click'
-  };
+<div id="popover-contents-2" class="popover-content-area hidden" data-automation-id="popover-contents-automation-id">
+  <div class="row">
+    <div class="twelve columns">
+      <div id="datagrid">
+      </div>
+    </div>
+  </div>
+</div>
 
-  $('#popover-trigger').popover(POPOVER_OPTIONS);
+<script>
+  $('body').one('initialized', function () {
+    let grid,
+      columns = [],
+      data = [];
+
+    // Some Sample Data
+    data.push({ id: 1, productId: 2142201, sku: 'SKU #9000001-237', productName: 'Compressor', activity:  'Assemble Paint', quantity: 1, price: 210.99, status: 'OK', orderDate: new Date(2014, 12, 8), action: 'Action'});
+    data.push({ id: 2, productId: 2241202, sku: 'SKU #9000001-236', productName: 'Different Compressor', activity:  'Inspect and Repair', quantity: 2, price: 210.99, status: '', orderDate: new Date(2015, 7, 3), action: 'On Hold'});
+    data.push({ id: 3, productId: 2342203, sku: 'SKU #9000001-235', productName: 'Compressor', activity:  'Inspect and Repair', quantity: 1, price: 120.99, status: null, orderDate: new Date(2014, 6, 3), action: 'Action'});
+    data.push({ id: 4, productId: 2445204, sku: 'SKU #9000001-234', productName: 'Another Compressor', activity:  'Assemble Paint', quantity: 3, price: 210.99, status: 'OK', orderDate: new Date(2015, 3, 3), action: 'Action'});
+    data.push({ id: 5, productId: 2542205, sku: 'SKU #9000001-233', productName: 'I Love Compressors', activity:  'Inspect and Repair', quantity: 4, price: 210.99, status: 'OK', orderDate: new Date(2015, 5, 5), action: 'On Hold'});
+    data.push({ id: 5, productId: 2642205, sku: 'SKU #9000001-232', productName: 'Air Compressors', activity:  'Inspect and Repair', quantity: 41, price: 120.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
+    data.push({ id: 6, productId: 2642206, sku: 'SKU #9000001-231', productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
+
+    // Define Columns for the Grid.
+
+    columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Expander, filterType: 'text', textOverflow: 'ellipsis', width: 150, hideable: false});
+    columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', filterType: 'text', formatter: Soho.Formatters.Hyperlink});
+    columns.push({ id: 'activity', name: 'Activity', field: 'activity', filterType: 'text'});
+    columns.push({ id: 'quantity1', name: 'Quantity 1', field: 'quantity'});
+    columns.push({ id: 'quantity2', name: 'Quantity 2', field: 'quantity'});
+    columns.push({ id: 'quantity3', name: 'Quantity 3', field: 'quantity'});
+
+    const rowTemplate = '<div class="datagrid-cell-layout"><div class="img-placeholder"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use href="#icon-camera"></use></svg></div></div>'+
+                      '<div class="datagrid-cell-layout"><p class="datagrid-row-heading">Expandable Content Area</p>' +
+                      '<p class="datagrid-row-micro-text">{{sku}}</p>'+
+                      '<span class="datagrid-wrapped-text">Lorem Ipsum is simply sample text of the printing and typesetting industry. Lorem Ipsum has been the industry standard sample text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only...</span>'+
+                      '<a class="hyperlink" id="expandable-row-for-{{sku}}" href="https://design.infor.com/" target="_blank" >Read more</a>';
+
+    grid = $('#datagrid').datagrid({
+      columns: columns,
+      idProperty:'officeId',
+      dataset: data,
+      rowTemplate: rowTemplate,
+      attributes: [{ name: 'id', value: 'custom-id' }, { name: 'data-automation-id', value: 'custom-automation-id' } ]
+    });
+
+    const POPOVER_OPTIONS = {
+      closebutton: true,
+      content: $('#popover-contents'),
+      placement: 'right',
+      popover: true,
+      offset: {
+        y: 10
+      },
+      title: 'Text Area',
+      trigger: 'click'
+    };
+
+    const POPOVER_OPTIONS_2 = {
+      closebutton: true,
+      content: $('#popover-contents-2'),
+      popover: true,
+      title: 'Datagrid',
+      trigger: 'click'
+    };
+
+    $('#popover-trigger').popover(POPOVER_OPTIONS);
+    $('#popover-trigger-2').popover(POPOVER_OPTIONS_2);
+  });
+
 </script>
