@@ -4,13 +4,35 @@
 
 ## v4.87.0 Features
 
+- `[Typography]` Added `text-wrap` class. ([#7497](https://github.com/infor-design/enterprise/issues/7497))
+
 ## v4.87.0 Fixes
 
+- `[Badges/Alerts/Tags/Icons]` Added docs and clearer examples. ([#7661](https://github.com/infor-design/enterprise-ng/issues/7661))
+- `[Circlepager]` Fixed circlepager's position inside of a card. ([#7724](https://github.com/infor-design/enterprise/issues/7724))
+- `[ColorPicker]` Fixed color selection on color picker. ([#7760](https://github.com/infor-design/enterprise-ng/issues/7760))
+- `[Dropdown]` Adjusted dropdown text in Firefox. ([#7763](https://github.com/infor-design/enterprise/issues/7763))
+- `[Datagrid]` Fixed bug where default filter wasn't honored for date or time columns. ([#7766](https://github.com/infor-design/enterprise/issues/7766))
+- `[Datepicker]` Fixed bug where date range selected is not properly rendered in some scenarios. ([#7528](https://github.com/infor-design/enterprise/issues/7528))
+- `[Editor]` Added swatch bar on colorpicker button. ([#7571](https://github.com/infor-design/enterprise/issues/7571))
+- `[Editor]` Fixed fonts selection selection on editor. ([#7762](https://github.com/infor-design/enterprise-ng/issues/7762))
 - `[FieldFilter]` Fixed Dropdown border not rendered properly. ([#7600](https://github.com/infor-design/enterprise/issues/7600))
 - `[FileuploadAdvanced]` Fixed Close Button not rendered properly. ([#7604](https://github.com/infor-design/enterprise/issues/7604))
+- `[Icon]` Adjusted width of icons. ([#7616](https://github.com/infor-design/enterprise/issues/7616))
+- `[Hyperlink]` Fixed hyperlink focus style in completion chart. ([#7731](https://github.com/infor-design/enterprise/issues/7731))
+- `[ModuleNav]` Added css to constrain images to 32px. ([#7820](https://github.com/infor-design/enterprise-ng/issues/7820))
 - `[ModuleNav]` Fixed missing tooltip on the settings button. ([#1525](https://github.com/infor-design/enterprise-ng/issues/1525))
+- `[ModuleNav]` Added `enableOutsideClick()` feature to collapse/hide menu via content click. ([#7786](https://github.com/infor-design/enterprise/issues/7786))
+- `[ModuleNav]` Fixed missing tooltip on the settings button. ([NG#1525](https://github.com/infor-design/enterprise-ng/issues/1525))
+- `[ModuleNav/Dropdown]` Added support for external URLs to the Dropdown component's list, as well as support for setting these in Module Nav Switcher. ([NG#1533](https://github.com/infor-design/enterprise-ng/issues/1533))
 - `[ModuleNav]` Reduced item padding so more items can fit in the menu before scrolling occurs. ([#7770](https://github.com/infor-design/enterprise/issues/7770))
 - `[ModuleNav]` Fixed issues in dark mode. ([#7753](https://github.com/infor-design/enterprise/issues/7753))
+- `[ModuleNav]` Added option/example to disable search in the dropdown menu ([NG#1535](https://github.com/infor-design/enterprise-ng/issues/1535))
+- `[ModuleNav]` Added option/example to disable search in the dropdown menu ([#1535](https://github.com/infor-design/enterprise-ng/issues/1535))
+- `[Number]` Added additional check for `formatNumber`. ([#7752](https://github.com/infor-design/enterprise/issues/7752))
+- `[Sparkline]` Fixed median fill on dark theme. ([#7717](https://github.com/infor-design/enterprise/issues/7717))
+- `[Searchfield]` Adjusted height for go button. ([#6695](https://github.com/infor-design/enterprise/issues/6695))
+- `[Tooltip]` Fix in `extraClass` example page for tooltip. ([#7669](https://github.com/infor-design/enterprise/issues/7669))
 - `[WeekView]` Fixed bug where going to next didn't render the complete week. ([#7684](https://github.com/infor-design/enterprise/issues/7684))
 
 ## v4.86.0
@@ -45,7 +67,7 @@
 - `[Message]` Fixed alignment issue on the icons. ([#7746](https://github.com/infor-design/enterprise/issues/7746))
 - `[ModuleNav]` Fixed rounding and `zindex` issues. ([#7654](https://github.com/infor-design/enterprise/issues/7654))
 - `[ModuleNav]` Added an option to set the icon to false initially. ([#7740](https://github.com/infor-design/enterprise/issues/7740))
-- `[Notification]` Updated color styles when notification is in subheader. ([#7623](https://github.com/infor-design/enterprise/issues/7623))
+- `[Notification]` Updated color styles when notification is in sub header. ([#7623](https://github.com/infor-design/enterprise/issues/7623))
 - `[Page-Patterns]` Fixed the width of the search field in page pattern example. ([#7561](https://github.com/infor-design/enterprise/issues/7561))
 - `[Popupmenu]` Fixed the behavior of the component when having submenus in NG. ([#7556](https://github.com/infor-design/enterprise/issues/7556))
 - `[Tabs]` Fixed an error in tabs where it is not sortable in NG. ([NG#1480](https://github.com/infor-design/enterprise-ng/issues/1480))

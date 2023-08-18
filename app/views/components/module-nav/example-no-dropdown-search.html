@@ -68,7 +68,7 @@
           <div class="module-nav-switcher">
             <div class="module-nav-section role-dropdown">
               <label for="module-nav-role-switcher" class="label audible">Roles</label>
-              <select id="module-nav-role-switcher" name="module-nav-role-switcher" class="dropdown" data-automation-id="custom-automation-dropdown-id">
+              <select id="module-nav-role-switcher" name="module-nav-role-switcher" data-options="{'noSearch': true}" class="dropdown" data-automation-id="custom-automation-dropdown-id">
                 <option value="admin" data-icon="{icon: 'app-ac'}">Admin Console</option>
                 <option value="job-console" data-icon="{icon: 'app-jo'}">Job Console</option>
                 <option value="landing-page-designer" data-icon="{icon: 'app-lmd'}">Landing Page Designer</option>
@@ -345,7 +345,7 @@
       <div class="four columns">
         <p>Displays top-level navigation in a flyout menu</p>
 
-        <div class="field field-checkbox">
+        <div class="field">
           <label for="display-mode-dropdown" class="label">Display Mode</label>
           <select id="display-mode-dropdown" class="dropdown">
             <option value="">Hidden</option>
@@ -368,11 +368,6 @@
           <input type="checkbox" checked="true" class="checkbox" name="offset-check" id="offset-check" />
           <label for="offset-check" class="checkbox-label">Offset the page container (don't hide any content)</label>
         </div>
-
-        <div class="field">
-          <input type="checkbox" class="checkbox" name="collapse-click-check" id="collapse-click-check" />
-          <label for="collapse-click-check" class="checkbox-label">Collapse/Hide when clicking outside an expanded menu</label>
-        </div>
       </div>
     </div>
     <div class="row test-spacer">&nbsp;</div>
@@ -390,14 +385,12 @@
     $('html').personalize({ colors: '#fff' });
     $('[data-theme-name="theme-classic"]').parent().addClass('is-disabled');
 
-    const navEl = $('#nav');
-    const navAPI = navEl.data('modulenav');
+    const navAPI = $('#nav').data('modulenav');
     const containerEl = $('.module-nav-container');
     const dropdownEl = $('#display-mode-dropdown')
     const dropdownAPI = $('#display-mode-dropdown').data('dropdown');
     const displayCheckEl = $('#display-detail-check');
     const offsetCheckEl = $('#offset-check');
-    const collapseCheckEl = $('#collapse-click-check');
     const hamburgerBtnEl = $('#header-hamburger');
     const pinSectionsCheckEl = $('#pin-sections');
 
@@ -432,14 +425,6 @@
         }
       });
     }
-
-    collapseCheckEl.on('change.test', (e) => {
-      navAPI.updated({ enableOutsideClick: collapseCheckEl[0].checked });
-    });
-
-    navEl.on('displaymodechange.test', (e, mode) => {
-      dropdownAPI.selectValue(mode === false ? '' : mode);
-    });
 
     // Connect component event handling
     const roleSwitcherEl = $('.role-dropdown');

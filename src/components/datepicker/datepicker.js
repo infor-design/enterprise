@@ -2125,7 +2125,6 @@ DatePicker.prototype = {
   /**
    * Updates the component instance. Can be used after being passed new settings.
    * @param {object} settings The settings to apply.
-   * @returns {object} The api
    */
   updated(settings) {
     if (typeof settings !== 'undefined') {

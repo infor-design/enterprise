@@ -72,12 +72,20 @@ numberUtils.toFixed = function toFixed(number, decimals = 2) {
   if (lastPart && lastPart.substr(0, 1) !== '0') {
     parsedNum = firstPart + parsedNum;
   }
+
   if (lastPart && lastPart.substr(0, 1) === '0') {
-    parsedNum = `${firstPart}${parsedNum}`;
+    if (parseInt(lastPart, 10) === 0) {
+      const decimalsLast = parsedNum.split('.')[1];
+      parsedNum = `${firstPart}${lastPart}${decimalsLast ? `.${decimalsLast}` : ''}`;
+    } else {
+      parsedNum = `${firstPart}${parsedNum}`;
+    }
   }
+
   if (hasMinus) {
     return `-${parsedNum}`;
   }
+
   return parsedNum;
 };
 
