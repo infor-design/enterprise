@@ -48,6 +48,13 @@
     &:active {
       background-color: $module-nav-item-selected-bg-color;
     }
+
+    img,
+    svg {
+      margin-top: 0;
+      height: $module-nav-switcher-icon-size;
+      width: $module-nav-switcher-icon-size;
+    }
   }
 
   .icon-custom,
