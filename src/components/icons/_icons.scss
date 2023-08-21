@@ -9,12 +9,26 @@
   width: 18px;
   position: relative;
 
-  &.icon-round,
-  &.icon-status {
+  &.icon-round {
     border-radius: 50%;
     border: 2px solid;
     width: 26px;
     height: 26px;
+  }
+}
+
+.icon-status {
+  display: inline-flex;
+  border-radius: 50%;
+  height: 24px;
+  width: 24px;
+  justify-content: center;
+  align-items: center;
+
+  .icon {
+    top: 0;
+    height: 18px;
+    width: 18px;
   }
 }
 
