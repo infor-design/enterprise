@@ -21,15 +21,21 @@ $header-full-searchfield-hyperlink-color: $ids-color-palette-white;
 
 $ids-color-palette-alabaster: $ids-color-palette-white;
 
-// home pages
+// Homepage
 $homepage-background-color: $body-color-primary-background;
+
+$header-hero-text-color: $ids-color-palette-slate-80;
+$header-label-text-color: $ids-color-palette-slate-80;
+$homepage-button-color: $ids-color-palette-slate-80;
+$header-hero-widget-bg-color: $ids-color-palette-white;
+
+$homepage-header-menu-button-color: $ids-color-palette-black;
+
+$widget-editable-border-color: $ids-color-palette-azure-60;
 
 // Color Personalization in header
 $header-default-bg-color: $ids-color-palette-azure-60;
 $header-default-bg-hover-color: $ids-color-palette-azure-80;
-
-$header-hero-text-color: $ids-color-palette-slate-10;
-$header-hero-widget-bg-color: $ids-color-palette-azure-100;
 
 $masthead-bg-color: $ids-color-palette-slate-80;
 $masthead-border-color: $ids-color-palette-slate-80;
@@ -297,6 +303,8 @@ $button-color-tertiary-disabled-background-new: transparent;
 $button-color-tertiary-hover-background-new: $ids-color-palette-azure-10;
 $button-color-tertiary-hover-font-new: $ids-color-palette-azure-60;
 
+$hero-button-color-tertiary-hover-background-new: $button-color-tertiary-hover-background-new;
+
 $button-color-destructive-focus-border-new: $ids-color-palette-ruby-60;
 
 $button-color-primary-destructive-initial-background-new: $ids-color-palette-ruby-60;
@@ -525,9 +533,6 @@ $fileupload-disabled-icon-color: $ids-color-brand-secondary-alt;
 $fileupload-disabled-border-color: $ids-color-palette-graphite-30;
 $fileupload-disabled-bg-color: $ids-color-palette-graphite-10;
 $fileupload-disabled-color: $ids-color-palette-graphite-30;
-
-// Homepage, Widget, Card
-$widget-editable-border-color: $ids-color-palette-azure-60;
 
 //Spinbox
 $spinbox-active-color: $font-color-extrahighcontrast;
@@ -772,6 +777,7 @@ $module-nav-item-sub-expander-size: 23px;
 // Module Nav Switcher (Role Dropdown + Button)
 $module-nav-switcher-dropdown-background-color: $ids-color-palette-white;
 $module-nav-switcher-button-size: 40px;
+$module-nav-switcher-icon-size: 32px;
 $module-nav-switcher-button-gutter-size: 8px;
 $module-nav-switcher-dropdown-height: 40px;
 $module-nav-switcher-dropdown-width: 256px;

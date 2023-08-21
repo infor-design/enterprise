@@ -256,7 +256,7 @@ colorUtils.getContrastColor = function getContrastColor(hex, light, dark) {
   const g = parse(2);
   const b = parse(4);
   const diff = ((r * 299) + (g * 587) + (b * 114)) / 1000;
-  return (diff >= 128) ? (dark || 'black') : (light || 'white');
+  return (diff >= 146) ? (dark || 'black') : (light || 'white');
 };
 
 /**
