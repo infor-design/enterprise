@@ -315,7 +315,7 @@ a.is-personalizable svg.ripple-effect {
   font-weight: ${colors.tabTextSelectedWeight} !important;
 }
 
-.tab-container.vertical.is-personalizable > .tab-list-container > .tab-list > .tab:hover {
+.tab-container.vertical.is-personalizable > .tab-list-container > .tab-list > .tab:not(.is-disabled):hover {
   background-color: ${colors.tabHoverColor} !important;
 }
 
@@ -323,7 +323,7 @@ a.is-personalizable svg.ripple-effect {
   background-color: ${colors.tabVerticalSelectedColor} !important;
 }
 
-.tab-container.vertical.is-personalizable > .tab-list-container > .tab-list > .tab:hover a {
+.tab-container.vertical.is-personalizable > .tab-list-container > .tab-list > .tab:not(.is-disabled):hover a {
   color: ${colors.tabHoverTextColor} !important;
 }
 
@@ -982,6 +982,10 @@ html[class*="theme-new-"] .application-menu.is-personalizable .accordion.panel.i
 .is-personalizable.tab-container.vertical,
 .is-personalizable.tab-container.vertical > .tab-list-container {
   background-color: ${colors.tabVerticalColor} !important;
+}
+
+.is-personalizable.tab-container.vertical {
+  border-right: 1px solid ${colors.verticalTabBorder} !important;
 }
 
 .is-personalizable .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab-list .tab.is-disabled,
