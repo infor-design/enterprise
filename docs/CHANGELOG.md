@@ -9,6 +9,8 @@
 ## v4.87.0 Fixes
 
 - `[Badges/Alerts/Tags/Icons]` Added docs and clearer examples. ([#7661](https://github.com/infor-design/enterprise-ng/issues/7661))
+- `[Color]` Fix on Slate's personalization header text color. ([#7811](https://github.com/infor-design/enterprise-ng/issues/7811))
+- `[Calendar]` Fixed uncaught error in cordova apps. ([#7818](https://github.com/infor-design/enterprise/issues/7818))
 - `[Circlepager]` Fixed circlepager's position inside of a card. ([#7724](https://github.com/infor-design/enterprise/issues/7724))
 - `[ColorPicker]` Fixed color selection on color picker. ([#7760](https://github.com/infor-design/enterprise-ng/issues/7760))
 - `[Column-Stacked]` Corrected the misalignment of legend labels. ([#7722](https://github.com/infor-design/enterprise/issues/7722))
@@ -22,6 +24,7 @@
 - `[FileuploadAdvanced]` Changed file upload copy. ([#7787](https://github.com/infor-design/enterprise/issues/7787))
 - `[Hyperlink]` Fixed hyperlink focus style in completion chart. ([#7731](https://github.com/infor-design/enterprise/issues/7731))
 - `[Icon]` Adjusted width of icons. ([#7616](https://github.com/infor-design/enterprise/issues/7616))
+- `[Images]` Fixed incorrect image size. ([#7616](https://github.com/infor-design/enterprise/issues/7616))
 - `[ListView]` Fix the hyperlinks in lists to have an underline. ([#7616](https://github.com/infor-design/enterprise/issues/7838))
 - `[ModuleNav]` Added css to constrain images to 32px. ([#7820](https://github.com/infor-design/enterprise-ng/issues/7820))
 - `[ModuleNav]` Fixed missing tooltip on the settings button. ([#1525](https://github.com/infor-design/enterprise-ng/issues/1525))
