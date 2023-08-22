@@ -311,12 +311,12 @@ a.is-personalizable svg.ripple-effect {
 }
 
 .tab-container.vertical.is-personalizable > .tab-list-container > .tab-list > .tab.is-selected a {
-  color: ${colors.tabSelectedTextColor} !important;
+  color: ${colors.tabVerticalSelectedTextColor} !important;
   font-weight: ${colors.tabTextSelectedWeight} !important;
 }
 
 .tab-container.vertical.is-personalizable > .tab-list-container > .tab-list > .tab:not(.is-disabled):hover {
-  background-color: ${colors.tabHoverColor} !important;
+  background-color: ${colors.tabVerticalHoverColor} !important;
 }
 
 .tab-container.vertical.is-personalizable > .tab-list-container > .tab-list > .tab.is-selected:hover {
@@ -328,7 +328,7 @@ a.is-personalizable svg.ripple-effect {
 }
 
 .tab-container.vertical.is-personalizable > .tab-list-container > .tab-list > .tab.is-selected:hover a {
-  color: ${colors.tabSelectedTextColor} !important;
+  color: ${colors.tabVerticalSelectedTextColor} !important;
 }
 
 .tab-container.vertical.is-personalizable > .tab-list-container > .tab-focus-indicator.is-selected.is-visible,

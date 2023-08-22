@@ -18,3 +18,21 @@
     }
   }
 }
+
+.tab-container.vertical > .tab-list-container > .tab-list > .tab.is-selected {
+  background-color: $ids-color-palette-white;
+
+  a {
+    color: $vertical-tab-active-text-color-new;
+    font-weight: 600;
+  }
+
+  &:hover {
+    background-color: $ids-color-palette-white;
+
+    a {
+      color: $vertical-tab-active-text-color-new;
+      font-weight: 600;
+    }
+  }
+}
