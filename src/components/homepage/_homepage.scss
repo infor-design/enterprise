@@ -385,109 +385,6 @@
       color: $header-hero-text-color;
       padding-left: 15px;
     }
-
-    .btn-tertiary,
-    .btn-tertiary:hover:not(:disabled):not(.close):not(.btn-filter):not(.personalize-actionable),
-    .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary).is-open span,
-    .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary) {
-      color: $header-button-color;
-
-      .icon {
-        color: $header-button-color;
-      }
-
-      &:not([disabled]):hover {
-        background-color: rgba(0, 0, 0, 0.3) !important;
-        color: $header-text-color;
-
-        .icon {
-          color: $header-text-color !important;
-        }
-      }
-
-      &:focus:not(.hide-focus) {
-        box-shadow: 0 0 0 2px transparent, 0 0 0 1px $header-button-color, $header-focus-box-shadow;
-
-        &:active {
-          box-shadow: none;
-        }
-      }
-    }
-
-    .chart-container {
-      .arc,
-      .bar,
-      &.line-chart .dot {
-        stroke: $subhead-bg-color;
-      }
-
-      text {
-        color: $header-text-color;
-        fill: $header-text-color;
-      }
-
-      .chart-legend-item-text {
-        color: $header-text-color;
-        fill: $header-text-color;
-      }
-
-      .list-button {
-        .icon {
-          color: $header-text-color;
-        }
-      }
-    }
-
-    .circlepager.is-active .controls .control-button {
-      &::before {
-        border-color: $header-button-color;
-      }
-
-      &:hover {
-        &::before {
-          border-color: $header-text-color;
-        }
-      }
-
-      &.is-active {
-        &::before {
-          background-color: $header-text-color;
-          border-color: $header-text-color;
-        }
-
-        &:hover {
-          &::before {
-            background-color: $header-text-color;
-            border-color: $header-text-color;
-          }
-        }
-      }
-
-      &:focus:not(.hide-focus) {
-        &::before {
-          box-shadow: $header-focus-box-shadow;
-          outline-color: $header-button-color;
-        }
-      }
-    }
-
-    .count-container {
-      background-color: inherit;
-
-      .instance-count {
-        .count {
-          color: $header-hero-text-color;
-        }
-
-        svg.icon {
-          background-color: $header-hero-widget-bg-color;
-        }
-
-        .title {
-          padding: 0;
-        }
-      }
-    }
   }
 
   .hero-footer {
@@ -540,7 +437,6 @@
       @include font-size(16);
 
       display: inline-block;
-      float: left;
       height: 40px;
       line-height: 40px;
 
@@ -553,15 +449,6 @@
       &::after {
         clear: both;
       }
-    }
-  }
-}
-
-// Homepage New Theme rules
-html[class*='new-'] {
-  .hero-widget .hero-header .toolbar .buttonset {
-    .btn-tertiary.btn-menu:not(:disabled):hover {
-      background-color: transparent;
     }
   }
 }
@@ -622,8 +509,4 @@ html[dir='rtl'] {
       }
     }
   }
-}
-
-.hero-header .btn-tertiary:hover:not(:disabled):not(.close):not(.personalize-actionable) svg.icon {
-  color: $header-text-color !important;
 }
