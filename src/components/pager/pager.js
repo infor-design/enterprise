@@ -120,6 +120,7 @@ const PAGER_DEFAULTS = {
 function Pager(element, settings) {
   this.settings = utils.mergeSettings(element, settings, PAGER_DEFAULTS);
   this.settings.dataset = settings.dataset; // by pass deep copy
+  this.settings.pagesizes = settings.pagesizes.length > 0 ? settings.pagesizes : this.settings.pagesizes;
   this.element = $(element);
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
