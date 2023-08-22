@@ -89,6 +89,12 @@
 
 .tab-panel-container {
   padding-top: 9px;
+
+  .tab-panel {
+    .header .toolbar .title [class^='btn'] + h1 {
+      margin-top: 7px;
+    }
+  }
 }
 
 .multitabs-section {
