@@ -281,6 +281,13 @@
 .tab-panel-container {
   .tab-panel {
     overflow-y: auto;
+    margin-top: -5px;
+  }
+}
+
+html.is-mac .tab-panel-container {
+  .tab-panel {
+    overflow-y: auto;
     margin-top: -10px;
   }
 }
