@@ -2697,7 +2697,7 @@ $datagrid-small-row-height: 25px;
     &:focus,
     &.is-focused {
       box-shadow: $datagrid-cell-focus-box-shadow;
-      outline: 1px solid $ids-color-brand-primary-base;
+      outline: 1px solid $datagrid-cell-focus-border-color;
       outline-offset: -1px;
       transform: scale(1);
     }
@@ -3410,7 +3410,7 @@ $datagrid-small-row-height: 25px;
   .datagrid {
     .datagrid-header th {
       background-color: $datagrid-nested-header-bg-color;
-      border-right: 1px solid $datagrid-nested-header-border-color;
+      border-left: 1px solid $datagrid-nested-header-border-color;
       z-index: 1;
     }
   }
@@ -3459,6 +3459,7 @@ $datagrid-small-row-height: 25px;
     background-clip: padding-box;
     background-color: $datagrid-header-bg-color;
     border-left: 1px solid $datagrid-header-border-color;
+    border-bottom: 1px solid $datagrid-border-color;
     height: $datagrid-header-height - 4;
     overflow: hidden;
     position: sticky;
@@ -3601,7 +3602,7 @@ $datagrid-small-row-height: 25px;
 
   .datagrid-header-groups {
     th {
-      background-color: $datagrid-header-active-color;
+      background-color: $datagrid-header-bg-color;
 
       &.l-left-text {
         .datagrid-column-wrapper {
@@ -3692,7 +3693,7 @@ $datagrid-small-row-height: 25px;
 
     input {
       background-color: transparent;
-      border-color: $datagrid-filter-border-color !important;
+      border-color: $datagrid-filter-border-color;
       color: $datagrid-filter-color;
       height: 24px;
       left: 9px;
@@ -3781,6 +3782,10 @@ $datagrid-small-row-height: 25px;
         height: 16px;
         vertical-align: top;
         width: 16px;
+
+        + .icon { // Dup icon?
+          display: none;
+        }
       }
 
       div.dropdown:not(.is-disabled) {
@@ -3974,6 +3979,9 @@ $datagrid-small-row-height: 25px;
 
       &:focus:not(.hide-focus) {
         border: 1px solid $datagrid-filter-focus-color;
+        box-shadow: 0 0 0 2px transparent,
+          0 0 0 0 $datagrid-filter-focus-color,
+          0 0 4px 3px rgba(54, 138, 192, 0.1);
 
         .icon {
           color: $datagrid-filter-focus-color !important;
@@ -5582,13 +5590,13 @@ html[dir='rtl'] {
     }
 
     &::before {
-      border-top: 5px solid $datagrid-header-hover-color;
+      border-top: 5px solid $datagrid-header-drag-arrow-color;
       top: -9px;
     }
 
     &::after {
-      border-bottom: 5px solid $datagrid-header-hover-color;
-      bottom: -9px;
+      border-bottom: 5px solid $datagrid-header-drag-arrow-color;
+      bottom: -10px;
     }
   }
 
@@ -5617,7 +5625,7 @@ html[dir='rtl'] {
         z-index: 1;
 
         .icon {
-          color: $datagrid-sort-icon-color;
+          color: $datagrid-sort-icon-sorted-color;
           height: 20px;
           left: -2px;
           top: 7px;

@@ -147,8 +147,7 @@ describe('Datagrid Settings', () => {
       fallbackTooltip: {
         content: 'Image could not load',
         delay: 200
-      },
-      headerBackgroundColor: 'dark'
+      }
     };
     datagridObj = new Datagrid(datagridEl, { dataset: data, columns });
   });
