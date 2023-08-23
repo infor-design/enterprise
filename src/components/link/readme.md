@@ -21,10 +21,10 @@ The link components provides a clickable, touchable link for accessing content f
 
 ```html
 <div class="link" tabindex="0">
-    <div class="status">
-        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-            <use href="#icon-stacked"></use>
-        </svg>
+    <div class="icon-status emerald01" role="presentation">
+      <svg class="icon emerald05-color" focusable="false" aria-hidden="true">
+        <use href="#icon-success"></use>
+      </svg>
     </div>
     <div class="text">
         <div class="title">
@@ -46,10 +46,10 @@ To create a link that spans the whole widget (2 or 3 up) add the `dual` class to
 
 ```html
 <div class="link dual" tabindex="0">
-    <div class="status">
-    <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-        <use href="#icon-new"></use>
-    </svg>
+    <div class="icon-status emerald01" role="presentation">
+      <svg class="icon emerald05-color" focusable="false" aria-hidden="true">
+        <use href="#icon-success"></use>
+      </svg>
     </div>
     <div class="text">
     <div class="title">
@@ -112,10 +112,10 @@ You can add custom id to the root of the component.
 
 ```html
 <div class="link" tabindex="0" id="my-link>
-    <div class="status">
-        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-            <use href="#icon-stacked"></use>
-        </svg>
+    <div class="icon-status emerald01" role="presentation">
+      <svg class="icon emerald05-color" focusable="false" aria-hidden="true">
+        <use href="#icon-success"></use>
+      </svg>
     </div>
     <div class="text">
         <div class="title">

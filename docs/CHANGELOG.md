@@ -4,6 +4,7 @@
 
 ## v4.87.0 Features
 
+- `[Icons]` Fixed shape and markup of status icons. Note: May need to update your code. ([#7747](https://github.com/infor-design/enterprise/issues/7661))
 - `[Typography]` Added `text-wrap` class. ([#7497](https://github.com/infor-design/enterprise/issues/7497))
 
 ## v4.87.0 Fixes
@@ -12,6 +13,8 @@
 - `[Color]` Fix on Slate's personalization header text color. ([#7811](https://github.com/infor-design/enterprise-ng/issues/7811))
 - `[Calendar]` Fixed uncaught error in `cordova` apps. ([#7818](https://github.com/infor-design/enterprise/issues/7818))
 - `[Circlepager]` Fixed circle pager's position inside of a card. ([#7724](https://github.com/infor-design/enterprise/issues/7724))
+- `[Color]` Fixed on Slate's personalization header text color. ([#7811](https://github.com/infor-design/enterprise-ng/issues/7811))
+- `[Calendar]` Fixed uncaught error in cordova apps. ([#7818](https://github.com/infor-design/enterprise/issues/7818))
 - `[ColorPicker]` Fixed color selection on color picker. ([#7760](https://github.com/infor-design/enterprise-ng/issues/7760))
 - `[Column-Stacked]` Corrected the misalignment of legend labels. ([#7722](https://github.com/infor-design/enterprise/issues/7722))
 - `[Dropdown]` Adjusted dropdown text in Firefox. ([#7763](https://github.com/infor-design/enterprise/issues/7763))
@@ -21,6 +24,7 @@
 - `[Datepicker]` Added a new `listcontextmenu` event that fires on right click of menu items. ([#7822](https://github.com/infor-design/enterprise/issues/7822))
 - `[Editor]` Added swatch bar on colorpicker button. ([#7571](https://github.com/infor-design/enterprise/issues/7571))
 - `[Editor]` Fixed fonts selection selection on editor. ([#7762](https://github.com/infor-design/enterprise-ng/issues/7762))
+- `[Editor]` Changed the header color from dark to grey and other minor style improvements. ([#7606](https://github.com/infor-design/enterprise-ng/issues/7606))
 - `[FieldFilter]` Fixed Dropdown border not rendered properly. ([#7600](https://github.com/infor-design/enterprise/issues/7600))
 - `[FileuploadAdvanced]` Fixed Close Button not rendered properly. ([#7604](https://github.com/infor-design/enterprise/issues/7604))
 - `[FileuploadAdvanced]` Changed file upload copy. ([#7787](https://github.com/infor-design/enterprise/issues/7787))
@@ -40,9 +44,10 @@
 - `[ModuleNav]` Added option/example to disable search in the dropdown menu ([NG#1535](https://github.com/infor-design/enterprise-ng/issues/1535))
 - `[ModuleNav]` Added option/example to disable search in the dropdown menu ([#1535](https://github.com/infor-design/enterprise-ng/issues/1535))
 - `[Number]` Added additional check for `formatNumber`. ([#7752](https://github.com/infor-design/enterprise/issues/7752))
+- `[Popover]` Fixed popover having issues on simulatenous clicks. ([#7679](https://github.com/infor-design/enterprise/issues/7679))
 - `[Sparkline]` Fixed median fill on dark theme. ([#7717](https://github.com/infor-design/enterprise/issues/7717))
 - `[Searchfield]` Adjusted height for go button. ([#6695](https://github.com/infor-design/enterprise/issues/6695))
-- `[Tooltip]` Fix in `extraClass` example page for tooltip. ([#7669](https://github.com/infor-design/enterprise/issues/7669))
+- `[Tooltip]` Fixed in `extraClass` example page for tooltip. ([#7669](https://github.com/infor-design/enterprise/issues/7669))
 - `[WeekView]` Fixed bug where going to next didn't render the complete week. ([#7684](https://github.com/infor-design/enterprise/issues/7684))
 
 ## v4.86.0
