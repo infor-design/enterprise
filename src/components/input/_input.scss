@@ -232,7 +232,7 @@ textarea[rows] {
 // Element with input "like" style borders
 .input-style {
   background-color: $input-color-initial-background;
-  border: 1px solid $input-color-initial-border;
+  border: 1px solid $input-border-color;
   border-collapse: separate;
 
   &:hover,
