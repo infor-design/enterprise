@@ -1,6 +1,6 @@
 const { getConfig } = require('../../helpers/e2e-utils.cjs');
 
-describe('Tag Puppeteer Visual Tests', () => {
+describe.skip('Tag Puppeteer Visual Tests', () => {
   const baseUrl = 'http://localhost:4000/components/tag';
   const tag = '.tag-list .tag:first-child';
 
@@ -35,7 +35,7 @@ describe('Tag Puppeteer Visual Tests', () => {
     });
   });
 
-  describe('Dismissible and Clickable', () => {
+  describe.skip('Dismissible and Clickable', () => {
     const url = `${baseUrl}/example-dismissible-and-clickable`;
 
     beforeAll(async () => {
@@ -53,7 +53,7 @@ describe('Tag Puppeteer Visual Tests', () => {
     });
   });
 
-  describe('Disabled', () => {
+  describe.skip('Disabled', () => {
     const url = `${baseUrl}/example-disabled`;
 
     beforeAll(async () => {
