@@ -3,6 +3,10 @@
 
 .tag,
 .badge {
+  display: inline-flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
   font-size: 14px;
 
   span {
@@ -20,13 +24,11 @@
 }
 
 .badge {
-  height: 22px;
-  line-height: 21px;
+  height: 24px;
 }
 
 .theme-new-contrast .badge {
-  height: 22px;
-  line-height: 20px;
+  height: 24px;
 }
 
 // Firefox behaves odd

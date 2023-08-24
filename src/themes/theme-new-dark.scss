@@ -25,11 +25,12 @@ $header-hero-text-color: $ids-color-palette-white;
 $header-label-text-color: $ids-color-palette-white;
 $homepage-button-color: $ids-color-palette-white;
 $header-hero-widget-bg-color: $ids-color-palette-white;
-
 $header-default-bg-color: $ids-color-palette-slate-90;
 $header-default-bg-hover-color: $ids-color-palette-slate-80;
 
+// Inputs
 $input-color-focus-border: $ids-color-palette-slate-10;
+$input-border-color: $ids-color-palette-slate-30;
 
 $homepage-header-menu-button-color: $ids-color-palette-white;
 
@@ -143,7 +144,7 @@ $circlepager-disable-focus-border-color: $ids-color-palette-slate-50;
 
 // Popovers
 $popover-bg-color: $ids-color-palette-slate-80;
-$popover-border-color: $ids-color-palette-slate-60;
+$popover-border-color: $ids-color-palette-slate-50;
 $popover-box-shadow: 0 2px 5px $drop-shadow-depth;
 $popover-arrow-border-color: $ids-color-palette-slate-50;
 $popover-color: $font-color;
@@ -163,7 +164,7 @@ $progress-bar-bg-color: $ids-color-brand-primary-base;
 // Tooltips
 $tooltip-bg-color: $ids-color-palette-white;
 $tooltip-border-color: $ids-color-palette-white;
-$tooltip-box-shadow: 0 2px 5px $drop-shadow-depth;
+$tooltip-box-shadow: 0 2px 5px rgba(59, 59, 63, 0.4);
 $tooltip-color: $ids-color-palette-slate-100;
 $tooltip-error-bg-color: $ids-color-status-danger;
 $tooltip-error-color: $ids-color-palette-white;
@@ -229,12 +230,12 @@ $card-actions-toolbar-button-hover-color: $ids-color-palette-slate-10;
 $card-border-color-hover: $ids-color-palette-slate-70;
 
 // Popup Menu
-$popupmenu-color: $ids-color-palette-white;
+$popupmenu-color: $ids-color-palette-slate-10;
 $popupmenu-icon-color: $ids-color-palette-slate-10;
 $popupmenu-heading-color: $ids-color-palette-slate-40;
-$popupmenu-bg-color: $ids-color-palette-slate-70;
-$popupmenu-border-color: $ids-color-palette-slate-50;
-$popupmenu-box-shadow: 0 2px 5px $drop-shadow-depth;
+$popupmenu-bg-color: $ids-color-palette-slate-90;
+$popupmenu-border-color: $ids-color-palette-slate-60;
+$popupmenu-box-shadow: 0 2px 5px rgba(59, 59, 63, 1);
 $popupmenu-checked-color: $ids-color-palette-white;
 $popupmenu-hover-color: $ids-color-palette-slate-80;
 $popupmenu-checked-color-inverse: $ids-color-brand-primary-base;
@@ -247,7 +248,7 @@ $secondary-border-btn-hover-border-color: $ids-color-palette-white;
 $secondary-border-btn-ripple-color: $ids-color-palette-white;
 
 // Input Fields
-$input-color: $input-color-initial-font;
+$input-color: $ids-color-palette-slate-10;
 $input-disabled-color: $input-color-disabled-font;
 $input-focus-border-color: $ids-color-brand-primary-base;
 $input-placeholder-color: $ids-color-palette-slate-30;
@@ -466,23 +467,26 @@ $switch-hover-box-shadow: 0 2px 5px $drop-shadow-depth;
 // Editor
 $editor-bg-color: transparent;
 $editor-border-color: $input-color-initial-border;
-$editor-hover-border-color: $ids-color-palette-white;
-$editor-focus-border-color: $ids-color-brand-primary-base;
+$editor-hover-border-color: $ids-color-palette-slate-10;
+$editor-focus-border-color: $ids-color-palette-slate-10;
 $editor-line-number-color: $ids-color-palette-slate-40;
 $editor-color: $input-color;
-$editor-toolbar-bg-color: $ids-color-palette-slate-20;
-$editor-toolbar-bottom-border-color: $ids-color-palette-slate-80;
-$editor-btn-color: $ids-color-palette-slate-70;
-$editor-btn-hover-color: $ids-color-palette-slate-100;
-$editor-btn-active-color: $ids-color-brand-primary-lighter;
+$editor-toolbar-bg-color: $ids-color-palette-slate-70;
+$editor-toolbar-bottom-border-color: $ids-color-palette-slate-50;
+$editor-btn-color: $ids-color-palette-slate-10;
+$editor-btn-hover-color: $ids-color-palette-slate-60;
+$editor-btn-active-color: $ids-color-palette-azure-40;
 $editor-btn-disabled-color: $ids-color-palette-slate-30;
+$editor-btn-hover-color: $ids-color-palette-slate-10;
+$button-editor-color-tertiary-hover-font-new: $ids-color-palette-slate-10;
 $editor-readonly-color: $input-readonly-color;
-$editor-btn-active-box-shadow: 0 0 0 2px transparent, 0 0 0 1px $ids-color-brand-primary-base, $focus-box-shadow;
-$editor-top-focus-box-shadow: -2px -2px 3px 0 rgba(141, 201, 230, 0.3);
+$editor-btn-active-box-shadow: 0 0 0 2px transparent, 0 0 0 1px $ids-color-palette-slate-10, $focus-box-shadow;
+$editor-top-focus-box-shadow: -2px -2px 3px 0 rgba(250, 250, 250, 0.3);
 $editor-blockquote-color: $ids-color-palette-slate-40;
+$button-editor-color-hover-background-new: $ids-color-palette-slate-60;
 
 // Formatter Toolbar
-$formatter-toolbar-separator-color: $ids-color-palette-slate-80;
+$formatter-toolbar-separator-color: $ids-color-palette-slate-30;
 
 // Radio Buttons
 $radio-border-hover-color: $radio-color-unchecked-hover-border;

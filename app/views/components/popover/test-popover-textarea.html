@@ -1,0 +1,46 @@
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <div class="field">
+      <button id="popover-trigger" class="btn-secondary" type="button">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use href="#icon-upload"></use>
+        </svg>
+        <span>Click To Show Popover</span>
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<div id="popover-contents" class="popover-content-area hidden" data-automation-id="popover-contents-automation-id">
+  <div class="field">
+    <label for="description-max">Notes (maxlength)</label>
+    <textarea id="description-max" class="textarea" maxlength="90" name="description-max">Line One</textarea>
+  </div>
+</div>
+
+<script>
+  var POPOVER_OPTIONS = {
+    attributes: [{
+      name: 'data-automation-id',
+      value: 'my-popover-automation-id'
+    },
+    {
+      name: 'id',
+      value: 'my-popover-id'
+    }],
+    closebutton: true,
+    content: $('#popover-contents'),
+    extraClass: 'alternate',
+    placement: 'right',
+    popover: true,
+    offset: {
+      y: 10
+    },
+    title: 'ABC Engine Company',
+    trigger: 'click'
+  };
+
+  $('#popover-trigger').popover(POPOVER_OPTIONS);
+</script>
