@@ -86,20 +86,22 @@
       title: 'Datagrid',
       trigger: 'click',
       onHidden: () => {
-        grid.destroy();
-        delete grid;
+        if (grid) {
+          grid.destroy();
+        }
       }
     };
 
     $('#popover-trigger').popover(POPOVER_OPTIONS);
-    $('#popover-trigger-2').popover(POPOVER_OPTIONS_2).on('show', () => {
-      grid = $('#datagrid').datagrid({
-        columns: columns,
-        idProperty:'officeId',
-        dataset: data,
-        rowTemplate: rowTemplate,
-        attributes: [{ name: 'id', value: 'custom-id' }, { name: 'data-automation-id', value: 'custom-automation-id' } ]
-      }).data('datagrid');
+    $('#popover-trigger-2').popover(POPOVER_OPTIONS_2).on('beforeshow', () => {
+      grid = $('#datagrid').data('datagrid');
+      if (!grid) {
+        grid = $('#datagrid').datagrid({
+          columns: columns,
+          dataset: data,
+          rowTemplate: rowTemplate
+        }).data('datagrid');
+      }
     })
   });
 
