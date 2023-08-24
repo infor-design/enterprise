@@ -1,8 +1,10 @@
 # What's New with Enterprise
 
+
 ## v4.84.7 Fixes
 
 - `[ModuleNav]` Added css to constrain images to 32px. ([#7820](https://github.com/infor-design/enterprise-ng/issues/7820))
+- `[ModuleNav]` Added ability to right click the grid and add data for open in a new window. ([#7847](https://github.com/infor-design/enterprise-ng/issues/7847))
 
 ## v4.84.6 Fixes
 

@@ -2193,6 +2193,17 @@ Dropdown.prototype = {
         self.highlightOption($(this), true);
       });
 
+    /**
+    * Fires after anything on the list is right clicked
+    * @event listcontextmenu
+    * @memberof Dropdown
+    * @property {object} event The jquery event object
+    * @property {object} data The jquery event object from the calling event
+    */
+    self.list.on('contextmenu.dropdown', (e) => {
+      self.element.trigger('listcontextmenu', e);
+    });
+
     if (this.hasTooltips) {
       function clearTimer() { //eslint-disable-line
         if (self.timer && self.timer.destroy) {
@@ -2613,6 +2624,8 @@ Dropdown.prototype = {
     if (!this.inputTimer()) {
       return;
     }
+
+    this.list.off('contextmenu.dropdown');
 
     if (this.touchmove) {
       this.touchmove = false;
