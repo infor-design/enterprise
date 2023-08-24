@@ -31,7 +31,7 @@
 
         .icon {
           height: 18px;
-          margin-top: -1px;
+          margin-top: -3px;
         }
 
         svg.icon.close {
@@ -92,7 +92,7 @@
 
   .tab-panel {
     .header .toolbar .title [class^='btn'] + h1 {
-      margin-top: 7px;
+      margin-top: 4px;
     }
   }
 }
@@ -100,5 +100,5 @@
 .multitabs-section {
   .tab-panel-container {
     padding-top: unset;
-  } 
+  }
 }

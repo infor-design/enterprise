@@ -349,6 +349,7 @@ Personalize.prototype = {
       colors.btnActionsHoverColor = themeColors.palette.slate[100].value;
       colors.moduleTabsSelectedTextColor = themeColors.palette.azure[60].value;
       colors.headerTabsSelectedTextColor = themeColors.palette.azure[60].value;
+      colors.headerTextColor = themeColors.palette.slate[100].value;
 
       colors.tabFocusBoxShadow = 'none';
       colors.tabTextWeight = '400';
@@ -368,7 +369,7 @@ Personalize.prototype = {
       colors.tabVerticalSelectedTextColor = themeColors.palette.azure[60].value;
       colors.tabVerticalColor = themeColors.palette.slate[10].value;
       colors.tabVerticalSelectedColor = themeColors.palette.white.value;
-      
+
       colors.tabCloseInactiveColor = 'rgb(111, 111, 118)';
       colors.tabCloseHoverColor = colors.contrast;
 
