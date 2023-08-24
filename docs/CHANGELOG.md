@@ -5,6 +5,7 @@
 ## v4.87.0 Features
 
 - `[Icons]` Fixed shape and markup of status icons. Note: May need to update your code. ([#7747](https://github.com/infor-design/enterprise/issues/7661))
+- `[Masthead]` Set height of masthead to 40px. ([#7747](https://github.com/infor-design/enterprise/issues/7857))
 - `[Typography]` Added `text-wrap` class. ([#7497](https://github.com/infor-design/enterprise/issues/7497))
 
 ## v4.87.0 Fixes
