@@ -457,5 +457,12 @@
 
     // Customizations to the component after init
     navAPI.updated({ displayMode: 'collapsed' });
+
+    $('.module-nav-switcher').on('listcontextmenu', function (e, delegate) {
+      console.log('Context Menu Event Fired')
+      const url = $(delegate.target).text().replace(/^\s+|\s+$/g, '').replace(' ', '').toLocaleLowerCase();
+      $(delegate.target)
+        .attr('href', `https://example.com/${url}`);
+    });
   });
 </script>

@@ -47,7 +47,7 @@ $panel-bg-color: $ids-color-palette-white;
 $panel-border-color: $ids-color-palette-slate-40;
 $drop-shadow-depth: rgba($ids-color-palette-black, 0.2);
 $focus-box-shadow-color: rgba(41, 41, 41, 0.3);
-$focus-box-shadow: 0 0 4px 2px $focus-box-shadow-color;
+$focus-box-shadow: 0 0 3px 1px $focus-box-shadow-color;
 
 $focus-box-shadow-spinbox: 0 -3px 3px 0 $focus-box-shadow-color,
   0 3px 3px 0 $focus-box-shadow-color;
@@ -304,7 +304,7 @@ $toolbar-btn-actions-hover-bg-color: $button-color-tertiary-hover-background-new
 $fieldfilter-border-side-color: $input-color-initial-border;
 
 // Formatter Toolbar
-$formatter-toolbar-separator-color: $ids-color-palette-slate-60;
+$formatter-toolbar-separator-color: $ids-color-palette-slate-30;
 
 //Contextual Toolbar
 $contextual-toolbar-bg-color: $ids-color-palette-azure-60;
@@ -433,22 +433,24 @@ $switch-focus-box-shadow: 0 0 0 3px #3f505f, 0 0 0 4px $ids-color-brand-primary-
 $switch-hover-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 
 // Editor
-$editor-bg-color: $input-color-initial-background;
+$editor-bg-color: $ids-color-palette-white;
 $editor-border-color: $input-color-initial-border;
 $editor-hover-border-color: $input-color-hover-border;
 $editor-focus-border-color: $input-color-focus-border;
-$editor-line-number-color: $ids-color-palette-slate-50;
+$editor-line-number-color: $ids-color-brand-secondary-alt;
 $editor-color: $input-color;
-$editor-toolbar-bg-color: $ids-color-palette-slate-90;
+$editor-toolbar-bg-color: $ids-color-palette-slate-10;
 $editor-toolbar-bottom-border-color: $ids-color-palette-slate-30;
-$editor-btn-color: $ids-color-palette-slate-20;
-$editor-btn-hover-color: $ids-color-palette-white;
-$editor-btn-active-color: $ids-color-palette-azure-40;
-$editor-btn-disabled-color: $ids-color-palette-slate-40;
+$editor-btn-color: $ids-color-palette-slate-100;
+$editor-btn-hover-color: $ids-color-palette-slate-100;
+$button-editor-color-tertiary-hover-font-new: $ids-color-palette-slate-100;
+$editor-btn-active-color: $ids-color-palette-azure-90;
+$editor-btn-disabled-color: $ids-color-palette-slate-60;
 $editor-readonly-color: $input-readonly-color;
-$editor-btn-active-box-shadow: 0 0 0 2px transparent, 0 0 0 1px $ids-color-brand-primary-base, $focus-box-shadow;
-$editor-top-focus-box-shadow: -2px -2px 3px 0 rgba(41, 41, 41, 0.3);
-$editor-blockquote-color: $ids-color-palette-slate-70;
+$editor-btn-active-box-shadow: 0 0 0 2px transparent, 0 0 0 1px $ids-color-palette-azure-60, $focus-box-shadow;
+$editor-top-focus-box-shadow: -1px -1px 3px 0 rgba(54, 138, 192, 0.3);
+$editor-blockquote-color: $ids-color-palette-slate-50;
+$button-editor-color-hover-background-new: $ids-color-palette-slate-20;
 
 // Radio Buttons
 $radio-border-hover-color: $radio-color-unchecked-hover-border;
@@ -778,6 +780,7 @@ $searchfield-header-border-color: $ids-color-palette-slate-90;
 $searchfield-header-text-color: $ids-color-palette-white;
 $searchfield-header-placeholder-text-color: rgba(255, 255, 255, 0.7);
 $searchfield-header-icon-color: $ids-color-palette-slate-60;
+$searchfield-toolbar-focus-color: $ids-color-palette-azure-90;
 
 //Image Border Color
 $image-border-color: $ids-color-palette-slate-30;
