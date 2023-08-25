@@ -311,7 +311,7 @@ Personalize.prototype = {
     const isNewDark = this.currentTheme.indexOf('new-dark') >= 0;
     const isClassicDark = this.currentTheme.indexOf('classic-dark') >= 0;
     const isNewContrast = this.currentTheme.indexOf('new-contrast') >= 0;
-    colors.btnTertiaryBgHoverColor = isAlabaster ? '#E6F1FD' : colors.darker;
+    colors.btnTertiaryBgHoverColor = isAlabaster ? '#E6F1FD' : 'rgba(0, 0, 0, 0.3)';
 
     if (isNewDark || isClassicDark) {
       colors.tabVerticalColor = '#525257';
