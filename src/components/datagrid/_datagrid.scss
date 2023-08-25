@@ -3779,6 +3779,11 @@ $datagrid-small-row-height: 25px;
         height: 16px;
         vertical-align: top;
         width: 16px;
+
+        + .icon {
+          // Dup icon?
+          display: none;
+        }
       }
 
       div.dropdown:not(.is-disabled) {

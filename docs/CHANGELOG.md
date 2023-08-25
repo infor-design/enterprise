@@ -1,5 +1,8 @@
 # What's New with Enterprise
 
+## v4.84.8 Fixes
+
+- `[Datagrid]` Fixed mislaigned icon on filter dropdowns. ([#7860](https://github.com/infor-design/enterprise/issues/7860))
 
 ## v4.84.7 Fixes
 
