@@ -122,6 +122,7 @@ FileUpload.prototype = {
       if (hasInlineLabel) {
         this.fileInput.data(`handleEvent +${[(e.type || '')]}`, e.handleObj);
       }
+      self.textInput.trigger('change');
     });
 
     if (this.fileInput.is(':disabled')) {

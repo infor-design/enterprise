@@ -26,6 +26,7 @@
 - `[Editor]` Fixed fonts selection selection on editor. ([#7762](https://github.com/infor-design/enterprise-ng/issues/7762))
 - `[Editor]` Changed the header color from dark to grey and other minor style improvements. ([#7606](https://github.com/infor-design/enterprise-ng/issues/7606))
 - `[FieldFilter]` Fixed Dropdown border not rendered properly. ([#7600](https://github.com/infor-design/enterprise/issues/7600))
+- `[Fileupload]` Fixed a bug where validation is not triggered after clearing the input. ([#7645](https://github.com/infor-design/enterprise/issues/7645))
 - `[FileuploadAdvanced]` Fixed Close Button not rendered properly. ([#7604](https://github.com/infor-design/enterprise/issues/7604))
 - `[FileuploadAdvanced]` Changed file upload copy. ([#7787](https://github.com/infor-design/enterprise/issues/7787))
 - `[Homepage]` Changed selector so multiple hero banners in a page will work. ([#7819](https://github.com/infor-design/enterprise/issues/7819))
