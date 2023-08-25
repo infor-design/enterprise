@@ -23,8 +23,8 @@
 
 <div id="popover-contents" class="popover-content-area hidden" data-automation-id="popover-contents-automation-id">
   <div class="field">
-    <label for="context-desc" class="required">Page Title</label>
-    <textarea id="context-desc" aria-required="true" data-validate="required" name="context-desc" maxlength="90"></textarea>
+    <label for="text-area" class="required">Page Title</label>
+    <textarea id="text-area" aria-required="true" data-validate="required" name="text-area" maxlength="90"></textarea>
   </div>
 </div>
 
@@ -76,7 +76,23 @@
         y: 10
       },
       title: 'Text Area',
-      trigger: 'click'
+      trigger: 'click',
+      beforeShow: (response) => {
+        const textArea = $('#text-area').data('textarea');
+        if (!textArea) {
+          $('#text-area').textarea();
+        } else {
+          textArea.updated();
+        }
+        response(true);
+      },
+      onHidden: () => {
+        const textArea = $('#text-area').data('textarea');
+
+        if (textArea) {
+          textArea.destroy();
+        }
+      }
     };
 
     const POPOVER_OPTIONS_2 = {
