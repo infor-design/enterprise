@@ -2,6 +2,7 @@
 .tab-container.vertical {
   background-color: $vertical-tab-background-color;
   border-right: 1px solid $vertical-tab-border-color;
+
   > .tab-list-container {
     > .tab-list {
       > .tab {
