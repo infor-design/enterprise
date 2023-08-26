@@ -310,7 +310,8 @@ Personalize.prototype = {
     colors.tabVerticalSelectedColor = themeColors.palette.white.value;
     colors.tabDivider = colors.darkest;
 
-    colors.tabFocusIndicator = themeColors.palette.slate[100].value;
+    colors.tabFocusIndicator = colors.contrast;
+    colors.tabFocusIndicatorVert = colors.base;
     colors.tabFocusBoxShadow = 'none';
 
     colors.tabCloseInactiveColor = 'rgba(255, 255, 255, 0.85)';
@@ -358,6 +359,7 @@ Personalize.prototype = {
       colors.verticalTabBorder = themeColors.palette.slate[30].value;
       colors.tabDivider = themeColors.palette.slate[30].value;
       colors.tabFocusIndicator = themeColors.palette.slate[100].value;
+      colors.tabFocusIndicatorVert = themeColors.palette.slate[100].value;
       colors.tabHoverColor = themeColors.palette.slate[20].value;
       colors.tabVerticalHoverColor = themeColors.palette.slate[20].value;
       colors.tabSelectedColor = themeColors.palette.white.value;

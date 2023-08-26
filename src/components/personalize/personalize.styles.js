@@ -242,11 +242,6 @@ a.is-personalizable svg.ripple-effect {
   border-bottom: 1px solid ${colors.tabBorderColor};
 }
 
-.tab-container.module-tabs .tab-focus-indicator.is-visible {
-  border-color: ${colors.tabFocusIndicator} !important;
-  box-shadow: ${colors.tabFocusBoxShadow} !important;
-}
-
 .tab-container.is-personalizable.header-tabs:not(.alternate) .tab-focus-indicator.is-visible,
 .tab-container.personalize-header.header-tabs:not(.alternate) .tab-focus-indicator.is-visible,
 .tab-container.is-personalizable.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled).is-selected,
@@ -331,9 +326,18 @@ a.is-personalizable svg.ripple-effect {
   color: ${colors.tabVerticalSelectedTextColor} !important;
 }
 
-.tab-container.vertical.is-personalizable > .tab-list-container > .tab-focus-indicator.is-selected.is-visible,
-.tab-container.vertical.is-personalizable .tab-focus-indicator.is-visible {
+.tab-container.module-tabs.is-personalizable .tab-focus-indicator.is-visible:is(.is-selected), 
+.tab-container.vertical.is-personalizable .tab-focus-indicator.is-visible:is(.is-selected) {
+  border-color: transparent !important;
+}
+
+.tab-container.module-tabs.is-personalizable .tab-focus-indicator.is-visible:not(.is-selected) {
   border-color: ${colors.tabFocusIndicator} !important;
+  box-shadow: ${colors.tabFocusBoxShadow} !important;
+}
+
+.tab-container.vertical.is-personalizable .tab-focus-indicator.is-visible:not(.is-selected) {
+  border-color: ${colors.tabFocusIndicatorVert} !important;
   box-shadow: ${colors.tabFocusBoxShadow} !important;
 }
 
