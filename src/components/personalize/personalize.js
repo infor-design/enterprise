@@ -292,6 +292,7 @@ Personalize.prototype = {
     colors.headerTabsSelectedTextColor = colors.contrast;
     colors.headerTabsTextColor = colors.contrast;
     colors.headerTextColor = colors.contrast;
+    colors.headerIconColor = colors.contrast;
     colors.tabHoverColor = colors.darkest;
     colors.tabVerticalHoverColor = themeColors.palette.slate[20].value;
     colors.tabHoverTextColor = themeColors.palette.slate[100].value;
@@ -313,6 +314,7 @@ Personalize.prototype = {
     colors.tabFocusIndicator = colors.contrast;
     colors.tabFocusIndicatorVert = colors.base;
     colors.tabFocusBoxShadow = 'none';
+    colors.tabFocusBoxShadowVert = 'none';
 
     colors.tabCloseInactiveColor = 'rgba(255, 255, 255, 0.85)';
     colors.tabCloseHoverColor = themeColors.palette.white.value;
@@ -324,7 +326,10 @@ Personalize.prototype = {
     colors.btnTertiaryBgHoverColor = isAlabaster ? '#E6F1FD' : colors.darker;
 
     if (isNewDark || isClassicDark) {
-      colors.tabVerticalColor = themeColors.palette.slate[70].value;
+      colors.tabVerticalColor = themeColors.palette.slate[90].value;
+      colors.tabVerticalSelectedColor = themeColors.palette.slate[100].value;
+      colors.tabVerticalHoverColor = themeColors.palette.slate[70].value;
+      colors.tabHoverTextColor = themeColors.palette.white.value;
     }
 
     // Alabaster is different so readjust the colors
@@ -351,15 +356,18 @@ Personalize.prototype = {
       colors.moduleTabsSelectedTextColor = themeColors.palette.azure[60].value;
       colors.headerTabsSelectedTextColor = themeColors.palette.azure[60].value;
       colors.headerTextColor = themeColors.palette.slate[100].value;
+      colors.headerIconColor = themeColors.palette.slate[80].value;
 
-      colors.tabFocusBoxShadow = 'none';
+      colors.tabFocusIndicator = themeColors.palette.azure[60].value;
+      colors.tabFocusIndicatorVert = themeColors.palette.azure[60].value;
+      colors.tabFocusBoxShadow = '0 0 4px 3px rgba(54, 138, 192, 0.2)';
+      colors.tabFocusBoxShadowVert = '0 0 4px 3px rgba(54, 138, 192, 0.2)';
+      
       colors.tabTextWeight = '400';
       colors.tabTextSelectedWeight = '700';
       colors.headerTabBorder = themeColors.palette.slate[30].value;
       colors.verticalTabBorder = themeColors.palette.slate[30].value;
       colors.tabDivider = themeColors.palette.slate[30].value;
-      colors.tabFocusIndicator = themeColors.palette.slate[100].value;
-      colors.tabFocusIndicatorVert = themeColors.palette.slate[100].value;
       colors.tabHoverColor = themeColors.palette.slate[20].value;
       colors.tabVerticalHoverColor = themeColors.palette.slate[20].value;
       colors.tabSelectedColor = themeColors.palette.white.value;
@@ -417,6 +425,11 @@ Personalize.prototype = {
         colors.tabCloseHoverColor = themeColors.palette.white.value;
         colors.tabDivider = themeColors.palette.slate[100].value;
         colors.headerTabsSelectedTextColor = themeColors.palette.slate[10].value;
+
+        // colors.tabFocusIndicator = colors.contrast;
+        colors.tabFocusIndicatorVert = themeColors.palette.white.value;
+      // colors.tabFocusBoxShadow = 'none';
+        colors.tabFocusBoxShadowVert = 'none';
       }
 
       if (isClassicDark) {

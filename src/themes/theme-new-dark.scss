@@ -33,7 +33,9 @@ $panel-bg-color: $ids-color-palette-slate-100;
 $panel-border-color: $ids-color-palette-slate-70;
 $drop-shadow-depth: rgba($ids-color-boxshadow-base, 0.4);
 $focus-box-shadow-color: rgba($ids-color-palette-slate-10, 0.3);
+$focus-box-shadow-color-new: rgba(54, 138, 192, 0.2);
 $focus-box-shadow: 0 0 4px 2px $focus-box-shadow-color;
+$focus-box-shadow-new: 0 0 4px 2px $focus-box-shadow-color-new;
 
 $focus-box-shadow-spinbox: 0 -3px 3px 0 $focus-box-shadow-color,
   0 3px 3px 0 $focus-box-shadow-color;
@@ -646,6 +648,10 @@ $vertical-tab-bg-hover-color: $ids-color-palette-slate-60;
 $vertical-tab-panel-bg-color: $ids-color-palette-slate-80;
 $vertical-tab-sidebar-bg-color: $ids-color-palette-slate-70;
 $vertical-tab-sidebar-border-color: $ids-color-palette-slate-60;
+
+$vertical-tab-background-color: $ids-color-palette-slate-90;
+$vertical-tab-selected-background-color: $ids-color-palette-slate-100;
+$vertical-tab-hover-background-color: $ids-color-palette-slate-70;
 
 // Multi-tabs
 $mutlitabs-section-border-color: $ids-color-palette-slate-50;

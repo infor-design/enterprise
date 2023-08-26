@@ -249,9 +249,13 @@ a.is-personalizable svg.ripple-effect {
 .header.is-personalizable .tab-container.header-tabs:not(.alternate) .tab-focus-indicator.is-visible,
 .header.is-personalizable .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected,
 .personalize-header.tab-container.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected:not(.is-disabled),
-.personalize-header.tab-container.header-tabs:not(.alternate) .tab-focus-indicator.is-visible,
-.header.is-personalizable .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled).is-selected {
+.personalize-header.tab-container.header-tabs:not(.alternate) .tab-focus-indicator.is-visible {
   border-color: ${colors.headerTabsSelectedTextColor} !important;
+  box-shadow: ${colors.tabFocusBoxShadow} !important;
+}
+
+.header.is-personalizable .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab:not(.is-disabled).is-selected {
+  box-shadow: none !important;
 }
 
 .tab-container.is-personalizable.header-tabs:not(.alternate) > .tab-list-container .tab:hover:not(.is-disabled),
@@ -329,6 +333,7 @@ a.is-personalizable svg.ripple-effect {
 .tab-container.module-tabs.is-personalizable .tab-focus-indicator.is-visible:is(.is-selected), 
 .tab-container.vertical.is-personalizable .tab-focus-indicator.is-visible:is(.is-selected) {
   border-color: transparent !important;
+  box-shadow: none !important;
 }
 
 .tab-container.module-tabs.is-personalizable .tab-focus-indicator.is-visible:not(.is-selected) {
@@ -338,7 +343,7 @@ a.is-personalizable svg.ripple-effect {
 
 .tab-container.vertical.is-personalizable .tab-focus-indicator.is-visible:not(.is-selected) {
   border-color: ${colors.tabFocusIndicatorVert} !important;
-  box-shadow: ${colors.tabFocusBoxShadow} !important;
+  box-shadow: ${colors.tabFocusBoxShadowVert} !important;
 }
 
 .builder-header.is-personalizable {
@@ -385,7 +390,7 @@ a.is-personalizable svg.ripple-effect {
 .is-personalizable .personalize-subheader button:not(:disabled),
 .is-personalizable .personalize-subheader button:not(:disabled):not(.close):not(.notification-close) .icon,
 .is-personalizable .personalize-subheader button:not(:disabled) .app-header.icon > span  {
-  color: ${colors.contrast} !important;
+  color: ${colors.headerIconColor} !important;
 }
 
 html[class*="theme-new"] .header.is-personalizable button:not(.close):not(:disabled):hover .icon {

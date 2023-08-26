@@ -126,6 +126,11 @@
   }
 }
 
+.tab-focus-indicator.is-visible {
+  border-color: $tab-selected-color;
+  box-shadow: $focus-box-shadow-new;
+}
+
 // RTL Styles
 html[dir='rtl'] {
   .tab-container.horizontal,

@@ -102,3 +102,15 @@
     padding-top: unset;
   }
 }
+
+.tab-container.module-tabs .tab-focus-indicator.is-visible {
+  box-shadow: none;
+
+  &:not(.is-selected) {
+    border-color: $ids-color-palette-white;
+  }
+
+  &.is-selected {
+    border-color: transparent;
+  }
+}

@@ -109,7 +109,7 @@
 
     .tab-focus-indicator.is-visible {
       border-color: transparent;
-      box-shadow: unset;
+      box-shadow: $focus-box-shadow-new;
 
       &.is-selected {
         border-color: $header-tab-focus-border-color;
