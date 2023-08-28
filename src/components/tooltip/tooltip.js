@@ -682,6 +682,7 @@ Tooltip.prototype = {
     }
 
     if (this.settings.initializeContent) {
+      this.settings.initializeContent = false;
       content.initialize();
     }
   },

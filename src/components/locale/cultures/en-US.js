@@ -551,7 +551,7 @@ Soho.Locale.addCulture('en-US', {
     TextBtnRemove: { id: 'TextBtnRemove', value: 'Close this error', comment: 'text for remove button for advanced fileupload' },
     TextColor: { id: 'TextColor', value: 'Text color', comment: 'add or edit text color in the editor' },
     TextDropArea: { id: 'DropArea', value: 'Drag and drop files to upload', comment: 'Text for drop area for advanced fileupload' },
-    TextDropAreaWithBrowse: { id: 'TextDropAreaWithBrowse', value: 'Drag and drop or <span class="hyperlink">Select files</span> to upload' },
+    TextDropAreaWithBrowse: { id: 'TextDropAreaWithBrowse', value: 'Drag and drop here or <span class="hyperlink">upload files</span>' },
     Thai: { id: 'Thai', value: 'Thai', comment: 'Language name for Thai' },
     Theme: { id: 'Theme', value: 'Theme', comment: 'Refers to an application theme' },
     ThousandsAbbrev: { id: 'ThousandsAbbrev', value: '{0}k', comment: 'Refers to a value in a chart in thousands. i.e. 1K, 100K' },
