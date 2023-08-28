@@ -325,7 +325,7 @@ a.is-personalizable svg.ripple-effect {
   color: ${colors.tabVerticalSelectedTextColor} !important;
 }
 
-.tab-container.module-tabs.is-personalizable .tab-focus-indicator.is-visible:is(.is-selected), 
+.tab-container.module-tabs.is-personalizable .tab-focus-indicator.is-visible:is(.is-selected),
 .tab-container.vertical.is-personalizable .tab-focus-indicator.is-visible:is(.is-selected) {
   border-color: transparent !important;
   box-shadow: none !important;
@@ -477,12 +477,12 @@ html.theme-classic-dark .header.is-personalizable .buttonset .searchfield-wrappe
 
 .header.is-personalizable .flex-toolbar .has-collapse-button .collapse-button {
   background-color: transparent;
-  border-color: ${colors.contrast};
+  border-color: ${colors.borderActiveSearchHeader};
 }
 
 .header.is-personalizable .flex-toolbar .has-collapse-button .collapse-button:focus:not(.hide-focus) {
   box-shadow: none !important;
-  border-color: ${colors.contrast};
+  border-color: ${colors.borderActiveSearchHeader};
 }
 
 html.theme-new-dark .header.is-personalizable.has-tabs .tab-container.header-tabs:not(.alternate) > .tab-list-container .tab.is-selected:not(.is-disabled) {
@@ -612,7 +612,11 @@ html.theme-classic-dark .is-personalizable .count-container .instance-count .cou
 }
 
 .header .toolbar-searchfield-wrapper.active.has-focus .searchfield {
-  border-color: ${colors.darkest};
+  border-color: ${colors.borderActiveSearchHeader};
+}
+
+.header .toolbar-searchfield-wrapper.active.has-focus {
+  box-shadow: ${colors.shadowActiveSearchHeader};
 }
 
 html[class*="-dark"] .header .toolbar-searchfield-wrapper.active.has-focus .searchfield {
@@ -745,11 +749,6 @@ html[dir='rtl'] .scrollable-flex-header.is-personalizable .breadcrumb.truncated:
 
 .module-tabs.is-personalizable .tab-more {
   border-left-color: ${colors.tabDivider} !important;
-}
-
-.module-tabs.is-personalizable .tab-more:hover {
-  background-color: ${colors.hover} !important;
-  color: ${colors.contrast};
 }
 
 .module-tabs.is-personalizable .tab-more.is-open {

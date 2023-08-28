@@ -1204,10 +1204,10 @@ Tabs.prototype = {
 
     if (this.isTabOverflowed(li)) {
       this.buildPopupMenu(a.attr('href'));
-      this.moreButton.addClass('is-focused');
+      if (focusedByKeyboard) this.moreButton.addClass('is-focused');
       this.positionFocusState(this.moreButton);
     } else {
-      li.addClass('is-focused');
+      if (focusedByKeyboard) li.addClass('is-focused');
       this.positionFocusState(a, focusedByKeyboard);
     }
 

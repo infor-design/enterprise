@@ -24,10 +24,6 @@
   }
 }
 
-.tab-container.vertical > .tab-list-container > .tab-focus-indicator.is-selected.is-visible {
-  box-shadow: unset;
-}
-
 .tab-container.vertical > .tab-list-container > .tab-list > .tab.is-selected:not(.is-disabled) {
   &:hover {
     background-color: $vertical-tab-hover-background-color;
@@ -40,15 +36,15 @@
       color: $vertical-tab-active-text-color-new;
       font-weight: 600;
     }
-  
+
     &:hover {
       background-color: $vertical-tab-selected-background-color;
-  
+
       a {
         color: $vertical-tab-active-text-color-new;
         font-weight: 600;
       }
     }
   }
-  
+
 }

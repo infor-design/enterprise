@@ -75,10 +75,15 @@ $toolbarsearchfield-category-empty-width: 51px;
       svg.icon:not(.close) {
         left: 8px;
       }
+
+      .collapse-button svg.icon:not(.close) {
+        left: 9px;
+        top: 12px !important;
+      }
     }
   }
 
-  
+
 
   &:not(.is-open):not(.non-collapsible) {
     .searchfield {

@@ -343,11 +343,6 @@
   > .tab-focus-indicator,
   > .tab-list-container > .tab-focus-indicator {
     border-radius: 0;
-
-    &.is-selected.is-visible {
-      border-color: transparent;
-      box-shadow: inset 0 0 0 1px $ids-color-palette-white;
-    }
   }
 }
 

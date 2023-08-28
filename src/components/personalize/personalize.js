@@ -324,6 +324,9 @@ Personalize.prototype = {
     const isClassicDark = this.currentTheme.indexOf('classic-dark') >= 0;
     const isNewContrast = this.currentTheme.indexOf('new-contrast') >= 0;
     colors.btnTertiaryBgHoverColor = isAlabaster ? '#E6F1FD' : 'rgba(0, 0, 0, 0.3)';
+    colors.borderActiveSearchHeader = colors.darkest;
+    colors.shadowActiveSearchHeader = 'none';
+    colors.borderActiveSearchMobile = colors.contrast;
 
     if (isNewDark || isClassicDark) {
       colors.tabVerticalColor = themeColors.palette.slate[90].value;
@@ -334,6 +337,7 @@ Personalize.prototype = {
 
     // Alabaster is different so readjust the colors
     if (isAlabaster) {
+      colors.tabHoverColor = themeColors.palette.slate[20].value;
       colors.text = themeColors.palette.azure[60].value;
       colors.darker = themeColors.palette.azure[10].value;
       colors.darkest = themeColors.palette.slate[100].value;
@@ -341,8 +345,11 @@ Personalize.prototype = {
       colors.btnHoverColor = themeColors.palette.azure[60].value;
       colors.btnBgHoverColor = themeColors.palette.azure[10].value;
       colors.btnOpacity = 1;
-      colors.focusBoxShadow = `0 0 0 2px transparent, 0 0 0 0 ${colors.contrast}, 0 0 1px 0px ${colors.contrast}`;
-      colors.btnFocusBorderColor = themeColors.palette.slate[100].value;
+      colors.borderActiveSearchHeader = themeColors.palette.azure[60].value;
+      colors.shadowActiveSearchHeader = '0 0 4px 3px rgba(54, 138, 192, 0.1)';
+      colors.focusBoxShadow = '0 0 4px 3px rgba(54, 138, 192, 0.1)';
+      colors.btnFocusBorderColor = themeColors.palette.azure[60].value;
+      colors.borderActiveSearchMobile = themeColors.palette.azure[60].value;
       colors.btnDisabledColor = 'rgba(0, 0, 0, 0.4) !important';
       colors.btnPrimaryColor = themeColors.palette.azure[60].value;
       colors.btnPrimaryColorHover = '#0066D4';
@@ -384,12 +391,14 @@ Personalize.prototype = {
       colors.tabCloseHoverColor = colors.contrast;
 
       if (isNewDark) {
+        colors.tabCloseInactiveColor = 'rgba(255, 255, 255, 0.85)';
         colors.base = themeColors.palette.slate[60].value;
         colors.btnPrimaryColor = colors.base;
         colors.dark = colors.base;
         colors.contrast = themeColors.palette.white.value;
         colors.focusBoxShadow = `0 0 0 2px transparent, 0 0 0 1px ${colors.contrast}, 0 0 1px 1px ${colors.contrast}`;
         colors.darker = themeColors.palette.slate[80].value;
+        colors.headerIconColor = themeColors.palette.slate[10].value;
         colors.btnHoverColor = themeColors.palette.white.value;
         colors.hyperlinkText = themeColors.palette.white.value;
         colors.lighter = themeColors.palette.slate[50].value;
@@ -397,7 +406,7 @@ Personalize.prototype = {
         colors.btnPrimaryColorHover = colors.darker;
         colors.btnSecondaryColor = colors.darkest;
         colors.btnSecondaryBorderColor = colors.base;
-        colors.btnTertiaryBgHoverColor = themeColors.palette.slate[90].value;
+        colors.btnTertiaryBgHoverColor = themeColors.palette.slate[70].value;
         colors.btnTertiaryHoverColor = themeColors.palette.white.value;
         colors.btnLinkColor = colors.light;
         colors.btnBgHoverColor = themeColors.palette.slate[80].value;
@@ -407,8 +416,7 @@ Personalize.prototype = {
         colors.headerTextColor = themeColors.palette.slate[10].value;
         colors.headerTabsTextColor = themeColors.palette.slate[10].value;
 
-        // Alabaster New Design
-        colors.headerTabBorder = themeColors.palette.slate[60].value;
+        colors.headerTabBorder = themeColors.palette.slate[90].value;
         colors.verticalTabBorder = themeColors.palette.slate[60].value;
         colors.tabFocusIndicator = themeColors.palette.white.value;
         colors.tabSelectedColor = themeColors.palette.slate[90].value;
@@ -451,7 +459,6 @@ Personalize.prototype = {
         colors.tabBottomBorderColor = '#50535A';
         colors.moduleTabsSelectedTextColor = themeColors.palette.white.value;
 
-        // Alabaster New Design
         colors.tabHeaderColor = themeColors.palette.slate[70].value;
         colors.headerTabBorder = themeColors.palette.slate[50].value;
         colors.tabSelectedColor = themeColors.palette.slate[70].value;
@@ -467,9 +474,8 @@ Personalize.prototype = {
       }
 
       if (isNewContrast) {
-        // Alabaster New Design
         colors.tabBorderColor = themeColors.palette.white.value;
-        colors.tabHoverColor = themeColors.palette.slate[30].value;
+        colors.tabHoverColor = themeColors.palette.slate[20].value;
       }
     }
 
