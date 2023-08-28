@@ -362,7 +362,7 @@ Personalize.prototype = {
       colors.tabFocusIndicatorVert = themeColors.palette.azure[60].value;
       colors.tabFocusBoxShadow = '0 0 4px 3px rgba(54, 138, 192, 0.2)';
       colors.tabFocusBoxShadowVert = '0 0 4px 3px rgba(54, 138, 192, 0.2)';
-      
+
       colors.tabTextWeight = '400';
       colors.tabTextSelectedWeight = '700';
       colors.headerTabBorder = themeColors.palette.slate[30].value;
@@ -426,9 +426,7 @@ Personalize.prototype = {
         colors.tabDivider = themeColors.palette.slate[100].value;
         colors.headerTabsSelectedTextColor = themeColors.palette.slate[10].value;
 
-        // colors.tabFocusIndicator = colors.contrast;
         colors.tabFocusIndicatorVert = themeColors.palette.white.value;
-      // colors.tabFocusBoxShadow = 'none';
         colors.tabFocusBoxShadowVert = 'none';
       }
 
