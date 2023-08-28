@@ -93,7 +93,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {array}    [settings.columnIds=[]] An array of column IDs used to define aria descriptors for selection checkboxes.
  * @param {boolean}  [settings.paging=false] Enable paging mode
  * @param {number}   [settings.pagesize=25] Number of rows per page
- * @param {array}    [settings.pagesizes=[10, 25, 50, 75]] Array of page sizes to show in the page size dropdown.
+ * @param {array}    [settings.pagesizes=[]] Array of page sizes to show in the page size dropdown.
  * @param {boolean}  [settings.indeterminate=false] Disable the ability to go to a specific page when paging.
  * @param {Function} [settings.source=false]  Callback function for paging
  * @param {boolean}  [settings.hidePagerOnOnePage=false]  If true, hides the pager if there's only one page worth of results.
@@ -206,7 +206,7 @@ const DATAGRID_DEFAULTS = {
   // Paging settings
   paging: false,
   pagesize: 25,
-  pagesizes: [10, 25, 50, 75],
+  pagesizes: [],
   showPageSizeSelector: true, // Will show page size selector
   indeterminate: false, // removed ability to go to a specific page.
   source: null, // callback for paging

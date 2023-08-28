@@ -33,6 +33,7 @@
         editable: true,
         filterable: true,
         pagesize: 10,
+        pagesizes: [10, 50, 100],
         resultsText: function (grid, count, filterCount) {
           console.log('ResultsText:', grid, count, filterCount);
           if (filterCount > 0) {
