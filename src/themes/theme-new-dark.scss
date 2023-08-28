@@ -448,6 +448,7 @@ $cardlist-box-shadow-color: rgba(0, 0, 0, 0.1);
 $checkbox-disabled-text-color: $checkbox-color-unchecked-disabled-font;
 $checkbox-disabled-checked-bg-color: $checkbox-color-unchecked-disabled-border;
 $checkbox-color-disabled-font: $input-color-disabled-font;
+$checkbox-color-checked-initial-background: $ids-color-palette-slate-80;
 
 // Switch
 $radio-checked-color: $ids-color-brand-primary-base;
@@ -692,7 +693,7 @@ $datagrid-sort-icon-sorted-color: $ids-color-palette-slate-10;
 $datagrid-required-icon-color: $ids-color-palette-slate-100;
 
 $datagrid-cell-color: $ids-color-palette-slate-10;
-$datagrid-cell-bg-color: $body-color-primary-background;
+$datagrid-cell-bg-color: $ids-color-palette-slate-90;
 $datagrid-cell-editing-bg-color: $panel-bg-color;
 $datagrid-cell-readonly-bg-color: rgba(62, 62, 66, 0.5);
 $datagrid-cell-readonly-color: $ids-color-palette-white;
@@ -701,8 +702,8 @@ $datagrid-group-row-border-color: $ids-color-palette-slate-60;
 $datagrid-cell-focus-box-shadow: 0 0 4px 1px rgba(85, 163, 243, .8);
 $datagrid-cell-focus-border-color: $ids-color-palette-azure-40;
 $datagrid-data-color: $font-color-extrahighcontrast;
-$datagrid-row-selected-color: #334d60;
-$datagrid-row-selected-color-dark: #3e586c;
+$datagrid-row-selected-color: $ids-color-palette-slate-70;
+$datagrid-row-selected-color-dark: $ids-color-palette-slate-70;
 $datagrid-row-hover-color: $ids-color-palette-slate-80;
 $datagrid-row-icon-color: $ids-color-palette-slate-30;
 
