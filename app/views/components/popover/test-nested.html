@@ -101,7 +101,7 @@
     $('#popover-trigger').popover(POPOVER_OPTIONS).on('beforeshow', () => {
       textArea = $('#text-area').data('textarea');
       if (!textArea) {
-        $('#text-area').textarea();
+        textArea = $('#text-area').textarea().data('textarea');
       }
     });
     $('#popover-trigger-2').popover(POPOVER_OPTIONS_2).on('beforeshow', () => {
