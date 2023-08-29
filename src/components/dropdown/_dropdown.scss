@@ -195,6 +195,10 @@ div.multiselect {
     right: 6px;
     top: 2px;
     width: 18px;
+
+    + .icon {
+      display: none;
+    }
   }
 
   &.is-readonly {

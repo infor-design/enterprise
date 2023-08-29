@@ -5,6 +5,7 @@
 ## v4.87.0 Features
 
 - `[Icons]` Fixed shape and markup of status icons. Note: May need to update your code. ([#7747](https://github.com/infor-design/enterprise/issues/7661))
+- `[Masthead]` Set height of masthead to 40px. ([#7857](https://github.com/infor-design/enterprise/issues/7857))
 - `[Radios]` Added hitbox feature for mobile devices. ([#7659](https://github.com/infor-design/enterprise/issues/7659))
 - `[Typography]` Added `text-wrap` class. ([#7497](https://github.com/infor-design/enterprise/issues/7497))
 
@@ -46,6 +47,7 @@
 - `[ModuleNav]` Added option/example to disable search in the dropdown menu ([NG#1535](https://github.com/infor-design/enterprise-ng/issues/1535))
 - `[ModuleNav]` Added option/example to disable search in the dropdown menu ([#1535](https://github.com/infor-design/enterprise-ng/issues/1535))
 - `[Number]` Added additional check for `formatNumber`. ([#7752](https://github.com/infor-design/enterprise/issues/7752))
+- `[Popover]` Fixes on issues with textarea and datagrid in popover when opening and closing. ([#7677](https://github.com/infor-design/enterprise/issues/7677))
 - `[Pager]` Fixed pager pagesizes default settings cannot be overridden with custom settings. ([#7629](https://github.com/infor-design/enterprise/issues/7629))
 - `[Popover]` Fixed popover having issues on simulatenous clicks. ([#7679](https://github.com/infor-design/enterprise/issues/7679))
 - `[Sparkline]` Fixed median fill on dark theme. ([#7717](https://github.com/infor-design/enterprise/issues/7717))
