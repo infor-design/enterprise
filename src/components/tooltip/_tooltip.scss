@@ -127,15 +127,16 @@
   }
 }
 
-.popover {
+.popover:not(.alternate) {
   .tooltip-title {
     align-items: center;
     font-size: 20px;
+    padding: 13px 20px;
 
     .btn-close {
       position: absolute;
       right: 5px;
-      top: 12px;
+      top: 15px;
     }
   }
 }
