@@ -21,15 +21,21 @@ $header-full-searchfield-hyperlink-color: $ids-color-palette-white;
 
 $ids-color-palette-alabaster: $ids-color-palette-white;
 
-// home pages
+// Homepage
 $homepage-background-color: $body-color-primary-background;
+
+$header-hero-text-color: $ids-color-palette-slate-80;
+$header-label-text-color: $ids-color-palette-slate-80;
+$homepage-button-color: $ids-color-palette-slate-80;
+$header-hero-widget-bg-color: $ids-color-palette-white;
+
+$homepage-header-menu-button-color: $ids-color-palette-black;
+
+$widget-editable-border-color: $ids-color-palette-azure-60;
 
 // Color Personalization in header
 $header-default-bg-color: $ids-color-palette-azure-60;
 $header-default-bg-hover-color: $ids-color-palette-azure-80;
-
-$header-hero-text-color: $ids-color-palette-slate-10;
-$header-hero-widget-bg-color: $ids-color-palette-azure-100;
 
 $masthead-bg-color: $ids-color-palette-slate-80;
 $masthead-border-color: $ids-color-palette-slate-80;
@@ -47,8 +53,10 @@ $drop-shadow-depth: rgba(0, 0, 0, 0.1);
 $drop-shadow-depth-tray: rgba(0, 0, 0, 0.1);
 
 $focus-box-shadow-color: rgba(54, 138, 192, 0.1); //Should be same size as $focus-box-shadow (only color transparent)
+$focus-box-shadow-color-new: rgba(54, 138, 192, 0.2);
 $focus-box-shadow-transparent: 0 0 4px 3px transparent;
 $focus-box-shadow: 0 0 4px 3px $focus-box-shadow-color; //Old Style: 0 0 5px rgba(8, 150, 233, .2)
+$focus-box-shadow-new: 0 0 4px 3px $focus-box-shadow-color-new;
 $focus-box-shadow-spinbox: 0 3px 3px 0 $focus-box-shadow-color,
   0 -3px 3px 0 $focus-box-shadow-color;
 
@@ -272,6 +280,7 @@ $input-disabled-color: $input-color-disabled-font;
 $input-placeholder-color: $ids-color-palette-slate-60;
 $input-readonly-color: $input-color-readonly-font;
 $input-color-border-space: $header-bg-color;
+$input-border-color: $input-color-initial-border;
 
 // Buttons
 $input-color-border-space: $header-bg-color;
@@ -295,6 +304,8 @@ $button-color-secondary-initial-background: transparent;
 $button-color-tertiary-disabled-background-new: transparent;
 $button-color-tertiary-hover-background-new: $ids-color-palette-azure-10;
 $button-color-tertiary-hover-font-new: $ids-color-palette-azure-60;
+
+$hero-button-color-tertiary-hover-background-new: $button-color-tertiary-hover-background-new;
 
 $button-color-destructive-focus-border-new: $ids-color-palette-ruby-60;
 
@@ -355,6 +366,19 @@ $dropdown-box-shadow-top: 0 0 5px $drop-shadow-depth;
 $dropdown-readonly-icon-color: $ids-color-palette-graphite-40;
 $dropdown-swatch-border-color: transparent;
 $dropdown-placeholder-text-color: $ids-color-palette-slate-60;
+
+// Link
+$link-color-text-font: $ids-color-palette-slate-60;
+$link-icon-color: $ids-color-palette-amethyst-70;
+$link-border-color: $ids-color-palette-slate-20;
+$link-hover-color: $ids-color-palette-slate-30;
+$link-selected-color: $ids-color-palette-slate-100;
+$link-background-color: $ids-color-palette-white;
+
+// Link List
+$linklist-color-text-font: $ids-color-palette-azure-80;
+$linklist-color-visited-text-font: $ids-color-palette-amethyst-80;
+$linklist-color-disabled-text-font: $ids-color-palette-slate-30;
 
 // List View
 $listview-bg-color: $ids-color-palette-white;
@@ -512,9 +536,6 @@ $fileupload-disabled-border-color: $ids-color-palette-graphite-30;
 $fileupload-disabled-bg-color: $ids-color-palette-graphite-10;
 $fileupload-disabled-color: $ids-color-palette-graphite-30;
 
-// Homepage, Widget, Card
-$widget-editable-border-color: $ids-color-palette-azure-60;
-
 //Spinbox
 $spinbox-active-color: $font-color-extrahighcontrast;
 $spinbox-button-color: transparent;
@@ -603,7 +624,7 @@ $editor-btn-active-color: $ids-color-brand-primary-base;
 $editor-btn-disabled-color: $ids-color-palette-graphite-40;
 $editor-readonly-color: $input-disabled-color;
 $editor-btn-active-box-shadow: 0 0 0 2px transparent, 0 0 0 1px $ids-color-brand-primary-base, $focus-box-shadow;
-$editor-top-focus-box-shadow: -2px -2px 3px 0 rgba(54, 138, 192, 0.3);
+$editor-top-focus-box-shadow: -1px -1px 3px 0 rgba(54, 138, 192, 0.3);
 $editor-blockquote-color: $ids-color-palette-graphite-60;
 
 //Pager
@@ -727,6 +748,7 @@ $module-nav-collapsed-size: 56px;
 $module-nav-gutter-size: 4px;
 $module-nav-expanded-size: 320px;
 $module-nav-submenu-size: 300px;
+$module-nav-bottom-margin: 8px;
 
 // Module Nav Input Field (Search/Role Dropdown)
 $module-nav-input-border-width: 1px;
@@ -744,8 +766,8 @@ $module-nav-item-icon-start-spacing: 11px;
 $module-nav-item-icon-end-spacing: 19px;
 $module-nav-item-dropdown-icon-size: 13px; // 10px in Figma
 $module-nav-item-collapsed-size: 40px;
-$module-nav-item-collapsed-general-spacing-size: 8px;
-$module-nav-item-collapsed-first-last-spacing-size: 5px;
+$module-nav-item-collapsed-general-spacing-size: 4px;
+$module-nav-item-collapsed-first-last-spacing-size: 4px;
 $module-nav-item-text-color: $ids-color-palette-slate-100;
 $module-nav-item-hover-bg-color: $ids-color-palette-slate-20;
 $module-nav-item-hover-text-color: $ids-color-palette-slate-100;
@@ -757,6 +779,7 @@ $module-nav-item-sub-expander-size: 23px;
 // Module Nav Switcher (Role Dropdown + Button)
 $module-nav-switcher-dropdown-background-color: $ids-color-palette-white;
 $module-nav-switcher-button-size: 40px;
+$module-nav-switcher-icon-size: 32px;
 $module-nav-switcher-button-gutter-size: 8px;
 $module-nav-switcher-dropdown-height: 40px;
 $module-nav-switcher-dropdown-width: 256px;
@@ -780,7 +803,7 @@ $module-nav-search-close-icon-x-offset: 12px;
 $module-nav-settings-menu-item-height: 40px;
 $module-nav-settings-menu-item-text-color: $ids-color-palette-slate-80;
 $module-nav-settings-menu-separator-color: $ids-color-palette-slate-20;
-$module-nav-accordion-gutter-size: 8px;
+$module-nav-accordion-gutter-size: 4px;
 $module-nav-footer-gutter-size: 12px;
 
 // Contextual Action Panel
@@ -826,9 +849,16 @@ $vertical-tab-focus-border-color: $ids-color-brand-primary-base;
 $vertical-tab-active-text-color: $ids-color-palette-white;
 $vertical-tab-active-bg-color: $ids-color-brand-primary-base;
 
+$vertical-tab-active-text-color-new: $ids-color-palette-azure-60;
+
 $vertical-tab-panel-bg-color: $panel-bg-color;
 $vertical-tab-sidebar-bg-color: $body-color-primary-background;
 $vertical-tab-sidebar-border-color: $ids-color-palette-graphite-20;
+
+$vertical-tab-border-color: $ids-color-palette-slate-30;
+$vertical-tab-background-color: $ids-color-palette-slate-10;
+$vertical-tab-selected-background-color: $ids-color-palette-white;
+$vertical-tab-hover-background-color: $ids-color-palette-slate-20;
 
 //Multi-tabs
 $mutlitabs-section-border-color: $ids-color-brand-secondary-alt;
@@ -928,6 +958,8 @@ $datagrid-light-header-filter-sorted-icon-color: $ids-color-palette-slate-80;
 $datagrid-light-header-icon-color: $ids-color-palette-slate-80;
 $datagrid-light-header-icon-hover-color: $ids-color-palette-slate-100;
 $datagrid-light-header-input-border-hover-color: $ids-color-palette-slate-100;
+
+$datagrid-button-icon-hover-bg-color: rgba(0, 0, 0, 0.1);
 
 // Search Results
 $sr-masthead-text-color: $font-color;
@@ -1096,7 +1128,7 @@ $header-tab-alt-normal-color: $ids-color-palette-graphite-60;
 $header-tab-alt-hover-color: $font-color-highcontrast;
 $header-tab-alt-selected-color: $ids-color-brand-primary-base;
 $header-tab-alt-separator: $header-tabcontainer-border-color;
-$header-tab-alt-disabled-color:  $ids-color-palette-slate-40;
+$header-tab-alt-disabled-color: $ids-color-palette-slate-40;
 $header-tab-separator-new: $ids-color-palette-white;
 $header-tab-disabled-color-new: rgba(255, 255, 255, .4);
 $header-tab-disabled-color: rgba(255, 255, 255, .4);

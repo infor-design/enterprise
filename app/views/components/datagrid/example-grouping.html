@@ -7,6 +7,12 @@
         <span class="datagrid-group-count">N</span>
       </div>
       <div class="buttonset">
+        <button type="button" class="btn" id="clear">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-undo"></use>
+          </svg>
+          <span>Clear Group</span>
+        </button>
       </div>
       <div class="more">
         <button class="btn-actions" type="button">
@@ -37,8 +43,7 @@
   $('body').one('initialized', function () {
 
       var grid,
-        columns = [],
-        data = [];
+        columns = [];
 
       //Define Columns for the Grid.
       columns.push({ id: 'drilldown', name: '', field: '', resizable: false, formatter: Soho.Formatters.Drilldown, click: function(e, args) {
@@ -56,7 +61,7 @@
       var url = '{{basepath}}api/accounts';
 
       $.getJSON(url, function(res) {
-        $('#datagrid').datagrid({
+        grid = $('#datagrid').datagrid({
           columns: columns,
           dataset: res,
           groupable: {
@@ -64,7 +69,7 @@
             expanded: true
           },
           toolbar: {title: 'Accounts', results: true, personalize: true, actions: true, rowHeight: true, keywordFilter: false}
-        });
+        }).data('datagrid');
 
         $('#datagrid').on('expandrow', function (e, args) {
           if (args.detail && args.detail.length > 0) {
@@ -75,6 +80,10 @@
         $('#datagrid').on('collapserow', function (e, args) {
           console.log('collapserow', args);
         });
+      });
+
+      $('#clear').on('click', function () {
+        grid.updateColumns(columns, null);
       });
  });
 

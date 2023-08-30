@@ -38,6 +38,7 @@ import './fileupload/fileupload.jquery';
 import './fileupload-advanced/fileupload-advanced.jquery';
 import './fontpicker/fontpicker.jquery';
 import './homepage/homepage.jquery';
+import './link/link.jquery';
 import './listbuilder/listbuilder.jquery';
 import './listview/listview.jquery';
 import './message/message.jquery';

@@ -9,6 +9,8 @@ demo:
 
 The classes `error`, `info`, or `alert` associate the element with a status by color. In addition any of the classes from the color-palette can be used. (See [Colors](./colors) docs for more information).
 
+Note that the tags and badges look the same but should not be used interchangeably. A badge is used mainly for alphanumeric values i.e. numbers currency ect. and should not cannot take an icon or text. For text embellishments use a tag. For icons use an icon or status icon or alert icon.
+
 ## Code Example
 
 A badge is a CSS only component that uses a `<span>` with the class `badge`. In addition, the following classes are also supported for specific status types: `error`, `info`, or `alert`. Also the class `round` can be added to make a perfectly round badge, when using 1 or 2 digit numbers.

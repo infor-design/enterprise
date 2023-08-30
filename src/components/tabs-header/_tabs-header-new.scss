@@ -109,7 +109,7 @@
 
     .tab-focus-indicator.is-visible {
       border-color: transparent;
-      box-shadow: unset;
+      box-shadow: $focus-box-shadow-new;
 
       &.is-selected {
         border-color: $header-tab-focus-border-color;
@@ -273,7 +273,7 @@
 .tab-container.is-personalizable {
   .tab-more {
     svg {
-      top: 2px;
+      top: -1px;
     }
   }
 }
@@ -282,6 +282,13 @@
   .tab-panel {
     overflow-y: auto;
     margin-top: -5px;
+  }
+}
+
+html.is-mac .tab-panel-container {
+  .tab-panel {
+    overflow-y: auto;
+    margin-top: -10px;
   }
 }
 

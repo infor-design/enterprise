@@ -189,6 +189,10 @@
     svg.icon {
       color: $button-editor-color-tertiary-hover-font-new;
     }
+
+    &.is-active svg.icon {
+      color: $editor-btn-active-color;
+    }
   }
 }
 
@@ -199,18 +203,14 @@
 .btn-link {
   border-radius: 8px;
 
-  &:hover {
+  &:not([disabled]):not(:disabled):hover {
     background-color: $button-color-tertiary-hover-background-new;
-    color: $button-color-tertiary-hover-font-new;
+    color: $button-hyperlink-color;
 
     svg.icon {
-      color: $button-color-tertiary-hover-font-new;
+      color: $button-hyperlink-color;
     }
   }
-}
-
-.btn-link[disabled] {
-  background-color: $button-color-tertiary-disabled-background-new;
 }
 
 // Reset standard button alignments.

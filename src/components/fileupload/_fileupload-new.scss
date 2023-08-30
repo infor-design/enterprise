@@ -4,7 +4,7 @@
 .fileupload-wrapper {
   .container {
     &.drop-area {
-      padding: 30px 30px 20px;
+      padding: 25px 30px 20px;
     }
 
     .file-row,
@@ -21,6 +21,7 @@
         }
 
         > .icon {
+          color: $ids-color-palette-white;
           top: -3px;
         }
 
@@ -29,6 +30,10 @@
             left: 0;
             top: -3px;
           }
+        }
+
+        .btn-icon .icon {
+          margin-top: -7px;
         }
       }
 

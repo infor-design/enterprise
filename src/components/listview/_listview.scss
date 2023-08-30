@@ -246,7 +246,6 @@
       color: $listview-color;
       font-size: $ids-size-font-base;
       font-weight: $ids-number-font-weight-base;
-      text-decoration: none;
 
       &.hyperlink {
         color: $hyperlink-color;
@@ -588,6 +587,81 @@
             outline: 0;
           }
         }
+      }
+    }
+  }
+
+  &.link-list {
+    padding-top: 5px;
+
+    li {
+      cursor: default;
+      background-color: transparent;
+      border: none;
+      padding: 0 15px;
+
+      .link-item {
+        padding: 0;
+        height: 28px;
+
+        .hyperlink {
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          max-width: 327px;
+          display: inline-block;
+        }
+
+        .hyperlink,
+        .hyperlink span {
+          color: $linklist-color-text-font;
+          text-decoration: none;
+          font-size: 16px;
+          font-weight: 600;
+          height: 28px;
+
+          &.show-visited:visited,
+          &.force-visited {
+            color: $linklist-color-visited-text-font;
+
+            svg,
+            span {
+              color: $linklist-color-visited-text-font;
+            }
+          }
+
+          > svg {
+            color: $linklist-color-text-font;
+            left: 0;
+            margin-right: 5px;
+          }
+
+          &[disabled] {
+            color: $linklist-color-disabled-text-font;
+            text-decoration: none;
+
+            svg,
+            span {
+              color: $linklist-color-disabled-text-font;
+            }
+          }
+        }
+
+        .hyperlink:not(.has-icon),
+        .hyperlink span {
+          &:hover:not([disabled]) {
+            text-decoration: underline;
+          }
+        }
+      }
+
+      &.is-selected:not(.hide-selected-color) {
+        background-color: transparent;
+      }
+
+      &:focus {
+        border-color: transparent;
+        box-shadow: none;
       }
     }
   }

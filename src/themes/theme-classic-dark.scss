@@ -35,7 +35,10 @@ $header-focus-box-shadow: 0 0 4px 3px rgba(255, 255, 255, 0.3);
 $header-toolbar-searchfield-icon-color: $ids-color-palette-white;
 $header-toolbar-button-hover-color: #313236;
 
-$header-hero-text-color: rgba($ids-color-palette-white, 0.7);
+// Homepages
+$header-hero-text-color: $ids-color-palette-white;
+$header-label-text-color: $ids-color-palette-white;
+$homepage-button-color: $ids-color-palette-white;
 $header-hero-widget-bg-color: $ids-color-palette-slate-90;
 
 $input-color-focus-border: $ids-color-palette-slate-10;
@@ -106,6 +109,8 @@ $button-icon-disabled-color: $ids-color-palette-slate-60;
 $button-color-secondary-initial-font: $ids-color-palette-slate-10;
 $button-color-secondary-hover-background: $ids-color-palette-slate-50;
 $button-color-secondary-initial-background: $ids-color-palette-slate-40;
+
+$hero-button-color-tertiary-hover-background-new: $button-color-tertiary-hover-background-new;
 
 // Button Ripple
 $secondary-btn-ripple-color: $ids-color-palette-slate-60;
@@ -237,6 +242,19 @@ $trigger-icon-fill-light-color: $ids-color-palette-slate-40;
 $trigger-hover-color: $ids-color-palette-white;
 $trigger-active-color: $ids-color-brand-primary-base;
 $trigger-focus-color: $ids-color-brand-primary-base;
+
+// Link
+$link-color-text-font: $ids-color-palette-white;
+$link-icon-color: $ids-color-palette-amethyst-30;
+$link-border-color: $ids-color-palette-slate-90;
+$link-hover-color: $ids-color-palette-slate-70;
+$link-selected-color: $ids-color-palette-black;
+$link-background-color: $ids-color-palette-slate-80;
+
+// Link List
+$linklist-color-text-font: $ids-color-palette-slate-10;
+$linklist-color-visited-text-font: $ids-color-palette-amethyst-20;
+$linklist-color-disabled-text-font: $ids-color-palette-slate-50;
 
 // List View
 $listview-bg-color: $ids-color-palette-slate-70;

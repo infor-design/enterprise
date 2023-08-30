@@ -12,8 +12,11 @@ div.multiselect {
   }
 
   > .listoption-icon {
-    left: 12px;
     top: 11px;
+
+    &:not(.custom-icon) {
+      left: 12px;
+    }
 
     &.large-icon {
       height: 32px;
@@ -372,7 +375,7 @@ html.is-firefox:not([dir='rtl']) {
     padding: 5px 30px 6px 10px;
 
     + .icon {
-      top: 2px;
+      top: 3px;
     }
 
     > .listoption-icon {

@@ -2467,6 +2467,8 @@ PopupMenu.prototype = {
       'mouseenter.popupmenu',
       'mouseleave.popupmenu'].join(' '));
 
+    this.menu.find('li').off('click.popupmenu');
+
     // Get rid of internal flags that check for how the menu was opened
     delete this.keydownThenClick;
     delete this.holdingDownClick;
@@ -2565,7 +2567,7 @@ PopupMenu.prototype = {
     const menuId = this.menu[0]?.id;
     const otherTriggers = $(`[aria-controls="${menuId}"]`).not(this.element);
 
-    if (!otherTriggers.length) {
+    if (!otherTriggers.length || this.settings.trigger === 'immediate') {
       const parentNode = this.menu.parent();
       parentNode.find('.arrow').remove();
       parentNode.off('contextmenu.popupmenu');
