@@ -128,9 +128,9 @@
 }
 
 .popover:not(.alternate) {
-  .tooltip-title {
+  .tooltip-title:not(.filled) {
     align-items: center;
-    font-size: 20px;
+    font-size: 2.2rem;
     padding: 13px 20px;
 
     .btn-close {
