@@ -128,6 +128,19 @@
 }
 
 .popover {
+  .tooltip-title {
+    align-items: center;
+    font-size: 20px;
+
+    .btn-close {
+      position: absolute;
+      right: 5px;
+      top: 12px;
+    }
+  }
+}
+
+.popover {
   background-color: $popover-bg-color;
   border: 1px solid $popover-border-color;
   box-shadow: $popover-box-shadow;
