@@ -127,6 +127,20 @@
   }
 }
 
+.popover:not(.alternate) {
+  .tooltip-title:not(.filled) {
+    align-items: center;
+    font-size: 2.2rem;
+    padding: 13px 20px;
+
+    .btn-close {
+      position: absolute;
+      right: 5px;
+      top: 15px;
+    }
+  }
+}
+
 .popover {
   background-color: $popover-bg-color;
   border: 1px solid $popover-border-color;
