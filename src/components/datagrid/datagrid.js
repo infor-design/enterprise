@@ -4823,7 +4823,7 @@ Datagrid.prototype = {
         self,
         formatLocale
       );
-      // ELEPHANT
+
       if (formatted.indexOf('<span class="is-readonly">') === 0) {
         col.readonly = true;
       }
