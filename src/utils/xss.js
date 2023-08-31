@@ -82,7 +82,6 @@ xssUtils.sanitizeHTML = function (html) {
   // Remove nested script tags
   santizedHtml = santizedHtml.replace(/<\/script>/g, '');
 
-  console.log(santizedHtml)
   return santizedHtml;
 };
 
