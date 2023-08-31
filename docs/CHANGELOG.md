@@ -7,6 +7,7 @@
 - `[Icons]` Fixed shape and markup of status icons. Note: May need to update your code. ([#7747](https://github.com/infor-design/enterprise/issues/7661))
 - `[Masthead]` Set height of masthead to 40px. ([#7857](https://github.com/infor-design/enterprise/issues/7857))
 - `[Popover]` Improved popover title style and position, excluding the 'alternate' class. ([#7676](https://github.com/infor-design/enterprise/issues/7676))
+- `[Radios]` Added hitbox feature for mobile devices. ([#7659](https://github.com/infor-design/enterprise/issues/7659))
 - `[Typography]` Added `text-wrap` class. ([#7497](https://github.com/infor-design/enterprise/issues/7497))
 
 ## v4.87.0 Fixes
