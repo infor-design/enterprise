@@ -4,20 +4,19 @@
 .masthead {
   background-color: $masthead-bg-color;
   border-bottom: 1px solid $masthead-border-color;
-  height: 38px;
+  height: 40px;
   width: 100%;
   z-index: 9000;
 
   .masthead-icon {
     border-radius: 0;
-    height: 32px;
-    margin: 4px 2px !important;
-    padding: 0;
-    width: 32px;
+    height: 28px;
+    width: 28px;
+    margin-top: 3px;
 
     > .icon {
-      height: 30px;
-      width: 30px;
+      height: 32px;
+      width: 32px;
     }
 
     .ripple-effect {
@@ -144,10 +143,6 @@
           margin-right: -3px;
           vertical-align: top;
         }
-      }
-
-      .masthead-icon > .icon {
-        margin: 1px 0;
       }
     }
   }
