@@ -712,7 +712,7 @@ WeekView.prototype = {
           <span class="week-view-header-day-of-week is-emphasis">${dayValue}</span>
           <span class="week-view-header-day-of-week">${dayNameValue}</span>
         </div>
-        <div class="week-view-all-day-wrapper"></div>
+        ${this.settings.showAllDay ? '<div class="week-view-all-day-wrapper"></div>' : ''}
       </div>`;
 
       body += `<div data-key="${daykey}" class="week-view-body-cell"></div>`;

@@ -1001,7 +1001,7 @@ PopupMenu.prototype = {
           this.element
             .on('touchstart.popupmenu', (e) => {
               // iOS needs this prevented to prevent its own longpress feature in Safari
-              // NOTE: this should not interfere with normal text input on form fields.
+              // NOTE: this should not interfere with Normal text input on form fields.
               if (env.os.name === 'ios' && e.target.tagName !== 'INPUT') {
                 e.preventDefault();
               }
@@ -2466,6 +2466,8 @@ PopupMenu.prototype = {
       'touchcancel.popupmenu',
       'mouseenter.popupmenu',
       'mouseleave.popupmenu'].join(' '));
+
+    this.menu.find('li').off('click.popupmenu');
 
     // Get rid of internal flags that check for how the menu was opened
     delete this.keydownThenClick;

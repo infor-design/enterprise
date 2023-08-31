@@ -44,7 +44,7 @@
       }
 
       &:focus:not(.hide-focus) {
-        border-color: $module-nav-item-selected-text-color;
+        border-color: transparent;
         box-shadow: none;
       }
     }
@@ -55,11 +55,11 @@
     }
 
     .icon {
-      top: -1px;
+      top: -3px;
     }
 
     .btn {
-      top: -1px;
+      top: 0;
 
       > .icon.chevron {
         top: -1px;
@@ -119,7 +119,7 @@
 
       [class^='btn'] {
         &:focus:not(.hide-focus) {
-          border-color: $module-nav-item-selected-text-color;
+          border-color: transparent;
         }
 
         .icon {
@@ -265,7 +265,7 @@
     .module-nav-footer {
       .accordion-header {
         &:last-of-type {
-          margin-block-end: 8px;
+          margin-block-end: 4px;
         }
       }
     }
@@ -286,7 +286,7 @@
         height: $module-nav-item-height;
 
         > a {
-          padding-block: 8px;
+          padding-block: 8.5px;
         }
 
         &:not(:last-child) {
@@ -329,7 +329,7 @@
       &:not(.has-icons) {
         // 1st-level Accordion Headers
         .accordion-header {
-          @include left-align-cascade-styles-header(13px, 9px, 47px, 16px, 'true', 16px);
+          @include left-align-cascade-styles-header(13px, 9px, 47px, 16px, 'true', 9px);
 
           &.has-chevron {
             > a {
@@ -344,7 +344,7 @@
 
           // 2nd-level Accordion Headers
           .accordion-header {
-            @include left-align-cascade-styles-header(13px, 9px, 47px, 16px, 'true', 16px);
+            @include left-align-cascade-styles-header(13px, 11px, 47px, 16px, 'true', 7px);
           }
 
           // 2nd-level Accordion Panes
@@ -353,7 +353,7 @@
 
             // 3rd-level Accordion Headers
             .accordion-header {
-              @include left-align-cascade-styles-header(55px, 41px, 66px, 48px, 'true', 16px);
+              @include left-align-cascade-styles-header(55px, 36px, 66px, 48px, 'true', 7px);
             }
 
             // 3rd-level Accordion Panes
@@ -362,7 +362,7 @@
 
               // 4th-level Accordion Headers
               .accordion-header {
-                @include left-align-cascade-styles-header(80px, 73px, 98px, 80px, 'true', 16px);
+                @include left-align-cascade-styles-header(80px, 63px, 98px, 80px, 'true', 7px);
               }
 
               // 4th-level Accordion Panes
@@ -371,7 +371,7 @@
 
                 // 5th-level Accordion Headers
                 .accordion-header {
-                  @include left-align-cascade-styles-header(115px, 106px, 130px, 112px, 'true', 16px);
+                  @include left-align-cascade-styles-header(115px, 90px, 139px, 112px, 'true', 7px);
                 }
 
                 // 5th-level Accordion Panes
@@ -380,7 +380,7 @@
 
                   // 6th-level Accordion Headers
                   .accordion-header {
-                    @include left-align-cascade-styles-header(151px, 138px, 162px, 144px, 'true', 16px);
+                    @include left-align-cascade-styles-header(151px, 141px, 162px, 144px, 'true', 14px);
                   }
 
                   // 6th-level Accordion Pane
@@ -418,7 +418,7 @@
 
           // 2nd-level Accordion Headers
           .accordion-header {
-            @include left-align-cascade-styles-header(49px, 9px, 94px, 16px, 'true', 16px);
+            @include left-align-cascade-styles-header(49px, 23px, 94px, 16px, 'true', 8px);
           }
 
           // 2nd-level Accordion Panes
@@ -427,7 +427,7 @@
 
             // 3rd-level Accordion Headers
             .accordion-header {
-              @include left-align-cascade-styles-header(55px, 41px, 66px, 48px, 'true', 16px);
+              @include left-align-cascade-styles-header(55px, 42px, 66px, 48px, 'true', 8px);
             }
 
             // 3rd-level Accordion Panes
@@ -436,7 +436,7 @@
 
               // 4th-level Accordion Headers
               .accordion-header {
-                @include left-align-cascade-styles-header(80px, 73px, 98px, 80px, 'true', 16px);
+                @include left-align-cascade-styles-header(80px, 66px, 98px, 80px, 'true', 8px);
               }
 
               // 4th-level Accordion Panes
@@ -445,7 +445,7 @@
 
                 // 5th-level Accordion Headers
                 .accordion-header {
-                  @include left-align-cascade-styles-header(115px, 106px, 130px, 112px, 'true', 16px);
+                  @include left-align-cascade-styles-header(115px, 92px, 130px, 112px, 'true', 8px);
                 }
 
                 // 5th-level Accordion Panes
@@ -454,7 +454,7 @@
 
                   // 6th-level Accordion Headers
                   .accordion-header {
-                    @include left-align-cascade-styles-header(151px, 138px, 162px, 144px, 'true', 16px);
+                    @include left-align-cascade-styles-header(151px, 145px, 162px, 144px, 'true', 14px);
                   }
 
                   // 6th-level Accordion Pane

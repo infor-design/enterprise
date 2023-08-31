@@ -22,13 +22,14 @@ const COMPONENT_NAME = 'modulenav';
 
 const MODULE_NAV_DEFAULTS = {
   accordionSettings: {
-    expanderDisplay: 'classic'
+    expanderDisplay: 'classic',
+    tooltipStyle: 'dark'
   },
   displayMode: MODULE_NAV_DISPLAY_MODES[0],
   filterable: false,
   initChildren: true,
   pinSections: false,
-  showDetailView: false,
+  showDetailView: false
 };
 
 const toggleScrollbar = (el, doToggle) => {
@@ -235,12 +236,14 @@ ModuleNav.prototype = {
       }
     };
 
-    this.accordionAPI.settings = this.settings.accordionSettings;
-    this.accordionAPI.settings.accordionFocusCallback = navFocusCallback;
-    this.accordionAPI.updated();
+    // Pass along updated settings, including local callback
+    const newSettings = utils.mergeSettings(this.accordionEl, {
+      accordionFocusCallback: navFocusCallback
+    }, this.settings.accordionSettings);
+    this.accordionAPI.updated(newSettings);
 
     // Build tooltips on top-level accordion headers in collapsed mode
-    const headers = this.accordionEl.querySelectorAll('.accordion-section > .accordion-header');
+    const headers = this.accordionEl.querySelectorAll('.accordion-section > .accordion-header, .accordion-section > soho-module-nav-settings > .accordion-header');
     if (headers.length) {
       [...headers].forEach((header) => {
         configureNavItemTooltip(header, this.settings.displayMode);

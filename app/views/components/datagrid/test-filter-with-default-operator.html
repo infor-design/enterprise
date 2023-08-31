@@ -1,0 +1,85 @@
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+      var grid,
+        columns = [],
+        data = [];
+
+      // Define Some Sample Data
+      data.push({ id: 1, productId: undefined, productName: 'Compressor', inStock: true, activity:  'Assemble', quantity: 1, price: 410.99, orderDate: new Date(2014, 12, 8), time: '1:30:45 AM', action: 'Action', status: 'Error'});
+      data.push({ id: 2, productId: 2241202, productName: '1 Different Compressor', inStock: true, activity:  'Inspect and Repair', quantity: 2, price: 310.99, orderDate: new Date(2015, 7, 3), time: '2:00 AM', action: 'On Hold', status: 'En file d\'attente'});
+      data.push({ id: 3, productId: 2342203, productName: 'Compressor', inStock: true, activity:  'Inspect and Repair', quantity: 1, price: 620.99, orderDate: new Date(2014, 6, 3), time: '1:40:00 AM', action: 'Action', status: 'Error'});
+      data.push({ id: 4, productId: 2445204, productName: undefined, inStock: false, activity:  'Assemble Paint', quantity: 3, price: 1210.99, orderDate: new Date(2015, 3, 3), time: '5:00:45 PM', action: 'Action', status: 'En file d\'attente'});
+      data.push({ id: 5, productId: 2542205, productName: 'I Love Compressors', inStock: true, activity:  'Inspect and Repair', quantity: 4, price: 810.99, orderDate: new Date(2015, 5, 5), time: '5:30 PM', action: 'On Hold', status: 'Confirmed'});
+      data.push({ id: 5, productId: 2642205, productName: 'Air Compressors', inStock: false, activity:  'Inspect and Repair', quantity: 41, price: 1120.99, orderDate: new Date(2014, 6, 9), time: '11:59:59 PM', action: 'On Hold', status: 'Error'});
+      data.push({ id: 6, productId: null, productName: 'Some Compressor', inStock: true, activity:  'inspect and Repair', quantity: 41, price: 123.99, orderDate: new Date(2014, 6, 9), time: '1:31 PM', action: 'On Hold', status: 'Confirmed'});
+      data.push({ id: 7, productId: null, productName: null, activity:  '', quantity: null, price: null, orderDate: null, action: 'Blank Row', status: 'Confirmed'});
+      data.push({ id: 8, productId: null, productName: null, activity:  null, quantity: null, price: null, orderDate: null, action: 'Blank Row', status: 'Confirmed'});
+
+      var statuses = [{id: '', value: '', label:'&nbsp;'},
+                      {id:'Confirmed', value:'Confirmed', label:'Confirmed'},
+                      {id:'En file d\'attente', value:'En file d\'attente', label:'En file d\'attente'},
+                      {id:'Error', value:'Error', label:'Error'}];
+
+      var activities = [{id: 'Assemble Paint', value:'Assemble Paint', label: 'Assemble Paint'},
+                         {id: 'Inspect and Repair', value:'Inspect and Repair', label: 'Inspect and Repair'}];
+
+    var lookupOptions = {
+      field: function (row, field, grid) {
+        return row.productId;
+      },
+      match: function (value, row, field, grid) {
+        return (row.productId) === value;
+      },
+      beforeShow: function (api, response) {
+        var url = '{{basepath}}api/lookupInfo';
+
+        $.getJSON(url, function(data) {
+          api.settings.options.columns = data[0].columns;
+          api.settings.options.dataset = data[0].dataset;
+          response();
+        });
+      },
+      options: {
+        selectable: 'single',
+        toolbar: {title: 'Products', results: true, dateFilter: false ,keywordFilter: false, actions: true, views: true , rowHeight: true}
+      }
+    };
+
+      // Define Columns for the Grid.
+      columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Soho.Formatters.SelectionCheckbox, align: 'center'});
+      columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Soho.Formatters.Readonly, filterType: 'text'});
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Soho.Formatters.Lookup, editorOptions: lookupOptions, filterType: 'lookup', mask: '#######', defaultFilterOperator: 'starts-with',
+        filterConditions: ['contains', 'does-not-contain', 'equals', 'does-not-equal', 'is-empty', 'is-not-empty', 'in-range', 'less-than', {value: 'less-equals', selected: true}, 'greater-than', 'greater-equals']});
+      columns.push({ id: 'productName', name: 'Product Name', field: 'productName',  formatter: Soho.Formatters.Text, filterType: 'text', defaultFilterOperator: 'starts-with',
+        filterConditions: ['contains', 'does-not-contain', 'equals', 'does-not-equal', 'is-empty', 'is-not-empty', 'end-with', 'does-not-end-with', {value: 'start-with', selected: true}, 'does-not-end-with']});
+      columns.push({ id: 'activity', name: 'Activity', field: 'activity', formatter: Soho.Formatters.Dropdown, filterType: 'multiselect', options: activities, editorOptions: {showSelectAll: true}});
+      columns.push({ id: 'quantity', name: 'Qty', field: 'quantity', align: 'right', filterType: 'integer', minWidth: 95});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'MM/dd/yyyy', filterType: 'date', editorOptions: {showMonthYearPicker: true}});
+
+
+      // Init and get the api for the grid
+      $('#datagrid').datagrid({
+        columns: columns,
+        dataset: data,
+        filterable: true,
+        filterWhenTyping: false,
+        selectable: 'mixed',
+        editable: true,
+        emptyMessage: {title: Soho.Locale.translate('NoData'), info: Soho.Locale.translate('NoDataFilter'), icon: 'icon-empty-no-data-new'},
+        toolbar: {title: 'Filterable Datagrid', filterRow: true, results: true, dateFilter: false ,keywordFilter: false, actions: true, views: false, rowHeight: true, collapsibleFilter: false}
+      }).on('filtered', function (e, args) {
+        console.log('filter ran', args);
+      }).on('filteroperatorchanged', function(e, args) {
+        console.log('event details', e);
+        console.log('event arguments', args);
+      });
+ });
+
+</script>

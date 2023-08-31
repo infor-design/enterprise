@@ -51,7 +51,8 @@
     border-left-color: $tooltip-bg-color;
   }
 
-  .hyperlink {
+  .hyperlink,
+  .hyperlink:hover:not([disabled]):not(.personalize-actionable-disabled) {
     color: $tooltip-color;
     font-size: $ids-size-font-sm;
 

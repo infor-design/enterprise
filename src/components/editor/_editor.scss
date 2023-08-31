@@ -805,6 +805,23 @@ html.is-firefox {
   top: 33px;
 }
 
+// Reset for editor (table)
+.editor {
+  table,
+  thead,
+  tbody,
+  th,
+  tr,
+  td {
+    border: inherit;
+    border-color: $datagrid-cell-border-color;
+  }
+
+  th {
+    font-weight: 700;
+  }
+}
+
 // RTL Styles
 html[dir='rtl'] {
   .editor-container {

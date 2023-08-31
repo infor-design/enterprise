@@ -128,12 +128,12 @@ const COMPONENT_NAME = 'datagrid';
  * @param {Function} [settings.onKeyDown=null] A callback function that fires when any key is pressed down.
  * @param {boolean}  [settings.searchExpandableRow=true] If true keywordSearch will search in expandable rows (default). If false it will not search expandable rows.
  * @param {object}   [settings.emptyMessage]
- * @param {object}   [settings.emptyMessage.title='No Data Available']
+ * @param {object}   [settings.emptyMessage.title='No data available']
  * @param {object}   [settings.emptyMessage.info='']
  * @param {object}   [settings.emptyMessage.icon='icon-empty-no-data-new']
  * @param {object}   [settings.emptyMessage.height=null]
  * An empty message will be displayed when there is no rows in the grid. This accepts an object of the form
- * emptyMessage: {title: 'No Data Available', info: 'Make a selection on the list above to see results',
+ * emptyMessage: {title: 'No data available', info: 'Make a selection on the list above to see results',
  * icon: 'icon-empty-no-data-new', button: {text: 'Button Text', click: <function>}, height: null|'small'} set this to null for no message
  * or will default to 'No Data Found with an icon.'
  * height: The empty message container height. If set to 'small' will show only title and all other will not be render (like: icon, button, info)
@@ -241,7 +241,7 @@ const DATAGRID_DEFAULTS = {
   onExpandChildren: null, // Callback fires when expanding children with treeGrid
   onCollapseChildren: null, // Callback fires when collapseing children with treeGrid
   onKeyDown: null,
-  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data-new', height: null },
+  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No data available'), info: '', icon: 'icon-empty-no-data-new', height: null },
   searchExpandableRow: true,
   allowChildExpandOnMatchOnly: false,
   allowChildExpandOnMatch: false,
@@ -2388,23 +2388,25 @@ Datagrid.prototype = {
     }
 
     if (col.filterType === 'lookup') {
-      btnDefault = filterConditions.length ? filterConditions[0] : 'contains';
-      btnMarkup = renderButton(btnDefault) +
-        render('contains', 'Contains', true) +
-        render('does-not-contain', 'DoesNotContain') +
-        render('equals', 'Equals') +
-        render('does-not-equal', 'DoesNotEqual') +
-        render('is-empty', 'IsEmpty') +
-        render('is-not-empty', 'IsNotEmpty') +
-        render('end-with', 'EndsWith') +
-        render('does-not-end-with', 'DoesNotEndWith') +
-        render('start-with', 'StartsWith') +
-        render('does-not-start-with', 'DoesNotStartWith') +
-        render('less-than', 'LessThan') +
-        render('less-equals', 'LessOrEquals') +
-        render('greater-than', 'GreaterThan') +
-        render('greater-equals', 'GreaterOrEquals');
-      btnMarkup = btnMarkup.replace('{{icon}}', btnDefault);
+      btnDefault = determineFilterDefaultValue(filterConditions, filterConditions.length ? filterConditions[0] : 'contains');
+      if (filterConditions.length === 0) {
+        btnMarkup = renderButton(btnDefault) +
+          render('contains', 'Contains', true) +
+          render('does-not-contain', 'DoesNotContain') +
+          render('equals', 'Equals') +
+          render('does-not-equal', 'DoesNotEqual') +
+          render('is-empty', 'IsEmpty') +
+          render('is-not-empty', 'IsNotEmpty') +
+          render('end-with', 'EndsWith') +
+          render('does-not-end-with', 'DoesNotEndWith') +
+          render('start-with', 'StartsWith') +
+          render('does-not-start-with', 'DoesNotStartWith');
+        btnMarkup = btnMarkup.replace('{{icon}}', btnDefault);
+      } else {
+        btnMarkup = renderButton(btnDefault) +
+          filterConditions.map(filter => render(filter, formatFilterText(filter))).join('');
+        btnMarkup = btnMarkup.replace('{{icon}}', btnDefault);
+      }
     }
 
     btnMarkup += '</ul>';
@@ -5915,6 +5917,8 @@ Datagrid.prototype = {
   updateColumns(columns, columnGroups) {
     if (columnGroups === undefined) {
       columnGroups = null;
+    } else if (columnGroups === null || columnGroups.length === 0) {
+      this.settings.groupable = null;
     }
 
     let conditions = [];
@@ -5922,10 +5926,7 @@ Datagrid.prototype = {
       conditions = this.filterConditions();
     }
     this.settings.columns = columns;
-
-    if (columnGroups) {
-      this.settings.columnGroups = columnGroups;
-    }
+    this.settings.columnGroups = columnGroups;
 
     this.rerender();
 

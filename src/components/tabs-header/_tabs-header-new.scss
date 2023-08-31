@@ -37,6 +37,7 @@
         font-weight: $ids-number-font-weight-bold;
         overflow: hidden;
         height: 34px;
+        max-width: 215px;
 
         &:not(.is-disabled) {
           color: $header-tab-normal-color-new;
@@ -44,6 +45,7 @@
 
         a {
           margin-top: -5px;
+          max-width: inherit;
         }
 
         &::before {
@@ -57,7 +59,7 @@
 
         &:hover:not(.is-disabled) {
           color: $header-tab-hover-color-new;
-          border-bottom: 4px solid $header-tab-indicator-hover-color-new;
+          border-bottom: 2px solid $header-tab-indicator-hover-color-new;
           background-color: $header-tab-background-hover-color-new;
         }
 
@@ -67,7 +69,7 @@
 
         &.is-selected:not(.is-disabled) {
           color: $header-tab-selected-color-new;
-          border-bottom: 4px solid $header-tab-selected-color-new;
+          border-bottom: 2px solid $header-tab-selected-color-new;
 
           &::before {
             background-color: rgba($header-tab-hover-color-new, 1);
@@ -230,7 +232,7 @@
         }
 
         &.is-disabled {
-          color: $disabled-color;
+          color: $header-tab-alt-disabled-color;
         }
       }
     }
@@ -273,6 +275,13 @@
     svg {
       top: 2px;
     }
+  }
+}
+
+.tab-panel-container {
+  .tab-panel {
+    overflow-y: auto;
+    margin-top: -5px;
   }
 }
 

@@ -136,7 +136,7 @@ describe('Datagrid Settings', () => {
       onExpandChildren: null,
       onCollapseChildren: null,
       onKeyDown: null,
-      emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data-new', height: null },
+      emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No data available'), info: '', icon: 'icon-empty-no-data-new', height: null },
       searchExpandableRow: true,
       allowChildExpandOnMatchOnly: false,
       allowChildExpandOnMatch: false,
@@ -161,21 +161,21 @@ describe('Datagrid Settings', () => {
   it('should set settings', () => {
     datagridObj?.destroy();
     datagridObj = new Datagrid(datagridEl, { dataset: data, columns });
-    datagridObj.settings.emptyMessage.title = 'No Data Available';
+    datagridObj.settings.emptyMessage.title = 'No data available';
 
     expect(datagridObj.settings).toEqual(defaultSettings);
   });
 
   it('should update set settings via data', () => {
     datagridObj.updated();
-    datagridObj.settings.emptyMessage.title = 'No Data Available';
+    datagridObj.settings.emptyMessage.title = 'No data available';
 
     expect(datagridObj.settings).toEqual(defaultSettings);
   });
 
   it('should update set settings via parameter', () => {
     datagridObj.updated(defaultSettings);
-    datagridObj.settings.emptyMessage.title = 'No Data Available';
+    datagridObj.settings.emptyMessage.title = 'No data available';
 
     expect(datagridObj.settings).toEqual(defaultSettings);
   });

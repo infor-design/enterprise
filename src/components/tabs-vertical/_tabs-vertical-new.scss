@@ -1,0 +1,20 @@
+
+.tab-container.vertical {
+  > .tab-list-container {
+    > .tab-list {
+      > .tab {
+        max-width: 250px;
+        max-height: 40px;
+
+        a {
+          max-width: inherit;
+          max-height: inherit;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          padding: 10px 12px;
+        }
+      }
+    }
+  }
+}

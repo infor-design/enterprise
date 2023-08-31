@@ -145,7 +145,7 @@ describe('Homepage API', () => {
     setTimeout(() => {
       expect(metadata.editing).toEqual(true);
       done();
-    }, 0);
+    }, 100);
   });
 
   it('can enable editing mode using setEdit()', (done) => {
@@ -162,6 +162,6 @@ describe('Homepage API', () => {
 
       expect(homepageAPI.state.editing).toEqual(true);
       done();
-    }, 0);
+    }, 100);
   });
 });

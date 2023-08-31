@@ -1252,10 +1252,6 @@ Modal.prototype = {
       }
     }
 
-    if (calcHeight < this.element.find('.modal-body').height()) {
-      wrapper[0].style.overflow = 'auto';
-    }
-
     const toolbars = this.element.find('.toolbar');
     if (toolbars.length) {
       toolbars.triggerHandler('recalculate-buttons');
@@ -1438,7 +1434,7 @@ Modal.prototype = {
       return true;
     }
 
-    const elemCanClose = this.element.triggerHandler('beforeclose');
+    const elemCanClose = this.element.triggerHandler(`beforeclose${customId ? `.${customId}` : ''}`);
     if (elemCanClose === false) {
       return false;
     }
@@ -1506,7 +1502,7 @@ Modal.prototype = {
 
         if (self.settings.trigger === 'immediate' || destroy) {
           if (!self.isCAP || (self.isCAP && !self.capAPI)) {
-            self.destroy();
+            self.destroy(customId);
           }
         }
 
@@ -1561,10 +1557,11 @@ Modal.prototype = {
 
   /**
    * Destroy the modal.
+   * @param {string} customId ID of element
    */
-  destroy() {
+  destroy(customId) {
     const self = this;
-    const canDestroy = this.element.trigger('beforedestroy');
+    const canDestroy = this.element.trigger(`beforedestroy${customId ? `.${customId}` : ''}`);
     if (!canDestroy) {
       return;
     }

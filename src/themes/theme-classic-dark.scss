@@ -101,10 +101,11 @@ $button-color-primary-active-background: $ids-color-palette-slate-60;
 $button-color-tertiary-hover-font-new: $ids-color-palette-white;
 $button-hyperlink-color: $ids-color-palette-slate-50;
 $button-hyperlink-hover-color: $ids-color-palette-slate-40;
-$button-color-tertiary-hover-background-new: transparent;
+$button-color-tertiary-hover-background-new: $ids-color-palette-slate-90;
 $button-icon-disabled-color: $ids-color-palette-slate-60;
-$button-color-secondary-initial-font: $ids-color-palette-slate-30;
+$button-color-secondary-initial-font: $ids-color-palette-slate-10;
 $button-color-secondary-hover-background: $ids-color-palette-slate-50;
+$button-color-secondary-initial-background: $ids-color-palette-slate-40;
 
 // Button Ripple
 $secondary-btn-ripple-color: $ids-color-palette-slate-60;
@@ -237,6 +238,19 @@ $trigger-hover-color: $ids-color-palette-white;
 $trigger-active-color: $ids-color-brand-primary-base;
 $trigger-focus-color: $ids-color-brand-primary-base;
 
+// Link
+$link-color-text-font: $ids-color-palette-white;
+$link-icon-color: $ids-color-palette-amethyst-30;
+$link-border-color: $ids-color-palette-slate-90;
+$link-hover-color: $ids-color-palette-slate-70;
+$link-selected-color: $ids-color-palette-black;
+$link-background-color: $ids-color-palette-slate-80;
+
+// Link List
+$linklist-color-text-font: $ids-color-palette-slate-10;
+$linklist-color-visited-text-font: $ids-color-palette-amethyst-20;
+$linklist-color-disabled-text-font: $ids-color-palette-slate-50;
+
 // List View
 $listview-bg-color: $ids-color-palette-slate-70;
 $listview-bg-color-alternate: $ids-color-palette-slate-80;
@@ -293,8 +307,8 @@ $dropdown-menu-border-color: $ids-color-brand-primary-base;
 $dropdown-menu-separator-color: $ids-color-palette-slate-40;
 $dropdown-menu-separator-border-color: $ids-color-palette-slate-50;
 $dropdown-readonly-icon-color: $ids-color-palette-slate-40;
-
 $dropdown-swatch-border-color: $ids-color-palette-slate-40;
+$dropdown-placeholder-text-color: $ids-color-palette-slate-40;
 
 // Date Picker
 $datepicker-month-year-color: $inverse-color;
@@ -590,7 +604,7 @@ $vertical-tab-sidebar-bg-color: $ids-color-palette-slate-70;
 $vertical-tab-sidebar-border-color: $ids-color-palette-slate-50;
 
 // Multi-tabs
-$mutlitabs-section-border-color: $ids-color-palette-slate-70;
+$mutlitabs-section-border-color: $ids-color-palette-slate-50;
 $mutlitabs-section-alt-bg-color: $ids-color-palette-black;
 $mutlitabs-section-alt-border-color: $ids-color-palette-slate-90;
 
@@ -802,6 +816,7 @@ $header-tab-alt-normal-color: $ids-color-palette-slate-30;
 $header-tab-alt-hover-color: $inverse-color;
 $header-tab-alt-selected-color: $inverse-color;
 $header-tab-background-hover-color: $ids-color-palette-slate-70;
+$header-tab-alt-disabled-color: $ids-color-palette-slate-40;
 
 // Header Breadcrumb
 $header-breadcrumb-color: $ids-color-palette-slate-10;

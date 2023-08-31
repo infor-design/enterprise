@@ -42,7 +42,7 @@ const COMPONENT_NAME = 'column';
 * @param {object} [settings.emptyMessage = { title: 'No Data', info: , icon: 'icon-empty-no-data-new' }]
 * An empty message will be displayed when there is no chart data. This accepts an object of the form
 * `emptyMessage: {
-*   title: 'No Data Available',
+*   title: 'No data available',
 *   info: 'Make a selection on the list above to see results',
 *   icon: 'icon-empty-no-data-new',
 *   button: {text: 'xxx', click: <function>
@@ -63,7 +63,7 @@ const COLUMN_DEFAULTS = {
   hideDots: false,
   ticks: 9,
   fitHeight: true,
-  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data-new' }
+  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No data available'), info: '', icon: 'icon-empty-no-data-new' }
 };
 
 function Column(element, settings) {
@@ -1303,6 +1303,7 @@ Column.prototype = {
       });
     }
 
+    // This will fix the position of labels on the x axis
     if (self.settings.isStacked && self.element.find('.x.axis').length > 0) {
       const $tick = $('.tick');
       const $xAxisGroup = $('.x.axis > g');

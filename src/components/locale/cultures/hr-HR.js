@@ -542,7 +542,7 @@ Soho.Locale.addCulture('hr-HR', {
     Tall: { id: 'Tall', value: 'Visoko', comment: 'Describes a Taller Row Height in a grid/list' },
     Target: { id: 'Target', value: 'Cilj', comment: 'Label for an input to enter a Target (Url Attribute)' },
     TeamEvent: { id: 'TeamEvent', value: 'Timski događaj', comment: 'Having an event with a work team' },
-    TestLocaleDefaults: { id: 'TestLocaleDefaults', value: 'Test Locale Defaults', comment: 'Do not translate' },
+    TestLocaleDefaults: { id: 'TestLocaleDefaults', value: 'Test locale defaults', comment: 'Do not translate' },
     TextBtnCancel: { id: 'TextBtnCancel', value: 'Odustani od prijenosa ove datoteke', comment: 'text for cancel button for advanced fileupload' },
     TextBtnCloseError: { id: 'TextBtnCloseError', value: 'Zatvori ovu pogrešku', comment: 'text for error close button for advanced fileupload' },
     TextBtnRemove: { id: 'TextBtnRemove', value: 'Zatvori ovu pogrešku', comment: 'text for remove button for advanced fileupload' },

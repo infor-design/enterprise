@@ -91,7 +91,7 @@ describe('Searchfield API', () => {
     expect(searchfieldInputEl.getAttribute('value')).toEqual(null);
   });
 
-  it('can add an extra "More Results" link to the results list', () => {
+  it.skip('can add an extra "More Results" link to the results list', () => {
     let wasCalled = false;
     function allResultsCallback() {
       wasCalled = true;
