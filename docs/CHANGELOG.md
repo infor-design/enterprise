@@ -6,11 +6,14 @@
 
 - `[Icons]` Fixed shape and markup of status icons. Note: May need to update your code. ([#7747](https://github.com/infor-design/enterprise/issues/7661))
 - `[Masthead]` Set height of masthead to 40px. ([#7857](https://github.com/infor-design/enterprise/issues/7857))
+- `[Popover]` Improved popover title style and position, excluding the 'alternate' class. ([#7676](https://github.com/infor-design/enterprise/issues/7676))
 - `[Typography]` Added `text-wrap` class. ([#7497](https://github.com/infor-design/enterprise/issues/7497))
 
 ## v4.87.0 Fixes
 
 - `[Badges/Alerts/Tags/Icons]` Added docs and clearer examples. ([#7661](https://github.com/infor-design/enterprise-ng/issues/7661))
+- `[Bar]` Fixed an issue where the x-axis labels on the bar chart were not visible. ([#7797](https://github.com/infor-design/enterprise/issues/7797))
+- `[Badges/Tags/]` Changed border radius to 12px. ([#7862](https://github.com/infor-design/enterprise-ng/issues/7862))
 - `[Color]` Fix on Slate's personalization header text color. ([#7811](https://github.com/infor-design/enterprise-ng/issues/7811))
 - `[Calendar]` Fixed uncaught error in `cordova` apps. ([#7818](https://github.com/infor-design/enterprise/issues/7818))
 - `[Circlepager]` Fixed circle pager's position inside of a card. ([#7724](https://github.com/infor-design/enterprise/issues/7724))
@@ -47,12 +50,15 @@
 - `[ModuleNav]` Added option/example to disable search in the dropdown menu ([#1535](https://github.com/infor-design/enterprise-ng/issues/1535))
 - `[Number]` Added additional check for `formatNumber`. ([#7752](https://github.com/infor-design/enterprise/issues/7752))
 - `[Popover]` Fixes on issues with textarea and datagrid in popover when opening and closing. ([#7677](https://github.com/infor-design/enterprise/issues/7677))
+- `[Popover]` Fixes on issues with textarea and datagrid in popover when opening and closing. ([#7677](https://github.com/infor-design/enterprise/issues/7677))
 - `[Pager]` Fixed pager pagesizes default settings cannot be overridden with custom settings. ([#7629](https://github.com/infor-design/enterprise/issues/7629))
 - `[Popover]` Fixed popover having issues on simulatenous clicks. ([#7679](https://github.com/infor-design/enterprise/issues/7679))
+- `[Popover]` Fixed where popover connected on click will not close on click (it just reopened). ([#7679](https://github.com/infor-design/enterprise/issues/7679))
 - `[Sparkline]` Fixed median fill on dark theme. ([#7717](https://github.com/infor-design/enterprise/issues/7717))
 - `[Searchfield]` Adjusted height for go button. ([#6695](https://github.com/infor-design/enterprise/issues/6695))
 - `[Tooltip]` Fixed in `extraClass` example page for tooltip. ([#7669](https://github.com/infor-design/enterprise/issues/7669))
 - `[WeekView]` Fixed bug where going to next didn't render the complete week. ([#7684](https://github.com/infor-design/enterprise/issues/7684))
+- `[WeekView]` Fixed the response of render on breakpoint in week view. ([#7727](https://github.com/infor-design/enterprise/issues/7727))
 
 ## v4.86.0
 

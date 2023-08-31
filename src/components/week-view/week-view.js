@@ -1058,6 +1058,7 @@ WeekView.prototype = {
     });
 
     $('body').off(`breakpoint-change.${this.id}`).on(`breakpoint-change.${this.id}`, () => this.onBreakPointChange());
+    $(window).on(`resize.${this.id}`, () => { this.element.trigger(`breakpoint-change.${this.id}`); });
 
     return this;
   },
