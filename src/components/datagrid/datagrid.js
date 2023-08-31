@@ -5078,7 +5078,7 @@ Datagrid.prototype = {
       }
 
       containerHtml.center += `<tr class="datagrid-expandable-row ${item.expanded ? ' is-expanded' : ''}"><td colspan="${visibleColumnsCenter + (this.settings.spacerColumn ? 1 : 0)}">
-        <div class="datagrid-row-detail hewwo" ${item.expanded ? ' style="height: auto"' : ''}><div class="datagrid-row-detail-padding">${renderedTmpl}</div></div>
+        <div class="datagrid-row-detail" ${item.expanded ? ' style="height: auto"' : ''}><div class="datagrid-row-detail-padding">${renderedTmpl}</div></div>
         </td></tr>`;
       if (this.hasRightPane) {
         containerHtml.right += `<tr class="datagrid-expandable-row no-border"><td colspan="${visibleColumnsRight}">
