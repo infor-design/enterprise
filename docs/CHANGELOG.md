@@ -58,6 +58,7 @@
 - `[Popover]` Fixed where popover connected on click will not close on click (it just reopened). ([#7679](https://github.com/infor-design/enterprise/issues/7679))
 - `[Sparkline]` Fixed median fill on dark theme. ([#7717](https://github.com/infor-design/enterprise/issues/7717))
 - `[Searchfield]` Adjusted height for go button. ([#6695](https://github.com/infor-design/enterprise/issues/6695))
+- `[Tabs]` Fixed alabaster design issues in tabs, tab-headers, tabs-module, tabs-multi components. ([#7803](https://github.com/infor-design/enterprise/issues/7803))
 - `[Tooltip]` Fixed in `extraClass` example page for tooltip. ([#7669](https://github.com/infor-design/enterprise/issues/7669))
 - `[WeekView]` Fixed bug where going to next didn't render the complete week. ([#7684](https://github.com/infor-design/enterprise/issues/7684))
 - `[WeekView]` Fixed the response of render on breakpoint in week view. ([#7727](https://github.com/infor-design/enterprise/issues/7727))
