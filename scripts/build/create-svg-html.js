@@ -85,6 +85,7 @@ const convertSvgMarkup = (id, contents) => {
   let changed = contents.replace(/<svg/, `<symbol id="icon-${id}"`);
   changed = changed.replace('</svg>', '</symbol>');
   changed = changed.replace(/\sxmlns="(.*?)"/, '');
+  changed = changed.replace(' style="color: white"', '');
   return changed;
 };
 
