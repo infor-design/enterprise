@@ -1,23 +1,18 @@
 <header class="header is-personalizable">
-  <div class="toolbar">
-    <div class="title">
+  <div class="flex-toolbar">
+    <div class="toolbar-section">
       {{> includes/header-appmenu-trigger}}
+    </div>
+    <div class="toolbar-section title">
       <h1>Long Page Title containing a left-side Button -- Does the Ellipsis make sense?</h1>
     </div>
 
-    <div class="buttonset">
+    <div class="toolbar-section search">
       <label for="header-searchfield" class="audible">Search</label>
-      <input id="header-searchfield" class="searchfield" name="header-searchfield" />
+      <input id="header-searchfield" class="searchfield" name="header-searchfield" data-options="{'collapsible': true, 'clearable': true}" />
     </div>
 
-    <div class="more">
-      <button class="btn-actions" type="button">
-        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-          <use href="#icon-more"></use>
-        </svg>
-        <span class="audible" data-translate="text">More</span>
-      </button>
-    </div>
+    {{> includes/header-actionbutton}}
 
   </div>
 </header>

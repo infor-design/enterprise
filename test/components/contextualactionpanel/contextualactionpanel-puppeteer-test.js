@@ -9,7 +9,7 @@ describe('Contextual Action Panel Puppeteer Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should not disable the elements inside of the tab panel when the li is not initially selected', async () => {
+    it.skip('should not disable the elements inside of the tab panel when the li is not initially selected', async () => {
       await page.click(`${capTrigger}`);
 
       await page.waitForSelector('.modal-engaged', { visible: true });

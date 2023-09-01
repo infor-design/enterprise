@@ -815,13 +815,6 @@ Tooltip.prototype = {
             return;
           }
 
-          if (target.closest('.popover').length === 0 &&
-              target.closest('.dropdown-list').length === 0) {
-            if (!(target.is('button') && target.siblings().hasClass('datepicker') && self.element.get(0) === target.get(0))) {
-              self.hide();
-            }
-          }
-
           // Closes patepicker dialog closes when clicking on a parent popover
           if (target.closest('.popover').length === 1 &&
               target.closest('.popover').not('.monthview-popup').length &&

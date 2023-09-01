@@ -1085,9 +1085,6 @@ SearchField.prototype = {
       // Retain input value if searchfield is not focused
       self.settings.value = $(self.element).val();
 
-      const wrapperElem = self.wrapper[0];
-      wrapperElem.classList.remove('has-focus', 'active');
-
       self.removeDocumentDeactivationEvents();
       self.clearResponsiveState();
 
@@ -1095,6 +1092,9 @@ SearchField.prototype = {
         self.collapse();
       } else if (self.isContainedByFlexToolbar && (self.settings.collapsible || breakpoints.isBelow('phone-to-tablet'))) {
         self.wrapper[0].classList.remove('is-open');
+      } else {
+        const wrapperElem = self.wrapper[0];
+        wrapperElem.classList.remove('has-focus', 'active');
       }
     }
 
@@ -1893,13 +1893,17 @@ SearchField.prototype = {
 
       self.clearResponsiveState();
 
-      self.wrapper[0].classList.remove('active', 'is-open');
+      self.wrapper.removeClass('is-open');
+      self.wrapper.removeClass('active');
       if (env.browser.isIE11) {
         self.wrapper[0].classList.remove('is-open');
       }
-      if (this.isContainedByFlexToolbar || !this.isFocused) {
-        self.wrapper[0].classList.remove('has-focus');
-      }
+
+      setTimeout(() => {
+        if (this.isContainedByFlexToolbar || !this.isFocused) {
+          self.wrapper[0].classList.remove('has-focus');
+        }
+      }, 300);
 
       if (self.categoryButton && self.categoryButton.length) {
         self.categoryButton.data('popupmenu').close(false, true);

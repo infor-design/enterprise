@@ -136,6 +136,8 @@ Bar.prototype = {
     const isPersonalizable = this.element.closest('.is-personalizable').length > 0;
     const isFormatter = !!s.formatterString;
     const format = value => d3.format(self.settings.formatterString || ',')(value);
+    const isBarStacked = s.type === 'bar-stacked';
+    const isBarNormalized = s.type === 'bar-normalized';
 
     let maxTextWidth;
     let largestText;
@@ -312,12 +314,13 @@ Bar.prototype = {
       this.ellipsis.use = true;
     }
 
+    // Check if there's no axis label bottom and no legend
     if (!!s?.axisLabels?.bottom && series[0].name === '') {
       h += 30;
     }
 
     if (s.isStacked) {
-      h -= (legendHeight - 8);
+      h -= (isBarStacked || isBarNormalized ? legendHeight - 20 : 0);
     }
 
     self.svg = d3.select(this.element[0])

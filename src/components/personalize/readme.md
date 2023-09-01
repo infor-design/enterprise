@@ -66,8 +66,8 @@ Only a subset of components support personalization:
 - [Headers and Subheaders]( ./header) - Each gets a contrasting back color and all elements in it are reflected.
 - [Module Tabs]( ./tabs-module) - The tabs and sub tabs and states.
 - [Button (Primary)]( ./button) - The selection states.
-- [Hyperlinks]( ./hyperlinks) - The link color.
-- [Hero Widget]( ./homepage) - Gets a contrasting back color.
+- [Hyperlinks]( ./hyperlinks) - The link color no longer changes
+- [Hero Widget]( ./homepage) - No longer changes
 
 ## Personalize Classes
 

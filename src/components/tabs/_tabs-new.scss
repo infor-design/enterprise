@@ -126,6 +126,11 @@
   }
 }
 
+.tab-focus-indicator.is-visible {
+  border-color: $tab-selected-color;
+  box-shadow: $focus-box-shadow-new;
+}
+
 // RTL Styles
 html[dir='rtl'] {
   .tab-container.horizontal,
@@ -151,5 +156,6 @@ html[dir='rtl'] .tab-container.header-tabs .tab .icon-error {
 }
 
 @import '../tabs-module/tabs-module-new';
+@import '../tabs-multi/multi-tabs-new';
 @import './tabs-horizontal-new';
 @import '../tabs-vertical/tabs-vertical-new';
