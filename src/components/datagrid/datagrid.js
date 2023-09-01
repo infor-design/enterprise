@@ -4194,6 +4194,7 @@ Datagrid.prototype = {
 
       self.runningCount++;
       const rowHtml = self.rowHtml(s.dataset[i], currentCount, i);
+
       if (self.hasLeftPane && rowHtml.left) {
         tableHtmlLeft += rowHtml.left;
       }
@@ -4754,9 +4755,8 @@ Datagrid.prototype = {
 
     isEven = (this.recordCount % 2 === 0);
     const isSelected = this.isRowSelected(rowData);
-    const isActivated = rowData._rowactivated;
+    const isActivated = rowData._rowactivated || rowData.expanded;
     const rowStatus = { class: '', svg: '' };
-
     if (rowData && rowData.rowStatus && (rowData.rowStatus.icon === 'new' ? self.settings.showNewRowIndicator : true)) {
       rowStatus.show = true;
       rowStatus.class = ` rowstatus-row-${rowData.rowStatus.icon}`;
@@ -5076,8 +5076,9 @@ Datagrid.prototype = {
           <div class="datagrid-row-detail"><div style="height: ${height}px"></div></div>
           </td></tr>`;
       }
-      containerHtml.center += `<tr class="datagrid-expandable-row"><td colspan="${visibleColumnsCenter + (this.settings.spacerColumn ? 1 : 0)}">
-        <div class="datagrid-row-detail"><div class="datagrid-row-detail-padding">${renderedTmpl}</div></div>
+
+      containerHtml.center += `<tr class="datagrid-expandable-row ${item.expanded ? ' is-expanded' : ''}"><td colspan="${visibleColumnsCenter + (this.settings.spacerColumn ? 1 : 0)}">
+        <div class="datagrid-row-detail" ${item.expanded ? ' style="height: auto"' : ''}><div class="datagrid-row-detail-padding">${renderedTmpl}</div></div>
         </td></tr>`;
       if (this.hasRightPane) {
         containerHtml.right += `<tr class="datagrid-expandable-row no-border"><td colspan="${visibleColumnsRight}">
