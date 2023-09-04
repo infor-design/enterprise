@@ -14,7 +14,8 @@
 
     .chart-legend.is-bottom {
       .chart-legend-item.is-one-line {
-        margin: 0 auto !important;
+        margin: 5px auto 0 !important;
+        padding: 0 5px;
       }
     }
   }
@@ -282,6 +283,10 @@
         align-items: center;
         display: flex !important;
         font-size: 0;
+
+        &.is-two-column {
+          padding: 2px 5px 4px 2px;
+        }
       }
 
       .chart-legend-item-text {
