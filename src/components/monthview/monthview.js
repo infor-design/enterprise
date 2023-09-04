@@ -1719,7 +1719,7 @@ MonthView.prototype = {
       inPageCalendarEl.on('aftercollapse', () => {
         this.element.trigger('monthviewcollapsed');
       });
-      
+
       const calExpandableareaApi = inPageCalendarEl.data('expandablearea');
 
       // Set expandable area for month year picker
