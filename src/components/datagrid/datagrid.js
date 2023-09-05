@@ -151,7 +151,6 @@ const COMPONENT_NAME = 'datagrid';
  * @param {boolean} [settings.dblClickApply=false] If true, needs to double click to trigger select row in datagrid.
  * @param {boolean} [settings.allowPasteFromExcel=false] If true will allow data copy/paste from excel
  * @param {string} [settings.fallbackImage='insert-image'] Will set a fall back image if the image formatter cannot load an image.
- * @param {string} [settings.headerBackgroundColor='dark'] Ability to set background color of datagrid header either light or dark.
 */
 const DATAGRID_DEFAULTS = {
   // F2 - toggles actionableMode "true" and "false"
@@ -254,8 +253,7 @@ const DATAGRID_DEFAULTS = {
   fallbackTooltip: {
     content: 'Image could not load',
     delay: 200
-  },
-  headerBackgroundColor: 'dark'
+  }
 };
 
 function Datagrid(element, settings) {
@@ -1664,11 +1662,6 @@ Datagrid.prototype = {
     }
 
     this.activeEllipsisHeaderAll();
-
-    // Set the color background header (light and dark)
-    (self?.settings?.headerBackgroundColor === 'light') ? //eslint-disable-line
-      (self?.headerRowLeft?.addClass('light'), self?.headerRow?.addClass('light'), self?.headerRowRight?.addClass('light')) :
-      (self?.headerRow?.addClass('dark'), self?.headerRowRight?.addClass('dark'), self?.headerRowLeft?.addClass('dark'));
   },
 
   /**
@@ -3287,7 +3280,7 @@ Datagrid.prototype = {
                   target.el.addClass('is-over');
                   showTarget.addClass('is-over');
                   rect = target.el[0].getBoundingClientRect();
-                  showTarget[0].style.left = `${parseInt(rect.left + (Locale.isRTL() ? 2 : 0), 10)}px`;
+                  showTarget[0].style.left = `${parseInt(rect.left + (Locale.isRTL() ? 2 : 1), 10)}px`;
                   let lastAdjustment = 0;
                   if (target.el.hasClass('last')) {
                     lastAdjustment = -(header.height() - 3);
@@ -5924,7 +5917,7 @@ Datagrid.prototype = {
    */
   updateColumns(columns, columnGroups) {
     if (columnGroups === undefined) {
-      columnGroups = null;
+      columnGroups = this.settings.columnGroups;
     } else if (columnGroups === null || columnGroups.length === 0) {
       this.settings.groupable = null;
     }
