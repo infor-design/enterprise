@@ -458,6 +458,11 @@ Personalize.prototype = {
         colors.btnBgHoverColor = '#313236';
         colors.tabBottomBorderColor = '#50535A';
         colors.moduleTabsSelectedTextColor = themeColors.palette.white.value;
+        colors.headerTextColor = themeColors.palette.graphite[10].value;
+        colors.headerIconColor = themeColors.palette.graphite[10].value;
+        colors.tabCloseInactiveColor = themeColors.palette.graphite[10].value;
+        colors.tabCloseHoverColor = themeColors.palette.white.value;
+        colors.tabVerticalHoverColor = themeColors.palette.slate[80].value;
 
         colors.tabHeaderColor = themeColors.palette.slate[70].value;
         colors.headerTabBorder = themeColors.palette.slate[50].value;

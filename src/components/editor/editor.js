@@ -771,7 +771,7 @@ Editor.prototype = {
 
     $(`<label class="audible" for="${newTextareaID}">${labelContents}</label>`).appendTo(textareaContainer);
 
-    const textarea = $(`<textarea id="${newTextareaID}" class="editable"></textarea>`).appendTo(textareaContainer);
+    const textarea = $(`<textarea id="${newTextareaID}" data-options="{ characterCounter: false }" class="editable"></textarea>`).appendTo(textareaContainer);
     return textarea;
   },
 
