@@ -366,15 +366,6 @@ $toolbarsearchfield-category-empty-width: 51px;
       color: $searchfield-icon-color;
     }
 
-    &.has-close-icon-button.is-open {
-      & > .close:not(.collapse-button):hover {
-        &,
-        & .icon {
-          color: $searchfield-icon-hover-color;
-        }
-      }
-    }
-
     &:not(.non-collapsible) {
       .searchfield {
         height: 38px; // Unable to use token here. need to use the soho height

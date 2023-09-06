@@ -74,12 +74,12 @@
           left: calc(100% - 72px);
 
           @media (min-width: $breakpoint-phone-to-tablet) {
-            left: 180px;
+            left: 193px;
           }
 
           .icon {
-            left: 0;
-            top: -8px;
+            left: 2px;
+            top: -3px;
           }
         }
       }
