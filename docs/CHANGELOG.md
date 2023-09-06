@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.88.0
+
+## v4.88.0 Fixes
+
+- `[Card/Widget]` Fix inconsistency in widget size. ([#7896](https://github.com/infor-design/enterprise/issues/7896))
+
 ## v4.87.0
 
 ## v4.87.0 Features
