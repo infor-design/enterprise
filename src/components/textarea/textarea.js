@@ -67,7 +67,7 @@ Textarea.prototype = {
         this.element.is('.textarea-def') ? 'input-md' : //eslint-disable-line
           this.element.is('.textarea-lg') ? 'input-lg' : ''); //eslint-disable-line
 
-    if (this.settings.characterCounter || this.getMaxLength()) {
+    if (this.settings.characterCounter && this.getMaxLength()) {
       this.counter = this.element.siblings('.textarea-wordcount');
 
       if (this.counter.length === 0) {
