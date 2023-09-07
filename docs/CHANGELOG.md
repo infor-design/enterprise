@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.88.0
+
+## v4.87.0 Fixes
+
+- `[Tabs]` Fixed the focus alignment in tabs for RTL. ([#7772](https://github.com/infor-design/enterprise/issues/7772))
+
 ## v4.87.0
 
 ## v4.87.0 Features
