@@ -5,6 +5,7 @@
 ## v4.88.0 Fixes
 
 - `[Card/Widget]` Fix inconsistency in widget size. ([#7896](https://github.com/infor-design/enterprise/issues/7896))
+- `[Tabs]` Fixed the focus alignment in tabs for RTL. ([#7772](https://github.com/infor-design/enterprise/issues/7772))
 
 ## v4.87.0
 
