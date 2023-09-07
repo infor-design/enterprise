@@ -3860,16 +3860,12 @@ Tabs.prototype = {
         targetRectObj.right += tablistScrollLeft;
 
         if (isRTL) {
-          targetRectObj.right += 1;
+          targetRectObj.right -= 1;
 
           // On RTL, remove the width of the controls on the left-most side of the tab container
           if (!isNotHeaderTabs) {
             targetRectObj.left -= tabMoreWidth;
             targetRectObj.right -= tabMoreWidth;
-          }
-
-          if (!hasSectionForm && !hasHeader) {
-            targetRectObj.right -= 42;
           }
         }
 
@@ -3892,7 +3888,7 @@ Tabs.prototype = {
       }
 
       if (isNotHeaderTabs && !self.isVerticalTabs() && !self.isModuleTabs()) {
-        targetRectObj.height; // eslint-disable-line
+        targetRectObj.height -= 1;
         targetRectObj.top += 2;
       }
 
