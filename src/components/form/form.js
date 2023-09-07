@@ -50,7 +50,7 @@ $.fn.enable = function () {
     .closest('.field')
     .removeClass('is-disabled');
 
-  this.closest('.field').find('button.trigger').enable();
+  this.closest('.field').find('button.trigger').removeAttr('disabled');
   return this;
 };
 
