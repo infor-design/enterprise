@@ -3940,7 +3940,7 @@ $datagrid-small-row-height: 25px;
       width: 36px;
 
       &:disabled {
-        opacity: 0.6;
+        opacity: $datagrid-filter-disabled-opacity;
 
         .icon {
           color: $datagrid-filter-disabled-color;
