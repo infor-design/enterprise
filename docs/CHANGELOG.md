@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.88.0
+
+## v4.88.0 Fixes
+
+- `[Lookup]` Fixed count text positioning. ([#7905](https://github.com/infor-design/enterprise/issues/7905))
+
 ## v4.87.0
 
 ## v4.87.0 Features
