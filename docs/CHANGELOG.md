@@ -4,6 +4,7 @@
 
 ## v4.87.0 Features
 
+- `[Datagrid]` Has a new design with a soft grey header. The white header background option is removed and this is now the default. ([#7814](https://github.com/infor-design/enterprise/issues/7814))
 - `[Icons]` Fixed shape and markup of status icons. Note: May need to update your code. ([#7747](https://github.com/infor-design/enterprise/issues/7661))
 - `[Masthead]` Set height of masthead to 40px. ([#7857](https://github.com/infor-design/enterprise/issues/7857))
 - `[Popover]` Improved popover title style and position, excluding the 'alternate' class. ([#7676](https://github.com/infor-design/enterprise/issues/7676))
@@ -28,6 +29,7 @@
 - `[Datagrid]` Added expanded default for expandable formatter. ([#7680](https://github.com/infor-design/enterprise/issues/7680))
 - `[Datepicker]` Fixed bug where date range selected is not properly rendered in some scenarios. ([#7528](https://github.com/infor-design/enterprise/issues/7528))
 - `[Datepicker]` Added a new `listcontextmenu` event that fires on right click of menu items. ([#7822](https://github.com/infor-design/enterprise/issues/7822))
+- `[Editor]` Refixed an xss issue in editor (iframes not permitted). ([#7590](https://github.com/infor-design/enterprise/issues/7590))
 - `[Editor]` Added swatch bar on colorpicker button. ([#7571](https://github.com/infor-design/enterprise/issues/7571))
 - `[Editor]` Fixed fonts selection selection on editor. ([#7762](https://github.com/infor-design/enterprise-ng/issues/7762))
 - `[Editor]` Changed the header color from dark to grey and other minor style improvements. ([#7606](https://github.com/infor-design/enterprise-ng/issues/7606))
