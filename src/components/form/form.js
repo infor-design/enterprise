@@ -49,6 +49,8 @@ $.fn.enable = function () {
   this.removeAttr('disabled readonly')
     .closest('.field')
     .removeClass('is-disabled');
+
+  this.closest('.field').find('button.trigger').enable();
   return this;
 };
 
