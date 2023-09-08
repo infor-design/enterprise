@@ -276,7 +276,7 @@
     border-top: 1px solid $chart-legend-border-color;
     margin: 0 auto;
     padding-bottom: 1em;
-    padding-top: 1em;
+    padding-top: 0.5em;
 
     &.adjusted-height {
       .chart-legend-item {
@@ -316,7 +316,7 @@
 
     &[tabindex='0']:focus {
       border-color: $input-color-focus-border;
-
+      border-radius: 4px;
       // Removed box shadow to match current style
       box-shadow: 0 0 4px 1px $focus-box-shadow-color;
       outline: none;
