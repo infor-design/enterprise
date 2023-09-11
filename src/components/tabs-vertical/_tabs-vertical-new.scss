@@ -1,6 +1,11 @@
 
 .tab-container.vertical {
+  background-color: $vertical-tab-background-color;
+  border-right: 1px solid $vertical-tab-border-color;
+
   > .tab-list-container {
+    background-color: $vertical-tab-background-color;
+
     > .tab-list {
       > .tab {
         max-width: 250px;
@@ -17,4 +22,29 @@
       }
     }
   }
+}
+
+.tab-container.vertical > .tab-list-container > .tab-list > .tab.is-selected:not(.is-disabled) {
+  &:hover {
+    background-color: $vertical-tab-hover-background-color;
+  }
+
+  &.is-selected {
+    background-color: $vertical-tab-selected-background-color;
+
+    a {
+      color: $vertical-tab-active-text-color-new;
+      font-weight: 600;
+    }
+
+    &:hover {
+      background-color: $vertical-tab-selected-background-color;
+
+      a {
+        color: $vertical-tab-active-text-color-new;
+        font-weight: 600;
+      }
+    }
+  }
+
 }

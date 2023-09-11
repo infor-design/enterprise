@@ -682,6 +682,7 @@ Tooltip.prototype = {
     }
 
     if (this.settings.initializeContent) {
+      this.settings.initializeContent = false;
       content.initialize();
     }
   },
@@ -814,17 +815,27 @@ Tooltip.prototype = {
             return;
           }
 
-          if (target.closest('.popover').length === 0 &&
-              target.closest('.dropdown-list').length === 0) {
-            if (!(target.is('button') && target.siblings().hasClass('datepicker') && self.element.get(0) === target.get(0))) {
-              self.hide();
-            }
-          }
-
           // Closes patepicker dialog closes when clicking on a parent popover
           if (target.closest('.popover').length === 1 &&
               target.closest('.popover').not('.monthview-popup').length &&
               self.element.prev().is('.datepicker')) {
+            self.hide();
+          }
+
+          let didHide = false;
+          if (target.closest('.popover').length === 0 &&
+            target.closest('.dropdown-list').length === 0) {
+            if (!(target.is('button') &&
+              (target.siblings().hasClass('datepicker') || target.siblings().hasClass('timepicker')) &&
+              self.element.get(0) === target.get(0))) {
+              if (!(self.element.get(0) === target.get(0) && target.is('button') && !target.is('button.trigger'))) {
+                self.hide();
+                didHide = true;
+              }
+            }
+          }
+
+          if (target.closest('.popover').length === 0 && target.is('.field') && !didHide) {
             self.hide();
           }
         })

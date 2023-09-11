@@ -74,7 +74,8 @@ xssUtils.sanitizeHTML = function (html) {
   // Remove Script tags
   santizedHtml = santizedHtml.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/g, '');
   // Remove iframe tags
-  santizedHtml = santizedHtml.replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/g, '');
+  santizedHtml = santizedHtml.replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, '');
+  santizedHtml = santizedHtml.replace(/<iframe\b[^<]*(?:(?!>)<[^<]*)*>/gi, '');
 
   // Remove console methods
   santizedHtml = this.sanitizeConsoleMethods(santizedHtml);

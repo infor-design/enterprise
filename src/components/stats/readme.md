@@ -25,9 +25,9 @@ The stat components provides a clickable, selectable, touchable link for accessi
 <div class="stat actionable" tabindex="0">
     <div class="assessment success">
         <div class="percentage">+28.62%</div>
-        <div class="status">
-            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-            <use href="#icon-success"></use>
+        <div class="icon-status amber01" role="presentation">
+            <svg class="icon amber05-color" focusable="false" aria-hidden="true">
+                <use href="#icon-building"></use>
             </svg>
         </div>
     </div>
@@ -53,10 +53,10 @@ To create a link that spans the whole widget (2 or 3 up) add the `dual` class to
 <div class="stat dual">
     <div class="assessment success">
         <div class="percentage">+28.62%</div>
-        <div class="status">
-            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+        <div class="icon-status emerald01" role="presentation">
+        <svg class="icon emerald05-color" focusable="false" aria-hidden="true">
             <use href="#icon-success"></use>
-            </svg>
+        </svg>
         </div>
     </div>
     <div class="details">

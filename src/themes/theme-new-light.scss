@@ -103,7 +103,16 @@ $modal-secondary-color: $ids-color-palette-slate-60;
 $module-tabs-active-bg-color: $ids-color-brand-primary-base;
 
 // DataGrid
-$datagrid-header-bg-color: $ids-color-palette-slate-80;
+$datagrid-header-bg-color: $ids-color-palette-slate-10;
+$datagrid-header-dragging-bg-color: $ids-color-palette-white;
+$datagrid-header-color: $ids-color-palette-slate-100;
+$datagrid-header-hover-color: $ids-color-palette-slate-20;
+$datagrid-nested-header-bg-color: $ids-color-palette-slate-10;
+$datagrid-nested-header-border-color: $ids-color-palette-slate-30;
+$datagrid-header-border-color: $ids-color-palette-slate-30;
+$datagrid-header-checkbox-border-color: $ids-color-palette-slate-80;
+$datagrid-header-active-color: $ids-color-palette-slate-20;
+
 $datagrid-list-header-color: $ids-color-font-base;
 $datagrid-list-header-bg-color: $ids-color-palette-slate-10;
 $datagrid-list-group-header-bg-color: $ids-color-palette-slate-20;
@@ -111,12 +120,20 @@ $datagrid-list-group-header-border-color: $ids-color-palette-slate-10;
 $datagrid-list-header-active-color: $ids-color-palette-slate-20;
 $datagrid-list-sort-icon-color: $ids-color-palette-slate-40;
 $datagrid-list-alt-sorted-icon-color: $ids-color-palette-slate-40;
-$datagrid-sort-icon-color: $ids-color-palette-slate-50;
+$datagrid-sort-icon-color: $ids-color-palette-slate-60;
+$datagrid-sort-icon-sorted-color: $ids-color-palette-slate-100;
 
-$datagrid-border-color: $ids-color-palette-slate-20;
-$datagrid-nested-header-border-color: $ids-color-palette-slate-30;
-$datagrid-header-border-color: $ids-color-palette-slate-30;
-$datagrid-header-checkbox-border-color: $ids-color-palette-slate-30;
+$datagrid-filter-border-color: $ids-color-palette-slate-100;
+$datagrid-filter-hover-border-color: $ids-color-palette-slate-90;
+$datagrid-filter-color: $ids-color-palette-slate-100;
+$datagrid-filter-hover-color: $ids-color-palette-slate-90;
+$datagrid-filter-disabled-color: $ids-color-palette-slate-30;
+$datagrid-filter-disabled-opacity: 0.3;
+$datagrid-filter-icon-color: $ids-color-palette-slate-100;
+$datagrid-filter-focus-color: $ids-color-palette-azure-70;
+$datagrid-filter-active-color: $ids-color-palette-azure-70;
+
+$datagrid-border-color: $ids-color-palette-slate-30;
 
 $datagrid-cell-readonly-bg-color: rgba(239, 239, 240, 0.5);
 $datagrid-cell-border-color: $ids-color-palette-slate-30;
@@ -133,18 +150,7 @@ $datagrid-list-header-hover-color: $ids-color-palette-slate-20;
 $datagrid-list-sort-icon-hover-color: $ids-color-palette-slate-50;
 
 $datagrid-rowgroup-header: $ids-color-palette-slate-10;
-$datagrid-rowgroup-color: $ids-color-palette-slate-60;
-
-$datagrid-light-header-bg-color: $ids-color-palette-white;
-$datagrid-light-header-bg-hover-color: #ecf2f8;
-$datagrid-light-header-bg-sorted-hover-color: $ids-color-palette-azure-10;
-$datagrid-light-header-font-color: $ids-color-palette-slate-100;
-$datagrid-light-header-border-color: $ids-color-palette-slate-30;
-$datagrid-light-header-filter-sort-icon-color: $ids-color-palette-slate-40;
-$datagrid-light-header-filter-sorted-icon-color: $ids-color-palette-slate-80;
-$datagrid-light-header-icon-color: $ids-color-palette-slate-80;
-$datagrid-light-header-icon-hover-color: $ids-color-palette-slate-100;
-$datagrid-light-header-input-border-hover-color: $ids-color-palette-slate-100;
+$datagrid-rowgroup-color: $ids-color-palette-slate-100;
 
 // Panels
 $panel-border-color: $ids-color-palette-slate-30;
@@ -291,16 +297,18 @@ $editor-hover-border-color: $input-color-hover-border;
 $editor-focus-border-color: $input-color-focus-border;
 $editor-line-number-color: $ids-color-brand-secondary-alt;
 $editor-color: $input-color;
-$editor-toolbar-bg-color: $ids-color-palette-slate-50;
+$editor-toolbar-bg-color: $ids-color-palette-slate-10;
 $editor-toolbar-bottom-border-color: $ids-color-palette-slate-30;
-$editor-btn-color: $ids-color-palette-slate-10;
-$editor-btn-hover-color: $ids-color-palette-white;
-$editor-btn-active-color: $ids-color-palette-azure-40;
-$editor-btn-disabled-color: $ids-color-palette-slate-40;
+$editor-btn-color: $ids-color-palette-slate-100;
+$editor-btn-hover-color: $ids-color-palette-slate-100;
+$button-editor-color-tertiary-hover-font-new: $ids-color-palette-slate-100;
+$editor-btn-active-color: $ids-color-palette-azure-70;
+$editor-btn-disabled-color: $ids-color-palette-slate-50;
 $editor-readonly-color: $input-readonly-color;
 $editor-btn-active-box-shadow: 0 0 0 2px transparent, 0 0 0 1px $ids-color-palette-azure-40, $focus-box-shadow;
-$editor-top-focus-box-shadow: -2px -2px 3px 0 rgba(54, 138, 192, 0.3);
+$editor-top-focus-box-shadow: -1px -1px 3px 0 rgba(54, 138, 192, 0.3);
 $editor-blockquote-color: $ids-color-palette-slate-40;
+$button-editor-color-hover-background-new: $ids-color-palette-slate-20;
 
 // Error Page
 $error-page-bg-color: $ids-color-palette-slate-30;
@@ -322,7 +330,7 @@ $popover-alternate-arrow-color: $ids-color-palette-slate-10;
 $popover-alternate-table-header: $ids-color-palette-slate-10;
 
 // Formatter Toolbar
-$formatter-toolbar-separator-color: $ids-color-palette-slate-80;
+$formatter-toolbar-separator-color: $ids-color-palette-slate-30;
 
 // Toolbar
 $toolbar-standalone-bg-color: $ids-color-palette-slate-20;

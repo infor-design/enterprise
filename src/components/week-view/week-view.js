@@ -93,6 +93,8 @@ WeekView.prototype = {
 
     if (!this.settings.endDate) {
       this.settings.endDate = dateUtils.lastDayOfWeek(new Date(), this.settings.firstDayOfWeek);
+    } else {
+      this.settings.endDate.setHours(23, 59, 59, 999);
     }
 
     return this.setLocaleThenBuild();
@@ -1056,6 +1058,7 @@ WeekView.prototype = {
     });
 
     $('body').off(`breakpoint-change.${this.id}`).on(`breakpoint-change.${this.id}`, () => this.onBreakPointChange());
+    $(window).on(`resize.${this.id}`, () => { this.element.trigger(`breakpoint-change.${this.id}`); });
 
     return this;
   },

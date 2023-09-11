@@ -35,8 +35,11 @@ $header-toolbar-searchfield-icon-color: $ids-color-palette-white;
 $header-toolbar-button-hover-color: transparent;
 $header-default-bg-color: $ids-color-palette-azure-80;
 
-$header-hero-text-color: rgba($ids-color-palette-white, 1);
-$header-hero-widget-bg-color: $subhead-bg-color;
+// Homepages
+$header-hero-text-color: $ids-color-palette-white;
+$header-label-text-color: $ids-color-palette-white;
+$homepage-button-color: $ids-color-palette-white;
+$header-hero-widget-bg-color: $ids-color-palette-white;
 
 $dropdown-search-bg-color: $ids-color-palette-white;
 $panel-bg-color: $ids-color-palette-white;
@@ -594,9 +597,10 @@ $chart-legend-border-color: $ids-color-palette-graphite-30;
 $datagrid-border-color: $ids-color-palette-graphite-60;
 $datagrid-header-color: $ids-color-palette-white;
 $datagrid-header-bg-color: $ids-color-palette-graphite-70;
+$datagrid-header-dragging-bg-color: $ids-color-palette-graphite-60;
 $datagrid-nested-header-bg-color: $ids-color-palette-graphite-60;
 $datagrid-nested-header-border-color: $ids-color-brand-secondary-alt;
-$datagrid-header-border-color: $ids-color-palette-graphite-60;
+$datagrid-header-border-color: $ids-color-palette-graphite-40;
 $datagrid-header-hover-color: $ids-color-palette-graphite-100;
 $datagrid-header-active-color: $ids-color-palette-graphite-80;
 $datagrid-header-checkbox-border-color: $ids-color-palette-graphite-50;
@@ -644,7 +648,8 @@ $datagrid-filter-border-color: $ids-color-palette-slate-40;
 $datagrid-filter-hover-border-color: $ids-color-palette-white;
 $datagrid-filter-color: $ids-color-palette-white;
 $datagrid-filter-hover-color: $ids-color-palette-white;
-$datagrid-filter-disabled-color: $ids-color-palette-slate-60;
+$datagrid-filter-disabled-color: $ids-color-palette-slate-40;
+$datagrid-filter-disabled-opacity: 0.5;
 $datagrid-filter-icon-color: $ids-color-palette-slate-30;
 $datagrid-filter-focus-color: $ids-color-palette-azure-40;
 $datagrid-filter-active-color: $ids-color-palette-azure-40;

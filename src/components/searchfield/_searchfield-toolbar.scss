@@ -16,6 +16,7 @@ $toolbarsearchfield-category-empty-width: 51px;
   text-align: left;
   white-space: nowrap;
   width: $toolbarsearchfield-empty-width;
+  min-height: 38px;
 
   @media only screen and (max-width: $breakpoint-phone-to-tablet) {
     overflow: auto;
@@ -48,6 +49,41 @@ $toolbarsearchfield-category-empty-width: 51px;
       font-weight: $ids-number-font-weight-bold;
     }
   }
+
+  &.has-collapse-button {
+    .searchfield {
+      transition: all 300ms;
+      width: 0%;
+      cursor: pointer;
+      right: 0;
+      position: absolute;
+    }
+
+    svg.icon:not(.close) {
+      transition: all 300ms;
+      position: absolute;
+      left: calc(100% - 26px);
+    }
+
+    &.is-open {
+      .searchfield {
+        transition: all 300ms;
+        width: 100%;
+        cursor: text;
+      }
+
+      svg.icon:not(.close) {
+        left: 8px;
+      }
+
+      .collapse-button svg.icon:not(.close) {
+        left: 9px;
+        top: 12px !important;
+      }
+    }
+  }
+
+
 
   &:not(.is-open):not(.non-collapsible) {
     .searchfield {

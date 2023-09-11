@@ -99,8 +99,8 @@ describe('WeekView API', () => {
   it('should move to next week and back', () => {
     document.body.querySelector('.btn-icon.next').click();
 
-    expect(document.body.querySelector('thead tr th:nth-child(2)').textContent.trim()).toEqual('7Sat');
-    expect(document.body.querySelector('thead tr th:nth-child(8)').textContent.trim()).toEqual('13Fri');
+    expect(document.body.querySelector('thead tr th:nth-child(2)').textContent.trim()).toEqual('8Sun');
+    expect(document.body.querySelector('thead tr th:nth-child(8)').textContent.trim()).toEqual('14Sat');
     document.body.querySelector('.btn-icon.prev').click();
 
     expect(document.body.querySelector('thead tr th:nth-child(2)').textContent.trim()).toEqual('1Sun');

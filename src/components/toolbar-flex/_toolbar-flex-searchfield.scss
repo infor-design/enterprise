@@ -139,7 +139,8 @@ html[dir='rtl'] {
 
         &.has-collapse-button {
           .searchfield {
-            width: calc(100% - 34px);
+            border-radius: 8px;
+            width: 100%;
           }
         }
       }

@@ -1,6 +1,10 @@
 // Uplift Field Filter
 //================================================== */
 
+.field-short.fieldfilter-wrapper div:first-of-type div.dropdown  {
+  border-right-color: unset;
+}
+
 .field.fieldfilter-wrapper {
   div:first-of-type {
     margin-right: auto;

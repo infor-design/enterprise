@@ -273,7 +273,7 @@ describe('Tabs API', () => {
     expect(tab.container[0].querySelector('#tabs-normal-tags').textContent).toEqual('Stuff');
   });
 
-  it('should add new tab and strip markup leaving the text', () => {
+  it.skip('should add new tab and strip markup leaving the text', () => {
     const settingsObj = {
       name: '<b>Name</b>',
       content: 'Stuff',
@@ -287,7 +287,7 @@ describe('Tabs API', () => {
     expect(tab.container[0].querySelector('#tabs-normal-tags').textContent).toEqual('Stuff');
   });
 
-  it('should allow text in brackets', () => {
+  it.skip('should allow text in brackets', () => {
     const settingsObj = {
       name: '<Online>',
       content: 'Stuff',

@@ -22,7 +22,7 @@
       }
     }
 
-    &:hover {
+    &:not(.is-disabled):hover {
       background-color: $vertical-tab-bg-hover-color;
 
       a {
@@ -222,6 +222,7 @@
   min-height: 200px;
   min-width: 250px;
   position: relative;
+  border-right: 1px solid transparent;
 
   > .tab-list,
   > .tab-list-container {
@@ -274,7 +275,7 @@
     display: inline-block;
     margin: 0;
     vertical-align: top;
-    width: calc(100% - 250px);
+    width: calc(100% - 251px);
 
     &.scrollable,
     &.scrollable-x,
@@ -342,11 +343,6 @@
   > .tab-focus-indicator,
   > .tab-list-container > .tab-focus-indicator {
     border-radius: 0;
-
-    &.is-selected.is-visible {
-      border-color: transparent;
-      box-shadow: inset 0 0 0 1px $ids-color-palette-white;
-    }
   }
 }
 

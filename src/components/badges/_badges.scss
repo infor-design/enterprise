@@ -27,12 +27,12 @@
   @include antialiased();
 
   background-color: $badge-neutral-bg-color;
-  border-radius: 15px;
+  border-radius: 12px;
   color: $badge-neutral-color;
   font-size: $ids-size-font-sm;
   font-weight: $ids-number-font-weight-base;
-  height: 22px;
-  line-height: 22px;
+  height: 24px;
+  line-height: 24px;
   padding: 0 10px;
   text-decoration: none;
   vertical-align: middle;
@@ -72,10 +72,11 @@
   }
 
   &.round {
-    display: inline-block;
-    padding: 0 1px 0 0;
+    display: inline-flex;
     text-align: center;
-    width: 22px;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
   }
 
   &.is-linkable {
@@ -89,15 +90,18 @@
     }
 
     .btn-linkable {
-      height: 20px;
-      padding-left: 5px;
-      vertical-align: top;
+      height: 24px;
+      padding-inline-start: 4px;
+      display: flex;
+      align-self: center;
+      justify-content: center;
+      flex-flow: column;
 
       .icon {
-        height: 10px;
+        height: 120px;
         margin: 0;
         vertical-align: baseline;
-        width: 10px;
+        width: 12px;
       }
     }
 
@@ -126,7 +130,7 @@
       .icon {
         height: 10px;
         margin: 0;
-        vertical-align: baseline;
+        vertical-align: unset;
         width: 10px;
       }
     }
@@ -364,8 +368,8 @@
   display: inline-block;
 
   &.pending {
-    min-height: 22px;
-    min-width: 22px;
+    min-height: 24px;
+    min-width: 24px;
     position: relative;
 
     // Clock circle

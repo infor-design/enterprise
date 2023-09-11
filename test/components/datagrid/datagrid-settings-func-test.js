@@ -102,7 +102,7 @@ describe('Datagrid Settings', () => {
       columnIds: [],
       paging: false,
       pagesize: 25,
-      pagesizes: [10, 25, 50, 75],
+      pagesizes: [],
       showPageSizeSelector: true,
       indeterminate: false,
       source: null,
@@ -147,8 +147,7 @@ describe('Datagrid Settings', () => {
       fallbackTooltip: {
         content: 'Image could not load',
         delay: 200
-      },
-      headerBackgroundColor: 'dark'
+      }
     };
     datagridObj = new Datagrid(datagridEl, { dataset: data, columns });
   });

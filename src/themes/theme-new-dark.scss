@@ -17,12 +17,22 @@
 
 // Theme Overrides
 $body-color-primary-background: $ids-color-palette-slate-100;
+
+// HomePage
 $homepage-background-color: $body-color-primary-background;
 
+$header-hero-text-color: $ids-color-palette-white;
+$header-label-text-color: $ids-color-palette-white;
+$homepage-button-color: $ids-color-palette-white;
+$header-hero-widget-bg-color: $ids-color-palette-white;
 $header-default-bg-color: $ids-color-palette-slate-90;
 $header-default-bg-hover-color: $ids-color-palette-slate-80;
 
+// Inputs
 $input-color-focus-border: $ids-color-palette-slate-10;
+$input-border-color: $ids-color-palette-slate-30;
+
+$homepage-header-menu-button-color: $ids-color-palette-white;
 
 // Form Background Color
 $header-toolbar-button-hover-color: $ids-color-palette-slate-70;
@@ -33,7 +43,9 @@ $panel-bg-color: $ids-color-palette-slate-100;
 $panel-border-color: $ids-color-palette-slate-70;
 $drop-shadow-depth: rgba($ids-color-boxshadow-base, 0.4);
 $focus-box-shadow-color: rgba($ids-color-palette-slate-10, 0.3);
-$focus-box-shadow: 0 0 4px 2px $focus-box-shadow-color;
+$focus-box-shadow-color-new: rgba(54, 138, 192, 0.2);
+$focus-box-shadow: rgba(54, 138, 192, 0.3) 0 0 3px 2px;
+$focus-box-shadow-new: 0 0 4px 2px $focus-box-shadow-color-new;
 
 $focus-box-shadow-spinbox: 0 -3px 3px 0 $focus-box-shadow-color,
   0 3px 3px 0 $focus-box-shadow-color;
@@ -72,7 +84,7 @@ $font-color-alert: $ids-color-status-danger;
 
 // The hyperlink Style
 $hyperlink-color: $ids-color-palette-azure-40;
-$hyperlink-focus-border-color: $ids-color-brand-primary-base;
+$hyperlink-focus-border-color: $ids-color-palette-azure-60;
 $hyperlink-visited-color: $ids-color-palette-amethyst-30;
 $hyperlink-disabled-color: $disabled-color;
 
@@ -119,6 +131,8 @@ $button-color-tertiary-destructive-disabled-background-new: $ids-color-palette-s
 
 $button-icon-disabled-color: $ids-color-palette-slate-60;
 
+$hero-button-color-tertiary-hover-background-new: $button-color-tertiary-hover-background-new;
+
 // Button Ripple
 $secondary-btn-ripple-color: $ids-color-palette-slate-60;
 $tertiary-btn-ripple-color: $ids-color-palette-slate-40;
@@ -132,7 +146,7 @@ $circlepager-disable-focus-border-color: $ids-color-palette-slate-50;
 
 // Popovers
 $popover-bg-color: $ids-color-palette-slate-80;
-$popover-border-color: $ids-color-palette-slate-60;
+$popover-border-color: $ids-color-palette-slate-50;
 $popover-box-shadow: 0 2px 5px $drop-shadow-depth;
 $popover-arrow-border-color: $ids-color-palette-slate-50;
 $popover-color: $font-color;
@@ -152,7 +166,7 @@ $progress-bar-bg-color: $ids-color-brand-primary-base;
 // Tooltips
 $tooltip-bg-color: $ids-color-palette-white;
 $tooltip-border-color: $ids-color-palette-white;
-$tooltip-box-shadow: 0 2px 5px $drop-shadow-depth;
+$tooltip-box-shadow: 0 2px 5px rgba(59, 59, 63, 0.4);
 $tooltip-color: $ids-color-palette-slate-100;
 $tooltip-error-bg-color: $ids-color-status-danger;
 $tooltip-error-color: $ids-color-palette-white;
@@ -218,12 +232,12 @@ $card-actions-toolbar-button-hover-color: $ids-color-palette-slate-10;
 $card-border-color-hover: $ids-color-palette-slate-70;
 
 // Popup Menu
-$popupmenu-color: $ids-color-palette-white;
+$popupmenu-color: $ids-color-palette-slate-10;
 $popupmenu-icon-color: $ids-color-palette-slate-10;
 $popupmenu-heading-color: $ids-color-palette-slate-40;
-$popupmenu-bg-color: $ids-color-palette-slate-70;
-$popupmenu-border-color: $ids-color-palette-slate-50;
-$popupmenu-box-shadow: 0 2px 5px $drop-shadow-depth;
+$popupmenu-bg-color: $ids-color-palette-slate-90;
+$popupmenu-border-color: $ids-color-palette-slate-60;
+$popupmenu-box-shadow: 0 2px 5px rgba(59, 59, 63, 1);
 $popupmenu-checked-color: $ids-color-palette-white;
 $popupmenu-hover-color: $ids-color-palette-slate-80;
 $popupmenu-checked-color-inverse: $ids-color-brand-primary-base;
@@ -236,7 +250,7 @@ $secondary-border-btn-hover-border-color: $ids-color-palette-white;
 $secondary-border-btn-ripple-color: $ids-color-palette-white;
 
 // Input Fields
-$input-color: $input-color-initial-font;
+$input-color: $ids-color-palette-slate-10;
 $input-disabled-color: $input-color-disabled-font;
 $input-focus-border-color: $ids-color-brand-primary-base;
 $input-placeholder-color: $ids-color-palette-slate-30;
@@ -290,6 +304,7 @@ $listview-disabled-color: $input-disabled-color;
 $listview-selected-text-color: $ids-color-palette-white;
 $listview-header-bg-color: $ids-color-palette-slate-60;
 $listview-header-color: $ids-color-palette-white;
+$listview-full-width-border-color: $ids-color-palette-slate-60;
 
 $listview-toolbar-button-text-color: $ids-color-palette-slate-30;
 $listview-toolbar-button-icon-color: $ids-color-palette-slate-30;
@@ -335,7 +350,7 @@ $colorpicker-readonly-icon-color: $ids-color-palette-slate-40;
 
 // Contextual Toolbar
 $contextual-toolbar-color: $inverse-color;
-$contextual-toolbar-bg-color: $ids-color-brand-primary-base;
+$contextual-toolbar-bg-color: $ids-color-palette-slate-80;
 $contextual-panel-separator-bg-color: $ids-color-palette-slate-30;
 
 // Drop down
@@ -370,17 +385,17 @@ $timepicker-readonly-icon-color: $ids-color-palette-slate-40;
 // Fileupload
 $fileupload-border-color: $ids-color-palette-slate-50;
 $fileupload-primary-color: $ids-color-palette-slate-30;
-$fileupload-secondary-color: $ids-color-palette-slate-40;
+$fileupload-secondary-color: $ids-color-palette-slate-20;
 $fileupload-status-color: $ids-color-palette-slate-90;
 $fileupload-status-hover-color: $ids-color-palette-slate-50;
 $fileupload-hover-color: $ids-color-palette-slate-20;
 $fileupload-droparea-color: $ids-color-palette-slate-40;
 $fileupload-droparea-hover-color: $ids-color-palette-slate-40;
-$fileupload-droparea-hover-bg-color: $ids-color-palette-azure-90;
-$fileupload-droparea-bg-color: rgba($ids-color-palette-slate-70, 0.5);
-$fileupload-droparea-hover-bg-color: $ids-color-palette-slate-70;
+$fileupload-droparea-bg-color: $ids-color-palette-slate-90;
+$fileupload-droparea-hover-bg-color: $ids-color-palette-slate-80;
 $fileupload-droparea-dd-hover-border-color: $ids-color-brand-primary-base;
 $fileupload-droparea-dd-hover-bg-color: rgba($ids-color-palette-slate-100, 0.3);
+$fileupload-droparea-hover-icon-color: $ids-color-palette-slate-30;
 
 // Spinbox
 $spinbox-active-color: $font-color-extrahighcontrast;
@@ -436,6 +451,7 @@ $cardlist-box-shadow-color: rgba(0, 0, 0, 0.1);
 $checkbox-disabled-text-color: $checkbox-color-unchecked-disabled-font;
 $checkbox-disabled-checked-bg-color: $checkbox-color-unchecked-disabled-border;
 $checkbox-color-disabled-font: $input-color-disabled-font;
+$checkbox-color-checked-initial-background: $ids-color-palette-slate-80;
 
 // Switch
 $radio-checked-color: $ids-color-brand-primary-base;
@@ -455,23 +471,26 @@ $switch-hover-box-shadow: 0 2px 5px $drop-shadow-depth;
 // Editor
 $editor-bg-color: transparent;
 $editor-border-color: $input-color-initial-border;
-$editor-hover-border-color: $ids-color-palette-white;
-$editor-focus-border-color: $ids-color-brand-primary-base;
+$editor-hover-border-color: $ids-color-palette-slate-10;
+$editor-focus-border-color: $ids-color-palette-slate-10;
 $editor-line-number-color: $ids-color-palette-slate-40;
 $editor-color: $input-color;
-$editor-toolbar-bg-color: $ids-color-palette-slate-20;
-$editor-toolbar-bottom-border-color: $ids-color-palette-slate-80;
-$editor-btn-color: $ids-color-palette-slate-70;
-$editor-btn-hover-color: $ids-color-palette-slate-100;
-$editor-btn-active-color: $ids-color-brand-primary-lighter;
+$editor-toolbar-bg-color: $ids-color-palette-slate-70;
+$editor-toolbar-bottom-border-color: $ids-color-palette-slate-50;
+$editor-btn-color: $ids-color-palette-slate-10;
+$editor-btn-hover-color: $ids-color-palette-slate-60;
+$editor-btn-active-color: $ids-color-palette-azure-40;
 $editor-btn-disabled-color: $ids-color-palette-slate-30;
+$editor-btn-hover-color: $ids-color-palette-slate-10;
+$button-editor-color-tertiary-hover-font-new: $ids-color-palette-slate-10;
 $editor-readonly-color: $input-readonly-color;
-$editor-btn-active-box-shadow: 0 0 0 2px transparent, 0 0 0 1px $ids-color-brand-primary-base, $focus-box-shadow;
-$editor-top-focus-box-shadow: -2px -2px 3px 0 rgba(141, 201, 230, 0.3);
+$editor-btn-active-box-shadow: 0 0 0 2px transparent, 0 0 0 1px $ids-color-palette-slate-10, $focus-box-shadow;
+$editor-top-focus-box-shadow: -2px -2px 3px 0 rgba(250, 250, 250, 0.3);
 $editor-blockquote-color: $ids-color-palette-slate-40;
+$button-editor-color-hover-background-new: $ids-color-palette-slate-60;
 
 // Formatter Toolbar
-$formatter-toolbar-separator-color: $ids-color-palette-slate-80;
+$formatter-toolbar-separator-color: $ids-color-palette-slate-30;
 
 // Radio Buttons
 $radio-border-hover-color: $radio-color-unchecked-hover-border;
@@ -641,11 +660,16 @@ $tab-alt-border-color: $ids-color-palette-slate-80;
 // Vertical Tabs
 $vertical-tab-text-color: $ids-color-palette-white;
 $vertical-tab-text-hover-color: $ids-color-palette-white;
-$vertical-tab-bg-hover-color: $ids-color-palette-slate-60;
+$vertical-tab-bg-hover-color: $ids-color-palette-slate-80;
 
 $vertical-tab-panel-bg-color: $ids-color-palette-slate-80;
+$vertical-tab-border-color: $ids-color-palette-slate-80;
 $vertical-tab-sidebar-bg-color: $ids-color-palette-slate-70;
-$vertical-tab-sidebar-border-color: $ids-color-palette-slate-50;
+$vertical-tab-sidebar-border-color: $ids-color-palette-slate-70;
+
+$vertical-tab-background-color: $ids-color-palette-slate-90;
+$vertical-tab-selected-background-color: $ids-color-palette-slate-100;
+$vertical-tab-hover-background-color: $ids-color-palette-slate-70;
 
 // Multi-tabs
 $mutlitabs-section-border-color: $ids-color-palette-slate-50;
@@ -661,32 +685,34 @@ $chart-arc-stroke: $ids-color-palette-slate-70;
 $chart-legend-border-color: $ids-color-palette-slate-70;
 
 // DataGrid
-$datagrid-border-color: $ids-color-palette-slate-50;
-$datagrid-header-color: $ids-color-palette-slate-100;
-$datagrid-header-bg-color: $ids-color-palette-slate-20;
-$datagrid-light-header-bg-color: $ids-color-palette-slate-20;
+$datagrid-border-color: $ids-color-palette-slate-60;
+$datagrid-header-bg-color: $ids-color-palette-slate-70;
+$datagrid-header-dragging-bg-color: $ids-color-palette-slate-80;
+$datagrid-header-color: $ids-color-palette-slate-10;
+$datagrid-header-hover-color: $ids-color-palette-slate-60;
+$datagrid-header-border-color: $ids-color-palette-slate-50;
+$datagrid-header-drag-arrow-color: $ids-color-palette-slate-10;
 
-$datagrid-nested-header-bg-color: $ids-color-palette-slate-40;
-$datagrid-nested-header-border-color: $ids-color-palette-slate-60;
-$datagrid-header-border-color: $ids-color-palette-slate-80;
-$datagrid-header-hover-color: $ids-color-palette-slate-20;
-$datagrid-header-active-color: $ids-color-palette-slate-30;
-$datagrid-header-checkbox-border-color: $ids-color-palette-slate-90;
-$datagrid-sort-icon-color: $ids-color-palette-slate-40;
-$datagrid-sort-icon-sorted-color: $ids-color-palette-slate-100;
+$datagrid-nested-header-bg-color: $ids-color-palette-slate-60;
+$datagrid-nested-header-border-color: $ids-color-palette-slate-50;
+$datagrid-header-active-color: $ids-color-palette-slate-80;
+$datagrid-header-checkbox-border-color: $ids-color-palette-slate-30;
+$datagrid-sort-icon-color: $ids-color-palette-slate-30;
+$datagrid-sort-icon-sorted-color: $ids-color-palette-slate-10;
 $datagrid-required-icon-color: $ids-color-palette-slate-100;
 
-$datagrid-cell-color: $ids-color-palette-white;
-$datagrid-cell-bg-color: $body-color-primary-background;
+$datagrid-cell-color: $ids-color-palette-slate-10;
+$datagrid-cell-bg-color: $ids-color-palette-slate-90;
 $datagrid-cell-editing-bg-color: $panel-bg-color;
 $datagrid-cell-readonly-bg-color: rgba(62, 62, 66, 0.5);
 $datagrid-cell-readonly-color: $ids-color-palette-white;
 $datagrid-cell-border-color: $ids-color-palette-slate-60;
-$datagrid-group-row-border-color: $ids-color-palette-slate-50;
-$datagrid-cell-focus-box-shadow: 0 0 4px 1px rgba(101, 104, 113, 0.4);
+$datagrid-group-row-border-color: $ids-color-palette-slate-60;
+$datagrid-cell-focus-box-shadow: 0 0 4px 1px rgba(85, 163, 243, .8);
+$datagrid-cell-focus-border-color: $ids-color-palette-azure-40;
 $datagrid-data-color: $font-color-extrahighcontrast;
-$datagrid-row-selected-color: #334d60;
-$datagrid-row-selected-color-dark: #3e586c;
+$datagrid-row-selected-color: $ids-color-palette-slate-100;
+$datagrid-row-selected-color-dark: $ids-color-palette-slate-100;
 $datagrid-row-hover-color: $ids-color-palette-slate-80;
 $datagrid-row-icon-color: $ids-color-palette-slate-30;
 
@@ -710,14 +736,15 @@ $datagrid-list-header-checkbox-border-color: $ids-color-palette-slate-50;
 $datagrid-list-header-active-color: $ids-color-palette-black;
 $datagrid-list-row-group-hover-color: $datagrid-row-selected-color;
 
-$datagrid-filter-border-color: $ids-color-palette-slate-70;
-$datagrid-filter-hover-border-color: $ids-color-palette-slate-100;
-$datagrid-filter-color: $ids-color-palette-slate-100;
-$datagrid-filter-hover-color: $ids-color-palette-slate-100;
-$datagrid-filter-disabled-color: $ids-color-palette-slate-40;
-$datagrid-filter-icon-color: $ids-color-palette-slate-70;
-$datagrid-filter-focus-color: $ids-color-brand-primary-alt;
-$datagrid-filter-active-color: $ids-color-brand-primary-alt;
+$datagrid-filter-border-color: $ids-color-palette-slate-10;
+$datagrid-filter-hover-border-color: $ids-color-palette-white;
+$datagrid-filter-color: $ids-color-palette-slate-10;
+$datagrid-filter-hover-color: $ids-color-palette-slate-20;
+$datagrid-filter-disabled-color: $ids-color-palette-slate-50;
+$datagrid-filter-disabled-opacity: 0.3;
+$datagrid-filter-icon-color: $ids-color-palette-slate-10;
+$datagrid-filter-focus-color: $ids-color-palette-azure-40;
+$datagrid-filter-active-color: $ids-color-palette-azure-40;
 
 $datagrid-list-filter-border-color: $ids-color-palette-slate-30;
 $datagrid-list-filter-hover-border-color: $ids-color-palette-white;
@@ -729,7 +756,7 @@ $datagrid-list-filter-focus-color: $ids-color-brand-primary-base;
 $datagrid-list-filter-active-color: $ids-color-brand-primary-base;
 
 $datagrid-rowgroup-header: $ids-color-palette-slate-70;
-$datagrid-rowgroup-color: $font-color;
+$datagrid-rowgroup-color: $ids-color-palette-slate-10;
 $datagrid-empty-bg-color: $ids-color-palette-slate-70; // $datagrid-cell-bg-color
 $datagrid-badges-azure-font-color: $ids-color-palette-white;
 
@@ -868,7 +895,6 @@ $header-primary-btn-background-hover-color: $ids-color-palette-slate-80;
 $header-flex-toolbar-input-searchfield-color: $ids-color-palette-white;
 $header-flex-toolbar-close-icon-color: $header-flex-toolbar-input-searchfield-color;
 
-$header-hero-text-color: rgba($ids-color-palette-white, 1);
 $header-hero-widget-bg-color: $ids-color-palette-slate-90;
 
 // Header Tabs

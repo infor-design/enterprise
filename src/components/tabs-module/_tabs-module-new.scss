@@ -30,8 +30,8 @@
         }
 
         .icon {
-          height: 11px;
-          margin-top: -1px;
+          height: 18px;
+          margin-top: -3px;
         }
 
         svg.icon.close {
@@ -89,10 +89,28 @@
 
 .tab-panel-container {
   padding-top: 9px;
+
+  .tab-panel {
+    .header .toolbar .title [class^='btn'] + h1 {
+      margin-top: 4px;
+    }
+  }
 }
 
 .multitabs-section {
   .tab-panel-container {
     padding-top: unset;
-  } 
+  }
+}
+
+.tab-container.module-tabs .tab-focus-indicator.is-visible {
+  box-shadow: none;
+
+  &:not(.is-selected) {
+    border-color: $ids-color-palette-white;
+  }
+
+  &.is-selected {
+    border-color: transparent;
+  }
 }

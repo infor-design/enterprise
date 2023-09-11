@@ -368,6 +368,11 @@
           <input type="checkbox" checked="true" class="checkbox" name="offset-check" id="offset-check" />
           <label for="offset-check" class="checkbox-label">Offset the page container (don't hide any content)</label>
         </div>
+
+        <div class="field">
+          <input type="checkbox" class="checkbox" name="collapse-click-check" id="collapse-click-check" />
+          <label for="collapse-click-check" class="checkbox-label">Collapse/Hide when clicking outside an expanded menu</label>
+        </div>
       </div>
     </div>
     <div class="row test-spacer">&nbsp;</div>
@@ -385,12 +390,14 @@
     $('html').personalize({ colors: '#fff' });
     $('[data-theme-name="theme-classic"]').parent().addClass('is-disabled');
 
-    const navAPI = $('#nav').data('modulenav');
+    const navEl = $('#nav');
+    const navAPI = navEl.data('modulenav');
     const containerEl = $('.module-nav-container');
     const dropdownEl = $('#display-mode-dropdown')
     const dropdownAPI = $('#display-mode-dropdown').data('dropdown');
     const displayCheckEl = $('#display-detail-check');
     const offsetCheckEl = $('#offset-check');
+    const collapseCheckEl = $('#collapse-click-check');
     const hamburgerBtnEl = $('#header-hamburger');
     const pinSectionsCheckEl = $('#pin-sections');
 
@@ -426,6 +433,14 @@
       });
     }
 
+    collapseCheckEl.on('change.test', (e) => {
+      navAPI.updated({ enableOutsideClick: collapseCheckEl[0].checked });
+    });
+
+    navEl.on('displaymodechange.test', (e, mode) => {
+      dropdownAPI.selectValue(mode === false ? '' : mode);
+    });
+
     // Connect component event handling
     const roleSwitcherEl = $('.role-dropdown');
     const roleSwitcherAPI = roleSwitcherEl.data('modulenavswitcher');
@@ -442,5 +457,12 @@
 
     // Customizations to the component after init
     navAPI.updated({ displayMode: 'collapsed' });
+
+    $('.module-nav-switcher').on('listcontextmenu', function (e, delegate) {
+      console.log('Context Menu Event Fired')
+      const url = $(delegate.target).text().replace(/^\s+|\s+$/g, '').replace(' ', '').toLocaleLowerCase();
+      $(delegate.target)
+        .attr('href', `https://example.com/${url}`);
+    });
   });
 </script>

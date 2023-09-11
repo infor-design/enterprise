@@ -11,12 +11,12 @@
 
 .masthead .masthead-icon > .icon {
   border-radius: 4px;
-  margin: 0 8px;
+  margin-inline-start: 6px;
 }
 
 .masthead .flex-toolbar .toolbar-section {
   .masthead-icon > .icon {
-    margin: 1px 6px;
+    margin: 0 6px;
   }
 
   &.title h1 {

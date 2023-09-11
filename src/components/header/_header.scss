@@ -495,8 +495,11 @@ $subheader-height: 60px;
         vertical-align: middle;
       }
 
-      .has-collapse-button .collapse-button {
-        right: 1px;
+      .has-collapse-button {
+        .collapse-button {
+            position: absolute;
+            right: 0;
+          }
       }
     }
   }
@@ -518,6 +521,10 @@ $subheader-height: 60px;
 
     &.has-focus {
       box-shadow: none;
+    }
+
+    .go-button {
+      height: 38px;
     }
   }
 

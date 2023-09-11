@@ -1,3 +1,14 @@
+<style>
+  /* Defines rules for the custom icon style */
+  .custom-icon {
+    border: 1px solid var(--ids-color-slate-100);
+    border-radius: 2px;
+    height: 18px;
+    margin-inline-end: 8px;
+    top: 3px;
+    width: 18px;
+  }
+</style>
 
 <div class="row top-padding">
   <div class="twelve columns">
@@ -21,6 +32,15 @@
       </div>
     </div>
 
+    <div class="field">
+      <label for="example-external">Dropdown With External icons</label>
+        <select id="example-external" name="example-external" class="dropdown">
+        <option value="opt-2" data-icon="{icon: 'https://randomuser.me/api/portraits/lego/7.jpg'}">One</option>
+        <option value="opt-3" data-icon="{icon: 'https://randomuser.me/api/portraits/lego/1.jpg'}">Two</option>
+        <option value="opt-4" data-icon="{icon: 'https://randomuser.me/api/portraits/lego/2.jpg'}">Three</option>
+        <option value="opt-5" data-icon="{icon: 'https://randomuser.me/api/portraits/lego/3.jpg'}">Four</option>
+      </select>
+    </div>
   </div>
 </div>
 

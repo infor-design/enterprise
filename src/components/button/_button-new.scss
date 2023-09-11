@@ -189,6 +189,10 @@
     svg.icon {
       color: $button-editor-color-tertiary-hover-font-new;
     }
+
+    &.is-active svg.icon {
+      color: $editor-btn-active-color;
+    }
   }
 }
 
