@@ -4,6 +4,7 @@
 
 ## v4.88.0 Fixes
 
+- `[Breadcrumb]` Updated hover color for breadcrumb in header. ([#7801](https://github.com/infor-design/enterprise/issues/7801))
 - `[Searchfield]` Adjusted position and hover color for custom button. ([#7832](https://github.com/infor-design/enterprise/issues/7832))
 - `[Tabs]` Fixed the focus alignment in tabs for RTL. ([#7772](https://github.com/infor-design/enterprise/issues/7772))
 
