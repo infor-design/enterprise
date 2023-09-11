@@ -14,8 +14,12 @@
 
     .chart-legend.is-bottom {
       .chart-legend-item.is-one-line {
-        margin: 5px auto 0 !important;
+        margin: 10px 44px 0 100px !important;
         padding: 0 2px 1px;
+
+        + .list-button {
+          margin-top: 9px;
+        }
       }
     }
   }
