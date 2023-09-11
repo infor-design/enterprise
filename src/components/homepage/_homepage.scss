@@ -337,6 +337,11 @@
   text-align: center;
 }
 
+.widget-content.no-scroll,
+.card-content.no-scroll {
+  overflow: hidden;
+}
+
 // Hero widget
 .hero-widget {
   background-color: $header-hero-widget-bg-color;
