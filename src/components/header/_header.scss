@@ -876,6 +876,7 @@ $subheader-height: 60px;
       padding: 0;
     }
 
+    .breadcrumb-list li.current .hyperlink,
     .hyperlink {
       color: $header-breadcrumb-color;
 
