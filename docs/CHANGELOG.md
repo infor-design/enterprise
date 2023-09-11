@@ -5,6 +5,7 @@
 ## v4.88.0 Fixes
 
 - `[Tabs]` Fixed the focus alignment in tabs for RTL. ([#7772](https://github.com/infor-design/enterprise/issues/7772))
+- `[Charts]` Fixed the size of the chart titles in columns. ([#7889](https://github.com/infor-design/enterprise/issues/7889))
 
 ## v4.87.0
 
