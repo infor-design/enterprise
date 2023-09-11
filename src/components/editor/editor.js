@@ -2783,8 +2783,7 @@ Editor.prototype = {
     }
 
     // Check if selected text is in current editor
-    const selectedElement = $(this.selection.anchorNode.parentNode).is('font') ? $(this.selection.anchorNode.parentNode.parentNode) : $(this.selection.anchorNode.parentNode); 
-    if (this.element.get(0) !== selectedElement.parent().get(0)) {
+    if (this.element.get(0) !== $(this.selection.anchorNode.parentNode).parent().get(0)) {
       return;
     }
 

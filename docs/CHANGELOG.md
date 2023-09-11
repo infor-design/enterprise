@@ -4,7 +4,6 @@
 
 ## v4.88.0 Fixes
 
-- `[Editor]` Fixed editor text not changing to other font headers after changing colors. ([#7796](https://github.com/infor-design/enterprise/issues/7796))
 - `[Tabs]` Fixed the focus alignment in tabs for RTL. ([#7772](https://github.com/infor-design/enterprise/issues/7772))
 
 ## v4.87.0
