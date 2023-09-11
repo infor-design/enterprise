@@ -955,7 +955,11 @@ html[class*="theme-classic-"] .tab-container.is-personalizable .tab-list-contain
 .header.is-personalizable + .page-container .scrollable-flex-header.personalize-subheader .breadcrumb .breadcrumb-overflow-container::after,
 .header.is-personalizable + .page-container .scrollable-flex-header.personalize-subheader .breadcrumb .breadcrumb-list li::after,
 .header.is-personalizable + .page-container .scrollable-flex-header.personalize-subheader .breadcrumb ol li::after  {
-  color: ${colors.contrast};
+  color: ${colors.contrast} !important;
+}
+
+.header.is-personalizable + .page-container .scrollable-flex-header.personalize-subheader .breadcrumb .hyperlink:hover {
+  border-bottom: 1px solid ${colors.contrast}
 }
 
 .header.is-personalizable + .page-container .scrollable-flex-header.personalize-subheader .breadcrumb {
