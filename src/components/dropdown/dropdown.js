@@ -878,10 +878,9 @@ Dropdown.prototype = {
       const allSelected = opts.not('[disabled], .hidden').length === selectedOpts.not('[disabled], .hidden').length;
 
       ulContents += `<li role="none" class="dropdown-select-all-list-item${allSelected ? ' is-selected' : ''}">` +
-        `<a role="option" href="#" id="dropdown-select-all-anchor" class="dropdown-select-all-anchor">${
-          Locale.translate('SelectAll')
+        `<a role="option" href="#" id="dropdown-select-all-anchor" class="dropdown-select-all-anchor">${Locale.translate('SelectAll')
         }</a>` +
-      '</li>';
+        '</li>';
     }
 
     // Move selected options in each group to just underneath their corresponding group headers.
@@ -1761,7 +1760,7 @@ Dropdown.prototype = {
       }
 
       if (e.key !== this.filterTerm && e.key.toLowerCase() === this.filterTerm &&
-          !self.settings.noSearch) {
+        !self.settings.noSearch) {
         this.filterTerm = e.key;
       }
     }
@@ -2083,7 +2082,7 @@ Dropdown.prototype = {
       this.virtualScroller = new VirtualScroll(this.virtualScrollElem, {
         height: 304,
         itemHeight: 32,
-        itemTemplate: function(item, elem) { //eslint-disable-line
+        itemTemplate: function (item, elem) { //eslint-disable-line
           let li = self.buildLiOption(elem, item);
           if (elem.selected) {
             selectedElem = elem;
@@ -2263,7 +2262,7 @@ Dropdown.prototype = {
         };
 
         if ((newPos.x >= pos.x + threshold) || (newPos.x <= pos.x - threshold) ||
-            (newPos.y >= pos.y + threshold) || (newPos.y <= pos.y - threshold)) {
+          (newPos.y >= pos.y + threshold) || (newPos.y <= pos.y - threshold)) {
           self.touchPrevented = true;
         }
       });
@@ -2301,7 +2300,6 @@ Dropdown.prototype = {
       this.parentScrollableArea.on('scroll.dropdown', (e) => {
         this.scrollDocument(e);
       });
-      this.parentScrollableArea.css('overscroll-behavior', 'none');
     }
 
     $('body').on('resize.dropdown', () => {
@@ -2336,8 +2334,8 @@ Dropdown.prototype = {
    */
   isDropdownElement(target) {
     return target.closest('.dropdown, .multiselect').length > 0 ||
-        target.closest('.dropdown-list').length > 0 ||
-        self.touchmove === true;
+      target.closest('.dropdown-list').length > 0 ||
+      self.touchmove === true;
   },
 
   /**
@@ -3538,8 +3536,7 @@ Dropdown.prototype = {
       attrToCopy.isData = attrToCopy.name.substr(0, 5) === 'data-';
       if (attrToCopy.isData && !attrToCopy.isExclude(attrToCopy.name)) {
         attrToCopy.obj[attrToCopy.name] = attr[key].value;
-        attrToCopy.str += ` ${
-          attrToCopy.name}="${attr[key].value}"`;
+        attrToCopy.str += ` ${attrToCopy.name}="${attr[key].value}"`;
       }
     }
     return { str: attrToCopy.str, obj: attrToCopy.obj };  //eslint-disable-line

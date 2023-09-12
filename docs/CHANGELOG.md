@@ -1,5 +1,12 @@
 # What's New with Enterprise
 
+## v4.68.4
+
+## v4.68.4 Fixes
+
+- `[Dropdown]` Removed overflow none style for dropdown modal. ([#6033](https://github.com/infor-design/enterprise/issues/6033))
+- `[Number]` Added additional check for `formatNumber`. ([#7752](https://github.com/infor-design/enterprise/issues/7752))
+
 ## v4.68.2
 
 ## v4.68.2 Fixes
