@@ -169,7 +169,7 @@ SearchField.prototype = {
    * @returns {boolean} whether or not the searchfield is currently able to be collapsed.
    */
   get isCurrentlyCollapsible() {
-    return this.settings.collapsible === true || (this.settings.collapsible === 'mobile' && this.shouldBeFullWidth());
+    return this.settings.collapsible === true || this.settings.collapsible === 'mobile' || this.shouldBeFullWidth();
   },
 
   /**
