@@ -245,6 +245,8 @@
 
   .tooltip-content {
     padding: 20px;
+    height: 100%;
+    overflow: auto;
   }
 
   &.alternate {
