@@ -14,7 +14,12 @@
 
     .chart-legend.is-bottom {
       .chart-legend-item.is-one-line {
-        margin: 0 auto !important;
+        margin: 10px 44px 0 100px !important;
+        padding: 0 2px 1px;
+
+        + .list-button {
+          margin-top: 9px;
+        }
       }
     }
   }
@@ -275,13 +280,17 @@
     border-top: 1px solid $chart-legend-border-color;
     margin: 0 auto;
     padding-bottom: 1em;
-    padding-top: 1em;
+    padding-top: 0.5em;
 
     &.adjusted-height {
       .chart-legend-item {
         align-items: center;
         display: flex !important;
         font-size: 0;
+
+        &.is-two-column {
+          padding: 2px 5px 4px 2px;
+        }
       }
 
       .chart-legend-item-text {
@@ -311,6 +320,7 @@
 
     &[tabindex='0']:focus {
       border-color: $input-color-focus-border;
+      border-radius: 4px;
 
       // Removed box shadow to match current style
       box-shadow: 0 0 4px 1px $focus-box-shadow-color;
@@ -329,7 +339,7 @@
     &.is-one-line {
       height: inherit;
       padding: 0;
-      min-height: 35px;
+      min-height: 28px;
     }
   }
 
