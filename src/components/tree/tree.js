@@ -177,9 +177,6 @@ Tree.prototype = {
   // Added parameters - To show check box and icon on demand for particular node
   decorateNode(a, iconToSet, hideCheckbox, nodeData) {
     a = this.isjQuery(a) ? a : $(a);
-    a.children().off();
-    a[0].innerHTML = xssUtils.stripHTML(a.html());
-    console.log('Strip HTML', a.html());
 
     let parentCount = 0;
     let badgeData = a[0].getAttribute('data-badge');
