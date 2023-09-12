@@ -2823,10 +2823,6 @@ Editor.prototype = {
     if (document.queryCommandState('strikethrough')) {
       document.execCommand('strikethrough', false, el);
     }
-    if (selectionData.el && selectionData.el.innerHTML && selectionData.el.innerHTML.indexOf('<font') > -1) {
-      document.execCommand('removeFormat', false, 'foreColor');
-      document.execCommand('removeFormat', false, 'backColor');
-    }
     if (selectionData.el && selectionData.el.innerHTML && selectionData.el.innerHTML.substr(0, 4) === '<ul>') {
       document.execCommand('insertunorderedlist', false, el);
       document.execCommand('removeFormat', false, el);
