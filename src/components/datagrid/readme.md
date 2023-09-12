@@ -110,6 +110,7 @@ $('#datagrid').datagrid({
 |`sortable` | If false, the column cannot be sorted.|
 |`width` | The column width, this can be an integer for pixel width or a percent fx `10%`, if left off the columns will be sized to contents and to fit the width of the grid using the internal algorithm.|
 |`hidden` | If true the column will be hidden, but will appear in the personalization dialog and can thus be later shown by the user.|
+|`hideable` | The column will not appear in the personalization dialog and thus cannot be controlled there by the user.|
 |`resizable` | If false the column will not be resizable, thus is a fixed size and can never be changed by the user by dragging the left and right edge.|
 |`headerTooltip` | Can be used to set a tooltip specific to the column header.|
 |`reorderable` | The column cannot be dragged around to have its order in the list changed.|

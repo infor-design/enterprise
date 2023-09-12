@@ -821,6 +821,23 @@ Tooltip.prototype = {
               self.element.prev().is('.datepicker')) {
             self.hide();
           }
+
+          let didHide = false;
+          if (target.closest('.popover').length === 0 &&
+            target.closest('.dropdown-list').length === 0) {
+            if (!(target.is('button') &&
+              (target.siblings().hasClass('datepicker') || target.siblings().hasClass('timepicker')) &&
+              self.element.get(0) === target.get(0))) {
+              if (!(self.element.get(0) === target.get(0) && target.is('button') && !target.is('button.trigger'))) {
+                self.hide();
+                didHide = true;
+              }
+            }
+          }
+
+          if (target.closest('.popover').length === 0 && target.is('.field') && !didHide) {
+            self.hide();
+          }
         })
         .on(`keydown.${COMPONENT_NAME}-${self.uniqueId}`, (e) => {
           if (e.which === 27 || self.settings.isError) {

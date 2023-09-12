@@ -39,6 +39,31 @@
   width: 0;
 }
 
+// Radio with hitbox
+.radio.hitbox {
+  + .radio-label {
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    vertical-align: middle;
+    min-width: 44px;
+    height: 44px;
+    padding-left: 38px;
+    padding-right: 14px;
+  }
+
+  + label {
+    &::before {
+      margin-top: 0;
+    }
+
+    &::after {
+      left: 17px;
+      top: 40%;
+    }
+  }
+}
+
 .inline-radio {
   margin-bottom: 0;
 }
