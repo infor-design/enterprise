@@ -2827,10 +2827,6 @@ Editor.prototype = {
       document.execCommand('insertunorderedlist', false, el);
       document.execCommand('removeFormat', false, el);
     }
-    if (selectionData.el && selectionData.el.innerHTML && selectionData.el.innerHTML.indexOf('<font') > -1) {
-      document.execCommand('removeFormat', false, 'foreColor');
-      document.execCommand('removeFormat', false, 'backColor');
-    }
     if (this.selection.anchorNode && this.selection.anchorNode.parentNode && this.selection.anchorNode.parentNode.parentElement.nodeName === 'UL') {
       document.execCommand('insertunorderedlist', false, el);
       document.execCommand('removeFormat', false, el);
