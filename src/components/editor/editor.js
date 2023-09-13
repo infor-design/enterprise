@@ -2823,11 +2823,15 @@ Editor.prototype = {
     if (document.queryCommandState('strikethrough')) {
       document.execCommand('strikethrough', false, el);
     }
+    if (selectionData.el && selectionData.el.innerHTML && selectionData.el.innerHTML.indexOf('<font') > -1) {
+      document.execCommand('removeFormat', false, 'foreColor');
+      document.execCommand('removeFormat', false, 'backColor');
+    }
+    // document.execCommand('formatBlock', false, el);
     if (selectionData.el && selectionData.el.innerHTML && selectionData.el.innerHTML.substr(0, 4) === '<ul>') {
       document.execCommand('insertunorderedlist', false, el);
       document.execCommand('removeFormat', false, el);
     }
-    // document.execCommand('formatBlock', false, el);
     if (this.selection.anchorNode && this.selection.anchorNode.parentNode && this.selection.anchorNode.parentNode.parentElement.nodeName === 'UL') {
       document.execCommand('insertunorderedlist', false, el);
       document.execCommand('removeFormat', false, el);
