@@ -2783,7 +2783,8 @@ Editor.prototype = {
     }
 
     // Check if selected text is in current editor
-    if (this.element.get(0) !== $(this.selection.anchorNode.parentNode).parent().get(0)) {
+    const selectedElement = $(this.selection.anchorNode.parentNode).is('font') ? $(this.selection.anchorNode.parentNode.parentNode) : $(this.selection.anchorNode.parentNode); 
+    if (this.element.get(0) !== selectedElement.parent().get(0)) {
       return;
     }
 
@@ -2821,10 +2822,6 @@ Editor.prototype = {
     }
     if (document.queryCommandState('strikethrough')) {
       document.execCommand('strikethrough', false, el);
-    }
-    if (selectionData.el && selectionData.el.innerHTML && selectionData.el.innerHTML.indexOf('<font') > -1) {
-      document.execCommand('removeFormat', false, 'foreColor');
-      document.execCommand('removeFormat', false, 'backColor');
     }
     if (selectionData.el && selectionData.el.innerHTML && selectionData.el.innerHTML.substr(0, 4) === '<ul>') {
       document.execCommand('insertunorderedlist', false, el);
