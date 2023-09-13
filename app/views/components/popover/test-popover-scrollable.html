@@ -3,13 +3,9 @@
 
     <div class="field">
       <button id="popover-trigger" class="btn-secondary" type="button">
-        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-          <use href="#icon-upload"></use>
-        </svg>
-        <span>Click To Show Popover</span>
+        <span>Show Popover</span>
       </button>
     </div>
-
   </div>
 </div>
 
@@ -112,32 +108,58 @@
       orci, eget gravida eros ante ac lorem. Nulla sem eros, vestibulum vitae eros et, interdum tempor neque.
     </p>
   </div>
-  <div class="modal-buttonset">
-    <button type="button" class="btn-modal-primary" id="popover-btn-view-more" data-automation-id="popover-btn-view-more-automation-id" >View more</button>
+  <div id="datagrid" class="datagrid">
   </div>
 </div>
 
 <script>
-  var POPOVER_OPTIONS = {
-    attributes: [{
-      name: 'data-automation-id',
-      value: 'my-popover-automation-id'
-    },
-    {
-      name: 'id',
-      value: 'my-popover-id'
-    }],
-    closebutton: true,
-    content: $('#popover-contents'),
-    extraClass: 'alternate',
-    placement: 'right',
-    popover: true,
-    offset: {
-      y: 10
-    },
-    title: 'ABC Engine Company',
-    trigger: 'click'
-  };
+  $('body').one('initialized', function () {
+    var POPOVER_OPTIONS = {
+      attributes: [{
+        name: 'data-automation-id',
+        value: 'my-popover-automation-id'
+      },
+      {
+        name: 'id',
+        value: 'my-popover-id'
+      }],
+      closebutton: true,
+      content: $('#popover-contents'),
+      extraClass: 'alternate scrollable',
+      placement: 'right',
+      popover: true,
+      offset: {
+        y: 10
+      },
+      title: 'ABC Engine Company',
+      trigger: 'click'
+    };
 
-  $('#popover-trigger').popover(POPOVER_OPTIONS);
+    $('#popover-trigger').popover(POPOVER_OPTIONS);
+
+    var columns = [];
+
+    $.getJSON('{{basepath}}api/datagrid-sample-data', function(res) {
+
+      // Define Columns for the Grid.
+      columns.push({ id: 'productId', hideable: false, name: 'Id', field: 'productId', formatter: Soho.Formatters.Text });
+      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Soho.Formatters.Hyperlink, click: function(e) { console.log('Click Fired') } });
+      columns.push({ id: 'activity', name: 'Activity', field: 'activity'});
+      columns.push({ id: 'hidden', hidden: true, name: 'Hidden', field: 'hidden'});
+      columns.push({ id: 'price', align: 'right', name: 'Actual Price', field: 'price', formatter: Soho.Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
+      columns.push({ id: 'percent', align: 'right', name: 'Actual %', field: 'percent', formatter: Soho.Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'percent'}});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Soho.Formatters.Date, dateFormat: 'M/d/yyyy'});
+      columns.push({ id: 'phone', name: 'Phone', field: 'phone', formatter: Soho.Formatters.Text});
+
+      // Init and get the api for the grid
+      $('#datagrid').datagrid({
+        columns: columns,
+        dataset: res,
+        saveColumns: false,
+        selectable: false,
+        attributes: [{ name: 'id', value: 'custom-id' }, { name: 'data-automation-id', value: 'custom-automation-id' } ],
+        toolbar: {title: 'Compressors', results: true, actions: true, rowHeight: true, personalize: true}
+      });
+    });
+  });
 </script>

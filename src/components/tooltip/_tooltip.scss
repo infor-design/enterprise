@@ -245,8 +245,6 @@
 
   .tooltip-content {
     padding: 20px;
-    height: 100%;
-    overflow: auto;
   }
 
   &.alternate {
@@ -272,6 +270,27 @@
       color: $popover-alternate-color;
       font-size: $ids-size-font-base;
       text-align: left;
+    }
+  }
+
+  &.scrollable {
+    overflow: hidden;
+
+    .tooltip-content {
+      height: 100%;
+      overflow: auto;
+
+      .toolbar {
+        .title {
+          width: 100% !important;
+        }
+      }
+
+      .modal-buttonset {
+        position: relative;
+        height: unset;
+        width: unset;
+      }
     }
   }
 
