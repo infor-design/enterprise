@@ -2782,8 +2782,10 @@ Editor.prototype = {
       return;
     }
 
+    const selectedElement = $(this.selection.anchorNode).is('div.editor') ? $(this.selection.anchorNode).get(0) : $(this.selection.anchorNode).parents('div.editor').get(0);
+
     // Check if selected text is in current editor
-    if (this.element.get(0) !== $(this.selection.anchorNode.parentNode).parent().get(0)) {
+    if (selectedElement === undefined || this.element.get(0) !== selectedElement) {
       return;
     }
 
