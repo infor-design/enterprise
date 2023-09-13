@@ -7,7 +7,8 @@
 
 .inline .radio ~ .label-text::after,
 .radio + label::after {
-  top: 8px;
+  top: 0.82rem;
+  left: 0.52rem;
 }
 
 .field-short,

@@ -20,15 +20,14 @@
 
 @mixin radio-checked-after-style {
   background-color: $radio-color-checked-initial-background;
-  border: 2px solid $radio-color-checked-initial-background;
   border-radius: 50%;
   content: '';
-  height: 4px;
+  height: 0.74rem;
   left: 5px;
   position: absolute;
   top: 7px;
   transition: all 0.2s ease 0s;
-  width: 4px;
+  width: 0.74rem;
 }
 
 .radio {
@@ -58,8 +57,8 @@
     }
 
     &::after {
-      left: 17px;
-      top: 40%;
+      left: 1.74rem;
+      top: 42%;
     }
   }
 }
