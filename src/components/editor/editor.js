@@ -2824,8 +2824,9 @@ Editor.prototype = {
       document.execCommand('strikethrough', false, el);
     }
     if (selectionData.el && selectionData.el.innerHTML && selectionData.el.innerHTML.indexOf('<font') > -1) {
-      document.execCommand('removeFormat', false, 'foreColor');
-      document.execCommand('removeFormat', false, 'backColor');
+      // document.execCommand('removeFormat', false, 'foreColor');
+      // document.execCommand('removeFormat', false, 'backColor');
+      console.log('Test');
     }
     // document.execCommand('formatBlock', false, el);
     if (selectionData.el && selectionData.el.innerHTML && selectionData.el.innerHTML.substr(0, 4) === '<ul>') {
