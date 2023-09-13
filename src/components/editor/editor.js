@@ -2827,6 +2827,7 @@ Editor.prototype = {
       document.execCommand('insertunorderedlist', false, el);
       document.execCommand('removeFormat', false, el);
     }
+    // document.execCommand('formatBlock', false, el);
     if (this.selection.anchorNode && this.selection.anchorNode.parentNode && this.selection.anchorNode.parentNode.parentElement.nodeName === 'UL') {
       document.execCommand('insertunorderedlist', false, el);
       document.execCommand('removeFormat', false, el);
