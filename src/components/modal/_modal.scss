@@ -238,7 +238,8 @@
 
     .searchfield-wrapper {
       min-width: 300px;
-      width: calc(100% + 2px);
+      width: 100%;
+      margin: 0;
 
       input {
         border-color: $fieldset-border-top-color;
