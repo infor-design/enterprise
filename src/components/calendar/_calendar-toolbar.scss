@@ -150,7 +150,7 @@
       margin-right: 0;
 
       &.active:not([disabled]) .icon {
-        color: $datepicker-selected-bg-color;
+        color: $button-color-tertiary-initial-font;
       }
     }
 
@@ -166,7 +166,7 @@
 
     .btn-cal-month-year {
       &.active:not([disabled]) .icon {
-        color: $datepicker-selected-bg-color;
+        color: $button-color-tertiary-initial-font;
       }
 
       .icon {

@@ -3,8 +3,9 @@
 .widget {
   border-radius: 8px;
   box-shadow: 0 0 4px $cardlist-box-shadow-color-hover;
-  height: 373px;
-  min-height: 373px;
+  height: 368px;
+  min-height: 368px;
+  overflow: hidden;
 
   &.bordered {
     border: none;
@@ -280,8 +281,6 @@
   }
 
   .listview {
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
     overflow: hidden;
     height: auto;
 
