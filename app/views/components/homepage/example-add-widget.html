@@ -1,3 +1,8 @@
+<style>
+  #bar-stacked-example {
+    height: 310px;
+  }
+</style>
 <div id="maincontent" class="homepage page-container scrollable" data-columns="3" role="main">
   <button type="button" class="btn-secondary" id="toggleBusinessInsight" style="margin: 0 0 15px 20px;">Append Business Insight</button>
 
@@ -79,28 +84,30 @@
   $('body').on('initialized', function () {
     var barData = [{
       data: [{
-        name: '2008',
-        value: 123
+          name: 'Category A',
+          value: 373,
+          url: 'test',
+          tooltip: 'Tooltip by Data <br> Component A <br> Information',
+          attributes: [
+           { name: 'id', value: 'bar-a' },
+           { name: 'data-automation-id', value: 'automation-id-bar-a' }
+         ]
       }, {
-        name: '2009',
-        value: 234
+          name: 'Category B',
+          value: 372,
+          attributes: [
+           { name: 'id', value: 'bar-b' },
+           { name: 'data-automation-id', value: 'automation-id-bar-b' }
+         ]
       }, {
-        name: '2010',
-        value: 345
+          name: 'Category C',
+          value: 236.35,
+          attributes: [
+           { name: 'id', value: 'bar-c' },
+           { name: 'data-automation-id', value: 'automation-id-bar-c' }
+         ]
       }],
-      name: 'Series 1'
-    }, {
-      data: [{
-        name: '2008',
-        value: 235
-      }, {
-        name: '2009',
-        value: 267
-      }, {
-        name: '2010',
-        value: 573
-      }],
-      name: 'Series 2'
+      name: 'Categories'  //Can be optionally passed in makes less sense with one: Group 1
     }];
 
     var pieData = [{
