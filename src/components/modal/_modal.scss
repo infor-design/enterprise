@@ -540,6 +540,8 @@ body.modal-engaged {
 }
 
 .modal-body {
+  overflow-x: auto;
+
   > *:not(.pager-toolbar):last-child {
     margin-bottom: 0;
   }
