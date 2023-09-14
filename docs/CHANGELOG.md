@@ -2,6 +2,10 @@
 
 ## v4.88.0
 
+## v4.88.0 Features
+
+- `[Form/Label]` Implemented a form layout designed to facilitate an inline design within a responsive-form container. ([#7764](https://github.com/infor-design/enterprise/issues/7764))
+
 ## v4.88.0 Fixes
 
 - `[Breadcrumb]` Updated hover color for breadcrumb in header. ([#7801](https://github.com/infor-design/enterprise/issues/7801))
