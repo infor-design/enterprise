@@ -273,6 +273,27 @@
     }
   }
 
+  &.scrollable {
+    overflow: hidden;
+
+    .tooltip-content {
+      height: 100%;
+      overflow: auto;
+
+      .toolbar {
+        .title {
+          width: 100% !important;
+        }
+      }
+
+      .modal-buttonset {
+        position: relative;
+        height: unset;
+        width: unset;
+      }
+    }
+  }
+
   .row:last-child {
     margin-bottom: -15px;
   }
