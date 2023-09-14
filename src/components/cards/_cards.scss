@@ -269,7 +269,7 @@ $card-header-section: '.card-header-section', '.widget-header-section';
 
     .expandable-header {
       &:first-child {
-        padding-top: 13px;
+        padding-top: 0;
       }
 
       .icon {
@@ -280,7 +280,7 @@ $card-header-section: '.card-header-section', '.widget-header-section';
 
     .btn-expander {
       border: 1px solid transparent;
-      border-radius: 2px;
+      border-radius: 8px;
       display: inline-block;
 
       &:focus:not(.hide-focus) {
@@ -525,7 +525,7 @@ $card-header-section: '.card-header-section', '.widget-header-section';
 
       .icon {
         left: 11px;
-        top: 11px;
+        top: 9px;
       }
     }
 
@@ -542,8 +542,8 @@ $card-header-section: '.card-header-section', '.widget-header-section';
 .widget-content,
 .card-content {
   flex-direction: column;
-  height: 318px;
-  min-height: 318px;
+  height: 320px;
+  min-height: 320px;
   overflow: auto;
   width: 100%;
 
@@ -800,7 +800,6 @@ html[dir='rtl'] {
 
   .widget-title {
     margin: 0;
-    width: 230px;
   }
 
   .widget-title:has(+ .badge) {
