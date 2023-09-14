@@ -851,6 +851,10 @@ Autocomplete.prototype = {
       a = anchorOrEvent;
     }
 
+    if (a.hasClass('no-results')) {
+      return;
+    }
+
     if (a.is('li')) {
       li = a;
       a = a.children('a');

@@ -28,6 +28,11 @@
       background-color: $dropdown-color-selected-background;
       color: $dropdown-color-selected-font;
     }
+
+    &.is-selected:has(a.no-results) {
+      color: $popupmenu-color;
+      background-color: transparent;
+    }
   }
 
   // Disable arrows
