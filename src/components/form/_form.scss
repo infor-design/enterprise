@@ -128,13 +128,13 @@
   .flex-columns {
     display: inline-block;
 
-    @media (min-width: 767px) {
+    @media (min-width: $breakpoint-phone-to-tablet) {
       display: flex;
       justify-content: space-between;
     }
 
     .columns {
-      @media (max-width: 767px) {
+      @media (max-width: $breakpoint-phone-to-tablet) {
         padding: 0;
       }
     }
