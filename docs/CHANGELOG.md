@@ -1,13 +1,33 @@
 # What's New with Enterprise
 
+## v4.88.0
+
+## v4.88.0 Fixes
+
+- `[Accordion]` Updated selected header text color. ([#7769](https://github.com/infor-design/enterprise/issues/7769))
+- `[Breadcrumb]` Updated hover color for breadcrumb in header. ([#7801](https://github.com/infor-design/enterprise/issues/7801))
+- `[Card/Widget]` Fix inconsistency in widget size. ([#7896](https://github.com/infor-design/enterprise/issues/7896))
+- `[Chart]` Fix on focus border being off in chart legend items. ([#7850](https://github.com/infor-design/enterprise/issues/7850))
+- `[Chart]` Fixed on focus border being off in chart legend items. ([#7850](https://github.com/infor-design/enterprise/issues/7850))
+- `[Column]` Fixed the size of the chart titles in columns. ([#7889](https://github.com/infor-design/enterprise/issues/7889))
+- `[Editor]` Fixed editor text not changing to other font headers after changing colors. ([#7793](https://github.com/infor-design/enterprise/issues/7793))
+- `[Lookup]` Fixed count text positioning. ([#7905](https://github.com/infor-design/enterprise/issues/7905))
+- `[Popover]` Added scrollable class for popover. ([#7678](https://github.com/infor-design/enterprise/issues/7678))
+- `[Listview]` Adjusted searchfield in listview when inside modal to fix alignment. ([NG#1547](https://github.com/infor-design/enterprise-ng/issues/1547))
+- `[Tabs]` Fixed the focus alignment in tabs for RTL. ([#7772](https://github.com/infor-design/enterprise/issues/7772))
+- `[Tree]` Fixed Cross-Site Scripting (XSS) when setting up tree node. ([#7631](https://github.com/infor-design/enterprise/issues/7631))
+
 ## v4.87.0
 
 ## v4.87.0 Features
 
+- `[Datagrid]` Has a new design with a soft grey header. The white header background option is removed and this is now the default. ([#7814](https://github.com/infor-design/enterprise/issues/7814))
+- `[Datagrid]` Fix the datagrid filter color when disabled. ([#7908](https://github.com/infor-design/enterprise/issues/7908))
 - `[Icons]` Fixed shape and markup of status icons. Note: May need to update your code. ([#7747](https://github.com/infor-design/enterprise/issues/7661))
 - `[Masthead]` Set height of masthead to 40px. ([#7857](https://github.com/infor-design/enterprise/issues/7857))
 - `[Popover]` Improved popover title style and position, excluding the 'alternate' class. ([#7676](https://github.com/infor-design/enterprise/issues/7676))
 - `[Radios]` Added hitbox feature for mobile devices. ([#7659](https://github.com/infor-design/enterprise/issues/7659))
+- `[Timepicker]` Fix issue with `enable` function. ([#7887](https://github.com/infor-design/enterprise/issues/7887))
 - `[Typography]` Added `text-wrap` class. ([#7497](https://github.com/infor-design/enterprise/issues/7497))
 
 ## v4.87.0 Fixes
@@ -15,7 +35,6 @@
 - `[Badges/Alerts/Tags/Icons]` Added docs and clearer examples. ([#7661](https://github.com/infor-design/enterprise-ng/issues/7661))
 - `[Bar]` Fixed an issue where the x-axis labels on the bar chart were not visible. ([#7797](https://github.com/infor-design/enterprise/issues/7797))
 - `[Badges/Tags/]` Changed border radius to 12px. ([#7862](https://github.com/infor-design/enterprise-ng/issues/7862))
-- `[Color]` Fix on Slate's personalization header text color. ([#7811](https://github.com/infor-design/enterprise-ng/issues/7811))
 - `[Calendar]` Fixed uncaught error in `cordova` apps. ([#7818](https://github.com/infor-design/enterprise/issues/7818))
 - `[Circlepager]` Fixed circle pager's position inside of a card. ([#7724](https://github.com/infor-design/enterprise/issues/7724))
 - `[Color]` Fixed on Slate's personalization header text color. ([#7811](https://github.com/infor-design/enterprise-ng/issues/7811))
@@ -25,8 +44,10 @@
 - `[Dropdown]` Adjusted dropdown text in Firefox. ([#7763](https://github.com/infor-design/enterprise/issues/7763))
 - `[Datagrid]` Fixed bug where default filter wasn't honored for date or time columns. ([#7766](https://github.com/infor-design/enterprise/issues/7766))
 - `[Datagrid]` Fixed datagrid column filter not open after a series of simultaneous clicking of column filters. ([#7750](https://github.com/infor-design/enterprise/issues/7750))
+- `[Datagrid]` Added expanded default for expandable formatter. ([#7680](https://github.com/infor-design/enterprise/issues/7680))
 - `[Datepicker]` Fixed bug where date range selected is not properly rendered in some scenarios. ([#7528](https://github.com/infor-design/enterprise/issues/7528))
 - `[Datepicker]` Added a new `listcontextmenu` event that fires on right click of menu items. ([#7822](https://github.com/infor-design/enterprise/issues/7822))
+- `[Editor]` Refixed an xss issue in editor (iframes not permitted). ([#7590](https://github.com/infor-design/enterprise/issues/7590))
 - `[Editor]` Added swatch bar on colorpicker button. ([#7571](https://github.com/infor-design/enterprise/issues/7571))
 - `[Editor]` Fixed fonts selection selection on editor. ([#7762](https://github.com/infor-design/enterprise-ng/issues/7762))
 - `[Editor]` Changed the header color from dark to grey and other minor style improvements. ([#7606](https://github.com/infor-design/enterprise-ng/issues/7606))
@@ -34,6 +55,7 @@
 - `[Fileupload]` Fixed a bug where validation is not triggered after clearing the input. ([#7645](https://github.com/infor-design/enterprise/issues/7645))
 - `[FileuploadAdvanced]` Fixed Close Button not rendered properly. ([#7604](https://github.com/infor-design/enterprise/issues/7604))
 - `[FileuploadAdvanced]` Changed file upload copy. ([#7787](https://github.com/infor-design/enterprise/issues/7787))
+- `[Header]` Changed toolbar to flex-toolbar in header. ([#7479](https://github.com/infor-design/enterprise/issues/7479))
 - `[Homepage]` Changed selector so multiple hero banners in a page will work. ([#7819](https://github.com/infor-design/enterprise/issues/7819))
 - `[Icon]` Adjusted width of icons. ([#7616](https://github.com/infor-design/enterprise/issues/7616))
 - `[Hyperlink]` Fixed hyperlink focus style in completion chart. ([#7731](https://github.com/infor-design/enterprise/issues/7731))
@@ -57,6 +79,7 @@
 - `[Popover]` Fixed where popover connected on click will not close on click (it just reopened). ([#7679](https://github.com/infor-design/enterprise/issues/7679))
 - `[Sparkline]` Fixed median fill on dark theme. ([#7717](https://github.com/infor-design/enterprise/issues/7717))
 - `[Searchfield]` Adjusted height for go button. ([#6695](https://github.com/infor-design/enterprise/issues/6695))
+- `[Tabs]` Fixed alabaster design issues in tabs, tab-headers, tabs-module, tabs-multi components. ([#7803](https://github.com/infor-design/enterprise/issues/7803))
 - `[Tooltip]` Fixed in `extraClass` example page for tooltip. ([#7669](https://github.com/infor-design/enterprise/issues/7669))
 - `[WeekView]` Fixed bug where going to next didn't render the complete week. ([#7684](https://github.com/infor-design/enterprise/issues/7684))
 - `[WeekView]` Fixed the response of render on breakpoint in week view. ([#7727](https://github.com/infor-design/enterprise/issues/7727))

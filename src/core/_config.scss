@@ -704,7 +704,7 @@ $accordion-inverse-focus-state-color: $ids-color-brand-primary-base;
 $accordion-focused-border-color: $ids-color-brand-primary-base;
 $accordion-focused-text-color: $ids-color-brand-primary-base;
 $accordion-selected-bg-color: $ids-color-brand-primary-base;
-$accordion-selected-text-color: $ids-color-palette-white;
+$accordion-selected-text-color: $ids-color-palette-slate-90;
 $accordion-panel-selected-text-color: $ids-color-palette-white;
 
 $accordion-highcontrast-text-decoration: none;
@@ -878,6 +878,7 @@ $chart-legend-border-color: $ids-color-palette-graphite-20;
 $datagrid-border-color: $ids-color-palette-graphite-20;
 $datagrid-header-color: $ids-color-palette-white;
 $datagrid-header-bg-color: $ids-color-palette-slate-60;
+$datagrid-header-dragging-bg-color: $ids-color-palette-slate-50;
 $datagrid-nested-header-bg-color: $ids-color-palette-slate-50;
 $datagrid-nested-header-border-color: $ids-color-palette-graphite-30;
 $datagrid-header-border-color: $ids-color-palette-graphite-30;
@@ -887,8 +888,10 @@ $datagrid-header-checkbox-border-color: $ids-color-palette-graphite-30;
 $datagrid-sort-icon-color: $ids-color-brand-secondary-alt;
 $datagrid-sort-icon-sorted-color: $ids-color-palette-white;
 $datagrid-required-icon-color: $ids-color-palette-white;
+$datagrid-header-drag-arrow-color: $ids-color-palette-slate-90;
 
 $datagrid-cell-color: $ids-color-font-base;
+$datagrid-cell-focus-border-color: $ids-color-brand-primary-base;
 $datagrid-cell-bg-color: $ids-color-palette-white;
 $datagrid-cell-editing-bg-color: $ids-color-palette-white;
 $datagrid-cell-readonly-bg-color: $ids-color-palette-graphite-10;
@@ -896,6 +899,7 @@ $datagrid-cell-readonly-color: $ids-color-font-base;
 $datagrid-cell-border-color: $ids-color-palette-graphite-30;
 $datagrid-group-row-border-color: $ids-color-palette-graphite-30;
 $datagrid-cell-focus-box-shadow: 0 0 4px 1px rgba(54, 138, 192, 0.4);
+$datagrid-cell-focus-border-color: $ids-color-brand-primary-base;
 $datagrid-data-color: $font-color-extrahighcontrast;
 $datagrid-row-selected-color: #d8f0f7;
 $datagrid-row-selected-color-dark: #d4ebf3;
@@ -927,7 +931,8 @@ $datagrid-filter-border-color: $ids-color-palette-slate-40;
 $datagrid-filter-hover-border-color: $ids-color-palette-slate-20;
 $datagrid-filter-color: $ids-color-palette-white;
 $datagrid-filter-hover-color: $ids-color-palette-white;
-$datagrid-filter-disabled-color: $ids-color-palette-slate-50;
+$datagrid-filter-disabled-color: $ids-color-palette-slate-40;
+$datagrid-filter-disabled-opacity: 0.6;
 $datagrid-filter-icon-color: $ids-color-palette-slate-30;
 $datagrid-filter-focus-color: $ids-color-palette-azure-40;
 $datagrid-filter-active-color: $ids-color-palette-azure-40;
@@ -946,19 +951,6 @@ $datagrid-rowgroup-color: $ids-color-palette-graphite-60;
 $datagrid-empty-bg-color: #f4f4f4; //$datagrid-cell-bg-color
 
 $datagrid-badges-azure-font-color: $ids-color-palette-white;
-
-$datagrid-light-header-bg-color: $ids-color-palette-white;
-$datagrid-light-header-bg-hover-color: #ecf2f8;
-$datagrid-light-header-bg-sorted-hover-color: $ids-color-palette-azure-10;
-
-$datagrid-light-header-font-color: $ids-color-palette-slate-100;
-$datagrid-light-header-border-color: $ids-color-palette-slate-30;
-$datagrid-light-header-filter-sort-icon-color: $ids-color-palette-slate-40;
-$datagrid-light-header-filter-sorted-icon-color: $ids-color-palette-slate-80;
-$datagrid-light-header-icon-color: $ids-color-palette-slate-80;
-$datagrid-light-header-icon-hover-color: $ids-color-palette-slate-100;
-$datagrid-light-header-input-border-hover-color: $ids-color-palette-slate-100;
-
 $datagrid-button-icon-hover-bg-color: rgba(0, 0, 0, 0.1);
 
 // Search Results

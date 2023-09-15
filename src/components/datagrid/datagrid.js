@@ -151,7 +151,6 @@ const COMPONENT_NAME = 'datagrid';
  * @param {boolean} [settings.dblClickApply=false] If true, needs to double click to trigger select row in datagrid.
  * @param {boolean} [settings.allowPasteFromExcel=false] If true will allow data copy/paste from excel
  * @param {string} [settings.fallbackImage='insert-image'] Will set a fall back image if the image formatter cannot load an image.
- * @param {string} [settings.headerBackgroundColor='dark'] Ability to set background color of datagrid header either light or dark.
 */
 const DATAGRID_DEFAULTS = {
   // F2 - toggles actionableMode "true" and "false"
@@ -254,8 +253,7 @@ const DATAGRID_DEFAULTS = {
   fallbackTooltip: {
     content: 'Image could not load',
     delay: 200
-  },
-  headerBackgroundColor: 'dark'
+  }
 };
 
 function Datagrid(element, settings) {
@@ -1664,11 +1662,6 @@ Datagrid.prototype = {
     }
 
     this.activeEllipsisHeaderAll();
-
-    // Set the color background header (light and dark)
-    (self?.settings?.headerBackgroundColor === 'light') ? //eslint-disable-line
-      (self?.headerRowLeft?.addClass('light'), self?.headerRow?.addClass('light'), self?.headerRowRight?.addClass('light')) :
-      (self?.headerRow?.addClass('dark'), self?.headerRowRight?.addClass('dark'), self?.headerRowLeft?.addClass('dark'));
   },
 
   /**
@@ -3287,7 +3280,7 @@ Datagrid.prototype = {
                   target.el.addClass('is-over');
                   showTarget.addClass('is-over');
                   rect = target.el[0].getBoundingClientRect();
-                  showTarget[0].style.left = `${parseInt(rect.left + (Locale.isRTL() ? 2 : 0), 10)}px`;
+                  showTarget[0].style.left = `${parseInt(rect.left + (Locale.isRTL() ? 2 : 1), 10)}px`;
                   let lastAdjustment = 0;
                   if (target.el.hasClass('last')) {
                     lastAdjustment = -(header.height() - 3);
@@ -4194,6 +4187,7 @@ Datagrid.prototype = {
 
       self.runningCount++;
       const rowHtml = self.rowHtml(s.dataset[i], currentCount, i);
+
       if (self.hasLeftPane && rowHtml.left) {
         tableHtmlLeft += rowHtml.left;
       }
@@ -4754,9 +4748,8 @@ Datagrid.prototype = {
 
     isEven = (this.recordCount % 2 === 0);
     const isSelected = this.isRowSelected(rowData);
-    const isActivated = rowData._rowactivated;
+    const isActivated = rowData._rowactivated || rowData.expanded;
     const rowStatus = { class: '', svg: '' };
-
     if (rowData && rowData.rowStatus && (rowData.rowStatus.icon === 'new' ? self.settings.showNewRowIndicator : true)) {
       rowStatus.show = true;
       rowStatus.class = ` rowstatus-row-${rowData.rowStatus.icon}`;
@@ -5076,8 +5069,9 @@ Datagrid.prototype = {
           <div class="datagrid-row-detail"><div style="height: ${height}px"></div></div>
           </td></tr>`;
       }
-      containerHtml.center += `<tr class="datagrid-expandable-row"><td colspan="${visibleColumnsCenter + (this.settings.spacerColumn ? 1 : 0)}">
-        <div class="datagrid-row-detail"><div class="datagrid-row-detail-padding">${renderedTmpl}</div></div>
+
+      containerHtml.center += `<tr class="datagrid-expandable-row ${item.expanded ? ' is-expanded' : ''}"><td colspan="${visibleColumnsCenter + (this.settings.spacerColumn ? 1 : 0)}">
+        <div class="datagrid-row-detail" ${item.expanded ? ' style="height: auto"' : ''}><div class="datagrid-row-detail-padding">${renderedTmpl}</div></div>
         </td></tr>`;
       if (this.hasRightPane) {
         containerHtml.right += `<tr class="datagrid-expandable-row no-border"><td colspan="${visibleColumnsRight}">
@@ -5923,7 +5917,7 @@ Datagrid.prototype = {
    */
   updateColumns(columns, columnGroups) {
     if (columnGroups === undefined) {
-      columnGroups = null;
+      columnGroups = this.settings.columnGroups;
     } else if (columnGroups === null || columnGroups.length === 0) {
       this.settings.groupable = null;
     }

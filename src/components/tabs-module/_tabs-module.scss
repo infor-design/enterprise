@@ -302,6 +302,10 @@
     .more-text {
       font-size: $ids-size-font-sm;
       font-weight: $ids-number-font-weight-bold;
+
+      .count {
+        font-weight: $ids-number-font-weight-bold;
+      }
     }
 
     &.is-selected {
