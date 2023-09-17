@@ -1,23 +1,5 @@
 // Radio Buttons - uplift theme
 //================================================== //
-.inline .radio ~ .label-text::before,
-.radio + label::before {
-  margin-top: 4px;
-}
-
-.inline .radio ~ .label-text::after,
-.radio + label::after {
-  top: 0.82rem;
-  left: 0.52rem;
-}
-
-.field-short,
-.form-layout-compact .field {
-  .inline .radio ~ .label-text::after,
-  .radio + label::after {
-    top: 13px;
-  }
-}
 
 .field-short .radio-group legend,
 .form-layout-compact .field .radio-group legend {
