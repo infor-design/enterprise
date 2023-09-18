@@ -42,6 +42,7 @@ The following classes can be used for form and label alignment.
 - `compound-field` - Used to put several fields next to each other in a row. This may be used for related fields like phone + extension [See Example](./demo/components/form/example-forms?font=source-sans)
 - `compound-field` - Used to put several fields next to each other in a row. This may be used for related fields like phone + extension [See Example](./demo/components/form/example-forms?font=source-sans)
 - `form-layout-compact` - Used to set the form fields in a more compact mode so more fields can fit in the page. [See Example](./demo/components/form/example-compact-mode?font=source-sans)
+- `flex-wrap-form flex-columns` - Used to a form layout with the help of Flexbox, this can be employed to inline a label and other elements using layout classes such as `.one` to `.twelve` and `.columns`. [See Example](./demo/components/form//test-inline-labels?font=source-sans)
 
 ### Single Record Edit / Main Detail
 
