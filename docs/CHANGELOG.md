@@ -15,6 +15,7 @@
 - `[Chart]` Fix on focus border being off in chart legend items. ([#7850](https://github.com/infor-design/enterprise/issues/7850))
 - `[Chart]` Fixed on focus border being off in chart legend items. ([#7850](https://github.com/infor-design/enterprise/issues/7850))
 - `[Column]` Fixed the size of the chart titles in columns. ([#7889](https://github.com/infor-design/enterprise/issues/7889))
+- `[Column]` Fixed an error loading on windows and a warning. ([#7941](https://github.com/infor-design/enterprise/issues/7941))
 - `[Editor]` Fixed editor text not changing to other font headers after changing colors. ([#7793](https://github.com/infor-design/enterprise/issues/7793))
 - `[Homepage]` Added better default color for hero now that its white. ([#7938](https://github.com/infor-design/enterprise/issues/7938))
 - `[Lookup]` Fixed count text positioning. ([#7905](https://github.com/infor-design/enterprise/issues/7905))
