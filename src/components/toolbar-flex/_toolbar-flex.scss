@@ -63,10 +63,16 @@
         }
 
         &.has-text.active.has-close-icon-button .custom-button {
-          left: calc(100% - 105px);
+          @media (min-width: $breakpoint-phone) {
+            left: calc(100% - 96px);
+          }
 
           @media (min-width: $breakpoint-phone-to-tablet) {
             left: 163px;
+          }
+
+          @media (min-width: $breakpoint-tablet-to-desktop) {
+            left: calc(100% - 56px);
           }
         }
 
