@@ -2,20 +2,21 @@
   .form-responsive {
     min-width: 320px;
   }
+
   .row:last-child {
     margin-bottom: -10px;
   }
 
   .container.many-modal {
-      display: inline-flex;
-    }
+    display: inline-flex;
+  }
 
-    .item {
-      height: 200px;
-      width: 200px;
-      background-color: red;
-      margin: 15px;
-    }
+  .item {
+    height: 200px;
+    width: 200px;
+    background-color: red;
+    margin: 15px;
+  }
 </style>
 <div class="row top-padding">
 	<div class="twelve columns">
@@ -62,13 +63,11 @@ var modals = {
     opt = $.extend({
       buttons: [{
         text: 'Cancel',
-      //  id: 'modal-button-1',
         click: function(e, modal) {
           modal.close();
         }
       }, {
         text: 'Save',
-      //  id: 'modal-button-2',
         click: function(e, modal) {
           modal.close();
         },
