@@ -116,7 +116,7 @@ const formatters = {
     let value2;
     const dateFormat = formatLocaleOnly ? null : col.dateFormat;
 
-    const placeholder = isReturnValue ? calculatePlaceholder(formatted, row, cell, value, col, isReturnValue): '';
+    const placeholder = isReturnValue ? calculatePlaceholder(formatted, row, cell, value, col, isReturnValue) : '';
     if (placeholder !== '') {
       isPlaceholder = true;
     }
