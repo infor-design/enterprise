@@ -27,6 +27,7 @@ charts.isIEEdge = env.browser.name === 'edge';
  * @returns {object} Object with the height and width.
  */
 charts.tooltipSize = function tooltipSize(content) {
+  if (!this.tooltip?.find) this.appendTooltip();
   DOM.html(this.tooltip.find('.tooltip-content'), content, '*');
   return { height: this.tooltip.outerHeight(), width: this.tooltip.outerWidth() };
 };
