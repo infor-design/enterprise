@@ -264,6 +264,18 @@ $toolbar-buttonset-height: 40px;
   }
 }
 
+// For Standalone popup menu label
+.btn-menu,
+.btn-actions {
+  &.is-open {
+    color: $toolbar-standalone-popup-label-color;
+
+    .icon {
+      color: $toolbar-standalone-popup-label-color;
+    }
+  }
+}
+
 // Used in Editor, some card menus, etc.
 .popupmenu.toolbar-options {
   li {
