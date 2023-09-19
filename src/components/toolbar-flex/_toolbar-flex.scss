@@ -426,14 +426,24 @@ html[class*='theme-classic-'] .flex-toolbar .toolbar-section .searchfield-wrappe
   .custom-button {
     top: 1px;
 
+    @media (min-width: $breakpoint-phone) {
+      left: -36px;
+    }
+
+    @media (min-width: $breakpoint-phone-to-tablet) {
+      left: 189px;
+    }
+
     + .collapse-button,
     + .close + .collapse-button {
       left: -37px;
+      top: -3px
     }
-  }
 
-  &.has-close-icon-button .custom-button {
-    left: -38px;
+    .icon {
+      left: 7px;
+      top: -1px;
+    }
   }
 
   &.has-categories.has-go-button .btn-icon.close {
@@ -441,15 +451,19 @@ html[class*='theme-classic-'] .flex-toolbar .toolbar-section .searchfield-wrappe
   }
 
   &:not(.has-categories).has-custom-button .btn-icon.close {
-    right: 40px;
-
     @media (max-width: $breakpoint-phone-to-tablet) {
       right: 75px;
     }
   }
 
   &.has-text.active.has-close-icon-button .custom-button {
-    left: -53px;
+    @media (min-width: $breakpoint-phone) {
+      left: -55px;
+    }
+
+    @media (min-width: $breakpoint-phone-to-tablet) {
+      left: 168px;
+    }
   }
 }
 
