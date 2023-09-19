@@ -8,27 +8,28 @@
   content: '';
   height: 14px;
   margin-left: -25px;
-  margin-top: 3px;
   position: absolute;
   width: 14px;
 }
 
 @mixin radio-checked-before-style {
   background-color: $radio-color-checked-initial-fill;
-  border: 1px solid $radio-color-checked-initial-fill;
+  border: 4px solid $radio-color-checked-initial-fill;
+  height: 8px;
+  width: 8px;
+  transition: none;
 }
 
 @mixin radio-checked-after-style {
   background-color: $radio-color-checked-initial-background;
-  border: 2px solid $radio-color-checked-initial-background;
+  border: 4px solid $radio-color-checked-initial-fill;
   border-radius: 50%;
   content: '';
-  height: 4px;
-  left: 5px;
+  height: 8px;
   position: absolute;
-  top: 7px;
   transition: all 0.2s ease 0s;
-  width: 4px;
+  width: 8px;
+  margin-left: -25px;
 }
 
 .radio {
@@ -55,11 +56,6 @@
   + label {
     &::before {
       margin-top: 0;
-    }
-
-    &::after {
-      left: 17px;
-      top: 40%;
     }
   }
 }
@@ -99,8 +95,9 @@
 
 .inline .radio ~ .label-text,
 .radio-label {
-  display: inline-block;
+  display: inline-flex;
   line-height: 20px;
+  align-items: center;
 
   &.radio-label:first-of-type {
     margin-top: 4px;
@@ -438,7 +435,7 @@ html[dir='rtl'] {
   .inline .radio ~ .label-text::after,
   .radio + label::after {
     left: 4px;
-    top: 12px;
+    margin-left: -4px;
   }
 
   .inline .radio ~ .label-text::before,

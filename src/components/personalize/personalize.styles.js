@@ -5,7 +5,6 @@ function personalizeStyles(colors) {
   const hyperlinkColorObj = colorUtils.hexToRgb(colors.hyperlinkText);
 
   return `
-
 .is-personalizable ::selection {
   background: ${colors.selection} !important;
 }
