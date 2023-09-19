@@ -194,7 +194,12 @@ $toolbarsearchfield-category-empty-width: 51px;
     border-radius: 2px 0 0 2px;
 
     &.searchfield-category-button {
+      min-width: 43px;
       background-color: rgba($searchfield-bg-color, 1);
+
+      svg.icon:not(.close) {
+        position: initial;
+      }
     }
   }
 
@@ -568,7 +573,6 @@ $toolbarsearchfield-category-empty-width: 51px;
 
       .go-button {
         border: 1px solid $searchfield-toolbar-border-color;
-        border-left: none;
         border-radius: 0;
         background-color: transparent;
         color: $searchfield-icon-color;
