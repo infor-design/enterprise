@@ -12,9 +12,9 @@ demo:
 ### Anatomy
 
 - Header
-  - Module switcher
-  - Dropdown
-  - Searchfield
+    - Module switcher
+    - Dropdown
+    - Searchfield
 - Accordion
 - Footer
 
@@ -37,7 +37,7 @@ Modes
 - Combine with the [header](./header) to provide the ability for users to expand and collapse the menu.
 - Display only the most important navigation within the menu.
 - Avoid nesting several items within the menu, as only the top-level items are available from the collapsed menu.
-  - If use cases warrant a more complex menu hierarchy, an optional searchfield can help users reveal nested links.
+    - If use cases warrant a more complex menu hierarchy, an optional searchfield can help users reveal nested links.
 - When applicable, pin the menu header and footer to keep them visible in the menu.
 - On mobile, tapping on page content collapses an expanded menu.
 
