@@ -32,6 +32,9 @@ This utility sets the text to uppercase.
 `.text-lowercase`
 This utility sets the text to lowercase.
 
+`.text-wrap`
+This utility enables long words or text strings to break and wrap within a container as needed.
+
 ### Display Utilities
 
 `.d-flex`
@@ -57,8 +60,29 @@ This utility aligns flex items along the vertical axis to the center.
 `.justify-content-center`
 This utility centers flex items along the horizontal axis.
 
+`.justify-content-end` & `.justify-content-flex-end`
+This utility will place the items at the end of the container.
+
+`.justify-content-start` & `.justify-content-flex-start`
+This utility will place the items at the start of the container.
+
+`.justify-content-space-around`
+This utility will provide spacing both before, between, and after the items.
+
+`.justify-content-space-evenly`
+This utility will provide equal spacing around the items.
+
 `.flex-center`
 This utility extends the `.d-flex`, `.align-items-center`, and `.justify-content-center` utilities to create a flex container that is centered both horizontally and vertically.
+
+`.flex-wrap`
+This utility defines that the flexible item will automatically wrap as needed.
+
+`.flex-nowrap`
+This utility ensures that flexible items remain unwrapped.
+
+`.flex-wrap-reverse`
+This utility instructs flexible items to wrap in reverse order when needed.
 
 ### Float Utilities
 
@@ -109,3 +133,8 @@ This utility adds padding to the left and right of an element, where # is a numb
 
 `.padding-y-#`
 This utility adds padding to the top and bottom of an element, where # is a number from 1 to 80 that specifies the amount of padding in pixels.
+
+### Reset Utilities
+
+`.unset-overflow`
+This utility will reset the ellipsis to its default form.

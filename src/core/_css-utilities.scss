@@ -16,11 +16,29 @@
   text-transform: lowercase !important;
 }
 .text-wrap {
-  word-break: break-all;
+  word-break: break-all !important;
 }
 
 .d-flex {
   display: flex !important;
+}
+
+.flex-wrap {
+  flex-wrap: wrap !important;
+}
+
+.flex-nowrap {
+  flex-wrap: nowrap !important;
+}
+
+.flex-wrap-reverse {
+  flex-wrap: wrap-reverse !important;
+}
+
+.unset-overflow {
+  overflow: unset !important;
+  text-overflow: unset !important;
+  white-space: unset !important;
 }
 
 .rounded {
@@ -41,6 +59,34 @@
 
 .justify-content-center {
   justify-content: center !important;
+}
+
+.justify-content-space-between {
+  justify-content: space-between !important;
+}
+
+.justify-content-start {
+  justify-content: start !important;
+}
+
+.justify-content-flex-start {
+  justify-content: flex-start !important;
+}
+
+.justify-content-end {
+  justify-content: end !important;
+}
+
+.justify-content-flex-end {
+  justify-content: flex-end !important;
+}
+
+.justify-content-space-evenly {
+  justify-content: space-evenly !important;
+}
+
+.justify-content-space-around {
+  justify-content: space-around !important;
 }
 
 .d-block {
@@ -81,7 +127,7 @@
   flex-direction: column;
 }
 
-// Margin and padding utilities up to 50px
+// Margin and padding utilities up to 80px
 @for $i from 0 through 80 {
   .p-bottom-#{$i} {
     $padding: $i * 1px;

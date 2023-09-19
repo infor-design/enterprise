@@ -441,6 +441,7 @@ html[class*="theme-new-"] .personalize-subheader .toolbar [class^='btn']:hover:n
 
 html[class*="theme-new-"] .header.is-personalizable button:not(.go-button):not(.close):not(.searchfield-category-button):not(:disabled):hover {
   background-color: ${colors.btnTertiaryBgHoverColor} !important;
+  color: ${colors.btnTertiaryHoverColor} !important;
 }
 
 .header .flex-toolbar [class^='btn'][disabled] {
