@@ -100,6 +100,45 @@
       }
     }
   }
+
+  .flex-wrap-form {
+    display: flex;
+    flex-wrap: wrap;
+
+    .field .columns {
+      &.one,
+      &.two,
+      &.three,
+      &.four,
+      &.five,
+      &.six,
+      &.seven,
+      &.eight,
+      &.nine,
+      &.ten,
+      &.eleven,
+      &.twelve {
+        @media (min-width: $breakpoint-phone-to-tablet) {
+          margin-left: 0;
+        }
+      }
+    }
+  }
+
+  .flex-columns {
+    display: inline-block;
+
+    @media (min-width: $breakpoint-phone-to-tablet) {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .columns {
+      @media (max-width: $breakpoint-phone-to-tablet) {
+        padding: 0;
+      }
+    }
+  }
 }
 
 @media (max-width: ($breakpoint-phone-to-tablet + 1)) {
