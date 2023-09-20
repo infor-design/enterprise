@@ -5,6 +5,7 @@
 ## v4.88.0 Features
 
 - `[Form/Label]` Implemented a form layout designed to facilitate an inline design within a responsive-form container. ([#7764](https://github.com/infor-design/enterprise/issues/7764))
+- `[Module Nav]` Added usage guidance to docs. ([#7869](https://github.com/infor-design/enterprise/issues/7869))
 
 ## v4.88.0 Fixes
 
