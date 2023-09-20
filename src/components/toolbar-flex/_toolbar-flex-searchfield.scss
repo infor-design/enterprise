@@ -184,6 +184,13 @@ html[dir='rtl'] {
 
           .collapse-button {
             background-color: transparent;
+
+            .icon {
+              @media (max-width: $breakpoint-slim) {
+                left: 8px;
+                top: 10px !important;
+              }
+            }
           }
 
           .btn-icon.close {
