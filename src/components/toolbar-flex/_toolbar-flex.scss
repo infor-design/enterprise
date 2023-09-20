@@ -31,6 +31,10 @@
       position: relative;
       overflow: hidden;
 
+      .searchfield {
+        position: initial;
+      }
+
       &.toolbar-searchfield-wrapper.has-close-icon-button {
         .btn-icon.close {
           right: 45px;
@@ -51,6 +55,16 @@
 
             @media (max-width: $breakpoint-phone-to-tablet) {
               right: 85px;
+            }
+          }
+
+          .go-button {
+            @media (min-width: $breakpoint-phone) {
+              right: 85px;
+            }
+
+            @media (min-width: $breakpoint-phone-to-tablet) {
+              right: 0;
             }
           }
         }
@@ -450,10 +464,13 @@ html[class*='theme-classic-'] .flex-toolbar .toolbar-section .searchfield-wrappe
 // Buttons hover state
 html[class*='theme-new-'] .flex-toolbar:not(.editor-toolbar):not(.formatter-toolbar):not(.contextual-toolbar) {
   .toolbar-section [class^='btn']:not(:disabled):not(.searchfield-category-button) {
-    border-radius: 8px;
-
     &:not(.collapse-button):hover {
       background-color: $toolbar-btn-actions-hover-bg-color;
+    }
+
+    &.go-button {
+      position: absolute;
+      border-left: none;
     }
   }
 }
