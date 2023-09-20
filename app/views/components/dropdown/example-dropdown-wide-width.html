@@ -1,0 +1,61 @@
+<div class="display-form">
+  <div class="field">
+    <h1>Dropdown Wide Width</h1>
+  </div>
+</div>
+<div class="display-form">
+  <div class="field">
+    <label for="first-name">First Name</label>
+    <input type="text" id="first-name" data-automation-id="input-first-name" name="first-name" placeholder="Normal text field"/>
+    <label class="required" for="last-name">Last Name</label>
+    <input type="text" id="last-name" data-automation-id="input-last-name" aria-required="true" name="last-name" data-validate="required"/>
+  </div>
+
+  <div class="field">
+    <label class="label" for="title">Title</label>
+    <input type="text" id="title" placeholder="Example"/>
+
+    <span id="comments-label" class="label">Comments</span>
+    <div class="editor" id="editor1" aria-label="Comments" data-options="{attributes: [{name: 'id', value: 'example1'}, {name: 'data-automation-id', value: 'automation-id-example1'}]}">
+      <p>Embrace <a href="http://en.wikipedia.org/wiki/e-commerce" class="hyperlink">e-commerce action-items</a>, reintermediate, ecologies paradigms wireless share life-hacks create innovative harness. Evolve solutions rich-clientAPIs synergies harness relationships virtual vertical facilitate end-to-end, wireless, evolve synergistic synergies.</p>
+      <p>Cross-platform, evolve, ROI scale cultivate eyeballs addelivery, e-services content cross-platform leverage extensible viral incentivize integrateAJAX-enabled sticky evolve magnetic cultivate leverage; cutting-edge. Innovate, end-to-end podcasting, whiteboard streamline e-business social; compelling, "cross-media exploit infomediaries innovative integrate integrateAJAX-enabled." Killer interactive reinvent, cultivate widgets leverage morph.</p>
+    </div>
+  </div>
+
+  <div class="field">
+    <label for="big-dropdown">Test Dropdown with tooltips and 12000 items</label>
+    <select id="big-dropdown" name="big-dropdown" class="dropdown">
+    </select>
+  </div>
+</div>
+
+<script>
+  var ele = $('#big-dropdown');
+  var markup = '';
+  for (var i =0; i < 12000; i++) {
+    var date = new Date();
+    date.setDate(date.getDate() + i);
+
+    markup += `<option value="option${i}" title="${date}">${date}</option>`;
+  }
+
+  ele.append(markup).dropdown({ width: 420, virtualScroll: true }).on('change', function (e, args) {
+    $('body').toast({
+      'title': 'Change Event Fired',
+      'message': 'Value changed to <span class="text-strong">' + $(this)[0].selectedOptions[0].innerText + '</span> '
+    });
+  });
+
+  $('body').initialize();
+</script>
+
+<style>
+  .display-form {
+    display: flex;
+    padding-top: 25px;
+  }
+
+  .field {
+    margin: 10px;
+  }
+</style>
