@@ -84,6 +84,19 @@
     .icon {
       color: $button-color-secondary-initial-font-new;
     }
+
+    &.is-open {
+      background-color: $button-color-tertiary-hover-background-new;
+      color: $button-color-secondary-menu-open-new;
+
+      .icon {
+        color: $button-color-secondary-menu-open-new;
+      }
+    }
+
+    &:focus:not(.hide-focus) {
+      box-shadow: unset;
+    }
   }
 
   svg.icon {

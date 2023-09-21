@@ -1,7 +1,11 @@
 
-<div class="row">
+<div class="row is-personalizable">
   <div class="twelve columns">
 
+    <div class="field">
+      <h2>Button Menu</h2>
+    </div>
+    <div class="field">
       <button type="button" id="test" class="btn-menu" data-options="{ 'attributes': [ { 'name': 'data-automation-id', 'value': 'menu-button' } ] }">
         <span>Add Item</span>
       </button>
@@ -15,7 +19,26 @@
         <li><a href="#">Notification Rules</a></li>
         <li><a href="#">Protect Sheet Rules</a></li>
       </ul>
-
+    </div>
+      
+    <div class="field">
+      <h2>Button Menu + Secondary</h2>
+    </div>
+    <div class="field">
+      <button type="button" id="test2" class="btn-menu btn-secondary" data-options="{ 'attributes': [ { 'name': 'data-automation-id', 'value': 'menu-button' } ] }">
+        <span>Add Item</span>
+      </button>
+      <ul class="popupmenu is-selectable has-icons">
+        <li><a href="#">Create a form</a></li>
+        <li class="separator"></li>
+        <li><a href="#">Spelling...</a></li>
+        <li><a href="#" disabled aria-disabled="true">Solver...</a></li>
+        <li class="separator"></li>
+        <li class="is-checked"><a href="#">Enable Autocomplete</a></li>
+        <li><a href="#">Notification Rules</a></li>
+        <li><a href="#">Protect Sheet Rules</a></li>
+      </ul>
+    </div>
   </div>
 </div>
 
