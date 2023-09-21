@@ -2136,6 +2136,10 @@ Dropdown.prototype = {
 
     this.setListWidth();
 
+    if (this.settings.maxWidth || this.settings.width) {
+      this.position();
+    }
+
     // Set the contents of the search input.
     // If we've got a stored typeahead
     if (typeof this.filterTerm === 'string' && this.filterTerm.length > 0) {
@@ -2403,7 +2407,7 @@ Dropdown.prototype = {
     const positionOpts = {
       parentXAlignment: 'left',
       placement: 'bottom',
-      strategies: ['flip', 'shrink-y']
+      strategies: ['flip', 'shrink-y', 'nudge']
     };
 
     function dropdownAfterPlaceCallback(e, placementObj) {
