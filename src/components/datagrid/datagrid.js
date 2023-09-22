@@ -7348,7 +7348,7 @@ Datagrid.prototype = {
         }
       }
 
-      if (columnSettings.inlineEditor) {
+      if (columnSettings?.inlineEditor) {
         if (e.type === 'click' && e.target.nodeName.toLowerCase() === 'input') {
           const el = e.target;
           el.focus();
