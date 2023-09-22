@@ -1221,6 +1221,7 @@ $datagrid-small-row-height: 25px;
           height: 25px;
           min-height: 25px;
           min-width: 25px;
+          top: -2px;
           width: 25px;
         }
 
@@ -1848,7 +1849,7 @@ $datagrid-small-row-height: 25px;
     }
 
     .datagrid-cell-wrapper {
-      padding: 0 8px 0;
+      padding: 3px 8px 0;
 
       .process-indicator {
         top: -2px;
@@ -1972,7 +1973,7 @@ $datagrid-small-row-height: 25px;
 
     .datagrid-cell-wrapper {
       min-height: $datagrid-extra-small-row-height + 6;
-      padding: 0 5px 0 !important;
+      padding: 2px 5px 0 !important;
 
       .dropdown-trigger {
         margin-top: -2px;
@@ -2502,11 +2503,10 @@ $datagrid-small-row-height: 25px;
 
     .datagrid-cell-wrapper {
       border: 1px solid transparent;
-      display: inline-flex;
-      align-items: center;
+      display: block;
       min-height: $datagrid-row-height + 6;
       overflow: hidden;
-      padding: 0 16px 0;
+      padding: 4px 16px 0;
 
       .colorpicker-container {
         background-color: transparent;
