@@ -1,0 +1,88 @@
+<style>
+  .form-responsive {
+    min-width: 320px;
+  }
+
+  .row:last-child {
+    margin-bottom: -10px;
+  }
+
+  .container.many-modal {
+    display: inline-flex;
+  }
+
+  .item {
+    height: 200px;
+    width: 200px;
+    background-color: red;
+    margin: 15px;
+  }
+</style>
+<div class="row top-padding">
+	<div class="twelve columns">
+    <button class="btn-secondary" type="button" id="many">Show Modal Many</button><br/><br/>
+
+    <div id="modal-many" class="hidden">
+      <div class="container many-modal">
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+    </div>
+    </div>
+	</div>
+</div>
+
+<script>
+var modals = {
+    'many': {
+      'title': 'Scroll Should Appear',
+      'id': 'my-id',
+      'content': $('#modal-many'),
+      'suppressEnterKey': true,
+      'forceOverflow': true
+    }
+  },
+
+  setModal = function (opt) {
+    opt = $.extend({
+      buttons: [{
+        text: 'Cancel',
+        click: function(e, modal) {
+          modal.close();
+        }
+      }, {
+        text: 'Save',
+        click: function(e, modal) {
+          modal.close();
+        },
+        validate: false,
+        isDefault: true
+      }]
+    }, opt);
+
+    $('body').modal(opt);
+  };
+
+  $('#many').on('click', function () {
+		$(this).focus();
+    setModal(modals[this.id]);
+  });
+
+</script>
