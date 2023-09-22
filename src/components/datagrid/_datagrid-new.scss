@@ -108,6 +108,10 @@
   }
 }
 
+.datagrid-drilldown {
+  top: -2px;
+}
+
 // Main Grid
 .datagrid {
   > tbody > tr .icon.plus-minus::before,
@@ -493,6 +497,10 @@
   .datagrid-trigger-cell .icon.icon-search-list {
     top: 4px;
   }
+
+  tbody tr td .datagrid-drilldown {
+    top: 2px;
+  }
 }
 
 // Fix Editor Alignment
@@ -541,6 +549,10 @@
     .datepicker + .icon {
       top: -4px;
     }
+  }
+
+  tbody tr td .datagrid-drilldown {
+    top: 0;
   }
 }
 
