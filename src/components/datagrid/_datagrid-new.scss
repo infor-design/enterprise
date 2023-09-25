@@ -490,16 +490,16 @@
     }
   }
 
+  tbody tr td .datagrid-drilldown {
+    top: 2px;
+  }
+
   .datagrid-trigger-cell.has-editor .icon.icon-search-list {
     top: 1px;
   }
 
   .datagrid-trigger-cell .icon.icon-search-list {
     top: 4px;
-  }
-
-  tbody tr td .datagrid-drilldown {
-    top: 2px;
   }
 }
 
