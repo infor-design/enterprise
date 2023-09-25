@@ -343,36 +343,33 @@
       <div class="four columns">&nbsp;</div>
       <div class="four columns">&nbsp;</div>
       <div class="four columns">
-        <p>Displays top-level navigation in a flyout menu</p>
-
         <div class="field field-checkbox">
-          <label for="display-mode-dropdown" class="label">Display Mode</label>
+          <label for="display-mode-dropdown" class="label">Display mode</label>
           <select id="display-mode-dropdown" class="dropdown">
-            <option value="">Hidden</option>
             <option value="collapsed" selected>Collapsed</option>
             <option value="expanded">Expanded</option>
+            <option value="">Hidden</option>
           </select>
         </div>
 
         <div class="field">
-          <input type="checkbox" class="checkbox" name="display-detail-check" id="display-detail-check" />
-          <label for="display-detail-check" class="checkbox-label">Display Detail View</label>
-        </div>
-
-        <div class="field">
           <input type="checkbox" class="checkbox" name="pin-sections" id="pin-sections" />
-          <label for="pin-sections" class="checkbox-label">Pin "optionally-pinned" Sections</label>
+          <label for="pin-sections" class="checkbox-label">Preview 'pinSections' setting</label>
         </div>
-
         <div class="field">
-          <input type="checkbox" checked="true" class="checkbox" name="offset-check" id="offset-check" />
-          <label for="offset-check" class="checkbox-label">Offset the page container (don't hide any content)</label>
+          <input type="checkbox" class="checkbox" name="display-detail-check" id="display-detail-check" />
+          <label for="display-detail-check" class="checkbox-label">Preview 'showDetailView' setting</label>
         </div>
 
+        <legend>Mobile options</legend>
         <div class="field">
           <input type="checkbox" class="checkbox" name="collapse-click-check" id="collapse-click-check" />
-          <label for="collapse-click-check" class="checkbox-label">Collapse/Hide when clicking outside an expanded menu</label>
-        </div>
+          <label for="collapse-click-check" class="checkbox-label">Expanded menu collapses when page content tapped</label>
+        </div>       
+        <div class="field">
+          <input type="checkbox" checked="true" class="checkbox" name="offset-check" id="offset-check" />
+          <label for="offset-check" class="checkbox-label">Expanded menu offsets page, showing all content</label>
+        </div>        
       </div>
     </div>
     <div class="row test-spacer">&nbsp;</div>
