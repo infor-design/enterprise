@@ -60,10 +60,13 @@ $('body').one('initialized', function () {
         year: 2020,
         day: 15,
         eventTypes: eventTypes,
+        disable: {
+          dayOfWeek: [0]
+        },
         dayLegend: [
           { name: 'Public Holiday', color: 'emerald02', dates: ['7/7/2020', '7/8/2020']} ,
           { name: 'Other', color: 'amethyst02', dates: ['7/22/2020', '7/23/2020'] },
-          { name: 'Weekend', color: 'ruby03', dayOfWeek: [0,6] }
+          { name: 'Weekend', color: 'ruby03', dayOfWeek: [6] }
         ],
         events: events,
         upcomingEventDays: 0,
