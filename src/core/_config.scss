@@ -434,6 +434,7 @@ $toolbar-separator-color: $ids-color-palette-graphite-30;
 $toolbar-btn-actions-hover-bg-color: $button-color-tertiary-hover-background-new;
 $toolbar-contextual-button-hover-bg-color: rgba(0, 0, 0, .3);
 $toolbar-contextual-button-color: $ids-color-palette-white;
+$toolbar-standalone-popup-label-color: $ids-color-brand-primary-base;
 
 // Field Filter
 $fieldfilter-border-side-color: transparent;
@@ -704,7 +705,7 @@ $accordion-inverse-focus-state-color: $ids-color-brand-primary-base;
 $accordion-focused-border-color: $ids-color-brand-primary-base;
 $accordion-focused-text-color: $ids-color-brand-primary-base;
 $accordion-selected-bg-color: $ids-color-brand-primary-base;
-$accordion-selected-text-color: $ids-color-palette-white;
+$accordion-selected-text-color: $ids-color-palette-slate-90;
 $accordion-panel-selected-text-color: $ids-color-palette-white;
 
 $accordion-highcontrast-text-decoration: none;
