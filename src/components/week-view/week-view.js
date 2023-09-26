@@ -449,7 +449,7 @@ WeekView.prototype = {
     const container = this.element[0].querySelector(`.week-view-body-cell[data-key="${event.startKey}"]`);
 
     if (container) {
-      const displayTime = ` ${Locale.formatHourRange(event.startsHour, event.endsHour, { locale: this.locale })}`;
+      const displayTime = ` ${Locale.formatHourRange(event.startsHour, event.endsHour, { locale: this.locale, keepPeriod: true })}`;
       const node = this.createEventElement(event);
 
       node.innerHTML = `<div class="calendar-event-content">
