@@ -1,0 +1,38 @@
+<div class="row top-padding">
+  <div class="twelve columns">
+    <div class="field">
+      <button class="btn-secondary" id="destroy-input-popup">Destroy Input Popup</button>
+      <button class="btn-secondary" id="destroy-textarea-popup">Destroy TextArea Popup</button>
+    </div>
+
+    <div class="field">
+      <label id="label1" name="label1" for="field1">Input Example</label>
+      <input id="field1" name="field1" data-popupmenu="action-popupmenu-2" menu="action-popupmenu-2" value="Right Click Here"/>
+    </div>
+
+    <div class="field">
+      <label for="textarea" id="label2" name="label2">Enabled Text Area Example</label>
+      <textarea id="textarea" name="textarea" data-popupmenu="action-popupmenu-2" menu="action-popupmenu-2">This text is modifiable</textarea>
+    </div>
+
+    <ul id="action-popupmenu-2">
+      <li>Test 1</li>
+      <li>Test 2</li>
+      <li>Test 3</li>
+      <li>Test 4</li>
+    </ul>
+  </div>
+</div>
+
+
+<script>
+  $('#destroy-input-popup').on('click', () => {
+    $('#field1').data('popupmenu').destroy();
+    $('#field1').remove();
+  });
+
+  $('#destroy-textarea-popup').on('click', () => {
+    $('#textarea').data('popupmenu').destroy();
+    $('#textarea').remove();
+  });
+</script>
