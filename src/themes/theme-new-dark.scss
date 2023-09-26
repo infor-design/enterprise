@@ -452,7 +452,8 @@ $cardlist-box-shadow-color: rgba(0, 0, 0, 0.1);
 $checkbox-disabled-text-color: $checkbox-color-unchecked-disabled-font;
 $checkbox-disabled-checked-bg-color: $checkbox-color-unchecked-disabled-border;
 $checkbox-color-disabled-font: $input-color-disabled-font;
-$checkbox-color-checked-initial-background: $ids-color-palette-slate-80;
+$checkbox-color-checked-initial-background: $ids-color-palette-slate-10;
+$checkbox-color-checked-initial-arrow: $ids-color-palette-slate-80;
 
 // Switch
 $radio-checked-color: $ids-color-brand-primary-base;
