@@ -26,6 +26,14 @@
   right 300ms $cubic-ease,
   box-shadow 300ms $cubic-ease);
 
+  &.active {
+    &.has-close-icon-button {
+      &.has-custom-button .searchfield {
+        padding-right: 60px;
+      }
+    }
+  }
+
   &.non-collapsible.is-open {
     > .icon:not(.close):not(.icon-error) {
       height: 18px;
@@ -102,7 +110,7 @@
     }
 
     &.has-custom-button .searchfield {
-      padding-right: 60px;
+      padding-right: 30px;
     }
   }
 

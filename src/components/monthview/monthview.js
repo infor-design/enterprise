@@ -795,7 +795,7 @@ MonthView.prototype = {
 
           const newDate = setHours(new Date(year, month, dayCnt));
           const comparisonDate = self.currentDate || elementDate;
-          if (newDate === setHours(comparisonDate)) {
+          if (!(s.day && !s.activeDate) && newDate === setHours(comparisonDate)) {
             setSelected(th, true);
           }
         }

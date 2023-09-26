@@ -36,8 +36,11 @@
   &.has-custom-button {
     .custom-button {
       position: absolute;
-      top: 1px;
+      top: 7px;
       left: 263px;
+      width: 24px;
+      min-width: 24px;
+      min-height: 24px;
     }
 
     &.has-go-button .custom-button {
