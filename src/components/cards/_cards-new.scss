@@ -400,6 +400,11 @@ html[dir='rtl'] {
       }
     }
 
+    &:not(.expandable-card-header) {
+      padding-left: 8px;
+      padding-right: 16px;
+    }
+
     h2 ~ svg.icon.has-tooltip {
       margin-right: 5px;
       top: 8px;
