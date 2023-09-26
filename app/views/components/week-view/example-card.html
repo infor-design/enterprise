@@ -31,6 +31,17 @@
       </div>
     </div>
   </div>
+
+  <div class="two-thirds column">
+    <div class="card">
+      <div class="card-header">
+          <h2 class="widget-title">Alternate Format</h2>
+      </div>
+      <div class="card-content">
+        <div id="week-view-alternate" class="week-view" data-init="false"></div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -77,6 +88,15 @@
         hideToolbar: true,
         showFooter: false,
         stacked: true
+      });
+
+      $('#week-view-alternate').weekview({
+          ...opts,
+          timeFirst: true,
+          militaryTime: true,
+          hideToolbar: true,
+          showFooter: false,
+          stacked: true
       });
     });
   });
