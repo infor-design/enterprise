@@ -666,7 +666,7 @@ Dropdown.prototype = {
           icon = $.fn.parseOptions(this, 'data-icon');
         }
 
-        if (icon instanceof Object && icon.icon === "") {
+        if (icon instanceof Object && icon.icon === '') {
           return;
         }
 
