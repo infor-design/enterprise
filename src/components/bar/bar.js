@@ -823,16 +823,16 @@ Bar.prototype = {
 
           const place = {
             top: `translate(${widthAxisLabel / 2},${-4})`,
-            right: `translate(${!hasOverlappingLabel ? widthAxisLabel + 53 : widthAxisLabel + 23},${height / 2})rotate(90)`,
+            right: `translate(${!hasOverlappingLabel ? widthAxisLabel + 50 : widthAxisLabel + 35},${height / 2})rotate(90)`,
             bottom: `translate(${widthAxisLabel / 2},${heightAxisLabel + 89})`,
             left: `translate(${!hasOverlappingLabel ? -35 : -50},${height / 2})rotate(-90)`,
           };
 
           const placeStyle = {
             top: `rotate(0deg) scaleX(-1) translate(-${widthAxisLabel / 2}px, ${-4}px)`,
-            right: `rotate(90deg) scaleX(-1) translate(-${(height / 2) + 5}px, -${widthAxisLabel + (this.isRTL ? 45 : 28)}px)`,
+            right: `rotate(90deg) scaleX(-1) translate(-${(height / 2) + 5}px, -${widthAxisLabel + (this.isRTL && !hasOverlappingLabel ? 45 : 28)}px)`,
             bottom: `rotate(0deg) scaleX(-1) translate(-${widthAxisLabel / 2}px, ${heightAxisLabel + 89}px)`,
-            left: `rotate(90deg) scaleX(-1) translate(-${(height / 2 - 5)}px, ${this.isRTL ? 45 : 55}px)`
+            left: `rotate(90deg) scaleX(-1) translate(-${(height / 2 - 5)}px, ${this.isRTL && !hasOverlappingLabel ? 45 : 60}px)`
           };
 
           axisLabelGroup.append('text')
