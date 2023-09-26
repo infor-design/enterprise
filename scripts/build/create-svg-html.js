@@ -85,6 +85,20 @@ const convertSvgMarkup = (id, contents) => {
   let changed = contents.replace(/<svg/, `<symbol id="icon-${id}"`);
   changed = changed.replace('</svg>', '</symbol>');
   changed = changed.replace(/\sxmlns="(.*?)"/, '');
+
+  changed = changed.replace(' style="color: #28282A; fill: transparent;"', '');
+  changed = changed.replace(' style="color: #28282A; fill: transparent"', '');
+  changed = changed.replace(' style="color: transparent; fill: #28282A;"', '');
+  changed = changed.replace(' color="transparent" fill="#28282a" stroke="none"', '');
+  changed = changed.replaceAll('#000', 'currentColor');
+
+  if (changed.indexOf('stroke=') === -1) {
+    changed = changed.replaceAll('fill-rule="evenodd"', 'fill="currentColor" fill-rule="evenodd"');
+  }
+
+  if (changed.indexOf('stroke=') === -1) {
+    changed = changed.replaceAll('<path d="', '<path fill="currentColor" d="');
+  }
   return changed;
 };
 
