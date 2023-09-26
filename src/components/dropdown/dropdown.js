@@ -656,7 +656,7 @@ Dropdown.prototype = {
         const iconAttr = $(this).attr('data-icon');
         let icon = null;
 
-        if (typeof iconAttr !== 'string' || !iconAttr.length || iconAttr === "{}") {
+        if (typeof iconAttr !== 'string' || !iconAttr.length || iconAttr === '{}') {
           return;
         }
 
@@ -1022,7 +1022,7 @@ Dropdown.prototype = {
     this.virtualScrollElem = this.listUl.closest('.virtual-scroll-container');
     this.opts = opts;
 
-    if (this.listIcon.hasIcons && this.listIcon.pseudoElemIcon !== "") {
+    if (this.listIcon.hasIcons && this.listIcon.pseudoElemIcon !== '') {
       this.list.addClass('has-icons');
 
       const iconClone = this.listIcon.pseudoElemIcon.clone();
