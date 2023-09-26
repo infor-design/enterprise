@@ -655,8 +655,8 @@ const Locale = {  // eslint-disable-line
       ret = ret.replace('h', 12);
     }
 
-    ret = ret.replace('hh', (!options.militaryTime && hours > 12 ? this.pad(hours - 12, 2) : this.pad(hours, 2)));
-    ret = ret.replace('h', (!options.militaryTime && hours > 12 ? hours - 12 : hours));
+    ret = ret.replace('hh', (!options?.militaryTime && hours > 12 ? this.pad(hours - 12, 2) : this.pad(hours, 2)));
+    ret = ret.replace('h', (!options?.militaryTime && hours > 12 ? hours - 12 : hours));
     ret = ret.replace('HH', this.pad(hours, 2));
     ret = ret.replace('H', hours);
     ret = ret.replace('mm', this.pad(mins, 2));
@@ -756,7 +756,7 @@ const Locale = {  // eslint-disable-line
       date.setMinutes(parts[1] || 0);
     }
 
-    return this.formatDate(date, { date: 'hour', militaryTime: options.militaryTime });
+    return this.formatDate(date, { date: 'hour', militaryTime: options?.militaryTime });
   },
 
   /**
@@ -770,7 +770,6 @@ const Locale = {  // eslint-disable-line
     let locale = this.currentLocale.name;
     let dayPeriods = this.calendar(locale).dayPeriods;
     let removePeriod = false;
-    const keepPeriod = options.keepPeriod;
 
     if (typeof options === 'object') {
       locale = options.locale || locale;
@@ -778,11 +777,11 @@ const Locale = {  // eslint-disable-line
     }
     let range = `${Locale.formatHour(startHour, options)} - ${Locale.formatHour(endHour, options)}`;
 
-    if (!options.militaryTime && (range.match(/:00/g) || []).length > 1) {
+    if (!options?.militaryTime && (range.match(/:00/g) || []).length > 1) {
       range = range.replaceAll(':00', '');
     }
 
-    if (!keepPeriod) {
+    if (!options?.keepPeriod) {
       if (range.indexOf(':00 AM -') > -1 || range.indexOf(':00 PM -') > -1) {
         removePeriod = true;
       }
@@ -796,7 +795,7 @@ const Locale = {  // eslint-disable-line
       }
     }
 
-    if (options.militaryTime) {
+    if (options?.militaryTime) {
       if (stringUtils.count(range, dayPeriods[0]) > 1) {
         range = range.replaceAll(dayPeriods[0], '');
       }
