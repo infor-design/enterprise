@@ -812,22 +812,29 @@ Bar.prototype = {
       const widthAxisLabel = w - 95;
       const heightAxisLabel = height - 60;
 
-      const place = {
-        top: `translate(${widthAxisLabel / 2},${-4})`,
-        right: `translate(${widthAxisLabel + 53},${height / 2})rotate(90)`,
-        bottom: `translate(${widthAxisLabel / 2},${heightAxisLabel + 89})`,
-        left: `translate(${-35},${height / 2})rotate(-90)`,
-      };
-
-      const placeStyle = {
-        top: `rotate(0deg) scaleX(-1) translate(-${widthAxisLabel / 2}px, ${-4}px)`,
-        right: `rotate(90deg) scaleX(-1) translate(-${(height / 2) + 5}px, -${widthAxisLabel + (this.isRTL ? 45 : 28)}px)`,
-        bottom: `rotate(0deg) scaleX(-1) translate(-${widthAxisLabel / 2}px, ${heightAxisLabel + 89}px)`,
-        left: `rotate(90deg) scaleX(-1) translate(-${(height / 2 - 5)}px, ${this.isRTL ? 45 : 55}px)`
-      };
-
       const addAxis = (pos) => {
         if (isAxisLabels[pos]) {
+          let hasOverlappingLabel;
+
+          // Check bar labels if there are lengthy labels (5 or more than characters)
+          self.svg.selectAll('.axis.y text')._groups[0].forEach(function (i) {
+            if (parseInt(i.getBoundingClientRect().width, 10) >= 34) hasOverlappingLabel = true;
+          });
+
+          const place = {
+            top: `translate(${widthAxisLabel / 2},${-4})`,
+            right: `translate(${!hasOverlappingLabel ? widthAxisLabel + 53 : widthAxisLabel + 23},${height / 2})rotate(90)`,
+            bottom: `translate(${widthAxisLabel / 2},${heightAxisLabel + 89})`,
+            left: `translate(${!hasOverlappingLabel ? -35 : -50},${height / 2})rotate(-90)`,
+          };
+
+          const placeStyle = {
+            top: `rotate(0deg) scaleX(-1) translate(-${widthAxisLabel / 2}px, ${-4}px)`,
+            right: `rotate(90deg) scaleX(-1) translate(-${(height / 2) + 5}px, -${widthAxisLabel + (this.isRTL ? 45 : 28)}px)`,
+            bottom: `rotate(0deg) scaleX(-1) translate(-${widthAxisLabel / 2}px, ${heightAxisLabel + 89}px)`,
+            left: `rotate(90deg) scaleX(-1) translate(-${(height / 2 - 5)}px, ${this.isRTL ? 45 : 55}px)`
+          };
+
           axisLabelGroup.append('text')
             .attr('class', `axis-label-${pos}`)
             .attr('text-anchor', 'middle')
