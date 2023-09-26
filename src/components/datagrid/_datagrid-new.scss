@@ -108,6 +108,10 @@
   }
 }
 
+.datagrid-drilldown {
+  top: -2px;
+}
+
 // Main Grid
 .datagrid {
   > tbody > tr .icon.plus-minus::before,
@@ -486,6 +490,10 @@
     }
   }
 
+  tbody tr td .datagrid-drilldown {
+    top: 2px;
+  }
+
   .datagrid-trigger-cell.has-editor .icon.icon-search-list {
     top: 1px;
   }
@@ -541,6 +549,10 @@
     .datepicker + .icon {
       top: -4px;
     }
+  }
+
+  tbody tr td .datagrid-drilldown {
+    top: 0;
   }
 }
 
