@@ -910,6 +910,7 @@ Validator.prototype = {
     let markup;
     let icon;
     const messageId = `${(field.attr('id') || 'id')}-${rule.type}`;
+    const isEnglish = $('html').attr('lang') === 'en-US';
 
     if (rule.type === 'error') {
       icon = `${validationType.type}`;
@@ -928,12 +929,12 @@ Validator.prototype = {
         </div>`;
     } else {
       markup = '' +
-        `<div id="${messageId}" class="${validationType.type}-message" data-rule-id="${rule.id || rule.message}">
-          ${$.createIcon({ classes: [`icon-${validationType.type}`], icon })}
+        `<div id="${messageId}" class="${validationType.type}-message${!isEnglish ? ' non-english' : ''}" data-rule-id="${rule.id || rule.message}">
           <pre class="audible">
             ${Locale.translate(validationType.titleMessageID)}
           </pre>
           <p class="message-text">${rule.message}</p>
+          ${$.createIcon({ classes: [`icon-${validationType.type}`], icon })}
         </div>`;
     }
 
