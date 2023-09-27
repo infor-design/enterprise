@@ -678,8 +678,8 @@ WeekView.prototype = {
       let halfHourRow = `<tr class="week-view-half-hour-row" data-hour="${hour}.5"><td><div class="week-view-cell-wrapper"></div></td>`;
 
       for (let day = new Date(startDate.getTime()); day <= endDate; day.setDate(day.getDate() + 1)) { //eslint-disable-line
-        weekRow += '<td><div class="week-view-cell-wrapper"></div></td>';
-        halfHourRow += '<td><div class="week-view-cell-wrapper"></div></td>';
+        weekRow += `<td data-key="${stringUtils.padDate(day.getFullYear(), day.getMonth(), day.getDate())}"><div class="week-view-cell-wrapper"></div></td>`;
+        halfHourRow += `<td data-key="${stringUtils.padDate(day.getFullYear(), day.getMonth(), day.getDate())}"><div class="week-view-cell-wrapper"></div></td>`;
       }
       weekRow += '</tr>';
       halfHourRow += '</tr>';
@@ -1057,6 +1057,17 @@ WeekView.prototype = {
       fireEvent(e.currentTarget, 'eventdblclick');
     });
 
+    this.element.off(`dblclick.${COMPONENT_NAME}`).on(`dblclick.${COMPONENT_NAME}`, 'td', (e) => {
+      const key = e.currentTarget.getAttribute('data-key');
+      const hour = $(e.currentTarget).parent().attr('class').contains('week-view-hour-row') ? 1 : 0.5;
+      if (!key) {
+        return;
+      }
+      const day = new Date(key.substr(0, 4), key.substr(4, 2) - 1, key.substr(6, 2));
+      e.stopPropagation();
+      console.log('dobol', day, hour)
+    });
+
     $('body').off(`breakpoint-change.${this.id}`).on(`breakpoint-change.${this.id}`, () => this.onBreakPointChange());
     $(window).on(`resize.${this.id}`, () => { this.element.trigger(`breakpoint-change.${this.id}`); });
 
@@ -1125,6 +1136,12 @@ WeekView.prototype = {
 
     this.settings.events.push(event);
     this.renderEvent(event);
+  },
+
+  showEventModal(event, done, eventTarget) {
+    if (!this.settings.modalTemplate) {
+      return;
+    }
   },
 
   /**
