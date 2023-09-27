@@ -30,6 +30,7 @@ const COMPONENT_NAME_DEFAULTS = {
   disable: {
     dayOfWeek: [],
   },
+  timePattern: 'h:mm a',
   showToday: true,
   showViewChanger: true,
   hitbox: false,
@@ -449,7 +450,7 @@ WeekView.prototype = {
     const container = this.element[0].querySelector(`.week-view-body-cell[data-key="${event.startKey}"]`);
 
     if (container) {
-      const displayTime = ` ${Locale.formatHourRange(event.startsHour, event.endsHour, { locale: this.locale, keepPeriod: true, militaryTime: this.settings.militaryTime })}`;
+      const displayTime = ` ${Locale.formatHourRange(event.startsHour, event.endsHour, { locale: this.locale, keepPeriod: true, pattern: this.settings.timePattern })}`;
       const node = this.createEventElement(event);
       const subject = `<span class="calendar-event-title">
           ${this.settings.timeFirst ? displayTime : event.shortSubject || event.subject}</br>${this.settings.timeFirst ? event.shortSubject || event.subject : displayTime}
