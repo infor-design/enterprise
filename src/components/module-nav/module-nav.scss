@@ -293,3 +293,9 @@
   overflow: hidden;
   margin-block-start: 0;
 }
+
+// Set Zindex
+.dropdown-list[data-element-id="module-nav-role-switcher"] {
+  z-index: 8000;
+}
+
