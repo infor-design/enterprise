@@ -650,7 +650,7 @@ Cards.prototype = {
   handleEvents() {
     const self = this;
     const $cardContent = $(self.element).find('.card-content, .widget-content');
-    const $detailElement = `#${self.settings.detailRefId}, .is-selected`;
+    const $detailElement = `#${self.settings.detailRefId}`;
 
     this.expandableCardHeader?.on('click.cards', (e) => {
       if (!self.isDisabled()) {
