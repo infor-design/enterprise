@@ -11,6 +11,7 @@
 
 - `[Accordion]` Updated selected header text color. ([#7769](https://github.com/infor-design/enterprise/issues/7769))
 - `[Breadcrumb]` Updated hover color for breadcrumb in header. ([#7801](https://github.com/infor-design/enterprise/issues/7801))
+- `[Build]` Fixed wrong filename in build download. ([#7992](https://github.com/infor-design/enterprise/issues/7992))
 - `[Button]` Updated hover color for header and CAP. ([#7944/7943](https://github.com/infor-design/enterprise/issues/7944))
 - `[Button]` Fixed stylings for button menu and secondary combo. ([#7783](https://github.com/infor-design/enterprise/issues/7783))
 - `[Button]` Formatted the appending of a cssClass property to include a prefix whitespace. ([#7852](https://github.com/infor-design/enterprise/issues/7852))
@@ -27,7 +28,9 @@
 - `[Dropdown]` Fixed dropdown position when expanded on corners. ([NG#1541](https://github.com/infor-design/enterprise-ng/issues/1541))
 - `[Editor]` Fixed editor text not changing to other font headers after changing colors. ([#7793](https://github.com/infor-design/enterprise/issues/7793))
 - `[Editor]` Fixed editor text not changing to other font headers in some scenarios after changing colors in Firefox. ([#7796](https://github.com/infor-design/enterprise/issues/7796))
+- `[Icons]` Fixed icon pipeline, made icons downloadable and added new empty state icons and a few standard icons. ([#518](https://github.com/infor-design/design-system/issues/518))
 - `[Homepage]` Added better default color for hero now that its white. ([#7938](https://github.com/infor-design/enterprise/issues/7938))
+- `[Line]` Fixed bottom spacing issue in RTL. ([#7776](https://github.com/infor-design/enterprise/issues/7776))
 - `[Listview]` Adjusted searchfield in listview when inside modal to fix alignment. ([NG#1547](https://github.com/infor-design/enterprise-ng/issues/1547))
 - `[Listview]` Adjusted searchfield in listview when inside modal to fix alignment. ([NG#1547](https://github.com/infor-design/enterprise-ng/issues/1547))
 - `[Lookup]` Fixed count text positioning. ([#7905](https://github.com/infor-design/enterprise/issues/7905))
