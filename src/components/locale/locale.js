@@ -758,7 +758,7 @@ const Locale = {  // eslint-disable-line
 
     const dateOpt = { date: 'hour' };
 
-    if (options.pattern) {
+    if (options?.pattern) {
       dateOpt.pattern = options.pattern;
     }
 
