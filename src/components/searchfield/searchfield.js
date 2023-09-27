@@ -1187,6 +1187,14 @@ SearchField.prototype = {
     const key = e.which;
     const keyName = e.key;
 
+    const searchInput = this.element[0];
+    const selectedString = searchInput.value.substring(searchInput.selectionStart, searchInput.selectionEnd);
+
+    // Workaround to allow for "ctrl + a delete" or "delete all" in Firefox.
+    if (selectedString.length > 0 && key === 8) {
+      this.element.val(searchInput.value.replace(selectedString, ''));
+    }
+
     if (key === 27 && env.browser.isIE11()) {
       e.preventDefault();
     }
