@@ -370,3 +370,18 @@
     }
   }
 }
+
+html[lang]:not([lang='en-US']) {
+  .tab-container.vertical {
+    .tab.is-error {
+      a {
+        display: inline-block;
+        padding-right: 8px;
+      }
+      a + .icon {
+        display: inline-block;
+        position: relative;
+      }
+    }
+  }
+}

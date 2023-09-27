@@ -792,21 +792,6 @@ span.required::after {
     max-width: 280px;
     padding-left: $this-icon-width + 5;
   }
-
-  &.non-english {
-    display: flex;
-    height: 15px;
-
-    .message-text {
-      padding-left: unset;
-      padding-right: 3px;
-    }
-
-    .icon {
-      position: relative;
-      margin-top: 5px;
-    }
-  }
 }
 
 // Alert Field
@@ -1009,6 +994,25 @@ span.required::after {
   ~ a.btn-tertiary {
     display: inline;
     padding: 0 5px;
+  }
+}
+
+html[lang]:not([lang='en-US']) {
+  .error-message {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    height: 15px;
+
+    .message-text {
+      padding-left: unset;
+      padding-right: 3px;
+    }
+
+    .icon {
+      position: relative;
+      margin-top: unset;
+    }
   }
 }
 
