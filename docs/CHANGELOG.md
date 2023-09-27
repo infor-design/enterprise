@@ -7,6 +7,8 @@
 - `[Checkbox]` Changed color of checkbox in dark mode. ([#7991](https://github.com/infor-design/enterprise/issues/7991))
 - `[Form/Label]` Implemented a form layout designed to facilitate an inline design within a responsive-form container. ([#7764](https://github.com/infor-design/enterprise/issues/7764))
 - `[Module Nav]` Added usage guidance to docs. ([#7869](https://github.com/infor-design/enterprise/issues/7869))
+- `[Module Nav]` Added mobile behaviors. ([#7804](https://github.com/infor-design/enterprise/issues/7804))
+- `[Module Nav]` Fixed an alignment issue. ([#7934](https://github.com/infor-design/enterprise/issues/7934))
 
 ## v4.88.0 Fixes
 
@@ -14,7 +16,9 @@
 - `[Breadcrumb]` Updated hover color for breadcrumb in header. ([#7801](https://github.com/infor-design/enterprise/issues/7801))
 - `[Button]` Updated hover color for header and CAP. ([#7944/7943](https://github.com/infor-design/enterprise/issues/7944))
 - `[Button]` Formatted the appending of a cssClass property to include a prefix whitespace. ([#7852](https://github.com/infor-design/enterprise/issues/7852))
+- `[Build]` Fixed wrong filename in build download. ([#7992](https://github.com/infor-design/enterprise/issues/7992))
 - `[Calendar]` Added check on setting current date so it doesn't override provided date settings. ([#7806](https://github.com/infor-design/enterprise/issues/7806))
+- `[Card]` Fixed issues when using both card and tabs component. ([#7915](https://github.com/infor-design/enterprise/issues/7915))
 - `[Card/Widget]` Fix inconsistency in widget size. ([#7896](https://github.com/infor-design/enterprise/issues/7896))
 - `[Chart]` Fix on focus border being off in chart legend items. ([#7850](https://github.com/infor-design/enterprise/issues/7850))
 - `[Chart]` Fixed on focus border being off in chart legend items. ([#7850](https://github.com/infor-design/enterprise/issues/7850))
@@ -25,8 +29,10 @@
 - `[Datagrid]` Adjusted positioning of drilldown button. ([#7014](https://github.com/infor-design/enterprise/issues/7014))
 - `[Dropdown]` Fix on dropdown not focusing in mobile. ([#7815](https://github.com/infor-design/enterprise/issues/7815))
 - `[Dropdown]` Fixed dropdown position when expanded on corners. ([NG#1541](https://github.com/infor-design/enterprise-ng/issues/1541))
+- `[Dropdown]` Fixed display render when the option has no icon. ([#7813](https://github.com/infor-design/enterprise/issues/7813))
 - `[Editor]` Fixed editor text not changing to other font headers after changing colors. ([#7793](https://github.com/infor-design/enterprise/issues/7793))
 - `[Editor]` Fixed editor text not changing to other font headers in some scenarios after changing colors in Firefox. ([#7796](https://github.com/infor-design/enterprise/issues/7796))
+- `[Fieldfilter]` Fixed uneven focus border for clear button. Adjusted day focus border sizing. Fixed misaligned datepicker short field. ([#7919](https://github.com/infor-design/enterprise/issues/7919))
 - `[Icons]` Fixed icon pipeline, made icons downloadable and added new empty state icons and a few standard icons. ([#518](https://github.com/infor-design/design-system/issues/518))
 - `[Homepage]` Added better default color for hero now that its white. ([#7938](https://github.com/infor-design/enterprise/issues/7938))
 - `[Line]` Fixed bottom spacing issue in RTL. ([#7776](https://github.com/infor-design/enterprise/issues/7776))
