@@ -737,12 +737,13 @@ WeekView.prototype = {
     return !!this.settings.stacked;
   },
 
-  renderDisable() {
-    if (!this.settings.disable.dayOfWeek.length > 0) {
+  renderDisable(disabled = []) {
+    const disableWeek = this.settings.disable.dayOfWeek.length > 0 ? this.settings.disable.dayOfWeek : disabled;
+    if (!disableWeek.length > 0) {
       return;
     }
 
-    const dayOfWeek = this.settings.disable.dayOfWeek;
+    const dayOfWeek = disableWeek;
     if (this.dayMap.length === 1) {
       const dayMap = this.dayMap[0];
       const dString = dayMap.key;
@@ -850,6 +851,7 @@ WeekView.prototype = {
     for (let i = 0; i < legends.length; i++) {
       const dates = legends[i].dates;
       const week = legends[i].dayOfWeek;
+      const disable = legends[i].disableWeek;
 
       if (dates) {
         for (let j = 0; j < dates.length; j++) {
@@ -870,6 +872,10 @@ WeekView.prototype = {
             }
           });
         }
+      }
+
+      if (disable) {
+        this.renderDisable(disable);
       }
     }
   },
