@@ -248,6 +248,11 @@ $card-header-section: '.card-header-section', '.widget-header-section';
     }
 
     .card-content {
+      margin: 0;
+      position: absolute;
+      top: 50%;
+      -ms-transform: translateY(-50%);
+      transform: translateY(-50%);
       padding-top: 12px;
 
       .card-empty-info {
