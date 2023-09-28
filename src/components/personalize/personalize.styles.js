@@ -64,8 +64,11 @@ html[class*="theme-classic-"]:not(.theme-classic-dark) .btn-primary:not(.destruc
   border-color: ${colors.baseDisabled};
 }
 
-.is-personalizable:not(.header) .btn-link:not(:disabled):hover,
-.is-personalizable:not(.header) .btn-menu:not(.btn-secondary):not([disabled]):not(:disabled):hover {
+.is-personalizable:not(.header) .btn-link:not(:disabled):hover {
+  background-color: ${colors.lightestPalette};
+}
+
+html[class*="new-"] .is-personalizable:not(.header) .btn-menu:not(.btn-secondary):not([disabled]):not(:disabled):hover {
   background-color: ${colors.lightestPalette};
 }
 
