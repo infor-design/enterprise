@@ -156,7 +156,7 @@ const formatters = {
       }
     }
 
-    return `<span class="trigger ${isPlaceholder ? 'is-placeholder' : ''}">${formatted}</span>${$.createIcon({ icon: 'calendar-list', classes: ['icon-calendar'] })}`;
+    return `<span class="trigger ${isPlaceholder ? 'is-placeholder' : ''}">${formatted}</span>${$.createIcon({ icon: 'calendar', classes: ['icon-calendar'] })}`;
   },
 
   Time(row, cell, value, col, isReturnValue) {

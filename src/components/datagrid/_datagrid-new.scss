@@ -1101,6 +1101,32 @@ html[dir='rtl'] {
     }
   }
 
+  .datagrid {
+    td.error {
+      .datagrid-cell-wrapper {
+        .trigger + .icon-calendar + .icon-error {
+          left: 0;
+          margin-top: 1px;
+        }
+      }
+    }
+  }
+
+  .datagrid-trigger-cell.has-editor {
+    &:not(.is-readonly) {
+      &:hover,
+      &:focus {
+        svg.icon + .icon-error,
+        svg.icon + .icon-info,
+        svg.icon + .icon-alert {
+          &:not(.datagrid-alert-icon) {
+            margin-left: 27px !important;
+          }
+        }
+      }
+    }
+  }
+
   // Small mode adjustments
   .datagrid-container {
     &.small-rowheight {
