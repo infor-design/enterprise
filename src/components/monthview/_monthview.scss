@@ -955,6 +955,10 @@
     display: inline-block;
     height: 12px;
     width: 12px;
+
+    &.default {
+      background-color: $calendar-disabled-bg-color;
+    }
   }
 }
 

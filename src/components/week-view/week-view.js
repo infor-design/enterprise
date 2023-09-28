@@ -737,12 +737,13 @@ WeekView.prototype = {
     return !!this.settings.stacked;
   },
 
-  renderDisable() {
-    if (!this.settings.disable.dayOfWeek.length > 0) {
+  renderDisable(disabled = []) {
+    const disableWeek = this.settings.disable.dayOfWeek.length > 0 ? this.settings.disable.dayOfWeek : disabled;
+    if (!disableWeek.length > 0) {
       return;
     }
 
-    const dayOfWeek = this.settings.disable.dayOfWeek;
+    const dayOfWeek = disableWeek;
     if (this.dayMap.length === 1) {
       const dayMap = this.dayMap[0];
       const dString = dayMap.key;
@@ -783,70 +784,98 @@ WeekView.prototype = {
       return;
     }
 
+    const setLegendColor = (date, legend) => {
+      const startDate = typeof date === 'string' ? new Date(date) : date;
+      let startKey = stringUtils.padDate(
+        startDate.getFullYear(),
+        startDate.getMonth(),
+        startDate.getDate(),
+      );
+
+      if (Locale.isIslamic(this.locale.name)) {
+        const startDateIslamic = Locale.gregorianToUmalqura(startDate);
+        startKey = stringUtils.padDate(
+          startDateIslamic[0],
+          startDateIslamic[1],
+          startDateIslamic[2]
+        );
+      }
+
+      const endDate = new Date(date);
+      let endKey = stringUtils.padDate(
+        endDate.getFullYear(),
+        endDate.getMonth(),
+        endDate.getDate()
+      );
+
+      if (Locale.isIslamic(this.locale.name)) {
+        const endDateIslamic = Locale.gregorianToUmalqura(endDate);
+        endKey = stringUtils.padDate(
+          endDateIslamic[0],
+          endDateIslamic[1],
+          endDateIslamic[2]
+        );
+      }
+
+      const days = this.dayMap.filter(day => day.key >= startKey && day.key <= endKey);
+      if (days.length > 0) {
+        let legendColor = legend.color;
+
+        if (legendColor.indexOf('#') === -1) {
+          const name = legendColor.replace(/[0-9]/g, '');
+          const number = legendColor.substr(legendColor.length - 2, 2) * 10;
+          legendColor = theme.themeColors().palette[name][number].value;
+        }
+
+        const normalColor = colorUtils.hexToRgba(legendColor, 0.3);
+        const container = days[0].elem;
+        const dayHourContainers = this.element[0].querySelectorAll(`td:nth-child(${container.cellIndex + 1})`);
+        for (let k = 0; k < dayHourContainers.length; k++) {
+          const tdEl = dayHourContainers[k];
+          const hourWrapper = $(tdEl.querySelector('.week-view-cell-wrapper'));
+          hourWrapper.addClass('is-colored');
+          hourWrapper[0].setAttribute('data-hex', legendColor);
+          hourWrapper[0].style.backgroundColor = normalColor;
+        }
+
+        const allDayContainer = $(container.querySelector('.week-view-all-day-wrapper'));
+        if (allDayContainer) {
+          allDayContainer.addClass('is-colored');
+          allDayContainer[0].setAttribute('data-hex', legendColor);
+          allDayContainer[0].style.backgroundColor = normalColor;
+        }
+      }
+    };
+
     const legends = this.settings.legend;
     for (let i = 0; i < legends.length; i++) {
       const dates = legends[i].dates;
-      for (let j = 0; j < dates.length; j++) {
-        const startDate = new Date(dates[j]);
-        let startKey = stringUtils.padDate(
-          startDate.getFullYear(),
-          startDate.getMonth(),
-          startDate.getDate(),
-        );
+      const week = legends[i].dayOfWeek;
+      const disable = legends[i].disableWeek;
 
-        if (Locale.isIslamic(this.locale.name)) {
-          const startDateIslamic = Locale.gregorianToUmalqura(startDate);
-          startKey = stringUtils.padDate(
-            startDateIslamic[0],
-            startDateIslamic[1],
-            startDateIslamic[2]
-          );
+      if (dates) {
+        for (let j = 0; j < dates.length; j++) {
+          setLegendColor(dates[j], legends[i]);
         }
+      }
 
-        const endDate = new Date(dates[j]);
-        let endKey = stringUtils.padDate(
-          endDate.getFullYear(),
-          endDate.getMonth(),
-          endDate.getDate()
-        );
+      if (week) {
+        for (let j = 0; j < this.dayMap.length; j++) {
+          const year = parseInt(this.dayMap[j].key.substring(0, 4), 10);
+          const month = parseInt(this.dayMap[j].key.substring(4, 6), 10) - 1;
+          const day = parseInt(this.dayMap[j].key.substring(6, 8), 10);
+          const date = new Date(year, month, day);
 
-        if (Locale.isIslamic(this.locale.name)) {
-          const endDateIslamic = Locale.gregorianToUmalqura(endDate);
-          endKey = stringUtils.padDate(
-            endDateIslamic[0],
-            endDateIslamic[1],
-            endDateIslamic[2]
-          );
+          week.forEach((d) => {
+            if (date.getDay() === d) {
+              setLegendColor(date, legends[i]);
+            }
+          });
         }
+      }
 
-        const days = this.dayMap.filter(day => day.key >= startKey && day.key <= endKey);
-        if (days.length > 0) {
-          let legendColor = legends[i].color;
-
-          if (legendColor.indexOf('#') === -1) {
-            const name = legendColor.replace(/[0-9]/g, '');
-            const number = legendColor.substr(legendColor.length - 2, 2) * 10;
-            legendColor = theme.themeColors().palette[name][number].value;
-          }
-
-          const normalColor = colorUtils.hexToRgba(legendColor, 0.3);
-          const container = days[0].elem;
-          const dayHourContainers = this.element[0].querySelectorAll(`td:nth-child(${container.cellIndex + 1})`);
-          for (let k = 0; k < dayHourContainers.length; k++) {
-            const tdEl = dayHourContainers[k];
-            const hourWrapper = $(tdEl.querySelector('.week-view-cell-wrapper'));
-            hourWrapper.addClass('is-colored');
-            hourWrapper[0].setAttribute('data-hex', legendColor);
-            hourWrapper[0].style.backgroundColor = normalColor;
-          }
-
-          const allDayContainer = $(container.querySelector('.week-view-all-day-wrapper'));
-          if (allDayContainer) {
-            allDayContainer.addClass('is-colored');
-            allDayContainer[0].setAttribute('data-hex', legendColor);
-            allDayContainer[0].style.backgroundColor = normalColor;
-          }
-        }
+      if (disable) {
+        this.renderDisable(disable);
       }
     }
   },
