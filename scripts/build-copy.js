@@ -52,9 +52,9 @@ const callback = (err) => {
 };
 
 // Do Copy
-copyFile('node_modules/jquery/dist/jquery.js', `${jsDir}/jquery-3.6.1.js`, callback);
-copyFile('node_modules/jquery/dist/jquery.min.js', `${jsDir}/jquery-3.6.1.min.js`, callback);
-copyFile('node_modules/jquery/dist/jquery.min.map', `${jsDir}/jquery-3.6.1.min.map`, callback);
+copyFile('node_modules/jquery/dist/jquery.js', `${jsDir}/jquery-3.7.1.js`, callback);
+copyFile('node_modules/jquery/dist/jquery.min.js', `${jsDir}/jquery-3.7.1.min.js`, callback);
+copyFile('node_modules/jquery/dist/jquery.min.map', `${jsDir}/jquery-3.7.1.min.map`, callback);
 copyFile('node_modules/d3/dist/d3.js', `${jsDir}/d3.v7.js`, callback);
 copyFile('node_modules/d3/dist/d3.min.js', `${jsDir}/d3.v7.min.js`, callback);
 copyFiles('src', '.scss', 'dist/sass/');

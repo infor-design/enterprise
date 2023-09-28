@@ -115,7 +115,7 @@
 
     &.show-detail {
       .page-container {
-        margin-inline-start: ($module-nav-submenu-size * -1);
+        margin-inline-start: 0;
       }
     }
   }
@@ -141,8 +141,28 @@
 
     // use `.has-module-nav-offset` on inner page containers to make
     // the page container stay out from underneath the Module Nav bar
-    > .page-container:not(.has-module-nav-offset) {
+    > .page-container.has-module-nav-offset {
+      margin-inline-start: $module-nav-expanded-size;
+      margin: 0;
+      width: 100%;
+    }
+
+    >.page-container:not(.has-module-nav-offset) {
       margin-inline-start: (($module-nav-expanded-size - $module-nav-collapsed-size) * -1);
+    }
+
+    > .page-container {
+      .page-overlay {
+        @include css3(transition, all 0.2s);
+
+        background: $module-nav-shadow-color;
+        height: 100%;
+        left: 0;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        visibility: visible;
+      }
     }
 
     &.show-detail {
@@ -151,7 +171,7 @@
       }
 
       .page-container {
-        margin-inline-start: ($module-nav-submenu-size * -2);
+        margin-inline-start: 0;
       }
     }
 
@@ -223,6 +243,10 @@
   height: 100%;
   position: relative;
   z-index: $module-nav-z-index;
+
+  &.show-shadow {
+    box-shadow: 0 14px 70px -16px $module-nav-shadow-color;
+  }
 }
 
 .module-nav-bar {
@@ -269,3 +293,9 @@
   overflow: hidden;
   margin-block-start: 0;
 }
+
+// Set Zindex
+.dropdown-list[data-element-id="module-nav-role-switcher"] {
+  z-index: 8000;
+}
+
