@@ -811,6 +811,7 @@ Bar.prototype = {
       const axisLabelGroup = self.svg.append('g').attr('class', 'axis-labels');
       const widthAxisLabel = w - 95;
       const heightAxisLabel = height - 60;
+      const isClassic = $('html[class*="classic-"]').length > 0;
 
       const addAxis = (pos) => {
         if (isAxisLabels[pos]) {
@@ -818,7 +819,7 @@ Bar.prototype = {
 
           // Check bar labels if there are lengthy labels (5 or more than characters)
           self.svg.selectAll('.axis.y text')._groups[0].forEach(function (i) {
-            if (parseInt(i.getBoundingClientRect().width, 10) >= 34) hasOverlappingLabel = true;
+            if (i.innerHTML.length >= 5) hasOverlappingLabel = true;
           });
 
           const place = {
@@ -832,7 +833,7 @@ Bar.prototype = {
             top: `rotate(0deg) scaleX(-1) translate(-${widthAxisLabel / 2}px, ${-4}px)`,
             right: `rotate(90deg) scaleX(-1) translate(-${(height / 2) + 5}px, -${widthAxisLabel + (this.isRTL && !hasOverlappingLabel ? 45 : 28)}px)`,
             bottom: `rotate(0deg) scaleX(-1) translate(-${widthAxisLabel / 2}px, ${heightAxisLabel + 89}px)`,
-            left: `rotate(90deg) scaleX(-1) translate(-${(height / 2 - 5)}px, ${this.isRTL && !hasOverlappingLabel ? 45 : 60}px)`
+            left: `rotate(90deg) scaleX(-1) translate(-${(height / 2 - 5)}px, ${this.isRTL && !hasOverlappingLabel ? 45 : !isClassic && this.isRTL ? 60 : 55}px)`
           };
 
           axisLabelGroup.append('text')
