@@ -30,7 +30,6 @@ const COMPONENT_NAME_DEFAULTS = {
   disable: {
     dayOfWeek: [],
   },
-  timePattern: 'h:mm a',
   showToday: true,
   showViewChanger: true,
   hitbox: false,
