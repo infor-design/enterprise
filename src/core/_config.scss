@@ -717,9 +717,10 @@ $module-nav-detail-bg-color: $ids-color-palette-slate-20;
 $module-nav-separator-color: $ids-color-palette-slate-20;
 $module-nav-separator-expanded-edge-distance: 22px;
 $module-nav-text-color: $ids-color-palette-slate-60;
+$module-nav-shadow-color: rgba(0, 0, 0, 0.25);
 
 // Module Nav (Common Sizes)
-$module-nav-z-index: 1;
+$module-nav-z-index: 7001;
 $module-nav-common-border-radius: 8px;
 $module-nav-collapsed-size: 56px;
 $module-nav-gutter-size: 4px;
@@ -758,6 +759,7 @@ $module-nav-switcher-dropdown-background-color: $ids-color-palette-white;
 $module-nav-switcher-button-size: 40px;
 $module-nav-switcher-icon-size: 32px;
 $module-nav-switcher-button-gutter-size: 8px;
+$module-nav-switcher-top-gutter-size: 7px;
 $module-nav-switcher-dropdown-height: 40px;
 $module-nav-switcher-dropdown-width: 256px;
 $module-nav-switcher-dropdown-item-height: 48px;

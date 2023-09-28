@@ -1,5 +1,10 @@
 # What's New with Enterprise
 
+## v4.84.9 Fixes
+
+- `[Module Nav]` Added mobile behaviors. ([#7804](https://github.com/infor-design/enterprise/issues/7804))
+- `[Module Nav]` Fixed an alignment issue. ([#7934](https://github.com/infor-design/enterprise/issues/7934))
+
 ## v4.84.8 Fixes
 
 - `[Datagrid]` Fixed mislaigned icon on filter dropdowns. ([#7860](https://github.com/infor-design/enterprise/issues/7860))

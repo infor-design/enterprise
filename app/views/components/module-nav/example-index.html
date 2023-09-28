@@ -319,7 +319,7 @@
     <!-- Detail area is optional and can have additional context -->
     <div class="module-nav-detail">&nbsp;</div>
   </aside>
-  <div class="page-container scrollable has-module-nav-offset">
+  <div class="page-container scrollable">
     <header class="header is-personalizable">
       <div class="flex-toolbar">
         <div class="toolbar-section">
@@ -364,15 +364,6 @@
           <label for="pin-sections" class="checkbox-label">Pin "optionally-pinned" Sections</label>
         </div>
 
-        <div class="field">
-          <input type="checkbox" checked="true" class="checkbox" name="offset-check" id="offset-check" />
-          <label for="offset-check" class="checkbox-label">Offset the page container (don't hide any content)</label>
-        </div>
-
-        <div class="field">
-          <input type="checkbox" class="checkbox" name="collapse-click-check" id="collapse-click-check" />
-          <label for="collapse-click-check" class="checkbox-label">Collapse/Hide when clicking outside an expanded menu</label>
-        </div>
       </div>
     </div>
     <div class="row test-spacer">&nbsp;</div>
@@ -396,8 +387,6 @@
     const dropdownEl = $('#display-mode-dropdown')
     const dropdownAPI = $('#display-mode-dropdown').data('dropdown');
     const displayCheckEl = $('#display-detail-check');
-    const offsetCheckEl = $('#offset-check');
-    const collapseCheckEl = $('#collapse-click-check');
     const hamburgerBtnEl = $('#header-hamburger');
     const pinSectionsCheckEl = $('#pin-sections');
 
@@ -410,11 +399,6 @@
 
     displayCheckEl.on('change.test', (e) => {
       navAPI.updated({ showDetailView: displayCheckEl[0].checked });
-    });
-
-    offsetCheckEl.on('change.test', (e) => {
-      const pageContainer = containerEl.find('.page-container');
-      pageContainer[0].classList[ offsetCheckEl[0].checked ? 'add' : 'remove' ]('has-module-nav-offset');
     });
 
     pinSectionsCheckEl.on('change.test', (e) => {
@@ -432,10 +416,6 @@
         }
       });
     }
-
-    collapseCheckEl.on('change.test', (e) => {
-      navAPI.updated({ enableOutsideClick: collapseCheckEl[0].checked });
-    });
 
     navEl.on('displaymodechange.test', (e, mode) => {
       dropdownAPI.selectValue(mode === false ? '' : mode);

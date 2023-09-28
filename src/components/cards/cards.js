@@ -142,7 +142,7 @@ Cards.prototype = {
     });
 
     if (this.settings.expandableHeader && this.expandableCardHeader) {
-      this.expandableCardHeader.attr('role', 'button');
+      this.expandableCardHeader?.attr('role', 'button');
     }
 
     if (this.buttonAction.length > 0 && this.settings.verticalButtonAction) {
@@ -176,7 +176,7 @@ Cards.prototype = {
     utils.addAttributes(this.element.find('.card .card-content'), this, this.settings.attributes, 'widget-content', true);
 
     if (!this.settings.selectable) {
-      utils.addAttributes(this.expandableCardHeader, this, this.settings.attributes, 'expander', true);
+      if (this.expandableCardHeader) utils.addAttributes(this.expandableCardHeader, this, this.settings.attributes, 'expander', true);
       utils.addAttributes(this.buttonAction, this, this.settings.attributes, 'action', true);
       utils.addAttributes(this.cardContentPane, this, this.settings.attributes, 'content', true);
     }
@@ -394,7 +394,7 @@ Cards.prototype = {
     if (canExpand === false) return;
 
     this.element.addClass('is-expanded');
-    this.expandableCardHeader.attr('aria-expanded', 'true');
+    this.expandableCardHeader?.attr('aria-expanded', 'true');
 
     /**
      * @event expand
@@ -442,7 +442,7 @@ Cards.prototype = {
      */
     this.cardContentPane.one('animateclosedcomplete', () => {
       this.element.removeClass('is-expanded');
-      this.expandableCardHeader.attr('aria-expanded', 'false');
+      this.expandableCardHeader?.attr('aria-expanded', 'false');
       this.element.triggerHandler('aftercollapse', [this.element]);
       this.cardContentPane[0].style.display = 'none';
     }).animateClosed({ timing: 300 });

@@ -27,7 +27,7 @@
   }
 
   // Resets app menu-related placement adjustments
-  .header + .page-container {
+  .header+.page-container {
     margin-top: 0;
   }
 
@@ -96,7 +96,7 @@
       margin-inline: $module-nav-item-margin-inline;
       padding-block: $module-nav-item-padding-size;
 
-      > .icon {
+      >.icon {
         margin-block: auto;
         margin-inline: 0;
       }
@@ -115,7 +115,7 @@
 
     &.show-detail {
       .page-container {
-        margin-inline-start: ($module-nav-submenu-size * -1);
+        margin-inline-start: 0;
       }
     }
   }
@@ -134,15 +134,35 @@
       padding: $module-nav-item-padding-size;
       padding-inline-start: $module-nav-item-margin-inline;
 
-      > .icon {
+      >.icon {
         margin-inline-end: $module-nav-item-icon-end-spacing;
       }
     }
 
     // use `.has-module-nav-offset` on inner page containers to make
     // the page container stay out from underneath the Module Nav bar
-    > .page-container:not(.has-module-nav-offset) {
+    >.page-container.has-module-nav-offset {
+      margin-inline-start: $module-nav-expanded-size;
+      margin: 0;
+      width: 100%;
+    }
+
+    >.page-container:not(.has-module-nav-offset) {
       margin-inline-start: (($module-nav-expanded-size - $module-nav-collapsed-size) * -1);
+    }
+
+    >.page-container {
+      .page-overlay {
+        @include css3(transition, all 0.2s);
+
+        background: $module-nav-shadow-color;
+        height: 100%;
+        left: 0;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        visibility: visible;
+      }
     }
 
     &.show-detail {
@@ -151,7 +171,7 @@
       }
 
       .page-container {
-        margin-inline-start: ($module-nav-submenu-size * -2);
+        margin-inline-start: 0;
       }
     }
 
@@ -167,7 +187,7 @@
     padding-block-end: 0;
   }
 
-  .module-nav-footer + .module-nav-settings {
+  .module-nav-footer+.module-nav-settings {
     padding-block-start: 0;
   }
 
@@ -203,14 +223,14 @@
     }
 
     &:not(.has-section-scrollbars) {
-      .module-nav-search-container + .module-nav-separator,
-      .module-nav-header + .module-nav-separator {
+      .module-nav-search-container+.module-nav-separator,
+      .module-nav-header+.module-nav-separator {
         display: none;
       }
     }
 
     &.has-section-scrollbars {
-      .module-nav-separator + .module-nav-footer {
+      .module-nav-separator+.module-nav-footer {
         margin-block-start: 0;
       }
     }
@@ -223,6 +243,10 @@
   height: 100%;
   position: relative;
   z-index: $module-nav-z-index;
+
+  &.show-shadow {
+    box-shadow: 0 14px 70px -16px $module-nav-shadow-color;
+  }
 }
 
 .module-nav-bar {
@@ -268,4 +292,9 @@
   flex-shrink: 0;
   overflow: hidden;
   margin-block-start: 0;
+}
+
+// Set Zindex
+.dropdown-list[data-element-id="module-nav-role-switcher"] {
+  z-index: 8000;
 }
