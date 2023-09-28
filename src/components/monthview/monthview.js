@@ -1409,6 +1409,13 @@ MonthView.prototype = {
     if (s.disable.dayOfWeek.indexOf(d2.getDay()) !== -1) {
       return true;
     }
+    if (s.legend) {
+      for (let i = 0; i < s.legend.length; i++) {
+        if (s.legend[i].disableWeek && s.legend[i].disableWeek.indexOf(d2.getDay()) !== -1) {
+          return true;
+        }
+      }
+    }
 
     const thisYear = d2.getFullYear();
 
@@ -2589,7 +2596,7 @@ MonthView.prototype = {
       const series = s.legend[i];
       let hex = series.color;
 
-      if (hex.indexOf('#') === -1) {
+      if (hex && hex.indexOf('#') === -1) {
         const name = hex.replace(/[0-9]/g, '');
         const number = hex.substr(hex.length - 2, 2) * 10;
         hex = theme.themeColors().palette[name][number].value;
@@ -2597,7 +2604,7 @@ MonthView.prototype = {
 
       const item = '' +
         `<div class="monthview-legend-item">
-          <span class="monthview-legend-swatch" style="background-color: ${colorUtils.hexToRgba(hex, 0.3)}"></span>
+          <span class="monthview-legend-swatch ${hex ? `" style="background-color: ${colorUtils.hexToRgba(hex, 0.3)}` : ' default"'}"></span>
           <span class="monthview-legend-text">${series.name}</span>
         </div>`;
 
