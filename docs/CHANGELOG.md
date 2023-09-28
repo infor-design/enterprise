@@ -13,6 +13,7 @@
 ## v4.88.0 Fixes
 
 - `[Accordion]` Updated selected header text color. ([#7769](https://github.com/infor-design/enterprise/issues/7769))
+- `[Bar]` Fixed overlapping and cropped axis labels (left & right) when horizontal bar label is lengthy. ([#7614](https://github.com/infor-design/enterprise/issues/7614))
 - `[Build]` Fixed wrong filename in build download. ([#7992](https://github.com/infor-design/enterprise/issues/7992))
 - `[Breadcrumb]` Updated hover color for breadcrumb in header. ([#7801](https://github.com/infor-design/enterprise/issues/7801))
 - `[Build]` Fixed wrong filename in build download. ([#7992](https://github.com/infor-design/enterprise/issues/7992))
