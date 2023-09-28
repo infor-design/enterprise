@@ -1117,7 +1117,7 @@ WeekView.prototype = {
         this.settings.events,
         this.settings.eventTypes
       );
-      this.showModalWithCallback(day, eventData, true);
+      this.showModalWithCallback(day, eventData, true, $(e.currentTarget));
 
       /**
        * Fires when the weekview day is double clicked.
@@ -1200,7 +1200,6 @@ WeekView.prototype = {
   },
 
   showModalWithCallback(day, eventData, isAdd, eventTarget) {
-    console.log('show modal with callback')
     this.showEventModal(day, eventData, (elem, event) => {
       const inputs = elem.querySelectorAll('input, textarea, select');
       for (let i = 0; i < inputs.length; i++) {
@@ -1262,7 +1261,7 @@ WeekView.prototype = {
     if (!eventTarget) {
       eventTarget = dayObj.elem;
     }
-
+    console.log(eventTarget);
     const modalOptions = this.settings.modalOptions || {
       content: $(this.modalContents),
       closebutton: true,
@@ -1283,7 +1282,53 @@ WeekView.prototype = {
       initializeContent: false
     };
 
-    eventTarget.popover(modalOptions);
+    eventTarget
+      .off('hide.calendar')
+      .on('hide.calendar', () => {
+        if (isCancel) {
+          this.removeModal();
+          return;
+        }
+
+        done(this.modalContents, event);
+        this.element.trigger('hidemodal', { elem: this.modalContents, event });
+        this.removeModal();
+        isCancel = true;
+      })
+      .popover(modalOptions)
+      .off('show.calendar')
+      .on('show.calendar', (evt, elem) => {
+        this.element.trigger('showmodal', { elem: this.modalContents, event });
+        elem.find('#isAllDay').off().on('click.calendar', (e) => {
+          const isDisabled = $(e.currentTarget).prop('checked');
+          if (isDisabled) {
+            elem.find('#durationHours').prop('disabled', true);
+            elem.find('#endsHourLocale').prop('disabled', true);
+            elem.find('#startsHourLocale').prop('disabled', true);
+          } else {
+            elem.find('#durationHours').prop('disabled', false);
+            elem.find('#endsHourLocale').prop('disabled', false);
+            elem.find('#startsHourLocale').prop('disabled', false);
+          }
+        });
+
+        elem.find('#type').val(event.type).dropdown();
+        elem.find('#comments').val(event.comments);
+        elem.find('#subject').focus();
+
+        elem.find('button').on('click', (e) => {
+          const popupApi = eventTarget.data('popover');
+          const action = e.currentTarget.getAttribute('data-action');
+          isCancel = action !== 'submit';
+          if (popupApi) {
+            popupApi.hide(true);
+          }
+        });
+
+        elem.find('.datepicker').datepicker({ locale: this.settings.locale, language: this.settings.language });
+        elem.find('.timepicker').timepicker({ locale: this.settings.locale, language: this.settings.language });
+        this.translate(elem);
+      });
   },
 
   /**
@@ -1417,6 +1462,23 @@ WeekView.prototype = {
     dayEvents.events = dayObj[0].events;
     dayEvents.elem = dayObj[0].elem;
     return dayEvents;
+  },
+
+  /**
+   * Translate elements in a DOM object
+   * @private
+   * @param  {object} elem The DOM Element
+   */
+  translate(elem) {
+    $(elem).find('[data-translate="text"]').each((i, item) => {
+      const obj = $(item);
+      obj.text(Locale.translate(obj.attr('data-translate-key') || obj.text(), {
+        showAsUndefined: false,
+        showBrackets: false,
+        language: this.settings.language,
+        locale: this.settings.locale
+      }));
+    });
   },
 
   /**
