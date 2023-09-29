@@ -1,5 +1,6 @@
 import { utils } from '../../utils/utils';
 import { accordionSearchUtils } from '../../utils/accordion-search-utils';
+import { breakpoints } from '../../utils/breakpoints';
 import '../../utils/behaviors';
 
 import './module-nav.switcher.jquery';
@@ -26,11 +27,15 @@ const MODULE_NAV_DEFAULTS = {
     tooltipStyle: 'dark'
   },
   displayMode: MODULE_NAV_DISPLAY_MODES[0],
-  enableOutsideClick: false,
   filterable: false,
   initChildren: true,
   pinSections: false,
-  showDetailView: false
+  showDetailView: false,
+  // Mobile Options
+  mobileBehavior: true,
+  breakpoint: 'phone-to-tablet', // Can be 'tablet' or 'phone-to-tablet'(+ 767), 'phablet (+610)', 'desktop' + (1024) or 'tablet-to-desktop'(+1280).Default is 'phone-to-tablet'(767)
+  showOverlay: true,
+  enableOutsideClick: false
 };
 
 const toggleScrollbar = (el, doToggle) => {
@@ -75,6 +80,13 @@ ModuleNav.prototype = {
    */
   get containerEl() {
     return this.element[0]?.parentElement;
+  },
+
+  /**
+ * @returns {HTMLElement | undefined} container element for Module Nav component and page content
+ */
+  get pageContainerEl() {
+    return this.element.next('.page-container');
   },
 
   /**
@@ -194,8 +206,7 @@ ModuleNav.prototype = {
       });
     }
 
-    this.enableOutsideClickEvent();
-
+    if (!this.settings.mobileBehavior) this.enableOutsideClickEvent();
     return this;
   },
 
@@ -211,9 +222,36 @@ ModuleNav.prototype = {
   },
 
   /**
+   * Detects a change in breakpoint size that can cause the Module Nav's state to change.
+   * @returns {void}
+   */
+  checkMobileBehavior() {
+    if (this.settings.displayMode === 'expanded' && this.settings.mobileBehavior) {
+      const overlay = this.pageContainerEl.find('.page-overlay');
+
+      if (breakpoints.isAbove(this.settings.breakpoint)) {
+        this.element[0].classList.remove('show-shadow');
+        this.pageContainerEl[0].classList.add('has-module-nav-offset');
+        this.settings.enableOutsideClick = false;
+        this.removeOutsideClickEvent();
+        overlay.remove();
+        return;
+      }
+
+      this.element[0].classList.add('show-shadow');
+      this.pageContainerEl[0].classList.remove('has-module-nav-offset');
+      if (overlay.length === 0 && this.settings.showOverlay) {
+        $('<div class="page-overlay"></div>').appendTo(this.pageContainerEl);
+      }
+      this.settings.enableOutsideClick = true;
+      this.enableOutsideClickEvent();
+    }
+  },
+
+  /**
    * @private
    */
-  disableOutsideClick() {
+  removeOutsideClickEvent() {
     $(this.containerEl).off(`click.${COMPONENT_NAME}`);
   },
 
@@ -226,7 +264,7 @@ ModuleNav.prototype = {
       const target = targetEl;
       if (target && !$(target).is('.application-menu-trigger') && !this.element[0].contains(target)) {
         this.setDisplayMode(this.previousDisplayMode);
-        this.disableOutsideClick();
+        this.removeOutsideClickEvent();
       }
     }
   },
@@ -298,6 +336,7 @@ ModuleNav.prototype = {
       this.ro = new ResizeObserver(() => {
         this.setPinSections(this.settings.pinSections);
         this.setScrollable();
+        this.checkMobileBehavior();
       });
     }
     if (this.accordionEl) {
@@ -344,11 +383,12 @@ ModuleNav.prototype = {
     // Don't show collapsed accordion headers if not in "expanded" mode
     if (this.settings.displayMode !== 'expanded') {
       this.collapseAccordionHeaders();
-    } else {
+    } else if (!this.settings.mobileBehavior) {
       this.enableOutsideClickEvent();
     }
 
     this.element.trigger('displaymodechange', [val, this.previousDisplayMode]);
+    this.checkMobileBehavior();
   },
 
   /**
@@ -474,7 +514,7 @@ ModuleNav.prototype = {
    * @private
    */
   teardownEvents() {
-    this.disableOutsideClick();
+    this.removeOutsideClickEvent();
     this.element.off(`updated.${COMPONENT_NAME}`);
     $(this.accordionEl).off(`rendered.${COMPONENT_NAME}`);
     $(this.accordionEl).off(`beforeexpand.${COMPONENT_NAME}`);

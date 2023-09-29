@@ -393,13 +393,22 @@
 html[dir='rtl'] {
   .card-header,
   .widget-header {
-    margin: 8px 16px 8px 2px;
+    &:not(.expandable-card-header) {
+      padding-left: 8px;
+      padding-right: 16px;
+      margin: unset;
+    }
 
     &:not(.has-toolbar) {
       > .btn-actions {
         left: 13px;
         right: auto;
       }
+    }
+
+    &:not(.expandable-card-header) {
+      padding-left: 8px;
+      padding-right: 16px;
     }
 
     h2 ~ svg.icon.has-tooltip {

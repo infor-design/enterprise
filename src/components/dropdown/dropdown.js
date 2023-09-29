@@ -656,7 +656,7 @@ Dropdown.prototype = {
         const iconAttr = $(this).attr('data-icon');
         let icon = null;
 
-        if (typeof iconAttr !== 'string' || !iconAttr.length) {
+        if (typeof iconAttr !== 'string' || !iconAttr.length || iconAttr === '{}') {
           return;
         }
 
@@ -665,6 +665,11 @@ Dropdown.prototype = {
         } else {
           icon = $.fn.parseOptions(this, 'data-icon');
         }
+
+        if (icon instanceof Object && icon.icon === '') {
+          return;
+        }
+
         self.setItemIcon({
           html: '',
           icon,
@@ -780,13 +785,17 @@ Dropdown.prototype = {
       const target = self.pseudoElem.find('.listoption-icon');
       const i = opt.index();
       const iconRef = self.listIcon.items[i];
+      
+      target.each((j, el) => el.remove());
+
       // Return out if this item has no icon
       if (!iconRef) {
+        self.listIcon.pseudoElemIcon = '';
+        self.listIcon.idx = i;
         return;
       }
 
       // Update new stuff
-      target.each((j, el) => el.remove());
       const elem = $.createIconElement({
         icon: iconRef.icon,
         class: ['listoption-icon']
@@ -794,7 +803,6 @@ Dropdown.prototype = {
 
       self.pseudoElem.prepend(elem);
       self.listIcon.pseudoElemIcon = elem;
-      self.listIcon.idx = i;
 
       if (iconRef.isClassList) {
         elem.addClass(iconRef.classList);
@@ -1014,7 +1022,7 @@ Dropdown.prototype = {
     this.virtualScrollElem = this.listUl.closest('.virtual-scroll-container');
     this.opts = opts;
 
-    if (this.listIcon.hasIcons) {
+    if (this.listIcon.hasIcons && this.listIcon.pseudoElemIcon !== '') {
       this.list.addClass('has-icons');
 
       const iconClone = this.listIcon.pseudoElemIcon.clone();
@@ -1856,7 +1864,7 @@ Dropdown.prototype = {
     const self = this;
     let input = this.pseudoElem;
 
-    if (useSearchInput || self.isMobile()) {
+    if (useSearchInput) {
       input = this.searchInput;
     }
 
@@ -2136,6 +2144,10 @@ Dropdown.prototype = {
 
     this.setListWidth();
 
+    if (this.settings.maxWidth || this.settings.width) {
+      this.position();
+    }
+
     // Set the contents of the search input.
     // If we've got a stored typeahead
     if (typeof this.filterTerm === 'string' && this.filterTerm.length > 0) {
@@ -2403,7 +2415,7 @@ Dropdown.prototype = {
     const positionOpts = {
       parentXAlignment: 'left',
       placement: 'bottom',
-      strategies: ['flip', 'shrink-y']
+      strategies: ['flip', 'shrink-y', 'nudge']
     };
 
     function dropdownAfterPlaceCallback(e, placementObj) {

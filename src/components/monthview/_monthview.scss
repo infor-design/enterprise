@@ -237,8 +237,8 @@
   td {
     border: 1px solid transparent;
     border-radius: 50%;
-    height: 42px;
-    width: 42px;
+    height: 41px;
+    width: 41px;
 
     // Adjust cell size for IOS
     @media only screen
@@ -955,6 +955,10 @@
     display: inline-block;
     height: 12px;
     width: 12px;
+
+    &.default {
+      background-color: $calendar-disabled-bg-color;
+    }
   }
 }
 

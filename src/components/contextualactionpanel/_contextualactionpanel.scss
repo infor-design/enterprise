@@ -149,22 +149,6 @@
     }
 
     .buttonset {
-      button[class^='btn']:not([disabled]) {
-        color: $contextual-panel-button-color;
-
-        &:hover {
-          color: $contextual-panel-hover-icon-color;
-
-          .icon {
-            color: $contextual-panel-hover-icon-color;
-          }
-        }
-
-        .icon {
-          color: $contextual-panel-icon-color;
-        }
-      }
-
       .toolbar-searchfield-wrapper {
         + .separator {
           margin-left: 12px;
@@ -179,14 +163,6 @@
   }
 
   .toolbar-section {
-    &.buttonset .btn-menu.is-open {
-      color: $button-color-tertiary-initial-font;
-
-      .icon {
-        color: $button-color-tertiary-initial-font;
-      }
-    }
-
     &.buttonset,
     &.search {
       &:last-child {
@@ -227,7 +203,7 @@
 
   .buttonset {
     [class^='btn']:last-child {
-      margin-right: 1px;
+      margin-right: 12px;
     }
   }
 

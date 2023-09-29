@@ -607,7 +607,8 @@ a.btn-close {
   }
 
   &:focus:not(.hide-focus) {
-    box-shadow: 0 0 0 2px transparent, 0 0 0 1px $button-color-secondary-focus-background, $focus-box-shadow;
+    box-shadow: 0 0 0 2px transparent, 0 0 0 0.12rem $button-color-secondary-focus-background, $focus-box-shadow;
+    z-index: 3;
 
     &:active {
       box-shadow: none;
@@ -755,7 +756,7 @@ a.btn-close {
 
   &.btn-primary,
   &.btn-secondary {
-    padding-right: 20px;
+    padding: 0 16px;
   }
 }
 
