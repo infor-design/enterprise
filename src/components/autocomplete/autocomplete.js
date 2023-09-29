@@ -927,8 +927,6 @@ Autocomplete.prototype = {
 
     this.closeList();
     this.element.focus();
-
-    return ret;
   },
 
   /*
