@@ -1095,11 +1095,13 @@ WeekView.prototype = {
 
     this.element.off(`dblclick.${COMPONENT_NAME}`).on(`dblclick.${COMPONENT_NAME}`, 'td', (e) => {
       const key = e.currentTarget.getAttribute('data-key');
-      const hour = $(e.currentTarget).parent().attr('class').includes('week-view-hour-row') ? 1 : 0.5;
+      const time = $(e.currentTarget).parent().attr('data-hour');
+      const hour = Math.floor(time);
+      const min = (time - hour) * 60;
       if (!key) {
         return;
       }
-      const day = new Date(key.substr(0, 4), key.substr(4, 2) - 1, key.substr(6, 2));
+      const day = new Date(key.substr(0, 4), key.substr(4, 2) - 1, key.substr(6, 2), hour, min);
 
       const eventData = utils.extend({ }, this.settings.newEventDefaults);
       eventData.startKey = key;
@@ -1261,7 +1263,7 @@ WeekView.prototype = {
     if (!eventTarget) {
       eventTarget = dayObj.elem;
     }
-    console.log(eventTarget);
+
     const modalOptions = this.settings.modalOptions || {
       content: $(this.modalContents),
       closebutton: true,
