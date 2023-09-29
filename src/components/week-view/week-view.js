@@ -1120,15 +1120,7 @@ WeekView.prototype = {
         this.settings.eventTypes
       );
       this.showModalWithCallback(day, eventData, true, $(e.currentTarget));
-
-      /**
-       * Fires when the weekview day is double clicked.
-       * @event dblclick
-       * @memberof WeekView
-       * @param {object} eventData - Information about the calendar date double clicked.
-       * @param {object} api - Access to the Calendar API
-       */
-      this.element.triggerHandler('dblclick', { eventData, api: this });
+      this.element.trigger('updated');
     });
 
     $('body').off(`breakpoint-change.${this.id}`).on(`breakpoint-change.${this.id}`, () => this.onBreakPointChange());
@@ -1328,7 +1320,12 @@ WeekView.prototype = {
         });
 
         elem.find('.datepicker').datepicker({ locale: this.settings.locale, language: this.settings.language });
-        elem.find('.timepicker').timepicker({ locale: this.settings.locale, language: this.settings.language });
+        const timepicker = elem.find('.timepicker');
+
+        if (timepicker) {
+          timepicker.val(Locale.formatHour(day.getHours() + (day.getMinutes() / 60)));
+          timepicker.timepicker({ locale: this.settings.locale, language: this.settings.language });
+        }
         this.translate(elem);
       });
   },
