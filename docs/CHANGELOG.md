@@ -52,6 +52,7 @@
 - `[Module Nav]` Updated examples to closer reflect usage guidance. ([#7870](https://github.com/infor-design/enterprise/issues/7870))
 - `[Modal]` Added overflow in modal body for horizontal scroll. ([#7827](https://github.com/infor-design/enterprise/issues/7827))
 - `[Popover]` Added scrollable class for popover. ([#7678](https://github.com/infor-design/enterprise/issues/7678))
+- `[Popupmenu]` Fixed placement of shared popupmenu. ([NG#1546](https://github.com/infor-design/enterprise-ng/issues/1546))
 - `[Radios]` Adjusted the styling of the checked and unchecked radio button. ([#7899](https://github.com/infor-design/enterprise/issues/7899))
 - `[Searchfield]` Fixed on go button misalignment. ([#7910](https://github.com/infor-design/enterprise/issues/7910))
 - `[Searchfield]` Adjusted position and hover color for custom button. ([#7832](https://github.com/infor-design/enterprise/issues/7832))
