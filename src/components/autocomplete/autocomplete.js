@@ -927,6 +927,9 @@ Autocomplete.prototype = {
 
     this.closeList();
     this.element.focus();
+
+    // eslint-disable-next-line
+    return ret;
   },
 
   /*
