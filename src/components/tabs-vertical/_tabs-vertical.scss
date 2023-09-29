@@ -385,4 +385,15 @@ html[lang]:not([lang='en-US']) {
       }
     }
   }
+
+  &[dir='rtl'] {
+    .tab-container.vertical {
+      .tab.is-error {
+        a {
+          padding-right: 30px;
+          padding-left: 8px;
+        }
+      }
+    }
+  }
 }
