@@ -1346,7 +1346,7 @@ PopupMenu.prototype = {
     }
 
     if (anchor.hasClass('no-results')) {
-      return;
+      return false;
     }
 
     if (anchor.parent().is('.submenu, .hidden, .is-disabled') || anchor[0].disabled) {
