@@ -1,6 +1,5 @@
 /* eslint-disable no-nested-ternary, prefer-template */
 
-import { Environment as env } from '../../utils/environment';
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { DOM } from '../../utils/dom';
