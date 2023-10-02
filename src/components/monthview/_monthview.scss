@@ -12,6 +12,7 @@
   vertical-align: middle;
   width: 100%;
   height: fit-content;
+  overflow: auto;
 
   // Hide Days Option
   &.is-monthyear {
