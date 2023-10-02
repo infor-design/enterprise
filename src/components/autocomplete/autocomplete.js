@@ -540,6 +540,20 @@ Autocomplete.prototype = {
       item.addClass('is-selected').find('a').focus();
     }
 
+    if (env.browser.isFirefox()) {
+      if (key === 8 || key === 46) {
+        const inputSelection = self.element.val().substring(
+          self.element[0].selectionStart, 
+          self.element[0].selectionEnd)
+          .toString().trim();
+
+          if (inputSelection.length > 0) {
+            self.element.val('');
+            return false;
+          }
+      }
+    }
+
     const excludes = 'li:not(.separator):not(.hidden):not(.heading):not(.group):not(.is-disabled)';
     const items = this.list.find(excludes);
     const highlighted = getHighlighted(items);

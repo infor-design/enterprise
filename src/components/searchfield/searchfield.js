@@ -1187,34 +1187,35 @@ SearchField.prototype = {
     const key = e.which;
     const keyName = e.key;
 
-    const searchInput = this.element[0];
-    const selectionStart = searchInput.selectionStart;
-    const selectionEnd = searchInput.selectionEnd;
-    const selectedString = searchInput.value.substring(selectionStart, selectionEnd);
+    // Care of RJ
+    // const searchInput = this.element[0];
+    // const selectionStart = searchInput.selectionStart;
+    // const selectionEnd = searchInput.selectionEnd;
+    // const selectedString = searchInput.value.substring(selectionStart, selectionEnd);
 
-    // Workaround for keyboard events regarding text selection and deletion in Firefox.
-    // This was due to the caret position jumping to the end on keydown events.
-    if (env.browser.isFirefox()) {
-      if (key === 8 || key === 46) {
-        if (selectedString.length > 0) {
-          e.preventDefault();
-          this.element.val(`${searchInput.value.substring(0, selectionStart)}${searchInput.value.substring(selectionEnd)}`);
-          setTimeout(() => {
-            searchInput.setSelectionRange(selectionStart, selectionStart);
-          }, 10);
-          this.checkContents();
-        } else {
-          setTimeout(() => {
-            searchInput.setSelectionRange(selectionStart, selectionStart);
-          }, 0);
-        }
-      }
-      if (key === 16) {
-        setTimeout(() => {
-          searchInput.setSelectionRange(selectionStart, selectionStart);
-        }, 0);
-      }
-    }
+    // // Workaround for keyboard events regarding text selection and deletion in Firefox.
+    // // This was due to the caret position jumping to the end on keydown events.
+    // if (env.browser.isFirefox()) {
+    //   if (key === 8 || key === 46) {
+    //     if (selectedString.length > 0) {
+    //       e.preventDefault();
+    //       this.element.val(`${searchInput.value.substring(0, selectionStart)}${searchInput.value.substring(selectionEnd)}`);
+    //       setTimeout(() => {
+    //         searchInput.setSelectionRange(selectionStart, selectionStart);
+    //       }, 10);
+    //       this.checkContents();
+    //     } else {
+    //       setTimeout(() => {
+    //         searchInput.setSelectionRange(selectionStart, selectionStart);
+    //       }, 0);
+    //     }
+    //   }
+    //   if (key === 16) {
+    //     setTimeout(() => {
+    //       searchInput.setSelectionRange(selectionStart, selectionStart);
+    //     }, 0);
+    //   }
+    // }
 
     if (key === 27 && env.browser.isIE11()) {
       e.preventDefault();
@@ -1222,7 +1223,7 @@ SearchField.prototype = {
 
     if (e.ctrlKey && key === 8) {
       this.element.val('');
-      this.checkContents();
+      // this.checkContents();
     }
 
     if (key === 9) { // Tab
