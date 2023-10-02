@@ -917,9 +917,8 @@ SearchField.prototype = {
 
         if (!anchor.hasClass('no-results')) {
           anchor.parent('li').addClass('is-selected');
+          self.element.val('');
         }
-
-        self.element.val('');
       });
     }).on(`listclose.${this.id}`, () => {
       const list = $('#autocomplete-list');
