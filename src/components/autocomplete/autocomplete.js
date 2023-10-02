@@ -514,6 +514,7 @@ Autocomplete.prototype = {
   // Handles the Autocomplete's "keydown" event
   handleAutocompleteKeydown(e) {
     const self = this;
+    const key = e.which;
 
     if (this.isLoading()) {
       e.preventDefault();
@@ -545,13 +546,13 @@ Autocomplete.prototype = {
       if (key === 8 || key === 46) {
         const inputSelection = self.element.val().substring(
           self.element[0].selectionStart, 
-          self.element[0].selectionEnd)
-          .toString().trim();
+          self.element[0].selectionEnd
+        ).toString().trim();
 
-          if (inputSelection.length > 0) {
-            self.element.val('');
-            return false;
-          }
+        if (inputSelection.length > 0) {
+          self.element.val('');
+          return false;
+        }
       }
     }
 
