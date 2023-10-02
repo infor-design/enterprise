@@ -13,6 +13,7 @@
 ## v4.88.0 Fixes
 
 - `[Accordion]` Updated selected header text color. ([#7769](https://github.com/infor-design/enterprise/issues/7769))
+- `[ApplicationMenu]` Fixed an issue where the hover button background color was incorrect. ([#7933](https://github.com/infor-design/enterprise/issues/7782))
 - `[Bar]` Fixed overlapping and cropped axis labels (left & right) when horizontal bar label is lengthy. ([#7614](https://github.com/infor-design/enterprise/issues/7614))
 - `[Build]` Fixed wrong filename in build download. ([#7992](https://github.com/infor-design/enterprise/issues/7992))
 - `[Breadcrumb]` Updated hover color for breadcrumb in header. ([#7801](https://github.com/infor-design/enterprise/issues/7801))
@@ -51,6 +52,7 @@
 - `[Module Nav]` Updated examples to closer reflect usage guidance. ([#7870](https://github.com/infor-design/enterprise/issues/7870))
 - `[Modal]` Added overflow in modal body for horizontal scroll. ([#7827](https://github.com/infor-design/enterprise/issues/7827))
 - `[Popover]` Added scrollable class for popover. ([#7678](https://github.com/infor-design/enterprise/issues/7678))
+- `[Popupmenu]` Fixed placement of shared popupmenu. ([NG#1546](https://github.com/infor-design/enterprise-ng/issues/1546))
 - `[Radios]` Adjusted the styling of the checked and unchecked radio button. ([#7899](https://github.com/infor-design/enterprise/issues/7899))
 - `[Searchfield]` Fixed no results text should not be selected. ([#7756](https://github.com/infor-design/enterprise/issues/7756))
 - `[Searchfield]` Fixed on go button misalignment. ([#7910](https://github.com/infor-design/enterprise/issues/7910))
