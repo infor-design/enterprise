@@ -822,7 +822,10 @@ Autocomplete.prototype = {
     if (allAnchors && allAnchors.length) {
       allAnchors.parent('li').removeClass('is-selected');
     }
-    anchor.parent('li').addClass('is-selected');
+
+    if (!anchor.hasClass('no-results')) {
+      anchor.parent('li').addClass('is-selected');
+    }    
 
     this.noSelect = true;
     this.element.val(text).focus();
