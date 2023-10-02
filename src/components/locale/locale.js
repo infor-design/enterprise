@@ -707,6 +707,7 @@ const Locale = {  // eslint-disable-line
 
     // Replace Left to Right Mark
     ret = ret.replace(/&lrm;|\u200E/gi, ' ');
+
     return ret.trim();
   },
 
@@ -754,7 +755,14 @@ const Locale = {  // eslint-disable-line
       date.setHours(parts[0]);
       date.setMinutes(parts[1] || 0);
     }
-    return this.formatDate(date, { date: 'hour' });
+
+    const dateOpt = { date: 'hour' };
+
+    if (options?.pattern) {
+      dateOpt.pattern = options.pattern;
+    }
+
+    return this.formatDate(date, dateOpt);
   },
 
   /**
@@ -768,22 +776,25 @@ const Locale = {  // eslint-disable-line
     let locale = this.currentLocale.name;
     let dayPeriods = this.calendar(locale).dayPeriods;
     let removePeriod = false;
+
     if (typeof options === 'object') {
       locale = options.locale || locale;
       dayPeriods = this.calendar(locale).dayPeriods;
     }
     let range = `${Locale.formatHour(startHour, options)} - ${Locale.formatHour(endHour, options)}`;
 
-    if (range.indexOf(':00 AM -') > -1 || range.indexOf(':00 PM -') > -1) {
-      removePeriod = true;
-    }
+    if (!options?.keepPeriod) {
+      if (range.indexOf(':00 AM -') > -1 || range.indexOf(':00 PM -') > -1) {
+        removePeriod = true;
+      }
 
-    if (stringUtils.count(range, dayPeriods[0]) > 1) {
-      range = range.replace(dayPeriods[0], '');
-    }
+      if (stringUtils.count(range, dayPeriods[0]) > 1) {
+        range = range.replace(dayPeriods[0], '');
+      }
 
-    if (stringUtils.count(range, dayPeriods[1]) > 1) {
-      range = range.replace(` ${dayPeriods[1]}`, '');
+      if (stringUtils.count(range, dayPeriods[1]) > 1) {
+        range = range.replace(` ${dayPeriods[1]}`, '');
+      }
     }
 
     range = range.replace('  ', ' ');

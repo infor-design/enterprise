@@ -4748,7 +4748,7 @@ Datagrid.prototype = {
 
     isEven = (this.recordCount % 2 === 0);
     const isSelected = this.isRowSelected(rowData);
-    const isActivated = rowData._rowactivated || rowData.expanded;
+    const isActivated = rowData._rowactivated;
     const rowStatus = { class: '', svg: '' };
     if (rowData && rowData.rowStatus && (rowData.rowStatus.icon === 'new' ? self.settings.showNewRowIndicator : true)) {
       rowStatus.show = true;
