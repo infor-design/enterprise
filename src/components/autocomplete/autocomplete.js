@@ -822,10 +822,13 @@ Autocomplete.prototype = {
     if (allAnchors && allAnchors.length) {
       allAnchors.parent('li').removeClass('is-selected');
     }
-    anchor.parent('li').addClass('is-selected');
+
+    if (!anchor.hasClass('no-results')) {
+      anchor.parent('li').addClass('is-selected');
+      this.element.val(text).focus();
+    }    
 
     this.noSelect = true;
-    this.element.val(text).focus();
     if (val !== text) {
       this.element.triggerHandler('change');
     }
@@ -849,6 +852,10 @@ Autocomplete.prototype = {
       a = $(anchorOrEvent.currentTarget);
     } else {
       a = anchorOrEvent;
+    }
+
+    if (a.hasClass('no-results')) {
+      return;
     }
 
     if (a.is('li')) {
@@ -924,6 +931,7 @@ Autocomplete.prototype = {
     this.closeList();
     this.element.focus();
 
+    // eslint-disable-next-line
     return ret;
   },
 

@@ -190,6 +190,7 @@ PopupMenu.prototype = {
     const parent = menu.parent();
     if (!parent.is('body')) {
       this.menuOrgContainment = { parent, index: parent.children().index(menu) };
+      this.menu.data('containment', this.menuOrgContainment);
     }
   },
 
@@ -1342,6 +1343,10 @@ PopupMenu.prototype = {
     let selectionResult = [anchor];
 
     if (!e && !anchor || !anchor.length) {
+      return false;
+    }
+
+    if (anchor.hasClass('no-results')) {
       return false;
     }
 
@@ -2583,10 +2588,13 @@ PopupMenu.prototype = {
       // Place the menu back where it came from while cleaning up.
       // Get an accurate target to place the menu back where it came from
       const searchfield = this.element.parent().children('.searchfield');
+      const menuContainment = this.menu.data('containment');
       if (searchfield.length) {
         this.menu.insertAfter(searchfield.first());
       } else if (this.menuOrgContainment) {
         this.insertAtContainment(this.menu);
+      } else if (menuContainment) {
+        this.insertAtContainment(this.menu, menuContainment);
       } else {
         this.menu.insertAfter(this.element);
       }
