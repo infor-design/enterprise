@@ -514,7 +514,6 @@ Autocomplete.prototype = {
   // Handles the Autocomplete's "keydown" event
   handleAutocompleteKeydown(e) {
     const self = this;
-    const key = e.which;
 
     if (this.isLoading()) {
       e.preventDefault();
