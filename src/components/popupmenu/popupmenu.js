@@ -1346,6 +1346,10 @@ PopupMenu.prototype = {
       return false;
     }
 
+    if (anchor.hasClass('no-results')) {
+      return false;
+    }
+
     if (anchor.parent().is('.submenu, .hidden, .is-disabled') || anchor[0].disabled) {
       // Do not close parent items of submenus on click
       e.preventDefault();
