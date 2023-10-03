@@ -4987,7 +4987,8 @@ html[dir='rtl'] {
           padding: 0 16px 0 0;
 
           + .trigger {
-            margin-right: -3px;
+            margin-left: 0;
+            margin-right: 3px;
 
             .icon {
               margin-right: 3px;

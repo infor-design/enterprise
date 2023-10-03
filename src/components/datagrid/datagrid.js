@@ -7610,7 +7610,6 @@ Datagrid.prototype = {
               focusElem.closest(self.editor.className).length > 0) {
               return;
             }
-
             self.commitCellEdit();
           }
         }, 150);
@@ -10485,7 +10484,8 @@ Datagrid.prototype = {
       });
     } else {
       if (typeof this.editor.val === 'function') {
-        newValue = this.editor.val();
+        const editorValue = this.editor.val();
+        newValue = isNaN(Date.parse(editorValue)) ? '' : editorValue;
       }
       this.commitCellEditUtil(input, newValue, isEditor, isFileupload, isUseActiveRow, isCallback);
     }
