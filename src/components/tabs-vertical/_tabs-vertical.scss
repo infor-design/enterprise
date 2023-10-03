@@ -371,7 +371,7 @@
   }
 }
 
-html[lang]:not([lang='en-US']) {
+html[dir='rtl'] {
   .tab-container.vertical {
     .tab.is-error {
       a {

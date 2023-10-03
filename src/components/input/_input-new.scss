@@ -79,11 +79,3 @@ button.close {
     width: 18px;
   }
 }
-
-html[lang]:not([lang='en-US']) {
-  .error-message {
-    .icon {
-      margin-top: 5px;
-    }
-  }
-}

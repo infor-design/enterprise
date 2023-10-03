@@ -997,25 +997,6 @@ span.required::after {
   }
 }
 
-html[lang]:not([lang='en-US']) {
-  .error-message {
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: flex-end;
-    height: 15px;
-
-    .message-text {
-      padding-left: unset;
-      padding-right: 3px;
-    }
-
-    .icon {
-      position: relative;
-      margin-top: unset;
-    }
-  }
-}
-
 // RTL Styles
 html[dir='rtl'] {
   .field-info,
