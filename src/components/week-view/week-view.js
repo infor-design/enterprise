@@ -34,8 +34,8 @@ const COMPONENT_NAME_DEFAULTS = {
   newEventDefaults: {
     title: 'NewEvent',
     subject: '',
-    isAllDay: true,
-    comments: ''
+    comments: '',
+    durationHours: 1
   },
   showToday: true,
   showViewChanger: true,
@@ -687,9 +687,10 @@ WeekView.prototype = {
       let weekRow = `<tr class="week-view-hour-row" data-hour="${hour}"><td><div class="week-view-cell-wrapper">${Locale.formatHour(hour, { locale: this.locale })}</div></td>`;
       let halfHourRow = `<tr class="week-view-half-hour-row" data-hour="${hour}.5"><td><div class="week-view-cell-wrapper"></div></td>`;
 
-      for (let day = new Date(startDate.getTime()); day <= endDate; day.setDate(day.getDate() + 1)) { //eslint-disable-line
-        weekRow += `<td data-key="${stringUtils.padDate(day.getFullYear(), day.getMonth(), day.getDate())}"><div class="week-view-cell-wrapper"></div></td>`;
-        halfHourRow += `<td data-key="${stringUtils.padDate(day.getFullYear(), day.getMonth(), day.getDate())}"><div class="week-view-cell-wrapper"></div></td>`;
+      for (let day = new Date(startDate.getTime()); day <= endDate; day.setDate(day.getDate() + 1)) {
+        const dataKey = stringUtils.padDate(day.getFullYear(), day.getMonth(), day.getDate());
+        weekRow += `<td data-key="${dataKey}"><div class="week-view-cell-wrapper"></div></td>`;
+        halfHourRow += `<td data-key="${dataKey}"><div class="week-view-cell-wrapper"></div></td>`;
       }
       weekRow += '</tr>';
       halfHourRow += '</tr>';
@@ -1326,6 +1327,14 @@ WeekView.prototype = {
 
         if (timepicker) {
           timepicker.val(Locale.formatHour(day.getHours() + (day.getMinutes() / 60)));
+          const duration = event.durationHours ? event.durationHours : 1;
+
+          if (timepicker.length > 1) {
+            for (let i = 1; i < timepicker.length; i++) {
+              $(timepicker[i]).val(Locale.formatHour(day.getHours() + duration + (day.getMinutes() / 60)));
+            }
+          }
+
           timepicker.timepicker({ locale: this.settings.locale, language: this.settings.language });
         }
         this.translate(elem);
