@@ -60,6 +60,8 @@
 - `[Searchfield]` Fixed no results text should not be selected. ([#7756](https://github.com/infor-design/enterprise/issues/7756))
 - `[Searchfield]` Fixed on go button misalignment. ([#7910](https://github.com/infor-design/enterprise/issues/7910))
 - `[Searchfield]` Adjusted position and hover color for custom button. ([#7832](https://github.com/infor-design/enterprise/issues/7832))
+- `[Searchfield]` Fix on go button misalignment. ([#7910](https://github.com/infor-design/enterprise/issues/7910))
+- `[Searchfield]` Fix ability to select and delete text in firefox. Adjusted custom button positioning. ([#7962](https://github.com/infor-design/enterprise/issues/7962))
 - `[Searchfield]` Fixed on go button misalignment. ([#7910](https://github.com/infor-design/enterprise/issues/7910))
 - `[Tabs]` Fixed the focus alignment in tabs for RTL. ([#7772](https://github.com/infor-design/enterprise/issues/7772))
 - `[Toolbar]` Added additional selectors and colors for dark theme dropdown label. ([#7897](https://github.com/infor-design/enterprise/issues/7897))
