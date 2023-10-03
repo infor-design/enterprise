@@ -256,7 +256,7 @@ html[dir='rtl'] {
 
 @include respond-to(tabletdown) {
   .monthview-popup.popover .monthview {
-    min-width: 310px;
+    min-width: inherit;
 
     @media only screen
       and (minwidth: $breakpoint-phone)

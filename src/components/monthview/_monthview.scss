@@ -3,8 +3,6 @@
 
 .monthview {
   background-color: $popover-bg-color;
-  border: 1px solid $popover-border-color;
-  box-shadow: $popover-box-shadow;
   display: inline-block;
   min-height: 235px;
   min-width: 297px;
@@ -14,7 +12,7 @@
   vertical-align: middle;
   width: 100%;
   height: fit-content;
-  overflow: auto;
+  overflow-x: hidden;
 
   // Hide Days Option
   &.is-monthyear {
