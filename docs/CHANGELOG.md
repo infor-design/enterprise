@@ -40,6 +40,7 @@
 - `[Datagrid]` Added a test page for column filter locale settings. ([#7554](https://github.com/infor-design/enterprise/issues/7554)
 - `[Datagrid]` Adjusted positioning of `drilldown` button. ([#7014](https://github.com/infor-design/enterprise/issues/7014))
 - `[Datagrid]` Fixed a bug where expanded rows showed as activated. ([#7979](https://github.com/infor-design/enterprise/issues/7979))
+- `[Datepicker]` Adjusted sizing of monthview popup to fix disappearing borders. ([#7974](https://github.com/infor-design/enterprise/issues/7974))
 - `[Dropdown]` Fix on dropdown not focusing in mobile. ([#7815](https://github.com/infor-design/enterprise/issues/7815))
 - `[Dropdown]` Fixed dropdown position when expanded on corners. ([NG#1541](https://github.com/infor-design/enterprise-ng/issues/1541))
 - `[Dropdown]` Fixed display render when the option has no icon. ([#7813](https://github.com/infor-design/enterprise/issues/7813))
