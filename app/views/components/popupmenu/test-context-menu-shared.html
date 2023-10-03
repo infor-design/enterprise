@@ -1,0 +1,72 @@
+<div class="row top-padding">
+  <div class="twelve columns">
+    <div class="field">
+      <button class="btn-secondary" id="destroy-input-popup">Destroy Input Popup</button>
+      <button class="btn-secondary" id="destroy-textarea-popup">Destroy TextArea Popup</button>
+    </div>
+
+    <div class="field">
+      <label id="label1" name="label1" for="field1">Input Example</label>
+      <input id="field1" data-options="{ trigger:'rightClick' }" name="field1" data-popupmenu="action-popupmenu-2" menu="action-popupmenu-2" value="Right Click Here"/>
+    </div>
+
+    <div class="field">
+      <label for="textarea" id="label2" name="label2">Enabled Text Area Example</label>
+      <textarea id="textarea" data-options="{ trigger:'rightClick' }" name="textarea" data-popupmenu="action-popupmenu-2" menu="action-popupmenu-2">This text is modifiable</textarea>
+    </div>
+
+    <ul id="action-popupmenu-2" class="popupmenu">
+      <li><a href="#" id="cut" data-automation-id="cut-automation-id">Cut</a></li>
+      <li><a href="#" id="copy" data-automation-id="copy-automation-id">Copy</a></li>
+      <li><a href="#" id="paste" data-automation-id="paste-automation-id">Paste</a></li>
+      <li>
+        <a id="paste-special" href="#">Paste Special</a>
+        <ul class="popupmenu">
+          <li><a id="sub-menu-1" data-automation-id="sub-menu-1-automation-id" href="#">Sub Menu 1</a></li>
+          <li><a id="sub-menu-2" data-automation-id="sub-menu-2-automation-id" href="#">Sub Menu 2</a></li>
+          <li class="separator"></li>
+          <li>
+            <a id="settings" data-automation-id="settings-automation-id" href="#">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use href="#icon-settings"></use>
+              </svg>
+              Settings
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li class="separator"></li>
+      <li><a href="#" id="name-project">Name and project range</a></li>
+      <li class="is-disabled"><a href="#" id="insert-comment" data-automation-id="insert-comment-automation-id" disabled="true">Insert comment</a></li>
+      <li class="is-disabled"><a href="#" id="insert-note" data-automation-id="insert-note-automation-id" disabled="true">Insert note</a></li>
+      <li><a href="#" id="clear-notes" data-automation-id="clear-notes-automation-id">Clear notes</a></li>
+
+      <li class="separator single-selectable-section"></li>
+      <li class="heading">Additional Options</li>
+      <li class="is-selectable is-checked"><a href="#" id="conditional-format" data-automation-id="conditional-format-automation-id">Conditional formatting</a></li>
+      <li class="is-selectable"><a href="#" id="data-validation" data-automation-id="data-validation-automation-id">Data validation</a></li>
+      <li class="separator"></li>
+      <li>
+        <a href="#" id="settings" data-automation-id="settings-2-automation-id">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use href="#icon-settings"></use>
+          </svg>
+          Settings
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+<script>
+  $('#destroy-input-popup').on('click', () => {
+    $('#field1').data('popupmenu').destroy();
+    $('#field1').remove();
+  });
+
+  $('#destroy-textarea-popup').on('click', () => {
+    $('#textarea').data('popupmenu').destroy();
+    $('#textarea').remove();
+  });
+</script>

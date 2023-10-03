@@ -435,14 +435,14 @@
       margin-top: -3px;
     }
 
-    &[disabled] {
+    &[disabled]:not(.no-results) {
       color: $disabled-color;
       pointer-events: none;
     }
   }
 
   a.no-results {
-    color: inherit !important;
+    cursor: default;
   }
 
   span {

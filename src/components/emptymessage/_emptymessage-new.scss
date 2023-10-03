@@ -45,7 +45,7 @@
 .card-empty-info,
 .widget-empty-info,
 .empty-info {
-  color: $font-color-muted;
+  color: $emptymessage-text-color;
   font-size: 1.6rem;
   padding: 0 20px 20px;
 }
@@ -63,7 +63,7 @@
 
 .empty-title,
 .card-empty-title {
-  color: $font-color-muted;
+  color: $emptymessage-title-color;
 }
 
 .empty-icon,
