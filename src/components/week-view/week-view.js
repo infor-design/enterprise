@@ -456,12 +456,15 @@ WeekView.prototype = {
     const container = this.element[0].querySelector(`.week-view-body-cell[data-key="${event.startKey}"]`);
 
     if (container) {
-      const displayTime = ` ${Locale.formatHourRange(event.startsHour, event.endsHour, { locale: this.locale })}`;
+      const displayTime = ` ${Locale.formatHourRange(event.startsHour, event.endsHour, { locale: this.locale, keepPeriod: true, pattern: this.settings.timePattern })}`;
       const node = this.createEventElement(event);
+      const subject = `<span class="calendar-event-title">
+          ${this.settings.timeFirst ? displayTime : event.shortSubject || event.subject}</br>${this.settings.timeFirst ? event.shortSubject || event.subject : displayTime}
+        </span>`;
 
       node.innerHTML = `<div class="calendar-event-content">
         ${event.icon ? `<span class="calendar-event-icon"><svg class="icon ${event.icon}" focusable="false" aria-hidden="true" role="presentation" data-status="${event.status}"><use href="#${event.icon}"></use></svg></span>` : ''}
-        <span class="calendar-event-title">${event.shortSubject || event.subject}</br>${displayTime}</span>
+        ${subject}
       </div>`;
 
       container?.appendChild(node);
