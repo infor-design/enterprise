@@ -1101,6 +1101,14 @@ html[dir='rtl'] {
     }
   }
 
+  .datagrid.medium-rowheight {
+    .is-editing .datepicker {
+      + .trigger.btn-icon {
+        margin-top: 5px;
+      }
+    }
+  }
+
   .datagrid {
     td.error {
       .datagrid-cell-wrapper {
