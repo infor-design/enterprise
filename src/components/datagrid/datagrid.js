@@ -10485,7 +10485,7 @@ Datagrid.prototype = {
     } else {
       if (typeof this.editor.val === 'function') {
         const editorValue = this.editor.val();
-        newValue = isNaN(Date.parse(editorValue)) ? '' : editorValue;
+        newValue = isNaN(Date.parse(editorValue)) && this.editor.name === 'date' ? '' : editorValue;
       }
       this.commitCellEditUtil(input, newValue, isEditor, isFileupload, isUseActiveRow, isCallback);
     }

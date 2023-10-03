@@ -4951,6 +4951,32 @@ html[dir='rtl'] {
   }
 
   .datagrid {
+    .is-editing .datepicker {
+      + .trigger svg {
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+
+  .datagrid.normal-rowheight {
+    .is-editing .datepicker {
+      + .trigger {
+        left: -10px;
+      }
+    }
+  }
+
+  .datagrid.medium-rowheight {
+    .is-editing .datepicker {
+      ~ .trigger {
+        left: 0;
+        margin-right: 0;
+      }
+    }
+  }
+
+  .datagrid {
     th:first-child {
       border-left: 1px solid $datagrid-header-border-color;
     }
@@ -4984,11 +5010,13 @@ html[dir='rtl'] {
 
       &.is-editing {
         .datepicker {
-          padding: 0 16px 0 0;
+          padding: 0;
 
           + .trigger {
             margin-left: 0;
             margin-right: 3px;
+            position: relative;
+            left: -10px;
 
             .icon {
               margin-right: 3px;
