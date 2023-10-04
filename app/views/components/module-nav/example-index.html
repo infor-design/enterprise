@@ -343,15 +343,6 @@
       <div class="four columns">&nbsp;</div>
       <div class="four columns">&nbsp;</div>
       <div class="four columns">
-        <div class="field field-checkbox">
-          <label for="display-mode-dropdown" class="label">Display mode</label>
-          <select id="display-mode-dropdown" class="dropdown">
-            <option value="collapsed" selected>Collapsed</option>
-            <option value="expanded">Expanded</option>
-            <option value="">Hidden</option>
-          </select>
-        </div>
-
         <div class="field">
           <input type="checkbox" class="checkbox" name="pin-sections" id="pin-sections" />
           <label for="pin-sections" class="checkbox-label">Preview 'pinSections' setting</label>
@@ -359,6 +350,10 @@
         <div class="field">
           <input type="checkbox" class="checkbox" name="display-detail-check" id="display-detail-check" />
           <label for="display-detail-check" class="checkbox-label">Preview 'showDetailView' setting</label>
+        </div>
+        <div class="field">
+          <input type="checkbox" class="checkbox" name="hide-completely" id="hide-completely" />
+          <label for="hide-completely" class="checkbox-label">Hide completely</label>
         </div>
       </div>
     </div>
@@ -380,18 +375,10 @@
     const navEl = $('#nav');
     const navAPI = navEl.data('modulenav');
     const containerEl = $('.module-nav-container');
-    const dropdownEl = $('#display-mode-dropdown')
-    const dropdownAPI = $('#display-mode-dropdown').data('dropdown');
     const displayCheckEl = $('#display-detail-check');
+    const hideCompletelyEl = $('#hide-completely');
     const hamburgerBtnEl = $('#header-hamburger');
     const pinSectionsCheckEl = $('#pin-sections');
-
-    // Connect form control event handling
-    dropdownAPI.element.on('change.test', (e) => {
-      let val = dropdownAPI.value;
-      if (val === 'Hidden') val = false;
-      navAPI.updated({ displayMode: val });
-    });
 
     displayCheckEl.on('change.test', (e) => {
       navAPI.updated({ showDetailView: displayCheckEl[0].checked });
@@ -403,18 +390,12 @@
 
     if (hamburgerBtnEl.length) {
       hamburgerBtnEl.on('click.test', (e) => {
-        if (dropdownAPI.value === 'collapsed') {
-          dropdownAPI.selectValue('expanded')
-          dropdownEl.trigger('change');
-        } else {
-          dropdownAPI.selectValue('collapsed')
-          dropdownEl.trigger('change');
-        }
+        navAPI.handleHamburgerClick();
       });
     }
 
     navEl.on('displaymodechange.test', (e, mode) => {
-      dropdownAPI.selectValue(mode === false ? '' : mode);
+      console.log('Display mode changed to:', mode);
     });
 
     // Connect component event handling
@@ -430,6 +411,19 @@
     roleButtonEl.on('click.test', (e) => {
       console.info('Module Button Click');
     })
+
+    hideCompletelyEl.on('change.test', (e) => {
+      console.log(hideCompletelyEl[0].checked)
+
+      if (hideCompletelyEl[0].checked) {
+        navAPI.updated({ displayMode: false });
+        hamburgerBtnEl.attr('disabled', 'true');
+      }
+      else {
+       navAPI.updated({ displayMode: navAPI.isLargerThanBreakpoint() ? 'collapsed' : 'expanded' });
+       hamburgerBtnEl.removeAttr('disabled');
+      }
+    });
 
     // Customizations to the component after init
     navAPI.updated({ displayMode: 'collapsed' });

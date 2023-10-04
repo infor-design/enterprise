@@ -1,6 +1,7 @@
 import { utils } from '../../utils/utils';
 import { accordionSearchUtils } from '../../utils/accordion-search-utils';
 import { breakpoints } from '../../utils/breakpoints';
+import { debounce } from '../../utils/debounced-resize';
 import '../../utils/behaviors';
 
 import './module-nav.switcher.jquery';
@@ -213,6 +214,10 @@ ModuleNav.prototype = {
       });
     }
 
+    $('body').on(`resize.${COMPONENT_NAME}`, debounce(() => {
+      this.checkMobileBehavior();
+    }, 0));
+
     if (!this.settings.mobileBehavior) this.enableOutsideClickEvent();
     return this;
   },
@@ -233,7 +238,8 @@ ModuleNav.prototype = {
    * @returns {void}
    */
   checkMobileBehavior() {
-    if (this.settings.displayMode === 'expanded' && this.settings.mobileBehavior) {
+    if (!this.settings.mobileBehavior) return;
+    if (this.settings.displayMode === 'expanded') {
       const overlay = this.pageContainerEl.find('.page-overlay');
 
       if (breakpoints.isAbove(this.settings.breakpoint)) {
@@ -252,6 +258,16 @@ ModuleNav.prototype = {
       }
       this.settings.enableOutsideClick = true;
       this.enableOutsideClickEvent();
+      return;
+    }
+
+    if (this.settings.displayMode === 'collapsed' && !this.isLargerThanBreakpoint()) {
+      setDisplayMode(false, this.containerEl);
+      return;
+    }
+
+    if (this.settings.displayMode === 'collapsed' && this.isLargerThanBreakpoint()) {
+      setDisplayMode('collapsed', this.containerEl);
     }
   },
 
@@ -270,16 +286,34 @@ ModuleNav.prototype = {
     if (this.settings.displayMode === 'expanded') {
       const target = targetEl;
       if (target && !$(target).is('.application-menu-trigger') && !this.element[0].contains(target)) {
-        this.setDisplayMode(this.previousDisplayMode);
+        this.setDisplayMode(this.isLargerThanBreakpoint() ? 'collapsed' : false);
         this.removeOutsideClickEvent();
       }
     }
   },
 
   /**
- * handles the Searchfield Input event
- * @param {jQuery.Event} e jQuery `input` event
- */
+   * Handler to manually attach to any hamburger button or other elements
+   */
+  handleHamburgerClick() {
+    const currentDisplayMode = this.settings.displayMode;
+    if (currentDisplayMode === 'expanded' && this.isLargerThanBreakpoint()) {
+      this.updated({ displayMode: 'collapsed' });
+    } else if (currentDisplayMode === 'collapsed' && this.isLargerThanBreakpoint()) {
+      this.updated({ displayMode: 'expanded' });
+    } else if (currentDisplayMode === 'expanded' && !this.isLargerThanBreakpoint()) {
+      this.updated({ displayMode: false });
+    } else if (currentDisplayMode === 'collapsed' && !this.isLargerThanBreakpoint()) {
+      this.updated({ displayMode: 'expanded' });
+    } else if (currentDisplayMode === false) {
+      this.updated({ displayMode: 'expanded' });
+    }
+  },
+
+  /**
+   * handles the Searchfield Input event
+   * @param {jQuery.Event} e jQuery `input` event
+   */
   handleSearchfieldInputEvent() {
     accordionSearchUtils.handleSearchfieldInputEvent.apply(this, [COMPONENT_NAME]);
   },
@@ -515,7 +549,6 @@ ModuleNav.prototype = {
    */
   teardown() {
     this.teardownEvents();
-    this.teardownResize();
     accordionSearchUtils.teardownFilter.apply(this, [COMPONENT_NAME]);
 
     // Separators
@@ -553,6 +586,7 @@ ModuleNav.prototype = {
     $(this.accordionEl).off(`beforeexpand.${COMPONENT_NAME}`);
     $(this.accordionEl).off(`afterexpand.${COMPONENT_NAME}`);
     $(this.accordionEl).off(`aftercollapse.${COMPONENT_NAME}`);
+    $('body').off(`resize.${COMPONENT_NAME}`);
   },
 
   /**
@@ -570,6 +604,7 @@ ModuleNav.prototype = {
    */
   destroy() {
     this.teardown();
+    this.teardownResize();
     $.removeData(this.element[0], COMPONENT_NAME);
   }
 };

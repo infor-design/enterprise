@@ -299,3 +299,9 @@
   z-index: 8000;
 }
 
+// Hide on Mobile
+@include respond-to(phone) {
+  .module-nav-container:not(.mode-expanded) .module-nav-bar {
+    display: none;
+  }
+}
