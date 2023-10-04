@@ -8,6 +8,7 @@ import { breakpoints } from '../../utils/breakpoints';
 import { theme } from '../theme/theme';
 import { CalendarToolbar } from '../calendar/calendar-toolbar';
 import { calendarShared } from '../calendar/calendar-shared';
+import { Tmpl } from '../tmpl/tmpl';
 
 // Settings and Options
 const COMPONENT_NAME = 'weekview';
@@ -29,6 +30,12 @@ const COMPONENT_NAME_DEFAULTS = {
   endHour: 19,
   disable: {
     dayOfWeek: [],
+  },
+  newEventDefaults: {
+    title: 'NewEvent',
+    subject: '',
+    comments: '',
+    durationHours: 1
   },
   showToday: true,
   showViewChanger: true,
@@ -449,12 +456,15 @@ WeekView.prototype = {
     const container = this.element[0].querySelector(`.week-view-body-cell[data-key="${event.startKey}"]`);
 
     if (container) {
-      const displayTime = ` ${Locale.formatHourRange(event.startsHour, event.endsHour, { locale: this.locale })}`;
+      const displayTime = ` ${Locale.formatHourRange(event.startsHour, event.endsHour, { locale: this.locale, keepPeriod: true, pattern: this.settings.timePattern })}`;
       const node = this.createEventElement(event);
+      const subject = `<span class="calendar-event-title">
+          ${this.settings.timeFirst ? displayTime : event.shortSubject || event.subject}</br>${this.settings.timeFirst ? event.shortSubject || event.subject : displayTime}
+        </span>`;
 
       node.innerHTML = `<div class="calendar-event-content">
         ${event.icon ? `<span class="calendar-event-icon"><svg class="icon ${event.icon}" focusable="false" aria-hidden="true" role="presentation" data-status="${event.status}"><use href="#${event.icon}"></use></svg></span>` : ''}
-        <span class="calendar-event-title">${event.shortSubject || event.subject}</br>${displayTime}</span>
+        ${subject}
       </div>`;
 
       container?.appendChild(node);
@@ -677,9 +687,10 @@ WeekView.prototype = {
       let weekRow = `<tr class="week-view-hour-row" data-hour="${hour}"><td><div class="week-view-cell-wrapper">${Locale.formatHour(hour, { locale: this.locale })}</div></td>`;
       let halfHourRow = `<tr class="week-view-half-hour-row" data-hour="${hour}.5"><td><div class="week-view-cell-wrapper"></div></td>`;
 
-      for (let day = new Date(startDate.getTime()); day <= endDate; day.setDate(day.getDate() + 1)) { //eslint-disable-line
-        weekRow += '<td><div class="week-view-cell-wrapper"></div></td>';
-        halfHourRow += '<td><div class="week-view-cell-wrapper"></div></td>';
+      for (let day = new Date(startDate.getTime()); day <= endDate; day.setDate(day.getDate() + 1)) {
+        const dataKey = stringUtils.padDate(day.getFullYear(), day.getMonth(), day.getDate());
+        weekRow += `<td data-key="${dataKey}"><div class="week-view-cell-wrapper"></div></td>`;
+        halfHourRow += `<td data-key="${dataKey}"><div class="week-view-cell-wrapper"></div></td>`;
       }
       weekRow += '</tr>';
       halfHourRow += '</tr>';
@@ -1082,7 +1093,36 @@ WeekView.prototype = {
       e.preventDefault();
     });
 
-    this.element.off(`dblclick.${COMPONENT_NAME}`).on(`dblclick.${COMPONENT_NAME}`, '.calendar-event', (e) => {
+    this.element.off(`dblclick.${COMPONENT_NAME}`).on(`dblclick.${COMPONENT_NAME}`, '.calendar-event, td', (e) => {
+      if ($(e.currentTarget).is('td')) {
+        const key = e.currentTarget.getAttribute('data-key');
+        const time = $(e.currentTarget).parent().attr('data-hour');
+        const hour = Math.floor(time);
+        const min = (time - hour) * 60;
+        if (!key) {
+          return;
+        }
+        const day = new Date(key.substr(0, 4), key.substr(4, 2) - 1, key.substr(6, 2), hour, min);
+
+        const eventData = utils.extend({ }, this.settings.newEventDefaults);
+        eventData.startKey = key;
+        eventData.endKey = key;
+        eventData.starts = day;
+        eventData.ends = day;
+        e.stopPropagation();
+
+        calendarShared.cleanEventData(
+          eventData,
+          false,
+          day,
+          this.locale,
+          this.language,
+          this.settings.events,
+          this.settings.eventTypes
+        );
+        this.showModalWithCallback(day, eventData, true, $(e.currentTarget));
+        this.element.trigger('updated');
+      }
       fireEvent(e.currentTarget, 'eventdblclick');
     });
 
@@ -1154,6 +1194,301 @@ WeekView.prototype = {
 
     this.settings.events.push(event);
     this.renderEvent(event);
+  },
+
+  showModalWithCallback(day, eventData, isAdd, eventTarget) {
+    this.showEventModal(day, eventData, (elem, event) => {
+      const inputs = elem.querySelectorAll('input, textarea, select');
+      for (let i = 0; i < inputs.length; i++) {
+        event[inputs[i].id] = inputs[i].getAttribute('type') === 'checkbox' ? inputs[i].checked : inputs[i].value;
+      }
+
+      if (isAdd) {
+        this.addEvent(event);
+      } else {
+        this.updateEvent(event);
+      }
+    }, eventTarget);
+  },
+
+  /**
+   * Show a modal used to add/edit events. This uses the modalTemplate setting for the modal contents.
+   * @param {date} day current date object
+   * @param {object} event The event object with common event properties for defaulting fields in the template.
+   * @param {function} done The callback for when the modal closes.
+   * @param {object} eventTarget The target element for the popup.
+   */
+  showEventModal(day, event, done, eventTarget) {
+    if (!this.settings.modalTemplate) {
+      return;
+    }
+
+    if (this.modalVisible()) {
+      this.removeModal();
+    }
+
+    this.modalContents = document.createElement('div');
+    DOM.addClass(this.modalContents, 'calendar-event-modal', 'hidden');
+    document.getElementsByTagName('body')[0].appendChild(this.modalContents);
+
+    event = calendarShared.addCalculatedFields(
+      event,
+      this.locale,
+      this.language,
+      this.settings.eventTypes
+    );
+    this.renderTmpl(event || {}, this.settings.modalTemplate, this.modalContents);
+    const dayObj = this.getDayEvents(day);
+
+    let isCancel = true;
+    dayObj.elem = $(dayObj.elem);
+    let placementArgs;
+
+    if (dayObj.elem.index() === 6) {
+      placementArgs = this.isRTL ? 'right' : 'left';
+    } else {
+      placementArgs = this.isRTL ? 'left' : 'right';
+    }
+
+    if (!eventTarget && this.activeView === 'day') {
+      eventTarget = $('.week-view-header-wrapper');
+      placementArgs = this.isRTL ? 'left' : 'right';
+    }
+
+    if (!eventTarget) {
+      eventTarget = dayObj.elem;
+    }
+
+    const modalOptions = this.settings.modalOptions || {
+      content: $(this.modalContents),
+      closebutton: true,
+      popover: true,
+      placementOpts: {
+        parent: eventTarget,
+        strategies: ['flip', 'nudge', 'shrink-y'],
+        parentXAlignment: 'center',
+        parentYAlignment: 'center',
+        placement: placementArgs
+      },
+      title: event.title || event.subject,
+      trigger: 'immediate',
+      keepOpen: true,
+      extraClass: 'calendar-popup calendar-popup-mobile',
+      tooltipElement: '#calendar-popup',
+      headerClass: event.color,
+      initializeContent: false
+    };
+
+    eventTarget
+      .off('hide.calendar')
+      .on('hide.calendar', () => {
+        if (isCancel) {
+          this.removeModal();
+          return;
+        }
+
+        done(this.modalContents, event);
+        this.element.trigger('hidemodal', { elem: this.modalContents, event });
+        this.removeModal();
+        isCancel = true;
+      })
+      .popover(modalOptions)
+      .off('show.calendar')
+      .on('show.calendar', (evt, elem) => {
+        this.element.trigger('showmodal', { elem: this.modalContents, event });
+        elem.find('#isAllDay').off().on('click.calendar', (e) => {
+          const isDisabled = $(e.currentTarget).prop('checked');
+          if (isDisabled) {
+            elem.find('#durationHours').prop('disabled', true);
+            elem.find('#endsHourLocale').prop('disabled', true);
+            elem.find('#startsHourLocale').prop('disabled', true);
+          } else {
+            elem.find('#durationHours').prop('disabled', false);
+            elem.find('#endsHourLocale').prop('disabled', false);
+            elem.find('#startsHourLocale').prop('disabled', false);
+          }
+        });
+
+        elem.find('#type').val(event.type).dropdown();
+        elem.find('#comments').val(event.comments);
+        elem.find('#subject').focus();
+
+        elem.find('button').on('click', (e) => {
+          const popupApi = eventTarget.data('popover');
+          const action = e.currentTarget.getAttribute('data-action');
+          isCancel = action !== 'submit';
+          if (popupApi) {
+            popupApi.hide(true);
+          }
+        });
+
+        elem.find('.datepicker').datepicker({ locale: this.settings.locale, language: this.settings.language });
+        const timepicker = elem.find('.timepicker');
+
+        if (timepicker) {
+          timepicker.val(Locale.formatHour(day.getHours() + (day.getMinutes() / 60)));
+          const duration = event.durationHours ? event.durationHours : 1;
+
+          if (timepicker.length > 1) {
+            for (let i = 1; i < timepicker.length; i++) {
+              $(timepicker[i]).val(Locale.formatHour(day.getHours() + duration + (day.getMinutes() / 60)));
+            }
+          }
+
+          timepicker.timepicker({ locale: this.settings.locale, language: this.settings.language });
+        }
+        this.translate(elem);
+      });
+  },
+
+  /**
+   * Used to check if a Modal is currently visible.
+   * @returns {boolean} whether or not the Modal is currently being displayed
+   */
+  modalVisible() {
+    return (document.querySelector('.calendar-event-modal') !== null);
+  },
+
+  /**
+   * Remove and destroy the modal.
+   * @private
+   */
+  removeModal() {
+    this.modalContents = null;
+    if (this.activeElem) {
+      this.activeElem.off();
+      if (this.activeElem.data('popover')) {
+        this.activeElem.data('popover').destroy();
+      }
+    }
+    DOM.remove(document.getElementById('calendar-popup'));
+    DOM.remove(document.querySelector('.calendar-event-modal'));
+    $('#timepicker-popup').hide();
+  },
+
+  /**
+   * Render the template into the container.
+   * @param {object} event The event object with common event properties.
+   * @param {object} template The template id.
+   * @param {object} container The container to put it in.
+   * @param {boolean} append If true we append the template into the container.
+  */
+  renderTmpl(event, template, container, append) {
+    if (typeof Tmpl !== 'object' || !template) {
+      return;
+    }
+
+    // create a copy of the template
+    if (template instanceof $) {
+      template = `${template.html()}`;
+    } else if (typeof template === 'string') {
+      // If a string doesn't contain HTML elments,
+      // assume it's an element ID string and attempt to select with jQuery
+      if (!stringUtils.containsHTML(template)) {
+        template = $(`#${template}`).html();
+      }
+    }
+
+    event.color = calendarShared.getEventTypeColor(event, this.settings.eventTypes);
+    event.startsLong = Locale.formatDate(event.starts, { date: 'long', locale: this.locale.name });
+    event.endsLong = Locale.formatDate(event.ends, { date: 'long', locale: this.locale.name });
+    event.startsHoursLong = `${Locale.formatDate(event.starts, { date: 'long', locale: this.locale.name })} ${Locale.formatDate(event.starts, { date: 'hour', locale: this.locale.name })}`;
+    event.endsHoursLong = `${Locale.formatDate(event.ends, { date: 'long', locale: this.locale.name })} ${Locale.formatDate(event.ends, { date: 'hour', locale: this.locale.name })}`;
+
+    if (Locale.isIslamic(this.locale.name)) {
+      const startsIslamic = Locale.gregorianToUmalqura(new Date(event.starts));
+      const endsIslamic = Locale.gregorianToUmalqura(new Date(event.ends));
+      event.startsLong = Locale.formatDate(startsIslamic, { date: 'long', locale: this.locale.name });
+      event.endsLong = Locale.formatDate(endsIslamic, { date: 'long', locale: this.locale.name });
+      event.startsHoursLong = `${Locale.formatDate(startsIslamic, { date: 'long', locale: this.locale.name })} ${Locale.formatDate(startsIslamic, { date: 'hour', locale: this.locale.name })}`;
+      event.endsHoursLong = `${Locale.formatDate(endsIslamic, { date: 'long', locale: this.locale.name })} ${Locale.formatDate(endsIslamic, { date: 'hour', locale: this.locale.name })}`;
+    }
+    event.typeLabel = this.getEventTypeLabel(event.type);
+
+    const renderedTmpl = Tmpl.compile(template, { event });
+    container.classList.remove('has-only-one');
+
+    if (append) {
+      DOM.append(container, renderedTmpl, '*');
+      return;
+    }
+    container.innerHTML = renderedTmpl;
+    container.classList.add('has-only-one');
+  },
+
+  /**
+   * Find the matching type and get the color.
+   * @param {object} id The eventType id to find.
+   * @param {object} event The event data object.
+   * @returns {object} The Calendar prototype, useful for chaining.
+   */
+  getEventTypeLabel(id) {
+    let type = '';
+    if (!id) {
+      return type;
+    }
+
+    const eventInfo = this.settings.eventTypes.filter(eventType => eventType.id === id);
+    if (eventInfo.length === 1) {
+      type = eventInfo[0].label;
+    }
+    return type;
+  },
+
+  /**
+   * Get the events and date for the currently selected calendar day.
+   * @param {date} date The date to find the events for.
+   * @returns {object} dayEvents An object with all the events and the event date.
+   */
+  getDayEvents(date) {
+    if (typeof date !== 'string' && !this.isRTL) {
+      date = stringUtils.padDate(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate(),
+      );
+    }
+
+    if (Locale.isIslamic(this.locale.name)) {
+      const dateIslamic = Locale.gregorianToUmalqura(date);
+      date = stringUtils.padDate(
+        dateIslamic[0],
+        dateIslamic[1],
+        dateIslamic[2]
+      );
+    }
+
+    const dayObj = this.dayMap.filter(dayFilter => dayFilter.key === date);
+
+    const dayEvents = {
+      date,
+      events: []
+    };
+
+    if (dayObj.length === 0) {
+      return [];
+    }
+
+    dayEvents.events = dayObj[0].events;
+    dayEvents.elem = dayObj[0].elem;
+    return dayEvents;
+  },
+
+  /**
+   * Translate elements in a DOM object
+   * @private
+   * @param  {object} elem The DOM Element
+   */
+  translate(elem) {
+    $(elem).find('[data-translate="text"]').each((i, item) => {
+      const obj = $(item);
+      obj.text(Locale.translate(obj.attr('data-translate-key') || obj.text(), {
+        showAsUndefined: false,
+        showBrackets: false,
+        language: this.settings.language,
+        locale: this.settings.locale
+      }));
+    });
   },
 
   /**
