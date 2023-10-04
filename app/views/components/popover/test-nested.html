@@ -39,9 +39,7 @@
 
 <script>
   $('body').one('initialized', function () {
-    let grid,
-      textArea,
-      columns = [],
+    let columns = [],
       data = [];
 
     // Some Sample Data
@@ -77,12 +75,7 @@
         y: 10
       },
       title: 'Text Area',
-      trigger: 'click',
-      onHidden: () => {
-        if (textArea) {
-          textArea.destroy();
-        }
-      }
+      trigger: 'click'
     };
 
     const POPOVER_OPTIONS_2 = {
@@ -90,30 +83,18 @@
       content: $('#popover-contents-2'),
       popover: true,
       title: 'Datagrid',
-      trigger: 'click',
-      onHidden: () => {
-        if (grid) {
-          grid.destroy();
-        }
-      }
+      trigger: 'click'
     };
 
-    $('#popover-trigger').popover(POPOVER_OPTIONS).on('beforeshow', () => {
-      textArea = $('#text-area').data('textarea');
-      if (!textArea) {
-        textArea = $('#text-area').textarea().data('textarea');
-      }
-    });
-    $('#popover-trigger-2').popover(POPOVER_OPTIONS_2).on('beforeshow', () => {
-      grid = $('#datagrid').data('datagrid');
-      if (!grid) {
-        grid = $('#datagrid').datagrid({
+    $('#text-area').textarea().data('textarea');
+    $('#datagrid').datagrid({
           columns: columns,
           dataset: data,
           rowTemplate: rowTemplate
         }).data('datagrid');
-      }
-    })
+
+    $('#popover-trigger').popover(POPOVER_OPTIONS);
+    $('#popover-trigger-2').popover(POPOVER_OPTIONS_2);
   });
 
 </script>

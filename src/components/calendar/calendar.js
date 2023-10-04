@@ -354,7 +354,8 @@ Calendar.prototype = {
       onChangeView: this.onChangeToWeekDay,
       eventTooltip: this.settings.eventTooltip,
       iconTooltip: this.settings.iconTooltip,
-      attributes: this.settings.attributes
+      attributes: this.settings.attributes,
+      modalTemplate: this.settings.modalTemplate
     });
     this.weekViewHeader = document.querySelector('.calendar .calendar-weekview .monthview-header');
 
