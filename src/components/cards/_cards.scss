@@ -266,6 +266,10 @@ $card-header-section: '.card-header-section', '.widget-header-section';
         }
       }
     }
+
+    .card-header + .card-content {
+      padding-top: 48px;
+    }
   }
 
   // Expandable card headers set auto-height automatically
