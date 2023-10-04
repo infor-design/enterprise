@@ -35,7 +35,8 @@ const MODULE_NAV_DEFAULTS = {
   mobileBehavior: true,
   breakpoint: 'phone-to-tablet', // Can be 'tablet' or 'phone-to-tablet'(+ 767), 'phablet (+610)', 'desktop' + (1024) or 'tablet-to-desktop'(+1280).Default is 'phone-to-tablet'(767)
   showOverlay: true,
-  enableOutsideClick: false
+  enableOutsideClick: false,
+  autoCollapseOnMobile: true
 };
 
 const toggleScrollbar = (el, doToggle) => {
@@ -203,6 +204,12 @@ ModuleNav.prototype = {
       });
       $(this.accordionEl).on(`aftercollapse.${COMPONENT_NAME}`, () => {
         this.setScrollable();
+      });
+      $(this.accordionEl).on(`selected.${COMPONENT_NAME}`, () => {
+        this.handleAutoCollapseOnMobile();
+      });
+      $(this.accordionEl).on(`followlink.${COMPONENT_NAME}`, () => {
+        this.handleAutoCollapseOnMobile();
       });
     }
 
@@ -457,6 +464,32 @@ ModuleNav.prototype = {
   setShowDetailView(val) {
     this.containerEl.classList[val ? 'add' : 'remove']('show-detail');
     this.detailViewEl?.classList[val ? 'add' : 'remove']('visible');
+  },
+
+  /**
+   * Checks the window size against the defined breakpoint.
+   * @private
+   * @returns {boolean} whether or not the window size is larger than the settings-defined breakpoint
+   */
+  isLargerThanBreakpoint() {
+    return breakpoints.isAbove(this.settings.breakpoint);
+  },
+
+  /**
+   * Handles the click to close behavior
+   * @private
+   */
+  handleAutoCollapseOnMobile() {
+    if (!this.settings.autoCollapseOnMobile) {
+      return;
+    }
+
+    this.userOpened = false;
+    if (this.isLargerThanBreakpoint()) {
+      return;
+    }
+
+    this.setDisplayMode(this.previousDisplayMode);
   },
 
   /**
