@@ -9,7 +9,7 @@
 - `[Module Nav]` Added usage guidance to docs. ([#7869](https://github.com/infor-design/enterprise/issues/7869))
 - `[Module Nav]` Added mobile behaviors. ([#7804](https://github.com/infor-design/enterprise/issues/7804))
 - `[Module Nav]` Fixed an alignment issue. ([#7934](https://github.com/infor-design/enterprise/issues/7934))
-- `[Module Nav]` Added mobile click to close setting, and made breakpoints fire on resize. ([#8019](https://github.com/infor-design/enterprise/issues/8019))
+- `[Module Nav]` Added mobile click to close setting, and made breakpoints fire on resize, added hamburger logic and new mobile states per phone vs bigger. ([#8019](https://github.com/infor-design/enterprise/issues/8019))
 
 ## v4.88.0 Fixes
 
