@@ -87,12 +87,6 @@ const Environment = {
       this.browser.name = 'chrome';
     }
 
-    const macosPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'];
-    if (macosPlatforms.indexOf(platform) > -1 && !/Linux/.test(platform)) {
-      cssClasses += 'is-mac ';
-      this.os.name = 'mac';
-    }
-
     if (ua.indexOf('Firefox') > 0) {
       cssClasses += 'is-firefox ';
       this.browser.name = 'firefox';
@@ -140,6 +134,12 @@ const Environment = {
           this.device = iDevices[i];
         }
       }
+    }
+
+    const macosPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'];
+    if (macosPlatforms.indexOf(platform) > -1 && !/Linux/.test(platform)) {
+      cssClasses += 'is-mac ';
+      this.os.name = 'mac';
     }
 
     if ((/Android/.test(ua))) {
