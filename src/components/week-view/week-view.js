@@ -297,21 +297,22 @@ WeekView.prototype = {
       } else {
         event.overnightStartsHour = event.startsHour;
         event.overnightEndsHour = event.endsHour;
-        if (this.isStackedView()) {
-          this.appendToDayContainer(event, true);
-        } else {
-          for (let i = 0; i < days.length; i++) {
-            const overnight = { ...event };
-            overnight.endsHour = this.settings.endHour + 0.6;
+        for (let i = 0; i < days.length; i++) {
+          const overnight = { ...event };
+          overnight.endsHour = this.settings.endHour + 0.6;
 
-            if (i > 0) {
-              overnight.startsHour = this.settings.startHour;
-            }
+          if (i > 0) {
+            overnight.startsHour = this.settings.startHour;
+            overnight.startKey = overnight.endKey;
+          }
 
-            if (i === days.length - 1) {
-              overnight.endsHour = overnight.overnightEndsHour;
-            }
+          if (i === days.length - 1) {
+            overnight.endsHour = overnight.overnightEndsHour;
+          }
 
+          if (this.isStackedView()) {
+            this.appendToDayContainer(overnight, true);
+          } else {
             this.appendEventToHours(days[i].elem, overnight, true);
           }
         }
@@ -488,7 +489,14 @@ WeekView.prototype = {
     const container = this.element[0].querySelector(`.week-view-body-cell[data-key="${event.startKey}"]`);
 
     if (container) {
-      const displayTime = ` ${Locale.formatHourRange(event.startsHour, event.endsHour, { locale: this.locale, keepPeriod: true, pattern: this.settings.timePattern })}`;
+      let displayTime;
+
+      if (isOvernight) {
+        displayTime = ` ${Locale.formatHourRange(event.overnightStartsHour, event.overnightEndsHour, { locale: this.locale, keepPeriod: true, pattern: this.settings.timePattern })}`;
+      } else {
+        displayTime = ` ${Locale.formatHourRange(event.startsHour, event.endsHour, { locale: this.locale, keepPeriod: true, pattern: this.settings.timePattern })}`;
+      }
+
       const node = this.createEventElement(event);
       const subject = `<span class="calendar-event-title">
           ${this.settings.timeFirst ? displayTime : event.shortSubject || event.subject}</br>${this.settings.timeFirst ? event.shortSubject || event.subject : displayTime}
