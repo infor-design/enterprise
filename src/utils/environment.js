@@ -138,6 +138,7 @@ const Environment = {
 
     const macosPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'];
     if (macosPlatforms.indexOf(platform) > -1 && !/Linux/.test(platform)) {
+      cssClasses = cssClasses.replace('ios ', '');
       cssClasses += 'is-mac ';
       this.os.name = 'mac';
     }
