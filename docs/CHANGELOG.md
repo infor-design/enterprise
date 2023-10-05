@@ -67,6 +67,7 @@
 - `[Tree]` Fixed Cross-Site Scripting (XSS) when setting up tree node. ([#7631](https://github.com/infor-design/enterprise/issues/7631))
 - `[Weekview]` Adjusted the positioning of text within the footer cell to keep it centered. Adjusted calendar icon position to be better aligned. ([#7926](https://github.com/infor-design/enterprise/issues/7926))
 - `[Weekview]` Added event modal on doubleclick. ([#7824](https://github.com/infor-design/enterprise/issues/7824))
+- `[Weekview]` Fix on week change when clicking today button. ([#7792](https://github.com/infor-design/enterprise/issues/7792))
 
 ## v4.87.0
 
