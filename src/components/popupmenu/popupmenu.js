@@ -1318,14 +1318,6 @@ PopupMenu.prototype = {
           }
         }
 
-        // Fix - not sure why, but firefox have to manualy trigger
-        if (self.isFirefox && isAutocomplete && !(/37|39|38|40/.test(key))) {
-          self.element.triggerHandler(e);
-          self.element[0].focus();
-          const val = self.element[0].value;
-          self.element[0].value = '';
-          self.element[0].value = val;
-        }
         return undefined;
       });
     }, 1);

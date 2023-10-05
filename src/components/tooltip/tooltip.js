@@ -609,7 +609,7 @@ Tooltip.prototype = {
 
     if (typeof content === 'string') {
       content = $(content);
-      contentArea.html(content);
+      DOM.replaceHtml(contentArea, content);
       contentArea.find('.hidden').removeClass('hidden');
     } else if (useHtml) {
       const clone = content[0].cloneNode(true);
@@ -617,9 +617,9 @@ Tooltip.prototype = {
       if (id) {
         clone.id = `${id}-${this.uniqueId}`;
       }
-      contentArea.html(clone.outerHTML);
+      DOM.replaceHtml(contentArea, clone.outerHTML);
     } else {
-      contentArea.html(content);
+      DOM.replaceHtml(contentArea, content);
     }
 
     const popoverWidth = contentArea.width();
