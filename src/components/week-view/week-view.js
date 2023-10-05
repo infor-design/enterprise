@@ -297,19 +297,23 @@ WeekView.prototype = {
       } else {
         event.overnightStartsHour = event.startsHour;
         event.overnightEndsHour = event.endsHour;
-        for (let i = 0; i < days.length; i++) {
-          const overnight = { ...event };
-          overnight.endsHour = this.settings.endHour + 0.6;
+        if (this.isStackedView()) {
+          this.appendToDayContainer(event, true);
+        } else {
+          for (let i = 0; i < days.length; i++) {
+            const overnight = { ...event };
+            overnight.endsHour = this.settings.endHour + 0.6;
 
-          if (i > 0) {
-            overnight.startsHour = this.settings.startHour;
+            if (i > 0) {
+              overnight.startsHour = this.settings.startHour;
+            }
+
+            if (i === days.length - 1) {
+              overnight.endsHour = overnight.overnightEndsHour;
+            }
+
+            this.appendEventToHours(days[i].elem, overnight, true);
           }
-
-          if (i === days.length - 1) {
-            overnight.endsHour = overnight.overnightEndsHour;
-          }
-
-          this.appendEventToHours(days[i].elem, overnight, true);
         }
       }
     }
@@ -478,8 +482,9 @@ WeekView.prototype = {
   /**
    * Add the ui event to day column
    * @param {object} event calendar event
+   * @param {boolean} isOvernight if event is overnight or not
    */
-  appendToDayContainer(event) {
+  appendToDayContainer(event, isOvernight = false) {
     const container = this.element[0].querySelector(`.week-view-body-cell[data-key="${event.startKey}"]`);
 
     if (container) {
@@ -491,6 +496,7 @@ WeekView.prototype = {
 
       node.innerHTML = `<div class="calendar-event-content">
         ${event.icon ? `<span class="calendar-event-icon"><svg class="icon ${event.icon}" focusable="false" aria-hidden="true" role="presentation" data-status="${event.status}"><use href="#${event.icon}"></use></svg></span>` : ''}
+        ${isOvernight ? '<span style="font-weight: bold">Overnight</span><br/>' : ''}
         ${subject}
       </div>`;
 

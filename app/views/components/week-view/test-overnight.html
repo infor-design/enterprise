@@ -13,21 +13,6 @@
 
     $.getJSON('{{basepath}}api/events', function(res) {
       events = res;
-
-      events.push(  {
-        "id": "77",
-        "subject": "Holiday Overnight Trip",
-        "shortSubject": "Holiday Trip",
-        "icon": "icon-clock",
-        "comments": "Short getaway",
-        "location": "Us Office",
-        "status": "Draft",
-        "starts": "2019-10-22T22:00:00.000",
-        "ends": "2019-10-23T08:00:00.000",
-        "type": "holiday",
-        "isAllDay": "false"
-      });
-
       const opts = {
         hideToolbar: false,
         borderless: true,
