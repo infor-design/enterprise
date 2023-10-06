@@ -1,5 +1,13 @@
 # What's New with Enterprise
 
+## v4.89.0
+
+## v4.89.0 Features
+
+## v4.89.0 Fixes
+
+- `[Datagrid]` Fixed the position of empty message without icon in the datagrid. ([#7854](https://github.com/infor-design/enterprise/issues/7854))
+
 ## v4.88.0
 
 ## v4.88.0 Features
