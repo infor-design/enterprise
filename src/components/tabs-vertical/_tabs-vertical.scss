@@ -248,10 +248,10 @@
         .icon-error,
         .icon-info,
         .icon-alert {
-          height: 14px;
+          height: 18px;
           left: 6px;
           position: absolute;
-          top: calc(50% - 7px);
+          top: calc(50% - 9px);
           width: 18px;
         }
       }
@@ -374,25 +374,8 @@
 html[dir='rtl'] {
   .tab-container.vertical {
     .tab.is-error {
-      a {
-        display: inline-block;
-        padding-right: 8px;
-      }
-
-      a + .icon {
-        display: inline-block;
-        position: relative;
-      }
-    }
-  }
-
-  &[dir='rtl'] {
-    .tab-container.vertical {
-      .tab.is-error {
-        a {
-          padding-right: 30px;
-          padding-left: 8px;
-        }
+      .icon-error {
+        left: 210px;
       }
     }
   }
