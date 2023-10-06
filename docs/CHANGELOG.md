@@ -2,9 +2,12 @@
 
 ## v4.89.0
 
+## v4.89.0 Features
+
 ## v4.89.0 Fixes
 
-- `[Weekview]` Fix on week change when clicking today button. ([#7792](https://github.com/infor-design/enterprise/issues/7792))
+- `[Module Nav]` Fixed a bug where the accordion in the page container inherited module nav accordion styles. ([#8040](https://github.com/infor-design/enterprise/issues/7884))
+- `[Weekview]` Fixed an issue with the week change when clicking the `Today` button. ([#7792](https://github.com/infor-design/enterprise/issues/7792))
 
 ## v4.88.0
 
