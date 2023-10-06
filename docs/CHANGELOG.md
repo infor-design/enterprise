@@ -1,5 +1,13 @@
 # What's New with Enterprise
 
+## v4.89.0
+
+## v4.89.0 Features
+
+## v4.89.0 Fixes
+
+- `[Spinbox]` Adjusted spinbox wrapper sizing to stop increment button from overflowing in classic. ([#7988](https://github.com/infor-design/enterprise/issues/7988))
+
 ## v4.88.0
 
 ## v4.88.0 Features
@@ -62,7 +70,6 @@
 - `[Searchfield]` Fix on go button misalignment. ([#7910](https://github.com/infor-design/enterprise/issues/7910))
 - `[Searchfield]` Fix ability to select and delete text in firefox. Adjusted custom button positioning. ([#7962](https://github.com/infor-design/enterprise/issues/7962))
 - `[Searchfield]` Fixed on go button misalignment. ([#7910](https://github.com/infor-design/enterprise/issues/7910))
-- `[Spinbox]` Adjusted spinbox wrapper sizing to stop increment button from overflowing in classic. ([#7988](https://github.com/infor-design/enterprise/issues/7988))
 - `[Tabs]` Fixed the focus alignment in tabs for RTL. ([#7772](https://github.com/infor-design/enterprise/issues/7772))
 - `[Toolbar]` Added additional selectors and colors for dark theme dropdown label. ([#7897](https://github.com/infor-design/enterprise/issues/7897))
 - `[Tree]` Fixed Cross-Site Scripting (XSS) when setting up tree node. ([#7631](https://github.com/infor-design/enterprise/issues/7631))
