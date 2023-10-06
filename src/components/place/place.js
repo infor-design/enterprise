@@ -553,7 +553,7 @@ Place.prototype = {
   /**
    * Checks if the parent element is in viewport
    * @param {Object} parentElement element to be checked
-   * @returns {boolean}
+   * @returns {boolean} whether or not the element is in the viewport
    */
   isParentElementinViewport(parentElement) {
     if (typeof jQuery === 'function' && parentElement instanceof jQuery) {
@@ -839,7 +839,6 @@ Place.prototype = {
     const windowH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
     const windowW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 
-    console.log('shrink');
     // Figure out the viewport boundaries
     const leftViewportEdge = (accountForScrolling ? scrollX : 0) +
       (containerBleed ? 0 : containerRect.left) + placementObj.containerOffsetX;
