@@ -7,6 +7,8 @@
 ## v4.89.0 Fixes
 
 - `[Accordion]` Adjusted rules of accordion top border to be consistent whether open or closed. ([#7978](https://github.com/infor-design/enterprise/issues/7978))
+- `[Module Nav]` Fixed a bug where the accordion in the page container inherited module nav accordion styles. ([#8040](https://github.com/infor-design/enterprise/issues/7884))
+- `[Spinbox]` Adjusted spinbox wrapper sizing to stop increment button from overflowing in classic. ([#7988](https://github.com/infor-design/enterprise/issues/7988))
 
 ## v4.88.0
 
@@ -40,10 +42,11 @@
 - `[Chart]` Fixed on focus border being off in chart legend items. ([#7850](https://github.com/infor-design/enterprise/issues/7850))
 - `[Column]` Fixed the size of the chart titles in columns. ([#7889](https://github.com/infor-design/enterprise/issues/7889))
 - `[Column]` Fixed an error loading on windows and a warning. ([#7941](https://github.com/infor-design/enterprise/issues/7941))
+- `[Contextmenu]` Changed color of checkbox in dark mode. ([#7991](https://github.com/infor-design/enterprise/issues/7991))
 - `[Datagrid]` Fixed a bug where the validation icon position was not correct in RTL (Right-to-Left) mode. ([#7768](https://github.com/infor-design/enterprise/issues/7768))
 - `[Datagrid]` Added undefined check for column settings to avoid errors in spacer. ([#7807](https://github.com/infor-design/enterprise/issues/7807))
 - `[Datagrid]` Added Placeholder for Datagrid Date Field. ([NG#1531](https://github.com/infor-design/enterprise-ng/issues/1531))
-- `[Datagrid]` Adjusted positioning of drilldown button. ([#7014](https://github.com/infor-design/enterprise/issues/7014))
+- `[Datagrid]` Adjusted positioning of `drilldown` button. ([#7014](https://github.com/infor-design/enterprise/issues/7014))
 - `[Datagrid]` Added a test page for column filter locale settings. ([#7554](https://github.com/infor-design/enterprise/issues/7554)
 - `[Datagrid]` Adjusted positioning of `drilldown` button. ([#7014](https://github.com/infor-design/enterprise/issues/7014))
 - `[Datagrid]` Fixed a bug where expanded rows showed as activated. ([#7979](https://github.com/infor-design/enterprise/issues/7979))
@@ -74,7 +77,7 @@
 - `[Toolbar]` Added additional selectors and colors for dark theme dropdown label. ([#7897](https://github.com/infor-design/enterprise/issues/7897))
 - `[Tree]` Fixed Cross-Site Scripting (XSS) when setting up tree node. ([#7631](https://github.com/infor-design/enterprise/issues/7631))
 - `[Weekview]` Adjusted the positioning of text within the footer cell to keep it centered. Adjusted calendar icon position to be better aligned. ([#7926](https://github.com/infor-design/enterprise/issues/7926))
-- `[Weekview]` Added event modal on doubleclick. ([#7824](https://github.com/infor-design/enterprise/issues/7824))
+- `[Weekview]` Added event modal on `doubleclick`. ([#7824](https://github.com/infor-design/enterprise/issues/7824))
 
 ## v4.87.0
 

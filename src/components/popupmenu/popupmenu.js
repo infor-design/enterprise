@@ -989,8 +989,7 @@ PopupMenu.prototype = {
       if (!leftClick) {
         this.menu.parent().on('contextmenu.popupmenu', disableBrowserContextMenu);
 
-        const disallowedOS = ['android', 'ios'];
-        if (disallowedOS.indexOf(env.os.name) === -1) {
+        if (!env.features.touch) {
           // Normal desktop operation
           this.element
             .on('contextmenu.popupmenu', (e) => {
