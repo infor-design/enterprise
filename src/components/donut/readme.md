@@ -6,18 +6,22 @@ demo:
   - name: Standard Donut Chart
     slug: example-index
   pages:
-  - name: Showing Slices as Alerts
+  - name: Showing slices in alert colors
     slug: example-alerts
-  - name: With a Right Click Menu
-    slug: example-rightclick
-  - name: Longer and Zero Labels
+  - name: Setting colors on slices
+    slug: example-colors
+  - name: Context menu on slices
+    slug: example-contextmenu
+  - name: Disable selection state
+    slug: example-disable-selection-state
+  - name: Legend on the bottom with a popup
+    slug: example-legend-bottom-popup
+  - name: Legend on the bottom
+    slug: example-legend-bottom
+  - name: Example showing a legend
+    slug: example-legend
+  - name: Example showing settings to change label values
     slug: example-values
-  - name: Set animation speed
-    slug: example-animation
-  - name: Example showing Get Selected value
-    slug: example-get-selected
-  - name: Example showing Set Selected value
-    slug: example-set-selected
 ---
 
 ## Settings
