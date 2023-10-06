@@ -3,7 +3,7 @@
 // Module Nav Accordion Component
 //================================================== //
 
-.module-nav-accordion {
+.module-nav .module-nav-accordion {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -18,7 +18,7 @@
 }
 
 // IDS Accordion Style Overrides
-.accordion.panel.module-nav-accordion {
+.module-nav .accordion.panel.module-nav-accordion {
   background-color: transparent;
   border: 0;
 
@@ -211,7 +211,7 @@
 //================================================== //
 
 .module-nav-container {
-  &.mode-collapsed {
+  &.mode-collapsed > .module-nav {
     .accordion-header {
       display: flex;
       align-items: center;
@@ -276,7 +276,7 @@
 //================================================== //
 
 .module-nav-container {
-  &.mode-expanded {
+  &.mode-expanded > .module-nav {
     .accordion {
       // Module Nav Accordion Alignment-only rules
       // These rules apply to both "collapsed" and "expanded" display modes
