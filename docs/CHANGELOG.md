@@ -42,6 +42,7 @@
 - `[Chart]` Fixed on focus border being off in chart legend items. ([#7850](https://github.com/infor-design/enterprise/issues/7850))
 - `[Column]` Fixed the size of the chart titles in columns. ([#7889](https://github.com/infor-design/enterprise/issues/7889))
 - `[Column]` Fixed an error loading on windows and a warning. ([#7941](https://github.com/infor-design/enterprise/issues/7941))
+- `[Contextmenu]` Changed color of checkbox in dark mode. ([#7991](https://github.com/infor-design/enterprise/issues/7991))
 - `[Datagrid]` Fixed a bug where the validation icon position was not correct in RTL (Right-to-Left) mode. ([#7768](https://github.com/infor-design/enterprise/issues/7768))
 - `[Datagrid]` Added undefined check for column settings to avoid errors in spacer. ([#7807](https://github.com/infor-design/enterprise/issues/7807))
 - `[Datagrid]` Added Placeholder for Datagrid Date Field. ([NG#1531](https://github.com/infor-design/enterprise-ng/issues/1531))
