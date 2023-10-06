@@ -1,5 +1,13 @@
 # What's New with Enterprise
 
+## v4.89.0
+
+## v4.89.0 Features
+
+## v4.89.0 Fixes
+
+- `[Accordion]` Adjusted rules of accordion top border to be consistent whether open or closed. ([#7978](https://github.com/infor-design/enterprise/issues/7978))
+
 ## v4.88.0
 
 ## v4.88.0 Features
