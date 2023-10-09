@@ -741,7 +741,8 @@ html.theme-classic-contrast .tab-container.alternate.header-tabs > .tab-list-con
         height: 14px;
         position: absolute;
         right: 5px;
-        top: 9px;
+        top: 1px;
+        transform: translateY(50%);
       }
     }
 
