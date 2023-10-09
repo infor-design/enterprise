@@ -346,7 +346,9 @@
       flex-grow: 2;
 
       .toolbar-searchfield-wrapper {
-        width: 100%;
+        @media (min-width: $breakpoint-phone-to-tablet) {
+          width: 100%;
+        }
       }
     }
 
