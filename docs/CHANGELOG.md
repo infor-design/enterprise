@@ -8,6 +8,7 @@
 
 - `[Module Nav]` Fixed a bug where the accordion in the page container inherited module nav accordion styles. ([#8040](https://github.com/infor-design/enterprise/issues/7884))
 - `[Spinbox]` Adjusted spinbox wrapper sizing to stop increment button from overflowing in classic. ([#7988](https://github.com/infor-design/enterprise/issues/7988))
+- `[Tabs]` Fixed alabaster design issues in headers, tabs, tab-headers, tabs-module, tabs-multi components. ([#7922](https://github.com/infor-design/enterprise/issues/7922))
 
 ## v4.88.0
 
