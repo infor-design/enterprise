@@ -417,6 +417,9 @@ ModuleNav.prototype = {
     if (this.settings.displayMode !== val) this.settings.displayMode = val;
     setDisplayMode(val, this.containerEl);
 
+    // close any active tooltips
+    $('#validation-errors, #tooltip, #validation-tooltip').addClass('is-hidden');
+
     // Reconfigure child elements to use the same display mode
     this.switcherAPI?.setDisplayMode(val);
     this.settingsAPI?.setDisplayMode(val);
