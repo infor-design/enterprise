@@ -18,6 +18,16 @@
         }
       }
     }
+
+    &.has-labels {
+      .indicator.icon .icon {
+        height: 22px;
+        left: -3px;
+        top: -3px;
+        width: 22px;
+        z-index: 1;
+      }
+    }
   }
 }
 
@@ -39,10 +49,11 @@
 }
 
 .process-indicator .indicator.icon .icon {
-  height: 22px;
-  left: 0;
-  top: 0;
-  width: 22px;
+  height: 29px;
+  left: -4px;
+  top: -4px;
+  width: 29px;
+  z-index: 1;
 }
 
 .process-indicator.responsive .details .icon {

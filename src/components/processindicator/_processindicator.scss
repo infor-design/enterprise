@@ -167,7 +167,7 @@ $indicator-current-size: ($indicator-size * 1.6);
         }
 
         &.icon.current + .separator {
-          margin-left: 0 !important;
+          margin-left: -2px !important;
         }
 
         .icon {
@@ -235,6 +235,7 @@ $indicator-current-size: ($indicator-size * 1.6);
         left: 0;
         top: 0;
         width: 16px;
+        z-index: 1;
       }
     }
 
