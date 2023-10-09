@@ -19,6 +19,10 @@
   flex-flow: row nowrap;
   justify-content: space-between;
 
+  &.datagrid-toolbar {
+    height: 50px;
+  }
+
   .toolbar-section {
     &.title {
       padding: 1px 0;
