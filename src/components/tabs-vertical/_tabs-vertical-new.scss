@@ -1,14 +1,14 @@
 
 .tab-container.vertical {
   background-color: $vertical-tab-background-color;
-  border-right: 1px solid $vertical-tab-border-color;
 
   > .tab-list-container {
     background-color: $vertical-tab-background-color;
+    border-right: 1px solid $vertical-tab-border-color;
 
     > .tab-list {
       > .tab {
-        max-width: 250px;
+        width: 250px;
         max-height: 40px;
 
         a {

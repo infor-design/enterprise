@@ -96,6 +96,8 @@ WeekView.prototype = {
     // Do initialization. Build or Events ect
     if (!this.settings.startDate) {
       this.settings.startDate = dateUtils.firstDayOfWeek(new Date(), this.settings.firstDayOfWeek);
+    } else {
+      this.settings.firstDayOfWeek = this.settings.startDate.getDay();
     }
 
     if (!this.settings.endDate) {
@@ -1080,8 +1082,12 @@ WeekView.prototype = {
         this.settings.startDate = startDate;
         this.settings.endDate = startDate;
       } else {
-        this.settings.startDate = this.hasIrregularDays ? startDate :
-          dateUtils.firstDayOfWeek(startDate, this.settings.firstDayOfWeek);
+        if (this.hasIrregularDays && startDate.getDay() === this.settings.firstDayOfWeek) {
+          this.settings.startDate = startDate;
+        } else {
+          this.settings.startDate = dateUtils.firstDayOfWeek(startDate, this.settings.firstDayOfWeek);
+        }
+
         this.settings.startDate.setHours(0, 0, 0, 0);
         this.settings.endDate = new Date(this.settings.startDate);
         this.settings.endDate.setDate(this.settings.endDate.getDate() + this.numberOfDays - 1);
