@@ -59,7 +59,7 @@ EmptyMessage.prototype = {
       this.settings.color = 'azure';
     }
 
-    if (opts.icon && !isHeightSmall) {
+    if (opts.icon && opts.icon !== 'null' && opts.icon !== null && opts.icon !== undefined && !isHeightSmall) {
       $(`<div class="empty-icon">
           <svg class="icon-empty-state is-${this.settings.color}" focusable="false" aria-hidden="true" role="presentation">
             <use href="#${opts.icon}"></use>
