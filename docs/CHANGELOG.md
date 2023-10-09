@@ -8,6 +8,7 @@
 
 - `[Module Nav]` Fixed a bug where the accordion in the page container inherited module nav accordion styles. ([#8040](https://github.com/infor-design/enterprise/issues/7884))
 - `[Spinbox]` Adjusted spinbox wrapper sizing to stop increment button from overflowing in classic. ([#7988](https://github.com/infor-design/enterprise/issues/7988))
+- `[Weekview]` Added overnight event view when end time goes to next day. ([#7840](https://github.com/infor-design/enterprise/issues/7840))
 
 ## v4.88.0
 
@@ -76,8 +77,6 @@
 - `[Toolbar]` Added additional selectors and colors for dark theme dropdown label. ([#7897](https://github.com/infor-design/enterprise/issues/7897))
 - `[Tree]` Fixed Cross-Site Scripting (XSS) when setting up tree node. ([#7631](https://github.com/infor-design/enterprise/issues/7631))
 - `[Weekview]` Adjusted the positioning of text within the footer cell to keep it centered. Adjusted calendar icon position to be better aligned. ([#7926](https://github.com/infor-design/enterprise/issues/7926))
-- `[Weekview]` Added overnight event view when end time goes to next day. ([#7840](https://github.com/infor-design/enterprise/issues/7840))
-- `[Weekview]` Added event modal on doubleclick. ([#7824](https://github.com/infor-design/enterprise/issues/7824))
 - `[Weekview]` Added event modal on `doubleclick`. ([#7824](https://github.com/infor-design/enterprise/issues/7824))
 
 ## v4.87.0
