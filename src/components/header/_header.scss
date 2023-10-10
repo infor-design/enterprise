@@ -355,6 +355,7 @@ $subheader-height: 60px;
     .toolbar-section.search-categories {
       .toolbar-searchfield-wrapper.has-categories .btn.searchfield-category-button {
         svg.icon {
+          color: $subheader-searchfield-category-button-font-color !important;
           transform: translateY(0);
         }
       }
