@@ -288,12 +288,36 @@ WeekView.prototype = {
     // Event extends multiple days or is all day
     if (days.length > 1) {
       // TODO
-      for (let i = 0; i < days.length; i++) {
-        let cssClass = i === 0 ? 'calendar-event-start' : 'calendar-event-continue';
-        if (i === days.length - 1) {
-          cssClass = 'calendar-event-ends';
+      if (event.isAllDay === 'true' || event.isAllDay === true) {
+        for (let i = 0; i < days.length; i++) {
+          let cssClass = i === 0 ? 'calendar-event-start' : 'calendar-event-continue';
+          if (i === days.length - 1) {
+            cssClass = 'calendar-event-ends';
+          }
+          this.appendEventToAllDay(days[i].elem, event, cssClass);
         }
-        this.appendEventToAllDay(days[i].elem, event, cssClass);
+      } else {
+        event.overnightStartsHour = event.startsHour;
+        event.overnightEndsHour = event.endsHour;
+        for (let i = 0; i < days.length; i++) {
+          const overnight = { ...event };
+          overnight.endsHour = this.settings.endHour + 0.6;
+
+          if (i > 0) {
+            overnight.startsHour = this.settings.startHour;
+            overnight.startKey = overnight.endKey;
+          }
+
+          if (i === days.length - 1) {
+            overnight.endsHour = overnight.overnightEndsHour;
+          }
+
+          if (this.isStackedView()) {
+            this.appendToDayContainer(overnight, true);
+          } else {
+            this.appendEventToHours(days[i].elem, overnight, true);
+          }
+        }
       }
     }
   },
@@ -363,9 +387,11 @@ WeekView.prototype = {
    * @private
    * @param {object} container The container to append to
    * @param {object} event The event data object.
+   * @param {boolean} isOvernight Check if event happens overnight
    */
-  appendEventToHours(container, event) {
+  appendEventToHours(container, event, isOvernight = false) {
     const dayHourContainers = this.element[0].querySelectorAll(`td:nth-child(${container.cellIndex + 1})`);
+
     for (let i = 0; i < dayHourContainers.length; i++) {
       const tdEl = dayHourContainers[i];
       const hour = parseFloat(tdEl.parentNode.getAttribute('data-hour'), 10);
@@ -378,16 +404,20 @@ WeekView.prototype = {
         let displayedTime = '';
         const node = this.createEventElement(event);
 
-        if (duration < 0.5) {
-          DOM.addClass(node, 'reduced-padding', event.color);
-        }
+        if (!isOvernight) {
+          if (duration < 0.5) {
+            DOM.addClass(node, 'reduced-padding', event.color);
+          }
 
-        if (duration < 1.5) {
-          DOM.addClass(node, 'is-ellipsis');
-        }
+          if (duration < 1.5) {
+            DOM.addClass(node, 'is-ellipsis');
+          }
 
-        if (duration > 2) {
-          displayedTime = ` ${Locale.formatHourRange(event.startsHour, event.endsHour, { locale: this.locale })}`;
+          if (duration > 2) {
+            displayedTime = ` ${Locale.formatHourRange(event.startsHour, event.endsHour, { locale: this.locale })}`;
+          }
+        } else {
+          displayedTime = ` ${Locale.formatHourRange(event.overnightStartsHour, event.overnightEndsHour, { locale: this.locale })}`;
         }
 
         // Max out at the bottom and show the time
@@ -415,6 +445,7 @@ WeekView.prototype = {
 
         node.innerHTML = `<div class="calendar-event-content">
           ${event.icon ? `<span class="calendar-event-icon"><svg class="icon ${event.icon}" focusable="false" aria-hidden="true" role="presentation" data-status="${event.status}"><use href="#${event.icon}"></use></svg></span>` : ''}
+          ${isOvernight ? '<span style="font-weight: bold">Overnight</span><br/>' : ''}
           <span class="calendar-event-title">${event.shortSubject || event.subject}${displayedTime}</span>
         </div>`;
 
@@ -443,6 +474,7 @@ WeekView.prototype = {
             node.style.left = `${width * j}%`;
           }
         }
+
         containerWrapper.appendChild(node);
         utils.addAttributes($(node), this, this.settings.attributes, `week-view-event-${event.id}`);
         this.attachTooltip(node, event);
@@ -453,12 +485,20 @@ WeekView.prototype = {
   /**
    * Add the ui event to day column
    * @param {object} event calendar event
+   * @param {boolean} isOvernight if event is overnight or not
    */
-  appendToDayContainer(event) {
+  appendToDayContainer(event, isOvernight = false) {
     const container = this.element[0].querySelector(`.week-view-body-cell[data-key="${event.startKey}"]`);
 
     if (container) {
-      const displayTime = ` ${Locale.formatHourRange(event.startsHour, event.endsHour, { locale: this.locale, keepPeriod: true, pattern: this.settings.timePattern })}`;
+      let displayTime;
+
+      if (isOvernight) {
+        displayTime = ` ${Locale.formatHourRange(event.overnightStartsHour, event.overnightEndsHour, { locale: this.locale, keepPeriod: true, pattern: this.settings.timePattern })}`;
+      } else {
+        displayTime = ` ${Locale.formatHourRange(event.startsHour, event.endsHour, { locale: this.locale, keepPeriod: true, pattern: this.settings.timePattern })}`;
+      }
+
       const node = this.createEventElement(event);
       const subject = `<span class="calendar-event-title">
           ${this.settings.timeFirst ? displayTime : event.shortSubject || event.subject}</br>${this.settings.timeFirst ? event.shortSubject || event.subject : displayTime}
@@ -466,6 +506,7 @@ WeekView.prototype = {
 
       node.innerHTML = `<div class="calendar-event-content">
         ${event.icon ? `<span class="calendar-event-icon"><svg class="icon ${event.icon}" focusable="false" aria-hidden="true" role="presentation" data-status="${event.status}"><use href="#${event.icon}"></use></svg></span>` : ''}
+        ${isOvernight ? '<span style="font-weight: bold">Overnight</span><br/>' : ''}
         ${subject}
       </div>`;
 
