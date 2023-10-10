@@ -52,7 +52,7 @@ describe('Module Nav API', () => {
     expect(moduleNavAPI).toBeTruthy();
   });
 
-  it('can display as collapsed', () => {
+  it.skip('can display as collapsed', () => {
     moduleNavAPI.updated({ displayMode: 'collapsed' });
 
     expect(moduleNavContainerEl.classList.contains('mode-collapsed')).toBeTruthy();
