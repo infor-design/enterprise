@@ -298,3 +298,26 @@
 .dropdown-list[data-element-id="module-nav-role-switcher"] {
   z-index: 8000;
 }
+
+// Hide on Mobile
+@include respond-to(phone) {
+  .module-nav-container.mode-collapsed .module-nav {
+    border-inline-end: 0;
+  }
+
+  .module-nav-container:not(.mode-expanded) .module-nav-bar {
+    display: none;
+  }
+}
+
+@media all and (orientation:landscape) {
+  .ios .module-nav-container.mode-collapsed .module-nav,
+  .android .module-nav-container.mode-collapsed .module-nav {
+    border-inline-end: 0;
+  }
+
+  .ios .module-nav-container:not(.mode-expanded) .module-nav-bar,
+  .android .module-nav-container:not(.mode-expanded) .module-nav-bar {
+    display: none;
+  }
+}

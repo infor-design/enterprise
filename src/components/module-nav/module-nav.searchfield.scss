@@ -44,7 +44,7 @@
 
     &.non-collapsible.is-open {
       > .icon:not(.close):not(.icon-error) {
-        left: $module-nav-item-icon-start-spacing;
+        left: calc($module-nav-item-icon-start-spacing - 1px);
         top: $module-nav-search-input-icon-y-offset;
       }
     }
