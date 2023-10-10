@@ -504,7 +504,6 @@ SearchField.prototype = {
    * Simpler version of `adjustOnBreakpoint` for non-collapsible Toolbar Flex searchfields
    */
   simpleAdjustOnBreakpoint() {
-    console.log('wee')
     if (this.shouldBeFullWidth()) {
       if (!this.isFocused && (this.settings.collapsible || this.isContainedByFlexToolbar)) {
         this.wrapper[0].classList.remove('is-open');
