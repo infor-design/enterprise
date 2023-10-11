@@ -1,5 +1,11 @@
 # What's New with Enterprise
 
+## v4.88.1
+
+## v4.88.1 Features
+
+- `[Module Nav]` Fixed a bug where the settings was behind the main module nav element. ([#8063](https://github.com/infor-design/enterprise/issues/8063))
+
 ## v4.88.0
 
 ## v4.88.0 Features
