@@ -8,6 +8,7 @@
 
 - `[Accordion]` Adjusted rules of accordion top border to be consistent whether open or closed. ([#7978](https://github.com/infor-design/enterprise/issues/7978))
 - `[Button]` Adjusted rule for primary button styling when hovered in new version. ([#7977](https://github.com/infor-design/enterprise/issues/7977))
+- `[Colors]` Made slate 01 darker based on feedback. ([#8065](https://github.com/infor-design/enterprise/issues/8065))
 - `[Datagrid]` Fixed the position of empty message without icon in the datagrid. ([#7854](https://github.com/infor-design/enterprise/issues/7854))
 - `[Module Nav]` Fixed a bug where the accordion in the page container inherited module nav accordion styles. ([#8040](https://github.com/infor-design/enterprise/issues/7884))
 - `[Spinbox]` Adjusted spinbox wrapper sizing to stop increment button from overflowing in classic. ([#7988](https://github.com/infor-design/enterprise/issues/7988))
