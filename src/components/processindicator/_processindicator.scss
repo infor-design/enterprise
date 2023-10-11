@@ -138,10 +138,10 @@ $indicator-current-size: ($indicator-size * 1.6);
 
       .indicator {
         border-radius: 50%;
-        height: 15px;
-        min-height: 15px;
-        min-width: 15px;
-        width: 14px;
+        height: 16px;
+        min-height: 16px;
+        min-width: 16px;
+        width: 16px;
 
         &.current {
           background-color: $ids-color-palette-white;
@@ -163,7 +163,7 @@ $indicator-current-size: ($indicator-size * 1.6);
         }
 
         &.icon + .separator {
-          margin-left: 1px !important;
+          margin-left: -1px !important;
         }
 
         &.icon.current + .separator {
@@ -247,7 +247,7 @@ $indicator-current-size: ($indicator-size * 1.6);
     }
 
     .separator {
-      margin-left: 0 !important;
+      margin-left: -1px !important;
     }
 
     .indicator.icon {
@@ -284,6 +284,8 @@ $indicator-current-size: ($indicator-size * 1.6);
   height: $indicator-size;
   position: relative;
   width: $indicator-size;
+  min-height: $indicator-size;
+  min-width: $indicator-size;
 
   // Color defs
   &.darkest {
@@ -318,6 +320,9 @@ $indicator-current-size: ($indicator-size * 1.6);
     border-radius: ($indicator-current-size / 2);
     height: $indicator-current-size;
     width: $indicator-current-size;
+    min-height: $indicator-current-size;
+    min-width: $indicator-current-size;
+    z-index: 1;
 
     // circle
     &::before {
@@ -337,7 +342,7 @@ $indicator-current-size: ($indicator-size * 1.6);
       content: '';
       display: inline-block;
       height: 0.15em;
-      left: 0.16em;
+      left: 0.15em;
       position: absolute;
       top: 0.57em;
       width: ($indicator-size * 0.78);
@@ -356,7 +361,7 @@ $indicator-current-size: ($indicator-size * 1.6);
 
       &::before,
       &::after {
-        left: 0.5em;
+        left: 0.52em;
         top: 0.98em;
       }
     }
@@ -393,7 +398,7 @@ $indicator-current-size: ($indicator-size * 1.6);
       border: 0.15em solid $ids-color-palette-white;
       content: '';
       height: 50%;
-      left: 0.35em;
+      left: 0.38em;
       position: absolute;
       top: 0.37em;
       width: 50%;
@@ -421,6 +426,8 @@ $indicator-current-size: ($indicator-size * 1.6);
     border-radius: ($indicator-size / 4);
     height: 0.6em;
     width: 0.6em;
+    min-height: 0.6em;
+    min-width: 0.6em;
   }
 
   &.icon {
@@ -457,7 +464,7 @@ $indicator-current-size: ($indicator-size * 1.6);
 
       &.more-info {
         &::before {
-          right: 0.02em;
+          right: 0;
         }
       }
     }
@@ -506,7 +513,7 @@ $indicator-current-size: ($indicator-size * 1.6);
   .indicator {
     &.more-info {
       &::before {
-        top: 0.3em;
+        top: 0.2em;
       }
     }
 
