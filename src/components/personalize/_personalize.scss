@@ -23,6 +23,7 @@
 
 .is-personalizable.header {
   background-color: $header-default-bg-color;
+  border-bottom: 1px solid $header-default-bg-border-color;
 }
 
 .is-personalizable.has-more-button.tab-container.horizontal {

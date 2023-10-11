@@ -685,11 +685,11 @@ $subheader-height: 60px;
         color: $header-button-focus-color;
 
         &.collapse-button {
-          border-color: $header-button-focus-color;
+          border-color: $header-button-focus-border-color;
         }
 
         &:not(.collapse-button) {
-          border-color: $header-button-focus-color;
+          border-color: $header-button-focus-border-color;
           box-shadow: 0 0 0 2px transparent, 0 0 0 0 $header-button-focus-color, $header-focus-box-shadow;
         }
 

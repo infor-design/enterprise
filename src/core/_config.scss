@@ -7,18 +7,20 @@ $subhead-bg-color: $ids-color-palette-azure-70;
 $transparent: transparent;
 
 $header-border-color: $ids-color-palette-azure-80;
-$header-button-color: $ids-color-palette-white;
-$header-button-focus-color: rgba($ids-color-palette-white, 1);
+$header-button-color: $ids-color-palette-slate-100;
+$header-button-focus-color: $ids-color-palette-slate-100;
+$header-button-focus-border-color: $ids-color-palette-azure-60;
 $header-button-hover-color: rgba($ids-color-palette-white, 0.7);
 $header-button-disabled-color: rgba($ids-color-palette-white, 0.3);
 $header-primary-btn-background-color: $ids-color-palette-azure-50;
 $header-primary-btn-background-hover-color: $ids-color-brand-primary-base;
-$header-text-color: $ids-color-palette-white;
+$header-text-color: $ids-color-palette-slate-100;
 $header-disabled-color: $ids-color-palette-slate-50;
 $header-focus-box-shadow: 0 0 3px 2px rgba(255, 255, 255, 0.3);
 
 $header-full-searchfield-hyperlink-color: $ids-color-palette-white;
 
+$header-button-hover-color-new: $ids-color-palette-azure-60;
 $ids-color-palette-alabaster: $ids-color-palette-white;
 
 // Homepage
@@ -34,7 +36,8 @@ $homepage-header-menu-button-color: $ids-color-palette-black;
 $widget-editable-border-color: $ids-color-palette-azure-60;
 
 // Color Personalization in header
-$header-default-bg-color: $ids-color-palette-azure-60;
+$header-default-bg-color: $ids-color-palette-white;
+$header-default-bg-border-color: $ids-color-palette-slate-30;
 $header-default-bg-hover-color: $ids-color-palette-azure-80;
 
 $masthead-bg-color: $ids-color-palette-slate-80;
@@ -1113,8 +1116,8 @@ $subheader-searchfield-category-button-font-color: $ids-color-palette-slate-80;
 $header-searchfield-input-border-color: $ids-color-palette-slate-40;
 $header-searchfield-input-border-hover-color: $ids-color-palette-slate-100;
 $header-searchfield-btn-font-color: $ids-color-palette-slate-80;
-$header-toolbar-searchfield-icon-color: $ids-color-palette-white;
-$header-toolbar-button-hover-color: rgba(0, 0, 0, 0.3);
+$header-toolbar-searchfield-icon-color: $ids-color-palette-slate-100;
+$header-toolbar-button-hover-color: $ids-color-palette-azure-10;
 
 // Header Tabs
 $header-tabcontainer-border-color: $ids-color-palette-graphite-30;
