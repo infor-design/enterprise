@@ -1,5 +1,9 @@
 # What's New with Enterprise
 
+## v4.84.12 Fixes
+
+- `[Module Nav]` Fixed a bug where the settings was behind the main module nav element. ([#8063](https://github.com/infor-design/enterprise/issues/8063))
+
 ## v4.84.11 Fixes
 
 - `[Module Nav]` Added mobile click to close setting, and made breakpoints fire on resize, added hamburger logic and new mobile states per phone vs bigger. ([#8019](https://github.com/infor-design/enterprise/issues/8019))
