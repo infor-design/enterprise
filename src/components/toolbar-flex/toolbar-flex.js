@@ -535,7 +535,7 @@ ToolbarFlex.prototype = {
         sf = sf.children('.searchfield');
       }
 
-      if (!sf.data('searchfield') &&  sf.is('.searchfield')) {
+      if (!sf.data('searchfield') && sf.is('.searchfield')) {
         const searchfieldOpts = $.extend({}, utils.parseSettings(sf[0]));
 
         if (this.settings.collapsibleFilter) {
