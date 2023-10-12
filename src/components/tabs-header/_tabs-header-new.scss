@@ -285,6 +285,12 @@
   }
 }
 
+.tab-container.vertical + .tab-panel-container {
+  .tab-panel {
+    overflow-y: hidden;
+  }
+}
+
 html.is-mac .tab-panel-container {
   .tab-panel {
     overflow-y: auto;
