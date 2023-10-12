@@ -7899,7 +7899,7 @@ Datagrid.prototype = {
     }
 
     const actions = toolbar.find('.btn-actions');
-    let isFlex = toolbar.is('.flex-toolbar');
+    const isFlex = toolbar.is('.flex-toolbar');
 
     if (this.settings.stickyHeader) {
       toolbar.addClass('is-sticky');
@@ -7950,7 +7950,7 @@ Datagrid.prototype = {
     (isFlex ? toolbar : actions).on('selected', selectHandler);
 
     if (this.settings.initializeToolbar && !toolbar.data('toolbar') && !toolbar.hasClass('flex-toolbar')) {
-      let opts = $.fn.parseOptions(toolbar);
+      const opts = $.fn.parseOptions(toolbar);
 
       if (this.settings.toolbar.fullWidth) {
         opts.rightAligned = true;
@@ -7960,7 +7960,7 @@ Datagrid.prototype = {
     }
 
     if (this.settings.initializeToolbar && toolbar.hasClass('flex-toolbar') && !toolbar.data('toolbarFlex')) {
-      let opts = $.fn.parseOptions(toolbar);
+      const opts = $.fn.parseOptions(toolbar);
       
       if (this.settings.toolbar.collapsibleFilter) {
         opts.collapsibleFilter = true;
