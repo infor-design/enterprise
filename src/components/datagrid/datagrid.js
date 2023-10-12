@@ -4671,6 +4671,10 @@ Datagrid.prototype = {
     const isEnabledTooltips = self.settings.enableTooltips;
     let isRowDisabled = false;
 
+    if (isSummaryRow) {
+      rowData.isSummaryRow = isSummaryRow;
+    }
+
     // Run a function that helps check if disabled
     if (self.settings.isRowDisabled && typeof self.settings.isRowDisabled === 'function') {
       const isDisabled = self.settings.isRowDisabled(actualIndex, rowData);
@@ -5054,7 +5058,7 @@ Datagrid.prototype = {
     containerHtml.center += '</tr>';
     containerHtml.right += '</tr>';
 
-    if (self.settings.rowTemplate) {
+    if (self.settings.rowTemplate && !isSummaryRow) {
       const tmpl = self.settings.rowTemplate;
       const item = rowData;
       const height = self.settings.rowTemplateHeight || 107;
@@ -11442,6 +11446,25 @@ Datagrid.prototype = {
       }
     }
 
+    if (this.settings.rowTemplate) {
+      const tmpl = this.settings.rowTemplate;
+      const item = rowData;
+      let renderedTmpl = ''
+
+      if (Tmpl && item) {
+        renderedTmpl = Tmpl.compile(`{{#dataset}}${tmpl}{{/dataset}}`, { dataset: item });
+      }
+
+      if (cellNode.parent().next().is('.datagrid-expandable-row')) {
+        const detailTmpl = cellNode.parent().next().find('.datagrid-row-detail-padding');
+        detailTmpl.html(renderedTmpl);
+      }
+    }
+    
+    if (this.settings.summaryRow && !this.settings.groupable) {
+      this.updateSummaryRow(col, cell);
+    }
+
     // Sanitize console methods
     oldVal = xssUtils.sanitizeConsoleMethods(oldVal);
     coercedVal = xssUtils.sanitizeConsoleMethods(coercedVal);
@@ -11492,6 +11515,14 @@ Datagrid.prototype = {
       this.element.trigger('cellchange', args);
       this.wasJustUpdated = true;
     }
+  },
+
+  updateSummaryRow(col, cell) {
+    const totals = this.calculateTotals();
+    const rowNodes = this.rowNodes(this.settings.dataset.length);
+    const cellNode = rowNodes.find('td').eq(cell);
+    const cellTemplate = `<div class="datagrid-cell-wrapper">${totals[col.id]}</div>`;
+    cellNode.html(cellTemplate);
   },
 
   /**
