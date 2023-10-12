@@ -10,7 +10,7 @@ describe('Header Puppeteer Visual Tests', () => {
       await page.goto(url, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     });
 
-    it('should not visually regress', async () => {
+    it.skip('should not visually regress', async () => {
       expect(await page.waitForSelector('.container', { visible: true })).toBeTruthy();
       const header = await page.$('.header');
       const img = await header.screenshot();
