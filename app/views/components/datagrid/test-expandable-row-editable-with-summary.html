@@ -46,7 +46,7 @@
         filterType: 'integer',
         formatter: Soho.Formatters.Integer,
         editor: Soho.Editors.Input,
-        summaryRowFormatter: Soho.Formatters.SummaryRow, aggregator: 'sum', summaryText: ' %', summaryTextPlacement: 'after'
+        summaryRowFormatter: Soho.Formatters.SummaryRow, aggregator: 'sum', summaryText: ' ', summaryTextPlacement: 'after'
       },
       {
         id: 'price',
@@ -56,7 +56,7 @@
         filterType: 'decimal',
         formatter: Soho.Formatters.Decimal,
         editor: Soho.Editors.Input,
-        summaryRowFormatter: Soho.Formatters.SummaryRow, aggregator: 'sum', summaryText: ' %', summaryTextPlacement: 'after'
+        summaryRowFormatter: Soho.Formatters.SummaryRow, aggregator: 'sum', summaryText: ' ', summaryTextPlacement: 'after'
       },
       {
         id: 'orderDate',
@@ -204,7 +204,14 @@
         }
       ];
 
-      var rowTemplate = '<input #descText soho-input name="description" id="description" value="{{quantity}}" />';
+      var rowTemplate = `<div class="field four columns">
+                          <label class="details-field-header">Quantity</label>
+                          <p class="details-field-value">{{quantity}}</p>
+                        </div>
+                        <div class="field four columns">
+                          <label class="details-field-header">Price</label>
+                          <p class="details-field-value">{{price}}</p>
+                        </div>`;
 
       // Init and get the api for the grid
       grid = $('#datagrid').datagrid({
